@@ -20,6 +20,8 @@ function format_link_build($link){
   //make sure the url is XHTML compliant
   $link['url'] = str_replace('&','&amp;',$link['url']);
   $link['url'] = str_replace('&amp;amp;','&amp;',$link['url']);
+  //remove double encodings in titles
+  $link['title'] = str_replace('&amp;amp;','&amp;',$link['title']);
 
   $ret  = '';
   $ret .= $link['pre'];
