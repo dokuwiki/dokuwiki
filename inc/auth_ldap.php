@@ -26,6 +26,7 @@ function auth_ldap_connect(){
     $LDAP_CONNECTION = @ldap_connect($cnf['server']);
     if(!$LDAP_CONNECTION){
       msg("LDAP: couldn't connect to LDAP server",-1);
+      if($cnf['debug']) msg('LDAP errstr: 'htmlspecialchars(ldap_error()),0);
       return false;
     }
     if($cnf['version']){
@@ -33,6 +34,7 @@ function auth_ldap_connect(){
                            LDAP_OPT_PROTOCOL_VERSION,
                            $cnf['version'])){
         msg('Setting LDAP Protocol version '.$cnf['version'].' failed',-1);
+        if($cnf['debug']) msg('LDAP errstr: 'htmlspecialchars(ldap_error()),0);
       }
     }
   }
@@ -64,6 +66,7 @@ function auth_checkPass($user,$pass){
 
   //try to bind with dn
   if(@ldap_bind($conn,$dn,$pass)){
+    if($cnf['debug']) msg('LDAP errstr: 'htmlspecialchars(ldap_error()),0);
     return true;
   }
   return false;
@@ -100,6 +103,7 @@ function auth_getUserData($user){
   //anonymous bind to lookup userdata
   if(!@ldap_bind($conn)){
     msg("LDAP: can not bind anonymously",-1);
+    if($cnf['debug']) msg('LDAP errstr: 'htmlspecialchars(ldap_error()),0);
     return false;
   }
 
@@ -129,6 +133,7 @@ function auth_getUserData($user){
     $sr     = @ldap_search($conn, $cnf['grouptree'], $filter);
     if(!$sr){
       msg("LDAP: Reading group memberships failed",-1);
+      if($cnf['debug']) msg('LDAP errstr: 'htmlspecialchars(ldap_error()),0);
       return false;
     }
     $result = ldap_get_entries($conn, $sr);
