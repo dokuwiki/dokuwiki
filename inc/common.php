@@ -119,18 +119,29 @@ function breadcrumbs(){
     $crumbs = array();
   }
   //we only save on show and existing wiki documents
-  if($ACT != 'show' || !@file_exists(wikiFN($ID))){
+  $file = wikiFN($ID);
+  if($ACT != 'show' || !@file_exists($file)){
     $_SESSION[$conf['title']]['bc'] = $crumbs;
     return $crumbs;
   }
+
+  // page names
+  $name = noNS($ID);
+  if ($conf['useheading']) {
+    // get page title
+    $title = getFirstHeading(io_readFile($file));
+    if ($title) {
+      $name = $title;
+    }
+  }
+
   //remove ID from array
-  $pos = array_search($ID,$crumbs);
-  if($pos !== false && $pos !== null){
-    array_splice($crumbs,$pos,1);
+  if (isset($crumbs[$ID])) {
+    unset($crumbs[$ID]);
   }
 
   //add to array
-  $crumbs[] =$ID;
+  $crumbs[$ID] = $name;
   //reduce size
   while(count($crumbs) > $conf['breadcrumbs']){
     array_shift($crumbs);

@@ -838,4 +838,21 @@ function mediaformat($text){
 	return format_link_build($link);
 }
 
+/**
+ * Get first heading, to be used as a page title
+ *
+ * @author Jan Decaluwe <jan@jandecaluwe.com>
+ */
+function getFirstHeading($text){
+  $title = '';
+  $lines = split("\n",$text);
+  foreach($lines as $line){
+    if(preg_match('/^\s*==+(.+?)==+\s*$/',$line,$matches)){
+      $title = $matches[1];
+      break;  
+    }
+  }
+  return $title;
+}
+
 ?>

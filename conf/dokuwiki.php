@@ -36,6 +36,7 @@ $conf['maxtoclevel'] = 3;                 //Up to which level include into AutoT
 $conf['maxseclevel'] = 3;                 //Up to which level create editable sections (max. 5)
 $conf['camelcase']   = 0;                 //Use CamelCase for linking? (I don't like it) 0|1
 $conf['deaccent']    = 1;                 //convert accented chars to unaccented ones in pagenames?
+$conf['useheading']  = 0;                 //use the first heading in a page as its name
 
 /* Antispam Features */
 

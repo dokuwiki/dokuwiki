@@ -273,9 +273,9 @@ function tpl_breadcrumbs(){
 
   $crumbs = breadcrumbs(); //setup crumb trace
   print $lang['breadcrumb'].':';
-  foreach ($crumbs as $crumb){
+  foreach ($crumbs as $id => $name){
     print ' &raquo; ';
-    tpl_link(wl($crumb),noNS($crumb),'class="breadcrumbs" title="'.$crumb.'"');
+    tpl_link(wl($id),$name,'class="breadcrumbs" title="'.$id.'"');
   }
 }
 

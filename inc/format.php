@@ -89,17 +89,19 @@ function format_link_wiki($link){
   list($link['url'],$hash) = split('#',$link['url'],2);
   $hash = cleanID($hash);
 
-  //use link without namespace as name
-  if(empty($link['name'])) $link['name'] = preg_replace('/.*:/','',$link['url']);
-  $link['name'] = htmlspecialchars($link['name']);
-
   $link['url'] = cleanID($link['url']);
   $link['title'] = $link['url'];
 
-  //set class depending on existance
+  //set class and name depending on file existence and content
   $file = wikiFN($link['url']);
   if(@file_exists($file)){
     $link['class']="wikilink1";
+    if ($conf['useheading'] && empty($link['name'])) {
+      $title = getFirstHeading(io_readFile($file));
+      if ($title){
+	$link['name'] = $title;
+      }
+    }
   }else{
     if($conf['autoplural']){
       //try plural/nonplural
@@ -121,6 +123,10 @@ function format_link_wiki($link){
       $link['class']="wikilink2";
     }
   }
+
+  //if no name yet, use link without namespace
+  if(empty($link['name'])) $link['name'] = preg_replace('/.*:/','',$link['url']);
+  $link['name'] = htmlspecialchars($link['name']);
 
   //construct the full link
   $link['url'] = wl($link['url']);
