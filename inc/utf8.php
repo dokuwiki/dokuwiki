@@ -69,6 +69,21 @@ function utf8_strlen($string){
   return count($uni);
 }
 
+/**
+ * This is a unicode aware replacement for substr()
+ *
+ * Uses mb_string extension if available
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    substr()
+ */
+function utf8_substr($str, $start, $length=null){
+  if(!defined('UTF8_NOMBSTRING') && function_exists('mb_substr'))
+    return mb_substr($str,$start,$length,'utf-8');
+
+  $uni = utf8_to_unicode($str);
+  return unicode_to_utf8(array_slice($uni,$start,$length));
+}
 
 /**
  * This is a unicode aware replacement for strtolower()
