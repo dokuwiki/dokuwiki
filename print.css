@@ -184,6 +184,10 @@ a.fn_bot{
   font-weight:bold;
 }
 
+acronym{
+  border: 0;
+}
+
 /* ---------- inline tables ------------------- */
 
 table.inline {
