@@ -25,6 +25,11 @@
   <link rel="shortcut icon" href="<?=DOKU_BASE?>images/favicon.ico" />
   <link rel="stylesheet" media="screen" type="text/css" href="<?=DOKU_TPL?>layout.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="<?=DOKU_TPL?>design.css" />
+
+  <? if($lang['direction'] == 'rtl') {?>
+  <link rel="stylesheet" media="screen" type="text/css" href="<?=DOKU_TPL?>rtl.css" />
+  <? } ?>
+
   <link rel="stylesheet" media="print" type="text/css" href="<?=DOKU_TPL?>print.css" />
 
   <!--[if gte IE 5]>

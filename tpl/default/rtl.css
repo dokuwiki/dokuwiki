@@ -1,0 +1,43 @@
+/**
+ * Layout corrections for right-to-left languages
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Dotan Kamber <kamberd@yahoo.com>
+ */
+
+.bar-left {
+  float: right;
+  text-align: right;
+}
+
+.bar-right {
+  float: left;
+  text-align: left;
+}
+
+.pagename {
+  float: right;
+  text-align: right;
+}
+
+.logo {
+  float: left;
+  text-align: left;
+}
+
+label {
+  text-align: left;
+}
+
+label.simple {
+  text-align: right;
+}
+
+div.meta div.user {
+  float: right
+}
+
+div.meta div.doc{
+  text-align: left;
+}
+
