@@ -1,5 +1,11 @@
 <?
-$lang['encoding']   = 'utf-8';
+/**
+ * dutch language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     François Kooman <fkooman.tuxed.net>
+ */
+$lang['encoding']   = 'iso-8859-15';
 $lang['locales']    = array(
                         'nld',
                         'nl_NL@euro',

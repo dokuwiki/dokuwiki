@@ -1,29 +1,46 @@
 <?
-require_once("conf/dokuwiki.php");
-require_once("inc/io.php");
+/**
+ * Common DokuWiki functions
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
 
-//set up error reporting to sane values
-error_reporting(E_ALL ^ E_NOTICE);
+  require_once("conf/dokuwiki.php");
+  require_once("inc/io.php");
 
-//make session rewrites XHTML compliant
-ini_set('arg_separator.output', '&amp;');
+  //set up error reporting to sane values
+  error_reporting(E_ALL ^ E_NOTICE);
 
-//init session
-session_name("DokuWiki");
-session_start();
+  //make session rewrites XHTML compliant
+  ini_set('arg_separator.output', '&amp;');
 
-//kill magic quotes
-if (get_magic_quotes_gpc()) {
-  if (!empty($_GET))    remove_magic_quotes($_GET);
-  if (!empty($_POST))   remove_magic_quotes($_POST);
-  if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-  if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-  if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
-  ini_set('magic_quotes_gpc', 0);
-}
-set_magic_quotes_runtime(0);
-ini_set('magic_quotes_sybase',0);
+  //init session
+  session_name("DokuWiki");
+  session_start();
 
+  //kill magic quotes
+  if (get_magic_quotes_gpc()) {
+    if (!empty($_GET))    remove_magic_quotes($_GET);
+    if (!empty($_POST))   remove_magic_quotes($_POST);
+    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
+    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
+    if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
+    ini_set('magic_quotes_gpc', 0);
+  }
+  set_magic_quotes_runtime(0);
+  ini_set('magic_quotes_sybase',0);
+
+  //disable gzip if not available
+  if($conf['usegzip'] && !function_exists('gzopen')){
+    $conf['usegzip'] = 0;
+  }
+
+/**
+ * remove magic quotes recursivly
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function remove_magic_quotes(&$array) {
   foreach (array_keys($array) as $key) {
     if (is_array($array[$key])) {
@@ -34,16 +51,11 @@ function remove_magic_quotes(&$array) {
   } 
 } 
 
-//disable gzip if not available
-if($conf['usegzip'] && !function_exists('gzopen')){
-  $conf['usegzip'] = 0;
-}
-
-/* ---------------------------------------------------------------------------------- */
-
 /**
- * This returns the full absolute URL to the directory where
+ * Returns the full absolute URL to the directory where
  * DokuWiki is installed in (includes a trailing slash)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getBaseURL($abs=false){
   global $conf;
@@ -83,8 +95,10 @@ function getBaseURL($abs=false){
 }
 
 /**
- * Returns info about the current document as associative
+ * Return info about the current document as associative
  * array.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function pageinfo(){
   global $ID;
@@ -134,6 +148,8 @@ function pageinfo(){
  * -1 error
  *  0 info
  *  1 success
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function msg($message,$lvl=0){
   global $MSG;
@@ -146,7 +162,9 @@ function msg($message,$lvl=0){
 }
 
 /**
- * This builds the breadcrumbstrail and returns it as array
+ * This builds the breadcrumb trail and returns it as array
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function breadcrumbs(){
   global $ID;
@@ -181,9 +199,13 @@ function breadcrumbs(){
 }
 
 /**
+ * Filter for page IDs
+ *
  * This is run on a ID before it is outputted somewhere
  * currently used to replace the colon with something else
  * on Windows systems and to have proper URL encoding
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idfilter($id){
   global $conf;
@@ -201,6 +223,8 @@ function idfilter($id){
 
 /**
  * This builds a link to a wikipage (using getBaseURL)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function wl($id='',$more='',$script='doku.php',$canonical=false){
   global $conf;
@@ -223,6 +247,8 @@ function wl($id='',$more='',$script='doku.php',$canonical=false){
 
 /**
  * Just builds a link to a script
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function script($script='doku.php'){
   $link = getBaseURL();
@@ -232,6 +258,8 @@ function script($script='doku.php'){
 
 /**
  * Return namespacepart of a wiki ID
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getNS($id){
  if(strpos($id,':')!==false){
@@ -241,15 +269,21 @@ function getNS($id){
 }
 
 /**
- * Returns the id without the namespace
+ * Returns the ID without the namespace
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function noNS($id){
   return preg_replace('/.*:/','',$id);
 }
 
 /**
+ * Spamcheck against wordlist
+ *
  * Checks the wikitext against a list of blocked expressions
  * returns true if the text contains any bad words
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function checkwordblock(){
   global $TEXT;
@@ -271,8 +305,11 @@ function checkwordblock(){
 }
 
 /**
- * Returns the IP of the client including X-Forwarded-For
- * Proxy Headers
+ * Return the IP of the client
+ *
+ * Honours X-Forwarded-For Proxy Headers
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function clientIP(){
   $my = $_SERVER['REMOTE_ADDR'];
@@ -283,8 +320,11 @@ function clientIP(){
 }
 
 /**
- * Checks if a given page is currently locked by anyone for editing.
+ * Checks if a given page is currently locked.
+ *
  * removes stale lockfiles
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function checklock($id){
   global $conf;
@@ -309,7 +349,9 @@ function checklock($id){
 }
 
 /**
- * Locks a page for editing
+ * Lock a page for editing
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function lock($id){
   $lock = wikiFN($id).'.lock';
@@ -321,9 +363,10 @@ function lock($id){
 }
 
 /**
- * Unlocks a page if it was locked by the user
+ * Unlock a page if it was locked by the user
  *
- * return true if a lock was removed
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @return bool true if a lock was removed
  */
 function unlock($id){
   $lock = wikiFN($id).'.lock';
@@ -338,8 +381,12 @@ function unlock($id){
 }
 
 /**
+ * Remove unwanted chars from ID
+ *
  * Cleans a given ID to only use allowed characters. Accented characters are
  * converted to unaccented ones
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanID($id){
   global $conf;
@@ -382,6 +429,8 @@ function cleanID($id){
 /**
  * returns the full path to the datafile specified by ID and
  * optional revision
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function wikiFN($id,$rev=''){
   global $conf;
@@ -403,6 +452,8 @@ function wikiFN($id,$rev=''){
 /**
  * Returns the full filepath to a localized textfile if local
  * version isn't found the english one is returned
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function localeFN($id){
   global $conf;
@@ -417,7 +468,8 @@ function localeFN($id){
 /**
  * convert line ending to unix format
  *
- * @see: formText() for 2crlf conversion
+ * @see    formText() for 2crlf conversion
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanText($text){
   $text = preg_replace("/(\015\012)|(\015)/","\012",$text);
@@ -429,7 +481,8 @@ function cleanText($text){
  * It also converts line endings to Windows format which is
  * pseudo standard for webforms. 
  *
- * @see: cleanText() for 2unix conversion
+ * @see    cleanText() for 2unix conversion
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function formText($text){
   $text = preg_replace("/\012/","\015\012",$text);
@@ -437,7 +490,9 @@ function formText($text){
 }
 
 /**
- * Returns the specified textfile in parsed format
+ * Returns the specified local text in parsed format
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function parsedLocale($id){
   //disable section editing
@@ -452,7 +507,9 @@ function parsedLocale($id){
 }
 
 /**
- * Returns the specified textfile in parsed format
+ * Returns the specified local text in raw format
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawLocale($id){
   return io_readFile(localeFN($id));
@@ -460,8 +517,12 @@ function rawLocale($id){
 
 
 /**
- * Returns the parsed Wikitext for the given id and revision. If $excuse
- * is true an explanation is returned if the file wasn't found
+ * Returns the parsed Wikitext for the given id and revision.
+ *
+ * If $excuse is true an explanation is returned if the file
+ * wasn't found
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function parsedWiki($id,$rev='',$excuse=true){
   $file = wikiFN($id,$rev);
@@ -489,15 +550,21 @@ function parsedWiki($id,$rev='',$excuse=true){
 
 /**
  * Returns the raw WikiText
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawWiki($id,$rev=''){
   return io_readFile(wikiFN($id,$rev));
 }
 
 /**
- * Returns the raw Wiki Text in three slices. The range parameter
- * Need to have the form "from-to" and gives the range of the section.
+ * Returns the raw Wiki Text in three slices.
+ *
+ * The range parameter needs to have the form "from-to"
+ * and gives the range of the section.
  * The returned order is prefix, section and suffix.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawWikiSlices($range,$id,$rev=''){
   list($from,$to) = split('-',$range,2);
@@ -514,9 +581,13 @@ function rawWikiSlices($range,$id,$rev=''){
 }
 
 /**
+ * Joins wiki text slices
+ *
  * function to join the text slices with correct lineendings again.
  * When the pretty parameter is set to true it adds additional empty
  * lines between sections if needed (used on saving).
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function con($pre,$text,$suf,$pretty=false){
 
@@ -531,7 +602,11 @@ function con($pre,$text,$suf,$pretty=false){
 }
 
 /**
+ * print debug messages
+ *
  * little function to print the content of a var
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function dbg($msg,$hidden=false){
   (!$hidden) ? print '<pre class="dbg">' : print "<!--\n";
@@ -541,6 +616,8 @@ function dbg($msg,$hidden=false){
 
 /**
  * Add's an entry to the changelog
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function addLogEntry($id,$summary=""){
   global $conf;
@@ -561,6 +638,8 @@ function addLogEntry($id,$summary=""){
 /**
  * returns an array of recently changed files using the
  * changelog
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getRecents($num=0,$incdel=false){
   global $conf;
@@ -594,6 +673,8 @@ function getRecents($num=0,$incdel=false){
 
 /**
  * Saves a wikitext by calling io_saveFile
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function saveWikiText($id,$text,$summary){
   global $conf;
@@ -630,6 +711,8 @@ function saveWikiText($id,$text,$summary){
 /**
  * moves the current version to the attic and returns its
  * revision date
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function saveOldRevision($id){
 	global $conf;
@@ -650,6 +733,8 @@ function saveOldRevision($id){
 /**
  * Sends a notify mail to the wikiadmin when a page was
  * changed
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function notify($id,$rev="",$summary=""){
   global $lang;
@@ -687,6 +772,11 @@ function notify($id,$rev="",$summary=""){
   @mail($conf['notify'],$subject,$text,$hdrs);
 }
 
+/**
+ * Return a list of available page revisons
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function getRevisions($id){
   $revd = dirname(wikiFN($id,'foo'));
   $revs = array();
@@ -708,6 +798,8 @@ function getRevisions($id){
 
 /**
  * downloads a file from the net and saves it to the given location
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function download($url,$file){
   $fp = @fopen($url,"rb");
@@ -727,6 +819,8 @@ function download($url,$file){
 
 /**
  * extracts the query from a google referer
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getGoogleQuery(){
   $url = parse_url($_SERVER['HTTP_REFERER']);
@@ -739,8 +833,9 @@ function getGoogleQuery(){
 }
 
 /**
- * This function tries the locales given in the
- * language file
+ * Try to set correct locale
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function setCorrectLocale(){
   global $conf;
@@ -758,14 +853,14 @@ function setCorrectLocale(){
 }
 
 /**
-* Return the human readable size of a file
-*
-* @param       int    $size   A file size
-* @param       int    $dec    A number of decimal places
-* @author      Martin Benjamin <b.martin@cybernet.ch>
-* @author      Aidan Lister <aidan@php.net>
-* @version     1.0.0
-*/
+ * Return the human readable size of a file
+ *
+ * @param       int    $size   A file size
+ * @param       int    $dec    A number of decimal places
+ * @author      Martin Benjamin <b.martin@cybernet.ch>
+ * @author      Aidan Lister <aidan@php.net>
+ * @version     1.0.0
+ */
 function filesize_h($size, $dec = 1)
 {
   $sizes = array('B', 'KB', 'MB', 'GB');
@@ -780,6 +875,11 @@ function filesize_h($size, $dec = 1)
   return round($size, $dec) . ' ' . $sizes[$i];
 }
 
+/**
+ * Run a few sanity checks
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function check(){
   global $conf;
   global $INFO;

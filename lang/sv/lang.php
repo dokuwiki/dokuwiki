@@ -1,4 +1,10 @@
 <?
+/**
+ * Swedish language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Joaquim Homrighausen <joho@webbplatsen.se>
+ */
 $lang['encoding']   = 'iso-8859-15';
 $lang['locales']    = array(
                         'swe',

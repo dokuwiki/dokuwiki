@@ -1,13 +1,19 @@
 <?
-require_once("inc/common.php");
-require_once("inc/parser.php");
+/**
+ * File IO functions
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
 
-
-
+  require_once("inc/common.php");
+  require_once("inc/parser.php");
 
 /**
  * Returns the parsed text from the given sourcefile. Uses cache
  * if exists. Creates it if not.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_cacheParse($file){
   global $conf;
@@ -50,8 +56,11 @@ function io_cacheParse($file){
 }
 
 /**
- * Returns content of $file as cleaned string. Uses gzip if extension
- * is .gz
+ * Returns content of $file as cleaned string.
+ *
+ * Uses gzip if extension is .gz
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_readFile($file){
   $ret = '';
@@ -66,10 +75,12 @@ function io_readFile($file){
 }
 
 /**
- * Saves $content to $file. Uses gzip if extension
- * is .gz
+ * Saves $content to $file.
  *
- * returns true on success
+ * Uses gzip if extension is .gz
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @return bool true on success
  */
 function io_saveFile($file,$content){
   io_makeFileDir($file);
@@ -95,6 +106,8 @@ function io_saveFile($file,$content){
 
 /**
  * Create the directory needed for the given file
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_makeFileDir($file){
   global $conf;
@@ -110,7 +123,7 @@ function io_makeFileDir($file){
 /**
  * Creates a directory hierachy.
  *
- * @see    http://www.php.net/manual/en/function.mkdir.php
+ * @link    http://www.php.net/manual/en/function.mkdir.php
  * @author <saint@corenova.com>
  */
 function io_mkdir_p($target){
@@ -123,7 +136,9 @@ function io_mkdir_p($target){
 
 /**
  * Runs an external command and returns it's output as string
- * inspired by a patch by Harry Brueckner <harry_b@eml.cc>
+ *
+ * @author Harry Brueckner <harry_b@eml.cc>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function io_runcmd($cmd){
   $fh = popen($cmd, "r");

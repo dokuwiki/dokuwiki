@@ -1,4 +1,10 @@
 <?
+/**
+ * Polish language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Grzegorz _ur <grzesiekzur@tlen.pl>
+ */
 $lang['encoding']   = 'iso-8859-2';
 $lang['locales']    = array(
                         'pl',

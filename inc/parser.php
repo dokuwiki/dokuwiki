@@ -1,14 +1,24 @@
 <?
-include_once("inc/common.php");
-include_once("inc/html.php");
-include_once("inc/format.php");
-require_once("lang/en/lang.php");
-require_once("lang/".$conf['lang']."/lang.php");
+/**
+ * The DokuWiki parser
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
+
+  include_once("inc/common.php");
+  include_once("inc/html.php");
+  include_once("inc/format.php");
+  require_once("lang/en/lang.php");
+  require_once("lang/".$conf['lang']."/lang.php");
 
 /**
- * The main parser function. Accepts raw data and returns
- * valid xhtml
-*/  
+ * The main parser function.
+ *
+ * Accepts raw data and returns valid xhtml
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */  
 function parse($text){
   global $parser;
   global $conf;
@@ -119,10 +129,14 @@ function parse($text){
 }
 
 /**
+ * Line by line preparser
+ *
  * This preparses the text by walking it line by line. This
  * is the only place where linenumbers are still available (needed
  * for section edit. Some precautions have to be taken to not change
  * any noparse block.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function preparse($text,&$table,&$hltable){
   $lines = split("\n",$text);
@@ -191,9 +205,13 @@ function preparse($text,&$table,&$hltable){
 }
 
 /**
+ * Build TOC lookuptable
+ *
  * This function adds some information about the given headline
  * to a lookuptable to be processed later. Returns a unique token
  * that idetifies the headline later
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function tokenize_headline(&$hltable,$pre,$hline,$lno){
   switch (strlen($pre)){
@@ -221,6 +239,11 @@ function tokenize_headline(&$hltable,$pre,$hline,$lno){
   return $token;
 }
 
+/**
+ * Headline formatter
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function format_headlines(&$table,&$hltable,&$text){
   global $parser;
   global $conf;
@@ -295,6 +318,8 @@ function format_headlines(&$table,&$hltable,&$text){
 
 /**
  * Formats various link types using the functions from format.php
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function linkformat($match){
   global $conf;
@@ -346,6 +371,8 @@ function linkformat($match){
 
 /**
  * Simple text formating and typography is done here
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function simpleformat($text){
   global $conf;
@@ -409,7 +436,9 @@ function simpleformat($text){
 }
 
 /**
- * Does the footnote formating
+ * Footnote formating
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function footnotes($text){
   $num = 0;
@@ -429,7 +458,9 @@ function footnotes($text){
 }
 
 /**
- * Replaces smileys with their graphic equivalents
+ * Replace smileys with their graphic equivalents
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function smileys(&$table,&$text){
   $smileys = file('conf/smileys.conf');
@@ -445,7 +476,9 @@ function smileys(&$table,&$text){
 }
 
 /**
- * Adds acronym tags to known acronyms
+ * Add acronym tags to known acronyms
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function acronyms(&$table,&$text){
   $acronyms = file('conf/acronyms.conf');
@@ -459,9 +492,10 @@ function acronyms(&$table,&$text){
   }
 } 
 
-
 /**
- * Applies custom text replacements
+ * Apply custom text replacements
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function customs($text){
   $reps = file ('conf/custom.conf');
@@ -477,6 +511,11 @@ function customs($text){
   return $text;
 }
 
+/**
+ * Replace regexp with token
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function firstpass(&$table,&$text,$regexp,$replace,$lpad='',$rpad=''){
   //extended regexps have to be disabled for inserting the token
   //and later reenabled when handling the actual code:
@@ -494,6 +533,11 @@ function firstpass(&$table,&$text,$regexp,$replace,$lpad='',$rpad=''){
   }
 }
 
+/**
+ * create a random and hopefully unique token
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function mkToken(){
   return '~'.md5(uniqid(rand(), true)).'~';
 }
@@ -501,7 +545,7 @@ function mkToken(){
 /**
  * Do quote blocks
  *
- * FIXME fix paragraphs
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function quoteformat($block){
   $block = trim($block);
@@ -548,6 +592,11 @@ function quoteformat($block){
   return "$ret";
 }
 
+/**
+ * format inline tables
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function tableformat($block) {
   $block = trim($block);
   $lines = split("\n",$block);
@@ -608,6 +657,11 @@ function tableformat($block) {
   return $ret;
 }
 
+/**
+ * format lists
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function listformat($block){
   //remove 1st newline 
   $block = substr($block,1);
@@ -686,6 +740,13 @@ function listformat($block){
   return "</p>\n".$ret."\n<p>";
 }
 
+/**
+ * Handle preformatted blocks
+ *
+ * Uses GeSHi for syntax highlighting
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function preformat($text,$type,$option=''){
   global $conf;
   //unescape
@@ -742,6 +803,11 @@ function preformat($text,$type,$option=''){
   return $text;
 }
 
+/**
+ * Format embedded media (images)
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
 function mediaformat($text){
   global $conf;
 

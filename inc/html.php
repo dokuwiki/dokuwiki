@@ -1,8 +1,17 @@
 <?
-include_once("inc/format.php");
+/**
+ * HTML output functions
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
+
+  include_once("inc/format.php");
 
 /**
  * Convenience function to quickly build a wikilink
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_wikilink($url,$name='',$search=''){
   global $conf;
@@ -21,6 +30,8 @@ function html_wikilink($url,$name='',$search=''){
 
 /**
  * The loginform
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_login(){
   global $lang;
@@ -67,6 +78,8 @@ function html_login(){
 
 /**
  * shows the edit/source/show button dependent on current mode
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_editbutton(){
   global $ID;
@@ -90,6 +103,11 @@ function html_editbutton(){
   return $r;
 }
 
+/**
+ * prints a section editing button
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_secedit_button($section,$p){
   global $ID;
   global $lang;
@@ -105,6 +123,11 @@ function html_secedit_button($section,$p){
   return $secedit;
 }
 
+/**
+ * inserts section edit buttons if wanted or removes the markers
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_secedit($text,$show=true){
   global $INFO;
   if($INFO['writable'] && $show){
@@ -122,6 +145,8 @@ function html_secedit($text,$show=true){
 
 /**
  * displays the breadcrumbs trace
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_breadcrumbs(){
   global $lang;
@@ -142,6 +167,8 @@ function html_breadcrumbs(){
 
 /**
  * display the HTML head and metadata
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_head(){
   global $ID;
@@ -203,6 +230,8 @@ function html_head(){
 
 /**
  * Displays a button (using it's own form)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_btn($name,$id,$akey,$params,$method='get'){
   global $conf;
@@ -245,6 +274,8 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 
 /**
  * Check for the given permission or prints an error
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_acl($perm){
   global $INFO;
@@ -256,6 +287,8 @@ function html_acl($perm){
 
 /**
  * Displays the page header and calls html_head()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_header(){
   global $ID;
@@ -307,8 +340,12 @@ function html_header(){
 }
 
 /**
+ * display document and user info
+ *
  * Displays some Metadata like who's logged in and the last modified
  * date - do not confuse this with the HTML meta header.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_metainfo(){
   global $conf;
@@ -349,6 +386,11 @@ function html_metainfo(){
   print '</div>';
 }
 
+/**
+ * Diplay the overall footer
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_footer(){
   global $ID;
   global $REV;
@@ -391,6 +433,11 @@ function html_footer(){
 <?
 }
 
+/**
+ * Print the table of contents
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_toc($toc){
   global $lang;
   $ret  = '';
@@ -409,7 +456,11 @@ function html_toc($toc){
 }
 
 /**
+ * TOC item formatter
+ *
  * User function for html_buildlist()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_list_toc($item){
   $ret  = '';
@@ -419,6 +470,11 @@ function html_list_toc($item){
   return $ret;
 }
 
+/**
+ * show a wiki page
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_show($text=''){
   global $ID;
   global $REV;
@@ -445,6 +501,8 @@ function html_show($text=''){
 
 /**
  * Highlights searchqueries in HTML code
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_hilight($html,$query){
   $queries = preg_split ("/\s/",$query,-1,PREG_SPLIT_NO_EMPTY);
@@ -456,7 +514,9 @@ function html_hilight($html,$query){
 }
 
 /**
- * This function runs a search and displays the result
+ * Run a search and display the result
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
   require_once("inc/search.php");
@@ -503,6 +563,11 @@ function html_search(){
   }
 }
 
+/**
+ * Display error on locked pages
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_locked($ip){
   global $ID;
   global $conf;
@@ -519,6 +584,11 @@ function html_locked($ip){
   print '</ul>';
 }
 
+/**
+ * list old revisions
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_revisions(){
   global $ID;
   global $INFO;
@@ -543,6 +613,11 @@ function html_revisions(){
   print '</ul>';
 }
 
+/**
+ * display recent changes
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_recent(){
   global $conf;
   $recents = getRecents(0,true);
@@ -563,6 +638,11 @@ function html_recent(){
   print '</ul>';
 }
 
+/**
+ * Display page index
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_index($ns){
   require_once("inc/search.php");
   global $conf;
@@ -583,7 +663,11 @@ function html_index($ns){
 }
 
 /**
+ * Index item formatter
+ *
  * User function for html_buildlist()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_list_index($item){
   $ret = '';
@@ -600,10 +684,14 @@ function html_list_index($item){
 }
 
 /**
+ * Build an unordered list
+ *
  * Build an unordered list from the given $data array
  * Each item in the array has to have a 'level' property
  * the item itself gets printed by the given $func user
  * function
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_buildlist($data,$class,$func){
   $level = 0;
@@ -645,6 +733,11 @@ function html_buildlist($data,$class,$func){
   return $ret;
 }
 
+/**
+ * display backlinks
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_backlinks(){
   require_once("inc/search.php");
   global $ID;
@@ -673,6 +766,11 @@ function html_backlinks(){
   print '</ul>';
 }
 
+/**
+ * show diff
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_diff($text='',$intro=true){
   require_once("inc/DifferenceEngine.php");
   global $ID;
@@ -712,6 +810,11 @@ function html_diff($text='',$intro=true){
   <?
 }
 
+/**
+ * show warning on conflict detection
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function html_conflict($text,$summary){
   global $ID;
   global $lang;
@@ -733,7 +836,9 @@ function html_conflict($text,$summary){
 }
 
 /**
- * Prints the glovbal message array
+ * Prints the global message array
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_msgarea(){
   global $MSG;
@@ -749,6 +854,8 @@ function html_msgarea(){
 
 /**
  * Prints the registration form
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_register(){
   global $lang;
@@ -783,6 +890,8 @@ function html_register(){
 
 /**
  * This displays the edit form (lots of logic included)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   global $ID;
@@ -909,6 +1018,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
 /**
  * prepares the signature string as configured in the config
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_signature(){
   global $conf;
@@ -925,6 +1036,8 @@ function html_signature(){
 
 /**
  * prints some debug info
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_debug(){
   global $conf;

@@ -1,11 +1,12 @@
 <?php
-
-// A PHP diff engine for phpwiki. (Taken from phpwiki-1.3.3)
-//
-// Copyright (C) 2000, 2001 Geoffrey T. Dairiki <dairiki@dairiki.org>
-// You may copy this code freely under the conditions of the GPL.
-//
-
+/**
+ * A PHP diff engine for phpwiki. (Taken from phpwiki-1.3.3)
+ *
+ * Additions by Axel Boldt for MediaWiki
+ *
+ * @copyright (C) 2000, 2001 Geoffrey T. Dairiki <dairiki@dairiki.org>
+ * @license  You may copy this code freely under the conditions of the GPL.
+ */
 define('USE_ASSERTS', function_exists('assert'));
 
 class _DiffOp {
@@ -191,7 +192,8 @@ class _DiffEngine
 	}
 	
 
-	/* Divide the Largest Common Subsequence (LCS) of the sequences
+	/**
+   * Divide the Largest Common Subsequence (LCS) of the sequences
 	 * [XOFF, XLIM) and [YOFF, YLIM) into NCHUNKS approximately equally
 	 * sized segments.
 	 *
@@ -306,7 +308,8 @@ class _DiffEngine
 	return $end;
 	}
 
-	/* Find LCS of two sequences.
+	/**
+   * Find LCS of two sequences.
 	 *
 	 * The results are recorded in the vectors $this->{x,y}changed[], by
 	 * storing a 1 in the element for each line that is an insertion
@@ -362,7 +365,8 @@ class _DiffEngine
 		}
 	}
 
-	/* Adjust inserts/deletes of identical lines to join changes
+	/**
+   * Adjust inserts/deletes of identical lines to join changes
 	 * as much as possible.
 	 *
 	 * We do something when a run of changed lines include a

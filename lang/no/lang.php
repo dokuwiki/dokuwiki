@@ -1,4 +1,10 @@
 <?
+/**
+ * Norwegian language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Reidar Mosvold <Reidar.Mosvold@hit.no>
+ */
 $lang['encoding']   = 'iso-8859-15';
 $lang['locales']    = array(
                         'norwegian',

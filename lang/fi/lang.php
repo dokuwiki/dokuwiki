@@ -1,4 +1,10 @@
 <?
+/**
+ * Finnish language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Petteri <petteri@gmail.com>
+ */
 $lang['encoding']   = 'iso-8859-15';
 $lang['locales']    = array(
                         'fin',

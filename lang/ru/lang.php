@@ -1,4 +1,10 @@
 <?
+/**
+ * Russian language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Jurijs Pimenovs <Jurijs_Pimenovs@exigengroup.lv>
+ */
 $lang['encoding']   = 'iso-8859-5';
 $lang['locales']    = array(
                         'rus',

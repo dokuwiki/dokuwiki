@@ -1,40 +1,61 @@
 <?
-require_once("inc/common.php");
-require_once("inc/io.php");
-require_once("inc/blowfish.php");
-# load the the auth functions
-require_once('inc/auth_'.$conf['authtype'].'.php');
+/**
+ * Authentication library
+ *
+ * Including this file will automatically try to login
+ * a user by calling auth_login()
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
 
-# some ACL level defines
-define('AUTH_NONE',0);
-define('AUTH_READ',1);
-define('AUTH_EDIT',2);
-define('AUTH_CREATE',4);
-define('AUTH_UPLOAD',8);
-define('AUTH_GRANT',255);
+  require_once("inc/common.php");
+  require_once("inc/io.php");
+  require_once("inc/blowfish.php");
+  // load the the auth functions
+  require_once('inc/auth_'.$conf['authtype'].'.php');
 
-if($conf['useacl']){
-  auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
-  # load ACL into a global array
-  $AUTH_ACL = file('conf/acl.auth');
-}
+  // some ACL level defines
+  define('AUTH_NONE',0);
+  define('AUTH_READ',1);
+  define('AUTH_EDIT',2);
+  define('AUTH_CREATE',4);
+  define('AUTH_UPLOAD',8);
+  define('AUTH_GRANT',255);
+
+  if($conf['useacl']){
+    auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+    // load ACL into a global array
+    $AUTH_ACL = file('conf/acl.auth');
+  }
 
 /**
  * This tries to login the user based on the sent auth credentials
  *
- * FIXME: Description no longer valid!
- *
  * The authentication works like this: if a username was given
- * a new login is assumed and user/password are checked - if they
- * are correct a random authtoken is created which is stored in
- * the session _and_ in a cookie.
- * The user stays logged in as long as the session and the cookie
- * match. This still isn't the securest method but requires an
- * attacker to steal an existing session _and_ the authtoken
- * cookie. The actual password is only transfered once per login.
- * 
+ * a new login is assumed and user/password are checked. If they
+ * are correct the password is encrypted with blowfish and stored
+ * together with the username in a cookie - the same info is stored
+ * in the session, too. Additonally a browserID is stored in the
+ * session.
+ *
+ * If no username was given the cookie is checked: if the username,
+ * crypted password and browserID match between session and cookie
+ * no further testing is done and the user is accepted
+ *
+ * If a cookie was found but no session info was availabe the
+ * blowish encrypted password from the cookie is decrypted and
+ * together with username rechecked by calling this function again.
+ *
  * On a successful login $_SERVER[REMOTE_USER] and $USERINFO
  * are set.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param   string  $user    Username
+ * @param   string  $pass    Cleartext Password
+ * @param   bool    $sticky  Cookie should not expire
+ * @return  bool             true on successful auth
 */
 function auth_login($user,$pass,$sticky=false){
   global $USERINFO;
@@ -72,7 +93,7 @@ function auth_login($user,$pass,$sticky=false){
     $cookie = base64_decode($_COOKIE['DokuWikiAUTH']);
     list($user,$sticky,$pass) = split('\|',$cookie,3);
     // get session info
-   	$session = $_SESSION[$conf['title']]['auth'];
+    $session = $_SESSION[$conf['title']]['auth'];
 
     if($user && $pass){
       // we got a cookie - see if we can trust it
@@ -100,6 +121,10 @@ function auth_login($user,$pass,$sticky=false){
  *
  * This is neither unique nor unfakable - still it adds some
  * security
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return  string  a MD5 sum of various browser headers
  */
 function auth_browseruid(){
   $uid  = '';
@@ -112,6 +137,15 @@ function auth_browseruid(){
 
 /**
  * Creates a random key to encrypt the password in cookies
+ *
+ * This function tries to read the password for encrypting
+ * cookies from $conf['datadir'].'/.cache/cookiesalt'
+ * if no such file is found a random key is created and
+ * and stored in this file.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return  string
  */
 function auth_cookiesalt(){
   global $conf;
@@ -127,6 +161,8 @@ function auth_cookiesalt(){
 /**
  * This clears all authenticationdata and thus log the user
  * off
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_logoff(){
   global $conf;
@@ -140,7 +176,14 @@ function auth_logoff(){
 }
 
 /**
- * Convinience function for auth_aclcheck
+ * Convinience function for auth_aclcheck()
+ *
+ * This checks the permissions for the current user
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param  string  $id  page ID
+ * @return int          permission level
  */
 function auth_quickaclcheck($id){
   global $conf;
@@ -153,6 +196,13 @@ function auth_quickaclcheck($id){
 /**
  * Returns the maximum rights a user has for
  * the given ID or its namespace
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param  string  $id     page ID
+ * @param  string  $user   Username
+ * @param  array   $groups Array of groups the user is in
+ * @return int             permission level
  */
 function auth_aclcheck($id,$user,$groups){
   global $conf;
@@ -234,7 +284,10 @@ function auth_aclcheck($id,$user,$groups){
 /**
  * Create a pronouncable password
  *
- * @see: http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @link    http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ *
+ * @return string  pronouncable password
  */
 function auth_pwgen(){
   $pw = '';
@@ -257,7 +310,9 @@ function auth_pwgen(){
 /**
  * Sends a password to the given user
  *
- * returns true on success
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return bool  true on success
  */
 function auth_sendPassword($user,$password){
   global $conf;
@@ -281,10 +336,13 @@ function auth_sendPassword($user,$password){
 }
 
 /**
- * The new user registration - we get our info directly from
- * $_POST
+ * Register a new user
+ * 
+ * This registers a new user - Data is read directly from $_POST
  *
- * It returns true on success and false on any error
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return bool  true on success, false on any error
  */
 function register(){
   global $lang;
@@ -333,9 +391,12 @@ function register(){
 /**
  * Uses a regular expresion to check if a given mail address is valid
  *
- * @see http://www.webmasterworld.com/forum88/135.htm
- *
  * May not be completly RFC conform!
+ * 
+ * @link    http://www.webmasterworld.com/forum88/135.htm
+ *
+ * @param   string $email the address to check
+ * @return  bool          true if address is valid
  */
 function isvalidemail($email){
   return eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);

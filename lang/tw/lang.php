@@ -1,6 +1,9 @@
 <?
-/* Description:             Chinese(Traditional) language file
- * Author:                  chinsan <chinsan@mail2000.com.tw>
+/**
+ * Chinese(Traditional) language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     chinsan <chinsan@mail2000.com.tw>
  */
 $lang['encoding']   = 'UTF-8';
 $lang['locales']    = array(

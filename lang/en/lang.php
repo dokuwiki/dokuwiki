@@ -1,4 +1,11 @@
 <?
+/**
+ * english language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author     Anika Henke <henke@cosmocode.de>
+ */
 $lang['encoding']   = 'iso-8859-15';
 $lang['locales']    = array(
                         'eng',

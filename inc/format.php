@@ -1,11 +1,20 @@
 <?
-require_once("conf/dokuwiki.php");
-require_once("inc/common.php");
+/**
+ * link format functions
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
+
+  require_once("conf/dokuwiki.php");
+  require_once("inc/common.php");
 
 
 /**
  * Assembles all parts defined by the link formater below
  * Returns HTML for the link
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function format_link_build($link){
   //make sure the url is XHTML compliant
@@ -44,6 +53,11 @@ function format_link_build($link){
  *
  */
 
+/**
+ * format wiki links
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function format_link_wiki($link){
   global $conf;
   global $ID; //we use this to get the current namespace
@@ -112,6 +126,11 @@ function format_link_wiki($link){
   return $link;
 }
 
+/**
+ * format external URLs
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function format_link_externalurl($link){
   global $conf;
   //simple setup
@@ -128,7 +147,13 @@ function format_link_externalurl($link){
   return $link;
 }
 
-//this only works in IE :-(
+/**
+ * format windows share links
+ *
+ * this only works in IE :-(
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function format_link_windows($link){
   global $conf;
   global $lang;
@@ -149,6 +174,11 @@ function format_link_windows($link){
   return $link;
 }
 
+/**
+ * format email addresses
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function format_link_email($link){
   global $conf;
   //simple setup
@@ -181,6 +211,11 @@ function format_link_email($link){
   return $link;
 }
 
+/**
+ * format interwiki links
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function format_link_interwiki($link){
   global $conf;
 
@@ -252,7 +287,11 @@ function format_link_interwiki($link){
   return $link;
 }
 
-
+/**
+ * format embedded media
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function format_link_media($link){
   global $conf;
 
@@ -321,7 +360,11 @@ function format_link_media($link){
 }
 
 /**
- * Builds an URL list from a RSS feed
+ * Build an URL list from a RSS feed
+ *
+ * Uses magpie
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function format_rss($url){
   global $lang;
@@ -355,7 +398,11 @@ function format_rss($url){
   return $ret;
 }
 
-
+/**
+ * Create cache images
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
   global $conf;
   
@@ -427,6 +474,11 @@ function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
   return $isimg;
 }
 
+/**
+ * resize images
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function img_resize($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   // create cachedir
   io_makeFileDir($to);

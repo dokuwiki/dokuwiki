@@ -1534,7 +1534,7 @@ echo $rss->saveFeed("RSS0.91", "feed.xml");
 /**
  * This class allows to override the hardcoded charset
  *
- * @author Andreas Gohr
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 class DokuWikiFeedCreator extends UniversalFeedCreator{
   function createFeed($format = "RSS0.91",$encoding='iso-8859-15') {

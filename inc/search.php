@@ -1,10 +1,20 @@
 <?
+/**
+ * DokuWiki search functions
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
 
-require_once("inc/common.php");
+  require_once("inc/common.php");
 
 /**
+ * recurse direcory
+ *
  * This function recurses into a given base directory
  * and calls the supplied function for each file and directory
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
   $dirs   = array();
@@ -60,9 +70,11 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
  */
 
 /**
- * This function build the browsable index of pages
+ * Build the browsable index of pages
  *
  * $opts['ns'] is the current namespace
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
   $return = true;
@@ -88,7 +100,9 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
 }
 
 /**
- * This function lists all namespaces
+ * List all namespaces
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'f') return true; //nothing to do on files
@@ -101,7 +115,9 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
 }
 
 /**
- * This function lists all mediafiles in a namespace
+ * List all mediafiles in a namespace
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
@@ -130,6 +146,8 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
 /**
  * This function just lists documents (for RSS namespace export)
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_list(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
@@ -149,6 +167,8 @@ function search_list(&$data,$base,$file,$type,$lvl,$opts){
  * Quicksearch for searching matching pagenames
  *
  * $opts['query'] is the search query
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
@@ -174,6 +194,8 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  *
  * $opts['ns']    namespace of the page
  * $opts['name']  name of the page without namespace
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
@@ -227,6 +249,8 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
  * Fulltextsearch
  *
  * $opts['query'] is the search query
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
@@ -274,8 +298,12 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
 }
 
 /**
+ * fulltext sort
+ *
  * Callback sort function for use with usort to sort the data
  * structure created by search_fulltext. Sorts descending by count
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function sort_search_fulltext($a,$b){
   if($a['count'] > $b['count']){
@@ -289,6 +317,8 @@ function sort_search_fulltext($a,$b){
 
 /**
  * translates a document path to an ID
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function pathID($path){
   $id = str_replace('/',':',$path);

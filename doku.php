@@ -1,4 +1,11 @@
 <?php
+/**
+ * DokuWiki mainscript
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
+
   define('DOKUWIKIVERSION','2004-01-13');
 
   ini_set('short_open_tag',"1");

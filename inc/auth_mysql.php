@@ -1,14 +1,21 @@
 <?php
 /**
- * This is used to authenticate against an MySQL server
+ * MySQL authentication backend
  *
- * PHPs MySQL extension is needed
+ * PHP's MySQL extension is needed
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
 /**
+ * Execute SQL
+ *
  * Executes SQL statements and returns the results as list
  * of hashes. Returns false on error. Returns auto_increment
  * IDs on INSERT statements.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_mysql_runsql($sql_string) {
   global $conf;
@@ -41,9 +48,13 @@ function auth_mysql_runsql($sql_string) {
 }
 
 /**
- * required auth function
+ * Check user+password [required auth function]
  *
- * Checks if a user with the given password exists
+ * Checks if the given user exists and the given
+ * plaintext password is correct
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @return  bool
  */
 function auth_checkPass($user,$pass){
   global $conf;
@@ -56,7 +67,7 @@ function auth_checkPass($user,$pass){
 }
 
 /**
- * Required auth function
+ * Return user info [required auth function]
  *
  * Returns info about the given user needs to contain
  * at least these fields:
@@ -65,6 +76,7 @@ function auth_checkPass($user,$pass){
  * mail string  email addres of the user
  * grps array   list of groups the user is in
  *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_getUserData($user){
   global $conf;
@@ -86,9 +98,11 @@ function auth_getUserData($user){
 }
 
 /**
- * Required auth function
+ * Create a new User [required auth function]
  *
  * Not implemented
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_createUser($user,$name,$mail){
   msg("Sorry. Creating users is not supported by the MySQL backend, yet",-1);
