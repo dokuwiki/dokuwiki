@@ -19,7 +19,7 @@ if(!function_exists('ldap_connect'))
  *
  * Holds the connection in global scope for multiple use
  *
- * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_ldap_connect(){
   global $LDAP_CONNECTION;
@@ -32,6 +32,7 @@ function auth_ldap_connect(){
       msg("LDAP: couldn't connect to LDAP server",-1);
       return false;
     }
+    //set protocol version
     if($cnf['version']){
       if(!@ldap_set_option($LDAP_CONNECTION,
                            LDAP_OPT_PROTOCOL_VERSION,
@@ -39,6 +40,15 @@ function auth_ldap_connect(){
         msg('Setting LDAP Protocol version '.$cnf['version'].' failed',-1);
         if($cnf['debug'])
           msg('LDAP errstr: '.htmlspecialchars(ldap_error($LDAP_CONNECTION)),0);
+
+        //use TLS (needs version 3)
+        if ($cnf['starttls']) {
+          if (!@ldap_start_tls($LDAP_CONNECTION)){
+            msg('Starting TLS failed',-1);
+            if($cnf['debug'])
+              msg('LDAP errstr: '.htmlspecialchars(ldap_error($LDAP_CONNECTION)),0);
+          }
+        }
       }
     }
   }
