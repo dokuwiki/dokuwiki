@@ -662,13 +662,20 @@ function dbg($msg,$hidden=false){
  */
 function addLogEntry($date,$id,$summary=""){
   global $conf;
-  $id     = cleanID($id);
+  $id     = cleanID($id);//FIXME not needed anymore?
+
+  if(!@is_writable($conf['changelog'])){
+    msg($conf['changelog'].' is not writable!',-1);
+    return;
+  }
+
   if(!$date) $date = time(); //use current time if none supplied
   $remote = $_SERVER['REMOTE_ADDR'];
   $user   = $_SERVER['REMOTE_USER'];
 
   $logline = join("\t",array($date,$remote,$id,$user,$summary))."\n";
 
+  //FIXME: use adjusted io_saveFile instead
   $fh = fopen($conf['changelog'],'a');
   if($fh){
     fwrite($fh,$logline);
@@ -686,6 +693,11 @@ function getRecents($num=0,$incdel=false){
   global $conf;
   $recent = array();
   if(!$num) $num = $conf['recent'];
+
+  if(!@is_readable($conf['changelog'])){
+    msg($conf['changelog'].' is not readable',-1);
+    return $recent;
+  }
 
   $loglines = file($conf['changelog']);
   rsort($loglines); //reverse sort on timestamp
@@ -720,6 +732,11 @@ function getRecents($num=0,$incdel=false){
  */
 function getRevisionInfo($id,$rev){
   global $conf;
+  $info = array();
+  if(!@is_readable($conf['changelog'])){
+    msg($conf['changelog'].' is not readable',-1);
+    return $recent;
+  }
   $loglines = file($conf['changelog']);
   $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
   rsort($loglines); //reverse sort on timestamp (shouldn't be needed)
