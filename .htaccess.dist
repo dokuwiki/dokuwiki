@@ -1,0 +1,16 @@
+## Enable this to restrict editing to logged in users only
+
+## make sure nobody gets the htaccess files
+<Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</Files>
+
+## Comment these rules in if you want to have nice URLs
+#RewriteEngine on
+#RewriteRule ^$                        doku.php  [L]
+#RewriteCond %{REQUEST_FILENAME}       !-f
+#RewriteCond %{REQUEST_FILENAME}       !-d
+#RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
+#RewriteRule ^index.php$               doku.php
