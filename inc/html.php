@@ -248,7 +248,7 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 
   //make nice URLs even for buttons  
   if(!$conf['userewrite']){
-    $script = DOKU_BASE.DOKUSCRIPT;
+    $script = DOKU_BASE.DOKU_SCRIPT;
     $params['id'] = $id;
   }else{
     $script = DOKU_BASE.$id;
