@@ -39,7 +39,7 @@ $lang['regsuccess']   = 'O utilizador foi criado. A senha será enviada para o e
 $lang['regmailfail']  = 'Houve um erro no envio da senha por e-mail. Por favor, contacte o administrador!';
 $lang['regbadmail']   = 'O endereço de correio electrónico é inválido. Se o endereço está correcto, e isto é um erro, por favor, contacte o administrador!';
 $lang['regpwmail']    = 'A sua senha DokuWiki';
-$lang['reghere']      = 'Para se inscrever, clique em .';
+$lang['reghere']      = 'Para se inscrever, clique em';
 
 $lang['txt_upload']   = 'Escolha ficheiro para upload';
 $lang['txt_filename'] = 'Insira o nome wiki (opcional)';
