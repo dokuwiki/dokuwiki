@@ -102,6 +102,11 @@
     $ACT = 'show';
   }
 
+  //check if searchword was given - else just show
+  if($ACT == 'search' && empty($QUERY)){
+    $ACT = 'show';
+  }
+
   //check which permission is needed
   if(in_array($ACT,array('preview','wordblock','conflict','lockedby'))){
     if($INFO['exists']){
@@ -126,7 +131,7 @@
       html_show($TEXT);
     }elseif($ACT == 'wordblock'){
       html_edit($TEXT,'wordblock');
-    }elseif($ACT == 'search' && !empty($QUERY)){
+    }elseif($ACT == 'search'){
       html_search();
     }elseif($ACT == 'revisions'){
       html_revisions();
