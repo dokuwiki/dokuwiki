@@ -244,9 +244,11 @@ function format_link_interwiki($link){
   $url = 'http://www.google.com/search?q=';
   $ico = 'google';
 
-  //load interwikilinks
-  //FIXME: loading this once may enhance speed a little bit
-  $iwlinks = file('conf/interwiki.conf');
+  // Initialize as NULL - for the first fn call
+  static $iwlinks = NULL;
+ 
+  // load interwikilinks if needed
+  if (!$iwlinks) $iwlinks = file('conf/interwiki.conf');
 
   //add special case 'this'
   $iwlinks[] = 'this '.DOKU_URL.'{NAME}'; 
