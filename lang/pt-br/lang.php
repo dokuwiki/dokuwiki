@@ -12,7 +12,7 @@ $lang['btn_source']   = 'Ver código fonte';
 $lang['btn_show']     = 'Ver documento';
 $lang['btn_create']   = 'Criar documento';
 $lang['btn_search']   = 'Pesquisar';
-$lang['btn_save']     = 'Gravar';
+$lang['btn_save']     = 'Salvar';
 $lang['btn_preview']  = 'Pré-visualizar';
 $lang['btn_top']      = 'Voltar ao topo';
 $lang['btn_revs']     = 'Revisões';
@@ -24,7 +24,7 @@ $lang['btn_secedit']  = 'Editar';
 $lang['btn_login']    = 'Login';
 $lang['btn_logout']   = 'Sair';
 
-$lang['loggedinas']   = 'Autorizado como';
+$lang['loggedinas']   = 'Usuário';
 $lang['user']         = 'Usuário';
 $lang['pass']         = 'Senha';
 $lang['remember']     = 'Lembrar';
@@ -39,7 +39,7 @@ $lang['regsuccess']   = 'O usuário foi criado. A senha será enviada para o e-m
 $lang['regmailfail']  = 'Houve um erro no envio da senha por e-mail. Por favor, contacte o administrador!';
 $lang['regbadmail']   = 'O endereço de e-mail é inválido. Se o endereço está correto, e isto é um erro, por favor, contacte o administrador!';
 $lang['regpwmail']    = 'A sua senha DokuWiki';
-$lang['reghere']      = 'Não tem uma conta? Para registrar-se, clique em .';
+$lang['reghere']      = 'Não tem uma conta? Para registrar-se, acesse';
 
 $lang['txt_upload']   = 'Escolha o arquivo para upload';
 $lang['txt_filename'] = 'Insira o nome wiki (opcional)';

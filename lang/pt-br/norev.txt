@@ -2,6 +2,6 @@
 
 A revisão especificada não existe.
 
-Clique em <Revisões> para ver a lista de revisões deste documento.
+Clique em ''Revisões'' para ver a lista de revisões deste documento.
 
 ----

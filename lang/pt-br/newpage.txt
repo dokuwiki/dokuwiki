@@ -2,6 +2,7 @@
 
 Você acessou uma ligação (link) para um tópico que ainda não existe.
 
-É possível criar o conteúdo deste novo documento após clicar no botão <Editar>.
+É possível criar o conteúdo deste novo documento após clicar em ''Criar documento''. Caso a opção ''Criar documento'' não esteja disponível, é porque você não tem permissão para criar documentos.
+
 
 ----

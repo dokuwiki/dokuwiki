@@ -3,6 +3,6 @@
 Esta é a previsão de como irá ficar o conteúdo do documento.
 
 **Atenção**: O documento ainda não está gravado.\\
-É necessário clicar em <Gravar> para efetivar as modificações.
+É necessário clicar em ''Salvar'' para efetivar as modificações.
 
 ----
