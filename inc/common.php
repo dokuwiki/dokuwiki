@@ -455,8 +455,9 @@ function cleanID($id){
 
   if($conf['deaccent']) $id = utf8_deaccent($id,-1);
 
-  //remove specials (only ascii specials are removed)
-  $id = preg_replace('#[\x00-\x20 ¡!"§$%&()\[\]{}¿\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);
+  //remove specials
+  //$id = preg_replace('#[\x00-\x20 ¡!"§$%&()\[\]{}¿\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);
+  $id = utf8_stripspecials($id,'_','_:.-');
 
   //clean up
   $id = preg_replace('#__#','_',$id);
