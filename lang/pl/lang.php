@@ -3,7 +3,7 @@
  * Polish language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Grzegorz _ur <grzesiekzur@tlen.pl>
+ * @author     Grzegorz Żur <grzesiekzur@tlen.pl>
  */
 $lang['encoding']   = 'utf-8';
 
@@ -27,6 +27,7 @@ $lang['btn_logout'] = 'Wyloguj';
 $lang['loggedinas'] = 'Zalogowany/a jako';
 $lang['user']       = 'Użytkownik';
 $lang['pass']       = 'Hasło';
+$lang['remember']   = 'Zapamiętaj';
 $lang['fullname']   = 'Imię i nazwisko';
 $lang['email']      = 'E-mail';
 $lang['register']   = 'Zarejestruj';
@@ -67,6 +68,7 @@ $lang['diff']       = 'Pokaż różnicę między wersjami';
 $lang['line']       = 'Linia';
 $lang['breadcrumb'] = 'Ścieżka';
 $lang['lastmod']    = 'ostatnio zmieniane';
+$lang['by']         = 'przez';
 $lang['deleted']    = 'usunięto';
 $lang['created']    = 'stworzono';
 $lang['restored']   = 'przywrócono poprzednią wersję';
