@@ -67,7 +67,7 @@ function getBaseURL($abs=false){
   if(!$abs){
     $dir = dirname($_SERVER['PHP_SELF']).'/';
     $dir = preg_replace('#//#','/',$dir);
-    $dir = preg_replace('#\/$#','/',$dir); #bugfix for weird WIN behaviour
+    $dir = preg_replace('#\\\/#','/',$dir); #bugfix for weird WIN behaviour
     return $dir;
   }
 
