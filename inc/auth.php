@@ -317,14 +317,14 @@ function auth_pwgen(){
 function auth_sendPassword($user,$password){
   global $conf;
   global $lang;
-  $users = auth_loadUserData();
   $hdrs  = '';
+  $userinfo = auth_getUserData($user);
 
-  if(!$users[$user]['mail']) return false;
+  if(!$userinfo['mail']) return false;
 
   $text = rawLocale('password');
   $text = str_replace('@DOKUWIKIURL@',getBaseURL(true),$text);
-  $text = str_replace('@FULLNAME@',$users[$user]['name'],$text);
+  $text = str_replace('@FULLNAME@',$userinfo['name'],$text);
   $text = str_replace('@LOGIN@',$user,$text);
   $text = str_replace('@PASSWORD@',$password,$text);
   $text = str_replace('@TITLE@',$conf['title'],$text);
@@ -332,7 +332,7 @@ function auth_sendPassword($user,$password){
   if (!empty($conf['mailfrom'])) {
     $hdrs = 'From: '.$conf['mailfrom']."\n";
   }
-  return @mail($users[$user]['mail'],$lang['regpwmail'],$text,$hdrs);
+  return @mail($userinfo['mail'],$lang['regpwmail'],$text,$hdrs);
 }
 
 /**
