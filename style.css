@@ -368,6 +368,14 @@ span.li {
   font-weight: normal;
 }
 
+li.open {
+  list-style-image: url(images/open.gif);
+}
+
+li.closed {
+  list-style-image: url(images/closed.gif);
+}
+
 .quote {
   border-left: 2px solid #8cacbb;
   padding-left: 3px;

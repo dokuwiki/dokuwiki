@@ -79,6 +79,8 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
   $return = true;
 
+  $item = array();
+
   if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
     //add but don't recurse
     $return = false;
@@ -95,7 +97,8 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
 
   $data[]=array( 'id'    => $id,
                  'type'  => $type,
-                 'level' => $lvl );
+                 'level' => $lvl,
+                 'open'  => $return );
   return $return;
 }
 

@@ -663,7 +663,7 @@ function html_index($ns){
 
   $data = array();
   search($data,$conf['datadir'],'search_index',array('ns' => $ns));
-  print html_buildlist($data,'idx','html_list_index');
+  print html_buildlist($data,'idx','html_list_index','html_li_index');
 }
 
 /**
@@ -688,16 +688,46 @@ function html_list_index($item){
 }
 
 /**
+ * Index List item
+ *
+ * This user function is used in html_build_lidt to build the
+ * <li> tags for namespaces when displaying the page index
+ * it gives different classes to opened or closed "folders"
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_li_index($item){
+  if($item['type'] == "f"){
+    return '<li class="level'.$item['level'].'">';
+  }elseif($item['open']){
+    return '<li class="open">';
+  }else{
+    return '<li class="closed">';
+  }
+}
+
+/**
+ * Default List item
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_li_default($item){
+  return '<li class="level'.$item['level'].'">';
+}
+
+/**
  * Build an unordered list
  *
  * Build an unordered list from the given $data array
  * Each item in the array has to have a 'level' property
  * the item itself gets printed by the given $func user
- * function
+ * function. The second and optional function is used to
+ * print the <li> tag. Both user function need to accept
+ * a single item.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_buildlist($data,$class,$func){
+function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
   $level = 0;
   $opens = 0;
   $ret   = '';
@@ -723,7 +753,7 @@ function html_buildlist($data,$class,$func){
     $level = $item['level'];
 
     //print item
-    $ret .= '<li class="level'.$item['level'].'">';
+    $ret .= $lifunc($item); //user function
     $ret .= '<span class="li">';
     $ret .= $func($item); //user function
     $ret .= '</span>';
