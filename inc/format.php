@@ -497,8 +497,9 @@ function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function img_resize($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
-  // create cachedir
-  io_makeFileDir($to);
+  global $conf;
+
+  if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
 
   // create an image of the given filetype
   if ($ext == 'jpg' || $ext == 'jpeg'){
@@ -513,11 +514,14 @@ function img_resize($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   }
   if(!$image) return false;
 
-  if(function_exists("imagecreatetruecolor")){
+  if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor")){
     $newimg = @imagecreatetruecolor ($to_w, $to_h);
   }
   if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
   if(!$newimg) return false;
+
+  // create cachedir
+  io_makeFileDir($to);
 
   //try resampling first
   if(function_exists("imagecopyresampled")){

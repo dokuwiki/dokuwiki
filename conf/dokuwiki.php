@@ -62,7 +62,7 @@ $conf['purgeonadd']  = 1;                //purge cache when a new file is added 
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
-
+$conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
