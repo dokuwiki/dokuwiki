@@ -889,8 +889,7 @@ function setCorrectLocale(){
  * @author      Aidan Lister <aidan@php.net>
  * @version     1.0.0
  */
-function filesize_h($size, $dec = 1)
-{
+function filesize_h($size, $dec = 1){
   $sizes = array('B', 'KB', 'MB', 'GB');
   $count = count($sizes);
   $i = 0;
@@ -908,9 +907,33 @@ function filesize_h($size, $dec = 1)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
+function getVersion(){
+  //import version string
+  if(@file_exists('VERSION')){
+    //official release
+    return 'Release '.io_readfile('VERSION');
+  }elseif(is_dir('_darcs')){
+    //darcs checkout
+    $inv = file('_darcs/inventory');
+    $inv = preg_grep('#andi@splitbrain\.org\*\*\d{14}#',$inv);
+    $cur = array_pop($inv);
+    preg_match('#\*\*(\d{4})(\d{2})(\d{2})#',$cur,$matches);
+    return 'Darcs '.$matches[1].'-'.$matches[2].'-'.$matches[3];
+  }else{
+    return 'snapshot?';
+  }
+}
+
+/**
+ * Run a few sanity checks
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function check(){
   global $conf;
   global $INFO;
+
+  msg('DokuWiki version: '.getVersion(),1);
 
   if(version_compare(phpversion(),'4.3.0','<')){
     msg('Your PHP version is too old ('.phpversion().' vs. 4.3.+ recommended)',-1);

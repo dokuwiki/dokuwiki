@@ -187,7 +187,7 @@ function html_head(){
   <head>
     <title><?=$ID?> [<?=$conf['title']?>]</title>
     <meta http-equiv="Content-Type" content="text/html; charset=<?=$lang['encoding']?>" />
-    <meta name="generator" content="DokuWiki <?=DOKUWIKIVERSION?>" />
+    <meta name="generator" content="DokuWiki <?=getVersion()?>" />
     <link rel="stylesheet" media="screen" type="text/css" href="<?=getBaseURL()?>style.css" />
     <link rel="stylesheet" media="print" type="text/css" href="<?=getBaseURL()?>print.css" />
     <link rel="shortcut icon" href="<?=getBaseURL()?>images/favicon.ico" />
