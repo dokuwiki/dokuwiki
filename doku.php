@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  define('DOKUWIKIVERSION','2004-01-13');
+  define('DOKUWIKIVERSION','2004-01-14');
 
   ini_set('short_open_tag',"1");
   require_once("conf/dokuwiki.php");
@@ -87,7 +87,7 @@
   $INFO = pageinfo();
 
   //Editing: check if locked by anyone - if not lock for my self
-  if(($ACT == 'edit' || $ACT == $lang['btn_preview'])){# && $INFO['editable']){
+  if(($ACT == 'edit' || $ACT == $lang['btn_preview']) && $INFO['editable']){
     $lockedby = checklock($ID);
     if($lockedby){
       $ACT = 'locked';
