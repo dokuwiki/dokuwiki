@@ -698,7 +698,7 @@ function html_index($ns){
     $ns = dirname(str_replace(':','/',$ID));
     if($ns == '.') $ns ='';
   }
-  $ns  = str_replace(':','/',$ns);
+  $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
   print parsedLocale('index');
 
