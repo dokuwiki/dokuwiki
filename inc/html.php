@@ -286,7 +286,7 @@ function html_acl($perm){
 }
 
 /**
- * Displays the page header and calls html_head()
+ * Displays the overall page header and calls html_head()
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -300,40 +300,42 @@ function html_header(){
 <body>
   <div class="all">
   <?
+    @include("includes/topheader.html");
     html_msgarea();
-    @include("includes/topheader.html")
   ?>
-  <div class="header">
-    <div class="pagename">
-      [[<a href="<?=wl($ID,'do=backlink')?>" onclick="return svchk()" onkeypress="return svchk()"><?=$ID?></a>]]
+  <div class="stylehead">
+    <div class="header">
+      <div class="pagename">
+        [[<a href="<?=wl($ID,'do=backlink')?>" onclick="return svchk()" onkeypress="return svchk()"><?=$ID?></a>]]
+      </div>
+      <div class="logo">
+        <a href="<?=wl()?>" name="top" accesskey="h" title="[ALT+H]" onclick="return svchk()" onkeypress="return svchk()"><?=$conf['title']?></a>
+      </div>
     </div>
-    <div class="logo">
-      <a href="<?=wl()?>" name="top" accesskey="h" title="[ALT+H]" onclick="return svchk()" onkeypress="return svchk()"><?=$conf['title']?></a>
-    </div>
-  </div>
-  <?@include("includes/header.html")?>
+    <?@include("includes/header.html")?>
 
-  <div class="bar" id="bar_top">
-    <div class="bar-left" id="bar_topleft">
-      <?=html_editbutton()?>
-      <?=html_btn(revs,$ID,'r',array('do' => 'revisions'))?>
-    </div>
+    <div class="bar" id="bar_top">
+      <div class="bar-left" id="bar_topleft">
+        <?=html_editbutton()?>
+        <?=html_btn(revs,$ID,'r',array('do' => 'revisions'))?>
+      </div>
 
-    <div class="bar-right" id="bar_topright">
-      <?=html_btn(recent,'','r',array('do' => 'recent'))?>
-      <form action="<?=wl()?>" accept-charset="<?=$lang['encoding']?>">
-      <input type="hidden" name="do" value="search" />
-      <input type="text" name="id" class="edit" />
-			<input type="submit" value="<?=$lang['btn_search']?>" class="button" />
-      </form>&nbsp;
+      <div class="bar-right" id="bar_topright">
+        <?=html_btn(recent,'','r',array('do' => 'recent'))?>
+        <form action="<?=wl()?>" accept-charset="<?=$lang['encoding']?>">
+          <input type="hidden" name="do" value="search" />
+          <input type="text" name="id" class="edit" />
+          <input type="submit" value="<?=$lang['btn_search']?>" class="button" />
+        </form>&nbsp;
+      </div>
     </div>
-  </div>
   
-  <?
-    flush();
-    html_breadcrumbs();
-    @include("includes/pageheader.html");
-  ?>
+    <?
+      flush();
+      html_breadcrumbs();
+      @include("includes/pageheader.html");
+    ?>
+  </div>
   <div class="page">
   <!-- wikipage start -->
 <?
@@ -401,29 +403,31 @@ function html_footer(){
   <!-- wikipage stop -->
   </div>
   <div class="clearer">&nbsp;</div>
-  <?
-    flush();
-    @include("includes/pagefooter.html");
-    html_metainfo();
-  ?>
-  <div class="bar" id="bar_bottom">
-    <div class="bar-left" id="bar_bottomleft">
-      <?=html_editbutton()?>
-      <?=html_btn(revs,$ID,'r',array('do' => 'revisions'))?>
-    </div>
+  <div class="stylefoot">
+    <?
+      flush();
+      @include("includes/pagefooter.html");
+      html_metainfo();
+    ?>
+    <div class="bar" id="bar_bottom">
+      <div class="bar-left" id="bar_bottomleft">
+        <?=html_editbutton()?>
+        <?=html_btn(revs,$ID,'r',array('do' => 'revisions'))?>
+      </div>
     
-    <div class="bar-right" id="bar_bottomright">
-      <?
-        if($conf['useacl']){
-          if($_SERVER['REMOTE_USER']){
-            print html_btn('logout',$ID,'',array('do' => 'logout',));
-          }else{
-            print html_btn('login',$ID,'',array('do' => 'login'));
+      <div class="bar-right" id="bar_bottomright">
+        <?
+          if($conf['useacl']){
+            if($_SERVER['REMOTE_USER']){
+              print html_btn('logout',$ID,'',array('do' => 'logout',));
+            }else{
+              print html_btn('login',$ID,'',array('do' => 'login'));
+            }
           }
-        }
-      ?>
-      <?=html_btn(index,$ID,'x',array('do' => 'index'))?>
-      <a href="#top"><input type="button" class="button" value="<?=$lang['btn_top']?>" /></a>&nbsp;
+        ?>
+        <?=html_btn(index,$ID,'x',array('do' => 'index'))?>
+        <a href="#top"><input type="button" class="button" value="<?=$lang['btn_top']?>" /></a>&nbsp;
+      </div>
     </div>
   </div>
   <?@include("includes/footer.html")?>
@@ -973,7 +977,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           insertButton('images/rule.png','<?=$lang['qb_hr']?>','----\n');
           mediaButton('images/image.png','<?=$lang['qb_media']?>','m','<?=$INFO['namespace']?>');
 
-					<?
+          <?
           if($conf['useacl'] && $_SERVER['REMOTE_USER']){
             echo "insertButton('images/sig.png','".$lang['qb_sig']."','".html_signature()."','y');";
           }
@@ -1006,7 +1010,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           showSizeCtl();
           <?if($wr){?>
             init_locktimer(<?=$conf['locktime']-60?>,'<?=$lang['willexpire']?>');
-					  document.editform.wikitext.focus();
+            document.editform.wikitext.focus();
           <?}?>
         </script>
       </td>
