@@ -1,5 +1,5 @@
-======Nincs ilyen változat======
+======Nincs ilyen vÃ¡ltozat======
 
-A megadott változat nem létezik. Használd az ''Elõzõ változatok'' nyomógombot az elõzmények listájának megtekintéséhez.
+A megadott vÃ¡ltozat nem lÃ©tezik. HasznÃ¡ld az ''ElÅ‘zÅ‘ vÃ¡ltozatok'' nyomÃ³gombot az elÅ‘zmÃ©nyek listÃ¡jÃ¡nak megtekintÃ©sÃ©hez.
 
 

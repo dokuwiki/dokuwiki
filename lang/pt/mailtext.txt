@@ -1,10 +1,10 @@
 Um documento no site Wiki @DOKUWIKIURL@ foi criado ou modificado.
 
-Aqui est„o os detalhes:
+Aqui est√£o os detalhes:
 
 Data          : @DATE@
 Browser       : @BROWSER@
-EndereÁo IP   : @IPADDRESS@
+Endere√ßo IP   : @IPADDRESS@
 Hostname      : @HOSTNAME@
 Documento Ant.: @OLDPAGE@
 Documento Novo: @NEWPAGE@

@@ -1,6 +1,6 @@
 ====== Recherche ======
 
-Voici les résultats de votre recherche. Si vous n'avez pas trouvé ce que vous cherchiez, vous pouvez créer
-cette nouvelle page en cliquant sur le bouton ''Créer cette page''.
+Voici les rÃ©sultats de votre recherche. Si vous n'avez pas trouvÃ© ce que vous cherchiez, vous pouvez crÃ©er
+cette nouvelle page en cliquant sur le bouton ''CrÃ©er cette page''.
 
-===== Résultats =====
+===== RÃ©sultats =====

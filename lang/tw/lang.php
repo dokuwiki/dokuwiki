@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     chinsan <chinsan@mail2000.com.tw>
  */
-$lang['encoding']   = 'UTF-8';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'UTF-8',
                         'zh_TW.UTF-8',

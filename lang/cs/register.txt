@@ -1,6 +1,6 @@
-====== Zaregistrujte se jako nov˝ uæivatel ======
+====== Zaregistrujte se jako nov√Ω u≈æivatel ======
 
-Abyste zÌskali uæivatelsk˝ ˙Ëet, vyplÚte prosÌm vπechny informace v n·sledujÌcÌm
-formul·¯i. Zadejte **platnou** mailovou adresu, na nÌæ bude zasl·no heslo.
-UæivatelskÈ jmÈno musÌ b˝t v platnÈm [[doku>wiki:pagename|form·tu]] (kter˝ je
-stejn˝ jako form·t n·zeu str·nky).
+Abyste z√≠skali u≈æivatelsk√Ω √∫ƒçet, vypl≈àte pros√≠m v≈°echny informace v n√°sleduj√≠c√≠m
+formul√°≈ôi. Zadejte **platnou** mailovou adresu, na n√≠≈æ bude zasl√°no heslo.
+U≈æivatelsk√© jm√©no mus√≠ b√Ωt v platn√©m [[doku>wiki:pagename|form√°tu]] (kter√Ω je
+stejn√Ω jako form√°t n√°zeu str√°nky).

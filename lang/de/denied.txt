@@ -1,5 +1,5 @@
 ====== Zugang verweigert ======
 
-Du hast nicht die benötigten Rechte, um weiterzumachen. Vielleicht musst
+Du hast nicht die benÃ¶tigten Rechte, um weiterzumachen. Vielleicht musst
 du dich erst einloggen?
 

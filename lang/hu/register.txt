@@ -1,6 +1,6 @@
-====== Új felhasználó regisztrálása ======
+====== Ãšj felhasznÃ¡lÃ³ regisztrÃ¡lÃ¡sa ======
 
-Töltsd ki az összes alábbi adatot az új Wiki felhasználói azonosítód létrehozásához. 
-Gyõzõdj meg róla, hogy **érvényes e-mail címet** adtál meg - az új jelszavad erre a címre küldjük el. 
-Az azonosítód érvényes [[doku>wiki:pagename|oldalnév]] kell legyen.
+TÃ¶ltsd ki az Ã¶sszes alÃ¡bbi adatot az Ãºj Wiki felhasznÃ¡lÃ³i azonosÃ­tÃ³d lÃ©trehozÃ¡sÃ¡hoz. 
+GyÅ‘zÅ‘dj meg rÃ³la, hogy **Ã©rvÃ©nyes e-mail cÃ­met** adtÃ¡l meg - az Ãºj jelszavad erre a cÃ­mre kÃ¼ldjÃ¼k el. 
+Az azonosÃ­tÃ³d Ã©rvÃ©nyes [[doku>wiki:pagename|oldalnÃ©v]] kell legyen.
 

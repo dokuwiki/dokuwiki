@@ -1,5 +1,5 @@
-======Keresés======
+======KeresÃ©s======
 
-A keresés eredményét lentebb láthatod. Ha nem találtad meg amit kerestél, akkor létrehozhatsz egy új oldalt a keresésed alapján ''Az oldal szerkesztése''  gombbal.
+A keresÃ©s eredmÃ©nyÃ©t lentebb lÃ¡thatod. Ha nem talÃ¡ltad meg amit kerestÃ©l, akkor lÃ©trehozhatsz egy Ãºj oldalt a keresÃ©sed alapjÃ¡n ''Az oldal szerkesztÃ©se''  gombbal.
 
-=====Eredmény(ek)=====
+=====EredmÃ©ny(ek)=====

@@ -1,5 +1,5 @@
 ======Gamle versioner======
 
-For at skifte tilbage til en gammel version, vælg den ved at trykke på den nedenunder. Når siden er hentet, tryk på   **''  [Editer denne side]  ''**   og gem den.
-Brug venligst //**kun**// denne funktion til at fjerne hærværk.
+For at skifte tilbage til en gammel version, vÃ¦lg den ved at trykke pÃ¥ den nedenunder. NÃ¥r siden er hentet, tryk pÃ¥   **''  [Editer denne side]  ''**   og gem den.
+Brug venligst //**kun**// denne funktion til at fjerne hÃ¦rvÃ¦rk.
 

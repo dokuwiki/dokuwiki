@@ -1,6 +1,6 @@
 ======SPAM bloqueado======
 
-Tus cambios **no** se han guardado porque contienen una o m·s palabras prohibidas .
+Tus cambios **no** se han guardado porque contienen una o m√°s palabras prohibidas .
 Si has intentado spammear el Wiki -- Perro malo! Si crees que es un error contacta
 con el administrador de este Wiki.
 

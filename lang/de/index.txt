@@ -1,4 +1,4 @@
-====== Übersicht ======
+====== Ãœbersicht ======
 
-Dies ist eine Übersicht über alle vorhandenen Seiten und [[doku>wiki:namespaces|Namensräume]].
+Dies ist eine Ãœbersicht Ã¼ber alle vorhandenen Seiten und [[doku>wiki:namespaces|NamensrÃ¤ume]].
 

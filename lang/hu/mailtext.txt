@@ -1,15 +1,15 @@
-A DokuWikidben egy oldalt lÈtrejˆtt, vagy megv·ltozott. A rÈszletek:
+A DokuWikidben egy oldalt l√©trej√∂tt, vagy megv√°ltozott. A r√©szletek:
 
-D·tum         : @DATE@
-BˆngÈszı      : @BROWSER@
-IP-cÌm        : @IPADDRESS@
-GÈp neve      : @HOSTNAME@
-Elızı v·ltozat: @OLDPAGE@
-⁄j v·ltozat   : @NEWPAGE@
-÷sszefoglalÛ  : @SUMMARY@
+D√°tum         : @DATE@
+B√∂ng√©sz≈ë      : @BROWSER@
+IP-c√≠m        : @IPADDRESS@
+G√©p neve      : @HOSTNAME@
+El≈ëz≈ë v√°ltozat: @OLDPAGE@
+√öj v√°ltozat   : @NEWPAGE@
+√ñsszefoglal√≥  : @SUMMARY@
 
 @DIFF@
 
 
 -- 
-Ezt a levelet a @DOKUWIKIURL@ DokuWiki gener·lta.
+Ezt a levelet a @DOKUWIKIURL@ DokuWiki gener√°lta.

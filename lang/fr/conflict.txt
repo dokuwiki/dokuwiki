@@ -1,9 +1,9 @@
-====== Une version plus récente existe déjà ======
+====== Une version plus rÃ©cente existe dÃ©jÃ  ======
 
-Une version plus récente du document que vous avez édité existe déjà. Celà arrive
-lorsqu'un autre utilisateur sauve le document pendant que vous l'éditez.
+Une version plus rÃ©cente du document que vous avez Ã©ditÃ© existe dÃ©jÃ . CelÃ  arrive
+lorsqu'un autre utilisateur sauve le document pendant que vous l'Ã©ditez.
 
-Examinez attentivement les différences ci-dessous, et décidez quelle version
-conserver. Si vous choisissez ''Sauver'', votre version sera sauvée. Cliquez
+Examinez attentivement les diffÃ©rences ci-dessous, et dÃ©cidez quelle version
+conserver. Si vous choisissez ''Sauver'', votre version sera sauvÃ©e. Cliquez
 sur ''Annuler'' pour conserver la version actuelle.
 

@@ -1,8 +1,8 @@
-====== InscriÁ„o ======
+====== Inscri√ß√£o ======
 
-Por favor, preencha todos os campos com a informaÁ„o correspondente, para poder criar uma nova conta neste SiteWiki.
+Por favor, preencha todos os campos com a informa√ß√£o correspondente, para poder criar uma nova conta neste SiteWiki.
 
-**Nota**: O nome de utilizador deve cumprir as mesmas regras de nomeaÁ„o de documentos Wiki v·lidos.\\
-**AtenÁ„o**: Verifique que o endereÁo de correio electrÛnico que preencheu È v·lido, pois a sua senha ser· enviada por e-mail.
+**Nota**: O nome de utilizador deve cumprir as mesmas regras de nomea√ß√£o de documentos Wiki v√°lidos.\\
+**Aten√ß√£o**: Verifique que o endere√ßo de correio electr√≥nico que preencheu √© v√°lido, pois a sua senha ser√° enviada por e-mail.
 
 ----

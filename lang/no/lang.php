@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Reidar Mosvold <Reidar.Mosvold@hit.no>
  */
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'norwegian',
                         'nor',
@@ -19,9 +19,9 @@ $lang['btn_edit']   = 'Rediger denne siden';
 $lang['btn_source'] = 'Vis kildetekst';
 $lang['btn_show']   = 'Vis siden';
 $lang['btn_create'] = 'Lag denne siden';
-$lang['btn_search'] = 'Søk';
+$lang['btn_search'] = 'SÃ¸k';
 $lang['btn_save']   = 'Lagre';
-$lang['btn_preview']= 'Forhåndsvis';
+$lang['btn_preview']= 'ForhÃ¥ndsvis';
 $lang['btn_top']    = 'Til starten av siden';
 $lang['btn_revs']   = 'Historikk';
 $lang['btn_recent'] = 'Siste nytt';
@@ -44,25 +44,25 @@ $lang['regmissing'] = 'Vennligst fyll ut alle felt.';
 $lang['reguexists'] = 'Det fins allerede en bruker med det brukernavnet.';
 $lang['regsuccess'] = 'Brukerkonto er laget og passordet er blitt sendt via e-post.';
 $lang['regmailfail']= 'En feil oppstod da passordet ditt skulle sendes via e-post. Vennligst kontakt administratoren!';
-$lang['regbadmail'] = 'Den angitte e-postadressen ser ut til å være ugyldig - vennligst kontakt administratoren om du anser dette som feilaktig';
+$lang['regbadmail'] = 'Den angitte e-postadressen ser ut til Ã¥ vÃ¦re ugyldig - vennligst kontakt administratoren om du anser dette som feilaktig';
 $lang['regpwmail']  = 'Ditt DokuWikipassord';
-$lang['reghere']    = 'Har du ikke konto ennå? Skaff deg en';
+$lang['reghere']    = 'Har du ikke konto ennÃ¥? Skaff deg en';
 
 $lang['txt_upload']   = 'Velg fil som du vil laste opp';
 $lang['txt_filename'] = 'Angi wikinavn (ikke obligatorisk)';
 $lang['lockedby']     = 'Stengt av';
-$lang['lockexpire']   = 'La avstengningen opphøre';
-$lang['willexpire']   = 'Din redigeringslås for dette dokumentet kommer snart til å opphøre.\nFor å unngå versjonskonflikter bør du forhåndsgranske ditt dokument for å forlenge redigeringslåsen.';
+$lang['lockexpire']   = 'La avstengningen opphÃ¸re';
+$lang['willexpire']   = 'Din redigeringslÃ¥s for dette dokumentet kommer snart til Ã¥ opphÃ¸re.\nFor Ã¥ unngÃ¥ versjonskonflikter bÃ¸r du forhÃ¥ndsgranske ditt dokument for Ã¥ forlenge redigeringslÃ¥sen.';
 
-$lang['notsavedyet'] = 'Det fins endringer som ikke er lagret.\nEr du sikker på at du vil fortsette?';
+$lang['notsavedyet'] = 'Det fins endringer som ikke er lagret.\nEr du sikker pÃ¥ at du vil fortsette?';
 $lang['rssfailed']   = 'En feil oppstod da denne RSS-kilden skulle hentes: ';
 $lang['nothingfound']= 'Ingen data.';
 
 $lang['mediaselect'] = 'Valg av mediadokument';
 $lang['fileupload']  = 'Mediafil lastet opp';
-$lang['uploadsucc']  = 'Overføringen var vellykket';
-$lang['uploadfail']  = 'Overføringen var mislykket, feil rettigheter?';
-$lang['uploadwrong'] = 'Overføringen ble nektet. Denne filendelsen er ikke tillatt.';
+$lang['uploadsucc']  = 'OverfÃ¸ringen var vellykket';
+$lang['uploadfail']  = 'OverfÃ¸ringen var mislykket, feil rettigheter?';
+$lang['uploadwrong'] = 'OverfÃ¸ringen ble nektet. Denne filendelsen er ikke tillatt.';
 $lang['namespaces']  = 'Wikinavn';
 $lang['mediafiles']  = 'Tilgjengelige filer ';
 
@@ -85,22 +85,22 @@ $lang['mail_changed'] = '[DokuWiki] side har blitt oppdatert:';
 
 $lang['nosmblinks'] = 'Lenker til Windowsressurser fungerer bare med Microsofts Internet Explorer.\nDu kan klippe og lime inn lenker hvis du anvender en annen nettleser enn MSIE..';
 
-$lang['qb_alert']   = 'Vennligst angi den teksten du vil formattere.\nDen vil bli lagt til på slutten av dokumentet.';
+$lang['qb_alert']   = 'Vennligst angi den teksten du vil formattere.\nDen vil bli lagt til pÃ¥ slutten av dokumentet.';
 $lang['qb_bold']    = 'Fet tekst';
 $lang['qb_italic']  = 'Kursiv tekst';
 $lang['qb_underl']  = 'Understreket tekst';
 $lang['qb_code']    = 'Kodetekst';
-$lang['qb_h1']      = 'Nivå 1 Rubrikk';
-$lang['qb_h2']      = 'Nivå 2 Rubrikk';
-$lang['qb_h3']      = 'Nivå 3 Rubrikk';
-$lang['qb_h4']      = 'Nivå 4 Rubrikk';
-$lang['qb_h5']      = 'Nivå 5 Rubrikk';
+$lang['qb_h1']      = 'NivÃ¥ 1 Rubrikk';
+$lang['qb_h2']      = 'NivÃ¥ 2 Rubrikk';
+$lang['qb_h3']      = 'NivÃ¥ 3 Rubrikk';
+$lang['qb_h4']      = 'NivÃ¥ 4 Rubrikk';
+$lang['qb_h5']      = 'NivÃ¥ 5 Rubrikk';
 $lang['qb_link']    = 'Intern lenke';
 $lang['qb_extlink'] = 'Ekstern lenke';
 $lang['qb_hr']      = 'Horisontal strek';
 $lang['qb_ol']      = 'Punkt for sortert punktliste';
 $lang['qb_ul']      = 'Punkt for usortert punktliste';
 $lang['qb_media']   = 'Legg til bilder og andre filer';
-$lang['qb_sig']     = 'Føy til signatur';
+$lang['qb_sig']     = 'FÃ¸y til signatur';
 
 ?>

@@ -1,5 +1,5 @@
 ====== S'enregistrer comme nouvel utilisateur ======
 
-Remplissez toutes les informations ci-dessous pour vous créer un compte sur ce Wiki.
-Assurez-vous de fournir une **adresse mail valide** car votre mot de passe sera envoyé à cette adresse.
-Le nom d'utilisateur doit être un [[doku>wiki:pagename|nom de page]] valide.
+Remplissez toutes les informations ci-dessous pour vous crÃ©er un compte sur ce Wiki.
+Assurez-vous de fournir une **adresse mail valide** car votre mot de passe sera envoyÃ© Ã  cette adresse.
+Le nom d'utilisateur doit Ãªtre un [[doku>wiki:pagename|nom de page]] valide.

@@ -1,7 +1,7 @@
-====== Hivatkozások ======
+====== HivatkozÃ¡sok ======
 
-Ez azoknak az oldalaknak a listája, amelyek erre az oldalra
-"visszamutatnak" (hivatkoznak). Vigyázz, mert a TeveHát stílusú
-hivatkozások itt nem jelennek meg.
+Ez azoknak az oldalaknak a listÃ¡ja, amelyek erre az oldalra
+"visszamutatnak" (hivatkoznak). VigyÃ¡zz, mert a TeveHÃ¡t stÃ­lusÃº
+hivatkozÃ¡sok itt nem jelennek meg.
 
 

@@ -1,2 +1,2 @@
-Redigera sidan och klicka ''**Spara**''. Se [[wiki:syntax]] för Wikisyntax. Redidgera bara sidan om du kan **förbättra** dess innehåll. Om du vill testa hur saker och ting fungerar, gör det på [[wiki:playground|lekplatsen]].
+Redigera sidan och klicka ''**Spara**''. Se [[wiki:syntax]] fÃ¶r Wikisyntax. Redidgera bara sidan om du kan **fÃ¶rbÃ¤ttra** dess innehÃ¥ll. Om du vill testa hur saker och ting fungerar, gÃ¶r det pÃ¥ [[wiki:playground|lekplatsen]].
 

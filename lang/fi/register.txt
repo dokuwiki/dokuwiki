@@ -1,4 +1,4 @@
-====== Rekisteröi uusi käyttäjä ======
-Täytä alla olevat tiedot tehdäksesi uusi käyttäjätili tähän wikiin. Muista antaa **toimiva 
-sähköpostiosoite**, sillä salasanasi lähetetään sinne. Käyttäjänimi pitää olla myös käypä 
+====== RekisterÃ¶i uusi kÃ¤yttÃ¤jÃ¤ ======
+TÃ¤ytÃ¤ alla olevat tiedot tehdÃ¤ksesi uusi kÃ¤yttÃ¤jÃ¤tili tÃ¤hÃ¤n wikiin. Muista antaa **toimiva 
+sÃ¤hkÃ¶postiosoite**, sillÃ¤ salasanasi lÃ¤hetetÃ¤Ã¤n sinne. KÃ¤yttÃ¤jÃ¤nimi pitÃ¤Ã¤ olla myÃ¶s kÃ¤ypÃ¤ 
 [[doku>wiki:pagename|sivunimi]].

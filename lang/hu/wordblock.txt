@@ -1,7 +1,7 @@
-======SPAM szûrés======
+======SPAM szÅ±rÃ©s======
 
-A változtatásaid **nem** mentettük, mert egy vagy több tiltott szót tartalmaz. Ha kéretlen reklám anyagot ("SPAM") próbáltál erre a Wikire rakni, akkor szégyelld magad. 
+A vÃ¡ltoztatÃ¡said **nem** mentettÃ¼k, mert egy vagy tÃ¶bb tiltott szÃ³t tartalmaz. Ha kÃ©retlen reklÃ¡m anyagot ("SPAM") prÃ³bÃ¡ltÃ¡l erre a Wikire rakni, akkor szÃ©gyelld magad. 
 
-Ha azt gondolod, hogy valami hibáról, vagy félreértésrõl van szó,
-akkor lépj kapcsolatba a Wiki a rendszergazdájával.
+Ha azt gondolod, hogy valami hibÃ¡rÃ³l, vagy fÃ©lreÃ©rtÃ©srÅ‘l van szÃ³,
+akkor lÃ©pj kapcsolatba a Wiki a rendszergazdÃ¡jÃ¡val.
 

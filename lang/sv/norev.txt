@@ -1,5 +1,5 @@
-======Det finns ingen sådan version======
+======Det finns ingen sÃ¥dan version======
 
-Den angivna versionen finns inte. Använd ''**Historik**'' för en förteckning
-över de versioner som finns av detta dokument.
+Den angivna versionen finns inte. AnvÃ¤nd ''**Historik**'' fÃ¶r en fÃ¶rteckning
+Ã¶ver de versioner som finns av detta dokument.
 

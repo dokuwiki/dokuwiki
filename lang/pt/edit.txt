@@ -1,7 +1,7 @@
-Edite o documento e clique no bot„o <Gravar>.\\
-Reveja a [[wiki:syntax | sintaxe]] das regras de formataÁ„o do texto.
+Edite o documento e clique no bot√£o <Gravar>.\\
+Reveja a [[wiki:syntax | sintaxe]] das regras de formata√ß√£o do texto.
 
-Por favor, altere o conte˙do deste documento apenas quando puder **melhor·-lo**.\\
+Por favor, altere o conte√∫do deste documento apenas quando puder **melhor√°-lo**.\\
 Se pretende testar os seus conhecimentos no uso deste motor Wiki, realize os seus testes no [[wiki:playground | Recreio]].
 
 ----

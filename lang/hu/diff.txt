@@ -1,4 +1,4 @@
-======Különbségek======
+======KÃ¼lÃ¶nbsÃ©gek======
 
-A kiválasztott változat és az aktuális verzió közötti különbséget mutatjuk.
+A kivÃ¡lasztott vÃ¡ltozat Ã©s az aktuÃ¡lis verziÃ³ kÃ¶zÃ¶tti kÃ¼lÃ¶nbsÃ©get mutatjuk.
 

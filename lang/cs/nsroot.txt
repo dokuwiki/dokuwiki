@@ -1,4 +1,4 @@
-====== Index jmenného prostoru ======
+====== Index jmennÃ©ho prostoru ======
 
-Zde je k dispozici index jmenného prostoru. Pokud chcete, mù¾ete vytvoøit
-vlastní stránku pou¾itou jako index stisknutím tlaèítka ''Vytvoøit stránku''.
+Zde je k dispozici index jmennÃ©ho prostoru. Pokud chcete, mÅ¯Å¾ete vytvoÅ™it
+vlastnÃ­ strÃ¡nku pouÅ¾itou jako index stisknutÃ­m tlaÄÃ­tka ''VytvoÅ™it strÃ¡nku''.

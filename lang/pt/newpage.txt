@@ -1,7 +1,7 @@
 ====== Documento Inexistente ======
 
-Acaba de tentar aceder a um documento que ainda n„o existe.
+Acaba de tentar aceder a um documento que ainda n√£o existe.
 
-Pode criar o conte˙do deste novo documento apÛs clicar no bot„o <Editar P·gina>.
+Pode criar o conte√∫do deste novo documento ap√≥s clicar no bot√£o <Editar P√°gina>.
 
 ----

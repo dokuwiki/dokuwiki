@@ -1,5 +1,5 @@
-====== Aperçu ======
+====== AperÃ§u ======
 
-Ceci est un aperçu de votre document. Attention : Il n'est **pas encore
-sauvé** !
+Ceci est un aperÃ§u de votre document. Attention : Il n'est **pas encore
+sauvÃ©** !
 

@@ -1,4 +1,4 @@
 ======Skillnader======
 
-Här visas skillnader mellan den valda versionen och den nuvarande versionen av dokumentet.
+HÃ¤r visas skillnader mellan den valda versionen och den nuvarande versionen av dokumentet.
 

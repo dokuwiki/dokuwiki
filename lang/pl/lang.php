@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Grzegorz _ur <grzesiekzur@tlen.pl>
  */
-$lang['encoding']   = 'iso-8859-2';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'pl',
                         'pl_pl',
@@ -13,17 +13,17 @@ $lang['locales']    = array(
                         'polish',
                       );
 
-$lang['btn_edit']   = 'Edytuj stronê';
-$lang['btn_source'] = 'Poka¿ ¼ród³o strony';
-$lang['btn_show']   = 'Poka¿ stronê';
-$lang['btn_create'] = 'Utwórz stronê';
+$lang['btn_edit']   = 'Edytuj stronÄ™';
+$lang['btn_source'] = 'PokaÅ¼ ÅºrÃ³dÅ‚o strony';
+$lang['btn_show']   = 'PokaÅ¼ stronÄ™';
+$lang['btn_create'] = 'UtwÃ³rz stronÄ™';
 $lang['btn_search'] = 'Szukaj';
 $lang['btn_save']   = 'Zapisz';
-$lang['btn_preview']= 'Podgl±d';
-$lang['btn_top']    = 'Do góry';
+$lang['btn_preview']= 'PodglÄ…d';
+$lang['btn_top']    = 'Do gÃ³ry';
 $lang['btn_revs']   = 'Poprzednie wersje';
 $lang['btn_recent'] = 'Ostatnie zmiany';
-$lang['btn_upload'] = 'Wy¶lij';
+$lang['btn_upload'] = 'WyÅ›lij';
 $lang['btn_cancel'] = 'Anuluj';
 $lang['btn_index']  = 'Indeks';
 $lang['btn_secedit']= 'Edytuj';
@@ -31,70 +31,70 @@ $lang['btn_login']  = 'Zaloguj';
 $lang['btn_logout'] = 'Wyloguj';
 
 $lang['loggedinas'] = 'Zalogowany/a jako';
-$lang['user']       = 'U¿ytkownik';
-$lang['pass']       = 'Has³o';
-$lang['fullname']   = 'Imiê i nazwisko';
+$lang['user']       = 'UÅ¼ytkownik';
+$lang['pass']       = 'HasÅ‚o';
+$lang['fullname']   = 'ImiÄ™ i nazwisko';
 $lang['email']      = 'E-mail';
 $lang['register']   = 'Zarejestruj';
-$lang['badlogin']   = 'Nazwa u¿ytkownika lub has³o s± nieprawid³owe.';
+$lang['badlogin']   = 'Nazwa uÅ¼ytkownika lub hasÅ‚o sÄ… nieprawidÅ‚owe.';
 
-$lang['regmissing'] = 'Wype³nij wszystkie pola.';
-$lang['reguexists'] = 'U¿ytkownik o tej nazwie ju¿ istnieje.';
-$lang['regsuccess'] = 'Utworzono u¿ytkownika. Has³o zosta³o przes³ane poczt±.';
-$lang['regmailfail']= 'Wyst±pi³ b³±d przy wysy³aniu has³a poczt±!';
-$lang['regbadmail'] = 'Adres e-mail jest nieprawid³owym!';
+$lang['regmissing'] = 'WypeÅ‚nij wszystkie pola.';
+$lang['reguexists'] = 'UÅ¼ytkownik o tej nazwie juÅ¼ istnieje.';
+$lang['regsuccess'] = 'Utworzono uÅ¼ytkownika. HasÅ‚o zostaÅ‚o przesÅ‚ane pocztÄ….';
+$lang['regmailfail']= 'WystÄ…piÅ‚ bÅ‚Ä…d przy wysyÅ‚aniu hasÅ‚a pocztÄ…!';
+$lang['regbadmail'] = 'Adres e-mail jest nieprawidÅ‚owym!';
 $lang['regpwmail']  = 'Twoje haslo do DokuWiki'; /* no diacritics in mail subject */
-$lang['reghere']    = 'Nie masz jeszcze konta? Zdob±d¼ je';
+$lang['reghere']    = 'Nie masz jeszcze konta? ZdobÄ…dÅº je';
 
-$lang['txt_upload']   = 'Wybierz plik do wys³ania';
+$lang['txt_upload']   = 'Wybierz plik do wysÅ‚ania';
 $lang['txt_filename'] = 'Nazwa pliku (opcjonalnie)';
 $lang['lockedby']     = 'Aktualnie zablokowane przez';
 $lang['lockexpire']   = 'Blokada wygasa';
-$lang['willexpire']   = 'Za minutê Twoja blokada tej strony wyga¶nie.\nW celu unikniêcia konfliktów wy¶wietl podgl±d aby odnowiæ blokadê.';
+$lang['willexpire']   = 'Za minutÄ™ Twoja blokada tej strony wygaÅ›nie.\nW celu unikniÄ™cia konfliktÃ³w wyÅ›wietl podglÄ…d aby odnowiÄ‡ blokadÄ™.';
 
-$lang['notsavedyet'] = 'Nie zapisane zmiany zostan± utracone.\nCzy na pewno kontynuowaæ?';
-$lang['rssfailed']   = 'Wyst±pi³ b³±d przy pobieraniu tych danych: ';
+$lang['notsavedyet'] = 'Nie zapisane zmiany zostanÄ… utracone.\nCzy na pewno kontynuowaÄ‡?';
+$lang['rssfailed']   = 'WystÄ…piÅ‚ bÅ‚Ä…d przy pobieraniu tych danych: ';
 $lang['nothingfound']= 'Nic nie znaleziono.';
 
-$lang['mediaselect'] = 'Wysy³anie pliku';
-$lang['fileupload']  = 'Wysy³anie pliku';
-$lang['uploadsucc']  = 'Wysy³anie powiod³o siê!';
-$lang['uploadfail']  = 'B³±d wysy³ania. Czy prawa do katalogów s± poprawne?';
-$lang['uploadwrong'] = 'Wysy³anie zabronione. Nie mo¿na wys³aæ plików z takim rozszerzeniem';
+$lang['mediaselect'] = 'WysyÅ‚anie pliku';
+$lang['fileupload']  = 'WysyÅ‚anie pliku';
+$lang['uploadsucc']  = 'WysyÅ‚anie powiodÅ‚o siÄ™!';
+$lang['uploadfail']  = 'BÅ‚Ä…d wysyÅ‚ania. Czy prawa do katalogÃ³w sÄ… poprawne?';
+$lang['uploadwrong'] = 'WysyÅ‚anie zabronione. Nie moÅ¼na wysÅ‚aÄ‡ plikÃ³w z takim rozszerzeniem';
 $lang['namespaces']  = 'Katalogi';
-$lang['mediafiles']  = 'Dostêpne pliki';
+$lang['mediafiles']  = 'DostÄ™pne pliki';
 
-$lang['hits']       = 'trafieñ';
-$lang['quickhits']  = 'Pasuj±ce has³a';
-$lang['toc']        = 'Spis tre¶ci';
+$lang['hits']       = 'trafieÅ„';
+$lang['quickhits']  = 'PasujÄ…ce hasÅ‚a';
+$lang['toc']        = 'Spis treÅ›ci';
 $lang['current']    = 'aktualna';
 $lang['yours']      = 'Twoja wersja';
-$lang['diff']       = 'Poka¿ ró¿nicê miêdzy wersjami';
+$lang['diff']       = 'PokaÅ¼ rÃ³Å¼nicÄ™ miÄ™dzy wersjami';
 $lang['line']       = 'Linia';
-$lang['breadcrumb'] = '¦cie¿ka';
+$lang['breadcrumb'] = 'ÅšcieÅ¼ka';
 $lang['lastmod']    = 'ostatnio zmieniane';
-$lang['deleted']    = 'usuniêto';
+$lang['deleted']    = 'usuniÄ™to';
 $lang['created']    = 'stworzono';
-$lang['restored']   = 'przywrócono poprzedni± wersjê';
+$lang['restored']   = 'przywrÃ³cono poprzedniÄ… wersjÄ™';
 $lang['summary']    = 'Opis zmian';
 
 $lang['mail_newpage'] = 'Strona dodana:';
 $lang['mail_changed'] = 'Strona zmieniona:';
 
-$lang['nosmblinks'] = 'Odno¶niki do zasobów sieci Windows dzia³aj± tylko w przegl±darce Internet Explorer.\n Mo¿esz skopiowaæ odno¶nik.';
+$lang['nosmblinks'] = 'OdnoÅ›niki do zasobÃ³w sieci Windows dziaÅ‚ajÄ… tylko w przeglÄ…darce Internet Explorer.\n MoÅ¼esz skopiowaÄ‡ odnoÅ›nik.';
 
-$lang['qb_alert']   = 'Wpisz tekst, który chcesz sformatowaæ.\nBêdzie on do³±czony na koniec strony.';
+$lang['qb_alert']   = 'Wpisz tekst, ktÃ³ry chcesz sformatowaÄ‡.\nBÄ™dzie on doÅ‚Ä…czony na koniec strony.';
 $lang['qb_bold']    = 'Pogrubienie';
 $lang['qb_italic']  = 'Pochylenie';
-$lang['qb_underl']  = 'Podkre¶lenie';
+$lang['qb_underl']  = 'PodkreÅ›lenie';
 $lang['qb_code']    = 'Kod';
-$lang['qb_h1']      = 'Nag³ówek 1 stopnia';
-$lang['qb_h2']      = 'Nag³ówek 2 stopnia';
-$lang['qb_h3']      = 'Nag³ówek 3 stopnia';
-$lang['qb_h4']      = 'Nag³ówek 4 stopnia';
-$lang['qb_h5']      = 'Nag³ówek 5 stopnia';
-$lang['qb_link']    = 'Odno¶nik wewnêtrzny';
-$lang['qb_extlink'] = 'Odno¶nik zewnêtrzny';
+$lang['qb_h1']      = 'NagÅ‚Ã³wek 1 stopnia';
+$lang['qb_h2']      = 'NagÅ‚Ã³wek 2 stopnia';
+$lang['qb_h3']      = 'NagÅ‚Ã³wek 3 stopnia';
+$lang['qb_h4']      = 'NagÅ‚Ã³wek 4 stopnia';
+$lang['qb_h5']      = 'NagÅ‚Ã³wek 5 stopnia';
+$lang['qb_link']    = 'OdnoÅ›nik wewnÄ™trzny';
+$lang['qb_extlink'] = 'OdnoÅ›nik zewnÄ™trzny';
 $lang['qb_hr']      = 'Linia pozioma';
 $lang['qb_ol']      = 'Numeracja';
 $lang['qb_ul']      = 'Wypunktowanie';

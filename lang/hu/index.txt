@@ -1,5 +1,5 @@
-====== Áttekintés (index) ======
+====== ÃttekintÃ©s (index) ======
 
-Az összes elérhetõ oldal áttekintése [[doku>wiki:namespaces|névterek]]
+Az Ã¶sszes elÃ©rhetÅ‘ oldal Ã¡ttekintÃ©se [[doku>wiki:namespaces|nÃ©vterek]]
 szerint rendezve.
 

@@ -1,8 +1,8 @@
-====== Previs„o ======
+====== Previs√£o ======
 
-Esta È a previs„o de como ir· ficar o conte˙do do documento se clicar no bot„o <Gravar>.
+Esta √© a previs√£o de como ir√° ficar o conte√∫do do documento se clicar no bot√£o <Gravar>.
 
-**AtenÁ„o**: O documento ainda n„o se encontra gravado.\\
-… necess·rio clicar no bot„o <Gravar> para efectivar as modificaÁıes que tenha realizado.
+**Aten√ß√£o**: O documento ainda n√£o se encontra gravado.\\
+√â necess√°rio clicar no bot√£o <Gravar> para efectivar as modifica√ß√µes que tenha realizado.
 
 ----

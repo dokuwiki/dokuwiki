@@ -1,8 +1,8 @@
-Se ha cambiado o aÒadido una pagina en el DokuWiki-Manuales. Aqui est·n los detalles
+Se ha cambiado o a√±adido una pagina en el DokuWiki-Manuales. Aqui est√°n los detalles
 
 Fecha          : @DATE@
 Navegador      : @BROWSER@
-DirecciÛn-IP   : @IPADDRESS@
+Direcci√≥n-IP   : @IPADDRESS@
 Nombre de Host : @HOSTNAME@
 Revision Vieja : @OLDPAGE@
 Revision Nueva : @NEWPAGE@

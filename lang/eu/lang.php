@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Xabi Ezpeleta <xezpeleta@mendikute.com>
  */
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'eusk',
                         'eu',

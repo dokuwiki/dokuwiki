@@ -3,9 +3,9 @@
  * dutch language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     François Kooman <fkooman.tuxed.net>
+ * @author     FranÃ§ois Kooman <fkooman.tuxed.net>
  */
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'nld',
                         'nl_NL@euro',
@@ -82,7 +82,7 @@ $lang['summary']    = 'Samenvatting aanpassen';
 $lang['mail_newpage'] = '[DokuWiki] pagina toegevoegd:';
 $lang['mail_changed'] = '[DokuWiki] pagina aangepast:';
 
-$lang['nosmblinks'] = 'Linken naar Windows shares werkt alleen in Microsoft Internet Explorer.\nJe kan de link wel kopiëren en plakken.';
+$lang['nosmblinks'] = 'Linken naar Windows shares werkt alleen in Microsoft Internet Explorer.\nJe kan de link wel kopiÃ«ren en plakken.';
 
 $lang['qb_alert']   = 'Voer de tekst in die je wilt opmaken.\nDe tekst wordt toegevoegd aan het eind van het document.';
 $lang['qb_bold']    = 'Vette tekst';

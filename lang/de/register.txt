@@ -1,7 +1,7 @@
 ====== Als neuer Nutzer registrieren ======
 
-Bitte fülle alle Felder aus, um einen neuen Nutzer-Account in diesem
-Wiki anzulegen. Stelle sicher, dass du eine **gültige E-Mail Adresse**
+Bitte fÃ¼lle alle Felder aus, um einen neuen Nutzer-Account in diesem
+Wiki anzulegen. Stelle sicher, dass du eine **gÃ¼ltige E-Mail Adresse**
 angibst - dein Passwort wird an diese Adresse gesendet. Der Nutzername
-sollte ein gültiger [[doku>wiki:pagename|Wiki Seitenname]] sein.
+sollte ein gÃ¼ltiger [[doku>wiki:pagename|Wiki Seitenname]] sein.
 

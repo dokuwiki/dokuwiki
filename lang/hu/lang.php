@@ -3,100 +3,100 @@
  * Hungarian language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Ziegler Gábor <gziegler@freemail.hu>
+ * @author     Ziegler GÃ¡bor <gziegler@freemail.hu>
  */
-$lang['encoding']   = 'iso-8859-2';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'hu',
                         'hu_HU'
                       );
 
-$lang['btn_edit']   = 'Oldal szerkesztése';
-$lang['btn_source'] = 'Oldalforrás megtekintése';
-$lang['btn_show']   = 'Oldal megtekintése';
-$lang['btn_create'] = 'Oldal létrehozása';
-$lang['btn_search'] = 'Megtekintés';
-$lang['btn_save']   = 'Mentés';
-$lang['btn_preview']= 'Elõnézet';
-$lang['btn_top']    = 'Vissza a tetejére';
-$lang['btn_revs']   = 'Elõzõ változatok';
-$lang['btn_recent'] = 'Legfrissebb változások';
-$lang['btn_upload'] = 'Feltöltés';
-$lang['btn_cancel'] = 'Mégsem';
-$lang['btn_index']  = 'Áttekintés';
-$lang['btn_secedit']= 'Szerkesztés';
-$lang['btn_login']  = 'Bejelentkezés';
-$lang['btn_logout'] = 'Kijelentkezés';
+$lang['btn_edit']   = 'Oldal szerkesztÃ©se';
+$lang['btn_source'] = 'OldalforrÃ¡s megtekintÃ©se';
+$lang['btn_show']   = 'Oldal megtekintÃ©se';
+$lang['btn_create'] = 'Oldal lÃ©trehozÃ¡sa';
+$lang['btn_search'] = 'MegtekintÃ©s';
+$lang['btn_save']   = 'MentÃ©s';
+$lang['btn_preview']= 'ElÅ‘nÃ©zet';
+$lang['btn_top']    = 'Vissza a tetejÃ©re';
+$lang['btn_revs']   = 'ElÅ‘zÅ‘ vÃ¡ltozatok';
+$lang['btn_recent'] = 'Legfrissebb vÃ¡ltozÃ¡sok';
+$lang['btn_upload'] = 'FeltÃ¶ltÃ©s';
+$lang['btn_cancel'] = 'MÃ©gsem';
+$lang['btn_index']  = 'ÃttekintÃ©s';
+$lang['btn_secedit']= 'SzerkesztÃ©s';
+$lang['btn_login']  = 'BejelentkezÃ©s';
+$lang['btn_logout'] = 'KijelentkezÃ©s';
 
-$lang['loggedinas'] = 'Belépett felhasználó: ';
-$lang['user']       = 'Azonosító';
-$lang['pass']       = 'Jelszó';
-$lang['fullname']   = 'Teljes név';
+$lang['loggedinas'] = 'BelÃ©pett felhasznÃ¡lÃ³: ';
+$lang['user']       = 'AzonosÃ­tÃ³';
+$lang['pass']       = 'JelszÃ³';
+$lang['fullname']   = 'Teljes nÃ©v';
 $lang['email']      = 'E-Mail';
-$lang['register']   = 'Regisztráció';
-$lang['badlogin']   = 'Sajnáljuk, az azonsító, vagy a jelszó nem jó.';
+$lang['register']   = 'RegisztrÃ¡ciÃ³';
+$lang['badlogin']   = 'SajnÃ¡ljuk, az azonsÃ­tÃ³, vagy a jelszÃ³ nem jÃ³.';
 
-$lang['regmissing'] = 'Sajnáljuk, az összes mezõt ki kell töltened.';
-$lang['reguexists'] = 'Sajnáljuk, ilyen azonosítójú felhasználónk már van.';
-$lang['regsuccess'] = 'A felhasználóiazonosítót létrehoztuk. A jelszót postáztuk..';
-$lang['regmailfail']= 'Úgy tûnik hiba történt a jelszó postázásáa során. Kérjük lépj kapcsolatba a rendszergazdával!!';
-$lang['regbadmail'] = 'A megadott e-mail cím érvénytelennek tûnik. Ha az gondolod ez hiba, lépjkapcsolatba rendszergazdával';
+$lang['regmissing'] = 'SajnÃ¡ljuk, az Ã¶sszes mezÅ‘t ki kell tÃ¶ltened.';
+$lang['reguexists'] = 'SajnÃ¡ljuk, ilyen azonosÃ­tÃ³jÃº felhasznÃ¡lÃ³nk mÃ¡r van.';
+$lang['regsuccess'] = 'A felhasznÃ¡lÃ³iazonosÃ­tÃ³t lÃ©trehoztuk. A jelszÃ³t postÃ¡ztuk..';
+$lang['regmailfail']= 'Ãšgy tÅ±nik hiba tÃ¶rtÃ©nt a jelszÃ³ postÃ¡zÃ¡sÃ¡a sorÃ¡n. KÃ©rjÃ¼k lÃ©pj kapcsolatba a rendszergazdÃ¡val!!';
+$lang['regbadmail'] = 'A megadott e-mail cÃ­m Ã©rvÃ©nytelennek tÅ±nik. Ha az gondolod ez hiba, lÃ©pjkapcsolatba rendszergazdÃ¡val';
 $lang['regpwmail']  = 'A DokuWiki jelszavad';
-$lang['reghere']    = 'Még nincs azonosítód? Hát kérj egyet';
+$lang['reghere']    = 'MÃ©g nincs azonosÃ­tÃ³d? HÃ¡t kÃ©rj egyet';
 
-$lang['txt_upload']   = 'Válaszd ki a feltöltendõ fájlt';
-$lang['txt_filename'] = 'Add meg a wikineved (elhagyható)';
-$lang['lockedby']     = 'Jelenleg zárolta';
-$lang['lockexpire']   = 'A zárolás lejár';
-$lang['willexpire']   = 'Az oldal zárolásod szerkesztéshez körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az elõnézet gombot a zárolási idõzítés frissítéséhez.';
+$lang['txt_upload']   = 'VÃ¡laszd ki a feltÃ¶ltendÅ‘ fÃ¡jlt';
+$lang['txt_filename'] = 'Add meg a wikineved (elhagyhatÃ³)';
+$lang['lockedby']     = 'Jelenleg zÃ¡rolta';
+$lang['lockexpire']   = 'A zÃ¡rolÃ¡s lejÃ¡r';
+$lang['willexpire']   = 'Az oldal zÃ¡rolÃ¡sod szerkesztÃ©shez kÃ¶rÃ¼lbelÃ¼l egy percen belÃ¼l lejÃ¡r.\nAz Ã¼tkÃ¶zÃ©sek elkerÃ¼lÃ©se vÃ©gett hasznÃ¡ld az elÅ‘nÃ©zet gombot a zÃ¡rolÃ¡si idÅ‘zÃ­tÃ©s frissÃ­tÃ©sÃ©hez.';
 
-$lang['notsavedyet'] = 'Elmentetlen változások vannak, amelyek el fognak veszni.\nTényleg ezt akarod?';
-$lang['rssfailed']   = 'Hiba történt ennek a betöltésekor: ';
-$lang['nothingfound']= 'Semmit nem találtam.';
+$lang['notsavedyet'] = 'Elmentetlen vÃ¡ltozÃ¡sok vannak, amelyek el fognak veszni.\nTÃ©nyleg ezt akarod?';
+$lang['rssfailed']   = 'Hiba tÃ¶rtÃ©nt ennek a betÃ¶ltÃ©sekor: ';
+$lang['nothingfound']= 'Semmit nem talÃ¡ltam.';
 
-$lang['mediaselect'] = 'Médiafájl kiválasztása';
-$lang['fileupload']  = 'Médiafájl felöltése';
-$lang['uploadsucc']  = 'A feltöltés sikerült';
-$lang['uploadfail']  = 'A feltöltés nem sikerült. Talán rosszak a jogosultságok?';
-$lang['uploadwrong'] = 'A feltölés megtagadva. Ez a fájl kiterjesztés tiltott.';
-$lang['namespaces']  = 'Névtér';
-$lang['mediafiles']  = 'Elérhetõ fájlok itt:';
+$lang['mediaselect'] = 'MÃ©diafÃ¡jl kivÃ¡lasztÃ¡sa';
+$lang['fileupload']  = 'MÃ©diafÃ¡jl felÃ¶ltÃ©se';
+$lang['uploadsucc']  = 'A feltÃ¶ltÃ©s sikerÃ¼lt';
+$lang['uploadfail']  = 'A feltÃ¶ltÃ©s nem sikerÃ¼lt. TalÃ¡n rosszak a jogosultsÃ¡gok?';
+$lang['uploadwrong'] = 'A feltÃ¶lÃ©s megtagadva. Ez a fÃ¡jl kiterjesztÃ©s tiltott.';
+$lang['namespaces']  = 'NÃ©vtÃ©r';
+$lang['mediafiles']  = 'ElÃ©rhetÅ‘ fÃ¡jlok itt:';
 
-$lang['hits']       = 'Találatok';
-$lang['quickhits']  = 'Illeszkedõ oldalnevek';
-$lang['toc']        = 'Tartalomjegyzék';
-$lang['current']    = 'aktuális';
-$lang['yours']      = 'A te változatod';
-$lang['diff']       = 'a különbségeket mutatja az aktuális változathoz képest';
-$lang['line']       = 'sorszám';
+$lang['hits']       = 'TalÃ¡latok';
+$lang['quickhits']  = 'IlleszkedÅ‘ oldalnevek';
+$lang['toc']        = 'TartalomjegyzÃ©k';
+$lang['current']    = 'aktuÃ¡lis';
+$lang['yours']      = 'A te vÃ¡ltozatod';
+$lang['diff']       = 'a kÃ¼lÃ¶nbsÃ©geket mutatja az aktuÃ¡lis vÃ¡ltozathoz kÃ©pest';
+$lang['line']       = 'sorszÃ¡m';
 $lang['breadcrumb'] = 'Nyomvonal';
-$lang['lastmod']    = 'Utolsó módosítás';
-$lang['deleted']    = 'eltávolítva';
-$lang['created']    = 'létrehozva';
-$lang['restored']   = 'az elõzõ változat helyreállítva';
-$lang['summary']    = 'A változások összefoglalása';
+$lang['lastmod']    = 'UtolsÃ³ mÃ³dosÃ­tÃ¡s';
+$lang['deleted']    = 'eltÃ¡volÃ­tva';
+$lang['created']    = 'lÃ©trehozva';
+$lang['restored']   = 'az elÅ‘zÅ‘ vÃ¡ltozat helyreÃ¡llÃ­tva';
+$lang['summary']    = 'A vÃ¡ltozÃ¡sok Ã¶sszefoglalÃ¡sa';
 
-$lang['mail_newpage'] = '[DokuWiki] oldalak hozzáadva:';
-$lang['mail_changed'] = '[DokuWiki] oldalak megváltoztatva:';
+$lang['mail_newpage'] = '[DokuWiki] oldalak hozzÃ¡adva:';
+$lang['mail_changed'] = '[DokuWiki] oldalak megvÃ¡ltoztatva:';
 
-$lang['nosmblinks'] = 'A Windows megosztott könyvtárak kereszthivatkozása csak  Microsoft Internet Explorerben mûködik közvetlenül.\nA hivatkozást másolni és beszúrni ettõl fügetlenül mndig tudod.';
+$lang['nosmblinks'] = 'A Windows megosztott kÃ¶nyvtÃ¡rak kereszthivatkozÃ¡sa csak  Microsoft Internet Explorerben mÅ±kÃ¶dik kÃ¶zvetlenÃ¼l.\nA hivatkozÃ¡st mÃ¡solni Ã©s beszÃºrni ettÅ‘l fÃ¼getlenÃ¼l mndig tudod.';
 
-$lang['qb_alert']   = 'Írd be a formázandó szöveget.\nEz a dokumentum szövegének végéhez fog hozzáadódni.';
-$lang['qb_bold']    = 'Félkövér szöveg';
-$lang['qb_italic']  = 'Dõlt szöveg';
-$lang['qb_underl']  = 'Aláhúzott szöveg';
-$lang['qb_code']    = 'Forráskód szöveg';
-$lang['qb_h1']      = '1. színtû címsor';
-$lang['qb_h2']      = '2. színtû címsor';
-$lang['qb_h3']      = '3. színtû címsor';
-$lang['qb_h4']      = '4. színtû címsor';
-$lang['qb_h5']      = '5. színtû címsor';
-$lang['qb_link']    = 'Belsõ hivatkozás';
-$lang['qb_extlink'] = 'Külsõ hivatkozás';
-$lang['qb_hr']      = 'Vízszintes elválasztó vonal';
-$lang['qb_ol']      = 'Sorszámozott lista elem';
+$lang['qb_alert']   = 'Ãrd be a formÃ¡zandÃ³ szÃ¶veget.\nEz a dokumentum szÃ¶vegÃ©nek vÃ©gÃ©hez fog hozzÃ¡adÃ³dni.';
+$lang['qb_bold']    = 'FÃ©lkÃ¶vÃ©r szÃ¶veg';
+$lang['qb_italic']  = 'DÅ‘lt szÃ¶veg';
+$lang['qb_underl']  = 'AlÃ¡hÃºzott szÃ¶veg';
+$lang['qb_code']    = 'ForrÃ¡skÃ³d szÃ¶veg';
+$lang['qb_h1']      = '1. szÃ­ntÅ± cÃ­msor';
+$lang['qb_h2']      = '2. szÃ­ntÅ± cÃ­msor';
+$lang['qb_h3']      = '3. szÃ­ntÅ± cÃ­msor';
+$lang['qb_h4']      = '4. szÃ­ntÅ± cÃ­msor';
+$lang['qb_h5']      = '5. szÃ­ntÅ± cÃ­msor';
+$lang['qb_link']    = 'BelsÅ‘ hivatkozÃ¡s';
+$lang['qb_extlink'] = 'KÃ¼lsÅ‘ hivatkozÃ¡s';
+$lang['qb_hr']      = 'VÃ­zszintes elvÃ¡lasztÃ³ vonal';
+$lang['qb_ol']      = 'SorszÃ¡mozott lista elem';
 $lang['qb_ul']      = 'Bajuszos lista elem';
-$lang['qb_media']   = 'Képek és más fájlok hozzáadása';
-$lang['qb_sig']     = 'Aláírás beszúrása';
+$lang['qb_media']   = 'KÃ©pek Ã©s mÃ¡s fÃ¡jlok hozzÃ¡adÃ¡sa';
+$lang['qb_sig']     = 'AlÃ¡Ã­rÃ¡s beszÃºrÃ¡sa';
 
 ?>

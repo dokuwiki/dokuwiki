@@ -1,8 +1,8 @@
-====== Újabb változat létezik ======
+====== Ãšjabb vÃ¡ltozat lÃ©tezik ======
 
-Az általad szerkesztett dokumentumnak egy újabb változata létezik. Ez
-akkor történik, ha egy másik felhasználó megváltoztatta a dokumentumot, amíg szerkesztetted. 
+Az Ã¡ltalad szerkesztett dokumentumnak egy Ãºjabb vÃ¡ltozata lÃ©tezik. Ez
+akkor tÃ¶rtÃ©nik, ha egy mÃ¡sik felhasznÃ¡lÃ³ megvÃ¡ltoztatta a dokumentumot, amÃ­g szerkesztetted. 
 
-Nézd át gondosan a lenti eltéréseket, aztán dönts arról, melyik változatot tartod meg. Ha ''Mentés'' gombot választod, akkor a Te változatod kerül mentésre. Nyomj ''Mégsem'' gombot a jelenlegi változat megtartásához.
+NÃ©zd Ã¡t gondosan a lenti eltÃ©rÃ©seket, aztÃ¡n dÃ¶nts arrÃ³l, melyik vÃ¡ltozatot tartod meg. Ha ''MentÃ©s'' gombot vÃ¡lasztod, akkor a Te vÃ¡ltozatod kerÃ¼l mentÃ©sre. Nyomj ''MÃ©gsem'' gombot a jelenlegi vÃ¡ltozat megtartÃ¡sÃ¡hoz.
 
 

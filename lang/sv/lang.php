@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Joaquim Homrighausen <joho@webbplatsen.se>
  */
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'swe',
                         'sv_SE',
@@ -13,14 +13,14 @@ $lang['locales']    = array(
                         'swedish',
                       );
 
-$lang['btn_edit']   = 'Redigera den här sidan';
-$lang['btn_source'] = 'Visa sidkälla';
+$lang['btn_edit']   = 'Redigera den hÃ¤r sidan';
+$lang['btn_source'] = 'Visa sidkÃ¤lla';
 $lang['btn_show']   = 'Visa sida';
-$lang['btn_create'] = 'Skapa den här sidan';
-$lang['btn_search'] = 'Sök';
+$lang['btn_create'] = 'Skapa den hÃ¤r sidan';
+$lang['btn_search'] = 'SÃ¶k';
 $lang['btn_save']   = 'Spara';
-$lang['btn_preview']= 'Förhandsgranska';
-$lang['btn_top']    = 'Till början av sidan';
+$lang['btn_preview']= 'FÃ¶rhandsgranska';
+$lang['btn_top']    = 'Till bÃ¶rjan av sidan';
 $lang['btn_revs']   = 'Historik';
 $lang['btn_recent'] = 'Senaste nytt';
 $lang['btn_upload'] = 'Ladda upp';
@@ -31,74 +31,74 @@ $lang['btn_login']  = 'Logga in';
 $lang['btn_logout'] = 'Logga ut';
 
 $lang['loggedinas'] = 'Inloggad som';
-$lang['user']       = 'Användarnamn';
-$lang['pass']       = 'Lösenord';
+$lang['user']       = 'AnvÃ¤ndarnamn';
+$lang['pass']       = 'LÃ¶senord';
 $lang['fullname']   = 'Namn';
 $lang['email']      = 'E-post';
 $lang['register']   = 'Registrera';
-$lang['badlogin']   = 'Ogiltigt användarnamn och/eller lösenord.';
+$lang['badlogin']   = 'Ogiltigt anvÃ¤ndarnamn och/eller lÃ¶senord.';
 
-$lang['regmissing'] = 'Var god fyll i alla fält.';
-$lang['reguexists'] = 'Det finns redan en användare med det användarnamnet.';
-$lang['regsuccess'] = 'Användarkontot skapat, lösenordet har skickats via e-post.';
-$lang['regmailfail']= 'Ett fel uppstod när ditt lösenord skulle skickas via e-post. Var god kontakta administratören!';
-$lang['regbadmail'] = 'Den angivna e-postadressen verkar vara ogiltig - om du anser detta felaktigt, var god kontakta administratören';
-$lang['regpwmail']  = 'Ditt DokuWikilösenord';
-$lang['reghere']    = 'Har du inte ett konto än? Skaffa ett';
+$lang['regmissing'] = 'Var god fyll i alla fÃ¤lt.';
+$lang['reguexists'] = 'Det finns redan en anvÃ¤ndare med det anvÃ¤ndarnamnet.';
+$lang['regsuccess'] = 'AnvÃ¤ndarkontot skapat, lÃ¶senordet har skickats via e-post.';
+$lang['regmailfail']= 'Ett fel uppstod nÃ¤r ditt lÃ¶senord skulle skickas via e-post. Var god kontakta administratÃ¶ren!';
+$lang['regbadmail'] = 'Den angivna e-postadressen verkar vara ogiltig - om du anser detta felaktigt, var god kontakta administratÃ¶ren';
+$lang['regpwmail']  = 'Ditt DokuWikilÃ¶senord';
+$lang['reghere']    = 'Har du inte ett konto Ã¤n? Skaffa ett';
 
-$lang['txt_upload']   = 'Välj fil att ladda upp';
+$lang['txt_upload']   = 'VÃ¤lj fil att ladda upp';
 $lang['txt_filename'] = 'Ange wikinamn (ej obligatoriskt)';
-$lang['lockedby']     = 'Låst av';
-$lang['lockexpire']   = 'Lås upphör att gälla';
-$lang['willexpire']   = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
+$lang['lockedby']     = 'LÃ¥st av';
+$lang['lockexpire']   = 'LÃ¥s upphÃ¶r att gÃ¤lla';
+$lang['willexpire']   = 'Ditt redigeringslÃ¥s fÃ¶r detta dokument kommer snart att upphÃ¶ra.\nFÃ¶r att undvika versionskonflikter bÃ¶r du fÃ¶rhandsgranska ditt dokument fÃ¶r att fÃ¶rlÃ¤nga redigeringslÃ¥set.';
 
-$lang['notsavedyet'] = 'Det finns ändringar som inte är sparade.\nÄr du säker på att du vill fortsätta?';
-$lang['rssfailed']   = 'Ett fel uppstod när denna RSS-källa skulle hämtas: ';
+$lang['notsavedyet'] = 'Det finns Ã¤ndringar som inte Ã¤r sparade.\nÃ„r du sÃ¤ker pÃ¥ att du vill fortsÃ¤tta?';
+$lang['rssfailed']   = 'Ett fel uppstod nÃ¤r denna RSS-kÃ¤lla skulle hÃ¤mtas: ';
 $lang['nothingfound']= 'Inget data.';
 
 $lang['mediaselect'] = 'Val av mediadokument';
 $lang['fileupload']  = 'Mediafile Upload';
-$lang['uploadsucc']  = 'Överföringen lyckades';
-$lang['uploadfail']  = 'Överföringen misslyckades, fel rättigheter?';
-$lang['uploadwrong'] = 'Överföringen nekad. Den filändelsen är inte tillåten';
+$lang['uploadsucc']  = 'Ã–verfÃ¶ringen lyckades';
+$lang['uploadfail']  = 'Ã–verfÃ¶ringen misslyckades, fel rÃ¤ttigheter?';
+$lang['uploadwrong'] = 'Ã–verfÃ¶ringen nekad. Den filÃ¤ndelsen Ã¤r inte tillÃ¥ten';
 $lang['namespaces']  = 'Wikinamn';
-$lang['mediafiles']  = 'Tillgängliga filer ';
+$lang['mediafiles']  = 'TillgÃ¤ngliga filer ';
 
-$lang['hits']       = 'Träffar';
+$lang['hits']       = 'TrÃ¤ffar';
 $lang['quickhits']  = 'Matchande wikinamn';
-$lang['toc']        = 'Innehållsförteckning';
+$lang['toc']        = 'InnehÃ¥llsfÃ¶rteckning';
 $lang['current']    = 'aktuell';
 $lang['yours']      = 'Din version';
 $lang['diff']       = 'visa skillnader mot aktuell version';
 $lang['line']       = 'Rad';
-$lang['breadcrumb'] = 'Spår';
+$lang['breadcrumb'] = 'SpÃ¥r';
 $lang['lastmod']    = 'Senast uppdaterad';
 $lang['deleted']    = 'raderat';
 $lang['created']    = 'skapat';
-$lang['restored']   = 'tidigare version återskapad';
+$lang['restored']   = 'tidigare version Ã¥terskapad';
 $lang['summary']    = 'Redigeringskommentar';
 
 $lang['mail_newpage'] = '[DokuWiki] sida har lagts till:';
 $lang['mail_changed'] = '[DokuWiki] sida har uppdaterats:';
 
-$lang['nosmblinks'] = 'Länkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.\nDu kan klippa och klistra in länken om du använder en annan webbläsare än MSIE..';
+$lang['nosmblinks'] = 'LÃ¤nkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.\nDu kan klippa och klistra in lÃ¤nken om du anvÃ¤nder en annan webblÃ¤sare Ã¤n MSIE..';
 
-$lang['qb_alert']   = 'Var god ange den text du vill formattera.\nDen kommer att läggas till i slutet av dokumentet.';
+$lang['qb_alert']   = 'Var god ange den text du vill formattera.\nDen kommer att lÃ¤ggas till i slutet av dokumentet.';
 $lang['qb_bold']    = 'Fet text';
 $lang['qb_italic']  = 'Kursiv text';
 $lang['qb_underl']  = 'Understruken text';
 $lang['qb_code']    = 'Kodtext';
-$lang['qb_h1']      = 'Nivå 1 Rubrik';
-$lang['qb_h2']      = 'Nivå 2 Rubrik';
-$lang['qb_h3']      = 'Nivå 3 Rubrik';
-$lang['qb_h4']      = 'Nivå 4 Rubrik';
-$lang['qb_h5']      = 'Nivå 5 Rubrik';
-$lang['qb_link']    = 'Intern Länk';
-$lang['qb_extlink'] = 'Extern Länk';
+$lang['qb_h1']      = 'NivÃ¥ 1 Rubrik';
+$lang['qb_h2']      = 'NivÃ¥ 2 Rubrik';
+$lang['qb_h3']      = 'NivÃ¥ 3 Rubrik';
+$lang['qb_h4']      = 'NivÃ¥ 4 Rubrik';
+$lang['qb_h5']      = 'NivÃ¥ 5 Rubrik';
+$lang['qb_link']    = 'Intern LÃ¤nk';
+$lang['qb_extlink'] = 'Extern LÃ¤nk';
 $lang['qb_hr']      = 'Horizontal Rule';
-$lang['qb_ol']      = 'Punkt för sorterad punktlista';
-$lang['qb_ul']      = 'Punkt för osorterad punktlista';
-$lang['qb_media']   = 'Lägg till bilder och andra filer';
+$lang['qb_ol']      = 'Punkt fÃ¶r sorterad punktlista';
+$lang['qb_ul']      = 'Punkt fÃ¶r osorterad punktlista';
+$lang['qb_media']   = 'LÃ¤gg till bilder och andra filer';
 $lang['qb_sig']     = 'Infoga signatur';
 
 ?>

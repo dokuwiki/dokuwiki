@@ -1,11 +1,11 @@
-====== Revisıes ======
+====== Revis√µes ======
 
-Estas s„o as revisıes ao documento corrente.\\
-Para reverter o documento para uma destas revisıes:
-  * Escolha a revis„o do documento da lista abaixo;
-  * Clique depois no bot„o <Editar P·gina>;
-  * FaÁa as alteraÁıes que veja necess·rias - opcional;
-  * Grava a revis„o antiga como sendo a revis„o actual do documento.
-ApÛs a gravaÁ„o, o documento da vers„o actual ser· substituÌdo pelo documento da revis„o escolhida.
+Estas s√£o as revis√µes ao documento corrente.\\
+Para reverter o documento para uma destas revis√µes:
+  * Escolha a revis√£o do documento da lista abaixo;
+  * Clique depois no bot√£o <Editar P√°gina>;
+  * Fa√ßa as altera√ß√µes que veja necess√°rias - opcional;
+  * Grava a revis√£o antiga como sendo a revis√£o actual do documento.
+Ap√≥s a grava√ß√£o, o documento da vers√£o actual ser√° substitu√≠do pelo documento da revis√£o escolhida.
 
 ----

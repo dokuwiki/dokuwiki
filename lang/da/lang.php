@@ -5,8 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Jon Bendtsen <bendtsen@diku.dk>
  */
-
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'dan',
                         'da_DK',
@@ -15,19 +14,19 @@ $lang['locales']    = array(
                       );
 
 $lang['btn_edit']   = 'Editer denne side';
-$lang['btn_search'] = 'Søg';
+$lang['btn_search'] = 'SÃ¸g';
 $lang['btn_save']   = 'Gem';
 $lang['btn_preview']= 'Preview';
 $lang['btn_top']    = 'Tilbage til toppen';
 $lang['btn_revs']   = 'Gamle versioner';
-$lang['btn_recent'] = 'Nye ændringer';
+$lang['btn_recent'] = 'Nye Ã¦ndringer';
 $lang['btn_upload'] = 'Upload';
 $lang['btn_cancel'] = 'Fortryd';
 
-$lang['txt_upload'] = 'Vælg fil til upload';
+$lang['txt_upload'] = 'VÃ¦lg fil til upload';
 $lang['txt_filename'] = 'Indtast wiki navn (valgfri)';
 
-$lang['mediaselect'] = 'Vælg mediafil';
+$lang['mediaselect'] = 'VÃ¦lg mediafil';
 $lang['fileupload']  = 'Upload mediafil';
 $lang['uploadsucc']  = 'Upload var en success';
 $lang['uploadfail']  = 'Upload fejlede';
@@ -35,17 +34,17 @@ $lang['uploadfail']  = 'Upload fejlede';
 $lang['hits']       = 'Hits';
 $lang['quickhits']  = 'Passende sidenavne';
 $lang['toc']        = 'Indholdsfortegnelse';
-$lang['current']    = 'nuværende';
-$lang['diff']       = 'vis forskelle i forhold til nuværende version';
+$lang['current']    = 'nuvÃ¦rende';
+$lang['diff']       = 'vis forskelle i forhold til nuvÃ¦rende version';
 $lang['line']       = 'Linie';
 $lang['breadcrumb'] = 'Sti';
-$lang['lastmod']    = 'Sidst ændret';
+$lang['lastmod']    = 'Sidst Ã¦ndret';
 
-$lang['mail_newpage'] = '[DokuWiki] side tilføjet:';
-$lang['mail_changed'] = '[DokuWiki] side ændret:';
+$lang['mail_newpage'] = '[DokuWiki] side tilfÃ¸jet:';
+$lang['mail_changed'] = '[DokuWiki] side Ã¦ndret:';
 
 $lang['qb_bold']    = 'Fed text';
-$lang['qb_italic']  = 'Skrå text';
+$lang['qb_italic']  = 'SkrÃ¥ text';
 $lang['qb_underl']  = 'Understreget text';
 $lang['qb_code']    = 'Skrivemaskine text';
 $lang['qb_h1']      = 'Level 1 overskrift';
@@ -58,6 +57,6 @@ $lang['qb_extlink'] = 'Extern link';
 $lang['qb_hr']      = 'Horizontal linie';
 $lang['qb_ol']      = 'Nummereret liste element';
 $lang['qb_ul']      = 'Unordnet liste element';
-$lang['qb_media']   = 'Tilføj billeder og andre filer';
+$lang['qb_media']   = 'TilfÃ¸j billeder og andre filer';
 
 ?>

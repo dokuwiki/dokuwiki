@@ -1,5 +1,5 @@
-Zredaguj tê stronê i naci¶nij ''zapisz''. 
+Zredaguj tÄ™ stronÄ™ i naciÅ›nij ''zapisz''. 
 
-Na stronie [[wiki:syntax]] znajduje siê opis sk³adni wiki. 
-Je¶li chcesz poæwiczyæ zajrzyj na stronê [[wiki:playground]].
+Na stronie [[wiki:syntax]] znajduje siÄ™ opis skÅ‚adni wiki. 
+JeÅ›li chcesz poÄ‡wiczyÄ‡ zajrzyj na stronÄ™ [[wiki:playground]].
 

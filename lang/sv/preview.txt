@@ -1,4 +1,4 @@
-======Förhandsgranskning======
+======FÃ¶rhandsgranskning======
 
-Detta är en förhandstitt av hur din text kommer att se ut när den visas. Kom ihåg: Den är **inte sparad** än!
+Detta Ã¤r en fÃ¶rhandstitt av hur din text kommer att se ut nÃ¤r den visas. Kom ihÃ¥g: Den Ã¤r **inte sparad** Ã¤n!
 

@@ -1,9 +1,9 @@
-DokuWikiisi lis‰ttiin tai siell‰ muutettiin sivua. T‰ss‰ yksityiskohdat
+DokuWikiisi lis√§ttiin tai siell√§ muutettiin sivua. T√§ss√§ yksityiskohdat
 
-P‰iv‰m‰‰r‰               : @DATE@
+P√§iv√§m√§√§r√§               : @DATE@
 Selain                   : @BROWSER@
 IP-Osoite                : @IPADDRESS@
-Is‰nt‰nimi               : @HOSTNAME@
+Is√§nt√§nimi               : @HOSTNAME@
 Vanha versio             : @OLDPAGE@
 Uusi versio              : @NEWPAGE@
 Yhteenveto muokkauksesta : @SUMMARY@
@@ -12,5 +12,5 @@ Yhteenveto muokkauksesta : @SUMMARY@
 
 
 --
-T‰m‰n postin generoi DokuWiki
+T√§m√§n postin generoi DokuWiki
 @DOKUWIKIURL@

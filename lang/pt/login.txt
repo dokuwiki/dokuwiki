@@ -1,7 +1,7 @@
-====== Sess„o ======
+====== Sess√£o ======
 
-N„o est· actualmente em sess„o!\\
-Introduza as suas credenciais de autenticaÁ„o para entrar em sess„o.
+N√£o est√° actualmente em sess√£o!\\
+Introduza as suas credenciais de autentica√ß√£o para entrar em sess√£o.
 
 **Nota**: Precisa de ter //cookies// activos no seu browser.
 

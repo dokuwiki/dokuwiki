@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Anika Henke <henke@cosmocode.de>
  */
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'eng',
                         'en_US',

@@ -1,8 +1,8 @@
-Strona w Twoim DokuWiki zosta≥a dodana lub zmieniona. 
-SzczegÛ≥y poniøej.
+Strona w Twoim DokuWiki zosta≈Ça dodana lub zmieniona. 
+Szczeg√≥≈Çy poni≈ºej.
 
 Data         : @DATE@
-Uøytkownik   : @BROWSER@
+U≈ºytkownik   : @BROWSER@
 Adres IP     : @IPADDRESS@
 Komputer     : @HOSTNAME@
 Stara wersja : @OLDPAGE@
@@ -14,5 +14,5 @@ Opis zmian   : @SUMMARY@
 
 -- 
 
-List zosta≥ wygenerowany przez DokuWiki pod adresem
+List zosta≈Ç wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@

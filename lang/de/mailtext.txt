@@ -1,4 +1,4 @@
-Eine Seite in deinem DokuWiki wurde ge‰ndert oder neu angelegt. Hier sind die Details:
+Eine Seite in deinem DokuWiki wurde ge√§ndert oder neu angelegt. Hier sind die Details:
 
 Datum       : @DATE@
 Browser     : @BROWSER@

@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Petteri <petteri@gmail.com>
  */
-$lang['encoding']   = 'iso-8859-15';
+$lang['encoding']   = 'utf-8';
 $lang['locales']    = array(
                         'fin',
                         'fi_FI@euro',
@@ -13,78 +13,78 @@ $lang['locales']    = array(
                         'finnish',
                       );
 
-$lang['btn_edit']   = 'Muokkaa tätä sivua';
-$lang['btn_source'] = 'Näytä sivun lähdekoodi';
-$lang['btn_show']   = 'Näytä sivu';
-$lang['btn_create'] = 'Luo tämä sivu';
+$lang['btn_edit']   = 'Muokkaa tÃ¤tÃ¤ sivua';
+$lang['btn_source'] = 'NÃ¤ytÃ¤ sivun lÃ¤hdekoodi';
+$lang['btn_show']   = 'NÃ¤ytÃ¤ sivu';
+$lang['btn_create'] = 'Luo tÃ¤mÃ¤ sivu';
 $lang['btn_search'] = 'Etsi';
 $lang['btn_save']   = 'Tallenna';
 $lang['btn_preview']= 'Esikatselu';
-$lang['btn_top']    = 'Takaisin ylös';
+$lang['btn_top']    = 'Takaisin ylÃ¶s';
 $lang['btn_revs']   = 'Vanhat versiot';
 $lang['btn_recent'] = 'Viimeiset muutokset';
-$lang['btn_upload'] = 'Lähetä tiedosto';
+$lang['btn_upload'] = 'LÃ¤hetÃ¤ tiedosto';
 $lang['btn_cancel'] = 'Peru';
 $lang['btn_index']  = 'Hakemisto';
 $lang['btn_secedit']= 'Muokkaa';
-$lang['btn_login']  = 'Kirjaudu sisään';
+$lang['btn_login']  = 'Kirjaudu sisÃ¤Ã¤n';
 $lang['btn_logout'] = 'Kirjaudu ulos';
 
-$lang['loggedinas'] = 'Kirjautunut nimellä';
-$lang['user']       = 'Käyttäjänimi';
+$lang['loggedinas'] = 'Kirjautunut nimellÃ¤';
+$lang['user']       = 'KÃ¤yttÃ¤jÃ¤nimi';
 $lang['pass']       = 'Salasana';
 $lang['fullname']   = 'Kokonimi';
-$lang['email']      = 'Sähköposti';
-$lang['register']   = 'Rekisteröidy';
-$lang['badlogin']   = 'Anteeksi, käyttäjänimi tai salasana oli väärä.';
+$lang['email']      = 'SÃ¤hkÃ¶posti';
+$lang['register']   = 'RekisterÃ¶idy';
+$lang['badlogin']   = 'Anteeksi, kÃ¤yttÃ¤jÃ¤nimi tai salasana oli vÃ¤Ã¤rÃ¤.';
 
-$lang['regmissing'] = 'Anteeksi, sinun täytyy täyttää kaikki kentät.';
-$lang['reguexists'] = 'Anteeksi, käyttäjä tällä käyttäjänimellä on jo olemassa';
-$lang['regsuccess'] = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla';
-$lang['regmailfail']= 'Näyttää siltä, että tuli virheitä salasanan lähettämisessä 
-sähköpostiin. Ota yhteys ylläpitäjään!';
-$lang['regbadmail'] = 'Antamasi sähköposti näyttää epäkelvolta. Jos pidät tätä virheenä ota yhteys ylläpitäjään.';
+$lang['regmissing'] = 'Anteeksi, sinun tÃ¤ytyy tÃ¤yttÃ¤Ã¤ kaikki kentÃ¤t.';
+$lang['reguexists'] = 'Anteeksi, kÃ¤yttÃ¤jÃ¤ tÃ¤llÃ¤ kÃ¤yttÃ¤jÃ¤nimellÃ¤ on jo olemassa';
+$lang['regsuccess'] = 'KÃ¤yttÃ¤jÃ¤ luotiin ja salasana lÃ¤hetettiin sÃ¤hkÃ¶postilla';
+$lang['regmailfail']= 'NÃ¤yttÃ¤Ã¤ siltÃ¤, ettÃ¤ tuli virheitÃ¤ salasanan lÃ¤hettÃ¤misessÃ¤ 
+sÃ¤hkÃ¶postiin. Ota yhteys yllÃ¤pitÃ¤jÃ¤Ã¤n!';
+$lang['regbadmail'] = 'Antamasi sÃ¤hkÃ¶posti nÃ¤yttÃ¤Ã¤ epÃ¤kelvolta. Jos pidÃ¤t tÃ¤tÃ¤ virheenÃ¤ ota yhteys yllÃ¤pitÃ¤jÃ¤Ã¤n.';
 $lang['regpwmail']  = 'Sinun DokuWiki salasanasi';
-$lang['reghere']    = 'Sinulla ei ole vielä käyttäjätiliä? Hanki sellainen';
+$lang['reghere']    = 'Sinulla ei ole vielÃ¤ kÃ¤yttÃ¤jÃ¤tiliÃ¤? Hanki sellainen';
 
-$lang['txt_upload']   = 'Valitse tiedosto lähetettäväksi';
-$lang['txt_filename'] = 'Syötä wikinimi (valinnainen)';
-$lang['lockedby']     = 'Tällä hetkellä tiedoston on lukinnnut';
-$lang['lockexpire']   = 'Lukitus päättyy';
-$lang['willexpire']   = 'Sinun lukitus tämän sivun muokkaukseen päättyy minuutin kuluttua.\nRistiriitojen välttämiseksi paina esikatselu-nappia nollataksesi lukitusajan.';
+$lang['txt_upload']   = 'Valitse tiedosto lÃ¤hetettÃ¤vÃ¤ksi';
+$lang['txt_filename'] = 'SyÃ¶tÃ¤ wikinimi (valinnainen)';
+$lang['lockedby']     = 'TÃ¤llÃ¤ hetkellÃ¤ tiedoston on lukinnnut';
+$lang['lockexpire']   = 'Lukitus pÃ¤Ã¤ttyy';
+$lang['willexpire']   = 'Sinun lukitus tÃ¤mÃ¤n sivun muokkaukseen pÃ¤Ã¤ttyy minuutin kuluttua.\nRistiriitojen vÃ¤lttÃ¤miseksi paina esikatselu-nappia nollataksesi lukitusajan.';
 
-$lang['notsavedyet'] = 'Dokumentissa on tallentamattomia muutoksia, jotka häviävät.\n Haluatko varmasti jatkaa?';
-$lang['rssfailed']   = 'Virhe tapahtui noudettaessa tätä syötettä: ';
-$lang['nothingfound']= 'Mitään ei löydetty.';
+$lang['notsavedyet'] = 'Dokumentissa on tallentamattomia muutoksia, jotka hÃ¤viÃ¤vÃ¤t.\n Haluatko varmasti jatkaa?';
+$lang['rssfailed']   = 'Virhe tapahtui noudettaessa tÃ¤tÃ¤ syÃ¶tettÃ¤: ';
+$lang['nothingfound']= 'MitÃ¤Ã¤n ei lÃ¶ydetty.';
 
 $lang['mediaselect'] = 'Mediatiedoston valinta';
-$lang['fileupload']  = 'Mediatiedoston lähetys';
-$lang['uploadsucc']  = 'Tiedoston lähetys onnistui';
-$lang['uploadfail']  = 'Tiedoston lähetys epäonnistui. Ehkä väärät oikeudet?';
-$lang['uploadwrong'] = 'Tiedoston lähetys evätty. Tämä tiedostopääte on kielletty';
+$lang['fileupload']  = 'Mediatiedoston lÃ¤hetys';
+$lang['uploadsucc']  = 'Tiedoston lÃ¤hetys onnistui';
+$lang['uploadfail']  = 'Tiedoston lÃ¤hetys epÃ¤onnistui. EhkÃ¤ vÃ¤Ã¤rÃ¤t oikeudet?';
+$lang['uploadwrong'] = 'Tiedoston lÃ¤hetys evÃ¤tty. TÃ¤mÃ¤ tiedostopÃ¤Ã¤te on kielletty';
 $lang['namespaces']  = 'Nimiavaruudet';
 $lang['mediafiles']  = 'Tarjolla olevat tiedostot';
 
 $lang['hits']       = 'Osumia';
 $lang['quickhits']  = 'Sopivat sivunimet';
-$lang['toc']        = 'Sisällysluettelo';
+$lang['toc']        = 'SisÃ¤llysluettelo';
 $lang['current']    = 'nykyinen';
 $lang['yours']      = 'Sinun versiosi';
-$lang['diff']       = 'näytä eroavaisuudet nykyiseen versioon';
+$lang['diff']       = 'nÃ¤ytÃ¤ eroavaisuudet nykyiseen versioon';
 $lang['line']       = 'Viiva';
-$lang['breadcrumb'] = 'Jäljet';
+$lang['breadcrumb'] = 'JÃ¤ljet';
 $lang['lastmod']    = 'Viimeksi muutettu';
 $lang['deleted']    = 'poistettu';
 $lang['created']    = 'luotu';
 $lang['restored']   = 'vanhat versiot palautettu';
 $lang['summary']    = 'Yhteenveto muokkauksesta';
 
-$lang['mail_newpage'] = '[DokuWiki] sivu lisätty:';
+$lang['mail_newpage'] = '[DokuWiki] sivu lisÃ¤tty:';
 $lang['mail_changed'] = '[DokuWiki] sivu muutettu:';
 
-$lang['nosmblinks'] = 'Linkit windows-jakoihin toimivat vain Microsof Internet Explorerilla.\nVoit silti kopioida ja liittää linkin.';
+$lang['nosmblinks'] = 'Linkit windows-jakoihin toimivat vain Microsof Internet Explorerilla.\nVoit silti kopioida ja liittÃ¤Ã¤ linkin.';
 
-$lang['qb_alert']   = 'Syötä teksti jonka haluat muotoilla.\nSe lisätään dokumentin loppuun.';
+$lang['qb_alert']   = 'SyÃ¶tÃ¤ teksti jonka haluat muotoilla.\nSe lisÃ¤tÃ¤Ã¤n dokumentin loppuun.';
 $lang['qb_bold']    = 'Lihavoitu teksti';
 $lang['qb_italic']  = 'Kursivoitu teksti';
 $lang['qb_underl']  = 'Alleviivattu teksti';
@@ -94,12 +94,12 @@ $lang['qb_h2']      = 'Taso 2 otsikko';
 $lang['qb_h3']      = 'Taso 3 otsikko';
 $lang['qb_h4']      = 'Taso 4 otsikko';
 $lang['qb_h5']      = 'Taso 5 otsikko';
-$lang['qb_link']    = 'Sisäinen linkki';
+$lang['qb_link']    = 'SisÃ¤inen linkki';
 $lang['qb_extlink'] = 'Ulkoinen linkki';
 $lang['qb_hr']      = 'Vaakaeroitin';
-$lang['qb_ol']      = 'Järjestetyn listan osa ';
-$lang['qb_ul']      = 'Epäjärjestetyn listan osa';
-$lang['qb_media']   = 'Lisää kuvia ja muita tiedostoja';
-$lang['qb_sig']     = 'Lisää allekirjoitus';
+$lang['qb_ol']      = 'JÃ¤rjestetyn listan osa ';
+$lang['qb_ul']      = 'EpÃ¤jÃ¤rjestetyn listan osa';
+$lang['qb_media']   = 'LisÃ¤Ã¤ kuvia ja muita tiedostoja';
+$lang['qb_sig']     = 'LisÃ¤Ã¤ allekirjoitus';
 
 ?>

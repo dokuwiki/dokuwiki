@@ -1,7 +1,7 @@
-====== Revis„o Inexistente ======
+====== Revis√£o Inexistente ======
 
-A revis„o especificada n„o existe.
+A revis√£o especificada n√£o existe.
 
-Clique no bot„o <Revisıes> para aceder ‡ lista de revisıes deste documento.
+Clique no bot√£o <Revis√µes> para aceder √† lista de revis√µes deste documento.
 
 ----

@@ -1,16 +1,16 @@
-Str·nka ve vaπem DokuWiki byla zmÏnÏna. Zde jsou podrobnosti:
+Str√°nka ve va≈°em DokuWiki byla zmƒõnƒõna. Zde jsou podrobnosti:
 
 Datum       : @DATE@
-ProhlÌæeË   : @BROWSER@
+Prohl√≠≈æeƒç   : @BROWSER@
 IP adresa   : @IPADDRESS@
 Hostitel    : @HOSTNAME@
-Star· verze : @OLDPAGE@
-Nov· verze  : @NEWPAGE@
-Koment·¯    : @SUMMARY@
+Star√° verze : @OLDPAGE@
+Nov√° verze  : @NEWPAGE@
+Koment√°≈ô    : @SUMMARY@
 
 @DIFF@
 
 
 -- 
-Tato zpr·va byla vygenerov·na systÈmem DokuWiki:
+Tato zpr√°va byla vygenerov√°na syst√©mem DokuWiki:
 @DOKUWIKIURL@

@@ -1,4 +1,4 @@
-Upravte stránku a stisknìte ''Ulo¾it''. Na stránce [[wiki:syntax]] se mù¾ete
-dozvìdìt více o Wiki syntaxi. Prosím upravujte stránky pouze pokud je mù¾ete
-**vylep¹it**. Pokud si chcete nìco pouze vyzkou¹et, pou¾ijte [[wiki:playground
-| pískovi¹tì]].
+Upravte strÃ¡nku a stisknÄ›te ''UloÅ¾it''. Na strÃ¡nce [[wiki:syntax]] se mÅ¯Å¾ete
+dozvÄ›dÄ›t vÃ­ce o Wiki syntaxi. ProsÃ­m upravujte strÃ¡nky pouze pokud je mÅ¯Å¾ete
+**vylepÅ¡it**. Pokud si chcete nÄ›co pouze vyzkouÅ¡et, pouÅ¾ijte [[wiki:playground
+| pÃ­skoviÅ¡tÄ›]].

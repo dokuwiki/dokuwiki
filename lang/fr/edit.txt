@@ -1,6 +1,6 @@
 Modifiez cette page et cliquez sur ''Sauver''. Voyez le [[wiki:syntax|Guide
-de la mise en page (en anglais)]] pour une aide à propos du format. Veuillez ne
-modifier cette page que si vous pouvez l'**améliorer**. Si vous
+de la mise en page (en anglais)]] pour une aide Ã  propos du format. Veuillez ne
+modifier cette page que si vous pouvez l'**amÃ©liorer**. Si vous
 souhaitez faire des tests, faites vos premiers pas dans le
-[[wiki:playground|bac à sable]].
+[[wiki:playground|bac Ã  sable]].
 

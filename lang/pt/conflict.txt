@@ -1,12 +1,12 @@
-====== Conflito de Edição ======
+====== Conflito de EdiÃ§Ã£o ======
 
-**Atenção**: Existe uma versão mais recente do que a versão usada no começo da sua edição.
-Isto acontece quando outra pessoa editou este documento entretanto e já gravou as alterações efectuadas.
+**AtenÃ§Ã£o**: Existe uma versÃ£o mais recente do que a versÃ£o usada no comeÃ§o da sua ediÃ§Ã£o.
+Isto acontece quando outra pessoa editou este documento entretanto e jÃ¡ gravou as alteraÃ§Ãµes efectuadas.
 
-Por favor, examine todas as diferenças mostradas abaixo com atenção, e decida qual a versão que deverá ser tornada a mais actual:
-  * Se escolher <Gravar> a sua versão será sobreposta à versão editada pela outra pessoa, que será perdida.
-  * Se escolher <Cancelar> a versão editada pela outra pessoa será a versão final, e a sua será perdida.
+Por favor, examine todas as diferenÃ§as mostradas abaixo com atenÃ§Ã£o, e decida qual a versÃ£o que deverÃ¡ ser tornada a mais actual:
+  * Se escolher <Gravar> a sua versÃ£o serÃ¡ sobreposta Ã  versÃ£o editada pela outra pessoa, que serÃ¡ perdida.
+  * Se escolher <Cancelar> a versÃ£o editada pela outra pessoa serÃ¡ a versÃ£o final, e a sua serÃ¡ perdida.
 
-**Nota**: Sem que efectue a consolidação das alterações de ambas as revisões ao documento irá sempre perder uma das versões.
+**Nota**: Sem que efectue a consolidaÃ§Ã£o das alteraÃ§Ãµes de ambas as revisÃµes ao documento irÃ¡ sempre perder uma das versÃµes.
 
 ----

@@ -1,6 +1,6 @@
-====== Rejestracja nowego u¿ytkownika ======
+====== Rejestracja nowego uÅ¼ytkownika ======
 
-Wype³nij wszystkie pola formularza aby stworzyæ nowe konto w tym wiki.
-Upewnij siê, ¿e poda³e¶/a¶ **w³a¶ciwy adres e-mail**, poniewa¿ nowe has³o zostanie do Ciebie przes³ane poczt±. 
-Nazwa u¿ytkownika powinna byæ zgodna z formatem z [[doku>wiki:pagename|nazwy strony]].
+WypeÅ‚nij wszystkie pola formularza aby stworzyÄ‡ nowe konto w tym wiki.
+Upewnij siÄ™, Å¼e podaÅ‚eÅ›/aÅ› **wÅ‚aÅ›ciwy adres e-mail**, poniewaÅ¼ nowe hasÅ‚o zostanie do Ciebie przesÅ‚ane pocztÄ…. 
+Nazwa uÅ¼ytkownika powinna byÄ‡ zgodna z formatem z [[doku>wiki:pagename|nazwy strony]].
 

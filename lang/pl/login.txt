@@ -1,5 +1,5 @@
 ====== Logowanie ======
 
-Wprowad¼ nazwê u¿ytkownika i has³o poni¿ej aby siê zalogowaæ.
-Twoja przegl±darka musi mieæ w³±czon± obs³ugê ciasteczek (cookies).
+WprowadÅº nazwÄ™ uÅ¼ytkownika i hasÅ‚o poniÅ¼ej aby siÄ™ zalogowaÄ‡.
+Twoja przeglÄ…darka musi mieÄ‡ wÅ‚Ä…czonÄ… obsÅ‚ugÄ™ ciasteczek (cookies).
 

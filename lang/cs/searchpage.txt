@@ -1,6 +1,6 @@
-====== Vyhledávání ======
+====== VyhledÃ¡vÃ¡nÃ­ ======
 
-Vısledky hledání mù¾ete vidìt ní¾e. Pokud jste nena¹li, co hledáte, zkuste
-po¾adovanou stránku sami vytvoøit stisknutím tlaèítka ''Vytvoøit stránku''.
+VÃ½sledky hledÃ¡nÃ­ mÅ¯Å¾ete vidÄ›t nÃ­Å¾e. Pokud jste nenaÅ¡li, co hledÃ¡te, zkuste
+poÅ¾adovanou strÃ¡nku sami vytvoÅ™it stisknutÃ­m tlaÄÃ­tka ''VytvoÅ™it strÃ¡nku''.
 
-===== Vısledky =====
+===== VÃ½sledky =====

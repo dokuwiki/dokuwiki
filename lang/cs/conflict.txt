@@ -1,8 +1,8 @@
-====== Existuje novìj¹í verze ======
+====== Existuje novÄ›jÅ¡Ã­ verze ======
 
-Existuje novìj¹í verze právì upravovaného dokumentu. To se stává, pokud nìkdo
-jinı zmìnil dokument, kterı právì upravujete.
+Existuje novÄ›jÅ¡Ã­ verze prÃ¡vÄ› upravovanÃ©ho dokumentu. To se stÃ¡vÃ¡, pokud nÄ›kdo
+jinÃ½ zmÄ›nil dokument, kterÃ½ prÃ¡vÄ› upravujete.
 
-Prohlédnìte si ní¾e uvedené rozdíly, pøípadnì rozdíly z obou verzí ruènì spojte
-dohromady a rozhodnìte se, kterou verzi uchovat. Pokud zvolíte ''Ulo¾it'',
-bude ulo¾ena va¹e verze. Jinak stisknìte ''Storno'' pro uchování pùvodní verze.
+ProhlÃ©dnÄ›te si nÃ­Å¾e uvedenÃ© rozdÃ­ly, pÅ™Ã­padnÄ› rozdÃ­ly z obou verzÃ­ ruÄnÄ› spojte
+dohromady a rozhodnÄ›te se, kterou verzi uchovat. Pokud zvolÃ­te ''UloÅ¾it'',
+bude uloÅ¾ena vaÅ¡e verze. Jinak stisknÄ›te ''Storno'' pro uchovÃ¡nÃ­ pÅ¯vodnÃ­ verze.

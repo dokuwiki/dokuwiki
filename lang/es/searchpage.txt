@@ -1,6 +1,6 @@
-======Búsqueda======
+======BÃºsqueda======
 
-Puedes encontrar los resultados de tu búsqueda debajo. Si no has encontrado lo que buscabas, puedes crear
-una nueva página tras tu consulta utilizando el botón  ''Edita esta página''.
+Puedes encontrar los resultados de tu bÃºsqueda debajo. Si no has encontrado lo que buscabas, puedes crear
+una nueva pÃ¡gina tras tu consulta utilizando el botÃ³n  ''Edita esta pÃ¡gina''.
 
 =====Resultados=====

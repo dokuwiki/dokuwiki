@@ -1,5 +1,5 @@
 ======Diferencias======
 
 Muestra las diferencias entre la revision seleccionada y la 
-versión actual de esta página.
+versiÃ³n actual de esta pÃ¡gina.
 

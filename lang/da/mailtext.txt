@@ -1,4 +1,4 @@
-En side i din DokuWiki blev ændret eller tilføjet. Her er detajlerne:
+En side i din DokuWiki blev Ã¦ndret eller tilfÃ¸jet. Her er detajlerne:
 
 Dato:           @DATE@
 Browser:        @BROWSER@
@@ -11,5 +11,5 @@ Ny version:     @NEWPAGE@
 
 
 -- 
-Denne email blev genereret af DokuWiki på denne adresse:
+Denne email blev genereret af DokuWiki pÃ¥ denne adresse:
 @DOKUWIKIURL@

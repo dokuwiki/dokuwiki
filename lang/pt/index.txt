@@ -1,6 +1,6 @@
-====== Índice ======
+====== Ãndice ======
 
-Este índice mostra todos os documentos disponíveis neste site Wiki, [[doku>wiki:namespaces | agrupados]] por assunto.
+Este Ã­ndice mostra todos os documentos disponÃ­veis neste site Wiki, [[doku>wiki:namespaces | agrupados]] por assunto.
 
 ----
 

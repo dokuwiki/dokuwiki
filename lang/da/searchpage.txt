@@ -1,5 +1,5 @@
-======Søg======
+======SÃ¸g======
 
-Resultaterne af din søgning kan du finde nedenunder. Hvis resultaterne ikke indeholder det du søgte efter kan du oprette en ny side med samme navn som søgningen ved at trykke på knappen **''[Editer denne side]''** i toppen til venstre.
+Resultaterne af din sÃ¸gning kan du finde nedenunder. Hvis resultaterne ikke indeholder det du sÃ¸gte efter kan du oprette en ny side med samme navn som sÃ¸gningen ved at trykke pÃ¥ knappen **''[Editer denne side]''** i toppen til venstre.
 
 =====Resultater=====

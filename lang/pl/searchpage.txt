@@ -1,9 +1,9 @@
 ====== Wyszukiwanie ======
 
-Wyniki wyszukiwania znajduj± siê poni¿ej. 
-Je¿eli nie znalaz³e¶/a¶ tego czego szukasz, 
-mo¿esz utworzyæ stronê o nazwie odpowiadaj±cej 
-szukanemu has³u klikaj±c ''utwórz stronê''.
+Wyniki wyszukiwania znajdujÄ… siÄ™ poniÅ¼ej. 
+JeÅ¼eli nie znalazÅ‚eÅ›/aÅ› tego czego szukasz, 
+moÅ¼esz utworzyÄ‡ stronÄ™ o nazwie odpowiadajÄ…cej 
+szukanemu hasÅ‚u klikajÄ…c ''utwÃ³rz stronÄ™''.
 
 ===== Wyniki =====
 

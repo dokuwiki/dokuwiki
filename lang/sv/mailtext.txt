@@ -1,9 +1,9 @@
-En sida i din DokuWiki har lagts till eller ‰ndrats; uppgifter om fˆr‰ndringen:
+En sida i din DokuWiki har lagts till eller √§ndrats; uppgifter om f√∂r√§ndringen:
 
 Datum                : @DATE@
-Webbl‰sare           : @BROWSER@
+Webbl√§sare           : @BROWSER@
 IP-adress            : @IPADDRESS@
-V‰rdnamn             : @HOSTNAME@
+V√§rdnamn             : @HOSTNAME@
 Tidigare version     : @OLDPAGE@
 Aktuell version      : @NEWPAGE@
 Redigeringskommentar : @SUMMARY@
