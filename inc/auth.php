@@ -12,6 +12,7 @@
   require_once("inc/common.php");
   require_once("inc/io.php");
   require_once("inc/blowfish.php");
+  require_once("inc/mail.php");
   // load the the auth functions
   require_once('inc/auth_'.$conf['authtype'].'.php');
 
@@ -329,10 +330,10 @@ function auth_sendPassword($user,$password){
   $text = str_replace('@PASSWORD@',$password,$text);
   $text = str_replace('@TITLE@',$conf['title'],$text);
 
-  if (!empty($conf['mailfrom'])) {
-    $hdrs = 'From: '.$conf['mailfrom']."\n";
-  }
-  return @mail($userinfo['mail'],$lang['regpwmail'],$text,$hdrs);
+  return mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
+                   $lang['regpwmail'],
+                   $text,
+                   $conf['mailfrom']);
 }
 
 /**
@@ -366,7 +367,7 @@ function register(){
   }
 
   //check mail
-  if(!isvalidemail($_POST['email'])){
+  if(!mail_isvalid($_POST['email'])){
     msg($lang['regbadmail'],-1);
     return false;
   }
@@ -386,20 +387,6 @@ function register(){
     msg($lang['regmailfail'],-1);
     return false;
   }
-}
-
-/**
- * Uses a regular expresion to check if a given mail address is valid
- *
- * May not be completly RFC conform!
- * 
- * @link    http://www.webmasterworld.com/forum88/135.htm
- *
- * @param   string $email the address to check
- * @return  bool          true if address is valid
- */
-function isvalidemail($email){
-  return eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);
 }
 
 ?>

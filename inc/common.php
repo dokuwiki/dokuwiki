@@ -9,6 +9,7 @@
   require_once("conf/dokuwiki.php");
   require_once("inc/io.php");
   require_once('inc/utf8.php');
+  require_once('inc/mail.php');
 
   //set up error reporting to sane values
   error_reporting(E_ALL ^ E_NOTICE);
@@ -772,10 +773,7 @@ function notify($id,$rev="",$summary=""){
   }
   $text = str_replace('@DIFF@',$diff,$text);
 
-  if (!empty($conf['mailfrom'])) {
-    $hdrs = 'From: '.$conf['mailfrom']."\n";
-  }
-  @mail($conf['notify'],$subject,$text,$hdrs);
+  mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
 }
 
 /**

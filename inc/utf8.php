@@ -42,6 +42,18 @@ function utf8_decodeFN($file){
 }
 
 /**
+ * Checks if a string contains 7bit ASCII only
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function utf8_isASCII($str){
+  for($i=0; $i<strlen($str); $i++){
+    if(ord($str{$i}) >127) return false;
+  }
+  return true;
+}
+
+/**
  * Tries to detect if a string is in Unicode encoding
  *
  * @author <bmorel@ssi.fr>
