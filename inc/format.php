@@ -275,11 +275,20 @@ function format_link_interwiki($link){
   }
 
   //replace placeholder
-  if(strstr($url,'{URL}') !== false){
-    $link['url'] = str_replace('{URL}',urlencode($link['url']),$url);
-  }elseif(strstr($url,'{NAME}') !== false){
-    $link['url'] = str_replace('{NAME}',$link['url'],$url);
+  if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
+    //use placeholders
+    $url = str_replace('{URL}',urlencode($link['url']),$url);
+    $url = str_replace('{NAME}',$link['url'],$url);
+    $parsed = parse_url($link['url']);
+    if(!$parsed['port']) $parsed['port'] = 80;
+    $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
+    $url = str_replace('{HOST}',$parsed['host'],$url);
+    $url = str_replace('{PORT}',$parsed['port'],$url);
+    $url = str_replace('{PATH}',$parsed['path'],$url);
+    $url = str_replace('{QUERY}',$parsed['query'],$url);
+    $link['url'] = $url;
   }else{
+    //default
     $link['url'] = $url.urlencode($link['url']);
   }
 
