@@ -1,0 +1,3 @@
+Modifica la pagina e clicca ''Salva''. Vedi [[wiki:syntax]] per la sintassi
+riconosciuta da Wiki. Per favore modifica questa pagina solo se puoi **apportare dei miglioramenti**. Se vuoi solo fare degli esperimenti e imparare come fare i primi passi usa [[wiki:playground]].
+

@@ -1,0 +1,16 @@
+Una pagina su DokuWiki è stata aggiunta o modificata. Questi sono i dettagli:
+
+Data                   : @DATE@
+Browser                : @BROWSER@
+IP-Address             : @IPADDRESS@
+Hostname               : @HOSTNAME@
+Vecchia revisione      : @OLDPAGE@
+Nuova revisione        : @NEWPAGE@
+Oggetto della modifica : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+Questo e-mail è stato generato da DokuWiki su
+@DOKUWIKIURL@
