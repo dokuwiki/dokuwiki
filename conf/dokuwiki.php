@@ -51,12 +51,6 @@ $conf['openregister']= 1;                //Should users to be allowed to registe
 $conf['authtype']    = 'plain';          //which authentication DB should be used (currently plain only)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 
-//LDAP auth specific stuff (see wiki:auth_ldap)
-$conf['auth']['ldap']['server']     = 'localhost';
-$conf['auth']['ldap']['usertree']   = 'ou=people, dc=my, dc=home';
-$conf['auth']['ldap']['grouptree']  = 'ou=group, dc=my, dc=home';
-$conf['auth']['ldap']['userfilter'] = '(&(uid=%u)(objectClass=posixAccount))';
-
 /* Advanced Options */
 $conf['userewrite']  = 0;                //this makes nice URLs but you need to enable it in .htaccess first 0|1
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
