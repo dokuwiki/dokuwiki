@@ -538,6 +538,13 @@ function html_search(){
   print parsedLocale('searchpage');
   flush();
 
+  //show progressbar
+  print '<div align="center">';
+  print '<script language="JavaScript" type="text/javascript">';
+  print 'showLoadBar();';
+  print '</script>';
+  print '<br /></div>';
+
   //do quick pagesearch
   $data = array();
   search($data,$conf['datadir'],'search_pagename',array(query => cleanID($QUERY)));
@@ -571,6 +578,11 @@ function html_search(){
   }else{
     print '<div align="center">'.$lang['nothingfound'].'</div>';
   }
+
+  //hide progressbar
+  print '<script language="JavaScript" type="text/javascript">';
+  print 'hideLoadBar();';
+  print '</script>';
 }
 
 /**

@@ -31,6 +31,29 @@ function escapeQuotes(text) {
 }
 
 /**
+ * Prints a animated gif to show the search is performed
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function showLoadBar(){
+  if(document.getElementById){
+    document.write('<img src="'+baseURL+'images/loading.gif" '+
+                   'width="150" height="12" id="loading" />');
+  }
+}
+
+/**
+ * Disables the animated gif to show the search is done
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function hideLoadBar(){
+  if(document.getElementById){
+    document.getElementById('loading').style.display="none";
+  }
+}
+
+/**
  * Checks if a summary was entered - if not the style is changed
  *
  * @author Andreas Gohr <andi@splitbrain.org>
