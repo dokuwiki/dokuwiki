@@ -174,6 +174,7 @@ function html_head(){
   global $ID;
   global $ACT;
   global $INFO;
+  global $REV;
   global $conf;
   global $lang;
   
@@ -197,7 +198,7 @@ function html_head(){
     <link rel="alternate" type="text/html" title="Plain HTML" href="<?=wl($ID,'do=export_html')?>" />
     <link rel="alternate" type="text/plain" title="Wiki Markup" href="<?=wl($ID, 'do=export_raw')?>" />
 <?
-  if($ACT=='show' || $ACT=='export_html'){
+  if( ($ACT=='show' || $ACT=='export_html') && !$REV){
     if($INFO['exists']){
       print '    <meta name="robots" content="index,follow" />'."\n";
       print '    <meta name="date" content="'.date('Y-m-d\TH:i:sO',$INFO['lastmod']).'" />'."\n";
