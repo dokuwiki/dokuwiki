@@ -10,6 +10,7 @@
   require_once(DOKU_INC.'inc/utf8.php');
 
   define('MAILHEADER_EOL',"\n"); //end of line for mail headers
+  #define('MAILHEADER_ASCIIONLY',1);
 
 /**
  * UTF-8 autoencoding replacement for PHPs mail function
@@ -17,8 +18,6 @@
  * Email address fields (To, From, Cc, Bcc can contain a textpart and an address
  * like this: 'Andreas Gohr <andi@splitbrain.org>' - the text part is encoded
  * automatically. You can seperate receivers by commas.
- *
- * @todo  currently an empty To: header is added
  *
  * @param string $to      Receiver of the mail (multiple seperated by commas)
  * @param string $subject Mailsubject
@@ -33,28 +32,44 @@
  * @see    mail()
  */
 function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=null, $params=null){
-  if(!utf8_isASCII($subject)) $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject).'?=';
+  if(defined('MAILHEADER_ASCIIONLY')){
+    $subject = utf8_deaccent($subject);
+    $subject = utf8_strip($subject);
+  }
+
+  if(!utf8_isASCII($subject))
+    $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject).'?=';
 
   $header  = '';
+
+  // use PHP mail's to field if pure ASCII-7 is available
+  $to = mail_encode_address($to,'To');
+  if(preg_match('#=?UTF-8?=#',$to)){
+    $header .= $to;
+    $to = null;
+  }else{
+    $to = preg_replace('#^To: #','',$to);
+  }
+
   $header .= mail_encode_address($from,'From');
-  $header .= mail_encode_address($to,'To');
   $header .= mail_encode_address($cc,'Cc');
   $header .= mail_encode_address($bcc,'Bcc');
   $header .= 'MIME-Version: 1.0'.MAILHEADER_EOL;
   $header .= 'Content-Type: text/plain; charset=UTF-8'.MAILHEADER_EOL;
   $header .= 'Content-Transfer-Encoding: quoted-printable'.MAILHEADER_EOL;
   $header .= $headers;
-  $heade   = trim($header);
+  $header  = trim($header);
 
   $body = mail_quotedprintable_encode($body);
 
-  return @mail(null,$subject,$body,$header,$params);
+  return @mail($to,$subject,$body,$header,$params);
 }
 
 /**
  * Encodes an email address header
  *
- * Unicode chracters will be encoded quoted_printable for headers like
+ * Unicode characters will be deaccented and encoded
+ * quoted_printable for headers.
  * Addresses may not contain Non-ASCII data!
  *
  * Example:
@@ -97,6 +112,12 @@ function mail_encode_address($string,$header='To'){
       $headers .= $header.': <'.$addr.'>'.MAILHEADER_EOL;
       continue;
     }
+
+    if(defined('MAILHEADER_ASCIIONLY')){
+      $text = utf8_deaccent($text);
+      $text = utf8_strip($text);
+    }
+
 
     // FIME: can make problems with long headers?
     if(!utf8_isASCII($text)){

@@ -54,6 +54,23 @@ function utf8_isASCII($str){
 }
 
 /**
+ * Strips all highbyte chars
+ *
+ * Returns a pure ASCII7 string
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function utf8_strip($str){
+  $ascii = '';
+  for($i=0; $i<strlen($str); $i++){
+    if(ord($str{$i}) <128){
+      $ascii .= $str{$i};
+    }
+  }
+  return $ascii;
+}
+
+/**
  * Tries to detect if a string is in Unicode encoding
  *
  * @author <bmorel@ssi.fr>
