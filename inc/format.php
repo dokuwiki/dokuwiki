@@ -89,18 +89,6 @@ function format_link_wiki($link){
   list($link['url'],$hash) = split('#',$link['url'],2);
   $hash = cleanID($hash);
 
-  //if no name set, use (unclean) link without namespace
-  if(empty($link['name'])){
-    if($conf['useslash']){
-      $nssep = '[:;/]';
-    }else{
-      $nssep = '[:;]';
-    }
-    $link['name'] = preg_replace('!.*'.$nssep.'!','',$link['url']);
-    $link['name'] = htmlspecialchars($link['name']);
-  }
-
-
   $file = wikiFN($link['url']);
   $url  = cleanID($link['url']);
 
@@ -128,6 +116,17 @@ function format_link_wiki($link){
   }else{
     $link['class']="wikilink2";
   }
+
+  //if no name set yet, use (unclean) link without namespace
+  if(empty($link['name'])){
+    if($conf['useslash']){
+      $nssep = '[:;/]';
+    }else{
+      $nssep = '[:;]';
+    }
+    $link['name'] = preg_replace('!.*'.$nssep.'!','',$link['url']);
+  }
+  $link['name'] = htmlspecialchars($link['name']);
 
   //set title
   $link['title'] = $url;
