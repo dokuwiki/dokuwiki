@@ -5,8 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
-  ini_set('short_open_tag',"1");
+  
   require_once("conf/dokuwiki.php");
   require_once("inc/common.php");
   require_once("inc/html.php");

@@ -72,13 +72,13 @@ function getBaseURL($abs=false){
   //if canonical url enabled always return absolute
   if($conf['canonical']) $abs = true;
 
-  //relative URLs are easy
-  if(!$abs){
-    $dir = dirname($_SERVER['PHP_SELF']).'/';
-    $dir = preg_replace('#//#','/',$dir);
-    $dir = preg_replace('#\\\/#','/',$dir); #bugfix for weird WIN behaviour
-    return $dir;
-  }
+  $dir = dirname($_SERVER['PHP_SELF']).'/';
+
+  $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
+  $dir = preg_replace('#//+#','/',$dir);
+
+  //finish here for relative URLs
+  if(!$abs) return $dir;
 
   $port = ':'.$_SERVER['SERVER_PORT'];
   //remove port from hostheader as sent by IE
@@ -97,9 +97,6 @@ function getBaseURL($abs=false){
       $port='';
     }
   }
-  $dir = (dirname($_SERVER['PHP_SELF'])).'/';
-  $dir = preg_replace('#//#','/',$dir);
-  $dir = preg_replace('#\/$#','/',$dir); #bugfix for weird WIN behaviour
 
   return $proto.$host.$port.$dir;
 }
