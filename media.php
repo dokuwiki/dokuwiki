@@ -4,7 +4,6 @@ require_once("conf/dokuwiki.php");
 require_once("inc/common.php");
 require_once("lang/en/lang.php");
 require_once("lang/".$conf['lang']."/lang.php");
-setCorrectLocale();
 require_once("inc/html.php");
 require_once("inc/search.php");
 require_once("inc/format.php");
@@ -54,6 +53,9 @@ html_head();
 </body>
 </html>
 <?
+//restore old umask
+umask($conf['oldumask']);
+
 /**********************************************/
 
 function media_upload($NS){

@@ -162,4 +162,7 @@
   }
   if(substr($ACT,0,6) != 'export') html_footer();
 
+
+  //restore old umask
+  umask($conf['oldumask']);
 ?>

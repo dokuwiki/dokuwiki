@@ -38,6 +38,9 @@
     $conf['usegzip'] = 0;
   }
 
+  //remember original umask
+  $conf['oldumask'] = umask();
+
 /**
  * remove magic quotes recursivly
  *
