@@ -36,6 +36,9 @@
   $SUF   = cleanText($_POST['suffix']);
   $SUM   = $_REQUEST['summary'];
 
+  //sanitize revision
+  $REV = preg_replace('/[^0-9]/','',$REV);
+
   //we accept the do param as HTTP header, too:
   if(!empty($_SERVER['HTTP_X_DOKUWIKI_DO'])){
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));

@@ -648,6 +648,9 @@ function getRecents($num=0,$incdel=false){
  */
 function getRevisionInfo($id,$rev){
   global $conf;
+
+  if(!$rev) return(null);
+
   $info = array();
   if(!@is_readable($conf['changelog'])){
     msg($conf['changelog'].' is not readable',-1);
