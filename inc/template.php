@@ -95,14 +95,12 @@ function tpl_content(){
       html_login();
       break;
     case 'register':
-      #FIXME check for $conf['openregister']) needs to be done first!!
       html_register();
       break;
     default:
       print "Uhm... Where am I? This shouldn't happen";
   }
 }
-
 
 
 /**
@@ -223,12 +221,11 @@ function tpl_button($type){
 /**
  * Print the search form
  *
- * @todo   svcheck missing
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_searchform(){
   global $lang;
-  print '<form action="'.wl().'" accept-charset="utf-8" class="search">';
+  print '<form action="'.wl().'" accept-charset="utf-8" class="search" onsubmit="return svchk()">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" accesskey="f" name="id" class="edit" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';

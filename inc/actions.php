@@ -9,6 +9,7 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/template.php');
 
+
 /**
  * Call the needed action handlers
  *
@@ -21,6 +22,9 @@ function act_dispatch(){
   global $QUERY;
   global $lang;
   global $conf;
+
+  //sanitize $ACT
+  $ACT = act_clean($ACT);
 
   //check permissions
   $ACT = act_permcheck($ACT);
@@ -35,7 +39,7 @@ function act_dispatch(){
 
   //edit
   if(($ACT == 'edit' || $ACT == $lang['btn_preview']) && $INFO['editable']){
-    $ACT = act_save($ACT);
+    $ACT = act_edit($ACT);
   }else{
     unlock($ID); //try to unlock 
   }
@@ -55,11 +59,33 @@ function act_dispatch(){
     $ACT = 'show';
   }
 
-  //fixme sanitize $ACT
- 
   //call template FIXME: all needed vars available?
   header('Content-Type: text/html; charset=utf-8'); 
   include(DOKU_INC.'tpl/'.$conf['template'].'/main.php');
+}
+
+/**
+ * Sanitize the action command
+ *
+ * Add all allowed commands here.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_clean($act){
+  global $lang;
+  global $conf;
+
+  if($act == 'register' && !$conf['openregister'])
+    return 'show';
+
+  if(!array_search($act,array('login','logout','register','save','edit',
+                              $lang['btn_preview'],'export_raw','export_html',
+                              'search','show','check','index','revisions',
+                              'diff','recent','backlink',))){
+    msg('Unknown command',-1);
+    return 'show';
+  }
+  return $act;
 }
 
 /**
@@ -82,6 +108,7 @@ function act_permcheck($act){
   if(! auth_quickaclcheck($ID) >= $permneed){
     return 'denied';
   }
+
 
   return $act;
 }
