@@ -69,6 +69,9 @@ function auth_checkPass($user,$pass){
   global $conf;
   $cnf = $conf['auth']['ldap'];
 
+  //reject empty password
+  if(empty($pass)) return false;
+
   //connect to LDAP Server
   $conn = auth_ldap_connect();
   if(!$conn) return false;
