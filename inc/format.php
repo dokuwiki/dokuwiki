@@ -89,47 +89,51 @@ function format_link_wiki($link){
   list($link['url'],$hash) = split('#',$link['url'],2);
   $hash = cleanID($hash);
 
-  $link['url'] = cleanID($link['url']);
-  $link['title'] = $link['url'];
-
-  //set class and name depending on file existence and content
-  $file = wikiFN($link['url']);
-  if(@file_exists($file)){
-    $link['class']="wikilink1";
-    if ($conf['useheading'] && empty($link['name'])) {
-      $title = getFirstHeading(io_readFile($file));
-      if ($title){
-	$link['name'] = $title;
-      }
-    }
-  }else{
-    if($conf['autoplural']){
-      //try plural/nonplural
-      if(substr($link['url'],-1) == 's'){
-        $try = substr($link['url'],0,-1);
-      }else{
-        $try = $link['url'].'s';
-      }
-      $file = wikiFN($try);
-      //check if the other form exists
-      if(@file_exists($file)){
-        $link['class']="wikilink1";
-        $link['url'] = $try;
-      }else{
-        $link['class']="wikilink2";
-      }
+  //if no name set, use (unclean) link without namespace
+  if(empty($link['name'])){
+    if($conf['useslash']){
+      $nssep = '[:;/]';
     }else{
-      //no autoplural is wanted
-      $link['class']="wikilink2";
+      $nssep = '[:;]';
+    }
+    $link['name'] = preg_replace('!.*'.$nssep.'!','',$link['url']);
+    $link['name'] = htmlspecialchars($link['name']);
+  }
+
+
+  $file = wikiFN($link['url']);
+  $url  = cleanID($link['url']);
+
+  //check alternative plural/nonplural form
+  if(!@file_exists($file) && $conf['autoplural']){
+    if(substr($url,-1) == 's'){
+      $try = substr($url,0,-1);
+    }else{
+      $try = $url.'s';
+    }
+    $tryfile = wikiFN($try);
+    if(@file_exists($tryfile)){
+      $file = $tryfile;
+      $url  = $try;
     }
   }
 
-  //if no name yet, use link without namespace
-  if(empty($link['name'])) $link['name'] = preg_replace('/.*:/','',$link['url']);
-  $link['name'] = htmlspecialchars($link['name']);
+  //set class and name depending on file existence and content
+  if(@file_exists($file)){
+    $link['class']="wikilink1";
+    if ($conf['useheading'] && empty($link['name'])) {
+      $hl = getFirstHeading(io_readFile($file));
+      if ($hl) $link['name'] = $hl;
+    }
+  }else{
+    $link['class']="wikilink2";
+  }
+
+  //set title
+  $link['title'] = $url;
 
   //construct the full link
-  $link['url'] = wl($link['url']);
+  $link['url'] = wl($url);
 
   //add hash if exists
   if($hash) $link['url'] .= '#'.$hash;
