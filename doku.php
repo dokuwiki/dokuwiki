@@ -51,6 +51,9 @@
     html_debug();
     exit;
   }
+  
+  //make infos about the selected page available
+  $INFO = pageinfo();
 
   //already logged in?
   if($_SERVER['REMOTE_USER'] && $ACT=='login') $ACT='show';
@@ -110,9 +113,6 @@
       exit();
     }
   }
-
-  //make infos about current page available
-  $INFO = pageinfo();
 
   //Editing: check if locked by anyone - if not lock for my self
   if(($ACT == 'edit' || $ACT == $lang['btn_preview']) && $INFO['editable']){

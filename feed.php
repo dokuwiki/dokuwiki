@@ -43,15 +43,21 @@
   //some defaults for the feed
   $CACHEGROUP = 'feed';
   $conf['typography'] = false;
-#  $conf['canonical']  = true;
+  $conf['canonical']  = true;
   $parser['toc']      = false;
 
-  $rss = new UniversalFeedCreator();
+#  $rss = new UniversalFeedCreator();
   $rss = new DokuWikiFeedCreator();
   $rss->title = $conf['title'];
   $rss->link  = DOKU_URL;
   $rss->syndicationURL = DOKU_URL.'/feed.php';
   $rss->cssStyleSheet  = DOKU_URL.'/feed.css';
+
+  $image = new FeedImage();
+  $image->title = $conf['title'];
+  $image->url = DOKU_URL."images/favicon.ico";
+  $image->link = DOKU_URL;
+  $rss->image = $image;
 
   if($mode == 'list'){
     rssListNamespace($rss,$ns);
@@ -90,8 +96,10 @@ function rssRecentChanges(&$rss,$num){
       $item->author = 'anonymous@';
     }
     $item->author  .= $recents[$id]['ip'];
-    
     $rss->addItem($item);
+
+    //this can take some time if a lot of recaching has to be done
+    @set_time_limit(30); //reset execution time
   }
 }
 
