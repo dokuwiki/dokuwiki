@@ -781,6 +781,7 @@ function preformat($text,$type,$option=''){
         //use geshi for highlighting
         require_once("inc/geshi.php");
         $geshi = new GeSHi($text, strtolower($option), "inc/geshi");
+        $geshi->set_encoding($lang['encoding']);
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);
 				$geshi->set_overall_class('code');
