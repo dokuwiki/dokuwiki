@@ -351,6 +351,7 @@ function tpl_pageinfo(){
       $fn = str_replace(realpath($conf['datadir']).DIRECTORY_SEPARATOR,'',$fn);
     }
   }
+  $fn = utf8_decodeFN($fn);
   $date = date($conf['dformat'],$INFO['lastmod']);
 
   // print it
