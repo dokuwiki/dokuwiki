@@ -38,7 +38,7 @@ function act_dispatch(){
     $ACT = act_save($ACT);
 
   //edit
-  if(($ACT == 'edit' || $ACT == $lang['btn_preview']) && $INFO['editable']){
+  if(($ACT == 'edit' || $ACT == 'preview') && $INFO['editable']){
     $ACT = act_edit($ACT);
   }else{
     unlock($ID); //try to unlock 
@@ -78,11 +78,15 @@ function act_clean($act){
   if($act == 'register' && !$conf['openregister'])
     return 'show';
 
+  if($act == $lang['btn_save']) $act = 'save';
+  if($act == $lang['btn_preview']) $act = 'preview';
+  $act = strtolower($act);
+
   if(!array_search($act,array('login','logout','register','save','edit',
-                              $lang['btn_preview'],'export_raw','export_html',
+                              'preview','export_raw','export_html',
                               'search','show','check','index','revisions',
                               'diff','recent','backlink',))){
-    msg('Unknown command',-1);
+    msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
   }
   return $act;
