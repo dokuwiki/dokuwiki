@@ -26,6 +26,7 @@ function admin_acl_handler(){
   //sanitize
   $user  = cleanID($user);
   if($type == '@') $user = '@'.$user;
+  if($user == '@all') $user = '@ALL'; //special group! (now case insensitive)
   $perm  = (int) $perm;
   if($perm > AUTH_UPLOAD) $perm = AUTH_UPLOAD;
   //FIXME sanitize scope!!!
