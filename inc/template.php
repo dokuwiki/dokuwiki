@@ -262,7 +262,6 @@ function tpl_searchform(){
 /**
  * Print the breadcrumbs trace
  *
- * @todo   add a hierachical breadcrumb function
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_breadcrumbs(){
@@ -277,6 +276,45 @@ function tpl_breadcrumbs(){
   foreach ($crumbs as $crumb){
     print ' &raquo; ';
     tpl_link(wl($crumb),noNS($crumb),'class="breadcrumbs" title="'.$crumb.'"');
+  }
+}
+
+/**
+ * Hierarchical breadcrumbs
+ *
+ * This code was suggested as replacement for the usual breadcrumbs
+ * trail in the Wiki and was modified by me.
+ * It only makes sense with a deep site structure.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @link   http://wiki.splitbrain.org/wiki:tipsandtricks:hierarchicalbreadcrumbs
+ */
+function tpl_youarehere(){
+  global $conf;
+  global $ID;
+  global $lang;
+
+  
+  $parts     = explode(':', $ID);
+
+  print $lang['breadcrumb'].': ';
+
+  //always print the startpage  
+  if( $a_part[0] != $conf['start'] )
+    tpl_link(wl($conf['start']),$conf['start'],'title="'.$conf['start'].'"');
+
+  $page = ''; 
+  foreach ($parts as $part){
+	  print ' &raquo; ';
+    $page .= $part;
+
+    if(file_exists(wikiFN($page))){
+      tpl_link(wl($page),$part,'title="'.$page.'"');
+    }else{
+      print $page;
+    }
+
+    $page .= ':';
   }
 }
 

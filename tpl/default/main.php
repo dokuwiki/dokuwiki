@@ -9,7 +9,6 @@
  * You should leave the doctype at the very top - It should
  * always be the very first line of a document.
  *
- * @todo   read the include hooks, add the CSS!
  * @link   http://wiki.splitbrain.org/wiki:tpl:templates
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -33,9 +32,12 @@
     img { behavior: url("<?=DOKU_BASE?>/pngbehavior.htc"); }
   </style>
   <![endif]-->
+
+  <?/*old includehook*/ @include(dirname(__FILE__).'/meta.html')?>
 </head>
 
 <body>
+<?/*old includehook*/ @include(dirname(__FILE__).'/topheader.html')?>
 <div class="dokuwiki">
   <?html_msgarea()?>
 
@@ -49,6 +51,8 @@
         <?tpl_link(wl(),$conf['title'],'name="top" accesskey="h" title="[ALT+H]"')?>
       </div>
     </div>
+  
+    <?/*old includehook*/ @include(dirname(__FILE__).'/header.html')?>
 
     <div class="bar" id="bar_top">
       <div class="bar-left" id="bar_topleft">
@@ -65,11 +69,14 @@
     <?if($conf['breadcrumbs']){?>
     <div class="breadcrumbs">
       <?tpl_breadcrumbs()?>
+      <?//tpl_youarehere() //(some people prefer this)?>
     </div>
     <?}?>
 
   </div>
   <?flush()?>
+
+  <?/*old includehook*/ @include(dirname(__FILE__).'/pageheader.html')?>
 
   <div class="page">
     <!-- wikipage start -->
@@ -92,6 +99,8 @@
       </div>
     </div>
 
+   <?/*old includehook*/ @include(dirname(__FILE__).'/pagefooter.html')?>
+
     <div class="bar" id="bar_bottom">
       <div class="bar-left" id="bar_bottomleft">
         <?tpl_button('edit')?>
@@ -108,4 +117,5 @@
   </div>
 
 </div>
+<?/*old includehook*/ @include(dirname(__FILE__).'/footer.html')?>
 </body>
