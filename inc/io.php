@@ -113,7 +113,10 @@ function io_saveFile($file,$content){
 function io_makeFileDir($file){
   global $conf;
 
-  $dir  = dirname($file);
+  $dir = dirname($file);
+  if($conf['safemodehack']){
+    preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','',$dir);
+  }
   umask($conf['dmask']);
   if(!is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
@@ -125,14 +128,57 @@ function io_makeFileDir($file){
  * Creates a directory hierachy.
  *
  * @link    http://www.php.net/manual/en/function.mkdir.php
- * @author <saint@corenova.com>
+ * @author  <saint@corenova.com>
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_mkdir_p($target){
+  global $conf;
   if (is_dir($target)||empty($target)) return 1; // best case check first
   if (@file_exists($target) && !is_dir($target)) return 0;
-  if (io_mkdir_p(substr($target,0,strrpos($target,'/'))))
-    return @mkdir($target,0777); // crawl back up & create dir tree
+  //recursion
+  if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
+    if($conf['safemodehack']){
+      return io_mkdir_ftp($target);
+    }else{
+      return @mkdir($target,0777); // crawl back up & create dir tree
+    }
+  }
   return 0;
+}
+
+/**
+ * Creates a directory using FTP
+ *
+ * This is used when the safemode workaround is enabled
+ *
+ * @author <andi@splitbrain.org>
+ */
+function io_mkdir_ftp($dir){
+  global $conf;
+
+  if(!function_exists('ftp_connect')){
+    msg("FTP support not found - safemode workaround not usable",-1);
+    return false;
+  }
+  
+  $conn = @ftp_connect($conf['ftp']['host'],$conf['ftp']['port'],10);
+  if(!$conn){
+    msg("FTP connection failed",-1);
+    return false;
+  }
+
+  if(!@ftp_login($conn, $conf['ftp']['user'], $conf['ftp']['pass'])){
+    msg("FTP login failed",-1);
+    return false;
+  }
+
+  //create directory
+  $ok = @ftp_mkdir($conn, $dir);
+  //set permissions (using the directory umask)
+  @ftp_site($conn,sprintf("CHMOD %04o %s",$perm & (0777 - $conf['dmask']),$dir));
+
+  ftp_close($conn);
+  return $ok;
 }
 
 /**
@@ -140,6 +186,7 @@ function io_mkdir_p($target){
  *
  * @author Harry Brueckner <harry_b@eml.cc>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated
  */
 function io_runcmd($cmd){
   $fh = popen($cmd, "r");

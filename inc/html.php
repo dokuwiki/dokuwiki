@@ -1124,6 +1124,7 @@ function html_debug(){
   $cnf = $conf;
   $cnf['auth']='***';
   $cnf['notify']='***';
+  $cnf['ftp']='***';
 
   print '<html><body>';
 

@@ -18,9 +18,7 @@
     $uploadok = true;
     //create the given namespace (just for beautification)
     $mdir = $conf['mediadir'].'/'.utf8_encodeFN(str_replace(':','/',$NS));
-    umask($conf['dmask']);
-    io_mkdir_p($mdir);
-    umask($conf['umask']);
+    io_makeFileDir("$mdir/xxx");
   }else{
     $uploadok = false;
   }
