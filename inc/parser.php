@@ -169,9 +169,7 @@ function preparse($text,&$table,&$hltable){
       $line = preg_replace("#<nowiki>(.*?)</nowiki>#","",$line);
       $line = preg_replace("#%%(.*?)%%#","",$line);
       $line = preg_replace("#<code( (\w+))?>(.*?)</code>#","",$line);
-      $line = preg_replace("#<file>(.*?)</file>#","",$line);
-      $line = preg_replace("#<html>(.*?)</html>#","",$line);
-      $line = preg_replace("#<php>(.*?)</php>#","",$line);
+      $line = preg_replace("#<(file|html|php)>(.*?)</\\1>#","",$line);
       //check for start of multiline noparse areas
       if(preg_match('#^.*?<(nowiki|code|php|html|file)( (\w+))?>#',$line,$matches)){
 				list($noparse) = split(" ",$matches[1]); //remove options
@@ -346,7 +344,7 @@ function linkformat($match){
   if(strpos($link['url'],'>')){
     // InterWiki
     $link = format_link_interwiki($link);
-  }elseif(preg_match('#^([a-z0-9]+?){1}://#i',$link['url'])){
+  }elseif(preg_match('#^([a-z0-9]+?)://#i',$link['url'])){
     // external URL
     $link = format_link_externalurl($link);
   }elseif(preg_match("/^\\\\\\\\([a-z0-9\-_.]+)\\\\(.+)$/",$link['url'])){
@@ -383,35 +381,34 @@ function simpleformat($text){
   $text = preg_replace('/\*\*(.+?)\*\*/s','<strong>\1</strong>',$text);  //bold
   $text = preg_replace('/\'\'(.+?)\'\'/s','<code>\1</code>',$text);  //code
   $text = preg_replace('#&lt;del&gt;(.*?)&lt;/del&gt;#is','<del>\1</del>',$text); //deleted
-  $text = preg_replace('/^(\s)*----+(\s*)$/m',"</p>\n<hr noshade=\"noshade\" size=\"1\" />\n<p>",$text); //hr
+  $text = preg_replace('/^\s*----+\s*$/m',"</p>\n<hr noshade=\"noshade\" size=\"1\" />\n<p>",$text); //hr
 
   //sub and superscript
-  $text = preg_replace('#&lt;sub&gt;(.*?)&lt;/sub&gt;#is','<sub>\1</sub>',$text);
-  $text = preg_replace('#&lt;sup&gt;(.*?)&lt;/sup&gt;#is','<sup>\1</sup>',$text);
+  $text = preg_replace('#&lt;su([bp])&gt;(.*?)&lt;/su\1&gt;#is','<su\1>\2</su\1>',$text);
  
   //do quoting 
   $text = preg_replace("/\n((&gt;)[^\n]*?\n)+/se","'\n'.quoteformat('\\0').'\n'",$text);
   
   // Typography
   if($conf['typography']){
-    $text = preg_replace('/([^-])--([^-])/s','\1&#8211;\2',$text); //endash
-    $text = preg_replace('/([^-])---([^-])/s','\1&#8212;\2',$text); //emdash
-    $text = preg_replace('/&quot;([^\"]+?)&quot;/s','&#8220;\1&#8221;',$text);  //curly quotes
-    $text = preg_replace('/(\s)\'(\S)/m','\1&#8216;\2',$text);  //single open quote
-    $text = preg_replace('/(\S)\'/','\1&#8217;',$text);  //single closing quote or apostroph
-    $text = preg_replace('/\.\.\./','\1&#8230;\2',$text);  //ellipse
-    $text = preg_replace('/(\d+)x(\d+)/i','\1&#215;\2',$text);  //640x480
+    $text = preg_replace('/(?<!-)--(?!-)/s','&ndash;',$text); //endash
+    $text = preg_replace('/(?<!-)---(?!-)/s','&mdash;',$text); //emdash
+    $text = preg_replace('/&quot;([^\"]+?)&quot;/s','&ldquo;\1&rdquo;',$text);  //curly quotes
+    $text = preg_replace('/(?<=\s)\'(?=\S)/m','&lsquo;',$text);  //single open quote
+    $text = preg_replace('/(?<=\S)\'/','&rsquo;',$text);  //single closing quote or apostroph
+    $text = preg_replace('/\.\.\./','&hellip;',$text);  //ellipse
+    $text = preg_replace('/(?<=\d)x(?=\d)/i','&times;',$text);  //640x480
 
     $text = preg_replace('/&gt;&gt;/i','&raquo;',$text);   // >>
     $text = preg_replace('/&lt;&lt;/i','&laquo;',$text);   // <<
 
-    $text = preg_replace('/&lt;-&gt;/i','&#8596;',$text);  // <->
-    $text = preg_replace('/&lt;-/i','&#8592;',$text);      // <-
-    $text = preg_replace('/-&gt;/i','&#8594;',$text);      //  ->
+    $text = preg_replace('/&lt;-&gt;/i','&harr;',$text);  // <->
+    $text = preg_replace('/&lt;-/i','&larr;',$text);      // <-
+    $text = preg_replace('/-&gt;/i','&rarr;',$text);      //  ->
 
-    $text = preg_replace('/&lt;=&gt;/i','&#8660;',$text);  // <=>
-    $text = preg_replace('/&lt;=/i','&#8656;',$text);      // <=
-    $text = preg_replace('/=&gt;/i','&#8658;',$text);      //  =>
+    $text = preg_replace('/&lt;=&gt;/i','&hArr;',$text);  // <=>
+    $text = preg_replace('/&lt;=/i','&lArr;',$text);      // <=
+    $text = preg_replace('/=&gt;/i','&rArr;',$text);      //  =>
 
     $text = preg_replace('/\(c\)/i','&copy;',$text);      //  copyrigtht
     $text = preg_replace('/\(r\)/i','&reg;',$text);      //  registered
@@ -419,7 +416,7 @@ function simpleformat($text){
   }
 
   //forced linebreaks
-  $text = preg_replace('#\\\\\\\\(\s)#',"<br />\\1",$text);
+  $text = preg_replace('#\\\\\\\\(?=\s)#',"<br />",$text);
 
   // lists (blocks leftover after blockformat)
   $text = preg_replace("/(\n( {2,}|\t)[\*\-][^\n]+)(\n( {2,}|\t)[^\n]*)*/se","\"\\n\".listformat('\\0')",$text);
@@ -472,7 +469,7 @@ function smileys(&$table,&$text){
     $sm     = preg_split('/\s+/',$smiley,2);
     $sm[1]  = '<img src="'.DOKU_BASE.'smileys/'.$sm[1].'" align="middle" alt="'.$sm[0].'" />';
     $sm[0]  = preg_quote($sm[0],'/');
-    firstpass($table,$text,'/(\W)'.$sm[0].'(\W)/s',$sm[1],"\\1","\\2");
+    firstpass($table,$text,'/(?<!\w)'.$sm[0].'(?!\w)/s',$sm[1]);
   }
 }
 
@@ -489,7 +486,7 @@ function acronyms(&$table,&$text){
     if(empty($acro)) continue;
     list($ac,$desc) = preg_split('/\s+/',$acro,2);
     $ac   = preg_quote($ac,'/');
-    firstpass($table,$text,'/(\b)('.$ac.')(\b)/s',"<acronym title=\"$desc\">\\2</acronym>","\\1","\\3");
+    firstpass($table,$text,'/\b('.$ac.')\b/s',"<acronym title=\"$desc\">\\1</acronym>");
   }
 } 
 
