@@ -11,10 +11,12 @@ if ( !defined('DOKU_TAB') ) {
     define ('DOKU_TAB',"\t");
 }
 
+require_once DOKU_INC . 'inc/parser/renderer.php';
+
 /**
 * @TODO Probably useful for have constant for linefeed formatting
 */
-class Doku_Renderer_XHTML {
+class Doku_Renderer_XHTML extends Doku_Renderer {
 
     var $doc = '';
     
@@ -377,7 +379,6 @@ class Doku_Renderer_XHTML {
     }
     
     /**
-    * @TODO Hook up with page resolver.
     * @TODO Support media
     * @TODO correct attributes
     */
@@ -387,14 +388,14 @@ class Doku_Renderer_XHTML {
         
         $title = $this->__getLinkTitle($title,$link, $isImage);
         
+        resolve_pageid($link,$exists);
+
         if ( !$isImage ) {
-            
-            if ( wikiPageExists($link) ) {
+            if ( $exists ) {
                 echo ' class="wikilink1"';
             } else {
                 echo ' class="wikilink2"';
             }
-            
         } else {
             echo ' class="media"';
         }
@@ -791,9 +792,10 @@ function interwikiImgExists($name) {
 }
 
 /**
-* For determining whether to use CSS class "wikilink1" or "wikilink2"
-* @todo use configinstead of DOKU_DATA
-*/
+ * For determining whether to use CSS class "wikilink1" or "wikilink2"
+ * @todo use configinstead of DOKU_DATA
+ * @deprecated -> resolve_pagename should be used
+ */
 function wikiPageExists($name) {
     
     static $pages = array();

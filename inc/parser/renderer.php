@@ -121,7 +121,7 @@ class Doku_Renderer {
     // $link like 'SomePage'
     function camelcaselink($link) {}
     
-    // $link like 'wikie:syntax', $title could be an array (media)
+    // $link like 'wiki:syntax', $title could be an array (media)
     function internallink($link, $title = NULL) {}
     
     // $link is full URL with scheme, $title could be an array (media)
@@ -163,7 +163,7 @@ class Doku_Renderer {
     function tablecell_open($colspan = 1, $align = NULL){}
     
     function tablecell_close(){}
-    
+
 }
 
 ?>

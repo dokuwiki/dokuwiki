@@ -341,7 +341,6 @@ class Doku_Handler {
     }
     
     /*
-    * @TODO What about email?
     */
     function internallink($match, $state, $pos) {
         // Strip the opening and closing markup
@@ -361,63 +360,47 @@ class Doku_Handler {
                 $link[1] = $media;
             }
         }
-        
-        // Interwiki links
+
+        //decide which kind of link it is
+
         if ( preg_match('/^[a-zA-Z]+>{1}[\w()\/\\#~:.?+=&%@!\-;,]+$/u',$link[0]) ) {
+	      // Interwiki
             $interwiki = preg_split('/>/u',$link[0]);
             $this->__addCall(
                 'interwikilink',
-                // UTF8 problem...
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
                 $pos
                 );
-        
-        // Link to internal wiki page
-        } else if ( preg_match('/^[\w:#]+$/u',$link[0]) ) {
+				}elseif ( preg_match('/\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
+				// Windows Share
+            $this->__addCall(
+                'windowssharelink',
+                array($link[0],$link[1]),
+                $pos
+                );
+				}elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
+				// E-Mail
+            $this->__addCall(
+                'emaillink',
+                array($link[0],$link[1]),
+                $pos
+                );
+        }elseif ( preg_match('#^([a-z0-9]+?)://#i',$link[0]) ) {
+        // external link (accepts all protocols)
+            $this->__addCall(
+                    'externallink',
+                    array($link[0],$link[1]),
+                    $pos
+                    );
+        }else{
+        // internal link
             $this->__addCall(
                 'internallink',
                 array($link[0],$link[1]),
                 $pos
                 );
-        
-        // Otherwise it's some kind of link to elsewhere
-        } else {
-            
-            // file://
-            if ( substr($link[0],0,4) == 'file' ) {
-                $this->__addCall(
-                    'filelink',
-                    array($link[0],$link[1]),
-                    $pos
-                );
-            
-            // Check for Windows shares - potential security issues here?
-            // i.e. mode not loaded but still matched here...
-            } else if ( preg_match('/\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
-                $this->__addCall(
-                    'windowssharelink',
-                    array($link[0],$link[1]),
-                    $pos
-                );
-            
-            // Otherwise it's one of the other valid internal links
-            } else {
-            
-                // Add the scheme as needed...
-                $leader = substr($link[0],0,3);
-                if ( $leader == 'www' ) {
-                    $link[0] = 'http://'.$link[0];
-                } else if ( $leader == 'ftp' ) {
-                    $link[0] = 'ftp://'.$link[0];
-                }
-                
-                $this->__addCall(
-                    'externallink',
-                    array($link[0],$link[1]),
-                    $pos
-                    );
-            }
         }
+
         return TRUE;
     }
     
