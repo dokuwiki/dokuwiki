@@ -40,6 +40,7 @@ $lang['user']       = 'Benutzername';
 $lang['pass']       = 'Passwort';
 $lang['fullname']   = 'Voller Name';
 $lang['email']      = 'E-Mail';
+$lang['remember']   = 'Eingeloggt bleiben';
 $lang['register']   = 'Registrieren';
 $lang['badlogin']   = 'Nutzername oder Passwort sind falsch.';
 
