@@ -17,9 +17,11 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function format_link_build($link){
-  //make sure the url is XHTML compliant
-  $link['url'] = str_replace('&','&amp;',$link['url']);
-  $link['url'] = str_replace('&amp;amp;','&amp;',$link['url']);
+  //make sure the url is XHTML compliant (skip mailto)
+  if(substr($link['url'],0,7) != 'mailto:'){
+    $link['url'] = str_replace('&','&amp;',$link['url']);
+    $link['url'] = str_replace('&amp;amp;','&amp;',$link['url']);
+  }
   //remove double encodings in titles
   $link['title'] = str_replace('&amp;amp;','&amp;',$link['title']);
 
