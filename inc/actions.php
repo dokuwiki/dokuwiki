@@ -90,6 +90,7 @@ function act_clean($act){
 
   if($act == $lang['btn_save']) $act = 'save';
   if($act == $lang['btn_preview']) $act = 'preview';
+  if($act == $lang['btn_cancel']) $act = 'show';
   $act = strtolower($act);
 
   if(array_search($act,array('login','logout','register','save','edit',
