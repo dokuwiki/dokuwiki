@@ -7,13 +7,18 @@
  */
 
 function admin_acl_handler(){
+  global $AUTH_ACL;
+
   $cmd   = $_REQUEST['acl_cmd'];
   $scope = $_REQUEST['acl_scope'];
   $type  = $_REQUEST['acl_type'];
   $user  = $_REQUEST['acl_user'];
   $perm  = $_REQUEST['acl_perm'];
+
   if(is_array($perm)){
-    $perm = array_pop(sort($perm)); //use the maximum
+    //use the maximum
+    sort($perm);
+    $perm = array_pop($perm);
   }else{
     $perm = 0;
   }
@@ -21,20 +26,23 @@ function admin_acl_handler(){
   //sanitize
   $user  = cleanID($user);
   if($type == '@') $user = '@'.$user;
+  $perm  = (int) $perm;
   if($perm > AUTH_UPLOAD) $perm = AUTH_UPLOAD;
   //FIXME sanitize scope!!!
 
+  //nothing to do?
+  if(empty($cmd) || empty($scope) || empty($user)) return;
 
-  //FIXME add should delete if nessary, too
-  if($cmd == 'add'){
-    admin_acl_add($scope, $user, $perm); //add feedback?
-  }elseif($cmd == 'update'){
-  	admin_acl_del($scope, $user, $perm);
-    admin_acl_add($scope, $user, $perm);	
+
+  if($cmd == 'save'){
+    admin_acl_del($scope, $user);
+    admin_acl_add($scope, $user, $perm);  
   }elseif($cmd == 'delete'){
-		admin_acl_del($scope, $user, $perm);
+    admin_acl_del($scope, $user);
   }
 
+  // reload ACL config
+  $AUTH_ACL = file('conf/acl.auth');
 }
 
 /**
@@ -108,8 +116,6 @@ function get_acl_config($ID){
  * @author  Frank Schubert <frank@schokilade.de>
  */
 function admin_acl_add($acl_scope, $acl_user, $acl_level){
-  if($acl_scope === '' || $acl_user === '' || $acl_level === '') return false;
-  
   $acl_config = join("",file('conf/acl.auth'));
   
   // max level for pagenames is edit
@@ -129,14 +135,12 @@ function admin_acl_add($acl_scope, $acl_user, $acl_level){
  *
  * @author  Frank Schubert <frank@schokilade.de>
  */
-function admin_acl_del($acl_scope, $acl_user, $acl_level){
-  if($acl_scope === '' || $acl_user === '' || $acl_level === '') return false;
-  
-  $acl_pattern = preg_quote($acl_scope)."\s+".$acl_user."\s+".$acl_level."\n";
-  
+function admin_acl_del($acl_scope, $acl_user){
   $acl_config = file('conf/acl.auth');
+
+  $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
   
-  // save all non!-matching
+  // save all non!-matching #FIXME invert is available from 4.2.0 only!
   $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
   
   return io_saveFile("conf/acl.auth", join("",$new_config));
@@ -158,7 +162,7 @@ function admin_acl_html(){
 
   print parsedLocale('admin_acl');
 
-	ptln('<div class="acladmin"');
+  ptln('<div class="acladmin"');
   ptln('<table class="inline">');
 
   //new
@@ -240,7 +244,7 @@ function admin_acl_html_new(){
   ptln('  <form method="post" action="'.wl($ID).'">',4);
   ptln('    <input type="hidden" name="do"   value="admin" />',4);
   ptln('    <input type="hidden" name="page" value="acl" />',4);
-  ptln('    <input type="hidden" name="acl_cmd"   value="add" />',4);
+  ptln('    <input type="hidden" name="acl_cmd" value="save" />',4);
  
   //scope select
   ptln($lang['acl_perms'],4);
@@ -261,7 +265,7 @@ function admin_acl_html_new(){
   ptln('    <input '.html_attbuild($att).' />',4);
   ptln('    <br />');
 
-  ptln(     admin_acl_html_checkboxes(0,false,false),8);
+  ptln(     admin_acl_html_checkboxes(0,false),8);
 
   ptln('    <input type="submit" class="edit" value="'.$lang['btn_save'].'" \>',4);
   ptln('  </form>');
@@ -303,14 +307,18 @@ function admin_acl_html_current($id,$permissions){
   ptln('    </th>');
   ptln('  </tr>');
 
+  sort($permissions);
+
   foreach ($permissions as $conf){
     //userfriendly group/user display
     if(substr($conf['name'],0,1)=="@"){
       $group = $lang['acl_group'];
       $name  = substr($conf['name'],1);
+      $type  = '@';
     }else{
       $group = $lang['acl_user'];
       $name  = $conf['name'];
+      $type  = '';
     }
 
     ptln('<tr>',2);
@@ -321,9 +329,10 @@ function admin_acl_html_current($id,$permissions){
     ptln('  <form method="post" action="'.wl($ID).'">',4);
     ptln('    <input type="hidden" name="do"   value="admin" />',4);
     ptln('    <input type="hidden" name="page" value="acl" />',4);
-    ptln('    <input type="hidden" name="acl_cmd"   value="update" />',4);
+    ptln('    <input type="hidden" name="acl_cmd"   value="save" />',4);
     ptln('    <input type="hidden" name="acl_scope" value="'.formtext($id).'" />',4);
-    ptln('    <input type="hidden" name="acl_user"  value="'.formtext($conf['name']).'" />',4);
+    ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
+    ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
     ptln(     admin_acl_html_checkboxes($conf['perm'],$ispage),8);
     ptln('    <input type="submit" class="edit" value="'.$lang['btn_update'].'" \>',4);
     ptln('  </form>');
@@ -340,7 +349,8 @@ function admin_acl_html_current($id,$permissions){
     ptln('    <input type="hidden" name="page"      value="acl" />',4);
     ptln('    <input type="hidden" name="acl_cmd"   value="delete" />',4);
     ptln('    <input type="hidden" name="acl_scope" value="'.formtext($id).'" />',4);
-    ptln('    <input type="hidden" name="acl_user"  value="'.formtext($conf['name']).'" />',4);
+    ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
+    ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
     ptln('    <input type="submit" class="edit" value="'.$lang['btn_delete'].'" \>',4);
     ptln('  </form>',4);
     ptln('</td>',4);
@@ -357,7 +367,7 @@ function admin_acl_html_current($id,$permissions){
  * @author  Frank Schubert <frank@schokilade.de>
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function admin_acl_html_checkboxes($setperm,$ispage,$submit=false){
+function admin_acl_html_checkboxes($setperm,$ispage){
   global $lang;
 
   static $label = 0; //number labels
@@ -369,11 +379,11 @@ function admin_acl_html_checkboxes($setperm,$ispage,$submit=false){
     //general checkbox attributes
     $atts = array( 'type'  => 'checkbox',
                    'id'    => 'pbox'.$label,
-                   'name'  => 'aclperm[]',
+                   'name'  => 'acl_perm[]',
                    'value' => $perm );
     //dynamic attributes
-    if($setperm >= $perm)            $atts['checked']  = 'checked';
-    if($submit)                      $atts['onchange'] = 'submit()';
+    if($setperm >= $perm) $atts['checked']  = 'checked';
+#		if($perm > AUTH_READ) $atts['onchange'] = #FIXME JS to autoadd lower perms
     if($ispage && $perm > AUTH_EDIT) $atts['disabled'] = 'disabled';
 
     //build code
