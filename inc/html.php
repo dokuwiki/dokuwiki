@@ -1044,7 +1044,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     </tr>
     <tr>
       <td colspan="3">
-        <textarea name="wikitext" id="wikitext" <?=$ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" tabindex="1"><?="\n".formText($text)?></textarea>
+        <textarea name="wikitext" id="wikitext" <?=$ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?="\n".formText($text)?></textarea>
       </td>
     </tr>
     <tr>
@@ -1058,7 +1058,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <td>
       <?if($wr){?>
         <?=$lang['summary']?>:
-        <input type="text" class="edit" name="summary" size="50" value="<?=formText($SUM)?>" tabindex="2" />
+        <input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?=formText($SUM)?>" tabindex="2" />
       <?}?>
       </td>
       <td align="right">

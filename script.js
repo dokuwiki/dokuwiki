@@ -31,6 +31,22 @@ function escapeQuotes(text) {
 }
 
 /**
+ * Checks if a summary was entered - if not the style is changed
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function summaryCheck(){
+  if(document.getElementById){
+    var sum = document.getElementById('summary');
+    if(sum.value == ''){
+      sum.className='missing';
+    }else{
+      sum.className='edit';
+    }
+  }
+}
+
+/**
  * This function generates the actual toolbar buttons with localized text
  * we use it to avoid creating the toolbar where javascript is not enabled
  */

@@ -1,4 +1,3 @@
-
 body {
   font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
   background-color: White;
@@ -89,6 +88,19 @@ input.edit {
   display: inline;
 }
 
+input.missing {
+  font-size: 100%;
+  border: 1px solid #8cacbb;
+  height: 22px ! important;
+  max-height: 22px ! important;
+  min-height: 22px ! important;
+  color: Black;
+  background-color: #ffcccc;
+  vertical-align: middle;
+  padding: 1px;
+  display: inline;
+}
+
 input.button {
   border: 1px solid #8cacbb;  
   color: Black;
@@ -153,24 +165,21 @@ span.user{
 }
 
 div.error{
-  background: transparent url(images/error.png) 0.5em 0px no-repeat;
-  background-color: #ff6666;
+  background: #ff6666; url(images/error.png) 0.5em 0px no-repeat;
   font-size: 90%;
   margin: 0px;
   padding-left: 3em;
 }
 
 div.info{
-  background: transparent url(images/info.png) 0.5em 0px no-repeat;
-  background-color: #ffff66;
+  background: #ffff66; url(images/info.png) 0.5em 0px no-repeat;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
 }
 
 div.success{
-  background: transparent url(images/thumbup.gif) 0.5em 0px no-repeat;
-  background-color: #66ff66;
+  background: #66ff66; url(images/thumbup.gif) 0.5em 0px no-repeat;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
