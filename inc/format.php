@@ -338,10 +338,15 @@ function format_link_media($link){
   }
   $link['name'] = trim($link['name']);
   
-  //split into src and parameters
-  list($src,$param) = split('\?',$link['name'],2);
+  //split into src and parameters (using the very last questionmark)
+  $pos = strrpos($link['name'], '?');
+  if($pos !== false){
+    $src   = substr($link['name'],0,$pos);
+    $param = substr($link['name'],$pos+1);
+  }
+
   //parse width and height
-  if(preg_match('#(\d*)(x(\d*))?#i',$param,$size)){
+  if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
     if($size[1]) $w = $size[1];
     if($size[3]) $h = $size[3];
   }
@@ -359,11 +364,12 @@ function format_link_media($link){
     }
   }
 
-  //check for nocache param
-  $nocache = preg_match('/nocache/i',$param);
+  //check for nocache/recache param
+  preg_match('/(nocache|recache)/i',$param,$cachemode);
+
   //do image caching, resizing and src rewriting
   $cache = $src;
-  $isimg = img_cache($cache,$src,$w,$h,$nocache);
+  $isimg = img_cache($cache,$src,$w,$h,$cachemode[1]);
 
   //set link to src if none given 
   if(!$link['url']){
@@ -435,9 +441,9 @@ function format_rss($url){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
+function img_cache(&$csrc,&$src,&$w,&$h,$cachemode){
   global $conf;
- 
+
   //container for various paths
   $f['full']['web'] = $src;
   $f['resz']['web'] = $src;
@@ -466,9 +472,10 @@ function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
   }
 
   //download external images if allowed
-  if($isurl && $isimg && !$nocache){
+  if($isurl && $isimg && $cachemode != 'nocache'){
     $cache = $conf['mediadir']."/.cache/$md5.$ext";
-    if (@file_exists($cache) || download($src,$cache)){
+    if ( ($cachemode == 'recache' && download($src,$cache)) ||
+         @file_exists($cache) || download($src,$cache)){
       $f['full']['web'] = $conf['mediaweb']."/.cache/$md5.$ext";
       $f['resz']['web'] = $conf['mediaweb']."/.cache/$md5.$ext";
       $f['full']['fs']  = $conf['mediadir']."/.cache/$md5.$ext";
