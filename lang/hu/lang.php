@@ -27,6 +27,7 @@ $lang['btn_logout'] = 'Kijelentkezés';
 $lang['loggedinas'] = 'Belépett felhasználó: ';
 $lang['user']       = 'Azonosító';
 $lang['pass']       = 'Jelszó';
+$lang['remember']   = 'Emlékezz rám';
 $lang['fullname']   = 'Teljes név';
 $lang['email']      = 'E-Mail';
 $lang['register']   = 'Regisztráció';
@@ -67,6 +68,16 @@ $lang['diff']       = 'a különbségeket mutatja az aktuális változathoz kép
 $lang['line']       = 'sorszám';
 $lang['breadcrumb'] = 'Nyomvonal';
 $lang['lastmod']    = 'Utolsó módosítás';
+$lang['by']         = 'szerkesztette:'; 
+  // Note: the Hungarian translation for 'by' is 'által', which is used 
+  // usually AFTER the word (contrary to English), furthermore, it is very
+  // awkward usage as a preposition in the Hungarian language.
+  // IIRC this 'by' is used only in "inc/html.php", where the context is:
+  //  if($INFO['editor']){
+  //    print ' '.$lang['by'].' ';
+  //    print $INFO['editor'];
+  //  }
+  // For THAT language context the translation is correct
 $lang['deleted']    = 'eltávolítva';
 $lang['created']    = 'létrehozva';
 $lang['restored']   = 'az előző változat helyreállítva';
