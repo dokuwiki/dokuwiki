@@ -8,6 +8,7 @@
 
   require_once("conf/dokuwiki.php");
   require_once("inc/io.php");
+  require_once('inc/utf8.php');
 
   //set up error reporting to sane values
   error_reporting(E_ALL ^ E_NOTICE);
@@ -392,32 +393,41 @@ function cleanID($id){
   global $conf;
   global $lang;
   $id = trim($id);
-  $id = strtolower($id);
+  $id = utf8_strtolower($id);
 
   //alternative namespace seperator
   $id = strtr($id,';',':');
   if($conf['useslash']) $id = strtr($id,'/',':');
 
+  //FIXME use config to ask for deaccenting
+  $id = utf8_deaccent($id,-1);
+
+  //remove specials (only ascii specials are removed)
+  $id = preg_replace('#[ !"Â§$%&()\[\]{}\\?`\'\#~*+=,<>\|^Â°@ÂµÂ¹Â²Â³Â¼Â½Â¬]#u','_',$id);
+
+/* DELETEME legacy code
   if(!$conf['localnames']){
     if($lang['encoding'] == 'iso-8859-15'){
       // replace accented chars with unaccented ones
       // this may look strange on your terminal - just don't touch
       $id = strtr(
       strtr($id,
-       'ŠŽšžŸÀÁÂÃÅÇÈÉÊËÌÍÎÏÑÒÓÔÕØÙÚÛÝàáâãåçèéêëìíîïñòóôõøùúûýÿ',
+       'ÂŠÂŽÂšÂžÂŸÃ€ÃÃ‚ÃƒÃ…Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃŽÃÃ‘Ã’Ã“Ã”Ã•Ã˜Ã™ÃšÃ›ÃÃ Ã¡Ã¢Ã£Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¸Ã¹ÃºÃ»Ã½Ã¿',
        'szszyaaaaaceeeeiiiinooooouuuyaaaaaceeeeiiiinooooouuuyy'),
-       array('Þ' => 'th', 'þ' => 'th', 'Ð' => 'dh', 'ð' => 'dh', 'ß' => 'ss',
-             'Œ' => 'oe', 'œ' => 'oe', 'Æ' => 'ae', 'æ' => 'ae', 'µ' => 'u',
-             'ü' => 'ue', 'ö' => 'oe', 'ä' => 'ae', 'Ü' => 'ue', 'Ö' => 'ö',
-             'Ä' => 'ae'));
+       array('Ãž' => 'th', 'Ã¾' => 'th', 'Ã' => 'dh', 'Ã°' => 'dh', 'ÃŸ' => 'ss',
+             'ÂŒ' => 'oe', 'Âœ' => 'oe', 'Ã†' => 'ae', 'Ã¦' => 'ae', 'Âµ' => 'u',
+             'Ã¼' => 'ue', 'Ã¶' => 'oe', 'Ã¤' => 'ae', 'Ãœ' => 'ue', 'Ã–' => 'Ã¶',
+             'Ã„' => 'ae'));
     }
     $WORD = 'a-z';
   }else{
     $WORD = '\w';
   }
-
   //special chars left will be converted to _
   $id = preg_replace('#[^'.$WORD.'0-9:\-\.]#','_',$id);
+*/
+
+  //clean up
   $id = preg_replace('#__#','_',$id);
   $id = preg_replace('#:+#',':',$id);
   $id = trim($id,':._-');
