@@ -749,6 +749,7 @@ function listformat($block){
  */
 function preformat($text,$type,$option=''){
   global $conf;
+  global $lang;
   //unescape
   $text = str_replace('\\"','"',$text);
   
