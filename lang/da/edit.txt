@@ -1,2 +1,2 @@
-Editer denne side og tryk på knappen **''[Gem]''**. Se [[wiki:formatering|Formaterings tips]] for Wiki syntaks. Ret venligst kun denne side hvis du kan **forbedre** den. Brug venligst [[wiki:sandkassen]] til at teste før du retter i en rigtig side. Husk også at bruge **''[Preview]''** før du gemmer siden.
+Rediger dette dokument og tryk på knappen **''[Gem]''**. Se [[wiki:formatering|Formaterings tips]] for Wiki syntaks. Ret venligst kun dette dokument hvis du kan **forbedre** det. Brug venligst [[wiki:sandkassen]] til at teste før du retter i et rigtigt dokument. Husk også at bruge **''[Preview]''** før du gemmer dokumentet.
 

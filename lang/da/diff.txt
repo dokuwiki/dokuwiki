@@ -1,4 +1,4 @@
-======Forskelle======
+====== Forskelle ======
 
-Dette viser dig forskellene i mellem den valgte version og den nuværende version. Gul er linier der findes i den gamle version, og grøn er linier der findes i den nuværende version.
+Dette viser forskellene mellem den valgte og den nuværende udgave af dokumentet. Gul er linjer der findes i den gamle udgave, og grøn er linjer der findes i den nuværende.
 
