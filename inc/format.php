@@ -343,6 +343,9 @@ function format_link_media($link){
   if($pos !== false){
     $src   = substr($link['name'],0,$pos);
     $param = substr($link['name'],$pos+1);
+  }else{
+    $src   = $link['name'];
+    $param = '';
   }
 
   //parse width and height
