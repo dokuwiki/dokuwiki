@@ -25,7 +25,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
   $dh = @opendir($base.'/'.$dir);
   if(!$dh) return;
   while(($file = readdir($dh)) !== false){
-    if(preg_match('/^\./',$file)) continue; //skip hidden files and upper dirs
+    if(preg_match('/^[\._]/',$file)) continue; //skip hidden files and upper dirs
     if(is_dir($base.'/'.$dir.'/'.$file)){
       $dirs[] = $dir.'/'.$file;
       continue;
