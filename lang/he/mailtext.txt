@@ -1,0 +1,15 @@
+דף בHebDokuWiki נוסף או שונה. הנה הפרטים:
+
+Date        : @DATE@
+Browser     : @BROWSER@
+IP-Address  : @IPADDRESS@
+Hostname    : @HOSTNAME@
+Old Revision: @OLDPAGE@
+New Revision: @NEWPAGE@
+
+@DIFF@
+
+--
+
+הדף הזה נוצר ע"י HebDokuWiki ב-
+@DOKUWIKIURL@
