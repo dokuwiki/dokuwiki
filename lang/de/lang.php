@@ -8,15 +8,6 @@
  * @author     Anika Henke <henke@cosmocode.de>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'deu',
-                        'de@euro',
-                        'de_DE@euro',
-                        'de',
-                        'de_DE',
-                        'ge',
-                        'german',
-                      );
 
 $lang['btn_edit']   = 'Diese Seite bearbeiten';
 $lang['btn_source'] = 'Zeige Quelltext';

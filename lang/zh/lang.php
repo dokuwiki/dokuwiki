@@ -7,12 +7,6 @@
  * @author     based on tw tranlastion by chinsan <chinsan@mail2000.com.tw>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'GBK',
-                        'zh_CN.GBK',
-                        'zh',
-                        'chinese(simplified)',
-                      );
 
 $lang['btn_edit']   = '编修本页';
 $lang['btn_source'] = '显示页面来源';

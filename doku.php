@@ -15,7 +15,6 @@
   require_once("inc/parser.php");
   require_once("lang/en/lang.php");
   require_once("lang/".$conf['lang']."/lang.php");
-  setCorrectLocale();
   require_once("inc/auth.php");
 
   //import variables

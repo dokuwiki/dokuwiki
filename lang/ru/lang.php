@@ -5,13 +5,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Jurijs Pimenovs <Jurijs_Pimenovs@exigengroup.lv>
  */
-$lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'rus',
-                        'ru_RU',
-                        'ru',
-                        'russian',
-                      );
 
 $lang['btn_edit']   = 'Редактировать страницу';
 $lang['btn_source'] = 'Показать исходный текст';

@@ -6,13 +6,6 @@
  * @author     José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  */
 $lang['encoding']     = 'utf-8';
-$lang['locales']      = array(
-                          'prt',
-                          'pt_PT@euro',
-                          'pt_PT',
-                          'pt',
-                          'portuguese',
-                        );
 
 $lang['btn_edit']     = 'Editar Página';
 $lang['btn_source']   = 'Ver em bruto';

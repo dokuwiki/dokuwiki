@@ -6,12 +6,6 @@
  * @author     Grzegorz _ur <grzesiekzur@tlen.pl>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'pl',
-                        'pl_pl',
-                        'pl',
-                        'polish',
-                      );
 
 $lang['btn_edit']   = 'Edytuj stronę';
 $lang['btn_source'] = 'Pokaż źródło strony';

@@ -6,13 +6,6 @@
  * @author     François Kooman <fkooman.tuxed.net>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'nld',
-                        'nl_NL@euro',
-                        'nl_NL',
-                        'nl',
-                        'dutch',
-                      );
 
 $lang['btn_edit']   = 'Pagina aanpassen';
 $lang['btn_source'] = 'Toon pagina broncode';

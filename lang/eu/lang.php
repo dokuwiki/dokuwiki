@@ -6,13 +6,6 @@
  * @author     Xabi Ezpeleta <xezpeleta@mendikute.com>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'eusk',
-                        'eu',
-                        'eu_ES@euro',
-                        'eu_ES',
-                        'euskara',
-                      );
 
 $lang['btn_edit']   = 'Aldatu orri hau';
 $lang['btn_source'] = 'Kodea ikusi';

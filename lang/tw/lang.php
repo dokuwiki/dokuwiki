@@ -6,12 +6,6 @@
  * @author     chinsan <chinsan@mail2000.com.tw>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'UTF-8',
-                        'zh_TW.UTF-8',
-                        'tw',
-                        'chinese(traditional)',
-                      );
 
 $lang['btn_edit']   = '編修本頁';
 $lang['btn_source'] = '顯示頁面來源';

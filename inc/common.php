@@ -862,7 +862,8 @@ function getGoogleQuery(){
 /**
  * Try to set correct locale
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated No longer used
+ * @author     Andreas Gohr <andi@splitbrain.org>
  */
 function setCorrectLocale(){
   global $conf;

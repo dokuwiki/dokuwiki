@@ -6,12 +6,6 @@
  * @author     Jon Bendtsen <bendtsen@diku.dk>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'dan',
-                        'da_DK',
-                        'da',
-                        'danish',
-                      );
 
 $lang['btn_edit']   = 'Editer denne side';
 $lang['btn_search'] = 'Søg';

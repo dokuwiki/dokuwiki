@@ -9,13 +9,6 @@
  * @author     Gwenn Gueguen <contact@demisel.net>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'fr_FR@euro',
-                        'fr_FR',
-                        'fr',
-                        'fra',
-                        'french',
-                      );
 
 $lang['btn_edit']   = 'Editer cette page';
 $lang['btn_source'] = 'Montrer le source de la page';

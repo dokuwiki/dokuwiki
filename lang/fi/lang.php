@@ -6,12 +6,6 @@
  * @author     Petteri <petteri@gmail.com>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'fin',
-                        'fi_FI@euro',
-                        'fi',
-                        'finnish',
-                      );
 
 $lang['btn_edit']   = 'Muokkaa tätä sivua';
 $lang['btn_source'] = 'Näytä sivun lähdekoodi';

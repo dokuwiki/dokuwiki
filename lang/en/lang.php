@@ -7,12 +7,6 @@
  * @author     Anika Henke <henke@cosmocode.de>
  */
 $lang['encoding']   = 'utf-8';
-$lang['locales']    = array(
-                        'eng',
-                        'en_US',
-                        'en',
-                        'english',
-                      );
 
 $lang['btn_edit']   = 'Edit this page';
 $lang['btn_source'] = 'Show pagesource';
