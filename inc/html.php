@@ -380,6 +380,10 @@ function html_metainfo(){
     print $lang['lastmod'];
     print ': ';
     print $date;
+    if($INFO['editor']){
+      print ' '.$lang['by'].' ';
+      print $INFO['editor'];
+    }
     if($INFO['locked']){
       print ' &middot; ';
       print $lang['lockedby'];
@@ -606,14 +610,34 @@ function html_revisions(){
   print parsedLocale('revisions');
   print '<ul>';
   if($INFO['exists']){
-    print '<li>'.$date.' <a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ('.$lang['current'].')</li>';
+    print '<li>';
+    print $date.' <a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
+
+    print $INFO['sum'];
+    print ' <span class="user">(';
+    print $INFO['ip'];
+    if($INFO['user']) print ' '.$INFO['user'];
+    print ')</span> ';
+
+    print '('.$lang['current'].')';
+    print '</li>';
   }
 
   foreach($revisions as $rev){
     $date = date($conf['dformat'],$rev);
+    $info = getRevisionInfo($ID,$rev);
+
     print '<li>';
     print $date.' <a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
-    print '<a href="'.wl($ID,"rev=$rev,do=diff").'">['.$lang['diff'].']</a>';
+    print $info['sum'];
+    print ' <span class="user">(';
+    print $info['ip'];
+    if($info['user']) print ' '.$info['user'];
+    print ')</span> ';
+
+    print '<a href="'.wl($ID,"rev=$rev,do=diff").'">';
+    print '<img src="'.getBaseURL().'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    print '</a>';
     print '</li>';
   }
   print '</ul>';

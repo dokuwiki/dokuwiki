@@ -69,6 +69,7 @@ $lang['diff']       = 'show differences to current version';
 $lang['line']       = 'Line';
 $lang['breadcrumb'] = 'Trace';
 $lang['lastmod']    = 'Last modified';
+$lang['by']         = 'by';
 $lang['deleted']    = 'removed';
 $lang['created']    = 'created';
 $lang['restored']   = 'old revision restored';

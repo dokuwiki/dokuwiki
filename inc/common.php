@@ -147,6 +147,18 @@ function pageinfo(){
   $info['editable']  = ($info['writable'] && empty($info['lock']));
   $info['lastmod']   = @filemtime($info['filepath']);
 
+  //who's the editor
+  if($REV){
+    $revinfo = getRevisionInfo($ID,$REV);
+  }else{
+    $revinfo = getRevisionInfo($ID,$info['lastmod']);
+  }
+  $info['ip']     = $revinfo['ip'];
+  $info['user']   = $revinfo['user'];
+  $info['sum']    = $revinfo['sum'];
+  $info['editor'] = $revinfo['ip'];
+  if($revinfo['user']) $info['editor'].= ' ('.$revinfo['user'].')';
+
   return $info;
 }
 
@@ -633,10 +645,10 @@ function dbg($msg,$hidden=false){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function addLogEntry($id,$summary=""){
+function addLogEntry($date,$id,$summary=""){
   global $conf;
   $id     = cleanID($id);
-  $date   = time();
+  if(!$date) $date = time(); //use current time if none supplied
   $remote = $_SERVER['REMOTE_ADDR'];
   $user   = $_SERVER['REMOTE_USER'];
 
@@ -686,6 +698,25 @@ function getRecents($num=0,$incdel=false){
 }
 
 /**
+ * gets additonal informations for a certain pagerevison
+ * from the changelog
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function getRevisionInfo($id,$rev){
+  global $conf;
+  $loglines = file($conf['changelog']);
+  $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
+  rsort($loglines); //reverse sort on timestamp (shouldn't be needed)
+  $line = split("\t",$loglines[0]);
+  $info['date'] = $line[0];
+  $info['ip']   = $line[1];
+  $info['user'] = $line[3];
+  $info['sum']   = $line[4];
+  return $info;
+}
+
+/**
  * Saves a wikitext by calling io_saveFile
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -713,7 +744,7 @@ function saveWikiText($id,$text,$summary){
     $del = false;
   }
 
-  addLogEntry($id,$summary);
+  addLogEntry(@filemtime($file),$id,$summary);
   notify($id,$old,$summary);
   
   //purge cache on add by updating the purgefile

@@ -71,6 +71,7 @@ $lang['diff']       = 'Zeige Unterschiede zu aktueller Version';
 $lang['line']       = 'Zeile';
 $lang['breadcrumb'] = 'Spur';
 $lang['lastmod']    = 'Zuletzt geändert';
+$lang['by']         = 'von';
 $lang['deleted']    = 'gelöscht';
 $lang['created']    = 'angelegt';
 $lang['restored']   = 'alte Version wieder hergestellt';
