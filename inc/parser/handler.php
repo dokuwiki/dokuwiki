@@ -14,6 +14,8 @@ class Doku_Handler {
         'toc' => TRUE,
     );
     
+    var $rewriteBlocks = TRUE;
+    
     function Doku_Handler() {
         $this->CallWriter = & new Doku_Handler_CallWriter($this);
     }
@@ -29,8 +31,10 @@ class Doku_Handler {
             $this->calls = $S->process($this->calls);
         }
         
-        $B = & new Doku_Handler_Block();
-        $this->calls = $B->process($this->calls);
+        if ( $this->rewriteBlocks ) {
+            $B = & new Doku_Handler_Block();
+            $this->calls = $B->process($this->calls);
+        }
         
         if ( $this->meta['toc'] ) {
             $T = & new Doku_Handler_Toc();
