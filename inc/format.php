@@ -148,6 +148,7 @@ function format_link_externalurl($link){
   $link['url']    = $link['url']; //keep it
   $link['title']  = htmlspecialchars($link['url']);
   if(!$link['name']) $link['name'] = htmlspecialchars($link['url']);
+  if($conf['relnofollow']) $link['more'] .= ' rel="nofollow"';
   //thats it :-)
   return $link;
 }
