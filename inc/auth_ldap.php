@@ -87,6 +87,7 @@ function auth_checkPass($user,$pass){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Trouble
+ * @author  Dan Allen <dan.j.allen@gmail.com>
  */
 function auth_getUserData($user){
   global $conf;
@@ -116,13 +117,15 @@ function auth_getUserData($user){
   $info['mail']= $result[0]['mail'][0];
   $info['name']= $result[0]['cn'][0];
   $info['uid'] = $result[0]['uid'][0];
-  
+
   //primary group id
   $gid = $result[0]['gidnumber'][0];
 
   //get groups for given user if grouptree is given
   if ($cnf['grouptree'] != '') {
-    $filter = "(&(objectClass=posixGroup)(|(gidNumber=$gid)(memberUID=".$info['uid'].")))";
+    $filter = str_replace('%i', $info['uid'], $cnf['groupfilter']);
+    $filter = str_replace('%u', $info['name'], $filter);
+    $filter = str_replace('%g', $gid, $filter);
     $sr     = @ldap_search($conn, $cnf['grouptree'], $filter);
     if(!$sr){
       msg("LDAP: Reading group memberships failed",-1);
