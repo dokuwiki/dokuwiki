@@ -57,6 +57,25 @@ function io_cacheParse($file){
 }
 
 /**
+ * Removes empty directories
+ *
+ * @todo use safemode hack
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
+function io_sweepNS($id){
+  global $conf;
+
+  //scan all namespaces
+  while(($id = getNS($id)) !== false){
+		$dir = $conf['datadir'].'/'.str_replace(':','/',$id);
+    $dir = utf8_encodeFN($dir);
+
+    //try to delete dir else return
+    if(!@rmdir($dir)) return;
+  }
+}
+
+/**
  * Returns content of $file as cleaned string.
  *
  * Uses gzip if extension is .gz

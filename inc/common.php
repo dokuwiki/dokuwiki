@@ -487,7 +487,7 @@ function parsedWiki($id,$rev='',$excuse=true){
   //ensure $id is in global $ID (needed for parsing)
   global $ID;
   $ID = $id;
-  
+
   if($rev){
     if(@file_exists($file)){
       $ret = parse(io_readFile($file));
@@ -689,6 +689,8 @@ function saveWikiText($id,$text,$summary){
     $del = true;
     //autoset summary on deletion
     if(empty($summary)) $summary = $lang['deleted'];
+    //remove empty namespaces
+    io_sweepNS($id);
   }else{
     // save file (datadir is created in io_saveFile)
     io_saveFile($file,$text);
