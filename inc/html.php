@@ -1075,6 +1075,7 @@ function html_signature(){
  */
 function html_debug(){
   global $conf;
+  global $lang;
 
   print '<html><body>';
 
@@ -1104,6 +1105,10 @@ function html_debug(){
 
   print '<b>locale:</b><pre>';
   print setlocale(LC_ALL,0);
+  print '</pre>';
+
+  print '<b>encoding:</b><pre>';
+  print $lang['encoding'];
   print '</pre>';
 
   print '<b>Environment:</b><pre>';
