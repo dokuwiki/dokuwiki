@@ -7,6 +7,7 @@ Vertsnavn            : @HOSTNAME@
 Tidligere versjon    : @OLDPAGE@
 Aktuell versjon      : @NEWPAGE@
 Redigeringskommentar : @SUMMARY@
+User                 : @USER@
 
 @DIFF@
 

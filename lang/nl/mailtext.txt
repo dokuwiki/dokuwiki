@@ -7,6 +7,7 @@ Hostname      : @HOSTNAME@
 Oude revisie  : @OLDPAGE@
 Nieuwe revisie: @NEWPAGE@
 Samenvatting  : @SUMMARY@
+User          : @USER@
 
 @DIFF@
 

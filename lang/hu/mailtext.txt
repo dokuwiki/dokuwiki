@@ -7,6 +7,7 @@ Gép neve      : @HOSTNAME@
 Előző változat: @OLDPAGE@
 Új változat   : @NEWPAGE@
 Összefoglaló  : @SUMMARY@
+User        : @USER@
 
 @DIFF@
 

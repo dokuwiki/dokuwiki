@@ -7,6 +7,7 @@ Isäntänimi               : @HOSTNAME@
 Vanha versio             : @OLDPAGE@
 Uusi versio              : @NEWPAGE@
 Yhteenveto muokkauksesta : @SUMMARY@
+User                     : @USER@
 
 @DIFF@
 

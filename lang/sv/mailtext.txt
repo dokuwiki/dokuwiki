@@ -7,6 +7,7 @@ Värdnamn             : @HOSTNAME@
 Tidigare version     : @OLDPAGE@
 Aktuell version      : @NEWPAGE@
 Redigeringskommentar : @SUMMARY@
+User                 : @USER@
 
 @DIFF@
 

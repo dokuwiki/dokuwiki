@@ -6,6 +6,8 @@ Dirección-IP   : @IPADDRESS@
 Nombre de Host : @HOSTNAME@
 Revision Vieja : @OLDPAGE@
 Revision Nueva : @NEWPAGE@
+Edit Summary   : @SUMMARY@
+User           : @USER@
 
 @DIFF@
 

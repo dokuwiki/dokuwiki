@@ -8,6 +8,7 @@ Komputer     : @HOSTNAME@
 Stara wersja : @OLDPAGE@
 Nowa wersja  : @NEWPAGE@
 Opis zmian   : @SUMMARY@
+User         : @USER@
 
 @DIFF@
 

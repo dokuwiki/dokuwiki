@@ -7,6 +7,7 @@ IP-адрес         : @IPADDRESS@
 Старая ревизия   : @OLDPAGE@
 Новая ревизия    : @NEWPAGE@
 Сводка изменений : @SUMMARY@
+User             : @USER@
 
 @DIFF@
 

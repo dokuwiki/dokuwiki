@@ -7,6 +7,7 @@ IP-Address  : @IPADDRESS@
 旧版次      : @OLDPAGE@
 新版次      : @NEWPAGE@
 编辑摘要    : @SUMMARY@
+User        : @USER@
 
 @DIFF@
 

@@ -6,7 +6,8 @@ Adresse IP        : @IPADDRESS@
 Nom d'hôte        : @HOSTNAME@
 Ancienne Révision : @OLDPAGE@
 Nouvelle Révision : @NEWPAGE@
-Résumé 		  : @SUMMARY@
+Résumé            : @SUMMARY@
+User              : @USER@
 
 @DIFF@
 

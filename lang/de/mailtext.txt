@@ -6,6 +6,8 @@ IP-Adresse  : @IPADDRESS@
 Hostname    : @HOSTNAME@
 Alte Version: @OLDPAGE@
 Neue Version: @NEWPAGE@
+Edit Summary: @SUMMARY@
+User        : @USER@
 
 @DIFF@
 

@@ -8,6 +8,8 @@ Endereço IP   : @IPADDRESS@
 Hostname      : @HOSTNAME@
 Documento Ant.: @OLDPAGE@
 Documento Novo: @NEWPAGE@
+Edit Summary  : @SUMMARY@
+User          : @USER@
 
 @DIFF@
 
