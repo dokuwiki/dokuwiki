@@ -110,10 +110,10 @@
     }else{
       $permneed = AUTH_CREATE;
     }
-  }elseif(in_array($ACT,array('revisions','show','edit'))){
-    $permneed = AUTH_READ;
-  }else{
+  }elseif(in_array($ACT,array('login','register','search','recent'))){
     $permneed = AUTH_NONE;
+  }else{
+    $permneed = AUTH_READ;
   }
 
   //start output
