@@ -1,6 +1,6 @@
 <?php
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
-  require_once(DOKU_INC.'conf/init.php');
+  require_once(DOKU_INC.'inc/init.php');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'lang/en/lang.php');
   require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');

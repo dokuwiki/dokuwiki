@@ -369,7 +369,6 @@ function cleanID($id){
   if($conf['deaccent']) $id = utf8_deaccent($id,-1);
 
   //remove specials
-  //$id = preg_replace('#[\x00-\x20 ¡!"§$%&()\[\]{}¿\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);
   $id = utf8_stripspecials($id,'_','_:.-');
 
   //clean up
@@ -815,6 +814,7 @@ function download($url,$file){
 /**
  * extracts the query from a google referer
  *
+ * @todo   should be more generic and support yahoo et al
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getGoogleQuery(){

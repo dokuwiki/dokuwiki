@@ -147,6 +147,7 @@ function html_secedit($text,$show=true){
 /**
  * displays the breadcrumbs trace
  *
+ * @deprecated
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_breadcrumbs(){
@@ -169,6 +170,7 @@ function html_breadcrumbs(){
 /**
  * display the HTML head and metadata
  *
+ * @deprecated -> tpl_metaheaders()
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_head(){
@@ -228,6 +230,21 @@ function html_head(){
     <?@include("includes/meta.html")?>
   </head>
 <?
+}
+
+/**
+ * Just the back to top button (in it's own form)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_topbtn(){
+  global $lang;
+
+  $ret  = '';
+  $ret .= '<form class="button" method="get" action="#top" onsubmit="return svchk()">';
+  $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_top']).'" class="button" ';
+  $ret .= '</form>';
+  return $ret;
 }
 
 /**

@@ -20,6 +20,10 @@
   // define main script
   if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
+  // define Template baseURL
+  if(!defined('DOKU_TPL')) define('DOKU_TPL',
+                                  DOKU_BASE.'tpl/'.$conf['template'].'/');
+
   // set up error reporting to sane values
   error_reporting(E_ALL ^ E_NOTICE);
 
@@ -28,7 +32,7 @@
 
   // init session
   session_name("DokuWiki");
-  session_start();
+  if (!headers_sent()) session_start();
 
   // kill magic quotes
   if (get_magic_quotes_gpc()) {

@@ -1,0 +1,192 @@
+<?php
+/**
+ * DokuWiki Actions
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ */
+
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'inc/template.php');
+
+/**
+ * Call the needed action handlers
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_dispatch(){
+  global $INFO;
+  global $ACT;
+  global $ID;
+  global $QUERY;
+  global $lang;
+  global $conf;
+
+  //check permissions
+  $ACT = act_permcheck($ACT);
+
+  //login stuff
+  if(in_array($ACT,array('login','logout','register')))
+    $ACT = act_login($ACT);
+ 
+  //save
+  if($ACT == 'save')
+    $ACT = act_save($ACT);
+
+  //edit
+  if(($ACT == 'edit' || $ACT == $lang['btn_preview']) && $INFO['editable']){
+    $ACT = act_save($ACT);
+  }else{
+    unlock($ID); //try to unlock 
+  }
+
+  //handle export
+  if(substr($ACT,0,6) == 'export')
+    $ACT = act_export($ACT);
+
+  //display some infos
+  if($ACT == 'check'){
+    check();
+    $ACT = 'show';
+  }
+
+  //check if searchword was given - else just show
+  if($ACT == 'search' && empty($QUERY)){
+    $ACT = 'show';
+  }
+
+  //fixme sanitize $ACT
+ 
+  //call template FIXME: all needed vars available?
+  header('Content-Type: text/html; charset=utf-8'); 
+  include(DOKU_INC.'tpl/'.$conf['template'].'/main.php');
+}
+
+/**
+ * Run permissionchecks
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_permcheck($act){
+  if(in_array($act,array('save','preview','edit'))){
+    if($INFO['exists']){
+      $permneed = AUTH_EDIT;
+    }else{
+      $permneed = AUTH_CREATE;
+    }
+  }elseif(in_array($act,array('login','register','search','recent'))){
+    $permneed = AUTH_NONE;
+  }else{
+    $permneed = AUTH_READ;
+  }
+  if(! auth_quickaclcheck($ID) >= $permneed){
+    return 'denied';
+  }
+
+  return $act;
+}
+
+/**
+ * Handle 'save'
+ *
+ * Checks for spam and conflicts and saves the page.
+ * Does a redirect to show the page afterwards or
+ * returns a new action.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_save($act){
+  global $ID;
+  global $DATE;
+  global $PRE;
+  global $TEXT;
+  global $SUF;
+  global $SUM;
+
+  //spam check
+  if(checkwordblock())
+    return 'wordblock';
+  //conflict check //FIXME use INFO
+  if($DATE != 0 && @filemtime(wikiFN($ID)) > $DATE )
+    return 'conflict';
+
+  //save it
+  saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM); //use pretty mode for con
+  //unlock it
+  unlock($ID);
+      
+  //show it
+  session_write_close();
+  header("Location: ".wl($ID,'',true));
+  exit();
+}
+
+/**
+ * Handle 'login', 'logout', 'register'
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_auth($act){
+  //already logged in?
+  if($_SERVER['REMOTE_USER'] && $act=='login')
+    return 'show';
+
+  //handle logout
+  if($act=='logout'){
+    auth_logoff();
+    return 'login';
+  }
+
+  //handle register
+  if($act=='register' && register()){
+    $act='login';
+  }
+
+  return $act;
+}
+
+/**
+ * Handle 'edit', 'preview'
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_edit($act){
+  //check if locked by anyone - if not lock for my self
+  $lockedby = checklock($ID);
+  if($lockedby) return 'locked';
+
+  lock($ID);
+  return $act;
+}
+
+/**
+ * Handle 'edit', 'preview'
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_export($act){
+  global $ID;
+  global $REV;
+
+  if($act == 'export_html'){
+    header('Content-Type: text/html; charset=utf-8');
+    ptln('<html>');
+    ptln('<head>');
+    tpl_metaheaders();
+    ptln('</head>');
+    ptln('<body>');
+    print parsedWiki($ID,$REV,false);
+    ptln('</body>');
+    ptln('</html>');
+    exit;
+  }
+
+  if($act == 'export_raw'){
+    header('Content-Type: text/plain; charset=utf-8');
+    print rawWiki($ID,$REV);
+    exit;
+  }
+
+  return 'show';
+}
+?>

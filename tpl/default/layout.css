@@ -1,0 +1,113 @@
+/**
+ * Tableless Layout for default template
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author moraes <moraes@tipos.com.br>
+ */
+
+
+/* -------------- top row --------------- */
+.header {
+	height:35px;
+	padding:3px 0 2px 2px;
+}
+
+.pagename {
+	height:25px;
+	float:left;
+	font-size:200%;
+	font-weight:bolder;
+	color:#DEE7EC;
+	text-align:left;
+	vertical-align:middle;
+	padding:1px 0 0 1px;
+}
+
+.pagename a:link, .pagename a:visited {
+  color:#436976;
+  text-decoration:none;
+}
+
+.pagename a:hover, .pagename a:active {
+  color:#FF9933;
+}
+
+.logo {
+	float:right;
+	font-size:220%;
+	font-weight:bolder;
+	text-align:right;
+	vertical-align:middle;
+}
+
+.logo a:link, .logo a:visited, .logo a:hover, .logo a:active {
+	color:#dee7ec;
+	text-decoration:none;
+	font-variant:small-caps;
+	letter-spacing:2pt;
+}
+
+/* ---------------  top and bottom bar ---------------- */
+.bar {
+	height:25px;
+	border-top:1px solid #8CACBB;
+	border-bottom:1px solid #8CACBB;
+	background:#DEE7EC;
+	padding:2px;
+	margin:0;
+}
+
+.bar-left {
+	float:left;
+  width:50%;
+}
+
+.bar-right {
+	float:right;
+  width:50%;
+  text-align:right;
+}
+
+#bar_bottom {
+  margin-bottom:3px;
+}
+
+/* ------------- File Metadata ----------------------- */
+
+div.meta {
+  clear: both;
+  margin-top: 1em;
+  color:#436976;
+  font-size:70%;
+}
+
+div.meta div.user {
+  float:left;
+}
+
+div.meta div.doc{
+  text-align:right;
+}
+
+/* ---------------  Media Selection  ----------------- */
+
+div.uploadform {
+  margin-top: 0.5em;
+  border-top: 1px solid #8cacbb;
+}
+
+.mediaselect-left {
+  float:left;
+  padding: 0.5em;
+  height:230px;
+  overflow:auto;
+}
+
+.mediaselect-right {
+  float:right;
+  border-left: 1px solid #8cacbb;
+  padding: 0.5em;
+  width:350px;
+  height:230px;
+  overflow:auto;
+}
