@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Mail functions
  *
@@ -6,9 +6,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-require_once('inc/utf8.php');
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'inc/utf8.php');
 
-define('MAILHEADER_EOL',"\n"); //end of line for mail headers
+  define('MAILHEADER_EOL',"\n"); //end of line for mail headers
 
 /**
  * UTF-8 autoencoding replacement for PHPs mail function

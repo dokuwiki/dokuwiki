@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Common DokuWiki functions
  *
@@ -6,100 +6,11 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  require_once("conf/dokuwiki.php");
-  require_once("inc/io.php");
-  require_once('inc/utf8.php');
-  require_once('inc/mail.php');
-
-  //set up error reporting to sane values
-  error_reporting(E_ALL ^ E_NOTICE);
-
-  //make session rewrites XHTML compliant
-  ini_set('arg_separator.output', '&amp;');
-
-  //init session
-  session_name("DokuWiki");
-  session_start();
-
-  //kill magic quotes
-  if (get_magic_quotes_gpc()) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
-    ini_set('magic_quotes_gpc', 0);
-  }
-  set_magic_quotes_runtime(0);
-  ini_set('magic_quotes_sybase',0);
-
-  //disable gzip if not available
-  if($conf['usegzip'] && !function_exists('gzopen')){
-    $conf['usegzip'] = 0;
-  }
-
-  //remember original umask
-  $conf['oldumask'] = umask();
-
-  //make absolute mediaweb
-  if(!preg_match('#^(https?://|/)#i',$conf['mediaweb'])){
-    $conf['mediaweb'] = getBaseURL().$conf['mediaweb'];
-  }
-
-/**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function remove_magic_quotes(&$array) {
-  foreach (array_keys($array) as $key) {
-    if (is_array($array[$key])) {
-      remove_magic_quotes($array[$key]);
-    }else {
-      $array[$key] = stripslashes($array[$key]);
-    }
-  } 
-} 
-
-/**
- * Returns the full absolute URL to the directory where
- * DokuWiki is installed in (includes a trailing slash)
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function getBaseURL($abs=false){
-  global $conf;
-  //if canonical url enabled always return absolute
-  if($conf['canonical']) $abs = true;
-
-  $dir = dirname($_SERVER['PHP_SELF']).'/';
-
-  $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
-  $dir = preg_replace('#//+#','/',$dir);
-
-  //finish here for relative URLs
-  if(!$abs) return $dir;
-
-  $port = ':'.$_SERVER['SERVER_PORT'];
-  //remove port from hostheader as sent by IE
-  $host = preg_replace('/:.*$/','',$_SERVER['HTTP_HOST']);
-
-  // see if HTTPS is enabled - apache leaves this empty when not available,
-  // IIS sets it to 'off', 'false' and 'disabled' are just guessing
-  if (preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
-    $proto = 'http://';
-    if ($_SERVER['SERVER_PORT'] == '80') {
-      $port='';
-    }
-  }else{
-    $proto = 'https://';
-    if ($_SERVER['SERVER_PORT'] == '443') {
-      $port='';
-    }
-  }
-
-  return $proto.$host.$port.$dir;
-}
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'conf/dokuwiki.php');
+  require_once(DOKU_INC.'inc/io.php');
+  require_once(DOKU_INC.'inc/utf8.php');
+  require_once(DOKU_INC.'inc/mail.php');
 
 /**
  * Return info about the current document as associative
@@ -257,20 +168,23 @@ function idfilter($id,$ue=true){
 }
 
 /**
- * This builds a link to a wikipage (using getBaseURL)
+ * This builds a link to a wikipage
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function wl($id='',$more='',$script='doku.php',$canonical=false){
+function wl($id='',$more='',$abs=false){
   global $conf;
   $more = str_replace(',','&amp;',$more);
 
   $id    = idfilter($id);
-  $xlink = getBaseURL($canonical);
+  if($abs){
+    $xlink = DOKU_URL;
+  }else{
+    $xlink = DOKU_BASE;
+  }
 
   if(!$conf['userewrite']){
-    $xlink .= $script;
-    $xlink .= '?id='.$id;
+    $xlink .= DOKU_SCRIPT.'?id='.$id;
     if($more) $xlink .= '&amp;'.$more;
   }else{
     $xlink .= $id;
@@ -283,12 +197,14 @@ function wl($id='',$more='',$script='doku.php',$canonical=false){
 /**
  * Just builds a link to a script
  *
+ * @todo   maybe obsolete
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function script($script='doku.php'){
-  $link = getBaseURL();
-  $link .= $script;
-  return $link;
+#  $link = getBaseURL();
+#  $link .= $script;
+#  return $link;
+  return DOKU_BASE.DOKU_SCRIPT;
 }
 
 /**
@@ -825,14 +741,14 @@ function notify($id,$rev="",$summary=""){
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
   $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
-  $text = str_replace('@NEWPAGE@',wl($id,'','doku.php',true),$text);
-  $text = str_replace('@DOKUWIKIURL@',getBaseURL(true),$text);
+  $text = str_replace('@NEWPAGE@',wl($id,'',true),$text);
+  $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
   
   if($rev){
     $subject = $lang['mail_changed'].' '.$id;
-    $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",'doku.php',true),$text);
+    $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true),$text);
     require_once("inc/DifferenceEngine.php");
     $df  = new Diff(split("\n",rawWiki($id,$rev)),
                     split("\n",rawWiki($id)));

@@ -1,36 +1,36 @@
 <?php
-ini_set('short_open_tag',"1");
-require_once("conf/dokuwiki.php");
-require_once("inc/common.php");
-require_once("lang/en/lang.php");
-require_once("lang/".$conf['lang']."/lang.php");
-require_once("inc/html.php");
-require_once("inc/search.php");
-require_once("inc/format.php");
-require_once("inc/auth.php");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
+  require_once(DOKU_INC.'conf/init.php');
+  require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'lang/en/lang.php');
+  require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
+  require_once(DOKU_INC.'inc/html.php');
+  require_once(DOKU_INC.'inc/search.php');
+  require_once(DOKU_INC.'inc/format.php');
+  require_once(DOKU_INC.'inc/auth.php');
 
-header('Content-Type: text/html; charset='.$lang['encoding']);
+  header('Content-Type: text/html; charset='.$lang['encoding']);
 
-$NS = $_REQUEST['ns'];
-$NS = cleanID($NS);
+  $NS = $_REQUEST['ns'];
+  $NS = cleanID($NS);
 
-if(auth_quickaclcheck("$NS:*") >= AUTH_UPLOAD){
-  $uploadok = true;
-  //create the given namespace (just for beautification)
-  $mdir = $conf['mediadir'].'/'.utf8_encodeFN(str_replace(':','/',$NS));
-  umask($conf['dmask']);
-  io_mkdir_p($mdir);
-  umask($conf['umask']);
-}else{
-  $uploadok = false;
-}
+  if(auth_quickaclcheck("$NS:*") >= AUTH_UPLOAD){
+    $uploadok = true;
+    //create the given namespace (just for beautification)
+    $mdir = $conf['mediadir'].'/'.utf8_encodeFN(str_replace(':','/',$NS));
+    umask($conf['dmask']);
+    io_mkdir_p($mdir);
+    umask($conf['umask']);
+  }else{
+    $uploadok = false;
+  }
 
-if($_FILES['upload']['tmp_name'] && $uploadok){
-  media_upload($NS);
-}
+  if($_FILES['upload']['tmp_name'] && $uploadok){
+    media_upload($NS);
+  }
 
-//start output
-html_head();
+  //start output
+  html_head();
 ?>
 <body>
   <?html_msgarea()?>
@@ -53,8 +53,8 @@ html_head();
 </body>
 </html>
 <?
-//restore old umask
-umask($conf['oldumask']);
+  //restore old umask
+  umask($conf['oldumask']);
 
 /**********************************************/
 
@@ -153,14 +153,14 @@ function media_html_namespaces(){
 
   $data = array();
   #add default namespace
-  print '<b><a href="'.getBaseURL().'media.php?ns=">'.$lang['namespaces'].'</a></b>';
+  print '<b><a href="'.DOKU_BASE.'media.php?ns=">'.$lang['namespaces'].'</a></b>';
   search($data,$conf['mediadir'],'search_namespaces',array());
   print html_buildlist($data,'idx',media_html_list_namespaces);
 }
 
 function media_html_list_namespaces($item){
   $ret  = '';
-  $ret .= '<a href="'.getBaseURL().'media.php?ns='.idfilter($item['id']).'" class="idx_dir">';
+  $ret .= '<a href="'.DOKU_BASE.'media.php?ns='.idfilter($item['id']).'" class="idx_dir">';
   $ret .= $item['id'];
   $ret .= '</a>';
   return $ret;

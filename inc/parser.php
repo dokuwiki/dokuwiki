@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * The DokuWiki parser
  *
@@ -6,11 +6,12 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  include_once("inc/common.php");
-  include_once("inc/html.php");
-  include_once("inc/format.php");
-  require_once("lang/en/lang.php");
-  require_once("lang/".$conf['lang']."/lang.php");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  include_once(DOKU_INC.'inc/common.php');
+  include_once(DOKU_INC.'inc/html.php');
+  include_once(DOKU_INC.'inc/format.php');
+  require_once(DOKU_INC.'lang/en/lang.php');
+  require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
 
 /**
  * The main parser function.
@@ -469,7 +470,7 @@ function smileys(&$table,&$text){
     $smiley = trim($smiley);
     if(empty($smiley)) continue;
     $sm     = preg_split('/\s+/',$smiley,2);
-    $sm[1]  = '<img src="'.getBaseURL().'smileys/'.$sm[1].'" align="middle" alt="'.$sm[0].'" />';
+    $sm[1]  = '<img src="'.DOKU_BASE.'smileys/'.$sm[1].'" align="middle" alt="'.$sm[0].'" />';
     $sm[0]  = preg_quote($sm[0],'/');
     firstpass($table,$text,'/(\W)'.$sm[0].'(\W)/s',$sm[1],"\\1","\\2");
   }

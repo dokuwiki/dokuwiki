@@ -5,14 +5,15 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-  
-  require_once("conf/dokuwiki.php");
-  require_once("inc/common.php");
-  require_once("inc/html.php");
-  require_once("inc/parser.php");
-  require_once("lang/en/lang.php");
-  require_once("lang/".$conf['lang']."/lang.php");
-  require_once("inc/auth.php");
+
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
+  require_once(DOKU_INC.'inc/init.php');
+  require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'inc/html.php');
+  require_once(DOKU_INC.'inc/parser.php');
+  require_once(DOKU_INC.'lang/en/lang.php');
+  require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
+  require_once(DOKU_INC.'inc/auth.php');
 
   //import variables
   $QUERY = trim($_REQUEST['id']);
@@ -73,7 +74,7 @@
       //unlock it
       unlock($id);
       //show it
-      header("Location: ".wl($ID, '','doku.php',true));
+      header("Location: ".wl($ID,'',true));
       exit();
     }
   }

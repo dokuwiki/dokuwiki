@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * link format functions
  *
@@ -6,8 +6,9 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  require_once("conf/dokuwiki.php");
-  require_once("inc/common.php");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'conf/dokuwiki.php');
+  require_once(DOKU_INC.'inc/common.php');
 
 
 /**
@@ -248,7 +249,7 @@ function format_link_interwiki($link){
   $iwlinks = file('conf/interwiki.conf');
 
   //add special case 'this'
-  $iwlinks[] = 'this '.getBaseURL(true).'{NAME}'; 
+  $iwlinks[] = 'this '.DOKU_URL.'{NAME}'; 
   
   //go through iwlinks and find URL for wiki
   foreach ($iwlinks as $line){
@@ -266,13 +267,13 @@ function format_link_interwiki($link){
 
   //if ico exists set additonal style
   if(@file_exists('interwiki/'.$ico.'.png')){
-    $link['style']='background: transparent url('.getBaseURL().'interwiki/'.$ico.'.png) 0px 1px no-repeat;';
+    $link['style']='background: transparent url('.DOKU_BASE.'interwiki/'.$ico.'.png) 0px 1px no-repeat;';
   }elseif(@file_exists('interwiki/'.$ico.'.gif')){
-    $link['style']='background: transparent url('.getBaseURL().'interwiki/'.$ico.'.gif) 0px 1px no-repeat;';
+    $link['style']='background: transparent url('.DOKU_BASE.'interwiki/'.$ico.'.gif) 0px 1px no-repeat;';
   }
 
   //do we stay at the same server? Use local target
-  if( strpos($url,getBaseURL(true)) === 0 ){
+  if( strpos($url,DOKU_URL) === 0 ){
     $link['target'] = $conf['target']['wiki'];
   }
 

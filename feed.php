@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  ini_set('short_open_tag',"1");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
+  require_once(DOKU_INC.'inc/init.php');
   require_once("inc/common.php");
   require_once("inc/parser.php");
   require_once("inc/feedcreator.class.php");
@@ -42,15 +43,15 @@
   //some defaults for the feed
   $CACHEGROUP = 'feed';
   $conf['typography'] = false;
-  $conf['canonical']  = true;
+#  $conf['canonical']  = true;
   $parser['toc']      = false;
 
   $rss = new UniversalFeedCreator();
   $rss = new DokuWikiFeedCreator();
   $rss->title = $conf['title'];
-  $rss->link  = wl();
-  $rss->syndicationURL = getBaseURL().'/feed.php';
-  $rss->cssStyleSheet = getBaseURL().'/feed.css';
+  $rss->link  = DOKU_URL;
+  $rss->syndicationURL = DOKU_URL.'/feed.php';
+  $rss->cssStyleSheet  = DOKU_URL.'/feed.css';
 
   if($mode == 'list'){
     rssListNamespace($rss,$ns);
@@ -77,7 +78,7 @@ function rssRecentChanges(&$rss,$num){
     }
     $item = new FeedItem();
     $item->title       = $id;
-    $item->link        = wl($id,'rev='.$recents[$id]['date']);
+    $item->link        = wl($id,'rev='.$recents[$id]['date'],true);
     $item->description = $desc;
     $item->date        = date('r',$recents[$id]['date']);
     if(strpos($id,':')!==false){
@@ -115,7 +116,7 @@ function rssListNamespace(&$rss,$ns){
     $desc = cleanDesc(parsedWiki($id));
     $item = new FeedItem();
     $item->title       = $id;
-    $item->link        = wl($id,'rev='.$date);
+    $item->link        = wl($id,'rev='.$date,true);
     $item->description = $desc;
     $item->date        = date('r',$date);
     $rss->addItem($item);

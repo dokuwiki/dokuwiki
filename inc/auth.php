@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Authentication library
  *
@@ -9,12 +9,13 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  require_once("inc/common.php");
-  require_once("inc/io.php");
-  require_once("inc/blowfish.php");
-  require_once("inc/mail.php");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'inc/io.php');
+  require_once(DOKU_INC.'inc/blowfish.php');
+  require_once(DOKU_INC.'inc/mail.php');
   // load the the auth functions
-  require_once('inc/auth_'.$conf['authtype'].'.php');
+  require_once(DOKU_INC.'inc/auth_'.$conf['authtype'].'.php');
 
   // some ACL level defines
   define('AUTH_NONE',0);
@@ -324,7 +325,7 @@ function auth_sendPassword($user,$password){
   if(!$userinfo['mail']) return false;
 
   $text = rawLocale('password');
-  $text = str_replace('@DOKUWIKIURL@',getBaseURL(true),$text);
+  $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
   $text = str_replace('@FULLNAME@',$userinfo['name'],$text);
   $text = str_replace('@LOGIN@',$user,$text);
   $text = str_replace('@PASSWORD@',$password,$text);

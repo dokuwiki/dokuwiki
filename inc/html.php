@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * HTML output functions
  *
@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  include_once("inc/format.php");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'inc/format.php');
 
 /**
  * Convenience function to quickly build a wikilink
@@ -188,13 +189,13 @@ function html_head(){
     <title><?=$ID?> [<?=$conf['title']?>]</title>
     <meta http-equiv="Content-Type" content="text/html; charset=<?=$lang['encoding']?>" />
     <meta name="generator" content="DokuWiki <?=getVersion()?>" />
-    <link rel="stylesheet" media="screen" type="text/css" href="<?=getBaseURL()?>style.css" />
-    <link rel="stylesheet" media="print" type="text/css" href="<?=getBaseURL()?>print.css" />
-    <link rel="shortcut icon" href="<?=getBaseURL()?>images/favicon.ico" />
+    <link rel="stylesheet" media="screen" type="text/css" href="<?=DOKU_BASE?>style.css" />
+    <link rel="stylesheet" media="print" type="text/css" href="<?=DOKU_BASE?>print.css" />
+    <link rel="shortcut icon" href="<?=DOKU_BASE?>images/favicon.ico" />
     <link rel="start" href="<?=wl()?>" />
     <link rel="contents" href="<?=wl($ID,'do=index')?>" title="<?=$lang['index']?>" />
-    <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="<?=getBaseURL()?>feed.php" />
-    <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="<?=getBaseURL()?>feed.php?mode=list&amp;ns=<?=$INFO['namespace']?>" />
+    <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="<?=DOKU_BASE?>feed.php" />
+    <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="<?=DOKU_BASE?>feed.php?mode=list&amp;ns=<?=$INFO['namespace']?>" />
     <link rel="alternate" type="text/html" title="Plain HTML" href="<?=wl($ID,'do=export_html')?>" />
     <link rel="alternate" type="text/plain" title="Wiki Markup" href="<?=wl($ID, 'do=export_raw')?>" />
 <?
@@ -213,14 +214,14 @@ function html_head(){
     <script language="JavaScript" type="text/javascript">
       var alertText   = '<?=$lang['qb_alert']?>';
       var notSavedYet = '<?=$lang['notsavedyet']?>';
-      var baseURL     = '<?=getBaseURL()?>';
+      var DOKU_BASE     = '<?=DOKU_BASE?>';
     </script>
-    <script language="JavaScript" type="text/javascript" src="<?=getBaseURL()?>script.js"></script>
+    <script language="JavaScript" type="text/javascript" src="<?=DOKU_BASE?>script.js"></script>
 
     <!--[if gte IE 5]>
     <style type="text/css">
       /* that IE 5+ conditional comment makes this only visible in IE 5+ */
-      img { behavior: url("<?=getBaseURL()?>pngbehavior.htc"); } /* IE bugfix for transparent PNGs */
+      img { behavior: url("<?=DOKU_BASE?>pngbehavior.htc"); } /* IE bugfix for transparent PNGs */
     </style>
     <![endif]-->
 
@@ -246,13 +247,11 @@ function html_btn($name,$id,$akey,$params,$method='get'){
   $id = idfilter($id,false);
 
   //make nice URLs even for buttons  
-  $link = getBaseURL().'/';
-  $link = preg_replace('#//$#','/',$link);
   if(!$conf['userewrite']){
-    $script = $link.'doku.php';
+    $script = DOKU_BASE.DOKUSCRIPT;
     $params['id'] = $id;
   }else{
-    $script = $link.$id;
+    $script = DOKU_BASE.$id;
   }
   
   $ret .= '<form class="button" method="'.$method.'" action="'.$script.'" onsubmit="return svchk()">';
@@ -529,7 +528,7 @@ function html_hilight($html,$query){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-  require_once("inc/search.php");
+  require_once(DOKU_INC.'inc/search.php');
   global $conf;
   global $QUERY;
   global $ID;
@@ -648,7 +647,7 @@ function html_revisions(){
     print ')</span> ';
 
     print '<a href="'.wl($ID,"rev=$rev,do=diff").'">';
-    print '<img src="'.getBaseURL().'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
     print '</a>';
     print '</li>';
   }
@@ -686,7 +685,7 @@ function html_recent(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_index($ns){
-  require_once("inc/search.php");
+  require_once(DOKU_INC.'inc/search.php');
   global $conf;
   global $ID;
   $dir = $conf['datadir'];
@@ -814,7 +813,7 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_backlinks(){
-  require_once("inc/search.php");
+  require_once(DOKU_INC.'inc/search.php');
   global $ID;
   global $conf;
 
@@ -847,7 +846,7 @@ function html_backlinks(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_diff($text='',$intro=true){
-  require_once("inc/DifferenceEngine.php");
+  require_once(DOKU_INC.'inc/DifferenceEngine.php');
   global $ID;
   global $REV;
   global $lang;
@@ -1136,11 +1135,15 @@ function html_debug(){
   print_r($cnf);
   print '</pre>';
 
-  print '<b>abs baseURL:</b><pre>';
-  print getBaseURL(true);
+  print '<b>DOKU_BASE:</b><pre>';
+  print DOKU_BASE;
   print '</pre>';
   
-  print '<b>rel baseURL:</b><pre>';
+  print '<b>abs DOKU_BASE:</b><pre>';
+  print DOKU_URL;
+  print '</pre>';
+  
+  print '<b>rel DOKU_BASE:</b><pre>';
   print dirname($_SERVER['PHP_SELF']).'/';
   print '</pre>';
 

@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * DokuWiki search functions
  *
@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  require_once("inc/common.php");
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  require_once(DOKU_INC.'inc/common.php');
 
 /**
  * recurse direcory

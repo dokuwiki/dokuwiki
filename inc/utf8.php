@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * UTF8 helper functions
  *
