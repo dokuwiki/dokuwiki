@@ -52,6 +52,24 @@ function utf8_check($Str) {
  return true;
 }
 
+
+/**
+ * This is a unicode aware replacement for strlen()
+ *
+ * Uses mb_string extension if available
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    strlen()
+ */
+function utf8_strlen($string){
+  if(!defined('UTF8_NOMBSTRING') && function_exists('mb_strlen'))
+    return mb_strlen($string,'utf-8');
+
+  $uni = utf8_to_unicode($string);
+  return count($uni);
+}
+
+
 /**
  * This is a unicode aware replacement for strtolower()
  *
@@ -116,6 +134,40 @@ function utf8_deaccent($string,$case=0){
     $string = str_replace(array_keys($UTF8_UPPER_ACCENTS),array_values($UTF8_UPPER_ACCENTS),$string);
   }
   return $string;
+}
+
+/**
+ * This is an Unicode aware replacement for strpos
+ *
+ * Uses mb_string extension if available
+ *
+ * @author Scott Michael Reynen <scott@randomchaos.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @link   http://www.randomchaos.com/document.php?source=php_and_unicode
+ * @see    strpos()
+ */
+function utf8_strpos($haystack, $needle,$offset=0) {
+  if(!defined('UTF8_NOMBSTRING') && function_exists('mb_strpos'))
+    return mb_strpos($haystack,$needle,$offset,'utf-8');
+
+  $haystack = utf8_to_unicode($haystack);
+  $needle   = utf8_to_unicode($needle);
+  $position = $offset;
+  $found = false;
+  
+  while( (! $found ) && ( $position < count( $haystack ) ) ) {
+    if ( $needle[0] == $haystack[$position] ) {
+      for ($i = 1; $i < count( $needle ); $i++ ) {
+        if ( $needle[$i] != $haystack[ $position + $i ] ) break;
+      }
+      if ( $i == count( $needle ) ) {
+        $found = true;
+        $position--;
+      }
+    }
+    $position++;
+  }
+  return ( $found == true ) ? $position : false;
 }
 
 /**
