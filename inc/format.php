@@ -70,15 +70,15 @@ function format_link_wiki($link){
   $link['suf']   = '';
   $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
 
-  //if links starts with . add current namespace if any
+  $ns = getNS($ID);
+  
+  //if links starts with . add current namespace
   if(strpos($link['url'],'.')===0){
-    $ns = substr($ID,0,strrpos($ID,':')); #get current ns
     $link['url'] = $ns.':'.substr($link['url'],1);
   }
 
   //if link contains no namespace. add current namespace (if any)
-  if(strpos($ID,':')!==false  && strpos($link['url'],':') === false){
-    $ns = substr($ID,0,strrpos($ID,':')); #get current ns
+  if($ns !== false && strpos($link['url'],':') === false){
     $link['url'] = $ns.':'.$link['url'];
   }
 
@@ -305,6 +305,7 @@ function format_link_interwiki($link){
  */
 function format_link_media($link){
   global $conf;
+  global $ID;
 
   $link['class']  = 'media';
   $link['style']  = '';
@@ -339,6 +340,19 @@ function format_link_media($link){
     if($size[3]) $h = $size[3];
   }
 
+  //namespace mangling for internal images
+  if(!preg_match('#^https?://#i',$src)){
+    $ns = getNS($ID);
+    //if src starts with . add current namespace
+    if(strpos($src,'.') === 0){
+      $src = $ns.':'.substr($src,1);
+    } 
+    //if src contains no namespace add current namespace if any
+    if($ns !== false && strpos($src,':') === false ){
+      $src = $ns.':'.$src;
+    }
+  }
+
   //check for nocache param
   $nocache = preg_match('/nocache/i',$param);
   //do image caching, resizing and src rewriting
@@ -347,7 +361,7 @@ function format_link_media($link){
 
   //set link to src if none given 
   if(!$link['url']){
-    $link['url'] = getBaseURL().$src;
+    $link['url'] = $src;
     $link['target'] = $conf['target']['media'];
   }
 
