@@ -5,7 +5,5 @@
 # edit   2
 # create 4
 # upload 8
-# grant  255 #not used yet
 
-*               @admin      255
 *               @ALL        4
