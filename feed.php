@@ -79,11 +79,11 @@ function rssRecentChanges(&$rss,$num){
   $recents = getRecents($num);
   foreach(array_keys($recents) as $id){
     $desc = cleanDesc(parsedWiki($id));
-    if(!empty($recents[$id]['sum'])){
-      $desc = '['.strip_tags($recents[$id]['sum']).'] '.$desc;
-    }
     $item = new FeedItem();
     $item->title       = $id;
+    if(!empty($recents[$id]['sum'])){
+      $item->title .= ': '.strip_tags($recents[$id]['sum']);
+    }
     $item->link        = wl($id,'rev='.$recents[$id]['date'],true);
     $item->description = $desc;
     $item->date        = date('r',$recents[$id]['date']);
