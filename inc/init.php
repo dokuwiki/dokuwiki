@@ -6,6 +6,9 @@
   // define the include path
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 
+  // set up error reporting to sane values
+  error_reporting(E_ALL ^ E_NOTICE);
+
   // load the config file(s)
   require_once(DOKU_INC.'conf/dokuwiki.php');
   @include_once(DOKU_INC.'conf/local.php');
@@ -23,9 +26,6 @@
   // define Template baseURL
   if(!defined('DOKU_TPL')) define('DOKU_TPL',
                                   DOKU_BASE.'tpl/'.$conf['template'].'/');
-
-  // set up error reporting to sane values
-  error_reporting(E_ALL ^ E_NOTICE);
 
   // make session rewrites XHTML compliant
   ini_set('arg_separator.output', '&amp;');
