@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  define('DOKUWIKIVERSION','2005-01-16');
+  define('DOKUWIKIVERSION','2005-01-17');
 
   ini_set('short_open_tag',"1");
   require_once("conf/dokuwiki.php");
