@@ -712,7 +712,7 @@ function saveWikiText($id,$text,$summary){
   
   //purge cache on add by updating the purgefile
   if($conf['purgeonadd'] && (!$old || $del)){
-    io_saveFile($conf['datadir'].'/.cache/purgefile',time());
+    io_saveFile($conf['datadir'].'/_cache/purgefile',time());
   }
 }
 

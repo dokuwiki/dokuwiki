@@ -486,13 +486,13 @@ function img_cache(&$csrc,&$src,&$w,&$h,$cachemode){
 
   //download external images if allowed
   if($isurl && $isimg && $cachemode != 'nocache'){
-    $cache = $conf['mediadir']."/.cache/$md5.$ext";
+    $cache = $conf['mediadir']."/_cache/$md5.$ext";
     if ( ($cachemode == 'recache' && download($src,$cache)) ||
          @file_exists($cache) || download($src,$cache)){
-      $f['full']['web'] = $conf['mediaweb']."/.cache/$md5.$ext";
-      $f['resz']['web'] = $conf['mediaweb']."/.cache/$md5.$ext";
-      $f['full']['fs']  = $conf['mediadir']."/.cache/$md5.$ext";
-      $f['resz']['fs']  = $conf['mediadir']."/.cache/$md5.$ext";
+      $f['full']['web'] = $conf['mediaweb']."/_cache/$md5.$ext";
+      $f['resz']['web'] = $conf['mediaweb']."/_cache/$md5.$ext";
+      $f['full']['fs']  = $conf['mediadir']."/_cache/$md5.$ext";
+      $f['resz']['fs']  = $conf['mediadir']."/_cache/$md5.$ext";
       $isurl = false;
     }
   }
@@ -505,15 +505,15 @@ function img_cache(&$csrc,&$src,&$w,&$h,$cachemode){
       if(!$h){
         $h = round(($w * $info[1]) / $info[0]);
       }
-      $cache = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+      $cache = $conf['mediadir'].'/_cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
       //delete outdated cachefile
       if(@file_exists($cache) && (filemtime($cache)<filemtime($f['full']['fs']))){
         unlink($cache);
       }
       //check if a resized cachecopy exists else create one
       if(@file_exists($cache) || img_resize($ext,$f['full']['fs'],$info[0],$info[1],$cache,$w,$h)){
-        $f['resz']['web'] = $conf['mediaweb'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
-        $f['resz']['fs']  = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+        $f['resz']['web'] = $conf['mediaweb'].'/_cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+        $f['resz']['fs']  = $conf['mediadir'].'/_cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
       }
     }else{
       //if no new size was given just return the img size

@@ -143,7 +143,7 @@ function auth_browseruid(){
  * Creates a random key to encrypt the password in cookies
  *
  * This function tries to read the password for encrypting
- * cookies from $conf['datadir'].'/.cache/.htcookiesalt'
+ * cookies from $conf['datadir'].'/_cache/_htcookiesalt'
  * if no such file is found a random key is created and
  * and stored in this file.
  *
@@ -153,7 +153,7 @@ function auth_browseruid(){
  */
 function auth_cookiesalt(){
   global $conf;
-  $file = $conf['datadir'].'/.cache/.htcookiesalt';
+  $file = $conf['datadir'].'/_cache/_htcookiesalt';
   $salt = io_readFile($file);
   if(empty($salt)){
     $salt = uniqid(rand(),true);

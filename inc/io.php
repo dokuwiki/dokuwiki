@@ -21,9 +21,9 @@ function io_cacheParse($file){
   global $CACHEGROUP;
   global $parser; //we read parser options
   $parsed = '';
-  $cache  = $conf['datadir'].'/.cache/';
+  $cache  = $conf['datadir'].'/_cache/';
   $cache .= md5($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$CACHEGROUP);
-  $purge  = $conf['datadir'].'/.cache/purgefile';
+  $purge  = $conf['datadir'].'/_cache/purgefile';
 
   // check if cache can be used
   $cachetime = @filemtime($cache);
