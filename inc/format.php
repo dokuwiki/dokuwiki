@@ -398,6 +398,7 @@ function format_rss($url){
   global $lang;
   define('MAGPIE_CACHE_ON', false); //we do our own caching
   define('MAGPIE_DIR', 'inc/magpie/');
+  define('MAGPIE_OUTPUT_ENCODING','UTF-8'); //return all feeds as UTF-8
   require_once(MAGPIE_DIR.'/rss_fetch.inc');
 
   //disable warning while fetching
