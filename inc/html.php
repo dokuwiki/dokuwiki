@@ -752,9 +752,6 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   global $lang;
   global $conf;
 
-  //check for create permissions first
-  if(!$INFO['exists'] && !html_acl(AUTH_CREATE)) return;
-
   //set summary default
   if(!$SUM){
     if($REV){
