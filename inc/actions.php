@@ -98,6 +98,8 @@ function act_clean($act){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_permcheck($act){
+  global $INFO;
+
   if(in_array($act,array('save','preview','edit'))){
     if($INFO['exists']){
       $permneed = AUTH_EDIT;
@@ -109,12 +111,9 @@ function act_permcheck($act){
   }else{
     $permneed = AUTH_READ;
   }
-  if(! auth_quickaclcheck($ID) >= $permneed){
-    return 'denied';
-  }
+  if($INFO['perm'] >= $permneed) return $act;
 
-
-  return $act;
+  return 'denied';
 }
 
 /**
