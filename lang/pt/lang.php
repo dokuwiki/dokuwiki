@@ -34,6 +34,7 @@ $lang['btn_logout']   = 'Sair da sessão';
 $lang['loggedinas']   = 'Está em sessão como';
 $lang['user']         = 'Utilizador';
 $lang['pass']         = 'Senha';
+$lang['remember']     = 'Sessão Automática?';
 $lang['fullname']     = 'Nome completo';
 $lang['email']        = 'e-mail';
 $lang['register']     = 'Inscrever-se';
