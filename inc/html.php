@@ -1078,6 +1078,10 @@ function html_signature(){
 function html_debug(){
   global $conf;
   global $lang;
+  //remove sensitive data
+  $cnf = $conf;
+  $cnf['auth']='***';
+  $cnf['notify']='***';
 
   print '<html><body>';
 
@@ -1090,7 +1094,7 @@ function html_debug(){
   print '</pre>';
 
   print '<b>$conf:</b><pre>';
-  print_r($conf);
+  print_r($cnf);
   print '</pre>';
 
   print '<b>abs baseURL:</b><pre>';
