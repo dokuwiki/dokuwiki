@@ -25,7 +25,7 @@ $lang['btn_index']  = 'Ãœbersicht';
 $lang['btn_secedit']= 'Bearbeiten';
 $lang['btn_login']  = 'Einloggen';
 $lang['btn_logout'] = 'Ausloggen';
-$lang['btn_acl_admin'] = 'ACL';
+$lang['btn_admin']  = 'Admin';
 
 $lang['loggedinas'] = 'Eingeloggt als';
 $lang['user']       = 'Benutzername';
@@ -100,22 +100,6 @@ $lang['qb_ol']      = 'Numerierter Listenpunkt';
 $lang['qb_ul']      = 'Listenpunkt';
 $lang['qb_media']   = 'Bilder und andere Dateien hinzufÃ¼gen';
 $lang['qb_sig']     = 'Unterschrift einfÃ¼gen';
-
-$lang['acl_admin']  = 'Hinzuf&uuml;gen';
-$lang['acl_current']= 'Aktuelle Access Control Konfiguration';
-$lang['acl_user']   = 'Benutzer/Gruppe';
-$lang['acl_scope']  = 'Pagename/Namespace';
-$lang['acl_level']  = 'Zugriffslevel';
-$lang['acl_none']   = 'Keine';
-$lang['acl_read']   = 'Lesen';
-$lang['acl_edit']   = 'Bearbeiten';
-$lang['acl_create'] = 'Anlegen';
-$lang['acl_upload'] = 'Upload';
-$lang['acl_commit'] = 'Ausführen';
-$lang['acl_input_request'] = 'bitte wählen';
-$lang['acl_group']  = 'Gruppe';
-$lang['acl_user']   = 'Benutzer';
-$lang['acl_confirm_delete'] = 'Diesen Eintrag entfernen?';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

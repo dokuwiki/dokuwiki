@@ -30,6 +30,19 @@ function html_wikilink($url,$name='',$search=''){
 }
 
 /**
+ * Helps building long attribute lists
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_attbuild($attributes){
+  $ret = '';
+  foreach ( $attributes as $key => $value ) {
+    $ret .= $key.'="'.formtext($value).'" ';
+  }
+  return trim($ret);
+}
+
+/**
  * The loginform
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -1208,6 +1221,9 @@ function html_acl_admin(){
 ?>  
   <fieldset style="float:left; text-align:left; white-space:nowrap; width:320px;">
     <legend><?=$lang['acl_admin']?></legend>
+
+
+<!-- XXXXXXXXXXXXX -->
     
     <form name="acl_admin_add" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
       <input type="hidden" name="do" value="acl_admin_add" />
@@ -1241,17 +1257,20 @@ function html_acl_admin(){
         </tr>
       </table>
     </form>
+<!-- XXXXXXXXXXXXX -->
   </fieldset>
 
   <div style="float:right;">
     <fieldset>
     <legend><?=$lang['acl_current']?></legend>
     <div style="text-align:left">
+
+<!-- XXXXXXXXXXXXX -->
     <?php
       $acl_config=get_acl_config($ID);
       foreach($acl_config as $pagename => $value){
         if($pagename != '*') {
-      $ID_cur=$pagename;
+          $ID_cur=$pagename;
           while(($piece=getNS($ID_cur)) !== false){
             $url="<a href='".wl($piece,'do=acl_admin')."'>".noNS($piece)."</a>:".$url;;
             $ID_cur=$piece;
@@ -1262,6 +1281,8 @@ function html_acl_admin(){
            }else{
              print $pagename;
            } ?>
+
+           <!-- XXXXXXXXXXXXX -->
            <table class="inline">
              <tr>
                <th class="inline"></th>
@@ -1270,7 +1291,7 @@ function html_acl_admin(){
                <th class="inline">W</th>
                <th class="inline">C</th>
                <th class="inline">U</th>
-        <th class="inline">UPDATE</th>
+               <th class="inline">UPDATE</th>
                <th class="inline">DELETE</th>
              </tr>
            <?php
@@ -1337,4 +1358,24 @@ function html_acl_admin(){
   </div>
 <?
 }
+
+/**
+ * Print the admin overview page
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
+function html_admin(){
+  global $ID;
+  global $lang;
+
+  print parsedLocale('admin');
+
+  ptln('<ul class="admin">');
+
+  // currently ACL only - more to come
+  ptln('<li><a href="'.wl($ID,'do=admin&page=acl').'">'.$lang['admin_acl'].'</a></li>');
+
+  ptln('</ul>');
+}
+
 ?>

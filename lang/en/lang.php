@@ -24,7 +24,9 @@ $lang['btn_index']  = 'Index';
 $lang['btn_secedit']= 'Edit';
 $lang['btn_login']  = 'Login';
 $lang['btn_logout'] = 'Logout';
-$lang['btn_acl_admin'] = 'ACL';
+$lang['btn_admin']  = 'Admin';
+$lang['btn_update'] = 'Update';
+$lang['btn_delete'] = 'Delete';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -99,21 +101,21 @@ $lang['qb_ul']      = 'Unordered List Item';
 $lang['qb_media']   = 'Add Images and other files';
 $lang['qb_sig']     = 'Insert Signature';
 
-$lang['acl_admin']  = 'New';
-$lang['acl_current']= 'Current Access Control Configuration';
-$lang['acl_user']   = 'User/Group';
-$lang['acl_scope']  = 'Pagename/Namespace';
-$lang['acl_level']  = 'Access Level';
-$lang['acl_none']   = 'None';
-$lang['acl_read']   = 'Read';
-$lang['acl_edit']   = 'Edit';
-$lang['acl_create'] = 'Create';
-$lang['acl_upload'] = 'Upload';
-$lang['acl_commit'] = 'Commit';
-$lang['acl_input_request'] = 'please select';
+$lang['del_confirm']= 'Delete this entry?';
+
+$lang['admin_acl']  = 'Access Control List Management...';
+
 $lang['acl_group']  = 'Group';
 $lang['acl_user']   = 'User';
-$lang['acl_confirm_delete'] = 'Delete this entry?';
+$lang['acl_perms']  = 'Permissions for';
+$lang['page']       = 'Page';
+$lang['namespace']  = 'Namespace';
+
+$lang['acl_perm1']  = 'Read';
+$lang['acl_perm2']  = 'Edit';
+$lang['acl_perm4']  = 'Create';
+$lang['acl_perm8']  = 'Upload';
+$lang['acl_new']    = 'Add new Entry';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

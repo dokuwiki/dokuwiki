@@ -98,6 +98,7 @@
         <?tpl_button('history')?>
       </div>
       <div class="bar-right" id="bar_bottomright">
+        <?tpl_button('admin')?>
         <?tpl_button('login')?>
         <?tpl_button('index')?>
         <?tpl_button('top')?>&nbsp;

@@ -87,7 +87,7 @@ textarea.edit {
   width:100%;
 }
 
-input.edit {
+input.edit,select.edit {
   font-size: 100%;
   border: 1px solid #8cacbb;
   height: 22px !important;
@@ -564,4 +564,17 @@ div.search_quickhits {
 
 .footerinc a:hover img {
     opacity: 1;
+}
+
+/* ---- Admin --- */
+
+div.acladmin label {
+  text-align: left;
+  font-weight: normal;
+  display: inline;
+}
+
+div.acladmin table{
+  margin-left: 10%;
+  width: 80%;
 }

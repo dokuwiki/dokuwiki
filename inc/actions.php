@@ -59,9 +59,19 @@ function act_dispatch(){
     $ACT = 'show';
   }
 
+  //handle admin tasks
+  if($ACT == 'admin'){
+		if($_REQUEST['page'] == 'acl'){
+			require_once(DOKU_INC.'inc/admin_acl.php');
+			admin_acl_handler();
+		}
+  }
+
   //call template FIXME: all needed vars available?
   header('Content-Type: text/html; charset=utf-8'); 
   include(DOKU_INC.'tpl/'.$conf['template'].'/main.php');
+  // output for the commands is now handled in inc/templates.php
+  // in function tpl_content()
 }
 
 /**
@@ -85,7 +95,7 @@ function act_clean($act){
   if(!array_search($act,array('login','logout','register','save','edit',
                               'preview','export_raw','export_html',
                               'search','show','check','index','revisions',
-                              'diff','recent','backlink',))){
+                              'diff','recent','backlink','admin',))){
     msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
   }
@@ -108,6 +118,8 @@ function act_permcheck($act){
     }
   }elseif(in_array($act,array('login','register','search','recent'))){
     $permneed = AUTH_NONE;
+  }elseif($act == 'admin'){
+    $permneed = AUTH_ADMIN;
   }else{
     $permneed = AUTH_READ;
   }

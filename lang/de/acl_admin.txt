@@ -1,3 +1,0 @@
-====== ACL-Administration ======
-
-Ansicht der vorhandenen ACL-Einstellungen und Konfiguration.

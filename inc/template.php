@@ -99,11 +99,28 @@ function tpl_content(){
     case 'denied':
       print parsedLocale('denied');
 			break;
+    case 'admin':
+      tpl_admin();
+      break;
     default:
 			msg("Failed to handle command: ".hsc($ACT),-1); 
   }
 }
 
+/**
+ * Handle the admin page contents
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_admin(){
+  switch($_REQUEST['page']){
+		case 'acl':
+			admin_acl_html();
+			break;
+    default:
+			html_admin();
+	}
+}
 
 /**
  * Print the correct HTML meta headers
@@ -184,12 +201,14 @@ function tpl_link($url,$name,$more=''){
  *  recent  - recent changes
  *  login   - login/logout button - if ACL enabled
  *  index   - The index
+ *  admin   - admin page - if enough rights
  *  top     - a back to top button
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_button($type){
   global $ID;
+  global $INFO;
   global $conf;
 
   switch($type){
@@ -217,6 +236,12 @@ function tpl_button($type){
         }
       }
       break;
+    case 'admin':
+      if($INFO['perm'] == AUTH_ADMIN)
+        print html_btn(admin,$ID,'',array('do' => 'admin'));
+      break;
+		default:
+			print '[unknown button type]';
   }
 }
 
