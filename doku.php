@@ -41,7 +41,6 @@
   if(empty($ID))  $ID  = $conf['start'];
   if(empty($ACT)) $ACT = 'show';
 
-  header('Content-Type: text/html; charset='.$lang['encoding']);
 
   if($ACT == 'debug'){
     html_debug();
@@ -117,6 +116,7 @@
   }
 
   //start output
+  header('Content-Type: text/html; charset='.$lang['encoding']);
   if(substr($ACT,0,6) != 'export') html_header();
   if(html_acl($permneed)){
     if($ACT == 'edit'){
