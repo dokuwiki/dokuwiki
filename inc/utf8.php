@@ -94,36 +94,121 @@ function utf8_check($Str) {
 }
 
 /**
- * This is a unicode aware replacement for strlen()
+ * Unicode aware replacement for strlen()
  *
- * Uses mb_string extension if available
+ * utf8_decode() converts characters that are not in ISO-8859-1
+ * to '?', which, for the purpose of counting, is alright - It's
+ * even faster than mb_strlen.
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author <chernyshevsky at hotmail dot com>
  * @see    strlen()
+ * @see    utf8_decode()
  */
 function utf8_strlen($string){
-  if(!defined('UTF8_NOMBSTRING') && function_exists('mb_strlen'))
-    return mb_strlen($string,'utf-8');
-
-  $uni = utf8_to_unicode($string);
-  return count($uni);
+  return strlen(utf8_decode($str));
 }
 
 /**
- * This is a unicode aware replacement for substr()
+ * Unicode aware replacement for substr()
  *
- * Uses mb_string extension if available
- *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @todo   Handle negative positions etc.
+ * @author Harry Fuecks <hfuecks@gmail.com>
  * @see    substr()
  */
 function utf8_substr($str, $start, $length=null){
-  if(!defined('UTF8_NOMBSTRING') && function_exists('mb_substr'))
-    return mb_substr($str,$start,$length,'utf-8');
+  if ( is_null($length) ) {
+    $length = '*';
+  } else { 
+    $length = '{0,'.$length.'}';
+  }
+  $pattern = '/^.{'.$start.'}(.'.$length.')/us';
+  preg_match($pattern, $str, $matches);
 
-  $uni = utf8_to_unicode($str);
-  return unicode_to_utf8(array_slice($uni,$start,$length));
+  if ( isset($matches[1]) ) {
+    return $matches[1];
+  }
+  return false;
 }
+
+/**
+ * Unicode aware replacement for explode
+ *
+ * @TODO   support third limit arg 
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @see    explode();
+ */
+function utf8_explode($sep, $str) {
+  if ( $sep == '' ) {
+    trigger_error('Empty delimiter',E_USER_WARNING);
+    return FALSE;
+  }
+
+  return preg_split('!'.preg_quote($sep,'!').'!u',$str);
+}
+
+/**
+ * Unicode aware replacement for strrepalce()
+ *
+ * @todo   support PHP5 count (fourth arg)
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @see    strreplace();
+ */
+function utf8_str_replace($s,$r,$str){
+  if(!is_array($s)){
+    $s = '!'.preg_quote($s,'!').'!u';
+  }else{
+    foreach ($s as $k => $v) {
+      $s[$k] = '!'.preg_quote($v).'!u';
+    }
+  }
+  return preg_replace($s,$r,$str);
+}
+
+/**
+ * Unicode aware replacement for ltrim()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    ltrim()
+ * @return string
+ */
+function utf8_ltrim($str,$charlist=''){
+  if($charlist == '') return ltrim($str);
+  
+  //quote charlist for use in a characterclass
+  $charlist = preg_replace('!([\\\\\\-\\]\\[/])!','\\\${1}',$charlist);
+
+  return preg_replace('/^['.$charlist.']+/u','',$str);
+}
+
+/**
+ * Unicode aware replacement for ltrim()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    rtrim()
+ * @return string
+ */
+function  utf8_rtrim($str,$charlist=''){
+  if($charlist == '') return rtrim($str);
+  
+  //quote charlist for use in a characterclass
+  $charlist = preg_replace('!([\\\\\\-\\]\\[/])!','\\\${1}',$charlist);
+  
+  return preg_replace('/['.$charlist.']+$/u','',$str);
+}
+
+/**
+ * Unicode aware replacement for trim()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    trim()
+ * @return string
+ */
+function  utf8_trim($str,$charlist='') {
+  if($charlist == '') return trim($str);
+
+  return utf8_ltrim(utf8_rtrim($str));
+}
+
 
 /**
  * This is a unicode aware replacement for strtolower()
@@ -224,38 +309,37 @@ function utf8_stripspecials($string,$repl='',$keep=''){
  *
  * Uses mb_string extension if available
  *
- * @author Scott Michael Reynen <scott@randomchaos.com>
- * @author Andreas Gohr <andi@splitbrain.org>
- * @link   http://www.randomchaos.com/document.php?source=php_and_unicode
+ * @author Harry Fuecks <hfuecks@gmail.com>
  * @see    strpos()
  */
 function utf8_strpos($haystack, $needle,$offset=0) {
   if(!defined('UTF8_NOMBSTRING') && function_exists('mb_strpos'))
     return mb_strpos($haystack,$needle,$offset,'utf-8');
 
-  $haystack = utf8_to_unicode($haystack);
-  $needle   = utf8_to_unicode($needle);
-  $position = $offset;
-  $found = false;
-  
-  while( (! $found ) && ( $position < count( $haystack ) ) ) {
-    if ( $needle[0] == $haystack[$position] ) {
-      for ($i = 1; $i < count( $needle ); $i++ ) {
-        if ( $needle[$i] != $haystack[ $position + $i ] ) break;
-      }
-      if ( $i == count( $needle ) ) {
-        $found = true;
-        $position--;
-      }
+  if(!$offset){
+    $ar = utf8_explode($needle, $str);
+    if ( count($ar) > 1 ) {
+       return utf8_strlen($ar[0]);
     }
-    $position++;
+    return false;
+  }else{
+    if ( !is_int($offset) ) {
+      trigger_error('Offset must be an integer',E_USER_WARNING);
+      return false;
+    }
+       
+    $str = utf8_substr($str, $offset);
+
+    if ( false !== ($pos = utf8_strpos($str,$needle))){
+       return $pos + $offset;
+    }
+    return false;
   }
-  return ( $found == true ) ? $position : false;
 }
 
 /**
- * This function will any UTF-8 encoded text and return it as
- * a list of Unicode values:
+ * This function returns any UTF-8 encoded text as a list of
+ * Unicode values:
  *
  * @author Scott Michael Reynen <scott@randomchaos.com>
  * @link   http://www.randomchaos.com/document.php?source=php_and_unicode
@@ -286,7 +370,7 @@ function utf8_to_unicode( $str ) {
 }
 
 /**
- * This function will convert a Unicode array back to its UTF-8 representation
+ * This function converts a Unicode array back to its UTF-8 representation
  *
  * @author Scott Michael Reynen <scott@randomchaos.com>
  * @link   http://www.randomchaos.com/document.php?source=php_and_unicode
