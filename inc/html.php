@@ -536,7 +536,7 @@ function html_search(){
 
   //do quick pagesearch
   $data = array();
-  search($data,$conf['datadir'],'search_pagename',array(query => $QUERY));
+  search($data,$conf['datadir'],'search_pagename',array(query => cleanID($QUERY)));
   if(count($data)){
     sort($data);
     print '<div class="search_quickresult">';
@@ -554,7 +554,7 @@ function html_search(){
 
   //do fulltext search
   $data = array();
-  search($data,$conf['datadir'],'search_fulltext',array(query => $QUERY));
+  search($data,$conf['datadir'],'search_fulltext',array(query => utf8_strtolower($QUERY)));
   if(count($data)){
     usort($data,'sort_search_fulltext');
     foreach($data as $row){

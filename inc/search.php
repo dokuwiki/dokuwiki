@@ -269,6 +269,8 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
 
   //get text
   $text = io_readfile($base.'/'.$file);
+  //lowercase text (u modifier does not help with case)
+  $lctext = utf8_strtolower($text);
 
   //create regexp from queries  
   $qpreg = preg_split('/\s+/',preg_quote($opts['query'],'#'));
@@ -276,17 +278,17 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
 
   //do the fulltext search
   $matches = array();
-  if($cnt = preg_match_all('#'.$qpreg.'#si',$text,$matches)){
+  if($cnt = preg_match_all('#'.$qpreg.'#usi',$lctext,$matches)){
     //this is not the best way for snippet generation but the fastest I could find
     //split query and only use the first token
     $q = preg_split('/\s+/',$opts['query'],2);
     $q = $q[0];
-    $p = strpos(strtolower($text),$q);
+    $p = utf8_strpos($lctext,$q);
     $f = $p - 100;
-    $l = strlen($q) + 200;
+    $l = utf8_strlen($q) + 200;
     if($f < 0) $f = 0;
     $snippet = '<span class="search_sep"> ... </span>'.
-               htmlspecialchars(substr($text,$f,$l)).
+               htmlspecialchars(utf8_substr($text,$f,$l)).
                '<span class="search_sep"> ... </span>';
     $snippet = preg_replace('#'.$qpreg.'#si','<span class="search_hit">\\1</span>',$snippet);
 
