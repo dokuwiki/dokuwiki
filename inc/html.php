@@ -167,7 +167,7 @@ function html_topbtn(){
 
   $ret  = '';
   $ret .= '<form class="button" method="get" action="#top" onsubmit="return svchk()">';
-  $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_top']).'" class="button" ';
+  $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_top']).'" class="button" />';
   $ret .= '</form>';
   return $ret;
 }
