@@ -329,16 +329,20 @@ function checkwordblock(){
 
   if(!$conf['usewordblock']) return false;
 
-  $blocks = file('conf/wordblock.conf');
-  $re = array();
-  #build regexp from blocks
-  foreach($blocks as $block){
-    $block = preg_replace('/#.*$/','',$block);
-    $block = trim($block);
-    if(empty($block)) continue;
-    $re[]  = $block;
+  $blockfile = file('conf/wordblock.conf');
+  //read file in chunks of 600 - this should work around the
+  //MAX_PATTERN_SIZE in PCRE
+  while($blocks = array_splice($blockfile,0,600)){
+    $re = array();
+    #build regexp from blocks
+    foreach($blocks as $block){
+      $block = preg_replace('/#.*$/','',$block);
+      $block = trim($block);
+      if(empty($block)) continue;
+      $re[]  = $block;
+    }
+    if(preg_match('#('.join('|',$re).')#si',$TEXT)) return true;
   }
-  if(preg_match('#('.join('|',$re).')#si',$TEXT)) return true;
   return false;
 }
 
