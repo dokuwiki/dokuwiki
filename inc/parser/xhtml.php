@@ -382,31 +382,35 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     * @TODO Support media
     * @TODO correct attributes
     */
-    function internallink($link, $title = NULL) {
-        
-        echo '<a';
-        
-        $title = $this->__getLinkTitle($title,$link, $isImage);
-        
-        resolve_pageid($link,$exists);
+    function internallink($id, $name = NULL) {
+				global $conf;
+
+        $name = $this->__getLinkTitle($name, $this->__simpleTitle($id), $isImage);
+        resolve_pageid($id,$exists);
 
         if ( !$isImage ) {
             if ( $exists ) {
-                echo ' class="wikilink1"';
+                $class='wikilink1';
             } else {
-                echo ' class="wikilink2"';
+                $class='wikilink2';
             }
         } else {
-            echo ' class="media"';
+            $class='media';
         }
         
-        echo ' href="http://wiki.splitbrain.org/'.$this->__xmlEntities($link).'"';
-        
-        echo ' onclick="return svchk()" onkeypress="return svchk()">';
-        
-        echo $title;
-        
-        echo '</a>';
+				//prepare for formating
+        $link['target'] = $conf['target']['wiki'];
+        $link['style']  = '';
+        $link['pre']    = '';
+        $link['suf']    = '';
+        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['class']  = $class;
+        $link['url']    = wl($id);
+        $link['name']   = $name;
+        $link['title']  = $id;
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
     
     
@@ -684,6 +688,53 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     
     //----------------------------------------------------------
     // Utils
+
+    /**
+     * Assembles all parts defined by the link formater below
+     * Returns HTML for the link
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function __formatLink($link){
+      //make sure the url is XHTML compliant (skip mailto)
+      if(substr($link['url'],0,7) != 'mailto:'){
+        $link['url'] = str_replace('&','&amp;',$link['url']);
+        $link['url'] = str_replace('&amp;amp;','&amp;',$link['url']);
+      }
+      //remove double encodings in titles
+      $link['title'] = str_replace('&amp;amp;','&amp;',$link['title']);
+
+      $ret  = '';
+      $ret .= $link['pre'];
+      $ret .= '<a href="'.$link['url'].'"';
+      if($link['class'])  $ret .= ' class="'.$link['class'].'"';
+      if($link['target']) $ret .= ' target="'.$link['target'].'"';
+      if($link['title'])  $ret .= ' title="'.$link['title'].'"';
+      if($link['style'])  $ret .= ' style="'.$link['style'].'"';
+      if($link['more'])   $ret .= ' '.$link['more'];
+      $ret .= '>';
+      $ret .= $link['name'];
+      $ret .= '</a>';
+      $ret .= $link['suf'];
+      return $ret;
+    }
+
+    /**
+     * Removes any Namespace from the given name but keeps
+     * casing and special chars
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function __simpleTitle($name){
+			global $conf;
+      if($conf['useslash']){
+        $nssep = '[:;/]';
+      }else{
+        $nssep = '[:;]';
+      }
+      return preg_replace('!.*'.$nssep.'!','',$name);
+    }
+
     
     function __newFootnoteId() {
         static $id = 1;
@@ -705,7 +756,6 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         $isImage = FALSE;
         
         if ( is_null($title) ) {
-            
             return $this->__xmlEntities($default);
             
         } else if ( is_string($title) ) {
