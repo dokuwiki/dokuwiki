@@ -937,6 +937,16 @@ function check(){
   }else{
     msg('conf/users.auth is not writable',0);
   }
+
+  if(function_exists('mb_strpos')){
+    if(defined('UTF8_NOMBSTRING')){
+      msg('mb_string extension is available but will not be used',0);
+    }else{
+      msg('mb_string extension is available and will be used',1);
+    }
+  }else{
+    msg('mb_string extension not available - PHP only replacements will be used',0);
+  }
  
   msg('Your current permission for this page is '.$INFO['perm'],0);
 
