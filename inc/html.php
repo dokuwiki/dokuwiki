@@ -762,7 +762,10 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
 
     if( $item['level'] > $level ){
       //open new list
-      $ret .= "\n<ul class=\"$class\">\n";
+      for($i=0; $i<($item['level'] - $level); $i++){
+        if ($i) $ret .= "<li class=\"clear\">\n";
+        $ret .= "\n<ul class=\"$class\">\n";
+      }
     }elseif( $item['level'] < $level ){
       //close last item
       $ret .= "</li>\n";

@@ -520,6 +520,12 @@ ul.toc li {
   padding-left:0.4em;
 }
 
+ul.toc li.clear {
+/*  background: transparent url(images/blank.gif) 0 0.6em no-repeat;*/
+  background-image: none;
+  padding-left:0.4em;
+}
+
 a.toc {
   color: #436976;
   text-decoration:none;
