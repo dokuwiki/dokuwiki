@@ -360,22 +360,9 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO Handle local vs. global namespace checks
     */
     function camelcaselink($link) {
-        
-        echo '<a href="'.$link.'"';
-        
-        if ( wikiPageExists($link) ) {
-            echo ' class="wikilink1"';
-        } else {
-            echo ' class="wikilink2"';
-        }
-        
-        // Probably dont need to convert entities - parser would have rejected it
-        echo ' onclick="return svchk()" onkeypress="return svchk()">';
-        echo $this->__xmlEntities($link);
-        echo '</a>';
+    	$this->internallink($link,$link); 
     }
     
     /**

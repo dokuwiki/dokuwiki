@@ -8,6 +8,8 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 
 function parse_to_instructions($text){
+  global $conf;
+
   require_once DOKU_INC . 'inc/parser/parser.php';
   
   // Create the parser
@@ -50,14 +52,17 @@ function parse_to_instructions($text){
   
   $Parser->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
   $Parser->addMode('quotes',new Doku_Parser_Mode_Quotes());
-  
-  $Parser->addMode('camelcaselink',new Doku_Parser_Mode_CamelCaseLink());
+
+  if($conf['camelcase']){  
+    $Parser->addMode('camelcaselink',new Doku_Parser_Mode_CamelCaseLink());
+  }
+
   $Parser->addMode('internallink',new Doku_Parser_Mode_InternalLink());
   $Parser->addMode('media',new Doku_Parser_Mode_Media());
   $Parser->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
   $Parser->addMode('email',new Doku_Parser_Mode_Email());
   $Parser->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
-  $Parser->addMode('filelink',new Doku_Parser_Mode_FileLink());
+  //$Parser->addMode('filelink',new Doku_Parser_Mode_FileLink()); //FIXME ???
   $Parser->addMode('eol',new Doku_Parser_Mode_Eol());
   
   // Do the parsing
