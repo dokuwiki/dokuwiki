@@ -396,7 +396,7 @@ function cleanID($id){
 
   //alternative namespace seperator
   $id = strtr($id,';',':');
-  $id = strtr($id,'/',':');
+  if($conf['useslash']) $id = strtr($id,'/',':');
 
   if(!$conf['localnames']){
     if($lang['encoding'] == 'iso-8859-15'){
