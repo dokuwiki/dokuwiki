@@ -61,11 +61,11 @@
 
   // make real paths and check them
   $conf['datadir']       = realpath($conf['datadir']);
-  if(!$conf['datadir'])    msg('Wrong datadir!',-1);
+  if(!$conf['datadir'])    die('Wrong datadir! Check config!');
   $conf['olddir']        = realpath($conf['olddir']);
-  if(!$conf['olddir'])     msg('Wrong olddir!',-1);
+  if(!$conf['olddir'])     die('Wrong olddir! Check config!');
   $conf['mediadir']      = realpath($conf['mediadir']);
-  if(!$conf['mediadir'])   msg('Wrong mediadir!',-1);
+  if(!$conf['mediadir'])   msg('Wrong mediadir! Check config!',-1);
 
 /**
  * remove magic quotes recursivly
