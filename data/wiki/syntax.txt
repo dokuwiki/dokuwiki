@@ -79,9 +79,11 @@ Windows shares like [[\\server\share|this]] are recognized, too. Please note tha
 
   Windows Shares like [[\\server\share|this]] are recognized, too.
 
-Note:
+Notes:
 
-  * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer.
+  * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
+  * For Mozilla and Firefox it can be enabled through the config option [[http://www.mozilla.org/quality/networking/docs/netprefs.html#file|security.checkloaduri]] but this is not recommended
+  * See [[bug>151]] for more info
 
 ==== Image Links ====
 
