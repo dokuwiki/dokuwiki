@@ -6,6 +6,7 @@
  * @author     Xabi Ezpeleta <xezpeleta@mendikute.com>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Aldatu orri hau';
 $lang['btn_source'] = 'Kodea ikusi';

@@ -1,6 +1,7 @@
 <?
 /**
  * Polish language file
+$lang['direction']  = 'ltr';
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Grzegorz Żur <grzesiekzur@tlen.pl>

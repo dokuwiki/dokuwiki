@@ -7,6 +7,7 @@
  * @author     Christof <gagi@fin.de>
  * @author     Anika Henke <henke@cosmocode.de>
  */
+$lang['direction']  = 'ltr';
 $lang['encoding']   = 'utf-8';
 
 $lang['btn_edit']   = 'Diese Seite bearbeiten';

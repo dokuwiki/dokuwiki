@@ -6,6 +6,7 @@
  * @author     Luis Fernando Enciso <lfenciso@certto.com.br>
  */
 $lang['encoding']     = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']     = 'Editar';
 $lang['btn_source']   = 'Ver código fonte';

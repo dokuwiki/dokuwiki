@@ -7,6 +7,7 @@
  * @author     Anika Henke <henke@cosmocode.de>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Edit this page';
 $lang['btn_source'] = 'Show pagesource';

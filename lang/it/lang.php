@@ -6,6 +6,7 @@
  * @author     Giorgio Vecchiocattivi <giorgio@vecchio.it>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Modifica questa pagina';
 $lang['btn_source'] = 'Mostra sorgente';

@@ -7,6 +7,7 @@
  * @author     koeppe <koeppe@kazur.dk>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Rediger dette dokument'; // Edit this page
 $lang['btn_source'] = 'Vis kildekode';          // Show pagesource

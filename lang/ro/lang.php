@@ -6,6 +6,7 @@
  * @author     Tiberiu Micu <tibimicu@gmx.net>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Editează această pagină';
 $lang['btn_source'] = 'Arată sursa paginii';

@@ -6,6 +6,7 @@
  * @author     Bohumir Zamecnik <bohous@luhy.net>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Upravit stránku';
 $lang['btn_source'] = 'Zobrazit zdroj stránky';

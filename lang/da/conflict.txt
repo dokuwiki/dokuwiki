@@ -1,0 +1,5 @@
+====== Der eksisterer en nyere udgave af dokumentet ======
+
+Der eksisterer en nyere udgave af dette dokument. Det sker når flere brugere åndre i dokumentet på samme tid.
+
+Gennemgå de viste forskelle grundigt, og beslut hvilken udgave der skal bevares. Hvis du vælger ''Gem'', bliver din udgave af dokumentet gemt. Vælger du ''Fortryd'' beholder du den nuværende udgave.

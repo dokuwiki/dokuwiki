@@ -7,6 +7,7 @@
  * @author     Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Pagina aanpassen';
 $lang['btn_source'] = 'Toon pagina broncode';

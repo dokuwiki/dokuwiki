@@ -1,0 +1,4 @@
+====== Opret en wiki-konto ======
+
+Udfyld nedenstånde skema for at oprette en konto i denne wiki. Srg for at bruge en **gyldig e-mail-adresse** - dit password bliver sent til dig. Dit brugernavn skal være et gyldigt [[doku>wiki:dokumentnavn|dokumantnavn]].
+

@@ -2,6 +2,7 @@
 /**
  * Russian language file
  *
+$lang['direction']  = 'ltr';
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Yuri Pimenov <up@ftpsearch.lv>
  */

@@ -6,6 +6,7 @@
  * @author     Reidar Mosvold <Reidar.Mosvold@hit.no>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Rediger denne siden';
 $lang['btn_source'] = 'Vis kildetekst';

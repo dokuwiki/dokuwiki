@@ -10,6 +10,7 @@
  * @author     Guy Brand <gb@isis.u-strasbg.fr>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Editer cette page';
 $lang['btn_source'] = 'Montrer le source de la page';

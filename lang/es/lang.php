@@ -6,6 +6,7 @@
  * @author     Zigor Astarbe <zigor@astarbe.com>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Edita esta página';
 $lang['btn_search'] = 'Buscar';

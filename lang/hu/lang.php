@@ -6,6 +6,7 @@
  * @author     Ziegler Gábor <gziegler@freemail.hu>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Oldal szerkesztése';
 $lang['btn_source'] = 'Oldalforrás megtekintése';

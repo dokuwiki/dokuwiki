@@ -6,6 +6,7 @@
  * @author     Joaquim Homrighausen <joho@webbplatsen.se>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Redigera den här sidan';
 $lang['btn_source'] = 'Visa sidkälla';
