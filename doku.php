@@ -25,6 +25,11 @@
   $RANGE = $_REQUEST['lines'];
   $HIGH  = $_REQUEST['s'];
   if(empty($HIGH)) $HIGH = getGoogleQuery();
+  
+#  $ACL_USER     = urldecode($_REQUEST['acl_user']);
+#  $ACL_SCOPE    = urldecode($_REQUEST['acl_scope']);
+#  $ACL_LEVEL    = $_REQUEST['acl_level'];
+#  $ACL_CHECKBOX = $_REQUEST['acl_checkbox'];
 
   $TEXT  = cleanText($_POST['wikitext']);
   $PRE   = cleanText($_POST['prefix']);
@@ -59,6 +64,33 @@
   if($ACT=='register' && register()){
     $ACT='login';
   }
+
+/*
+  //handle acl_admin stuff, add acl entry
+  if( ($ACT=='acl_admin_add') && (auth_quickaclcheck($ID) == AUTH_GRANT)){
+    acl_admin_change($ACL_SCOPE, $ACL_USER, "", $ACL_CHECKBOX);
+    # reload ACL into a global array
+    //$AUTH_ACL = file('conf/acl.auth');
+    $AUTH_ACL = load_acl_config();
+    $ACT='acl_admin';
+  }
+  
+  //handle acl_admin stuff, change acl entry
+  if( ($ACT=='acl_admin_change') && (auth_quickaclcheck($ID) == AUTH_GRANT)){
+    acl_admin_change($ACL_SCOPE, $ACL_USER, $ACL_LEVEL, $ACL_CHECKBOX);
+    # reload ACL into a global array
+    $AUTH_ACL = load_acl_config();
+    $ACT='acl_admin';
+  }
+  
+  //handle acl_admin_del stuff, remove acl entry
+  if( ($ACT=='acl_admin_del') && (auth_quickaclcheck($ID) == AUTH_GRANT)) {
+    acl_admin_del($ACL_SCOPE, $ACL_USER, $ACL_LEVEL);
+    # reload ACL into a global array
+    $AUTH_ACL = load_acl_config();
+    $ACT='acl_admin';
+  }
+*/
 
   //do saving after spam- and conflictcheck
   if($ACT == $lang['btn_save'] && auth_quickaclcheck($ID)){
@@ -148,6 +180,8 @@
       html_diff(con($PRE,$TEXT,$SUF),false);
     }elseif($ACT == 'locked'){
       html_locked($lockedby);
+#    }elseif( ($ACT == 'acl_admin') && (auth_quickaclcheck($ID) == AUTH_GRANT)){
+#      html_acl_admin();
     }elseif($ACT == 'login'){
       html_login();
     }elseif($ACT == 'register' && $conf['openregister']){

@@ -428,6 +428,10 @@ function html_footer(){
             }else{
               print html_btn('login',$ID,'',array('do' => 'login'));
             }
+            #//acl-admin button
+            #if($INFO['perm'] == AUTH_GRANT){
+            #  print html_btn('acl_admin',$ID,'',array('do' => 'acl_admin'));
+            #}
           }
         ?>
         <?=html_btn(index,$ID,'x',array('do' => 'index'))?>
@@ -1171,4 +1175,147 @@ function html_debug(){
   print '</body></html>';
 }
 
+/**
+ * prints the acl-admin form(s)
+ *
+ * @author Frank Schubert <frank@schokilade.de>
+ */
+function html_acl_admin(){
+  global $lang;
+  global $ID;
+  global $INFO;
+
+  print parsedLocale('acl_admin');
+?>  
+  <fieldset style="float:left; text-align:left; white-space:nowrap; width:320px;">
+    <legend><?=$lang['acl_admin']?></legend>
+    
+    <form name="acl_admin_add" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
+      <input type="hidden" name="do" value="acl_admin_add" />
+      <input type="hidden" name="save" value="1" />
+      <table>
+        <tr>
+    <td><?=$lang['acl_user']?></td>
+    <td><input type="text" name="acl_user" class="edit" size="20" value="" /></td>
+    </tr><tr>
+        <td><?=$lang['acl_scope']?></td>
+    <td><select name="acl_scope" id="acl_scope" class="edit" size="1" onChange="checkAclLevel();">
+        <option value="">(<?=$lang['acl_input_request']?>)</option>
+        <option><?=$ID?></option>
+        <?php if( ($ns=getNS($ID)) != NULL) {?>
+                 <option><?=$ns?>:*</option>
+        <?php }else{ ?>
+                 <option>*</option>
+        <?php } ?>
+        </select></td>
+    </tr><tr>
+        <td style="vertical-align:top"><?=$lang['acl_level']?></td>
+        <td>
+      <input type="checkbox" name="acl_checkbox[1]" value="on" checked="checked" /><?=$lang['acl_read']?><br />
+      <input type="checkbox" name="acl_checkbox[2]" value="on" /><?=$lang['acl_edit']?><br />
+      <input type="checkbox" name="acl_checkbox[4]" value="on" /><?=$lang['acl_create']?><br />
+      <input type="checkbox" name="acl_checkbox[8]" value="on" /><?=$lang['acl_upload']?>
+    </td>
+    </tr><tr>
+    <td></td>
+    <td><input type="submit" class="button" value="<?=$lang['acl_commit']?>" /></td>
+        </tr>
+      </table>
+    </form>
+  </fieldset>
+
+  <div style="float:right;">
+    <fieldset>
+    <legend><?=$lang['acl_current']?></legend>
+    <div style="text-align:left">
+    <?php
+      $acl_config=get_acl_config($ID);
+      foreach($acl_config as $pagename => $value){
+        if($pagename != '*') {
+      $ID_cur=$pagename;
+          while(($piece=getNS($ID_cur)) !== false){
+            $url="<a href='".wl($piece,'do=acl_admin')."'>".noNS($piece)."</a>:".$url;;
+            $ID_cur=$piece;
+          }
+          $url.="<a href='".wl($pagename,'do=acl_admin')."'>".noNS($pagename)."</a>";
+          print $url;
+          $url='';
+           }else{
+             print $pagename;
+           } ?>
+           <table class="inline">
+             <tr>
+               <th class="inline"></th>
+               <th class="inline">name</th>
+               <th class="inline">R</th>
+               <th class="inline">W</th>
+               <th class="inline">C</th>
+               <th class="inline">U</th>
+        <th class="inline">UPDATE</th>
+               <th class="inline">DELETE</th>
+             </tr>
+           <?php
+           foreach($value as $conf){
+           ?>
+             <tr>
+        <!-- user/group -->
+            <td class="inline">
+              <?php
+    	$group = false;
+            if(substr($conf[0],0,1)=="@"){ 
+    	  print $lang['acl_group'];
+    	  $group = true;
+    	}else{
+    	  print $lang['acl_user'];
+    	}
+              ?>
+            </td>
+        <td class="inline">
+        <!-- name -->
+          <?php
+    	if($group) { print substr($conf[0],1); } else { print $conf[0]; }
+          ?>
+        </td>
+        <form name="acl_admin_change" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
+        <?php
+          // read,write,create,upload
+          $acl_nums=array(1,2,4,8);
+          foreach($acl_nums as $num){
+    	?><td class="inline">
+    	  <input type="hidden" name="do" value="acl_admin_change" />
+                  <input type="hidden" name="save" value="1" />
+    	  <input type="hidden" name="acl_scope" value='<?=urlencode($pagename)?>' />
+    	  <input type="hidden" name="acl_user" value='<?=urlencode($conf[0])?>' />
+    	  <input type="hidden" name="acl_level" value='<?=$conf[1]?>' />
+    	  <input type="checkbox" name="acl_checkbox[<?=$num?>]" value="on"<?php
+    	  if($conf[1]>=$num) { 
+    	  ?> checked="checked"<?php
+    	  }
+    	?> /></td><?php
+          }
+        ?>
+        <td class="inline"><input type="submit" class="button" value="update"></td>
+        </form>
+            <td class="inline">
+        <!-- delete form -->
+            <form name="acl_admin_del" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
+              <input type="hidden" name="do" value="acl_admin_del" />
+              <input type="hidden" name="save" value="1" />
+              <input type="hidden" name="acl_scope" value='<?=urlencode($pagename);?>' />
+             <input type="hidden" name="acl_user" value='<?=urlencode($conf[0])?>' />
+          <input type="hidden" name="acl_level" value='<?=$conf[1]?>' />
+              <input type="submit" class="button" value='DEL' onClick="return window.confirm('<?=$lang['acl_confirm_delete']?>');" />
+            </form>
+            </td>
+             </tr>
+           <?php
+           }
+      ?></table><?php
+      }
+    ?>
+    </div>
+    </fieldset>
+  </div>
+<?
+}
 ?>

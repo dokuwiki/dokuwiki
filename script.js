@@ -431,3 +431,26 @@ function fixDate(date) {
   if (skew > 0)
     date.setTime(date.getTime() - skew);
 }
+
+/*
+ * This enables/disables checkboxes for acl-administration
+ *
+ * @author Frank Schubert <frank@schokilade.de>
+ */
+function checkAclLevel(){
+  if(document.getElementById) {
+    var scope = document.getElementById('acl_scope').value;
+
+    //check for namespace
+    if( (scope.indexOf(":*") > 0) || (scope == "*") ){
+      document.getElementsByName('acl_checkbox[4]')[0].disabled=false;
+      document.getElementsByName('acl_checkbox[8]')[0].disabled=false;
+    }else{
+      document.getElementsByName('acl_checkbox[4]')[0].checked=false;
+      document.getElementsByName('acl_checkbox[8]')[0].checked=false;
+
+      document.getElementsByName('acl_checkbox[4]')[0].disabled=true;
+      document.getElementsByName('acl_checkbox[8]')[0].disabled=true;
+    }
+  }
+}

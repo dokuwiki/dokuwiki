@@ -16,6 +16,7 @@
   require_once(DOKU_INC.'inc/mail.php');
   // load the the auth functions
   require_once(DOKU_INC.'inc/auth_'.$conf['authtype'].'.php');
+  require_once(DOKU_INC.'inc/acl_admin.php');
 
   // some ACL level defines
   define('AUTH_NONE',0);
@@ -23,11 +24,11 @@
   define('AUTH_EDIT',2);
   define('AUTH_CREATE',4);
   define('AUTH_UPLOAD',8);
-  define('AUTH_GRANT',255);
+  define('AUTH_ADMIN',255);
 
   if($conf['useacl']){
     auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
-    // load ACL into a global array
+    //load ACL into a global array
     $AUTH_ACL = file('conf/acl.auth');
   }
 
@@ -212,6 +213,16 @@ function auth_aclcheck($id,$user,$groups){
 
   # if no ACL is used always return upload rights
   if(!$conf['useacl']) return AUTH_UPLOAD;
+  
+  //if user is superuser return 255 (acl_admin)
+  if($conf['superuser'] == $user) { return AUTH_ADMIN; }
+
+  //prepend groups with @
+  for($i=0; $i<count($groups); $i++){
+    $groups[$i] = '@'.$groups[$i];
+  }
+  //if user is in superuser group return 255 (acl_admin)
+  if(in_array($conf['superuser'], $groups)) { return AUTH_ADMIN; }
 
   $ns    = getNS($id);
   $perm  = -1;
@@ -237,6 +248,7 @@ function auth_aclcheck($id,$user,$groups){
     foreach($matches as $match){
       $match = preg_replace('/#.*$/','',$match); //ignore comments
       $acl   = preg_split('/\s+/',$match);
+      if($acl[2] > AUTH_UPLOAD) $acl[2] = AUTH_UPLOAD; //no admins in the ACL!
       if($acl[2] > $perm){
         $perm = $acl[2];
       }
@@ -260,6 +272,7 @@ function auth_aclcheck($id,$user,$groups){
       foreach($matches as $match){
         $match = preg_replace('/#.*$/','',$match); //ignore comments
         $acl   = preg_split('/\s+/',$match);
+        if($acl[2] > AUTH_UPLOAD) $acl[2] = AUTH_UPLOAD; //no admins in the ACL!
         if($acl[2] > $perm){
           $perm = $acl[2];
         }
@@ -389,5 +402,20 @@ function register(){
     return false;
   }
 }
+
+/**
+ * Uses a regular expresion to check if a given mail address is valid
+ *
+ * May not be completly RFC conform!
+ * 
+ * @link    http://www.webmasterworld.com/forum88/135.htm
+ *
+ * @param   string $email the address to check
+ * @return  bool          true if address is valid
+ */
+function isvalidemail($email){
+  return eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);
+}
+
 
 ?>
