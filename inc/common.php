@@ -415,8 +415,7 @@ function cleanID($id){
   $id = strtr($id,';',':');
   if($conf['useslash']) $id = strtr($id,'/',':');
 
-  //FIXME use config to ask for deaccenting
-  $id = utf8_deaccent($id,-1);
+  if($conf['deaccent']) $id = utf8_deaccent($id,-1);
 
   //remove specials (only ascii specials are removed)
   $id = preg_replace('#[ !"§$%&()\[\]{}\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);

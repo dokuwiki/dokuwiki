@@ -34,8 +34,7 @@ $conf['signature']   = ' --- //[[@MAIL@|@NAME@]] @DATE@//'; //signature see wiki
 $conf['maxtoclevel'] = 3;                 //Up to which level include into AutoTOC (max. 5)
 $conf['maxseclevel'] = 3;                 //Up to which level create editable sections (max. 5)
 $conf['camelcase']   = 0;                 //Use CamelCase for linking? (I don't like it) 0|1
-$conf['localnames']  = 0;                 //Allow non-ASCII chars in pagenames (0|1)
-                                          //You need a correct locale for this!
+$conf['deaccent']    = 1;                 //convert accented chars to unaccented ones in pagenames?
 
 /* Antispam Features */
 
