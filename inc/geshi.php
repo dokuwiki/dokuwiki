@@ -1467,7 +1467,13 @@ class GeSHi
 						// Otherwise, convert it to HTML form
 						elseif ( $STRING_OPEN != '' )
 						{
-							$char = htmlentities($char, ENT_COMPAT, $this->encoding);
+							if(strtolower($this->encoding) == 'utf-8'){
+								//only escape <128 (we don't want to break multibyte chars)
+								if( ord($char) < 128 ) $char = htmlentities($char, ENT_COMPAT, $this->encoding);
+							}else{
+								//encode everthing
+								$char = htmlentities($char, ENT_COMPAT, $this->encoding);
+							}
 						}
 						// Where are we adding this char?
 						if ( !$COMMENT_MATCHED )
