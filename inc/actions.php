@@ -31,7 +31,7 @@ function act_dispatch(){
 
   //login stuff
   if(in_array($ACT,array('login','logout','register')))
-    $ACT = act_login($ACT);
+    $ACT = act_auth($ACT);
  
   //save
   if($ACT == 'save')
@@ -92,10 +92,10 @@ function act_clean($act){
   if($act == $lang['btn_preview']) $act = 'preview';
   $act = strtolower($act);
 
-  if(!array_search($act,array('login','logout','register','save','edit',
-                              'preview','export_raw','export_html',
-                              'search','show','check','index','revisions',
-                              'diff','recent','backlink','admin',))){
+  if(array_search($act,array('login','logout','register','save','edit',
+                             'preview','export_raw','export_html',
+                             'search','show','check','index','revisions',
+                             'diff','recent','backlink','admin',)) === false){
     msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
   }
@@ -181,7 +181,7 @@ function act_auth($act){
 
   //handle register
   if($act=='register' && register()){
-    $act='login';
+    return 'login';
   }
 
   return $act;
