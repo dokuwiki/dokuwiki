@@ -185,7 +185,7 @@ function msg($message,$lvl=0){
   $errors[0]  = 'info';
   $errors[1]  = 'success';
 
-  if(!headers_sent){
+  if(!headers_sent()){
     if(!isset($MSG)) $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
   }else{
