@@ -1,0 +1,5 @@
+====== Áttekintés (index) ======
+
+Az összes elérhetõ oldal áttekintése [[doku>wiki:namespaces|névterek]]
+szerint rendezve.
+

@@ -1,0 +1,7 @@
+====== Hivatkozások ======
+
+Ez azoknak az oldalaknak a listája, amelyek erre az oldalra
+"visszamutatnak" (hivatkoznak). Vigyázz, mert a TeveHát stílusú
+hivatkozások itt nem jelennek meg.
+
+

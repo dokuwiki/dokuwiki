@@ -1,0 +1,3 @@
+Szerkeszd az oldalt majd üsd le a ''Mentés'' gombot. Lásd a [[wiki:syntax|nyelvtan]] oldalt (angolul) a formázási lehetõségekért. 
+Kérünk, hogy csak akkor szerkeszd az oldalt ha **jobbítani** tudod.
+Ha ki akarsz próbálni dolgokat akkor az elsõ lépéseid a [[wiki:playground|játszótéren]] (playground) tedd.

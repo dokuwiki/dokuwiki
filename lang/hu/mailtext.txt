@@ -1,0 +1,15 @@
+A DokuWikidben egy oldalt létrejött, vagy megváltozott. A részletek:
+
+Dátum         : @DATE@
+Böngészõ      : @BROWSER@
+IP-cím        : @IPADDRESS@
+Gép neve      : @HOSTNAME@
+Elõzõ változat: @OLDPAGE@
+Új változat   : @NEWPAGE@
+Összefoglaló  : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+Ezt a levelet a @DOKUWIKIURL@ DokuWiki generálta.

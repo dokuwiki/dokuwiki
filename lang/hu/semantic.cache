@@ -1,0 +1,15 @@
+;; Object hu/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "hu/"
+  :tables (list 
+   (semanticdb-table "lang.php"
+    :major-mode 'php-mode
+    :tags 'nil
+    :file "lang.php"
+    :pointmax 4377
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0beta3"
+  :semanticdb-version "2.0beta3"
+  )
