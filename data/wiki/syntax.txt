@@ -219,6 +219,34 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
 
 Please note: These conversions can be turned off in the config file.
 
+===== Quoting =====
+
+Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
+
+  I think we should do it
+  
+  > No we shouldn't
+  
+  >> Well, I say we should
+  
+  > Really?
+  
+  >> Yes!
+  
+  >>> Then lets do it!
+
+I think we should do it
+
+> No we shouldn't
+
+>> Well, I say we should
+
+> Really?
+
+>> Yes!
+
+>>> Then lets do it!
+
 ===== Tables =====
 
 DokuWiki supports a simple syntax to create tables. 
