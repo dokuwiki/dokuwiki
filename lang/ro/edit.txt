@@ -1,0 +1,4 @@
+Editează pagina şi apasă ''Salvează''. Vezi [[wiki:syntax]] pentru sintaxă.
+Te rog editează pagina doar pentru a o **îmbunătaţi**. Dacă vrei să testezi
+cîteva lucruri, învaţă sa faci primii paşi în [[wiki:playground]]. 
+

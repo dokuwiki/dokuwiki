@@ -1,0 +1,5 @@
+====== Login ======
+
+Nu sînteţi logat! Introduceţi datele de autentificare pentru logare.
+Trebuie să permiteţi cookie-uri pentru logare.
+

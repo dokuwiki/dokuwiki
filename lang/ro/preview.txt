@@ -1,0 +1,4 @@
+======Previzualizare======
+
+Acesta este modul în care va arăta textul. Nu uita: **Nu** e încă **salvat**! 
+

@@ -1,0 +1,9 @@
+====== Există o nouă versiune ======
+
+Există o versiune nouă a documentului editat. Aceasta se întîmplă cînd un alt 
+utilizator a schimbat documentul în timp ce îl editezi.
+
+Examinează diferenţele arătate mai jos, apoi ia decizia care versiune o reţii.
+Dacă alegi ''Salvează'', versiunea documentului va fi salvată. Apăsaţi ''Renunţare''
+pentru a menţine versiunea curentă.
+

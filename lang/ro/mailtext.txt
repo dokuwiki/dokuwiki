@@ -1,0 +1,16 @@
+A fost adăugată sau schimbată o pagină. Aici sînt detaliile:
+
+Data        : @DATE@
+Navigator   : @BROWSER@
+Adresa-IP   : @IPADDRESS@
+Nume gazdă  : @HOSTNAME@
+Versiune veche : @OLDPAGE@
+Versiune nouă  : @NEWPAGE@
+Rezumat editare: @SUMMARY@
+
+@DIFF@
+
+
+-- 
+Mailul a fost generat de DokuWiki la
+@DOKUWIKIURL@
