@@ -336,7 +336,7 @@ function format_link_media($link){
 
   //set link to src if none given 
   if(!$link['url']){
-    $link['url'] = $src;
+    $link['url'] = getBaseURL().$src;
     $link['target'] = $conf['target']['media'];
   }
 
