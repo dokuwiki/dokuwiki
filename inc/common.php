@@ -393,15 +393,14 @@ function wikiFN($id,$rev=''){
   $id = cleanID($id);
   $id = str_replace(':','/',$id);
   if(empty($rev)){
-    $fn = $conf['datadir'].'/'.$id.'.txt';
+    $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
   }else{
-    $fn = $conf['olddir'].'/'.$id.'.'.$rev.'.txt';
+    $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
     if($conf['usegzip'] && !@file_exists($fn)){
       //return gzip if enabled and plaintext doesn't exist
       $fn .= '.gz';
     }
   }
-  $fn = utf8_encodeFN($fn);
   return $fn;
 }
 
