@@ -99,24 +99,45 @@ function mediaButton(imageFile, speedTip, accessKey, namespace) {
 /**
  * apply tagOpen/tagClose to selection in textarea, use sampleText instead
  * of selection if there is none copied and adapted from phpBB
+ *
+ * @author phpBB development team
+ * @author MediaWiki development team
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Jim Raynor <jim_raynor@web.de>
  */
 function insertTags(tagOpen, tagClose, sampleText) {
   var txtarea = document.editform.wikitext;
   // IE
   if(document.selection  && !is_gecko) {
     var theSelection = document.selection.createRange().text;
-    if(!theSelection) { theSelection=sampleText;}
+    var replaced = true;
+    if(!theSelection){
+      replaced = false;
+      theSelection=sampleText;
+    }
     txtarea.focus();
+ 
+    // This has change
+    text = theSelection;
     if(theSelection.charAt(theSelection.length - 1) == " "){// exclude ending space char, if any
       theSelection = theSelection.substring(0, theSelection.length - 1);
-      document.selection.createRange().text = tagOpen + theSelection + tagClose + " ";
+      r = document.selection.createRange();
+      r.text = tagOpen + theSelection + tagClose + " ";
     } else {
-      document.selection.createRange().text = tagOpen + theSelection + tagClose;
+      r = document.selection.createRange();
+      r.text = tagOpen + theSelection + tagClose;
     }
+    if(!replaced){
+      r.moveStart('character',-text.length-tagClose.length);
+      r.moveEnd('character',-tagClose.length);
+    }
+    r.select();
   // Mozilla
   } else if(txtarea.selectionStart || txtarea.selectionStart == '0') {
-     var startPos = txtarea.selectionStart;
-    var endPos = txtarea.selectionEnd;
+    var replaced = false;
+    var startPos = txtarea.selectionStart;
+    var endPos   = txtarea.selectionEnd;
+    if(endPos - startPos) replaced = true;
     var scrollTop=txtarea.scrollTop;
     var myText = (txtarea.value).substring(startPos, endPos);
     if(!myText) { myText=sampleText;}
@@ -126,14 +147,19 @@ function insertTags(tagOpen, tagClose, sampleText) {
       subst = tagOpen + myText + tagClose;
     }
     txtarea.value = txtarea.value.substring(0, startPos) + subst +
-    txtarea.value.substring(endPos, txtarea.value.length);
+                    txtarea.value.substring(endPos, txtarea.value.length);
     txtarea.focus();
-
-    var cPos=startPos+(tagOpen.length+myText.length+tagClose.length);
-    txtarea.selectionStart=cPos;
-    txtarea.selectionEnd=cPos;
-    txtarea.scrollTop=scrollTop;
-
+ 
+    //set new selection
+    if(replaced){
+      var cPos=startPos+(tagOpen.length+myText.length+tagClose.length);
+      txtarea.selectionStart=cPos;
+      txtarea.selectionEnd=cPos;
+    }else{
+      txtarea.selectionStart=startPos+tagOpen.length;   
+      txtarea.selectionEnd=startPos+tagOpen.length+myText.length;
+      txtarea.scrollTop=scrollTop;
+    }
   // All others
   } else {
     var copy_alertText=alertText;
