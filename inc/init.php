@@ -28,7 +28,7 @@
                                   DOKU_BASE.'tpl/'.$conf['template'].'/');
 
   // make session rewrites XHTML compliant
-  ini_set('arg_separator.output', '&amp;');
+  @ini_set('arg_separator.output', '&amp;');
 
   // init session
   session_name("DokuWiki");
@@ -41,10 +41,10 @@
     if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
     if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
     if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
-    ini_set('magic_quotes_gpc', 0);
+    @ini_set('magic_quotes_gpc', 0);
   }
-  set_magic_quotes_runtime(0);
-  ini_set('magic_quotes_sybase',0);
+  @set_magic_quotes_runtime(0);
+  @ini_set('magic_quotes_sybase',0);
 
   // disable gzip if not available
   if($conf['usegzip'] && !function_exists('gzopen')){
