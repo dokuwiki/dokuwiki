@@ -319,14 +319,14 @@ function html_header(){
     <div class="bar" id="bar_top">
       <div class="bar-left" id="bar_topleft">
         <?=html_editbutton()?>
-        <?=html_btn(revs,$ID,'r',array('do' => 'revisions'))?>
+        <?=html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
       </div>
 
       <div class="bar-right" id="bar_topright">
         <?=html_btn(recent,'','r',array('do' => 'recent'))?>
         <form action="<?=wl()?>" accept-charset="<?=$lang['encoding']?>">
           <input type="hidden" name="do" value="search" />
-          <input type="text" name="id" class="edit" />
+          <input type="text" accesskey="f" name="id" class="edit" />
           <input type="submit" value="<?=$lang['btn_search']?>" class="button" />
         </form>&nbsp;
       </div>
@@ -418,7 +418,7 @@ function html_footer(){
     <div class="bar" id="bar_bottom">
       <div class="bar-left" id="bar_bottomleft">
         <?=html_editbutton()?>
-        <?=html_btn(revs,$ID,'r',array('do' => 'revisions'))?>
+        <?=html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
       </div>
     
       <div class="bar-right" id="bar_bottomright">
