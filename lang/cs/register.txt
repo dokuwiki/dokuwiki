@@ -1,0 +1,6 @@
+====== Zaregistrujte se jako nový u¾ivatel ======
+
+Abyste získali u¾ivatelský úèet, vyplòte prosím v¹echny informace v následujícím
+formuláøi. Zadejte **platnou** mailovou adresu, na ní¾ bude zasláno heslo.
+U¾ivatelské jméno musí být v platném [[doku>wiki:pagename|formátu]] (který je
+stejný jako formát názeu stránky).

@@ -1,0 +1,4 @@
+Upravte stránku a stisknìte ''Ulo¾it''. Na stránce [[wiki:syntax]] se mù¾ete
+dozvìdìt více o Wiki syntaxi. Prosím upravujte stránky pouze pokud je mù¾ete
+**vylep¹it**. Pokud si chcete nìco pouze vyzkou¹et, pou¾ijte [[wiki:playground
+| pískovi¹tì]].

@@ -1,0 +1,8 @@
+====== Existuje novìj¹í verze ======
+
+Existuje novìj¹í verze právì upravovaného dokumentu. To se stává, pokud nìkdo
+jiný zmìnil dokument, který právì upravujete.
+
+Prohlédnìte si ní¾e uvedené rozdíly, pøípadnì rozdíly z obou verzí ruènì spojte
+dohromady a rozhodnìte se, kterou verzi uchovat. Pokud zvolíte ''Ulo¾it'',
+bude ulo¾ena va¹e verze. Jinak stisknìte ''Storno'' pro uchování pùvodní verze.

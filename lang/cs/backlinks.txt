@@ -1,0 +1,4 @@
+====== Zpìtné odkazy ======
+
+Zde je seznam stránek, které pravdìpodobnì odkazují na aktuální stránku. V¹imnìte
+si, ¾e odkazy s prvními písmeny velkými (CamelCase) nejsou detekovány jako zpìtné odkazy.

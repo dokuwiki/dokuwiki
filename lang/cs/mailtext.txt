@@ -1,0 +1,16 @@
+Stránka ve va¹em DokuWiki byla zmìnìna. Zde jsou podrobnosti:
+
+Datum       : @DATE@
+Prohlí¾eè   : @BROWSER@
+IP adresa   : @IPADDRESS@
+Hostitel    : @HOSTNAME@
+Stará verze : @OLDPAGE@
+Nová verze  : @NEWPAGE@
+Komentáø    : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+Tato zpráva byla vygenerována systémem DokuWiki:
+@DOKUWIKIURL@
