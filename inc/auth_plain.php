@@ -11,6 +11,9 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+// we only accept page ids for auth_plain
+if(isset($_REQUEST['u']))
+  $_REQUEST['u'] = cleanID($_REQUEST['u']);
 
 /**
  * Check user+password [required auth function]
