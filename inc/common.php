@@ -884,6 +884,14 @@ function check(){
   global $conf;
   global $INFO;
 
+  if(version_compare(phpversion(),'4.3.0','<')){
+    msg('Your PHP version is too old ('.phpversion().' vs. 4.3.+ recommended)',-1);
+  }elseif(version_compare(phpversion(),'4.3.10','<')){
+    msg('Consider upgrading PHP to 4.3.10 or higher for security reasons (your version: '.phpversion().')',0);
+  }else{
+    msg('PHP version '.phpversion(),1);
+  }
+
   if(is_writable($conf['changelog'])){
     msg('Changelog is writable',1);
   }else{
