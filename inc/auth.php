@@ -16,7 +16,6 @@
   require_once(DOKU_INC.'inc/mail.php');
   // load the the auth functions
   require_once(DOKU_INC.'inc/auth_'.$conf['authtype'].'.php');
-  require_once(DOKU_INC.'inc/acl_admin.php');
 
   // some ACL level defines
   define('AUTH_NONE',0);
@@ -47,7 +46,7 @@
  * no further testing is done and the user is accepted
  *
  * If a cookie was found but no session info was availabe the
- * blowish encrypted password from the cookie is decrypted and
+ * blowfish encrypted password from the cookie is decrypted and
  * together with username rechecked by calling this function again.
  *
  * On a successful login $_SERVER[REMOTE_USER] and $USERINFO
@@ -120,10 +119,11 @@ function auth_login($user,$pass,$sticky=false){
 }
 
 /**
- * Builds a pseudo UID from browserdata
+ * Builds a pseudo UID from browser and IP data
  *
  * This is neither unique nor unfakable - still it adds some
- * security
+ * security. Using the first part of the IP makes sure
+ * proxy farms like AOLs are stil okay.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
@@ -135,6 +135,7 @@ function auth_browseruid(){
   $uid .= $_SERVER['HTTP_ACCEPT_ENCODING'];
   $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
   $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
+  $uid .= substr($_SERVER['REMOTE_ADDR'],0,strpos($_SERVER['REMOTE_ADDR'],'.'));
   return md5($uid);
 }
 
