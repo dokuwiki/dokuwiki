@@ -242,7 +242,8 @@ function html_btn($name,$id,$akey,$params,$method='get'){
   
   $ret = '';
 
-  $id = idfilter($id);
+  //filter id (without urlencoding)
+  $id = idfilter($id,false);
 
   //make nice URLs even for buttons  
   $link = getBaseURL().'/';

@@ -7,6 +7,30 @@
  */
 
 /**
+ * URL-Encode a filename to allow unicodecharacters
+ *
+ * Slashes are not encoded
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function utf8_encodeFN($file){
+  $file = rawurlencode($file);
+  $file = str_replace('%2F','/',$file);
+  return $file;
+}
+
+/**
+ * URL-Decode a filename
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function utf8_decodeFN($file){
+  $file = rawurldecode($file);
+  return $file;
+}
+
+
+/**
  * This is a unicode aware replacement for strtolower()
  *
  * Uses mb_string extension if available

@@ -324,7 +324,8 @@ function sort_search_fulltext($a,$b){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function pathID($path){
-  $id = str_replace('/',':',$path);
+  $id = utf8_decodeFN($path);
+  $id = str_replace('/',':',$id);
   $id = preg_replace('#\.txt$#','',$id);
   $id = preg_replace('#^:+#','',$id);
   $id = preg_replace('#:+$#','',$id);

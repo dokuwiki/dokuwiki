@@ -206,9 +206,11 @@ function breadcrumbs(){
  * currently used to replace the colon with something else
  * on Windows systems and to have proper URL encoding
  *
+ * Urlencoding is ommitted when the second parameter is false
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function idfilter($id){
+function idfilter($id,$ue=true){
   global $conf;
   if ($conf['useslash'] && $conf['userewrite']){
     $id = strtr($id,':','/');
@@ -216,9 +218,11 @@ function idfilter($id){
       $conf['userewrite']) {
     $id = strtr($id,':',';');
   }
-  $id = urlencode($id);
-  $id = str_replace('%3A',':',$id); //keep as colon
-  $id = str_replace('%2F','/',$id); //keep as slash
+  if($ue){
+    $id = urlencode($id);
+    $id = str_replace('%3A',':',$id); //keep as colon
+    $id = str_replace('%2F','/',$id); //keep as slash
+  }
   return $id;
 }
 
@@ -440,6 +444,8 @@ function cleanID($id){
  * returns the full path to the datafile specified by ID and
  * optional revision
  *
+ * The filename is URL encoded to protect Unicode chars
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function wikiFN($id,$rev=''){
@@ -447,16 +453,16 @@ function wikiFN($id,$rev=''){
   $id = cleanID($id);
   $id = str_replace(':','/',$id);
   if(empty($rev)){
-    return $conf['datadir'].'/'.$id.'.txt';
+    $fn = $conf['datadir'].'/'.$id.'.txt';
   }else{
     $fn = $conf['olddir'].'/'.$id.'.'.$rev.'.txt';
-    if(!$conf['usegzip'] || @file_exists($fn)){
-      //return plaintext if exists or gzip is disabled
-      return $fn;
-    }else{
-      return $fn.'.gz';
+    if($conf['usegzip'] && !@file_exists($fn)){
+      //return gzip if enabled and plaintext doesn't exist
+      $fn .= '.gz';
     }
   }
+  $fn = utf8_encodeFN($fn);
+  return $fn;
 }
 
 /**
