@@ -1,0 +1,5 @@
+====== Permissão Negada ======
+
+Desculpe, você não tem permissões suficientes para continuar. Por acaso, não se esqueceu de fazer o login?
+
+----

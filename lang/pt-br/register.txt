@@ -1,0 +1,8 @@
+====== Registro de novo usuário ======
+
+Por favor, preencha todos os campos com a informação correspondente, para poder criar uma nova conta neste Wiki.
+
+**Nota**: O nome de usuário deve ser um [[doku>wiki:pagename|nome de página ou documento]] válido.\\
+**Nota**: Certifique-se de o endereço de e-mail é válido, pois a sua senha será enviada por e-mail.
+
+----

@@ -1,0 +1,6 @@
+====== Documento sendo editado ======
+
+Esta página está temporariamente bloqueada porque está sendo editada por outra pessoa.\\
+Você deve aguardar até o usuário termine a edição ou então que o temporizador de bloqueio expire.
+
+----

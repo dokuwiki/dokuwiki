@@ -1,0 +1,8 @@
+====== Sessão ======
+
+No momento você não está autorizado (logado)!\\
+Informe suas credenciais de autenticação para abrir numa sessão (autorização).
+
+**Nota**: É necessário que seu navegador esteja habilitado para aceitar //cookies//.
+
+----
