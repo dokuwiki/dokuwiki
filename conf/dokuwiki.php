@@ -73,7 +73,8 @@ $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 
 //this includes a local config file if exist which make upgrading more easy - just don't touch this
-@include("conf/local.php");
+if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+@include(DOKU_INC.'conf/local.php');
 
 //a small bugfix for some browsers/proxies just don't touch this either
 $lang = array();
