@@ -68,6 +68,7 @@ $lang['diff']         = 'mostrar diferenças com a versão actual';
 $lang['line']         = 'Linha';
 $lang['breadcrumb']   = 'Visitou';
 $lang['lastmod']      = 'Modificado em';
+$lang['by']           = 'por';
 $lang['deleted']      = 'Documento automaticamente removido.';
 $lang['created']      = 'Criação deste novo documento.';
 $lang['restored']     = 'Versão anterior restaurada.';
