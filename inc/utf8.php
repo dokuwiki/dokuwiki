@@ -322,8 +322,6 @@ $UTF8_UPPER_TO_LOWER = @array_flip($UTF8_LOWER_TO_UPPER);
  * This lookuptable defines replacements for accented characters from the ASCII-7
  * range. This are lower case letters only.
  *
- * FIXME missing chars eg: æ
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    utf8_deaccent()
  */
@@ -342,7 +340,7 @@ $UTF8_LOWER_ACCENTS = array(
   'ÿ' => 'y', 'ũ' => 'u', 'ŭ' => 'u', 'ư' => 'u', 'ţ' => 't', 'ý' => 'y', 'ő' => 'o', 
   'â' => 'a', 'ľ' => 'l', 'ẅ' => 'w', 'ż' => 'z', 'ī' => 'i', 'ã' => 'a', 'ġ' => 'g', 
   'ṁ' => 'm', 'ō' => 'o', 'ĩ' => 'i', 'ù' => 'u', 'į' => 'i', 'ź' => 'z', 'á' => 'a', 
-  'û' => 'u',
+  'û' => 'u', 'þ' => 'th', 'ð' => 'dh', 'æ' => 'ae', 'µ' => 'u',
 );
 
 /**
@@ -350,8 +348,6 @@ $UTF8_LOWER_ACCENTS = array(
  *
  * This lookuptable defines replacements for accented characters from the ASCII-7
  * range. This are upper case letters only.
- *
- * FIXME missing chars eg: æ
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    utf8_deaccent()
@@ -371,7 +367,7 @@ $UTF8_UPPER_ACCENTS = array(
   'ÿ' => 'Y', 'ũ' => 'U', 'ŭ' => 'U', 'ư' => 'U', 'ţ' => 'T', 'ý' => 'Y', 'ő' => 'O', 
   'â' => 'A', 'ľ' => 'L', 'ẅ' => 'W', 'ż' => 'Z', 'ī' => 'I', 'ã' => 'A', 'ġ' => 'G', 
   'ṁ' => 'M', 'ō' => 'O', 'ĩ' => 'I', 'ù' => 'U', 'į' => 'I', 'ź' => 'Z', 'á' => 'A', 
-  'û' => 'U',
+  'û' => 'U', 'Þ' => 'th', 'Ð' => 'dh', 'Æ' => 'ae',
 );
 
 ?>

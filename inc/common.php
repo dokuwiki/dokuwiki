@@ -418,29 +418,7 @@ function cleanID($id){
   if($conf['deaccent']) $id = utf8_deaccent($id,-1);
 
   //remove specials (only ascii specials are removed)
-  $id = preg_replace('#[ !"§$%&()\[\]{}\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);
-
-/* DELETEME legacy code
-  if(!$conf['localnames']){
-    if($lang['encoding'] == 'iso-8859-15'){
-      // replace accented chars with unaccented ones
-      // this may look strange on your terminal - just don't touch
-      $id = strtr(
-      strtr($id,
-       'ÀÁÂÃÅÇÈÉÊËÌÍÎÏÑÒÓÔÕØÙÚÛÝàáâãåçèéêëìíîïñòóôõøùúûýÿ',
-       'szszyaaaaaceeeeiiiinooooouuuyaaaaaceeeeiiiinooooouuuyy'),
-       array('Þ' => 'th', 'þ' => 'th', 'Ð' => 'dh', 'ð' => 'dh', 'ß' => 'ss',
-             '' => 'oe', '' => 'oe', 'Æ' => 'ae', 'æ' => 'ae', 'µ' => 'u',
-             'ü' => 'ue', 'ö' => 'oe', 'ä' => 'ae', 'Ü' => 'ue', 'Ö' => 'ö',
-             'Ä' => 'ae'));
-    }
-    $WORD = 'a-z';
-  }else{
-    $WORD = '\w';
-  }
-  //special chars left will be converted to _
-  $id = preg_replace('#[^'.$WORD.'0-9:\-\.]#','_',$id);
-*/
+  $id = preg_replace('#[0x00-0x20 !"§$%&()\[\]{}\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);
 
   //clean up
   $id = preg_replace('#__#','_',$id);
