@@ -752,14 +752,14 @@ function notify($id,$rev="",$summary=""){
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
   $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
-  $text = str_replace('@NEWPAGE@',wl($id,'','',true),$text);
+  $text = str_replace('@NEWPAGE@',wl($id,'','doku.php',true),$text);
   $text = str_replace('@DOKUWIKIURL@',getBaseURL(true),$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
   
   if($rev){
     $subject = $lang['mail_changed'].' '.$id;
-    $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",'',true),$text);
+    $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",'doku.php',true),$text);
     require_once("inc/DifferenceEngine.php");
     $df  = new Diff(split("\n",rawWiki($id,$rev)),
                     split("\n",rawWiki($id)));
