@@ -80,10 +80,4 @@ $conf['ftp']['user'] = 'user';
 $conf['ftp']['pass'] = 'password';
 $conf['ftp']['root'] = '/home/user/htdocs';
 
-//this includes a local config file if exist which make upgrading more easy - just don't touch this
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-@include(DOKU_INC.'conf/local.php');
-
-//a small bugfix for some browsers/proxies just don't touch this either
-$lang = array();
 ?>

@@ -5,7 +5,13 @@
 
   // define the include path
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+
+  // load the config file(s)
   require_once(DOKU_INC.'conf/dokuwiki.php');
+  @include_once(DOKU_INC.'conf/local.php');
+
+  //prepare language array
+  $lang = array();
 
   // define baseURL
   if(!defined('DOKU_BASE')) define('DOKU_BASE',getBaseURL());
