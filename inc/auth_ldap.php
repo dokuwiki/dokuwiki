@@ -10,6 +10,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+//check for LDAP extension on load
+if(!function_exists('ldap_connect'))
+  msg("LDAP extension not found",-1);
+
 /**
  * Connect to the LDAP server
  *

@@ -8,6 +8,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+//check for MySQL extension on load
+if(!function_exists('mysql_connect'))
+  msg("MySQL extension not found",-1);
+
 /**
  * Execute SQL
  *
