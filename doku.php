@@ -1,5 +1,5 @@
 <?php
-  define('DOKUWIKIVERSION','2004-01-12');
+  define('DOKUWIKIVERSION','2004-01-13');
 
   ini_set('short_open_tag',"1");
   require_once("conf/dokuwiki.php");

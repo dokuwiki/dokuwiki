@@ -325,6 +325,7 @@ function format_link_media($link){
  */
 function format_rss($url){
   global $lang;
+  define('MAGPIE_CACHE_ON', false); //we do our own caching
   define('MAGPIE_DIR', 'inc/magpie/');
   require_once(MAGPIE_DIR.'/rss_fetch.inc');
 
