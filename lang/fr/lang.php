@@ -7,6 +7,7 @@
  * @author     Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author     cumulus <pta-n56@myamail.com>
  * @author     Gwenn Gueguen <contact@demisel.net>
+ * @author     Guy Brand <gb@isis.u-strasbg.fr>
  */
 $lang['encoding']   = 'utf-8';
 
@@ -30,11 +31,15 @@ $lang['btn_logout'] = 'Déconnexion';
 $lang['loggedinas'] = 'Connecté en tant que';
 $lang['user']       = 'Utilisateur';
 $lang['pass']       = 'Mot de passe';
+$lang['remember']   = 'Mémoriser';
 $lang['fullname']   = 'Nom complet';
 $lang['email']      = 'Adresse mail';
 $lang['register']   = 'S\'enregistrer';
 $lang['badlogin']   = 'L\'utilisateur ou le mot de passe est incorrect.';
 
+$lang['regmissing'] = 'Désolé, vous devez remplir tous les champs.';
+$lang['reguexists'] = 'Désolé, ce login appartient déjà à un autre utilisateur.';
+$lang['regsuccess'] = 'L\'utilisateur a été créé. Le mot de passe a été expédié par mél.';
 $lang['regmailfail'] = 'Il semble y avoir un problème à l\'envoi du mail. Contactez l\'administrateur.';
 $lang['regbadmail']  = 'L\'adresse mail semble incorrecte - Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regpwmail']   = 'Votre mot de passe DokuWiki';
@@ -67,6 +72,7 @@ $lang['diff']       = 'différences avec la version actuelle';
 $lang['line']       = 'Ligne';
 $lang['breadcrumb'] = 'Piste';
 $lang['lastmod']    = 'Dernière modification';
+$lang['by']         = 'par';
 $lang['deleted']    = 'effacée';
 $lang['created']    = 'créée';
 $lang['restored']   = 'ancienne révision restaurée';
