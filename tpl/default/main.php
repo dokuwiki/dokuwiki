@@ -126,3 +126,4 @@
 </div>
 <?/*old includehook*/ @include(dirname(__FILE__).'/footer.html')?>
 </body>
+</html>

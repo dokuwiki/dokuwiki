@@ -30,7 +30,6 @@ class Doku_Renderer_XHTML {
     var $entities = array();
     var $interwiki = array();
 
-    //@todo why ob?    
     function document_start() {
         ob_start();
     }
@@ -276,8 +275,8 @@ class Doku_Renderer_XHTML {
         } else {
         
             // Handle with Geshi here (needs tuning)
-            require_once(DOKU_INC . 'geshi.php');
-            $geshi = new GeSHi($text, strtolower($language), DOKU_INC . 'geshi');
+            require_once(DOKU_INC . 'inc/geshi.php');
+            $geshi = new GeSHi($text, strtolower($language), DOKU_INC . 'inc/geshi');
             $geshi->enable_classes();
             $geshi->set_header_type(GESHI_HEADER_PRE);
             $geshi->set_overall_class('code');
