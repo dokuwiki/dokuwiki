@@ -194,6 +194,8 @@ function act_auth($act){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_edit($act){
+  global $ID;
+
   //check if locked by anyone - if not lock for my self
   $lockedby = checklock($ID);
   if($lockedby) return 'locked';
