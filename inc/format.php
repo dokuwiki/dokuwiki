@@ -344,7 +344,7 @@ function format_link_media($link){
 
   //prepare name
   if($isimg){
-           $link['name'] = '<img src="'.getBaseURL().$cache.'"';
+           $link['name'] = '<img src="'.$cache.'"';
     if($w) $link['name'] .= ' width="'.$w.'"';
     if($h) $link['name'] .= ' height="'.$h.'"';
     if($t) $link['name'] .= ' title="'.$t.'"';

@@ -41,6 +41,11 @@
   //remember original umask
   $conf['oldumask'] = umask();
 
+  //make absolute mediaweb
+  if(!preg_match('#^(https?://|/)#i',$conf['mediaweb'])){
+    $conf['mediaweb'] = getBaseURL().$conf['mediaweb'];
+  }
+
 /**
  * remove magic quotes recursivly
  *
