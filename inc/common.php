@@ -750,7 +750,8 @@ function saveWikiText($id,$text,$summary){
     // remove empty files
     @unlink($file);
     $del = true;
-    $summary = $lang['deleted']; //autoset summary on deletion
+    //autoset summary on deletion
+    if(empty($summary)) $summary = $lang['deleted'];
   }else{
     // save file (datadir is created in io_saveFile)
     io_saveFile($file,$text);
