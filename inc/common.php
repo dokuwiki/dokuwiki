@@ -755,6 +755,7 @@ function notify($id,$rev="",$summary=""){
   $text = str_replace('@NEWPAGE@',wl($id,'','',true),$text);
   $text = str_replace('@DOKUWIKIURL@',getBaseURL(true),$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
+  $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
   
   if($rev){
     $subject = $lang['mail_changed'].' '.$id;
