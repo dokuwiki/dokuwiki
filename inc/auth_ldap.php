@@ -86,6 +86,7 @@ function auth_checkPass($user,$pass){
  * uid  string  Posix User ID
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Trouble
  */
 function auth_getUserData($user){
   global $conf;
@@ -119,17 +120,22 @@ function auth_getUserData($user){
   //primary group id
   $gid = $result[0]['gidnumber'][0];
 
-  //get groups for given user
-  $filter = "(&(objectClass=posixGroup)(|(gidNumber=$gid)(memberUID=".$info['uid'].")))";
-  $sr     = @ldap_search($conn, $cnf['grouptree'], $filter);
-  if(!$sr){
-    msg("LDAP: Reading group memberships failed",-1);
-    return false;
-  }
-  $result = ldap_get_entries($conn, $sr);
-  foreach($result as $grp){
-    if(!empty($grp['cn'][0]))
-      $info['grps'][] = $grp['cn'][0];
+  //get groups for given user if grouptree is given
+  if ($cnf['grouptree'] != '') {
+    $filter = "(&(objectClass=posixGroup)(|(gidNumber=$gid)(memberUID=".$info['uid'].")))";
+    $sr     = @ldap_search($conn, $cnf['grouptree'], $filter);
+    if(!$sr){
+      msg("LDAP: Reading group memberships failed",-1);
+      return false;
+    }
+    $result = ldap_get_entries($conn, $sr);
+    foreach($result as $grp){
+      if(!empty($grp['cn'][0]))
+        $info['grps'][] = $grp['cn'][0];
+    }
+  }else{
+    //if no groups are available in LDAP always return the default group
+    $info['grps'][] = $conf['defaultgroup'];
   }
   return $info;
 }
