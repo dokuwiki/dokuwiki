@@ -142,7 +142,12 @@ function pageinfo(){
 }
 
 /**
- * adds a message to the global message array
+ * print a message
+ *
+ * If HTTP headers were not sent yet the message is added 
+ * to the global message array else it's printed directly
+ * using html_msgarea()
+ * 
  *
  * Levels can be:
  *
@@ -151,6 +156,7 @@ function pageinfo(){
  *  1 success
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    html_msgarea
  */
 function msg($message,$lvl=0){
   global $MSG;
@@ -158,8 +164,14 @@ function msg($message,$lvl=0){
   $errors[0]  = 'info';
   $errors[1]  = 'success';
 
-  if(!isset($MSG)) $MSG = array();
-  $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+  if(!headers_sent){
+    if(!isset($MSG)) $MSG = array();
+    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+  }else{
+    $MSG = array();
+    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+    html_msgarea();
+  }
 }
 
 /**

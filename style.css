@@ -158,7 +158,6 @@ div.error{
   font-size: 90%;
   margin: 0px;
   padding-left: 3em;
-  height: 16px;
 }
 
 div.info{
@@ -167,7 +166,6 @@ div.info{
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
-  height: 16px;
 }
 
 div.success{
@@ -176,7 +174,6 @@ div.success{
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
-  height: 16px;
 }
 
 /* ---------------------------- Diff rendering --------------------------*/
