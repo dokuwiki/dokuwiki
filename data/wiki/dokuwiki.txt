@@ -27,6 +27,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[http://bugs.splitbrain.org/index.php?project=1|Bugs and feature wishes]]
 
   * [[doku>wiki:todo|ToDo List]]
+  * [[doku>wiki:development|Development Ressources]]
   * [[doku>wiki:changes|Change Log]]
   * [[doku>wiki:thanks|Thanks]]
 
