@@ -102,4 +102,5 @@ $lang['qb_ul']      = 'Ongeordende lijst item';
 $lang['qb_media']   = 'Voeg plaatjes en andere bestanden toe';
 $lang['qb_sig']     = 'Handtekening invoegen';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

@@ -101,4 +101,5 @@ $lang['qb_ul']      = 'Punkt för osorterad punktlista';
 $lang['qb_media']   = 'Lägg till bilder och andra filer';
 $lang['qb_sig']     = 'Infoga signatur';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

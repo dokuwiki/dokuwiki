@@ -61,4 +61,5 @@ $lang['qb_ol']      = 'Item de Lista Ordenada';
 $lang['qb_ul']      = 'Item de Lista Desordenada';
 $lang['qb_media']   = 'Añadir Imágenes otros ficheros';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

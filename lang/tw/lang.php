@@ -109,4 +109,6 @@ $lang['txt_clickhere'] = '按這就會幫您自動放好了';
 $lang['txt_year']      = '年份';
 $lang['txt_month']     = '月份';
 $lang['arr_daysofweek']= array('日','一','二','三','四','五','六');
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

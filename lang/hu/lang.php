@@ -99,4 +99,5 @@ $lang['qb_ul']      = 'Bajuszos lista elem';
 $lang['qb_media']   = 'Képek és más fájlok hozzáadása';
 $lang['qb_sig']     = 'Aláírás beszúrása';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

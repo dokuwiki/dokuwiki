@@ -103,4 +103,5 @@ $lang['qb_ul']      = 'Unordered List Item';
 $lang['qb_media']   = 'Add Images and other files';
 $lang['qb_sig']     = 'Insert Signature';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

@@ -102,4 +102,5 @@ $lang['qb_ul']      = 'Epäjärjestetyn listan osa';
 $lang['qb_media']   = 'Lisää kuvia ja muita tiedostoja';
 $lang['qb_sig']     = 'Lisää allekirjoitus';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

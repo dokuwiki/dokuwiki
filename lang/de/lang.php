@@ -108,4 +108,5 @@ $lang['qb_ul']      = 'Listenpunkt';
 $lang['qb_media']   = 'Bilder und andere Dateien hinzufügen';
 $lang['qb_sig']     = 'Unterschrift einfügen';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

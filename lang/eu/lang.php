@@ -88,4 +88,5 @@ $lang['qb_ul']      = 'Zerrenda desordenatuko gaia';
 $lang['qb_media']   = 'Irudiak/Fitxategiak gehitu';
 $lang['qb_sig']     = 'Insert Signature';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

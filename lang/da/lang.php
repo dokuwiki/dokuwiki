@@ -59,4 +59,5 @@ $lang['qb_ol']      = 'Nummereret liste element';
 $lang['qb_ul']      = 'Unordnet liste element';
 $lang['qb_media']   = 'Tilføj billeder og andre filer';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

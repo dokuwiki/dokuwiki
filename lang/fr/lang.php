@@ -102,4 +102,5 @@ $lang['qb_ul']      = 'Liste libre';
 $lang['qb_media']   = 'Ajouter des images et autres fichiers';
 $lang['qb_sig']     = 'Insérer une signature';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

@@ -101,4 +101,5 @@ $lang['qb_ul']      = 'Wypunktowanie';
 $lang['qb_media']   = 'Dodaj obrazek lub inny plik';
 $lang['qb_sig']     = 'Wstaw podpis';
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>
