@@ -58,13 +58,13 @@ function admin_acl_handler(){
  * @todo    can this be combined with auth_aclcheck to avoid duplicate code?
  * @author  Frank Schubert <frank@schokilade.de>
  */
-function get_acl_config($ID){
+function get_acl_config($id){
   global $AUTH_ACL;
   
   $acl_config=array();
   
   // match exact name
-  $matches = preg_grep('/^'.$ID.'\s+.*/',$AUTH_ACL);
+  $matches = preg_grep('/^'.$id.'\s+.*/',$AUTH_ACL);
   if(count($matches)){
     foreach($matches as $match){
       $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -76,8 +76,8 @@ function get_acl_config($ID){
   
   $specific_found=array();
   // match ns
-  if(($ID=getNS($ID)) !== false){
-    $matches = preg_grep('/^'.$ID.':\*\s+.*/',$AUTH_ACL);
+  while(($id=getNS($id)) !== false){
+    $matches = preg_grep('/^'.$id.':\*\s+.*/',$AUTH_ACL);
     if(count($matches)){
       foreach($matches as $match){
         $match = preg_replace('/#.*$/','',$match); //ignore comments
