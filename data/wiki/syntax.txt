@@ -111,7 +111,7 @@ You can use up to five different levels of headlines to structure your content. 
   === Headline Level 4 ===
   == Headline Level 5 ==
 
-By using four dashes, you can make a horizontal line:
+By using four or more dashes, you can make a horizontal line:
 
 ----
 
