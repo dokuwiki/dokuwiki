@@ -1,0 +1,41 @@
+====== DokuWiki ======
+
+DokuWiki is a standards compliant, simple to use [[wp>Wiki]], mainly aimed at creating documentation of any kind. It is targeted at developer teams, workgroups and small companies. It has a simple but powerful [[wiki:syntax]] which makes sure the datafiles remain readable outside the Wiki and eases the creation of structured texts. All data is stored in plain text files -- no database is required.
+
+===== Download =====
+
+DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
+
+===== Read More =====
+
+All documentation and additional information besides the [[syntax|syntax description]] is now maintained in the DokuWiki at [[doku>wiki:dokuwiki|splitbrain]] only and not included in the releases anymore.
+
+  * [[doku>wiki:news|News and Announcements]]
+  * [[doku>wiki:features|Features]]
+  * [[doku>wiki:requirements|System Requirements]]
+  * [[doku>wiki:compatibility|Browser Compatibility]]
+  * [[doku>wiki:Install|How to install or upgrade]]
+  * [[doku>wiki:config|Configuration]]
+  * [[doku>wiki:FAQ|Frequently Asked Questions (FAQ)]]
+  * [[doku>wiki:accesskeys|Accesskeys]]
+
+  * [[doku>wiki:discussion:discussion|Discussion]]
+  * [[doku>wiki:users|DokuWiki Users]]
+  * [[doku>wiki:compare|Wiki Engine Comparison]]
+  * [[doku>wiki:experiences|Experiences]]
+  * [[doku>wiki:tips|Tips and Tricks]]
+  * [[http://bugs.splitbrain.org/index.php?project=1|Bugs and feature wishes]]
+
+  * [[doku>wiki:todo|ToDo List]]
+  * [[doku>wiki:changes|Change Log]]
+  * [[doku>wiki:thanks|Thanks]]
+
+===== Copyright =====
+
+2004-2005 (c) Andreas Gohr <andi@splitbrain.org>
+
+The DokuWiki engine is licensend under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider donating a few bucks to me via [[https://www.paypal.com/xclick/business=andi%40splitbrain.org&amp;item_name=DokuWiki+Donation&amp;no_shipping=1&amp;no_note=1&amp;tax=0&amp;currency_code=EUR&amp;lc=US|PayPal]] ;-).
+
+The content published in the DokuWiki at http://www.splitbrain.org/dokuwiki/ is licensed under the [[http://creativecommons.org/licenses/by-nc-sa/2.0/|Creative Commons Attribution-NonCommercial-ShareAlike License]] Version 2.0. This is true for all content (files inside the ''data'' directory) distributed in the download tarball, too.
+
+Not sure what this means? See the [[doku>wiki:faq#licenses_explained|FAQ on the Licenses]].
