@@ -1,0 +1,7 @@
+======No such revision======
+
+The specified revision doesn't exist. Use the ''Old revisions'' button for a list of old revisions of this document.
+
+======Phiên bản chưa có======
+
+Chưa có phiên bản được chỉ định. Xin bấm nút ''Phiên bản cũ'' để xem danh sách các phiên bản của văn kiện này.

@@ -1,0 +1,9 @@
+====== Login ======
+
+You are currently not logged in! Enter your authentication credentials below to log in.
+You need to have cookies enabled to log in.
+
+====== Đăng nhập ======
+
+Hiện bạn chưa đăng nhập! Điền vào những chi tiết chứng minh ở phía dưới.
+Máy của bạn cần đặt chế độ nhận cookies để đăng nhập.

@@ -1,0 +1,10 @@
+====== Backlinks ======
+
+This is a list of pages that seem to link back to the current page. Note that CamelCase links are
+not detected as backlinks.
+
+====== Nối về trước ======
+
+Đây là danh sách các trang hình như đã nối vào trang này. Chú ý là các nối loại CamelCase không được xác
+nhận đã nối về trước.
+

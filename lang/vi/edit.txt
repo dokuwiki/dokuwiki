@@ -1,0 +1,9 @@
+Edit the page and hit ''Save''. See [[wiki:syntax]] for
+Wiki syntax. Please edit the page only if you can **improve** it. If you
+want to test some things, learn to make your first steps on the
+[[wiki:playground]].
+
+Biên soạn trang này và bấm ''Bảo lưu''. Xem [[wiki:syntax]] về
+cú pháp của Wiki. Xin bạn biên soạn trang này nếu bạn có thể **cải tiến** nó.
+Nếu bạn muốn thí nghiệm, bạn có thể tập những bước đầu ở
+[[wiki:playground]].
