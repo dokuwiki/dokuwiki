@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     François Kooman <fkooman.tuxed.net>
+ * @author     Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  */
 $lang['encoding']   = 'utf-8';
 
@@ -68,6 +69,7 @@ $lang['diff']       = 'toon verschillen met huidige revisie';
 $lang['line']       = 'Regel';
 $lang['breadcrumb'] = 'Pad';
 $lang['lastmod']    = 'Laatst gewijzigd';
+$lang['by']         = 'door';
 $lang['deleted']    = 'verwijderd';
 $lang['created']    = 'aangemaakt';
 $lang['restored']   = 'oude revisie hersteld';
