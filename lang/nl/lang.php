@@ -27,6 +27,7 @@ $lang['btn_logout'] = 'Uitloggen';
 $lang['loggedinas'] = 'Ingelogd als';
 $lang['user']       = 'Gebruikersnaam';
 $lang['pass']       = 'Wachtwoord';
+$lang['remember']   = 'Bewaar';
 $lang['fullname']   = 'Volledige naam';
 $lang['email']      = 'E-mail';
 $lang['register']   = 'Registreren';
