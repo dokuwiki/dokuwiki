@@ -232,10 +232,6 @@ function auth_aclcheck($id,$user,$groups){
   $perm  = -1;
 
   if($user){
-    //prepend groups with @
-    for($i=0; $i<count($groups); $i++){
-      $groups[$i] = '@'.$groups[$i];
-    }
     //add ALL group
     $groups[] = '@ALL';
     //add User
