@@ -294,6 +294,9 @@ function auth_aclcheck($id,$user,$groups){
       return $perm;
     }
   }while(1); //this should never loop endless
+
+  //still here? return no permissions
+  return AUTH_NONE;
 }
 
 /**
