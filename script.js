@@ -37,7 +37,7 @@ function escapeQuotes(text) {
  */
 function showLoadBar(){
   if(document.getElementById){
-    document.write('<img src="'+baseURL+'images/loading.gif" '+
+    document.write('<img src="'+DOKU_BASE+'images/loading.gif" '+
                    'width="150" height="12" id="loading" />');
   }
 }
@@ -88,7 +88,7 @@ function formatButton(imageFile, speedTip, tagOpen, tagClose, sampleText, access
   document.write("('"+tagOpen+"','"+tagClose+"','"+sampleText+"');\">");
 
   document.write("<img width=\"24\" height=\"24\" src=\""+
-                baseURL+imageFile+"\" border=\"0\" alt=\""+
+                DOKU_BASE+imageFile+"\" border=\"0\" alt=\""+
                 speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
   return;
@@ -111,7 +111,7 @@ function insertButton(imageFile, speedTip, value, accessKey) {
   document.write("(document.editform.wikitext,'"+value+"');\">");
 
   document.write("<img width=\"24\" height=\"24\" src=\""+
-                baseURL+imageFile+"\" border=\"0\" alt=\""+
+                DOKU_BASE+imageFile+"\" border=\"0\" alt=\""+
                 speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
   return;
@@ -126,10 +126,10 @@ function mediaButton(imageFile, speedTip, accessKey, namespace) {
   if(accessKey){
     document.write("accesskey=\""+accessKey+"\" ");
   }
-  document.write("href=\"javascript:void(window.open('"+baseURL+"media.php?ns="+
+  document.write("href=\"javascript:void(window.open('"+DOKU_BASE+"media.php?ns="+
                  namespace+"','mediaselect','width=600,height=320,left=70,top=50,scrollbars=yes'));\">");
   document.write("<img width=\"24\" height=\"24\" src=\""+
-                 baseURL+imageFile+"\" border=\"0\" alt=\""+
+                 DOKU_BASE+imageFile+"\" border=\"0\" alt=\""+
                  speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
   return;
@@ -330,8 +330,8 @@ function showSizeCtl(){
     }else{
       textarea.style.height = hgt;
     }
-    document.writeln('<a href="javascript:sizeCtl(100)"><img src="'+baseURL+'images/larger.png" width="20" height="20" border="0"></a>');
-    document.writeln('<a href="javascript:sizeCtl(-100)"><img src="'+baseURL+'images/smaller.png" width="20" height="20" border="0"></a>');
+    document.writeln('<a href="javascript:sizeCtl(100)"><img src="'+DOKU_BASE+'images/larger.png" width="20" height="20" border="0"></a>');
+    document.writeln('<a href="javascript:sizeCtl(-100)"><img src="'+DOKU_BASE+'images/smaller.png" width="20" height="20" border="0"></a>');
   }
 }
 
