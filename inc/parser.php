@@ -596,6 +596,7 @@ function quoteformat($block){
  * format inline tables
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Aaron Evans <aarone@klamathsystems.com>
  */
 function tableformat($block) {
   $block = trim($block);
@@ -630,7 +631,7 @@ function tableformat($block) {
 
     for ($c=0; $c < count($rows[$r]); $c++){
       $cspan=1;
-      $data = trim($rows[$r][$c]['data']);
+      $data = $rows[$r][$c]['data'];
       $head = $rows[$r][$c]['head'];
 
       //join cells if next is empty
@@ -644,15 +645,26 @@ function tableformat($block) {
         $cspan = '';
       }
 
+      //determine alignment from whitespace
+      if (preg_match('/^\s\s/', $data)) { // right indentation
+		    $td_class = "rightalign";
+  	    if (preg_match('/\s\s$/', $data)) { // both left and right indentation
+          $td_class = "centeralign";
+        }
+      } else { // left indentation (default)
+        $td_class = "leftalign";
+      }
+
+      $data = trim($data);
       if ($head) {
-        $ret .= "    <th class=\"inline\" $cspan>$data</th>\n";
+        $ret .= "    <th class=\"$td_class\" $cspan>$data </th>\n";  // set css class for alignment
       } else {
-        $ret .= "    <td class=\"inline\" $cspan>$data</td>\n";
+        $ret .= "    <td class=\"$td_class\" $cspan>$data </td>\n"; // set css class for alignment
       }
     }
     $ret .= "  </tr>\n";
   }
-  $ret .= "</table>\n<p>";
+  $ret .= "</table><br />\n<p>";
 
   return $ret;
 }

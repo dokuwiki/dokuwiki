@@ -445,19 +445,28 @@ table.inline {
   border-collapse: collapse;
 }
 
-th.inline{
+table.inline th {
   padding: 3px;
   border: 1px solid #8cacbb;
   background-color: #dee7ec;
-  text-align: left;
 }
 
-td.inline{
+table.inline td {
   padding: 3px;
   border: 1px solid #8cacbb;
+}
+
+.leftalign{
   text-align: left;
 }
 
+.centeralign{
+  text-align: center;
+}
+
+.rightalign{
+  text-align: right;
+}
 
 /* ---------- table of contents ------------------- */
 

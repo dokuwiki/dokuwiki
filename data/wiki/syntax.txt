@@ -251,6 +251,20 @@ As you can see, it's the cell separator before a cell which decides about the fo
 
 Note: Vertical spans (rowspan) are not possible.
 
+You can align the table contents, too. Just add at least two whitespaces at the opposite end of your text: Add two spaces on the left to align right, two spaces on the right to align left and two spaces at least at both ends for centered text.
+
+^           Table with alignment           ^^^
+|         right|    center    |left          |
+|left          |         right|    center    |
+| xxxxxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxxxxx |
+
+This is how it looks in the source:
+
+  ^           Table with alignment           ^^^
+  |         right|    center    |left          |
+  |left          |         right|    center    |
+  | xxxxxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxxxxx |
+
 ===== Nonparsed Blocks =====
 
 You can include non parsed blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags ''code'' or ''file''.

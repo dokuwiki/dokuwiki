@@ -197,19 +197,27 @@ table.inline {
   border-collapse: collapse;
 }
 
-th.inline{
+table.inline th {
   padding: 3px;
   border: 1px solid #000000;
   border-bottom: 2px solid #000000;
-  text-align: left;
 }
 
-td.inline{
+table.inline td {
   padding: 3px;
   border: 1px solid #000000;
+}
+
+.leftalign{
   text-align: left;
 }
 
+.centeralign{
+  text-align: center;
+}
 
+.rightalign{
+  text-align: right;
+}
 
 .toc, .footerinc, .header, .bar, .user {display:none}
