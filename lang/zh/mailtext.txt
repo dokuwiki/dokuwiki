@@ -1,0 +1,15 @@
+在您的 DokuWiki 有新增、变动过一页了。以下是细节资料：
+
+日期        : @DATE@
+浏览器      : @BROWSER@
+IP-Address  : @IPADDRESS@
+机器名称    : @HOSTNAME@
+旧版次      : @OLDPAGE@
+新版次      : @NEWPAGE@
+编辑摘要    : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+这封信是由 @DOKUWIKIURL@ 的 DokuWiki 自动产生
