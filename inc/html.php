@@ -178,7 +178,7 @@ function html_head(){
   global $conf;
   global $lang;
   
-  print '<'.'?xml version="1.0"?'.">\n";
+  //print '<'.'?xml version="1.0"?'.">\n";
   print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"';
   print ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
   print "\n";
