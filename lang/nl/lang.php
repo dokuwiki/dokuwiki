@@ -45,7 +45,7 @@ $lang['reghere']    = 'Je hebt nog geen account? Vraag er eentje aan';
 $lang['txt_upload']   = 'Selecteer een bestand om te uploaden';
 $lang['txt_filename'] = 'Vul wiki-naam in (optioneel)';
 $lang['lockedby']     = 'Momenteel in gebruik door';
-$lang['lockexpire']   = 'Exclusief gebruiksrecht vervalt o';
+$lang['lockexpire']   = 'Exclusief gebruiksrecht vervalt op';
 $lang['willexpire']   = 'Je exclusieve gebruiksrecht voor het aanpassen van deze pagina verloopt over een minuut.\nOm problemen te voorkomen klik op de Preview knop om de exclusieve gebruiksrechten te verlengen.';
 
 $lang['notsavedyet'] = 'Er zijn op dit moment wijzigingen die nog niet zijn opgeslagen, deze zullen verloren gaan.\nWeet je zeker dat je wilt doorgaan?';
