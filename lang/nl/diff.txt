@@ -1,0 +1,3 @@
+======Verschillen======
+
+Dit geeft de verschillen weer tussen de geselecteerde revisie en de huidige revisie van de pagina.

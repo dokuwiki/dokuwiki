@@ -1,0 +1,16 @@
+En side i din DokuWiki har blitt lagt til eller blitt endret. Info om endringen:
+
+Dato                 : @DATE@
+Nettleser            : @BROWSER@
+IP-adresse           : @IPADDRESS@
+Vertsnavn            : @HOSTNAME@
+Tidligere versjon    : @OLDPAGE@
+Aktuell versjon      : @NEWPAGE@
+Redigeringskommentar : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+Denne meldingen ble laget av DokuWiki
+@DOKUWIKIURL@

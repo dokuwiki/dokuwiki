@@ -1,0 +1,5 @@
+====== Strona zablokowana ======
+
+Ta strona jest zablokowana do edycji przez innego u¿ytkownika.
+Musisz zaczekaæ a¿ u¿ytkownik zakoñczy redagowanie lub jego blokada wyga¶nie.
+

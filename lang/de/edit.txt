@@ -1,0 +1,2 @@
+Nach dem Bearbeiten den ''Speichern'' Knopf drücken. Siehe [[wiki:syntax]] zur Wiki Syntax.
+

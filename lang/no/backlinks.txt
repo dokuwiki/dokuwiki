@@ -1,0 +1,3 @@
+======Tilbakelinker======
+
+Dette er en fortegnelse over sider som ser ut til å linke tilbake til den aktuelle siden. Husk at CamelCase-linker ikke blir oppdaget som tilbakelinker.

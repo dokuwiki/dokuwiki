@@ -1,0 +1,4 @@
+====== Pages pointant sur la page en cours (backlinks) ======
+
+Ceci est la liste de pages qui pointent sur la page en cours.
+Notez bien que les liens "CamelCase" ne sont pas dectectés comme des backlinks.

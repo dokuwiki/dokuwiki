@@ -1,0 +1,5 @@
+======Gamle versioner======
+
+For at skifte tilbage til en gammel version, vælg den ved at trykke på den nedenunder. Når siden er hentet, tryk på   **''  [Editer denne side]  ''**   og gem den.
+Brug venligst //**kun**// denne funktion til at fjerne hærværk.
+

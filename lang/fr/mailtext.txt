@@ -1,0 +1,16 @@
+Une page dans votre Wiki a été ajoutée ou modifiée. Voici les détails
+
+Date              : @DATE@
+Browser           : @BROWSER@
+Adresse IP        : @IPADDRESS@
+Nom d'hôte        : @HOSTNAME@
+Ancienne Révision : @OLDPAGE@
+Nouvelle Révision : @NEWPAGE@
+Résumé 		  : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+Ce message a été généré par DokuWiki à
+@DOKUWIKIURL@

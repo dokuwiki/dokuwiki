@@ -1,0 +1,5 @@
+====== Blokowanie niew³a¶ciwych tre¶ci ======
+    
+Twoje zmiany **nie** zosta³y zapisane poniewa¿ zawieraj± niedozwolone s³owa.
+Je¶li próbowa³e¶/a¶ umie¶ciæ niew³a¶ciwe tre¶ci to wstyd¼ siê!
+

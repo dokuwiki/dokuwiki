@@ -1,0 +1,211 @@
+
+body {
+  font: 12pt "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+  background-color: White;
+  color: Black;
+}
+
+table {
+  font-size: 100%;
+  padding:0;
+  margin:0;
+}
+
+tr,td,th {padding:0; margin:0;}
+
+img {border:0}
+
+a {
+  color:#000000;
+  text-decoration:none;
+}
+
+
+div.meta {
+  clear:both;
+  margin-top: 1em;
+  font-size:70%;
+  text-align:right;
+}
+
+div.breadcrumbs{
+  display:none;
+}
+
+div.secedit{
+  display:none;
+}
+
+/* --------------------- Text formating -------------------------------- */
+
+/* external link */
+a.urlextern:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+
+/* interwiki link */
+a.interwiki:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+
+/* email link */
+a.mail:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+
+/* existing wikilink */
+a.wikilink1    {text-decoration:underline }
+
+/* the document */
+div.page {
+  text-align: justify;
+}
+
+/* general headline setup */
+h1, h2, h3, h4, h5 {
+    color: Black;
+    background-color: transparent;
+    font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    font-weight: normal;
+    margin-left:    0;
+    margin-right:   0;
+    margin-top:     0;
+    margin-bottom:  1em;
+    padding-left:   0;
+    padding-right:  0;
+    padding-top:    0.5em;
+    padding-bottom: 0;
+    border-bottom: 1px solid #000000;
+    clear:left;
+}
+
+/* special headlines */
+h1 {font-size: 160%; font-weight: bold;}
+h2 {font-size: 150%; }
+h3 {font-size: 140%; border-bottom: none; font-weight: bold;}
+h4 {font-size: 120%; border-bottom: none; font-weight: bold;}
+h5 {font-size: 100%; border-bottom: none; font-weight: bold;}
+
+/* embedded images */
+img.media {
+  margin: 3px;
+}
+
+img.medialeft {
+  border: 0;
+  float: left;
+  margin: 0 1.5em 0 0;
+} 
+  
+img.mediaright {
+  border: 0;
+  float: right;
+  margin: 0 0 0 1.5em;
+}
+
+/* unordered lists */
+ul { 
+    line-height: 1.5em;
+    list-style-type: square;
+    margin: 0 0 1.0em 1.5em;
+    padding: 0;
+
+}
+
+/* ordered lists */
+ol {
+    line-height: 1.5em;
+    margin: 0 0 1.0em 1.5em;
+    padding: 0;
+    font-weight: bold;
+}
+
+/* the list items overriding the ol definition */
+span.li {
+    font-weight: normal;
+}
+
+/* code blocks by indention */
+pre.pre {
+  font-size: 8pt;
+  padding: 0.5em;
+  border: 1px dashed #000000;
+  color: Black;
+  overflow: visible;
+}
+
+/* code blocks by code tag */
+pre.code {
+  font-size: 8pt;
+  padding: 0.5em;
+  border: 1px dashed #000000;
+  color: Black;
+  overflow: visible;
+}
+
+/* inline code words */
+code {
+  font-size: 120%;
+}
+
+/* code blocks by file tag */
+pre.file {
+  font-size: 8pt;
+  padding: 0.5em;
+  border: 1px dotted #000000;
+  color: Black;
+  overflow: visible;
+}
+
+/* footnotes */
+div.footnotes{
+  clear:both;
+  border-top: 1px solid #000000;
+  padding-left: 1em;
+  margin-top: 1em;
+}
+
+div.fn{
+  font-size:90%;
+}
+
+a.fn_top{
+  vertical-align:super;
+  font-size:80%;
+}
+
+a.fn_bot{
+  vertical-align:super;
+  font-size:80%;
+  font-weight:bold;
+}
+
+/* ---------- inline tables ------------------- */
+
+table.inline {
+  font-size: 80%;
+  background-color: #ffffff;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+th.inline{
+  padding: 3px;
+  border: 1px solid #000000;
+  border-bottom: 2px solid #000000;
+  text-align: left;
+}
+
+td.inline{
+  padding: 3px;
+  border: 1px solid #000000;
+  text-align: left;
+}
+
+
+
+.toc, .footerinc, .header, .bar, .user {display:none}

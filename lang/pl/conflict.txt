@@ -1,0 +1,9 @@
+====== Istnieje nowsza wersja strony ======
+
+Istnieje nowsza wersja edytowanej strony. 
+Prawdopodobnie kto¶ zmieni³ tê stronê w trakcie Twojej pracy.
+
+Przegl±dnij dok³adnie poni¿sze ró¿nice i zdecyduj, któr± wersjê zatrzymaæ.
+Je¶li naci¶niesz ''zapisz'' to Twoja wersja zostanie zapisana. 
+Je¶li naci¶niesz ''anuluj'' to zostanie wybrana stara wersja strony.
+

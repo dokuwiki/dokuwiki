@@ -1,0 +1,4 @@
+====== Indeks ======
+
+Dette er en indeks eller en fortegnelse over alle tilgjengelige sider, sortert etter [[doku>wiki:namespaces|wikinavn]].
+

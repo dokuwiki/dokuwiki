@@ -1,0 +1,6 @@
+====== On olemassa uudempi versio ======
+Sinun muokkaamastasi dokumentintista on olemassa uudempi versio. N‰in k‰y, kun toinen k‰ytt‰j‰ 
+muuttaa dokumenttia sill‰ aikaa, kun sin‰ olit muokkaamassa sit‰.
+
+Tutki alla n‰kyv‰t eroavaisuudet kunnolla ja p‰‰t‰ mik‰ versio s‰ilytet‰‰n. Jos valitse talenna 
+sinun versiosi tallennetaan. Valitse ''peru'' pit‰‰ksesi t‰m‰nhetkisen version.

@@ -1,0 +1,5 @@
+====== Podgl±d ======
+
+To jest podgl±d edytowanej strony. 
+Pamiêtaj, ¿e ta strona **nie** jest jeszcze zapisana!
+

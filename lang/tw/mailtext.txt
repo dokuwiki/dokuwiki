@@ -1,0 +1,15 @@
+在您的 DokuWiki 有新增、變動過一頁了。以下是細節資料：
+
+日期        : @DATE@
+瀏覽器      : @BROWSER@
+IP-Address  : @IPADDRESS@
+機器名稱    : @HOSTNAME@
+舊版次      : @OLDPAGE@
+新版次      : @NEWPAGE@
+編輯摘要    : @SUMMARY@
+
+@DIFF@
+
+
+-- 
+這封信是由 @DOKUWIKIURL@ 的 DokuWiki 自動產生

@@ -1,0 +1,5 @@
+====== Zugang verweigert ======
+
+Du hast nicht die benötigten Rechte, um weiterzumachen. Vielleicht musst
+du dich erst einloggen?
+

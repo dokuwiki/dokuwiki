@@ -1,0 +1,4 @@
+====== Indeks ======
+
+Indeks wszystkich dostêpnych stron pogrupowanych wed³ug [[doku>wiki:namespaces|katalogów]].
+

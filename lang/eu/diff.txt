@@ -1,0 +1,5 @@
+======Aldaketak======
+
+Aukeratutako berrikuspenaren eta egungo bertsioaren arteko
+aldaketak aurkezten ditu.
+

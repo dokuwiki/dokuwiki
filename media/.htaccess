@@ -1,0 +1,9 @@
+## The following directives should enhance security in the media
+## directory. However they are reported to make some trouble with
+## Apache2 and/or when PHP is used as CGI.
+## They are not really needed anymore as the upload mechanism
+## now is controlled through $conf['uploadtypes'] - but you may want
+## to try if they work for you. Some more security is always nice :-)
+
+# php_value engine off
+# AddType text/plain .php .phtml .php3 .html .htm .shtml

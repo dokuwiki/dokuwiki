@@ -1,0 +1,5 @@
+====== Registreer als nieuwe gebruiker ======
+
+Vul alle informatie hieronder in om een nieuw account voor deze wiki aan te maken.
+Zorg dat je een **geldig e-mailadres** opgeeft - je nieuwe wachtwoord wordt hierheen gezonden. De gebruikersnaam moet een geldige [[doku>wiki:pagename|pagename]] zijn.
+

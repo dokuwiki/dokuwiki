@@ -1,0 +1,6 @@
+====== Register as new user ======
+
+Fill in all the information below to create a new account in this wiki.
+Make sure you supply a **valid e-mail address** - your new password will
+be sent to it. The login name should be a valid [[doku>wiki:pagename|pagename]].
+

@@ -1,0 +1,15 @@
+Se ha cambiado o añadido una pagina en el DokuWiki-Manuales. Aqui están los detalles
+
+Fecha          : @DATE@
+Navegador      : @BROWSER@
+Dirección-IP   : @IPADDRESS@
+Nombre de Host : @HOSTNAME@
+Revision Vieja : @OLDPAGE@
+Revision Nueva : @NEWPAGE@
+
+@DIFF@
+
+
+-- 
+Este email ha sido generado por DokuWiki en
+@DOKUWIKIURL@

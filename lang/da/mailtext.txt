@@ -1,0 +1,15 @@
+En side i din DokuWiki blev ændret eller tilføjet. Her er detajlerne:
+
+Dato:           @DATE@
+Browser:        @BROWSER@
+IP-Adresse:     @IPADDRESS@
+Hostnavn:       @HOSTNAME@
+Gammel version: @OLDPAGE@
+Ny version:     @NEWPAGE@
+
+@DIFF@
+
+
+-- 
+Denne email blev genereret af DokuWiki på denne adresse:
+@DOKUWIKIURL@

@@ -1,0 +1,16 @@
+DokuWikiisi lis‰ttiin tai siell‰ muutettiin sivua. T‰ss‰ yksityiskohdat
+
+P‰iv‰m‰‰r‰               : @DATE@
+Selain                   : @BROWSER@
+IP-Osoite                : @IPADDRESS@
+Is‰nt‰nimi               : @HOSTNAME@
+Vanha versio             : @OLDPAGE@
+Uusi versio              : @NEWPAGE@
+Yhteenveto muokkauksesta : @SUMMARY@
+
+@DIFF@
+
+
+--
+T‰m‰n postin generoi DokuWiki
+@DOKUWIKIURL@
