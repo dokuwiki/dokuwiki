@@ -506,11 +506,18 @@ function parsedWiki($id,$rev='',$excuse=true){
     }
   }else{
     if(@file_exists($file)){
-      $ret = io_cacheParse($file);
+      if(!defined('DOKU_USENEWPARSER')){
+        $ret = io_cacheParse($file);
+      }else{
+        msg('using new parser');
+        require_once(DOKU_INC.'inc/parser/action.php');
+        $ret = render_as_xhtml(parse_to_instructions(io_readFile($file)));
+      }
     }elseif($excuse){
       $ret = parsedLocale('newpage');
     }
   }
+
   return $ret;
 }
 
