@@ -44,6 +44,10 @@ function html_login(){
           <input type="password" name="p" class="edit" />
         </label><br />
         <input type="submit" value="<?=$lang['btn_login']?>" class="button" />
+        <label for="remember" class="simple">
+          <input type="checkbox" name="r" id="remember" value="1" />
+          <span><?=$lang['remember']?></span>
+        </label>
       </fieldset>
     </form>
   <?

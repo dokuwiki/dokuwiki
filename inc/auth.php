@@ -1,6 +1,7 @@
 <?
 require_once("inc/common.php");
 require_once("inc/io.php");
+require_once("inc/blowfish.php");
 # load the the auth functions
 require_once('inc/auth_'.$conf['authtype'].'.php');
 
@@ -13,13 +14,15 @@ define('AUTH_UPLOAD',8);
 define('AUTH_GRANT',255);
 
 if($conf['useacl']){
-  auth_login($_REQUEST['u'],$_REQUEST['p']);
+  auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
   # load ACL into a global array
   $AUTH_ACL = file('conf/acl.auth');
 }
 
 /**
  * This tries to login the user based on the sent auth credentials
+ *
+ * FIXME: Description no longer valid!
  *
  * The authentication works like this: if a username was given
  * a new login is assumed and user/password are checked - if they
@@ -33,43 +36,92 @@ if($conf['useacl']){
  * On a successful login $_SERVER[REMOTE_USER] and $USERINFO
  * are set.
 */
-function auth_login($user,$pass){
+function auth_login($user,$pass,$sticky=false){
   global $USERINFO;
   global $conf;
   global $lang;
-  $cookie  = $_COOKIE['AUTHTOKEN'];
-	$session = $_SESSION[$conf['title']]['authtoken'];
+  $sticky ? $sticky = true : $sticky = false; //sanity check
 
   if(isset($user)){
+    //usual login
     if (auth_checkPass($user,$pass)){
-      //make username available as REMOTE_USER
+      // make logininfo globally available
       $_SERVER['REMOTE_USER'] = $user;
-      //set global user info
-      $USERINFO = auth_getUserData($user);
-      //set authtoken
-      $token = md5(uniqid(rand(), true));
-      $_SESSION[$conf['title']]['user']      = $user;
-      $_SESSION[$conf['title']]['authtoken'] = $token;
-      setcookie('AUTHTOKEN', $token);
+      $USERINFO = auth_getUserData($user); //FIXME move all references to session 
+
+      // set cookie
+      $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
+      $cookie = base64_encode("$user|$sticky|$pass");
+      if($sticky) $time = time()+60*60*24*365; //one year
+      setcookie('DokuWikiAUTH',$cookie,$time);
+
+      // set session
+      $_SESSION[$conf['title']]['auth']['user'] = $user;
+      $_SESSION[$conf['title']]['auth']['pass'] = $pass;
+      $_SESSION[$conf['title']]['auth']['buid'] = auth_browseruid();
+      $_SESSION[$conf['title']]['auth']['info'] = $USERINFO;
+      return true;
     }else{
       //invalid credentials - log off
       msg($lang['badlogin'],-1);
       auth_logoff();
-    }
-  }elseif(isset($cookie) && isset($session)){
-    if($cookie == $session){
-      //make username available as REMOTE_USER
-      $_SERVER['REMOTE_USER'] = $_SESSION[$conf['title']]['user'];
-      //set global user info
-      $USERINFO = auth_getUserData($_SERVER['REMOTE_USER']);
-    }else{
-      //bad token
-      auth_logoff();
+      return false;
     }
   }else{
-    //just to be sure
-    auth_logoff();
+    // read cookie information
+    $cookie = base64_decode($_COOKIE['DokuWikiAUTH']);
+    list($user,$sticky,$pass) = split('\|',$cookie,3);
+    // get session info
+   	$session = $_SESSION[$conf['title']]['auth'];
+
+    if($user && $pass){
+      // we got a cookie - see if we can trust it
+      if(isset($session) &&
+        ($session['user'] == $user) &&
+        ($session['pass'] == $pass) &&  //still crypted
+        ($session['buid'] == auth_browseruid()) ){
+        // he has session, cookie and browser right - let him in
+        $_SERVER['REMOTE_USER'] = $user;
+        $USERINFO = $session['info']; //FIXME move all references to session
+        return true;
+      }
+      // no we don't trust it yet - recheck pass
+      $pass = PMA_blowfish_decrypt($pass,auth_cookiesalt());
+      return auth_login($user,$pass,$sticky);
+    }
   }
+  //just to be sure
+  auth_logoff();
+  return false;
+}
+
+/**
+ * Builds a pseudo UID from browserdata
+ *
+ * This is neither unique nor unfakable - still it adds some
+ * security
+ */
+function auth_browseruid(){
+  $uid  = '';
+  $uid .= $_SERVER['HTTP_USER_AGENT'];
+  $uid .= $_SERVER['HTTP_ACCEPT_ENCODING'];
+  $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+  $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
+  return md5($uid);
+}
+
+/**
+ * Creates a random key to encrypt the password in cookies
+ */
+function auth_cookiesalt(){
+  global $conf;
+  $file = $conf['datadir'].'/.cache/cookiesalt';
+  $salt = io_readFile($file);
+  if(empty($salt)){
+    $salt = uniqid(rand(),true);
+    io_saveFile($file,$salt);
+  }
+  return $salt;
 }
 
 /**
@@ -79,10 +131,12 @@ function auth_login($user,$pass){
 function auth_logoff(){
   global $conf;
   global $USERINFO;
-  unset($_SESSION[$conf['title']]['authtoken']);
-  unset($_SESSION[$conf['title']]['user']);
+  unset($_SESSION[$conf['title']]['auth']['user']);
+  unset($_SESSION[$conf['title']]['auth']['pass']);
+  unset($_SESSION[$conf['title']]['auth']['info']);
   unset($_SERVER['REMOTE_USER']);
-  $USERINFO=null;
+  $USERINFO=null; //FIXME
+  setcookie('DokuWikiAUTH','',time()-3600);
 }
 
 /**

@@ -40,7 +40,12 @@ label {
   font-weight: bold;
 }
 
-label input {
+label.simple {
+  text-align: left;
+  font-weight: normal;
+}
+
+label input.edit {
   width: 50%;
 }
 

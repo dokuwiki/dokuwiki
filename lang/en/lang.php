@@ -27,6 +27,7 @@ $lang['btn_logout'] = 'Logout';
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
 $lang['pass']       = 'Password';
+$lang['remember']   = 'Remeber me';
 $lang['fullname']   = 'Full name';
 $lang['email']      = 'E-Mail';
 $lang['register']   = 'Register';
