@@ -42,6 +42,11 @@ hr {
   height: 0px;
 }
 
+div.nothing {
+  text-align:center;
+	margin: 2em;
+}
+
 /* ---------------- forms ------------------------ */
 
 form {

@@ -96,6 +96,9 @@ function tpl_content(){
     case 'register':
       html_register();
       break;
+    case 'denied':
+      print parsedLocale('denied');
+			break;
     default:
 			msg("Failed to handle command: ".hsc($ACT),-1); 
   }
@@ -305,6 +308,86 @@ function tpl_pageinfo(){
       print $INFO['locked'];
     }
   }
+}
+
+/**
+ * Print a list of namespaces containing media files
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_medianamespaces(){
+	global $conf;
+
+  $data = array();
+  search($data,$conf['mediadir'],'search_namespaces',array());
+  print html_buildlist($data,'idx',media_html_list_namespaces);
+}
+
+/**
+ * Print a list of mediafiles in the current namespace
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_mediafilelist(){
+  global $conf;
+  global $lang;
+  global $NS;
+  $dir = utf8_encodeFN(str_replace(':','/',$NS));
+
+  $data = array();
+  search($data,$conf['mediadir'],'search_media',array(),$dir);
+
+  if(!count($data)){
+    ptln('<div class="nothing">'.$lang['nothingfound'].'<div>');
+    return;
+  }
+
+  ptln('<ul>',2);
+  foreach($data as $item){
+    ptln('<li>',4);
+    ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">'.
+         utf8_decodeFN($item['file']).
+         '</a>',6);
+    if($item['isimg']){
+      ptln('('.$item['info'][0].'&#215;'.$item['info'][1].
+           ' '.filesize_h($item['size']).')<br />',6);
+
+      # build thumbnail
+      $link=array();
+      $link['name']=$item['id'];
+      if($item['info'][0]>120) $link['name'] .= '?120';
+      $link = format_link_media($link);
+      ptln($link['name'],6);
+
+    }else{
+      ptln ('('.filesize_h($item['size']).')',6);
+    }
+    ptln('</li>',4);
+  }
+  ptln('</ul>',2);
+}
+
+/**
+ * Print the media upload form if permissions are correct
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_mediauploadform(){
+  global $NS;
+  global $UPLOADOK;
+  global $lang;
+
+  if(!$UPLOADOK) return;
+
+  ptln('<form action="'.$_SERVER['PHP_SELF'].'" name="upload"'.
+       ' method="post" enctype="multipart/form-data">',2);
+  ptln($lang['txt_upload'].':<br />',4);
+  ptln('<input type="file" name="upload" class="edit" onchange="suggestWikiname();" />',4);
+  ptln('<input type="hidden" name="ns" value="'.hsc($NS).'" /><br />',4);
+  ptln($lang['txt_filename'].'<br />',4);
+  ptln('<input type="text" name="id" class="edit" />',4);
+  ptln('<input type="submit" class="button" value="'.$lang['btn_upload'].'" accesskey="s" />',4);
+  ptln('</form>',2);
 }
 
 ?>

@@ -293,6 +293,7 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 /**
  * Check for the given permission or prints an error
  *
+ * @deprecated
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_acl($perm){
@@ -596,7 +597,7 @@ function html_search(){
       print '</div>';
     }
   }else{
-    print '<div align="center">'.$lang['nothingfound'].'</div>';
+    print '<div class="nothing">'.$lang['nothingfound'].'</div>';
   }
 
   //hide progressbar
