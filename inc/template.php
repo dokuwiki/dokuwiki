@@ -50,13 +50,12 @@ function tpl_content(){
   global $SUF;
   global $SUM;
   global $IDX;
-  global $lang;
 
   switch($ACT){
     case 'show':
       html_show();
       break;
-    case $lang['btn_preview']:
+    case 'preview':
       html_edit($TEXT);
       html_show($TEXT);
       break;
@@ -98,7 +97,7 @@ function tpl_content(){
       html_register();
       break;
     default:
-      print "Uhm... Where am I? This shouldn't happen";
+			msg("Failed to handle command: ".hsc($ACT),-1); 
   }
 }
 
