@@ -407,7 +407,7 @@ function format_rss($url){
  */
 function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
   global $conf;
-  
+ 
   //container for various paths
   $f['full']['web'] = $src;
   $f['resz']['web'] = $src;
@@ -428,6 +428,7 @@ function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
     $isurl = true;
   }else{
     $src = str_replace(':','/',$src);
+    $src = utf8_encodeFN($src);
     $f['full']['web'] = $conf['mediaweb'].'/'.$src;
     $f['resz']['web'] = $conf['mediaweb'].'/'.$src;
     $f['full']['fs']  = $conf['mediadir'].'/'.$src;
@@ -447,27 +448,32 @@ function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
   }
 
   //for local images (cached or media) do resizing
-  if($isimg && (!$isurl) && $w){
-    $info = getImageSize($f['full']['fs']);
-    //if $h not given calcualte it with correct aspect ratio
-    if(!$h){
-      $h = round(($w * $info[1]) / $info[0]);
+  if($isimg && (!$isurl)){
+    if($w){
+      $info = getImageSize($f['full']['fs']);
+      //if $h not given calcualte it with correct aspect ratio
+      if(!$h){
+        $h = round(($w * $info[1]) / $info[0]);
+      }
+      $cache = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+      //delete outdated cachefile
+      if(@file_exists($cache) && (filemtime($cache)<filemtime($f['full']['fs']))){
+        unlink($cache);
+      }
+      //check if a resized cachecopy exists else create one
+      if(@file_exists($cache) || img_resize($ext,$f['full']['fs'],$info[0],$info[1],$cache,$w,$h)){
+        $f['resz']['web'] = $conf['mediaweb'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+        $f['resz']['fs']  = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+      }
+    }else{
+      //if no new size was given just return the img size
+      $info = getImageSize($f['full']['fs']);
+      $w = $info[0];
+      $h = $info[1];
     }
-    $cache = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
-    //delete outdated cachefile
-    if(@file_exists($cache) && (filemtime($cache)<filemtime($f['full']['fs']))){
-      unlink($cache);
-    }
-    //check if a resized cachecopy exists else create one
-    if(@file_exists($cache) || img_resize($ext,$f['full']['fs'],$info[0],$info[1],$cache,$w,$h)){
-      $f['resz']['web'] = $conf['mediaweb'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
-      $f['resz']['fs']  = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
-    }
-  }elseif($isimg && (!$isurl)){
-    //if no new size was given just return the img size
-    $info = getImageSize($f['full']['fs']);
-    $w = $info[0];
-    $h = $info[1];
+    //urlencode (yes! secondtime! with force!)
+    $f['full']['web'] = utf8_encodeFN($f['full']['web'],false);
+    $f['resz']['web'] = utf8_encodeFN($f['resz']['web'],false);
   }
 
   //set srcs

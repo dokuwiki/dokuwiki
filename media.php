@@ -18,7 +18,7 @@ $NS = cleanID($NS);
 if(auth_quickaclcheck("$NS:*") >= AUTH_UPLOAD){
   $uploadok = true;
   //create the given namespace (just for beautification)
-  $mdir = $conf['mediadir'].'/'.str_replace(':','/',$NS);
+  $mdir = $conf['mediadir'].'/'.utf8_encodeFN(str_replace(':','/',$NS));
   umask($conf['dmask']);
   io_mkdir_p($mdir);
   umask($conf['umask']);
@@ -67,7 +67,7 @@ function media_upload($NS){
   if(empty($id)) $id = $file['name'];
   $id   = cleanID($NS.':'.$id);
   // get filename
-  $fn   = str_replace(':','/',$id);
+  $fn   = utf8_encodeFN(str_replace(':','/',$id));
   $fn   = $conf['mediadir'].'/'.$fn;
   // prepare directory
   io_makeFileDir($fn);
@@ -105,7 +105,7 @@ function media_html_uploadform($ns){
 function media_html_media($ns){
   global $conf;
   global $lang;
-  $dir = str_replace(':','/',$ns);
+  $dir = utf8_encodeFN(str_replace(':','/',$ns));
 
   print '<b>'.$lang['mediafiles'].'</b>';
   print ' <code>'.$ns.':</code>';
@@ -124,7 +124,7 @@ function media_html_media($ns){
   foreach($data as $item){
     print '<li>';
     print '<a href="javascript:mediaSelect(\''.$item['id'].'\')">';
-    print $item['file'];
+    print utf8_decodeFN($item['file']);
     print '</a>';
     if($item['isimg']){
       print ' ('.$item['info'][0].'&#215;'.$item['info'][1];
@@ -158,7 +158,7 @@ function media_html_namespaces(){
 
 function media_html_list_namespaces($item){
   $ret  = '';
-  $ret .= '<a href="'.getBaseURL().'media.php?ns='.$item['id'].'" class="idx_dir">';
+  $ret .= '<a href="'.getBaseURL().'media.php?ns='.idfilter($item['id']).'" class="idx_dir">';
   $ret .= $item['id'];
   $ret .= '</a>';
   return $ret;
