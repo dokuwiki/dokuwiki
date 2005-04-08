@@ -1,5 +1,2 @@
-**You've loaded an old revision of the document!** If you save it, you will create a new version with this data.
-----
-
 **Bạn đã nạp một phiên bản cũ của văn kiện!** Nếu bảo lưu, bạn sẽ tạo phiên bản với dữ kiện này.
 ----

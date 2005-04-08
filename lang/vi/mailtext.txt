@@ -1,5 +1,3 @@
-A page in your DokuWiki was added or changed. Here are the details:
-
 Một trang trên DokuWiki của bạn vừa được bổ sung hoặc thay đổi. Sau đây là chi tiết:
 
 Date        : @DATE@

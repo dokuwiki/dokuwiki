@@ -1,9 +1,3 @@
-======SPAM blocked======
-
-Your changes were **not** saved because it contains one or more blocked words.
-If you tried to spam the Wiki -- Bad dog! If you think this is an error, contact
-the administrator of this Wiki.
-
 ======SPAM bị chận======
 
 Các thay đổi **không** được bảo lưu vì có một hoặc nhiều từ bị ngăn chận.

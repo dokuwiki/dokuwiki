@@ -1,7 +1,3 @@
-====== Index ======
-
-This is an index over all available pages ordered by [[doku>wiki:namespaces|namespaces]].
-
 ====== Mục lục ======
 
 Đây là mục lục của tất cả các trang, xếp theo thứ tự [[doku>wiki:namespaces|namespaces]].
