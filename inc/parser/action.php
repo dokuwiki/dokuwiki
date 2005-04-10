@@ -7,6 +7,8 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 
+require_once(DOKU_INC.'inc/utils.php');
+
 function parse_to_instructions($text){
   global $conf;
 
@@ -45,10 +47,10 @@ function parse_to_instructions($text){
   $Parser->addMode('quote',new Doku_Parser_Mode_Quote());
   
   // FIXME These need data files...
-  #$Parser->addMode('acronym',new Doku_Parser_Mode_Acronym(array_keys(getAcronyms())));
+  $Parser->addMode('smiley',new Doku_Parser_Mode_Smiley(array_keys(getSmileys())));
+  $Parser->addMode('acronym',new Doku_Parser_Mode_Acronym(array_keys(getAcronyms())));
   #$Parser->addMode('wordblock',new Doku_Parser_Mode_Wordblock(getBadWords()));
-  #$Parser->addMode('smiley',new Doku_Parser_Mode_Smiley(array_keys(getSmileys())));
-  #$Parser->addMode('entity',new Doku_Parser_Mode_Entity(array_keys(getEntities())));
+  $Parser->addMode('entity',new Doku_Parser_Mode_Entity(array_keys(getEntities())));
   
   $Parser->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
   $Parser->addMode('quotes',new Doku_Parser_Mode_Quotes());
@@ -76,10 +78,10 @@ function render_as_xhtml($instructions){
   $Renderer = & new Doku_Renderer_XHTML();
 
   //FIXME add data
-  #$Renderer->smileys = getSmileys();
-  #$Renderer->entities = getEntities();
-  #$Renderer->acronyms = getAcronyms();
-  #$Renderer->interwiki = getInterwiki();
+  $Renderer->smileys = getSmileys();
+  $Renderer->entities = getEntities();
+  $Renderer->acronyms = getAcronyms();
+  $Renderer->interwiki = getInterwiki();
   #$Renderer->badwords = getBadWords();
   
   // Loop through the instructions
@@ -94,6 +96,7 @@ function render_as_xhtml($instructions){
 /**
  * Returns a full page id
  *
+ * @todo move to renderer? 
  */
 function resolve_pageid(&$page,&$exists){
   global $ID;

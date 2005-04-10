@@ -60,7 +60,7 @@ function media_upload($NS){
   io_makeFileDir($fn);
 
   umask($conf['umask']);
-  if(preg_match('/\.'.$conf['uploadtypes'].'$/i',$fn)){
+  if(preg_match('/\.('.$conf['uploadtypes'].')$/i',$fn)){
     if (move_uploaded_file($file['tmp_name'], $fn)) {
       msg($lang['uploadsucc'],1);
       return true;

@@ -232,17 +232,25 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO Support optional eval of code depending on conf/dokuwiki.php
     */
     function php($text) {
-        $this->preformatted($text);
+				global $conf;
+				if($conf['phpok']){
+						eval($text);
+        }else{
+					  $this->file($text);
+				}
     }
     
     /**
-    * @TODO Support optional echo of HTML depending on conf/dokuwiki.php
     */
     function html($text) {
-        $this->file($text);
+				global $conf;
+        if($conf['htmlok']){
+					echo $text;
+				}else{
+	        $this->file($text);
+				}
     }
     
     function preformatted($text) {
@@ -268,9 +276,9 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO Hook up correctly with Geshi
     */
     function code($text, $language = NULL) {
+				global $conf;
     
         if ( is_null($language) ) {
             $this->preformatted($text);
@@ -282,9 +290,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
             $geshi->enable_classes();
             $geshi->set_header_type(GESHI_HEADER_PRE);
             $geshi->set_overall_class('code');
-            
-            // Fix this
-            $geshi->set_link_target('_blank');
+						$geshi->set_link_target($conf['target']['extern']);
             
             $text = $geshi->parse_code();
             echo $text;
@@ -306,13 +312,11 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO Remove hard coded link to splitbrain.org
     */
     function smiley($smiley) {
-        
         if ( array_key_exists($smiley, $this->smileys) ) {
             $title = $this->__xmlEntities($this->smileys[$smiley]);
-            echo '<img src="http://wiki.splitbrain.org/smileys/'.$this->smileys[$smiley].
+            echo '<img src="'.DOKU_BASE.'smileys/'.$this->smileys[$smiley].
                 '" align="middle" alt="'.
                     $this->__xmlEntities($smiley).'" />';
         } else {
@@ -321,8 +325,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO localization?
-    */
+    * not used
     function wordblock($word) {
         if ( array_key_exists($word, $this->badwords) ) {
             echo '** BLEEP **';
@@ -330,6 +333,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
             echo $this->__xmlEntities($word);
         }
     }
+    */
     
     function entity($entity) {
         if ( array_key_exists($entity, $this->entities) ) {
@@ -340,23 +344,23 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     function multiplyentity($x, $y) {
-        echo "$x&#215;$y";
+        echo "$x&times;$y";
     }
     
     function singlequoteopening() {
-        echo "&#8216;";
+        echo "&lsquo;";
     }
     
     function singlequoteclosing() {
-        echo "&#8217;";
+        echo "&rsquo;";
     }
     
     function doublequoteopening() {
-        echo "&#8220;";
+        echo "&ldquo;";
     }
     
     function doublequoteclosing() {
-        echo "&#8221;";
+        echo "&rdquo;";
     }
     
     /**

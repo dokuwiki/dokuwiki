@@ -565,7 +565,7 @@ class Doku_Parser_Mode_Wordblock extends Doku_Parser_Mode {
 
 //-------------------------------------------------------------------
 /**
-* @TODO Quotes and 640x480 are note supported - just straight replacements here
+* @TODO Quotes and 640x480 are not supported - just straight replacements here
 */
 class Doku_Parser_Mode_Entity extends Doku_Parser_Mode {
     // A list
@@ -615,10 +615,10 @@ class Doku_Parser_Mode_Quotes extends Doku_Parser_Mode {
                     '(?<=\s)\'(?=\S)',$mode,'singlequoteopening'
                 );
         $this->Lexer->addSpecialPattern(
-                    '(?<=\S)\'',$mode,'singlequoteclosing'
+                    '(?<=^|\S)\'',$mode,'singlequoteclosing'
                 );
         $this->Lexer->addSpecialPattern(
-                    '(?<=\s)"(?=\S)',$mode,'doublequoteopening'
+                    '(?<=^|\s)"(?=\S)',$mode,'doublequoteopening'
                 );
         $this->Lexer->addSpecialPattern(
                     '(?<=\S)"',$mode,'doublequoteclosing'
