@@ -88,7 +88,7 @@ class Doku_Handler {
         $markerLen = strlen($iLevels[$level]);
         $title = substr($match, $markerLen, strlen($match)-($markerLen*2));
         
-        $this->__addCall('header',array($title,$level), $pos);
+        $this->__addCall('header',array($title,$level,$pos), $pos);
         $this->meta['section'] = TRUE;
         return TRUE;
     }
@@ -1353,9 +1353,11 @@ class Doku_Handler_Toc {
     var $numHeaders = 0;
     
     function process($calls) {
+      #FIXME can this be done better?
+      global $conf;
         
         foreach ( $calls as $call ) {
-            if ( $call[0] == 'header' && $call[1][1] < 4 ) {
+            if ( $call[0] == 'header' && $call[1][1] <= $conf['maxtoclevel'] ) {
                 $this->numHeaders++;
                 $this->addToToc($call);
             }

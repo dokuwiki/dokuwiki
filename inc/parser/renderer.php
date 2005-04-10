@@ -19,7 +19,7 @@ class Doku_Renderer {
     
     function toc_close() {}
     
-    function header($text, $level) {}
+    function header($text, $level, $pos) {}
     
     function section_open($level) {}
     

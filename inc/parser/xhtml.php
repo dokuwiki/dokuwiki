@@ -32,11 +32,15 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     var $entities = array();
     var $interwiki = array();
 
+    var $lastsec = 0;
+
     function document_start() {
         ob_start();
     }
     
     function document_end() {
+				// add button for last section if any
+        if($this->lastsec) $this->__secedit($this->lastsec,'');
         
         if ( count ($this->footnotes) > 0 ) {
             echo '<div class="footnotes">'.DOKU_LF;
@@ -87,7 +91,16 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         echo '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     }
     
-    function header($text, $level) {
+    function header($text, $level, $pos) {
+        global $conf;
+				//handle section editing 
+        if($level <= $conf['maxseclevel']){
+            // add button for last section if any
+            if($this->lastsec) $this->__secedit($this->lastsec,$pos-1);
+						// remember current position
+	          $this->lastsec = $pos;
+				}
+
         echo DOKU_LF.'<a name="'.$this->__headerToLink($text).'"></a><h'.$level.'>';
         echo $this->__xmlEntities($text);
         echo "</h$level>".DOKU_LF;
@@ -283,8 +296,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         if ( is_null($language) ) {
             $this->preformatted($text);
         } else {
-        
-            // Handle with Geshi here (needs tuning)
+            // Handle with Geshi here FIXME: strip first beginning newline
             require_once(DOKU_INC . 'inc/geshi.php');
             $geshi = new GeSHi($text, strtolower($language), DOKU_INC . 'inc/geshi');
             $geshi->enable_classes();
@@ -742,6 +754,13 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     function __headerToLink($title) {
         return preg_replace('/\W/','_',trim($title));
     }
+
+    /**
+     * Adds code for section editing button
+     */
+		function __secedit($f, $t){
+        print '<!-- SECTION ['.$f.'-'.$t.'] -->';
+		}
     
     function __getLinkTitle($title, $default, & $isImage) {
         $isImage = FALSE;
@@ -838,7 +857,7 @@ function interwikiImgExists($name) {
  * @deprecated -> resolve_pagename should be used
  */
 function wikiPageExists($name) {
-    
+msg("deprecated wikiPageExists called",-1);    
     static $pages = array();
     
     if ( array_key_exists($name,$pages) ) {

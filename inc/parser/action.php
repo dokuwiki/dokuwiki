@@ -73,6 +73,8 @@ function parse_to_instructions($text){
 
 function render_as_xhtml($instructions){
 
+#dbg($instructions);
+
   // Create the renderer
   require_once DOKU_INC . 'inc/parser/xhtml.php';
   $Renderer = & new Doku_Renderer_XHTML();
