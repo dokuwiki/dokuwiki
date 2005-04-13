@@ -120,17 +120,19 @@ class Doku_Renderer_Wiki extends Doku_Renderer {
     
     function listu_open() {
         $this->listMarker = '*';
+        echo "\n";
     }
     
     function listo_open() {
         $this->listMarker = '-';
+        echo "\n";
     }
     
     /**
     * @TODO Problem here with nested lists
     */
     function listitem_open($level) {
-        echo str_repeat('   ', $level).$this->listMarker;
+        echo str_repeat('  ', $level).$this->listMarker;
     }
     
     function listitem_close() {
