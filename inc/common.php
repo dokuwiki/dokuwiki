@@ -416,6 +416,21 @@ function wikiFN($id,$rev=''){
 }
 
 /**
+ * returns the full path to the mediafile specified by ID
+ *
+ * The filename is URL encoded to protect Unicode chars
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function mediaFN($id){
+  global $conf;
+  $id = cleanID($id);
+  $id = str_replace(':','/',$id);
+    $fn = $conf['datadir'].'/'.utf8_encodeFN($id);
+  return $fn;
+}
+
+/**
  * Returns the full filepath to a localized textfile if local
  * version isn't found the english one is returned
  *
