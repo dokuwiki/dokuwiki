@@ -93,9 +93,12 @@ function auth_getUserData($user){
 
   $sql    = str_replace('%u',addslashes($user),$cnf['groups']);
   $result = auth_mysql_runsql($sql);
-  if(!count($result)) return false;
-  foreach($result as $row){
-    $info['grps'][] = $row['group'];
+  if(!count($result)){
+    $info['grps'][] = $conf['defaultgroup'];
+  }else{
+    foreach($result as $row){
+      $info['grps'][] = $row['group'];
+    }
   }
 
   return $info;
