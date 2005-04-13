@@ -563,4 +563,5 @@ function PMA_blowfish_decrypt($encdata, $secret) {
     return trim($decrypt);
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

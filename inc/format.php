@@ -586,4 +586,5 @@ function img_resize($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   return false;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

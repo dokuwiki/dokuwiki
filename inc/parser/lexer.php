@@ -552,4 +552,5 @@ function Doku_Lexer_Escape($str) {
     return preg_replace($chars, $escaped, $str);
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

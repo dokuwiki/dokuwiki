@@ -984,4 +984,6 @@ function check(){
     msg('The current page is not writable you',0);
   }
 }
-?>
+
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -396,4 +396,5 @@ function admin_acl_html_checkboxes($setperm,$ispage){
   return $ret;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

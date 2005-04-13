@@ -421,4 +421,5 @@ function isvalidemail($email){
 }
 
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

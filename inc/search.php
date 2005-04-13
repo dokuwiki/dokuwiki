@@ -335,4 +335,5 @@ function pathID($path){
   return $id;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

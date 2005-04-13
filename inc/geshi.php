@@ -2416,4 +2416,3 @@ if ( !function_exists('geshi_highlight') )
 	}
 }
 
-?>

@@ -855,4 +855,5 @@ function getFirstHeading($text){
   return $title;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

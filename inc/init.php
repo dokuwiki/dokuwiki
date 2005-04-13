@@ -123,4 +123,5 @@ function getBaseURL($abs=false){
 }
 
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

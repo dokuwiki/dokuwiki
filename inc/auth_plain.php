@@ -113,4 +113,5 @@ function auth_plain_loadUserData(){
   return $data;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

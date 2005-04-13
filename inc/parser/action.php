@@ -145,4 +145,5 @@ function resolve_pageid(&$page,&$exists){
   if(!empty($hash)) $page.'#'.$hash;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -69,4 +69,5 @@ class Doku_Renderer_SpamCheck extends Doku_Renderer {
     }
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

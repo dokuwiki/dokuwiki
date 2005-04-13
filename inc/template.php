@@ -454,4 +454,5 @@ function tpl_mediauploadform(){
   ptln('</form>',2);
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

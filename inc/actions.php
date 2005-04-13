@@ -234,4 +234,6 @@ function act_export($act){
 
   return 'show';
 }
-?>
+
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

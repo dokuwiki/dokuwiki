@@ -961,4 +961,5 @@ function html_admin(){
   ptln('</ul>');
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

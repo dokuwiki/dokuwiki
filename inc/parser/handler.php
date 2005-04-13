@@ -1496,4 +1496,5 @@ class Doku_Handler_Toc {
     
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

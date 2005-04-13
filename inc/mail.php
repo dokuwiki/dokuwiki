@@ -195,4 +195,5 @@ function mail_quotedprintable_encode($input='',$line_max=74,$space_conv=false){
 }
 
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

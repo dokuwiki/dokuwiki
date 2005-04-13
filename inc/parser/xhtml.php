@@ -875,3 +875,5 @@ msg("deprecated wikiPageExists called",-1);
     return $pages[$name];
 }
 
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

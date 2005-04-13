@@ -108,5 +108,6 @@ function auth_createUser($user,$name,$mail){
   return null;
 }
 
-?>
 
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

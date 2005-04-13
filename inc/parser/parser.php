@@ -825,4 +825,5 @@ function Doku_Parser_Disabled() {
     return $modes;
 }
 
-?>
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :
