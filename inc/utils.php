@@ -9,6 +9,36 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 
 /**
+ * Returns the (known) extension of a given filename
+ *
+ * returns false if not a known extension
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function media_extension($file){
+  $exts = join('|',array_keys(getMimeTypes()));
+  if(preg_match('#\.('.$exts.')$#i',$file,$matches)){
+    return strtolower($matches[1]);
+  }
+  
+  return false;
+}
+
+
+/**
+ * returns a hash of mimetypes
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function getMimeTypes() {
+  static $mime = NULL;
+  if ( !$mime ) {
+    $mime = confToHash(DOKU_INC . 'conf/mime.conf');
+  }
+  return $mime;
+}
+
+/**
  * returns a hash of acronyms
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
@@ -68,13 +98,11 @@ function getInterwiki() {
 function confToHash($file) {
   $conf = array();
   $lines = @file( $file );
-  if ( !$lines ) {
-    return $conf;
-  }
+  if ( !$lines ) return $conf;
 
   foreach ( $lines as $line ) {
     //ignore comments
-    $line = preg_replace('/[^&]#.*$/','',$line);
+    $line = preg_replace('/[^&]?#.*$/','',$line);
     $line = trim($line);
     if(empty($line)) continue;
     $line = preg_split('/\s+/',$line,2);

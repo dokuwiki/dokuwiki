@@ -426,7 +426,7 @@ function mediaFN($id){
   global $conf;
   $id = cleanID($id);
   $id = str_replace(':','/',$id);
-    $fn = $conf['datadir'].'/'.utf8_encodeFN($id);
+    $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
   return $fn;
 }
 

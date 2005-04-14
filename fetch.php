@@ -6,11 +6,12 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-
 	if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
 	require_once(DOKU_INC.'inc/init.php');
 	require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'inc/utils.php');
   require_once(DOKU_INC.'inc/auth.php');
+  $mimetypes = getMimeTypes();
 
 	//get input
 	$MEDIA  = $_REQUEST['media'];
@@ -18,6 +19,12 @@
 	$WIDTH  = $_REQUEST['w'];
 	$HEIGHT = $_REQUEST['h'];
   $EXT    = media_extension($MEDIA);
+  if($EXT !== false){
+    $MIME = $mimetypes[$EXT];
+  }else{
+    $EXT  = 'unknown';
+    $MIME = 'application/octet-stream';
+  }
 
 	//media to local file
 	if(preg_match('#^(https?|ftp)://#i',$MEDIA)){
@@ -39,7 +46,8 @@
     //check permissions (namespace only)
     if(auth_quickaclcheck(getNS($MEDIA).':X') < AUTH_READ){
       header("HTTP/1.0 401 Unauthorized");
-      //fixme add some image for imagefiles else display login message
+      //fixme add some image for imagefiles
+      print 'Unauthorized';
       exit;
     }
     $FILE  = mediaFN($MEDIA);
@@ -48,26 +56,55 @@
   //check file existance
   if(!@file_exists($FILE)){
     header("HTTP/1.0 404 Not Found");
-    //FIXME add some default broken image or display message
+    //FIXME add some default broken image
+    print 'Not Found';
     exit;
   }
 
 
+  //handle image resizing
+  if((substr($MIME,0,5) == 'image') && $WIDTH){
+    $FILE = get_resized($FILE,$EXT,$WIDTH,$HEIGHT);
+  }
 
-  //FIXME handle image resizing
 
-
-  //FIXME add correct mimetype
-  //FIXME send Size header
-  //FIXME send Lastmod Handler
-  //FIXME cache headers??
+  //FIXME set sane cachecontrol headers
   //FIXME handle conditional and partial requests
 
   //send file
-  passthru($FILE) ;
+  header("Content-Type: $MIME");
+  header('Last-Modified: '.date('r',filemtime($FILE)));
+  header('Content-Length: '.filesize($FILE));
 
 
-/* ----------- */
+  $fp = @fopen($FILE,"rb");
+  fpassthru($fp);
+  fclose($fp);
+
+/* ------------------------------------------------------------------------ */
+
+/**
+ * Resizes the given image to the given size
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
+function get_resized($file, $ext, $w, $h=0){
+  global $conf;
+
+  $md5   = md5($file);
+  $info  = getimagesize($file);
+  if(!$h) $h = round(($w * $info[1]) / $info[0]);
+
+  //cache
+  $local = $conf['mediadir'].'/_cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+  $mtime = @filemtime($local); // 0 if not exists
+
+  if( $mtime > filemtime($file) || resize_image($ext,$file,$info[0],$info[1],$local,$w,$h) ){
+    return $local;
+  }
+  //still here? resizing failed
+  return $file;
+}
 
 /**
  * Returns the wanted cachetime in seconds
@@ -119,7 +156,60 @@ function get_from_URL($url,$ext,$cache){
   return false;
 }
 
+/**
+ * resize images
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function resize_image($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
+  global $conf;
 
+  if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
+
+  // create an image of the given filetype
+  if ($ext == 'jpg' || $ext == 'jpeg'){
+    if(!function_exists("imagecreatefromjpeg")) return false;
+    $image = @imagecreateFromjpeg($from);
+  }elseif($ext == 'png') {
+    if(!function_exists("imagecreatefrompng")) return false;
+    $image = @imagecreatefrompng($from);
+  }elseif($ext == 'gif') {
+    if(!function_exists("imagecreatefromgif")) return false;
+    $image = @imagecreatefromgif($from);
+  }
+  if(!$image) return false;
+
+  if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor")){
+    $newimg = @imagecreatetruecolor ($to_w, $to_h);
+  }
+  if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
+  if(!$newimg) return false;
+
+  // create cachedir
+  io_makeFileDir($to);
+
+  //try resampling first
+  if(function_exists("imagecopyresampled")){
+    if(!@imagecopyresampled($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h)) {
+      imagecopyresized($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h);
+    }
+  }else{
+    imagecopyresized($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h);
+  }
+
+  if ($ext == 'jpg' || $ext == 'jpeg'){
+    if(!function_exists("imagejpeg")) return false;
+    return imagejpeg($newimg, $to, 70);
+  }elseif($ext == 'png') {
+    if(!function_exists("imagepng")) return false;
+    return imagepng($newimg, $to);
+  }elseif($ext == 'gif') {
+    if(!function_exists("imagegif")) return false;
+    return imagegif($newimg, $to);
+  }
+
+  return false;
+}
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
