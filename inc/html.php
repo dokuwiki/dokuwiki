@@ -154,6 +154,7 @@ function html_secedit($text,$show=true){
   }else{
     $text = preg_replace('#<!-- SECTION \[(\d*-\d*)\] -->#e','',$text);
   }
+  $text = preg_replace('@<p>\s*</p>@', '', $text);
   return $text;
 }
 
