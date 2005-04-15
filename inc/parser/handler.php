@@ -357,12 +357,7 @@ class Doku_Handler {
         
         // If the title is an image, convert it to an array containing the image details
         } else if ( preg_match('/^\{\{[^\}]+\}\}$/',$link[1]) ) {
-            $media = Doku_Handler_Parse_Media($link[1]);
-            
-            // Check it's really an image, not a link to a file
-            if ( !strpos($media['type'], 'link') ) {
-                $link[1] = $media;
-            }
+            $link[1] = Doku_Handler_Parse_Media($link[1]);
         }
 
         //decide which kind of link it is
@@ -421,17 +416,17 @@ class Doku_Handler {
     function media($match, $state, $pos) {
         $p = Doku_Handler_Parse_Media($match);
         
-        // If it's not an image, build a normal link
-        if ( strpos($p['type'], 'link') ) {
-            $this->__addCall($p['type'],array($p['src'], $p['title']), $pos);
-        } else {
-            $this->__addCall(
-                $p['type'],
-                array($p['src'], $p['title'], $p['align'], $p['width'], $p['height'], $p['cache']),
-                $pos
-                );
-        }
+        $this->__addCall(
+              $p['type'],
+              array($p['src'], $p['title'], $p['align'], $p['width'], $p['height'], $p['cache']),
+              $pos
+             );
         return TRUE;
+    }
+
+    function rss($match, $state, $pos) {
+        $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
+        $this->__addCall('rss',array($link),$pos);
     }
     
     function externallink($match, $state, $pos) {

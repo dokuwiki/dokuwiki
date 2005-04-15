@@ -7,8 +7,14 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 
-require_once(DOKU_INC.'inc/utils.php');
+require_once(DOKU_INC.'inc/confutils.php');
 
+/**
+ * turns a page into a list of instructions
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function parse_to_instructions($text){
   global $conf;
 
@@ -46,7 +52,6 @@ function parse_to_instructions($text){
   $Parser->addMode('file',new Doku_Parser_Mode_File());
   $Parser->addMode('quote',new Doku_Parser_Mode_Quote());
   
-  // FIXME These need data files...
   $Parser->addMode('smiley',new Doku_Parser_Mode_Smiley(array_keys(getSmileys())));
   $Parser->addMode('acronym',new Doku_Parser_Mode_Acronym(array_keys(getAcronyms())));
   #$Parser->addMode('wordblock',new Doku_Parser_Mode_Wordblock(getBadWords()));
@@ -60,6 +65,7 @@ function parse_to_instructions($text){
   }
 
   $Parser->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+  $Parser->addMode('rss',new Doku_Parser_Mode_RSS());
   $Parser->addMode('media',new Doku_Parser_Mode_Media());
   $Parser->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
   $Parser->addMode('email',new Doku_Parser_Mode_Email());
@@ -71,6 +77,12 @@ function parse_to_instructions($text){
   return $Parser->parse($text);
 }  
 
+/**
+ * Renders a list of instruction to XHTML
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function render_as_xhtml($instructions){
 
 #dbg($instructions);
@@ -79,7 +91,6 @@ function render_as_xhtml($instructions){
   require_once DOKU_INC . 'inc/parser/xhtml.php';
   $Renderer = & new Doku_Renderer_XHTML();
 
-  //FIXME add data
   $Renderer->smileys = getSmileys();
   $Renderer->entities = getEntities();
   $Renderer->acronyms = getAcronyms();
@@ -94,81 +105,5 @@ function render_as_xhtml($instructions){
   // Return the output
   return $Renderer->doc;
 }
-
-/**
- * Returns a full media id
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @todo move to utils? 
- */
-function resolve_mediaid(&$page,&$exists){
-  global $ID;
-  global $conf;
-  $ns = getNS($ID);
-  //if links starts with . add current namespace
-  if($page{0} == '.'){
-    $page = $ns.':'.substr($page,1);
-  }
-
-  //if link contains no namespace. add current namespace (if any)
-  if($ns !== false && strpos($page,':') === false){
-    $page = $ns.':'.$page;
-  }
-
-  $page   = cleanID($page);
-  $file   = mediaFN($page);
-  $exists = @file_exists($file);
-}
-
-/**
- * Returns a full page id
- *
- * @todo move to utils? 
- */
-function resolve_pageid(&$page,&$exists){
-  global $ID;
-  global $conf;
-  $ns = getNS($ID);
-
-  //if links starts with . add current namespace
-  if($page{0} == '.'){
-    $page = $ns.':'.substr($page,1);
-  }
-
-  //if link contains no namespace. add current namespace (if any)
-  if($ns !== false && strpos($page,':') === false){
-    $page = $ns.':'.$page;
-  }
-
-  //keep hashlink if exists then clean both parts
-  list($page,$hash) = split('#',$page,2);
-  $page = cleanID($page);
-  $hash = cleanID($hash);
-
-  $file = wikiFN($page);
-
-  $exists = false;
-
-  //check alternative plural/nonplural form
-  if(!@file_exists($file)){
-    if( $conf['autoplural'] ){
-      if(substr($page,-1) == 's'){
-        $try = substr($page,0,-1);
-      }else{
-        $try = $page.'s';
-      }
-      if(@file_exists(wikiFN($try))){
-        $page   = $try;
-        $exists = true;
-      }
-    }
-  }else{
-    $exists = true;
-  }
-
-  //add hash if any
-  if(!empty($hash)) $page.'#'.$hash;
-}
-
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

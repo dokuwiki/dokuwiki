@@ -9,7 +9,8 @@
 	if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
 	require_once(DOKU_INC.'inc/init.php');
 	require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/utils.php');
+  require_once(DOKU_INC.'inc/pageutils.php');
+  require_once(DOKU_INC.'inc/confutils.php');
   require_once(DOKU_INC.'inc/auth.php');
   $mimetypes = getMimeTypes();
 
@@ -59,7 +60,6 @@
     exit;
   }
 
-
   //handle image resizing
   if((substr($MIME,0,5) == 'image') && $WIDTH){
     $FILE = get_resized($FILE,$EXT,$WIDTH,$HEIGHT);
@@ -92,6 +92,7 @@ function get_resized($file, $ext, $w, $h=0){
   $md5   = md5($file);
   $info  = getimagesize($file);
   if(!$h) $h = round(($w * $info[1]) / $info[0]);
+
 
   //cache
   $local = $conf['mediadir'].'/_cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
@@ -140,7 +141,7 @@ function get_from_URL($url,$ext,$cache){
 
   //  never cache     exists but no endless cache     not exists or expired
   if( $cache == 0 || ($mtime != 0 && $cache != -1) || $mtime < time()-$cache ){
-    if(download($url,$local)){
+    if(io_download($url,$local)){
       return $local;
     }else{
       return false;
@@ -167,7 +168,7 @@ function resize_image($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   // create an image of the given filetype
   if ($ext == 'jpg' || $ext == 'jpeg'){
     if(!function_exists("imagecreatefromjpeg")) return false;
-    $image = @imagecreateFromjpeg($from);
+    $image = @imagecreatefromjpeg($from);
   }elseif($ext == 'png') {
     if(!function_exists("imagecreatefrompng")) return false;
     $image = @imagecreatefrompng($from);

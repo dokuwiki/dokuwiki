@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
+ * @deprecated part of the XHTML renderer
  */
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
@@ -486,8 +487,8 @@ function img_cache(&$csrc,&$src,&$w,&$h,$cachemode){
   //download external images if allowed
   if($isurl && $isimg && $cachemode != 'nocache'){
     $cache = $conf['mediadir']."/_cache/$md5.$ext";
-    if ( ($cachemode == 'recache' && download($src,$cache)) ||
-         @file_exists($cache) || download($src,$cache)){
+    if ( ($cachemode == 'recache' && io_download($src,$cache)) ||
+         @file_exists($cache) || io_download($src,$cache)){
       $f['full']['web'] = $conf['mediaweb']."/_cache/$md5.$ext";
       $f['resz']['web'] = $conf['mediaweb']."/_cache/$md5.$ext";
       $f['full']['fs']  = $conf['mediadir']."/_cache/$md5.$ext";

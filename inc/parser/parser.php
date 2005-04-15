@@ -660,6 +660,15 @@ class Doku_Parser_Mode_Media extends Doku_Parser_Mode {
 }
 
 //-------------------------------------------------------------------
+class Doku_Parser_Mode_RSS extends Doku_Parser_Mode {
+
+    function connectTo($mode) {
+        $this->Lexer->addSpecialPattern("\{\{rss>[^\}]+\}\}",$mode,'rss');
+    }
+
+}
+
+//-------------------------------------------------------------------
 class Doku_Parser_Mode_ExternalLink extends Doku_Parser_Mode {    
     var $schemes = array('http','https','telnet','gopher','wais','ftp','ed2k','irc');
     var $patterns = array();
@@ -801,7 +810,7 @@ function Doku_Parser_Substition() {
         'acronym','smiley','wordblock','entity','camelcaselink',
         'internallink','media','externallink','linebreak','email',
         'windowssharelink','filelink','notoc','multiplyentity',
-        'quotes',
+        'quotes','rss'
         
     );
     return $modes;
@@ -826,4 +835,4 @@ function Doku_Parser_Disabled() {
 }
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=4 enc=utf-8 :

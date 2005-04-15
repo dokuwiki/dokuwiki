@@ -219,27 +219,6 @@ function script($script='doku.php'){
 }
 
 /**
- * Return namespacepart of a wiki ID
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function getNS($id){
- if(strpos($id,':')!==false){
-   return substr($id,0,strrpos($id,':'));
- }
- return false;
-}
-
-/**
- * Returns the ID without the namespace
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function noNS($id){
-  return preg_replace('/.*:/','',$id);
-}
-
-/**
  * Spamcheck against wordlist
  *
  * Checks the wikitext against a list of blocked expressions
@@ -353,97 +332,6 @@ function unlock($id){
     }
   }
   return false;
-}
-
-/**
- * Remove unwanted chars from ID
- *
- * Cleans a given ID to only use allowed characters. Accented characters are
- * converted to unaccented ones
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function cleanID($id){
-  global $conf;
-  global $lang;
-  $id = trim($id);
-  $id = utf8_strtolower($id);
-
-  //alternative namespace seperator
-  $id = strtr($id,';',':');
-  if($conf['useslash']){
-    $id = strtr($id,'/',':');
-  }else{
-    $id = strtr($id,'/','_');
-  }
-
-  if($conf['deaccent']) $id = utf8_deaccent($id,-1);
-
-  //remove specials
-  $id = utf8_stripspecials($id,'_','_:.-');
-
-  //clean up
-  $id = preg_replace('#__#','_',$id);
-  $id = preg_replace('#:+#',':',$id);
-  $id = trim($id,':._-');
-  $id = preg_replace('#:[:\._\-]+#',':',$id);
-
-  return($id);
-}
-
-/**
- * returns the full path to the datafile specified by ID and
- * optional revision
- *
- * The filename is URL encoded to protect Unicode chars
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function wikiFN($id,$rev=''){
-  global $conf;
-  $id = cleanID($id);
-  $id = str_replace(':','/',$id);
-  if(empty($rev)){
-    $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
-  }else{
-    $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
-    if($conf['usegzip'] && !@file_exists($fn)){
-      //return gzip if enabled and plaintext doesn't exist
-      $fn .= '.gz';
-    }
-  }
-  return $fn;
-}
-
-/**
- * returns the full path to the mediafile specified by ID
- *
- * The filename is URL encoded to protect Unicode chars
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function mediaFN($id){
-  global $conf;
-  $id = cleanID($id);
-  $id = str_replace(':','/',$id);
-    $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
-  return $fn;
-}
-
-/**
- * Returns the full filepath to a localized textfile if local
- * version isn't found the english one is returned
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function localeFN($id){
-  global $conf;
-  $file = './lang/'.$conf['lang'].'/'.$id.'.txt';
-  if(!@file_exists($file)){
-    //fall back to english
-    $file = './lang/en/'.$id.'.txt';
-  }
-  return cleanText($file);
 }
 
 /**
@@ -823,27 +711,6 @@ function getRevisions($id){
   rsort($revs);
   return $revs;
 }
-
-/**
- * downloads a file from the net and saves it to the given location
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function download($url,$file){
-  $fp = @fopen($url,"rb");
-  if(!$fp) return false;
-
-  while(!feof($fp)){
-    $cont.= fread($fp,1024);
-  }
-  fclose($fp);
-
-  $fp2 = @fopen($file,"w");
-  if(!$fp2) return false;
-  fwrite($fp2,$cont);
-  fclose($fp2);
-  return true;
-} 
 
 /**
  * extracts the query from a google referer

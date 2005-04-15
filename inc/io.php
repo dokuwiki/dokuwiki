@@ -201,6 +201,28 @@ function io_mkdir_ftp($dir){
 }
 
 /**
+ * downloads a file from the net and saves it to the given location
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @todo   Add size limit
+ */
+function io_download($url,$file){
+  $fp = @fopen($url,"rb");
+  if(!$fp) return false;
+
+  while(!feof($fp)){
+    $cont.= fread($fp,1024);
+  }
+  fclose($fp);
+
+  $fp2 = @fopen($file,"w");
+  if(!$fp2) return false;
+  fwrite($fp2,$cont);
+  fclose($fp2);
+  return true;
+} 
+
+/**
  * Runs an external command and returns it's output as string
  *
  * @author Harry Brueckner <harry_b@eml.cc>

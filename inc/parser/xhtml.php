@@ -1,4 +1,11 @@
 <?php
+/**
+ * Renderer for XHTML output
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 
 if ( !defined('DOKU_LF') ) {
@@ -14,8 +21,8 @@ if ( !defined('DOKU_TAB') ) {
 require_once DOKU_INC . 'inc/parser/renderer.php';
 
 /**
-* @TODO Probably useful for have constant for linefeed formatting
-*/
+ * The Renderer 
+ */
 class Doku_Renderer_XHTML extends Doku_Renderer {
 
     var $doc = '';
@@ -381,10 +388,6 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
       $this->internallink($link,$link); 
     }
     
-    /**
-    * @TODO Support media
-    * @TODO correct attributes
-    */
     function internallink($id, $name = NULL) {
         global $conf;
 
@@ -416,37 +419,38 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         echo $this->__formatLink($link);
     }
     
-    
-    /**
-    * @TODO Should list assume blacklist check already made?
-    * @TODO External link icon
-    * @TODO correct attributes
-    */
-    function externallink($link, $title = NULL) {
-        
-        echo '<a';
-        
-        $title = $this->__getLinkTitle($title, $link, $isImage);
+    function externallink($url, $name = NULL) {
+        global $conf;
+
+        $name = $this->__getLinkTitle($name, $url, $isImage);
         
         if ( !$isImage ) {
-            echo ' class="urlextern"';
+            $class='urlextern';
         } else {
-            echo ' class="media"';
+            $class='media';
         }
         
-        echo ' target="_blank" href="'.$this->__xmlEntities($link).'"';
-        
-        echo ' onclick="return svchk()" onkeypress="return svchk()">';
-        
-        echo $title;
-        
-        echo '</a>';
+        //prepare for formating
+        $link['target'] = $conf['target']['extern'];
+        $link['style']  = '';
+        $link['pre']    = '';
+        $link['suf']    = '';
+        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['class']  = $class;
+        $link['url']    = $url;
+        $link['name']   = $name;
+        $link['title']  = $this->__xmlEntities($url);
+        if($conf['relnofollow']) $link['more'] .= ' rel="nofollow"';
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
     
     /**
     * @TODO Remove hard coded link to splitbrain.org on style
     */
     function interwikilink($link, $title = NULL, $wikiName, $wikiUri) {
+        global $conf;
         
         // RESOLVE THE URL
         if ( isset($this->interwiki[$wikiName]) ) {
@@ -615,10 +619,44 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
 
     /**
+     * Renders an RSS feed using magpie
+     * 
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function rss ($url){
+        global $lang;
+        define('MAGPIE_CACHE_ON', false); //we do our own caching
+        define('MAGPIE_DIR', DOKU_INC.'inc/magpie/');
+        define('MAGPIE_OUTPUT_ENCODING','UTF-8'); //return all feeds as UTF-8
+        require_once(MAGPIE_DIR.'/rss_fetch.inc');
+
+        //disable warning while fetching
+        $elvl = error_reporting(E_ERROR);
+        $rss  = fetch_rss($url);
+        error_reporting($elvl);
+
+        print '<ul class="rss">';
+        if($rss){
+            foreach ($rss->items as $item ) {
+                print '<li>';
+                $this->externallink($item['link'],$item['title']);
+                print '</li>';
+            }
+        }else{
+            print '<li>';
+            print '<em>'.$lang['rssfailed'].'</em>';
+            $this->externallink($url);
+            print '</li>';
+        }
+        print '</ul>';
+    }
+
+    /**
      * Renders internal and external media
      * 
      * @author Andreas Gohr <andi@splitbrain.org>
      * @todo   handle center align
+     * @todo   move to bottom
      */
     function __media ($src, $title=NULL, $align=NULL, $width=NULL,
                       $height=NULL, $cache=NULL) {
@@ -629,9 +667,8 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         if(substr($mime,0,5) == 'image'){
             //add image tag
             $ret .= '<img class="media" src="'.
-                    DOKU_BASE.'fetch.php?media='.urlencode($src).
-                    '&amp;w='.$width.'&amp;h='.$height.
-                    '&amp;cache='.$cache.'"';
+                    DOKU_BASE.'fetch.php?w='.$width.'&amp;h='.$height.
+                    '&amp;cache='.$cache.'&amp;media='.urlencode($src).'"';
         
             if (!is_null($title))
                 $ret .= ' title="'.$this->__xmlEntities($title).'"';
