@@ -89,9 +89,9 @@ Notes:
 
 You can also use an image to link to another internal or external page by combining the syntax for links and images (see below) like this:
 
-  [[http://www.php.net|{{wiki:php-powered.png}}]]
+  [[http://www.php.net|{{wiki:dokuwiki-128.png}}]]
 
-[[http://www.php.net|{{wiki:php-powered.png}}]]
+[[http://www.php.net|{{wiki:dokuwiki-128.png}}]]
 
 Please note: The image formatting is the only formatting syntax accepted in link names.
 
@@ -121,36 +121,37 @@ By using four or more dashes, you can make a horizontal line:
 
 You can include external and internal [[doku>images]] with curly brackets. Optionally you can specify the size of them.
 
-Real size:                        {{wiki:php-powered.png}}
+Real size:                        {{wiki:dokuwiki-128.png}}
 
-Resize to given width:            {{wiki:php-powered.png?100}}
+Resize to given width:            {{wiki:dokuwiki-128.png?100}}
 
-Resize to given width and height: {{wiki:php-powered.png?100x100}}
+Resize to given width and height: {{wiki:dokuwiki-128.png?100x200}}
 
 Resized external image:           {{http://de3.php.net/images/php.gif?100x100}}
 
-  Real size:                        {{wiki:php-powered.png}}
-  Resize to given width:            {{wiki:php-powered.png?100}}
-  Resize to given width and height: {{wiki:php-powered.png?100x100}}
+  Real size:                        {{wiki:dokuwiki-128.png}}
+  Resize to given width:            {{wiki:dokuwiki-128.png?100}}
+  Resize to given width and height: {{wiki:dokuwiki-128.png?100x200}}
   Resized external image:           {{http://de3.php.net/images/php.gif?100x100}}
+
 
 By using left or right whitespaces you can choose the alignment
 
-{{ wiki:php-powered.png}}
+{{ wiki:dokuwiki-128.png}}
 
-{{wiki:php-powered.png }}
+{{wiki:dokuwiki-128.png }}
 
-{{ wiki:php-powered.png }}
+{{ wiki:dokuwiki-128.png }}
 
-  {{ wiki:php-powered.png}}
-  {{wiki:php-powered.png }}
-  {{ wiki:php-powered.png }}
+  {{ wiki:dokuwiki-128.png}}
+  {{wiki:dokuwiki-128.png }}
+  {{ wiki:dokuwiki-128.png }}
 
 Of course, you can add a title (displayed as a tooltip by most browsers), too.
 
-{{ wiki:php-powered.png |This is the caption}}
+{{ wiki:dokuwiki-128.png |This is the caption}}
 
-  {{ wiki:php-powered.png |This is the caption}}
+  {{ wiki:dokuwiki-128.png |This is the caption}}
 
 If you specify a filename (external or internal) that is not an image (''gif,jpeg,png''), then it will be displayed as a link instead.
 

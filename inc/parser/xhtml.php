@@ -39,7 +39,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     function document_end() {
-				// add button for last section if any
+        // add button for last section if any
         if($this->lastsec) $this->__secedit($this->lastsec,'');
         
         if ( count ($this->footnotes) > 0 ) {
@@ -93,13 +93,13 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     
     function header($text, $level, $pos) {
         global $conf;
-				//handle section editing 
+        //handle section editing 
         if($level <= $conf['maxseclevel']){
             // add button for last section if any
             if($this->lastsec) $this->__secedit($this->lastsec,$pos-1);
-						// remember current position
-	          $this->lastsec = $pos;
-				}
+            // remember current position
+            $this->lastsec = $pos;
+        }
 
         echo DOKU_LF.'<a name="'.$this->__headerToLink($text).'"></a><h'.$level.'>';
         echo $this->__xmlEntities($text);
@@ -247,23 +247,23 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     /**
     */
     function php($text) {
-				global $conf;
-				if($conf['phpok']){
-						eval($text);
+        global $conf;
+        if($conf['phpok']){
+            eval($text);
         }else{
-					  $this->file($text);
-				}
+            $this->file($text);
+        }
     }
     
     /**
     */
     function html($text) {
-				global $conf;
+        global $conf;
         if($conf['htmlok']){
-					echo $text;
-				}else{
-	        $this->file($text);
-				}
+          echo $text;
+        }else{
+          $this->file($text);
+        }
     }
     
     function preformatted($text) {
@@ -291,7 +291,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     /**
     */
     function code($text, $language = NULL) {
-				global $conf;
+        global $conf;
     
         if ( is_null($language) ) {
             $this->preformatted($text);
@@ -302,7 +302,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
             $geshi->enable_classes();
             $geshi->set_header_type(GESHI_HEADER_PRE);
             $geshi->set_overall_class('code');
-						$geshi->set_link_target($conf['target']['extern']);
+            $geshi->set_link_target($conf['target']['extern']);
             
             $text = $geshi->parse_code();
             echo $text;
@@ -378,7 +378,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     /**
     */
     function camelcaselink($link) {
-    	$this->internallink($link,$link); 
+      $this->internallink($link,$link); 
     }
     
     /**
@@ -386,7 +386,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     * @TODO correct attributes
     */
     function internallink($id, $name = NULL) {
-				global $conf;
+        global $conf;
 
         $name = $this->__getLinkTitle($name, $this->__simpleTitle($id), $isImage);
         resolve_pageid($id,$exists);
@@ -401,7 +401,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
             $class='media';
         }
         
-				//prepare for formating
+        //prepare for formating
         $link['target'] = $conf['target']['wiki'];
         $link['style']  = '';
         $link['pre']    = '';
@@ -579,67 +579,103 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO Resolve namespaces
-    * @TODO Add image caching
-    * @TODO Remove hard coded link to splitbrain.org
-    */
-    function internalmedia (
-        $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
-        ) {
+     * @todo don't add link for flash
+     */
+    function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
+                            $height=NULL, $cache=NULL) {
         
-        // Sort out the namespace here...
-        if ( strpos($src,':') ) {
-            $src = explode(':',$src);
-            $src = $src[1];
-        }
-        echo '<img class="media" src="http://wiki.splitbrain.org/media/wiki/'.$this->__xmlEntities($src).'"';
-        
-        if ( !is_null($title) ) {
-            echo ' title="'.$this->__xmlEntities($title).'"';
-        }
-        
-        if ( !is_null($align) ) {
-            echo ' align="'.$align.'"';
-        }
-        
-        if ( !is_null($width) ) {
-            echo ' width="'.$this->__xmlEntities($width).'"';
-        }
-        
-        if ( !is_null($height) ) {
-            echo ' height="'.$this->__xmlEntities($height).'"';
-        }
-        
-        echo '/>'; 
-        
+        resolve_mediaid($src, $exists);
+
+        $this->internallink($src, $title =
+                                    array( 'type'   => 'internalmedia',
+                                           'src'    => $src,
+                                           'title'  => $title,
+                                           'align'  => $align,
+                                           'width'  => $width,
+                                           'height' => $height,
+                                           'cache'  => $cache,
+                                           'link'   => $link ));
     }
     
     /**
-    * @TODO Add image caching
-    */
-    function externalmedia (
-        $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
-        ) {
+     * @todo don't add link for flash
+     */
+    function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
+                            $height=NULL, $cache=NULL) {
+
+        $this->externallink($src, $title =
+                                    array( 'type'   => 'externalmedia',
+                                           'src'    => $src,
+                                           'title'  => $title,
+                                           'align'  => $align,
+                                           'width'  => $width,
+                                           'height' => $height,
+                                           'cache'  => $cache,
+                                           'link'   => $link ));
+    }
+
+    /**
+     * Renders internal and external media
+     * 
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @todo   handle center align
+     */
+    function __media ($src, $title=NULL, $align=NULL, $width=NULL,
+                      $height=NULL, $cache=NULL) {
+
+        $ret = '';
+
+        list($ext,$mime) = mimetype($src);
+        if(substr($mime,0,5) == 'image'){
+            //add image tag
+            $ret .= '<img class="media" src="'.
+                    DOKU_BASE.'fetch.php?media='.urlencode($src).
+                    '&amp;w='.$width.'&amp;h='.$height.
+                    '&amp;cache='.$cache.'"';
         
-        echo '<img class="media" src="'.$this->__xmlEntities($src).'"';
+            if (!is_null($title))
+                $ret .= ' title="'.$this->__xmlEntities($title).'"';
+            
         
-        if ( !is_null($title) ) {
-            echo ' title="'.$this->__xmlEntities($title).'"';
+            if (!is_null($align))
+                $ret .= ' align="'.$align.'"'; #FIXME use class!
+          
+            if ( !is_null($width) )
+                $ret .= ' width="'.$this->__xmlEntities($width).'"';
+        
+            if ( !is_null($height) )
+                $ret .= ' height="'.$this->__xmlEntities($height).'"';
+
+            $ret .= ' />'; 
+
+        }elseif($mime == 'application/x-shockwave-flash'){
+            //FIXME default to a higher flash version?
+
+            $ret .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'.
+                    ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0"';
+            if ( !is_null($width) ) $ret .= ' width="'.$this->__xmlEntities($width).'"';
+            if ( !is_null($height) ) $ret .= ' height="'.$this->__xmlEntities($height).'"';
+            $ret .= '>'.DOKU_LF;
+            $ret .= '<param name="movie" value="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'" />'.DOKU_LF;
+            $ret .= '<param name="quality" value="high" />'.DOKU_LF;
+            $ret .= '<embed src="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'"'.
+                    ' quality="high" bgcolor="#000000"';
+            if ( !is_null($width) ) $ret .= ' width="'.$this->__xmlEntities($width).'"';
+            if ( !is_null($height) ) $ret .= ' height="'.$this->__xmlEntities($height).'"';
+            $ret .= ' type="application/x-shockwave-flash"'.
+                    ' pluginspage="http://www.macromedia.com/shockwave/download/index.cgi'.
+                    '?P1_Prod_Version=ShockwaveFlash"></embed>'.DOKU_LF;
+            $ret .= '</object>'.DOKU_LF;
+
+        }elseif(!is_null($title)){
+            // well at least we have a title to display
+            $ret .= $this->__xmlEntities($title);
+        }else{
+            // just show the source
+            $ret .= $this->__xmlEntities($src);
         }
-        
-        if ( !is_null($align) ) {
-            echo ' align="'.$align.'"';
-        }
-        
-        if ( !is_null($width) ) {
-            echo ' width="'.$this->__xmlEntities($width).'"';
-        }
-        
-        if ( !is_null($height) ) {
-            echo ' height="'.$this->__xmlEntities($height).'"';
-        }
-        
-        echo '/>'; 
+
+        return $ret;
     }
     
     // $numrows not yet implemented
@@ -699,27 +735,27 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function __formatLink($link){
-      //make sure the url is XHTML compliant (skip mailto)
-      if(substr($link['url'],0,7) != 'mailto:'){
-        $link['url'] = str_replace('&','&amp;',$link['url']);
-        $link['url'] = str_replace('&amp;amp;','&amp;',$link['url']);
-      }
-      //remove double encodings in titles
-      $link['title'] = str_replace('&amp;amp;','&amp;',$link['title']);
+        //make sure the url is XHTML compliant (skip mailto)
+        if(substr($link['url'],0,7) != 'mailto:'){
+            $link['url'] = str_replace('&','&amp;',$link['url']);
+            $link['url'] = str_replace('&amp;amp;','&amp;',$link['url']);
+        }
+        //remove double encodings in titles
+        $link['title'] = str_replace('&amp;amp;','&amp;',$link['title']);
 
-      $ret  = '';
-      $ret .= $link['pre'];
-      $ret .= '<a href="'.$link['url'].'"';
-      if($link['class'])  $ret .= ' class="'.$link['class'].'"';
-      if($link['target']) $ret .= ' target="'.$link['target'].'"';
-      if($link['title'])  $ret .= ' title="'.$link['title'].'"';
-      if($link['style'])  $ret .= ' style="'.$link['style'].'"';
-      if($link['more'])   $ret .= ' '.$link['more'];
-      $ret .= '>';
-      $ret .= $link['name'];
-      $ret .= '</a>';
-      $ret .= $link['suf'];
-      return $ret;
+        $ret  = '';
+        $ret .= $link['pre'];
+        $ret .= '<a href="'.$link['url'].'"';
+        if($link['class'])  $ret .= ' class="'.$link['class'].'"';
+        if($link['target']) $ret .= ' target="'.$link['target'].'"';
+        if($link['title'])  $ret .= ' title="'.$link['title'].'"';
+        if($link['style'])  $ret .= ' style="'.$link['style'].'"';
+        if($link['more'])   $ret .= ' '.$link['more'];
+        $ret .= '>';
+        $ret .= $link['name'];
+        $ret .= '</a>';
+        $ret .= $link['suf'];
+        return $ret;
     }
 
     /**
@@ -729,13 +765,13 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function __simpleTitle($name){
-			global $conf;
-      if($conf['useslash']){
-        $nssep = '[:;/]';
-      }else{
-        $nssep = '[:;]';
-      }
-      return preg_replace('!.*'.$nssep.'!','',$name);
+        global $conf;
+        if($conf['useslash']){
+            $nssep = '[:;/]';
+        }else{
+            $nssep = '[:;]';
+        }
+        return preg_replace('!.*'.$nssep.'!','',$name);
     }
 
     
@@ -758,9 +794,9 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     /**
      * Adds code for section editing button
      */
-		function __secedit($f, $t){
+    function __secedit($f, $t){
         print '<!-- SECTION ['.$f.'-'.$t.'] -->';
-		}
+    }
     
     function __getLinkTitle($title, $default, & $isImage) {
         $isImage = FALSE;
@@ -781,12 +817,20 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     }
     
     /**
-    * @TODO Resolve namespace on internal images
-    * @TODO Remove hard coded url to splitbrain.org
-    * @TODO Image caching
-    */
+     * @TODO Resolve namespace on internal images
+     */
     function __imageTitle($img) {
-        
+
+        //FIXME resolve internal links
+
+        return $this->__media($img['src'],
+                              $img['title'],
+                              $img['align'],
+                              $img['width'],
+                              $img['height'],
+                              $img['cache']);
+
+/*        
         if ( $img['type'] == 'internalmedia' ) {
             
             // Resolve here...
@@ -826,6 +870,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         $imgStr .= '/>';
         
         return $imgStr;
+*/
     }
 }
 
@@ -876,4 +921,4 @@ msg("deprecated wikiPageExists called",-1);
 }
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=4 enc=utf-8 :

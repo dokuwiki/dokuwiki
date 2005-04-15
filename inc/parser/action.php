@@ -96,9 +96,34 @@ function render_as_xhtml($instructions){
 }
 
 /**
+ * Returns a full media id
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @todo move to utils? 
+ */
+function resolve_mediaid(&$page,&$exists){
+  global $ID;
+  global $conf;
+  $ns = getNS($ID);
+  //if links starts with . add current namespace
+  if($page{0} == '.'){
+    $page = $ns.':'.substr($page,1);
+  }
+
+  //if link contains no namespace. add current namespace (if any)
+  if($ns !== false && strpos($page,':') === false){
+    $page = $ns.':'.$page;
+  }
+
+  $page   = cleanID($page);
+  $file   = mediaFN($page);
+  $exists = @file_exists($file);
+}
+
+/**
  * Returns a full page id
  *
- * @todo move to renderer? 
+ * @todo move to utils? 
  */
 function resolve_pageid(&$page,&$exists){
   global $ID;

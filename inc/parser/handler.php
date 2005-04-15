@@ -532,62 +532,47 @@ function Doku_Handler_Parse_Media($match) {
     if ( !isset($link[1]) ) {
         $link[1] = NULL;
     }
-    
-    // img src url from params
-    // What if it's an external image where URL contains '?' char?
-    $src = preg_split('/\?/u',$link[0],2);
-    
-    // Strip any alignment whitespace
-    $src[0] = trim($src[0]);
-    
-    // Check for width, height and caching params
-    if ( isset($src[1]) ) {
-        
-        if(preg_match('#(\d*)(x(\d*))?#i',$src[1],$matches)){
-            
-            if(isset($matches[1])) {
-                $width = $matches[1];
-            } else {
-                $width = NULL;
-            }
-            
-            if(isset($matches[3])) {
-                $height = $matches[3];
-            } else {
-                $height = NULL;
-            }
-            
-            $cache = !(bool)preg_match('/nocache/i',$src[1]);
-        }
-        
-    } else {
-        $width = NULL;
-        $height = NULL;
-        $cache = TRUE;
+   
+    //remove aligning spaces
+    $link[0] = trim($link[0]);
+ 
+    //split into src and parameters (using the very last questionmark)
+    $pos = strrpos($link[0], '?');
+    if($pos !== false){
+        $src   = substr($link[0],0,$pos);
+        $param = substr($link[0],$pos+1);
+    }else{
+        $src   = $link[0];
+        $param = '';
     }
-    
+
+    //parse width and height
+    if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
+        ($size[1]) ? $w = $size[1] : $w = NULL;
+        ($size[3]) ? $h = $size[3] : $h = NULL;
+    }
+
+    //get caching command
+    if (preg_match('/(nocache|recache)/i',$param,$cachemode)){
+        $cache = $cachemode[1];
+    }else{
+        $cache = 'cache';
+    }
+   
     // Check whether this is a local or remote image
-    if ( substr($src[0],0,4) == 'http' ) {
-        $call = 'external';
+    if ( preg_match('#^(https?|ftp)#i',$src) ) {
+        $call = 'externalmedia';
     } else {
-        $call = 'internal';
+        $call = 'internalmedia';
     }
-    
-    // Check this is actually an image...
-    if ( !preg_match('/\.(gif|png|jpe?g)$/',$src[0] ) ) {
-        // Security implications?...
-        $call .= 'link';
-    } else {
-        $call .= 'media';
-    }
-    
+
     $params = array(
         'type'=>$call,
-        'src'=>$src[0],
+        'src'=>$src,
         'title'=>$link[1],
         'align'=>$align,
-        'width'=>$width,
-        'height'=>$height,
+        'width'=>$w,
+        'height'=>$h,
         'cache'=>$cache,
     );
     
@@ -1497,4 +1482,4 @@ class Doku_Handler_Toc {
 }
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=4 enc=utf-8 :

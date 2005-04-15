@@ -9,21 +9,24 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 
 /**
- * Returns the (known) extension of a given filename
- *
- * returns false if not a known extension
+ * Returns the (known) extension and mimetype of a given filename
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function media_extension($file){
-  $exts = join('|',array_keys(getMimeTypes()));
+function mimetype($file){
+  $ret    = array(false,false); // return array
+  $mtypes = getMimeTypes();     // known mimetypes
+  $exts   = join('|',array_keys($mtypes));  // known extensions (regexp)
   if(preg_match('#\.('.$exts.')$#i',$file,$matches)){
-    return strtolower($matches[1]);
+    $ext = strtolower($matches[1]);
   }
-  
-  return false;
-}
 
+  if($ext && $mtypes[$ext]){
+    $ret = array($ext, $mtypes[$ext]);
+  }
+
+  return $ret;
+}
 
 /**
  * returns a hash of mimetypes

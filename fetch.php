@@ -18,10 +18,8 @@
 	$CACHE  = calc_cache($_REQUEST['cache']);
 	$WIDTH  = $_REQUEST['w'];
 	$HEIGHT = $_REQUEST['h'];
-  $EXT    = media_extension($MEDIA);
-  if($EXT !== false){
-    $MIME = $mimetypes[$EXT];
-  }else{
+  list($EXT,$MIME) = mimetype($MEDIA);
+  if($EXT === false){
     $EXT  = 'unknown';
     $MIME = 'application/octet-stream';
   }
