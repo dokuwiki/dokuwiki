@@ -131,7 +131,7 @@ function breadcrumbs(){
   $name = noNS($ID);
   if ($conf['useheading']) {
     // get page title
-    $title = getFirstHeading(io_readFile($file));
+    $title = p_get_first_heading($ID);
     if ($title) {
       $name = $title;
     }

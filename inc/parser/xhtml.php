@@ -391,7 +391,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     function internallink($id, $name = NULL) {
         global $conf;
 
-        $name = $this->__getLinkTitle($name, $this->__simpleTitle($id), $isImage);
+        $name = $this->__getLinkTitle($name, $this->__simpleTitle($id), $isImage, $id);
         resolve_pageid($id,$exists);
 
         if ( !$isImage ) {
@@ -857,11 +857,19 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         print '<!-- SECTION ['.$f.'-'.$t.'] -->';
     }
     
-    function __getLinkTitle($title, $default, & $isImage) {
+    function __getLinkTitle($title, $default, & $isImage, $id=NULL) {
+        global $conf;
+
         $isImage = FALSE;
         
         if ( is_null($title) ) {
-            return $this->__xmlEntities($default);
+	  if ($conf['useheading'] && $id) {
+	    $heading = p_get_first_heading($id);
+	    if ($heading) {
+	      return $this->__xmlEntities($heading);
+	    }
+	  }
+	  return $this->__xmlEntities($default);
             
         } else if ( is_string($title) ) {
             

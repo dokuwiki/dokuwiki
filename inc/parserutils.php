@@ -235,4 +235,23 @@ function p_render_xhtml($instructions){
   return $Renderer->doc;
 }
 
+/**
+ * Gets the first heading from a file
+ *
+ * @author Jan Decaluwe <jan@jandecaluwe.com>
+ */
+
+function p_get_first_heading($id){
+  $file = wikiFN($id);
+  if (@file_exists($file)) {
+    $instructions = p_cached_instructions($file);
+    foreach ( $instructions as $instruction ) {
+      if ($instruction[0] == 'header') {
+	return $instruction[1][0];
+      }
+    }
+  }
+  return NULL;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
