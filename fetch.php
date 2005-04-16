@@ -172,6 +172,7 @@ function resize_image($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   }elseif($ext == 'png') {
     if(!function_exists("imagecreatefrompng")) return false;
     $image = @imagecreatefrompng($from);
+
   }elseif($ext == 'gif') {
     if(!function_exists("imagecreatefromgif")) return false;
     $image = @imagecreatefromgif($from);
@@ -183,6 +184,12 @@ function resize_image($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   }
   if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
   if(!$newimg) return false;
+
+  //keep png alpha channel if possible
+  if($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')){
+    imagealphablending($newimg, false);
+    imagesavealpha($newimg,true);
+  }
 
   // create cachedir
   io_makeFileDir($to);
