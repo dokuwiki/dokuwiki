@@ -90,6 +90,8 @@ function getInterwiki() {
   if ( !$wikis ) {
     $wikis = confToHash(DOKU_INC . 'conf/interwiki.conf');
   }
+  //add sepecial case 'this'
+  $wikis[] = 'this '.DOKU_URL.'{NAME}';
   return $wikis;
 }
 

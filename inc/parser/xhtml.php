@@ -449,62 +449,74 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
     /**
     * @TODO Remove hard coded link to splitbrain.org on style
     */
-    function interwikilink($link, $title = NULL, $wikiName, $wikiUri) {
+    function interwikilink($match, $name = NULL, $wikiName, $wikiUri) {
         global $conf;
         
-        // RESOLVE THE URL
+        $link = array();
+        $link['target'] = $conf['target']['interwiki'];
+        $link['pre']    = '';
+        $link['suf']    = '';
+        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['name']   = $this->__getLinkTitle($name, $wikiUri, $isImage);
+
+        if ( !$isImage ) {
+            $link['class'] = 'interwiki';
+        } else {
+            $link['class'] = 'media';
+        }
+
+        //get interwiki URL
         if ( isset($this->interwiki[$wikiName]) ) {
-            
-            $wikiUriEnc = urlencode($wikiUri);
-            
-            if ( strstr($this->interwiki[$wikiName],'{URL}' ) !== FALSE ) {
-                
-                $url = str_replace('{URL}', $wikiUriEnc, $this->interwiki[$wikiName] );
-                
-            } else if ( strstr($this->interwiki[$wikiName],'{NAME}' ) !== FALSE ) {
-                
-                $url = str_replace('{NAME}', $wikiUriEnc, $this->interwiki[$wikiName] );
-                
-            } else {
-                
-                $url = $this->interwiki[$wikiName] . urlencode($wikiUri);
-                
-            }
-        
+            $url = $this->interwiki[$wikiName];
         } else {
             // Default to Google I'm feeling lucky
-            $url = 'http://www.google.com/search?q='.urlencode($wikiUri).'&amp;btnI=lucky';
+            $url = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
+            $wikiName = 'go';
         }
-        
-        // BUILD THE LINK
-        echo '<a';
-        
-        $title = $this->__getLinkTitle($title, $wikiUri, $isImage);
-        
-        if ( !$isImage ) {
-            echo ' class="interwiki"';
-        } else {
-            echo ' class="media"';
+       
+        if(!$isImage){
+            //if ico exists set additional style
+            if(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.png')){
+                $link['style']='background: transparent url('.DOKU_BASE.'interwiki/'.$wikiName.'.png) 0px 1px no-repeat;';
+            }elseif(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.gif')){
+                $link['style']='background: transparent url('.DOKU_BASE.'interwiki/'.$wikiName.'.gif) 0px 1px no-repeat;';
+            }
         }
-        
-        echo ' href="'.$this->__xmlEntities($url).'"';
-        
-        if ( FALSE !== ( $type = interwikiImgExists($wikiName) ) ) {
-            echo ' style="background: transparent url(http://wiki.splitbrain.org/interwiki/'.
-                $wikiName.'.'.$type.') 0px 1px no-repeat;"';
+
+        //do we stay at the same server? Use local target
+        if( strpos($url,DOKU_URL) === 0 ){
+            $link['target'] = $conf['target']['wiki'];
         }
-        
-        echo ' onclick="return svchk()" onkeypress="return svchk()">';
-        
-        echo $title;
-        
-        echo '</a>';
+
+        //replace placeholder
+        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
+            //use placeholders
+            $url = str_replace('{URL}',urlencode($wikiUri),$url);
+            $url = str_replace('{NAME}',$wikiUri,$url);
+            $parsed = parse_url($wikiUri);
+            if(!$parsed['port']) $parsed['port'] = 80;
+            $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
+            $url = str_replace('{HOST}',$parsed['host'],$url);
+            $url = str_replace('{PORT}',$parsed['port'],$url);
+            $url = str_replace('{PATH}',$parsed['path'],$url);
+            $url = str_replace('{QUERY}',$parsed['query'],$url);
+            $link['url'] = $url;
+        }else{
+            //default
+            $link['url'] = $url.urlencode($wikiUri);
+        }
+
+        $link['title'] = htmlspecialchars($link['url']);
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
     
     /**
-    * @TODO Correct the CSS class for files? (not windows)
-    * @TODO Remove hard coded URL to splitbrain.org
-    */
+     * @deprecated not used!!!
+     * @TODO Correct the CSS class for files? (not windows)
+     * @TODO Remove hard coded URL to splitbrain.org
+     */
     function filelink($link, $title = NULL) {
         echo '<a';
         
