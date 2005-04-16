@@ -7,7 +7,6 @@
  */
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_INC.'inc/format.php');
 
 /**
  * Convenience function to quickly build a wikilink
@@ -52,7 +51,7 @@ function html_login(){
   global $conf;
   global $ID;
 
-  print parsedLocale('login');
+  print p_locale_xhtml('login');
   ?>
     <div align="center">
     <form action="<?=script()?>" accept-charset="<?=$lang['encoding']?>" method="post">
@@ -144,7 +143,7 @@ function html_secedit_button($section,$p){
  */
 function html_secedit($text,$show=true){
   global $INFO;
-  if($INFO['writable'] && $show){
+  if($INFO['writable'] && $show && !$INFO['rev']){
     $text = preg_replace('#<!-- SECTION \[(\d+-\d+)\] -->#e',
                          "html_secedit_button('\\1',true)",
                          $text);
@@ -270,13 +269,13 @@ function html_show($text=''){
 
   if ($text){
     //PreviewHeader
-    print parsedLocale('preview');
+    print p_locale_xhtml('preview');
     print '<div class="preview">';
     print html_secedit(parse($text),false);
     print '</div>';
   }else{
-    if ($REV) print parsedLocale('showrev');
-    $html = parsedWiki($ID,$REV,true);
+    if ($REV) print p_locale_xhtml('showrev');
+    $html = p_wiki_xhtml($ID,$REV,true);
     $html = html_secedit($html);
     print html_hilight($html,$HIGH);
   }
@@ -308,7 +307,7 @@ function html_search(){
   global $ID;
   global $lang;
 
-  print parsedLocale('searchpage');
+  print p_locale_xhtml('searchpage');
   flush();
 
   //show progressbar
@@ -372,7 +371,7 @@ function html_locked($ip){
   $expire = @date($conf['dformat'], $locktime + $conf['locktime'] );
   $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
 
-  print parsedLocale('locked');
+  print p_locale_xhtml('locked');
   print '<ul>';
   print '<li><b>'.$lang['lockedby'].':</b> '.$ip.'</li>';
   print '<li><b>'.$lang['lockexpire'].':</b> '.$expire.' ('.$min.' min)</li>';
@@ -392,7 +391,7 @@ function html_revisions(){
   $revisions = getRevisions($ID); 
   $date = @date($conf['dformat'],$INFO['lastmod']);
   
-  print parsedLocale('revisions');
+  print p_locale_xhtml('revisions');
   print '<ul>';
   if($INFO['exists']){
     print '<li>';
@@ -437,7 +436,7 @@ function html_recent(){
   global $conf;
   $recents = getRecents(0,true);
 
-  print parsedLocale('recent');
+  print p_locale_xhtml('recent');
   print '<ul>';
   foreach(array_keys($recents) as $id){
     $date = date($conf['dformat'],$recents[$id]['date']);
@@ -470,7 +469,7 @@ function html_index($ns){
   }
   $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
-  print parsedLocale('index');
+  print p_locale_xhtml('index');
 
   $data = array();
   search($data,$conf['datadir'],'search_index',array('ns' => $ns));
@@ -599,7 +598,7 @@ function html_backlinks(){
     $opts['name'] = $ID;
   }
 
-  print parsedLocale('backlinks');
+  print p_locale_xhtml('backlinks');
 
   $data = array();
   search($data,$conf['datadir'],'search_backlinks',$opts);
@@ -642,7 +641,7 @@ function html_diff($text='',$intro=true){
               $lang['current'];
   }
   $tdf = new TableDiffFormatter();
-  if($intro) print parsedLocale('diff');
+  if($intro) print p_locale_xhtml('diff');
   ?>
     <table class="diff" width="100%">
       <tr>
@@ -667,7 +666,7 @@ function html_conflict($text,$summary){
   global $ID;
   global $lang;
 
-  print parsedLocale('conflict');
+  print p_locale_xhtml('conflict');
   ?>
   <form name="editform" method="post" action="<?=script()?>" accept-charset="<?=$lang['encoding']?>">
   <input type="hidden" name="id" value="<?=$ID?>" />
@@ -709,7 +708,7 @@ function html_register(){
   global $lang;
   global $ID;
 
-  print parsedLocale('register');
+  print p_locale_xhtml('register');
 ?>
   <div align="center">
   <form name="register" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
@@ -776,10 +775,10 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
   $wr = $INFO['writable'];
   if($wr){
-    if ($REV) print parsedLocale('editrev');
-    print parsedLocale($include);
+    if ($REV) print p_locale_xhtml('editrev');
+    print p_locale_xhtml($include);
   }else{
-    print parsedLocale('read');
+    print p_locale_xhtml('read');
     $ro='readonly="readonly"';
   }
   if(!$DATE) $DATE = $INFO['lastmod'];
@@ -952,7 +951,7 @@ function html_admin(){
   global $ID;
   global $lang;
 
-  print parsedLocale('admin');
+  print p_locale_xhtml('admin');
 
   ptln('<ul class="admin">');
 

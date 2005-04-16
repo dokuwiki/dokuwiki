@@ -11,6 +11,7 @@
   require_once(DOKU_INC.'inc/io.php');
   require_once(DOKU_INC.'inc/utf8.php');
   require_once(DOKU_INC.'inc/mail.php');
+  require_once(DOKU_INC.'inc/parserutils.php');
 
 /**
  * Return info about the current document as associative
@@ -46,6 +47,7 @@ function pageinfo(){
       $REV = '';
     }
   }
+  $info['rev'] = $REV;
   if($info['exists']){
     $info['writable'] = (is_writable($info['filepath']) &&
                          ($info['perm'] >= AUTH_EDIT));
@@ -359,69 +361,12 @@ function formText($text){
 }
 
 /**
- * Returns the specified local text in parsed format
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function parsedLocale($id){
-  //disable section editing
-  global $parser;
-  $se = $parser['secedit'];
-  $parser['secedit'] = false;
-  //fetch parsed locale
-  $html = io_cacheParse(localeFN($id));
-  //reset section editing
-  $parser['secedit'] = $se;
-  return $html;
-}
-
-/**
  * Returns the specified local text in raw format
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawLocale($id){
   return io_readFile(localeFN($id));
-}
-
-
-/**
- * Returns the parsed Wikitext for the given id and revision.
- *
- * If $excuse is true an explanation is returned if the file
- * wasn't found
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function parsedWiki($id,$rev='',$excuse=true){
-  $file = wikiFN($id,$rev);
-  $ret  = '';
-  
-  //ensure $id is in global $ID (needed for parsing)
-  global $ID;
-  $ID = $id;
-
-  if($rev){
-    if(@file_exists($file)){
-      $ret = parse(io_readFile($file));
-    }elseif($excuse){
-      $ret = parsedLocale('norev');
-    }
-  }else{
-    if(@file_exists($file)){
-      if(!defined('DOKU_USENEWPARSER')){
-        $ret = io_cacheParse($file);
-      }else{
-        msg('using new parser');
-        require_once(DOKU_INC.'inc/parser/action.php');
-        $ret = render_as_xhtml(parse_to_instructions(io_readFile($file)));
-      }
-    }elseif($excuse){
-      $ret = parsedLocale('newpage');
-    }
-  }
-
-  return $ret;
 }
 
 /**

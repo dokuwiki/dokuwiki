@@ -7,6 +7,8 @@
  * @deprecated replaced by the new parser
  */
 
+trigger_error('deprecated parser.php included');
+
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   include_once(DOKU_INC.'inc/common.php');
   include_once(DOKU_INC.'inc/html.php');

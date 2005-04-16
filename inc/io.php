@@ -8,13 +8,13 @@
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/parser.php');
 
 /**
  * Returns the parsed text from the given sourcefile. Uses cache
  * if exists. Creates it if not.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @deprecated -> parserutils
  */
 function io_cacheParse($file){
   global $conf;
