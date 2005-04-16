@@ -4,10 +4,10 @@
  * ---------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie
- * Release Version: 1.0.4
- * CVS Revision Version: $Revision: 1.6 $
+ * Release Version: 1.0.6
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 2004/05/20
- * Last Modified: $Date: 2004/11/27 00:57:58 $
+ * Last Modified: $Date: 2005/01/29 10:36:06 $
  *
  * The GeSHi class for Generic Syntax Highlighting. Please refer to the documentation
  * at http://qbnz.com/highlighter/documentation.php for more information about how to
@@ -52,10 +52,12 @@ define('GESHI_COMMENTS', 0);
 // Error detection - use these to analyse faults
 define('GESHI_ERROR_NO_INPUT', 1);
 define('GESHI_ERROR_NO_SUCH_LANG', 2);
+define('GESHI_ERROR_FILE_NOT_READABLE', 3);
 // Human error messages - added in 1.0.2
 $_GESHI_ERRORS = array(
 	GESHI_ERROR_NO_INPUT => 'No source code inputted',
-	GESHI_ERROR_NO_SUCH_LANG => 'GeSHi could not find the language {LANGUAGE} (using path {PATH})'
+	GESHI_ERROR_NO_SUCH_LANG => 'GeSHi could not find the language {LANGUAGE} (using path {PATH})',
+	GESHI_ERROR_FILE_NOT_READABLE => 'The file specified for load_from_file was not readable'
 );
 
 // Line numbers - use with enable_line_numbers()
@@ -85,7 +87,7 @@ define('GESHI_VISITED', 3);
 
 // Important string starter/finisher - use these (added in 1.0.2).
 // Note that if you change these, they should be as-is: i.e., don't
-// write them as if they had been run through htmlentities()
+// write them as if they had been run through @htmlentities()
 define('GESHI_START_IMPORTANT', '<BEGIN GeSHi>');
 define('GESHI_END_IMPORTANT', '<END GeSHi>');
 
@@ -144,7 +146,7 @@ class GeSHi
 	var $max_tabs = 20;                   // Maximum number of spaces per tab
 	var $min_tabs = 0;                    // Minimum  "   "    "    "    "
 	var $link_target = '';                // default target for keyword links
-	var $encoding = '';                   // The encoding to use for htmlentities() calls
+	var $encoding = 'ISO-8859-1';         // The encoding to use for @htmlentities() calls
 
 	// Deprecated/unused
 	var $output_format = GESHI_OUTPUT_HTML;
@@ -838,6 +840,93 @@ class GeSHi
 
 
 	/**
+	 * method: get_language_name_from_extension
+	 * ----------------------------------------
+	 * Given a file extension, this method returns either a valid geshi language
+	 * name, or the empty string if it couldn't be found
+	 */
+	function get_language_name_from_extension ( $extension, $lookup = array() )
+	{
+		if ( !$lookup )
+		{
+			$lookup = array(
+				'actionscript' => array('as'),
+				'ada' => array('a', 'ada', 'adb', 'ads'),
+				'apache' => array('conf'),
+				'asm' => array('ash', 'asm'),
+				'asp' => array('asp'),
+				'bash' => array('sh'),
+				'c' => array('c'),
+				'c_mac' => array('c'),
+				'caddcl' => array(),
+				'cadlisp' => array(),
+				'cpp' => array('cpp'),
+				'csharp' => array(),
+				'css' => array('css'),
+				'delphi' => array('dpk'),
+				'html4strict' => array('html', 'htm'),
+				'java' => array('java'),
+				'javascript' => array('js'),
+				'lisp' => array('lisp'),
+				'lua' => array('lua'),
+				'mpasm' => array(),
+				'nsis' => array(),
+				'objc' => array(),
+				'oobas' => array(),
+				'oracle8' => array(),
+				'pascal' => array('pas'),
+				'perl' => array('pl', 'pm'),
+				'php' => array('php', 'php5', 'phtml', 'phps'),
+				'python' => array('py'),
+				'qbasic' => array('bi'),
+				'smarty' => array(),
+				'vb' => array('bas'),
+				'vbnet' => array(),
+				'visualfoxpro' => array(),
+				'xml' => array('xml')
+			);
+		}
+
+		foreach ( $lookup as $lang => $extensions )
+		{
+			foreach ( $extensions as $ext )
+			{
+				if ( $ext == $extension )
+				{
+					return $lang;
+				}
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Method: load_from_file
+	 * ----------------------
+	 * Given a file name, this method loads its contents in, and attempts
+	 * to set the language automatically. An optional lookup table can be
+	 * passed for looking up the language name.
+	 *
+	 * The language table is in the form
+	 * <pre>array(
+	 *   'lang_name' => array('extension', 'extension', ...),
+	 *   'lang_name' ...
+	 * );</pre>
+	 */
+	function load_from_file ( $file_name, $lookup = array() )
+	{
+		if ( is_readable($file_name) )
+		{
+			$this->set_source(implode('', file($file_name)));
+			$this->set_language($this->get_language_name_from_extension(substr(strrchr($file_name, '.'), 1), $lookup));
+		}
+		else
+		{
+			$this->error = GESHI_ERROR_FILE_NOT_READABLE;
+		}
+	}
+
+	/**
 	 * method: add_keyword
 	 * -------------------
 	 * Adds a keyword to a keyword group for highlighting
@@ -1055,7 +1144,7 @@ class GeSHi
 	/**
 	 * method: set_encoding
 	 * --------------------
-	 * Sets the encoding used for htmlentities(), for international
+	 * Sets the encoding used for @htmlentities(), for international
 	 * support.
 	 */
 	function set_encoding ( $encoding )
@@ -1070,7 +1159,7 @@ class GeSHi
 	 * Returns the code in $this->source, highlighted and surrounded by the
 	 * nessecary HTML. This should only be called ONCE, cos it's SLOW!
 	 * If you want to highlight the same source multiple times, you're better
-	 * off doing a whole lot of str_replaces to replace the <span>s
+	 * off doing a whole lot of str_replaces to replace the <<span>>s
 	 */
 	function parse_code()
 	{
@@ -1084,11 +1173,11 @@ class GeSHi
 			$result = $this->header();
 			if ( $this->header_type != GESHI_HEADER_PRE )
 			{
-				$result .= $this->indent(htmlentities($this->source, ENT_COMPAT, $this->encoding));
+				$result .= $this->indent(@htmlentities($this->source, ENT_COMPAT, $this->encoding));
 			}
 			else
 			{
-				$result .= htmlentities($this->source, ENT_COMPAT, $this->encoding);
+				$result .= @htmlentities($this->source, ENT_COMPAT, $this->encoding);
 			}
 			// Stop Timing
 			$this->set_time($start_time, microtime());
@@ -1358,7 +1447,7 @@ class GeSHi
 											{
 												$attributes = ' class="coMULTI"';
 											}
-											$test_str = "<span$attributes>" . htmlentities($test_str, ENT_COMPAT, $this->encoding);
+											$test_str = "<span$attributes>" . @htmlentities($test_str, ENT_COMPAT, $this->encoding);
 										}
 										else
 										{
@@ -1377,7 +1466,7 @@ class GeSHi
 									}
 									else
 									{
-										$test_str = htmlentities($test_str, ENT_COMPAT, $this->encoding);
+										$test_str = @htmlentities($test_str, ENT_COMPAT, $this->encoding);
 									}
 
 									$close_pos = strpos( $part, $close, $i + strlen($close) );
@@ -1388,7 +1477,7 @@ class GeSHi
 									}
 
 									// Short-cut through all the multiline code
-									$rest_of_comment = htmlentities(substr($part, $i + $com_len, $close_pos - $i), ENT_COMPAT, $this->encoding);
+									$rest_of_comment = @htmlentities(substr($part, $i + $com_len, $close_pos - $i), ENT_COMPAT, $this->encoding);
 									if ( ($this->lexic_permissions['COMMENTS']['MULTI'] || $test_str_match == GESHI_START_IMPORTANT) && ($this->line_numbers != GESHI_NO_LINE_NUMBERS || count($this->highlight_extra_lines) > 0) )
 									{
 										// strreplace to put close span and open span around multiline newlines
@@ -1438,18 +1527,18 @@ class GeSHi
 											{
 												$attributes = ' class="co' . $comment_key . '"';
 											}
-											$test_str = "<span$attributes>" . htmlentities($this->change_case($test_str), ENT_COMPAT, $this->encoding);
+											$test_str = "<span$attributes>" . @htmlentities($this->change_case($test_str), ENT_COMPAT, $this->encoding);
 										}
 										else
 										{
-											$test_str = htmlentities($test_str, ENT_COMPAT, $this->encoding);
+											$test_str = @htmlentities($test_str, ENT_COMPAT, $this->encoding);
 										}
 										$close_pos = strpos( $part, "\n", $i );
 										if ( $close_pos === false )
 										{
 											$close_pos = strlen($part);
 										}
-										$test_str .= htmlentities(substr($part, $i + $com_len, $close_pos - $i - $com_len), ENT_COMPAT, $this->encoding);
+										$test_str .= @htmlentities(substr($part, $i + $com_len, $close_pos - $i - $com_len), ENT_COMPAT, $this->encoding);
 										if ( $this->lexic_permissions['COMMENTS'][$comment_key] )
 										{
 											$test_str .= "</span>";
@@ -1467,10 +1556,16 @@ class GeSHi
 						// Otherwise, convert it to HTML form
 						elseif ( $STRING_OPEN != '' )
 						{
-							if(strtolower($this->encoding) == 'utf-8'){
+							if ( strtolower($this->encoding) == 'utf-8' )
+							{
 								//only escape <128 (we don't want to break multibyte chars)
-								if( ord($char) < 128 ) $char = htmlentities($char, ENT_COMPAT, $this->encoding);
-							}else{
+								if ( ord($char) < 128 )
+								{
+									$char = htmlentities($char, ENT_COMPAT, $this->encoding);
+								}
+							}
+							else
+							{
 								//encode everthing
 								$char = htmlentities($char, ENT_COMPAT, $this->encoding);
 							}
@@ -1500,7 +1595,7 @@ class GeSHi
 				}
 				else
 				{
-					$result .= htmlentities($part, ENT_COMPAT, $this->encoding);
+					$result .= @htmlentities($part, ENT_COMPAT, $this->encoding);
 				}
 				// Close the <span> that surrounds the block
 				if ( $this->strict_mode && $this->lexic_permissions['SCRIPT'] )
@@ -1511,7 +1606,7 @@ class GeSHi
 			// Else not a block to highlight
 			else
 			{
-				$result .= htmlentities($part, ENT_COMPAT, $this->encoding);
+				$result .= @htmlentities($part, ENT_COMPAT, $this->encoding);
 			}
 		}
 
@@ -1541,10 +1636,88 @@ class GeSHi
 	 */
 	function indent ( $result )
 	{
+            /// Replace tabs with the correct number of spaces
+            if (false !== strpos($result, "\t")) {
+                $lines = explode("\n", $result);
+                foreach ($lines as $key => $line) {
+                    if (false === strpos($line, "\t")) {
+                        $lines[$key] = $line;
+                        continue;
+                    }//echo 'checking line ' . $key . '<br />';
+
+                    $pos = 0;
+                    $tab_width = $this->tab_width;
+                    $length = strlen($line);
+                    $result_line = '';
+
+                    //echo '<pre>line: ' . htmlspecialchars($line) . '</pre>';
+                    $IN_TAG = false;
+                    for ($i = 0; $i < $length; $i++) {
+                        $char = substr($line, $i, 1);
+                        // Simple engine to work out whether we're in a tag.
+                        // If we are we modify $pos. This is so we ignore HTML
+                        // in the line and only workout the tab replacement
+                        // via the actual content of the string
+                        // This test could be improved to include strings in the
+                        // html so that < or > would be allowed in user's styles
+                        // (e.g. quotes: '<' '>'; or similar)
+                        if ($IN_TAG && '>' == $char) {
+                            $IN_TAG = false;
+                            $result_line .= '>';
+                            ++$pos;
+                        } elseif (!$IN_TAG && '<' == $char) {
+                            $IN_TAG = true;
+                            $result_line .= '<';
+                            ++$pos;
+                        } elseif (!$IN_TAG && '&' == $char) {
+                            //echo "matched &amp; in line... ";
+                            $substr = substr($line, $i + 3, 4);
+                            //$substr_5 = substr($line, 5, 1);
+                            $posi = strpos($substr, ';');
+                            if (false !== $posi) {
+                                //echo "found entity at $posi\n";
+                                $pos += $posi + 3;
+                            }
+                            $result_line .= '&';
+                        } elseif (!$IN_TAG && "\t" == $char) {
+                            $str = '';
+                            // OPTIMISE - move $strs out. Make an array:
+                            // $tabs = array(
+                            //  1 => '&nbsp;',
+                            //  2 => '&nbsp; ',
+                            //  3 => '&nbsp; &nbsp;' etc etc
+                            // to use instead of building a string every time
+                            $strs = array(0 => '&nbsp;', 1 => ' ');
+                            //echo "building (pos=$pos i=$i) (" . ($i - $pos) . ") " . ($tab_width - (($i - $pos) % $tab_width)) . " spaces\n";
+                            for ($k = 0; $k < ($tab_width - (($i - $pos) % $tab_width)); $k++) $str .= $strs[$k % 2];
+                            $result_line .= $str;
+                            //$pos--;
+                            $pos++;
+                            //$pos -= $tab_width-1;
+
+                            if (false === strpos($line, "\t", $i + 1)) {
+                                //$lines[$key] = $result_line;
+                                //echo 'got here';
+                                $result_line .= substr($line, $i + 1);
+                                break;
+                            }
+                        } elseif ( $IN_TAG ) {
+                            ++$pos;
+                            $result_line .= $char;
+                        } else {
+                            $result_line .= $char;
+                            //++$pos;
+                        }
+                    }
+                    $lines[$key] = $result_line;
+                }
+                $result = implode("\n", $lines);
+            }
+		// Other whitespace
 		$result = str_replace('  ', '&nbsp; ', $result);
 		$result = str_replace('  ', ' &nbsp;', $result);
 		$result = str_replace("\n ", "\n&nbsp;", $result);
-		$result = str_replace("\t", $this->get_tab_replacement(), $result);
+		//$result = str_replace("\t", $this->get_tab_replacement(), $result);
 		if ( $this->line_numbers == GESHI_NO_LINE_NUMBERS )
 		{
 			$result = nl2br($result);
@@ -1591,7 +1764,7 @@ class GeSHi
 				if ( $keyword != '' )
 				{
 					$keyword = ( $this->language_data['CASE_SENSITIVE'][$group] ) ? $keyword : strtolower($keyword);
-					return '<|UR1|"' . str_replace(array('{FNAME}', '.'), array(htmlentities($keyword, ENT_COMPAT, $this->encoding), '<DOT>'), $this->language_data['URLS'][$group]) . '">';
+					return '<|UR1|"' . str_replace(array('{FNAME}', '.'), array(@htmlentities($keyword, ENT_COMPAT, $this->encoding), '<DOT>'), $this->language_data['URLS'][$group]) . '">';
 				}
 				return '';
 			}
@@ -1611,7 +1784,7 @@ class GeSHi
 	 */
 	function parse_non_string_part ( &$stuff_to_parse )
 	{
-		$stuff_to_parse = ' ' . quotemeta(htmlentities($stuff_to_parse, ENT_COMPAT, $this->encoding));
+		$stuff_to_parse = ' ' . quotemeta(@htmlentities($stuff_to_parse, ENT_COMPAT, $this->encoding));
 		// These vars will disappear in the future
 		$func = '$this->change_case';
 		$func2 = '$this->add_url_to_keyword';
@@ -1723,7 +1896,7 @@ class GeSHi
 		{
 			foreach ( $this->language_data['OBJECT_SPLITTERS'] as $key => $splitter )
 			{
-				if ( false !== stristr($stuff_to_parse, $this->language_data['OBJECT_SPLITTERS'][$key]) )
+				if ( false !== stristr($stuff_to_parse, $splitter) )
 				{
 					if ( !$this->use_classes )
 					{
@@ -1877,6 +2050,7 @@ class GeSHi
 	 * Gets the replacement string for tabs in the source code. Useful for
 	 * HTML highlighting, where tabs don't mean anything to a browser.
 	 */
+	 /*
 	function get_tab_replacement ()
 	{
 		$i = 0;
@@ -1895,6 +2069,7 @@ class GeSHi
 		}
 		return $result;
 	}
+	*/
 
 	/**
 	 * method: finalise
@@ -1906,9 +2081,9 @@ class GeSHi
 	{
 		// Remove end parts of important declarations
 		// This is BUGGY!! My fault for bad code: fix coming in 1.2
-		if ( $this->enable_important_blocks && (strstr($parsed_code, htmlentities(GESHI_START_IMPORTANT, ENT_COMPAT, $this->encoding)) === false) )
+		if ( $this->enable_important_blocks && (strstr($parsed_code, @htmlentities(GESHI_START_IMPORTANT, ENT_COMPAT, $this->encoding)) === false) )
 		{
-			$parsed_code = str_replace(htmlentities(GESHI_END_IMPORTANT, ENT_COMPAT, $this->encoding), '', $parsed_code);
+			$parsed_code = str_replace(@htmlentities(GESHI_END_IMPORTANT, ENT_COMPAT, $this->encoding), '', $parsed_code);
 		}
 
 		// Add HTML whitespace stuff if we're using the <div> header
@@ -2021,6 +2196,16 @@ class GeSHi
 			}
 		}
 
+		// purge some unnecessary stuff
+		$parsed_code = preg_replace('#<span[^>]+>(\s*)</span>#', '\\1', $parsed_code);
+		$parsed_code = preg_replace('#<div[^>]+>(\s*)</div>#', '\\1', $parsed_code);
+
+		if ( $this->header_type == GESHI_HEADER_PRE )
+		{
+			// enforce line numbers when using pre
+			$parsed_code = str_replace('<li></li>', '<li>&nbsp;</li>', $parsed_code);
+		}
+
 		return $this->header() . chop($parsed_code) . $this->footer();
 	}
 
@@ -2035,14 +2220,14 @@ class GeSHi
 		// Get attributes needed
 		$attributes = $this->get_attributes();
 
-		if ( $this->use_classes )
-		{
+		/*if ( $this->use_classes )
+		{*/
 			$ol_attributes = '';
-		}
+		/*}
 		else
 		{
-			$ol_attributes = ' style="margin: 0;"';
-		}
+			//$ol_attributes = ' style="margin: 0;"';
+		}*/
 
 		if ( $this->line_numbers_start != 1 )
 		{
@@ -2181,7 +2366,7 @@ class GeSHi
 		$replacements[] = $this->language;
 
 		$keywords[] = '<VERSION>';
-		$replacements[] = '1.0.4';
+		$replacements[] = '1.0.6';
 
 		return str_replace($keywords, $replacements, $instr);
 	}
@@ -2249,7 +2434,7 @@ class GeSHi
 		// <pre> or <div> container). Additionally, set default styles for lines
 		if ( !$economy_mode || $this->line_numbers != GESHI_NO_LINE_NUMBERS )
 		{
-			$stylesheet .= "$selector, {$selector}ol, {$selector}ol li {margin: 0;}\n";
+			//$stylesheet .= "$selector, {$selector}ol, {$selector}ol li {margin: 0;}\n";
 			$stylesheet .= "$selector.de1, $selector.de2 {{$this->code_style}}\n";
 		}
 
@@ -2416,3 +2601,4 @@ if ( !function_exists('geshi_highlight') )
 	}
 }
 
+?>
