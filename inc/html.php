@@ -8,6 +8,8 @@
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 
+  require_once(DOKU_INC.'inc/parserutils.php');
+
 /**
  * Convenience function to quickly build a wikilink
  *
@@ -84,9 +86,12 @@ function html_login(){
   ?>
     </div>
   <?
+/*
+ FIXME provide new hook
   if(@file_exists('includes/login.txt')){
     print io_cacheParse('includes/login.txt');
   }
+*/
 }
 
 /**
@@ -257,26 +262,28 @@ function html_list_toc($item){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_show($text=''){
+function html_show($txt=''){
   global $ID;
   global $REV;
   global $HIGH;
   //disable section editing for old revisions or in preview
   if($text || $REV){
-    global $parser;
-    $parser['secedit'] = false;
+    $secedit = false;
+  }else{
+    $secedit = true;
   }
-
-  if ($text){
+  
+  if ($txt){
     //PreviewHeader
     print p_locale_xhtml('preview');
     print '<div class="preview">';
-    print html_secedit(parse($text),false);
+    print html_secedit(p_render_xhtml(p_get_instructions($txt)),$secedit);
     print '</div>';
+
   }else{
     if ($REV) print p_locale_xhtml('showrev');
     $html = p_wiki_xhtml($ID,$REV,true);
-    $html = html_secedit($html);
+    $html = html_secedit($html,$secedit);
     print html_hilight($html,$HIGH);
   }
 }

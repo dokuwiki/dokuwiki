@@ -30,7 +30,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 
   if($rev){
     if(@file_exists($file)){
-      $ret = p_render_xhtml(p_get_instructions($file)); //no caching on old revisions
+      $ret = p_render_xhtml(p_get_instructions(io_readfile($file))); //no caching on old revisions
     }elseif($excuse){
       $ret = p_locale_xhtml('norev');
     }
@@ -131,7 +131,7 @@ function p_cached_instructions($file){
     return unserialize(io_readfile($cache));
   }elseif(@file_exists($file)){
     // no cache - do some work
-    $ins = p_get_instructions($file);
+    $ins = p_get_instructions(io_readfile($file));
     io_savefile($cache,serialize($ins));
     return $ins;
   }
@@ -145,10 +145,8 @@ function p_cached_instructions($file){
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_get_instructions($file){
+function p_get_instructions($text){
   global $conf;
-
-  $text = io_readfile($file);
 
   require_once DOKU_INC . 'inc/parser/parser.php';
   
