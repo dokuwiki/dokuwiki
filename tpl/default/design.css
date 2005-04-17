@@ -271,6 +271,13 @@ img.mediaright {
   margin: 0 0 0 1.5em;
 }
 
+img.mediacenter {
+  border: 0;
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 acronym {
   cursor: help;
   border-bottom: 1px dotted #000;

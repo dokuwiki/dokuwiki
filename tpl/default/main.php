@@ -36,7 +36,7 @@
   <style type="text/css">
     /* that IE 5+ conditional comment makes this only visible in IE 5+ */
     /* IE bugfix for transparent PNGs */
-    img { behavior: url("<?=DOKU_BASE?>/pngbehavior.htc"); }
+    //DISABLED   img { behavior: url("<?=DOKU_BASE?>/pngbehavior.htc"); }
   </style>
   <![endif]-->
 

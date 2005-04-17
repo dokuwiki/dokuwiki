@@ -678,17 +678,14 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             //add image tag
-            $ret .= '<img class="media" src="'.
-                    DOKU_BASE.'fetch.php?w='.$width.'&amp;h='.$height.
+            $ret .= '<img src="'.DOKU_BASE.'fetch.php?w='.$width.'&amp;h='.$height.
                     '&amp;cache='.$cache.'&amp;media='.urlencode($src).'"';
+            
+            $ret .= ' class="media'.$align.'"';
         
             if (!is_null($title))
                 $ret .= ' title="'.$this->__xmlEntities($title).'"';
             
-        
-            if (!is_null($align))
-                $ret .= ' align="'.$align.'"'; #FIXME use class!
-          
             if ( !is_null($width) )
                 $ret .= ' width="'.$this->__xmlEntities($width).'"';
         
