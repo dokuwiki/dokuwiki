@@ -246,6 +246,85 @@ function tpl_button($type){
 }
 
 /**
+ * Like the action buttons but links
+ *
+ * Available links are
+ *
+ *  edit    - edit/create/show button
+ *  history - old revisions
+ *  recent  - recent changes
+ *  login   - login/logout button - if ACL enabled
+ *  index   - The index
+ *  admin   - admin page - if enough rights
+ *  top     - a back to top button
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    tpl_button
+ */
+function tpl_actionlink($type,$pre='',$suf=''){
+  global $ID;
+  global $INFO;
+  global $REV;
+  global $ACT;
+  global $conf;
+  global $lang;
+
+  switch($type){
+    case 'edit':
+      #most complicated type - we need to decide on current action
+      if($ACT == 'show' || $ACT == 'search'){
+        if($INFO['writable']){
+          if($INFO['exists']){
+            tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+                     $pre.$lang['btn_edit'].$suf,
+                     'class="action" accesskey="e" rel="nofollow"');
+          }else{
+            tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+                     $pre.$lang['btn_create'].$suf,
+                     'class="action" accesskey="e" rel="nofollow"');
+          }
+        }else{
+          tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+                   $pre.$lang['btn_source'].$suf,
+                   'class="action" accesskey="v" rel="nofollow"');
+        }
+      }else{
+          tpl_link(wl($ID,'do=show'),
+                   $pre.$lang['btn_show'].$suf,
+                   'class="action" accesskey="v" rel="nofollow"');
+      }
+      break;
+    case 'history':
+      tpl_link(wl($ID,'do=revisions'),$pre.$lang['btn_revs'].$suf,'class="action" accesskey="o"');
+      break;
+    case 'recent':
+      tpl_link(wl($ID,'do=recent'),$pre.$lang['btn_recent'].$suf,'class="action" accesskey="r"');
+      break;
+    case 'index':
+      tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action" accesskey="x"');
+      break;
+    case 'top':
+      print '<a href="#top" class="action" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
+      break;
+    case 'login':
+      if($conf['useacl']){
+        if($_SERVER['REMOTE_USER']){
+          tpl_link(wl($ID,'do=logout'),$pre.$lang['btn_logout'].$suf,'class="action"');
+        }else{
+          tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action"');
+        }
+      }
+      break;
+    case 'admin':
+      if($INFO['perm'] == AUTH_ADMIN)
+        tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action"');
+      break;
+    default:
+      print '[unknown link type]';
+  }
+}
+
+/**
  * Print the search form
  *
  * @author Andreas Gohr <andi@splitbrain.org>
