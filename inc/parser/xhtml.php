@@ -599,18 +599,24 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
      */
     function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL) {
-        
+        global $conf;
         resolve_mediaid($src, $exists);
 
-        $this->internallink($src, $title =
-                                    array( 'type'   => 'internalmedia',
-                                           'src'    => $src,
-                                           'title'  => $title,
-                                           'align'  => $align,
-                                           'width'  => $width,
-                                           'height' => $height,
-                                           'cache'  => $cache,
-                                           'link'   => $link ));
+        $link = array();
+        $link['class']  = 'media';
+        $link['style']  = '';
+        $link['pre']    = '';
+        $link['suf']    = '';
+        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['target'] = $conf['target']['media'];
+
+        $link['title']  = $this->__xmlEntities($src);
+        $link['url']    = DOKU_BASE.'fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        $link['name']   = $this->__media ($src, $title, $align, $width, $height, $cache);
+
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
     
     /**
@@ -618,16 +624,23 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
      */
     function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL) {
+        global $conf;
 
-        $this->externallink($src, $title =
-                                    array( 'type'   => 'externalmedia',
-                                           'src'    => $src,
-                                           'title'  => $title,
-                                           'align'  => $align,
-                                           'width'  => $width,
-                                           'height' => $height,
-                                           'cache'  => $cache,
-                                           'link'   => $link ));
+        $link = array();
+        $link['class']  = 'media';
+        $link['style']  = '';
+        $link['pre']    = '';
+        $link['suf']    = '';
+        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['target'] = $conf['target']['media'];
+
+        $link['title']  = $this->__xmlEntities($src);
+        $link['url']    = DOKU_BASE.'fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        $link['name']   = $this->__media ($src, $title, $align, $width, $height, $cache);
+
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
 
     /**

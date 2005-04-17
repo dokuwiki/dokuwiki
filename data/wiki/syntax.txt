@@ -123,16 +123,16 @@ You can include external and internal [[doku>images]] with curly brackets. Optio
 
 Real size:                        {{wiki:dokuwiki-128.png}}
 
-Resize to given width:            {{wiki:dokuwiki-128.png?100}}
+Resize to given width:            {{wiki:dokuwiki-128.png?50}}
 
-Resize to given width and height: {{wiki:dokuwiki-128.png?100x200}}
+Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
 
-Resized external image:           {{http://de3.php.net/images/php.gif?100x100}}
+Resized external image:           {{http://de3.php.net/images/php.gif?200x50}}
 
   Real size:                        {{wiki:dokuwiki-128.png}}
-  Resize to given width:            {{wiki:dokuwiki-128.png?100}}
-  Resize to given width and height: {{wiki:dokuwiki-128.png?100x200}}
-  Resized external image:           {{http://de3.php.net/images/php.gif?100x100}}
+  Resize to given width:            {{wiki:dokuwiki-128.png?50}}
+  Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
+  Resized external image:           {{http://de3.php.net/images/php.gif?200x50}}
 
 
 By using left or right whitespaces you can choose the alignment
