@@ -382,7 +382,8 @@ function rawWiki($id,$rev=''){
  * Returns the raw Wiki Text in three slices.
  *
  * The range parameter needs to have the form "from-to"
- * and gives the range of the section.
+ * and gives the range of the section in bytes - no
+ * UTF-8 awareness is needed.
  * The returned order is prefix, section and suffix.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -390,13 +391,12 @@ function rawWiki($id,$rev=''){
 function rawWikiSlices($range,$id,$rev=''){
   list($from,$to) = split('-',$range,2);
   $text = io_readFile(wikiFN($id,$rev));
-  $text = split("\n",$text);
   if(!$from) $from = 0;
-  if(!$to)   $to   = count($text);
+  if(!$to)   $to   = strlen($text);
 
-  $slices[0] = join("\n",array_slice($text,0,$from));
-  $slices[1] = join("\n",array_slice($text,$from,$to + 1  - $from));
-  $slices[2] = join("\n",array_slice($text,$to+1));
+  $slices[0] = substr($text,0,$from-1);
+  $slices[1] = substr($text,$from-1,$to-$from);
+  $slices[2] = substr($text,$to);
 
   return $slices;
 }

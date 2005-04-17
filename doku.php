@@ -29,11 +29,6 @@
   $HIGH  = $_REQUEST['s'];
   if(empty($HIGH)) $HIGH = getGoogleQuery();
   
-#  $ACL_USER     = urldecode($_REQUEST['acl_user']);
-#  $ACL_SCOPE    = urldecode($_REQUEST['acl_scope']);
-#  $ACL_LEVEL    = $_REQUEST['acl_level'];
-#  $ACL_CHECKBOX = $_REQUEST['acl_checkbox'];
-
   $TEXT  = cleanText($_POST['wikitext']);
   $PRE   = cleanText($_POST['prefix']);
   $SUF   = cleanText($_POST['suffix']);
