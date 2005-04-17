@@ -171,9 +171,8 @@ function html_topbtn(){
   global $lang;
 
   $ret  = '';
-  $ret .= '<form class="button" method="get" action="#top" onsubmit="return svchk()">';
-  $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_top']).'" class="button" />';
-  $ret .= '</form>';
+  $ret  = '<a href="#top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" /></a>';
+
   return $ret;
 }
 
