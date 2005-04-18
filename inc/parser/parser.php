@@ -748,11 +748,11 @@ class Doku_Parser_Mode_WindowsShareLink extends Doku_Parser_Mode {
 }
 
 //-------------------------------------------------------------------
-class Doku_Parser_Mode_Email extends Doku_Parser_Mode {
+class Doku_Parser_Mode_EmailLink extends Doku_Parser_Mode {
     
     function connectTo($mode) {
     //<([\w0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)>
-        $this->Lexer->addSpecialPattern("<[\w0-9\-_.]+?@[\w\-]+\.[\w\-\.]+\.*[\w]+>",$mode,'email');
+        $this->Lexer->addSpecialPattern("<[\w0-9\-_.]+?@[\w\-]+\.[\w\-\.]+\.*[\w]+>",$mode,'emaillink');
     }
     
 }
@@ -808,7 +808,7 @@ function Doku_Parser_Formatting($remove = '') {
 function Doku_Parser_Substition() {
     $modes = array(
         'acronym','smiley','wordblock','entity','camelcaselink',
-        'internallink','media','externallink','linebreak','email',
+        'internallink','media','externallink','linebreak','emaillink',
         'windowssharelink','filelink','notoc','multiplyentity',
         'quotes','rss'
         

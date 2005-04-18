@@ -198,7 +198,7 @@ function p_get_instructions($text){
   $Parser->addMode('rss',new Doku_Parser_Mode_RSS());
   $Parser->addMode('media',new Doku_Parser_Mode_Media());
   $Parser->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
-  $Parser->addMode('email',new Doku_Parser_Mode_Email());
+  $Parser->addMode('emaillink',new Doku_Parser_Mode_EmailLink());
   $Parser->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
   //$Parser->addMode('filelink',new Doku_Parser_Mode_FileLink()); //FIXME ???
   $Parser->addMode('eol',new Doku_Parser_Mode_Eol());

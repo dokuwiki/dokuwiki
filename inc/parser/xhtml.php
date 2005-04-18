@@ -512,11 +512,10 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         echo $this->__formatLink($link);
     }
     
-    /**
+    /*
      * @deprecated not used!!!
      * @TODO Correct the CSS class for files? (not windows)
      * @TODO Remove hard coded URL to splitbrain.org
-     */
     function filelink($link, $title = NULL) {
         echo '<a';
         
@@ -538,6 +537,7 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         
         echo '</a>';
     }
+    */
     
     /**
     * @TODO Remove hard coded URL to splitbrain.org
@@ -567,31 +567,65 @@ class Doku_Renderer_XHTML extends Doku_Renderer {
         echo '</a>';
     }
     
-    /**
-    * @TODO Protect email address from harvesters
-    * @TODO Remove hard coded link to splitbrain.org
-    */
-    function email($address, $title = NULL) {
-        echo '<a';
-        
-        $title = $this->__getLinkTitle($title, $address, $isImage);
-        
+    function emaillink($address, $name = NULL) {
+        global $conf;
+        //simple setup
+        $link = array();
+        $link['target'] = '';
+        $link['pre']    = '';
+        $link['suf']   = '';
+        $link['style']  = '';
+        $link['more']   = '';
+  
+        //we just test for image here - we need to encode the title our self
+        $this->__getLinkTitle($name, $address, $isImage);
         if ( !$isImage ) {
-            echo ' class="mail"';
+            $link['class']='mail';
         } else {
-            echo ' class="media"';
+            $link['class']='media';
+        }
+
+        //shields up
+        if($conf['mailguard']=='visible'){
+            //the mail name gets some visible encoding
+            $address = str_replace('@',' [at] ',$address);
+            $address = str_replace('.',' [dot] ',$address);
+            $address = str_replace('-',' [dash] ',$address);
+
+            $title   = $this->__xmlEntities($address);
+            if(empty($name)){
+                $name = $this->__xmlEntities($address);
+            }else{
+                $name = $this->__xmlEntities($name);
+            }
+        }elseif($conf['mailguard']=='hex'){
+            //encode every char to a hex entity
+            for ($x=0; $x < strlen($address); $x++) {
+                $encode .= '&#x' . bin2hex($address[$x]).';';
+            }
+            $address = $encode;
+            $title   = $encode;
+            if(empty($name)){
+                $name = $encode;
+            }else{
+                $name = $this->__xmlEntities($name);
+            }
+        }else{
+            //keep address as is
+            $title   = $this->__xmlEntities($address);
+            if(empty($name)){
+                $name = $this->__xmlEntities($address);
+            }else{
+                $name = $this->__xmlEntities($name);
+            }
         }
         
-        echo ' href="mailto:'.$this->__xmlEntities($address).'"';
-        
-        echo ' style="background: transparent url(http://wiki.splitbrain.org/images/mail_icon.gif) 0px 1px no-repeat;"';
-        
-        echo ' onclick="return svchk()" onkeypress="return svchk()">';
-        
-        echo $title;
-        
-        echo '</a>';
-        
+        $link['url']   = 'mailto:'.$address;
+        $link['name']  = $name;
+        $link['title'] = $title;
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
     
     /**

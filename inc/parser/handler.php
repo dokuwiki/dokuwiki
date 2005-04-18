@@ -442,9 +442,9 @@ class Doku_Handler {
         return TRUE;
     }
     
-    function email($match, $state, $pos) {
+    function emaillink($match, $state, $pos) {
         $email = preg_replace(array('/^</','/>$/'),'',$match);
-        $this->__addCall('email',array($email, NULL), $pos);
+        $this->__addCall('emaillink',array($email, NULL), $pos);
         return TRUE;
     }
     
