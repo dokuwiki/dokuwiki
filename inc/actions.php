@@ -45,7 +45,7 @@ function act_dispatch(){
   }
 
   //handle export
-  if(substr($ACT,0,6) == 'export')
+  if(substr($ACT,0,7) == 'export_')
     $ACT = act_export($ACT);
 
   //display some infos
@@ -85,18 +85,22 @@ function act_clean($act){
   global $lang;
   global $conf;
 
+  //remove all bad chars
+  $act = strtolower($act);
+  $act = preg_replace('/[^a-z_]+/','',$act);
+
   if($act == 'register' && !$conf['openregister'])
     return 'show';
 
   if($act == $lang['btn_save']) $act = 'save';
   if($act == $lang['btn_preview']) $act = 'preview';
   if($act == $lang['btn_cancel']) $act = 'show';
-  $act = strtolower($act);
+  if($act == 'export_html') $act = 'export_xhtml';
 
   if(array_search($act,array('login','logout','register','save','edit',
-                             'preview','export_raw','export_html',
-                             'search','show','check','index','revisions',
-                             'diff','recent','backlink','admin',)) === false){
+                             'preview','search','show','check','index','revisions',
+                             'diff','recent','backlink','admin',)) === false
+     && substr($act,0,7) != 'export_' ) {
     msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
   }
@@ -213,24 +217,36 @@ function act_export($act){
   global $ID;
   global $REV;
 
-  if($act == 'export_html'){
+  // no renderer for this
+  if($act == 'export_raw'){
+    header('Content-Type: text/plain; charset=utf-8');
+    print rawWiki($ID,$REV);
+    exit;
+  }
+
+  // html export #FIXME what about the template's style?
+  if($act == 'export_xhtml'){
     header('Content-Type: text/html; charset=utf-8');
     ptln('<html>');
     ptln('<head>');
     tpl_metaheaders();
     ptln('</head>');
     ptln('<body>');
-    print parsedWiki($ID,$REV,false);
+    print p_wiki_xhtml($ID,$REV,false);
     ptln('</body>');
     ptln('</html>');
     exit;
   }
 
-  if($act == 'export_raw'){
-    header('Content-Type: text/plain; charset=utf-8');
-    print rawWiki($ID,$REV);
+  // try to run renderer #FIXME use cached instructions
+  $mode = substr($act,7);
+  $text = p_render($mode,p_get_instructions(rawWiki($ID,$REV)));
+  if(!is_null($text)){
+    print $text;
     exit;
   }
+
+
 
   return 'show';
 }

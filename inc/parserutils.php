@@ -30,7 +30,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 
   if($rev){
     if(@file_exists($file)){
-      $ret = p_render_xhtml(p_get_instructions(io_readfile($file))); //no caching on old revisions
+      $ret = p_render('xhtml',p_get_instructions(io_readfile($file))); //no caching on old revisions
     }elseif($excuse){
       $ret = p_locale_xhtml('norev');
     }
@@ -86,7 +86,7 @@ function p_cached_xhtml($file){
     $parsed = io_readfile($cache);
     $parsed .= "\n<!-- cachefile $cache used -->\n";
   }else{
-    $parsed = p_render_xhtml(p_cached_instructions($file)); //try to use cached instructions
+    $parsed = p_render('xhtml', p_cached_instructions($file)); //try to use cached instructions
     io_saveFile($cache,$parsed); //save cachefile
     $parsed .= "\n<!-- no cachefile used, but created -->\n";
 
@@ -208,17 +208,23 @@ function p_get_instructions($text){
 }  
 
 /**
- * Renders a list of instruction to XHTML
+ * Renders a list of instruction to the specified output mode
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_render_xhtml($instructions){
+function p_render($mode,$instructions){
   if(is_null($instructions)) return '';
 
   // Create the renderer
-  require_once DOKU_INC . 'inc/parser/xhtml.php';
-  $Renderer = & new Doku_Renderer_XHTML();
+  if(!@file_exists(DOKU_INC."inc/parser/$mode.php")){
+    msg("No renderer for $mode found",-1);
+    return null;
+  }
+
+  require_once DOKU_INC."inc/parser/$mode.php";
+  $rclass = "Doku_Renderer_$mode";
+  $Renderer = & new $rclass(); #FIXME any way to check for class existance?
 
   $Renderer->smileys = getSmileys();
   $Renderer->entities = getEntities();

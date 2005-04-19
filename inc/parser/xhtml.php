@@ -23,7 +23,7 @@ require_once DOKU_INC . 'inc/parser/renderer.php';
 /**
  * The Renderer 
  */
-class Doku_Renderer_XHTML extends Doku_Renderer {
+class Doku_Renderer_xhtml extends Doku_Renderer {
 
     var $doc = '';
     
