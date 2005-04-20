@@ -46,8 +46,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function document_end() {
-        // add button for last section if any
-        if($this->lastsec) $this->__secedit($this->lastsec,'');
+        // add button for last section if any and more than one
+        if($this->lastsec > 1) $this->__secedit($this->lastsec,'');
         
         if ( count ($this->footnotes) > 0 ) {
             echo '<div class="footnotes">'.DOKU_LF;
@@ -447,7 +447,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     /**
-    * @TODO Remove hard coded link to splitbrain.org on style
     */
     function interwikilink($match, $name = NULL, $wikiName, $wikiUri) {
         global $conf;
@@ -540,31 +539,36 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     */
     
     /**
-    * @TODO Remove hard coded URL to splitbrain.org
-    * @TODO Add error message for non-IE users
     */
-    function windowssharelink($link, $title = NULL) {
-        echo '<a';
-        
-        $title = $this->__getLinkTitle($title, $link, $isImage);
-        
+    function windowssharelink($url, $name = NULL) {
+        global $conf;
+        global $lang;
+        //simple setup
+        $link['target'] = $conf['target']['windows'];
+        $link['pre']    = '';
+        $link['suf']   = '';
+        $link['style']  = '';
+        //Display error on browsers other than IE
+        $link['more'] = 'onclick="if(document.all == null){alert(\''.
+                        $this->__xmlEntities($lang['nosmblinks'],ENT_QUOTES).
+                        '\');}" onkeypress="if(document.all == null){alert(\''.
+                        $this->__xmlEntities($lang['nosmblinks'],ENT_QUOTES).'\');}"';
+
+        $link['name'] = $this->__getLinkTitle($name, $url, $isImage);
         if ( !$isImage ) {
-            echo ' class="windows"';
+            $link['class'] = 'windows';
         } else {
-            echo ' class="media"';
+            $link['class'] = 'media';
         }
-        
-        $link = str_replace('\\','/',$link);
-        $link = 'file:///'.$link;
-        echo ' href="'.$this->__xmlEntities($link).'"';
-        
-        echo ' style="background: transparent url(http://wiki.splitbrain.org/images/windows.gif) 0px 1px no-repeat;"';
-        
-        echo ' onclick="return svchk()" onkeypress="return svchk()">';
-        
-        echo $title;
-        
-        echo '</a>';
+
+
+        $link['title'] = $this->__xmlEntities($url);
+        $url = str_replace('\\','/',$url);
+        $url = 'file:///'.$url;
+        $link['url'] = $url;
+
+        //output formatted
+        echo $this->__formatLink($link);
     }
     
     function emaillink($address, $name = NULL) {
