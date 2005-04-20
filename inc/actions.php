@@ -85,6 +85,11 @@ function act_clean($act){
   global $lang;
   global $conf;
 
+  //handle localized buttons
+  if($act == $lang['btn_save']) $act = 'save';
+  if($act == $lang['btn_preview']) $act = 'preview';
+  if($act == $lang['btn_cancel']) $act = 'show';
+
   //remove all bad chars
   $act = strtolower($act);
   $act = preg_replace('/[^a-z_]+/','',$act);
@@ -92,9 +97,6 @@ function act_clean($act){
   if($act == 'register' && !$conf['openregister'])
     return 'show';
 
-  if($act == $lang['btn_save']) $act = 'save';
-  if($act == $lang['btn_preview']) $act = 'preview';
-  if($act == $lang['btn_cancel']) $act = 'show';
   if($act == 'export_html') $act = 'export_xhtml';
 
   if(array_search($act,array('login','logout','register','save','edit',
