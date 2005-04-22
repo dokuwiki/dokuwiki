@@ -1,4 +1,4 @@
 ====== Henvisninger bagud ======
 
-Dette er en liste over alle de dokumenter der henviser tilbage til det nuværende dokument. Vær opmærksom på at CamelCase henvisninger ikke bliver opfattet som henvisninger bagud.
+Dette er en liste over alle de dokumenter der henviser tilbage til det nuværende dokument.
 

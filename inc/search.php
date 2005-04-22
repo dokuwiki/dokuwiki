@@ -207,13 +207,10 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   //only search txt files
   if(!preg_match('#\.txt$#',$file)) return true;;
 
-  //get text
-  $text = io_readfile($base.'/'.$file);
-
   //absolute search id
   $sid = cleanID($opts['ns'].':'.$opts['name']);
 
-  //construct current namespace
+  //current id and namespace
   $cid = pathID($file);
   $cns = getNS($cid);
 
@@ -222,31 +219,25 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
     return false;
   }
 
-  //match all links
-  //FIXME may be incorrect because of code blocks
-  //      CamelCase isn't supported, too
-  preg_match_all('#\[\[(.+?)\]\]#si',$text,$matches,PREG_SET_ORDER);
-  foreach($matches as $match){
-    //get ID from link and discard most non wikilinks
-    list($mid) = split('\|',$match[1],2);
-    if(preg_match("#^(https?|telnet|gopher|file|wais|ftp|ed2k|irc)://#",$mid)) continue;
-    if(preg_match("#\w+>#",$mid)) continue;
-    $mns = getNS($mid);
-   	//namespace starting with "." - prepend current namespace
-    if(strpos($mns,'.')===0){
-      $mid = $cns.":".substr($mid,1);
-    }
-    if($mns===false){
-      //no namespace in link? add current
-      $mid = "$cns:$mid";
-    }
-    $mid = cleanID($mid);
+  //fetch instructions
+  require_once(DOKU_INC.'inc/parserutils.php');
+  $instructions = p_cached_instructions($base.$file,true);
+  if(is_null($instructions)) return false;
 
-    if ($mid == $sid){
-      $data[]['id'] = $cid;
-      break;
+  //check all links for match
+  foreach($instructions as $ins){
+    if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
+      $mid = $ins[1][0];
+      resolve_pageid($cns,$mid,$exists); //exists is not used 
+      if($mid == $sid){
+        //we have a match - finish
+        $data[]['id'] = $cid;
+        break;
+      }
     }
   }
+
+  return false;
 }
 
 /**
@@ -325,6 +316,7 @@ function sort_search_fulltext($a,$b){
  * translates a document path to an ID
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @todo    move to pageutils
  */
 function pathID($path){
   $id = utf8_decodeFN($path);

@@ -1,4 +1,3 @@
 ====== Zpětné odkazy ======
 
-Zde je seznam stránek, které pravděpodobně odkazují na aktuální stránku. Všimněte
-si, že odkazy s prvními písmeny velkými (CamelCase) nejsou detekovány jako zpětné odkazy.
+Zde je seznam stránek, které pravděpodobně odkazují na aktuální stránku. 

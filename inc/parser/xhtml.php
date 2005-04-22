@@ -390,9 +390,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     
     function internallink($id, $name = NULL, $search=NULL) {
         global $conf;
+        global $ID;
 
         $name = $this->_getLinkTitle($name, $this->_simpleTitle($id), $isImage, $id);
-        resolve_pageid($id,$exists);
+        resolve_pageid(getNS($ID),$id,$exists);
 
         if ( !$isImage ) {
             if ( $exists ) {
@@ -644,7 +645,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL) {
         global $conf;
-        resolve_mediaid($src, $exists);
+        global $ID;
+        resolve_mediaid(getNS($ID),$src, $exists);
 
         $link = array();
         $link['class']  = 'media';

@@ -1,4 +1,4 @@
 ======Tillbakalänkar======
 
 Detta är en förteckning över sidor som verkar länka tillbaka till den aktuella
-sidan. Var god notera att CamelCase-länkar inte upptäcks som tillbakalänkar.
+sidan.

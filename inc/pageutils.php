@@ -122,14 +122,11 @@ function localeFN($id){
 /**
  * Returns a full media id
  *
- * uses global $ID to resolve relative pages
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function resolve_mediaid(&$page,&$exists){
-  global $ID;
+function resolve_mediaid($ns,&$page,&$exists){
   global $conf;
-  $ns = getNS($ID);
+
   //if links starts with . add current namespace
   if($page{0} == '.'){
     $page = $ns.':'.substr($page,1);
@@ -148,14 +145,10 @@ function resolve_mediaid(&$page,&$exists){
 /**
  * Returns a full page id
  *
- * uses global $ID to resolve relative pages
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function resolve_pageid(&$page,&$exists){
-  global $ID;
+function resolve_pageid($ns,&$page,&$exists){
   global $conf;
-  $ns = getNS($ID);
 
   //if links starts with . add current namespace
   if($page{0} == '.'){

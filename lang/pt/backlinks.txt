@@ -2,6 +2,3 @@
 
 Esta é uma lista de todos os documentos que apresentam ligações ao documento corrente.
 
-**Nota**: As ligações do tipo CamelCase não são detectadas como sendo um //backlink//.
-
------

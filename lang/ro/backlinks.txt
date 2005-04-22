@@ -1,5 +1,4 @@
 ====== Legături înapoi ======
 
-Aceasta e o listă de pagini care au legături către pagina curentă. De notat că legăturile 
-de tip CamelCase nu sînt detectate ca şi legături înapoi. 
+Aceasta e o listă de pagini care au legături către pagina curentă.
 

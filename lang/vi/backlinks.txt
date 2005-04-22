@@ -1,4 +1,3 @@
 ====== Nối về trước ======
 
-Đây là danh sách các trang hình như đã nối vào trang này. Chú ý là các nối loại CamelCase không được xác
-nhận đã nối về trước.
+Đây là danh sách các trang hình như đã nối vào trang này.

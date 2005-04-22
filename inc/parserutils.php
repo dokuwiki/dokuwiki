@@ -111,13 +111,22 @@ function p_cached_xhtml($file){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_cached_instructions($file){
+function p_cached_instructions($file,$cacheonly=false){
   global $conf;
   $cache  = $conf['datadir'].'/_cache/instructions/';
   $cache .= md5($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT']);
 
   // check if cache can be used
   $cachetime = @filemtime($cache); // 0 if not exists
+
+  // cache forced?
+  if($cacheonly){
+    if($cachetime){
+      return unserialize(io_readfile($cache));
+    }else{
+      return NULL;
+    }
+  }
 
   if( @file_exists($file)                                             // does the source exist
       && $cachetime > @filemtime($file)                               // cache is fresh
