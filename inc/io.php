@@ -134,7 +134,7 @@ function io_makeFileDir($file){
 
   $dir = dirname($file);
   if($conf['safemodehack']){
-    preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','',$dir);
+    $dir = preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','',$dir);
   }
   umask($conf['dmask']);
   if(!is_dir($dir)){
