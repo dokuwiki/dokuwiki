@@ -1156,6 +1156,7 @@ class Doku_Handler_Block {
     
     var $inParagraph = FALSE;
     var $atStart = TRUE;
+    var $skipEolKey = -1;
     
     // Blocks don't contain linefeeds
     var $blockOpen = array(
@@ -1221,12 +1222,38 @@ class Doku_Handler_Block {
             if ( !$this->atStart ) {
             
                 if ( $call[0] == 'eol' ) {
-                    
+                   
+
+                    /* XXX
                     if ( $this->inParagraph ) {
                         $this->calls[] = array('p_close',array(), $call[2]);
                     }
                     $this->calls[] = array('p_open',array(), $call[2]);
                     $this->inParagraph = TRUE;
+                    */
+
+                    # Check this isn't an eol instruction to skip...
+                    if ( $this->skipEolKey != $key ) {
+                         # Look to see if the next instruction is an EOL
+                        if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
+
+                            if ( $this->inParagraph ) {
+                                $this->calls[] = array('p_close',array(), $call[2]);
+                            }
+
+                            $this->calls[] = array('p_open',array(), $call[2]);
+                            $this->inParagraph = TRUE;
+
+                            
+                            # Mark the next instruction for skipping
+                            $this->skipEolKey = $key+1;
+
+                        }else{
+                            //if this is just a single eol make a space from it
+                            $this->calls[] = array('cdata',array(" "), $call[2]);
+                        }
+                    }
+
                     
                 } else {
                     
