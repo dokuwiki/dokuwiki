@@ -210,7 +210,14 @@ function io_download($url,$file){
   $fp = @fopen($url,"rb");
   if(!$fp) return false;
 
+  $kb  = 0;
+  $now = time();
+
   while(!feof($fp)){
+    if($kb++ > 2048 || (time() - $now) > 45){
+      //abort on 2 MB and timeout on 45 sec
+      return false;
+    }
     $cont.= fread($fp,1024);
   }
   fclose($fp);
