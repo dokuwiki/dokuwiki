@@ -15,19 +15,14 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_wikilink($url,$name='',$search=''){
-  global $conf;
-  $link         = array();
-  $link['url']  = $url;
-  $link['name'] = $name;
-  $link         = format_link_wiki($link);
-
-  if($search){
-    ($conf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
-    $link['url'] .= urlencode($search);
+function html_wikilink($id,$name='',$search=''){
+  require_once(DOKU_INC.'inc/parser/xhtml.php');
+  static $xhtml_renderer = NULL;
+  if(is_null($xhtml_renderer)){
+    $xhtml_renderer = new Doku_Renderer_xhtml(); 
   }
 
-  return format_link_build($link);
+  return $xhtml_renderer->internallink($id,$name,$search);
 }
 
 /**

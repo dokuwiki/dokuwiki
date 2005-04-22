@@ -388,7 +388,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
       $this->internallink($link,$link); 
     }
     
-    function internallink($id, $name = NULL) {
+    function internallink($id, $name = NULL, $search=NULL) {
         global $conf;
 
         $name = $this->_getLinkTitle($name, $this->_simpleTitle($id), $isImage, $id);
@@ -414,6 +414,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['url']    = wl($id);
         $link['name']   = $name;
         $link['title']  = $id;
+
+        //add search string
+        if($search){
+            ($conf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
+            $link['url'] .= urlencode($search);
+        }
 
         //output formatted
         echo $this->_formatLink($link);
