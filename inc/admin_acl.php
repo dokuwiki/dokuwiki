@@ -161,7 +161,7 @@ function admin_acl_del($acl_scope, $acl_user){
 function admin_acl_html(){
   global $ID;
 
-  print parsedLocale('admin_acl');
+  print p_locale_xhtml('admin_acl');
 
   ptln('<div class="acladmin"');
   ptln('<table class="inline">');

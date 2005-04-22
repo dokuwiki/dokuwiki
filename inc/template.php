@@ -97,7 +97,7 @@ function tpl_content(){
       html_register();
       break;
     case 'denied':
-      print parsedLocale('denied');
+      print p_locale_xhtml('denied');
 			break;
     case 'admin':
       tpl_admin();
