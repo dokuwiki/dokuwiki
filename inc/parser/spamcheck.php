@@ -15,44 +15,44 @@ class Doku_Renderer_SpamCheck extends Doku_Renderer {
     var $spamPattern = '#^$#';
     
     function internallink($link, $title = NULL) {
-        $this->__checkTitle($title);
+        $this->_checkTitle($title);
     }
     
     function externallink($link, $title = NULL) {
-        $this->__checkLinkForSpam($link);
-        $this->__checkTitle($title);
+        $this->_checkLinkForSpam($link);
+        $this->_checkTitle($title);
     }
     
     function interwikilink($link, $title = NULL) {
-        $this->__checkTitle($title);
+        $this->_checkTitle($title);
     }
     
     function filelink($link, $title = NULL) {
-        $this->__checkLinkForSpam($link);
-        $this->__checkTitle($title);
+        $this->_checkLinkForSpam($link);
+        $this->_checkTitle($title);
     }
     
     function windowssharelink($link, $title = NULL) {
-        $this->__checkLinkForSpam($link);
-        $this->__checkTitle($title);
+        $this->_checkLinkForSpam($link);
+        $this->_checkTitle($title);
     }
     
     function email($address, $title = NULL) {
-        $this->__checkLinkForSpam($address);
-        $this->__checkTitle($title);
+        $this->_checkLinkForSpam($address);
+        $this->_checkTitle($title);
     }
     
     function internalmedialink ($src) {
-        $this->__checkLinkForSpam($src);
+        $this->_checkLinkForSpam($src);
     }
 
     function externalmedialink($src) {
-        $this->__checkLinkForSpam($src);
+        $this->_checkLinkForSpam($src);
     }
 
-    function __checkTitle($title) {
+    function _checkTitle($title) {
         if ( is_array($title) && isset($title['src'])) {
-            $this->__checkLinkForSpam($title['src']);
+            $this->_checkLinkForSpam($title['src']);
         }
     }
     
@@ -60,7 +60,7 @@ class Doku_Renderer_SpamCheck extends Doku_Renderer {
     /**
     * @TODO What about links like www.google.com - no http://
     */
-    function __checkLinkForSpam($link) {
+    function _checkLinkForSpam($link) {
         if( preg_match($this->spamPattern,$link) ) {
             $spam = $this->currentCall;
             $spam[3] = $link;

@@ -76,7 +76,7 @@ class Doku_Parser {
             // Normalize CRs and pad doc
             $doc = "\n".str_replace("\r\n","\n",$doc)."\n";
             $this->Lexer->parse($doc);
-            $this->Handler->__finalize();
+            $this->Handler->_finalize();
             return $this->Handler->calls;
         } else {
             return FALSE;

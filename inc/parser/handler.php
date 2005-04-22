@@ -20,12 +20,12 @@ class Doku_Handler {
         $this->CallWriter = & new Doku_Handler_CallWriter($this);
     }
     
-    function __addCall($handler, $args, $pos) {
+    function _addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
         $this->CallWriter->writeCall($call);
     }
     
-    function __finalize(){
+    function _finalize(){
         if ( $this->meta['section'] ) {
             $S = & new Doku_Handler_Section();
             $this->calls = $S->process($this->calls);
@@ -57,7 +57,7 @@ class Doku_Handler {
     function base($match, $state, $pos) {
         switch ( $state ) {
             case DOKU_LEXER_UNMATCHED:
-                $this->__addCall('cdata',array($match), $pos);
+                $this->_addCall('cdata',array($match), $pos);
                 return TRUE;
             break;
             
@@ -88,7 +88,7 @@ class Doku_Handler {
         $markerLen = strlen($iLevels[$level]);
         $title = substr($match, $markerLen, strlen($match)-($markerLen*2));
         
-        $this->__addCall('header',array($title,$level,$pos), $pos);
+        $this->_addCall('header',array($title,$level,$pos), $pos);
         $this->meta['section'] = TRUE;
         return TRUE;
     }
@@ -99,72 +99,72 @@ class Doku_Handler {
     }
     
     function linebreak($match, $state, $pos) {
-        $this->__addCall('linebreak',array(),$pos);
+        $this->_addCall('linebreak',array(),$pos);
         return TRUE;
     }
     
     function eol($match, $state, $pos) {
-        $this->__addCall('eol',array(),$pos);
+        $this->_addCall('eol',array(),$pos);
         return TRUE;
     }
     
     function hr($match, $state, $pos) {
-        $this->__addCall('hr',array(),$pos);
+        $this->_addCall('hr',array(),$pos);
         return TRUE;
     }
     
-    function __nestingTag($match, $state, $pos, $name) {
+    function _nestingTag($match, $state, $pos, $name) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
-                $this->__addCall($name.'_open', array(), $pos);
+                $this->_addCall($name.'_open', array(), $pos);
             break;
             case DOKU_LEXER_EXIT:
-                $this->__addCall($name.'_close', array(), $pos);
+                $this->_addCall($name.'_close', array(), $pos);
             break;
             case DOKU_LEXER_UNMATCHED:
-                $this->__addCall('cdata',array($match), $pos);
+                $this->_addCall('cdata',array($match), $pos);
             break;
         }
     }
     
     function strong($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'strong');
+        $this->_nestingTag($match, $state, $pos, 'strong');
         return TRUE;
     }
     
     function emphasis($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'emphasis');
+        $this->_nestingTag($match, $state, $pos, 'emphasis');
         return TRUE;
     }
     
     function underline($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'underline');
+        $this->_nestingTag($match, $state, $pos, 'underline');
         return TRUE;
     }
     
     function monospace($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'monospace');
+        $this->_nestingTag($match, $state, $pos, 'monospace');
         return TRUE;
     }
     
     function subscript($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'subscript');
+        $this->_nestingTag($match, $state, $pos, 'subscript');
         return TRUE;
     }
     
     function superscript($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'superscript');
+        $this->_nestingTag($match, $state, $pos, 'superscript');
         return TRUE;
     }
     
     function deleted($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'deleted');
+        $this->_nestingTag($match, $state, $pos, 'deleted');
         return TRUE;
     }
     
     
     function footnote($match, $state, $pos) {
-        $this->__nestingTag($match, $state, $pos, 'footnote');
+        $this->_nestingTag($match, $state, $pos, 'footnote');
         return TRUE;
     }
     
@@ -173,19 +173,19 @@ class Doku_Handler {
             case DOKU_LEXER_ENTER:
                 $ReWriter = & new Doku_Handler_List($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
-                $this->__addCall('list_open', array($match), $pos);
+                $this->_addCall('list_open', array($match), $pos);
             break;
             case DOKU_LEXER_EXIT:
-                $this->__addCall('list_close', array(), $pos);
+                $this->_addCall('list_close', array(), $pos);
                 $this->CallWriter->process();
                 $ReWriter = & $this->CallWriter;
                 $this->CallWriter = & $ReWriter->CallWriter;
             break;
             case DOKU_LEXER_MATCHED:
-                $this->__addCall('list_item', array($match), $pos);
+                $this->_addCall('list_item', array($match), $pos);
             break;
             case DOKU_LEXER_UNMATCHED:
-                $this->__addCall('cdata', array($match), $pos);
+                $this->_addCall('cdata', array($match), $pos);
             break;
         }
         return TRUE;
@@ -193,21 +193,21 @@ class Doku_Handler {
     
     function unformatted($match, $state, $pos) {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->__addCall('unformatted',array($match), $pos);
+            $this->_addCall('unformatted',array($match), $pos);
         }
         return TRUE;
     }
     
     function php($match, $state, $pos) {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->__addCall('php',array($match), $pos);
+            $this->_addCall('php',array($match), $pos);
         }
         return TRUE;
     }
     
     function html($match, $state, $pos) {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->__addCall('html',array($match), $pos);
+            $this->_addCall('html',array($match), $pos);
         }
         return TRUE;
     }
@@ -217,19 +217,19 @@ class Doku_Handler {
             case DOKU_LEXER_ENTER:
                 $ReWriter = & new Doku_Handler_Preformatted($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
-                $this->__addCall('preformatted_start',array(), $pos);
+                $this->_addCall('preformatted_start',array(), $pos);
             break;
             case DOKU_LEXER_EXIT:
-                $this->__addCall('preformatted_end',array(), $pos);
+                $this->_addCall('preformatted_end',array(), $pos);
                 $this->CallWriter->process();
                 $ReWriter = & $this->CallWriter;
                 $this->CallWriter = & $ReWriter->CallWriter;
             break;
             case DOKU_LEXER_MATCHED:
-                $this->__addCall('preformatted_newline',array(), $pos);
+                $this->_addCall('preformatted_newline',array(), $pos);
             break;
             case DOKU_LEXER_UNMATCHED:
-                $this->__addCall('preformatted_content',array($match), $pos);
+                $this->_addCall('preformatted_content',array($match), $pos);
             break;
         }
         
@@ -238,7 +238,7 @@ class Doku_Handler {
     
     function file($match, $state, $pos) {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->__addCall('file',array($match), $pos);
+            $this->_addCall('file',array($match), $pos);
         }
         return TRUE;
     }
@@ -250,22 +250,22 @@ class Doku_Handler {
             case DOKU_LEXER_ENTER:
                 $ReWriter = & new Doku_Handler_Quote($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
-                $this->__addCall('quote_start',array($match), $pos);
+                $this->_addCall('quote_start',array($match), $pos);
             break;
             
             case DOKU_LEXER_EXIT:
-                $this->__addCall('quote_end',array(), $pos);
+                $this->_addCall('quote_end',array(), $pos);
                 $this->CallWriter->process();
                 $ReWriter = & $this->CallWriter;
                 $this->CallWriter = & $ReWriter->CallWriter;
             break;
             
             case DOKU_LEXER_MATCHED:
-                $this->__addCall('quote_newline',array($match), $pos);
+                $this->_addCall('quote_newline',array($match), $pos);
             break;
             
             case DOKU_LEXER_UNMATCHED:
-                $this->__addCall('cdata',array($match), $pos);
+                $this->_addCall('cdata',array($match), $pos);
             break;
             
         }
@@ -283,7 +283,7 @@ class Doku_Handler {
                 }
                 # $matches[0] contains name of programming language
                 # if available
-                $this->__addCall(
+                $this->_addCall(
                         'code',
                         array($matches[1],$matches[0]),
                         $pos
@@ -294,53 +294,53 @@ class Doku_Handler {
     }
     
     function acronym($match, $state, $pos) {
-        $this->__addCall('acronym',array($match), $pos);
+        $this->_addCall('acronym',array($match), $pos);
         return TRUE;
     }
     
     function smiley($match, $state, $pos) {
-        $this->__addCall('smiley',array($match), $pos);
+        $this->_addCall('smiley',array($match), $pos);
         return TRUE;
     }
     
     function wordblock($match, $state, $pos) {
-        $this->__addCall('wordblock',array($match), $pos);
+        $this->_addCall('wordblock',array($match), $pos);
         return TRUE;
     }
     
     function entity($match, $state, $pos) {
-        $this->__addCall('entity',array($match), $pos);
+        $this->_addCall('entity',array($match), $pos);
         return TRUE;
     }
     
     function multiplyentity($match, $state, $pos) {
         preg_match_all('/\d+/',$match,$matches);
-        $this->__addCall('multiplyentity',array($matches[0][0],$matches[0][1]), $pos);
+        $this->_addCall('multiplyentity',array($matches[0][0],$matches[0][1]), $pos);
         return TRUE;
     }
     
     function singlequoteopening($match, $state, $pos) {
-        $this->__addCall('singlequoteopening',array(), $pos);
+        $this->_addCall('singlequoteopening',array(), $pos);
         return TRUE;
     }
     
     function singlequoteclosing($match, $state, $pos) {
-        $this->__addCall('singlequoteclosing',array(), $pos);
+        $this->_addCall('singlequoteclosing',array(), $pos);
         return TRUE;
     }
     
     function doublequoteopening($match, $state, $pos) {
-        $this->__addCall('doublequoteopening',array(), $pos);
+        $this->_addCall('doublequoteopening',array(), $pos);
         return TRUE;
     }
     
     function doublequoteclosing($match, $state, $pos) {
-        $this->__addCall('doublequoteclosing',array(), $pos);
+        $this->_addCall('doublequoteclosing',array(), $pos);
         return TRUE;
     }
     
     function camelcaselink($match, $state, $pos) {
-        $this->__addCall('camelcaselink',array($match), $pos);
+        $this->_addCall('camelcaselink',array($match), $pos);
         return TRUE;
     }
     
@@ -365,35 +365,35 @@ class Doku_Handler {
         if ( preg_match('/^[a-zA-Z]+>{1}[\w()\/\\#~:.?+=&%@!\-;,]+$/u',$link[0]) ) {
 	      // Interwiki
             $interwiki = preg_split('/>/u',$link[0]);
-            $this->__addCall(
+            $this->_addCall(
                 'interwikilink',
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
                 $pos
                 );
 				}elseif ( preg_match('/\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
 				// Windows Share
-            $this->__addCall(
+            $this->_addCall(
                 'windowssharelink',
                 array($link[0],$link[1]),
                 $pos
                 );
 				}elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
 				// E-Mail
-            $this->__addCall(
+            $this->_addCall(
                 'emaillink',
                 array($link[0],$link[1]),
                 $pos
                 );
         }elseif ( preg_match('#^([a-z0-9]+?)://#i',$link[0]) ) {
         // external link (accepts all protocols)
-            $this->__addCall(
+            $this->_addCall(
                     'externallink',
                     array($link[0],$link[1]),
                     $pos
                     );
         }else{
         // internal link
-            $this->__addCall(
+            $this->_addCall(
                 'internallink',
                 array($link[0],$link[1]),
                 $pos
@@ -404,19 +404,19 @@ class Doku_Handler {
     }
     
     function filelink($match, $state, $pos) {
-        $this->__addCall('filelink',array($match, NULL), $pos);
+        $this->_addCall('filelink',array($match, NULL), $pos);
         return TRUE;
     }
     
     function windowssharelink($match, $state, $pos) {
-        $this->__addCall('windowssharelink',array($match, NULL), $pos);
+        $this->_addCall('windowssharelink',array($match, NULL), $pos);
         return TRUE;
     }
     
     function media($match, $state, $pos) {
         $p = Doku_Handler_Parse_Media($match);
         
-        $this->__addCall(
+        $this->_addCall(
               $p['type'],
               array($p['src'], $p['title'], $p['align'], $p['width'], $p['height'], $p['cache']),
               $pos
@@ -426,7 +426,7 @@ class Doku_Handler {
 
     function rss($match, $state, $pos) {
         $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
-        $this->__addCall('rss',array($link),$pos);
+        $this->_addCall('rss',array($link),$pos);
     }
     
     function externallink($match, $state, $pos) {
@@ -434,17 +434,17 @@ class Doku_Handler {
         // See: http://www.boingboing.net/2005/02/06/shmoo_group_exploit_.html
         // Not worried about other charsets so long as page is output as UTF-8
         /*if ( strlen($match) != utf8_strlen($match) ) {
-            $this->__addCall('cdata',array($match), $pos);
+            $this->_addCall('cdata',array($match), $pos);
         } else {*/
             
-            $this->__addCall('externallink',array($match, NULL), $pos);
+            $this->_addCall('externallink',array($match, NULL), $pos);
         //}
         return TRUE;
     }
     
     function emaillink($match, $state, $pos) {
         $email = preg_replace(array('/^</','/>$/'),'',$match);
-        $this->__addCall('emaillink',array($email, NULL), $pos);
+        $this->_addCall('emaillink',array($email, NULL), $pos);
         return TRUE;
     }
     
@@ -456,17 +456,17 @@ class Doku_Handler {
                 $ReWriter = & new Doku_Handler_Table($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
                 
-                $this->__addCall('table_start', array(), $pos);
-                //$this->__addCall('table_row', array(), $pos);
+                $this->_addCall('table_start', array(), $pos);
+                //$this->_addCall('table_row', array(), $pos);
                 if ( trim($match) == '^' ) {
-                    $this->__addCall('tableheader', array(), $pos);
+                    $this->_addCall('tableheader', array(), $pos);
                 } else {
-                    $this->__addCall('tablecell', array(), $pos);
+                    $this->_addCall('tablecell', array(), $pos);
                 }
             break;
             
             case DOKU_LEXER_EXIT:
-                $this->__addCall('table_end', array(), $pos);
+                $this->_addCall('table_end', array(), $pos);
                 $this->CallWriter->process();
                 $ReWriter = & $this->CallWriter;
                 $this->CallWriter = & $ReWriter->CallWriter;
@@ -474,23 +474,23 @@ class Doku_Handler {
             
             case DOKU_LEXER_UNMATCHED:
                 if ( trim($match) != '' ) {
-                    $this->__addCall('cdata',array($match), $pos);
+                    $this->_addCall('cdata',array($match), $pos);
                 }
             break;
             
             case DOKU_LEXER_MATCHED:
                 if ( preg_match('/.{2}/',$match) ) {
-                    $this->__addCall('table_align', array($match), $pos);
+                    $this->_addCall('table_align', array($match), $pos);
                 } else if ( $match == "\n|" ) {
-                    $this->__addCall('table_row', array(), $pos);
-                    $this->__addCall('tablecell', array(), $pos);
+                    $this->_addCall('table_row', array(), $pos);
+                    $this->_addCall('tablecell', array(), $pos);
                 } else if ( $match == "\n^" ) {
-                    $this->__addCall('table_row', array(), $pos);
-                    $this->__addCall('tableheader', array(), $pos);
+                    $this->_addCall('table_row', array(), $pos);
+                    $this->_addCall('tableheader', array(), $pos);
                 } else if ( $match == '|' ) {
-                    $this->__addCall('tablecell', array(), $pos);
+                    $this->_addCall('tablecell', array(), $pos);
                 } else if ( $match == '^' ) {
-                    $this->__addCall('tableheader', array(), $pos);
+                    $this->_addCall('tableheader', array(), $pos);
                 }
             break;
         }
