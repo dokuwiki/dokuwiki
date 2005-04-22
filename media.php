@@ -6,7 +6,6 @@
   require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
   require_once(DOKU_INC.'inc/html.php');
   require_once(DOKU_INC.'inc/search.php');
-  require_once(DOKU_INC.'inc/format.php');
   require_once(DOKU_INC.'inc/template.php');
   require_once(DOKU_INC.'inc/auth.php');
 
@@ -44,7 +43,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_upload($NS){
-  global $conf;
+	require_once(DOKU_INC.'inc/confutils.php');
   global $lang;
 
   // get file
@@ -54,13 +53,18 @@ function media_upload($NS){
   if(empty($id)) $id = $file['name'];
   $id   = cleanID($NS.':'.$id);
   // get filename
-  $fn   = utf8_encodeFN(str_replace(':','/',$id));
-  $fn   = $conf['mediadir'].'/'.$fn;
-  // prepare directory
-  io_makeFileDir($fn);
+  $fn   = mediaFN($id);
+
+  // get filetype regexp
+	$types = array_keys(getMimeTypes());
+	$types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
+  $regex = join('|',$types);
+
 
   umask($conf['umask']);
-  if(preg_match('/\.('.$conf['uploadtypes'].')$/i',$fn)){
+  if(preg_match('/\.('.$regex.')$/i',$fn)){
+  	// prepare directory
+  	io_makeFileDir($fn);
     if (move_uploaded_file($file['tmp_name'], $fn)) {
       msg($lang['uploadsucc'],1);
       return true;

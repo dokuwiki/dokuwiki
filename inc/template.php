@@ -492,15 +492,18 @@ function tpl_mediafilelist(){
          utf8_decodeFN($item['file']).
          '</a>',6);
     if($item['isimg']){
-      ptln('('.$item['info'][0].'&#215;'.$item['info'][1].
-           ' '.filesize_h($item['size']).')<br />',6);
+      $w = $item['info'][0];
+      $h = $item['info'][1];
 
-      # build thumbnail
-      $link=array();
-      $link['name']=$item['id'];
-      if($item['info'][0]>120) $link['name'] .= '?120';
-      $link = format_link_media($link);
-      ptln($link['name'],6);
+      ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')<br />',6);
+      ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">');
+
+      if($w>120){
+        print '<img src="'.DOKU_BASE.'fetch.php?w=120&amp;media='.urlencode($item['id']).'" width="120" />';
+      }else{
+        print '<img src="'.DOKU_BASE.'fetch.php?media='.urlencode($item['id']).'" width="'.$w.'" height="'.$h.'" />';
+      }
+      print '</a>';
 
     }else{
       ptln ('('.filesize_h($item['size']).')',6);
