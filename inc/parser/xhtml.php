@@ -388,7 +388,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
       $this->internallink($link,$link); 
     }
     
-    function internallink($id, $name = NULL, $search=NULL) {
+    /**
+     * $search and $returnonly are not for the renderer but are used
+     * elsewhere - no need to implement them in other renderers
+     */
+    function internallink($id, $name = NULL, $search=NULL,$returnonly=false) {
         global $conf;
         global $ID;
 
@@ -423,7 +427,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //output formatted
-        echo $this->_formatLink($link);
+        if($returnonly){
+            return $this->_formatLink($link);
+        }else{
+            echo $this->_formatLink($link);
+        }
     }
     
     function externallink($url, $name = NULL) {

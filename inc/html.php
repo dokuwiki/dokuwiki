@@ -22,7 +22,7 @@ function html_wikilink($id,$name='',$search=''){
     $xhtml_renderer = new Doku_Renderer_xhtml(); 
   }
 
-  return $xhtml_renderer->internallink($id,$name,$search);
+  return $xhtml_renderer->internallink($id,$name,$search,true);
 }
 
 /**
@@ -396,6 +396,8 @@ function html_revisions(){
   print '<ul>';
   if($INFO['exists']){
     print '<li>';
+    print '<img src="'.DOKU_BASE.'images/blank.gif" border="0" width="15" height="11" alt="" /> ';
+
     print $date.' <a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 
     print $INFO['sum'];
@@ -413,16 +415,17 @@ function html_revisions(){
     $info = getRevisionInfo($ID,$rev);
 
     print '<li>';
+    print '<a href="'.wl($ID,"rev=$rev,do=diff").'">';
+    print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    print '</a> ';
+
     print $date.' <a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
     print $info['sum'];
     print ' <span class="user">(';
     print $info['ip'];
     if($info['user']) print ' '.$info['user'];
-    print ')</span> ';
+    print ')</span>';
 
-    print '<a href="'.wl($ID,"rev=$rev,do=diff").'">';
-    print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
-    print '</a>';
     print '</li>';
   }
   print '</ul>';
@@ -435,6 +438,7 @@ function html_revisions(){
  */
 function html_recent(){
   global $conf;
+  global $lang;
   $recents = getRecents(0,true);
 
   print p_locale_xhtml('recent');
@@ -442,12 +446,23 @@ function html_recent(){
   foreach(array_keys($recents) as $id){
     $date = date($conf['dformat'],$recents[$id]['date']);
     print '<li>';
+
+    print '<a href="'.wl($id,"do=diff").'">';
+    print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    print '</a> ';
+
+    print '<a href="'.wl($id,"do=revisions").'">';
+    print '<img src="'.DOKU_BASE.'images/history.png" border="0" width="12" height="14" title="'.$lang['btn_revs'].'" />';
+    print '</a> ';
+
+
     print $date.' '.html_wikilink($id,$id);
-    print ' '.htmlspecialchars($recents[$id]['sum']);
+    print htmlspecialchars($recents[$id]['sum']);
     print ' <span class="user">(';
     print $recents[$id]['ip'];
     if($recents[$id]['user']) print ' '.$recents[$id]['user'];
     print ')</span>';
+
     print '</li>';
   }
   print '</ul>';
