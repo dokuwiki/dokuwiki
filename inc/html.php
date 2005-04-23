@@ -633,10 +633,18 @@ function html_diff($text='',$intro=true){
               $lang['current'];
     $right = $lang['yours'];
   }else{
-    $df  = new Diff(split("\n",htmlspecialchars(rawWiki($ID,$REV))),
+    if($REV){
+      $r = $REV;
+    }else{
+      //use last revision if none given
+      $revs = getRevisions($ID);
+      $r = $revs[0];
+    }
+
+    $df  = new Diff(split("\n",htmlspecialchars(rawWiki($ID,$r))),
                     split("\n",htmlspecialchars(rawWiki($ID,''))));
-    $left  = '<a class="wikilink1" href="'.wl($ID,"rev=$REV").'">'.
-              $ID.' '.date($conf['dformat'],$REV).'</a>';
+    $left  = '<a class="wikilink1" href="'.wl($ID,"rev=$r").'">'.
+              $ID.' '.date($conf['dformat'],$r).'</a>';
     $right = '<a class="wikilink1" href="'.wl($ID).'">'.
               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
               $lang['current'];

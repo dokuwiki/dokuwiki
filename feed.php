@@ -8,10 +8,10 @@
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
   require_once(DOKU_INC.'inc/init.php');
-  require_once("inc/common.php");
-  require_once("inc/parser.php");
-  require_once("inc/feedcreator.class.php");
-  require_once("inc/auth.php");
+  require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'inc/parserutils.php');
+  require_once(DOKU_INC.'inc/feedcreator.class.php');
+  require_once(DOKU_INC.'inc/auth.php');
 
   //set auth header for login
   if($_REQUEST['login'] && !isset($_SERVER['PHP_AUTH_USER'])){
@@ -21,10 +21,11 @@
   }
 
 
-  $num  = $_REQUEST['num'];
-  $type = $_REQUEST['type'];
-  $mode = $_REQUEST['mode'];
-  $ns   = $_REQUEST['ns'];
+  $num   = $_REQUEST['num'];
+  $type  = $_REQUEST['type'];
+  $mode  = $_REQUEST['mode'];
+  $ns    = $_REQUEST['ns'];
+  $ltype = $_REQUEST['linkto'];
 
   switch ($type){
     case 'rss':
@@ -62,11 +63,11 @@
   if($mode == 'list'){
     rssListNamespace($rss,$ns);
   }else{
-    rssRecentChanges($rss,$num);
+    rssRecentChanges($rss,$num,$ltype);
   }
 
-  header('Content-Type: application/xml; charset='.$lang['encoding']);
-  print $rss->createFeed($type,$lang['encoding']);
+  header('Content-Type: application/xml; charset=utf-8');
+  print $rss->createFeed($type,'utf-8');
 
 // ---------------------------------------------------------------- //
 
@@ -75,16 +76,27 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rssRecentChanges(&$rss,$num){
+function rssRecentChanges(&$rss,$num,$ltype){
   $recents = getRecents($num);
   foreach(array_keys($recents) as $id){
-    $desc = cleanDesc(parsedWiki($id));
+    $desc = cleanDesc(p_wiki_xhtml($id,'',false));
     $item = new FeedItem();
     $item->title       = $id;
     if(!empty($recents[$id]['sum'])){
       $item->title .= ': '.strip_tags($recents[$id]['sum']);
     }
-    $item->link        = wl($id,'rev='.$recents[$id]['date'],true);
+		
+		switch ($ltype){
+			case 'page':
+    		$item->link = wl($id,'rev='.$recents[$id]['date'],true);
+				break;
+			case 'rev':
+				$item->link = wl($id,'do=revisions&amp;rev='.$recents[$id]['date'],true);
+				break;
+			default:
+				$item->link = wl($id,'do=diff&amp;'.$recents[$id]['date'],true);
+		}
+
     $item->description = $desc;
     $item->date        = date('r',$recents[$id]['date']);
     if(strpos($id,':')!==false){
@@ -121,7 +133,7 @@ function rssListNamespace(&$rss,$ns){
   foreach($data as $row){
     $id = $row['id'];
     $date = filemtime(wikiFN($id));
-    $desc = cleanDesc(parsedWiki($id));
+    $desc = cleanDesc(p_wiki_xhtml($id,'',false));
     $item = new FeedItem();
     $item->title       = $id;
     $item->link        = wl($id,'rev='.$date,true);
@@ -141,6 +153,7 @@ function rssListNamespace(&$rss,$ns){
  */
 function cleanDesc($desc){
   //remove TOC
+  $desc = preg_replace('!<div class="toc">.*?(</div>\n</div>)!s','',$desc);
   $desc = strip_tags($desc);
   $desc = preg_replace('/[\n\r\t]/',' ',$desc);
   $desc = preg_replace('/  /',' ',$desc);
