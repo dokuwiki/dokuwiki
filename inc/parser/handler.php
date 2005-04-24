@@ -1418,7 +1418,7 @@ class Doku_Handler_Toc {
                 $this->addTocCall(array($call[0],array($call[1][0],$i),$call[2]), DOKU_TOCBRANCH_OPEN);
                 
                 if ( $i != $depth ) {
-                    $this->addTocCall(array($call[0],array($call[1][0], $i, TRUE),$call[2]), DOKU_TOCITEM_OPEN);
+                    $this->addTocCall(array($call[0],array($call[1][0], $i, '', TRUE),$call[2]), DOKU_TOCITEM_OPEN);
                 } else {
                     $this->addTocCall(array($call[0],array($call[1][0], $i),$call[2]), DOKU_TOCITEM_OPEN);
                     $this->addTocCall(array($call[0],array($call[1][0], $i),$call[2]), DOKU_TOC_ELEMENT);
@@ -1440,7 +1440,7 @@ class Doku_Handler_Toc {
                 $this->addTocCall(array($call[0],array($call[1][0],$i),$call[2]), DOKU_TOCBRANCH_OPEN);
                 // It's just a filler
                 if ( $i != $depth ) {
-                    $this->addTocCall(array($call[0],array($call[1][0], $i, TRUE),$call[2]), DOKU_TOCITEM_OPEN);
+                    $this->addTocCall(array($call[0],array($call[1][0], $i, '', TRUE),$call[2]), DOKU_TOCITEM_OPEN);
                 } else {
                     $this->addTocCall(array($call[0],array($call[1][0], $i),$call[2]), DOKU_TOCITEM_OPEN);
                 }
@@ -1488,7 +1488,7 @@ class Doku_Handler_Toc {
             break;
             
             case DOKU_TOCITEM_OPEN:
-                if ( isset( $call[1][2] ) ) {
+                if ( isset( $call[1][3] ) ) {
                     $this->toc[] = array('tocitem_open',array($call[1][1], TRUE),$call[2]);
                 } else {
                     $this->toc[] = array('tocitem_open',array($call[1][1]),$call[2]);
@@ -1516,7 +1516,8 @@ class Doku_Handler_Toc {
     }
     
     function finalizeToc($call) {
-        if ( $this->numHeaders < 3 ) {
+        global $conf;
+        if ( $this->numHeaders < $conf['maxtoclevel'] ) {
             return;
         }
         if ( count ($this->tocStack) > 0 ) {
