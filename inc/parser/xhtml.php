@@ -905,7 +905,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     * @TODO Tuning needed - e.g. utf8 strtolower ? 
     */
     function _headerToLink($title) {
-        return preg_replace('/\W/','_',trim($title));
+        return str_replace(':','',cleanID($title));
     }
 
     /**
