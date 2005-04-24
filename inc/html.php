@@ -419,7 +419,7 @@ function html_revisions(){
     print '</a> ';
 
     print $date.' <a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
-    print $info['sum'];
+    print htmlspecialchars($info['sum']);
     print ' <span class="user">(';
     print $info['ip'];
     if($info['user']) print ' '.$info['user'];
@@ -456,7 +456,7 @@ function html_recent(){
 
 
     print $date.' '.html_wikilink($id,$id);
-    print htmlspecialchars($recents[$id]['sum']);
+    print ' '.htmlspecialchars($recents[$id]['sum']);
     print ' <span class="user">(';
     print $recents[$id]['ip'];
     if($recents[$id]['user']) print ' '.$recents[$id]['user'];
