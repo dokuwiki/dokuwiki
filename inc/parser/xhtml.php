@@ -750,8 +750,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             
             $ret .= ' class="media'.$align.'"';
         
-            if (!is_null($title))
+            if (!is_null($title)) {
                 $ret .= ' title="'.$this->_xmlEntities($title).'"';
+                $ret .= ' alt="'.$this->_xmlEntities($title).'"';
+            }else{
+                $ret .= ' alt=""';
+            }
             
             if ( !is_null($width) )
                 $ret .= ' width="'.$this->_xmlEntities($width).'"';

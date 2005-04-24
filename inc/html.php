@@ -125,14 +125,14 @@ function html_secedit_button($section,$p){
   global $ID;
   global $lang;
   $secedit  = '';
-  if($p) $secedit .= "</p>\n";
+#  if($p) $secedit .= "</p>\n";
   $secedit .= '<div class="secedit">';
   $secedit .= html_btn('secedit',$ID,'',
                         array('do'      => 'edit',
                               'lines'   => "$section"),
                               'post');
   $secedit .= '</div>';
-  if($p) $secedit .= "\n<p>";
+#  if($p) $secedit .= "\n<p>";
   return $secedit;
 }
 
@@ -153,7 +153,6 @@ function html_secedit($text,$show=true){
   }else{
     $text = preg_replace('#<!-- SECTION \[(\d*-\d*)\] -->#e','',$text);
   }
-  $text = preg_replace('@<p>\s*</p>@', '', $text);
   return $text;
 }
 

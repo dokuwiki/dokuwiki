@@ -1185,7 +1185,29 @@ class Doku_Handler_Block {
     var $stackClose = array(
         'footnote_close','section_close',
         );
-    
+   
+    function closeParagraph($pos){
+        // look back if there was any content - we don't want empty paragraphs
+        $content = '';
+        for($i=count($this->calls)-1; $i>=0; $i--){
+            if($this->calls[$i][0] == 'p_open'){
+                break;
+            }elseif($this->calls[$i][0] == 'cdata'){
+                $content .= $this->calls[$i][1][0];
+            }else{
+                $content = 'found markup';
+                break;
+            }
+        }
+ 
+        if(trim($content)==''){
+            //remove the whole paragraph
+            array_splice($this->calls,$i);
+        }else{
+            $this->calls[] = array('p_close',array(), $pos);
+        }
+    }
+ 
     function process($calls) {
         foreach ( $calls as $key => $call ) {
         
@@ -1212,7 +1234,8 @@ class Doku_Handler_Block {
             if ( in_array($call[0],$this->stackClose ) ) {
             
                 if ( $this->inParagraph ) {
-                    $this->calls[] = array('p_close',array(), $call[2]);
+                    //$this->calls[] = array('p_close',array(), $call[2]);
+                    $this->closeParagraph($call[2]);
                 }
                 $this->calls[] = $call;
                 $this->removeFromStack();
@@ -1238,7 +1261,8 @@ class Doku_Handler_Block {
                         if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
 
                             if ( $this->inParagraph ) {
-                                $this->calls[] = array('p_close',array(), $call[2]);
+                                //$this->calls[] = array('p_close',array(), $call[2]);
+                                $this->closeParagraph($call[2]);
                             }
 
                             $this->calls[] = array('p_open',array(), $call[2]);
@@ -1260,7 +1284,8 @@ class Doku_Handler_Block {
                     $storeCall = TRUE;
                     
                     if ( $this->inParagraph && in_array($call[0], $this->blockOpen) ) {
-                        $this->calls[] = array('p_close',array(), $call[2]);
+                        //$this->calls[] = array('p_close',array(), $call[2]);
+                        $this->closeParagraph($call[2]);
                         $this->inParagraph = FALSE;
                         $this->calls[] = $call;
                         $storeCall = FALSE;
@@ -1268,7 +1293,8 @@ class Doku_Handler_Block {
                     
                     if ( in_array($call[0], $this->blockClose) ) {
                         if ( $this->inParagraph ) {
-                            $this->calls[] = array('p_close',array(), $call[2]);
+                            //$this->calls[] = array('p_close',array(), $call[2]);
+                            $this->closeParagraph($call[2]);
                             $this->inParagraph = FALSE;
                         }
                         if ( $storeCall ) {
@@ -1320,10 +1346,12 @@ class Doku_Handler_Block {
                 // Ditch the last call
                 array_pop($this->calls);
             } else if ( !in_array($call[0], $this->blockClose) ) {
-                $this->calls[] = array('p_close',array(), $call[2]);
+                //$this->calls[] = array('p_close',array(), $call[2]);
+                $this->closeParagraph($call[2]);
             } else {
                 $last_call = array_pop($this->calls);
-                $this->calls[] = array('p_close',array(), $call[2]);
+                //$this->calls[] = array('p_close',array(), $call[2]);
+                $this->closeParagraph($call[2]);
                 $this->calls[] = $last_call;
             }
         }

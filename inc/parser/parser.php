@@ -165,10 +165,11 @@ class Doku_Parser_Mode_Footnote extends Doku_Parser_Mode {
 class Doku_Parser_Mode_Header extends Doku_Parser_Mode {
     
     function preConnect() {
+        //we're not picky about the closing ones, two are enough
         
         // Header 1 is special case - match 6 or more
         $this->Lexer->addSpecialPattern(
-                            '[ \t]*={6,}[^\n]+={6,}[ \t]*\n',
+                            '[ \t]*={6,}[^\n]+={2,}[ \t]*\n',
                             'base',
                             'header'
                         );
@@ -176,7 +177,7 @@ class Doku_Parser_Mode_Header extends Doku_Parser_Mode {
         // For the rest, match exactly
         for ( $i = 5; $i > 1; $i--) {
             $this->Lexer->addSpecialPattern(
-                                '[ \t]*={'.$i.'}[^\n]+={'.$i.'}[ \t]*\n',
+                                '[ \t]*={'.$i.'}[^\n]+={2,}[ \t]*\n',
                                 'base',
                                 'header'
                             );
