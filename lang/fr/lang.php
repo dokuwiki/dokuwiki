@@ -8,6 +8,7 @@
  * @author     cumulus <pta-n56@myamail.com>
  * @author     Gwenn Gueguen <contact@demisel.net>
  * @author     Guy Brand <gb@isis.u-strasbg.fr>
+ * @author     Fabien Chabreuil <fabien@integralpersonality.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -40,7 +41,7 @@ $lang['badlogin']   = 'L\'utilisateur ou le mot de passe est incorrect.';
 
 $lang['regmissing'] = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists'] = 'Désolé, ce login appartient déjà à un autre utilisateur.';
-$lang['regsuccess'] = 'L\'utilisateur a été créé. Le mot de passe a été expédié par mél.';
+$lang['regsuccess'] = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regmailfail'] = 'Il semble y avoir un problème à l\'envoi du mail. Contactez l\'administrateur.';
 $lang['regbadmail']  = 'L\'adresse mail semble incorrecte - Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regpwmail']   = 'Votre mot de passe DokuWiki';
