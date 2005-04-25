@@ -15,7 +15,7 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_wikilink($id,$name='',$search=''){
+function html_wikilink($id,$name=NULL,$search=''){
   require_once(DOKU_INC.'inc/parser/xhtml.php');
   static $xhtml_renderer = NULL;
   if(is_null($xhtml_renderer)){
@@ -478,6 +478,7 @@ function html_index($ns){
   global $ID;
   $dir = $conf['datadir'];
   $ns  = cleanID($ns);
+  #fixme use appropriate function
   if(empty($ns)){
     $ns = dirname(str_replace(':','/',$ID));
     if($ns == '.') $ns ='';
