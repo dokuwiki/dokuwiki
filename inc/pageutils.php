@@ -35,7 +35,7 @@ function cleanID($id){
   $id = utf8_stripspecials($id,'_','_:.-');
 
   //clean up
-  $id = preg_replace('#__#','_',$id);
+  $id = preg_replace('#_+#','_',$id);
   $id = preg_replace('#:+#',':',$id);
   $id = trim($id,':._-');
   $id = preg_replace('#:[:\._\-]+#',':',$id);
