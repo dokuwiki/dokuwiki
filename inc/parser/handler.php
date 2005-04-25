@@ -354,15 +354,14 @@ class Doku_Handler {
         $link = preg_split('/\|/u',$link,2);
         if ( !isset($link[1]) ) {
             $link[1] = NULL;
-        
-        // If the title is an image, convert it to an array containing the image details
         } else if ( preg_match('/^\{\{[^\}]+\}\}$/',$link[1]) ) {
+            // If the title is an image, convert it to an array containing the image details
             $link[1] = Doku_Handler_Parse_Media($link[1]);
         }
 
         //decide which kind of link it is
 
-        if ( preg_match('/^[a-zA-Z]+>{1}[\w()\/\\#~:.?+=&%@!\-;,]+$/u',$link[0]) ) {
+        if ( preg_match('/^[a-zA-Z]+>{1}.+$/u',$link[0]) ) {
 	      // Interwiki
             $interwiki = preg_split('/>/u',$link[0]);
             $this->_addCall(
