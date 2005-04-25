@@ -260,7 +260,7 @@ function html_show($txt=''){
   global $REV;
   global $HIGH;
   //disable section editing for old revisions or in preview
-  if($text || $REV){
+  if($txt || $REV){
     $secedit = false;
   }else{
     $secedit = true;
