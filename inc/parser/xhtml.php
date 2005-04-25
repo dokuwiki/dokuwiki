@@ -424,6 +424,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['pre']    = '';
         $link['suf']    = '';
+        // highlight link to current page
+        if ($id == $ID) {
+	  $link['pre']    = '<strong>';
+	  $link['suf']    = '</strong>';
+	}
         $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
         $link['class']  = $class;
         $link['url']    = wl($id);

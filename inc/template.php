@@ -351,10 +351,16 @@ function tpl_breadcrumbs(){
   if(!$conf['breadcrumbs']) return;
 
   $crumbs = breadcrumbs(); //setup crumb trace
+  //render crumbs, highlight the last one
   print $lang['breadcrumb'].':';
+  $last = count($crumbs);
+  $i = 0;
   foreach ($crumbs as $id => $name){
+    $i++;
     print ' &raquo; ';
+    if ($i == $last) print '<strong>';
     tpl_link(wl($id),$name,'class="breadcrumbs" title="'.$id.'"');
+    if ($i == $last) print '</strong>';
   }
 }
 
