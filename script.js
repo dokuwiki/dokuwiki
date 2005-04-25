@@ -330,8 +330,8 @@ function showSizeCtl(){
     }else{
       textarea.style.height = hgt;
     }
-    document.writeln('<a href="javascript:sizeCtl(100)"><img src="'+DOKU_BASE+'images/larger.png" width="20" height="20" border="0"></a>');
-    document.writeln('<a href="javascript:sizeCtl(-100)"><img src="'+DOKU_BASE+'images/smaller.png" width="20" height="20" border="0"></a>');
+    document.writeln('<a href="javascript:sizeCtl(100)"><img src="'+DOKU_BASE+'images/larger.gif" width="20" height="20" border="0"></a>');
+    document.writeln('<a href="javascript:sizeCtl(-100)"><img src="'+DOKU_BASE+'images/smaller.gif" width="20" height="20" border="0"></a>');
   }
 }
 
