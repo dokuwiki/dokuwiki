@@ -163,7 +163,7 @@ function admin_acl_html(){
 
   print p_locale_xhtml('admin_acl');
 
-  ptln('<div class="acladmin"');
+  ptln('<div class="acladmin">');
   ptln('<table class="inline">');
 
   //new
@@ -214,7 +214,7 @@ function admin_acl_html_dropdown($id){
   $att = array( 'name'  => 'acl_scope',
                 'class' => 'edit',
                 'title' => $lang['page'].'/'.$lang['namespace']);
-  $ret .= '<select '.html_attbuild($att).' />';
+  $ret .= '<select '.html_attbuild($att).'>';
   foreach($opt as $o){
     $ret .= '<option value="'.$o['key'].'"'.$o['sel'].'>'.$o['val'].'</option>';
   }
@@ -268,7 +268,7 @@ function admin_acl_html_new(){
 
   ptln(     admin_acl_html_checkboxes(0,false),8);
 
-  ptln('    <input type="submit" class="edit" value="'.$lang['btn_save'].'" \>',4);
+  ptln('    <input type="submit" class="edit" value="'.$lang['btn_save'].'" />',4);
   ptln('  </form>');
 
 
@@ -323,7 +323,7 @@ function admin_acl_html_current($id,$permissions){
     }
 
     ptln('<tr>',2);
-    ptln('<td class="leftalign">'.$group.' '.$name.'</th>',4);
+    ptln('<td class="leftalign">'.$group.' '.$name.'</td>',4);
 
     // update form
     ptln('<td class="centeralign">',4);
@@ -335,7 +335,7 @@ function admin_acl_html_current($id,$permissions){
     ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
     ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
     ptln(     admin_acl_html_checkboxes($conf['perm'],$ispage),8);
-    ptln('    <input type="submit" class="edit" value="'.$lang['btn_update'].'" \>',4);
+    ptln('    <input type="submit" class="edit" value="'.$lang['btn_update'].'" />',4);
     ptln('  </form>');
     ptln('</td>',4);
 
@@ -352,7 +352,7 @@ function admin_acl_html_current($id,$permissions){
     ptln('    <input type="hidden" name="acl_scope" value="'.formtext($id).'" />',4);
     ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
     ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
-    ptln('    <input type="submit" class="edit" value="'.$lang['btn_delete'].'" \>',4);
+    ptln('    <input type="submit" class="edit" value="'.$lang['btn_delete'].'" />',4);
     ptln('  </form>',4);
     ptln('</td>',4);
 
