@@ -395,9 +395,12 @@ function html_revisions(){
   print '<ul>';
   if($INFO['exists']){
     print '<li>';
-    print '<img src="'.DOKU_BASE.'images/blank.gif" border="0" width="15" height="11" alt="" /> ';
 
-    print $date.' <a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
+    print $date;
+
+    print ' <img src="'.DOKU_BASE.'images/blank.gif" border="0" width="15" height="11" alt="" /> ';
+
+    print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 
     print $INFO['sum'];
     print ' <span class="user">(';
@@ -414,11 +417,15 @@ function html_revisions(){
     $info = getRevisionInfo($ID,$rev);
 
     print '<li>';
-    print '<a href="'.wl($ID,"rev=$rev,do=diff").'">';
+
+    print $date;
+
+    print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
     print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
     print '</a> ';
 
-    print $date.' <a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
+    print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
+
     print htmlspecialchars($info['sum']);
     print ' <span class="user">(';
     print $info['ip'];
@@ -446,6 +453,8 @@ function html_recent(){
     $date = date($conf['dformat'],$recents[$id]['date']);
     print '<li>';
 
+    print $date.' ';
+
     print '<a href="'.wl($id,"do=diff").'">';
     print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
     print '</a> ';
@@ -454,8 +463,8 @@ function html_recent(){
     print '<img src="'.DOKU_BASE.'images/history.png" border="0" width="12" height="14" title="'.$lang['btn_revs'].'" />';
     print '</a> ';
 
+    print html_wikilink($id,$id);
 
-    print $date.' '.html_wikilink($id,$id);
     print ' '.htmlspecialchars($recents[$id]['sum']);
     print ' <span class="user">(';
     print $recents[$id]['ip'];
