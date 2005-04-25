@@ -17,6 +17,8 @@
  * @deprecated -> parserutils
  */
 function io_cacheParse($file){
+  trigger_error("deprecated io_cacheParse called");
+
   global $conf;
   global $CACHEGROUP;
   global $parser; //we read parser options

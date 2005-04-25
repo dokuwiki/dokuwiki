@@ -25,8 +25,8 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
   $ret  = '';
   
   //ensure $id is in global $ID (needed for parsing)
-  global $ID;
-  $ID = $id;
+//  global $ID;
+//  $ID = $id;
 
   if($rev){
     if(@file_exists($file)){
@@ -75,7 +75,6 @@ function p_cached_xhtml($file){
       && $cachetime > @filemtime($file)                               // cache is fresh
       && ((time() - $cachetime) < $conf['cachetime'])                 // and is cachefile young enough
       && !isset($_REQUEST['purge'])                                   // no purge param was set
-
       && ($cachetime > @filemtime(DOKU_INC.'conf/dokuwiki.php'))      // newer than the config file
       && ($cachetime > @filemtime(DOKU_INC.'conf/local.php'))         // newer than the local config file
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/xhtml.php'))   // newer than the renderer
@@ -213,9 +212,9 @@ function p_get_instructions($text){
   $Parser->addMode('eol',new Doku_Parser_Mode_Eol());
   
   // Do the parsing
-  $parsed = $Parser->parse($text);
-#  dbg($parsed);
-  return $parsed;
+  $p = $Parser->parse($text);
+#  dbg($p);
+  return $p;
 }  
 
 /**
