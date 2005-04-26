@@ -1,12 +1,13 @@
 <?
 /**
- * Polish language file
-$lang['direction']  = 'ltr';
+ * polish language file 
+ * based on english one
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Grzegorz Żur <grzesiekzur@tlen.pl>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Edytuj stronę';
 $lang['btn_source'] = 'Pokaż źródło strony';
@@ -24,6 +25,9 @@ $lang['btn_index']  = 'Indeks';
 $lang['btn_secedit']= 'Edytuj';
 $lang['btn_login']  = 'Zaloguj';
 $lang['btn_logout'] = 'Wyloguj';
+$lang['btn_admin']  = 'Administracja';
+$lang['btn_update'] = 'Aktualizuj';
+$lang['btn_delete'] = 'Usuń';
 
 $lang['loggedinas'] = 'Zalogowany/a jako';
 $lang['user']       = 'Użytkownik';
@@ -31,7 +35,7 @@ $lang['pass']       = 'Hasło';
 $lang['remember']   = 'Zapamiętaj';
 $lang['fullname']   = 'Imię i nazwisko';
 $lang['email']      = 'E-mail';
-$lang['register']   = 'Zarejestruj';
+$lang['register']   = 'zarejestruj się!';
 $lang['badlogin']   = 'Nazwa użytkownika lub hasło są nieprawidłowe.';
 
 $lang['regmissing'] = 'Wypełnij wszystkie pola.';
@@ -67,7 +71,7 @@ $lang['current']    = 'aktualna';
 $lang['yours']      = 'Twoja wersja';
 $lang['diff']       = 'Pokaż różnicę między wersjami';
 $lang['line']       = 'Linia';
-$lang['breadcrumb'] = 'Ścieżka';
+$lang['breadcrumb'] = 'Ślad';
 $lang['lastmod']    = 'ostatnio zmieniane';
 $lang['by']         = 'przez';
 $lang['deleted']    = 'usunięto';
@@ -97,6 +101,22 @@ $lang['qb_ol']      = 'Numeracja';
 $lang['qb_ul']      = 'Wypunktowanie';
 $lang['qb_media']   = 'Dodaj obrazek lub inny plik';
 $lang['qb_sig']     = 'Wstaw podpis';
+
+$lang['del_confirm']= 'Usunąć wpis?';
+
+$lang['admin_acl']  = 'Zarządzanie uprawnieniami...';
+
+$lang['acl_group']  = 'Grupa';
+$lang['acl_user']   = 'Użytkownik';
+$lang['acl_perms']  = 'Uprawnienia użytkownika';
+$lang['page']       = 'Strona';
+$lang['namespace']  = 'Katalog';
+
+$lang['acl_perm1']  = 'Czytanie';
+$lang['acl_perm2']  = 'Zmiana';
+$lang['acl_perm4']  = 'Tworzenie';
+$lang['acl_perm8']  = 'Przesyłanie plików';
+$lang['acl_new']    = 'Dodaj nowy wpis';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

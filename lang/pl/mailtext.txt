@@ -1,5 +1,5 @@
 Strona w Twoim DokuWiki została dodana lub zmieniona. 
-Szczegóły poniżej.
+Szczegółowe informacje:
 
 Data         : @DATE@
 Użytkownik   : @BROWSER@
@@ -14,6 +14,5 @@ User         : @USER@
 
 
 -- 
-
 List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@

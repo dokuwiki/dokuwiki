@@ -1,9 +1,9 @@
 ====== Wyszukiwanie ======
 
-Wyniki wyszukiwania znajdują się poniżej. 
+Wyniki wyszukiwania. 
 Jeżeli nie znalazłeś/aś tego czego szukasz, 
 możesz utworzyć stronę o nazwie odpowiadającej 
-szukanemu hasłu klikając ''utwórz stronę''.
+szukanemu hasłu klikając ''edytuj stronę''.
 
 ===== Wyniki =====
 

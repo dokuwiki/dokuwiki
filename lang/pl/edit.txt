@@ -1,5 +1,5 @@
 Zredaguj tę stronę i naciśnij ''zapisz''. 
 
-Na stronie [[wiki:syntax]] znajduje się opis składni wiki. 
-Jeśli chcesz poćwiczyć zajrzyj na stronę [[wiki:playground]].
+Na stronie ze [[wiki:syntax|składnią]] znajdziesz opis znaczników wiki. 
+Jeśli chcesz poćwiczyć zajrzyj do [[wiki:playground|piaskownicy]].
 
