@@ -31,8 +31,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     
     var $footnotes = array();
     
-    var $footnoteIdStack = array();
-    
     var $acronyms = array();
     var $smileys = array();
     var $badwords = array();
@@ -40,6 +38,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $interwiki = array();
 
     var $lastsec = 0;
+
+    var $store = '';
+
 
     function document_start() {
     }
@@ -195,19 +196,33 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function footnote_open() {
         $id = $this->_newFootnoteId();
         $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" class="fn_top">'.$id.')</a>';
-        $this->footnoteIdStack[] = $id;
-        ob_start();
+
+        // move current content to store and record footnote
+        $this->store = $this->doc;
+        $this->doc   = '';
+
+        $this->doc .= '<div class="fn">';
+        $this->doc .= '<a href="#fnt'.$id.'" name="fn'.$id.'" class="fn_bot">';
+        $this->doc .= $id.')</a> '.DOKU_LF;
     }
     
     function footnote_close() {
-        $contents = ob_get_contents();
-        ob_end_clean();
-        $id = array_pop($this->footnoteIdStack);
+       # $contents = ob_get_contents();
+       # ob_end_clean();
+       # $id = array_pop($this->footnoteIdStack);
         
-        $contents = '<div class="fn"><a href="#fnt'.
-            $id.'" name="fn'.$id.'" class="fn_bot">'.
-                $id.')</a> ' .DOKU_LF .$contents. "\n" . '</div>' . DOKU_LF;
-        $this->footnotes[$id] = $contents;
+       # $contents = '<div class="fn"><a href="#fnt'.
+       #     $id.'" name="fn'.$id.'" class="fn_bot">'.
+       #         $id.')</a> ' .DOKU_LF .$contents. "\n" . '</div>' . DOKU_LF;
+       # $this->footnotes[$id] = $contents;
+
+
+        $this->doc .= '</div>' . DOKU_LF;
+
+        // put recorded footnote into the stack and restore old content
+        $this->footnotes[count($this->footnotes)] = $this->doc;
+        $this->doc = $this->store;
+        $this->store = '';
     }
     
     function listu_open() {
