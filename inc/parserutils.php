@@ -25,8 +25,8 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
   $ret  = '';
   
   //ensure $id is in global $ID (needed for parsing)
-//  global $ID;
-//  $ID = $id;
+  global $ID;
+  $ID = $id;
 
   if($rev){
     if(@file_exists($file)){
