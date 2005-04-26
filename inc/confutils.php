@@ -88,10 +88,10 @@ function getEntities() {
 function getInterwiki() {
   static $wikis = NULL;
   if ( !$wikis ) {
-    $wikis = confToHash(DOKU_INC . 'conf/interwiki.conf');
+    $wikis = confToHash(DOKU_INC . 'conf/interwiki.conf',true);
   }
   //add sepecial case 'this'
-  $wikis[] = 'this '.DOKU_URL.'{NAME}';
+  $wikis['this'] = DOKU_URL.'{NAME}';
   return $wikis;
 }
 
@@ -100,7 +100,7 @@ function getInterwiki() {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function confToHash($file) {
+function confToHash($file,$lower=false) {
   $conf = array();
   $lines = @file( $file );
   if ( !$lines ) return $conf;
@@ -112,7 +112,11 @@ function confToHash($file) {
     if(empty($line)) continue;
     $line = preg_split('/\s+/',$line,2);
     // Build the associative array
-    $conf[$line[0]] = $line[1];
+    if($lower){
+      $conf[strtolower($line[0])] = $line[1];
+    }else{
+      $conf[$line[0]] = $line[1];
+    }
   }
     
   return $conf;

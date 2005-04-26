@@ -362,22 +362,22 @@ class Doku_Handler {
         //decide which kind of link it is
 
         if ( preg_match('/^[a-zA-Z]+>{1}.+$/u',$link[0]) ) {
-	      // Interwiki
+        // Interwiki
             $interwiki = preg_split('/>/u',$link[0]);
             $this->_addCall(
                 'interwikilink',
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
                 $pos
                 );
-				}elseif ( preg_match('/\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
-				// Windows Share
+        }elseif ( preg_match('/\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
+        // Windows Share
             $this->_addCall(
                 'windowssharelink',
                 array($link[0],$link[1]),
                 $pos
                 );
-				}elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
-				// E-Mail
+        }elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
+        // E-Mail
             $this->_addCall(
                 'emaillink',
                 array($link[0],$link[1]),
