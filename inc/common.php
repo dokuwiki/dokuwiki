@@ -392,7 +392,7 @@ function rawWikiSlices($range,$id,$rev=''){
   list($from,$to) = split('-',$range,2);
   $text = io_readFile(wikiFN($id,$rev));
   if(!$from) $from = 0;
-  if(!$to)   $to   = strlen($text);
+  if(!$to)   $to   = strlen($text)+1;
 
   $slices[0] = substr($text,0,$from-1);
   $slices[1] = substr($text,$from-1,$to-$from);
