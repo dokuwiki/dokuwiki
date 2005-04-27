@@ -358,9 +358,9 @@ function tpl_breadcrumbs(){
   foreach ($crumbs as $id => $name){
     $i++;
     print ' &raquo; ';
-    if ($i == $last) print '<strong>';
+    if ($i == $last) print '<span class="curid">';
     tpl_link(wl($id),$name,'class="breadcrumbs" title="'.$id.'"');
-    if ($i == $last) print '</strong>';
+    if ($i == $last) print '</span>';
   }
 }
 

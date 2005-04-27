@@ -426,9 +426,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['suf']    = '';
         // highlight link to current page
         if ($id == $ID) {
-	  $link['pre']    = '<strong>';
-	  $link['suf']    = '</strong>';
-	}
+            $link['pre']    = '<span class="curid">';
+            $link['suf']    = '</span>';
+        }
         $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
         $link['class']  = $class;
         $link['url']    = wl($id);
@@ -916,9 +916,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         return htmlspecialchars($string);
     }
     
-    /**
-    * @TODO Tuning needed - e.g. utf8 strtolower ? 
-    */
     function _headerToLink($title) {
         return str_replace(':','',cleanID($title));
     }
@@ -936,13 +933,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $isImage = FALSE;
         
         if ( is_null($title) ) {
-	  if ($conf['useheading'] && $id) {
-	    $heading = p_get_first_heading($id);
-	    if ($heading) {
-	      return $this->_xmlEntities($heading);
-	    }
-	  }
-	  return $this->_xmlEntities($default);
+            if ($conf['useheading'] && $id) {
+                $heading = p_get_first_heading($id);
+                if ($heading) {
+                    return $this->_xmlEntities($heading);
+                }
+            }
+            return $this->_xmlEntities($default);
             
         } else if ( is_string($title) ) {
             
