@@ -260,10 +260,10 @@ function p_render($mode,$instructions){
 function p_get_first_heading($id){
   $file = wikiFN($id);
   if (@file_exists($file)) {
-    $instructions = p_cached_instructions($file);
+    $instructions = p_cached_instructions($file,true);
     foreach ( $instructions as $instruction ) {
       if ($instruction[0] == 'header') {
-	return $instruction[1][0];
+        return $instruction[1][0];
       }
     }
   }
