@@ -107,7 +107,8 @@ class Doku_LexerParallelRegex {
 	 */
 	function _getCompoundedRegex() {
 		if ($this->_regex == null) {
-			for ($i = 0; $i < count($this->_patterns); $i++) {
+      $cnt = $this->_patterns;
+			for ($i = 0; $i < $cnt; $i++) {
 				
 				// Replace lookaheads / lookbehinds with marker
 				$pattern = preg_replace(

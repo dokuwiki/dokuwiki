@@ -222,7 +222,8 @@ function auth_aclcheck($id,$user,$groups){
   if(!is_array($groups)) $groups = array();
 
   //prepend groups with @
-  for($i=0; $i<count($groups); $i++){
+  $cnt = count($groups);
+  for($i=0; $i<$cnt; $i++){
     $groups[$i] = '@'.$groups[$i];
   }
   //if user is in superuser group return 255 (acl_admin)
