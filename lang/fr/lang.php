@@ -45,7 +45,7 @@ $lang['regsuccess'] = 'L\'utilisateur a été créé. Le mot de passe a été ex
 $lang['regmailfail'] = 'Il semble y avoir un problème à l\'envoi du mail. Contactez l\'administrateur.';
 $lang['regbadmail']  = 'L\'adresse mail semble incorrecte - Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regpwmail']   = 'Votre mot de passe DokuWiki';
-$lang['reghere']     = 'Vous n\'avez pas encore de compte ? Enregistrez-vous ici.';
+$lang['reghere']     = 'Vous n\'avez pas encore de compte ? Enregistrez-vous ici';
 
 $lang['txt_upload'] = 'Sélectionnez un fichier à envoyer';
 $lang['txt_filename'] = 'Donnez un "wikiname" (optionnel)';
