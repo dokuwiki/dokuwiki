@@ -456,6 +456,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         $name = $this->_getLinkTitle($name, $url, $isImage);
+
+        // add protocol on simple short URLs
+        if(substr($url,0,3) == 'ftp') $url = 'ftp://'.$url;
+        if(substr($url,0,3) == 'www') $url = 'http://'.$url;
         
         if ( !$isImage ) {
             $class='urlextern';

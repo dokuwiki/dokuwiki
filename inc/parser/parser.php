@@ -169,7 +169,7 @@ class Doku_Parser_Mode_Header extends Doku_Parser_Mode {
         
         // Header 1 is special case - match 6 or more
         $this->Lexer->addSpecialPattern(
-                            '[ \t]*={6,}[^\n]+={2,}[ \t]*\n',
+                            '[ \t]*={6,}[^\n]+={2,}[ \t]*(?=\n)',
                             'base',
                             'header'
                         );
@@ -177,7 +177,7 @@ class Doku_Parser_Mode_Header extends Doku_Parser_Mode {
         // For the rest, match exactly
         for ( $i = 5; $i > 1; $i--) {
             $this->Lexer->addSpecialPattern(
-                                '[ \t]*={'.$i.'}[^\n]+={2,}[ \t]*\n',
+                                '[ \t]*={'.$i.'}[^\n]+={2,}[ \t]*(?=\n)',
                                 'base',
                                 'header'
                             );
@@ -219,7 +219,7 @@ class Doku_Parser_Mode_Eol extends Doku_Parser_Mode {
 class Doku_Parser_Mode_HR extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('\n[ \t]*-{4,}[ \t]*\n',$mode,'hr');
+        $this->Lexer->addSpecialPattern('\n[ \t]*-{4,}[ \t]*(?=\n)',$mode,'hr');
     }
     
 }
@@ -683,11 +683,11 @@ class Doku_Parser_Mode_ExternalLink extends Doku_Parser_Mode {
         $any  = $ltrs.$gunk.$punc;
         
         foreach ( $this->schemes as $scheme ) {
-            $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?['.$punc.']*[^'.$any.']';
+            $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         }
         
-        $this->patterns[] = '\b(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?['.$punc.']*[^'.$any.']';
-        $this->patterns[] = '\b(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?['.$punc.']*[^'.$any.']';
+        $this->patterns[] = '\b(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '\b(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         
     }
     

@@ -31,7 +31,7 @@ define("DOKU_LEXER_SPECIAL", 5);
  *    when one does it's label is returned.
  *    @package Doku
  *    @subpackage Lexer
-  */
+ */
 class Doku_LexerParallelRegex {
 	var $_patterns;
 	var $_labels;
