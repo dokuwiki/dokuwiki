@@ -313,9 +313,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( is_null($language) ) {
             $this->preformatted($text);
         } else {
-            // Handle with Geshi here FIXME: strip first beginning newline
+            //strip leading blank line
+            $text = preg_replace('/^\s*?\n/','',$text);
+            // Handle with Geshi here
             require_once(DOKU_INC . 'inc/geshi.php');
             $geshi = new GeSHi($text, strtolower($language), DOKU_INC . 'inc/geshi');
+            $geshi->set_encoding('utf-8');
             $geshi->enable_classes();
             $geshi->set_header_type(GESHI_HEADER_PRE);
             $geshi->set_overall_class('code');
