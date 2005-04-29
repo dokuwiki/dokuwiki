@@ -187,7 +187,7 @@ function resolve_pageid($ns,&$page,&$exists){
   }
 
   //add hash if any
-  if(!empty($hash)) $page.'#'.$hash;
+  if(!empty($hash)) $page .= '#'.$hash;
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
