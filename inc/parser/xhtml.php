@@ -193,6 +193,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</del>';
     }
     
+    /**
+     * Callback for footnote start syntax
+     *
+     * All following content will go to the footnote instead of
+     * the document. To achive this the previous rendered content
+     * is moved to $store and $doc is cleared
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
     function footnote_open() {
         $id = $this->_newFootnoteId();
         $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" class="fn_top">'.$id.')</a>';
@@ -206,17 +215,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= $id.')</a> '.DOKU_LF;
     }
     
+    /**
+     * Callback for footnote end syntax
+     *
+     * All rendered content is moved to the $footnotes array and the old
+     * content is restored from $store again
+     *
+     * @author Andreas Gohr
+     */
     function footnote_close() {
-       # $contents = ob_get_contents();
-       # ob_end_clean();
-       # $id = array_pop($this->footnoteIdStack);
-        
-       # $contents = '<div class="fn"><a href="#fnt'.
-       #     $id.'" name="fn'.$id.'" class="fn_bot">'.
-       #         $id.')</a> ' .DOKU_LF .$contents. "\n" . '</div>' . DOKU_LF;
-       # $this->footnotes[$id] = $contents;
-
-
         $this->doc .= '</div>' . DOKU_LF;
 
         // put recorded footnote into the stack and restore old content
@@ -262,18 +269,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     /**
-    */
+     * Execute PHP code if allowed
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
     function php($text) {
         global $conf;
         if($conf['phpok']){
+            ob_start;
             eval($text);
+            $this->doc .= ob_get_contents();
+            ob_end_clean;
         }else{
             $this->file($text);
         }
     }
     
     /**
-    */
+     * Insert HTML if allowed
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
     function html($text) {
         global $conf;
         if($conf['htmlok']){
@@ -292,7 +308,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     /**
-    * @TODO Shouldn't this output <blockquote??
+    * @TODO Shouldn't this output <blockquote>?
     */
     function quote_open() {
         $this->doc .= '<div class="quote">'.DOKU_LF;
@@ -306,7 +322,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     /**
-    */
+     * Callback for code text
+     *
+     * Uses GeSHi to highlight language syntax
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
     function code($text, $language = NULL) {
         global $conf;
     
@@ -402,8 +423,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     /**
+     * Render an internal Wiki Link
+     *
      * $search and $returnonly are not for the renderer but are used
      * elsewhere - no need to implement them in other renderers
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false) {
         global $conf;
@@ -548,35 +573,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= $this->_formatLink($link);
     }
     
-    /*
-     * @deprecated not used!!!
-     * @TODO Correct the CSS class for files? (not windows)
-     * @TODO Remove hard coded URL to splitbrain.org
-    function filelink($link, $title = NULL) {
-        $this->doc .= '<a';
-        
-        $title = $this->_getLinkTitle($title, $link, $isImage);
-        
-        if ( !$isImage ) {
-            $this->doc .= ' class="windows"';
-        } else {
-            $this->doc .= ' class="media"';
-        }
-        
-        $this->doc .= ' href="'.$this->_xmlEntities($link).'"';
-        
-        $this->doc .= ' style="background: transparent url(http://wiki.splitbrain.org/images/windows.gif) 0px 1px no-repeat;"';
-        
-        $this->doc .= ' onclick="return svchk()" onkeypress="return svchk()">';
-        
-        $this->doc .= $title;
-        
-        $this->doc .= '</a>';
-    }
-    */
-    
     /**
-    */
+     */
     function windowssharelink($url, $name = NULL) {
         global $conf;
         global $lang;
@@ -720,7 +718,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-     * Renders an RSS feed using magpie
+     * Renders an RSS feed using Magpie
      * 
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -752,71 +750,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</ul>';
     }
 
-    /**
-     * Renders internal and external media
-     * 
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @todo   handle center align
-     * @todo   move to bottom
-     */
-    function _media ($src, $title=NULL, $align=NULL, $width=NULL,
-                      $height=NULL, $cache=NULL) {
-
-        $ret = '';
-
-        list($ext,$mime) = mimetype($src);
-        if(substr($mime,0,5) == 'image'){
-            //add image tag
-            $ret .= '<img src="'.DOKU_BASE.'fetch.php?w='.$width.'&amp;h='.$height.
-                    '&amp;cache='.$cache.'&amp;media='.urlencode($src).'"';
-            
-            $ret .= ' class="media'.$align.'"';
-        
-            if (!is_null($title)) {
-                $ret .= ' title="'.$this->_xmlEntities($title).'"';
-                $ret .= ' alt="'.$this->_xmlEntities($title).'"';
-            }else{
-                $ret .= ' alt=""';
-            }
-            
-            if ( !is_null($width) )
-                $ret .= ' width="'.$this->_xmlEntities($width).'"';
-        
-            if ( !is_null($height) )
-                $ret .= ' height="'.$this->_xmlEntities($height).'"';
-
-            $ret .= ' />'; 
-
-        }elseif($mime == 'application/x-shockwave-flash'){
-            //FIXME default to a higher flash version?
-
-            $ret .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'.
-                    ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0"';
-            if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
-            if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
-            $ret .= '>'.DOKU_LF;
-            $ret .= '<param name="movie" value="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'" />'.DOKU_LF;
-            $ret .= '<param name="quality" value="high" />'.DOKU_LF;
-            $ret .= '<embed src="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'"'.
-                    ' quality="high" bgcolor="#000000"';
-            if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
-            if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
-            $ret .= ' type="application/x-shockwave-flash"'.
-                    ' pluginspage="http://www.macromedia.com/shockwave/download/index.cgi'.
-                    '?P1_Prod_Version=ShockwaveFlash"></embed>'.DOKU_LF;
-            $ret .= '</object>'.DOKU_LF;
-
-        }elseif(!is_null($title)){
-            // well at least we have a title to display
-            $ret .= $this->_xmlEntities($title);
-        }else{
-            // just show the source
-            $ret .= $this->_xmlEntities($src);
-        }
-
-        return $ret;
-    }
-    
     // $numrows not yet implemented
     function table_open($maxcols = NULL, $numrows = NULL){
         $this->doc .= '<table class="inline">'.DOKU_LF;
@@ -868,8 +801,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     // Utils
 
     /**
-     * Assembles all parts defined by the link formater below
-     * Returns HTML for the link
+     * Build a link
+     *
+     * Assembles all parts defined in $link returns HTML for the link
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -913,6 +847,66 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         return preg_replace('!.*'.$nssep.'!','',$name);
     }
 
+
+    /**
+     * Renders internal and external media
+     * 
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _media ($src, $title=NULL, $align=NULL, $width=NULL,
+                      $height=NULL, $cache=NULL) {
+
+        $ret = '';
+
+        list($ext,$mime) = mimetype($src);
+        if(substr($mime,0,5) == 'image'){
+            //add image tag
+            $ret .= '<img src="'.DOKU_BASE.'fetch.php?w='.$width.'&amp;h='.$height.
+                    '&amp;cache='.$cache.'&amp;media='.urlencode($src).'"';
+            
+            $ret .= ' class="media'.$align.'"';
+        
+            if (!is_null($title)) {
+                $ret .= ' title="'.$this->_xmlEntities($title).'"';
+                $ret .= ' alt="'.$this->_xmlEntities($title).'"';
+            }else{
+                $ret .= ' alt=""';
+            }
+            
+            if ( !is_null($width) )
+                $ret .= ' width="'.$this->_xmlEntities($width).'"';
+        
+            if ( !is_null($height) )
+                $ret .= ' height="'.$this->_xmlEntities($height).'"';
+
+            $ret .= ' />'; 
+
+        }elseif($mime == 'application/x-shockwave-flash'){
+            $ret .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'.
+                    ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"';
+            if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
+            if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
+            $ret .= '>'.DOKU_LF;
+            $ret .= '<param name="movie" value="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'" />'.DOKU_LF;
+            $ret .= '<param name="quality" value="high" />'.DOKU_LF;
+            $ret .= '<embed src="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'"'.
+                    ' quality="high"';
+            if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
+            if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
+            $ret .= ' type="application/x-shockwave-flash"'.
+                    ' pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>'.DOKU_LF;
+            $ret .= '</object>'.DOKU_LF;
+
+        }elseif(!is_null($title)){
+            // well at least we have a title to display
+            $ret .= $this->_xmlEntities($title);
+        }else{
+            // just show the source
+            $ret .= $this->_xmlEntities($src);
+        }
+
+        return $ret;
+    }
     
     function _newFootnoteId() {
         static $id = 1;
@@ -929,16 +923,25 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     /**
      * Adds code for section editing button
+     *
+     * This is just aplaceholder and gets replace by the button if
+     * section editing is allowed
+     * 
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _secedit($f, $t){
         $this->doc .= '<!-- SECTION ['.$f.'-'.$t.'] -->';
     }
-    
+   
+    /**
+     * Construct a title and handle images in titles
+     *
+     * @author Harry Fuecks <harryf@gmail.com>
+     */
     function _getLinkTitle($title, $default, & $isImage, $id=NULL) {
         global $conf;
 
         $isImage = FALSE;
-        
         if ( is_null($title) ) {
             if ($conf['useheading'] && $id) {
                 $heading = p_get_first_heading($id);
@@ -947,122 +950,28 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 }
             }
             return $this->_xmlEntities($default);
-            
         } else if ( is_string($title) ) {
-            
             return $this->_xmlEntities($title);
-            
         } else if ( is_array($title) ) {
-            
             $isImage = TRUE;
             return $this->_imageTitle($title);
-        
         }
     }
     
     /**
-     * @TODO Resolve namespace on internal images
+     * Returns an HTML code for images used in link titles
+     *
+     * @todo Resolve namespace on internal images
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _imageTitle($img) {
-
-        //FIXME resolve internal links
-
         return $this->_media($img['src'],
                               $img['title'],
                               $img['align'],
                               $img['width'],
                               $img['height'],
                               $img['cache']);
-
-/*        
-        if ( $img['type'] == 'internalmedia' ) {
-            
-            // Resolve here...
-            if ( strpos($img['src'],':') ) {
-                $src = explode(':',$img['src']);
-                $src = $src[1];
-            } else {
-                $src = $img['src'];
-            }
-            
-            $imgStr = '<img class="media" src="http://wiki.splitbrain.org/media/wiki/'.$this->_xmlEntities($src).'"';
-            
-        } else {
-            
-            $imgStr = '<img class="media" src="'.$this->_xmlEntities($img['src']).'"';
-            
-        }
-        
-        if ( !is_null($img['title']) ) {
-            $imgStr .= ' alt="'.$this->_xmlEntities($img['title']).'"';
-        } else {
-            $imgStr .= ' alt=""';
-        }
-        
-        if ( !is_null($img['align']) ) {
-            $imgStr .= ' align="'.$img['align'].'"';
-        }
-        
-        if ( !is_null($img['width']) ) {
-            $imgStr .= ' width="'.$this->_xmlEntities($img['width']).'"';
-        }
-        
-        if ( !is_null($img['height']) ) {
-            $imgStr .= ' height="'.$this->_xmlEntities($img['height']).'"';
-        }
-        
-        $imgStr .= '/>';
-        
-        return $imgStr;
-*/
     }
 }
-
-/**
-* Test whether there's an image to display with this interwiki link
-*/
-function interwikiImgExists($name) {
-    
-    static $exists = array();
-    
-    if ( array_key_exists($name,$exists) ) {
-        return $exists[$name];
-    }
-    
-    if( @file_exists( DOKU. 'interwiki/'.$name.'.png') ) {
-        $exists[$name] = 'png';
-    } else if ( @file_exists( DOKU . 'interwiki/'.$name.'.gif') ) {
-        $exists[$name] = 'gif';
-    } else {
-        $exists[$name] = FALSE;
-    }
-    
-    return $exists[$name];
-}
-
-/**
- * For determining whether to use CSS class "wikilink1" or "wikilink2"
- * @todo use configinstead of DOKU_DATA
- * @deprecated -> resolve_pagename should be used
- */
-function wikiPageExists($name) {
-msg("deprecated wikiPageExists called",-1);    
-    static $pages = array();
-    
-    if ( array_key_exists($name,$pages) ) {
-        return $pages[$name];
-    }
-    
-    $file = str_replace(':','/',$name).'.txt';
-    
-    if ( @file_exists( DOKU_DATA . $file ) ) {
-        $pages[$name] = TRUE;
-    } else {
-        $pages[$name] = FALSE;
-    }
-    
-    return $pages[$name];
-}
-
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

@@ -98,7 +98,11 @@ function getInterwiki() {
 /**
  * Builds a hash from a configfile
  *
+ * If $lower is set to true all hash keys are converted to
+ * lower case.
+ *
  * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function confToHash($file,$lower=false) {
   $conf = array();

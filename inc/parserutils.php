@@ -256,7 +256,6 @@ function p_render($mode,$instructions){
  *
  * @author Jan Decaluwe <jan@jandecaluwe.com>
  */
-
 function p_get_first_heading($id){
   $file = wikiFN($id);
   if (@file_exists($file)) {
