@@ -426,6 +426,7 @@ class Doku_Handler {
     function rss($match, $state, $pos) {
         $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
         $this->_addCall('rss',array($link),$pos);
+        return TRUE;
     }
     
     function externallink($match, $state, $pos) {

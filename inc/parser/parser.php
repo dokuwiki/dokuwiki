@@ -811,8 +811,7 @@ function Doku_Parser_Substition() {
         'acronym','smiley','wordblock','entity','camelcaselink',
         'internallink','media','externallink','linebreak','emaillink',
         'windowssharelink','filelink','notoc','multiplyentity',
-        'quotes','rss'
-        
+        'quotes','rss',
     );
     return $modes;
 }
