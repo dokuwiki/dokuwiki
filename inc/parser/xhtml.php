@@ -839,14 +839,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function _simpleTitle($name){
         global $conf;
+
         if($conf['useslash']){
             $nssep = '[:;/]';
         }else{
             $nssep = '[:;]';
         }
-        return preg_replace('!.*'.$nssep.'!','',$name);
+        $name = preg_replace('!.*'.$nssep.'!','',$name);
+        //if there is a hash we use the ancor name only
+        $name = preg_replace('!.*#!','',$name);
+        return $name;
     }
-
 
     /**
      * Renders internal and external media
