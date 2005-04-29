@@ -281,28 +281,21 @@ function utf8_deaccent($string,$case=0){
 /**
  * Removes special characters (nonalphanumeric) from a UTF-8 string
  *
- * Be sure to specify all specialchars you give in $repl in $keep, too
- * or it won't work.
- *
  * This function adds the controlchars 0x00 to 0x19 to the array of
  * stripped chars (they are not included in $UTF8_SPECIAL_CHARS)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string $string The UTF8 string to strip of special chars
  * @param  string $repl   Replace special with this string
- * @param  string $keep   Special chars to keep (in UTF8)
  */
-function utf8_stripspecials($string,$repl='',$keep=''){
+function utf8_stripspecials($string,$repl=''){
   global $UTF8_SPECIAL_CHARS;
-  if($keep != ''){
-    $specials = array_diff($UTF8_SPECIAL_CHARS, utf8_to_unicode($keep));
-  }else{
-    $specials = $UTF8_SPECIAL_CHARS;
+
+  static $specials = null;
+  if(is_null($specials)){
+    $specials = preg_quote(unicode_to_utf8($UTF8_SPECIAL_CHARS), '/');
   }
 
-  $specials = unicode_to_utf8($specials);
-  $specials = preg_quote($specials, '/');
-  
   return preg_replace('/[\x00-\x19'.$specials.']/u',$repl,$string);
 }
 
@@ -522,15 +515,16 @@ $UTF8_UPPER_ACCENTS = array(
  * chars.
  *
  * The controlchars 0x00 to 0x19 are _not_ included in this array. The space 0x20 is!
+ * These chars are _not_ in the array either:  _ (0x5f), : 0x3a, . 0x2e, - 0x2d
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    utf8_stripspecials()
  */
 $UTF8_SPECIAL_CHARS = array(
   0x001a, 0x001b, 0x001c, 0x001d, 0x001e, 0x001f, 0x0020, 0x0021, 0x0022, 0x0023,
-  0x0024, 0x0025, 0x0026, 0x0027, 0x0028, 0x0029, 0x002a, 0x002b, 0x002c, 0x002d,
-  0x002e, 0x002f, 0x003a, 0x003b, 0x003c, 0x003d, 0x003e, 0x003f, 0x0040, 0x005b,
-  0x005c, 0x005d, 0x005e, 0x005f, 0x0060, 0x007b, 0x007c, 0x007d, 0x007e,
+  0x0024, 0x0025, 0x0026, 0x0027, 0x0028, 0x0029, 0x002a, 0x002b, 0x002c,
+          0x002f,         0x003b, 0x003c, 0x003d, 0x003e, 0x003f, 0x0040, 0x005b,
+  0x005c, 0x005d, 0x005e,         0x0060, 0x007b, 0x007c, 0x007d, 0x007e,
   0x007f, 0x0080, 0x0081, 0x0082, 0x0083, 0x0084, 0x0085, 0x0086, 0x0087, 0x0088,
   0x0089, 0x008a, 0x008b, 0x008c, 0x008d, 0x008e, 0x008f, 0x0090, 0x0091, 0x0092,
 	0x0093, 0x0094, 0x0095, 0x0096, 0x0097, 0x0098, 0x0099, 0x009a, 0x009b, 0x009c,
