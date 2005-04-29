@@ -12,12 +12,11 @@
 $conf['umask']       = 0111;              //set the umask for new files
 $conf['dmask']       = 0000;              //directory mask accordingly
 $conf['lang']        = 'en';              //your language
+$conf['basedir']     = '';                //relative dir to serveroot - blank for autodetection
 $conf['datadir']     = './data';          //where to store the data
 $conf['olddir']      = './attic';         //where to store old revisions
 $conf['mediadir']    = './media';         //where to store media files
-$conf['mediaweb']    = 'media';           //access to media from the web
 $conf['changelog']   = './changes.log';   //change log
-$conf['uploadtypes'] = 'gif|jpe?g|png|zip|pdf|tar(\.gz)?|tgz'; //regexp of allowed filetypes to upload
 
 /* Display Options */
 

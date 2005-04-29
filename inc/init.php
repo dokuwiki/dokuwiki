@@ -93,7 +93,11 @@ function getBaseURL($abs=false){
   //if canonical url enabled always return absolute
   if($conf['canonical']) $abs = true;
 
-  $dir = dirname($_SERVER['PHP_SELF']).'/';
+  if($conf['basedir']){
+    $dir = $conf['basedir'];
+  }else{
+    $dir = dirname($_SERVER['PHP_SELF']).'/';
+  }
 
   $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
   $dir = preg_replace('#//+#','/',$dir);
