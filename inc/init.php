@@ -95,6 +95,10 @@ function getBaseURL($abs=false){
 
   if($conf['basedir']){
     $dir = $conf['basedir'];
+  }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
+    $dir = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
+                         $_SERVER['SCRIPT_FILENAME']);
+    $dir = dirname('/'.$dir).'/';
   }else{
     $dir = dirname($_SERVER['PHP_SELF']).'/';
   }
