@@ -436,7 +436,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $name = $this->_getLinkTitle($name, $this->_simpleTitle($id), $isImage, $id);
         resolve_pageid(getNS($ID),$id,$exists);
-
         if ( !$isImage ) {
             if ( $exists ) {
                 $class='wikilink1';

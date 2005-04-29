@@ -1147,7 +1147,11 @@ class Doku_Handler_Section {
     
 }
 
-//------------------------------------------------------------------------
+/**
+ * Handler for paragraphs
+ *
+ * @author Harry Fuecks <harryf@gmail.com>
+ */
 class Doku_Handler_Block {
     
     var $calls = array();
@@ -1186,6 +1190,13 @@ class Doku_Handler_Block {
         'footnote_close','section_close',
         );
    
+    /**
+     * Close a paragraph if needed
+     *
+     * This function makes sure there are no empty paragraphs on the stack
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
     function closeParagraph($pos){
         // look back if there was any content - we don't want empty paragraphs
         $content = '';
@@ -1208,6 +1219,13 @@ class Doku_Handler_Block {
         }
     }
  
+    /**
+     * Processes the whole instruction stack to open and close paragraphs
+     *
+     * @author Harry Fuecks <harryf@gmail.com>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @todo   This thing is really messy and should be rewritten
+     */
     function process($calls) {
         foreach ( $calls as $key => $call ) {
         
@@ -1371,6 +1389,7 @@ class Doku_Handler_Block {
         $this->inParagraph = $state[1];
     }
 }
+
 //------------------------------------------------------------------------
 define('DOKU_TOC_OPEN',1);
 define('DOKU_TOCBRANCH_OPEN',2);

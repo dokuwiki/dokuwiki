@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  //xdebug_start_profiling();
+//  xdebug_start_profiling();
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
   require_once(DOKU_INC.'inc/init.php');
@@ -61,5 +61,5 @@
   //restore old umask
   umask($conf['oldumask']);
 
-  //xdebug_dump_function_profile(3);
+//  xdebug_dump_function_profile(1);
 ?>

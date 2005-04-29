@@ -83,7 +83,7 @@ function rssRecentChanges(&$rss,$num,$ltype){
     $item = new FeedItem();
     $item->title       = $id;
     if(!empty($recents[$id]['sum'])){
-      $item->title .= ': '.strip_tags($recents[$id]['sum']);
+      $item->title .= ' - '.strip_tags($recents[$id]['sum']);
     }
 		
 		switch ($ltype){
