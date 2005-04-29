@@ -87,12 +87,14 @@ class Doku_Parser {
 
 //-------------------------------------------------------------------
 /**
-* This class and all the subclasses below are
-* used to reduce the effort required to register
-* modes with the Lexer. For performance these
-* could all be eliminated later perhaps, or
-* the Parser could be serialized to a file once
-* all modes are registered
+ * This class and all the subclasses below are
+ * used to reduce the effort required to register
+ * modes with the Lexer. For performance these
+ * could all be eliminated later perhaps, or
+ * the Parser could be serialized to a file once
+ * all modes are registered
+ *
+ * @author Harry Fuecks <harryf@gmail.com>
 */
 class Doku_Parser_Mode {
     
@@ -316,10 +318,14 @@ class Doku_Parser_Mode_ListBlock extends Doku_Parser_Mode {
                 Doku_Parser_Substition(),
                 Doku_Parser_Disabled()
             );
+
         $this->allowedModes[] = 'footnote';
         $this->allowedModes[] = 'preformatted';
         $this->allowedModes[] = 'unformatted';
-    
+        $this->allowedModes[] = 'html';
+        $this->allowedModes[] = 'php';
+        $this->allowedModes[] = 'code';
+        $this->allowedModes[] = 'file';
     }
     
     function connectTo($mode) {
