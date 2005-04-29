@@ -108,6 +108,7 @@ function auth_checkPass($user,$pass){
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Trouble
  * @author  Dan Allen <dan.j.allen@gmail.com>
+ * @auhtor  <evaldas.auryla@pheur.org>
  */
 function auth_getUserData($user){
   global $conf;
@@ -117,11 +118,21 @@ function auth_getUserData($user){
   $conn = auth_ldap_connect();
   if(!$conn) return false;
 
-  //anonymous bind to lookup userdata
-  if(!@ldap_bind($conn)){
-    msg("LDAP: can not bind anonymously",-1);
-    if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
-    return false;
+  //bind to server to lookup userdata
+  if ($cnf['binddn']) {
+    //use superuser credentials
+    if(!@ldap_bind($conn,$cnf['binddn'],$cnf['bindpw'])){
+      msg("LDAP: can not bind as superuser",-1);
+      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+      return false;
+    }
+  }else{
+    //bind anonymous
+    if(!@ldap_bind($conn)){
+      msg("LDAP: can not bind anonymously",-1);
+      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+      return false;
+    }
   }
 
   //get info for given user
@@ -137,10 +148,25 @@ function auth_getUserData($user){
   $info['dn']  = $result[0]['dn'];
   $info['mail']= $result[0]['mail'][0];
   $info['name']= $result[0]['cn'][0];
-  $info['uid'] = $result[0]['uid'][0];
 
-  //primary group id
+  //use ActiveDirectory sAMAccountName as uid
+  if(isset($result[0]['sAMAccountName'][0])){
+    $info['uid'] = $result[0]['sAMAccountName'][0];
+  }else{
+    $info['uid'] = $result[0]['uid'][0];
+  }
+
+  //get primary group id
   $gid = $result[0]['gidnumber'][0];
+
+  //handle ActiveDirectory memberOf
+  if(is_array($result[0]['memberof'])){
+    foreach($result[0]['memberof'] as $grp){
+      if (preg_match("/CN=(.+?),/i",$grp,$match)) {
+        $info['grps'][] = trim($match[1]);
+      }
+    }
+  }
 
   //get groups for given user if grouptree is given
   if ($cnf['grouptree'] != '') {
@@ -158,10 +184,11 @@ function auth_getUserData($user){
       if(!empty($grp['cn'][0]))
         $info['grps'][] = $grp['cn'][0];
     }
-  }else{
-    //if no groups are available in LDAP always return the default group
-    $info['grps'][] = $conf['defaultgroup'];
   }
+
+  //if no groups were found always return the default group
+  if(!count($info['grps'])) $info['grps'][] = $conf['defaultgroup'];
+  
   return $info;
 }
 
