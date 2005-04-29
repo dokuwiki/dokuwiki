@@ -183,6 +183,9 @@ function idfilter($id,$ue=true){
 /**
  * This builds a link to a wikipage
  *
+ * It handles URL rewriting and adds additional parameter if
+ * given in $more
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function wl($id='',$more='',$abs=false){
@@ -196,12 +199,15 @@ function wl($id='',$more='',$abs=false){
     $xlink = DOKU_BASE;
   }
 
-  if(!$conf['userewrite']){
-    $xlink .= DOKU_SCRIPT.'?id='.$id;
-    if($more) $xlink .= '&amp;'.$more;
-  }else{
+  if($conf['userewrite'] == 2){
+    $xlink .= DOKU_SCRIPT.'/'.$id;
+    if($more) $xlink .= '?'.$more;
+  }elseif($conf['userewrite']){
     $xlink .= $id;
     if($more) $xlink .= '?'.$more;
+  }else{
+    $xlink .= DOKU_SCRIPT.'?id='.$id;
+    if($more) $xlink .= '&amp;'.$more;
   }
   
   return $xlink;

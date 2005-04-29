@@ -186,14 +186,16 @@ function html_btn($name,$id,$akey,$params,$method='get'){
   //filter id (without urlencoding)
   $id = idfilter($id,false);
 
-  //make nice URLs even for buttons  
-  if(!$conf['userewrite']){
+  //make nice URLs even for buttons 
+  if($conf['userewrite'] == 2){
+    $script = DOKU_BASE.DOKU_SCRIPT.'/'.$id;
+  }elseif($conf['userewrite']){
+    $script = DOKU_BASE.$id;
+  }else{
     $script = DOKU_BASE.DOKU_SCRIPT;
     $params['id'] = $id;
-  }else{
-    $script = DOKU_BASE.$id;
   }
-  
+ 
   $ret .= '<form class="button" method="'.$method.'" action="'.$script.'" onsubmit="return svchk()">';
   
   reset($params);

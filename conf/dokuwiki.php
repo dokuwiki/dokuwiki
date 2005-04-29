@@ -56,7 +56,7 @@ $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 $conf['superuser']   = 'superman';       //The admin can be user or @group
 
 /* Advanced Options */
-$conf['userewrite']  = 0;                //this makes nice URLs but you need to enable it in .htaccess first 0|1
+$conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
 $conf['autoplural']  = 0;                //try (non)plural form of nonexisting files?

@@ -6,6 +6,45 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+/**
+ * Fetch the pageid
+ *
+ * Uses either standard $_REQUEST variable or extracts it from
+ * the full request URI when userewrite is set to 2
+ *
+ * Returns $conf['start'] if no id was found.
+ * 
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function getID(){
+  global $conf;
+
+  $id = cleanID($_REQUEST['id']);
+  
+  //construct page id from request URI
+  if(empty($id) && $conf['userewrite'] == 2){
+    //get the script URL
+    if($conf['basedir']){
+      $script = $conf['basedir'].DOKU_SCRIPT;
+    }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
+      $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
+                              $_SERVER['SCRIPT_FILENAME']);
+      $script = '/'.$script;
+    }else{
+      $script = $_SERVER['SCRIPT_NAME'];
+    }
+
+    //remove script URL and Querystring to gain the id
+    if(preg_match('/^'.preg_quote($script,'/').'(.*)/',
+                  $_SERVER['REQUEST_URI'], $match)){
+      $id = preg_replace ('/\?.*/','',$match[1]);
+    }
+    $id = cleanID($id);
+  }
+  if(empty($id)) $id = $conf['start'];
+
+  return $id;
+}
 
 /**
  * Remove unwanted chars from ID

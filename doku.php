@@ -20,7 +20,8 @@
 
   //import variables
   $QUERY = trim($_REQUEST['id']);
-  $ID    = cleanID($_REQUEST['id']);
+#  $ID    = cleanID($_REQUEST['id']);
+  $ID    = getID();
   $REV   = $_REQUEST['rev'];
   $ACT   = $_REQUEST['do'];
   $IDX   = $_REQUEST['idx'];
@@ -43,8 +44,7 @@
   }
 
   if(!empty($IDX)) $ACT='index';
-  //set defaults
-  if(empty($ID))  $ID  = $conf['start'];
+  //set default #FIXME not needed here? done in actions?
   if(empty($ACT)) $ACT = 'show';
 
 
