@@ -1,0 +1,8 @@
+====== Ekzistas pli nova versio de la dokumento ======
+
+Ekzistas pli nova versio de la dokumento. Tio okazas kiam iu alia uzanto 
+ŝanĝigis enhavon de la dokumento dum vi redaktis ĝin.
+
+Atente esploru distingojn kaj decidu kiun version vi restigos. 
+Se vi premos ''"Konservu"'', do via versio estos konservita. 
+Presonte butonon ''Abolu'' vi restigos kurantan version.

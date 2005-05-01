@@ -1,0 +1,5 @@
+Redaktu paĝon kaj poste premu butonon titolitan ''"Konservu"''. Bonvolu tralegi 
+[[wiki:syntax|sintakso]] por kompreni kiel vi povas krei paĝojn. Bonvolu redakti nur
+tiuokaze se vi planas **plibonigi** enhavon de la paĝo. Se vi volas nur testi ion, do 
+bonvolu uzi specialan paĝon: [[wiki:playground|testejo]].
+

@@ -1,0 +1,17 @@
+Iu paĝo en via Vikio estis ŝanĝita aŭ aldonita. Jen detaloj:
+
+Dato              : @DATE@
+Krozilo           : @BROWSER@
+IP-aderso         : @IPADDRESS@
+RetNodo           : @HOSTNAME@
+Antaŭa revizio    : @OLDPAGE@
+Nova revizio      : @NEWPAGE@
+Bulteno de ŝanĝoj : @SUMMARY@
+Uzanto            : @USER@
+
+@DIFF@
+
+
+-- 
+Tiu ĉi mesaĝo estis kreita fare de DokuWiki kiu lokiĝas ĉi tie:
+@DOKUWIKIURL@
