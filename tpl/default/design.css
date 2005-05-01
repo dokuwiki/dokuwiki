@@ -341,6 +341,11 @@ span.li {
   font-weight: normal;
 }
 
+ol {list-style-type: decimal}
+ol ol {list-style-type: upper-roman}
+ol ol ol {list-style-type: lower-alpha}
+ol ol ol ol {list-style-type: lower-greek}
+
 li.open {
   list-style-image: url(images/open.gif);
 }
@@ -349,9 +354,10 @@ li.closed {
   list-style-image: url(images/closed.gif);
 }
 
-.quote {
+blockquote {
   border-left: 2px solid #8cacbb;
   padding-left: 3px;
+  margin-left: 0;
 }
 
 /* code blocks by indention */

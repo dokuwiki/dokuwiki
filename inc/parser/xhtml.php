@@ -307,18 +307,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '<pre class="file">' . $this->_xmlEntities($text). '</pre>'. DOKU_LF;
     }
     
-    /**
-    * @TODO Shouldn't this output <blockquote>?
-    */
     function quote_open() {
-        $this->doc .= '<div class="quote">'.DOKU_LF;
+        $this->doc .= '<blockquote>'.DOKU_LF;
     }
     
-    /**
-    * @TODO Shouldn't this output </blockquote>?
-    */
     function quote_close() {
-        $this->doc .= '</div>'.DOKU_LF;
+        $this->doc .= '</blockquote>'.DOKU_LF;
     }
     
     /**

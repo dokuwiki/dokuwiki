@@ -201,7 +201,7 @@ class Doku_Parser_Mode_NoToc extends Doku_Parser_Mode {
 class Doku_Parser_Mode_Linebreak extends Doku_Parser_Mode {
     
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('\x5C{2}\s',$mode,'linebreak');
+        $this->Lexer->addSpecialPattern('\x5C{2}(?=\s)',$mode,'linebreak');
     }
 }
 
