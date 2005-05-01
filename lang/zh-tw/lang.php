@@ -108,4 +108,3 @@ $lang['txt_month']     = '月份';
 $lang['arr_daysofweek']= array('日','一','二','三','四','五','六');
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

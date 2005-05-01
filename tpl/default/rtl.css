@@ -1,5 +1,5 @@
 /**
- * Layout corrections for right-to-left languages
+ * Layout and dedsign corrections for right-to-left languages
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Dotan Kamber <kamberd@yahoo.com>
@@ -39,5 +39,73 @@ div.meta div.user {
 
 div.meta div.doc{
   text-align: left;
+}
+
+/* ------------------  Design corrections  --------------------------------- */
+
+ul,ol {
+  margin: 0.5em 1.5em 0.5em 0;
+}
+
+a.urlextern,a.interwiki,a.windows{
+  /* should work but dosn't - so we just disable icons here*/
+  /*
+  background-position: right 1px;
+  padding-right: 16px;
+  */
+  background-image: none !important;
+  padding: 0;
+}
+
+div.secedit input.button {
+  float: left;
+}
+
+/* headlines */
+h1, h2, h3, h4, h5 {
+  clear: right;
+}
+
+/* special headlines */
+h1 {margin-left: 0px; margin-right: 0px;}
+h2 {margin-left: 0px; margin-right: 20px;}
+h3 {margin-left: 0px; margin-right: 40px;}
+h4 {margin-left: 0px; margin-right: 60px;}
+h5 {margin-left: 0px; margin-right: 80px;}
+
+/* indent different sections */
+div.level1 {margin-left: 0px; margin-right: 3px;}
+div.level2 {margin-left: 0px; margin-right: 23px;}
+div.level3 {margin-left: 0px; margin-right: 43px;}
+div.level4 {margin-left: 0px; margin-right: 63px;}
+div.level5 {margin-left: 0px; margin-right: 83px;}
+
+/* TOC control */
+div.toc {
+  float: left;
+	margin-left: 0;
+	margin-right: 2em;
+}
+
+div.tocheader {
+  text-align: right;
+}
+
+#tocinside {
+  text-align: right;
+}
+
+ul.toc {
+  padding: 0;
+  padding-right: 1em;
+}
+
+ul.toc li {
+  background-position: right 0.6em;
+  padding-right:0.4em;
+}
+
+ul.toc li.clear {
+  padding-right:0.4em;
 }
 

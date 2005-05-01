@@ -101,4 +101,3 @@ $lang['qb_media']   = 'תמונות או קובץ אחר';
 $lang['qb_sig']     = 'הזנת חתימה';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

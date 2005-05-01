@@ -97,4 +97,4 @@ $lang['qb_ul']      = 'Elenco puntato';
 $lang['qb_media']   = 'Inserisci immagino o altri file';
 $lang['qb_sig']     = 'Inserisci la firma';
 
-?>
+//Setup VIM: ex: et ts=2 enc=utf-8 :

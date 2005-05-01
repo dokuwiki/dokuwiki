@@ -97,4 +97,4 @@ $lang['qb_ul']        = 'Item numa Lista Não Ordenada';
 $lang['qb_media']     = 'Incluir imagens e/ou outros arquivos';
 $lang['qb_sig']       = 'Inserir Assinatura';
 
-?>
+//Setup VIM: ex: et ts=2 enc=utf-8 :

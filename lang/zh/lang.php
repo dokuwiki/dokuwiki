@@ -98,6 +98,7 @@ $lang['qb_ul']      = '项目表(符号)';
 $lang['qb_media']   = '加入图片或档案';
 $lang['qb_sig']     = '插入签名';
 
+// no official language strings
 $lang['txt_insert']    = '放入日历';
 $lang['qb_calendar']   = '放入一个日历';
 $lang['btn_insert']    = '产生日历';
@@ -108,4 +109,3 @@ $lang['txt_month']     = '月份';
 $lang['arr_daysofweek']= array('日','一','二','三','四','五','六');
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

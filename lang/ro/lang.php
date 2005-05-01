@@ -97,6 +97,8 @@ $lang['qb_ul']      = 'Listă Neordoată';
 $lang['qb_media']   = 'Adaugă imagini şi alte fişiere';
 $lang['qb_sig']     = 'Inserează semnătură';
 
+
+//no official language strings
 $lang['txt_insert']    = 'Inserează Calendar';
 $lang['qb_calendar']   = 'Inserează un Calendar';
 $lang['btn_insert']    = 'Generează Calendar';
@@ -106,4 +108,4 @@ $lang['txt_year']      = 'An';
 $lang['txt_month']     = 'Luna';
 $lang['arr_daysofweek']= array('Du','Lu','Ma','Mi','Jo','Vi','Sî');
 
-?>
+//Setup VIM: ex: et ts=2 enc=utf-8 :

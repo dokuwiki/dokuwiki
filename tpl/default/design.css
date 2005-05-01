@@ -190,7 +190,7 @@ a.windows:hover {
 /* interwiki link */
 a.interwiki{
     background: transparent url(images/interwiki.png) 0px 1px no-repeat;
-    padding: 1px 0px 1px 16px;
+		padding-left: 16px;
     color:#436976;
     text-decoration:none;
 }

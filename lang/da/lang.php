@@ -116,4 +116,3 @@ $lang['qb_media']   = 'Tilføj billeder og andre filer'; // Add Images and other
 $lang['qb_sig']     = 'Indsæt signatur';                // Insert Signature
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

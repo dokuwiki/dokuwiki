@@ -97,4 +97,3 @@ $lang['qb_media']   = 'Vložit obrázky nebo jiné soubory';
 $lang['qb_sig']     = 'Vložit podpis';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

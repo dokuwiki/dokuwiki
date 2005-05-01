@@ -2,11 +2,11 @@
 /**
  * Russian language file
  *
-$lang['direction']  = 'ltr';
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Yuri Pimenov <up@ftpsearch.lv>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Редактировать страницу';
 $lang['btn_source'] = 'Показать исходный текст';
@@ -99,4 +99,3 @@ $lang['qb_media']   = 'Добавить картинки и другие фай�
 $lang['qb_sig']     = 'Вставить Подпись';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

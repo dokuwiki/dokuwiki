@@ -6,7 +6,7 @@
  * @author     José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  */
 $lang['encoding']     = 'utf-8';
-$lang['direction']  = 'ltr';
+$lang['direction']    = 'ltr';
 
 $lang['btn_edit']     = 'Editar Página';
 $lang['btn_source']   = 'Ver em bruto';
@@ -99,4 +99,3 @@ $lang['qb_media']     = 'Incluir imagens e outros ficheiros';
 $lang['qb_sig']       = 'Inserir Assinatura';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

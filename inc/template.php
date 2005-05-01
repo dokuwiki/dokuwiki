@@ -351,13 +351,17 @@ function tpl_breadcrumbs(){
   if(!$conf['breadcrumbs']) return;
 
   $crumbs = breadcrumbs(); //setup crumb trace
+
+  //reverse crumborder in right-to-left mode
+  if($lang['direction'] == 'rtl') $crumbs = array_reverse($crumbs,true);
+
   //render crumbs, highlight the last one
   print $lang['breadcrumb'].':';
   $last = count($crumbs);
   $i = 0;
   foreach ($crumbs as $id => $name){
     $i++;
-    print ' &raquo; ';
+    print ' <span class="bcsep">&raquo;</span> ';
     if ($i == $last) print '<span class="curid">';
     tpl_link(wl($id),$name,'class="breadcrumbs" title="'.$id.'"');
     if ($i == $last) print '</span>';
@@ -373,6 +377,7 @@ function tpl_breadcrumbs(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @link   http://wiki.splitbrain.org/wiki:tipsandtricks:hierarchicalbreadcrumbs
+ * @todo   May behave starngely in RTL languages
  */
 function tpl_youarehere(){
   global $conf;

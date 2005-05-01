@@ -537,9 +537,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(!$isImage){
             //if ico exists set additional style
             if(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.png')){
-                $link['style']='background: transparent url('.DOKU_BASE.'interwiki/'.$wikiName.'.png) 0px 1px no-repeat;';
+                $link['style']='background-image: url('.DOKU_BASE.'interwiki/'.$wikiName.'.png)';
             }elseif(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.gif')){
-                $link['style']='background: transparent url('.DOKU_BASE.'interwiki/'.$wikiName.'.gif) 0px 1px no-repeat;';
+                $link['style']='background-image: url('.DOKU_BASE.'interwiki/'.$wikiName.'.gif)';
             }
         }
 
