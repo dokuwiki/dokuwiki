@@ -32,6 +32,7 @@ $lang['btn_delete'] = 'Slett';
 $lang['loggedinas'] = 'Innlogget som';
 $lang['user']       = 'Brukernavn';
 $lang['pass']       = 'Passord';
+$lang['remember']   = 'Husk på meg';
 $lang['fullname']   = 'Navn';
 $lang['email']      = 'E-post';
 $lang['register']   = 'Registrer';
@@ -101,15 +102,20 @@ $lang['qb_ul']      = 'Punkt for usortert punktliste';
 $lang['qb_media']   = 'Legg til bilder og andre filer';
 $lang['qb_sig']     = 'Føy til signatur';
 
+$lang['del_confirm']= 'Slett denne oppføringen?';
+
 $lang['admin_acl']  = 'Administrasjon av Access Control List';
+
 $lang['acl_group']  = 'Gruppe';
 $lang['acl_user']   = 'Bruker';
 $lang['acl_perms']  = 'Rettigheter for';
 $lang['page']       = 'Side';
 $lang['namespace']  = 'Namespace';                                              
+
 $lang['acl_perm1']  = 'Les';
 $lang['acl_perm2']  = 'Rediger';
 $lang['acl_perm4']  = 'Lag';
 $lang['acl_perm8']  = 'Last Opp';
+$lang['acl_new']    = 'Legg til Oppføring';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
