@@ -45,6 +45,7 @@
 function media_upload($NS){
 	require_once(DOKU_INC.'inc/confutils.php');
   global $lang;
+  global $conf;
 
   // get file
   $id   = $_POST['id'];
@@ -60,12 +61,15 @@ function media_upload($NS){
 	$types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
   $regex = join('|',$types);
 
-
+  // we set the umask here but this doesn't really help
+  // because a temp file was created already
   umask($conf['umask']);
   if(preg_match('/\.('.$regex.')$/i',$fn)){
   	// prepare directory
   	io_makeFileDir($fn);
     if (move_uploaded_file($file['tmp_name'], $fn)) {
+			// set the correct permission here
+			chmod($fn, 0777 - $conf['umask']);
       msg($lang['uploadsucc'],1);
       return true;
     }else{
