@@ -198,6 +198,15 @@ class Doku_Parser_Mode_NoToc extends Doku_Parser_Mode {
 }
 
 //-------------------------------------------------------------------
+class Doku_Parser_Mode_NoCache extends Doku_Parser_Mode {
+            
+    function connectTo($mode) {
+        $this->Lexer->addSpecialPattern('~~NOCACHE~~',$mode,'nocache');
+    }   
+                
+}               
+ 
+//-------------------------------------------------------------------
 class Doku_Parser_Mode_Linebreak extends Doku_Parser_Mode {
     
     function connectTo($mode) {
@@ -816,7 +825,7 @@ function Doku_Parser_Substition() {
     $modes = array(
         'acronym','smiley','wordblock','entity','camelcaselink',
         'internallink','media','externallink','linebreak','emaillink',
-        'windowssharelink','filelink','notoc','multiplyentity',
+        'windowssharelink','filelink','notoc','nocache','multiplyentity',
         'quotes','rss',
     );
     return $modes;

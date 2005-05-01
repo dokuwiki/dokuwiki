@@ -30,7 +30,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 
   if($rev){
     if(@file_exists($file)){
-      $ret = p_render('xhtml',p_get_instructions(io_readfile($file))); //no caching on old revisions
+      $ret = p_render('xhtml',p_get_instructions(io_readfile($file)),$info); //no caching on old revisions
     }elseif($excuse){
       $ret = p_locale_xhtml('norev');
     }
@@ -62,6 +62,7 @@ function p_locale_xhtml($id){
  * Uses and creates a cachefile
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @todo   rewrite to use mode instead of hardcoded XHTML
  */
 function p_cached_xhtml($file){
   global $conf;
@@ -87,19 +88,15 @@ function p_cached_xhtml($file){
     $parsed = io_readfile($cache);
     $parsed .= "\n<!-- cachefile $cache used -->\n";
   }else{
-    $parsed = p_render('xhtml', p_cached_instructions($file)); //try to use cached instructions
-    io_saveFile($cache,$parsed); //save cachefile
-    $parsed .= "\n<!-- no cachefile used, but created -->\n";
+    $parsed = p_render('xhtml', p_cached_instructions($file),$info); //try to use cached instructions
 
-    /* FIXME add nocache directive handling like this:
-    if($parser['cache']){
+    if($info['cache']){
       io_saveFile($cache,$parsed); //save cachefile
       $parsed .= "\n<!-- no cachefile used, but created -->\n";
     }else{
       @unlink($cache); //try to delete cachefile
       $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
     }
-    */
   }
 
   return $parsed;
@@ -170,6 +167,7 @@ function p_get_instructions($text){
   $Parser->addMode('listblock',new Doku_Parser_Mode_ListBlock());
   $Parser->addMode('preformatted',new Doku_Parser_Mode_Preformatted()); 
   $Parser->addMode('notoc',new Doku_Parser_Mode_NoToc());
+  $Parser->addMode('nocache',new Doku_Parser_Mode_NoCache());
   $Parser->addMode('header',new Doku_Parser_Mode_Header());
   $Parser->addMode('table',new Doku_Parser_Mode_Table());
   
@@ -222,10 +220,12 @@ function p_get_instructions($text){
 /**
  * Renders a list of instruction to the specified output mode
  *
+ * In the $info array are informations from the renderer returned
+ *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_render($mode,$instructions){
+function p_render($mode,$instructions,& $info){
   if(is_null($instructions)) return '';
 
   // Create the renderer
@@ -249,6 +249,10 @@ function p_render($mode,$instructions){
       // Execute the callback against the Renderer
       call_user_func_array(array(&$Renderer, $instruction[0]),$instruction[1]);
   }
+
+  //set info array 
+  $info = $Renderer->info;
+
   // Return the output
   return $Renderer->doc;
 }

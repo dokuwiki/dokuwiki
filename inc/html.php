@@ -272,7 +272,7 @@ function html_show($txt=''){
     //PreviewHeader
     print p_locale_xhtml('preview');
     print '<div class="preview">';
-    print html_secedit(p_render('xhtml',p_get_instructions($txt)),$secedit);
+    print html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
     print '</div>';
 
   }else{

@@ -242,7 +242,7 @@ function act_export($act){
 
   // try to run renderer #FIXME use cached instructions
   $mode = substr($act,7);
-  $text = p_render($mode,p_get_instructions(rawWiki($ID,$REV)));
+  $text = p_render($mode,p_get_instructions(rawWiki($ID,$REV)),$info);
   if(!is_null($text)){
     print $text;
     exit;

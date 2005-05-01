@@ -12,6 +12,7 @@ class Doku_Handler {
     var $meta = array(
         'section' => FALSE,
         'toc' => TRUE,
+        'cache' => TRUE,
     );
     
     var $rewriteBlocks = TRUE;
@@ -95,6 +96,11 @@ class Doku_Handler {
     
     function notoc($match, $state, $pos) {
         $this->meta['toc'] = FALSE;
+        return TRUE;
+    }
+
+    function nocache($match, $state, $pos) {
+        $this->_addCall('nocache',array(),$pos);
         return TRUE;
     }
     

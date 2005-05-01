@@ -1,5 +1,13 @@
 <?php
 class Doku_Renderer {
+    var $info = array(
+        'cache' => TRUE, // may the rendered result cached?
+    );
+
+
+    function nocache() {
+        $this->info['cache'] = FALSE;
+    }
     
     function document_start() {}
     
@@ -167,4 +175,4 @@ class Doku_Renderer {
 }
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=4 enc=utf-8 :
