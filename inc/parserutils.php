@@ -67,6 +67,7 @@ function p_cached_xhtml($file){
   global $conf;
   $cache  = $conf['datadir'].'/_cache/xhtml/';
   $cache .= md5($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT']);
+  $purge  = $conf['datadir'].'/_cache/purgefile';
 
   // check if cache can be used
   $cachetime = @filemtime($cache); // 0 if not exists
@@ -75,6 +76,7 @@ function p_cached_xhtml($file){
       && $cachetime > @filemtime($file)                               // cache is fresh
       && ((time() - $cachetime) < $conf['cachetime'])                 // and is cachefile young enough
       && !isset($_REQUEST['purge'])                                   // no purge param was set
+      && ($cachetime > @filemtime($purge))                            // and newer than the purgefile
       && ($cachetime > @filemtime(DOKU_INC.'conf/dokuwiki.php'))      // newer than the config file
       && ($cachetime > @filemtime(DOKU_INC.'conf/local.php'))         // newer than the local config file
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/xhtml.php'))   // newer than the renderer
