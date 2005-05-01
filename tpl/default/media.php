@@ -28,7 +28,7 @@
   <style type="text/css">
     /* that IE 5+ conditional comment makes this only visible in IE 5+ */
     /* IE bugfix for transparent PNGs */
-    img { behavior: url("<?=DOKU_BASE?>/pngbehavior.htc"); }
+    //img { behavior: url("<?=DOKU_BASE?>/pngbehavior.htc"); }
   </style>
   <![endif]-->
 </head>
@@ -37,7 +37,7 @@
 <div class="dokuwiki">
   <?html_msgarea()?>
 
-  <h1><?=hsc($lang['mediaselect'])?></h1>
+  <h1><?=hsc($lang['mediaselect'])?> <code><?=hsc($NS)?></code></h1>
 
   <div class="mediaselect">
 
@@ -48,8 +48,6 @@
 		</div>
 
     <div class="mediaselect-right">
-      <b>Available files in</b> <code><?=hsc($NS)?>:</code>
-
       <?tpl_mediafilelist()?>
 
 			<div class="uploadform">
