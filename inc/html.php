@@ -991,7 +991,7 @@ function html_admin(){
   ptln('<ul class="admin">');
 
   // currently ACL only - more to come
-  ptln('<li><a href="'.wl($ID,'do=admin&page=acl').'">'.$lang['admin_acl'].'</a></li>');
+  ptln('<li><a href="'.wl($ID,'do=admin&amp;page=acl').'">'.$lang['admin_acl'].'</a></li>');
 
   ptln('</ul>');
 }

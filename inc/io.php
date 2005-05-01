@@ -197,7 +197,7 @@ function io_mkdir_ftp($dir){
   //create directory
   $ok = ftp_mkdir($conn, $dir);
   //set permissions (using the directory umask)
-  ftp_site($conn,sprintf("CHMOD %04o %s",$perm & (0777 - $conf['dmask']),$dir));
+  ftp_site($conn,sprintf("CHMOD %04o %s",(0777 - $conf['dmask']),$dir));
 
   ftp_close($conn);
   return $ok;

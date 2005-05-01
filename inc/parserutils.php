@@ -212,7 +212,7 @@ function p_get_instructions($text){
   $Parser->addMode('eol',new Doku_Parser_Mode_Eol());
   
   // Do the parsing
-  $p = $Parser->parse($text);
+  $p    = $Parser->parse($text);
 #  dbg($p);
   return $p;
 }  
