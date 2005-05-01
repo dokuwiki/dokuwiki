@@ -1,0 +1,12 @@
+====== Zugangsverwaltung ======
+
+Auf dieser Seite kannst du Berechtigungen für die aktuelle Seite und alle darüberliegenden
+[[doku>wiki:namespaces|Namensräume]] festlegen. Du solltest zuerst die 
+[[doku>wiki:acl|offizielle Dokumentation]] zur Zugangsverwaltung lesen, um zu verstehen
+wie diese arbeitet.
+
+Diese Seite zeigt nur die Berechtigungen an, die sich auf die aktuell gewählte Wiki-Seite
+auswirken. Berechtigungen für andere Seiten werden nicht gezeigt -- um diese zu bearbeiten
+[[this>doku.php?do=index|wähle]] zuerst die entsprechende Seite bevor du in die Zugangsverwaltung
+wechselst.
+

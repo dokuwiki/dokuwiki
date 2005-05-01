@@ -27,6 +27,8 @@ $lang['btn_secedit']= 'Bearbeiten';
 $lang['btn_login']  = 'Einloggen';
 $lang['btn_logout'] = 'Ausloggen';
 $lang['btn_admin']  = 'Admin';
+$lang['btn_update'] = 'Updaten';
+$lang['btn_delete'] = 'Löschen';
 
 $lang['loggedinas'] = 'Eingeloggt als';
 $lang['user']       = 'Benutzername';
@@ -102,5 +104,20 @@ $lang['qb_ul']      = 'Listenpunkt';
 $lang['qb_media']   = 'Bilder und andere Dateien hinzufügen';
 $lang['qb_sig']     = 'Unterschrift einfügen';
 
+$lang['del_confirm']= 'Eintrag wirklich löschen?';
+
+$lang['admin_acl']  = 'Zugangsverwaltung...';
+
+$lang['acl_group']  = 'Gruppe';
+$lang['acl_user']   = 'Benutzer';
+$lang['acl_perms']  = 'Berechtigungen für';
+$lang['page']       = 'Seite';
+$lang['namespace']  = 'Namensraum';
+
+$lang['acl_perm1']  = 'Lesen';
+$lang['acl_perm2']  = 'Bearbeiten';
+$lang['acl_perm4']  = 'Anlegen';
+$lang['acl_perm8']  = 'Hochladen';
+$lang['acl_new']    = 'Eintrag hinzufügen';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>
