@@ -1,0 +1,11 @@
+====== Administrasjon av Access Control List ======
+
+På denne siden kan du legge til, og fjerne, rettigheter for den nåværende 
+siden og alle [[doku>wiki:namespaces|namespaces]] den befinner seg på. 
+Du burde lese den [[doku>wiki:acl|offisielle dokumentasjonen på ACL]] for 
+å forstå hvordan tilgangskontroll fungerer.
+
+Siden viser alle rettigheter som er av betydning for den nåværende siden. 
+Rettigheter som gjelder andre sider blir ikke vist her -- men for å 
+redigere dem, [[this>doku.php?do=index|gå til siden]] det gjelder, og 
+skift til ACL Administrasjon.

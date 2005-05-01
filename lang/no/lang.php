@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Reidar Mosvold <Reidar.Mosvold@hit.no>
+ * @author     Jorge Barrera Grandon <jorge@digitalwolves.org>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -24,6 +25,9 @@ $lang['btn_index']  = 'Indeks';
 $lang['btn_secedit']= 'Rediger';
 $lang['btn_login']  = 'Logg inn';
 $lang['btn_logout'] = 'Logg ut';
+$lang['btn_admin']  = 'Admin';
+$lang['btn_update'] = 'Oppdater';
+$lang['btn_delete'] = 'Slett';
 
 $lang['loggedinas'] = 'Innlogget som';
 $lang['user']       = 'Brukernavn';
@@ -68,6 +72,7 @@ $lang['diff']       = 'vis forskjeller med aktuell versjon';
 $lang['line']       = 'Rad';
 $lang['breadcrumb'] = 'Spor';
 $lang['lastmod']    = 'Sist oppdatert';
+$lang['by']         = 'av';
 $lang['deleted']    = 'slettet';
 $lang['created']    = 'lagret';
 $lang['restored']   = 'tidligere versjon er gjenopprettet';
@@ -96,5 +101,15 @@ $lang['qb_ul']      = 'Punkt for usortert punktliste';
 $lang['qb_media']   = 'Legg til bilder og andre filer';
 $lang['qb_sig']     = 'Føy til signatur';
 
+$lang['admin_acl']  = 'Administrasjon av Access Control List';
+$lang['acl_group']  = 'Gruppe';
+$lang['acl_user']   = 'Bruker';
+$lang['acl_perms']  = 'Rettigheter for';
+$lang['page']       = 'Side';
+$lang['namespace']  = 'Namespace';                                              
+$lang['acl_perm1']  = 'Les';
+$lang['acl_perm2']  = 'Rediger';
+$lang['acl_perm4']  = 'Lag';
+$lang['acl_perm8']  = 'Last Opp';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

@@ -119,4 +119,3 @@ $lang['acl_perm8']  = 'Upload';
 $lang['acl_new']    = 'Add new Entry';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

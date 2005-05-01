@@ -5,6 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Antono Vasiljev <esperanto.minsk ĈE tut.by>
  */
+$lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Redakti paĝon';
 $lang['btn_source'] = 'Montri fontatekston';
