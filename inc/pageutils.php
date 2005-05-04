@@ -188,6 +188,7 @@ function resolve_mediaid($ns,&$page,&$exists){
  */
 function resolve_pageid($ns,&$page,&$exists){
   global $conf;
+  $exists = false;
 
   //if links starts with . add current namespace
   if($page{0} == '.'){
@@ -205,8 +206,6 @@ function resolve_pageid($ns,&$page,&$exists){
   $hash = cleanID($hash);
 
   $file = wikiFN($page);
-
-  $exists = false;
 
   //check alternative plural/nonplural form
   if(!@file_exists($file)){

@@ -94,7 +94,7 @@ class Doku_Parser {
  * the Parser could be serialized to a file once
  * all modes are registered
  *
- * @author Harry Fuecks <harryf@gmail.com>
+ * @author Harry Fuecks <hfuecks@gmail.com>
 */
 class Doku_Parser_Mode {
     

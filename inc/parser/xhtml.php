@@ -416,6 +416,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
       $this->internallink($link,$link); 
     }
     
+
+    function locallink($hash, $name = NULL){
+        global $ID;
+        $name  = $this->_getLinkTitle($name, $hash, $isImage);
+        $hash  = $this->_headerToLink($hash);
+        $title = $ID.' &crarr;';
+        $this->doc .= '<a href="#'.$hash.'" title="'.$title.'" class="wikilink1">';
+        $this->doc .= $name;
+        $this->doc .= '</a>';
+    }
+
     /**
      * Render an internal Wiki Link
      *
@@ -935,7 +946,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Construct a title and handle images in titles
      *
-     * @author Harry Fuecks <harryf@gmail.com>
+     * @author Harry Fuecks <hfuecks@gmail.com>
      */
     function _getLinkTitle($title, $default, & $isImage, $id=NULL) {
         global $conf;

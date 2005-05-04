@@ -364,6 +364,7 @@ class Doku_Handler {
             // If the title is an image, convert it to an array containing the image details
             $link[1] = Doku_Handler_Parse_Media($link[1]);
         }
+        $link[0] = trim($link[0]);
 
         //decide which kind of link it is
 
@@ -375,7 +376,7 @@ class Doku_Handler {
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
                 $pos
                 );
-        }elseif ( preg_match('/\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
+        }elseif ( preg_match('/^\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
         // Windows Share
             $this->_addCall(
                 'windowssharelink',
@@ -396,6 +397,13 @@ class Doku_Handler {
                     array($link[0],$link[1]),
                     $pos
                     );
+        }elseif ( preg_match('!^#.+!',$link[0]) ){
+        // local link
+            $this->_addCall(
+                'locallink',
+                array(substr($link[0],1),$link[1]),
+                $pos
+                );
         }else{
         // internal link
             $this->_addCall(
@@ -1156,7 +1164,7 @@ class Doku_Handler_Section {
 /**
  * Handler for paragraphs
  *
- * @author Harry Fuecks <harryf@gmail.com>
+ * @author Harry Fuecks <hfuecks@gmail.com>
  */
 class Doku_Handler_Block {
     
@@ -1228,7 +1236,7 @@ class Doku_Handler_Block {
     /**
      * Processes the whole instruction stack to open and close paragraphs
      *
-     * @author Harry Fuecks <harryf@gmail.com>
+     * @author Harry Fuecks <hfuecks@gmail.com>
      * @author Andreas Gohr <andi@splitbrain.org>
      * @todo   This thing is really messy and should be rewritten
      */
