@@ -1,7 +1,10 @@
 ## Enable this to restrict editing to logged in users only
 
+#disable indexes
+Options -Indexes
+
 ## make sure nobody gets the htaccess files
-<Files ~ "^\.ht">
+<Files ~ "^[\._]ht">
     Order allow,deny
     Deny from all
     Satisfy All
