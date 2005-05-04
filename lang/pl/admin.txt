@@ -1,0 +1,4 @@
+====== Administracja ======
+
+Lista dostępnych czynności administracyjnych.
+
