@@ -74,6 +74,10 @@
   header('Last-Modified: '.date('r',filemtime($FILE)));
   header('Content-Length: '.filesize($FILE));
 
+  //application mime type is downloadable
+  if(substr($MIME,0,11) == 'application'){
+    header('Content-Disposition: attachment; filename="'.basename($FILE).'"');
+  }
 
   $fp = @fopen($FILE,"rb");
   if($fp){
