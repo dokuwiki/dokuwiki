@@ -24,34 +24,34 @@ $lang['btn_upload'] = 'Hochladen';
 $lang['btn_cancel'] = 'Abbrechen';
 $lang['btn_index']  = 'Übersicht';
 $lang['btn_secedit']= 'Bearbeiten';
-$lang['btn_login']  = 'Einloggen';
-$lang['btn_logout'] = 'Ausloggen';
+$lang['btn_login']  = 'Anmelden';
+$lang['btn_logout'] = 'Abmelden';
 $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Updaten';
 $lang['btn_delete'] = 'Löschen';
 
-$lang['loggedinas'] = 'Eingeloggt als';
+$lang['loggedinas'] = 'Angemeldet als';
 $lang['user']       = 'Benutzername';
 $lang['pass']       = 'Passwort';
 $lang['fullname']   = 'Voller Name';
 $lang['email']      = 'E-Mail';
-$lang['remember']   = 'Eingeloggt bleiben';
+$lang['remember']   = 'Angemeldet bleiben';
 $lang['register']   = 'Registrieren';
 $lang['badlogin']   = 'Nutzername oder Passwort sind falsch.';
 
 $lang['regmissing'] = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists'] = 'Der Nutzername existiert leider schon.';
 $lang['regsuccess'] = 'Der neue Nutzer wurde angelegt. Das Passwort wurde per Mail versandt.';
-$lang['regmailfail']= 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wende dich an den Wiki-Admin.';
-$lang['regbadmail'] = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wende dich bitte an den Wiki-Admin.';
-$lang['regpwmail']  = 'Dein DokuWiki Passwort';
-$lang['reghere']    = 'Du hast noch keinen Account? Hier anmelden';
+$lang['regmailfail']= 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wenden sie sich an den Wiki-Admin.';
+$lang['regbadmail'] = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden sie sich bitte an den Wiki-Admin.';
+$lang['regpwmail']  = 'Ihr DokuWiki Passwort';
+$lang['reghere']    = 'Sie haben noch keinen Zugang? Hier anmelden';
 
 $lang['txt_upload'] = 'Datei zum Hochladen auswählen';
 $lang['txt_filename'] = 'Wikinamen eingeben (optional)';
 $lang['lockedby']     = 'Momentan gesperrt von';
 $lang['lockexpire']   = 'Sperre läuft ab am';
-$lang['willexpire']   = 'Deine Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
+$lang['willexpire']   = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
 
 $lang['notsavedyet'] = 'Nicht gespeicherte Änderungen gehen verloren!\nWeitermachen?';
 $lang['rssfailed']   = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
@@ -70,7 +70,7 @@ $lang['hits']       = 'Treffer';
 $lang['quickhits']  = 'Passende Seitennamen';
 $lang['toc']        = 'Inhaltsverzeichnis';
 $lang['current']    = 'aktuell';
-$lang['yours']      = 'Deine Version';
+$lang['yours']      = 'Ihre Version';
 $lang['diff']       = 'Zeige Unterschiede zu aktueller Version';
 $lang['line']       = 'Zeile';
 $lang['breadcrumb'] = 'Spur';
@@ -86,7 +86,7 @@ $lang['mail_changed'] = '[DokuWiki] Seite geaendert:';
 
 $lang['nosmblinks'] = 'Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 
-$lang['qb_alert']   = 'Bitte gib den zu formatierenden Text ein.\nDieser wird am Ende des Dokuments eingefügt.';
+$lang['qb_alert']   = 'Bitte geben sie den zu formatierenden Text ein.\nDieser wird am Ende des Dokuments eingefügt.';
 $lang['qb_bold']    = 'Fetter Text';
 $lang['qb_italic']  = 'Kursiver Text';
 $lang['qb_underl']  = 'Unterstrichener Text';

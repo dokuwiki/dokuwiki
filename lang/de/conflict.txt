@@ -1,11 +1,10 @@
 ====== Eine neuere Version existiert ======
 
-Eine neuere Version des Dokuments, das du bearbeitet hast, existiert. Das
-heißt, dass jemand anderes das Dokument während deiner Bearbeitung gespeichert
-hat.
+Eine neuere Version des aktuell in Bearbeitung befindlichen Dokuments existiert. Das
+heißt jemand hat parallel an der selben Seite gearbeitet und zuerst gespeichert.
 
-Untersuche die untenstehenden Unterschiede zwischen der aktuellen und deiner
-Version des Dokuments und entscheide dann, ob du deine Version des Dokuments
-wirklich speichern möchtest. Wähle ''Speichern'' zum Sichern oder ''Abbrechen'', 
-um die neuere Version beizubehalten.
+Die unten aufgeführten Unterschiede können bei der Entscheidung helfen welchem
+Dokument Vorrang gewährt wird. Wählen sie  **''[Speichern]''** zum Sichern ihrer Version
+oder **''[Abbrechen]''**,  um ihre Version zu verwerfen und die zuerst gespeicherte Seite
+zu behalten.
 

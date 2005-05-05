@@ -1,5 +1,5 @@
-====== Einloggen ======
+====== Anmelden ======
 
-Du bist momentan nicht eingeloggt. Gib deine Nutzerdaten in das unten stehende
-Formular ein. Du musst Cookies eingeschaltet haben, um dich einzuloggen.
+Geben sie ihren Benutzernamen und ihr Passwort in das Formular unten ein, um sich anzumelden.
+Bitte beachten sie, dass dafür "Cookies" in den Sicherheitseinstellungen ihres Browsers erlaubt sein müssen.
 

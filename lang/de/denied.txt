@@ -1,5 +1,5 @@
 ====== Zugang verweigert ======
 
-Du hast nicht die benötigten Rechte, um weiterzumachen. Vielleicht musst
-du dich erst einloggen?
+Sie haben nicht die erforderlichen Rechte, um diese Aktion durchzuführen.
+Evtl. sind sie nicht beim Wiki angemeldet?
 

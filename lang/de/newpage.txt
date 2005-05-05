@@ -1,7 +1,7 @@
 ======Dieses Thema existiert noch nicht======
 
-Du bist einem Link zu einer Seite gefolgt, die noch nicht existiert.
-Du kannst die Seite selbst anlegen, indem du auf den ''Seite anlegen''
-Knopf drückst.
+Sie sind einem Link zu einer Seite gefolgt, die noch nicht existiert.
+Sie können die Seite mit dem Knopf **"[Seite anlegen]"** selbst anlegen
+und mit Inhalt füllen.
 
 
