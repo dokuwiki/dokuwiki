@@ -410,6 +410,7 @@ function tpl_youarehere(){
 
 /**
  * Print info if the user is logged in
+ * and show full name in that case
  *
  * Could be enhanced with a profile link in future?
  *
@@ -417,8 +418,9 @@ function tpl_youarehere(){
  */
 function tpl_userinfo(){
   global $lang;
+  global $INFO;
   if($_SERVER['REMOTE_USER'])
-    print $lang['loggedinas'].': '.$_SERVER['REMOTE_USER'];
+    print $lang['loggedinas'].': '.$INFO['userinfo']['name'];
 }
 
 /**
