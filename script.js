@@ -127,7 +127,7 @@ function mediaButton(imageFile, speedTip, accessKey, namespace) {
     document.write("accesskey=\""+accessKey+"\" ");
   }
   document.write("href=\"javascript:void(window.open('"+DOKU_BASE+"media.php?ns="+
-                 namespace+"','mediaselect','width=600,height=320,left=70,top=50,scrollbars=yes'));\">");
+                 namespace+"','mediaselect','width=600,height=320,left=70,top=50,scrollbars=yes,resizable=yes'));\">");
   document.write("<img width=\"24\" height=\"24\" src=\""+
                  DOKU_BASE+imageFile+"\" border=\"0\" alt=\""+
                  speedTip+"\" title=\""+speedTip+"\">");
