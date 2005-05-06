@@ -1,0 +1,12 @@
+<?
+/*
+  This is an example of how a local.php coul look like.
+  Simply copy the options you want to change from dokuwiki.php
+  to this file and change them
+ */
+
+
+$conf['title']       = 'My Wiki';        //what to show in the title
+
+$conf['useacl']      = 1;                //Use Access Control Lists to restrict access?
+$conf['superuser']   = 'joe';
