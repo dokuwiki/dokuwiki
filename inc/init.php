@@ -9,6 +9,9 @@
   // set up error reporting to sane values
   error_reporting(E_ALL ^ E_NOTICE);
 
+  //prepare config array()
+  $conf = array();
+
   // load the config file(s)
   require_once(DOKU_INC.'conf/dokuwiki.php');
   @include_once(DOKU_INC.'conf/local.php');

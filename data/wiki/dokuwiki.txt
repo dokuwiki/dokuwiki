@@ -24,7 +24,9 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>wiki:compare|Wiki Engine Comparison]]
   * [[doku>wiki:experiences|Experiences]]
   * [[doku>wiki:tips|Tips and Tricks]]
+
   * [[http://bugs.splitbrain.org/index.php?project=1|Bugs and feature wishes]]
+  * [[doku>wiki:mailinglist|Mailing List]]
 
   * [[doku>wiki:todo|ToDo List]]
   * [[doku>wiki:development|Development Ressources]]
