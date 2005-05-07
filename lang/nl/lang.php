@@ -25,6 +25,9 @@ $lang['btn_index']  = 'Index';
 $lang['btn_secedit']= 'Aanpassen';
 $lang['btn_login']  = 'Inloggen';
 $lang['btn_logout'] = 'Uitloggen';
+$lang['btn_admin']  = 'Beheer';
+$lang['btn_update'] = 'Bijwerken';
+$lang['btn_delete'] = 'Verwijder';
 
 $lang['loggedinas'] = 'Ingelogd als';
 $lang['user']       = 'Gebruikersnaam';
@@ -98,5 +101,21 @@ $lang['qb_ol']      = 'Geordende lijst item';
 $lang['qb_ul']      = 'Ongeordende lijst item';
 $lang['qb_media']   = 'Voeg plaatjes en andere bestanden toe';
 $lang['qb_sig']     = 'Handtekening invoegen';
+
+$lang['del_confirm']= 'Deze regel verwijderen?';
+ 
+$lang['admin_acl']  = 'Toegangsrechten...';
+ 
+$lang['acl_group']  = 'Groep';
+$lang['acl_user']   = 'Gebruiker';
+$lang['acl_perms']  = 'Permissies voor';
+$lang['page']       = 'Pagina';
+$lang['namespace']  = 'Namespace';
+ 
+$lang['acl_perm1']  = 'Lezen';
+$lang['acl_perm2']  = 'Bewerken';
+$lang['acl_perm4']  = 'Aanmaken';
+$lang['acl_perm8']  = 'Upload';
+$lang['acl_new']    = 'Nieuwe regel toevoegen';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

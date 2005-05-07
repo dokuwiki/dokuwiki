@@ -1,0 +1,11 @@
+====== Toegangsrechten ======
+
+Op deze pagina kun je permissies toevoegen en verwijderen voor de huidige
+pagina en alle [[doku>wiki:namespaces|namespaces]] waar deze in staat.
+Het is raadzaam om de [[doku>wiki:acl|officiële documentatie]] te lezen,
+om te begrijpen hoe toegangsrechten werken.
+
+Hieronder zie je alle permissies die van belang zijn voor de huidige pagina.
+Permissies van andere pagina's worden niet getoond -- om deze te wijzigen:
+ga eerst naar de [[this>doku.php?do=index|betreffende pagina]] en kies dan
+via Beheer de Toegangsrechten.
