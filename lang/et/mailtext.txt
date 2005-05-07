@@ -1,0 +1,16 @@
+Üks Lehekülg Sinu DokuWiki-is on muutunud või sinna lisatud.
+
+Kuupäev             : @DATE@
+Brauser             : @BROWSER@
+IP-Aadress          : @IPADDRESS@
+Hosti nimi          : @HOSTNAME@
+Vana revision       : @OLDPAGE@
+Uus revision        : @NEWPAGE@
+Muudatuste kokkuvõte: @SUMMARY@
+Kasutaja            : @USER@
+
+@DIFF@
+
+
+-- 
+See kiri saadeti DokuWiki-st aadressilt @DOKUWIKIURL@

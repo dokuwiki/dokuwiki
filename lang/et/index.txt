@@ -1,0 +1,4 @@
+====== Indeks ======
+
+See on kogu olemasolevate lehekülgede indeks järjestatud [[doku>wiki:namespaces|namespaces]] järgi.
+

@@ -1,0 +1,5 @@
+====== Logi sisse ======
+
+Sa ei ole hetkel sisse logitud! Sisselogimiseks sisesta oma kasutajanimi ja paraool allpool.
+Küpsised peavad olema lubatud, et logimine toimiks.
+

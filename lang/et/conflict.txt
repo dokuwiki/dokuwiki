@@ -1,0 +1,10 @@
+====== Uuem versioon eksisteerib ======
+
+Uuem versioon dokumendist mida redigeerisid juba eksisteerib. See juhtub
+kui mõni teine kasutaja jõudis oma muudatused salvestada samal ajal kui
+Sina dokumenti redigeerisid.
+
+Vaata korralikult üle allpool toodud erinevused ja siis otsusta milline
+versioon alles jätta. Kui valid ''salvesta'' jäetakse alles Sinu versioon.
+Vajuta ''tühista'', et jätta alles juba eelnevalt salvestatud versioon.
+

@@ -1,0 +1,4 @@
+Redigeeri lehekülge ja muudatuste salvestamiseks vajuta ''Salvesta''.
+Viki süntaksi kohta loe [[wiki:syntax|siit]]. Palun muuda lehekülge ainult
+siis kui Sul on midagi olulist lisada. Testimiseks kasuta [[wiki:playground|mänguala]].
+

@@ -1,0 +1,5 @@
+====== Alglingid ======
+
+See on nimekiri lehekülgedest mis viitavad jooksvale leheküljele.
+Märkus: CamelCase linke ei tuvastata alglinkidena.
+

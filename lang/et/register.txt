@@ -1,0 +1,6 @@
+====== Registreeru uue kasutajana ======
+
+Täida järgnevad väljad, et luua uut kontot selles vikis.
+Veendu, et sisestatud e-posti aadress on korrektne. Sinu konto parool
+saadetakse Sulle e-posti kaudu. Kasutajanimi peaks [[doku>wiki:pagename|pagename]].
+
