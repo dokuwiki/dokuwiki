@@ -59,8 +59,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function toc_open() {
+        global $lang;
         $this->doc .= '<div class="toc">'.DOKU_LF;
-        $this->doc .= '<div class="tocheader">Table of Contents <script type="text/javascript">showTocToggle("+","-")</script></div>'.DOKU_LF;
+        $this->doc .= '<div class="tocheader">';
+        $this->doc .= $lang['toc'];
+        $this->doc .= ' <script type="text/javascript">showTocToggle("+","-")';
+        $this->doc .= '</script></div>'.DOKU_LF;
         $this->doc .= '<div id="tocinside">'.DOKU_LF;
     }
     
