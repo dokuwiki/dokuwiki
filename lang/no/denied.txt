@@ -1,4 +1,3 @@
-======Tilgang nektet======
+======Adgang forbudt======
 
-Dessverre har du ikke tilgang til å fortsette. Kanskje du har glemt å logge deg inn?
-
+Adgang forbudt. Kanskje du har glemt å logge deg inn?

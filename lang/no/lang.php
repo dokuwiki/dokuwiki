@@ -16,7 +16,7 @@ $lang['btn_create'] = 'Lag denne siden';
 $lang['btn_search'] = 'Søk';
 $lang['btn_save']   = 'Lagre';
 $lang['btn_preview']= 'Forhåndsvis';
-$lang['btn_top']    = 'Til starten av siden';
+$lang['btn_top']    = 'Til toppen av siden';
 $lang['btn_revs']   = 'Historikk';
 $lang['btn_recent'] = 'Siste nytt';
 $lang['btn_upload'] = 'Last opp';
@@ -35,7 +35,7 @@ $lang['pass']       = 'Passord';
 $lang['remember']   = 'Husk på meg';
 $lang['fullname']   = 'Navn';
 $lang['email']      = 'E-post';
-$lang['register']   = 'Registrer';
+$lang['register']   = 'Registrer deg';
 $lang['badlogin']   = 'Ugyldig brukernavn og/eller passord.';
 
 $lang['regmissing'] = 'Vennligst fyll ut alle felt.';
@@ -69,7 +69,7 @@ $lang['quickhits']  = 'Matchende wikinavn';
 $lang['toc']        = 'Innholdsfortegnelse';
 $lang['current']    = 'aktuell';
 $lang['yours']      = 'Din versjon';
-$lang['diff']       = 'vis forskjeller med aktuell versjon';
+$lang['diff']       = 'Vis forskjeller med aktuell versjon';
 $lang['line']       = 'Rad';
 $lang['breadcrumb'] = 'Spor';
 $lang['lastmod']    = 'Sist oppdatert';
@@ -112,10 +112,10 @@ $lang['acl_perms']  = 'Rettigheter for';
 $lang['page']       = 'Side';
 $lang['namespace']  = 'Namespace';                                              
 
-$lang['acl_perm1']  = 'Les';
-$lang['acl_perm2']  = 'Rediger';
-$lang['acl_perm4']  = 'Lag';
-$lang['acl_perm8']  = 'Last Opp';
+$lang['acl_perm1']  = 'Lese';
+$lang['acl_perm2']  = 'Redigere';
+$lang['acl_perm4']  = 'Lage';
+$lang['acl_perm8']  = 'Laste Opp';
 $lang['acl_new']    = 'Legg til Oppføring';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
