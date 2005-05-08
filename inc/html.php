@@ -985,6 +985,7 @@ function html_debug(){
 function html_admin(){
   global $ID;
   global $lang;
+  global $conf;
 
   print p_locale_xhtml('admin');
 
@@ -992,7 +993,10 @@ function html_admin(){
 
   // currently ACL only - more to come
   ptln('<li><a href="'.wl($ID,'do=admin&amp;page=acl').'">'.$lang['admin_acl'].'</a></li>');
-
+  if (!$conf['openregister']){
+    ptln('<li><a href="'.wl($ID,'do=admin&amp;page=register').'">'.$lang['admin_register'].'</a></li>');
+  }
+  
   ptln('</ul>');
 }
 

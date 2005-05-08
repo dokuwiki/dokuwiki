@@ -368,7 +368,7 @@ function register(){
   global $conf;
 
   if(!$_POST['save']) return false;
-  if(!$conf['openregister']) return false;
+//  if(!$conf['openregister']) return false;
 
   //clean username
   $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);

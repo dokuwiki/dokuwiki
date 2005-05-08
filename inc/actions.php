@@ -64,7 +64,9 @@ function act_dispatch(){
 		if($_REQUEST['page'] == 'acl'){
 			require_once(DOKU_INC.'inc/admin_acl.php');
 			admin_acl_handler();
-		}
+		} elseif ($_REQUEST['page'] == 'register') {
+      $ACT = 'register';
+    }
   }
 
   //call template FIXME: all needed vars available?

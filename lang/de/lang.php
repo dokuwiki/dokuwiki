@@ -107,6 +107,7 @@ $lang['qb_sig']     = 'Unterschrift einfügen';
 $lang['del_confirm']= 'Eintrag wirklich löschen?';
 
 $lang['admin_acl']  = 'Zugangsverwaltung...';
+$lang['admin_register']= 'Neuen Benutzer anmelden...';
 
 $lang['acl_group']  = 'Gruppe';
 $lang['acl_user']   = 'Benutzer';

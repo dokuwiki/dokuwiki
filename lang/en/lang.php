@@ -105,6 +105,7 @@ $lang['qb_sig']     = 'Insert Signature';
 $lang['del_confirm']= 'Delete this entry?';
 
 $lang['admin_acl']  = 'Access Control List Management...';
+$lang['admin_register']= 'Add new user...';
 
 $lang['acl_group']  = 'Group';
 $lang['acl_user']   = 'User';
