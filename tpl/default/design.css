@@ -320,7 +320,7 @@ div.level5 {margin-left: 83px;}
 ul { 
   line-height: 1.5em;
   list-style-type: square;
-  margin: 0.5em 0 0.5em 1.5em;
+  margin: 0 0 0.5em 1.5em;
   padding: 0;
   list-style-image: url(images/bullet.gif);
 }
@@ -328,7 +328,7 @@ ul {
 /* ordered lists */
 ol {
   line-height: 1.5em;
-  margin: 0.5em 0 0.5em 1.5em;
+  margin: 0 0 0.5em 1.5em;
   padding: 0;
   color: #638c9c;
   font-weight: bold;
