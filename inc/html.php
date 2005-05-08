@@ -741,6 +741,7 @@ function html_msgarea(){
  */
 function html_register(){
   global $lang;
+  global $conf;
   global $ID;
 
   print p_locale_xhtml('register');
@@ -755,6 +756,22 @@ function html_register(){
       <?=$lang['user']?>
       <input type="text" name="login" class="edit" size="50" value="<?=formText($_POST['login'])?>" />
     </label><br />
+    
+    <?php
+      if (!$conf['autopasswd']) {
+    ?>
+      <label>
+        <?=$lang['pass']?>
+        <input type="password" name="pass" class="edit" size="50" />
+      </label><br />
+      <label>
+        <?=$lang['passchk']?>
+        <input type="password" name="passchk" class="edit" size="50" />
+      </label><br />
+    <?php
+      }
+    ?>
+
     <label>
       <?=$lang['fullname']?>
       <input type="text" name="fullname" class="edit" size="50" value="<?=formText($_POST['fullname'])?>" />

@@ -33,6 +33,7 @@ $lang['btn_delete'] = 'Löschen';
 $lang['loggedinas'] = 'Angemeldet als';
 $lang['user']       = 'Benutzername';
 $lang['pass']       = 'Passwort';
+$lang['passchk']    = 'und nochmal';
 $lang['fullname']   = 'Voller Name';
 $lang['email']      = 'E-Mail';
 $lang['remember']   = 'Angemeldet bleiben';
@@ -41,9 +42,11 @@ $lang['badlogin']   = 'Nutzername oder Passwort sind falsch.';
 
 $lang['regmissing'] = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists'] = 'Der Nutzername existiert leider schon.';
-$lang['regsuccess'] = 'Der neue Nutzer wurde angelegt. Das Passwort wurde per Mail versandt.';
+$lang['regsuccess'] = 'Der neue Nutzer wurde angelegt und das Passwort per Email versandt.';
+$lang['regsuccess2']= 'Der neue Nutzer wurde angelegt.';
 $lang['regmailfail']= 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wenden sie sich an den Wiki-Admin.';
 $lang['regbadmail'] = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden sie sich bitte an den Wiki-Admin.';
+$lang['reqbadpass'] = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal.';
 $lang['regpwmail']  = 'Ihr DokuWiki Passwort';
 $lang['reghere']    = 'Sie haben noch keinen Zugang? Hier anmelden';
 

@@ -51,9 +51,10 @@ $conf['mailguard']   = 'hex';             //obfuscate email addresses against sp
 /* Authentication Options */
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
 $conf['openregister']= 1;                //Should users to be allowed to register?
+$conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
 $conf['authtype']    = 'plain';          //which authentication DB should be used (currently plain only)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
-$conf['superuser']   = '!!not set!!';       //The admin can be user or @group
+$conf['superuser']   = '!!not set!!';    //The admin can be user or @group
 
 /* Advanced Options */
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
