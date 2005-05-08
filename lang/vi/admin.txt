@@ -1,0 +1,3 @@
+====== Quản lý ======
+
+Sau đây là các mục quản lý trong DokuWiki.

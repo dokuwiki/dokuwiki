@@ -1,0 +1,13 @@
+====== Quản lý phép truy nhập {Access Control List (ACL)} ======
+
+Trên trang này, bạn có thể thêm và xoá phép truy nhập cho trang đương thời
+và những [[doku>wiki:namespaces|không gian tên]] thuộc về trang.
+Bạn nên đọc [[doku>wiki:acl|tài liệu chính thức về ACL]]
+để hiểu kỷ về việc kiểm soát truy nhập {access control}.
+
+Sau đây là những phép truy nhập đáng kể cho trang đương thời.
+Phép truy nhập cho những trang khác không hiện lên đây --
+có thể biên soạn bằng cách [[this>doku.php?do=index|đến]]
+trước vào phần tính chất của trang,
+rồi sang phần Quản lý phép truy nhập.
+
