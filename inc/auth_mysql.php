@@ -43,10 +43,11 @@ function auth_mysql_runsql($sql_string) {
       $resultarray[]=$temparray;
     }
     mysql_free_result ($result);
-  }
-  if (mysql_insert_id($link)) {
+  } elseif (mysql_insert_id($link)) {
     $resultarray = mysql_insert_id($link); //give back ID on insert
-  }
+  } else
+    $resultarray = 0; // asure that the return value is valid
+    
   mysql_close ($link);
   return $resultarray;
 }
@@ -55,7 +56,9 @@ function auth_mysql_runsql($sql_string) {
  * Check user+password [required auth function]
  *
  * Checks if the given user exists and the given
- * plaintext password is correct
+ * plaintext password is correct. Furtheron it
+ * might be checked wether the user is member of
+ * the right group
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  bool
@@ -65,6 +68,7 @@ function auth_checkPass($user,$pass){
   $cnf = $conf['auth']['mysql'];
 
   $sql    = str_replace('%u',addslashes($user),$cnf['passcheck']);
+  $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
   $sql    = str_replace('%p',addslashes($pass),$sql);
   $result = auth_mysql_runsql($sql);
   return(count($result));
@@ -107,14 +111,51 @@ function auth_getUserData($user){
 /**
  * Create a new User [required auth function]
  *
- * Not implemented
+ * user string  username
+ * pass string  password
+ * name string  full name of the user
+ * mail string  email address
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
+ * Returns false if the user already exists, null when an error
+ * occoured and the cleartext password of the new user if
+ * everything went well.
+ *
+ * The user HAS TO be added to the default group by this
+ * function
+ *
+ * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
-function auth_createUser($user,$name,$mail){
-  msg("Sorry. Creating users is not supported by the MySQL backend, yet",-1);
+function auth_createUser($user,$pass,$name,$mail){
+  global $conf;
+  $cnf = $conf['auth']['mysql'];
+  
+  $info = auth_getUserData($user);
+  if ($info != false) return false;
+  
+  $sql    = str_replace('%g',$conf['defaultgroup'],$cnf['getgroupid']);
+  $result = auth_mysql_runsql($sql);
+  
+  if (count($result) == 1) {
+    $gid  = $result[0]['gid'];
+    
+    $sql  = str_replace('%u',$user,$cnf['adduser']);
+    $sql  = str_replace('%p',$pass,$sql);
+    $sql  = str_replace('%n',$name,$sql);
+    $sql  = str_replace('%e',$mail,$sql);
+    $uid  = auth_mysql_runsql($sql);
+    
+    if ($uid != 0) { 
+      $sql  = str_replace('%uid',$uid,$cnf['addusergroup']);
+      $sql  = str_replace('%gid',$gid,$sql);
+      auth_mysql_runsql($sql);
+      return $pass;
+    } else
+      msg("Registering of the new user '$user' failed!", -1);
+
+  } else
+    msg("The default group is not cleanly defined in the database!", -1);
+
   return null;
 }
-
-
+    
 //Setup VIM: ex: et ts=2 enc=utf-8 :

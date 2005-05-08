@@ -64,13 +64,12 @@ function auth_getUserData($user){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function auth_createUser($user,$name,$mail){
+function auth_createUser($user,$pass,$name,$mail){
   global $conf;
 
   $users = auth_plain_loadUserData();
   if(isset($users[$user])) return false;
 
-  $pass = auth_pwgen();
   $userline = join(':',array($user,
                              md5($pass),
                              $name,

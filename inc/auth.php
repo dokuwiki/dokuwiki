@@ -389,7 +389,8 @@ function register(){
   }
 
   //okay try to create the user
-  $pass = auth_createUser($_POST['login'],$_POST['fullname'],$_POST['email']);
+  $pass = auth_pwgen();
+  $pass = auth_createUser($_POST['login'],$pass,$_POST['fullname'],$_POST['email']);
   if(empty($pass)){
     msg($lang['reguexists'],-1);
     return false;

@@ -199,7 +199,7 @@ function auth_getUserData($user){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function auth_createUser($user,$name,$mail){
+function auth_createUser($user,$pass,$name,$mail){
   msg("Sorry. Creating users is not supported by the LDAP backend",-1);
   return null;
 }
