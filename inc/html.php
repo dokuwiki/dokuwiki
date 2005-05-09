@@ -994,7 +994,7 @@ function html_admin(){
   // currently ACL only - more to come
   ptln('<li><a href="'.wl($ID,'do=admin&amp;page=acl').'">'.$lang['admin_acl'].'</a></li>');
   if (!$conf['openregister']){
-    ptln('<li><a href="'.wl($ID,'do=admin&amp;page=register').'">'.$lang['admin_register'].'</a></li>');
+    ptln('<li><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></li>');
   }
   
   ptln('</ul>');

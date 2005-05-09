@@ -64,8 +64,6 @@ function act_dispatch(){
 		if($_REQUEST['page'] == 'acl'){
 			require_once(DOKU_INC.'inc/admin_acl.php');
 			admin_acl_handler();
-		} elseif ($_REQUEST['page'] == 'register') {
-      $ACT = 'register';
     }
   }
 
@@ -85,7 +83,6 @@ function act_dispatch(){
  */
 function act_clean($act){
   global $lang;
-  global $conf;
 
   //handle localized buttons
   if($act == $lang['btn_save']) $act = 'save';
@@ -95,9 +92,6 @@ function act_clean($act){
   //remove all bad chars
   $act = strtolower($act);
   $act = preg_replace('/[^a-z_]+/','',$act);
-
-  if($act == 'register' && !$conf['openregister'])
-    return 'show';
 
   if($act == 'export_html') $act = 'export_xhtml';
 
@@ -118,6 +112,7 @@ function act_clean($act){
  */
 function act_permcheck($act){
   global $INFO;
+  global $conf;
 
   if(in_array($act,array('save','preview','edit'))){
     if($INFO['exists']){
@@ -125,8 +120,13 @@ function act_permcheck($act){
     }else{
       $permneed = AUTH_CREATE;
     }
-  }elseif(in_array($act,array('login','register','search','recent'))){
+  }elseif(in_array($act,array('login','search','recent'))){
     $permneed = AUTH_NONE;
+  }elseif($act == 'register'){
+    if ($conf['openregister'])
+      $permneed = AUTH_NONE;
+    else
+      $permneed = AUTH_AUTH;
   }elseif($act == 'admin'){
     $permneed = AUTH_ADMIN;
   }else{
