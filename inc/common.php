@@ -731,7 +731,7 @@ function getVersion(){
   //import version string
   if(@file_exists('VERSION')){
     //official release
-    return 'Release '.io_readfile('VERSION');
+    return 'Release '.trim(io_readfile('VERSION'));
   }elseif(is_dir('_darcs')){
     //darcs checkout
     $inv = file('_darcs/inventory');
