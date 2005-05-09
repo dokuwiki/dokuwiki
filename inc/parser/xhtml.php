@@ -207,7 +207,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function footnote_open() {
-        $id = $this->_newFootnoteId();
+        #$id = $this->_newFootnoteId();
+        $id = count($this->footnotes)+1;
         $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" class="fn_top">'.$id.')</a>';
 
         // move current content to store and record footnote
@@ -920,11 +921,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         return $ret;
-    }
-    
-    function _newFootnoteId() {
-        static $id = 1;
-        return $id++;
     }
     
     function _xmlEntities($string) {
