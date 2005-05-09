@@ -49,8 +49,8 @@ $lang['reghere']    = 'Har du ikke konto ennå? Skaff deg en';
 $lang['txt_upload']   = 'Velg fil som du vil laste opp';
 $lang['txt_filename'] = 'Angi wikinavn (ikke obligatorisk)';
 $lang['lockedby']     = 'Stengt av';
-$lang['lockexpire']   = 'La avstengningen opphøre';
-$lang['willexpire']   = 'Din redigeringslås for dette dokumentet kommer snart til å opphøre.\nFor å unngå versjonskonflikter bør du forhåndsgranske ditt dokument for å forlenge redigeringslåsen.';
+$lang['lockexpire']   = 'Avstengningen opphører';
+$lang['willexpire']   = 'Din redigeringslås for dette dokumentet kommer snart til å opphøre.\nFor å unngå versjonskonflikter bør du forhåndsvise ditt dokument for å forlenge redigeringslåsen.';
 
 $lang['notsavedyet'] = 'Det fins endringer som ikke er lagret.\nEr du sikker på at du vil fortsette?';
 $lang['rssfailed']   = 'En feil oppstod da denne RSS-kilden skulle hentes: ';
@@ -67,7 +67,7 @@ $lang['mediafiles']  = 'Tilgjengelige filer ';
 $lang['hits']       = 'Treff';
 $lang['quickhits']  = 'Matchende wikinavn';
 $lang['toc']        = 'Innholdsfortegnelse';
-$lang['current']    = 'aktuell';
+$lang['current']    = 'Aktuell versjon';
 $lang['yours']      = 'Din versjon';
 $lang['diff']       = 'Vis forskjeller med aktuell versjon';
 $lang['line']       = 'Rad';
@@ -76,7 +76,7 @@ $lang['lastmod']    = 'Sist oppdatert';
 $lang['by']         = 'av';
 $lang['deleted']    = 'slettet';
 $lang['created']    = 'lagret';
-$lang['restored']   = 'tidligere versjon er gjenopprettet';
+$lang['restored']   = 'Gjenopprettet til en tidligere versjon';
 $lang['summary']    = 'Redigeringskommentar';
 
 $lang['mail_newpage'] = '[DokuWiki] side har blitt lagt til:';
@@ -105,6 +105,7 @@ $lang['qb_sig']     = 'Føy til signatur';
 $lang['del_confirm']= 'Slett denne oppføringen?';
 
 $lang['admin_acl']  = 'Administrasjon av Access Control List';
+$lang['admin_register']= 'Legg til ny bruker...';
 
 $lang['acl_group']  = 'Gruppe';
 $lang['acl_user']   = 'Bruker';
