@@ -97,8 +97,7 @@ function getBaseURL($abs=false){
   if($conf['canonical']) $abs = true;
 
   if($conf['basedir']){
-    $dir = $conf['basedir'];
- 
+    $dir = $conf['basedir'].'/';
   }elseif($_SERVER['SCRIPT_NAME']){
     $dir = dirname($_SERVER['SCRIPT_NAME']).'/';
   }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
