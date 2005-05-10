@@ -123,10 +123,11 @@ function act_permcheck($act){
   }elseif(in_array($act,array('login','search','recent'))){
     $permneed = AUTH_NONE;
   }elseif($act == 'register'){
-    if ($conf['openregister'])
+    if ($conf['openregister']){
       $permneed = AUTH_NONE;
-    else
-      $permneed = AUTH_AUTH;
+    }else{
+      $permneed = AUTH_ADMIN;
+    }
   }elseif($act == 'admin'){
     $permneed = AUTH_ADMIN;
   }else{

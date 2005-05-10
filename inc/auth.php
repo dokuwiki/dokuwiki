@@ -365,13 +365,8 @@ function auth_sendPassword($user,$password){
  */
 function register(){
   global $lang;
-  global $conf;
 
   if(!$_POST['save']) return false;
-
-  //no open register? -> only admin allowed!
-  if(!$conf['openregister'] && 
-     auth_quickaclcheck('') != AUTH_ADMIN ) return false;
 
   //clean username
   $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
