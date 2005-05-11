@@ -365,6 +365,7 @@ function auth_sendPassword($user,$password){
  */
 function register(){
   global $lang;
+  global $conf;
 
   if(!$_POST['save']) return false;
 
