@@ -83,7 +83,7 @@ function auth_checkPass($user,$pass){
     if(!$dn) return false;
   } else {
     // dn is defined in the usertree
-    $dn = str_replace('%u', $user, $cnf['usertree']);
+    $dn = auth_ldap_makeFilter($cnf['usertree'], array('user'=>$user)); 
   }
   //try to bind with dn
   if(@ldap_bind($conn,$dn,$pass)){
@@ -138,24 +138,26 @@ function auth_getUserData($user){
       return false;
     }
   }
+  $info['user']= $user;
 
   //get info for given user
-  $base   = str_replace('%u',$user,$cnf['usertree']);
+  $base = auth_ldap_makeFilter($cnf['usertree'], $info); 
   if(!empty($cnf['userfilter'])) {
-    $filter = str_replace('%u',$user,$cnf['userfilter']);
+    $filter = auth_ldap_makeFilter($cnf['userfilter'], $info); 
   } else {
     $filter = "(ObjectClass=*)";
   }
   $sr     = ldap_search($conn, $base, $filter);;
   $result = ldap_get_entries($conn, $sr);
+  $user_result = $result[0]; 
   if($result['count'] != 1){
     return false; //user not found
   }
 
   //general user info
-  $info['dn']  = $result[0]['dn'];
-  $info['mail']= $result[0]['mail'][0];
-  $info['name']= $result[0]['cn'][0];
+  $info['dn']= $user_result['dn'];
+  $info['mail']= $user_result['mail'][0];
+  $info['name']= $user_result['cn'][0];
 
   //use ActiveDirectory sAMAccountName as uid
   if(isset($result[0]['sAMAccountName'][0])){
@@ -177,11 +179,11 @@ function auth_getUserData($user){
   }
 
   //get groups for given user if grouptree is given
-  if ($cnf['grouptree'] != '') {
-    $filter = str_replace('%i', $info['uid'], $cnf['groupfilter']);
-    $filter = str_replace('%u', $user, $filter);
-    $filter = str_replace('%g', $gid, $filter);
-    $sr     = @ldap_search($conn, $cnf['grouptree'], $filter);
+  if (!empty($cnf['grouptree'])) {
+    $base = auth_ldap_makeFilter($cnf['grouptree'], $user_result); 
+    $filter = auth_ldap_makeFilter($cnf['groupfilter'], $user_result); 
+
+    $sr = @ldap_search($conn, $base, $filter);
     if(!$sr){
       msg("LDAP: Reading group memberships failed",-1);
       if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
@@ -212,5 +214,32 @@ function auth_createUser($user,$pass,$name,$mail){
   return null;
 }
 
+
+/**
+ * Make ldap filter strings.
+ *
+ * Used by auth_getUserData to make the filter
+ * strings for grouptree and groupfilter
+ *
+ * filter      string  ldap search filter with placeholders
+ * placeholders array   array with the placeholders
+ * 
+ * @author  Troels Liebe Bentsen <tlb@rapanden.dk>
+ * @return  string
+ */
+function auth_ldap_makeFilter($filter, $placeholders) {
+  preg_match_all("/%{([^}]+)/", $filter, $matches, PREG_PATTERN_ORDER);
+  //replace each match
+  foreach ($matches[1] as $match) {
+    //take first element if array
+    if(is_array($placeholders[$match])) {
+      $value = $placeholders[$match][0];
+    } else {
+      $value = $placeholders[$match];
+    }
+    $filter = str_replace('%{'.$match.'}', $value, $filter);
+  }
+  return $filter;
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
