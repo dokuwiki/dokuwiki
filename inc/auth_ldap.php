@@ -179,7 +179,7 @@ function auth_getUserData($user){
   //get groups for given user if grouptree is given
   if ($cnf['grouptree'] != '') {
     $filter = str_replace('%i', $info['uid'], $cnf['groupfilter']);
-    $filter = str_replace('%u', $info['name'], $filter);
+    $filter = str_replace('%u', $user, $filter);
     $filter = str_replace('%g', $gid, $filter);
     $sr     = @ldap_search($conn, $cnf['grouptree'], $filter);
     if(!$sr){
