@@ -76,11 +76,15 @@ function auth_checkPass($user,$pass){
   $conn = auth_ldap_connect();
   if(!$conn) return false;
 
-  //get dn for given user
-  $info = auth_getUserData($user);
-  $dn   = $info['dn'];
-  if(!$dn) return false;
-
+  if(!empty($cnf['userfilter'])) {
+    //get dn for given user
+    $info = auth_getUserData($user);
+    $dn   = $info['dn'];  
+    if(!$dn) return false;
+  } else {
+    // dn is defined in the usertree
+    $dn = str_replace('%u', $user, $cnf['usertree']);
+  }
   //try to bind with dn
   if(@ldap_bind($conn,$dn,$pass)){
     if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
@@ -126,8 +130,8 @@ function auth_getUserData($user){
       if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
       return false;
     }
-  }else{
-    //bind anonymous
+  }elseif(!empty($cnf['userfilter'])){
+    //bind anonymous if we need to do a search for the dn
     if(!@ldap_bind($conn)){
       msg("LDAP: can not bind anonymously",-1);
       if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
@@ -136,8 +140,12 @@ function auth_getUserData($user){
   }
 
   //get info for given user
-  $filter = str_replace('%u',$user,$cnf['userfilter']);
   $base   = str_replace('%u',$user,$cnf['usertree']);
+  if(!empty($cnf['userfilter'])) {
+    $filter = str_replace('%u',$user,$cnf['userfilter']);
+  } else {
+    $filter = "(ObjectClass=*)";
+  }
   $sr     = ldap_search($conn, $base, $filter);;
   $result = ldap_get_entries($conn, $sr);
   if($result['count'] != 1){
