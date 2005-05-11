@@ -81,8 +81,7 @@
 
   $fp = @fopen($FILE,"rb");
   if($fp){
-    fpassthru($fp);
-    fclose($fp);
+    fpassthru($fp); //does a close itself
   }else{
     header("HTTP/1.0 500 Internal Server Error");
     print "Could not read $FILE - bad permissions?";
