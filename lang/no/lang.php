@@ -32,6 +32,7 @@ $lang['btn_delete'] = 'Slett';
 $lang['loggedinas'] = 'Innlogget som';
 $lang['user']       = 'Brukernavn';
 $lang['pass']       = 'Passord';
+$lang['passchk']    = 'Skriv det igjen for bekreftelse';
 $lang['remember']   = 'Husk på meg';
 $lang['fullname']   = 'Navn';
 $lang['email']      = 'E-post';
@@ -40,9 +41,11 @@ $lang['badlogin']   = 'Ugyldig brukernavn og/eller passord.';
 
 $lang['regmissing'] = 'Vennligst fyll ut alle felt.';
 $lang['reguexists'] = 'Det fins allerede en bruker med det brukernavnet.';
-$lang['regsuccess'] = 'Brukerkonto er laget og passordet er blitt sendt via e-post.';
+$lang['regsuccess'] = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';
+$lang['regsuccess2']= 'Brukerkonto har blitt laget.';
 $lang['regmailfail']= 'En feil oppstod da passordet ditt skulle sendes via e-post. Vennligst kontakt administratoren!';
 $lang['regbadmail'] = 'Den angitte e-postadressen ser ut til å være ugyldig - vennligst kontakt administratoren om du anser dette som feilaktig';
+$lang['regbadpass'] = 'De to passordene du skrev er ikke like. Vennligst forsøk igjen.';
 $lang['regpwmail']  = 'Ditt DokuWikipassord';
 $lang['reghere']    = 'Har du ikke konto ennå? Skaff deg en';
 
