@@ -159,16 +159,6 @@ function auth_getUserData($user){
   $info['mail']= $user_result['mail'][0];
   $info['name']= $user_result['cn'][0];
 
-  //use ActiveDirectory sAMAccountName as uid
-  if(isset($result[0]['sAMAccountName'][0])){
-    $info['uid'] = $result[0]['sAMAccountName'][0];
-  }else{
-    $info['uid'] = $result[0]['uid'][0];
-  }
-
-  //get primary group id
-  $gid = $result[0]['gidnumber'][0];
-
   //handle ActiveDirectory memberOf
   if(is_array($result[0]['memberof'])){
     foreach($result[0]['memberof'] as $grp){
