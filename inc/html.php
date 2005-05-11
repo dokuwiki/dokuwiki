@@ -368,6 +368,7 @@ function html_locked($ip){
   global $ID;
   global $conf;
   global $lang;
+  global $INFO;
   
   $locktime = filemtime(wikiFN($ID).'.lock');
   $expire = @date($conf['dformat'], $locktime + $conf['locktime'] );
@@ -375,7 +376,7 @@ function html_locked($ip){
 
   print p_locale_xhtml('locked');
   print '<ul>';
-  print '<li><b>'.$lang['lockedby'].':</b> '.$ip.'</li>';
+  print '<li><b>'.$lang['lockedby'].':</b> '.$INFO['locked'].'</li>';
   print '<li><b>'.$lang['lockexpire'].':</b> '.$expire.' ('.$min.' min)</li>';
   print '</ul>';
 }
@@ -405,10 +406,9 @@ function html_revisions(){
     print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 
     print $INFO['sum'];
-    print ' <span class="user">(';
-    print $INFO['ip'];
-    if($INFO['user']) print ' '.$INFO['user'];
-    print ')</span> ';
+    print ' <span class="user">';
+    print $INFO['editor'];
+    print '</span> ';
 
     print '('.$lang['current'].')';
     print '</li>';
@@ -429,10 +429,13 @@ function html_revisions(){
     print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
 
     print htmlspecialchars($info['sum']);
-    print ' <span class="user">(';
-    print $info['ip'];
-    if($info['user']) print ' '.$info['user'];
-    print ')</span>';
+    print ' <span class="user">';
+    if($info['user']){
+      print $info['user'];
+    }else{
+      print $info['ip'];
+    }
+    print '</span>';
 
     print '</li>';
   }
@@ -468,10 +471,13 @@ function html_recent(){
     print html_wikilink($id,$id);
 
     print ' '.htmlspecialchars($recents[$id]['sum']);
-    print ' <span class="user">(';
-    print $recents[$id]['ip'];
-    if($recents[$id]['user']) print ' '.$recents[$id]['user'];
-    print ')</span>';
+    print ' <span class="user">';
+    if($recents[$id]['user']){
+      print $recents[$id]['user'];
+    }else{
+      print $recents[$id]['ip'];
+    }
+    print '</span>';
 
     print '</li>';
   }

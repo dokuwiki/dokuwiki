@@ -67,7 +67,11 @@ function pageinfo(){
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
   $info['editor'] = $revinfo['ip'];
-  if($revinfo['user']) $info['editor'].= ' ('.$revinfo['user'].')';
+  if($revinfo['user']){
+    $info['editor'] = $revinfo['user'];
+  }else{
+    $info['editor'] = $revinfo['ip'];
+  }
 
   return $info;
 }
