@@ -76,7 +76,7 @@ function auth_login($user,$pass,$sticky=false){
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
       $cookie = base64_encode("$user|$sticky|$pass");
       if($sticky) $time = time()+60*60*24*365; //one year
-      setcookie('DokuWikiAUTH',$cookie,$time);
+      setcookie('DokuWikiAUTH',$cookie,$time,'/');
 
       // set session
       $_SESSION[$conf['title']]['auth']['user'] = $user;
@@ -176,7 +176,7 @@ function auth_logoff(){
   unset($_SESSION[$conf['title']]['auth']['info']);
   unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
-  setcookie('DokuWikiAUTH','',time()-3600);
+  setcookie('DokuWikiAUTH','',time()-600000,'/');
 }
 
 /**
