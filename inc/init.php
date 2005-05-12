@@ -162,7 +162,7 @@ function scriptify($file) {
   foreach ($lines as $line){
     fwrite($fh, $line);
   }
-  $fclose($fh);
+  fclose($fh);
 }
 
 
