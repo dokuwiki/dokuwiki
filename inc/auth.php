@@ -28,7 +28,7 @@
   if($conf['useacl']){
     auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
     //load ACL into a global array
-    $AUTH_ACL = file('conf/acl.auth');
+    $AUTH_ACL = file('conf/acl.auth.php');
   }
 
 /**

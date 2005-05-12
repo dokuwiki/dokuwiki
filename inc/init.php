@@ -70,6 +70,10 @@
   $conf['mediadir']      = realpath($conf['mediadir']);
   if(!$conf['mediadir'])   msg('Wrong mediadir! Check config!',-1);
 
+  // automatic upgrade to script versions of certain files
+  scriptify('conf/users.auth');
+  scriptify('conf/acl.auth');
+
 /**
  * remove magic quotes recursivly
  *
@@ -133,6 +137,32 @@ function getBaseURL($abs=false){
   }
 
   return $proto.$host.$port.$dir;
+}
+
+function scriptify($file) {
+  // checks
+  if (!is_readable($file)) {
+    return;
+  }
+  $fn = $file.'.php';
+  if (@file_exists($fn)) {
+    return;
+  }
+  $fh = fopen($fn, 'w');
+  if (!$fh) {
+    die($fn.' is not writable!');
+  }
+  // write php exit hack first
+  fwrite($fh, "# $fn\n");
+  fwrite($fh, '# <?php exit()?>'."\n");
+  fwrite($fh, "# Don't modify the lines above\n");
+  fwrite($fh, "#\n");
+  // copy existing lines
+  $lines = file($file);
+  foreach ($lines as $line){
+    fwrite($fh, $line);
+  }
+  $fclose($fh);
 }
 
 

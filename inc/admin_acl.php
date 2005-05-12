@@ -43,7 +43,7 @@ function admin_acl_handler(){
   }
 
   // reload ACL config
-  $AUTH_ACL = file('conf/acl.auth');
+  $AUTH_ACL = file('conf/acl.auth.php');
 }
 
 /**
@@ -112,12 +112,12 @@ function get_acl_config($id){
 
 
 /**
- * adds new acl-entry to conf/acl.auth
+ * adds new acl-entry to conf/acl.auth.php
  *
  * @author  Frank Schubert <frank@schokilade.de>
  */
 function admin_acl_add($acl_scope, $acl_user, $acl_level){
-  $acl_config = join("",file('conf/acl.auth'));
+  $acl_config = join("",file('conf/acl.auth.php'));
   
   // max level for pagenames is edit
   if(strpos("*", $acl_scope) === false) {
@@ -128,23 +128,23 @@ function admin_acl_add($acl_scope, $acl_user, $acl_level){
   
   $new_config = $acl_config.$new_acl;
   
-  return io_saveFile("conf/acl.auth", $new_config);
+  return io_saveFile("conf/acl.auth.php", $new_config);
 }
 
 /**
- * remove acl-entry from conf/acl.auth
+ * remove acl-entry from conf/acl.auth.php
  *
  * @author  Frank Schubert <frank@schokilade.de>
  */
 function admin_acl_del($acl_scope, $acl_user){
-  $acl_config = file('conf/acl.auth');
+  $acl_config = file('conf/acl.auth.php');
 
   $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
   
   // save all non!-matching #FIXME invert is available from 4.2.0 only!
   $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
   
-  return io_saveFile("conf/acl.auth", join("",$new_config));
+  return io_saveFile("conf/acl.auth.php", join("",$new_config));
 }
 
 // --- HTML OUTPUT FUNCTIONS BELOW --- //

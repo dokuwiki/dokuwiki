@@ -76,13 +76,13 @@ function auth_createUser($user,$pass,$name,$mail){
                              $mail,
                              $conf['defaultgroup']));
   $userline .= "\n";
-  $fh = fopen('conf/users.auth','a');
+  $fh = fopen('conf/users.auth.php','a');
   if($fh){
     fwrite($fh,$userline);
     fclose($fh);
     return $pass;
   }
-  msg('The users.auth file is not writable. Please inform the Wiki-Admin',-1);
+  msg('The users.auth.php file is not writable. Please inform the Wiki-Admin',-1);
   return null;
 }
 
@@ -96,7 +96,7 @@ function auth_createUser($user,$pass,$name,$mail){
  */
 function auth_plain_loadUserData(){
   $data = array();
-  $lines = file('conf/users.auth');
+  $lines = file('conf/users.auth.php');
   foreach($lines as $line){
     $line = preg_replace('/#.*$/','',$line); //ignore comments
     $line = trim($line);

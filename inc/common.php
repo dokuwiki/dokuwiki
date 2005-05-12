@@ -791,10 +791,10 @@ function check(){
     msg('Mediadir is not writable',-1);
   }
 
-  if(is_writable('conf/users.auth')){
-    msg('conf/users.auth is writable',1);
+  if(is_writable('conf/users.auth.php')){
+    msg('conf/users.auth.php is writable',1);
   }else{
-    msg('conf/users.auth is not writable',0);
+    msg('conf/users.auth.php is not writable',0);
   }
 
   if(function_exists('mb_strpos')){
