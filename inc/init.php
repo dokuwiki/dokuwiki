@@ -139,6 +139,15 @@ function getBaseURL($abs=false){
   return $proto.$host.$port.$dir;
 }
 
+/**
+ * Append a PHP extension to a given file and adds an exit call
+ *
+ * This is used to migrate some old configfiles. An added PHP extension
+ * ensures the contents are not shown to webusers even if .htaccess files
+ * do not work
+ *
+ * @author Jan Decaluwe <jan@jandecaluwe.com>
+ */
 function scriptify($file) {
   // checks
   if (!is_readable($file)) {
@@ -163,8 +172,9 @@ function scriptify($file) {
     fwrite($fh, $line);
   }
   fclose($fh);
+  //try to rename the old file
+  @rename($file,"$file.old");
 }
-
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
