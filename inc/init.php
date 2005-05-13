@@ -68,7 +68,7 @@
   $conf['olddir']        = realpath($conf['olddir']);
   if(!$conf['olddir'])     die('Wrong olddir! Check config!');
   $conf['mediadir']      = realpath($conf['mediadir']);
-  if(!$conf['mediadir'])   msg('Wrong mediadir! Check config!',-1);
+  if(!$conf['mediadir'])   die('Wrong mediadir! Check config!');
 
   // automatic upgrade to script versions of certain files
   scriptify('conf/users.auth');
