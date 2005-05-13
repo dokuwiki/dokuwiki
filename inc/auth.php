@@ -470,7 +470,7 @@ function auth_cryptPassword($clear,$method='',$salt=''){
       return sha1($clear);
     case 'ssha':
       $salt=substr($salt,0,4);
-      return '{SSHA}'.base64_encode(pack("H*", sha1($password.$salt)).$salt);
+      return '{SSHA}'.base64_encode(pack("H*", sha1($clear.$salt)).$salt);
     case 'crypt':
       return crypt($clear,substr($salt,0,2));
     default:
