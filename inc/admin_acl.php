@@ -120,7 +120,7 @@ function admin_acl_add($acl_scope, $acl_user, $acl_level){
   $acl_config = join("",file('conf/acl.auth.php'));
   
   // max level for pagenames is edit
-  if(strpos("*", $acl_scope) === false) {
+  if(strpos($acl_scope,'*') === false) {
     if($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
   }
   
