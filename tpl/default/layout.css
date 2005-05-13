@@ -60,12 +60,10 @@
 
 .bar-left {
 	float:left;
-  width:50%;
 }
 
 .bar-right {
 	float:right;
-  width:50%;
   text-align:right;
 }
 
