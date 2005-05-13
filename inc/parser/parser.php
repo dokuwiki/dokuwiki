@@ -751,8 +751,8 @@ class Doku_Parser_Mode_WindowsShareLink extends Doku_Parser_Mode {
         $punc = '.:?\-;,';
         $host = $ltrs.$punc;
         $any  = $ltrs.$gunk.$punc;
-        
-        $this->pattern = "[$gunk$punc\s]\\\\\\\\[$host]+?\\\\[$any]+?[$punc]*[^$any]";
+
+        $this->pattern = "[$gunk$punc\s]\\\\\\\\[$host]+?\\\\[$any]+?(?=['.$punc.']*[^'.$any.'])";
     }
     
     function connectTo($mode) {
