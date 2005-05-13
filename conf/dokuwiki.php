@@ -48,11 +48,12 @@ $conf['mailguard']   = 'hex';             //obfuscate email addresses against sp
                                           //  'hex'     - use hex entities to encode the mail address
                                           //  'none'    - do not obfuscate addresses
 
-/* Authentication Options */
+/* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
 $conf['openregister']= 1;                //Should users to be allowed to register?
 $conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
-$conf['authtype']    = 'plain';          //which authentication DB should be used (currently plain only)
+$conf['authtype']    = 'plain';          //which authentication backend should be used
+$conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha,crypt)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 $conf['superuser']   = '!!not set!!';    //The admin can be user or @group
 

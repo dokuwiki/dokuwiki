@@ -438,6 +438,81 @@ function isvalidemail($email){
   return eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);
 }
 
+/**
+ * Encrypts a password using the given method and salt
+ *
+ * If the selected method needs a salt and none was given, a random one
+ * is chosen.
+ *
+ * The following methods are understood:
+ *
+ *   smd5 - Salted MD5 hashing
+ *   md5  - Simple MD5 hashing
+ *   sha1 - SHA1 hashing
+ *   ssha - Salted SHA1 hashing
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @return  string  The crypted password
+ */
+function auth_cryptPassword($clear,$method='',$salt=''){
+  global $conf;
+  if(empty($method)) $method = $conf['passcrypt'];
 
+  //prepare a salt
+  if(empty($salt)) $salt = md5(uniqid(rand(), true));
+
+  switch(strtolower($method)){
+    case 'smd5':
+        return crypt($clear,'$1$'.substr($salt,0,8).'$');
+    case 'md5':
+      return md5($clear);
+    case 'sha1':
+      return sha1($clear);
+    case 'ssha':
+      $salt=substr($salt,0,4);
+      return '{SSHA}'.base64_encode(pack("H*", sha1($password.$salt)).$salt);
+    case 'crypt':
+      return crypt($clear,substr($salt,0,2));
+    default:
+      msg("Unsupported crypt method $method",-1);
+  }
+}
+
+/**
+ * Verifies a cleartext password against a crypted hash
+ *
+ * The method and salt used for the crypted hash is determined automatically
+ * then the clear text password is crypted using the same method. If both hashs
+ * match true is is returned else false
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @return  bool
+ */
+function auth_verifyPassword($clear,$crypt){
+  $method='';
+  $salt='';
+
+  //determine the used method and salt
+  if(substr($crypt,0,3) == '$1$'){
+    $method = 'smd5';
+    $salt   = substr($crypt,3,8);
+  }elseif(substr($crypt,0,6) == '{SSHA}'){
+    $method = 'ssha';
+    $salt   = substr(base64_decode(substr($crypt, 6)),20);
+  }elseif(strlen($crypt) == 32){
+    $method = 'md5';
+  }elseif(strlen($crypt) == 40){
+    $method = 'sha1';
+  }else{
+    $method = 'crypt';
+    $salt   = substr($crypt,0,2);
+  }
+
+  //crypt and compare
+  if(auth_cryptPassword($clear,$method,$salt) === $crypt){
+    return true;
+  }
+  return false;
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

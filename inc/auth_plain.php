@@ -26,13 +26,10 @@ if(isset($_REQUEST['u']))
  */
 function auth_checkPass($user,$pass){
   $users = auth_plain_loadUserData();
-  $pass = md5($pass); //encode pass
 
-  if($users[$user]['pass'] == $pass){
-    return true;
-  }else{
-    return false;
-  }
+  if(!isset($users[$user])) return false;
+
+  return auth_verifyPassword($pass,$users[$user]['pass']);
 }
 
 /**
@@ -71,7 +68,7 @@ function auth_createUser($user,$pass,$name,$mail){
   if(isset($users[$user])) return false;
 
   $userline = join(':',array($user,
-                             md5($pass),
+                             auth_cryptPassword($pass),
                              $name,
                              $mail,
                              $conf['defaultgroup']));
