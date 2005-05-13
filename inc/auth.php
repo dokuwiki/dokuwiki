@@ -387,10 +387,10 @@ function register(){
     $pass = auth_pwgen();                // automatically generate password
   } elseif (empty($_POST['pass']) ||
             empty($_POST['passchk'])) {
-    msg($lang['reqmissing'], -1);        // complain about missing passwords
+    msg($lang['regmissing'], -1);        // complain about missing passwords
     return false;
   } elseif ($_POST['pass'] != $_POST['passchk']) {
-    msg($lang['reqbadpass'], -1);      // complain about misspelled passwords
+    msg($lang['regbadpass'], -1);      // complain about misspelled passwords
     return false;
   } else {
     $pass = $_POST['pass'];              // accept checked and valid password
