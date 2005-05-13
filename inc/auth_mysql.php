@@ -61,6 +61,7 @@ function auth_mysql_runsql($sql_string) {
  * the right group
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @return  bool
  */
 function auth_checkPass($user,$pass){
@@ -69,9 +70,13 @@ function auth_checkPass($user,$pass){
 
   $sql    = str_replace('%u',addslashes($user),$cnf['passcheck']);
   $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
-  $sql    = str_replace('%p',addslashes($pass),$sql);
   $result = auth_mysql_runsql($sql);
-  return(count($result));
+  
+  if(count($result)){
+    return(auth_verifyPassword($pass,$result[0]['pass']));
+  }else{
+    return(false);
+  }
 }
 
 /**
@@ -139,7 +144,7 @@ function auth_createUser($user,$pass,$name,$mail){
     $gid  = $result[0]['gid'];
     
     $sql  = str_replace('%u',$user,$cnf['adduser']);
-    $sql  = str_replace('%p',$pass,$sql);
+    $sql  = str_replace('%p',auth_cryptPassword($pass),$sql);
     $sql  = str_replace('%n',$name,$sql);
     $sql  = str_replace('%e',$mail,$sql);
     $uid  = auth_mysql_runsql($sql);
