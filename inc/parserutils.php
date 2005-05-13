@@ -122,7 +122,7 @@ function p_cached_instructions($file,$cacheonly=false){
     if($cachetime){
       return unserialize(io_readfile($cache));
     }else{
-      return NULL;
+      return array();
     }
   }
 
