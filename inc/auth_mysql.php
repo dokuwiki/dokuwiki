@@ -134,33 +134,49 @@ function auth_createUser($user,$pass,$name,$mail){
   global $conf;
   $cnf = $conf['auth']['mysql'];
   
+  //check if user exists
   $info = auth_getUserData($user);
   if ($info != false) return false;
+ 
+  //get groupid of default group
+  if($cnf['getgroupid']){
+    $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$cnf['getgroupid']);
+    $result = auth_mysql_runsql($sql);
+    if($result === false) return null;
+    if (count($result) == 1){
+      $gid = $result[0]['gid'];
+    }else{
+      msg("MySQL: Couldn't find the default group",-1);
+      return null;
+    }
+  }
   
-  $sql    = str_replace('%g',$conf['defaultgroup'],$cnf['getgroupid']);
-  $result = auth_mysql_runsql($sql);
-  
-  if (count($result) == 1) {
-    $gid  = $result[0]['gid'];
-    
-    $sql  = str_replace('%u',$user,$cnf['adduser']);
-    $sql  = str_replace('%p',auth_cryptPassword($pass),$sql);
-    $sql  = str_replace('%n',$name,$sql);
-    $sql  = str_replace('%e',$mail,$sql);
-    $uid  = auth_mysql_runsql($sql);
-    
-    if ($uid != 0) { 
-      $sql  = str_replace('%uid',$uid,$cnf['addusergroup']);
-      $sql  = str_replace('%gid',$gid,$sql);
-      auth_mysql_runsql($sql);
-      return $pass;
-    } else
-      msg("Registering of the new user '$user' failed!", -1);
+  //prepare the insert 
+  $sql = str_replace('%u'  ,addslashes($user),$cnf['adduser']);
+  $sql = str_replace('%p'  ,addslashes(auth_cryptPassword($pass)),$sql);
+  $sql = str_replace('%n'  ,addslashes($name),$sql);
+  $sql = str_replace('%e'  ,addslashes($mail),$sql);
+  $sql = str_replace('%gid',addslashes($gid),$sql);
+  $sql = str_replace('%g'  ,addslashes($conf['defaultgroup']),$sql);
 
-  } else
-    msg("The default group is not cleanly defined in the database!", -1);
+  //do the insert
+  $uid  = auth_mysql_runsql($sql);
+  if($uid == 0){
+    msg("Registering of the new user '$user' failed!", -1);
+    return null;
+  }
 
-  return null;
+  //add to default group  
+  if ($cnf['addusergroup']) {
+    $sql = str_replace('%uid',addslashes($uid),$cnf['addusergroup']);
+    $sql = str_replace('%u'  ,addslashes($user),$sql);
+    $sql = str_replace('%gid',addslashes($gid),$sql);
+    $sql = str_replace('%g'  ,addslashes($conf['defaultgroup']),$sql);
+    $result = auth_mysql_runsql($sql);
+    if($result === false) msg("MySQL: couldn't add user to the default group");
+  }
+
+  return $pass;
 }
     
 //Setup VIM: ex: et ts=2 enc=utf-8 :
