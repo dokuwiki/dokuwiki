@@ -443,7 +443,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false) {
         global $conf;
         global $ID;
-
         // default name is based on $id as given
         $default = $this->_simpleTitle($id);
         // now first resolve and clean up the $id
@@ -458,7 +457,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         } else {
             $class='media';
         }
-        
+       
+        //keep hash anchor
+        list($id,$hash) = split('#',$id,2);
+ 
         //prepare for formating
         $link['target'] = $conf['target']['wiki'];
         $link['style']  = '';
@@ -474,12 +476,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['url']    = wl($id);
         $link['name']   = $name;
         $link['title']  = $id;
-
         //add search string
         if($search){
             ($conf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
             $link['url'] .= urlencode($search);
         }
+
+        //keep hash
+        if($hash) $link['url'].='#'.$hash;
 
         //output formatted
         if($returnonly){
