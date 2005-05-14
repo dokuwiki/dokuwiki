@@ -532,7 +532,7 @@ function getRevisionInfo($id,$rev){
   }
   $loglines = file($conf['changelog']);
   $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
-  rsort($loglines); //reverse sort on timestamp (shouldn't be needed)
+  $loglines = array_reverse($loglines); //reverse sort on timestamp (shouldn't be needed)
   $line = split("\t",$loglines[0]);
   $info['date'] = $line[0];
   $info['ip']   = $line[1];
