@@ -446,10 +446,13 @@ function isvalidemail($email){
  *
  * The following methods are understood:
  *
- *   smd5 - Salted MD5 hashing
- *   md5  - Simple MD5 hashing
- *   sha1 - SHA1 hashing
- *   ssha - Salted SHA1 hashing
+ *   smd5  - Salted MD5 hashing
+ *   md5   - Simple MD5 hashing
+ *   sha1  - SHA1 hashing
+ *   ssha  - Salted SHA1 hashing
+ *   crypt - Unix crypt
+ *   mysql - MySQL password (old method)
+ *   my411 - MySQL 4.1.1 password
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  string  The crypted password
@@ -473,6 +476,22 @@ function auth_cryptPassword($clear,$method='',$salt=''){
       return '{SSHA}'.base64_encode(pack("H*", sha1($clear.$salt)).$salt);
     case 'crypt':
       return crypt($clear,substr($salt,0,2));
+    case 'mysql':
+      //from http://www.php.net/mysql comment by <soren at byu dot edu>
+      $nr=0x50305735;
+      $nr2=0x12345671;
+      $add=7;
+      $charArr = preg_split("//", $clear);
+      foreach ($charArr as $char) {
+        if (($char == '') || ($char == ' ') || ($char == '\t')) continue;
+        $charVal = ord($char);
+        $nr ^= ((($nr & 63) + $add) * $charVal) + ($nr << 8);
+        $nr2 += ($nr2 << 8) ^ $nr;
+        $add += $charVal;
+      }
+      return sprintf("%08x%08x", ($nr & 0x7fffffff), ($nr2 & 0x7fffffff));
+    case 'my411':
+      return '*'.sha1(pack("H*", sha1($clear)));
     default:
       msg("Unsupported crypt method $method",-1);
   }
@@ -493,16 +512,21 @@ function auth_verifyPassword($clear,$crypt){
   $salt='';
 
   //determine the used method and salt
+  $len = strlen($crypt);
   if(substr($crypt,0,3) == '$1$'){
     $method = 'smd5';
     $salt   = substr($crypt,3,8);
   }elseif(substr($crypt,0,6) == '{SSHA}'){
     $method = 'ssha';
     $salt   = substr(base64_decode(substr($crypt, 6)),20);
-  }elseif(strlen($crypt) == 32){
+  }elseif($len == 32){
     $method = 'md5';
-  }elseif(strlen($crypt) == 40){
+  }elseif($len == 40){
     $method = 'sha1';
+  }elseif($len == 16){
+    $method = 'mysql';
+  }elseif($len == 41 && $crypt[0] == '*'){
+    $method = 'my411';
   }else{
     $method = 'crypt';
     $salt   = substr($crypt,0,2);
