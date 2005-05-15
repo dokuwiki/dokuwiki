@@ -591,3 +591,14 @@ div.acladmin table{
   margin-left: 10%;
   width: 80%;
 }
+
+/* ---------- AJAX quicksearch ----------- */
+
+div.ajax_qsearch {
+  position:absolute;
+  text-align:left;
+  width: 200px;
+  background-color: #ff9;
+  opacity: 0.9;
+  -moz-border-radius: 15px;
+}

@@ -71,6 +71,38 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
  */
 
 /**
+ * Searches for pages beginning with the given query
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
+  $item = array();
+
+  if($type == 'd'){
+    return false; //no handling yet
+  }
+
+  //get id
+  $id = pathID($file);
+
+  //check if it matches the query
+  if(!preg_match('/^'.preg_quote($opts['query'],'/').'/u',$id)){
+    return false;
+  }
+
+  //check ACL
+  if(auth_quickaclcheck($id) < AUTH_READ){
+    return false;
+  }
+
+  $data[]=array( 'id'    => $id,
+                 'type'  => $type,
+                 'level' => 1,
+                 'open'  => true);
+  return true;
+}
+
+/**
  * Build the browsable index of pages
  *
  * $opts['ns'] is the current namespace

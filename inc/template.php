@@ -332,9 +332,27 @@ function tpl_actionlink($type,$pre='',$suf=''){
 function tpl_searchform(){
   global $lang;
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" onsubmit="return svchk()">';
+
+//FIXME this should be moved somewhere else
+?>
+<script type="text/javascript" src="<?=DOKU_BASE?>tw-sack.js"></script>
+<script type="text/javascript">
+  ajax = new sack('<?=DOKU_BASE?>ajax.php');
+  ajax.AjaxFailedAlert = '';
+
+  function ajax_qsearch(value){
+    ajax.element = 'ajax_qsearch';
+    ajax.encodeURIString = false;
+    var call = 'call=qsearch&q=';
+    call += encodeURI(value);
+    ajax.runAJAX(call);
+  }
+</script>
+<?php
   print '<input type="hidden" name="do" value="search" />';
-  print '<input type="text" accesskey="f" name="id" class="edit" />';
+  print '<input type="text" accesskey="f" name="id" class="edit" onkeyup="ajax_qsearch(this.value)" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
+  print '<div id="ajax_qsearch" class="ajax_qsearch"></div>';
   print '</form>';
 }
 
