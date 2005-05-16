@@ -24,7 +24,11 @@ function auth_pgsql_runsql($sql_string) {
   global $conf;
   $cnf = $conf['auth']['pgsql'];
 
-  $dsn="host=".$cnf['server']." port=5432 dbname=".$cnf['database']." user=".$cnf['user']." password=".$cnf['password'];
+  if($cnf['port']) {
+      $port=" port=".$cnf['port'];
+  }
+
+  $dsn="host=".$cnf['server']." dbname=".$cnf['database'].$port." user=".$cnf['user']." password=".$cnf['password'];
   $link   = pg_connect($dsn);
   if(!$link){
     msg('PgSQL: Connection to database failed!',-1);
@@ -59,10 +63,14 @@ function auth_checkPass($user,$pass){
   global $conf;
   $cnf = $conf['auth']['pgsql'];
 
-  $sql    = str_replace('%u',addslashes($user),$cnf['passcheck']);
-  $sql    = str_replace('%p',addslashes($pass),$sql);
+  $sql    = str_replace('%u',addslashes($user),$cnf['userinfo']);
   $result = auth_pgsql_runsql($sql);
-  return(count($result));
+  if(count($result)>0) {
+    $info=$result[0];
+    return auth_verifyPassword($pass, $info['pass']);
+  } else {
+    return false;
+  }
 }
 
 /**
@@ -98,16 +106,30 @@ function auth_getUserData($user){
 
 /**
  * Create a new User [required auth function]
- *
- * Not implemented
- *
- * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function auth_createUser($user,$pass,$name,$mail){
-  msg("Sorry. Creating users is not supported by the PgSQL backend, yet",-1);
+function auth_createUser($user,$pass,$name,$mail) {
+  global $conf;
+  $cnf = $conf['auth']['pgsql'];
+
+  if($cnf['createuser']) {
+    $sql    = str_replace('%u',addslashes($user),$cnf['userinfo']);
+    $result = auth_pgsql_runsql($sql);
+    if(count($result)>0) return false;
+
+      $sql    = str_replace('%u',addslashes($user),$cnf['createuser']);
+      $sql    = str_replace('%p',auth_cryptPassword($pass),$sql);
+      $sql    = str_replace('%f',addslashes($name),$sql);
+      $sql    = str_replace('%e',addslashes($mail),$sql);
+      $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
+
+      $result=auth_pgsql_runsql($sql);
+      if(count($result))
+        return $pass;
+  } else {
+    msg("Sorry. Your PgSQL backend is not configured to create new users.",-1);
+  }
   return null;
 }
 
-
-
 //Setup VIM: ex: et ts=2 enc=utf-8 :
+
