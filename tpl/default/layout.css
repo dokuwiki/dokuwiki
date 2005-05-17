@@ -98,17 +98,12 @@ div.uploadform {
 .mediaselect-left {
   float:left;
   padding: 0.5em;
-/*  height:230px;
-  overflow:auto;*/
+  width:30%;
 }
 
 .mediaselect-right {
   float:right;
   border-left: 1px solid #8cacbb;
   padding: 0.5em;
-  width: 50%;
-  max-width: 50%;
-/*  width:350px;
-  height:230px;
-  overflow:auto;*/
+  width:65%;
 }

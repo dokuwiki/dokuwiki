@@ -91,7 +91,8 @@ function media_upload($NS){
 function media_html_list_namespaces($item){
   $ret  = '';
   $ret .= '<a href="'.DOKU_BASE.'media.php?ns='.idfilter($item['id']).'" class="idx_dir">';
-  $ret .= $item['id'];
+  $pos = strrpos($item['id'], ':');
+  $ret .= substr($item['id'], $pos > 0 ? $pos + 1 : 0);
   $ret .= '</a>';
   return $ret;
 }
