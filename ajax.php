@@ -30,6 +30,7 @@ if(function_exists($call)){
  */
 function ajax_qsearch(){
   global $conf;
+  global $lang;
 
 	$query = cleanID($_REQUEST['q']);
 	if(empty($query)) return;
@@ -41,6 +42,9 @@ function ajax_qsearch(){
   $data = array();
   search($data,$conf['datadir'],'search_qsearch',array(query => $query),$nsdir);
 
+	if(!count($data)) return;
+
+	print '<b>'.$lang['quickhits'].'</b>';
   print html_buildlist($data,'qsearch','html_list_index');
 }
 
