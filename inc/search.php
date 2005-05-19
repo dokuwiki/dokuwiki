@@ -29,6 +29,9 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
     if(is_dir($base.'/'.$dir.'/'.$file)){
       $dirs[] = $dir.'/'.$file;
       continue;
+    }elseif(substr($file,-5) == '.lock'){
+      //skip lockfiles
+      continue;
     }
     $files[] = $dir.'/'.$file;
   }
