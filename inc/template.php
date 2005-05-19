@@ -88,7 +88,7 @@ function tpl_content(){
       html_diff(con($PRE,$TEXT,$SUF),false);
       break;
     case 'locked':
-      html_locked($lockedby);
+      html_locked();
       break;
     case 'login':
       html_login();

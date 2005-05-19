@@ -364,7 +364,7 @@ function html_search(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_locked($ip){
+function html_locked(){
   global $ID;
   global $conf;
   global $lang;

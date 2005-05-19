@@ -11,6 +11,7 @@
 
   require_once(DOKU_INC.'inc/confutils.php');
   require_once(DOKU_INC.'inc/pageutils.php');
+  require_once(DOKU_INC.'inc/pluginutils.php');
 
 /**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
@@ -155,14 +156,26 @@ function p_cached_instructions($file,$cacheonly=false){
 function p_get_instructions($text){
   global $conf;
 
+  //import parser classes and mode definitions
   require_once DOKU_INC . 'inc/parser/parser.php';
-  
+
+  // load syntax plugins
+  $pluginlist = plugin_list('syntax');
+  if(count($pluginlist)){
+    global $PARSER_MODES;
+    $plugins    = array();
+    foreach($pluginlist as $p){
+      plugin_load('syntax',$p,$plugin[$p]);                  //load plugin into $plugin array
+      $PARSER_MODES[$plugin[$p]->getType()][] = "plugin_$p"; //register mode type
+    }
+  }
+ 
   // Create the parser
   $Parser = & new Doku_Parser();
   
   // Add the Handler
   $Parser->Handler = & new Doku_Handler();
-  
+
   // Load all the modes
   $Parser->addMode('listblock',new Doku_Parser_Mode_ListBlock());
   $Parser->addMode('preformatted',new Doku_Parser_Mode_Preformatted()); 
@@ -192,7 +205,7 @@ function p_get_instructions($text){
   
   $Parser->addMode('smiley',new Doku_Parser_Mode_Smiley(array_keys(getSmileys())));
   $Parser->addMode('acronym',new Doku_Parser_Mode_Acronym(array_keys(getAcronyms())));
-  #$Parser->addMode('wordblock',new Doku_Parser_Mode_Wordblock(getBadWords()));
+  #$Parser->addMode('wordblock',new Doku_Parser_Mode_Wordblock($Modes,getBadWords()));
   $Parser->addMode('entity',new Doku_Parser_Mode_Entity(array_keys(getEntities())));
   
   $Parser->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
@@ -200,6 +213,11 @@ function p_get_instructions($text){
 
   if($conf['camelcase']){  
     $Parser->addMode('camelcaselink',new Doku_Parser_Mode_CamelCaseLink());
+  }
+
+  //add plugins FIXME since order is important we, need to find a better way!
+  foreach ( array_keys($plugin) as $p ) {
+    $Parser->addMode("plugin_$p",$plugin[$p]);
   }
 
   $Parser->addMode('internallink',new Doku_Parser_Mode_InternalLink());
@@ -210,10 +228,10 @@ function p_get_instructions($text){
   $Parser->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
   //$Parser->addMode('filelink',new Doku_Parser_Mode_FileLink()); //FIXME ???
   $Parser->addMode('eol',new Doku_Parser_Mode_Eol());
-  
+
   // Do the parsing
   $p    = $Parser->parse($text);
-#  dbg($p);
+//  dbg($p);
   return $p;
 }  
 

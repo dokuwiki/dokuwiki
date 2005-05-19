@@ -54,6 +54,25 @@ class Doku_Handler {
         }
         return FALSE;
     }
+
+
+    /**
+     * Special plugin handler
+     *
+     * This handler is called for all modes starting with 'plugin_'.
+     * An additional parameter with the plugin name is passed
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function plugin($match, $state, $pos, $pluginname){
+        $data = array($match);
+        $plugin = null;
+        if(plugin_load('syntax',$pluginname,$plugin)){
+            $data = $plugin->handle($match, $state, $pos, $handler);
+        }
+        $this->_addCall('plugin',array($pluginname,$data,$pos),$pos);
+        return TRUE;
+    }
     
     function base($match, $state, $pos) {
         switch ( $state ) {

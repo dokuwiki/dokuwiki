@@ -19,6 +19,7 @@ if ( !defined('DOKU_TAB') ) {
 }
 
 require_once DOKU_INC . 'inc/parser/renderer.php';
+require_once DOKU_INC . 'inc/pluginutils.php';
 
 /**
  * The Renderer 
@@ -41,7 +42,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     var $store = '';
 
-
     function document_start() {
     }
     
@@ -55,6 +55,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $this->doc .= $footnote;
             }
             $this->doc .= '</div>'.DOKU_LF;
+        }
+    }
+
+    //handles plugin rendering
+    function plugin($name,$data){
+        $plugin = null;
+        if(plugin_load('syntax',$name,$plugin)){
+            $plugin->render('xhtml',$this,$data);
         }
     }
     

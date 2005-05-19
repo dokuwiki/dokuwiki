@@ -5,6 +5,45 @@ if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../')
 require_once DOKU_INC . 'inc/parser/lexer.php';
 require_once DOKU_INC . 'inc/parser/handler.php';
 
+
+/**
+ * Define various types of modes used by the parser - they are used to
+ * populate the list of modes another mode accepts
+ */
+global $PARSER_MODES;
+$PARSER_MODES = array(
+    // containers are complex modes that can contain many other modes
+    // hr breaks the principle but they shouldn't be used in tables / lists
+    // so they are put here
+    'container'    => array('listblock','table','quote','hr'),
+
+    // some mode are allowed inside the base mode only
+    'baseonly'     => array('header'),
+
+    // modes for styling text -- footnote behaves similar to styling
+    'formatting'   => array('strong', 'emphasis', 'underline', 'monospace',
+                            'subscript', 'superscript', 'deleted', 'footnote'),
+
+    // modes where the token is simply replaced - they can not contain any
+    // other modes
+    'substition'   => array('acronym','smiley','wordblock','entity',
+                            'camelcaselink', 'internallink','media',
+                            'externallink','linebreak','emaillink',
+                            'windowssharelink','filelink','notoc',
+                            'nocache','multiplyentity','quotes','rss'),
+
+    // modes which have a start and end token but inside which 
+    // no other modes should be applied
+    'protected'    => array('preformatted','code','file','php','html'),
+    
+    // inside this mode no wiki markup should be applied but lineendings
+    // and whitespace isn't preserved
+    'disabled'     => array('unformatted'),
+
+    // used to mark paragraph boundaries
+    'paragraphs'   => array('eol')
+);
+
 //-------------------------------------------------------------------
 
 /**
@@ -101,7 +140,7 @@ class Doku_Parser_Mode {
     var $Lexer;
     
     var $allowedModes = array();
-    
+
     // Called before any calls to connectTo
     function preConnect() {}
     
@@ -120,15 +159,16 @@ class Doku_Parser_Mode {
 class Doku_Parser_Mode_Base extends Doku_Parser_Mode {
     
     function Doku_Parser_Mode_Base() {
+        global $PARSER_MODES;
         
         $this->allowedModes = array_merge (
-                Doku_Parser_BlockContainers(),
-                Doku_Parser_BaseOnly(),
-                Doku_Parser_Paragraphs(),
-                Doku_Parser_Formatting(),
-                Doku_Parser_Substition(),
-                Doku_Parser_Protected(),
-                Doku_Parser_Disabled()
+                $PARSER_MODES['container'],
+                $PARSER_MODES['baseonly'],
+                $PARSER_MODES['paragraphs'],
+                $PARSER_MODES['formatting'],
+                $PARSER_MODES['substition'],
+                $PARSER_MODES['protected'],
+                $PARSER_MODES['disabled']
             );
     }
 }
@@ -137,13 +177,14 @@ class Doku_Parser_Mode_Base extends Doku_Parser_Mode {
 class Doku_Parser_Mode_Footnote extends Doku_Parser_Mode {
     
     function Doku_Parser_Mode_Footnote() {
+        global $PARSER_MODES;
         
         $this->allowedModes = array_merge (
-                Doku_Parser_BlockContainers(),
-                Doku_Parser_Formatting(),
-                Doku_Parser_Substition(),
-                Doku_Parser_Protected(),
-                Doku_Parser_Disabled()
+                $PARSER_MODES['container'],
+                $PARSER_MODES['formatting'],
+                $PARSER_MODES['substition'],
+                $PARSER_MODES['protected'],
+                $PARSER_MODES['disabled']
             );
         
     }
@@ -237,7 +278,6 @@ class Doku_Parser_Mode_HR extends Doku_Parser_Mode {
 
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_Formatting extends Doku_Parser_Mode {
-    
     var $type;
     
     var $formatting = array (
@@ -278,6 +318,7 @@ class Doku_Parser_Mode_Formatting extends Doku_Parser_Mode {
         );
     
     function Doku_Parser_Mode_Formatting($type) {
+        global $PARSER_MODES;
     
         if ( !array_key_exists($type, $this->formatting) ) {
             trigger_error('Invalid formatting type '.$type, E_USER_WARNING);
@@ -285,12 +326,18 @@ class Doku_Parser_Mode_Formatting extends Doku_Parser_Mode {
         
         $this->type = $type;
 
+        // formatting may contain other formatting but not it self
+        $modes = $PARSER_MODES['formatting'];
+        $key = array_search($type, $modes);
+        if ( is_int($key) ) {
+            unset($modes[$key]);
+        }
+
         $this->allowedModes = array_merge (
-                Doku_Parser_Formatting($type),
-                Doku_Parser_Substition(),
-                Doku_Parser_Disabled()
+                $modes,
+                $PARSER_MODES['substition'],
+                $PARSER_MODES['disabled']
             );
-            
     }
     
     function connectTo($mode) {
@@ -321,20 +368,16 @@ class Doku_Parser_Mode_Formatting extends Doku_Parser_Mode {
 class Doku_Parser_Mode_ListBlock extends Doku_Parser_Mode {
 
     function Doku_Parser_Mode_ListBlock() {
+        global $PARSER_MODES;
     
         $this->allowedModes = array_merge (
-                Doku_Parser_Formatting(),
-                Doku_Parser_Substition(),
-                Doku_Parser_Disabled()
+                $PARSER_MODES['formatting'],
+                $PARSER_MODES['substition'],
+                $PARSER_MODES['disabled'],
+                $PARSER_MODES['protected'] #XXX new
             );
 
-        $this->allowedModes[] = 'footnote';
-        $this->allowedModes[] = 'preformatted';
-        $this->allowedModes[] = 'unformatted';
-        $this->allowedModes[] = 'html';
-        $this->allowedModes[] = 'php';
-        $this->allowedModes[] = 'code';
-        $this->allowedModes[] = 'file';
+    //    $this->allowedModes[] = 'footnote';
     }
     
     function connectTo($mode) {
@@ -355,15 +398,17 @@ class Doku_Parser_Mode_ListBlock extends Doku_Parser_Mode {
 class Doku_Parser_Mode_Table extends Doku_Parser_Mode {
     
     function Doku_Parser_Mode_Table() {
+        global $PARSER_MODES;
     
         $this->allowedModes = array_merge (
-                Doku_Parser_Formatting(),
-                Doku_Parser_Substition(),
-                Doku_Parser_Disabled()
+                $PARSER_MODES['formatting'],
+                $PARSER_MODES['substition'],
+                $PARSER_MODES['disabled'],
+                $PARSER_MODES['protected'] #XXX new
             );
-        $this->allowedModes[] = 'footnote';
-        $this->allowedModes[] = 'preformatted';
-        $this->allowedModes[] = 'unformatted';
+        #$this->allowedModes[] = 'footnote';
+        #$this->allowedModes[] = 'preformatted';
+        #$this->allowedModes[] = 'unformatted';
     }
     
     function connectTo($mode) {
@@ -473,15 +518,17 @@ class Doku_Parser_Mode_File extends Doku_Parser_Mode {
 class Doku_Parser_Mode_Quote extends Doku_Parser_Mode {
     
     function Doku_Parser_Mode_Quote() {
+        global $PARSER_MODES;
     
         $this->allowedModes = array_merge (
-                Doku_Parser_Formatting(),
-                Doku_Parser_Substition(),
-                Doku_Parser_Disabled()
+                $PARSER_MODES['formatting'],
+                $PARSER_MODES['substition'],
+                $PARSER_MODES['disabled'],
+                $PARSER_MODES['protected'] #XXX new
             );
-            $this->allowedModes[] = 'footnote';
-            $this->allowedModes[] = 'preformatted';
-            $this->allowedModes[] = 'unformatted';
+            #$this->allowedModes[] = 'footnote';
+            #$this->allowedModes[] = 'preformatted';
+            #$this->allowedModes[] = 'unformatted';
     }
     
     function connectTo($mode) {
@@ -774,8 +821,13 @@ class Doku_Parser_Mode_EmailLink extends Doku_Parser_Mode {
 }
 
 //-------------------------------------------------------------------
+//
+// XXX deprecated - replace by $PARSER_MODES 
+//
 // Help fns to keep mode lists - used to make it easier to populate
 // the list of modes another mode accepts
+
+/*
 
 // Can contain many other modes
 // E.g. a footnote can containing formatting etc.
@@ -848,6 +900,8 @@ function Doku_Parser_Disabled() {
     );
     return $modes;
 }
+*/
 
+// --------------------------------------------------------------------------
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

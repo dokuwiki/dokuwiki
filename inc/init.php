@@ -10,6 +10,7 @@
   error_reporting(E_ALL ^ E_NOTICE);
 
   //prepare config array()
+  global $conf;
   $conf = array();
 
   // load the config file(s)
@@ -17,11 +18,15 @@
   @include_once(DOKU_INC.'conf/local.php');
 
   //prepare language array
+  global $lang;
   $lang = array();
 
   // define baseURL
   if(!defined('DOKU_BASE')) define('DOKU_BASE',getBaseURL());
   if(!defined('DOKU_URL'))  define('DOKU_URL',getBaseURL(true));
+
+  // define Plugin dir
+  if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'inc/plugins/');
 
   // define main script
   if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
