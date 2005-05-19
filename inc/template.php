@@ -194,6 +194,42 @@ function tpl_link($url,$name,$more=''){
 }
 
 /**
+ * get the parent page
+ *
+ * Tries to find out which page is parent.
+ * returns false if none is available
+ *
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ */
+function tpl_getparent($ID){
+  global $conf;
+    
+  if ($ID != $conf['start']) {
+    $idparts = explode(':', $ID);
+    $pn = array_pop($idparts);    // get the page name
+
+    for ($n=0; $n < 2; $n++) {
+      if (count($idparts) == 0) {
+        $ID = $conf['start'];     // go to topmost page
+        break;
+      }else{
+        $ns = array_pop($idparts);     // get the last part of namespace
+        if ($pn != $ns) {                 // are we already home?
+          array_push($idparts, $ns, $ns); // no, then add a page with same name
+          $ID = implode (':', $idparts); // as the namespace and recombine $ID
+          break;
+        }
+      }
+    }
+    
+    if (@file_exists(wikiFN($ID))) {
+      return $ID;
+    }
+  }
+  return false;
+}
+
+/**
  * Print one of the buttons
  *
  * Available Buttons are
@@ -205,8 +241,10 @@ function tpl_link($url,$name,$more=''){
  *  index   - The index
  *  admin   - admin page - if enough rights
  *  top     - a back to top button
+ *  back    - a back to parent button - if available
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 function tpl_button($type){
   global $ID;
@@ -225,6 +263,11 @@ function tpl_button($type){
       break;
     case 'index':
       print html_btn(index,$ID,'x',array('do' => 'index'));
+      break;
+    case 'back':
+      if ($ID = tpl_getparent($ID)) {
+        print html_btn(back,$ID,'b',array('do' => 'show'));
+      }
       break;
     case 'top':
       print html_topbtn();
@@ -259,8 +302,10 @@ function tpl_button($type){
  *  index   - The index
  *  admin   - admin page - if enough rights
  *  top     - a back to top button
+ *  back    - a back to parent button - if available
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @see    tpl_button
  */
 function tpl_actionlink($type,$pre='',$suf=''){
@@ -307,6 +352,11 @@ function tpl_actionlink($type,$pre='',$suf=''){
       break;
     case 'top':
       print '<a href="#top" class="action" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
+      break;
+    case 'back':
+      if ($ID = tpl_getparent($ID)) {
+        tpl_link(wl($ID,'do=show'),$pre.$lang['btn_back'].$suf,'class="action" accesskey="b"');
+      }
       break;
     case 'login':
       if($conf['useacl']){

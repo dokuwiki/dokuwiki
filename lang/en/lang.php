@@ -30,6 +30,7 @@ $lang['btn_logout'] = 'Logout';
 $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Update';
 $lang['btn_delete'] = 'Delete';
+$lang['btn_back']   = 'Back';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';

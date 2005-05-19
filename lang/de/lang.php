@@ -31,6 +31,7 @@ $lang['btn_logout'] = 'Abmelden';
 $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Updaten';
 $lang['btn_delete'] = 'Löschen';
+$lang['btn_back']   = 'Zurück';
 
 $lang['loggedinas'] = 'Angemeldet als';
 $lang['user']       = 'Benutzername';
