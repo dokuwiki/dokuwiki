@@ -157,7 +157,7 @@ function cleanDesc($desc){
   $desc = strip_tags($desc);
   $desc = preg_replace('/[\n\r\t]/',' ',$desc);
   $desc = preg_replace('/  /',' ',$desc);
-  $desc = substr($desc,0,250);
+  $desc = utf8_substr($desc,0,250);
   $desc = $desc.'...';
   return $desc;
 }

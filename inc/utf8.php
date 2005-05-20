@@ -111,24 +111,19 @@ function utf8_strlen($string){
 /**
  * Unicode aware replacement for substr()
  *
- * @todo   Handle negative positions etc.
- * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author lmak at NOSPAM dot iti dot gr
+ * @link   http://www.php.net/manual/en/function.substr.php
  * @see    substr()
  */
-function utf8_substr($str, $start, $length=null){
-  if ( is_null($length) ) {
-    $length = '*';
-  } else { 
-    $length = '{0,'.$length.'}';
-  }
-  $pattern = '/^.{'.$start.'}(.'.$length.')/us';
-  preg_match($pattern, $str, $matches);
+function utf8_substr($str,$start,$length=null){
+   preg_match_all("/./u", $str, $ar);
 
-  if ( isset($matches[1]) ) {
-    return $matches[1];
-  }
-  return false;
-}
+   if($length != null) {
+       return join("",array_slice($ar[0],$start,$length));
+   } else {
+       return join("",array_slice($ar[0],$start));
+   }
+} 
 
 /**
  * Unicode aware replacement for explode
