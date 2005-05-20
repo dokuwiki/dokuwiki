@@ -601,4 +601,5 @@ div.ajax_qsearch {
   width: 200px;
   background-color: #ff9;
   opacity: 0.9;
+  display:none;
 }

@@ -170,9 +170,10 @@ function tpl_metaheaders(){
   ptln("  var DOKU_BASE   = '".DOKU_BASE."'",$it);
   ptln('</script>',$it);
  
-  // load the default JavaScript file
+  // load the default JavaScript files
   ptln('<script language="JavaScript" type="text/javascript" src="'.DOKU_BASE.'script.js"></script>',$it);
-
+  ptln('<script language="JavaScript" type="text/javascript" src="'.DOKU_BASE.'tw-sack.js"></script>',$it);
+  ptln('<script language="JavaScript" type="text/javascript" src="'.DOKU_BASE.'ajax.js"></script>',$it);
 
   //FIXME include some default CSS ? IE FIX?
 }
@@ -332,46 +333,10 @@ function tpl_actionlink($type,$pre='',$suf=''){
 function tpl_searchform(){
   global $lang;
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search" onsubmit="return svchk()">';
-
-//FIXME this should be moved somewhere else
-?>
-<script type="text/javascript" src="<?=DOKU_BASE?>tw-sack.js"></script>
-<script type="text/javascript">
-  ajax = new sack('<?=DOKU_BASE?>ajax.php');
-  ajax.AjaxFailedAlert = '';
-
-  var qr = null;
-  function ajax_runqsearch(){
-    ajax_stopqsearch();
-    qr = window.setTimeout('ajax_qsearch()',500);
-  }
-
-  function ajax_stopqsearch(){
-    document.getElementById('ajax_qsearch').innerHTML = '';
-    if(qr != null){
-      window.clearTimeout(qr);
-      qr = null;
-    }
-  }
-
-  function ajax_qsearch(){
-    var value = document.search.id.value;
-    if(value=='') return;
-    ajax.element = 'ajax_qsearch';
-    ajax.encodeURIString = false;
-    var call = 'call=qsearch&q=';
-    call += encodeURI(value);
-    ajax.runAJAX(call);
-
-    ajax_stopqsearch()
-  }
-</script>
-<?php
   print '<input type="hidden" name="do" value="search" />';
-  #print '<input type="text" accesskey="f" name="id" class="edit" autocomplete="off" onkeyup="ajax_qsearch(this.value)" />';
-  print '<input type="text" accesskey="f" name="id" class="edit" onkeypress="ajax_runqsearch()" />';
+  print '<input type="text" id="qsearch_in" accesskey="f" name="id" class="edit" onkeyup="ajax_qsearch.call(\'qsearch_in\',\'qsearch_out\')" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
-  print '<div id="ajax_qsearch" class="ajax_qsearch"></div>';
+  print '<div id="qsearch_out" class="ajax_qsearch" onclick="this.style.display=\'none\'"></div>';
   print '</form>';
 }
 
