@@ -402,13 +402,6 @@ class Doku_Handler {
                 array($link[0],$link[1]),
                 $pos
                 );
-        }elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
-        // E-Mail
-            $this->_addCall(
-                'emaillink',
-                array($link[0],$link[1]),
-                $pos
-                );
         }elseif ( preg_match('#^([a-z0-9]+?)://#i',$link[0]) ) {
         // external link (accepts all protocols)
             $this->_addCall(
@@ -416,6 +409,13 @@ class Doku_Handler {
                     array($link[0],$link[1]),
                     $pos
                     );
+        }elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
+        // E-Mail
+            $this->_addCall(
+                'emaillink',
+                array($link[0],$link[1]),
+                $pos
+                );
         }elseif ( preg_match('!^#.+!',$link[0]) ){
         // local link
             $this->_addCall(
