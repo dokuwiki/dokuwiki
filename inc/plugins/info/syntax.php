@@ -22,7 +22,14 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     function getType(){
         return 'substition';
     }
-    
+   
+    /**
+     * Where to sort in?
+     */ 
+    function getSort(){
+        return 155;
+    }
+
 
     /**
      * Connect pattern to lexer
@@ -47,8 +54,14 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         if($mode == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
-                case 'foo': 
-                    $renderer->doc .= "foo is foo";
+                case 'version';
+                    $renderer->doc .= getVersion();
+                    break;
+                case 'syntaxmodes';
+                    $renderer->doc .= $this->_syntaxmodes_xhtml();
+                    break;
+                case 'syntaxtypes';
+                    $renderer->doc .= $this->_syntaxtypes_xhtml();
                     break;
                 default:
                     $renderer->doc .= "no info about ".htmlspecialchars($data[0]);
@@ -58,6 +71,40 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         return false;
     }
 
+    /**
+     * lists all known syntax types and their registered modes
+     */
+    function _syntaxtypes_xhtml(){
+        global $PARSER_MODES;
+        $doc  = '';
+
+        $doc .= '<table class="inline"><tbody>';
+        foreach($PARSER_MODES as $mode => $modes){
+            $doc .= '<tr>';
+            $doc .= '<td class="leftalign">';
+            $doc .= $mode;
+            $doc .= '</td>';
+            $doc .= '<td class="leftalign">';
+            $doc .= join(', ',$modes);
+            $doc .= '</td>';
+            $doc .= '</tr>';
+        }
+        $doc .= '</tbody></table>';
+        return $doc;
+    }
+
+    /**
+     * lists all known syntax modes and their sorting value
+     */
+    function _syntaxmodes_xhtml(){
+        $modes = p_get_parsermodes();
+        $doc  = '';
+
+        foreach ($modes as $mode){
+            $doc .= $mode['mode'].' ('.$mode['sort'].'), ';
+        }
+        return $doc;
+    }
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

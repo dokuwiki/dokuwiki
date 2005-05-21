@@ -48,7 +48,7 @@ function plugin_load($type,$name,&$ref){
 	}
 
   //try to load the wanted plugin file
-  if(!@include_once(DOKU_PLUGIN.$name.'/'.$type.'.php')){
+  if(!include_once(DOKU_PLUGIN.$name.'/'.$type.'.php')){
     return false;
   }
 

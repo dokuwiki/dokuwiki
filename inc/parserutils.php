@@ -154,86 +154,123 @@ function p_cached_instructions($file,$cacheonly=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_get_instructions($text){
-  global $conf;
 
-  //import parser classes and mode definitions
-  require_once DOKU_INC . 'inc/parser/parser.php';
+  $modes = p_get_parsermodes();
 
-  // load syntax plugins
-  $pluginlist = plugin_list('syntax');
-  if(count($pluginlist)){
-    global $PARSER_MODES;
-    $plugins    = array();
-    foreach($pluginlist as $p){
-      plugin_load('syntax',$p,$plugin[$p]);                  //load plugin into $plugin array
-      $PARSER_MODES[$plugin[$p]->getType()][] = "plugin_$p"; //register mode type
-    }
-  }
- 
   // Create the parser
   $Parser = & new Doku_Parser();
   
   // Add the Handler
   $Parser->Handler = & new Doku_Handler();
 
-  // Load all the modes
-  $Parser->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-  $Parser->addMode('preformatted',new Doku_Parser_Mode_Preformatted()); 
-  $Parser->addMode('notoc',new Doku_Parser_Mode_NoToc());
-  $Parser->addMode('nocache',new Doku_Parser_Mode_NoCache());
-  $Parser->addMode('header',new Doku_Parser_Mode_Header());
-  $Parser->addMode('table',new Doku_Parser_Mode_Table());
-  
-  $formats = array (
-      'strong', 'emphasis', 'underline', 'monospace',
-      'subscript', 'superscript', 'deleted',
-  );
-  foreach ( $formats as $format ) {
-      $Parser->addMode($format,new Doku_Parser_Mode_Formatting($format));
+  //add modes to parser
+  foreach($modes as $mode){
+    $Parser->addMode($mode['mode'],$mode['obj']);
   }
-  
-  $Parser->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
-  $Parser->addMode('footnote',new Doku_Parser_Mode_Footnote());
-  $Parser->addMode('hr',new Doku_Parser_Mode_HR());
-  
-  $Parser->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
-  $Parser->addMode('php',new Doku_Parser_Mode_PHP());
-  $Parser->addMode('html',new Doku_Parser_Mode_HTML());
-  $Parser->addMode('code',new Doku_Parser_Mode_Code());
-  $Parser->addMode('file',new Doku_Parser_Mode_File());
-  $Parser->addMode('quote',new Doku_Parser_Mode_Quote());
-  
-  $Parser->addMode('smiley',new Doku_Parser_Mode_Smiley(array_keys(getSmileys())));
-  $Parser->addMode('acronym',new Doku_Parser_Mode_Acronym(array_keys(getAcronyms())));
-  #$Parser->addMode('wordblock',new Doku_Parser_Mode_Wordblock($Modes,getBadWords()));
-  $Parser->addMode('entity',new Doku_Parser_Mode_Entity(array_keys(getEntities())));
-  
-  $Parser->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
-  $Parser->addMode('quotes',new Doku_Parser_Mode_Quotes());
-
-  if($conf['camelcase']){  
-    $Parser->addMode('camelcaselink',new Doku_Parser_Mode_CamelCaseLink());
-  }
-
-  //add plugins FIXME since order is important we, need to find a better way!
-  foreach ( array_keys($plugin) as $p ) {
-    $Parser->addMode("plugin_$p",$plugin[$p]);
-  }
-
-  $Parser->addMode('internallink',new Doku_Parser_Mode_InternalLink());
-  $Parser->addMode('rss',new Doku_Parser_Mode_RSS());
-  $Parser->addMode('media',new Doku_Parser_Mode_Media());
-  $Parser->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
-  $Parser->addMode('emaillink',new Doku_Parser_Mode_EmailLink());
-  $Parser->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
-  //$Parser->addMode('filelink',new Doku_Parser_Mode_FileLink()); //FIXME ???
-  $Parser->addMode('eol',new Doku_Parser_Mode_Eol());
 
   // Do the parsing
   $p    = $Parser->parse($text);
 //  dbg($p);
   return $p;
 }  
+
+/**
+ * returns all available parser syntax modes in correct order
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function p_get_parsermodes(){
+  global $conf;
+
+  //reuse old data
+  static $modes = null;
+  if($modes != null){
+    return $modes;
+  }
+
+  //import parser classes and mode definitions
+  require_once DOKU_INC . 'inc/parser/parser.php';
+
+  // we now collect all syntax modes and their objects, then they will
+  // be sorted and added to the parser in correct order
+  $modes = array();
+  
+  // add syntax plugins
+  $pluginlist = plugin_list('syntax');
+  if(count($pluginlist)){
+    global $PARSER_MODES;
+    $obj = null; 
+    foreach($pluginlist as $p){
+      plugin_load('syntax',$p,$obj);                  //load plugin into $obj
+      $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
+      //add to modes
+      $modes[] = array(
+                   'sort' => $obj->getSort(),
+                   'mode' => "plugin_$p",
+                   'obj'  => $obj,
+                 );
+    }
+  }
+
+  // add default modes
+  $std_modes = array('listblock','preformatted','notoc','nocache',
+                     'header','table','linebreak','footnote','hr',
+                     'unformatted','php','html','code','file','quote',
+                     'multiplyentity','quotes','internallink','rss',
+                     'media','externallink','emaillink','windowssharelink',
+                     'eol');
+  foreach($std_modes as $m){
+    $class = "Doku_Parser_Mode_$m";
+    $obj   = new $class();
+    $modes[] = array(
+                 'sort' => $obj->getSort(), 
+                 'mode' => $m,
+                 'obj'  => $obj
+               );
+  }
+  
+  // add formatting modes
+  $fmt_modes = array('strong','emphasis','underline','monospace',
+                     'subscript','superscript','deleted');
+  foreach($fmt_modes as $m){
+    $obj   = new Doku_Parser_Mode_formatting($m);
+    $modes[] = array( 
+                 'sort' => $obj->getSort(),
+                 'mode' => $m,
+                 'obj'  => $obj
+               );
+  }
+
+  // add modes which need files
+  $obj     = new Doku_Parser_Mode_smiley(array_keys(getSmileys()));
+  $modes[] = array('sort' => $obj->getSort(), 'mode' => 'smiley','obj'  => $obj );
+  $obj     = new Doku_Parser_Mode_acronym(array_keys(getAcronyms()));
+  $modes[] = array('sort' => $obj->getSort(), 'mode' => 'acronym','obj'  => $obj );
+  $obj     = new Doku_Parser_Mode_entity(array_keys(getEntities()));
+  $modes[] = array('sort' => $obj->getSort(), 'mode' => 'entity','obj'  => $obj );
+  
+  
+  // add optional camelcase mode
+  if($conf['camelcase']){
+    $obj     = new Doku_Parser_Mode_camelcaselink();
+    $modes[] = array('sort' => $obj->getSort(), 'mode' => 'camelcaselink','obj'  => $obj );
+  }
+
+  //sort modes
+  usort($modes,'p_sort_modes');
+
+  return $modes;
+}
+
+/**
+ * Callback function for usort
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function p_sort_modes($a, $b){
+  if($a['sort'] == $b['sort']) return 0;
+  return ($a['sort'] < $b['sort']) ? -1 : 1;
+}
 
 /**
  * Renders a list of instruction to the specified output mode
