@@ -34,9 +34,12 @@ function getID(){
       $script = $_SERVER['SCRIPT_NAME'];
     }
 
+    //clean script and request (fixes a windows problem)
+    $script  = preg_replace('/\/\/+/','/',$script);
+    $request = preg_replace('/\/\/+/','/',$_SERVER['REQUEST_URI']);
+
     //remove script URL and Querystring to gain the id
-    if(preg_match('/^'.preg_quote($script,'/').'(.*)/',
-                  $_SERVER['REQUEST_URI'], $match)){
+    if(preg_match('/^'.preg_quote($script,'/').'(.*)/',$request, $match)){
       $id = preg_replace ('/\?.*/','',$match[1]);
     }
     $id = cleanID($id);
