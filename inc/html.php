@@ -447,14 +447,22 @@ function html_revisions(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_recent(){
+function html_recent($first=0){
   global $conf;
   global $lang;
-  $recents = getRecents(0,true);
+  $recents = getRecents(-1,true);
+  
+  if($first >= count($recents)) $first = 0;
+  $last = $first + $conf['recent'];
+  if ($last > count($recents))
+    $last = count($recents);
 
   print p_locale_xhtml('recent');
   print '<ul>';
-  foreach(array_keys($recents) as $id){
+  
+  $keys = array_keys($recents);
+  for ($n=$first; $n < $last; $n++){
+    $id = $keys[$n];
     $date = date($conf['dformat'],$recents[$id]['date']);
     print '<li>';
 
@@ -482,6 +490,21 @@ function html_recent(){
     print '</li>';
   }
   print '</ul>';
+
+  print '<div class="pagenav">';
+  if ($first > 0) {
+    $first -= $conf['recent']; 
+    if ($first < 0) $first = 0;
+    print '<div class="pagenav-prev">';
+    print html_btn('prevpage','',"p",array('do' => 'recent', 'first' => $first));
+    print '</div>';
+  }
+  if ($last < count($recents)) {
+    print '<div class="pagenav-next">';
+    print html_btn('nextpage','',"n",array('do' => 'recent', 'first' => $last));
+    print '</div>';
+  }
+  print '</div>';
 }
 
 /**

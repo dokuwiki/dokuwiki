@@ -148,6 +148,32 @@ div.secedit input.button {
   display: inline;
 }
 
+/* ----------- page navigator ------------- */
+
+div.pagenav {
+	margin-top:1em;
+}
+
+div.pagenav-prev {
+	text-align:right;	
+	float:left;
+	width:50%
+}
+
+div.pagenav-prev input.button {
+	margin-right:5px;
+}
+
+div.pagenav-next {
+	text-align:left;
+	float:right;
+	width:50%
+}
+
+div.pagenav-next input.button {
+	margin-left:5px;
+}
+
 /* --------------- Links ------------------ */
 
 a {

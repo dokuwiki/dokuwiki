@@ -75,7 +75,9 @@ function tpl_content(){
       html_diff();
       break;
     case 'recent':
-      html_recent();
+      $first = $_REQUEST['first'];
+      if(empty($first)) $first=0;
+      html_recent($first);
       break;
     case 'index':
       html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?

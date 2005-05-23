@@ -476,6 +476,9 @@ function addLogEntry($date,$id,$summary=""){
 /**
  * returns an array of recently changed files using the
  * changelog
+ * num     : return 'num' entries
+ * num =  0: return count of entries set by $conf['recent']
+ * num = -1: return all available entries
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -507,7 +510,7 @@ function getRecents($num=0,$incdel=false){
       $recent[$info[2]]['sum']  = $info[4];
       $recent[$info[2]]['del']  = !@file_exists(wikiFN($info[2]));
     }
-    if(count($recent) >= $num){
+    if($num != -1 && count($recent) >= $num){
       break; //finish if enough items found
     }
   }
