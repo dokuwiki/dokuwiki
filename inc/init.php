@@ -44,7 +44,6 @@
 
   // init session
   session_name("DokuWiki");
-  @session_cache_limiter('private_no_expire');
   if (!headers_sent()) session_start();
 
   // kill magic quotes
