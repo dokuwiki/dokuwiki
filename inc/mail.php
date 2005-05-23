@@ -9,7 +9,7 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/utf8.php');
 
-  define('MAILHEADER_EOL',"\n"); //end of line for mail headers
+  define('MAILHEADER_EOL',"\015\012"); //end of line for mail headers
   #define('MAILHEADER_ASCIIONLY',1);
 
 /**
@@ -42,15 +42,7 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
 
   $header  = '';
 
-  // use PHP mail's to field if pure ASCII-7 is available
-  $to = mail_encode_address($to,'To');
-  if(preg_match('#=?UTF-8?=#',$to)){
-    $header .= $to;
-    $to = null;
-  }else{
-    $to = preg_replace('#^To: #','',$to);
-  }
-
+  $to = mail_encode_address($to);
   $header .= mail_encode_address($from,'From');
   $header .= mail_encode_address($cc,'Cc');
   $header .= mail_encode_address($bcc,'Bcc');
@@ -73,11 +65,11 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
  * Addresses may not contain Non-ASCII data!
  *
  * Example:
- *   mail_encode_address("föö <foo@bar.com>, me@somewhere.com","To");
+ *   mail_encode_address("föö <foo@bar.com>, me@somewhere.com","TBcc");
  *
  * @param string $string Multiple headers seperated by commas
  */
-function mail_encode_address($string,$header='To'){
+function mail_encode_address($string,$header=''){
   $headers = '';
   $parts = split(',',$string);
   foreach ($parts as $part){
@@ -107,26 +99,30 @@ function mail_encode_address($string,$header='To'){
       continue;
     }
 
-    // no text was given
-    if(empty($text)){
-      $headers .= $header.': <'.$addr.'>'.MAILHEADER_EOL;
-      continue;
-    }
+    // text was given
+    if(!empty($text)){
+      // add address quotes
+      $addr = "<$addr>";
 
-    if(defined('MAILHEADER_ASCIIONLY')){
-      $text = utf8_deaccent($text);
-      $text = utf8_strip($text);
-    }
+      if(defined('MAILHEADER_ASCIIONLY')){
+        $text = utf8_deaccent($text);
+        $text = utf8_strip($text);
+      }
 
-
-    // FIME: can make problems with long headers?
-    if(!utf8_isASCII($text)){
-      $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text).'?=';
+      if(!utf8_isASCII($text)){
+        $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text).'?=';
+      }
     }
     
-    //construct header
-    $headers .= $header.': '.$text.' <'.$addr.'>'.MAILHEADER_EOL;
+    // add to header comma seperated and in new line to avoid too long headers
+    if($headers != '') $headers .= ','.MAILHEADER_EOL.' ';
+    $headers .= $text.$addr;
   }
+
+  if(empty($headers)) return null;
+
+  //if headername was given add it and close correctly
+  if($header) $headers = $header.': '.$headers.MAILHEADER_EOL;
 
   return $headers;
 }
