@@ -9,7 +9,7 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/utf8.php');
 
-  define('MAILHEADER_EOL',"\015\012"); //end of line for mail headers
+  define('MAILHEADER_EOL',"\n"); //end of line for mail headers
   #define('MAILHEADER_ASCIIONLY',1);
 
 /**
