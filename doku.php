@@ -13,8 +13,6 @@
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/pageutils.php');
   require_once(DOKU_INC.'inc/html.php');
-  require_once(DOKU_INC.'lang/en/lang.php');
-  require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
   require_once(DOKU_INC.'inc/auth.php');
   require_once(DOKU_INC.'inc/actions.php');
 
