@@ -77,7 +77,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssRecentChanges(&$rss,$num,$ltype){
-  $recents = getRecents($num);
+  $recents = getRecents(0,$num);
   foreach(array_keys($recents) as $id){
     $desc = cleanDesc(p_wiki_xhtml($id,'',false));
     $item = new FeedItem();

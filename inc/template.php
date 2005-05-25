@@ -75,8 +75,7 @@ function tpl_content(){
       html_diff();
       break;
     case 'recent':
-      $first = $_REQUEST['first'];
-      if(empty($first)) $first=0;
+      $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
       html_recent($first);
       break;
     case 'index':

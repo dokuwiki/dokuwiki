@@ -476,16 +476,18 @@ function addLogEntry($date,$id,$summary=""){
 /**
  * returns an array of recently changed files using the
  * changelog
+ * first   : first entry in array returned
  * num     : return 'num' entries
- * num =  0: return count of entries set by $conf['recent']
- * num = -1: return all available entries
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getRecents($num=0,$incdel=false){
+function getRecents($first,$num,$incdel=false){
   global $conf;
   $recent = array();
-  if(!$num) $num = $conf['recent'];
+  $names  = array();
+
+  if(!$num)
+    return $recent;
 
   if(!@is_readable($conf['changelog'])){
     msg($conf['changelog'].' is not readable',-1);
@@ -500,17 +502,20 @@ function getRecents($num=0,$incdel=false){
     if(empty($line)) continue;   //skip empty lines
     $info = split("\t",$line);   //split into parts
     //add id if not in yet and file still exists and is allowed to read
-    if(!$recent[$info[2]] && 
+    if(!$names[$info[2]] && 
        (@file_exists(wikiFN($info[2])) || $incdel) &&
        (auth_quickaclcheck($info[2]) >= AUTH_READ)
       ){
+      $names[$info[2]] = 1;
+      if(--$first >= 0) continue;  /* skip "first" entries */
+      
       $recent[$info[2]]['date'] = $info[0];
       $recent[$info[2]]['ip']   = $info[1];
       $recent[$info[2]]['user'] = $info[3];
       $recent[$info[2]]['sum']  = $info[4];
       $recent[$info[2]]['del']  = !@file_exists(wikiFN($info[2]));
     }
-    if($num != -1 && count($recent) >= $num){
+    if(count($recent) >= $num){
       break; //finish if enough items found
     }
   }

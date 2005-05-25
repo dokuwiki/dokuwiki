@@ -446,22 +446,28 @@ function html_revisions(){
  * display recent changes
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 function html_recent($first=0){
   global $conf;
   global $lang;
-  $recents = getRecents(-1,true);
-  
-  if($first >= count($recents)) $first = 0;
-  $last = $first + $conf['recent'];
-  if ($last > count($recents))
-    $last = count($recents);
+
+  /* we need to get one additionally log entry to be able to
+   * decide if this is the last page or is there another one.
+   * This is the cheapest solution to get this information.
+   */
+  $recents = getRecents($first,$conf['recent'] + 1,true);
+  if(count($recents) == 0 && $first != 0){
+    $first=0;
+    $recents = getRecents(0,$conf['recent'] + 1,true);
+  }
+  $cnt = count($recents) <= $conf['recent'] ? count($recents) : $conf['recent']; 
 
   print p_locale_xhtml('recent');
   print '<ul>';
   
   $keys = array_keys($recents);
-  for ($n=$first; $n < $last; $n++){
+  for ($n=0; $n < $cnt; $n++){
     $id = $keys[$n];
     $date = date($conf['dformat'],$recents[$id]['date']);
     print '<li>';
@@ -492,16 +498,17 @@ function html_recent($first=0){
   print '</ul>';
 
   print '<div class="pagenav">';
+  $last = $first + $conf['recent'];
   if ($first > 0) {
     $first -= $conf['recent']; 
     if ($first < 0) $first = 0;
     print '<div class="pagenav-prev">';
-    print html_btn('prevpage','',"p",array('do' => 'recent', 'first' => $first));
+    print html_btn('newer','',"p",array('do' => 'recent', 'first' => $first));
     print '</div>';
   }
-  if ($last < count($recents)) {
+  if ($conf['recent'] < count($recents)) {
     print '<div class="pagenav-next">';
-    print html_btn('nextpage','',"n",array('do' => 'recent', 'first' => $last));
+    print html_btn('older','',"n",array('do' => 'recent', 'first' => $last));
     print '</div>';
   }
   print '</div>';
