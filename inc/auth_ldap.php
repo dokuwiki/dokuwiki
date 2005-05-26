@@ -80,27 +80,62 @@ function auth_checkPass($user,$pass){
   global $conf;
   $cnf = $conf['auth']['ldap'];
 
-  //reject empty password
+    //reject empty password
   if(empty($pass)) return false;
 
   //connect to LDAP Server
   $conn = auth_ldap_connect();
   if(!$conn) return false;
+  
+  // indirect user bind
+  if(!empty($cnf['binddn']) and !empty($cnf['bindpw'])) {
+    //use superuser credentials
+    if(!@ldap_bind($conn,$cnf['binddn'],$cnf['bindpw'])){
+      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+       return false;
+    }
 
-  if(!empty($cnf['userfilter'])) {
-    //get dn for given user
-    $info = auth_getUserData($user);
-    $dn   = $info['dn'];  
-    if(!$dn) return false;
+  // special bind string
+  } else if(!empty($cnf['binddn']) and !empty($cnf['usertree']) and !empty($cnf['userfilter'])) {
+    $dn = auth_ldap_makeFilter($cnf['binddn'], array('user'=>$user,'server'=>$cnf['server'])); 
+ 
+  // direct user bind
+  } else if(strpos($cnf['usertree'], '%{user}')) {
+    $dn = auth_ldap_makeFilter($cnf['usertree'], array('user'=>$user,'server'=>$cnf['server'])); 
+ 
+  // Anonymous bind
+  } else { 
+    if(!@ldap_bind($conn)){
+      msg("LDAP: can not bind anonymously",-1);
+      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+      return false;
+    }
+  } 
+
+  // Try to bind to with the dn if we have one.
+  if(!empty($dn)) {
+    // User/Password bind
+    if(!@ldap_bind($conn,$dn,$pass)){
+      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+       return false;
+    }
+    return true;
   } else {
-    // dn is defined in the usertree
-    $dn = auth_ldap_makeFilter($cnf['usertree'], array('user'=>$user)); 
-  }
-  //try to bind with dn
-  if(@ldap_bind($conn,$dn,$pass)){
-    if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+    // See if we can find the user
+    $info = auth_getUserData($user);
+    if(empty($info['dn'])) {
+      return false;
+    } else {
+      $dn = $info['dn'];
+    }
+    // Try to bind with the dn provided
+    if(!@ldap_bind($conn,$dn,$pass)){
+      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+       return false;
+    }
     return true;
   }
+  
   return false;
 }
 
@@ -133,23 +168,8 @@ function auth_getUserData($user){
   $conn = auth_ldap_connect();
   if(!$conn) return false;
 
-  //bind to server to lookup userdata
-  if ($cnf['binddn']) {
-    //use superuser credentials
-    if(!@ldap_bind($conn,$cnf['binddn'],$cnf['bindpw'])){
-      msg("LDAP: can not bind as superuser",-1);
-      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
-      return false;
-    }
-  }elseif(!empty($cnf['userfilter'])){
-    //bind anonymous if we need to do a search for the dn
-    if(!@ldap_bind($conn)){
-      msg("LDAP: can not bind anonymously",-1);
-      if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
-      return false;
-    }
-  }
   $info['user']= $user;
+  $info['server']= $cnf['server'];
 
   //get info for given user
   $base = auth_ldap_makeFilter($cnf['usertree'], $info); 
@@ -158,27 +178,42 @@ function auth_getUserData($user){
   } else {
     $filter = "(ObjectClass=*)";
   }
-  $sr     = ldap_search($conn, $base, $filter);;
-  $result = ldap_get_entries($conn, $sr);
-  $user_result = $result[0]; 
+
+  $sr     = @ldap_search($conn, $base, $filter);
+  $result = @ldap_get_entries($conn, $sr);
+  if($cnf['debug']) msg('LDAP errstr: '.htmlspecialchars(ldap_error($conn)),0);
+  
+  // Don't accept more or less than one response
   if($result['count'] != 1){
     return false; //user not found
   }
 
+  $user_result = $result[0]; 
+  
   //general user info
   $info['dn']= $user_result['dn'];
   $info['mail']= $user_result['mail'][0];
   $info['name']= $user_result['cn'][0];
 
-  //handle ActiveDirectory memberOf
-  if(is_array($result[0]['memberof'])){
-    foreach($result[0]['memberof'] as $grp){
-      if (preg_match("/CN=(.+?),/i",$grp,$match)) {
-        $info['grps'][] = trim($match[1]);
+  #overwrite if other attribs are specified.
+  foreach($cnf['mapping'] as $localkey => $key) {
+    if(is_array($key)) {
+      //use regexp to clean up user_result
+      list($key, $regexp) = each($key);
+      foreach($user_result[$key] as $grp){
+        if (preg_match($regexp,$grp,$match)) {
+          if($localkey == 'grps') {
+            $info[$localkey][] = $match[1];
+          } else {
+            $info[$localkey] = $match[1];
+          }
+        }
       }
+    } else {
+      $info[$localkey] = $user_result[$key][0];
     }
   }
-
+  
   //get groups for given user if grouptree is given
   if (!empty($cnf['grouptree'])) {
     $base = auth_ldap_makeFilter($cnf['grouptree'], $user_result); 
