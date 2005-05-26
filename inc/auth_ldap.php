@@ -41,15 +41,26 @@ function auth_ldap_connect(){
         if($cnf['debug'])
           msg('LDAP errstr: '.htmlspecialchars(ldap_error($LDAP_CONNECTION)),0);
 
+      } else {
         //use TLS (needs version 3)
-        if ($cnf['starttls']) {
+        if($cnf['starttls']) {
           if (!@ldap_start_tls($LDAP_CONNECTION)){
             msg('Starting TLS failed',-1);
             if($cnf['debug'])
               msg('LDAP errstr: '.htmlspecialchars(ldap_error($LDAP_CONNECTION)),0);
           }
         }
-      }
+        // needs version 3
+        if(isset($cnf['referrals'])) {
+          if(!@ldap_set_option($LDAP_CONNECTION,
+                           LDAP_OPT_REFERRALS,
+                           $cnf['referrals'])){
+            msg('Setting LDAP referrals to off failed',-1);
+            if($cnf['debug'])
+              msg('LDAP errstr: '.htmlspecialchars(ldap_error($LDAP_CONNECTION)),0);
+          }
+        }
+      } 
     }
   }
   return $LDAP_CONNECTION;
