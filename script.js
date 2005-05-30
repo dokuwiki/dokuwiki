@@ -197,8 +197,8 @@ function insertTags(tagOpen, tagClose, sampleText) {
     }else{
       txtarea.selectionStart=startPos+tagOpen.length;   
       txtarea.selectionEnd=startPos+tagOpen.length+myText.length;
-      txtarea.scrollTop=scrollTop;
     }
+    txtarea.scrollTop=scrollTop;
   // All others
   } else {
     var copy_alertText=alertText;
