@@ -163,7 +163,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'd') return false;
 
   $info         = array();
-  $info['id']   = pathID($file);
+  $info['id']   = pathID($file,true);
 
   //check ACL for namespace (we have no ACL for mediafiles)
   if(auth_quickaclcheck(getNS($info['id']).':*') < AUTH_READ){
@@ -353,10 +353,10 @@ function sort_search_fulltext($a,$b){
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @todo    move to pageutils
  */
-function pathID($path){
+function pathID($path,$keeptxt=false){
   $id = utf8_decodeFN($path);
   $id = str_replace('/',':',$id);
-  $id = preg_replace('#\.txt$#','',$id);
+  if(!$keeptxt) $id = preg_replace('#\.txt$#','',$id);
   $id = preg_replace('#^:+#','',$id);
   $id = preg_replace('#:+$#','',$id);
   return $id;
