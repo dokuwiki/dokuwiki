@@ -289,10 +289,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function php($text) {
         global $conf;
         if($conf['phpok']){
-            ob_start;
+            ob_start();
             eval($text);
             $this->doc .= ob_get_contents();
-            ob_end_clean;
+            ob_end_clean();
         }else{
             $this->file($text);
         }
