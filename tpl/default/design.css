@@ -472,6 +472,17 @@ div.tocheader {
   margin-bottom: 2px;
 }
 
+div.toctoggle {
+  float:right;
+  margin-top:0.3em;
+  margin-right:3px;
+}
+
+div.toctoggle img {
+  width:0.8em;
+  height:0.8em;
+}
+
 #tocinside {
   border: 1px solid #8cacbb;
   background-color: #ffffff;

@@ -291,10 +291,10 @@ function suggestWikiname(){
  */
 function showTocToggle(show,hide) {
   if(document.getElementById) {
-    document.writeln('<span class=\'toctoggle\'><a href="javascript:toggleToc()" class="toc">' +
+    document.writeln('<div class=\'toctoggle\'><a href="javascript:toggleToc()" class="toc">' +
     '<span id="showlink" style="display:none;">' + show + '</span>' +
     '<span id="hidelink">' + hide + '</span>'
-    + '</a></span>');
+    + '</a></div>');
   }
 }
 

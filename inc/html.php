@@ -216,43 +216,6 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 }
 
 /**
- * Print the table of contents
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_toc($toc){
-  global $lang;
-  $ret  = '';
-  $ret .= '<div class="toc">';
-  $ret .=   '<div class="tocheader">';
-  $ret .=      $lang['toc'];
-  $ret .=     ' <script type="text/javascript">';
-  $ret .=     'showTocToggle("+","-")';
-  $ret .=     '</script>';
-  $ret .=   '</div>';
-  $ret .=   '<div id="tocinside">';
-  $ret .=   html_buildlist($toc,'toc','html_list_toc');
-  $ret .=   '</div>';
-  $ret .= '</div>';
-  return $ret;
-}
-
-/**
- * TOC item formatter
- *
- * User function for html_buildlist()
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_list_toc($item){
-  $ret  = '';
-  $ret .= '<a href="#'.$item['id'].'" class="toc">';
-  $ret .= $item['name'];
-  $ret .= '</a>';
-  return $ret;
-}
-
-/**
  * show a wiki page
  *
  * @author Andreas Gohr <andi@splitbrain.org>
