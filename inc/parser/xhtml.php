@@ -70,10 +70,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $lang;
         $this->doc .= '<div class="toc">'.DOKU_LF;
         $this->doc .= '<div class="tocheader">';
+/*      The (+/-) version will work too but needs some CSS tweaking to look fine */
 /*      $this->doc .= ' <script type="text/javascript">showTocToggle("+","-")';*/
         $this->doc .=  '<script type="text/javascript">showTocToggle(';
-        $this->doc .=    '"<img src=\"'.DOKU_BASE.'images/arrow_down.png\">",';
-        $this->doc .=    '"<img src=\"'.DOKU_BASE.'images/arrow_up.png\">")';
+        $this->doc .=    '\'<img src="'.DOKU_BASE.'images/arrow_down.png">\',';
+        $this->doc .=    '\'<img src="'.DOKU_BASE.'images/arrow_up.png">\')';
         $this->doc .=  '</script>';
         $this->doc .= $lang['toc'];
         $this->doc .= '</div>'.DOKU_LF;
