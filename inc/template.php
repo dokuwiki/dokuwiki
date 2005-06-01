@@ -383,9 +383,16 @@ function tpl_actionlink($type,$pre='',$suf=''){
  */
 function tpl_searchform(){
   global $lang;
+  global $ACT;
+  
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search" onsubmit="return svchk()">';
   print '<input type="hidden" name="do" value="search" />';
-  print '<input type="text" id="qsearch_in" accesskey="f" name="id" class="edit" onkeyup="ajax_qsearch.call(\'qsearch_in\',\'qsearch_out\')" />';
+  print '<input type="text" ';
+  
+  if ($ACT == 'search')
+    print 'value="'.$_REQUEST['id'].'" '; /* keep search input as long as user stays on search page */
+    
+  print 'id="qsearch_in" accesskey="f" name="id" class="edit" onkeyup="ajax_qsearch.call(\'qsearch_in\',\'qsearch_out\')" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
   print '<div id="qsearch_out" class="ajax_qsearch" onclick="this.style.display=\'none\'"></div>';
   print '</form>';
