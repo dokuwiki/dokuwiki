@@ -300,12 +300,31 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   $lctext = utf8_strtolower($text);
 
   //create regexp from queries  
-  $qpreg = preg_split('/\s+/',preg_quote($opts['query'],'#'));
-  $qpreg = '('.join('|',$qpreg).')';
-
+  $poswords = array();
+  $negwords = array();
+  $qpreg = preg_split('/\s+/',$opts['query']);
+  
+  foreach($qpreg as $word){
+    switch(substr($word,0,1)){
+      case '-':
+        array_push($negwords,preg_quote(substr($word,1),'#'));
+        break;
+      case '+':
+        array_push($poswords,preg_quote(substr($word,1),'#'));
+        break;
+      default:
+        array_push($poswords,preg_quote($word,'#'));
+        break;
+    }
+  }
+  
+  $req  = count($poswords) ? $reg .= '^(?=.*?'.join(')(?=.*?',$poswords).')' : '^';
+  $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
+  $mark = '('.join('|',$poswords).')';
+  
   //do the fulltext search
   $matches = array();
-  if($cnt = preg_match_all('#'.$qpreg.'#usi',$lctext,$matches)){
+  if($cnt = preg_match_all('#'.$reg.'#usi',$lctext,$matches)){
     //this is not the best way for snippet generation but the fastest I could find
     //split query and only use the first token
     $q = preg_split('/\s+/',$opts['query'],2);
@@ -317,15 +336,16 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
     $snippet = '<span class="search_sep"> ... </span>'.
                htmlspecialchars(utf8_substr($text,$f,$l)).
                '<span class="search_sep"> ... </span>';
-    $snippet = preg_replace('#'.$qpreg.'#si','<span class="search_hit">\\1</span>',$snippet);
+    $snippet = preg_replace('#'.$mark.'#si','<span class="search_hit">\\1</span>',$snippet);
 
     $data[] = array(
-      'id'      => $id,
-      'count'   => $cnt,
-      'snippet' => $snippet,
+      'id'       => $id,
+      'count'    => preg_match_all('#'.$mark.'#usi',$lctext,$matches),
+      'poswords' => join(' ',$poswords),
+      'snippet'  => $snippet,
     );
   }
-
+  
   return true;
 }
 

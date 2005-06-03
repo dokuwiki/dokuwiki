@@ -307,7 +307,7 @@ function html_search(){
     usort($data,'sort_search_fulltext');
     foreach($data as $row){
       print '<div class="search_result">';
-      print html_wikilink(':'.$row['id'],$row['id'],$QUERY);
+      print html_wikilink(':'.$row['id'],$row['id'],$row['poswords']);
       print ': <span class="search_cnt">'.$row['count'].' '.$lang['hits'].'</span><br />';
       print '<div class="search_snippet">'.$row['snippet'].'</div>';
       print '</div>';
