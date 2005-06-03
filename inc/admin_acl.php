@@ -28,7 +28,7 @@ function admin_acl_handler(){
   if($type == '@') $user = '@'.$user;
   if($user == '@all') $user = '@ALL'; //special group! (now case insensitive)
   $perm  = (int) $perm;
-  if($perm > AUTH_UPLOAD) $perm = AUTH_UPLOAD;
+  if($perm > AUTH_DELETE) $perm = AUTH_DELETE;
   //FIXME sanitize scope!!!
 
   //nothing to do?
@@ -374,7 +374,7 @@ function admin_acl_html_checkboxes($setperm,$ispage){
   static $label = 0; //number labels
   $ret = '';
 
-  foreach(array(AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD) as $perm){
+  foreach(array(AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD,AUTH_DELETE) as $perm){
     $label += 1;
 
     //general checkbox attributes

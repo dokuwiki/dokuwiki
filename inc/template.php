@@ -548,6 +548,7 @@ function tpl_mediafilelist(){
   global $conf;
   global $lang;
   global $NS;
+  global $AUTH;
   $dir = utf8_encodeFN(str_replace(':','/',$NS));
 
   $data = array();
@@ -564,11 +565,27 @@ function tpl_mediafilelist(){
     ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">'.
          utf8_decodeFN($item['file']).
          '</a>',6);
+
+    //prepare deletion button
+    if($AUTH >= AUTH_DELETE){
+      $ask  = $lang['del_confirm'].'\\n';
+      $ask .= $item['id'];
+
+      $del = '<a href="media.php?delete='.urlencode($item['id']).'" '.
+             'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
+             '<img src="'.DOKU_BASE.'images/del.png" alt="'.$lang['btn_delete'].'" '.
+             'align="bottom" title="'.$lang['btn_delete'].'" /></a>';
+    }else{
+      $del = '';
+    }
+
+
     if($item['isimg']){
       $w = $item['info'][0];
       $h = $item['info'][1];
 
-      ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')<br />',6);
+      ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
+      ptln($del.'<br />',6);
       ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">');
 
       if($w>120){
@@ -580,6 +597,7 @@ function tpl_mediafilelist(){
 
     }else{
       ptln ('('.filesize_h($item['size']).')',6);
+      ptln($del,6);
     }
     ptln('</li>',4);
   }
@@ -594,6 +612,7 @@ function tpl_mediafilelist(){
 function tpl_mediauploadform(){
   global $NS;
   global $UPLOADOK;
+  global $AUTH;
   global $lang;
 
   if(!$UPLOADOK) return;
@@ -606,6 +625,9 @@ function tpl_mediauploadform(){
   ptln($lang['txt_filename'].'<br />',4);
   ptln('<input type="text" name="id" class="edit" />',4);
   ptln('<input type="submit" class="button" value="'.$lang['btn_upload'].'" accesskey="s" />',4);
+  if($AUTH >= AUTH_DELETE){
+    ptln('<label for="ow" class="simple"><input type="checkbox" name="ow" value="1" id="ow">'.$lang['txt_overwrt'].'</label>',4);
+  }
   ptln('</form>',2);
 }
 

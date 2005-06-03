@@ -11,11 +11,18 @@
 
   header('Content-Type: text/html; charset='.$lang['encoding']);
 
-  $NS = $_REQUEST['ns'];
-  $NS = cleanID($NS);
+  //get namespace to display (either direct or from deletion order)
+  if($_REQUEST['delete']){
+		$DEL = cleanID($_REQUEST['delete']);
+    $NS  = getNS($DEL);
+  }else{
+    $NS = $_REQUEST['ns'];
+    $NS = cleanID($NS);
+  }
 
   //check upload permissions
-  if(auth_quickaclcheck("$NS:*") >= AUTH_UPLOAD){
+  $AUTH = auth_quickaclcheck("$NS:*");
+  if($AUTH >= AUTH_UPLOAD){
     $UPLOADOK = true;
     //create the given namespace (just for beautification)
     $mdir = $conf['mediadir'].'/'.utf8_encodeFN(str_replace(':','/',$NS));
@@ -24,8 +31,14 @@
     $UPLOADOK = false;
   }
 
+  //handle deletion
+	if($DEL && $AUTH >= AUTH_DELETE){
+		media_delete($DEL);
+	}
+
+	//handle upload
   if($_FILES['upload']['tmp_name'] && $UPLOADOK){
-    media_upload($NS);
+    media_upload($NS,$AUTH);
   }
 
   //start output and load template
@@ -38,11 +51,26 @@
 /**********************************************/
 
 /**
+ * Deletes mediafiles - Auth is not handled here!
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function media_delete($delid){
+  $file = mediaFN($delid);
+	if(@unlink($file)){
+		return true;
+	}
+	//something went wrong
+  msg("'$file' couldn't be deleted - check permissions",-1);
+  return false;
+}
+
+/**
  * Handles Mediafile uploads
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function media_upload($NS){
+function media_upload($NS,$AUTH){
 	require_once(DOKU_INC.'inc/confutils.php');
   global $lang;
   global $conf;
@@ -65,9 +93,14 @@ function media_upload($NS){
   // because a temp file was created already
   umask($conf['umask']);
   if(preg_match('/\.('.$regex.')$/i',$fn)){
+		//check for overwrite
+		if(@file_exists($fn) && (!$_POST['ow'] || $AUTH < AUTH_DELETE)){
+			msg($lang['uploadexist'],0);
+			return false;
+		}
   	// prepare directory
   	io_makeFileDir($fn);
-    if (move_uploaded_file($file['tmp_name'], $fn)) {
+    if(move_uploaded_file($file['tmp_name'], $fn)) {
 			// set the correct permission here
 			chmod($fn, 0777 - $conf['umask']);
       msg($lang['uploadsucc'],1);

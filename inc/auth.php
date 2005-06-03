@@ -23,6 +23,7 @@
   define('AUTH_EDIT',2);
   define('AUTH_CREATE',4);
   define('AUTH_UPLOAD',8);
+  define('AUTH_DELETE',16);
   define('AUTH_ADMIN',255);
 
   if($conf['useacl']){
@@ -249,7 +250,7 @@ function auth_aclcheck($id,$user,$groups){
     foreach($matches as $match){
       $match = preg_replace('/#.*$/','',$match); //ignore comments
       $acl   = preg_split('/\s+/',$match);
-      if($acl[2] > AUTH_UPLOAD) $acl[2] = AUTH_UPLOAD; //no admins in the ACL!
+      if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
       if($acl[2] > $perm){
         $perm = $acl[2];
       }
@@ -273,7 +274,7 @@ function auth_aclcheck($id,$user,$groups){
       foreach($matches as $match){
         $match = preg_replace('/#.*$/','',$match); //ignore comments
         $acl   = preg_split('/\s+/',$match);
-        if($acl[2] > AUTH_UPLOAD) $acl[2] = AUTH_UPLOAD; //no admins in the ACL!
+        if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
         if($acl[2] > $perm){
           $perm = $acl[2];
         }

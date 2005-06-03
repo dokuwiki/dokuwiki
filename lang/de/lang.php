@@ -53,8 +53,9 @@ $lang['reqbadpass'] = 'Die beiden eingegeben Passwörter stimmen nicht überein.
 $lang['regpwmail']  = 'Ihr DokuWiki Passwort';
 $lang['reghere']    = 'Sie haben noch keinen Zugang? Hier anmelden';
 
-$lang['txt_upload'] = 'Datei zum Hochladen auswählen';
+$lang['txt_upload']   = 'Datei zum Hochladen auswählen';
 $lang['txt_filename'] = 'Wikinamen eingeben (optional)';
+$lang['txt_overwrt']  = 'Bestehende Datei überschreiben';
 $lang['lockedby']     = 'Momentan gesperrt von';
 $lang['lockexpire']   = 'Sperre läuft ab am';
 $lang['willexpire']   = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
@@ -69,6 +70,7 @@ $lang['fileupload']  = 'Datei hochladen';
 $lang['uploadsucc']  = 'Datei wurde erfolgreich hochgeladen';
 $lang['uploadfail']  = 'Hochladen fehlgeschlagen. Keine Berechtigung?';
 $lang['uploadwrong'] = 'Hochladen verweigert. Diese Dateiendung ist nicht erlaubt.';
+$lang['uploadexist'] = 'Datei existiert bereits. Keine Änderungen vorgenommen.';
 $lang['namespaces']  = 'Namensräume';
 $lang['mediafiles']  = 'Vorhandene Dateien in';
 
@@ -125,6 +127,7 @@ $lang['acl_perm1']  = 'Lesen';
 $lang['acl_perm2']  = 'Bearbeiten';
 $lang['acl_perm4']  = 'Anlegen';
 $lang['acl_perm8']  = 'Hochladen';
+$lang['acl_perm16'] = 'Entfernen';
 $lang['acl_new']    = 'Eintrag hinzufügen';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

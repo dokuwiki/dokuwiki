@@ -54,6 +54,7 @@ $lang['reghere']    = 'You don\'t have an account yet? Just get one';
 
 $lang['txt_upload']   = 'Select file to upload';
 $lang['txt_filename'] = 'Enter wikiname (optional)';
+$lang['txt_overwrt']  = 'Overwrite existing file';
 $lang['lockedby']     = 'Currently locked by';
 $lang['lockexpire']   = 'Lock expires at';
 $lang['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
@@ -66,7 +67,8 @@ $lang['mediaselect'] = 'Mediafile Selection';
 $lang['fileupload']  = 'Mediafile Upload';
 $lang['uploadsucc']  = 'Upload successful';
 $lang['uploadfail']  = 'Upload failed. Maybe wrong permissions?';
-$lang['uploadwrong'] = 'Upload denied. This file extension is forbidden';
+$lang['uploadwrong'] = 'Upload denied. This file extension is forbidden!';
+$lang['uploadexist'] = 'File already exists. Nothing done.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
 
@@ -123,6 +125,7 @@ $lang['acl_perm1']  = 'Read';
 $lang['acl_perm2']  = 'Edit';
 $lang['acl_perm4']  = 'Create';
 $lang['acl_perm8']  = 'Upload';
+$lang['acl_perm16'] = 'Delete';
 $lang['acl_new']    = 'Add new Entry';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
