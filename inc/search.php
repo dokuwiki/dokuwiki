@@ -317,6 +317,9 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
         break;
     }
   }
+
+  // a search without any posword is useless
+  if (!count($poswords)) return true;
   
   $req  = count($poswords) ? $reg .= '^(?=.*?'.join(')(?=.*?',$poswords).')' : '^';
   $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
