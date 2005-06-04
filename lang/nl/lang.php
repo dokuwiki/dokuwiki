@@ -17,6 +17,8 @@ $lang['btn_search'] = 'Zoeken';
 $lang['btn_save']   = 'Opslaan';
 $lang['btn_preview']= 'Voorbeeld';
 $lang['btn_top']    = 'Terug naar boven';
+$lang['btn_newer']  = '<< recenter';
+$lang['btn_older']  = 'ouder >>';
 $lang['btn_revs']   = 'Oude revisies';
 $lang['btn_recent'] = 'Recente aanpassingen';
 $lang['btn_upload'] = 'Upload';
@@ -28,6 +30,7 @@ $lang['btn_logout'] = 'Uitloggen';
 $lang['btn_admin']  = 'Beheer';
 $lang['btn_update'] = 'Bijwerken';
 $lang['btn_delete'] = 'Verwijder';
+$lang['btn_back']   = 'Terug';
 
 $lang['loggedinas'] = 'Ingelogd als';
 $lang['user']       = 'Gebruikersnaam';
