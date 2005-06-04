@@ -76,6 +76,7 @@ function sack(file){
 					break;
 					case 4: // Completed.
 						self.response = self.xmlhttp.responseText
+            self.responseXML = self.xmlhttp.responseXML;
 						self.onCompletion();
 						if(self.execute){ self.runResponse(); }
 						if (self.elementObj) { 
@@ -87,5 +88,5 @@ function sack(file){
 		}
 	};
 this.createAJAX();
-if(this.failed && this.AjaxFailedAlert){ alert(this.AjaxFailedAlert); }
+//if(this.failed && this.AjaxFailedAlert){ alert(this.AjaxFailedAlert); }
 }
