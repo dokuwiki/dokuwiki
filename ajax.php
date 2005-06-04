@@ -6,19 +6,23 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+//fix for Opera XMLHttpRequests
+if(!count($_POST) && $HTTP_RAW_POST_DATA){
+  parse_str($HTTP_RAW_POST_DATA, $_POST);
+}
+
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/auth.php');
 
-
 //call the requested function
-$call = 'ajax_'.$_REQUEST['call'];
+$call = 'ajax_'.$_POST['call'];
 if(function_exists($call)){
 	$call();
 }else{
-	print "The called function does not exist!";
+  print "The called function does not exist!";
 }
 
 /**
@@ -30,7 +34,7 @@ function ajax_qsearch(){
   global $conf;
   global $lang;
 
-	$query = cleanID($_REQUEST['q']);
+	$query = cleanID($_POST['q']);
 	if(empty($query)) return;
 
 	$nsdir = str_replace(':','/',getNS($query));

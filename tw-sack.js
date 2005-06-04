@@ -59,24 +59,12 @@ function sack(file){
     if (this.element) { this.elementObj = document.getElementById(this.element); }
     if (this.xmlhttp) {
       var self = this; // wierd fix for odd behavior where "this" wouldn't work in the readystate function.
-      // Opera doesn't support setRequestHeader, try catch is for IE
-      try {
-        if(!this.xmlhttp.setRequestHeader){
-          this.method = "GET";
-        }
-      } catch (ex) { }
-
-      if (this.encodeURIString){ this.URLString = this.encodeURLString(this.URLString); }
-
-      if (this.method == "POST") {
-        this.xmlhttp.open(this.method, this.requestFile ,true);
-        this.xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        this.xmlhttp.send(this.URLString);
-      }else{
-        this.xmlhttp.open(this.method, this.requestFile+'?'+this.URLString, true);
-        this.xmlhttp.send();
+      this.xmlhttp.open(this.method, this.requestFile ,true);
+      if (this.method == "POST" && this.xmlhttp.setRequestHeader) {
+        this.xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
       }
-
+      if (this.encodeURIString){ this.URLString = this.encodeURLString(this.URLString); }
+      this.xmlhttp.send(this.URLString);
       this.xmlhttp.onreadystatechange = function() {
         switch (self.xmlhttp.readyState){
           case 1: // Loading.
