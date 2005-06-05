@@ -1,9 +1,9 @@
 <?php
-  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
+  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
   require_once(DOKU_INC.'inc/init.php');
   require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'lang/en/lang.php');
-  require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
+  require_once(DOKU_INC.'inc/lang/en/lang.php');
+  require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
   require_once(DOKU_INC.'inc/html.php');
   require_once(DOKU_INC.'inc/search.php');
   require_once(DOKU_INC.'inc/template.php');
@@ -43,7 +43,7 @@
 
   //start output and load template
   header('Content-Type: text/html; charset=utf-8');
-  include(DOKU_INC.'lib/tpl/'.$conf['template'].'/lib/exe/media.php');
+  include(DOKU_INC.'lib/tpl/'.$conf['template'].'/media.php');
 
   //restore old umask
   umask($conf['oldumask']);
