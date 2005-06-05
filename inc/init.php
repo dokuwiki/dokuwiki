@@ -22,8 +22,8 @@
   $lang = array();
 
   //load the language files
-  require_once(DOKU_INC.'lang/en/lang.php');
-  require_once(DOKU_INC.'lang/'.$conf['lang'].'/lang.php');
+  require_once(DOKU_INC.'inc/lang/en/lang.php');
+  require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
 
   // define baseURL
   if(!defined('DOKU_BASE')) define('DOKU_BASE',getBaseURL());

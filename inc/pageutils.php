@@ -153,10 +153,10 @@ function mediaFN($id){
  */
 function localeFN($id){
   global $conf;
-  $file = './lang/'.$conf['lang'].'/'.$id.'.txt';
+  $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.txt';
   if(!@file_exists($file)){
     //fall back to english
-    $file = './lang/en/'.$id.'.txt';
+    $file = DOKU_INC.'inc/lang/en/'.$id.'.txt';
   }
   return $file;
 }
