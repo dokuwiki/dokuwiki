@@ -16,8 +16,6 @@ category {
 
 item link, entry id {
   display: block;
-  background: transparent url(images/link_icon.gif) 0px 1px no-repeat;
-  padding: 1px 0px 1px 16px;
   color:#436976;
   text-decoration:underline;
 }

@@ -1,21 +1,21 @@
 div.clearer {clear: both; line-height: 0; height: 0;}
 
 div.error{
-  background: #ff6666 url(images/error.png) 0.5em 0px no-repeat;
+  background: #ff6666 url(../images/error.png) 0.5em 0px no-repeat;
   font-size: 90%;
   margin: 0px;
   padding-left: 3em;
 }
 
 div.info{
-  background: #ffff66 url(images/info.png) 0.5em 0px no-repeat;
+  background: #ffff66 url(../images/info.png) 0.5em 0px no-repeat;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
 }
 
 div.success{
-  background: #66ff66 url(images/thumbup.gif) 0.5em 0px no-repeat;
+  background: #66ff66 url(../images/thumbup.gif) 0.5em 0px no-repeat;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;

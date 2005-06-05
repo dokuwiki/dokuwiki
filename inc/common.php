@@ -105,7 +105,11 @@ function msg($message,$lvl=0){
   }else{
     $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
-    html_msgarea();
+    if(function_exists('html_msgarea')){
+      html_msgarea();
+    }else{
+      print "ERROR($lvl) $message";
+    }
   }
 }
 
@@ -244,7 +248,7 @@ function checkwordblock(){
 
   if(!$conf['usewordblock']) return false;
 
-  $blockfile = file('conf/wordblock.conf');
+  $blockfile = file(DOKU_INC.'conf/wordblock.conf');
   //how many lines to read at once (to work around some PCRE limits)
   if(version_compare(phpversion(),'4.3.0','<')){
     //old versions of PCRE define a maximum of parenthesises even if no
@@ -799,7 +803,7 @@ function check(){
     msg('Mediadir is not writable',-1);
   }
 
-  if(is_writable('conf/users.auth.php')){
+  if(is_writable(DOKU_INC.'conf/users.auth.php')){
     msg('conf/users.auth.php is writable',1);
   }else{
     msg('conf/users.auth.php is not writable',0);

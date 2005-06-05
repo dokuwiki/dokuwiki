@@ -20,7 +20,7 @@
 
   <?tpl_metaheaders()?>
 
-  <link rel="shortcut icon" href="<?=DOKU_BASE?>images/favicon.ico" />
+  <link rel="shortcut icon" href="<?=DOKU_BASE?>lib/images/favicon.ico" />
   <link rel="stylesheet" media="screen" type="text/css" href="<?=DOKU_TPL?>layout.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="<?=DOKU_TPL?>design.css" />
 
@@ -28,7 +28,7 @@
   <style type="text/css">
     /* that IE 5+ conditional comment makes this only visible in IE 5+ */
     /* IE bugfix for transparent PNGs */
-    //img { behavior: url("<?=DOKU_BASE?>/pngbehavior.htc"); }
+    //DISABLED img { behavior: url("<?=DOKU_BASE?>lib/scripts/pngbehavior.htc"); }
   </style>
   <![endif]-->
 </head>
@@ -42,7 +42,7 @@
   <div class="mediaselect">
 
     <div class="mediaselect-left">
-      <b><a href="<?=DOKU_BASE?>/media.php?ns="><?=hsc($lang['namespaces'])?></a></b>
+      <b><a href="<?=DOKU_BASE?>/lib/exe/media.php?ns="><?=hsc($lang['namespaces'])?></a></b>
 
 			<?tpl_medianamespaces()?>
 		</div>

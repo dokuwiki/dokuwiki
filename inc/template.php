@@ -145,7 +145,7 @@ function tpl_metaheaders(){
   ptln('<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="'.DOKU_BASE.'feed.php?mode=list&amp;ns='.$INFO['namespace'].'" />',$it);
   ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.wl($ID,'do=export_html').'" />',$it);
   ptln('<link rel="alternate" type="text/plain" title="Wiki Markup" href="'.wl($ID, 'do=export_raw').'" />',$it);
-  ptln('<link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.'style.css" />',$it);
+  ptln('<link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.'lib/styles/style.css" />',$it);
 
   // setup robot tags apropriate for different modes
   if( ($ACT=='show' || $ACT=='export_html') && !$REV){
@@ -172,9 +172,12 @@ function tpl_metaheaders(){
   ptln('</script>',$it);
  
   // load the default JavaScript files
-  ptln('<script language="JavaScript" type="text/javascript" src="'.DOKU_BASE.'script.js"></script>',$it);
-  ptln('<script language="JavaScript" type="text/javascript" src="'.DOKU_BASE.'tw-sack.js"></script>',$it);
-  ptln('<script language="JavaScript" type="text/javascript" src="'.DOKU_BASE.'ajax.js"></script>',$it);
+  ptln('<script language="JavaScript" type="text/javascript" src="'.
+       DOKU_BASE.'lib/scripts/script.js"></script>',$it);
+  ptln('<script language="JavaScript" type="text/javascript" src="'.
+       DOKU_BASE.'lib/scripts/tw-sack.js"></script>',$it);
+  ptln('<script language="JavaScript" type="text/javascript" src="'.
+       DOKU_BASE.'lib/scripts/ajax.js"></script>',$it);
 
   //FIXME include some default CSS ? IE FIX?
 }
@@ -571,9 +574,9 @@ function tpl_mediafilelist(){
       $ask  = $lang['del_confirm'].'\\n';
       $ask .= $item['id'];
 
-      $del = '<a href="media.php?delete='.urlencode($item['id']).'" '.
+      $del = '<a href="'.DOKU_BASE.'lib/exe/media.php?delete='.urlencode($item['id']).'" '.
              'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
-             '<img src="'.DOKU_BASE.'images/del.png" alt="'.$lang['btn_delete'].'" '.
+             '<img src="'.DOKU_BASE.'lib/images/del.png" alt="'.$lang['btn_delete'].'" '.
              'align="bottom" title="'.$lang['btn_delete'].'" /></a>';
     }else{
       $del = '';
@@ -589,9 +592,9 @@ function tpl_mediafilelist(){
       ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">');
 
       if($w>120){
-        print '<img src="'.DOKU_BASE.'fetch.php?w=120&amp;media='.urlencode($item['id']).'" width="120" />';
+        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?w=120&amp;media='.urlencode($item['id']).'" width="120" />';
       }else{
-        print '<img src="'.DOKU_BASE.'fetch.php?media='.urlencode($item['id']).'" width="'.$w.'" height="'.$h.'" />';
+        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($item['id']).'" width="'.$w.'" height="'.$h.'" />';
       }
       print '</a>';
 

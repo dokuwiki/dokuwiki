@@ -30,14 +30,14 @@
   if(!defined('DOKU_URL'))  define('DOKU_URL',getBaseURL(true));
 
   // define Plugin dir
-  if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'inc/plugins/');
+  if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
   // define main script
   if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
   // define Template baseURL
   if(!defined('DOKU_TPL')) define('DOKU_TPL',
-                                  DOKU_BASE.'tpl/'.$conf['template'].'/');
+                                  DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
 
   // make session rewrites XHTML compliant
   @ini_set('arg_separator.output', '&amp;');
@@ -72,16 +72,29 @@
   }
 
   // make real paths and check them
-  $conf['datadir']       = realpath($conf['datadir']);
+  $conf['datadir']       = init_path($conf['datadir']);
   if(!$conf['datadir'])    die('Wrong datadir! Check config!');
-  $conf['olddir']        = realpath($conf['olddir']);
+  $conf['olddir']        = init_path($conf['olddir']);
   if(!$conf['olddir'])     die('Wrong olddir! Check config!');
-  $conf['mediadir']      = realpath($conf['mediadir']);
+  $conf['mediadir']      = init_path($conf['mediadir']);
   if(!$conf['mediadir'])   die('Wrong mediadir! Check config!');
 
   // automatic upgrade to script versions of certain files
-  scriptify('conf/users.auth');
-  scriptify('conf/acl.auth');
+  scriptify(DOKU_INC.'conf/users.auth');
+  scriptify(DOKU_INC.'conf/acl.auth');
+
+
+/**
+ * returns absolute path
+ *
+ * This tries the given past first, then checks in DOKU_INC
+ */
+function init_path($path){
+  $p = realpath($path);
+  if($p) return $p;
+  $p = realpath(DOKU_INC.$path);
+  return $p;
+}
 
 /**
  * remove magic quotes recursivly
@@ -123,6 +136,9 @@ function getBaseURL($abs=false){
 
   $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
   $dir = preg_replace('#//+#','/',$dir);
+  
+  //handle script in lib/exe dir
+  $dir = preg_replace('!lib/exe/$!','',$dir);
 
   //finish here for relative URLs
   if(!$abs) return $dir;

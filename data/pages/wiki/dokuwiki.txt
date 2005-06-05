@@ -8,7 +8,7 @@ DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
 
 ===== Read More =====
 
-All documentation and additional information besides the [[syntax|syntax description]] is now maintained in the DokuWiki at [[doku>wiki:dokuwiki|splitbrain]] only and not included in the releases anymore.
+All documentation and additional information besides the [[syntax|syntax description]] is maintained in the DokuWiki at [[doku>wiki:dokuwiki|wiki.splitbrain.org]].
 
   * [[doku>wiki:news|News and Announcements]]
   * [[doku>wiki:features|Features]]
@@ -29,7 +29,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>wiki:mailinglist|Mailing List]]
 
   * [[doku>wiki:todo|ToDo List]]
-  * [[doku>wiki:development|Development Ressources]]
+  * [[doku>wiki:development|Development Resources]]
   * [[doku>wiki:changes|Change Log]]
   * [[doku>wiki:thanks|Thanks]]
 

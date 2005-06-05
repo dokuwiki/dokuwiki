@@ -15,7 +15,7 @@
   require_once(DOKU_INC.'inc/blowfish.php');
   require_once(DOKU_INC.'inc/mail.php');
   // load the the auth functions
-  require_once(DOKU_INC.'inc/auth_'.$conf['authtype'].'.php');
+  require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
 
   // some ACL level defines
   define('AUTH_NONE',0);
@@ -29,7 +29,7 @@
   if($conf['useacl']){
     auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
     //load ACL into a global array
-    $AUTH_ACL = file('conf/acl.auth.php');
+    $AUTH_ACL = file(DOKU_INC.'conf/acl.auth.php');
   }
 
 /**

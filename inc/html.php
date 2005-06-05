@@ -364,7 +364,7 @@ function html_revisions(){
 
     print $date;
 
-    print ' <img src="'.DOKU_BASE.'images/blank.gif" border="0" width="15" height="11" alt="" /> ';
+    print ' <img src="'.DOKU_BASE.'lib/images/blank.gif" border="0" width="15" height="11" alt="" /> ';
 
     print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 
@@ -386,7 +386,7 @@ function html_revisions(){
     print $date;
 
     print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
-    print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    print '<img src="'.DOKU_BASE.'lib/images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
     print '</a> ';
 
     print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
@@ -438,11 +438,11 @@ function html_recent($first=0){
     print $date.' ';
 
     print '<a href="'.wl($id,"do=diff").'">';
-    print '<img src="'.DOKU_BASE.'images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    print '<img src="'.DOKU_BASE.'lib/images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
     print '</a> ';
 
     print '<a href="'.wl($id,"do=revisions").'">';
-    print '<img src="'.DOKU_BASE.'images/history.png" border="0" width="12" height="14" title="'.$lang['btn_revs'].'" />';
+    print '<img src="'.DOKU_BASE.'lib/images/history.png" border="0" width="12" height="14" title="'.$lang['btn_revs'].'" />';
     print '</a> ';
 
     print html_wikilink($id,$id);
@@ -848,29 +848,29 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           <?/* sets changed to true when previewed */?>
           textChanged = <? ($pr) ? print 'true' : print 'false' ?>;
           
-          formatButton('images/bold.png','<?=$lang['qb_bold']?>','**','**','<?=$lang['qb_bold']?>','b');
-          formatButton('images/italic.png','<?=$lang['qb_italic']?>',"\/\/","\/\/",'<?=$lang['qb_italic']?>','i');
-          formatButton('images/underline.png','<?=$lang['qb_underl']?>','__','__','<?=$lang['qb_underl']?>','u');
-          formatButton('images/code.png','<?=$lang['qb_code']?>','\'\'','\'\'','<?=$lang['qb_code']?>','c');
+          formatButton('bold.png','<?=$lang['qb_bold']?>','**','**','<?=$lang['qb_bold']?>','b');
+          formatButton('italic.png','<?=$lang['qb_italic']?>',"\/\/","\/\/",'<?=$lang['qb_italic']?>','i');
+          formatButton('underline.png','<?=$lang['qb_underl']?>','__','__','<?=$lang['qb_underl']?>','u');
+          formatButton('code.png','<?=$lang['qb_code']?>','\'\'','\'\'','<?=$lang['qb_code']?>','c');
 
-          formatButton('images/fonth1.png','<?=$lang['qb_h1']?>','====== ',' ======\n','<?=$lang['qb_h1']?>','1');
-          formatButton('images/fonth2.png','<?=$lang['qb_h2']?>','===== ',' =====\n','<?=$lang['qb_h2']?>','2');
-          formatButton('images/fonth3.png','<?=$lang['qb_h3']?>','==== ',' ====\n','<?=$lang['qb_h3']?>','3');
-          formatButton('images/fonth4.png','<?=$lang['qb_h4']?>','=== ',' ===\n','<?=$lang['qb_h4']?>','4');
-          formatButton('images/fonth5.png','<?=$lang['qb_h5']?>','== ',' ==\n','<?=$lang['qb_h5']?>','5');
+          formatButton('fonth1.png','<?=$lang['qb_h1']?>','====== ',' ======\n','<?=$lang['qb_h1']?>','1');
+          formatButton('fonth2.png','<?=$lang['qb_h2']?>','===== ',' =====\n','<?=$lang['qb_h2']?>','2');
+          formatButton('fonth3.png','<?=$lang['qb_h3']?>','==== ',' ====\n','<?=$lang['qb_h3']?>','3');
+          formatButton('fonth4.png','<?=$lang['qb_h4']?>','=== ',' ===\n','<?=$lang['qb_h4']?>','4');
+          formatButton('fonth5.png','<?=$lang['qb_h5']?>','== ',' ==\n','<?=$lang['qb_h5']?>','5');
 
-          formatButton('images/link.png','<?=$lang['qb_link']?>','[[',']]','<?=$lang['qb_link']?>','l');
-          formatButton('images/extlink.png','<?=$lang['qb_extlink']?>','[[',']]','http://www.example.com|<?=$lang['qb_extlink']?>');
+          formatButton('link.png','<?=$lang['qb_link']?>','[[',']]','<?=$lang['qb_link']?>','l');
+          formatButton('extlink.png','<?=$lang['qb_extlink']?>','[[',']]','http://www.example.com|<?=$lang['qb_extlink']?>');
 
-          formatButton('images/list.png','<?=$lang['qb_ol']?>','  - ','\n','<?=$lang['qb_ol']?>');
-          formatButton('images/list_ul.png','<?=$lang['qb_ul']?>','  * ','\n','<?=$lang['qb_ul']?>');
+          formatButton('list.png','<?=$lang['qb_ol']?>','  - ','\n','<?=$lang['qb_ol']?>');
+          formatButton('list_ul.png','<?=$lang['qb_ul']?>','  * ','\n','<?=$lang['qb_ul']?>');
 
-          insertButton('images/rule.png','<?=$lang['qb_hr']?>','----\n');
-          mediaButton('images/image.png','<?=$lang['qb_media']?>','m','<?=$INFO['namespace']?>');
+          insertButton('rule.png','<?=$lang['qb_hr']?>','----\n');
+          mediaButton('image.png','<?=$lang['qb_media']?>','m','<?=$INFO['namespace']?>');
 
           <?
           if($conf['useacl'] && $_SERVER['REMOTE_USER']){
-            echo "insertButton('images/sig.png','".$lang['qb_sig']."','".html_signature()."','y');";
+            echo "insertButton('sig.png','".$lang['qb_sig']."','".html_signature()."','y');";
           }
           ?>
         </script>

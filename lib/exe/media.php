@@ -43,7 +43,7 @@
 
   //start output and load template
   header('Content-Type: text/html; charset=utf-8');
-  include(DOKU_INC.'tpl/'.$conf['template'].'/media.php');
+  include(DOKU_INC.'lib/tpl/'.$conf['template'].'/lib/exe/media.php');
 
   //restore old umask
   umask($conf['oldumask']);
@@ -123,7 +123,7 @@ function media_upload($NS,$AUTH){
  */
 function media_html_list_namespaces($item){
   $ret  = '';
-  $ret .= '<a href="'.DOKU_BASE.'media.php?ns='.idfilter($item['id']).'" class="idx_dir">';
+  $ret .= '<a href="'.DOKU_BASE.'lib/exe/media.php?ns='.idfilter($item['id']).'" class="idx_dir">';
   $pos = strrpos($item['id'], ':');
   $ret .= substr($item['id'], $pos > 0 ? $pos + 1 : 0);
   $ret .= '</a>';

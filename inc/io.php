@@ -10,55 +10,6 @@
   require_once(DOKU_INC.'inc/common.php');
 
 /**
- * Returns the parsed text from the given sourcefile. Uses cache
- * if exists. Creates it if not.
- *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @deprecated -> parserutils
- */
-function io_cacheParse($file){
-  trigger_error("deprecated io_cacheParse called");
-
-  global $conf;
-  global $CACHEGROUP;
-  global $parser; //we read parser options
-  $parsed = '';
-  $cache  = $conf['datadir'].'/_cache/';
-  $cache .= md5($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$CACHEGROUP);
-  $purge  = $conf['datadir'].'/_cache/purgefile';
-
-  // check if cache can be used
-  $cachetime = @filemtime($cache);
-
-  if(   @file_exists($cache)                          // does the cachefile exist
-     && @file_exists($file)                           // and does the source exist
-     && !isset($_REQUEST['purge'])                    // no purge param was set
-     && filesize($cache)                              // and contains the cachefile any data
-     && ((time() - $cachetime) < $conf['cachetime'])  // and is cachefile young enough
-     && ($cachetime > filemtime($file))               // and newer than the source
-     && ($cachetime > @filemtime($purge))             // and newer than the purgefile
-     && ($cachetime > filemtime('conf/dokuwiki.php')) // and newer than the config file
-     && ($cachetime > @filemtime('conf/local.php'))   // and newer than the local config file
-     && ($cachetime > filemtime('inc/parser.php'))    // and newer than the parser
-     && ($cachetime > filemtime('inc/format.php')))   // and newer than the formating functions
-  {
-    $parsed  = io_readFile($cache); //give back cache
-    $parsed .= "\n<!-- cachefile $cache used -->\n";
-  }elseif(@file_exists($file)){
-    $parsed = parse(io_readFile($file)); //sets global parseroptions
-    if($parser['cache']){
-      io_saveFile($cache,$parsed); //save cachefile
-      $parsed .= "\n<!-- no cachefile used, but created -->\n";
-    }else{
-      @unlink($cache); //try to delete cachefile
-      $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
-    }
-  }
-
-  return $parsed;
-}
-
-/**
  * Removes empty directories
  *
  * @todo use safemode hack

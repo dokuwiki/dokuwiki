@@ -68,9 +68,9 @@ Notes:
 
 ==== Interwiki ====
 
-DokuWiki supports [[doku>wiki:interwiki]] links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
+DokuWiki supports [[doku>wiki:interwiki|Interwiki]] links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
-  DokuWiki supports [[doku>wiki:interwiki]] links. These are quick links to other Wikis.
+  DokuWiki supports [[doku>wiki:interwiki|Interwiki]] links. These are quick links to other Wikis.
   For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
 ==== Windows Shares ====

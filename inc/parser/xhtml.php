@@ -73,8 +73,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 /*      The (+/-) version will work too but needs some CSS tweaking to look fine */
 /*      $this->doc .= ' <script type="text/javascript">showTocToggle("+","-")';*/
         $this->doc .=  '<script type="text/javascript">showTocToggle(';
-        $this->doc .=    '\'<img src="'.DOKU_BASE.'images/arrow_down.png">\',';
-        $this->doc .=    '\'<img src="'.DOKU_BASE.'images/arrow_up.png">\')';
+        $this->doc .=    '\'<img src="'.DOKU_BASE.'lib/images/arrow_down.png">\',';
+        $this->doc .=    '\'<img src="'.DOKU_BASE.'lib/images/arrow_up.png">\')';
         $this->doc .=  '</script>';
         $this->doc .= $lang['toc'];
         $this->doc .= '</div>'.DOKU_LF;
@@ -376,12 +376,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
     }
     
-    /**
-    */
     function smiley($smiley) {
         if ( array_key_exists($smiley, $this->smileys) ) {
             $title = $this->_xmlEntities($this->smileys[$smiley]);
-            $this->doc .= '<img src="'.DOKU_BASE.'smileys/'.$this->smileys[$smiley].
+            $this->doc .= '<img src="'.DOKU_BASE.'lib/images/smileys/'.$this->smileys[$smiley].
                 '" align="middle" alt="'.
                     $this->_xmlEntities($smiley).'" />';
         } else {
@@ -389,7 +387,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
     }
     
-    /**
+    /*
     * not used
     function wordblock($word) {
         if ( array_key_exists($word, $this->badwords) ) {
@@ -566,10 +564,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
        
         if(!$isImage){
             //if ico exists set additional style
-            if(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.png')){
-                $link['style']='background-image: url('.DOKU_BASE.'interwiki/'.$wikiName.'.png)';
+            if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$wikiName.'.png')){
+                $link['style']='background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$wikiName.'.png)';
             }elseif(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.gif')){
-                $link['style']='background-image: url('.DOKU_BASE.'interwiki/'.$wikiName.'.gif)';
+                $link['style']='background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$wikiName.'.gif)';
             }
         }
 
@@ -714,7 +712,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['target'] = $conf['target']['media'];
 
         $link['title']  = $this->_xmlEntities($src);
-        $link['url']    = DOKU_BASE.'fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        $link['url']    = DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
 
@@ -738,7 +736,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['target'] = $conf['target']['media'];
 
         $link['title']  = $this->_xmlEntities($src);
-        $link['url']    = DOKU_BASE.'fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        $link['url']    = DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
 
@@ -893,7 +891,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             //add image tag
-            $ret .= '<img src="'.DOKU_BASE.'fetch.php?w='.$width.'&amp;h='.$height.
+            $ret .= '<img src="'.DOKU_BASE.'lib/exe/fetch.php?w='.$width.'&amp;h='.$height.
                     '&amp;cache='.$cache.'&amp;media='.urlencode($src).'"';
             
             $ret .= ' class="media'.$align.'"';
@@ -919,9 +917,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
             if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
             $ret .= '>'.DOKU_LF;
-            $ret .= '<param name="movie" value="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'" />'.DOKU_LF;
+            $ret .= '<param name="movie" value="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($src).'" />'.DOKU_LF;
             $ret .= '<param name="quality" value="high" />'.DOKU_LF;
-            $ret .= '<embed src="'.DOKU_BASE.'fetch.php?media='.urlencode($src).'"'.
+            $ret .= '<embed src="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($src).'"'.
                     ' quality="high"';
             if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
             if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';

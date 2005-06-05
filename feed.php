@@ -51,12 +51,12 @@
   $rss = new DokuWikiFeedCreator();
   $rss->title = $conf['title'];
   $rss->link  = DOKU_URL;
-  $rss->syndicationURL = DOKU_URL.'/feed.php';
-  $rss->cssStyleSheet  = DOKU_URL.'/feed.css';
+  $rss->syndicationURL = DOKU_URL.'feed.php';
+  $rss->cssStyleSheet  = DOKU_URL.'lib/styles/feed.css';
 
   $image = new FeedImage();
   $image->title = $conf['title'];
-  $image->url = DOKU_URL."images/favicon.ico";
+  $image->url = DOKU_URL."lib/images/favicon.ico";
   $image->link = DOKU_URL;
   $rss->image = $image;
 
@@ -77,7 +77,14 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssRecentChanges(&$rss,$num,$ltype){
+  global $conf;
+	if(!$num) $num = $conf['recent'];
+
   $recents = getRecents(0,$num);
+
+  //this can take some time if a lot of recaching has to be done
+  @set_time_limit(90); // set max execution time
+
   foreach(array_keys($recents) as $id){
     $desc = cleanDesc(p_wiki_xhtml($id,'',false));
     $item = new FeedItem();
@@ -109,9 +116,6 @@ function rssRecentChanges(&$rss,$num,$ltype){
     }
     $item->author  .= $recents[$id]['ip'];
     $rss->addItem($item);
-
-    //this can take some time if a lot of recaching has to be done
-    @set_time_limit(30); //reset execution time
   }
 }
 
@@ -121,7 +125,7 @@ function rssRecentChanges(&$rss,$num,$ltype){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssListNamespace(&$rss,$ns){
-  require_once("inc/search.php");
+  require_once(DOKU_INC.'inc/search.php');
   global $conf;
 
   $ns=':'.cleanID($ns);
