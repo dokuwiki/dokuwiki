@@ -291,7 +291,7 @@ function html_search(){
     print '<b>'.$lang[quickhits].':</b><br />';
     foreach($data as $row){
       print '<div class="search_quickhits">';
-      print html_wikilink(':'.$row['id'],$row['id']);
+      print html_wikilink(':'.$row['id'],$conf['useheading']?NULL:$row['id']);
       print '</div> ';
     }
     //clear float (see http://www.complexspiral.com/publications/containing-floats/)
@@ -307,7 +307,7 @@ function html_search(){
     usort($data,'sort_search_fulltext');
     foreach($data as $row){
       print '<div class="search_result">';
-      print html_wikilink(':'.$row['id'],$row['id'],$row['poswords']);
+      print html_wikilink(':'.$row['id'],$conf['useheading']?NULL:$row['id'],$row['poswords']);
       print ': <span class="search_cnt">'.$row['count'].' '.$lang['hits'].'</span><br />';
       print '<div class="search_snippet">'.$row['snippet'].'</div>';
       print '</div>';
@@ -445,7 +445,7 @@ function html_recent($first=0){
     print '<img src="'.DOKU_BASE.'lib/images/history.png" border="0" width="12" height="14" title="'.$lang['btn_revs'].'" />';
     print '</a> ';
 
-    print html_wikilink($id,$id);
+    print html_wikilink($id,$conf['useheading']?NULL:$id);
 
     print ' '.htmlspecialchars($recents[$id]['sum']);
     print ' <span class="user">';
@@ -633,7 +633,7 @@ function html_backlinks(){
   print '<ul class="idx">';
   foreach($data as $row){
     print '<li>';
-    print html_wikilink(':'.$row['id'],$row['id']);
+    print html_wikilink(':'.$row['id'],$conf['useheading']?NULL:$row['id']);
     print '</li>';
   }
   print '</ul>';
