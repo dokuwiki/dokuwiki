@@ -321,17 +321,14 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   // a search without any posword is useless
   if (!count($poswords)) return true;
   
-  $req  = count($poswords) ? $reg .= '^(?=.*?'.join(')(?=.*?',$poswords).')' : '^';
+  $reg  = '^(?=.*?'.join(')(?=.*?',$poswords).')';
   $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
-  $mark = '('.join('|',$poswords).')';
   
   //do the fulltext search
   $matches = array();
   if($cnt = preg_match_all('#'.$reg.'#usi',$lctext,$matches)){
     //this is not the best way for snippet generation but the fastest I could find
-    //split query and only use the first token
-    $q = preg_split('/\s+/',$opts['query'],2);
-    $q = $q[0];
+    $q = $poswords[0];  //use first posword for snippet
     $p = utf8_strpos($lctext,$q);
     $f = $p - 100;
     $l = utf8_strlen($q) + 200;
@@ -339,6 +336,7 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
     $snippet = '<span class="search_sep"> ... </span>'.
                htmlspecialchars(utf8_substr($text,$f,$l)).
                '<span class="search_sep"> ... </span>';
+    $mark    = '('.join('|',$poswords).')';
     $snippet = preg_replace('#'.$mark.'#si','<span class="search_hit">\\1</span>',$snippet);
 
     $data[] = array(
