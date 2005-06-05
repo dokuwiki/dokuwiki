@@ -36,6 +36,8 @@ $conf['maxseclevel'] = 3;                 //Up to which level create editable se
 $conf['camelcase']   = 0;                 //Use CamelCase for linking? (I don't like it) 0|1
 $conf['deaccent']    = 1;                 //convert accented chars to unaccented ones in pagenames?
 $conf['useheading']  = 0;                 //use the first heading in a page as its name
+$conf['refcheck']    = 1;                 //check references before deleting media files
+$conf['refcount']    = 5;                 //search only no of references to satisfy the refcheck
 
 /* Antispam Features */
 

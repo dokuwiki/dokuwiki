@@ -34,11 +34,20 @@
   }
 
   //handle deletion
-	if($DEL && $AUTH >= AUTH_DELETE){
-		media_delete($DEL);
+  $mediareferences = array();
+  if($DEL && $AUTH >= AUTH_DELETE){
+	if($conf['refcheck']){
+  	  search($mediareferences,$conf['datadir'],'search_reference',array('query' => $DEL));
 	}
+    if(!count($mediareferences)){
+      media_delete($DEL);
+    }else{
+      $text = str_replace('%s',noNS($DEL),$lang['mediainuse']);
+      msg($text,0);
+    }
+  }
 
-	//handle upload
+  //handle upload
   if($_FILES['upload']['tmp_name'] && $UPLOADOK){
     media_upload($NS,$AUTH);
   }
@@ -58,12 +67,16 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_delete($delid){
+  global $lang;
+
   $file = mediaFN($delid);
-	if(@unlink($file)){
-		return true;
-	}
-	//something went wrong
-  msg("'$file' couldn't be deleted - check permissions",-1);
+  if(@unlink($file)){
+    msg(str_replace('%s',noNS($delid),$lang['deletesucc']),1);
+    return true;
+  }
+  //something went wrong
+  $text = str_replace('%s',$file,$lang['deletefail']);
+  msg($text,-1);
   return false;
 }
 

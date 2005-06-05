@@ -69,6 +69,9 @@ $lang['uploadsucc']  = 'Upload successful';
 $lang['uploadfail']  = 'Upload failed. Maybe wrong permissions?';
 $lang['uploadwrong'] = 'Upload denied. This file extension is forbidden!';
 $lang['uploadexist'] = 'File already exists. Nothing done.';
+$lang['deletesucc']  = 'The file "%s" has been deleted.';
+$lang['deletefail']  = '"%s" couldn\'t be deleted - check perission.';
+$lang['mediainuse']  = 'The file "%s" hasn\'t been deleted - it is still in use.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
 

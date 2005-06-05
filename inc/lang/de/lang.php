@@ -71,6 +71,9 @@ $lang['uploadsucc']  = 'Datei wurde erfolgreich hochgeladen';
 $lang['uploadfail']  = 'Hochladen fehlgeschlagen. Keine Berechtigung?';
 $lang['uploadwrong'] = 'Hochladen verweigert. Diese Dateiendung ist nicht erlaubt.';
 $lang['uploadexist'] = 'Datei existiert bereits. Keine Änderungen vorgenommen.';
+$lang['deletesucc']  = 'Die Datei "%s" wurde gelöscht.';
+$lang['deletefail']  = '"%s" konnte nicht gelöscht werden - prüfen Sie die Berechtigungen.';
+$lang['mediainuse']  = 'Die Datei "%s" wurde nicht gelöscht - sie wird noch verwendet.';
 $lang['namespaces']  = 'Namensräume';
 $lang['mediafiles']  = 'Vorhandene Dateien in';
 

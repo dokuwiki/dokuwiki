@@ -294,11 +294,6 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
     return false;
   }
 
-  //get text
-  $text = io_readfile($base.'/'.$file);
-  //lowercase text (u modifier does not help with case)
-  $lctext = utf8_strtolower($text);
-
   //create regexp from queries  
   $poswords = array();
   $negwords = array();
@@ -323,12 +318,77 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   
   $reg  = '^(?=.*?'.join(')(?=.*?',$poswords).')';
   $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
+  search_regex($data,$base,$file,$reg,$poswords);
+  return true;
+}
+
+/**
+ * Reference search
+ * This fuction searches for existing references to a given media file
+ * and returns an array with the found pages. It doesn't pay any
+ * attention to ACL permissions to find every reference. The caller
+ * must check if the user has the appropriate rights to see the found
+ * page and eventually have to prevent the result from displaying.
+ *
+ * @param array  $data Reference to the result data structure
+ * @param string $base Base usually $conf['datadir']
+ * @param string $file current file or directory relative to $base
+ * @param char   $type Type either 'd' for directory or 'f' for file
+ * @param int    $lvl  Current recursion depht
+ * @param mixed  $opts option array as given to search()
+ *
+ * $opts['query'] is the demanded media file name
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ */
+function search_reference(&$data,$base,$file,$type,$lvl,$opts){
+  global $conf;
   
+  //we do nothing with directories
+  if($type == 'd') return true;
+  
+  //only search txt files
+  if(!preg_match('#\.txt$#',$file)) return true;
+
+  //we finish after five references found. The return value
+  //'false' will skip subdirectories to speed search up.
+  if(count($data) >= $conf['refcount']) return false;
+  
+  $reg = '{{ *'.$opts['query'].' *(\|.*)?}}';
+  search_regex($data,$base,$file,$reg,array($opts['query']));
+  return true;
+}
+
+/* ------------- helper functions below -------------- */
+
+/**
+ * fulltext search helper
+ * searches a text file with a given regular expression
+ * no ACL checks are performed. This have to be done by
+ * the caller if necessary.
+ *
+ * @param array  $data  reference to array for results
+ * @param string $base  base directory
+ * @param string $file  file name to search in
+ * @param string $reg   regular expression to search for
+ * @param array  $words words that should be marked in the results
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ */
+function search_regex(&$data,$base,$file,$reg,$words){
+
+  //get text
+  $text = io_readfile($base.'/'.$file);
+  //lowercase text (u modifier does not help with case)
+  $lctext = utf8_strtolower($text);
+
   //do the fulltext search
   $matches = array();
   if($cnt = preg_match_all('#'.$reg.'#usi',$lctext,$matches)){
     //this is not the best way for snippet generation but the fastest I could find
-    $q = $poswords[0];  //use first posword for snippet
+    $q = $words[0];  //use first word for snippet creation
     $p = utf8_strpos($lctext,$q);
     $f = $p - 100;
     $l = utf8_strlen($q) + 200;
@@ -336,19 +396,20 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
     $snippet = '<span class="search_sep"> ... </span>'.
                htmlspecialchars(utf8_substr($text,$f,$l)).
                '<span class="search_sep"> ... </span>';
-    $mark    = '('.join('|',$poswords).')';
+    $mark    = '('.join('|', $words).')';
     $snippet = preg_replace('#'.$mark.'#si','<span class="search_hit">\\1</span>',$snippet);
 
     $data[] = array(
-      'id'       => $id,
+      'id'       => pathID($file),
       'count'    => preg_match_all('#'.$mark.'#usi',$lctext,$matches),
-      'poswords' => join(' ',$poswords),
+      'poswords' => join(' ',$words),
       'snippet'  => $snippet,
     );
   }
-  
+ 
   return true;
 }
+
 
 /**
  * fulltext sort
