@@ -90,7 +90,7 @@ textarea.edit {
 input.edit,select.edit {
   font-size: 100%;
   border: 1px solid #8cacbb;
-  height: 22px !important;
+  height: 18px !important;
   max-height: 22px !important;
   min-height: 22px !important;
   color: Black;
@@ -103,7 +103,7 @@ input.edit,select.edit {
 input.missing {
   font-size: 100%;
   border: 1px solid #8cacbb;
-  height: 22px !important;
+  height: 18px !important;
   max-height: 22px !important;
   min-height: 22px !important;
   color: Black;
