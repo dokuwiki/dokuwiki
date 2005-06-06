@@ -73,6 +73,7 @@
   header("Content-Type: $MIME");
   header('Last-Modified: '.date('r',filemtime($FILE)));
   header('Content-Length: '.filesize($FILE));
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 
   //application mime type is downloadable
   if(substr($MIME,0,11) == 'application'){
