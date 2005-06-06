@@ -73,8 +73,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 /*      The (+/-) version will work too but needs some CSS tweaking to look fine */
 /*      $this->doc .= ' <script type="text/javascript">showTocToggle("+","-")';*/
         $this->doc .=  '<script type="text/javascript">showTocToggle(';
-        $this->doc .=    '\'<img src="'.DOKU_BASE.'lib/images/arrow_down.png">\',';
-        $this->doc .=    '\'<img src="'.DOKU_BASE.'lib/images/arrow_up.png">\')';
+        $this->doc .=    '\'<img src="'.DOKU_BASE.'lib/images/arrow_down.gif">\',';
+        $this->doc .=    '\'<img src="'.DOKU_BASE.'lib/images/arrow_up.gif">\')';
         $this->doc .=  '</script>';
         $this->doc .= $lang['toc'];
         $this->doc .= '</div>'.DOKU_LF;
