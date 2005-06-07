@@ -15,7 +15,7 @@ $lang['btn_show']   = 'Vis dokument';
 $lang['btn_create'] = 'Opret dette dokument';
 $lang['btn_search'] = 'Søg';
 $lang['btn_save']   = 'Gem';
-$lang['btn_preview']= 'Preview';
+$lang['btn_preview']= 'Forhåndsvisning';
 $lang['btn_top']    = 'Tilbage til toppen';
 $lang['btn_prevpage']= '<< forrige side';
 $lang['btn_nextpage']= 'næste side >>';
@@ -123,5 +123,11 @@ $lang['acl_perm2']  = 'Skriv';
 $lang['acl_perm4']  = 'Opret';
 $lang['acl_perm8']  = 'Upload';
 $lang['acl_new']    = 'Tilføj ny post';
+
+$lang['tpl_btn_insert']   = 'Indsæt';
+$lang['tpl_txt']          = 'Vælg skabelon';
+$lang['tpl_txt_headline'] = 'Indsæt skabelon';
+$lang['tpl_qb']           = 'Indsæt skabelon';
+$lang['tpl_select']       = 'Indsæt skabelon';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -1,4 +1,4 @@
-====== Preview ======
+====== Forhåndsvisning ======
 
-Dette er et preview af hvordan dokumentet vil se ud. Husk: Det er //**IKKE**// gemt endnu! Hvis det ser godt ud, så tryk på knappen **''[Gem]''**
+Dette er en forhåndsvisning af hvordan dokumentet vil se ud. Husk: Det er //**IKKE**// gemt endnu! Hvis det ser godt ud, så tryk på knappen **''[Gem]''**
 
