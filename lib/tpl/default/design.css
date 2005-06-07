@@ -141,7 +141,7 @@ div.secedit input.button {
   padding: 0px;
   font-size: 10px;
   cursor: pointer;
-  height: 15px;
+  height: 15px !important;
   max-height: 15px !important;
   min-height: 15px !important;
   float:right;
