@@ -1,4 +1,4 @@
 ======Eelvaade======
 
-See on eelvaade sellest kuidas Sinu tekst hakkab välja nägema. Meelespea: tekst on salvestamata!
-
+Siin saad eelnevalt vaadata, milline su tekst välja näeks. Pea aga meeles, et see **ei ole veel 
+salvestatud** ! 

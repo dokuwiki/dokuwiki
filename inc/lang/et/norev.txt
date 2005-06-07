@@ -1,4 +1,5 @@
-======Sellist revisioni ei ole======
+======Sellist versiooni pole======
 
-Sisestatud revisioni ei eksisteeri. Kasuta nuppu ''Vanad revisionid'', et näha nimekirja selle dokumendi vanadest revisionidest.
+Sellist versiooni ei ole olemas. Selle dokumendi eelmiste versioonide nägemiseks klõpsa ''Eelmised 
+versioonid'' nupul.
 

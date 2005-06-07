@@ -1,5 +1,4 @@
-====== Alglingid ======
+====== Siia lehele lingiga haagitud lehed ======
 
-See on nimekiri lehekülgedest mis viitavad jooksvale leheküljele.
-Märkus: CamelCase linke ei tuvastata alglinkidena.
+Nimekiri nendest lehtedest, kuskohalt Sa lingi abil siia lehele saad. 
 

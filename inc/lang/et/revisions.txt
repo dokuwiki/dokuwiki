@@ -1,4 +1,5 @@
-======Vanad revisionid======
+======eelnevad versioonid======
 
-Need on vanad revision sellest dokumendist. Vana revisioni taastamiseks, märgi see ära ja vajuta nuppe ''Redigeeri lehekülge'' ja ''Salvesta''.
+Need on käesoleva dokumendi eelnevad versioonid. Vana versiooni juurde tagasi pöördumiseks vali sobiv, 
+klõpsa ''Toimeta seda lehte'' peal ja salvesta see.
 

@@ -1,4 +1,4 @@
-Redigeeri lehekülge ja muudatuste salvestamiseks vajuta ''Salvesta''.
-Viki süntaksi kohta loe [[wiki:syntax|siit]]. Palun muuda lehekülge ainult
-siis kui Sul on midagi olulist lisada. Testimiseks kasuta [[wiki:playground|mänguala]].
+Toimeta seda lehte ja klõpsa ''Salvesta'' peal. Wikis teksti kujundamise vahenditega tutvumiseks, st. 
+kuidas teha rasvast ja kaldkirja jne., vaata [[wiki:syntax|süntaksitutvustus lehelt]]. 
+Kui Sa tahad midagi testida, saad seda teha [[wiki:playground|mängualal]].
 

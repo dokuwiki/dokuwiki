@@ -1,5 +1,6 @@
-======SPÄMM blokeeritud======
+====== SPÄMM blokeeritud ======
 
-Sinu muudatusi ei salvestatud, sest need sisaldasid ühte või rohkemat blokeeri nimekirjas olevat sõna.
-Kui tahtsid vikit spämmida siis -- häbi, häbi! Kui arvad, et tegemist on veaga, kontakteeru administraatoriga.
+Sinu muutusi kahjuks **ei** salvestatud kuna tekst sisaldab ühte või rohkem blokeeritud sõna. Kas Sa üritad 
+Wikile spämmi saata -- oh sa põrsas! Kui aga arvad, et tegemist on eksitusega, siis suhtle Wiki 
+administraatoriga.
 

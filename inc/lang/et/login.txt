@@ -1,5 +1,5 @@
 ====== Logi sisse ======
 
-Sa ei ole hetkel sisse logitud! Sisselogimiseks sisesta oma kasutajanimi ja paraool allpool.
-Küpsised peavad olema lubatud, et logimine toimiks.
-
+Hetkel pole Sa sisse logitud! Allpool saad sisestada kõik vajaliku, et sisse logida. Kui Sa oled oma 
+arvuti taga ainukasutaja oleks hea kui Su arvutil  oleks lubatud 'cookies', st. järgmine kord kui 
+siia lehele tuled oled automaatselt sisse logitud.

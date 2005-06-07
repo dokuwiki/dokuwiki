@@ -1,6 +1,6 @@
-======Otsing======
+======Otsi ======
 
-Allpool on toodud otsingu tulemused. Kui Sa ei leidnud seda mida otsid, võid luua uue otsingusse sisestatud
-võtmesõnaga lehekülje kasutades nuppu ''Redigeeri lehekülge''.
+Leiad vasted oma otsingule. Kui Sa otsitavat ei leidnud võid tekitada oma otsingu nimelise uue lehe 
+kasutades ''Toimeta seda lehte'' nuppu.
 
-=====Tulemused=====
+=====Vasted=====

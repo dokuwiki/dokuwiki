@@ -1,16 +1,16 @@
-Üks Lehekülg Sinu DokuWiki-is on muutunud või sinna lisatud.
+Sinu lehte DokuWiki-s on muudetud. Alljärgnevalt detailid:
 
-Kuupäev             : @DATE@
-Brauser             : @BROWSER@
-IP-Aadress          : @IPADDRESS@
-Hosti nimi          : @HOSTNAME@
-Vana revision       : @OLDPAGE@
-Uus revision        : @NEWPAGE@
-Muudatuste kokkuvõte: @SUMMARY@
-Kasutaja            : @USER@
+Kuupäev           : @DATE@
+Brauser           : @BROWSER@
+IP-Aadress        : @IPADDRESS@
+Arvuti nimi       : @HOSTNAME@
+Eelnev versioon   : @OLDPAGE@
+Uus versioon      : @NEWPAGE@
+Toimeta kokkuvõtet: @SUMMARY@
+Kasutaja          : @USER@
 
 @DIFF@
 
 
 -- 
-See kiri saadeti DokuWiki-st aadressilt @DOKUWIKIURL@
+Selle e-posti tekitas Sulle DokuWiki @DOKUWIKIURL@

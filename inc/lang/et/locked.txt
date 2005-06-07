@@ -1,5 +1,4 @@
-====== Lehekülg lukustatud ======
+====== Leht lukustatud ======
 
-See lehekülg on hetkel lukustatud redigeerimiseks ühe teise kasutaja poolt.
-Sa pead ootama seni kuni lehekülje lukustanud kasutaja lõpetab redigeerimise või
-lukustus aegub.
+Hetkel on see leht lukustatud kuna teine kasutaja toimetab tema kallal. Sa pead ootama kuni ta kas 
+lõpetab või lukustus aegub.

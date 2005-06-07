@@ -1,4 +1,4 @@
 ======Erinevused======
 
-Siin on näha erinevused lehekülje valitud revisioni ja jooksva versiooni vahel.
+Siin näed erinevusi valitud versiooni ja hetkel kehtiva lehekülje vahel.
 

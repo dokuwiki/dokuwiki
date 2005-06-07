@@ -1,4 +1,4 @@
-====== Indeks ======
+====== Sisukord ======
 
-See on kogu olemasolevate lehekülgede indeks järjestatud [[doku>wiki:namespaces|namespaces]] järgi.
-
+See siin on nimekiri kõigist saadaval olevatest lehtedest järjestatud
+[[doku>wiki:namespaces|alajaotuste]] järgi.

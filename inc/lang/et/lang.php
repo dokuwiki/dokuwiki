@@ -1,101 +1,125 @@
 <?
 /**
- * english language file
+ * Estonian language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Oliver S6ro <seem.iges@mail.ee>
+ * @author     Aari Juhanson <aari@vmg.vil.ee>
+ * @author     Kaiko Kaur <kaiko@kultuur.edu.ee>
  */
 $lang['encoding']   = 'utf-8';
+$lang['direction']  = 'ltr';
 
-$lang['btn_edit']   = 'Redigeeri lehekülge';
-$lang['btn_source'] = 'Näita lehe algteksti';
-$lang['btn_show']   = 'Näita lehekülge';
-$lang['btn_create'] = 'Loo see lehekülg';
+$lang['btn_edit']   = 'Toimeta seda lehte';
+$lang['btn_source'] = 'Näita lehepõhja';
+$lang['btn_show']   = 'Näita lehte';
+$lang['btn_create'] = 'Tekita selle lingi alla leht';
 $lang['btn_search'] = 'Otsi';
 $lang['btn_save']   = 'Salvesta';
 $lang['btn_preview']= 'Eelvaade';
-$lang['btn_top']    = 'Tagasi üles';
-$lang['btn_revs']   = 'Vanad revisionid';
+$lang['btn_top']    = 'Tagasi lehe algusesse';
+$lang['btn_revs']   = 'Eelmised versioonid';
 $lang['btn_recent'] = 'Viimased muudatused';
-$lang['btn_upload'] = 'Laadi üles';
-$lang['btn_cancel'] = 'Tühista';
-$lang['btn_index']  = 'Indeks';
-$lang['btn_secedit']= 'Redigeeri';
+$lang['btn_upload'] = 'Lae üles';
+$lang['btn_cancel'] = 'Katkesta';
+$lang['btn_index']  = 'Sisukord';
+$lang['btn_secedit']= 'Toimeta';
 $lang['btn_login']  = 'Logi sisse';
 $lang['btn_logout'] = 'Logi välja';
+$lang['btn_admin']  = 'Administreeri';
+$lang['btn_update'] = 'Uuenda';
+$lang['btn_delete'] = 'Kustuta';
 
-$lang['loggedinas'] = 'Logitud sisse kasutajana';
-$lang['user']       = 'Kasutajanimi';
+$lang['loggedinas'] = 'Logis sisse kui';
+$lang['user']       = 'Kasutaja';
 $lang['pass']       = 'Parool';
-$lang['remember']   = 'Jäta mind meelde';
-$lang['fullname']   = 'Täisnimi';
+$lang['remember']   = 'Pea mind meeles';
+$lang['fullname']   = 'Täielik nimi';
 $lang['email']      = 'E-post';
-$lang['register']   = 'Registreeri';
-$lang['badlogin']   = 'Aiaiai, vale kasutajanimi ja/või parool.';
+$lang['register']   = 'Registreeri uus kasutaja';
+$lang['badlogin']   = 'Oops, Sinu kasutajanimi või parool oli vale.';
 
-$lang['regmissing'] = 'Väljad peavad olema täidetud.';
-$lang['reguexists'] = 'Selline kasutaja juba eksisteerib.';
-$lang['regsuccess'] = 'Kasutaja loodud. Parool saadeti e-postiga.';
-$lang['regmailfail']= 'Paistab, et parooli saatmine e-posti teel ebõnnestus. Palun kontakteeruge administraatoriga.';
-$lang['regbadmail'] = 'Antud e-posti aadress tundub ebakorrektne - kui arvatate, et see on viga, kontakteeruge administraatoriga';
+$lang['regmissing'] = 'Kõik väljad tuleb ära täita.';
+$lang['reguexists'] = 'Tegelikult on sellise nimega kasutaja juba olemas.';
+$lang['regsuccess'] = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';
+$lang['regmailfail']= 'Ilmselt tekkis e-posti teel parooli saatmisel mingi tõrge. Palun suhtle sel teemal 
+oma serveri administraatoriga!';
+$lang['regbadmail'] = 'Tundub, et Sinu antud e-posti aadress ei toimi - kui Sa arvad, et tegemist on 
+ekstitusega, suhtle oma serveri administraatoriga';
 $lang['regpwmail']  = 'Sinu DokuWiki parool';
-$lang['reghere']    = 'Sul ei ole veel kontot? Lihtsalt registreeri end.';
+$lang['reghere']    = 'Sul ei olegi veel kasutajakontot? No aga tekita see siis endale!';
 
-$lang['txt_upload']   = 'Vali fail üleslaadimiseks';
-$lang['txt_filename'] = 'Sisesta vikinimi (valikuline)';
-$lang['lockedby']     = 'Hetkel lukustatud kasutaja poolt';
+$lang['txt_upload']   = 'Vali fail, mida üles laadida';
+$lang['txt_filename'] = 'Siseta oma Wikinimi (soovituslik)';
+$lang['lockedby']     = 'Praegu on selle lukustanud';
 $lang['lockexpire']   = 'Lukustus aegub';
-$lang['willexpire']   = 'Sinu selle lehekülje redigeerimise lukustus aegub 1 minuti pärast.\nLukustuse aegumise vältimise vajuta korra Eelvaade nuppu, mis taaskäivitab lukustuse taimeri.';
+$lang['willexpire']   = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
 
-$lang['notsavedyet'] = 'Salvestamata muudatused lähevad kaduma.\nSoovid tõesti jätkata?';
-$lang['rssfailed']   = 'Feedi fetchimisel ilmnes viga: ';
-$lang['nothingfound']= 'Ei leitud midagi.';
+$lang['notsavedyet'] = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.\nKas Sa ikka tahad edasi liikuda?'; 
+$lang['rssfailed']   = 'Sinu soovitud info ammutamisel tekkis viga: ';
+$lang['nothingfound']= 'Oops, aga mitte muhvigi ei leitud.';
 
-$lang['mediaselect'] = 'Meediafaili valik';
-$lang['fileupload']  = 'Meediafaili üleslaadimine';
-$lang['uploadsucc']  = 'Üleslaadimine õnnestus';
-$lang['uploadfail']  = 'Üleslaadimine ebaõnnestus. Võibolla valed õiguste seadistused?';
-$lang['uploadwrong'] = 'Sellise laiendiga failide üleslaadimine on keelatud';
-$lang['namespaces']  = 'Namespaces';
-$lang['mediafiles']  = 'Olemasolevaid failid';
+$lang['mediaselect'] = 'Hunnik faile';
+$lang['fileupload']  = 'Faili üleslaadimine';
+$lang['uploadsucc']  = 'Üleslaadimine läks ootuspäraselt hästi';
+$lang['uploadfail']  = 'Üleslaadimine läks nässu. Äkki pole Sa selleks lihtsalt piisavalt võimukas tegija?'; 
+$lang['uploadwrong'] = 'Ei saa Sa midagi üles laadida. Oops, aga seda tüüpi faili sul lihtsalt ei lubata üles laadida';
+$lang['namespaces']  = 'Alajaotus';
+$lang['mediafiles']  = 'Failid on Sulle kättesaadavad';
 
-$lang['hits']       = 'Tabamusi';
-$lang['quickhits']  = 'Sobivad leheküljenimed';
-$lang['toc']        = 'Sisukord';
-$lang['current']    = 'jooksev';
+$lang['hits']       = 'Päringu tabamused';
+$lang['quickhits']  = 'Päringule vastavad lehed';
+$lang['toc']        = 'Sisujuht';
+$lang['current']    = 'Hetkel kehtiv';
 $lang['yours']      = 'Sinu versioon';
-$lang['diff']       = 'näita erinevusi jooksvast versioonist';
-$lang['line']       = 'Rida';
-$lang['breadcrumb'] = 'Jälg';
-$lang['lastmod']    = 'Viimati muudetud';
-$lang['by']         = 'by';
-$lang['deleted']    = 'kustutatud';
-$lang['created']    = 'loodud';
-$lang['restored']   = 'vana revision taastatud';
-$lang['summary']    = 'Muudatuste kokkuvõte';
+$lang['diff']       = 'Näita erinevusi hetkel kehtiva versiooniga';
+$lang['line']       = 'Joon';
+$lang['breadcrumb'] = 'Käidud rada';
+$lang['lastmod']    = 'Viimati muutnud';
+$lang['by']         = 'persoon';
+$lang['deleted']    = 'eemaldatud';
+$lang['created']    = 'tekitatud';
+$lang['restored']   = 'vana versioon taastatud';
+$lang['summary']    = 'kokkuvõte muudatustest';
 
-$lang['mail_newpage'] = '[DokuWiki] lehekülg lisatud:';
-$lang['mail_changed'] = '[DokuWiki] lehekülg muudetud:';
+$lang['mail_newpage'] = '[DokuWiki] leht lisatud:';
+$lang['mail_changed'] = '[DokuWiki] leht muudetud';
 
-$lang['nosmblinks'] = 'Lingid Windowsi võrgudraividele töötavaid ainult Internet Exploreris.\nKuid saad teha siis lõika&kleebi';
+$lang['nosmblinks'] = 'Windowsis võrguarvutiga ühendamine toimib ainult Internet Exploreris ja 
+sisevõrgus.\nAga Sa saad õnneks omale lingi kopeerida ja hiljem kuhugi kleepida.';
 
-$lang['qb_alert']   = 'Palun sisesta tekst mida soovid vormindada.\nVormindatud tekst lisatakse dokumendi lõppu.';
+$lang['qb_alert']   = 'Sisesta palun tekst, mida Sa tahad kujundada.\nSee lisatakse dokumendi lõppu..'; 
 $lang['qb_bold']    = 'Rasvane kiri';
 $lang['qb_italic']  = 'Kaldkiri';
-$lang['qb_underl']  = 'Alljoonitud kiri';
-$lang['qb_code']    = 'Kood';
-$lang['qb_h1']      = '1 taseme pealkiri';
-$lang['qb_h2']      = '2 taseme pealkiri';
-$lang['qb_h3']      = '3 taseme pealkiri';
-$lang['qb_h4']      = '4 taseme pealkiri';
-$lang['qb_h5']      = '5 taseme pealkiri';
-$lang['qb_link']    = 'Sisemine link';
-$lang['qb_extlink'] = 'Välimine link';
-$lang['qb_hr']      = 'Vertikaalne reegel';
-$lang['qb_ol']      = 'Järjestatud nimekirja kanne';
-$lang['qb_ul']      = 'Järjestamata nimekirja kanne';
-$lang['qb_media']   = 'Lisa pildid ja muud failid';
-$lang['qb_sig']     = 'Lisa allkiri';
+$lang['qb_underl']  = 'Alajoonega kiri';
+$lang['qb_code']    = 'Koodi tekst';
+$lang['qb_h1']      = '1. astme pealkiri';
+$lang['qb_h2']      = '2. astme pealkiri';
+$lang['qb_h3']      = '3. astme pealkiri';
+$lang['qb_h4']      = '4. astme pealkiri';
+$lang['qb_h5']      = '5. astme pealkiri';
+$lang['qb_link']    = 'Siselink';
+$lang['qb_extlink'] = 'Välislink';
+$lang['qb_hr']      = 'Horisontaalne vahejoon';
+$lang['qb_ol']      = 'Nummerdatud nimikiri';
+$lang['qb_ul']      = 'Mummuga nimekiri';
+$lang['qb_media']   = 'Lisa pilte ja muid faile';
+$lang['qb_sig']     = 'Lisa allkiri!';
+
+$lang['acl_group']  = 'Grupp';
+$lang['acl_user']   = 'Kasutaja';
+$lang['acl_perms']  = 'Lubatud';
+$lang['page']       = 'leht';
+$lang['namespace']  = 'alajaotus';
+
+$lang['acl_perm1']  = 'Lugemine';
+$lang['acl_perm2']  = 'Toimetamine';
+$lang['acl_perm4']  = 'Tekitamine';
+$lang['acl_perm8']  = 'Üles laadimine';
+$lang['acl_new']    = 'Uue kirje lisamine';
+
+$lang['del_confirm']= 'Kas kustutame selle kirje?';
+
+$lang['admin_acl']  = 'Ligipääsukontrolli nimekirja haldamine...';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>

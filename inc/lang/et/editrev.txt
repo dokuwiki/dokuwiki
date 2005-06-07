@@ -1,2 +1,4 @@
-**Laadisid vana revisioni sellest dokumendist!** Kui salvestad selle, luuakse uus versioon selle revision andmetega.
+**Sa oled omale tõmmanud selle dokumendi vana versiooni!** Kui Sa selle salvestad sünnib nende 
+andmetega uus versioon.
 ----
+

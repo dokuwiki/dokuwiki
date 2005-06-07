@@ -1,0 +1,11 @@
+====== Ligipääsukontrolli nimekirja haldamine ======
+
+Sellel lehel saad lisada ja eemaldada käesolevale lehele ja
+selle kõigile [[doku>wiki:namespaces|alajaotustele]] mõeldud õigusi. 
+Aga kõigepealt peaksid Sa ikka läbi lugema [[doku>wiki:acl|ACL-i puudutava ametliku info]],
+et pihta saada kuidas ligipääsu kontrollimine toimib.
+
+See leht näitab kõiki õigusi, mis on käesoleva lehe jaoks määrava tähtsusega.
+Teisi lehti puudutavaid õigusi siin ei näe -- selleks et neid toimetada
+[[this>doku.php?do=index|otsi kõigepealt üles]] vastav leht ja siis asu ACL adminstreerimise kallale.
+
