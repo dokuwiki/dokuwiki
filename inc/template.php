@@ -135,6 +135,7 @@ function tpl_metaheaders(){
   global $INFO;
   global $ACT;
   global $lang;
+  global $conf;
   $it=2;
 
   // the usual stuff
@@ -178,6 +179,12 @@ function tpl_metaheaders(){
        DOKU_BASE.'lib/scripts/tw-sack.js"></script>',$it);
   ptln('<script language="JavaScript" type="text/javascript" src="'.
        DOKU_BASE.'lib/scripts/ajax.js"></script>',$it);
+
+  // load spellchecker script if wanted
+  if($conf['spellchecker'] && ($ACT=='edit' || $ACT=='preview')){
+    ptln('<script language="JavaScript" type="text/javascript" src="'.
+       DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it);
+  }
 
   //FIXME include some default CSS ? IE FIX?
 }

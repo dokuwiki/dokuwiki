@@ -20,7 +20,7 @@ require_once(DOKU_INC.'inc/auth.php');
 //call the requested function
 $call = 'ajax_'.$_POST['call'];
 if(function_exists($call)){
-	$call();
+  $call();
 }else{
   print "The called function does not exist!";
 }
@@ -34,20 +34,21 @@ function ajax_qsearch(){
   global $conf;
   global $lang;
 
-	$query = cleanID($_POST['q']);
-	if(empty($query)) return;
+  $query = cleanID($_POST['q']);
+  if(empty($query)) return;
 
-	$nsdir = str_replace(':','/',getNS($query));
-	require_once(DOKU_INC.'inc/search.php');
-	require_once(DOKU_INC.'inc/html.php');
+  $nsdir = str_replace(':','/',getNS($query));
+  require_once(DOKU_INC.'inc/search.php');
+  require_once(DOKU_INC.'inc/html.php');
 
   $data = array();
   search($data,$conf['datadir'],'search_qsearch',array(query => $query),$nsdir);
 
-	if(!count($data)) return;
+  if(!count($data)) return;
 
-	print '<b>'.$lang['quickhits'].'</b>';
+  print '<b>'.$lang['quickhits'].'</b>';
   print html_buildlist($data,'qsearch','html_list_index');
 }
 
+//Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

@@ -739,7 +739,7 @@ function filesize_h($size, $dec = 1){
 }
 
 /**
- * Run a few sanity checks
+ * Return DokuWikis version
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */

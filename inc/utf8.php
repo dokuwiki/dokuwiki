@@ -105,7 +105,7 @@ function utf8_check($Str) {
  * @see    utf8_decode()
  */
 function utf8_strlen($string){
-  return strlen(utf8_decode($str));
+  return strlen(utf8_decode($string));
 }
 
 /**
@@ -124,6 +124,20 @@ function utf8_substr($str,$start,$length=null){
        return join("",array_slice($ar[0],$start));
    }
 } 
+
+/**
+ * Unicode aware replacement for substr_replace()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    substr_replace()
+ */
+function utf8_substr_replace($string, $replacement, $start , $length=0 ){
+  $ret = '';
+  if($start>0) $ret .= utf8_substr($string, 0, $start);
+  $ret .= $replacement;
+  $ret .= utf8_substr($string, $start+$length);
+  return $ret;
+}
 
 /**
  * Unicode aware replacement for explode

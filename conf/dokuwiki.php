@@ -69,6 +69,7 @@ $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults t
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
+$conf['spellchecker']= 0;                //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
@@ -85,4 +86,3 @@ $conf['ftp']['user'] = 'user';
 $conf['ftp']['pass'] = 'password';
 $conf['ftp']['root'] = '/home/user/htdocs';
 
-?>

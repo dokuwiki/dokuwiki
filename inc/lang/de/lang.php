@@ -130,4 +130,10 @@ $lang['acl_perm8']  = 'Hochladen';
 $lang['acl_perm16'] = 'Entfernen';
 $lang['acl_new']    = 'Eintrag hinzufügen';
 
+$lang['spell_start']= 'Rechtschreibung prüfen';
+$lang['spell_stop'] = 'Bearbeiten fortsetzen';
+$lang['spell_wait'] = 'Bitte warten...';
+$lang['spell_noerr']= 'Keine Fehler gefunden';
+$lang['spell_nosug']= 'Keine Vorschläge';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

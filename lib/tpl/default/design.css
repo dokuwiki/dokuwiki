@@ -640,3 +640,47 @@ div.ajax_qsearch {
   opacity: 0.9;
   display:none;
 }
+
+/* ---------- Spellchecking ------------- */
+
+a.spell_error {
+  color: #ff0000;
+  text-decoration: underline;
+}
+
+div#spell_suggest {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  background-color: #fff;
+  padding: 2px;
+  border: 1px solid #000;
+  font-size:80%;
+}
+
+div#spell_result {
+  display:none;
+  font-family:monospace;
+  border: 1px solid #8cacbb; 
+  color: Black;
+  font-size:14px;
+  padding: 3px;
+  background-color: #f7f9fa;
+  overflow: auto;
+
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+span.spell_noerr {
+  color: #009933;
+}
+
+span.spell_wait {
+  color: #0066cc;
+}
+

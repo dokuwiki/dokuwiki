@@ -833,6 +833,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     $ro='readonly="readonly"';
   }
   if(!$DATE) $DATE = $INFO['lastmod'];
+
+  
 ?>
   <form name="editform" method="post" action="<?=script()?>" accept-charset="<?=$lang['encoding']?>" onsubmit="return svchk()">
   <input type="hidden" name="id"   value="<?=$ID?>" />
@@ -842,7 +844,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   <input type="hidden" name="suffix" value="<?=formText($SUF)?>" />
   <table style="width:99%">
     <tr>
-      <td class="toolbar" colspan="3">
+      <td class="toolbar" colspan="2">
         <?if($wr){?>
         <script language="JavaScript" type="text/javascript">
           <?/* sets changed to true when previewed */?>
@@ -852,7 +854,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           formatButton('italic.png','<?=$lang['qb_italic']?>',"\/\/","\/\/",'<?=$lang['qb_italic']?>','i');
           formatButton('underline.png','<?=$lang['qb_underl']?>','__','__','<?=$lang['qb_underl']?>','u');
           formatButton('code.png','<?=$lang['qb_code']?>','\'\'','\'\'','<?=$lang['qb_code']?>','c');
-          formatButton('strike.png','<?=$lang['qb_strike']?>','<del>','</del>','<?=$lang['qb_strike']?>','d');
+          formatButton('strike.png','<?=$lang['qb_strike']?>','<del>','<\/del>','<?=$lang['qb_strike']?>','d');
 
           formatButton('fonth1.png','<?=$lang['qb_h1']?>','====== ',' ======\n','<?=$lang['qb_h1']?>','1');
           formatButton('fonth2.png','<?=$lang['qb_h2']?>','===== ',' =====\n','<?=$lang['qb_h2']?>','2');
@@ -877,13 +879,20 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
         </script>
         <?}?>
       </td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        <textarea name="wikitext" id="wikitext" <?=$ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?="\n".formText($text)?></textarea>
+      <td>
+<!--        <span class="action" id="action"><a class="check_spelling" onClick="setObjToCheck('wikitext'); spellCheck();">Check Spelling</a></span>
+        <span class="status" id="status"></span> -->
+        <div id="spell_action"></div>
+        <div id="spell_suggest"></div>
       </td>
     </tr>
     <tr>
+      <td colspan="3">
+        <div id="spell_result"></div>
+        <textarea name="wikitext" id="wikitext" <?=$ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?="\n".formText($text)?></textarea>
+      </td>
+    </tr>
+    <tr id="wikieditbar">
       <td>
       <?if($wr){?>
         <input class="button" type="submit" name="do" value="<?=$lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="3" />
@@ -902,6 +911,10 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           showSizeCtl();
           <?if($wr){?>
             init_locktimer(<?=$conf['locktime']-60?>,'<?=$lang['willexpire']?>');
+
+            //initialize spellchecker
+            ajax_spell.init('<?=$lang['spell_start']?>','<?=$lang['spell_stop']?>','<?=$lang['spell_wait']?>','<?=$lang['spell_noerr']?>','<?=$lang['spell_nosug']?>');
+
             document.editform.wikitext.focus();
           <?}?>
         </script>
