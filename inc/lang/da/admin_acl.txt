@@ -1,0 +1,13 @@
+====== Rettigheds Administration ======
+
+I dette dokument kan du tilføje og fjerne rettigheder for det
+nuværende dokument, samt alle de [[doku>wiki:namespaces|navnerumen]]
+dokumentet er en del af. Før du går igang bør du læse den officiale
+[[doku>wiki:acl|ACL dokumentation]], for fuldt at forstå hvordan
+rettighedskontrollen virker.
+
+Herunder vises alle rettigheder der har betydning for det nuværende
+dokument. Rettigheder for andre dokumenter vises ikke her. For at
+ændre rettigheder for andre dokumenter, skal du først
+[[this>doku.php?do=index|finde frem]] til det pågældene dokument,
+hvorefter du kan ændre rettighederne her.
