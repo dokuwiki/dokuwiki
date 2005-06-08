@@ -12,6 +12,9 @@
   require_once(DOKU_INC.'inc/pageutils.php');
   require_once(DOKU_INC.'inc/confutils.php');
   require_once(DOKU_INC.'inc/auth.php');
+  //close sesseion
+  session_write_close();
+
   $mimetypes = getMimeTypes();
 
 	//get input

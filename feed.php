@@ -13,12 +13,15 @@
   require_once(DOKU_INC.'inc/feedcreator.class.php');
   require_once(DOKU_INC.'inc/auth.php');
 
-  //set auth header for login
+  //set auth header for login FIXME: is this used anymore???
   if($_REQUEST['login'] && !isset($_SERVER['PHP_AUTH_USER'])){
     header('WWW-Authenticate: Basic realm="'.$conf['title'].'"');
     header('HTTP/1.0 401 Unauthorized');
     auth_logoff();
   }
+
+  //close sesseion
+  session_write_close();
 
 
   $num   = $_REQUEST['num'];

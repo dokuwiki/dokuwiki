@@ -119,6 +119,10 @@ function msg($message,$lvl=0){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function breadcrumbs(){
+  // we prepare the breadcrumbs early for quick session closing
+  static $crumbs = null;
+  if($crumbs != null) return $crumbs;
+
   global $ID;
   global $ACT;
   global $conf;

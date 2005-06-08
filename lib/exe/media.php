@@ -8,6 +8,8 @@
   require_once(DOKU_INC.'inc/search.php');
   require_once(DOKU_INC.'inc/template.php');
   require_once(DOKU_INC.'inc/auth.php');
+  //close sesseion
+  session_write_close();
 
   header('Content-Type: text/html; charset='.$lang['encoding']);
 

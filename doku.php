@@ -18,7 +18,6 @@
 
   //import variables
   $QUERY = trim($_REQUEST['id']);
-#  $ID    = cleanID($_REQUEST['id']);
   $ID    = getID();
   $REV   = $_REQUEST['rev'];
   $ACT   = $_REQUEST['do'];
@@ -54,6 +53,13 @@
   //make infos about the selected page available
   $INFO = pageinfo();
 
+  //prepare breadcrumbs (initialize a static var)
+  breadcrumbs();
+
+  //close session
+  session_write_close();
+
+  //do the work
   act_dispatch($ACT);
 
   //restore old umask

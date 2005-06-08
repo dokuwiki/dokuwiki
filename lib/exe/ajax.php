@@ -16,6 +16,8 @@ require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/auth.php');
+//close sesseion
+session_write_close();
 
 header('Content-Type: text/html; charset=utf-8');
 
