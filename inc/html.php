@@ -913,7 +913,9 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
             init_locktimer(<?=$conf['locktime']-60?>,'<?=$lang['willexpire']?>');
 
             //initialize spellchecker
-            ajax_spell.init('<?=$lang['spell_start']?>','<?=$lang['spell_stop']?>','<?=$lang['spell_wait']?>','<?=$lang['spell_noerr']?>','<?=$lang['spell_nosug']?>');
+            <?if($conf['spellchecker']){?>
+              ajax_spell.init('<?=$lang['spell_start']?>','<?=$lang['spell_stop']?>','<?=$lang['spell_wait']?>','<?=$lang['spell_noerr']?>','<?=$lang['spell_nosug']?>');
+            <?}?>
 
             document.editform.wikitext.focus();
           <?}?>
