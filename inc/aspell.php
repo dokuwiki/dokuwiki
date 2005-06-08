@@ -165,7 +165,7 @@ class Aspell{
         );
 
         $process = proc_open(ASPELL_BIN.' -a'.$this->args, $descspec, $pipes);
-        if (is_resource($process)) {
+        if ($process) {
             //write to stdin
             fwrite($pipes[0],$text);
             fclose($pipes[0]);
@@ -184,13 +184,13 @@ class Aspell{
 
             if(proc_close($process) != 0){
                 //something went wrong
-                trigger_error("aspell returned an error: $err", E_USER_WARNING);
-                return null;
+                $err = "Aspell returned an error: $err";
+                return false;
             }
             return true;
         }
         //opening failed
-        trigger_error("Could not run aspell '".ASPELL_BIN."'", E_USER_WARNING);
+        $err = "Could not run Aspell '".ASPELL_BIN."'";
         return false;
     }
 

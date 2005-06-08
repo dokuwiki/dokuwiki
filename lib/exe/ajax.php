@@ -17,12 +17,15 @@ require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/auth.php');
 
+header('Content-Type: text/html; charset=utf-8');
+
+
 //call the requested function
 $call = 'ajax_'.$_POST['call'];
 if(function_exists($call)){
   $call();
 }else{
-  print "The called function does not exist!";
+  print "The called function '".htmlspecialchars($call)."' does not exist!";
 }
 
 /**

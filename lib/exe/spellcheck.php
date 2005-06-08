@@ -51,6 +51,8 @@ require_once (DOKU_INC.'inc/init.php');
 require_once (DOKU_INC.'inc/utf8.php');
 require_once (DOKU_INC.'inc/aspell.php');
 
+header('Content-Type: text/html; charset=utf-8');
+
 //create spell object
 $spell = new Aspell($conf['lang'],'null','utf-8');
 $spell->setMode(PSPELL_FAST);
@@ -84,7 +86,12 @@ function spell_check() {
 //  $string = preg_replace('!()!e','spellclean(\\1)',$string);
 
   // run aspell in terse sgml mode
-  $spell->runAspell("!\n+sgml\n".$string,$out,$err);
+  if(!$spell->runAspell("!\n+sgml\n".$string,$out,$err)){
+    print '2'; //to indicate an error
+    print "An error occured while trying to run the spellchecker:\n";
+    print $err;
+    return;
+  }
 
   // go through the result
   $lines = split("\n",$out);
