@@ -116,7 +116,13 @@ function act_permcheck($act){
 
   if(in_array($act,array('save','preview','edit'))){
     if($INFO['exists']){
-      $permneed = AUTH_EDIT;
+      if($act == 'edit'){
+        //the edit function will check again and do a source show
+        //when no AUTH_EDIT available
+        $permneed = AUTH_READ;
+      }else{
+        $permneed = AUTH_EDIT;
+      }
     }else{
       $permneed = AUTH_CREATE;
     }
