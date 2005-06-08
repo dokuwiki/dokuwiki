@@ -44,6 +44,7 @@ $lang['badlogin']   = 'Sorry: de gebruikersnaam of het wachtwoord klopt niet.';
 $lang['regmissing'] = 'Sorry: je moet alle velden invullen.';
 $lang['reguexists'] = 'Sorry: er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess'] = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';
+$lang['regsuccess2']= 'De gebruiker is aangemaakt.';
 $lang['regmailfail']= 'Het lijkt erop dat het sturen van de wachtwoordmail mislukt is. Neem a.u.b. contact op met de beheerder!';
 $lang['regbadmail'] = 'Het opgegeven e-mailadres lijkt ongeldig - als je denkt dat dit niet klopt neem dan contact op met de beheerder.';
 $lang['regpwmail']  = 'Je DokuWiki wachtwoord';
@@ -51,6 +52,7 @@ $lang['reghere']    = 'Je hebt nog geen account? Vraag er eentje aan';
 
 $lang['txt_upload']   = 'Selecteer een bestand om te uploaden';
 $lang['txt_filename'] = 'Vul wiki-naam in (optioneel)';
+$lang['txt_overwrt']  = 'Overschrijf bestaand bestand';
 $lang['lockedby']     = 'Momenteel in gebruik door';
 $lang['lockexpire']   = 'Exclusief gebruiksrecht vervalt op';
 $lang['willexpire']   = 'Je exclusieve gebruiksrecht voor het aanpassen van deze pagina verloopt over een minuut.\nOm problemen te voorkomen klik op de Voorbeeld knop om de exclusieve gebruiksrechten te verlengen.';
@@ -64,6 +66,7 @@ $lang['fileupload']  = 'Bestand upload';
 $lang['uploadsucc']  = 'Upload geslaagd';
 $lang['uploadfail']  = 'Upload mislukt. Misschien verkeerde permissies?';
 $lang['uploadwrong'] = 'Upload mislukt. Deze file-extensie is verboden';
+$lang['uploadexist'] = 'Bestand bestaat reeds. Er is niets gewijzigd.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Beschikbare bestanden in';
 
@@ -105,9 +108,10 @@ $lang['qb_ul']      = 'Ongeordende lijst item';
 $lang['qb_media']   = 'Voeg plaatjes en andere bestanden toe';
 $lang['qb_sig']     = 'Handtekening invoegen';
 
-$lang['del_confirm']= 'Deze regel verwijderen?';
+$lang['del_confirm']= 'Dit item verwijderen?';
  
 $lang['admin_acl']  = 'Toegangsrechten...';
+$lang['admin_register']= 'Nieuwe gebruiker toevoegen...';
  
 $lang['acl_group']  = 'Groep';
 $lang['acl_user']   = 'Gebruiker';
@@ -119,6 +123,13 @@ $lang['acl_perm1']  = 'Lezen';
 $lang['acl_perm2']  = 'Bewerken';
 $lang['acl_perm4']  = 'Aanmaken';
 $lang['acl_perm8']  = 'Upload';
+$lang['acl_perm16'] = 'Verwijder';
 $lang['acl_new']    = 'Nieuwe regel toevoegen';
+
+$lang['spell_start']= 'Controleer spelling';
+$lang['spell_stop'] = 'Doorgaan met aanpassen';
+$lang['spell_wait'] = 'Even wachten a.u.b...';
+$lang['spell_noerr']= 'Geen fouten gevonden';
+$lang['spell_nosug']= 'Geen suggesties';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
