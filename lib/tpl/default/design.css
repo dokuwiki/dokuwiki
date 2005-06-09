@@ -657,6 +657,7 @@ div#spell_suggest {
   padding: 2px;
   border: 1px solid #000;
   font-size:80%;
+  z-index: 2;
 }
 
 div#spell_result {
@@ -668,6 +669,7 @@ div#spell_result {
   padding: 3px;
   background-color: #f7f9fa;
   overflow: auto;
+  z-index: 1;
 
   white-space: pre-wrap;       /* css-3 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
