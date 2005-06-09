@@ -48,13 +48,14 @@ if(!count($_POST) && $HTTP_RAW_POST_DATA){
 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 require_once (DOKU_INC.'inc/init.php');
+session_write_close();
 require_once (DOKU_INC.'inc/utf8.php');
 require_once (DOKU_INC.'inc/aspell.php');
 
-header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/plain; charset=utf-8');
 
 //create spell object
-$spell = new Aspell($conf['lang'],'null','utf-8');
+$spell = new Aspell($conf['lang'],null,'utf-8');
 $spell->setMode(PSPELL_FAST);
 
 //call the requested function
@@ -78,15 +79,15 @@ function spell_check() {
   // we need the text as array later
   $data = explode("\n",$string);
 
-  //prepare for aspell (add ^ to prevent commands)
-  $string = '^'.join("\n^",$data);
 
-  // keep some words from being checked (use blanks to preserve the offset) FIXME doesn't work yet
+  // keep some words from being checked (use blanks to preserve the offset)
+  // FIXME doesn't work yet... however with the used html mode of aspell this isn't really needed
 /*  $string = preg_replace('!<\?(code|del|file)( \+)?>!e','spellclean(\\1)',$string); */
 //  $string = preg_replace('!()!e','spellclean(\\1)',$string);
 
   // run aspell in terse sgml mode
-  if(!$spell->runAspell("!\n+sgml\n".$string,$out,$err)){
+  if(!$spell->runAspell($string,$out,$err,array('!','+html'))){
+  //if(!$spell->runAspell($string,$out,$err)){
     print '2'; //to indicate an error
     print "An error occured while trying to run the spellchecker:\n";
     print $err;
@@ -97,6 +98,7 @@ function spell_check() {
   $lines = split("\n",$out);
   $rcnt  = count($lines)-1;    // aspell result count
   $lcnt  = count($data)+1;     // original line counter
+
 
   for($i=$rcnt; $i>=0; $i--){
     $line = trim($lines[$i]);

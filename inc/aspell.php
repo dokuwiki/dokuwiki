@@ -27,10 +27,13 @@
 if(!defined('ASPELL_BIN')) define('ASPELL_BIN','aspell');
 
 
+// different spelling modes supported by aspell
 if(!defined('PSPELL_FAST'))         define(PSPELL_FAST,1);         # Fast mode (least number of suggestions)
 if(!defined('PSPELL_NORMAL'))       define(PSPELL_NORMAL,2);       # Normal mode (more suggestions)
 if(!defined('PSPELL_BAD_SPELLERS')) define(PSPELL_BAD_SPELLERS,3); # Slow mode (a lot of suggestions)
 if(!defined('ASPELL_ULTRA'))        define(ASPELL_ULTRA,4);        # Ultra fast mode (not available in Pspell!)
+
+
 
 /**
  * You can define PSPELL_COMP to use this class as drop in replacement
@@ -111,17 +114,17 @@ class Aspell{
     function _prepareArgs(){
         $this->args = '';
 
-        if($this->language){
+        if($this->language != null){
             $this->args .= ' --lang='.escapeshellarg($this->language);
         }else{
             return false; // no lang no spell
         }
 
-        if($this->jargon){
+        if($this->jargon != null){
             $this->args .= ' --jargon='.escapeshellarg($this->jargon);
         }
 
-        if($this->encoding){
+        if($this->encoding != null){
             $this->args .= ' --encoding='.escapeshellarg($this->encoding);
         }
 
@@ -148,15 +151,14 @@ class Aspell{
      * This opens a bidirectional pipe to the aspell binary, writes
      * the given text to STDIN and returns STDOUT and STDERR
      *
-     * You have full access to aspell's pipe mode here - this means you need
-     * quote your lines yourself read the aspell manual for more info
+     * You can give an array of special commands to be executed first
+     * as $specials parameter. Data lines are escaped automatically
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      * @link     http://aspell.sf.net/man-html/Through-A-Pipe.html
      */
-    function runAspell($text,&$out,&$err){
+    function runAspell($text,&$out,&$err,$specials=null){
         if(empty($text)) return true;
-
         //prepare file descriptors
         $descspec = array(
                0 => array('pipe', 'r'),  // stdin is a pipe that the child will read from
@@ -166,22 +168,37 @@ class Aspell{
 
         $process = proc_open(ASPELL_BIN.' -a'.$this->args, $descspec, $pipes);
         if ($process) {
-            //write to stdin
-            fwrite($pipes[0],$text);
+            // write specials if given
+            if(is_array($specials)){
+                foreach($specials as $s) fwrite($pipes[0],"$s\n");
+            }
+
+            // write line and read answer
+            $data = explode("\n",$text);
+            foreach($data as $line){
+                fwrite($pipes[0],"^$line\n"); // aspell uses ^ to escape the line
+                fflush($pipes[0]);
+                do{
+                    $r = fgets($pipes[1],8192);
+                    $out .= $r;
+                    if(feof($pipes[1])) break;
+                }while($r != "\n");
+            }
             fclose($pipes[0]);
 
-            //read stdout
+            // read remaining stdout (shouldn't be any)
             while (!feof($pipes[1])) {
                 $out .= fread($pipes[1], 8192);
             }
             fclose($pipes[1]);
 
-            //read stderr
+            // read stderr
             while (!feof($pipes[2])) {
                 $err .= fread($pipes[2], 8192);
             }
             fclose($pipes[2]);
 
+            // close process
             if(proc_close($process) != 0){
                 //something went wrong
                 $err = "Aspell returned an error: $err";
