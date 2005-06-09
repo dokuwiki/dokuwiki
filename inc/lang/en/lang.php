@@ -129,10 +129,11 @@ $lang['acl_perm8']  = 'Upload';
 $lang['acl_perm16'] = 'Delete';
 $lang['acl_new']    = 'Add new Entry';
 
-$lang['spell_start']= 'Check Spelling';
-$lang['spell_stop'] = 'Resume Editing';
-$lang['spell_wait'] = 'Please wait...';
-$lang['spell_noerr']= 'No Mistakes found';
-$lang['spell_nosug']= 'No Suggestions';
+$lang['spell_start'] = 'Check Spelling';
+$lang['spell_stop']  = 'Resume Editing';
+$lang['spell_wait']  = 'Please wait...';
+$lang['spell_noerr'] = 'No Mistakes found';
+$lang['spell_nosug'] = 'No Suggestions';
+$lang['spell_change']= 'Change';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
