@@ -164,7 +164,8 @@ function spell_formatword($word,$suggestions=null){
 function spell_resume(){
   $text = $_POST['data'];
 
-  $text = preg_replace("/(\r\n|\n|\r)/", "", $text);
+  //some browsers insert newlines instead of spaces
+  $text = preg_replace("/(\r\n|\n|\r)/", ' ', $text);
   $text = preg_replace("=<br */?>=i", "\n", $text);
 
   // remove HTML tags
