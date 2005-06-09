@@ -122,7 +122,14 @@ $lang['acl_perm1']  = 'Læs';
 $lang['acl_perm2']  = 'Skriv';
 $lang['acl_perm4']  = 'Opret';
 $lang['acl_perm8']  = 'Upload';
+$lang['acl_perm16'] = 'Slet';
 $lang['acl_new']    = 'Tilføj ny post';
+
+$lang['spell_start']= 'Stavekontrol';
+$lang['spell_stop'] = 'Forsæt redigering';
+$lang['spell_wait'] = 'Vent et øjeblik...';
+$lang['spell_noerr']= 'Der blev ikke fundet nogle fejl';
+$lang['spell_nosug']= 'Ingen forslag fundet';
 
 $lang['tpl_btn_insert']   = 'Indsæt';
 $lang['tpl_txt']          = 'Vælg skabelon';
