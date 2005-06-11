@@ -104,12 +104,13 @@ function spell_check() {
     $line = trim($lines[$i]);
     if($line[0] == '@') continue; // comment
     if($line[0] == '*') continue; // no mistake in this word
+    if($line[0] == '+') continue; // root of word was found
     if(empty($line)){
       // empty line -> new source line
       $lcnt--;
       continue;
     }
-    if(preg_match('/^& ([^ ]+) (\d+) (\d+): (.*)/',$line,$match)){
+    if(preg_match('/^[&\?] ([^ ]+) (\d+) (\d+): (.*)/',$line,$match)){
       // match with suggestions
       $word = $match[1];
       $off  = $match[3]-1;
@@ -131,6 +132,11 @@ function spell_check() {
       $data[$lcnt] = utf8_substr_replace($data[$lcnt], spell_formatword($word) , $off, $len);
       continue;
     }
+    //still here - couldn't parse output
+    print '2';
+    print "The spellchecker output couldn't be parsed.\n";
+    print "Line $i:".$line;
+    return;
   }
 
   // the first char returns the spell info
@@ -140,7 +146,10 @@ function spell_check() {
     $string = '0'.join('<br />',$data);
   }
 
-  //output
+  // encode multibyte chars as entities for broken Konqueror
+  $string = utf8_tohtml($string);
+
+  //output 
   print $string;
 }
 
@@ -151,6 +160,11 @@ function spell_formatword($word,$suggestions=null){
     //restrict to maximum of 7 elements
     $suggestions = array_slice($suggestions,0,7);
     $suggestions = array_map('htmlspecialchars',$suggestions);
+
+    //konqueror's broken UTF-8 handling needs this
+    $suggestions = array_map('utf8_tohtml',$suggestions);
+    $suggestions = array_map('urlencode',$suggestions);
+
     $suggestions = array_map('addslashes',$suggestions);
     $sug = ",'".join("','",$suggestions)."'"; //build javascript args
   }else{
@@ -175,6 +189,12 @@ function spell_resume(){
 
   // restore quoted special chars
   $text = unhtmlspecialchars($text);
+
+  // but protect '&' (gets removed in JS later)
+  $text = str_replace('&','&amp;',$text);
+  // encode multibyte chars as entities for broken Konqueror
+  $text = utf8_tohtml($text);
+
 
   // output
   print $text;

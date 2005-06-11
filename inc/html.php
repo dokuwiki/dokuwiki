@@ -277,7 +277,7 @@ function html_search(){
 
   //show progressbar
   print '<div align="center">';
-  print '<script language="JavaScript" type="text/javascript">';
+  print '<script language="javascript" type="text/javascript" charset="utf-8">';
   print 'showLoadBar();';
   print '</script>';
   print '<br /></div>';
@@ -317,7 +317,7 @@ function html_search(){
   }
 
   //hide progressbar
-  print '<script language="JavaScript" type="text/javascript">';
+  print '<script language="javascript" type="text/javascript" charset="utf-8">';
   print 'hideLoadBar();';
   print '</script>';
 }
@@ -846,7 +846,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     <tr>
       <td class="toolbar" colspan="2">
         <?if($wr){?>
-        <script language="JavaScript" type="text/javascript">
+        <script language="javascript" type="text/javascript" charset="utf-8">
           <?/* sets changed to true when previewed */?>
           textChanged = <? ($pr) ? print 'true' : print 'false' ?>;
           
@@ -907,7 +907,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <?}?>
       </td>
       <td align="right">
-        <script type="text/javascript">
+        <script language="javascript" type="text/javascript" charset="utf-8">
           showSizeCtl();
           <?if($wr){?>
             init_locktimer(<?=$conf['locktime']-60?>,'<?=$lang['willexpire']?>');

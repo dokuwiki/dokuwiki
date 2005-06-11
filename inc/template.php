@@ -166,23 +166,23 @@ function tpl_metaheaders(){
   }
 
   // include some JavaScript language strings
-  ptln('<script language="JavaScript" type="text/javascript">',$it);
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
   ptln("  var alertText   = '".$lang['qb_alert']."'",$it);
   ptln("  var notSavedYet = '".$lang['notsavedyet']."'",$it);
   ptln("  var DOKU_BASE   = '".DOKU_BASE."'",$it);
   ptln('</script>',$it);
  
   // load the default JavaScript files
-  ptln('<script language="JavaScript" type="text/javascript" src="'.
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/script.js"></script>',$it);
-  ptln('<script language="JavaScript" type="text/javascript" src="'.
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/tw-sack.js"></script>',$it);
-  ptln('<script language="JavaScript" type="text/javascript" src="'.
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/ajax.js"></script>',$it);
 
   // load spellchecker script if wanted
   if($conf['spellchecker'] && ($ACT=='edit' || $ACT=='preview')){
-    ptln('<script language="JavaScript" type="text/javascript" src="'.
+    ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it);
   }
 
