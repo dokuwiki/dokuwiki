@@ -1,7 +1,7 @@
-====== Pesquisa ======
+﻿====== Pesquisa ======
 
 Você pode encontrar os resultados da sua pesquisa mais abaixo.
 
-Se não encontrou o que procurava, pode criar um novo documento com o nome da pergunta usando a opção ''Editar''.
+Se não encontrou o que procurava, pode criar uma nova entrada com o nome da pergunta usando a opção ''Editar''.
 
 ===== Resultados =====

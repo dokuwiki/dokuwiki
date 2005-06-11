@@ -1,8 +1,8 @@
-====== Conflito de Edição ======
+﻿====== Conflito de Edição ======
 
-**Atenção**: Existe uma versão mais recente do que a versão usada no começo da sua edição.
-Isto acontece quando outra pessoa editou este documento enquanto você o esteve editando.
+**Atenção**: existe uma versão mais recente do que a versão usada no começo da sua edição.
+Isto acontece quando outra pessoa editou esta entrada enquanto você a esteve editando.
 
-Por favor, examine todas as diferenças mostradas abaixo com atenção, e decida qual a versão que deverá ser mantida. Se escolher ''Salvar'', sua versão será será gravada. Escolha ''Cancelar'' para manter a versão atual.
+Por favor, examine todas as diferenças mostradas abaixo com atenção, e decida qual a versão que deverá ser mantida. Se escolher ''Salvar'', sua versão será gravada. Escolha ''Cancelar'' para manter a versão atual.
 
 ----

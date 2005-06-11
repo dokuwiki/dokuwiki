@@ -1,8 +1,8 @@
-====== Pré-visualização ======
+﻿====== Pré-visualização ======
 
-Esta é a previsão de como irá ficar o conteúdo do documento.
+Esta é a previsão de como irá ficar o conteúdo da entrada.
 
-**Atenção**: O documento ainda não está gravado.\\
+**Atenção**: A entrada ainda não está gravada.\\
 É necessário clicar em ''Salvar'' para efetivar as modificações.
 
 ----

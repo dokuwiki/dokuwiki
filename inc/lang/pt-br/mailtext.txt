@@ -1,4 +1,4 @@
-Um documento no site Wiki @DOKUWIKIURL@ foi criado ou modificado.
+﻿Uma entrada no site Wiki @DOKUWIKIURL@ foi criada ou modificada.
 
 Aqui estão os detalhes:
 

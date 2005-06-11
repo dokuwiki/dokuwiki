@@ -1,8 +1,8 @@
-Edite o documento e clique em ''Salvar''.\\
+﻿Edite a entrada e clique em ''Salvar''.\\
 Reveja a [[wiki:syntax | sintaxe]] das regras de formatação do texto.
 
 Por favor, altere o conteúdo deste documento apenas quando puder **melhorá-lo**.\\
-Se pretende testar algumas coisas, realize os seus testes na [[wiki:playground | playground]].
+Se pretende testar alguma coisa, realize os seus testes no [[wiki:playground | playground]].
 
 ----
 
