@@ -196,10 +196,9 @@ function spell_formatword($word,$suggestions=null){
 
     //konqueror's broken UTF-8 handling needs this
     $suggestions = array_map('utf8_tohtml',$suggestions);
-    $suggestions = array_map('urlencode',$suggestions);
-
     $suggestions = array_map('addslashes',$suggestions);
-    $sug = ",'".join("','",$suggestions)."'"; //build javascript args
+
+    $sug = ",'".join("','",$suggestions)."'"; // build javascript args
   }else{
     $sug = '';
   }
