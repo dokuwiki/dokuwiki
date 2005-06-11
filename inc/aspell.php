@@ -145,6 +145,7 @@ class Aspell{
         return true;
     }
 
+
     /**
      * Pipes a text to aspell
      *
@@ -178,14 +179,35 @@ class Aspell{
             foreach($data as $line){
                 fwrite($pipes[0],"^$line\n"); // aspell uses ^ to escape the line
                 fflush($pipes[0]);
-                $line = '';
                 do{
-                    $r = fread($pipes[1],1);
-                    $line .= $r;
+                    $r = fgets($pipes[1],8192);
+                    
+                    // Aspell returns lines with preceding '?' like ispell do
+                    // but this lines are badly corrupted. We had to correct
+                    // those lines here due to not to break our result parser.
+                    if($r[0] == '?'){
+                        $pos = strpos($r, "&");
+                        if ($pos === false){
+                           // Is this the last spelling error in the source line,
+                           // then the result line is not terminated with a newline.
+                           // We add one here. The pipe is empty so we prepare
+                           // to leave the loop.
+                           $out .= $r."\n";
+                           $r = "\n";  // trick to exit the loop
+                        }else{
+                           // If another word in the source line is misspelled,
+                           // the result line is directly joined to the '?'
+                           // line. We divide them here and add the missing
+                           // newlines. After that we continue to read the pipe.
+                           $out .= str_replace("&", "\n&", $r);
+                           $r = "x";   // trick to loop again for sure
+                        }
+                    }else{
+                      $out .= $r;
+                    }
+
                     if(feof($pipes[1])) break;
-                    if($r == "\n") break;
-                }while($line != "\n");
-                $out .= $line;
+                }while($r != "\n");
             }
             fclose($pipes[0]);
 
