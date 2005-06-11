@@ -178,11 +178,14 @@ class Aspell{
             foreach($data as $line){
                 fwrite($pipes[0],"^$line\n"); // aspell uses ^ to escape the line
                 fflush($pipes[0]);
+                $line = '';
                 do{
-                    $r = fgets($pipes[1],8192);
-                    $out .= $r;
+                    $r = fread($pipes[1],1);
+                    $line .= $r;
                     if(feof($pipes[1])) break;
-                }while($r != "\n");
+                    if($r == "\n") break;
+                }while($line != "\n");
+                $out .= $line;
             }
             fclose($pipes[0]);
 

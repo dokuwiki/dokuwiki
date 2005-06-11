@@ -66,7 +66,18 @@ if(function_exists($call)){
   print "The called function does not exist!";
 }
 
-
+/**
+ * Spellchecker. Called by an AJAX request
+ *
+ * Runs the given Text through Aspell and prints XHTML with
+ * markup. The first char represents the error code:
+ *
+ * 0 - No spelling mistakes
+ * 1 - Spelling mistakes found
+ * 2 - An error occured error message follows
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function spell_check() {
   global $spell;
   $string = $_POST['data'];
@@ -105,39 +116,56 @@ function spell_check() {
     if($line[0] == '@') continue; // comment
     if($line[0] == '*') continue; // no mistake in this word
     if($line[0] == '+') continue; // root of word was found
+    if($line[0] == '?') continue; // word was guessed
     if(empty($line)){
       // empty line -> new source line
       $lcnt--;
       continue;
     }
-    if(preg_match('/^[&\?] ([^ ]+) (\d+) (\d+): (.*)/',$line,$match)){
+    // now get the misspelled words
+    if(preg_match('/^& ([^ ]+) (\d+) (\d+): (.*)/',$line,$match)){
       // match with suggestions
       $word = $match[1];
       $off  = $match[3]-1;
       $sug  = split(', ',$match[4]);
-      $len  = utf8_strlen($word);
-      $misspell = true;
-
-
-      $data[$lcnt] = utf8_substr_replace($data[$lcnt], spell_formatword($word,$sug) , $off, $len);
-      continue;
-    }
-    if(preg_match('/^# ([^ ]+) (\d+)/',$line,$match)){
+    }elseif(preg_match('/^# ([^ ]+) (\d+)/',$line,$match)){
       // match without suggestions
       $word = $match[1];
       $off  = $match[2]-1;
-      $len  = utf8_strlen($word);
-      $misspell = true;
-
-      $data[$lcnt] = utf8_substr_replace($data[$lcnt], spell_formatword($word) , $off, $len);
-      continue;
+      $sug  = null;
+    }else{
+      // couldn't parse output
+      print '2';
+      print "The spellchecker output couldn't be parsed.\n";
+      print "Line $i:".$line;
+      return;
     }
-    //still here - couldn't parse output
-    print '2';
-    print "The spellchecker output couldn't be parsed.\n";
-    print "Line $i:".$line;
-    return;
-  }
+
+
+    $misspell = true;
+    $len  = utf8_strlen($word);
+
+    // try to insert markup
+    // Aspell sometimes returns too few blank lines, the following loop
+    // tries to compensate by skipping to next line if Aspell's output
+    // doesn't match - we're skipping maximal 2 lines before giving up and
+    // throwing an error
+    for($x=0; $x<3; $x++){
+      $lcnt -= $x;
+      if(utf8_substr($data[$lcnt],$off,$len) == $word){
+        $data[$lcnt] = utf8_substr_replace($data[$lcnt],
+                                           spell_formatword($word,$sug),
+                                           $off, $len);
+        break;
+      }elseif($x == 2){
+        print '2';
+        print "The spellchecker output doesn't match the input data.\n";
+        print "Offending word: '$word' offset: $off, line $i";
+        return;
+      }
+    }
+
+  }//end of output parsing
 
   // the first char returns the spell info
   if($misspell){
@@ -153,6 +181,11 @@ function spell_check() {
   print $string;
 }
 
+/**
+ * Formats a word with needed markup for the Suggestion Popup
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function spell_formatword($word,$suggestions=null){
   static $i = 1;
 
@@ -177,6 +210,11 @@ function spell_formatword($word,$suggestions=null){
   return $link;
 }
 
+/**
+ * Rewrite markuped XHTML back to plain Text. AJAX callback
+ *
+ * @author Andreas Gohr <andi@splitbrain.org> 
+ */
 function spell_resume(){
   $text = $_POST['data'];
 
@@ -198,14 +236,6 @@ function spell_resume(){
 
   // output
   print $text;
-}
-
-function spell_suggest(){
-  $id   = $_POST['id'];
-  $word = $_POST['word'];
-
-
-  print $id."\n".$word;
 }
 
 /**
