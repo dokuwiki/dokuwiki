@@ -897,14 +897,7 @@ class Doku_Parser_Mode_windowssharelink extends Doku_Parser_Mode {
     var $pattern;
     
     function preConnect() {
-        
-        $ltrs = '\w';
-        $gunk = '/\#~:.?+=&%@!\-';
-        $punc = '.:?\-;,';
-        $host = $ltrs.$punc;
-        $any  = $ltrs.$gunk.$punc;
-
-        $this->pattern = "[$gunk$punc\s]\\\\\\\\[$host]+?\\\\[$any]+?(?=['.$punc.']*[^'.$any.'])";
+        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w$]+)+";
     }
     
     function connectTo($mode) {
