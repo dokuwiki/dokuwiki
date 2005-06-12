@@ -141,29 +141,9 @@ function spell_check() {
       return;
     }
 
-
     $misspell = true;
     $len  = utf8_strlen($word);
-
-    // try to insert markup
-    // Aspell sometimes returns too few blank lines, the following loop
-    // tries to compensate by skipping to next line if Aspell's output
-    // doesn't match - we're skipping maximal 2 lines before giving up and
-    // throwing an error
-    for($x=0; $x<3; $x++){
-      $lcnt -= $x;
-      if(utf8_substr($data[$lcnt],$off,$len) == $word){
-        $data[$lcnt] = utf8_substr_replace($data[$lcnt],
-                                           spell_formatword($word,$sug),
-                                           $off, $len);
-        break;
-      }elseif($x == 2){
-        print '2';
-        print "The spellchecker output doesn't match the input data.\n";
-        print "Offending word: '$word' offset: $off, line $i";
-        return;
-      }
-    }
+    $data[$lcnt] = utf8_substr_replace($data[$lcnt],spell_formatword($word,$sug),$off, $len);
 
   }//end of output parsing
 

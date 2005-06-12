@@ -168,54 +168,44 @@ class Aspell{
         );
 
         $process = proc_open(ASPELL_BIN.' -a'.$this->args, $descspec, $pipes);
+        $terse   = 1;   // terse mode active
         if ($process) {
             // write specials if given
             if(is_array($specials)){
-                foreach($specials as $s) fwrite($pipes[0],"$s\n");
+                foreach($specials as $s){
+                    if ($s == '!') $terse = 0;
+                    fwrite($pipes[0],"$s\n");
+                }
             }
 
-            // write line and read answer
-            $data = explode("\n",$text);
-            foreach($data as $line){
-                fwrite($pipes[0],"^$line\n"); // aspell uses ^ to escape the line
-                fflush($pipes[0]);
-                do{
-                    $r = fgets($pipes[1],8192);
-                    
-                    // Aspell returns lines with preceding '?' like ispell do
-                    // but this lines are badly corrupted. We had to correct
-                    // those lines here due to not to break our result parser.
-                    if($r[0] == '?'){
-                        $pos = strpos($r, "&");
-                        if ($pos === false){
-                           // Is this the last spelling error in the source line,
-                           // then the result line is not terminated with a newline.
-                           // We add one here. The pipe is empty so we prepare
-                           // to leave the loop.
-                           $out .= $r."\n";
-                           $r = "\n";  // trick to exit the loop
-                        }else{
-                           // If another word in the source line is misspelled,
-                           // the result line is directly joined to the '?'
-                           // line. We divide them here and add the missing
-                           // newlines. After that we continue to read the pipe.
-                           $out .= str_replace("&", "\n&", $r);
-                           $r = "x";   // trick to loop again for sure
-                        }
-                    }else{
-                      $out .= $r;
-                    }
-
-                    if(feof($pipes[1])) break;
-                }while($r != "\n");
-            }
+            // prepare text for Aspell and handle it over
+            $string = "^".str_replace("\n", "\n^",$text)."^\n";
+            fwrite($pipes[0],$string);  // send text to Aspell
             fclose($pipes[0]);
-
-            // read remaining stdout (shouldn't be any)
+            
+            // read Aspells response from stdin
             while (!feof($pipes[1])) {
                 $out .= fread($pipes[1], 8192);
             }
             fclose($pipes[1]);
+
+            // Aspell has a bug that can't be autodetected because both versions
+            // might produce the same output but under different conditions. So
+            // we check Aspells version number here to divide broken and working
+            // versions of Aspell.
+            $tmp = array();
+            preg_match('/^\@.*Aspell (\d+)\.(\d+).(\d+)/',$out,$tmp);
+            $version = $tmp[1]*1000 + $tmp[2]*10 + $tmp[3];
+            
+            if ($version <= 603)  // version 0.60.3
+                $r = $terse ? "\n*\n\$1" : "\n\$1"; // replacement for broken Aspell
+            else
+                $r = $terse ? "\n*\n" : "\n";    // replacement for good Aspell
+
+            // lines starting with a '?' are no realy misspelled words and some
+            // Aspell versions doesn't produce usable output anyway so we filter
+            // them out here.
+            $out = preg_replace('/\n\? [^\n\&\*]*([\n]?)/',$r, $out);
 
             // read stderr
             while (!feof($pipes[2])) {
