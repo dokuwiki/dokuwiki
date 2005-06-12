@@ -55,10 +55,12 @@ function auth_mysql_runsql($sql_string) {
 /**
  * Check user+password [required auth function]
  *
- * Checks if the given user exists and the given
- * plaintext password is correct. Furtheron it
- * might be checked wether the user is member of
- * the right group
+ * Checks if the given user exists and the given plaintext password
+ * is correct. Furtheron it might be checked wether the user is
+ * member of the right group
+ *
+ * Depending on which SQL string is defined in the config, password
+ * checking is done here (getpass) or by the database (passcheck)
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -68,15 +70,26 @@ function auth_checkPass($user,$pass){
   global $conf;
   $cnf = $conf['auth']['mysql'];
 
-  $sql    = str_replace('%u',addslashes($user),$cnf['passcheck']);
-  $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
-  $result = auth_mysql_runsql($sql);
+  if($cnf['getpass']){
+    // we check the pass ourself against the crypted one
+    $sql    = str_replace('%u',addslashes($user),$cnf['getpass']);
+    $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
+    $result = auth_mysql_runsql($sql);
   
-  if(count($result)){
-    return(auth_verifyPassword($pass,$result[0]['pass']));
+    if(count($result)){
+      return(auth_verifyPassword($pass,$result[0]['pass']));
+    }
   }else{
-    return(false);
+    // we leave pass checking to the database
+    $sql    = str_replace('%u',addslashes($user),$cnf['passcheck']);
+    $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
+    $sql    = str_replace('%p',addslashes($pass,$sql));
+
+    if(count($result) == 1){
+      return true;
+    }
   }
+  return false;
 }
 
 /**
