@@ -877,12 +877,10 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           }
           ?>
         </script>
+        <span id="spell_action"></span>
         <?}?>
       </td>
       <td>
-<!--        <span class="action" id="action"><a class="check_spelling" onClick="setObjToCheck('wikitext'); spellCheck();">Check Spelling</a></span>
-        <span class="status" id="status"></span> -->
-        <div id="spell_action"></div>
         <div id="spell_suggest"></div>
       </td>
     </tr>
