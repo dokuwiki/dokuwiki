@@ -67,6 +67,21 @@ if(function_exists($call)){
 }
 
 /**
+ * replaces a link with blanks of same length
+ * The first string is the complete link and
+ * and the second optional string might be the
+ * alternative text that would become part of
+ * the result string and will be checked for
+ * spelling errors again.
+ *
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ */
+function spaceslink($string, $check=""){
+  $result = str_pad($check,utf8_strlen($string)-2," ",STR_PAD_LEFT);
+  return $result."  ";
+}
+
+/**
  * Spellchecker. Called by an AJAX request
  *
  * Runs the given Text through Aspell and prints XHTML with
@@ -96,6 +111,10 @@ function spell_check() {
 /*  $string = preg_replace('!<\?(code|del|file)( \+)?>!e','spellclean(\\1)',$string); */
 //  $string = preg_replace('!()!e','spellclean(\\1)',$string);
 
+  // don't check links and medialinks for spelling errors
+  $string = preg_replace('/\{\{[^\|]*\|?(.*)\}\}/e','spaceslink("\\0","\\1")',$string);
+  $string = preg_replace('/\[\[[^\|]*\|?(.*)\]\]/e','spaceslink("\\0","\\1")',$string);
+  
   // run aspell in terse sgml mode
   if(!$spell->runAspell($string,$out,$err,array('!','+html'))){
   //if(!$spell->runAspell($string,$out,$err)){
