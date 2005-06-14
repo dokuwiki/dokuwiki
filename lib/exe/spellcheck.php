@@ -105,12 +105,6 @@ function spell_check() {
   // we need the text as array later
   $data = explode("\n",$string);
 
-
-  // keep some words from being checked (use blanks to preserve the offset)
-  // FIXME doesn't work yet... however with the used html mode of aspell this isn't really needed
-/*  $string = preg_replace('!<\?(code|del|file)( \+)?>!e','spellclean(\\1)',$string); */
-//  $string = preg_replace('!()!e','spellclean(\\1)',$string);
-
   // don't check links and medialinks for spelling errors
   $string = preg_replace('/\{\{[^\|]*\|?(.*)\}\}/e','spaceslink("\\0","\\1")',$string);
   $string = preg_replace('/\[\[[^\|]*\|?(.*)\]\]/e','spaceslink("\\0","\\1")',$string);
@@ -173,8 +167,10 @@ function spell_check() {
     $string = '0'.join('<br />',$data);
   }
 
-  // encode multibyte chars as entities for broken Konqueror
-  $string = utf8_tohtml($string);
+  if(!$_POST['utf8']){
+    // encode multibyte chars as entities for broken Konqueror
+    $string = utf8_tohtml($string);
+  }
 
   //output 
   print $string;
@@ -193,8 +189,11 @@ function spell_formatword($word,$suggestions=null){
     $suggestions = array_slice($suggestions,0,7);
     $suggestions = array_map('htmlspecialchars',$suggestions);
 
-    //konqueror's broken UTF-8 handling needs this
-    $suggestions = array_map('utf8_tohtml',$suggestions);
+    if(!$_POST['utf8']){
+      //konqueror's broken UTF-8 handling needs this
+      $suggestions = array_map('utf8_tohtml',$suggestions);
+    }
+
     $suggestions = array_map('addslashes',$suggestions);
 
     $sug = ",'".join("','",$suggestions)."'"; // build javascript args
@@ -226,14 +225,23 @@ function spell_resume(){
   // restore quoted special chars
   $text = unhtmlspecialchars($text);
 
-  // but protect '&' (gets removed in JS later)
-  $text = str_replace('&','&amp;',$text);
-  // encode multibyte chars as entities for broken Konqueror
-  $text = utf8_tohtml($text);
-
+  // check if UTF-8 is accepted
+  if(!$_POST['utf8']){
+    // protect '&' (gets removed in JS later)
+    $text = str_replace('&','&amp;',$text);
+    // encode multibyte chars as entities for broken Konqueror
+    $text = utf8_tohtml($text);
+  }
 
   // output
   print $text;
+}
+
+/**
+ * Just send data back as received for UTF-8 testing
+ */
+function spell_utf8test(){
+  print $_POST['data'];
 }
 
 /**
