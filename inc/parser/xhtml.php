@@ -566,7 +566,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             //if ico exists set additional style
             if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$wikiName.'.png')){
                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$wikiName.'.png)';
-            }elseif(@file_exists(DOKU_INC.'interwiki/'.$wikiName.'.gif')){
+            }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$wikiName.'.gif')){
                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$wikiName.'.gif)';
             }
         }
