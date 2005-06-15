@@ -157,7 +157,7 @@ function html_secedit($text,$show=true){
 }
 
 /**
- * Just the back to top button (in it's own form)
+ * Just the back to top button (in its own form)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
