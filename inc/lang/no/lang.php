@@ -124,4 +124,11 @@ $lang['acl_perm4']  = 'Lage';
 $lang['acl_perm8']  = 'Laste Opp';
 $lang['acl_new']    = 'Legg til Oppføring';
 
+$lang['spell_start'] = 'Sjekk stavelse';
+$lang['spell_stop']  = 'Tilbake til redigering';
+$lang['spell_wait']  = 'Vennligst vent..';
+$lang['spell_noerr'] = 'Ingen feil funnet';
+$lang['spell_nosug'] = 'Ingen forslag';
+$lang['spell_change']= 'Endre';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
