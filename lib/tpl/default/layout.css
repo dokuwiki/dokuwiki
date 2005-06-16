@@ -107,3 +107,27 @@ div.uploadform {
   padding: 0.5em;
   width:65%;
 }
+
+div.mediaref_head {
+	margin-left:0.5em;
+}
+
+div.mediaref .search_result {
+	padding-left:1em;
+}
+
+.mediaref_ref {
+	color:#009900;
+}
+
+div.mediaref_hidden {
+	margin-top:1em;
+	text-align:center;
+	font-size:1.2em;
+	color:#BB0000;
+}
+
+div.mediaref_footer {
+	margin-top:1em;
+	text-align:center;
+}

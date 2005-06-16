@@ -37,6 +37,7 @@ $conf['camelcase']   = 0;                 //Use CamelCase for linking? (I don't 
 $conf['deaccent']    = 1;                 //convert accented chars to unaccented ones in pagenames?
 $conf['useheading']  = 0;                 //use the first heading in a page as its name
 $conf['refcheck']    = 1;                 //check references before deleting media files
+$conf['refshow']     = 0;                 //show where media files are still used
 $conf['refcount']    = 5;                 //search only no of references to satisfy the refcheck
 
 /* Antispam Features */

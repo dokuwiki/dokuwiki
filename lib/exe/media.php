@@ -41,9 +41,8 @@
 	}
     if(!count($mediareferences)){
       media_delete($DEL);
-    }else{
-      $text = str_replace('%s',noNS($DEL),$lang['mediainuse']);
-      msg($text,0);
+    }elseif(!$conf['refshow']){
+      msg(str_replace('%s',noNS($DEL),$lang['mediainuse']),0);
     }
   }
 
@@ -54,8 +53,12 @@
 
   //start output and load template
   header('Content-Type: text/html; charset=utf-8');
-  include(DOKU_INC.'lib/tpl/'.$conf['template'].'/media.php');
-
+  if($conf['refshow'] && count($mediareferences)){
+    include(DOKU_INC.'lib/tpl/'.$conf['template'].'/mediaref.php');
+  }else{
+    include(DOKU_INC.'lib/tpl/'.$conf['template'].'/media.php');
+  }
+  
   //restore old umask
   umask($conf['oldumask']);
 
@@ -75,8 +78,7 @@ function media_delete($delid){
     return true;
   }
   //something went wrong
-  $text = str_replace('%s',$file,$lang['deletefail']);
-  msg($text,-1);
+  msg(str_replace('%s',$file,$lang['deletefail']),-1);
   return false;
 }
 

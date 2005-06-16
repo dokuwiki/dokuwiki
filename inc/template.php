@@ -247,17 +247,20 @@ function tpl_getparent($ID){
  *  edit    - edit/create/show button
  *  history - old revisions
  *  recent  - recent changes
- *  login   - login/logout button - if ACL enabled
- *  index   - The index
- *  admin   - admin page - if enough rights
- *  top     - a back to top button
- *  back    - a back to parent button - if available
+ *  login    - login/logout button - if ACL enabled
+ *  index     - The index
+ *  admin      - admin page - if enough rights
+ *  top         - a back to top button
+ *  back        - a back to parent button - if available
+ *  backtomedia - returns to the mediafile upload dialog
+ *                after references have been displayed
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 function tpl_button($type){
   global $ID;
+  global $NS;
   global $INFO;
   global $conf;
 
@@ -294,6 +297,9 @@ function tpl_button($type){
     case 'admin':
       if($INFO['perm'] == AUTH_ADMIN)
         print html_btn(admin,$ID,'',array('do' => 'admin'));
+      break;
+    case 'backtomedia':
+      print html_backtomedia_button(array('ns' => $NS),'b');
       break;
 		default:
 			print '[unknown button type]';
@@ -589,7 +595,6 @@ function tpl_mediafilelist(){
       $del = '';
     }
 
-
     if($item['isimg']){
       $w = $item['info'][0];
       $h = $item['info'][1];
@@ -612,6 +617,36 @@ function tpl_mediafilelist(){
     ptln('</li>',4);
   }
   ptln('</ul>',2);
+}
+
+/**
+ * show references to a media file
+ * References uses the same visual as search results and share
+ * their CSS tags except pagenames won't be links.
+ *
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ */
+function tpl_showreferences(&$data){
+  global $lang;
+
+  $hidden=0; //count of hits without read permission
+  
+  if(count($data)){
+    usort($data,'sort_search_fulltext');
+    foreach($data as $row){
+      if(auth_quickaclcheck($row['id']) >= AUTH_READ){
+        print '<div class="search_result">';
+        print '<span class="mediaref_ref">'.$row['id'].'</span>';
+        print ': <span class="search_cnt">'.$row['count'].' '.$lang['hits'].'</span><br />';
+        print '<div class="search_snippet">'.$row['snippet'].'</div>';
+        print '</div>';
+      }else
+        $hidden++;
+    }
+    if ($hidden){
+      print '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
+    }
+  }
 }
 
 /**

@@ -31,6 +31,7 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Update';
 $lang['btn_delete'] = 'Delete';
 $lang['btn_back']   = 'Back';
+$lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -74,6 +75,10 @@ $lang['deletefail']  = '"%s" couldn\'t be deleted - check perission.';
 $lang['mediainuse']  = 'The file "%s" hasn\'t been deleted - it is still in use.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
+
+$lang['reference']   = 'References for';
+$lang['ref_inuse']   = 'The file can\'t be deleted, because it\'s still used by the following pages:';
+$lang['ref_hidden']  = 'Some references  are on pages you don\'t have permission to read';
 
 $lang['hits']       = 'Hits';
 $lang['quickhits']  = 'Matching pagenames';

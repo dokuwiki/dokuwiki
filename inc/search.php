@@ -355,7 +355,7 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
   //'false' will skip subdirectories to speed search up.
   if(count($data) >= $conf['refcount']) return false;
   
-  $reg = '{{ *'.$opts['query'].' *(\|.*)?}}';
+  $reg = '\{\{ *\:?'.$opts['query'].' *(\|.*)?\}\}';
   search_regex($data,$base,$file,$reg,array($opts['query']));
   return true;
 }

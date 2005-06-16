@@ -32,6 +32,7 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Updaten';
 $lang['btn_delete'] = 'Löschen';
 $lang['btn_back']   = 'Zurück';
+$lang['btn_backtomedia'] = 'Zurück zur Dateiauswahl';
 
 $lang['loggedinas'] = 'Angemeldet als';
 $lang['user']       = 'Benutzername';
@@ -76,6 +77,10 @@ $lang['deletefail']  = '"%s" konnte nicht gelöscht werden - prüfen Sie die Ber
 $lang['mediainuse']  = 'Die Datei "%s" wurde nicht gelöscht - sie wird noch verwendet.';
 $lang['namespaces']  = 'Namensräume';
 $lang['mediafiles']  = 'Vorhandene Dateien in';
+
+$lang['reference']   = 'Verwendung von';
+$lang['ref_inuse']   = 'Diese Datei kann nicht gelöscht werden, da sie noch von folgenden Seiten benutzt wird:';
+$lang['ref_hidden']  = 'Einige Verweise sind auf Seiten für die Sie keine Leseberechtigung haben.';
 
 $lang['hits']       = 'Treffer';
 $lang['quickhits']  = 'Passende Seitennamen';
