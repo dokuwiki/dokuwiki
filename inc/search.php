@@ -216,15 +216,16 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
   if(!preg_match('#\.txt$#',$file)) return true;
 
   //simple stringmatching 
-  if(strpos($file,$opts['query']) !== false){
-    //check ACL
-    $id = pathID($file);
-    if(auth_quickaclcheck($id) < AUTH_READ){
-      return false;
-    } 
-    $data[]['id'] = $id;
+  if (!empty($opts['query'])){
+    if(strpos($file,$opts['query']) !== false){
+      //check ACL
+      $id = pathID($file);
+      if(auth_quickaclcheck($id) < AUTH_READ){
+        return false;
+      } 
+      $data[]['id'] = $id;
+    }
   }
-
   return true;
 }
 
@@ -302,10 +303,14 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   foreach($qpreg as $word){
     switch(substr($word,0,1)){
       case '-':
-        array_push($negwords,preg_quote(substr($word,1),'#'));
+        if(strlen($word) > 1){  // catch single '-'
+          array_push($negwords,preg_quote(substr($word,1),'#'));
+        }
         break;
       case '+':
-        array_push($poswords,preg_quote(substr($word,1),'#'));
+        if(strlen($word) > 1){  // catch single '+'
+          array_push($poswords,preg_quote(substr($word,1),'#'));
+        }
         break;
       default:
         array_push($poswords,preg_quote($word,'#'));
