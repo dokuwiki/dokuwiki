@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * german language file
  *

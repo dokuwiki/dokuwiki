@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Swedish language file
  *

@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * vietnamese language file
  *

@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Estonian language file
  *

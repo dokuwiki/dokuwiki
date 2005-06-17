@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * french language file
  *

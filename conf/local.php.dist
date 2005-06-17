@@ -1,4 +1,4 @@
-<?
+<?php
 /*
   This is an example of how a local.php coul look like.
   Simply copy the options you want to change from dokuwiki.php

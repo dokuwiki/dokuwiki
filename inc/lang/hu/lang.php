@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Hungarian language file
  *

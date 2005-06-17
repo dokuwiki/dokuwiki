@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Portuguese language file
  *

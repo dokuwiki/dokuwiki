@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * polish language file 
  * based on english one

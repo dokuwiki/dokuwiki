@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * italian language file
  *

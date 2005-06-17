@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * korean language file
  *

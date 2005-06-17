@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Hebrew language file
  *

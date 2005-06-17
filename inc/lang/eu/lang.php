@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Basque language file
  *

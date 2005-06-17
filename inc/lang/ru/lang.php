@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Russian language file
  *

@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * romanian language file
  *

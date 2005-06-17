@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Chinese(Simplified) language file
  *

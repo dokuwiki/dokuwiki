@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * This is DokuWiki's Main Configuration file
  * This is a piece of PHP code so PHP syntax applies!
