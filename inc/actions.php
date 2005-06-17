@@ -185,12 +185,18 @@ function act_save($act){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_auth($act){
+  global $ID;
+  
   //already logged in?
   if($_SERVER['REMOTE_USER'] && $act=='login')
     return 'show';
 
   //handle logout
   if($act=='logout'){
+    $lockedby = checklock($ID); //page still locked?
+    if($lockedby == $_SERVER['REMOTER_USER'])
+      unlock($ID); //try to unlock 
+      
     auth_logoff();
     return 'login';
   }
