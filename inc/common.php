@@ -692,6 +692,7 @@ function getRevisions($id){
  */
 function getGoogleQuery(){
   $url = parse_url($_SERVER['HTTP_REFERER']);
+  if(!$url) return '';
 
   if(!preg_match("#google\.#i",$url['host'])) return '';
   $query = array();
