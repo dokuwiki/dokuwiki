@@ -75,8 +75,8 @@ $lang['created']    = '새로 만듬';
 $lang['restored']   = '옛날 버전 복구';
 $lang['summary']    = '요약 편집';
 
-$lang['mail_newpage'] = '[DokuWiki] 페이지 추가:';
-$lang['mail_changed'] = '[DokuWiki] 페이지 변경:';
+$lang['mail_newpage'] = '페이지 추가:';
+$lang['mail_changed'] = '페이지 변경:';
 
 $lang['nosmblinks'] = '윈도우 공유파일과의 연결을 MS 익스플로러에서만 작동합니다.\n그렇지만 링크를 복사 붙여넣기할 수 있습니다.';
 

@@ -84,8 +84,8 @@ $lang['created']    = 'oprettet';
 $lang['restored']   = 'gammel udgave reetableret';
 $lang['summary']    = 'Redigerings resume';
 
-$lang['mail_newpage'] = '[DokuWiki] dokument tilføjet:';
-$lang['mail_changed'] = '[DokuWiki] dokument ændret:';
+$lang['mail_newpage'] = 'dokument tilføjet:';
+$lang['mail_changed'] = 'dokument ændret:';
 
 $lang['nosmblinks'] = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.\nDu kan stadig kopiere og indsætte linket.';
 

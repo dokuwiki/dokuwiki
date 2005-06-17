@@ -655,6 +655,7 @@ function notify($id,$rev="",$summary=""){
     $diff = rawWiki($id);
   }
   $text = str_replace('@DIFF@',$diff,$text);
+  $subject = '['.$conf['title'].'] '.$subject;
 
   mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
 }

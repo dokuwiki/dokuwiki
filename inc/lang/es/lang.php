@@ -58,8 +58,8 @@ $lang['by']         = 'por';
 $lang['deleted']    = 'borrado';
 $lang['created']    = 'creado';
 
-$lang['mail_newpage'] = '[DokuWiki] página añadida:';
-$lang['mail_changed'] = '[DokuWiki] página cambiada:';
+$lang['mail_newpage'] = 'página añadida:';
+$lang['mail_changed'] = 'página cambiada:';
 
 $lang['qb_bold']    = 'Texto Negrita';
 $lang['qb_italic']  = 'Texto Itálica';

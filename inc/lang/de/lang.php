@@ -89,8 +89,8 @@ $lang['created']    = 'angelegt';
 $lang['restored']   = 'alte Version wieder hergestellt';
 $lang['summary']    = 'Zusammenfassung';
 
-$lang['mail_newpage'] = '[DokuWiki] Neue Seite:';
-$lang['mail_changed'] = '[DokuWiki] Seite geaendert:';
+$lang['mail_newpage'] = 'Neue Seite:';
+$lang['mail_changed'] = 'Seite geaendert:';
 
 $lang['nosmblinks'] = 'Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 

@@ -77,8 +77,8 @@ $lang['created']    = 'נוצר';
 $lang['restored']   = 'שוחזר';
 $lang['summary']    = 'עריכת תקציר';
 
-$lang['mail_newpage'] = 'דף [DokuWiki[ נוסף:';
-$lang['mail_changed'] = 'דף [DokuWiki[ שונה:';
+$lang['mail_newpage'] = 'דף נוסף:';
+$lang['mail_changed'] = 'דף שונה:';
 
 $lang['nosmblinks'] = 'קישור למערכת קבצים של חלונות פועל רק בדפדפן אינטרנט אקספלורר.\n זה בסדר, אין צורך לעבור. אפשר להעתיק ולהדביק את הקישור';
 

@@ -78,8 +78,8 @@ $lang['created']    = 'được tạo ra';
 $lang['restored']   = 'phiên bản cũ đã được khôi phục';
 $lang['summary']    = 'Tóm tắt biên soạn';
 
-$lang['mail_newpage'] = 'Trang DokuWiki được thêm:';
-$lang['mail_changed'] = 'Trang DokuWiki thay đổi:';
+$lang['mail_newpage'] = 'Trang được thêm:';
+$lang['mail_changed'] = 'Trang thay đổi:';
 
 $lang['nosmblinks'] = 'Nối với các Windows shares chỉ có hiệu lực với Microsoft Internet Explorer.\nBạn vẫn có thể sao và chép các mốc nối.';
 

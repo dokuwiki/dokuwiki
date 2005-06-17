@@ -62,8 +62,8 @@ $lang['created']    = 'sortua';
 $lang['restored']   = 'berrikuspen zaharra berrezarria';
 $lang['summary']    = 'Edit summary';
 
-$lang['mail_newpage'] = '[DokuWiki] gehitutako orria:';
-$lang['mail_changed'] = '[DokuWiki] aldatutako orria:';
+$lang['mail_newpage'] = 'gehitutako orria:';
+$lang['mail_changed'] = 'aldatutako orria:';
 
 $lang['qb_bold']    = 'Letra beltzez';
 $lang['qb_italic']  = 'Letra italiarrez';

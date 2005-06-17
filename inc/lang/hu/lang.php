@@ -84,8 +84,8 @@ $lang['created']    = 'létrehozva';
 $lang['restored']   = 'az előző változat helyreállítva';
 $lang['summary']    = 'A változások összefoglalása';
 
-$lang['mail_newpage'] = '[DokuWiki] oldalak hozzáadva:';
-$lang['mail_changed'] = '[DokuWiki] oldalak megváltoztatva:';
+$lang['mail_newpage'] = 'oldalak hozzáadva:';
+$lang['mail_changed'] = 'oldalak megváltoztatva:';
 
 $lang['nosmblinks'] = 'A Windows megosztott könyvtárak kereszthivatkozása csak  Microsoft Internet Explorerben működik közvetlenül.\nA hivatkozást másolni és beszúrni ettől fügetlenül mndig tudod.';
 

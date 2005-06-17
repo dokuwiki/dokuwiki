@@ -87,8 +87,8 @@ $lang['created']    = 'created';
 $lang['restored']   = 'old revision restored';
 $lang['summary']    = 'Edit summary';
 
-$lang['mail_newpage'] = '[DokuWiki] page added:';
-$lang['mail_changed'] = '[DokuWiki] page changed:';
+$lang['mail_newpage'] = 'page added:';
+$lang['mail_changed'] = 'page changed:';
 
 $lang['nosmblinks'] = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
 

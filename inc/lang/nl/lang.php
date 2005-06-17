@@ -85,8 +85,8 @@ $lang['created']    = 'aangemaakt';
 $lang['restored']   = 'oude revisie hersteld';
 $lang['summary']    = 'Samenvatting aanpassen';
 
-$lang['mail_newpage'] = '[DokuWiki] pagina toegevoegd:';
-$lang['mail_changed'] = '[DokuWiki] pagina aangepast:';
+$lang['mail_newpage'] = 'pagina toegevoegd:';
+$lang['mail_changed'] = 'pagina aangepast:';
 
 $lang['nosmblinks'] = 'Linken naar Windows shares werkt alleen in Microsoft Internet Explorer.\nJe kan de link wel kopiëren en plakken.';
 

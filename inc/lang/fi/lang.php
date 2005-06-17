@@ -74,8 +74,8 @@ $lang['created']    = 'luotu';
 $lang['restored']   = 'vanhat versiot palautettu';
 $lang['summary']    = 'Yhteenveto muokkauksesta';
 
-$lang['mail_newpage'] = '[DokuWiki] sivu lisätty:';
-$lang['mail_changed'] = '[DokuWiki] sivu muutettu:';
+$lang['mail_newpage'] = 'sivu lisätty:';
+$lang['mail_changed'] = 'sivu muutettu:';
 
 $lang['nosmblinks'] = 'Linkit windows-jakoihin toimivat vain Microsof Internet Explorerilla.\nVoit silti kopioida ja liittää linkin.';
 

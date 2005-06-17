@@ -74,8 +74,8 @@ $lang['created']    = 'creata';
 $lang['restored']   = 'versione precedente ripristinata';
 $lang['summary']    = 'Oggetto della modifica';
 
-$lang['mail_newpage'] = '[DokuWiki] pagina aggiunta:';
-$lang['mail_changed'] = '[DokuWiki] pagina modificata:';
+$lang['mail_newpage'] = 'pagina aggiunta:';
+$lang['mail_changed'] = 'pagina modificata:';
 
 $lang['nosmblinks'] = 'I collegamenti con le risorse condivise di Windows funzionano solo con Microsoft Internet Explorer.\nPuoi fare un copia/incolla di questo collegamento.';
 

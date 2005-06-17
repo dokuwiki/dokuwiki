@@ -73,8 +73,8 @@ $lang['created']    = 'vytvořeno';
 $lang['restored']   = 'stará verze byla obnovena';
 $lang['summary']    = 'Komentář k úpravám';
 
-$lang['mail_newpage'] = '[DokuWiki] nová stránka:';
-$lang['mail_changed'] = '[DokuWiki] změna stránky:';
+$lang['mail_newpage'] = 'nová stránka:';
+$lang['mail_changed'] = 'změna stránky:';
 
 $lang['nosmblinks'] = 'Odkazování na sdílené prostředky Windows funguje jen v Internet Exploreru.\nPřesto tento odkaz můžete zkopírovat a vložit jinde.';
 

@@ -75,8 +75,8 @@ $lang['created']    = '建立';
 $lang['restored']   = '已恢復為舊版';
 $lang['summary']    = '編輯摘要';
 
-$lang['mail_newpage'] = '[DokuWiki] 增加的頁面:';
-$lang['mail_changed'] = '[DokuWiki] 變更的頁面:';
+$lang['mail_newpage'] = '增加的頁面:';
+$lang['mail_changed'] = '變更的頁面:';
 
 $lang['nosmblinks'] = '只有在 Microsoft IE 下才能執行「連結到 Windows shares」。\n不過您仍可拷貝、複製這連結';
 

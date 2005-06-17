@@ -75,8 +75,8 @@ $lang['restored']   = 'старая ревизия восстановлена';
 $lang['summary']    = 'Сводка изменений';
 
 
-$lang['mail_newpage'] = 'Страница [DokuWiki] добавлена:';
-$lang['mail_changed'] = 'Страница [DokuWiki] изменена:';
+$lang['mail_newpage'] = 'Страница добавлена:';
+$lang['mail_changed'] = 'Страница изменена:';
 
 $lang['nosmblinks'] = 'Ссылка на шаринги Windows работает только из Microsoft Internet Explorer.\nВы все же можете использовать copy and paste со ссылкой.';
 

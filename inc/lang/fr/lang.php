@@ -80,8 +80,8 @@ $lang['created']    = 'créée';
 $lang['restored']   = 'ancienne révision restaurée';
 $lang['summary']    = 'Résumé des modifications';
 
-$lang['mail_newpage'] = '[DokuWiki] page ajoutée :';
-$lang['mail_changed'] = '[DokuWiki] page changée :';
+$lang['mail_newpage'] = 'page ajoutée :';
+$lang['mail_changed'] = 'page changée :';
 
 $lang['nosmblinks'] = 'Les liens vers les disques partagés de Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.\nVou pouvez toujours faire un copier/coller du lien.';
 

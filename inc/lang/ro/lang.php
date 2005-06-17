@@ -74,8 +74,8 @@ $lang['created']    = 'creat';
 $lang['restored']   = 'versiune veche restaurată';
 $lang['summary']    = 'Editează sumarul';
 
-$lang['mail_newpage'] = '[DokuWiki] pagina adăugată:';
-$lang['mail_changed'] = '[DokuWiki] page schimbată:';
+$lang['mail_newpage'] = 'pagina adăugată:';
+$lang['mail_changed'] = 'page schimbată:';
 
 $lang['nosmblinks'] = 'Legăturile către sharing-uri Windows funcţioneaza numai in Microsoft Internet Explorer.\nPuteţi însă copia şi insera legătura.';
 

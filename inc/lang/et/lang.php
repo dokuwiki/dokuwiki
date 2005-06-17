@@ -82,8 +82,8 @@ $lang['created']    = 'tekitatud';
 $lang['restored']   = 'vana versioon taastatud';
 $lang['summary']    = 'kokkuvõte muudatustest';
 
-$lang['mail_newpage'] = '[DokuWiki] leht lisatud:';
-$lang['mail_changed'] = '[DokuWiki] leht muudetud';
+$lang['mail_newpage'] = 'leht lisatud:';
+$lang['mail_changed'] = 'leht muudetud';
 
 $lang['nosmblinks'] = 'Windowsis võrguarvutiga ühendamine toimib ainult Internet Exploreris ja 
 sisevõrgus.\nAga Sa saad õnneks omale lingi kopeerida ja hiljem kuhugi kleepida.';

@@ -75,8 +75,8 @@ $lang['restored']   = 'malnova revizio restarigita';
 $lang['summary']    = 'Bulteno de amendoj';
 
 
-$lang['mail_newpage'] = 'Paĝo [DokuWiki] estas aldonita:';
-$lang['mail_changed'] = 'Paĝo [DokuWiki] estas modifita:';
+$lang['mail_newpage'] = 'Paĝo estas aldonita:';
+$lang['mail_changed'] = 'Paĝo estas modifita:';
 
 $lang['nosmblinks'] = '';
 

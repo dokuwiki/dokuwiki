@@ -84,8 +84,8 @@ $lang['created']    = 'lagret';
 $lang['restored']   = 'Gjenopprettet til en tidligere versjon';
 $lang['summary']    = 'Redigeringskommentar';
 
-$lang['mail_newpage'] = '[DokuWiki] side har blitt lagt til:';
-$lang['mail_changed'] = '[DokuWiki] side har blitt oppdatert:';
+$lang['mail_newpage'] = 'side har blitt lagt til:';
+$lang['mail_changed'] = 'side har blitt oppdatert:';
 
 $lang['nosmblinks'] = 'Lenker til Windowsressurser fungerer bare med Microsofts Internet Explorer.\nDu kan klippe og lime inn lenker hvis du anvender en annen nettleser enn MSIE..';
 

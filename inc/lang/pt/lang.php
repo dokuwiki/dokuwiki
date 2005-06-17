@@ -75,8 +75,8 @@ $lang['created']      = 'Criação deste novo documento.';
 $lang['restored']     = 'Versão anterior restaurada.';
 $lang['summary']      = 'Sumário da Edição';
 
-$lang['mail_newpage'] = '[DokuWiki] documento adicionado:';
-$lang['mail_changed'] = '[DokuWiki] documento modificado:';
+$lang['mail_newpage'] = 'documento adicionado:';
+$lang['mail_changed'] = 'documento modificado:';
 
 $lang['nosmblinks']   = 'Ligação a pastas Windows partilhadas apenas funciona com o Microsoft Internet Explorer.\nPode no entanto copiar e colar o link.';
 
