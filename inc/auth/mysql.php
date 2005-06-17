@@ -83,7 +83,8 @@ function auth_checkPass($user,$pass){
     // we leave pass checking to the database
     $sql    = str_replace('%u',addslashes($user),$cnf['passcheck']);
     $sql    = str_replace('%g',addslashes($conf['defaultgroup']),$sql);
-    $sql    = str_replace('%p',addslashes($pass,$sql));
+    $sql    = str_replace('%p',addslashes($pass),$sql);
+    $result = auth_mysql_runsql($sql);
 
     if(count($result) == 1){
       return true;
