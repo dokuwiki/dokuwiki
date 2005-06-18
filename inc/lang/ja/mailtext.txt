@@ -1,0 +1,17 @@
+DokuWiki 内の文書が更新されました。詳細は以下の通りです。
+
+日付        : @DATE@
+ブラウザ    : @BROWSER@
+IPアドレス  : @IPADDRESS@
+ホスト名    : @HOSTNAME@
+前リビジョン: @OLDPAGE@
+新リビジョン: @NEWPAGE@
+サマリの変更: @SUMMARY@
+ユーザー名  : @USER@
+
+@DIFF@
+
+
+-- 
+このメールは次のDokuWikiより自動的に送信されています。
+@DOKUWIKIURL@
