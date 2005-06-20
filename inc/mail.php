@@ -54,7 +54,11 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
 
   $body = mail_quotedprintable_encode($body);
 
-  return @mail($to,$subject,$body,$header,$params);
+  if($params == null){
+    return @mail($to,$subject,$body,$header);
+  }else{
+    return @mail($to,$subject,$body,$header,$params);
+  }
 }
 
 /**
