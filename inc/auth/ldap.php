@@ -62,6 +62,16 @@ function auth_ldap_connect(){
         }
       } 
     }
+    //set deref mode
+    if($cnf['deref']){
+      if(!@ldap_set_option($LDAP_CONNECTION,
+                           LDAP_OPT_DEREF,
+                           $cnf['deref'])){
+        msg('Setting LDAP Deref mode '.$cnf['deref']. 'failed',-1);
+        if($cnf['debug'])
+          msg('LDAP errstr: '.htmlspecialchars(ldap_error($LDAP_CONNECTION)),0);
+      } 
+    }
   }
   return $LDAP_CONNECTION;
 }
