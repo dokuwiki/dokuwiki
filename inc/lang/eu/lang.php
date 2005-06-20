@@ -14,18 +14,18 @@ $lang['btn_show']   = 'Orria ikusi';
 $lang['btn_create'] = 'Sortu orri hau';
 $lang['btn_search'] = 'Bilatu';
 $lang['btn_save']   = 'Gorde';
-$lang['btn_preview']= 'Aurreikuspena';
+$lang['btn_preview']= 'Aurrebista';
 $lang['btn_top']    = 'Itzuli gora';
-$lang['btn_revs']   = 'Aurreikuspen zaharrak';
-$lang['btn_recent'] = 'Arestiko aldaketak';
+$lang['btn_revs']   = 'Bertsio zaharrak';
+$lang['btn_recent'] = 'Azken aldaketak';
 $lang['btn_upload'] = 'Ireki';
 $lang['btn_cancel'] = 'Ezeztatu';
 $lang['btn_index']  = 'Aurkibidea';
 $lang['btn_secedit']= 'Aldatu';
-$lang['btn_login']  = 'Login';
+$lang['btn_login']  = 'Sartu';
 $lang['btn_logout'] = 'Atera';
 
-$lang['loggedinas'] = 'Logged in as';
+$lang['loggedinas'] = 'Erabiltzailea';
 $lang['user']       = 'Erabiltzailea';
 $lang['pass']       = 'Pasahitza';
 $lang['fullname']   = 'Izen Deiturak';
@@ -59,11 +59,11 @@ $lang['breadcrumb'] = 'Traza';
 $lang['lastmod']    = 'Azken aldaketa';
 $lang['deleted']    = 'ezabatua';
 $lang['created']    = 'sortua';
-$lang['restored']   = 'berrikuspen zaharra berrezarria';
-$lang['summary']    = 'Edit summary';
+$lang['restored']   = 'bertsio zaharra berrezarria';
+$lang['summary']    = 'Aldatu laburpena';
 
-$lang['mail_newpage'] = 'gehitutako orria:';
-$lang['mail_changed'] = 'aldatutako orria:';
+$lang['mail_newpage'] = '[DokuWiki] gehitutako orria:';
+$lang['mail_changed'] = '[DokuWiki] aldatutako orria:';
 
 $lang['qb_bold']    = 'Letra beltzez';
 $lang['qb_italic']  = 'Letra italiarrez';
@@ -80,6 +80,6 @@ $lang['qb_hr']      = 'Horizontal Marra';
 $lang['qb_ol']      = 'Zerrenda ordenatuko gaia';
 $lang['qb_ul']      = 'Zerrenda desordenatuko gaia';
 $lang['qb_media']   = 'Irudiak/Fitxategiak gehitu';
-$lang['qb_sig']     = 'Insert Signature';
+$lang['qb_sig']     = 'Gehitu sinadura';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -4,10 +4,10 @@ Data                : @DATE@
 Nabigatzailea       : @BROWSER@
 IP-Helbidea         : @IPADDRESS@
 Host izena          : @HOSTNAME@
-Berrikuspen zaharra : @OLDPAGE@
-Berrikuspen berria  : @NEWPAGE@
-Edit Summary        : @SUMMARY@
-User                : @USER@
+Bertsio zaharra : @OLDPAGE@
+Bertsio berria  : @NEWPAGE@
+Aldatu laburpena    : @SUMMARY@
+Erabiltzailea       : @USER@
 
 @DIFF@
 

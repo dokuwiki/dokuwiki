@@ -1,4 +1,3 @@
 ======Aurreikuspena======
 
-Hau zure testuaren aurrekispen bat besterik ez da. Gogoratu: **ez dago gordeta** oraindik!
-
+Hau zure testuaren aurrebista bat besterik ez da. Gogoratu: **ez da gorde** oraindik!

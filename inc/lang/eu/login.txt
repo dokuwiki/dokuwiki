@@ -1,0 +1,5 @@
+====== Login ======
+
+Ez duzu sesiorik hasi! Sar ezazu zure erabiltzaile izena eta pasahitza.
+Gogoratu coockie-ak baimenduta izan behar dituzula.
+

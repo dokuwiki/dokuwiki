@@ -1,9 +1,6 @@
 ======Bilaketa======
 
-Puedes encontrar los resultados de tu búsqueda debajo. Si no has encontrado lo que buscabas, puedes crear
-una nueva página tras tu consulta utilizando el botón  ''Edita esta página''.
-
 Emaitzak ondorengo aurkiketan bilatu ditzakezu. Bilatzen zabiltzana aurkitu ez baduzu, zuk zeuk sortu
 dezakezu orri berri bat bilaketa ostean ''Sortu orri hau'' erabiliz.
 
-=====Aurkiketak=====
+=====Bilaketa emaitzak:=====

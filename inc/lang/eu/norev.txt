@@ -1,4 +1,3 @@
 ======Berrikuspen hau ez da existitzen======
 
-Zehaztutako berrikuspena ez da existitzen. Erabili ''Berrikuspen zaharrak'' dokumentu honen berrikuspen zaharren zerrenda bat ikusi ahal izateko.
-
+Zehaztutako bertsioa ez da existitzen. Erabili ''Bertsio zaharrak'' dokumentu honen aurreko bertsioen zerrenda bat ikusi ahal izateko.

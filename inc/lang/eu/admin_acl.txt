@@ -1,0 +1,5 @@
+====== ACL Kudeaketa ======
+
+Tresna honekin atal honi, eta baita bertako [[doku>wiki:namespaces|namespace]] guztiei, baimenak gehitu edo ezabatu diezazkiozu. Ezer aldatu aurretik [[doku>wiki:acl|ACLei buruzko dokumentazio ofiziala]] irakurri beharko zenuke hau dena guztiz ulertzeko.
+
+Jarraian atal honetarako ezarriak dauden baimenak azaltzen dira. Beste atalei dagozkien baimenak ez dira azaltzen -- [[this>doku.php?do=index|hauek]] aldatzeko orri bakoitza kudeatu beharko duzu.
