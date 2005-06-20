@@ -93,6 +93,9 @@ function auth_createUser($user,$pass,$name,$mail){
  */
 function auth_plain_loadUserData(){
   $data = array();
+  if(!@file_exists(DOKU_INC.'conf/users.auth.php')){
+    return $data;
+  }
   $lines = file(DOKU_INC.'conf/users.auth.php');
   foreach($lines as $line){
     $line = preg_replace('/#.*$/','',$line); //ignore comments
