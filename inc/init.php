@@ -91,9 +91,10 @@
  */
 function init_path($path){
   $p = realpath($path);
-  if($p) return $p;
+  if(is_dir($p)) return $p;
   $p = realpath(DOKU_INC.$path);
-  return $p;
+  if(is_dir($p)) return $p;
+  return '';
 }
 
 /**
