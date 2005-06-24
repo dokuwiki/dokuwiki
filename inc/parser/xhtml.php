@@ -275,11 +275,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function listcontent_open() {
-        $this->doc .= '<span class="li">';
+        $this->doc .= '<div class="li">';
     }
     
     function listcontent_close() {
-        $this->doc .= '</span>'.DOKU_LF;
+        $this->doc .= '</div>'.DOKU_LF;
     }
      
     function unformatted($text) {

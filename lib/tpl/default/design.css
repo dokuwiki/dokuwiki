@@ -362,7 +362,7 @@ ol {
 }
 
 /* the list items overriding the ol definition */
-span.li {
+.li {
   color: #000000;
   font-weight: normal;
 }
