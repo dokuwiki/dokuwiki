@@ -662,7 +662,7 @@ function tpl_mediauploadform(){
 
   if(!$UPLOADOK) return;
 
-  ptln('<form action="'.$_SERVER['PHP_SELF'].'" name="upload"'.
+  ptln('<form action="'.DOKU_BASE.'lib/exe/media.php" name="upload"'.
        ' method="post" enctype="multipart/form-data">',2);
   ptln($lang['txt_upload'].':<br />',4);
   ptln('<input type="file" name="upload" class="edit" onchange="suggestWikiname();" />',4);
