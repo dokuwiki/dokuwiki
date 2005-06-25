@@ -1,0 +1,4 @@
+====== Naujo vartotojo registracija ======
+
+Norėdami tapti nauju registruotu šio tinklalapio vartotoju, užpildykite žemiau esančią formą. Būtinai turite nurodyti **veikiantį el. pašto adresą**, nes jūsų slaptažodis bus išsiųstas pastaruoju adresu. Prisijungimo vardas turėtų būti sukurtas pagal [[doku>wiki:pagename|puslapio pavadinimo]] taisykles.
+

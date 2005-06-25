@@ -1,0 +1,6 @@
+====== Egzistuoja naujesnė versija ======
+
+Rasta naujesnė dokumento, kurį redagavote, versija. Tai atsitinka tada, kai kitas vartotojas modifikuoja dokumentą tuo metu, kai jūs jį redaguojate.
+
+Atidžiai peržvelkite žemiau esančius skirtumus ir nuspręskite, kurią versiją išsaugoti. Paspausdami ''Išsaugoti'' išsaugosite saviškę versiją. Paspausdami ''Atšaukti'' išsaugosite esamą versiją.
+

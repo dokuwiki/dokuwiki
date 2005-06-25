@@ -1,0 +1,6 @@
+====== Priėjimo Kontrolės Sąrašų (PKS) valdymas ======
+
+Šiame puslapyje jūs galite pridėti ir išimti priėjimo leidimus esamam puslapiui ir visiems [[doku>wiki:namespaces|puslapiams]], kurie yra jame.
+Prieš ką nors darydami turėtumėte paskaityti [[doku>wiki:acl|oficialią PKS dokumentaciją]]. Tai leis jums suprasti, kaip šie sąrašai veikia.
+
+Šiame puslapyje matote visus priėjimo leidimus, kurie priklauso esamam puslapiui. Čia nerasite kitų puslapių priėjimo leidimų. Norėdami redaguoti kito puslapio leidimus, turite jį [[this>doku.php?do=index|susirasti]], tada išsirinkti PKS Administraciją.

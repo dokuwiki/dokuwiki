@@ -1,0 +1,18 @@
+Jūsų DokuWiki buvo sukurtas arba pakeistas puslapis. Detalės:
+
+Data        : @DATE@
+Naršyklė     : @BROWSER@
+IP adresas  : @IPADDRESS@
+Host'as    : @HOSTNAME@
+Sena versija: @OLDPAGE@
+Nauja versija: @NEWPAGE@
+Redagavimo aprašas: @SUMMARY@
+Vartotojas        : @USER@
+
+Pakeitimo diff'as:
+
+@DIFF@
+
+
+-- 
+Šis laiškas buvo sugeneruotas DokuWiki (@DOKUWIKIURL@).
