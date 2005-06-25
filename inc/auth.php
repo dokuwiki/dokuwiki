@@ -17,6 +17,8 @@
   // load the the auth functions
   require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
 
+  if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', md5($_SERVER['PHP_SELF']));
+
   // some ACL level defines
   define('AUTH_NONE',0);
   define('AUTH_READ',1);
@@ -81,7 +83,7 @@ function auth_login($user,$pass,$sticky=false){
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
       $cookie = base64_encode("$user|$sticky|$pass");
       if($sticky) $time = time()+60*60*24*365; //one year
-      setcookie('DokuWikiAUTH',$cookie,$time,'/');
+      setcookie(DOKU_COOKIE,$cookie,$time,'/');
 
       // set session
       $_SESSION[$conf['title']]['auth']['user'] = $user;
@@ -97,7 +99,7 @@ function auth_login($user,$pass,$sticky=false){
     }
   }else{
     // read cookie information
-    $cookie = base64_decode($_COOKIE['DokuWikiAUTH']);
+    $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
     list($user,$sticky,$pass) = split('\|',$cookie,3);
     // get session info
     $session = $_SESSION[$conf['title']]['auth'];
@@ -181,7 +183,7 @@ function auth_logoff(){
   unset($_SESSION[$conf['title']]['auth']['info']);
   unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
-  setcookie('DokuWikiAUTH','',time()-600000,'/');
+  setcookie(DOKU_COOKIE,'',time()-3600,'/');
 }
 
 /**
