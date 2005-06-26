@@ -1195,7 +1195,7 @@ class Doku_Handler_Block {
     var $atStart = TRUE;
     var $skipEolKey = -1;
     
-    // Blocks don't contain linefeeds
+    // Blocks these should not be inside paragraphs
     var $blockOpen = array(
             'header',
             'listu_open','listo_open','listitem_open',
@@ -1214,7 +1214,7 @@ class Doku_Handler_Block {
             'code','file','php','html','hr','preformatted',
         );
     
-    // Stacks can contain linefeeds
+    // Stacks can contain paragraphs
     var $stackOpen = array(
         'footnote_open','section_open',
         );
@@ -1222,7 +1222,34 @@ class Doku_Handler_Block {
     var $stackClose = array(
         'footnote_close','section_close',
         );
-   
+  
+
+    /**
+     * Constructor. Adds loaded syntax plugins to the block and stack
+     * arrays
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function Doku_Handler_Block(){
+        global $DOKU_PLUGINS;
+        //check if syntax plugins were loaded
+        if(!is_array($DOKU_PLUGINS['syntax'])) return;
+        foreach($DOKU_PLUGINS['syntax'] as $n => $p){
+            $ptype = $p->getPType();
+            if($ptype == 'block'){
+                $this->blockOpen[]  = 'plugin_'.$n;
+                $this->blockOpen[]  = 'plugin_'.$n.'_open';
+                $this->blockClose[] = 'plugin_'.$n;
+                $this->blockClose[] = 'plugin_'.$n.'_close';
+            }elseif($ptype == 'stack'){
+                $this->stackOpen[]  = 'plugin_'.$n;
+                $this->stackOpen[]  = 'plugin_'.$n.'_open';
+                $this->stackClose[] = 'plugin_'.$n;
+                $this->stackClose[] = 'plugin_'.$n.'_close';
+            }
+        }
+    }
+ 
     /**
      * Close a paragraph if needed
      *

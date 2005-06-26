@@ -17,10 +17,28 @@ require_once(DOKU_INC.'inc/parser/parser.php');
 class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
+     * Syntax Type
+     *
      * Needs to return one of the mode types defined in $PARSER_MODES in parser.php
      */
     function getType(){
         trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
+    }
+
+    /**
+     * Paragraph Type
+     *
+     * Defines how this syntax is handled regarding paragraphs. This is important
+     * for correct XHTML nesting. Should return one of the following:
+     *
+     * 'normal' - The plugin can be used inside paragraphs
+     * 'block'  - Open paragraphs need to be closed before plugin output
+     * 'stack'  - Special case. Plugin wraps other paragraphs.
+     *
+     * @see Doku_Handler_Block
+     */
+    function getPType(){
+        return 'normal';
     }
 
     /**
