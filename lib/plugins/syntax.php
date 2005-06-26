@@ -17,6 +17,22 @@ require_once(DOKU_INC.'inc/parser/parser.php');
 class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
+     * General Info
+     *
+     * Needs to return a associative array with the following values:
+     *
+     * author - Author of the plugin
+     * email  - Email address to contact the author
+     * date   - Last modified date of the plugin in YYYY-MM-DD format
+     * name   - Name of the plugin
+     * desc   - Short description of the plugin (Text only)
+     * url    - Website with more information on the plugin (eg. syntax description)
+     */
+    function getInfo(){
+        trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
+    }
+
+    /**
      * Syntax Type
      *
      * Needs to return one of the mode types defined in $PARSER_MODES in parser.php

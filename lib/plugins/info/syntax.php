@@ -17,12 +17,33 @@ require_once(DOKU_PLUGIN.'syntax.php');
 class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
+     * return some info
+     */
+    function getInfo(){
+        return array(
+            'author' => 'Andreas Gohr',
+            'email'  => 'andi@splitbrain.org',
+            'date'   => '2005-06-26',
+            'name'   => 'Info Plugin',
+            'desc'   => 'Displays information about various DokuWiki internals',
+            'url'    => 'http://wiki.splitbrain.org/plugin:info',
+        );
+    }
+
+    /**
      * What kind of syntax are we?
      */
     function getType(){
         return 'substition';
     }
    
+    /**
+     * What about paragraphs?
+     */
+    function getPType(){
+        return 'block';
+    }
+
     /**
      * Where to sort in?
      */ 
@@ -54,14 +75,17 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         if($mode == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
-                case 'version';
+                case 'version':
                     $renderer->doc .= getVersion();
                     break;
-                case 'syntaxmodes';
+                case 'syntaxmodes':
                     $renderer->doc .= $this->_syntaxmodes_xhtml();
                     break;
-                case 'syntaxtypes';
+                case 'syntaxtypes':
                     $renderer->doc .= $this->_syntaxtypes_xhtml();
+                    break;
+                case 'syntaxplugins':
+                    $this->_syntaxplugins_xhtml($renderer);
                     break;
                 default:
                     $renderer->doc .= "no info about ".htmlspecialchars($data[0]);
@@ -69,6 +93,37 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             return true;
         }
         return false;
+    }
+
+    /**
+     * list all installed syntax plugins
+     *
+     * uses some of the original renderer methods
+     */
+    function _syntaxplugins_xhtml(& $renderer){
+        global $lang;
+        $renderer->doc .= '<ul>';
+
+        $plugins = plugin_list('syntax');
+        foreach($plugins as $p){
+            if(plugin_load('syntax',$p,$po)){
+                $info = $po->getInfo();
+
+                $renderer->doc .= '<li>';
+                $renderer->externallink($info['url'],$info['name']);
+                $renderer->doc .= ' ';
+                $renderer->doc .= '<i>'.$info['date'].'</i>';
+                $renderer->doc .= ' ';
+                $renderer->doc .= $lang['by'];
+                $renderer->doc .= ' ';
+                $renderer->emaillink($info['email'],$info['author']);
+                $renderer->doc .= '<br />';
+                $renderer->doc .= htmlspecialchars($info['desc']);
+                $renderer->doc .= '</li>';
+            }
+        }
+
+        $renderer->doc .= '</ul>';
     }
 
     /**
