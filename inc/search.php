@@ -356,9 +356,10 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
   //only search txt files
   if(!preg_match('#\.txt$#',$file)) return true;
 
-  //we finish after 'n' references found. The return value
+  //we finish after 'cnt' references found. The return value
   //'false' will skip subdirectories to speed search up.
-  if(count($data) >= $conf['refcheck']) return false;
+  $cnt = $conf['refshow'] > 0 ? $conf['refshow'] : 1;
+  if(count($data) >= $cnt) return false;
   
   $reg = '\{\{ *\:?'.$opts['query'].' *(\|.*)?\}\}';
   search_regex($data,$base,$file,$reg,array($opts['query']));
