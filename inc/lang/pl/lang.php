@@ -1,6 +1,6 @@
 <?php
 /**
- * polish language file 
+ * polish language file
  * based on english one
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
@@ -17,6 +17,8 @@ $lang['btn_search'] = 'Szukaj';
 $lang['btn_save']   = 'Zapisz';
 $lang['btn_preview']= 'Podgląd';
 $lang['btn_top']    = 'Do góry';
+$lang['btn_newer']  = '<< późniejsze';
+$lang['btn_older']  = 'wcześniejsze >>';
 $lang['btn_revs']   = 'Poprzednie wersje';
 $lang['btn_recent'] = 'Ostatnie zmiany';
 $lang['btn_upload'] = 'Wyślij';
@@ -28,10 +30,13 @@ $lang['btn_logout'] = 'Wyloguj';
 $lang['btn_admin']  = 'Administracja';
 $lang['btn_update'] = 'Aktualizuj';
 $lang['btn_delete'] = 'Usuń';
+$lang['btn_back']   = 'Wstecz';
+$lang['btn_backtomedia'] = 'Powrót do wyboru pliku';
 
 $lang['loggedinas'] = 'Zalogowany/a jako';
 $lang['user']       = 'Użytkownik';
 $lang['pass']       = 'Hasło';
+$lang['passchk']    = 'powtórz hasło';
 $lang['remember']   = 'Zapamiętaj';
 $lang['fullname']   = 'Imię i nazwisko';
 $lang['email']      = 'E-mail';
@@ -41,13 +46,16 @@ $lang['badlogin']   = 'Nazwa użytkownika lub hasło są nieprawidłowe.';
 $lang['regmissing'] = 'Wypełnij wszystkie pola.';
 $lang['reguexists'] = 'Użytkownik o tej nazwie już istnieje.';
 $lang['regsuccess'] = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
+$lang['regsuccess2']= 'Utworzono użytkownika.';
 $lang['regmailfail']= 'Wystąpił błąd przy wysyłaniu hasła pocztą!';
 $lang['regbadmail'] = 'Adres e-mail jest nieprawidłowym!';
-$lang['regpwmail']  = 'Twoje haslo do DokuWiki'; /* no diacritics in mail subject */
-$lang['reghere']    = 'Nie masz jeszcze konta? Zdobądź je';
+$lang['regbadpass'] = 'Hasła nie są identyczne, spróbuj ponownie.';
+$lang['regpwmail']  = 'Twoje haslo do DokuWiki'; /* no diacritics in mail subject, still needed? */
+$lang['reghere']    = 'Nie masz jeszcze konta? Zdobądź je!';
 
 $lang['txt_upload']   = 'Wybierz plik do wysłania';
 $lang['txt_filename'] = 'Nazwa pliku (opcjonalnie)';
+$lang['txt_overwrt']  = 'Nadpisać istniejący plik?';
 $lang['lockedby']     = 'Aktualnie zablokowane przez';
 $lang['lockexpire']   = 'Blokada wygasa';
 $lang['willexpire']   = 'Za minutę Twoja blokada tej strony wygaśnie.\nW celu uniknięcia konfliktów wyświetl podgląd aby odnowić blokadę.';
@@ -61,8 +69,16 @@ $lang['fileupload']  = 'Wysyłanie pliku';
 $lang['uploadsucc']  = 'Wysyłanie powiodło się!';
 $lang['uploadfail']  = 'Błąd wysyłania. Czy prawa do katalogów są poprawne?';
 $lang['uploadwrong'] = 'Wysyłanie zabronione. Nie można wysłać plików z takim rozszerzeniem';
+$lang['uploadexist'] = 'Plik już istnieje, nie wykonano operacji.';
+$lang['deletesucc']  = 'Plik "%s" został usunięty.';
+$lang['deletefail']  = 'Plik "%s" nie został usunięty, sprawdź uprawnienia.';
+$lang['mediainuse']  = 'Plik "%s" nie został usunięty, ponieważ jest używany.';
 $lang['namespaces']  = 'Katalogi';
 $lang['mediafiles']  = 'Dostępne pliki';
+
+$lang['reference']   = 'Odnośniki do';
+$lang['ref_inuse']   = 'Ten plik nie może być usunięty, ponieważ jest używany na następujących stronach:';
+$lang['ref_hidden']  = 'Odnośniki mogą znajdować się na stronach, do których nie masz uprawnień.';
 
 $lang['hits']       = 'trafień';
 $lang['quickhits']  = 'Pasujące hasła';
@@ -89,6 +105,7 @@ $lang['qb_bold']    = 'Pogrubienie';
 $lang['qb_italic']  = 'Pochylenie';
 $lang['qb_underl']  = 'Podkreślenie';
 $lang['qb_code']    = 'Kod';
+$lang['qb_strike']  = 'Przekreślenie';
 $lang['qb_h1']      = 'Nagłówek 1 stopnia';
 $lang['qb_h2']      = 'Nagłówek 2 stopnia';
 $lang['qb_h3']      = 'Nagłówek 3 stopnia';
@@ -105,6 +122,7 @@ $lang['qb_sig']     = 'Wstaw podpis';
 $lang['del_confirm']= 'Usunąć wpis?';
 
 $lang['admin_acl']  = 'Zarządzanie uprawnieniami...';
+$lang['admin_register']= 'Dodawanie użytkownika...';
 
 $lang['acl_group']  = 'Grupa';
 $lang['acl_user']   = 'Użytkownik';
@@ -116,6 +134,14 @@ $lang['acl_perm1']  = 'Czytanie';
 $lang['acl_perm2']  = 'Zmiana';
 $lang['acl_perm4']  = 'Tworzenie';
 $lang['acl_perm8']  = 'Przesyłanie plików';
+$lang['acl_perm16'] = 'Usuwanie';
 $lang['acl_new']    = 'Dodaj nowy wpis';
+
+$lang['spell_start'] = 'Sprawdź pisownię';
+$lang['spell_stop']  = 'Zakończ sprawdzanie';
+$lang['spell_wait']  = 'Proszę czekać...';
+$lang['spell_noerr'] = 'Nie znaleziono błędów';
+$lang['spell_nosug'] = 'Brak podpowiedzi';
+$lang['spell_change']= 'Zmień';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
