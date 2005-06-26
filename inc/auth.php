@@ -17,7 +17,7 @@
   // load the the auth functions
   require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
 
-  if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', md5($_SERVER['PHP_SELF']));
+  if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));
 
   // some ACL level defines
   define('AUTH_NONE',0);
@@ -183,7 +183,7 @@ function auth_logoff(){
   unset($_SESSION[$conf['title']]['auth']['info']);
   unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
-  setcookie(DOKU_COOKIE,'',time()-3600,'/');
+  setcookie(DOKU_COOKIE,'',time()-600000,'/');
 }
 
 /**
