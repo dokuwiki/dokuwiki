@@ -57,6 +57,7 @@ function io_readFile($file){
  */
 function io_saveFile($file,$content){
   io_makeFileDir($file);
+  io_lock($file);
   if(substr($file,-3) == '.gz'){
     $fh = @gzopen($file,'wb9');
     if(!$fh){
@@ -74,7 +75,51 @@ function io_saveFile($file,$content){
     fwrite($fh, $content);
     fclose($fh);
   }
+  io_unlock($file);
   return true;
+}
+
+/**
+ * Tries to lock a file
+ *
+ * Locking is only done for io_savefile and uses directories
+ * inside $conf['lockdir']
+ *
+ * It waits maximal 3 seconds for the lock, after this time
+ * the lock is assumed to be stale and the function goes on 
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function io_lock($file){
+  global $conf;
+  // no locking if safemode hack
+  if($conf['safemodehack']) return;
+
+  $lockDir = $conf['lockdir'].'/'.md5($file);
+  @ignore_user_abort(1);
+
+  
+  $timeStart = time();
+  do {
+    //waited longer than 3 seconds? -> stale lock
+    if ((time() - $timeStart) > 3) break;
+    $locked = @mkdir($lockDir);
+  } while ($locked === false);
+}
+
+/**
+ * Unlocks a file
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function io_unlock($file){
+  global $conf;
+  // no locking if safemode hack
+  if($conf['safemodehack']) return;
+
+  $lockDir = $conf['lockdir'].'/'.md5($file);
+  @rmdir($lockDir);
+  @ignore_user_abort(0);
 }
 
 /**
