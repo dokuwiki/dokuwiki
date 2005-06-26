@@ -1,0 +1,17 @@
+Stran na vašem DokuWiki je bila dodana ali spremenjena. Podrobnosti:
+
+Datum            : @DATE@
+Brskalnik        : @BROWSER@
+IP-naslov        : @IPADDRESS@
+Gostitelj        : @HOSTNAME@
+Stara različica  : @OLDPAGE@
+Nova Različica   : @NEWPAGE@
+Povzetek urejanja: @SUMMARY@
+Uporabnik        : @USER@
+
+@DIFF@
+
+
+-- 
+To sporočilo je ustvaril DokuWiki na
+@DOKUWIKIURL@

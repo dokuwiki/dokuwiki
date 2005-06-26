@@ -1,0 +1,4 @@
+======Primerjaj izbrane različice======
+
+Prikaže se vam razlika med izbrano in trenutno različico te strani.
+

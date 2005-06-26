@@ -1,0 +1,6 @@
+====== Obstaja novejša različica ======
+
+Obstaja novejša različica dokumenta, ki ga urejate. Do tega pride, ko kak drugi uporabnik spremeni dokument med vašim urejanjem.
+
+Temeljito preglejte spodaj prikazane razlike in se potem odločite, katero verzijo želite obdržati. Če izberete ''shrani'', bo shranjena vaša različica. Pritisnite ''prekliči'', če želite ohraniti trenutno različico.
+

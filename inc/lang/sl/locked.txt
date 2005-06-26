@@ -1,0 +1,3 @@
+====== Stran je zaklenjena ======
+
+To stran je nekdo zaklenjenil za urejanje. Počakati morate, da jo ta uporabnik neha urejati ali pa da poteče zaklep. 

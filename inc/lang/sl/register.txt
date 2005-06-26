@@ -1,0 +1,6 @@
+====== Odpri nov račun ======
+
+Vnesite vse potrebne podatke in si ustvarite račun za ta wiki.
+Preverite da ste vnesli **veljaven e-mail naslov** - tja bo poslano geslo.
+Uporabniško ime mora biti veljavno [[doku>wiki:pagename|ime strani]].
+

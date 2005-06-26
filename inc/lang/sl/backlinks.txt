@@ -1,0 +1,4 @@
+====== Kaj je povezano sem ======
+
+To je seznam strani, ki so povezane na trenutno stran. Opomba: CamelCase povezave niso zaznane kot take povezave.
+
