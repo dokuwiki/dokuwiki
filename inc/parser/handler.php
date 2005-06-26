@@ -1288,9 +1288,11 @@ class Doku_Handler_Block {
      */
     function process($calls) {
         foreach ( $calls as $key => $call ) {
+            $cname = $call[0];
+            if($cname == 'plugin') $cname='plugin_'.$call[1][0];
         
             // Process blocks which are stack like... (contain linefeeds)
-            if ( in_array($call[0],$this->stackOpen ) ) {
+            if ( in_array($cname,$this->stackOpen ) ) {
                 /*
                 if ( $this->atStart ) {
                     $this->calls[] = array('p_open',array(), $call[2]);
@@ -1301,7 +1303,7 @@ class Doku_Handler_Block {
                 $this->calls[] = $call;
                 
                 // Hack - footnotes shouldn't immediately contain a p_open
-                if ( $call[0] != 'footnote_open' ) {
+                if ( $cname != 'footnote_open' ) {
                     $this->addToStack();
                 } else {
                     $this->addToStack(FALSE);
@@ -1309,7 +1311,7 @@ class Doku_Handler_Block {
                 continue;
             }
             
-            if ( in_array($call[0],$this->stackClose ) ) {
+            if ( in_array($cname,$this->stackClose ) ) {
             
                 if ( $this->inParagraph ) {
                     //$this->calls[] = array('p_close',array(), $call[2]);
@@ -1322,7 +1324,7 @@ class Doku_Handler_Block {
             
             if ( !$this->atStart ) {
             
-                if ( $call[0] == 'eol' ) {
+                if ( $cname == 'eol' ) {
                    
 
                     /* XXX
@@ -1360,8 +1362,7 @@ class Doku_Handler_Block {
                 } else {
                     
                     $storeCall = TRUE;
-                    
-                    if ( $this->inParagraph && in_array($call[0], $this->blockOpen) ) {
+                    if ( $this->inParagraph && in_array($cname, $this->blockOpen) ) {
                         //$this->calls[] = array('p_close',array(), $call[2]);
                         $this->closeParagraph($call[2]);
                         $this->inParagraph = FALSE;
@@ -1369,7 +1370,7 @@ class Doku_Handler_Block {
                         $storeCall = FALSE;
                     }
                     
-                    if ( in_array($call[0], $this->blockClose) ) {
+                    if ( in_array($cname, $this->blockClose) ) {
                         if ( $this->inParagraph ) {
                             //$this->calls[] = array('p_close',array(), $call[2]);
                             $this->closeParagraph($call[2]);
@@ -1403,7 +1404,7 @@ class Doku_Handler_Block {
             } else {
                 
                 // Unless there's already a block at the start, start a paragraph
-                if ( !in_array($call[0],$this->blockOpen) ) {
+                if ( !in_array($cname,$this->blockOpen) ) {
                     $this->calls[] = array('p_open',array(), $call[2]);
                     if ( $call[0] != 'eol' ) {
                         $this->calls[] = $call;
@@ -1420,10 +1421,10 @@ class Doku_Handler_Block {
         }
     
         if ( $this->inParagraph ) {
-            if ( $call[0] == 'p_open' ) {
+            if ( $cname == 'p_open' ) {
                 // Ditch the last call
                 array_pop($this->calls);
-            } else if ( !in_array($call[0], $this->blockClose) ) {
+            } else if ( !in_array($cname, $this->blockClose) ) {
                 //$this->calls[] = array('p_close',array(), $call[2]);
                 $this->closeParagraph($call[2]);
             } else {
