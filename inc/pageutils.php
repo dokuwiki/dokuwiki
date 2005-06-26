@@ -231,4 +231,23 @@ function resolve_pageid($ns,&$page,&$exists){
   if(!empty($hash)) $page .= '#'.$hash;
 }
 
+/**
+ * Returns the name of a cachefile from given data
+ *
+ * The needed directory is created by this function!
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $data  This data is used to create a unique md5 name
+ * @param string $ext   This is appended to the filename if given
+ * @return string       The filename of the cachefile
+ */
+function getCacheName($data,$ext=''){
+  global $conf;
+  $md5  = md5($data);
+  $file = $conf['cachedir'].'/'.$md5{0}.'/'.$md5.$ext;
+  io_makeFileDir($file);
+  return $file;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

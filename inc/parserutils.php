@@ -67,8 +67,7 @@ function p_locale_xhtml($id){
  */
 function p_cached_xhtml($file){
   global $conf;
-  $cache  = $conf['datadir'].'/_cache/xhtml/';
-  $cache .= md5($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT']);
+  $cache  = getCacheName($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.xhtml');
   $purge  = $conf['datadir'].'/_cache/purgefile';
 
   // check if cache can be used
@@ -112,8 +111,7 @@ function p_cached_xhtml($file){
  */
 function p_cached_instructions($file,$cacheonly=false){
   global $conf;
-  $cache  = $conf['datadir'].'/_cache/instructions/';
-  $cache .= md5($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT']);
+  $cache  = getCacheName($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.i');
 
   // check if cache can be used
   $cachetime = @filemtime($cache); // 0 if not exists

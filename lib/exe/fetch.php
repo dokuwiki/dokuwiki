@@ -101,13 +101,12 @@
 function get_resized($file, $ext, $w, $h=0){
   global $conf;
 
-  $md5   = md5($file);
   $info  = getimagesize($file);
   if(!$h) $h = round(($w * $info[1]) / $info[0]);
 
 
   //cache
-  $local = $conf['mediadir'].'/_cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
+  $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
   $mtime = @filemtime($local); // 0 if not exists
 
   if( $mtime > filemtime($file) || resize_image($ext,$file,$info[0],$info[1],$local,$w,$h) ){
@@ -144,9 +143,7 @@ function get_from_URL($url,$ext,$cache){
   global $conf;
 
   $url = strtolower($url);
-  $md5 = md5($url);
-
-  $local = $conf['mediadir']."/_cache/$md5.$ext";
+  $local = getCacheName($url,".media.$ext");
   $mtime = @filemtime($local); // 0 if not exists
 
   //decide if download needed:
@@ -204,7 +201,7 @@ function resize_image($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   }
 
   // create cachedir
-  io_makeFileDir($to);
+  //io_makeFileDir($to); // not needed anymore, should exist
 
   //try resampling first
   if(function_exists("imagecopyresampled")){

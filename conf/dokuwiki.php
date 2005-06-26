@@ -13,10 +13,7 @@ $conf['umask']       = 0111;              //set the umask for new files
 $conf['dmask']       = 0000;              //directory mask accordingly
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
-$conf['datadir']     = './data/pages';    //where to store the data
-$conf['olddir']      = './data/attic';    //where to store old revisions
-$conf['mediadir']    = './data/media';    //where to store media files
-$conf['changelog']   = './data/changes.log'; //change log
+$conf['savedir']     = './data';          //where to store all the files
 
 /* Display Options */
 

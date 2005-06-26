@@ -66,18 +66,8 @@
   // remember original umask
   $conf['oldumask'] = umask();
 
-  // make absolute mediaweb
-  if(!preg_match('#^(https?://|/)#i',$conf['mediaweb'])){
-    $conf['mediaweb'] = getBaseURL().$conf['mediaweb'];
-  }
-
   // make real paths and check them
-  $conf['datadir']       = init_path($conf['datadir']);
-  if(!$conf['datadir'])    die('Wrong datadir! Check config!');
-  $conf['olddir']        = init_path($conf['olddir']);
-  if(!$conf['olddir'])     die('Wrong olddir! Check config!');
-  $conf['mediadir']      = init_path($conf['mediadir']);
-  if(!$conf['mediadir'])   die('Wrong mediadir! Check config!');
+  init_paths();
 
   // automatic upgrade to script versions of certain files
   scriptify(DOKU_INC.'conf/users.auth');
@@ -85,15 +75,37 @@
 
 
 /**
+ * Checks paths from config file
+ */
+function init_paths(){
+  global $conf;
+
+  $paths = array('datadir'   => 'pages',
+                 'olddir'    => 'attic',
+                 'mediadir'  => 'media',
+                 'metadir'   => 'meta',
+                 'cachedir'  => 'cache',
+                 'lockdir'   => 'locks',
+                 'changelog' => 'changes.log');
+
+  foreach($paths as $c => $p){
+
+    if(!$conf[$c])   $conf[$c] = $conf['savedir'].'/'.$p;
+    $conf[$c]        = init_path($conf[$c]);
+    if(!$conf[$c])   die("$c does not exist or isn't writable. Check config!");
+  }
+}
+
+/**
  * returns absolute path
  *
- * This tries the given past first, then checks in DOKU_INC
+ * This tries the given path first, then checks in DOKU_INC
  */
 function init_path($path){
   $p = realpath($path);
-  if(is_dir($p)) return $p;
+  if(@file_exists($p)) return $p;
   $p = realpath(DOKU_INC.$path);
-  if(is_dir($p)) return $p;
+  if(@file_exists($p)) return $p;
   return '';
 }
 

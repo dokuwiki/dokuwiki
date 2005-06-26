@@ -593,7 +593,7 @@ function saveWikiText($id,$text,$summary){
   
   //purge cache on add by updating the purgefile
   if($conf['purgeonadd'] && (!$old || $del)){
-    io_saveFile($conf['datadir'].'/_cache/purgefile',time());
+    io_saveFile($conf['cachedir'].'/purgefile',time());
   }
 }
 
@@ -807,6 +807,12 @@ function check(){
     msg('Mediadir is writable',1);
   }else{
     msg('Mediadir is not writable',-1);
+  }
+
+  if(is_writable($conf['cachedir'])){
+    msg('Cachedir is writable',1);
+  }else{
+    msg('Cachedir is not writable',-1);
   }
 
   if(is_writable(DOKU_INC.'conf/users.auth.php')){
