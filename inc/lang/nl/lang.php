@@ -31,10 +31,12 @@ $lang['btn_admin']  = 'Beheer';
 $lang['btn_update'] = 'Bijwerken';
 $lang['btn_delete'] = 'Verwijder';
 $lang['btn_back']   = 'Terug';
+$lang['btn_backtomedia'] = 'Terug naar Bestand selectie';
 
 $lang['loggedinas'] = 'Ingelogd als';
 $lang['user']       = 'Gebruikersnaam';
 $lang['pass']       = 'Wachtwoord';
+$lang['passchk']    = 'nogmaals';
 $lang['remember']   = 'Bewaar';
 $lang['fullname']   = 'Volledige naam';
 $lang['email']      = 'E-mail';
@@ -47,6 +49,7 @@ $lang['regsuccess'] = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail 
 $lang['regsuccess2']= 'De gebruiker is aangemaakt.';
 $lang['regmailfail']= 'Het lijkt erop dat het sturen van de wachtwoordmail mislukt is. Neem a.u.b. contact op met de beheerder!';
 $lang['regbadmail'] = 'Het opgegeven e-mailadres lijkt ongeldig - als je denkt dat dit niet klopt neem dan contact op met de beheerder.';
+$lang['regbadpass'] = 'De twee ingevoerde wachtwoorden zijn niet identiek. Probeer het nog eens.';
 $lang['regpwmail']  = 'Je DokuWiki wachtwoord';
 $lang['reghere']    = 'Je hebt nog geen account? Vraag er eentje aan';
 
@@ -67,8 +70,15 @@ $lang['uploadsucc']  = 'Upload geslaagd';
 $lang['uploadfail']  = 'Upload mislukt. Misschien verkeerde permissies?';
 $lang['uploadwrong'] = 'Upload mislukt. Deze file-extensie is verboden';
 $lang['uploadexist'] = 'Bestand bestaat reeds. Er is niets gewijzigd.';
+$lang['deletesucc']  = 'Het bestand "%s" is verwijderd.';
+$lang['deletefail']  = '"%s" kan niet worden verwijderd - controleer permissies.';
+$lang['mediainuse']  = 'Het bestand "%s" is niet verwijderd - het is nog in gebruik.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Beschikbare bestanden in';
+
+$lang['reference']   = 'Referenties voor';
+$lang['ref_inuse']   = 'Het bestand kan niet worden verwijderd, omdat het nog in gebruik is op de volgende pagina\'s:';
+$lang['ref_hidden']  = 'Enkele referenties staan op pagina\'s waarvoor je geen lees permissie hebt';
 
 $lang['hits']       = 'Hits';
 $lang['quickhits']  = 'Overeenkomende pagina namen';
@@ -94,6 +104,7 @@ $lang['qb_alert']   = 'Voer de tekst in die je wilt opmaken.\nDe tekst wordt toe
 $lang['qb_bold']    = 'Vette tekst';
 $lang['qb_italic']  = 'Cursieve tekst';
 $lang['qb_underl']  = 'Onderstreepte tekst';
+$lang['qb_strike']  = 'Doorgehaalde tekst';
 $lang['qb_code']    = 'Code tekst';
 $lang['qb_h1']      = 'Niveau 1 kop';
 $lang['qb_h2']      = 'Niveau 2 kop';
@@ -126,10 +137,11 @@ $lang['acl_perm8']  = 'Upload';
 $lang['acl_perm16'] = 'Verwijder';
 $lang['acl_new']    = 'Nieuwe regel toevoegen';
 
-$lang['spell_start']= 'Controleer spelling';
-$lang['spell_stop'] = 'Doorgaan met aanpassen';
-$lang['spell_wait'] = 'Even wachten a.u.b...';
-$lang['spell_noerr']= 'Geen fouten gevonden';
-$lang['spell_nosug']= 'Geen suggesties';
+$lang['spell_start'] = 'Controleer spelling';
+$lang['spell_stop']  = 'Doorgaan met aanpassen';
+$lang['spell_wait']  = 'Even wachten a.u.b...';
+$lang['spell_noerr'] = 'Geen fouten gevonden';
+$lang['spell_nosug'] = 'Geen suggesties';
+$lang['spell_change']= 'Wijzig';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
