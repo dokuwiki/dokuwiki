@@ -118,6 +118,12 @@ function tpl_content(){
     case 'admin':
       tpl_admin();
       break;
+    case 'track':
+      html_track();
+      break;
+    case 'ignore':
+      html_ignore();
+      break;
     default:
 			msg("Failed to handle command: ".hsc($ACT),-1); 
   }
@@ -292,6 +298,7 @@ function tpl_getparent($ID){
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 function tpl_button($type){
+  global $ACT;
   global $ID;
   global $NS;
   global $INFO;
@@ -333,6 +340,17 @@ function tpl_button($type){
       break;
     case 'backtomedia':
       print html_backtomedia_button(array('ns' => $NS),'b');
+      break;
+    case 'track':
+      if($conf['useacl'] && $ACT == 'show'){
+        if($_SERVER['REMOTE_USER']){
+          if(tracking($ID,$_SERVER['REMOTE_USER'])){
+            print html_btn('ignore',$ID,'',array('do' => 'ignore',));
+          } else {
+            print html_btn('track',$ID,'',array('do' => 'track',));
+          }
+        }
+      }
       break;
 		default:
 			print '[unknown button type]';
@@ -419,6 +437,17 @@ function tpl_actionlink($type,$pre='',$suf=''){
     case 'admin':
       if($INFO['perm'] == AUTH_ADMIN)
         tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action"');
+      break;
+   case 'track':
+      if($conf['useacl'] && $ACT == 'show'){
+        if($_SERVER['REMOTE_USER']){
+          if(tracking($ID,$_SERVER['REMOTE_USER'])){
+            tpl_link(wl($ID,'do=ignore'),$pre.$lang['btn_ignore'].$suf,'class="action"');
+          } else {
+            tpl_link(wl($ID,'do=track'),$pre.$lang['btn_track'].$suf,'class="action"');
+          }
+        }
+      }
       break;
     default:
       print '[unknown link type]';

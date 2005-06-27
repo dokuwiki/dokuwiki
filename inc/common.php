@@ -621,6 +621,10 @@ function saveWikiText($id,$text,$summary){
   if (empty($text)){
     // remove empty files
     @unlink($file);
+    $mfile=wikiMN($id);
+    if (file_exists($mfile)) {
+      @unlink($mfile);
+    }
     $del = true;
     //autoset summary on deletion
     if(empty($summary)) $summary = $lang['deleted'];
@@ -673,7 +677,15 @@ function notify($id,$rev="",$summary=""){
   global $lang;
   global $conf;
   $hdrs ='';
-  if(empty($conf['notify'])) return; //notify enabled?
+
+  $mlist = array();
+
+  $file=wikiMN($id);
+  if (file_exists($file)) {
+    $mlist = file($file);
+  }
+
+  if(empty($conf['notify']) && count($mlist) == 0) return; //notify enabled?
   
   $text = rawLocale('mailtext');
   $text = str_replace('@DATE@',date($conf['dformat']),$text);
@@ -701,7 +713,25 @@ function notify($id,$rev="",$summary=""){
   $text = str_replace('@DIFF@',$diff,$text);
   $subject = '['.$conf['title'].'] '.$subject;
 
-  mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
+  $bcc = '';
+  if(count($mlist) > 0) {
+    foreach ($mlist as $who) {
+      $who = rtrim($who);
+      $info = auth_getUserData($who);
+      $level = auth_aclcheck($id,$who,$info['grps']);
+      if ($level >= AUTH_READ) {
+        if (strcasecmp($info['mail'],$conf['notify']) != 0) {
+          if (empty($bcc)) {
+            $bcc = $info['mail'];
+          } else {
+            $bcc = "$bcc,".$info['mail'];
+          }
+        }
+      }
+    }
+  }
+
+  mail_send($conf['notify'],$subject,$text,$conf['mailfrom'],'',$bcc);
 }
 
 /**
@@ -891,5 +921,23 @@ function check(){
   }
 }
 
+/**
+ * Let us know if a user is tracking a page
+ *
+ * @author Steven Danz <steven-danz@kc.rr.com>
+ */
+function tracking($id,$uid){
+  $file=wikiMN($id);
+  if (file_exists($file)) {
+    $mlist = file($file);
+    foreach ($mlist as $who) {
+      $who = rtrim($who);
+      if ($who==$uid) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

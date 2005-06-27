@@ -34,6 +34,10 @@ function act_dispatch(){
   //login stuff
   if(in_array($ACT,array('login','logout')))
     $ACT = act_auth($ACT);
+
+  //check if user is asking to track a page
+  if($ACT == 'track' || $ACT == 'ignore')
+    $ACT = act_track($ACT);
  
   //check permissions
   $ACT = act_permcheck($ACT);
@@ -102,7 +106,7 @@ function act_clean($act){
 
   if(array_search($act,array('login','logout','register','save','edit',
                              'preview','search','show','check','index','revisions',
-                             'diff','recent','backlink','admin',)) === false
+                             'diff','recent','backlink','admin','track','ignore',)) === false
      && substr($act,0,7) != 'export_' ) {
     msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
@@ -264,6 +268,38 @@ function act_export($act){
   }
 
 
+
+  return 'show';
+}
+
+/**
+ * Handle 'track', 'ignore'
+ *
+ * @author Steven Danz <steven-danz@kc.rr.com>
+ */
+function act_track($act){
+  global $ID;
+  global $INFO;
+
+  $tracking = tracking($ID, $_SERVER['REMOTE_USER']);
+  $file=wikiMN($ID);
+  if ($act=='track' && !$tracking){
+    if ($INFO['userinfo']['mail']){
+      if (io_appendFile($file,$_SERVER['REMOTE_USER']."\n")) {
+        msg('Added '.$INFO['userinfo']['name'].' to tracking list for '.$ID,0);
+      } else {
+        msg('Error adding '.$INFO['userinfo']['name'].' to tracking list for '.$ID,0);
+      }
+    } else {
+      msg('There is no address associated with your login, you cannot be added to the tracking list',-1);
+    }
+  } elseif ($act=='ignore' && $tracking){
+    if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
+      msg('Removed '.$INFO['userinfo']['name'].' from the tracking list for '.$ID,0);
+    } else {
+      msg('Error removing '.$INFO['userinfo']['name'].' to tracking list for '.$ID,0);
+    }
+  }
 
   return 'show';
 }

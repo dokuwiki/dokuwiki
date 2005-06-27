@@ -80,6 +80,88 @@ function io_saveFile($file,$content){
 }
 
 /**
+ * Appends $content to $file.
+ *
+ * Uses gzip if extension is .gz
+ *
+ * @author Steven Danz <steven-danz@kc.rr.com>
+ * @return bool true on success
+ */
+function io_appendFile($file,$content){
+  io_makeFileDir($file);
+  io_lock($file);
+  if(substr($file,-3) == '.gz'){
+    $fh = @gzopen($file,'ab9');
+    if(!$fh){
+      msg("Appending to $file failed",-1);
+      return false;
+    }
+    gzwrite($fh, $content);
+    gzclose($fh);
+  }else{
+    $fh = @fopen($file,'ab');
+    if(!$fh){
+      msg("Appending to $file failed",-1);
+      return false;
+    }
+    fwrite($fh, $content);
+    fclose($fh);
+  }
+  io_unlock($file);
+  return true;
+}
+
+/**
+ * Delete exact match for $content from $file.
+ *
+ * Uses gzip if extension is .gz
+ *
+ * @author Steven Danz <steven-danz@kc.rr.com>
+ * @return bool true on success
+ */
+function io_deleteFromFile($file,$remove){
+  if (@file_exists($file)) {
+    io_lock($file);
+    $content = '';
+    if(substr($file,-3) == '.gz'){
+      $mlist = gzfile($file);
+    }else{
+      $mlist = file($file);
+    }
+    foreach ($mlist as $entry) {
+      if ($entry != $remove) {
+        $content = $content . $entry;
+      }
+    }
+
+    if (!empty($content)) {
+      if(substr($file,-3) == '.gz'){
+        $fh = @gzopen($file,'wb9');
+        if(!$fh){
+          msg("Removing content from $file failed",-1);
+          return false;
+        }
+        gzwrite($fh, $content);
+        gzclose($fh);
+      }else{
+        $fh = @fopen($file,'wb');
+        if(!$fh){
+          msg("Removing content from $file failed",-1);
+          return false;
+        }
+        fwrite($fh, $content);
+        fclose($fh);
+      }
+    } else {
+      @unlink($file);
+    }
+
+    io_unlock($file);
+  }
+  return true;
+}
+
+/**
  * Tries to lock a file
  *
  * Locking is only done for io_savefile and uses directories

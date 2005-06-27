@@ -131,6 +131,21 @@ function wikiFN($id,$rev=''){
 }
 
 /**
+ * returns the full path to the mailist specified by ID
+ *
+ * The filename is URL encoded to protect Unicode chars
+ *
+ * @author Steven Danz <steven-danz@kc.rr.com>
+ */
+function wikiMN($id){
+  global $conf;
+  $id = cleanID($id);
+  $id = str_replace(':','/',$id);
+  $fn = $conf['metadir'].'/'.utf8_encodeFN($id).'.mlist';
+  return $fn;
+}
+
+/**
  * returns the full path to the mediafile specified by ID
  *
  * The filename is URL encoded to protect Unicode chars
