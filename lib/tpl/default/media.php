@@ -42,7 +42,7 @@
   <div class="mediaselect">
 
     <div class="mediaselect-left">
-      <b><a href="<?php echo DOKU_BASE?>/lib/exe/media.php?ns="><?php echo hsc($lang['namespaces'])?></a></b>
+      <b><a href="<?php echo DOKU_BASE?>lib/exe/media.php?ns="><?php echo hsc($lang['namespaces'])?></a></b>
 
 			<?php tpl_medianamespaces()?>
 		</div>
