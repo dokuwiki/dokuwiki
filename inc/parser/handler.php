@@ -224,15 +224,25 @@ class Doku_Handler {
     }
     
     function php($match, $state, $pos) {
+	    global $conf;
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->_addCall('php',array($match), $pos);
+			if ($conf['phpok']) {
+	            $this->_addCall('php',array($match), $pos);
+			} else {
+				$this->_addCall('file',array($match), $pos);
+			}
         }
         return TRUE;
     }
     
     function html($match, $state, $pos) {
+	    global $conf;
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->_addCall('html',array($match), $pos);
+	        if($conf['htmlok']){
+	            $this->_addCall('html',array($match), $pos);
+			} else {
+				$this->_addCall('file',array($match), $pos);
+			}
         }
         return TRUE;
     }
@@ -1198,20 +1208,20 @@ class Doku_Handler_Block {
     // Blocks these should not be inside paragraphs
     var $blockOpen = array(
             'header',
-            'listu_open','listo_open','listitem_open',
+            'listu_open','listo_open','listitem_open','listcontent_open',
             'table_open','tablerow_open','tablecell_open','tableheader_open',
             'quote_open',
             'section_open', // Needed to prevent p_open between header and section_open
-            'code','file','php','html','hr','preformatted',
+            'code','file','hr','preformatted',
         );
     
     var $blockClose = array(
             'header',
-            'listu_close','listo_close','listitem_close',
+            'listu_close','listo_close','listitem_close','listcontent_close',
             'table_close','tablerow_close','tablecell_close','tableheader_close',
             'quote_close',
             'section_close', // Needed to prevent p_close after section_close
-            'code','file','php','html','hr','preformatted',
+            'code','file','hr','preformatted',
         );
     
     // Stacks can contain paragraphs
