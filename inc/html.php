@@ -51,27 +51,27 @@ function html_login(){
   print p_locale_xhtml('login');
   ?>
     <div align="center">
-    <form action="<?=script()?>" accept-charset="<?=$lang['encoding']?>" method="post">
+    <form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
       <fieldset>
-        <legend><?=$lang['btn_login']?></legend>
-        <input type="hidden" name="id" value="<?=$ID?>" />
+        <legend><?php echo $lang['btn_login']?></legend>
+        <input type="hidden" name="id" value="<?php echo $ID?>" />
         <input type="hidden" name="do" value="login" />
         <label>
-          <span><?=$lang['user']?></span>
-          <input type="text" name="u" value="<?=formText($_REQUEST['u'])?>" class="edit" />
+          <span><?php echo $lang['user']?></span>
+          <input type="text" name="u" value="<?php echo formText($_REQUEST['u'])?>" class="edit" />
         </label><br />
         <label>
-          <span><?=$lang['pass']?></span>
+          <span><?php echo $lang['pass']?></span>
           <input type="password" name="p" class="edit" />
         </label><br />
-        <input type="submit" value="<?=$lang['btn_login']?>" class="button" />
+        <input type="submit" value="<?php echo $lang['btn_login']?>" class="button" />
         <label for="remember" class="simple">
           <input type="checkbox" name="r" id="remember" value="1" />
-          <span><?=$lang['remember']?></span>
+          <span><?php echo $lang['remember']?></span>
         </label>
       </fieldset>
     </form>
-  <?
+  <?php
     if($conf['openregister']){
       print '<p>';
       print $lang['reghere'];
@@ -80,7 +80,7 @@ function html_login(){
     }
   ?>
     </div>
-  <?
+  <?php
 /*
  FIXME provide new hook
   if(@file_exists('includes/login.txt')){
@@ -708,15 +708,15 @@ function html_diff($text='',$intro=true){
     <table class="diff" width="100%">
       <tr>
         <td colspan="2" width="50%" class="diff-header">
-          <?=$left?>
+          <?php echo $left?>
         </td>
         <td colspan="2" width="50%" class="diff-header">
-          <?=$right?>
+          <?php echo $right?>
         </td>
       </tr>
-      <?=$tdf->format($df)?>
+      <?php echo $tdf->format($df)?>
     </table>
-  <?
+  <?php
 }
 
 /**
@@ -730,18 +730,18 @@ function html_conflict($text,$summary){
 
   print p_locale_xhtml('conflict');
   ?>
-  <form name="editform" method="post" action="<?=script()?>" accept-charset="<?=$lang['encoding']?>">
-  <input type="hidden" name="id" value="<?=$ID?>" />
-  <input type="hidden" name="wikitext" value="<?=formText($text)?>" />
-  <input type="hidden" name="summary" value="<?=formText($summary)?>" />
+  <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
+  <input type="hidden" name="id" value="<?php echo $ID?>" />
+  <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
+  <input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
   
   <div align="center">
-    <input class="button" type="submit" name="do" value="<?=$lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
-    <input class="button" type="submit" name="do" value="<?=$lang['btn_cancel']?>" />
+    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
+    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" />
   </div>
   </form>
   <br /><br /><br /><br />
-  <?
+  <?php
 }
 
 /**
@@ -774,25 +774,25 @@ function html_register(){
   print p_locale_xhtml('register');
 ?>
   <div align="center">
-  <form name="register" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
+  <form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
   <input type="hidden" name="do" value="register" />
   <input type="hidden" name="save" value="1" />
   <fieldset>
-    <legend><?=$lang['register']?></legend>
+    <legend><?php echo $lang['register']?></legend>
     <label>
-      <?=$lang['user']?>
-      <input type="text" name="login" class="edit" size="50" value="<?=formText($_POST['login'])?>" />
+      <?php echo $lang['user']?>
+      <input type="text" name="login" class="edit" size="50" value="<?php echo formText($_POST['login'])?>" />
     </label><br />
     
     <?php
       if (!$conf['autopasswd']) {
     ?>
       <label>
-        <?=$lang['pass']?>
+        <?php echo $lang['pass']?>
         <input type="password" name="pass" class="edit" size="50" />
       </label><br />
       <label>
-        <?=$lang['passchk']?>
+        <?php echo $lang['passchk']?>
         <input type="password" name="passchk" class="edit" size="50" />
       </label><br />
     <?php
@@ -800,18 +800,18 @@ function html_register(){
     ?>
 
     <label>
-      <?=$lang['fullname']?>
-      <input type="text" name="fullname" class="edit" size="50" value="<?=formText($_POST['fullname'])?>" />
+      <?php echo $lang['fullname']?>
+      <input type="text" name="fullname" class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
     </label><br />
     <label>
-      <?=$lang['email']?>
-      <input type="text" name="email" class="edit" size="50" value="<?=formText($_POST['email'])?>" />
+      <?php echo $lang['email']?>
+      <input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
     </label><br />
-    <input type="submit" class="button" value="<?=$lang['register']?>" />
+    <input type="submit" class="button" value="<?php echo $lang['register']?>" />
   </fieldset>
   </form>
   </div>
-<?
+<?php
 }
 
 /**
@@ -864,49 +864,49 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
   
 ?>
-  <form name="editform" method="post" action="<?=script()?>" accept-charset="<?=$lang['encoding']?>" onsubmit="return svchk()">
-  <input type="hidden" name="id"   value="<?=$ID?>" />
-  <input type="hidden" name="rev"  value="<?=$REV?>" />
-  <input type="hidden" name="date" value="<?=$DATE?>" />
-  <input type="hidden" name="prefix" value="<?=formText($PRE)?>" />
-  <input type="hidden" name="suffix" value="<?=formText($SUF)?>" />
+  <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" onsubmit="return svchk()">
+  <input type="hidden" name="id"   value="<?php echo $ID?>" />
+  <input type="hidden" name="rev"  value="<?php echo $REV?>" />
+  <input type="hidden" name="date" value="<?php echo $DATE?>" />
+  <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
+  <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
   <table style="width:99%">
     <tr>
       <td class="toolbar" colspan="2">
-        <?if($wr){?>
+        <?php if($wr){?>
         <script language="javascript" type="text/javascript" charset="utf-8">
-          <?/* sets changed to true when previewed */?>
-          textChanged = <? ($pr) ? print 'true' : print 'false' ?>;
+          <?php /* sets changed to true when previewed */?>
+          textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
           
-          formatButton('bold.png','<?=$lang['qb_bold']?>','**','**','<?=$lang['qb_bold']?>','b');
-          formatButton('italic.png','<?=$lang['qb_italic']?>',"\/\/","\/\/",'<?=$lang['qb_italic']?>','i');
-          formatButton('underline.png','<?=$lang['qb_underl']?>','__','__','<?=$lang['qb_underl']?>','u');
-          formatButton('code.png','<?=$lang['qb_code']?>','\'\'','\'\'','<?=$lang['qb_code']?>','c');
-          formatButton('strike.png','<?=$lang['qb_strike']?>','<del>','<\/del>','<?=$lang['qb_strike']?>','d');
+          formatButton('bold.png','<?php echo $lang['qb_bold']?>','**','**','<?php echo $lang['qb_bold']?>','b');
+          formatButton('italic.png','<?php echo $lang['qb_italic']?>',"\/\/","\/\/",'<?php echo $lang['qb_italic']?>','i');
+          formatButton('underline.png','<?php echo $lang['qb_underl']?>','__','__','<?php echo $lang['qb_underl']?>','u');
+          formatButton('code.png','<?php echo $lang['qb_code']?>','\'\'','\'\'','<?php echo $lang['qb_code']?>','c');
+          formatButton('strike.png','<?php echo $lang['qb_strike']?>','<del>','<\/del>','<?php echo $lang['qb_strike']?>','d');
 
-          formatButton('fonth1.png','<?=$lang['qb_h1']?>','====== ',' ======\n','<?=$lang['qb_h1']?>','1');
-          formatButton('fonth2.png','<?=$lang['qb_h2']?>','===== ',' =====\n','<?=$lang['qb_h2']?>','2');
-          formatButton('fonth3.png','<?=$lang['qb_h3']?>','==== ',' ====\n','<?=$lang['qb_h3']?>','3');
-          formatButton('fonth4.png','<?=$lang['qb_h4']?>','=== ',' ===\n','<?=$lang['qb_h4']?>','4');
-          formatButton('fonth5.png','<?=$lang['qb_h5']?>','== ',' ==\n','<?=$lang['qb_h5']?>','5');
+          formatButton('fonth1.png','<?php echo $lang['qb_h1']?>','====== ',' ======\n','<?php echo $lang['qb_h1']?>','1');
+          formatButton('fonth2.png','<?php echo $lang['qb_h2']?>','===== ',' =====\n','<?php echo $lang['qb_h2']?>','2');
+          formatButton('fonth3.png','<?php echo $lang['qb_h3']?>','==== ',' ====\n','<?php echo $lang['qb_h3']?>','3');
+          formatButton('fonth4.png','<?php echo $lang['qb_h4']?>','=== ',' ===\n','<?php echo $lang['qb_h4']?>','4');
+          formatButton('fonth5.png','<?php echo $lang['qb_h5']?>','== ',' ==\n','<?php echo $lang['qb_h5']?>','5');
 
-          formatButton('link.png','<?=$lang['qb_link']?>','[[',']]','<?=$lang['qb_link']?>','l');
-          formatButton('extlink.png','<?=$lang['qb_extlink']?>','[[',']]','http://www.example.com|<?=$lang['qb_extlink']?>');
+          formatButton('link.png','<?php echo $lang['qb_link']?>','[[',']]','<?php echo $lang['qb_link']?>','l');
+          formatButton('extlink.png','<?php echo $lang['qb_extlink']?>','[[',']]','http://www.example.com|<?php echo $lang['qb_extlink']?>');
 
-          formatButton('list.png','<?=$lang['qb_ol']?>','  - ','\n','<?=$lang['qb_ol']?>');
-          formatButton('list_ul.png','<?=$lang['qb_ul']?>','  * ','\n','<?=$lang['qb_ul']?>');
+          formatButton('list.png','<?php echo $lang['qb_ol']?>','  - ','\n','<?php echo $lang['qb_ol']?>');
+          formatButton('list_ul.png','<?php echo $lang['qb_ul']?>','  * ','\n','<?php echo $lang['qb_ul']?>');
 
-          insertButton('rule.png','<?=$lang['qb_hr']?>','----\n');
-          mediaButton('image.png','<?=$lang['qb_media']?>','m','<?=$INFO['namespace']?>');
+          insertButton('rule.png','<?php echo $lang['qb_hr']?>','----\n');
+          mediaButton('image.png','<?php echo $lang['qb_media']?>','m','<?php echo $INFO['namespace']?>');
 
-          <?
+          <?php
           if($conf['useacl'] && $_SERVER['REMOTE_USER']){
             echo "insertButton('sig.png','".$lang['qb_sig']."','".html_signature()."','y');";
           }
           ?>
         </script>
         <span id="spell_action"></span>
-        <?}?>
+        <?php } ?>
       </td>
       <td>
         <div id="spell_suggest"></div>
@@ -915,42 +915,42 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     <tr>
       <td colspan="3">
         <div id="spell_result"></div>
-        <textarea name="wikitext" id="wikitext" <?=$ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?="\n".formText($text)?></textarea>
+        <textarea name="wikitext" id="wikitext" <?php echo $ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?php echo "\n".formText($text)?></textarea>
       </td>
     </tr>
     <tr id="wikieditbar">
       <td>
-      <?if($wr){?>
-        <input class="button" type="submit" name="do" value="<?=$lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="3" />
-        <input class="button" type="submit" name="do" value="<?=$lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
-        <input class="button" type="submit" name="do" value="<?=$lang['btn_cancel']?>" tabindex="5" />
-      <?}?>
+      <?php if($wr){?>
+        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="3" />
+        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
+        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
+      <?php } ?>
       </td>
       <td>
-      <?if($wr){?>
-        <?=$lang['summary']?>:
-        <input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?=formText($SUM)?>" tabindex="2" />
-      <?}?>
+      <?php if($wr){ ?>
+        <?php echo $lang['summary']?>:
+        <input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?php echo formText($SUM)?>" tabindex="2" />
+      <?php }?>
       </td>
       <td align="right">
         <script language="javascript" type="text/javascript" charset="utf-8">
           showSizeCtl();
-          <?if($wr){?>
-            init_locktimer(<?=$conf['locktime']-60?>,'<?=$lang['willexpire']?>');
+          <?php if($wr){ ?>
+            init_locktimer(<?php echo $conf['locktime']-60?>,'<?php echo $lang['willexpire']?>');
 
             //initialize spellchecker
-            <?if($conf['spellchecker']){?>
-              ajax_spell.init('<?=$lang['spell_start']?>','<?=$lang['spell_stop']?>','<?=$lang['spell_wait']?>','<?=$lang['spell_noerr']?>','<?=$lang['spell_nosug']?>','<?=$lang['spell_change']?>');
-            <?}?>
+            <?php if($conf['spellchecker']){ ?>
+              ajax_spell.init('<?php echo $lang['spell_start']?>','<?php echo $lang['spell_stop']?>','<?php echo $lang['spell_wait']?>','<?php echo $lang['spell_noerr']?>','<?php echo $lang['spell_nosug']?>','<?php echo $lang['spell_change']?>');
+            <?php } ?>
 
             document.editform.wikitext.focus();
-          <?}?>
+          <?php } ?>
         </script>
       </td>
     </tr>
   </table>
   </form>
-<?
+<?php
 }
 
 /**
