@@ -16,6 +16,8 @@ $lang['btn_search'] = 'Paieška';
 $lang['btn_save']   = 'Išsaugoti';
 $lang['btn_preview']= 'Peržiūra';
 $lang['btn_top']    = 'Į viršų';
+$lang['btn_newer']  = '<< naujesnė';
+$lang['btn_older']  = 'senesnė >>';
 $lang['btn_revs']   = 'Senos versijos';
 $lang['btn_recent'] = 'Naujausi keitimai';
 $lang['btn_upload'] = 'Atsiųsti bylą';
@@ -27,10 +29,13 @@ $lang['btn_logout'] = 'Atsijungti';
 $lang['btn_admin']  = 'Administracija';
 $lang['btn_update'] = 'Atnaujinti';
 $lang['btn_delete'] = 'Ištrinti';
+$lang['btn_back']   = 'Atgal';
+$lang['btn_backtomedia'] = 'Atgal į Mediabylos išsirinkimą';
 
 $lang['loggedinas'] = 'Prisijungęs kaip';
 $lang['user']       = 'Vartotojo vardas';
 $lang['pass']       = 'Slaptažodis';
+$lang['passchk']    = 'dar kartą';
 $lang['remember']   = 'Prisiminti mane';
 $lang['fullname']   = 'Visas vardas';
 $lang['email']      = 'El. pašto adresas';
@@ -40,13 +45,16 @@ $lang['badlogin']   = 'Nurodėte blogą vartotojo vardą arba slaptažodį.';
 $lang['regmissing'] = 'Turite užpildyti visus laukus.';
 $lang['reguexists'] = 'Vartotojas su pasirinktu prisijungimo vardu jau egzistuoja.';
 $lang['regsuccess'] = 'Vartotojas sukurtas, slaptažodis išsiųstas el. paštu.';
+$lang['regsuccess2']= 'Vartotojas sukurtas.';
 $lang['regmailfail']= 'Siunčiant slaptažodį el. paštu įvyko klaida - susisiekite su administracija!';
 $lang['regbadmail'] = 'Nurodytas el. pašto adresas yra neteisingas - jei manote, kad tai klaida, susisiekite su administracija';
+$lang['regbadpass'] = 'Įvesti slaptažodžiai nesutampa, bandykite dar kartą.';
 $lang['regpwmail']  = 'Jūsų DokuWiki slaptažodis';
 $lang['reghere']    = 'Dar neužsiregistravote? Padarykite tai dabar';
 
 $lang['txt_upload']   = 'Išsirinkite atsiunčiamą bylą';
 $lang['txt_filename'] = 'Įveskite wikivardą (nebūtina)';
+$lang['txt_overwrt']  = 'Perrašyti egzistuojančią bylą';
 $lang['lockedby']     = 'Užrakintas vartotojo';
 $lang['lockexpire']   = 'Užraktas bus nuimtas';
 $lang['willexpire']   = 'Šio puslapio redagavimo užrakto galiojimo laikas baigsis po minutės.\nNorėdami išvengti nesklandumų naudokite peržiūros mygtuką ir užraktas atsinaujins.';
@@ -60,8 +68,16 @@ $lang['fileupload']  = 'Mediabylos atsiuntimas';
 $lang['uploadsucc']  = 'Atsiuntimas pavyko';
 $lang['uploadfail']  = 'Atsiuntimas nepavyko. Blogi priėjimo leidimai??';
 $lang['uploadwrong'] = 'Atsiuntimas atmestas. Bylos tipas neleistinas';
+$lang['uploadexist'] = 'Tokia byla jau egzistuoja. Veiksmai atšaukti.';
+$lang['deletesucc']  = 'Byla "%s" ištrinta.';
+$lang['deletefail']  = 'Byla "%s" negali būti ištrinta - patikrinkite leidimus.';
+$lang['mediainuse']  = 'Byla "%s" nebuvo ištrinta - ji vis dar naudojama.';
 $lang['namespaces']  = 'Pavadinimai';
 $lang['mediafiles']  = 'Prieinamos bylos';
+
+$lang['reference']   = 'Paminėjimai';
+$lang['ref_inuse']   = 'Byla negali būti ištrinta, nes ji vis dar yra naudojama šiuose puslapiuose:';
+$lang['ref_hidden']  = 'Kai kurie paminėjimai yra puslapiuose, kurių jums neleista skaityti.';
 
 $lang['hits']       = 'Atidarymai';
 $lang['quickhits']  = 'Sutampantys pavadinimai';
@@ -88,6 +104,7 @@ $lang['qb_bold']    = 'Pusjuodis';
 $lang['qb_italic']  = 'Kursyvas';
 $lang['qb_underl']  = 'Pabrauktas';
 $lang['qb_code']    = 'Kodas';
+$lang['qb_strike']  = 'Perbraukta';
 $lang['qb_h1']      = 'Pirmo lygio antraštė';
 $lang['qb_h2']      = 'Antro lygio antraštė';
 $lang['qb_h3']      = 'Trečio lygio antraštė';
@@ -104,6 +121,7 @@ $lang['qb_sig']     = 'Įterpti parašą';
 $lang['del_confirm']= 'Ištrinti šį įrašą?';
 
 $lang['admin_acl']  = 'Priėjimo Kontrolės Sąrašų valdymas...';
+$lang['admin_register']= 'Sukurti naują vartotoją...';
 
 $lang['acl_group']  = 'Grupė';
 $lang['acl_user']   = 'Vartotojas';
@@ -115,4 +133,14 @@ $lang['acl_perm1']  = 'Skaityti';
 $lang['acl_perm2']  = 'Redaguoti';
 $lang['acl_perm4']  = 'Sukurti';
 $lang['acl_perm8']  = 'Atsiųsti';
+$lang['acl_perm16'] = 'Ištrinti';
 $lang['acl_new']    = 'Pridėti naują įrašą';
+
+$lang['spell_start'] = 'Patikrinti rašybą';
+$lang['spell_stop']  = 'Tęsti redagavimą';
+$lang['spell_wait']  = 'Prašau palaukti...';
+$lang['spell_noerr'] = 'Klaidų nerasta';
+$lang['spell_nosug'] = 'Taisymo pasiūlymų nėra';
+$lang['spell_change']= 'Keisti';
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :
