@@ -50,6 +50,10 @@ function getAcronyms() {
   static $acronyms = NULL;
   if ( !$acronyms ) {
     $acronyms = confToHash(DOKU_INC . 'conf/acronyms.conf');
+    if (@file_exists(DOKU_INC . 'conf/local.acronyms.conf')) {
+      $local = confToHash(DOKU_INC . 'conf/local.acronyms.conf');
+      $acronyms = array_merge($acronyms, $local);
+    }
   }
   return $acronyms;
 }
