@@ -2,7 +2,7 @@
 /**
  * UTF8 helper functions
  *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @license    LGPL (http://www.gnu.org/copyleft/lesser.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
