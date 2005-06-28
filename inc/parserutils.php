@@ -68,7 +68,7 @@ function p_locale_xhtml($id){
 function p_cached_xhtml($file){
   global $conf;
   $cache  = getCacheName($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.xhtml');
-  $purge  = $conf['datadir'].'/_cache/purgefile';
+  $purge  = $conf['cachedir'].'/purgefile';
 
   // check if cache can be used
   $cachetime = @filemtime($cache); // 0 if not exists
