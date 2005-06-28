@@ -75,12 +75,18 @@ if(function_exists($call)){
  * spelling errors again.
  *
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function spaceslink($string, $check=""){
   $string = stripslashes($string);
   $check  = stripslashes($check);
-  $result = str_pad($check,utf8_strlen($string)-2," ",STR_PAD_LEFT);
-  return $result."  ";
+
+  $result  = '  '; //opening [[
+  $result .= str_pad('',utf8_strlen($string),' '); 
+  $result .= $check;
+  $result .= '  '; //closing ]]
+
+  return $result;
 }
 
 /**
@@ -108,17 +114,19 @@ function spell_check() {
   $data = explode("\n",$string);
 
   // don't check links and medialinks for spelling errors
-  $string = preg_replace('/\{\{(.*?)(\|(.*?))?(\}\})/e','spaceslink("\\0","\\3")',$string);
-  $string = preg_replace('/\[\[(.*?)(\|(.*?))?(\]\])/e','spaceslink("\\0","\\3")',$string);
+  $string = preg_replace('/\{\{(.*?)(\|(.*?))?(\}\})/e','spaceslink("\\1","\\2")',$string);
+  $string = preg_replace('/\[\[(.*?)(\|(.*?))?(\]\])/e','spaceslink("\\1","\\2")',$string);
 
   // run aspell in terse sgml mode
   if(!$spell->runAspell($string,$out,$err,array('!','+html'))){
-  //if(!$spell->runAspell($string,$out,$err)){
     print '2'; //to indicate an error
     print "An error occured while trying to run the spellchecker:\n";
     print $err;
     return;
   }
+
+  #use this to debug raw aspell output
+  #print "1$out"; return;
 
   // go through the result
   $lines = split("\n",$out);
