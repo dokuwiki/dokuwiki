@@ -1,0 +1,2 @@
+Labo lapu un uzklikšķini uz ''Saglabāt''. Par lietojamo sintaksi skaties rakstu  [[wiki:syntax]]. Lūdzu labo tika tad, ja vari lapu **uzlabot**. Ja gribi tikai kaut ko izmēģināt, izmanto [[wiki:playground|smilšukasti]].
+

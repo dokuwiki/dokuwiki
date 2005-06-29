@@ -1,0 +1,4 @@
+====== Login ======
+Tu neesi ielogojies! Ievadi savu lietotājvārdu un paroli.
+Pārlukprogrammai jāpieņem //cookies//.
+

@@ -1,0 +1,8 @@
+====== Piekļuves tiesību vadība ======
+
+Šajā lapā var pievienot un dzēst tiesības uz patreizējo lapu un [[doku>wiki:namespaces|nodaļu]] kurā tā atrodas.
+Lai saprastu, kā tās darbojas, Tev jāizlasa [[doku>wiki:acl|oficiālā dokumentācija par piekļuves tiesībām (ACL)]].
+
+Lapa parāda visas tiesības, kas attiecas patreizējo lapu. Tiesības uz citām lapā nav parādītas. Lai mainītu tās, vispirms to   [[this>doku.php?do=index|sameklē]] un tad pārej uz piekļuves tiesību vadību.
+
+
