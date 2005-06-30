@@ -670,6 +670,7 @@ function getRevisions($id){
   $revs = array();
   $clid = cleanID($id);
   if(strrpos($clid,':')) $clid = substr($clid,strrpos($clid,':')+1); //remove path
+  $clid = utf8_encodeFN($clid);
 
   if (is_dir($revd) && $dh = opendir($revd)) {
     while (($file = readdir($dh)) !== false) {
