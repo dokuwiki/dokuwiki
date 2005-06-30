@@ -179,7 +179,7 @@ class Aspell{
             }
 
             // prepare text for Aspell and handle it over
-            $string = "^".str_replace("\n", "\n^",$text)."^\n";
+            $string = "^".str_replace("\n", "\n^",$text);
             fwrite($pipes[0],$string);  // send text to Aspell
             fclose($pipes[0]);
             
