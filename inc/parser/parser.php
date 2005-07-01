@@ -760,7 +760,7 @@ class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
     function connectTo($mode) {
     
         $this->Lexer->addSpecialPattern(
-                    '(?<=\s)\'(?=\S)',$mode,'singlequoteopening'
+                    '(?<=^|\s)\'(?=\S)',$mode,'singlequoteopening'
                 );
         $this->Lexer->addSpecialPattern(
                     '(?<=^|\S)\'',$mode,'singlequoteclosing'
@@ -769,7 +769,7 @@ class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
                     '(?<=^|\s)"(?=\S)',$mode,'doublequoteopening'
                 );
         $this->Lexer->addSpecialPattern(
-                    '(?<=\S)"',$mode,'doublequoteclosing'
+                    '(?<=^|\S)"',$mode,'doublequoteclosing'
                 );
 
     }
