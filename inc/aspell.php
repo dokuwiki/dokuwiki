@@ -72,6 +72,7 @@ class Aspell{
     var $jargon   = null;
     var $encoding = 'iso8859-1';
     var $mode     = PSPELL_NORMAL;
+    var $version  = 0;
     
     var $args='';
 
@@ -195,9 +196,9 @@ class Aspell{
             // versions of Aspell.
             $tmp = array();
             preg_match('/^\@.*Aspell (\d+)\.(\d+).(\d+)/',$out,$tmp);
-            $version = $tmp[1]*1000 + $tmp[2]*10 + $tmp[3];
+            $this->version = $tmp[1]*100 + $tmp[2]*10 + $tmp[3];
             
-            if ($version <= 603)  // version 0.60.3
+            if ($this->version <= 603)  // version 0.60.3
                 $r = $terse ? "\n*\n\$1" : "\n\$1"; // replacement for broken Aspell
             else
                 $r = $terse ? "\n*\n" : "\n";    // replacement for good Aspell

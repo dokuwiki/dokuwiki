@@ -165,8 +165,14 @@ function spell_check() {
     }
 
     $misspell = true;
-    $len  = utf8_strlen($word);
-    $data[$lcnt] = utf8_substr_replace($data[$lcnt],spell_formatword($word,$sug),$off, $len);
+    //aspell < 0.60 returns singlebyte offsets
+    if($spell->version >= 600){
+      $len  = utf8_strlen($word);
+      $data[$lcnt] = utf8_substr_replace($data[$lcnt],spell_formatword($word,$sug),$off, $len);
+    }else{
+      $len  = strlen($word);
+      $data[$lcnt] = substr_replace($data[$lcnt],spell_formatword($word,$sug),$off, $len);
+    }
 
   }//end of output parsing
 
