@@ -178,10 +178,15 @@ function auth_cookiesalt(){
 function auth_logoff(){
   global $conf;
   global $USERINFO;
-  unset($_SESSION[$conf['title']]['auth']['user']);
-  unset($_SESSION[$conf['title']]['auth']['pass']);
-  unset($_SESSION[$conf['title']]['auth']['info']);
-  unset($_SERVER['REMOTE_USER']);
+
+  if(isset($_SESSION[$conf['title']]['auth']['user']))
+    unset($_SESSION[$conf['title']]['auth']['user']);
+  if(isset($_SESSION[$conf['title']]['auth']['pass']))
+    unset($_SESSION[$conf['title']]['auth']['pass']);
+  if(isset($_SESSION[$conf['title']]['auth']['info']))
+    unset($_SESSION[$conf['title']]['auth']['info']);
+  if(isset($_SERVER['REMOTE_USER']))
+    unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
   setcookie(DOKU_COOKIE,'',time()-600000,'/');
 }
