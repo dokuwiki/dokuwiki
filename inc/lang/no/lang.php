@@ -17,8 +17,8 @@ $lang['btn_search'] = 'Søk';
 $lang['btn_save']   = 'Lagre';
 $lang['btn_preview']= 'Forhåndsvis';
 $lang['btn_top']    = 'Til toppen av siden';
-$lang['btn_prevpage']= '<< forrige side';
-$lang['btn_nextpage']= 'neste side >>';
+$lang['btn_newer']= '<< nyere';
+$lang['btn_older']= 'eldre >>';
 $lang['btn_revs']   = 'Historikk';
 $lang['btn_recent'] = 'Siste nytt';
 $lang['btn_upload'] = 'Last opp';
@@ -30,6 +30,8 @@ $lang['btn_logout'] = 'Logg ut';
 $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Oppdater';
 $lang['btn_delete'] = 'Slett';
+$lang['btn_back']   = 'Tilbake';
+$lang['btn_backtomedia']  = 'Tilbake til Valg av Mediafil';
 
 $lang['loggedinas'] = 'Innlogget som';
 $lang['user']       = 'Brukernavn';
@@ -53,6 +55,7 @@ $lang['reghere']    = 'Har du ikke konto ennå? Skaff deg en';
 
 $lang['txt_upload']   = 'Velg fil som du vil laste opp';
 $lang['txt_filename'] = 'Angi wikinavn (ikke obligatorisk)';
+$lang['txt_overwrt']  = 'Overskriv eksisterende fil';
 $lang['lockedby']     = 'Stengt av';
 $lang['lockexpire']   = 'Avstengningen opphører';
 $lang['willexpire']   = 'Din redigeringslås for dette dokumentet kommer snart til å opphøre.\nFor å unngå versjonskonflikter bør du forhåndsvise ditt dokument for å forlenge redigeringslåsen.';
@@ -61,13 +64,21 @@ $lang['notsavedyet'] = 'Det fins endringer som ikke er lagret.\nEr du sikker på
 $lang['rssfailed']   = 'En feil oppstod da denne RSS-kilden skulle hentes: ';
 $lang['nothingfound']= 'Ingen data.';
 
-$lang['mediaselect'] = 'Valg av mediadokument';
+$lang['mediaselect'] = 'Valg av mediafil';
 $lang['fileupload']  = 'Mediafil lastet opp';
 $lang['uploadsucc']  = 'Overføringen var vellykket';
 $lang['uploadfail']  = 'Overføringen var mislykket, feil rettigheter?';
-$lang['uploadwrong'] = 'Overføringen ble nektet. Denne filendelsen er ikke tillatt.';
+$lang['uploadwrong'] = 'Overføringen ble nektet. Denne filendelsen er ikke tillatt.';;
+$lang['uploadexist'] = 'Filen eksisterer. Ingen handling gjort.';
+$lang['deletesucc']  = 'Filen "%s" har blitt slettet.';
+$lang['deletefail']  = '"%s" kunne ikke bli slettet - sjekk rettighetene.';
+$lang['mediainuse']  = 'Filen "%s" har ikke blitt slettet - den er fortsatt i bruk.';
 $lang['namespaces']  = 'Wikinavn';
 $lang['mediafiles']  = 'Tilgjengelige filer ';
+
+$lang['reference']   = 'Referanser for';
+$lang['ref_inuse']   = 'Filen kan ikke slettes fordi den fortsatt blir brukt av førlgende side(r):';
+$lang['ref_hidden']  = 'Noen referanser befinner seg på sider du ikke har tilgang till å lese';
 
 $lang['hits']       = 'Treff';
 $lang['quickhits']  = 'Matchende wikinavn';
@@ -94,6 +105,7 @@ $lang['qb_bold']    = 'Fet tekst';
 $lang['qb_italic']  = 'Kursiv tekst';
 $lang['qb_underl']  = 'Understreket tekst';
 $lang['qb_code']    = 'Kodetekst';
+$lang['qb_strike']  = 'Gjennomstreket tekst';
 $lang['qb_h1']      = 'Nivå 1 Rubrikk';
 $lang['qb_h2']      = 'Nivå 2 Rubrikk';
 $lang['qb_h3']      = 'Nivå 3 Rubrikk';
@@ -122,6 +134,7 @@ $lang['acl_perm1']  = 'Lese';
 $lang['acl_perm2']  = 'Redigere';
 $lang['acl_perm4']  = 'Lage';
 $lang['acl_perm8']  = 'Laste Opp';
+$lang['acl_perm16'] = 'Slette';
 $lang['acl_new']    = 'Legg til Oppføring';
 
 $lang['spell_start'] = 'Sjekk stavelse';
