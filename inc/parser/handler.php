@@ -103,10 +103,8 @@ class Doku_Handler {
             $level = 1;
         }
         
-        // Strip of the marker for the header, based on the level - the rest is the title
-        $iLevels = array_flip($levels);
-        $markerLen = strlen($iLevels[$level]);
-        $title = substr($match, $markerLen, strlen($match)-($markerLen*2));
+        // Strip markers and whitespaces
+        $title = trim($match,'= ');
         
         $this->_addCall('header',array($title,$level,$pos), $pos);
         $this->meta['section'] = TRUE;
