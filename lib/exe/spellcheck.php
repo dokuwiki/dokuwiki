@@ -78,9 +78,6 @@ if(function_exists($call)){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function spaceslink($string, $check=""){
-  $string = stripslashes($string);
-  $check  = stripslashes($check);
-
   $result  = '  '; //opening [[
   $result .= str_pad('',utf8_strlen($string),' '); 
   $result .= $check;
