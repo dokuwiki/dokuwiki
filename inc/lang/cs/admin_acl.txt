@@ -1,0 +1,11 @@
+====== Správa přístupových práv (ACL) ======
+
+Na této stránce můžete přidávat i odebírat oprávnění k aktuální stránce
+i ke všem [[doku>wiki:namespaces|jmenným prostorům]], do nichž náleží.
+Abyste plně porozuměli, jak správa přístupových práv (ACL) funguje,
+přečtěte si [[doku>wiki:acl|oficiální dokumentaci k ACL]].
+
+Na této stránce jsou zobrazeny pouze přístupová práva vztahující se
+ke konkrétní stránce. Práva k ostatním stránkám se zde nezobrazují.
+Pro jejich úpravu proto přejděte nejprve na danou stránku a poté
+zvolte správu přístupových práv.

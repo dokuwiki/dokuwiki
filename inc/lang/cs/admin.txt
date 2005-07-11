@@ -1,0 +1,3 @@
+====== Správa ======
+
+Níže je uveden seznam možností administrace DokuWiki.
