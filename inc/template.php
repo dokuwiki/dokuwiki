@@ -269,17 +269,17 @@ function tpl_button($type){
       print html_editbutton();
       break;
     case 'history':
-      print html_btn(revs,$ID,'o',array('do' => 'revisions'));
+      print html_btn('revs',$ID,'o',array('do' => 'revisions'));
       break;
     case 'recent':
-      print html_btn(recent,'','r',array('do' => 'recent'));
+      print html_btn('recent','','r',array('do' => 'recent'));
       break;
     case 'index':
-      print html_btn(index,$ID,'x',array('do' => 'index'));
+      print html_btn('index',$ID,'x',array('do' => 'index'));
       break;
     case 'back':
       if ($ID = tpl_getparent($ID)) {
-        print html_btn(back,$ID,'b',array('do' => 'show'));
+        print html_btn('back',$ID,'b',array('do' => 'show'));
       }
       break;
     case 'top':
@@ -296,7 +296,7 @@ function tpl_button($type){
       break;
     case 'admin':
       if($INFO['perm'] == AUTH_ADMIN)
-        print html_btn(admin,$ID,'',array('do' => 'admin'));
+        print html_btn('admin',$ID,'',array('do' => 'admin'));
       break;
     case 'backtomedia':
       print html_backtomedia_button(array('ns' => $NS),'b');
