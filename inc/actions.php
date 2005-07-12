@@ -26,13 +26,23 @@ function act_dispatch(){
   //sanitize $ACT
   $ACT = act_clean($ACT);
 
+  //check if searchword was given - else just show
+  if($ACT == 'search' && empty($QUERY)){
+    $ACT = 'show';
+  }
+
+  //login stuff
+  if(in_array($ACT,array('login','logout')))
+    $ACT = act_auth($ACT);
+ 
   //check permissions
   $ACT = act_permcheck($ACT);
 
-  //login stuff
-  if(in_array($ACT,array('login','logout','register')))
-    $ACT = act_auth($ACT);
- 
+  //register
+  if($ACT == 'register' && register()){
+    $ACT = 'login';
+  }
+
   //save
   if($ACT == 'save')
     $ACT = act_save($ACT);
@@ -51,11 +61,6 @@ function act_dispatch(){
   //display some infos
   if($ACT == 'check'){
     check();
-    $ACT = 'show';
-  }
-
-  //check if searchword was given - else just show
-  if($ACT == 'search' && empty($QUERY)){
     $ACT = 'show';
   }
 
@@ -180,7 +185,7 @@ function act_save($act){
 }
 
 /**
- * Handle 'login', 'logout', 'register'
+ * Handle 'login', 'logout'
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -198,11 +203,6 @@ function act_auth($act){
       unlock($ID); //try to unlock 
       
     auth_logoff();
-    return 'login';
-  }
-
-  //handle register
-  if($act=='register' && register()){
     return 'login';
   }
 
