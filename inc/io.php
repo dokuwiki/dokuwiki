@@ -131,9 +131,6 @@ function io_makeFileDir($file){
   global $conf;
 
   $dir = dirname($file);
-  if($conf['safemodehack']){
-    $dir = preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','',$dir);
-  }
   umask($conf['dmask']);
   if(!is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
@@ -155,7 +152,8 @@ function io_mkdir_p($target){
   //recursion
   if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
     if($conf['safemodehack']){
-      return io_mkdir_ftp($target);
+      $dir = preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','', $target);
+      return io_mkdir_ftp($dir);
     }else{
       return @mkdir($target,0777); // crawl back up & create dir tree
     }
@@ -189,13 +187,12 @@ function io_mkdir_ftp($dir){
     return false;
   }
 
-//FIXME silence those commands again!
   //create directory
-  $ok = ftp_mkdir($conn, $dir);
+  $ok = @ftp_mkdir($conn, $dir);
   //set permissions (using the directory umask)
-  ftp_site($conn,sprintf("CHMOD %04o %s",(0777 - $conf['dmask']),$dir));
+  @ftp_site($conn,sprintf("CHMOD %04o %s",(0777 - $conf['dmask']),$dir));
 
-  ftp_close($conn);
+  @ftp_close($conn);
   return $ok;
 }
 
