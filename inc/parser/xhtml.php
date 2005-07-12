@@ -349,7 +349,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $geshi->set_encoding('utf-8');
             $geshi->enable_classes();
             $geshi->set_header_type(GESHI_HEADER_PRE);
-            $geshi->set_overall_class('code');
+            $geshi->set_overall_class("code $language");
             $geshi->set_link_target($conf['target']['extern']);
             
             $text = $geshi->parse_code();
