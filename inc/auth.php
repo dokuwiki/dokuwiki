@@ -304,7 +304,8 @@ function auth_aclcheck($id,$user,$groups){
       //we did this already
       //looks like there is something wrong with the ACL
       //break here
-      return $perm;
+      msg('No ACL setup yet! Denying access to everyone.');
+      return AUTH_NONE;
     }
   }while(1); //this should never loop endless
 
