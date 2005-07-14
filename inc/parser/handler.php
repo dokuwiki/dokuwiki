@@ -68,7 +68,7 @@ class Doku_Handler {
         $data = array($match);
         $plugin = null;
         if(plugin_load('syntax',$pluginname,$plugin)){
-            $data = $plugin->handle($match, $state, $pos, $handler);
+            $data = $plugin->handle($match, $state, $pos, $this);
         }
         $this->_addCall('plugin',array($pluginname,$data,$pos),$pos);
         return TRUE;
