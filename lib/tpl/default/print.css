@@ -1,6 +1,6 @@
 
 body {
-  font: 12pt "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+  font: 10pt "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
   background-color: White;
   color: Black;
 }
@@ -86,9 +86,9 @@ h1, h2, h3, h4, h5 {
 /* special headlines */
 h1 {font-size: 160%; font-weight: bold;}
 h2 {font-size: 150%; }
-h3 {font-size: 140%; border-bottom: none; font-weight: bold;}
-h4 {font-size: 120%; border-bottom: none; font-weight: bold;}
-h5 {font-size: 100%; border-bottom: none; font-weight: bold;}
+h3 {font-size: 140%; border-bottom: none; }
+h4 {font-size: 120%; border-bottom: none; }
+h5 {font-size: 100%; border-bottom: none; }
 
 /* embedded images */
 img.media {
@@ -118,10 +118,10 @@ ul {
 
 /* ordered lists */
 ol {
-    line-height: 1.5em;
-    margin: 0 0 1.0em 1.5em;
+    line-height: 1.0em;
+    margin: 0 0 1.0em 1.0em;
     padding: 0;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 /* the list items overriding the ol definition */
@@ -221,3 +221,5 @@ table.inline td {
 }
 
 .toc, .footerinc, .header, .bar, .user {display:none}
+
+#sidebar {display:none}
