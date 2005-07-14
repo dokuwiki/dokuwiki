@@ -7,7 +7,7 @@
  * Release Version: 1.0.6
  * CVS Revision Version: $Revision: 1.1 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/02 04:57:18 $
  *
  * HTML 4.01 strict language file for GeSHi.
  *

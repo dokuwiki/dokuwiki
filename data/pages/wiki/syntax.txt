@@ -1,6 +1,6 @@
 ====== Formatting Syntax ======
 
-[[wiki:DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing the //Edit this page// button at the top or bottom of the page. If you want to try something, just use the [[playground]] page. The simpler markup is easily accessible via [[doku>wiki:quickbuttons|quickbuttons]], too.
+[[wiki:DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing the //Edit this page// button at the top or bottom of the page. If you want to try something, just use the [[playground|playground]] page. The simpler markup is easily accessible via [[doku>wiki:quickbuttons|quickbuttons]], too.
 
 ===== Basic text formatting =====
 
@@ -332,7 +332,7 @@ class HelloWorldApp {
 }
 </code>
 
-The following language strings are currently recognized: //actionscript, ada, apache, asm, asp, bash, caddcl, cadlisp, c, c_mac, cpp, csharp, css, delphi, html4strict, java, javascript, lisp, lua, mpasm, nsis, objc, oobas, oracle8, pascal, perl, php-brief, php, python, qbasic, smarty, sql, vb, vbnet, visualfoxpro, xml//
+The following language strings are currently recognized: //actionscript, ada, apache, asm, asp, bash, caddcl, cadlisp, c, c_mac, cpp, csharp, css, delphi, diff, d, html4strict, java, javascript, lisp, lua, matlab, mpasm, nsis, objc, oobas, oracle8, pascal, perl, php-brief, php, python, qbasic, smarty, sql, vb, vbnet, vhdl, visualfoxpro, xml//
 
 ===== Embedding HTML and PHP =====
 
@@ -360,3 +360,9 @@ echo '<img src="' . $_SERVER['PHP_SELF'] . '?=' . php_logo_guid() . '" alt="PHP 
 </php>
 
 **Please Note**: HTML and PHP embedding is disabled by default in the configuration. If disabled, the code is displayed instead of executed.
+
+===== Syntax Plugins =====
+
+DokuWiki's syntax can be extended by [[doku>wiki:plugins|Plugins]]. How the installed plugins are used is described on their appropriate description pages. The following syntax plugins are available in this particular DokuWiki installation:
+
+~~INFO:syntaxplugins~~

@@ -5,14 +5,16 @@
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2004/08/30
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/14 13:03:15 $
  *
  * Python language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2005/05/26
+ *  -  Modifications by Tim (tim@skreak.com): added more keyword categories, tweaked colors
  * 2004/11/27 (1.0.1)
  *  -  Added support for multiple object splitters
  * 2004/08/30 (1.0.0)
@@ -46,49 +48,127 @@ $language_data = array (
 	'COMMENT_SINGLE' => array(1 => '#'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"'),
-	'ESCAPE_CHAR' => '',
+	'QUOTEMARKS' => array('"', "'", '"""'),
+	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
+
+		/*
+		** Set 1: reserved words
+		** http://python.org/doc/current/ref/keywords.html
+		*/
 		1 => array(
-			'and','assert','break','class','continue','def','del','elif','else','except','exec','finally','for','from',
-			'global','if','import','in','is','lambda','map','not','None','or','pass','print','raise','range','return',
-			'try','while','abs','apply','callable','chr','cmp','coerce','compile','complex','delattr','dir','divmod',
-			'eval','execfile','filter','float','getattr','globals','group','hasattr','hash','hex','',
-			'id','input','int','intern','isinstance','issubclass','joinfields','len','list','local','long',
-			'max','min','match','oct','open','ord','pow','raw_input','reduce','reload','repr','round',
-			'search','setattr','setdefault','slice','str','splitfields','unichr','unicode','tuple','type',
-			'vars','xrange','zip','__abs__','__add__','__and__','__call__','__cmp__','__coerce__',
-			'__del__','__delattr__','__delitem__','__delslice__','__div__','__divmod__',
-			'__float__','__getattr__','__getitem__','__getslice__','__hash__','__hex__',
-			'__iadd__','__isub__','__imod__','__idiv__','__ipow__','__iand__','__ior__','__ixor__',
-			'__ilshift__','__irshift__','__invert__','__int__','__init__','__len__','__long__','__lshift__',
-			'__mod__','__mul__','__neg__','__nonzero__','__oct__','__or__','__pos__','__pow__',
+			'and', 'del', 'for', 'is', 'raise', 'assert', 'elif', 'from', 'lambda', 'return', 'break',
+			'else', 'global', 'not', 'try', 'class', 'except', 'if', 'or', 'while', 'continue', 'exec',
+			'import', 'pass', 'yield', 'def', 'finally', 'in', 'print'
+			),
+
+		/*
+		** Set 2: builtins
+		** http://python.org/doc/current/lib/built-in-funcs.html
+		*/
+		2 => array(
+			'__import__', 'abs', 'basestring', 'bool', 'callable', 'chr', 'classmethod', 'cmp', 
+			'compile', 'complex', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'execfile', 
+			'file', 'filter', 'float', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help',
+			'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'list', 'locals',
+			'long', 'map', 'max', 'min', 'object', 'oct', 'open', 'ord', 'pow', 'property', 'range',
+			'raw_input', 'reduce', 'reload', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice',
+			'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'unichr', 'unicode', 
+			'vars', 'xrange', 'zip',
+			// Built-in constants: http://python.org/doc/current/lib/node35.html
+			'False', 'True', 'None', 'NotImplemented', 'Ellipsis',
+			// Built-in Exceptions: http://python.org/doc/current/lib/module-exceptions.html
+			'Exception', 'StandardError', 'ArithmeticError', 'LookupError', 'EnvironmentError',
+			'AssertionError', 'AttributeError', 'EOFError', 'FloatingPointError', 'IOError',
+			'ImportError', 'IndexError', 'KeyError', 'KeyboardInterrupt', 'MemoryError', 'NameError',
+			'NotImplementedError', 'OSError', 'OverflowError', 'ReferenceError', 'RuntimeError',
+			'StopIteration', 'SyntaxError', 'SystemError', 'SystemExit', 'TypeError',
+			'UnboundlocalError', 'UnicodeError', 'UnicodeEncodeError', 'UnicodeDecodeError',
+			'UnicodeTranslateError', 'ValueError', 'WindowsError', 'ZeroDivisionError', 'Warning',
+			'UserWarning', 'DeprecationWarning', 'PendingDeprecationWarning', 'SyntaxWarning',
+			'RuntimeWarning', 'FutureWarning',
+			// self: this is a common python convention (but not a reserved word)
+			'self'
+			),
+
+		/*
+		** Set 3: standard library
+		** http://python.org/doc/current/lib/modindex.html
+		*/
+		3 => array(
+			'__builtin__', '__future__', '__main__', '_winreg', 'aifc', 'AL', 'al', 'anydbm',
+			'array', 'asynchat', 'asyncore', 'atexit', 'audioop', 'base64', 'BaseHTTPServer',
+			'Bastion', 'binascii', 'binhex', 'bisect', 'bsddb', 'bz2', 'calendar', 'cd', 'cgi',
+			'CGIHTTPServer', 'cgitb', 'chunk', 'cmath', 'cmd', 'code', 'codecs', 'codeop',
+			'collections', 'colorsys', 'commands', 'compileall', 'compiler', 'compiler',
+			'ConfigParser', 'Cookie', 'cookielib', 'copy', 'copy_reg', 'cPickle', 'crypt',
+			'cStringIO', 'csv', 'curses', 'datetime', 'dbhash', 'dbm', 'decimal', 'DEVICE',
+			'difflib', 'dircache', 'dis', 'distutils', 'dl', 'doctest', 'DocXMLRPCServer', 'dumbdbm',
+			'dummy_thread', 'dummy_threading', 'email', 'encodings', 'errno', 'exceptions', 'fcntl',
+			'filecmp', 'fileinput', 'FL', 'fl', 'flp', 'fm', 'fnmatch', 'formatter', 'fpectl',
+			'fpformat', 'ftplib', 'gc', 'gdbm', 'getopt', 'getpass', 'gettext', 'GL', 'gl', 'glob',
+			'gopherlib', 'grp', 'gzip', 'heapq', 'hmac', 'hotshot', 'htmlentitydefs', 'htmllib',
+			'HTMLParser', 'httplib', 'imageop', 'imaplib', 'imgfile', 'imghdr', 'imp', 'inspect',
+			'itertools', 'jpeg', 'keyword', 'linecache', 'locale', 'logging', 'mailbox', 'mailcap',
+			'marshal', 'math', 'md5', 'mhlib', 'mimetools', 'mimetypes', 'MimeWriter', 'mimify',
+			'mmap', 'msvcrt', 'multifile', 'mutex', 'netrc', 'new', 'nis', 'nntplib', 'operator',
+			'optparse', 'os', 'ossaudiodev', 'parser', 'pdb', 'pickle', 'pickletools', 'pipes',
+			'pkgutil', 'platform', 'popen2', 'poplib', 'posix', 'posixfile', 'pprint', 'profile',
+			'pstats', 'pty', 'pwd', 'py_compile', 'pyclbr', 'pydoc', 'Queue', 'quopri', 'random',
+			're', 'readline', 'repr', 'resource', 'rexec', 'rfc822', 'rgbimg', 'rlcompleter',
+			'robotparser', 'sched', 'ScrolledText', 'select', 'sets', 'sgmllib', 'sha', 'shelve',
+			'shlex', 'shutil', 'signal', 'SimpleHTTPServer', 'SimpleXMLRPCServer', 'site', 'smtpd',
+			'smtplib', 'sndhdr', 'socket', 'SocketServer', 'stat', 'statcache', 'statvfs', 'string',
+			'StringIO', 'stringprep', 'struct', 'subprocess', 'sunau', 'SUNAUDIODEV', 'sunaudiodev',
+			'symbol', 'sys', 'syslog', 'tabnanny', 'tarfile', 'telnetlib', 'tempfile', 'termios',
+			'test', 'textwrap', 'thread', 'threading', 'time', 'timeit', 'Tix', 'Tkinter', 'token',
+			'tokenize', 'traceback', 'tty', 'turtle', 'types', 'unicodedata', 'unittest', 'urllib2',
+			'urllib', 'urlparse', 'user', 'UserDict', 'UserList', 'UserString', 'uu', 'warnings',
+			'wave', 'weakref', 'webbrowser', 'whichdb', 'whrandom', 'winsound', 'xdrlib', 'xml',
+			'xmllib', 'xmlrpclib', 'zipfile', 'zipimport', 'zlib'
+			),
+
+		/*
+		** Set 4: special methods
+		** http://python.org/doc/current/ref/specialnames.html
+		*/
+		4 => array(
+			/*
+			// Iterator types: http://python.org/doc/current/lib/typeiter.html
+			'__iter__', 'next',
+			// String types: http://python.org/doc/current/lib/string-methods.html
+			'capitalize', 'center', 'count', 'decode', 'encode', 'endswith', 'expandtabs',
+			'find', 'index', 'isalnum', 'isaplpha', 'isdigit', 'islower', 'isspace', 'istitle',
+			'isupper', 'join', 'ljust', 'lower', 'lstrip', 'replace', 'rfind', 'rindex', 'rjust',
+			'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title',
+			'translate', 'upper', 'zfill',
+			*/
+			// Basic customization: http://python.org/doc/current/ref/customization.html
+			'__new__', '__init__', '__del__', '__repr__', '__str__', 
+			'__lt__', '__le__', '__eq__', '__ne__', '__gt__', '__ge__', '__cmp__', '__rcmp__',
+			'__hash__', '__nonzero__', '__unicode__', '__dict__',
+			// Attribute access: http://python.org/doc/current/ref/attribute-access.html
+			'__setattr__', '__delattr__', '__getattr__', '__getattribute__', '__get__', '__set__',
+			'__delete__', '__slots__',
+			// Class creation, callable objects
+			'__metaclass__', '__call__', 
+			// Container types: http://python.org/doc/current/ref/sequence-types.html
+			'__len__', '__getitem__', '__setitem__', '__delitem__', '__iter__', '__contains__',
+			'__getslice__', '__setslice__', '__delslice__',
+			// Numeric types: http://python.org/doc/current/ref/numeric-types.html
+			'__abs__','__add__','__and__','__coerce__','__div__','__divmod__','__float__',
+			'__hex__','__iadd__','__isub__','__imod__','__idiv__','__ipow__','__iand__',
+			'__ior__','__ixor__', '__ilshift__','__irshift__','__invert__','__int__',
+			'__long__','__lshift__',
+			'__mod__','__mul__','__neg__','__oct__','__or__','__pos__','__pow__',
 			'__radd__','__rdiv__','__rdivmod__','__rmod__','__rpow__','__rlshift__','__rrshift__',
 			'__rshift__','__rsub__','__rmul__','__repr__','__rand__','__rxor__','__ror__',
-			'__setattr__','__setitem__','__setslice__','__str__','__sub__','__xor__',
-			'__bases__','__class__','__dict__','__methods__','__members__','__name__',
-			'__version__','ArithmeticError','AssertionError','AttributeError','EOFError','Exception',
-			'FloatingPointError','IOError','ImportError','IndentationError','IndexError',
-			'KeyError','KeyboardInterrupt','LookupError','MemoryError','NameError','OverflowError',
-			'RuntimeError','StandardError','SyntaxError','SystemError','SystemExit','TabError','TypeError',
-			'ValueError','ZeroDivisionError','AST','','atexit','BaseHTTPServer','Bastion',
-			'cmd','codecs','commands','compileall','copy','CGIHTTPServer','Complex','dbhash',
-			'dircmp','dis','dospath','dumbdbm','emacs','find','fmt','fnmatch','ftplib',
-			'getopt','glob','gopherlib','grep','htmllib','httplib','ihooks','imghdr','imputil',
-			'linecache','lockfile','macpath','macurl2path','mailbox','mailcap',
-			'mimetools','mimify','mutex','math','Mimewriter','newdir','ni','nntplib','ntpath','nturl2path',
-			'os','ospath','pdb','pickle','pipes','poly','popen2','posixfile','posixpath','profile','pstats','pyclbr',
-			'pyexpat','Para','quopri','Queue','rand','random','regex','regsub','rfc822',
-			'sched','sgmllib','shelve','site','sndhdr','string','sys','snmp',
-			'SimpleHTTPServer','StringIO','SocketServer',
-			'tb','tempfile','toaiff','token','tokenize','traceback','tty','types','tzparse',
-			'Tkinter','unicodedata','urllib','urlparse','util','uu','UserDict','UserList',
-			'wave','webbrowser','whatsound','whichdb','whrandom','xdrlib','xml','xmlpackage',
-			'zmod','array','struct','self',
+			'__sub__','__xor__'
 			)
+
 		),
 	'SYMBOLS' => array(
-			'(', ')', '[', ']', '{', '}', '*', '&', '%', '!', ';', '<', '>', '?'
+			'(', ')', '[', ']', '{', '}', '*', '&', '%', '!', ';', '<', '>', '?', '`'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
@@ -96,7 +176,10 @@ $language_data = array (
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #b1b100;'
+			1 => 'color: #ff7700;font-weight:bold;',	// Reserved
+			2 => 'color: #008000;',						// Built-ins + self
+			3 => 'color: #dc143c;',						// Standard lib
+			4 => 'color: #0000cd;'						// Special methods
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080; font-style: italic;',
@@ -106,16 +189,16 @@ $language_data = array (
 			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: black;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #ff0000;'
+			0 => 'color: #483d8b;'
 			),
 		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
+			0 => 'color: #ff4500;'
 			),
 		'METHODS' => array(
-			1 => 'color: #202020;'
+			1 => 'color: black;'
 			),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66;'

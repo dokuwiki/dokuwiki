@@ -5,9 +5,9 @@
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
  * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2004/06/18
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/13 22:27:48 $
  *
  * CSS language file for GeSHi.
  *
@@ -67,7 +67,7 @@ $language_data = array (
 			'border-right-style', 'border-right-width', 'border-top-color',
 			'border-top-style', 'border-top-width','border-bottom', 'border-collapse',
 			'border-left', 'border-width', 'border-color', 'border-spacing',
-			'border-style', 'border-top', 'border',  'bottom', 'caption-side',
+			'border-style', 'border-top', 'border',  'caption-side',
 			'clear', 'clip', 'color', 'content', 'counter-increment', 'counter-reset',
 			'cue-after', 'cue-before', 'cue', 'cursor', 'direction', 'display',
 			'elevation', 'empty-cells', 'float', 'font-family', 'font-size',
@@ -85,12 +85,13 @@ $language_data = array (
 			'speak', 'speech-rate', 'stress', 'table-layout', 'text-align', 'text-decoration',
 			'text-indent', 'text-shadow', 'text-transform', 'top', 'unicode-bidi',
 			'vertical-align', 'visibility', 'voice-family', 'volume', 'white-space', 'widows',
-			'width', 'word-spacing', 'z-index'
+			'width', 'word-spacing', 'z-index', 'bottom'
 			),
 		2 => array(
 			'above', 'absolute', 'always', 'armenian', 'aural', 'auto', 'avoid',
 			'baseline', 'behind', 'below', 'bidi-override', 'blink', 'block', 'bold', 'bolder', 'both',
-			'capitalize', 'center-left', 'center-right', 'center', 'circle', 'cjk-ideographic', 'close-quote', 'collapse', 'condensed', 'continuous', 'crop', 'crosshair', 'cross', 'cursive',
+			'capitalize', 'center-left', 'center-right', 'center', 'circle', 'cjk-ideographic', 
+            'close-quote', 'collapse', 'condensed', 'continuous', 'crop', 'crosshair', 'cross', 'cursive',
 			'dashed', 'decimal-leading-zero', 'decimal', 'default', 'digits', 'disc', 'dotted', 'double',
 			'e-resize', 'embed', 'extra-condensed', 'extra-expanded', 'expanded',
 			'fantasy', 'far-left', 'far-right', 'faster', 'fast', 'fixed', 'fuchsia',

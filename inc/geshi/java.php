@@ -5,9 +5,9 @@
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
  * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/13 22:28:25 $
  *
  * Java language file for GeSHi.
  *
@@ -65,7 +65,8 @@ $language_data = array (
 			'null', 'return', 'false', 'final', 'true', 'public',
 			'private', 'protected', 'extends', 'break', 'class',
 			'new', 'try', 'catch', 'throws', 'finally', 'implements',
-			'interface', 'throw', 'native', 'synchronized', 'this'
+			'interface', 'throw', 'native', 'synchronized', 'this',
+            'abstract', 'transient'
 			),
 		3 => array(
 			'AbstractAction', 'AbstractBorder', 'AbstractButton', 'AbstractCellEditor',
@@ -248,27 +249,11 @@ $language_data = array (
 			'FocusEvent', 'FocusListener', 'FocusManager', 'Font', 'FontFormatException',
 			'FontMetrics', 'FontRenderContext', 'FontUIResource', 'Format', 'FormatConversionProvider',
 			'FormView', 'Frame', 'FREE_MEM', 'GapContent', 'GeneralPath', 'GeneralSecurityException',
-			'GlyphJustificationInfo', 'GlyphMetrics', 'GlyphVector',
-			'GlyphView',
-			'GlyphView.GlyphPainter',
-			'GradientPaint',
-			'GraphicAttribute',
-			'Graphics',
-			'Graphics2D',
-			'GraphicsConfigTemplate',
-			'GraphicsConfiguration',
-			'GraphicsDevice',
-			'GraphicsEnvironment',
-			'GrayFilter',
-			'GregorianCalendar',
-			'GridBagConstraints',
-			'GridBagLayout',
-			'GridLayout',
-			'Group',
-			'Guard',
-			'GuardedObject',
-			'GZIPInputStream',
-			'GZIPOutputStream',
+			'GlyphJustificationInfo', 'GlyphMetrics', 'GlyphVector', 'GlyphView', 'GlyphView.GlyphPainter',
+			'GradientPaint', 'GraphicAttribute', 'Graphics', 'Graphics2D', 'GraphicsConfigTemplate',
+			'GraphicsConfiguration', 'GraphicsDevice', 'GraphicsEnvironment', 'GrayFilter',
+            'GregorianCalendar', 'GridBagConstraints', 'GridBagLayout', 'GridLayout', 'Group', 'Guard',
+			'GuardedObject', 'GZIPInputStream', 'GZIPOutputStream',
 			'HasControls',
 			'HashMap',
 			'HashSet',
@@ -1330,7 +1315,7 @@ $language_data = array (
 			'_Remote_Stub '
 			),
 		4 => array(
-			'static', 'void', 'double', 'int', 'real', 'boolean', 'byte'
+			'static', 'void', 'double', 'int', 'real', 'boolean', 'byte', 'short', 'long', 'single'
 			)
 		),
 	'SYMBOLS' => array(
@@ -1382,7 +1367,7 @@ $language_data = array (
 	'URLS' => array(
 		1 => '',
 		2 => '',
-		3 => 'http://www.google.com/search?q=allinurl%3A{FNAME}+java.sun.com&amp;bntl=1',
+		3 => 'http://www.google.com/search?q=allinurl%3A{FNAME}+java.sun.com&bntl=1',
 		4 => ''
 		),
 	'OOLANG' => true,

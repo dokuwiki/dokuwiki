@@ -5,9 +5,9 @@
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * CVS Revision Version: $Revision: 1.3 $
  * Date Started: 2004/06/04
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/15 12:07:32 $
  *
  * VB.NET language file for GeSHi.
  *
@@ -152,7 +152,6 @@
 			),
 		'COMMENTS' => array(
 			1 => 'color: #008080; font-style: italic;',
-			2 => 'color: #008080;',
 			'MULTI' => 'color: #008080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(

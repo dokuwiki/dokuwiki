@@ -5,9 +5,9 @@
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2004/29/07
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/13 22:27:06 $
  *
  * Apache language file for GeSHi.
  * Words are from SciTe configuration file
@@ -171,4 +171,3 @@ $language_data = array (
 );
 
 ?>
-

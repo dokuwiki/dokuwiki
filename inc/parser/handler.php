@@ -315,7 +315,8 @@ class Doku_Handler {
                     $matches[0] = NULL;
                 }
                 # $matches[0] contains name of programming language
-                # if available
+                # if available, We shortcut html here.
+                if($matches[0] == 'html') $matches[0] = 'html4strict';
                 $this->_addCall(
                         'code',
                         array($matches[1],$matches[0]),

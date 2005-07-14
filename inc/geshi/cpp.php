@@ -8,9 +8,9 @@
  *  - Jack Lloyd (lloyd@randombit.net)
  * Copyright: (c) 2004 Dennis Bayer, Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2004/09/27
- * Last Modified: $Date: 2005/01/29 01:48:39 $
+ * Last Modified: $Date: 2005/06/13 22:27:06 $
  *
  * C++ language file for GeSHi.
  *
@@ -170,5 +170,3 @@ $language_data = array (
 );
 
 ?>
-
-
