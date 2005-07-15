@@ -206,21 +206,23 @@ function auth_getUserData($user){
   $info['name']= $user_result['cn'][0];
 
   #overwrite if other attribs are specified.
-  foreach($cnf['mapping'] as $localkey => $key) {
-    if(is_array($key)) {
-      //use regexp to clean up user_result
-      list($key, $regexp) = each($key);
-      foreach($user_result[$key] as $grp){
-        if (preg_match($regexp,$grp,$match)) {
-          if($localkey == 'grps') {
-            $info[$localkey][] = $match[1];
-          } else {
-            $info[$localkey] = $match[1];
+  if(is_array($cnf['mapping'])){
+    foreach($cnf['mapping'] as $localkey => $key) {
+      if(is_array($key)) {
+        //use regexp to clean up user_result
+        list($key, $regexp) = each($key);
+        foreach($user_result[$key] as $grp){
+          if (preg_match($regexp,$grp,$match)) {
+            if($localkey == 'grps') {
+              $info[$localkey][] = $match[1];
+            } else {
+              $info[$localkey] = $match[1];
+            }
           }
         }
+      } else {
+        $info[$localkey] = $user_result[$key][0];
       }
-    } else {
-      $info[$localkey] = $user_result[$key][0];
     }
   }
   
