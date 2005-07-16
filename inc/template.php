@@ -676,5 +676,27 @@ function tpl_mediauploadform(){
   ptln('</form>',2);
 }
 
+/**
+ * Prints the name of the given page (current one if none given).
+ *
+ * If useheading is enabled this will use the first headline else
+ * the given ID is printed.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_pagetitle($id=null){
+  global $conf;
+  if(is_null($id)){
+    global $ID;
+    $id = $ID;
+  }
+
+  $name = $id;
+  if ($conf['useheading']) {
+    $title = p_get_first_heading($id);
+    if ($title) $name = $title;
+  }
+  print hsc($name);
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

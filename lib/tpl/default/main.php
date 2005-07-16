@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>"
  lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction']?>">
 <head>
-  <title><?php echo $ID?> [<?php echo hsc($conf['title'])?>]</title>
+  <title><?php tpl_pagetitle()?> [<?php echo hsc($conf['title'])?>]</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <?php tpl_metaheaders()?>
