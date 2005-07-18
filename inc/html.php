@@ -817,6 +817,7 @@ function html_register(){
 /**
  * This displays the edit form (lots of logic included)
  *
+ * @fixme  this is a huge lump of code and should be modularized
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_edit($text=null,$include='edit'){ //FIXME: include needed?
@@ -843,10 +844,15 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   //no text? Load it!
   if(!isset($text)){
     $pr = false; //no preview mode
-    if($RANGE){
-      list($PRE,$text,$SUF) = rawWikiSlices($RANGE,$ID,$REV);
+    if($INFO['exists']){
+      if($RANGE){
+        list($PRE,$text,$SUF) = rawWikiSlices($RANGE,$ID,$REV);
+      }else{
+        $text = rawWiki($ID,$REV);
+      }
     }else{
-      $text = rawWiki($ID,$REV);
+      //try to load a pagetemplate
+      $text = pageTemplate($ID);
     }
   }else{
     $pr = true; //preview mode

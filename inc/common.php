@@ -397,6 +397,16 @@ function rawWiki($id,$rev=''){
 }
 
 /**
+ * Returns the pagetemplate contents for the ID's namespace
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function pageTemplate($id){
+  return io_readFile(dirname(wikiFN($id)).'/_template.txt');
+}
+
+
+/**
  * Returns the raw Wiki Text in three slices.
  *
  * The range parameter needs to have the form "from-to"
