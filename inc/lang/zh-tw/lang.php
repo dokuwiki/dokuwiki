@@ -16,6 +16,8 @@ $lang['btn_search'] = '搜尋';
 $lang['btn_save']   = '儲存';
 $lang['btn_preview']= '預覽';
 $lang['btn_top']    = '回到頁頂';
+$lang['btn_newer']  = '<< 較新';
+$lang['btn_older']  = '較舊 >>';
 $lang['btn_revs']   = '舊版';
 $lang['btn_recent'] = '最近更新';
 $lang['btn_upload'] = '上傳';
@@ -24,10 +26,16 @@ $lang['btn_index']  = '索引頁';
 $lang['btn_secedit']= '改這段';
 $lang['btn_login']  = '登入';
 $lang['btn_logout'] = '登出';
+$lang['btn_admin']  = '管理選單';
+$lang['btn_update'] = '更新設定';
+$lang['btn_delete'] = '刪除';
+$lang['btn_back']   = '回上一步';
+$lang['btn_backtomedia'] = '重新選擇圖檔';
 
 $lang['loggedinas'] = '登入為';
 $lang['user']       = '帳號';
 $lang['pass']       = '密碼';
+$lang['passchk']    = '再次確認密碼';
 $lang['remember']   = '記住帳號密碼';
 $lang['fullname']   = '暱稱';
 $lang['email']      = 'E-Mail';
@@ -36,29 +44,40 @@ $lang['badlogin']   = '很抱歉，您的使用者名稱或密碼可能錯誤';
 
 $lang['regmissing'] = '很抱歉，所有的欄位都要填哦';
 $lang['reguexists'] = '很抱歉，已有人註冊該帳號了喔';
-$lang['regsuccess'] = '使用者已建立，密碼也以 email 寄出到您信箱了。';
+$lang['regsuccess'] = '使用者已建立，密碼已經用 email 寄到您信箱了唷。';
+$lang['regsuccess2']= '使用者已建立';
 $lang['regmailfail']= '寄出密碼信似乎發生錯誤，請跟管理者聯絡！';
-$lang['regbadmail'] = '您給的 email 似乎不對，如果您認為是正確的，請與管理者聯絡。';
-$lang['regpwmail']  = 'Your DokuWiki Password';
+$lang['regbadmail'] = '您輸入的 email 似乎不對，如果您認為是正確的，請與管理者聯絡。';
+$lang['regbadpass'] = '兩次打的密碼不一致，請再重試，謝謝。';
+$lang['regpwmail']  = '您的 DokuWiki 帳號密碼';
 $lang['reghere']    = '您還沒有帳號對吧？來註冊一個吧。';
 
-$lang['txt_upload']   = '選擇要上傳的檔案';
-$lang['txt_filename'] = '輸入 wikiname (optional)';
+$lang['txt_upload']   = '請選擇要上傳的檔案';
+$lang['txt_filename'] = '請輸入要存在 wiki 內的檔名 (optional)';
+$lang['txt_overwrt']  = '是否要覆蓋原有檔案';
 $lang['lockedby']     = '目前已被下列人員鎖定';
 $lang['lockexpire']   = '預計解除鎖定於';
 $lang['willexpire']   = '您目前編輯這頁的鎖定將會在一分鐘內解除。\若要避免發生意外，請按「預覽」鍵來重新設定鎖定狀態';
 
 $lang['notsavedyet'] = '有尚未儲存的變更將會遺失。\n真的要繼續嗎？';
-$lang['rssfailed']   = '當抓取它處餵送過來的資料時發生錯誤: ';
+$lang['rssfailed']   = '當抓取餵送過來的 RSS 資料時發生錯誤: ';
 $lang['nothingfound']= '沒找到任何結果。';
 
-$lang['mediaselect'] = '選擇影音檔';
-$lang['fileupload']  = '上傳影音檔';
+$lang['mediaselect'] = '選擇圖檔';
+$lang['fileupload']  = '上傳圖檔';
 $lang['uploadsucc']  = '上傳成功';
 $lang['uploadfail']  = '上傳失敗。或許權限設定錯誤了嗎？';
 $lang['uploadwrong'] = '拒絕上傳。該檔案類型不被支援。';
+$lang['uploadexist'] = '該檔案已有存在了喔，故取消上傳動作。';
+$lang['deletesucc']  = '"%s" 檔已刪除完畢。';
+$lang['deletefail']  = '"%s" 檔無法刪除，請先檢查權限設定。';
+$lang['mediainuse']  = '"%s" 檔因還在使用中，故目前尚無法刪除。';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = '可用的檔案有';
+
+$lang['reference']   = '引用到本頁的，合計有';
+$lang['ref_inuse']   = '這檔還不能刪除，因為還有以下的頁面在使用它：';
+$lang['ref_hidden']  = '有些引用到這個的頁面，您目前還沒有權限可讀取喔。';
 
 $lang['hits']       = '個符合';
 $lang['quickhits']  = '符合的頁面名稱';
@@ -85,6 +104,7 @@ $lang['qb_bold']    = '粗體';
 $lang['qb_italic']  = '斜體';
 $lang['qb_underl']  = '底線';
 $lang['qb_code']    = '程式碼';
+$lang['qb_strike']  = '刪除線';
 $lang['qb_h1']      = 'H1 標題';
 $lang['qb_h2']      = 'H2 標題';
 $lang['qb_h3']      = 'H3 標題';
@@ -97,6 +117,31 @@ $lang['qb_ol']      = '項目表(數字)';
 $lang['qb_ul']      = '項目表(符號)';
 $lang['qb_media']   = '加入圖片或檔案';
 $lang['qb_sig']     = '插入簽名';
+
+$lang['del_confirm']= '確定要刪除該管理規則?';
+
+$lang['admin_acl']  = '設定權限控制清單(ACL)...';
+$lang['admin_register']= '新增使用者中...';
+
+$lang['acl_group']  = '群組';
+$lang['acl_user']   = '帳號';
+$lang['acl_perms']  = '設定權限於';
+$lang['page']       = 'Page';
+$lang['namespace']  = 'Namespace';
+
+$lang['acl_perm1']  = '讀取權限';
+$lang['acl_perm2']  = '編輯頁面';
+$lang['acl_perm4']  = '新增頁面';
+$lang['acl_perm8']  = '上傳圖檔';
+$lang['acl_perm16'] = '刪除檔案';
+$lang['acl_new']    = '新增管理規則';
+
+$lang['spell_start'] = '檢查拼字中';
+$lang['spell_stop']  = '恢復編輯';
+$lang['spell_wait']  = '請稍後...';
+$lang['spell_noerr'] = '未發現任何錯誤';
+$lang['spell_nosug'] = '沒有建議事項';
+$lang['spell_change']= '更改';
 
 $lang['txt_insert']    = '放入日曆';
 $lang['qb_calendar']   = '放入一個日曆';
