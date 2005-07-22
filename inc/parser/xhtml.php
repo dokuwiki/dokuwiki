@@ -681,7 +681,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             }
         }
         
-        $link['url']   = 'mailto:'.$address;
+        $link['url']   = 'mailto:'.rawurlencode($address);
         $link['name']  = $name;
         $link['title'] = $title;
 
