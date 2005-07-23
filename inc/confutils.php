@@ -37,6 +37,10 @@ function getMimeTypes() {
   static $mime = NULL;
   if ( !$mime ) {
     $mime = confToHash(DOKU_INC . 'conf/mime.conf');
+    if (@file_exists(DOKU_INC . 'conf/mime.local.conf')) {
+      $local = confToHash(DOKU_INC . 'conf/mime.local.conf');
+      $mime = array_merge($mime, $local);
+    }
   }
   return $mime;
 }
@@ -50,8 +54,8 @@ function getAcronyms() {
   static $acronyms = NULL;
   if ( !$acronyms ) {
     $acronyms = confToHash(DOKU_INC . 'conf/acronyms.conf');
-    if (@file_exists(DOKU_INC . 'conf/local.acronyms.conf')) {
-      $local = confToHash(DOKU_INC . 'conf/local.acronyms.conf');
+    if (@file_exists(DOKU_INC . 'conf/acronyms.local.conf')) {
+      $local = confToHash(DOKU_INC . 'conf/acronyms.local.conf');
       $acronyms = array_merge($acronyms, $local);
     }
   }
@@ -67,6 +71,10 @@ function getSmileys() {
   static $smileys = NULL;
   if ( !$smileys ) {
     $smileys = confToHash(DOKU_INC . 'conf/smileys.conf');
+    if (@file_exists(DOKU_INC . 'conf/smileys.local.conf')) {
+      $local = confToHash(DOKU_INC . 'conf/smileys.local.conf');
+      $smileys = array_merge($smileys, $local);
+    }
   }
   return $smileys;
 }
@@ -80,6 +88,10 @@ function getEntities() {
   static $entities = NULL;
   if ( !$entities ) {
     $entities = confToHash(DOKU_INC . 'conf/entities.conf');
+    if (@file_exists(DOKU_INC . 'conf/entities.local.conf')) {
+      $local = confToHash(DOKU_INC . 'conf/entities.local.conf');
+      $entities = array_merge($entities, $local);
+    }
   }
   return $entities;
 }
@@ -93,6 +105,10 @@ function getInterwiki() {
   static $wikis = NULL;
   if ( !$wikis ) {
     $wikis = confToHash(DOKU_INC . 'conf/interwiki.conf',true);
+    if (@file_exists(DOKU_INC . 'conf/interwiki.local.conf')) {
+      $local = confToHash(DOKU_INC . 'conf/interwiki.local.conf');
+      $wikis = array_merge($wikis, $local);
+    }
   }
   //add sepecial case 'this'
   $wikis['this'] = DOKU_URL.'{NAME}';
