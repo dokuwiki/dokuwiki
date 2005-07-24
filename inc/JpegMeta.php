@@ -431,7 +431,8 @@ class JpegMeta
                                      'Iptc.Caption',
                                      'Exif.UserComment',
                                      'Exif.TIFFUserComment',
-                                     'Exif.TIFFImageDescription'));
+                                     'Exif.TIFFImageDescription',
+                                     'File.Name'));
         if (empty($cap)) return false;
 
         if(!$max) return $cap;

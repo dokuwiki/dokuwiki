@@ -77,6 +77,40 @@ function pageinfo(){
 }
 
 /**
+ * Build an string of URL parameters
+ *
+ * @author Andreas Gohr
+ */
+function buildURLparams($params){
+  $url = '';
+  $amp = false;
+  foreach($params as $key => $val){
+    if($amp) $url .= '&amp;';
+
+    $url .= $key.'=';
+    $url .= urlencode($val);
+    $amp = true;
+  }
+  return $url;
+}
+
+/**
+ * Build an string of html tag attributes
+ *
+ * @author Andreas Gohr
+ */
+function buildAttributes($params){
+  $url = '';
+  foreach($params as $key => $val){
+    $url .= $key.'="';
+    $url .= htmlspecialchars ($val);
+    $url .= '" ';
+  }
+  return $url;
+}
+
+
+/**
  * print a message
  *
  * If HTTP headers were not sent yet the message is added 

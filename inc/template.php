@@ -765,15 +765,29 @@ function tpl_img($maxwidth=900,$maxheight=700){
     $h = floor($ratio*$h);
   }
 
-  //FIXME add alt attribute, classes
+  //prepare URL
+  $p = array();
+  $p['cache'] = $_REQUEST['cache'];
+  $p['media'] = $IMG;
+  $p = buildURLparams($p);
+  $url=DOKU_BASE.'lib/exe/fetch.php?'.$p;
 
-  $url=DOKU_BASE.'lib/exe/fetch.php?cache='.urlencode($_REQUEST['cache']).
-       '&amp;media='.urlencode($IMG);
-
+  //prepare attributes
   $alt=tpl_img_getTag('Simple.Title');
+  $p = array();
+  if($w) $p['width']  = $w;
+  if($h) $p['height'] = $h;
+         $p['class']  = 'img_detail';
+  if($alt){
+    $p['alt']   = $alt;
+    $p['title'] = $alt;
+  }else{
+    $p['alt'] = '';
+  }
+  $p = buildAttributes($p);
 
   print '<a href="'.$url.'">';
-  print '<img src="'.$url.'&amp;w='.$w.'&amp;h='.$w.'" width="'.$w.'" height="'.$h.'" />';
+  print '<img src="'.$url.'&amp;w='.$w.'&amp;h='.$w.'" '.$p.'/>';
   print '</a>';
 }
 

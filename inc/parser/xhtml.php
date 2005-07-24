@@ -708,7 +708,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
-        if(substr($mime,0,5) == 'image'){
+        if(substr($mime,0,5) == 'image' && !preg_match('#^(https?|ftp)://#i',$src)){
             $link['url']= DOKU_BASE.'lib/exe/detail.php?id='.$ID.'&amp;cache='.$cache.'&amp;media='.urlencode($src);
         }else{
             $link['url']= DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
