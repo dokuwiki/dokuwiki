@@ -5,6 +5,7 @@
   require_once(DOKU_INC.'inc/lang/en/lang.php');
   require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
   require_once(DOKU_INC.'inc/html.php');
+  require_once(DOKU_INC.'inc/JpegMeta.php');
   require_once(DOKU_INC.'inc/search.php');
   require_once(DOKU_INC.'inc/template.php');
   require_once(DOKU_INC.'inc/auth.php');

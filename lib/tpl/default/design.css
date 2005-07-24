@@ -700,3 +700,21 @@ dl.img_tags dt {
 dl.img_tags dd {
   background-color: #f5f5f5;
 }
+
+div.meta {
+  color: #666;
+  font-size: 70%;
+  line-height: 95%;
+}
+
+div.meta img.thumb{
+  float:left;
+  margin-right: 0.1em;
+}
+
+/* -------------- Media Popup ---------------------- */
+
+div.mediaselect-right li, div.uploadform { 
+  clear: both;
+}
+

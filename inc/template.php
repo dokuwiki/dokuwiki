@@ -612,15 +612,28 @@ function tpl_mediafilelist(){
 
       ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
       ptln($del.'<br />',6);
+      ptln('<div class="meta">',6);
       ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">');
 
       if($w>120){
-        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?w=120&amp;media='.urlencode($item['id']).'" width="120" />';
+        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?w=120&amp;media='.urlencode($item['id']).'" width="120" class="thumb" />';
       }else{
-        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($item['id']).'" width="'.$w.'" height="'.$h.'" />';
+        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($item['id']).'" width="'.$w.'" height="'.$h.'" class="thumb" />';
       }
       print '</a>';
+      
+      //read EXIF/IPTC data
+      $meta = new JpegMeta(mediaFN($item['id']));
+      $t = $meta->getField('IPTC.Headline');
+      if($t) print '<b>'.$t.'</b><br />';
 
+      $t = $meta->getField(array('IPTC.Caption','EXIF.UserComment','EXIF.TIFFImageDescription','EXIF.TIFFUserComment'));
+      if($t) print $t.'<br />';
+
+      $t = $meta->getField(array('IPTC.Keywords','IPTC.Category'));
+      if($t) print '<i>'.$t.'</i><br />';
+
+      ptln('</div>',6);
     }else{
       ptln ('('.filesize_h($item['size']).')',6);
       ptln($del,6);
