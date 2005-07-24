@@ -686,3 +686,17 @@ span.spell_wait {
   color: #0066cc;
 }
 
+/* ---------------  Image Details  ----------------- */
+
+div.img_big {
+  float: left;
+  margin-right: 0.5em;
+}
+
+dl.img_tags dt {
+  font-weight: bold;
+  background-color: #dee7ec;
+}
+dl.img_tags dd {
+  background-color: #f5f5f5;
+}

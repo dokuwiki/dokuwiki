@@ -707,7 +707,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['target'] = $conf['target']['media'];
 
         $link['title']  = $this->_xmlEntities($src);
-        $link['url']    = DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        list($ext,$mime) = mimetype($src);
+        if(substr($mime,0,5) == 'image'){
+            $link['url']= DOKU_BASE.'lib/exe/detail.php?id='.$ID.'&amp;cache='.$cache.'&amp;media='.urlencode($src);
+        }else{
+            $link['url']= DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        }
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
 
@@ -894,6 +899,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if (!is_null($title)) {
                 $ret .= ' title="'.$this->_xmlEntities($title).'"';
                 $ret .= ' alt="'.$this->_xmlEntities($title).'"';
+            }elseif($ext == 'jpg' || $ext == 'jpeg'){
+                //try to use the caption from IPTC/EXIF
+                require_once(DOKU_INC.'inc/JpegMeta.php');
+                $jpeg =& new JpegMeta(mediaFN($src));
+                if($jpeg !== false) $cap = $jpeg->getTitle();
+                if($cap){
+                    $ret .= ' title="'.$this->_xmlEntities($cap).'"';
+                    $ret .= ' alt="'.$this->_xmlEntities($cap).'"';
+                }
             }else{
                 $ret .= ' alt=""';
             }

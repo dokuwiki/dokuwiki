@@ -11,8 +11,6 @@
   //close sesseion
   session_write_close();
 
-  header('Content-Type: text/html; charset='.$lang['encoding']);
-
   //get namespace to display (either direct or from deletion order)
   if($_REQUEST['delete']){
 		$DEL = cleanID($_REQUEST['delete']);

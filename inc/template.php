@@ -204,6 +204,17 @@ function tpl_link($url,$name,$more=''){
 }
 
 /**
+ * Prints a link to a WikiPage
+ *
+ * Wrapper around html_wikilink
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_pagelink($id,$name=NULL){
+  print html_wikilink($id,$name);
+}
+
+/**
  * get the parent page
  *
  * Tries to find out which page is parent.
@@ -697,6 +708,73 @@ function tpl_pagetitle($id=null){
     if ($title) $name = $title;
   }
   print hsc($name);
+}
+
+/**
+ * Returns the requested EXIF/IPTC tag from the current image
+ *
+ * If $tags is an array all given tags are tried until a
+ * value is found. If no value is found $alt is returned.
+ *
+ * Which texts are known is defined in the functions _exifTagNames
+ * and _iptcTagNames() in inc/jpeg.php (You need to prepend IPTC
+ * to the names of the latter one)
+ *
+ * Only allowed in: detail.php
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_img_getTag($tags,$alt=''){
+  // Init Exif Reader
+  global $SRC;
+  static $meta = null;
+  if(is_null($meta)) $meta = new JpegMeta($SRC);
+  if($meta === false) return $alt;
+  $info = $meta->getField($tags);
+  if($info == false) return $alt;
+  return $info;
+}
+
+/**
+ * Prints the image with a link to the full sized version
+ *
+ * Only allowed in: detail.php
+ */
+function tpl_img($maxwidth=900,$maxheight=700){
+  global $IMG;
+  $w = tpl_img_getTag('File.Width');
+  $h = tpl_img_getTag('File.Height');
+
+  //resize to given max values
+  $ratio = 0;
+  if($w > $h){
+    if($w > $maxwidth){
+      $ratio = $maxwidth/$w;
+    }elseif($h > $maxheight){
+      $ratio = $maxheight/$h;
+    }
+  }else{
+    if($h > $maxheight){
+      $ratio = $maxheight/$h;
+    }elseif($w > $maxwidth){
+      $ratio = $maxwidth/$w;
+    }
+  }
+  if($ratio){
+    $w = floor($ratio*$w);
+    $h = floor($ratio*$h);
+  }
+
+  //FIXME add alt attribute, classes
+
+  $url=DOKU_BASE.'lib/exe/fetch.php?cache='.urlencode($_REQUEST['cache']).
+       '&amp;media='.urlencode($IMG);
+
+  $alt=tpl_img_getTag('Simple.Title');
+
+  print '<a href="'.$url.'">';
+  print '<img src="'.$url.'&amp;w='.$w.'&amp;h='.$w.'" width="'.$w.'" height="'.$h.'" />';
+  print '</a>';
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
