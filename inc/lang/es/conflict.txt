@@ -1,0 +1,5 @@
+====== Existe una versión más reciente ======
+
+Existe una versión más reciente del documento que has editado. Esto sucede cuando otro usuario ha modificado el documento mientras lo estabas editando.
+
+Examina las diferencias mostradas abajo a fondo, y decide entonces cual conservar. Si eliges ''Guardar'', tu versión será guardada. Si eliges ''Cancelar'' se guardará la actual versión.

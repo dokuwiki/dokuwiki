@@ -1,0 +1,3 @@
+====== Backlinks ======
+
+Esta es una lista de páginas que parecen contener enlaces a la página actual. Fíjate que los enlaces CamelCase no se detectan como backlinks.

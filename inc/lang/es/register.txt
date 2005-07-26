@@ -1,0 +1,4 @@
+====== Registro como nuevo usuario ======
+
+Completa toda la información del formulario para crear un nuevo usuario en este wiki.
+Asegúrate que escribes una **dirección de e-mail válida** y que allí se enviará tu contraseña. El nombre de usuario ha de ser un nombre válido según [[doku>wiki:pagename|pagename]].
