@@ -16,6 +16,8 @@ require_once(DOKU_INC.'inc/parser/parser.php');
  */
 class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
+    var $allowedModesSetup = false;
+    
     /**
      * General Info
      *
@@ -40,6 +42,17 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     function getType(){
         trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
     }
+    
+    /**
+     * Allowed Mode Types
+     *
+     * Defines the mode types for other dokuwiki markup that maybe nested within the 
+     * plugin's own markup. Needs to return an array of one or more of the mode types 
+     * defined in $PARSER_MODES in parser.php
+     */
+    function getAllowedTypes() {
+        return array();
+    }
 
     /**
      * Paragraph Type
@@ -48,6 +61,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * for correct XHTML nesting. Should return one of the following:
      *
      * 'normal' - The plugin can be used inside paragraphs
+
      * 'block'  - Open paragraphs need to be closed before plugin output
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
@@ -59,6 +73,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
      * Handler to prepare matched data for the rendering process
+     * This function is called statically - it may not reference any object properties
      *
      * Usually you should only need the $match param.
      *
@@ -74,6 +89,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
      * Handles the actual output creation.
+     * This function is called statically - it may not reference any object properties
      *
      * The function should always check for the given mode and return false
      * when a mode isn't supported.
@@ -93,6 +109,26 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      */
     function render($mode, &$renderer, $data) {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
+    }
+    
+    /**
+     *  There should be no need to override this function
+     */
+    function accepts($mode) {
+    
+        if (!$allowedModesSetup) {
+            global $PARSER_MODES;
+
+            $allowedModeTypes = $this->getAllowedTypes();
+            foreach($allowedModeTypes as $mt) {
+                array_merge($this->allowedModes, $PARSER_MODES[$mt]);
+            }        
+                
+            unset($this->allowedModes[array_search(substr(get_class($this), 7), $this->allowedModes)]);
+            $allowedModesSetup = true;
+        }
+        
+        return parent::accepts($mode);            
     }
 
 }
