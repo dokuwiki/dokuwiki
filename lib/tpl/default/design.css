@@ -568,6 +568,15 @@ a.fn_bot{
   font-weight:bold;
 }
 
+/* insitu-footnotes */
+div.insitu-footnote {
+  font-size: 80%;
+  line-height: 1.2em;
+  border: 1px solid #8cacbb;
+  background: #eef3f8;
+  text-align: left;
+  padding: 4px;
+}
 
 /* --------------- search result formating --------------- */
 .search_result{

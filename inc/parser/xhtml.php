@@ -51,8 +51,34 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         
         if ( count ($this->footnotes) > 0 ) {
             $this->doc .= '<div class="footnotes">'.DOKU_LF;
+
+            $id = 0;
             foreach ( $this->footnotes as $footnote ) {
-                $this->doc .= $footnote;
+                $id++;   // the number of the current footnote
+                
+                // check its not a placeholder that indicates actual footnote text is elsewhere
+                if (substr($footnote, 0, 5) != "@@FNT") {
+
+                    // open the footnote and set the anchor and backlink
+                    $this->doc .= '<div class="fn">';
+                    $this->doc .= '<a href="#fnt'.$id.'" id="fn'.$id.'" name="fn'.$id.'" class="fn_bot">';
+                    $this->doc .= $id.')</a> '.DOKU_LF;
+                    
+                    // get any other footnotes that use the same markup
+                    $alt = array_keys($this->footnotes, "@@FNT$id");
+                    
+                    if (count($alt)) {
+                      foreach ($alt as $ref) {
+                        // set anchor and backlink for the other footnotes
+                        $this->doc .= ', <a href="#fnt'.($ref+1).'" id="fn'.($ref+1).'" name="fn'.($ref+1).'" class="fn_bot">';
+                        $this->doc .= ($ref+1).')</a> '.DOKU_LF;                  
+                      }
+                    }
+                    
+                    // add footnote markup and close this footnote
+                    $this->doc .= $footnote;
+                    $this->doc .= '</div>' . DOKU_LF;
+                }
             }
             $this->doc .= '</div>'.DOKU_LF;
         }
@@ -209,23 +235,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Callback for footnote start syntax
      *
      * All following content will go to the footnote instead of
-     * the document. To achive this the previous rendered content
+     * the document. To achieve this the previous rendered content
      * is moved to $store and $doc is cleared
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function footnote_open() {
-        #$id = $this->_newFootnoteId();
-        $id = count($this->footnotes)+1;
-        $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" class="fn_top">'.$id.')</a>';
 
         // move current content to store and record footnote
         $this->store = $this->doc;
         $this->doc   = '';
-
-        $this->doc .= '<div class="fn">';
-        $this->doc .= '<a href="#fnt'.$id.'" name="fn'.$id.'" class="fn_bot">';
-        $this->doc .= $id.')</a> '.DOKU_LF;
     }
     
     /**
@@ -237,12 +256,28 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr
      */
     function footnote_close() {
-        $this->doc .= '</div>' . DOKU_LF;
 
-        // put recorded footnote into the stack and restore old content
-        $this->footnotes[count($this->footnotes)] = $this->doc;
+        // recover footnote into the stack and restore old content
+        $footnote = $this->doc;
         $this->doc = $this->store;
         $this->store = '';
+        
+        // check to see if this footnote has been seen before
+        $i = array_search($footnote, $this->footnotes);
+        
+        if ($i === false) {
+            // its a new footnote, add it to the $footnotes array
+            $id = count($this->footnotes)+1;
+            $this->footnotes[count($this->footnotes)] = $footnote;
+        } else {
+            // seen this one before, translate the index to an id and save a placeholder
+            $i++;
+            $id = count($this->footnotes)+1;
+            $this->footnotes[count($this->footnotes)] = "@@FNT".($i);
+        }
+
+        // output the footnote reference and link, incl. onmouseover for insitu footnote popup
+        $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" class="fn_top" onmouseover="fnt(\''.$id.'\', this, event);">'.$id.')</a>';
     }
     
     function listu_open() {

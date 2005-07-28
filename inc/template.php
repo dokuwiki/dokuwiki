@@ -185,6 +185,12 @@ function tpl_metaheaders(){
     ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it);
   }
+  
+  // dom tool tip library, for insitu footnotes
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+       DOKU_BASE.'lib/scripts/domLib.js"></script>',$it);
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+       DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
 
   //FIXME include some default CSS ? IE FIX?
 }
