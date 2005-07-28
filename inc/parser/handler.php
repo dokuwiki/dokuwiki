@@ -411,7 +411,7 @@ class Doku_Handler {
                 array($link[0],$link[1]),
                 $pos
                 );
-        }elseif ( preg_match('#^([a-z0-9]+?)://#i',$link[0]) ) {
+        }elseif ( preg_match('#^([a-z0-9\-\.+]+?)://#i',$link[0]) ) {
         // external link (accepts all protocols)
             $this->_addCall(
                     'externallink',
