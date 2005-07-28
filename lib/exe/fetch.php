@@ -85,7 +85,12 @@
 
   $fp = @fopen($FILE,"rb");
   if($fp){
-    fpassthru($fp); //does a close itself
+    while (!feof($fp)) {
+      @set_time_limit(); // large files can take a lot of time
+      print fread($fp, 16*1024);
+      flush();
+    }
+    fclose($fp);
   }else{
     header("HTTP/1.0 500 Internal Server Error");
     print "Could not read $FILE - bad permissions?";
