@@ -4,10 +4,10 @@
  * -------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.1
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 2004/06/18
- * Last Modified: $Date: 2005/06/13 22:27:48 $
+ * Last Modified: $Date: 2005/07/26 05:23:30 $
  *
  * CSS language file for GeSHi.
  *
@@ -72,7 +72,7 @@ $language_data = array (
 			'cue-after', 'cue-before', 'cue', 'cursor', 'direction', 'display',
 			'elevation', 'empty-cells', 'float', 'font-family', 'font-size',
 			'font-size-adjust', 'font-stretch', 'font-style', 'font-variant',
-			'font-weight', 'font', 'height', 'left', 'letter-spacing', 'line-height',
+			'font-weight', 'font', 'height', 'letter-spacing', 'line-height',
 			'list-style', 'list-style-image', 'list-style-position', 'list-style-type',
 			'margin-bottom', 'margin-left', 'margin-right', 'margin-top', 'margin',
 			'marker-offset', 'marks', 'max-height', 'max-width', 'min-height',
@@ -85,7 +85,7 @@ $language_data = array (
 			'speak', 'speech-rate', 'stress', 'table-layout', 'text-align', 'text-decoration',
 			'text-indent', 'text-shadow', 'text-transform', 'top', 'unicode-bidi',
 			'vertical-align', 'visibility', 'voice-family', 'volume', 'white-space', 'widows',
-			'width', 'word-spacing', 'z-index', 'bottom'
+			'width', 'word-spacing', 'z-index', 'bottom', 'left'
 			),
 		2 => array(
 			'above', 'absolute', 'always', 'armenian', 'aural', 'auto', 'avoid',

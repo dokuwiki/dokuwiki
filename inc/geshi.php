@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.9 2005/06/17 10:45:23 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.10 2005/07/25 10:42:23 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7');
+define('GESHI_VERSION', '1.0.7.1');
 
 /** For the future (though this may never be realised) */
 define('GESHI_OUTPUT_HTML', 0);
@@ -1979,14 +1979,14 @@ class GeSHi
 							$keyword = quotemeta($keyword);
 							if ($this->language_data['CASE_SENSITIVE'][$k]) {
 								$stuff_to_parse = preg_replace(
-                                    "#([^a-zA-Z0-9\$_\|\.\#;>])($keyword)([^a-zA-Z0-9_<\|%\-&])#e",
+                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)([^a-zA-Z0-9_<\|%\-&])#e",
                                     "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END') . '\\3'",
                                     $stuff_to_parse
                                 );
 							} else {
 								// Change the case of the word.
 								$stuff_to_parse = preg_replace(
-                                    "#([^a-zA-Z0-9\$_\|\.\#;>])($keyword)([^a-zA-Z0-9_<\|%\-&])#ie",
+                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)([^a-zA-Z0-9_<\|%\-&])#ie",
                                     "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END') . '\\3'",
                                     $stuff_to_parse
                                 );
@@ -2216,13 +2216,12 @@ class GeSHi
             		$end = '</div>';
             	} else {
             		if ($this->use_classes) {
+                        $attr = ' class="li1"';
             			$def_attr = ' class="de1"';
             		} else {
+                        $attr = ' style="' . $this->line_style1 . '"';
             			$def_attr = ' style="' . $this->code_style . '"';
             		}
-            		// Reset everything
-            		$attr = '';
-            		// Span or div?
             		$start = "<div$def_attr>";
             		$end = '</div>';
             	}

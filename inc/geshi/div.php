@@ -1,21 +1,24 @@
 <?php
 /*************************************************************************************
- * matlab.php
- * -----------
- * Author: Florian Knorn (floz@gmx.de)
- * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
+ * div.php
+ * ---------------------------------
+ * Author: Gabriel Lorenzo (ermakina@gmail.com)
+ * Copyright: (c) 2005 Gabriel Lorenzo (http://ermakina.gazpachito.net)
  * Release Version: 1.0.7.1
  * CVS Revision Version: $Revision: 1.2 $
- * Date Started: 2005/02/09
+ * Date Started: 2005/06/19
  * Last Modified: $Date: 2005/07/26 05:23:30 $
  *
- * Matlab M-file language file for GeSHi. 
+ * DIV language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/05/07 (1.0.0)
- *   -  First Release
+ * 2005/06/22 (1.0.0)
+ *  -  First Release, includes "2nd gen" ELSEIF statement
  *
+ * TODO (updated 2005/06/22)
+ * -------------------------
+ *  -  I'm pretty satisfied with this, so nothing for now... :P
  *
  *************************************************************************************
  *
@@ -38,24 +41,34 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'M',
-	'COMMENT_SINGLE' => array(1 => '%'),
-	'COMMENT_MULTI' => array(),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'"),
+	'LANG_NAME' => 'DIV',
+	'COMMENT_SINGLE' => array(1 => '//'),
+	'COMMENT_MULTI' => array('/*' => '*/'),
+	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
+	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
-			'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for', 
-			'function', 'global', 'if', 'otherwise', 'persistent', 'return', 
-			'switch', 'try', 'while','...'
+			'while','until','to','switch','step','return','repeat','loop','if','from','frame','for','end','elseif',
+			'else','default','debug','continue','clone','case','break','begin'
+			),
+		2 => array(
+			'xor','whoami','type','sizeof','pointer','or','offset','not','neg','mod','id','dup','and','_ne','_lt',
+			'_le','_gt','_ge','_eq'
+			),
+		3 => array(
+			'setup_program','program','process','private','local','import','global','function','const',
+			'compiler_options'
+			),
+		4 => array(
+			'word','struct','string','int','byte'
 			),
 		),
-	'SYMBOLS' => array( 
-		'...' 
+	'SYMBOLS' => array(
+		'(',')','[',']','=','+','-','*','/','!','%','^','&',':',';',',','<','>'
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
+		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false,
@@ -63,23 +76,32 @@ $language_data = array (
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #0000FF;',
+			1 => 'color: #0040b1;',
+			2 => 'color: #000000;',
+			3 => 'color: #000066; font-weight: bold;',
+			4 => 'color: #993333;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #228B22;',
+			1 => 'color: #808080; font-style: italic;',
+			'MULTI' => 'color: #808080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
+			0 => ''
 			),
 		'BRACKETS' => array(
+			0 => 'color: #44aa44;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #A020F0;'
+			0 => 'color: #ff0000;'
 			),
 		'NUMBERS' => array(
+			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
+			0 => 'color: #202020;',
 			),
 		'SYMBOLS' => array(
+			0 => 'color: #44aa44;'
 			),
 		'REGEXPS' => array(
 			),
@@ -92,11 +114,8 @@ $language_data = array (
 		3 => '',
 		4 => ''
 		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
-		1 => '.',
-		2 => '::'
-		),
+	'OOLANG' => false,
+	'OBJECT_SPLITTER' => '',
 	'REGEXPS' => array(
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

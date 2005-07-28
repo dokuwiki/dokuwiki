@@ -4,10 +4,10 @@
  * -------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/blog)
- * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * Release Version: 1.0.7.1
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/06/02 04:57:18 $
+ * Last Modified: $Date: 2005/07/26 05:23:30 $
  *
  * LUA language file for GeSHi.
  *

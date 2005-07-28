@@ -4,10 +4,10 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.1
+ * CVS Revision Version: $Revision: 1.3 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/06/13 22:29:20 $
+ * Last Modified: $Date: 2005/07/26 05:23:30 $
  *
  * Smarty template language file for GeSHi.
  *

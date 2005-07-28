@@ -4,10 +4,10 @@
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.1
+ * CVS Revision Version: $Revision: 1.3 $
  * Date Started: 2004/08/30
- * Last Modified: $Date: 2005/06/14 13:03:15 $
+ * Last Modified: $Date: 2005/07/26 05:23:30 $
  *
  * Python language file for GeSHi.
  *
