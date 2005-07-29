@@ -199,7 +199,7 @@ function act_auth($act){
   //handle logout
   if($act=='logout'){
     $lockedby = checklock($ID); //page still locked?
-    if($lockedby == $_SERVER['REMOTER_USER'])
+    if($lockedby == $_SERVER['REMOTE_USER'])
       unlock($ID); //try to unlock 
       
     auth_logoff();
