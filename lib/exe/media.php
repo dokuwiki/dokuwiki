@@ -53,9 +53,9 @@
   //start output and load template
   header('Content-Type: text/html; charset=utf-8');
   if($conf['refshow'] && count($mediareferences)){
-    include(DOKU_INC.'lib/tpl/'.$conf['template'].'/mediaref.php');
+    include(template('mediaref.php'));
   }else{
-    include(DOKU_INC.'lib/tpl/'.$conf['template'].'/media.php');
+    include(template('media.php'));
   }
   
   //restore old umask

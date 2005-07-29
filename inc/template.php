@@ -32,6 +32,21 @@ function ptln($string,$intend=0){
 }
 
 /**
+ * Returns the path to the given template, uses
+ * default one if the custom version doesn't exist
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function template($tpl){
+  global $conf;
+
+  if(@is_readable(DOKU_INC.'lib/tpl/'.$conf['template'].'/'.$tpl))
+    return DOKU_INC.'lib/tpl/'.$conf['template'].'/'.$tpl;
+
+  return DOKU_INC.'lib/tpl/default/'.$tpl;
+}
+
+/**
  * Print the content
  *
  * This function is used for printing all the usual content

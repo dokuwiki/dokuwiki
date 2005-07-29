@@ -39,7 +39,7 @@
 
   //start output and load template
   header('Content-Type: text/html; charset=utf-8');
-  include(DOKU_INC.'lib/tpl/'.$conf['template'].'/detail.php');
+  include(template('detail.php'));
   
   //restore old umask
   umask($conf['oldumask']);

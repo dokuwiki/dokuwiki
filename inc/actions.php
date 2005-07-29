@@ -74,7 +74,7 @@ function act_dispatch(){
 
   //call template FIXME: all needed vars available?
   header('Content-Type: text/html; charset=utf-8'); 
-  include(DOKU_INC.'lib/tpl/'.$conf['template'].'/main.php');
+  include(template('main.php'));
   // output for the commands is now handled in inc/templates.php
   // in function tpl_content()
 }
