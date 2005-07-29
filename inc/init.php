@@ -6,6 +6,9 @@
   // define the include path
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 
+  // define config path (packagers may want to change this to /etc/dokuwiki/)
+  if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'/conf/');
+
   // set up error reporting to sane values
   error_reporting(E_ALL ^ E_NOTICE);
 
@@ -14,8 +17,8 @@
   $conf = array();
 
   // load the config file(s)
-  require_once(DOKU_INC.'conf/dokuwiki.php');
-  @include_once(DOKU_INC.'conf/local.php');
+  require_once(DOKU_CONF.'dokuwiki.php');
+  @include_once(DOKU_CONF.'local.php');
 
   //prepare language array
   global $lang;
@@ -70,8 +73,8 @@
   init_paths();
 
   // automatic upgrade to script versions of certain files
-  scriptify(DOKU_INC.'conf/users.auth');
-  scriptify(DOKU_INC.'conf/acl.auth');
+  scriptify(DOKU_CONF.'users.auth');
+  scriptify(DOKU_CONF.'acl.auth');
 
 
 /**

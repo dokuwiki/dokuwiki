@@ -31,8 +31,8 @@
   if($conf['useacl']){
     auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
     //load ACL into a global array
-    if(is_readable(DOKU_INC.'conf/acl.auth.php')){
-      $AUTH_ACL = file(DOKU_INC.'conf/acl.auth.php');
+    if(is_readable(DOKU_CONF.'acl.auth.php')){
+      $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
     }else{
       $AUTH_ACL = array();
     }

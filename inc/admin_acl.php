@@ -43,7 +43,7 @@ function admin_acl_handler(){
   }
 
   // reload ACL config
-  $AUTH_ACL = file(DOKU_INC.'conf/acl.auth.php');
+  $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
 }
 
 /**
@@ -117,7 +117,7 @@ function get_acl_config($id){
  * @author  Frank Schubert <frank@schokilade.de>
  */
 function admin_acl_add($acl_scope, $acl_user, $acl_level){
-  $acl_config = join("",file(DOKU_INC.'conf/acl.auth.php'));
+  $acl_config = join("",file(DOKU_CONF.'acl.auth.php'));
   
   // max level for pagenames is edit
   if(strpos($acl_scope,'*') === false) {
@@ -128,7 +128,7 @@ function admin_acl_add($acl_scope, $acl_user, $acl_level){
   
   $new_config = $acl_config.$new_acl;
   
-  return io_saveFile(DOKU_INC.'conf/acl.auth.php', $new_config);
+  return io_saveFile(DOKU_CONF.'acl.auth.php', $new_config);
 }
 
 /**
@@ -137,14 +137,14 @@ function admin_acl_add($acl_scope, $acl_user, $acl_level){
  * @author  Frank Schubert <frank@schokilade.de>
  */
 function admin_acl_del($acl_scope, $acl_user){
-  $acl_config = file(DOKU_INC.'conf/acl.auth.php');
+  $acl_config = file(DOKU_CONF.'acl.auth.php');
 
   $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
   
   // save all non!-matching #FIXME invert is available from 4.2.0 only!
   $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
   
-  return io_saveFile(DOKU_INC.'conf/acl.auth.php', join('',$new_config));
+  return io_saveFile(DOKU_CONF.'acl.auth.php', join('',$new_config));
 }
 
 // --- HTML OUTPUT FUNCTIONS BELOW --- //

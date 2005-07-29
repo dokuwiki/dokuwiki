@@ -7,7 +7,7 @@
  */
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_INC.'conf/dokuwiki.php');
+  require_once(DOKU_CONF.'dokuwiki.php');
   require_once(DOKU_INC.'inc/io.php');
   require_once(DOKU_INC.'inc/utf8.php');
   require_once(DOKU_INC.'inc/mail.php');
@@ -286,7 +286,7 @@ function checkwordblock(){
 
   if(!$conf['usewordblock']) return false;
 
-  $blockfile = file(DOKU_INC.'conf/wordblock.conf');
+  $blockfile = file(DOKU_CONF.'wordblock.conf');
   //how many lines to read at once (to work around some PCRE limits)
   if(version_compare(phpversion(),'4.3.0','<')){
     //old versions of PCRE define a maximum of parenthesises even if no
@@ -860,7 +860,7 @@ function check(){
     msg('Cachedir is not writable',-1);
   }
 
-  if(is_writable(DOKU_INC.'conf/users.auth.php')){
+  if(is_writable(DOKU_CONF.'users.auth.php')){
     msg('conf/users.auth.php is writable',1);
   }else{
     msg('conf/users.auth.php is not writable',0);

@@ -73,7 +73,7 @@ function auth_createUser($user,$pass,$name,$mail){
                              $mail,
                              $conf['defaultgroup']));
   $userline .= "\n";
-  $fh = fopen(DOKU_INC.'conf/users.auth.php','a');
+  $fh = fopen(DOKU_CONF.'users.auth.php','a');
   if($fh){
     fwrite($fh,$userline);
     fclose($fh);
@@ -93,10 +93,10 @@ function auth_createUser($user,$pass,$name,$mail){
  */
 function auth_plain_loadUserData(){
   $data = array();
-  if(!@file_exists(DOKU_INC.'conf/users.auth.php')){
+  if(!@file_exists(DOKU_CONF.'users.auth.php')){
     return $data;
   }
-  $lines = file(DOKU_INC.'conf/users.auth.php');
+  $lines = file(DOKU_CONF.'users.auth.php');
   foreach($lines as $line){
     $line = preg_replace('/#.*$/','',$line); //ignore comments
     $line = trim($line);

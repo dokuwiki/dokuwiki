@@ -36,9 +36,9 @@ function mimetype($file){
 function getMimeTypes() {
   static $mime = NULL;
   if ( !$mime ) {
-    $mime = confToHash(DOKU_INC . 'conf/mime.conf');
-    if (@file_exists(DOKU_INC . 'conf/mime.local.conf')) {
-      $local = confToHash(DOKU_INC . 'conf/mime.local.conf');
+    $mime = confToHash(DOKU_CONF.'mime.conf');
+    if (@file_exists(DOKU_CONF.'mime.local.conf')) {
+      $local = confToHash(DOKU_CONF.'mime.local.conf');
       $mime = array_merge($mime, $local);
     }
   }
@@ -53,9 +53,9 @@ function getMimeTypes() {
 function getAcronyms() {
   static $acronyms = NULL;
   if ( !$acronyms ) {
-    $acronyms = confToHash(DOKU_INC . 'conf/acronyms.conf');
-    if (@file_exists(DOKU_INC . 'conf/acronyms.local.conf')) {
-      $local = confToHash(DOKU_INC . 'conf/acronyms.local.conf');
+    $acronyms = confToHash(DOKU_CONF.'acronyms.conf');
+    if (@file_exists(DOKU_CONF.'acronyms.local.conf')) {
+      $local = confToHash(DOKU_CONF.'acronyms.local.conf');
       $acronyms = array_merge($acronyms, $local);
     }
   }
@@ -70,9 +70,9 @@ function getAcronyms() {
 function getSmileys() {
   static $smileys = NULL;
   if ( !$smileys ) {
-    $smileys = confToHash(DOKU_INC . 'conf/smileys.conf');
-    if (@file_exists(DOKU_INC . 'conf/smileys.local.conf')) {
-      $local = confToHash(DOKU_INC . 'conf/smileys.local.conf');
+    $smileys = confToHash(DOKU_CONF.'smileys.conf');
+    if (@file_exists(DOKU_CONF.'smileys.local.conf')) {
+      $local = confToHash(DOKU_CONF.'smileys.local.conf');
       $smileys = array_merge($smileys, $local);
     }
   }
@@ -87,9 +87,9 @@ function getSmileys() {
 function getEntities() {
   static $entities = NULL;
   if ( !$entities ) {
-    $entities = confToHash(DOKU_INC . 'conf/entities.conf');
-    if (@file_exists(DOKU_INC . 'conf/entities.local.conf')) {
-      $local = confToHash(DOKU_INC . 'conf/entities.local.conf');
+    $entities = confToHash(DOKU_CONF.'entities.conf');
+    if (@file_exists(DOKU_CONF.'entities.local.conf')) {
+      $local = confToHash(DOKU_CONF.'entities.local.conf');
       $entities = array_merge($entities, $local);
     }
   }
@@ -104,9 +104,9 @@ function getEntities() {
 function getInterwiki() {
   static $wikis = NULL;
   if ( !$wikis ) {
-    $wikis = confToHash(DOKU_INC . 'conf/interwiki.conf',true);
-    if (@file_exists(DOKU_INC . 'conf/interwiki.local.conf')) {
-      $local = confToHash(DOKU_INC . 'conf/interwiki.local.conf');
+    $wikis = confToHash(DOKU_CONF.'interwiki.conf',true);
+    if (@file_exists(DOKU_CONF.'interwiki.local.conf')) {
+      $local = confToHash(DOKU_CONF.'interwiki.local.conf');
       $wikis = array_merge($wikis, $local);
     }
   }

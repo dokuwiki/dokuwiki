@@ -78,8 +78,8 @@ function p_cached_xhtml($file){
       && ((time() - $cachetime) < $conf['cachetime'])                 // and is cachefile young enough
       && !isset($_REQUEST['purge'])                                   // no purge param was set
       && ($cachetime > @filemtime($purge))                            // and newer than the purgefile
-      && ($cachetime > @filemtime(DOKU_INC.'conf/dokuwiki.php'))      // newer than the config file
-      && ($cachetime > @filemtime(DOKU_INC.'conf/local.php'))         // newer than the local config file
+      && ($cachetime > @filemtime(DOKU_CONF.'dokuwiki.php'))      // newer than the config file
+      && ($cachetime > @filemtime(DOKU_CONF.'local.php'))         // newer than the local config file
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/xhtml.php'))   // newer than the renderer
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/parser.php'))  // newer than the parser
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/handler.php')))// newer than the handler
@@ -128,8 +128,8 @@ function p_cached_instructions($file,$cacheonly=false){
   if( @file_exists($file)                                             // does the source exist
       && $cachetime > @filemtime($file)                               // cache is fresh
       && !isset($_REQUEST['purge'])                                   // no purge param was set
-      && ($cachetime > @filemtime(DOKU_INC.'conf/dokuwiki.php'))      // newer than the config file
-      && ($cachetime > @filemtime(DOKU_INC.'conf/local.php'))         // newer than the local config file
+      && ($cachetime > @filemtime(DOKU_CONF.'dokuwiki.php'))      // newer than the config file
+      && ($cachetime > @filemtime(DOKU_CONF.'local.php'))         // newer than the local config file
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/parser.php'))  // newer than the parser
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/handler.php')))// newer than the handler
   {

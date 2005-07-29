@@ -7,7 +7,7 @@
  */
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_INC.'conf/dokuwiki.php');
+  require_once(DOKU_CONF.'dokuwiki.php');
 
 /**
  * Wrapper around htmlspecialchars()
