@@ -1,16 +1,16 @@
-ÔÚÄúµÄ DokuWiki ÓÐÐÂÔö¡¢±ä¶¯¹ýÒ»Ò³ÁË¡£ÒÔÏÂÊÇÏ¸½Ú×ÊÁÏ£º
+åœ¨æ‚¨çš„ DokuWiki æœ‰æ–°å¢žã€å˜åŠ¨è¿‡ä¸€é¡µäº†ã€‚ä»¥ä¸‹æ˜¯ç»†èŠ‚èµ„æ–™ï¼š
 
-ÈÕÆÚ        : @DATE@
-ä¯ÀÀÆ÷      : @BROWSER@
+æ—¥æœŸ        : @DATE@
+æµè§ˆå™¨      : @BROWSER@
 IP-Address  : @IPADDRESS@
-»úÆ÷Ãû³Æ    : @HOSTNAME@
-¾É°æ´Î      : @OLDPAGE@
-ÐÂ°æ´Î      : @NEWPAGE@
-±à¼­ÕªÒª    : @SUMMARY@
+æœºå™¨åç§°    : @HOSTNAME@
+æ—§ç‰ˆæ¬¡      : @OLDPAGE@
+æ–°ç‰ˆæ¬¡      : @NEWPAGE@
+ç¼–è¾‘æ‘˜è¦    : @SUMMARY@
 User        : @USER@
 
 @DIFF@
 
 
 -- 
-Õâ·âÐÅÊÇÓÉ @DOKUWIKIURL@ µÄ DokuWiki ×Ô¶¯²úÉú
+è¿™å°ä¿¡æ˜¯ç”± @DOKUWIKIURL@ çš„ DokuWiki è‡ªåŠ¨äº§ç”Ÿ
