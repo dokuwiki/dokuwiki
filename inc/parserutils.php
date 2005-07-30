@@ -199,7 +199,7 @@ function p_get_parsermodes(){
     global $PARSER_MODES;
     $obj = null; 
     foreach($pluginlist as $p){
-      plugin_load('syntax',$p,$obj);                  //load plugin into $obj
+      $obj =& plugin_load('syntax',$p);               //load plugin into $obj
       $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
       //add to modes
       $modes[] = array(
@@ -207,6 +207,7 @@ function p_get_parsermodes(){
                    'mode' => "plugin_$p",
                    'obj'  => $obj,
                  );
+      unset($obj); //remove the reference
     }
   }
 

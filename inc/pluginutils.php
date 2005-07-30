@@ -34,29 +34,26 @@ function plugin_list($type){
  *
  * @param  $type string 	type of plugin to load
  * @param  $name string 	name of the plugin to load
- * @param  $ref  ref      will contain the plugin object
- * @return boolean        plugin loading successful?
+ * @return object         the plugin object or null on failure
  */
-function plugin_load($type,$name,&$ref){
+function &plugin_load($type,$name){
   //we keep all loaded plugins available in global scope for reuse
   global $DOKU_PLUGINS;
 
 	//plugin already loaded?
 	if($DOKU_PLUGINS[$type][$name] != null){
-		$ref = $DOKU_PLUGINS[$type][$name];
-		return true;
+		return $DOKU_PLUGINS[$type][$name];
 	}
 
   //try to load the wanted plugin file
   if(!include_once(DOKU_PLUGIN.$name.'/'.$type.'.php')){
-    return false;
+    return null;
   }
 
   //construct class and instanciate
   $class = $type.'_plugin_'.$name;
   $DOKU_PLUGINS[$type][$name] = new $class;
-  $ref = $DOKU_PLUGINS[$type][$name];
-  return true;
+  return $DOKU_PLUGINS[$type][$name];
 }
 
 

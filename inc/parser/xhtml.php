@@ -86,8 +86,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     //handles plugin rendering
     function plugin($name,$data){
-        $plugin = null;
-        if(plugin_load('syntax',$name,$plugin)){
+        $plugin =& plugin_load('syntax',$name); 
+        if($plugin != null){
             $plugin->render('xhtml',$this,$data);
         }
     }
