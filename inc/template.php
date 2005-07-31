@@ -629,30 +629,46 @@ function tpl_mediafilelist(){
     }
 
     if($item['isimg']){
-      $w = $item['info'][0];
-      $h = $item['info'][1];
+      $w = $item['meta']->getField('File.Width');
+      $h = $item['meta']->getField('File.Height');
 
       ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
       ptln($del.'<br />',6);
       ptln('<div class="meta">',6);
-      ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">');
+      
+      //build thumbnail
+      print '<a href="javascript:mediaSelect(\''.$item['id'].'\')">';
 
-      if($w>120){
-        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?w=120&amp;media='.urlencode($item['id']).'" width="120" class="thumb" />';
-      }else{
-        print '<img src="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($item['id']).'" width="'.$w.'" height="'.$h.'" class="thumb" />';
+      if($w>120 || $h>120){
+        $ratio = $item['meta']->getResizeRatio(120);
+        $w = floor($w * $ratio);
+        $h = floor($h * $ratio);
       }
+
+      $p = array();
+      $p['w'] = $w;
+      $p['h'] = $h;
+      $p['media'] = $item['id'];
+      $src = DOKU_BASE.'lib/exe/fetch.php?'.buildURLParams($p);
+
+      $p = array();
+      $p['width']  = $w;
+      $p['height'] = $h;
+      $p['alt']    = $item['id'];
+      $p['class']  = 'thumb';
+      $att = buildAttributes($p);
+
+      print '<img src="'.$src.'" '.$att.' />';
       print '</a>';
       
       //read EXIF/IPTC data
-      $meta = new JpegMeta(mediaFN($item['id']));
-      $t = $meta->getField('IPTC.Headline');
+      $t = $item['meta']->getField('IPTC.Headline');
       if($t) print '<b>'.$t.'</b><br />';
 
-      $t = $meta->getField(array('IPTC.Caption','EXIF.UserComment','EXIF.TIFFImageDescription','EXIF.TIFFUserComment'));
+      $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment','EXIF.TIFFImageDescription','EXIF.TIFFUserComment'));
       if($t) print $t.'<br />';
 
-      $t = $meta->getField(array('IPTC.Keywords','IPTC.Category'));
+      $t = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
       if($t) print '<i>'.$t.'</i><br />';
 
       ptln('</div>',6);
@@ -781,15 +797,15 @@ function tpl_img($maxwidth=900,$maxheight=700){
   $h = tpl_img_getTag('File.Height');
 
   //resize to given max values
-  $ratio = 0;
-  if($w > $h){
-    if($w > $maxwidth){
+  $ratio = 1;
+  if($w >= $h){
+    if($w >= $maxwidth){
       $ratio = $maxwidth/$w;
     }elseif($h > $maxheight){
       $ratio = $maxheight/$h;
     }
   }else{
-    if($h > $maxheight){
+    if($h >= $maxheight){
       $ratio = $maxheight/$h;
     }elseif($w > $maxwidth){
       $ratio = $maxwidth/$w;

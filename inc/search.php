@@ -174,7 +174,8 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
   $info['size'] = filesize($base.'/'.$file);
   if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
     $info['isimg'] = true;
-    $info['info']  = getimagesize($base.'/'.$file);
+    require_once(DOKU_INC.'inc/JpegMeta.php');
+    $info['meta']  = new JpegMeta($base.'/'.$file);
   }else{
     $info['isimg'] = false;
   }

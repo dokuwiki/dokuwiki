@@ -328,6 +328,36 @@ class JpegMeta
     }
 
     /**
+     * Calculates the multiplier needed to resize the image to the given
+     * dimensions
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function getResizeRatio($maxwidth,$maxheight=0){
+        if(!$maxheight) $maxheight = $maxwidth;
+
+        $w = $this->getField('File.Width');
+        $h = $this->getField('File.Height');
+
+        $ratio = 1;
+        if($w >= $h){
+            if($w >= $maxwidth){
+                $ratio = $maxwidth/$w;
+            }elseif($h > $maxheight){
+                $ratio = $maxheight/$h;
+            }
+        }else{
+            if($h >= $maxheight){
+                $ratio = $maxheight/$h;
+            }elseif($w > $maxwidth){
+                $ratio = $maxwidth/$w;
+            }
+        }
+        return $ratio;
+    }
+
+
+    /**
      * Set an IPTC field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
@@ -1090,12 +1120,18 @@ class JpegMeta
         return true;
     }
 
-    /*************************************************************/
+    /**
+     * Gets basic info from the file - should work with non-JPEGs
+     *
+     * @author  Sebastian Delmont <sdelmont@zonageek.com>
+     * @author  Andreas Gohr <andi@splitbrain.org>
+     */
     function _parseFileInfo()
     {
         if (file_exists($this->_fileName)) {
             $this->_info['file'] = array();
             $this->_info['file']['Name'] = basename($this->_fileName);
+            $this->_info['file']['Path'] = realpath($this->_fileName);
             $this->_info['file']['Size'] = filesize($this->_fileName);
             if ($this->_info['file']['Size'] < 1024) {
                 $this->_info['file']['NiceSize'] = $this->_info['file']['Size'] . 'B';
@@ -1111,7 +1147,6 @@ class JpegMeta
             }
             $this->_info['file']['UnixTime'] = filemtime($this->_fileName);
 
-            // Andreas Gohr <andi@splitbrain.org>
             // get image size directly from file
             $size = getimagesize($this->_fileName);
             $this->_info['file']['Width']  = $size[0];
