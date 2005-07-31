@@ -70,6 +70,7 @@ if(defined('PSPELL_COMP')){
 class Aspell{
     var $language = null;
     var $jargon   = null;
+    var $personal = null;
     var $encoding = 'iso8859-1';
     var $mode     = PSPELL_NORMAL;
     var $version  = 0;
@@ -85,7 +86,6 @@ class Aspell{
         $this->language = $language;
         $this->jargon   = $jargon;
         $this->encoding = $encoding;
-        $this->_prepareArgs();
     } 
 
     /**
@@ -101,7 +101,6 @@ class Aspell{
         }
 
         $this->mode = $mode;
-        $this->_prepareArgs();
         return $mode;
     }
 
@@ -123,6 +122,10 @@ class Aspell{
 
         if($this->jargon != null){
             $this->args .= ' --jargon='.escapeshellarg($this->jargon);
+        }
+
+        if($this->personal != null){
+            $this->args .= ' --personal='.escapeshellarg($this->personal);
         }
 
         if($this->encoding != null){
@@ -160,6 +163,7 @@ class Aspell{
      * @link     http://aspell.sf.net/man-html/Through-A-Pipe.html
      */
     function runAspell($text,&$out,&$err,$specials=null){
+        $this->_prepareArgs();
         if(empty($text)) return true;
         //prepare file descriptors
         $descspec = array(

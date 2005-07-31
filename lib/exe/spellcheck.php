@@ -58,6 +58,11 @@ header('Content-Type: text/plain; charset=utf-8');
 $spell = new Aspell($conf['lang'],null,'utf-8');
 $spell->setMode(PSPELL_FAST);
 
+//add personal dictionary
+if(@file_exists(DOKU_INC.'conf/words.aspell')){
+  $spell->personal = DOKU_INC.'conf/words.aspell';
+}
+
 //call the requested function
 $call = 'spell_'.$_POST['call'];
 if(function_exists($call)){
