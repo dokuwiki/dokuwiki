@@ -733,3 +733,25 @@ div.mediaselect-right li, div.uploadform {
   clear: both;
 }
 
+div.mediaedit div.data label{
+	display: block;
+  text-align: right; 
+  width: 20%;
+  float: left;
+  margin-right: 0.5em;
+}
+
+div.mediaedit div.data input, div.mediaedit div.data textarea{
+  width: 75%;
+  padding: 0.1em;
+  margin: 0.1em;
+}
+
+div.mediaedit div.data input.button {
+  width: 10em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+

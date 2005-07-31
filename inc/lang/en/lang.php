@@ -144,6 +144,9 @@ $lang['spell_noerr'] = 'No Mistakes found';
 $lang['spell_nosug'] = 'No Suggestions';
 $lang['spell_change']= 'Change';
 
+$lang['metaedit']    = 'Edit Metadata';
+$lang['metasaveerr'] = 'Writing metadata failed';
+$lang['metasaveok']  = 'Metadata saved';
 $lang['img_backto']  = 'Back to';
 $lang['img_title']   = 'Title';
 $lang['img_caption'] = 'Caption';

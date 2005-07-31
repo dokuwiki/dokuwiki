@@ -665,11 +665,20 @@ function tpl_mediafilelist(){
       $t = $item['meta']->getField('IPTC.Headline');
       if($t) print '<b>'.$t.'</b><br />';
 
-      $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment','EXIF.TIFFImageDescription','EXIF.TIFFUserComment'));
+      $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
+                                         'EXIF.TIFFImageDescription',
+                                         'EXIF.TIFFUserComment'));
       if($t) print $t.'<br />';
 
       $t = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
       if($t) print '<i>'.$t.'</i><br />';
+
+      //add edit button
+      if($AUTH >= AUTH_UPLOAD && $item['meta']->getField('File.Mime') == 'image/jpeg'){
+        print '<a href="'.DOKU_BASE.'lib/exe/media.php?edit='.urlencode($item['id']).'">';
+        print '<img src="'.DOKU_BASE.'lib/images/edit.gif" alt="'.$lang['metaedit'].'" title="'.$lang['metaedit'].'" />';
+        print '</a>';
+      }
 
       ptln('</div>',6);
     }else{
@@ -771,7 +780,7 @@ function tpl_pagetitle($id=null){
  * and _iptcTagNames() in inc/jpeg.php (You need to prepend IPTC
  * to the names of the latter one)
  *
- * Only allowed in: detail.php
+ * Only allowed in: detail.php, mediaedit.php
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */

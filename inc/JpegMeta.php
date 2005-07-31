@@ -3,9 +3,10 @@
  * JPEG metadata reader/writer
  *
  * @license    PHP license 2.0 (http://www.php.net/license/2_02.txt)
- * @link       
+ * @link       http://www.zonageek.com/software/php/jpeg/index.php 
  * @author     Sebastian Delmont <sdelmont@zonageek.com>
  * @author     Andreas Gohr <andi@splitbrain.org>
+ * @todo       Add support for Maker Notes, Extend for GIF and PNG metadata
  */
 
 // This class is a modified and enhanced version of the JPEG class by
@@ -161,6 +162,40 @@ class JpegMeta
             }
         }
         return trim($info);
+    }
+
+    /**
+     * Convinience function to set nearly all available Data
+     * through one function
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function setField($field, $value)
+    {
+        if(strtolower(substr($field,0,5)) == 'iptc.'){
+            return $this->setIPTCField(substr($field,5),$value);
+        }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+            return $this->setExifField(substr($field,5),$value);
+        }else{
+            return $this->setExifField($field,$value);
+        }
+    }
+
+    /**
+     * Convinience function to delete nearly all available Data
+     * through one function
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function deleteField($field)
+    {
+        if(strtolower(substr($field,0,5)) == 'iptc.'){
+            return $this->deleteIPTCField(substr($field,5));
+        }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+            return $this->deleteExifField(substr($field,5));
+        }else{
+            return $this->deleteExifField($field);
+        }
     }
 
     /**
@@ -770,18 +805,19 @@ class JpegMeta
      * Save changed Metadata
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     function save($fileName = "") {
-      if ($fileName == "") {
-        $tmpName = $this->_fileName . ".tmp";
-        $this->_writeJPEG($tmpName);
-        if (file_exists($tmpName)) {
-          rename($tmpName, $this->_fileName);
+        if ($fileName == "") {
+            $tmpName = tempnam(dirname($this->_fileName),'_metatemp_');
+            $this->_writeJPEG($tmpName);
+            if (@file_exists($tmpName)) {
+                return rename($tmpName, $this->_fileName);
+            }
+        } else {
+            return $this->_writeJPEG($fileName);
         }
-      }
-      else {
-        $this->_writeJPEG($fileName);
-      }
+        return false;
     }
     
     /*************************************************************/

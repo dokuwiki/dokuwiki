@@ -14,8 +14,12 @@
 
   //get namespace to display (either direct or from deletion order)
   if($_REQUEST['delete']){
-		$DEL = cleanID($_REQUEST['delete']);
+    $DEL = cleanID($_REQUEST['delete']);
     $NS  = getNS($DEL);
+  }elseif($_REQUEST['edit']){
+    $IMG = cleanID($_REQUEST['edit']);
+    $SRC = mediaFN($IMG);
+    $NS  = getNS($IMG);
   }else{
     $NS = $_REQUEST['ns'];
     $NS = cleanID($NS);
@@ -35,14 +39,19 @@
   //handle deletion
   $mediareferences = array();
   if($DEL && $AUTH >= AUTH_DELETE){
-	if($conf['refcheck']){
-  	  search($mediareferences,$conf['datadir'],'search_reference',array('query' => $DEL));
-	}
+    if($conf['refcheck']){
+      search($mediareferences,$conf['datadir'],'search_reference',array('query' => $DEL));
+    }
     if(!count($mediareferences)){
       media_delete($DEL);
     }elseif(!$conf['refshow']){
       msg(str_replace('%s',noNS($DEL),$lang['mediainuse']),0);
     }
+  }
+
+  //handle metadatasaving
+  if($UPLOADOK && $SRC && $_REQUEST['save']){
+    media_metasave($SRC,$_REQUEST['meta']);
   }
 
   //handle upload
@@ -54,6 +63,8 @@
   header('Content-Type: text/html; charset=utf-8');
   if($conf['refshow'] && count($mediareferences)){
     include(template('mediaref.php'));
+  }elseif($IMG){
+    include(template('mediaedit.php'));
   }else{
     include(template('media.php'));
   }
@@ -87,7 +98,7 @@ function media_delete($delid){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_upload($NS,$AUTH){
-	require_once(DOKU_INC.'inc/confutils.php');
+  require_once(DOKU_INC.'inc/confutils.php');
   global $lang;
   global $conf;
 
@@ -101,24 +112,24 @@ function media_upload($NS,$AUTH){
   $fn   = mediaFN($id);
 
   // get filetype regexp
-	$types = array_keys(getMimeTypes());
-	$types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
+  $types = array_keys(getMimeTypes());
+  $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
   $regex = join('|',$types);
 
   // we set the umask here but this doesn't really help
   // because a temp file was created already
   umask($conf['umask']);
   if(preg_match('/\.('.$regex.')$/i',$fn)){
-		//check for overwrite
-		if(@file_exists($fn) && (!$_POST['ow'] || $AUTH < AUTH_DELETE)){
-			msg($lang['uploadexist'],0);
-			return false;
-		}
-  	// prepare directory
-  	io_makeFileDir($fn);
+    //check for overwrite
+    if(@file_exists($fn) && (!$_POST['ow'] || $AUTH < AUTH_DELETE)){
+      msg($lang['uploadexist'],0);
+      return false;
+    }
+    // prepare directory
+    io_makeFileDir($fn);
     if(move_uploaded_file($file['tmp_name'], $fn)) {
-			// set the correct permission here
-			chmod($fn, 0777 - $conf['umask']);
+      // set the correct permission here
+      chmod($fn, 0777 - $conf['umask']);
       msg($lang['uploadsucc'],1);
       return true;
     }else{
@@ -144,6 +155,33 @@ function media_html_list_namespaces($item){
   $ret .= substr($item['id'], $pos > 0 ? $pos + 1 : 0);
   $ret .= '</a>';
   return $ret;
+}
+
+/**
+ * Saves image meta data
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function media_metasave($src,$data){
+	global $lang;
+
+  $meta = new JpegMeta($src);
+  $meta->_parseAll();
+
+	foreach($data as $key => $val){
+		$val=trim($val);
+		if(empty($val)){
+			$meta->deleteField($key);
+		}else{
+			$meta->setField($key,$val);
+		}
+	}
+
+	if($meta->save()){
+		msg($lang['metasaveok'],1);
+	}else{
+		msg($lang['metasaveerr'],-1);
+	}
 }
 
 ?>
