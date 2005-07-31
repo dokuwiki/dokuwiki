@@ -207,7 +207,8 @@ function tpl_metaheaders(){
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
 
-  //FIXME include some default CSS ? IE FIX?
+  // plugin stylesheets
+  plugin_printCSS();
 }
 
 /**
@@ -603,7 +604,7 @@ function tpl_mediafilelist(){
   search($data,$conf['mediadir'],'search_media',array(),$dir);
 
   if(!count($data)){
-    ptln('<div class="nothing">'.$lang['nothingfound'].'<div>');
+    ptln('<div class="nothing">'.$lang['nothingfound'].'</div>');
     return;
   }
 

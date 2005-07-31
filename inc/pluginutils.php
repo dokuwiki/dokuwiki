@@ -7,19 +7,40 @@
  */
 
 /**
+ * prints needed HTML to include plugin CSS files
+ */
+function plugin_printCSS(){
+  $plugins = plugin_list();
+  foreach ($plugins as $p){
+    $dir = "lib/plugins/$p/";
+		if(@file_exists(DOKU_INC.$dir.'style.css')){
+			print '  <link rel="stylesheet" type="text/css" href="'.DOKU_BASE.$dir.'style.css" />'."\n";
+    }
+		if(@file_exists(DOKU_INC.$dir.'screen.css')){
+			print '  <link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.$dir.'screen.css" />'."\n";
+    }
+		if(@file_exists(DOKU_INC.$dir.'print.css')){
+			print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
+    }
+	}
+} 
+
+/**
  * Returns a list of available plugins of given type
+ *
+ * Returns all plugins if no type given
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function plugin_list($type){
+function plugin_list($type=''){
   $plugins = array();
   if ($dh = opendir(DOKU_PLUGIN)) {
     while (false !== ($file = readdir($dh))) {
       if ($file == '.' || $file == '..') continue;
       if (is_file(DOKU_PLUGIN.$file)) continue;
 
-      if (@file_exists(DOKU_PLUGIN.$file.'/'.$type.'.php')){
-        $plugins[] = $file;
+	    if ($type=='' ||   @file_exists(DOKU_PLUGIN.$file.'/'.$type.'.php')){
+  	    $plugins[] = $file;
       }
     }
     closedir($dh);
