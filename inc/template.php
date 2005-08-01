@@ -207,8 +207,8 @@ function tpl_metaheaders(){
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
 
-  // plugin stylesheets
-  plugin_printCSS();
+  // plugin stylesheets and Scripts
+  plugin_printCSSJS();
 }
 
 /**

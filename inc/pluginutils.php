@@ -7,9 +7,9 @@
  */
 
 /**
- * prints needed HTML to include plugin CSS files
+ * prints needed HTML to include plugin CSS and JS files
  */
-function plugin_printCSS(){
+function plugin_printCSSJS(){
   $plugins = plugin_list();
   foreach ($plugins as $p){
     $dir = "lib/plugins/$p/";
@@ -21,6 +21,9 @@ function plugin_printCSS(){
     }
 		if(@file_exists(DOKU_INC.$dir.'print.css')){
 			print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
+    }
+		if(@file_exists(DOKU_INC.$dir.'script.js')){
+      print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'print.css"></script>'."\n";
     }
 	}
 } 
