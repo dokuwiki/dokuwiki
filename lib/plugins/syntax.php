@@ -73,7 +73,9 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
      * Handler to prepare matched data for the rendering process
-     * This function is called statically - it may not reference any object properties
+     *
+     * This function can only pass data to render() via its return value - render()
+     * may be not be run during the object's current life.
      *
      * Usually you should only need the $match param.
      *
@@ -89,7 +91,10 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
      * Handles the actual output creation.
-     * This function is called statically - it may not reference any object properties
+     * 
+     * The function must not assume any other of the classes methods have been run
+     * during the object's current life. The only reliable data it receives are its
+     * parameters.
      *
      * The function should always check for the given mode and return false
      * when a mode isn't supported.
@@ -109,28 +114,28 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      */
     function render($mode, &$renderer, $data) {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
+
     }
     
     /**
      *  There should be no need to override this function
      */
     function accepts($mode) {
-    
-        if (!$allowedModesSetup) {
+
+        if (!$this->allowedModesSetup) {
             global $PARSER_MODES;
 
             $allowedModeTypes = $this->getAllowedTypes();
             foreach($allowedModeTypes as $mt) {
-                array_merge($this->allowedModes, $PARSER_MODES[$mt]);
+                $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
             }        
                 
             unset($this->allowedModes[array_search(substr(get_class($this), 7), $this->allowedModes)]);
-            $allowedModesSetup = true;
+            $this->allowedModesSetup = true;
         }
         
         return parent::accepts($mode);            
     }
 
 }
-
 //Setup VIM: ex: et ts=4 enc=utf-8 :
