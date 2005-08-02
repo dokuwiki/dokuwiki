@@ -62,6 +62,8 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      *
      * 'normal' - The plugin can be used inside paragraphs
 
+
+
      * 'block'  - Open paragraphs need to be closed before plugin output
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
