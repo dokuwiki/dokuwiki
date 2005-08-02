@@ -23,7 +23,7 @@ function plugin_printCSSJS(){
 			print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
     }
 		if(@file_exists(DOKU_INC.$dir.'script.js')){
-      print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'print.css"></script>'."\n";
+      print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
     }
 	}
 } 
