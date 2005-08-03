@@ -68,28 +68,31 @@ function plugin_list($type=''){
  *
  * @param  $type string     type of plugin to load
  * @param  $name string     name of the plugin to load
- * @return object         the plugin object or null on failure
+ * @return objectreference  the plugin object or null on failure
  */
 function &plugin_load($type,$name){
   //we keep all loaded plugins available in global scope for reuse
   global $DOKU_PLUGINS;
 
-    //plugin already loaded?
-    if($DOKU_PLUGINS[$type][$name] != null){
-        return $DOKU_PLUGINS[$type][$name];
-    }
+
+  //plugin already loaded?
+  if($DOKU_PLUGINS[$type][$name] != null){
+    return $DOKU_PLUGINS[$type][$name];
+  }
 
   //try to load the wanted plugin file
-  if(!@include_once(DOKU_PLUGIN."$name/$type.php")){
+  if(!include_once(DOKU_PLUGIN."$name/$type.php")){
     list($plugin, $component) = preg_split("/_/",$name, 2);
-    if (!$component || !@include_once(DOKU_PLUGIN."$plugin/$type/$component.php")) {
+    if (!$component || !include_once(DOKU_PLUGIN."$plugin/$type/$component.php")) {
         return null;
     }
   }
 
+/* FIXME: chris: what's this for?
   global $plugin_investigate_pluginorder;
   if (!isset($plugin_investigate_pluginorder)) $plugin_investigate_pluginorder = array();
   $plugin_investigate_pluginorder[] = $name;
+*/
 
   //construct class and instanciate
   $class = $type.'_plugin_'.$name;

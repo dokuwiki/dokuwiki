@@ -6,6 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'syntax.php');
@@ -23,7 +24,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2005-06-26',
+            'date'   => '2005-08-03',
             'name'   => 'Info Plugin',
             'desc'   => 'Displays information about various DokuWiki internals',
             'url'    => 'http://wiki.splitbrain.org/plugin:info',
@@ -106,21 +107,21 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         $plugins = plugin_list('syntax');
         foreach($plugins as $p){
-            if(plugin_load('syntax',$p,$po)){
-                $info = $po->getInfo();
+            $po =& plugin_load('syntax',$p);
+            $info = $po->getInfo();
 
-                $renderer->doc .= '<li>';
-                $renderer->externallink($info['url'],$info['name']);
-                $renderer->doc .= ' ';
-                $renderer->doc .= '<i>'.$info['date'].'</i>';
-                $renderer->doc .= ' ';
-                $renderer->doc .= $lang['by'];
-                $renderer->doc .= ' ';
-                $renderer->emaillink($info['email'],$info['author']);
-                $renderer->doc .= '<br />';
-                $renderer->doc .= htmlspecialchars($info['desc']);
-                $renderer->doc .= '</li>';
-            }
+            $renderer->doc .= '<li>';
+            $renderer->externallink($info['url'],$info['name']);
+            $renderer->doc .= ' ';
+            $renderer->doc .= '<i>'.$info['date'].'</i>';
+            $renderer->doc .= ' ';
+            $renderer->doc .= $lang['by'];
+            $renderer->doc .= ' ';
+            $renderer->emaillink($info['email'],$info['author']);
+            $renderer->doc .= '<br />';
+            $renderer->doc .= htmlspecialchars($info['desc']);
+            $renderer->doc .= '</li>';
+            unset($po);
         }
 
         $renderer->doc .= '</ul>';

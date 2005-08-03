@@ -61,9 +61,6 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * for correct XHTML nesting. Should return one of the following:
      *
      * 'normal' - The plugin can be used inside paragraphs
-
-
-
      * 'block'  - Open paragraphs need to be closed before plugin output
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
