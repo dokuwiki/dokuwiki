@@ -52,8 +52,8 @@ function plugin_list($type=''){
               $plugins[] = $plugin.'_'.substr($component, 0, -4);
             }
           }
-        }
         closedir($dp);
+        }
       }
     }
     closedir($dh);
