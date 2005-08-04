@@ -107,7 +107,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         $plugins = plugin_list('syntax');
         foreach($plugins as $p){
-            $po =& plugin_load('syntax',$p);
+            if (!$po =& plugin_load('syntax',$p)) continue;
             $info = $po->getInfo();
 
             $renderer->doc .= '<li>';

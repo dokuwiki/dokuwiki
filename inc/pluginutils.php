@@ -81,21 +81,17 @@ function &plugin_load($type,$name){
   }
 
   //try to load the wanted plugin file
-  if(!include_once(DOKU_PLUGIN."$name/$type.php")){
+  if(!@include_once(DOKU_PLUGIN."$name/$type.php")){
     list($plugin, $component) = preg_split("/_/",$name, 2);
-    if (!$component || !include_once(DOKU_PLUGIN."$plugin/$type/$component.php")) {
+    if (!$component || !@include_once(DOKU_PLUGIN."$plugin/$type/$component.php")) {
         return null;
     }
   }
 
-/* FIXME: chris: what's this for?
-  global $plugin_investigate_pluginorder;
-  if (!isset($plugin_investigate_pluginorder)) $plugin_investigate_pluginorder = array();
-  $plugin_investigate_pluginorder[] = $name;
-*/
-
   //construct class and instanciate
   $class = $type.'_plugin_'.$name;
+  if (!class_exists($class)) return null;
+  
   $DOKU_PLUGINS[$type][$name] = new $class;
   return $DOKU_PLUGINS[$type][$name];
 }
