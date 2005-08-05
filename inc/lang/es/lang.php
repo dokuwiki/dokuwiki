@@ -7,6 +7,7 @@
  * @author     Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author     Gabiel Molina <gabriel191@gmail.com>
  * @author     Paco Avila <monkiki@gmail.com>
+ * @author     Bernardo Arlandis Mañó <bernardo@tsolucio.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -62,6 +63,7 @@ $lang['mediaselect'] = 'Selección Mediafile';
 $lang['fileupload']  = 'Subida de Mediafile';
 $lang['uploadsucc']  = 'Carga satisfactoria';
 $lang['uploadfail']  = 'La subida ha fallado. Puede ser por permisos equivocados?';
+$lang['mediafiles']  = 'Ficheros disponibles en';
 
 $lang['hits']       = 'Hits';
 $lang['quickhits']  = 'Matching pagenames';
@@ -77,6 +79,10 @@ $lang['created']    = 'creado';
 $lang['lockedby']     = 'Actualmente bloqueado por';
 $lang['lockexpire']   = 'El bloqueo expira en';
 $lang['willexpire']   = 'Tu bloqueo para editar esta página expira en un minuto.\nPara evitar confictos usa el botón previsualizar para reinicial el contador de tiempo.';
+
+$lang['notsavedyet'] = 'Hay cambios que no se han guardado que se perderán.\n¿Quiere continuar?';
+$lang['rssfailed']   = 'Se ha producido un error leyendo datos: ';
+$lang['nothingfound']= 'No se ha encontrado nada.';
 
 $lang['mail_newpage'] = 'página añadida:';
 $lang['mail_changed'] = 'página cambiada:';
@@ -95,7 +101,7 @@ $lang['qb_extlink'] = 'Enlace Externo';
 $lang['qb_hr']      = 'Línea horizontal';
 $lang['qb_ol']      = 'Item de Lista Ordenada';
 $lang['qb_ul']      = 'Item de Lista Desordenada';
-$lang['qb_media']   = 'Añadir Imágenes otros ficheros';
+$lang['qb_media']   = 'Añadir Imágenes u otros ficheros';
 
 $lang['admin_acl']  = 'Mantenimiento del contol de accesos...';
 $lang['admin_register']= 'Añadir nuevo usuario...';
