@@ -321,7 +321,7 @@ class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
             ),
         
         'emphasis'=> array (
-            'entry'=>'//(?=.*(?<!http:|ftp:)//)', //hack for bug #384
+            'entry'=>'//(?=[^\x00]*[^:]//)', //hack for bug #384 
             'exit'=>'//',
             'sort'=>80
             ),
