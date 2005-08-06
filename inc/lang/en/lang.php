@@ -32,8 +32,8 @@ $lang['btn_update'] = 'Update';
 $lang['btn_delete'] = 'Delete';
 $lang['btn_back']   = 'Back';
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
-$lang['btn_track']  = 'Email Changes';
-$lang['btn_ignore'] = 'End Changes Email';
+$lang['btn_subscribe']   = 'Subscribe Changes';
+$lang['btn_unsubscribe'] = 'Unsubscribe Changes';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';

@@ -341,13 +341,13 @@ function tpl_button($type){
     case 'backtomedia':
       print html_backtomedia_button(array('ns' => $NS),'b');
       break;
-    case 'track':
+    case 'subscription':
       if($conf['useacl'] && $ACT == 'show'){
         if($_SERVER['REMOTE_USER']){
-          if(tracking($ID,$_SERVER['REMOTE_USER'])){
-            print html_btn('ignore',$ID,'',array('do' => 'ignore',));
+          if($INFO['subscribed']){
+            print html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
           } else {
-            print html_btn('track',$ID,'',array('do' => 'track',));
+            print html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
           }
         }
       }

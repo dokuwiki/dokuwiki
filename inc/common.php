@@ -26,12 +26,14 @@ function pageinfo(){
   global $conf;
 
   if($_SERVER['REMOTE_USER']){
-    $info['user']     = $_SERVER['REMOTE_USER'];
-    $info['userinfo'] = $USERINFO;
-    $info['perm']     = auth_quickaclcheck($ID);
+    $info['user']       = $_SERVER['REMOTE_USER'];
+    $info['userinfo']   = $USERINFO;
+    $info['perm']       = auth_quickaclcheck($ID);
+    $info['subscribed'] = is_subscribed($ID,$_SERVER['REMOTE_USER']);
   }else{
-    $info['user']     = '';
-    $info['perm']     = auth_aclcheck($ID,'',null);
+    $info['user']       = '';
+    $info['perm']       = auth_aclcheck($ID,'',null);
+    $info['subscribed'] = false;
   }
 
   $info['namespace'] = getNS($ID);
@@ -678,12 +680,6 @@ function notify($id,$rev="",$summary=""){
   global $conf;
   $hdrs ='';
 
-  $mlist = array();
-
-  $file=wikiMN($id);
-  if (file_exists($file)) {
-    $mlist = file($file);
-  }
 
   if(empty($conf['notify']) && count($mlist) == 0) return; //notify enabled?
   
@@ -712,6 +708,14 @@ function notify($id,$rev="",$summary=""){
   }
   $text = str_replace('@DIFF@',$diff,$text);
   $subject = '['.$conf['title'].'] '.$subject;
+
+
+  // FIXME move this to its own function
+  $mlist = array();
+  $file=metaFN($id,'.mlist');
+  if (file_exists($file)) {
+    $mlist = file($file);
+  }
 
   $bcc = '';
   if(count($mlist) > 0) {
@@ -924,19 +928,16 @@ function check(){
 /**
  * Let us know if a user is tracking a page
  *
- * @author Steven Danz <steven-danz@kc.rr.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tracking($id,$uid){
-  $file=wikiMN($id);
-  if (file_exists($file)) {
+function is_subscribed($id,$uid){
+  $file=metaFN($id,'.mlist');
+  if (@file_exists($file)) {
     $mlist = file($file);
-    foreach ($mlist as $who) {
-      $who = rtrim($who);
-      if ($who==$uid) {
-        return true;
-      }
-    }
+    $pos = array_search($uid."\n",$mlist);
+    return is_int($pos);
   }
+
   return false;
 }
 

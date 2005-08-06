@@ -114,9 +114,9 @@
         <?php tpl_button('history')?>
       </div>
       <div class="bar-right" id="bar_bottomright">
+        <?php tpl_button('subscription')?>
         <?php tpl_button('admin')?>
         <?php tpl_button('login')?>
-        <?php tpl_button('track')?>
         <?php tpl_button('index')?>
         <?php tpl_button('top')?>&nbsp;
       </div>

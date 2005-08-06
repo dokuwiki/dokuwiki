@@ -35,9 +35,9 @@ function act_dispatch(){
   if(in_array($ACT,array('login','logout')))
     $ACT = act_auth($ACT);
 
-  //check if user is asking to track a page
-  if($ACT == 'track' || $ACT == 'ignore')
-    $ACT = act_track($ACT);
+  //check if user is asking to (un)subscribe a page
+  if($ACT == 'subscribe' || $ACT == 'unsubscribe')
+    $ACT = act_subscription($ACT);
  
   //check permissions
   $ACT = act_permcheck($ACT);
@@ -106,7 +106,8 @@ function act_clean($act){
 
   if(array_search($act,array('login','logout','register','save','edit',
                              'preview','search','show','check','index','revisions',
-                             'diff','recent','backlink','admin','track','ignore',)) === false
+                             'diff','recent','backlink','admin','subscribe',
+                             'unsubscribe',)) === false
      && substr($act,0,7) != 'export_' ) {
     msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
@@ -273,31 +274,33 @@ function act_export($act){
 }
 
 /**
- * Handle 'track', 'ignore'
+ * Handle 'subscribe', 'unsubscribe'
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
+ * @todo   localize
  */
-function act_track($act){
+function act_subscription($act){
   global $ID;
   global $INFO;
 
-  $tracking = tracking($ID, $_SERVER['REMOTE_USER']);
-  $file=wikiMN($ID);
-  if ($act=='track' && !$tracking){
+  $file=metaFN($ID,'.mlist');
+  if ($act=='subscribe' && !$INFO['subscribed']){
     if ($INFO['userinfo']['mail']){
-      if (io_appendFile($file,$_SERVER['REMOTE_USER']."\n")) {
-        msg('Added '.$INFO['userinfo']['name'].' to tracking list for '.$ID,0);
+      if (io_saveFile($file,$_SERVER['REMOTE_USER']."\n",true)) {
+        $INFO['subscribed'] = true;
+        msg('Added '.$INFO['userinfo']['name'].' to subscription list for '.$ID,1);
       } else {
-        msg('Error adding '.$INFO['userinfo']['name'].' to tracking list for '.$ID,0);
+        msg('Error adding '.$INFO['userinfo']['name'].' to subscription list for '.$ID,-1);
       }
     } else {
-      msg('There is no address associated with your login, you cannot be added to the tracking list',-1);
+      msg('There is no address associated with your login, you cannot be added to the subscription list',-1);
     }
-  } elseif ($act=='ignore' && $tracking){
+  } elseif ($act=='unsubscribe' && $INFO['subscribed']){
     if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
-      msg('Removed '.$INFO['userinfo']['name'].' from the tracking list for '.$ID,0);
+      $INFO['subscribed'] = false;
+      msg('Removed '.$INFO['userinfo']['name'].' from subscription list for '.$ID,1);
     } else {
-      msg('Error removing '.$INFO['userinfo']['name'].' to tracking list for '.$ID,0);
+      msg('Error removing '.$INFO['userinfo']['name'].' from subscription list for '.$ID,-1);
     }
   }
 
