@@ -13,14 +13,7 @@
   require_once(DOKU_INC.'inc/feedcreator.class.php');
   require_once(DOKU_INC.'inc/auth.php');
 
-  //set auth header for login FIXME: is this used anymore???
-  if($_REQUEST['login'] && !isset($_SERVER['PHP_AUTH_USER'])){
-    header('WWW-Authenticate: Basic realm="'.$conf['title'].'"');
-    header('HTTP/1.0 401 Unauthorized');
-    auth_logoff();
-  }
-
-  //close sesseion
+  //close session
   session_write_close();
 
 
@@ -44,13 +37,20 @@
        $type = 'RSS1.0';
   }
 
-  //some defaults for the feed
-  $CACHEGROUP = 'feed';
-  $conf['typography'] = false;
-  $conf['canonical']  = true;
-  $parser['toc']      = false;
+	// the feed is dynamic - we need a cache for each combo
+  // (but most people just use the default feed so it's still effective)
+	$cache = getCacheName($num.$type.$mode.$ns.$ltype.$_SERVER['REMOTE_USER'],'.feed');
 
-#  $rss = new UniversalFeedCreator();
+	// check cacheage and deliver if nothing has changed since last
+  // time (with 5 minutes settletime)
+	$cmod = @filemtime($cache); // 0 if not exists
+	if($cmod && ($cmod+(5*60) >= @filemtime($conf['changelog']))){
+  	header('Content-Type: application/xml; charset=utf-8');
+		print io_readFile($cache);
+		exit;
+  }
+
+	// create new feed
   $rss = new DokuWikiFeedCreator();
   $rss->title = $conf['title'];
   $rss->link  = DOKU_URL;
@@ -69,8 +69,14 @@
     rssRecentChanges($rss,$num,$ltype);
   }
 
+  $feed = $rss->createFeed($type,'utf-8');
+	
+  // save cachefile
+	io_saveFile($cache,$feed);
+
+	// finally deliver
   header('Content-Type: application/xml; charset=utf-8');
-  print $rss->createFeed($type,'utf-8');
+  print $feed;
 
 // ---------------------------------------------------------------- //
 
