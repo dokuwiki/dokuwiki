@@ -17,6 +17,8 @@ $lang['btn_search'] = 'Søg';
 $lang['btn_save']   = 'Gem';
 $lang['btn_preview']= 'Forhåndsvisning';
 $lang['btn_top']    = 'Tilbage til toppen';
+$lang['btn_newer']  = '<< forrige side';
+$lang['btn_older']  = 'næste side >>';
 $lang['btn_prevpage']= '<< forrige side';
 $lang['btn_nextpage']= 'næste side >>';
 $lang['btn_revs']   = 'Gamle udgaver';
@@ -30,6 +32,10 @@ $lang['btn_logout'] = 'Log ud';
 $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Opdater';
 $lang['btn_delete'] = 'Slet';
+$lang['btn_back']   = 'Tilbage';
+$lang['btn_backtomedia'] = 'Tilbage til Mediafile Selection';
+$lang['btn_subscribe']   = 'Abonner på nye ændringer';
+$lang['btn_unsubscribe'] = 'Unsubscribe Changes';
 
 $lang['loggedinas'] = 'Logget på som';
 $lang['user']       = 'Brugernavn';
@@ -53,6 +59,7 @@ $lang['reghere']    = 'Opret en DokuWiki-kontor her';
 
 $lang['txt_upload']   = 'Vælg den fil der skal uploads';
 $lang['txt_filename'] = 'Indtast wikinavn (valgfrit)';
+$lang['txt_overwrt']  = 'Overskriv eksisterende fil';
 $lang['lockedby']     = 'Midlertidig låst af';
 $lang['lockexpire']   = 'Lås udløber kl.';
 $lang['willexpire']   = 'Din lås på dette dokument udløber om et minut.\nTryk på'.$lang['btn_preview'].'-knappen for at undgå konflikter.';
@@ -66,8 +73,16 @@ $lang['fileupload']  = 'Upload medifil';
 $lang['uploadsucc']  = 'Upload var en succes';
 $lang['uploadfail']  = 'Upload fejlede. Der er muligvis problemer med rettighederne';
 $lang['uploadwrong'] = 'Upload afvist. Filtyppen er ikke tilladt';
+$lang['uploadexist'] = 'Filen eksisterer allerede.';
+$lang['deletesucc']  = 'Filen"%s" er blevet slettet.';
+$lang['deletefail']  = '"%s" kunne ikke slettes - check rettighederne.';
+$lang['mediainuse']  = 'File "%s" er ikke slettet - den er staig i brug.';
 $lang['namespaces']  = 'Navnerum';
 $lang['mediafiles']  = 'Tilgængelige filer i';
+
+$lang['reference']   = 'Henvisning til';
+$lang['ref_inuse']   = 'Filen kan ikke slettes, da den stadig er i brug på følgende sider:';
+$lang['ref_hidden']  = 'Nogle henvisninger er i dokumenter du ikke har læse rettigheder til';
 
 $lang['hits']       = 'Hits';
 $lang['quickhits']  = 'Tilsvarende dokumentnavne';
@@ -94,6 +109,7 @@ $lang['qb_bold']    = 'Fed';
 $lang['qb_italic']  = 'Kursiv';
 $lang['qb_underl']  = 'Understregning';
 $lang['qb_code']    = 'Skrivemaskine tekst';
+$lang['qb_strike']  = 'Gennemstregning';
 $lang['qb_h1']      = 'Niveau 1 overskrift';
 $lang['qb_h2']      = 'Niveau 2 overskrift';
 $lang['qb_h3']      = 'Niveau 3 overskrift';
@@ -130,6 +146,22 @@ $lang['spell_stop'] = 'Forsæt redigering';
 $lang['spell_wait'] = 'Vent et øjeblik...';
 $lang['spell_noerr']= 'Der blev ikke fundet nogle fejl';
 $lang['spell_nosug']= 'Ingen forslag fundet';
+$lang['spell_change']= 'Ændr';
+
+$lang['metaedit']    = 'Rediger Metadata';
+$lang['metasaveerr'] = 'Skrivning af metadata fejlede';
+$lang['metasaveok']  = 'Metadata gemt';
+$lang['img_backto']  = 'Tilbage til';
+$lang['img_title']   = 'Titel';
+$lang['img_caption'] = 'Billedtekst';
+$lang['img_date']    = 'Dato';
+$lang['img_fname']   = 'Filnavn';
+$lang['img_fsize']   = 'Størrelse';
+$lang['img_artist']  = 'Fotograf';
+$lang['img_copyr']   = 'Copyright';
+$lang['img_format']  = 'Format';
+$lang['img_camera']  = 'Kamera';
+$lang['img_keywords']= 'Emneord';
 
 $lang['tpl_btn_insert']   = 'Indsæt';
 $lang['tpl_txt']          = 'Vælg skabelon';
@@ -138,3 +170,4 @@ $lang['tpl_qb']           = 'Indsæt skabelon';
 $lang['tpl_select']       = 'Indsæt skabelon';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
+
