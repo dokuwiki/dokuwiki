@@ -414,7 +414,15 @@ function html_revisions(){
     print $date;
 
     print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
-    print '<img src="'.DOKU_BASE.'lib/images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    $p = array();
+    $p['src']    = DOKU_BASE.'lib/images/diff.png';
+    $p['border'] = 0;
+    $p['width']  = 15;
+    $p['height'] = 11;
+    $p['title']  = $lang['diff'];
+    $p['alt']    = $lang['diff'];
+    $att = buildAttributes($p);
+    print "<img $att />";
     print '</a> ';
 
     print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
@@ -466,11 +474,27 @@ function html_recent($first=0){
     print $date.' ';
 
     print '<a href="'.wl($id,"do=diff").'">';
-    print '<img src="'.DOKU_BASE.'lib/images/diff.png" border="0" width="15" height="11" title="'.$lang['diff'].'" />';
+    $p = array();
+    $p['src']    = DOKU_BASE.'lib/images/diff.png';
+    $p['border'] = 0;
+    $p['width']  = 15;
+    $p['height'] = 11;
+    $p['title']  = $lang['diff'];
+    $p['alt']    = $lang['diff'];
+    $att = buildAttributes($p);
+    print "<img $att />";
     print '</a> ';
 
     print '<a href="'.wl($id,"do=revisions").'">';
-    print '<img src="'.DOKU_BASE.'lib/images/history.png" border="0" width="12" height="14" title="'.$lang['btn_revs'].'" />';
+    $p = array();
+    $p['src']    = DOKU_BASE.'lib/images/history.png';
+    $p['border'] = 0;
+    $p['width']  = 12;
+    $p['height'] = 14;
+    $p['title']  = $lang['btn_revs'];
+    $p['alt']    = $lang['btn_revs'];
+    $att = buildAttributes($p);
+    print "<img $att />";
     print '</a> ';
 
     print html_wikilink($id,$conf['useheading']?NULL:$id);
