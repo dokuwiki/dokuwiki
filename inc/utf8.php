@@ -294,10 +294,11 @@ function utf8_deaccent($string,$case=0){
  * stripped chars (they are not included in $UTF8_SPECIAL_CHARS)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param  string $string The UTF8 string to strip of special chars
- * @param  string $repl   Replace special with this string
+ * @param  string $string     The UTF8 string to strip of special chars
+ * @param  string $repl       Replace special with this string
+ * @param  string $additional Additional chars to strip (used in regexp char class)
  */
-function utf8_stripspecials($string,$repl=''){
+function utf8_stripspecials($string,$repl='',$additional=''){
   global $UTF8_SPECIAL_CHARS;
 
   static $specials = null;
@@ -305,7 +306,7 @@ function utf8_stripspecials($string,$repl=''){
     $specials = preg_quote(unicode_to_utf8($UTF8_SPECIAL_CHARS), '/');
   }
 
-  return preg_replace('/[\x00-\x19'.$specials.']/u',$repl,$string);
+  return preg_replace('/['.$additional.'\x00-\x19'.$specials.']/u',$repl,$string);
 }
 
 /**
