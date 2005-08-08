@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     François Kooman <fkooman.tuxed.net>
  * @author     Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
+ * @author     Riny Heijdendael <riny@heijdendael.nl>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -143,5 +144,20 @@ $lang['spell_wait']  = 'Even wachten a.u.b...';
 $lang['spell_noerr'] = 'Geen fouten gevonden';
 $lang['spell_nosug'] = 'Geen suggesties';
 $lang['spell_change']= 'Wijzig';
+
+$lang['metaedit']    = 'Edit Metadata';
+$lang['metasaveerr'] = 'Writing metadata failed';
+$lang['metasaveok']  = 'Metadata saved';
+$lang['img_backto']  = 'Terug naar';
+$lang['img_title']   = 'Titel';
+$lang['img_caption'] = 'Bijschrift';
+$lang['img_date']    = 'Datum';
+$lang['img_fname']   = 'Bestandsnaam';
+$lang['img_fsize']   = 'Grootte';
+$lang['img_artist']  = 'Fotograaf';
+$lang['img_copyr']   = 'Copyright';
+$lang['img_format']  = 'Formaat';
+$lang['img_camera']  = 'Camera';
+$lang['img_keywords']= 'Trefwoorden';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
