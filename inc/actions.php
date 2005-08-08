@@ -282,25 +282,26 @@ function act_export($act){
 function act_subscription($act){
   global $ID;
   global $INFO;
-
+  global $lang;
+  
   $file=metaFN($ID,'.mlist');
   if ($act=='subscribe' && !$INFO['subscribed']){
     if ($INFO['userinfo']['mail']){
       if (io_saveFile($file,$_SERVER['REMOTE_USER']."\n",true)) {
         $INFO['subscribed'] = true;
-        msg('Added '.$INFO['userinfo']['name'].' to subscription list for '.$ID,1);
+        msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
       } else {
-        msg('Error adding '.$INFO['userinfo']['name'].' to subscription list for '.$ID,-1);
+        msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
       }
     } else {
-      msg('There is no address associated with your login, you cannot be added to the subscription list',-1);
+      msg($lang['subscribe_noaddress']);
     }
   } elseif ($act=='unsubscribe' && $INFO['subscribed']){
     if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
       $INFO['subscribed'] = false;
-      msg('Removed '.$INFO['userinfo']['name'].' from subscription list for '.$ID,1);
+      msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
     } else {
-      msg('Error removing '.$INFO['userinfo']['name'].' from subscription list for '.$ID,-1);
+      msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
     }
   }
 

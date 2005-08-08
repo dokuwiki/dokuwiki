@@ -161,5 +161,10 @@ $lang['img_format']  = 'Format';
 $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Keywords';
 
+$lang['subscribe_success']  = 'Added %s to subscription list for %s';
+$lang['subscribe_error']    = 'Error adding %s to subscription list for %s';
+$lang['subscribe_noaddress']= 'There is no address associated with your login, you cannot be added to the subscription list';
+$lang['unsubscribe_success']= 'Removed %s from subscription list for %s';
+$lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

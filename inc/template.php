@@ -118,12 +118,6 @@ function tpl_content(){
     case 'admin':
       tpl_admin();
       break;
-    case 'track':
-      html_track();
-      break;
-    case 'ignore':
-      html_ignore();
-      break;
     default:
 			msg("Failed to handle command: ".hsc($ACT),-1); 
   }
@@ -342,7 +336,7 @@ function tpl_button($type){
       print html_backtomedia_button(array('ns' => $NS),'b');
       break;
     case 'subscription':
-      if($conf['useacl'] && $ACT == 'show'){
+      if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']){
             print html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
@@ -438,13 +432,13 @@ function tpl_actionlink($type,$pre='',$suf=''){
       if($INFO['perm'] == AUTH_ADMIN)
         tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action"');
       break;
-   case 'track':
-      if($conf['useacl'] && $ACT == 'show'){
+   case 'subscribe':
+      if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
-          if(tracking($ID,$_SERVER['REMOTE_USER'])){
-            tpl_link(wl($ID,'do=ignore'),$pre.$lang['btn_ignore'].$suf,'class="action"');
+          if($info['subscribed']) {
+            tpl_link(wl($ID,'do=unsubscribe'),$pre.$lang['btn_unsubscribe'].$suf,'class="action"');
           } else {
-            tpl_link(wl($ID,'do=track'),$pre.$lang['btn_track'].$suf,'class="action"');
+            tpl_link(wl($ID,'do=subscribe'),$pre.$lang['btn_subscribe'].$suf,'class="action"');
           }
         }
       }

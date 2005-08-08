@@ -69,6 +69,7 @@ $conf['notify']      = '';               //send change info to this email (leave
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['spellchecker']= 0;                //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
+$conf['subscribers'] = 0;                //enable change notice subscription support
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';

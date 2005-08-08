@@ -746,8 +746,9 @@ function notify($id,$rev="",$summary=""){
   global $conf;
   $hdrs ='';
 
+  $bcc = subscriber_addresslist($id);
 
-  if(empty($conf['notify']) && count($mlist) == 0) return; //notify enabled?
+  if(empty($conf['notify']) && empty($bcc)) return; //notify enabled?
   
   $text = rawLocale('mailtext');
   $text = str_replace('@DATE@',date($conf['dformat']),$text);
@@ -774,32 +775,6 @@ function notify($id,$rev="",$summary=""){
   }
   $text = str_replace('@DIFF@',$diff,$text);
   $subject = '['.$conf['title'].'] '.$subject;
-
-
-  // FIXME move this to its own function
-  $mlist = array();
-  $file=metaFN($id,'.mlist');
-  if (file_exists($file)) {
-    $mlist = file($file);
-  }
-
-  $bcc = '';
-  if(count($mlist) > 0) {
-    foreach ($mlist as $who) {
-      $who = rtrim($who);
-      $info = auth_getUserData($who);
-      $level = auth_aclcheck($id,$who,$info['grps']);
-      if ($level >= AUTH_READ) {
-        if (strcasecmp($info['mail'],$conf['notify']) != 0) {
-          if (empty($bcc)) {
-            $bcc = $info['mail'];
-          } else {
-            $bcc = "$bcc,".$info['mail'];
-          }
-        }
-      }
-    }
-  }
 
   mail_send($conf['notify'],$subject,$text,$conf['mailfrom'],'',$bcc);
 }
@@ -1005,6 +980,44 @@ function is_subscribed($id,$uid){
   }
 
   return false;
+}
+
+/**
+ * Return a string with the email addresses of all the
+ * users subscribed to a page
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function subscriber_addresslist($id){
+  global $conf;
+
+  $emails = '';
+  
+  if ($conf['subscribers'] == 1) {
+    $mlist = array();
+    $file=metaFN($id,'.mlist');
+    if (file_exists($file)) {
+      $mlist = file($file);
+    }
+    if(count($mlist) > 0) {
+      foreach ($mlist as $who) {
+        $who = rtrim($who);
+        $info = auth_getUserData($who);
+        $level = auth_aclcheck($id,$who,$info['grps']);
+        if ($level >= AUTH_READ) {
+          if (strcasecmp($info['mail'],$conf['notify']) != 0) {
+            if (empty($emails)) {
+              $emails = $info['mail'];
+            } else {
+              $emails = "$emails,".$info['mail'];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return $emails;
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
