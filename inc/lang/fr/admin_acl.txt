@@ -1,0 +1,12 @@
+====== Gestion de la liste des contôles d'accès [ACL] ======
+
+Sur cette page vous pouvez ajouter ou enlever les permissions pour la page
+courante et toutes les [[doku>wiki:namespaces|catégories]] dont elle fait
+partie. Vous devriez lire la [[doku>wiki:acl|documentation officielle sur
+les ACL]] pour mieux comprendre comment les contôles d'accès fonctionnent.
+
+Cette page affiche toutes les permissions signicatives pour la page
+courante. Les permissions concernant les autres pages ne sont pas affichées
+-- pour modifier ces dernières, [[this>doku.php?do=index|fureter]] jusqu'à
+la page en question puis retourner à l'outil administratif de gestion des
+contôles d'accès [ACL].
