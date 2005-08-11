@@ -497,7 +497,7 @@ function html_recent($first=0){
     print "<img $att />";
     print '</a> ';
 
-    print html_wikilink($id,$conf['useheading']?NULL:$id);
+    print html_wikilink(":$id",$conf['useheading']?NULL:$id);
 
     print ' '.htmlspecialchars($recents[$id]['sum']);
     print ' <span class="user">';
