@@ -143,6 +143,21 @@ $lang['spell_noerr'] = '未發現任何錯誤';
 $lang['spell_nosug'] = '沒有建議事項';
 $lang['spell_change']= '更改';
 
+$lang['metaedit']    = '更改相片資料(EXIF)';
+$lang['metasaveerr'] = '相片資料(EXIF)儲存失敗喔';
+$lang['metasaveok']  = '相片資料已成功儲存';
+$lang['img_backto']  = '回上一頁';
+$lang['img_title']   = '標題';
+$lang['img_caption'] = '照片說明';
+$lang['img_date']    = '日期';
+$lang['img_fname']   = '檔名';
+$lang['img_fsize']   = '大小';
+$lang['img_artist']  = '攝影者';
+$lang['img_copyr']   = '版權';
+$lang['img_format']  = '格式';
+$lang['img_camera']  = '相機';
+$lang['img_keywords']= '關鍵字';
+
 $lang['txt_insert']    = '放入日曆';
 $lang['qb_calendar']   = '放入一個日曆';
 $lang['btn_insert']    = '產生日曆';
