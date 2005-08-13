@@ -72,7 +72,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Create output
      */
-    function render($mode, &$renderer, $data) {
+    function render($format, &$renderer, $data) {
         if($mode == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){

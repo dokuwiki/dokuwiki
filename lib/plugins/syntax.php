@@ -95,23 +95,23 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * during the object's current life. The only reliable data it receives are its
      * parameters.
      *
-     * The function should always check for the given mode and return false
-     * when a mode isn't supported.
+     * The function should always check for the given output format and return false
+     * when a format isn't supported.
      *
      * $renderer contains a reference to the renderer object which is
      * currently handling the rendering. You need to use it for writing
      * the output. How this is done depends on the renderer used (specified
-     * by $mode
+     * by $format
      *
      * The contents of the $data array depends on what the handler() function above
      * created
      *
-     * @param   $mode     string   current Rendermode
+     * @param   $format   string   output format to being Rendered
      * @param   $renderer ref      reference to the current renderer object
      * @param   $data     array    data created by handler()
      * @return  boolean            rendered correctly?
      */
-    function render($mode, &$renderer, $data) {
+    function render($format, &$renderer, $data) {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
 
     }
