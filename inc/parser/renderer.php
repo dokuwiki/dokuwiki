@@ -1,4 +1,15 @@
 <?php
+/**
+ * Renderer for XHTML output
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
+
+require_once DOKU_INC . 'inc/parser/renderer.php';
+require_once DOKU_INC . 'inc/pluginutils.php';
+
 class Doku_Renderer {
     var $info = array(
         'cache' => TRUE, // may the rendered result cached?
@@ -9,6 +20,16 @@ class Doku_Renderer {
         $this->info['cache'] = FALSE;
     }
     
+    //handle plugin rendering
+    function plugin($name,$data){
+        $plugin =& plugin_load('syntax',$name); 
+        if($plugin != null){
+			// determine mode from renderer class name - format = "Doku_Renderer_<mode>"
+		    $mode = substr(get_class($this), 14);
+            $plugin->render($mode,$this,$data);
+        }
+    }
+	
     function document_start() {}
     
     function document_end() {}

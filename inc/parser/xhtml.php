@@ -19,7 +19,6 @@ if ( !defined('DOKU_TAB') ) {
 }
 
 require_once DOKU_INC . 'inc/parser/renderer.php';
-require_once DOKU_INC . 'inc/pluginutils.php';
 
 /**
  * The Renderer 
@@ -84,14 +83,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
     }
 
-    //handles plugin rendering
-    function plugin($name,$data){
-        $plugin =& plugin_load('syntax',$name); 
-        if($plugin != null){
-            $plugin->render('xhtml',$this,$data);
-        }
-    }
-    
     function toc_open() {
         global $lang;
         $this->doc .= '<div class="toc">'.DOKU_LF;
