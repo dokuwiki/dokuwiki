@@ -31,6 +31,8 @@ $lang['btn_update'] = '更新設定';
 $lang['btn_delete'] = '刪除';
 $lang['btn_back']   = '回上一步';
 $lang['btn_backtomedia'] = '重新選擇圖檔';
+$lang['btn_subscribe']   = '訂閱更動通知';
+$lang['btn_unsubscribe'] = '退訂更動通知';
 
 $lang['loggedinas'] = '登入為';
 $lang['user']       = '帳號';
@@ -157,6 +159,12 @@ $lang['img_copyr']   = '版權';
 $lang['img_format']  = '格式';
 $lang['img_camera']  = '相機';
 $lang['img_keywords']= '關鍵字';
+
+$lang['subscribe_success']  = '已將『%s』加入 %s 訂閱清單內';
+$lang['subscribe_error']    = '要把『%s』加入 %s 訂閱清單時，發生錯誤';
+$lang['subscribe_noaddress']= '您的帳號內並無 Email 資料，因此還無法使用訂閱功能唷。';
+$lang['unsubscribe_success']= '已將『%s』從 %s 訂閱清單中移除';
+$lang['unsubscribe_error']  = '要把『%s』從 %s 訂閱清單中移除時，發生錯誤';
 
 $lang['txt_insert']    = '放入日曆';
 $lang['qb_calendar']   = '放入一個日曆';
