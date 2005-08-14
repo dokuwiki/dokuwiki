@@ -108,7 +108,7 @@ class Doku_Renderer {
     
     function listitem_close() {}
     
-    function listcontent_open($level) {}
+    function listcontent_open() {}
     
     function listcontent_close() {}
     
@@ -167,7 +167,8 @@ class Doku_Renderer {
     // Link to a Windows share, , $title could be an array (media)
     function windowssharelink($link, $title = NULL) {}
     
-    function email($address, $title = NULL) {}
+//  function email($address, $title = NULL) {}
+    function emaillink($address, $name = NULL) {}
     
     function internalmedialink (
         $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
