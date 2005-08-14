@@ -1,0 +1,17 @@
+Witaj!
+
+Strona @PAGE@ w wiki @TITLE@ została zmieniona.
+Szczegóły:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Aby zaprzestać subskrypcji zmian tej strony zaloguj się na
+@DOKUWIKIURL@ a następnie przejdź do strony
+@NEWPAGE@
+i wybierz 'zaprzestań subskrypcji zmian'.
+
+-- 
+List został wygenerowany przez DokuWiki pod adresem
+@DOKUWIKIURL@

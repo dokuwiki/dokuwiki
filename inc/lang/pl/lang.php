@@ -32,15 +32,17 @@ $lang['btn_update'] = 'Aktualizuj';
 $lang['btn_delete'] = 'Usuń';
 $lang['btn_back']   = 'Wstecz';
 $lang['btn_backtomedia'] = 'Powrót do wyboru pliku';
+$lang['btn_subscribe']   = 'Subskrybuj zmiany';
+$lang['btn_unsubscribe'] = 'Zaprzestań subskrypcji zmian';
 
 $lang['loggedinas'] = 'Zalogowany/a jako';
 $lang['user']       = 'Użytkownik';
 $lang['pass']       = 'Hasło';
-$lang['passchk']    = 'powtórz hasło';
+$lang['passchk']    = 'Powtórz hasło';
 $lang['remember']   = 'Zapamiętaj';
 $lang['fullname']   = 'Imię i nazwisko';
 $lang['email']      = 'E-mail';
-$lang['register']   = 'zarejestruj się!';
+$lang['register']   = 'Zarejestruj się!';
 $lang['badlogin']   = 'Nazwa użytkownika lub hasło są nieprawidłowe.';
 
 $lang['regmissing'] = 'Wypełnij wszystkie pola.';
@@ -48,10 +50,10 @@ $lang['reguexists'] = 'Użytkownik o tej nazwie już istnieje.';
 $lang['regsuccess'] = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
 $lang['regsuccess2']= 'Utworzono użytkownika.';
 $lang['regmailfail']= 'Wystąpił błąd przy wysyłaniu hasła pocztą!';
-$lang['regbadmail'] = 'Adres e-mail jest nieprawidłowym!';
+$lang['regbadmail'] = 'Adres e-mail jest nieprawidłowy!';
 $lang['regbadpass'] = 'Hasła nie są identyczne, spróbuj ponownie.';
-$lang['regpwmail']  = 'Twoje haslo do DokuWiki'; /* no diacritics in mail subject, still needed? */
-$lang['reghere']    = 'Nie masz jeszcze konta? Zdobądź je!';
+$lang['regpwmail']  = 'Twoje hasło do DokuWiki';
+$lang['reghere']    = 'Nie masz jeszcze konta? Zdobądź je';
 
 $lang['txt_upload']   = 'Wybierz plik do wysłania';
 $lang['txt_filename'] = 'Nazwa pliku (opcjonalnie)';
@@ -67,7 +69,7 @@ $lang['nothingfound']= 'Nic nie znaleziono.';
 $lang['mediaselect'] = 'Wysyłanie pliku';
 $lang['fileupload']  = 'Wysyłanie pliku';
 $lang['uploadsucc']  = 'Wysyłanie powiodło się!';
-$lang['uploadfail']  = 'Błąd wysyłania. Czy prawa do katalogów są poprawne?';
+$lang['uploadfail']  = 'Błąd wysyłania pliku. Czy prawa do katalogów są poprawne?';
 $lang['uploadwrong'] = 'Wysyłanie zabronione. Nie można wysłać plików z takim rozszerzeniem';
 $lang['uploadexist'] = 'Plik już istnieje, nie wykonano operacji.';
 $lang['deletesucc']  = 'Plik "%s" został usunięty.';
@@ -88,10 +90,10 @@ $lang['yours']      = 'Twoja wersja';
 $lang['diff']       = 'Pokaż różnicę między wersjami';
 $lang['line']       = 'Linia';
 $lang['breadcrumb'] = 'Ślad';
-$lang['lastmod']    = 'ostatnio zmieniane';
+$lang['lastmod']    = 'ostatnio zmienione';
 $lang['by']         = 'przez';
 $lang['deleted']    = 'usunięto';
-$lang['created']    = 'stworzono';
+$lang['created']    = 'utworzono';
 $lang['restored']   = 'przywrócono poprzednią wersję';
 $lang['summary']    = 'Opis zmian';
 
@@ -104,7 +106,7 @@ $lang['qb_alert']   = 'Wpisz tekst, który chcesz sformatować.\nBędzie on doł
 $lang['qb_bold']    = 'Pogrubienie';
 $lang['qb_italic']  = 'Pochylenie';
 $lang['qb_underl']  = 'Podkreślenie';
-$lang['qb_code']    = 'Kod';
+$lang['qb_code']    = 'Kod źródłowy';
 $lang['qb_strike']  = 'Przekreślenie';
 $lang['qb_h1']      = 'Nagłówek 1 stopnia';
 $lang['qb_h2']      = 'Nagłówek 2 stopnia';
@@ -119,10 +121,10 @@ $lang['qb_ul']      = 'Wypunktowanie';
 $lang['qb_media']   = 'Dodaj obrazek lub inny plik';
 $lang['qb_sig']     = 'Wstaw podpis';
 
-$lang['del_confirm']= 'Usunąć wpis?';
+$lang['del_confirm']= 'Czy napewno usunąć?';
 
-$lang['admin_acl']  = 'Zarządzanie uprawnieniami...';
-$lang['admin_register']= 'Dodawanie użytkownika...';
+$lang['admin_acl']  = 'Zarządzanie uprawnieniami';
+$lang['admin_register']= 'Dodawanie użytkownika';
 
 $lang['acl_group']  = 'Grupa';
 $lang['acl_user']   = 'Użytkownik';
@@ -143,5 +145,26 @@ $lang['spell_wait']  = 'Proszę czekać...';
 $lang['spell_noerr'] = 'Nie znaleziono błędów';
 $lang['spell_nosug'] = 'Brak podpowiedzi';
 $lang['spell_change']= 'Zmień';
+
+$lang['metaedit']    = 'Edytuj metadane';
+$lang['metasaveerr'] = 'Zapis metadanych nie powiódł się';
+$lang['metasaveok']  = 'Metadane zapisano';
+$lang['img_backto']  = 'Wróć do';
+$lang['img_title']   = 'Tytuł';
+$lang['img_caption'] = 'Nagłówek';
+$lang['img_date']    = 'Data';
+$lang['img_fname']   = 'Nazwa pliku';
+$lang['img_fsize']   = 'Rozmiar';
+$lang['img_artist']  = 'Fotograf';
+$lang['img_copyr']   = 'Prawa autorskie';
+$lang['img_format']  = 'Format';
+$lang['img_camera']  = 'Aparat';
+$lang['img_keywords']= 'Słowa kluczowe';
+
+$lang['subscribe_success']  = 'Dodano %s do listy subskrypcji strony %s';
+$lang['subscribe_error']    = 'Błąd przy dodawaniu %s do listy subskrypcji strony %s';
+$lang['subscribe_noaddress']= 'Nie podałeś adresu e-mail przy rejestracji, nie możesz zostać dodany do listy subskrypcji.';
+$lang['unsubscribe_success']= 'Usunięto %s z listy subskrypcji strony %s';
+$lang['unsubscribe_error']  = 'Błąd przu usuwaniu %s z listy subskrypcji strony %s';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

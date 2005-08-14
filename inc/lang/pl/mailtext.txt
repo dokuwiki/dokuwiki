@@ -2,13 +2,13 @@ Strona w Twoim DokuWiki została dodana lub zmieniona.
 Szczegółowe informacje:
 
 Data         : @DATE@
-Użytkownik   : @BROWSER@
+Przeglądarka : @BROWSER@
 Adres IP     : @IPADDRESS@
 Komputer     : @HOSTNAME@
 Stara wersja : @OLDPAGE@
 Nowa wersja  : @NEWPAGE@
 Opis zmian   : @SUMMARY@
-User         : @USER@
+Użytkownik   : @USER@
 
 @DIFF@
 

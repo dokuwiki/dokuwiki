@@ -1,14 +1,19 @@
-# This is a list of words the indexer ignores, one word per line
-# When you edit this file be sure to use UNIX line endings (single newline)
-# No need to include words shorter than 3 chars - these are ignored anyway
-# This list is based upon the ones found at http://www.ranks.nl/stopwords/
+# Lista słów ignorowanych przy indeksowaniu treści.
+# W jednej linii powinno znajdować się tylko jedno słowo.
+# Przy edycji tego pliku pamiętaj o używaniu uniksowego końca linii (LF).
+# Nie ma potrzeby wpisywania słów krótszych niż 3 znaki ponieważ one są zawsze ignorowane.
+# Lista oparta na danych ze strony http://www.ranks.nl/stopwords/
 aby
 ale
 bardziej
 bardzo
 bez
 bowiem
-bêdzie
+był
+była
+było
+były
+będzie
 czy
 czyli
 dla
@@ -24,6 +29,8 @@ jego
 jej
 jest
 jeszcze
+jeśli
+już
 kiedy
 kilka
 która
@@ -35,8 +42,11 @@ których
 którym
 którzy
 lub
-miêdzy
+między
 mnie
+mogą
+może
+można
 nad
 nam
 nas
@@ -46,6 +56,7 @@ nawet
 nich
 nie
 nim
+niż
 oraz
 pod
 poza
@@ -53,23 +64,26 @@ przed
 przede
 przez
 przy
-siê
+również
+się
 sobie
 swoje
 tak
 takie
+także
 tam
-te
 tego
 tej
 ten
+też
 tych
 tylko
 tym
 wiele
 wielu
-wiêc
+więc
 wszystkich
 wszystkim
 wszystko
+właśnie
 zawsze

@@ -1,5 +1,5 @@
-====== Blokowanie niewłaściwych treści ======
+====== Blokowanie niedozwolonych treści ======
     
 Twoje zmiany **nie** zostały zapisane ponieważ zawierają niedozwolone słowa.
-Jeśli próbowałeś/aś umieścić niewłaściwe treści to wstydź się!
+Jeśli próbowałeś/aś umieścić niedozwolone treści to wstydź się!
 
