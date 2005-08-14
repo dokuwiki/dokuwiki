@@ -238,7 +238,11 @@ function idfilter($id,$ue=true){
  */
 function wl($id='',$more='',$abs=false){
   global $conf;
-  $more = str_replace(',','&amp;',$more);
+  if(is_array($more)){
+    $more = buildURLparams($more);
+  }else{
+    $more = str_replace(',','&amp;',$more);
+  }
 
   $id    = idfilter($id);
   if($abs){
@@ -260,6 +264,68 @@ function wl($id='',$more='',$abs=false){
   
   return $xlink;
 }
+
+/**
+ * Build a link to a media file
+ *
+ * Will return a link to the detail page if $direct is false
+ */
+function ml($id='',$more='',$direct=true){
+  global $conf;
+  if(is_array($more)){
+    $more = buildURLparams($more);
+  }else{
+    $more = str_replace(',','&amp;',$more);
+  }
+
+  $xlink = DOKU_BASE;
+
+  // external URLs are always direct without rewriting
+  if(preg_match('#^(https?|ftp)://#i',$id)){
+    $xlink .= 'lib/exe/fetch.php';
+    if($more){
+      $xlink .= '?'.$more;
+      $xlink .= '&amp;media='.$id;
+    }else{
+      $xlink .= '?media='.$id;
+    }
+    return $xlink;
+  } 
+
+  $id = idfilter($id);
+
+  // decide on scriptname
+  if($direct){
+    if($conf['userewrite'] == 1){
+      $script = '_media';
+    }else{
+      $script = 'lib/exe/fetch.php';
+    }
+  }else{
+    if($conf['userewrite'] == 1){
+      $script = '_detail';
+    }else{
+      $script = 'lib/exe/detail.php';
+    }
+  }
+
+  // build URL based on rewrite mode
+  if($conf['userewrite']){
+    $xlink .= $script.'/'.$id;
+    if($more) $xlink .= '?'.$more;
+  }else{
+    if($more){ 
+      $xlink .= '?'.$more;
+      $xlink .= '&amp;media='.$id;
+    }else{
+      $xlink .= '?media='.$id;
+    }
+  }
+
+  return $xlink;
+}
+
+
 
 /**
  * Just builds a link to a script

@@ -734,10 +734,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
-        if(substr($mime,0,5) == 'image' && !preg_match('#^(https?|ftp)://#i',$src)){
-            $link['url']= DOKU_BASE.'lib/exe/detail.php?id='.$ID.'&amp;cache='.$cache.'&amp;media='.urlencode($src);
+        if(substr($mime,0,5)){
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),false);
         }else{
-            $link['url']= DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
         }
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
@@ -762,7 +762,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['target'] = $conf['target']['media'];
 
         $link['title']  = $this->_xmlEntities($src);
-        $link['url']    = DOKU_BASE.'lib/exe/fetch.php?cache='.$cache.'&amp;media='.urlencode($src);
+        $link['url']    = ml($src,array('cache'=>$cache));
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
 
@@ -917,9 +917,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             //add image tag
-            $ret .= '<img src="'.DOKU_BASE.'lib/exe/fetch.php?w='.$width.'&amp;h='.$height.
-                    '&amp;cache='.$cache.'&amp;media='.urlencode($src).'"';
-            
+            $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
             $ret .= ' class="media'.$align.'"';
         
             if (!is_null($title)) {
@@ -952,9 +950,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
             if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
             $ret .= '>'.DOKU_LF;
-            $ret .= '<param name="movie" value="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($src).'" />'.DOKU_LF;
+            $ret .= '<param name="movie" value="'.ml($src).'" />'.DOKU_LF;
             $ret .= '<param name="quality" value="high" />'.DOKU_LF;
-            $ret .= '<embed src="'.DOKU_BASE.'lib/exe/fetch.php?media='.urlencode($src).'"'.
+            $ret .= '<embed src="'.ml($src).'"'.
                     ' quality="high"';
             if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
             if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';

@@ -8,25 +8,25 @@
  */
 
 /**
- * Fetch the pageid
+ * Fetch the an ID from request
  *
  * Uses either standard $_REQUEST variable or extracts it from
  * the full request URI when userewrite is set to 2
  *
- * Returns $conf['start'] if no id was found.
+ * Returns $conf['start'] if no id was found and $param is 'id'
  * 
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getID(){
+function getID($param='id'){
   global $conf;
 
-  $id = cleanID($_REQUEST['id']);
+  $id = cleanID($_REQUEST[$param]);
   
   //construct page id from request URI
   if(empty($id) && $conf['userewrite'] == 2){
     //get the script URL
     if($conf['basedir']){
-      $script = $conf['basedir'].DOKU_SCRIPT;
+      $script = $conf['basedir'].basedir($_SERVER['SCRIPT_FILENAME']);
     }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
       $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                               $_SERVER['SCRIPT_FILENAME']);
@@ -43,9 +43,10 @@ function getID(){
     if(preg_match('/^'.preg_quote($script,'/').'(.*)/',$request, $match)){
       $id = preg_replace ('/\?.*/','',$match[1]);
     }
+    $id = urldecode($id);
     $id = cleanID($id);
   }
-  if(empty($id)) $id = $conf['start'];
+  if(empty($id) && $param='id') $id = $conf['start'];
 
   return $id;
 }

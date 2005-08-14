@@ -674,11 +674,7 @@ function tpl_mediafilelist(){
         $h = floor($h * $ratio);
       }
 
-      $p = array();
-      $p['w'] = $w;
-      $p['h'] = $h;
-      $p['media'] = $item['id'];
-      $src = DOKU_BASE.'lib/exe/fetch.php?'.buildURLParams($p);
+      $src = ml($item['id'],array('w'=>$w,'h'=>$h));
 
       $p = array();
       $p['width']  = $w;
@@ -854,12 +850,9 @@ function tpl_img($maxwidth=900,$maxheight=700){
     $h = floor($ratio*$h);
   }
 
-  //prepare URL
-  $p = array();
-  $p['cache'] = $_REQUEST['cache'];
-  $p['media'] = $IMG;
-  $p = buildURLparams($p);
-  $url=DOKU_BASE.'lib/exe/fetch.php?'.$p;
+  //prepare URLs
+  $url=ml($IMG,array('cache'=>$_REQUEST['cache']));
+  $src=ml($IMG,array('cache'=>$_REQUEST['cache'],'w'=>$w,'h'=>$h));
 
   //prepare attributes
   $alt=tpl_img_getTag('Simple.Title');
@@ -876,7 +869,7 @@ function tpl_img($maxwidth=900,$maxheight=700){
   $p = buildAttributes($p);
 
   print '<a href="'.$url.'">';
-  print '<img src="'.$url.'&amp;w='.$w.'&amp;h='.$w.'" '.$p.'/>';
+  print '<img src="'.$src.'" '.$p.'/>';
   print '</a>';
 }
 

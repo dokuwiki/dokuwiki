@@ -11,8 +11,8 @@
   //close session
   session_write_close();
 
-  $IMG  = cleanID($_REQUEST['media']);
-  $ID   = getID();
+  $IMG  = getID('media');
+  $ID   = cleanID($_REQUEST['id']);
 
   $ERROR = false;
   // check image permissions
