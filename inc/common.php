@@ -705,7 +705,9 @@ function saveWikiText($id,$text,$summary){
   }
 
   addLogEntry(@filemtime($file),$id,$summary);
-  notify($id,$old,$summary);
+  // send notify mails
+  notify($id,'admin',$old,$summary);
+  notify($id,'subscribers',$old,$summary);
   
   //purge cache on add by updating the purgefile
   if($conf['purgeonadd'] && (!$old || $del)){
@@ -736,26 +738,42 @@ function saveOldRevision($id){
 }
 
 /**
- * Sends a notify mail to the wikiadmin when a page was
- * changed
+ * Sends a notify mail on page change
+ *
+ * @param  string $id       The changed page
+ * @param  string $who      Who to notify (admin|subscribers)
+ * @param  int    $rev      Old page revision
+ * @param  string $summary  What changed
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id,$rev="",$summary=""){
+function notify($id,$who,$rev='',$summary=''){
   global $lang;
   global $conf;
-  $hdrs ='';
 
-  $bcc = subscriber_addresslist($id);
-
-  if(empty($conf['notify']) && empty($bcc)) return; //notify enabled?
+  // decide if there is something to do
+  if($who == 'admin'){
+    if(empty($conf['notify'])) return; //notify enabled?
+    $text = rawLocale('mailtext');
+    $to   = $conf['notify'];
+    $bcc  = '';
+  }elseif($who == 'subscribers'){
+    if(!$conf['subscribers']) return; //subscribers enabled?
+    $bcc  = subscriber_addresslist($id);
+    if(empty($bcc)) return;
+    $to   = '';
+    $text = rawLocale('subscribermail');
+  }else{
+    return; //just to be safe
+  }
   
-  $text = rawLocale('mailtext');
   $text = str_replace('@DATE@',date($conf['dformat']),$text);
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
   $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
   $text = str_replace('@NEWPAGE@',wl($id,'',true),$text);
+  $text = str_replace('@PAGE@',$id,$text);
+  $text = str_replace('@TITLE@',$conf['title'],$text);
   $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
@@ -776,7 +794,7 @@ function notify($id,$rev="",$summary=""){
   $text = str_replace('@DIFF@',$diff,$text);
   $subject = '['.$conf['title'].'] '.$subject;
 
-  mail_send($conf['notify'],$subject,$text,$conf['mailfrom'],'',$bcc);
+  mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
 }
 
 /**
@@ -986,31 +1004,31 @@ function is_subscribed($id,$uid){
  * Return a string with the email addresses of all the
  * users subscribed to a page
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Steven Danz <steven-danz@kc.rr.com>
  */
 function subscriber_addresslist($id){
   global $conf;
 
   $emails = '';
   
-  if ($conf['subscribers'] == 1) {
-    $mlist = array();
-    $file=metaFN($id,'.mlist');
-    if (file_exists($file)) {
-      $mlist = file($file);
-    }
-    if(count($mlist) > 0) {
-      foreach ($mlist as $who) {
-        $who = rtrim($who);
-        $info = auth_getUserData($who);
-        $level = auth_aclcheck($id,$who,$info['grps']);
-        if ($level >= AUTH_READ) {
-          if (strcasecmp($info['mail'],$conf['notify']) != 0) {
-            if (empty($emails)) {
-              $emails = $info['mail'];
-            } else {
-              $emails = "$emails,".$info['mail'];
-            }
+  if (!$conf['subscribers']) return;
+
+  $mlist = array();
+  $file=metaFN($id,'.mlist');
+  if (file_exists($file)) {
+    $mlist = file($file);
+  }
+  if(count($mlist) > 0) {
+    foreach ($mlist as $who) {
+      $who = rtrim($who);
+      $info = auth_getUserData($who);
+      $level = auth_aclcheck($id,$who,$info['grps']);
+      if ($level >= AUTH_READ) {
+        if (strcasecmp($info['mail'],$conf['notify']) != 0) {
+          if (empty($emails)) {
+            $emails = $info['mail'];
+          } else {
+            $emails = "$emails,".$info['mail'];
           }
         }
       }
