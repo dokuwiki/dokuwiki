@@ -24,6 +24,12 @@
 function idx_getPageWords($page){
     global $conf;
     $word_idx = file($conf['cachedir'].'/word.idx');
+    $swfile   = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+    if(@file_exists($swfile)){
+        $stopwords = file($swfile);
+    }else{
+        $stopwords = array();
+    }
 
     // split page into words
     $body  = rawWiki($page);
@@ -60,13 +66,17 @@ function idx_getPageWords($page){
 
         // checking minimum word-size (excepting numbers)
         if(!is_numeric($word)) {
-            if(strlen($word) < 3) {  #FIXME add config option for max wordsize
+            if(strlen($word) < 3) {
                 $doit = false;
                 continue;
             }
         }
       
-        //FIXME add stopword check
+        // stopword check
+        if(is_int(array_search("$word\n",$stopwords))){
+            $doit = false;
+            continue;
+        }
 
         // get word ID
         $wid = array_search("$word\n",$word_idx);

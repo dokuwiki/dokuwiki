@@ -867,4 +867,22 @@ function tpl_img($maxwidth=900,$maxheight=700){
   print '</a>';
 }
 
+/**
+ * This function inserts a 1x1 pixel gif which in reality
+ * is the inexer function.
+ *
+ * Should be called somewhere at the very end of the main.php
+ * template
+ */
+function tpl_indexerWebBug(){
+  global $ID;
+  $p = array();
+  $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.urlencode($ID);
+  $p['width']  = 1;
+  $p['height'] = 1;
+  $p['alt']    = '';
+  $att = buildAttributes($p);
+  print "<img $att />";
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

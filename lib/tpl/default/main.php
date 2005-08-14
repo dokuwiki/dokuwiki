@@ -126,5 +126,7 @@
 
 </div>
 <?php /*old includehook*/ @include(dirname(__FILE__).'/footer.html')?>
+
+<?php tpl_indexerWebBug()?>
 </body>
 </html>

@@ -71,6 +71,7 @@
 
   // make real paths and check them
   init_paths();
+  init_files();
 
   // automatic upgrade to script versions of certain files
   scriptify(DOKU_CONF.'users.auth');
@@ -92,10 +93,26 @@ function init_paths(){
                  'changelog' => 'changes.log');
 
   foreach($paths as $c => $p){
-
     if(!$conf[$c])   $conf[$c] = $conf['savedir'].'/'.$p;
     $conf[$c]        = init_path($conf[$c]);
     if(!$conf[$c])   die("$c does not exist or isn't writable. Check config!");
+  }
+}
+
+/**
+ * Checks the existance of certain files and creates them if missing
+ */
+function init_files(){
+  global $conf;
+  $files = array( $conf['cachedir'].'/word.idx',
+                  $conf['cachedir'].'/page.idx',
+                  $conf['cachedir'].'/index.idx', );
+
+  foreach($files as $file){
+    if(!@file_exists($file)){
+      $fh = fopen($file,'a');
+      fclose($fh);
+    }
   }
 }
 
