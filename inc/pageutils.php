@@ -13,14 +13,18 @@
  * Uses either standard $_REQUEST variable or extracts it from
  * the full request URI when userewrite is set to 2
  *
- * Returns $conf['start'] if no id was found and $param is 'id'
+ * For $param='id' $conf['start'] is returned if no id was found
+ * and the returned ID will be cleaned. For other params the
+ * cleaning has to be done outside this function
  * 
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getID($param='id'){
   global $conf;
 
-  $id = cleanID($_REQUEST[$param]);
+  $id = $_REQUEST[$param];
+
+  if($param == 'id') $id = cleanID($id);
   
   //construct page id from request URI
   if(empty($id) && $conf['userewrite'] == 2){

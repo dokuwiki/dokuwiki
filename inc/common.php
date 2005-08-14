@@ -285,9 +285,9 @@ function ml($id='',$more='',$direct=true){
     $xlink .= 'lib/exe/fetch.php';
     if($more){
       $xlink .= '?'.$more;
-      $xlink .= '&amp;media='.$id;
+      $xlink .= '&amp;media='.urlencode($id);
     }else{
-      $xlink .= '?media='.$id;
+      $xlink .= '?media='.urlencode($id);
     }
     return $xlink;
   } 
