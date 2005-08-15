@@ -734,7 +734,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
-        if(substr($mime,0,5)){
+        if(substr($mime,0,5) == 'image'){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),false);
         }else{
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
