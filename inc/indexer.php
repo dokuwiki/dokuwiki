@@ -15,11 +15,10 @@
 /**
  * Split a page into words
  *
- * It is based upon PHPCMS's indexer function index_entry
- *
  * Returns an array of of word counts, false if an error occured
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function idx_getPageWords($page){
     global $conf;
@@ -31,63 +30,43 @@ function idx_getPageWords($page){
         $stopwords = array();
     }
 
-    // split page into words
-    $body  = rawWiki($page);
-    $body  = utf8_stripspecials($body,' ','._\-:');
-    $body  = utf8_strtolower($body);
-    $body  = trim($body);
-    $words = explode(' ',$body);
-    sort($words);
+    $body   = rawWiki($page);
+    $body   = strtr($body, "\r\n\t", '   ');
+    $tokens = explode(' ', $body);
+    $tokens = array_count_values($tokens);   // count the frequency of each token
+    
+    $words = array();
+    foreach ($tokens as $word => $count) {
+        $word = utf8_strtolower($word);
 
+        // simple filter to restrict use of utf8_stripspecials 
+        if (preg_match('/\W/', $word)) {
+            $arr = explode(' ', utf8_stripspecials($word,' ','._\-:'));
+            $arr = array_count_values($arr);
+            
+            foreach ($arr as $w => $c) {
+                if (!is_numeric($w) && strlen($w) < 3) continue;
+                $words[$w] = $c + (isset($words[$w]) ? $words[$w] : 0);
+            }
+        } else {
+            if (!is_numeric($w) && strlen($w) < 3) continue;
+            $words[$word] = $count + (isset($words[$word]) ? $words[$word] : 0);
+        }
+    }
+ 
+    // arrive here with $words = array(word => frequency)
+ 
     $index = array(); //resulting index
-    $old   = '';
-    $wid   = -1;
-    $doit  = true;
-    $pos   = 0;
-
-    //compact wordlist FIXME check for stopwords
-    foreach($words as $word){
-        if(strlen($word) == 0) continue;
-
-        // it's the same word
-        if($word == $old){
-            if($doit == false) {
-                // we didn't wanted it last time
-                continue;
-            }
-            // just increase the counter
-            $index[$wid]++;
-            continue;
-        }
-
-        // rememember old word
-        $old  = $word;
-        $doit = true;
-
-        // checking minimum word-size (excepting numbers)
-        if(!is_numeric($word)) {
-            if(strlen($word) < 3) {
-                $doit = false;
-                continue;
-            }
-        }
-      
-        // stopword check
-        if(is_int(array_search("$word\n",$stopwords))){
-            $doit = false;
-            continue;
-        }
-
-        // get word ID
+    foreach ($words as $word => $freq) {
+	if (is_int(array_search("$word\n",$stopwords))) continue;
         $wid = array_search("$word\n",$word_idx);
         if(!is_int($wid)){
             $word_idx[] = "$word\n";
             $wid = count($word_idx)-1;
         }
-        // add to index
-        $index[$wid] = 1;
+        $index[$wid] = $freq;
     }
-
+ 
     // save back word index
     $fh = fopen($conf['cachedir'].'/word.idx','w');
     if(!$fh){
@@ -96,7 +75,7 @@ function idx_getPageWords($page){
     }
     fwrite($fh,join('',$word_idx));
     fclose($fh);
-
+ 
     return $index;
 }
 
