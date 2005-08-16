@@ -715,9 +715,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= $this->_formatLink($link);
     }
     
-    /**
-     * @todo don't add link for flash
-     */
     function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL) {
         global $conf;
@@ -735,15 +732,30 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
-            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),false);
-        }else{
-            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
-        }
-        $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
+             // link only jpeg images
+             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = TRUE;
+             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),false);
+         }elseif($mime == 'application/x-shockwave-flash'){
+             // don't link flash movies
+             $noLink = TRUE;
+         }else{
+             // add file icons
+             $link['class'] = 'urlextern';
+             if(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')){
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.png)';
+             }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.gif')){
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.gif)';
+             }else{
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.gif)';
+             }
+             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+         }
+         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
 
-        //output formatted
-        $this->doc .= $this->_formatLink($link);
+         //output formatted
+         if ($noLink) $this->doc .= $link['name'];
+         else $this->doc .= $this->_formatLink($link);
     }
     
     /**
@@ -766,8 +778,28 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
 
+        list($ext,$mime) = mimetype($src);
+        if(substr($mime,0,5) == 'image'){
+             // link only jpeg images
+             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = TRUE;
+        }elseif($mime == 'application/x-shockwave-flash'){
+             // don't link flash movies
+             $noLink = TRUE;
+        }else{
+             // add file icons
+             $link['class'] = 'urlextern';
+             if(@file_exists(DOKU_INC.'lib/images/fileicons/'. $ext.'.png')){
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.png)';
+             }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.gif')){
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.gif)';
+             }else{
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.gif)';
+             }
+         }
+
         //output formatted
-        $this->doc .= $this->_formatLink($link);
+        if ($noLink) $this->doc .= $link['name'];
+        else $this->doc .= $this->_formatLink($link);
     }
 
     /**
