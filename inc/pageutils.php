@@ -152,6 +152,27 @@ function metaFN($id,$ext){
 }
 
 /**
+ * returns an array of full paths to all metafiles of a given ID
+ *
+ * @author Esther Brunner <esther@kaffeehaus.ch>
+ */
+function metaFiles($id){
+   $name   = noNS($id);
+   $dir    = metaFN(getNS($id),'');
+   $files  = array();
+
+   $dh = @opendir($dir);
+   if(!$dh) return;
+   while(($file = readdir($dh)) !== false){
+     if(strpos($file,$name.'.') == 0 && !is_dir($dir.$file))
+       $files[] = $dir.$file;
+   }
+   closedir($dh);
+
+   return $files;
+}
+
+/**
  * returns the full path to the mediafile specified by ID
  *
  * The filename is URL encoded to protect Unicode chars

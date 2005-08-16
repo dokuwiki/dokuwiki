@@ -687,11 +687,12 @@ function saveWikiText($id,$text,$summary){
   $old  = saveOldRevision($id);
 
   if (empty($text)){
-    // remove empty files
+    // remove empty file
     @unlink($file);
-    $mfile=wikiMN($id);
-    if (file_exists($mfile)) {
-      @unlink($mfile);
+    // remove any meta info
+    $mfiles = metaFiles($id);
+    foreach ($mfiles as $mfile) {
+      if (file_exists($mfile)) @unlink($mfile);
     }
     $del = true;
     //autoset summary on deletion
