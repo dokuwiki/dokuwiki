@@ -1,0 +1,31 @@
+# 這檔是製作索引檔(index)時不要列入的關鍵字，格式為每字(詞)就使用一行。
+# 在修改時，請注意要用 UNIX 格式的換行符號(newline)處理，而非 DOS 的 CR-LR 喔
+# (如果在 MS Windows 環境使用的話，可使用 vim win32版 或 UltraEdit或其他類似編輯器修改)
+#
+# 還有，不必把小於 3 個字元(英數字元)都包括進來。
+# 目前本清單的內容是以 http://www.ranks.nl/stopwords/ 為基礎而發展的。
+about
+are
+and
+you
+your
+them
+their
+com
+for
+from
+into
+how
+that
+the
+this
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www
