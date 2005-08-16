@@ -37,19 +37,20 @@ function idx_getPageWords($page){
     
     $words = array();
     foreach ($tokens as $word => $count) {
-        $word = utf8_strtolower($word);
 
         // simple filter to restrict use of utf8_stripspecials 
-        if (preg_match('/\W/', $word)) {
+        if (preg_match('/[^0-9A-Za-z]/u', $word)) {
             $arr = explode(' ', utf8_stripspecials($word,' ','._\-:'));
             $arr = array_count_values($arr);
             
             foreach ($arr as $w => $c) {
                 if (!is_numeric($w) && strlen($w) < 3) continue;
+    		    $w = utf8_strtolower($w);
                 $words[$w] = $c + (isset($words[$w]) ? $words[$w] : 0);
             }
         } else {
             if (!is_numeric($w) && strlen($w) < 3) continue;
+	        $word = strtolower($word);
             $words[$word] = $count + (isset($words[$word]) ? $words[$word] : 0);
         }
     }
