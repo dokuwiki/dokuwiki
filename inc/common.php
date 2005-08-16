@@ -310,17 +310,17 @@ function ml($id='',$more='',$direct=true){
   }
 
   // build URL based on rewrite mode
-  if($conf['userewrite']){
-    $xlink .= $script.'/'.$id;
-    if($more) $xlink .= '?'.$more;
-  }else{
-    if($more){ 
-      $xlink .= '?'.$more;
-      $xlink .= '&amp;media='.$id;
-    }else{
-      $xlink .= '?media='.$id;
-    }
-  }
+   if($conf['userewrite']){
+     $xlink .= $script.'/'.$id;
+     if($more) $xlink .= '?'.$more;
+   }else{
+     if($more){
+       $xlink .= $script.'?'.$more;
+       $xlink .= '&amp;media='.$id;
+     }else{
+       $xlink .= $script.'?media='.$id;
+     }
+   }
 
   return $xlink;
 }
