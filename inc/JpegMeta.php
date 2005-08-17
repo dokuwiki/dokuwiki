@@ -2729,6 +2729,7 @@ class JpegMeta
         $tags[0x74] = 'CopyrightNotice';
         $tags[0x05] = 'ObjectName';
         $tags[0x5A] = 'City';
+        $tags[0x5C] = 'Sublocation';
         $tags[0x5F] = 'ProvinceState';
         $tags[0x65] = 'CountryName';
         $tags[0x67] = 'OriginalTransmissionReference';
