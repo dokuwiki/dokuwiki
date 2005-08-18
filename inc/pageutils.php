@@ -164,7 +164,7 @@ function metaFiles($id){
    $dh = @opendir($dir);
    if(!$dh) return;
    while(($file = readdir($dh)) !== false){
-     if(strpos($file,$name.'.') == 0 && !is_dir($dir.$file))
+     if(strpos($file,$name.'.') === 0 && !is_dir($dir.$file))
        $files[] = $dir.$file;
    }
    closedir($dh);
