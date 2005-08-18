@@ -50,7 +50,7 @@ function getID($param='id'){
     $id = urldecode($id);
     $id = cleanID($id);
   }
-  if(empty($id) && $param='id') $id = $conf['start'];
+  if(empty($id) && $param=='id') $id = $conf['start'];
 
   return $id;
 }
