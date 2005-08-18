@@ -73,7 +73,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * Create output
      */
     function render($format, &$renderer, $data) {
-        if($mode == 'xhtml'){
+        if($format == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
                 case 'version':
@@ -119,7 +119,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= ' ';
             $renderer->emaillink($info['email'],$info['author']);
             $renderer->doc .= '<br />';
-            $renderer->doc .= htmlspecialchars($info['desc']);
+            $renderer->doc .= strtr(htmlspecialchars($info['desc']),array("\n","<br />"));
             $renderer->doc .= '</li>';
             unset($po);
         }
