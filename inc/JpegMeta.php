@@ -147,6 +147,8 @@ class JpegMeta
                 return $this->getRawInfo();
             }elseif(strtolower($field) == 'simple.title'){
                 $info = $this->getTitle();
+            }elseif(strtolower($field) == 'simple.shutterspeed'){
+                $info = $this->getShutterSpeed();
             }else{
                 $info = $this->getExifField($field);
             }
@@ -246,6 +248,25 @@ class JpegMeta
         $cam = trim("$make $model");
         if(empty($cam)) return false;
         return $cam;
+    }
+
+    /**
+     * Return shutter speed as a ratio
+     *
+     * @author Joe Lapp <joe.lapp@pobox.com>
+     */
+    function getShutterSpeed()
+    {
+        if (!isset($this->_info['exif'])) {
+            $this->_parseMarkerExif();
+        }
+        if(!isset($this->_info['exif']['ExposureTime'])){
+            return '';
+        }
+
+        $field = $this->_info['exif']['ExposureTime'];
+        if($field['den'] == 1) return $field['num'];
+        return $field['num'].'/'.$field['den'];
     }
 
     /**
