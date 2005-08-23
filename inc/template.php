@@ -876,6 +876,9 @@ function tpl_img($maxwidth=900,$maxheight=700){
  */
 function tpl_indexerWebBug(){
   global $ID;
+  global $INFO;
+  if(!$INFO['exists']) return;
+
   $p = array();
   $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.urlencode($ID).
                  '&'.time();
