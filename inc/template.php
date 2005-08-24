@@ -346,8 +346,11 @@ function tpl_button($type){
         }
       }
       break;
-		default:
-			print '[unknown button type]';
+    case 'backlink':
+      print html_btn('backlink',$ID,'',array('do' => 'backlink'));
+      break;
+    default:
+      print '[unknown button type]';
   }
 }
 
@@ -443,6 +446,9 @@ function tpl_actionlink($type,$pre='',$suf=''){
         }
       }
       break;
+	case 'backlink':
+	  tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action"');
+	  break;
     default:
       print '[unknown link type]';
   }
