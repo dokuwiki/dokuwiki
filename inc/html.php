@@ -1065,11 +1065,6 @@ function html_debug(){
   print '</body></html>';
 }
 
-/**
- * Print the admin overview page
- *
- * @author  Andreas Gohr <andi@splitbrain.org>
- */
 function html_admin(){
   global $ID;
   global $lang;
@@ -1077,15 +1072,45 @@ function html_admin(){
 
   print p_locale_xhtml('admin');
 
-  ptln('<ul class="admin">');
+  // build menu of admin functions from the plugins that handle them
+  $pluginlist = plugin_list('admin');
+  $menu = array();
+  foreach ($pluginlist as $p) {
+    if($obj =& plugin_load('admin',$p) === NULL) continue;
+    $menu[] = array('plugin' => $p, 
+                    'prompt' => $obj->getMenuText($conf['lang']),
+                    'sort' => $obj->getMenuSort()
+                   );
+  }
+
+  usort($menu, p_sort_modes);
+
+  // output the menu
+  ptln('<ul>');
+
+  foreach ($menu as $item) {
+    if (!$item['prompt']) continue;
+    ptln('  <li><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></li>');
+  }
+
+  // add in non-plugin functions
+  if (!$conf['openregister']){
+    ptln('<li><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></li>');
+  }
+  
+  ptln('</ul>');
+
+/*
+  ptln('<ul>');  ptln('<ul class="admin">');
 
   // currently ACL only - more to come
   ptln('<li><a href="'.wl($ID,'do=admin&amp;page=acl').'">'.$lang['admin_acl'].'</a></li>');
   if (!$conf['openregister']){
     ptln('<li><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></li>');
   }
-  
+    
   ptln('</ul>');
+*/
 }
 
 

@@ -70,10 +70,21 @@ function act_dispatch(){
 
   //handle admin tasks
   if($ACT == 'admin'){
-		if($_REQUEST['page'] == 'acl'){
-			require_once(DOKU_INC.'inc/admin_acl.php');
-			admin_acl_handler();
+    // retrieve admin plugin name from $_REQUEST['page']
+    if ($_REQUEST['page']) {
+        $pluginlist = plugin_list('admin');
+        if (in_array($_REQUEST['page'], $pluginlist)) {     
+          // attempt to load the plugin
+          if ($plugin =& plugin_load('admin',$_REQUEST['page']) !== NULL)
+              $plugin->handle();
+        }
+    }         
+/*
+        if($_REQUEST['page'] == 'acl'){
+            require_once(DOKU_INC.'inc/admin_acl.php');
+            admin_acl_handler();
     }
+*/
   }
 
   //call template FIXME: all needed vars available?

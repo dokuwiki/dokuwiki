@@ -129,13 +129,35 @@ function tpl_content(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_admin(){
+
+    $plugin = NULL;
+    if ($_REQUEST['page']) {
+        $pluginlist = plugin_list('admin');
+
+        if (in_array($_REQUEST['page'], $pluginlist)) {
+
+          // attempt to load the plugin
+          $plugin =& plugin_load('admin',$_REQUEST['page']);
+        }
+    }
+
+    if ($plugin !== NULL)
+        $plugin->html();
+    else
+        html_admin();
+/*
   switch($_REQUEST['page']){
-		case 'acl':
-			admin_acl_html();
-			break;
+        case 'acl':
+            admin_acl_html();
+            break;
+        case 'plugin':
+            require_once(DOKU_INC.'inc/admin_plugin.php');
+            admin_plugin_html();
+            break;
     default:
-			html_admin();
-	}
+            html_admin();
+    }
+*/    
 }
 
 /**
