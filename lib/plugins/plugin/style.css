@@ -1,0 +1,49 @@
+/*
+ * admin plugin extension - style additions
+ *
+ * @author  Christopher Smith  chris@jalakai.co.uk
+ * @link    http://wiki.jalakai.co.uk/dokuwiki/doku.php/tutorials/adminplugin
+ */
+
+/* overall containing div */
+#plugin_manager {}
+
+#plugin_manager h2 {margin-left: 0;}
+#plugin_manager form { display: block; margin: 0; padding: 0;}
+#plugin_manager form:after {content:'.'; display: block; clear: both; visibility: hidden; height: 0;}
+#plugin_manager legend {display: none;}
+#plugin_manager .legend {color: black; display: block; margin: 0; padding: 0; font-size: 1em; line-height: 1.4em; font-weight: normal; text-align: left;}
+#plugin_manager fieldset {border: 0; width: auto;}
+#plugin_manager .button {float: right; margin: 0 0.3em 2px 0;}
+#plugin_manager p, #plugin_manager label {text-align: left;}
+#plugin_manager .hidden {display: none;}
+#plugin_manager .new {background: #dee7ec;}
+#plugin_manager input[disabled] {color: #ccc; border-color: #ccc;}  /* IE won't understand but doesn't require it */
+
+#plugin_manager .pm_menu, #plugin_manager .pm_info {margin-left: 0; text-align: left; overflow: hidden;}
+#plugin_manager .pm_menu {float: left; width: 48%;}
+#plugin_manager .pm_info {float: right; width: 50%;}
+
+#plugin_manager .common {border-bottom: 1px solid #8cacbb;}
+#plugin_manager .common form { border: 1px solid #8cacbb; border-bottom: 0;}
+#plugin_manager .common fieldset { margin: 0; padding: 0;}
+#plugin_manager .common .legend { background: #dee7ec; margin-bottom: 0.3em; padding-left: 0.5em;}
+#plugin_manager .common label { padding: 0 0 0.5em 0.5em; }
+#plugin_manager .common input {width: auto; margin: 0 1em;}
+#plugin_manager .common .button { width: 6em; }
+#plugin_manager .common p {border-bottom: 1px solid #8cacbb; padding: 0 0 0.5em 0.5em; margin-bottom: 0;}
+
+#plugin_manager .plugins {border-bottom: 1px solid #8cacbb;}
+#plugin_manager .plugins form { border: 1px solid #8cacbb; border-bottom: 0;}
+#plugin_manager .plugins fieldset { }
+#plugin_manager .plugins .legend { float: left; }
+#plugin_manager .plugins .button { }
+
+#plugin_manager .pm_info h3 {margin-left: 0; }
+#plugin_manager .pm_info dl { overflow: hidden; margin: 1em 0; padding: 0;}
+#plugin_manager .pm_info dt { width: 6em; float: left; clear: left; margin:0; padding: 0;}
+#plugin_manager .pm_info dd { margin:0 0 0 7em; padding: 0;}
+
+
+/* end admin plugin styles */
+

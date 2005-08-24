@@ -1,0 +1,7 @@
+====== Plugin Management ======
+
+On this page you can manage everything to do with Dokuwiki [[doku>wiki:plugins|plugins]].
+To be able to download and install a plugin your plugin folder must
+be writeable by the webserver.
+
+
