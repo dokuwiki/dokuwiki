@@ -10,21 +10,41 @@
  * prints needed HTML to include plugin CSS and JS files
  */
 function plugin_printCSSJS(){
-  $plugins = plugin_list();
-  foreach ($plugins as $p){
-    $dir = "lib/plugins/$p/";
-        if(@file_exists(DOKU_INC.$dir.'style.css')){
-            print '  <link rel="stylesheet" type="text/css" href="'.DOKU_BASE.$dir.'style.css" />'."\n";
-    }
-        if(@file_exists(DOKU_INC.$dir.'screen.css')){
-            print '  <link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.$dir.'screen.css" />'."\n";
-    }
-        if(@file_exists(DOKU_INC.$dir.'print.css')){
-            print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
-    }
-        if(@file_exists(DOKU_INC.$dir.'script.js')){
-      print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
-    }
+    global $conf;
+    
+    if (isset($conf['plugin_manager']) && $conf['plugin_manager']) {
+        // individual plugin instances of the files swept into one file each
+        $dir = "lib/plugins/plugin_";
+            if(@file_exists(DOKU_INC.$dir.'style.css')){
+                print '  <link rel="stylesheet" type="text/css" href="'.DOKU_BASE.$dir.'style.css" />'."\n";
+        }
+            if(@file_exists(DOKU_INC.$dir.'screen.css')){
+                print '  <link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.$dir.'screen.css" />'."\n";
+        }
+            if(@file_exists(DOKU_INC.$dir.'print.css')){
+                print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
+        }
+            if(@file_exists(DOKU_INC.$dir.'script.js')){
+          print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
+        }
+    } else {
+        // no plugin manager so individual instances of these files for any plugin that uses them
+        $plugins = plugin_list();
+        foreach ($plugins as $p){
+            $dir = "lib/plugins/$p/";
+            if(@file_exists(DOKU_INC.$dir.'style.css')){
+                print '  <link rel="stylesheet" type="text/css" href="'.DOKU_BASE.$dir.'style.css" />'."\n";
+            }
+            if(@file_exists(DOKU_INC.$dir.'screen.css')){
+                print '  <link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.$dir.'screen.css" />'."\n";
+            }
+            if(@file_exists(DOKU_INC.$dir.'print.css')){
+                print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
+            }
+            if(@file_exists(DOKU_INC.$dir.'script.js')){
+                print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
+            }
+        }
     }
 } 
 
@@ -39,7 +59,7 @@ function plugin_list($type=''){
   $plugins = array();
   if ($dh = opendir(DOKU_PLUGIN)) {
     while (false !== ($plugin = readdir($dh))) {
-      if ($plugin == '.' || $plugin == '..') continue;
+      if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp') continue;
       if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
       if ($type=='' || @file_exists(DOKU_PLUGIN."$plugin/$type.php")){
