@@ -12,7 +12,7 @@
 function plugin_printCSSJS(){
     global $conf;
     
-    if (isset($conf['plugin_manager']) && $conf['plugin_manager']) {
+    if (isset($conf['pluginmanager']) && $conf['pluginmanager']) {
         // individual plugin instances of the files swept into one file each
         $dir = "lib/plugins/plugin_";
             if(@file_exists(DOKU_INC.$dir.'style.css')){
