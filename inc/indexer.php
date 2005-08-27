@@ -92,7 +92,7 @@ function idx_getPageWords($page){
 function idx_addPage($page){
     global $conf;
 
-    // load known words and documents
+    // load known documents
     $page_idx = file($conf['cachedir'].'/page.idx');
 
     // get page id (this is the linenumber in page.idx)
@@ -183,6 +183,119 @@ function idx_writeIndexLine($fh,$line,$pid,$count){
 
     // add newline
     fwrite($fh,"\n");
+}
+
+/**
+ * Lookup words in index
+ *
+ * Takes an array of word and will return a list of matching
+ * documents for each one.
+ *
+ * It returns an array using the same index as the input
+ * array. Returns false if something went wrong.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function idx_lookup($words){
+    global $conf;
+
+    $result = array();
+
+    // load known words and documents
+    $page_idx = file($conf['cachedir'].'/page.idx');
+    $word_idx = file($conf['cachedir'].'/word.idx');
+
+    // get word IDs
+    $wids = array();
+    $pos = 0;
+    foreach($words as $word){
+
+        //FIXME words should be cleaned here as in getPageWords
+
+        $wid = array_search("$word\n",$word_idx);
+        if(is_int($wid)){
+            $wids[] = $wid;
+            $result[$pos]['wordid'] = $wid;
+        }
+        $result[$pos]['word'] = $word;
+        $pos++;
+    }
+    sort($wids);
+
+
+    // Open index
+    $idx = fopen($conf['cachedir'].'/index.idx','r');
+    if(!$idx){
+       msg("Failed to open index files",-1);
+       return false;
+    } 
+
+    // Walk the index til the lines are found
+    $docs = array();                          // hold docs found
+    $lno  = 0;
+    $line = '';
+    $srch = array_shift($wids);               // which word do we look for?
+    while (!feof($idx)) {
+        // read full line
+        $line .= fgets($idx, 4096);
+        if(substr($line,-1) != "\n") continue;
+        if($lno > $srch)             break;   // shouldn't happen
+ 
+
+        // do we want this line?
+        if($lno == $srch){
+            // add docs to list
+            $docs[$srch] = idx_parseIndexLine($page_idx,$line);
+
+            $srch = array_shift($wids);        // next word to look up
+            if($srch == null) break;           // no more words
+        }
+
+        $line = ''; // reset line buffer
+        $lno++;     // increase linecounter
+    }
+    fclose($idx);
+
+    // merge docs into results
+    $count = count($result);
+    for($i=0; $i<$count; $i++){
+        if(isset($result[$i]['wordid'])){
+            $result[$i]['pages'] = $docs[$result[$i]['wordid']];
+        }
+    }
+dbg($result);
+
+}
+
+/**
+ * Returns a list of documents and counts from a index line
+ *
+ * It omits docs with a count of 0 and pages that no longer
+ * exist.
+ *
+ * @param  array  $page_idx The list of known pages
+ * @param  string $line     A line from the main index
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function idx_parseIndexLine(&$page_idx,$line){
+    $result = array();
+
+    $line = trim($line);
+    if($line == '') return;
+
+    $parts = explode(':',$line);
+    foreach($parts as $part){
+        if($part == '') continue;
+        list($doc,$cnt) = explode('*',$part);
+        if(!$cnt) continue;
+        $doc = trim($page_idx[$doc]);
+        if(!$doc) continue;
+        // make sure the document still exists
+        if(!@file_exists(wikiFN($doc))) continue;
+
+        $result[$doc] = $cnt;
+    }
+    return $result;
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
