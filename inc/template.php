@@ -536,32 +536,40 @@ function tpl_breadcrumbs(){
  * It only makes sense with a deep site structure.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Nigel McNie <oracle.shinoda@gmail.com>
  * @link   http://wiki.splitbrain.org/wiki:tipsandtricks:hierarchicalbreadcrumbs
- * @todo   May behave starngely in RTL languages
+ * @todo   May behave strangely in RTL languages
  */
 function tpl_youarehere(){
   global $conf;
   global $ID;
   global $lang;
 
-  
+
   $parts     = explode(':', $ID);
 
+  // Perhaps a $lang['tree'] could be defined? "Trace" isn't too appropriate
+  //print $lang['tree'].': ';
   print $lang['breadcrumb'].': ';
 
-  //always print the startpage  
+  //always print the startpage
   if( $a_part[0] != $conf['start'] )
     tpl_link(wl($conf['start']),$conf['start'],'title="'.$conf['start'].'"');
 
-  $page = ''; 
+  $page = '';
   foreach ($parts as $part){
-	  print ' &raquo; ';
+        // Skip startpage if already done
+        if ($part == $conf['start']) continue;
+
+          print ' &raquo; ';
     $page .= $part;
 
     if(file_exists(wikiFN($page))){
       tpl_link(wl($page),$part,'title="'.$page.'"');
     }else{
-      print $page;
+      // Print the link, but mark as not-existing, as for other non-existing links
+      tpl_link(wl($page),$part,'title="'.$page.'" class="wikilink2"');
+      //print $page;
     }
 
     $page .= ':';
