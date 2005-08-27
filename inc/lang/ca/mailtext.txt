@@ -1,0 +1,16 @@
+﻿S'ha afegit o modificat una pàgina en el vostre wiki. Ací teniu més detalls:
+
+Data           : @DATE@
+Navegador      : @BROWSER@
+IP             : @IPADDRESS@
+Rev. anterior  : @OLDPAGE@
+Rev. actual    : @NEWPAGE@
+Resum d'edició : @SUMMARY@
+Usuari         : @USER@
+
+@DIFF@
+
+
+-- 
+Missatge generat per DokuWiki en
+@DOKUWIKIURL@
