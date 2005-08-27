@@ -299,16 +299,17 @@ function tpl_getparent($ID){
  *
  * Available Buttons are
  *
- *  edit    - edit/create/show button
- *  history - old revisions
- *  recent  - recent changes
- *  login    - login/logout button - if ACL enabled
- *  index     - The index
- *  admin      - admin page - if enough rights
+ *  edit        - edit/create/show button
+ *  history     - old revisions
+ *  recent      - recent changes
+ *  login       - login/logout button - if ACL enabled
+ *  index       - The index
+ *  admin       - admin page - if enough rights
  *  top         - a back to top button
  *  back        - a back to parent button - if available
  *  backtomedia - returns to the mediafile upload dialog
  *                after references have been displayed
+ *  backlink    - links to the list of backlinks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -389,6 +390,7 @@ function tpl_button($type){
  *  admin   - admin page - if enough rights
  *  top     - a back to top button
  *  back    - a back to parent button - if available
+ * backlink - links to the list of backlinks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
