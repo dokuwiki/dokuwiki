@@ -191,9 +191,6 @@ function idx_writeIndexLine($fh,$line,$pid,$count){
  * Takes an array of word and will return a list of matching
  * documents for each one.
  *
- * It returns an array using the same index as the input
- * array. Returns false if something went wrong.
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idx_lookup($words){
@@ -207,21 +204,17 @@ function idx_lookup($words){
 
     // get word IDs
     $wids = array();
-    $pos = 0;
     foreach($words as $word){
-
-        //FIXME words should be cleaned here as in getPageWords
-
         $wid = array_search("$word\n",$word_idx);
         if(is_int($wid)){
             $wids[] = $wid;
-            $result[$pos]['wordid'] = $wid;
+            $result[$word] = $wid;
+        }else{
+            $result[$word] = array();
         }
-        $result[$pos]['word'] = $word;
-        $pos++;
     }
     sort($wids);
-
+    $wids = array_unique($wids);
 
     // Open index
     $idx = fopen($conf['cachedir'].'/index.idx','r');
@@ -256,15 +249,14 @@ function idx_lookup($words){
     }
     fclose($idx);
 
-    // merge docs into results
-    $count = count($result);
-    for($i=0; $i<$count; $i++){
-        if(isset($result[$i]['wordid'])){
-            $result[$i]['pages'] = $docs[$result[$i]['wordid']];
+    // merge found pages into result array
+    foreach(array_keys($result) as $word){
+        if(is_int($result[$word])){
+            $result[$word] = $docs[$result[$word]];
         }
     }
-dbg($result);
 
+    return $result;
 }
 
 /**
@@ -281,7 +273,7 @@ function idx_parseIndexLine(&$page_idx,$line){
     $result = array();
 
     $line = trim($line);
-    if($line == '') return;
+    if($line == '') return $result;
 
     $parts = explode(':',$line);
     foreach($parts as $part){
@@ -296,6 +288,35 @@ function idx_parseIndexLine(&$page_idx,$line){
         $result[$doc] = $cnt;
     }
     return $result;
+}
+
+/**
+ * Tokenizes a string into an array of search words
+ *
+ * Uses the same algorithm as idx_getPageWords()
+ *
+ * @todo make combined function to use alone or in getPageWords
+ */
+function idx_tokenizer($string,&$stopwords){
+    $words = array();
+
+    if(preg_match('/[^0-9A-Za-z]/u', $string)){
+        $arr = explode(' ', utf8_stripspecials($string,' ','._\-:'));
+        foreach ($arr as $w) {
+            if (!is_numeric($w) && strlen($w) < 3) continue;
+            $w = utf8_strtolower($w);
+            if(is_int(array_search("$w\n",$stopwords))) continue;
+            $words[] = $w;
+        }
+    }else{
+        $w = $string;
+        if (!is_numeric($w) && strlen($w) < 3) return $words;
+        $w = strtolower($w);
+        if(is_int(array_search("$w\n",$stopwords))) return $words;
+        $words[] = $w;
+    }
+
+    return $words;
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
