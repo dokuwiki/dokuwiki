@@ -998,7 +998,7 @@ function html_signature(){
   $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
   $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
   $sig = str_replace('@DATE@',date($conf['dformat']),$sig);
-  return $sig;
+  return addslashes($sig);
 }
 
 /**
