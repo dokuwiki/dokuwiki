@@ -1,0 +1,17 @@
+Hallo!
+
+Die Seite @PAGE@ im @TITLE@ Wiki wurde bearbeitet.
+Das sind die Änderungen:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Um das Abonnement für diese Seite aufzulösen, melde dich im Wiki an
+@DOKUWIKIURL@, besuche dann
+@NEWPAGE@
+und klicke auf die Taste 'Änderungen abbestellen'.
+
+-- 
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@

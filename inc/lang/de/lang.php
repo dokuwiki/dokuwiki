@@ -6,6 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Christof <gagi@fin.de>
  * @author     Anika Henke <henke@cosmocode.de>
+ * @author     Esther Brunner <esther@kaffeehaus.ch>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -33,6 +34,8 @@ $lang['btn_update'] = 'Updaten';
 $lang['btn_delete'] = 'Löschen';
 $lang['btn_back']   = 'Zurück';
 $lang['btn_backtomedia'] = 'Zurück zur Dateiauswahl';
+$lang['btn_subscribe']   = 'Änderungen abonnieren';
+$lang['btn_unsubscribe'] = 'Änderungen abbestellen';
 
 $lang['loggedinas'] = 'Angemeldet als';
 $lang['user']       = 'Benutzername';
@@ -144,5 +147,26 @@ $lang['spell_wait']  = 'Bitte warten...';
 $lang['spell_noerr'] = 'Keine Fehler gefunden';
 $lang['spell_nosug'] = 'Keine Vorschläge';
 $lang['spell_change']= 'Ändern';
+
+$lang['metaedit']    = 'Metadaten bearbeiten';
+$lang['metasaveerr'] = 'Die Metadaten konnten nicht gesichert werden';
+$lang['metasaveok']  = 'Metadaten gesichert';
+$lang['img_backto']  = 'Zurück zu';
+$lang['img_title']   = 'Titel';
+$lang['img_caption'] = 'Bildunterschrift';
+$lang['img_date']    = 'Datum';
+$lang['img_fname']   = 'Dateiname';
+$lang['img_fsize']   = 'Grösse';
+$lang['img_artist']  = 'Fotografin / Fotograf';
+$lang['img_copyr']   = 'Copyright';
+$lang['img_format']  = 'Format';
+$lang['img_camera']  = 'Kamera';
+$lang['img_keywords']= 'Schlagwörter';
+
+$lang['subscribe_success']  = '%s hat nun Änderungen der Seite %s abonniert';
+$lang['subscribe_error']    = '%s kann die Änderungen der Seite %s nicht abonnieren';
+$lang['subscribe_noaddress']= 'Weil Deine E-Mail-Adresse fehlt, kannst Du leider das Thema nicht abonnieren';
+$lang['unsubscribe_success']= 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
+$lang['unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
