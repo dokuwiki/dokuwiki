@@ -20,7 +20,7 @@ require_once(DOKU_PLUGIN.'admin.php');
 //    global $lang;
     
     //--------------------------[ GLOBALS ]------------------------------------------------
-    // note: probably should be dokuwiki wide globals, where it can be access by pluginutils.php
+    // note: probably should be dokuwiki wide globals, where they can be accessed by pluginutils.php
     global $common_plugin_files, $common_plugin_types;
     $common_plugin_types = array('syntax', 'admin');
     $common_plugin_files = array("style.css", "screen.css", "print.css", "script.js");
@@ -104,8 +104,8 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       }
       
       // create object to handle the command
-      $class = "admin_plugin_".$this->cmd;
-      if (!class_exists($class)) $class = 'admin_plugin_manage';
+      $class = "ap_".$this->cmd;
+      if (!class_exists($class)) $class = 'ap_manage';
       
       $this->handler = & new $class($this, $plugin);
       $this->msg = $this->handler->process();
@@ -119,10 +119,9 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       if ($this->disabled) return;
 
       // enable direct access to language strings
-//      if (!$this->localised) $this->setupLocale();
       $this->setupLocale();
       
-      if ($this->handler === NULL) $this->handler = & new admin_plugin_manage();
+      if ($this->handler === NULL) $this->handler = & new ap_manage();
       if (!$this->plugin_list) sort($this->plugin_list = plugin_list());
       
       ptln('<div id="plugin_manager">');
@@ -132,14 +131,14 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     
 }
 
-class admin_plugin_manage {
+class ap_manage {
     
         var $manager = NULL;
         var $lang = array();
         var $plugin = '';
         var $downloaded = array();
         
-        function admin_plugin_manage(&$manager, $plugin) {
+        function ap_manage(&$manager, $plugin) {
             $this->manager = & $manager;
             $this->plugin = $plugin;
             $this->lang = & $manager->lang;            
@@ -312,7 +311,7 @@ class admin_plugin_manage {
         }
     }
     
-    class admin_plugin_refresh extends admin_plugin_manage {
+    class ap_refresh extends ap_manage {
     
         function process() {
             $this->refresh();
@@ -332,7 +331,7 @@ class admin_plugin_manage {
         
     }
     
-    class admin_plugin_download extends admin_plugin_manage {
+    class ap_download extends ap_manage {
     
         var $overwrite = false;
         
@@ -360,8 +359,8 @@ class admin_plugin_manage {
     
           ap_decompress("$tmp/$file", $tmp);
           
-          // search tmp/$folder for the directory that has been created
-          // move that directory to lib/plugins/
+          // search tmp/$folder for the folder(s) that has been created
+          // move that folder(s) to lib/plugins/
           if ($dh = @opendir("$tmp/")) {
               while (false !== ($f = readdir($dh))) {
                 if ($f == '.' || $f == '..' || $f == 'tmp') continue;
@@ -415,7 +414,7 @@ class admin_plugin_manage {
         
     }
     
-    class admin_plugin_delete extends admin_plugin_manage {
+    class ap_delete extends ap_manage {
     
         function process() {    
         
@@ -428,7 +427,7 @@ class admin_plugin_manage {
         }
     }
     
-    class admin_plugin_info extends admin_plugin_manage {
+    class ap_info extends ap_manage {
     
         var $plugin_info = array();        // the plugin itself
         var $details = array();            // any component plugins
@@ -497,7 +496,7 @@ class admin_plugin_manage {
           
               foreach ($this->details as $info) {
             
-                  ptln("<dl>",4);
+                ptln("<dl>",4);
                 if (!$this->plugin_info['name']) ptln("<dt>Name</dt><dd>".$this->out($info['name'])."</dd>",6);            
                 if (!$this->plugin_info['type']) ptln("<dt>Type</dt><dd>".$this->out($info['type'])."</dd>",6);
                 if (!$this->plugin_info['desc']) ptln("<dt>Description</dt><dd>".$this->out($info['desc'])."</dd>",6);
@@ -506,7 +505,7 @@ class admin_plugin_manage {
                 ptln("</dl>",4);
           
               }
-                ptln("</div>",2);
+              ptln("</div>",2);
             }
           }
           ptln("</div>");
@@ -520,7 +519,7 @@ class admin_plugin_manage {
     }
     
     //--------------[ to do ]---------------------------------------
-    class admin_plugin_update extends admin_plugin_manage {
+    class ap_update extends ap_manage {
     
         function html() {
             parent::html();
@@ -546,7 +545,7 @@ class admin_plugin_manage {
             ptln('</div>');
         }
     }
-    class admin_plugin_settings extends admin_plugin_manage {}
+    class ap_settings extends ap_manage {}
     
     //--------------[ utilities ]-----------------------------------
     
@@ -554,11 +553,6 @@ class admin_plugin_manage {
     
     // generate an admin plugin href 
     function apl($pl, $fn) { return wl($ID,"do=admin&amp;page=plugin".($pl?"&amp;plugin=$pl":"").($fn?"&amp;fn=$fn":"")); }
-    
-    // generate a complete admin plugin link (may change to button)
-    function ap_link($pl, $fn, $txt) {
-      return '<a href="'.apl($pl, $fn).'">['.$txt.']</a>';
-    }
     
     // decompress wrapper
     function ap_decompress($file, $target) {

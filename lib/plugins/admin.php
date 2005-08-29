@@ -58,6 +58,8 @@ class DokuWiki_Admin_Plugin {
   function getPluginComponent() { list($t, $p, $n, $c) = explode('_', get_class($this), 4); return (isset($c)?$c:''); }
   
   function setupLocale() {
+  	if ($this->localised) return;
+  
     global $conf;            // definitely don't invoke "global $lang"
     $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
     
