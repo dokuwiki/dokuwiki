@@ -504,7 +504,17 @@ function rawWiki($id,$rev=''){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function pageTemplate($id){
-  return io_readFile(dirname(wikiFN($id)).'/_template.txt');
+  global $conf;
+  global $INFO;
+  $tpl = io_readFile(dirname(wikiFN($id)).'/_template.txt');
+  $tpl = str_replace('@ID@',$id,$tpl);
+  $tpl = str_replace('@NS@',getNS($id),$tpl);
+  $tpl = str_replace('@PAGE@',strtr(noNS($id),'_',' '),$tpl);
+  $tpl = str_replace('@USER@',$_SERVER['REMOTE_USER'],$tpl);
+  $tpl = str_replace('@NAME@',$INFO['userinfo']['name'],$tpl);
+  $tpl = str_replace('@MAIL@',$INFO['userinfo']['mail'],$tpl);
+  $tpl = str_replace('@DATE@',date($conf['dformat']),$tpl);
+  return $tpl;
 }
 
 
