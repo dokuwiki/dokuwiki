@@ -1039,4 +1039,13 @@ function subscriber_addresslist($id){
   return $emails;
 }
 
+/**
+ * Removes quoting backslashes
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function unslash($string,$char="'"){
+  return str_replace('\\'.$char,$char,$string);
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

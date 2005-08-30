@@ -283,7 +283,7 @@ function html_hilight($html,$query){
   $queries = preg_split ("/\s/",$query,-1,PREG_SPLIT_NO_EMPTY);
   foreach ($queries as $q){
     $q = preg_quote($q,'/');
-    $html = preg_replace("/((<[^>]*)|$q)/ie", '"\2"=="\1"? "\1":"<span class=\"search_hit\">\1</span>"', $html);
+    $html = preg_replace("/((<[^>]*)|$q)/ie", '"\2"=="\1"? unslash("\1"):"<span class=\"search_hit\">".unslash("\1")."</span>"', $html);
   }
   return $html;
 }
