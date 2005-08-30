@@ -52,7 +52,7 @@
 
 	// create new feed
   $rss = new DokuWikiFeedCreator();
-  $rss->title = $conf['title'];
+  $rss->title = $conf['title'].(($ns) ? ' '.$ns : '');
   $rss->link  = DOKU_URL;
   $rss->syndicationURL = DOKU_URL.'feed.php';
   $rss->cssStyleSheet  = DOKU_URL.'lib/styles/feed.css';
@@ -66,7 +66,7 @@
   if($mode == 'list'){
     rssListNamespace($rss,$ns);
   }else{
-    rssRecentChanges($rss,$num,$ltype);
+    rssRecentChanges($rss,$num,$ltype,$ns);
   }
 
   $feed = $rss->createFeed($type,'utf-8');
@@ -85,11 +85,11 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rssRecentChanges(&$rss,$num,$ltype){
+function rssRecentChanges(&$rss,$num,$ltype,$ns){
   global $conf;
-	if(!$num) $num = $conf['recent'];
+  if(!$num) $num = $conf['recent'];
 
-  $recents = getRecents(0,$num);
+  $recents = getRecents(0,$num,false,$ns);
 
   //this can take some time if a lot of recaching has to be done
   @set_time_limit(90); // set max execution time

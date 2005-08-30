@@ -582,7 +582,6 @@ function dbg($msg,$hidden=false){
  */
 function addLogEntry($date,$id,$summary=""){
   global $conf;
-  $id     = cleanID($id);//FIXME not needed anymore?
 
   if(!@is_writable($conf['changelog'])){
     msg($conf['changelog'].' is not writable!',-1);
@@ -594,13 +593,7 @@ function addLogEntry($date,$id,$summary=""){
   $user   = $_SERVER['REMOTE_USER'];
 
   $logline = join("\t",array($date,$remote,$id,$user,$summary))."\n";
-
-  //FIXME: use adjusted io_saveFile instead
-  $fh = fopen($conf['changelog'],'a');
-  if($fh){
-    fwrite($fh,$logline);
-    fclose($fh);
-  }
+  io_saveFile($conf['changelog'],$logline,true);
 }
 
 /**
@@ -611,7 +604,7 @@ function addLogEntry($date,$id,$summary=""){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getRecents($first,$num,$incdel=false){
+function getRecents($first,$num,$incdel=false,$ns=''){
   global $conf;
   $recent = array();
   $names  = array();
@@ -636,6 +629,9 @@ function getRecents($first,$num,$incdel=false){
        (@file_exists(wikiFN($info[2])) || $incdel) &&
        (auth_quickaclcheck($info[2]) >= AUTH_READ)
       ){
+      // filter namespace
+      if (($ns) && (strpos($info[2],$ns.':') !== 0)) continue;
+
       $names[$info[2]] = 1;
       if(--$first >= 0) continue;  /* skip "first" entries */
       

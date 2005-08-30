@@ -450,15 +450,15 @@ function html_revisions(){
 function html_recent($first=0){
   global $conf;
   global $lang;
-
+  global $ID;
   /* we need to get one additionally log entry to be able to
    * decide if this is the last page or is there another one.
    * This is the cheapest solution to get this information.
    */
-  $recents = getRecents($first,$conf['recent'] + 1,true);
+  $recents = getRecents($first,$conf['recent'] + 1,true,getNS($ID));
   if(count($recents) == 0 && $first != 0){
     $first=0;
-    $recents = getRecents(0,$conf['recent'] + 1,true);
+    $recents = getRecents(0,$conf['recent'] + 1,true,getNS($ID));
   }
   $cnt = count($recents) <= $conf['recent'] ? count($recents) : $conf['recent']; 
 
