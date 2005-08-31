@@ -8,6 +8,7 @@
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'inc/HTTPClient.php');
 
 /**
  * Removes empty directories
@@ -261,30 +262,21 @@ function io_mkdir_ftp($dir){
  * downloads a file from the net and saves it to the given location
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @todo   Add size limit
  */
 function io_download($url,$file){
-  $fp = @fopen($url,"rb");
+  $http = new DokuHTTPClient();
+  $http->max_bodysize = 2*1024*1024; //max. 2MB
+  $http->timeout = 25; //max. 25 sec
+
+  $data = $http->get($url);
+  if(!$data) return false;
+
+  $fp = @fopen($file,"w");
   if(!$fp) return false;
-
-  $kb  = 0;
-  $now = time();
-
-  while(!feof($fp)){
-    if($kb++ > 2048 || (time() - $now) > 45){
-      //abort on 2 MB and timeout on 45 sec
-      return false;
-    }
-    $cont.= fread($fp,1024);
-  }
+  fwrite($fp,$data);
   fclose($fp);
-
-  $fp2 = @fopen($file,"w");
-  if(!$fp2) return false;
-  fwrite($fp2,$cont);
-  fclose($fp2);
   return true;
-} 
+}
 
 /**
  * Runs an external command and returns it's output as string
