@@ -604,7 +604,7 @@ function addLogEntry($date,$id,$summary=""){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getRecents($first,$num,$incdel=false,$ns=''){
+function getRecents($first,$num,$incdel=false,$ns='',$subNS=true){
   global $conf;
   $recent = array();
   $names  = array();
@@ -631,6 +631,9 @@ function getRecents($first,$num,$incdel=false,$ns=''){
       ){
       // filter namespace
       if (($ns) && (strpos($info[2],$ns.':') !== 0)) continue;
+      
+      // exclude subnamespaces
+      if ((!$subNS) && (getNS($info[2]) != $ns)) continue;
 
       $names[$info[2]] = 1;
       if(--$first >= 0) continue;  /* skip "first" entries */
