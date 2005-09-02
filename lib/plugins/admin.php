@@ -101,7 +101,7 @@ class DokuWiki_Admin_Plugin {
   // use these to avoid having to duplicate code to produce links in line with the installation configuration
   function plugin_email($email, $name='', $class='', $more='') {
     if (!$email) return $name;
-    $email = $this->obfuscate($email);
+    $email = obfuscate($email);
     if (!$name) $name = $email;
     $class = "class='".($class ? $class : 'mail')."'";
     return "<a href='mailto:$email' $class title='$email' $more>$name</a>";
