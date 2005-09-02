@@ -7,7 +7,7 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 
   // define config path (packagers may want to change this to /etc/dokuwiki/)
-  if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'/conf/');
+  if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
   // set up error reporting to sane values
   error_reporting(E_ALL ^ E_NOTICE);
