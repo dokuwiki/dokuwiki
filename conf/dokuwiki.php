@@ -79,6 +79,13 @@ $conf['target']['extern']    = '_blank';
 $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 
+//Proxy setup - if your Server needs a proxy to access the web set these
+$conf['proxy']['host'] = '';
+$conf['proxy']['port'] = '';
+$conf['proxy']['user'] = '';
+$conf['proxy']['pass'] = '';
+$conf['proxy']['ssl']  = '';
+
 /* Safemode Hack */
 $conf['safemodehack'] = 0;               //read http://wiki.splitbrain.org/wiki:safemodehack !
 $conf['ftp']['host'] = 'localhost';

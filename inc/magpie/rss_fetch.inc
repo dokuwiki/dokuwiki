@@ -14,6 +14,10 @@
  * Magpie mailing list:
  * magpierss-general@lists.sourceforge.net
  *
+ * This file was modified for DokuWiki to use it's own HTTPClient lib
+ * instead of the Snoopy lib delivered with Magpie. Search for DokuWiki
+ * to find the modifications. Original code was commented out.
+ *
  */
  
 // Setup MAGPIE_DIR for use on hosts that don't include
@@ -30,9 +34,13 @@ if (!defined('MAGPIE_DIR')) {
 require_once( MAGPIE_DIR . 'rss_parse.inc' );
 require_once( MAGPIE_DIR . 'rss_cache.inc' );
 
+
+//DokuWiki changes
 // for including 3rd party libraries
-define('MAGPIE_EXTLIB', MAGPIE_DIR . 'extlib' . DIR_SEP);
-require_once( MAGPIE_EXTLIB . 'Snoopy.class.inc');
+//define('MAGPIE_EXTLIB', MAGPIE_DIR . 'extlib' . DIR_SEP);
+// require_once( MAGPIE_EXTLIB . 'Snoopy.class.inc');
+if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+require_once(DOKU_INC.'inc/HTTPClient.php');
 
 
 /* 
@@ -262,9 +270,20 @@ function magpie_error ($errormsg="") {
     Purpose:    retrieve an arbitrary remote file
     Input:      url of the remote file
                 headers to send along with the request (optional)
-    Output:     an HTTP response object (see Snoopy.class.inc)  
+    Output:     an HTTPClient response object
 \*=======================================================================*/
 function _fetch_remote_file ($url, $headers = "" ) {
+		// We use DokuWiki's HTTPClient here
+
+		$client = new DokuHTTPClient();
+		$client->timeout = MAGPIE_FETCH_TIME_OUT;
+		if (is_array($headers) ) {
+        $client->headers = $headers;
+    }
+		$client->get($url);
+		return $client;
+
+/*
     // Snoopy is an HTTP client in PHP
     $client = new Snoopy();
     $client->agent = MAGPIE_USER_AGENT;
@@ -276,22 +295,31 @@ function _fetch_remote_file ($url, $headers = "" ) {
     
     @$client->fetch($url);
     return $client;
-
+*/
 }
 
 /*=======================================================================*\
     Function:   _response_to_rss
     Purpose:    parse an HTTP response object into an RSS object
-    Input:      an HTTP response object (see Snoopy)
+    Input:      an HTTP response object, DokuWiki HTTPClient
     Output:     parsed RSS object (see rss_parse)
 \*=======================================================================*/
 function _response_to_rss ($resp) {
-    $rss = new MagpieRSS( $resp->results, MAGPIE_OUTPUT_ENCODING, MAGPIE_INPUT_ENCODING, MAGPIE_DETECT_ENCODING );
+//DokuWiki:
+#    $rss = new MagpieRSS( $resp->results, MAGPIE_OUTPUT_ENCODING, MAGPIE_INPUT_ENCODING, MAGPIE_DETECT_ENCODING );
+    $rss = new MagpieRSS( $resp->resp_body, MAGPIE_OUTPUT_ENCODING, MAGPIE_INPUT_ENCODING, MAGPIE_DETECT_ENCODING );
     
     // if RSS parsed successfully       
     if ( $rss and !$rss->ERROR) {
-        
         // find Etag, and Last-Modified
+				if($resp->resp_headers['etag']){        
+            $rss->etag = $val;
+				}
+				if($resp->resp_headers['last-modified']){
+						$rss->last_modified = $val;
+				}
+
+/*
         foreach($resp->headers as $h) {
             // 2003-03-02 - Nicola Asuni (www.tecnick.com) - fixed bug "Undefined offset: 1"
             if (strpos($h, ": ")) {
@@ -310,7 +338,7 @@ function _response_to_rss ($resp) {
                 $rss->last_modified = $val;
             }
         }
-        
+*/        
         return $rss;    
     } // else construct error message
     else {

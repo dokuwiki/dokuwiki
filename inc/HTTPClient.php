@@ -35,7 +35,7 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_port = $conf['proxy']['port'];
         $this->proxy_user = $conf['proxy']['user'];
         $this->proxy_pass = $conf['proxy']['pass'];
-        $this->proxy_ssl  = $conf['proxy']['usessl'];
+        $this->proxy_ssl  = $conf['proxy']['ssl'];
     }
 }
 
@@ -140,6 +140,7 @@ class HTTPClient {
      */
     function sendRequest($url,$data=array(),$method='GET'){
         $this->error = '';
+        $this->status = 0;
 
         // parse URL into bits
         $uri = parse_url($url);
@@ -187,6 +188,7 @@ class HTTPClient {
         // open socket
         $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
         if (!$socket){
+            $resp->status = '-100';
             $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
             return $false;
         }
@@ -287,7 +289,7 @@ class HTTPClient {
                                                       $this->resp_headers['location'];
                 }
                 // perform redirected request, always via GET (required by RFC)
-                return $this->_sendRequest($this->resp_headers['location'],array(),'GET');
+                return $this->sendRequest($this->resp_headers['location'],array(),'GET');
             }
         }
 
