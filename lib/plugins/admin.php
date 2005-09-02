@@ -127,27 +127,6 @@ class DokuWiki_Admin_Plugin {
   function plugin_render($text, $format='xhtml') {
     return p_render($format, p_get_instructions($text),$info); 
   }
-    
-  // return an obfuscated email address in line with $conf['mailguard'] setting
-  // FIXME?? this should really be a common function, used by the renderer as well - no point maintaining two!
-  function obfuscate($email) {
-    global $conf;
-    
-    switch ($conf['mailguard']) {
-        case 'visible' :
-            $obfuscate = array('@' => '[at]', '.' => '[dot]', '-' => '[dash]');
-            return strtr($email, $obfuscate);
-            
-        case 'hex' :
-            $encode = '';
-            for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email{$x}).';';
-            return $encode;
-            
-        case 'none' :
-        default :
-            return $email;
-    }            
-  }
-
+  
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :

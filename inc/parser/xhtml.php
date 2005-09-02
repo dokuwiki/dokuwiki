@@ -672,39 +672,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['class']='media';
         }
 
-        //shields up
-        if($conf['mailguard']=='visible'){
-            //the mail name gets some visible encoding
-            $address = str_replace('@',' [at] ',$address);
-            $address = str_replace('.',' [dot] ',$address);
-            $address = str_replace('-',' [dash] ',$address);
-
-            $title   = $this->_xmlEntities($address);
-            if(empty($name)){
-                $name = $this->_xmlEntities($address);
-            }else{
-                $name = $this->_xmlEntities($name);
-            }
-        }elseif($conf['mailguard']=='hex'){
-            //encode every char to a hex entity
-            for ($x=0; $x < strlen($address); $x++) {
-                $encode .= '&#x' . bin2hex($address[$x]).';';
-            }
-            $address = $encode;
-            $title   = $encode;
-            if(empty($name)){
-                $name = $encode;
-            }else{
-                $name = $this->_xmlEntities($name);
-            }
+        $address = obfuscate($address);
+        $title   = $address;
+        if(empty($name)){
+            $name = $address;
         }else{
-            //keep address as is
-            $title   = $this->_xmlEntities($address);
-            if(empty($name)){
-                $name = $this->_xmlEntities($address);
-            }else{
-                $name = $this->_xmlEntities($name);
-            }
+            $name = $this->_xmlEntities($name);
         }
         
         $link['url']   = 'mailto:'.rawurlencode($address);

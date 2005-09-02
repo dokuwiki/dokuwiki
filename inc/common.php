@@ -893,6 +893,31 @@ function filesize_h($size, $dec = 1){
 }
 
 /**
+ * return an obfuscated email address in line with $conf['mailguard'] setting
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ */
+function obfuscate($email) {
+  global $conf;
+  
+  switch ($conf['mailguard']) {
+    case 'visible' :
+      $obfuscate = array('@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] ');
+      return strtr($email, $obfuscate);
+      
+    case 'hex' :
+      $encode = '';
+      for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email{$x}).';';
+      return $encode;
+      
+    case 'none' :
+    default :
+      return $email;
+  }            
+}
+
+/**
  * Return DokuWikis version
  *
  * @author Andreas Gohr <andi@splitbrain.org>
