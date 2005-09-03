@@ -42,17 +42,22 @@ function ajax_qsearch(){
   $query = cleanID($_POST['q']);
   if(empty($query)) return;
 
-  $nsdir = str_replace(':','/',getNS($query));
-  require_once(DOKU_INC.'inc/search.php');
   require_once(DOKU_INC.'inc/html.php');
+  require_once(DOKU_INC.'inc/fulltext.php');
 
   $data = array();
-  search($data,$conf['datadir'],'search_qsearch',array(query => $query),$nsdir);
+  $data = ft_pageLookup($query);
 
   if(!count($data)) return;
 
   print '<b>'.$lang['quickhits'].'</b>';
-  print html_buildlist($data,'qsearch','html_list_index');
+  print '<ul>';
+  foreach($data as $id){
+    print '<li>';
+    print html_wikilink(':'.$id,$conf['useheading']?NULL:$id);
+    print '</li>';
+  }
+  print '</ul>';
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

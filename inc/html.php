@@ -295,6 +295,7 @@ function html_hilight($html,$query){
  */
 function html_search(){
   require_once(DOKU_INC.'inc/search.php');
+  require_once(DOKU_INC.'inc/fulltext.php');
   global $conf;
   global $QUERY;
   global $ID;
@@ -312,14 +313,14 @@ function html_search(){
 
   //do quick pagesearch
   $data = array();
-  search($data,$conf['datadir'],'search_pagename',array(query => cleanID($QUERY)));
+  $data = ft_pageLookup(cleanID($QUERY));
   if(count($data)){
     sort($data);
     print '<div class="search_quickresult">';
     print '<b>'.$lang[quickhits].':</b><br />';
-    foreach($data as $row){
+    foreach($data as $id){
       print '<div class="search_quickhits">';
-      print html_wikilink(':'.$row['id'],$conf['useheading']?NULL:$row['id']);
+      print html_wikilink(':'.$id,$conf['useheading']?NULL:$id);
       print '</div> ';
     }
     //clear float (see http://www.complexspiral.com/publications/containing-floats/)
@@ -329,16 +330,19 @@ function html_search(){
   flush();
 
   //do fulltext search
-  $data = array();
-  search($data,$conf['datadir'],'search_fulltext',array(query => utf8_strtolower($QUERY)));
+  $data = ft_pageSearch($QUERY,$poswords);
   if(count($data)){
-    usort($data,'sort_search_fulltext');
-    foreach($data as $row){
+    $num = 1;
+    foreach($data as $id => $cnt){
       print '<div class="search_result">';
-      print html_wikilink(':'.$row['id'],$conf['useheading']?NULL:$row['id'],$row['poswords']);
-      print ': <span class="search_cnt">'.$row['count'].' '.$lang['hits'].'</span><br />';
-      print '<div class="search_snippet">'.$row['snippet'].'</div>';
+      print html_wikilink(':'.$id,$conf['useheading']?NULL:$id,$poswords);
+      print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
+      if($num < 15){ // create snippets for the first number of matches only #FIXME add to conf ?
+        print '<div class="search_snippet">'.ft_snippet($id,$poswords).'</div>';
+      }
       print '</div>';
+      flush();
+      $num++;
     }
   }else{
     print '<div class="nothing">'.$lang['nothingfound'].'</div>';

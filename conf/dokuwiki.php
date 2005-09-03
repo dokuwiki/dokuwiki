@@ -84,7 +84,7 @@ $conf['proxy']['host'] = '';
 $conf['proxy']['port'] = '';
 $conf['proxy']['user'] = '';
 $conf['proxy']['pass'] = '';
-$conf['proxy']['ssl']  = '';
+$conf['proxy']['ssl']  = 0;
 
 /* Safemode Hack */
 $conf['safemodehack'] = 0;               //read http://wiki.splitbrain.org/wiki:safemodehack !

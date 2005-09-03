@@ -14,15 +14,16 @@
  * The fulltext search
  *
  * Returns a list of matching documents for the given query
+ *
  */
-function ft_pageSearch($query){
+function ft_pageSearch($query,&$poswords){
     $q = ft_queryParser($query);
+
+    // use this for higlighting later:
+    $poswords = join(' ',$q['and']);
 
     // lookup all words found in the query
     $words  = array_merge($q['and'],$q['not']);
-    foreach($q['phrases'] as $phrase){
-        $words  = array_merge($words,$phrase['words']);
-    }
     if(!count($words)) return array();
     $result = idx_lookup($words);
 
@@ -36,8 +37,7 @@ function ft_pageSearch($query){
         $not = array_merge($not,array_keys($result[$w]));
     }
 
-
-    // combine and words
+    // combine and-words
     if(count($q['and']) > 1){
         $docs = ft_resultCombine($q['and']);
     }else{
@@ -52,7 +52,6 @@ function ft_pageSearch($query){
 
     if(!count($docs)) return array();
 
-
     // handle phrases
     if(count($q['phrases'])){
         //build a regexp
@@ -63,7 +62,7 @@ function ft_pageSearch($query){
         // check the source of all documents for the exact phrases
         foreach(array_keys($docs) as $id){
             $text  = utf8_strtolower(rawWiki($id));
-            if(!preg_match_all('/'.$regex.'/usi',$text)){
+            if(!preg_match('/'.$regex.'/usi',$text)){
                 unset($docs[$id]); // no hit - remove
             }
         }
@@ -75,6 +74,63 @@ function ft_pageSearch($query){
     arsort($docs);
 
     return $docs;
+}
+
+/**
+ * Quicksearch for pagenames
+ *
+ * By default it only matches the pagename and ignores the
+ * namespace. This can be changed with the second parameter
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function ft_pageLookup($id,$pageonly=true){
+    global $conf;
+    $id    = preg_quote($id,'/');
+    $pages = file($conf['cachedir'].'/page.idx');
+    $pages = array_values(preg_grep('/'.$id.'/',$pages));
+
+    $cnt = count($pages);
+    for($i=0; $i<$cnt; $i++){
+        if($pageonly){
+            if(!preg_match('/'.$id.'/',noNS($pages[$i]))){
+                unset($pages[$i]);
+                continue;
+            } 
+        }
+        if(!@file_exists(wikiFN($pages[$i]))){
+            unset($pages[$i]);
+            continue;
+        }
+    }
+    sort($pages);
+    return $pages;
+}
+
+/**
+ * Creates a snippet extract
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function ft_snippet($id,$poswords){
+    $poswords = preg_quote($poswords,'#');
+    $re       = '('.str_replace(' ','|',$poswords).')';
+    $text     = rawWiki($id);
+    //FIXME caseinsensitive matching doesn't work with UTF-8!?
+    preg_match_all('#(.{0,50})'.$re.'(.{0,50})#iu',$text,$matches,PREG_SET_ORDER);
+
+    $cnt = 0;
+    $snippet = '';
+    foreach($matches as $match){
+        $snippet .= '...'.htmlspecialchars($match[1]);
+        $snippet .= '<span class="search_hit">';
+        $snippet .= htmlspecialchars($match[2]);
+        $snippet .= '</span>';
+        $snippet .= htmlspecialchars($match[3]).'... ';
+        if($cnt++ == 2) break;
+    }
+
+    return $snippet;
 }
 
 /**
@@ -144,4 +200,4 @@ function ft_queryParser($query){
     return $q;
 }
 
-
+//Setup VIM: ex: et ts=4 enc=utf-8 :

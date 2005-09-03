@@ -283,6 +283,7 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['query'] is the search query
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @deprecated - fulltext indexer is used instead
  */
 function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
@@ -383,6 +384,8 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ *
+ * @deprecated - fulltext indexer is used instead
  */
 function search_regex(&$data,$base,$file,$reg,$words){
 
