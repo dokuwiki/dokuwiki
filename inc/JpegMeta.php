@@ -339,6 +339,7 @@ class JpegMeta
      * Set an EXIF field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     * @author Joe Lapp <joe.lapp@pobox.com>
      */
     function setExifField($field, $value)
     {
@@ -352,6 +353,13 @@ class JpegMeta
 
         if ($this->_info['exif'] == false) {
             $this->_info['exif'] = array();
+        }
+
+        // make sure datetimes are in correct format
+        if(strlen($field) >= 8 && strtolower(substr($field, 0, 8)) == 'datetime') {
+            if(strlen($value) < 8 || $value{4} != ':' || $value{7} != ':') {
+                $value = date('Y:m:d H:i:s', strtotime($value));
+            }
         }
 
         $this->_info['exif'][$field] = $value;
