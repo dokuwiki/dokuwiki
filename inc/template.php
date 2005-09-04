@@ -204,8 +204,8 @@ function tpl_metaheaders(){
 
   // include some JavaScript language strings
   ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-  ptln("  var alertText   = '".addslashes($lang['qb_alert'])."'",$it);
-  ptln("  var notSavedYet = '".addslashes($lang['notsavedyet'])."'",$it);
+  ptln("  var alertText   = '".str_replace('\\\\n','\\n',addslashes($lang['qb_alert']))."'",$it);
+  ptln("  var notSavedYet = '".str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."'",$it);
   ptln("  var DOKU_BASE   = '".DOKU_BASE."'",$it);
   ptln('</script>',$it);
  

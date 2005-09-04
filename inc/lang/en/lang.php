@@ -63,7 +63,8 @@ $lang['lockedby']     = 'Currently locked by';
 $lang['lockexpire']   = 'Lock expires at';
 $lang['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
 
-$lang['notsavedyet'] = 'There are unsaved changes, that will be lost.\nReally continue?';
+$lang['notsavedyet'] = 'Unsaved changes will be lost.\nReally continue?';
+
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Nothing was found.';
 
