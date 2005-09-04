@@ -54,7 +54,7 @@ function ajax_qsearch(){
   print '<ul>';
   foreach($data as $id){
     print '<li>';
-    print html_wikilink(':'.$id,$conf['useheading']?NULL:$id);
+    print html_wikilink(':'.$id);
     print '</li>';
   }
   print '</ul>';
