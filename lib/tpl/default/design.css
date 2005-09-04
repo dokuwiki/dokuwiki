@@ -116,7 +116,7 @@ input.missing {
 /* --------- buttons ------------------- */
 
 
-input.button {
+input.button, button.button{
   border: 1px solid #8cacbb;  
   color: Black;
   background-color: white;

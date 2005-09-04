@@ -78,9 +78,9 @@ class DokuWiki_Admin_Plugin {
     $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
     if(!@file_exists($file)){
       //fall back to english
-      $file = DOKU_PLUGIN.$plugin.'inc/lang/en/'.$id.'.txt';
+      $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
     }
-  return $file;
+    return $file;
   }
   
   // use this function to access plugin language strings

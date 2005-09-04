@@ -231,6 +231,21 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
 }
 
 /**
+ * Just lists all documents
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
+function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
+  //we do nothing with directories
+  if($type == 'd') return true;
+  //only search txt files
+  if(!preg_match('#\.txt$#',$file)) return true;
+
+  $data[]['id'] = pathID($file);
+  return true;
+}
+
+/**
  * Search for backlinks to a given page
  *
  * $opts['ns']    namespace of the page
