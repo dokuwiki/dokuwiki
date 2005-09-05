@@ -1,4 +1,4 @@
-﻿====== Gestió de la llista de control d'accés ======
+====== Gestió de la llista de control d'accés ======
 
 En aquesta pàgina podeu afegir i suprimir permissos per a la pàgina
 actual i per a tots els [[doku>wiki:namespaces|namespaces]] en què 

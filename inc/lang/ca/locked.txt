@@ -1,4 +1,4 @@
-﻿====== Pàgina blocada ======
+====== Pàgina blocada ======
 
 Aquesta pàgina actualment està blocada per a edició per un altre usuari.
 Haureu d'esperar fins que aquest usuari acabe d'editar-la o fins que venci

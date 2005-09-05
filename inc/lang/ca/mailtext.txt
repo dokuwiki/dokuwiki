@@ -1,4 +1,4 @@
-﻿S'ha afegit o modificat una pàgina en el vostre wiki. Ací teniu més detalls:
+S'ha afegit o modificat una pàgina en el vostre wiki. Ací teniu més detalls:
 
 Data           : @DATE@
 Navegador      : @BROWSER@
