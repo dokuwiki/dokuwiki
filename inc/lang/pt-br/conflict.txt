@@ -1,4 +1,4 @@
-﻿====== Conflito de Edição ======
+====== Conflito de Edição ======
 
 **Atenção**: existe uma versão mais recente do que a versão usada no começo da sua edição.
 Isto acontece quando outra pessoa editou esta entrada enquanto você a esteve editando.

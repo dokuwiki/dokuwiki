@@ -1,4 +1,4 @@
-﻿Edite a entrada e clique em ''Salvar''.\\
+Edite a entrada e clique em ''Salvar''.\\
 Reveja a [[wiki:syntax | sintaxe]] das regras de formatação do texto.
 
 Por favor, altere o conteúdo deste documento apenas quando puder **melhorá-lo**.\\

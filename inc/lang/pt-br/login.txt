@@ -1,4 +1,4 @@
-﻿====== Sessão ======
+====== Sessão ======
 
 No momento você não está autorizado (não está logado)!\\
 Informe suas credenciais de autenticação para abrir numa nova sessão (autorização).

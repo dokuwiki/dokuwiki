@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Brazilian Portuguese language file
  *
