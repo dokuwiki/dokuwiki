@@ -4,17 +4,17 @@
  * --------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.1
- * CVS Revision Version: $Revision: 1.3 $
+ * Release Version: 1.0.7.2
+ * CVS Revision Version: $Revision: 1.5 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/07/26 05:23:30 $
+ * Last Modified: $Date: 2005/09/03 12:36:41 $
  *
  * Java language file for GeSHi.
  *
  * CHANGES
  * -------
  * 2004/11/27 (1.0.3)
- *  -  Added support for multiple object splitters
+ *   -  Added support for multiple object splitters
  * 2004/08/05 (1.0.2)
  *   -  Added URL support
  *   -  Added keyword "this", as bugs in GeSHi class ironed out

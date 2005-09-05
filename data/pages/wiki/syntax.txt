@@ -332,7 +332,7 @@ class HelloWorldApp {
 }
 </code>
 
-The following language strings are currently recognized: //actionscript, ada, apache, asm, asp, bash, caddcl, cadlisp, c, c_mac, cpp, csharp, css, delphi, diff, d, div, eiffel, gml, html4strict, java, javascript, lisp, lua, matlab, mpasm, nsis, objc, oobas, oracle8, pascal, perl, php-brief, php, python, qbasic, smarty, sql, vb, vbnet, vhdl, visualfoxpro, xml//
+The following language strings are currently recognized: //actionscript, actionscript-french, ada, apache, applescript, asm, asp, bash, caddcl, cadlisp, c, c_mac, cpp, csharp, css, delphi, diff, d, div, dos, eiffel, freebasic, gml, html4strict, ini, inno, java, javascript, lisp, lua, matlab, mpasm, nsis, objc, oobas, oracle8, pascal, perl, php-brief, php, python, qbasic, sdlbasic, smarty, sql, vb, vbnet, vhdl, visualfoxpro, xml//
 
 ===== Embedding HTML and PHP =====
 

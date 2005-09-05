@@ -4,17 +4,19 @@
  * ----------
  * Author: Járja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 Járja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.1
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.2
+ * CVS Revision Version: $Revision: 1.5 $
  * Date Started: 2004/07/26
- * Last Modified: $Date: 2005/07/26 05:23:30 $
+ * Last Modified: $Date: 2005/09/03 12:36:41 $
  *
  * Delphi (Object Pascal) language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2005/09/03 (1.0.2)
+ *   -  Added support for hex numbers and string entities
  * 2004/11/27 (1.0.1)
- *  -  Added support for multiple object splitters
+ *   -  Added support for multiple object splitters
  * 2004/10/27 (1.0.0)
  *   -  First Release
  *
@@ -130,6 +132,8 @@ $language_data = array (
 			1 => 'color: #006600;'
 			),
 		'REGEXPS' => array(
+            0 => 'color: #9ac;',
+            1 => 'color: #ff0000;'
 			),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66;'
@@ -148,6 +152,8 @@ $language_data = array (
 		1 => '.'
 		),
 	'REGEXPS' => array(
+        0 => '\$[0-9a-fA-F]+',
+        1 => '\#\$?[0-9]{1,3}'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(

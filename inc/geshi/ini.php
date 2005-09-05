@@ -1,21 +1,23 @@
 <?php
 /*************************************************************************************
- * matlab.php
- * -----------
- * Author: Florian Knorn (floz@gmx.de)
- * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
+ * ini.php
+ * --------
+ * Author: deguix (cevo_deguix@yahoo.com.br)
+ * Copyright: (c) 2005 deguix
  * Release Version: 1.0.7.2
- * CVS Revision Version: $Revision: 1.3 $
- * Date Started: 2005/02/09
- * Last Modified: $Date: 2005/09/03 12:36:41 $
+ * CVS Revision Version: $Revision: 1.2 $
+ * Date Started: 2005/03/27
+ * Last Modified: $Date: 2005/09/03 12:36:42 $
  *
- * Matlab M-file language file for GeSHi. 
+ * INI language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/05/07 (1.0.0)
+ * 2005/04/05 (1.0.0)
  *   -  First Release
  *
+ * TODO (updated 2005/03/27)
+ * -------------------------
  *
  *************************************************************************************
  *
@@ -38,66 +40,78 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'M',
-	'COMMENT_SINGLE' => array(1 => '%'),
+	'LANG_NAME' => 'ini',
+	'COMMENT_SINGLE' => array(0 => ';'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'"),
+	'QUOTEMARKS' => array(),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
-		1 => array(
-			'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for', 
-			'function', 'global', 'if', 'otherwise', 'persistent', 'return', 
-			'switch', 'try', 'while','...'
-			),
 		),
-	'SYMBOLS' => array( 
-		'...' 
+	'SYMBOLS' => array(
+		'[', ']', '='
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => false,
-		2 => false,
-		3 => false,
-		4 => false,
+		GESHI_COMMENTS => false
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #0000FF;',
+		    0 => ''
 			),
 		'COMMENTS' => array(
-			1 => 'color: #228B22;',
+			0 => 'color: #666666; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
+		    0 => ''
 			),
 		'BRACKETS' => array(
+		    0 => ''
 			),
 		'STRINGS' => array(
-			0 => 'color: #A020F0;'
+		    0 => ''
 			),
 		'NUMBERS' => array(
+		    0 => ''
 			),
 		'METHODS' => array(
+		    0 => ''
 			),
 		'SYMBOLS' => array(
+			0 => 'color: #000066; font-weight:bold;'
 			),
 		'REGEXPS' => array(
+			0 => 'color: #000066; font-weight:bold;',
+			1 => 'color: #000099;',
+			2 => 'color: #660066;'
 			),
 		'SCRIPT' => array(
+		    0 => ''
 			)
 		),
 	'URLS' => array(
-		1 => '',
-		2 => '',
-		3 => '',
-		4 => ''
 		),
-	'OOLANG' => true,
+	'OOLANG' => false,
 	'OBJECT_SPLITTERS' => array(
-		1 => '.',
-		2 => '::'
 		),
 	'REGEXPS' => array(
+		0 => '\[.+\]',
+		1 => array(
+			GESHI_SEARCH => '([a-zA-Z0-9_]+\s*)=(.+)',
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => '=\\2'
+			),
+		2 => array(
+            // Evil hackery to get around GeSHi bug: <>" and ; are added so <span>s can be matched
+            // Explicit match on variable names because if a comment is before the first < of the span
+            // gets chewed up...
+			GESHI_SEARCH => '([<>";a-zA-Z0-9_]+\s*)=(.+)',
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '\\1=',
+			GESHI_AFTER => ''
+			)
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(

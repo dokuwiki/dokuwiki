@@ -3,16 +3,19 @@
  * lua.php
  * -------
  * Author: Roberto Rossi (rsoftware@altervista.org)
- * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/blog)
- * Release Version: 1.0.7.1
- * CVS Revision Version: $Revision: 1.2 $
+ * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
+ * Release Version: 1.0.7.2
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/07/26 05:23:30 $
+ * Last Modified: $Date: 2005/09/03 12:36:41 $
  *
  * LUA language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2005/08/26 (1.0.2)
+ *  -  Added support for objects and methods
+ *  -  Removed unusable keywords
  * 2004/11/27 (1.0.1)
  *  -  Added support for multiple object splitters
  * 2004/10/27 (1.0.0)
@@ -65,19 +68,7 @@ $language_data = array (
 			'clock','date','difftime','execute','exit','getenv','setlocale','time',
 			'_G','getfenv','getmetatable','ipairs','loadlib','next','pairs','pcall',
 			'rawegal','rawget','rawset','require','setfenv','setmetatable','xpcall',
-			'string','table','math','coroutine','io','os','debug',
-			'string.byte','string.char','string.dump','string.find','string.len',
-			'string.lower','string.rep','string.sub','string.upper','string.format','string.gfind','string.gsub',
-			'table.concat','table.foreach','table.foreachi','table.getn','table.sort','table.insert','table.remove','table.setn',
-			'math.abs','math.acos','math.asin','math.atan','math.atan2','math.ceil','math.cos','math.deg','math.exp',
-			'math.floor','math.frexp','math.ldexp','math.log','math.log10','math.max','math.min','math.mod',
-			'math.pi','math.rad','math.random','math.randomseed','math.sin','math.sqrt','math.tan',
-			'coroutine.create','coroutine.resume','coroutine.status',
-			'coroutine.wrap','coroutine.yield',
-			'io.close','io.flush','io.input','io.lines','io.open','io.output','io.read','io.tmpfile','io.type','io.write',
-			'io.stdin','io.stdout','io.stderr',
-			'os.clock','os.date','os.difftime','os.execute','os.exit','os.getenv','os.remove','os.rename',
-			'os.setlocale','os.time','os.tmpname'
+			'string','table','math','coroutine','io','os','debug'
 			)
 		),
 	'SYMBOLS' => array(
@@ -108,6 +99,7 @@ $language_data = array (
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
+      0 => 'color: #b1b100;'
 			),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66;'
@@ -117,8 +109,8 @@ $language_data = array (
 		'SCRIPT' => array(
 			)
 		),
-	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
+	'OOLANG' => true,
+	'OBJECT_SPLITTERS' => array('.'
 		),
 	'REGEXPS' => array(
 		),
@@ -130,3 +122,4 @@ $language_data = array (
 );
 
 ?>
+

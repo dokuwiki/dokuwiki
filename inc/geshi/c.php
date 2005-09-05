@@ -6,10 +6,10 @@
  * Contributors:
  *  - Jack Lloyd (lloyd@randombit.net)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.1
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.2
+ * CVS Revision Version: $Revision: 1.3 $
  * Date Started: 2004/06/04
- * Last Modified: $Date: 2005/07/26 05:23:30 $
+ * Last Modified: $Date: 2005/09/03 12:36:42 $
  *
  * C language file for GeSHi.
  *

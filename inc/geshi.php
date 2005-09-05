@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.10 2005/07/25 10:42:23 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.13 2005/09/03 12:54:37 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.1');
+define('GESHI_VERSION', '1.0.7.2');
 
 /** For the future (though this may never be realised) */
 define('GESHI_OUTPUT_HTML', 0);
@@ -67,6 +67,8 @@ define('GESHI_NORMAL_LINE_NUMBERS', 1);
 define('GESHI_FANCY_LINE_NUMBERS', 2);
 
 // Container HTML type
+/** Use nothing to surround the source */
+define('GESHI_HEADER_NONE', 0);
 /** Use a <div> to surround the source */
 define('GESHI_HEADER_DIV', 1);
 /** Use a <pre> to surround the source */
@@ -518,12 +520,15 @@ class GeSHi
      * GESHI_HEADER_PRE means that a <pre> is used - less source, but less
      * control. Default is GESHI_HEADER_PRE.
      * 
+     * From 1.0.7.2, you can use GESHI_HEADER_NONE to specify that no header code
+     * should be outputted.
+     * 
      * @param int The type of header to be used
      * @since 1.0.0
 	 */
 	function set_header_type ($type)
 	{
-        if (GESHI_HEADER_DIV != $type && GESHI_HEADER_PRE != $type) {
+        if (GESHI_HEADER_DIV != $type && GESHI_HEADER_PRE != $type && GESHI_HEADER_NONE != $type) {
             $this->error = GESHI_ERROR_INVALID_HEADER_TYPE;
             return;
         }
@@ -777,7 +782,7 @@ class GeSHi
 		if (!$preserve_defaults) {
 			$this->language_data['STYLES']['BRACKETS'][0] = $style;
 		} else {
-			$this->language_data['STYLES']['BRACKETS'][0] = $style;
+			$this->language_data['STYLES']['BRACKETS'][0] .= $style;
 		}
 	}
 
@@ -811,7 +816,7 @@ class GeSHi
 		if (!$preserve_defaults) {
 			$this->language_data['STYLES']['SYMBOLS'][0] = $style;
 		} else {
-			$this->language_data['STYLES']['SYMBOLS'][0] = $style;
+			$this->language_data['STYLES']['SYMBOLS'][0] .= $style;
 		}
 		// For backward compatibility
 		$this->set_brackets_style ($style, $preserve_defaults);
@@ -845,7 +850,7 @@ class GeSHi
 		if (!$preserve_defaults) {
 			$this->language_data['STYLES']['STRINGS'][0] = $style;
 		} else {
-			$this->language_data['STYLES']['STRINGS'][0] = $style;
+			$this->language_data['STYLES']['STRINGS'][0] .= $style;
 		}
 	}
 
@@ -875,7 +880,7 @@ class GeSHi
 		if (!$preserve_defaults) {
 			$this->language_data['STYLES']['NUMBERS'][0] = $style;
 		} else {
-			$this->language_data['STYLES']['NUMBERS'][0] = $style;
+			$this->language_data['STYLES']['NUMBERS'][0] .= $style;
 		}
 	}
 
@@ -938,7 +943,7 @@ class GeSHi
 		if (!$preserve_defaults) {
 			$this->language_data['STYLES']['REGEXPS'][$key] = $style;
 		} else {
-			$this->language_data['STYLES']['REGEXPS'][$key] = $style;
+			$this->language_data['STYLES']['REGEXPS'][$key] .= $style;
 		}
 	}
 
@@ -2135,6 +2140,7 @@ class GeSHi
 	 */
 	function load_language ($file_name)
 	{
+        $language_data = array();
 		require $file_name;
 		// Perhaps some checking might be added here later to check that
 		// $language data is a valid thing but maybe not
@@ -2179,7 +2185,7 @@ class GeSHi
         }
         
         // Add HTML whitespace stuff if we're using the <div> header
-        if ($this->header_type == GESHI_HEADER_DIV) {
+        if ($this->header_type != GESHI_HEADER_PRE) {
             $parsed_code = $this->indent($parsed_code);
         }
         
@@ -2297,6 +2303,10 @@ class GeSHi
 		// Get the header HTML
 		$header = $this->format_header_content();
 
+        if (GESHI_HEADER_NONE == $this->header_type) {
+            return "$header<ol$ol_attributes>";
+        }
+        
 		// Work out what to return and do it
 		if ($this->line_numbers != GESHI_NO_LINE_NUMBERS) {
 			if ($this->header_type == GESHI_HEADER_PRE) {
@@ -2349,6 +2359,11 @@ class GeSHi
 	{
 		$footer_content = $this->format_footer_content();
 
+        if (GESHI_HEADER_NONE == $this->header_type) {
+            return ($this->line_numbers != GESHI_NO_LINE_NUMBERS) ? '</ol>' . $footer_content
+                : $footer_content;
+        }
+        
 		if ($this->header_type == GESHI_HEADER_DIV) {
 			if ($this->line_numbers != GESHI_NO_LINE_NUMBERS) {
 				return "</ol>$footer_content</div>";

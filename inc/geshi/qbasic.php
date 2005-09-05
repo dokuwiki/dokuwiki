@@ -4,10 +4,10 @@
  * ----------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.1
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.2
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 2004/06/20
- * Last Modified: $Date: 2005/07/26 05:23:30 $
+ * Last Modified: $Date: 2005/09/03 12:36:42 $
  *
  * QBasic/QuickBASIC language file for GeSHi.
  *
@@ -51,7 +51,7 @@
  ************************************************************************************/
 $language_data = array (
 	'LANG_NAME' => 'QBasic/QuickBASIC',
-	'COMMENT_SINGLE' => array(1 => "'", 2 => 'REM'),
+	'COMMENT_SINGLE' => array(1 => "'", 2 => ' REM', 3 => "\tREM"),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
 	'QUOTEMARKS' => array('"'),
@@ -103,7 +103,8 @@ $language_data = array (
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080;',
-			2 => 'color: #808080;'
+			2 => 'color: #808080;',
+            3 => 'color: #808080;'
 			),
 		'BRACKETS' => array(
 			0 => 'color: #66cc66;'
