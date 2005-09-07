@@ -176,23 +176,26 @@ function getBaseURL($abs=false){
   //finish here for relative URLs
   if(!$abs) return $dir;
 
-  $port = ':'.$_SERVER['SERVER_PORT'];
-  //remove port from hostheader as sent by IE
-  $host = preg_replace('/:.*$/','',$_SERVER['HTTP_HOST']);
+  //split hostheader into host and port
+  list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
+  if(!$port)  $port = $_SERVER['SERVER_PORT'];
+  if(!$port)  $port = 80;
 
   // see if HTTPS is enabled - apache leaves this empty when not available,
   // IIS sets it to 'off', 'false' and 'disabled' are just guessing
   if (preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
     $proto = 'http://';
-    if ($_SERVER['SERVER_PORT'] == '80') {
+    if ($port == '80') {
       $port='';
     }
   }else{
     $proto = 'https://';
-    if ($_SERVER['SERVER_PORT'] == '443') {
+    if ($port == '443') {
       $port='';
     }
   }
+
+  if($port) $port = ':'.$port;
 
   return $proto.$host.$port.$dir;
 }
