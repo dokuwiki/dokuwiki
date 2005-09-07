@@ -916,7 +916,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           formatButton('italic.png','<?php echo $lang['qb_italic']?>',"\/\/","\/\/",'<?php echo $lang['qb_italic']?>','i');
           formatButton('underline.png','<?php echo $lang['qb_underl']?>','__','__','<?php echo $lang['qb_underl']?>','u');
           formatButton('code.png','<?php echo $lang['qb_code']?>','\'\'','\'\'','<?php echo $lang['qb_code']?>','c');
-          formatButton('strike.png','<?php echo $lang['qb_strike']?>','<del>','<\/del>','<?php echo $lang['qb_strike']?>','d');
+          formatButton('strike.png','<?php echo $lang['qb_strike']?>','&lt;del&gt;','&lt;\/del&gt;','<?php echo $lang['qb_strike']?>','d');
 
           formatButton('fonth1.png','<?php echo $lang['qb_h1']?>','====== ',' ======\n','<?php echo $lang['qb_h1']?>','1');
           formatButton('fonth2.png','<?php echo $lang['qb_h2']?>','===== ',' =====\n','<?php echo $lang['qb_h2']?>','2');
