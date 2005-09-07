@@ -148,12 +148,16 @@ function idx_addPage($page){
 
     // close the temp file and move it over to be the new one
     fclose($tmp);
-    if(copy($conf['cachedir'].'/index.tmp',
+    // try rename first (fast) fallback to copy (slow)
+    if(@rename($conf['cachedir'].'/index.tmp',
+              $conf['cachedir'].'/index.idx')){
+        return true;
+    }elseif(copy($conf['cachedir'].'/index.tmp',
             $conf['cachedir'].'/index.idx')){
         unlink($conf['cachedir'].'/index.tmp');
         return true;
     }
-    else{return false;}
+    return false;
 }
 
 /**
