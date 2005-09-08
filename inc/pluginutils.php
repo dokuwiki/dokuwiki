@@ -12,23 +12,25 @@
 function plugin_printCSSJS(){
     global $conf;
     
-    if (isset($conf['pluginmanager']) && $conf['pluginmanager']) {
+    if (isset($conf['pluginmanager']) && $conf['pluginmanager']  && 
+        // implicit check that plugin manager has setup the aggregated files - it has styles of its own
+        @file_exists(DOKU_INC.'lib/plugins/plugin_style.css'))  {
         // individual plugin instances of the files swept into one file each
         $dir = "lib/plugins/plugin_";
-            if(@file_exists(DOKU_INC.$dir.'style.css')){
-                print '  <link rel="stylesheet" type="text/css" href="'.DOKU_BASE.$dir.'style.css" />'."\n";
+        if(@file_exists(DOKU_INC.$dir.'style.css')){
+            print '  <link rel="stylesheet" type="text/css" href="'.DOKU_BASE.$dir.'style.css" />'."\n";
         }
-            if(@file_exists(DOKU_INC.$dir.'screen.css')){
-                print '  <link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.$dir.'screen.css" />'."\n";
+        if(@file_exists(DOKU_INC.$dir.'screen.css')){
+            print '  <link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.$dir.'screen.css" />'."\n";
         }
-            if(@file_exists(DOKU_INC.$dir.'print.css')){
-                print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
+        if(@file_exists(DOKU_INC.$dir.'print.css')){
+            print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
         }
-            if(@file_exists(DOKU_INC.$dir.'script.js')){
-          print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
+        if(@file_exists(DOKU_INC.$dir.'script.js')){
+            print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
         }
     } else {
-        // no plugin manager so individual instances of these files for any plugin that uses them
+        // no plugin manager (or aggregate files not setup) so individual instances of these files for any plugin that uses them
         $plugins = plugin_list();
         foreach ($plugins as $p){
             $dir = "lib/plugins/$p/";
