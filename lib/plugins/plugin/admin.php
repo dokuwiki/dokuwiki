@@ -14,10 +14,6 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'admin.php');
-     
-    // language stuff here for now ... move to language files when complete
-    
-//    global $lang;
     
     //--------------------------[ GLOBALS ]------------------------------------------------
     // note: probably should be dokuwiki wide globals, where they can be accessed by pluginutils.php
@@ -47,7 +43,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       global $conf;
       $this->disabled = (!isset($conf['pluginmanager']) || ($conf['pluginmanager'] == 0));
     }
- 
+    
     /**
      * return some info
      */
@@ -68,6 +64,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
      * return prompt for admin menu
      */
     function getMenuText($language) {
+
         if (!$this->disabled) 
           return parent::getMenuText($language);
 
@@ -89,6 +86,9 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       
       if ($this->disabled) return;
       
+      // enable direct access to language strings
+      $this->setupLocale();
+      
       $this->plugin = $_REQUEST['plugin'];
       $this->cmd = $_REQUEST['fn'];
       if (is_array($this->cmd)) $this->cmd = key($this->cmd);
@@ -107,7 +107,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       $class = "ap_".$this->cmd;
       if (!class_exists($class)) $class = 'ap_manage';
       
-      $this->handler = & new $class($this, $plugin);
+      $this->handler = & new $class($this, $this->plugin);
       $this->msg = $this->handler->process();
     }
  
@@ -121,7 +121,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       // enable direct access to language strings
       $this->setupLocale();
       
-      if ($this->handler === NULL) $this->handler = & new ap_manage();
+      if ($this->handler === NULL) $this->handler = & new ap_manage($this, $this->plugin);
       if (!$this->plugin_list) sort($this->plugin_list = plugin_list());
       
       ptln('<div id="plugin_manager">');
@@ -148,18 +148,8 @@ class ap_manage {
             return '';
         }
         
-        function html() {
-          
-          print $this->manager->plugin_locale_xhtml('admin_plugin');
-          
-          // FIXME, these probably shouldn't be here any more!
-          if (!$this->manager->msg) $this->manager->msg = '&nbsp;';
-          ptln("<p>{$manager->msg}</p>");
-          
-          if ($this->manager->error) {
-            ptln("<p class='error'>".str_replace("\n","<br>",$this->manager->error)."</p>");
-          }
-          
+        function html() {          
+          print $this->manager->locale_xhtml('admin_plugin');
           $this->html_menu();          
         }
         
@@ -207,17 +197,17 @@ class ap_manage {
             $new = (in_array($plugin, $this->downloaded)) ? ' class="new"' : '';
             
             ptln('  <form action="'.wl($ID).'" method="post" '.$new.'>');
+            ptln('    <h3 class="legend">'.$plugin.'</h3>');
             ptln('    <fieldset>');
             ptln('      <legend>'.$plugin.'</legend>');
-            ptln('      <h3 class="legend">'.$plugin.'</h3>');
             ptln('      <input type="hidden" name="do"     value="admin" />');
             ptln('      <input type="hidden" name="page"   value="plugin" />');
             ptln('      <input type="hidden" name="plugin" value="'.$plugin.'" />');
             
-            $this->html_button('delete', false, 6);
-            $this->html_button('update', !$this->plugin_readlog($plugin, 'url'), 6);
-            $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
             $this->html_button('info', false, 6);
+            $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
+            $this->html_button('update', !$this->plugin_readlog($plugin, 'url'), 6);
+            $this->html_button('delete', false, 6);
             
             ptln('    </fieldset>');
             ptln('  </form>');
@@ -267,6 +257,72 @@ class ap_manage {
             return (!$this->manager->error);
         }
         
+        function download($url, $overwrite=false) {
+          global $lang;
+          
+          // check the url
+          if (!preg_match("/[^\/]*$/", $url, $matches = array()) || !$matches[0]) {
+            $this->manager->error = $this->lang['error_badurl']."\n";
+            return false;
+          }
+          
+          $file = $matches[0];
+          $folder = "p".md5($file.date('r'));     // tmp folder name - will be empty (should really make sure it doesn't already exist)
+          $tmp = DOKU_PLUGIN."tmp/$folder";
+          
+          if (!ap_mkdir($tmp)) {
+            $this->manager->error = $this->lang['error_dir_create']."\n";
+            return false;
+          }
+          
+          if (!io_download($url, "$tmp/$file")) {
+            $this->manager->error = sprintf($this->lang['error_download'],$url)."\n";
+          }
+    
+          if (!$this->manager->error && !ap_decompress("$tmp/$file", $tmp)) {
+            $this->manager->error = sprintf($this->lang['error_decompress'],$file)."\n";
+          }
+          
+          // search tmp/$folder for the folder(s) that has been created
+          // move that folder(s) to lib/plugins/
+          if (!$this->manager->error) {
+            if ($dh = @opendir("$tmp/")) {
+              while (false !== ($f = readdir($dh))) {
+                if ($f == '.' || $f == '..' || $f == 'tmp') continue;
+                if (!is_dir("$tmp/$f")) continue;
+                
+                // check to make sure we aren't overwriting anything
+                if (!$overwrite && @file_exists(DOKU_PLUGIN."/$f")) {
+                   // remember our settings, ask the user to confirm overwrite, FIXME
+                   continue;
+                }
+                
+                $instruction = @file_exists(DOKU_PLUGIN."/$f") ? 'update' : 'install';
+                
+                if (ap_copy("$tmp/$f", DOKU_PLUGIN.$f)) {
+                  $this->downloaded[] = $f;
+                  $this->plugin_writelog($f, $instruction, array($url));
+                } else {
+                  $this->manager->error .= sprintf($lang['error_copy']."\n", $f);
+                }
+              }        
+              closedir($dh);
+            } else {
+              $this->manager->error = $this->lang['error']."\n";
+            }
+          }
+          
+          // cleanup
+          if ($folder && is_dir(DOKU_PLUGIN."tmp/$folder")) ap_delete(DOKU_PLUGIN."tmp/$folder");
+          
+          if (!$this->manager->error) {
+              $this->refresh();
+              return true;
+          }
+
+          return false;
+        }
+        
         // log 
         function plugin_writelog($plugin, $cmd, $data) {
         
@@ -283,7 +339,7 @@ class ap_manage {
                 
               case 'update' :
                 $date = date('r');
-                if (!$fp = @fopen($file, 'w+')) return;
+                if (!$fp = @fopen($file, 'a')) return;
                 fwrite($fp, "updated=$date\n");
                 fclose($fp);
                 break;
@@ -329,6 +385,7 @@ class ap_manage {
             ptln('</div>');
         }
         
+
     }
     
     class ap_download extends ap_manage {
@@ -336,56 +393,10 @@ class ap_manage {
         var $overwrite = false;
         
         function process() {
-          global $lang, $conf;
+          global $lang;
           
           $plugin_url = $_REQUEST['url'];
-          if (!preg_match("/[^\/]*$/", $plugin_url, $matches = array()) || !$matches[0]) {
-            $this->manager->error = $this->lang['error_badurl'].'\n';
-            return '';
-          }
-          
-          $file = $matches[0];
-          $folder = "p".md5($file.date('r'));     // tmp folder name - will be empty (should really make sure it doesn't already exist)
-          $tmp = DOKU_PLUGIN."tmp/$folder";
-          
-          if (!$this->manager->error && !ap_mkdir($tmp)) {
-            $this->manager->error = $this->lang['error_dir_create'].'\n';
-            $folder = '';
-          }
-          
-          if (!$this->manager->error && !io_download($plugin_url, "$tmp/$file")) {
-            $this->manager->error = sprintf($this->lang['error_download'],$url)."\n";
-          }
-    
-          ap_decompress("$tmp/$file", $tmp);
-          
-          // search tmp/$folder for the folder(s) that has been created
-          // move that folder(s) to lib/plugins/
-          if ($dh = @opendir("$tmp/")) {
-              while (false !== ($f = readdir($dh))) {
-                if ($f == '.' || $f == '..' || $f == 'tmp') continue;
-                if (!is_dir("$tmp/$f")) continue;
-                
-                // check to make sure we aren't overwriting anything
-                if (file_exists(DOKU_PLUGIN."/$f")) {
-                   // remember our settings, ask the user to confirm overwrite, FIXME
-                   continue;
-                } 
-                
-                ap_copy("$tmp/$f", DOKU_PLUGIN.$f);
-                $this->downloaded[] = $f;
-                $this->plugin_writelog($f, 'install', array($plugin_url));
-              }        
-            closedir($dh);
-          }
-          
-          // cleanup
-          if ($folder && is_dir(DOKU_PLUGIN."tmp/$folder")) ap_delete(DOKU_PLUGIN."tmp/$folder");
-          
-          if (!$this->manager->error) {
-              $this->refresh();
-          }
-
+          $this->download($plugin_url, $this->overwrite);
           return '';
         }
         
@@ -396,7 +407,7 @@ class ap_manage {
             ptln('<h2>'.$this->lang['downloading'].'</h2>');
             
             if ($this->manager->error) {
-                ptln('<p class="error">'.$this->manager->error.'</p>');
+                ptln('<p class="error">'.str_replace("\n","<br />",$this->manager->error).'</p>');
             } else if (count($this->downloaded) == 1) {
                 ptln('<p>'.sprintf($this->lang['downloaded'],$this->downloaded[0]).'</p>');
             } else if (count($this->downloaded)) {   // more than one plugin in the download
@@ -418,12 +429,17 @@ class ap_manage {
     
         function process() {    
         
-            $deleted = $this->manager->plugin;
-            ap_delete(DOKU_PLUGIN.$deleted);
-            $this->plugin = '';
-            
+            ap_delete(DOKU_PLUGIN.$this->manager->plugin);            
             $this->refresh();
-            return "Plugin $deleted deleted";
+        }
+        
+        function html() {
+            parent::html();
+            
+            ptln('<div class="pm_info">');
+            ptln('<h2>'.$this->lang['deleting'].'</h2>');            
+            ptln('<p>'.sprintf($this->lang['deleted'],$this->plugin).'</p>');
+            ptln('</div>');
         }
     }
     
@@ -465,43 +481,46 @@ class ap_manage {
           if (!$this->manager->plugin) { return; }
                               
           ptln('<div class="pm_info">');
-          ptln("<h2>Plugin: {$this->manager->plugin}</h2>");
+          ptln("<h2>".$this->manager->getLang('plugin')." {$this->manager->plugin}</h2>");
 
           // collect pertinent information from the log
           $installed = $this->plugin_readlog($this->manager->plugin, 'installed');
           $source = $this->plugin_readlog($this->manager->plugin, 'url');          
-          $updated = substr(strrchr("\n".$this->plugin_readlog($this->manager->plugin, 'updated'), '\n'), 1);
+          $updated = $this->plugin_readlog($this->manager->plugin, 'updated');
+          if (strrpos($updated, "\n") !== false) $updated = substr($updated, strrpos($updated, "\n")+1);
           
           ptln("<dl>",2);
+          ptln("<dt>".$this->manager->getLang('source').'</dt><dd>'.($source ? $source : $this->manager->getLang('unknown'))."</dd>",4);
           ptln("<dt>".$this->manager->getLang('installed').'</dt><dd>'.($installed ? $installed : $this->manager->getLang('unknown'))."</dd>",4);
           if ($updated) ptln("<dt>".$this->manager->getLang('lastupdate').'</dt><dd>'.$updated."</dd>",4);
-          ptln("<dt>".$this->manager->getLang('source').'</dt><dd>'.($source ? $source : $this->manager->getLang('unknown'))."</dd>",4);
           ptln("</dl>",2);
                     
           if (count($this->details) == 0) {
-              ptln("<p>This plugin returned no information, it may be invalid.</p>",2);
+              ptln("<p>".$this->manager->getLang('noinfo')."</p>",2);
           } else {
           
             ptln("<dl>",2);
-            if ($this->plugin_info['name']) ptln("<dt>Name</dt><dd>".$this->out($this->plugin_info['name'])."</dd>",4);
-            if ($this->plugin_info['type']) ptln("<dt>Type</dt><dd>".$this->out($this->plugin_info['type'])."</dd>",4);
-            if ($this->plugin_info['desc']) ptln("<dt>Description</dt><dd>".$this->out($this->plugin_info['desc'])."</dd>",4);
-            if ($this->plugin_info['author']) ptln("<dt>Author</dt><dd>".$this->manager->plugin_email($this->plugin_info['email'], $this->plugin_info['author'])."</dd>",4);
-            if ($this->plugin_info['url']) ptln("<dt>Web</dt><dd>".$this->manager->plugin_link($this->plugin_info['url'], '', 'urlextern')."</dd>",4);
+            if ($this->plugin_info['name']) ptln("<dt>".$this->manager->getLang('name')."</dt><dd>".$this->out($this->plugin_info['name'])."</dd>",4);
+            if ($this->plugin_info['date']) ptln("<dt>".$this->manager->getLang('date')."</dt><dd>".$this->out($this->plugin_info['date'])."</dd>",4);
+            if ($this->plugin_info['type']) ptln("<dt>".$this->manager->getLang('type')."</dt><dd>".$this->out($this->plugin_info['type'])."</dd>",4);
+            if ($this->plugin_info['desc']) ptln("<dt>".$this->manager->getLang('desc')."</dt><dd>".$this->out($this->plugin_info['desc'])."</dd>",4);
+            if ($this->plugin_info['author']) ptln("<dt>".$this->manager->getLang('author')."</dt><dd>".$this->manager->email($this->plugin_info['email'], $this->plugin_info['author'])."</dd>",4);
+            if ($this->plugin_info['url']) ptln("<dt>".$this->manager->getLang('www')."</dt><dd>".$this->manager->external_link($this->plugin_info['url'], '', 'urlextern')."</dd>",4);
             ptln("</dl>",2);
           
             if (count($this->details) > 1) {
-              ptln("<h3>Components</h3>",2);
+              ptln("<h3>".$this->manager->getLang('components')."</h3>",2);
               ptln("<div>",2);
           
               foreach ($this->details as $info) {
             
                 ptln("<dl>",4);
-                if (!$this->plugin_info['name']) ptln("<dt>Name</dt><dd>".$this->out($info['name'])."</dd>",6);            
-                if (!$this->plugin_info['type']) ptln("<dt>Type</dt><dd>".$this->out($info['type'])."</dd>",6);
-                if (!$this->plugin_info['desc']) ptln("<dt>Description</dt><dd>".$this->out($info['desc'])."</dd>",6);
-                if (!$this->plugin_info['author']) ptln("<dt>Author</dt><dd>".$this->manager->plugin_email($info['email'], $info['author'])."</dd>",6);
-                if (!$this->plugin_info['url']) ptln("<dt>Web</dt><dd>".$this->manager->plugin_link($info['url'], '', 'urlextern')."</dd>",6);
+                ptln("<dt>".$this->manager->getLang('name')."</dt><dd>".$this->out($info['name'])."</dd>",6);            
+                if (!$this->plugin_info['date']) ptln("<dt>".$this->manager->getLang('date')."</dt><dd>".$this->out($info['date'])."</dd>",6);
+                if (!$this->plugin_info['type']) ptln("<dt>".$this->manager->getLang('type')."</dt><dd>".$this->out($info['type'])."</dd>",6);
+                if (!$this->plugin_info['desc']) ptln("<dt>".$this->manager->getLang('desc')."</dt><dd>".$this->out($info['desc'])."</dd>",6);
+                if (!$this->plugin_info['author']) ptln("<dt>".$this->manager->getLang('author')."</dt><dd>".$this->manager->email($info['email'], $info['author'])."</dd>",6);
+                if (!$this->plugin_info['url']) ptln("<dt>".$this->manager->getLang('www')."</dt><dd>".$this->manager->external_link($info['url'], '', 'urlextern')."</dd>",6);
                 ptln("</dl>",4);
           
               }
@@ -521,6 +540,16 @@ class ap_manage {
     //--------------[ to do ]---------------------------------------
     class ap_update extends ap_manage {
     
+        var $overwrite = true;
+        
+        function process() {
+          global $lang;
+          
+          $plugin_url = $this->plugin_readlog($this->plugin, 'url');
+          $this->download($plugin_url, $this->overwrite);
+          return '';
+        }
+    
         function html() {
             parent::html();
             
@@ -528,20 +557,19 @@ class ap_manage {
             ptln('<h2>'.$this->lang['updating'].'</h2>');
             
             if ($this->manager->error) {
-                ptln('<p class="error">'.$this->manager->error.'</p>');
+                ptln('<p class="error">'.str_replace("\n","<br />", $this->manager->error).'</p>');
             } else if (count($this->downloaded) == 1) {
-                ptln('<p>'.sprintf($this->lang['downloaded'],$this->downloaded[0]).'</p>');
+                ptln('<p>'.sprintf($this->lang['updated'],$this->downloaded[0]).'</p>');
             } else if (count($this->downloaded)) {   // more than one plugin in the download
-                ptln('<p>'.$this->lang['downloads'].'</p>');
+                ptln('<p>'.$this->lang['updates'].'</p>');
                 ptln('<ul>');
                 foreach ($this->downloaded as $plugin) {
                     ptln('<li>'.$plugin.'</li>',2);
                 }
                 ptln('</ul>');
             } else {        // none found in download
-                ptln('<p>'.$this->lang['download_none'].'</p>');
+                ptln('<p>'.$this->lang['update_none'].'</p>');
             }
-            ptln('<p>Under Construction</p>');
             ptln('</div>');
         }
     }
@@ -559,33 +587,30 @@ class ap_manage {
     
         // decompression library doesn't like target folders ending in "/"
         if (substr($target, -1) == "/") $target = substr($target, 0, -1);
+        $ext = substr($file, strrpos($file,'.')+1);
         
-        // .tar, .tar.bz, .tar.gz
-        if (preg_match("/\.tar(\.bz2?|\.gz)?$/", $file)) {
+        // .tar, .tar.bz, .tar.gz, .tgz
+        if (in_array($ext, array('tar','bz','bz2','gz','tgz'))) {
           
           require_once(DOKU_PLUGIN."plugin/inc/tarlib.class.php");
           
           $tar = new CompTar($file, COMPRESS_DETECT);
           $ok = $tar->Extract(FULL_ARCHIVE, $target, '', 0777);
         
-          // sort something out for handling tar error messages meaningfully  
-          if ($ok<0) ptln("<p>tar error:".$tar->TarErrorStr($ok)."</p>");
+          // FIXME sort something out for handling tar error messages meaningfully  
           return ($ok<0?false:true);
-        }
-        
-        if (substr($file, -4) == ".zip") {    
-    
+          
+        } else if ($ext == 'zip') {
+
           require_once(DOKU_PLUGIN."plugin/inc/zip.lib.php");
           
           $zip = new zip();
           $ok = $zip->Extract($file, $target);
           
-          // sort something out for handling zip error messages meaningfully  
-          if ($ok==-1) ptln("<p>zip error:</p>");            
+          // FIXME sort something out for handling zip error messages meaningfully  
           return ($ok==-1?false:true);
-        }
-        
-        if (substr($file, -4) == ".rar") {
+          
+        }  else if ($ext == "rar") {
           // not yet supported -- fix me
           return false;
         }
@@ -660,7 +685,7 @@ class ap_manage {
       $path = DOKU_PLUGIN.$plugin.'/';
       
       foreach ($common_plugin_types as $type) {
-          if (file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }
+        if (file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }
         
         if ($dh = @opendir($path.$type.'/')) {
           while (false !== ($cp = readdir($dh))) {
