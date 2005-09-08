@@ -17,7 +17,9 @@ require_once(DOKU_INC.'inc/parser/parser.php');
 class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     var $allowedModesSetup = false;
-    
+    var $localised = false;            // set to true by setupLocale() after loading language dependent strings
+    var $lang = array();            // array to hold language dependent strings, best accessed via ->getLang()
+
     /**
      * General Info
      *
@@ -117,7 +119,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     }
     
     /**
-     *  There should be no need to override this function
+     *  There should be no need to override these functions
      */
     function accepts($mode) {
 
@@ -136,5 +138,76 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
         return parent::accepts($mode);            
     }
 
+    // plugin introspection methods
+    // extract from class name, format = <plugin type>_plugin_<name>[_<component name>]
+    function getPluginType() { list($t) = explode('_', get_class($this), 2); return $t;  }
+    function getPluginName() { list($t, $p, $n) = explode('_', get_class($this), 4); return $n; }
+    function getPluginComponent() { list($t, $p, $n, $c) = explode('_', get_class($this), 4); return (isset($c)?$c:''); }
+
+    // localisation methods
+    /**
+     * getLang($id)
+     *
+     * use this function to access plugin language strings
+     * to try to minimise unnecessary loading of the strings when the plugin doesn't require them
+     * e.g. when info plugin is querying plugins for information about themselves.
+     *
+     * @param   $id     id of the string to be retrieved
+     * @return  string  string in appropriate language or english if not available
+     */
+    function getLang($id) {
+      if (!$this->localised) $this->setupLocale();
+      
+      return (isset($this->lang[$id]) ? $this->lang[$id] : '');
+    }
+    
+    /**
+     * locale_xhtml($id)
+     *
+     * retrieve a language dependent wiki page and pass to xhtml renderer for display
+     * plugin equivalent of p_locale_xhtml()
+     *
+     * @param   $id     id of language dependent wiki page
+     * @return  string  parsed contents of the wiki page in xhtml format
+     */
+    function locale_xhtml($id) {
+      return p_cached_xhtml($this->localFN($id));
+    }
+    
+    /**
+     * localFN($id)
+     * prepends appropriate path for a language dependent filename
+     * plugin equivalent of localFN()
+     */
+    function localFN($id) {
+      global $conf;
+      $plugin = $this->getPluginName();
+      $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
+      if(!@file_exists($file)){
+        //fall back to english
+        $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+      }
+      return $file;
+    }
+    
+    /**
+     *  setupLocale() 
+     *  reads all the plugins language dependent strings into $this->lang
+     *  this function is automatically called by getLang()
+     */
+    function setupLocale() {
+        if ($this->localised) return;
+    
+      global $conf;            // definitely don't invoke "global $lang"
+      $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
+      
+      // don't include once, in case several plugin components require the same language file
+      @include($path.'en/lang.php');    
+      if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
+      
+      $this->lang = $lang;
+      $this->localised = true;
+    }
+ 
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :
