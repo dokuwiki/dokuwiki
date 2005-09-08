@@ -10,7 +10,6 @@
 
 #plugin_manager h2 { margin-left: 0;}
 #plugin_manager form { display: block; margin: 0; padding: 0;}
-#plugin_manager form:after { content:'.'; display: block; clear: both; visibility: hidden; height: 0;}
 #plugin_manager legend { display: none;}
 #plugin_manager .legend { color: black; display: block; margin: 0; padding: 0; font-size: 1em; line-height: 1.4em; font-weight: normal; text-align: left;}
 #plugin_manager fieldset { border: 0; width: auto;}
