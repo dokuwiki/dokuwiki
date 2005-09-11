@@ -259,22 +259,52 @@ function io_mkdir_ftp($dir){
 }
 
 /**
- * downloads a file from the net and saves it to the given location
+ * downloads a file from the net and saves it
+ *
+ * if $useAttachment is false, 
+ * - $file is the full filename to save the file, incl. path
+ * - if successful will return true, false otherwise
+ 
+ * if $useAttachment is true, 
+ * - $file is the directory where the file should be saved
+ * - if successful will return the name used for the saved file, false otherwise
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Chris Smith <chris@jalakai.co.uk>
  */
-function io_download($url,$file){
+function io_download($url,$file,$useAttachment=false,$defaultName=''){
   $http = new DokuHTTPClient();
   $http->max_bodysize = 2*1024*1024; //max. 2MB
   $http->timeout = 25; //max. 25 sec
 
   $data = $http->get($url);
   if(!$data) return false;
+  
+  if ($useAttachment) {
+    $name = '';
+      if (isset($http->resp_headers['content-disposition'])) {
+      $content_disposition = $http->resp_headers['content-disposition'];
+      if (is_string($content_disposition) && 
+          preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match=array())) {
+          
+          $name = basename($match[1]);
+      }
+          
+    }
+    
+    if (!$name) {
+        if (!$defaultName) return false;
+        $name = $defaultName;        
+    }
+    
+    $file = $file.$name;
+  }
 
   $fp = @fopen($file,"w");
   if(!$fp) return false;
   fwrite($fp,$data);
   fclose($fp);
+  if ($useAttachment) return $name;
   return true;
 }
 

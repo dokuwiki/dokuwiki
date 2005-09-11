@@ -275,7 +275,7 @@ class ap_manage {
             return false;
           }
           
-          if (!io_download($url, "$tmp/$file")) {
+          if (!$file = io_download($url, "$tmp/", true, $file)) {
             $this->manager->error = sprintf($this->lang['error_download'],$url)."\n";
           }
     
