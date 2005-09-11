@@ -31,6 +31,7 @@ $lang['btn_admin']  = 'Administracja';
 $lang['btn_update'] = 'Aktualizuj';
 $lang['btn_delete'] = 'Usuń';
 $lang['btn_back']   = 'Wstecz';
+$lang['btn_backlink']    = 'Odnośniki';
 $lang['btn_backtomedia'] = 'Powrót do wyboru pliku';
 $lang['btn_subscribe']   = 'Subskrybuj zmiany';
 $lang['btn_unsubscribe'] = 'Zaprzestań subskrypcji zmian';
