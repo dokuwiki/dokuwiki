@@ -68,6 +68,7 @@ $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults t
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
+$conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
 $conf['spellchecker']= 0;                //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 $conf['subscribers'] = 0;                //enable change notice subscription support
 $conf['pluginmanager'] = 0;              //enable automated plugin management (requires plugin)

@@ -114,7 +114,9 @@ function get_resized($file, $ext, $w, $h=0){
   $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
   $mtime = @filemtime($local); // 0 if not exists
 
-  if( $mtime > filemtime($file) || resize_image($ext,$file,$info[0],$info[1],$local,$w,$h) ){
+  if( $mtime > filemtime($file) ||
+      resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
+      resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
     return $local;
   }
   //still here? resizing failed
@@ -143,23 +145,25 @@ function calc_cache($cache){
  * wanted
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Pavel Vitis <Pavel.Vitis@seznam.cz>
  */
 function get_from_URL($url,$ext,$cache){
   global $conf;
 
-  $url = strtolower($url);
-  $local = getCacheName($url,".media.$ext");
+  $local = getCacheName(strtolower($url),".media.$ext");
   $mtime = @filemtime($local); // 0 if not exists
 
   //decide if download needed:
-
-  //  never cache     exists but no endless cache     not exists or expired
-  if( $cache == 0 || ($mtime != 0 && $cache != -1) || $mtime < time()-$cache ){
-    if(io_download($url,$local)){
-      return $local;
-    }else{
-      return false;
-    }
+  if( $cache == 0 ||                             // never cache
+      ($mtime != 0 && $cache != -1) ||           // exists but no endless cache
+      ($mtime == 0) ||                           // not exists
+      ($cache != -1 && $mtime < time()-$cache)   // expired
+    ){
+      if(io_download($url,$local)){
+        return $local;
+      }else{
+        return false;
+      }
   }
       
   //if cache exists use it else
@@ -170,11 +174,34 @@ function get_from_URL($url,$ext,$cache){
 }
 
 /**
- * resize images
+ * resize images using external ImageMagick convert program
+ *
+ * @author Pavel Vitis <Pavel.Vitis@seznam.cz>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
+  global $conf;
+
+  // check if convert is configured and available
+  if(!@is_executable($conf['im_convert'])) return false;
+
+  // prepare command
+  $cmd  = $conf['im_convert'];
+  $cmd .= ' -resize '.$to_w.'x'.$to_h.'!';
+  $cmd .= " $from $to";
+
+  @exec($cmd,$out,$retval);
+  if ($retval == 0) return true;
+
+  return false;
+}
+
+/**
+ * resize images using PHP's libGD support
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function resize_image($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
+function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   global $conf;
 
   if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
