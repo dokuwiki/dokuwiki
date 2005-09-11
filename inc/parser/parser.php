@@ -623,11 +623,9 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
     }
     
     function preConnect() {
-        $sep = '';
-        foreach ( $this->acronyms as $acronym ) {
-            $this->pattern .= $sep.'(?<=\b)'.Doku_Lexer_Escape($acronym).'(?=\b)';
-            $sep = '|';
-        }
+        $bound = '[\x00-\x2f\x3a-\x3f\x5b-\x7f]';
+        $acronyms = array_map('Doku_Lexer_Escape',$this->acronyms);
+        $this->pattern = '(?<='.$bound.')(?:'.join('|',$acronyms).')(?='.$bound.')';
     }
     
     function connectTo($mode) {
