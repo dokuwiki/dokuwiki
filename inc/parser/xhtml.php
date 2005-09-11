@@ -969,8 +969,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // well at least we have a title to display
             $ret .= $this->_xmlEntities($title);
         }else{
-            // just show the source
-            $ret .= $this->_xmlEntities($src);
+            // just show the sourcename
+            $ret .= $this->_xmlEntities(noNS($src));
         }
 
         return $ret;
