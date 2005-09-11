@@ -87,13 +87,15 @@ Notes:
 
 ==== Image Links ====
 
-You can also use an image to link to another internal or external page by combining the syntax for links and images (see below) like this:
+You can also use an image to link to another internal or external page by combining the syntax for links and [[#images_and_other_files|images]] (see below) like this:
 
   [[http://www.php.net|{{wiki:dokuwiki-128.png}}]]
 
 [[http://www.php.net|{{wiki:dokuwiki-128.png}}]]
 
 Please note: The image formatting is the only formatting syntax accepted in link names.
+
+The whole [[#images_and_other_files|image]] and [[#links|link]] syntax is supported (including image resizing, internal and external images and URLs and interwiki links).
 
 ===== Footnotes =====
 
@@ -154,6 +156,8 @@ Of course, you can add a title (displayed as a tooltip by most browsers), too.
   {{ wiki:dokuwiki-128.png |This is the caption}}
 
 If you specify a filename (external or internal) that is not an image (''gif,jpeg,png''), then it will be displayed as a link instead.
+
+For linking an image to another page see [[Image Links]] above.
 
 ===== Lists =====
 
