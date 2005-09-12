@@ -1,2 +1,3 @@
-**Toto je starí verze dokumentu!**
+**Toto je starší verze dokumentu!**
 ----
+

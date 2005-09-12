@@ -30,7 +30,10 @@ $lang['btn_admin']  = 'Správa';
 $lang['btn_update'] = 'Aktualizovat';
 $lang['btn_delete'] = 'Vymazat';
 $lang['btn_back']   = 'Zpět';
+$lang['btn_backlink']   = 'Zpětné odkazy';
 $lang['btn_backtomedia'] = 'Zpět do Výběru dokumentu';
+$lang['btn_subscribe'] = 'Odebírat změny mailem';
+$lang['btn_unsubscribe'] = 'Neodebírat změny mailem';
 
 $lang['loggedinas'] = 'Přihlášen(a) jako';
 $lang['user']       = 'Uživatelské jméno';
@@ -59,7 +62,8 @@ $lang['lockedby']     = 'Právě zamknuto:';
 $lang['lockexpire']   = 'Zámek vyprší:';
 $lang['willexpire']   = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
 
-$lang['notsavedyet'] = 'Neuložené změny budou ztraceny.\nChcete opravdu pokračovat?';
+$lang['notsavedyet'] = 'Jsou tu neuložené změny, které budou ztraceny.\nChcete opravdu pokračovat?';
+
 $lang['rssfailed']   = 'Nastala chyba při vytváření tohoto RSS: ';
 $lang['nothingfound']= 'Nic nenalezeno.';
 
@@ -142,5 +146,26 @@ $lang['spell_wait']  = 'Prosím počkejte...';
 $lang['spell_noerr'] = 'Bez chyb';
 $lang['spell_nosug'] = 'Žádné návrhy';
 $lang['spell_change']= 'Změnit';
+
+$lang['metaedit']    = 'Upravit Metadata';
+$lang['metasaveerr'] = 'Chyba při zápisu metadat';
+$lang['metasaveok']  = 'Metadata uložena';
+$lang['img_backto']  = 'Zpět na';
+$lang['img_title']   = 'Titulek';
+$lang['img_caption'] = 'Popis';
+$lang['img_date']    = 'Datum';
+$lang['img_fname']   = 'Jméno souboru';
+$lang['img_fsize']   = 'Velikost';
+$lang['img_artist']  = 'Autor fotografie';
+$lang['img_copyr']   = 'Copyright';
+$lang['img_format']  = 'Formát';
+$lang['img_camera']  = 'Typ fotoaparátu';
+$lang['img_keywords']= 'Klíčová slova';
+
+$lang['subscribe_success']  = 'Uživatel %s je nyní přihlášen k odběru změn ve stránce %s';
+$lang['subscribe_error']    = 'Chyba při zařazování uživatele %s do seznamu pro odběr změn ve stránce %s';
+$lang['subscribe_noaddress']= 'K vašemu uživatelskému profilu chybí e-mailová adresa, takže vás nelze do seznamu pro odběr změn';
+$lang['unsubscribe_success']= 'Uživatel %s byl odebrán ze seznamu pro odběr změn ve stránce %s';
+$lang['unsubscribe_error']  = 'Chyba při odstraňování uživatele %s ze seznamu pro odběru změn ve stránce %s';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

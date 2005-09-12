@@ -3,4 +3,4 @@
 Abyste získali uživatelský účet, vyplňte prosím všechny informace v následujícím
 formuláři. Zadejte **platnou** mailovou adresu, na níž bude zasláno heslo.
 Uživatelské jméno musí být v platném [[doku>wiki:pagename|formátu]] (který je
-stejný jako formát názeu stránky).
+stejný jako formát názvu stránky).

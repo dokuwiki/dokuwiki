@@ -1,0 +1,16 @@
+Dobrý den,
+
+Stránka @PAGE@ ve wiki @TITLE@ se zmìnila.
+Tady jsou detaily:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Pro odhlášení z odbìru zmìn pro tuto stránku se pøihlašte do wiki
+@DOKUWIKIURL@ a vstupte na stránku
+@NEWPAGE@, kde stisknete tlaèítko 'Neodebírat zmìny mailem'.
+
+-- 
+Tato zpráva byla vygenerována systémem DokuWiki:
+@DOKUWIKIURL@

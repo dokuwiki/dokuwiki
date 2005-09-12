@@ -7,7 +7,7 @@ Hostitel    : @HOSTNAME@
 Stará verze : @OLDPAGE@
 Nová verze  : @NEWPAGE@
 Komentář    : @SUMMARY@
-User        : @USER@
+Uživatel    : @USER@
 
 @DIFF@
 
