@@ -668,28 +668,18 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_backlinks(){
-  require_once(DOKU_INC.'inc/search.php');
+  require_once(DOKU_INC.'inc/fulltext.php');
   global $ID;
   global $conf;
 
-  if(preg_match('#^(.*):(.*)$#',$ID,$matches)){
-    $opts['ns']   = $matches[1];
-    $opts['name'] = $matches[2];
-  }else{
-    $opts['ns']   = '';
-    $opts['name'] = $ID;
-  }
-
   print p_locale_xhtml('backlinks');
 
-  $data = array();
-  search($data,$conf['datadir'],'search_backlinks',$opts);
-  sort($data);
+  $data = ft_backlinks($ID);
 
   print '<ul class="idx">';
-  foreach($data as $row){
+  foreach($data as $blink){
     print '<li>';
-    print html_wikilink(':'.$row['id'],$conf['useheading']?NULL:$row['id']);
+    print html_wikilink(':'.$blink,$conf['useheading']?NULL:$blink);
     print '</li>';
   }
   print '</ul>';

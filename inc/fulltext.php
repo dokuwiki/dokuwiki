@@ -77,6 +77,48 @@ function ft_pageSearch($query,&$poswords){
 }
 
 /**
+ * Returns the backlinks for a given page
+ *
+ * Does a quick lookup with the fulltext index, then
+ * evaluates the instructions of the found pages
+ */
+function ft_backlinks($id){
+    global $conf;
+    $result = array();
+
+    // quick lookup of the pagename
+    $page    = noNS($id);
+    $matches = idx_lookup(array($page));
+
+    if(!count($matches)) return $result;
+    require_once(DOKU_INC.'inc/parserutils.php');
+
+
+    // check instructions for matching links
+    foreach(array_keys($matches[$page]) as $match){
+        $instructions = p_cached_instructions(wikiFN($match),true);
+        if(is_null($instructions)) continue;
+
+        $match_ns =  getNS($match);
+
+        foreach($instructions as $ins){
+            if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
+                $link = $ins[1][0];
+                resolve_pageid($match_ns,$link,$exists); //exists is not used
+                if($link == $id){
+                    //we have a match - finish
+                    $result[] = $match;
+                    break;
+                }
+            }
+        }
+    }
+
+    sort($result);
+    return $result;
+}
+
+/**
  * Quicksearch for pagenames
  *
  * By default it only matches the pagename and ignores the

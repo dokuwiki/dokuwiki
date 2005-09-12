@@ -252,6 +252,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['name']  name of the page without namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @deprecated Replaced by ft_backlinks()
  */
 function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
