@@ -648,12 +648,16 @@ div.acladmin table{
 
 div.ajax_qsearch {
   position:absolute;
-  right:225px;;
-  text-align:left;
+  right:237px;;
   width: 200px;
-  background-color: #ff9;
   opacity: 0.9;
   display:none;
+  font-size: 80%;
+  line-height: 1.2em;
+  border: 1px solid #8cacbb;
+  background: #eef3f8;
+  text-align: left;
+  padding: 4px;
 }
 
 /* ---------- Spellchecking ------------- */
