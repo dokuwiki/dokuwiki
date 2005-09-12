@@ -70,6 +70,15 @@ function ft_pageSearch($query,&$poswords){
 
     if(!count($docs)) return array();
 
+    // check ACL permissions
+    foreach(array_keys($docs) as $doc){
+        if(auth_quickaclcheck($doc) < AUTH_READ){
+            unset($docs[$doc]);
+        }
+    }
+
+    if(!count($docs)) return array();
+
     // if there are any hits left, sort them by count
     arsort($docs);
 
@@ -114,6 +123,15 @@ function ft_backlinks($id){
         }
     }
 
+    if(!count($result)) return $result;
+
+    // check ACL permissions
+    foreach(array_keys($result) as $idx){
+        if(auth_quickaclcheck($result[$idx]) < AUTH_READ){
+            unset($result[$idx]);
+        }
+    }
+
     sort($result);
     return $result;
 }
@@ -145,6 +163,16 @@ function ft_pageLookup($id,$pageonly=true){
             continue;
         }
     }
+
+    if(!count($pages)) return array();
+
+    // check ACL permissions
+    foreach(array_keys($pages) as $idx){
+        if(auth_quickaclcheck($pages[$idx]) < AUTH_READ){
+            unset($pages[$idx]);
+        }
+    }
+
     sort($pages);
     return $pages;
 }

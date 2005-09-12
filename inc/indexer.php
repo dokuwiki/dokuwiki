@@ -199,6 +199,9 @@ function idx_writeIndexLine($fh,$line,$pid,$count){
  * Takes an array of word and will return a list of matching
  * documents for each one.
  *
+ * Important: No ACL checking is done here! All results are
+ *            returned, regardless of permissions
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idx_lookup($words){
