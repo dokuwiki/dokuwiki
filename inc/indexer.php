@@ -49,7 +49,7 @@ function idx_getPageWords($page){
                 $words[$w] = $c + (isset($words[$w]) ? $words[$w] : 0);
             }
         } else {
-            if (!is_numeric($w) && strlen($w) < 3) continue;
+            if (!is_numeric($word) && strlen($word) < 3) continue;
 	        $word = strtolower($word);
             $words[$word] = $count + (isset($words[$word]) ? $words[$word] : 0);
         }
