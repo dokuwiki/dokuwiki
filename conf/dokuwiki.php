@@ -13,6 +13,7 @@ $conf['umask']       = 0111;              //set the umask for new files
 $conf['dmask']       = 0000;              //directory mask accordingly
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
+$conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
 $conf['savedir']     = './data';          //where to store all the files
 
 /* Display Options */

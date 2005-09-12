@@ -176,6 +176,9 @@ function getBaseURL($abs=false){
   //finish here for relative URLs
   if(!$abs) return $dir;
 
+  //use config option if available
+  if($conf['baseurl']) return $conf['baseurl'].$dir;
+
   //split hostheader into host and port
   list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
   if(!$port)  $port = $_SERVER['SERVER_PORT'];
