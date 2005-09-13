@@ -38,7 +38,7 @@ while(!@mkdir($lock)){
 idx_addPage($ID);
 
 // we're finished
-io_saveFile(metaFN($id,'.indexed'),'');
+io_saveFile(metaFN($ID,'.indexed'),'');
 @rmdir($lock);
 sendGIF();
 
