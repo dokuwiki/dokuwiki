@@ -32,7 +32,10 @@ $lang['btn_admin']  = 'Beheer';
 $lang['btn_update'] = 'Bijwerken';
 $lang['btn_delete'] = 'Verwijder';
 $lang['btn_back']   = 'Terug';
+$lang['btn_backlink']    = 'Referenties';
 $lang['btn_backtomedia'] = 'Terug naar Bestand selectie';
+$lang['btn_subscribe']   = 'Volg wijzigingen';
+$lang['btn_unsubscribe'] = 'Stop volgen wijzigingen';
 
 $lang['loggedinas'] = 'Ingelogd als';
 $lang['user']       = 'Gebruikersnaam';
@@ -159,5 +162,11 @@ $lang['img_copyr']   = 'Copyright';
 $lang['img_format']  = 'Formaat';
 $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Trefwoorden';
+
+$lang['subscribe_success']  = '%s toegevoegd aan de lijst voor %s';
+$lang['subscribe_error']    = 'Fout bij toevoegen van %s aan de lijst voor %s';
+$lang['subscribe_noaddress']= 'Er is geen adres dat overeenkomt met uw login, u kan niet toegevoegd worden aan de lijst';
+$lang['unsubscribe_success']= '%s verwijderd van de lijst voor %s';
+$lang['unsubscribe_error']  = 'Fout bij verwijderen van %s van de lijst voor %s';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
