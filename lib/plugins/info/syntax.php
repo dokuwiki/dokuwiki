@@ -119,7 +119,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= ' ';
             $renderer->emaillink($info['email'],$info['author']);
             $renderer->doc .= '<br />';
-            $renderer->doc .= strtr(htmlspecialchars($info['desc']),array("\n","<br />"));
+            $renderer->doc .= strtr(htmlspecialchars($info['desc']),array("\n"=>"<br />"));
             $renderer->doc .= '</li>';
             unset($po);
         }
