@@ -26,12 +26,10 @@ function pageinfo(){
   global $conf;
 
   if($_SERVER['REMOTE_USER']){
-    $info['user']       = $_SERVER['REMOTE_USER'];
     $info['userinfo']   = $USERINFO;
     $info['perm']       = auth_quickaclcheck($ID);
     $info['subscribed'] = is_subscribed($ID,$_SERVER['REMOTE_USER']);
   }else{
-    $info['user']       = '';
     $info['perm']       = auth_aclcheck($ID,'',null);
     $info['subscribed'] = false;
   }
@@ -68,7 +66,7 @@ function pageinfo(){
   $info['ip']     = $revinfo['ip'];
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
-  $info['editor'] = $revinfo['ip'];
+
   if($revinfo['user']){
     $info['editor'] = $revinfo['user'];
   }else{
