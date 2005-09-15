@@ -66,6 +66,12 @@ function getID($param='id'){
 function cleanID($id){
   global $conf;
   global $lang;
+  static $sepcharpat = null;
+  
+  $sepchar = $conf['sepchar'];
+  if($sepcharpat == null) // build string only once to save clock cycles
+    $sepcharpat = '#\\'.$sepchar.'+#';
+
   $id = trim($id);
   $id = utf8_strtolower($id);
 
@@ -80,10 +86,10 @@ function cleanID($id){
   if($conf['deaccent']) $id = utf8_deaccent($id,-1);
 
   //remove specials
-  $id = utf8_stripspecials($id,'_');
+  $id = utf8_stripspecials($id,$sepchar);
 
   //clean up
-  $id = preg_replace('#_+#','_',$id);
+  $id = preg_replace($sepcharpat,$sepchar,$id);
   $id = preg_replace('#:+#',':',$id);
   $id = trim($id,':._-');
   $id = preg_replace('#:[:\._\-]+#',':',$id);

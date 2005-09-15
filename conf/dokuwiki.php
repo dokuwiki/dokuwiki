@@ -60,6 +60,8 @@ $conf['superuser']   = '!!not set!!';    //The admin can be user or @group
 /* Advanced Options */
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
+$conf['sepchar']     = '_';              //word separator character in page names; may be a
+                                         //  letter, a digit, '_', '-', or '.'.
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
 $conf['autoplural']  = 0;                //try (non)plural form of nonexisting files?
 $conf['usegzip']     = 1;                //gzip old revisions?
