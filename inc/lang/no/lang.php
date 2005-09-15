@@ -150,7 +150,7 @@ $lang['spell_change']= 'Endre';
  
 $lang['metaedit']    = 'Rediger Metadata';
 $lang['metasaveerr'] = 'Skriving av metadata feilet';
-$lang['metasaveok']  = 'Metadata larget';
+$lang['metasaveok']  = 'Metadata lagret';
 $lang['img_backto']  = 'Tilbake til';
 $lang['img_title']   = 'Tittel';
 $lang['img_caption'] = 'Billedtekst';
@@ -164,7 +164,7 @@ $lang['img_camera']  = 'Kamera';
 $lang['img_keywords']= 'Nøkkelord';
  
 $lang['subscribe_success']  = 'La til %s som abonnent av listen for %s';
-$lang['subscribe_error']    = 'En feil oppstod når %s skulle som abonnent av listen for %s';
+$lang['subscribe_error']    = 'En feil oppstod n�r %s skulle legges til som abonnent av listen for %s';
 $lang['subscribe_noaddress']= 'Det er ingen adresse som er assosiert med din login. Du kan dermed ikke bli lagt til som abonnent av listen.';
 $lang['unsubscribe_success']= 'Fjernet %s som abonnent for listen %s';
 $lang['unsubscribe_error']  = 'En feil oppstod når %s skulle fjernes som abonnent fra listen for %s';

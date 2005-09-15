@@ -1,6 +1,6 @@
 Hei!
 
-Siden @PAGE@ i @TITLE@ wikien har blitt endret.
+Siden @PAGE@ i @TITLE@-wikien har blitt endret.
 Her er endringene:
 
 --------------------------------------------------------
