@@ -75,6 +75,11 @@ $conf['im_convert']  = '';               //path to ImageMagicks convert (will be
 $conf['spellchecker']= 0;                //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 $conf['subscribers'] = 0;                //enable change notice subscription support
 $conf['pluginmanager'] = 0;              //enable automated plugin management (requires plugin)
+$conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
+                                         //  'diff'    - page showing revision differences
+                                         //  'page'    - the revised page itself
+                                         //  'rev'     - page showing all revisions
+                                         //  'current' - most recent revision of page
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
