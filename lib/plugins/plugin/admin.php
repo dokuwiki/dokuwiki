@@ -594,7 +594,11 @@ class ap_manage {
           
           require_once(DOKU_PLUGIN."plugin/inc/tarlib.class.php");
           
-          $tar = new CompTar($file, COMPRESS_DETECT);
+          if (strpos($ext, 'bz') !== false) $compress_type = COMPRESS_BZIP;
+          else if (strpos($ext,'gz') !== false) $compress_type = COMPRESS_GZIP;
+          else $compress_type = COMPRESS_NONE;
+
+          $tar = new CompTar($file, $compress_type);
           $ok = $tar->Extract(FULL_ARCHIVE, $target, '', 0777);
         
           // FIXME sort something out for handling tar error messages meaningfully  
