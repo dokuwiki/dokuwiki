@@ -80,7 +80,7 @@ function cleanID($id){
   if($conf['useslash']){
     $id = strtr($id,'/',':');
   }else{
-    $id = strtr($id,'/','_');
+    $id = strtr($id,'/',$sepchar);
   }
 
   if($conf['deaccent']) $id = utf8_deaccent($id,-1);
