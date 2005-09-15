@@ -95,12 +95,21 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns){
   @set_time_limit(90); // set max execution time
 
   foreach(array_keys($recents) as $id){
-    $desc = cleanDesc(p_wiki_xhtml($id,'',false));
+
     $item = new FeedItem();
-    $item->title       = $id;
+    $item->title = $id;
+    $xhtml = p_wiki_xhtml($id,'',false);
+    
+    if($conf['useheading']) {
+        $matches = array();
+        if(preg_match('|<h([1-9])>(.*?)</h\1>|', $xhtml, $matches))
+            $item->title = trim($matches[2]);
+    }
     if(!empty($recents[$id]['sum'])){
       $item->title .= ' - '.strip_tags($recents[$id]['sum']);
     }
+
+    $desc = cleanDesc($xhtml);
 		
 		switch ($ltype){
 			case 'page':
