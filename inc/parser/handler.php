@@ -459,7 +459,8 @@ class Doku_Handler {
         
         $this->_addCall(
               $p['type'],
-              array($p['src'], $p['title'], $p['align'], $p['width'], $p['height'], $p['cache']),
+              array($p['src'], $p['title'], $p['align'], $p['width'],
+                     $p['height'], $p['cache'], $p['linking']),
               $pos
              );
         return TRUE;
@@ -589,13 +590,22 @@ function Doku_Handler_Parse_Media($match) {
         ($size[3]) ? $h = $size[3] : $h = NULL;
     }
 
+    //get linking command
+    if(preg_match('/nolink/i',$param)){
+        $linking = 'nolink';
+    }else if(preg_match('/direct/i',$param)){
+        $linking = 'direct';
+    }else{
+        $linking = 'details';
+    }
+   
     //get caching command
     if (preg_match('/(nocache|recache)/i',$param,$cachemode)){
         $cache = $cachemode[1];
     }else{
         $cache = 'cache';
     }
-   
+    
     // Check whether this is a local or remote image
     if ( preg_match('#^(https?|ftp)#i',$src) ) {
         $call = 'externalmedia';
@@ -611,6 +621,7 @@ function Doku_Handler_Parse_Media($match) {
         'width'=>$w,
         'height'=>$h,
         'cache'=>$cache,
+        'linking'=>$linking,
     );
     
     return $params;

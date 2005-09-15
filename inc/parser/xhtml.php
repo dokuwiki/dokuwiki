@@ -689,7 +689,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
-                            $height=NULL, $cache=NULL) {
+                            $height=NULL, $cache=NULL, $linking=NULL) {
         global $conf;
         global $ID;
         resolve_mediaid(getNS($ID),$src, $exists);
@@ -707,7 +707,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(substr($mime,0,5) == 'image'){
              // link only jpeg images
              // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = TRUE;
-             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),false);
+             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
          }elseif($mime == 'application/x-shockwave-flash'){
              // don't link flash movies
              $noLink = TRUE;
@@ -725,9 +725,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
          }
          $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
 
-
          //output formatted
-         if ($noLink) $this->doc .= $link['name'];
+         if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
          else $this->doc .= $this->_formatLink($link);
     }
     
@@ -735,7 +734,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @todo don't add link for flash
      */
     function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
-                            $height=NULL, $cache=NULL) {
+                            $height=NULL, $cache=NULL, $linking=NULL) {
         global $conf;
 
         $link = array();
@@ -771,7 +770,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
          }
 
         //output formatted
-        if ($noLink) $this->doc .= $link['name'];
+        if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
         else $this->doc .= $this->_formatLink($link);
     }
 
