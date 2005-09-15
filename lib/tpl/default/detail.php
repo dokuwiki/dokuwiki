@@ -46,7 +46,7 @@
 	  <h1><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?></h1>
 
 	  <div class="img_big">
-	  	<?php tpl_img() ?>
+	  	<?php tpl_img(900,700) ?>
 	  </div>
 
 		<div class="img_detail">

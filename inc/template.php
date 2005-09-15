@@ -857,7 +857,7 @@ function tpl_img_getTag($tags,$alt=''){
  *
  * Only allowed in: detail.php
  */
-function tpl_img($maxwidth=900,$maxheight=700){
+function tpl_img($maxwidth=0,$maxheight=0){
   global $IMG;
   $w = tpl_img_getTag('File.Width');
   $h = tpl_img_getTag('File.Height');
@@ -865,15 +865,15 @@ function tpl_img($maxwidth=900,$maxheight=700){
   //resize to given max values
   $ratio = 1;
   if($w >= $h){
-    if($w >= $maxwidth){
+    if($maxwidth && $w >= $maxwidth){
       $ratio = $maxwidth/$w;
-    }elseif($h > $maxheight){
+    }elseif($maxheight && $h > $maxheight){
       $ratio = $maxheight/$h;
     }
   }else{
-    if($h >= $maxheight){
+    if($maxheight && $h >= $maxheight){
       $ratio = $maxheight/$h;
-    }elseif($w > $maxwidth){
+    }elseif($maxwidth && $w > $maxwidth){
       $ratio = $maxwidth/$w;
     }
   }
