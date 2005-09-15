@@ -174,6 +174,11 @@ function rssListNamespace(&$rss,$ns){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanDesc($desc){
+  //start description at text of first paragraph
+  $matches = array();
+  if(preg_match('/<p>|<p\s.*?>/', $desc, $matches, PREG_OFFSET_CAPTURE))
+      $desc = substr($desc, $matches[0][1]);
+
   //remove TOC
   $desc = preg_replace('!<div class="toc">.*?(</div>\n</div>)!s','',$desc);
   $desc = strip_tags($desc);
