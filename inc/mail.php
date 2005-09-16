@@ -142,7 +142,7 @@ function mail_encode_address($string,$header=''){
  * @return  bool          true if address is valid
  */
 function mail_isvalid($email){
-  return eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);
+  return eregi("^[0-9a-z]([+-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);
 }
 
 /**
