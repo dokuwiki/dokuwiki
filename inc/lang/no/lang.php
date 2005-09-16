@@ -54,7 +54,7 @@ $lang['regmailfail']= 'En feil oppstod da passordet ditt skulle sendes via e-pos
 $lang['regbadmail'] = 'Den angitte e-post adressen ser ut til å være ugyldig. Vennligst kontakt administratoren om du anser dette som feilaktig.';
 $lang['regbadpass'] = 'De to angitte passordene er ikke like, vennligst forsøk igjen.';
 $lang['regpwmail']  = 'Ditt DokuWiki passord';
-$lang['reghere']    = 'Har du ikke en konto enda? Lag deg en.';
+$lang['reghere']    = 'Har du ikke en konto enda? Lag deg en';
  
 $lang['txt_upload']   = 'Velg fil som skal lastes opp';
 $lang['txt_filename'] = 'Skriv inn wikinavn (alternativt)';
@@ -77,7 +77,7 @@ $lang['uploadexist'] = 'Filen eksisterer. Ingenting har blitt gjort.';
 $lang['deletesucc']  = 'Filen "%s" har blitt slettet.';
 $lang['deletefail']  = '"%s" kunne ikke slettes - sjekk rettighetene.';
 $lang['mediainuse']  = 'Filen "%s" har ikke biltt slettet - den er fortsatt i bruk.';
-$lang['namespaces']  = 'Wikinavn';
+$lang['namespaces']  = 'sidenavn';
 $lang['mediafiles']  = 'Tilgjengelige filer i';
  
 $lang['reference']   = 'Referanser for';
@@ -87,15 +87,15 @@ $lang['ref_hidden']  = 'Noen referanser er på sider du ikke har tilgang til å 
 $lang['hits']       = 'Treff';
 $lang['quickhits']  = 'Matchende wikinavn';
 $lang['toc']        = 'Innholdsfortegnelse';
-$lang['current']    = 'nåværende';
+$lang['current']    = 'nåværende versjon';
 $lang['yours']      = 'Din versjon';
-$lang['diff']       = 'vis forskjeller med nåværende versjon';
+$lang['diff']       = 'Vis forskjeller mot nåværende versjon';
 $lang['line']       = 'Linje';
 $lang['breadcrumb'] = 'Spor';
 $lang['lastmod']    = 'Sist modifisert';
 $lang['by']         = 'av';
 $lang['deleted']    = 'fjernet';
-$lang['created']    = 'laget';
+$lang['created']    = 'opprettet';
 $lang['restored']   = 'gjenopprettet til en tidligere versjon';
 $lang['summary']    = 'Redigeringskommentar';
  
@@ -120,7 +120,7 @@ $lang['qb_extlink'] = 'Ekstern Lenke';
 $lang['qb_hr']      = 'Horisontal strek';
 $lang['qb_ol']      = 'Punkt for sortert punktliste';
 $lang['qb_ul']      = 'Punkt for usortert punktliste';
-$lang['qb_media']   = 'Legg til filer og andre filer';
+$lang['qb_media']   = 'Legg til bilder og andre filer';
 $lang['qb_sig']     = 'Føy til signatur';
  
 $lang['del_confirm']= 'Slett denne oppføringen?';
@@ -164,7 +164,7 @@ $lang['img_camera']  = 'Kamera';
 $lang['img_keywords']= 'Nøkkelord';
  
 $lang['subscribe_success']  = 'La til %s som abonnent av listen for %s';
-$lang['subscribe_error']    = 'En feil oppstod n�r %s skulle legges til som abonnent av listen for %s';
+$lang['subscribe_error']    = 'En feil oppstod når %s skulle legges til som abonnent av listen for %s';
 $lang['subscribe_noaddress']= 'Det er ingen adresse som er assosiert med din login. Du kan dermed ikke bli lagt til som abonnent av listen.';
 $lang['unsubscribe_success']= 'Fjernet %s som abonnent for listen %s';
 $lang['unsubscribe_error']  = 'En feil oppstod når %s skulle fjernes som abonnent fra listen for %s';
