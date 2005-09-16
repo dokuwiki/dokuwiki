@@ -685,7 +685,6 @@ class FeedCreator extends HtmlDescribable {
 			echo "<br /><b>Error creating feed file, please check write permissions.</b><br />";
 		}
 	}
-	
 }
 
 
@@ -846,8 +845,9 @@ class RSSCreator10 extends FeedCreator {
 			if ($this->items[$i]->source!="") {
 				$feed.= "        <dc:source>".htmlspecialchars($this->items[$i]->source)."</dc:source>\n";
 			}
-			if ($this->items[$i]->author!="") {
-				$feed.= "        <dc:creator>".htmlspecialchars($this->items[$i]->author)."</dc:creator>\n";
+            $creator = $this->getAuthor($this->items[$i]->author, $this->items[$i]->authorEmail);
+			if ($creator) {
+				$feed.= "        <dc:creator>".htmlspecialchars($creator)."</dc:creator>\n";
 			}
 			$feed.= "        <title>".htmlspecialchars(strip_tags(strtr($this->items[$i]->title,"\n\r","  ")))."</title>\n";
 			$feed.= "        <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
@@ -858,6 +858,22 @@ class RSSCreator10 extends FeedCreator {
 		$feed.= "</rdf:RDF>\n";
 		return $feed;
 	}
+
+    /**
+     * Compose the RSS-1.0 author field.
+     *
+     * @author Joe Lapp <joe.lapp@pobox.com>
+     */
+     
+    function getAuthor($author, $email) {
+      if($author) {
+        if($email) {
+          return $author.' ('.$email.')';
+        }
+        return $author;
+      }
+      return $email;
+    }        
 }
 
 
@@ -967,8 +983,9 @@ class RSSCreator091 extends FeedCreator {
 			$feed.= "            <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
 			$feed.= "            <description>".$this->items[$i]->getDescription()."</description>\n";
 			
-			if ($this->items[$i]->author!="") {
-				$feed.= "            <author>".htmlspecialchars($this->items[$i]->author)."</author>\n";
+            $author = $this->getAuthor($this->items[$i]->author, $this->items[$i]->authorEmail);
+			if ($author) {
+				$feed.= "            <author>".htmlspecialchars($author)."</author>\n";
 			}
 			/*
 			// on hold
@@ -996,6 +1013,19 @@ class RSSCreator091 extends FeedCreator {
 		$feed.= "</rss>\n";
 		return $feed;
 	}
+
+    /**
+     * Compose the RSS-0.91 and RSS-2.0 author field.
+     *
+     * @author Joe Lapp <joe.lapp@pobox.com>
+     */
+     
+    function getAuthor($author, $email) {
+      if($author && $email) {
+        return $email.' ('.$author.')';
+      }
+      return $email;
+    }        
 }
 
 
@@ -1127,11 +1157,20 @@ class AtomCreator03 extends FeedCreator {
 			$feed.= "        <modified>".htmlspecialchars($itemDate->iso8601())."</modified>\n";
 			$feed.= "        <id>".htmlspecialchars($this->items[$i]->link)."</id>\n";
 			$feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "        ");
-			if ($this->items[$i]->author!="") {
+
+            $author = $this->items[$i]->author;
+            $authorEmail = $this->items[$i]->authorEmail;
+			if ($author || $authorEmail) {
 				$feed.= "        <author>\n";
-				$feed.= "            <name>".htmlspecialchars($this->items[$i]->author)."</name>\n";
-				$feed.= "        </author>\n";
+                if($author) {
+  				    $feed.= "            <name>".htmlspecialchars($author)."</name>\n";
+				}
+                if($authorEmail) {
+  				    $feed.= "            <email>".htmlspecialchars($authorEmail)."</email>\n";
+                }
+                $feed.= "        </author>\n";
 			}
+            
 			if ($this->items[$i]->description!="") {
 				$feed.= "        <summary>".htmlspecialchars($this->items[$i]->description)."</summary>\n";
 			}

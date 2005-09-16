@@ -91,6 +91,7 @@
 function rssRecentChanges(&$rss,$num,$ltype,$ns){
   global $conf;
   if(!$num) $num = $conf['recent'];
+  $guardmail = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
   $recents = getRecents(0,$num,false,$ns);
 
@@ -137,12 +138,23 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns){
     if(strpos($id,':')!==false){
       $item->category    = substr($id,0,strrpos($id,':'));
     }
-    if($recents[$id]['user']){
-      $item->author = $recents[$id]['user'].'@';
+    
+    $user = null;
+    $user = @$recents[$id]['user']; // the @ spares time repeating lookup
+    $item->author = '';
+    
+    if($user){
+      $userInfo = auth_getUserData($user);
+      $item->author = $userInfo['name'];
+      if($guardmail) {
+        //cannot obfuscate because some RSS readers may check validity
+        $item->authorEmail = $user.'@'.$recents[$id]['ip'];
+      }else{
+        $item->authorEmail = $userInfo['mail'];
+      }
     }else{
-      $item->author = 'anonymous@';
+      $item->authorEmail = 'anonymous@'.$recents[$id]['ip'];
     }
-    $item->author  .= $recents[$id]['ip'];
     $rss->addItem($item);
   }
 }
