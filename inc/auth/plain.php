@@ -45,7 +45,11 @@ function auth_checkPass($user,$pass){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_getUserData($user){
-  $users = auth_plain_loadUserData();
+  static $users = null;
+  
+  if($users == null) {
+    $users = auth_plain_loadUserData();
+  }
   return $users[$user];
 }
 
