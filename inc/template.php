@@ -412,66 +412,66 @@ function tpl_actionlink($type,$pre='',$suf=''){
           if($INFO['exists']){
             tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                      $pre.$lang['btn_edit'].$suf,
-                     'class="action" accesskey="e" rel="nofollow"');
+                     'class="action edit" accesskey="e" rel="nofollow"');
           }else{
             tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                      $pre.$lang['btn_create'].$suf,
-                     'class="action" accesskey="e" rel="nofollow"');
+                     'class="action create" accesskey="e" rel="nofollow"');
           }
         }else{
           tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                    $pre.$lang['btn_source'].$suf,
-                   'class="action" accesskey="v" rel="nofollow"');
+                   'class="action source" accesskey="v" rel="nofollow"');
         }
       }else{
           tpl_link(wl($ID,'do=show'),
                    $pre.$lang['btn_show'].$suf,
-                   'class="action" accesskey="v" rel="nofollow"');
+                   'class="action show" accesskey="v" rel="nofollow"');
       }
       break;
     case 'history':
-      tpl_link(wl($ID,'do=revisions'),$pre.$lang['btn_revs'].$suf,'class="action" accesskey="o"');
+      tpl_link(wl($ID,'do=revisions'),$pre.$lang['btn_revs'].$suf,'class="action revisions" accesskey="o"');
       break;
     case 'recent':
-      tpl_link(wl($ID,'do=recent'),$pre.$lang['btn_recent'].$suf,'class="action" accesskey="r"');
+      tpl_link(wl($ID,'do=recent'),$pre.$lang['btn_recent'].$suf,'class="action recent" accesskey="r"');
       break;
     case 'index':
-      tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action" accesskey="x"');
+      tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action index" accesskey="x"');
       break;
     case 'top':
-      print '<a href="#top" class="action" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
+      print '<a href="#top" class="action top" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
       break;
     case 'back':
       if ($ID = tpl_getparent($ID)) {
-        tpl_link(wl($ID,'do=show'),$pre.$lang['btn_back'].$suf,'class="action" accesskey="b"');
+        tpl_link(wl($ID,'do=show'),$pre.$lang['btn_back'].$suf,'class="action back" accesskey="b"');
       }
       break;
     case 'login':
       if($conf['useacl']){
         if($_SERVER['REMOTE_USER']){
-          tpl_link(wl($ID,'do=logout'),$pre.$lang['btn_logout'].$suf,'class="action"');
+          tpl_link(wl($ID,'do=logout'),$pre.$lang['btn_logout'].$suf,'class="action logout"');
         }else{
-          tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action"');
+          tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action logout"');
         }
       }
       break;
     case 'admin':
       if($INFO['perm'] == AUTH_ADMIN)
-        tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action"');
+        tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action admin"');
       break;
    case 'subscribe':
       if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($info['subscribed']) {
-            tpl_link(wl($ID,'do=unsubscribe'),$pre.$lang['btn_unsubscribe'].$suf,'class="action"');
+            tpl_link(wl($ID,'do=unsubscribe'),$pre.$lang['btn_unsubscribe'].$suf,'class="action unsubscribe"');
           } else {
-            tpl_link(wl($ID,'do=subscribe'),$pre.$lang['btn_subscribe'].$suf,'class="action"');
+            tpl_link(wl($ID,'do=subscribe'),$pre.$lang['btn_subscribe'].$suf,'class="action subscribe"');
           }
         }
       }
       break;
 	case 'backlink':
-	  tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action"');
+	  tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink"');
 	  break;
     default:
       print '[unknown link type]';
