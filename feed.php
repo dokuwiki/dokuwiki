@@ -23,6 +23,9 @@
   $ns    = $_REQUEST['ns'];
   $ltype = $_REQUEST['linkto'];
 
+  if($type == '')
+    $type = $conf['rss_type'];
+
   switch ($type){
     case 'rss':
        $type = 'RSS0.9';

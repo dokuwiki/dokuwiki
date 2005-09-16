@@ -75,6 +75,11 @@ $conf['im_convert']  = '';               //path to ImageMagicks convert (will be
 $conf['spellchecker']= 0;                //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 $conf['subscribers'] = 0;                //enable change notice subscription support
 $conf['pluginmanager'] = 0;              //enable automated plugin management (requires plugin)
+$conf['rss_type']    = 'rss1';           //type of RSS feed to provide, by default:
+                                         //  'rss'  - RSS 0.91
+                                         //  'rss1' - RSS 1.0
+                                         //  'rss2' - RSS 2.0
+                                         //  'atom' - Atom 0.3
 $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'diff'    - page showing revision differences
                                          //  'page'    - the revised page itself
