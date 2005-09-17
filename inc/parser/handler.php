@@ -1489,12 +1489,16 @@ class Doku_Handler_Toc {
     
     function process($calls) {
       #FIXME can this be done better?
-      global $conf;
+      
+        global $conf;
+        $toplevel = $conf['toptoclevel']; // retrieve vars once to save time
+        $maxlevel = $conf['maxtoclevel'];
         
         foreach ( $calls as $call ) {
-            if ( $call[0] == 'header' && $call[1][1] <= $conf['maxtoclevel'] ) {
+            $level = $call[1][1];
+            if ( $call[0] == 'header' && $level >= $toplevel && $level <= $maxlevel ) {
                 $this->numHeaders++;
-                $this->addToToc($call);
+                $this->addToToc($level - $toplevel + 1, $call);
             }
             $this->calls[] = $call;
         }
@@ -1504,9 +1508,7 @@ class Doku_Handler_Toc {
         return $this->calls;
     }
     
-    function addToToc($call) {
-        
-        $depth = $call[1][1];
+    function addToToc($depth, $call) {
         
         // If it's the opening item...
         if ( count ( $this->toc) == 0 ) {

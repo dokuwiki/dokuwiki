@@ -29,6 +29,7 @@ $conf['htmlok']      = 0;                 //may raw HTML be embedded? This may b
 $conf['phpok']       = 0;                 //may PHP code be embedded? Never do this on the internet! 0|1
 $conf['dformat']     = 'Y/m/d H:i';       //dateformat accepted by PHPs date() function
 $conf['signature']   = ' --- //[[@MAIL@|@NAME@]] @DATE@//'; //signature see wiki:config for details
+$conf['toptoclevel'] = 1;                 //Level starting with and below to include in AutoTOC (max. 5)
 $conf['maxtoclevel'] = 3;                 //Up to which level include into AutoTOC (max. 5)
 $conf['maxseclevel'] = 3;                 //Up to which level create editable sections (max. 5)
 $conf['camelcase']   = 0;                 //Use CamelCase for linking? (I don't like it) 0|1
