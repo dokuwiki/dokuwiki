@@ -254,7 +254,7 @@ function utf8_strtolower($string){
  */
 function utf8_strtoupper($string){
   if(!defined('UTF8_NOMBSTRING') && function_exists('mb_strtolower'))
-    return mb_strtolower($string,'utf-8');
+    return mb_strtoupper($string,'utf-8');
 
   global $UTF8_LOWER_TO_UPPER;
   $uni = utf8_to_unicode($string);
