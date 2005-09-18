@@ -34,7 +34,7 @@ function idx_getPageWords($page){
     $body   = strtr($body, "\r\n\t", '   ');
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
-    
+
     $words = array();
     foreach ($tokens as $word => $count) {
 
@@ -54,7 +54,7 @@ function idx_getPageWords($page){
             $words[$word] = $count + (isset($words[$word]) ? $words[$word] : 0);
         }
     }
- 
+
     // arrive here with $words = array(word => frequency)
  
     $index = array(); //resulting index

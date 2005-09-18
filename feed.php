@@ -98,19 +98,19 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns){
   //this can take some time if a lot of recaching has to be done
   @set_time_limit(90); // set max execution time
 
-  foreach(array_keys($recents) as $id){
+	foreach($recents as $recent){
 
     $item = new FeedItem();
-    $item->title = $id;
-    $xhtml = p_wiki_xhtml($id,'',false);
+    $item->title = $recent['id'];
+    $xhtml = p_wiki_xhtml($recent['id'],'',false);
     
     if($conf['useheading']) {
         $matches = array();
         if(preg_match('|<h([1-9])>(.*?)</h\1>|', $xhtml, $matches))
             $item->title = trim($matches[2]);
     }
-    if(!empty($recents[$id]['sum'])){
-      $item->title .= ' - '.strip_tags($recents[$id]['sum']);
+    if(!empty($recent['sum'])){
+      $item->title .= ' - '.strip_tags($recent['sum']);
     }
 
     $desc = cleanDesc($xhtml);
@@ -120,27 +120,26 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns){
 
     switch ($ltype){
       case 'page':
-        $item->link = wl($id,'rev='.$recents[$id]['date'],true);
+        $item->link = wl($recent['id'],'rev='.$recent['date'],true);
         break;
       case 'rev':
-        $item->link = wl($id,'do=revisions&amp;rev='.$recents[$id]['date'],true);
+        $item->link = wl($recent['id'],'do=revisions&amp;rev='.$recent['date'],true);
         break;
       case 'current':
-        $item->link = wl($id, '', true);
+        $item->link = wl($recent['id'], '', true);
         break;
       case 'diff':
       default:
-        $item->link = wl($id,'do=diff&amp;'.$recents[$id]['date'],true);
+        $item->link = wl($recent['id'],'do=diff&amp;'.$recent['date'],true);
     }
 
     $item->description = $desc;
-    $item->date        = date('r',$recents[$id]['date']);
-    if(strpos($id,':')!==false){
-      $item->category    = substr($id,0,strrpos($id,':'));
-    }
+    $item->date        = date('r',$recent['date']);
+		$cat = getNS($recent['id']);
+		if($cat) $item->category = $cat;
     
     $user = null;
-    $user = @$recents[$id]['user']; // the @ spares time repeating lookup
+    $user = @$recent['user']; // the @ spares time repeating lookup
     $item->author = '';
     
     if($user){
@@ -148,12 +147,12 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns){
       $item->author = $userInfo['name'];
       if($guardmail) {
         //cannot obfuscate because some RSS readers may check validity
-        $item->authorEmail = $user.'@'.$recents[$id]['ip'];
+        $item->authorEmail = $user.'@'.$recent['ip'];
       }else{
         $item->authorEmail = $userInfo['mail'];
       }
     }else{
-      $item->authorEmail = 'anonymous@'.$recents[$id]['ip'];
+      $item->authorEmail = 'anonymous@'.$recent['ip'];
     }
     $rss->addItem($item);
   }

@@ -469,15 +469,13 @@ function html_recent($first=0){
   print p_locale_xhtml('recent');
   print '<ul>';
   
-  $keys = array_keys($recents);
-  for ($n=0; $n < $cnt; $n++){
-    $id = $keys[$n];
-    $date = date($conf['dformat'],$recents[$id]['date']);
+  foreach($recents as $recent){
+    $date = date($conf['dformat'],$recent['date']);
     print '<li>';
 
     print $date.' ';
 
-    print '<a href="'.wl($id,"do=diff").'">';
+    print '<a href="'.wl($recent['id'],"do=diff").'">';
     $p = array();
     $p['src']    = DOKU_BASE.'lib/images/diff.png';
     $p['border'] = 0;
@@ -489,7 +487,7 @@ function html_recent($first=0){
     print "<img $att />";
     print '</a> ';
 
-    print '<a href="'.wl($id,"do=revisions").'">';
+    print '<a href="'.wl($recent['id'],"do=revisions").'">';
     $p = array();
     $p['src']    = DOKU_BASE.'lib/images/history.png';
     $p['border'] = 0;
@@ -501,14 +499,14 @@ function html_recent($first=0){
     print "<img $att />";
     print '</a> ';
 
-    print html_wikilink(":$id",$conf['useheading']?NULL:$id);
+    print html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']);
 
-    print ' '.htmlspecialchars($recents[$id]['sum']);
+    print ' '.htmlspecialchars($recent['sum']);
     print ' <span class="user">';
-    if($recents[$id]['user']){
-      print $recents[$id]['user'];
+    if($recent['user']){
+      print $recent['user'];
     }else{
-      print $recents[$id]['ip'];
+      print $recent['ip'];
     }
     print '</span>';
 

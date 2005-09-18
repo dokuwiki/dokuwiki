@@ -595,17 +595,70 @@ function addLogEntry($date,$id,$summary=""){
 }
 
 /**
+ * Internal function used by getRecents
+ *
+ * don't call directly
+ *
+ * @see getRecents()
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function _handleRecent($line,$incdel,$ns,$subNS){
+  static $seen  = array();         //caches seen pages and skip them
+  if(empty($line)) return false;   //skip empty lines
+
+  // split the line into parts
+  list($dt,$ip,$id,$usr,$sum) = explode("\t",$line);
+  
+  // skip seen ones
+  if($seen[$id]) return false;
+
+  // remember in seen to skip additional sights
+  $seen[$id] = 1;
+
+  // filter namespace
+  if (($ns) && (strpos($id,$ns.':') !== 0)) return false;
+
+  // exclude subnamespaces
+  if ((!$subNS) && (getNS($id) != $ns)) return false;
+
+  // check existance
+  if(!@file_exists(wikiFN($id))){
+    if(!$incdel){
+      return false;
+    }else{
+      $recent = array();
+      $recent['del'] = true;
+    }
+  }else{
+    $recent = array();
+    $recent['del'] = false;
+  }
+
+  $recent['id']   = $id;
+  $recent['date'] = $dt;
+  $recent['ip']   = $ip;
+  $recent['user'] = $usr;
+  $recent['sum']  = $sum;
+
+  return $recent;
+}
+
+/**
  * returns an array of recently changed files using the
  * changelog
- * first   : first entry in array returned
- * num     : return 'num' entries
+ *
+ * @param int    $first   number of first entry returned (for paginating
+ * @param int    $num     return $num entries
+ * @param bool   $incdel  include deleted pages?
+ * @param string $ns      restrict to given namespace
+ * @param bool   $subNS   include subnamespaces
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getRecents($first,$num,$incdel=false,$ns='',$subNS=true){
   global $conf;
   $recent = array();
-  $names  = array();
+  $count  = 0;
 
   if(!$num)
     return $recent;
@@ -615,37 +668,47 @@ function getRecents($first,$num,$incdel=false,$ns='',$subNS=true){
     return $recent;
   }
 
-  $loglines = file($conf['changelog']);
-  rsort($loglines); //reverse sort on timestamp
+  $fh  = fopen($conf['changelog'],'r');
+  $buf = '';
+  $csz = 4096;                              //chunksize
+  fseek($fh,0,SEEK_END);                    // jump to the end
+  $pos = ftell($fh);                        // position pointer
 
-  foreach ($loglines as $line){
-    $line = rtrim($line);        //remove newline
-    if(empty($line)) continue;   //skip empty lines
-    $info = split("\t",$line);   //split into parts
-    //add id if not in yet and file still exists and is allowed to read
-    if(!$names[$info[2]] && 
-       (@file_exists(wikiFN($info[2])) || $incdel) &&
-       (auth_quickaclcheck($info[2]) >= AUTH_READ)
-      ){
-      // filter namespace
-      if (($ns) && (strpos($info[2],$ns.':') !== 0)) continue;
-      
-      // exclude subnamespaces
-      if ((!$subNS) && (getNS($info[2]) != $ns)) continue;
+  // now read backwards into buffer
+  while($pos > 0){
+    $pos -= $csz;                           // seek to previous chunk...
+    if($pos < 0) $pos = 0;                  // ...or rest of file
+    fseek($fh,$pos);
 
-      $names[$info[2]] = 1;
-      if(--$first >= 0) continue;  /* skip "first" entries */
-      
-      $recent[$info[2]]['date'] = $info[0];
-      $recent[$info[2]]['ip']   = $info[1];
-      $recent[$info[2]]['user'] = $info[3];
-      $recent[$info[2]]['sum']  = $info[4];
-      $recent[$info[2]]['del']  = !@file_exists(wikiFN($info[2]));
+    $buf = fread($fh,$csz).$buf;            // prepend to buffer
+
+    $lines = explode("\n",$buf);            // split buffer into lines
+
+    if($pos > 0){
+      $buf = array_shift($lines);           // first one may be still incomplete
     }
-    if(count($recent) >= $num){
-      break; //finish if enough items found
+
+    $cnt = count($lines);
+    if(!$cnt) continue;                     // no lines yet
+
+    // handle lines
+    for($i = $cnt-1; $i >= 0; $i--){
+      $rec = _handleRecent($lines[$i],$incdel,$ns,$subNS);
+      if($rec !== false){
+        if(--$first >= 0) continue;         // skip first entries
+        $recent[] = $rec;
+        $count++;
+
+        // break while when we have enough entries
+        if($count >= $num){
+          $pos = 0; // will break the while loop
+          break;    // will break the for loop
+        }
+      }
     }
-  }
+  }// end of while
+
+  fclose($fh);
   return $recent;
 }
 
