@@ -32,7 +32,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     var $cmd = '';
     var $handler = NULL;
     
-    var $functions = array('delete','update','settings','info');  // require a plugin name
+    var $functions = array('delete','update',/*'settings',*/'info');  // require a plugin name
     var $commands = array('manage','refresh','download');         // don't require a plugin name
     var $plugin_list = array();
     
@@ -204,7 +204,8 @@ class ap_manage {
             ptln('      <input type="hidden" name="plugin" value="'.$plugin.'" />');
             
             $this->html_button('info', false, 6);
-            $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
+            if (in_array('settings', $this->manager->functions)) 
+			    $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
             $this->html_button('update', !$this->plugin_readlog($plugin, 'url'), 6);
             $this->html_button('delete', false, 6);
             
