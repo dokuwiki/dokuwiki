@@ -82,7 +82,6 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
-         global $ID, $lang;
       
       if ($this->disabled) return;
       
