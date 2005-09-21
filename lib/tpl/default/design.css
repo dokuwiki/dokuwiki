@@ -720,13 +720,13 @@ dl.img_tags dd {
   background-color: #f5f5f5;
 }
 
-div.meta {
+div.imagemeta {
   color: #666;
   font-size: 70%;
   line-height: 95%;
 }
 
-div.meta img.thumb{
+div.imagemeta img.thumb{
   float:left;
   margin-right: 0.1em;
 }

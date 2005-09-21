@@ -695,7 +695,7 @@ function tpl_mediafilelist(){
 
       ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
       ptln($del.'<br />',6);
-      ptln('<div class="meta">',6);
+      ptln('<div class="imagemeta">',6);
       
       //build thumbnail
       print '<a href="javascript:mediaSelect(\''.$item['id'].'\')">';
