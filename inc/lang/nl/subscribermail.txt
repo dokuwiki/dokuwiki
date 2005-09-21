@@ -1,0 +1,16 @@
+Hallo!
+
+De pagina @PAGE@ op the @TITLE@ wiki is gewijzigd.
+Hier zijn de aanpassingen:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Om deze berichten niet meer te ontvangen van @DOKUWIKIURL@ , ga dan naar
+@NEWPAGE@
+en kies 'Stop volgen wijzigingen'.
+
+--
+Deze mail is gegenereeds door Dokuwiki op
+@DOKUWIKIURL@
