@@ -316,7 +316,7 @@ function idx_tokenizer($string,&$stopwords){
         foreach ($arr as $w) {
             if (!is_numeric($w) && strlen($w) < 3) continue;
             $w = utf8_strtolower($w);
-            if(is_int(array_search("$w\n",$stopwords))) continue;
+            if($stopwords && is_int(array_search("$w\n",$stopwords))) continue;
             $words[] = $w;
         }
     }else{

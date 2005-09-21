@@ -97,14 +97,15 @@ function ft_backlinks($id){
 
     // quick lookup of the pagename
     $page    = noNS($id);
-    $matches = idx_lookup(array($page));
+    $sw      = array(); // we don't use stopwords here
+    $matches = idx_lookup(idx_tokenizer($page,$sw));  //pagename may contain specials (_ or .)
+    $docs = ft_resultCombine(array_values($matches));
 
-    if(!count($matches)) return $result;
+    if(!count($docs)) return $result;
     require_once(DOKU_INC.'inc/parserutils.php');
 
-
     // check instructions for matching links
-    foreach(array_keys($matches[$page]) as $match){
+    foreach(array_keys($docs) as $match){
         $instructions = p_cached_instructions(wikiFN($match),true);
         if(is_null($instructions)) continue;
 
