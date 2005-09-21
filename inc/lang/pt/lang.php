@@ -16,34 +16,45 @@ $lang['btn_search']   = 'Pesquisar';
 $lang['btn_save']     = 'Gravar';
 $lang['btn_preview']  = 'Prever';
 $lang['btn_top']      = 'Voltar ao topo';
+$lang['btn_newer']    = '<< mais recente';
+$lang['btn_older']    = 'menos recente >>';
 $lang['btn_revs']     = 'Revisões';
 $lang['btn_recent']   = 'Alt. Recentes';
-$lang['btn_upload']   = 'Upload';
+$lang['btn_upload']   = 'Carregar';
 $lang['btn_cancel']   = 'Cancelar';
 $lang['btn_index']    = 'Índice';
 $lang['btn_secedit']  = 'Editar';
 $lang['btn_login']    = 'Entrar em sessão';
 $lang['btn_logout']   = 'Sair da sessão';
+$lang['btn_admin']    = 'Gerir';
+$lang['btn_update']   = 'Actualizar';
+$lang['btn_delete']   = 'Apagar';
+$lang['btn_back']     = 'Voltar';
+$lang['btn_backtomedia'] = 'Voltar à Selecção de Media';
 
 $lang['loggedinas']   = 'Está em sessão como';
 $lang['user']         = 'Utilizador';
 $lang['pass']         = 'Senha';
+$lang['passchk']      = 'Confirmar Senha';
 $lang['remember']     = 'Sessão Automática?';
 $lang['fullname']     = 'Nome completo';
 $lang['email']        = 'e-mail';
-$lang['register']     = 'Inscrever-se';
+$lang['register']     = 'Inscrever';
 $lang['badlogin']     = 'O utilizador inválido ou senha inválida.';
 
 $lang['regmissing']   = 'Por favor, preencha todos os campos.';
 $lang['reguexists']   = 'Este utilizador já está inscrito. Por favor escolha outro nome de utilizador.';
-$lang['regsuccess']   = 'O utilizador foi criado. A senha será enviada para o endereço de correio electrónico usado na inscrição.';
+$lang['regsuccess']   = 'O utilizador foi criado e a senha foi enviada para o endereço de correio electrónico usado na inscrição.';
+$lang['regsuccess2']  = 'O utilizador foi criado.';
 $lang['regmailfail']  = 'Houve um erro no envio da senha por e-mail. Por favor, contacte o administrador!';
 $lang['regbadmail']   = 'O endereço de correio electrónico é inválido. Se o endereço está correcto, e isto é um erro, por favor, contacte o administrador!';
+$lang['regbadpass']   = 'As duas senhas não são idênticas, por favor tente de novo.';
 $lang['regpwmail']    = 'A sua senha DokuWiki';
 $lang['reghere']      = 'Para se inscrever, clique em';
 
-$lang['txt_upload']   = 'Escolha ficheiro para upload';
+$lang['txt_upload']   = 'Escolha ficheiro para carregar';
 $lang['txt_filename'] = 'Insira o nome wiki (opcional)';
+$lang['txt_overwrt']  = 'Escrever por cima dO ficheiro já existente';
 $lang['lockedby']     = 'Bloqueado por';
 $lang['lockexpire']   = 'Expira em';
 $lang['willexpire']   = 'O bloqueio de edição para este documento irá expirar num minuto.\nPara evitar conflitos de edição, clique no botão <Prever> para re-iniciar o temporizador de bloqueio.';
@@ -57,8 +68,16 @@ $lang['fileupload']   = 'Carregamento de ficheiros';
 $lang['uploadsucc']   = 'Carregamento com sucesso';
 $lang['uploadfail']   = 'Falhou o carregamento. Talvez por não ter permissões?';
 $lang['uploadwrong']  = 'Carregamento negado. Esta extensão está proibida.';
+$lang['uploadexist']  = 'O ficheiro já existe. Não pode ser carregado.';
+$lang['deletesucc']   = 'O ficheiro "%s" foi removido.';
+$lang['deletefail']   = 'O ficheiro "%s" não pode ser removido, por favor verifique as permissões.';
+$lang['mediainuse']   = 'O ficheiro "%s" não foi removido porque está ainda a ser usado.';
 $lang['namespaces']   = 'Grupos';
 $lang['mediafiles']   = 'Ficheiros disponíveis em';
+
+$lang['reference']    = 'Referências para';
+$lang['ref_inuse']    = 'O ficheiro "%s" não pode ser removido, porque está ainda a ser usado nestes documentos:';
+$lang['ref_hidden']   = 'Algumas referências estão em documentos para os quais não tem permissão para ler';
 
 $lang['hits']         = 'Resultados';
 $lang['quickhits']    = 'Documentos encontrados';
@@ -81,10 +100,11 @@ $lang['mail_changed'] = 'documento modificado:';
 $lang['nosmblinks']   = 'Ligação a pastas Windows partilhadas apenas funciona com o Microsoft Internet Explorer.\nPode no entanto copiar e colar o link.';
 
 $lang['qb_alert']     = 'Por favor, insira o texto que deseja formatar.\nSerá acrescentado ao fim do documento.';
-$lang['qb_bold']      = 'Bold Text';
-$lang['qb_italic']    = 'Text Itálico';
-$lang['qb_underl']    = 'Text Sublinhado';
-$lang['qb_code']      = 'Text Código';
+$lang['qb_bold']      = 'Texto com Ênfase';
+$lang['qb_italic']    = 'Texto Itálico';
+$lang['qb_underl']    = 'Texto Sublinhado';
+$lang['qb_code']      = 'Texto Código';
+$lang['qb_strike']    = 'Texto Riscado';
 $lang['qb_h1']        = 'Cabeçalho Nível 1';
 $lang['qb_h2']        = 'Cabeçalho Nível 2';
 $lang['qb_h3']        = 'Cabeçalho Nível 3';
@@ -97,5 +117,30 @@ $lang['qb_ol']        = 'Item numa Lista Ordenada';
 $lang['qb_ul']        = 'Item numa Lista Não Ordenada';
 $lang['qb_media']     = 'Incluir imagens e outros ficheiros';
 $lang['qb_sig']       = 'Inserir Assinatura';
+
+$lang['del_confirm']  = 'Remover esta entrada?';
+
+$lang['admin_acl']      = 'Gestão de ACLs...';
+$lang['admin_register'] = 'Inscrever Novo Utilizador...';
+
+$lang['acl_group']    = 'Grupo';
+$lang['acl_user']     = 'Utilizador';
+$lang['acl_perms']    = 'Permissão para';
+$lang['page']         = 'Documento';
+$lang['namespace']    = 'Namespace';
+
+$lang['acl_perm1']    = 'Ler';
+$lang['acl_perm2']    = 'Editar';
+$lang['acl_perm4']    = 'Criar';
+$lang['acl_perm8']    = 'Carregar';
+$lang['acl_perm16']   = 'Remover';
+$lang['acl_new']      = 'Adicionar nova entrada';
+
+$lang['spell_start']  = 'Verificar Ortografia';
+$lang['spell_stop']   = 'Retomar a Edição';
+$lang['spell_wait']   = 'Por favor aguarde...';
+$lang['spell_noerr']  = 'Não existem erros de ortografia';
+$lang['spell_nosug']  = 'Nenhuma sugestão';
+$lang['spell_change'] = 'Alterar';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -1,0 +1,7 @@
+====== Gestão de Access Control List (ACL) ======
+
+Aqui pode adicionar, remover ou modificar as permissões que têm significado em relação ao documento actual e a todos os grupos (//namespaces//) aos quais o documento pertence. As permissões de outros documentos não são mostradas. Para gerir as permissões de outros documentos precisa primeiro de [[this>doku.php?do=index | "navegar"]] até ao documento em questão e só depois de clicar no botão [Gerir] é que as poderá editar.
+
+**Nota**: para melhor entender e saber como funciona as ACLs no DokuWiki deve ler a [[doku>wiki:acl | documentação oficial sobre ACL]], que existe no site oficial do DokuWiki.
+
+----

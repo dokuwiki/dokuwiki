@@ -1,0 +1,5 @@
+====== Administração ======
+
+Esta é a lista de tarefas de Administração permitidas pelo DokuWiki.
+
+----
