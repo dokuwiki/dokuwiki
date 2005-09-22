@@ -597,6 +597,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['target'] = $conf['target']['wiki'];
         }
 
+        //split into hash and url part
+        list($wikiUri,$hash) = explode('#',$wikiUri,2);
+
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
             //use placeholders
@@ -614,6 +617,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             //default
             $link['url'] = $url.urlencode($wikiUri);
         }
+        if($hash) $link['url'] .= '#'.urlencode($hash);
 
         $link['title'] = htmlspecialchars($link['url']);
 
