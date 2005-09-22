@@ -7,8 +7,8 @@
  */
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
-	require_once(DOKU_INC.'inc/init.php');
-	require_once(DOKU_INC.'inc/common.php');
+  require_once(DOKU_INC.'inc/init.php');
+  require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/pageutils.php');
   require_once(DOKU_INC.'inc/confutils.php');
   require_once(DOKU_INC.'inc/auth.php');
@@ -17,21 +17,21 @@
 
   $mimetypes = getMimeTypes();
 
-	//get input
-	$MEDIA  = getID('media');
-	$CACHE  = calc_cache($_REQUEST['cache']);
-	$WIDTH  = $_REQUEST['w'];
-	$HEIGHT = $_REQUEST['h'];
+  //get input
+  $MEDIA  = getID('media');
+  $CACHE  = calc_cache($_REQUEST['cache']);
+  $WIDTH  = $_REQUEST['w'];
+  $HEIGHT = $_REQUEST['h'];
   list($EXT,$MIME) = mimetype($MEDIA);
   if($EXT === false){
     $EXT  = 'unknown';
     $MIME = 'application/octet-stream';
   }
 
-	//media to local file
-	if(preg_match('#^(https?|ftp)://#i',$MEDIA)){
+  //media to local file
+  if(preg_match('#^(https?|ftp)://#i',$MEDIA)){
     //handle external media
-  	$FILE = get_from_URL($MEDIA,$EXT,$CACHE);
+    $FILE = get_from_URL($MEDIA,$EXT,$CACHE);
     if(!$FILE){
       //download failed - redirect to original URL
       header('Location: '.$MEDIA);
@@ -182,8 +182,8 @@ function get_from_URL($url,$ext,$cache){
 function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   global $conf;
 
-  // check if convert is configured and available
-  if(!@is_executable($conf['im_convert'])) return false;
+  // check if convert is configured
+  if(!$conf['im_convert']) return false;
 
   // prepare command
   $cmd  = $conf['im_convert'];
