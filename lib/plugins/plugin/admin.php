@@ -190,6 +190,7 @@ class ap_manage {
         }
             
         function html_pluginlist() {
+		  global $ID;
 
           foreach ($this->manager->plugin_list as $plugin) {
           
@@ -580,7 +581,10 @@ class ap_manage {
     function is_css($f) { return (substr($f, -4) == '.css'); }
     
     // generate an admin plugin href 
-    function apl($pl, $fn) { return wl($ID,"do=admin&amp;page=plugin".($pl?"&amp;plugin=$pl":"").($fn?"&amp;fn=$fn":"")); }
+    function apl($pl, $fn) { 
+      global $ID; 
+      return wl($ID,"do=admin&amp;page=plugin".($pl?"&amp;plugin=$pl":"").($fn?"&amp;fn=$fn":""));
+    }
     
     // decompress wrapper
     function ap_decompress($file, $target) {
