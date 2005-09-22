@@ -139,10 +139,11 @@ class Doku_LexerParallelRegex {
             for ($i = 0; $i < $cnt; $i++) {
                 
                 // Replace lookaheads / lookbehinds with marker
+                $m = "\1\1";
                 $pattern = preg_replace(
                         array (
-                            '/\(\?(i|m|s|x|U)\)/U',
-                            '/\(\?(\-[i|m|s|x|U])\)/U',
+                            '/\(\?(i|m|s|x|u|U)\)/U',
+                            '/\(\?(\-[i|m|s|x|u|U])\)/U',
                             '/\(\?\=(.*)\)/sU',
                             '/\(\?\!(.*)\)/sU',
                             '/\(\?\<\=(.*)\)/sU',
@@ -150,13 +151,13 @@ class Doku_LexerParallelRegex {
                             '/\(\?\:(.*)\)/sU',
                         ),
                         array (
-                            '<<<<SO:\\1>>>>',
-                            '<<<<SOR:\\1>>>>',
-                            '<<<<LA:IS:\\1>>>>',
-                            '<<<<LA:NOT:\\1>>>>',
-                            '<<<<LB:IS:\\1>>>>',
-                            '<<<<LB:NOT:\\1>>>>',
-                            '<<<<GRP:\\1>>>>',
+                            $m.'SO:\\1'.$m,
+                            $m.'SOR:\\1'.$m,
+                            $m.'LA:IS:\\1'.$m,
+                            $m.'LA:NOT:\\1'.$m,
+                            $m.'LB:IS:\\1'.$m,
+                            $m.'LB:NOT:\\1'.$m,
+                            $m.'GRP:\\1'.$m,
                         ),
                         $this->_patterns[$i]
                     );
@@ -170,13 +171,13 @@ class Doku_LexerParallelRegex {
                 // Restore lookaheads / lookbehinds
                 $pattern = preg_replace(
                         array (
-                            '<<<<<SO:(.{1})>>>>>',
-                            '<<<<<SOR:(.{2})>>>>>',
-                            '/<<<<LA:IS:(.*)>>>>/sU',
-                            '/<<<<LA:NOT:(.*)>>>>/sU',
-                            '/<<<<LB:IS:(.*)>>>>/sU',
-                            '/<<<<LB:NOT:(.*)>>>>/sU',
-                            '/<<<<GRP:(.*)>>>>/sU',
+                            '/'.$m.'SO:(.{1})'.$m.'/',
+                            '/'.$m.'SOR:(.{2})'.$m.'/',
+                            '/'.$m.'LA:IS:(.*)'.$m.'/sU',
+                            '/'.$m.'LA:NOT:(.*)'.$m.'/sU',
+                            '/'.$m.'LB:IS:(.*)'.$m.'/sU',
+                            '/'.$m.'LB:NOT:(.*)'.$m.'/sU',
+                            '/'.$m.'GRP:(.*)'.$m.'/sU',
                         ),
                         array (
                             '(?\\1)',
