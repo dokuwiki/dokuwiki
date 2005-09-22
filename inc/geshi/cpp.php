@@ -7,10 +7,10 @@
  *  - M. Uli Kusterer (witness.of.teachtext@gmx.net)
  *  - Jack Lloyd (lloyd@randombit.net)
  * Copyright: (c) 2004 Dennis Bayer, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.2
- * CVS Revision Version: $Revision: 1.4 $
+ * Release Version: 1.0.7.3
+ * CVS Revision Version: $Revision: 1.5 $
  * Date Started: 2004/09/27
- * Last Modified: $Date: 2005/09/03 12:36:42 $
+ * Last Modified: $Date: 2005/09/22 01:30:09 $
  *
  * C++ language file for GeSHi.
  *

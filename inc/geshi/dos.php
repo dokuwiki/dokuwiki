@@ -4,10 +4,10 @@
  * -------
  * Author: Alessandro Staltari (staltari@geocities.com)
  * Copyright: (c) 2005 Alessandro Staltari (http://www.geocities.com/SiliconValley/Vista/8155/)
- * Release Version: 1.0.7.2
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.3
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 2005/07/05
- * Last Modified: $Date: 2005/09/03 12:36:41 $
+ * Last Modified: $Date: 2005/09/22 01:32:47 $
  *
  * DOS language file for GeSHi.
  *
@@ -64,7 +64,7 @@ $language_data = array (
 	'LANG_NAME' => 'DOS',
 	'COMMENT_SINGLE' => array(1 =>'REM', 2 => '@REM'),
 	'COMMENT_MULTI' => array(),
-	'CASE_KEYWORDS' => GESHI_CAP_NO_CHANGE,
+	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array(),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(

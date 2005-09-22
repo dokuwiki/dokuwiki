@@ -4,10 +4,10 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br)
  * Copyright: (c) 2005 deguix
- * Release Version: 1.0.7.2
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.3
+ * CVS Revision Version: $Revision: 1.3 $
  * Date Started: 2005/03/27
- * Last Modified: $Date: 2005/09/03 12:36:42 $
+ * Last Modified: $Date: 2005/09/22 01:32:47 $
  *
  * INI language file for GeSHi.
  *

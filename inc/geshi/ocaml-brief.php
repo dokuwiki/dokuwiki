@@ -1,25 +1,27 @@
 <?php
 /*************************************************************************************
- * matlab.php
- * -----------
- * Author: Florian Knorn (floz@gmx.de)
- * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
+ * ocaml.php
+ * ----------
+ * Author: Flaie (fireflaie@gmail.com)
+ * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.7.3
- * CVS Revision Version: $Revision: 1.4 $
- * Date Started: 2005/02/09
+ * CVS Revision Version: $Revision: 1.2 $
+ * Date Started: 2005/08/27
  * Last Modified: $Date: 2005/09/22 01:35:22 $
  *
- * Matlab M-file language file for GeSHi. 
+ * OCaml (Objective Caml) language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/05/07 (1.0.0)
+ * 2005/08/27 (1.0.0)
  *   -  First Release
  *
+ * TODO (updated 2005/08/27)
+ * -------------------------
  *
  *************************************************************************************
  *
- *     This file is part of GeSHi.
+ *   This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,64 +40,67 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'M',
-	'COMMENT_SINGLE' => array(1 => '%'),
-	'COMMENT_MULTI' => array(),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'"),
-	'ESCAPE_CHAR' => '',
+	'LANG_NAME' => 'OCaml',
+	'COMMENT_SINGLE' => array(),
+	'COMMENT_MULTI' => array('(*' => '*)'),
+	'CASE_KEYWORDS' => 0,
+	'QUOTEMARKS' => array('"'),
+	'ESCAPE_CHAR' => "",
 	'KEYWORDS' => array(
+	   /* main OCaml keywords */
 		1 => array(
-			'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for', 
-			'function', 'global', 'if', 'otherwise', 'persistent', 'return', 
-			'switch', 'try', 'while','...'
-			),
+			'and', 'As', 'asr', 'begin', 'Class', 'Closed', 'constraint', 'do', 'done', 'downto', 'else',
+			'end', 'exception', 'external', 'failwith', 'false', 'flush', 'for', 'fun', 'function', 'functor',
+			'if', 'in', 'include', 'inherit',  'incr', 'land', 'let', 'load', 'los', 'lsl', 'lsr', 'lxor',
+			'match', 'method', 'mod', 'module', 'mutable', 'new', 'not', 'of', 'open', 'option', 'or', 'parser',
+			'private', 'ref', 'rec', 'raise', 'regexp', 'sig', 'struct', 'stdout', 'stdin', 'stderr', 'then',
+			'to', 'true', 'try', 'type', 'val', 'virtual', 'when', 'while', 'with'
+			)
 		),
-	'SYMBOLS' => array( 
-		'...' 
-		),
+	/* highlighting symbols is really important in OCaml */
+	'SYMBOLS' => array(
+			';', '!', ':', '.', '=', '%', '^', '*', '-', '/', '+', 
+			'>', '<', '(', ')', '[', ']', '&', '|', '#', "'"
+			), 
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
 		1 => false,
-		2 => false,
-		3 => false,
-		4 => false,
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #0000FF;',
+			1 => 'color: #06c; font-weight: bold;' /* nice blue */
 			),
 		'COMMENTS' => array(
-			1 => 'color: #228B22;',
+			'MULTI' => 'color: #5d478b; font-style: italic;' /* light purple */
 			),
 		'ESCAPE_CHAR' => array(
 			),
 		'BRACKETS' => array(
+			0 => 'color: #6c6;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #A020F0;'
+			0 => 'color: #3cb371;' /* nice green */
 			),
 		'NUMBERS' => array(
+			0 => 'color: #c6c;' /* pink */
 			),
 		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			1 => 'color: #060;' /* dark green */
 			),
 		'REGEXPS' => array(
+			),
+		'SYMBOLS' => array( 
+			0 => 'color: #a52a2a;' /* maroon */
 			),
 		'SCRIPT' => array(
 			)
 		),
 	'URLS' => array(
 		1 => '',
-		2 => '',
-		3 => '',
-		4 => ''
 		),
 	'OOLANG' => true,
 	'OBJECT_SPLITTERS' => array(
-		1 => '.',
-		2 => '::'
+		1 => '.'
 		),
 	'REGEXPS' => array(
 		),
