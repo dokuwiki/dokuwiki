@@ -621,6 +621,9 @@ function _handleRecent($line,$incdel,$ns,$subNS){
   // exclude subnamespaces
   if ((!$subNS) && (getNS($id) != $ns)) return false;
 
+  // check ACL
+  if (auth_quickaclcheck($id) < AUTH_READ) return false;
+
   // check existance
   if(!@file_exists(wikiFN($id))){
     if(!$incdel){
