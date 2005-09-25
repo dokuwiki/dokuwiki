@@ -100,7 +100,6 @@ function ft_backlinks($id){
     $sw      = array(); // we don't use stopwords here
     $matches = idx_lookup(idx_tokenizer($page,$sw));  //pagename may contain specials (_ or .)
     $docs = ft_resultCombine(array_values($matches));
-
     if(!count($docs)) return $result;
     require_once(DOKU_INC.'inc/parserutils.php');
 
@@ -216,6 +215,10 @@ function ft_snippet($id,$poswords){
  */
 function ft_resultCombine($args){
     $array_count = count($args);
+    if($array_count == 1){
+        return $args[0];
+    }
+
     $result = array();
     foreach ($args[0] as $key1 => $value1) {
         for ($i = 1; $i !== $array_count; $i++) {
