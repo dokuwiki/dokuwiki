@@ -18,7 +18,6 @@
  */
 function ft_pageSearch($query,&$poswords){
     $q = ft_queryParser($query);
-
     // use this for higlighting later:
     $poswords = join(' ',$q['and']);
 
@@ -51,14 +50,12 @@ function ft_pageSearch($query,&$poswords){
     }
 
     if(!count($docs)) return array();
-
     // handle phrases
     if(count($q['phrases'])){
         //build a regexp
         $q['phrases'] = array_map('utf8_strtolower',$q['phrases']);
         $q['phrases'] = array_map('preg_quote',$q['phrases']);
         $regex = '('.join('|',$q['phrases']).')';
-
         // check the source of all documents for the exact phrases
         foreach(array_keys($docs) as $id){
             $text  = utf8_strtolower(rawWiki($id));
@@ -237,6 +234,7 @@ function ft_resultCombine($args){
  * Builds an array of search words from a query
  *
  * @todo support OR and parenthesises?
+ * @todo add namespace handling
  */
 function ft_queryParser($query){
     global $conf;
@@ -255,7 +253,7 @@ function ft_queryParser($query){
     
     // handle phrase searches
     while(preg_match('/"(.*?)"/',$query,$match)){
-        $q['phrases'][] = $match[0];
+        $q['phrases'][] = $match[1];
         $q['and'] = array_merge(idx_tokenizer($match[0],$stopwords));
         $query = preg_replace('/"(.*?)"/','',$query,1);
     }
@@ -266,6 +264,11 @@ function ft_queryParser($query){
             $token = idx_tokenizer($w,$stopwords);
             if(count($token)) $q['not'] = array_merge($q['not'],$token);
         }else{
+            // asian "words" need to be searched as phrases
+            if(preg_match_all('/('.IDX_ASIAN.'+)/u',$w,$matches)){
+                $q['phrases'] = array_merge($q['phrases'],$matches[1]);
+
+            }
             $token = idx_tokenizer($w,$stopwords);
             if(count($token)) $q['and'] = array_merge($q['and'],$token);
         }
