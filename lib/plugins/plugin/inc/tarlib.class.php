@@ -47,8 +47,7 @@ class CompTar
     if($p_comptype == COMPRESS_DETECT)
     {
       if(strtolower(substr($p_filen,-3)) == '.gz') $p_comptype = COMPRESS_GZIP;
-//    elseif(strtolower(substr($p_filen,-4)) == '.bz2') $p_comptype = COMPRESS_BZIP;  -- CS
-      elseif(preg_match( "/\.bz2?$/", $p_filen)) $p_comptype = COMPRESS_BZIP;  //--CS  bz or bz2
+      elseif(strtolower(substr($p_filen,-4)) == '.bz2') $p_comptype = COMPRESS_BZIP;
       else $p_comptype = COMPRESS_NONE;
     }
 
