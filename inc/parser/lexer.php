@@ -142,8 +142,8 @@ class Doku_LexerParallelRegex {
                 $m = "\1\1";
                 $pattern = preg_replace(
                         array (
-                            '/\(\?(i|m|s|x|u|U)\)/U',
-                            '/\(\?(\-[i|m|s|x|u|U])\)/U',
+                            '/\(\?(i|m|s|x|U)\)/U',
+                            '/\(\?(\-[i|m|s|x|U])\)/U',
                             '/\(\?\=(.*)\)/sU',
                             '/\(\?\!(.*)\)/sU',
                             '/\(\?\<\=(.*)\)/sU',
