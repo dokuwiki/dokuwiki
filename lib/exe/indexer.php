@@ -25,7 +25,7 @@ if($last > @filemtime(wikiFN($ID))) sendGIF();
 
 // try to aquire a lock
 $lock = $conf['lockdir'].'/_indexer.lock';
-while(!@mkdir($lock)){
+while(!@mkdir($lock,0777)){
     if(time()-@filemtime($lock) > 60*5){
         // looks like a stale lock - remove it
         @rmdir($lock);
