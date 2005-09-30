@@ -144,4 +144,16 @@ $lang['spell_noerr'] = 'Nessun errore trovato';
 $lang['spell_nosug'] = 'Nessun suggerimento';
 $lang['spell_change']= 'Cambia';
 
+$lang['img_backto']  = 'Torna a';
+$lang['img_title']   = 'Titolo';
+$lang['img_caption'] = 'Descrizione';
+$lang['img_date']    = 'Data';
+$lang['img_fname']   = 'Nome file';
+$lang['img_fsize']   = 'Dimensione';
+$lang['img_artist']  = 'Autore';
+$lang['img_copyr']   = 'Copyright';
+$lang['img_format']  = 'Formato';
+$lang['img_camera']  = 'Macchina';
+$lang['img_keywords']= 'Parole chiave';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
