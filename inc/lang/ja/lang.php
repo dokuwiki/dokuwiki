@@ -3,7 +3,7 @@
  * japanese language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Davilin <webmaster@davilin.com>
+ * @author     Davilin(Yuji Takenaka) <webmaster@davilin.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -16,8 +16,8 @@ $lang['btn_search'] = '検索';
 $lang['btn_save']   = '保存';
 $lang['btn_preview']= '確認';
 $lang['btn_top']    = '文書の先頭へ';
-$lang['btn_prevpage']= '<< 前の文書';
-$lang['btn_nextpage']= '次の文書 >>';
+$lang['btn_newer']  = '<< より新しい';
+$lang['btn_older']  = 'より古い >>';
 $lang['btn_revs']   = '以前のリビジョン';
 $lang['btn_recent'] = '最近の変更';
 $lang['btn_upload'] = 'アップロード';
@@ -29,6 +29,11 @@ $lang['btn_logout'] = 'ログアウト';
 $lang['btn_admin']  = '管理';
 $lang['btn_update'] = '更新';
 $lang['btn_delete'] = '削除';
+$lang['btn_back']   = '戻る';
+$lang['btn_backlink']    = "バックリンク";
+$lang['btn_backtomedia'] = 'メディアファイル選択に戻る';
+$lang['btn_subscribe']   = '変更履歴配信の登録';
+$lang['btn_unsubscribe'] = '変更履歴配信の解除';
 
 $lang['loggedinas'] = 'ようこそ';
 $lang['user']       = 'ユーザー名';
@@ -52,11 +57,13 @@ $lang['reghere']    = 'ご自分用のアカウントを取ってみては如何
 
 $lang['txt_upload']   = 'アップロードするファイルを選んでください。';
 $lang['txt_filename'] = 'Wiki名を入力（オプション）';
+$lang['txt_overwrt']  = '既存のファイルを上書き';
 $lang['lockedby']     = 'この文書は次のユーザによってロックされています';
 $lang['lockexpire']   = '排他期限';
 $lang['willexpire']   = '編集中の文書は排他期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行ってロックタイマーをリセットしてください。';
 
 $lang['notsavedyet'] = '変更は保存されません。このまま処理を続けてよろしいですか？';
+
 $lang['rssfailed']   = 'RSSの取り出しに失敗しました：';
 $lang['nothingfound']= '該当文書はありませんでした。';
 
@@ -65,8 +72,16 @@ $lang['fileupload']  = 'メディアファイルをアップロード';
 $lang['uploadsucc']  = 'アップロード完了';
 $lang['uploadfail']  = 'アップロードに失敗しました。権限がありません。';
 $lang['uploadwrong'] = 'アップロードは拒否されました。この拡張子は許可されていません。';
+$lang['uploadexist'] = '同名のファイルが存在するため、アップロードできません。';
+$lang['deletesucc']  = 'ファイル "%s" は削除されました。';
+$lang['deletefail']  = 'ファイル "%s" が削除できません。権限を確認して下さい。';
+$lang['mediainuse']  = 'ファイル "%s" は使用中のため、削除されませんでした。';
 $lang['namespaces']  = '名前空間';
 $lang['mediafiles']  = '有効なファイル：';
+
+$lang['reference']   = '参照先';
+$lang['ref_inuse']   = 'このファイルは、次のページで使用中のため削除できません。';
+$lang['ref_hidden']  = 'このページに存在するいくつかの参照先は、権限が無いため読むことができません。';
 
 $lang['hits']       = 'ヒット';
 $lang['quickhits']  = 'マッチした文書名';
@@ -83,16 +98,17 @@ $lang['created']    = '作成';
 $lang['restored']   = '以前のバージョンを復元';
 $lang['summary']    = 'サマリーを編集';
 
-$lang['mail_newpage'] = '[DokuWiki] 文書の追加：';
-$lang['mail_changed'] = '[DokuWiki] 文書の変更：';
+$lang['mail_newpage'] = '文書の追加：';
+$lang['mail_changed'] = '文書の変更：';
 
-$lang['nosmblinks'] = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
+$lang['nosmblinks'] = 'ウィンドウズの共有フォルダへリンクは Microsoft Internet Explorer でのみ可能となります。\n当然、カットアンドペーストが使用できます。';
 
 $lang['qb_alert']   = '文書の最後に挿入したい定型文書を入力して下さい。';
 $lang['qb_bold']    = '太字';
 $lang['qb_italic']  = '斜体';
 $lang['qb_underl']  = '下線';
 $lang['qb_code']    = 'コード';
+$lang['qb_strike']  = '打消線';
 $lang['qb_h1']      = '第一見出し';
 $lang['qb_h2']      = '第二見出し';
 $lang['qb_h3']      = '第三見出し';
@@ -121,6 +137,35 @@ $lang['acl_perm1']  = '読取';
 $lang['acl_perm2']  = '編集';
 $lang['acl_perm4']  = '作成';
 $lang['acl_perm8']  = 'アップロード';
+$lang['acl_perm16'] = '削除';
 $lang['acl_new']    = '新規エントリ';
+
+$lang['spell_start'] = 'スペルチェック';
+$lang['spell_stop']  = '再開';
+$lang['spell_wait']  = 'しばらくお待ち下さい...';
+$lang['spell_noerr'] = 'スペルエラーなし';
+$lang['spell_nosug'] = '候補なし';
+$lang['spell_change']= '変更';
+
+$lang['metaedit']    = 'メタデータ編集';
+$lang['metasaveerr'] = 'メタデータの書き込みに失敗しました';
+$lang['metasaveok']  = 'メタデータは保存されました';
+$lang['img_backto']  = '戻る';
+$lang['img_title']   = 'タイトル';
+$lang['img_caption'] = '見出し';
+$lang['img_date']    = '日付';
+$lang['img_fname']   = 'ファイル名';
+$lang['img_fsize']   = 'サイズ';
+$lang['img_artist']  = '作成者';
+$lang['img_copyr']   = '著作権';
+$lang['img_format']  = 'フォーマット';
+$lang['img_camera']  = '使用カメラ';
+$lang['img_keywords']= 'キーワード';
+
+$lang['subscribe_success']  = '変更履歴配信の登録が完了しました。';
+$lang['subscribe_error']    = '変更履歴配信の登録に失敗しました。';
+$lang['subscribe_noaddress']= 'ログインしていないため、変更履歴配信に登録することはできません。';
+$lang['unsubscribe_success']= '変更履歴配信の解除が完了しました。';
+$lang['unsubscribe_error']  = '変更履歴配信の解除に失敗しました。';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
