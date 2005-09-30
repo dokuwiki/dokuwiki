@@ -396,7 +396,7 @@ class Doku_Handler {
 
         //decide which kind of link it is
 
-        if ( preg_match('/^[a-zA-Z]+>{1}.*$/u',$link[0]) ) {
+        if ( preg_match('/^[a-zA-Z\.]+>{1}.*$/u',$link[0]) ) {
         // Interwiki
             $interwiki = preg_split('/>/u',$link[0]);
             $this->_addCall(
