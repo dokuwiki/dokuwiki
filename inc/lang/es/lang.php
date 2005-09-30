@@ -37,7 +37,7 @@ $lang['btn_backtomedia'] = 'Vuelta a la selección de medios';
 
 $lang['loggedinas'] = 'Conectado como ';
 $lang['user']       = 'Usuario';
-$lang['pass']       = 'Contrasña';
+$lang['pass']       = 'Contraseña';
 $lang['passchk']    = 'otra vez';
 $lang['remember']   = 'Recordarme';
 $lang['fullname']   = 'Nombre completo';
