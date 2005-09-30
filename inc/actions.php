@@ -207,6 +207,7 @@ function act_save($act){
  */
 function act_auth($act){
   global $ID;
+  global $INFO;
   
   //already logged in?
   if($_SERVER['REMOTE_USER'] && $act=='login')
@@ -217,8 +218,13 @@ function act_auth($act){
     $lockedby = checklock($ID); //page still locked?
     if($lockedby == $_SERVER['REMOTE_USER'])
       unlock($ID); //try to unlock 
-      
+
+    // do the logout stuff      
     auth_logoff();
+
+    // rebuild info array
+    $INFO = pageinfo();
+
     return 'login';
   }
 
