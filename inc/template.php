@@ -460,9 +460,10 @@ function tpl_actionlink($type,$pre='',$suf=''){
         tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action admin"');
       break;
    case 'subscribe':
+   case 'subscription':
       if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
-          if($info['subscribed']) {
+          if($INFO['subscribed']) {
             tpl_link(wl($ID,'do=unsubscribe'),$pre.$lang['btn_unsubscribe'].$suf,'class="action unsubscribe"');
           } else {
             tpl_link(wl($ID,'do=subscribe'),$pre.$lang['btn_subscribe'].$suf,'class="action subscribe"');
