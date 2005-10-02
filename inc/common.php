@@ -826,8 +826,8 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
   addLogEntry(@filemtime($file),$id,$summary,$minor);
   // send notify mails
-  notify($id,'admin',$old,$summary);
-  notify($id,'subscribers',$old,$summary);
+  notify($id,'admin',$old,$summary,$minor);
+  notify($id,'subscribers',$old,$summary,$minor);
   
   //purge cache on add by updating the purgefile
   if($conf['purgeonadd'] && (!$old || $del)){
@@ -860,14 +860,15 @@ function saveOldRevision($id){
 /**
  * Sends a notify mail on page change
  *
- * @param  string $id       The changed page
- * @param  string $who      Who to notify (admin|subscribers)
- * @param  int    $rev      Old page revision
- * @param  string $summary  What changed
+ * @param  string  $id       The changed page
+ * @param  string  $who      Who to notify (admin|subscribers)
+ * @param  int     $rev      Old page revision
+ * @param  string  $summary  What changed
+ * @param  boolean $minor    Is this a minor edit?
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id,$who,$rev='',$summary=''){
+function notify($id,$who,$rev='',$summary='',$minor=false){
   global $lang;
   global $conf;
 
@@ -879,6 +880,7 @@ function notify($id,$who,$rev='',$summary=''){
     $bcc  = '';
   }elseif($who == 'subscribers'){
     if(!$conf['subscribers']) return; //subscribers enabled?
+    if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return; //skip minors
     $bcc  = subscriber_addresslist($id);
     if(empty($bcc)) return;
     $to   = '';
