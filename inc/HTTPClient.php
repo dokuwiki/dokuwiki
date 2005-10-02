@@ -54,7 +54,7 @@ class HTTPClient {
     //set these if you like
     var $agent;         // User agent
     var $http;          // HTTP version defaults to 1.0
-    var $timeout;       
+    var $timeout;       // read timeout (seconds)
     var $cookies;
     var $referer;
     var $max_redirect;
@@ -185,13 +185,18 @@ class HTTPClient {
             $headers['Proxy-Authorization'] = 'BASIC '.base64_encode($this->proxy_user.':'.$this->proxy_pass);
         }
 
+        // stop time
+        $start = time();
+        
         // open socket
         $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
         if (!$socket){
             $resp->status = '-100';
             $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
-            return $false;
+            return false;
         }
+        //set non blocking
+        stream_set_blocking($socket,0);
 
         // build request
         $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -204,10 +209,18 @@ class HTTPClient {
 
         // send request
         fputs($socket, $request);
-
         // read headers from socket
         $r_headers = '';
         do{
+            if(time()-$start > $this->timeout){
+                $this->status = -100;
+                $this->error = 'Timeout while reading headers';
+                return false;
+            }
+            if(feof($socket)){
+                $this->error = 'Premature End of File (socket)';
+                return false;
+            }
             $r_headers .= fread($socket,1); #FIXME read full lines here?
         }while(!preg_match('/\r\n\r\n$/',$r_headers));
 
@@ -217,6 +230,15 @@ class HTTPClient {
             do {
                 unset($chunk_size);
                 do {
+                    if(feof($socket)){
+                        $this->error = 'Premature End of File (socket)';
+                        return false;
+                    }
+                    if(time()-$start > $this->timeout){
+                        $this->status = -100;
+                        $this->error = 'Timeout while reading chunk';
+                        return false;
+                    }
                     $byte = fread($socket,1);
                     $chunk_size .= $byte;
                 } while (preg_match('/[a-zA-Z0-9]/',$byte)); // read chunksize including \r
@@ -235,6 +257,11 @@ class HTTPClient {
         }else{
             // read entire socket
             while (!feof($socket)) {
+                if(time()-$start > $this->timeout){
+                    $this->status = -100;
+                    $this->error = 'Timeout while reading response';
+                    return false;
+                }
                 $r_body .= fread($socket,4096);
                 if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
@@ -248,12 +275,6 @@ class HTTPClient {
         fclose($socket);
 
         $this->_debug('response headers',$r_headers);
-
-        // check for timeout
-        if ($status['timed_out']){
-            $this->error = "Connection timed out";
-            return false;
-        }
 
         // get Status
         if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m)) {
