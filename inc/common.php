@@ -14,6 +14,13 @@
   require_once(DOKU_INC.'inc/parserutils.php');
 
 /**
+ * These constants are used with the recents function
+ */
+define('RECENTS_SKIP_DELETED',2);
+define('RECENTS_SKIP_MINORS',4);
+define('RECENTS_SKIP_SUBSPACES',8);
+
+/**
  * Return info about the current document as associative
  * array.
  *
@@ -66,6 +73,7 @@ function pageinfo(){
   $info['ip']     = $revinfo['ip'];
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
+  $info['minor']  = $revinfo['minor'];
 
   if($revinfo['user']){
     $info['editor'] = $revinfo['user'];
@@ -578,7 +586,7 @@ function dbg($msg,$hidden=false){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function addLogEntry($date,$id,$summary=""){
+function addLogEntry($date,$id,$summary='',$minor=false){
   global $conf;
 
   if(!@is_writable($conf['changelog'])){
@@ -590,8 +598,30 @@ function addLogEntry($date,$id,$summary=""){
   $remote = $_SERVER['REMOTE_ADDR'];
   $user   = $_SERVER['REMOTE_USER'];
 
+  if($conf['useacl'] && $user && $minor){
+    $summary = '*'.$summary;
+  }else{
+    $summary = ' '.$summary;
+  }
+
   $logline = join("\t",array($date,$remote,$id,$user,$summary))."\n";
   io_saveFile($conf['changelog'],$logline,true);
+}
+
+/**
+ * Checks an summary entry if it was a minor edit
+ *
+ * The summary is cleaned of the marker char
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function isMinor(&$summary){
+  if(substr($summary,0,1) == '*'){
+    $summary = substr($summary,1);
+    return true;
+  }
+  $summary = trim($summary);
+  return false;
 }
 
 /**
@@ -602,7 +632,7 @@ function addLogEntry($date,$id,$summary=""){
  * @see getRecents()
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function _handleRecent($line,$incdel,$ns,$subNS){
+function _handleRecent($line,$ns,$flags){
   static $seen  = array();         //caches seen pages and skip them
   if(empty($line)) return false;   //skip empty lines
 
@@ -611,6 +641,16 @@ function _handleRecent($line,$incdel,$ns,$subNS){
   
   // skip seen ones
   if($seen[$id]) return false;
+  $recent = array();
+
+  // check minors
+  if(isMinor($sum)){
+    // skip minors
+    if($flags & RECENTS_SKIP_MINORS) return false;
+    $recent['minor'] = true;
+  }else{
+    $recent['minor'] = false;
+  }
 
   // remember in seen to skip additional sights
   $seen[$id] = 1;
@@ -619,21 +659,19 @@ function _handleRecent($line,$incdel,$ns,$subNS){
   if (($ns) && (strpos($id,$ns.':') !== 0)) return false;
 
   // exclude subnamespaces
-  if ((!$subNS) && (getNS($id) != $ns)) return false;
+  if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($id) != $ns)) return false;
 
   // check ACL
   if (auth_quickaclcheck($id) < AUTH_READ) return false;
 
   // check existance
   if(!@file_exists(wikiFN($id))){
-    if(!$incdel){
+    if($flags & RECENTS_SKIP_DELETED){
       return false;
     }else{
-      $recent = array();
       $recent['del'] = true;
     }
   }else{
-    $recent = array();
     $recent['del'] = false;
   }
 
@@ -646,19 +684,26 @@ function _handleRecent($line,$incdel,$ns,$subNS){
   return $recent;
 }
 
+
 /**
  * returns an array of recently changed files using the
  * changelog
  *
+ * The following constants can be used to control which changes are
+ * included. Add them together as needed.
+ *
+ * RECENTS_SKIP_DELETED   - don't include deleted pages
+ * RECENTS_SKIP_MINORS    - don't include minor changes
+ * RECENTS_SKIP_SUBSPACES - don't include subspaces
+ *
  * @param int    $first   number of first entry returned (for paginating
  * @param int    $num     return $num entries
- * @param bool   $incdel  include deleted pages?
  * @param string $ns      restrict to given namespace
- * @param bool   $subNS   include subnamespaces
+ * @param bool   $flags   see above
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getRecents($first,$num,$incdel=false,$ns='',$subNS=true){
+function getRecents($first,$num,$ns='',$flags=0){
   global $conf;
   $recent = array();
   $count  = 0;
@@ -696,7 +741,7 @@ function getRecents($first,$num,$incdel=false,$ns='',$subNS=true){
 
     // handle lines
     for($i = $cnt-1; $i >= 0; $i--){
-      $rec = _handleRecent($lines[$i],$incdel,$ns,$subNS);
+      $rec = _handleRecent($lines[$i],$ns,$flags);
       if($rec !== false){
         if(--$first >= 0) continue;         // skip first entries
         $recent[] = $rec;
@@ -735,10 +780,11 @@ function getRevisionInfo($id,$rev){
   $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
   $loglines = array_reverse($loglines); //reverse sort on timestamp (shouldn't be needed)
   $line = split("\t",$loglines[0]);
-  $info['date'] = $line[0];
-  $info['ip']   = $line[1];
-  $info['user'] = $line[3];
+  $info['date']  = $line[0];
+  $info['ip']    = $line[1];
+  $info['user']  = $line[3];
   $info['sum']   = $line[4];
+  $info['minor'] = isMinor($info['sum']);
   return $info;
 }
 
@@ -747,7 +793,7 @@ function getRevisionInfo($id,$rev){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function saveWikiText($id,$text,$summary){
+function saveWikiText($id,$text,$summary,$minor=false){
   global $conf;
   global $lang;
   umask($conf['umask']);
@@ -778,7 +824,7 @@ function saveWikiText($id,$text,$summary){
     $del = false;
   }
 
-  addLogEntry(@filemtime($file),$id,$summary);
+  addLogEntry(@filemtime($file),$id,$summary,$minor);
   // send notify mails
   notify($id,'admin',$old,$summary);
   notify($id,'subscribers',$old,$summary);

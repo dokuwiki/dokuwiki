@@ -190,7 +190,7 @@ function act_save($act){
     return 'conflict';
 
   //save it
-  saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM); //use pretty mode for con
+  saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
   //unlock it
   unlock($ID);
       

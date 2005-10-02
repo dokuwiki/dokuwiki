@@ -56,11 +56,11 @@ function html_login(){
         <legend><?php echo $lang['btn_login']?></legend>
         <input type="hidden" name="id" value="<?php echo $ID?>" />
         <input type="hidden" name="do" value="login" />
-        <label>
+        <label class="block">
           <span><?php echo $lang['user']?></span>
           <input type="text" name="u" value="<?php echo formText($_REQUEST['u'])?>" class="edit" />
         </label><br />
-        <label>
+        <label class="block">
           <span><?php echo $lang['pass']?></span>
           <input type="password" name="p" class="edit" />
         </label><br />
@@ -392,7 +392,7 @@ function html_revisions(){
   print p_locale_xhtml('revisions');
   print '<ul>';
   if($INFO['exists']){
-    print '<li>';
+    print ($INFO['minor']) ? '<li class="minor">' : '<li>';
 
     print $date;
 
@@ -413,8 +413,7 @@ function html_revisions(){
     $date = date($conf['dformat'],$rev);
     $info = getRevisionInfo($ID,$rev);
 
-    print '<li>';
-
+    print ($info['minor']) ? '<li class="minor">' : '<li>';
     print $date;
 
     print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
@@ -459,10 +458,10 @@ function html_recent($first=0){
    * decide if this is the last page or is there another one.
    * This is the cheapest solution to get this information.
    */
-  $recents = getRecents($first,$conf['recent'] + 1,true,getNS($ID));
+  $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
   if(count($recents) == 0 && $first != 0){
     $first=0;
-    $recents = getRecents(0,$conf['recent'] + 1,true,getNS($ID));
+    $recents = getRecents(0,$conf['recent'] + 1,getNS($ID));
   }
   $cnt = count($recents) <= $conf['recent'] ? count($recents) : $conf['recent']; 
 
@@ -471,7 +470,7 @@ function html_recent($first=0){
   
   foreach($recents as $recent){
     $date = date($conf['dformat'],$recent['date']);
-    print '<li>';
+    print ($recent['minor']) ? '<li class="minor">' : '<li>';
 
     print $date.' ';
 
@@ -500,8 +499,8 @@ function html_recent($first=0){
     print '</a> ';
 
     print html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']);
-
     print ' '.htmlspecialchars($recent['sum']);
+
     print ' <span class="user">';
     if($recent['user']){
       print $recent['user'];
@@ -795,7 +794,7 @@ function html_register(){
   <input type="hidden" name="save" value="1" />
   <fieldset>
     <legend><?php echo $lang['register']?></legend>
-    <label>
+    <label class="block">
       <?php echo $lang['user']?>
       <input type="text" name="login" class="edit" size="50" value="<?php echo formText($_POST['login'])?>" />
     </label><br />
@@ -803,11 +802,11 @@ function html_register(){
     <?php
       if (!$conf['autopasswd']) {
     ?>
-      <label>
+      <label class="block">
         <?php echo $lang['pass']?>
         <input type="password" name="pass" class="edit" size="50" />
       </label><br />
-      <label>
+      <label class="block">
         <?php echo $lang['passchk']?>
         <input type="password" name="passchk" class="edit" size="50" />
       </label><br />
@@ -815,11 +814,11 @@ function html_register(){
       }
     ?>
 
-    <label>
+    <label class="block">
       <?php echo $lang['fullname']?>
       <input type="text" name="fullname" class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
     </label><br />
-    <label>
+    <label class="block">
       <?php echo $lang['email']?>
       <input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
     </label><br />
@@ -943,8 +942,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     <tr id="wikieditbar">
       <td>
       <?php if($wr){?>
-        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="3" />
-        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
+        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
+        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="5" />
         <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
       <?php } ?>
       </td>
@@ -952,6 +951,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <?php if($wr){ ?>
         <?php echo $lang['summary']?>:
         <input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?php echo formText($SUM)?>" tabindex="2" />
+        <?php html_minoredit()?>
       <?php }?>
       </td>
       <td align="right">
@@ -973,6 +973,34 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   </table>
   </form>
 <?php
+}
+
+/**
+ * Adds a checkbox for minor edits for logged in users
+ *
+ * @author Andrea Gohr <andi@splitbrain.org>
+ */
+function html_minoredit(){
+  global $conf;
+  global $lang;
+  // minor edits are for logged in users only
+  if(!$conf['useacl'] || !$_SERVER['REMOTE_USER']){
+    return;
+  } 
+
+  $p = array();
+  $p['name']     = 'minor';
+  $p['type']     = 'checkbox';
+  $p['id']       = 'minoredit';
+  $p['tabindex'] = 3;
+  $p['value']    = '1';
+  if($_REQUEST['minor']) $p['checked']='checked';
+  $att = buildAttributes($p);
+
+  print "<input $att />";
+  print '<label for="minoredit">';
+  print $lang['minoredit'];
+  print '</label>';
 }
 
 /**

@@ -20,6 +20,7 @@
   $num   = $_REQUEST['num'];
   $type  = $_REQUEST['type'];
   $mode  = $_REQUEST['mode'];
+  $minor = $_REQUEST['minor'];
   $ns    = $_REQUEST['ns'];
   $ltype = $_REQUEST['linkto'];
 
@@ -69,7 +70,7 @@
   if($mode == 'list'){
     rssListNamespace($rss,$ns);
   }else{
-    rssRecentChanges($rss,$num,$ltype,$ns);
+    rssRecentChanges($rss,$num,$ltype,$ns,$minor);
   }
 
   $feed = $rss->createFeed($type,'utf-8');
@@ -88,12 +89,16 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rssRecentChanges(&$rss,$num,$ltype,$ns){
+function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
   global $conf;
   if(!$num) $num = $conf['recent'];
   $guardmail = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
-  $recents = getRecents(0,$num,false,$ns);
+
+	$flags = RECENTS_SKIP_DELETED;
+  if(!$minor) $flags += RECENTS_SKIP_MINORS;
+
+  $recents = getRecents(0,$num,$ns,$flags);
 
   //this can take some time if a lot of recaching has to be done
   @set_time_limit(90); // set max execution time

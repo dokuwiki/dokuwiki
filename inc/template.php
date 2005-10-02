@@ -800,7 +800,7 @@ function tpl_mediauploadform(){
   ptln('<input type="text" name="id" class="edit" />',4);
   ptln('<input type="submit" class="button" value="'.$lang['btn_upload'].'" accesskey="s" />',4);
   if($AUTH >= AUTH_DELETE){
-    ptln('<label for="ow" class="simple"><input type="checkbox" name="ow" value="1" id="ow">'.$lang['txt_overwrt'].'</label>',4);
+    ptln('<label for="ow"><input type="checkbox" name="ow" value="1" id="ow">'.$lang['txt_overwrt'].'</label>',4);
   }
   ptln('</form>',2);
 }

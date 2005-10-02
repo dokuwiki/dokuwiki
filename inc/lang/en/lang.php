@@ -45,6 +45,7 @@ $lang['fullname']   = 'Full name';
 $lang['email']      = 'E-Mail';
 $lang['register']   = 'Register';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
+$lang['minoredit']  = 'Minor Edit';
 
 $lang['regmissing'] = 'Sorry, you must fill in all fields.';
 $lang['reguexists'] = 'Sorry, a user with this login already exists.';

@@ -40,11 +40,11 @@
 				<input type="hidden" name="edit" value="<?php echo hsc($IMG)?>" />
 				<input type="hidden" name="save" value="1" />
 
-				<label for="title"><?php echo $lang['img_title']?></label>
+				<label class="block" for="title"><?php echo $lang['img_title']?></label>
 				<input type="text" name="meta[Iptc.Headline]" id="title" class="edit"
          value="<?php echo hsc(tpl_img_getTag('IPTC.Headline'))?>" /><br />
 
-				<label for="caption"><?php echo $lang['img_caption']?></label>
+				<label class="block" for="caption"><?php echo $lang['img_caption']?></label>
 				<textarea name="meta[Iptc.Caption]" id="caption" class="edit" rows="5"><?php
           echo hsc(tpl_img_getTag(array('IPTC.Caption',
                                         'EXIF.UserComment',
@@ -52,19 +52,19 @@
                                         'EXIF.TIFFUserComment')));
         ?></textarea><br />
 
-				<label for="artist"><?php echo $lang['img_artist']?></label>
+				<label class="block" for="artist"><?php echo $lang['img_artist']?></label>
 				<input type="text" name="meta[Iptc.Byline]" id="artist" class="edit"
          value="<?php echo hsc(tpl_img_getTag(array('Iptc.Byline',
                                                     'Exif.TIFFArtist',
                                                     'Exif.Artist',
                                                     'Iptc.Credit')))?>" /><br />
 
-				<label for="copy"><?php echo $lang['img_copyr']?></label>
+				<label class="block" for="copy"><?php echo $lang['img_copyr']?></label>
 				<input type="text" name="meta[Iptc.CopyrightNotice]" id="copy" class="edit"
          value="<?php echo hsc(tpl_img_getTag(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright')))?>" /><br />
 
 
-				<label for="keywords"><?php echo $lang['img_keywords']?></label>
+				<label class="block" for="keywords"><?php echo $lang['img_keywords']?></label>
         <textarea name="meta[Iptc.Keywords]" id="keywords" class="edit"><?php
           echo hsc(tpl_img_getTag(array('IPTC.Keywords',
                                         'EXIF.Category')));

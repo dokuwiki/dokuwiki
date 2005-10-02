@@ -55,18 +55,19 @@ form {
   display: inline;
 }
 
-label {
+label.block {
   display: block;
   text-align: right;
   font-weight: bold;
 }
 
 label.simple {
+  display: block;
   text-align: left;
   font-weight: normal;
 }
 
-label input.edit {
+label.block input.edit {
   width: 50%;
 }
 
@@ -278,6 +279,11 @@ div.breadcrumbs{
 span.user{
   color: #cccccc;
   font-size: 90%;
+}
+
+li.minor {
+  color: #666;
+  font-style: italic;
 }
 
 /* embedded images */
