@@ -1,0 +1,17 @@
+Hei!
+
+Sivua @PAGE@ wiki-sivustolla @TITLE@ on muokattu.
+Tässä muutokset:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Poistaaksesi sivun seurannan, kirjaudu wikiin osoitteessa
+@DOKUWIKIURL@ ja siirry sivulle
+@NEWPAGE@
+ja valitse 'Lopeta tarkkailu'.
+
+-- 
+Tämän viestin generoi DokuWiki osoitteessa
+@DOKUWIKIURL@

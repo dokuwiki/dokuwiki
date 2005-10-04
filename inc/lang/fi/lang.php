@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Petteri <petteri@gmail.com>
+ * @author     Matti Pöllä <mpo@iki.fi>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -20,18 +21,28 @@ $lang['btn_revs']   = 'Vanhat versiot';
 $lang['btn_recent'] = 'Viimeiset muutokset';
 $lang['btn_upload'] = 'Lähetä tiedosto';
 $lang['btn_cancel'] = 'Peru';
+$lang['btn_admin']  = 'Ylläpito';
+$lang['btn_update'] = 'Päivitä';
+$lang['btn_delete'] = 'Poista';
+$lang['btn_back']   = 'Takaisin';
+$lang['btn_backlink'] = "Paluulinkit";
 $lang['btn_index']  = 'Hakemisto';
 $lang['btn_secedit']= 'Muokkaa';
 $lang['btn_login']  = 'Kirjaudu sisään';
 $lang['btn_logout'] = 'Kirjaudu ulos';
+$lang['btn_subscribe'] = 'Tarkkaile';
+$lang['btn_unsubscribe'] = 'Lopeta tarkkailu';
 
 $lang['loggedinas'] = 'Kirjautunut nimellä';
 $lang['user']       = 'Käyttäjänimi';
 $lang['pass']       = 'Salasana';
+$lang['passchk']    = 'uudelleen';
+$lang['remember']   = 'Muista minut';
 $lang['fullname']   = 'Kokonimi';
 $lang['email']      = 'Sähköposti';
 $lang['register']   = 'Rekisteröidy';
-$lang['badlogin']   = 'Anteeksi, käyttäjänimi tai salasana oli väärä.';
+$lang['badlogin']   = 'Käyttäjänimi tai salasana oli väärä.';
+$lang['minoredit']  = 'Pieni muutos';
 
 $lang['regmissing'] = 'Anteeksi, sinun täytyy täyttää kaikki kentät.';
 $lang['reguexists'] = 'Anteeksi, käyttäjä tällä käyttäjänimellä on jo olemassa';

@@ -1,0 +1,10 @@
+====== Käyttöoikeuksien hallinta ======
+Tällä sivulla voit lisätä ja poistaa oikeuksia nykyiselle sivulle ja
+[[doku>wiki:namespaces|nimiavaruuksille]]. Lue
+[[doku>wiki:acl|käyttöoikeuksien (ACL) virallinen dokumentaatio]]
+ymmärtääksesi kuinka käyttöoikeuksien hallinta toimii.
+
+Näkyvillä on kaikki käyttöoikeudet, jotka koskevat tätä sivua. Muiden
+sivujen käyttöoikeudet eivät ole näkyvillä -- muokataksesi niitä
+[[this>doku.php?do=index|selaa]] ensin ko. sivulle ja valitse sen
+jälkeen käyttöoikeuksien hallinta.
