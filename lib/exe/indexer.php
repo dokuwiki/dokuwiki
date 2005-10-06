@@ -44,7 +44,6 @@ function indexer_stop() {
 // Now start work
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/indexer.php');
 //close session
 session_write_close();
 
@@ -56,7 +55,6 @@ if(!$ID) indexer_stop();
 $last = @filemtime(metaFN($ID,'.indexed'));
 if($last > @filemtime(wikiFN($ID))) indexer_stop();
 
-
 // try to aquire a lock
 $lock = $conf['lockdir'].'/_indexer.lock';
 while(!@mkdir($lock,0777)){
@@ -67,6 +65,8 @@ while(!@mkdir($lock,0777)){
         indexer_stop();
     }
 }
+
+require_once(DOKU_INC.'inc/indexer.php');
 
 // do the work
 idx_addPage($ID);
