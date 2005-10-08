@@ -894,37 +894,12 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   <table style="width:99%">
     <tr>
       <td class="toolbar" colspan="2">
+        <div id="toolbar"></div>
+
         <?php if($wr){?>
         <script language="javascript" type="text/javascript" charset="utf-8">
           <?php /* sets changed to true when previewed */?>
           textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
-          
-          formatButton('bold.png','<?php echo $lang['qb_bold']?>','**','**','<?php echo $lang['qb_bold']?>','b');
-          formatButton('italic.png','<?php echo $lang['qb_italic']?>',"\/\/","\/\/",'<?php echo $lang['qb_italic']?>','i');
-          formatButton('underline.png','<?php echo $lang['qb_underl']?>','__','__','<?php echo $lang['qb_underl']?>','u');
-          formatButton('code.png','<?php echo $lang['qb_code']?>','\'\'','\'\'','<?php echo $lang['qb_code']?>','c');
-          formatButton('strike.png','<?php echo $lang['qb_strike']?>','&lt;del&gt;','&lt;\/del&gt;','<?php echo $lang['qb_strike']?>','d');
-
-          formatButton('fonth1.png','<?php echo $lang['qb_h1']?>','====== ',' ======\n','<?php echo $lang['qb_h1']?>','1');
-          formatButton('fonth2.png','<?php echo $lang['qb_h2']?>','===== ',' =====\n','<?php echo $lang['qb_h2']?>','2');
-          formatButton('fonth3.png','<?php echo $lang['qb_h3']?>','==== ',' ====\n','<?php echo $lang['qb_h3']?>','3');
-          formatButton('fonth4.png','<?php echo $lang['qb_h4']?>','=== ',' ===\n','<?php echo $lang['qb_h4']?>','4');
-          formatButton('fonth5.png','<?php echo $lang['qb_h5']?>','== ',' ==\n','<?php echo $lang['qb_h5']?>','5');
-
-          formatButton('link.png','<?php echo $lang['qb_link']?>','[[',']]','<?php echo $lang['qb_link']?>','l');
-          formatButton('extlink.png','<?php echo $lang['qb_extlink']?>','[[',']]','http://www.example.com|<?php echo $lang['qb_extlink']?>');
-
-          formatButton('list.png','<?php echo $lang['qb_ol']?>','  - ','\n','<?php echo $lang['qb_ol']?>');
-          formatButton('list_ul.png','<?php echo $lang['qb_ul']?>','  * ','\n','<?php echo $lang['qb_ul']?>');
-
-          insertButton('rule.png','<?php echo $lang['qb_hr']?>','----\n');
-          mediaButton('image.png','<?php echo $lang['qb_media']?>','m','<?php echo $INFO['namespace']?>');
-
-          <?php
-          if($conf['useacl'] && $_SERVER['REMOTE_USER']){
-            echo "insertButton('sig.png','".$lang['qb_sig']."','".html_signature()."','y');";
-          }
-          ?>
         </script>
         <span id="spell_action"></span>
         <?php } ?>
@@ -955,14 +930,18 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <?php }?>
       </td>
       <td align="right">
+        <div id="sizectl"></div>
+
         <script language="javascript" type="text/javascript" charset="utf-8">
-          showSizeCtl();
+          //showSizeCtl();
           <?php if($wr){ ?>
             init_locktimer(<?php echo $conf['locktime']-60?>,'<?php echo $lang['willexpire']?>');
 
+            //initToolbar('toolbar','wikitext',toolbar);
+
             //initialize spellchecker
             <?php if($conf['spellchecker']){ ?>
-              ajax_spell.init('<?php echo $lang['spell_start']?>','<?php echo $lang['spell_stop']?>','<?php echo $lang['spell_wait']?>','<?php echo $lang['spell_noerr']?>','<?php echo $lang['spell_nosug']?>','<?php echo $lang['spell_change']?>');
+//              ajax_spell.init('<?php echo $lang['spell_start']?>','<?php echo $lang['spell_stop']?>','<?php echo $lang['spell_wait']?>','<?php echo $lang['spell_noerr']?>','<?php echo $lang['spell_nosug']?>','<?php echo $lang['spell_change']?>');
             <?php } ?>
 
             document.editform.wikitext.focus();
@@ -1001,24 +980,6 @@ function html_minoredit(){
   print '<label for="minoredit">';
   print $lang['minoredit'];
   print '</label>';
-}
-
-/**
- * prepares the signature string as configured in the config
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_signature(){
-  global $conf;
-  global $INFO;
-
-  $sig = $conf['signature'];
-  $sig = strftime($sig);
-  $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
-  $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
-  $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
-  $sig = str_replace('@DATE@',date($conf['dformat']),$sig);
-  return addslashes($sig);
 }
 
 /**

@@ -123,6 +123,9 @@ $lang['qb_ol']      = 'Ordered List Item';
 $lang['qb_ul']      = 'Unordered List Item';
 $lang['qb_media']   = 'Add Images and other files';
 $lang['qb_sig']     = 'Insert Signature';
+$lang['qb_smileys'] = 'Smileys';
+$lang['qb_chars']   = 'Special Chars';
+
 
 $lang['del_confirm']= 'Delete this entry?';
 

@@ -666,6 +666,30 @@ div.ajax_qsearch {
   padding: 4px;
 }
 
+/* --------- Toolbar -------------------- */
+button.toolbutton{
+  background-color: #fff;
+  padding: 0px;
+  margin: 0 1px 0 0;
+	border: 1px solid #8cacbb;
+	cursor: pointer;
+}
+
+div.picker {
+  width: 250px;
+  border: 1px solid #8cacbb;
+  background: #eef3f8;
+}
+
+button.pickerbutton {
+  padding: 0px;
+  margin: 0 1px 1px 0;
+  border: 0;
+  background-color: transparent;
+  font-size: 80%;
+	cursor: pointer;
+}
+
 /* ---------- Spellchecking ------------- */
 
 a.spell_error {

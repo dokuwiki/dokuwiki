@@ -207,6 +207,7 @@ function tpl_metaheaders(){
   ptln("  var alertText   = '".str_replace('\\\\n','\\n',addslashes($lang['qb_alert']))."'",$it);
   ptln("  var notSavedYet = '".str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."'",$it);
   ptln("  var DOKU_BASE   = '".DOKU_BASE."'",$it);
+
   ptln('</script>',$it);
  
   // load the default JavaScript files
@@ -217,17 +218,50 @@ function tpl_metaheaders(){
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/ajax.js"></script>',$it);
 
-  // load spellchecker script if wanted
-  if($conf['spellchecker'] && ($ACT=='edit' || $ACT=='preview')){
-    ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it);
-  }
   
   // dom tool tip library, for insitu footnotes
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/domLib.js"></script>',$it);
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
+
+  // add size control
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
+  ptln("addEvent(window,'onload',function(){initSizeCtl('sizectl','wikitext')});",$it+2);
+  ptln('</script>',$it);
+
+
+  // editing functions
+  if(($ACT=='edit' || $ACT=='preview') && $INFO['writable']){
+    // load toolbar functions
+    ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+         DOKU_BASE.'lib/scripts/edit.js"></script>',$it);
+
+    // load spellchecker functions if wanted
+    if($conf['spellchecker']){
+      ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+           DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it+2);
+    }
+
+    ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
+
+    // add toolbar
+    require_once(DOKU_INC.'inc/toolbar.php');
+    toolbar_JSdefines('toolbar');
+    ptln("addEvent(window,'onload',function(){initToolbar('toolbar','wikitext',toolbar);});",$it+2);
+
+    // add spellchecker
+    if($conf['spellchecker']){
+      //init here
+      ptln("addEvent(window,'onload',function(){ ajax_spell.init('".$lang['spell_start']."','".
+                                                                    $lang['spell_stop']."','".
+                                                                    $lang['spell_wait']."','".
+                                                                    $lang['spell_noerr']."','".
+                                                                    $lang['spell_nosug']."','".
+                                                                    $lang['spell_change']."'); });");
+    }
+    ptln('</script>',$it);
+  }
 
   // plugin stylesheets and Scripts
   plugin_printCSSJS();
