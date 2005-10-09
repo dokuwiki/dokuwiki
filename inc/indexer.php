@@ -17,12 +17,12 @@
 // Ranges taken from http://en.wikipedia.org/wiki/Unicode_block
 // I'm no language expert. If you think some ranges are wrongly chosen or
 // a range is missing, please contact me
-define(IDX_ASIAN,'['.
-                 '\x{0E00}-\x{0E7F}'.  // Thai
-                 '\x{2E80}-\x{D7AF}'.  // CJK -> Hangul
-                 '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
-                 '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
-                 ']');
+define('IDX_ASIAN','['.
+                   '\x{0E00}-\x{0E7F}'.  // Thai
+                   '\x{2E80}-\x{D7AF}'.  // CJK -> Hangul
+                   '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
+                   '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
+                   ']');
 
 
 /**
@@ -52,8 +52,9 @@ function idx_getPageWords($page){
     foreach ($tokens as $word => $count) {
         // simple filter to restrict use of utf8_stripspecials 
         if (preg_match('/[^0-9A-Za-z]/u', $word)) {
-            // handle asian chars as single words
-            $word = preg_replace('/('.IDX_ASIAN.')/u','\1 ',$word);
+            // handle asian chars as single words (may fail on older PHP version)
+            $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$word);
+            if(!is_null($asia)) $word = $asia; //recover from regexp failure
             $arr = explode(' ', utf8_stripspecials($word,' ','._\-:'));
             $arr = array_count_values($arr);
             
@@ -326,8 +327,9 @@ function idx_tokenizer($string,&$stopwords){
     $words = array();
 
     if(preg_match('/[^0-9A-Za-z]/u', $string)){
-        #handle asian chars as single words
-        $string = preg_replace('/('.IDX_ASIAN.')/u','\1 ',$string);
+        // handle asian chars as single words (may fail on older PHP version)
+        $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$string);
+        if(!is_null($asia)) $string = $asia; //recover from regexp failure
 
         $arr = explode(' ', utf8_stripspecials($string,' ','._\-:'));
         foreach ($arr as $w) {

@@ -265,7 +265,7 @@ function ft_queryParser($query){
             if(count($token)) $q['not'] = array_merge($q['not'],$token);
         }else{
             // asian "words" need to be searched as phrases
-            if(preg_match_all('/('.IDX_ASIAN.'+)/u',$w,$matches)){
+            if(@preg_match_all('/('.IDX_ASIAN.'+)/u',$w,$matches)){
                 $q['phrases'] = array_merge($q['phrases'],$matches[1]);
 
             }
