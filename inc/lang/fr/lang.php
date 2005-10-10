@@ -36,11 +36,12 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Mise à jour';
 $lang['btn_delete'] = 'Effacer';
 $lang['btn_back']   = 'Retour';
+$lang['btn_backlink']    = "Liens vers cette page";
 $lang['btn_backtomedia'] = 'Retour à la sélection du ficher média';
 $lang['btn_subscribe']   = 'Enregistrer les modifications';
 $lang['btn_unsubscribe'] = 'Retirer les modifications';
 
-$lang['loggedinas'] = 'Se connecter en tant que';
+$lang['loggedinas'] = 'Connecté en tant que';
 $lang['user']       = 'Utilisateur';
 $lang['pass']       = 'Mot de passe';
 $lang['passchk']    = 'encore une fois';
