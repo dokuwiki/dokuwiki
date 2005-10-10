@@ -42,52 +42,48 @@ $opt_casefile = FALSE;
 $opt_groupfile = FALSE;
 
 /* only allow cmd line options if PEAR Console_Getopt is available */
-@include_once 'Console/Getopt.php'; /* PEAR lib */
-if (class_exists('Console_Getopt')) {
+include_once(DOKU_INC.'inc/cliopts.php');
 
-    $argv = Console_Getopt::readPHPArgv();
-    if (PEAR::isError($argv)) {
-        die('Fatal Error: ' . $argv->getMessage()) . "\n";
-    }
-
-    $short_opts = "f:g:hls:p:";
-    $long_opts  = array("help", "file=", "group=", "list", "separator=", "path=");
-    $options = Console_Getopt::getopt($argv, $short_opts, $long_opts);
-    if (PEAR::isError($options)) {
-        usage($available_grouptests);
-    }
-
-    foreach ($options[0] as $option) {
-        switch ($option[0]) {
-            case 'h':
-            case '--help':
-                usage();
-                break;
-            case 'f':
-            case '--file':
-                $opt_casefile = $option[1];
-                break;
-            case 'g':
-            case '--group':
-                $opt_groupfile = $option[1];
-                break;
-            case 'l':
-            case '--list':
-                $opt_list = TRUE;
-                break;
-            case 's':
-            case '--separator':
-                $opt_separator = $option[1];
-                break;
-            case 'p':
-            case '--path':
-                if (file_exists($option[1])) {
-                    define('SIMPLE_TEST', $option[1]);
-                }
-                break;
-        }
-    }
+$short_opts = "f:g:hls:p:";
+$long_opts  = array("help", "file=", "group=", "list", "separator=", "path=");
+$OPTS = Doku_Cli_Opts::getOptions(__FILE__,$short_opts,$long_opts);
+if ( $OPTS->isError() ) {
+    fwrite( STDERR, $OPTS->getMessage() . "\n");
+    usage($available_grouptests);
+    exit(1);
 }
+
+foreach ($OPTS->options as $key => $val) {
+    switch ($key) {
+        case 'h':
+        case 'help':
+            usage();
+            break;
+        case 'f':
+        case 'file':
+            $opt_casefile = $val;
+            break;
+        case 'g':
+        case 'group':
+            $opt_groupfile = $val;
+            break;
+        case 'l':
+        case 'list':
+            $opt_list = TRUE;
+            break;
+        case 's':
+        case 'separator':
+            $opt_separator = $val;
+            break;
+        case 'p':
+        case 'path':
+            if (file_exists($val)) {
+                define('SIMPLE_TEST', $val);
+            }
+            break;
+   }
+}
+
 
 if (!@include_once SIMPLE_TEST . 'reporter.php') {
     die("Where's Simple Test ?!? Not at ".SIMPLE_TEST);
