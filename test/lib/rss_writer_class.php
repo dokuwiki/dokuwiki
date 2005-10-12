@@ -367,4 +367,3 @@ class rss_writer_class extends xml_writer_class
 };
 
 }
-?>

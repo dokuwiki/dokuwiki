@@ -10,6 +10,7 @@ ini_set('memory_limit','128M');
 /* Used to determine output to display */
 define('DW_TESTS_OUTPUT_HTML',1);
 define('DW_TESTS_OUTPUT_XML',2);
+
 if ( isset($_GET['output']) && $_GET['output'] == 'xml' ) {
     define('DW_TESTS_OUTPUT',DW_TESTS_OUTPUT_XML);
 } else {
@@ -91,9 +92,7 @@ function DW_TESTS_PaintSuiteHeader() {
         default:
             echo "<h1>Dokuwiki: Unit Test Suite</h1>\n";
             echo "<p><a href='index.php?show=groups'>Test groups</a>";
-            echo " || <a href='index.php?show=cases'>Test cases</a>";
-            echo " || <a href='index.php?show=webgroups'>Web Test Groups</a>";
-	    echo " || <a href='index.php?show=webcases'>Web Test Cases</a></p>";
+            echo " || <a href='index.php?show=cases'>Test cases</a></p>";
         break;
     }
 }
@@ -101,11 +100,11 @@ function DW_TESTS_PaintSuiteHeader() {
 function DW_TESTS_PaintCaseList() {
     switch ( DW_TESTS_OUTPUT ) {
         case DW_TESTS_OUTPUT_XML:
-            //echo XMLTestManager::getTestCaseList(TEST_CASES);
+            echo XMLTestManager::getTestCaseList(TEST_CASES);
         break;
         case DW_TESTS_OUTPUT_HTML:
         default:
-            //echo HTMLTestManager::getTestCaseList(TEST_CASES);
+            echo HTMLTestManager::getTestCaseList(TEST_CASES);
         break;
     }
 }
@@ -113,11 +112,11 @@ function DW_TESTS_PaintCaseList() {
 function DW_TESTS_PaintGroupTestList() {
     switch ( DW_TESTS_OUTPUT ) {
         case DW_TESTS_OUTPUT_XML:
-            //echo XMLTestManager::getGroupTestList(TEST_GROUPS);
+            echo XMLTestManager::getGroupTestList(TEST_GROUPS);
         break;
         case DW_TESTS_OUTPUT_HTML:
         default:
-            //echo HTMLTestManager::getGroupTestList(TEST_GROUPS);
+            echo HTMLTestManager::getGroupTestList(TEST_GROUPS);
         break;
     }
 }
@@ -140,19 +139,21 @@ EOD;
 /** OUTPUT STARTS HERE **/
 
 // If it's a group test
-if (isset($_GET['run'])) {
-	switch ( $_GET['run'] ) {
-        /*
-	TestManager::runGroupTest(ucfirst($_GET['run']),
+if (isset($_GET['group'])) {
+    if ('all' == $_GET['group']) {
+        TestManager::runAllTests(DW_TESTS_GetReporter());
+    } else {
+        TestManager::runGroupTest(ucfirst($_GET['group']),
                                   TEST_GROUPS,
                                   DW_TESTS_GetReporter());
-	TestManager::runTestCase($_GET['case'], DW_TESTS_GetReporter());
-				  DW_TESTS_PaintRunMore();
-	*/
-		default:
-			TestManager::runAllTests(DW_TESTS_GetReporter());
-		break;
-	}
+    }
+    DW_TESTS_PaintRunMore();
+    exit();
+}
+
+// If it's a single test case
+if (isset($_GET['case'])) {
+    TestManager::runTestCase($_GET['case'], TEST_CASES, DW_TESTS_GetReporter());
     DW_TESTS_PaintRunMore();
     exit();
 }
@@ -170,4 +171,3 @@ if (isset($_GET['show']) && $_GET['show'] == 'cases') {
 }
 
 DW_TESTS_PaintFooter();
-?>

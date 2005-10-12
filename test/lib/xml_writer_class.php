@@ -290,4 +290,3 @@ class xml_writer_class
 };
 
 }
-?>

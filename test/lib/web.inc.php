@@ -45,4 +45,3 @@ class DWWebTestCase extends WebTestCase {
     }
 
 }
-?>

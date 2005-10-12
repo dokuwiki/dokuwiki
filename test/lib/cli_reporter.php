@@ -89,4 +89,3 @@ class CLIReporter extends SimpleReporter {
         }
     }
 }
-?>
