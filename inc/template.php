@@ -335,8 +335,8 @@ function tpl_button($type){
       print html_btn('index',$ID,'x',array('do' => 'index'));
       break;
     case 'back':
-      if ($ID = tpl_getparent($ID)) {
-        print html_btn('back',$ID,'b',array('do' => 'show'));
+      if ($parent = tpl_getparent($ID)) {
+        print html_btn('back',$parent,'b',array('do' => 'show'));
       }
       break;
     case 'top':
