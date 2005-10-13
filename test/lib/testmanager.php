@@ -44,7 +44,7 @@ class TestManager {
     function runTestCase($testcase_name, $test_case_directory, &$reporter) {
         $manager =& new TestManager();
         
-        $testcase_name = preg_replace('/[^a-zA-Z_:]/','',$testcase_name);
+        $testcase_name = preg_replace('/[^a-zA-Z0-9_:]/','',$testcase_name);
         $testcase_name = str_replace(':',DIRECTORY_SEPARATOR,$testcase_name);
         
         $testcase_file = $test_case_directory . DIRECTORY_SEPARATOR .
@@ -75,7 +75,7 @@ class TestManager {
 
     function runGroupTest($group_test_name, $group_test_directory, &$reporter) {
         $manager =& new TestManager();
-        $group_test_name = preg_replace('/[^a-zA-Z_:]/','',$group_test_name);
+        $group_test_name = preg_replace('/[^a-zA-Z0-9_:]/','',$group_test_name);
         $group_test_name = str_replace(':',DIRECTORY_SEPARATOR,$group_test_name);
         $file_path = $group_test_directory . DIRECTORY_SEPARATOR .
             strtolower($group_test_name) . $manager->_grouptest_extension;
