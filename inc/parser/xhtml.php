@@ -723,7 +723,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
              }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.gif')){
                  $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.gif)';
              }else{
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.gif)';
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.png)';
              }
              $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
          }
@@ -769,7 +769,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
              }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.gif')){
                  $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.gif)';
              }else{
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.gif)';
+                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.png)';
              }
          }
 
