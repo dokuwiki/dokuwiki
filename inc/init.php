@@ -157,14 +157,16 @@ function getBaseURL($abs=false){
 
   if($conf['basedir']){
     $dir = $conf['basedir'].'/';
-  }elseif($_SERVER['SCRIPT_NAME']){
+  }elseif(substr($_SERVER['SCRIPT_NAME'],-4) == '.php'){
     $dir = dirname($_SERVER['SCRIPT_NAME']).'/';
+  }elseif(substr($_SERVER['PHP_SELF'],-4) == '.php'){
+    $dir = dirname($_SERVER['PHP_SELF']).'/';
   }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
     $dir = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                          $_SERVER['SCRIPT_FILENAME']);
     $dir = dirname('/'.$dir).'/';
   }else{
-    $dir = dirname($_SERVER['PHP_SELF']).'/';
+    $dir = './'; //probably wrong
   }
 
   $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
