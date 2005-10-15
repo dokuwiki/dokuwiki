@@ -719,7 +719,7 @@ function tpl_mediafilelist(){
   ptln('<ul>',2);
   foreach($data as $item){
     ptln('<li>',4);
-    ptln('<a href="javascript:mediaSelect(\''.$item['id'].'\')">'.
+    ptln('<a href="javascript:mediaSelect(\':'.$item['id'].'\')">'.
          utf8_decodeFN($item['file']).
          '</a>',6);
 
