@@ -47,6 +47,7 @@ require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
+require_once(DOKU_INC.'inc/indexer.php');
 
 $ID = cleanID($_REQUEST['id']);
 if(!$ID) indexer_stop();
@@ -65,8 +66,6 @@ while(!@mkdir($lock,0777)){
         indexer_stop();
     }
 }
-
-require_once(DOKU_INC.'inc/indexer.php');
 
 // do the work
 idx_addPage($ID);
