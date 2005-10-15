@@ -503,7 +503,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['pre']    = '<span class="curid">';
             $link['suf']    = '</span>';
         }
-        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['more']   = '';
         $link['class']  = $class;
         $link['url']    = wl($id);
         $link['name']   = $name;
@@ -545,7 +545,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['pre']    = '';
         $link['suf']    = '';
-        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['more']   = '';
         $link['class']  = $class;
         $link['url']    = $url;
         $link['name']   = $name;
@@ -565,7 +565,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['target'] = $conf['target']['interwiki'];
         $link['pre']    = '';
         $link['suf']    = '';
-        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['more']   = '';
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         if ( !$isImage ) {
@@ -703,7 +703,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['pre']    = '';
         $link['suf']    = '';
-        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['more']   = '';
         $link['target'] = $conf['target']['media'];
 
         $link['title']  = $this->_xmlEntities($src);
@@ -746,7 +746,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['pre']    = '';
         $link['suf']    = '';
-        $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
+        $link['more']   = '';
         $link['target'] = $conf['target']['media'];
 
         $link['title']  = $this->_xmlEntities($src);

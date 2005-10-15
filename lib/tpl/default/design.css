@@ -637,6 +637,10 @@ div.search_quickhits {
     opacity: 1;
 }
 
+#sizectl img {
+	cursor: pointer;
+}
+
 /* ---- Admin --- */
 
 div.acladmin label {

@@ -224,7 +224,7 @@ function html_btn($name,$id,$akey,$params,$method='get'){
     $params['id'] = $id;
   }
  
-  $ret .= '<form class="button" method="'.$method.'" action="'.$script.'" onsubmit="return svchk()">';
+  $ret .= '<form class="button" method="'.$method.'" action="'.$script.'">';
   
   reset($params);
   while (list($key, $val) = each($params)) {
@@ -885,7 +885,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
   
 ?>
-  <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" onsubmit="return svchk()">
+  <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
   <input type="hidden" name="id"   value="<?php echo $ID?>" />
   <input type="hidden" name="rev"  value="<?php echo $REV?>" />
   <input type="hidden" name="date" value="<?php echo $DATE?>" />
@@ -911,42 +911,26 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     <tr>
       <td colspan="3">
         <div id="spell_result"></div>
-        <textarea name="wikitext" id="wikitext" <?php echo $ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?php echo "\n".formText($text)?></textarea>
+        <textarea name="wikitext" id="wikitext" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
       </td>
     </tr>
     <tr id="wikieditbar">
       <td>
       <?php if($wr){?>
-        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
-        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="5" />
+        <input class="button" id="edbtn_save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
+        <input class="button" id="edbtn_preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
         <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
       <?php } ?>
       </td>
       <td>
       <?php if($wr){ ?>
         <?php echo $lang['summary']?>:
-        <input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?php echo formText($SUM)?>" tabindex="2" />
+        <input type="text" class="edit" name="summary" id="summary" size="50" value="<?php echo formText($SUM)?>" tabindex="2" />
         <?php html_minoredit()?>
       <?php }?>
       </td>
       <td align="right">
         <div id="sizectl"></div>
-
-        <script language="javascript" type="text/javascript" charset="utf-8">
-          //showSizeCtl();
-          <?php if($wr){ ?>
-            init_locktimer(<?php echo $conf['locktime']-60?>,'<?php echo $lang['willexpire']?>');
-
-            //initToolbar('toolbar','wikitext',toolbar);
-
-            //initialize spellchecker
-            <?php if($conf['spellchecker']){ ?>
-//              ajax_spell.init('<?php echo $lang['spell_start']?>','<?php echo $lang['spell_stop']?>','<?php echo $lang['spell_wait']?>','<?php echo $lang['spell_noerr']?>','<?php echo $lang['spell_nosug']?>','<?php echo $lang['spell_change']?>');
-            <?php } ?>
-
-            document.editform.wikitext.focus();
-          <?php } ?>
-        </script>
       </td>
     </tr>
   </table>

@@ -225,42 +225,55 @@ function tpl_metaheaders(){
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
 
-  // add size control
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-  ptln("addEvent(window,'onload',function(){initSizeCtl('sizectl','wikitext')});",$it+2);
-  ptln('</script>',$it);
 
 
   // editing functions
-  if(($ACT=='edit' || $ACT=='preview') && $INFO['writable']){
-    // load toolbar functions
-    ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-         DOKU_BASE.'lib/scripts/edit.js"></script>',$it);
-
-    // load spellchecker functions if wanted
-    if($conf['spellchecker']){
-      ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-           DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it+2);
-    }
-
+  if($ACT=='edit' || $ACT=='preview'){
+    // add size control
     ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-
-    // add toolbar
-    require_once(DOKU_INC.'inc/toolbar.php');
-    toolbar_JSdefines('toolbar');
-    ptln("addEvent(window,'onload',function(){initToolbar('toolbar','wikitext',toolbar);});",$it+2);
-
-    // add spellchecker
-    if($conf['spellchecker']){
-      //init here
-      ptln("addEvent(window,'onload',function(){ ajax_spell.init('".$lang['spell_start']."','".
-                                                                    $lang['spell_stop']."','".
-                                                                    $lang['spell_wait']."','".
-                                                                    $lang['spell_noerr']."','".
-                                                                    $lang['spell_nosug']."','".
-                                                                    $lang['spell_change']."'); });");
-    }
+    ptln("addEvent(window,'onload',function(){initSizeCtl('sizectl','wikitext')});",$it+2);
     ptln('</script>',$it);
+
+    if($INFO['writable']){
+      // load toolbar functions
+      ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+           DOKU_BASE.'lib/scripts/edit.js"></script>',$it);
+
+      // load spellchecker functions if wanted
+      if($conf['spellchecker']){
+        ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+             DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it+2);
+      }
+ 
+      ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
+
+      // add toolbar
+      require_once(DOKU_INC.'inc/toolbar.php');
+      toolbar_JSdefines('toolbar');
+      ptln("addEvent(window,'onload',function(){initToolbar('toolbar','wikitext',toolbar);});",$it+2);
+
+      // add pageleave check
+      ptln("addEvent(window,'onload',function(){initChangeCheck('".
+           str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."');});",$it);
+
+      // add lock timer
+      ptln("addEvent(window,'onload',function(){init_locktimer(".
+           ($conf['locktime']-60).",'".
+           str_replace('\\\\n','\\n',addslashes($lang['willexpire']))."');});",$it);
+
+      // add spellchecker
+      if($conf['spellchecker']){
+        //init here
+        ptln("addEvent(window,'onload',function(){ ajax_spell.init('".
+                                       $lang['spell_start']."','".
+                                       $lang['spell_stop']."','".
+                                       $lang['spell_wait']."','".
+                                       $lang['spell_noerr']."','".
+                                       $lang['spell_nosug']."','".
+                                       $lang['spell_change']."'); });");
+      }
+      ptln('</script>',$it);
+    }
   }
 
   // plugin stylesheets and Scripts
@@ -270,13 +283,12 @@ function tpl_metaheaders(){
 /**
  * Print a link
  *
- * Just builds a link but adds additional JavaScript needed for
- * the unsaved data check needed in the edit form.
+ * Just builds a link.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_link($url,$name,$more=''){
-  print '<a href="'.$url.'" onclick="return svchk()" onkeypress="return svchk()"';
+  print '<a href="'.$url.'" ';
   if ($more) print ' '.$more;
   print ">$name</a>";
 }
@@ -522,7 +534,7 @@ function tpl_searchform(){
   global $lang;
   global $ACT;
   
-  print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search" onsubmit="return svchk()">';
+  print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
   
