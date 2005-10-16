@@ -71,7 +71,7 @@ while(!@mkdir($lock,0777)){
 idx_addPage($ID);
 
 // we're finished
-io_saveFile(metaFN($ID,'.indexed'),'');
+io_saveFile(metaFN($ID,'.indexed'),' ');
 @rmdir($lock);
 indexer_stop();
 
