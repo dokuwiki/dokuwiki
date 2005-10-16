@@ -27,7 +27,8 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
   
   //ensure $id is in global $ID (needed for parsing)
   global $ID;
-  $ID = $id;
+  $keep = $ID;
+  $ID   = $id;
 
   if($rev){
     if(@file_exists($file)){
@@ -42,6 +43,9 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
       $ret = p_locale_xhtml('newpage');
     }
   }
+
+  //restore ID (just in case)
+  $ID = $keep;
 
   return $ret;
 }
