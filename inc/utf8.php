@@ -377,7 +377,7 @@ function utf8_tohtml ($str) {
  * @link   http://www.randomchaos.com/document.php?source=php_and_unicode
  * @see    unicode_to_utf8()
  */
-function utf8_to_unicode( $str ) {
+function utf8_to_unicode( &$str ) {
   $unicode = array();  
   $values = array();
   $lookingFor = 1;
@@ -408,7 +408,7 @@ function utf8_to_unicode( $str ) {
  * @link   http://www.randomchaos.com/document.php?source=php_and_unicode
  * @see    utf8_to_unicode()
  */
-function unicode_to_utf8( $str ) {
+function unicode_to_utf8( &$str ) {
   $utf8 = '';
   foreach( $str as $unicode ) {
     if ( $unicode < 128 ) {
@@ -423,6 +423,33 @@ function unicode_to_utf8( $str ) {
     }
   }
   return $utf8;
+}
+
+/**
+ * UTF-8 to UTF-16BE conversion.
+ *
+ * Maybe really UCS-2 without mb_string due to utf8_to_unicode limits
+ */
+function utf8_to_utf16be(&$str, $bom = false) {
+  $out = $bom ? "\xFE\xFF" : '';
+  if(!defined('UTF8_NOMBSTRING') && function_exists('mb_convert_encoding'))
+    return $out.mb_convert_encoding($str,'UTF-16BE','UTF-8');
+
+  $uni = utf8_to_unicode($str);
+  foreach($uni as $cp){
+    $out .= pack('n',$cp);
+  }
+  return $out;
+}
+
+/**
+ * UTF-8 to UTF-16BE conversion.
+ *
+ * Maybe really UCS-2 without mb_string due to utf8_to_unicode limits
+ */
+function utf16be_to_utf8(&$str) {
+  $uni = unpack('n*',$str);
+  return unicode_to_utf8($uni);
 }
 
 /**

@@ -57,6 +57,10 @@
  * @link        http://pear.php.net/pepr/pepr-proposal-show.php?id=198
  */
 
+// for DokuWiki
+if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+require_once(DOKU_INC.'inc/utf8.php');
+
 /**
  * Marker constant for JSON::decode(), used to flag stack state
  */
@@ -191,7 +195,8 @@ class JSON
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c, ord($var{$c+1}));
                             $c+=1;
-                            $utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            //$utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            $utf16 = utf8_to_utf16be($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
     
@@ -202,7 +207,8 @@ class JSON
                                          ord($var{$c+1}),
                                          ord($var{$c+2}));
                             $c+=2;
-                            $utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            //$utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            $utf16 = utf8_to_utf16be($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
     
@@ -214,7 +220,8 @@ class JSON
                                          ord($var{$c+2}),
                                          ord($var{$c+3}));
                             $c+=3;
-                            $utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            //$utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            $utf16 = utf8_to_utf16be($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
     
@@ -227,7 +234,8 @@ class JSON
                                          ord($var{$c+3}),
                                          ord($var{$c+4}));
                             $c+=4;
-                            $utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            //$utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            $utf16 = utf8_to_utf16be($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
     
@@ -241,7 +249,8 @@ class JSON
                                          ord($var{$c+4}),
                                          ord($var{$c+5}));
                             $c+=5;
-                            $utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            //$utf16 = mb_convert_encoding($char, 'UTF-16', 'UTF-8');
+                            $utf16 = utf8_to_utf16be($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
                     }
@@ -411,7 +420,8 @@ class JSON
                                     // single, escaped unicode character
                                     $utf16 = chr(hexdec(substr($chrs, ($c+2), 2)))
                                            . chr(hexdec(substr($chrs, ($c+4), 2)));
-                                    $utf8 .= mb_convert_encoding($utf16, 'UTF-8', 'UTF-16');
+                                    //$utf8 .= mb_convert_encoding($utf16, 'UTF-8', 'UTF-16');
+                                    $utf8 .= utf16be_to_utf8($utf16);
                                     $c+=5;
         
                                 } elseif(($ord_chrs_c >= 0x20) && ($ord_chrs_c <= 0x7F)) {
