@@ -878,6 +878,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //remove double encodings in titles
         $link['title'] = str_replace('&amp;amp;','&amp;',$link['title']);
 
+        // be sure there are no bad chars in url or title
+        // (we can't do this for name because it can contain an img tag)
+        $link['url']   = strtr($link['url'],array('>'=>'%3E','<'=>'%3C','"'=>'%22'));
+        $link['title'] = strtr($link['title'],array('>'=>'&gt;','<'=>'&lt;','"'=>'&quot;'));
+
         $ret  = '';
         $ret .= $link['pre'];
         $ret .= '<a href="'.$link['url'].'"';
