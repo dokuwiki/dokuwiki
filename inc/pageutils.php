@@ -30,7 +30,11 @@ function getID($param='id'){
   if(empty($id) && $conf['userewrite'] == 2){
     //get the script URL
     if($conf['basedir']){
-      $script = $conf['basedir'].basename($_SERVER['SCRIPT_FILENAME']);
+      $relpath = '';
+      if($param != 'id') {
+        $relpath = 'lib/exe/';
+      }
+      $script = $conf['basedir'].$relpath.basename($_SERVER['SCRIPT_FILENAME']);
     }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
       $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                               $_SERVER['SCRIPT_FILENAME']);
