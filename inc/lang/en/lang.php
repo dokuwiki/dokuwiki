@@ -35,15 +35,21 @@ $lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
 $lang['btn_unsubscribe'] = 'Unsubscribe Changes';
+$lang['btn_profile'] = 'Update Profile';
+$lang['btn_reset'] = 'Reset';
+$lang['btn_resendpwd'] = 'Send password';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
 $lang['pass']       = 'Password';
+$lang['newpass']    = 'New password';
+$lang['oldpass']    = 'Confirm current password';
 $lang['passchk']    = 'once again';
 $lang['remember']   = 'Remember me';
 $lang['fullname']   = 'Full name';
 $lang['email']      = 'E-Mail';
 $lang['register']   = 'Register';
+$lang['profile']    = 'User Profile';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
 $lang['minoredit']  = 'Minor Edit';
 
@@ -56,6 +62,17 @@ $lang['regbadmail'] = 'The given email address looks invalid - if you think this
 $lang['regbadpass'] = 'The two given passwords are not identically, please try again.';
 $lang['regpwmail']  = 'Your DokuWiki password';
 $lang['reghere']    = 'You don\'t have an account yet? Just get one';
+
+$lang['profna']       = 'This wiki does not support profile modification';
+$lang['profnochange'] = 'No changes, nothing to do.';
+$lang['profnoempty']  = 'An empty name or email address is not allowed.';
+
+$lang['pwdforget'] = 'Forgotten your password? Get it resent';
+$lang['resendna']  = 'This wiki does not support password resending.';
+$lang['resendpwd'] = 'Resend password';
+$lang['resendpwdmissing'] = 'Sorry, you must fill in all fields.';
+$lang['resendpwdnouser']  = 'Sorry, we can\'t find this user in our database.';
+$lang['resendpwdsuccess'] = 'Your new password has been sent by email.';
 
 $lang['txt_upload']   = 'Select file to upload';
 $lang['txt_filename'] = 'Enter wikiname (optional)';

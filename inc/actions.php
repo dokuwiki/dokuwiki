@@ -46,7 +46,15 @@ function act_dispatch(){
   if($ACT == 'register' && register()){
     $ACT = 'login';
   }
-
+  
+  if ($ACT == 'resendpwd' && act_resendpwd()) {
+    $ACT = 'login';
+  }
+  
+  //update user profile
+  if (($ACT == 'profile') && updateprofile()) {
+  }
+  
   //save
   if($ACT == 'save')
     $ACT = act_save($ACT);
@@ -118,7 +126,7 @@ function act_clean($act){
   if(array_search($act,array('login','logout','register','save','edit',
                              'preview','search','show','check','index','revisions',
                              'diff','recent','backlink','admin','subscribe',
-                             'unsubscribe',)) === false
+                             'unsubscribe','profile','resendpwd',)) === false
      && substr($act,0,7) != 'export_' ) {
     msg('Unknown command: '.htmlspecialchars($act),-1);
     return 'show';
@@ -147,7 +155,7 @@ function act_permcheck($act){
     }else{
       $permneed = AUTH_CREATE;
     }
-  }elseif(in_array($act,array('login','search','recent'))){
+  }elseif(in_array($act,array('login','search','recent','profile'))){
     $permneed = AUTH_NONE;
   }elseif($act == 'register'){
     if ($conf['openregister']){
@@ -324,6 +332,5 @@ function act_subscription($act){
 
   return 'show';
 }
-
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

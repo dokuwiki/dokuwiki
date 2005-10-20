@@ -57,6 +57,7 @@ $conf['authtype']    = 'plain';          //which authentication backend should b
 $conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 $conf['superuser']   = '!!not set!!';    //The admin can be user or @group
+$conf['profileconfirm'] = '1';           //Require current password to confirm changes to user profile
 
 /* Advanced Options */
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal

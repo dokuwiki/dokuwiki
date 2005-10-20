@@ -92,10 +92,12 @@ function io_saveFile($file,$content,$append=false){
  *
  * Uses gzip if extension is .gz
  *
+ * 2005-10-14 : added regex option -- Christopher Smith <chris@jalakai.co.uk>
+ *
  * @author Steven Danz <steven-danz@kc.rr.com>
  * @return bool true on success
  */
-function io_deleteFromFile($file,$badline){
+function io_deleteFromFile($file,$badline,$regex=false){
   if (!@file_exists($file)) return true;
 
   io_lock($file);
@@ -108,10 +110,14 @@ function io_deleteFromFile($file,$badline){
   }
 
   // remove all matching lines
-  $pos = array_search($badline,$lines); //return null or false if not found
-  while(is_int($pos)){
-    unset($lines[$pos]);
-    $pos = array_search($badline,$lines);
+  if ($regex) {
+  	$lines = preg_grep($badline,$lines,PREG_GREP_INVERT);
+  } else {
+    $pos = array_search($badline,$lines); //return null or false if not found
+    while(is_int($pos)){
+      unset($lines[$pos]);
+      $pos = array_search($badline,$lines);
+    }
   }
 
   if(count($lines)){

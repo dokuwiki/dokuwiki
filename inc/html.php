@@ -78,6 +78,13 @@ function html_login(){
       print ': <a href="'.wl($ID,'do=register').'" class="wikilink1">'.$lang['register'].'</a>';
       print '</p>';
     }
+
+    if (auth_canDo('modifyUser')) {
+      print '<p>';
+      print $lang['pwdforget'];
+      print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['resendpwd'].'</a>';
+      print '</p>';
+    }
   ?>
     </div>
   <?php
@@ -830,6 +837,66 @@ function html_register(){
 }
 
 /**
+ * Print the update profile form
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_updateprofile(){
+  global $lang;
+  global $conf;
+  global $ID;
+  global $INFO;
+
+  print p_locale_xhtml('updateprofile');
+  
+  if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
+  if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
+?>
+  <div align="center">
+  <form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
+  <input type="hidden" name="do" value="profile" />
+  <input type="hidden" name="save" value="1" />
+  <fieldset style="width: 80%;">
+    <legend><?php echo $lang['profile']?></legend>
+    <label class="block">
+      <?php echo $lang['user']?>
+      <input type="text" name="fullname" disabled="disabled" class="edit" size="50" value="<?php echo formText($_SERVER['REMOTE_USER'])?>" />
+    </label><br /> 
+    <label class="block">
+      <?php echo $lang['fullname']?>
+      <input type="text" name="fullname" class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
+    </label><br />
+    <label class="block">
+      <?php echo $lang['email']?>
+      <input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
+    </label><br /><br />
+    <label class="block">
+      <?php echo $lang['newpass']?>
+      <input type="password" name="newpass" class="edit" size="50" />
+    </label><br />
+    <label class="block">
+      <?php echo $lang['passchk']?>
+      <input type="password" name="passchk" class="edit" size="50" />
+    </label><br />
+    
+    <?php if ($conf['profileconfirm']) { ?>
+      <br />
+      <label class="block">
+      <?php echo $lang['oldpass']?>
+      <input type="password" name="oldpass" class="edit" size="50" />    
+    </label><br />
+    <?php } ?>
+    
+    <input type="submit" class="button" value="<?php echo $lang['btn_profile']?>" />
+    <input type="reset" class="button" value="<?php echo $lang['btn_reset']?>" />
+  </fieldset>
+  </form>
+  </div>
+<?php
+}
+
+/**
  * This displays the edit form (lots of logic included)
  *
  * @fixme  this is a huge lump of code and should be modularized
@@ -1064,19 +1131,36 @@ function html_admin(){
   }
   
   ptln('</ul>');
-
-/*
-  ptln('<ul>');  ptln('<ul class="admin">');
-
-  // currently ACL only - more to come
-  ptln('<li><a href="'.wl($ID,'do=admin&amp;page=acl').'">'.$lang['admin_acl'].'</a></li>');
-  if (!$conf['openregister']){
-    ptln('<li><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></li>');
-  }
-    
-  ptln('</ul>');
-*/
 }
 
+/**
+ * Form to request a new password for an existing account
+ *
+ * @author Benoit Chesneau <benoit@bchesneau.info>
+ */
+function html_resendpwd() {
+  global $lang;
+  global $conf;
+  global $ID;
+ 
+  print p_locale_xhtml('resendpwd');
+?>
+  <div align="center">
+  <form name="resendpwd" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
+    <fieldset>
+      <br />
+      <legend><?php echo $lang['btn_resendpwd']?></legend>
+      <input type="hidden" name="do" value="resendpwd" />
+      <input type="hidden" name="save" value="1" />
+      <label class="block">
+        <span><?php echo $lang['user']?></span>
+        <input type="text" name="login" value="<?php echo formText($_POST['login'])?>" class="edit" /><br /><br />
+      </label><br />
+      <input type="submit" value="<?php echo $lang['btn_resendpwd']?>" class="button" />
+    </fieldset>
+  </form>
+  </div>
+<?php
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

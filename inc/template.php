@@ -112,14 +112,20 @@ function tpl_content(){
     case 'register':
       html_register();
       break;
+    case 'resendpwd':
+      html_resendpwd();
+      break;
     case 'denied':
       print p_locale_xhtml('denied');
-			break;
+      break;
+    case 'profile' :
+      html_updateprofile();
+      break;            
     case 'admin':
       tpl_admin();
       break;
     default:
-			msg("Failed to handle command: ".hsc($ACT),-1); 
+            msg("Failed to handle command: ".hsc($ACT),-1); 
   }
 }
 
@@ -145,19 +151,6 @@ function tpl_admin(){
         $plugin->html();
     else
         html_admin();
-/*
-  switch($_REQUEST['page']){
-        case 'acl':
-            admin_acl_html();
-            break;
-        case 'plugin':
-            require_once(DOKU_INC.'inc/admin_plugin.php');
-            admin_plugin_html();
-            break;
-    default:
-            html_admin();
-    }
-*/    
 }
 
 /**
@@ -418,6 +411,11 @@ function tpl_button($type){
     case 'backlink':
       print html_btn('backlink',$ID,'',array('do' => 'backlink'));
       break;
+    case 'profile':
+      if(($_SERVER['REMOTE_USER']) && auth_canDo('modifyUser') && ($ACT!='profile')){
+        print html_btn('profile',$ID,'',array('do' => 'profile'));
+      }
+      break;
     default:
       print '[unknown button type]';
   }
@@ -517,9 +515,14 @@ function tpl_actionlink($type,$pre='',$suf=''){
         }
       }
       break;
-	case 'backlink':
-	  tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink"');
-	  break;
+    case 'backlink':
+      tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink"');
+      break;
+    case 'profile':
+      if(($_SERVER['REMOTE_USER']) && auth_canDo('modifyUser') && ($ACT!='profile')){
+        tpl_link(wl($ID,'do=profile'),$pre.$lang['btn_profile'].$suf, 'class="action profile"');
+      }
+      break;
     default:
       print '[unknown link type]';
   }
@@ -689,7 +692,7 @@ function tpl_pageinfo(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_medianamespaces(){
-	global $conf;
+    global $conf;
 
   $data = array();
   search($data,$conf['mediadir'],'search_namespaces',array());

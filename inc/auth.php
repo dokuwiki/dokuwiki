@@ -14,8 +14,61 @@
   require_once(DOKU_INC.'inc/io.php');
   require_once(DOKU_INC.'inc/blowfish.php');
   require_once(DOKU_INC.'inc/mail.php');
-  // load the the auth functions
-  require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
+  
+  // load the the backend auth functions and instantiate the auth object
+  if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
+      require_once(DOKU_INC.'inc/auth/basic.class.php');
+      require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
+  
+      $auth_class = "auth_".$conf['authtype'];
+      if (!class_exists($auth_class)) $auth_class = "auth_basic";
+      $auth = new $auth_class();
+
+      // interface between current dokuwiki/old auth system and new style auth object
+      function auth_canDo($fn) { 
+	    global $auth; 
+		return method_exists($auth, $fn);
+	  }
+	  
+	  // mandatory functions - these should exist
+      function auth_checkPass($user,$pass) {
+	    global $auth; 
+		return method_exists($auth,'checkPass') ? $auth->checkPass($user, $pass) : false; 
+	  }
+      
+	  function auth_getUserData($user) { 
+	    global $auth; 
+		return method_exists($auth, 'getUserData') ? $auth->getUserData($user) : false; 
+	  }
+	  
+	  // optional functions, behave gracefully if these don't exist; 
+	  // potential calling code should query whether these exist in advance
+      function auth_createUser($user,$pass,$name,$mail) { 
+	    global $auth; 
+		return method_exists($auth, 'createUser') ? $auth->createUser($user,$pass,$name,$mail) : null;
+	  }
+      
+	  function auth_modifyUser($user, $changes) {
+	    global $auth; 
+		return method_exists($auth, 'modifyUser') ? $auth->modifyUser($user,$changes) : false; 
+	  }
+	  
+      function auth_deleteUsers($users) {
+	    global $auth; 
+		return method_exists($auth, 'deleteUsers') ? $auth->deleteUsers($users) : 0; 
+	  }	  
+	  
+	  // other functions, will only be accessed by new code 
+	  //- these must query auth_canDo() or test method existence themselves.
+
+  } else {
+    // old style auth functions
+    require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
+    $auth = null;
+	  
+	// new function, allows other parts of dokuwiki to know what they can and can't do  
+	function auth_canDo($fn) { return function_exists("auth_$fn"); }
+  }
 
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));
 
@@ -78,7 +131,7 @@ function auth_login($user,$pass,$sticky=false){
       // make logininfo globally available
       $_SERVER['REMOTE_USER'] = $user;
       $USERINFO = auth_getUserData($user); //FIXME move all references to session 
-
+    
       // set cookie
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
       $cookie = base64_encode("$user|$sticky|$pass");
@@ -178,6 +231,7 @@ function auth_cookiesalt(){
 function auth_logoff(){
   global $conf;
   global $USERINFO;
+  global $INFO, $ID;
 
   if(isset($_SESSION[$conf['title']]['auth']['user']))
     unset($_SESSION[$conf['title']]['auth']['user']);
@@ -435,6 +489,109 @@ function register(){
     msg($lang['regmailfail'],-1);
     return false;
   }
+}
+
+/**
+ * Update user profile
+ *
+ * @author    Christopher Smith <chris@jalakai.co.uk>
+ */
+function updateprofile() {
+  global $conf;
+  global $INFO;
+  global $lang;
+  
+  if(!$_POST['save']) return false;
+
+  // should not be able to get here without modifyUser being possible...
+  if(!auth_canDo('modifyUser')) {
+    msg($lang['profna'],-1);
+    return false;
+  }
+
+  if ($_POST['newpass'] != $_POST['passchk']) {
+    msg($lang['regbadpass'], -1);      // complain about misspelled passwords
+    return false;
+  }
+    
+  //clean fullname and email
+  $_POST['fullname'] = trim(str_replace(':','',$_POST['fullname']));
+  $_POST['email']    = trim(str_replace(':','',$_POST['email']));
+  
+  if (empty($_POST['fullname']) || empty($_POST['email'])) {
+    msg($lang['profnoempty'],-1);
+    return false;
+  }
+
+  if (!mail_isvalid($_POST['email'])){
+    msg($lang['regbadmail'],-1);
+    return false;
+  }
+  
+  if ($_POST['fullname'] != $INFO['userinfo']['name']) $changes['name'] = $_POST['fullname'];
+  if ($_POST['email']    != $INFO['userinfo']['mail']) $changes['mail'] = $_POST['email'];
+  if (!empty($_POST['newpass']))  $changes['pass'] = $_POST['newpass'];
+  
+  if (!count($changes)) {
+    msg($lang['profnochange'], -1);
+    return false;
+  } 
+
+  if ($conf['profileconfirm']) {
+      if (!auth_verifyPassword($_POST['oldpass'],$INFO['userinfo']['pass'])) {
+      msg($lang['badlogin'],-1);
+      return false;
+    }
+  }  
+  
+  return auth_modifyUser($_SERVER['REMOTE_USER'], $changes);
+}
+
+/**
+ * Send a  new password
+ *
+ * @author Benoit Chesneau <benoit@bchesneau.info>
+ * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @return bool true on success, false on any error
+*/
+function act_resendpwd(){
+    global $lang;
+    global $conf;
+    
+    if(!$_POST['save']) return false;
+
+    // should not be able to get here without modifyUser being possible...
+	if(!auth_canDo('modifyUser')) {
+      msg($lang['resendna'],-1);
+      return false;
+	}
+    
+    if (empty($_POST['login'])) {
+      msg($lang['resendpwdmissing'], -1);
+      return false;
+    } else {
+      $user = $_POST['login'];
+    }
+    
+    $userinfo = auth_getUserData($user);
+    if(!$userinfo['mail']) {
+      msg($lang['resendpwdnouser'], -1);
+      return false;
+    }
+    
+    $pass = auth_pwgen();
+    if (!auth_modifyUser($user,array('pass' => $pass))) {
+      msg('error modifying user data',-1);
+      return false;
+    }
+        
+    if (auth_sendPassword($user,$pass)) {
+      msg($lang['resendpwdsuccess'],1);
+    } else {
+      msg($lang['regmailfail'],-1);
+    }
+    return true;
 }
 
 /**
