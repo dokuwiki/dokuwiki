@@ -542,7 +542,7 @@ function tpl_searchform(){
   print '<input type="text" ';
   
   if ($ACT == 'search')
-    print 'value="'.$_REQUEST['id'].'" '; /* keep search input as long as user stays on search page */
+    print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
     
   print 'id="qsearch_in" accesskey="f" name="id" class="edit" onkeyup="ajax_qsearch.call(\'qsearch_in\',\'qsearch_out\')" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
