@@ -13,7 +13,6 @@ class common_obfuscate_test extends UnitTestCase {
     function test_hex(){
         global $conf;
         $conf['mailguard'] = 'hex';
-print obfuscate('andi@foobar.com');
         $this->assertEqual(obfuscate('jon-doe@example.com'), 
         '&#x6a;&#x6f;&#x6e;&#x2d;&#x64;&#x6f;&#x65;&#x40;&#x65;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#x6d;');
     }

@@ -4,6 +4,7 @@ ini_set('memory_limit','128M');
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 define('TEST_ROOT', dirname(__FILE__));
 define('TMPL_FILESCHEME_PATH', TEST_ROOT . '/filescheme/');
+define('TEST_RUNNING',TRUE);
 error_reporting(E_ALL);
 
 require_once 'lib/testmanager.php';

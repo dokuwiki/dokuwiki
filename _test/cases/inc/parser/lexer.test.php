@@ -8,7 +8,6 @@
 /**
 * Includes
 */
-require_once('./testconfig.php');
 require_once DOKU_INC . 'inc/parser/lexer.php';
     
 /**

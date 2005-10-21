@@ -82,7 +82,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
     
     function testEmail() {
-        $this->P->addMode('email',new Doku_Parser_Mode_Email());
+        $this->P->addMode('email',new Doku_Parser_Mode_Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
         $calls = array (
             array('document_start',array()),
