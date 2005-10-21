@@ -128,14 +128,14 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
         $item->link = wl($recent['id'],'rev='.$recent['date'],true);
         break;
       case 'rev':
-        $item->link = wl($recent['id'],'do=revisions&amp;rev='.$recent['date'],true);
+        $item->link = wl($recent['id'],'do=revisions&rev='.$recent['date'],true);
         break;
       case 'current':
         $item->link = wl($recent['id'], '', true);
         break;
       case 'diff':
       default:
-        $item->link = wl($recent['id'],'do=diff&amp;'.$recent['date'],true);
+        $item->link = wl($recent['id'],'do=diff'.$recent['date'],true);
     }
 
     $item->description = $desc;
