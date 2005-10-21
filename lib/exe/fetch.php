@@ -18,7 +18,7 @@
   $mimetypes = getMimeTypes();
 
   //get input
-  $MEDIA  = getID('media');
+  $MEDIA  = getID('media',false); // no cleaning - maybe external
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = $_REQUEST['w'];
   $HEIGHT = $_REQUEST['h'];

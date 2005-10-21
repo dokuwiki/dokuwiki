@@ -14,6 +14,21 @@
   $IMG  = getID('media');
   $ID   = cleanID($_REQUEST['id']);
 
+	//FIXME remove me later
+	if($_REQUEST['debug']){
+			print '<pre>';
+			foreach(explode(' ','basedir userewrite baseurl useslash') as $x){
+					print '$'."conf['$x'] = '".$conf[$x]."';\n";
+			}
+			foreach(explode(' ','DOCUMENT_ROOT HTTP_HOST SCRIPT_FILENAME PHP_SELF '.
+                      'REQUEST_URI SCRIPT_NAME PATH_INFO PATH_TRANSLATED') as $x){
+					print '$'."_SERVER['$x'] = '".$_SERVER[$x]."';\n";
+			}
+			print "getID('media'): ".getID('media')."\n";
+      print "getID('media',false): ".getID('media',false)."\n";
+			print '</pre>';
+	}
+
   $ERROR = false;
   // check image permissions
   $AUTH = auth_quickaclcheck($IMG);

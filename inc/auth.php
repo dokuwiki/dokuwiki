@@ -310,7 +310,7 @@ function auth_aclcheck($id,$user,$groups){
   }
 
   //check exact match first
-  $matches = preg_grep('/^'.$id.'\s+('.$regexp.')\s+/',$AUTH_ACL);
+  $matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/',$AUTH_ACL);
   if(count($matches)){
     foreach($matches as $match){
       $match = preg_replace('/#.*$/','',$match); //ignore comments

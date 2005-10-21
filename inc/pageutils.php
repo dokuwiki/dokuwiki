@@ -13,19 +13,16 @@
  * Uses either standard $_REQUEST variable or extracts it from
  * the full request URI when userewrite is set to 2
  *
- * For $param='id' $conf['start'] is returned if no id was found
- * and the returned ID will be cleaned. For other params the
- * cleaning has to be done outside this function
+ * For $param='id' $conf['start'] is returned if no id was found.
+ * If the second parameter is true (default) the ID is cleaned.
  * 
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getID($param='id'){
+function getID($param='id',$clean=true){
   global $conf;
 
   $id = $_REQUEST[$param];
 
-  if($param == 'id') $id = cleanID($id);
-  
   //construct page id from request URI
   if(empty($id) && $conf['userewrite'] == 2){
     //get the script URL
@@ -52,10 +49,12 @@ function getID($param='id'){
       $id = preg_replace ('/\?.*/','',$match[1]);
     }
     $id = urldecode($id);
-    $id = cleanID($id);
+    //strip leading slashes
+    $id = preg_replace('!^/+!','',$id);
   }
-  if(empty($id) && $param=='id') $id = cleanID($conf['start']);
-
+  if(empty($id) && $param=='id') $id = $conf['start'];
+  if($clean) $id = cleanID($id);
+  
   return $id;
 }
 
