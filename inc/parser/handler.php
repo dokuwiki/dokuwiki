@@ -104,7 +104,8 @@ class Doku_Handler {
         }
         
         // Strip markers and whitespaces
-        $title = trim($match,'= ');
+        $title = trim($match,'=');
+        $title = trim($title,' ');
         
         $this->_addCall('header',array($title,$level,$pos), $pos);
         $this->meta['section'] = TRUE;

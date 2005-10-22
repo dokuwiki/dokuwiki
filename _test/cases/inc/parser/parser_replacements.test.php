@@ -339,11 +339,10 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_close',array()),
             array('hr',array()),
             array('p_open',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array("\n Bar\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
-        
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
     
@@ -358,11 +357,10 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_close',array()),
             array('hr',array()),
             array('p_open',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array("\n Bar\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
-        
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 }
