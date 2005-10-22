@@ -6,6 +6,7 @@
  * @author     François Kooman <fkooman.tuxed.net>
  * @author     Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author     Riny Heijdendael <riny@heijdendael.nl>
+ * @author     Koen Huybrechts <huybkoen@gmail.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -45,10 +46,11 @@ $lang['remember']   = 'Bewaar';
 $lang['fullname']   = 'Volledige naam';
 $lang['email']      = 'E-mail';
 $lang['register']   = 'Registreren';
-$lang['badlogin']   = 'Sorry: de gebruikersnaam of het wachtwoord klopt niet.';
+$lang['badlogin']   = 'Gebruikersnaam en/of Wachtwoord kloppen niet';
+$lang['minoredit']  = 'Kleine wijziging';
 
-$lang['regmissing'] = 'Sorry: je moet alle velden invullen.';
-$lang['reguexists'] = 'Sorry: er bestaat al een gebruiker met deze loginnaam.';
+$lang['regmissing'] = 'Vul al de velden in';
+$lang['reguexists'] = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess'] = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';
 $lang['regsuccess2']= 'De gebruiker is aangemaakt.';
 $lang['regmailfail']= 'Het lijkt erop dat het sturen van de wachtwoordmail mislukt is. Neem a.u.b. contact op met de beheerder!';
