@@ -6,11 +6,6 @@
 */
 
 /**
-* Init
-*/
-require_once('./testconfig.php');
-
-/**
 * @package JPSpan
 * @subpackage Tests
 */

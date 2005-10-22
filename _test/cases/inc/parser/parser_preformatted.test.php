@@ -175,7 +175,30 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
     
+		// test with PHP allowed
     function testPHP() {
+				global $conf;
+        $conf['phpok'] = 1;
+
+        $this->P->addMode('php',new Doku_Parser_Mode_PHP());
+        $this->P->parse('Foo <php>testing</php> Bar');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('php',array('testing')),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+		// test with PHP forbidden
+    function testPHPno() {
+        global $conf;
+        $conf['phpok'] = 0;
+
         $this->P->addMode('php',new Doku_Parser_Mode_PHP());
         $this->P->parse('Foo <php>testing</php> Bar');
         $calls = array (
@@ -183,7 +206,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('p_close',array()),
-            array('php',array('testing')),
+            array('file',array('testing')),
             array('p_open',array()),
             array('cdata',array(' Bar'."\n")),
             array('p_close',array()),
@@ -191,8 +214,31 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
+		// test with HTML allowed 
     function testHTML() {
+        global $conf;
+        $conf['htmlok'] = 1;
+
+        $this->P->addMode('html',new Doku_Parser_Mode_HTML());
+        $this->P->parse('Foo <html>testing</html> Bar');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('html',array('testing')),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+		// test with HTML forbidden
+		function testHTMLno() {
+        global $conf;
+        $conf['htmlok'] = 0;
+
         $this->P->addMode('html',new Doku_Parser_Mode_HTML());
         $this->P->parse('Foo <html>testing</html> Bar');
         $calls = array (
@@ -200,7 +246,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('p_close',array()),
-            array('html',array('testing')),
+            array('file',array('testing')),
             array('p_open',array()),
             array('cdata',array(' Bar'."\n")),
             array('p_close',array()),
@@ -208,6 +254,9 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
+
+
+
     
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!
@@ -223,10 +272,6 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('preformatted',array("==Test==\n  y  ")),
             array('p_open',array()),
             array('cdata',array('Bar')),
-            array('p_close',array()),
-            array('p_open',array()),
-            array('p_close',array()),
-            array('p_open',array()),
             array('p_close',array()),
             array('document_end',array()),
         );
