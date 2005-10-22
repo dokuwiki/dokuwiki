@@ -1,6 +1,7 @@
 #!/usr/bin/php -d short_open_tag=on
 <?php
 #------------------------------------------------------------------------------
+ini_set('memory_limit','128M');
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/common.php';
@@ -18,7 +19,7 @@ function usage() {
     defaults to the root wiki namespace
     
     OPTIONS
-        -h, --help=<action>: get help
+        -h, --help get help
 ";
 }
 
@@ -67,8 +68,8 @@ function dw_get_pages($dir) {
             $pages = array_merge($pages, dw_get_pages($dir . '/' . $entry));
         } else {
             $page = array(
-                'id'=>substr(pathID($dir . '/' . $entry),$trunclen),
-                'file'=>$dir . '/' . $entry,
+                'id'  => pathID(substr($dir.'/'.$entry,$trunclen)),
+                'file'=> $dir.'/'.$entry,
                 );
             $pages[] = $page;
         }
@@ -89,6 +90,7 @@ function dw_internal_links($page) {
             $mid = $ins[1][0];
             resolve_pageid($cns,$mid,$exists);
             if ( !$exists ) {
+								list($mid) = explode('#',$mid); //record pages without hashs
                 $links[] = $mid;
             }
         }
@@ -117,6 +119,7 @@ if ( $OPTS->numArgs() == 1 ) {
 
 #------------------------------------------------------------------------------
 $WANTED_PAGES = array();
+
 foreach ( dw_get_pages($START_DIR) as $WIKI_PAGE ) {
     $WANTED_PAGES = array_merge($WANTED_PAGES,dw_internal_links($WIKI_PAGE));
 }
