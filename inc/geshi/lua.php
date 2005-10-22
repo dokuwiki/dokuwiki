@@ -4,10 +4,10 @@
  * -------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.3
- * CVS Revision Version: $Revision: 1.5 $
+ * Release Version: 1.0.7.4
+ * CVS Revision Version: $Revision: 1.7 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/09/22 01:35:22 $
+ * Last Modified: $Date: 2005/10/22 07:52:59 $
  *
  * LUA language file for GeSHi.
  *
@@ -68,6 +68,18 @@ $language_data = array (
 			'clock','date','difftime','execute','exit','getenv','setlocale','time',
 			'_G','getfenv','getmetatable','ipairs','loadlib','next','pairs','pcall',
 			'rawegal','rawget','rawset','require','setfenv','setmetatable','xpcall',
+            'string.byte','string.char','string.dump','string.find','string.len',
+            'string.lower','string.rep','string.sub','string.upper','string.format','string.gfind','string.gsub',
+            'table.concat','table.foreach','table.foreachi','table.getn','table.sort','table.insert','table.remove','table.setn',
+            'math.abs','math.acos','math.asin','math.atan','math.atan2','math.ceil','math.cos','math.deg','math.exp',
+            'math.floor','math.frexp','math.ldexp','math.log','math.log10','math.max','math.min','math.mod',
+            'math.pi','math.rad','math.random','math.randomseed','math.sin','math.sqrt','math.tan',
+            'coroutine.create','coroutine.resume','coroutine.status',
+            'coroutine.wrap','coroutine.yield',
+            'io.close','io.flush','io.input','io.lines','io.open','io.output','io.read','io.tmpfile','io.type','io.write',
+            'io.stdin','io.stdout','io.stderr',
+            'os.clock','os.date','os.difftime','os.execute','os.exit','os.getenv','os.remove','os.rename',
+            'os.setlocale','os.time','os.tmpname',
 			'string','table','math','coroutine','io','os','debug'
 			)
 		),
@@ -109,8 +121,8 @@ $language_data = array (
 		'SCRIPT' => array(
 			)
 		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array('.'
+	'OOLANG' => false,
+	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
 		),

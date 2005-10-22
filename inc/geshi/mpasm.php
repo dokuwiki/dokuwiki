@@ -4,10 +4,10 @@
  * ---------
  * Author: Bakalex (bakalex@gmail.com)
  * Copyright: (c) 2004 Bakalex, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.3
- * CVS Revision Version: $Revision: 1.4 $
+ * Release Version: 1.0.7.4
+ * CVS Revision Version: $Revision: 1.5 $
  * Date Started: 2004/12/6
- * Last Modified: $Date: 2005/09/22 01:35:22 $
+ * Last Modified: $Date: 2005/10/22 07:52:59 $
  *
  * Microchip Assembler language file for GeSHi.
  *

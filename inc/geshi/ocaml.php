@@ -4,10 +4,10 @@
  * ----------
  * Author: Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.3
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.4
+ * CVS Revision Version: $Revision: 1.3 $
  * Date Started: 2005/08/27
- * Last Modified: $Date: 2005/09/22 01:35:22 $
+ * Last Modified: $Date: 2005/10/22 07:52:59 $
  *
  * OCaml (Objective Caml) language file for GeSHi.
  *

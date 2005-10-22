@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.15 2005/09/22 01:41:46 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.19 2005/10/22 07:52:59 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.3');
+define('GESHI_VERSION', '1.0.7.4');
 
 /** For the future (though this may never be realised) */
 define('GESHI_OUTPUT_HTML', 0);
@@ -1687,14 +1687,19 @@ class GeSHi
 											$test_str = @htmlspecialchars($test_str, ENT_COMPAT, $this->encoding);
 										}
 										$close_pos = strpos($part, "\n", $i);
+                                        $oops = false;
 										if ($close_pos === false) {
 											$close_pos = strlen($part);
+                                            $oops = true;
 										}
 										$test_str .= @htmlspecialchars(substr($part, $i + $com_len, $close_pos - $i - $com_len), ENT_COMPAT, $this->encoding);
 										if ($this->lexic_permissions['COMMENTS'][$comment_key]) {
 											$test_str .= "</span>";
 										}
-										$test_str .= "\n";
+                                        // Take into account that the comment might be the last in the source
+                                        if (!$oops) { 
+										  $test_str .= "\n";
+                                        }
 										$i = $close_pos;
 										// parse the rest
 										$result .= $this->parse_non_string_part($stuff_to_parse);
@@ -1735,10 +1740,10 @@ class GeSHi
 					$result .= @htmlspecialchars($part, ENT_COMPAT, $this->encoding);
 				}
 				// Close the <span> that surrounds the block
-                // Removed since the only time this is used is for php and it doesn't need a </span>
-				/*if ($this->strict_mode && $this->lexic_permissions['SCRIPT']) {
+				if ($this->strict_mode && $this->language_data['STYLES']['SCRIPT'][$script_key] != '' &&
+                    $this->lexic_permissions['SCRIPT']) {
 					$result .= '</span>';
-				}*/
+				}
 			} else {
                 // Else not a block to highlight
 				$result .= @htmlspecialchars($part, ENT_COMPAT, $this->encoding);
@@ -2305,7 +2310,10 @@ class GeSHi
 		$header = $this->format_header_content();
 
         if (GESHI_HEADER_NONE == $this->header_type) {
-            return "$header<ol$ol_attributes>";
+            if ($this->line_numbers != GESHI_NO_LINE_NUMBERS) {
+                return "$header<ol$ol_attributes>";
+            }
+            return $header;
         }
         
 		// Work out what to return and do it
@@ -2615,11 +2623,11 @@ if (!function_exists('geshi_highlight')) {
 	function geshi_highlight ($string, $language, $path, $return = false)
 	{
 		$geshi = new GeSHi($string, $language, $path);
-		$geshi->set_header_type(GESHI_HEADER_DIV);
+		$geshi->set_header_type(GESHI_HEADER_NONE);
 		if ($return) {
-			return str_replace('<div>', '<code>', str_replace('</div>', '</code>', $geshi->parse_code()));
+			return '<code>' . $geshi->parse_code() . '</code>';
 		}
-		echo str_replace('<div>', '<code>', str_replace('</div>', '</code>', $geshi->parse_code()));
+		echo '<code>' . $geshi->parse_code() . '</code>';
 		if ($geshi->error()) {
 			return false;
 		}
