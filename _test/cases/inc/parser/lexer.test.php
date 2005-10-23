@@ -593,18 +593,4 @@ class TestOfLexerByteIndices extends UnitTestCase {
     
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = & new GroupTest('LexerTests');
-    $test->addTestCase(new TestOfLexerParallelRegex());
-    $test->addTestCase(new TestOfLexerStateStack());
-    $test->addTestCase(new TestOfLexer());
-    $test->addTestCase(new TestOfLexerModes());
-    $test->addTestCase(new TestOfLexerHandlers());
-    $test->addTestCase(new TestOfLexerByteIndices());
-    $test->run(new HtmlReporter());
-}
 ?>

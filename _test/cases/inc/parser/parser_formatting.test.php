@@ -261,11 +261,3 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
     }
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new TestOfDoku_Parser_Formatting();
-    $test->run(new HtmlReporter());
-}

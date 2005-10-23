@@ -30,12 +30,4 @@ class ParserGroupTest extends GroupTest {
     
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new ParserGroupTest();
-    $test->run(new HtmlReporter());
-}
 ?>

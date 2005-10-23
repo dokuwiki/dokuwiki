@@ -548,11 +548,3 @@ def');
     }
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new TestOfDoku_Parser_Table();
-    $test->run(new HtmlReporter());
-}

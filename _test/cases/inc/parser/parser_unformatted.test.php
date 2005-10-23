@@ -39,11 +39,3 @@ class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
     }
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new TestOfDoku_Parser_Unformatted();
-    $test->run(new HtmlReporter());
-}

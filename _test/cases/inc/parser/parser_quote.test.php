@@ -104,11 +104,3 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
 
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new TestOfDoku_Parser_Quote();
-    $test->run(new HtmlReporter());
-}

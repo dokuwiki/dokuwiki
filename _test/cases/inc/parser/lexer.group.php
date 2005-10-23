@@ -18,12 +18,4 @@ class LexerGroupTest extends GroupTest {
     
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new LexerGroupTest();
-    $test->run(new HtmlReporter());
-}
 ?>

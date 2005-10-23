@@ -14,11 +14,9 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("Foo")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('cdata',array("Bar")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -34,14 +32,10 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('cdata',array("Foo")),
             array('p_close',array()),
             array('p_open',array()),
-            array('p_close',array()),
-            array('p_open',array()),
             array('cdata',array("bar")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('cdata',array("Foo")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -55,11 +49,9 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("Foo")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('cdata',array("Bar")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -74,7 +66,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nFoo")),
             array('linebreak',array()),
-            array('cdata',array("Bar\n")),
+            array('cdata',array(" Bar\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -94,8 +86,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('p_close',array()),
             array('p_open',array()),
             array('cdata',array("Bar")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(" ")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -117,11 +108,3 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
 
 }
 
-/**
-* Conditional test runner
-*/
-if (!defined('TEST_RUNNING')) {
-    define('TEST_RUNNING', true);
-    $test = &new TestOfDoku_Parser_Eol();
-    $test->run(new HtmlReporter());
-}
