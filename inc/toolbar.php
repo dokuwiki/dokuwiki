@@ -63,7 +63,7 @@ function toolbar_JSdefines($varname){
             'icon'   => 'strike.png',
             'key'    => 'd',
             'open'  => '<del>',
-            'close'   => '<del>',
+            'close'   => '</del>',
             ),
        array(
             'type'   => 'format',
@@ -71,7 +71,7 @@ function toolbar_JSdefines($varname){
             'icon'   => 'h1.png',
             'key'    => '1',
             'open'   => '====== ',
-            'close'  => '======\n',
+            'close'  => ' ======\n',
             ),
        array(
             'type'   => 'format',
@@ -79,7 +79,7 @@ function toolbar_JSdefines($varname){
             'icon'   => 'h2.png',
             'key'    => '2',
             'open'   => '===== ',
-            'close'  => '=====\n',
+            'close'  => ' =====\n',
             ),
        array(
             'type'   => 'format',
@@ -87,7 +87,7 @@ function toolbar_JSdefines($varname){
             'icon'   => 'h3.png',
             'key'    => '3',
             'open'   => '==== ',
-            'close'  => '====\n',
+            'close'  => ' ====\n',
             ),
        array(
             'type'   => 'format',
@@ -95,7 +95,7 @@ function toolbar_JSdefines($varname){
             'icon'   => 'h4.png',
             'key'    => '4',
             'open'   => '=== ',
-            'close'  => '===\n',
+            'close'  => ' ===\n',
             ),
        array(
             'type'   => 'format',
@@ -103,7 +103,7 @@ function toolbar_JSdefines($varname){
             'icon'   => 'h5.png',
             'key'    => '5',
             'open'   => '== ',
-            'close'  => '==\n',
+            'close'  => ' ==\n',
             ),
        array(
             'type'   => 'format',
