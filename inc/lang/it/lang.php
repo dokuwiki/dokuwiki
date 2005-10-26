@@ -31,6 +31,7 @@ $lang['btn_admin']  = 'Amministrazione';
 $lang['btn_update'] = 'Aggiorna';
 $lang['btn_delete'] = 'Cancella';
 $lang['btn_back']   = 'Indietro';
+$lang['btn_backlink'] = "Pagine che indicano qua";
 $lang['btn_backtomedia'] = 'Torna al selettore Mediafile';
 
 $lang['loggedinas'] = 'Collegato come';
@@ -144,6 +145,9 @@ $lang['spell_noerr'] = 'Nessun errore trovato';
 $lang['spell_nosug'] = 'Nessun suggerimento';
 $lang['spell_change']= 'Cambia';
 
+$lang['mediaedit'] = "Modifica i metadati";
+$lang['metasaveerr'] = 'Non sono riuscito a salvare i metadati';
+$lang['metasaveok']  = 'Metadati salvati';
 $lang['img_backto']  = 'Torna a';
 $lang['img_title']   = 'Titolo';
 $lang['img_caption'] = 'Descrizione';
