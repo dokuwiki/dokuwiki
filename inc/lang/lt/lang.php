@@ -30,7 +30,10 @@ $lang['btn_admin']  = 'Administracija';
 $lang['btn_update'] = 'Atnaujinti';
 $lang['btn_delete'] = 'Ištrinti';
 $lang['btn_back']   = 'Atgal';
+$lang['btn_backlink'] = 'Atgalinės nuorodos';
 $lang['btn_backtomedia'] = 'Atgal į Mediabylos išsirinkimą';
+$lang['btn_subscribe'] = 'Užsisakyti keitimų prenumeratą';
+$lang['btn_unsubscribe'] = 'Atsisakyti keitimų prenumeratos';
 
 $lang['loggedinas'] = 'Prisijungęs kaip';
 $lang['user']       = 'Vartotojo vardas';
@@ -41,6 +44,7 @@ $lang['fullname']   = 'Visas vardas';
 $lang['email']      = 'El. pašto adresas';
 $lang['register']   = 'Registruotis';
 $lang['badlogin']   = 'Nurodėte blogą vartotojo vardą arba slaptažodį.';
+$lang['minoredit']  = 'Nedidelis pataisymas';
 
 $lang['regmissing'] = 'Turite užpildyti visus laukus.';
 $lang['reguexists'] = 'Vartotojas su pasirinktu prisijungimo vardu jau egzistuoja.';
@@ -142,5 +146,26 @@ $lang['spell_wait']  = 'Prašau palaukti...';
 $lang['spell_noerr'] = 'Klaidų nerasta';
 $lang['spell_nosug'] = 'Taisymo pasiūlymų nėra';
 $lang['spell_change']= 'Keisti';
+
+$lang['metaedit'] = 'Redaguoti metaduomenis';
+$lang['metasaveerr'] = 'Nepavyko išsaugoti metaduomenų';
+$lang['metasaveok'] = 'Metaduomenys išsaugoti';
+$lang['img_backto'] = 'Atgal į';
+$lang['img_title'] = 'Pavadinimas';
+$lang['img_caption'] = 'Antraštė';
+$lang['img_date'] = 'Data';
+$lang['img_fname'] = 'Bylos pavadinimas';
+$lang['img_fsize'] = 'Dydis';
+$lang['img_artist'] = 'Fotografas';
+$lang['img_copyr'] = 'Autorinės teisės';
+$lang['img_format'] = 'Formatas';
+$lang['img_camera'] = 'Kamera';
+$lang['img_keywords'] = 'Raktiniai žodžiai';
+
+$lang['subscribe_success']  = '%s užsakyta "%s" prenumerata';
+$lang['subscribe_error']    = '%s užsakant "%s" prenumeratą įvyko klaida';
+$lang['subscribe_noaddress']= 'Jūs nesatė nurodęs el. pašto adreso, todėl negalima Jums užsakyti prenumeratos';
+$lang['unsubscribe_success']= '%s ištrintas iš "%s" prenumeratos';
+$lang['unsubscribe_error']  = '%s trinant iš "%s" prenumeratos įvyko klaida';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
