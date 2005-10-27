@@ -1047,7 +1047,7 @@ function getVersion(){
   }elseif(is_dir('_darcs')){
     //darcs checkout
     $inv = file('_darcs/inventory');
-    $inv = preg_grep('#andi@splitbrain\.org\*\*\d{14}#',$inv);
+    $inv = preg_grep('#\*\*\d{14}[\]$]#',$inv);
     $cur = array_pop($inv);
     preg_match('#\*\*(\d{4})(\d{2})(\d{2})#',$cur,$matches);
     return 'Darcs '.$matches[1].'-'.$matches[2].'-'.$matches[3];
