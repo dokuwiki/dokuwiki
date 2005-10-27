@@ -45,7 +45,7 @@
   if(empty($ACT)) $ACT = 'show';
 
 
-  if($ACT == 'debug'){
+  if($conf['allowdebug'] && $ACT == 'debug'){
     html_debug();
     exit;
   }

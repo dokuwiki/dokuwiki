@@ -1120,6 +1120,12 @@ function check(){
   }else{
     msg('mb_string extension not available - PHP only replacements will be used',0);
   }
+
+  if($conf['allowdebug']){
+    msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
+  }else{
+    msg('Debugging support is disabled',1);
+  }
  
   msg('Your current permission for this page is '.$INFO['perm'],0);
 

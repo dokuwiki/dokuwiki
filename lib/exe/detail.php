@@ -14,8 +14,7 @@
   $IMG  = getID('media');
   $ID   = cleanID($_REQUEST['id']);
 
-	//FIXME remove me later
-	if($_REQUEST['debug']){
+	if($conf['allowdebug'] && $_REQUEST['debug']){
 			print '<pre>';
 			foreach(explode(' ','basedir userewrite baseurl useslash') as $x){
 					print '$'."conf['$x'] = '".$conf[$x]."';\n";

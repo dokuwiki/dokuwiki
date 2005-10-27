@@ -37,6 +37,7 @@ $conf['deaccent']    = 1;                 //convert accented chars to unaccented
 $conf['useheading']  = 0;                 //use the first heading in a page as its name
 $conf['refcheck']    = 1;                 //check for references before deleting media files
 $conf['refshow']     = 0;                 //how many references should be shown, 5 is a good value
+$conf['allowdebug']  = 1;                 //make debug possible, disable after install! 0|1
 
 /* Antispam Features */
 

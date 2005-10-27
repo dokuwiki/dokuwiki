@@ -90,16 +90,16 @@ function p_cached_xhtml($file){
   {
     //well then use the cache
     $parsed = io_readfile($cache);
-    $parsed .= "\n<!-- cachefile $cache used -->\n";
+    if($conf['allowdebug']) $parsed .= "\n<!-- cachefile $cache used -->\n";
   }else{
     $parsed = p_render('xhtml', p_cached_instructions($file),$info); //try to use cached instructions
 
     if($info['cache']){
       io_saveFile($cache,$parsed); //save cachefile
-      $parsed .= "\n<!-- no cachefile used, but created -->\n";
+      if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, but created -->\n";
     }else{
       @unlink($cache); //try to delete cachefile
-      $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
+      if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
     }
   }
 
