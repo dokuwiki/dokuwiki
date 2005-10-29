@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki JavaScript and CSS creator
+ * DokuWiki JavaScript creator
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -14,12 +14,9 @@ require_once(DOKU_INC.'inc/io.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
-    if($_REQUEST['type'] == 'css'){
-        css_out();
-    }else{
-        header('Content-Type: text/javascript; charset=utf-8');
-        js_out();
-    }
+    header('Content-Type: text/javascript; charset=utf-8');
+    js_out();
+    js_dynamicout();
 }
 
 
@@ -28,7 +25,6 @@ if(!defined('SIMPLE_TEST')){
 /**
  * Output all needed JavaScript
  *
- * @todo   Add Whitespace and Comment Compression
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function js_out(){
@@ -38,7 +34,7 @@ function js_out(){
     $write = (bool) $_REQUEST['write'];  // writable?
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName($conf['lang'].$edit.$write,$ext='.js'); 
+    $cache = getCacheName('scripts'.$edit.$write,'.js'); 
 
     // Array of needed files
     $files = array(
@@ -56,10 +52,11 @@ function js_out(){
         }
     }
 
-    // FIXME load plugin scripts
+    // get possible plugin scripts
+    $plugins = js_pluginscripts();
 
     // check cache age here
-    if(js_cacheok($cache,$files)){
+    if(js_cacheok($cache,array_merge($files,$plugins))){
         readfile($cache);
         return;
     }
@@ -109,24 +106,43 @@ function js_out(){
         }
     }
 
+    // load plugin scripts (suppress warnings for missing ones)
+    foreach($plugins as $plugin){
+        @readfile($plugin);
+    }
 
     // load user script
-    if(@file_exists(DOKU_INC.'conf/userscript.js')){
-      readfile(DOKU_INC.'conf/userscript.js');
-    }
+    @readfile(DOKU_CONF.'userscript.js');
 
     // end output buffering and get contents
     $js = ob_get_contents();
     ob_end_clean();
 
     // compress whitespace and comments
-    $js = js_compress($js);
+    if($conf['compress']){
+        $js = js_compress($js);
+    }
 
     // save cache file
     io_saveFile($cache,$js);
 
     // finally send output
     print $js;
+}
+
+/**
+ * Adds some dynamic JavaScript using the readonly Session
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function js_dynamicout(){
+    $edit  = (bool) $_REQUEST['edit'];   // edit or preview mode?
+    $write = (bool) $_REQUEST['write'];  // writable?
+    $sig   = (bool) $_REQUEST['sig'];    // show sig button?
+    if($edit && $write && $sig){
+        require_once(DOKU_INC.'inc/toolbar.php');
+        toolbar_addsigbutton('toolbar');
+    }
 }
 
 /**
@@ -139,9 +155,10 @@ function js_cacheok($cache,$files){
     if(!$ctime) return false; //There is no cache
 
     // some additional files to check
-    $files[] = DOKU_INC.'conf/dokuwiki.conf';
-    $files[] = DOKU_INC.'conf/local.conf';
-    $files[] = DOKU_INC.'conf/userscript.js';
+    $files[] = DOKU_CONF.'dokuwiki.conf';
+    $files[] = DOKU_CONF.'local.conf';
+    $files[] = DOKU_CONF.'userscript.js';
+    $files[] = __FILE__;
 
     // now walk the files
     foreach($files as $file){
@@ -150,6 +167,20 @@ function js_cacheok($cache,$files){
         }
     }
     return true;
+}
+
+/**
+ * Returns a list of possible Plugin Scripts (no existance check here)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function js_pluginscripts(){
+    $list = array();
+    $plugins = plugin_list();
+    foreach ($plugins as $p){
+        $list[] = DOKU_PLUGIN."$p/script.js";
+    }
+    return $list;
 }
 
 /**
@@ -171,7 +202,16 @@ function js_runonstart($func){
     print "addEvent(window,'load',function(){ $func; });";
 }
 
-//http://modp.com/release/jsstrip/jsstrip.py
+/**
+ * Strip comments and whitespaces from given JavaScript Code
+ *
+ * This is a rewrite of Nick Galbreaths python tool jsstrip.py which is
+ * released under BSD license. See link for original code.
+ *
+ * @author Nick Galbreath <nickg@modp.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @link http://modp.com/release/jsstrip/
+ */
 function js_compress($s){
     $i = 0;
     $line = 0;
@@ -286,8 +326,6 @@ function js_compress($s){
     ob_end_clean();
     return $out;
 }
-
-//http://csstidy.sourceforge.net/download.php
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 ?>

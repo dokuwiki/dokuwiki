@@ -21,16 +21,7 @@
   <?php tpl_metaheaders()?>
 
   <link rel="shortcut icon" href="<?php echo DOKU_BASE?>lib/images/favicon.ico" />
-  <link rel="stylesheet" media="screen" type="text/css" href="<?php echo DOKU_TPL?>layout.css" />
-  <link rel="stylesheet" media="screen" type="text/css" href="<?php echo DOKU_TPL?>design.css" />
 
-  <!--[if gte IE 5]>
-  <style type="text/css">
-    /* that IE 5+ conditional comment makes this only visible in IE 5+ */
-    /* IE bugfix for transparent PNGs */
-    //DISABLED img { behavior: url("<?php echo DOKU_BASE?>lib/scripts/pngbehavior.htc"); }
-  </style>
-  <![endif]-->
 </head>
 
 <body>

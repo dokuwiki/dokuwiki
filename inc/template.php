@@ -176,7 +176,6 @@ function tpl_metaheaders(){
   ptln('<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="'.DOKU_BASE.'feed.php?mode=list&amp;ns='.$INFO['namespace'].'" />',$it);
   ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.wl($ID,'do=export_html').'" />',$it);
   ptln('<link rel="alternate" type="text/plain" title="Wiki Markup" href="'.wl($ID, 'do=export_raw').'" />',$it);
-  ptln('<link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.'lib/styles/style.css" />',$it);
 
   // setup robot tags apropriate for different modes
   if( ($ACT=='show' || $ACT=='export_html') && !$REV){
@@ -195,97 +194,16 @@ function tpl_metaheaders(){
     ptln('<meta name="robots" content="noindex,nofollow" />',$it);
   }
 
-/*
+  // load stylesheets
+  ptln('<link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.'lib/exe/css.php" />',$it);
+  ptln('<link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.'lib/exe/css.php?print=1" />',$it);
 
-  // include some JavaScript language strings #FIXME still needed?
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-  ptln("  var alertText   = '".str_replace('\\\\n','\\n',addslashes($lang['qb_alert']))."'",$it);
-  ptln("  var notSavedYet = '".str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."'",$it);
-  ptln("  var DOKU_BASE   = '".DOKU_BASE."'",$it);
-
-  ptln('</script>',$it);
- 
-  // load the default JavaScript files
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/events.js"></script>',$it);
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/script.js"></script>',$it);
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/tw-sack.js"></script>',$it);
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/ajax.js"></script>',$it);
-
-  
-  // dom tool tip library, for insitu footnotes
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/domLib.js"></script>',$it);
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
-
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-  ptln("addEvent(window,'load',function(){ajax_qsearch.init('qsearch_in','qsearch_out');});",$it);
-  ptln("addEvent(window,'load',function(){addEvent(document,'click',closePopups);});",$it);
-  ptln('</script>',$it);
-
-  // editing functions
-  if($ACT=='edit' || $ACT=='preview'){
-    // add size control
-    ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-    ptln("addEvent(window,'load',function(){initSizeCtl('sizectl','wikitext')});",$it+2);
-    ptln('</script>',$it);
-
-    if($INFO['writable']){
-      // load toolbar functions
-      ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-           DOKU_BASE.'lib/scripts/edit.js"></script>',$it);
-
-      // load spellchecker functions if wanted
-      if($conf['spellchecker']){
-        ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-             DOKU_BASE.'lib/scripts/spellcheck.js"></script>',$it+2);
-      }
- 
-      ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-
-      // add toolbar
-      require_once(DOKU_INC.'inc/toolbar.php');
-      toolbar_JSdefines('toolbar');
-      ptln("addEvent(window,'load',function(){initToolbar('toolbar','wikitext',toolbar);});",$it+2);
-
-      // add pageleave check
-      ptln("addEvent(window,'load',function(){initChangeCheck('".
-           str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."');});",$it);
-
-      // add lock timer
-      ptln("addEvent(window,'load',function(){init_locktimer(".
-           ($conf['locktime']-60).",'".
-           str_replace('\\\\n','\\n',addslashes($lang['willexpire']))."');});",$it);
-
-      // add spellchecker
-      if($conf['spellchecker']){
-        //init here
-        ptln("addEvent(window,'load',function(){ ajax_spell.init('".
-                                       $lang['spell_start']."','".
-                                       $lang['spell_stop']."','".
-                                       $lang['spell_wait']."','".
-                                       $lang['spell_noerr']."','".
-                                       $lang['spell_nosug']."','".
-                                       $lang['spell_change']."'); });");
-      }
-      ptln('</script>',$it);
-    }
-  }
-*/
-
+  // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview') ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
-
+  $js_sig   = ($conf['useacl'] && $_SERVER['REMOTE_USER']) ? 1 : 0;
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/exe/jscss.php?type=js&amp;edit='.$js_edit.'&amp;write='.$js_write.'"></script>',$it);
-
-
-  // plugin stylesheets and Scripts
-  plugin_printCSSJS();
+       DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&amp;write='.$js_write.'&amp;sig='.$js_sig.'"></script>',$it);
 }
 
 /**

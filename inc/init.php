@@ -42,6 +42,10 @@
   if(!defined('DOKU_TPL')) define('DOKU_TPL',
                                   DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
 
+  // define real Template directory
+  if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
+                                  DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+
   // make session rewrites XHTML compliant
   @ini_set('arg_separator.output', '&amp;');
 

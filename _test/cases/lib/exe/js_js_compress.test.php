@@ -1,9 +1,9 @@
 <?php
 
-require_once DOKU_INC.'lib/exe/jscss.php';
+require_once DOKU_INC.'lib/exe/js.php';
 
 
-class jscss_js_compress_test extends UnitTestCase {
+class js_js_compress_test extends UnitTestCase {
 
     function test_mlcom1(){
         $text = '/**

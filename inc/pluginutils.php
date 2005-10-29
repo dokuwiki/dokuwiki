@@ -8,6 +8,8 @@
 
 /**
  * prints needed HTML to include plugin CSS and JS files
+ *
+ * @deprecated - now handled by the style and script loader in lib/exe
  */
 function plugin_printCSSJS(){
     global $conf;

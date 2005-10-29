@@ -23,22 +23,6 @@
   <?php tpl_metaheaders()?>
 
   <link rel="shortcut icon" href="<?php echo DOKU_BASE?>lib/images/favicon.ico" />
-  <link rel="stylesheet" media="screen" type="text/css" href="<?php echo DOKU_TPL?>layout.css" />
-  <link rel="stylesheet" media="screen" type="text/css" href="<?php echo DOKU_TPL?>design.css" />
-
-  <?php if($lang['direction'] == 'rtl') {?>
-  <link rel="stylesheet" media="screen" type="text/css" href="<?php echo DOKU_TPL?>rtl.css" />
-  <?php } ?>
-
-  <link rel="stylesheet" media="print" type="text/css" href="<?php echo DOKU_TPL?>print.css" />
-
-  <!--[if gte IE 5]>
-  <style type="text/css">
-    /* that IE 5+ conditional comment makes this only visible in IE 5+ */
-    /* IE bugfix for transparent PNGs */
-    //DISABLED   img { behavior: url("<?php echo DOKU_BASE?>lib/scripts/pngbehavior.htc"); }
-  </style>
-  <![endif]-->
 
   <?php /*old includehook*/ @include(dirname(__FILE__).'/meta.html')?>
 </head>

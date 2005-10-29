@@ -164,17 +164,6 @@ function toolbar_JSdefines($varname){
            ),
     );
     
-    // if logged in add sig button
-    if($conf['useacl'] && $_SERVER['REMOTE_USER']){
-        $menu[] = array(
-            'type'   => 'insert',
-            'title'  => $lang['qb_sig'],
-            'icon'   => 'sig.png',
-            'key'    => 'y',
-            'insert' => toolbar_signature(),
-            );
-    }
-
     // use JSON to build the JavaScript array
     $json = new JSON();
     print "var $varname = ".$json->encode($menu).";\n";
@@ -187,15 +176,35 @@ function toolbar_JSdefines($varname){
  */
 function toolbar_signature(){
   global $conf;
-  global $INFO;
 
   $sig = $conf['signature'];
   $sig = strftime($sig);
   $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
-  $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
-  $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
+  $sig = str_replace('@NAME@',$_SESSION[$conf[title]]['auth']['info']['name'],$sig);
+  $sig = str_replace('@MAIL@',$_SESSION[$conf[title]]['auth']['info']['mail'],$sig);
   $sig = str_replace('@DATE@',date($conf['dformat']),$sig);
   return $sig;
+}
+
+/**
+ * Adds the signature button to the already prepared Javascript array
+ * @param  string $varname Name of the JS variable to fill
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function toolbar_addsigbutton($varname){
+    global $lang;
+
+    $menu = array(
+                'type'   => 'insert',
+                'title'  => $lang['qb_sig'],
+                'icon'   => 'sig.png',
+                'key'    => 'y',
+                'insert' => toolbar_signature(),
+              );
+    // use JSON to build the JavaScript array
+    $json = new JSON();
+    print $varname.'['.$varname.'.length] = '.$json->encode($menu).";\n";
+
 }
 
 
