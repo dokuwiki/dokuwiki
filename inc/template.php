@@ -195,7 +195,9 @@ function tpl_metaheaders(){
     ptln('<meta name="robots" content="noindex,nofollow" />',$it);
   }
 
-  // include some JavaScript language strings
+/*
+
+  // include some JavaScript language strings #FIXME still needed?
   ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
   ptln("  var alertText   = '".str_replace('\\\\n','\\n',addslashes($lang['qb_alert']))."'",$it);
   ptln("  var notSavedYet = '".str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."'",$it);
@@ -204,6 +206,8 @@ function tpl_metaheaders(){
   ptln('</script>',$it);
  
   // load the default JavaScript files
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+       DOKU_BASE.'lib/scripts/events.js"></script>',$it);
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/script.js"></script>',$it);
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
@@ -218,13 +222,16 @@ function tpl_metaheaders(){
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/scripts/domTT.js"></script>',$it);
 
-
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
+  ptln("addEvent(window,'load',function(){ajax_qsearch.init('qsearch_in','qsearch_out');});",$it);
+  ptln("addEvent(window,'load',function(){addEvent(document,'click',closePopups);});",$it);
+  ptln('</script>',$it);
 
   // editing functions
   if($ACT=='edit' || $ACT=='preview'){
     // add size control
     ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
-    ptln("addEvent(window,'onload',function(){initSizeCtl('sizectl','wikitext')});",$it+2);
+    ptln("addEvent(window,'load',function(){initSizeCtl('sizectl','wikitext')});",$it+2);
     ptln('</script>',$it);
 
     if($INFO['writable']){
@@ -243,21 +250,21 @@ function tpl_metaheaders(){
       // add toolbar
       require_once(DOKU_INC.'inc/toolbar.php');
       toolbar_JSdefines('toolbar');
-      ptln("addEvent(window,'onload',function(){initToolbar('toolbar','wikitext',toolbar);});",$it+2);
+      ptln("addEvent(window,'load',function(){initToolbar('toolbar','wikitext',toolbar);});",$it+2);
 
       // add pageleave check
-      ptln("addEvent(window,'onload',function(){initChangeCheck('".
+      ptln("addEvent(window,'load',function(){initChangeCheck('".
            str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."');});",$it);
 
       // add lock timer
-      ptln("addEvent(window,'onload',function(){init_locktimer(".
+      ptln("addEvent(window,'load',function(){init_locktimer(".
            ($conf['locktime']-60).",'".
            str_replace('\\\\n','\\n',addslashes($lang['willexpire']))."');});",$it);
 
       // add spellchecker
       if($conf['spellchecker']){
         //init here
-        ptln("addEvent(window,'onload',function(){ ajax_spell.init('".
+        ptln("addEvent(window,'load',function(){ ajax_spell.init('".
                                        $lang['spell_start']."','".
                                        $lang['spell_stop']."','".
                                        $lang['spell_wait']."','".
@@ -268,6 +275,14 @@ function tpl_metaheaders(){
       ptln('</script>',$it);
     }
   }
+*/
+
+  $js_edit  = ($ACT=='edit' || $ACT=='preview') ? 1 : 0;
+  $js_write = ($INFO['writable']) ? 1 : 0;
+
+  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+       DOKU_BASE.'lib/exe/jscss.php?type=js&amp;edit='.$js_edit.'&amp;write='.$js_write.'"></script>',$it);
+
 
   // plugin stylesheets and Scripts
   plugin_printCSSJS();
@@ -533,20 +548,17 @@ function tpl_actionlink($type,$pre='',$suf=''){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_searchform(){
+function tpl_searchform($withajax=true){
   global $lang;
   global $ACT;
   
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
-  
-  if ($ACT == 'search')
-    print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
-    
-  print 'id="qsearch_in" accesskey="f" name="id" class="edit" onkeyup="ajax_qsearch.call(\'qsearch_in\',\'qsearch_out\')" />';
+  if ($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
+  print 'id="qsearch_in" accesskey="f" name="id" class="edit" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
-  print '<div id="qsearch_out" class="ajax_qsearch" onclick="this.style.display=\'none\'"></div>';
+  print '<div id="qsearch_out" class="ajax_qsearch JSpopup"></div>';
   print '</form>';
 }
 

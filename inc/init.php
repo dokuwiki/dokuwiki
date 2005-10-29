@@ -46,8 +46,10 @@
   @ini_set('arg_separator.output', '&amp;');
 
   // init session
-  session_name("DokuWiki");
-  if (!headers_sent()) session_start();
+  if (!headers_sent() && !defined(NOSESSION)){
+    session_name("DokuWiki");
+    session_start();
+  }
 
   // kill magic quotes
   if (get_magic_quotes_gpc()) {
