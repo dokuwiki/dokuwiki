@@ -7,7 +7,7 @@
  */
 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
-define('NOSESSION',true); // we do not use a session or authentication here (better caching)
+if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/io.php');

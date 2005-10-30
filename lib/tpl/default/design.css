@@ -214,10 +214,8 @@ a.windows:hover {
   text-decoration:underline;
 }
 
-/* interwiki link */
+/* interwiki link (icon are set by dokuwiki) */
 a.interwiki{
-    background: transparent url(images/interwiki.png) 0px 1px no-repeat;
-		padding-left: 16px;
     color:#436976;
     text-decoration:none;
 }

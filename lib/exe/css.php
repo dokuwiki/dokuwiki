@@ -7,10 +7,11 @@
  */
 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
-define('NOSESSION',true); // we do not use a session or authentication here (better caching)
+if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/io.php');
+require_once(DOKU_INC.'inc/confutils.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
@@ -64,6 +65,9 @@ function css_out(){
     // start output buffering and build the stylesheet
     ob_start();
 
+    // print the default classes for Interwikilinks
+    css_interwiki();
+
     // load files
     foreach($files as $file => $location){
         print css_loadfile($file, $location);
@@ -106,6 +110,41 @@ function css_cacheok($cache,$files){
         }
     }
     return true;
+}
+
+/**
+ * Prints classes for interwikilinks
+ *
+ * Interwiki links have two classes: 'interwiki' and 'iw_$name>' where
+ * $name is the identifier given in the config. All Interwiki links get
+ * an default style with a default icon. If a special icon is available
+ * for an interwiki URL it is set in it's own class. Both classes can be
+ * overwritten in the template or userstyles.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function css_interwiki(){
+
+    // default style
+    echo 'a.interwiki {';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.png) 0px 1px no-repeat;';
+    echo ' padding-left: 16px;';
+    echo '}';
+
+    // additional styles when icon available
+    $iwlinks = getInterwiki();
+    foreach(array_keys($iwlinks) as $iw){
+        if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
+            echo "a.iw_$iw {";
+            echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
+            echo '}';
+        }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
+            echo "a.iw_$iw {";
+            echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
+            echo '}';
+        }
+    }
+
 }
 
 /**

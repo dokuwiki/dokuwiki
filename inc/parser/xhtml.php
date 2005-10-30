@@ -568,12 +568,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['more']   = '';
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
-        if ( !$isImage ) {
-            $link['class'] = 'interwiki';
-        } else {
-            $link['class'] = 'media';
-        }
-
         //get interwiki URL
         if ( isset($this->interwiki[$wikiName]) ) {
             $url = $this->interwiki[$wikiName];
@@ -582,14 +576,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $url = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
             $wikiName = 'go';
         }
-       
-        if(!$isImage){
-            //if ico exists set additional style
-            if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$wikiName.'.png')){
-                $link['style']='background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$wikiName.'.png)';
-            }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$wikiName.'.gif')){
-                $link['style']='background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$wikiName.'.gif)';
-            }
+
+        if ( !$isImage ) {
+            $link['class'] = "interwiki iw_$wikiName";
+        } else {
+            $link['class'] = 'media';
         }
 
         //do we stay at the same server? Use local target
