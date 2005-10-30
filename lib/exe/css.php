@@ -77,6 +77,9 @@ function css_out(){
     $css = ob_get_contents();
     ob_end_clean();
 
+    // apply style replacements
+    $css = css_applystyle($css);
+
     // compress whitespace and comments
     if($conf['compress']){
         $css = css_compress($css);
@@ -101,6 +104,7 @@ function css_cacheok($cache,$files){
     // some additional files to check
     $files[] = DOKU_CONF.'dokuwiki.conf';
     $files[] = DOKU_CONF.'local.conf';
+    $files[] = DOKU_TPLINC.'style.ini';
     $files[] = __FILE__;
 
     // now walk the files
@@ -110,6 +114,20 @@ function css_cacheok($cache,$files){
         }
     }
     return true;
+}
+
+/**
+ * Does placeholder replacements in the style according to 
+ * the ones defined in a templates style.ini file
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function css_applystyle($css){
+    if(@file_exists(DOKU_TPLINC.'style.ini')){
+        $ini = parse_ini_file(DOKU_TPLINC.'style.ini');
+        $css = strtr($css,$ini);
+    }
+    return $css;
 }
 
 /**

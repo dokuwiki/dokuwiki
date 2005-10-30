@@ -9,7 +9,7 @@
 
 body {
   font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-  background-color: White;
+  background-color: __white__;
   color: Black;
   margin: 0;
   padding: 0;
@@ -37,7 +37,7 @@ p {padding:0; margin: 0 0 1.0em 0;}
 
 hr {
   border: 0px;
-  border-top: 1px solid #8cacbb;
+  border-top: 1px solid __dark__;
   text-align:center;
   height: 0px;
 }
@@ -74,15 +74,15 @@ label.block input.edit {
 fieldset {
   width: 300px;
   text-align: center;
-  border: 1px solid #8cacbb;
+  border: 1px solid __dark__;
   padding: 0.5em;
 }
 
 textarea.edit {
   font-family:monospace;
-  border: 1px solid #8cacbb;  
+  border: 1px solid __dark__;  
   color: Black;
-  background-color: white;
+  background-color: __white__;
   font-size:14px;
   padding: 3px;
   width:100%;
@@ -90,12 +90,12 @@ textarea.edit {
 
 input.edit,select.edit {
   font-size: 100%;
-  border: 1px solid #8cacbb;
+  border: 1px solid __dark__;
   height: 18px !important;
   max-height: 22px !important;
   min-height: 22px !important;
   color: Black;
-  background-color: white;
+  background-color: __white__;
   vertical-align: middle;
   padding: 1px;
   display: inline;
@@ -103,7 +103,7 @@ input.edit,select.edit {
 
 input.missing {
   font-size: 100%;
-  border: 1px solid #8cacbb;
+  border: 1px solid __dark__;
   height: 18px !important;
   max-height: 22px !important;
   min-height: 22px !important;
@@ -118,9 +118,9 @@ input.missing {
 
 
 input.button, button.button{
-  border: 1px solid #8cacbb;  
+  border: 1px solid __dark__;  
   color: Black;
-  background-color: white;
+  background-color: __white__;
   vertical-align: middle;
   text-decoration:none;
   font-size: 100%;
@@ -133,9 +133,9 @@ input.button, button.button{
 }
 
 div.secedit input.button {
-  border: 1px solid #8cacbb;
+  border: 1px solid __dark__;
   color: Black;
-  background-color: white;
+  background-color: __white__;
   vertical-align: middle;
   text-decoration:none;
   margin: 0px;
@@ -178,11 +178,11 @@ div.pagenav-next input.button {
 /* --------------- Links ------------------ */
 
 a {
-  color:#436976;
+  color:__extern__;
   text-decoration:none;
 }
 a:hover {
-  color:#000000;
+  color:__black__;
   text-decoration:underline;
 }
 
@@ -190,7 +190,7 @@ a:hover {
 a.urlextern{
     background: transparent url(images/link_icon.gif) 0px 1px no-repeat;
     padding: 1px 0px 1px 16px;
-    color:#436976;
+    color:__extern__;
     text-decoration:none;
 }
 a.urlextern:visited {
@@ -204,7 +204,7 @@ a.urlextern:hover {
 a.windows{
     background: transparent url(images/windows.gif) 0px 1px no-repeat;
     padding: 1px 0px 1px 16px;
-    color:#436976;
+    color:__extern__;
     text-decoration:none;
 } 
 a.windows:visited {
@@ -216,7 +216,7 @@ a.windows:hover {
 
 /* interwiki link (icon are set by dokuwiki) */
 a.interwiki{
-    color:#436976;
+    color:__extern__;
     text-decoration:none;
 }
 a.interwiki:visited {
@@ -228,11 +228,11 @@ a.interwiki:hover {
 
 /* link to some embedded media */
 a.media {
-  color:#436976;
+  color:__extern__;
   text-decoration:none;
 }
 a.media:hover {
-  color:#436976;
+  color:__extern__;
   text-decoration:underline
 }
 
@@ -240,7 +240,7 @@ a.media:hover {
 a.mail {
   background: transparent url(images/mail_icon.gif) 0px 1px no-repeat;
   padding: 1px 0px 1px 16px;
-  color:#436976;
+  color:__extern__;
   text-decoration:none;
 }
 a.mail:hover {
@@ -248,39 +248,39 @@ a.mail:hover {
 }
 
 /* existing wikipage */
-a.wikilink1:link    { color:#009900; text-decoration:none }
-a.wikilink1:visited { color:#009900; text-decoration:none }
-a.wikilink1:hover   { color:#009900; text-decoration:underline }
+a.wikilink1:link    { color:__existing__; text-decoration:none }
+a.wikilink1:visited { color:__existing__; text-decoration:none }
+a.wikilink1:hover   { color:__existing__; text-decoration:underline }
 
 /* not existing wikipage */
-a.wikilink2:link    { color:#FF3300; text-decoration:none }
-a.wikilink2:visited { color:#FF3300; text-decoration:none }
-a.wikilink2:hover   { color:#FF3300; text-decoration:underline }
+a.wikilink2:link    { color:__missing__; text-decoration:none }
+a.wikilink2:visited { color:__missing__; text-decoration:none }
+a.wikilink2:hover   { color:__missing__; text-decoration:underline }
 
 
 /* ------------- Page elements ----------------- */
 
 div.preview{
-  background:#f7f9fa;
+  background:__lighter__;
   margin-left:2em;
   padding: 4px;
-  border: 1px dashed #000000;
+  border: 1px dashed __black__;
 }
 
 div.breadcrumbs{
-  background-color: #f5f5f5;
+  background-color: __lightgray__;
   font-size:80%;
-  color: #666666;
+  color: __darkgray__;
   padding-left: 4px;
 }
 
 span.user{
-  color: #cccccc;
+  color: __mediumgray__;
   font-size: 90%;
 }
 
 li.minor {
-  color: #666;
+  color: __darkgray__;
   font-style: italic;
 }
 
@@ -310,7 +310,7 @@ img.mediacenter {
 
 acronym {
   cursor: help;
-  border-bottom: 1px dotted #000;
+  border-bottom: 1px dotted __black__;
 }
 
 /* general headline setup */
@@ -328,7 +328,7 @@ h1, h2, h3, h4, h5 {
     padding-right:  0;
     padding-top:    0.5em;
     padding-bottom: 0;
-    border-bottom: 1px solid #8cacbb;
+    border-bottom: 1px solid __dark__;
     clear: left;
 }
 
@@ -360,14 +360,14 @@ ol {
   line-height: 1.5em;
   margin: 0 0 0.5em 1.5em;
   padding: 0;
-  color: #638c9c;
+  color: __darker__;
   font-weight: bold;
   list-style-image: none;
 }
 
 /* the list items overriding the ol definition */
 .li {
-  color: #000000;
+  color: __black__;
   font-weight: normal;
 }
 
@@ -385,7 +385,7 @@ li.closed {
 }
 
 blockquote {
-  border-left: 2px solid #8cacbb;
+  border-left: 2px solid __dark__;
   padding-left: 3px;
   margin-left: 0;
 }
@@ -394,9 +394,9 @@ blockquote {
 pre.pre {
   font-size: 120%;
   padding: 0.5em;
-  border: 1px dashed #8cacbb;
+  border: 1px dashed __dark__;
   color: Black;
-  background-color: #f7f9fa;
+  background-color: __lighter__;
   overflow: auto;
 }
 
@@ -404,9 +404,9 @@ pre.pre {
 pre.code {
   font-size: 120%;
   padding: 0.5em;
-  border: 1px dashed #8cacbb;
+  border: 1px dashed __dark__;
   color: Black;
-  background-color: #f7f9fa;
+  background-color: __lighter__;
   overflow: auto;
 }
 
@@ -419,28 +419,28 @@ code {
 pre.file {
   font-size: 120%;
   padding: 0.5em;
-  border: 1px dashed #8cacbb;
+  border: 1px dashed __dark__;
   color: Black;
-  background-color: #dee7ec;
+  background-color: __medium__;
   overflow: auto;
 }
 
 /* inline tables */
 table.inline {
-  background-color: #ffffff;
+  background-color: __white__;
   border-spacing: 0px;
   border-collapse: collapse;
 }
 
 table.inline th {
   padding: 3px;
-  border: 1px solid #8cacbb;
-  background-color: #dee7ec;
+  border: 1px solid __dark__;
+  background-color: __medium__;
 }
 
 table.inline td {
   padding: 3px;
-  border: 1px solid #8cacbb;
+  border: 1px solid __dark__;
 }
 
 .leftalign{
@@ -469,8 +469,8 @@ div.toc {
 
 div.tocheader {
   padding: 3px;
-  border: 1px solid #8cacbb;
-  background-color: #dee7ec;
+  border: 1px solid __dark__;
+  background-color: __medium__;
   text-align: left;
   font-weight:bold;
   margin-bottom: 2px;
@@ -488,8 +488,8 @@ div.toctoggle img {
 }
 
 #tocinside {
-  border: 1px solid #8cacbb;
-  background-color: #ffffff;
+  border: 1px solid __dark__;
+  background-color: __white__;
   text-align: left;
   padding-top: 0.5em;
   padding-bottom: 0.7em;
@@ -515,20 +515,20 @@ ul.toc li.clear {
 }
 
 a.toc {
-  color: #436976;
+  color: __extern__;
   text-decoration:none;
 }
 
 a.toc:hover {
-  color: #000000;
+  color: __black__;
   text-decoration:underline; 
 }
 
 /* ---------------------------- Diff rendering --------------------------*/
-table.diff { background:white; }
+table.diff { background:__white__; }
 td.diff-blockheader {font-weight:bold}
 td.diff-header {
-  border-bottom: 1px solid #8cacbb;
+  border-bottom: 1px solid __dark__;
   font-size:120%;
 }
 td.diff-addedline {
@@ -542,7 +542,7 @@ td.diff-deletedline {
     font-size: 100%;
 }
 td.diff-context {
-    background:#f7f9fa;
+    background:__lighter__;
     font-family: monospace;
     font-size: 100%;
 }
@@ -552,7 +552,7 @@ span.diffchange { color: red; }
 
 div.footnotes{
   clear:both;
-  border-top: 1px solid #8cacbb;
+  border-top: 1px solid __dark__;
   padding-left: 1em;
   margin-top: 1em;
 }
@@ -576,8 +576,8 @@ a.fn_bot{
 div.insitu-footnote {
   font-size: 80%;
   line-height: 1.2em;
-  border: 1px solid #8cacbb;
-  background: #eef3f8;
+  border: 1px solid __dark__;
+  background: __light__;
   text-align: left;
   padding: 4px;
   max-width: 40%;    /* IE's width is handled in javascript */  
@@ -596,24 +596,24 @@ div.insitu-footnote {
 }
 
 .search_snippet{
-  color: #999999;
+  color: __mediumgray__;
   font-size: 12px;
   margin-left: 20px;
 }
 
 .search_sep{
-  color: #000000;
+  color: __black__;
 }
 
 .search_hit{
-  color: #000000;
-  background: #FFFF99;
+  color: __black__;
+  background: __highlight__;
 }
 
 div.search_quickresult{
   margin-bottom: 15px;
   padding-bottom: 5px;
-  border-bottom: 1px dashed #8cacbb;
+  border-bottom: 1px dashed __dark__;
   margin-left: 30px;
   padding-right: 10px;
 }
@@ -662,25 +662,25 @@ div.ajax_qsearch {
   display:none;
   font-size: 80%;
   line-height: 1.2em;
-  border: 1px solid #8cacbb;
-  background: #eef3f8;
+  border: 1px solid __dark__;
+  background: __light__;
   text-align: left;
   padding: 4px;
 }
 
 /* --------- Toolbar -------------------- */
 button.toolbutton{
-  background-color: #fff;
+  background-color: __white__;
   padding: 0px;
   margin: 0 1px 0 0;
-	border: 1px solid #8cacbb;
+	border: 1px solid __dark__;
 	cursor: pointer;
 }
 
 div.picker {
   width: 250px;
-  border: 1px solid #8cacbb;
-  background: #eef3f8;
+  border: 1px solid __dark__;
+  background: __light__;
 }
 
 button.pickerbutton {
@@ -695,7 +695,7 @@ button.pickerbutton {
 /* ---------- Spellchecking ------------- */
 
 a.spell_error {
-  color: #ff0000;
+  color: #ff0;
   text-decoration: underline;
 }
 
@@ -704,9 +704,9 @@ div#spell_suggest {
   left: 0;
   top: 0;
   display: none;
-  background-color: #fff;
+  background-color: __white__;
   padding: 2px;
-  border: 1px solid #000;
+  border: 1px solid __black__;
   font-size:80%;
   z-index: 2;
 }
@@ -714,11 +714,11 @@ div#spell_suggest {
 div#spell_result {
   display:none;
   font-family:monospace;
-  border: 1px solid #8cacbb; 
+  border: 1px solid __dark__; 
   color: Black;
   font-size:14px;
   padding: 3px;
-  background-color: #f7f9fa;
+  background-color: __lighter__;
   overflow: auto;
   z-index: 1;
 
@@ -730,11 +730,11 @@ div#spell_result {
 }
 
 span.spell_noerr {
-  color: #009933;
+  color: #093;
 }
 
 span.spell_wait {
-  color: #0066cc;
+  color: #06c;
 }
 
 /* ---------------  Image Details  ----------------- */
@@ -746,14 +746,14 @@ div.img_big {
 
 dl.img_tags dt {
   font-weight: bold;
-  background-color: #dee7ec;
+  background-color: __medium__;
 }
 dl.img_tags dd {
-  background-color: #f5f5f5;
+  background-color: __lightgray__;
 }
 
 div.imagemeta {
-  color: #666;
+  color: __darkgray__;
   font-size: 70%;
   line-height: 95%;
 }

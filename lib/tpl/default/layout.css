@@ -17,19 +17,15 @@
 	float:left;
 	font-size:200%;
 	font-weight:bolder;
-	color:#DEE7EC;
+	color: __medium__;
 	text-align:left;
 	vertical-align:middle;
 	padding:1px 0 0 1px;
 }
 
-.pagename a:link, .pagename a:visited {
-  color:#436976;
+.pagename a:link, .pagename a:visited, .pagename a:hover, .pagename a:active {
+  color: __extern__;
   text-decoration:none;
-}
-
-.pagename a:hover, .pagename a:active {
-  color:#FF9933;
 }
 
 .logo {
@@ -41,7 +37,7 @@
 }
 
 .logo a:link, .logo a:visited, .logo a:hover, .logo a:active {
-	color:#dee7ec;
+	color: __medium__;
 	text-decoration:none;
 	font-variant:small-caps;
 	letter-spacing:2pt;
@@ -50,9 +46,9 @@
 /* ---------------  top and bottom bar ---------------- */
 .bar {
 	height:25px;
-	border-top:1px solid #8CACBB;
-	border-bottom:1px solid #8CACBB;
-	background:#DEE7EC;
+	border-top:1px solid __dark__;
+	border-bottom:1px solid __dark__;
+	background: __medium__;
 	padding:2px;
 	margin:0;
   clear: both;
@@ -76,7 +72,7 @@
 div.meta {
   clear: both;
   margin-top: 1em;
-  color:#436976;
+  color: __extern__;
   font-size:70%;
 }
 
@@ -92,7 +88,7 @@ div.meta div.doc{
 
 div.uploadform {
   margin-top: 0.5em;
-  border-top: 1px solid #8cacbb;
+  border-top: 1px solid __dark__;
 }
 
 .mediaselect-left {
@@ -103,7 +99,7 @@ div.uploadform {
 
 .mediaselect-right {
   float:right;
-  border-left: 1px solid #8cacbb;
+  border-left: 1px solid __dark__;
   padding: 0.5em;
   width:65%;
 }
@@ -117,14 +113,14 @@ div.mediaref .search_result {
 }
 
 .mediaref_ref {
-	color:#009900;
+	color: __existing__;
 }
 
 div.mediaref_hidden {
 	margin-top:1em;
 	text-align:center;
 	font-size:1.2em;
-	color:#BB0000;
+	color: #BB0000;
 }
 
 div.mediaref_footer {
