@@ -285,14 +285,29 @@ function html_show($txt=''){
  * Highlights searchqueries in HTML code
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Harry Fuecks <hfuecks@gmail.com>
  */
 function html_hilight($html,$query){
-  $queries = preg_split ("/\s/",$query,-1,PREG_SPLIT_NO_EMPTY);
+  //split at common delimiters
+  $queries = preg_split ('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>]+/',$query,-1,PREG_SPLIT_NO_EMPTY);
   foreach ($queries as $q){
-    $q = preg_quote($q,'/');
-    $html = preg_replace("/((<[^>]*)|$q)/ie", '"\2"=="\1"? unslash("\1"):"<span class=\"search_hit\">".unslash("\1")."</span>"', $html);
+     $q = preg_quote($q,'/');
+     $html = preg_replace_callback("/((<[^>]*)|$q)/i",'html_hilight_callback',$html);
   }
   return $html;
+}
+
+/** 
+ * Callback used by html_hilight()
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ */     
+function html_hilight_callback($m) {
+  $hlight = unslash($m[0]);
+  if ( !isset($m[2])) {
+    $hlight = '<span class="search_hit">'.$hlight.'</span>';
+  }
+  return $hlight;
 }
 
 /**
