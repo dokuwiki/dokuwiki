@@ -464,19 +464,27 @@ function tpl_actionlink($type,$pre='',$suf=''){
 /**
  * Print the search form
  *
+ * If the first parameter is given a div with the ID 'qsearch_out' will
+ * be added which instructs the ajax pagequicksearch to kick in and place
+ * its output into this div. The second parameter controls the propritary
+ * attribute autocomplete. If set to false this attribute will be set with an
+ * value of "off" to instruct the browser to disable it's own built in
+ * autocompletion feature (MSIE and Firefox)
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_searchform($withajax=true){
+function tpl_searchform($ajax=true,$autocomplete=true){
   global $lang;
   global $ACT;
   
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
-  if ($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
+  if($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
+  if(!$autocomplete) print 'autocomplete="off" ';
   print 'id="qsearch_in" accesskey="f" name="id" class="edit" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
-  print '<div id="qsearch_out" class="ajax_qsearch JSpopup"></div>';
+  if($ajax) print '<div id="qsearch_out" class="ajax_qsearch JSpopup"></div>';
   print '</form>';
 }
 
