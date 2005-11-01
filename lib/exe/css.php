@@ -45,9 +45,10 @@ function css_out(){
         $files[DOKU_CONF.'userprint.css'] = '';
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
-        //fixme spellchecker style
+        //fixme extra spellchecker style?
         $files[DOKU_TPLINC.'layout.css'] = DOKU_TPL;
         $files[DOKU_TPLINC.'design.css'] = DOKU_TPL;
+        $files[DOKU_TPLINC.'style.css']  = DOKU_TPL;
         if($lang['direction'] == 'rtl'){
             $files[DOKU_TPLINC.'rtl.css'] = DOKU_TPL;
         }
