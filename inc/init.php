@@ -50,7 +50,7 @@
   @ini_set('arg_separator.output', '&amp;');
 
   // init session
-  if (!headers_sent() && !defined(NOSESSION)){
+  if (!headers_sent() && !defined('NOSESSION')){
     session_name("DokuWiki");
     session_start();
   }

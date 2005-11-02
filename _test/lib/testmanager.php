@@ -6,6 +6,16 @@
 define('TEST_GROUPS',realpath(dirname(__FILE__).'/../cases'));
 define('TEST_CASES',realpath(dirname(__FILE__).'/../cases'));
 
+// try to load runkit extension
+if (!extension_loaded('runkit')) {
+   if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) {
+       dl('php_runkit.dll');
+   } else {
+       dl('runkit.so');
+   }
+}
+
+
 class TestManager {
     var $_testcase_extension = '.test.php';
     var $_grouptest_extension = '.group.php';
@@ -22,6 +32,14 @@ class TestManager {
             define($key, $value);
         }
         TestManager::_installSimpleTest();
+
+				list($version) = file(SIMPLE_TEST.'VERSION');
+				$version = trim($version);
+				if(!version_compare('1.0.1alpha',$version,'<')){
+						echo "At least SimpleTest Version 1.0.1alpha is required.";
+						echo " Yours is $version\n";
+						exit;
+				}
     }
     
     function _installSimpleTest() {

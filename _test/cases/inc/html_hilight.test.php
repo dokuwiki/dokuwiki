@@ -12,7 +12,7 @@ function html_hilight_test_unslash($string,$char="'"){
   return $str;
 }
 
-class html_hilight_test extends UnitTestCase {
+class html_hilight_test extends UnitTestCase{
 
   function setup() {
     runkit_function_rename('html_hilight_test_unslash','unslash');
