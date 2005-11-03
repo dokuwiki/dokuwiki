@@ -21,6 +21,14 @@ class css_css_compress_test extends UnitTestCase {
         $this->assertEqual(css_compress($text), '#comment/* */{color:lime;}');
     }
 
+    function test_hack(){
+        $text = '/* Mac IE will not see this and continue with inline-block */
+                 /* \\*/
+                 display: inline; 
+                 /* */';
+        $this->assertEqual(css_compress($text), '/* \\*/display:inline;/* */');
+    }
+
     function test_nl1(){
         $text = "a{left:20px;\ntop:20px}";
         $this->assertEqual(css_compress($text), 'a{left:20px;top:20px}');

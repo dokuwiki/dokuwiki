@@ -9,9 +9,9 @@ define('TEST_CASES',realpath(dirname(__FILE__).'/../cases'));
 // try to load runkit extension
 if (!extension_loaded('runkit')) {
    if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) {
-       dl('php_runkit.dll');
+       @dl('php_runkit.dll');
    } else {
-       dl('runkit.so');
+       @dl('runkit.so');
    }
 }
 

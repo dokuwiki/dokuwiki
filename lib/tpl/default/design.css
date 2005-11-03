@@ -129,7 +129,12 @@ input.button, button.button{
   max-height: 22px !important;
   min-height: 22px !important;
   margin: 1px;
+  display: inline-block;
+
+  /* Mac IE will not see this and continue with inline-block */
+  /* \*/
   display: inline;
+  /* */  
 }
 
 div.secedit input.button {

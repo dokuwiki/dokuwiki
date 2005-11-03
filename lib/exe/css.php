@@ -206,11 +206,11 @@ function css_pluginstyles($mode='screen'){
 function css_compress($css){
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
-    $css = preg_replace('/ ?([:;,{}]) ?/','\\1',$css);
+    $css = preg_replace('/ ?([:;,{}\/]) ?/','\\1',$css);
 
     // strip comments (ungreedy)
     // We keep very small comments to maintain typical browser hacks
-    $css = preg_replace('!(/\*)(.{4,})(\*/)!U','',$css);
+    $css = preg_replace('#(/\*)((?!\*/).){4,}(\*/)#Us','',$css);
 
     // shorten colors
     $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3/", "#\\1\\2\\3",$css);
