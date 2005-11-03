@@ -523,7 +523,11 @@ class Doku_Handler {
             break;
             
             case DOKU_LEXER_MATCHED:
-                if ( preg_match('/.{2}/',$match) ) {
+                if ( $match == ' ' ){
+                    $this->_addCall('cdata', array($match), $pos);
+                } else if ( preg_match('/\t+/',$match) ) {
+                    $this->_addCall('table_align', array($match), $pos);
+                } else if ( preg_match('/ {2,}/',$match) ) {
                     $this->_addCall('table_align', array($match), $pos);
                 } else if ( $match == "\n|" ) {
                     $this->_addCall('table_row', array(), $pos);
@@ -1135,7 +1139,7 @@ class Doku_Handler_Table {
                 
                 // Now convert the whitespace back to cdata
                 $this->tableCalls[$key][0] = 'cdata';
-                
+
             } else if ( $call[0] == 'colspan' ) {
             
                 $this->tableCalls[$key-1][1][0] = FALSE;
@@ -1158,11 +1162,26 @@ class Doku_Handler_Table {
                 $toDelete[] = $key+1;
             }
         }
-        
+
+
+        // condense cdata
+        $cnt = count($this->tableCalls);
+        for( $key = 0; $key < $cnt; $key++){
+            if($this->tableCalls[$key][0] == 'cdata'){
+                $ckey = $key;
+                $key++;
+                while($this->tableCalls[$key][0] == 'cdata'){
+                    $this->tableCalls[$ckey][1][0] .= $this->tableCalls[$key][1][0];
+                    $toDelete[] = $key;
+                    $key++;
+                }
+                continue;
+            }
+        }
+
         foreach ( $toDelete as $delete ) {
             unset($this->tableCalls[$delete]);
         }
-        
         $this->tableCalls = array_values($this->tableCalls);
     }
 }

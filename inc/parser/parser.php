@@ -464,7 +464,8 @@ class Doku_Parser_Mode_table extends Doku_Parser_Mode {
     function postConnect() {
         $this->Lexer->addPattern('\n\^','table');
         $this->Lexer->addPattern('\n\|','table');
-        $this->Lexer->addPattern(' {2,}','table');
+        #$this->Lexer->addPattern(' {2,}','table');
+        $this->Lexer->addPattern('[\t ]+','table');
         $this->Lexer->addPattern('\^','table');
         $this->Lexer->addPattern('\|','table');
         $this->Lexer->addExitPattern('\n','table');
