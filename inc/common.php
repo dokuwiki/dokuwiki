@@ -660,6 +660,9 @@ function _handleRecent($line,$ns,$flags){
   // remember in seen to skip additional sights
   $seen[$id] = 1;
 
+  // check if it's a hidden page
+  if(isHiddenPage($id)) return false;
+
   // filter namespace
   if (($ns) && (strpos($id,$ns.':') !== 0)) return false;
 

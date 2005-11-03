@@ -301,4 +301,28 @@ function getCacheName($data,$ext=''){
   return $file;
 }
 
+/**
+ * Checks a pageid against $conf['hidepages']
+ *
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ */
+function isHiddenPage($id){
+  global $conf;
+  if(empty($conf['hidepages'])) return false;
+
+  if(preg_match('/'.$conf['hidepages'].'/ui',':'.$id)){
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Reverse of isHiddenPage
+ *
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ */
+function isVisiblePage($id){
+  return !isHiddenPage($id);
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

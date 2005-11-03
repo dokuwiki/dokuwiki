@@ -125,8 +125,14 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
     return false;
   }
 
-  //check ACL
   $id = pathID($file);
+
+  //check hidden
+  if($type=='f' && isHiddenPage($id)){
+    return false;
+  }
+
+  //check ACL
   if($type=='f' && auth_quickaclcheck($id) < AUTH_READ){
     return false;
   }

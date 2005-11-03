@@ -44,6 +44,11 @@ function ft_pageSearch($query,&$poswords){
     }
     if(!count($docs)) return array();
 
+    // create a list of hidden pages in the result
+    $hidden = array();
+    $hidden = array_filter(array_keys($docs),'isHiddenPage');
+    $not = array_merge($not,$hidden);
+
     // remove negative matches
     foreach($not as $n){
         unset($docs[$n]);
@@ -95,13 +100,14 @@ function ft_backlinks($id){
     // quick lookup of the pagename
     $page    = noNS($id);
     $sw      = array(); // we don't use stopwords here
-    $matches = idx_lookup(idx_tokenizer($page,$sw));  //pagename may contain specials (_ or .)
-    $docs = ft_resultCombine(array_values($matches));
+    $matches = idx_lookup(idx_tokenizer($page,$sw));  // pagename may contain specials (_ or .)
+    $docs    = array_keys(ft_resultCombine(array_values($matches)));
+    $docs    = array_filter($docs,'isVisiblePage'); // discard hidden pages
     if(!count($docs)) return $result;
     require_once(DOKU_INC.'inc/parserutils.php');
 
     // check instructions for matching links
-    foreach(array_keys($docs) as $match){
+    foreach($docs as $match){
         $instructions = p_cached_instructions(wikiFN($match),true);
         if(is_null($instructions)) continue;
 
@@ -161,6 +167,7 @@ function ft_pageLookup($id,$pageonly=true){
         }
     }
 
+    $pages = array_filter($pages,'isVisiblePage'); // discard hidden pages
     if(!count($pages)) return array();
 
     // check ACL permissions
