@@ -700,7 +700,7 @@ button.pickerbutton {
 /* ---------- Spellchecking ------------- */
 
 a.spell_error {
-  color: #ff0;
+  color: #f00;
   text-decoration: underline;
 }
 
