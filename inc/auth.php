@@ -23,51 +23,55 @@
       $auth_class = "auth_".$conf['authtype'];
       if (!class_exists($auth_class)) $auth_class = "auth_basic";
       $auth = new $auth_class();
+      if ($auth->success == false) {
+          msg($lang['authmodfailed'],-1);
+          unset($auth);
+      }
 
       // interface between current dokuwiki/old auth system and new style auth object
       function auth_canDo($fn) { 
-	    global $auth; 
-		return method_exists($auth, $fn);
-	  }
+        global $auth; 
+        return method_exists($auth, $fn);
+      }
 	  
-	  // mandatory functions - these should exist
+      // mandatory functions - these should exist
       function auth_checkPass($user,$pass) {
-	    global $auth; 
-		return method_exists($auth,'checkPass') ? $auth->checkPass($user, $pass) : false; 
-	  }
+        global $auth; 
+        return method_exists($auth,'checkPass') ? $auth->checkPass($user, $pass) : false; 
+      }
       
-	  function auth_getUserData($user) { 
-	    global $auth; 
-		return method_exists($auth, 'getUserData') ? $auth->getUserData($user) : false; 
-	  }
+      function auth_getUserData($user) { 
+        global $auth; 
+        return method_exists($auth, 'getUserData') ? $auth->getUserData($user) : false; 
+      }
 	  
-	  // optional functions, behave gracefully if these don't exist; 
-	  // potential calling code should query whether these exist in advance
+      // optional functions, behave gracefully if these don't exist; 
+      // potential calling code should query whether these exist in advance
       function auth_createUser($user,$pass,$name,$mail) { 
-	    global $auth; 
-		return method_exists($auth, 'createUser') ? $auth->createUser($user,$pass,$name,$mail) : null;
-	  }
+        global $auth; 
+        return method_exists($auth, 'createUser') ? $auth->createUser($user,$pass,$name,$mail) : null;
+      }
       
-	  function auth_modifyUser($user, $changes) {
-	    global $auth; 
-		return method_exists($auth, 'modifyUser') ? $auth->modifyUser($user,$changes) : false; 
-	  }
+      function auth_modifyUser($user, $changes) {
+        global $auth; 
+        return method_exists($auth, 'modifyUser') ? $auth->modifyUser($user,$changes) : false; 
+      }
 	  
       function auth_deleteUsers($users) {
-	    global $auth; 
-		return method_exists($auth, 'deleteUsers') ? $auth->deleteUsers($users) : 0; 
-	  }	  
+        global $auth; 
+        return method_exists($auth, 'deleteUsers') ? $auth->deleteUsers($users) : 0; 
+      }	  
 	  
-	  // other functions, will only be accessed by new code 
-	  //- these must query auth_canDo() or test method existence themselves.
+      // other functions, will only be accessed by new code 
+      //- these must query auth_canDo() or test method existence themselves.
 
   } else {
     // old style auth functions
     require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
     $auth = null;
 	  
-	// new function, allows other parts of dokuwiki to know what they can and can't do  
-	function auth_canDo($fn) { return function_exists("auth_$fn"); }
+    // new function, allows other parts of dokuwiki to know what they can and can't do  
+    function auth_canDo($fn) { return function_exists("auth_$fn"); }
   }
 
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));

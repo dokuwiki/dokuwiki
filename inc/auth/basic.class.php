@@ -10,6 +10,8 @@
  
 class auth_basic {
 
+	var $success = TRUE;
+
 	/**
 	 * Check user+password [ MUST BE OVERRIDDEN ]
 	 *

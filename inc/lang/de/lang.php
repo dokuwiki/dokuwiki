@@ -171,4 +171,6 @@ $lang['subscribe_noaddress']= 'Weil Deine E-Mail-Adresse fehlt, kannst Du leider
 $lang['unsubscribe_success']= 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
 $lang['unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
 
+$lang['authmodfailed'] = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
