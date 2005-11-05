@@ -66,8 +66,9 @@ function css_out(){
     // start output buffering and build the stylesheet
     ob_start();
 
-    // print the default classes for Interwikilinks
+    // print the default classes for interwiki links and file downloads
     css_interwiki();
+    css_filetypes();
 
     // load files
     foreach($files as $file => $location){
@@ -163,7 +164,34 @@ function css_interwiki(){
             echo '}';
         }
     }
+}
 
+/**
+ * Prints classes for file download links
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function css_filetypes(){
+
+    // default style
+    echo 'a.mediafile {';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/fileicons/file.png) 0px 1px no-repeat;';
+    echo ' padding-left: 16px;';
+    echo '}';
+
+    // additional styles when icon available
+    $mimes = getMimeTypes();
+    foreach(array_keys($mimes) as $mime){
+        if(@file_exists(DOKU_INC.'lib/images/fileicons/'.$mime.'.png')){
+            echo "a.mf_$mime {";
+            echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$mime.'.png)';
+            echo '}';
+        }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$mime.'.gif')){
+            echo "a.mf_$mime {";
+            echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$mime.'.gif)';
+            echo '}';
+        }
+    }
 }
 
 /**

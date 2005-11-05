@@ -703,22 +703,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
-             // link only jpeg images
-             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = TRUE;
              $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
          }elseif($mime == 'application/x-shockwave-flash'){
              // don't link flash movies
              $noLink = TRUE;
          }else{
              // add file icons
-             $link['class'] = 'urlextern';
-             if(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')){
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.png)';
-             }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.gif')){
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.gif)';
-             }else{
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.png)';
-             }
+             $link['class'] .= ' mediafile mf_'.$ext;
              $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
          }
          $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
@@ -757,14 +748,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
              $noLink = TRUE;
         }else{
              // add file icons
-             $link['class'] = 'urlextern';
-             if(@file_exists(DOKU_INC.'lib/images/fileicons/'. $ext.'.png')){
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.png)';
-             }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.gif')){
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.'.gif)';
-             }else{
-                 $link['style']='background-image: url('.DOKU_BASE.'lib/images/fileicons/file.png)';
-             }
+             $link['class'] .= ' mediafile mf_'.$ext;
          }
 
         //output formatted
