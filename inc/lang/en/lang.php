@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Anika Henke <henke@cosmocode.de>
+ * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -35,9 +36,9 @@ $lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
 $lang['btn_unsubscribe'] = 'Unsubscribe Changes';
-$lang['btn_profile'] = 'Update Profile';
-$lang['btn_reset'] = 'Reset';
-$lang['btn_resendpwd'] = 'Send password';
+$lang['btn_profile']    = 'Update Profile';
+$lang['btn_reset']     = 'Reset';
+$lang['btn_resendpwd'] = 'Send new password';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -51,7 +52,7 @@ $lang['email']      = 'E-Mail';
 $lang['register']   = 'Register';
 $lang['profile']    = 'User Profile';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
-$lang['minoredit']  = 'Minor Edit';
+$lang['minoredit']  = 'Minor Changes';
 
 $lang['regmissing'] = 'Sorry, you must fill in all fields.';
 $lang['reguexists'] = 'Sorry, a user with this login already exists.';
@@ -67,9 +68,9 @@ $lang['profna']       = 'This wiki does not support profile modification';
 $lang['profnochange'] = 'No changes, nothing to do.';
 $lang['profnoempty']  = 'An empty name or email address is not allowed.';
 
-$lang['pwdforget'] = 'Forgotten your password? Get it resent';
+$lang['pwdforget'] = 'Forgotten your password? Get a new one';
 $lang['resendna']  = 'This wiki does not support password resending.';
-$lang['resendpwd'] = 'Resend password';
+$lang['resendpwd'] = 'Send new password for';
 $lang['resendpwdmissing'] = 'Sorry, you must fill in all fields.';
 $lang['resendpwdnouser']  = 'Sorry, we can\'t find this user in our database.';
 $lang['resendpwdsuccess'] = 'Your new password has been sent by email.';
@@ -82,7 +83,6 @@ $lang['lockexpire']   = 'Lock expires at';
 $lang['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
 
 $lang['notsavedyet'] = 'Unsaved changes will be lost.\nReally continue?';
-
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Nothing was found.';
 
@@ -142,7 +142,6 @@ $lang['qb_media']   = 'Add Images and other files';
 $lang['qb_sig']     = 'Insert Signature';
 $lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Special Chars';
-
 
 $lang['del_confirm']= 'Delete this entry?';
 

@@ -79,10 +79,10 @@ function html_login(){
       print '</p>';
     }
 
-    if (auth_canDo('modifyUser') && $conf['autopasswd']) {
+    if (auth_canDo('modifyUser')) {
       print '<p>';
       print $lang['pwdforget'];
-      print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['resendpwd'].'</a>';
+      print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
       print '</p>';
     }
   ?>
@@ -1164,7 +1164,7 @@ function html_resendpwd() {
   <form name="resendpwd" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
     <fieldset>
       <br />
-      <legend><?php echo $lang['btn_resendpwd']?></legend>
+      <legend><?php echo $lang['resendpwd']?></legend>
       <input type="hidden" name="do" value="resendpwd" />
       <input type="hidden" name="save" value="1" />
       <label class="block">
