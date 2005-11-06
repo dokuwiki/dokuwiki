@@ -1,5 +1,5 @@
 <?php
-
+require_once DOKU_INC.'inc/utf8.php';
 require_once DOKU_INC.'inc/pageutils.php';
 
 class init_getID_test extends UnitTestCase {

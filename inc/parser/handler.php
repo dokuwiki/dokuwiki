@@ -593,6 +593,9 @@ function Doku_Handler_Parse_Media($match) {
     if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
         ($size[1]) ? $w = $size[1] : $w = NULL;
         ($size[3]) ? $h = $size[3] : $h = NULL;
+    } else {
+        $w = NULL;
+        $h = NULL;
     }
 
     //get linking command
@@ -1511,10 +1514,25 @@ class Doku_Handler_Toc {
       #FIXME can this be done better?
       
         global $conf;
-        $toplevel = $conf['toptoclevel']; // retrieve vars once to save time
-        $maxlevel = $conf['maxtoclevel'];
+        
+        if ( isset($conf['toptoclevel']) ) {
+            // retrieve vars once to save time
+            $toplevel = $conf['toptoclevel'];
+        } else {
+            $toplevel = 0;
+        }
+        
+        if ( isset($conf['maxtoclevel']) ) {
+            $maxlevel = $conf['maxtoclevel'];
+        } else {
+            $maxlevel = 0;
+        }
         
         foreach ( $calls as $call ) {
+            if ( !isset($call[1][1]) ) {
+                $this->calls[] = $call;
+                continue;
+            }
             $level = $call[1][1];
             if ( $call[0] == 'header' && $level >= $toplevel && $level <= $maxlevel ) {
                 $this->numHeaders++;
@@ -1639,7 +1657,7 @@ class Doku_Handler_Toc {
     
     function finalizeToc($call) {
         global $conf;
-        if ( $this->numHeaders < $conf['maxtoclevel'] ) {
+        if ( isset($conf['maxtoclevel']) && $this->numHeaders < $conf['maxtoclevel'] ) {
             return;
         }
         if ( count ($this->tocStack) > 0 ) {

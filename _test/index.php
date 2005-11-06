@@ -1,5 +1,8 @@
 <?php
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+define('DOKU_CONF',realpath(dirname(__FILE__).'/../conf').'/'        );
+require_once DOKU_CONF . 'dokuwiki.php';
+$conf['lang'] = 'en'; 
 define('TEST_ROOT', dirname(__FILE__));
 define('TMPL_FILESCHEME_PATH', TEST_ROOT . '/filescheme/');
 error_reporting(E_ALL);

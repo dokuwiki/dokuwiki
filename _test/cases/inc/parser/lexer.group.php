@@ -13,7 +13,7 @@ class LexerGroupTest extends GroupTest {
 
     function LexerGroupTest() {
         $this->GroupTest('LexerGroupTest');
-        $this->addTestFile('lexer.test.php');
+        $this->addTestFile(dirname(__FILE__).'/lexer.test.php');
     }
     
 }

@@ -355,7 +355,7 @@ class TestParserByteIndex {
     
 	function ignore() {}
     
-	function catch() {}
+	function caught() {}
 }
 
 Mock::generate('TestParserByteIndex');
@@ -371,41 +371,41 @@ class TestOfLexerByteIndices extends UnitTestCase {
         
 		$handler = &new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("catch", true);
+        $handler->setReturnValue("caught", true);
         
 		$handler->expectArgumentsAt(
             0,
-            "catch",
+            "caught",
             array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
             );
 		$handler->expectArgumentsAt(
             1,
-            "catch",
+            "caught",
             array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
             );
 		$handler->expectArgumentsAt(
             2,
-            "catch",
+            "caught",
             array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
             );
         $handler->expectArgumentsAt(
             3,
-            "catch",
+            "caught",
             array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
             );
 		$handler->expectArgumentsAt(
             4,
-            "catch",
+            "caught",
             array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
             );
-		$handler->expectCallCount("catch", 5);
+		$handler->expectCallCount("caught", 5);
         
 		$lexer = &new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern("<file>", "ignore", "catch");
-		$lexer->addExitPattern("</file>", "catch");
-        $lexer->addSpecialPattern('b','catch','special');
-        $lexer->mapHandler('special','catch');
-        $lexer->addPattern('c','catch');
+		$lexer->addEntryPattern("<file>", "ignore", "caught");
+		$lexer->addExitPattern("</file>", "caught");
+        $lexer->addSpecialPattern('b','caught','special');
+        $lexer->mapHandler('special','caught');
+        $lexer->addPattern('c','caught');
         
 		$this->assertTrue($lexer->parse($doc));
 		$handler->tally();
@@ -416,41 +416,41 @@ class TestOfLexerByteIndices extends UnitTestCase {
         
 		$handler = &new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("catch", true);
+        $handler->setReturnValue("caught", true);
         
 		$handler->expectArgumentsAt(
             0,
-            "catch",
+            "caught",
             array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
             );
 		$handler->expectArgumentsAt(
             1,
-            "catch",
+            "caught",
             array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
             );
 		$handler->expectArgumentsAt(
             2,
-            "catch",
+            "caught",
             array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
             );
         $handler->expectArgumentsAt(
             3,
-            "catch",
+            "caught",
             array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
             );
 		$handler->expectArgumentsAt(
             4,
-            "catch",
+            "caught",
             array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
             );
-		$handler->expectCallCount("catch", 5);
+		$handler->expectCallCount("caught", 5);
         
 		$lexer = &new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern('<file>(?=.*\x3C/file\x3E)', "ignore", "catch");
-		$lexer->addExitPattern("</file>", "catch");
-        $lexer->addSpecialPattern('b','catch','special');
-        $lexer->mapHandler('special','catch');
-        $lexer->addPattern('c','catch');
+		$lexer->addEntryPattern('<file>(?=.*\x3C/file\x3E)', "ignore", "caught");
+		$lexer->addExitPattern("</file>", "caught");
+        $lexer->addSpecialPattern('b','caught','special');
+        $lexer->mapHandler('special','caught');
+        $lexer->addPattern('c','caught');
         
 		$this->assertTrue($lexer->parse($doc));
 		$handler->tally();
@@ -461,41 +461,41 @@ class TestOfLexerByteIndices extends UnitTestCase {
         
 		$handler = &new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("catch", true);
+        $handler->setReturnValue("caught", true);
         
 		$handler->expectArgumentsAt(
             0,
-            "catch",
+            "caught",
             array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
             );
 		$handler->expectArgumentsAt(
             1,
-            "catch",
+            "caught",
             array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
             );
 		$handler->expectArgumentsAt(
             2,
-            "catch",
+            "caught",
             array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
             );
         $handler->expectArgumentsAt(
             3,
-            "catch",
+            "caught",
             array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
             );
 		$handler->expectArgumentsAt(
             4,
-            "catch",
+            "caught",
             array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
             );
-		$handler->expectCallCount("catch", 5);
+		$handler->expectCallCount("caught", 5);
         
 		$lexer = &new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern('<file>(?!foo)', "ignore", "catch");
-		$lexer->addExitPattern("</file>", "catch");
-        $lexer->addSpecialPattern('b','catch','special');
-        $lexer->mapHandler('special','catch');
-        $lexer->addPattern('c','catch');
+		$lexer->addEntryPattern('<file>(?!foo)', "ignore", "caught");
+		$lexer->addExitPattern("</file>", "caught");
+        $lexer->addSpecialPattern('b','caught','special');
+        $lexer->mapHandler('special','caught');
+        $lexer->addPattern('c','caught');
         
 		$this->assertTrue($lexer->parse($doc));
 		$handler->tally();
@@ -506,41 +506,41 @@ class TestOfLexerByteIndices extends UnitTestCase {
         
 		$handler = &new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("catch", true);
+        $handler->setReturnValue("caught", true);
         
 		$handler->expectArgumentsAt(
             0,
-            "catch",
+            "caught",
             array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
             );
 		$handler->expectArgumentsAt(
             1,
-            "catch",
+            "caught",
             array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
             );
 		$handler->expectArgumentsAt(
             2,
-            "catch",
+            "caught",
             array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
             );
         $handler->expectArgumentsAt(
             3,
-            "catch",
+            "caught",
             array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
             );
 		$handler->expectArgumentsAt(
             4,
-            "catch",
+            "caught",
             array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
             );
-		$handler->expectCallCount("catch", 5);
+		$handler->expectCallCount("caught", 5);
         
 		$lexer = &new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern('<file>', "ignore", "catch");
-		$lexer->addExitPattern("(?<=d)</file>", "catch");
-        $lexer->addSpecialPattern('b','catch','special');
-        $lexer->mapHandler('special','catch');
-        $lexer->addPattern('c','catch');
+		$lexer->addEntryPattern('<file>', "ignore", "caught");
+		$lexer->addExitPattern("(?<=d)</file>", "caught");
+        $lexer->addSpecialPattern('b','caught','special');
+        $lexer->mapHandler('special','caught');
+        $lexer->addPattern('c','caught');
         
 		$this->assertTrue($lexer->parse($doc));
 		$handler->tally();
@@ -551,41 +551,41 @@ class TestOfLexerByteIndices extends UnitTestCase {
         
 		$handler = &new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("catch", true);
+        $handler->setReturnValue("caught", true);
         
 		$handler->expectArgumentsAt(
             0,
-            "catch",
+            "caught",
             array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
             );
 		$handler->expectArgumentsAt(
             1,
-            "catch",
+            "caught",
             array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
             );
 		$handler->expectArgumentsAt(
             2,
-            "catch",
+            "caught",
             array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
             );
         $handler->expectArgumentsAt(
             3,
-            "catch",
+            "caught",
             array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
             );
 		$handler->expectArgumentsAt(
             4,
-            "catch",
+            "caught",
             array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
             );
-		$handler->expectCallCount("catch", 5);
+		$handler->expectCallCount("caught", 5);
         
 		$lexer = &new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern('<file>', "ignore", "catch");
-		$lexer->addExitPattern("(?<!c)</file>", "catch");
-        $lexer->addSpecialPattern('b','catch','special');
-        $lexer->mapHandler('special','catch');
-        $lexer->addPattern('c','catch');
+		$lexer->addEntryPattern('<file>', "ignore", "caught");
+		$lexer->addExitPattern("(?<!c)</file>", "caught");
+        $lexer->addSpecialPattern('b','caught','special');
+        $lexer->mapHandler('special','caught');
+        $lexer->addPattern('c','caught');
         
 		$this->assertTrue($lexer->parse($doc));
 		$handler->tally();

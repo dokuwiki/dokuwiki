@@ -12,20 +12,21 @@
 class ParserGroupTest extends GroupTest {
 
     function ParserGroupTest() {
+		$dir = dirname(__FILE__).'/';		
         $this->GroupTest('ParserGroupTest');
-        $this->addTestFile('parser_eol.test.php');
-        $this->addTestFile('parser_footnote.test.php');
-        $this->addTestFile('parser_formatting.test.php');
-        $this->addTestFile('parser_headers.test.php');
-        $this->addTestFile('parser_i18n.test.php');
-        $this->addTestFile('parser_links.test.php');
-        $this->addTestFile('parser_lists.test.php');
-        $this->addTestFile('parser_preformatted.test.php');
-        $this->addTestFile('parser_quote.test.php');
-        $this->addTestFile('parser_replacements.test.php');
-        $this->addTestFile('parser_table.test.php');
-        $this->addTestFile('parser_tocsections.test.php');
-        $this->addTestFile('parser_unformatted.test.php');
+        $this->addTestFile($dir . 'parser_eol.test.php');
+        $this->addTestFile($dir . 'parser_footnote.test.php');
+        $this->addTestFile($dir .'parser_formatting.test.php');
+        $this->addTestFile($dir .'parser_headers.test.php');
+        $this->addTestFile($dir .'parser_i18n.test.php');
+        $this->addTestFile($dir .'parser_links.test.php');
+        $this->addTestFile($dir .'parser_lists.test.php');
+        $this->addTestFile($dir .'parser_preformatted.test.php');
+        $this->addTestFile($dir .'parser_quote.test.php');
+        $this->addTestFile($dir .'parser_replacements.test.php');
+        $this->addTestFile($dir .'parser_table.test.php');
+        $this->addTestFile($dir .'parser_tocsections.test.php');
+        $this->addTestFile($dir .'parser_unformatted.test.php');
     }
     
 }

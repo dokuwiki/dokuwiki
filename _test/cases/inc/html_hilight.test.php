@@ -15,11 +15,17 @@ function html_hilight_test_unslash($string,$char="'"){
 class html_hilight_test extends UnitTestCase{
 
   function setup() {
+	if ( function_exists('unslash') ) {
+		runkit_function_rename('unslash','html_hilight_test_unslash_real');
+	}
     runkit_function_rename('html_hilight_test_unslash','unslash');
   }
   
   function teardown() {
-    runkit_function_rename('unslash','html_hilight_test_unslash');
+	runkit_function_rename('unslash','html_hilight_test_unslash');
+	if ( function_exists('html_hilight_test_unslash_real') ) {
+		runkit_function_rename('html_hilight_test_unslash_real','unslash');
+	}
   }
 
   function testHighlightOneWord() {
@@ -93,6 +99,6 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'x/')
       );
   }
-  
+
 }
 

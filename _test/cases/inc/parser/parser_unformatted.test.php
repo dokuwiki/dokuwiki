@@ -19,6 +19,7 @@ class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('document_end',array()),
         );
+
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
         
     }

@@ -80,8 +80,9 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
     function testEmail() {
+		$this->fail('The emaillink mode seems to cause php 5.0.5 to segfault');
+		return;
         $this->P->addMode('email',new Doku_Parser_Mode_Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
         $calls = array (
@@ -95,7 +96,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+	
     function testInternalLinkOneChar() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[l]] Bar");
