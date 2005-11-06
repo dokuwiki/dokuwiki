@@ -1,0 +1,106 @@
+<?php
+/*
+  This is an example configuration for the mysql auth module.
+
+  This SQL statements are optimized for following table structure.
+  If you use a different one you have to change them accordingly.
+  See comments of every statement for details.
+
+  TABLE users
+      uid   login   pass   firstname   lastname   email
+	  
+  TABLE groups
+      gid   name
+	  
+  TABLE usergroup
+      uid   gid
+  
+  To use this configuration you have to copy them to local.php
+  or at least include this file in local.php.
+ */
+
+
+/* Normally password encryptionis done by DokuWiki (recommended) but for
+ * some reasons it might be usefull to let the database do the encryption.
+ * Set 'encryptPass' to '1' and the cleartext password is forwarded to
+ * the database, otherwise the encrypted one.
+ */
+$conf['auth']['mysql']['encryptPass'] = 0;
+
+/* Multiple table operations will be protected by locks. This array tolds
+ * the module which tables to lock. If you use any aliases for table names
+ * these array must also contain these aliases. Any unamed alias will cause
+ * a warning suring operation. See the example below.
+ */
+$conf['auth']['mysql']['TablesToLock']= array("users", "users AS u","groups", "groups AS g", "usergroup", "usergroup AS ug");
+
+/* This statement should return the database index of a given user name.
+ * The module will access the index with the name 'id' so a alias might be
+ * necessary.
+ * following patters will be replaced:
+ *   %u    user name 
+ */
+$conf['auth']['mysql']['getUserID']   = "SELECT uid AS id FROM users WHERE login='%u'";
+
+/* This statement should return the database index of a given group name.
+ * The module will access the index with the name 'id' so a alias might be
+ * necessary.
+ * following patters will be replaced:
+ *   %g    group name 
+ */
+$conf['auth']['mysql']['getGroupID']  = "SELECT gid AS id FROM groups WHERE name='%g'";
+
+/* This statement is used to grant or deny access to the wiki. The result should
+ * be a table with exact one line containing at least the password of the user.
+ * If the result table is empty or contains more than one row, access will be denied.
+ * The module access the password as 'pass' so a alias might be necessary.
+ * following patters will be replaced:
+ *   %u    user name
+ *   %p    encrypted or clear text password (depends on 'encryptPass')
+ *   %g    default group name 
+ */
+$conf['auth']['mysql']['checkPass']   = "SELECT pass
+                                         FROM usergroup AS ug
+                                         JOIN users AS u ON u.uid=ug.uid
+                                         JOIN groups AS g ON g.gid=ug.gid
+                                         WHERE login='%u'
+                                         AND name='%g'";
+
+$conf['auth']['mysql']['getGroups']   = "SELECT name as `group`
+                                         FROM groups g, users u, usergroup ug
+                                         WHERE u.uid = ug.uid
+                                         AND g.gid = ug.gid
+                                         AND u.login='%u'";
+$conf['auth']['mysql']['getUserInfo'] = "SELECT pass, CONCAT(firstname,' ',lastname) AS name, email AS mail
+                                         FROM users
+                                         WHERE login='%u'";
+$conf['auth']['mysql']['getUsers']    = "SELECT DISTINCT login AS user
+                                         FROM users AS u 
+                                         LEFT JOIN usergroup AS ug ON u.uid=ug.uid
+                                         LEFT JOIN groups AS g ON ug.gid=g.gid";
+
+$conf['auth']['mysql']['SortOrder']   = "ORDER BY login";
+$conf['auth']['mysql']['FilterLogin'] = "login LIKE '%s'";
+$conf['auth']['mysql']['FilterName']  = "CONCAT(firstname,' ',lastname) LIKE '%s'";
+$conf['auth']['mysql']['FilterEmail'] = "email LIKE '%s'";
+$conf['auth']['mysql']['FilterGroup'] = "name LIKE '%s'";
+
+$conf['auth']['mysql']['addUser']     = "INSERT INTO users
+                                         (login, pass, email, firstname, lastname)
+                                         VALUES ('%u', '%p', '%e',
+                                         SUBSTRING_INDEX('%n',' ', 1),
+                                         SUBSTRING_INDEX('%n',' ', -1))";
+$conf['auth']['mysql']['delUser']     = "DELETE FROM users
+                                         WHERE uid='%uid'";
+$conf['auth']['mysql']['addGroup']    = "INSERT INTO groups (name)
+                                         VALUES ('%g')";
+$conf['auth']['mysql']['delGroup']    = "DELETE FROM groups
+                                         WHERE gid='%gid'";
+$conf['auth']['mysql']['addUserGroup']= "INSERT INTO usergroup (uid, gid)
+                                         VALUES ('%uid', '%gid')";
+$conf['auth']['mysql']['delUserGroup']= "DELETE FROM usergroup
+                                         WHERE uid='%uid'
+                                         AND gid='%gid'";
+$conf['auth']['mysql']['delUserRefs'] = "DELETE FROM usergroup
+                                         WHERE uid='%uid'";
+?> 
