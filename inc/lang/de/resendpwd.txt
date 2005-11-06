@@ -1,0 +1,5 @@
+====== Neues Passwort anfordern ======
+
+Füllen Sie alle Felder unten aus, um ein neues Passwort für Ihren Zugang zu erhalten.
+Das neue Passwort wird an Ihre gespeicherte E-Mail Adresse geschickt. Der Benutzername
+sollte Ihr Wiki Benutzername sein.

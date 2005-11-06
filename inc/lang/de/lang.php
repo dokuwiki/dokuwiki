@@ -7,6 +7,7 @@
  * @author     Christof <gagi@fin.de>
  * @author     Anika Henke <henke@cosmocode.de>
  * @author     Esther Brunner <esther@kaffeehaus.ch>
+ * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -37,16 +38,23 @@ $lang['btn_backlink']    = 'Links hierher';
 $lang['btn_backtomedia'] = 'Zurück zur Dateiauswahl';
 $lang['btn_subscribe']   = 'Änderungen abonnieren';
 $lang['btn_unsubscribe'] = 'Änderungen abbestellen';
+$lang['btn_profile']    = 'Benutzerprofil';
+$lang['btn_reset']     = 'Zurücksetzen';
+$lang['btn_resendpwd'] = 'Sende neues Passwort';
 
 $lang['loggedinas'] = 'Angemeldet als';
 $lang['user']       = 'Benutzername';
 $lang['pass']       = 'Passwort';
+$lang['newpass']    = 'Neues Passwort';
+$lang['oldpass']    = 'Bestätigen (Altes Passwort)';
 $lang['passchk']    = 'und nochmal';
+$lang['remember']   = 'Angemeldet bleiben';
 $lang['fullname']   = 'Voller Name';
 $lang['email']      = 'E-Mail';
-$lang['remember']   = 'Angemeldet bleiben';
 $lang['register']   = 'Registrieren';
+$lang['profile']    = 'Benutzerprofil';
 $lang['badlogin']   = 'Nutzername oder Passwort sind falsch.';
+$lang['minoredit']  = 'kleine Änderung';
 
 $lang['regmissing'] = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists'] = 'Der Nutzername existiert leider schon.';
@@ -58,6 +66,17 @@ $lang['regbadpass'] = 'Die beiden eingegeben Passwörter stimmen nicht überein.
 $lang['regpwmail']  = 'Ihr DokuWiki Passwort';
 $lang['reghere']    = 'Sie haben noch keinen Zugang? Hier anmelden';
 
+$lang['profna']       = 'Änderung des Benutzerprofils in diesem Wiki nicht möglich.';
+$lang['profnochange'] = 'Keine Änderungen, nichts zu tun.';
+$lang['profnoempty']  = 'Es muß ein Name und eine E-Mail Adresse angegeben werden.';
+
+$lang['pwdforget']    = 'Passwort vergessen? Kein Problem';
+$lang['resendna']      = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
+$lang['resendpwd']      = 'Neues Passwort schicken für';
+$lang['resendpwdmissing'] = 'Es tut mir Leid, aber Sie müssen alle Felder ausfüllen.';
+$lang['resendpwdnouser']  = 'Es tut mir Leid, aber der Benutzer existiert nicht in unserer Datenbank.';
+$lang['resendpwdsuccess'] = 'Ihr neues Passwort wurde per E-Mail versand.';
+
 $lang['txt_upload']   = 'Datei zum Hochladen auswählen';
 $lang['txt_filename'] = 'Wikinamen eingeben (optional)';
 $lang['txt_overwrt']  = 'Bestehende Datei überschreiben';
@@ -68,7 +87,6 @@ $lang['willexpire']   = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer
 $lang['notsavedyet'] = 'Nicht gespeicherte Änderungen gehen verloren!\nWeitermachen?';
 $lang['rssfailed']   = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
 $lang['nothingfound']= 'Nichts gefunden.';
-
 
 $lang['mediaselect'] = 'Dateiauswahl';
 $lang['fileupload']  = 'Datei hochladen';
@@ -124,6 +142,8 @@ $lang['qb_ol']      = 'Numerierter Listenpunkt';
 $lang['qb_ul']      = 'Listenpunkt';
 $lang['qb_media']   = 'Bilder und andere Dateien hinzufügen';
 $lang['qb_sig']     = 'Unterschrift einfügen';
+$lang['qb_smileys'] = 'Smileys';
+$lang['qb_chars']   = 'Sonderzeichen';
 
 $lang['del_confirm']= 'Eintrag wirklich löschen?';
 
