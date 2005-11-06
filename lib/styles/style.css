@@ -1,7 +1,13 @@
+/**
+ * Basic styles. These styles are needed for basic DokuWiki functions
+ * regardless of the used template. Templates can override them of course
+ */ 
+
 div.clearer {clear: both; line-height: 0; height: 0;}
 
 div.error{
   background: #fcc url(../images/error.png) 0.5em 0px no-repeat;
+  color: #000;
 	border-bottom: 1px solid #faa;
   font-size: 90%;
   margin: 0px;
@@ -10,6 +16,7 @@ div.error{
 
 div.info{
   background: #ccf url(../images/info.png) 0.5em 0px no-repeat;
+  color: #000;
 	border-bottom: 1px solid #aaf;
   font-size: 90%;
   margin: 0;
@@ -18,11 +25,29 @@ div.info{
 
 div.success{
   background: #cfc url(../images/success.png) 0.5em 0px no-repeat;
+  color: #000;
 	border-bottom: 1px solid #afa;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
 }
+
+/* image alignment */
+
+img.medialeft {
+  float: left;
+}
+
+img.mediaright {
+  float: right;
+}
+
+img.mediacenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 /* syntax highlighting code */
 .code .br0	{ color: #66cc66; }
