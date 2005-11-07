@@ -710,16 +710,16 @@ class auth_mysql extends auth_basic {
           $tmp = addslashes('%'.mysql_real_escape_string($pattern, $this->dbcon).'%');
           if ($item == 'user') {
             if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%s',$tmp,$this->cnf['FilterLogin']);
+            $SQLfilter .= str_replace('%u',$tmp,$this->cnf['FilterLogin']);
           } else if ($item == 'name') {
             if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%s',$tmp,$this->cnf['FilterName']);
+            $SQLfilter .= str_replace('%n',$tmp,$this->cnf['FilterName']);
           } else if ($item == 'mail') {
             if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%s',$tmp,$this->cnf['FilterEmail']);
+            $SQLfilter .= str_replace('%e',$tmp,$this->cnf['FilterEmail']);
           } else if ($item == 'grps') {
             if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%s',$tmp,$this->cnf['FilterGroup']);
+            $SQLfilter .= str_replace('%g',$tmp,$this->cnf['FilterGroup']);
           }
         }
         
