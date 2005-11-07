@@ -51,6 +51,62 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 }
 
 /**
+ * Returns starting summary for a page (e.g. the first few
+ * paragraphs), marked up in XHTML.
+ *
+ * If $excuse is true an explanation is returned if the file
+ * wasn't found
+ *
+ * @param string wiki page id
+ * @param reference populated with page title from heading or page id
+ * @author Andreas Gohr <hfuecks@gmail.com>
+ */
+function p_wiki_xhtml_summary($id, &$title, $rev='', $excuse=true){
+  $file = wikiFN($id,$rev);
+  $ret  = '';
+
+  //ensure $id is in global $ID (needed for parsing)
+  global $ID;
+  $keep = $ID;
+  $ID   = $id;
+
+  if($rev){
+    if(@file_exists($file)){
+      //no caching on old revisions
+      $ins = p_get_instructions(io_readfile($file));
+    }elseif($excuse){
+      $ret = p_locale_xhtml('norev');
+      //restore ID (just in case)
+      $ID = $keep;
+      return $ret;
+    }
+
+  }else{
+
+    if(@file_exists($file)){
+      // The XHTML for a summary is not cached so use the instruction cache
+      $ins = p_cached_instructions($file);
+    }elseif($excuse){
+      $ret = p_locale_xhtml('newpage');
+      //restore ID (just in case)
+      $ID = $keep;
+      return $ret;
+    }
+  }
+
+  $ret = p_render('xhtmlsummary',$ins,$info);
+
+  if ( $info['sum_pagetitle'] ) {
+    $title = $info['sum_pagetitle'];
+  } else {
+    $title = $id;
+  }
+
+  $ID = $keep;
+  return $ret;
+}
+
+/**
  * Returns the specified local text in parsed format
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -294,6 +350,9 @@ function p_render($mode,$instructions,& $info){
 
   require_once DOKU_INC."inc/parser/$mode.php";
   $rclass = "Doku_Renderer_$mode";
+  if ( !class_exists($rclass) ) {
+    trigger_error("Unable to resolve render class $rclass",E_USER_ERROR);
+  }
   $Renderer = & new $rclass(); #FIXME any way to check for class existance?
 
   $Renderer->smileys = getSmileys();
