@@ -42,7 +42,8 @@ $lang['remember']   = '記住帳號密碼';
 $lang['fullname']   = '暱稱';
 $lang['email']      = 'E-Mail';
 $lang['register']   = '註冊';
-$lang['badlogin']   = '很抱歉，您的使用者名稱或密碼可能錯誤';
+$lang['badlogin']   = '很抱歉，您的使用者名稱或密碼可能有錯誤';
+$lang['minoredit']  = '次要性的修改';
 
 $lang['regmissing'] = '很抱歉，所有的欄位都要填哦';
 $lang['reguexists'] = '很抱歉，已有人註冊該帳號了喔';
