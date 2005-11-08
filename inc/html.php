@@ -289,7 +289,7 @@ function html_show($txt=''){
  */
 function html_hilight($html,$query){
   //split at common delimiters
-  $queries = preg_split ('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>]+/',$query,-1,PREG_SPLIT_NO_EMPTY);
+  $queries = preg_split ('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/',$query,-1,PREG_SPLIT_NO_EMPTY);
   foreach ($queries as $q){
      $q = preg_quote($q,'/');
      $html = preg_replace_callback("/((<[^>]*)|$q)/i",'html_hilight_callback',$html);
