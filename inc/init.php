@@ -26,7 +26,7 @@
 
   //load the language files
   require_once(DOKU_INC.'inc/lang/en/lang.php');
-  if ( defined($conf['lang']) ) {
+  if ( $conf['lang'] && $conf['lang'] != 'en' ) {
     require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
   }
 

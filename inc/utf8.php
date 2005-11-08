@@ -409,11 +409,8 @@ function utf8_to_unicode( &$str ) {
  * @see    utf8_to_unicode()
  */
 function unicode_to_utf8( &$str ) {
-  // init_getID_test causes something to get
-  // passed to this function that isn't a string
-  if ( !is_string($str) ) {
-    return;
-  }
+  if (!is_array($str)) return '';
+
   $utf8 = '';
   foreach( $str as $unicode ) {
     if ( $unicode < 128 ) {
