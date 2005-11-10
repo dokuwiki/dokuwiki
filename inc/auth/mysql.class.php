@@ -130,6 +130,7 @@ class auth_mysql extends auth_basic {
           $grps = array($this->defaultgroup);
  
         $this->lockTables("WRITE");
+        $pwd = $this->cnf['encryptPass'] ? $pwd : auth_cryptPassword($pwd);
         $rc = $this->addUser($user,$pwd,$name,$mail,$grps);
         $this->unlockTables();
         $this->closeDB();
@@ -163,8 +164,11 @@ class auth_mysql extends auth_basic {
       if($this->openDB()) {
         $this->lockTables("WRITE");
         if (($info = $this->getUserInfo($user)) !== false) {
-          foreach ($changes as $field => $value)
+          foreach ($changes as $field => $value) {
+            if ($field == 'pass' && !$this->cnf['encryptPass'])
+               $value = auth_cryptPassword($value);
             $info[$field] = $value;  // update user record
+          }
 
           $rc = $this->delUser($user);   // remove user from database
           if ($rc)
@@ -430,7 +434,7 @@ class auth_mysql extends auth_basic {
      * 'false'.
      *
      * @param  $user  nick of the user
-     * @param  $pwd   clear text password
+     * @param  $pwd   encrypted password
      * @param  $name  full name of the user
      * @param  $mail  email address
      * @param  $grps  array of groups the user should become member of
@@ -442,9 +446,8 @@ class auth_mysql extends auth_basic {
      */
     function addUser($user,$pwd,$name,$mail,$grps){
       if($this->dbcon && is_array($grps)) {
-        $_pwd = $this->cnf['encryptPass'] ? $pwd : auth_cryptPassword($pwd);
         $sql = str_replace('%u'  ,addslashes($user),$this->cnf['addUser']);
-        $sql = str_replace('%p'  ,addslashes($_pwd),$sql);
+        $sql = str_replace('%p'  ,addslashes($pwd),$sql);
         $sql = str_replace('%n'  ,addslashes($name),$sql);
         $sql = str_replace('%e'  ,addslashes($mail),$sql);  
         $uid = $this->modifyDB($sql);
@@ -556,9 +559,8 @@ class auth_mysql extends auth_basic {
     function openDB() {
       global $lang;
       
-      if ($this->dbcon == 0) {
+      if (!$this->dbcon) {
         $con = @mysql_connect ($this->cnf['server'], $this->cnf['user'], $this->cnf['password']);   
-
         if ($con) {
           if ((mysql_select_db($this->cnf['database'], $con))) {
             $this->dbcon = $con; 
