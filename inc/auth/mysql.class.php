@@ -164,7 +164,10 @@ class auth_mysql extends auth_basic {
       if($this->openDB()) {
         $this->lockTables("WRITE");
         if (($info = $this->getUserInfo($user)) !== false) {
+          $newuser = $user;
           foreach ($changes as $field => $value) {
+            if ($field == 'user')
+               $newuser = $value;
             if ($field == 'pass' && !$this->cnf['encryptPass'])
                $value = auth_cryptPassword($value);
             $info[$field] = $value;  // update user record
@@ -172,7 +175,7 @@ class auth_mysql extends auth_basic {
 
           $rc = $this->delUser($user);   // remove user from database
           if ($rc)
-            $rc = $this->addUser($user,$info['pass'],$info['name'],$info['mail'],$info['grps']);
+            $rc = $this->addUser($newuser,$info['pass'],$info['name'],$info['mail'],$info['grps']);
           if (!$rc)
             msg($lang['modUserFailed'], -1);
         }  

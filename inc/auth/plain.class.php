@@ -111,13 +111,18 @@ class auth_plain extends auth_basic {
       if (!is_array($changes) || !count($changes)) return true;
 
       // update userinfo with new data, remembering to encrypt any password
+      $newuser = $user;
       foreach ($changes as $field => $value) {
+        if ($field == 'user') { 
+          $newuser = $value;
+          continue;
+        }
         if ($field == 'pass') $value = auth_cryptPassword($value);
         $userinfo[$field] = $value;
       }
       
       $groups = join(',',$userinfo['grps']);
-      $userline = join(':',array($user, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $groups))."\n";
+      $userline = join(':',array($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $groups))."\n";
       
       if (!$this->deleteUsers(array($user))) {
         msg('Unable to modify user data. Please inform the Wiki-Admin',-1);
@@ -131,7 +136,7 @@ class auth_plain extends auth_basic {
         return false;
       }
       
-      $this->users[$user] = $userinfo;
+      $this->users[$newuser] = $userinfo;
       return true;      
     }
 
