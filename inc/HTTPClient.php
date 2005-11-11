@@ -155,8 +155,8 @@ class HTTPClient {
         // proxy setup
         if($this->proxy_host){
             $request_url = $url;
-            $server      = $config['proxy_host'];
-            $port        = $config['proxy_port'];
+            $server      = $this->proxy_host;
+            $port        = $this->proxy_port;
             if (empty($port)) $port = 8080;
         }else{
             $request_url = $path;
