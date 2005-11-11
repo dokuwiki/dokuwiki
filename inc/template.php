@@ -201,9 +201,17 @@ function tpl_metaheaders(){
   // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview') ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
-  $js_sig   = ($conf['useacl'] && $_SERVER['REMOTE_USER']) ? 1 : 0;
+  if($js_edit && $js_write){
+    ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
+    ptln("NS='".$INFO['namespace']."';",$it+2);
+    if($conf['useacl'] && $_SERVER['REMOTE_USER']){
+      require_once('inc/toolbar.php');
+      ptln("SIG='".toolbar_signature()."';",$it+2);
+    }
+    ptln('</script>',$it);
+  }
   ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&amp;write='.$js_write.'&amp;sig='.$js_sig.'"></script>',$it);
+       DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&amp;write='.$js_write.'"></script>',$it);
 }
 
 /**

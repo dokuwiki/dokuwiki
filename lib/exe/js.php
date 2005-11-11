@@ -16,7 +16,6 @@ require_once(DOKU_INC.'inc/io.php');
 if(!defined('SIMPLE_TEST')){
     header('Content-Type: text/javascript; charset=utf-8');
     js_out();
-    js_dynamicout();
 }
 
 
@@ -131,21 +130,6 @@ function js_out(){
 }
 
 /**
- * Adds some dynamic JavaScript using the readonly Session
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function js_dynamicout(){
-    $edit  = (bool) $_REQUEST['edit'];   // edit or preview mode?
-    $write = (bool) $_REQUEST['write'];  // writable?
-    $sig   = (bool) $_REQUEST['sig'];    // show sig button?
-    if($edit && $write && $sig){
-        require_once(DOKU_INC.'inc/toolbar.php');
-        toolbar_addsigbutton('toolbar');
-    }
-}
-
-/**
  * Checks if a JavaScript Cache file still is valid
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -155,8 +139,8 @@ function js_cacheok($cache,$files){
     if(!$ctime) return false; //There is no cache
 
     // some additional files to check
-    $files[] = DOKU_CONF.'dokuwiki.conf';
-    $files[] = DOKU_CONF.'local.conf';
+    $files[] = DOKU_CONF.'dokuwiki.php';
+    $files[] = DOKU_CONF.'local.php';
     $files[] = DOKU_CONF.'userscript.js';
     $files[] = __FILE__;
 

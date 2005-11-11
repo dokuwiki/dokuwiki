@@ -104,8 +104,8 @@ function css_cacheok($cache,$files){
     if(!$ctime) return false; //There is no cache
 
     // some additional files to check
-    $files[] = DOKU_CONF.'dokuwiki.conf';
-    $files[] = DOKU_CONF.'local.conf';
+    $files[] = DOKU_CONF.'dokuwiki.php';
+    $files[] = DOKU_CONF.'local.php';
     $files[] = DOKU_TPLINC.'style.ini';
     $files[] = __FILE__;
 
