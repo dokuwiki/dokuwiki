@@ -69,6 +69,7 @@ $lang['reghere']    = 'Sie haben noch keinen Zugang? Hier anmelden';
 $lang['profna']       = 'Änderung des Benutzerprofils in diesem Wiki nicht möglich.';
 $lang['profnochange'] = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']  = 'Es muß ein Name und eine E-Mail Adresse angegeben werden.';
+$lang['profchanged']  = 'Benuzerprofil erfolgreich geändert.';
 
 $lang['pwdforget']    = 'Passwort vergessen? Kein Problem';
 $lang['resendna']      = 'Passwörter versenden ist in diesem Wiki nicht möglich.';

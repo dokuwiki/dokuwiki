@@ -903,7 +903,7 @@ function html_updateprofile(){
     </label><br />
     <?php } ?>
     
-    <input type="submit" class="button" value="<?php echo $lang['btn_profile']?>" />
+    <input type="submit" class="button" value="<?php echo $lang['btn_save']?>" />
     <input type="reset" class="button" value="<?php echo $lang['btn_reset']?>" />
   </fieldset>
   </form>

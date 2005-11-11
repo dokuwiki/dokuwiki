@@ -53,6 +53,8 @@ function act_dispatch(){
   
   //update user profile
   if (($ACT == 'profile') && updateprofile()) {
+    msg($lang['profchanged'],1);
+    $ACT = 'show';
   }
   
   //save

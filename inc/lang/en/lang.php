@@ -67,6 +67,7 @@ $lang['reghere']    = 'You don\'t have an account yet? Just get one';
 $lang['profna']       = 'This wiki does not support profile modification';
 $lang['profnochange'] = 'No changes, nothing to do.';
 $lang['profnoempty']  = 'An empty name or email address is not allowed.';
+$lang['profchanged']  = 'User profile sucessfully updated.';
 
 $lang['pwdforget'] = 'Forgotten your password? Get a new one';
 $lang['resendna']  = 'This wiki does not support password resending.';
