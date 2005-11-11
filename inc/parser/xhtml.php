@@ -578,7 +578,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         if ( !$isImage ) {
-            $link['class'] = "interwiki iw_$wikiName";
+            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
+            $link['class'] = "interwiki iw_$class";
         } else {
             $link['class'] = 'media';
         }
@@ -709,7 +710,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
              $noLink = TRUE;
          }else{
              // add file icons
-             $link['class'] .= ' mediafile mf_'.$ext;
+             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+             $link['class'] .= ' mediafile mf_'.$class;
              $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
          }
          $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);

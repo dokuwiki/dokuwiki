@@ -154,12 +154,13 @@ function css_interwiki(){
     // additional styles when icon available
     $iwlinks = getInterwiki();
     foreach(array_keys($iwlinks) as $iw){
+        $class = preg_replace('/[^_\-a-z0-9]+/i','_',$iw);
         if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
-            echo "a.iw_$iw {";
+            echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
             echo '}';
         }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
-            echo "a.iw_$iw {";
+            echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
             echo '}';
         }
@@ -182,12 +183,13 @@ function css_filetypes(){
     // additional styles when icon available
     $mimes = getMimeTypes();
     foreach(array_keys($mimes) as $mime){
+        $class = preg_replace('/[^_\-a-z0-9]+/i','_',$mime);
         if(@file_exists(DOKU_INC.'lib/images/fileicons/'.$mime.'.png')){
-            echo "a.mf_$mime {";
+            echo "a.mf_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$mime.'.png)';
             echo '}';
         }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$mime.'.gif')){
-            echo "a.mf_$mime {";
+            echo "a.mf_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$mime.'.gif)';
             echo '}';
         }
