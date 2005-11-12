@@ -29,6 +29,16 @@ class css_css_compress_test extends UnitTestCase {
         $this->assertEqual(css_compress($text), '/* \\*/display:inline;/* */');
     }
 
+    function test_hack2(){
+        $text = '/* min-height hack for Internet Explorer http://www.cssplay.co.uk/boxes/minheight.html */
+                 /*\\*/
+                 * html .page {
+                     height: 450px;
+                 }
+                 /**/';
+        $this->assertEqual(css_compress($text), '/*\\*/* html .page{height:450px;}/**/');
+    }
+
     function test_nl1(){
         $text = "a{left:20px;\ntop:20px}";
         $this->assertEqual(css_compress($text), 'a{left:20px;top:20px}');

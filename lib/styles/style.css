@@ -3,7 +3,7 @@
  * regardless of the used template. Templates can override them of course
  */ 
 
-div.clearer {clear: both; line-height: 0; height: 0;}
+div.clearer {clear: both; line-height: 0; height: 0; overflow:hidden;}
 
 div.error{
   background: #fcc url(../images/error.png) 0.5em 0px no-repeat;

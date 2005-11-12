@@ -238,9 +238,8 @@ function css_compress($css){
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
     $css = preg_replace('/ ?([:;,{}\/]) ?/','\\1',$css);
 
-    // strip comments (ungreedy)
-    // We keep very small comments to maintain typical browser hacks
-    $css = preg_replace('#(/\*)((?!\*/).){4,}(\*/)#Us','',$css);
+    //strip comments through a callback
+    $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
 
     // shorten colors
     $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3/", "#\\1\\2\\3",$css);
@@ -248,6 +247,17 @@ function css_compress($css){
     return $css;
 }
 
+/**
+ * Callback for css_compress()
+ *
+ * Keeps short comments (< 5 chars) to maintain typical browser hacks
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function css_comment_cb($matches){
+    if(strlen($matches[2]) > 4) return '';
+    return $matches[0];
+}
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 ?>
