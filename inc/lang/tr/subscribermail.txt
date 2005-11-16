@@ -1,0 +1,20 @@
+Merhaba!
+
+
+
+@TITLE@ wikisindeki @PAGE@ sayfası değiştirildi.
+Değişiklikler aşağıdadır:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Bu sayfaya abonelikten çıkmak için 
+@DOKUWIKIURL@ adresindeki wikiye gir, ardından
+@NEWPAGE@
+sayfasına git ve 'Değişikliklerden çıkı' seç.
+
+-- 
+Bu mail 
+@DOKUWIKIURL@
+adresindeki DokuWiki tarafından hazırlandı.

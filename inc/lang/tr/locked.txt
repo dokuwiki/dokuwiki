@@ -1,0 +1,6 @@
+====== Sayfa kilitli ======
+
+Bu sayfa şu an başka bir kullanıcının değiştirmesi için kilitli. Kilitin
+süresi geçene veya bu kullanıcı değiştirmeyi bitirene kadar beklemen 
+lazım.
+

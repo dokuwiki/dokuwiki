@@ -1,0 +1,9 @@
+====== Yeni versiyon mevcut ======
+
+Değiştirdiğin dökümanın daha yeni bir versiyonu mevcut. Bu, sen değiştirirken
+başka bir kullanıcının dökümanı değiştirmesi halinde olur.
+
+Aşağıda gösterilen farkları dikatlice süz, sonra hangi versiyonu koruyacağına
+karar ver. Eğer ''kaydeti'' seçersen, senin versiyonun kaydedilir. Mevcut 
+versiyonu korumak için ''iptale'' tıkla.
+

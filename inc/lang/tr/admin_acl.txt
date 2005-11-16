@@ -1,0 +1,12 @@
+====== Erişim Kontrol Listesi(ACL) Yönetimi ======
+
+Bu sayfada bu sayfa ve içindeki tüm 
+[[doku>wiki:namespaces|isim alanları]] için yetkiler ekleyebilirsin. 
+[[doku>wiki:acl|EKL(ACL) resmi dokümantasyonu]]'nu okuyarak EKL'nin
+nasıl işlediğini tam olarak anlayabilirsin (İngilizce).
+
+Sayfada bu sayfa ile ilgili tüm yetkiler sıralanmaktadır. Başka
+sayfalarla ilgili yetkiler gösterilmemiştir, onları değiştirmek için
+önce o sayfaya [[this>doku.php?do=index|git]], sonra EKL yönetimine
+geçiş yap.
+

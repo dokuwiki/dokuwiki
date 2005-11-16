@@ -1,0 +1,18 @@
+DokuWikinizde bir sayfa eklendi veya değişti. Detaylar şunlar:
+
+Tarih            : @DATE@
+Tarayıcı         : @BROWSER@
+IP-Adresi        : @IPADDRESS@
+Sunucu adı       : @HOSTNAME@
+Eski sürüm       : @OLDPAGE@
+Yeni sürüm       : @NEWPAGE@
+Değiştirme özeti : @SUMMARY@
+Kullanıcı        : @USER@
+
+@DIFF@
+
+
+-- 
+Bu mail
+@DOKUWIKIURL@
+adresindeki DokuWiki tarafından hazırlandı.

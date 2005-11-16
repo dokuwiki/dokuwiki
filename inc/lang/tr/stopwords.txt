@@ -1,0 +1,29 @@
+# Bu indeksleyicinin yok saydığı kelimelerin bir listesidir, satır başına bir kelime
+# Bu dosyayı değiştirirken UNIX satır sonları (tek satır sonu) kullan
+# 3 karakterden kısa kelimeleri eklemeye gerek yok, bunlar zaten indekslenmez
+# Bu liste http://www.ranks.nl/stopwords/ altındakilerden derlenmiştir
+about
+are
+and
+you
+your
+them
+their
+com
+for
+from
+into
+how
+that
+the
+this
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www
