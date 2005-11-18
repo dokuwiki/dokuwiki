@@ -36,7 +36,7 @@ function io_sweepNS($id){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function io_readFile($file){
+function io_readFile($file,$clean=true){
   $ret = '';
   if(@file_exists($file)){
     if(substr($file,-3) == '.gz'){
@@ -45,7 +45,11 @@ function io_readFile($file){
       $ret = join('',file($file));
     }
   }
-  return cleanText($ret);
+  if($clean){
+    return cleanText($ret);
+  }else{
+    return $ret;
+  }
 }
 
 /**

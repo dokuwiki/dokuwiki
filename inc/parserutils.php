@@ -179,7 +179,7 @@ function p_cached_instructions($file,$cacheonly=false){
   // cache forced?
   if($cacheonly){
     if($cachetime){
-      return unserialize(io_readfile($cache));
+      return unserialize(io_readfile($cache,false));
     }else{
       return array();
     }
@@ -194,7 +194,7 @@ function p_cached_instructions($file,$cacheonly=false){
       && ($cachetime > @filemtime(DOKU_INC.'inc/parser/handler.php')))// newer than the handler
   {
     //well then use the cache
-    return unserialize(io_readfile($cache));
+    return unserialize(io_readfile($cache,false));
   }elseif(@file_exists($file)){
     // no cache - do some work
     $ins = p_get_instructions(io_readfile($file));
