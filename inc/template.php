@@ -667,8 +667,15 @@ function tpl_mediafilelist(){
 
   ptln('<ul>',2);
   foreach($data as $item){
+    if(!$item['isimg']){
+      // add file icons
+      list($ext,$mime) = mimetype($item['file']);
+      $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+      $class .= ' class="mediafile mf_'.$class.'"';
+    }
+
     ptln('<li>',4);
-    ptln('<a href="javascript:mediaSelect(\':'.$item['id'].'\')">'.
+    ptln('<a href="javascript:mediaSelect(\':'.$item['id'].'\')"'.$class.'>'.
          utf8_decodeFN($item['file']).
          '</a>',6);
 
