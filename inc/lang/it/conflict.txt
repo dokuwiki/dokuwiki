@@ -1,9 +1,10 @@
 ====== Esiste una versione più recente ======
 
 Esiste una versione più recente del documento che hai modificato.
-Questo può accadere perché un altro utente ha modificato il documento durante le tue modifiche.
+Questo può accadere quando un altro utente ha già modificato il 
+documento durante le tue modifiche.
 
-Esamina le differenze mostrate in seguito, quindi decidi quale
+Esamina le differenze mostrate di seguito, quindi decidi quale
 versione mantenere. Se scegli ''salva'', la tua versione verrà
 salvata. Clicca su ''annulla'' per mantenere la versione corrente.
 

@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giorgio Vecchiocattivi <giorgio@vecchio.it>
- * @mod by     Roberto Bolli <http://www.rbent.it/>
+ * @mod by     Roberto Bolli <http://www.rbnet.it/>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -31,8 +31,10 @@ $lang['btn_admin']  = 'Amministrazione';
 $lang['btn_update'] = 'Aggiorna';
 $lang['btn_delete'] = 'Cancella';
 $lang['btn_back']   = 'Indietro';
-$lang['btn_backlink'] = "Pagine che indicano qua";
+$lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = 'Torna al selettore Mediafile';
+$lang['btn_subscribe']   = 'Sottoscrivi modifiche';
+$lang['btn_unsubscribe'] = 'Cancella sottoscrizione';
 
 $lang['loggedinas'] = 'Collegato come';
 $lang['user']       = 'Nome utente';
@@ -61,8 +63,9 @@ $lang['lockedby']     = 'Attualmente bloccato da';
 $lang['lockexpire']   = 'Il blocco scade alle';
 $lang['willexpire']   = 'Il tuo blocco su questa pagina scadrà tra circa un minuto.\nPer evitare incongruenze usa il pulsante di anteprima per prolungare il periodo di blocco.';
 
-$lang['notsavedyet'] = 'Alcune modifiche non salvate andranno perse.\nSei sicuro?';
-$lang['rssfailed']   = 'Si è verifico un errore cercando questo feed : ';
+$lang['notsavedyet'] = 'Alcune modifiche non salvate andranno perse.\nContinuare?';
+
+$lang['rssfailed']   = 'Si è verificato un errore cercando questo feed: ';
 $lang['nothingfound']= 'Nessun risultato trovato.';
 
 $lang['mediaselect'] = 'Selezione dei file';
@@ -122,7 +125,7 @@ $lang['qb_sig']     = 'Inserisci la firma';
 
 $lang['del_confirm']= 'Cancellare questa voce?';
 
-$lang['admin_acl']  = 'Access Control List Management...';
+$lang['admin_acl']  = 'Gestione Access Control List...';
 $lang['admin_register']= 'Aggiungi un nuovo utente...';
 
 $lang['acl_group']  = 'Gruppo';
@@ -145,19 +148,25 @@ $lang['spell_noerr'] = 'Nessun errore trovato';
 $lang['spell_nosug'] = 'Nessun suggerimento';
 $lang['spell_change']= 'Cambia';
 
-$lang['mediaedit'] = "Modifica i metadati";
-$lang['metasaveerr'] = 'Non sono riuscito a salvare i metadati';
-$lang['metasaveok']  = 'Metadati salvati';
+$lang['metaedit']    = 'Modifica Metadata';
+$lang['metasaveerr'] = 'Scrittura metadata fallita';
+$lang['metasaveok']  = 'Metadata salvati';
 $lang['img_backto']  = 'Torna a';
 $lang['img_title']   = 'Titolo';
 $lang['img_caption'] = 'Descrizione';
 $lang['img_date']    = 'Data';
-$lang['img_fname']   = 'Nome file';
-$lang['img_fsize']   = 'Dimensione';
+$lang['img_fname']   = 'Nome File';
+$lang['img_fsize']   = 'Grandezza';
 $lang['img_artist']  = 'Autore';
 $lang['img_copyr']   = 'Copyright';
 $lang['img_format']  = 'Formato';
-$lang['img_camera']  = 'Macchina';
+$lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Parole chiave';
+
+$lang['subscribe_success']  = '%s è stato aggiunto alla lista di controllo per la pagina %s';
+$lang['subscribe_error']    = 'Si è verificato un errore durante l\'aggiunta di %s alla lista di controllo per la pagina %s';
+$lang['subscribe_noaddress']= 'Non c\'è alcun indirizzo associato con il tuo login, non puoi sottoscrivere alcuna lista';
+$lang['unsubscribe_success']= '%s è stato rimosso dalla lista di controllo per la pagina %s';
+$lang['unsubscribe_error']  = 'Si è verificato un errore durante la rimozione di %s dalla lista di controllo per la pagina %s';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

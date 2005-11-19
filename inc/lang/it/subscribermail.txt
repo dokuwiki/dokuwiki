@@ -1,0 +1,18 @@
+Ciao!
+
+La pagina @PAGE@ di @TITLE@ wiki è stata aggiornata.
+Qui sotto sono elencate le modifiche apportate:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Per cancellare la tua sottoscrizione alla lista di controllo 
+per questa pagina collegati al wiki
+@DOKUWIKIURL@ poi spostati su
+@NEWPAGE@
+e seleziona 'Cancella sottoscrizione'.
+
+-- 
+Questa email è stata generata da DokuWiki su
+@DOKUWIKIURL@

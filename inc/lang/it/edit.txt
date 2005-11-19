@@ -1,3 +1,5 @@
-Modifica la pagina e clicca ''Salva''. Vedi [[wiki:syntax]] per la sintassi
-riconosciuta da Wiki. Per favore modifica questa pagina solo se puoi **apportare dei miglioramenti**. Se vuoi solo fare degli esperimenti e imparare come fare i primi passi usa [[wiki:playground]].
+Modifica la pagina e clicca su ''Salva''. Vedi [[wiki:syntax]] per la sintassi
+riconosciuta da Wiki. Modifica questa pagina solo se puoi 
+**apportare dei miglioramenti**. Se vuoi solo effettuare degli esperimenti ed imparare 
+come fare i primi passi usa [[wiki:playground]].
 
