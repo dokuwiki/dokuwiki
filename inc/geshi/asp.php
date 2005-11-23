@@ -4,7 +4,7 @@
  * --------
  * Author: Amit Gupta (http://blog.igeek.info/)
  * Copyright: (c) 2004 Amit Gupta (http://blog.igeek.info/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.4
+ * Release Version: 1.0.7.5
  * CVS Revision Version: $Revision: 1.5 $
  * Date Started: 2004/08/13
  * Last Modified: $Date: 2005/10/22 07:52:59 $

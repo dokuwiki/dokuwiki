@@ -4,7 +4,7 @@
  * --------- 
  * Author: Carl Fürstenberg (azatoth@gmail.com) 
  * Copyright: (c) 2005 Carl Fürstenberg, Nigel McNie (http://qbnz.com/highlighter) 
- * Release Version: 1.0.7.4
+ * Release Version: 1.0.7.5
  * CVS Revision Version: $Revision: 1.2 $ 
  * Date Started: 2004/06/04 
  * Last Modified: $Date: 2005/10/22 07:52:59 $ 

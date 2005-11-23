@@ -4,7 +4,7 @@
  * -----------
  * Author: Florian Knorn (floz@gmx.de)
  * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
- * Release Version: 1.0.7.4
+ * Release Version: 1.0.7.5
  * CVS Revision Version: $Revision: 1.5 $
  * Date Started: 2005/02/09
  * Last Modified: $Date: 2005/10/22 07:52:59 $
