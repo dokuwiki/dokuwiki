@@ -158,9 +158,10 @@ function tpl_admin(){
  *
  * This has to go into the head section of your template.
  *
+ * @param  boolean $alt Should feeds and alternative format links be added?
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_metaheaders(){
+function tpl_metaheaders($alt=true){
   global $ID;
   global $INFO;
   global $ACT;
@@ -172,10 +173,13 @@ function tpl_metaheaders(){
   ptln('<meta name="generator" content="DokuWiki '.getVersion().'" />',$it);
   ptln('<link rel="start" href="'.DOKU_BASE.'" />',$it);
   ptln('<link rel="contents" href="'.wl($ID,'do=index').'" title="'.$lang['index'].'" />',$it);
-  ptln('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="'.DOKU_BASE.'feed.php" />',$it);
-  ptln('<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="'.DOKU_BASE.'feed.php?mode=list&amp;ns='.$INFO['namespace'].'" />',$it);
-  ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.wl($ID,'do=export_html').'" />',$it);
-  ptln('<link rel="alternate" type="text/plain" title="Wiki Markup" href="'.wl($ID, 'do=export_raw').'" />',$it);
+
+  if($alt){
+    ptln('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="'.DOKU_BASE.'feed.php" />',$it);
+    ptln('<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="'.DOKU_BASE.'feed.php?mode=list&amp;ns='.$INFO['namespace'].'" />',$it);
+    ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.wl($ID,'do=export_html').'" />',$it);
+    ptln('<link rel="alternate" type="text/plain" title="Wiki Markup" href="'.wl($ID, 'do=export_raw').'" />',$it);
+  }
 
   // setup robot tags apropriate for different modes
   if( ($ACT=='show' || $ACT=='export_html') && !$REV){
