@@ -50,6 +50,7 @@ function js_out(){
             $files[] = DOKU_INC.'lib/scripts/spellcheck.js';
         }
     }
+    $files[] = DOKU_TPLINC.'script.js';
 
     // get possible plugin scripts
     $plugins = js_pluginscripts();
