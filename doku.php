@@ -53,6 +53,11 @@
   //make infos about the selected page available
   $INFO = pageinfo();
 
+  //send 404 for missing pages if configured
+  if($conf['send404'] && !$INFO['exists']){
+    header('HTTP/1.0 404 Not Found');
+  }
+
   //prepare breadcrumbs (initialize a static var)
   breadcrumbs();
 

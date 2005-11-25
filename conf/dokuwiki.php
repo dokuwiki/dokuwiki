@@ -80,6 +80,7 @@ $conf['subscribers'] = 0;                //enable change notice subscription sup
 $conf['pluginmanager'] = 0;              //enable automated plugin management (requires plugin)
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0
 $conf['hidepages']   = '';               //Regexp for pages to be skipped from RSS, Search and Recent Changes
+$conf['send404']     = 0;                //Send a HTTP 404 status for non existing pages?
 $conf['rss_type']    = 'rss1';           //type of RSS feed to provide, by default:
                                          //  'rss'  - RSS 0.91
                                          //  'rss1' - RSS 1.0
