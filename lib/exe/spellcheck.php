@@ -112,6 +112,9 @@ function spell_check() {
   $string = preg_replace("/(\015\012)|(\015)/","\012",$string);
   $string = htmlspecialchars($string);
 
+  // make sure multiple spaces are kept
+  $string = preg_replace('/  /','&nbsp; ',$string);
+
   // we need the text as array later
   $data = explode("\n",$string);
 
@@ -242,6 +245,9 @@ function spell_resume(){
 
   // restore quoted special chars
   $text = unhtmlspecialchars($text);
+
+  // restore spaces
+  $text = preg_replace('/&nbsp;/',' ',$text);
 
   // check if UTF-8 is accepted
   if(!$_POST['utf8']){
