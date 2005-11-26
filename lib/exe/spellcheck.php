@@ -122,8 +122,8 @@ function spell_check() {
   $string = preg_replace('/\{\{(.*?)(\|(.*?))?(\}\})/e','spaceslink("\\1","\\2")',$string);
   $string = preg_replace('/\[\[(.*?)(\|(.*?))?(\]\])/e','spaceslink("\\1","\\2")',$string);
 
-  // run aspell in terse sgml mode
-  if(!$spell->runAspell($string,$out,$err,array('!','+html'))){
+  // run aspell in terse sgml mode, ignore nbsp as correct word
+  if(!$spell->runAspell($string,$out,$err,array('!','+html','@nbsp'))){
     print '2'; //to indicate an error
     print "An error occured while trying to run the spellchecker:\n";
     print $err;
@@ -243,11 +243,11 @@ function spell_resume(){
   // remove HTML tags
   $text = strip_tags($text);
 
-  // restore quoted special chars
-  $text = unhtmlspecialchars($text);
-
   // restore spaces
   $text = preg_replace('/&nbsp;/',' ',$text);
+
+  // restore quoted special chars
+  $text = unhtmlspecialchars($text);
 
   // check if UTF-8 is accepted
   if(!$_POST['utf8']){
