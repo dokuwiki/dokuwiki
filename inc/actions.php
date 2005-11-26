@@ -124,6 +124,7 @@ function act_clean($act){
   $act = preg_replace('/[^a-z_]+/','',$act);
 
   if($act == 'export_html') $act = 'export_xhtml';
+  if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
   if(array_search($act,array('login','logout','register','save','edit',
                              'preview','search','show','check','index','revisions',
@@ -284,6 +285,12 @@ function act_export($act){
     print p_wiki_xhtml($ID,$REV,false);
     ptln('</body>');
     ptln('</html>');
+    exit;
+  }
+
+  // html body only
+  if($act == 'export_xhtmlbody'){
+    print p_wiki_xhtml($ID,$REV,false);
     exit;
   }
 
