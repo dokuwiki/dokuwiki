@@ -179,11 +179,20 @@ function rssListNamespace(&$rss,$ns){
   sort($data);
   search($data,$conf['datadir'],'search_list','',$ns);
   foreach($data as $row){
-    $id = $row['id'];
-    $date = filemtime(wikiFN($id));
-    $desc = cleanDesc(p_wiki_xhtml($id,'',false));
     $item = new FeedItem();
+
+    $id    = $row['id'];
+    $date  = filemtime(wikiFN($id));
+    $xhtml = p_wiki_xhtml($id,'',false);
+    $desc  = cleanDesc($xhtml);
     $item->title       = $id;
+
+    if($conf['useheading']) {
+        $matches = array();
+        if(preg_match('|<h([1-9])>(.*?)</h\1>|', $xhtml, $matches))
+            $item->title = trim($matches[2]);
+    }
+
     $item->link        = wl($id,'rev='.$date,true);
     $item->description = $desc;
     $item->date        = date('r',$date);
