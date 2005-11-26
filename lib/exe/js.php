@@ -71,7 +71,7 @@ function js_out(){
 
     // load files
     foreach($files as $file){
-        readfile($file);
+        @readfile($file);
     }
 
     // init stuff
