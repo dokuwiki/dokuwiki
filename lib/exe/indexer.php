@@ -113,7 +113,7 @@ function runSitemapper(){
 
         print '  <url>'.NL;
         print '    <loc>'.wl($id,'',true).'</loc>'.NL;
-        print '    <lastmod>'.date('Y-m-d\TH:i:s',$date).'</lastmod>'.NL;
+        print '    <lastmod>'.date_iso8601($date).'</lastmod>'.NL;
         print '  </url>'.NL;
     }
     print '</urlset>'.NL;
@@ -123,6 +123,21 @@ function runSitemapper(){
 
     io_saveFile($sitemap,$data);
     return true;
+}
+
+/**
+ * Formats a timestamp as ISO 8601 date
+ *
+ * @author <ungu at terong dot com>
+ * @link http://www.php.net/manual/en/function.date.php#54072
+ */
+function date_iso8601($int_date) {
+   //$int_date: current date in UNIX timestamp
+   $date_mod = date('Y-m-d\TH:i:s', $int_date);
+   $pre_timezone = date('O', $int_date);
+   $time_zone = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
+   $date_mod .= $time_zone;
+   return $date_mod;
 }
 
 /**
