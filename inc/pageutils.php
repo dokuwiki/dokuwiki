@@ -89,7 +89,7 @@ function cleanID($id){
   if($conf['deaccent']) $id = utf8_deaccent($id,-1);
 
   //remove specials
-  $id = utf8_stripspecials($id,$sepchar);
+  $id = utf8_stripspecials($id,$sepchar,'\*');
 
   //clean up
   $id = preg_replace($sepcharpat,$sepchar,$id);

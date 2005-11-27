@@ -19,7 +19,7 @@
 function ft_pageSearch($query,&$poswords){
     $q = ft_queryParser($query);
     // use this for higlighting later:
-    $poswords = join(' ',$q['and']);
+    $poswords = str_replace('*','',join(' ',$q['and']));
 
     // lookup all words found in the query
     $words  = array_merge($q['and'],$q['not']);
@@ -268,7 +268,7 @@ function ft_queryParser($query){
     $words = explode(' ',$query);
     foreach($words as $w){
         if($w{0} == '-'){
-            $token = idx_tokenizer($w,$stopwords);
+            $token = idx_tokenizer($w,$stopwords,true);
             if(count($token)) $q['not'] = array_merge($q['not'],$token);
         }else{
             // asian "words" need to be searched as phrases
@@ -276,7 +276,7 @@ function ft_queryParser($query){
                 $q['phrases'] = array_merge($q['phrases'],$matches[1]);
 
             }
-            $token = idx_tokenizer($w,$stopwords);
+            $token = idx_tokenizer($w,$stopwords,true);
             if(count($token)) $q['and'] = array_merge($q['and'],$token);
         }
     }

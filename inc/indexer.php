@@ -55,7 +55,7 @@ function idx_getPageWords($page){
             // handle asian chars as single words (may fail on older PHP version)
             $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$word);
             if(!is_null($asia)) $word = $asia; //recover from regexp failure
-            $arr = explode(' ', utf8_stripspecials($word,' ','._\-:'));
+            $arr = explode(' ', utf8_stripspecials($word,' ','._\-:\*'));
             $arr = array_count_values($arr);
             
             foreach ($arr as $w => $c) {
@@ -231,12 +231,41 @@ function idx_lookup($words){
     // get word IDs
     $wids = array();
     foreach($words as $word){
-        $wid = array_search("$word\n",$word_idx);
-        if(is_int($wid)){
-            $wids[] = $wid;
-            $result[$word] = $wid;
-        }else{
-            $result[$word] = array();
+        $result[$word] = array();
+        $wild = 0;
+        $xword = $word; 
+
+        // check for wildcards
+        if(substr($xword,0,1) == '*'){
+            $xword = substr($xword,1);
+            $wild  = 1;
+        }
+        if(substr($xword,-1,1) == '*'){
+            $xword = substr($xword,0,-1);
+            $wild += 2;
+        }
+ 
+        // look for the ID(s) for the given word
+        if($wild){  // handle wildcard search
+            $cnt = count($word_idx);
+            for($wid=0; $wid<$cnt; $wid++){
+                $iword = $word_idx[$wid];
+                if( (($wild==3) && is_int(strpos($iword,$xword))) ||
+                    (($wild==1) && ("$xword\n" == substr($iword,(-1*strlen($xword))-1))) ||
+                    (($wild==2) && ($xword == substr($iword,0,strlen($xword))))
+                  ){
+                    $wids[] = $wid;
+                    $result[$word][] = $wid;
+                }
+            }
+        }else{     // handle exact search
+            $wid = array_search("$word\n",$word_idx);
+            if(is_int($wid)){
+                $wids[] = $wid;
+                $result[$word][] = $wid;
+            }else{
+                $result[$word] = array();
+            }
         }
     }
     sort($wids);
@@ -245,7 +274,7 @@ function idx_lookup($words){
     // Open index
     $idx = fopen($conf['cachedir'].'/index.idx','r');
     if(!$idx){
-       msg("Failed to open index files",-1);
+       msg("Failed to open index file",-1);
        return false;
     } 
 
@@ -275,14 +304,19 @@ function idx_lookup($words){
     }
     fclose($idx);
 
-    // merge found pages into result array
+
+    // merge found pages into final result array
+    $final = array();
     foreach(array_keys($result) as $word){
-        if(is_int($result[$word])){
-            $result[$word] = $docs[$result[$word]];
+        $final[$word] = array();
+        foreach($result[$word] as $wid){
+            $hits = &$docs[$wid];
+            foreach ($hits as $hitkey => $hitcnt) {
+                $final[$word][$hitkey] = $hitcnt + $final[$word][$hitkey];
+            }
         }
     }
-
-    return $result;
+    return $final;
 }
 
 /**
@@ -321,17 +355,22 @@ function idx_parseIndexLine(&$page_idx,$line){
  *
  * Uses the same algorithm as idx_getPageWords()
  *
+ * @param string   $string     the query as given by the user
+ * @param arrayref $stopwords  array of stopwords
+ * @param boolean  $wc         are wildcards allowed?
+ * 
  * @todo make combined function to use alone or in getPageWords
  */
-function idx_tokenizer($string,&$stopwords){
+function idx_tokenizer($string,&$stopwords,$wc=false){
     $words = array();
+    if(!$wc) $wc = '\*';
 
     if(preg_match('/[^0-9A-Za-z]/u', $string)){
         // handle asian chars as single words (may fail on older PHP version)
         $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$string);
         if(!is_null($asia)) $string = $asia; //recover from regexp failure
 
-        $arr = explode(' ', utf8_stripspecials($string,' ','._\-:'));
+        $arr = explode(' ', utf8_stripspecials($string,' ','._\-:'.$wc));
         foreach ($arr as $w) {
             if (!is_numeric($w) && strlen($w) < 3) continue;
             $w = utf8_strtolower($w);

@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.19 2005/10/22 07:52:59 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.23 2005/11/19 02:23:37 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.4');
+define('GESHI_VERSION', '1.0.7.5');
 
 /** For the future (though this may never be realised) */
 define('GESHI_OUTPUT_HTML', 0);
@@ -286,6 +286,7 @@ class GeSHi
     /**
      * Whether important blocks should be recognised or not
      * @var boolean
+     * @deprecated
      * @todo REMOVE THIS FUNCTIONALITY!
      */
 	var $enable_important_blocks = false;
@@ -293,6 +294,7 @@ class GeSHi
     /**
      * Styles for important parts of the code
      * @var string
+     * @deprecated
      * @todo As above - rethink the whole idea of important blocks as it is buggy and
      * will be hard to implement in 1.2
      */
@@ -1305,6 +1307,7 @@ class GeSHi
 	 * Sets whether context-important blocks are highlighted
      * 
      * @todo REMOVE THIS SHIZ FROM GESHI!
+     * @deprecated
 	 */
 	function enable_important_blocks ( $flag )
 	{
@@ -1590,6 +1593,12 @@ class GeSHi
 										$attributes = ' class="es0"';
 									}
 									$char = "<span$attributes>" . $char;
+                                    if (substr($code, $i + 1, 1) == "\n") {
+                                        // escaping a newline, what's the point in putting the span around
+                                        // the newline? It only causes hassles when inserting line numbers
+                                        $char .= '</span>';
+                                        $ESCAPE_CHAR_OPEN = false;
+                                    }
 								}
 							} else {
 								$ESCAPE_CHAR_OPEN = false;
@@ -1897,7 +1906,7 @@ class GeSHi
 	 */
 	function add_url_to_keyword ($keyword, $group, $start_or_end)
 	{
-		if (isset($this->language_data['URLS'][$group]) &&
+        if (isset($this->language_data['URLS'][$group]) &&
             $this->language_data['URLS'][$group] != '' &&
             substr($keyword, 0, 5) != '&lt;/') {
 			// There is a base group for this keyword
@@ -1915,7 +1924,8 @@ class GeSHi
                         ) . '">';
 				}
 				return '';
-			} else {
+            // HTML fix. Again, dirty hackage...
+			} elseif (!($this->language == 'html4strict' && '&gt;' == $keyword)) {
 				return '</a>';
 			}
 		}
@@ -2405,7 +2415,7 @@ class GeSHi
 			if ($this->use_classes) {
 				$attr = ' class="foot"';
 			} else {
-				$attr = " style=\"{$this->footer_content_style}\">";
+				$attr = " style=\"{$this->footer_content_style}\"";
 			}
 			return "<div$attr>$footer</div>";
 		}
