@@ -35,22 +35,29 @@ function css_out(){
     // The generated script depends on some dynamic options
     $cache = getCacheName('styles'.$print,'.css');
 
+    // load template styles
+    $tplstyles = array();
+    if(@file_exists(DOKU_TPLINC.'style.ini')){
+        $ini = parse_ini_file(DOKU_TPLINC.'style.ini',true);
+        foreach($ini['stylesheets'] as $file => $mode){
+            $tplstyles[$mode][DOKU_TPLINC.$file] = DOKU_TPL;
+        }
+    }
+
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
     $files   = array();
     if($print){
         $files[DOKU_TPLINC.'print.css'] = DOKU_TPL;
+        $files = array_merge($files, $tplstyles['print']);
         // load plugin styles
         $files = array_merge($files, css_pluginstyles('print'));
         $files[DOKU_CONF.'userprint.css'] = '';
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
-        //fixme extra spellchecker style?
-        $files[DOKU_TPLINC.'layout.css'] = DOKU_TPL;
-        $files[DOKU_TPLINC.'design.css'] = DOKU_TPL;
-        $files[DOKU_TPLINC.'style.css']  = DOKU_TPL;
+        $files = array_merge($files, $tplstyles['screen']);
         if($lang['direction'] == 'rtl'){
-            $files[DOKU_TPLINC.'rtl.css'] = DOKU_TPL;
+            $files = array_merge($files, $tplstyles['rtl']);
         }
         // load plugin styles
         $files = array_merge($files, css_pluginstyles('screen'));
@@ -126,8 +133,8 @@ function css_cacheok($cache,$files){
  */
 function css_applystyle($css){
     if(@file_exists(DOKU_TPLINC.'style.ini')){
-        $ini = parse_ini_file(DOKU_TPLINC.'style.ini');
-        $css = strtr($css,$ini);
+        $ini = parse_ini_file(DOKU_TPLINC.'style.ini',true);
+        $css = strtr($css,$ini['replacements']);
     }
     return $css;
 }
