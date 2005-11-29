@@ -20,10 +20,6 @@ sendGIF();
 // - probably not needed but better safe...
 ob_start();
 
-// Now start work
-require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/auth.php');
-
 // run one of the jobs
 runIndexer() or runSitemapper();
 
@@ -121,7 +117,15 @@ function runSitemapper(){
     $data = ob_get_contents();
     ob_end_clean();
 
+    //save the new sitemap
     io_saveFile($sitemap,$data);
+
+    //ping google
+    $url  = 'http://www.google.com/webmasters/sitemaps/ping?sitemap=';
+    $url .= urlencode(DOKU_URL.$sitemap);
+    $http = new DokuHTTPClient();
+    $http->get($url);
+
     return true;
 }
 
