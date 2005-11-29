@@ -1,0 +1,17 @@
+ZdravÌm!
+
+Str·nka @PAGE@ v @TITLE@ wiki bola zmenen·.
+Tu s˙ zmeny:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Pre odhl·senie da z tejto str·nky chodte na
+@DOKUWIKIURL@, potom navötÌvte
+@NEWPAGE@
+a zvolte 'Neposielaù zmeny'.
+
+-- 
+Tento mail bol vygenerovan˝ DokuWiki na
+@DOKUWIKIURL@

@@ -1,0 +1,17 @@
+Stránka vo vašom DokuWiki bola zmenená. Tu sú podrobnosti:
+
+Dátum       : @DATE@
+Prehliadač   : @BROWSER@
+IP adresa   : @IPADDRESS@
+Hostitel    : @HOSTNAME@
+Stará verzia : @OLDPAGE@
+Nová verzia  : @NEWPAGE@
+Komentár    : @SUMMARY@
+User        : @USER@
+
+@DIFF@
+
+
+-- 
+Táto správa bola vygenerovaná systémom DokuWiki:
+@DOKUWIKIURL@

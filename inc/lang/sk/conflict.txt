@@ -1,0 +1,6 @@
+====== Existuje novšia verzia ======
+
+Existuje novšia verzia práve upravovaného dokumentu. To se stáva, keď niekto
+iný zmenil dokument, ktorý práve upravujete.
+
+Prehliadnite si nižšie uvedené rozdiely, prípadne rozdiely z obidvoch verzií ručne spojte dohromady a rozhodnite sa, ktorú verziu uchovať. Ak zvolíte ''Uložiť', bude uložená vaša verzia. V opačnom prípade stlačte ''Storno'' pre uchovanie pôvodnej verzie.

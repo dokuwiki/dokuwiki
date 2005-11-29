@@ -1,0 +1,2 @@
+Upravte stránku a stisknite ''Uložiť''. Na stránke [[wiki:syntax]] sa môžete
+dozvedieť viacej o Wiki syntaxi. Prosím upravujte stránky len pokiaľ ich môžete **vylepšit**. Pokiaľ si chcete niečo len vyskúšať, použite [[wiki:playground| pieskovisko]].
