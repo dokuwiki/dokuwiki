@@ -206,6 +206,11 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
 
   if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
 
+  // check available memory
+  if(!is_mem_available(($from_w * $from_h * 4) + ($to_w * $to_h * 4))){
+    return false;
+  }
+
   // create an image of the given filetype
   if ($ext == 'jpg' || $ext == 'jpeg'){
     if(!function_exists("imagecreatefromjpeg")) return false;
@@ -272,6 +277,50 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   return $okay;
 }
 
+/**
+ * Checks if the given amount of memory is available
+ *
+ * If the memory_get_usage() function is not available the
+ * function just assumes $used bytes of already allocated memory
+ *
+ * @param  int $mem  Size of memory you want to allocate in bytes
+ * @param  int $used already allocated memory (see above)
+ * @author Filip Oscadal <webmaster@illusionsoftworks.cz>
+ * @author Andreas Gohr <andi@splitbrain.org> 
+ */
+function is_mem_available($mem,$bytes=1048576){
+  $limit = trim(ini_get('memory_limit'));
+  if(empty($limit)) return true; // no limit set!
+
+  // parse limit to bytes
+  $unit = strtolower(substr($limit,-1));
+  switch($unit){
+    case 'g':
+      $limit = substr($limit,0,-1);
+      $limit *= 1024*1024*1024;
+      break;
+    case 'm':
+      $limit = substr($limit,0,-1);
+      $limit *= 1024*1024;
+      break;
+    case 'k':
+      $limit = substr($limit,0,-1);
+      $limit *= 1024;
+      break;
+  }
+
+  // get used memory if possible
+  if(function_exists('memory_get_usage')){
+    $used = memory_get_usage();
+  }
+
+
+  if($used+$mem > $limit){
+    return false;
+  }
+
+  return true;
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>
