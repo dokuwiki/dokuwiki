@@ -42,7 +42,10 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
 
   $header  = '';
 
-  $to = mail_encode_address($to);
+  // No named recipients for To: in Windows (see FS#652)
+  $usenames = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
+
+  $to = mail_encode_address($to,'',$usenames);
   $header .= mail_encode_address($from,'From');
   $header .= mail_encode_address($cc,'Cc');
   $header .= mail_encode_address($bcc,'Bcc');
@@ -71,9 +74,11 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
  * Example:
  *   mail_encode_address("föö <foo@bar.com>, me@somewhere.com","TBcc");
  *
- * @param string $string Multiple headers seperated by commas
+ * @param string  $string Multiple adresses separated by commas
+ * @param string  $header Name of the header (To,Bcc,Cc,...)
+ * @param boolean $names  Allow named Recipients?
  */
-function mail_encode_address($string,$header=''){
+function mail_encode_address($string,$header='',$names=true){
   $headers = '';
   $parts = split(',',$string);
   foreach ($parts as $part){
@@ -104,7 +109,7 @@ function mail_encode_address($string,$header=''){
     }
 
     // text was given
-    if(!empty($text)){
+    if(!empty($text) && $names){
       // add address quotes
       $addr = "<$addr>";
 
