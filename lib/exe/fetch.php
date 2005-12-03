@@ -224,16 +224,16 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
     $newimg = @imagecreatetruecolor ($to_w, $to_h);
   }
   if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
-  if(!$newimg) return false;
+  if(!$newimg){
+    imagedestroy($image);
+    return false;
+  }
 
   //keep png alpha channel if possible
   if($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')){
     imagealphablending($newimg, false);
     imagesavealpha($newimg,true);
   }
-
-  // create cachedir
-  //io_makeFileDir($to); // not needed anymore, should exist
 
   //try resampling first
   if(function_exists("imagecopyresampled")){
@@ -244,18 +244,32 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
     imagecopyresized($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h);
   }
 
+  $okay = false;
   if ($ext == 'jpg' || $ext == 'jpeg'){
-    if(!function_exists("imagejpeg")) return false;
-    return imagejpeg($newimg, $to, 70);
+    if(!function_exists('imagejpeg')){
+      $okay = false;
+    }else{
+      $okay = imagejpeg($newimg, $to, 70);
+    }
   }elseif($ext == 'png') {
-    if(!function_exists("imagepng")) return false;
-    return imagepng($newimg, $to);
+    if(!function_exists('imagepng')){
+      $okay = false;
+    }else{
+      $okay =  imagepng($newimg, $to);
+    }
   }elseif($ext == 'gif') {
-    if(!function_exists("imagegif")) return false;
-    return imagegif($newimg, $to);
+    if(!function_exists('imagegif')){
+      $okay = false;
+    }else{
+      $okay = imagegif($newimg, $to);
+    }
   }
 
-  return false;
+  // destroy GD image ressources
+  if($image) imagedestroy($image);
+  if($newimg) imagedestroy($newimg);
+
+  return $okay;
 }
 
 
