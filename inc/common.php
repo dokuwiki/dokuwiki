@@ -911,7 +911,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
   if($rev){
     $subject = $lang['mail_changed'].' '.$id;
     $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true),$text);
-    require_once("inc/DifferenceEngine.php");
+    require_once(DOKU_INC.'inc/DifferenceEngine.php');
     $df  = new Diff(split("\n",rawWiki($id,$rev)),
                     split("\n",rawWiki($id)));
     $dformat = new UnifiedDiffFormatter();
