@@ -17,13 +17,12 @@ session_write_close();  //close session
 sendGIF();
 
 // Catch any possible output (e.g. errors)
-// - probably not needed but better safe...
-ob_start();
+if(!$_REQUEST['debug']) ob_start();
 
 // run one of the jobs
 runIndexer() or runSitemapper();
 
-ob_end_clean();
+if(!$_REQUEST['debug']) ob_end_clean();
 exit;
 
 // --------------------------------------------------------------------
@@ -84,17 +83,20 @@ function runSitemapper(){
     }else{
         $sitemap = DOKU_INC.'sitemap.xml';
     }
-
+    print "runSitemapper(): using $sitemap".NL;
 
     if(!is_writable($sitemap)) return false;
     if(@filesize($sitemap) && 
        @filemtime($sitemap) > (time()-($conf['sitemap']*60*60*24))){
+       print 'runSitemapper(): Sitemap up to date'.NL;
        return false;
     }
 
-    ob_start();
     $pages = file($conf['cachedir'].'/page.idx');
+    print 'runSitemapper(): creating sitemap using '.count($pages).' pages'.NL;
 
+    // build the sitemap
+    ob_start();
     print '<?xml version="1.0" encoding="UTF-8"?>'.NL;
     print '<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">'.NL;
     foreach($pages as $id){
@@ -113,18 +115,19 @@ function runSitemapper(){
         print '  </url>'.NL;
     }
     print '</urlset>'.NL;
-
     $data = ob_get_contents();
     ob_end_clean();
 
     //save the new sitemap
     io_saveFile($sitemap,$data);
 
+    print 'runSitemapper(): pinging google'.NL;
     //ping google
     $url  = 'http://www.google.com/webmasters/sitemaps/ping?sitemap=';
     $url .= urlencode(DOKU_URL.$sitemap);
     $http = new DokuHTTPClient();
     $http->get($url);
+    if($http->error) print 'runSitemapper(): '.$http->error.NL;
 
     return true;
 }
@@ -151,6 +154,10 @@ function date_iso8601($int_date) {
  * @author Harry Fuecks <fuecks@gmail.com>
  */
 function sendGIF(){
+    if($_REQUEST['debug']){
+        header('Content-Type: text/plain');
+        return;
+    }
     $img = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7');
     header('Content-Type: image/gif');
     header('Content-Length: '.strlen($img));
