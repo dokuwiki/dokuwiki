@@ -1,0 +1,4 @@
+====== Przesyłanie nowego hasła ======
+
+Aby otrzymać hasło, podaj wszystkie wymagane informacje dotyczące Twojego konta w tym wiki.
+Twoje nowe hasło zostanie przesłane pocztą elektroniczną. Nazwa użytkownika to Twoja nazwa użytkownika w tym wiki.
