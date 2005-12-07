@@ -18,7 +18,9 @@
 
   // load the config file(s)
   require_once(DOKU_CONF.'dokuwiki.php');
-  @include_once(DOKU_CONF.'local.php');
+  if(@file_exists(DOKU_CONF.'local.php')){
+    require_once(DOKU_CONF.'local.php');
+  }
 
   //prepare language array
   global $lang;
