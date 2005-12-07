@@ -9,6 +9,7 @@ if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../')
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/auth.php');
 session_write_close();  //close session
+if(!defined('NL')) define('NL',"\n");
 
 // keep running after browser closes connection
 @ignore_user_abort(true);
@@ -34,13 +35,17 @@ exit;
  */
 function runIndexer(){
     global $conf;
+    print "runIndexer(): started".NL;
 
     $ID = cleanID($_REQUEST['id']);
     if(!$ID) return false;
 
     // check if indexing needed
     $last = @filemtime(metaFN($ID,'.indexed'));
-    if($last > @filemtime(wikiFN($ID))) return false;
+    if($last > @filemtime(wikiFN($ID))){
+        print "runIndexer(): index for $ID up to date".NL;
+        return false;
+    }
 
     // try to aquire a lock
     $lock = $conf['lockdir'].'/_indexer.lock';
@@ -48,7 +53,9 @@ function runIndexer(){
         if(time()-@filemtime($lock) > 60*5){
             // looks like a stale lock - remove it
             @rmdir($lock);
+            print "runIndexer(): stale lock removed".NL;
         }else{
+            print "runIndexer(): indexer locked".NL;
             return false;
         }
     }
@@ -61,6 +68,7 @@ function runIndexer(){
     // we're finished - save and free lock
     io_saveFile(metaFN($ID,'.indexed'),' ');
     @rmdir($lock);
+    print "runIndexer(): finished".NL;
     return true;
 }
 
@@ -75,8 +83,8 @@ function runIndexer(){
  */
 function runSitemapper(){
     global $conf;
+    print "runSitemapper(): started".NL;
     if(!$conf['sitemap']) return false;
-    if(!defined('NL')) define('NL',"\n");
 
     if($conf['usegzip']){
         $sitemap = DOKU_INC.'sitemap.xml.gz';
@@ -129,6 +137,7 @@ function runSitemapper(){
     $http->get($url);
     if($http->error) print 'runSitemapper(): '.$http->error.NL;
 
+    print 'runSitemapper(): finished'.NL;
     return true;
 }
 
