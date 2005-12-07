@@ -21,7 +21,7 @@
 
   <?php tpl_metaheaders()?>
 
-  <link rel="shortcut icon" href="<?php echo DOKU_BASE?>images/favicon.ico" />
+  <link rel="shortcut icon" href="<?php echo DOKU_TPL?>images/favicon.ico" />
 
 </head>
 

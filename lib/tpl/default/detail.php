@@ -23,7 +23,7 @@
 
   <?php tpl_metaheaders()?>
 
-  <link rel="shortcut icon" href="<?php echo DOKU_BASE?>lib/images/favicon.ico" />
+  <link rel="shortcut icon" href="<?php echo DOKU_TPL?>images/favicon.ico" />
 </head>
 
 <body>
