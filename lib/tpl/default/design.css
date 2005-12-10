@@ -482,17 +482,18 @@ div.tocheader {
 }
 
 div.toctoggle {
+}
+
+div.tocheader img {
+  width:0.8em;
+  height:0.8em;
   float:right;
   margin-top:0.3em;
   margin-right:3px;
+  cursor: pointer;
 }
 
-div.toctoggle img {
-  width:0.8em;
-  height:0.8em;
-}
-
-#tocinside {
+#toc__inside {
   border: 1px solid __dark__;
   background-color: __white__;
   text-align: left;

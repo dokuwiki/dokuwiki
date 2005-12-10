@@ -77,6 +77,7 @@ function js_out(){
     // init stuff
     js_runonstart("ajax_qsearch.init('qsearch_in','qsearch_out')");
     js_runonstart("addEvent(document,'click',closePopups)");
+    js_runonstart('addTocToggle()');
 
     if($edit){
         // size controls
@@ -113,6 +114,13 @@ function js_out(){
 
     // load user script
     @readfile(DOKU_CONF.'userscript.js');
+
+
+    // initialize init pseudo event
+    echo 'if (document.addEventListener) {';
+    echo '    document.addEventListener("DOMContentLoaded", window.fireoninit, null);';
+    echo '}';
+    echo 'addEvent(window,"load",window.fireoninit);';
 
     // end output buffering and get contents
     $js = ob_get_contents();
@@ -184,7 +192,7 @@ function js_escape($string){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function js_runonstart($func){
-    print "addEvent(window,'load',function(){ $func; });";
+    echo "addInitEvent(function(){ $func; });";
 }
 
 /**
