@@ -86,7 +86,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function toc_open() {
         global $lang;
         $this->doc .= '<div class="toc">'.DOKU_LF;
-        $this->doc .= '<div class="tocheader" id="toc__header">';
+        $this->doc .= '<div class="tocheader toctoggle" id="toc__header">';
         $this->doc .= $lang['toc'];
         $this->doc .= '</div>'.DOKU_LF;
         $this->doc .= '<div id="toc__inside">'.DOKU_LF;
