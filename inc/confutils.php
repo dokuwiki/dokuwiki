@@ -131,7 +131,7 @@ function confToHash($file,$lower=false) {
 
   foreach ( $lines as $line ) {
     //ignore comments
-    $line = preg_replace('/[^&]?#.*$/','',$line);
+    $line = preg_replace('/(?<!&)#.*$/','',$line);
     $line = trim($line);
     if(empty($line)) continue;
     $line = preg_split('/\s+/',$line,2);
