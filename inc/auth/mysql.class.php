@@ -67,9 +67,12 @@ class auth_mysql extends auth_basic {
         $sql    = str_replace('%g',addslashes($this->defaultgroup),$sql);
         $result = $this->queryDB($sql);
       
-        if($result !== false && count($result) == 1)
-          $rc = $cnf['encryptPass'] ? true : auth_verifyPassword($pass,$result[0]['pass']);
-		  
+        if($result !== false && count($result) == 1) {
+          if($this->cnf['encryptPass'] == 1)
+            $rc = true;
+          else
+            $rc = auth_verifyPassword($pass,$result[0]['pass']);
+        }
         $this->closeDB();
       }
       return $rc;
