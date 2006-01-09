@@ -1,0 +1,6 @@
+======SPAM blocked======
+
+Your changes were **not** saved because it contains one or more blocked words.
+If you tried to spam the Wiki -- Bad dog! If you think this is an error, contact
+the administrator of this Wiki.
+
