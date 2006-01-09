@@ -733,7 +733,11 @@ function getRecents($first,$num,$ns='',$flags=0){
   // now read backwards into buffer
   while($pos > 0){
     $pos -= $csz;                           // seek to previous chunk...
-    if($pos < 0) $pos = 0;                  // ...or rest of file
+    if($pos < 0) {                          // ...or rest of file
+      $csz += $pos; 
+      $pos = 0;
+    }
+
     fseek($fh,$pos);
 
     $buf = fread($fh,$csz).$buf;            // prepend to buffer
