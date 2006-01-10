@@ -10,7 +10,55 @@
  
 class auth_basic {
 
-	var $success = TRUE;
+	var $success = true;
+
+  /**
+   * Do all authentication [ OPTIONAL ]
+   *
+   * If this function is implemented it will be used to
+   * authenticate a user - all other DokuWiki internals
+   * will not be used for authenticating, thus
+   * implementing the functions below becomes optional.
+   *
+   * The function can be used to authenticate against third
+   * party cookies or Apache auth mechanisms and replaces
+   * the auth_login() function
+   *
+   * The function will be called with or without a set
+   * username. If the Username is given it was called
+   * from the login form and the given credentials might
+   * need to be checked. If no username was given it
+   * the function needs to check if the user is logged in
+   * by other means (cookie, environment).
+   *
+   * The function needs to set some globals needed by
+   * DokuWiki like auth_login() does.
+   *
+   * @see auth_login()
+   * @author  Andreas Gohr <andi@splitbrain.org>
+   *
+   * @param   string  $user    Username
+   * @param   string  $pass    Cleartext Password
+   * @param   bool    $sticky  Cookie should not expire
+   * @return  bool             true on successful auth
+   */
+#  function trustExternal($user,$pass,$sticky=false){
+#    global $USERINFO;
+#    global $conf;
+#    $sticky ? $sticky = true : $sticky = false; //sanity check
+#
+#    // do the checking here
+#
+#    // set the globals if authed
+#    $USERINFO['name'] = 'FIXME';
+#    $USERINFO['mail'] = 'FIXME';
+#    $USERINFO['grps'] = array('FIXME');
+#    $_SERVER['REMOTE_USER'] = $user;
+#    $_SESSION[$conf['title']]['auth']['user'] = $user;
+#    $_SESSION[$conf['title']]['auth']['pass'] = $pass;
+#    $_SESSION[$conf['title']]['auth']['info'] = $USERINFO;
+#    return true;
+#  }
 
 	/**
 	 * Check user+password [ MUST BE OVERRIDDEN ]

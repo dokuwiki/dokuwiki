@@ -85,8 +85,15 @@
   define('AUTH_DELETE',16);
   define('AUTH_ADMIN',255);
 
+  // do the login either by cookie or provided credentials
   if($conf['useacl']){
-    auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+    // external trust mechanism in place?
+    if(auth_canDo('trustExternal') && !is_null($auth)){
+      $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+    }else{
+      auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+    }
+
     //load ACL into a global array
     if(is_readable(DOKU_CONF.'acl.auth.php')){
       $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
