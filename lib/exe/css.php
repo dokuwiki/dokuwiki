@@ -49,15 +49,15 @@ function css_out(){
     $files   = array();
     if($print){
         $files[DOKU_TPLINC.'print.css'] = DOKU_TPL;
-        $files = array_merge($files, $tplstyles['print']);
+        if (isset($tplstyles['print'])) $files = array_merge($files, $tplstyles['print']);
         // load plugin styles
         $files = array_merge($files, css_pluginstyles('print'));
         $files[DOKU_CONF.'userprint.css'] = '';
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
-        $files = array_merge($files, $tplstyles['screen']);
+        if (isset($tplstyles['screen'])) $files = array_merge($files, $tplstyles['screen']);
         if($lang['direction'] == 'rtl'){
-            $files = array_merge($files, $tplstyles['rtl']);
+            if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
         }
         // load plugin styles
         $files = array_merge($files, css_pluginstyles('screen'));
