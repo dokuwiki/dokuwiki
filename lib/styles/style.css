@@ -34,15 +34,15 @@ div.success{
 
 /* image alignment */
 
-img.medialeft {
+.medialeft {
   float: left;
 }
 
-img.mediaright {
+.mediaright {
   float: right;
 }
 
-img.mediacenter {
+.mediacenter {
   display: block;
   margin-left: auto;
   margin-right: auto;
