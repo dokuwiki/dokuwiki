@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * slovenian language file
  *
