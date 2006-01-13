@@ -17,9 +17,8 @@ require_once(DOKU_PLUGIN.'admin.php');
     
     //--------------------------[ GLOBALS ]------------------------------------------------
     // note: probably should be dokuwiki wide globals, where they can be accessed by pluginutils.php
-    global $common_plugin_files, $common_plugin_types;
+    global $common_plugin_types;
     $common_plugin_types = array('syntax', 'admin');
-    $common_plugin_files = array("style.css", "screen.css", "print.css", "script.js");
 
 /**
  * All DokuWiki plugins to extend the admin function
@@ -190,7 +189,7 @@ class ap_manage {
         }
             
         function html_pluginlist() {
-		  global $ID;
+          global $ID;
 
           foreach ($this->manager->plugin_list as $plugin) {
           
@@ -205,8 +204,9 @@ class ap_manage {
             ptln('      <input type="hidden" name="plugin" value="'.$plugin.'" />');
             
             $this->html_button('info', false, 6);
-            if (in_array('settings', $this->manager->functions)) 
-			    $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
+            if (in_array('settings', $this->manager->functions)) {
+              $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
+            }
             $this->html_button('update', !$this->plugin_readlog($plugin, 'url'), 6);
             $this->html_button('delete', false, 6);
             
@@ -221,38 +221,11 @@ class ap_manage {
         }
         
         /**
-         *  Rebuild aggregated files & update latest plugin date
+         *  Refresh plugin list
          */
         function refresh() {
-            global $lang;
-            global $common_plugin_files;
             
             sort($this->manager->plugin_list = plugin_list());
-            
-            foreach ($common_plugin_files as $file) {
-              $aggregate = '';
-              
-              // could replace with an class/object based aggregator, 
-              // that way special files could have their own aggregator
-              foreach ($this->manager->plugin_list as $plugin) {
-                if (@file_exists(DOKU_PLUGIN."$plugin/$file")) {
-                    $contents = @file_get_contents(DOKU_PLUGIN."$plugin/$file")."\n";
-                    
-                    // url conversion for css files
-                    if (is_css($file)) {
-                      $contents = preg_replace('/(url\([\'\"]?)([^\/](?![a-zA-Z0-9]+:\/\/).*?)([\'\"]?\))/','$1'.$plugin.'/$2$3',$contents); 
-                    }
-                    
-                    $aggregate .= $contents;
-                }
-              }
-              
-              if (trim($aggregate)) {
-                if (!io_savefile(DOKU_PLUGIN."plugin_$file", $aggregate)) {
-                  $this->manager->error .= sprintf($this->lang['error_write'],$file);
-                }
-              }
-            }
             
             // update latest plugin date - FIXME            
             return (!$this->manager->error);
@@ -408,7 +381,7 @@ class ap_manage {
             ptln('<h2>'.$this->lang['downloading'].'</h2>');
             
             if ($this->manager->error) {
-                ptln('<p class="error">'.str_replace("\n","<br />",$this->manager->error).'</p>');
+                ptln('<div class="error">'.str_replace("\n","<br />",$this->manager->error).'</div>');
             } else if (count($this->downloaded) == 1) {
                 ptln('<p>'.sprintf($this->lang['downloaded'],$this->downloaded[0]).'</p>');
             } else if (count($this->downloaded)) {   // more than one plugin in the download
@@ -430,16 +403,24 @@ class ap_manage {
     
         function process() {    
         
-            ap_delete(DOKU_PLUGIN.$this->manager->plugin);            
-            $this->refresh();
+            if (!ap_delete(DOKU_PLUGIN.$this->manager->plugin)) {
+              $this->manager->error = sprintf($this->lang['error_delete'],$this->manager->plugin);
+            } else {
+              $this->refresh();
+            }
         }
         
         function html() {
             parent::html();
             
             ptln('<div class="pm_info">');
-            ptln('<h2>'.$this->lang['deleting'].'</h2>');            
-            ptln('<p>'.sprintf($this->lang['deleted'],$this->plugin).'</p>');
+            ptln('<h2>'.$this->lang['deleting'].'</h2>');
+            
+            if ($this->manager->error) {
+              ptln('<div class="error">'.str_replace("\n","<br />",$this->manager->error).'</div>');
+            } else {
+              ptln('<p>'.sprintf($this->lang['deleted'],$this->plugin).'</p>');
+            }
             ptln('</div>');
         }
     }
@@ -558,7 +539,7 @@ class ap_manage {
             ptln('<h2>'.$this->lang['updating'].'</h2>');
             
             if ($this->manager->error) {
-                ptln('<p class="error">'.str_replace("\n","<br />", $this->manager->error).'</p>');
+                ptln('<div class="error">'.str_replace("\n","<br />", $this->manager->error).'</div>');
             } else if (count($this->downloaded) == 1) {
                 ptln('<p>'.sprintf($this->lang['updated'],$this->downloaded[0]).'</p>');
             } else if (count($this->downloaded)) {   // more than one plugin in the download
@@ -664,23 +645,23 @@ class ap_manage {
     // delete, with recursive sub-directory support
     function ap_delete($path) {
     
-        if (!is_string($path) || $path == "") return;
+        if (!is_string($path) || $path == "") return false;
     
         if (is_dir($path)) {
-          if (!$dh = @opendir($path)) return;
+          if (!$dh = @opendir($path)) return false;
     
           while ($f = readdir($dh)) {
             if ($f == '..' || $f == '.') continue;
             ap_delete("$path/$f");
           }
-          
+
           closedir($dh);
-          rmdir($path);
-          return;
-          
+          return @rmdir($path);
         } else {
-          unlink($path);
+          return @unlink($path);
         }
+
+        return false;
     } 
     
     // return a list (name & type) of all the component plugins that make up this plugin

@@ -49,7 +49,6 @@ $lang['download_none']   = 'Keine Plugins gefunden oder es trat ein Fehler beim 
 	
 // error messages
 $lang['error_download']  = 'Konnte das Plugin %s nicht installieren';
-$lang['error_write']     = 'Konnte keine vereinigte Datei für %s erstellen';
 $lang['error_badurl']    = 'Wahrscheinlich ungültige URL, konnte keinen Dateinamen ausfindig machen';
 $lang['error_dircreate'] = 'Konnte keinen temporären Ordner für die Downloads erstellen';
 //$lang['error_'] = '';	

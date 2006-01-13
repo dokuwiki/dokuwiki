@@ -68,15 +68,16 @@ $lang['www'] = 'Web:';
 // error messages
 $lang['error'] = 'An unknown error occurred.';
 $lang['error_download'] = 'Unable to download the plugin file: %s';
-$lang['error_write'] = 'Unable to create aggregate file %s';
 $lang['error_badurl'] = 'Suspect bad url - unable to determine file name from the url';
 $lang['error_dircreate'] = 'Unable to create temporary folder to receive download';
 $lang['error_decompress'] = 'The plugin manager was unable to decompress the downloaded file. '.
             'This maybe as a result of a bad download, in which case you should try again; '.
             'or the compression format may be unknown, in which case you will need to download and install the plugin manually.';
-$lang['error_copy'] = 'There was a file copy error while attempting to install files for plugin %s: '.
+$lang['error_copy'] = 'There was a file copy error while attempting to install files for plugin <em>%s</em>: '.
             'the disk could be full or file access permissions may be incorrect. '.
             'This may have resulted in a partially installed plugin and leave your wiki installation unstable.';
+$lang['error_delete'] = 'There was an error while attempting to delete plugin <em>%s</em>.  '.
+            'The most probably cause is insufficient file or directory access permissions';
 //$lang['error_'] = '';    
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

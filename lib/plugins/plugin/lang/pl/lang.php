@@ -68,7 +68,6 @@ $lang['www'] = 'WWW:';
 // error messages
 $lang['error'] = 'Wystąpił nieznany błąd.';
 $lang['error_download'] = 'Nie powiodło się ściągnięcie pliku wtyczki: %s';
-$lang['error_write'] = 'Nie powiodło się stworzenie pliku aggregate %s';
 $lang['error_badurl'] = 'Prawdopodobnie zły url - nie da się ustalić nazwy pliku na podstawie urla';
 $lang['error_dircreate'] = 'Nie powiodło się stworzenie tymczasowego katalogu na pobrane pliki';
 $lang['error_decompress'] = 'Menadżer wtyczek nie był w stanie rozpakować ściągniętego pliku. '.
