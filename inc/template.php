@@ -206,7 +206,7 @@ function tpl_metaheaders($alt=true){
   $js_edit  = ($ACT=='edit' || $ACT=='preview') ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
   if($js_edit && $js_write){
-    ptln('<script language="javascript" type="text/javascript" charset="utf-8">',$it);
+    ptln('<script type="text/javascript" charset="utf-8">',$it);
     ptln("NS='".$INFO['namespace']."';",$it+2);
     if($conf['useacl'] && $_SERVER['REMOTE_USER']){
       require_once('inc/toolbar.php');
@@ -214,7 +214,7 @@ function tpl_metaheaders($alt=true){
     }
     ptln('</script>',$it);
   }
-  ptln('<script language="javascript" type="text/javascript" charset="utf-8" src="'.
+  ptln('<script type="text/javascript" charset="utf-8" src="'.
        DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&amp;write='.$js_write.'"></script>',$it);
 }
 
@@ -489,7 +489,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   global $lang;
   global $ACT;
   
-  print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search">';
+  print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search"><div class="no">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
   if($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
@@ -497,7 +497,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   print 'id="qsearch_in" accesskey="f" name="id" class="edit" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
   if($ajax) print '<div id="qsearch_out" class="ajax_qsearch JSpopup"></div>';
-  print '</form>';
+  print '</div></form>';
 }
 
 /**
@@ -691,7 +691,7 @@ function tpl_mediafilelist(){
       $del = '<a href="'.DOKU_BASE.'lib/exe/media.php?delete='.urlencode($item['id']).'" '.
              'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
              '<img src="'.DOKU_BASE.'lib/images/del.png" alt="'.$lang['btn_delete'].'" '.
-             'align="bottom" title="'.$lang['btn_delete'].'" /></a>';
+             'title="'.$lang['btn_delete'].'" /></a>';
     }else{
       $del = '';
     }
@@ -806,7 +806,7 @@ function tpl_mediauploadform(){
   ptln('<input type="text" name="id" class="edit" />',4);
   ptln('<input type="submit" class="button" value="'.$lang['btn_upload'].'" accesskey="s" />',4);
   if($AUTH >= AUTH_DELETE){
-    ptln('<label for="ow"><input type="checkbox" name="ow" value="1" id="ow">'.$lang['txt_overwrt'].'</label>',4);
+    ptln('<label for="ow"><input type="checkbox" name="ow" value="1" id="ow" />'.$lang['txt_overwrt'].'</label>',4);
   }
   ptln('</form>',2);
 }

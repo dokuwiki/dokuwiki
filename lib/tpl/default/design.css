@@ -47,6 +47,12 @@ div.nothing {
 	margin: 2em;
 }
 
+div.no {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
 /* ---------------- forms ------------------------ */
 
 form {
@@ -311,6 +317,11 @@ img.mediacenter {
 	display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* smileys */
+img.middle {
+  vertical-align: middle;
 }
 
 acronym {

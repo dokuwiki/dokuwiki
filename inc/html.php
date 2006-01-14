@@ -186,7 +186,7 @@ function html_backtomedia_button($params,$akey=''){
   global $conf;
   global $lang;
   
-  $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/media.php">';
+  $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/media.php"><div class="no">';
   
   reset($params);
   while (list($key, $val) = each($params)) {
@@ -200,7 +200,7 @@ function html_backtomedia_button($params,$akey=''){
     $ret .= 'accesskey="'.$akey.'" ';
   }
   $ret .= '/>';
-  $ret .= '</form>';
+  $ret .= '</div></form>';
 
   return $ret;
 }
@@ -231,7 +231,7 @@ function html_btn($name,$id,$akey,$params,$method='get'){
     $params['id'] = $id;
   }
  
-  $ret .= '<form class="button" method="'.$method.'" action="'.$script.'">';
+  $ret .= '<form class="button" method="'.$method.'" action="'.$script.'"><div class="no">';
   
   reset($params);
   while (list($key, $val) = each($params)) {
@@ -245,7 +245,7 @@ function html_btn($name,$id,$akey,$params,$method='get'){
     $ret .= 'accesskey="'.$akey.'" ';
   }
   $ret .= '/>';
-  $ret .= '</form>';
+  $ret .= '</div></form>';
 
   return $ret;
 }
@@ -327,8 +327,8 @@ function html_search(){
   flush();
 
   //show progressbar
-  print '<div align="center">';
-  print '<script language="javascript" type="text/javascript" charset="utf-8">';
+  print '<div class="centeralign">';
+  print '<script type="text/javascript" charset="utf-8">';
   print 'showLoadBar();';
   print '</script>';
   print '<br /></div>';
@@ -371,7 +371,7 @@ function html_search(){
   }
 
   //hide progressbar
-  print '<script language="javascript" type="text/javascript" charset="utf-8">';
+  print '<script type="text/javascript" charset="utf-8">';
   print 'hideLoadBar();';
   print '</script>';
 }
@@ -979,7 +979,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
         <div id="toolbar"></div>
 
         <?php if($wr){?>
-        <script language="javascript" type="text/javascript" charset="utf-8">
+        <script type="text/javascript" charset="utf-8">
           <?php /* sets changed to true when previewed */?>
           textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
         </script>

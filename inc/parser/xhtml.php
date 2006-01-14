@@ -162,7 +162,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function hr() {
-        $this->doc .= '<hr noshade="noshade" size="1" />'.DOKU_LF;
+        $this->doc .= '<hr />'.DOKU_LF;
     }
     
     function strong_open() {
@@ -400,7 +400,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( array_key_exists($smiley, $this->smileys) ) {
             $title = $this->_xmlEntities($this->smileys[$smiley]);
             $this->doc .= '<img src="'.DOKU_BASE.'lib/images/smileys/'.$this->smileys[$smiley].
-                '" align="middle" alt="'.
+                '" class="middle" alt="'.
                     $this->_xmlEntities($smiley).'" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);

@@ -29,7 +29,7 @@ function plugin_printCSSJS(){
             print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
         }
         if(@file_exists(DOKU_INC.$dir.'script.js')){
-            print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
+            print '  <script type="text/javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
         }
     } else {
         // no plugin manager (or aggregate files not setup) so individual instances of these files for any plugin that uses them
@@ -46,7 +46,7 @@ function plugin_printCSSJS(){
                 print '  <link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.$dir.'print.css" />'."\n";
             }
             if(@file_exists(DOKU_INC.$dir.'script.js')){
-                print '  <script type="text/javascript" language="javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
+                print '  <script type="text/javascript" charset="utf-8" src="'.DOKU_BASE.$dir.'script.js"></script>'."\n";
             }
         }
     }
