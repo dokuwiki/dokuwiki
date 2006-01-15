@@ -113,7 +113,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= '<li>';
             $renderer->externallink($info['url'],$info['name']);
             $renderer->doc .= ' ';
-            $renderer->doc .= '<i>'.$info['date'].'</i>';
+            $renderer->doc .= '<em>'.$info['date'].'</em>';
             $renderer->doc .= ' ';
             $renderer->doc .= $lang['by'];
             $renderer->doc .= ' ';

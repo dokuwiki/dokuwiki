@@ -346,11 +346,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function quote_open() {
-        $this->doc .= '<blockquote>'.DOKU_LF;
+        $this->doc .= '<blockquote><div class="no">'.DOKU_LF;
     }
     
     function quote_close() {
-        $this->doc .= '</blockquote>'.DOKU_LF;
+        $this->doc .= '</div></blockquote>'.DOKU_LF;
     }
     
     /**

@@ -82,6 +82,7 @@ fieldset {
   text-align: center;
   border: 1px solid __dark__;
   padding: 0.5em;
+  margin: auto;
 }
 
 textarea.edit {
@@ -644,6 +645,10 @@ div.search_quickhits {
 }
 
 /* ------------------ Additional ---------------------- */
+
+div.footerinc {
+    text-align: center;
+}
 .footerinc a img {
     opacity: 0.5;
 }

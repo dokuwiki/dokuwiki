@@ -50,7 +50,7 @@ function html_login(){
 
   print p_locale_xhtml('login');
   ?>
-    <div align="center">
+    <div class="centeralign">
     <form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
       <fieldset>
         <legend><?php echo $lang['btn_login']?></legend>
@@ -339,7 +339,7 @@ function html_search(){
   if(count($data)){
     sort($data);
     print '<div class="search_quickresult">';
-    print '<b>'.$lang[quickhits].':</b><br />';
+    print '<strong>'.$lang[quickhits].':</strong><br />';
     foreach($data as $id){
       print '<div class="search_quickhits">';
       print html_wikilink(':'.$id,$conf['useheading']?NULL:$id);
@@ -393,8 +393,8 @@ function html_locked(){
 
   print p_locale_xhtml('locked');
   print '<ul>';
-  print '<li><b>'.$lang['lockedby'].':</b> '.$INFO['locked'].'</li>';
-  print '<li><b>'.$lang['lockexpire'].':</b> '.$expire.' ('.$min.' min)</li>';
+  print '<li><strong>'.$lang['lockedby'].':</strong> '.$INFO['locked'].'</li>';
+  print '<li><strong>'.$lang['lockexpire'].':</strong> '.$expire.' ('.$min.' min)</li>';
   print '</ul>';
 }
 
@@ -768,11 +768,11 @@ function html_conflict($text,$summary){
   print p_locale_xhtml('conflict');
   ?>
   <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
-  <input type="hidden" name="id" value="<?php echo $ID?>" />
-  <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
-  <input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
-  
-  <div align="center">
+  <div class="centeralign">
+    <input type="hidden" name="id" value="<?php echo $ID?>" />
+    <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
+    <input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
+
     <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
     <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" />
   </div>
@@ -810,11 +810,12 @@ function html_register(){
 
   print p_locale_xhtml('register');
 ?>
-  <div align="center">
+  <div class="centeralign">
   <form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
-  <input type="hidden" name="do" value="register" />
-  <input type="hidden" name="save" value="1" />
   <fieldset>
+    <input type="hidden" name="do" value="register" />
+    <input type="hidden" name="save" value="1" />
+
     <legend><?php echo $lang['register']?></legend>
     <label class="block">
       <?php echo $lang['user']?>
@@ -868,11 +869,12 @@ function html_updateprofile(){
   if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
   if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
 ?>
-  <div align="center">
+  <div class="centeralign">
   <form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
-  <input type="hidden" name="do" value="profile" />
-  <input type="hidden" name="save" value="1" />
   <fieldset style="width: 80%;">
+    <input type="hidden" name="do" value="profile" />
+    <input type="hidden" name="save" value="1" />
+
     <legend><?php echo $lang['profile']?></legend>
     <label class="block">
       <?php echo $lang['user']?>
@@ -968,15 +970,15 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   
 ?>
   <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
-  <input type="hidden" name="id"   value="<?php echo $ID?>" />
-  <input type="hidden" name="rev"  value="<?php echo $REV?>" />
-  <input type="hidden" name="date" value="<?php echo $DATE?>" />
-  <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
-  <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
   <table style="width:99%">
     <tr>
       <td class="toolbar" colspan="2">
         <div id="toolbar"></div>
+        <input type="hidden" name="id"   value="<?php echo $ID?>" />
+        <input type="hidden" name="rev"  value="<?php echo $REV?>" />
+        <input type="hidden" name="date" value="<?php echo $DATE?>" />
+        <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
+        <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
 
         <?php if($wr){?>
         <script type="text/javascript" charset="utf-8">
@@ -1011,7 +1013,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
         <?php html_minoredit()?>
       <?php }?>
       </td>
-      <td align="right">
+      <td class="rightalign">
         <div id="sizectl"></div>
       </td>
     </tr>
@@ -1160,7 +1162,7 @@ function html_resendpwd() {
  
   print p_locale_xhtml('resendpwd');
 ?>
-  <div align="center">
+  <div class="centeralign">
   <form name="resendpwd" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
     <fieldset>
       <br />

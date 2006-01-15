@@ -50,7 +50,7 @@ function ajax_qsearch(){
 
   if(!count($data)) return;
 
-  print '<b>'.$lang['quickhits'].'</b>';
+  print '<strong>'.$lang['quickhits'].'</strong>';
   print '<ul>';
   foreach($data as $id){
     print '<li>';
