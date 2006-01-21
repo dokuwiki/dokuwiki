@@ -319,6 +319,24 @@ function io_download($url,$file,$useAttachment=false,$defaultName=''){
 }
 
 /**
+ * Windows copatible rename
+ *
+ * rename() can not overwrite existing files on Windows
+ * this function will use copy/unlink instead
+ */
+function io_rename($from,$to){
+  if(!@rename($from,$to)){
+    if(@copy($from,$to)){
+      @unlink($from);
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+
+
+/**
  * Runs an external command and returns it's output as string
  *
  * @author Harry Brueckner <harry_b@eml.cc>

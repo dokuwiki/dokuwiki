@@ -841,7 +841,7 @@ class JpegMeta
             $tmpName = tempnam(dirname($this->_fileName),'_metatemp_');
             $this->_writeJPEG($tmpName);
             if (@file_exists($tmpName)) {
-                return rename($tmpName, $this->_fileName);
+                return io_rename($tmpName, $this->_fileName);
             }
         } else {
             return $this->_writeJPEG($fileName);
