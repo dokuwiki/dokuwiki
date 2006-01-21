@@ -18,6 +18,7 @@ img {border:0}
 a {
   color:#000000;
   text-decoration:none;
+	background: none !important;
 }
 
 
