@@ -294,7 +294,7 @@ class auth_mysql extends auth_basic {
       if($this->openDB()) {
         $this->lockTables("WRITE");
         $rc = addUserToGroup($user, $group);
-        $this->unlochTables();
+        $this->unlockTables();
         $this->closeDB();
       }
       return $rc;
