@@ -241,6 +241,9 @@ function css_pluginstyles($mode='screen'){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_compress($css){
+    //strip (incorrect but common) one line comments
+    $css = preg_replace('!//.*$!m','',$css);
+
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
     $css = preg_replace('/ ?([:;,{}\/]) ?/','\\1',$css);
