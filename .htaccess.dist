@@ -1,7 +1,8 @@
 ## Enable this to restrict editing to logged in users only
 
-#disable indexes
-Options -Indexes
+## You should disable Indexes and MultiViews either here or in the
+## global config
+#Options -Indexes -MultiViews
 
 ## make sure nobody gets the htaccess files
 <Files ~ "^[\._]ht">
@@ -10,7 +11,8 @@ Options -Indexes
     Satisfy All
 </Files>
 
-## Comment these rules in if you want to have nice URLs
+## Comment these rules in if you want to have nice URLs using
+## $conf['rewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
 #RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
 #RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
