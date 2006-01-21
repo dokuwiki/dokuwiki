@@ -39,7 +39,7 @@ class auth_plain extends auth_basic {
     }
 
     /**
-     * Return user info [required auth function]
+     * Return user info
      *
      * Returns info about the given user needs to contain
      * at least these fields:
@@ -57,7 +57,7 @@ class auth_plain extends auth_basic {
     }
 
     /**
-     * Create a new User [implement only where required/possible]
+     * Create a new User
      *
      * Returns false if the user already exists, null when an error
      * occured and the cleartext password of the new user if
@@ -94,7 +94,7 @@ class auth_plain extends auth_basic {
     }
     
     /**
-     * Modify user data [implement only where required/possible]
+     * Modify user data
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @param   $user      nick of the user to be changed
@@ -196,7 +196,7 @@ class auth_plain extends auth_basic {
     }
     
     /**
-     * Bulk retrieval of user data [implement only where required/possible]
+     * Bulk retrieval of user data
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @param   start     index of first user to be returned
@@ -230,7 +230,7 @@ class auth_plain extends auth_basic {
     }
     
     /**
-     * Give user membership of a group [implement only where required/possible]
+     * Give user membership of a group
      * 
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @return  bool
@@ -247,7 +247,7 @@ class auth_plain extends auth_basic {
     }
 
     /**
-     * Remove user from a group [implement only where required/possible]
+     * Remove user from a group
      * 
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @return  bool
