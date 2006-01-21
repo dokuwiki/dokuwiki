@@ -1103,6 +1103,10 @@ function html_debug(){
   print $lang['encoding'];
   print '</pre>';
 
+  print '<b>$_SESSION:</b><pre>';
+  print_r($_SESSION);
+  print '</pre>';
+
   print '<b>Environment:</b><pre>';
   print_r($_ENV);
   print '</pre>';
