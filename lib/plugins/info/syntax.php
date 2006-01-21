@@ -110,7 +110,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             if (!$po =& plugin_load('syntax',$p)) continue;
             $info = $po->getInfo();
 
-            $renderer->doc .= '<li>';
+            $renderer->doc .= '<li><div class="li">';
             $renderer->externallink($info['url'],$info['name']);
             $renderer->doc .= ' ';
             $renderer->doc .= '<em>'.$info['date'].'</em>';
@@ -120,7 +120,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $renderer->emaillink($info['email'],$info['author']);
             $renderer->doc .= '<br />';
             $renderer->doc .= strtr(htmlspecialchars($info['desc']),array("\n"=>"<br />"));
-            $renderer->doc .= '</li>';
+            $renderer->doc .= '</div></li>';
             unset($po);
         }
 

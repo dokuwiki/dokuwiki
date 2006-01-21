@@ -369,7 +369,8 @@ ul {
   list-style-type: square;
   margin: 0 0 0.5em 1.5em;
   padding: 0;
-  list-style-image: url(images/bullet.gif);
+  color: __darker__;
+	list-style-image: none;
 }
 
 /* ordered lists */
@@ -379,10 +380,10 @@ ol {
   padding: 0;
   color: __darker__;
   font-weight: bold;
-  list-style-image: none;
+	list-style-image: none;
 }
 
-/* the list items overriding the ol definition */
+/* the list items overriding the ul/ol definition */
 .li {
   color: __black__;
   font-weight: normal;
@@ -395,10 +396,12 @@ ol ol ol ol {list-style-type: lower-greek}
 
 li.open {
   list-style-image: url(images/open.gif);
+	/*list-style-type: circle;*/
 }
 
 li.closed {
   list-style-image: url(images/closed.gif);
+	/*list-style-type: disc;*/
 }
 
 blockquote {
@@ -491,9 +494,6 @@ div.tocheader {
   text-align: left;
   font-weight:bold;
   margin-bottom: 2px;
-}
-
-div.toctoggle {
 }
 
 div.tocheader img {

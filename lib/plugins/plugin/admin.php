@@ -388,7 +388,7 @@ class ap_manage {
                 ptln('<p>'.$this->lang['downloads'].'</p>');
                 ptln('<ul>');
                 foreach ($this->downloaded as $plugin) {
-                    ptln('<li>'.$plugin.'</li>',2);
+                    ptln('<li><div class="li">'.$plugin.'</div></li>',2);
                 }
                 ptln('</ul>');
             } else {        // none found in download
@@ -546,7 +546,7 @@ class ap_manage {
                 ptln('<p>'.$this->lang['updates'].'</p>');
                 ptln('<ul>');
                 foreach ($this->downloaded as $plugin) {
-                    ptln('<li>'.$plugin.'</li>',2);
+                    ptln('<li><div class="li">'.$plugin.'</div></li>',2);
                 }
                 ptln('</ul>');
             } else {        // none found in download

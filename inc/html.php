@@ -394,8 +394,8 @@ function html_locked(){
 
   print p_locale_xhtml('locked');
   print '<ul>';
-  print '<li><strong>'.$lang['lockedby'].':</strong> '.$INFO['locked'].'</li>';
-  print '<li><strong>'.$lang['lockexpire'].':</strong> '.$expire.' ('.$min.' min)</li>';
+  print '<li><div class="li"><strong>'.$lang['lockedby'].':</strong> '.$INFO['locked'].'</li>';
+  print '<li><div class="li"><strong>'.$lang['lockexpire'].':</strong> '.$expire.' ('.$min.' min)</div></li>';
   print '</ul>';
 }
 
@@ -416,6 +416,7 @@ function html_revisions(){
   print '<ul>';
   if($INFO['exists']){
     print ($INFO['minor']) ? '<li class="minor">' : '<li>';
+    print '<div class="li">';
 
     print $date;
 
@@ -429,6 +430,7 @@ function html_revisions(){
     print '</span> ';
 
     print '('.$lang['current'].')';
+    print '</div>';
     print '</li>';
   }
 
@@ -437,6 +439,7 @@ function html_revisions(){
     $info = getRevisionInfo($ID,$rev);
 
     print ($info['minor']) ? '<li class="minor">' : '<li>';
+    print '<div class="li">';
     print $date;
 
     print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
@@ -462,6 +465,7 @@ function html_revisions(){
     }
     print '</span>';
 
+    print '</div>';
     print '</li>';
   }
   print '</ul>';
@@ -494,6 +498,7 @@ function html_recent($first=0){
   foreach($recents as $recent){
     $date = date($conf['dformat'],$recent['date']);
     print ($recent['minor']) ? '<li class="minor">' : '<li>';
+    print '<div class="li">';
 
     print $date.' ';
 
@@ -532,6 +537,7 @@ function html_recent($first=0){
     }
     print '</span>';
 
+    print '</div>';
     print '</li>';
   }
   print '</ul>';
@@ -669,9 +675,9 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
 
     //print item
     $ret .= $lifunc($item); //user function
-    $ret .= '<span class="li">';
+    $ret .= '<div class="li">';
     $ret .= $func($item); //user function
-    $ret .= '</span>';
+    $ret .= '</div>';
   }
 
   //close remaining items and lists
@@ -698,9 +704,9 @@ function html_backlinks(){
 
   print '<ul class="idx">';
   foreach($data as $blink){
-    print '<li>';
+    print '<li><div class="li">';
     print html_wikilink(':'.$blink,$conf['useheading']?NULL:$blink);
-    print '</li>';
+    print '</div></li>';
   }
   print '</ul>';
 }
@@ -1144,12 +1150,12 @@ function html_admin(){
 
   foreach ($menu as $item) {
     if (!$item['prompt']) continue;
-    ptln('  <li><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></li>');
+    ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
   }
 
   // add in non-plugin functions
   if (!$conf['openregister']){
-    ptln('<li><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></li>');
+    ptln('<li><div class="li"><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></div></li>');
   }
   
   ptln('</ul>');

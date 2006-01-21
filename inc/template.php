@@ -678,7 +678,7 @@ function tpl_mediafilelist(){
       $class .= ' class="mediafile mf_'.$class.'"';
     }
 
-    ptln('<li>',4);
+    ptln('<li><div class="li">',4);
     ptln('<a href="javascript:mediaSelect(\':'.$item['id'].'\')"'.$class.'>'.
          utf8_decodeFN($item['file']).
          '</a>',6);
@@ -749,7 +749,7 @@ function tpl_mediafilelist(){
       ptln ('('.filesize_h($item['size']).')',6);
       ptln($del,6);
     }
-    ptln('</li>',4);
+    ptln('</div></li>',4);
   }
   ptln('</ul>',2);
 }
