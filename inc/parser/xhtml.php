@@ -510,7 +510,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //add search string
         if($search){
             ($conf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
-            $link['url'] .= urlencode($search);
+            $link['url'] .= rawurlencode($search);
         }
 
         //keep hash
@@ -594,7 +594,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
             //use placeholders
-            $url = str_replace('{URL}',urlencode($wikiUri),$url);
+            $url = str_replace('{URL}',rawurlencode($wikiUri),$url);
             $url = str_replace('{NAME}',$wikiUri,$url);
             $parsed = parse_url($wikiUri);
             if(!$parsed['port']) $parsed['port'] = 80;
@@ -606,9 +606,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['url'] = $url;
         }else{
             //default
-            $link['url'] = $url.urlencode($wikiUri);
+            $link['url'] = $url.rawurlencode($wikiUri);
         }
-        if($hash) $link['url'] .= '#'.urlencode($hash);
+        if($hash) $link['url'] .= '#'.rawurlencode($hash);
 
         $link['title'] = htmlspecialchars($link['url']);
 

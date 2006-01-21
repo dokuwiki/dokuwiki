@@ -101,7 +101,7 @@ function buildURLparams($params){
     if($amp) $url .= '&amp;';
 
     $url .= $key.'=';
-    $url .= urlencode($val);
+    $url .= rawurlencode($val);
     $amp = true;
   }
   return $url;
@@ -232,7 +232,7 @@ function idfilter($id,$ue=true){
     $id = strtr($id,':',';');
   }
   if($ue){
-    $id = urlencode($id);
+    $id = rawurlencode($id);
     $id = str_replace('%3A',':',$id); //keep as colon
     $id = str_replace('%2F','/',$id); //keep as slash
   }
@@ -296,9 +296,9 @@ function ml($id='',$more='',$direct=true){
     $xlink .= 'lib/exe/fetch.php';
     if($more){
       $xlink .= '?'.$more;
-      $xlink .= '&amp;media='.urlencode($id);
+      $xlink .= '&amp;media='.rawurlencode($id);
     }else{
-      $xlink .= '?media='.urlencode($id);
+      $xlink .= '?media='.rawurlencode($id);
     }
     return $xlink;
   } 

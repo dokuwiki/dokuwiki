@@ -688,7 +688,7 @@ function tpl_mediafilelist(){
       $ask  = $lang['del_confirm'].'\\n';
       $ask .= $item['id'];
 
-      $del = '<a href="'.DOKU_BASE.'lib/exe/media.php?delete='.urlencode($item['id']).'" '.
+      $del = '<a href="'.DOKU_BASE.'lib/exe/media.php?delete='.rawurlencode($item['id']).'" '.
              'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
              '<img src="'.DOKU_BASE.'lib/images/del.png" alt="'.$lang['btn_delete'].'" '.
              'title="'.$lang['btn_delete'].'" /></a>';
@@ -739,7 +739,7 @@ function tpl_mediafilelist(){
 
       //add edit button
       if($AUTH >= AUTH_UPLOAD && $item['meta']->getField('File.Mime') == 'image/jpeg'){
-        print '<a href="'.DOKU_BASE.'lib/exe/media.php?edit='.urlencode($item['id']).'">';
+        print '<a href="'.DOKU_BASE.'lib/exe/media.php?edit='.rawurlencode($item['id']).'">';
         print '<img src="'.DOKU_BASE.'lib/images/edit.gif" alt="'.$lang['metaedit'].'" title="'.$lang['metaedit'].'" />';
         print '</a>';
       }
@@ -927,7 +927,7 @@ function tpl_indexerWebBug(){
   if(isHiddenPage($ID)) return; //no need to index hidden pages
 
   $p = array();
-  $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.urlencode($ID).
+  $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
                  '&'.time();
   $p['width']  = 1;
   $p['height'] = 1;
