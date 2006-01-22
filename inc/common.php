@@ -365,7 +365,7 @@ function checkwordblock(){
 
   if(!$conf['usewordblock']) return false;
 
-  $blockfile = file(DOKU_CONF.'wordblock.conf');
+  $wordblocks = getWordblocks();
   //how many lines to read at once (to work around some PCRE limits)
   if(version_compare(phpversion(),'4.3.0','<')){
     //old versions of PCRE define a maximum of parenthesises even if no
@@ -377,7 +377,7 @@ function checkwordblock(){
     //MAX_PATTERN_SIZE in modern PCRE
     $chunksize = 600;
   }
-  while($blocks = array_splice($blockfile,0,$chunksize)){
+  while($blocks = array_splice($wordblocks,0,$chunksize)){
     $re = array();
     #build regexp from blocks
     foreach($blocks as $block){
@@ -386,7 +386,9 @@ function checkwordblock(){
       if(empty($block)) continue;
       $re[]  = $block;
     }
-    if(preg_match('#('.join('|',$re).')#si',$TEXT)) return true;
+    if(preg_match('#('.join('|',$re).')#si',$TEXT, $match=array())) {
+		  return true;
+		}
   }
   return false;
 }

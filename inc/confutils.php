@@ -116,6 +116,23 @@ function getInterwiki() {
 }
 
 /**
+ * returns array of wordblock patterns
+ *
+ */
+function getWordblocks() {
+  static $wordblocks = NULL;
+  if ( !$wordblocks ) {
+    $wordblocks = file(DOKU_CONF.'wordblock.conf');
+    if (@file_exists(DOKU_CONF.'wordblock.local.conf')) {
+      $local = file(DOKU_CONF.'wordblock.local.conf');
+      $wordblocks = array_merge($wordblocks, $local);
+    }
+  }
+  return $wordblocks;
+}
+
+
+/**
  * Builds a hash from a configfile
  *
  * If $lower is set to true all hash keys are converted to
