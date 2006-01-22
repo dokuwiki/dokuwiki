@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.23 2005/11/19 02:23:37 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.28 2006/01/21 23:31:39 oracleshinoda Exp $
  *
  */
 
@@ -40,10 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.5');
-
-/** For the future (though this may never be realised) */
-define('GESHI_OUTPUT_HTML', 0);
+define('GESHI_VERSION', '1.0.7.6');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -131,7 +128,9 @@ define('GESHI_AFTER', 4);
 define('GESHI_COMMENTS', 0);
 
 // Error detection - use these to analyse faults
-/** No sourcecode to highlight was specified */
+/** No sourcecode to highlight was specified
+ * @deprecated
+ */
 define('GESHI_ERROR_NO_INPUT', 1);
 /** The language specified does not exist */
 define('GESHI_ERROR_NO_SUCH_LANG', 2);
@@ -196,7 +195,7 @@ class GeSHi
      * @var array
      */
     var $error_messages = array(
-        GESHI_ERROR_NO_INPUT => 'No source code inputted',
+        //GESHI_ERROR_NO_INPUT => 'No source code inputted',
         GESHI_ERROR_NO_SUCH_LANG => 'GeSHi could not find the language {LANGUAGE} (using path {PATH})',
         GESHI_ERROR_FILE_NOT_READABLE => 'The file specified for load_from_file was not readable',
         GESHI_ERROR_INVALID_HEADER_TYPE => 'The header type specified is invalid',
@@ -224,6 +223,7 @@ class GeSHi
      *   a &lt;pre&gt; HTML element.</li>
      *   <li><b>GESHI_HEADER_DIV</b>: Source is outputted in
      *   a &lt;div&gt; HTML element.</li>
+     *   <li><b>GESHI_HEADER_NONE</b>: No header is outputted.</li>
      * </ul>
      * 
      * @var int
@@ -391,12 +391,6 @@ class GeSHi
      */
 	var $encoding = 'ISO-8859-1';
 
-	/**
-     * Unused (planned for future)
-     * @var int
-	 */
-	var $output_format = GESHI_OUTPUT_HTML;
-
     /**#@-*/
 
 	/**
@@ -415,7 +409,7 @@ class GeSHi
 	 */
 	function GeSHi ($source, $language, $path = '')
 	{
-		$this->set_source($source);
+        $this->set_source($source);
         $this->set_language_path($path);
         $this->set_language($language);
 	}
@@ -466,9 +460,6 @@ class GeSHi
 	 */
 	function set_source ($source)
 	{
-        if ('' == trim($source)) {
-            $this->error = GESHI_ERROR_NO_INPUT;
-        }
 		$this->source = $source;
 	}
 
@@ -510,7 +501,8 @@ class GeSHi
 	function set_language_path ($path)
 	{
         if ($path) {
-		  $this->language_path = ('/' == substr($path, strlen($path) - 1, 1)) ? $path : $path . '/';
+			$this->language_path = ('/' == substr($path, strlen($path) - 1, 1)) ? $path : $path . '/';
+			$this->set_language($this->language);	    // otherwise set_language_path has no effect
         }
 	}
 
@@ -1406,15 +1398,10 @@ class GeSHi
 
 		// Firstly, if there is an error, we won't highlight
 		if ($this->error) {
-			$result = $this->header();
-			if ($this->header_type != GESHI_HEADER_PRE) {
-				$result .= $this->indent(@htmlspecialchars($this->source, ENT_COMPAT, $this->encoding));
-			} else {
-				$result .= @htmlspecialchars($this->source, ENT_COMPAT, $this->encoding);
-			}
-			// Stop Timing
-			$this->set_time($start_time, microtime());
-			return $result . $this->footer();
+            $result = @htmlspecialchars($this->source, ENT_COMPAT, $this->encoding);
+			// Timing is irrelevant
+			$this->set_time($start_time, $start_time);
+			return $this->finalise($result);
 		}
 
 		// Add spaces for regular expression matching and line numbers
@@ -1433,6 +1420,7 @@ class GeSHi
 		$HIGHLIGHTING_ON  = ( !$this->strict_mode ) ? true : '';
 		// Whether to highlight inside a block of code
 		$HIGHLIGHT_INSIDE_STRICT = false;
+		$HARDQUOTE_OPEN = false;
 		$stuff_to_parse   = '';
 		$result           = '';
 
@@ -1541,6 +1529,7 @@ class GeSHi
 					for ($i = 0; $i < $length; $i++) {
 						// Get the next char
 						$char = substr($part, $i, 1);
+				        $hq = isset($this->language_data['HARDQUOTE']) ? $this->language_data['HARDQUOTE'][0] : false;
 						// Is this char the newline and line numbers being used?
 						if (($this->line_numbers != GESHI_NO_LINE_NUMBERS
                             || count($this->highlight_extra_lines) > 0)
@@ -1564,10 +1553,27 @@ class GeSHi
                                 ($this->lexic_permissions['STRINGS'] && !$ESCAPE_CHAR_OPEN)) {
 								$char .= '</span>';
 							}
+						    $escape_me = false;
+    						if ($HARDQUOTE_OPEN)
+	    					{
+	    						if ($ESCAPE_CHAR_OPEN)
+								$escape_me = true;
+		    					else {
+			    					foreach ($this->language_data['HARDESCAPE'] as $hardesc)
+				    				if (substr($part, $i, strlen($hardesc)) == $hardesc)
+					    			{
+						    			$escape_me = true;
+							    		break;
+							    	}
+							    }
+						    }
 							if (!$ESCAPE_CHAR_OPEN) {
 								$STRING_OPEN = '';
 								$CLOSE_STRING = true;
 							}
+						    if (!$escape_me) {
+						    	$HARDQUOTE_OPEN = false;
+						    }
 							$ESCAPE_CHAR_OPEN = false;
 						} elseif (in_array($char, $this->language_data['QUOTEMARKS']) &&
                             ($STRING_OPEN == '') && $this->lexic_permissions['STRINGS']) {
@@ -1582,11 +1588,39 @@ class GeSHi
 
 							$result .= $this->parse_non_string_part( $stuff_to_parse );
 							$stuff_to_parse = '';
-						} elseif (($char == $this->language_data['ESCAPE_CHAR']) && ($STRING_OPEN != '')) {
+    				    } elseif (
+    					$hq &&
+    					substr($part, $i, strlen($hq)) == $hq &&
+    					($STRING_OPEN == '') && $this->lexic_permissions['STRINGS']
+    				    )
+    				    {
+    					// The start of a hard quoted string
+    					$STRING_OPEN = $this->language_data['HARDQUOTE'][1];
+    					if (!$this->use_classes) {
+    					    $attributes = ' style="' . $this->language_data['STYLES']['STRINGS'][0] . '"';
+    					} else {
+    					    $attributes = ' class="st0"';
+    					}
+    					$char = "<span$attributes>" . $hq;
+    					$i += strlen($hq) - 1;
+    					$HARDQUOTE_OPEN = true;
+    					$result .= $this->parse_non_string_part( $stuff_to_parse );
+    					$stuff_to_parse = '';
+    				    } elseif ($char == $this->language_data['ESCAPE_CHAR'] && $STRING_OPEN != '')
+    				    {
                             // An escape character
 							if (!$ESCAPE_CHAR_OPEN) {
+    							$ESCAPE_CHAR_OPEN = !$HARDQUOTE_OPEN;  // true unless $HARDQUOTE_OPEN
+    							if ($HARDQUOTE_OPEN)
+    								foreach ($this->language_data['HARDESCAPE'] as $hard)
+    								{
+    									if (substr($part, $i, strlen($hard)) == $hard)
+    									{
 								$ESCAPE_CHAR_OPEN = true;
-								if ($this->lexic_permissions['ESCAPE_CHAR']) {
+    										break;
+    									}
+    								}
+    							if ($ESCAPE_CHAR_OPEN && $this->lexic_permissions['ESCAPE_CHAR']) {
 									if (!$this->use_classes) {
 										$attributes = ' style="' . $this->language_data['STYLES']['ESCAPE_CHAR'][0] . '"';
 									} else {
@@ -1912,14 +1946,23 @@ class GeSHi
 			// There is a base group for this keyword
 			if ($start_or_end == 'BEGIN') {
 				// HTML workaround... not good form (tm) but should work for 1.0.X
-				$keyword = ( substr($keyword, 0, 4) == '&lt;' ) ? substr($keyword, 4) : $keyword;
-				$keyword = ( substr($keyword, -4) == '&gt;' ) ? substr($keyword, 0, strlen($keyword) - 4) : $keyword;
 				if ($keyword != '') {
-					$keyword = ( $this->language_data['CASE_SENSITIVE'][$group] ) ? $keyword : strtolower($keyword);
+                    // Old system: strtolower
+					//$keyword = ( $this->language_data['CASE_SENSITIVE'][$group] ) ? $keyword : strtolower($keyword);
+                    // New system: get keyword from language file to get correct case
+                    foreach ($this->language_data['KEYWORDS'][$group] as $word) {
+                        if (strtolower($word) == strtolower($keyword)) {
+                            break;
+                        }
+                    }
+                    $word = ( substr($word, 0, 4) == '&lt;' ) ? substr($word, 4) : $word;
+                    $word = ( substr($word, -4) == '&gt;' ) ? substr($word, 0, strlen($word) - 4) : $word;
+                    if (!$word) return '';
+                    
 					return '<|UR1|"' .
                         str_replace(
                             array('{FNAME}', '.'),
-                            array(@htmlspecialchars($keyword, ENT_COMPAT, $this->encoding), '<DOT>'),
+                            array(@htmlspecialchars($word, ENT_COMPAT, $this->encoding), '<DOT>'),
                             $this->language_data['URLS'][$group]
                         ) . '">';
 				}
@@ -1974,8 +2017,8 @@ class GeSHi
 		// Put /NUM!/ in for the styles, which gets replaced at the end.
 		//
 		if ($this->lexic_permissions['NUMBERS'] && preg_match('#[0-9]#', $stuff_to_parse )) {
-			$stuff_to_parse = preg_replace('#([^a-zA-Z0-9\#])([0-9]+)([^a-zA-Z0-9])#', "\\1<|/NUM!/>\\2|>\\3", $stuff_to_parse);
-			$stuff_to_parse = preg_replace('#([^a-zA-Z0-9\#>])([0-9]+)([^a-zA-Z0-9])#', "\\1<|/NUM!/>\\2|>\\3", $stuff_to_parse);
+			$stuff_to_parse = preg_replace('#([^a-zA-Z0-9_\#])([0-9]+)([^a-zA-Z0-9])#', "\\1<|/NUM!/>\\2|>\\3", $stuff_to_parse);
+			$stuff_to_parse = preg_replace('#([^a-zA-Z0-9_\#>])([0-9]+)([^a-zA-Z0-9])#', "\\1<|/NUM!/>\\2|>\\3", $stuff_to_parse);
 		}
 
 		// Highlight keywords
@@ -2000,15 +2043,15 @@ class GeSHi
 							$keyword = quotemeta($keyword);
 							if ($this->language_data['CASE_SENSITIVE'][$k]) {
 								$stuff_to_parse = preg_replace(
-                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)([^a-zA-Z0-9_<\|%\-&])#e",
-                                    "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END') . '\\3'",
+                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])#e",
+                                    "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END')",
                                     $stuff_to_parse
                                 );
 							} else {
 								// Change the case of the word.
 								$stuff_to_parse = preg_replace(
-                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)([^a-zA-Z0-9_<\|%\-&])#ie",
-                                    "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END') . '\\3'",
+                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])#ie",
+                                    "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END')",
                                     $stuff_to_parse
                                 );
 							}

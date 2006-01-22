@@ -4,10 +4,10 @@
  * --------
  * Author: Alexander 'E-Razor' Krause (admin@erazor-zone.de)
  * Copyright: (c) 2005 Alexander Krause
- * Release Version: 1.0.7.5
- * CVS Revision Version: $Revision: 1.5 $
+ * Release Version: 1.0.7.6
+ * CVS Revision Version: $Revision: 1.6 $
  * Date Started: 2005/06/15
- * Last Modified: $Date: 2005/10/22 07:52:59 $
+ * Last Modified: $Date: 2005/11/20 07:47:40 $
  * 
  * VHDL (VHSICADL, very high speed integrated circuit HDL) language file for GeSHi.
  *

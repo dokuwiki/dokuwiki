@@ -4,10 +4,10 @@
  * ----------
  * Author: Jon Raphaelson (jonraphaelson@gmail.com)
  * Copyright: (c) 2005 Jon Raphaelson, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.5
- * CVS Revision Version: $Revision: 1.3 $
+ * Release Version: 1.0.7.6
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 2004/08/30
- * Last Modified: $Date: 2005/10/22 07:52:59 $
+ * Last Modified: $Date: 2005/11/20 07:47:40 $
  *
  * Scheme language file for GeSHi.
  *

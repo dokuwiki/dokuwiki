@@ -4,15 +4,17 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br), Tux (http://tux.a4.cz/)
  * Copyright: (c) 2005 deguix, 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.5
- * CVS Revision Version: $Revision: 1.6 $
- * Date Started: 2005/06/17
- * Last Modified: $Date: 2005/10/22 07:52:59 $
+ * Release Version: 1.0.7.6
+ * CVS Revision Version: $Revision: 1.8 $
+ * Date Started: 2005/12/03
+ * Last Modified: $Date: 2006/01/21 23:36:49 $
  *
  * Nullsoft Scriptable Install System language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2005/12/03 (2.0.2)
+ *   - Updated to NSIS 2.11.
  * 2005/06/17 (2.0.1)
  *   - Updated to NSIS 2.07b0.
  * 2005/04/05 (2.0.0)
@@ -56,9 +58,10 @@ $language_data = array (
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
-			'!addIncludeDir', '!addplugindir', '!cd', '!define', '!echo', '!else', '!endif', '!error', '!execute', '!ifdef',
-			'!ifmacrodef', '!ifmacrondef', '!ifndef', '!include', '!insertmacro', '!macro', '!macroend', '!packhdr',
-			'!system', '!undef', '!verbose', '!warning'
+			'!appendfile', '!addIncludeDir', '!addplugindir', '!cd', '!define', '!delfile', '!echo', '!else',
+			'!endif', '!error', '!execute', '!ifdef', '!ifmacrodef', '!ifmacrondef', '!ifndef', '!include',
+			'!insertmacro', '!macro', '!macroend', '!packhdr', '!tempfile', '!system', '!undef', '!verbose',
+			'!warning'
 		  ),
 		2 => array(
 			'AddBrandingImage', 'AllowRootDirInstall', 'AutoCloseWindow', 'BGFont',
@@ -109,15 +112,15 @@ $language_data = array (
 			'MB_ABORTRETRYIGNORE', 'MB_DEFBUTTON1', 'MB_DEFBUTTON2', 'MB_DEFBUTTON3', 'MB_DEFBUTTON4',
 			'MB_ICONEXCLAMATION', 'MB_ICONINFORMATION', 'MB_ICONQUESTION', 'MB_ICONSTOP', 'MB_OK', 'MB_OKCANCEL',
 			'MB_RETRYCANCEL', 'MB_RIGHT', 'MB_SETFOREGROUND', 'MB_TOPMOST', 'MB_YESNO', 'MB_YESNOCANCEL', 'nevershow',
-			'none', 'normal', 'off', 'OFFLINE', 'on', 'radiobuttons', 'READONLY', 'RO', 'show', 'silent', 'silentlog',
-			'SW_HIDE', 'SW_SHOWMAXIMIZED', 'SW_SHOWMINIMIZED', 'SW_SHOWNORMAL', 'SYSTEM', 'textonly', 'true', 'try',
-			'uninstConfirm', 'zlib'
+			'none', 'normal', 'off', 'OFFLINE', 'on', 'radiobuttons', 'READONLY', 'RO', 'SHCTX', 'SHELL_CONTEXT', 'show',
+			'silent', 'silentlog', 'SW_HIDE', 'SW_SHOWMAXIMIZED', 'SW_SHOWMINIMIZED', 'SW_SHOWNORMAL', 'SYSTEM',
+			'textonly', 'true', 'try', 'uninstConfirm', 'zlib'
 		   ),
 		6 => array(
-			'/a', '/components', '/COMPONENTSONLYONCUSTOM', '/CUSTOMSTRING', '/e', '/FILESONLY', '/gray', '/ifempty', '/IMGID',
-			'/ITALIC', '/lang', '/NOCUSTOM', '/nonfatal', '/NOUNLOAD', '/oname', '/r', '/REBOOTOK', '/RESIZETOFIT', '/SOLID',
-			'/SD', '/SHORT', '/silent', '/SOLID', '/STRIKE', '/TIMEOUT', '/TRIMCENTER', '/TRIMLEFT', '/TRIMRIGHT', '/UNDERLINE',
-			'/windows', '/x'
+			'/a', '/components', '/COMPONENTSONLYONCUSTOM', '/CUSTOMSTRING', '/e', '/FILESONLY', '/FINAL', '/gray', '/GLOBAL',
+			'/ifempty', '/IMGID', '/ITALIC', '/lang', '/NOCUSTOM', '/nonfatal', '/NOUNLOAD', '/oname', '/r', '/REBOOTOK',
+			'/RESIZETOFIT', '/SOLID', '/SD', '/SHORT', '/silent', '/SOLID', '/STRIKE', '/TIMEOUT', '/TRIMCENTER', '/TRIMLEFT',
+			'/TRIMRIGHT', '/UNDERLINE', '/windows', '/x'
 		   ),
 		7 => array(
 			'.onGUIEnd', '.onGUIInit', '.onInit', '.onInstFailed', '.onInstSuccess', '.onMouseOverSection',
@@ -207,6 +210,15 @@ $language_data = array (
 		   ),
 		13 => array(
 			'Colors.nsh', 'WHITE', 'BLACK', 'YELLOW', 'RED', 'GREEN', 'BLUE', 'MAGENTA', 'CYAN', 'rgb2hex'
+		   ),
+		14 => array(
+			'FileFunc.nsh', '${Locate}', '${GetSize}', '${DriveSpace}', '${GetDrives}', '${GetTime}', '${GetFileAttributes}', '${GetFileVersion}', '${GetExeName}', '${GetExePath}', '${GetParameters}', '${GetOptions}', '${GetRoot}', '${GetParent}', '${GetFileName}', '${GetBaseName}', '${GetFileExt}', '${BannerTrimPath}', '${DirState}', '${RefreshShellIcons}'
+		   ),
+		15 => array(
+			'TextFunc.nsh', '${LineFind}', '${LineRead}', '${FileReadFromEnd}', '${LineSum}', '${FileJoin}', '${TextCompare}', '${ConfigRead}', '${ConfigWrite}', '${FileRecode}', '${TrimNewLines}'
+		   ),
+		16 => array(
+			'WordFunc.nsh', '${WordFind}', '${WordFind2X}', '${WordFind3X}', '${WordReplace}', '${WordAdd}', '${WordInsert}', '${StrFilter}', '${VersionCompare}', '${VersionConvert}'
 		   )
 	),
 	'SYMBOLS' => array(
@@ -225,7 +237,10 @@ $language_data = array (
 		10 => false,
 		11 => false,
 		12 => false,
-		13 => false
+		13 => false,
+		14 => false,
+		15 => false,
+		16 => false
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
@@ -241,7 +256,10 @@ $language_data = array (
 			10 => 'color: #006600;',
 			11 => 'color: #006600;',
 			12 => 'color: #006600;',
-			13 => 'color: #006600;'
+			13 => 'color: #006600;',
+			14 => 'color: #006600;',
+			15 => 'color: #006600;',
+			16 => 'color: #006600;'
 			),
 		'COMMENTS' => array(
 			1 => 'color: #666666; font-style: italic;',
@@ -295,6 +313,10 @@ $language_data = array (
 		10 => '',
 		11 => '',
 		12 => '',
+		13 => '',
+		14 => '',
+		15 => '',
+		16 => ''
 		),
 	'OOLANG' => false,
 	'OBJECT_SPLITTERS' => array(
@@ -308,14 +330,14 @@ $language_data = array (
 		5 => '\$\{.{1,256}\}',
 		6 => '\$\\\(.{1,256}\\\)',
 		7 => array(
-			GESHI_SEARCH => '([a-zA-Z0-9_]*?)(::)([a-zA-Z0-9_]*?)',
+			GESHI_SEARCH => '([^:/\\\*\?\"\<\>\|\s]*?)(::)([^:/\\\*\?\"\<\>\|\s]*?)',
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => '',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => '\\2\\3'
 			),
 		8 => array(
-			GESHI_SEARCH => '([a-zA-Z0-9_]*?)(::)([a-zA-Z0-9_]*?\s)',
+			GESHI_SEARCH => '([^:/\\\*\?\"\<\>\|\s]*?)(::)([^:/\\\*\?\"\<\>\|]*?\s)',
 			GESHI_REPLACE => '\\3',
 			GESHI_MODIFIERS => '',
 			GESHI_BEFORE => '\\1\\2',

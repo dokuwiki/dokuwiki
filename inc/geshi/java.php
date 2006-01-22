@@ -4,15 +4,17 @@
  * --------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.5
- * CVS Revision Version: $Revision: 1.8 $
+ * Release Version: 1.0.7.6
+ * CVS Revision Version: $Revision: 1.11 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/10/22 07:52:59 $
+ * Last Modified: $Date: 2005/12/30 04:52:10 $
  *
  * Java language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2005/12/28 (1.0.4)
+ *   -  Added instanceof keyword
  * 2004/11/27 (1.0.3)
  *   -  Added support for multiple object splitters
  * 2004/08/05 (1.0.2)
@@ -66,7 +68,7 @@ $language_data = array (
 			'private', 'protected', 'extends', 'break', 'class',
 			'new', 'try', 'catch', 'throws', 'finally', 'implements',
 			'interface', 'throw', 'native', 'synchronized', 'this',
-            'abstract', 'transient'
+            'abstract', 'transient', 'instanceof'
 			),
 		3 => array(
 			'AbstractAction', 'AbstractBorder', 'AbstractButton', 'AbstractCellEditor',

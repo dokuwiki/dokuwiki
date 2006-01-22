@@ -4,15 +4,17 @@
  * ----------
  * Author: Járja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 Járja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.5
- * CVS Revision Version: $Revision: 1.7 $
+ * Release Version: 1.0.7.6
+ * CVS Revision Version: $Revision: 1.9 $
  * Date Started: 2004/07/26
- * Last Modified: $Date: 2005/10/22 07:52:59 $
+ * Last Modified: $Date: 2006/01/21 23:36:08 $
  *
  * Delphi (Object Pascal) language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2005/11/19 (1.0.3)
+ *   -  Updated the very incomplete keyword and type lists
  * 2005/09/03 (1.0.2)
  *   -  Added support for hex numbers and string entities
  * 2004/11/27 (1.0.1)
@@ -44,122 +46,227 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Delphi',
-	'COMMENT_SINGLE' => array(1 => '//'),
-	'COMMENT_MULTI' => array('(*' => '*)', '{' => '}'),
-	'CASE_KEYWORDS' => 0,
-	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
-		1 => array(
-			'And', 'Array', 'As', 'Begin', 'Case', 'Class', 'Constructor', 'Destructor', 'Div', 'Do', 'DownTo', 'Else',
-			'End', 'Except', 'File', 'Finally', 'For', 'Function', 'Goto', 'If', 'Implementation', 'In', 'Inherited', 'Interface',
-			'Is', 'Mod', 'Not', 'Object', 'Of', 'On', 'Or', 'Packed', 'Procedure', 'Program', 'Property', 'Raise', 'Record',
-			'Repeat', 'Set', 'Shl', 'Shr', 'Then', 'ThreadVar', 'To', 'Try', 'Unit', 'Until', 'Uses', 'While', 'With', 'Xor'
-			),
-		2 => array(
-			'nil', 'false', 'true', 'var', 'type', 'const'
-			),
-		3 => array(
-			'Abs', 'Addr', 'AnsiCompareStr', 'AnsiCompareText', 'AnsiContainsStr', 'AnsiEndsStr', 'AnsiIndexStr', 'AnsiLeftStr',
-			'AnsiLowerCase', 'AnsiMatchStr', 'AnsiMidStr', 'AnsiPos', 'AnsiReplaceStr', 'AnsiReverseString', 'AnsiRightStr',
-			'AnsiStartsStr', 'AnsiUpperCase', 'ArcCos', 'ArcSin', 'ArcTan', 'Assigned', 'BeginThread', 'Bounds', 'CelsiusToFahrenheit',
-			'ChangeFileExt', 'Chr', 'CompareStr', 'CompareText', 'Concat', 'Convert', 'Copy', 'Cos', 'CreateDir', 'CurrToStr',
-			'CurrToStrF', 'Date', 'DateTimeToFileDate', 'DateTimeToStr', 'DateToStr', 'DayOfTheMonth', 'DayOfTheWeek', 'DayOfTheYear',
-			'DayOfWeek', 'DaysBetween', 'DaysInAMonth', 'DaysInAYear', 'DaySpan', 'DegToRad', 'DeleteFile', 'DiskFree', 'DiskSize',
-			'DupeString', 'EncodeDate', 'EncodeDateTime', 'EncodeTime', 'EndOfADay', 'EndOfAMonth', 'Eof', 'Eoln', 'Exp', 'ExtractFileDir',
-			'ExtractFileDrive', 'ExtractFileExt', 'ExtractFileName', 'ExtractFilePath', 'FahrenheitToCelsius', 'FileAge',
-			'FileDateToDateTime', 'FileExists', 'FilePos', 'FileSearch', 'FileSetDate', 'FileSize', 'FindClose', 'FindCmdLineSwitch',
-			'FindFirst', 'FindNext', 'FloatToStr', 'FloatToStrF', 'Format', 'FormatCurr', 'FormatDateTime', 'FormatFloat', 'Frac',
-			'GetCurrentDir', 'GetLastError', 'GetMem', 'High', 'IncDay', 'IncMinute', 'IncMonth', 'IncYear', 'InputBox',
-			'InputQuery', 'Int', 'IntToHex', 'IntToStr', 'IOResult', 'IsInfinite', 'IsLeapYear', 'IsMultiThread', 'IsNaN',
-			'LastDelimiter', 'Length', 'Ln', 'Lo', 'Log10', 'Low', 'LowerCase', 'Max', 'Mean', 'MessageDlg', 'MessageDlgPos',
-			'MonthOfTheYear', 'Now', 'Odd', 'Ord', 'ParamCount', 'ParamStr', 'Pi', 'Point', 'PointsEqual', 'Pos', 'Pred',
-			'Printer', 'PromptForFileName', 'PtInRect', 'RadToDeg', 'Random', 'RandomRange', 'RecodeDate', 'RecodeTime', 'Rect',
-			'RemoveDir', 'RenameFile', 'Round', 'SeekEof', 'SeekEoln', 'SelectDirectory', 'SetCurrentDir', 'Sin', 'SizeOf',
-			'Slice', 'Sqr', 'Sqrt', 'StringOfChar', 'StringReplace', 'StringToWideChar', 'StrToCurr', 'StrToDate', 'StrToDateTime',
-			'StrToFloat', 'StrToInt', 'StrToInt64', 'StrToInt64Def', 'StrToIntDef', 'StrToTime', 'StuffString', 'Succ', 'Sum', 'Tan',
-			'Time', 'TimeToStr', 'Tomorrow', 'Trunc', 'UpCase', 'UpperCase', 'VarType', 'WideCharToString', 'WrapText', 'Yesterday',
+    'LANG_NAME' => 'Delphi',
+    'COMMENT_SINGLE' => array(1 => '//'),
+    'COMMENT_MULTI' => array('(*' => '*)', '{' => '}'),
+    'CASE_KEYWORDS' => 0,
+    'QUOTEMARKS' => array("'", '"'),
+    'ESCAPE_CHAR' => '',
+    'KEYWORDS' => array(
+        1 => array(
+            'Abstract', 'And', 'Array', 'As', 'Asm', 'At', 'Begin', 'Case', 'Class',
+            'Const', 'Constructor', 'Contains', 'Destructor', 'DispInterface', 'Div',
+            'Do', 'DownTo', 'Else', 'End', 'Except', 'File', 'Finalization',
+            'Finally', 'For', 'Function', 'Goto', 'If', 'Implementation', 'In',
+            'Inherited', 'Initialization', 'Inline', 'Interface', 'Is', 'Label',
+            'Mod', 'Not', 'Object', 'Of', 'On', 'Or', 'Overload', 'Override',
+            'Package', 'Packed', 'Private', 'Procedure', 'Program', 'Property',
+            'Protected', 'Public', 'Published', 'Raise', 'Record', 'Repeat',
+            'Requires', 'Resourcestring', 'Set', 'Shl', 'Shr', 'Then', 'ThreadVar',
+            'To', 'Try', 'Type', 'Unit', 'Until', 'Uses', 'Var', 'Virtual', 'While',
+            'With', 'Xor', 'assembler', 'cdecl', 'far', 'near', 'pascal', 'register',
+            'safecall', 'stdcall', 'varargs'
+            ),
+        2 => array(
+            'nil', 'false', 'self', 'true', 'var', 'type', 'const'
+            ),
+        3 => array(
+            'Abs', 'AcquireExceptionObject', 'Addr', 'AnsiToUtf8', 'Append', 'ArcTan',
+            'Assert', 'AssignFile', 'Assigned', 'BeginThread', 'BlockRead',
+            'BlockWrite', 'Break', 'ChDir', 'Chr', 'Close', 'CloseFile',
+            'CompToCurrency', 'CompToDouble', 'Concat', 'Continue', 'Copy', 'Cos',
+            'Dec', 'Delete', 'Dispose', 'DoubleToComp', 'EndThread', 'EnumModules',
+            'EnumResourceModules', 'Eof', 'Eoln', 'Erase', 'ExceptAddr',
+            'ExceptObject', 'Exclude', 'Exit', 'Exp', 'FilePos', 'FileSize',
+            'FillChar', 'Finalize', 'FindClassHInstance', 'FindHInstance',
+            'FindResourceHInstance', 'Flush', 'Frac', 'FreeMem', 'Get8087CW',
+            'GetDir', 'GetLastError', 'GetMem', 'GetMemoryManager',
+            'GetModuleFileName', 'GetVariantManager', 'Halt', 'Hi', 'High',
+            'IOResult', 'Inc', 'Include', 'Initialize', 'Insert', 'Int',
+            'IsMemoryManagerSet', 'IsVariantManagerSet', 'Length', 'Ln', 'Lo', 'Low',
+            'MkDir', 'Move', 'New', 'Odd', 'OleStrToStrVar', 'OleStrToString', 'Ord',
+            'PUCS4Chars', 'ParamCount', 'ParamStr', 'Pi', 'Pos', 'Pred', 'Ptr',
+            'Random', 'Randomize', 'Read', 'ReadLn', 'ReallocMem',
+            'ReleaseExceptionObject', 'Rename', 'Reset', 'Rewrite', 'RmDir', 'Round',
+            'RunError', 'Seek', 'SeekEof', 'SeekEoln', 'Set8087CW', 'SetLength',
+            'SetLineBreakStyle', 'SetMemoryManager', 'SetString', 'SetTextBuf',
+            'SetVariantManager', 'Sin', 'SizeOf', 'Slice', 'Sqr', 'Sqrt', 'Str',
+            'StringOfChar', 'StringToOleStr', 'StringToWideChar', 'Succ', 'Swap',
+            'Trunc', 'Truncate', 'TypeInfo', 'UCS4StringToWideString', 'UTF8Decode',
+            'UTF8Encode', 'UnicodeToUtf8', 'UniqueString', 'UpCase', 'Utf8ToAnsi',
+            'Utf8ToUnicode', 'Val', 'VarArrayRedim', 'VarClear',
+            'WideCharLenToStrVar', 'WideCharLenToString', 'WideCharToStrVar',
+            'WideCharToString', 'WideStringToUCS4String', 'Write', 'WriteLn',
 
-			'Append', 'AppendStr', 'Assign', 'AssignFile', 'AssignPrn', 'Beep', 'BlockRead', 'BlockWrite', 'Break',
-			'ChDir', 'Close', 'CloseFile', 'Continue', 'DateTimeToString', 'Dec', 'DecodeDate', 'DecodeDateTime',
-			'DecodeTime', 'Delete', 'Dispose', 'EndThread', 'Erase', 'Exclude', 'Exit', 'FillChar', 'Flush', 'FreeAndNil',
-			'FreeMem', 'GetDir', 'GetLocaleFormatSettings', 'Halt', 'Inc', 'Include', 'Insert', 'MkDir', 'Move', 'New',
-			'ProcessPath', 'Randomize', 'Read', 'ReadLn', 'ReallocMem', 'Rename', 'ReplaceDate', 'ReplaceTime',
-			'Reset', 'ReWrite', 'RmDir', 'RunError', 'Seek', 'SetLength', 'SetString', 'ShowMessage', 'ShowMessageFmt',
-			'ShowMessagePos', 'Str', 'Truncate', 'Val', 'Write', 'WriteLn'
-			),
-		4 => array(
-			'AnsiChar', 'AnsiString', 'Boolean', 'Byte', 'Cardinal', 'Char', 'Comp', 'Currency', 'Double', 'Extended',
-			'Int64', 'Integer', 'LongInt', 'LongWord', 'PAnsiChar', 'PAnsiString', 'PChar', 'PCurrency', 'PDateTime',
-			'PExtended', 'PInt64', 'Pointer', 'PShortString', 'PString', 'PVariant', 'PWideChar', 'PWideString',
-			'Real', 'Real48', 'ShortInt', 'ShortString', 'Single', 'SmallInt', 'String', 'TBits', 'TConvType', 'TDateTime',
-			'Text', 'TextFile', 'TFloatFormat', 'TFormatSettings', 'TList', 'TObject', 'TOpenDialog', 'TPoint',
-			'TPrintDialog', 'TRect', 'TReplaceFlags', 'TSaveDialog', 'TSearchRec', 'TStringList', 'TSysCharSet',
-			'TThreadFunc', 'Variant', 'WideChar', 'WideString', 'Word'
-			),
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => false,
-		2 => false,
-		3 => false,
-		4 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #000000; font-weight: bold;',
-			2 => 'color: #000000; font-weight: bold;',
-			3 => 'color: #000066;',
-			4 => 'color: #993333;'
-			),
-		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
-			),
-		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
-			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-			1 => 'color: #006600;'
-			),
-		'REGEXPS' => array(
+            'Abort', 'AddExitProc', 'AddTerminateProc', 'AdjustLineBreaks', 'AllocMem',
+            'AnsiCompareFileName', 'AnsiCompareStr', 'AnsiCompareText',
+            'AnsiDequotedStr', 'AnsiExtractQuotedStr', 'AnsiLastChar',
+            'AnsiLowerCase', 'AnsiLowerCaseFileName', 'AnsiPos', 'AnsiQuotedStr',
+            'AnsiSameStr', 'AnsiSameText', 'AnsiStrComp', 'AnsiStrIComp',
+            'AnsiStrLComp', 'AnsiStrLIComp', 'AnsiStrLastChar', 'AnsiStrLower',
+            'AnsiStrPos', 'AnsiStrRScan', 'AnsiStrScan', 'AnsiStrUpper',
+            'AnsiUpperCase', 'AnsiUpperCaseFileName', 'AppendStr', 'AssignStr',
+            'Beep', 'BoolToStr', 'ByteToCharIndex', 'ByteToCharLen', 'ByteType',
+            'CallTerminateProcs', 'ChangeFileExt', 'CharLength', 'CharToByteIndex',
+            'CharToByteLen', 'CompareMem', 'CompareStr', 'CompareText', 'CreateDir',
+            'CreateGUID', 'CurrToStr', 'CurrToStrF', 'CurrentYear', 'Date',
+            'DateTimeToFileDate', 'DateTimeToStr', 'DateTimeToString',
+            'DateTimeToSystemTime', 'DateTimeToTimeStamp', 'DateToStr', 'DayOfWeek',
+            'DecodeDate', 'DecodeDateFully', 'DecodeTime', 'DeleteFile',
+            'DirectoryExists', 'DiskFree', 'DiskSize', 'DisposeStr', 'EncodeDate',
+            'EncodeTime', 'ExceptionErrorMessage', 'ExcludeTrailingBackslash',
+            'ExcludeTrailingPathDelimiter', 'ExpandFileName', 'ExpandFileNameCase',
+            'ExpandUNCFileName', 'ExtractFileDir', 'ExtractFileDrive',
+            'ExtractFileExt', 'ExtractFileName', 'ExtractFilePath',
+            'ExtractRelativePath', 'ExtractShortPathName', 'FileAge', 'FileClose',
+            'FileCreate', 'FileDateToDateTime', 'FileExists', 'FileGetAttr',
+            'FileGetDate', 'FileIsReadOnly', 'FileOpen', 'FileRead', 'FileSearch',
+            'FileSeek', 'FileSetAttr', 'FileSetDate', 'FileSetReadOnly', 'FileWrite',
+            'FinalizePackage', 'FindClose', 'FindCmdLineSwitch', 'FindFirst',
+            'FindNext', 'FloatToCurr', 'FloatToDateTime', 'FloatToDecimal',
+            'FloatToStr', 'FloatToStrF', 'FloatToText', 'FloatToTextFmt',
+            'FmtLoadStr', 'FmtStr', 'ForceDirectories', 'Format', 'FormatBuf',
+            'FormatCurr', 'FormatDateTime', 'FormatFloat', 'FreeAndNil',
+            'GUIDToString', 'GetCurrentDir', 'GetEnvironmentVariable',
+            'GetFileVersion', 'GetFormatSettings', 'GetLocaleFormatSettings',
+            'GetModuleName', 'GetPackageDescription', 'GetPackageInfo', 'GetTime',
+            'IncAMonth', 'IncMonth', 'IncludeTrailingBackslash',
+            'IncludeTrailingPathDelimiter', 'InitializePackage', 'IntToHex',
+            'IntToStr', 'InterlockedDecrement', 'InterlockedExchange',
+            'InterlockedExchangeAdd', 'InterlockedIncrement', 'IsDelimiter',
+            'IsEqualGUID', 'IsLeapYear', 'IsPathDelimiter', 'IsValidIdent',
+            'Languages', 'LastDelimiter', 'LoadPackage', 'LoadStr', 'LowerCase',
+            'MSecsToTimeStamp', 'NewStr', 'NextCharIndex', 'Now', 'OutOfMemoryError',
+            'QuotedStr', 'RaiseLastOSError', 'RaiseLastWin32Error', 'RemoveDir',
+            'RenameFile', 'ReplaceDate', 'ReplaceTime', 'SafeLoadLibrary',
+            'SameFileName', 'SameText', 'SetCurrentDir', 'ShowException', 'Sleep',
+            'StrAlloc', 'StrBufSize', 'StrByteType', 'StrCat', 'StrCharLength',
+            'StrComp', 'StrCopy', 'StrDispose', 'StrECopy', 'StrEnd', 'StrFmt',
+            'StrIComp', 'StrLCat', 'StrLComp', 'StrLCopy', 'StrLFmt', 'StrLIComp',
+            'StrLen', 'StrLower', 'StrMove', 'StrNew', 'StrNextChar', 'StrPCopy',
+            'StrPLCopy', 'StrPas', 'StrPos', 'StrRScan', 'StrScan', 'StrToBool',
+            'StrToBoolDef', 'StrToCurr', 'StrToCurrDef', 'StrToDate', 'StrToDateDef',
+            'StrToDateTime', 'StrToDateTimeDef', 'StrToFloat', 'StrToFloatDef',
+            'StrToInt', 'StrToInt64', 'StrToInt64Def', 'StrToIntDef', 'StrToTime',
+            'StrToTimeDef', 'StrUpper', 'StringReplace', 'StringToGUID', 'Supports',
+            'SysErrorMessage', 'SystemTimeToDateTime', 'TextToFloat', 'Time',
+            'TimeStampToDateTime', 'TimeStampToMSecs', 'TimeToStr', 'Trim',
+            'TrimLeft', 'TrimRight', 'TryEncodeDate', 'TryEncodeTime',
+            'TryFloatToCurr', 'TryFloatToDateTime', 'TryStrToBool', 'TryStrToCurr',
+            'TryStrToDate', 'TryStrToDateTime', 'TryStrToFloat', 'TryStrToInt',
+            'TryStrToInt64', 'TryStrToTime', 'UnloadPackage', 'UpperCase',
+            'WideCompareStr', 'WideCompareText', 'WideFmtStr', 'WideFormat',
+            'WideFormatBuf', 'WideLowerCase', 'WideSameStr', 'WideSameText',
+            'WideUpperCase', 'Win32Check', 'WrapText',
+
+            'ActivateClassGroup', 'AllocateHwnd', 'BinToHex', 'CheckSynchronize',
+            'CollectionsEqual', 'CountGenerations', 'DeallocateHwnd', 'EqualRect',
+            'ExtractStrings', 'FindClass', 'FindGlobalComponent', 'GetClass',
+            'GroupDescendantsWith', 'HexToBin', 'IdentToInt',
+            'InitInheritedComponent', 'IntToIdent', 'InvalidPoint',
+            'IsUniqueGlobalComponentName', 'LineStart', 'ObjectBinaryToText',
+            'ObjectResourceToText', 'ObjectTextToBinary', 'ObjectTextToResource',
+            'PointsEqual', 'ReadComponentRes', 'ReadComponentResEx',
+            'ReadComponentResFile', 'Rect', 'RegisterClass', 'RegisterClassAlias',
+            'RegisterClasses', 'RegisterComponents', 'RegisterIntegerConsts',
+            'RegisterNoIcon', 'RegisterNonActiveX', 'SmallPoint', 'StartClassGroup',
+            'TestStreamFormat', 'UnregisterClass', 'UnregisterClasses',
+            'UnregisterIntegerConsts', 'UnregisterModuleClasses',
+            'WriteComponentResFile',
+
+            'ArcCos', 'ArcCosh', 'ArcCot', 'ArcCotH', 'ArcCsc', 'ArcCscH', 'ArcSec',
+            'ArcSecH', 'ArcSin', 'ArcSinh', 'ArcTan2', 'ArcTanh', 'Ceil',
+            'CompareValue', 'Cosecant', 'Cosh', 'Cot', 'CotH', 'Cotan', 'Csc', 'CscH',
+            'CycleToDeg', 'CycleToGrad', 'CycleToRad', 'DegToCycle', 'DegToGrad',
+            'DegToRad', 'DivMod', 'DoubleDecliningBalance', 'EnsureRange', 'Floor',
+            'Frexp', 'FutureValue', 'GetExceptionMask', 'GetPrecisionMode',
+            'GetRoundMode', 'GradToCycle', 'GradToDeg', 'GradToRad', 'Hypot',
+            'InRange', 'IntPower', 'InterestPayment', 'InterestRate',
+            'InternalRateOfReturn', 'IsInfinite', 'IsNan', 'IsZero', 'Ldexp', 'LnXP1',
+            'Log10', 'Log2', 'LogN', 'Max', 'MaxIntValue', 'MaxValue', 'Mean',
+            'MeanAndStdDev', 'Min', 'MinIntValue', 'MinValue', 'MomentSkewKurtosis',
+            'NetPresentValue', 'Norm', 'NumberOfPeriods', 'Payment', 'PeriodPayment',
+            'Poly', 'PopnStdDev', 'PopnVariance', 'Power', 'PresentValue',
+            'RadToCycle', 'RadToDeg', 'RadToGrad', 'RandG', 'RandomRange', 'RoundTo',
+            'SLNDepreciation', 'SYDDepreciation', 'SameValue', 'Sec', 'SecH',
+            'Secant', 'SetExceptionMask', 'SetPrecisionMode', 'SetRoundMode', 'Sign',
+            'SimpleRoundTo', 'SinCos', 'Sinh', 'StdDev', 'Sum', 'SumInt',
+            'SumOfSquares', 'SumsAndSquares', 'Tan', 'Tanh', 'TotalVariance',
+            'Variance'
+            ),
+        4 => array(
+            'AnsiChar', 'AnsiString', 'Bool', 'Boolean', 'Byte', 'ByteBool', 'Cardinal', 'Char',
+            'Comp', 'Currency', 'DWORD', 'Double', 'Extended', 'Int64', 'Integer', 'IUnknown',
+            'LongBool', 'LongInt', 'LongWord', 'PAnsiChar', 'PAnsiString', 'PBool', 'PBoolean', 'PByte',
+            'PByteArray', 'PCardinal', 'PChar', 'PComp', 'PCurrency', 'PDWORD', 'PDate', 'PDateTime',
+            'PDouble', 'PExtended', 'PInt64', 'PInteger', 'PLongInt', 'PLongWord', 'Pointer', 'PPointer',
+            'PShortInt', 'PShortString', 'PSingle', 'PSmallInt', 'PString', 'PHandle', 'PVariant', 'PWord',
+            'PWordArray', 'PWordBool', 'PWideChar', 'PWideString', 'Real', 'Real48', 'ShortInt', 'ShortString',
+            'Single', 'SmallInt', 'String', 'TClass', 'TDate', 'TDateTime', 'TextFile', 'THandle',
+            'TObject', 'TTime', 'Variant', 'WideChar', 'WideString', 'Word', 'WordBool'
+            ),
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => true,
+        1 => false,
+        2 => false,
+        3 => false,
+        4 => false,
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #000000; font-weight: bold;',
+            2 => 'color: #000000; font-weight: bold;',
+            3 => 'color: #000066;',
+            4 => 'color: #993333;'
+            ),
+        'COMMENTS' => array(
+            1 => 'color: #808080; font-style: italic;',
+            'MULTI' => 'color: #808080; font-style: italic;'
+            ),
+        'ESCAPE_CHAR' => array(
+            ),
+        'BRACKETS' => array(
+            0 => 'color: #66cc66;'
+            ),
+        'STRINGS' => array(
+            0 => 'color: #ff0000;'
+            ),
+        'NUMBERS' => array(
+            0 => 'color: #cc66cc;'
+            ),
+        'METHODS' => array(
+            1 => 'color: #006600;'
+            ),
+        'REGEXPS' => array(
             0 => 'color: #9ac;',
             1 => 'color: #ff0000;'
-			),
-		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
-		1 => '',
-		2 => '',
-		3 => '',
-		4 => ''
-		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
-		1 => '.'
-		),
-	'REGEXPS' => array(
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #66cc66;'
+            ),
+        'SCRIPT' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => ''
+        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array(
+        1 => '.'
+        ),
+    'REGEXPS' => array(
         0 => '\$[0-9a-fA-F]+',
         1 => '\#\$?[0-9]{1,3}'
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        )
 );
 
 ?>

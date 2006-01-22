@@ -4,10 +4,10 @@
  * --------------
  * Author: Pàdraig O`Connel (info@moonsword.info)
  * Copyright: (c) 2005 Pàdraig O`Connel (http://moonsword.info)
- * Release Version: 1.0.7.5
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.6
+ * CVS Revision Version: $Revision: 1.4 $
  * Date Started: 16.10.2005
- * Last Modified: $Date: 2005/10/22 07:52:59 $
+ * Last Modified: $Date: 2005/12/30 04:50:56 $
  *
  * BlitzBasic language file for GeSHi.
  *
@@ -17,8 +17,10 @@
  *
  * CHANGES
  * -------
+ * 2005/12/28 (1.0.1)
+ *   -  Remove unnecessary style index for regexps
  * 2005/10/22 (1.0.0)
- *  -  First Release
+ *   -  First Release
  *
  * TODO (updated 2005/10/22)
  * -------------------------
@@ -159,7 +161,6 @@
       0 => 'color: #000066;'
       ),
     'REGEXPS' => array(
-      0 => 'font-weight: bold;'
       ),
     'SCRIPT' => array(
       0 => '',
@@ -174,7 +175,6 @@
   	1 => '\\'
 	),
   'REGEXPS' => array(
-
   ),
   'STRICT_MODE_APPLIES' => GESHI_NEVER,
   'SCRIPT_DELIMITERS' => array(),
