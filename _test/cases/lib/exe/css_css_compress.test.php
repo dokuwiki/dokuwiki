@@ -21,6 +21,25 @@ class css_css_compress_test extends UnitTestCase {
         $this->assertEqual(css_compress($text), '#comment/* */{color:lime;}');
     }
 
+    function test_slcom1(){
+        $text = '// this is a comment';
+        $this->assertEqual(css_compress($text), '');
+    }
+
+    function test_slcom2(){
+        $text = '#foo {
+                    color: lime; // another comment
+                }';
+        $this->assertEqual(css_compress($text), '#foo{color:lime;}');
+    }
+
+    function test_slcom3(){
+        $text = '#foo {
+                    background-image: url(http://foo.bar/baz.jpg);
+                }';
+        $this->assertEqual(css_compress($text), '#foo{background-image:url(http://foo.bar/baz.jpg);}');
+    }
+
     function test_hack(){
         $text = '/* Mac IE will not see this and continue with inline-block */
                  /* \\*/
