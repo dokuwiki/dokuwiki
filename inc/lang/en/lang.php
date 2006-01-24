@@ -193,11 +193,4 @@ $lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
 /* auth.class lanuage support */
 $lang['authmodfailed']   = 'User authentification not possible. Please inform your Wiki Admin.';
 
-/* mysql.class language support */
-$lang['noMySQL']         = "MySQL extension for PHP not found. Please inform your Wiki Admin.";
-$lang['noDatabase']      = "MySQL: Can't access Database '%d'. Please inform you Wiki Admin.";
-$lang['noConnect']       = "MySQL: Can't connect to '%u@%s'. Please inform your Wiki Admin.";
-$lang['joinGroupFailed'] = "Account for '%u' not created because it can't be added to group '%g'.";
-$lang['modUserFailed']   = "Unable to modify user data. Please inform your Wiki Admin";
-
 //Setup VIM: ex: et ts=2 enc=utf-8 :

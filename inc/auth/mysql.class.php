@@ -14,6 +14,9 @@ require_once(DOKU_AUTH.'/basic.class.php');
 class auth_mysql extends auth_basic {
    
     var $dbcon        = 0;
+    var $dbver        = 0;    // database version
+    var $dbrev        = 0;    // database revision
+    var $dbsub        = 0;    // database subrevision
     var $cnf          = null;
     var $defaultgroup = "";
     
@@ -27,13 +30,13 @@ class auth_mysql extends auth_basic {
      */
     function auth_mysql() {
       global $conf;
-      global $lang;
       
       if (method_exists($this, 'auth_basic'))
         parent::auth_basic();
         
       if(!function_exists('mysql_connect')) {
-        msg($lang['noMySQL'],-1);
+        if ($this->cnf['debug'])
+          msg("MySQL err: PHP MySQL extension not found.",-1);
         $this->success = false;
       }
       
@@ -141,17 +144,24 @@ class auth_mysql extends auth_basic {
     }
    
     /**
-     * [public function]
+     * Modify user data [public function]
      *
-     * Modify user data
+     * An existing user dataset will be modified. Changes are given in an array.
+     * 
+     * The dataset update will be rejected if the user name should be changed
+     * to an already existing one.
      *
-     * @param   $user      nick of the user to be changed
-     * @param   $changes   array of field/value pairs to be changed (password will be clear text)
-     * @return  bool
+     * The password must be provides unencrypted. Pasword cryption is done
+     * automatically if configured.
      *
-     * @todo  Modifications are done through deleting and recreating the user.
-     *        This might be suboptimal and dangerous. Using UPDATE seems the
-     *        better way.
+     * If one or more groups could't be updated, no error would be set. In
+     * this case the dataset might already be changed and we can't rollback
+     * the changes. Transactions would be really usefull here.
+     *
+     * @param   $user     nick of the user to be changed
+     * @param   $changes  array of field/value pairs to be changed (password
+     *                    will be clear text)
+     * @return  bool      true on success, false on error
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -161,25 +171,26 @@ class auth_mysql extends auth_basic {
       
       if (!is_array($changes) || !count($changes))
         return true;  // nothing to change
-        
+       
       if($this->_openDB()) {
         $this->_lockTables("WRITE");
-        if (($info = $this->_getUserInfo($user)) !== false) {
-          $newuser = $user;
-          foreach ($changes as $field => $value) {
-            if ($field == 'user')
-               $newuser = $value;
-            if ($field == 'pass' && !$this->cnf['encryptPass'])
-               $value = auth_cryptPassword($value);
-            $info[$field] = $value;  // update user record
-          }
 
-          $rc = $this->_delUser($user);   // remove user from database
-          if ($rc)
-            $rc = $this->_addUser($newuser,$info['pass'],$info['name'],$info['mail'],$info['grps']);
-          if (!$rc)
-            msg($lang['modUserFailed'], -1);
-        }  
+        if (($uid = $this->_getUserID($user))) {
+          $rc = $this->_updateUserInfo($changes, $uid);
+
+          if ($rc && isset($changes['grps'])) {
+            $groups = $this->_getGroups($user);
+            $grpadd = array_diff($changes['grps'], $groups);
+            $grpdel = array_diff($groups, $changes['grps']);
+           
+            foreach($grpadd as $group)
+              $this->_addUserToGroup($uid, $group, 1);
+              
+            foreach($grpdel as $group)
+              $this->_delUserFromGroup($uid, $group);
+          }        
+        }
+        
         $this->_unlockTables();
         $this->_closeDB();
       }
@@ -238,9 +249,7 @@ class auth_mysql extends auth_basic {
     }
     
     /**
-     * [public function]
-     *
-     * Bulk retrieval of user data.
+     * Bulk retrieval of user data. [public function]
      *
      * @param   start     index of first user to be returned
      * @param   limit     max number of users to be returned
@@ -276,22 +285,21 @@ class auth_mysql extends auth_basic {
     }
 
     /**
-     * [public function]
-     *
-     * Give user membership of a group
+     * Give user membership of a group [public function]
      * 
      * @param   $user
      * @param   $group  
-     * @return  bool
+     * @return  bool    true on success, false on error
      *
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function joinGroup($user, $group) {
       $rc = false;
       
-      if($this->_openDB()) {
+      if ($this->_openDB()) {
         $this->_lockTables("WRITE");
-        $rc = _addUserToGroup($user, $group);
+        $uid = $this->_getUserID($user);
+        $rc  = $this->_addUserToGroup($uid, $group);
         $this->_unlockTables();
         $this->_closeDB();
       }
@@ -299,9 +307,7 @@ class auth_mysql extends auth_basic {
     }
 
     /**
-     * [public function]
-     *
-     * Remove user from a group
+     * Remove user from a group [public function]
      *
      * @param   $user    user that leaves a group
      * @param   $group   group to leave
@@ -312,20 +318,10 @@ class auth_mysql extends auth_basic {
     function leaveGroup($user, $group) {
       $rc = false;
       
-      if($this->_openDB()) {
+      if ($this->_openDB()) {
         $this->_lockTables("WRITE");
-        
         $uid = $this->_getUserID($user);
-        if ($uid) {
-          $gid = $this->_getGroupID($group);
-          if ($gid) {
-            $sql = str_replace('%{uid}',  addslashes($uid),$this->cnf['delUserGroup']);
-            $sql = str_replace('%{user}', addslashes($user),$sql);
-            $sql = str_replace('%{gid}',  addslashes($gid),$sql);
-            $sql = str_replace('%{group}',addslashes($group),$sql);
-            $rc  = $this->_modifyDB($sql) == 0 ? true : false;
-          }
-        }
+        $rc  = $this->_delUserFromGroup($uid, $group);
         $this->_unlockTables();
         $this->_closeDB();
       }
@@ -333,53 +329,76 @@ class auth_mysql extends auth_basic {
     }
  
     /**
-     * Adds a user to a group. If $force is set to '1' the group will be
-     * created if it not already existed.
+     * Adds a user to a group.
+     *
+     * If $force is set to '1' non existing groups would be created.
      *
      * The database connection must already be established. Otherwise
      * this function does nothing and returns 'false'. It is strongly
      * recommended to call this function only after all participating
      * tables (group and usergroup) have been locked.
      *
-     * @param   $user    user to add to a group
+     * @param   $uid     user id to add to a group
      * @param   $group   name of the group
      * @param   $force   '1' create missing groups
      * @return  bool     'true' on success, 'false' on error
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
-    function _addUserToGroup($user, $group, $force=0) {
+    function _addUserToGroup($uid, $group, $force=0) {
       $newgroup = 0;
         
-      if($this->dbcon) {
-        $uid = $this->_getUserID($user);
-        if ($uid) {
-          $gid = $this->_getGroupID($group);
-          if (!$gid) {
-            if ($force) {  // create missing groups
-              $sql = str_replace('%{group}',addslashes($group),$this->cnf['addGroup']);
-              $gid = $this->_modifyDB($sql);
-              $newgroup = 1;  // group newly created
-            }
-            if (!$gid) return false; // group didn't exist and can't be created
+      if (($this->dbcon) && ($uid)) {
+        $gid = $this->_getGroupID($group);
+        if (!$gid) {
+          if ($force) {  // create missing groups
+            $sql = str_replace('%{group}',addslashes($group),$this->cnf['addGroup']);
+            $gid = $this->_modifyDB($sql);
+            $newgroup = 1;  // group newly created
           }
+          if (!$gid) return false; // group didn't exist and can't be created
+        }
         
-          $sql = str_replace('%{uid}',  addslashes($uid),$this->cnf['addUserGroup']);
-          $sql = str_replace('%{user}', addslashes($user),$sql);
-          $sql = str_replace('%{gid}',  addslashes($gid),$sql);
-          $sql = str_replace('%{group}',addslashes($group),$sql);
-          if ($this->_modifyDB($sql) !== false) return true;
+        $sql = str_replace('%{uid}',  addslashes($uid),$this->cnf['addUserGroup']);
+        $sql = str_replace('%{user}', addslashes($user),$sql);
+        $sql = str_replace('%{gid}',  addslashes($gid),$sql);
+        $sql = str_replace('%{group}',addslashes($group),$sql);
+        if ($this->_modifyDB($sql) !== false) return true;
 
-          if ($newgroup) { // remove previously created group on error
-            $sql = str_replace('%{gid}',  addslashes($gid),$this->cnf['delGroup']);
-            $sql = str_replace('%{group}',addslashes($group),$sql);
-            $this->_modifyDB($sql);
-          }
+        if ($newgroup) { // remove previously created group on error
+          $sql = str_replace('%{gid}',  addslashes($gid),$this->cnf['delGroup']);
+          $sql = str_replace('%{group}',addslashes($group),$sql);
+          $this->_modifyDB($sql);
         }
       }
       return false;
     }
 
+    /**
+     * Remove user from a group
+     *
+     * @param   $uid     user id that leaves a group
+     * @param   $group   group to leave
+     * @return  bool     true on success, false on error
+     *
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     */
+    function _delUserFromGroup($uid, $group) {
+      $rc = false;
+      
+      if (($this->dbcon) && ($uid)) {
+        $gid = $this->_getGroupID($group);
+        if ($gid) {
+          $sql = str_replace('%{uid}',  addslashes($uid),$this->cnf['delUserGroup']);
+          $sql = str_replace('%{user}', addslashes($user),$sql);
+          $sql = str_replace('%{gid}',  addslashes($gid),$sql);
+          $sql = str_replace('%{group}',addslashes($group),$sql);
+          $rc  = $this->_modifyDB($sql) == 0 ? true : false;
+        }
+      }
+      return $rc;
+    }
+ 
     /**
      * Retrieves a list of groups the user is a member off.
      *
@@ -458,7 +477,8 @@ class auth_mysql extends auth_basic {
       
         if ($uid) {
           foreach($grps as $group) {
-            $gid = $this->_addUserToGroup($user, $group, 1);
+            $uid = $this->_getUserID($user);
+            $gid = $this->_addUserToGroup($uid, $group, 1);
             if ($gid === false) break;
           }
           
@@ -470,9 +490,8 @@ class auth_mysql extends auth_basic {
              * is not a big issue so we ignore this problem here.
              */
             $this->_delUser($user);
-            $text = str_replace('%{user}',addslashes($user),$this->cnf['joinGroupFailed']);
-            $text = str_replace('%{group}',addslashes($group),$text);
-            msg($text, -1);
+            if ($this->cnf['debug'])
+              msg ("MySQL err: Adding user '$user' to group '$group' failed.",-1);
           }
         }
       }
@@ -531,6 +550,65 @@ class auth_mysql extends auth_basic {
     }
 
     /**
+     * Updates the user info in the database
+     *
+     * Update a user data structure in the database according changes
+     * given in an array. The user name can only be changes if it didn't
+     * exists already. If the new user name exists the update procedure
+     * will be aborted. The database keeps unchanged.
+     *
+     * The database connection has already to be established for this
+     * function to work. Otherwise it will return 'false'.
+     *
+     * The password will be crypted if necessary.
+     *
+     * @param  $changes  array of items to change as pairs of item and value
+     * @param  $uid      user id of dataset to change, must be unique in DB
+     * @return true on success or false on error
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     */
+    function _updateUserInfo($changes, $uid) {
+      $sql  = $this->cnf['updateUser']." ";
+      $cnt = 0;
+      $err = 0;
+
+      if($this->dbcon) {
+        foreach ($changes as $item => $value) {
+          if ($item == 'user') {      
+            if (($this->_getUserID($changes['user']))) {
+              $err = 1; /* new username already exists */
+              break;    /* abort update */
+            }
+            if ($cnt++ > 0) $sql .= ", ";
+            $sql .= str_replace('%{user}',$value,$this->cnf['UpdateLogin']);
+          } else if ($item == 'name') {
+            if ($cnt++ > 0) $sql .= ", ";
+            $sql .= str_replace('%{name}',$value,$this->cnf['UpdateName']);
+          } else if ($item == 'pass') {
+            if (!$this->cnf['encryptPass'])
+              $value = auth_cryptPassword($value);
+            if ($cnt++ > 0) $sql .= ", ";
+            $sql .= str_replace('%{pass}',$value,$this->cnf['UpdatePass']);
+          } else if ($item == 'mail') {
+            if ($cnt++ > 0) $sql .= ", ";
+            $sql .= str_replace('%{email}',$value,$this->cnf['UpdateEmail']);
+          }
+        }
+
+        if ($err == 0) {
+          if ($cnt > 0) {
+            $sql .= " ".str_replace('%{uid}', $uid, $this->cnf['UpdateTarget']);
+            $sql .= " LIMIT 1";
+            $this->_modifyDB($sql);
+          }
+          return true;
+        }
+      }
+      return false;
+    }
+
+    /**
      * Retrieves the group id of a given group name
      * 
      * The database connection must already be established
@@ -561,24 +639,25 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _openDB() {
-      global $lang;
-      
       if (!$this->dbcon) {
         $con = @mysql_connect ($this->cnf['server'], $this->cnf['user'], $this->cnf['password']);   
         if ($con) {
           if ((mysql_select_db($this->cnf['database'], $con))) {
+            if ((preg_match("/^(\d+)\.(\d+)\.(\d+).*/", mysql_get_server_info ($con), $result)) == 1) {
+              $this->dbver = $result[1];
+              $this->dbrev = $result[2];
+              $this->dbsub = $result[3];
+            }
             $this->dbcon = $con; 
-            return true;   // connection and database sucessfully opened
+            return true;   // connection and database successfully opened
           } else {
-            $text = str_replace('%d',addslashes($this->cnf['database']),$lang['noDatabase']);
-            msg($text, -1);
             mysql_close ($con);
+            if ($this->cnf['debug'])
+              msg("MySQL err: No access to database {$this->cnf['database']}.", -1);
           }   
-        } else {
-          $text = str_replace('%u',addslashes($this->cnf['user']),$lang['noConnect']);
-          $text = str_replace('%s',addslashes($this->cnf['server']),$text);
-          msg($text, -1);
-        }
+        } else if ($this->cnf['debug'])
+          msg ("MySQL err: Connection to {$this->cnf['user']}@{$this->cnf['server']} not possible.", -1);
+
         return false;  // connection failed
       }
       return true;  // connection already open
@@ -617,7 +696,8 @@ class auth_mysql extends auth_basic {
           mysql_free_result ($result);
           return $resultarray;
         }
-        msg('MySQL: '.mysql_error($this->dbcon), -1);
+        if ($this->cnf['debug'])
+          msg('MySQL err: '.mysql_error($this->dbcon), -1);
       }
       return false;
     }
@@ -640,7 +720,8 @@ class auth_mysql extends auth_basic {
           $rc = mysql_insert_id($this->dbcon); //give back ID on insert
           if ($rc !== false) return $rc;
         }
-        msg('MySQL: '.mysql_error($this->dbcon), -1);
+        if ($this->cnf['debug'])
+          msg('MySQL err: '.mysql_error($this->dbcon), -1);
       }
       return false;
     }
@@ -741,7 +822,8 @@ class auth_mysql extends auth_basic {
 
       return $sql;
     }
-    
+ 
+   
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

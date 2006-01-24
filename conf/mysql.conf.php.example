@@ -28,6 +28,11 @@ $conf['auth']['mysql']['user']     = '';
 $conf['auth']['mysql']['password'] = '';
 $conf['auth']['mysql']['database'] = '';
 
+/* This option enables debug messages in the mysql module. It is
+ * mostly usefull for system admins.
+ */
+$conf['auth']['mysql']['debug'] = 0;
+
 /* Normally password encryptionis done by DokuWiki (recommended) but for
  * some reasons it might be usefull to let the database do the encryption.
  * Set 'encryptPass' to '1' and the cleartext password is forwarded to
@@ -48,7 +53,9 @@ $conf['auth']['mysql']['TablesToLock']= array("users", "users AS u","groups", "g
  * following patters will be replaced:
  *   %{user}	user name 
  */
-$conf['auth']['mysql']['getUserID']   = "SELECT uid AS id FROM users WHERE login='%{user}'";
+$conf['auth']['mysql']['getUserID']   = "SELECT uid AS id
+                                         FROM users
+                                         WHERE login='%{user}'";
 
 /* This statement should return the database index of a given group name.
  * The module will access the index with the name 'id' so a alias might be
@@ -56,7 +63,9 @@ $conf['auth']['mysql']['getUserID']   = "SELECT uid AS id FROM users WHERE login
  * following patters will be replaced:
  *   %{group}	group name 
  */
-$conf['auth']['mysql']['getGroupID']  = "SELECT gid AS id FROM groups WHERE name='%{group}'";
+$conf['auth']['mysql']['getGroupID']  = "SELECT gid AS id
+                                         FROM groups
+                                         WHERE name='%{group}'";
 
 /* This statement is used to grant or deny access to the wiki. The result should
  * be a table with exact one line containing at least the password of the user.
@@ -136,6 +145,24 @@ $conf['auth']['mysql']['addUser']     = "INSERT INTO users
                                          VALUES ('%{user}', '%{pass}', '%{email}',
                                          SUBSTRING_INDEX('%{name}',' ', 1),
                                          SUBSTRING_INDEX('%{name}',' ', -1))";
+
+/* This statements should modify a user entry in the database. The statements
+ * UpdateLogin, UpdatePass, UpdateEmail and UpdateName will be added to 
+ * updateUser on demand. Only changed parameters will be used.
+ * Following patterns will be replaced:
+ *   %{user}	user's login name
+ *   %{pass}	password (encrypted or clear text, depends on 'encryptPass')
+ *   %{email}	email address
+ *   %{name}	user's full name
+ *   %{uid}     user id that should be updated
+ */ 
+$conf['auth']['mysql']['updateUser']  = "UPDATE users SET";
+$conf['auth']['mysql']['UpdateLogin'] = "login='%{user}'";
+$conf['auth']['mysql']['UpdatePass']  = "pass='%{pass}'";
+$conf['auth']['mysql']['UpdateEmail'] = "email='%{email}'";
+$conf['auth']['mysql']['UpdateName']  = "firstname=SUBSTRING_INDEX('%{name}',' ', 1),
+                                         lastname=SUBSTRING_INDEX('%{name}',' ', -1)";
+$conf['auth']['mysql']['UpdateTarget']= "WHERE uid=%{uid}";
 
 /* This statement should remove a user fom the database.
  * Following patterns will be replaced:

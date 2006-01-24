@@ -195,11 +195,4 @@ $lang['unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte ni
 /* auth.class lanuage support */
 $lang['authmodfailed']   = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
 
-/* mysql.class language support */
-$lang['noMySQL']         = "MySQL Erweiterung für PHP nicht gefunden. Bitte informieren Sie ihren Wiki Admin.";
-$lang['noDatabase']      = "MySQL: Zugriff auf Datenbank '%d' fehlgeschlagen. Bitte informieren Sie ihren Wiki Admin.";
-$lang['noConnect']       = "MySQL: Datenbank '%u@%s' nicht erreichbar. Bitte informieren Sie ihren Wiki Admin.";
-$lang['joinGroupFailed'] = "Konto für '%u' nicht angelegt; Benutzer konnte nicht der Gruppe '%g' zugeordnet werden.";
-$lang['modUserFailed']   = "Benutzerdaten können nicht geändert werden. Bitte informieren Sie ihren Wiki Admin.";
-
 //Setup VIM: ex: et ts=2 enc=utf-8 :
