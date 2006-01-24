@@ -16,9 +16,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -38,9 +35,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -55,9 +49,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listo_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -77,9 +68,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listo_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -95,9 +83,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listo_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -117,9 +102,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listo_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -130,9 +112,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $this->P->parse("\r\n  *A\r\n    * B\r\n  * C\r\n");
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -152,9 +131,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -165,9 +141,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $this->P->parse("\r\n  -A\r\n    - B\r\n  - C\r\n");
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listo_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -187,9 +160,6 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listo_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -242,8 +212,7 @@ Bar');
             array('listu_close',array()),
             array('p_open',array()),
             array('cdata',array("Bar")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(' ')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -262,9 +231,6 @@ Bar');
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -283,9 +249,6 @@ Bar');
             array('listu_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -303,9 +266,6 @@ Bar');
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
@@ -320,9 +280,6 @@ Bar');
             array('listu_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
@@ -338,15 +295,12 @@ Bar');
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('linebreak',array()),
-            array('cdata',array("D")),
+            array('cdata',array(" D")),
             array('listcontent_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(2)),
@@ -362,15 +316,12 @@ Bar');
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
     
-    // Huh?
+    // This breaks the parser/render chain badly #701
     function testUnorderedListFootnote() {
         $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
         $this->P->addMode('footnote',new Doku_Parser_Mode_Footnote());

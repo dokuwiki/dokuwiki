@@ -58,18 +58,12 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
         $this->P->parse("\n> def\n>>ghi\n ");
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('quote_open',array()),
             array('cdata',array(" def")),
             array('quote_open',array()),
             array('cdata',array("ghi")),
             array('quote_close',array()),
             array('quote_close',array()),
-            array('p_open',array()),
-            array('cdata',array(" \n")),
-            array('p_close',array()),
             array('document_end',array()),
             
         );
@@ -93,8 +87,7 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
             array('quote_close',array()),
             array('p_open',array()),
             array('cdata',array("klm")),
-            array('p_close',array()),
-            array('p_open',array()),
+            array('cdata',array(' ')),
             array('p_close',array()),
             array('document_end',array()),
             
