@@ -1,0 +1,14 @@
+====== Configuration Manager ======
+
+Use this page to control the settings of your Dokuwiki installation.  
+For help on individual settings refer to [[doku>wiki:config]].
+For more details about this plugin see [[doku>plugin:config]].
+
+Settings shown with a light red background are protected and can not be altered with this plugin.
+Settings shown with a blue background are the default values and settings shown with a white 
+background have been set locally for this particular installation.  Both blue and white settings
+can be altered.
+
+Remember to press the **SAVE** button before leaving this page otherwise your changes will be lost.
+
+

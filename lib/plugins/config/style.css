@@ -1,0 +1,25 @@
+/* plugin:configmanager */
+#configmanager {margin: 1em;}
+#configmanager p.error {border: 1px solid red; background-color: #c66; color: white; padding: 0.5em; text-align:center}
+#configmanager p.ok {border: 1px solid green; background-color: #6c6; color: black; padding: 0.5em; text-align:center}
+#configmanager p.info {border: 1px solid __dark__; background-color: __medium__; color: black; padding: 0.5em; text-align:center}
+#configmanager form { }
+#configmanager table {margin: 1em 0;}
+#configmanager td input.text {width: 30em; border: 1px solid __medium__;}
+#configmanager td select {border: 1px solid __medium__;}
+
+#configmanager tr.default .input, 
+#configmanager tr.default input,
+#configmanager tr.default select {
+  background-color: __medium__;
+}
+
+#configmanager tr.protected .input, 
+#configmanager tr.protected input,
+#configmanager tr.protected select {
+  background-color: #ffcccc;
+}
+
+#configmanager td.error  {background-color: red;}
+
+/* end plugin:configmanager */

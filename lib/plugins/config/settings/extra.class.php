@@ -1,0 +1,90 @@
+<?php
+/**
+ * additional setting classes specific to these settings
+ *
+ * @author    Chris Smith <chris@jalakai.co.uk>
+ */
+
+if (!class_exists('setting_sepchar')) {
+  class setting_sepchar extends setting_multichoice {
+    
+    function setting_sepchar($key,$param=NULL) {
+        $str = '_-.0123456789abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};        
+        
+        // call foundation class constructor
+        $this->setting($key,$param);
+    }
+  }
+}
+
+if (!class_exists('setting_savedir')) {
+  class setting_savedir extends setting {
+
+    function update($input) {
+        if ($this->is_protected()) return false;
+        
+        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        if ($value == $input) return false;
+
+        if (!init_path($input)) {
+          $this->_error = true;
+          $this->_input = $input;
+          return false;
+        }
+        
+        $this->_local = $input;
+        return true;
+    }
+  }
+}
+
+if (!class_exists('setting_authtype')) {
+  class setting_authtype extends setting {
+    var $_pattern = '#^[a-zA-Z0-9_]*$#';
+
+    function update($input) {
+        if ($this->is_protected()) return false;
+        
+        $input = trim($input);
+        
+        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        if ($value == $input) return false;
+
+        if (preg_match($this->_pattern, $input)) {
+          if (@file_exists(DOKU_INC.'inc/auth/'.$input.'.class.php') ||
+              @file_exists(DOKU_INC.'inc/auth/'.$input.'.php')) {
+            $this->_local = $input;
+            return true;
+          }
+        }
+        
+        $this->_error = true;
+        $this->_input = $input;
+        return false;    
+    }
+  }
+}
+
+if (!class_exists('setting_im_convert')) {
+  class setting_im_convert extends setting {
+
+    function update($input) {
+        if ($this->is_protected()) return false;
+        
+        $input = trim($input);
+        
+        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        if ($value == $input) return false;
+
+        if ($input && !@file_exists($input)) {
+          $this->_error = true;
+          $this->_input = $input;
+          return false;    
+        }
+        
+        $this->_local = $input;
+        return true;
+    }
+  }
+}
