@@ -191,6 +191,7 @@ $lang['unsubscribe_success']= 'Removed %s from subscription list for %s';
 $lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
 
 /* auth.class lanuage support */
-$lang['authmodfailed']   = 'User authentification not possible. Please inform your Wiki Admin.';
+$lang['authmodfailed']   = 'Bad user authentication configuration. Please inform your Wiki Admin.';
+$lang['authtempfail']    = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

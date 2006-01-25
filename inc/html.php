@@ -47,6 +47,7 @@ function html_login(){
   global $lang;
   global $conf;
   global $ID;
+	global $auth;
 
   print p_locale_xhtml('login');
   ?>
@@ -79,7 +80,7 @@ function html_login(){
       print '</p>';
     }
 
-    if (auth_canDo('modifyUser')) {
+    if ($auth->canDo('modifyUser')) {
       print '<p>';
       print $lang['pwdforget'];
       print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';

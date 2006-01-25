@@ -17,62 +17,25 @@
   
   // load the the backend auth functions and instantiate the auth object
   if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
-      require_once(DOKU_INC.'inc/auth/basic.class.php');
-      require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
+    require_once(DOKU_INC.'inc/auth/basic.class.php');
+    require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
   
-      $auth_class = "auth_".$conf['authtype'];
-      if (!class_exists($auth_class)) $auth_class = "auth_basic";
+    $auth_class = "auth_".$conf['authtype'];
+    if (class_exists($auth_class)) {
       $auth = new $auth_class();
-      if ($auth->success == false) {
-          msg($lang['authmodfailed'],-1);
-          unset($auth);
-      }
+      if ($auth->success == false) { 
+			  unset($auth); 
+				msg($lang['authtempfail'], -1);
 
-      // interface between current dokuwiki/old auth system and new style auth object
-      function auth_canDo($fn) { 
-        global $auth; 
-        return method_exists($auth, $fn);
-      }
-	  
-      // mandatory functions - these should exist
-      function auth_checkPass($user,$pass) {
-        global $auth; 
-        return method_exists($auth,'checkPass') ? $auth->checkPass($user, $pass) : false; 
-      }
-      
-      function auth_getUserData($user) { 
-        global $auth; 
-        return method_exists($auth, 'getUserData') ? $auth->getUserData($user) : false; 
-      }
-	  
-      // optional functions, behave gracefully if these don't exist; 
-      // potential calling code should query whether these exist in advance
-      function auth_createUser($user,$pass,$name,$mail) { 
-        global $auth; 
-        return method_exists($auth, 'createUser') ? $auth->createUser($user,$pass,$name,$mail) : null;
-      }
-      
-      function auth_modifyUser($user, $changes) {
-        global $auth; 
-        return method_exists($auth, 'modifyUser') ? $auth->modifyUser($user,$changes) : false; 
-      }
-	  
-      function auth_deleteUsers($users) {
-        global $auth; 
-        return method_exists($auth, 'deleteUsers') ? $auth->deleteUsers($users) : 0; 
-      }	  
-	  
-      // other functions, will only be accessed by new code 
-      //- these must query auth_canDo() or test method existence themselves.
-
-  } else {
-    // old style auth functions
-    require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.php');
-    $auth = null;
-	  
-    // new function, allows other parts of dokuwiki to know what they can and can't do  
-    function auth_canDo($fn) { return function_exists("auth_$fn"); }
-  }
+        // turn acl config setting off for the rest of this page
+				$conf['useacl'] = 0;
+			}
+		} else {
+			die($lang['authmodfailed']);
+		}
+	} else {
+	  die($lang['authmodfailed']);
+	}
 
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));
 
@@ -88,7 +51,7 @@
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
     // external trust mechanism in place?
-    if(auth_canDo('trustExternal') && !is_null($auth)){
+    if(!is_null($auth) && $auth->canDo('trustExternal')){
       $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
     }else{
       auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
@@ -134,14 +97,15 @@ function auth_login($user,$pass,$sticky=false){
   global $USERINFO;
   global $conf;
   global $lang;
+	global $auth;
   $sticky ? $sticky = true : $sticky = false; //sanity check
 
   if(isset($user)){
     //usual login
-    if (auth_checkPass($user,$pass)){
+    if ($auth->checkPass($user,$pass)){
       // make logininfo globally available
       $_SERVER['REMOTE_USER'] = $user;
-      $USERINFO = auth_getUserData($user); //FIXME move all references to session 
+      $USERINFO = $auth->getUserData($user); //FIXME move all references to session 
     
       // set cookie
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
@@ -414,8 +378,10 @@ function auth_pwgen(){
 function auth_sendPassword($user,$password){
   global $conf;
   global $lang;
+	global $auth;
+	
   $hdrs  = '';
-  $userinfo = auth_getUserData($user);
+  $userinfo = $auth->getUserData($user);
 
   if(!$userinfo['mail']) return false;
 
@@ -444,8 +410,10 @@ function auth_sendPassword($user,$password){
 function register(){
   global $lang;
   global $conf;
+	global $auth;
 
   if(!$_POST['save']) return false;
+	if(!$auth->canDo('createUser')) return false;
 
   //clean username
   $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
@@ -481,7 +449,7 @@ function register(){
   }
 
   //okay try to create the user
-  $pass = auth_createUser($_POST['login'],$pass,$_POST['fullname'],$_POST['email']);
+  $pass = $auth->createUser($_POST['login'],$pass,$_POST['fullname'],$_POST['email']);
   if(empty($pass)){
     msg($lang['reguexists'],-1);
     return false;
@@ -511,11 +479,12 @@ function updateprofile() {
   global $conf;
   global $INFO;
   global $lang;
+	global $auth;
   
   if(!$_POST['save']) return false;
 
   // should not be able to get here without modifyUser being possible...
-  if(!auth_canDo('modifyUser')) {
+  if(!$auth->canDo('modifyUser')) {
     msg($lang['profna'],-1);
     return false;
   }
@@ -555,7 +524,7 @@ function updateprofile() {
     }
   }  
   
-  return auth_modifyUser($_SERVER['REMOTE_USER'], $changes);
+  return $auth->modifyUser($_SERVER['REMOTE_USER'], $changes);
 }
 
 /**
@@ -569,11 +538,12 @@ function updateprofile() {
 function act_resendpwd(){
     global $lang;
     global $conf;
+		global $auth;
     
     if(!$_POST['save']) return false;
 
     // should not be able to get here without modifyUser being possible...
-	if(!auth_canDo('modifyUser')) {
+	if(!$auth->canDo('modifyUser')) {
       msg($lang['resendna'],-1);
       return false;
 	}
@@ -585,14 +555,14 @@ function act_resendpwd(){
       $user = $_POST['login'];
     }
     
-    $userinfo = auth_getUserData($user);
+    $userinfo = $auth->getUserData($user);
     if(!$userinfo['mail']) {
       msg($lang['resendpwdnouser'], -1);
       return false;
     }
     
     $pass = auth_pwgen();
-    if (!auth_modifyUser($user,array('pass' => $pass))) {
+    if (!$auth->modifyUser($user,array('pass' => $pass))) {
       msg('error modifying user data',-1);
       return false;
     }

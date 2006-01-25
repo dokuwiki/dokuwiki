@@ -1175,6 +1175,7 @@ function is_subscribed($id,$uid){
  */
 function subscriber_addresslist($id){
   global $conf;
+	global $auth;
 
   $emails = '';
   
@@ -1188,7 +1189,7 @@ function subscriber_addresslist($id){
   if(count($mlist) > 0) {
     foreach ($mlist as $who) {
       $who = rtrim($who);
-      $info = auth_getUserData($who);
+      $info = $auth->getUserData($who);
       $level = auth_aclcheck($id,$who,$info['grps']);
       if ($level >= AUTH_READ) {
         if (strcasecmp($info['mail'],$conf['notify']) != 0) {

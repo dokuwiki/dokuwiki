@@ -20,6 +20,41 @@ class auth_plain extends auth_basic {
 
     var $users = null;
     var $_pattern = array();
+		
+		/**
+		 * Constructor
+		 *
+		 * Carry out sanity checks to ensure the object is
+		 * able to operate.
+		 * 
+		 * Set $this->success to false if checks fail
+		 *
+     * @author  Christopher Smith <chris@jalakai.co.uk>
+		 */		 
+		function auth_plain() {
+		  if (!@is_readable(AUTH_USERFILE)) $this->success = false;
+		}
+
+    /**
+     * Check if authorisation mechanism supports fn and
+     * that fn will operate in the current environment
+     *
+     * @author  Christopher Smith <chris@jalakai.co.uk>
+     * @return  bool
+     */
+    function canDo($fn) {
+
+		  switch ($fn) {
+			  case 'createUser'  :
+			  case 'modifyUser'  :
+				case 'deleteUsers' :
+				case 'joinGroup'   :
+				case 'leaveGroup'  :
+				  return (@is_writable(AUTH_USERFILE));
+			}
+
+	    return method_exists($this, $fn);
+    }
 
     /**
      * Check user+password [required auth function]

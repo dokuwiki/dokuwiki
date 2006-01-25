@@ -5,12 +5,25 @@
  * foundation authorisation class 
  * all auth classes should inherit from this class
  *
- * @author    Chris Smith <chris@jalakaic.co.uk>
+ * @author    Chris Smith <chris@jalakai.co.uk>
  */
  
 class auth_basic {
 
 	var $success = true;
+
+	/**
+	 * Constructor
+	 *
+	 * Carry out sanity checks to ensure the object is
+	 * able to operate.
+	 * 
+	 * Set $this->success to false if checks fail
+	 *
+   * @author  Christopher Smith <chris@jalakai.co.uk>
+   */		 
+#  function auth_basic() {
+#	 }
 
   /**
    * Do all authentication [ OPTIONAL ]
@@ -59,6 +72,17 @@ class auth_basic {
 #    $_SESSION[$conf['title']]['auth']['info'] = $USERINFO;
 #    return true;
 #  }
+
+  /**
+	 * Check if authorisation mechanism supports fn and
+	 * that fn will operate in the current environment
+	 *
+	 * @author  Christopher Smith <chris@jalakai.co.uk>
+	 * @return  bool
+	 */
+  function canDo($fn) {
+	  return method_exists($this, $fn);
+	}
 
 	/**
 	 * Check user+password [ MUST BE OVERRIDDEN ]
