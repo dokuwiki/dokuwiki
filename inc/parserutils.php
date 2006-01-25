@@ -275,9 +275,12 @@ function p_get_parsermodes(){
   $std_modes = array('listblock','preformatted','notoc','nocache',
                      'header','table','linebreak','footnote','hr',
                      'unformatted','php','html','code','file','quote',
-                     'multiplyentity','quotes','internallink','rss',
-                     'media','externallink','emaillink','windowssharelink',
-                     'eol');
+                     'internallink','rss','media','externallink',
+                     'emaillink','windowssharelink','eol');
+  if($conf['typography']){
+    $std_modes[] = 'quotes';
+    $std_modes[] = 'multiplyentity';
+  }
   foreach($std_modes as $m){
     $class = "Doku_Parser_Mode_$m";
     $obj   = new $class();

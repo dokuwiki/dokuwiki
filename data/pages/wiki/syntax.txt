@@ -222,7 +222,7 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
 "He thought 'It's a man's world'..."
 </code>
 
-Please note: These conversions can be turned off in the config file.
+Please note: These conversions can be turned off through a [[doku>wiki:config#typography|config option]] and a [[doku>wiki:entities|pattern file]].
 
 ===== Quoting =====
 
