@@ -242,9 +242,16 @@ class auth_mysql extends auth_basic {
       
       if($this->_openDB()) {
         $sql = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
-        $result = $this->_queryDB($sql);
-        if ($result)
-            $rc = count($result);
+        
+        if ($this->dbver >= 4) {
+          $sql = substr($sql, 6);  /* remove 'SELECT' or 'select' */
+          $sql = "SELECT SQL_CALC_FOUND_ROWS".$sql." LIMIT 1";
+          $this->_queryDB($sql);
+          $result = $this->_queryDB("SELECT FOUND_ROWS()");
+          $rc = $result[0]['FOUND_ROWS()'];
+        } else if (($result = $this->_queryDB($sql)))
+          $rc = count($result);
+          
         $this->_closeDB();
       }
       return $rc;
