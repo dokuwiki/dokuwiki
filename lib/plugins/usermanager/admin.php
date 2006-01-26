@@ -28,6 +28,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     var $_last = 0;           // index of the last user to be displayed
     var $_pagesize = 20;      // number of users to list on one page
     var $_user_edit = null;   // set to user selected for editing
+    var $_disabled = '';      // if disabled set to explanatory string
 
     /**
      * Constructor
@@ -36,21 +37,30 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         global $auth;
 
         $this->setupLocale();
-        if (isset($auth)) $this->_auth = & $auth;
+                
+        if (!isset($auth)) { 
+          $this->disabled = $this->lang['noauth'];
+        } else if (!$auth->canDo('retrieveUsers')) {
+          $this->disabled = $this->lang['notsupported'];
+        } else {
+
+          // we're good to go
+          $this->_auth = & $auth;
+                
+                }
     }
 
     /**
      * return some info
      */
     function getInfo(){
-        $disabled = is_null($this->_auth) ? '(disabled)' : '';
 
         return array(
             'author' => 'Chris Smith',
             'email'  => 'chris@jalakai.co.uk',
             'date'   => '2005-11-24',
             'name'   => 'User Manager',
-            'desc'   => 'Manage users '.$disabled,
+            'desc'   => 'Manage users '.$this->disabled,
             'url'    => 'http://wiki.splitbrain.org/plugin:user_manager',
         );
     }
@@ -62,7 +72,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!is_null($this->_auth)) 
           return parent::getMenuText($language);
 
-        return $this->getLang["menu"]." (objectified auth only)";
+        return $this->getLang["menu"].' '.$this->disabled;
     }
 
     /**
@@ -107,7 +117,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                           break;
         }
           
-        $this->_user_total = $this->_auth->getUserCount($this->_filter);
+        $this->_user_total = $this->_auth->canDo('getUserCount') ? $this->_auth->getUserCount($this->_filter) : -1;
   
         // page handling
         switch($cmd){
@@ -156,7 +166,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         ptln("      <tr>");
 //        ptln("        <td colspan=\"2\"><input type=\"submit\" name=\"fn[search][new]\" value=\"".$this->lang['search']."\" /></td>");
-		ptln("        <td colspan=\"2\" style=\"vertical-align:middle; text-align:right;\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" /></td>");
+        ptln("        <td colspan=\"2\" style=\"vertical-align:middle; text-align:right;\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"userid\" value=\"".$this->_htmlFilter('user')."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"username\" value=\"".$this->_htmlFilter('name')."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"usermail\" value=\"".$this->_htmlFilter('mail')."\" /></td>");
@@ -326,14 +336,14 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $changes = array();
         $user_old = cleanID(preg_replace('/.*:/','',$_REQUEST['userid_old']));
         if ($user != $user_old) {
-		  // check $user doesn't already exist
-		  if ($this->_auth->getUserData($user)) {
-		    msg(sprintf($this->lang['update_exists'],$user),-1);
-			$this->_edit_user = $user = $user_old;
-		  } else {
+          // check $user doesn't already exist
+          if ($this->_auth->getUserData($user)) {
+            msg(sprintf($this->lang['update_exists'],$user),-1);
+            $this->_edit_user = $user = $user_old;
+          } else {
             $changes['user'] = $user;
             $user = $user_old;
-		  }
+          }
         }
 
         if (!empty($pass)) $changes['pass'] = $pass;
@@ -412,8 +422,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     function _pagination() {
 
-        $buttons['start'] = $buttons['prev'] = ($this->_start == 0) ? 'disabled="disabled"' : '';
-        $buttons['last'] = $buttons['next'] = (($this->_start + $this->_pagesize) >= $this->_user_total) ? 'disabled="disabled"' : '';
+        $disabled = 'disabled="disabled"';
+
+        $buttons['start'] = $buttons['prev'] = ($this->_start == 0) ? $disabled : '';
+
+        if ($this->_user_total == -1) {
+          $buttons['last'] = $disabled;
+          $buttons['next'] = '';
+        } else {
+          $buttons['last'] = $buttons['next'] = (($this->_start + $this->_pagesize) >= $this->_user_total) ? $disabled : '';
+        }
 
         return $buttons;
     }

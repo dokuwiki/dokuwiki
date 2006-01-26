@@ -12,7 +12,10 @@ $lang['direction']  = 'ltr';
 $lang['menu'] = 'User Manager'; 
  
 // custom language strings for the plugin
-$lang['badauth']     = 'invalid auth mechanism';
+$lang['noauth']      = '(user authentication not available)';
+$lang['nosupport']   = '(user management not supported)';
+
+$lang['badauth']     = 'invalid auth mechanism';     // should never be displayed!
 
 $lang['user_id']     = 'User';
 $lang['user_pass']   = 'Password';
