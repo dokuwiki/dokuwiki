@@ -18,6 +18,7 @@ class auth_ldap extends auth_basic {
     function auth_ldap(){
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
+        if(empty($this->cnf['groupkey'])) $this->cnf['groupkey'] = 'cn';
     }
 
 
@@ -41,7 +42,7 @@ class auth_ldap extends auth_basic {
             // use superuser credentials
             if(!@ldap_bind($this->con,$this->cnf['binddn'],$this->cnf['bindpw'])){
                 if($this->cnf['debug'])
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)),0);
                 return false;
             }
 
@@ -62,7 +63,7 @@ class auth_ldap extends auth_basic {
             if(!@ldap_bind($this->con)){
                 msg("LDAP: can not bind anonymously",-1);
                 if($this->cnf['debug'])
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP anonymous bind: '.htmlspecialchars(ldap_error($this->con)),0);
                 return false;
             }
         }
@@ -73,7 +74,7 @@ class auth_ldap extends auth_basic {
             if(!@ldap_bind($this->con,$dn,$pass)){
                 if($this->cnf['debug']){
                     msg("LDAP: bind with $dn failed", -1);
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP user dn bind: '.htmlspecialchars(ldap_error($this->con)),0);
                 }
                 return false;
             }
@@ -91,7 +92,7 @@ class auth_ldap extends auth_basic {
             if(!@ldap_bind($this->con,$dn,$pass)){
                 if($this->cnf['debug']){
                     msg("LDAP: bind with $dn failed", -1);
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP user bind: '.htmlspecialchars(ldap_error($this->con)),0);
                 }
                 return false;
             }
@@ -141,7 +142,7 @@ class auth_ldap extends auth_basic {
         $sr     = @ldap_search($this->con, $base, $filter);
         $result = @ldap_get_entries($this->con, $sr);
         if($this->cnf['debug'])
-            msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+            msg('LDAP user search: '.htmlspecialchars(ldap_error($this->con)),0);
 
         // Don't accept more or less than one response
         if($result['count'] != 1){
@@ -184,18 +185,19 @@ class auth_ldap extends auth_basic {
             $base   = $this->_makeFilter($this->cnf['grouptree'], $user_result);
             $filter = $this->_makeFilter($this->cnf['groupfilter'], $user_result);
 
-            $sr = @ldap_search($this->con, $base, $filter, array('cn'));
+            $sr = @ldap_search($this->con, $base, $filter, array($this->cnf['groupkey']));
             if(!$sr){
                 msg("LDAP: Reading group memberships failed",-1);
                 if($this->cnf['debug'])
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP group search: '.htmlspecialchars(ldap_error($this->con)),0);
                 return false;
             }
             $result = ldap_get_entries($this->con, $sr);
             ldap_free_result($sr);
 
             foreach($result as $grp){
-                if(!empty($grp['cn'][0])) $info['grps'][] = $grp['cn'][0];
+                if(!empty($grp[$this->cnf['groupkey']][0]))
+                    $info['grps'][] = $grp[$this->cnf['groupkey']][0];
             }
         }
 
@@ -207,119 +209,6 @@ class auth_ldap extends auth_basic {
         return $info;
 	}
 	
-	/**
-	 * Create a new User [implement only where required/possible]
-	 *
-	 * Returns false if the user already exists, null when an error
-	 * occured and the cleartext password of the new user if
-	 * everything went well.
-	 * 
-	 * The new user HAS TO be added to the default group by this
-	 * function!
-	 *
-	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 */
-#	function createUser($user,$pass,$name,$mail,$grps=null){
-#		
-#	  msg("authorisation method does not allow creation of new users", -1);
-#	  return null;
-#	}
-	
-	/**
-	 * Modify user data [implement only where required/possible]
-	 *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @param   $user      nick of the user to be changed
-	 * @param   $changes   array of field/value pairs to be changed (password will be clear text)
-	 * @return  bool
-	 */
-#	function modifyUser($user, $changes) {
-#	  msg("authorisation method does not allow modifying of user data", -1);
-#	  return false;
-#	}
-	
-	/**
-	 * Delete one or more users [implement only where required/possible]
-	 *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @param   array  $users
-	 * @return  int    number of users deleted
-	 */
-#	function deleteUsers($users) {
-#	  msg("authorisation method does not allow deleting of users", -1);
-#	  return false;
-#	}
-
-	/**
-	 * Return a count of the number of user which meet $filter criteria
-	 * [should be implemented whenever retrieveUsers is implemented]
-	 *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 */
-#	function getUserCount($filter=array()) {
-#	
-#	  msg("authorisation method does not provide user counts", -1);
-#	  return 0;
-#	}
-	
-	/**
-	 * Bulk retrieval of user data [implement only where required/possible]
-	 *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @param   start     index of first user to be returned
-	 * @param   limit     max number of users to be returned
-	 * @param   filter    array of field/pattern pairs, null for no filter
-	 * @return  array of userinfo (refer getUserData for internal userinfo details)
-	 */
-#	function retrieveUsers($start=0,$limit=-1,$filter=null) {
-#	  msg("authorisation method does not support mass retrieval of user data", -1);
-#	  return array();
-#	}
-	
-	/**
-	 * Define a group [implement only where required/possible]
-	 * 
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @return  bool
-	 */
-#	function addGroup($group) {
-#	  msg("authorisation method does not support independent group creation", -1);
-#	  return false;
-#	}
-
-	/**
-	 * Retrieve groups [implement only where required/possible]
-	 * 
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @return  array
-	 */
-#	function retrieveGroups($start=0,$limit=0) {
-#	  msg("authorisation method does not support group list retrieval", -1);
-#	  return array();
-#	}
-
-	/**
-	 * Give user membership of a group [implement only where required/possible]
-	 * 
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @return  bool
-	 */
-#	function joinGroup($user, $group) {
-#	  msg("authorisation method does not support alteration of group memberships", -1);
-#	  return false;
-#	}
-
-	/**
-	 * Remove user from a group [implement only where required/possible]
-	 * 
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @return  bool
-	 */
-#	function leaveGroup($user, $group) {
-#	  msg("authorisation method does not support alteration of group memberships", -1);
-#	  return false;
-#	}
-
     /**
      * Make LDAP filter strings.
      *
@@ -369,14 +258,14 @@ class auth_ldap extends auth_basic {
                                  $this->cnf['version'])){
                 msg('Setting LDAP Protocol version '.$this->cnf['version'].' failed',-1);
                 if($this->cnf['debug'])
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP version set: '.htmlspecialchars(ldap_error($this->con)),0);
             }else{
                 //use TLS (needs version 3)
                 if($this->cnf['starttls']) {
                     if (!@ldap_start_tls($this->con)){
                         msg('Starting TLS failed',-1);
                         if($this->cnf['debug'])
-                            msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                            msg('LDAP TLS set: '.htmlspecialchars(ldap_error($this->con)),0);
                     }
                 }
                 // needs version 3
@@ -385,7 +274,7 @@ class auth_ldap extends auth_basic {
                        $this->cnf['referrals'])){
                         msg('Setting LDAP referrals to off failed',-1);
                         if($this->cnf['debug'])
-                            msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                            msg('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)),0);
                     }
                 }
             }
@@ -396,7 +285,7 @@ class auth_ldap extends auth_basic {
             if(!@ldap_set_option($this->con, LDAP_OPT_DEREF, $this->cnf['deref'])){
                 msg('Setting LDAP Deref mode '.$this->cnf['deref'].' failed',-1);
                 if($this->cnf['debug'])
-                    msg('LDAP errstr: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP deref set: '.htmlspecialchars(ldap_error($this->con)),0);
             }
         }
 
