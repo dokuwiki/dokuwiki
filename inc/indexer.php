@@ -61,7 +61,7 @@ function idx_getPageWords($page){
             foreach ($arr as $w => $c) {
                 if (!is_numeric($w) && strlen($w) < 3) continue;
     		    $w = utf8_strtolower($w);
-                $words[$w] = $c + (isset($words[$w]) ? $words[$w] : 0);
+                $words[$w] = $c * $count + (isset($words[$w]) ? $words[$w] : 0);
             }
         } else {
             if (!is_numeric($word) && strlen($word) < 3) continue;
