@@ -312,6 +312,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     
       ptln('    <input type="submit" class="edit" value="'.$lang['btn_save'].'" />',4);
       ptln('  </form>');
+      ptln('</td>',4);
       ptln('</tr>',2);
     }
     
