@@ -103,7 +103,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         if ($cmd != "search") {
-          $this->_start = $_REQUEST['start'];
+		  if (!empty($_REQUEST['start']))
+	        $this->_start = $_REQUEST['start'];
           $this->_filter = $this->_retrieveFilter();
         }
 
