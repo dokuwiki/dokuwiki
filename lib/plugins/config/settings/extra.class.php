@@ -9,7 +9,7 @@ if (!class_exists('setting_sepchar')) {
   class setting_sepchar extends setting_multichoice {
     
     function setting_sepchar($key,$param=NULL) {
-        $str = '_-.0123456789abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $str = '_-.';
         for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};        
         
         // call foundation class constructor
