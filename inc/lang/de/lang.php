@@ -148,8 +148,8 @@ $lang['qb_chars']   = 'Sonderzeichen';
 
 $lang['del_confirm']= 'Eintrag wirklich löschen?';
 
-$lang['admin_acl']  = 'Zugangsverwaltung...';
-$lang['admin_register']= 'Neuen Benutzer anmelden...';
+$lang['admin_acl']  = 'Zugangsverwaltung';
+$lang['admin_register']= 'Neuen Benutzer anmelden';
 
 $lang['acl_group']  = 'Gruppe';
 $lang['acl_user']   = 'Benutzer';

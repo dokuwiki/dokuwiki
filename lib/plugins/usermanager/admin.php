@@ -192,7 +192,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    <tbody>");
         ptln("      <tr><td colspan=\"6\" style=\"text-align:center\">");
         ptln("        <span style=\"float:left\">");
-        ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." value=\"".$this->lang['delete_selected']."\"/>");
+        ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." value=\"".$this->lang['delete_selected']."\" id=\"usrmgr__del\" />");
         ptln("        </span>");
         ptln("        <span style=\"float:right\">");
         ptln("          <input type=\"submit\" name=\"fn[start]\" ".$page_buttons['start']." value=\"".$this->lang['start']."\" />");

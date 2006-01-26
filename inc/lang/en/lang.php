@@ -77,7 +77,7 @@ $lang['resendpwdnouser']  = 'Sorry, we can\'t find this user in our database.';
 $lang['resendpwdsuccess'] = 'Your new password has been sent by email.';
 
 $lang['txt_upload']   = 'Select file to upload';
-$lang['txt_filename'] = 'Enter wikiname (optional)';
+$lang['txt_filename'] = 'Upload as (optional)';
 $lang['txt_overwrt']  = 'Overwrite existing file';
 $lang['lockedby']     = 'Currently locked by';
 $lang['lockexpire']   = 'Lock expires at';
@@ -144,10 +144,10 @@ $lang['qb_sig']     = 'Insert Signature';
 $lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Special Chars';
 
-$lang['del_confirm']= 'Delete this entry?';
+$lang['del_confirm']= 'Really delete selected item(s)?';
 
-$lang['admin_acl']  = 'Access Control List Management...';
-$lang['admin_register']= 'Add new user...';
+$lang['admin_acl']  = 'Access Control List Management';
+$lang['admin_register']= 'Add new user';
 
 $lang['acl_group']  = 'Group';
 $lang['acl_user']   = 'User';

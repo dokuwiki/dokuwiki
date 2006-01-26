@@ -65,8 +65,9 @@ function js_out(){
     ob_start();
 
     // add some translation strings and global variables
-    print "var alertText   = '".str_replace('\\\\n','\\n',addslashes($lang['qb_alert']))."';";
-    print "var notSavedYet = '".str_replace('\\\\n','\\n',addslashes($lang['notsavedyet']))."';";
+    print "var alertText   = '".js_escape($lang['qb_alert'])."';";
+    print "var notSavedYet = '".js_escape($lang['notsavedyet'])."';";
+    print "var reallyDel   = '".js_escape($lang['del_confirm'])."';";
     print "var DOKU_BASE   = '".DOKU_BASE."';";
 
     // load files
