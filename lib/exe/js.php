@@ -79,6 +79,7 @@ function js_out(){
     js_runonstart("ajax_qsearch.init('qsearch_in','qsearch_out')");
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart('addTocToggle()');
+    js_runonstart('scrollToMarker()');
 
     if($edit){
         // size controls

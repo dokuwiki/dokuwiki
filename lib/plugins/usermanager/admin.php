@@ -226,7 +226,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         if($this->_edit_user  && $this->_auth->canDo('modifyUser')){
-          ptln("<div".$style.">");
+          ptln("<div".$style." id=\"scroll__here\">");
           print $this->locale_xhtml('edit');
           ptln("  <div class=\"level2\">");
 
