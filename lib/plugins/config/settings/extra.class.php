@@ -40,28 +40,18 @@ if (!class_exists('setting_savedir')) {
 }
 
 if (!class_exists('setting_authtype')) {
-  class setting_authtype extends setting {
-    var $_pattern = '#^[a-zA-Z0-9_]*$#';
+  class setting_authtype extends setting_multichoice {
 
-    function update($input) {
-        if ($this->is_protected()) return false;
-        
-        $input = trim($input);
-        
-        $value = is_null($this->_local) ? $this->_default : $this->_local;
-        if ($value == $input) return false;
+    function initialize($default,$local,$protected) {
 
-        if (preg_match($this->_pattern, $input)) {
-          if (@file_exists(DOKU_INC.'inc/auth/'.$input.'.class.php') ||
-              @file_exists(DOKU_INC.'inc/auth/'.$input.'.php')) {
-            $this->_local = $input;
-            return true;
-          }
-        }
-        
-        $this->_error = true;
-        $this->_input = $input;
-        return false;    
+      // populate $this->_choices with a list of available auth mechanisms
+      $authtypes = glob(DOKU_INC.'inc/auth/*.class.php');
+      $authtypes = preg_replace('#^.*/([^/]*)\.class\.php$#i','$1', $authtypes);
+      sort($authtypes);
+
+      $this->_choices = $authtypes;
+      
+      parent::initialize($default,$local,$protected);
     }
   }
 }

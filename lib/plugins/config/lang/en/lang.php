@@ -47,10 +47,11 @@ $lang['deaccent']    = 'deaccent in pagenames';    //convert accented chars to u
 $lang['useheading']  = 'use first heading';        //use the first heading in a page as its name
 $lang['refcheck']    = 'media reference check';    //check for references before deleting media files
 $lang['refshow']     = 'media references to show'; //how many references should be shown, 5 is a good value
+$lang['allowdebug']  = 'allow debug (disable!)';   //make debug possible, disable after install! 0|1
 
 $lang['usewordblock']= 'block spam based on words';  //block spam based on words? 0|1
 $lang['indexdelay']  = 'time delay before indexing'; //allow indexing after this time (seconds) default is 5 days
-$lang['relnofollow'] = 'use rel no follow';          //use rel="nofollow" for external links?
+$lang['relnofollow'] = 'use rel="nofollow"';         //use rel="nofollow" for external links?
 $lang['mailguard']   = 'obfuscate email addresses';  //obfuscate email addresses against spam harvesters?
 
 /* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
@@ -79,7 +80,6 @@ $lang['gdlib']       = 'GD Lib version';              //the GDlib version (0, 1 
 $lang['im_convert']  = 'imagemagick path';            //path to ImageMagicks convert (will be used instead of GD)
 $lang['spellchecker']= 'enable spellchecker';         //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 $lang['subscribers'] = 'enable subscription support'; //enable change notice subscription support
-$lang['pluginmanager'] = 'enable plugin manager';     //enable automated plugin management (requires plugin)
 $lang['compress']    = 'Compress CSS & javascript files';  //Strip whitespaces and comments from Styles and JavaScript? 1|0
 $lang['hidepages']   = 'Hide matching pages (regex)';      //Regexp for pages to be skipped from RSS, Search and Recent Changes
 $lang['send404']     = 'Send "HTTP404/Page Not Found"';    //Send a HTTP 404 status for non existing pages?
@@ -116,7 +116,7 @@ $lang['userewrite_o_1'] = 'htaccess';
 $lang['userewrite_o_2'] = 'dokuwiki';
 
 /* gdlib options */
-$lang['gdlib_o_0'] = 'version 0.x';
+$lang['gdlib_o_0'] = 'GD Lib not available';
 $lang['gdlib_o_1'] = 'version 1.x';
 $lang['gdlib_o_2'] = 'autodetect';
 

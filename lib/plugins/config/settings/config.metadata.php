@@ -93,6 +93,7 @@ $meta['deaccent']    = array('onoff');
 $meta['useheading']  = array('onoff');
 $meta['refcheck']    = array('onoff');
 $meta['refshow']     = array('numeric');
+$meta['allowdebug']  = array('onoff');
 
 $meta['usewordblock']= array('onoff');
 $meta['indexdelay']  = array('numeric');
@@ -123,7 +124,6 @@ $meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
 $meta['im_convert']  = array('im_convert');
 $meta['spellchecker']= array('onoff');
 $meta['subscribers'] = array('onoff');
-$meta['pluginmanager'] = array('onoff');
 $meta['compress']    = array('onoff');
 $meta['hidepages']   = array('');
 $meta['send404']     = array('onoff');
