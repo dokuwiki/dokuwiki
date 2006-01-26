@@ -184,10 +184,12 @@ class auth_mysql extends auth_basic {
             $grpdel = array_diff($groups, $changes['grps']);
            
             foreach($grpadd as $group)
-              $this->_addUserToGroup($uid, $group, 1);
+              if (($this->_addUserToGroup($uid, $group, 1)) == false)
+                $rc = false;
               
             foreach($grpdel as $group)
-              $this->_delUserFromGroup($uid, $group);
+              if (($this->_delUserFromGroup($uid, $group)) == false)
+                $rc = false;
           }        
         }
         
@@ -251,33 +253,26 @@ class auth_mysql extends auth_basic {
     /**
      * Bulk retrieval of user data. [public function]
      *
-     * @param   start     index of first user to be returned
+     * @param   first     index of first user to be returned
      * @param   limit     max number of users to be returned
      * @param   filter    array of field/pattern pairs
      * @return  array of userinfo (refer getUserData for internal userinfo details)
      *
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
-    function retrieveUsers($start=0,$limit=0,$filter=array()) {
+    function retrieveUsers($first=0,$limit=10,$filter=array()) {
       $out   = array();
-      $i     = 0;
-      $count = 0;
-      
+ 
       if($this->_openDB()) {
         $this->_lockTables("READ");
-        $sql = $this->_createSQLFilter($this->cnf['getUsers'], $filter)." ".$this->cnf['SortOrder'];
+        $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
+        $sql .= " ".$this->cnf['SortOrder']." LIMIT $first,$limit";
         $result = $this->_queryDB($sql);
-        if ($result) {
-          foreach ($result as $user) {
-            if ($i++ >= $start) {
-              $info = $this->_getUserInfo($user['user']);
-              if ($info) {
-                $out[$user['user']] = $info;
-                if (($limit > 0) && (++$count >= $limit)) break;
-              }
-            }
-          }
-        }
+
+        foreach ($result as $user)
+          if (($info = $this->_getUserInfo($user['user'])))
+            $out[$user['user']] = $info;
+            
         $this->_unlockTables();
         $this->_closeDB();
       }
