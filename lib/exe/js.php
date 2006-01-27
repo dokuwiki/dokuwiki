@@ -79,7 +79,6 @@ function js_out(){
     js_runonstart("ajax_qsearch.init('qsearch_in','qsearch_out')");
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart('addTocToggle()');
-    js_runonstart('scrollToMarker()');
 
     if($edit){
         // size controls
@@ -117,6 +116,8 @@ function js_out(){
     // load user script
     @readfile(DOKU_CONF.'userscript.js');
 
+    // add scroll event
+    js_runonstart('scrollToMarker()');
 
     // initialize init pseudo event
     echo 'if (document.addEventListener) {';

@@ -269,6 +269,7 @@ function html_show($txt=''){
   
   if ($txt){
     //PreviewHeader
+    print '<br id="scroll__here" />';
     print p_locale_xhtml('preview');
     print '<div class="preview">';
     print html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
