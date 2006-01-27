@@ -775,7 +775,7 @@ function html_conflict($text,$summary){
 
   print p_locale_xhtml('conflict');
   ?>
-  <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
+  <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
   <div class="centeralign">
     <input type="hidden" name="id" value="<?php echo $ID?>" />
     <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
@@ -819,7 +819,7 @@ function html_register(){
   print p_locale_xhtml('register');
 ?>
   <div class="centeralign">
-  <form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
+  <form id="dw__register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
   <fieldset>
     <input type="hidden" name="do" value="register" />
     <input type="hidden" name="save" value="1" />
@@ -878,7 +878,7 @@ function html_updateprofile(){
   if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
 ?>
   <div class="centeralign">
-  <form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
+  <form id="dw__register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
   <fieldset style="width: 80%;">
     <input type="hidden" name="do" value="profile" />
     <input type="hidden" name="save" value="1" />
@@ -977,7 +977,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
   
 ?>
-  <form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
+  <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
   <table style="width:99%">
     <tr>
       <td class="toolbar" colspan="2">
@@ -1175,7 +1175,7 @@ function html_resendpwd() {
   print p_locale_xhtml('resendpwd');
 ?>
   <div class="centeralign">
-  <form name="resendpwd" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
+  <form id="dw__resendpwd" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
     <fieldset>
       <br />
       <legend><?php echo $lang['resendpwd']?></legend>

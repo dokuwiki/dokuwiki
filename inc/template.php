@@ -491,7 +491,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   global $lang;
   global $ACT;
   
-  print '<form action="'.wl().'" accept-charset="utf-8" class="search" name="search"><div class="no">';
+  print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
   if($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
@@ -799,7 +799,7 @@ function tpl_mediauploadform(){
 
   if(!$UPLOADOK) return;
 
-  ptln('<form action="'.DOKU_BASE.'lib/exe/media.php" name="upload"'.
+  ptln('<form action="'.DOKU_BASE.'lib/exe/media.php" id="dw__upload"'.
        ' method="post" enctype="multipart/form-data">',2);
   ptln($lang['txt_upload'].':<br />',4);
   ptln('<input type="file" name="upload" class="edit" onchange="suggestWikiname();" />',4);
