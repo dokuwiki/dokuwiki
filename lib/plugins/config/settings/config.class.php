@@ -20,6 +20,8 @@ if (!class_exists('configuration')) {
     var $_default_file  = '';
     var $_local_file = '';
     var $_protected_file = '';
+    
+    var $_pluginLocale = false;    // locale strings for plugin settings loaded?
 
     /**
      *  constructor
@@ -41,8 +43,8 @@ if (!class_exists('configuration')) {
         if (isset($file['protected'])) $this->_protected_file = $file['protected'];
         
         $this->locked = $this->_is_locked();
-        
-        $this->_metadata = $meta;
+                
+        $this->_metadata = array_merge($meta, $this->get_plugin_metadata());
         
         $this->retrieve_settings();
     }
@@ -50,7 +52,7 @@ if (!class_exists('configuration')) {
     function retrieve_settings() {
     
         if (!$this->_loaded) {
-          $default = $this->_read_config($this->_default_file);
+          $default = array_merge($this->_read_config($this->_default_file), $this->get_plugin_default());
           $local = $this->_read_config($this->_local_file);
           $protected = $this->_read_config($this->_protected_file);
           
@@ -202,7 +204,47 @@ if (!class_exists('configuration')) {
         }
         
         return $out;
-    }    
+    }
+    
+    /**
+     * load metadata for plugin settings
+     */
+    function get_plugin_metadata(){
+      $file = '/settings/config.metadata.php';
+      $meta = array();
+      
+      if ($dh = opendir(DOKU_PLUGIN)) {
+        while (false !== ($plugin = readdir($dh))) {
+          if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
+          if (is_file(DOKU_PLUGIN.$plugin)) continue;
+
+          if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
+            @include(DOKU_PLUGIN.$plugin.$file);            
+          }
+        }
+        closedir($dh);
+      }
+      return $meta;
+    }
+    
+    /**
+     * load default settings for plugins
+     */
+    function get_plugin_default(){
+      $file    = '/settings/config.default.php';
+      $default = array();
+      
+      if ($dh = opendir(DOKU_PLUGIN)) {
+        while (false !== ($plugin = readdir($dh))) {
+          if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
+            $default = array_merge($default, $this->_read_config("DOKU_PLUGIN.'".$plugin.$file."'"));
+          }
+        }
+        closedir($dh);
+      }
+      return $default;
+    }
+    
   }
 }
 
@@ -308,6 +350,7 @@ if (!class_exists('setting')) {
     }
     
     function prompt(&$plugin) {
+        if (!$this->pluginLocale) $this->setupPluginLocale(&$plugin);
         $prompt = $plugin->getLang($this->_key);
         if (!$prompt) $prompt = str_replace(array('____','_'),' ',$this->_key);
         return htmlspecialchars($prompt);
@@ -318,6 +361,33 @@ if (!class_exists('setting')) {
     function error() { return $this->_error; }
     
     function _out_key() { return str_replace(CM_KEYMARKER,"']['",$this->_key); }        
+    
+    /**
+     * load extra localized strings for the plugin setting prompts
+     */
+    function setupPluginLocale(&$config){
+      global $conf;
+      
+      $langfile   = '/lang/'.$conf[lang].'/settings.php';
+      $enlangfile = '/lang/en/settings.php';
+      
+      if ($dh = opendir(DOKU_PLUGIN)) {
+        while (false !== ($plugin = readdir($dh))) {
+          if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
+          if (is_file(DOKU_PLUGIN.$plugin)) continue;
+
+          if (@file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
+            @include(DOKU_PLUGIN.$plugin.$enlangfile);
+            if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
+          }
+        }
+        closedir($dh);
+        
+        $config->lang = array_merge($lang, $config->lang);
+      }
+      $this->pluginLocale = true;
+      return true;
+    }
   }
 }
 
