@@ -1,0 +1,8 @@
+====== Envoyer un nouveau mot de passe ======
+
+Veuillez compléter les champs ci dessous pour obtenir un nouveau mot
+de passe pour votre compte dans ce wiki. Votre nouveau mot de passe
+vous sera envoyé à l'adresse de courriel utilisée lors de votre
+enregistrement. Le nom d'utilisateur devrait être votre nom dans le
+wiki.
+

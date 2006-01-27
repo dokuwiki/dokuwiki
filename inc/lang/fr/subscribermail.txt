@@ -1,0 +1,17 @@
+Bonjour !
+
+La page @PAGE@ dans le wiki @TITLE@ a changé.
+Voici les modifications :
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Pour vous désabonner de cette page, connectez vous via
+@DOKUWIKIURL@ et visualisez la page
+@NEWPAGE@
+puis choisissez 'Ne pas notifier les modifications'.
+
+-- 
+Ce message a été généré par Dokuwiki
+@DOKUWIKIURL@
