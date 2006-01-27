@@ -38,8 +38,11 @@ $lang['btn_delete'] = 'Effacer';
 $lang['btn_back']   = 'Retour';
 $lang['btn_backlink']    = "Liens vers cette page";
 $lang['btn_backtomedia'] = 'Retour à la sélection du ficher média';
-$lang['btn_subscribe']   = 'Enregistrer les modifications';
-$lang['btn_unsubscribe'] = 'Retirer les modifications';
+$lang['btn_subscribe']   = 'Notifier les modifications';
+$lang['btn_unsubscribe'] = 'Ne pas notifier les modifications';
+$lang['btn_profile']    = 'Mettre à jour le profil';
+$lang['btn_reset']     = 'Réinitialiser';
+$lang['btn_resendpwd'] = 'Envoyer le mot de passe';
 
 $lang['loggedinas'] = 'Connecté en tant que';
 $lang['user']       = 'Utilisateur';
