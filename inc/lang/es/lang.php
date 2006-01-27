@@ -103,7 +103,7 @@ $lang['qb_ol']      = 'Item de Lista Ordenada';
 $lang['qb_ul']      = 'Item de Lista Desordenada';
 $lang['qb_media']   = 'Añadir Imágenes u otros ficheros';
 
-$lang['admin_acl']  = 'Mantenimiento del contol de accesos...';
+$lang['admin_acl']  = 'Mantenimiento del contol de accesos';
 $lang['admin_register']= 'Añadir nuevo usuario...';
 
 $lang['acl_group']  = 'Grupo';

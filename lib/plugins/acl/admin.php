@@ -14,6 +14,13 @@ require_once(DOKU_PLUGIN.'admin.php');
  * need to inherit from this class
  */
 class admin_plugin_acl extends DokuWiki_Admin_Plugin {
+
+
+		function admin_plugin_acl(){
+			$this->setupLocale();
+		}
+
+
  
     /**
      * return some info
@@ -33,8 +40,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * return prompt for admin menu
      */
     function getMenuText($language) {
-        global $lang;
-        return $lang['admin_acl'];
+        return $this->lang['admin_acl'];
     }
  
     /**
@@ -99,7 +105,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     function html() {
       global $ID;
     
-      print p_locale_xhtml('admin_acl');
+      print $this->locale_xhtml('intro');
     
       ptln('<div class="acladmin">');
       ptln('<table class="inline">');
@@ -228,7 +234,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function admin_acl_html_dropdown($id){
-      global $lang;
       $cur = $id;
       $ret = '';
       $opt = array();
@@ -236,15 +241,15 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       //prepare all options
     
       // current page
-      $opt[] = array('key'=> $id, 'val'=> $id.' ('.$lang['page'].')');
+      $opt[] = array('key'=> $id, 'val'=> $id.' ('.$this->lang['page'].')');
     
       // additional namespaces
       while(($id=getNS($id)) !== false){
-        $opt[] = array('key'=> $id.':*', 'val'=> $id.':* ('.$lang['namespace'].')');
+        $opt[] = array('key'=> $id.':*', 'val'=> $id.':* ('.$this->lang['namespace'].')');
       }
     
       // the top namespace
-      $opt[] = array('key'=> '*', 'val'=> '* ('.$lang['namespace'].')');
+      $opt[] = array('key'=> '*', 'val'=> '* ('.$this->lang['namespace'].')');
     
       // set sel on second entry (current namespace)
       $opt[1]['sel'] = ' selected="selected"';
@@ -255,7 +260,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       // create HTML
       $att = array( 'name'  => 'acl_scope',
                     'class' => 'edit',
-                    'title' => $lang['page'].'/'.$lang['namespace']);
+                    'title' => $this->lang['page'].'/'.$this->lang['namespace']);
       $ret .= '<select '.html_attbuild($att).'>';
       foreach($opt as $o){
         $ret .= '<option value="'.$o['key'].'"'.$o['sel'].'>'.$o['val'].'</option>';
@@ -272,12 +277,12 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function admin_acl_html_new(){
-      global $lang;
       global $ID;
+			global $lang;
     
       // table headers
       ptln('<tr>',2);
-      ptln('  <th class="leftalign" colspan="3">'.$lang['acl_new'].'</th>',2);
+      ptln('  <th class="leftalign" colspan="3">'.$this->lang['acl_new'].'</th>',2);
       ptln('</tr>',2);
     
       ptln('<tr>',2);
@@ -290,21 +295,21 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       ptln('    <input type="hidden" name="acl_cmd" value="save" />',4);
      
       //scope select
-      ptln($lang['acl_perms'],4);
+      ptln($this->lang['acl_perms'],4);
       ptln($this->admin_acl_html_dropdown($ID),4); 
     
       $att = array( 'name'  => 'acl_type',
                     'class' => 'edit',
-                    'title' => $lang['acl_user'].'/'.$lang['acl_group']);
+                    'title' => $this->lang['acl_user'].'/'.$this->lang['acl_group']);
       ptln('    <select '.html_attbuild($att).'>',4);
-      ptln('      <option value="@">'.$lang['acl_group'].'</option>',4);
-      ptln('      <option value="">'.$lang['acl_user'].'</option>',4);
+      ptln('      <option value="@">'.$this->lang['acl_group'].'</option>',4);
+      ptln('      <option value="">'.$this->lang['acl_user'].'</option>',4);
       ptln('    </select>',4);
     
       $att = array( 'name'  => 'acl_user',
                     'type'  => 'text',
                     'class' => 'edit',
-                    'title' => $lang['acl_user'].'/'.$lang['acl_group']);
+                    'title' => $this->lang['acl_user'].'/'.$this->lang['acl_group']);
       ptln('    <input '.html_attbuild($att).' />',4);
       ptln('    <br />');
     
@@ -336,11 +341,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       // table headers
       ptln('  <tr>');
       ptln('    <th class="leftalign" colspan="3">');
-      ptln($lang['acl_perms'],6);
+      ptln($this->lang['acl_perms'],6);
       if($ispage){
-        ptln($lang['page'],6);
+        ptln($this->lang['page'],6);
       }else{
-        ptln($lang['namespace'],6);
+        ptln($this->lang['namespace'],6);
       }
       ptln('<em>'.$id.'</em>',6);
       ptln('    </th>');
@@ -351,11 +356,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       foreach ($permissions as $conf){
         //userfriendly group/user display
         if(substr($conf['name'],0,1)=="@"){
-          $group = $lang['acl_group'];
+          $group = $this->lang['acl_group'];
           $name  = substr($conf['name'],1);
           $type  = '@';
         }else{
-          $group = $lang['acl_user'];
+          $group = $this->lang['acl_user'];
           $name  = $conf['name'];
           $type  = '';
         }
@@ -426,9 +431,9 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         if($ispage && $perm > AUTH_EDIT) $atts['disabled'] = 'disabled';
     
         //build code
-        $ret .= '<label for="pbox'.$label.'" title="'.$lang['acl_perm'.$perm].'">';
+        $ret .= '<label for="pbox'.$label.'" title="'.$this->lang['acl_perm'.$perm].'">';
         $ret .= '<input '.html_attbuild($atts).' />';
-        $ret .= $lang['acl_perm'.$perm];
+        $ret .= $this->lang['acl_perm'.$perm];
         $ret .= "</label>\n";
       }
       return $ret;

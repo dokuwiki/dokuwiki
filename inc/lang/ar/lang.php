@@ -123,22 +123,7 @@ $lang['qb_media']   = 'أضف صور و ملفات أخرى';
 $lang['qb_sig']     = 'أضف توقيعك';
 
 $lang['del_confirm']= 'مسح؟';
-
-$lang['admin_acl']  = 'إدارة قوائم التحكم بالدخول...';
-$lang['admin_register']= 'أضف مستخدم جديد...';
-
-$lang['acl_group']  = 'مجموعة';
-$lang['acl_user']   = 'مستخدم';
-$lang['acl_perms']  = 'ترخيص لـ';
-$lang['page']       = 'صفحة';
-$lang['namespace']  = 'فضاء التسمية';
-
-$lang['acl_perm1']  = 'قراءة';
-$lang['acl_perm2']  = 'تحرير';
-$lang['acl_perm4']  = 'إنشاء';
-$lang['acl_perm8']  = 'تحميل';
-$lang['acl_perm16'] = 'مسح';
-$lang['acl_new']    = 'أضف أضافة جديدة';
+$lang['admin_register']= 'أضف مستخدم جديد';
 
 $lang['spell_start'] = 'تدقيق إملائى';
 $lang['spell_stop']  = 'أكمل التحرير';

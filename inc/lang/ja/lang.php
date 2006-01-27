@@ -123,22 +123,7 @@ $lang['qb_media']   = 'イメージやファイルの追加';
 $lang['qb_sig']     = '署名の挿入';
 
 $lang['del_confirm']= 'エントリを削除しますか？';
-
-$lang['admin_acl']  = 'アクセスコントロール管理...';
-$lang['admin_register']= '新規ユーザー登録...';
-
-$lang['acl_group']  = 'グループ';
-$lang['acl_user']   = 'ユーザー';
-$lang['acl_perms']  = '権限を追加';
-$lang['page']       = '文書';
-$lang['namespace']  = '名前空間';
-
-$lang['acl_perm1']  = '読取';
-$lang['acl_perm2']  = '編集';
-$lang['acl_perm4']  = '作成';
-$lang['acl_perm8']  = 'アップロード';
-$lang['acl_perm16'] = '削除';
-$lang['acl_new']    = '新規エントリ';
+$lang['admin_register']= '新規ユーザー登録';
 
 $lang['spell_start'] = 'スペルチェック';
 $lang['spell_stop']  = '再開';

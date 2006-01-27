@@ -144,22 +144,7 @@ $lang['qb_smileys'] = 'Smajlíky';
 $lang['qb_chars']   = 'Špeciálne znaky';
 
 $lang['del_confirm']= 'Zmazať túto položku?';
-
-$lang['admin_acl']  = 'Správa zoznamu prístupových práv...';
-$lang['admin_register']= 'Pridaj nového užívateľa...';
-
-$lang['acl_group']  = 'Skupina';
-$lang['acl_user']   = 'Užívateľ';
-$lang['acl_perms']  = 'Práva pre';
-$lang['page']       = 'Stránka';
-$lang['namespace']  = 'Menný priestor';
-
-$lang['acl_perm1']  = 'Čítať';
-$lang['acl_perm2']  = 'Zmeniť';
-$lang['acl_perm4']  = 'Vytvoriť';
-$lang['acl_perm8']  = 'Nahrať súbor';
-$lang['acl_perm16'] = 'Zmazať';
-$lang['acl_new']    = 'Pridať novú položku';
+$lang['admin_register']= 'Pridaj nového užívateľa';
 
 $lang['spell_start'] = 'Skontrolovať pravopis';
 $lang['spell_stop']  = 'Úprava výsledku';

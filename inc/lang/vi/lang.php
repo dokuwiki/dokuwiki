@@ -24,7 +24,7 @@ $lang['btn_index']  = 'Mục lục';
 $lang['btn_secedit']= 'Biên soạn';
 $lang['btn_login']  = 'Đăng nhập';
 $lang['btn_logout'] = 'Thoát';
-$lang['btn_admin'] = 'Quản lý';
+$lang['btn_admin']  = 'Quản lý';
 $lang['btn_update'] = 'Cập nhật';
 $lang['btn_delete'] = 'Xoá';
 
@@ -103,18 +103,5 @@ $lang['qb_sig']     = 'Đặt chữ ký';
 
 $lang['del_confirm']= 'Xoá mục này?';
 
-$lang['admin_acl']  = 'Quản lý phép truy nhật {Access Control List}...';
-
-$lang['acl_group']  = 'Nhóm';
-$lang['acl_user']   = 'Người';
-$lang['acl_perms']  = 'Phép truy nhập cho';
-$lang['page']       = 'Trang';
-$lang['namespace']  = 'Không gian tên';
-
-$lang['acl_perm1']  = 'Đọc';
-$lang['acl_perm2']  = 'Biên soạn';
-$lang['acl_perm4']  = 'Tạo';
-$lang['acl_perm8']  = 'Tải lên';
-$lang['acl_new']    = 'Thêm mục mới';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

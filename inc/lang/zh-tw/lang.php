@@ -122,22 +122,7 @@ $lang['qb_media']   = '加入圖片或檔案';
 $lang['qb_sig']     = '插入簽名';
 
 $lang['del_confirm']= '確定要刪除該管理規則?';
-
-$lang['admin_acl']  = '設定權限控制清單(ACL)...';
-$lang['admin_register']= '新增使用者中...';
-
-$lang['acl_group']  = '群組';
-$lang['acl_user']   = '帳號';
-$lang['acl_perms']  = '設定權限於';
-$lang['page']       = 'Page';
-$lang['namespace']  = 'Namespace';
-
-$lang['acl_perm1']  = '讀取權限';
-$lang['acl_perm2']  = '編輯頁面';
-$lang['acl_perm4']  = '新增頁面';
-$lang['acl_perm8']  = '上傳圖檔';
-$lang['acl_perm16'] = '刪除檔案';
-$lang['acl_new']    = '新增管理規則';
+$lang['admin_register']= '新增使用者中';
 
 $lang['spell_start'] = '檢查拼字中';
 $lang['spell_stop']  = '恢復編輯';

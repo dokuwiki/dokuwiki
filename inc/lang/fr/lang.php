@@ -131,22 +131,7 @@ $lang['qb_media']   = 'Ajouter des images et autres fichiers';
 $lang['qb_sig']     = 'Insérer une signature';
 
 $lang['del_confirm']= 'Effacer cette entrée?';
-
-$lang['admin_acl']  = 'Gestion de la liste des contrôles d\'accès';
-$lang['admin_register']= 'Ajouter un nouvel utilisateur...';
-
-$lang['acl_group']  = 'Groupe';
-$lang['acl_user']   = 'Utilisateur';
-$lang['acl_perms']  = 'Permission pour';
-$lang['page']       = 'Page';
-$lang['namespace']  = 'Catégorie';
-
-$lang['acl_perm1']  = 'Lecture';
-$lang['acl_perm2']  = 'Écriture';
-$lang['acl_perm4']  = 'Création';
-$lang['acl_perm8']  = 'Télécharger';
-$lang['acl_perm16'] = 'Effacer';
-$lang['acl_new']    = 'Ajouter une nouvelle entrée';
+$lang['admin_register']= 'Ajouter un nouvel utilisateur';
 
 $lang['spell_start'] = 'Vérifier l\'orthographe';
 $lang['spell_stop']  = 'Reprendre l\'édition';

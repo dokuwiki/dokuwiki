@@ -123,22 +123,7 @@ $lang['qb_media']   = 'Resim ve başka dosyalar ekle';
 $lang['qb_sig']     = 'İmza Ekle';
 
 $lang['del_confirm']= 'Bu girişi sil?';
-
-$lang['admin_acl']  = 'Erişim kontrol listesi yönetimi';
 $lang['admin_register']= 'Yeni kullanıcı ekle...';
-
-$lang['acl_group']  = 'Grup';
-$lang['acl_user']   = 'Kullanıcı';
-$lang['acl_perms']  = 'Şunun için yetkiler:';
-$lang['page']       = 'Sayfa';
-$lang['namespace']  = 'İsim aralığı';
-
-$lang['acl_perm1']  = 'Okuma';
-$lang['acl_perm2']  = 'Değiştirme';
-$lang['acl_perm4']  = 'Oluşturma';
-$lang['acl_perm8']  = 'Yükleme';
-$lang['acl_perm16'] = 'Silme';
-$lang['acl_new']    = 'Yeni giriş ekle';
 
 $lang['spell_start'] = 'Hecelemeyi kontrol et';
 $lang['spell_stop']  = 'Değiştirmeye Devam et';

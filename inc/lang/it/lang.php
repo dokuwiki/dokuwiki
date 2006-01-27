@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giorgio Vecchiocattivi <giorgio@vecchio.it>
- * @mod by     Roberto Bolli <http://www.rbnet.it/>
+ * @author     Roberto Bolli <http://www.rbnet.it/>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -124,22 +124,7 @@ $lang['qb_media']   = 'Inserisci immagino o altri file';
 $lang['qb_sig']     = 'Inserisci la firma';
 
 $lang['del_confirm']= 'Cancellare questa voce?';
-
-$lang['admin_acl']  = 'Gestione Access Control List...';
-$lang['admin_register']= 'Aggiungi un nuovo utente...';
-
-$lang['acl_group']  = 'Gruppo';
-$lang['acl_user']   = 'Utente';
-$lang['acl_perms']  = 'Permessi per';
-$lang['page']       = 'Pagina';
-$lang['namespace']  = 'Categoria';
-
-$lang['acl_perm1']  = 'Lettura';
-$lang['acl_perm2']  = 'Modifica';
-$lang['acl_perm4']  = 'Creazione';
-$lang['acl_perm8']  = 'Upload';
-$lang['acl_perm16'] = 'Cancellazione';
-$lang['acl_new']    = 'Aggiungi nuovo record';
+$lang['admin_register']= 'Aggiungi un nuovo utente';
 
 $lang['spell_start'] = 'Dizionario';
 $lang['spell_stop']  = 'Resume Editing';

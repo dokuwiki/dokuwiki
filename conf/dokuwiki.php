@@ -15,6 +15,7 @@ $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
 $conf['savedir']     = './data';          //where to store all the files
+$conf['allowdebug']  = 1;                 //make debug possible, disable after install! 0|1
 
 /* Display Options */
 
@@ -37,7 +38,6 @@ $conf['deaccent']    = 1;                 //convert accented chars to unaccented
 $conf['useheading']  = 0;                 //use the first heading in a page as its name
 $conf['refcheck']    = 1;                 //check for references before deleting media files
 $conf['refshow']     = 0;                 //how many references should be shown, 5 is a good value
-$conf['allowdebug']  = 1;                 //make debug possible, disable after install! 0|1
 
 /* Antispam Features */
 

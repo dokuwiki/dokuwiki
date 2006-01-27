@@ -123,22 +123,7 @@ $lang['qb_media']   = 'Vložit obrázky nebo jiné soubory';
 $lang['qb_sig']     = 'Vložit podpis';
 
 $lang['del_confirm']= 'Vymazat tuto položku?';
-
-$lang['admin_acl']  = 'Správa přístupových práv...';
-$lang['admin_register']= 'Přidat nového uživatele...';
-
-$lang['acl_group']  = 'Skupina';
-$lang['acl_user']   = 'Uživatel';
-$lang['acl_perms']  = 'Práva pro';
-$lang['page']       = 'Stránka';
-$lang['namespace']  = 'Jmenný prostor';
-
-$lang['acl_perm1']  = 'Čtení';
-$lang['acl_perm2']  = 'Úpravy';
-$lang['acl_perm4']  = 'Vytvoření';
-$lang['acl_perm8']  = 'Upload';
-$lang['acl_perm16'] = 'Mazání';
-$lang['acl_new']    = 'Přidat novou položku';
+$lang['admin_register']= 'Přidat nového uživatele';
 
 $lang['spell_start'] = 'Zkontrolovat pravopis';
 $lang['spell_stop']  = 'Pokračovat v úpravách';

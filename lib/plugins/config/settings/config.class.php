@@ -350,7 +350,7 @@ if (!class_exists('setting')) {
     }
     
     function prompt(&$plugin) {
-        if (!$this->pluginLocale) $this->setupPluginLocale(&$plugin);
+        if (!$this->pluginLocale) $this->setupPluginLocale($plugin);
         $prompt = $plugin->getLang($this->_key);
         if (!$prompt) $prompt = str_replace(array('____','_'),' ',$this->_key);
         return htmlspecialchars($prompt);

@@ -145,22 +145,7 @@ $lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Special Chars';
 
 $lang['del_confirm']= 'Really delete selected item(s)?';
-
-$lang['admin_acl']  = 'Access Control List Management';
 $lang['admin_register']= 'Add new user';
-
-$lang['acl_group']  = 'Group';
-$lang['acl_user']   = 'User';
-$lang['acl_perms']  = 'Permissions for';
-$lang['page']       = 'Page';
-$lang['namespace']  = 'Namespace';
-
-$lang['acl_perm1']  = 'Read';
-$lang['acl_perm2']  = 'Edit';
-$lang['acl_perm4']  = 'Create';
-$lang['acl_perm8']  = 'Upload';
-$lang['acl_perm16'] = 'Delete';
-$lang['acl_new']    = 'Add new Entry';
 
 $lang['spell_start'] = 'Check Spelling';
 $lang['spell_stop']  = 'Resume Editing';

@@ -124,22 +124,7 @@ $lang['qb_media']   = 'Tilføj billeder eller andre filer';
 $lang['qb_sig']     = 'Insæt signatur';
 
 $lang['del_confirm']= 'Slet denne post?';
-
-$lang['admin_acl']  = 'Rettigheds Administration...';
-$lang['admin_register']= 'Tilføj ny bruger...';
-
-$lang['acl_group']  = 'Gruppe';
-$lang['acl_user']   = 'Bruger';
-$lang['acl_perms']  = 'Rettigheder for';
-$lang['page']       = 'Dokument';
-$lang['namespace']  = 'Navnerum';
-
-$lang['acl_perm1']  = 'Læs';
-$lang['acl_perm2']  = 'Skriv';
-$lang['acl_perm4']  = 'Opret';
-$lang['acl_perm8']  = 'Upload';
-$lang['acl_perm16'] = 'Slet';
-$lang['acl_new']    = 'Tilføj ny post';
+$lang['admin_register']= 'Tilføj ny bruger';
 
 $lang['spell_start']= 'Stavekontrol';
 $lang['spell_stop'] = 'Forsæt redigering';

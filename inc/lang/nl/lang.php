@@ -126,23 +126,8 @@ $lang['qb_media']   = 'Voeg plaatjes en andere bestanden toe';
 $lang['qb_sig']     = 'Handtekening invoegen';
 
 $lang['del_confirm']= 'Dit item verwijderen?';
+$lang['admin_register']= 'Nieuwe gebruiker toevoegen';
  
-$lang['admin_acl']  = 'Toegangsrechten...';
-$lang['admin_register']= 'Nieuwe gebruiker toevoegen...';
- 
-$lang['acl_group']  = 'Groep';
-$lang['acl_user']   = 'Gebruiker';
-$lang['acl_perms']  = 'Permissies voor';
-$lang['page']       = 'Pagina';
-$lang['namespace']  = 'Namespace';
- 
-$lang['acl_perm1']  = 'Lezen';
-$lang['acl_perm2']  = 'Bewerken';
-$lang['acl_perm4']  = 'Aanmaken';
-$lang['acl_perm8']  = 'Upload';
-$lang['acl_perm16'] = 'Verwijder';
-$lang['acl_new']    = 'Nieuwe regel toevoegen';
-
 $lang['spell_start'] = 'Controleer spelling';
 $lang['spell_stop']  = 'Doorgaan met aanpassen';
 $lang['spell_wait']  = 'Even wachten a.u.b...';

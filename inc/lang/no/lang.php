@@ -124,23 +124,8 @@ $lang['qb_media']   = 'Legg til bilder og andre filer';
 $lang['qb_sig']     = 'Føy til signatur';
  
 $lang['del_confirm']= 'Slett denne oppføringen?';
- 
-$lang['admin_acl']  = 'Administrasjon av Access Control List...';
-$lang['admin_register']= 'Legg til ny bruker...';
- 
-$lang['acl_group']  = 'Gruppe';
-$lang['acl_user']   = 'Bruker';
-$lang['acl_perms']  = 'Rettigheter for';
-$lang['page']       = 'Side';
-$lang['namespace']  = 'Wikinavn';
- 
-$lang['acl_perm1']  = 'Lese';
-$lang['acl_perm2']  = 'Redigere';
-$lang['acl_perm4']  = 'Lage';
-$lang['acl_perm8']  = 'Laste opp';
-$lang['acl_perm16'] = 'Slette';
-$lang['acl_new']    = 'Legg til ny oppføring';
- 
+$lang['admin_register']= 'Legg til ny bruker';
+
 $lang['spell_start'] = 'Sjekk stavelse';
 $lang['spell_stop']  = 'Tilbake til redigering';
 $lang['spell_wait']  = 'Vennligst vent...';

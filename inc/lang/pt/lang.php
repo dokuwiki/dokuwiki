@@ -119,22 +119,7 @@ $lang['qb_media']     = 'Incluir imagens e outros ficheiros';
 $lang['qb_sig']       = 'Inserir Assinatura';
 
 $lang['del_confirm']  = 'Remover esta entrada?';
-
-$lang['admin_acl']      = 'Gestão de ACLs...';
-$lang['admin_register'] = 'Inscrever Novo Utilizador...';
-
-$lang['acl_group']    = 'Grupo';
-$lang['acl_user']     = 'Utilizador';
-$lang['acl_perms']    = 'Permissão para';
-$lang['page']         = 'Documento';
-$lang['namespace']    = 'Namespace';
-
-$lang['acl_perm1']    = 'Ler';
-$lang['acl_perm2']    = 'Editar';
-$lang['acl_perm4']    = 'Criar';
-$lang['acl_perm8']    = 'Carregar';
-$lang['acl_perm16']   = 'Remover';
-$lang['acl_new']      = 'Adicionar nova entrada';
+$lang['admin_register'] = 'Inscrever Novo Utilizador';
 
 $lang['spell_start']  = 'Verificar Ortografia';
 $lang['spell_stop']   = 'Retomar a Edição';
