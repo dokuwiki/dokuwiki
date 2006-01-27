@@ -421,7 +421,7 @@ function html_revisions(){
 
     print $date;
 
-    print ' <img src="'.DOKU_BASE.'lib/images/blank.gif" border="0" width="15" height="11" alt="" /> ';
+    print ' <img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" /> ';
 
     print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 

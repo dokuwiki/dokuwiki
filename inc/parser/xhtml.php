@@ -132,7 +132,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->lastsec = $pos;
         }
 
-        $this->doc .= DOKU_LF.'<a name="'.$this->_headerToLink($text).'"></a><h'.$level.'>';
+        $this->doc .= DOKU_LF.'<a name="'.$this->_headerToLink($text).'" id="'.$this->_headerToLink($text).'"></a><h'.$level.'>';
         $this->doc .= $this->_xmlEntities($text);
         $this->doc .= "</h$level>".DOKU_LF;
     }
@@ -182,11 +182,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     function underline_open() {
-        $this->doc .= '<u>';
+        $this->doc .= '<em class="u">';
     }
     
     function underline_close() {
-        $this->doc .= '</u>';
+        $this->doc .= '</em>';
     }
     
     function monospace_open() {
@@ -267,7 +267,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // output the footnote reference and link, incl. onmouseover for insitu footnote popup
-        $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" class="fn_top" onmouseover="fnt(\''.$id.'\', this, event);">'.$id.')</a>';
+        $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" id="fnt'.$id.'" class="fn_top" onmouseover="fnt(\''.$id.'\', this, event);">'.$id.')</a>';
     }
     
     function listu_open() {

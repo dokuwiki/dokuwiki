@@ -47,12 +47,6 @@ div.nothing {
 	margin: 2em;
 }
 
-div.no {
-  display: inline;
-  margin: 0;
-  padding: 0;
-}
-
 /* ---------------- forms ------------------------ */
 
 form {

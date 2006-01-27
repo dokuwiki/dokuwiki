@@ -5,6 +5,12 @@
 
 div.clearer {clear: both; line-height: 0; height: 0; overflow:hidden;}
 
+div.no {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
 div.error{
   background: #fcc url(../images/error.png) 0.5em 0px no-repeat;
   color: #000;
@@ -46,6 +52,11 @@ div.success{
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+em.u {
+  font-style: normal;
+  text-decoration: underline;
 }
 
 
