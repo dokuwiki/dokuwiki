@@ -11,7 +11,7 @@
 #configmanager tr.default .input, 
 #configmanager tr.default input,
 #configmanager tr.default select {
-  background-color: __medium__;
+  background-color: #ccddff;
 }
 
 #configmanager tr.protected .input, 
