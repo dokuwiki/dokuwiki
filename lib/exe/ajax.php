@@ -60,5 +60,20 @@ function ajax_qsearch(){
   print '</ul>';
 }
 
+/**
+ * Refresh a page lock
+ *
+ * Andreas Gohr <andi@splitbrain.org>
+ */
+function ajax_lock(){
+  $id = cleanID($_POST['id']);
+  if(empty($id)) return;
+
+  if(!checklock($id)){
+    lock($id);
+    print 1;
+  }
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
 ?>

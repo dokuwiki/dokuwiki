@@ -93,7 +93,7 @@ function js_out(){
             js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");
 
             // add lock timer
-            js_runonstart("init_locktimer(".($conf['locktime']-60).",'".js_escape($lang['willexpire'])."')");
+            js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."')");
 
             // load spell checker
             if($conf['spellchecker']){
