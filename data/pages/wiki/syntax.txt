@@ -64,7 +64,7 @@ Notes:
 
   * Links to [[wiki:syntax|existing pages]] are shown in a different style from [[wiki:nonexisting]] ones.
   * DokuWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behaviour can be enabled in the [[doku>config]] file. Hint: If DokuWiki is a link, then it's enabled.
-  * When a section's heading is changed, it's bookmark changes, too. So don't rely on section linking too much.
+  * When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.
 
 ==== Interwiki ====
 
@@ -99,9 +99,9 @@ The whole [[#images_and_other_files|image]] and [[#links|link]] syntax is suppor
 
 ===== Footnotes =====
 
-You can add footnotes ((This is a footnote)) by using double parenthesises.
+You can add footnotes ((This is a footnote)) by using double parantheses.
 
-  You can add footnotes ((This is a footnote)) by using double parenthesises.
+  You can add footnotes ((This is a footnote)) by using double parantheses.
 
 ===== Sectioning =====
 
