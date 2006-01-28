@@ -99,9 +99,9 @@ The whole [[#images_and_other_files|image]] and [[#links|link]] syntax is suppor
 
 ===== Footnotes =====
 
-You can add footnotes ((This is a footnote)) by using double parantheses.
+You can add footnotes ((This is a footnote)) by using double parentheses.
 
-  You can add footnotes ((This is a footnote)) by using double parantheses.
+  You can add footnotes ((This is a footnote)) by using double parentheses.
 
 ===== Sectioning =====
 
