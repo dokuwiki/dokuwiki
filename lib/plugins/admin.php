@@ -15,7 +15,7 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 class DokuWiki_Admin_Plugin {
 
   var $localised = false;        // set to true by setupLocale() after loading language dependent strings
-  var $lang = array();          // array to hold language dependent strings, best accessed via ->getLang()
+  var $lang = array();           // array to hold language dependent strings, best accessed via ->getLang()
 
   /**
    * General Info
@@ -114,11 +114,13 @@ class DokuWiki_Admin_Plugin {
    *  this function is automatically called by getLang()
    */
   function setupLocale() {
-      if ($this->localised) return;
-  
+    if ($this->localised) return;
+
     global $conf;            // definitely don't invoke "global $lang"
     $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
-    
+
+    $lang = array();
+ 
     // don't include once, in case several plugin components require the same language file
     @include($path.'en/lang.php');    
     if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');

@@ -30,6 +30,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     var $_changed = false;          // set to true if configuration has altered
     var $_error = false;
     var $_session_started = false;
+        var $_localised_prompts = false;
 
     /**
      * return some info
@@ -91,6 +92,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       global $lang;  
     
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
+            $this->setupLocale(true);
 
       print $this->locale_xhtml('intro');
       
@@ -165,9 +167,45 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       
       return true;
     }
-    
+
     function _close_session() {
       if ($this->_session_started) session_write_close();
+    }
+
+    function setupLocale($prompts=false) {
+
+      parent::setupLocale();
+      if (!$prompts || $this->_localised_prompts) return;
+
+      $this->_setup_localised_plugin_prompts();
+      $this->_localised_prompts = true;
+
+    }
+
+    function _setup_localised_plugin_prompts() {
+      global $conf;
+      
+      $langfile   = '/lang/'.$conf[lang].'/settings.php';
+      $enlangfile = '/lang/en/settings.php';
+            
+            $lang = array();
+      
+      if ($dh = opendir(DOKU_PLUGIN)) {
+        while (false !== ($plugin = readdir($dh))) {
+          if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
+          if (is_file(DOKU_PLUGIN.$plugin)) continue;
+
+          if (@file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
+            @include(DOKU_PLUGIN.$plugin.$enlangfile);
+            if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);                        
+          }
+        }
+        closedir($dh);
+
+        $this->lang = array_merge($lang, $this->lang);
+      }
+
+      return true;
     }
     
 }
