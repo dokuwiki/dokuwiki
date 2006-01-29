@@ -80,7 +80,7 @@ function html_login(){
       print '</p>';
     }
 
-    if ($auth->canDo('modifyUser')) {
+    if ($auth->canDo('modifyUser') && $conf['resendpasswd']) {
       print '<p>';
       print $lang['pwdforget'];
       print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';

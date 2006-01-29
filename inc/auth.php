@@ -541,6 +541,7 @@ function act_resendpwd(){
 		global $auth;
     
     if(!$_POST['save']) return false;
+    if(!$conf['resendpasswd']) return false;
 
     // should not be able to get here without modifyUser being possible...
 	if(!$auth->canDo('modifyUser')) {

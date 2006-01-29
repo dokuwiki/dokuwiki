@@ -54,6 +54,7 @@ $conf['mailguard']   = 'hex';             //obfuscate email addresses against sp
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
 $conf['openregister']= 1;                //Should users to be allowed to register?
 $conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
+$conf['resendpasswd']= 0;                //allow resend password function?
 $conf['authtype']    = 'plain';          //which authentication backend should be used
 $conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
