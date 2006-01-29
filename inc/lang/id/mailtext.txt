@@ -1,0 +1,17 @@
+Halaman di DokuWiki Anda telah bertamah atau berubah, dengan detil sebagai berikut:
+
+Date        : @DATE@
+Browser     : @BROWSER@
+IP-Address  : @IPADDRESS@
+Hostname    : @HOSTNAME@
+Old Revision: @OLDPAGE@
+New Revision: @NEWPAGE@
+Edit Summary: @SUMMARY@
+User        : @USER@
+
+@DIFF@
+
+
+-- 
+Email ini digenerate oleh DokuWiki di
+@DOKUWIKIURL@

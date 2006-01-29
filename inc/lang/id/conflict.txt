@@ -1,0 +1,6 @@
+====== Versi terbaru telah Ada ======
+
+Versi terbaru dari dokumen yang baru saja Anda Edit telah ada. Ini terjadi ketika user lain telah selesai mengubah halaman, saat Anda sedang meng-edit.
+
+Pertimbangkan perbedaan yang ditampilkan dibawah ini, kemudian putuskan versi mana yang harus disimpan. Jika Anda memilih "Simpan", versi (tulisan terbaru) Andalah yang akan disimpan. Tekan "Gagal" to menggunakan versi tulisan yang telah ada.
+

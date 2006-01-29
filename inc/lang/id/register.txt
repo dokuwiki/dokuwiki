@@ -1,0 +1,5 @@
+====== Mendaftar sebagai anggota baru ======
+
+Isikan semua informasi dibawah ini untuk membuat account baru di wiki ini.
+Pastikan Anda telah mengisikan **alamat email yang valid**, karena password akan dikirim melalui email ini. Nama login harus sesuai dengan aturan [[doku>wiki:pagename|pagename]].
+

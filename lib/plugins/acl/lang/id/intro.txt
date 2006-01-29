@@ -1,0 +1,12 @@
+====== Access Control List Management ======
+
+On this page you can add and remove permissions for the current
+page and all the [[doku>wiki:namespaces|namespaces]] it is in.
+You should read the [[doku>wiki:acl|official documentation on ACL]]
+to fully understand how access control works.
+
+The page displays all permissions that are significant for the
+current page. Permissions regarding other pages are not shown -- to
+edit them [[this>doku.php?do=index|browse]] to the according page
+first, then change to the ACL Administration.
+

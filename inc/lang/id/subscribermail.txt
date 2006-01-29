@@ -1,0 +1,17 @@
+Halo Dunia!
+
+Halaman @PAGE@ di @TITLE@ wiki telah berubah.
+Perubahannya adalah sebagai berikut:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Untuk unsubscribe dari halaman ini, silahkan login ke wiki di
+@DOKUWIKIURL@ lalu buka
+@NEWPAGE@
+dan pilih 'Unsubscribe Changes'.
+
+-- 
+email ini telah digenerate oleh DokuWiki di
+@DOKUWIKIURL@
