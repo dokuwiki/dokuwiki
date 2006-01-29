@@ -1,0 +1,7 @@
+====== Gestion des Plugins  ======
+
+Cette page vous permet de gérer tout ce qui a trait aux [[doku>wiki:plugins|plugins]] de Dokuwiki.
+Pour télécharger et installer un plugin, le répertoire plugin doit
+être accessible en écriture pour le serveur Web.
+
+
