@@ -103,6 +103,7 @@ $meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','
 $meta['useacl']      = array('onoff');
 $meta['openregister']= array('onoff');
 $meta['autopasswd']  = array('onoff');
+$meta['resendpasswd'] = array('onoff');
 $meta['authtype']    = array('authtype');
 $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','sha1','ssha','crypt','mysql','my411'));
 $meta['defaultgroup']= array('');

@@ -94,11 +94,11 @@ function pageinfo(){
  *
  * @author Andreas Gohr
  */
-function buildURLparams($params){
+function buildURLparams($params, $sep='&amp;'){
   $url = '';
   $amp = false;
   foreach($params as $key => $val){
-    if($amp) $url .= '&amp;';
+    if($amp) $url .= $sep;
 
     $url .= $key.'=';
     $url .= rawurlencode($val);
@@ -247,12 +247,12 @@ function idfilter($id,$ue=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function wl($id='',$more='',$abs=false){
+function wl($id='',$more='',$abs=false,$sep='&amp;'){
   global $conf;
   if(is_array($more)){
-    $more = buildURLparams($more);
+    $more = buildURLparams($more,$sep);
   }else{
-    $more = str_replace(',','&amp;',$more);
+    $more = str_replace(',',$sep,$more);
   }
 
   $id    = idfilter($id);
@@ -270,7 +270,7 @@ function wl($id='',$more='',$abs=false){
     if($more) $xlink .= '?'.$more;
   }else{
     $xlink .= DOKU_SCRIPT.'?id='.$id;
-    if($more) $xlink .= '&amp;'.$more;
+    if($more) $xlink .= $sep.$more;
   }
   
   return $xlink;
@@ -281,12 +281,12 @@ function wl($id='',$more='',$abs=false){
  *
  * Will return a link to the detail page if $direct is false
  */
-function ml($id='',$more='',$direct=true){
+function ml($id='',$more='',$direct=true,$sep='&amp;'){
   global $conf;
   if(is_array($more)){
-    $more = buildURLparams($more);
+    $more = buildURLparams($more,$sep);
   }else{
-    $more = str_replace(',','&amp;',$more);
+    $more = str_replace(',',$sep,$more);
   }
 
   $xlink = DOKU_BASE;
@@ -296,7 +296,7 @@ function ml($id='',$more='',$direct=true){
     $xlink .= 'lib/exe/fetch.php';
     if($more){
       $xlink .= '?'.$more;
-      $xlink .= '&amp;media='.rawurlencode($id);
+      $xlink .= $sep.'media='.rawurlencode($id);
     }else{
       $xlink .= '?media='.rawurlencode($id);
     }
@@ -327,7 +327,7 @@ function ml($id='',$more='',$direct=true){
    }else{
      if($more){
        $xlink .= $script.'?'.$more;
-       $xlink .= '&amp;media='.$id;
+       $xlink .= $sep.'media='.$id;
      }else{
        $xlink .= $script.'?media='.$id;
      }

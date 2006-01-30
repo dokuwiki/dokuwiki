@@ -54,6 +54,7 @@ $lang['mailguard']   = 'obfuscate email addresses';  //obfuscate email addresses
 $lang['useacl']      = 'use ACL';                //Use Access Control Lists to restrict access?
 $lang['openregister']= 'open register';          //Should users to be allowed to register?
 $lang['autopasswd']  = 'autogenerate passwords'; //autogenerate passwords and email them to user
+$lang['resendpasswd']= 'allow resend password';  //allow resend password function?
 $lang['authtype']    = 'authentication backend'; //which authentication backend should be used
 $lang['passcrypt']   = 'password encryption';    //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
 $lang['defaultgroup']= 'default group';          //Default groups new Users are added to
