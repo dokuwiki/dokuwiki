@@ -6,13 +6,9 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
 
-// settings must be present and set appropriately for the language
-$lang['encoding']   = 'utf-8';
-$lang['direction']  = 'ltr';
-
 // for admin plugins, the menu prompt to be displayed in the admin menu
 // if set here, the plugin doesn't need to override the getMenuText() method
-$lang['menu']       = 'Configuration Settings ...'; 
+$lang['menu']       = 'Configuration Settings'; 
 
 $lang['error']      = 'Settings not updated due to an invalid value, please review your changes and resubmit.
                        <br />The incorrect value(s) will be shown surrounded by a red border.';
@@ -131,6 +127,4 @@ $lang['rss_linkto_o_diff']    = 'list of differences';
 $lang['rss_linkto_o_page']    = 'the revised page';
 $lang['rss_linkto_o_rev']     = 'list of revisions';
 $lang['rss_linkto_o_current'] = 'the current page';
-
-
 

@@ -43,6 +43,8 @@ All documentation and additional information besides the [[syntax|syntax descrip
 
 The DokuWiki engine is licensed under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider donating a few bucks to me via [[https://www.paypal.com/xclick/business=andi%40splitbrain.org&amp;item_name=DokuWiki+Donation&amp;no_shipping=1&amp;no_note=1&amp;tax=0&amp;currency_code=EUR&amp;lc=US|PayPal]] ;-).
 
-The content published in the DokuWiki at http://www.splitbrain.org/dokuwiki/ is licensed under the [[http://creativecommons.org/licenses/by-nc-sa/2.0/|Creative Commons Attribution-NonCommercial-ShareAlike License]] Version 2.0. This is true for all content (files inside the ''data'' directory) distributed in the download tarball, too.
+The content published in the DokuWiki at http://www.splitbrain.org/dokuwiki/ is licensed under the [[http://creativecommons.org/licenses/by-nc-sa/2.0/|Creative Commons Attribution-NonCommercial-ShareAlike License]] Version 2.0.
+
+An exception is made for the content which distributed in the download tarball ((files inside the ''data'' directory -- eg: ''dokuwiki.txt'', ''syntax.txt'', ''dokuwiki-128.png'')) which is, for compatibility reasons, licensed under the GNU General Public License Version 2 as well.
 
 Not sure what this means? See the [[doku>wiki:faq#licenses_explained|FAQ on the Licenses]].

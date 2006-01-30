@@ -1,18 +1,18 @@
 <?php
 /**
- * english language file
+ * German language file
+ *
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
  
-// settings must be present and set appropriately for the language
-$lang['encoding']   = 'utf-8';
-$lang['direction']  = 'ltr';
- 
-// for admin plugins, the menu prompt to be displayed in the admin menu
-// if set here, the plugin doesn't need to override the getMenuText() method
-$lang['menu'] = 'Benutzer pflegen...'; 
+$lang['menu'] = 'Benutzerverwaltung'; 
  
 // custom language strings for the plugin
-$lang['badauth']     = 'Ungültiger Methode zur Autentifizierung';
+$lang['noauth']      = '(Authentifizierungssystem nicht verfügbar)';
+$lang['nosupport']   = '(Benutzerverwaltung nicht unterstützt)';
+
+$lang['badauth']     = 'Ungültige Methode zur Authentifizierung';
 
 $lang['user_id']     = 'Benutzer';
 $lang['user_pass']   = 'Passwort';
@@ -39,6 +39,8 @@ $lang['delete_ok']   = '%d Benutzer gelöscht';
 $lang['delete_fail'] = '%d konnten nicht gelöscht werden.';
 $lang['update_ok']   = 'Benutzerdaten erfolgreich geändert.';
 $lang['update_fail'] = 'Änderung der Benutzerdaten fehlgeschlagen.';
+$lang['update_exists'] = 'Nutzername konnte nicht geändert werden, weil der angegebene Nutzer (%s) bereits existiert (alle anderen Änderungen wurden durchgeführt).';
+
 
 $lang['start']  = 'Anfang';
 $lang['prev']   = 'Vorherige';

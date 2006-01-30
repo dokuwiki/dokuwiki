@@ -179,5 +179,6 @@ $lang['unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte ni
 
 /* auth.class lanuage support */
 $lang['authmodfailed']   = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
+$lang['authtempfail']    = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert wenden Sie sich an den Systembetreuer.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

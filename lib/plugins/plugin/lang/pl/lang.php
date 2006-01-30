@@ -6,12 +6,6 @@
  * @author     Michał Tkacz <mehow@autocom.pl>
  */
 
-// settings must be present and set appropriately for the language
-$lang['encoding']   = 'utf-8';
-$lang['direction']  = 'ltr';
-
-// for admin plugins, the menu prompt to be displayed in the admin menu
-// if set here, the plugin doesn't need to override the getMenuText() method
 $lang['menu'] = 'Menadżer wtyczek'; 
 
 // custom language strings for the plugin
@@ -75,7 +69,6 @@ $lang['error_decompress'] = 'Menadżer wtyczek nie był w stanie rozpakować śc
             'lub nieznany format kompresji (w takim przypadku będziesz musiał ściągnąć i zainstalować wtyczkę ręcznie).';
 $lang['error_copy'] = 'Wystąpił błąd podczas kopiowania pliku w trakcie instalacji wtyczki %s: '.
             'być może dysk jest pełny lub prawa dostępu są niepoprawne. '.
-            'Efektem może być częściowo zainstalowana wtyczka co może spowodować niestabilność Twojej instalacji wiki.';
-//$lang['error_'] = '';    
+            'Efektem może być częściowo zainstalowana wtyczka co może spowodować niestabilność Twojej instalacji wiki.';   
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

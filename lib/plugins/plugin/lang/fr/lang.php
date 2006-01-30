@@ -6,13 +6,7 @@
  * @author     Guy Brand <gb@isis.u-strasbg.fr>
  */
 
-// settings must be present and set appropriately for the language
-$lang['encoding']   = 'utf-8';
-$lang['direction']  = 'ltr';
-
-// for admin plugins, the menu prompt to be displayed in the admin menu
-// if set here, the plugin doesn't need to override the getMenuText() method
-$lang['menu'] = 'Gérer les plugins...'; 
+$lang['menu'] = 'Gérer les plugins'; 
 
 // custom language strings for the plugin
 $lang['refresh'] = "Actualiser la liste des plugins installés";
@@ -77,7 +71,6 @@ $lang['error_copy'] = 'Une erreur de copie est survenue lors de l\'installation 
             'votre disque est peut être plein ou les droits d\'accès au fichier incorrects. '.
             'Il a pu en résulter une installation partielle du plugin rendant votre installation du wiki instable.';
 $lang['error_delete'] = 'Une erreur est survenue à la suppression du plugin <em>%s</em>.  '.
-            'La raison la plus probable est l\'insuffisance des droits sur les fichiers ou le répertoire';
-//$lang['error_'] = '';    
+            'La raison la plus probable est l\'insuffisance des droits sur les fichiers ou le répertoire';    
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

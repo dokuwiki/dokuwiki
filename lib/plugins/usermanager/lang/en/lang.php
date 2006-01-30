@@ -1,14 +1,10 @@
 <?php
 /**
- * english language file
+ * English language file
+ *
+ * @author Chris Smith <chris@jalakai.co.uk>
  */
  
-// settings must be present and set appropriately for the language
-$lang['encoding']   = 'utf-8';
-$lang['direction']  = 'ltr';
- 
-// for admin plugins, the menu prompt to be displayed in the admin menu
-// if set here, the plugin doesn't need to override the getMenuText() method
 $lang['menu'] = 'User Manager'; 
  
 // custom language strings for the plugin
@@ -40,13 +36,12 @@ $lang['summary']     = 'Displaying users %1$d-%2$d of %3$d found. %4$d users tot
 $lang['nonefound']   = 'No users found. %d users total.';
 $lang['delete_ok']   = '%d users deleted';
 $lang['delete_fail'] = '%d failed deleting.';
-$lang['update_ok']   = 'user updated sucessfully';
-$lang['update_fail'] = 'user update failed';
-$lang['update_exists'] = 'user name change failed, the specified user name (%s) already exists (any other changes will be applied).';
+$lang['update_ok']   = 'User updated sucessfully';
+$lang['update_fail'] = 'User update failed';
+$lang['update_exists'] = 'User name change failed, the specified user name (%s) already exists (any other changes will be applied).';
 
 $lang['start']  = 'start';
 $lang['prev']   = 'previous';
 $lang['next']   = 'next';
 $lang['last']   = 'last';
 
-?>
