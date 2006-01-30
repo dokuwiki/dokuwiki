@@ -53,6 +53,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
+      global $ID;
     
       if (!$this->_restore_session()) return $this->_close_session();
       if (!isset($_REQUEST['save']) || ($_REQUEST['save'] != 1)) return $this->_close_session();
@@ -89,7 +90,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * output appropriate html
      */
     function html() { 
-      global $lang;  
+      global $lang;
+      global $ID;
     
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
             $this->setupLocale(true);
@@ -105,7 +107,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       elseif ($this->_changed)
         ptln('<p class="ok">'.$this->getLang('updated').'</p>');
       
-      ptln('<form action="'.wl($id).'" method="post">');
+      ptln('<form action="'.wl($ID).'" method="post">');
       ptln('  <table class="inline">');
       
       foreach($this->_config->setting as $setting) {
