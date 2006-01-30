@@ -43,7 +43,69 @@ class auth_mysql extends auth_basic {
       $this->cnf          = $conf['auth']['mysql'];
       $this->defaultgroup = $conf['defaultgroup'];
     }
-    
+
+    /**
+  	 * Check if authorisation mechanism supports fn and
+  	 * that fn will operate in the current environment
+  	 *
+  	 * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+  	 * @author  Christopher Smith <chris@jalakai.co.uk>
+  	 * @return  bool
+  	 */
+    function canDo($fn) {
+      /* general database configuration set? */
+      if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
+          empty($this->cnf['password']) || empty($this->cnf['database']))
+        return false;
+          
+      /* lock array filled with tables names? */
+      if (!is_array($this->cnf['TablesToLock']) || empty($this->cnf['TablesToLock']))
+        return false;
+        
+      switch($fn) {
+        case 'checkPass':
+          $config = array('checkPass');
+          break;
+        case 'getUserData':
+          $config = array('getUserInfo','getGroups');
+          break;
+        case 'createUser':
+          $config = array('getUserInfo','getGroups','addUser',
+             'getUserID','addGroup','addUserGroup','delGroup');
+          break;
+        case 'modifyUser':
+          $config = array('getUserID','updateUser','UpdateTarget',
+             'getGroups','getGroupID','addGroup','addUserGroup',
+             'delGroup','getGroupID','delUserGroup');
+          break;
+        case 'deleteUsers':
+          $config = array('getUserID','delUser','delUserRefs');
+          break;
+        case 'getUserCount':
+          $config = array('getUsers');
+          break;
+        case 'retrieveUsers':
+          $config = array('getUsers','getUserInfo','getGroups');
+          break;
+        case 'joinGroup':
+          $config = array('getUserID','getGroupID','addGroup',
+             'addUserGroup','delGroup');
+          break;
+        case 'leaveGroup':
+          $config = array('getUserID','getGroupID','delUserGroup');
+          break;
+        default:
+          return false; /* unknown function call */
+      }
+      
+      foreach ($config as $statement)
+        if (empty($this->cnf[$statement]))
+          return false; /* required statement not set */
+
+      /* all tests passed :-) */
+      return true;
+  	}
+
     /**
      * Checks if the given user exists and the given plaintext password
      * is correct. Furtheron it might be checked wether the user is
@@ -69,7 +131,7 @@ class auth_mysql extends auth_basic {
         $result = $this->_queryDB($sql);
       
         if($result !== false && count($result) == 1) {
-          if($this->cnf['encryptPass'] == 1)
+          if($this->cnf['forwardClearPass'] == 1)
             $rc = true;
           else
             $rc = auth_verifyPassword($pass,$result[0]['pass']);
@@ -134,7 +196,7 @@ class auth_mysql extends auth_basic {
           $grps = array($this->defaultgroup);
  
         $this->_lockTables("WRITE");
-        $pwd = $this->cnf['encryptPass'] ? $pwd : auth_cryptPassword($pwd);
+        $pwd = $this->cnf['forwardClearPass'] ? $pwd : auth_cryptPassword($pwd);
         $rc = $this->_addUser($user,$pwd,$name,$mail,$grps);
         $this->_unlockTables();
         $this->_closeDB();
@@ -588,7 +650,7 @@ class auth_mysql extends auth_basic {
             if ($cnt++ > 0) $sql .= ", ";
             $sql .= str_replace('%{name}',$value,$this->cnf['UpdateName']);
           } else if ($item == 'pass') {
-            if (!$this->cnf['encryptPass'])
+            if (!$this->cnf['forwardClearPass'])
               $value = auth_cryptPassword($value);
             if ($cnt++ > 0) $sql .= ", ";
             $sql .= str_replace('%{pass}',$value,$this->cnf['UpdatePass']);
