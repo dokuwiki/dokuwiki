@@ -32,7 +32,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     var $handler = NULL;
     
     var $functions = array('delete','update',/*'settings',*/'info');  // require a plugin name
-    var $commands = array('manage','refresh','download');         // don't require a plugin name
+    var $commands = array('manage','download');                       // don't require a plugin name
     var $plugin_list = array();
     
     var $msg = '';
@@ -162,12 +162,6 @@ class ap_manage {
           ptln('    <fieldset class="hidden">',4);
           ptln('      <input type="hidden" name="do"   value="admin" />');
           ptln('      <input type="hidden" name="page" value="plugin" />');
-          ptln('    </fieldset>');
-          ptln('    <fieldset>');
-          ptln('      <legend>'.$this->lang['refresh'].'</legend>');
-          ptln('      <h3 class="legend">'.$this->lang['refresh'].'</h3>');
-          ptln('      <input type="submit" class="button" name="fn[refresh]" value="'.$this->lang['btn_refresh'].'" />');
-          ptln('      <p>'.$this->lang['refresh_x'].'</p>');
           ptln('    </fieldset>');
           ptln('    <fieldset>');
           ptln('      <legend>'.$this->lang['download'].'</legend>');
@@ -340,28 +334,7 @@ class ap_manage {
             return '';
         }
     }
-    
-    class ap_refresh extends ap_manage {
-    
-        function process() {
-            $this->refresh();
-            
-            if (!$this->manager->error) return $this->lang['refreshed'];
-        }
-        
-        function html() {
-        
-            parent::html();
-            
-            ptln('<div class="pm_info">');
-            ptln('<h2>'.$this->lang['refreshing'].'</h2>');
-            ptln('<p>'.$this->lang['refreshed'].'</p>');
-            ptln('</div>');
-        }
-        
-
-    }
-    
+       
     class ap_download extends ap_manage {
     
         var $overwrite = false;
