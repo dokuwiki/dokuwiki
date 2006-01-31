@@ -91,6 +91,8 @@
  */
 function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
   global $conf;
+  global $auth;
+
   if(!$num) $num = $conf['recent'];
   $guardmail = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
@@ -148,7 +150,7 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
     $item->author = '';
     
     if($user){
-      $userInfo = auth_getUserData($user);
+      $userInfo = $auth->getUserData($user);
       $item->author = $userInfo['name'];
       if($guardmail) {
         //cannot obfuscate because some RSS readers may check validity
