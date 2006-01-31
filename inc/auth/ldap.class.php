@@ -11,6 +11,7 @@
 class auth_ldap extends auth_basic {
     var $cnf = null;
     var $con = null;
+    var $bound = false;
 
     /**
      * Constructor
@@ -78,6 +79,7 @@ class auth_ldap extends auth_basic {
                 }
                 return false;
             }
+            $this->bound = true;
             return true;
         }else{
             // See if we can find the user
@@ -96,6 +98,7 @@ class auth_ldap extends auth_basic {
                 }
                 return false;
             }
+            $this->bound = true;
             return true;
         }
 
@@ -127,6 +130,18 @@ class auth_ldap extends auth_basic {
 	function getUserData($user) {
         global $conf;
         if(!$this->_openLDAP()) return false;
+
+        if(!$this->bound){
+            if($this->cnf['binddn'] && $this->cnf['bindpw']){
+                // use superuser credentials
+                if(!@ldap_bind($this->con,$this->cnf['binddn'],$this->cnf['bindpw'])){
+                    if($this->cnf['debug'])
+                        msg('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)),0);
+                    return false;
+                }
+            }
+            $this->bound = true;
+        }
 
         $info['user']   = $user;
         $info['server'] = $this->cnf['server'];
