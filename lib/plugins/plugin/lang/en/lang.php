@@ -9,8 +9,6 @@
 $lang['menu'] = 'Manage Plugins'; 
 
 // custom language strings for the plugin
-$lang['refresh'] = "Refresh list of installed plugins";
-$lang['refresh_x'] = "Use this option if you have altered any of your plugins manually"; 
 $lang['download'] = "Download and install a new plugin";
 $lang['manage'] = "Installed Plugins";
 
@@ -18,7 +16,6 @@ $lang['btn_info'] = 'info';
 $lang['btn_update'] = 'update';
 $lang['btn_delete'] = 'delete';
 $lang['btn_settings'] = 'settings';
-$lang['btn_refresh'] = 'Refresh';
 $lang['btn_download'] = 'Download';
 
 $lang['url']              = 'URL';
@@ -30,9 +27,6 @@ $lang['unknown']          = 'unknown';
 
 // ..ing = header message
 // ..ed = success message
-
-$lang['refreshing'] = 'Refreshing ...';
-$lang['refreshed'] = 'Plugin refresh completed.';
 
 $lang['updating']         = 'Updating ...';
 $lang['updated']          = 'Plugin %s updated successfully';
