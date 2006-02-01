@@ -145,8 +145,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $users = array_keys($user_list);
 
         $page_buttons = $this->_pagination();
-        $edit_disable = $this->_auth->canDo('modifyUser') ? '' : 'disabled="disabled"';
         $delete_disable = $this->_auth->canDo('deleteUsers') ? '' : 'disabled="disabled"';
+        
+		if ($this->_auth->canDo('modifyUser')) {
+			$edit_disable = '';
+			$img_useredit = 'user_edit.png';
+		} else {
+			$edit_disable = 'disabled="disabled"';
+			$img_useredit = 'no_user_edit.png';
+		}
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -166,7 +173,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      </tr>");
 
         ptln("      <tr>");
-//        ptln("        <td colspan=\"2\"><input type=\"submit\" name=\"fn[search][new]\" value=\"".$this->lang['search']."\" /></td>");
         ptln("        <td colspan=\"2\" style=\"vertical-align:middle; text-align:right;\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"userid\" value=\"".$this->_htmlFilter('user')."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"username\" value=\"".$this->_htmlFilter('name')."\" /></td>");
@@ -182,8 +188,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $groups = join(', ',$grps);
             ptln("    <tr valign=\"top\" align=\"left\">");
             ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".$user."]\" ".$delete_disable." /></td>");
-//            ptln("      <td class=\"centeralign\"><input type=\"submit\" name=\"fn[edit][".$user."]\" ".$edit_disable." value=\"".$this->lang['edit']."\"/></td>");
-            ptln("      <td class=\"centeralign\"><input type=\"image\" name=\"fn[edit][".$user."]\" ".$edit_disable." src=\"".DOKU_PLUGIN_IMAGES."user_edit.png\" title=\"".$this->lang['edit_prompt']."\" alt=\"".$this->lang['edit']."\"/></td>");
+            ptln("      <td class=\"centeralign\"><input type=\"image\" name=\"fn[edit][".$user."]\" ".$edit_disable." src=\"".DOKU_PLUGIN_IMAGES.$img_useredit."\" title=\"".$this->lang['edit_prompt']."\" alt=\"".$this->lang['edit']."\"/></td>");
             ptln("      <td>".hsc($user)."</td><td>".hsc($name)."</td><td>".hsc($mail)."</td><td>".hsc($groups)."</td>");
             ptln("    </tr>");
           }
