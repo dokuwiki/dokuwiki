@@ -53,13 +53,11 @@ class auth_mysql extends auth_basic {
   	 * @return  bool
   	 */
     function canDo($fn) {
+      $wop = false;  /* function is write operation */
+      
       /* general database configuration set? */
       if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
           empty($this->cnf['password']) || empty($this->cnf['database']))
-        return false;
-          
-      /* lock array filled with tables names? */
-      if (!is_array($this->cnf['TablesToLock']) || empty($this->cnf['TablesToLock']))
         return false;
         
       switch($fn) {
@@ -72,14 +70,17 @@ class auth_mysql extends auth_basic {
         case 'createUser':
           $config = array('getUserInfo','getGroups','addUser',
              'getUserID','addGroup','addUserGroup','delGroup');
+          $wop = true;
           break;
         case 'modifyUser':
           $config = array('getUserID','updateUser','UpdateTarget',
              'getGroups','getGroupID','addGroup','addUserGroup',
              'delGroup','getGroupID','delUserGroup');
+          $wop = true;
           break;
         case 'deleteUsers':
           $config = array('getUserID','delUser','delUserRefs');
+          $wop = true;
           break;
         case 'getUserCount':
           $config = array('getUsers');
@@ -90,14 +91,20 @@ class auth_mysql extends auth_basic {
         case 'joinGroup':
           $config = array('getUserID','getGroupID','addGroup',
              'addUserGroup','delGroup');
+          $wop = true;
           break;
         case 'leaveGroup':
           $config = array('getUserID','getGroupID','delUserGroup');
+          $wop = true;
           break;
         default:
           return false; /* unknown function call */
       }
       
+      /* write operation and lock array filled with tables names? */
+      if ($wop && (!is_array($this->cnf['TablesToLock']) || empty($this->cnf['TablesToLock'])))
+        return false;
+        
       foreach ($config as $statement)
         if (empty($this->cnf[$statement]))
           return false; /* required statement not set */
