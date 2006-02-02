@@ -160,7 +160,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         ptln("<div class=\"level2\" style=\"margin-bottom: 2em;\">");
         
-        if ($this->_user_total) {
+        if ($this->_user_total > 0) {
           ptln("<p>".sprintf($this->lang['summary'],$this->_start+1,$this->_last,$this->_user_total,$this->_auth->getUserCount())."</p>");
         } else {
           ptln("<p>".sprintf($this->lang['nonefound'],$this->_auth->getUserCount())."</p>");
