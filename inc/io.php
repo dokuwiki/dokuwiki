@@ -294,8 +294,9 @@ function io_download($url,$file,$useAttachment=false,$defaultName=''){
     $name = '';
       if (isset($http->resp_headers['content-disposition'])) {
       $content_disposition = $http->resp_headers['content-disposition'];
+			$match=array();
       if (is_string($content_disposition) && 
-          preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match=array())) {
+          preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
           
           $name = basename($match[1]);
       }

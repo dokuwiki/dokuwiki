@@ -124,8 +124,8 @@ if (!class_exists('configuration')) {
 
         $contents = @php_strip_whitespace($file);
         $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);/';
-    
-        preg_match_all($pattern,$contents,$matches=array(),PREG_SET_ORDER);
+        $matches=array();
+        preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
 
         for ($i=0; $i<count($matches); $i++) {
 
