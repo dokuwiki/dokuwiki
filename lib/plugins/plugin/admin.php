@@ -328,7 +328,8 @@ class ap_manage {
                 return $log[$plugin];
             }
             
-            if (preg_match_all('/'.$field.'=(.*)$/m',$log[$plugin], $match=array()))
+						$match = array();
+            if (preg_match_all('/'.$field.'=(.*)$/m',$log[$plugin], $match))
                 return implode("\n", $match[1]);
             
             return '';
