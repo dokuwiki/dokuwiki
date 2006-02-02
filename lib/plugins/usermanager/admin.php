@@ -340,28 +340,35 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     function _modifyUser(){
         if (!$this->_auth->canDo('UserMod')) return false;
 
-        list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
-        if (empty($user)) return false;
+		/* get currently valid  user data */
+        $olduser = cleanID(preg_replace('/.*:/','',$_REQUEST['userid_old']));
+        $oldinfo = $this->_auth->getUserData($olduser);
+		
+		/* get new user data subject to change */
+        list($newuser,$newpass,$newname,$newmail,$newgrps) = $this->_retrieveUser();
+        if (empty($newuser)) return false;
 
         $changes = array();
-        $user_old = cleanID(preg_replace('/.*:/','',$_REQUEST['userid_old']));
-        if ($user != $user_old) {
-          // check $user doesn't already exist
-          if ($this->_auth->getUserData($user)) {
-            msg(sprintf($this->lang['update_exists'],$user),-1);
-            $this->_edit_user = $user = $user_old;
+        if ($newuser != $olduser) {
+          /* check if $newuser already exist */
+          if ($this->_auth->getUserData($newuser)) {
+            msg(sprintf($this->lang['update_exists'],$newuser),-1);
+            $this->_edit_user = $olduser;
           } else {
-            $changes['user'] = $user;
-            $user = $user_old;
+            $changes['user'] = $newuser;
           }
         }
 
-        if (!empty($pass)) $changes['pass'] = $pass;
-        if (!empty($name)) $changes['name'] = $name;
-        if (!empty($mail)) $changes['mail'] = $mail;
-        if (!empty($grps)) $changes['grps'] = $grps;
+        if (!empty($newpass))
+		  $changes['pass'] = $newpass;
+        if (!empty($newname) && $newname != $oldinfo['name'])
+		  $changes['name'] = $newname;
+        if (!empty($newmail) && $newmail != $oldinfo['mail'])
+		  $changes['mail'] = $newmail;
+        if (!empty($newgrps) && $newgrps != $oldinfo['grps'])
+		  $changes['grps'] = $newgrps;
 
-        if ($this->_auth->modifyUser($user, $changes)) {
+		if ($this->_auth->modifyUser($olduser, $changes)) {
           msg($this->lang['update_ok'],1);
         } else {
           msg($this->lang['update_fail'],-1);
