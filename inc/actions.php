@@ -27,7 +27,8 @@ function act_dispatch(){
   $ACT = act_clean($ACT);
 
   //check if searchword was given - else just show
-  if($ACT == 'search' && empty($QUERY)){
+  $s = cleanID($QUERY);
+  if($ACT == 'search' && empty($s)){
     $ACT = 'show';
   }
 

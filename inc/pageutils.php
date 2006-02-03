@@ -52,8 +52,8 @@ function getID($param='id',$clean=true){
     //strip leading slashes
     $id = preg_replace('!^/+!','',$id);
   }
-  if(empty($id) && $param=='id') $id = $conf['start'];
   if($clean) $id = cleanID($id);
+  if(empty($id) && $param=='id') $id = $conf['start'];
   
   return $id;
 }
