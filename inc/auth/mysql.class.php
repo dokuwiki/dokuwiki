@@ -42,76 +42,62 @@ class auth_mysql extends auth_basic {
       
       $this->cnf          = $conf['auth']['mysql'];
       $this->defaultgroup = $conf['defaultgroup'];
+
+      // set capabilities based upon config strings set
+      if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
+          empty($this->cnf['password']) || empty($this->cnf['database']))
+        return;
+
+      $this->cando['addUser']      = $this->_chkcnf(array('getUserInfo',
+                                                          'getGroups',
+                                                          'addUser',
+                                                          'getUserID',
+                                                          'addGroup',
+                                                          'addUserGroup'),true);
+      $this->cando['delUser']      = $this->_chkcnf(array('getUserID',
+                                                          'delUser',
+                                                          'delUserRefs'),true);
+      $this->cando['modLogin']     = $this->_chkcnf(array('getUserID',
+                                                          'updateUser',
+                                                          'UpdateTarget',
+                                                          'getGroups',
+                                                          'getGroupID',
+                                                          'addGroup',
+                                                          'addUserGroup',
+                                                          'delGroup',
+                                                          'getGroupID',
+                                                          'delUserGroup'),true);
+      $this->cando['modPass']      = $this->cando['modLogin'];
+      $this->cando['modName']      = $this->cando['modLogin'];
+      $this->cando['modMail']      = $this->cando['modLogin'];
+      $this->cando['modGroups']    = $this->cando['modLogin'];
+      $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
+                                                          'getGroupID'),false);
+      $this->cando['getUsers']     = $this->_chkcnf(array('getUsers',
+                                                          'getUserInfo',
+                                                          'getGroups'),false);
+      $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'),false);
     }
 
     /**
-  	 * Check if authorisation mechanism supports fn and
-  	 * that fn will operate in the current environment
-  	 *
-  	 * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
-  	 * @author  Christopher Smith <chris@jalakai.co.uk>
-  	 * @return  bool
-  	 */
-    function canDo($fn) {
-      $wop = false;  /* function is write operation */
-      
-      /* general database configuration set? */
-      if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
-          empty($this->cnf['password']) || empty($this->cnf['database']))
-        return false;
-        
-      switch($fn) {
-        case 'checkPass':
-          $config = array('checkPass');
-          break;
-        case 'getUserData':
-          $config = array('getUserInfo','getGroups');
-          break;
-        case 'createUser':
-          $config = array('getUserInfo','getGroups','addUser',
-             'getUserID','addGroup','addUserGroup','delGroup');
-          $wop = true;
-          break;
-        case 'modifyUser':
-          $config = array('getUserID','updateUser','UpdateTarget',
-             'getGroups','getGroupID','addGroup','addUserGroup',
-             'delGroup','getGroupID','delUserGroup');
-          $wop = true;
-          break;
-        case 'deleteUsers':
-          $config = array('getUserID','delUser','delUserRefs');
-          $wop = true;
-          break;
-        case 'getUserCount':
-          $config = array('getUsers');
-          break;
-        case 'retrieveUsers':
-          $config = array('getUsers','getUserInfo','getGroups');
-          break;
-        case 'joinGroup':
-          $config = array('getUserID','getGroupID','addGroup',
-             'addUserGroup','delGroup');
-          $wop = true;
-          break;
-        case 'leaveGroup':
-          $config = array('getUserID','getGroupID','delUserGroup');
-          $wop = true;
-          break;
-        default:
-          return false; /* unknown function call */
+     * Check if the given config strings are set 
+     *
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @return  bool
+     */
+    function _chkcnf($keys, $wop=false){
+      foreach ($keys as $key){
+        if (empty($this->cnf[$key])) return false;
       }
-      
-      /* write operation and lock array filled with tables names? */
-      if ($wop && (!is_array($this->cnf['TablesToLock']) || empty($this->cnf['TablesToLock'])))
-        return false;
-        
-      foreach ($config as $statement)
-        if (empty($this->cnf[$statement]))
-          return false; /* required statement not set */
 
-      /* all tests passed :-) */
+      /* write operation and lock array filled with tables names? */
+      if ($wop && (!is_array($this->cnf['TablesToLock']) ||
+                   !count($this->cnf['TablesToLock']))){
+        return false;
+      }
+
       return true;
-  	}
+    }
 
     /**
      * Checks if the given user exists and the given plaintext password

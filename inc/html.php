@@ -73,14 +73,14 @@ function html_login(){
       </fieldset>
     </form>
   <?php
-    if($conf['openregister']){
+    if($auth->canDo('addUser') && $conf['openregister']){
       print '<p>';
       print $lang['reghere'];
       print ': <a href="'.wl($ID,'do=register').'" class="wikilink1">'.$lang['register'].'</a>';
       print '</p>';
     }
 
-    if ($auth->canDo('modifyUser') && $conf['resendpasswd']) {
+    if ($auth->canDo('modPass') && $conf['resendpasswd']) {
       print '<p>';
       print $lang['pwdforget'];
       print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
@@ -872,6 +872,7 @@ function html_updateprofile(){
   global $conf;
   global $ID;
   global $INFO;
+  global $auth;
 
   print p_locale_xhtml('updateprofile');
   
@@ -891,12 +892,14 @@ function html_updateprofile(){
     </label><br /> 
     <label class="block">
       <?php echo $lang['fullname']?>
-      <input type="text" name="fullname" class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
+      <input type="text" name="fullname" <?php if(!$auth->canDo('modName')) echo 'disabled="disabled"'?> class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
     </label><br />
     <label class="block">
       <?php echo $lang['email']?>
-      <input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
+      <input type="text" name="email" <?php if(!$auth->canDo('modName')) echo 'disabled="disabled"'?> class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
     </label><br /><br />
+
+    <?php if($auth->canDo('modPass')) { ?>
     <label class="block">
       <?php echo $lang['newpass']?>
       <input type="password" name="newpass" class="edit" size="50" />
@@ -905,6 +908,7 @@ function html_updateprofile(){
       <?php echo $lang['passchk']?>
       <input type="password" name="passchk" class="edit" size="50" />
     </label><br />
+    <?php } ?>
     
     <?php if ($conf['profileconfirm']) { ?>
       <br />

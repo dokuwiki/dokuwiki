@@ -20,8 +20,13 @@ class auth_ldap extends auth_basic {
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
         if(empty($this->cnf['groupkey'])) $this->cnf['groupkey'] = 'cn';
-    }
 
+        // try to connect
+        if(!$this->_openLDAP()) $this->success = false;
+
+        // auth_ldap currently just handles authentication, so no
+        // capabilities are set
+    }
 
 	/**
 	 * Check user+password

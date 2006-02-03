@@ -358,7 +358,7 @@ function tpl_button($type){
       print html_btn('backlink',$ID,'',array('do' => 'backlink'));
       break;
     case 'profile':
-      if(($_SERVER['REMOTE_USER']) && $auth->canDo('modifyUser') && ($ACT!='profile')){
+      if(($_SERVER['REMOTE_USER']) && $auth->canDo('Profile') && ($ACT!='profile')){
         print html_btn('profile',$ID,'',array('do' => 'profile'));
       }
       break;
@@ -466,7 +466,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink"');
       break;
     case 'profile':
-      if(($_SERVER['REMOTE_USER']) && $auth->canDo('modifyUser') && ($ACT!='profile')){
+      if(($_SERVER['REMOTE_USER']) && $auth->canDo('Profile') && ($ACT!='profile')){
         tpl_link(wl($ID,'do=profile'),$pre.$lang['btn_profile'].$suf, 'class="action profile"');
       }
       break;

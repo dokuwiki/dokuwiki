@@ -51,7 +51,7 @@
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
     // external trust mechanism in place?
-    if(!is_null($auth) && $auth->canDo('trustExternal')){
+    if(!is_null($auth) && $auth->canDo('external')){
       $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
     }else{
       auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
@@ -413,7 +413,7 @@ function register(){
 	global $auth;
 
   if(!$_POST['save']) return false;
-	if(!$auth->canDo('createUser')) return false;
+	if(!$auth->canDo('addUser')) return false;
 
   //clean username
   $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
@@ -483,8 +483,8 @@ function updateprofile() {
   
   if(!$_POST['save']) return false;
 
-  // should not be able to get here without modifyUser being possible...
-  if(!$auth->canDo('modifyUser')) {
+  // should not be able to get here without Profile being possible...
+  if(!$auth->canDo('Profile')) {
     msg($lang['profna'],-1);
     return false;
   }
@@ -543,11 +543,11 @@ function act_resendpwd(){
     if(!$_POST['save']) return false;
     if(!$conf['resendpasswd']) return false;
 
-    // should not be able to get here without modifyUser being possible...
-	if(!$auth->canDo('modifyUser')) {
+    // should not be able to get here without modPass being possible...
+    if(!$auth->canDo('modPass')) {
       msg($lang['resendna'],-1);
       return false;
-	}
+    }
     
     if (empty($_POST['login'])) {
       msg($lang['resendpwdmissing'], -1);

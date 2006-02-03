@@ -25,36 +25,27 @@ class auth_plain extends auth_basic {
 		 * Constructor
 		 *
 		 * Carry out sanity checks to ensure the object is
-		 * able to operate.
+		 * able to operate. Set capabilities.
 		 * 
-		 * Set $this->success to false if checks fail
-		 *
      * @author  Christopher Smith <chris@jalakai.co.uk>
 		 */		 
 		function auth_plain() {
-		  if (!@is_readable(AUTH_USERFILE)) $this->success = false;
+		  if (!@is_readable(AUTH_USERFILE)){
+        $this->success = false;
+      }else{
+        if(@is_writable(AUTH_USERFILE)){
+          $this->cando['addUser']      = true;
+          $this->cando['delUser']      = true;
+          $this->cando['modLogin']     = true;
+          $this->cando['modPass']      = true;
+          $this->cando['modName']      = true;
+          $this->cando['modMail']      = true;
+          $this->cando['modGroups']    = true;
+        }
+        $this->cando['getUsers']     = true;
+        $this->cando['getUserCount'] = true;
+      }
 		}
-
-    /**
-     * Check if authorisation mechanism supports fn and
-     * that fn will operate in the current environment
-     *
-     * @author  Christopher Smith <chris@jalakai.co.uk>
-     * @return  bool
-     */
-    function canDo($fn) {
-
-		  switch ($fn) {
-			  case 'createUser'  :
-			  case 'modifyUser'  :
-				case 'deleteUsers' :
-				case 'joinGroup'   :
-				case 'leaveGroup'  :
-				  return (@is_writable(AUTH_USERFILE));
-			}
-
-	    return method_exists($this, $fn);
-    }
 
     /**
      * Check user+password [required auth function]
@@ -262,40 +253,6 @@ class auth_plain extends auth_basic {
       }
 
       return $out;
-    }
-    
-    /**
-     * Give user membership of a group
-     * 
-     * @author  Chris Smith <chris@jalakai.co.uk>
-     * @return  bool
-     */
-    function joinGroup($user, $group) {
-    
-      // sanity checks, user must exist, and not currently a group member
-      if (($userinfo = $this->getUserData($user)) === false) return false;      
-      if (in_array($group, $userinfo['grps'])) return true;
-      
-      $userinfo['grps'][] = $group;
-      
-      return $this->modifyUser($user, array('grps' => $userinfo['grps']));
-    }
-
-    /**
-     * Remove user from a group
-     * 
-     * @author  Chris Smith <chris@jalakai.co.uk>
-     * @return  bool
-     */
-    function leaveGroup($user, $group) {
-    
-      // sanity checks, user must exist, and currently be a group member
-      if (($userinfo = $this->getUserData($user)) === false) return false;      
-      if (($i = array_search($group, $userinfo['grps'])) === false) return true;
-      
-      array_splice($userinfo['grps'],$i,1);
-      
-      return $this->modifyUser($user, array('grps' => $userinfo['grps']));
     }
     
     /**

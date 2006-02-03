@@ -40,7 +40,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 
         if (!isset($auth)) { 
           $this->disabled = $this->lang['noauth'];
-        } else if (!$auth->canDo('retrieveUsers')) {
+        } else if (!$auth->canDo('getUsers')) {
           $this->disabled = $this->lang['notsupported'];
         } else {
 
@@ -103,8 +103,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         if ($cmd != "search") {
-		  if (!empty($_REQUEST['start']))
-	        $this->_start = $_REQUEST['start'];
+          if (!empty($_REQUEST['start']))
+            $this->_start = $_REQUEST['start'];
           $this->_filter = $this->_retrieveFilter();
         }
 
@@ -145,15 +145,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $users = array_keys($user_list);
 
         $page_buttons = $this->_pagination();
-        $delete_disable = $this->_auth->canDo('deleteUsers') ? '' : 'disabled="disabled"';
+        $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
         
-		if ($this->_auth->canDo('modifyUser')) {
-			$edit_disable = '';
-			$img_useredit = 'user_edit.png';
-		} else {
-			$edit_disable = 'disabled="disabled"';
-			$img_useredit = 'no_user_edit.png';
-		}
+        if ($this->_auth->canDo('UserMod')) {
+            $edit_disable = '';
+            $img_useredit = 'user_edit.png';
+        } else {
+            $edit_disable = 'disabled="disabled"';
+            $img_useredit = 'no_user_edit.png';
+        }
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -220,7 +220,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $style = $this->_edit_user ? " style=\"width: 46%; float: left;\"" : "";
 
-        if ($this->_auth->canDo('createUser')) {
+        if ($this->_auth->canDo('addUser')) {
           ptln("<div".$style.">");
           print $this->locale_xhtml('add');
           ptln("  <div class=\"level2\">");
@@ -231,7 +231,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           ptln("</div>");
         }
 
-        if($this->_edit_user  && $this->_auth->canDo('modifyUser')){
+        if($this->_edit_user  && $this->_auth->canDo('UserMod')){
           ptln("<div".$style." id=\"scroll__here\">");
           print $this->locale_xhtml('edit');
           ptln("  <div class=\"level2\">");
@@ -243,6 +243,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
     }
 
+
+		/**
+     * @todo disable fields which the backend can't change
+     */
     function _htmlUserForm($cmd,$user=null,$indent=0) {
 
         if ($user) {
@@ -300,7 +304,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     function _addUser(){
     
-        if (!$this->_auth->canDo('createUser')) return false;
+        if (!$this->_auth->canDo('addUser')) return false;
 
         list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
         if (empty($user)) return false;
@@ -313,7 +317,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     function _deleteUser(){
 
-        if (!$this->_auth->canDo('deleteUsers')) return false;
+        if (!$this->_auth->canDo('delUser')) return false;
 
         $selected = $_REQUEST['delete'];
         if (!is_array($selected) || empty($selected)) return false;
@@ -334,7 +338,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Modify user
      */
     function _modifyUser(){
-        if (!$this->_auth->canDo('modifyUser')) return false;
+        if (!$this->_auth->canDo('UserMod')) return false;
 
         list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
         if (empty($user)) return false;
