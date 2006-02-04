@@ -342,11 +342,13 @@ function html_search(){
   if(count($data)){
     sort($data);
     print '<div class="search_quickresult">';
-    print '<strong>'.$lang[quickhits].':</strong><br />';
+    print '<h3>'.$lang[quickhits].':</h3>';
     foreach($data as $id){
-      print '<div class="search_quickhits">';
+      print '<ul class="search_quickhits">';
+      print '<li> ';
       print html_wikilink(':'.$id,$conf['useheading']?NULL:$id);
-      print '</div> ';
+      print '</li> ';
+      print '</ul> ';
     }
     //clear float (see http://www.complexspiral.com/publications/containing-floats/)
     print '<div class="clearer">&nbsp;</div>';
