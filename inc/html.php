@@ -343,13 +343,13 @@ function html_search(){
     sort($data);
     print '<div class="search_quickresult">';
     print '<h3>'.$lang[quickhits].':</h3>';
+    print '<ul class="search_quickhits">';
     foreach($data as $id){
-      print '<ul class="search_quickhits">';
       print '<li> ';
       print html_wikilink(':'.$id,$conf['useheading']?NULL:$id);
       print '</li> ';
-      print '</ul> ';
     }
+    print '</ul> ';
     //clear float (see http://www.complexspiral.com/publications/containing-floats/)
     print '<div class="clearer">&nbsp;</div>';
     print '</div>';
