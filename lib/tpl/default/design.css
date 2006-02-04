@@ -92,26 +92,24 @@ textarea.edit {
 input.edit,select.edit {
   font-size: 100%;
   border: 1px solid __dark__;
-  height: 18px !important;
-  max-height: 22px !important;
-  min-height: 22px !important;
+  height: 1.65em;
   color: Black;
   background-color: __white__;
   vertical-align: middle;
-  padding: 1px;
+  margin: 1px;
+  padding: 0 5px;
   display: inline;
 }
 
 input.missing {
   font-size: 100%;
   border: 1px solid __dark__;
-  height: 18px !important;
-  max-height: 22px !important;
-  min-height: 22px !important;
+  height: 1.65em;
   color: Black;
   background-color: #ffcccc;
   vertical-align: middle;
-  padding: 1px;
+  margin: 1px;
+  padding: 0 5px;
   display: inline;
 }
 
@@ -126,10 +124,9 @@ input.button, button.button{
   text-decoration:none;
   font-size: 100%;
   cursor: pointer;
-  height: 22px !important;
-  max-height: 22px !important;
-  min-height: 22px !important;
+  height: 1.8em;
   margin: 1px;
+  padding: 0 5px;
   display: inline-block;
 
   /* Mac IE will not see this and continue with inline-block */
@@ -148,9 +145,6 @@ div.secedit input.button {
   padding: 0px;
   font-size: 10px;
   cursor: pointer;
-  height: 15px !important;
-  max-height: 15px !important;
-  min-height: 15px !important;
   float:right;
   display: inline;
 }

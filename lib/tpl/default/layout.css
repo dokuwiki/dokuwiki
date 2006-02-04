@@ -44,7 +44,7 @@
 
 /* ---------------  top and bottom bar ---------------- */
 .bar {
-	height:25px;
+	height:2.0em;
 	border-top:1px solid __dark__;
 	border-bottom:1px solid __dark__;
 	background: __medium__;
