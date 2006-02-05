@@ -984,10 +984,9 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
   
 ?>
-  <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
-  <table style="width:99%">
-    <tr>
-      <td class="toolbar" colspan="2">
+  <div style="width:99%;">
+  <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"><div class="no">
+     <div class="toolbar">
         <div id="toolbar"></div>
         <input type="hidden" name="id"   value="<?php echo $ID?>" />
         <input type="hidden" name="rev"  value="<?php echo $REV?>" />
@@ -1002,38 +1001,29 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
         </script>
         <span id="spell_action"></span>
         <?php } ?>
-      </td>
-      <td>
         <div id="spell_suggest"></div>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        <div id="spell_result"></div>
-        <textarea name="wikitext" id="wikitext" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
-      </td>
-    </tr>
-    <tr id="wikieditbar">
-      <td>
+    </div>
+    <div id="spell_result"></div>
+
+    <textarea name="wikitext" id="wikitext" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
+
+    <div id="wikieditbar">
+      <div id="sizectl"></div>
       <?php if($wr){?>
         <input class="button" id="edbtn_save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
         <input class="button" id="edbtn_preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
         <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
       <?php } ?>
-      </td>
-      <td>
       <?php if($wr){ ?>
-        <?php echo $lang['summary']?>:
-        <input type="text" class="edit" name="summary" id="summary" size="50" value="<?php echo formText($SUM)?>" tabindex="2" />
-        <?php html_minoredit()?>
+        <span class="summary">
+           <label for="summary"><?php echo $lang['summary']?>:</label>
+           <input type="text" class="edit" name="summary" id="summary" size="50" value="<?php echo formText($SUM)?>" tabindex="2" />
+           <?php html_minoredit()?>
+        </span>
       <?php }?>
-      </td>
-      <td class="rightalign">
-        <div id="sizectl"></div>
-      </td>
-    </tr>
-  </table>
-  </form>
+    </div>
+  </div></form>
+  </div>
 <?php
 }
 
