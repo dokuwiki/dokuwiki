@@ -132,9 +132,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->lastsec = $pos;
         }
 
-        $this->doc .= DOKU_LF.'<a name="'.$this->_headerToLink($text).'" id="'.$this->_headerToLink($text).'"></a><h'.$level.'>';
+        $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$this->_headerToLink($text).'" id="'.$this->_headerToLink($text).'">';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</h$level>".DOKU_LF;
+        $this->doc .= "</a></h$level>".DOKU_LF;
     }
     
     function section_open($level) {

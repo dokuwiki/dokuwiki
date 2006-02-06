@@ -197,6 +197,10 @@ a:hover {
   color:__black__;
   text-decoration:underline;
 }
+h1 a, h2 a, h3 a, h4 a, h5 a, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover {
+  color:__black__;
+  text-decoration:none;
+}
 
 /* external link */
 a.urlextern{
