@@ -16,9 +16,9 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_wikilink($id,$name=NULL,$search=''){
-  require_once(DOKU_INC.'inc/parser/xhtml.php');
   static $xhtml_renderer = NULL;
   if(is_null($xhtml_renderer)){
+    require_once(DOKU_INC.'inc/parser/xhtml.php');
     $xhtml_renderer = new Doku_Renderer_xhtml(); 
   }
 
