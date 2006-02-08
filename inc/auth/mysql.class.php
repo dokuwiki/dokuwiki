@@ -38,6 +38,7 @@ class auth_mysql extends auth_basic {
         if ($this->cnf['debug'])
           msg("MySQL err: PHP MySQL extension not found.",-1);
         $this->success = false;
+        return;
       }
       
       $this->cnf          = $conf['auth']['mysql'];
@@ -59,7 +60,11 @@ class auth_mysql extends auth_basic {
                                                           'delUserRefs'),true);
       $this->cando['modLogin']     = $this->_chkcnf(array('getUserID',
                                                           'updateUser',
-                                                          'UpdateTarget',
+                                                          'UpdateTarget'),true);
+      $this->cando['modPass']      = $this->cando['modLogin'];
+      $this->cando['modName']      = $this->cando['modLogin'];
+      $this->cando['modMail']      = $this->cando['modLogin'];
+      $this->cando['modGroups']    = $this->_chkcnf(array('getUserID',
                                                           'getGroups',
                                                           'getGroupID',
                                                           'addGroup',
@@ -67,12 +72,9 @@ class auth_mysql extends auth_basic {
                                                           'delGroup',
                                                           'getGroupID',
                                                           'delUserGroup'),true);
-      $this->cando['modPass']      = $this->cando['modLogin'];
-      $this->cando['modName']      = $this->cando['modLogin'];
-      $this->cando['modMail']      = $this->cando['modLogin'];
-      $this->cando['modGroups']    = $this->cando['modLogin'];
+      /* getGroups is not yet supported
       $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
-                                                          'getGroupID'),false);
+                                                          'getGroupID'),false); */
       $this->cando['getUsers']     = $this->_chkcnf(array('getUsers',
                                                           'getUserInfo',
                                                           'getGroups'),false);
@@ -209,9 +211,14 @@ class auth_mysql extends auth_basic {
      * The password must be provides unencrypted. Pasword cryption is done
      * automatically if configured.
      *
-     * If one or more groups could't be updated, no error would be set. In
+     * If one or more groups could't be updated, an error would be set. In
      * this case the dataset might already be changed and we can't rollback
      * the changes. Transactions would be really usefull here.
+     *
+     * modifyUser() may be called without SQL statements defined that are
+     * needed to change group membership (for example if only the user profile
+     * should be modified). In this case we asure that we don't touch groups
+     * even $changes['grps'] is set by mistake.
      *
      * @param   $user     nick of the user to be changed
      * @param   $changes  array of field/value pairs to be changed (password
@@ -233,7 +240,7 @@ class auth_mysql extends auth_basic {
         if (($uid = $this->_getUserID($user))) {
           $rc = $this->_updateUserInfo($changes, $uid);
 
-          if ($rc && isset($changes['grps'])) {
+          if ($rc && isset($changes['grps']) && $this->cando['modGroups']) {
             $groups = $this->_getGroups($user);
             $grpadd = array_diff($changes['grps'], $groups);
             $grpdel = array_diff($groups, $changes['grps']);
