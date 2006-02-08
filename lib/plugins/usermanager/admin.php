@@ -244,7 +244,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
 
-		/**
+    /**
      * @todo disable fields which the backend can't change
      */
     function _htmlUserForm($cmd,$user=null,$indent=0) {
@@ -262,11 +262,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      <tr><th>".$this->lang["field"]."</th><th>".$this->lang["value"]."</th></tr>",$indent);
         ptln("    </thead>",$indent);
         ptln("    <tbody>",$indent);
-        ptln("      <tr><td><label for=\"".$cmd."_userid\" >".$this->lang["user_id"]." : </label></td><td><input type=\"text\" id=\"".$cmd."_userid\" name=\"userid\" value=\"".$user."\" /></td></tr>",$indent);
-        ptln("      <tr><td><label for=\"".$cmd."_userpass\" >".$this->lang["user_pass"]." : </label></td><td><input type=\"text\" id=\"".$cmd."_userpass\" name=\"userpass\" value=\"\" /></td></tr>",$indent);
-        ptln("      <tr><td><label for=\"".$cmd."_username\" >".$this->lang["user_name"]." : </label></td><td><input type=\"text\" id=\"".$cmd."_username\" name=\"username\" value=\"".$name."\" /></td></tr>",$indent);
-        ptln("      <tr><td><label for=\"".$cmd."_usermail\" >".$this->lang["user_mail"]." : </label></td><td><input type=\"text\" id=\"".$cmd."_usermail\" name=\"usermail\" value=\"".$mail."\" /></td></tr>",$indent);
-        ptln("      <tr><td><label for=\"".$cmd."_usergroups\" >".$this->lang["user_groups"]." : </label></td><td><input type=\"text\" id=\"".$cmd."_usergroups\" name=\"usergroups\" value=\"".$groups."\" /></td></tr>",$indent);
+
+        $this->_htmlInputField($cmd."_userid",    "userid",    $this->lang["user_id"],    $user,  $this->_auth->canDo("modLogin"), $indent+6);
+        $this->_htmlInputField($cmd."_userpass",  "userpass",  $this->lang["user_pass"],  "",     $this->_auth->canDo("modPass"),  $indent+6);
+        $this->_htmlInputField($cmd."_username",  "username",  $this->lang["user_name"],  $name,  $this->_auth->canDo("modName"),  $indent+6);
+        $this->_htmlInputField($cmd."_usermail",  "usermail",  $this->lang["user_mail"],  $mail,  $this->_auth->canDo("modMail"),  $indent+6);
+        $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"),$indent+6);
+
         ptln("    </tbody>",$indent);
         ptln("    <tbody>",$indent);
         ptln("      <tr>",$indent);
@@ -286,6 +288,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    </tbody>",$indent);
         ptln("  </table>",$indent);
         ptln("</form>",$indent);
+    }
+    
+    function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
+        $disabled = $cando ? "" : " disabled=\"disabled\"";
+        $class = $cando ? "" : " class=\"disabled\"";
+        ptln("<tr".$class."><td><label for=\"".$id."\" >".$label." : </label></td><td><input type=\"text\" id=\"".$id."\" name=\"".$name."\" value=\"".$value."\"".$disabled." /></td></tr>",$indent);
     }
 
     function _htmlFilter($key) {
@@ -340,17 +348,23 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     function _modifyUser(){
         if (!$this->_auth->canDo('UserMod')) return false;
 
-		/* get currently valid  user data */
+        // get currently valid  user data
         $olduser = cleanID(preg_replace('/.*:/','',$_REQUEST['userid_old']));
         $oldinfo = $this->_auth->getUserData($olduser);
-		
-		/* get new user data subject to change */
+    
+        // get new user data subject to change
         list($newuser,$newpass,$newname,$newmail,$newgrps) = $this->_retrieveUser();
         if (empty($newuser)) return false;
 
         $changes = array();
         if ($newuser != $olduser) {
-          /* check if $newuser already exist */
+        
+          if (!$this->_auth->canDo('modLogin')) {        // sanity check, shouldn't be possible
+            msg($this->lang['update_fail'],-1);
+            return false;
+          }
+
+          // check if $newuser already exists
           if ($this->_auth->getUserData($newuser)) {
             msg(sprintf($this->lang['update_exists'],$newuser),-1);
             $this->_edit_user = $olduser;
@@ -359,16 +373,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           }
         }
 
-        if (!empty($newpass))
-		  $changes['pass'] = $newpass;
-        if (!empty($newname) && $newname != $oldinfo['name'])
-		  $changes['name'] = $newname;
-        if (!empty($newmail) && $newmail != $oldinfo['mail'])
-		  $changes['mail'] = $newmail;
-        if (!empty($newgrps) && $newgrps != $oldinfo['grps'])
-		  $changes['grps'] = $newgrps;
+        if (!empty($newpass) && $this->_auth->canDo('modPass')) 
+          $changes['pass'] = $newpass;
+        if (!empty($newname) && $this->_auth->canDo('modName') && $newname != $oldinfo['name'])
+          $changes['name'] = $newname;
+        if (!empty($newmail) && $this->_auth->canDo('modMail') && $newmail != $oldinfo['mail'])
+          $changes['mail'] = $newmail;
+        if (!empty($newgrps) && $this->_auth->canDo('modGroups') && $newgrps != $oldinfo['grps'])
+          $changes['grps'] = $newgrps;
 
-		if ($this->_auth->modifyUser($olduser, $changes)) {
+    if ($this->_auth->modifyUser($olduser, $changes)) {
           msg($this->lang['update_ok'],1);
         } else {
           msg($this->lang['update_fail'],-1);
