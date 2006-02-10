@@ -65,8 +65,10 @@ function getID($param='id',$clean=true){
  * converted to unaccented ones
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string  $id    The pageid to clean
+ * @param  boolean $ascii Force ASCII
  */
-function cleanID($id){
+function cleanID($id,$ascii=false){
   global $conf;
   global $lang;
   static $sepcharpat = null;
@@ -86,10 +88,13 @@ function cleanID($id){
     $id = strtr($id,'/',$sepchar);
   }
 
-  if($conf['deaccent']) $id = utf8_deaccent($id,-1);
+  if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id); 
+  if($conf['deaccent'] || $ascii) $id = utf8_deaccent($id,-1);
 
   //remove specials
   $id = utf8_stripspecials($id,$sepchar,'\*');
+
+  if($ascii) $id = utf8_strip($id);
 
   //clean up
   $id = preg_replace($sepcharpat,$sepchar,$id);

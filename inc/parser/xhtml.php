@@ -967,8 +967,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         return htmlspecialchars($string);
     }
     
+    /**
+     * Creates a linkid from a headline
+     */
     function _headerToLink($title) {
-        return str_replace(':','',cleanID($title));
+        $title = str_replace(':','',cleanID($title,true));
+        $title = ltrim($title,'0123456789');
+        if(empty($title)) $title='section';
+        return $title;
     }
 
     /**
