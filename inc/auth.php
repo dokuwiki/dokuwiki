@@ -207,6 +207,7 @@ function auth_logoff(){
   global $conf;
   global $USERINFO;
   global $INFO, $ID;
+  global $auth;
 
   if(isset($_SESSION[$conf['title']]['auth']['user']))
     unset($_SESSION[$conf['title']]['auth']['user']);
@@ -218,6 +219,10 @@ function auth_logoff(){
     unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
   setcookie(DOKU_COOKIE,'',time()-600000,'/');
+
+  if($auth && $auth->canDo('logoff')){
+    $auth->logOff();
+  }
 }
 
 /**

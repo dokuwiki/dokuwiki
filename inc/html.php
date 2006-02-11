@@ -1063,6 +1063,7 @@ function html_minoredit(){
 function html_debug(){
   global $conf;
   global $lang;
+  global $auth;
   //remove sensitive data
   $cnf = $conf;
   $cnf['auth']='***';
@@ -1106,6 +1107,12 @@ function html_debug(){
   print '<b>encoding:</b><pre>';
   print $lang['encoding'];
   print '</pre>';
+
+  if($auth){
+    print '<b>Auth backend capabilities:</b><pre>';
+    print_r($auth->cando);
+    print '</pre>';
+  }
 
   print '<b>$_SESSION:</b><pre>';
   print_r($_SESSION);

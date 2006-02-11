@@ -10,44 +10,45 @@
  
 class auth_basic {
 
-	var $success = true;
+  var $success = true;
 
 
-	/**
+  /**
    * Posible things an auth backend module may be able to
    * do. The things a backend can do need to be set to true
    * in the constructor.
    */
-	var $cando = array (
-		'addUser'     => false, // can Users be created?
-	  'delUser'     => false, // can Users be deleted?
-	  'modLogin'    => false, // can login names be changed?
-	  'modPass'     => false, // can passwords be changed?
-	  'modName'     => false, // can real names be changed?
-	  'modMail'     => false, // can emails be changed?
-	  'modGroups'   => false, // can groups be changed?
-	  'getUsers'    => false, // can a (filtered) list of users be retrieved?
-	  'getUserCount'=> false, // can the number of users be retrieved?
-	  'getGroups'   => false, // can a list of available groups be retrieved?
-	  'external'    => false, // does the module do external auth checking?
+  var $cando = array (
+    'addUser'     => false, // can Users be created?
+    'delUser'     => false, // can Users be deleted?
+    'modLogin'    => false, // can login names be changed?
+    'modPass'     => false, // can passwords be changed?
+    'modName'     => false, // can real names be changed?
+    'modMail'     => false, // can emails be changed?
+    'modGroups'   => false, // can groups be changed?
+    'getUsers'    => false, // can a (filtered) list of users be retrieved?
+    'getUserCount'=> false, // can the number of users be retrieved?
+    'getGroups'   => false, // can a list of available groups be retrieved?
+    'external'    => false, // does the module do external auth checking?
+    'logoff'      => false, // has the module some special logoff method?
   );
 
 
-	/**
-	 * Constructor.
-	 *
-	 * Carry out sanity checks to ensure the object is
-	 * able to operate. Set capabilities in $this->cando
+  /**
+   * Constructor.
+   *
+   * Carry out sanity checks to ensure the object is
+   * able to operate. Set capabilities in $this->cando
    * array here
-	 * 
-	 * Set $this->success to false if checks fail
-	 *
+   * 
+   * Set $this->success to false if checks fail
+   *
    * @author  Christopher Smith <chris@jalakai.co.uk>
-   */		 
+   */     
   function auth_basic() {
-	 	// the base class constructor does nothing, derived class
+     // the base class constructor does nothing, derived class
     // constructors do the real work
-	}
+  }
 
   /**
    * Capability check. [ DO NOT OVERRIDE ]
@@ -59,19 +60,19 @@ class auth_basic {
    * ususal capabilities start with lowercase letter
    * shortcut capabilities start with uppercase letter
    *
-	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 * @return  bool
-	 */
+   * @author  Andreas Gohr <andi@splitbrain.org>
+   * @return  bool
+   */
   function canDo($cap) {
-		switch($cap){
-			case 'Profile':
-				// can at least one of the user's properties be changed?
-				return ( $this->cando['modPass']  ||
+    switch($cap){
+      case 'Profile':
+        // can at least one of the user's properties be changed?
+        return ( $this->cando['modPass']  ||
                  $this->cando['modName']  ||
                  $this->cando['modMail'] );
-				break;
-			case 'UserMod':
-			  // can at least anything be changed?
+        break;
+      case 'UserMod':
+        // can at least anything be changed?
         return ( $this->cando['modPass']   ||
                  $this->cando['modName']   ||
                  $this->cando['modMail']   ||
@@ -79,15 +80,26 @@ class auth_basic {
                  $this->cando['modGroups'] ||
                  $this->cando['modMail'] );
         break;
-			default:
-				// print a helping message for developers
-				if(!isset($this->cando[$cap])){
-					msg("Check for unknown capability '$cap' - Do you use an outdated Plugin?",-1);
-				}
-			  return $this->cando[$cap];
-		}
-	}
+      default:
+        // print a helping message for developers
+        if(!isset($this->cando[$cap])){
+          msg("Check for unknown capability '$cap' - Do you use an outdated Plugin?",-1);
+        }
+        return $this->cando[$cap];
+    }
+  }
 
+  /**
+   * Log off the current user [ OPTIONAL ]
+   *
+   * Is run in addition to the ususal logoff method. Should
+   * only be needed when trustExternal is implemented.
+   *
+   * @see     auth_logoff()
+   * @author  Andreas Gohr
+   */
+  function logOff(){
+  }
 
   /**
    * Do all authentication [ OPTIONAL ]
@@ -141,139 +153,140 @@ class auth_basic {
 #    return true;
   }
 
-	/**
-	 * Check user+password [ MUST BE OVERRIDDEN ]
-	 *
-	 * Checks if the given user exists and the given
-	 * plaintext password is correct
-	 *
-	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 * @return  bool
-	 */
-	function checkPass($user,$pass){
-	  msg("no valid authorisation system in use", -1);
-	  return false;
-	}
-	
-	/**
-	 * Return user info [ MUST BE OVERRIDDEN ]
-	 *
-	 * Returns info about the given user needs to contain
-	 * at least these fields:
-	 *
-	 * name string  full name of the user
-	 * mail string  email addres of the user
-	 * grps array   list of groups the user is in
-	 *
-	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 * @return  array containing user data or false
-	 */
-	function getUserData($user) {
+  /**
+   * Check user+password [ MUST BE OVERRIDDEN ]
+   *
+   * Checks if the given user exists and the given
+   * plaintext password is correct
+   *
+   * @author  Andreas Gohr <andi@splitbrain.org>
+   * @return  bool
+   */
+  function checkPass($user,$pass){
     msg("no valid authorisation system in use", -1);
     return false;
-	}
-	
-	/**
-	 * Create a new User [implement only where required/possible]
-	 *
-	 * Returns false if the user already exists, null when an error
-	 * occured and the cleartext password of the new user if
-	 * everything went well.
-	 * 
-	 * The new user HAS TO be added to the default group by this
-	 * function!
-	 *
+  }
+  
+  /**
+   * Return user info [ MUST BE OVERRIDDEN ]
+   *
+   * Returns info about the given user needs to contain
+   * at least these fields:
+   *
+   * name string  full name of the user
+   * mail string  email addres of the user
+   * grps array   list of groups the user is in
+   *
+   * @author  Andreas Gohr <andi@splitbrain.org>
+   * @return  array containing user data or false
+   */
+  function getUserData($user) {
+    msg("no valid authorisation system in use", -1);
+    return false;
+  }
+  
+  /**
+   * Create a new User [implement only where required/possible]
+   *
+   * Returns false if the user already exists, null when an error
+   * occured and the cleartext password of the new user if
+   * everything went well.
+   * 
+   * The new user HAS TO be added to the default group by this
+   * function!
+   *
    * Set addUser capability when implemented
    *
-	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 */
-	function createUser($user,$pass,$name,$mail,$grps=null){
-	  msg("authorisation method does not allow creation of new users", -1);
-	  return null;
-	}
-	
-	/**
-	 * Modify user data [implement only where required/possible]
-	 *
+   * @author  Andreas Gohr <andi@splitbrain.org>
+   */
+  function createUser($user,$pass,$name,$mail,$grps=null){
+    msg("authorisation method does not allow creation of new users", -1);
+    return null;
+  }
+  
+  /**
+   * Modify user data [implement only where required/possible]
+   *
    * Set the mod* capabilities according to the implemented features
    *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @param   $user      nick of the user to be changed
-	 * @param   $changes   array of field/value pairs to be changed (password will be clear text)
-	 * @return  bool
-	 */
-	function modifyUser($user, $changes) {
-	  msg("authorisation method does not allow modifying of user data", -1);
-	  return false;
-	}
-	
-	/**
-	 * Delete one or more users [implement only where required/possible]
-	 *
+   * @author  Chris Smith <chris@jalakai.co.uk>
+   * @param   $user      nick of the user to be changed
+   * @param   $changes   array of field/value pairs to be changed (password will be clear text)
+   * @return  bool
+   */
+  function modifyUser($user, $changes) {
+    msg("authorisation method does not allow modifying of user data", -1);
+    return false;
+  }
+  
+  /**
+   * Delete one or more users [implement only where required/possible]
+   *
    * Set delUser capability when implemented
-	 *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @param   array  $users
-	 * @return  int    number of users deleted
-	 */
-	function deleteUsers($users) {
-	  msg("authorisation method does not allow deleting of users", -1);
-	  return false;
-	}
+   *
+   * @author  Chris Smith <chris@jalakai.co.uk>
+   * @param   array  $users
+   * @return  int    number of users deleted
+   */
+  function deleteUsers($users) {
+    msg("authorisation method does not allow deleting of users", -1);
+    return false;
+  }
 
-	/**
-	 * Return a count of the number of user which meet $filter criteria
-	 * [should be implemented whenever retrieveUsers is implemented]
-	 *
-	 * Set getUserCount capability when implemented
+  /**
+   * Return a count of the number of user which meet $filter criteria
+   * [should be implemented whenever retrieveUsers is implemented]
    *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 */
-	function getUserCount($filter=array()) {
-	  msg("authorisation method does not provide user counts", -1);
-	  return 0;
-	}
-	
-	/**
-	 * Bulk retrieval of user data [implement only where required/possible]
-	 *
-	 * Set getUsers capability when implemented
+   * Set getUserCount capability when implemented
    *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @param   start     index of first user to be returned
-	 * @param   limit     max number of users to be returned
-	 * @param   filter    array of field/pattern pairs, null for no filter
-	 * @return  array of userinfo (refer getUserData for internal userinfo details)
-	 */
-	function retrieveUsers($start=0,$limit=-1,$filter=null) {
-	  msg("authorisation method does not support mass retrieval of user data", -1);
-	  return array();
-	}
-	
-	/**
-	 * Define a group [implement only where required/possible]
-	 * 
-	 * Set addGroup capability when implemented
+   * @author  Chris Smith <chris@jalakai.co.uk>
+   */
+  function getUserCount($filter=array()) {
+    msg("authorisation method does not provide user counts", -1);
+    return 0;
+  }
+  
+  /**
+   * Bulk retrieval of user data [implement only where required/possible]
    *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @return  bool
-	 */
-	function addGroup($group) {
-	  msg("authorisation method does not support independent group creation", -1);
-	  return false;
-	}
+   * Set getUsers capability when implemented
+   *
+   * @author  Chris Smith <chris@jalakai.co.uk>
+   * @param   start     index of first user to be returned
+   * @param   limit     max number of users to be returned
+   * @param   filter    array of field/pattern pairs, null for no filter
+   * @return  array of userinfo (refer getUserData for internal userinfo details)
+   */
+  function retrieveUsers($start=0,$limit=-1,$filter=null) {
+    msg("authorisation method does not support mass retrieval of user data", -1);
+    return array();
+  }
+  
+  /**
+   * Define a group [implement only where required/possible]
+   * 
+   * Set addGroup capability when implemented
+   *
+   * @author  Chris Smith <chris@jalakai.co.uk>
+   * @return  bool
+   */
+  function addGroup($group) {
+    msg("authorisation method does not support independent group creation", -1);
+    return false;
+  }
 
-	/**
-	 * Retrieve groups [implement only where required/possible]
-	 * 
-	 * Set getGroups capability when implemented
+  /**
+   * Retrieve groups [implement only where required/possible]
+   * 
+   * Set getGroups capability when implemented
    *
-	 * @author  Chris Smith <chris@jalakai.co.uk>
-	 * @return  array
-	 */
-	function retrieveGroups($start=0,$limit=0) {
-	  msg("authorisation method does not support group list retrieval", -1);
-	  return array();
-	}
+   * @author  Chris Smith <chris@jalakai.co.uk>
+   * @return  array
+   */
+  function retrieveGroups($start=0,$limit=0) {
+    msg("authorisation method does not support group list retrieval", -1);
+    return array();
+  }
 
 }
+//Setup VIM: ex: et ts=2 enc=utf-8 :
