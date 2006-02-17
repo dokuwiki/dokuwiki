@@ -12,30 +12,33 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/io.php');
-  require_once(DOKU_INC.'inc/blowfish.php');
-  require_once(DOKU_INC.'inc/mail.php');
-  
-  // load the the backend auth functions and instantiate the auth object
-  if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
-    require_once(DOKU_INC.'inc/auth/basic.class.php');
-    require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
-  
-    $auth_class = "auth_".$conf['authtype'];
-    if (class_exists($auth_class)) {
-      $auth = new $auth_class();
-      if ($auth->success == false) { 
-			  unset($auth); 
-				msg($lang['authtempfail'], -1);
 
-        // turn acl config setting off for the rest of this page
-				$conf['useacl'] = 0;
-			}
-		} else {
-			die($lang['authmodfailed']);
-		}
-	} else {
-	  die($lang['authmodfailed']);
-	}
+  if($conf['useacl']){
+    require_once(DOKU_INC.'inc/blowfish.php');
+    require_once(DOKU_INC.'inc/mail.php');
+
+    // load the the backend auth functions and instantiate the auth object
+    if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
+      require_once(DOKU_INC.'inc/auth/basic.class.php');
+      require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
+
+      $auth_class = "auth_".$conf['authtype'];
+      if (class_exists($auth_class)) {
+        $auth = new $auth_class();
+        if ($auth->success == false) {
+          unset($auth);
+          msg($lang['authtempfail'], -1);
+
+          // turn acl config setting off for the rest of this page
+          $conf['useacl'] = 0;
+        }
+      } else {
+        die($lang['authmodfailed']);
+      }
+    } else {
+      die($lang['authmodfailed']);
+    }
+  }
 
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));
 
@@ -97,7 +100,7 @@ function auth_login($user,$pass,$sticky=false){
   global $USERINFO;
   global $conf;
   global $lang;
-	global $auth;
+  global $auth;
   $sticky ? $sticky = true : $sticky = false; //sanity check
 
   if(isset($user)){
@@ -105,8 +108,8 @@ function auth_login($user,$pass,$sticky=false){
     if ($auth->checkPass($user,$pass)){
       // make logininfo globally available
       $_SERVER['REMOTE_USER'] = $user;
-      $USERINFO = $auth->getUserData($user); //FIXME move all references to session 
-    
+      $USERINFO = $auth->getUserData($user); //FIXME move all references to session
+
       // set cookie
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
       $cookie = base64_encode("$user|$sticky|$pass");
@@ -260,7 +263,7 @@ function auth_aclcheck($id,$user,$groups){
 
   # if no ACL is used always return upload rights
   if(!$conf['useacl']) return AUTH_UPLOAD;
-  
+
   //if user is superuser return 255 (acl_admin)
   if($conf['superuser'] == $user) { return AUTH_ADMIN; }
 
@@ -383,8 +386,8 @@ function auth_pwgen(){
 function auth_sendPassword($user,$password){
   global $conf;
   global $lang;
-	global $auth;
-	
+  global $auth;
+
   $hdrs  = '';
   $userinfo = $auth->getUserData($user);
 
@@ -405,7 +408,7 @@ function auth_sendPassword($user,$password){
 
 /**
  * Register a new user
- * 
+ *
  * This registers a new user - Data is read directly from $_POST
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -415,10 +418,10 @@ function auth_sendPassword($user,$password){
 function register(){
   global $lang;
   global $conf;
-	global $auth;
+  global $auth;
 
   if(!$_POST['save']) return false;
-	if(!$auth->canDo('addUser')) return false;
+  if(!$auth->canDo('addUser')) return false;
 
   //clean username
   $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
@@ -483,8 +486,8 @@ function updateprofile() {
   global $conf;
   global $INFO;
   global $lang;
-	global $auth;
-  
+  global $auth;
+
   if(!$_POST['save']) return false;
 
   // should not be able to get here without Profile being possible...
@@ -497,11 +500,11 @@ function updateprofile() {
     msg($lang['regbadpass'], -1);      // complain about misspelled passwords
     return false;
   }
-    
+
   //clean fullname and email
   $_POST['fullname'] = trim(str_replace(':','',$_POST['fullname']));
   $_POST['email']    = trim(str_replace(':','',$_POST['email']));
-  
+
   if (empty($_POST['fullname']) || empty($_POST['email'])) {
     msg($lang['profnoempty'],-1);
     return false;
@@ -511,23 +514,23 @@ function updateprofile() {
     msg($lang['regbadmail'],-1);
     return false;
   }
-  
+
   if ($_POST['fullname'] != $INFO['userinfo']['name']) $changes['name'] = $_POST['fullname'];
   if ($_POST['email']    != $INFO['userinfo']['mail']) $changes['mail'] = $_POST['email'];
   if (!empty($_POST['newpass']))  $changes['pass'] = $_POST['newpass'];
-  
+
   if (!count($changes)) {
     msg($lang['profnochange'], -1);
     return false;
-  } 
+  }
 
   if ($conf['profileconfirm']) {
       if (!auth_verifyPassword($_POST['oldpass'],$INFO['userinfo']['pass'])) {
       msg($lang['badlogin'],-1);
       return false;
     }
-  }  
-  
+  }
+
   return $auth->modifyUser($_SERVER['REMOTE_USER'], $changes);
 }
 
@@ -542,8 +545,8 @@ function updateprofile() {
 function act_resendpwd(){
     global $lang;
     global $conf;
-		global $auth;
-    
+    global $auth;
+
     if(!$_POST['save']) return false;
     if(!$conf['resendpasswd']) return false;
 
@@ -552,26 +555,26 @@ function act_resendpwd(){
       msg($lang['resendna'],-1);
       return false;
     }
-    
+
     if (empty($_POST['login'])) {
       msg($lang['resendpwdmissing'], -1);
       return false;
     } else {
       $user = $_POST['login'];
     }
-    
+
     $userinfo = $auth->getUserData($user);
     if(!$userinfo['mail']) {
       msg($lang['resendpwdnouser'], -1);
       return false;
     }
-    
+
     $pass = auth_pwgen();
     if (!$auth->modifyUser($user,array('pass' => $pass))) {
       msg('error modifying user data',-1);
       return false;
     }
-        
+
     if (auth_sendPassword($user,$pass)) {
       msg($lang['resendpwdsuccess'],1);
     } else {
@@ -584,7 +587,7 @@ function act_resendpwd(){
  * Uses a regular expresion to check if a given mail address is valid
  *
  * May not be completly RFC conform!
- * 
+ *
  * @link    http://www.webmasterworld.com/forum88/135.htm
  *
  * @param   string $email the address to check
