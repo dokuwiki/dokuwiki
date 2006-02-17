@@ -19,7 +19,7 @@ function html_wikilink($id,$name=NULL,$search=''){
   static $xhtml_renderer = NULL;
   if(is_null($xhtml_renderer)){
     require_once(DOKU_INC.'inc/parser/xhtml.php');
-    $xhtml_renderer = new Doku_Renderer_xhtml(); 
+    $xhtml_renderer = new Doku_Renderer_xhtml();
   }
 
   return $xhtml_renderer->internallink($id,$name,$search,true);
@@ -47,7 +47,7 @@ function html_login(){
   global $lang;
   global $conf;
   global $ID;
-	global $auth;
+  global $auth;
 
   print p_locale_xhtml('login');
   ?>
@@ -186,15 +186,15 @@ function html_topbtn(){
 function html_backtomedia_button($params,$akey=''){
   global $conf;
   global $lang;
-  
+
   $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/media.php"><div class="no">';
-  
+
   reset($params);
   while (list($key, $val) = each($params)) {
     $ret .= '<input type="hidden" name="'.$key.'" ';
     $ret .= 'value="'.htmlspecialchars($val).'" />';
   }
-  
+
   $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_backtomedia']).'" class="button" ';
   if($akey){
     $ret .= 'title="ALT+'.strtoupper($akey).'" ';
@@ -214,15 +214,15 @@ function html_backtomedia_button($params,$akey=''){
 function html_btn($name,$id,$akey,$params,$method='get'){
   global $conf;
   global $lang;
-  
+
   $label = $lang['btn_'.$name];
-  
+
   $ret = '';
 
   //filter id (without urlencoding)
   $id = idfilter($id,false);
 
-  //make nice URLs even for buttons 
+  //make nice URLs even for buttons
   if($conf['userewrite'] == 2){
     $script = DOKU_BASE.DOKU_SCRIPT.'/'.$id;
   }elseif($conf['userewrite']){
@@ -231,15 +231,15 @@ function html_btn($name,$id,$akey,$params,$method='get'){
     $script = DOKU_BASE.DOKU_SCRIPT;
     $params['id'] = $id;
   }
- 
+
   $ret .= '<form class="button" method="'.$method.'" action="'.$script.'"><div class="no">';
-  
+
   reset($params);
   while (list($key, $val) = each($params)) {
     $ret .= '<input type="hidden" name="'.$key.'" ';
     $ret .= 'value="'.htmlspecialchars($val).'" />';
   }
-  
+
   $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
   if($akey){
     $ret .= 'title="ALT+'.strtoupper($akey).'" ';
@@ -266,7 +266,7 @@ function html_show($txt=''){
   }else{
     $secedit = true;
   }
-  
+
   if ($txt){
     //PreviewHeader
     print '<br id="scroll__here" />';
@@ -300,11 +300,11 @@ function html_hilight($html,$query){
   return $html;
 }
 
-/** 
+/**
  * Callback used by html_hilight()
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
- */     
+ */
 function html_hilight_callback($m) {
   $hlight = unslash($m[0]);
   if ( !isset($m[2])) {
@@ -391,7 +391,7 @@ function html_locked(){
   global $conf;
   global $lang;
   global $INFO;
-  
+
   $locktime = filemtime(wikiFN($ID).'.lock');
   $expire = @date($conf['dformat'], $locktime + $conf['locktime'] );
   $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
@@ -413,9 +413,9 @@ function html_revisions(){
   global $INFO;
   global $conf;
   global $lang;
-  $revisions = getRevisions($ID); 
+  $revisions = getRevisions($ID);
   $date = @date($conf['dformat'],$INFO['lastmod']);
-  
+
   print p_locale_xhtml('revisions');
   print '<ul>';
   if($INFO['exists']){
@@ -494,11 +494,11 @@ function html_recent($first=0){
     $first=0;
     $recents = getRecents(0,$conf['recent'] + 1,getNS($ID));
   }
-  $cnt = count($recents) <= $conf['recent'] ? count($recents) : $conf['recent']; 
+  $cnt = count($recents) <= $conf['recent'] ? count($recents) : $conf['recent'];
 
   print p_locale_xhtml('recent');
   print '<ul>';
-  
+
   foreach($recents as $recent){
     $date = date($conf['dformat'],$recent['date']);
     print ($recent['minor']) ? '<li class="minor">' : '<li>';
@@ -549,7 +549,7 @@ function html_recent($first=0){
   print '<div class="pagenav">';
   $last = $first + $conf['recent'];
   if ($first > 0) {
-    $first -= $conf['recent']; 
+    $first -= $conf['recent'];
     if ($first < 0) $first = 0;
     print '<div class="pagenav-prev">';
     print html_btn('newer','',"p",array('do' => 'recent', 'first' => $first));
@@ -674,7 +674,7 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
       $ret .= "</li>\n";
     }
 
-    //remember current level 
+    //remember current level
     $level = $item['level'];
 
     //print item
@@ -832,7 +832,7 @@ function html_register(){
       <?php echo $lang['user']?>
       <input type="text" name="login" class="edit" size="50" value="<?php echo formText($_POST['login'])?>" />
     </label><br />
-    
+
     <?php
       if (!$conf['autopasswd']) {
     ?>
@@ -877,7 +877,7 @@ function html_updateprofile(){
   global $auth;
 
   print p_locale_xhtml('updateprofile');
-  
+
   if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
   if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
 ?>
@@ -891,7 +891,7 @@ function html_updateprofile(){
     <label class="block">
       <?php echo $lang['user']?>
       <input type="text" name="fullname" disabled="disabled" class="edit" size="50" value="<?php echo formText($_SERVER['REMOTE_USER'])?>" />
-    </label><br /> 
+    </label><br />
     <label class="block">
       <?php echo $lang['fullname']?>
       <input type="text" name="fullname" <?php if(!$auth->canDo('modName')) echo 'disabled="disabled"'?> class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
@@ -911,15 +911,15 @@ function html_updateprofile(){
       <input type="password" name="passchk" class="edit" size="50" />
     </label><br />
     <?php } ?>
-    
+
     <?php if ($conf['profileconfirm']) { ?>
       <br />
       <label class="block">
       <?php echo $lang['oldpass']?>
-      <input type="password" name="oldpass" class="edit" size="50" />    
+      <input type="password" name="oldpass" class="edit" size="50" />
     </label><br />
     <?php } ?>
-    
+
     <input type="submit" class="button" value="<?php echo $lang['btn_save']?>" />
     <input type="reset" class="button" value="<?php echo $lang['btn_reset']?>" />
   </fieldset>
@@ -982,7 +982,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   }
   if(!$DATE) $DATE = $INFO['lastmod'];
 
-  
+
 ?>
   <div style="width:99%;">
   <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"><div class="no">
@@ -1038,7 +1038,7 @@ function html_minoredit(){
   // minor edits are for logged in users only
   if(!$conf['useacl'] || !$_SERVER['REMOTE_USER']){
     return;
-  } 
+  }
 
   $p = array();
   $p['name']     = 'minor';
@@ -1087,11 +1087,11 @@ function html_debug(){
   print '<b>DOKU_BASE:</b><pre>';
   print DOKU_BASE;
   print '</pre>';
-  
+
   print '<b>abs DOKU_BASE:</b><pre>';
   print DOKU_URL;
   print '</pre>';
-  
+
   print '<b>rel DOKU_BASE:</b><pre>';
   print dirname($_SERVER['PHP_SELF']).'/';
   print '</pre>';
@@ -1142,7 +1142,7 @@ function html_admin(){
   $menu = array();
   foreach ($pluginlist as $p) {
     if($obj =& plugin_load('admin',$p) === NULL) continue;
-    $menu[] = array('plugin' => $p, 
+    $menu[] = array('plugin' => $p,
                     'prompt' => $obj->getMenuText($conf['lang']),
                     'sort' => $obj->getMenuSort()
                    );
@@ -1162,7 +1162,7 @@ function html_admin(){
   if (!$conf['openregister']){
     ptln('<li><div class="li"><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></div></li>');
   }
-  
+
   ptln('</ul>');
 }
 
@@ -1175,7 +1175,7 @@ function html_resendpwd() {
   global $lang;
   global $conf;
   global $ID;
- 
+
   print p_locale_xhtml('resendpwd');
 ?>
   <div class="centeralign">

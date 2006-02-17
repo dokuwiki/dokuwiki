@@ -222,14 +222,14 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
   //only search txt files
   if(!preg_match('#\.txt$#',$file)) return true;
 
-  //simple stringmatching 
+  //simple stringmatching
   if (!empty($opts['query'])){
     if(strpos($file,$opts['query']) !== false){
       //check ACL
       $id = pathID($file);
       if(auth_quickaclcheck($id) < AUTH_READ){
         return false;
-      } 
+      }
       $data[]['id'] = $id;
     }
   }
@@ -287,7 +287,7 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   foreach($instructions as $ins){
     if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
       $mid = $ins[1][0];
-      resolve_pageid($cns,$mid,$exists); //exists is not used 
+      resolve_pageid($cns,$mid,$exists); //exists is not used
       if($mid == $sid){
         //we have a match - finish
         $data[]['id'] = $cid;
@@ -319,11 +319,11 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
     return false;
   }
 
-  //create regexp from queries  
+  //create regexp from queries
   $poswords = array();
   $negwords = array();
   $qpreg = preg_split('/\s+/',$opts['query']);
-  
+
   foreach($qpreg as $word){
     switch(substr($word,0,1)){
       case '-':
@@ -344,7 +344,7 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
 
   // a search without any posword is useless
   if (!count($poswords)) return true;
-  
+
   $reg  = '^(?=.*?'.join(')(?=.*?',$poswords).')';
   $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
   search_regex($data,$base,$file,$reg,$poswords);
@@ -373,10 +373,10 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_reference(&$data,$base,$file,$type,$lvl,$opts){
   global $conf;
-  
+
   //we do nothing with directories
   if($type == 'd') return true;
-  
+
   //only search txt files
   if(!preg_match('#\.txt$#',$file)) return true;
 
@@ -384,7 +384,7 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
   //'false' will skip subdirectories to speed search up.
   $cnt = $conf['refshow'] > 0 ? $conf['refshow'] : 1;
   if(count($data) >= $cnt) return false;
-  
+
   $reg = '\{\{ *\:?'.$opts['query'].' *(\|.*)?\}\}';
   search_regex($data,$base,$file,$reg,array($opts['query']));
   return true;
@@ -438,7 +438,7 @@ function search_regex(&$data,$base,$file,$reg,$words){
       'snippet'  => $snippet,
     );
   }
- 
+
   return true;
 }
 

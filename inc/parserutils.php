@@ -1,7 +1,7 @@
 <?php
 /**
  * Utilities for collecting data from config files
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Harry Fuecks <hfuecks@gmail.com>
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -24,7 +24,7 @@
 function p_wiki_xhtml($id, $rev='', $excuse=true){
   $file = wikiFN($id,$rev);
   $ret  = '';
-  
+
   //ensure $id is in global $ID (needed for parsing)
   global $ID;
   $keep = $ID;
@@ -217,7 +217,7 @@ function p_get_instructions($text){
 
   // Create the parser
   $Parser = & new Doku_Parser();
-  
+
   // Add the Handler
   $Parser->Handler = & new Doku_Handler();
 
@@ -230,7 +230,7 @@ function p_get_instructions($text){
   $p    = $Parser->parse($text);
 //  dbg($p);
   return $p;
-}  
+}
 
 /**
  * returns all available parser syntax modes in correct order
@@ -252,12 +252,12 @@ function p_get_parsermodes(){
   // we now collect all syntax modes and their objects, then they will
   // be sorted and added to the parser in correct order
   $modes = array();
-  
+
   // add syntax plugins
   $pluginlist = plugin_list('syntax');
   if(count($pluginlist)){
     global $PARSER_MODES;
-    $obj = null; 
+    $obj = null;
     foreach($pluginlist as $p){
       if(!$obj =& plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
       $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
@@ -285,18 +285,18 @@ function p_get_parsermodes(){
     $class = "Doku_Parser_Mode_$m";
     $obj   = new $class();
     $modes[] = array(
-                 'sort' => $obj->getSort(), 
+                 'sort' => $obj->getSort(),
                  'mode' => $m,
                  'obj'  => $obj
                );
   }
-  
+
   // add formatting modes
   $fmt_modes = array('strong','emphasis','underline','monospace',
                      'subscript','superscript','deleted');
   foreach($fmt_modes as $m){
     $obj   = new Doku_Parser_Mode_formatting($m);
-    $modes[] = array( 
+    $modes[] = array(
                  'sort' => $obj->getSort(),
                  'mode' => $m,
                  'obj'  => $obj
@@ -310,8 +310,8 @@ function p_get_parsermodes(){
   $modes[] = array('sort' => $obj->getSort(), 'mode' => 'acronym','obj'  => $obj );
   $obj     = new Doku_Parser_Mode_entity(array_keys(getEntities()));
   $modes[] = array('sort' => $obj->getSort(), 'mode' => 'entity','obj'  => $obj );
-  
-  
+
+
   // add optional camelcase mode
   if($conf['camelcase']){
     $obj     = new Doku_Parser_Mode_camelcaselink();
@@ -363,14 +363,14 @@ function p_render($mode,$instructions,& $info){
   $Renderer->acronyms = getAcronyms();
   $Renderer->interwiki = getInterwiki();
   #$Renderer->badwords = getBadWords();
-  
+
   // Loop through the instructions
   foreach ( $instructions as $instruction ) {
       // Execute the callback against the Renderer
       call_user_func_array(array(&$Renderer, $instruction[0]),$instruction[1]);
   }
 
-  //set info array 
+  //set info array
   $info = $Renderer->info;
 
   // Return the output

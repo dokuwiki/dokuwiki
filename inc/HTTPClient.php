@@ -18,7 +18,7 @@ define('HTTP_NL',"\r\n");
  * @author Andreas Goetz <cpuidle@gmx.de>
  */
 class DokuHTTPClient extends HTTPClient {
-    
+
     /**
      * Constructor.
      *
@@ -187,7 +187,7 @@ class HTTPClient {
 
         // stop time
         $start = time();
-        
+
         // open socket
         $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
         if (!$socket){
@@ -269,7 +269,7 @@ class HTTPClient {
                 }
             }
         }
-        
+
         // close socket
         $status = socket_get_status($socket);
         fclose($socket);
@@ -286,7 +286,7 @@ class HTTPClient {
         // handle headers and cookies
         $this->resp_headers = $this->_parseHeaders($r_headers);
         if(isset($this->resp_headers['set-cookie'])){
-            foreach ($this->resp_headers['set-cookie'] as $c){ 
+            foreach ($this->resp_headers['set-cookie'] as $c){
                 list($key, $value, $foo) = split('=', $cookie);
                 $this->cookies[$key] = $value;
             }
@@ -389,14 +389,14 @@ class HTTPClient {
      * @author Andreas Goetz <cpuidle@gmx.de>
      */
     function _getCookies(){
-        foreach ($this->cookies as $key => $val){           
+        foreach ($this->cookies as $key => $val){
             if ($headers) $headers .= '; ';
             $headers .= $key.'='.$val;
-        }             
-            
+        }
+
         if ($headers) $headers = "Cookie: $headers".HTTP_NL;
         return $headers;
-    } 
+    }
 
     /**
      * Encode data for posting

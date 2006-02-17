@@ -2,12 +2,12 @@
 /**
  * auth/basic.class.php
  *
- * foundation authorisation class 
+ * foundation authorisation class
  * all auth classes should inherit from this class
  *
  * @author    Chris Smith <chris@jalakaic.co.uk>
  */
- 
+
 class auth_ldap extends auth_basic {
     var $cnf = null;
     var $con = null;
@@ -28,17 +28,17 @@ class auth_ldap extends auth_basic {
         // capabilities are set
     }
 
-	/**
-	 * Check user+password
-	 *
-	 * Checks if the given user exists and the given
-	 * plaintext password is correct by trying to bind
+    /**
+     * Check user+password
+     *
+     * Checks if the given user exists and the given
+     * plaintext password is correct by trying to bind
      * to the LDAP server
-	 *
-	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 * @return  bool
-	 */
-	function checkPass($user,$pass){
+     *
+     * @author  Andreas Gohr <andi@splitbrain.org>
+     * @return  bool
+     */
+    function checkPass($user,$pass){
         // reject empty password
         if(empty($pass)) return false;
         if(!$this->_openLDAP()) return false;
@@ -108,17 +108,17 @@ class auth_ldap extends auth_basic {
         }
 
         return false;
-	}
-	
-	/**
-	 * Return user info [ MUST BE OVERRIDDEN ]
-	 *
-	 * Returns info about the given user needs to contain
-	 * at least these fields:
-	 *
-	 * name string  full name of the user
-	 * mail string  email addres of the user
-	 * grps array   list of groups the user is in
+    }
+
+    /**
+     * Return user info [ MUST BE OVERRIDDEN ]
+     *
+     * Returns info about the given user needs to contain
+     * at least these fields:
+     *
+     * name string  full name of the user
+     * mail string  email addres of the user
+     * grps array   list of groups the user is in
      *
      * This LDAP specific function returns the following
      * addional fields:
@@ -130,9 +130,9 @@ class auth_ldap extends auth_basic {
      * @author  Trouble
      * @author  Dan Allen <dan.j.allen@gmail.com>
      * @auhtor  <evaldas.auryla@pheur.org>
-	 * @return  array containing user data or false
+     * @return  array containing user data or false
      */
-	function getUserData($user) {
+    function getUserData($user) {
         global $conf;
         if(!$this->_openLDAP()) return false;
 
@@ -227,8 +227,8 @@ class auth_ldap extends auth_basic {
         }
 
         return $info;
-	}
-	
+    }
+
     /**
      * Make LDAP filter strings.
      *
@@ -237,7 +237,7 @@ class auth_ldap extends auth_basic {
      *
      * filter      string  ldap search filter with placeholders
      * placeholders array   array with the placeholders
-     * 
+     *
      * @author  Troels Liebe Bentsen <tlb@rapanden.dk>
      * @return  string
      */
@@ -254,7 +254,7 @@ class auth_ldap extends auth_basic {
             $filter = str_replace('%{'.$match.'}', $value, $filter);
         }
         return $filter;
-    } 
+    }
 
     /**
      * Opens a connection to the configured LDAP server and sets the wnated

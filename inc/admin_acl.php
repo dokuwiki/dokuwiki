@@ -37,7 +37,7 @@ function admin_acl_handler(){
 
   if($cmd == 'save'){
     admin_acl_del($scope, $user);
-    admin_acl_add($scope, $user, $perm);  
+    admin_acl_add($scope, $user, $perm);
   }elseif($cmd == 'delete'){
     admin_acl_del($scope, $user);
   }
@@ -60,9 +60,9 @@ function admin_acl_handler(){
  */
 function get_acl_config($id){
   global $AUTH_ACL;
-  
+
   $acl_config=array();
-  
+
   // match exact name
   $matches = preg_grep('/^'.$id.'\s+.*/',$AUTH_ACL);
   if(count($matches)){
@@ -73,7 +73,7 @@ function get_acl_config($id){
       $acl_config[$acl[0]][] = array( 'name' => $acl[1], 'perm' => $acl[2]);
     }
   }
-  
+
   $specific_found=array();
   // match ns
   while(($id=getNS($id)) !== false){
@@ -88,7 +88,7 @@ function get_acl_config($id){
       }
     }
   }
-  
+
   //include *-config
   $matches = preg_grep('/^\*\s+.*/',$AUTH_ACL);
   if(count($matches)){
@@ -102,11 +102,11 @@ function get_acl_config($id){
       }
     }
   }
-  
+
   //sort
   //FIXME: better sort algo: first sort by key, then sort by first value
   krsort($acl_config, SORT_STRING);
- 
+
   return($acl_config);
 }
 
@@ -118,16 +118,16 @@ function get_acl_config($id){
  */
 function admin_acl_add($acl_scope, $acl_user, $acl_level){
   $acl_config = join("",file(DOKU_CONF.'acl.auth.php'));
-  
+
   // max level for pagenames is edit
   if(strpos($acl_scope,'*') === false) {
     if($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
   }
-  
+
   $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
-  
+
   $new_config = $acl_config.$new_acl;
-  
+
   return io_saveFile(DOKU_CONF.'acl.auth.php', $new_config);
 }
 
@@ -140,10 +140,10 @@ function admin_acl_del($acl_scope, $acl_user){
   $acl_config = file(DOKU_CONF.'acl.auth.php');
 
   $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
-  
+
   // save all non!-matching #FIXME invert is available from 4.2.0 only!
   $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
-  
+
   return io_saveFile(DOKU_CONF.'acl.auth.php', join('',$new_config));
 }
 
@@ -172,7 +172,7 @@ function admin_acl_html(){
   //current config
   $acls = get_acl_config($ID);
   foreach ($acls as $id => $acl){
-    admin_acl_html_current($id,$acl); 
+    admin_acl_html_current($id,$acl);
   }
 
   ptln('</table>');
@@ -246,10 +246,10 @@ function admin_acl_html_new(){
   ptln('    <input type="hidden" name="do"   value="admin" />',4);
   ptln('    <input type="hidden" name="page" value="acl" />',4);
   ptln('    <input type="hidden" name="acl_cmd" value="save" />',4);
- 
+
   //scope select
   ptln($lang['acl_perms'],4);
-  ptln(admin_acl_html_dropdown($ID),4); 
+  ptln(admin_acl_html_dropdown($ID),4);
 
   $att = array( 'name'  => 'acl_type',
                 'class' => 'edit',
@@ -384,7 +384,7 @@ function admin_acl_html_checkboxes($setperm,$ispage){
                    'value' => $perm );
     //dynamic attributes
     if($setperm >= $perm) $atts['checked']  = 'checked';
-#		if($perm > AUTH_READ) $atts['onchange'] = #FIXME JS to autoadd lower perms
+#   if($perm > AUTH_READ) $atts['onchange'] = #FIXME JS to autoadd lower perms
     if($ispage && $perm > AUTH_EDIT) $atts['disabled'] = 'disabled';
 
     //build code

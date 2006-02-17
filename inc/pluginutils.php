@@ -1,7 +1,7 @@
 <?php
 /**
  * Utilities for handling plugins
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
@@ -72,7 +72,7 @@ function &plugin_load($type,$name){
   //construct class and instanciate
   $class = $type.'_plugin_'.$name;
   if (!class_exists($class)) return null;
-  
+
   $DOKU_PLUGINS[$type][$name] = new $class;
   return $DOKU_PLUGINS[$type][$name];
 }

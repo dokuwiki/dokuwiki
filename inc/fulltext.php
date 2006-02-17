@@ -159,7 +159,7 @@ function ft_pageLookup($id,$pageonly=true){
             if(!preg_match('/'.$id.'/',noNS($pages[$i]))){
                 unset($pages[$i]);
                 continue;
-            } 
+            }
         }
         if(!@file_exists(wikiFN($pages[$i]))){
             unset($pages[$i]);
@@ -257,7 +257,7 @@ function ft_queryParser($query){
     $q['phrases'] = array();
     $q['and']     = array();
     $q['not']     = array();
-    
+
     // handle phrase searches
     while(preg_match('/"(.*?)"/',$query,$match)){
         $q['phrases'][] = $match[1];

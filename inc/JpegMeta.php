@@ -3,7 +3,7 @@
  * JPEG metadata reader/writer
  *
  * @license    PHP license 2.0 (http://www.php.net/license/2_02.txt)
- * @link       http://www.zonageek.com/software/php/jpeg/index.php 
+ * @link       http://www.zonageek.com/software/php/jpeg/index.php
  * @author     Sebastian Delmont <sdelmont@zonageek.com>
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @todo       Add support for Maker Notes, Extend for GIF and PNG metadata
@@ -121,7 +121,7 @@ class JpegMeta
         return $info;
     }
 
-    
+
     /**
      * Convinience function to access nearly all available Data
      * through one function
@@ -154,7 +154,7 @@ class JpegMeta
             }
             if($info != false) break;
         }
-    
+
         if($info === false)  $info = $alt;
         if(is_array($info)){
             if(isset($info['val'])){
@@ -214,7 +214,7 @@ class JpegMeta
         if (isset($this->_info['dates'][$field])) {
             return $this->_info['dates'][$field];
         }
-    
+
         return false;
     }
 
@@ -232,7 +232,7 @@ class JpegMeta
         if (isset($this->_info['file'][$field])) {
             return $this->_info['file'][$field];
         }
-            
+
         return false;
     }
 
@@ -848,7 +848,7 @@ class JpegMeta
         }
         return false;
     }
-    
+
     /*************************************************************/
     /* PRIVATE FUNCTIONS (Internal Use Only!)                    */
     /*************************************************************/
@@ -1325,7 +1325,7 @@ class JpegMeta
             return false;
         }
 
-		$pos = 0;
+        $pos = 0;
         $this->_info['jfif'] = array();
 
 
@@ -1395,7 +1395,7 @@ class JpegMeta
             return false;
         }
 
-		$pos = 0;
+        $pos = 0;
         $this->_info['sof'] = array();
 
 
@@ -2353,7 +2353,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _write8BIM(&$data, $pos, $type, $header, &$value) 
+    function _write8BIM(&$data, $pos, $type, $header, &$value)
     {
         $signature = "8BIM";
 

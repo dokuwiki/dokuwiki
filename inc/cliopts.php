@@ -32,18 +32,18 @@ if (version_compare(phpversion(), '4.3.0', '<') || php_sapi_name() == 'cgi') {
     // Handle output buffering
     @ob_end_flush();
     ob_implicit_flush(TRUE);
-    
+
     // PHP ini settings
     set_time_limit(0);
     ini_set('track_errors', TRUE);
     ini_set('html_errors', FALSE);
     ini_set('magic_quotes_runtime', FALSE);
-    
+
     // Define stream constants
     define('STDIN', fopen('php://stdin', 'r'));
     define('STDOUT', fopen('php://stdout', 'w'));
     define('STDERR', fopen('php://stderr', 'w'));
-    
+
     // Close the streams on script termination
     register_shutdown_function(
         create_function('',
@@ -69,7 +69,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
  *
  */
  class Doku_Cli_Opts {
-    
+
     /**
     * <?php ?>
     * @see http://www.sitepoint.com/article/php-command-line-1/3
@@ -80,40 +80,40 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
     */
     function & getOptions($bin_file, $short_options, $long_options = null) {
         $args = Doku_Cli_Opts::readPHPArgv();
-        
+
         if ( Doku_Cli_Opts::isError($args) ) {
             return $args;
         }
-        
+
         // Compatibility between "php extensions.php" and "./extensions.php"
         if ( realpath($_SERVER['argv'][0]) == $bin_file ) {
             $options = Doku_Cli_Opts::getOpt($args,$short_options,$long_options);
         } else {
             $options = Doku_Cli_Opts::getOpt2($args,$short_options,$long_options);
         }
-        
+
         if ( Doku_Cli_Opts::isError($options) ) {
             return $options;
         }
-        
+
         $container = new Doku_Cli_Opts_Container($options);
         return $container;
     }
-    
+
     function getopt2($args, $short_options, $long_options = null) {
         return Doku_Cli_Opts::doGetopt(
             2, $args, $short_options, $long_options
             );
     }
-    
+
     function getopt($args, $short_options, $long_options = null) {
         return Doku_Cli_Opts::doGetopt(
             1, $args, $short_options, $long_options
             );
     }
-    
+
     function doGetopt($version, $args, $short_options, $long_options = null) {
-        
+
         // in case you pass directly readPHPArgv() as the first arg
         if (Doku_Cli_Opts::isError($args)) {
             return $args;
@@ -123,13 +123,13 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
         }
         $opts     = array();
         $non_opts = array();
-        
+
         settype($args, 'array');
-        
+
         if ($long_options && is_array($long_options)) {
             sort($long_options);
         }
-        
+
         /*
          * Preserve backwards compatibility with callers that relied on
          * erroneous POSIX fix.
@@ -139,10 +139,10 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                 array_shift($args);
             }
         }
-        
+
         reset($args);
         while (list($i, $arg) = each($args)) {
-        
+
             /* The special element '--' means explicit end of
                options. Treat the rest of the arguments as non-options
                and end the loop. */
@@ -150,7 +150,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                 $non_opts = array_merge($non_opts, array_slice($args, $i + 1));
                 break;
             }
-            
+
             if ($arg{0} != '-' || (strlen($arg) > 1 && $arg{1} == '-' && !$long_options)) {
                 $non_opts = array_merge($non_opts, array_slice($args, $i));
                 break;
@@ -164,15 +164,15 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                     return $error;
             }
         }
-        
+
         return array($opts, $non_opts);
     }
-    
+
     function _parseShortOption($arg, $short_options, &$opts, &$args) {
         for ($i = 0; $i < strlen($arg); $i++) {
             $opt = $arg{$i};
             $opt_arg = null;
-            
+
             /* Try to find the short option in the specifier string. */
             if (($spec = strstr($short_options, $opt)) === false || $arg{$i} == ':')
             {
@@ -181,7 +181,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                     "Unrecognized option -- $opt"
                     );
             }
-            
+
             if (strlen($spec) > 1 && $spec{1} == ':') {
                 if (strlen($spec) > 2 && $spec{2} == ':') {
                     if ($i + 1 < strlen($arg)) {
@@ -205,25 +205,25 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                             );
                 }
             }
-            
+
             $opts[] = array($opt, $opt_arg);
         }
     }
-    
+
     function _parseLongOption($arg, $long_options, &$opts, &$args) {
         @list($opt, $opt_arg) = explode('=', $arg);
         $opt_len = strlen($opt);
-        
+
         for ($i = 0; $i < count($long_options); $i++) {
             $long_opt  = $long_options[$i];
             $opt_start = substr($long_opt, 0, $opt_len);
-            
+
             /* Option doesn't match. Go on to the next one. */
             if ($opt_start != $opt)
                 continue;
-            
+
             $opt_rest  = substr($long_opt, $opt_len);
-            
+
             /* Check that the options uniquely matches one of the allowed
                options. */
             if ($opt_rest != '' && $opt{0} != '=' &&
@@ -234,7 +234,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                     "Option --$opt is ambiguous"
                     );
             }
-            
+
             if (substr($long_opt, -1) == '=') {
                 if (substr($long_opt, -2) != '==') {
                     /* Long option requires an argument.
@@ -252,17 +252,17 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
                     "Option --$opt doesn't allow an argument"
                     );
             }
-            
+
             $opts[] = array('--' . $opt, $opt_arg);
             return;
         }
-        
+
         return Doku_Cli_Opts::raiseError(
             DOKU_CLI_OPTS_UNKNOWN_OPT,
             "Unrecognized option --$opt"
             );
     }
-    
+
     function readPHPArgv() {
         global $argv;
         if (!is_array($argv)) {
@@ -279,11 +279,11 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
         }
         return $argv;
     }
-    
+
     function raiseError($code, $msg) {
         return new Doku_Cli_Opts_Error($code, $msg);
     }
-    
+
     function isError($obj) {
         return is_a($obj, 'Doku_Cli_Opts_Error');
     }
@@ -292,31 +292,31 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
 
 //------------------------------------------------------------------------------
 class Doku_Cli_Opts_Error {
-    
+
     var $code;
     var $msg;
-    
+
     function Doku_Cli_Opts_Error($code, $msg) {
         $this->code = $code;
         $this->msg = $msg;
     }
-    
+
     function getMessage() {
         return $this->msg;
     }
-    
+
     function isError() {
         return TRUE;
     }
-    
+
 }
 
 //------------------------------------------------------------------------------
 class Doku_Cli_Opts_Container {
-    
+
     var $options = array();
     var $args = array();
-    
+
     function Doku_Cli_Opts_Container($options) {
         foreach ( $options[0] as $option ) {
             if ( FALSE !== ( strpos($option[0], '--') ) ) {
@@ -326,35 +326,35 @@ class Doku_Cli_Opts_Container {
             }
             $this->options[$opt_name] = $option[1];
         }
-        
-        
+
+
         $this->args = $options[1];
     }
-    
+
     function has($option) {
         return array_key_exists($option, $this->options);
     }
-    
+
     function get($option) {
         if ( isset($this->options[$option]) ) {
             return ( $this->options[$option] ) ;
         }
     }
-    
+
     function arg($index) {
         if ( isset($this->args[$index]) ) {
             return $this->args[$index];
         }
     }
-    
+
     function numArgs() {
         return count($this->args);
     }
-    
+
     function hasArgs() {
         return count($this->args) !== 0;
     }
-    
+
     function isError() {
         return FALSE;
     }

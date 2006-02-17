@@ -74,7 +74,7 @@ class Aspell{
     var $encoding = 'iso8859-1';
     var $mode     = PSPELL_NORMAL;
     var $version  = 0;
-    
+
     var $args='';
 
     /**
@@ -86,7 +86,7 @@ class Aspell{
         $this->language = $language;
         $this->jargon   = $jargon;
         $this->encoding = $encoding;
-    } 
+    }
 
     /**
      * Set the spelling mode like pspell_config_mode()
@@ -187,7 +187,7 @@ class Aspell{
             $string = "^".str_replace("\n", "\n^",$text);
             fwrite($pipes[0],$string);  // send text to Aspell
             fclose($pipes[0]);
-            
+
             // read Aspells response from stdin
             while (!feof($pipes[1])) {
                 $out .= fread($pipes[1], 8192);
@@ -201,7 +201,7 @@ class Aspell{
             $tmp = array();
             preg_match('/^\@.*Aspell (\d+)\.(\d+).(\d+)/',$out,$tmp);
             $this->version = $tmp[1]*100 + $tmp[2]*10 + $tmp[3];
-            
+
             if ($this->version <= 603)  // version 0.60.3
                 $r = $terse ? "\n*\n\$1" : "\n\$1"; // replacement for broken Aspell
             else

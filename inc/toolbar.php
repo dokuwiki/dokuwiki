@@ -1,7 +1,7 @@
 <?php
 /**
  * Editing toolbar functions
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
@@ -21,9 +21,9 @@ require_once(DOKU_INC.'inc/JSON.php');
 function toolbar_JSdefines($varname){
     global $ID;
     global $conf;
-    global $lang;    
+    global $lang;
 
-    // build button array  
+    // build button array
     $menu = array(
        array(
             'type'   => 'format',
@@ -169,7 +169,7 @@ function toolbar_JSdefines($varname){
             'key'    => 'y',
            ),
     );
-    
+
     // use JSON to build the JavaScript array
     $json = new JSON();
     print "var $varname = ".$json->encode($menu).";\n";

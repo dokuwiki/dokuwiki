@@ -181,7 +181,7 @@ function getBaseURL($abs=false){
 
   $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
   $dir = preg_replace('#//+#','/',$dir);
-  
+
   //handle script in lib/exe dir
   $dir = preg_replace('!lib/exe/$!','',$dir);
 

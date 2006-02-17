@@ -120,12 +120,12 @@ function tpl_content(){
       break;
     case 'profile' :
       html_updateprofile();
-      break;            
+      break;
     case 'admin':
       tpl_admin();
       break;
     default:
-            msg("Failed to handle command: ".hsc($ACT),-1); 
+            msg("Failed to handle command: ".hsc($ACT),-1);
   }
 }
 
@@ -252,7 +252,7 @@ function tpl_pagelink($id,$name=NULL){
  */
 function tpl_getparent($ID){
   global $conf;
-    
+
   if ($ID != $conf['start']) {
     $idparts = explode(':', $ID);
     $pn = array_pop($idparts);    // get the page name
@@ -270,7 +270,7 @@ function tpl_getparent($ID){
         }
       }
     }
-    
+
     if (@file_exists(wikiFN($ID))) {
       return $ID;
     }
@@ -304,7 +304,7 @@ function tpl_button($type){
   global $NS;
   global $INFO;
   global $conf;
-	global $auth;
+  global $auth;
 
   switch($type){
     case 'edit':
@@ -393,7 +393,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
   global $ACT;
   global $conf;
   global $lang;
-	global $auth;
+  global $auth;
 
   switch($type){
     case 'edit':
@@ -490,7 +490,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
 function tpl_searchform($ajax=true,$autocomplete=true){
   global $lang;
   global $ACT;
-  
+
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
@@ -705,7 +705,7 @@ function tpl_mediafilelist(){
       ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
       ptln($del.'<br />',6);
       ptln('<div class="imagemeta">',6);
-      
+
       //build thumbnail
       print '<a href="javascript:mediaSelect(\''.$item['id'].'\')">';
 
@@ -726,7 +726,7 @@ function tpl_mediafilelist(){
 
       print '<img src="'.$src.'" '.$att.' />';
       print '</a>';
-      
+
       //read EXIF/IPTC data
       $t = $item['meta']->getField('IPTC.Headline');
       if($t) print '<strong>'.$t.'</strong><br />';
@@ -767,7 +767,7 @@ function tpl_showreferences(&$data){
   global $lang;
 
   $hidden=0; //count of hits without read permission
-  
+
   if(count($data)){
     usort($data,'sort_search_fulltext');
     foreach($data as $row){

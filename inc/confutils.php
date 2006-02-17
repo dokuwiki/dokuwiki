@@ -1,7 +1,7 @@
 <?php
 /**
  * Utilities for collecting data from config files
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Harry Fuecks <hfuecks@gmail.com>
  */
@@ -159,7 +159,7 @@ function confToHash($file,$lower=false) {
       $conf[$line[0]] = $line[1];
     }
   }
-    
+
   return $conf;
 }
 

@@ -22,7 +22,7 @@
  * @param string $to      Receiver of the mail (multiple seperated by commas)
  * @param string $subject Mailsubject
  * @param string $body    Messagebody
- * @param string $from    Sender address 
+ * @param string $from    Sender address
  * @param string $cc      CarbonCopy receiver (multiple seperated by commas)
  * @param string $bcc     BlindCarbonCopy receiver (multiple seperated by commas)
  * @param string $headers Additional Headers (seperated by MAILHEADER_EOL
@@ -122,7 +122,7 @@ function mail_encode_address($string,$header='',$names=true){
         $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text).'?=';
       }
     }
-    
+
     // add to header comma seperated and in new line to avoid too long headers
     if($headers != '') $headers .= ','.MAILHEADER_EOL.' ';
     $headers .= $text.$addr;
@@ -140,7 +140,7 @@ function mail_encode_address($string,$header='',$names=true){
  * Uses a regular expresion to check if a given mail address is valid
  *
  * May not be completly RFC conform!
- * 
+ *
  * @link    http://www.webmasterworld.com/forum88/135.htm
  *
  * @param   string $email the address to check

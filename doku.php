@@ -26,7 +26,7 @@
   $RANGE = $_REQUEST['lines'];
   $HIGH  = $_REQUEST['s'];
   if(empty($HIGH)) $HIGH = getGoogleQuery();
-  
+
   $TEXT  = cleanText($_POST['wikitext']);
   $PRE   = cleanText($_POST['prefix']);
   $SUF   = cleanText($_POST['suffix']);
@@ -49,7 +49,7 @@
     html_debug();
     exit;
   }
-  
+
   //make infos about the selected page available
   $INFO = pageinfo();
 

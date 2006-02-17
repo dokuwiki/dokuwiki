@@ -6,8 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
  */
- 
-define('DOKU_AUTH', dirname(__FILE__)); 
+
+define('DOKU_AUTH', dirname(__FILE__));
 require_once(DOKU_AUTH.'/basic.class.php');
 
 define('AUTH_USERFILE',DOKU_CONF.'users.auth.php');
@@ -15,22 +15,22 @@ define('AUTH_USERFILE',DOKU_CONF.'users.auth.php');
 // we only accept page ids for auth_plain
 if(isset($_REQUEST['u']))
   $_REQUEST['u'] = cleanID($_REQUEST['u']);
-  
+
 class auth_plain extends auth_basic {
 
     var $users = null;
     var $_pattern = array();
-		
-		/**
-		 * Constructor
-		 *
-		 * Carry out sanity checks to ensure the object is
-		 * able to operate. Set capabilities.
-		 * 
+
+    /**
+     * Constructor
+     *
+     * Carry out sanity checks to ensure the object is
+     * able to operate. Set capabilities.
+     *
      * @author  Christopher Smith <chris@jalakai.co.uk>
-		 */		 
-		function auth_plain() {
-		  if (!@is_readable(AUTH_USERFILE)){
+     */
+    function auth_plain() {
+      if (!@is_readable(AUTH_USERFILE)){
         $this->success = false;
       }else{
         if(@is_writable(AUTH_USERFILE)){
@@ -45,7 +45,7 @@ class auth_plain extends auth_basic {
         $this->cando['getUsers']     = true;
         $this->cando['getUserCount'] = true;
       }
-		}
+    }
 
     /**
      * Check user+password [required auth function]
@@ -57,10 +57,10 @@ class auth_plain extends auth_basic {
      * @return  bool
      */
     function checkPass($user,$pass){
-    
+
       $userinfo = $this->getUserData($user);
       if ($userinfo === false) return false;
-    
+
       return auth_verifyPassword($pass,$this->users[$user]['pass']);
     }
 
@@ -87,7 +87,7 @@ class auth_plain extends auth_basic {
      *
      * Returns false if the user already exists, null when an error
      * occured and true if everything went well.
-     * 
+     *
      * The new user will be added to the default group by this
      * function if grps are not specified (default behaviour).
      *
@@ -96,28 +96,28 @@ class auth_plain extends auth_basic {
      */
     function createUser($user,$pwd,$name,$mail,$grps=null){
       global $conf;
-          
+
       // user mustn't already exist
       if ($this->getUserData($user) !== false) return false;
-      
+
       $pass = auth_cryptPassword($pwd);
-      
+
       // set default group if no groups specified
       if (!is_array($grps)) $grps = array($conf['defaultgroup']);
 
       // prepare user line
-      $groups = join(',',$grps);    
+      $groups = join(',',$grps);
       $userline = join(':',array($user,$pass,$name,$mail,$groups))."\n";
 
       if (io_saveFile(AUTH_USERFILE,$userline,true)) {
         $this->users[$user] = compact('pass','name','mail','grps');
         return $pwd;
       }
-    
+
       msg('The '.AUTH_USERFILE.' file is not writable. Please inform the Wiki-Admin',-1);
       return null;
     }
-    
+
     /**
      * Modify user data
      *
@@ -130,7 +130,7 @@ class auth_plain extends auth_basic {
       global $conf;
       global $ACT;
       global $INFO;
-      
+
       // sanity checks, user must already exist and there must be something to change
       if (($userinfo = $this->getUserData($user)) === false) return false;
       if (!is_array($changes) || !count($changes)) return true;
@@ -138,31 +138,31 @@ class auth_plain extends auth_basic {
       // update userinfo with new data, remembering to encrypt any password
       $newuser = $user;
       foreach ($changes as $field => $value) {
-        if ($field == 'user') { 
+        if ($field == 'user') {
           $newuser = $value;
           continue;
         }
         if ($field == 'pass') $value = auth_cryptPassword($value);
         $userinfo[$field] = $value;
       }
-      
+
       $groups = join(',',$userinfo['grps']);
       $userline = join(':',array($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $groups))."\n";
-      
+
       if (!$this->deleteUsers(array($user))) {
         msg('Unable to modify user data. Please inform the Wiki-Admin',-1);
         return false;
       }
-      
+
       if (!io_saveFile(AUTH_USERFILE,$userline,true)) {
         msg('There was an error modifying your user data. You should register again.',-1);
         // FIXME, user has been deleted but not recreated, should force a logout and redirect to login page
         $ACT == 'register';
         return false;
       }
-      
+
       $this->users[$newuser] = $userinfo;
-      return true;      
+      return true;
     }
 
     /**
@@ -173,18 +173,18 @@ class auth_plain extends auth_basic {
      *  @return  int             the number of users deleted
      */
     function deleteUsers($users) {
-    
+
       if (!is_array($users) || empty($users)) return 0;
 
       if ($this->users === null) $this->_loadUserData();
-      
+
       $deleted = array();
       foreach ($users as $user) {
         if (isset($this->users[$user])) $deleted[] = preg_quote($user,'/');
       }
 
       if (empty($deleted)) return 0;
-      
+
       $pattern = '/^('.join('|',$deleted).'):/';
 
       if (io_deleteFromFile(AUTH_USERFILE,$pattern,true)) {
@@ -198,7 +198,7 @@ class auth_plain extends auth_basic {
       $count -= $count($this->users());
       return $count;
     }
-    
+
     /**
      * Return a count of the number of user which meet $filter criteria
      *
@@ -208,18 +208,18 @@ class auth_plain extends auth_basic {
 
       if($this->users === null) $this->_loadUserData();
 
-      if (!count($filter)) return count($this->users);      
-      
+      if (!count($filter)) return count($this->users);
+
       $count = 0;
       $this->_constructPattern($filter);
-      
+
       foreach ($this->users as $user => $info) {
           $count += $this->_filter($user, $info);
       }
-        
+
       return $count;
     }
-    
+
     /**
      * Bulk retrieval of user data
      *
@@ -234,12 +234,12 @@ class auth_plain extends auth_basic {
       if ($this->users === null) $this->_loadUserData();
 
       ksort($this->users);
-      
+
       $i = 0;
       $count = 0;
       $out = array();
       $this->_constructPattern($filter);
-            
+
       foreach ($this->users as $user => $info) {
         if ($this->_filter($user, $info)) {
           if ($i >= $start) {
@@ -253,7 +253,7 @@ class auth_plain extends auth_basic {
 
       return $out;
     }
-    
+
     /**
      * Load all user data
      *
@@ -265,23 +265,23 @@ class auth_plain extends auth_basic {
       $this->users = array();
 
       if(!@file_exists(AUTH_USERFILE)) return;
-      
+
       $lines = file(AUTH_USERFILE);
       foreach($lines as $line){
         $line = preg_replace('/#.*$/','',$line); //ignore comments
         $line = trim($line);
         if(empty($line)) continue;
-    
+
         $row    = split(":",$line,5);
         $groups = split(",",$row[4]);
-        
+
         $this->users[$row[0]]['pass'] = $row[1];
         $this->users[$row[0]]['name'] = urldecode($row[2]);
         $this->users[$row[0]]['mail'] = $row[3];
         $this->users[$row[0]]['grps'] = $groups;
       }
     }
-    
+
     /**
      * return 1 if $user + $info match $filter criteria, 0 otherwise
      *
@@ -300,14 +300,14 @@ class auth_plain extends auth_basic {
         }
         return 1;
     }
-    
+
     function _constructPattern($filter) {
       $this->_pattern = array();
       foreach ($filter as $item => $pattern) {
 //        $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/';          // don't allow regex characters
         $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/';    // allow regex characters
       }
-    }    
+    }
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

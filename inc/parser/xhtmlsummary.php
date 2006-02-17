@@ -15,7 +15,7 @@ require_once DOKU_INC . 'inc/parser/xhtml.php';
 * use as the title of the page.
 */
 class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
-    
+
     // Namespace these variables to
     // avoid clashes with parent classes
     var $sum_paragraphs = 0;
@@ -23,24 +23,24 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
     var $sum_inSection = FALSE;
     var $sum_summary = '';
     var $sum_pageTitle = FALSE;
-    
+
     function document_start() {
         $this->doc .= DOKU_LF.'<div>'.DOKU_LF;
     }
-    
+
     function document_end() {
         $this->doc = $this->sum_summary;
         $this->doc .= DOKU_LF.'</div>'.DOKU_LF;
     }
-    
+
     function toc_open() {
         $this->sum_summary .= $this->doc;
     }
-    
+
     function toc_close() {
         $this->doc = '';
     }
-    
+
     function header($text, $level, $pos) {
         if ( !$this->sum_pageTitle ) {
             $this->info['sum_pagetitle'] = $text;
@@ -50,27 +50,27 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
         $this->doc .= $this->_xmlEntities($text);
         $this->doc .= "</h$level>".DOKU_LF;
     }
-    
+
     function section_open($level) {
         if ( $this->sum_capture ) {
             $this->sum_inSection = TRUE;
         }
     }
-    
+
     function section_close() {
         if ( $this->sum_capture && $this->sum_inSection ) {
             $this->sum_summary .= $this->doc;
             $this->sum_capture = FALSE;
         }
     }
-    
+
     function p_open() {
         if ( $this->sum_capture && $this->sum_paragraphs < 2 ) {
             $this->sum_paragraphs++;
         }
         parent :: p_open();
     }
-    
+
     function p_close() {
         parent :: p_close();
         if ( $this->sum_capture && $this->sum_paragraphs >= 2 ) {
@@ -78,7 +78,7 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
             $this->sum_capture = FALSE;
         }
     }
-    
+
 }
 
 

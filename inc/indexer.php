@@ -50,31 +50,31 @@ function idx_getPageWords($page){
 
     $words = array();
     foreach ($tokens as $word => $count) {
-        // simple filter to restrict use of utf8_stripspecials 
+        // simple filter to restrict use of utf8_stripspecials
         if (preg_match('/[^0-9A-Za-z]/u', $word)) {
             // handle asian chars as single words (may fail on older PHP version)
             $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$word);
             if(!is_null($asia)) $word = $asia; //recover from regexp failure
             $arr = explode(' ', utf8_stripspecials($word,' ','._\-:\*'));
             $arr = array_count_values($arr);
-            
+
             foreach ($arr as $w => $c) {
                 if (!is_numeric($w) && strlen($w) < 3) continue;
-    		    $w = utf8_strtolower($w);
+                $w = utf8_strtolower($w);
                 $words[$w] = $c * $count + (isset($words[$w]) ? $words[$w] : 0);
             }
         } else {
             if (!is_numeric($word) && strlen($word) < 3) continue;
-	        $word = strtolower($word);
+            $word = strtolower($word);
             $words[$word] = $count + (isset($words[$word]) ? $words[$word] : 0);
         }
     }
 
     // arrive here with $words = array(word => frequency)
- 
+
     $index = array(); //resulting index
     foreach ($words as $word => $freq) {
-	if (is_int(array_search("$word\n",$stopwords))) continue;
+    if (is_int(array_search("$word\n",$stopwords))) continue;
         $wid = array_search("$word\n",$word_idx);
         if(!is_int($wid)){
             $word_idx[] = "$word\n";
@@ -82,7 +82,7 @@ function idx_getPageWords($page){
         }
         $index[$wid] = $freq;
     }
- 
+
     // save back word index
     $fh = fopen($conf['cachedir'].'/word.idx','w');
     if(!$fh){
@@ -91,7 +91,7 @@ function idx_getPageWords($page){
     }
     fwrite($fh,join('',$word_idx));
     fclose($fh);
- 
+
     return $index;
 }
 
@@ -133,7 +133,7 @@ function idx_addPage($page){
     if(!$idx || !$tmp){
        trigger_error("Failed to open index files", E_USER_ERROR);
        return false;
-    } 
+    }
 
     // copy from index to temp file, modifying were needed
     $lno = 0;
@@ -233,7 +233,7 @@ function idx_lookup($words){
     foreach($words as $word){
         $result[$word] = array();
         $wild = 0;
-        $xword = $word; 
+        $xword = $word;
 
         // check for wildcards
         if(substr($xword,0,1) == '*'){
@@ -244,7 +244,7 @@ function idx_lookup($words){
             $xword = substr($xword,0,-1);
             $wild += 2;
         }
- 
+
         // look for the ID(s) for the given word
         if($wild){  // handle wildcard search
             $cnt = count($word_idx);
@@ -276,7 +276,7 @@ function idx_lookup($words){
     if(!$idx){
        msg("Failed to open index file",-1);
        return false;
-    } 
+    }
 
     // Walk the index til the lines are found
     $docs = array();                          // hold docs found
@@ -288,7 +288,7 @@ function idx_lookup($words){
         $line .= fgets($idx, 4096);
         if(substr($line,-1) != "\n") continue;
         if($lno > $srch)             break;   // shouldn't happen
- 
+
 
         // do we want this line?
         if($lno == $srch){
@@ -358,7 +358,7 @@ function idx_parseIndexLine(&$page_idx,$line){
  * @param string   $string     the query as given by the user
  * @param arrayref $stopwords  array of stopwords
  * @param boolean  $wc         are wildcards allowed?
- * 
+ *
  * @todo make combined function to use alone or in getPageWords
  */
 function idx_tokenizer($string,&$stopwords,$wc=false){

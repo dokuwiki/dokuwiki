@@ -2,12 +2,12 @@
 /**
  * auth/basic.class.php
  *
- * foundation authorisation class 
+ * foundation authorisation class
  * all auth classes should inherit from this class
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
- 
+
 class auth_basic {
 
   var $success = true;
@@ -40,11 +40,11 @@ class auth_basic {
    * Carry out sanity checks to ensure the object is
    * able to operate. Set capabilities in $this->cando
    * array here
-   * 
+   *
    * Set $this->success to false if checks fail
    *
    * @author  Christopher Smith <chris@jalakai.co.uk>
-   */     
+   */
   function auth_basic() {
      // the base class constructor does nothing, derived class
     // constructors do the real work
@@ -166,7 +166,7 @@ class auth_basic {
     msg("no valid authorisation system in use", -1);
     return false;
   }
-  
+
   /**
    * Return user info [ MUST BE OVERRIDDEN ]
    *
@@ -184,13 +184,13 @@ class auth_basic {
     msg("no valid authorisation system in use", -1);
     return false;
   }
-  
+
   /**
    * Create a new User [implement only where required/possible]
    *
    * Returns false if the user already exists, null when an error
    * occured and true if everything went well.
-   * 
+   *
    * The new user HAS TO be added to the default group by this
    * function!
    *
@@ -202,7 +202,7 @@ class auth_basic {
     msg("authorisation method does not allow creation of new users", -1);
     return null;
   }
-  
+
   /**
    * Modify user data [implement only where required/possible]
    *
@@ -217,7 +217,7 @@ class auth_basic {
     msg("authorisation method does not allow modifying of user data", -1);
     return false;
   }
-  
+
   /**
    * Delete one or more users [implement only where required/possible]
    *
@@ -244,7 +244,7 @@ class auth_basic {
     msg("authorisation method does not provide user counts", -1);
     return 0;
   }
-  
+
   /**
    * Bulk retrieval of user data [implement only where required/possible]
    *
@@ -260,10 +260,10 @@ class auth_basic {
     msg("authorisation method does not support mass retrieval of user data", -1);
     return array();
   }
-  
+
   /**
    * Define a group [implement only where required/possible]
-   * 
+   *
    * Set addGroup capability when implemented
    *
    * @author  Chris Smith <chris@jalakai.co.uk>
@@ -276,7 +276,7 @@ class auth_basic {
 
   /**
    * Retrieve groups [implement only where required/possible]
-   * 
+   *
    * Set getGroups capability when implemented
    *
    * @author  Chris Smith <chris@jalakai.co.uk>

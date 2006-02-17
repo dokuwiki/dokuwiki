@@ -24,8 +24,8 @@ class auth_punbb extends auth_mysql {
    */
   function auth_punbb(){
     global $conf;
-    $this->cando['external'] = true; 
-    $this->cando['logoff']   = true; 
+    $this->cando['external'] = true;
+    $this->cando['logoff']   = true;
 
     // make sure we use a crypt understood by punbb
     if(function_exists('sha1')){
@@ -73,7 +73,7 @@ class auth_punbb extends auth_mysql {
                                                     (username, password, email, realname)
                                              VALUES ('%{user}', '%{pass}', '%{email}', '%{name}')";
     $conf['auth']['mysql']['addGroup']    = "INSERT INTO ${db_prefix}groups (g_title) VALUES ('%{group}')";
-    $conf['auth']['mysql']['addUserGroup']= "UPDATE ${db_prefix}users 
+    $conf['auth']['mysql']['addUserGroup']= "UPDATE ${db_prefix}users
                                                 SET group_id=%{gid}
                                               WHERE id='%{uid}'";
     $conf['auth']['mysql']['delGroup']    = "DELETE FROM ${db_prefix}groups WHERE g_id='%{gid}'";

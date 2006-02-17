@@ -39,7 +39,7 @@ function act_dispatch(){
   //check if user is asking to (un)subscribe a page
   if($ACT == 'subscribe' || $ACT == 'unsubscribe')
     $ACT = act_subscription($ACT);
- 
+
   //check permissions
   $ACT = act_permcheck($ACT);
 
@@ -47,17 +47,17 @@ function act_dispatch(){
   if($ACT == 'register' && register()){
     $ACT = 'login';
   }
-  
+
   if ($ACT == 'resendpwd' && act_resendpwd()) {
     $ACT = 'login';
   }
-  
+
   //update user profile
   if (($ACT == 'profile') && updateprofile()) {
     msg($lang['profchanged'],1);
     $ACT = 'show';
   }
-  
+
   //save
   if($ACT == 'save')
     $ACT = act_save($ACT);
@@ -66,7 +66,7 @@ function act_dispatch(){
   if(($ACT == 'edit' || $ACT == 'preview') && $INFO['editable']){
     $ACT = act_edit($ACT);
   }else{
-    unlock($ID); //try to unlock 
+    unlock($ID); //try to unlock
   }
 
   //handle export
@@ -84,12 +84,12 @@ function act_dispatch(){
     // retrieve admin plugin name from $_REQUEST['page']
     if ($_REQUEST['page']) {
         $pluginlist = plugin_list('admin');
-        if (in_array($_REQUEST['page'], $pluginlist)) {     
+        if (in_array($_REQUEST['page'], $pluginlist)) {
           // attempt to load the plugin
           if ($plugin =& plugin_load('admin',$_REQUEST['page']) !== NULL)
               $plugin->handle();
         }
-    }         
+    }
 /*
         if($_REQUEST['page'] == 'acl'){
             require_once(DOKU_INC.'inc/admin_acl.php');
@@ -99,7 +99,7 @@ function act_dispatch(){
   }
 
   //call template FIXME: all needed vars available?
-  header('Content-Type: text/html; charset=utf-8'); 
+  header('Content-Type: text/html; charset=utf-8');
   include(template('main.php'));
   // output for the commands is now handled in inc/templates.php
   // in function tpl_content()
@@ -205,7 +205,7 @@ function act_save($act){
   saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
   //unlock it
   unlock($ID);
-      
+
   //show it
   session_write_close();
   header("Location: ".wl($ID,'',true));
@@ -220,7 +220,7 @@ function act_save($act){
 function act_auth($act){
   global $ID;
   global $INFO;
-  
+
   //already logged in?
   if($_SERVER['REMOTE_USER'] && $act=='login')
     return 'show';
@@ -229,9 +229,9 @@ function act_auth($act){
   if($act=='logout'){
     $lockedby = checklock($ID); //page still locked?
     if($lockedby == $_SERVER['REMOTE_USER'])
-      unlock($ID); //try to unlock 
+      unlock($ID); //try to unlock
 
-    // do the logout stuff      
+    // do the logout stuff
     auth_logoff();
 
     // rebuild info array
@@ -318,7 +318,7 @@ function act_subscription($act){
   global $ID;
   global $INFO;
   global $lang;
-  
+
   $file=metaFN($ID,'.mlist');
   if ($act=='subscribe' && !$INFO['subscribed']){
     if ($INFO['userinfo']['mail']){

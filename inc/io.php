@@ -21,7 +21,7 @@ function io_sweepNS($id){
 
   //scan all namespaces
   while(($id = getNS($id)) !== false){
-		$dir = $conf['datadir'].'/'.str_replace(':','/',$id);
+    $dir = $conf['datadir'].'/'.str_replace(':','/',$id);
     $dir = utf8_encodeFN($dir);
 
     //try to delete dir else return
@@ -115,7 +115,7 @@ function io_deleteFromFile($file,$badline,$regex=false){
 
   // remove all matching lines
   if ($regex) {
-  	$lines = preg_grep($badline,$lines,PREG_GREP_INVERT);
+    $lines = preg_grep($badline,$lines,PREG_GREP_INVERT);
   } else {
     $pos = array_search($badline,$lines); //return null or false if not found
     while(is_int($pos)){
@@ -158,7 +158,7 @@ function io_deleteFromFile($file,$badline,$regex=false){
  * inside $conf['lockdir']
  *
  * It waits maximal 3 seconds for the lock, after this time
- * the lock is assumed to be stale and the function goes on 
+ * the lock is assumed to be stale and the function goes on
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -170,7 +170,7 @@ function io_lock($file){
   $lockDir = $conf['lockdir'].'/'.md5($file);
   @ignore_user_abort(1);
 
-  
+
   $timeStart = time();
   do {
     //waited longer than 3 seconds? -> stale lock
@@ -207,7 +207,7 @@ function io_makeFileDir($file){
   if(!is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
   }
-  umask($conf['umask']); 
+  umask($conf['umask']);
 }
 
 /**
@@ -247,7 +247,7 @@ function io_mkdir_ftp($dir){
     msg("FTP support not found - safemode workaround not usable",-1);
     return false;
   }
-  
+
   $conn = @ftp_connect($conf['ftp']['host'],$conf['ftp']['port'],10);
   if(!$conn){
     msg("FTP connection failed",-1);
@@ -271,11 +271,11 @@ function io_mkdir_ftp($dir){
 /**
  * downloads a file from the net and saves it
  *
- * if $useAttachment is false, 
+ * if $useAttachment is false,
  * - $file is the full filename to save the file, incl. path
  * - if successful will return true, false otherwise
- 
- * if $useAttachment is true, 
+
+ * if $useAttachment is true,
  * - $file is the directory where the file should be saved
  * - if successful will return the name used for the saved file, false otherwise
  *
@@ -289,25 +289,25 @@ function io_download($url,$file,$useAttachment=false,$defaultName=''){
 
   $data = $http->get($url);
   if(!$data) return false;
-  
+
   if ($useAttachment) {
     $name = '';
       if (isset($http->resp_headers['content-disposition'])) {
       $content_disposition = $http->resp_headers['content-disposition'];
-			$match=array();
-      if (is_string($content_disposition) && 
+      $match=array();
+      if (is_string($content_disposition) &&
           preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
-          
+
           $name = basename($match[1]);
       }
-          
+
     }
-    
+
     if (!$name) {
         if (!$defaultName) return false;
-        $name = $defaultName;        
+        $name = $defaultName;
     }
-    
+
     $file = $file.$name;
   }
 

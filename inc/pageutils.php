@@ -1,7 +1,7 @@
 <?php
 /**
  * Utilities for handling pagenames
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @todo       Combine similar functions like {wiki,media,meta}FN()
@@ -15,7 +15,7 @@
  *
  * For $param='id' $conf['start'] is returned if no id was found.
  * If the second parameter is true (default) the ID is cleaned.
- * 
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getID($param='id',$clean=true){
@@ -54,7 +54,7 @@ function getID($param='id',$clean=true){
   }
   if($clean) $id = cleanID($id);
   if(empty($id) && $param=='id') $id = $conf['start'];
-  
+
   return $id;
 }
 
@@ -72,7 +72,7 @@ function cleanID($id,$ascii=false){
   global $conf;
   global $lang;
   static $sepcharpat = null;
-  
+
   $sepchar = $conf['sepchar'];
   if($sepcharpat == null) // build string only once to save clock cycles
     $sepcharpat = '#\\'.$sepchar.'+#';
@@ -88,7 +88,7 @@ function cleanID($id,$ascii=false){
     $id = strtr($id,'/',$sepchar);
   }
 
-  if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id); 
+  if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id);
   if($conf['deaccent'] || $ascii) $id = utf8_deaccent($id,-1);
 
   //remove specials
