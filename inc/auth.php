@@ -454,8 +454,7 @@ function register(){
   }
 
   //okay try to create the user
-  $pass = $auth->createUser($_POST['login'],$pass,$_POST['fullname'],$_POST['email']);
-  if(empty($pass)){
+  if(!$auth->createUser($_POST['login'],$pass,$_POST['fullname'],$_POST['email'])){
     msg($lang['reguexists'],-1);
     return false;
   }

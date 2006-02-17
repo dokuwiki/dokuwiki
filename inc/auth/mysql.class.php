@@ -165,8 +165,7 @@ class auth_mysql extends auth_basic {
      * [public function]
      *
      * Create a new User. Returns false if the user already exists,
-     * null when an error occured and the cleartext password of the
-     * new user if everything went well.
+     * null when an error occured and true if everything went well.
      * 
      * The new user will be added to the default group by this
      * function if grps are not specified (default behaviour).
@@ -195,7 +194,7 @@ class auth_mysql extends auth_basic {
         $rc = $this->_addUser($user,$pwd,$name,$mail,$grps);
         $this->_unlockTables();
         $this->_closeDB();
-        if ($rc) return $pwd;
+        if ($rc) return true;
       }
       return null;  // return error
     }

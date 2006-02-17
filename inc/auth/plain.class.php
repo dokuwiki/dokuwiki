@@ -86,8 +86,7 @@ class auth_plain extends auth_basic {
      * Create a new User
      *
      * Returns false if the user already exists, null when an error
-     * occured and the cleartext password of the new user if
-     * everything went well.
+     * occured and true if everything went well.
      * 
      * The new user will be added to the default group by this
      * function if grps are not specified (default behaviour).
@@ -111,7 +110,7 @@ class auth_plain extends auth_basic {
       $userline = join(':',array($user,$pass,$name,$mail,$groups))."\n";
 
       if (io_saveFile(AUTH_USERFILE,$userline,true)) {
-          $this->users[$user] = compact('pass','name','mail','grps');
+        $this->users[$user] = compact('pass','name','mail','grps');
         return $pwd;
       }
     

@@ -189,8 +189,7 @@ class auth_basic {
    * Create a new User [implement only where required/possible]
    *
    * Returns false if the user already exists, null when an error
-   * occured and the cleartext password of the new user if
-   * everything went well.
+   * occured and true if everything went well.
    * 
    * The new user HAS TO be added to the default group by this
    * function!
