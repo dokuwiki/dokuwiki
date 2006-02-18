@@ -34,8 +34,8 @@ $lang['btn_update'] = 'Opdater';
 $lang['btn_delete'] = 'Slet';
 $lang['btn_back']   = 'Tilbage';
 $lang['btn_backtomedia'] = 'Tilbage til Mediafile Selection';
-$lang['btn_subscribe']   = 'Abonner på nye ændringer';
-$lang['btn_unsubscribe'] = 'Unsubscribe Changes';
+$lang['btn_subscribe']   = 'Abonner på ændringer';
+$lang['btn_unsubscribe'] = 'Fjern abonnement på ændringer';
 
 $lang['loggedinas'] = 'Logget på som';
 $lang['user']       = 'Brugernavn';
@@ -43,7 +43,7 @@ $lang['pass']       = 'Password';
 $pass['passchk']    = 'Gentag password';
 $lang['remember']   = 'Log automatisk på';
 $lang['fullname']   = 'Navn';
-$lang['email']      = 'E-Mail';
+$lang['email']      = 'E-mail';
 $lang['register']   = 'Tilmeld';
 $lang['badlogin']   = 'Forkert brugernavn eller password.';
 
@@ -54,10 +54,10 @@ $lang['regsuccess2']= 'Du er nu oprettet som bruger.';
 $lang['regmailfail']= 'Dit password blev ikke sendt. Kontakt venligst administratoren.';
 $lang['regbadmail'] = 'E-mail-adressen er ugyldig. Kontakt venligst administratoren, hvis du mener dette er en fejl.';
 $lang['regbadpass'] = 'De to passwords er ikke ens, vær venlig at prøve igen.';
-$lang['regpwmail']  = 'Dis DokuWiki password';
-$lang['reghere']    = 'Opret en DokuWiki-kontor her';
+$lang['regpwmail']  = 'Dit DokuWiki password';
+$lang['reghere']    = 'Opret en DokuWiki-konto her';
 
-$lang['txt_upload']   = 'Vælg den fil der skal uploads';
+$lang['txt_upload']   = 'Vælg den fil der skal uploades';
 $lang['txt_filename'] = 'Indtast wikinavn (valgfrit)';
 $lang['txt_overwrt']  = 'Overskriv eksisterende fil';
 $lang['lockedby']     = 'Midlertidig låst af';
@@ -69,20 +69,20 @@ $lang['rssfailed']   = 'Der opstod en fejl ved indhentning af: ';
 $lang['nothingfound']= 'Søgningen gav intet resultat.';
 
 $lang['mediaselect'] = 'Vælg mediefil';
-$lang['fileupload']  = 'Upload medifil';
+$lang['fileupload']  = 'Upload mediefil';
 $lang['uploadsucc']  = 'Upload var en succes';
 $lang['uploadfail']  = 'Upload fejlede. Der er muligvis problemer med rettighederne';
-$lang['uploadwrong'] = 'Upload afvist. Filtyppen er ikke tilladt';
+$lang['uploadwrong'] = 'Upload afvist. Filtypen er ikke tilladt';
 $lang['uploadexist'] = 'Filen eksisterer allerede.';
-$lang['deletesucc']  = 'Filen"%s" er blevet slettet.';
+$lang['deletesucc']  = 'Filen "%s" er blevet slettet.';
 $lang['deletefail']  = '"%s" kunne ikke slettes - check rettighederne.';
-$lang['mediainuse']  = 'File "%s" er ikke slettet - den er staig i brug.';
+$lang['mediainuse']  = 'Filen "%s" er ikke slettet - den er stadig i brug.';
 $lang['namespaces']  = 'Navnerum';
 $lang['mediafiles']  = 'Tilgængelige filer i';
 
 $lang['reference']   = 'Henvisning til';
 $lang['ref_inuse']   = 'Filen kan ikke slettes, da den stadig er i brug på følgende sider:';
-$lang['ref_hidden']  = 'Nogle henvisninger er i dokumenter du ikke har læse rettigheder til';
+$lang['ref_hidden']  = 'Nogle henvisninger er i dokumenter du ikke har læserettigheder til';
 
 $lang['hits']       = 'Hits';
 $lang['quickhits']  = 'Tilsvarende dokumentnavne';
@@ -104,7 +104,7 @@ $lang['mail_changed'] = 'dokument ændret:';
 
 $lang['nosmblinks'] = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.\nDu kan stadig kopiere og indsætte linket.';
 
-$lang['qb_alert']   = 'Skriv den tekst du <f8>nsker at formatere.\nDen vil blive tilf<f8>jet i slutningen af dokumentet.';
+$lang['qb_alert']   = 'Skriv den tekst du ønsker at formatere.\nDen vil blive tilføjet i slutningen af dokumentet.';
 $lang['qb_bold']    = 'Fed';
 $lang['qb_italic']  = 'Kursiv';
 $lang['qb_underl']  = 'Understregning';
@@ -121,19 +121,19 @@ $lang['qb_hr']      = 'Vandret linje';
 $lang['qb_ol']      = 'Nummereret liste';
 $lang['qb_ul']      = 'Unummereret liste';
 $lang['qb_media']   = 'Tilføj billeder eller andre filer';
-$lang['qb_sig']     = 'Insæt signatur';
+$lang['qb_sig']     = 'Indsæt signatur';
 
 $lang['del_confirm']= 'Slet denne post?';
 $lang['admin_register']= 'Tilføj ny bruger';
 
 $lang['spell_start']= 'Stavekontrol';
-$lang['spell_stop'] = 'Forsæt redigering';
+$lang['spell_stop'] = 'Fortsæt redigering';
 $lang['spell_wait'] = 'Vent et øjeblik...';
 $lang['spell_noerr']= 'Der blev ikke fundet nogle fejl';
 $lang['spell_nosug']= 'Ingen forslag fundet';
 $lang['spell_change']= 'Ændr';
 
-$lang['metaedit']    = 'Rediger Metadata';
+$lang['metaedit']    = 'Rediger metadata';
 $lang['metasaveerr'] = 'Skrivning af metadata fejlede';
 $lang['metasaveok']  = 'Metadata gemt';
 $lang['img_backto']  = 'Tilbage til';

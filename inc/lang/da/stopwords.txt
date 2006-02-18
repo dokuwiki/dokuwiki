@@ -28,7 +28,6 @@ for
 fordi
 forrige
 fra
-få
 før
 god
 han
@@ -76,7 +75,6 @@ næste
 næsten
 otte
 over
-på
 seks
 ses
 som
