@@ -8,9 +8,10 @@
 
 
 /* Datastorage and Permissions */
+$conf['umask']       = 0022;              //set the global umask
+$conf['fmode']       = 0666;              //set file creation mode
+$conf['dmode']       = 0777;              //set direction creation mode
 
-$conf['umask']       = 0111;              //set the umask for new files
-$conf['dmask']       = 0000;              //directory mask accordingly
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect

@@ -129,7 +129,7 @@ function media_upload($NS,$AUTH){
     io_makeFileDir($fn);
     if(move_uploaded_file($file['tmp_name'], $fn)) {
       // set the correct permission here
-      chmod($fn, 0777 - $conf['umask']);
+      chmod($fn, $conf['fmode'] & ~$conf['umask']);
       msg($lang['uploadsucc'],1);
       return true;
     }else{

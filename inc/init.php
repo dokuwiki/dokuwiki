@@ -118,10 +118,12 @@ function init_files(){
                   $conf['cachedir'].'/page.idx',
                   $conf['cachedir'].'/index.idx', );
 
+  umask($conf['umask']);
   foreach($files as $file){
     if(!@file_exists($file)){
       $fh = fopen($file,'a');
       fclose($fh);
+      chmod($conf['fmode'], $file);
     }
   }
 }

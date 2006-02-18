@@ -49,7 +49,7 @@ function runIndexer(){
 
     // try to aquire a lock
     $lock = $conf['lockdir'].'/_indexer.lock';
-    while(!@mkdir($lock,0777)){
+    while(!@mkdir($lock,$conf['dmode'])){
         usleep(50);
         if(time()-@filemtime($lock) > 60*5){
             // looks like a stale lock - remove it

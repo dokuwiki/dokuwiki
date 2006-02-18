@@ -73,7 +73,8 @@ $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/');
 
 $meta['umask']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
-$meta['dmask']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
+$meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
+$meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
 $meta['basedir']  = array('');
 $meta['baseurl']  = array('');
 

@@ -64,8 +64,10 @@ function io_readFile($file,$clean=true){
  * @return bool true on success
  */
 function io_saveFile($file,$content,$append=false){
+  global $conf;
   $mode = ($append) ? 'ab' : 'wb';
 
+  $fileexists = file_exists($file);
   io_makeFileDir($file);
   io_lock($file);
   if(substr($file,-3) == '.gz'){
@@ -85,6 +87,8 @@ function io_saveFile($file,$content,$append=false){
     fwrite($fh, $content);
     fclose($fh);
   }
+
+  if(!$fileexists && $conf['fmode'] != 0666) { chmod($file, $conf['fmode']); }
   io_unlock($file);
   return true;
 }
@@ -170,7 +174,6 @@ function io_lock($file){
   $lockDir = $conf['lockdir'].'/'.md5($file);
   @ignore_user_abort(1);
 
-
   $timeStart = time();
   do {
     //waited longer than 3 seconds? -> stale lock
@@ -203,11 +206,10 @@ function io_makeFileDir($file){
   global $conf;
 
   $dir = dirname($file);
-  umask($conf['dmask']);
+  umask($conf['umask']);
   if(!is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
   }
-  umask($conf['umask']);
 }
 
 /**
@@ -227,7 +229,7 @@ function io_mkdir_p($target){
       $dir = preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','', $target);
       return io_mkdir_ftp($dir);
     }else{
-      return @mkdir($target,0777); // crawl back up & create dir tree
+      return @mkdir($target,$conf['dmode']); // crawl back up & create dir tree
     }
   }
   return 0;
@@ -261,8 +263,8 @@ function io_mkdir_ftp($dir){
 
   //create directory
   $ok = @ftp_mkdir($conn, $dir);
-  //set permissions (using the directory umask)
-  @ftp_site($conn,sprintf("CHMOD %04o %s",(0777 - $conf['dmask']),$dir));
+  //set permissions (using the directory umask and dmode)
+  @ftp_site($conn,sprintf("CHMOD %04o %s",($conf['dmode'] & ~$conf['umask']),$dir));
 
   @ftp_close($conn);
   return $ok;
@@ -283,6 +285,7 @@ function io_mkdir_ftp($dir){
  * @author Chris Smith <chris@jalakai.co.uk>
  */
 function io_download($url,$file,$useAttachment=false,$defaultName=''){
+  global $conf;
   $http = new DokuHTTPClient();
   $http->max_bodysize = 2*1024*1024; //max. 2MB
   $http->timeout = 25; //max. 25 sec
@@ -311,23 +314,28 @@ function io_download($url,$file,$useAttachment=false,$defaultName=''){
     $file = $file.$name;
   }
 
+  $fileexists = file_exists($file);
+  umask($conf['umask']);
   $fp = @fopen($file,"w");
   if(!$fp) return false;
   fwrite($fp,$data);
   fclose($fp);
+  if(!$fileexists && $conf['fmode'] != 0666) { chmod($file, $conf['fmode']); }
   if ($useAttachment) return $name;
   return true;
 }
 
 /**
- * Windows copatible rename
+ * Windows compatible rename
  *
  * rename() can not overwrite existing files on Windows
  * this function will use copy/unlink instead
  */
 function io_rename($from,$to){
+  global $conf;
   if(!@rename($from,$to)){
     if(@copy($from,$to)){
+      if($conf['fmode'] != 0666) { chmod($file, $conf['fmode']); }
       @unlink($from);
       return true;
     }

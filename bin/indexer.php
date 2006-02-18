@@ -79,6 +79,7 @@ function _index($id){
     _lock();
     echo "$id... ";
     idx_addPage($id);
+    umask($conf['umask']);
     io_saveFile(metaFN($id,'.indexed'),' ');
     echo "done.\n";
     _unlock();
@@ -124,6 +125,7 @@ function _clearindex(){
     global $conf;
     _lock();
     echo "Clearing index... ";
+    umask($conf['umask']);
     io_saveFile($conf['cachedir'].'/word.idx','');
     io_saveFile($conf['cachedir'].'/page.idx','');
     io_saveFile($conf['cachedir'].'/index.idx','');

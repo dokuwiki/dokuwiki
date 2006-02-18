@@ -18,9 +18,10 @@ $lang['locked']     = 'The settings file can not be updated, if this is unintent
                        ensure the local settings file name and permissions are correct.';
 
 // settings prompts
-$lang['umask']       = 'new file permission mask';      //set the umask for new files
-$lang['dmask']       = 'new folder permission mask';    //directory mask accordingly
-$lang['lang']        = 'language';                      //your language
+$lang['umask']       = 'global permission mask';     //set the umask for new files
+$lang['fmode']       = 'file creation mode';         //directory mask accordingly
+$lang['dmode']       = 'directory creation mode';    //directory mask accordingly
+$lang['lang']        = 'language';           //your language
 $lang['basedir']     = 'base directory';     //absolute dir from serveroot - blank for autodetection
 $lang['baseurl']     = 'base url';           //URL to server including protocol - blank for autodetect
 $lang['savedir']     = 'save directory';     //where to store all the files
