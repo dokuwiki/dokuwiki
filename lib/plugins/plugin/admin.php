@@ -586,13 +586,12 @@ class ap_manage {
     // possibly should use io_MakeFileDir, not sure about using its method of error handling
     function ap_mkdir($d) {
         global $conf;
-        
-        umask($conf['dmask']);
-        $ok = io_mkdir_p($d);
+
         umask($conf['umask']);
+        $ok = io_mkdir_p($d);
         return $ok;
     }
-    
+
     // copy with recursive sub-directory support
     function ap_copy($src, $dst) {
     
