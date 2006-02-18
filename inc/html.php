@@ -647,6 +647,9 @@ function html_li_default($item){
  * print the <li> tag. Both user function need to accept
  * a single item.
  *
+ * Both user functions can be given as array to point to
+ * a member of an object.
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
@@ -678,9 +681,17 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
     $level = $item['level'];
 
     //print item
-    $ret .= $lifunc($item); //user function
+    if(is_array($lifunc)){
+      $ret .= $lifunc[0]->$lifunc[1]($item); //user object method
+    }else{
+      $ret .= $lifunc($item); //user function
+    }
     $ret .= '<div class="li">';
+    if(is_array($func)){
+      $ret .= $func[0]->$func[1]($item); //user object method
+    }else{
     $ret .= $func($item); //user function
+    }
     $ret .= '</div>';
   }
 

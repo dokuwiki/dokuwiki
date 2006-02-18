@@ -37,10 +37,12 @@ class Doku_Handler {
             $this->calls = $B->process($this->calls);
         }
 
+/** FIXME deprecated
         if ( $this->meta['toc'] ) {
             $T = & new Doku_Handler_Toc();
             $this->calls = $T->process($this->calls);
         }
+*/
 
         array_unshift($this->calls,array('document_start',array(),0));
         $last_call = end($this->calls);
@@ -1495,6 +1497,9 @@ class Doku_Handler_Block {
 }
 
 //------------------------------------------------------------------------
+
+/** FIXME deprecated
+
 define('DOKU_TOC_OPEN',1);
 define('DOKU_TOCBRANCH_OPEN',2);
 define('DOKU_TOCITEM_OPEN',3);
@@ -1671,6 +1676,6 @@ class Doku_Handler_Toc {
     }
 
 }
-
+*/
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

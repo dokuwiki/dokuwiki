@@ -25,7 +25,10 @@ require_once DOKU_INC . 'inc/parser/renderer.php';
  */
 class Doku_Renderer_xhtml extends Doku_Renderer {
 
-    var $doc = '';
+    // @access public
+    var $doc = '';        // will contain the whole document
+    var $toc = array();   // will contain the Table of Contents
+
 
     var $headers = array();
 
@@ -42,6 +45,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $store = '';
 
     function document_start() {
+        //reset some internals
+        $this->toc     = array();
+        $this->headers = array();
     }
 
     function document_end() {
@@ -81,7 +87,38 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             }
             $this->doc .= '</div>'.DOKU_LF;
         }
+
+        // prepend the TOC
+        $this->doc = $this->render_TOC().$this->doc;
     }
+
+    /**
+     * Return the TOC rendered to XHTML
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function render_TOC(){
+        if(!count($this->toc)) return '';
+        global $lang;
+        $out  = '<div class="toc">'.DOKU_LF;
+        $out .= '<div class="tocheader toctoggle" id="toc__header">';
+        $out .= $lang['toc'];
+        $out .= '</div>'.DOKU_LF;
+        $out .= '<div id="toc__inside">'.DOKU_LF;
+        $out .= html_buildlist($this->toc,'toc',array($this,'_tocitem'));
+        $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
+        return $out;
+    }
+
+    /**
+     * Callback for html_buildlist
+     */
+    function _tocitem($item){
+        return '<span class="li"><a href="#'.$item['hid'].'" class="toc">'.
+               $this->_xmlEntities($item['title']).'</a></span>';
+    }
+
+/** FIXME deprecated
 
     function toc_open() {
         global $lang;
@@ -122,6 +159,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     }
 
+*/
+
     function header($text, $level, $pos) {
         global $conf;
         //handle section editing
@@ -132,7 +171,21 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->lastsec = $pos;
         }
 
-        $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$this->_headerToLink($text).'" id="'.$this->_headerToLink($text).'">';
+        // create a unique header id
+        $hid = $this->_headerToLink($text,'true');
+
+        //handle TOC
+//FIXME        if($this->meta['toc'] &&
+        if($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']){
+            // the TOC is one of our standard ul list arrays ;-)
+            $this->toc[] = array( 'hid'   => $hid,
+                                  'title' => $text,
+                                  'type'  => 'ul',
+                                  'level' => $level);
+        }
+
+        // write the header
+        $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$hid.'" id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
         $this->doc .= "</a></h$level>".DOKU_LF;
     }
@@ -969,11 +1022,26 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     /**
      * Creates a linkid from a headline
+     *
+     * @param string  $title   The headline title
+     * @param boolean $create  Create a new unique ID?
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _headerToLink($title) {
-        $title = str_replace(':','',cleanID($title,true));
+    function _headerToLink($title,$create=false) {
+        $title = str_replace(':','',cleanID($title,true)); //force ASCII
         $title = ltrim($title,'0123456789');
         if(empty($title)) $title='section';
+
+        if($create){
+            // make sure tiles are unique
+            $num = '';
+            while(in_array($title.$num,$this->headers)){
+                ($num) ? $num = 1 : $num++;
+            }
+            $title = $title.$num;
+            $this->headers[] = $title;
+        }
+
         return $title;
     }
 
