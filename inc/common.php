@@ -126,10 +126,10 @@ function buildAttributes($params){
 /**
  * print a message
  *
- * If HTTP headers were not sent yet the message is added 
+ * If HTTP headers were not sent yet the message is added
  * to the global message array else it's printed directly
  * using html_msgarea()
- * 
+ *
  *
  * Levels can be:
  *
@@ -174,7 +174,7 @@ function breadcrumbs(){
   global $ACT;
   global $conf;
   $crumbs = $_SESSION[$conf['title']]['bc'];
-  
+
   //first visit?
   if (!is_array($crumbs)){
     $crumbs = array();
@@ -272,7 +272,7 @@ function wl($id='',$more='',$abs=false,$sep='&amp;'){
     $xlink .= DOKU_SCRIPT.'?id='.$id;
     if($more) $xlink .= $sep.$more;
   }
-  
+
   return $xlink;
 }
 
@@ -301,7 +301,7 @@ function ml($id='',$more='',$direct=true,$sep='&amp;'){
       $xlink .= '?media='.rawurlencode($id);
     }
     return $xlink;
-  } 
+  }
 
   $id = idfilter($id);
 
@@ -371,11 +371,11 @@ function checkwordblock(){
     //old versions of PCRE define a maximum of parenthesises even if no
     //backreferences are used - the maximum is 99
     //this is very bad performancewise and may even be too high still
-    $chunksize = 40; 
+    $chunksize = 40;
   }else{
     //read file in chunks of 600 - this should work around the
     //MAX_PATTERN_SIZE in modern PCRE
-    $chunksize = 600;
+    $chunksize = 400;
   }
   while($blocks = array_splice($wordblocks,0,$chunksize)){
     $re = array();
@@ -387,8 +387,8 @@ function checkwordblock(){
       $re[]  = $block;
     }
     if(preg_match('#('.join('|',$re).')#si',$TEXT, $match=array())) {
-		  return true;
-		}
+      return true;
+    }
   }
   return false;
 }
@@ -418,22 +418,22 @@ function clientIP(){
 function checklock($id){
   global $conf;
   $lock = wikiFN($id).'.lock';
-  
+
   //no lockfile
   if(!@file_exists($lock)) return false;
-  
+
   //lockfile expired
   if((time() - filemtime($lock)) > $conf['locktime']){
     unlink($lock);
     return false;
   }
-  
+
   //my own lock
   $ip = io_readFile($lock);
   if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){
     return false;
   }
-  
+
   return $ip;
 }
 
@@ -483,7 +483,7 @@ function cleanText($text){
 /**
  * Prepares text for print in Webforms by encoding special chars.
  * It also converts line endings to Windows format which is
- * pseudo standard for webforms. 
+ * pseudo standard for webforms.
  *
  * @see    cleanText() for 2unix conversion
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -645,7 +645,7 @@ function _handleRecent($line,$ns,$flags){
 
   // split the line into parts
   list($dt,$ip,$id,$usr,$sum) = explode("\t",$line);
-  
+
   // skip seen ones
   if($seen[$id]) return false;
   $recent = array();
@@ -736,7 +736,7 @@ function getRecents($first,$num,$ns='',$flags=0){
   while($pos > 0){
     $pos -= $csz;                           // seek to previous chunk...
     if($pos < 0) {                          // ...or rest of file
-      $csz += $pos; 
+      $csz += $pos;
       $pos = 0;
     }
 
@@ -842,7 +842,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
   // send notify mails
   notify($id,'admin',$old,$summary,$minor);
   notify($id,'subscribers',$old,$summary,$minor);
-  
+
   //purge cache on add by updating the purgefile
   if($conf['purgeonadd'] && (!$old || $del)){
     io_saveFile($conf['cachedir'].'/purgefile',time());
@@ -856,7 +856,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function saveOldRevision($id){
-	global $conf;
+  global $conf;
   umask($conf['umask']);
   $oldf = wikiFN($id);
   if(!@file_exists($oldf)) return '';
@@ -902,7 +902,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
   }else{
     return; //just to be safe
   }
-  
+
   $text = str_replace('@DATE@',date($conf['dformat']),$text);
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
@@ -913,7 +913,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
   $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
-  
+
   if($rev){
     $subject = $lang['mail_changed'].' '.$id;
     $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true),$text);
@@ -1009,7 +1009,7 @@ function filesize_h($size, $dec = 1){
   $sizes = array('B', 'KB', 'MB', 'GB');
   $count = count($sizes);
   $i = 0;
-    
+
   while ($size >= 1024 && ($i < $count - 1)) {
     $size /= 1024;
     $i++;
@@ -1026,21 +1026,21 @@ function filesize_h($size, $dec = 1){
  */
 function obfuscate($email) {
   global $conf;
-  
+
   switch ($conf['mailguard']) {
     case 'visible' :
       $obfuscate = array('@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] ');
       return strtr($email, $obfuscate);
-      
+
     case 'hex' :
       $encode = '';
       for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email{$x}).';';
       return $encode;
-      
+
     case 'none' :
     default :
       return $email;
-  }            
+  }
 }
 
 /**
@@ -1135,7 +1135,7 @@ function check(){
   }else{
     msg('Debugging support is disabled',1);
   }
- 
+
   msg('Your current permission for this page is '.$INFO['perm'],0);
 
   if(is_writable($INFO['filepath'])){
@@ -1175,10 +1175,10 @@ function is_subscribed($id,$uid){
  */
 function subscriber_addresslist($id){
   global $conf;
-	global $auth;
+  global $auth;
 
   $emails = '';
-  
+
   if (!$conf['subscribers']) return;
 
   $mlist = array();
