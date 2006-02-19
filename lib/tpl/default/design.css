@@ -158,6 +158,10 @@ input.button, button.button{
   /* */  
 }
 
+* html input.button, * html button.button{
+  padding: 0;
+}
+
 div.secedit input.button {
   border: 1px solid __dark__;
   color: Black;
