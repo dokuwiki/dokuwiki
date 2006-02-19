@@ -116,13 +116,22 @@ input.missing {
 /* edit form */
 div.toolbar, div#wikieditbar {
    margin:2px 0;
+   text-align: left;
 }
 div#sizectl {
    float:right;
    width:50px;
 }
-div#wikieditbar span.summary {
-   margin-left: 10%;
+div#wikieditbar div.editButtons {
+   width: 32%;
+   float: left;
+}
+div#wikieditbar div.summary {
+   width: 60%;
+   float: right;
+}
+.nowrap {
+   white-space:nowrap;
 }
 
 /* --------- buttons ------------------- */

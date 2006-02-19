@@ -1021,16 +1021,18 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     <div id="wikieditbar">
       <div id="sizectl"></div>
       <?php if($wr){?>
-        <input class="button" id="edbtn_save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
-        <input class="button" id="edbtn_preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
-        <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
+         <div class="editButtons">
+            <input class="button" id="edbtn_save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
+            <input class="button" id="edbtn_preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
+            <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
+         </div>
       <?php } ?>
       <?php if($wr){ ?>
-        <span class="summary">
-           <label for="summary"><?php echo $lang['summary']?>:</label>
+        <div class="summary">
+           <label for="summary" class="nowrap"><?php echo $lang['summary']?>:</label>
            <input type="text" class="edit" name="summary" id="summary" size="50" value="<?php echo formText($SUM)?>" tabindex="2" />
            <?php html_minoredit()?>
-        </span>
+        </div>
       <?php }?>
     </div>
   </div></form>
@@ -1060,10 +1062,12 @@ function html_minoredit(){
   if($_REQUEST['minor']) $p['checked']='checked';
   $att = buildAttributes($p);
 
+  print '<span class="nowrap">';
   print "<input $att />";
   print '<label for="minoredit">';
   print $lang['minoredit'];
   print '</label>';
+  print '</span>';
 }
 
 /**
