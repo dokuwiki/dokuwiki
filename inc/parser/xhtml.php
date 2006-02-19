@@ -89,7 +89,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // prepend the TOC
-        $this->doc = $this->render_TOC().$this->doc;
+        if($this->info['toc']){
+            $this->doc = $this->render_TOC().$this->doc;
+        }
     }
 
     /**
@@ -98,7 +100,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function render_TOC(){
-        if(!count($this->toc)) return '';
+        if(count($this->toc) < 3) return '';
         global $lang;
         $out  = '<div class="toc">'.DOKU_LF;
         $out .= '<div class="tocheader toctoggle" id="toc__header">';
@@ -175,7 +177,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $hid = $this->_headerToLink($text,'true');
 
         //handle TOC
-//FIXME        if($this->meta['toc'] &&
         if($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']){
             // the TOC is one of our standard ul list arrays ;-)
             $this->toc[] = array( 'hid'   => $hid,

@@ -11,8 +11,6 @@ class Doku_Handler {
 
     var $meta = array(
         'section' => FALSE,
-        'toc' => TRUE,
-        'cache' => TRUE,
     );
 
     var $rewriteBlocks = TRUE;
@@ -115,7 +113,7 @@ class Doku_Handler {
     }
 
     function notoc($match, $state, $pos) {
-        $this->meta['toc'] = FALSE;
+        $this->_addCall('notoc',array(),$pos);
         return TRUE;
     }
 
