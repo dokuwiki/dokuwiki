@@ -120,13 +120,12 @@ div.toolbar, div#wikieditbar {
 }
 div#sizectl {
    float:right;
-   width:50px;
-   padding-bottom: 1.2em;
+   width:40px;
+   height:2.7em;
 }
 div#wikieditbar div.editButtons {
-   width: 23em;
    float: left;
-   padding: 0 0 0.8em 0;
+   padding: 0 1.0em 0.7em 0;
 }
 div#wikieditbar div.summary {
    float: left;
@@ -134,7 +133,6 @@ div#wikieditbar div.summary {
 .nowrap {
    white-space:nowrap;
 }
-
 
 /* --------- buttons ------------------- */
 
