@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     koeppe <koeppe@kazur.dk>
  * @author     Jon Bendtsen <bendtsen@diku.dk>
+ * @author     Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -33,18 +34,24 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Opdater';
 $lang['btn_delete'] = 'Slet';
 $lang['btn_back']   = 'Tilbage';
-$lang['btn_backtomedia'] = 'Tilbage til Mediafile Selection';
+$lang['btn_backtomedia'] = 'Tilbage til valg af mediefil';
 $lang['btn_subscribe']   = 'Abonner på ændringer';
 $lang['btn_unsubscribe'] = 'Fjern abonnement på ændringer';
+$lang['btn_profile']    = 'Opdater profil';
+$lang['btn_reset']     = 'Nulstil';
+$lang['btn_resendpwd'] = 'Send nyt password';
 
 $lang['loggedinas'] = 'Logget på som';
 $lang['user']       = 'Brugernavn';
 $lang['pass']       = 'Password';
-$pass['passchk']    = 'Gentag password';
+$lang['newpass']    = 'Nyt password';
+$lang['oldpass']    = 'Bekræft gammelt password';
+$lang['passchk']    = 'Gentag nyt password';
 $lang['remember']   = 'Log automatisk på';
 $lang['fullname']   = 'Navn';
 $lang['email']      = 'E-mail';
 $lang['register']   = 'Tilmeld';
+$lang['profile']    = 'Brugerprofil';
 $lang['badlogin']   = 'Forkert brugernavn eller password.';
 
 $lang['regmissing'] = 'Du skal udfylde alle felter.';
