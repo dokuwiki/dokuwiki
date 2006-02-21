@@ -3,7 +3,7 @@
 require_once DOKU_INC.'inc/utf8.php';
 
 // use no mbstring help here
-define('UTF8_NOMBSTRING',1);
+if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
 class utf8_utf16be_test extends UnitTestCase {
     // some chars from various code regions
