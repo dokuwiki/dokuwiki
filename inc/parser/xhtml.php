@@ -1037,7 +1037,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // make sure tiles are unique
             $num = '';
             while(in_array($title.$num,$this->headers)){
-                ($num) ? $num = 1 : $num++;
+                ($num) ? $num++ : $num = 1;
             }
             $title = $title.$num;
             $this->headers[] = $title;
