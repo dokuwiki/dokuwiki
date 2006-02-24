@@ -1,0 +1,10 @@
+div.dokuwiki div.acladmin label {
+  text-align: left;
+  font-weight: normal;
+  display: inline;
+}
+
+div.dokuwiki div.acladmin table{
+  margin-left: 10%;
+  width: 80%;
+}

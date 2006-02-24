@@ -684,20 +684,6 @@ div.footerinc {
     opacity: 1;
 }
 
-
-/* ---- Admin --- */
-
-div.dokuwiki div.acladmin label {
-  text-align: left;
-  font-weight: normal;
-  display: inline;
-}
-
-div.dokuwiki div.acladmin table{
-  margin-left: 10%;
-  width: 80%;
-}
-
 /* ---------- AJAX quicksearch ----------- */
 
 div.dokuwiki div.ajax_qsearch {
