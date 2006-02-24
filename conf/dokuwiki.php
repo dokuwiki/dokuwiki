@@ -25,6 +25,7 @@ $conf['template']    = 'default';         //see tpl directory
 $conf['fullpath']    = 0;                 //show full path of the document or relative to datadir only? 0|1
 $conf['recent']      = 20;                //how many entries to show in recent
 $conf['breadcrumbs'] = 10;                //how many recent visited pages to show
+$conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
 $conf['typography']  = 1;                 //convert quotes, dashes and stuff to typographic equivalents? 0|1
 $conf['htmlok']      = 0;                 //may raw HTML be embedded? This may break layout and XHTML validity 0|1
 $conf['phpok']       = 0;                 //may PHP code be embedded? Never do this on the internet! 0|1

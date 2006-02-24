@@ -64,6 +64,12 @@
     </div>
     <?php }?>
 
+    <?php if($conf['youarehere']){?>
+    <div class="breadcrumbs">
+      <?php tpl_youarehere() ?>
+    </div>
+    <?php }?>
+
   </div>
   <?php flush()?>
 

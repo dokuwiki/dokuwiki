@@ -535,12 +535,12 @@ function tpl_breadcrumbs(){
 /**
  * Hierarchical breadcrumbs
  *
- * This code was suggested as replacement for the usual breadcrumbs
- * trail in the Wiki and was modified by me.
+ * This code was suggested as replacement for the usual breadcrumbs.
  * It only makes sense with a deep site structure.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Nigel McNie <oracle.shinoda@gmail.com>
+ * @author Sean Coates <sean@caedmon.net>
  * @link   http://wiki.splitbrain.org/wiki:tipsandtricks:hierarchicalbreadcrumbs
  * @todo   May behave strangely in RTL languages
  */
@@ -549,16 +549,22 @@ function tpl_youarehere(){
   global $ID;
   global $lang;
 
+  //check if enabled
+  if(!$conf['youarehere']) return;
 
   $parts     = explode(':', $ID);
 
-  // Perhaps a $lang['tree'] could be defined? "Trace" isn't too appropriate
-  //print $lang['tree'].': ';
-  print $lang['breadcrumb'].': ';
+  print $lang['youarehere'].': ';
 
   //always print the startpage
-  if( $a_part[0] != $conf['start'] )
-    tpl_link(wl($conf['start']),$conf['start'],'title="'.$conf['start'].'"');
+  if( $a_part[0] != $conf['start']){
+    if($conf['useheading']){
+      $pageName = p_get_first_heading($conf['start']);
+    }else{
+      $pageName = $conf['start'];
+    }
+    tpl_link(wl($conf['start']),$pageName,'title="'.$pageName.'"');
+  }
 
   $page = '';
   foreach ($parts as $part){
@@ -569,7 +575,14 @@ function tpl_youarehere(){
     $page .= $part;
 
     if(file_exists(wikiFN($page))){
-      tpl_link(wl($page),$part,'title="'.$page.'"');
+      if($conf['useheading']){
+        $pageName = p_get_first_heading($page);
+        $partName = $pageName;
+      }else{
+        $pageName = $page;
+        $partName = $part;
+      }
+      tpl_link(wl($page),$partName,'title="'.$pageName.'"');
     }else{
       // Print the link, but mark as not-existing, as for other non-existing links
       tpl_link(wl($page),$part,'title="'.$page.'" class="wikilink2"');

@@ -111,6 +111,7 @@ $lang['yours']      = 'Your Version';
 $lang['diff']       = 'show differences to current version';
 $lang['line']       = 'Line';
 $lang['breadcrumb'] = 'Trace';
+$lang['youarehere'] = 'You are here';
 $lang['lastmod']    = 'Last modified';
 $lang['by']         = 'by';
 $lang['deleted']    = 'removed';
