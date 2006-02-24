@@ -1,6 +1,7 @@
 ====== Recherche ======
 
-Voici les résultats de votre recherche. Si vous n'avez pas trouvé ce que vous cherchiez, vous pouvez créer
-cette nouvelle page en cliquant sur le bouton ''Éditer cette page''.
+Voici les résultats de votre recherche. Si vous n'avez pas trouvé ce
+que vous cherchiez, vous pouvez créer ou éditer la page correspondante
+à votre requête en cliquant sur le bouton approprié.
 
 ===== Résultats =====
