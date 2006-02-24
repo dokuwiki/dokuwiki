@@ -150,7 +150,7 @@ class HTTPClient {
         if(!empty($uri['query'])) $path .= '?'.$uri['query'];
         $port = $uri['port'];
         if($uri['user']) $this->user = $uri['user'];
-        if($uri['pass']) $this->user = $uri['pass'];
+        if($uri['pass']) $this->pass = $uri['pass'];
 
         // proxy setup
         if($this->proxy_host){
