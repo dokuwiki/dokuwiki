@@ -4,16 +4,20 @@ if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../')
 require_once DOKU_INC . 'inc/parser/xhtml.php';
 
 /**
-* The summary XHTML form selects either up to the first two paragraphs
-* it find in a page or the first section (whichever comes first)
-* It strips out the table of contents if one exists
-* Section divs are not used - everything should be nested in a single
-* div with CSS class "page"
-* Headings have their a name link removed and section editing links
-* removed
-* It also attempts to capture the first heading in a page for
-* use as the title of the page.
-*/
+ * The summary XHTML form selects either up to the first two paragraphs
+ * it find in a page or the first section (whichever comes first)
+ * It strips out the table of contents if one exists
+ * Section divs are not used - everything should be nested in a single
+ * div with CSS class "page"
+ * Headings have their a name link removed and section editing links
+ * removed
+ * It also attempts to capture the first heading in a page for
+ * use as the title of the page.
+ *
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @todo   Is this currently used anywhere? Should it?
+ */
 class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
 
     // Namespace these variables to
@@ -33,10 +37,12 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
         $this->doc .= DOKU_LF.'</div>'.DOKU_LF;
     }
 
+    // FIXME not supported anymore
     function toc_open() {
         $this->sum_summary .= $this->doc;
     }
 
+    // FIXME not supported anymore
     function toc_close() {
         $this->doc = '';
     }

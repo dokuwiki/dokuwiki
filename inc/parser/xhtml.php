@@ -120,49 +120,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                $this->_xmlEntities($item['title']).'</a></span>';
     }
 
-/** FIXME deprecated
-
-    function toc_open() {
-        global $lang;
-        $this->doc .= '<div class="toc">'.DOKU_LF;
-        $this->doc .= '<div class="tocheader toctoggle" id="toc__header">';
-        $this->doc .= $lang['toc'];
-        $this->doc .= '</div>'.DOKU_LF;
-        $this->doc .= '<div id="toc__inside">'.DOKU_LF;
-    }
-
-    function tocbranch_open($level) {
-        $this->doc .= '<ul class="toc">'.DOKU_LF;
-    }
-
-    function tocitem_open($level, $empty = FALSE) {
-        if ( !$empty ) {
-            $this->doc .= '<li class="level'.$level.'">';
-        } else {
-            $this->doc .= '<li class="clear">';
-        }
-    }
-
-    function tocelement($level, $title) {
-        $this->doc .= '<span class="li"><a href="#'.$this->_headerToLink($title).'" class="toc">';
-        $this->doc .= $this->_xmlEntities($title);
-        $this->doc .= '</a></span>';
-    }
-
-    function tocitem_close($level) {
-        $this->doc .= '</li>'.DOKU_LF;
-    }
-
-    function tocbranch_close($level) {
-        $this->doc .= '</ul>'.DOKU_LF;
-    }
-
-    function toc_close() {
-        $this->doc .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
-    }
-
-*/
-
     function header($text, $level, $pos) {
         global $conf;
         //handle section editing

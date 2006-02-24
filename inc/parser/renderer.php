@@ -39,19 +39,7 @@ class Doku_Renderer {
 
     function document_end() {}
 
-    function toc_open() {}
-
-    function tocbranch_open($level) {}
-
-    function tocitem_open($level, $empty = FALSE) {}
-
-    function tocelement($level, $title) {}
-
-    function tocitem_close($level) {}
-
-    function tocbranch_close($level) {}
-
-    function toc_close() {}
+    function render_TOC() { return '' }
 
     function header($text, $level, $pos) {}
 
