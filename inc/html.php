@@ -234,10 +234,12 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 
   $ret .= '<form class="button" method="'.$method.'" action="'.$script.'"><div class="no">';
 
-  reset($params);
-  while (list($key, $val) = each($params)) {
-    $ret .= '<input type="hidden" name="'.$key.'" ';
-    $ret .= 'value="'.htmlspecialchars($val).'" />';
+  if(is_array($params)){
+    reset($params);
+    while (list($key, $val) = each($params)) {
+      $ret .= '<input type="hidden" name="'.$key.'" ';
+      $ret .= 'value="'.htmlspecialchars($val).'" />';
+    }
   }
 
   $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
