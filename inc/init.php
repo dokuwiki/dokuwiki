@@ -76,8 +76,35 @@
     $conf['usegzip'] = 0;
   }
 
-  // remember original umask
-  $conf['oldumask'] = umask();
+  // Legacy support for old umask/dmask scheme
+  if(isset($conf['dmask'])) {
+    unset($conf['dmask']);
+    unset($conf['fmask']);
+    unset($conf['umask']);
+  }
+
+  // Set defaults for fmode, dmode and umask.
+  if(!isset($conf['fmode'])) {
+    $conf['fmode'] = 0666;
+  }
+  if(!isset($conf['dmode'])) {
+    $conf['dmode'] = 0777;
+  }
+  if(!isset($conf['umask'])) {
+    $conf['umask'] = umask();
+  }
+
+  // Precalculate the fmask and dmask, so we can set later.
+  if(($conf['umask'] != umask()) or ($conf['fmode'] != 0666)) {
+    $conf['fmask'] = $conf['fmode'] & ~$conf['umask'];
+  }
+  if(($conf['umask'] != umask()) or ($conf['dmode'] != 0666)) {
+    $conf['dmask'] = $conf['dmode'] & ~$conf['umask'];
+  }
+#  print "$name:".sprintf("dmask:%04o<br>\n",$conf['dmode'])."\n";
+#  print "$name:".sprintf("umask:%04o<br>\n",$conf['umask'])."\n";
+#  print "$name:".sprintf("dmask:%04o<br>\n",$conf['dmask'])."\n";
+#  exit;
 
   // make real paths and check them
   init_paths();
@@ -118,12 +145,11 @@ function init_files(){
                   $conf['cachedir'].'/page.idx',
                   $conf['cachedir'].'/index.idx', );
 
-  umask($conf['umask']);
   foreach($files as $file){
     if(!@file_exists($file)){
       $fh = fopen($file,'a');
       fclose($fh);
-      chmod($conf['fmode'], $file);
+      if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
     }
   }
 }

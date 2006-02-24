@@ -79,7 +79,6 @@ function _index($id){
     _lock();
     echo "$id... ";
     idx_addPage($id);
-    umask($conf['umask']);
     io_saveFile(metaFN($id,'.indexed'),' ');
     echo "done.\n";
     _unlock();
@@ -92,7 +91,7 @@ function _lock(){
     global $conf;
     $lock = $conf['lockdir'].'/_indexer.lock';
     $said = false;
-    while(!@mkdir($lock)){
+    while(!@mkdir($lock, $conf['dmode'])){
         if(time()-@filemtime($lock) > 60*5){
             // looks like a stale lock - remove it
             @rmdir($lock);
@@ -106,6 +105,7 @@ function _lock(){
             sleep(15);
         }
     }
+    if(isset($conf['dmask'])) { chmod($lock, $conf['dmask']); }
     if($said) print "\n";
 }
 
@@ -125,7 +125,6 @@ function _clearindex(){
     global $conf;
     _lock();
     echo "Clearing index... ";
-    umask($conf['umask']);
     io_saveFile($conf['cachedir'].'/word.idx','');
     io_saveFile($conf['cachedir'].'/page.idx','');
     io_saveFile($conf['cachedir'].'/index.idx','');

@@ -55,7 +55,4 @@
   header('Content-Type: text/html; charset=utf-8');
   include(template('detail.php'));
 
-  //restore old umask
-  umask($conf['oldumask']);
-
 ?>

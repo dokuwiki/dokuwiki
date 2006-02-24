@@ -67,8 +67,5 @@
   //do the work
   act_dispatch($ACT);
 
-  //restore old umask
-  umask($conf['oldumask']);
-
 //  xdebug_dump_function_profile(1);
 ?>

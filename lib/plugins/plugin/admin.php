@@ -587,7 +587,6 @@ class ap_manage {
     function ap_mkdir($d) {
         global $conf;
 
-        umask($conf['umask']);
         $ok = io_mkdir_p($d);
         return $ok;
     }

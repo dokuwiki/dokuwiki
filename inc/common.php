@@ -810,7 +810,6 @@ function getRevisionInfo($id,$rev){
 function saveWikiText($id,$text,$summary,$minor=false){
   global $conf;
   global $lang;
-  umask($conf['umask']);
   // ignore if no changes were made
   if($text == rawWiki($id,'')){
     return;
@@ -857,7 +856,6 @@ function saveWikiText($id,$text,$summary,$minor=false){
  */
 function saveOldRevision($id){
   global $conf;
-  umask($conf['umask']);
   $oldf = wikiFN($id);
   if(!@file_exists($oldf)) return '';
   $date = filemtime($oldf);

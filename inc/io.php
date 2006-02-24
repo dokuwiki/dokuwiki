@@ -88,7 +88,7 @@ function io_saveFile($file,$content,$append=false){
     fclose($fh);
   }
 
-  if(!$fileexists && $conf['fmode'] != 0666) { chmod($file, $conf['fmode']); }
+  if(!$fileexists and isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
   io_unlock($file);
   return true;
 }
@@ -178,7 +178,8 @@ function io_lock($file){
   do {
     //waited longer than 3 seconds? -> stale lock
     if ((time() - $timeStart) > 3) break;
-    $locked = @mkdir($lockDir);
+    $locked = @mkdir($lockDir, $conf['dmode']);
+    if($locked and isset($conf['dmask'])) { chmod($lockDir, $conf['dmask']); }
   } while ($locked === false);
 }
 
@@ -206,7 +207,6 @@ function io_makeFileDir($file){
   global $conf;
 
   $dir = dirname($file);
-  umask($conf['umask']);
   if(!is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
   }
@@ -229,7 +229,9 @@ function io_mkdir_p($target){
       $dir = preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','', $target);
       return io_mkdir_ftp($dir);
     }else{
-      return @mkdir($target,$conf['dmode']); // crawl back up & create dir tree
+      $ret = @mkdir($target,$conf['dmode']); // crawl back up & create dir tree
+      if($ret and isset($conf['dmask'])) { chmod($target, $conf['dmask']); }
+      return $ret;
     }
   }
   return 0;
@@ -264,7 +266,7 @@ function io_mkdir_ftp($dir){
   //create directory
   $ok = @ftp_mkdir($conn, $dir);
   //set permissions (using the directory umask and dmode)
-  @ftp_site($conn,sprintf("CHMOD %04o %s",($conf['dmode'] & ~$conf['umask']),$dir));
+  @ftp_site($conn,sprintf("CHMOD %04o %s",$conf['dmask'],$dir));
 
   @ftp_close($conn);
   return $ok;
@@ -315,12 +317,11 @@ function io_download($url,$file,$useAttachment=false,$defaultName=''){
   }
 
   $fileexists = file_exists($file);
-  umask($conf['umask']);
   $fp = @fopen($file,"w");
   if(!$fp) return false;
   fwrite($fp,$data);
   fclose($fp);
-  if(!$fileexists && $conf['fmode'] != 0666) { chmod($file, $conf['fmode']); }
+  if(!$fileexists and isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
   if ($useAttachment) return $name;
   return true;
 }
@@ -335,7 +336,7 @@ function io_rename($from,$to){
   global $conf;
   if(!@rename($from,$to)){
     if(@copy($from,$to)){
-      if($conf['fmode'] != 0666) { chmod($file, $conf['fmode']); }
+      if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
       @unlink($from);
       return true;
     }
@@ -362,6 +363,5 @@ function io_runcmd($cmd){
   pclose($fh);
   return $ret;
 }
-
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

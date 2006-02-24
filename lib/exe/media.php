@@ -68,9 +68,6 @@
   }else{
     include(template('media.php'));
   }
-  
-  //restore old umask
-  umask($conf['oldumask']);
 
 /**********************************************/
 
@@ -116,9 +113,7 @@ function media_upload($NS,$AUTH){
   $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
   $regex = join('|',$types);
 
-  // we set the umask here but this doesn't really help
   // because a temp file was created already
-  umask($conf['umask']);
   if(preg_match('/\.('.$regex.')$/i',$fn)){
     //check for overwrite
     if(@file_exists($fn) && (!$_POST['ow'] || $AUTH < AUTH_DELETE)){
@@ -129,7 +124,7 @@ function media_upload($NS,$AUTH){
     io_makeFileDir($fn);
     if(move_uploaded_file($file['tmp_name'], $fn)) {
       // set the correct permission here
-      chmod($fn, $conf['fmode'] & ~$conf['umask']);
+      if(isset($conf['fmask'])) { chmod($fn, $conf['fmask']); }
       msg($lang['uploadsucc'],1);
       return true;
     }else{
