@@ -40,21 +40,21 @@ div.success{
 
 /* image alignment */
 
-.medialeft {
+div.dokuwiki .medialeft {
   float: left;
 }
 
-.mediaright {
+div.dokuwiki .mediaright {
   float: right;
 }
 
-.mediacenter {
+div.dokuwiki .mediacenter {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-em.u {
+div.dokuwiki em.u {
   font-style: normal;
   text-decoration: underline;
 }

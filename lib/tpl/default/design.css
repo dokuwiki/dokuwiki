@@ -16,62 +16,62 @@ body {
 }
 
 /* the document */
-div.page {
+div.dokuwiki div.page {
   margin-top: 4px;
   margin-left:  1em;
   margin-right: 2em;
   text-align: justify;
 }
 
-table {
+div.dokuwiki table {
   font-size: 100%;
   padding:0;
   margin:0;
 }
 
-tr,td,th {padding:0; margin:0;}
+div.dokuwiki tr, div.dokuwiki td, div.dokuwiki th {padding:0; margin:0;}
 
-img {border:0}
+div.dokuwiki img {border:0}
 
-p {padding:0; margin: 0 0 1.0em 0;}
+div.dokuwiki p {padding:0; margin: 0 0 1.0em 0;}
 
-hr {
+div.dokuwiki hr {
   border: 0px;
   border-top: 1px solid __dark__;
   text-align:center;
   height: 0px;
 }
 
-div.nothing {
+div.dokuwiki div.nothing {
   text-align:center;
-	margin: 2em;
+  margin: 2em;
 }
 
 /* ---------------- forms ------------------------ */
 
-form {
+div.dokuwiki form {
   border: none;
   margin: 0;
   display: inline;
 }
 
-label.block {
+div.dokuwiki label.block {
   display: block;
   text-align: right;
   font-weight: bold;
 }
 
-label.simple {
+div.dokuwiki label.simple {
   display: block;
   text-align: left;
   font-weight: normal;
 }
 
-label.block input.edit {
+div.dokuwiki label.block input.edit {
   width: 50%;
 }
 
-fieldset {
+div.dokuwiki fieldset {
   width: 300px;
   text-align: center;
   border: 1px solid __dark__;
@@ -79,7 +79,7 @@ fieldset {
   margin: auto;
 }
 
-textarea.edit {
+div.dokuwiki textarea.edit {
   font-family:monospace;
   border: 1px solid __dark__;  
   color: Black;
@@ -89,7 +89,7 @@ textarea.edit {
   width:100%;
 }
 
-input.edit,select.edit {
+div.dokuwiki input.edit, div.dokuwiki select.edit {
   font-size: 100%;
   border: 1px solid __dark__;
   height: 1.65em;
@@ -101,7 +101,7 @@ input.edit,select.edit {
   display: inline;
 }
 
-input.missing {
+div.dokuwiki input.missing {
   font-size: 100%;
   border: 1px solid __dark__;
   height: 1.65em;
@@ -114,30 +114,33 @@ input.missing {
 }
 
 /* edit form */
-div.toolbar, div#wikieditbar {
+div.dokuwiki div.toolbar, div.dokuwiki div#wikieditbar {
    margin:2px 0;
    text-align: left;
 }
-div#sizectl {
+div.dokuwiki div#sizectl {
    float:right;
    width:40px;
    height:2.7em;
 }
-div#wikieditbar div.editButtons {
+div.dokuwiki #sizectl img {
+   cursor: pointer;
+}
+div.dokuwiki div#wikieditbar div.editButtons {
    float: left;
    padding: 0 1.0em 0.7em 0;
 }
-div#wikieditbar div.summary {
+div.dokuwiki div#wikieditbar div.summary {
    float: left;
 }
-.nowrap {
+div.dokuwiki .nowrap {
    white-space:nowrap;
 }
 
 /* --------- buttons ------------------- */
 
 
-input.button, button.button{
+div.dokuwiki input.button, div.dokuwiki button.button{
   border: 1px solid __dark__;  
   color: Black;
   background-color: __white__;
@@ -156,11 +159,11 @@ input.button, button.button{
   /* */  
 }
 
-* html input.button, * html button.button{
+* html div.dokuwiki input.button, * html div.dokuwiki button.button{
   padding: 0;
 }
 
-div.secedit input.button {
+div.dokuwiki div.secedit input.button {
   border: 1px solid __dark__;
   color: Black;
   background-color: __white__;
@@ -176,161 +179,161 @@ div.secedit input.button {
 
 /* ----------- page navigator ------------- */
 
-div.pagenav {
+div.dokuwiki div.pagenav {
 	margin-top:1em;
 }
 
-div.pagenav-prev {
+div.dokuwiki div.pagenav-prev {
 	text-align:right;	
 	float:left;
 	width:50%
 }
 
-div.pagenav-prev input.button {
+div.dokuwiki div.pagenav-prev input.button {
 	margin-right:5px;
 }
 
-div.pagenav-next {
+div.dokuwiki div.pagenav-next {
 	text-align:left;
 	float:right;
 	width:50%
 }
 
-div.pagenav-next input.button {
+div.dokuwiki div.pagenav-next input.button {
 	margin-left:5px;
 }
 
 /* --------------- Links ------------------ */
 
-a {
+div.dokuwiki a {
   color:__extern__;
   text-decoration:none;
 }
-a:hover {
+div.dokuwiki a:hover {
   color:__black__;
   text-decoration:underline;
 }
-h1 a, h2 a, h3 a, h4 a, h5 a, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover {
+div.dokuwiki h1 a, div.dokuwiki h2 a, div.dokuwiki h3 a, div.dokuwiki h4 a, div.dokuwiki h5 a, div.dokuwiki h1 a:hover, div.dokuwiki h2 a:hover, div.dokuwiki h3 a:hover, div.dokuwiki h4 a:hover, div.dokuwiki h5 a:hover {
   color:__black__;
   text-decoration:none;
 }
 
 /* external link */
-a.urlextern{
+div.dokuwiki a.urlextern{
     background: transparent url(images/link_icon.gif) 0px 1px no-repeat;
     padding: 1px 0px 1px 16px;
     color:__extern__;
     text-decoration:none;
 }
-a.urlextern:visited {
+div.dokuwiki a.urlextern:visited {
   color:Purple;
 }
-a.urlextern:hover {
+div.dokuwiki a.urlextern:hover {
   text-decoration:underline;
 }
 
 /* windows share */
-a.windows{
+div.dokuwiki a.windows{
     background: transparent url(images/windows.gif) 0px 1px no-repeat;
     padding: 1px 0px 1px 16px;
     color:__extern__;
     text-decoration:none;
 } 
-a.windows:visited {
+div.dokuwiki a.windows:visited {
   color:Purple;
 }
-a.windows:hover { 
+div.dokuwiki a.windows:hover { 
   text-decoration:underline;
 }
 
 /* interwiki link (icon are set by dokuwiki) */
-a.interwiki{
+div.dokuwiki a.interwiki{
     color:__extern__;
     text-decoration:none;
 }
-a.interwiki:visited {
+div.dokuwiki a.interwiki:visited {
   color:Purple;
 }
-a.interwiki:hover {
+div.dokuwiki a.interwiki:hover {
   text-decoration:underline;
 }
 
 /* link to some embedded media */
-a.media {
+div.dokuwiki a.media {
   color:__extern__;
   text-decoration:none;
 }
-a.media:hover {
+div.dokuwiki a.media:hover {
   color:__extern__;
   text-decoration:underline
 }
 
 /* email link */
-a.mail {
+div.dokuwiki a.mail {
   background: transparent url(images/mail_icon.gif) 0px 1px no-repeat;
   padding: 1px 0px 1px 16px;
   color:__extern__;
   text-decoration:none;
 }
-a.mail:hover {
+div.dokuwiki a.mail:hover {
   text-decoration:underline;
 }
 
 /* existing wikipage */
-a.wikilink1:link    { color:__existing__; text-decoration:none }
-a.wikilink1:visited { color:__existing__; text-decoration:none }
-a.wikilink1:hover   { color:__existing__; text-decoration:underline }
+div.dokuwiki a.wikilink1:link    { color:__existing__; text-decoration:none }
+div.dokuwiki a.wikilink1:visited { color:__existing__; text-decoration:none }
+div.dokuwiki a.wikilink1:hover   { color:__existing__; text-decoration:underline }
 
 /* not existing wikipage */
-a.wikilink2:link    { color:__missing__; text-decoration:none }
-a.wikilink2:visited { color:__missing__; text-decoration:none }
-a.wikilink2:hover   { color:__missing__; text-decoration:underline }
+div.dokuwiki a.wikilink2:link    { color:__missing__; text-decoration:none }
+div.dokuwiki a.wikilink2:visited { color:__missing__; text-decoration:none }
+div.dokuwiki a.wikilink2:hover   { color:__missing__; text-decoration:underline }
 
 
 /* ------------- Page elements ----------------- */
 
-div.preview{
+div.dokuwiki div.preview{
   background:__lighter__;
   margin-left:2em;
   padding: 4px;
   border: 1px dashed __black__;
 }
 
-div.breadcrumbs{
+div.dokuwiki div.breadcrumbs{
   background-color: __lightgray__;
   font-size:80%;
   color: __darkgray__;
   padding-left: 4px;
 }
 
-span.user{
+div.dokuwiki span.user{
   color: __mediumgray__;
   font-size: 90%;
 }
 
-li.minor {
+div.dokuwiki li.minor {
   color: __darkgray__;
   font-style: italic;
 }
 
 /* embedded images */
-img.media {
+div.dokuwiki img.media {
   margin: 3px;
 }
 
-img.medialeft {
+div.dokuwiki img.medialeft {
   border: 0;
   float: left;
   margin: 0 1.5em 0 0;
 }
 
-img.mediaright {
+div.dokuwiki img.mediaright {
   border: 0;
   float: right;
   margin: 0 0 0 1.5em;
 }
 
-img.mediacenter {
+div.dokuwiki img.mediacenter {
   border: 0;
 	display: block;
   margin-left: auto;
@@ -338,17 +341,17 @@ img.mediacenter {
 }
 
 /* smileys */
-img.middle {
+div.dokuwiki img.middle {
   vertical-align: middle;
 }
 
-acronym {
+div.dokuwiki acronym {
   cursor: help;
   border-bottom: 1px dotted __black__;
 }
 
 /* general headline setup */
-h1, h2, h3, h4, h5 {
+div.dokuwiki h1, div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki h5 {
     color: Black;
     background-color: transparent;
     font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
@@ -367,68 +370,68 @@ h1, h2, h3, h4, h5 {
 }
 
 /* special headlines */
-h1 {font-size: 160%; margin-left: 0px; font-weight: bold;}
-h2 {font-size: 150%; margin-left: 20px;}
-h3 {font-size: 140%; margin-left: 40px; border-bottom: none; font-weight: bold;}
-h4 {font-size: 120%; margin-left: 60px; border-bottom: none; font-weight: bold;}
-h5 {font-size: 100%; margin-left: 80px; border-bottom: none; font-weight: bold;}
+div.dokuwiki h1 {font-size: 160%; margin-left: 0px; font-weight: bold;}
+div.dokuwiki h2 {font-size: 150%; margin-left: 20px;}
+div.dokuwiki h3 {font-size: 140%; margin-left: 40px; border-bottom: none; font-weight: bold;}
+div.dokuwiki h4 {font-size: 120%; margin-left: 60px; border-bottom: none; font-weight: bold;}
+div.dokuwiki h5 {font-size: 100%; margin-left: 80px; border-bottom: none; font-weight: bold;}
 
 /* indent different sections */
-div.level1 {margin-left: 3px;}
-div.level2 {margin-left: 23px;}
-div.level3 {margin-left: 43px;}
-div.level4 {margin-left: 63px;}
-div.level5 {margin-left: 83px;}
+div.dokuwiki div.level1 {margin-left: 3px;}
+div.dokuwiki div.level2 {margin-left: 23px;}
+div.dokuwiki div.level3 {margin-left: 43px;}
+div.dokuwiki div.level4 {margin-left: 63px;}
+div.dokuwiki div.level5 {margin-left: 83px;}
 
 /* unordered lists */
-ul { 
+div.dokuwiki ul { 
   line-height: 1.5em;
   list-style-type: square;
   margin: 0 0 0.5em 1.5em;
   padding: 0;
   color: __darker__;
-	list-style-image: none;
+  list-style-image: none;
 }
 
 /* ordered lists */
-ol {
+div.dokuwiki ol {
   line-height: 1.5em;
   margin: 0 0 0.5em 1.5em;
   padding: 0;
   color: __darker__;
   font-weight: bold;
-	list-style-image: none;
+  list-style-image: none;
 }
 
 /* the list items overriding the ul/ol definition */
-.li {
+div.dokuwiki .li {
   color: __black__;
   font-weight: normal;
 }
 
-ol {list-style-type: decimal}
-ol ol {list-style-type: upper-roman}
-ol ol ol {list-style-type: lower-alpha}
-ol ol ol ol {list-style-type: lower-greek}
+div.dokuwiki ol {list-style-type: decimal}
+div.dokuwiki ol ol {list-style-type: upper-roman}
+div.dokuwiki ol ol ol {list-style-type: lower-alpha}
+div.dokuwiki ol ol ol ol {list-style-type: lower-greek}
 
-li.open {
+div.dokuwiki li.open {
   list-style-image: url(images/open.gif);
 	/*list-style-type: circle;*/
 }
 
-li.closed {
+div.dokuwiki li.closed {
   list-style-image: url(images/closed.gif);
 	/*list-style-type: disc;*/
 }
 
-blockquote {
+div.dokuwiki blockquote {
   border-left: 2px solid __dark__;
   padding-left: 3px;
   margin-left: 0;
 }
 
 /* code blocks by indention */
-pre.pre {
+div.dokuwiki pre.pre {
   font-size: 120%;
   padding: 0.5em;
   border: 1px dashed __dark__;
@@ -438,7 +441,7 @@ pre.pre {
 }
 
 /* code blocks by code tag */
-pre.code {
+div.dokuwiki pre.code {
   font-size: 120%;
   padding: 0.5em;
   border: 1px dashed __dark__;
@@ -448,12 +451,12 @@ pre.code {
 }
 
 /* inline code words */
-code {
+div.dokuwiki code {
   font-size: 120%;
 }
 
 /* code blocks by file tag */
-pre.file {
+div.dokuwiki pre.file {
   font-size: 120%;
   padding: 0.5em;
   border: 1px dashed __dark__;
@@ -463,38 +466,38 @@ pre.file {
 }
 
 /* inline tables */
-table.inline {
+div.dokuwiki table.inline {
   background-color: __white__;
   border-spacing: 0px;
   border-collapse: collapse;
 }
 
-table.inline th {
+div.dokuwiki table.inline th {
   padding: 3px;
   border: 1px solid __dark__;
   background-color: __medium__;
 }
 
-table.inline td {
+div.dokuwiki table.inline td {
   padding: 3px;
   border: 1px solid __dark__;
 }
 
-.leftalign{
+div.dokuwiki .leftalign{
   text-align: left;
 }
 
-.centeralign{
+div.dokuwiki .centeralign{
   text-align: center;
 }
 
-.rightalign{
+div.dokuwiki .rightalign{
   text-align: right;
 }
 
 /* ---------- table of contents ------------------- */
 
-div.toc {
+div.dokuwiki div.toc {
   margin-left: 2em;
   margin-top: 1.2em;
   margin-bottom: 0;
@@ -504,7 +507,7 @@ div.toc {
   clear:both;
 }
 
-div.tocheader {
+div.dokuwiki div.tocheader {
   padding: 3px;
   border: 1px solid __dark__;
   background-color: __medium__;
@@ -513,7 +516,7 @@ div.tocheader {
   margin-bottom: 2px;
 }
 
-div.tocheader img {
+div.dokuwiki div.tocheader img {
   width:0.8em;
   height:0.8em;
   float:right;
@@ -522,7 +525,7 @@ div.tocheader img {
   cursor: pointer;
 }
 
-#toc__inside {
+div.dokuwiki #toc__inside {
   border: 1px solid __dark__;
   background-color: __white__;
   text-align: left;
@@ -530,7 +533,7 @@ div.tocheader img {
   padding-bottom: 0.7em;
 }
 
-ul.toc {
+div.dokuwiki ul.toc {
   list-style-type: none;
   list-style-image: none;
   line-height: 1.2em;
@@ -539,76 +542,76 @@ ul.toc {
   padding-left: 1em;
 }
 
-ul.toc li {
+div.dokuwiki ul.toc li {
   background: transparent url(images/tocdot2.gif) 0 0.6em no-repeat;
   padding-left:0.4em;
 }
 
-ul.toc li.clear {
+div.dokuwiki ul.toc li.clear {
   background-image: none;
   padding-left:0.4em;
 }
 
-a.toc {
+div.dokuwiki a.toc {
   color: __extern__;
   text-decoration:none;
 }
 
-a.toc:hover {
+div.dokuwiki a.toc:hover {
   color: __black__;
   text-decoration:underline; 
 }
 
 /* ---------------------------- Diff rendering --------------------------*/
-table.diff { background:__white__; }
-td.diff-blockheader {font-weight:bold}
-td.diff-header {
+div.dokuwiki table.diff { background:__white__; }
+div.dokuwiki td.diff-blockheader {font-weight:bold}
+div.dokuwiki td.diff-header {
   border-bottom: 1px solid __dark__;
   font-size:120%;
 }
-td.diff-addedline {
+div.dokuwiki td.diff-addedline {
     background:#ddffdd;
     font-family: monospace;
     font-size: 100%;
 }
-td.diff-deletedline { 
+div.dokuwiki td.diff-deletedline { 
     background:#ffffbb;
     font-family: monospace;    
     font-size: 100%;
 }
-td.diff-context {
+div.dokuwiki td.diff-context {
     background:__lighter__;
     font-family: monospace;
     font-size: 100%;
 }
-span.diffchange { color: red; }
+div.dokuwiki span.diffchange { color: red; }
 
 /* --------------------- footnotes -------------------------------- */
 
-div.footnotes{
+div.dokuwiki div.footnotes{
   clear:both;
   border-top: 1px solid __dark__;
   padding-left: 1em;
   margin-top: 1em;
 }
 
-div.fn{
+div.dokuwiki div.fn{
   font-size:90%;
 }
 
-a.fn_top{
+div.dokuwiki a.fn_top{
   vertical-align:super;
   font-size:80%;
 }
 
-a.fn_bot{
+div.dokuwiki a.fn_bot{
   vertical-align:super;
   font-size:80%;
   font-weight:bold;
 }
 
 /* insitu-footnotes */
-div.insitu-footnote {
+div.dokuwiki div.insitu-footnote {
   font-size: 80%;
   line-height: 1.2em;
   border: 1px solid __dark__;
@@ -619,49 +622,49 @@ div.insitu-footnote {
 }
 
 /* overcome IE issue with one line code or file boxes which require h. scrolling */
-* html .insitu-footnote pre.code, * html .insitu-footnote pre.file {
+* html div.dokuwiki .insitu-footnote pre.code, * html div.dokuwiki .insitu-footnote pre.file {
   padding-bottom: 18px;
 }
 
 /* --------------- search result formating --------------- */
-.search_result{
+div.dokuwiki .search_result{
   margin-bottom: 6px;
   padding-left: 30px;
   padding-right: 10px;
 }
 
-.search_snippet{
+div.dokuwiki .search_snippet{
   color: __mediumgray__;
   font-size: 12px;
   margin-left: 20px;
 }
 
-.search_sep{
+div.dokuwiki .search_sep{
   color: __black__;
 }
 
-.search_hit{
+div.dokuwiki .search_hit{
   color: __black__;
   background: __highlight__;
 }
 
-div.search_quickresult{
+div.dokuwiki div.search_quickresult{
   margin: 0 0 15px 30px;
   padding: 0 10px 10px 0;
   border-bottom: 1px dashed __dark__;
 }
-div.search_quickresult h3{
+div.dokuwiki div.search_quickresult h3{
   margin: 0 0 1.0em 0;
   padding: 0;
   font-size: 1em;
   font-weight: bold;
 }
 
-ul.search_quickhits {
+div.dokuwiki ul.search_quickhits {
   margin: 0 0 0.5em 1.0em;
 }
 
-ul.search_quickhits li {
+div.dokuwiki ul.search_quickhits li {
   margin: 0 1.0em 0 1.0em;
   float:left;
   width: 30%;
@@ -674,32 +677,30 @@ div.footerinc {
 }
 .footerinc a img {
     opacity: 0.5;
+    border:0
 }
 
 .footerinc a:hover img {
     opacity: 1;
 }
 
-#sizectl img {
-	cursor: pointer;
-}
 
 /* ---- Admin --- */
 
-div.acladmin label {
+div.dokuwiki div.acladmin label {
   text-align: left;
   font-weight: normal;
   display: inline;
 }
 
-div.acladmin table{
+div.dokuwiki div.acladmin table{
   margin-left: 10%;
   width: 80%;
 }
 
 /* ---------- AJAX quicksearch ----------- */
 
-div.ajax_qsearch {
+div.dokuwiki div.ajax_qsearch {
   position:absolute;
   right:237px;;
   width: 200px;
@@ -714,7 +715,7 @@ div.ajax_qsearch {
 }
 
 /* --------- Toolbar -------------------- */
-button.toolbutton{
+div.dokuwiki button.toolbutton{
   background-color: __white__;
   padding: 0px;
   margin: 0 1px 0 0;
@@ -722,13 +723,13 @@ button.toolbutton{
 	cursor: pointer;
 }
 
-div.picker {
+div.dokuwiki div.picker {
   width: 250px;
   border: 1px solid __dark__;
   background: __light__;
 }
 
-button.pickerbutton {
+div.dokuwiki button.pickerbutton {
   padding: 0px;
   margin: 0 1px 1px 0;
   border: 0;
@@ -739,12 +740,12 @@ button.pickerbutton {
 
 /* ---------- Spellchecking ------------- */
 
-a.spell_error {
+div.dokuwiki a.spell_error {
   color: #f00;
   text-decoration: underline;
 }
 
-div#spell_suggest {
+div.dokuwiki div#spell_suggest {
   position: absolute;
   left: 0;
   top: 0;
@@ -756,7 +757,7 @@ div#spell_suggest {
   z-index: 2;
 }
 
-div#spell_result {
+div.dokuwiki div#spell_result {
   display:none;
   font-family:monospace;
   border: 1px solid __dark__; 
@@ -774,61 +775,61 @@ div#spell_result {
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-span.spell_noerr {
+div.dokuwiki span.spell_noerr {
   color: #093;
 }
 
-span.spell_wait {
+div.dokuwiki span.spell_wait {
   color: #06c;
 }
 
 /* ---------------  Image Details  ----------------- */
 
-div.img_big {
+div.dokuwiki div.img_big {
   float: left;
   margin-right: 0.5em;
 }
 
-dl.img_tags dt {
+div.dokuwiki dl.img_tags dt {
   font-weight: bold;
   background-color: __medium__;
 }
-dl.img_tags dd {
+div.dokuwiki dl.img_tags dd {
   background-color: __lightgray__;
 }
 
-div.imagemeta {
+div.dokuwiki div.imagemeta {
   color: __darkgray__;
   font-size: 70%;
   line-height: 95%;
 }
 
-div.imagemeta img.thumb{
+div.dokuwiki div.imagemeta img.thumb{
   float:left;
   margin-right: 0.1em;
 }
 
 /* -------------- Media Popup ---------------------- */
 
-div.mediaselect-right li, div.uploadform { 
+div.dokuwiki div.mediaselect-right li, div.dokuwiki div.uploadform { 
   clear: both;
 }
 
-div.mediaedit div.data label{
-	display: block;
+div.dokuwiki div.mediaedit div.data label{
+  display: block;
   text-align: right; 
   width: 20%;
   float: left;
   margin-right: 0.5em;
 }
 
-div.mediaedit div.data input, div.mediaedit div.data textarea{
+div.dokuwiki div.mediaedit div.data input, div.dokuwiki div.mediaedit div.data textarea{
   width: 75%;
   padding: 0.1em;
   margin: 0.1em;
 }
 
-div.mediaedit div.data input.button {
+div.dokuwiki div.mediaedit div.data input.button {
   width: 10em;
   display: block;
   margin-left: auto;
