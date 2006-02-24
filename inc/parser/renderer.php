@@ -39,7 +39,7 @@ class Doku_Renderer {
 
     function document_end() {}
 
-    function render_TOC() { return '' }
+    function render_TOC() { return ''; }
 
     function header($text, $level, $pos) {}
 
