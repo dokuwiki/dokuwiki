@@ -1,0 +1,4 @@
+====== Send nyt password ======
+
+Udfyld alle nedenstående felter for at få tilsendt et nyt password til denne wiki.
+Dit nye password vil blive sendt til den opgivne e-mailadresse. Brugernavnet bør være dit wiki brugernavn.

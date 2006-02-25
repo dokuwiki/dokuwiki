@@ -1,0 +1,17 @@
+Hej!
+
+Siden @PAGE@ i @TITLE@ wikien er blevet ændret.
+Her er detaljerne:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+For at afmelde abonnement på denne side log ind på wikien på
+@DOKUWIKIURL@ , besøg
+@NEWPAGE@
+og vælg 'Fjern abonnement på ændringer'.
+
+-- 
+Denne e-mail blev genereret af DokuWiki på
+@DOKUWIKIURL@

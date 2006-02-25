@@ -20,8 +20,6 @@ $lang['btn_preview']= 'Forhåndsvisning';
 $lang['btn_top']    = 'Tilbage til toppen';
 $lang['btn_newer']  = '<< forrige side';
 $lang['btn_older']  = 'næste side >>';
-$lang['btn_prevpage']= '<< forrige side';
-$lang['btn_nextpage']= 'næste side >>';
 $lang['btn_revs']   = 'Gamle udgaver';
 $lang['btn_recent'] = 'Nye ændringer';
 $lang['btn_upload'] = 'Upload';
@@ -34,6 +32,7 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Opdater';
 $lang['btn_delete'] = 'Slet';
 $lang['btn_back']   = 'Tilbage';
+$lang['btn_backlink']    = "Henvisninger bagud";
 $lang['btn_backtomedia'] = 'Tilbage til valg af mediefil';
 $lang['btn_subscribe']   = 'Abonner på ændringer';
 $lang['btn_unsubscribe'] = 'Fjern abonnement på ændringer';
@@ -53,6 +52,7 @@ $lang['email']      = 'E-mail';
 $lang['register']   = 'Tilmeld';
 $lang['profile']    = 'Brugerprofil';
 $lang['badlogin']   = 'Forkert brugernavn eller password.';
+$lang['minoredit']  = 'Mindre ændringer';
 
 $lang['regmissing'] = 'Du skal udfylde alle felter.';
 $lang['reguexists'] = 'Dette brugernavn er allerede i brug.';
@@ -64,12 +64,24 @@ $lang['regbadpass'] = 'De to passwords er ikke ens, vær venlig at prøve igen.'
 $lang['regpwmail']  = 'Dit DokuWiki password';
 $lang['reghere']    = 'Opret en DokuWiki-konto her';
 
+$lang['profna']       = 'Denne wiki understøtter ikke ændring af profiler';
+$lang['profnochange'] = 'Ingen ændringer, intet modificeret.';
+$lang['profnoempty']  = 'Tomt navn eller e-mail adresse er ikke tilladt.';
+$lang['profchanged']  = 'Brugerprofil opdateret korrekt.';
+
+$lang['pwdforget'] = 'Glemt dit password? F√• et nyt';
+$lang['resendna']  = 'Denne wiki underst√∏tter ikke udsendelse af nyt password.';
+$lang['resendpwd'] = 'Send nyt password for';
+$lang['resendpwdmissing'] = 'Du skal udfylde alle felter.';
+$lang['resendpwdnouser']  = 'Vi kan ikke finde denne bruger i vores database.';
+$lang['resendpwdsuccess'] = 'Dit nye password er blevet sendt med e-mail.';
+
 $lang['txt_upload']   = 'Vælg den fil der skal uploades';
 $lang['txt_filename'] = 'Indtast wikinavn (valgfrit)';
 $lang['txt_overwrt']  = 'Overskriv eksisterende fil';
 $lang['lockedby']     = 'Midlertidig låst af';
 $lang['lockexpire']   = 'Lås udløber kl.';
-$lang['willexpire']   = 'Din lås på dette dokument udløber om et minut.\nTryk på'.$lang['btn_preview'].'-knappen for at undgå konflikter.';
+$lang['willexpire']   = 'Din lås på dette dokument udløber om et minut.\nTryk på '.$lang['btn_preview'].'-knappen for at undgå konflikter.';
 
 $lang['notsavedyet'] = 'Der er lavet ændringer i dokumentet, hvis du fortsætter vil ændringerne gå tabt.\nØnsker du at fortsætte?';
 $lang['rssfailed']   = 'Der opstod en fejl ved indhentning af: ';
@@ -99,6 +111,7 @@ $lang['yours']      = 'Din version';
 $lang['diff']       = 'vis forskelle i forhold til den nuværende udgave';
 $lang['line']       = 'Linje';
 $lang['breadcrumb'] = 'Sti';
+$lang['youarehere'] = 'Du er her';
 $lang['lastmod']    = 'Sidst ændret';
 $lang['by']         = 'af';
 $lang['deleted']    = 'slettet';
@@ -127,10 +140,12 @@ $lang['qb_extlink'] = 'Ekstern henvisning';
 $lang['qb_hr']      = 'Vandret linje';
 $lang['qb_ol']      = 'Nummereret liste';
 $lang['qb_ul']      = 'Unummereret liste';
-$lang['qb_media']   = 'Tilføj billeder eller andre filer';
+$lang['qb_media']   = 'Tilføj billeder og andre filer';
 $lang['qb_sig']     = 'Indsæt signatur';
+$lang['qb_smileys'] = 'Smileys';
+$lang['qb_chars']   = 'Specialtegn';
 
-$lang['del_confirm']= 'Slet denne post?';
+$lang['del_confirm']= 'Slet valgte post(er)?';
 $lang['admin_register']= 'Tilføj ny bruger';
 
 $lang['spell_start']= 'Stavekontrol';
@@ -155,11 +170,14 @@ $lang['img_format']  = 'Format';
 $lang['img_camera']  = 'Kamera';
 $lang['img_keywords']= 'Emneord';
 
-$lang['tpl_btn_insert']   = 'Indsæt';
-$lang['tpl_txt']          = 'Vælg skabelon';
-$lang['tpl_txt_headline'] = 'Indsæt skabelon';
-$lang['tpl_qb']           = 'Indsæt skabelon';
-$lang['tpl_select']       = 'Indsæt skabelon';
+$lang['subscribe_success']  = 'Tilføjet %s til abonnentliste for %s';
+$lang['subscribe_error']    = 'Fejl ved tilføjelse af %s til abonnentliste for %s';
+$lang['subscribe_noaddress']= 'Ingen adresse knyttet til dit login, du kan ikke tilføjes til abonnentlisten';
+$lang['unsubscribe_success']= 'Fjernet %s fra abonnentliste for %s';
+$lang['unsubscribe_error']  = 'Fejl ved fjernelse af %s fra abonnentliste for %s';
+
++/* auth.class language support */
++$lang['authmodfailed']   = 'Fejl i brugervalideringens konfiguration. Kontakt venligst wikiens administrator.';
++$lang['authtempfail']    = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-
