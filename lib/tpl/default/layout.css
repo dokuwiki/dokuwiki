@@ -48,7 +48,7 @@ div.dokuwiki .bar {
 	border-top:1px solid __dark__;
 	border-bottom:1px solid __dark__;
 	background: __medium__;
-	padding:2px;
+	padding:0.15em;
 	margin:0;
   clear: both;
 }

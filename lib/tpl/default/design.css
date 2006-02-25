@@ -92,24 +92,22 @@ div.dokuwiki textarea.edit {
 div.dokuwiki input.edit, div.dokuwiki select.edit {
   font-size: 100%;
   border: 1px solid __dark__;
-  height: 1.65em;
   color: Black;
   background-color: __white__;
   vertical-align: middle;
   margin: 1px;
-  padding: 0 5px;
+  padding: 0.20em 0.3em;
   display: inline;
 }
 
 div.dokuwiki input.missing {
   font-size: 100%;
   border: 1px solid __dark__;
-  height: 1.65em;
   color: Black;
   background-color: #ffcccc;
   vertical-align: middle;
   margin: 1px;
-  padding: 0 5px;
+  padding: 0.20em 0.3em;
   display: inline;
 }
 
@@ -148,9 +146,8 @@ div.dokuwiki input.button, div.dokuwiki button.button{
   text-decoration:none;
   font-size: 100%;
   cursor: pointer;
-  height: 1.8em;
   margin: 1px;
-  padding: 0 5px;
+  padding: 0.125em 0.4em;
   display: inline-block;
 
   /* Mac IE will not see this and continue with inline-block */
@@ -160,6 +157,7 @@ div.dokuwiki input.button, div.dokuwiki button.button{
 }
 
 * html div.dokuwiki input.button, * html div.dokuwiki button.button{
+  height: 1.8em;
   padding: 0;
 }
 
