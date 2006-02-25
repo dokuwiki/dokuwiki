@@ -1,35 +1,23 @@
 <?php
 /*************************************************************************************
- * html4strict.php
- * ---------------
- * Author: Nigel McNie (oracle.shinoda@gmail.com)
- * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
+ * cfm.php
+ * -------
+ * Author: Diego ()
+ * Copyright: (c) 2006 Diego
  * Release Version: 1.0.7.7
- * CVS Revision Version: $Revision: 1.10 $
- * Date Started: 2004/07/10
+ * CVS Revision Version: $Revision: 1.2 $
+ * Date Started: 2006/02/25
  * Last Modified: $Date: 2006/02/25 00:46:33 $
  *
- * HTML 4.01 strict language file for GeSHi.
+ * ColdFusion language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/12/28 (1.0.4)
- *   -  Removed escape character for strings
- * 2004/11/27 (1.0.3)
- *   -  Added support for multiple object splitters
- * 2004/10/27 (1.0.2)
- *   -  Added support for URLs
- * 2004/08/05 (1.0.1)
- *   -  Added INS and DEL
- *   -  Removed the background colour from tags' styles
- * 2004/07/14 (1.0.0)
+ * 2006/02/25 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TODO (updated 2006/02/25)
  * -------------------------
- * * Check that only HTML4 strict attributes are highlighted
- * * Eliminate empty tags that aren't allowed in HTML4 strict
- * * Split to several files - html4trans, xhtml1 etc
  *
  *************************************************************************************
  *
@@ -52,15 +40,40 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'HTML',
-	'COMMENT_SINGLE' => array(),
-	'COMMENT_MULTI' => array('<!--' => '-->'),
+	'LANG_NAME' => 'CFM',
+	'COMMENT_SINGLE' => array(1 => '//'),
+	'COMMENT_MULTI' => array('<!--' => '-->','&lt;!---' => '---&gt;'),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '',
+	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
+		/* CFM Tags */
 		1 => array(
+			'&lt;cfabort', '&lt;cfapplet', '&lt;cfapplication', '&lt;cfargument', '&lt;cfassociate', '&lt;&lt;cfbreak&gt;', 
+			'&lt;cfcache', '&lt;cfcase', '&lt;cfcatch', '&lt;/cfcatch&gt;', '&lt;cfchart', '&lt;/cfchart&gt;', '&lt;cfchartdata', 
+			'&lt;cfchartseries', '&lt;/cfchartseries&gt;', '&lt;cfcol', '&lt;cfcollection', '&lt;cfcomponent', '&lt;/cfcomponent&gt;', 
+			'&lt;cfcontent', '&lt;cfcookie', '&lt;/cfdefaultcase&gt;', '&lt;cfdirectory', '&lt;cfdocument', '&lt;/cfdocument&gt;', 
+			'&lt;cfdocumentitem', '&lt;/cfdocumentitem&gt;', '&lt;cfdocumentsection', '&lt;/cfdocumentsection&gt;', '&lt;cfdump', 
+			'&lt;cfelse', '&lt;cfelseif', '&lt;cferror', '&lt;cfexecute', '&lt;/cfexecute&gt;', '&lt;cfexit', '&lt;cffile', 
+			'&lt;cfflush', '&lt;cfform', '&lt;/cfform&gt;', '&lt;cfformgroup', '&lt;/cfformgroup', '&lt;cfformitem', 
+			'&lt;/cfformitem&gt;', '&lt;cfftp', '&lt;cffunction', '&lt;/cffunction&gt;', '&lt;cfgrid', '&lt;/cfgrid&gt;', 
+			'&lt;cfgridcolumn', '&lt;cfgridrow', '&lt;cfgridupdate', '&lt;cfheader', '&lt;cfhtmlhead', '&lt;cfhttp', 
+			'&lt;/cfhttp&gt;', '&lt;cfhttpparam', '&lt;cfif', '&lt;/cfif&gt;', '&lt;cfimport', '&lt;cfinclude', '&lt;cfindex', 
+			'&lt;cfinput', '&lt;cfinsert', '&lt;cfinvoke', '&lt;cfinvokeargument', '&lt;cfldap', '&lt;cflocation', '&lt;cflock', 
+			'&lt;/cflock&gt;', '&lt;cflog', '&lt;cflogin', '&lt;/cflogin&gt;', '&lt;cfloginuser', '&lt;cflogout', '&lt;cfloop', 
+			'&lt;/cfloop&gt;', '&lt;cfmail', '&lt;/cfmail&gt;', '&lt;cfmailparam', '&lt;cfmailpart', '&lt;/cfmailpart&gt;', 
+			'&lt;cfmodule', '&lt;cfNTauthenticate', '&lt;cfobject', '&lt;cfobjectcache', '&lt;cfoutput&gt;', '&lt;cfoutput', '&lt;/cfoutput&gt;', 
+			'&lt;cfparam', '&lt;cfpop', '&lt;cfprocessingdirective', '&lt;/cfprocessingdirective&gt;', '&lt;cfprocparam', 
+			'&lt;cfprocresult', '&lt;cfproperty', '&lt;cfquery', '&lt;/cfquery&gt;', '&lt;cfqueryparam', '&lt;cfregistry', 
+			'&lt;/cfregistry&gt;', '&lt;cfreport', '&lt;/cfreport&gt;', '&lt;cfreportparam', '&lt;/cfreportparam&gt;', 
+			'&lt;cfrethrow', '&lt;cfreturn', '&lt;cfsavecontent', '&lt;/cfsavecontent&gt;', '&lt;cfschedule', '&lt;cfscript', '&lt;cfscript&gt;',
+			'&lt;/cfscript&gt;', '&lt;cfsearch', '&lt;cfselect', '&lt;/cfselect&gt;', '&lt;cfset', '&lt;cfsetting', '&lt;cfsilent', 
+			'&lt;/cfsilent&gt;', '&lt;cfstoredproc', '&lt;/cfstoredproc&gt;', '&lt;cfswitch', '&lt;/cfswitch&gt;', '&lt;cftable', 
+			'&lt;/cftable&gt;', '&lt;cftextarea', '&lt;/cftextarea&gt;', '&lt;cfthrow', '&lt;cftimer', '&lt;/cftimer&gt;', 
+			'&lt;cftrace', '&lt;/cftrace&gt;', '&lt;cftransaction', '&lt;/cftransaction&gt;', '&lt;cftree', '&lt;/cftree&gt;', 
+			'&lt;cftreeitem', '&lt;cftry', '&lt;/cftry&gt;', '&lt;cfupdate', '&lt;cfwddx','&lt;','&gt;'
 			),
+		/* HTML Tags */
 		2 => array(
 			'&lt;a&gt;', '&lt;abbr&gt;', '&lt;acronym&gt;', '&lt;address&gt;', '&lt;applet&gt;',
 			'&lt;a', '&lt;abbr', '&lt;acronym', '&lt;address', '&lt;applet',
@@ -70,7 +83,7 @@ $language_data = array (
 			'&lt;base&gt;', '&lt;basefont&gt;', '&lt;bdo&gt;', '&lt;big&gt;', '&lt;blockquote&gt;', '&lt;body&gt;', '&lt;br&gt;', '&lt;button&gt;', '&lt;b&gt;',
 			'&lt;base', '&lt;basefont', '&lt;bdo', '&lt;big', '&lt;blockquote', '&lt;body', '&lt;br', '&lt;button', '&lt;b',
 			'&lt;/base&gt;', '&lt;/basefont&gt;', '&lt;/bdo&gt;', '&lt;/big&gt;', '&lt;/blockquote&gt;', '&lt;/body&gt;', '&lt;/br&gt;', '&lt;/button&gt;', '&lt;/b&gt;',
-			'&lt;/base', '&lt;/basefont', '&lt;/bdo', '&lt;/big', '&lt;/blockquote', '&lt;/body', '&lt;/br', '&lt;/button', '&lt;/b',
+			'&lt;/base', '&lt;/basefont', '&lt;/bdo', '&lt;/big', '&lt;/blockquote', '&lt;/body', '&lt;/br','&lt;br /&gt;', '&lt;/button', '&lt;/b',
 
 			'&lt;caption&gt;', '&lt;center&gt;', '&lt;cite&gt;', '&lt;code&gt;', '&lt;colgroup&gt;', '&lt;col&gt;',
 			'&lt;caption', '&lt;center', '&lt;cite', '&lt;code', '&lt;colgroup', '&lt;col',
@@ -159,6 +172,7 @@ $language_data = array (
 
 			'&gt;', '&lt;'
 			),
+		/* HTML attributes */
 		3 => array(
 			'abbr', 'accept-charset', 'accept', 'accesskey', 'action', 'align', 'alink', 'alt', 'archive', 'axis',
 			'background', 'bgcolor', 'border',
@@ -179,55 +193,108 @@ $language_data = array (
 			'usemap',
 			'valign', 'value', 'valuetype', 'version', 'vlink', 'vspace',
 			'width'
+			),
+			/* CFM Script delimeters */
+		4 => array(
+			'var', 'function', 'while', 'if','else'
+			),
+			/* CFM Functions */
+		5 => array(
+			'Abs', 'GetFunctionList', 'LSTimeFormat','ACos','GetGatewayHelper','LTrim','AddSOAPRequestHeader','GetHttpRequestData',
+			'Max','AddSOAPResponseHeader','GetHttpTimeString','Mid','ArrayAppend','GetLocale','Min','ArrayAvg','GetLocaleDisplayName',
+			'Minute','ArrayClear','GetMetaData','Month','ArrayDeleteAt','GetMetricData','MonthAsString','ArrayInsertAt','GetPageContext',
+			'Now','ArrayIsEmpty','GetProfileSections','NumberFormat','ArrayLen','GetProfileString','ParagraphFormat','ArrayMax',
+			'GetLocalHostIP','ParseDateTime','ArrayMin','GetSOAPRequest','Pi','ArrayNew','GetSOAPRequestHeader','PreserveSingleQuotes',
+			'ArrayPrepend','GetSOAPResponse','Quarter','ArrayResize','GetSOAPResponseHeader','QueryAddColumn','ArraySet',
+			'GetTempDirectory','QueryAddRow','ArraySort','GetTempDirectory','QueryNew','ArraySum','GetTempFile','QuerySetCell',
+			'ArraySwap','GetTickCount','QuotedValueList','ArrayToList','GetTimeZoneInfo','Rand','Asc','GetToken','Randomize',
+			'ASin','Hash','RandRange','Atn','Hour','REFind','BinaryDecode','HTMLCodeFormat','REFindNoCase','BinaryEncode',
+			'HTMLEditFormat','ReleaseComObject','BitAnd','IIf','RemoveChars','BitMaskClear','IncrementValue','RepeatString',
+			'BitMaskRead','InputBaseN','Replace','BitMaskSet','Insert','ReplaceList','BitNot','Int','ReplaceNoCase','BitOr',
+			'IsArray','REReplace','BitSHLN','IsBinary','REReplaceNoCase','BitSHRN','IsBoolean','Reverse','BitXor','IsCustomFunction',
+			'Right','Ceiling','IsDate','RJustify','CharsetDecode','IsDebugMode','Round','CharsetEncode','IsDefined','RTrim',
+			'Chr','IsLeapYear','Second','CJustify','IsLocalHost','SendGatewayMessage','Compare','IsNumeric','SetEncoding',
+			'CompareNoCase','IsNumericDate','SetLocale','Cos','IsObject','SetProfileString','CreateDate','IsQuery','SetVariable',
+			'CreateDateTime','IsSimpleValue','Sgn','CreateObject','IsSOAPRequest','Sin','CreateODBCDate','IsStruct','SpanExcluding',
+			'CreateODBCDateTime','IsUserInRole','SpanIncluding','CreateODBCTime','IsValid','Sqr','CreateTime','IsWDDX','StripCR',
+			'CreateTimeSpan','IsXML','StructAppend','CreateUUID','IsXmlAttribute','StructClear','DateAdd','IsXmlDoc','StructCopy',
+			'DateCompare','IsXmlElem','StructCount','DateConvert','IsXmlNode','StructDelete','DateDiff','IsXmlRoot','StructFind',
+			'DateFormat','JavaCast','StructFindKey','DatePart','JSStringFormat','StructFindValue','Day','LCase','StructGet',
+			'DayOfWeek','Left','StructInsert','DayOfWeekAsString','Len','StructIsEmpty','DayOfYear','ListAppend','StructKeyArray',
+			'DaysInMonth','ListChangeDelims','StructKeyExists','DaysInYear','ListContains','StructKeyList','DE','ListContainsNoCase',
+			'StructNew','DecimalFormat','ListDeleteAt','StructSort','DecrementValue','ListFind','StructUpdate','Decrypt','ListFindNoCase',
+			'Tan','DecryptBinary','ListFirst','TimeFormat','DeleteClientVariable','ListGetAt','ToBase64','DirectoryExists',
+			'ListInsertAt','ToBinary','DollarFormat','ListLast','ToScript','Duplicate','ListLen','ToString','Encrypt','ListPrepend',
+			'Trim','EncryptBinary','ListQualify','UCase','Evaluate','ListRest','URLDecode','Exp','ListSetAt','URLEncodedFormat',
+			'ExpandPath','ListSort','URLSessionFormat','FileExists','ListToArray','Val','Find','ListValueCount','ValueList',
+			'FindNoCase','ListValueCountNoCase','Week','FindOneOf','LJustify','Wrap','FirstDayOfMonth','Log','WriteOutput',
+			'Fix','Log10','XmlChildPos','FormatBaseN','LSCurrencyFormat','XmlElemNew','GetAuthUser','LSDateFormat','XmlFormat',
+			'GetBaseTagData','LSEuroCurrencyFormat','XmlGetNodeType','GetBaseTagList','LSIsCurrency','XmlNew','GetBaseTemplatePath',
+			'LSIsDate','XmlParse','GetClientVariablesList','LSIsNumeric','XmlSearch','GetCurrentTemplatePath','LSNumberFormat',
+			'XmlTransform','GetDirectoryFromPath','LSParseCurrency','XmlValidate','GetEncoding','LSParseDateTime','Year',
+			'GetException','LSParseEuroCurrency','YesNoFormat','GetFileFromPath','LSParseNumber'
+			),
+		/* CFM Attributes */
+		6 => array(
+			'=','&amp;','name','dbtype','connectstring','datasource','username','password','query','delimeter','description','required','hint','default','access','from','to','list','index'
 			)
 		),
 	'SYMBOLS' => array(
-		'/', '='
+		'/', '=', 'EQ', 'GT', 'LT', 'GTE', 'LTE', 'IS', 'LIKE', '&', '{', '}', '(', ')', '[', ']','gt','lt'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false,
+		4 => false,
+        5 => false,
+        6 => false
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #b1b100;',
+			1 => 'color: #990000;',
 			2 => 'color: #000000; font-weight: bold;',
-			3 => 'color: #000066;'
+			3 => 'color: #0000FF;',
+			4 => 'color: #000000; font-weight: bold;',
+			5 => 'color: #0000FF;',
+			6 => 'color: #0000FF'
 			),
 		'COMMENTS' => array(
-			'MULTI' => 'color: #808080; font-style: italic;'
+			1 => 'color: #808080; font-style: italic;',
+			'MULTI' => 'color: #808080; font-style: italic; background-color:#FFFF99;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #0000FF;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #ff0000;'
+			0 => 'color: #009900;'
 			),
 		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
+			0 => 'color: #FF0000;'
 			),
 		'METHODS' => array(
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #0000FF;'
 			),
 		'SCRIPT' => array(
 			0 => 'color: #00bbdd;',
-			1 => 'color: #ddbb00;',
-			2 => 'color: #009900;'
+			1 => 'color: #0000FF;',
+			2 => 'color: #000099;',
+			3 => 'color: #333333;'
 			),
 		'REGEXPS' => array(
 			)
 		),
 	'URLS' => array(
 		1 => '',
-		2 => 'http://december.com/html/4/element/{FNAME}.html',
-		3 => ''
+		2 => '',
+		3 => '',
+		4 => ''
 		),
 	'OOLANG' => false,
 	'OBJECT_SPLITTERS' => array(
@@ -240,16 +307,20 @@ $language_data = array (
 			'<!DOCTYPE' => '>'
 			),
 		1 => array(
-			'&' => ';'
+			 '#' => '#'
 			),
 		2 => array(
+			'<cfscript>' => '</cfscript>;'
+			),
+		3 => array(
 			'<' => '>'
 			)
 	),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
 		0 => false,
-		1 => false,
-		2 => true
+		1 => true,
+		2 => true,
+		3 => true
 		)
 );
 

@@ -4,10 +4,10 @@
  * --------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter
- * Release Version: 1.0.7.6
- * CVS Revision Version: $Revision: 1.7 $
+ * Release Version: 1.0.7.7
+ * CVS Revision Version: $Revision: 1.9 $
  * Date Started: 2004/08/30
- * Last Modified: $Date: 2005/12/09 05:33:18 $
+ * Last Modified: $Date: 2006/02/25 00:46:33 $
  *
  * Generic Lisp language file for GeSHi.
  *

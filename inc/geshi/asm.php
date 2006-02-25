@@ -4,10 +4,10 @@
  * -------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.6
- * CVS Revision Version: $Revision: 1.7 $
+ * Release Version: 1.0.7.7
+ * CVS Revision Version: $Revision: 1.10 $
  * Date Started: 2004/07/27
- * Last Modified: $Date: 2005/11/20 07:47:40 $
+ * Last Modified: $Date: 2006/02/25 00:46:33 $
  *
  * x86 Assembler language file for GeSHi.
  * Words are from SciTe configuration file (based on NASM syntax)
@@ -187,7 +187,7 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
-		0 => '[0-9a-fA-F][0-9a-fA-F]*[hH]',
+		0 => '0[0-9a-fA-F][0-9a-fA-F]*[hH]',
 		1 => '[01][01]*[bB]'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

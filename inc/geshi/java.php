@@ -4,10 +4,10 @@
  * --------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.6
- * CVS Revision Version: $Revision: 1.11 $
+ * Release Version: 1.0.7.7
+ * CVS Revision Version: $Revision: 1.14 $
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2005/12/30 04:52:10 $
+ * Last Modified: $Date: 2006/02/25 00:46:33 $
  *
  * Java language file for GeSHi.
  *
@@ -60,7 +60,7 @@ $language_data = array (
 	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
 		1 => array(
-			'for', 'foreach', 'if', 'elseif', 'else', 'while', 'do',
+			'for', 'foreach', 'if', 'else', 'while', 'do',
 			'switch', 'case'
 			),
 		2 => array(
@@ -68,7 +68,9 @@ $language_data = array (
 			'private', 'protected', 'extends', 'break', 'class',
 			'new', 'try', 'catch', 'throws', 'finally', 'implements',
 			'interface', 'throw', 'native', 'synchronized', 'this',
-            'abstract', 'transient', 'instanceof'
+            'abstract', 'transient', 'instanceof', 'assert', 'continue',
+            'default', 'enum', 'package', 'static', 'strictfp', 'super',
+            'volatile', 'const', 'goto'
 			),
 		3 => array(
 			'AbstractAction', 'AbstractBorder', 'AbstractButton', 'AbstractCellEditor',
@@ -1317,7 +1319,7 @@ $language_data = array (
 			'_Remote_Stub '
 			),
 		4 => array(
-			'static', 'void', 'double', 'int', 'real', 'boolean', 'byte', 'short', 'long', 'single'
+			'void', 'double', 'int', 'boolean', 'byte', 'short', 'long', 'char', 'float'
 			)
 		),
 	'SYMBOLS' => array(
@@ -1374,8 +1376,7 @@ $language_data = array (
 		),
 	'OOLANG' => true,
 	'OBJECT_SPLITTERS' => array(
-		1 => '.',
-		2 => '::'
+		1 => '.'
 		),
 	'REGEXPS' => array(
 		),
