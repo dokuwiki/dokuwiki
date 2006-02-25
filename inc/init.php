@@ -101,10 +101,6 @@
   if(($conf['umask'] != umask()) or ($conf['dmode'] != 0666)) {
     $conf['dmask'] = $conf['dmode'] & ~$conf['umask'];
   }
-#  print "$name:".sprintf("dmask:%04o<br>\n",$conf['dmode'])."\n";
-#  print "$name:".sprintf("umask:%04o<br>\n",$conf['umask'])."\n";
-#  print "$name:".sprintf("dmask:%04o<br>\n",$conf['dmask'])."\n";
-#  exit;
 
   // make real paths and check them
   init_paths();
