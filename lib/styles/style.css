@@ -1,7 +1,7 @@
 /**
  * Basic styles. These styles are needed for basic DokuWiki functions
  * regardless of the used template. Templates can override them of course
- */ 
+ */
 
 div.clearer {clear: both; line-height: 0; height: 0; overflow:hidden;}
 
@@ -14,7 +14,7 @@ div.no {
 div.error{
   background: #fcc url(../images/error.png) 0.5em 0px no-repeat;
   color: #000;
-	border-bottom: 1px solid #faa;
+  border-bottom: 1px solid #faa;
   font-size: 90%;
   margin: 0px;
   padding-left: 3em;
@@ -23,7 +23,7 @@ div.error{
 div.info{
   background: #ccf url(../images/info.png) 0.5em 0px no-repeat;
   color: #000;
-	border-bottom: 1px solid #aaf;
+  border-bottom: 1px solid #aaf;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
@@ -32,7 +32,7 @@ div.info{
 div.success{
   background: #cfc url(../images/success.png) 0.5em 0px no-repeat;
   color: #000;
-	border-bottom: 1px solid #afa;
+  border-bottom: 1px solid #afa;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
@@ -61,23 +61,23 @@ div.dokuwiki em.u {
 
 
 /* syntax highlighting code */
-.code .br0	{ color: #66cc66; }
-.code .co1	{ color: #808080; font-style: italic; }
-.code .co2	{ color: #808080; font-style: italic; }
-.code .coMULTI	{ color: #808080; font-style: italic; }
-.code .es0	{ color: #000099; font-weight: bold; }
-.code .kw1	{ color: #b1b100; }
-.code .kw2	{ color: #000000; font-weight: bold; }
-.code .kw3	{ color: #000066; }
-.code .kw4	{ color: #993333; }
-.code .kw5	{ color: #0000ff; }
-.code .me0	{ color: #006600; }
-.code .nu0	{ color: #cc66cc; }
-.code .re0	{ color: #0000ff; }
-.code .re1	{ color: #0000ff; }
-.code .re2	{ color: #0000ff; }
-.code .re4	{ color: #009999; }
-.code .sc0	{ color: #00bbdd; }
-.code .sc1	{ color: #ddbb00; }
-.code .sc2	{ color: #009900; }
-.code .st0	{ color: #ff0000; }
+.code .br0  { color: #66cc66; }
+.code .co1  { color: #808080; font-style: italic; }
+.code .co2  { color: #808080; font-style: italic; }
+.code .coMULTI  { color: #808080; font-style: italic; }
+.code .es0  { color: #000099; font-weight: bold; }
+.code .kw1  { color: #b1b100; }
+.code .kw2  { color: #000000; font-weight: bold; }
+.code .kw3  { color: #000066; }
+.code .kw4  { color: #993333; }
+.code .kw5  { color: #0000ff; }
+.code .me0  { color: #006600; }
+.code .nu0  { color: #cc66cc; }
+.code .re0  { color: #0000ff; }
+.code .re1  { color: #0000ff; }
+.code .re2  { color: #0000ff; }
+.code .re4  { color: #009999; }
+.code .sc0  { color: #00bbdd; }
+.code .sc1  { color: #ddbb00; }
+.code .sc2  { color: #009900; }
+.code .st0  { color: #ff0000; }

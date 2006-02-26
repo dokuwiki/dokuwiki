@@ -7,19 +7,19 @@
 
 /* -------------- top row --------------- */
 div.dokuwiki .header {
-	height:35px;
-	padding:3px 0 2px 2px;
+  height:35px;
+  padding:3px 0 2px 2px;
 }
 
 div.dokuwiki .pagename {
-	height:25px;
-	float:left;
-	font-size:200%;
-	font-weight:bolder;
-	color: __medium__;
-	text-align:left;
-	vertical-align:middle;
-	padding:1px 0 0 1px;
+  height:25px;
+  float:left;
+  font-size:200%;
+  font-weight:bolder;
+  color: __medium__;
+  text-align:left;
+  vertical-align:middle;
+  padding:1px 0 0 1px;
 }
 
 div.dokuwiki .pagename a:link, div.dokuwiki .pagename a:visited, div.dokuwiki .pagename a:hover, div.dokuwiki .pagename a:active {
@@ -28,41 +28,41 @@ div.dokuwiki .pagename a:link, div.dokuwiki .pagename a:visited, div.dokuwiki .p
 }
 
 div.dokuwiki .logo {
-	float:right;
-	font-size:220%;
-	font-weight:bolder;
-	text-align:right;
-	vertical-align:middle;
+  float:right;
+  font-size:220%;
+  font-weight:bolder;
+  text-align:right;
+  vertical-align:middle;
 }
 
 div.dokuwiki .logo a:link, div.dokuwiki .logo a:visited, div.dokuwiki .logo a:hover, div.dokuwiki .logo a:active {
-	color: __medium__;
-	text-decoration:none;
-	font-variant:small-caps;
-	letter-spacing:2pt;
+  color: __medium__;
+  text-decoration:none;
+  font-variant:small-caps;
+  letter-spacing:2pt;
 }
 
 /* ---------------  top and bottom bar ---------------- */
 div.dokuwiki .bar {
-	height:2.0em;
-	border-top:1px solid __dark__;
-	border-bottom:1px solid __dark__;
-	background: __medium__;
-	padding:0.15em;
-	margin:0;
+  height:2.0em;
+  border-top:1px solid __dark__;
+  border-bottom:1px solid __dark__;
+  background: __medium__;
+  padding:0.15em;
+  margin:0;
   clear: both;
 }
 
 div.dokuwiki .bar-left {
-	float:left;
+  float:left;
 }
 
 div.dokuwiki .bar-right {
-	float:right;
+  float:right;
   text-align:right;
 }
 
-div.dokuwiki #bar_bottom {
+div.dokuwiki #bar__bottom {
   margin-bottom:3px;
 }
 
@@ -104,26 +104,26 @@ div.dokuwiki .mediaselect-right {
 }
 
 div.dokuwiki div.mediaref_head {
-	margin-left:0.5em;
+  margin-left:0.5em;
 }
 
 div.dokuwiki div.mediaref .search_result {
-	padding-left:1em;
+  padding-left:1em;
 }
 
 div.dokuwiki .mediaref_ref {
-	color: __existing__;
+  color: __existing__;
 }
 
 div.dokuwiki div.mediaref_hidden {
-	margin-top:1em;
-	text-align:center;
-	font-size:1.2em;
-	color: #BB0000;
+  margin-top:1em;
+  text-align:center;
+  font-size:1.2em;
+  color: #BB0000;
 }
 
 div.dokuwiki div.mediaref_footer {
-	margin-top:1em;
-	text-align:center;
+  margin-top:1em;
+  text-align:center;
 }
 

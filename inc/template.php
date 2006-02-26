@@ -496,9 +496,9 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   print '<input type="text" ';
   if($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
   if(!$autocomplete) print 'autocomplete="off" ';
-  print 'id="qsearch_in" accesskey="f" name="id" class="edit" />';
+  print 'id="qsearch__in" accesskey="f" name="id" class="edit" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" />';
-  if($ajax) print '<div id="qsearch_out" class="ajax_qsearch JSpopup"></div>';
+  if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
   print '</div></form>';
 }
 
@@ -821,7 +821,7 @@ function tpl_mediauploadform(){
   ptln('<input type="text" name="id" class="edit" />',4);
   ptln('<input type="submit" class="button" value="'.$lang['btn_upload'].'" accesskey="s" />',4);
   if($AUTH >= AUTH_DELETE){
-    ptln('<label for="ow"><input type="checkbox" name="ow" value="1" id="ow" />'.$lang['txt_overwrt'].'</label>',4);
+    ptln('<label for="dw__ow"><input type="checkbox" name="ow" value="1" id="dw__ow" />'.$lang['txt_overwrt'].'</label>',4);
   }
   ptln('</form>',2);
 }

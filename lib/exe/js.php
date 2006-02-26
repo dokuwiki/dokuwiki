@@ -76,18 +76,18 @@ function js_out(){
     }
 
     // init stuff
-    js_runonstart("ajax_qsearch.init('qsearch_in','qsearch_out')");
+    js_runonstart("ajax_qsearch.init('qsearch__in','qsearch__out')");
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart('addTocToggle()');
 
     if($edit){
         // size controls
-        js_runonstart("initSizeCtl('sizectl','wikitext')");
+        js_runonstart("initSizeCtl('size__ctl','wiki__text')");
 
         if($write){
             require_once(DOKU_INC.'inc/toolbar.php');
             toolbar_JSdefines('toolbar');
-            js_runonstart("initToolbar('toolbar','wikitext',toolbar)");
+            js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
 
             // add pageleave check
             js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");

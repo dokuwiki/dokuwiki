@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki Spellcheck AJAX backend 
+ * DokuWiki Spellcheck AJAX backend
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -17,27 +17,27 @@
  * Copyright (c) 2005, Garrison Locke
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- *   * Redistributions of source code must retain the above copyright notice, 
+ *   * Redistributions of source code must retain the above copyright notice,
  *     this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright notice, 
- *     this list of conditions and the following disclaimer in the documentation 
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
  *     and/or other materials provided with the distribution.
- *   * Neither the name of the http://www.broken-notebook.com nor the names of its 
- *     contributors may be used to endorse or promote products derived from this 
+ *   * Neither the name of the http://www.broken-notebook.com nor the names of its
+ *     contributors may be used to endorse or promote products derived from this
  *     software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
- * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  */
 
@@ -84,7 +84,7 @@ if(function_exists($call)){
  */
 function spaceslink($string, $check=""){
   $result  = '  '; //opening [[
-  $result .= str_pad('',utf8_strlen($string),' '); 
+  $result .= str_pad('',utf8_strlen($string),' ');
   $result .= $check;
   $result .= '  '; //closing ]]
 
@@ -193,7 +193,7 @@ function spell_check() {
     $string = utf8_tohtml($string);
   }
 
-  //output 
+  //output
   print $string;
 }
 
@@ -223,7 +223,7 @@ function spell_formatword($word,$suggestions=null){
   }
 
   $link = '<a href="javascript:ajax_spell.suggest('.$i.$sug.')" '.
-          'class="spell_error" id="spell_error'.$i.'">'.htmlspecialchars($word).'</a>';
+          'class="spell_error" id="spell__error'.$i.'">'.htmlspecialchars($word).'</a>';
   $i++;
   return $link;
 }
@@ -231,7 +231,7 @@ function spell_formatword($word,$suggestions=null){
 /**
  * Rewrite markuped XHTML back to plain Text. AJAX callback
  *
- * @author Andreas Gohr <andi@splitbrain.org> 
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function spell_resume(){
   $text = $_POST['data'];
@@ -278,10 +278,10 @@ function unhtmlspecialchars($string, $quotstyle=ENT_COMPAT){
   $string = str_replace ( '&amp;', '&', $string );
   $string = str_replace ( '&lt;', '<', $string );
   $string = str_replace ( '&gt;', '>', $string );
-  
+
   if($quotstyle != ENT_NOQUOTES){
     $string = str_replace ( '&quot;', '\"', $string );
-  } 
+  }
   if($quotstyle == ENT_QUOTES){
     $string = str_replace ( '&#39;', '\'', $string );
     $string = str_replace ( '&#039;', '\'', $string );

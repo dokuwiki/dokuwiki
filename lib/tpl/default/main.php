@@ -42,16 +42,16 @@
         <?php tpl_link(wl(),$conf['title'],'name="top" accesskey="h" title="[ALT+H]"')?>
       </div>
     </div>
-  
+
     <?php /*old includehook*/ @include(dirname(__FILE__).'/header.html')?>
 
-    <div class="bar" id="bar_top">
-      <div class="bar-left" id="bar_topleft">
+    <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
         <?php tpl_button('edit')?>
         <?php tpl_button('history')?>
       </div>
-  
-      <div class="bar-right" id="bar_topright">
+
+      <div class="bar-right" id="bar__topright">
         <?php tpl_button('recent')?>
         <?php tpl_searchform()?>&nbsp;
       </div>
@@ -98,15 +98,15 @@
 
    <?php /*old includehook*/ @include(dirname(__FILE__).'/pagefooter.html')?>
 
-    <div class="bar" id="bar_bottom">
-      <div class="bar-left" id="bar_bottomleft">
+    <div class="bar" id="bar__bottom">
+      <div class="bar-left" id="bar__bottomleft">
         <?php tpl_button('edit')?>
         <?php tpl_button('history')?>
       </div>
-      <div class="bar-right" id="bar_bottomright">
+      <div class="bar-right" id="bar__bottomright">
         <?php tpl_button('subscription')?>
         <?php tpl_button('admin')?>
-		<?php tpl_button('profile')?>
+        <?php tpl_button('profile')?>
         <?php tpl_button('login')?>
         <?php tpl_button('index')?>
         <?php tpl_button('top')?>&nbsp;

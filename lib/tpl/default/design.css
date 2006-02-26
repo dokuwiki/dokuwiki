@@ -81,7 +81,7 @@ div.dokuwiki fieldset {
 
 div.dokuwiki textarea.edit {
   font-family:monospace;
-  border: 1px solid __dark__;  
+  border: 1px solid __dark__;
   color: Black;
   background-color: __white__;
   font-size:14px;
@@ -112,23 +112,23 @@ div.dokuwiki input.missing {
 }
 
 /* edit form */
-div.dokuwiki div.toolbar, div.dokuwiki div#wikieditbar {
+div.dokuwiki div.toolbar, div.dokuwiki div#wiki__editbar {
    margin:2px 0;
    text-align: left;
 }
-div.dokuwiki div#sizectl {
+div.dokuwiki div#size__ctl {
    float:right;
    width:40px;
    height:2.7em;
 }
-div.dokuwiki #sizectl img {
+div.dokuwiki #size__ctl img {
    cursor: pointer;
 }
-div.dokuwiki div#wikieditbar div.editButtons {
+div.dokuwiki div#wiki__editbar div.editButtons {
    float: left;
    padding: 0 1.0em 0.7em 0;
 }
-div.dokuwiki div#wikieditbar div.summary {
+div.dokuwiki div#wiki__editbar div.summary {
    float: left;
 }
 div.dokuwiki .nowrap {
@@ -139,7 +139,7 @@ div.dokuwiki .nowrap {
 
 
 div.dokuwiki input.button, div.dokuwiki button.button{
-  border: 1px solid __dark__;  
+  border: 1px solid __dark__;
   color: Black;
   background-color: __white__;
   vertical-align: middle;
@@ -153,7 +153,7 @@ div.dokuwiki input.button, div.dokuwiki button.button{
   /* Mac IE will not see this and continue with inline-block */
   /* \*/
   display: inline;
-  /* */  
+  /* */
 }
 
 * html div.dokuwiki input.button, * html div.dokuwiki button.button{
@@ -178,27 +178,27 @@ div.dokuwiki div.secedit input.button {
 /* ----------- page navigator ------------- */
 
 div.dokuwiki div.pagenav {
-	margin-top:1em;
+    margin-top:1em;
 }
 
 div.dokuwiki div.pagenav-prev {
-	text-align:right;	
-	float:left;
-	width:50%
+    text-align:right;
+    float:left;
+    width:50%
 }
 
 div.dokuwiki div.pagenav-prev input.button {
-	margin-right:5px;
+    margin-right:5px;
 }
 
 div.dokuwiki div.pagenav-next {
-	text-align:left;
-	float:right;
-	width:50%
+    text-align:left;
+    float:right;
+    width:50%
 }
 
 div.dokuwiki div.pagenav-next input.button {
-	margin-left:5px;
+    margin-left:5px;
 }
 
 /* --------------- Links ------------------ */
@@ -236,11 +236,11 @@ div.dokuwiki a.windows{
     padding: 1px 0px 1px 16px;
     color:__extern__;
     text-decoration:none;
-} 
+}
 div.dokuwiki a.windows:visited {
   color:Purple;
 }
-div.dokuwiki a.windows:hover { 
+div.dokuwiki a.windows:hover {
   text-decoration:underline;
 }
 
@@ -333,7 +333,7 @@ div.dokuwiki img.mediaright {
 
 div.dokuwiki img.mediacenter {
   border: 0;
-	display: block;
+    display: block;
   margin-left: auto;
   margin-right: auto;
 }
@@ -382,7 +382,7 @@ div.dokuwiki div.level4 {margin-left: 63px;}
 div.dokuwiki div.level5 {margin-left: 83px;}
 
 /* unordered lists */
-div.dokuwiki ul { 
+div.dokuwiki ul {
   line-height: 1.5em;
   list-style-type: square;
   margin: 0 0 0.5em 1.5em;
@@ -414,12 +414,12 @@ div.dokuwiki ol ol ol ol {list-style-type: lower-greek}
 
 div.dokuwiki li.open {
   list-style-image: url(images/open.gif);
-	/*list-style-type: circle;*/
+    /*list-style-type: circle;*/
 }
 
 div.dokuwiki li.closed {
   list-style-image: url(images/closed.gif);
-	/*list-style-type: disc;*/
+    /*list-style-type: disc;*/
 }
 
 div.dokuwiki blockquote {
@@ -557,7 +557,7 @@ div.dokuwiki a.toc {
 
 div.dokuwiki a.toc:hover {
   color: __black__;
-  text-decoration:underline; 
+  text-decoration:underline;
 }
 
 /* ---------------------------- Diff rendering --------------------------*/
@@ -572,9 +572,9 @@ div.dokuwiki td.diff-addedline {
     font-family: monospace;
     font-size: 100%;
 }
-div.dokuwiki td.diff-deletedline { 
+div.dokuwiki td.diff-deletedline {
     background:#ffffbb;
-    font-family: monospace;    
+    font-family: monospace;
     font-size: 100%;
 }
 div.dokuwiki td.diff-context {
@@ -616,7 +616,7 @@ div.insitu-footnote {
   background: __light__;
   text-align: left;
   padding: 4px;
-  max-width: 40%;    /* IE's width is handled in javascript */  
+  max-width: 40%;    /* IE's width is handled in javascript */
 }
 
 /* overcome IE issue with one line code or file boxes which require h. scrolling */
@@ -729,7 +729,7 @@ div.dokuwiki a.spell_error {
   text-decoration: underline;
 }
 
-div.dokuwiki div#spell_suggest {
+div.dokuwiki div#spell__suggest {
   position: absolute;
   left: 0;
   top: 0;
@@ -741,10 +741,10 @@ div.dokuwiki div#spell_suggest {
   z-index: 2;
 }
 
-div.dokuwiki div#spell_result {
+div.dokuwiki div#spell__result {
   display:none;
   font-family:monospace;
-  border: 1px solid __dark__; 
+  border: 1px solid __dark__;
   color: Black;
   font-size:14px;
   padding: 3px;
@@ -795,13 +795,13 @@ div.dokuwiki div.imagemeta img.thumb{
 
 /* -------------- Media Popup ---------------------- */
 
-div.dokuwiki div.mediaselect-right li, div.dokuwiki div.uploadform { 
+div.dokuwiki div.mediaselect-right li, div.dokuwiki div.uploadform {
   clear: both;
 }
 
 div.dokuwiki div.mediaedit div.data label{
   display: block;
-  text-align: right; 
+  text-align: right;
   width: 20%;
   float: left;
   margin-right: 0.5em;

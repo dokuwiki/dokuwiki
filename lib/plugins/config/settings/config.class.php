@@ -12,11 +12,11 @@ if (!class_exists('configuration')) {
     var $_name = 'conf';           // name of the config variable found in the files (overridden by $config['varname'])
     var $_format = 'php';          // format of the config file, supported formats - php (overridden by $config['format'])
     var $_heading = '';            // heading string written at top of config file - don't include comment indicators
-    var $_loaded = false;          // set to true after configuration files are loaded     
+    var $_loaded = false;          // set to true after configuration files are loaded
     var $_metadata = array();      // holds metadata describing the settings
     var $setting = array();        // array of setting objects
     var $locked = false;           // configuration is considered locked if it can't be updated
-     
+
     // filenames, these will be eval()'d prior to use so maintain any constants in output
     var $_default_file  = '';
     var $_local_file = '';
@@ -42,7 +42,7 @@ if (!class_exists('configuration')) {
         if (isset($file['protected'])) $this->_protected_file = $file['protected'];
 
         $this->locked = $this->_is_locked();
-   
+
         $this->_metadata = array_merge($meta, $this->get_plugin_metadata());
 
         $this->retrieve_settings();
@@ -70,16 +70,16 @@ if (!class_exists('configuration')) {
               $param = NULL;
             }
 
-            $this->setting[$key] = new $class($key,$param);    
-            $this->setting[$key]->initialize($default[$key],$local[$key],$protected[$key]);    
+            $this->setting[$key] = new $class($key,$param);
+            $this->setting[$key]->initialize($default[$key],$local[$key],$protected[$key]);
           }
-          
+
           $this->_loaded = true;
-        }        
+        }
     }
-    
+
     function save_settings($id, $header='', $backup=true) {
-    
+
       if ($this->locked) return false;
 
       $file = eval('return '.$this->_local_file.';');
@@ -93,23 +93,23 @@ if (!class_exists('configuration')) {
       if (!$fh = @fopen($file, 'wb')) {
         @rename($file.'.bak', $file);     // problem opening, restore the backup
         return false;
-      }      
+      }
 
       if (empty($header)) $header = $this->_heading;
 
       $out = $this->_out_header($id,$header);
-             
+
       foreach ($this->setting as $setting) {
         $out .= $setting->out($this->_name, $this->_format);
       }
-      
+
       $out .= $this->_out_footer();
 
       @fwrite($fh, $out);
       fclose($fh);
       return true;
     }
-    
+
     /**
      * return an array of config settings
      */
@@ -119,7 +119,7 @@ if (!class_exists('configuration')) {
 
       $config = array();
       $file = eval('return '.$file.';');
-    
+
       if ($this->_format == 'php') {
 
         $contents = @php_strip_whitespace($file);
@@ -143,7 +143,7 @@ if (!class_exists('configuration')) {
 
       return $config;
     }
-  
+
     function _out_header($id, $header) {
       $out = '';
       if ($this->_format == 'php') {
@@ -155,10 +155,10 @@ if (!class_exists('configuration')) {
                 " * Date: ".date('r')."\n".
                 " */\n\n";
       }
-    
+
       return $out;
     }
-  
+
     function _out_footer() {
       $out = '';
       if ($this->_format == 'php') {
@@ -167,7 +167,7 @@ if (!class_exists('configuration')) {
           }
           $out .= "\n// end auto-generated content\n";
       }
-    
+
       return $out;
     }
 
@@ -196,7 +196,7 @@ if (!class_exists('configuration')) {
           if (!is_array($value)) {
             $out[$prefix.$key] = $value;
             continue;
-          }    
+          }
 
           $tmp = $this->_flatten($value,$prefix.$key.CM_KEYMARKER);
           $out = array_merge($out,$tmp);
@@ -218,7 +218,7 @@ if (!class_exists('configuration')) {
           if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
           if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
-            @include(DOKU_PLUGIN.$plugin.$file);            
+            @include(DOKU_PLUGIN.$plugin.$file);
           }
         }
         closedir($dh);
@@ -243,7 +243,7 @@ if (!class_exists('configuration')) {
       }
       return $default;
     }
-    
+
   }
 }
 
@@ -300,12 +300,12 @@ if (!class_exists('setting')) {
         $this->_local = $input;
         return true;
     }
-    
+
     /**
      *  @return   array(string $label_html, string $input_html)
      */
     function html(&$plugin, $echo=false) {
-    
+
         $value = '';
         $disable = '';
 
@@ -321,11 +321,11 @@ if (!class_exists('setting')) {
         }
 
         $key = htmlspecialchars($this->_key);
-        $value = htmlspecialchars($value);    
+        $value = htmlspecialchars($value);
 
-        $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config_'.$key.'" name="config['.$key.']" type="text" class="text" value="'.$value.'" '.$disable.'/>';
-        return array($label,$input);        
+        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="text" class="text" value="'.$value.'" '.$disable.'/>';
+        return array($label,$input);
     }
 
     /**
@@ -347,19 +347,19 @@ if (!class_exists('setting')) {
 
       return $out;
     }
-    
-    function prompt(&$plugin) {      
+
+    function prompt(&$plugin) {
       $prompt = $plugin->getLang($this->_key);
       if (!$prompt) $prompt = str_replace(array('____','_'),' ',$this->_key);
       return htmlspecialchars($prompt);
     }
-    
+
     function is_protected() { return !is_null($this->_protected); }
     function is_default() { return !$this->is_protected() && is_null($this->_local); }
     function error() { return $this->_error; }
-    
-    function _out_key() { return str_replace(CM_KEYMARKER,"']['",$this->_key); }        
-  } 
+
+    function _out_key() { return str_replace(CM_KEYMARKER,"']['",$this->_key); }
+  }
 }
 
 if (!class_exists('setting_password')) {
@@ -386,9 +386,9 @@ if (!class_exists('setting_password')) {
 
         $key = htmlspecialchars($this->_key);
 
-        $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config_'.$key.'" name="config['.$key.']" type="password" class="text" value="" '.$disable.'/>';
-        return array($label,$input);        
+        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="password" class="text" value="" '.$disable.'/>';
+        return array($label,$input);
     }
   }
 }
@@ -402,9 +402,9 @@ if (!class_exists('setting_email')) {
 if (!class_exists('setting_numeric')) {
   class setting_numeric extends setting {
     var $_pattern = '/^[-+\/*0-9 ]*$/';
-    
+
     function out($var, $fmt='php') {
-    
+
       if ($this->is_protected()) return '';
       if (is_null($this->_local) || ($this->_default == $this->_local)) return '';
 
@@ -431,25 +431,25 @@ if (!class_exists('setting_onoff')) {
           $disable = ' disabled="disabled"';
         } else {
           $value = is_null($this->_local) ? $this->_default : $this->_local;
-        }    
+        }
 
         $key = htmlspecialchars($this->_key);
-        $checked = ($value) ? ' checked="checked"' : '';    
+        $checked = ($value) ? ' checked="checked"' : '';
 
         $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
         $input = '<div class="input"><input id="config_'.$key.'" name="config['.$key.']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
-        return array($label,$input);        
+        return array($label,$input);
     }
 
     function update($input) {
         if ($this->is_protected()) return false;
 
-        $input = ($input) ? 1 : 0;        
+        $input = ($input) ? 1 : 0;
         $value = is_null($this->_local) ? $this->_default : $this->_local;
         if ($value == $input) return false;
 
         $this->_local = $input;
-        return true;        
+        return true;
     }
   }
 }
@@ -467,7 +467,7 @@ if (!class_exists('setting_mulitchoice')) {
           $value = $this->_protected;
           $disable = ' disabled="disabled"';
         } else {
-          $value = is_null($this->_local) ? $this->_default : $this->_local;          
+          $value = is_null($this->_local) ? $this->_default : $this->_local;
         }
 
         // ensure current value is included
@@ -478,14 +478,14 @@ if (!class_exists('setting_mulitchoice')) {
         if (!$this->is_protected() && count($this->_choices) <= 1) {
           $disable = ' disabled="disabled"';
           $nochoice = $plugin->getLang('nochoice');
-        }    
+        }
 
         $key = htmlspecialchars($this->_key);
 
         $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
 
         $input = "<div class=\"input\">\n";
-        $input .= '<select id="config_'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";
+        $input .= '<select id="config__'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";
         foreach ($this->_choices as $choice) {
             $selected = ($value == $choice) ? ' selected="selected"' : '';
             $option = $plugin->getLang($this->_key.'_o_'.$choice);
@@ -498,7 +498,7 @@ if (!class_exists('setting_mulitchoice')) {
         $input .= "</select> $nochoice \n";
         $input .= "</div>\n";
 
-        return array($label,$input);        
+        return array($label,$input);
     }
 
     function update($input) {
@@ -527,26 +527,26 @@ if (!class_exists('setting_dirchoice')) {
       // populate $this->_choices with a list of available templates
       $list = array();
 
-      if ($dh = @opendir($this->_dir)) {        
+      if ($dh = @opendir($this->_dir)) {
         while (false !== ($entry = readdir($dh))) {
           if ($entry == '.' || $entry == '..') continue;
 
-          $file = (is_link($this->_dir.$entry)) ? readlink($this->_dir.$entry) : $entry;        
-          if (is_dir($this->_dir.$file)) $list[] = $entry;             
+          $file = (is_link($this->_dir.$entry)) ? readlink($this->_dir.$entry) : $entry;
+          if (is_dir($this->_dir.$file)) $list[] = $entry;
         }
         closedir($dh);
       }
       sort($list);
       $this->_choices = $list;
-      
+
       parent::initialize($default,$local,$protected);
     }
-  }    
+  }
 }
 
 
 /**
- *  Provide php_strip_whitespace (php5 function) functionality 
+ *  Provide php_strip_whitespace (php5 function) functionality
  *
  *  @author   Chris Smith <chris@jalakai.co.uk>
  */
@@ -567,11 +567,11 @@ if (!function_exists('php_strip_whitespace'))  {
     function php_strip_whitespace($file) {
         if (!@is_readable($file)) return '';
 
-        $in = join('',@file($file));        
+        $in = join('',@file($file));
         $out = '';
 
         $tokens = token_get_all($in);
- 
+
         foreach ($tokens as $token) {
           if (is_string ($token)) {
             $out .= $token;
@@ -580,13 +580,13 @@ if (!function_exists('php_strip_whitespace'))  {
             switch ($id) {
               case T_COMMENT : // fall thru
               case T_ML_COMMENT : // fall thru
-              case T_DOC_COMMENT : // fall thru 
-              case T_WHITESPACE : 
+              case T_DOC_COMMENT : // fall thru
+              case T_WHITESPACE :
                 break;
               default : $out .= $text; break;
             }
           }
-        }    
+        }
         return ($out);
     }
 
@@ -614,7 +614,7 @@ if (!function_exists('php_strip_whitespace'))  {
 
         if (!@is_readable($file)) return '';
 
-        $contents = join('',@file($file));        
+        $contents = join('',@file($file));
         $out = '';
 
         $state = 0;
@@ -636,5 +636,5 @@ if (!function_exists('php_strip_whitespace'))  {
 
         return $out;
     }
-  } 
+  }
 }

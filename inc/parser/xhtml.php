@@ -66,7 +66,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
-                    $this->doc .= '<a href="#fnt'.$id.'" id="fn'.$id.'" name="fn'.$id.'" class="fn_bot">';
+                    $this->doc .= '<a href="#fnt__'.$id.'" id="fn__'.$id.'" name="fn__'.$id.'" class="fn_bot">';
                     $this->doc .= $id.')</a> '.DOKU_LF;
 
                     // get any other footnotes that use the same markup
@@ -75,7 +75,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if (count($alt)) {
                       foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <a href="#fnt'.($ref+1).'" id="fn'.($ref+1).'" name="fn'.($ref+1).'" class="fn_bot">';
+                        $this->doc .= ', <a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" name="fn__'.($ref+1).'" class="fn_bot">';
                         $this->doc .= ($ref+1).')</a> '.DOKU_LF;
                       }
                     }
@@ -278,7 +278,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // output the footnote reference and link, incl. onmouseover for insitu footnote popup
-        $this->doc .= '<a href="#fn'.$id.'" name="fnt'.$id.'" id="fnt'.$id.'" class="fn_top" onmouseover="fnt(\''.$id.'\', this, event);">'.$id.')</a>';
+        $this->doc .= '<a href="#fn__'.$id.'" name="fnt__'.$id.'" id="fnt__'.$id.'" class="fn_top" onmouseover="fnt(\''.$id.'\', this, event);">'.$id.')</a>';
     }
 
     function listu_open() {

@@ -54,15 +54,15 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      */
     function handle() {
       global $ID;
-    
+
       if (!$this->_restore_session()) return $this->_close_session();
       if (!isset($_REQUEST['save']) || ($_REQUEST['save'] != 1)) return $this->_close_session();
-            
+
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
-      
+
       // don't go any further if the configuration is locked
       if ($this->_config->_locked) return $this->_close_session();
-      
+
       $this->_input = $_REQUEST['config'];
 
       while (list($key) = each($this->_config->setting)) {
@@ -72,101 +72,101 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
         if ($this->_config->setting[$key]->error()) $this->_error = true;
       }
-      
+
       if ($this->_changed  && !$this->_error) {
         $this->_config->save_settings($this->getPluginName());
-        
+
         // save state & force a page reload to get the new settings to take effect
         $_SESSION['PLUGIN_CONFIG'] = array('state' => 'updated', 'time' => time());
         $this->_close_session();
         header("Location: ".wl($ID,array('do'=>'admin','page'=>'config'),true,'&'));
         exit();
       }
-      
+
       $this->_close_session();
     }
 
     /**
      * output appropriate html
      */
-    function html() { 
+    function html() {
       global $lang;
       global $ID;
-    
+
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
             $this->setupLocale(true);
 
       print $this->locale_xhtml('intro');
-      
-      ptln('<div id="configmanager">');
-      
+
+      ptln('<div id="config__manager">');
+
       if ($this->_config->locked)
         ptln('<p class="info">'.$this->getLang('locked').'</p>');
-      elseif ($this->_error) 
+      elseif ($this->_error)
         ptln('<p class="error">'.$this->getLang('error').'</p>');
       elseif ($this->_changed)
         ptln('<p class="ok">'.$this->getLang('updated').'</p>');
-      
+
       ptln('<form action="'.wl($ID).'" method="post">');
       ptln('  <table class="inline">');
-      
+
       foreach($this->_config->setting as $setting) {
-      
+
         list($label,$input) = $setting->html($this, $this->_error);
-        
-        $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');        
+
+        $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');
         $error = $setting->error() ? ' class="error"' : '';
-        
+
         ptln('    <tr'.$class.'>');
         ptln('      <td>'.$label.'</td>');
         ptln('      <td'.$error.'>'.$input.'</td>');
         ptln('    </tr>');
       }
-      
+
       ptln('  </table>');
-      
+
       ptln('<p>');
       ptln('  <input type="hidden" name="do"     value="admin" />');
       ptln('  <input type="hidden" name="page"   value="config" />');
-      
+
       if (!$this->_config->locked) {
         ptln('  <input type="hidden" name="save"   value="1" />');
         ptln('  <input type="submit" name="submit" value="'.$lang['btn_save'].'" />');
         ptln('  <input type="reset" value="'.$lang['btn_reset'].'" />');
       }
-      
+
       ptln('</p>');
-      
+
       ptln('</form>');
       ptln('</div>');
     }
-    
+
     /**
      * @return boolean   true - proceed with handle, false - don't proceed
      */
     function _restore_session() {
-    
-      // dokuwiki closes the session before act_dispatch. $_SESSION variables are all set, 
-      // however they can't be changed without starting the session again      
+
+      // dokuwiki closes the session before act_dispatch. $_SESSION variables are all set,
+      // however they can't be changed without starting the session again
       if (!headers_sent()) {
         session_start();
         $this->_session_started = true;
-      }      
-      
+      }
+
       if (!isset($_SESSION['PLUGIN_CONFIG'])) return true;
-      
+
       $session = $_SESSION['PLUGIN_CONFIG'];
       unset($_SESSION['PLUGIN_CONFIG']);
-              
+
       // still valid?
       if (time() - $session['time'] > 120) return true;
-        
+
       switch ($session['state']) {
         case 'updated' :
           $this->_changed = true;
           return false;
       }
-      
+
       return true;
     }
 
@@ -186,12 +186,12 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     function _setup_localised_plugin_prompts() {
       global $conf;
-      
+
       $langfile   = '/lang/'.$conf[lang].'/settings.php';
       $enlangfile = '/lang/en/settings.php';
-            
+
             $lang = array();
-      
+
       if ($dh = opendir(DOKU_PLUGIN)) {
         while (false !== ($plugin = readdir($dh))) {
           if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
@@ -199,7 +199,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
           if (@file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
             @include(DOKU_PLUGIN.$plugin.$enlangfile);
-            if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);                        
+            if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
           }
         }
         closedir($dh);
@@ -209,5 +209,5 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
       return true;
     }
-    
+
 }

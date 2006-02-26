@@ -18,7 +18,7 @@ img {border:0}
 a {
   color:#000000;
   text-decoration:none;
-	background: none !important;
+  background: none !important;
 }
 
 
@@ -100,8 +100,8 @@ img.medialeft {
   border: 0;
   float: left;
   margin: 0 1.5em 0 0;
-} 
-  
+}
+
 img.mediaright {
   border: 0;
   float: right;
@@ -109,7 +109,7 @@ img.mediaright {
 }
 
 /* unordered lists */
-ul { 
+ul {
     line-height: 1.5em;
     list-style-type: square;
     margin: 0 0 1.0em 1.5em;
