@@ -609,7 +609,7 @@ div.dokuwiki a.fn_bot{
 }
 
 /* insitu-footnotes */
-div.dokuwiki div.insitu-footnote {
+div.insitu-footnote {
   font-size: 80%;
   line-height: 1.2em;
   border: 1px solid __dark__;
@@ -620,7 +620,7 @@ div.dokuwiki div.insitu-footnote {
 }
 
 /* overcome IE issue with one line code or file boxes which require h. scrolling */
-* html div.dokuwiki .insitu-footnote pre.code, * html div.dokuwiki .insitu-footnote pre.file {
+* html .insitu-footnote pre.code, * html .insitu-footnote pre.file {
   padding-bottom: 18px;
 }
 
@@ -699,27 +699,27 @@ div.dokuwiki div.ajax_qsearch {
 }
 
 /* --------- Toolbar -------------------- */
-div.dokuwiki button.toolbutton{
+button.toolbutton{
   background-color: __white__;
   padding: 0px;
   margin: 0 1px 0 0;
-	border: 1px solid __dark__;
-	cursor: pointer;
+  border: 1px solid __dark__;
+  cursor: pointer;
 }
 
-div.dokuwiki div.picker {
+div.picker {
   width: 250px;
   border: 1px solid __dark__;
   background: __light__;
 }
 
-div.dokuwiki button.pickerbutton {
+button.pickerbutton {
   padding: 0px;
   margin: 0 1px 1px 0;
   border: 0;
   background-color: transparent;
   font-size: 80%;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 /* ---------- Spellchecking ------------- */
