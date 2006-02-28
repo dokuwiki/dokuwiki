@@ -21,8 +21,7 @@ function io_sweepNS($id){
 
   //scan all namespaces
   while(($id = getNS($id)) !== false){
-    $dir = $conf['datadir'].'/'.str_replace(':','/',$id);
-    $dir = utf8_encodeFN($dir);
+    $dir = $conf['datadir'].'/'.utf8_encodeFN(str_replace(':','/',$id));
 
     //try to delete dir else return
     if(!@rmdir($dir)) return;
