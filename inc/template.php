@@ -177,12 +177,12 @@ function tpl_metaheaders($alt=true){
   if($alt){
     ptln('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="'.DOKU_BASE.'feed.php" />',$it);
     ptln('<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="'.DOKU_BASE.'feed.php?mode=list&amp;ns='.$INFO['namespace'].'" />',$it);
-    ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.wl($ID,'do=export_html').'" />',$it);
+    ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.wl($ID,'do=export_xhtml').'" />',$it);
     ptln('<link rel="alternate" type="text/plain" title="Wiki Markup" href="'.wl($ID, 'do=export_raw').'" />',$it);
   }
 
   // setup robot tags apropriate for different modes
-  if( ($ACT=='show' || $ACT=='export_html') && !$REV){
+  if( ($ACT=='show' || $ACT=='export_xhtml') && !$REV){
     if($INFO['exists']){
       ptln('<meta name="date" content="'.date('Y-m-d\TH:i:sO',$INFO['lastmod']).'" />',$it);
       //delay indexing:
