@@ -827,9 +827,11 @@ function saveWikiText($id,$text,$summary,$minor=false){
       if (file_exists($mfile)) @unlink($mfile);
     }
     $del = true;
-    //autoset summary on deletion
+    // autoset summary on deletion
     if(empty($summary)) $summary = $lang['deleted'];
-    //remove empty namespaces
+    // unlock early
+    unlock($id);
+    // remove empty namespaces
     io_sweepNS($id);
   }else{
     // save file (datadir is created in io_saveFile)
