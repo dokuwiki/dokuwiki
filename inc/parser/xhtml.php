@@ -19,6 +19,7 @@ if ( !defined('DOKU_TAB') ) {
 }
 
 require_once DOKU_INC . 'inc/parser/renderer.php';
+require_once DOKU_INC . 'inc/html.php';
 
 /**
  * The Renderer
