@@ -1,10 +1,9 @@
 <?php
 /**
- * auth/basic.class.php
+ * LDAP authentication backend
  *
- * foundation authorisation class
- * all auth classes should inherit from this class
- *
+ * @license   GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author    Andreas Gohr <andi@splitbrain.org>
  * @author    Chris Smith <chris@jalakaic.co.uk>
  */
 
@@ -19,6 +18,15 @@ class auth_ldap extends auth_basic {
     function auth_ldap(){
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
+
+        // ldap extension is needed
+        if(!function_exists('ldap_connect')) {
+            if ($this->cnf['debug'])
+                msg("LDAP err: PHP LDAP extension not found.",-1);
+            $this->success = false;
+            return;
+        }
+
         if(empty($this->cnf['groupkey'])) $this->cnf['groupkey'] = 'cn';
 
         // try to connect

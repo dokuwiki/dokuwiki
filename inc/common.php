@@ -140,11 +140,13 @@ function buildAttributes($params){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    html_msgarea
  */
-function msg($message,$lvl=0){
+function msg($message,$lvl=0,$line='',$file=''){
   global $MSG;
   $errors[-1] = 'error';
   $errors[0]  = 'info';
   $errors[1]  = 'success';
+
+  if($line || $file) $message.=' ['.basename($file).':'.$line.']';
 
   if(!headers_sent()){
     if(!isset($MSG)) $MSG = array();
