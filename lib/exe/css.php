@@ -55,6 +55,9 @@ function css_out(){
         $files[DOKU_CONF.'userprint.css'] = '';
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
+        if($conf['spellchecker']){
+            $files[DOKU_INC.'lib/styles/spellcheck.css'] = DOKU_BASE.'lib/styles/';
+        }
         if (isset($tplstyles['screen'])) $files = array_merge($files, $tplstyles['screen']);
         if($lang['direction'] == 'rtl'){
             if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);

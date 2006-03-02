@@ -154,6 +154,7 @@ div.dokuwiki input.button, div.dokuwiki button.button{
   /* \*/
   display: inline;
   /* */
+
 }
 
 * html div.dokuwiki input.button, * html div.dokuwiki button.button{
@@ -730,33 +731,18 @@ div.dokuwiki a.spell_error {
 }
 
 div.dokuwiki div#spell__suggest {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: none;
   background-color: __white__;
   padding: 2px;
   border: 1px solid __black__;
   font-size:80%;
-  z-index: 2;
 }
 
 div.dokuwiki div#spell__result {
-  display:none;
-  font-family:monospace;
   border: 1px solid __dark__;
   color: Black;
   font-size:14px;
   padding: 3px;
   background-color: __lighter__;
-  overflow: auto;
-  z-index: 1;
-
-  white-space: pre-wrap;       /* css-3 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 div.dokuwiki span.spell_noerr {

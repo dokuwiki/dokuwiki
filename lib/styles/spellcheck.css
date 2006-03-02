@@ -1,0 +1,27 @@
+/**
+ * Basic styles for the spellchecker. Only included when the spellchek option
+ * is enabled. These styles are the absolute minimum to make the spellchecker
+ * work. Templates should add addional styles for making it look nice.
+ */
+
+div.dokuwiki div#spell__suggest {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  z-index: 2;
+}
+
+div.dokuwiki div#spell__result {
+  display:none;
+  font-family:monospace;
+  overflow: auto;
+  z-index: 1;
+
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
