@@ -148,13 +148,6 @@ div.dokuwiki input.button, div.dokuwiki button.button{
   cursor: pointer;
   margin: 1px;
   padding: 0.125em 0.4em;
-  display: inline-block;
-
-  /* Mac IE will not see this and continue with inline-block */
-  /* \*/
-  display: inline;
-  /* */
-
 }
 
 * html div.dokuwiki input.button, * html div.dokuwiki button.button{
