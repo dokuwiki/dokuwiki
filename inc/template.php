@@ -700,8 +700,8 @@ function tpl_mediafilelist(){
 
     //prepare deletion button
     if($AUTH >= AUTH_DELETE){
-      $ask  = $lang['del_confirm'].'\\n';
-      $ask .= $item['id'];
+      $ask  = addslashes($lang['del_confirm']).'\\n';
+      $ask .= addslashes($item['id']);
 
       $del = '<a href="'.DOKU_BASE.'lib/exe/media.php?delete='.rawurlencode($item['id']).'" '.
              'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
@@ -720,7 +720,7 @@ function tpl_mediafilelist(){
       ptln('<div class="imagemeta">',6);
 
       //build thumbnail
-      print '<a href="javascript:mediaSelect(\''.$item['id'].'\')">';
+      print '<a href="javascript:mediaSelect(\':'.$item['id'].'\')">';
 
       if($w>120 || $h>120){
         $ratio = $item['meta']->getResizeRatio(120);
