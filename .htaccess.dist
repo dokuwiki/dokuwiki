@@ -1,8 +1,8 @@
 ## Enable this to restrict editing to logged in users only
 
 ## You should disable Indexes and MultiViews either here or in the
-## global config
-#Options -Indexes -MultiViews
+## global config. Symlinks maybe needed for URL rewriting.
+#Options -Indexes -MultiViews +FollowSymLinks
 
 ## make sure nobody gets the htaccess files
 <Files ~ "^[\._]ht">
