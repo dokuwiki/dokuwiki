@@ -264,16 +264,18 @@ function auth_aclcheck($id,$user,$groups){
   # if no ACL is used always return upload rights
   if(!$conf['useacl']) return AUTH_UPLOAD;
 
+  $user = auth_nameencode($user);
+
   //if user is superuser return 255 (acl_admin)
   if($conf['superuser'] == $user) { return AUTH_ADMIN; }
 
   //make sure groups is an array
   if(!is_array($groups)) $groups = array();
 
-  //prepend groups with @
+  //prepend groups with @ and nameencode
   $cnt = count($groups);
   for($i=0; $i<$cnt; $i++){
-    $groups[$i] = '@'.$groups[$i];
+    $groups[$i] = '@'.auth_nameencode($groups[$i]);
   }
   //if user is in superuser group return 255 (acl_admin)
   if(in_array($conf['superuser'], $groups)) { return AUTH_ADMIN; }
@@ -348,6 +350,23 @@ function auth_aclcheck($id,$user,$groups){
 
   //still here? return no permissions
   return AUTH_NONE;
+}
+
+/**
+ * Encode ASCII special chars
+ *
+ * Some auth backends allow special chars in their user and groupnames
+ * The special chars are encoded with this function. Only ASCII chars
+ * are encoded UTF-8 multibyte are left as is (different from usual
+ * urlencoding!).
+ *
+ * Decoding can be done with rawurldecode
+ *
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ * @see rawurldecode()
+ */
+function auth_nameencode($name){
+  return preg_replace('/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',"'%'.dechex(ord('\\1'))",$name);
 }
 
 /**

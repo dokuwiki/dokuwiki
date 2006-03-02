@@ -2,7 +2,14 @@
 # <?php exit()?>
 # Don't modify the lines above
 #
-# Access Control
+# Access Control Lists
+#
+# Editing this file by hand shouldn't be necessary. Use the ACL
+# Manager interface instead.
+#
+# If your auth backend allows special char like spaces in groups
+# or user names you need to urlencode them (only chars <128, leave
+# UTF-8 multibyte chars as is)
 #
 # none   0
 # read   1

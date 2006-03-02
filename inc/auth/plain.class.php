@@ -15,6 +15,8 @@ define('AUTH_USERFILE',DOKU_CONF.'users.auth.php');
 // we only accept page ids for auth_plain
 if(isset($_REQUEST['u']))
   $_REQUEST['u'] = cleanID($_REQUEST['u']);
+if(isset($_REQUEST['acl_user']))
+  $_REQUEST['acl_user'] = cleanID($_REQUEST['acl_user']);
 
 class auth_plain extends auth_basic {
 
