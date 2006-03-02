@@ -1,0 +1,14 @@
+====== Menadżer konfiguracji ======
+
+Na tej stronie można zmienić ustawienia tej instalacji DokuWiki.
+W celu uzyskania pomocy na temat ustawień zajrzyj na stronę o [[doku>wiki:config|konfiguracji]].
+W celu uzyskania informacji o tej wtyczce zajrzyj na stronę o [[doku>plugin:config|wtyczce]].
+
+Ustawienia w kolorze jasnoczerwonym są chronione i nie mogą być zmienioną z użyciem tej wtyczki.
+Ustawienia w kolorze niebieskim mają domyślne wartości.
+Ustawienia w kolorze białym są specyficzne dla tej instalacji.
+Ustawienia w kolorach niebieskim i białym mogą być zmienione.
+
+W celu zapisania nowej konfiguracji naciśnij **zapisz** przed opuszczeniem tej strony.
+
+

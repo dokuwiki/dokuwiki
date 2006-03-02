@@ -4,13 +4,11 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Michał Tkacz <mehow@autocom.pl>
+ * @author     Grzegorz Żur <grzegorz.zur@gmail.com>
  */
-
 $lang['menu'] = 'Menadżer wtyczek'; 
 
 // custom language strings for the plugin
-$lang['refresh'] = "Odśwież listę zainstalowanych wtyczek";
-$lang['refresh_x'] = "Użyj tej funkcji jeśli zmodyfikowałeś którąkolwiek z wtyczek ręcznie"; 
 $lang['download'] = "Ściągnij i zainstaluj nową wtyczkę";
 $lang['manage'] = "Zainstalowane Wtyczki";
 
@@ -18,11 +16,9 @@ $lang['btn_info'] = 'info';
 $lang['btn_update'] = 'aktualizuj';
 $lang['btn_delete'] = 'usuń';
 $lang['btn_settings'] = 'ustawienia';
-$lang['btn_refresh'] = 'Odśwież';
-$lang['btn_download'] = 'Ściągnij';
+$lang['btn_download'] = 'pobierz';
 
 $lang['url'] = 'URL';
-//$lang[''] = '';
 
 $lang['installed'] = 'Instalacja:';
 $lang['lastupdate'] = 'Ostatnio zaktualizowana:';
@@ -32,9 +28,6 @@ $lang['unknown'] = 'nieznane';
 // ..ing = header message
 // ..ed = success message
 
-$lang['refreshing'] = 'Odświeżam...';
-$lang['refreshed'] = 'Odświeżanie wtyczek zakończone.';
-
 $lang['updating'] = 'Aktualizuję...';
 $lang['updated'] = 'Aktualizacja wtyczki %s pomyślnie ściągnięta';
 $lang['updates'] = 'Aktualizacje następujących wtyczek zostały pomyślnie ściągnięte';
@@ -43,7 +36,7 @@ $lang['update_none'] = 'Nie znaleziono aktualizacji.';
 $lang['deleting'] = 'Usuwam...';
 $lang['deleted'] = 'Wtyczka %s usunięta.';
 
-$lang['downloading'] = 'Ściągam...';
+$lang['downloading'] = 'Pobieram...';
 $lang['downloaded'] = 'Wtyczka %s pomyślnie zainstalowana';
 $lang['downloads'] = 'Następujące wtyczki zostały pomyślnie zainstalowane:';
 $lang['download_none'] = 'Nie znaleziono wtyczek lub wystąpił nieznany problem podczas ściągania i instalacji.';
@@ -70,5 +63,7 @@ $lang['error_decompress'] = 'Menadżer wtyczek nie był w stanie rozpakować śc
 $lang['error_copy'] = 'Wystąpił błąd podczas kopiowania pliku w trakcie instalacji wtyczki %s: '.
             'być może dysk jest pełny lub prawa dostępu są niepoprawne. '.
             'Efektem może być częściowo zainstalowana wtyczka co może spowodować niestabilność Twojej instalacji wiki.';   
+$lang['error_delete']     = 'Wystąpił błąd przy próbie usunięcia wtyczki <em>%s</em>. '.
+                            'Prawdopodobną przyczyną są niewystarczające uprawnienia do katalogu.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

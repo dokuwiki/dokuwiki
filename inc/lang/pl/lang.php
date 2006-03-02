@@ -4,6 +4,8 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Grzegorz Żur <grzegorz.zur@gmail.com>
+ *
+ *
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -109,6 +111,7 @@ $lang['yours']      = 'Twoja wersja';
 $lang['diff']       = 'Pokaż różnicę między wersjami';
 $lang['line']       = 'Linia';
 $lang['breadcrumb'] = 'Ślad';
+$lang['youarehere'] = 'Jesteś tutaj';
 $lang['lastmod']    = 'ostatnio zmienione';
 $lang['by']         = 'przez';
 $lang['deleted']    = 'usunięto';
@@ -173,14 +176,8 @@ $lang['subscribe_noaddress']= 'Nie podałeś adresu e-mail przy rejestracji, nie
 $lang['unsubscribe_success']= 'Usunięto %s z listy subskrypcji strony %s';
 $lang['unsubscribe_error']  = 'Błąd przu usuwaniu %s z listy subskrypcji strony %s';
 
-/* auth.class lanuage support */
+/* auth.class language support */
 $lang['authmodfailed']   = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
-
-/* mysql.class language support */
-$lang['noMySQL']         = "Brak obsługi MySQL w PHP. Powiadom administratora tego wiki.";
-$lang['noDatabase']      = "MySQL: Brak dostępu do bazy '%d'. Powiadom administratora tego wiki.";
-$lang['noConnect']       = "MySQL: Brak połączenia z '%u@%s'. Powiadom administratora tego wiki.";
-$lang['joinGroupFailed'] = "Nie utworzono konta '%u' ponieważ nie można dodać go do grupy '%g'.";
-$lang['modUserFailed']   = "Nie można zmienić danych użytkownika. Powiadom administratora tego wiki.";
+$lang['authtempfail']    = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

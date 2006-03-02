@@ -1,6 +1,6 @@
 ====== Wyszukiwanie ======
 
-Wyniki wyszukiwania. 
-Jeżeli nie znalazłeś/aś tego czego szukasz, możesz utworzyć stronę o nazwie odpowiadającej szukanemu hasłu klikając ''utwórz stronę''.
+Wyniki wyszukiwania.
+Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.
 
 ===== Wyniki =====
