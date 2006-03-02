@@ -14,6 +14,7 @@
   require_once(DOKU_INC.'inc/auth.php');
   //close sesseion
   session_write_close();
+  if(!defined('CHUNK_SIZE')) define('CHUNK_SIZE',16*1024);
 
   $mimetypes = getMimeTypes();
 
@@ -53,8 +54,8 @@
       exit;
     }
     $FILE  = mediaFN($MEDIA);
-  } 
-  
+  }
+
   //check file existance
   if(!@file_exists($FILE)){
     header("HTTP/1.0 404 Not Found");
@@ -68,35 +69,123 @@
     $FILE = get_resized($FILE,$EXT,$WIDTH,$HEIGHT);
   }
 
+  // finally send the file to the client
+  sendFile($FILE,$MIME);
 
-  //FIXME set sane cachecontrol headers
-  //FIXME handle conditional and partial requests
+/* ------------------------------------------------------------------------ */
 
-  //send file
-  header("Content-Type: $MIME");
-  header('Last-Modified: '.date('r',filemtime($FILE)));
-  header('Content-Length: '.filesize($FILE));
-  header('Cache-Control: private, must-revalidate, post-check=0, pre-check=0');
+/**
+ * Set headers and send the file to the client
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function sendFile($file,$mime){
+  // send headers
+  header("Content-Type: $mime");
+  http_conditionalRequest(filemtime($file));
+  list($start,$len) = http_rangeRequest(filesize($file));
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+  header('Pragma: public');
+  header('Accept-Ranges: bytes');
 
   //application mime type is downloadable
-  if(substr($MIME,0,11) == 'application'){
-    header('Content-Disposition: attachment; filename="'.basename($FILE).'"');
+  if(substr($mime,0,11) == 'application'){
+    header('Content-Disposition: attachment; filename="'.basename($file).'";');
   }
 
-  $fp = @fopen($FILE,"rb");
+  // send file contents
+  $fp = @fopen($file,"rb");
   if($fp){
-    while (!feof($fp)) {
+    fseek($fp,$start); //seek to start of range
+
+    $chunk = ($len > CHUNK_SIZE) ? CHUNK_SIZE : $len;
+    while (!feof($fp) && $chunk > 0) {
       @set_time_limit(); // large files can take a lot of time
-      print fread($fp, 16*1024);
+      print fread($fp, $chunk);
       flush();
+      $len -= $chunk;
+      $chunk = ($len > CHUNK_SIZE) ? CHUNK_SIZE : $len;
     }
     fclose($fp);
   }else{
     header("HTTP/1.0 500 Internal Server Error");
-    print "Could not read $FILE - bad permissions?";
+    print "Could not read $file - bad permissions?";
+  }
+}
+
+/**
+ * Checks and sets headers to handle range requets
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @returns array The start byte and the amount of bytes to send
+ */
+function http_rangeRequest($size){
+  if(!isset($_SERVER['HTTP_RANGE'])){
+    // no range requested - send the whole file
+    header("Content-Length: $size");
+    return array(0,$size);
   }
 
-/* ------------------------------------------------------------------------ */
+  $t = explode('=', $_SERVER['HTTP_RANGE']);
+  if (!$t[0]=='bytes') {
+    // we only understand byte ranges - send the whole file
+    header("Content-Length: $size");
+    return array(0,$size);
+  }
+
+  $r = explode('-', $t[1]);
+  $start = (int)$r[0];
+  $end = (int)$r[1];
+  if (!$end) $end = $size - 1;
+  if ($start > $end || $start > $size || $end > $size){
+    header('HTTP/1.1 416 Requested Range Not Satisfiable');
+    print 'Bad Range Request!';
+    exit;
+  }
+
+  $tot = $end - $start + 1;
+  header('HTTP/1.1 206 Partial Content');
+  header("Content-Range: bytes {$start}-{$end}/{$size}");
+  header("Content-Length: $tot");
+
+  return array($start,$tot);
+}
+
+/**
+ * Checks and sets HTTP headers for conditional HTTP requests
+ *
+ * @author Simon Willison <swillison@gmail.com>
+ * @link   http://simon.incutio.com/archive/2003/04/23/conditionalGet
+ */
+function http_conditionalRequest($timestamp){
+    // A PHP implementation of conditional get, see 
+    //   http://fishbowl.pastiche.org/archives/001132.html
+    $last_modified = substr(date('r', $timestamp), 0, -5).'GMT';
+    $etag = '"'.md5($last_modified).'"';
+    // Send the headers
+    header("Last-Modified: $last_modified");
+    header("ETag: $etag");
+    // See if the client has provided the required headers
+    $if_modified_since = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ?
+        stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) :
+        false;
+    $if_none_match = isset($_SERVER['HTTP_IF_NONE_MATCH']) ?
+        stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) : 
+        false;
+    if (!$if_modified_since && !$if_none_match) {
+        return;
+    }
+    // At least one of the headers is there - check them
+    if ($if_none_match && $if_none_match != $etag) {
+        return; // etag is there but doesn't match
+    }
+    if ($if_modified_since && $if_modified_since != $last_modified) {
+        return; // if-modified-since is there but doesn't match
+    }
+    // Nothing has changed since their last request - serve a 304 and exit
+    header('HTTP/1.0 304 Not Modified');
+    exit;
+}
 
 /**
  * Resizes the given image to the given size
@@ -165,7 +254,7 @@ function get_from_URL($url,$ext,$cache){
         return false;
       }
   }
-      
+
   //if cache exists use it else
   if($mtime) return $local;
 
@@ -286,7 +375,7 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * @param  int $mem  Size of memory you want to allocate in bytes
  * @param  int $used already allocated memory (see above)
  * @author Filip Oscadal <webmaster@illusionsoftworks.cz>
- * @author Andreas Gohr <andi@splitbrain.org> 
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function is_mem_available($mem,$bytes=1048576){
   $limit = trim(ini_get('memory_limit'));
