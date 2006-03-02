@@ -97,8 +97,8 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
-$conf['target']['interwiki'] = '_blank';
-$conf['target']['extern']    = '_blank';
+$conf['target']['interwiki'] = '';
+$conf['target']['extern']    = '';
 $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 
