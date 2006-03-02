@@ -10,7 +10,7 @@ rss channel, feed, RDF {
 link, description, language, managingEditor, copyright, lastBuildDate, date,
 pubDate, generator, webMaster, ttl, docs, tagline, author, copyright,
 generator, content, created, issued, modified, subject, id, format, creator,
-category {
+category, image {
   display: none;
 }
 
@@ -29,7 +29,7 @@ channel title, feed title {
   border-bottom: 20px solid #dee7ec;
 }
 
-:root:before, :root:before {
+:root:before {
   content: "This data file is meant to be read in a XML feed reader. See document source."
 }
 
