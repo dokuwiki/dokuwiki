@@ -4,7 +4,8 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Yuri Pimenov <up@ftpsearch.lv>
- * @uthor      Igor Tarasov <tigr@mail15.com>
+ * @author      Igor Tarasov <tigr@mail15.com>
+ * @author      Denis Simakov <akinoame1@gmail.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -17,6 +18,8 @@ $lang['btn_search'] = 'Поиск';
 $lang['btn_save']   = 'Сохранить';
 $lang['btn_preview']= 'Просмотр';
 $lang['btn_top']    = 'Наверх';
+$lang['btn_newer']  = '<< более новые';
+$lang['btn_older']  = 'более старые >>';
 $lang['btn_revs']   = 'История страницы';
 $lang['btn_recent'] = 'Недавние изменения';
 $lang['btn_upload'] = 'Закачать';
@@ -25,16 +28,20 @@ $lang['btn_index']  = 'Содержание';
 $lang['btn_secedit']= 'Править';
 $lang['btn_login']  = 'Войти';
 $lang['btn_logout'] = 'Выйти';
+$lang['btn_admin']  = 'Управление';
 $lang['btn_update'] = 'Обновить';
 $lang['btn_delete'] = 'Удалить';
 $lang['btn_back']   = 'Назад';
+$lang['btn_backlink']    = "Ссылки сюда";
+$lang['btn_backtomedia'] = 'Вернуться к выбору медиа-файла';
+$lang['btn_subscribe']   = 'Подписаться';
+$lang['btn_unsubscribe'] = 'Отписаться';
 $lang['btn_profile']= 'Профиль';
 $lang['btn_reset']  = 'Сброс';
-$lang['btn_newer']  = '<< более новые';
-$lang['btn_older']  = 'более старые >>';
+$lang['btn_resendpwd'] = 'Послать новый пароль';
 
-$lang['loggedinas'] = 'В системе под пользователем';
-$lang['user']       = 'Логин';
+$lang['loggedinas'] = 'Вы';
+$lang['user']       = 'Имя пользователя';
 $lang['pass']       = 'Пароль';
 $lang['newpass']    = 'Новый пароль';
 $lang['oldpass']    = 'Введите текущий пароль';
@@ -42,7 +49,7 @@ $lang['passchk']    = 'повторите';
 $lang['remember']   = 'Запомнить меня';
 $lang['fullname']   = 'Полное имя';
 $lang['email']      = 'E-Mail';
-$lang['register']   = 'Зарегестрироваться';
+$lang['register']   = 'Зарегистрироваться';
 $lang['profile']    = 'Профиль пользователя';
 $lang['badlogin']   = 'Извините, неверное имя пользователя или пароль.';
 $lang['minoredit']  = 'Небольшие изменения';
@@ -70,7 +77,7 @@ $lang['resendpwdnouser']  = 'Пользователь с таким именем
 $lang['resendpwdsuccess'] = 'Ваш новый пароль был выслан на ваш адрес электронной почты.';
 
 $lang['txt_upload']   = 'Выберите файл для закачки';
-$lang['txt_filename'] = 'Введите wikiname (необязательно)';
+$lang['txt_filename'] = 'Введите имя файла в wiki (необязательно)';
 $lang['txt_overwrt']  = 'Перезаписать существующий файл';
 $lang['lockedby']     = 'В данный момент заблокирован';
 $lang['lockexpire']   = 'Блокировка истекает в';
@@ -90,7 +97,7 @@ $lang['deletesucc']  = 'Файл "%s" был удалён.';
 $lang['deletefail']  = 'Невозможно удалить файл "%s". Проверьте права доступа к файлу.';
 $lang['mediainuse']  = 'Файл "%s" не был удалён - файл все ещё используется.';
 $lang['namespaces']  = 'Пространства имен';
-$lang['mediafiles']  = 'Доступые файлы';
+$lang['mediafiles']  = 'Доступные файлы';
 
 $lang['reference']   = 'Ссылки для';
 $lang['ref_inuse']   = 'Этот файл не может быть удалён, так как он используется следующими страницами:';
@@ -103,7 +110,8 @@ $lang['current']    = 'текущий';
 $lang['yours']      = 'Ваша версия';
 $lang['diff']       = 'показать отличия от текущей версии';
 $lang['line']       = 'Строка';
-$lang['breadcrumb'] = 'История';
+$lang['breadcrumb'] = 'Вы посетили';
+$lang['youarehere'] = 'Вы находитесь здесь';
 $lang['lastmod']    = 'Последние изменения';
 $lang['by']         = '';
 $lang['deleted']    = 'удалено';
