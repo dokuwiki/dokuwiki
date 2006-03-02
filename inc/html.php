@@ -332,11 +332,12 @@ function html_search(){
   flush();
 
   //show progressbar
-  print '<div class="centeralign">';
-  print '<script type="text/javascript" charset="utf-8">';
-  print 'showLoadBar();';
-  print '</script>';
+  print '<div class="centeralign" id="dw__loading">';
   print '<br /></div>';
+  print '<script type="text/javascript" charset="utf-8">';
+  print 'showLoadBar("dw__loading");';
+  print '</script>';
+  flush();
 
   //do quick pagesearch
   $data = array();
@@ -379,8 +380,9 @@ function html_search(){
 
   //hide progressbar
   print '<script type="text/javascript" charset="utf-8">';
-  print 'hideLoadBar();';
+  print 'hideLoadBar("dw__loading");';
   print '</script>';
+  flush();
 }
 
 /**
