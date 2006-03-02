@@ -25,3 +25,37 @@ $lang['lastupdate']       = 'Sidst opdateret:';
 $lang['source']           = 'Kilde:';
 $lang['unknown']          = 'ukendt';
 
+// ..ing = header message
+// ..ed = success message
+
+$lang['updating']         = 'Opdaterer ...';
+$lang['updated']          = 'Plugin %s blev korrekt opdateret';
+$lang['updates']          = 'De følgende plugins blev opdateret korrekt:';
+$lang['update_none']      = 'Ingen opdateringer fundet.';
+
+$lang['deleting']         = 'Sletter ...';
+$lang['deleted']          = 'Plugin %s slettet.';
+
+$lang['downloading']      = 'Downloader ...';
+$lang['downloaded']       = 'Plugin %s blev  korrekt installeret';
+$lang['downloads']        = 'De følgende plugins blev installeret korrekt:';
+$lang['download_none']    = 'Ingen plugins blev fundet, eller en ukendt fejl opstod under download og installering.';
+
+// info titles
+$lang['plugin']           = 'Plugin:';
+$lang['components']       = 'Komponenter';
+$lang['noinfo']           = 'Dette plugin gav ingen information, det kan være fejlagtigt.';
+$lang['name']             = 'Navn:';
+$lang['date']             = 'Dato:';
+$lang['type']             = 'Type:';
+$lang['desc']             = 'Beskrivelse:';
+$lang['author']           = 'Programmør:';
+$lang['www']              = 'Web:';
+    
+// error messages
+$lang['error']            = 'En ukendt fejl opstod.';
+$lang['error_download']   = 'Kunne ikke downloade plugin filen: %s';
+$lang['error_badurl']     = 'Muligvis dårlig webadresse - kunne ikke hente filnavn fra adressen';
+$lang['error_dircreate']  = 'Kunne ikke oprette midlertidig mappe til download';
+
+//Setup VIM: ex: et ts=4 enc=utf-8 :

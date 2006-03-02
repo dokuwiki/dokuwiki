@@ -17,3 +17,25 @@ $lang['nochoice']   = '(ingen andre valgmuligheder)';
 $lang['locked']     = 'Indstillingsfilen kunne ikke opdateres, hvis dette er en fejl, <br />
                        sørg da for at den lokale indstillingsfils navn og rettigheder er korrekte.';
 
+/* userewrite options */
+$lang['userewrite_o_0'] = 'ingen';
+$lang['userewrite_o_1'] = 'htaccess';
+$lang['userewrite_o_2'] = 'dokuwiki';
+
+/* gdlib options */
+$lang['gdlib_o_0'] = 'GD Lib ikke tilstede';
+$lang['gdlib_o_1'] = 'version 1.x';
+$lang['gdlib_o_2'] = 'automatisk detektering';
+
+/* rss_type options */
+$lang['rss_type_o_rss']  = 'RSS 0.91';
+$lang['rss_type_o_rss1'] = 'RSS 1.0';
+$lang['rss_type_o_rss2'] = 'RSS 2.0';
+$lang['rss_type_o_atom'] = 'Atom 0.3';
+
+/* rss_linkto options */
+$lang['rss_linkto_o_diff']    = 'liste over forskelle';
+$lang['rss_linkto_o_page']    = 'den redigerede side';
+$lang['rss_linkto_o_rev']     = 'liste over ændringer';
+$lang['rss_linkto_o_current'] = 'den nuværende side';
+
