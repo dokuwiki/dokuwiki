@@ -158,6 +158,7 @@ class ap_manage {
           ptln('<div class="pm_menu">');
 
           ptln('<div class="common">');
+          ptln('  <h2>'.$this->lang['download'].'</h2>');
           ptln('  <form action="'.wl($ID).'" method="post">');
           ptln('    <fieldset class="hidden">',4);
           ptln('      <input type="hidden" name="do"   value="admin" />');
@@ -165,9 +166,8 @@ class ap_manage {
           ptln('    </fieldset>');
           ptln('    <fieldset>');
           ptln('      <legend>'.$this->lang['download'].'</legend>');
-          ptln('      <h3 class="legend">'.$this->lang['download'].'</h3>');
+          ptln('      <label for="dw__url">'.$this->lang['url'].'<input name="url" id="dw__url" class="edit" type="text" maxlength="200" /></label>');
           ptln('      <input type="submit" class="button" name="fn[download]" value="'.$this->lang['btn_download'].'" />');
-          ptln('      <label for="dw__url">'.$this->lang['url'].'<input name="url" id="dw__url" class="field" type="text" maxlength="200" /></label>');
           ptln('    </fieldset>');
           ptln('  </form>');
           ptln('</div>');
@@ -190,9 +190,9 @@ class ap_manage {
             $new = (in_array($plugin, $this->downloaded)) ? ' class="new"' : '';
 
             ptln('  <form action="'.wl($ID).'" method="post" '.$new.'>');
-            ptln('    <h3 class="legend">'.$plugin.'</h3>');
             ptln('    <fieldset>');
             ptln('      <legend>'.$plugin.'</legend>');
+            ptln('      <h3 class="legend">'.$plugin.'</h3>');
             ptln('      <input type="hidden" name="do"     value="admin" />');
             ptln('      <input type="hidden" name="page"   value="plugin" />');
             ptln('      <input type="hidden" name="plugin" value="'.$plugin.'" />');
