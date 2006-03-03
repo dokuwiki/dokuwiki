@@ -173,11 +173,11 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      </tr>");
 
         ptln("      <tr>");
-        ptln("        <td colspan=\"2\" style=\"vertical-align:middle; text-align:right;\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"userid\" value=\"".$this->_htmlFilter('user')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"username\" value=\"".$this->_htmlFilter('name')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"usermail\" value=\"".$this->_htmlFilter('mail')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"usergroups\" value=\"".$this->_htmlFilter('grps')."\" /></td>");
+        ptln("        <td colspan=\"2\" class=\"rightalign\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"userid\" class=\"edit\" value=\"".$this->_htmlFilter('user')."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"username\" class=\"edit\" value=\"".$this->_htmlFilter('name')."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"usermail\" class=\"edit\" value=\"".$this->_htmlFilter('mail')."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"usergroups\" class=\"edit\" value=\"".$this->_htmlFilter('grps')."\" /></td>");
         ptln("      </tr>");
         ptln("    </thead>");
 
@@ -186,7 +186,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           foreach ($user_list as $user => $userinfo) {
             extract($userinfo);
             $groups = join(', ',$grps);
-            ptln("    <tr valign=\"top\" align=\"left\">");
+            ptln("    <tr class=\"user_info\">");
             ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".$user."]\" ".$delete_disable." /></td>");
             ptln("      <td class=\"centeralign\"><input type=\"image\" name=\"fn[edit][".$user."]\" ".$edit_disable." src=\"".DOKU_PLUGIN_IMAGES.$img_useredit."\" title=\"".$this->lang['edit_prompt']."\" alt=\"".$this->lang['edit']."\"/></td>");
             ptln("      <td>".hsc($user)."</td><td>".hsc($name)."</td><td>".hsc($mail)."</td><td>".hsc($groups)."</td>");
@@ -196,17 +196,17 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         ptln("    <tbody>");
-        ptln("      <tr><td colspan=\"6\" style=\"text-align:center\">");
-        ptln("        <span style=\"float:left\">");
-        ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." value=\"".$this->lang['delete_selected']."\" id=\"usrmgr__del\" />");
+        ptln("      <tr><td colspan=\"6\" class=\"centeralign\">");
+        ptln("        <span class=\"medialeft\">");
+        ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." class=\"button\" value=\"".$this->lang['delete_selected']."\" id=\"usrmgr__del\" />");
         ptln("        </span>");
-        ptln("        <span style=\"float:right\">");
-        ptln("          <input type=\"submit\" name=\"fn[start]\" ".$page_buttons['start']." value=\"".$this->lang['start']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev']." value=\"".$this->lang['prev']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[next]\" ".$page_buttons['next']." value=\"".$this->lang['next']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[last]\" ".$page_buttons['last']." value=\"".$this->lang['last']."\" />");
+        ptln("        <span class=\"mediaright\">");
+        ptln("          <input type=\"submit\" name=\"fn[start]\" ".$page_buttons['start']." class=\"button\" value=\"".$this->lang['start']."\" />");
+        ptln("          <input type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev']." class=\"button\" value=\"".$this->lang['prev']."\" />");
+        ptln("          <input type=\"submit\" name=\"fn[next]\" ".$page_buttons['next']." class=\"button\" value=\"".$this->lang['next']."\" />");
+        ptln("          <input type=\"submit\" name=\"fn[last]\" ".$page_buttons['last']." class=\"button\" value=\"".$this->lang['last']."\" />");
         ptln("        </span>");
-        ptln("        <input type=\"submit\" name=\"fn[search][clear]\" value=\"".$this->lang['clear']."\" />");
+        ptln("        <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
         ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
         ptln("      </td></tr>");
@@ -218,7 +218,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("</form>");
         ptln("</div>");
 
-        $style = $this->_edit_user ? " style=\"width: 46%; float: left;\"" : "";
+        $style = $this->_edit_user ? " class=\"edit_user\"" : "";
 
         if ($this->_auth->canDo('addUser')) {
           ptln("<div".$style.">");
@@ -282,7 +282,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           
         $this->_htmlFilterSettings($indent+10);
 
-        ptln("          <input type=\"submit\" name=\"fn[".$cmd."]\" value=\"".$this->lang[$cmd]."\" />",$indent);
+        ptln("          <input type=\"submit\" name=\"fn[".$cmd."]\" class=\"button\" value=\"".$this->lang[$cmd]."\" />",$indent);
         ptln("        </td>",$indent);
         ptln("      </tr>",$indent);
         ptln("    </tbody>",$indent);
@@ -293,7 +293,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
         $disabled = $cando ? "" : " disabled=\"disabled\"";
         $class = $cando ? "" : " class=\"disabled\"";
-        ptln("<tr".$class."><td><label for=\"".$id."\" >".$label." : </label></td><td><input type=\"text\" id=\"".$id."\" name=\"".$name."\" value=\"".$value."\"".$disabled." /></td></tr>",$indent);
+        ptln("<tr".$class."><td><label for=\"".$id."\" >".$label.": </label></td><td><input type=\"text\" id=\"".$id."\" name=\"".$name."\" value=\"".$value."\"".$disabled." class=\"edit\" /></td></tr>",$indent);
     }
 
     function _htmlFilter($key) {

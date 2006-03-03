@@ -1,6 +1,12 @@
 /* User Manager specific styles */
-.disabled {
+tr.disabled {
   color: #6f6f6f;
-	background: #e4e4e4;
+  background: #e4e4e4;
 }
-
+tr.user_info {
+  vertical-align: top;
+}
+div.edit_user {
+  width: 46%;
+  float: left;
+}
