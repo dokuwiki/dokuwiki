@@ -728,6 +728,7 @@ div.dokuwiki div#spell__suggest {
   padding: 2px;
   border: 1px solid __black__;
   font-size:80%;
+  display: none;
 }
 
 div.dokuwiki div#spell__result {
@@ -736,6 +737,7 @@ div.dokuwiki div#spell__result {
   font-size:14px;
   padding: 3px;
   background-color: __lighter__;
+  display: none;
 }
 
 div.dokuwiki span.spell_noerr {
