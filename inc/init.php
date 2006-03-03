@@ -128,7 +128,8 @@ function init_paths(){
   foreach($paths as $c => $p){
     if(!$conf[$c])   $conf[$c] = $conf['savedir'].'/'.$p;
     $conf[$c]        = init_path($conf[$c]);
-    if(!$conf[$c])   die("$c does not exist, isn't accessable or writable. Check config and permissions!");
+    if(!$conf[$c])   nice_die("The $c does not exist, isn't accessable or writable.
+                               Check your config and permission settings!");
   }
 }
 
@@ -149,7 +150,7 @@ function init_files(){
         fclose($fh);
         if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
       }else{
-        die("$file is not writable. Check permissions!");
+        nice_die("$file is not writable. Check your permissions settings!");
       }
     }
   }
@@ -282,7 +283,7 @@ function scriptify($file) {
   }
   $fh = fopen($fn, 'w');
   if (!$fh) {
-    die($fn.' is not writable!');
+    nice_die($fn.' is not writable. Check your permission settings!');
   }
   // write php exit hack first
   fwrite($fh, "# $fn\n");
@@ -297,6 +298,27 @@ function scriptify($file) {
   fclose($fh);
   //try to rename the old file
   @rename($file,"$file.old");
+}
+
+/**
+ * print a nice message even if no styles are loaded yet.
+ */
+function nice_die($msg){
+  echo<<<EOT
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+  <html>
+    <head><title>DokuWiki Setup Error</title></head>
+    <body style="font-family: Arial, sans-serif">
+      <div style="width:60%; margin: auto; background-color: #fcc;
+                  border: 1px solid #faa; padding: 0.5em 1em;">
+      <h1 style="font-size: 120%">DokuWiki Setup Error</h1>
+      <p>$msg</p>
+      </div>
+    </body>
+  </html>
+EOT;
+  exit;
 }
 
 

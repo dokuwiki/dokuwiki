@@ -33,10 +33,10 @@
           $conf['useacl'] = 0;
         }
       } else {
-        die($lang['authmodfailed']);
+        nice_die($lang['authmodfailed']);
       }
     } else {
-      die($lang['authmodfailed']);
+      nice_die($lang['authmodfailed']);
     }
   }
 
