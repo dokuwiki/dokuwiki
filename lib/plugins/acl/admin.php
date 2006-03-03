@@ -289,7 +289,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
       ptln('<td class="centeralign" colspan="3">',4);
 
-      ptln('  <form method="post" action="'.wl($ID).'">',4);
+      ptln('  <form method="post" action="'.wl($ID).'"><div class="no">',4);
       ptln('    <input type="hidden" name="do"   value="admin" />',4);
       ptln('    <input type="hidden" name="page" value="acl" />',4);
       ptln('    <input type="hidden" name="acl_cmd" value="save" />',4);
@@ -316,7 +316,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       ptln(     $this->admin_acl_html_checkboxes(0,false),8);
 
       ptln('    <input type="submit" class="edit" value="'.$lang['btn_save'].'" />',4);
-      ptln('  </form>');
+      ptln('  </div></form>');
       ptln('</td>',4);
       ptln('</tr>',2);
     }
@@ -371,7 +371,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         // update form
         ptln('<td class="centeralign">',4);
-        ptln('  <form method="post" action="'.wl($ID).'">',4);
+        ptln('  <form method="post" action="'.wl($ID).'"><div class="no">',4);
         ptln('    <input type="hidden" name="do"   value="admin" />',4);
         ptln('    <input type="hidden" name="page" value="acl" />',4);
         ptln('    <input type="hidden" name="acl_cmd"   value="save" />',4);
@@ -380,7 +380,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
         ptln(     $this->admin_acl_html_checkboxes($conf['perm'],$ispage),8);
         ptln('    <input type="submit" class="edit" value="'.$lang['btn_update'].'" />',4);
-        ptln('  </form>');
+        ptln('  </div></form>');
         ptln('</td>',4);
 
 
@@ -389,7 +389,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $ask  = $lang['del_confirm'].'\\n';
         $ask .= $id.'  '.$conf['name'].'  '.$conf['perm'];
         ptln('<td class="centeralign">',4);
-        ptln('  <form method="post" action="'.wl($ID).'" onsubmit="return confirm(\''.str_replace('\\\\n','\\n',addslashes($ask)).'\')">',4);
+        ptln('  <form method="post" action="'.wl($ID).'" onsubmit="return confirm(\''.str_replace('\\\\n','\\n',addslashes($ask)).'\')"><div class="no">',4);
         ptln('    <input type="hidden" name="do"        value="admin" />',4);
         ptln('    <input type="hidden" name="page"      value="acl" />',4);
         ptln('    <input type="hidden" name="acl_cmd"   value="delete" />',4);
@@ -397,7 +397,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
         ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
         ptln('    <input type="submit" class="edit" value="'.$lang['btn_delete'].'" />',4);
-        ptln('  </form>',4);
+        ptln('  </div></form>',4);
         ptln('</td>',4);
 
         ptln('</tr>',2);
