@@ -101,11 +101,11 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       ptln('<div id="config__manager">');
 
       if ($this->_config->locked)
-        ptln('<p class="info">'.$this->getLang('locked').'</p>');
+        ptln('<div class="info">'.$this->getLang('locked').'</div>');
       elseif ($this->_error)
-        ptln('<p class="error">'.$this->getLang('error').'</p>');
+        ptln('<div class="error">'.$this->getLang('error').'</div>');
       elseif ($this->_changed)
-        ptln('<p class="ok">'.$this->getLang('updated').'</p>');
+        ptln('<div class="success">'.$this->getLang('updated').'</div>');
 
       ptln('<form action="'.wl($ID).'" method="post">');
       ptln('  <table class="inline">');
@@ -131,8 +131,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
       if (!$this->_config->locked) {
         ptln('  <input type="hidden" name="save"   value="1" />');
-        ptln('  <input type="submit" name="submit" value="'.$lang['btn_save'].'" />');
-        ptln('  <input type="reset" value="'.$lang['btn_reset'].'" />');
+        ptln('  <input type="submit" name="submit" class="button" value="'.$lang['btn_save'].'" />');
+        ptln('  <input type="reset" class="button" value="'.$lang['btn_reset'].'" />');
       }
 
       ptln('</p>');

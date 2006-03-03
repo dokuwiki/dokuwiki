@@ -1,12 +1,17 @@
 /* plugin:configmanager */
 #config__manager {margin: 1em;}
-#config__manager p.error {border: 1px solid red; background-color: #c66; color: white; padding: 0.5em; text-align:center}
-#config__manager p.ok {border: 1px solid green; background-color: #6c6; color: black; padding: 0.5em; text-align:center}
-#config__manager p.info {border: 1px solid __dark__; background-color: __medium__; color: black; padding: 0.5em; text-align:center}
+#config__manager div.success,
+#config__manager div.error,
+#config__manager div.info {
+  background-position: 0.5em;
+  padding: 0.5em;
+  text-align:center
+}
+
 #config__manager form { }
 #config__manager table {margin: 1em 0;}
-#config__manager td input.text {width: 30em; border: 1px solid __medium__;}
-#config__manager td select {border: 1px solid __medium__;}
+#config__manager td input.edit {width: 30em;}
+#config__manager td select.edit {}
 
 #config__manager tr.default .input,
 #config__manager tr.default input,

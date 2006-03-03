@@ -324,7 +324,7 @@ if (!class_exists('setting')) {
         $value = htmlspecialchars($value);
 
         $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="text" class="text" value="'.$value.'" '.$disable.'/>';
+        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
         return array($label,$input);
     }
 
@@ -387,7 +387,7 @@ if (!class_exists('setting_password')) {
         $key = htmlspecialchars($this->_key);
 
         $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="password" class="text" value="" '.$disable.'/>';
+        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="password" class="edit" value="" '.$disable.'/>';
         return array($label,$input);
     }
   }
@@ -485,7 +485,7 @@ if (!class_exists('setting_mulitchoice')) {
         $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
 
         $input = "<div class=\"input\">\n";
-        $input .= '<select id="config__'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";
+        $input .= '<select class="edit" id="config__'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";
         foreach ($this->_choices as $choice) {
             $selected = ($value == $choice) ? ' selected="selected"' : '';
             $option = $plugin->getLang($this->_key.'_o_'.$choice);
