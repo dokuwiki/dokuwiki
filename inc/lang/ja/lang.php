@@ -3,7 +3,10 @@
  * japanese language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Davilin(Yuji Takenaka) <webmaster@davilin.com>
+ * @author     Yuji Takenaka <webmaster@davilin.com>
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author     Anika Henke <henke@cosmocode.de>
+ * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -34,16 +37,23 @@ $lang['btn_backlink']    = "バックリンク";
 $lang['btn_backtomedia'] = 'メディアファイル選択に戻る';
 $lang['btn_subscribe']   = '変更履歴配信の登録';
 $lang['btn_unsubscribe'] = '変更履歴配信の解除';
+$lang['btn_profile']    = 'ユーザー情報の更新';
+$lang['btn_reset']     = 'リセット';
+$lang['btn_resendpwd'] = 'パスワードの再発行';
 
 $lang['loggedinas'] = 'ようこそ';
 $lang['user']       = 'ユーザー名';
 $lang['pass']       = 'パスワード';
+$lang['newpass']    = '新しいパスワード';
+$lang['oldpass']    = '現在のパスワード';
 $lang['passchk']    = '確認';
 $lang['remember']   = 'ユーザー名とパスワードを記憶する';
 $lang['fullname']   = 'フルネーム';
-$lang['email']      = 'E-Mail';
+$lang['email']      = 'メールアドレス';
 $lang['register']   = 'ユーザー登録';
+$lang['profile']    = 'ユーザー情報';
 $lang['badlogin']   = 'ユーザー名かパスワードが違います。';
+$lang['minoredit']  = '小変更';
 
 $lang['regmissing'] = '全ての項目を入力してください。';
 $lang['reguexists'] = 'このユーザー名は既に存在しています。';
@@ -55,15 +65,26 @@ $lang['regbadpass'] = '確認用のパスワードが正しくありません。
 $lang['regpwmail']  = 'あなたの DokuWiki パスワード';
 $lang['reghere']    = 'ご自分用のアカウントを取ってみては如何ですか？';
 
+$lang['profna']       = 'ユーザー情報の変更は出来ません';
+$lang['profnochange'] = '変更点はありませんでした。';
+$lang['profnoempty']  = 'ユーザー名とメールアドレスを入力して下さい。';
+$lang['profchanged']  = 'ユーザー情報は更新されました。';
+
+$lang['pwdforget'] = 'パスワードをお忘れですか？パスワード再発行';
+$lang['resendna']  = 'パスワードの再発行は出来ません。';
+$lang['resendpwd'] = '新しいパスワードを送信します：';
+$lang['resendpwdmissing'] = '全ての項目を入力して下さい。';
+$lang['resendpwdnouser']  = '入力されたユーザーが見つかりませんでした。';
+$lang['resendpwdsuccess'] = '新しいパスワードがメールで送信されました。';
+
 $lang['txt_upload']   = 'アップロードするファイルを選んでください。';
-$lang['txt_filename'] = 'Wiki名を入力（オプション）';
+$lang['txt_filename'] = '名前を変更してアップロード（オプション）';
 $lang['txt_overwrt']  = '既存のファイルを上書き';
 $lang['lockedby']     = 'この文書は次のユーザによってロックされています';
-$lang['lockexpire']   = '排他期限';
+$lang['lockexpire']   = '排他期限：';
 $lang['willexpire']   = '編集中の文書は排他期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行ってロックタイマーをリセットしてください。';
 
 $lang['notsavedyet'] = '変更は保存されません。このまま処理を続けてよろしいですか？';
-
 $lang['rssfailed']   = 'RSSの取り出しに失敗しました：';
 $lang['nothingfound']= '該当文書はありませんでした。';
 
@@ -91,6 +112,7 @@ $lang['yours']      = 'あなたのバージョン';
 $lang['diff']       = '現在のバージョンとの差分を表示';
 $lang['line']       = 'ライン';
 $lang['breadcrumb'] = 'トレース';
+$lang['youarehere'] = '現在位置';
 $lang['lastmod']    = '最終更新';
 $lang['by']         = 'by';
 $lang['deleted']    = '削除';
@@ -121,9 +143,11 @@ $lang['qb_ol']      = '記号付きリスト';
 $lang['qb_ul']      = '記号なしリスト';
 $lang['qb_media']   = 'イメージやファイルの追加';
 $lang['qb_sig']     = '署名の挿入';
+$lang['qb_smileys'] = 'スマイリー';
+$lang['qb_chars']   = '特殊文字';
 
-$lang['del_confirm']= 'エントリを削除しますか？';
-$lang['admin_register']= '新規ユーザー登録';
+$lang['del_confirm']= '選択した項目を本当に削除しますか？';
+$lang['admin_register']= '新規ユーザー作成';
 
 $lang['spell_start'] = 'スペルチェック';
 $lang['spell_stop']  = '再開';
@@ -152,5 +176,9 @@ $lang['subscribe_error']    = '変更履歴配信の登録に失敗しました�
 $lang['subscribe_noaddress']= 'ログインしていないため、変更履歴配信に登録することはできません。';
 $lang['unsubscribe_success']= '変更履歴配信の解除が完了しました。';
 $lang['unsubscribe_error']  = '変更履歴配信の解除に失敗しました。';
+
+/* auth.class language support */
+$lang['authmodfailed']   = 'ユーザー認証の設定が正しくありません。Wikiの管理者に連絡して下さい。';
+$lang['authtempfail']    = 'ユーザー認証が一時的に使用できなくなっています。この状態が続いているようであれば、Wikiの管理者に連絡して下さい。';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
