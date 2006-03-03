@@ -9,6 +9,13 @@
  */
 
 if(!defined('PUN_ROOT')) define('PUN_ROOT', DOKU_INC.'../forum/');
+if(get_magic_quotes_gpc()){
+  nice_die('Sorry the punbb auth backend requires the PHP option
+  <a href="http://www.php.net/manual/en/ref.info.php#ini.magic-quotes-gpc">magic_quotes_gpc</a>
+  to be disabled for proper operation. Either setup your PHP install accordingly or
+  choose a different auth backend.');
+}
+
 require_once PUN_ROOT.'include/common.php';
 require_once DOKU_INC.'inc/auth/mysql.class.php';
 

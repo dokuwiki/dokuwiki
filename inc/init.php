@@ -60,13 +60,14 @@
   }
 
   // kill magic quotes
-  if (get_magic_quotes_gpc()) {
+  if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
     if (!empty($_GET))    remove_magic_quotes($_GET);
     if (!empty($_POST))   remove_magic_quotes($_POST);
     if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
     if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
     if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
     @ini_set('magic_quotes_gpc', 0);
+    define('MAGIC_QUOTES_STRIPPED',1);
   }
   @set_magic_quotes_runtime(0);
   @ini_set('magic_quotes_sybase',0);
