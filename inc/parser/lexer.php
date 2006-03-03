@@ -549,8 +549,8 @@ class Doku_Lexer {
 function Doku_Lexer_Escape($str) {
     //$str = addslashes($str);
     $chars = array(
-        '/\./',
         '/\\\\/',
+        '/\./',
         '/\+/',
         '/\*/',
         '/\?/',
@@ -569,8 +569,8 @@ function Doku_Lexer_Escape($str) {
         );
 
     $escaped = array(
-        '\.',
         '\\\\\\\\',
+        '\.',
         '\+',
         '\*',
         '\?',
