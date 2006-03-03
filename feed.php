@@ -41,20 +41,20 @@
        $type = 'RSS1.0';
   }
 
-	// the feed is dynamic - we need a cache for each combo
+  // the feed is dynamic - we need a cache for each combo
   // (but most people just use the default feed so it's still effective)
-	$cache = getCacheName($num.$type.$mode.$ns.$ltype.$_SERVER['REMOTE_USER'],'.feed');
+  $cache = getCacheName($num.$type.$mode.$ns.$ltype.$_SERVER['REMOTE_USER'],'.feed');
 
-	// check cacheage and deliver if nothing has changed since last
+  // check cacheage and deliver if nothing has changed since last
   // time (with 5 minutes settletime)
-	$cmod = @filemtime($cache); // 0 if not exists
-	if($cmod && ($cmod+(5*60) >= @filemtime($conf['changelog']))){
-  	header('Content-Type: application/xml; charset=utf-8');
-		print io_readFile($cache);
-		exit;
+  $cmod = @filemtime($cache); // 0 if not exists
+  if($cmod && ($cmod+(5*60) >= @filemtime($conf['changelog']))){
+    header('Content-Type: application/xml; charset=utf-8');
+    print io_readFile($cache);
+    exit;
   }
 
-	// create new feed
+  // create new feed
   $rss = new DokuWikiFeedCreator();
   $rss->title = $conf['title'].(($ns) ? ' '.$ns : '');
   $rss->link  = DOKU_URL;
@@ -74,11 +74,11 @@
   }
 
   $feed = $rss->createFeed($type,'utf-8');
-	
-  // save cachefile
-	io_saveFile($cache,$feed);
 
-	// finally deliver
+  // save cachefile
+  io_saveFile($cache,$feed);
+
+  // finally deliver
   header('Content-Type: application/xml; charset=utf-8');
   print $feed;
 
@@ -97,7 +97,7 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
   $guardmail = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
 
-	$flags = RECENTS_SKIP_DELETED;
+  $flags = RECENTS_SKIP_DELETED;
   if(!$minor) $flags += RECENTS_SKIP_MINORS;
 
   $recents = getRecents(0,$num,$ns,$flags);
@@ -105,12 +105,12 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
   //this can take some time if a lot of recaching has to be done
   @set_time_limit(90); // set max execution time
 
-	foreach($recents as $recent){
+  foreach($recents as $recent){
 
     $item = new FeedItem();
     $item->title = $recent['id'];
     $xhtml = p_wiki_xhtml($recent['id'],'',false);
-    
+
     if($conf['useheading']) {
         $matches = array();
         if(preg_match('|<h([1-9])>(.*?)</h\1>|', $xhtml, $matches))
@@ -142,13 +142,13 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
 
     $item->description = $desc;
     $item->date        = date('r',$recent['date']);
-		$cat = getNS($recent['id']);
-		if($cat) $item->category = $cat;
-    
+    $cat = getNS($recent['id']);
+    if($cat) $item->category = $cat;
+
     $user = null;
     $user = @$recent['user']; // the @ spares time repeating lookup
     $item->author = '';
-    
+
     if($user){
       $userInfo = $auth->getUserData($user);
       $item->author = $userInfo['name'];
@@ -199,7 +199,7 @@ function rssListNamespace(&$rss,$ns){
     $item->description = $desc;
     $item->date        = date('r',$date);
     $rss->addItem($item);
-  }  
+  }
 }
 
 /**

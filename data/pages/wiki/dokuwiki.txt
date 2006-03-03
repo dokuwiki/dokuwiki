@@ -12,34 +12,47 @@ DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
 
 All documentation and additional information besides the [[syntax|syntax description]] is maintained in the DokuWiki at [[doku>wiki:dokuwiki|wiki.splitbrain.org]].
 
-  * [[doku>wiki:news|News and Announcements]]
-  * [[doku>wiki:features|Features]]
-  * [[doku>wiki:requirements|System Requirements]]
-  * [[doku>wiki:compatibility|Browser Compatibility]]
-  * [[doku>wiki:Install|How to install or upgrade]]
-  * [[doku>wiki:config|Configuration]]
-  * [[doku>wiki:FAQ|Frequently Asked Questions (FAQ)]]
-  * [[doku>wiki:accesskeys|Accesskeys]]
+**About DokuWiki**
 
-  * [[doku>wiki:discussion:discussion|Discussion]]
-  * [[doku>wiki:users|DokuWiki Users]]
-  * [[doku>wiki:compare|Wiki Engine Comparison]]
-  * [[doku>wiki:experiences|Experiences]]
-  * [[doku>wiki:tips|Tips and Tricks]]
-  * [[doku>wiki:tpl:templates|Templates]] and [[doku>wiki:plugins|Plugins]]
+  * [[doku>wiki:features|A feature list]] :!:
+  * [[doku>wiki:users|Happy Users]]
+  * [[doku>wiki:press|Who wrote about it]]
+  * [[doku>wiki:blogroll|What Bloggers think]]
+  * [[http://www.wikimatrix.org/show/DokuWiki|Compare it with other wiki software]]
+
+**Installing DokuWiki**
+
+  * [[doku>wiki:requirements|System Requirements]]
+  * [[http://www.splitbrain.org/go/dokuwiki|Download DokuWiki]] :!:
+  * [[doku>wiki:changes|Change Log]]
+  * [[doku>wiki:Install|How to install or upgrade]] :!:
+  * [[doku>wiki:config|Configuration]]
+
+**Using DokuWiki**
+
+  * [[wiki:syntax|Wiki Syntax]]
+  * [[doku>wiki:manual|The manual]] :!:
+  * [[doku>wiki:FAQ|Frequently Asked Questions (FAQ)]]
   * [[doku>wiki:glossary|Glossary]]
 
-  * [[http://bugs.splitbrain.org/index.php?project=1|Bugs and feature wishes]]
-  * [[doku>wiki:mailinglist|Mailing List]]
+**Customizing DokuWiki**
 
-  * [[doku>wiki:todo|ToDo List]]
+  * [[doku>wiki:tips|Tips and Tricks]]
+  * [[doku>wiki:tpl:templates|How to create and use templates]]
+  * [[doku>wiki:plugins|Installing plugins]]
   * [[doku>wiki:development|Development Resources]]
-  * [[doku>wiki:changes|Change Log]]
-  * [[doku>wiki:thanks|Thanks]]
+
+**DokuWiki Feedback**
+
+  * [[doku>wiki:mailinglist|Join the mailing list]] :!:
+  * [[http://bugs.splitbrain.org/index.php?project=1|Submit bugs and feature wishes]]
+  * [[doku>wiki:discussion:discussion|The discussion pages]]
+  * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
+  * [[doku>wiki:thanks|Some humble thanks]]
 
 ===== Copyright =====
 
-2004-2005 (c) Andreas Gohr <andi@splitbrain.org>
+2004-2006 (c) Andreas Gohr <andi@splitbrain.org>
 
 The DokuWiki engine is licensed under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider donating a few bucks to me via [[https://www.paypal.com/xclick/business=andi%40splitbrain.org&amp;item_name=DokuWiki+Donation&amp;no_shipping=1&amp;no_note=1&amp;tax=0&amp;currency_code=EUR&amp;lc=US|PayPal]] ;-).
 
