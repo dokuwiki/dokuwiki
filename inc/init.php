@@ -128,39 +128,62 @@ function init_paths(){
   foreach($paths as $c => $p){
     if(!$conf[$c])   $conf[$c] = $conf['savedir'].'/'.$p;
     $conf[$c]        = init_path($conf[$c]);
-    if(!$conf[$c])   die("$c does not exist or isn't writable. Check config!");
+    if(!$conf[$c])   die("$c does not exist, isn't accessable or writable. Check config and permissions!");
   }
 }
 
 /**
- * Checks the existance of certain files and creates them if missing
+ * Checks the existance of certain files and creates them if missing.
  */
 function init_files(){
   global $conf;
+
   $files = array( $conf['cachedir'].'/word.idx',
                   $conf['cachedir'].'/page.idx',
-                  $conf['cachedir'].'/index.idx', );
+                  $conf['cachedir'].'/index.idx');
 
   foreach($files as $file){
     if(!@file_exists($file)){
-      $fh = fopen($file,'a');
-      fclose($fh);
-      if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
+      $fh = @fopen($file,'a');
+      if($fh){
+        fclose($fh);
+        if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
+      }else{
+        die("$file is not writable. Check permissions!");
+      }
     }
   }
 }
 
 /**
- * returns absolute path
+ * Returns absolute path
  *
- * This tries the given path first, then checks in DOKU_INC
+ * This tries the given path first, then checks in DOKU_INC.
+ * Check for accessability on directories as well.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function init_path($path){
+  // check existance
   $p = realpath($path);
-  if(@file_exists($p)) return $p;
-  $p = realpath(DOKU_INC.$path);
-  if(@file_exists($p)) return $p;
-  return '';
+  if(!@file_exists($p)){
+    $p = realpath(DOKU_INC.$path);
+    if(!@file_exists($p)){
+      return '';
+    }
+  }
+
+  // check writability
+  if(!@is_writable($p)){
+    return '';
+  }
+
+  // check accessability (execute bit) for directories
+  if(@is_dir($p) && !@file_exists("$p/.")){
+    return '';
+  }
+
+  return $p;
 }
 
 /**

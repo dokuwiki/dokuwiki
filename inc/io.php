@@ -206,7 +206,7 @@ function io_makeFileDir($file){
   global $conf;
 
   $dir = dirname($file);
-  if(!is_dir($dir)){
+  if(!@is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
   }
 }
@@ -220,7 +220,7 @@ function io_makeFileDir($file){
  */
 function io_mkdir_p($target){
   global $conf;
-  if (is_dir($target)||empty($target)) return 1; // best case check first
+  if (@is_dir($target)||empty($target)) return 1; // best case check first
   if (@file_exists($target) && !is_dir($target)) return 0;
   //recursion
   if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
