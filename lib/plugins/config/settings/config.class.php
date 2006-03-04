@@ -350,8 +350,8 @@ if (!class_exists('setting')) {
 
     function prompt(&$plugin) {
       $prompt = $plugin->getLang($this->_key);
-      if (!$prompt) $prompt = str_replace(array('____','_'),' ',$this->_key);
-      return htmlspecialchars($prompt);
+      if (!$prompt) $prompt = htmlspecialchars(str_replace(array('____','_'),' ',$this->_key));
+      return $prompt;
     }
 
     function is_protected() { return !is_null($this->_protected); }
