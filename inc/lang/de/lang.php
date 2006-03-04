@@ -76,14 +76,14 @@ $lang['resendna']      = 'Passwörter versenden ist in diesem Wiki nicht möglic
 $lang['resendpwd']      = 'Neues Passwort schicken für';
 $lang['resendpwdmissing'] = 'Es tut mir Leid, aber Sie müssen alle Felder ausfüllen.';
 $lang['resendpwdnouser']  = 'Es tut mir Leid, aber der Benutzer existiert nicht in unserer Datenbank.';
-$lang['resendpwdsuccess'] = 'Ihr neues Passwort wurde per E-Mail versand.';
+$lang['resendpwdsuccess'] = 'Ihr neues Passwort wurde per E-Mail versandt.';
 
 $lang['txt_upload']   = 'Datei zum Hochladen auswählen';
 $lang['txt_filename'] = 'Wikinamen eingeben (optional)';
 $lang['txt_overwrt']  = 'Bestehende Datei überschreiben';
 $lang['lockedby']     = 'Momentan gesperrt von';
 $lang['lockexpire']   = 'Sperre läuft ab am';
-$lang['willexpire']   = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
+$lang['willexpire']   = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
 
 $lang['notsavedyet'] = 'Nicht gespeicherte Änderungen gehen verloren!\nWeitermachen?';
 $lang['rssfailed']   = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
@@ -103,7 +103,7 @@ $lang['mediafiles']  = 'Vorhandene Dateien in';
 
 $lang['reference']   = 'Verwendung von';
 $lang['ref_inuse']   = 'Diese Datei kann nicht gelöscht werden, da sie noch von folgenden Seiten benutzt wird:';
-$lang['ref_hidden']  = 'Einige Verweise sind auf Seiten für die Sie keine Leseberechtigung haben.';
+$lang['ref_hidden']  = 'Einige Verweise sind auf Seiten, für die Sie keine Leseberechtigung haben.';
 
 $lang['hits']       = 'Treffer';
 $lang['quickhits']  = 'Passende Seitennamen';
