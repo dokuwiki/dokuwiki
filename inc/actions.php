@@ -283,7 +283,7 @@ function act_export($act){
     tpl_metaheaders();
     ptln('</head>');
     ptln('<body>');
-    ptln('<div class="dokuwiki">');
+    ptln('<div class="dokuwiki export">');
     print p_wiki_xhtml($ID,$REV,false);
     ptln('</div>');
     ptln('</body>');

@@ -15,11 +15,11 @@
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>" lang="<?php echo $conf['lang']?>" dir="ltr">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>
      <?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?>
     [<?php echo hsc($conf['title'])?>]
   </title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <?php tpl_metaheaders()?>
 
@@ -31,27 +31,27 @@
   <?php html_msgarea()?>
 
   <div class="page">
-	  <?php if($ERROR){ print $ERROR; }else{ ?>
+    <?php if($ERROR){ print $ERROR; }else{ ?>
 
-	  <h1><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?></h1>
+    <h1><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?></h1>
 
-	  <div class="img_big">
-	  	<?php tpl_img(900,700) ?>
-	  </div>
+    <div class="img_big">
+      <?php tpl_img(900,700) ?>
+    </div>
 
-		<div class="img_detail">
-		  <p class="img_caption">
-			  <?php print nl2br(hsc(tpl_img_getTag(array('IPTC.Caption',
+    <div class="img_detail">
+      <p class="img_caption">
+        <?php print nl2br(hsc(tpl_img_getTag(array('IPTC.Caption',
                                                'EXIF.UserComment',
                                                'EXIF.TIFFImageDescription',
                                                'EXIF.TIFFUserComment')))); ?>
-	  	</p>
+      </p>
 
       <p>&larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?></p>
 
       <dl class="img_tags">
         <?php
-					$t = tpl_img_getTag('Date.EarliestTime');
+          $t = tpl_img_getTag('Date.EarliestTime');
           if($t) print '<dt>'.$lang['img_date'].':</dt><dd>'.date($conf['dformat'],$t).'</dd>';
 
           $t = tpl_img_getTag('File.Name');
@@ -78,7 +78,7 @@
         ?>
       </dl>
       <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
-		</div>
+    </div>
 
   <?php } ?>
   </div>

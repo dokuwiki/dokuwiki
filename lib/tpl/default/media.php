@@ -15,8 +15,8 @@
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>" lang="<?php echo $conf['lang']?>" dir="ltr">
 <head>
-  <title><?php echo hsc($lang['mediaselect'])?> [<?php echo hsc($conf['title'])?>]</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title><?php echo hsc($lang['mediaselect'])?> [<?php echo hsc($conf['title'])?>]</title>
 
   <?php tpl_metaheaders()?>
 
@@ -35,16 +35,16 @@
     <div class="mediaselect-left">
       <strong><a href="<?php echo DOKU_BASE?>lib/exe/media.php?ns="><?php echo hsc($lang['namespaces'])?></a></strong>
 
-			<?php tpl_medianamespaces()?>
-		</div>
+      <?php tpl_medianamespaces()?>
+    </div>
 
     <div class="mediaselect-right">
       <?php tpl_mediafilelist()?>
 
-			<div class="uploadform">
-			<?php tpl_mediauploadform()?>
-			</div>
-		</div>
+      <div class="uploadform">
+      <?php tpl_mediauploadform()?>
+      </div>
+    </div>
 
   </div>
 
