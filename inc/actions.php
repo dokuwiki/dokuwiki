@@ -277,9 +277,16 @@ function act_export($act){
 
   // html export #FIXME what about the template's style?
   if($act == 'export_xhtml'){
+    global $conf;
+    global $lang;
     header('Content-Type: text/html; charset=utf-8');
-    ptln('<html>');
+    ptln('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"');
+    ptln(' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+    ptln('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$conf['lang'].'"');
+    ptln(' lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">');
     ptln('<head>');
+    ptln('  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+    ptln('  <title>'.$ID.'</title>');
     tpl_metaheaders();
     ptln('</head>');
     ptln('<body>');
