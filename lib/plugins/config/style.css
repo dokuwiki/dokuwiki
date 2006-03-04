@@ -11,7 +11,7 @@
 #config__manager form { }
 #config__manager table {margin: 1em 0;}
 #config__manager td input.edit {width: 30em;}
-#config__manager td select.edit {}
+#config__manager td select.edit {padding: 0;}
 
 #config__manager tr.default .input,
 #config__manager tr.default input,

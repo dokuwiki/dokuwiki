@@ -10,3 +10,8 @@ div.edit_user {
   width: 46%;
   float: left;
 }
+input.button[disabled] { 
+  color: #ccc!important;
+  border-color: #ccc!important;
+}
+/* IE won't understand but doesn't require it */
