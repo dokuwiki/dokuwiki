@@ -40,7 +40,7 @@ $lang['toptoclevel'] = 'Мин. уровень в содержании';      //
 $lang['maxtoclevel'] = 'Макс. уровень в содержании';      //Up to which level include into AutoTOC (max. 5)
 $lang['maxseclevel'] = 'Макс. уровень для правки';   //Up to which level create editable sections (max. 5)
 $lang['camelcase']   = 'Использовать ВикиРегистр для ссылок';  //Use CamelCase for linking? (I don't like it) 0|1
-$lang['deaccent']    = 'Убирать диакр. знаки в именах страниц';    //convert accented chars to unaccented ones in pagenames?
+$lang['deaccent']    = 'Транслитерация в именах страниц';    //convert accented chars to unaccented ones in pagenames?
 $lang['useheading']  = 'Первый заголовок вместо имени';        //use the first heading in a page as its name
 $lang['refcheck']    = 'Проверять ссылки на медиа-файлы';    //check for references before deleting media files
 $lang['refshow']     = 'Показывать ссылок на медиа-файлы'; //how many references should be shown, 5 is a good value
@@ -112,6 +112,11 @@ $lang['ftp____root'] = 'ftp - корневая директория';
 $lang['userewrite_o_0'] = '(нет)';
 $lang['userewrite_o_1'] = 'htaccess';
 $lang['userewrite_o_2'] = 'средствами ДокуВики';
+
+/* deaccent options */
+$lang['deaccent_o_0'] = 'отключить';
+$lang['deaccent_o_1'] = 'убирать только диакр. знаки';
+$lang['deaccent_o_2'] = 'полная транслитерация';
 
 /* gdlib options */
 $lang['gdlib_o_0'] = 'GD Lib недоступна';
