@@ -1,2 +1,5 @@
-Rediger dette dokument og tryk på knappen **''[Gem]''**. Se [[wiki:formatering|Formaterings tips]] for Wiki syntaks. Ret venligst kun dette dokument hvis du kan **forbedre** det. Brug venligst [[wiki:sandkassen]] til at teste før du retter i et rigtigt dokument. Husk også at bruge **''[Forhåndsvisning]''** før du gemmer dokumentet.
+Rediger dette dokument og tryk på knappen **''[Gem]''**. Se [[wiki:syntax|Formaterings tips]]
+for Wiki syntaks. Ret venligst kun dette dokument hvis du kan **forbedre** det. Brug venligst
+[[playground:playground|sandkassen]] til at teste før du retter i et rigtigt dokument.
+Husk også at bruge **''[Forhåndsvisning]''** før du gemmer dokumentet.
 

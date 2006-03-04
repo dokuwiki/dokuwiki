@@ -1,3 +1,3 @@
 Uredite stran in pritisnite ''Shrani''. Glej [[wiki:syntax]] za
- navodila za urejanje. Prosimo vas, da stran spremenite le, če jo nameravate **izboljšati**. Če hočete preizkusiti kakšno zadevo, se poigrajte v [[wiki:peskovnik|peskovniku]].
+ navodila za urejanje. Prosimo vas, da stran spremenite le, če jo nameravate **izboljšati**. Če hočete preizkusiti kakšno zadevo, se poigrajte v [[playground:playground|peskovniku]].
 
