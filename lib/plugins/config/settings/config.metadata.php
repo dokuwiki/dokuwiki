@@ -66,25 +66,26 @@ $file['protected'] = "DOKU_CONF.'local.protected.php'";  // optional
 // - any settings not mentioned will come after the last setting listed and
 //   will use the default class with no parameters
 
-$meta['title']    = array('');
-$meta['start']    = array('');
+$meta['title']    = array('string');
+$meta['start']    = array('string');
 $meta['savedir']  = array('savedir');
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/');
 
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
-$meta['basedir']  = array('');
-$meta['baseurl']  = array('');
+$meta['basedir']  = array('string');
+$meta['baseurl']  = array('string');
 
 $meta['fullpath']    = array('onoff');
 $meta['recent']      = array('numeric');
 $meta['breadcrumbs'] = array('numeric');
+$meta['youarehere']  = array('onoff');
 $meta['typography']  = array('onoff');
 $meta['htmlok']      = array('onoff');
 $meta['phpok']       = array('onoff');
-$meta['dformat']     = array('');
-$meta['signature']   = array('');
+$meta['dformat']     = array('string');
+$meta['signature']   = array('string');
 $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
 $meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
 $meta['maxseclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5)); // 0 for no sec edit buttons
@@ -106,8 +107,8 @@ $meta['autopasswd']  = array('onoff');
 $meta['resendpasswd'] = array('onoff');
 $meta['authtype']    = array('authtype');
 $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','sha1','ssha','crypt','mysql','my411'));
-$meta['defaultgroup']= array('');
-$meta['superuser']   = array('');
+$meta['defaultgroup']= array('string');
+$meta['superuser']   = array('string');
 $meta['profileconfirm'] = array('onoff');
 
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
@@ -126,29 +127,29 @@ $meta['im_convert']  = array('im_convert');
 $meta['spellchecker']= array('onoff');
 $meta['subscribers'] = array('onoff');
 $meta['compress']    = array('onoff');
-$meta['hidepages']   = array('');
+$meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');
 $meta['sitemap']     = array('numeric');
 
 $meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom'));
 $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
 
-$meta['target____wiki']      = array('');
-$meta['target____interwiki'] = array('');
-$meta['target____extern']    = array('');
-$meta['target____media']     = array('');
-$meta['target____windows']   = array('');
+$meta['target____wiki']      = array('string');
+$meta['target____interwiki'] = array('string');
+$meta['target____extern']    = array('string');
+$meta['target____media']     = array('string');
+$meta['target____windows']   = array('string');
 
-$meta['proxy____host'] = array('','_pattern' => '#^[a-z0-9\-\.+]+?#i');
+$meta['proxy____host'] = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');
 $meta['proxy____port'] = array('numeric');
-$meta['proxy____user'] = array('');
+$meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password');
 $meta['proxy____ssl']  = array('onoff');
 
 $meta['safemodehack'] = array('onoff');
-$meta['ftp____host']  = array('','_pattern' => '#^[a-z0-9\-\.+]+?#i');
+$meta['ftp____host']  = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');
 $meta['ftp____port']  = array('numeric');
-$meta['ftp____user']  = array('');
+$meta['ftp____user']  = array('string');
 $meta['ftp____pass']  = array('password');
-$meta['ftp____root']  = array('');
+$meta['ftp____root']  = array('string');
 

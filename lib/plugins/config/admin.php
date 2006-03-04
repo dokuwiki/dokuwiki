@@ -131,7 +131,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
       if (!$this->_config->locked) {
         ptln('  <input type="hidden" name="save"   value="1" />');
-        ptln('  <input type="submit" name="submit" class="button" value="'.$lang['btn_save'].'" />');
+        ptln('  <input type="submit" name="submit" class="button" value="'.$lang['btn_save'].'" accesskey="s" />');
         ptln('  <input type="reset" class="button" value="'.$lang['btn_reset'].'" />');
       }
 

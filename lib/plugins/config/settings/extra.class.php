@@ -19,7 +19,7 @@ if (!class_exists('setting_sepchar')) {
 }
 
 if (!class_exists('setting_savedir')) {
-  class setting_savedir extends setting {
+  class setting_savedir extends setting_string {
 
     function update($input) {
         if ($this->is_protected()) return false;
@@ -57,7 +57,7 @@ if (!class_exists('setting_authtype')) {
 }
 
 if (!class_exists('setting_im_convert')) {
-  class setting_im_convert extends setting {
+  class setting_im_convert extends setting_string {
 
     function update($input) {
         if ($this->is_protected()) return false;

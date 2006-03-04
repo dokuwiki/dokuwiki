@@ -305,7 +305,6 @@ if (!class_exists('setting')) {
      *  @return   array(string $label_html, string $input_html)
      */
     function html(&$plugin, $echo=false) {
-
         $value = '';
         $disable = '';
 
@@ -324,7 +323,7 @@ if (!class_exists('setting')) {
         $value = htmlspecialchars($value);
 
         $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+        $input = '<textarea rows="3" cols="40" id="config__'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
         return array($label,$input);
     }
 
@@ -341,6 +340,7 @@ if (!class_exists('setting')) {
       if ($fmt=='php') {
         // translation string needs to be improved FIXME
         $tr = array("\n"=>'\n', "\r"=>'\r', "\t"=>'\t', "\\" => '\\\\', "'" => '\\\'');
+        $tr = array("\\" => '\\\\', "'" => '\\\'');
 
         $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr($this->_local, $tr)."';\n";
       }
@@ -362,8 +362,35 @@ if (!class_exists('setting')) {
   }
 }
 
+if (!class_exists('setting_string')) {
+  class setting_string extends setting {
+    function html(&$plugin, $echo=false) {
+        $value = '';
+        $disable = '';
+
+        if ($this->is_protected()) {
+          $value = $this->_protected;
+          $disable = 'disabled="disabled"';
+        } else {
+          if ($echo && $this->_error) {
+            $value = $this->_input;
+          } else {
+            $value = is_null($this->_local) ? $this->_default : $this->_local;
+          }
+        }
+
+        $key = htmlspecialchars($this->_key);
+        $value = htmlspecialchars($value);
+
+        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+        return array($label,$input);
+    }
+  }
+}
+
 if (!class_exists('setting_password')) {
-  class setting_password extends setting {
+  class setting_password extends setting_string {
 
     function update($input) {
         if ($this->is_protected()) return false;
@@ -394,13 +421,13 @@ if (!class_exists('setting_password')) {
 }
 
 if (!class_exists('setting_email')) {
-  class setting_email extends setting {
+  class setting_email extends setting_string {
     var $_pattern = '#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i';
   }
 }
 
 if (!class_exists('setting_numeric')) {
-  class setting_numeric extends setting {
+  class setting_numeric extends setting_string {
     var $_pattern = '/^[-+\/*0-9 ]*$/';
 
     function out($var, $fmt='php') {
@@ -454,8 +481,8 @@ if (!class_exists('setting_onoff')) {
   }
 }
 
-if (!class_exists('setting_mulitchoice')) {
-  class setting_multichoice extends setting {
+if (!class_exists('setting_multichoice')) {
+  class setting_multichoice extends setting_string {
     var $_choices = array();
 
     function html(&$plugin) {
