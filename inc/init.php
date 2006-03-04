@@ -65,7 +65,7 @@
     if (!empty($_POST))   remove_magic_quotes($_POST);
     if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
     if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
+#    if (!empty($_SESSION)) remove_magic_quotes($_SESSION); #FIXME needed ?
     @ini_set('magic_quotes_gpc', 0);
     define('MAGIC_QUOTES_STRIPPED',1);
   }
@@ -85,13 +85,13 @@
   }
 
   // Set defaults for fmode, dmode and umask.
-  if(!isset($conf['fmode'])) {
+  if(!isset($conf['fmode']) || $conf['fmode'] === '') {
     $conf['fmode'] = 0666;
   }
-  if(!isset($conf['dmode'])) {
+  if(!isset($conf['dmode']) || $conf['dmode'] === '') {
     $conf['dmode'] = 0777;
   }
-  if(!isset($conf['umask'])) {
+  if(!isset($conf['umask']) || $conf['umask'] === '') {
     $conf['umask'] = umask();
   }
 

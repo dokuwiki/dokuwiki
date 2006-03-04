@@ -8,7 +8,7 @@
 
 
 /* Datastorage and Permissions */
-$conf['umask']       = 0002;              //set the global umask
+$conf['umask']       = '';                //set the global umask - empty for system default
 $conf['fmode']       = 0666;              //set file creation mode
 $conf['dmode']       = 0777;              //set direction creation mode
 
