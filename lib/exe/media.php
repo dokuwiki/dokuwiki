@@ -124,7 +124,7 @@ function media_upload($NS,$AUTH){
     io_makeFileDir($fn);
     if(move_uploaded_file($file['tmp_name'], $fn)) {
       // set the correct permission here
-      if(isset($conf['fmask'])) { chmod($fn, $conf['fmask']); }
+      if($conf['fperm']) chmod($fn, $fperm);
       msg($lang['uploadsucc'],1);
       return true;
     }else{

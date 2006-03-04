@@ -105,7 +105,7 @@ function _lock(){
             sleep(15);
         }
     }
-    if(isset($conf['dmask'])) { chmod($lock, $conf['dmask']); }
+    if($conf['dperm']) chmod($lock, $conf['dperm']);
     if($said) print "\n";
 }
 

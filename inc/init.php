@@ -77,31 +77,8 @@
     $conf['usegzip'] = 0;
   }
 
-  // Legacy support for old umask/dmask scheme
-  if(isset($conf['dmask'])) {
-    unset($conf['dmask']);
-    unset($conf['fmask']);
-    unset($conf['umask']);
-  }
-
-  // Set defaults for fmode, dmode and umask.
-  if(!isset($conf['fmode']) || $conf['fmode'] === '') {
-    $conf['fmode'] = 0666;
-  }
-  if(!isset($conf['dmode']) || $conf['dmode'] === '') {
-    $conf['dmode'] = 0777;
-  }
-  if(!isset($conf['umask']) || $conf['umask'] === '') {
-    $conf['umask'] = umask();
-  }
-
-  // Precalculate the fmask and dmask, so we can set later.
-  if(($conf['umask'] != umask()) or ($conf['fmode'] != 0666)) {
-    $conf['fmask'] = $conf['fmode'] & ~$conf['umask'];
-  }
-  if(($conf['umask'] != umask()) or ($conf['dmode'] != 0666)) {
-    $conf['dmask'] = $conf['dmode'] & ~$conf['umask'];
-  }
+  // precalculate file creation modes
+  init_creationmodes();
 
   // make real paths and check them
   init_paths();
@@ -149,7 +126,7 @@ function init_files(){
       $fh = @fopen($file,'a');
       if($fh){
         fclose($fh);
-        if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
+        if($conf['fperm']) chmod($file, $conf['fperm']);
       }else{
         nice_die("$file is not writable. Check your permissions settings!");
       }
@@ -186,6 +163,36 @@ function init_path($path){
   }
 
   return $p;
+}
+
+/**
+ * Sets the internal config values fperm and dperm which, when set,
+ * will be used to change the permission of a newly created dir or
+ * file with chmod. Considers the influence of the system's umask
+ * setting the values only if needed.
+ */
+function init_creationmodes(){
+  global $conf;
+
+  // Legacy support for old umask/dmask scheme
+  unset($conf['dmask']);
+  unset($conf['fmask']);
+  unset($conf['umask']);
+  unset($conf['fperm']);
+  unset($conf['dperm']);
+
+  // get system umask
+  $umask = umask();
+
+  // check what is set automatically by the system on file creation
+  // and set the fperm param if it's not what we want
+  $auto_fmode = 0666 & ~$umask;
+  if($auto_fmode != $conf['fmode']) $conf['fperm'] = $conf['fmode'];
+
+  // check what is set automatically by the system on file creation
+  // and set the dperm param if it's not what we want
+  $auto_dmode = $conf['dmode'] & ~$umask;
+  if($auto_dmode != $conf['dmode']) $conf['dperm'] = $conf['dmode'];
 }
 
 /**

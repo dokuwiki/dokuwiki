@@ -18,8 +18,6 @@ $lang['locked']     = 'Le fichier des paramètres ne peut être modifié, si cec
                        vérifiez que le nom et les droits du fichier sont corrects.';
 
 // settings prompts
-$lang['umask']       = 'masque pour les nouveaux fichiers';      //set the umask for new files
-$lang['dmask']       = 'masque pour les nouveaux répertoires';   //directory mask accordingly
 $lang['lang']        = 'langue';                                 //your language
 $lang['basedir']     = 'répertoire de base';                     //absolute dir from serveroot - blank for autodetection
 $lang['baseurl']     = 'url de base';                            //URL to server including protocol - blank for autodetect

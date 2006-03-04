@@ -7,11 +7,11 @@
 
 if (!class_exists('setting_sepchar')) {
   class setting_sepchar extends setting_multichoice {
-    
+
     function setting_sepchar($key,$param=NULL) {
         $str = '_-.';
-        for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};        
-        
+        for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};
+
         // call foundation class constructor
         $this->setting($key,$param);
     }
@@ -23,7 +23,7 @@ if (!class_exists('setting_savedir')) {
 
     function update($input) {
         if ($this->is_protected()) return false;
-        
+
         $value = is_null($this->_local) ? $this->_default : $this->_local;
         if ($value == $input) return false;
 
@@ -32,7 +32,7 @@ if (!class_exists('setting_savedir')) {
           $this->_input = $input;
           return false;
         }
-        
+
         $this->_local = $input;
         return true;
     }
@@ -50,7 +50,7 @@ if (!class_exists('setting_authtype')) {
       sort($authtypes);
 
       $this->_choices = $authtypes;
-      
+
       parent::initialize($default,$local,$protected);
     }
   }
@@ -61,18 +61,18 @@ if (!class_exists('setting_im_convert')) {
 
     function update($input) {
         if ($this->is_protected()) return false;
-        
+
         $input = trim($input);
-        
+
         $value = is_null($this->_local) ? $this->_default : $this->_local;
         if ($value == $input) return false;
 
         if ($input && !@file_exists($input)) {
           $this->_error = true;
           $this->_input = $input;
-          return false;    
+          return false;
         }
-        
+
         $this->_local = $input;
         return true;
     }

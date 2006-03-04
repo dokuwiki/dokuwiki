@@ -20,7 +20,6 @@ $lang['locked']     = 'The settings file can not be updated, if this is unintent
 
 /* -------------------- Config Options --------------------------- */
 
-$lang['umask']       = 'global permission mask';
 $lang['fmode']       = 'file creation mode';
 $lang['dmode']       = 'directory creation mode';
 $lang['lang']        = 'language';

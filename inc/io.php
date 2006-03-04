@@ -87,7 +87,7 @@ function io_saveFile($file,$content,$append=false){
     fclose($fh);
   }
 
-  if(!$fileexists and isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
+  if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
   io_unlock($file);
   return true;
 }
@@ -178,7 +178,7 @@ function io_lock($file){
     //waited longer than 3 seconds? -> stale lock
     if ((time() - $timeStart) > 3) break;
     $locked = @mkdir($lockDir, $conf['dmode']);
-    if($locked and isset($conf['dmask'])) { chmod($lockDir, $conf['dmask']); }
+    if($locked && $conf['dperm']) chmod($lockDir, $conf['dperm']);
   } while ($locked === false);
 }
 
@@ -229,7 +229,7 @@ function io_mkdir_p($target){
       return io_mkdir_ftp($dir);
     }else{
       $ret = @mkdir($target,$conf['dmode']); // crawl back up & create dir tree
-      if($ret and isset($conf['dmask'])) { chmod($target, $conf['dmask']); }
+      if($ret && $conf['dperm']) chmod($target, $conf['dperm']);
       return $ret;
     }
   }
@@ -264,8 +264,8 @@ function io_mkdir_ftp($dir){
 
   //create directory
   $ok = @ftp_mkdir($conn, $dir);
-  //set permissions (using the directory umask and dmode)
-  @ftp_site($conn,sprintf("CHMOD %04o %s",$conf['dmask'],$dir));
+  //set permissions
+  @ftp_site($conn,sprintf("CHMOD %04o %s",$conf['dmode'],$dir));
 
   @ftp_close($conn);
   return $ok;
@@ -320,7 +320,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName=''){
   if(!$fp) return false;
   fwrite($fp,$data);
   fclose($fp);
-  if(!$fileexists and isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
+  if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
   if ($useAttachment) return $name;
   return true;
 }
@@ -335,7 +335,7 @@ function io_rename($from,$to){
   global $conf;
   if(!@rename($from,$to)){
     if(@copy($from,$to)){
-      if(isset($conf['fmask'])) { chmod($file, $conf['fmask']); }
+      if($conf['fperm']) chmod($file, $conf['fperm']);
       @unlink($from);
       return true;
     }

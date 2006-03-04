@@ -2,7 +2,7 @@
 /**
  * Metadata for configuration manager plugin
  *
- * Note:  This file should be included within a function to ensure it 
+ * Note:  This file should be included within a function to ensure it
  *        doesn't class with the settings it is describing.
  *
  * Format:
@@ -58,12 +58,12 @@ $file['default']   = "DOKU_CONF.'dokuwiki.php'";         // optional
 $file['protected'] = "DOKU_CONF.'local.protected.php'";  // optional
 
 // test value (FIXME, remove before publishing)
-//$meta['test']     = array('multichoice','_choices' => array(''));  
- 
+//$meta['test']     = array('multichoice','_choices' => array(''));
+
 // --------------[ setting metadata ]------------------------------------
 // - for description of format and fields see top of file
 // - order the settings in the order you wish them to appear
-// - any settings not mentioned will come after the last setting listed and 
+// - any settings not mentioned will come after the last setting listed and
 //   will use the default class with no parameters
 
 $meta['title']    = array('');
@@ -72,7 +72,6 @@ $meta['savedir']  = array('savedir');
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/');
 
-$meta['umask']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
 $meta['basedir']  = array('');

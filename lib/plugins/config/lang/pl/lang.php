@@ -17,7 +17,6 @@ $lang['nochoice']   = '(brak innych możliwości)';
 $lang['locked']     = 'Plik ustawień nie mógł zostać zmieniony, upewnij się, czy uprawnienia do plik są odpowiednie.';
 
 // settings prompts
-$lang['umask']       = 'maska uprawnień nowego pliku';     //set the umask for new files
 $lang['fmode']       = 'tryb tworzenia pliku';         //directory mask accordingly
 $lang['dmode']       = 'tryb tworzenia katalogu';    //directory mask accordingly
 $lang['lang']        = 'język';           //your language

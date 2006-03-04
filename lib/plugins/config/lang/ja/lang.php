@@ -19,7 +19,6 @@ $lang['locked']     = '設定用ファイルを更新できません。もし意
                        ローカル設定ファイルの名前と権限を確認して下さい。';
 
 // settings prompts
-$lang['umask']       = 'グローバル権限マスク';     //set the umask for new files
 $lang['fmode']       = 'ファイル作成マスク';         //directory mask accordingly
 $lang['dmode']       = 'フォルダ作成マスク';    //directory mask accordingly
 $lang['lang']        = '使用言語';           //your language

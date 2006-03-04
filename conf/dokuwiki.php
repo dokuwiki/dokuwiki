@@ -8,9 +8,8 @@
 
 
 /* Datastorage and Permissions */
-$conf['umask']       = '';                //set the global umask - empty for system default
-$conf['fmode']       = 0666;              //set file creation mode
-$conf['dmode']       = 0777;              //set direction creation mode
+$conf['fmode']       = 0644;              //set file creation mode
+$conf['dmode']       = 0755;              //set directory creation mode
 
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection

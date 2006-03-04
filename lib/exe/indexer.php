@@ -60,7 +60,7 @@ function runIndexer(){
             return false;
         }
     }
-    if(isset($conf['dmask'])) { chmod($lock, $conf['dmask']); }
+    if($conf['dperm']) chmod($lock, $conf['dperm']);
 
     require_once(DOKU_INC.'inc/indexer.php');
 
