@@ -77,7 +77,7 @@
 
 
     <div class="footer">
-      <hr>
+      <hr />
         <?php tpl_button('backtomedia')?>
     </div>
   </div>

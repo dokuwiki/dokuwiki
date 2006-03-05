@@ -66,8 +66,8 @@ function html_login(){
           <input type="password" name="p" class="edit" />
         </label><br />
         <input type="submit" value="<?php echo $lang['btn_login']?>" class="button" />
-        <label for="remember" class="simple">
-          <input type="checkbox" name="r" id="remember" value="1" />
+        <label for="remember__me" class="simple">
+          <input type="checkbox" name="r" id="remember_me" value="1" />
           <span><?php echo $lang['remember']?></span>
         </label>
       </fieldset>
