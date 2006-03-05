@@ -1,0 +1,4 @@
+====== Nosūtīt jaunu paroli ======
+
+Azipildi zemāk prasīto, lai saņemtu savam kontam jaunu paroli.
+Jauno paroli nosūtīs uz reģistrēto e-pasta adresi. Lietotāja vārdam jābūt tavam //wiki sistēmas// lietotājavārdam.

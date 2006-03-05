@@ -1,0 +1,17 @@
+Sveiki!
+
+@TITLE@ wiki ir mainījusies lapa @PAGE@ .
+
+Atšķirības ir:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Lai atteiktos no šīm vēstulēm, ielogojies wiki sistēmā 
+@DOKUWIKIURL@, tad apmeklē @NEWPAGE@
+uz izvēlies 'Atteikties no izmaiņu paziņojumiem'.
+
+-- 
+Vestuli izveidoja 
+@DOKUWIKIURL@

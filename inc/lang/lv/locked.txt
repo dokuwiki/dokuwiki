@@ -1,3 +1,5 @@
 ====== Lapa aizņemta ======
 
-Lapa aizņemta, to patlaban labo cits lietotājs. Tev ir jāgaida, kamēr to pabeigs labot vai arī iztecēs labotājam rezervētais laiks.
+Lapa aizņemta, to patlaban labo cits lietotājs. Tev ir jāgaida, kamēr to pabeigs labot vai arī iztecēs labotājam atvēlētais laiks.
+
+

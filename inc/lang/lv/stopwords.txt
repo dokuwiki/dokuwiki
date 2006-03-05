@@ -1,0 +1,4 @@
+# Šis ir to vārdu sarakstus, kurus indeksētājs neņem vērā. Katru vārdu savā rindā!
+# Labojot failu ievēro, ja jālieto UNIX rindu aplauzumi(single newline)
+# Nevajag likst sarakstā par 3 būrtiem īsākus vārdus, tos tā pat neņem vērā
+# Angļu valodai saraksts ņemts no http://www.ranks.nl/stopwords/

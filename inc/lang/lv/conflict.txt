@@ -4,3 +4,5 @@ Tevis labotajam dokumetam jau ir jaunāka versija. Tā gadās, ja cits lietotāj
 
 Rūpīgi pārlūko šeit parādītās atšķirības un tad izlem, kuru variantu paturēt. Ja nospiedīsi  ''Saglabāt'', saglabāsies tavs teksts. Ja nospiedīsi ''Atlikt'' paliks pašreizējais variants.
 
+
+
