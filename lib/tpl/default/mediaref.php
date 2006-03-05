@@ -39,7 +39,7 @@
     <?php tpl_showreferences($mediareferences)?>
 
   <div class="mediaref_footer">
-    <hr>
+    <hr />
       <?php tpl_button('backtomedia')?>
     </div>
   </div>
