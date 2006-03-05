@@ -690,7 +690,7 @@ function tpl_mediafilelist(){
       // add file icons
       list($ext,$mime) = mimetype($item['file']);
       $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
-      $class .= ' class="mediafile mf_'.$class.'"';
+      $class = ' class="mediafile mf_'.$class.'"';
     }
 
     ptln('<li><div class="li">',4);
