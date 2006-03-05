@@ -712,8 +712,8 @@ function tpl_mediafilelist(){
     }
 
     if($item['isimg']){
-      $w = $item['meta']->getField('File.Width');
-      $h = $item['meta']->getField('File.Height');
+      $w = (int) $item['meta']->getField('File.Width');
+      $h = (int) $item['meta']->getField('File.Height');
 
       ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
       ptln($del.'<br />',6);
@@ -742,15 +742,15 @@ function tpl_mediafilelist(){
 
       //read EXIF/IPTC data
       $t = $item['meta']->getField('IPTC.Headline');
-      if($t) print '<strong>'.$t.'</strong><br />';
+      if($t) print '<strong>'.htmlspecialchars($t).'</strong><br />';
 
       $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
                                          'EXIF.TIFFImageDescription',
                                          'EXIF.TIFFUserComment'));
-      if($t) print $t.'<br />';
+      if($t) print htmlspecialchars($t).'<br />';
 
       $t = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
-      if($t) print '<em>'.$t.'</em><br />';
+      if($t) print '<em>'.htmlspecialchars($t).'</em><br />';
 
       //add edit button
       if($AUTH >= AUTH_UPLOAD && $item['meta']->getField('File.Mime') == 'image/jpeg'){
