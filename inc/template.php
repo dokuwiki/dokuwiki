@@ -209,7 +209,7 @@ function tpl_metaheaders($alt=true){
     ptln('<script type="text/javascript" charset="utf-8">',$it);
     ptln("NS='".$INFO['namespace']."';",$it+2);
     if($conf['useacl'] && $_SERVER['REMOTE_USER']){
-      require_once('inc/toolbar.php');
+      require_once(DOKU_INC.'inc/toolbar.php');
       ptln("SIG='".toolbar_signature()."';",$it+2);
     }
     ptln('</script>',$it);
