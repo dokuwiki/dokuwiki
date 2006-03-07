@@ -7,19 +7,17 @@
 
 /* -------------- top row --------------- */
 div.dokuwiki .header {
-  height:35px;
-  padding:3px 0 2px 2px;
+  padding:3px 0 0 2px;
 }
 
 div.dokuwiki .pagename {
-  height:25px;
   float:left;
   font-size:200%;
   font-weight:bolder;
   color: __medium__;
   text-align:left;
   vertical-align:middle;
-  padding:1px 0 0 1px;
+  padding: 0;
 }
 
 div.dokuwiki .pagename a:link, div.dokuwiki .pagename a:visited, div.dokuwiki .pagename a:hover, div.dokuwiki .pagename a:active {
@@ -44,11 +42,10 @@ div.dokuwiki .logo a:link, div.dokuwiki .logo a:visited, div.dokuwiki .logo a:ho
 
 /* ---------------  top and bottom bar ---------------- */
 div.dokuwiki .bar {
-  height:2.0em;
   border-top:1px solid __dark__;
   border-bottom:1px solid __dark__;
   background: __medium__;
-  padding:0.15em;
+  padding: 0.1em 0.15em;
   margin:0;
   clear: both;
 }

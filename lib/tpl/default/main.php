@@ -41,6 +41,8 @@
       <div class="logo">
         <?php tpl_link(wl(),$conf['title'],'name="top" accesskey="h" title="[ALT+H]"')?>
       </div>
+
+      <div class="clearer"></div>
     </div>
 
     <?php /*old includehook*/ @include(dirname(__FILE__).'/header.html')?>
@@ -55,6 +57,8 @@
         <?php tpl_button('recent')?>
         <?php tpl_searchform()?>&nbsp;
       </div>
+
+      <div class="clearer"></div>
     </div>
 
     <?php if($conf['breadcrumbs']){?>
@@ -111,6 +115,7 @@
         <?php tpl_button('index')?>
         <?php tpl_button('top')?>&nbsp;
       </div>
+      <div class="clearer"></div>
     </div>
 
   </div>
