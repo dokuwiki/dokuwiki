@@ -23,6 +23,17 @@ class auth_nameencode_test extends UnitTestCase {
         $this->assertEqual(auth_nameencode($in),$out);
     }
 
+    function test_groupskipon(){
+        $in  = '@hey$you';
+        $out = '@hey%24you';
+        $this->assertEqual(auth_nameencode($in,true),$out);
+    }
+
+    function test_groupskipoff(){
+        $in  = '@hey$you';
+        $out = '%40hey%24you';
+        $this->assertEqual(auth_nameencode($in),$out);
+    }
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

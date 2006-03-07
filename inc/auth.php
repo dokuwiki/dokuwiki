@@ -267,7 +267,7 @@ function auth_aclcheck($id,$user,$groups){
   $user = auth_nameencode($user);
 
   //if user is superuser return 255 (acl_admin)
-  if($conf['superuser'] == $user) { return AUTH_ADMIN; }
+  if(auth_nameencode($conf['superuser']) == $user) { return AUTH_ADMIN; }
 
   //make sure groups is an array
   if(!is_array($groups)) $groups = array();
@@ -278,7 +278,7 @@ function auth_aclcheck($id,$user,$groups){
     $groups[$i] = '@'.auth_nameencode($groups[$i]);
   }
   //if user is in superuser group return 255 (acl_admin)
-  if(in_array($conf['superuser'], $groups)) { return AUTH_ADMIN; }
+  if(in_array(auth_nameencode($conf['superuser'],true), $groups)) { return AUTH_ADMIN; }
 
   $ns    = getNS($id);
   $perm  = -1;
@@ -365,8 +365,14 @@ function auth_aclcheck($id,$user,$groups){
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @see rawurldecode()
  */
-function auth_nameencode($name){
-  return preg_replace('/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',"'%'.dechex(ord('\\1'))",$name);
+function auth_nameencode($name,$skip_group=false){
+  if($skip_group && $name{0} =='@'){
+    return '@'.preg_replace('/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
+                            "'%'.dechex(ord('\\1'))",substr($name,1));
+  }else{
+    return preg_replace('/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
+                        "'%'.dechex(ord('\\1'))",$name);
+  }
 }
 
 /**
