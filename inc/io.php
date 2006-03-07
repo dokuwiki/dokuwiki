@@ -16,12 +16,12 @@
  * @todo use safemode hack
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function io_sweepNS($id){
+function io_sweepNS($id,$basedir='datadir'){
   global $conf;
 
   //scan all namespaces
   while(($id = getNS($id)) !== false){
-    $dir = $conf['datadir'].'/'.utf8_encodeFN(str_replace(':','/',$id));
+    $dir = $conf[$basedir].'/'.utf8_encodeFN(str_replace(':','/',$id));
 
     //try to delete dir else return
     if(!@rmdir($dir)) return;

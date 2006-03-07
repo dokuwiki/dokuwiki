@@ -82,6 +82,7 @@ function media_delete($delid){
   $file = mediaFN($delid);
   if(@unlink($file)){
     msg(str_replace('%s',noNS($delid),$lang['deletesucc']),1);
+    io_sweepNS($delid,'mediadir');
     return true;
   }
   //something went wrong
