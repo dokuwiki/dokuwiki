@@ -121,6 +121,8 @@ function mail_encode_address($string,$header='',$names=true){
       if(!utf8_isASCII($text)){
         $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text).'?=';
       }
+    }else{
+      $text = '';
     }
 
     // add to header comma seperated and in new line to avoid too long headers
