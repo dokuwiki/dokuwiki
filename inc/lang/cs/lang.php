@@ -34,16 +34,23 @@ $lang['btn_backlink']   = 'Zpětné odkazy';
 $lang['btn_backtomedia'] = 'Zpět do Výběru dokumentu';
 $lang['btn_subscribe'] = 'Odebírat změny mailem';
 $lang['btn_unsubscribe'] = 'Neodebírat změny mailem';
+$lang['btn_profile']    = 'Upravit profil';
+$lang['btn_reset'] = 'Reset';
+$lang['btn_resendpwd'] = 'Zaslat nové heslo';
 
 $lang['loggedinas'] = 'Přihlášen(a) jako';
 $lang['user']       = 'Uživatelské jméno';
 $lang['pass']       = 'Heslo';
+$lang['newpass']    = 'Nové heslo';
+$lang['oldpass']    = 'Současné heslo';
 $lang['passchk']    = 'ještě jednou';
 $lang['remember']   = 'Přihlásit se nastálo';
 $lang['fullname']   = 'Celé jméno';
 $lang['email']      = 'E-Mail';
 $lang['register']   = 'Registrovat';
+$lang['profile']    = 'Uživatelský profil';
 $lang['badlogin']   = 'Zadané uživatelské jméno a heslo není správně.';
+$lanf['minoredit']  = 'Drobné změny';
 
 $lang['regmissing'] = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists'] = 'Uživatel se stejným jménem už je zaregistrován.';
@@ -55,6 +62,18 @@ $lang['regbadpass'] = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím 
 $lang['regpwmail']  = 'Vaše heslo do systému DokuWiki';
 $lang['reghere']    = 'Nemáte uživatelský účet? Zřiďte si ho';
 
+$lang['profna']       = 'Toto wiki neumožnuje změnu profilu';
+$lang['profnochange'] = 'Žádné změny nebyly provedeny.';
+$lang['profnoempty']  = 'Nelze zada prázdné jméno nebo email.';
+$lang['profchanged']  = 'Uživatelský profil změněn.';
+
+$lang['pwdforget'] = 'Zapoměli jste heslo? Nechte si zaslat nové';
+$lang['resendna']  = 'Toto wiki neumožnuje zasílání nových hesel.';
+$lang['resendpwd'] = 'Odesla nové heslo pro uživatele';
+$lang['resendpwdmissing'] = 'Musíte vyplnit všechny položky.';
+$lang['resendpwdnouser']  = 'Bohužel, takový uživatel v systému není.';
+$lang['resendpwdsuccess'] = 'Vaše nové heslo bylo odesláno emailem.';
+
 $lang['txt_upload']   = 'Vyberte soubor jako přílohu';
 $lang['txt_filename'] = 'Wiki jméno (volitelné)';
 $lang['txt_overwrt']  = 'Přepsat existující soubor';
@@ -63,7 +82,6 @@ $lang['lockexpire']   = 'Zámek vyprší:';
 $lang['willexpire']   = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
 
 $lang['notsavedyet'] = 'Jsou tu neuložené změny, které budou ztraceny.\nChcete opravdu pokračovat?';
-
 $lang['rssfailed']   = 'Nastala chyba při vytváření tohoto RSS: ';
 $lang['nothingfound']= 'Nic nenalezeno.';
 
@@ -91,6 +109,7 @@ $lang['yours']      = 'Vaše verze';
 $lang['diff']       = 'zobrazit rozdíly vůči aktuální verzi';
 $lang['line']       = 'Řádek';
 $lang['breadcrumb'] = 'Historie';
+$lang['youarehere'] = 'Umístění';
 $lang['lastmod']    = 'Poslední úprava';
 $lang['by']         = 'autor:';
 $lang['deleted']    = 'odstraněno';
@@ -121,6 +140,8 @@ $lang['qb_ol']      = 'Číslovaný seznam';
 $lang['qb_ul']      = 'Nečíslovaný seznam';
 $lang['qb_media']   = 'Vložit obrázky nebo jiné soubory';
 $lang['qb_sig']     = 'Vložit podpis';
+$lang['qb_smileys'] = 'Emotikony';
+$lang['qb_chars']   = 'Speciální znaky';
 
 $lang['del_confirm']= 'Vymazat tuto položku?';
 $lang['admin_register']= 'Přidat nového uživatele';

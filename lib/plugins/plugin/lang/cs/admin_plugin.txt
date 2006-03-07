@@ -1,0 +1,6 @@
+====== Plugin Management ======
+
+Na této stránce lze zpravovat moduly do Dokuwiki [[doku>wiki:plugins|plugins]].
+Aby bylo možné stahovat a instalovt zásuvné moduly, musí být adresář //plugin//
+přístupný pro zápis webovým serverem.
+
