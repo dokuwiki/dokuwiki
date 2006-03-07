@@ -181,8 +181,9 @@ function init_creationmodes(){
   unset($conf['fperm']);
   unset($conf['dperm']);
 
-  // get system umask
-  $umask = umask();
+  // get system umask, fallback to 0 if none available
+  $umask = @umask();
+  if(!$umask) $umask = 0000;
 
   // check what is set automatically by the system on file creation
   // and set the fperm param if it's not what we want
