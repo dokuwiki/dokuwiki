@@ -114,6 +114,7 @@ function act_dispatch(){
  */
 function act_clean($act){
   global $lang;
+  global $conf;
 
   //handle localized buttons
   if($act == $lang['btn_save']) $act = 'save';
@@ -126,6 +127,14 @@ function act_clean($act){
 
   if($act == 'export_html') $act = 'export_xhtml';
   if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
+
+  //disable all acl related commands if ACL is disabled
+  if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
+                                             'subscribe','unsubscribe','profile',
+                                             'resendpwd',))){
+    msg('Command unavailable: '.htmlspecialchars($act),-1);
+    return 'show';
+  }
 
   if(array_search($act,array('login','logout','register','save','edit',
                              'preview','search','show','check','index','revisions',
