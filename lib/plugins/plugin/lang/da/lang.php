@@ -37,7 +37,7 @@ $lang['deleting']         = 'Sletter ...';
 $lang['deleted']          = 'Plugin %s slettet.';
 
 $lang['downloading']      = 'Downloader ...';
-$lang['downloaded']       = 'Plugin %s blev  korrekt installeret';
+$lang['downloaded']       = 'Plugin %s blev korrekt installeret';
 $lang['downloads']        = 'De følgende plugins blev installeret korrekt:';
 $lang['download_none']    = 'Ingen plugins blev fundet, eller en ukendt fejl opstod under download og installering.';
 
@@ -57,5 +57,14 @@ $lang['error']            = 'En ukendt fejl opstod.';
 $lang['error_download']   = 'Kunne ikke downloade plugin filen: %s';
 $lang['error_badurl']     = 'Muligvis dårlig webadresse - kunne ikke hente filnavn fra adressen';
 $lang['error_dircreate']  = 'Kunne ikke oprette midlertidig mappe til download';
+$lang['error_decompress'] = 'Pluginhåndtering kunne ikke dekomprimere den downloadede fil. '.
+                            'Det kan skyldes et fejlagtigt download, og i så fald så prøv igen; '.
+                            'eller komprimeringsformatet kan være ukendt, så du er nødt til at downloade og installere plugin\'et manuelt.';
+$lang['error_copy']       = 'Der opstod en filkopieringsfejl under forsøget på at installere filerne til plugin '.
+                            '<em>%s</em>: disken kan være fuld eller filadgangsrettighederne kan være forkert sat. '.
+                            'Dette kan have ført til et delvist installeret plugin og efterladt din wiki '.
+                            'installation ustabil.';
+$lang['error_delete']     = 'Der opstod en fejl ved forsøget på at slette plugin <em>%s</em>.  '.
+                            'Dette skyldes sandsynligvis utilstrækkelig adgang til filer eller mapper.';
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

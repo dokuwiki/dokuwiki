@@ -17,10 +17,18 @@ $lang['nochoice']   = '(ingen andre valgmuligheder)';
 $lang['locked']     = 'Indstillingsfilen kunne ikke opdateres, hvis dette er en fejl, <br />
                        sørg da for at den lokale indstillingsfils navn og rettigheder er korrekte.';
 
+
+/* -------------------- Config Options --------------------------- */
+
 /* userewrite options */
 $lang['userewrite_o_0'] = 'ingen';
 $lang['userewrite_o_1'] = 'htaccess';
-$lang['userewrite_o_2'] = 'dokuwiki';
+$lang['userewrite_o_2'] = 'Dokuwiki intern';
+
+/* deaccent options */
+$lang['deaccent_o_0'] = 'fra';
+$lang['deaccent_o_1'] = 'fjern accenter';
+$lang['deaccent_o_2'] = 'romaniser';
 
 /* gdlib options */
 $lang['gdlib_o_0'] = 'GD Lib ikke tilstede';
