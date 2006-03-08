@@ -1,16 +1,17 @@
 /* User Manager specific styles */
-tr.disabled {
+#user__manager tr.disabled {
   color: #6f6f6f;
   background: #e4e4e4;
 }
-tr.user_info {
+#user__manager tr.user_info {
   vertical-align: top;
 }
-div.edit_user {
+#user__manager div.edit_user {
   width: 46%;
   float: left;
+  margin-top: 2em;
 }
-input.button[disabled] { 
+#user__manager input.button[disabled] {
   color: #ccc!important;
   border-color: #ccc!important;
 }

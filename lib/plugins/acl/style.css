@@ -1,10 +1,9 @@
-div.dokuwiki div.acladmin label {
+#acl__manager label {
   text-align: left;
   font-weight: normal;
   display: inline;
 }
-
-div.dokuwiki div.acladmin table{
+#acl__manager table {
   margin-left: 10%;
   width: 80%;
 }

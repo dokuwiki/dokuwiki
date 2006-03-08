@@ -479,18 +479,6 @@ div.dokuwiki table.inline td {
   border: 1px solid __dark__;
 }
 
-div.dokuwiki .leftalign{
-  text-align: left;
-}
-
-div.dokuwiki .centeralign{
-  text-align: center;
-}
-
-div.dokuwiki .rightalign{
-  text-align: right;
-}
-
 /* ---------- table of contents ------------------- */
 
 div.dokuwiki div.toc {

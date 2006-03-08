@@ -158,7 +158,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
 
-        ptln("<div class=\"level2\" style=\"margin-bottom: 2em;\">");
+        ptln("<div id=\"user__manager\">");
+        ptln("<div class=\"level2\">");
         
         if ($this->_user_total > 0) {
           ptln("<p>".sprintf($this->lang['summary'],$this->_start+1,$this->_last,$this->_user_total,$this->_auth->getUserCount())."</p>");
@@ -241,6 +242,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           ptln("  </div>");
           ptln("</div>");
         }
+        ptln("</div>");
     }
 
 
