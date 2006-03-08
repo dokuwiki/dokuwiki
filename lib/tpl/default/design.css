@@ -547,11 +547,17 @@ div.dokuwiki a.toc:hover {
 }
 
 /* ---------------------------- Diff rendering --------------------------*/
-div.dokuwiki table.diff { background:__white__; }
+div.dokuwiki table.diff {
+  background:__white__;
+  width:100%;
+}
 div.dokuwiki td.diff-blockheader {font-weight:bold}
-div.dokuwiki td.diff-header {
+div.dokuwiki table.diff th {
   border-bottom: 1px solid __dark__;
   font-size:120%;
+  width: 50%;
+  font-weight: normal;
+  text-align: left;
 }
 div.dokuwiki td.diff-addedline {
     background:#ddffdd;

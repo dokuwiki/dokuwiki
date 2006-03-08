@@ -453,7 +453,6 @@ function html_revisions(){
     print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
     $p = array();
     $p['src']    = DOKU_BASE.'lib/images/diff.png';
-    $p['border'] = 0;
     $p['width']  = 15;
     $p['height'] = 11;
     $p['title']  = $lang['diff'];
@@ -513,7 +512,6 @@ function html_recent($first=0){
     print '<a href="'.wl($recent['id'],"do=diff").'">';
     $p = array();
     $p['src']    = DOKU_BASE.'lib/images/diff.png';
-    $p['border'] = 0;
     $p['width']  = 15;
     $p['height'] = 11;
     $p['title']  = $lang['diff'];
@@ -525,7 +523,6 @@ function html_recent($first=0){
     print '<a href="'.wl($recent['id'],"do=revisions").'">';
     $p = array();
     $p['src']    = DOKU_BASE.'lib/images/history.png';
-    $p['border'] = 0;
     $p['width']  = 12;
     $p['height'] = 14;
     $p['title']  = $lang['btn_revs'];
@@ -768,14 +765,14 @@ function html_diff($text='',$intro=true){
   $tdf = new TableDiffFormatter();
   if($intro) print p_locale_xhtml('diff');
   ?>
-    <table class="diff" width="100%">
+    <table class="diff">
       <tr>
-        <td colspan="2" width="50%" class="diff-header">
+        <th colspan="2">
           <?php echo $left?>
-        </td>
-        <td colspan="2" width="50%" class="diff-header">
+        </th>
+        <th colspan="2">
           <?php echo $right?>
-        </td>
+        </th>
       </tr>
       <?php echo $tdf->format($df)?>
     </table>

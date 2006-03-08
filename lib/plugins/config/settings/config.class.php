@@ -463,8 +463,8 @@ if (!class_exists('setting_onoff')) {
         $key = htmlspecialchars($this->_key);
         $checked = ($value) ? ' checked="checked"' : '';
 
-        $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<div class="input"><input id="config_'.$key.'" name="config['.$key.']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
+        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<div class="input"><input id="config__'.$key.'" name="config['.$key.']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
         return array($label,$input);
     }
 
@@ -509,7 +509,7 @@ if (!class_exists('setting_multichoice')) {
 
         $key = htmlspecialchars($this->_key);
 
-        $label = '<label for="config_'.$key.'">'.$this->prompt($plugin).'</label>';
+        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
 
         $input = "<div class=\"input\">\n";
         $input .= '<select class="edit" id="config__'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";

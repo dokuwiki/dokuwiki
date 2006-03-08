@@ -210,11 +210,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("        <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
         ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
+
+        $this->_htmlFilterSettings(2);
+
         ptln("      </td></tr>");
         ptln("    </tbody>");
         ptln("  </table>");
-
-        $this->_htmlFilterSettings(2);
 
         ptln("</form>");
         ptln("</div>");
