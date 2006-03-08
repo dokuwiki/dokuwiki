@@ -173,7 +173,7 @@ function html_topbtn(){
   global $lang;
 
   $ret  = '';
-  $ret  = '<a href="#top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" /></a>';
+  $ret  = '<a href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" /></a>';
 
   return $ret;
 }

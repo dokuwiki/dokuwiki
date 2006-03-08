@@ -431,7 +431,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action index" accesskey="x"');
       break;
     case 'top':
-      print '<a href="#top" class="action top" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
+      print '<a href="#dokuwiki__top" class="action top" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
       break;
     case 'back':
       if ($ID = tpl_getparent($ID)) {

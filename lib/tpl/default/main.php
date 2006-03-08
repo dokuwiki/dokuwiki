@@ -39,7 +39,7 @@
         [[<?php tpl_link(wl($ID,'do=backlink'),$ID)?>]]
       </div>
       <div class="logo">
-        <?php tpl_link(wl(),$conf['title'],'name="top" accesskey="h" title="[ALT+H]"')?>
+        <?php tpl_link(wl(),$conf['title'],'name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]"')?>
       </div>
 
       <div class="clearer"></div>
