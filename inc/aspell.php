@@ -219,9 +219,10 @@ class Aspell{
             fclose($pipes[2]);
 
             // close process
-            if(proc_close($process) != 0){
+            $rc = proc_close($process);
+            if ($err){
                 //something went wrong
-                $err = "Aspell returned an error: $err";
+                $err = "Aspell returned an error(".ASPELL_BIN." exitcode: $rc ):\n".$err;
                 return false;
             }
             return true;
