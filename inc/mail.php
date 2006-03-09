@@ -38,7 +38,7 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
   }
 
   if(!utf8_isASCII($subject))
-    $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject).'?=';
+    $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
 
   $header  = '';
 
@@ -119,7 +119,7 @@ function mail_encode_address($string,$header='',$names=true){
       }
 
       if(!utf8_isASCII($text)){
-        $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text).'?=';
+        $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text,0).'?=';
       }
     }else{
       $text = '';
@@ -155,52 +155,68 @@ function mail_isvalid($email){
 /**
  * Quoted printable encoding
  *
- * @author <pob@medienrecht.org>
- * @author <tamas.tompa@kirowski.com>
- * @link   http://www.php.net/manual/en/function.quoted-printable-decode.php
+ * @author umu <umuAThrz.tu-chemnitz.de>
+ * @link   http://www.php.net/manual/en/function.imap-8bit.php#61216
  */
-function mail_quotedprintable_encode($input='',$line_max=74,$space_conv=false){
-  $hex = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
-  $lines = preg_split("/(?:\r\n|\r|\n)/", $input);
-  $eol = "\n";
-  $escape = "=";
-  $output = "";
-  while( list(, $line) = each($lines) ) {
-    //$line = rtrim($line); // remove trailing white space -> no =20\r\n necessary
-    $linlen = strlen($line);
-    $newline = "";
-    for($i = 0; $i < $linlen; $i++) {
-      $c = substr( $line, $i, 1 );
-      $dec = ord( $c );
-      if ( ( $i == 0 ) && ( $dec == 46 ) ) { // convert first point in the line into =2E
-        $c = "=2E";
-      }
-      if ( $dec == 32 ) {
-        if ( $i == ( $linlen - 1 ) ) { // convert space at eol only
-          $c = "=20";
-        } else if ( $space_conv ) {
-          $c = "=20";
-        }
-      } elseif ( ($dec == 61) || ($dec < 32 ) || ($dec > 126) ) { // always encode "\t", which is *not* required
-        $h2 = floor($dec/16);
-        $h1 = floor($dec%16);
-        $c = $escape.$hex["$h2"].$hex["$h1"];
-      }
-      if ( (strlen($newline) + strlen($c)) >= $line_max ) { // CRLF is not counted
-         $output .= $newline.$escape.$eol; // soft line break; " =\r\n" is okay
-         $newline = "";
-         // check if newline first character will be point or not
-         if ( $dec == 46 ) {
-            $c = "=2E";
-         }
-      }
-      $newline .= $c;
-    } // end of for
-    $output .= $newline.$eol;
-  } // end of while
-  return trim($output);
-}
+function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
+  // split text into lines
+  $aLines= preg_split("/(?:\r\n|\r|\n)/", $sText);
 
+  for ($i=0;$i<count($aLines);$i++) {
+    $sLine =& $aLines[$i];
+    if (strlen($sLine)===0) continue; // do nothing, if empty
+
+    $sRegExp = '/[^\x09\x20\x21-\x3C\x3E-\x7E]/e';
+
+    // imap_8bit encodes x09 everywhere, not only at lineends,
+    // for EBCDIC safeness encode !"#$@[\]^`{|}~,
+    // for complete safeness encode every character :)
+    if ($bEmulate_imap_8bit)
+      $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/e';
+
+    $sReplmt = 'sprintf( "=%02X", ord ( "$0" ) ) ;';
+    $sLine = preg_replace( $sRegExp, $sReplmt, $sLine );
+
+    // encode x09,x20 at lineends
+    {
+      $iLength = strlen($sLine);
+      $iLastChar = ord($sLine{$iLength-1});
+
+      //              !!!!!!!!
+      // imap_8_bit does not encode x20 at the very end of a text,
+      // here is, where I don't agree with imap_8_bit,
+      // please correct me, if I'm wrong,
+      // or comment next line for RFC2045 conformance, if you like
+      if (!($bEmulate_imap_8bit && ($i==count($aLines)-1)))
+
+      if (($iLastChar==0x09)||($iLastChar==0x20)) {
+        $sLine{$iLength-1}='=';
+        $sLine .= ($iLastChar==0x09)?'09':'20';
+      }
+    }    // imap_8bit encodes x20 before chr(13), too
+    // although IMHO not requested by RFC2045, why not do it safer :)
+    // and why not encode any x20 around chr(10) or chr(13)
+    if ($bEmulate_imap_8bit) {
+      $sLine=str_replace(' =0D','=20=0D',$sLine);
+      //$sLine=str_replace(' =0A','=20=0A',$sLine);
+      //$sLine=str_replace('=0D ','=0D=20',$sLine);
+      //$sLine=str_replace('=0A ','=0A=20',$sLine);
+    }
+
+    // finally split into softlines no longer than $maxlen chars,
+    // for even more safeness one could encode x09,x20
+    // at the very first character of the line
+    // and after soft linebreaks, as well,
+    // but this wouldn't be caught by such an easy RegExp
+    if($maxlen){
+      preg_match_all( '/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch );
+      $sLine = implode( '=' . chr(13).chr(10), $aMatch[0] ); // add soft crlf's
+    }
+  }
+
+  // join lines into text
+  return implode(chr(13).chr(10),$aLines);
+}
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
