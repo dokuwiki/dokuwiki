@@ -140,7 +140,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->toc[] = array( 'hid'   => $hid,
                                   'title' => $text,
                                   'type'  => 'ul',
-                                  'level' => $level);
+                                  'level' => $level-$conf['toptoclevel']+1);
         }
 
         // write the header
