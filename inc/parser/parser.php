@@ -832,7 +832,7 @@ class Doku_Parser_Mode_rss extends Doku_Parser_Mode {
 
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
-    var $schemes = array('http','https','telnet','gopher','wais','ftp','ed2k','irc');
+    var $schemes = array('http','https','telnet','gopher','wais','ftp','ed2k','irc','ldap');
     var $patterns = array();
 
     function preConnect() {
