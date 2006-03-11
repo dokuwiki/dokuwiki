@@ -9,7 +9,9 @@
 #user__manager div.edit_user {
   width: 46%;
   float: left;
-  margin-top: 2em;
+}
+#user__manager table {
+  margin-bottom: 1em;
 }
 #user__manager input.button[disabled] {
   color: #ccc!important;
