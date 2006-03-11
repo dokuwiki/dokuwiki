@@ -61,18 +61,52 @@ function ajax_qsearch(){
 }
 
 /**
- * Refresh a page lock
+ * Refresh a page lock and save draft
  *
  * Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_lock(){
+  global $conf;
+  global $lang;
   $id = cleanID($_POST['id']);
   if(empty($id)) return;
 
   if(!checklock($id)){
     lock($id);
-    print 1;
+    echo 1;
   }
+
+  if($conf['usedraft'] && $_POST['wikitext']){
+    $client = $_SERVER['REMOTE_USER'];
+    if(!$client) $client = clientIP(true);
+
+    $draft = array('id'     => $ID,
+                   'prefix' => $_POST['prefix'],
+                   'text'   => $_POST['wikitext'],
+                   'suffix' => $_POST['suffix'],
+                   'date'   => $_POST['date'],
+                   'client' => $client,
+                  );
+    $cname = getCacheName($draft['client'].$id,'.draft');
+    if(io_saveFile($cname,serialize($draft))){
+      echo $lang['draftdate'].' '.date($conf['dformat']);
+    }
+  }
+
+}
+
+/**
+ * Delete a draft
+ */
+function ajax_draftdel(){
+  $id = cleanID($_POST['id']);
+  if(empty($id)) return;
+
+  $client = $_SERVER['REMOTE_USER'];
+  if(!$client) $client = clientIP(true);
+
+  $cname = getCacheName($client.$id,'.draft');
+  @unlink($cname);
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

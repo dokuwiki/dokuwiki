@@ -36,9 +36,12 @@ $lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
 $lang['btn_unsubscribe'] = 'Unsubscribe Changes';
-$lang['btn_profile']    = 'Update Profile';
-$lang['btn_reset']     = 'Reset';
-$lang['btn_resendpwd'] = 'Send new password';
+$lang['btn_profile']     = 'Update Profile';
+$lang['btn_reset']       = 'Reset';
+$lang['btn_resendpwd']   = 'Send new password';
+$lang['btn_draft']    = 'Edit draft';
+$lang['btn_recover']  = 'Recover draft';
+$lang['btn_draftdel'] = 'Delete draft';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -53,6 +56,7 @@ $lang['register']   = 'Register';
 $lang['profile']    = 'User Profile';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
 $lang['minoredit']  = 'Minor Changes';
+$lang['draftdate']  = 'Draft autosaved on'; // full dformat date will be added
 
 $lang['regmissing'] = 'Sorry, you must fill in all fields.';
 $lang['reguexists'] = 'Sorry, a user with this login already exists.';

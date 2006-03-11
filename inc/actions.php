@@ -62,6 +62,14 @@ function act_dispatch(){
   if($ACT == 'save')
     $ACT = act_save($ACT);
 
+  //draft deletion
+  if($ACT == 'draftdel')
+    $ACT = act_draftdel($ACT);
+
+  //draft saving on preview
+  if($ACT == 'preview')
+    $ACT = act_draftsave($ACT);
+
   //edit
   if(($ACT == 'edit' || $ACT == 'preview') && $INFO['editable']){
     $ACT = act_edit($ACT);
@@ -116,10 +124,18 @@ function act_clean($act){
   global $lang;
   global $conf;
 
+  // check if the action was given as array key
+  if(is_array($act)){
+    list($act) = array_keys($act);
+  }
+
   //handle localized buttons
-  if($act == $lang['btn_save']) $act = 'save';
-  if($act == $lang['btn_preview']) $act = 'preview';
-  if($act == $lang['btn_cancel']) $act = 'show';
+  if($act == $lang['btn_save'])     $act = 'save';
+  if($act == $lang['btn_preview'])  $act = 'preview';
+  if($act == $lang['btn_cancel'])   $act = 'show';
+  if($act == $lang['btn_recover'])  $act = 'recover';
+  if($act == $lang['btn_draftdel']) $act = 'draftdel';
+
 
   //remove all bad chars
   $act = strtolower($act);
@@ -136,12 +152,12 @@ function act_clean($act){
     return 'show';
   }
 
-  if(array_search($act,array('login','logout','register','save','edit',
-                             'preview','search','show','check','index','revisions',
-                             'diff','recent','backlink','admin','subscribe',
-                             'unsubscribe','profile','resendpwd',)) === false
-     && substr($act,0,7) != 'export_' ) {
-    msg('Unknown command: '.htmlspecialchars($act),-1);
+  if(!in_array($act,array('login','logout','register','save','edit','draft',
+                          'preview','search','show','check','index','revisions',
+                          'diff','recent','backlink','admin','subscribe',
+                          'unsubscribe','profile','resendpwd','recover',
+                          'draftdel',)) && substr($act,0,7) != 'export_' ) {
+    msg('Command unknown: '.htmlspecialchars($act),-1);
     return 'show';
   }
   return $act;
@@ -156,7 +172,7 @@ function act_permcheck($act){
   global $INFO;
   global $conf;
 
-  if(in_array($act,array('save','preview','edit'))){
+  if(in_array($act,array('save','preview','edit','recover'))){
     if($INFO['exists']){
       if($act == 'edit'){
         //the edit function will check again and do a source show
@@ -187,6 +203,43 @@ function act_permcheck($act){
 }
 
 /**
+ * Handle 'draftdel'
+ *
+ * Deletes the draft for the current page and user
+ */
+function act_draftdel($act){
+  global $INFO;
+  @unlink($INFO['draft']);
+  $INFO['draft'] = null;
+  return 'show';
+}
+
+/**
+ * Saves a draft on preview
+ *
+ * @todo this currently duplicates code from ajax.php :-/
+ */
+function act_draftsave($act){
+  global $INFO;
+  global $ID;
+  global $conf;
+  if($conf['usedraft'] && $_POST['wikitext']){
+    $draft = array('id'     => $ID,
+                   'prefix' => $_POST['prefix'],
+                   'text'   => $_POST['wikitext'],
+                   'suffix' => $_POST['suffix'],
+                   'date'   => $_POST['date'],
+                   'client' => $INFO['client'],
+                  );
+    $cname = getCacheName($draft['client'].$ID,'.draft');
+    if(io_saveFile($cname,serialize($draft))){
+      $INFO['draft'] = $cname;
+    }
+  }
+  return $act;
+}
+
+/**
  * Handle 'save'
  *
  * Checks for spam and conflicts and saves the page.
@@ -214,6 +267,9 @@ function act_save($act){
   saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
   //unlock it
   unlock($ID);
+
+  //delete draft
+  act_draftdel($act);
 
   //show it
   session_write_close();
@@ -259,6 +315,7 @@ function act_auth($act){
  */
 function act_edit($act){
   global $ID;
+  global $INFO;
 
   //check if locked by anyone - if not lock for my self
   $lockedby = checklock($ID);

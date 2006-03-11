@@ -98,7 +98,7 @@ function html_login(){
 }
 
 /**
- * shows the edit/source/show button dependent on current mode
+ * shows the edit/source/show/draft button dependent on current mode
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -110,10 +110,14 @@ function html_editbutton(){
 
   if($ACT == 'show' || $ACT == 'search'){
     if($INFO['writable']){
-      if($INFO['exists']){
-        $r = html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+      if($INFO['draft']){
+          $r = html_btn('draft',$ID,'e',array('do' => 'draft'),'post');
       }else{
-        $r = html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+        if($INFO['exists']){
+          $r = html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+        }else{
+          $r = html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+        }
       }
     }else{
       $r = html_btn('source',$ID,'v',array('do' => 'edit','rev' => $REV),'post');
@@ -284,6 +288,36 @@ function html_show($txt=''){
     $html = html_secedit($html,$secedit);
     print html_hilight($html,$HIGH);
   }
+}
+
+/**
+ * ask the user about how to handle an exisiting draft
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_draft(){
+  global $INFO;
+  global $ID;
+  global $lang;
+  global $conf;
+  $draft = unserialize(io_readFile($INFO['draft'],false));
+  $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
+
+  echo p_locale_xhtml('draft');
+  ?>
+  <form id="dw__editform" method="post" action="<?php echo script()?>"
+   accept-charset="<?php echo $lang['encoding']?>"><div class="no">
+    <input type="hidden" name="id"   value="<?php echo $ID?>" />
+    <input type="hidden" name="date" value="<?php echo $draft['date']?>" /></div>
+    <textarea name="wikitext" id="wiki__text" readonly="readonly" cols="80" rows="10" class="edit"><?php echo "\n".formText($text)?></textarea>
+
+    <div id="draft__status"><?php echo $lang['draftdate'].' '.date($conf['dformat'],filemtime($INFO['draft']))?></div>
+
+    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_recover']?>" tabindex="1" />
+    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_draftdel']?>" tabindex="2" />
+    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="3" />
+  </form>
+  <?php
 }
 
 /**
@@ -999,6 +1033,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   <div style="width:99%;">
   <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"><div class="no">
      <div class="toolbar">
+        <div id="draft__status"><?php if($INFO['draft']) echo $lang['draftdate'].' '.date($conf['dformat']);?></div>
         <div id="tool__bar"></div>
         <input type="hidden" name="id"   value="<?php echo $ID?>" />
         <input type="hidden" name="rev"  value="<?php echo $REV?>" />
@@ -1012,8 +1047,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
           textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
         </script>
         <span id="spell__action"></span>
-        <?php } ?>
         <div id="spell__suggest"></div>
+        <?php } ?>
     </div>
     <div id="spell__result"></div>
 
@@ -1025,7 +1060,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
          <div class="editButtons">
             <input class="button" id="edbtn__save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
             <input class="button" id="edbtn__preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
-            <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
+            <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
          </div>
       <?php } ?>
       <?php if($wr){ ?>

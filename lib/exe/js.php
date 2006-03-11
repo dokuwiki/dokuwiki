@@ -93,7 +93,7 @@ function js_out(){
             js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");
 
             // add lock timer
-            js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."')");
+            js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
 
             // load spell checker
             if($conf['spellchecker']){
@@ -195,7 +195,7 @@ function js_escape($string){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function js_runonstart($func){
-    echo "addInitEvent(function(){ $func; });";
+    echo "addInitEvent(function(){ $func; });\n";
 }
 
 /**

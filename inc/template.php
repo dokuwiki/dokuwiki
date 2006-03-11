@@ -53,8 +53,8 @@ function template($tpl){
  * (defined by the global $ACT var) by calling the appropriate
  * outputfunction(s) from html.php
  *
- * Everything that doesn't use the default template isn't
- * handled by this function. ACL stuff is not done either.
+ * Everything that doesn't use the main template file isn't
+ * handled by this function. ACL stuff is not done here either.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -74,8 +74,14 @@ function tpl_content(){
       html_edit($TEXT);
       html_show($TEXT);
       break;
+    case 'recover':
+      html_edit($TEXT);
+      break;
     case 'edit':
       html_edit();
+      break;
+    case 'draft':
+      html_draft();
       break;
     case 'wordblock':
       html_edit($TEXT,'wordblock');
@@ -203,7 +209,7 @@ function tpl_metaheaders($alt=true){
   ptln('<link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.'lib/exe/css.php?print=1" />',$it);
 
   // load javascript
-  $js_edit  = ($ACT=='edit' || $ACT=='preview') ? 1 : 0;
+  $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover') ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
   if($js_edit && $js_write){
     ptln('<script type="text/javascript" charset="utf-8">',$it);
@@ -283,7 +289,7 @@ function tpl_getparent($ID){
  *
  * Available Buttons are
  *
- *  edit        - edit/create/show button
+ *  edit        - edit/create/show/draft button
  *  history     - old revisions
  *  recent      - recent changes
  *  login       - login/logout button - if ACL enabled

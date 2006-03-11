@@ -115,6 +115,16 @@ div.dokuwiki input.missing {
   display: inline;
 }
 
+/* disabled style - not understood by IE */
+div.dokuwiki textarea.edit[disabled],
+div.dokuwiki textarea.edit[readonly],
+div.dokuwiki input.edit[disabled],
+div.dokuwiki input.edit[readonly],
+div.dokuwiki select.edit[disabled] {
+  background-color: #f5f5f5!important;
+  color: #666!important;
+}
+
 /* edit form */
 div.dokuwiki div.toolbar, div.dokuwiki div#wiki__editbar {
    margin:2px 0;
@@ -137,6 +147,10 @@ div.dokuwiki div#wiki__editbar div.summary {
 }
 div.dokuwiki .nowrap {
    white-space:nowrap;
+}
+div.dokuwiki div#draft__status {
+    float: right;
+    color: __dark__;
 }
 
 /* --------- buttons ------------------- */

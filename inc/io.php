@@ -33,6 +33,9 @@ function io_sweepNS($id,$basedir='datadir'){
  *
  * Uses gzip if extension is .gz
  *
+ * If you want to use the returned value in unserialize
+ * be sure to set $clean to false!
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_readFile($file,$clean=true){

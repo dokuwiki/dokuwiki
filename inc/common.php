@@ -36,14 +36,17 @@ function pageinfo(){
     $info['userinfo']   = $USERINFO;
     $info['perm']       = auth_quickaclcheck($ID);
     $info['subscribed'] = is_subscribed($ID,$_SERVER['REMOTE_USER']);
+    $info['client']     = $_SERVER['REMOTE_USER'];
 
     // if some outside auth were used only REMOTE_USER is set
     if(!$info['userinfo']['name']){
       $info['userinfo']['name'] = $_SERVER['REMOTE_USER'];
     }
+
   }else{
     $info['perm']       = auth_aclcheck($ID,'',null);
     $info['subscribed'] = false;
+    $info['client']     = clientIP(true);
   }
 
   $info['namespace'] = getNS($ID);
@@ -84,6 +87,17 @@ function pageinfo(){
     $info['editor'] = $revinfo['user'];
   }else{
     $info['editor'] = $revinfo['ip'];
+  }
+
+  // draft
+  $draft = getCacheName($info['client'].$ID,'.draft');
+  if(@file_exists($draft)){
+    if(@filemtime($draft) < @filemtime(wikiFN($ID))){
+      // remove stale draft
+      @unlink($draft);
+    }else{
+      $info['draft'] = $draft;
+    }
   }
 
   return $info;

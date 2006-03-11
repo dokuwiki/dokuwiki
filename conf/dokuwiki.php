@@ -65,6 +65,7 @@ $conf['profileconfirm'] = '1';           //Require current password to confirm c
 /* Advanced Options */
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
+$conf['usedraft']    = 1;                //automatically save a draft while editing (0|1)
 $conf['sepchar']     = '_';              //word separator character in page names; may be a
                                          //  letter, a digit, '_', '-', or '.'.
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
