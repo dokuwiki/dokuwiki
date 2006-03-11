@@ -398,16 +398,47 @@ function checkwordblock(){
 /**
  * Return the IP of the client
  *
- * Honours X-Forwarded-For Proxy Headers
+ * Honours X-Forwarded-For and X-Real-IP Proxy Headers
  *
+ * It returns a comma separated list of IPs if the above mentioned
+ * headers are set. If the single parameter is set, it tries to return
+ * a routable public address, prefering the ones suplied in the X
+ * headers
+ *
+ * @param  boolean $single If set only a single IP is returned
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function clientIP(){
-  $my = $_SERVER['REMOTE_ADDR'];
-  if($_SERVER['HTTP_X_FORWARDED_FOR']){
-    $my .= ' ('.$_SERVER['HTTP_X_FORWARDED_FOR'].')';
+function clientIP($single=false){
+  $ip = array();
+  $ip[] = $_SERVER['REMOTE_ADDR'];
+  if($_SERVER['HTTP_X_FORWARDED_FOR'])
+    $ip = array_merge($ip,explode(',',$_SERVER['HTTP_X_FORWARDED_FOR']));
+  if($_SERVER['HTTP_X_REAL_IP'])
+    $ip = array_merge($ip,explode(',',$_SERVER['HTTP_X_REAL_IP']));
+
+  // remove any non-IP stuff
+  $cnt = count($ip);
+  for($i=0; $i<$cnt; $i++){
+    $ip[$i] = preg_replace('/[^0-9\.]+/','',$ip[$i]);
+    if(!preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/',$ip[$i])) $ip[$i] = '';
+    if(empty($ip[$i])) unset($ip[$i]);
   }
-  return $my;
+  $ip = array_values(array_unique($ip));
+  if(!$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
+
+  if(!$single) return join(',',$ip);
+
+  // decide which IP to use, trying to avoid local addresses
+  $ip = array_reverse($ip);
+  foreach($ip as $i){
+    if(preg_match('/^(127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/',$i)){
+      continue;
+    }else{
+      return $i;
+    }
+  }
+  // still here? just use the first (last) address
+  return $ip[0];
 }
 
 /**
