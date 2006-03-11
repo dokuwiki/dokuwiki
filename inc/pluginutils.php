@@ -5,21 +5,33 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
-
+ 
+// plugin related constants
+$plugin_types = array('admin','syntax');
+ 
 /**
  * Returns a list of available plugins of given type
  *
- * Returns all plugins if no type given
+ * @param $type  string, plugin_type name; 
+ *               the type of plugin to return, 
+ *               use empty string for all types
+ * @param $all   bool; 
+ *               false to only return enabled plugins,
+ *               true to return both enabled and disabled plugins
+ *
+ * @return       array of plugin names
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function plugin_list($type=''){
+function plugin_list($type='',$all=false){
   $plugins = array();
   if ($dh = opendir(DOKU_PLUGIN)) {
     while (false !== ($plugin = readdir($dh))) {
       if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp') continue;
       if (is_file(DOKU_PLUGIN.$plugin)) continue;
+			
+			// if required, skip disabled plugins
+			if (!$all && plugin_isdisabled($plugin)) continue;
 
       if ($type=='' || @file_exists(DOKU_PLUGIN."$plugin/$type.php")){
           $plugins[] = $plugin;
@@ -76,3 +88,7 @@ function &plugin_load($type,$name){
   $DOKU_PLUGINS[$type][$name] = new $class;
   return $DOKU_PLUGINS[$type][$name];
 }
+
+function plugin_isdisabled($name) { return @file_exists(DOKU_PLUGIN.$name.'/disabled'); }
+function plugin_enable($name) { return @unlink(DOKU_PLUGIN.$name.'/disabled'); }
+function plugin_disable($name) { return @touch(DOKU_PLUGIN.$name.'/disabled'); }

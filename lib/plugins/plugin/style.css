@@ -30,16 +30,21 @@
 #plugin__manager .common input.edit { width: 24em; margin: 0.5em;}
 #plugin__manager .common .button { }
 
-#plugin__manager .plugins { }
-#plugin__manager .plugins form { }
-#plugin__manager .plugins fieldset { text-align: right; border-top:0; border-right:0; border-left:0;}
-#plugin__manager .plugins .legend { color: black; display: block; margin: 0; padding: 0; font-size: 1em; line-height: 1.4em; font-weight: normal; text-align: left; float: left; padding: 0;}
+#plugin__manager form.plugins { background: __dark__; }
+#plugin__manager .plugins fieldset { text-align: right; border-width: 0.3em 0.2em; border-color: __white__; margin: 1px 0; padding: 0.2em 0.3em; background: __white__;}
+#plugin__manager .plugins fieldset.protected { background: #fdd; color: #000; }
+#plugin__manager .plugins fieldset.disabled { background: #e0e0e0; color: #a8a8a8; }
+
+#plugin__manager .plugins .legend { color: black; display: block; margin: 0; padding: 0; font-size: 1em; line-height: 1.4em; font-weight: normal; text-align: left; float: left; padding: 0; clear: none;}
 #plugin__manager .plugins .button { width: 5em; font-size: 95%;}
+
+#plugin__manager .plugins fieldset.buttons .button { float: left; }
 
 #plugin__manager .pm_info h3 { margin-left: 0; }
 #plugin__manager .pm_info dl { margin: 1em 0; padding: 0;}
 #plugin__manager .pm_info dt { width: 6em; float: left; clear: left; margin:0; padding: 0;}
-#plugin__manager .pm_info dd { margin:0 0 0 7em; padding: 0;}
+#plugin__manager .pm_info dd { margin:0 0 0 7em; padding: 0; background: none;}
 
+#plugin__manager .plugins .enable { float: left; width: auto; margin-right: 0.5em;}
 
 /* end admin plugin styles */

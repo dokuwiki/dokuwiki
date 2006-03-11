@@ -17,6 +17,7 @@ $lang['btn_update'] = 'update';
 $lang['btn_delete'] = 'delete';
 $lang['btn_settings'] = 'settings';
 $lang['btn_download'] = 'Download';
+$lang['btn_enable'] = 'Save';
 
 $lang['url']              = 'URL';
 

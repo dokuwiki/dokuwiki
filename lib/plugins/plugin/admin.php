@@ -17,9 +17,13 @@ require_once(DOKU_PLUGIN.'admin.php');
 
     //--------------------------[ GLOBALS ]------------------------------------------------
     // note: probably should be dokuwiki wide globals, where they can be accessed by pluginutils.php
-    global $common_plugin_types;
-    $common_plugin_types = array('syntax', 'admin');
-
+    // global $plugin_types;
+    // $plugin_types = array('syntax', 'admin');
+		
+		// plugins that are an integral part of dokuwiki, they shouldn't be disabled or deleted
+		global $plugin_protected;
+		$plugin_protected = array('acl','plugin','config','info','usermanager');
+		
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
@@ -32,7 +36,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     var $handler = NULL;
 
     var $functions = array('delete','update',/*'settings',*/'info');  // require a plugin name
-    var $commands = array('manage','download');                       // don't require a plugin name
+    var $commands = array('manage','download','enable');              // don't require a plugin name
     var $plugin_list = array();
 
     var $msg = '';
@@ -87,11 +91,20 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       // enable direct access to language strings
       $this->setupLocale();
 
-      $this->plugin = $_REQUEST['plugin'];
-      $this->cmd = $_REQUEST['fn'];
-      if (is_array($this->cmd)) $this->cmd = key($this->cmd);
+//      $this->plugin = $_REQUEST['plugin'];
+//      $this->cmd = $_REQUEST['fn'];
+//      if (is_array($this->cmd)) $this->cmd = key($this->cmd);
 
-      sort($this->plugin_list = plugin_list());
+      $fn = $_REQUEST['fn'];
+      if (is_array($fn)) {
+          $this->cmd = key($fn);
+          $this->plugin = is_array($fn[$this->cmd]) ? key($fn[$this->cmd]) : null;
+      } else {
+          $this->cmd = $fn;
+          $this->plugin = null;
+      }
+
+      sort($this->plugin_list = plugin_list('', true));
 
       // verify $_REQUEST vars
       if (in_array($this->cmd, $this->commands)) {
@@ -120,7 +133,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       $this->setupLocale();
 
       if ($this->handler === NULL) $this->handler = & new ap_manage($this, $this->plugin);
-      if (!$this->plugin_list) sort($this->plugin_list = plugin_list());
+      if (!$this->plugin_list) sort($this->plugin_list = plugin_list('',true));
 
       ptln('<div id="plugin__manager">');
       $this->handler->html();
@@ -174,9 +187,23 @@ class ap_manage {
 
           if ($listPlugins) {
             ptln('<h2>'.$this->lang['manage'].'</h2>');
-            ptln('<div class="plugins">');
+						
+            ptln('<form action="'.wl($ID).'" method="post" class="plugins">');
+//            ptln('  <div class="plugins">');
+						
+						ptln('  <fieldset class="buttons">');
+            ptln('    <input type="hidden" name="do"     value="admin" />');
+            ptln('    <input type="hidden" name="page"   value="plugin" />');
+						ptln('  </fieldset>');
+						
             $this->html_pluginlist();
-            ptln('</div>');
+						
+						ptln('  <fieldset class="buttons">');
+						ptln('    <input type="submit" class="button" name="fn[enable]" value="'.$this->lang['btn_enable'].'" />');
+						ptln('  </fieldset>');
+						
+//            ptln('  </div>');
+						ptln('</form>');
           }
 
           ptln('</div>');
@@ -184,34 +211,43 @@ class ap_manage {
 
         function html_pluginlist() {
           global $ID;
+					global $plugin_protected;
 
           foreach ($this->manager->plugin_list as $plugin) {
 
-            $new = (in_array($plugin, $this->downloaded)) ? ' class="new"' : '';
+						$disabled = plugin_isdisabled($plugin);
+						$protected = in_array($plugin,$plugin_protected);
+						
+						$checked = ($disabled) ? '' : ' checked="checked"';
+						$check_disabled = ($protected) ? ' disabled="disabled"' : '';
+						
+						// determine display class(es)
+						$class = array();
+						if (in_array($plugin, $this->downloaded)) $class[] = 'new';
+						if ($disabled) $class[] = 'disabled';
+						if ($protected) $class[] = 'protected';
+						
+						$class = count($class) ? ' class="'.join(' ', $class).'"' : '';
 
-            ptln('  <form action="'.wl($ID).'" method="post" '.$new.'>');
-            ptln('    <fieldset>');
+            ptln('    <fieldset'.$class.'>');
             ptln('      <legend>'.$plugin.'</legend>');
+						ptln('      <input type="checkbox" class="enable" name="enabled[]" value="'.$plugin.'"'.$checked.$check_disabled.' />');
             ptln('      <h3 class="legend">'.$plugin.'</h3>');
-            ptln('      <input type="hidden" name="do"     value="admin" />');
-            ptln('      <input type="hidden" name="page"   value="plugin" />');
-            ptln('      <input type="hidden" name="plugin" value="'.$plugin.'" />');
 
-            $this->html_button('info', false, 6);
+            $this->html_button($plugin, 'info', false, 6);
             if (in_array('settings', $this->manager->functions)) {
-              $this->html_button('settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
+              $this->html_button($plugin, 'settings', !@file_exists(DOKU_PLUGIN.$plugin.'/settings.php'), 6);
             }
-            $this->html_button('update', !$this->plugin_readlog($plugin, 'url'), 6);
-            $this->html_button('delete', false, 6);
+            $this->html_button($plugin, 'update', !$this->plugin_readlog($plugin, 'url'), 6);						
+            $this->html_button($plugin, 'delete', $protected, 6);
 
             ptln('    </fieldset>');
-            ptln('  </form>');
             }
         }
 
-        function html_button($btn, $disabled=false, $indent=0) {
+        function html_button($plugin, $btn, $disabled=false, $indent=0) {
             $disabled = ($disabled) ? 'disabled="disabled"' : '';
-            ptln('<input type="submit" class="button" '.$disabled.' name="fn['.$btn.']" value="'.$this->lang['btn_'.$btn].'" />',$indent);
+            ptln('<input type="submit" class="button" '.$disabled.' name="fn['.$btn.']['.$plugin.']" value="'.$this->lang['btn_'.$btn].'" />',$indent);
         }
 
         /**
@@ -219,7 +255,7 @@ class ap_manage {
          */
         function refresh() {
 
-            sort($this->manager->plugin_list = plugin_list());
+            sort($this->manager->plugin_list = plugin_list('',true));
 
             // update latest plugin date - FIXME
             return (!$this->manager->error);
@@ -531,6 +567,33 @@ class ap_manage {
         }
     }
     class ap_settings extends ap_manage {}
+		
+		class ap_enable extends ap_manage {
+		
+		  var $enabled = array();
+		
+		  function process() {
+			  global $plugin_protected;
+				
+				$this->enabled = $_REQUEST['enabled'];
+				
+				foreach ($this->manager->plugin_list as $plugin) {
+				  if (in_array($plugin, $plugin_protected)) continue;
+					
+					$new = in_array($plugin, $this->enabled);
+					$old = !plugin_isdisabled($plugin);
+					
+					if ($new != $old) {
+						switch ($new) {
+						  // enable plugin
+							case true : plugin_enable($plugin); break;
+							case false: plugin_disable($plugin); break;
+						}
+					}		
+				}
+			}
+			
+		}
 
     //--------------[ utilities ]-----------------------------------
 
@@ -641,12 +704,12 @@ class ap_manage {
     // can this move to pluginutils?
     function ap_plugin_components($plugin) {
 
-      global $common_plugin_types;
+      global $plugin_types;
 
       $components = array();
       $path = DOKU_PLUGIN.$plugin.'/';
 
-      foreach ($common_plugin_types as $type) {
+      foreach ($plugin_types as $type) {
         if (file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }
 
         if ($dh = @opendir($path.$type.'/')) {
