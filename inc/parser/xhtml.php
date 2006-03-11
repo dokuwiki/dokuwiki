@@ -93,6 +93,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($this->info['toc']){
             $this->doc = $this->render_TOC().$this->doc;
         }
+
+        // make sure there are no empty paragraphs
+        $this->doc = preg_replace('#<p(>| .*?>)\s*</p>#','',$this->doc);
     }
 
     /**
