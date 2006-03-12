@@ -14,7 +14,7 @@ $lang['nosupport']   = '(brugerstyring er ikke understøttet)';
 $lang['badauth']     = 'ugyldig valideringsmekanisme';     // should never be displayed!
 
 $lang['user_id']     = 'Bruger';
-$lang['user_pass']   = 'Password';
+$lang['user_pass']   = 'Adgangskode';
 $lang['user_name']   = 'Navn';
 $lang['user_mail']   = 'E-mail';
 $lang['user_groups'] = 'Grupper';

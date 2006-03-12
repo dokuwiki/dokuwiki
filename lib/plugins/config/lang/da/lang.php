@@ -20,12 +20,12 @@ $lang['locked']     = 'Indstillingsfilen kunne ikke opdateres, hvis dette er en 
 
 /* -------------------- Config Options --------------------------- */
 
-//$lang['fmode']       = 'File creation mode';
-//$lang['dmode']       = 'Directory creation mode';
+$lang['fmode']       = 'Filoprettelsestilstand';
+$lang['dmode']       = 'Katalogoprettelsestilstand';
 $lang['lang']        = 'Sprog';
-//$lang['basedir']     = 'Base directory';
-//$lang['baseurl']     = 'Base URL';
-//$lang['savedir']     = 'Directory for saving data';
+$lang['basedir']     = 'Grundkatalog';
+$lang['baseurl']     = 'Grund URL';
+$lang['savedir']     = 'Katalog til opbevaring af data';
 $lang['start']       = 'Startsidens navn';
 $lang['title']       = 'Wiki titel';
 $lang['template']    = 'Skabelon';
@@ -38,11 +38,11 @@ $lang['htmlok']      = 'Tillad indlejret HTML';
 $lang['phpok']       = 'Tillad indlejret PHP';
 $lang['dformat']     = 'Datoformat (se PHP\'s <a href="http://www.php.net/date">date</a> funktion)';
 $lang['signature']   = 'Signatur';
-//$lang['toptoclevel'] = 'Top level for table of contents';
-//$lang['maxtoclevel'] = 'Maximum level for table of contents';
+$lang['toptoclevel'] = 'Højeste niveau for indholdsfortegnelse';
+$lang['maxtoclevel'] = 'Maksimalt niveau for indholdsfortegnelse';
 //$lang['maxseclevel'] = 'Maximum section edit level';
 $lang['camelcase']   = 'Brug CamelCase til links';
-//$lang['deaccent']    = 'Clean pagenames';
+$lang['deaccent']    = 'Pæne sidenavne';
 //$lang['useheading']  = 'Use first heading for pagenames';
 //$lang['refcheck']    = 'Media reference check';
 //$lang['refshow']     = 'Number of media references to show';
@@ -62,10 +62,10 @@ $lang['relnofollow'] = 'Brug rel="nofollow"';
 //$lang['passcrypt']   = 'Password encryption method';
 //$lang['defaultgroup']= 'Default group';
 $lang['superuser']   = 'Superbruger';
-//$lang['profileconfirm'] = 'Confirm profile changes with password';
+$lang['profileconfirm'] = 'Bekræft profilændringer med password';
 
 /* Advanced Options */
-//$lang['userewrite']  = 'Use nice URLs';
+$lang['userewrite']  = 'Brug pæne URLer';
 //$lang['useslash']    = 'Use slash as namespace separator in URLs';
 //$lang['sepchar']     = 'Page name word separator';
 //$lang['canonical']   = 'Use fully canonical URLs';
@@ -79,7 +79,7 @@ $lang['mailfrom']    = 'Email adresse til brug for automatiske mails';
 $lang['gdlib']       = 'GD Lib version';
 //$lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
 $lang['spellchecker']= 'Slå stavekontrol til';
-//$lang['subscribers'] = 'Enable page subscription support';
+$lang['subscribers'] = 'Slå understøttelse af abonnement på sider til';
 $lang['compress']    = 'Komprimer CSS og Javascript filer';
 //$lang['hidepages']   = 'Hide matching pages (regular expressions)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for ikke-eksisterende sider';
@@ -102,12 +102,12 @@ $lang['proxy____pass'] = 'Proxy password';
 $lang['proxy____ssl']  = 'Brug SSL til at forbinde til proxy';
 
 /* Safemode Hack */
-//$lang['safemodehack'] = 'enable safemode hack';
-//$lang['ftp____host'] = 'FTP server for safemode hack';
-//$lang['ftp____port'] = 'FTP port for safemode hack';
-//$lang['ftp____user'] = 'FTP user name for safemode hack';
-//$lang['ftp____pass'] = 'FTP password for safemode hack';
-//$lang['ftp____root'] = 'FTP root directory for safemode hack';
+$lang['safemodehack'] = 'slå safemode hack til';
+$lang['ftp____host'] = 'FTP server til safemode hack';
+$lang['ftp____port'] = 'FTP port til safemode hack';
+$lang['ftp____user'] = 'FTP brugernavn til safemode hack';
+$lang['ftp____pass'] = 'FTP adgangskode til safemode hack';
+$lang['ftp____root'] = 'FTP rodkatalog til safemode hack';
 
 /* userewrite options */
 $lang['userewrite_o_0'] = 'ingen';

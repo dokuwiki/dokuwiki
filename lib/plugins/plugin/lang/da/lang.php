@@ -17,6 +17,7 @@ $lang['btn_update'] = 'opdater';
 $lang['btn_delete'] = 'slet';
 $lang['btn_settings'] = 'indstillinger';
 $lang['btn_download'] = 'Download';
+$lang['btn_enable'] = 'Gem';
 
 $lang['url']              = 'URL';
 
