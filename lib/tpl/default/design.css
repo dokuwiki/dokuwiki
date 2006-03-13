@@ -85,8 +85,9 @@ div.dokuwiki textarea.edit {
   color: Black;
   background-color: __white__;
   font-size:14px;
-  padding: 3px;
+  padding: 0.3em 0 0 0.3em;
   width:100%;
+  background:  __white__ url(images/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki input.edit, div.dokuwiki select.edit {
@@ -98,6 +99,7 @@ div.dokuwiki input.edit, div.dokuwiki select.edit {
   margin: 1px;
   padding: 0.20em 0.3em;
   display: inline;
+  background:  __white__ url(images/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki select.edit {
@@ -166,6 +168,7 @@ div.dokuwiki input.button, div.dokuwiki button.button{
   cursor: pointer;
   margin: 1px;
   padding: 0.125em 0.4em;
+  background:  __white__ url(images/buttonshadow.png) repeat-x bottom;
 }
 
 * html div.dokuwiki input.button, * html div.dokuwiki button.button{
@@ -711,6 +714,7 @@ button.toolbutton{
   margin: 0 1px 0 0;
   border: 1px solid __dark__;
   cursor: pointer;
+  background:  __white__ url(images/buttonshadow.png) repeat-x bottom;
 }
 
 div.picker {
