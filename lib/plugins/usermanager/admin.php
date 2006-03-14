@@ -48,7 +48,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           // we're good to go
           $this->_auth = & $auth;
                 
-                }
+        }
     }
 
     /**
@@ -370,7 +370,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Modify user
+     * Modify user (modified user data has been recieved)
      */
     function _modifyUser(){
         if (!$this->_auth->canDo('UserMod')) return false;
