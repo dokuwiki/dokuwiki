@@ -273,7 +273,7 @@ class auth_ldap extends auth_basic {
     function _openLDAP(){
         if($this->con) return true; // connection already established
 
-        $port = ($this->cnf['port']) ? $this->cnf['port'] : 636;
+        $port = ($this->cnf['port']) ? $this->cnf['port'] : 389;
         $this->con = @ldap_connect($this->cnf['server'],$port);
         if(!$this->con){
             msg("LDAP: couldn't connect to LDAP server",-1);
