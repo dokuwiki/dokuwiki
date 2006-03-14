@@ -27,7 +27,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     var $_start = 0;          // index of first user to be displayed
     var $_last = 0;           // index of the last user to be displayed
     var $_pagesize = 20;      // number of users to list on one page
-    var $_user_edit = null;   // set to user selected for editing
+    var $_edit_user = '';     // set to user selected for editing
+		var $_edit_userdata = array();
     var $_disabled = '';      // if disabled set to explanatory string
 
     /**
@@ -112,7 +113,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           case "add"    : $this->_addUser(); break;
           case "delete" : $this->_deleteUser(); break;
           case "modify" : $this->_modifyUser(); break;
-          case "edit"   : $this->_edit_user = $param; break;     // no extra handling required - only html
+          case "edit"   : $this->_editUser($param); break;
           case "search" : $this->_setFilter($param);
                           $this->_start = 0;
                           break;
@@ -227,7 +228,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           print $this->locale_xhtml('add');
           ptln("  <div class=\"level2\">");
 
-          $this->_htmlUserForm('add',null,4);
+          $this->_htmlUserForm('add',null,array(),4);
 
           ptln("  </div>");
           ptln("</div>");
@@ -238,7 +239,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           print $this->locale_xhtml('edit');
           ptln("  <div class=\"level2\">");
 
-          $this->_htmlUserForm('modify',$this->_edit_user,4);
+          $this->_htmlUserForm('modify',$this->_edit_user,$this->_edit_userdata,4);
 
           ptln("  </div>");
           ptln("</div>");
@@ -250,13 +251,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * @todo disable fields which the backend can't change
      */
-    function _htmlUserForm($cmd,$user=null,$indent=0) {
+    function _htmlUserForm($cmd,$user='',$userdata=array(),$indent=0) {
+
+        $name = $mail = $groups = '';
 
         if ($user) {
-          extract($this->_auth->getUserData($user));
-          $groups = join(',',$grps);
-        } else {
-          $user = $name = $mail = $groups = '';
+          extract($userdata);
+          if (!empty($grps)) $groups = join(',',$grps);
         }
 
         ptln("<form action=\"".wl($ID)."\" method=\"post\">",$indent);
@@ -343,6 +344,29 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           $part2 = str_replace('%d', (count($selected)-$count), $this->lang['delete_fail']);
           msg("$part1, $part2",-1);
         }
+				
+				return true;
+    }
+		
+    /**
+     * Edit user (a user has been selected for editing)
+     */
+    function _editUser($param) {
+        if (!$this->_auth->canDo('UserMod')) return false;
+
+        $user = cleanID(preg_replace('/.*:/','',$param));
+        $userdata = $this->_auth->getUserData($user);
+
+        // no user found?
+        if (!$userdata) {
+          msg($this->lang['edit_usermissing'],-1);
+          return false;
+        }
+
+        $this->_edit_user = $user;
+        $this->_edit_userdata = $userdata;
+
+        return true;
     }
 
     /**
@@ -385,11 +409,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!empty($newgrps) && $this->_auth->canDo('modGroups') && $newgrps != $oldinfo['grps'])
           $changes['grps'] = $newgrps;
 
-    if ($this->_auth->modifyUser($olduser, $changes)) {
+        if ($this->_auth->modifyUser($olduser, $changes)) {
           msg($this->lang['update_ok'],1);
         } else {
           msg($this->lang['update_fail'],-1);
         }
+
+        return true;
     }
 
     /*
