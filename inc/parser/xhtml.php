@@ -95,7 +95,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // make sure there are no empty paragraphs
-        $this->doc = preg_replace('#<p(>| .*?>)\s*</p>#','',$this->doc);
+        $this->doc = preg_replace('#<p>\s*</p>#','',$this->doc);
     }
 
     /**
