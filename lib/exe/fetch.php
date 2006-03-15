@@ -82,11 +82,12 @@
 function sendFile($file,$mime){
   // send headers
   header("Content-Type: $mime");
-  http_conditionalRequest(filemtime($file));
-  list($start,$len) = http_rangeRequest(filesize($file));
   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
   header('Pragma: public');
   header('Accept-Ranges: bytes');
+  //send important headers first, script stops here if '304 Not Modified' response
+  http_conditionalRequest(filemtime($file));
+  list($start,$len) = http_rangeRequest(filesize($file));
 
   //application mime type is downloadable
   if(substr($mime,0,11) == 'application'){
