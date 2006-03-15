@@ -67,10 +67,15 @@ function css_out(){
         $files[DOKU_CONF.'userstyle.css'] = '';
     }
 
-    // check cache age 
+    // check cache age & handle conditional request
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
     if(css_cacheok($cache,array_keys($files))){
+        http_conditionalRequest(filemtime($cache));
         readfile($cache);
         return;
+    } else {
+        http_conditionalRequest(time());
     }
 
     // start output buffering and build the stylesheet

@@ -55,10 +55,15 @@ function js_out(){
     // get possible plugin scripts
     $plugins = js_pluginscripts();
 
-    // check cache age here
+    // check cache age & handle conditional request
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
     if(js_cacheok($cache,array_merge($files,$plugins))){
+        http_conditionalRequest(filemtime($cache));
         readfile($cache);
         return;
+    } else {
+        http_conditionalRequest(time());
     }
 
     // start output buffering and build the script
