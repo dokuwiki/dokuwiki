@@ -174,4 +174,7 @@ $lang['subscribe_noaddress']= 'K vašemu uživatelskému profilu chybí e-mailov
 $lang['unsubscribe_success']= 'Uživatel %s byl odebrán ze seznamu pro odběr změn ve stránce %s';
 $lang['unsubscribe_error']  = 'Chyba při odstraňování uživatele %s ze seznamu pro odběru změn ve stránce %s';
 
+$lang['authmodfailed']   = 'Autentikace uživatelů je špatně nastavena. Informujte správce této wiki.';
+$lang['authtempfail']    = 'Autentikace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte správce této wiki.';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
