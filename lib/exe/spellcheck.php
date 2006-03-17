@@ -51,6 +51,7 @@ require_once (DOKU_INC.'inc/init.php');
 session_write_close();
 require_once (DOKU_INC.'inc/utf8.php');
 require_once (DOKU_INC.'inc/aspell.php');
+require_once (DOKU_INC.'inc/common.php');
 
 header('Content-Type: text/plain; charset=utf-8');
 
@@ -83,6 +84,8 @@ if(function_exists($call)){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function spaceslink($string, $check=""){
+  $string  = unslash($string);
+  $check   = unslash($check);
   $result  = '  '; //opening [[
   $result .= str_pad('',utf8_strlen($string),' ');
   $result .= $check;
