@@ -624,12 +624,16 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
     }
 
     function preConnect() {
+        if(!count($this->acronyms)) return;
+
         $bound = '[\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]';
         $acronyms = array_map('Doku_Lexer_Escape',$this->acronyms);
         $this->pattern = '(?<=^|'.$bound.')(?:'.join('|',$acronyms).')(?='.$bound.')';
     }
 
     function connectTo($mode) {
+        if(!count($this->acronyms)) return;
+
         if ( strlen($this->pattern) > 0 ) {
             $this->Lexer->addSpecialPattern($this->pattern,$mode,'acronym');
         }
@@ -651,6 +655,8 @@ class Doku_Parser_Mode_smiley extends Doku_Parser_Mode {
     }
 
     function preConnect() {
+        if(!count($this->smileys)) return;
+
         $sep = '';
         foreach ( $this->smileys as $smiley ) {
             $this->pattern .= $sep.Doku_Lexer_Escape($smiley);
@@ -659,6 +665,8 @@ class Doku_Parser_Mode_smiley extends Doku_Parser_Mode {
     }
 
     function connectTo($mode) {
+        if(!count($this->smileys)) return;
+
         if ( strlen($this->pattern) > 0 ) {
             $this->Lexer->addSpecialPattern($this->pattern,$mode,'smiley');
         }
@@ -718,6 +726,8 @@ class Doku_Parser_Mode_entity extends Doku_Parser_Mode {
     }
 
     function preConnect() {
+        if(!count($this->entities)) return;
+
         $sep = '';
         foreach ( $this->entities as $entity ) {
             $this->pattern .= $sep.Doku_Lexer_Escape($entity);
@@ -726,6 +736,8 @@ class Doku_Parser_Mode_entity extends Doku_Parser_Mode {
     }
 
     function connectTo($mode) {
+        if(!count($this->entities)) return;
+
         if ( strlen($this->pattern) > 0 ) {
             $this->Lexer->addSpecialPattern($this->pattern,$mode,'entity');
         }
