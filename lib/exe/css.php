@@ -48,22 +48,21 @@ function css_out(){
     // are needed to fix relative paths in the stylesheets
     $files   = array();
     if($print){
-        $files[DOKU_TPLINC.'print.css'] = DOKU_TPL;
-        if (isset($tplstyles['print'])) $files = array_merge($files, $tplstyles['print']);
-        // load plugin styles
+        // load plugin, template, user styles
         $files = array_merge($files, css_pluginstyles('print'));
+        if (isset($tplstyles['print'])) $files = array_merge($files, $tplstyles['print']);
         $files[DOKU_CONF.'userprint.css'] = '';
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
         if($conf['spellchecker']){
             $files[DOKU_INC.'lib/styles/spellcheck.css'] = DOKU_BASE.'lib/styles/';
         }
+        // load plugin, template, user styles
+        $files = array_merge($files, css_pluginstyles('screen'));
         if (isset($tplstyles['screen'])) $files = array_merge($files, $tplstyles['screen']);
         if($lang['direction'] == 'rtl'){
             if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
         }
-        // load plugin styles
-        $files = array_merge($files, css_pluginstyles('screen'));
         $files[DOKU_CONF.'userstyle.css'] = '';
     }
 
@@ -192,7 +191,8 @@ function css_filetypes(){
     // default style
     echo 'a.mediafile {';
     echo ' background: transparent url('.DOKU_BASE.'lib/images/fileicons/file.png) 0px 1px no-repeat;';
-    echo ' padding-left: 16px;';
+    echo ' padding-left: 18px;';
+    echo ' padding-bottom: 1px;';
     echo '}';
 
     // additional styles when icon available
