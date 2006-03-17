@@ -822,10 +822,53 @@ function getRecents($first,$num,$ns='',$flags=0){
 }
 
 /**
+ * Compare the logline $a to the timestamp $b
+ * @author Yann Hamon <yann.hamon@mandragor.org>
+ * @return integer 0 if the logline has timestamp $b, <0 if the timestam
+ *         of $a is greater than $b, >0 else.
+ */
+function hasTimestamp($a, $b)
+{
+  if (strpos($a, $b) === 0)
+    return 0;
+  else
+    return strcmp ($a, $b);
+}
+
+/**
+ * performs a dichotomic search on an array using
+ * a custom compare function
+ *
+ * @author Yann Hamon <yann.hamon@mandragor.org>
+ */
+function array_dichotomic_search($ar, $value, $compareFunc) {
+  $value = trim($value);
+  if (!$ar || !$value || !$compareFunc) return (null);
+  $len = count($ar);
+
+  $l = 0;
+  $r = $len-1;
+
+  do {
+    $i = floor(($l+$r)/2);
+    if ($compareFunc($ar[$i], $value)<0)
+      $l = $i+1;
+    else
+     $r = $i-1;
+  } while ($compareFunc($ar[$i], $value)!=0 && $l<=$r);
+
+  if ($compareFunc($ar[$i], $value)==0)
+    return $i;
+  else
+    return -1;
+}
+
+/**
  * gets additonal informations for a certain pagerevison
  * from the changelog
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Yann Hamon <yann.hamon@mandragor.org>
  */
 function getRevisionInfo($id,$rev){
   global $conf;
@@ -838,9 +881,27 @@ function getRevisionInfo($id,$rev){
     return $recent;
   }
   $loglines = file($conf['changelog']);
-  $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
-  $loglines = array_reverse($loglines); //reverse sort on timestamp (shouldn't be needed)
-  $line = split("\t",$loglines[0]);
+
+  // Search for a line with a matching timestamp
+  $index = array_dichotomic_search ($loglines, $rev, hasTimestamp);
+  if ($index == -1)
+    return;
+
+  // The following code is necessary when there is more than
+  // one line with one same timestamp
+  $loglines_matching = array();
+  $loglines_matching[] =  $loglines[$index];
+  for ($i=$index-1;hasTimestamp($loglines[$i], $rev) == 0; $i--)
+    $loglines_matching[] = $loglines[$i];
+  for ($i=$index+1;hasTimestamp($loglines[$i], $rev) == 0; $i++)
+    $loglines_matching[] = $loglines[$i];
+
+  // Match only lines concerning the document $id
+  $loglines_matching = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines_matching);
+
+  $loglines_matching = array_reverse($loglines_matching); //reverse sort on timestamp
+  $line = split("\t",$loglines_matching[0]);
+
   $info['date']  = $line[0];
   $info['ip']    = $line[1];
   $info['user']  = $line[3];
@@ -848,6 +909,7 @@ function getRevisionInfo($id,$rev){
   $info['minor'] = isMinor($info['sum']);
   return $info;
 }
+
 
 /**
  * Saves a wikitext by calling io_saveFile
