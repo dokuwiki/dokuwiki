@@ -47,6 +47,11 @@ div.dokuwiki div.nothing {
   margin: 2em;
 }
 
+div.dokuwiki a.nolink:link, div.dokuwiki a.nolink:visited, div.dokuwiki a.nolink:hover, div.dokuwiki a.nolink:active {
+  color: Black;
+  text-decoration:none;
+}
+
 /* ---------------- forms ------------------------ */
 
 div.dokuwiki form {
