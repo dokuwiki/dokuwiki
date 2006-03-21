@@ -29,7 +29,7 @@ $lang['savedir']     = 'Katalog til opbevaring af data';
 $lang['start']       = 'Startsidens navn';
 $lang['title']       = 'Wiki titel';
 $lang['template']    = 'Skabelon';
-//$lang['fullpath']    = 'Reveal full path of pages in the footer';
+$lang['fullpath']    = 'Vis den fulde stil til siderne i bundlinjen';
 $lang['recent']      = 'Nylige ændringer';
 $lang['breadcrumbs'] = 'Stilængde';
 $lang['youarehere']  = 'Hierarkisk sti';
@@ -40,16 +40,16 @@ $lang['dformat']     = 'Datoformat (se PHP\'s <a href="http://www.php.net/date">
 $lang['signature']   = 'Signatur';
 $lang['toptoclevel'] = 'Højeste niveau for indholdsfortegnelse';
 $lang['maxtoclevel'] = 'Maksimalt niveau for indholdsfortegnelse';
-//$lang['maxseclevel'] = 'Maximum section edit level';
+$lang['maxseclevel'] = 'Maksimalt niveau for redigering af sektioner';
 $lang['camelcase']   = 'Brug CamelCase til links';
 $lang['deaccent']    = 'Pæne sidenavne';
-//$lang['useheading']  = 'Use first heading for pagenames';
-//$lang['refcheck']    = 'Media reference check';
-//$lang['refshow']     = 'Number of media references to show';
+$lang['useheading']  = 'Brug første overskrift til sidenavne';
+$lang['refcheck']    = 'Mediereference kontrol';
+$lang['refshow']     = 'Antal viste mediereferencer';
 $lang['allowdebug']  = 'Tillad debugging <b>slå fra hvis unødvendig!</b>';
 
 $lang['usewordblock']= 'Bloker spam baseret på ordliste';
-//$lang['indexdelay']  = 'Time delay before indexing';
+$lang['indexdelay']  = 'Tidsforsinkelse af indeksering';
 $lang['relnofollow'] = 'Brug rel="nofollow"';
 //$lang['mailguard']   = 'Obfuscate email addresses';
 
@@ -74,14 +74,14 @@ $lang['userewrite']  = 'Brug pæne URLer';
 //$lang['cachetime']   = 'Maximum age for cache (sec)';
 $lang['purgeonadd']  = 'Ryd cache når nye sider tilføjes';
 //$lang['locktime']    = 'Maximum age for lock files (sec)';
-//$lang['notify']      = 'Send change notifications to this email address';
+$lang['notify']      = 'Send ændringsnotifikationer til denne e-mailadresse';
 $lang['mailfrom']    = 'Email adresse til brug for automatiske mails';
 $lang['gdlib']       = 'GD Lib version';
-//$lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
+$lang['im_convert']  = 'Sti til ImageMagick\'s convert værktøj';
 $lang['spellchecker']= 'Slå stavekontrol til';
 $lang['subscribers'] = 'Slå understøttelse af abonnement på sider til';
 $lang['compress']    = 'Komprimer CSS og Javascript filer';
-//$lang['hidepages']   = 'Hide matching pages (regular expressions)';
+$lang['hidepages']   = 'Skjul matchende sider (regulære udtryk)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for ikke-eksisterende sider';
 $lang['sitemap']     = 'Generer Google sitemap (dage)';
 
