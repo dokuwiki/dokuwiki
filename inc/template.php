@@ -959,4 +959,48 @@ function tpl_indexerWebBug(){
   print "<img $att />";
 }
 
+// configuration methods
+/**
+ * tpl_getConf($id)
+ * 
+ * use this function to access template configuration variables
+ */
+function tpl_getConf($id){
+  global $conf;
+  global $tpl_configloaded;
+  
+  $tpl = $conf['template'];
+  
+  if (!$tpl_configloaded){
+    $tconf = tpl_loadConfig();
+    if ($tconf !== false){
+      foreach ($tconf as $key => $value){
+        if (isset($conf['tpl'][$tpl][$key])) continue;
+        $conf['tpl'][$tpl][$key] = $value;
+      }
+      $tpl_configloaded = true;
+    }
+  }
+
+  return $conf['tpl'][$tpl][$id];
+}
+
+/**
+ * tpl_loadConfig()
+ * reads all template configuration variables
+ * this function is automatically called by tpl_getConf()
+ */
+function tpl_loadConfig(){
+      
+  $file = DOKU_TPLINC.'/conf/default.php';
+  $conf = array();
+  
+  if (!@file_exists($file)) return false;
+  
+  // load default config file
+  include($file);
+  
+  return $conf;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
