@@ -26,6 +26,7 @@ if (!class_exists('configuration')) {
      *  constructor
      */
     function configuration($datafile) {
+        global $conf;
 
         if (!@file_exists($datafile)) {
           msg('No configuration metadata found at - '.htmlspecialchars($datafile),-1);
@@ -43,15 +44,16 @@ if (!class_exists('configuration')) {
 
         $this->locked = $this->_is_locked();
 
-        $this->_metadata = array_merge($meta, $this->get_plugin_metadata());
+        $this->_metadata = array_merge($meta, $this->get_plugintpl_metadata($conf['template']));
 
         $this->retrieve_settings();
     }
 
     function retrieve_settings() {
+        global $conf;
 
         if (!$this->_loaded) {
-          $default = array_merge($this->_read_config($this->_default_file), $this->get_plugin_default());
+          $default = array_merge($this->_read_config($this->_default_file), $this->get_plugintpl_default($conf['template']));
           $local = $this->_read_config($this->_local_file);
           $protected = $this->_read_config($this->_protected_file);
 
@@ -206,11 +208,11 @@ if (!class_exists('configuration')) {
     }
 
     /**
-     * load metadata for plugin settings
+     * load metadata for plugin and template settings
      */
-    function get_plugin_metadata(){
-      $file = '/settings/config.metadata.php';
-      $meta = array();
+    function get_plugintpl_metadata($tpl){
+      $file     = '/conf/metadata.php';
+      $metadata = array();
 
       if ($dh = opendir(DOKU_PLUGIN)) {
         while (false !== ($plugin = readdir($dh))) {
@@ -218,29 +220,57 @@ if (!class_exists('configuration')) {
           if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
           if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
+            $meta = array();
             @include(DOKU_PLUGIN.$plugin.$file);
+            foreach ($meta as $key => $value){
+              $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
+            }
           }
         }
         closedir($dh);
       }
-      return $meta;
+      
+      // the same for the active template
+      if (@file_exists(DOKU_TPLINC.$file)){
+        $meta = array();
+        @include(DOKU_TPLINC.$file);
+        foreach ($meta as $key => $value){
+          $metadata['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
+        }
+      }
+      
+      return $metadata;
     }
 
     /**
-     * load default settings for plugins
+     * load default settings for plugins and templates
      */
-    function get_plugin_default(){
-      $file    = '/settings/config.default.php';
+    function get_plugintpl_default($tpl){
+      $file    = '/conf/default.php';
       $default = array();
 
       if ($dh = opendir(DOKU_PLUGIN)) {
         while (false !== ($plugin = readdir($dh))) {
           if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
-            $default = array_merge($default, $this->_read_config("DOKU_PLUGIN.'".$plugin.$file."'"));
+            $conf = array();
+            @include(DOKU_PLUGIN.$plugin.$file);
+            foreach ($conf as $key => $value){
+              $default['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
+            }
           }
         }
         closedir($dh);
       }
+      
+      // the same for the active template
+      if (@file_exists(DOKU_TPLINC.$file)){
+        $conf = array();
+        @include(DOKU_TPLINC.$file);
+        foreach ($conf as $key => $value){
+          $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
+        }
+      }
+      
       return $default;
     }
 

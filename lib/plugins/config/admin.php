@@ -184,13 +184,11 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     }
 
-    function _setup_localised_plugin_prompts() {
+    function _setup_localised_plugintpl_prompts() {
       global $conf;
 
       $langfile   = '/lang/'.$conf[lang].'/settings.php';
       $enlangfile = '/lang/en/settings.php';
-
-      $lang = array();
 
       if ($dh = opendir(DOKU_PLUGIN)) {
         while (false !== ($plugin = readdir($dh))) {
@@ -208,7 +206,19 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
         closedir($dh);
       }
-
+      
+      // the same for the active template
+      $tpl = $conf['template'];
+      
+      if (@file_exists(DOKU_TPLINC.$enlangfile)){
+        $lang = array();
+        @include(DOKU_TPLINC.$enlangfile);
+        if ($conf['lang'] != 'en') @include(DOKU_TPLINC.$langfile);
+        foreach ($lang as $key => $value){
+          $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
+        }
+      }
+      
       return true;
     }
 
