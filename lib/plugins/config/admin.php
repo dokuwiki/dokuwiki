@@ -94,7 +94,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       global $ID;
 
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
-            $this->setupLocale(true);
+      $this->setupLocale(true);
 
       print $this->locale_xhtml('intro');
 
@@ -190,7 +190,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       $langfile   = '/lang/'.$conf[lang].'/settings.php';
       $enlangfile = '/lang/en/settings.php';
 
-            $lang = array();
+      $lang = array();
 
       if ($dh = opendir(DOKU_PLUGIN)) {
         while (false !== ($plugin = readdir($dh))) {
@@ -198,13 +198,15 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
           if (@file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
+            $lang = array();
             @include(DOKU_PLUGIN.$plugin.$enlangfile);
             if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
+            foreach ($lang as $key => $value){
+              $this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
+            }
           }
         }
         closedir($dh);
-
-        $this->lang = array_merge($lang, $this->lang);
       }
 
       return true;

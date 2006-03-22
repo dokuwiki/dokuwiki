@@ -16,6 +16,7 @@ class DokuWiki_Admin_Plugin {
 
   var $localised = false;        // set to true by setupLocale() after loading language dependent strings
   var $lang = array();           // array to hold language dependent strings, best accessed via ->getLang()
+  var $configloaded = false;     // set to true by loadConfig() after loading plugin configuration variables
 
   /**
    * General Info
@@ -127,6 +128,48 @@ class DokuWiki_Admin_Plugin {
     
     $this->lang = $lang;
     $this->localised = true;
+  }
+  
+  // configuration methods
+  /**
+   * getConf($id)
+   * 
+   * use this function to access plugin configuration variables
+   */
+  function getConf($id){
+    global $conf;
+    
+    $plugin = $this->getPluginName();
+    
+    if (!$this->configloaded){
+      if ($pconf = $this->loadConfig() !== false){
+        foreach ($pconf as $key => $value){
+          if (isset($conf['plugin'][$plugin][$key])) continue;
+          $conf['plugin'][$plugin][$key] = $value;
+        }
+        $this->configloaded = true;
+      }
+    }
+
+    return $conf['plugin'][$plugin][$id];
+  }
+  
+  /**
+   * loadConfig()
+   * reads all plugin configuration variables into $this->conf
+   * this function is automatically called by getConf()
+   */
+  function loadConfig(){
+        
+    $path = DOKU_PLUGIN.$this->getPluginName().'/conf/';
+    $conf = array();
+    
+    if (!@file_exists($path.'default.php')) return false;
+    
+    // load default config file
+    include($path.'default.php');
+    
+    return $conf;
   }
   
   // standard functions for outputing email addresses and links
