@@ -12,6 +12,7 @@
   require_once(DOKU_INC.'inc/parserutils.php');
   require_once(DOKU_INC.'inc/feedcreator.class.php');
   require_once(DOKU_INC.'inc/auth.php');
+  require_once(DOKU_INC.'inc/pageutils.php');
 
   //close session
   session_write_close();
@@ -46,12 +47,17 @@
   $cache = getCacheName($num.$type.$mode.$ns.$ltype.$_SERVER['REMOTE_USER'],'.feed');
 
   // check cacheage and deliver if nothing has changed since last
-  // time (with 5 minutes settletime)
+  // time or the update interval has not passed, also handles conditional requests
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+  header('Pragma: public');
+  header('Content-Type: application/xml; charset=utf-8');
   $cmod = @filemtime($cache); // 0 if not exists
-  if($cmod && ($cmod+(5*60) >= @filemtime($conf['changelog']))){
-    header('Content-Type: application/xml; charset=utf-8');
+  if($cmod && (($cmod+$conf['rss_update']>time()) || ($cmod>@filemtime($conf['changelog'])))){
+    http_conditionalRequest($cmod);
     print io_readFile($cache);
     exit;
+  } else {
+    http_conditionalRequest(time());
   }
 
   // create new feed
@@ -79,7 +85,6 @@
   io_saveFile($cache,$feed);
 
   // finally deliver
-  header('Content-Type: application/xml; charset=utf-8');
   print $feed;
 
 // ---------------------------------------------------------------- //

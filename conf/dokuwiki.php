@@ -94,6 +94,7 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
+$conf['rss_update'] = 5*60;              //Update the RSS feed every n minutes (defaults to 5 minutes)
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
