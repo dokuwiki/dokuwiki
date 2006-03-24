@@ -3,6 +3,13 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+  // start timing Dokuwiki execution
+  function delta_time($start=0) {
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec+(float)$sec)-((float)$start);
+  }
+  define('DOKU_START_TIME', delta_time());
+
   // define the include path
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 

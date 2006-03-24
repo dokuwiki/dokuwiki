@@ -55,4 +55,11 @@ $tgt = ($conf['target']['extern']) ? 'target="'.$conf['target']['extern'].'"' : 
 </rdf:RDF>
 
 -->
+
+<?php
+if ($conf['allowdebug']) {
+    echo '<!-- page made in '.round(delta_time(DOKU_START_TIME), 3).' seconds -->';
+}
+?>
+
 </div>
