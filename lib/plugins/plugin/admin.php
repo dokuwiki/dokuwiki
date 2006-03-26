@@ -257,6 +257,10 @@ class ap_manage {
 
             sort($this->manager->plugin_list = plugin_list('',true));
 
+            // expire dokuwiki caches
+            // touching local.php expires wiki page, JS and CSS caches
+            @touch(DOKU_CONF.'local.php');
+
             // update latest plugin date - FIXME
             return (!$this->manager->error);
         }
@@ -591,6 +595,9 @@ class ap_manage {
 						}
 					}		
 				}
+
+        // refresh plugins, including expiring any dokuwiki cache(s)
+        $this->refresh();
 			}
 			
 		}
