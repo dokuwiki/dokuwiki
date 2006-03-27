@@ -458,7 +458,11 @@ if (!class_exists('setting_email')) {
 
 if (!class_exists('setting_numeric')) {
   class setting_numeric extends setting_string {
-    var $_pattern = '/^[-+\/*0-9 ]*$/';
+    // This allows for many PHP syntax errors...
+    // var $_pattern = '/^[-+\/*0-9 ]*$/';
+    // much more restrictive, but should eliminate syntax errors.
+    var $_pattern = '/^[-]?[0-9]+(?:[-+*][0-9]+)*$/';
+    //FIXME - make the numeric error checking better.
 
     function out($var, $fmt='php') {
 
