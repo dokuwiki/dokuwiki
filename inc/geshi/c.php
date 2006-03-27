@@ -6,7 +6,7 @@
  * Contributors:
  *  - Jack Lloyd (lloyd@randombit.net)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.7
+ * Release Version: 1.0.7.8
  * CVS Revision Version: $Revision: 1.8 $
  * Date Started: 2004/06/04
  * Last Modified: $Date: 2006/02/25 00:46:33 $

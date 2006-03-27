@@ -2,25 +2,26 @@
 /*************************************************************************************
  * diff.php
  * --------
- * Author: Conny Brunnkvist (conny@fuchsia.se)
+ * Author: Conny Brunnkvist (conny@fuchsia.se), W. Tasin (tasin@fhm.edu)
  * Copyright: (c) 2004 Fuchsia Open Source Solutions (http://www.fuchsia.se/)
- * Release Version: 1.0.7.7
- * CVS Revision Version: $Revision: 1.8 $
+ * Release Version: 1.0.7.8
+ * CVS Revision Version: $Revision: 1.9 $
  * Date Started: 2004/12/29
- * Last Modified: $Date: 2006/02/25 00:46:33 $
+ * Last Modified: $Date: 2006/03/23 07:28:46 $
  *
  * Diff-output language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2006/02/27
+ *  -  changing language file to use matching of start (^) and end ($) (wt)
+ * 
  * 2004/12/29 (1.0.0)
  *  -  First Release
  *
- * TODO (updated 2004/12/29)
+ * TODO (updated 2006/02/27)
  * -------------------------
- * * Find out why GeSHi doesn't seem to allow matching of start (^) and end ($) 
- * * So that we can stop pretending that we are dealing with single-line comments
- * * Should be able to cover all sorts of diff-output
+ *    
  *
  *************************************************************************************
  *
@@ -45,72 +46,64 @@
 
 $language_data = array (
 	'LANG_NAME' => 'Diff',
-	'COMMENT_SINGLE' => array(
-				0 => '--- ',
-				1 => '+++ ',
-				2 => '<',
-				3 => '>',
-				4 => '-',
-				5 => '+',
-				6 => '!',
-				7 => '@@',
-				8 => '*** ',
-				/*9 => '***************',*/
-				/*10 => ' ', // All other rows starts with a space (bug?) */
-			),
+	'COMMENT_SINGLE' => array(),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array(),
 	'ESCAPE_CHAR' => ' ',
 	'KEYWORDS' => array(
-			0 => array(
-				'\ No newline at end of file',
-			),
 			1 => array(
+				'\ No newline at end of file'
+			),
+			2 => array(
 				'***************' /* This only seems to works in some cases? */
 			),
 		),
 	'SYMBOLS' => array(
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
+        1 => false,
+        2 => false
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			0 => 'color: #aaaaaa; font-style: italic;',
-			1 => 'color: #dd6611;',
+			1 => 'color: #aaaaaa; font-style: italic;',
+			2 => 'color: #dd6611;',
 			),
 		'COMMENTS' => array(
-			0 => 'color: #228822;',
-			1 => 'color: #228822;',
-                        2 => 'color: #991111;', 
-                        3 => 'color: #00aaee;', 
-                        4 => 'color: #991111;', 
-                        5 => 'color: #00b000;', 
-                        /*6 => 'color: #dd6611;', */
-                        6 => 'color: #0011dd;', 
-			7 => 'color: #aaaa88;',
-			8 => 'color: #228822;',
-			/*9 => 'color: #aaaa88;',*/
-			/*10 => 'color: #000000;',*/
-			),
+            ),
 		'ESCAPE_CHAR' => array(
+            0 => ''
 			),
 		'BRACKETS' => array(
+            0 => ''
 			),
 		'STRINGS' => array(
+            0 => ''
 			),
 		'NUMBERS' => array(
+            0 => ''
 			),
 		'METHODS' => array(
+            0 => ''
 			),
 		'SYMBOLS' => array(
+            0 => ''
 			),
 		'SCRIPT' => array(
+            0 => ''
 			),
-                'REGEXPS' => array(
-			0 => 'color: #aaaaaa;',
-			/*1 => 'color: #000000;',*/
+        'REGEXPS' => array(
+			0 => 'color: #440088;',
+			1 => 'color: #991111;',
+			2 => 'color: #00b000;',
+            3 => 'color: #888822;', 
+            4 => 'color: #888822;', 
+            5 => 'color: #0011dd;', 
+            6 => 'color: #440088;', 
+			7 => 'color: #991111;',
+            8 => 'color: #00b000;', 
+			9 => 'color: #888822;',
                         ),
 		),
 	'URLS' => array(
@@ -119,14 +112,70 @@ $language_data = array (
 	'OBJECT_SPLITTER' => '',
 	'REGEXPS' => array(
 			0 => "[0-9,]+[acd][0-9,]+",
-			/*1 => array( // Match all other lines - again this also doesn't work.
-				GESHI_SEARCH => '(\ )(.+)',
-				GESHI_REPLACE => '\\2\\3',
-				GESHI_MODIFIERS => '',
-				GESHI_BEFORE => '\\1',
-				GESHI_AFTER => ''
-			),*/
-		),
+			1 => array(
+			GESHI_SEARCH => '^\\&lt;.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			2 => array(
+			GESHI_SEARCH => '^\\&gt;.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			3 => array(
+			GESHI_SEARCH => '^[\\-]{3}\\s.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			4 => array(
+			GESHI_SEARCH => '^(\\+){3}\\s.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			5 => array(
+			GESHI_SEARCH => '^\\!.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			6 => array(
+			GESHI_SEARCH => '^[\\@]{2}.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			7 => array(
+			GESHI_SEARCH => '^\\-.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			8 => array(
+			GESHI_SEARCH => '^\\+.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+			9 => array(
+			GESHI_SEARCH => '^(\\*){3}\\s.*$',
+			GESHI_REPLACE => '\\0',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+	),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(
 		),

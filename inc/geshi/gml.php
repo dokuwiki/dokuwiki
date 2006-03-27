@@ -4,10 +4,10 @@
  * --------
  * Author: José Jorge Enríquez (jenriquez@users.sourceforge.net)
  * Copyright: (c) 2005 José Jorge Enríquez Rodríguez (http://www.zonamakers.com)
- * Release Version: 1.0.7.7
- * CVS Revision Version: $Revision: 1.9 $
+ * Release Version: 1.0.7.8
+ * CVS Revision Version: $Revision: 1.10 $
  * Date Started: 2005/06/21
- * Last Modified: $Date: 2006/02/25 00:46:33 $
+ * Last Modified: $Date: 2006/03/23 07:30:24 $
  *
  * GML language file for GeSHi.
  *
@@ -471,8 +471,7 @@ $language_data = array (
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
-			1 => 'color: #202020;',
-			2 => 'color: #202020;'
+			1 => 'color: #202020;'
 			),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66; font-weight: bold;'

@@ -7,7 +7,7 @@
  *  - M. Uli Kusterer (witness.of.teachtext@gmx.net)
  *  - Jack Lloyd (lloyd@randombit.net)
  * Copyright: (c) 2004 Dennis Bayer, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.7
+ * Release Version: 1.0.7.8
  * CVS Revision Version: $Revision: 1.10 $
  * Date Started: 2004/09/27
  * Last Modified: $Date: 2006/02/25 00:46:33 $

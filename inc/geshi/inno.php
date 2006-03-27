@@ -4,7 +4,7 @@
  * ----------
  * Author: Thomas Klingler (hotline@theratech.de) based on delphi.php from Járja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 Járja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.7
+ * Release Version: 1.0.7.8
  * CVS Revision Version: $Revision: 1.7 $
  * Date Started: 2005/07/29
  * Last Modified: $Date: 2006/02/25 00:46:33 $

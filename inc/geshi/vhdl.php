@@ -4,7 +4,7 @@
  * --------
  * Author: Alexander 'E-Razor' Krause (admin@erazor-zone.de)
  * Copyright: (c) 2005 Alexander Krause
- * Release Version: 1.0.7.7
+ * Release Version: 1.0.7.8
  * CVS Revision Version: $Revision: 1.8 $
  * Date Started: 2005/06/15
  * Last Modified: $Date: 2006/02/25 00:46:33 $

@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.30 2006/02/25 00:46:33 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.32 2006/03/23 07:24:17 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.7');
+define('GESHI_VERSION', '1.0.7.8');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -1985,7 +1985,8 @@ class GeSHi
 	 */
 	function parse_non_string_part (&$stuff_to_parse)
 	{
-		$stuff_to_parse = ' ' . quotemeta(@htmlspecialchars($stuff_to_parse, ENT_COMPAT, $this->encoding));
+		$stuff_to_parse = ' ' . @htmlspecialchars($stuff_to_parse, ENT_COMPAT, $this->encoding);
+        $stuff_to_parse_pregquote = preg_quote($stuff_to_parse, '/');
 		// These vars will disappear in the future
 		$func = '$this->change_case';
 		$func2 = '$this->add_url_to_keyword';
@@ -1997,14 +1998,14 @@ class GeSHi
 			if ($this->lexic_permissions['REGEXPS'][$key]) {
 				if (is_array($regexp)) {
 					$stuff_to_parse = preg_replace(
-                        "#" .
-                        $regexp[GESHI_SEARCH] .
-                        "#{$regexp[GESHI_MODIFIERS]}",
+                        "/" .
+                        str_replace('/', '\/', $regexp[GESHI_SEARCH]) .
+                        "/{$regexp[GESHI_MODIFIERS]}",
                         "{$regexp[GESHI_BEFORE]}<|!REG3XP$key!>{$regexp[GESHI_REPLACE]}|>{$regexp[GESHI_AFTER]}",
                         $stuff_to_parse
                     );
 				} else {
-					$stuff_to_parse = preg_replace( "#(" . $regexp . ")#", "<|!REG3XP$key!>\\1|>", $stuff_to_parse);
+					$stuff_to_parse = preg_replace( "/(" . str_replace('/', '\/', $regexp) . ")/", "<|!REG3XP$key!>\\1|>", $stuff_to_parse);
 				}
 			}
 		}
@@ -2032,30 +2033,31 @@ class GeSHi
 			foreach ($this->language_data['KEYWORDS'] as $k => $keywordset) {
 				if ($this->lexic_permissions['KEYWORDS'][$k]) {
 					foreach ($keywordset as $keyword) {
-						$keyword = quotemeta($keyword);
+						$keyword = preg_quote($keyword, '/');
 						//
 						// This replacement checks the word is on it's own (except if brackets etc
 						// are next to it), then highlights it. We don't put the color=" for the span
 						// in just yet - otherwise languages with the keywords "color" or "or" have
 						// a fit.
 						//
-						if (false !== stristr($stuff_to_parse, $keyword )) {
+						if (false !== stristr($stuff_to_parse_pregquote, $keyword )) {
 							$stuff_to_parse .= ' ';
 							// Might make a more unique string for putting the number in soon
 							// Basically, we don't put the styles in yet because then the styles themselves will
 							// get highlighted if the language has a CSS keyword in it (like CSS, for example ;))
 							$styles = "/$k/";
-							$keyword = quotemeta($keyword);
 							if ($this->language_data['CASE_SENSITIVE'][$k]) {
 								$stuff_to_parse = preg_replace(
-                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])#e",
+                                    "/([^a-zA-Z0-9\$_\|\#;>|^])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])/e",
                                     "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END')",
                                     $stuff_to_parse
                                 );
 							} else {
 								// Change the case of the word.
+                                // hackage again... must... release... 1.2...
+                                if ('smarty' == $this->language) { $hackage = '\/'; } else { $hackage = ''; }
 								$stuff_to_parse = preg_replace(
-                                    "#([^a-zA-Z0-9\$_\|\#;>])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])#ie",
+                                    "/([^a-zA-Z0-9\$_\|\#;>$hackage|^])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])/ie",
                                     "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END')",
                                     $stuff_to_parse
                                 );
@@ -2098,7 +2100,7 @@ class GeSHi
 					} else {
 						$attributes = ' class="me' . $key . '"';
 					}
-					$stuff_to_parse = preg_replace("#(" . quotemeta($this->language_data['OBJECT_SPLITTERS'][$key]) . "[\s]*)([a-zA-Z\*\(][a-zA-Z0-9_\*]*)#", "\\1<|$attributes>\\2|>", $stuff_to_parse);
+					$stuff_to_parse = preg_replace("/(" . preg_quote($this->language_data['OBJECT_SPLITTERS'][$key], 1) . "[\s]*)([a-zA-Z\*\(][a-zA-Z0-9_\*]*)/", "\\1<|$attributes>\\2|>", $stuff_to_parse);
 				}
 			}
 		}

@@ -4,7 +4,7 @@
  * ------------
  * Author: Roberto Rossi 
  * Copyright: (c) 2005 Roberto Rossi (http://rsoftware.altervista.org)
- * Release Version: 1.0.7.7
+ * Release Version: 1.0.7.8
  * CVS Revision Version: $Revision: 1.7 $
  * Date Started: 2005/08/19
  * Date Modified: $Date: 2006/02/25 00:46:33 $
