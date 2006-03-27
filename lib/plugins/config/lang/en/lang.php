@@ -55,7 +55,7 @@ $lang['mailguard']   = 'Obfuscate email addresses';
 
 /* Authentication Options */
 $lang['useacl']      = 'Use access control lists';
-$lang['openregister']= 'Allow everyon to register';
+$lang['openregister']= 'Allow everyone to register';
 $lang['autopasswd']  = 'Autogenerate passwords';
 $lang['resendpasswd']= 'Allow resend password';
 $lang['authtype']    = 'Authentication backend';
@@ -67,6 +67,7 @@ $lang['profileconfirm'] = 'Confirm profile changes with password';
 /* Advanced Options */
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
+$lang['usedraft']    = 'Automatically save a draft while editing';
 $lang['sepchar']     = 'Page name word separator';
 $lang['canonical']   = 'Use fully canonical URLs';
 $lang['autoplural']  = 'Check for plural forms in links';
@@ -87,6 +88,7 @@ $lang['sitemap']     = 'Generate Google sitemap (days)';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';
+$lang['rss_update']  = 'XML feed update interval (sec)';
 
 /* Target options */
 $lang['target____wiki']      = 'Target window for internal links';

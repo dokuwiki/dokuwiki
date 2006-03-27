@@ -113,6 +113,7 @@ $meta['profileconfirm'] = array('onoff');
 
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
 $meta['useslash']    = array('onoff');
+$meta['usedraft']    = array('onoff');
 $meta['sepchar']     = array('sepchar');
 $meta['canonical']   = array('onoff');
 $meta['autoplural']  = array('onoff');
@@ -133,6 +134,7 @@ $meta['sitemap']     = array('numeric');
 
 $meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom'));
 $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
+$meta['rss_update']  = array('numeric');
 
 $meta['target____wiki']      = array('string');
 $meta['target____interwiki'] = array('string');
