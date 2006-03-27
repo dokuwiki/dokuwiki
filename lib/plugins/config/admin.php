@@ -184,7 +184,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     }
 
-    function _setup_localised_plugintpl_prompts() {
+    function _setup_localised_plugin_prompts() {
       global $conf;
 
       $langfile   = '/lang/'.$conf[lang].'/settings.php';
