@@ -67,7 +67,7 @@ class auth_ldap extends auth_basic {
             $dn = $this->_makeFilter($this->cnf['binddn'],
                                      array('user'=>$user,'server'=>$this->cnf['server']));
 
-        }else if(strpos($cnf['usertree'], '%{user}')) {
+        }else if(strpos($this->cnf['usertree'], '%{user}')) {
             // direct user bind
             $dn = $this->_makeFilter($this->cnf['usertree'],
                                      array('user'=>$user,'server'=>$this->cnf['server']));
