@@ -1031,26 +1031,30 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
 ?>
   <div style="width:99%;">
-  <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"><div class="no">
-     <div class="toolbar">
-        <div id="draft__status"><?php if($INFO['draft']) echo $lang['draftdate'].' '.date($conf['dformat']);?></div>
-        <div id="tool__bar"></div>
-        <input type="hidden" name="id"   value="<?php echo $ID?>" />
-        <input type="hidden" name="rev"  value="<?php echo $REV?>" />
-        <input type="hidden" name="date" value="<?php echo $DATE?>" />
-        <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
-        <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
 
-        <?php if($wr){?>
-        <script type="text/javascript" charset="utf-8">
-          <?php /* sets changed to true when previewed */?>
-          textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
-        </script>
-        <span id="spell__action"></span>
-        <div id="spell__suggest"></div>
-        <?php } ?>
+   <div class="toolbar">
+      <div id="draft__status"><?php if($INFO['draft']) echo $lang['draftdate'].' '.date($conf['dformat']);?></div>
+      <div id="tool__bar"></div>
+
+      <?php if($wr){?>
+      <script type="text/javascript" charset="utf-8">
+        <?php /* sets changed to true when previewed */?>
+        textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
+      </script>
+      <span id="spell__action"></span>
+      <div id="spell__suggest"></div>
+      <?php } ?>
+   </div>
+   <div id="spell__result"></div>
+
+
+   <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"><div class="no">
+      <input type="hidden" name="id"   value="<?php echo $ID?>" />
+      <input type="hidden" name="rev"  value="<?php echo $REV?>" />
+      <input type="hidden" name="date" value="<?php echo $DATE?>" />
+      <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
+      <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
     </div>
-    <div id="spell__result"></div>
 
     <textarea name="wikitext" id="wiki__text" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
 
@@ -1060,7 +1064,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
          <div class="editButtons">
             <input class="button" id="edbtn__save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
             <input class="button" id="edbtn__preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
-            <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
+            <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_cancel']?>" tabindex="6" />
          </div>
       <?php } ?>
       <?php if($wr){ ?>
@@ -1071,7 +1075,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
         </div>
       <?php }?>
     </div>
-  </div></form>
+  </form>
   </div>
 <?php
 }
