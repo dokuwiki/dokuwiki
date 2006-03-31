@@ -1,8 +1,3 @@
-====== Pré-visualização ======
+====== Visualização ======
 
-Esta é a previsão de como irá ficar o conteúdo da entrada.
-
-**Atenção**: A entrada ainda não está gravada.\\
-É necessário clicar em ''Salvar'' para efetivar as modificações.
-
-----
+Essa é uma visualização de como será a aparência do seu texto. Lembre-se: ele ainda **não foi gravado**!

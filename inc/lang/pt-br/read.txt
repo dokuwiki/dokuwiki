@@ -1,5 +1,1 @@
-**Atenção**: Esta entrada esta no modo "apenas para leitura".\\
-Pode ver o código fonte da entrada, mas não pode fazer qualquer alteração.\\ \\
-Informe-se com o administrador deste Wiki se achar que isto não está correto.
-
-----
+Essa página está em modo somente de leitura. Você pode visualizar a fonte, mas não alterá-la. Informe-se com o administrador do Wiki, caso você ache que isso está incorreto.

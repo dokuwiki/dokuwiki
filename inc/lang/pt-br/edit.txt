@@ -1,5 +1,4 @@
-Edite a entrada e clique em ''Salvar''. Reveja a [[wiki:syntax|sintaxe]] das regras de formatação do texto.
-
-Por favor, altere o conteúdo deste documento apenas quando puder **melhorá-lo**.\\
-Se pretende testar alguma coisa, realize os seus testes no [[playground:playground|playground]].
+Edite a págine e clique em ''Salvar''. Veja [[wiki:syntax]] para a sintaxe
+do Wiki. Por favor, edite a página apenas se você puder **aprimorá-la**.
+Se você deseja testar alguma coisa, faça-o no [[playground:playground|playground]].
 

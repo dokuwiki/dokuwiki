@@ -1,8 +1,5 @@
-====== Documento Inexistente ======
+====== Esse tópico ainda não existe ======
 
-Você acessou um link para um tópico que ainda não existe.
-
-É possível criar o conteúdo desta nova entrada após clicar em ''Criar entrada''. Caso a opção ''Criar entrada'' não esteja disponível, é porque você não tem permissão para criar entradas.
-
-
-----
+Você clicou em um link para um tópico que ainda não existe.
+Se for permitido, você poderá criá-lo usando o botão
+''Criar essa página''.

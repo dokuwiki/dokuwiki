@@ -1,4 +1,4 @@
-====== Backlinks ======
+====== Links reversos ======
 
-Esta é uma lista de todas as entradas que apresentam links à entrada atual.
+Esta é uma lista de todas as páginas que apresentam links para a página atual.
 

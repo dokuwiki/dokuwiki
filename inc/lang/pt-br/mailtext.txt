@@ -1,19 +1,17 @@
-Uma entrada no site Wiki @DOKUWIKIURL@ foi criada ou modificada.
+Uma página em seu DokuWiki foi adicionada ou alterada. Aqui estão os detalhes:
 
-Aqui estão os detalhes:
-
-Data          : @DATE@
-Navegador     : @BROWSER@
-Endereço IP   : @IPADDRESS@
-Hostname      : @HOSTNAME@
-Documento Ant.: @OLDPAGE@
-Documento Novo: @NEWPAGE@
+Data            : @DATE@
+Navegador       : @BROWSER@
+Endereço IP     : @IPADDRESS@
+Nome do host    : @HOSTNAME@
+Revisão antiga  : @OLDPAGE@
+Nova revisão    : @NEWPAGE@
+Resumo da edição: @SUMMARY@
+Usuário         : @USER@
 
 @DIFF@
 
 
-
-----
-
-Esta mensagem foi gerada automaticamente pelo DokuWiki em
-@DOKUWIKIURL@.
+-- 
+Essa mensagem foi gerada pelo DokuWiki em
+@DOKUWIKIURL@

@@ -1,6 +1,4 @@
-====== Revisões ======
+======Revisões anteriores======
 
-Estas são as revisões da entrada atual.\\
-Para reverter a entrada para uma destas revisões, selecione uma delas abaixo, clique em ''Editar'' e depois grave a entrada.
+Essas são as revisões anteriores desse documento. Para reverter a uma revisão antiga, selecione-a abaixo, clique em ''Editar essa página'' e salve-a.
 
-----

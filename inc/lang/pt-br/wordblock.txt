@@ -1,7 +1,6 @@
-====== Bloquear SPAM ======
+======Bloqueio de SPAM======
 
-As suas alterações foram **bloqueadas** porque contém uma ou mais palavras consideradas abusivas (SPAM).
+Suas modificações **não** foram salvas porque elas contém uma ou mais palavras bloqueadas.
+Se você tentou enviar spam para o wiki, isso é feio, muito feio! Agora se você acha que 
+esse bloqueio foi indevido, por favor, entre em contato com o administrador desse wiki.
 
-Se isto não estiver correto, por favor contacte o administrador deste Wiki.
-
-----

@@ -1,7 +1,3 @@
-====== Revisão Inexistente ======
+====== Essa revisão não existe ======
 
-A revisão especificada não existe.
-
-Clique em ''Revisões'' para ver a lista de revisões desta entrada.
-
-----
+A revisão especificada não existe. Utilize o botão ''Revisões anteriores'' para uma listagem das revisões anteriores desse documento.

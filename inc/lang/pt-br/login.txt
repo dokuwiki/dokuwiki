@@ -1,8 +1,4 @@
-====== Sessão ======
+====== Autenticação ======
 
-No momento você não está autorizado (não está logado)!\\
-Informe suas credenciais de autenticação para abrir numa nova sessão (autorização).
-
-**Nota**: É necessário que seu navegador esteja habilitado para aceitar //cookies//.
-
-----
+Você não está autenticado. Digite as seus dados de usuário abaixo para entrar no sistema.
+É necessário habilitar os cookies no seu navegador para que isso funcione.
