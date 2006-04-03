@@ -109,21 +109,63 @@ function utf8_strlen($string){
 }
 
 /**
- * Unicode aware replacement for substr()
+ * UTF-8 aware alternative to substr
  *
- * @author lmak at NOSPAM dot iti dot gr
- * @link   http://www.php.net/manual/en/function.substr.php
- * @see    substr()
+ * Return part of a string given character offset (and optionally length)
+ * Note: supports use of negative offsets and lengths but will be slower
+ * when doing so
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @param string
+ * @param integer number of UTF-8 characters offset (from left)
+ * @param integer (optional) length in UTF-8 characters from offset
+ * @return mixed string or FALSE if failure
  */
-function utf8_substr($str,$start,$length=null){
-   preg_match_all("/./u", $str, $ar);
+function utf8_substr($str, $offset, $length = null) {
+    if(!defined('UTF8_NOMBSTRING') && function_exists('mb_substr')){
+        if( $length === null ){
+            mb_substr($str, $offset);
+        }else{
+            mb_substr($str, $offset, $length);
+        }
+    }
 
-   if($length != null) {
-       return join("",array_slice($ar[0],$start,$length));
-   } else {
-       return join("",array_slice($ar[0],$start));
-   }
+    if ( $offset >= 0 && $length >= 0 ) {
+        if ( $length === null ) {
+            $length = '*';
+        } else {
+            $strlen = strlen(utf8_decode($str));
+            if ( $offset > $strlen ) {
+                return '';
+            }
+
+            if ( ( $offset + $length ) > $strlen ) {
+               $length = '*';
+            } else {
+                $length = '{'.$length.'}';
+            }
+        }
+
+        $pattern = '/^.{'.$offset.'}(.'.$length.')/us';
+        preg_match($pattern, $str, $matches);
+
+        if ( isset($matches[1]) ) {
+            return $matches[1];
+        }
+        return false;
+
+    } else {
+        // Handle negatives using different, slower technique
+        // From: http://www.php.net/manual/en/function.substr.php#44838
+        preg_match_all('/./u', $str, $ar);
+        if( $length !== null ) {
+            return join('',array_slice($ar[0],$offset,$length));
+        } else {
+            return join('',array_slice($ar[0],$offset));
+        }
+    }
 }
+
 
 /**
  * Unicode aware replacement for substr_replace()
