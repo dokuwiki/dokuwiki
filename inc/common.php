@@ -21,6 +21,28 @@ define('RECENTS_SKIP_MINORS',4);
 define('RECENTS_SKIP_SUBSPACES',8);
 
 /**
+ * Wrapper around htmlspecialchars()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    htmlspecialchars()
+ */
+function hsc($string){
+  return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * print a newline terminated string
+ *
+ * You can give an indention as optional parameter
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function ptln($string,$intend=0){
+  for($i=0; $i<$intend; $i++) print ' ';
+  print"$string\n";
+}
+
+/**
  * Return info about the current document as associative
  * array.
  *

@@ -10,28 +10,6 @@
   require_once(DOKU_CONF.'dokuwiki.php');
 
 /**
- * Wrapper around htmlspecialchars()
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @see    htmlspecialchars()
- */
-function hsc($string){
-  return htmlspecialchars($string);
-}
-
-/**
- * print a newline terminated string
- *
- * You can give an indention as optional parameter
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function ptln($string,$intend=0){
-  for($i=0; $i<$intend; $i++) print ' ';
-  print"$string\n";
-}
-
-/**
  * Returns the path to the given template, uses
  * default one if the custom version doesn't exist
  *
