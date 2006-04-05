@@ -315,6 +315,43 @@ function wl($id='',$more='',$abs=false,$sep='&amp;'){
 }
 
 /**
+ * This builds a link to an alternate page format
+ *
+ * Handles URL rewriting if enabled. Follows the style of wl().
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function exportlink($id='',$format='raw',$more='',$abs=false,$sep='&amp;'){
+  global $conf;
+  if(is_array($more)){
+    $more = buildURLparams($more,$sep);
+  }else{
+    $more = str_replace(',',$sep,$more);
+  }
+
+  $format = rawurlencode($format);
+  $id = idfilter($id);
+  if($abs){
+    $xlink = DOKU_URL;
+  }else{
+    $xlink = DOKU_BASE;
+  }
+
+  if($conf['userewrite'] == 2){
+    $xlink .= DOKU_SCRIPT.'/'.$id.'?do=export_'.$format;
+    if($more) $xlink .= $sep.$more;
+  }elseif($conf['userewrite'] == 1){
+    $xlink .= '_export/'.$format.'/'.$id;
+    if($more) $xlink .= '?'.$more;
+  }else{
+    $xlink .= DOKU_SCRIPT.'?do=export_'.$format.$sep.'id='.$id;
+    if($more) $xlink .= $sep.$more;
+  }
+
+  return $xlink;
+}
+
+/**
  * Build a link to a media file
  *
  * Will return a link to the detail page if $direct is false
