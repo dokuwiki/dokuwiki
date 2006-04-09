@@ -579,7 +579,7 @@ class ap_manage {
 		  function process() {
 			  global $plugin_protected;
 				
-				$this->enabled = $_REQUEST['enabled'];
+				$this->enabled = isset($_REQUEST['enabled']) ? $_REQUEST['enabled'] : array();
 				
 				foreach ($this->manager->plugin_list as $plugin) {
 				  if (in_array($plugin, $plugin_protected)) continue;
