@@ -10,6 +10,10 @@ class Doku_Handler {
     var $calls = array();
 
     var $meta = array(
+        'first_heading' => '',
+    );
+
+    var $status = array(
         'section' => FALSE,
     );
 
@@ -25,9 +29,10 @@ class Doku_Handler {
     }
 
     function _finalize(){
-        if ( $this->meta['section'] ) {
-            $S = & new Doku_Handler_Section();
-            $this->calls = $S->process($this->calls);
+
+        if ( $this->status['section'] ) {
+           $last_call = end($this->calls);
+           array_push($this->calls,array('section_close',array(), $last_call[2]));
         }
 
         if ( $this->rewriteBlocks ) {
@@ -36,6 +41,7 @@ class Doku_Handler {
         }
 
         array_unshift($this->calls,array('document_start',array(),0));
+        array_unshift($this->calls,array('meta',array($this->meta),0));
         $last_call = end($this->calls);
         array_push($this->calls,array('document_end',array(),$last_call[2]));
     }
@@ -63,7 +69,7 @@ class Doku_Handler {
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
         }
-        $this->_addCall('plugin',array($pluginname,$data,$pos),$pos);
+        $this->_addCall('plugin',array($pluginname,$data,$state),$pos);
         return TRUE;
     }
 
@@ -79,29 +85,21 @@ class Doku_Handler {
 
     function header($match, $state, $pos) {
         $match = trim($match);
-        $levels = array(
-            '======'=>1,
-            '====='=>2,
-            '===='=>3,
-            '==='=>4,
-            '=='=>5,
-        );
-        $hsplit = preg_split( '/(={2,})/u', $match,-1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
 
-        // Locate the level - default to level 1 if no match (title contains == signs)
-        if ( isset($hsplit[0]) && array_key_exists($hsplit[0], $levels) ) {
-            $level = $levels[$hsplit[0]];
-        } else {
-            $level = 1;
-        }
+        list($header,$title) = split(' ',$match,2);
+        $level = 7 - strlen($header);
 
         // Strip markers and whitespaces
         $title = trim($match,'=');
         $title = trim($title,' ');
 
+        if ($this->status['section']) $this->_addCall('section_close',array(),$pos);
+
         $this->_addCall('header',array($title,$level,$pos), $pos);
-        $this->meta['section'] = TRUE;
+
+        $this->_addCall('section_open',array($level),$pos);
+        $this->status['section'] = TRUE;
+        if (!$this->meta['first_heading']) $this->meta['first_heading'] = $title;
         return TRUE;
     }
 
@@ -1203,6 +1201,12 @@ class Doku_Handler_Section {
                 $inSection = TRUE;
 
             } else {
+
+                if ($call[0] == 'section_open' )  {
+                    $inSection = TRUE;
+                } else if ($call[0] == 'section_open' ) {
+                    $inSection = FALSE;
+                }
                 $sectionCalls[] = $call;
             }
         }
@@ -1274,14 +1278,10 @@ class Doku_Handler_Block {
             $ptype = $p->getPType();
             if($ptype == 'block'){
                 $this->blockOpen[]  = 'plugin_'.$n;
-                $this->blockOpen[]  = 'plugin_'.$n.'_open';
                 $this->blockClose[] = 'plugin_'.$n;
-                $this->blockClose[] = 'plugin_'.$n.'_close';
             }elseif($ptype == 'stack'){
                 $this->stackOpen[]  = 'plugin_'.$n;
-                $this->stackOpen[]  = 'plugin_'.$n.'_open';
                 $this->stackClose[] = 'plugin_'.$n;
-                $this->stackClose[] = 'plugin_'.$n.'_close';
             }
         }
     }
@@ -1313,6 +1313,8 @@ class Doku_Handler_Block {
         }else{
             $this->calls[] = array('p_close',array(), $pos);
         }
+
+        $this->inParagraph = FALSE;
     }
 
     /**
@@ -1325,17 +1327,19 @@ class Doku_Handler_Block {
     function process($calls) {
         foreach ( $calls as $key => $call ) {
             $cname = $call[0];
-            if($cname == 'plugin') $cname='plugin_'.$call[1][0];
+            if($cname == 'plugin') {
+                $cname='plugin_'.$call[1][0];
+
+                $plugin = true;
+                $plugin_open = (($call[1][2] == DOKU_LEXER_ENTER) || ($call[1][2] == DOKU_LEXER_SPECIAL));
+                $plugin_close = (($call[1][2] == DOKU_LEXER_EXIT) || ($call[1][2] == DOKU_LEXER_SPECIAL));
+            } else {
+                $plugin = false;
+            }
 
             // Process blocks which are stack like... (contain linefeeds)
-            if ( in_array($cname,$this->stackOpen ) ) {
-                /*
-                if ( $this->atStart ) {
-                    $this->calls[] = array('p_open',array(), $call[2]);
-                    $this->atStart = FALSE;
-                    $this->inParagraph = TRUE;
-                }
-                */
+            if ( in_array($cname,$this->stackOpen ) && (!$plugin || $plugin_open) ) {
+
                 $this->calls[] = $call;
 
                 // Hack - footnotes shouldn't immediately contain a p_open
@@ -1347,10 +1351,9 @@ class Doku_Handler_Block {
                 continue;
             }
 
-            if ( in_array($cname,$this->stackClose ) ) {
+            if ( in_array($cname,$this->stackClose ) && (!$plugin || $plugin_close)) {
 
                 if ( $this->inParagraph ) {
-                    //$this->calls[] = array('p_close',array(), $call[2]);
                     $this->closeParagraph($call[2]);
                 }
                 $this->calls[] = $call;
@@ -1362,18 +1365,9 @@ class Doku_Handler_Block {
 
                 if ( $cname == 'eol' ) {
 
-
-                    /* XXX
-                    if ( $this->inParagraph ) {
-                        $this->calls[] = array('p_close',array(), $call[2]);
-                    }
-                    $this->calls[] = array('p_open',array(), $call[2]);
-                    $this->inParagraph = TRUE;
-                    */
-
-                    # Check this isn't an eol instruction to skip...
+                    // Check this isn't an eol instruction to skip...
                     if ( $this->skipEolKey != $key ) {
-                         # Look to see if the next instruction is an EOL
+                        // Look to see if the next instruction is an EOL
                         if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
 
                             if ( $this->inParagraph ) {
@@ -1385,7 +1379,7 @@ class Doku_Handler_Block {
                             $this->inParagraph = TRUE;
 
 
-                            # Mark the next instruction for skipping
+                            // Mark the next instruction for skipping
                             $this->skipEolKey = $key+1;
 
                         }else{
@@ -1398,19 +1392,15 @@ class Doku_Handler_Block {
                 } else {
 
                     $storeCall = TRUE;
-                    if ( $this->inParagraph && in_array($cname, $this->blockOpen) ) {
-                        //$this->calls[] = array('p_close',array(), $call[2]);
+                    if ( $this->inParagraph && (in_array($cname, $this->blockOpen) && (!$plugin || $plugin_open))) {
                         $this->closeParagraph($call[2]);
-                        $this->inParagraph = FALSE;
                         $this->calls[] = $call;
                         $storeCall = FALSE;
                     }
 
-                    if ( in_array($cname, $this->blockClose) ) {
+                    if ( in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
                         if ( $this->inParagraph ) {
-                            //$this->calls[] = array('p_close',array(), $call[2]);
                             $this->closeParagraph($call[2]);
-                            $this->inParagraph = FALSE;
                         }
                         if ( $storeCall ) {
                             $this->calls[] = $call;
@@ -1418,15 +1408,24 @@ class Doku_Handler_Block {
                         }
 
                         // This really sucks and suggests this whole class sucks but...
-                        if ( isset($calls[$key+1])
-                            &&
-                            !in_array($calls[$key+1][0], $this->blockOpen)
-                            &&
-                            !in_array($calls[$key+1][0], $this->blockClose)
-                            ) {
+                        if ( isset($calls[$key+1])) {
+                            $cname_plusone = $calls[$key+1][0];
+                            if ($cname_plusone == 'plugin') {
+                                $cname_plusone = 'plugin'.$calls[$key+1][1][0];
+                                
+                                // plugin test, true if plugin has a state which precludes it requiring blockOpen or blockClose
+                                $plugin_plusone = true;
+                                $plugin_test = ($call[$key+1][1][2] == DOKU_LEXER_MATCHED) || ($call[$key+1][1][2] == DOKU_LEXER_MATCHED);
+                            } else {
+                                $plugin_plusone = false;
+                            }
+                            if ((!in_array($cname_plusone, $this->blockOpen) && !in_array($cname_plusone, $this->blockClose)) ||
+                                ($plugin_plusone && $plugin_test)
+                                ) {
 
-                            $this->calls[] = array('p_open',array(), $call[2]);
-                            $this->inParagraph = TRUE;
+                                $this->calls[] = array('p_open',array(), $call[2]);
+                                $this->inParagraph = TRUE;
+                            }
                         }
                     }
 

@@ -222,22 +222,11 @@ class Doku_Parser_Mode_header extends Doku_Parser_Mode {
 
     function preConnect() {
         //we're not picky about the closing ones, two are enough
-
-        // Header 1 is special case - match 6 or more
         $this->Lexer->addSpecialPattern(
-                            '[ \t]*={6,}[^\n]+={2,}[ \t]*(?=\n)',
+                            '[ \t]*={2,6}[^\n]+={2,}[ \t]*(?=\n)',
                             'base',
                             'header'
                         );
-
-        // For the rest, match exactly
-        for ( $i = 5; $i > 1; $i--) {
-            $this->Lexer->addSpecialPattern(
-                                '[ \t]*={'.$i.'}[^\n]+={2,}[ \t]*(?=\n)',
-                                'base',
-                                'header'
-                            );
-        }
     }
 
     function getSort() {

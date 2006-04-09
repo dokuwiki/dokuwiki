@@ -390,11 +390,8 @@ function p_get_first_heading($id){
   $file = wikiFN($id);
   if (@file_exists($file)) {
     $instructions = p_cached_instructions($file,true);
-    foreach ( $instructions as $instruction ) {
-      if ($instruction[0] == 'header') {
-        return trim($instruction[1][0]);
-      }
-    }
+		$meta = $instructions[0][1];
+		return isset($meta[0]['first_heading']) ? trim($meta[0]['first_heading']) : NULL;
   }
   return NULL;
 }

@@ -45,6 +45,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     var $store = '';
 
+    var $meta = array();
+
+    function meta($data) {
+      if (is_array($data)) $this->meta = $data;
+    }
+
     function document_start() {
         //reset some internals
         $this->toc     = array();
@@ -562,6 +568,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['more']   = '';
         $link['class']  = $class;
         $link['url']    = $url;
+
         $link['name']   = $name;
         $link['title']  = $this->_xmlEntities($url);
         if($conf['relnofollow']) $link['more'] .= ' rel="nofollow"';
