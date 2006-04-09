@@ -5,13 +5,14 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
 
 // todo
 // - maintain a history of file modified
 // - allow a plugin to contain extras to be copied to the current template (extra/tpl/)
 // - to images (lib/images/) [ not needed, should go in lib/plugin/images/ ]
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'admin.php');
 
