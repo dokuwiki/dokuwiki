@@ -1,0 +1,4 @@
+====== Actualiza el perfil de tu cuenta de usuario  ======
+
+Sólo necesitas completar aquellos campos que quieres cambiar. No
+puedes cambiar tu nombre de usuario.

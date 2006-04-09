@@ -1,0 +1,17 @@
+Hola!
+
+La página  @PAGE@ en el wiki @TITLE@ ha cambiado.
+Los cambios son los siguientes:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Para desubscribirte de esta página, ingresa al wiki
+en @DOKUWIKIURL@ y luego visita la página:
+@NEWPAGE@
+y elige 'Unsubscribe Changes'.
+
+--
+Este mail fue generado por DokuWiki en
+@DOKUWIKIURL@

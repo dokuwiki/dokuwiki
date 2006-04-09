@@ -1,0 +1,4 @@
+====== Administración ======
+
+Abajo puedes encontrar una lista de las tareas de administración
+disponibles en Dokuwiki.

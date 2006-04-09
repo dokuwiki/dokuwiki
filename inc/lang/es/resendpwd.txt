@@ -1,0 +1,6 @@
+====== Enviar nueva contraseña  ======
+
+Completa la información requerida abajo para obtener una nueva contraseña
+para tu cuenta de usuario en este wiki. La nueva contraseña te será enviada
+a la dirección de mail que está registrada. El nombre de usuario debe ser
+tu nombre de usuario en este wiki.

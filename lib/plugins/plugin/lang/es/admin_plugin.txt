@@ -1,0 +1,5 @@
+====== Administración de Plugin (agregados) ======
+
+En esta página tu puedes administrar todo lo que tenga que ver con los
+[[doku>wiki:plugins|plugins]] de Dokuwiki.  Para poder descargar e instalar un plugin
+el usuario correspondiente al servidor de web debe poder escribir en el directorio de plugins.

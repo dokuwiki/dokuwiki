@@ -1,0 +1,15 @@
+====== Administrador de configuración ======
+
+Usa esta página para controlar los parámetros de tu instalación
+de Dokuwiki.
+Ayuda sobre [[doku>wiki:config|parámetros individuales]].
+Más detalles sobre este [[doku>plugin:config|plugin]].
+
+Los parámetros que se muestran sobre un fondo rosado están protegidos y no pueden ser modificados
+usando este plugin.
+Los parámetros que se muestran sobre un fondo azul tienen los valores por defecto, y los parámetros
+mostrados sobre un fondo blanco han sido establecidos para esta instalación en particular. Tanto
+los parámetros sobre fondo azul y los que están sobre fondo blanco pueden ser modificados.
+
+Recuerda cliquear el boton **Guardar** antes de abandonar la página, sino se perderán los cambios
+que hayas hecho.

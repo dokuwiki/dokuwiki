@@ -1,0 +1,11 @@
+====== Administración de la lista de control de acceso  ======
+
+En esta página tu puedes agregar y quitar permisos para la página
+actual y todos los [[doku>wiki:namespaces|espacios de nombres]] en los
+que está. Tu deberías leer la [[doku>wiki:acl|documentación oficial
+sobre ACL]] para comprender completamente cómo funcionan el control de acceso.
+
+La página muestra todos los permisos que son significativos para
+la página actual. Los permisos relativos a otras páginas no se muestran --
+para editarlos, primero [[this>doku.php?do=index|navega]] a la página correspondiente y
+luego vé a la administración de ACL.
