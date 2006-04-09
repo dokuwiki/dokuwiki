@@ -345,6 +345,8 @@ function p_sort_modes($a, $b){
 function p_render($mode,$instructions,& $info){
   if(is_null($instructions)) return '';
 
+  if ($mode=='wiki') { msg("Renderer for $mode not valid",-1); return null; } //FIXME!! remove this line when inc/parser/wiki.php works.
+
   // Create the renderer
   if(!@file_exists(DOKU_INC."inc/parser/$mode.php")){
     msg("No renderer for $mode found",-1);
@@ -354,7 +356,9 @@ function p_render($mode,$instructions,& $info){
   require_once DOKU_INC."inc/parser/$mode.php";
   $rclass = "Doku_Renderer_$mode";
   if ( !class_exists($rclass) ) {
-    trigger_error("Unable to resolve render class $rclass",E_USER_ERROR);
+    trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
+    msg("Renderer for $mode not valid",-1);
+    return null;
   }
   $Renderer = & new $rclass(); #FIXME any way to check for class existance?
 

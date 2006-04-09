@@ -1,4 +1,7 @@
 <?php
+//FIXME!! remove the line ignoring the 'wiki' export mode from
+// inc/parserutils.php#p_renderer() when this file works.
+
 /**
 * Basis for converting to Dokuwiki syntax
 * This is not yet complete but useable for converting
