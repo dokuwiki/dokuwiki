@@ -30,16 +30,24 @@
 
   switch ($type){
     case 'rss':
-       $type = 'RSS0.9';
+       $type = 'RSS0.91';
+       $mime = 'text/xml';
        break;
     case 'rss2':
        $type = 'RSS2.0';
+       $mime = 'text/xml';
        break;
     case 'atom':
        $type = 'ATOM0.3';
+       $mime = 'application/xml';
+       break;
+    case 'atom1':
+       $type = 'ATOM1.0';
+       $mime = 'application/atom+xml';
        break;
     default:
        $type = 'RSS1.0';
+       $mime = 'application/xml';
   }
 
   // the feed is dynamic - we need a cache for each combo
