@@ -56,7 +56,7 @@ function js_out(){
     $plugins = js_pluginscripts();
 
     // check cache age & handle conditional request
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Cache-Control: public, max-age=3600');
     header('Pragma: public');
     if(js_cacheok($cache,array_merge($files,$plugins))){
         http_conditionalRequest(filemtime($cache));

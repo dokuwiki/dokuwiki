@@ -67,7 +67,7 @@ function css_out(){
     }
 
     // check cache age & handle conditional request
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Cache-Control: public, max-age=3600');
     header('Pragma: public');
     if(css_cacheok($cache,array_keys($files))){
         http_conditionalRequest(filemtime($cache));
