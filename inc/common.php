@@ -950,9 +950,10 @@ function getRevisionInfo($id,$rev){
   // one line with one same timestamp
   $loglines_matching = array();
   $loglines_matching[] =  $loglines[$index];
-  for ($i=$index-1;hasTimestamp($loglines[$i], $rev) == 0; $i--)
+  for ($i=$index-1;$i>=0 && hasTimestamp($loglines[$i], $rev) == 0; $i--)
     $loglines_matching[] = $loglines[$i];
-  for ($i=$index+1;hasTimestamp($loglines[$i], $rev) == 0; $i++)
+  $logsize = count($loglines);
+  for ($i=$index+1;$i<$logsize && hasTimestamp($loglines[$i], $rev) == 0; $i++)
     $loglines_matching[] = $loglines[$i];
 
   // Match only lines concerning the document $id
