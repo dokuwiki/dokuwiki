@@ -815,14 +815,14 @@ function tpl_mediauploadform(){
 }
 
 /**
- * Prints the name of the given page (current one if none given).
+ * Prints or returns the name of the given page (current one if none given).
  *
  * If useheading is enabled this will use the first headline else
- * the given ID is printed.
+ * the given ID is used.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_pagetitle($id=null){
+function tpl_pagetitle($id=null, $ret=false){
   global $conf;
   if(is_null($id)){
     global $ID;
@@ -834,7 +834,12 @@ function tpl_pagetitle($id=null){
     $title = p_get_first_heading($id);
     if ($title) $name = $title;
   }
-  print hsc($name);
+
+  if ($ret) {
+      return hsc($name);
+  } else {
+      print hsc($name);
+  }
 }
 
 /**
