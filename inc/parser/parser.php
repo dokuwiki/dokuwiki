@@ -223,7 +223,7 @@ class Doku_Parser_Mode_header extends Doku_Parser_Mode {
     function preConnect() {
         //we're not picky about the closing ones, two are enough
         $this->Lexer->addSpecialPattern(
-                            '[ \t]*={2,6}[^\n]+={2,}[ \t]*(?=\n)',
+                            '[ \t]*={2,}[^\n]+={2,}[ \t]*(?=\n)',
                             'base',
                             'header'
                         );
