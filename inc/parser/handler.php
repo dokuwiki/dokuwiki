@@ -84,26 +84,10 @@ class Doku_Handler {
     }
 
     function header($match, $state, $pos) {
-        $match = trim($match);
-        $levels = array(
-            '======'=>1,
-            '====='=>2,
-            '===='=>3,
-            '==='=>4,
-            '=='=>5,
-        );
-        $hsplit = preg_split( '/(={2,})/u', $match,-1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
-        // Locate the level - default to level 1 if no match (title contains == signs)
-        if ( isset($hsplit[0]) && array_key_exists($hsplit[0], $levels) ) {
-            $level = $levels[$hsplit[0]];
-        } else {
-            $level = 1;
-        }
-
-        // Strip markers and whitespaces
-        $title = trim($match,'=');
-        $title = trim($title,' ');
+        // get level and title
+        $level = 7 - strspn($match,'=');
+        if($level < 1) $level = 1;
+        $title = trim($match,'= ');
 
         if ($this->status['section']) $this->_addCall('section_close',array(),$pos);
 
