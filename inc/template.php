@@ -109,7 +109,10 @@ function tpl_content(){
       tpl_admin();
       break;
     default:
-            msg("Failed to handle command: ".hsc($ACT),-1);
+      $evt = new event('ACTION_TEMPLATE',$ACT);
+      $evt->advise();
+      if ($evt->_default)
+        msg("Failed to handle command: ".hsc($ACT),-1);
   }
 }
 
