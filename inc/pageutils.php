@@ -111,10 +111,11 @@ function cleanID($id,$ascii=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getNS($id){
- if(strpos($id,':')!==false){
-   return substr($id,0,strrpos($id,':'));
- }
- return false;
+  $pos = strrpos($id,':');
+  if($pos!==false){
+    return substr($id,0,$pos);
+  }
+  return false;
 }
 
 /**
@@ -218,24 +219,57 @@ function localeFN($id){
 }
 
 /**
+ * Resolve relative paths in IDs
+ *
+ * Do not call directly use resolve_mediaid or resolve_pageid
+ * instead
+ *
+ * Partyly based on a cleanPath function found at
+ * http://www.php.net/manual/en/function.realpath.php#57016
+ *
+ * @author <bart at mediawave dot nl>
+ */
+function resolve_id($ns,$id){
+  // if the id starts with a dot we need to handle the
+  // relative stuff
+  if($id{0} == '.'){
+    // normalize initial dots without a colon
+    $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
+    // prepend the current namespace
+    $id = $ns.':'.$id;
+
+    // cleanup relatives
+    $result = array();
+    $pathA  = explode(':', $id);
+    if (!$pathA[0]) $result[] = '';
+    foreach ($pathA AS $key => $dir) {
+      if ($dir == '..') {
+        if (end($result) == '..') {
+          $result[] = '..';
+        } elseif (!array_pop($result)) {
+          $result[] = '..';
+        }
+      } elseif ($dir && $dir != '.') {
+        $result[] = $dir;
+      }
+    }
+    if (!end($pathA)) $result[] = '';
+    $id = implode(':', $result);
+  }elseif($ns !== false && strpos($id,':') === false){
+    //if link contains no namespace. add current namespace (if any)
+    $id = $ns.':'.$id;
+  }
+
+  return cleanID($id);
+}
+
+/**
  * Returns a full media id
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function resolve_mediaid($ns,&$page,&$exists){
-  global $conf;
-
-  //if links starts with . add current namespace
-  if($page{0} == '.'){
-    $page = $ns.':'.substr($page,1);
-  }
-
-  //if link contains no namespace. add current namespace (if any)
-  if($ns !== false && strpos($page,':') === false){
-    $page = $ns.':'.$page;
-  }
-
-  $page   = cleanID($page);
+  $page   = resolve_id($ns,$page);
   $file   = mediaFN($page);
   $exists = @file_exists($file);
 }
@@ -249,19 +283,9 @@ function resolve_pageid($ns,&$page,&$exists){
   global $conf;
   $exists = false;
 
-  //if links starts with . add current namespace
-  if($page{0} == '.'){
-    $page = $ns.':'.substr($page,1);
-  }
-
-  //if link contains no namespace. add current namespace (if any)
-  if($ns !== false && strpos($page,':') === false){
-    $page = $ns.':'.$page;
-  }
-
   //keep hashlink if exists then clean both parts
   list($page,$hash) = split('#',$page,2);
-  $page = cleanID($page);
+  $page = resolve_id($ns,$page);
   $hash = cleanID($hash);
 
   $file = wikiFN($page);
@@ -337,7 +361,7 @@ function isVisiblePage($id){
  * @link   http://simon.incutio.com/archive/2003/04/23/conditionalGet
  */
 function http_conditionalRequest($timestamp){
-    // A PHP implementation of conditional get, see 
+    // A PHP implementation of conditional get, see
     //   http://fishbowl.pastiche.org/archives/001132.html
     $last_modified = substr(date('r', $timestamp), 0, -5).'GMT';
     $etag = '"'.md5($last_modified).'"';
@@ -349,7 +373,7 @@ function http_conditionalRequest($timestamp){
         stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) :
         false;
     $if_none_match = isset($_SERVER['HTTP_IF_NONE_MATCH']) ?
-        stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) : 
+        stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) :
         false;
     if (!$if_modified_since && !$if_none_match) {
         return;
