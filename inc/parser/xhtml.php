@@ -780,34 +780,65 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-     * Renders an RSS feed using Magpie
+     * Renders an RSS feed
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function rss ($url){
+    function rss ($url,$params){
         global $lang;
-        define('MAGPIE_CACHE_ON', false); //we do our own caching
-        define('MAGPIE_DIR', DOKU_INC.'inc/magpie/');
-        define('MAGPIE_OUTPUT_ENCODING','UTF-8'); //return all feeds as UTF-8
-        require_once(MAGPIE_DIR.'/rss_fetch.inc');
+        global $conf;
+
+        require_once(DOKU_INC.'inc/FeedParser.php');
+        $feed = new FeedParser();
+        $feed->feed_url($url);
 
         //disable warning while fetching
         $elvl = error_reporting(E_ERROR);
-        $rss  = fetch_rss($url);
+        $rc = $feed->init();
         error_reporting($elvl);
 
+        //decide on start and end
+        if($params['reverse']){
+            $mod = -1;
+            $start = $feed->get_item_quantity()-1;
+            $end   = $start - ($params['max']);
+            $end   = ($end < 0) ? 0 : $end;
+        }else{
+            $mod   = 1;
+            $start = 0;
+            $end   = $feed->get_item_quantity();
+            $end   = ($end > $params['max']) ? $params['max'] : $end;;
+        }
+
         $this->doc .= '<ul class="rss">';
-        if($rss){
-            foreach ($rss->items as $item ) {
-                $this->doc .= '<li>';
-                $this->externallink($item['link'],$item['title']);
-                $this->doc .= '</li>';
+        if($rc){
+            for ($x = $start; $x != $end; $x += $mod) {
+                $this->doc .= '<li><div class="li">';
+                $this->externallink($feed->get_item_permalink($x),
+                                    $feed->get_item_title($x));
+                if($params['author']){
+                    $this->doc .= ' '.$lang['by'].' '.$feed->get_item_author($x);
+                }
+                if($params['date']){
+                    $this->doc .= ' ('.$feed->get_item_date($x,$conf['dformat']).')';
+                }
+                if($params['date']){
+                    $this->doc .= '<div class="detail">';
+                    if($htmlok){
+                        $this->doc .= $feed->get_item_description($x);
+                    }else{
+                        $this->doc .= strip_tags($feed->get_item_description($x));
+                    }
+                    $this->doc .= '</div>';
+                }
+
+                $this->doc .= '</div></li>';
             }
         }else{
-            $this->doc .= '<li>';
+            $this->doc .= '<li><div class="li">';
             $this->doc .= '<em>'.$lang['rssfailed'].'</em>';
             $this->externallink($url);
-            $this->doc .= '</li>';
+            $this->doc .= '</div></li>';
         }
         $this->doc .= '</ul>';
     }

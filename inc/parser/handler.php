@@ -456,7 +456,22 @@ class Doku_Handler {
 
     function rss($match, $state, $pos) {
         $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
-        $this->_addCall('rss',array($link),$pos);
+
+        // get params
+        list($link,$params) = explode(' ',$link,2);
+
+        $p = array();
+        if(preg_match('/\b(\d+)\b/',$params,$match)){
+            $p['max'] = $match[1];
+        }else{
+            $p['max'] = 8;
+        }
+        $p['reverse'] = (preg_match('/rev/',$params));
+        $p['author']  = (preg_match('/\b(by|author)/',$params));
+        $p['date']    = (preg_match('/\b(date)/',$params));
+        $p['details'] = (preg_match('/\b(desc|detail)/',$params));
+
+        $this->_addCall('rss',array($link,$p),$pos);
         return TRUE;
     }
 
