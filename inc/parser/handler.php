@@ -39,6 +39,9 @@ class Doku_Handler {
             $B = & new Doku_Handler_Block();
             $this->calls = $B->process($this->calls);
         }
+				
+				$evt = new event('HANDLER_FINALISED',$this);
+				$evt->advise();
 
         array_unshift($this->calls,array('document_start',array(),0));
         array_unshift($this->calls,array('meta',array($this->meta),0));
