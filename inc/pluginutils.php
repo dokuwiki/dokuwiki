@@ -7,7 +7,7 @@
  */
  
 // plugin related constants
-$plugin_types = array('admin','syntax');
+$plugin_types = array('admin','syntax','action');
  
 /**
  * Returns a list of available plugins of given type
