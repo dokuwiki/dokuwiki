@@ -1283,6 +1283,12 @@ function check(){
     msg('Cachedir is not writable',-1);
   }
 
+  if(is_writable($conf['lockdir'])){
+    msg('Lockdir is writable',1);
+  }else{
+    msg('Lockdir is not writable',-1);
+  }
+
   if(is_writable(DOKU_CONF.'users.auth.php')){
     msg('conf/users.auth.php is writable',1);
   }else{
