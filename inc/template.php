@@ -125,8 +125,7 @@ function tpl_content_core(){
       break;
     default:
       $evt = new event('ACTION_TEMPLATE',$ACT);
-      $evt->advise();
-      if ($evt->_default)
+      if ($evt->advise())
         msg("Failed to handle command: ".hsc($ACT),-1);
   }
 }
