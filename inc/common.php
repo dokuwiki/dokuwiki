@@ -1005,6 +1005,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }else{
     // save file (datadir is created in io_saveFile)
     io_saveFile($file,$text);
+    saveMetadata($id, $file, $minor);
     $del = false;
   }
 
@@ -1017,6 +1018,27 @@ function saveWikiText($id,$text,$summary,$minor=false){
   if($conf['purgeonadd'] && (!$old || $del)){
     io_saveFile($conf['cachedir'].'/purgefile',time());
   }
+}
+
+/**
+ * saves the metadata for a page
+ *
+ * @author Esther Brunner <wikidesign@gmail.com>
+ */
+function saveMetadata($id, $file, $minor){
+  global $INFO;
+  
+  $user = $_SERVER['REMOTE_USER'];
+  
+  $meta = array();
+  if (!$INFO['exists']){ // newly created
+    $meta['date']['created'] = @filectime($file);
+    if ($user) $meta['creator'] = $INFO['userinfo']['name'];
+  } elseif (!$minor) {   // non-minor modification
+    $meta['date']['modified'] = @filemtime($file);
+    if ($user) $meta['contributor'][$user] = $INFO['userinfo']['name'];
+  }
+  p_set_metadata($id, $meta, true);
 }
 
 /**

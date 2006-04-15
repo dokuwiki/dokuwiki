@@ -233,6 +233,98 @@ function p_get_instructions($text){
 }
 
 /**
+ * returns the metadata of a page
+ *
+ * @author Esther Brunner <esther@kaffeehaus.ch>
+ */
+function p_get_metadata($id, $key=false, $render=false){
+  $file = metaFN($id, '.meta');
+  
+  if (@file_exists($file)) $meta = unserialize(io_readFile($file, false));
+  else $meta = array();
+  
+  // metadata has never been rendered before - do it!
+  if ($render && !$meta['description']['abstract']){
+    $meta = p_render_metadata($id, $meta);
+    io_saveFile($file, serialize($meta));
+  }
+  
+  // filter by $key
+  if ($key){
+    list($key, $subkey) = explode(' ', $key, 2);
+    if (trim($subkey)) return $meta[$key][$subkey];
+    else return $meta[$key];
+  }
+  
+  return $meta;
+}
+
+/**
+ * sets metadata elements of a page
+ *
+ * @author Esther Brunner <esther@kaffeehaus.ch>
+ */
+function p_set_metadata($id, $data, $render=false){
+  if (!is_array($data)) return false;
+  
+  $orig = p_get_metadata($id);
+  
+  // render metadata first?
+  if ($render) $meta = p_render_metadata($id, $orig);
+  else $meta = $orig;
+    
+  // now add the passed metadata
+  $protected = array('description', 'date', 'contributor');
+  foreach ($data as $key => $value){
+    
+    // be careful with sub-arrays of $meta['relation']
+    if ($key == 'relation'){
+      foreach ($value as $subkey => $subvalue){
+        $meta[$key][$subkey] = array_merge($meta[$key][$subkey], $subvalue);
+      }
+      
+    // be careful with some senisitive arrays of $meta
+    } elseif (in_array($key, $protected)){
+      if (is_array($value)){
+        $meta[$key] = array_merge($meta[$key], $value);
+      }
+    
+    // no special treatment for the rest
+    } else {
+      $meta[$key] = $value;
+    }
+  }
+  
+  // save only if metadata changed
+  if ($meta == $orig) return true;
+  return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+}
+
+/**
+ * renders the metadata of a page
+ *
+ * @author Esther Brunner <esther@kaffeehaus.ch>
+ */
+function p_render_metadata($id, $orig){
+  require_once DOKU_INC."inc/parser/metadata.php";
+
+  // get instructions
+  $instructions = p_cached_instructions(wikiFN($id));
+
+  // set up the renderer
+  $renderer = & new Doku_Renderer_metadata();
+  $renderer->meta = $orig;
+  
+  // loop through the instructions
+  foreach ($instructions as $instruction){
+    // execute the callback against the renderer
+    call_user_func_array(array(&$renderer, $instruction[0]), $instruction[1]);
+  }
+  
+  return $renderer->meta;
+}
+
+/**
  * returns all available parser syntax modes in correct order
  *
  * @author Andreas Gohr <andi@splitbrain.org>
