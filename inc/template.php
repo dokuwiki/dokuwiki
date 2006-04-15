@@ -36,7 +36,22 @@ function template($tpl){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_content(){
+function tpl_content() {
+  global $ACT;
+
+  ob_start();
+
+  $evt = new event('TPL_ACTION_HTML',$ACT,tpl_content_core);
+  $evt->trigger();
+
+  $html_output = ob_get_clean();
+
+  $evt = new event('TPL_DISPLAY_HTML',$html_output,ptln);
+  $evt->trigger();
+
+}
+
+function tpl_content_core(){
   global $ACT;
   global $TEXT;
   global $PRE;
