@@ -107,10 +107,17 @@ function act_dispatch(){
   }
 
   //call template FIXME: all needed vars available?
-  header('Content-Type: text/html; charset=utf-8');
+  $headers[] = 'Content-Type: text/html; charset=utf-8';
+  $evt = new event('SEND_HEADERS',$headers,act_sendheaders);
+  $evt->trigger();
+
   include(template('main.php'));
   // output for the commands is now handled in inc/templates.php
   // in function tpl_content()
+}
+
+function act_sendheaders($headers) {
+  foreach ($headers as $hdr) header($hdr);
 }
 
 /**
