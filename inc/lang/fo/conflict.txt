@@ -1,0 +1,5 @@
+====== Ein níggjari útgáva av skjalinum er til ======
+
+Ein nýggjari útgáva av hesum skjalinum er til. Hetta hendur tá fleiri brúkarir rætta í skjalinum samstundis.
+
+Eftirkanna tær vístu broytingar nágreiniliga, og avgerð hvat fyri útgávu sum skal goymast. Um tú velur ''Goym'', verður tín útgáva av skalinum goymd. Velur tú ''Angra'' varðveittur tú tí núverandi útgávuna.

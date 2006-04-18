@@ -1,0 +1,17 @@
+Eitt skjal í tíni DokuWiki bleiv broytt ella skoytt uppí. Her er ein lýsing:
+
+Dato               : @DATE@
+Browser            : @BROWSER@
+IP-adressa         : @IPADDRESS@
+Hostnavn           : @HOSTNAME@
+Gomul útgáva       : @OLDPAGE@
+Nýggj útgáva       : @NEWPAGE@
+Rætti samandráttur : @SUMMARY@
+Brúkari            : @USER@
+
+@DIFF@
+
+
+-- 
+Hesin t-postur var skaptur av DokuWiki á:
+@DOKUWIKIURL@

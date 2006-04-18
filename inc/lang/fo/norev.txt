@@ -1,0 +1,4 @@
+====== Valda útgávan er ikki til ======
+
+Valda útgávan av skjalinum er ikki til! Trýst á knappin **''[Gamlar útgávur]''** fyri at síggja ein lista yvur gamlar útgávur av hesum skjali.
+

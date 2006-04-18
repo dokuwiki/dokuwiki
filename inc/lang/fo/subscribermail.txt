@@ -1,0 +1,17 @@
+Hey!
+
+Síðan @PAGE@ á @TITLE@ wikiuni er blivin broytt.
+Her eru ein lýsing:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Fyri at avmelda broytinga upplýsingar fyri hesa síðu rita inn á wikiuna á
+@DOKUWIKIURL@ , vitja
+@NEWPAGE@
+og vel 'Strika til melda broytingar'.
+
+-- 
+Hesin t-postur var skaptur av DokuWiki á:
+@DOKUWIKIURL@

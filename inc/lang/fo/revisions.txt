@@ -1,0 +1,3 @@
+====== Gamlar útgávur ======
+
+Her eru tær gomlu útgávurnar av hesum skalinum. Tú kanst venda aftur til eina eldri útgávu av skjalinum við at velja tað niðanfyri, trýst á **''[Rætta hetta skjal]''** knappin, og til síðst goyma skjali.

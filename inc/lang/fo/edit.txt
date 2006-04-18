@@ -1,0 +1,5 @@
+Rætta hetta skjal og trýst so á **''[Goym]''** knappin. Sí [[wiki:syntax|snið ábending]]
+fyri Wiki setningsbygnað. Rætta vinarliga bert hetta skjali um tú kanst **fyrireika** tað. Nýt vinarliga
+[[playground:playground|sandkassan]] til at testa áðrenn tú rættar í einum røttum skjali.
+Minst eisini til at brúkar **''[Forskoðan]''** áðrenn tú goymur skjalið.
+
