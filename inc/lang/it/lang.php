@@ -35,19 +35,30 @@ $lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = 'Torna al selettore Mediafile';
 $lang['btn_subscribe']   = 'Sottoscrivi modifiche';
 $lang['btn_unsubscribe'] = 'Cancella sottoscrizione';
+$lang['btn_profile']     = 'Aggiorna Profilo';
+$lang['btn_reset']       = 'Azzera';
+$lang['btn_resendpwd']   = 'Invia nuova password';
+$lang['btn_draft']    = 'Modifica bozza';
+$lang['btn_recover']  = 'Ripristina bozza';
+$lang['btn_draftdel'] = 'Cancella bozza';
 
 $lang['loggedinas'] = 'Collegato come';
 $lang['user']       = 'Nome utente';
 $lang['pass']       = 'Password';
+$lang['newpass']    = 'Nuova password';
+$lang['oldpass']    = 'Conferma password corrente';
 $lang['passchk']    = 'Ripeti password';
 $lang['remember']   = 'Ricorda automaticamente';
 $lang['fullname']   = 'Nome completo';
 $lang['email']      = 'E-Mail';
 $lang['register']   = 'Registra';
+$lang['profile']    = 'Profilo Utente';
 $lang['badlogin']   = 'Il nome utente o la password non è valida.';
+$lang['minoredit']  = 'Modifiche Minori';
+$lang['draftdate']  = 'Bozza salvata in automatico il'; // full dformat date will be added
 
 $lang['regmissing'] = 'Devi riempire tutti i campi.';
-$lang['reguexists'] = 'Il nome nome utente immesso esiste già.';
+$lang['reguexists'] = 'Il nome utente immesso esiste già.';
 $lang['regsuccess'] = 'L\'utente è stato creato. La tua password ti è stata inviata con un messaggio di posta elettronica.';
 $lang['regsuccess2']= 'L\'utente è stato creato.';
 $lang['regmailfail']= 'Sembra che ci sia stato un errore nell\'invio del messaggio e-mail. Per favore contatta il tuo amministratore!';
@@ -55,6 +66,18 @@ $lang['regbadmail'] = 'L\'indirizzo email fornito sembra essere non valido - se 
 $lang['regbadpass'] = 'Le due password inserite non coincidono, prova di nuovo.';
 $lang['regpwmail']  = 'La tua password DokuWiki';
 $lang['reghere']    = 'Non hai ancora un accesso? Registrati qui.';
+
+$lang['profna']       = 'Questo wiki non supporta modifiche al profilo';
+$lang['profnochange'] = 'Nessuna modifica, niente da aggiornare.';
+$lang['profnoempty']  = 'Nome o indirizzo email vuoti non sono consentiti.';
+$lang['profchanged']  = 'Profilo utente aggiornato con successo.';
+
+$lang['pwdforget'] = 'Hai dimenticato la tua password? Richiedine una nuova';
+$lang['resendna']  = 'Questo wiki non supporta il re-invio delle password.';
+$lang['resendpwd'] = 'Invia nuova password per';
+$lang['resendpwdmissing'] = 'Spiacente, devi compilare tutti i campi.';
+$lang['resendpwdnouser']  = 'Ci dispiace, non riusciamo a trovare questo utente nel nostro database.';
+$lang['resendpwdsuccess'] = 'La tua nuova password è stata spedita via email.';
 
 $lang['txt_upload']   = 'Seleziona un file da caricare';
 $lang['txt_filename'] = 'Inserisci un "wikiname" (opzionale)';
@@ -64,7 +87,6 @@ $lang['lockexpire']   = 'Il blocco scade alle';
 $lang['willexpire']   = 'Il tuo blocco su questa pagina scadrà tra circa un minuto.\nPer evitare incongruenze usa il pulsante di anteprima per prolungare il periodo di blocco.';
 
 $lang['notsavedyet'] = 'Alcune modifiche non salvate andranno perse.\nContinuare?';
-
 $lang['rssfailed']   = 'Si è verificato un errore cercando questo feed: ';
 $lang['nothingfound']= 'Nessun risultato trovato.';
 
@@ -76,7 +98,7 @@ $lang['uploadwrong'] = 'Invio rifiutato. Questa estensione di file non è ammess
 $lang['uploadexist'] = 'File esistente. Lavoro abortito.';
 $lang['deletesucc']  = 'Il file "%s" è stato cancellato.';
 $lang['deletefail']  = '"%s" non può essere cancellato - verifica i permessi.';
-$lang['mediainuse']  = 'Il file "%s" on è stato cancellato - è ancora in uso.';
+$lang['mediainuse']  = 'Il file "%s" non è stato cancellato - è ancora in uso.';
 $lang['namespaces']  = 'Categorie';
 $lang['mediafiles']  = 'File disponibili in';
 
@@ -92,6 +114,7 @@ $lang['yours']      = 'la tua versione';
 $lang['diff']       = 'differenze con la versione attuale';
 $lang['line']       = 'Linea';
 $lang['breadcrumb'] = 'Traccia';
+$lang['youarehere'] = 'You are here';
 $lang['lastmod']    = 'Ultima modifica';
 $lang['by']         = 'da';
 $lang['deleted']    = 'cancellata';
@@ -120,8 +143,10 @@ $lang['qb_extlink'] = 'Collegamento esterno';
 $lang['qb_hr']      = 'Riga orizzontale';
 $lang['qb_ol']      = 'Elenco numerato';
 $lang['qb_ul']      = 'Elenco puntato';
-$lang['qb_media']   = 'Inserisci immagino o altri file';
+$lang['qb_media']   = 'Inserisci immagini o altri file';
 $lang['qb_sig']     = 'Inserisci la firma';
+$lang['qb_smileys'] = 'Smiley';
+$lang['qb_chars']   = 'Caratteri Speciali';
 
 $lang['del_confirm']= 'Cancellare questa voce?';
 $lang['admin_register']= 'Aggiungi un nuovo utente';
@@ -153,5 +178,9 @@ $lang['subscribe_error']    = 'Si è verificato un errore durante l\'aggiunta di
 $lang['subscribe_noaddress']= 'Non c\'è alcun indirizzo associato con il tuo login, non puoi sottoscrivere alcuna lista';
 $lang['unsubscribe_success']= '%s è stato rimosso dalla lista di controllo per la pagina %s';
 $lang['unsubscribe_error']  = 'Si è verificato un errore durante la rimozione di %s dalla lista di controllo per la pagina %s';
+
+/* auth.class language support */
+$lang['authmodfailed']   = 'La configurazione dell\'autenticazione non è corretta. Per favore informa l\'amministratore di questo Wiki.';
+$lang['authtempfail']    = 'L\'autenticazione degli utenti è temporaneamente non disponibile. Se questa situazione persiste, per favore informa l\'amministratore di questo Wiki.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

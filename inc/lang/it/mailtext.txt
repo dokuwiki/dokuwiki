@@ -12,5 +12,5 @@ Oggetto della modifica : @SUMMARY@
 
 
 -- 
-Questo e-mail è stato generato da DokuWiki su
+Questa e-mail è stata generata da DokuWiki su
 @DOKUWIKIURL@
