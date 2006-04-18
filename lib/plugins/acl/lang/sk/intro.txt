@@ -1,6 +1,7 @@
-====== Spr·va prÌstupov˝ch pr·v (ACL) ======
+====== Spr√°va pr√≠stupov√Ωch pr√°v (ACL) ======
 
-Na tejto str·nke mÙûete pridaù a odobraù opr·vnenia pre aktu·lnu str·nku a vöetky [[doku>wiki:namespaces|mennÈ priestory]] v nej. MÙûete si preËÌtaù [[doku>wiki:acl|ofici·lnu dokument·ciu k ACL]] pre plnÈ porozumenie tomu, ako kontrola prÌstupu pracuje.
+Na tejto str√°nke m√¥≈æete prida≈• a odobra≈• opr√°vnenia pre aktu√°lnu str√°nku a v≈°etky [[doku>wiki:namespaces|menn√© priestory]] v nej. M√¥≈æete si preƒç√≠ta≈• [[doku>wiki:acl|ofici√°lnu dokument√°ciu k ACL]] pre pln√© porozumenie tomu, ako kontrola pr√≠stupu pracuje.
 
-Str·nka ukazuje vöetky opr·vnenia, ktorÈ sa vzùahuj˙ na aktu·lnu str·nku. Opr·vnenia t˝kaj˙ce sa in˝ch str·nok nie s˙ zobrazenÈ  -- pre ich zmenu [[this>doku.php?do=index|nalistujte]] prÌsluön˙ str·nku a potom sa prepnite do Administr·cie ACL.
+Str√°nka ukazuje v≈°etky opr√°vnenia, ktor√© sa vz≈•ahuj√∫ na aktu√°lnu str√°nku. Opr√°vnenia t√Ωkaj√∫ce sa in√Ωch str√°nok nie s√∫ zobrazen√©  -- pre ich zmenu [[this>doku.php?do=index|nalistujte]] pr√≠slu≈°n√∫ str√°nku a potom sa prepnite do Administr√°cie ACL.
+
 

@@ -1,27 +1,28 @@
-#Toto je zoznam slov ignorovanıch indexérom, jedno slovo na riadok
-# Keï editujete tento súbor, uistite sa, èi pouívate UNIXové konce riadkov (jednoduchı novı riadok)
-# Nie je potrebné vklada slová krašie ako 3 znaky - tie sú ignorované vdy.
-# Tento zoznam je zaloenı na inom nájdenom na http://www.ranks.nl/stopwords/
+#Toto je zoznam slov ignorovanÃ½ch indexÃ©rom, jedno slovo na riadok
+# KeÄ editujete tento sÃºbor, uistite sa, Äi pouÅ¾Ã­vate UNIXovÃ© konce riadkov (jednoduchÃ½ novÃ½ riadok)
+# Nie je potrebnÃ© vkladaÅ¥ slovÃ¡ kraÅ¥Å¡ie ako 3 znaky - tie sÃº ignorovanÃ© vÅ¾dy.
+# Tento zoznam je zaloÅ¾enÃ½ na inom nÃ¡jdenom na http://www.ranks.nl/stopwords/
 okolo
 tvoj
 ale
 ako
-akı
-aká
-aké
+akÃ½
+akÃ¡
+akÃ©
 kde
-kım
+kÃ½m
 kom
 komu
 ich
 jeho
 jej
 tvoj
-môj
+mÃ´j
 moja
 moje
 moji
-náš
-váš
+nÃ¡Å¡
+vÃ¡Å¡
 www
+
 

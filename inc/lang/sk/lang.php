@@ -110,6 +110,7 @@ $lang['yours']      = 'Vaša verzia';
 $lang['diff']       = 'zobrazit rozdiely voči aktuálnej verzii';
 $lang['line']       = 'Riadok';
 $lang['breadcrumb'] = 'História';
+$lang['youarehere'] = 'Nachádzate sa';
 $lang['lastmod']    = 'Posledná úprava';
 $lang['by']         = 'od';
 $lang['deleted']    = 'odstranené';
@@ -176,6 +177,7 @@ $lang['unsubscribe_error']  = 'Chaba pri odobraní %s zo zoznamu objednávok pre
 
 /* auth.class language support */
 $lang['authmodfailed']   = 'Užívateľská autentifikácia nie je možná. Prosím informujte  správcu tohto systému.';
+$lang['authtempfail']    = 'Užívateľská autentifikácia je dočasne nedostupná. Ak táto situácia pretrvá, prosím informujte správcu tohto systému.';
 
 /* mysql.class language support */
 $lang['noMySQL']         = "MySQL rozšírenie pre PHP nenájdené. Prosím informujte  správcu tohto systému.";

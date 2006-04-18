@@ -3,7 +3,7 @@
  * Slovak language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
+ * @author     Ondrej Vegh <ov@vsieti.sk>
  */
 
 $lang['admin_acl']  = 'Správa zoznamu prístupových práv';
