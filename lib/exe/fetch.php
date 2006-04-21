@@ -70,7 +70,7 @@
   }
 
   // finally send the file to the client
-  sendFile($FILE,$MIME);
+  sendFile($FILE,$MIME,$CACHE);
 
 /* ------------------------------------------------------------------------ */
 
@@ -78,15 +78,34 @@
  * Set headers and send the file to the client
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function sendFile($file,$mime){
+function sendFile($file,$mime,$cache){
+  global $conf;
+  $fmtime = filemtime($file);
   // send headers
   header("Content-Type: $mime");
-  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-  header('Pragma: public');
+  // smart http caching headers
+  if ($cache==-1) {
+    // cache
+    // cachetime or one hour
+    header('Expires: '.gmdate("D, d M Y H:i:s", time()+max($conf['cachetime'], 3600)).' GMT');
+    header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($conf['cachetime'], 3600));
+    header('Pragma: public');
+  } else if ($cache>0) {
+    // recache
+    // remaining cachetime + 10 seconds so the newly recached media is used
+    header('Expires: '.gmdate("D, d M Y H:i:s", $fmtime+$conf['cachetime']+10).' GMT');
+    header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($fmtime-time()+$conf['cachetime']+10, 0));
+    header('Pragma: public');
+  } else if ($cache==0) {
+    // nocache
+    header('Cache-Control: must-revalidate, no-transform, post-check=0, pre-check=0');
+    header('Pragma: public');
+  }
   header('Accept-Ranges: bytes');
   //send important headers first, script stops here if '304 Not Modified' response
-  http_conditionalRequest(filemtime($file));
+  http_conditionalRequest($fmtime);
   list($start,$len) = http_rangeRequest(filesize($file));
 
   //application mime type is downloadable
