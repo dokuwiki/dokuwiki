@@ -204,14 +204,15 @@ function calc_cache($cache){
 function get_from_URL($url,$ext,$cache){
   global $conf;
 
+  // if 'nocache' just redirect
+  if ($cache==0) { return false; }
+
   $local = getCacheName(strtolower($url),".media.$ext");
   $mtime = @filemtime($local); // 0 if not exists
 
   //decide if download needed:
-  if( $cache == 0 ||                             // never cache
-      ($mtime != 0 && $cache != -1) ||           // exists but no endless cache
-      ($mtime == 0) ||                           // not exists
-      ($cache != -1 && $mtime < time()-$cache)   // expired
+  if( ($mtime == 0) ||                           // cache does not exist
+      ($cache != -1 && $mtime < time()-$cache)   // 'recache' and cache has expired
     ){
       if(io_download($url,$local)){
         return $local;
