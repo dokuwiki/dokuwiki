@@ -1,30 +1,22 @@
 <?php
 /*************************************************************************************
- * pascal.php
- * ----------
- * Author: Tux (tux@inamil.cz)
- * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
+ * cfdg.php
+ * --------
+ * Author: John Horigan <john@glyphic.com>
+ * Copyright: (c) 2006 John Horigan http://www.ozonehouse.com/john/
  * Release Version: 1.0.7.9
- * CVS Revision Version: $Revision: 1.10 $
- * Date Started: 2004/07/26
- * Last Modified: $Date: 2006/04/23 01:14:42 $
+ * CVS Revision Version: $Revision: 1.2 $
+ * Date Started: 2006/03/11
+ * Last Modified: $Date: 2006/04/23 01:14:41 $
  *
- * Pascal language file for GeSHi.
+ * CFDG language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2004/11/27 (1.0.2)
- *  -  Added support for multiple object splitters
- * 2004/10/27 (1.0.1)
- *   -  Added support for URLs
- * 2004/08/05 (1.0.0)
- *   -  Added support for symbols
- * 2004/07/27 (0.9.1)
- *   -  Pascal is OO language. Some new words.
- * 2004/07/26 (0.9.0)
- *   -  First Release
+ * 2006/03/11 (1.0.0)
+ *  -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TODO (updated 2006/03/11)
  * -------------------------
  *
  *************************************************************************************
@@ -48,56 +40,43 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Pascal',
-	'COMMENT_SINGLE' => array(1 => '//'),
-	'COMMENT_MULTI' => array('{' => '}','(*' => '*)'),
+	'LANG_NAME' => 'CFDG',
+	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
+	'COMMENT_MULTI' => array('/*' => '*/'),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '\\',
+	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
-			'if', 'while', 'until', 'repeat', 'default',
-			'do', 'else', 'for', 'switch', 'goto','label','asm','begin','end',
-			'assembler','case', 'downto', 'to','div','mod','far','forward','in','inherited',
-			'inline','interrupt','label','library','not','var','of','then','stdcall',
-			'cdecl','end.','raise','try','except','name','finally','resourcestring','override','overload',
-			'default','public','protected','private','property','published','stored','catch'
+			'include', 'startshape', 'rule', 'background'
 			),
 		2 => array(
-			'nil', 'false', 'break', 'true', 'function', 'procedure','implementation','interface',
-			'unit','program','initialization','finalization','uses'
+			'SQUARE', 'CIRCLE', 'TRIANGLE',
 			),
 		3 => array(
-			'abs', 'absolute','and','arc','arctan','chr','constructor','destructor',
-			'dispose','cos','eof','eoln','exp','get','index','ln','new','xor','write','writeln',
-			'shr','sin','sqrt','succ','pred','odd','read','readln','ord','ordinal','blockread','blockwrite'
-			),
-		4 => array(
-			'array', 'char', 'const', 'boolean',  'real', 'integer', 'longint',
-			'word', 'shortint', 'record','byte','bytebool','string',
-			'type','object','export','exports','external','file','longbool','pointer','set',
-			'packed','ansistring','union'
-			),
+			'b','brightness','h','hue','sat','saturation',
+			'a','alpha','x','y','z','s','size',
+			'r','rotate','f','flip','skew','xml_set_object'
+			)
 		),
 	'SYMBOLS' => array(
+		'[', ']', '{', '}', '*', '|'
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
+		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false,
-		4 => false,
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #b1b100;',
+			1 => 'color: #717100;',
 			2 => 'color: #000000; font-weight: bold;',
-			3 => '',
-			4 => 'color: #993333;'
+			3 => 'color: #006666;'
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080; font-style: italic;',
-			2 => 'color: #339933;',
+			2 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
@@ -113,7 +92,8 @@ $language_data = array (
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
-			1 => 'color: #202020;'
+			1 => 'color: #006600;',
+			2 => 'color: #006600;'
 			),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66;'
@@ -121,6 +101,10 @@ $language_data = array (
 		'REGEXPS' => array(
 			),
 		'SCRIPT' => array(
+			0 => '',
+			1 => '',
+			2 => '',
+			3 => ''
 			)
 		),
 	'URLS' => array(
@@ -129,10 +113,8 @@ $language_data = array (
 		3 => '',
 		4 => ''
 		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
-		1 => '.'
-		),
+	'OOLANG' => false,
+	'OBJECT_SPLITTERS' => '',
 	'REGEXPS' => array(
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
@@ -143,3 +125,4 @@ $language_data = array (
 );
 
 ?>
+

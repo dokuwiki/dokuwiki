@@ -4,7 +4,7 @@
  * --------
  * Author: mastrboy
  * Copyright: (c) 2006 and to GESHi ;)
- * Release Version: 1.0.7.8
+ * Release Version: 1.0.7.9
  * Date Started: 26.01.2006
  *
  * Current bugs & todo:

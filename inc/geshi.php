@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.32 2006/03/23 07:24:17 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.36 2006/04/23 00:15:26 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.8');
+define('GESHI_VERSION', '1.0.7.9');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -527,6 +527,10 @@ class GeSHi
             return;
         }
 		$this->header_type = $type;
+        // Set a default overall style if the header is a <div>
+        if (GESHI_HEADER_DIV == $type && !$this->overall_style) {
+            $this->overall_style = 'font-family: monospace;';
+        }
 	}
 
 	/**
@@ -1079,6 +1083,7 @@ class GeSHi
 				'c_mac' => array('c'),
 				'caddcl' => array(),
 				'cadlisp' => array(),
+                'cdfg' => array('cdfg'),
 				'cpp' => array('cpp'),
 				'csharp' => array(),
 				'css' => array('css'),
@@ -1098,6 +1103,7 @@ class GeSHi
 				'php' => array('php', 'php5', 'phtml', 'phps'),
 				'python' => array('py'),
 				'qbasic' => array('bi'),
+                'sas' => array('sas'),
 				'smarty' => array(),
 				'vb' => array('bas'),
 				'vbnet' => array(),
@@ -1551,7 +1557,7 @@ class GeSHi
                             // A match of a string delimiter
 							if (($this->lexic_permissions['ESCAPE_CHAR'] && $ESCAPE_CHAR_OPEN) ||
                                 ($this->lexic_permissions['STRINGS'] && !$ESCAPE_CHAR_OPEN)) {
-								$char .= '</span>';
+								$char = htmlspecialchars($char, ENT_COMPAT, $this->encoding) . '</span>';
 							}
 						    $escape_me = false;
     						if ($HARDQUOTE_OPEN)
@@ -1584,7 +1590,7 @@ class GeSHi
 							} else {
 								$attributes = ' class="st0"';
 							}
-							$char = "<span$attributes>" . $char;
+							$char = "<span$attributes>" . htmlspecialchars($char, ENT_COMPAT, $this->encoding);
 
 							$result .= $this->parse_non_string_part( $stuff_to_parse );
 							$stuff_to_parse = '';
@@ -1828,14 +1834,13 @@ class GeSHi
                     if (false === strpos($line, "\t")) {
                         $lines[$key] = $line;
                         continue;
-                    }//echo 'checking line ' . $key . '<br />';
-
+                    }
+                    
                     $pos = 0;
                     $tab_width = $this->tab_width;
                     $length = strlen($line);
                     $result_line = '';
 
-                    //echo '<pre>line: ' . htmlspecialchars($line) . '</pre>';
                     $IN_TAG = false;
                     for ($i = 0; $i < $length; $i++) {
                         $char = substr($line, $i, 1);
@@ -1854,13 +1859,10 @@ class GeSHi
                             $IN_TAG = true;
                             $result_line .= '<';
                             ++$pos;
-                        } elseif (!$IN_TAG && '&' == $char) {
-                            //echo "matched &amp; in line... ";
-                            $substr = substr($line, $i + 3, 4);
+                        } elseif (!$IN_TAG && '&' == $char) {                            $substr = substr($line, $i + 3, 4);
                             //$substr_5 = substr($line, 5, 1);
                             $posi = strpos($substr, ';');
                             if (false !== $posi) {
-                                //echo "found entity at $posi\n";
                                 $pos += $posi + 3;
                             }
                             $result_line .= '&';
@@ -1873,7 +1875,6 @@ class GeSHi
                             //  3 => '&nbsp; &nbsp;' etc etc
                             // to use instead of building a string every time
                             $strs = array(0 => '&nbsp;', 1 => ' ');
-                            //echo "building (pos=$pos i=$i) (" . ($i - $pos) . ") " . ($tab_width - (($i - $pos) % $tab_width)) . " spaces\n";
                             for ($k = 0; $k < ($tab_width - (($i - $pos) % $tab_width)); $k++) $str .= $strs[$k % 2];
                             $result_line .= $str;
                             //$pos--;
@@ -1882,7 +1883,6 @@ class GeSHi
 
                             if (false === strpos($line, "\t", $i + 1)) {
                                 //$lines[$key] = $result_line;
-                                //echo 'got here';
                                 $result_line .= substr($line, $i + 1);
                                 break;
                             }
@@ -1987,7 +1987,6 @@ class GeSHi
 	{
 		$stuff_to_parse = ' ' . @htmlspecialchars($stuff_to_parse, ENT_COMPAT, $this->encoding);
         $stuff_to_parse_pregquote = preg_quote($stuff_to_parse, '/');
-		// These vars will disappear in the future
 		$func = '$this->change_case';
 		$func2 = '$this->add_url_to_keyword';
 
@@ -2169,7 +2168,7 @@ class GeSHi
 		$stuff_to_parse = str_replace('<|', '<span', $stuff_to_parse);
 		$stuff_to_parse = str_replace ( '|>', '</span>', $stuff_to_parse );
 
-		return substr(stripslashes($stuff_to_parse), 1);
+		return substr($stuff_to_parse, 1);
 	}
 
 	/**
@@ -2266,6 +2265,8 @@ class GeSHi
             // Set vars to defaults for following loop
             $parsed_code = '';
             $i = 0;
+            $attrs = array();
+                        
             // Foreach line...
             foreach ($code as $line) {
                 $line = ( $line ) ? $line : '&nbsp;';
@@ -2274,10 +2275,12 @@ class GeSHi
                     $i % $this->line_nth_row == ($this->line_nth_row - 1)) {
             		// Set the attributes to style the line
                     if ($this->use_classes) {
-            			$attr = ' class="li2"';
+            			//$attr = ' class="li2"';
+                        $attrs['class'][] = 'li2';
             			$def_attr = ' class="de2"';
                     } else {
-            			$attr = ' style="' . $this->line_style2 . '"';
+            			//$attr = ' style="' . $this->line_style2 . '"';
+                        $attrs['style'][] = $this->line_style2;
             			// This style "covers up" the special styles set for special lines
             			// so that styles applied to special lines don't apply to the actual
             			// code on that line
@@ -2288,10 +2291,12 @@ class GeSHi
             		$end = '</div>';
             	} else {
             		if ($this->use_classes) {
-                        $attr = ' class="li1"';
+                        //$attr = ' class="li1"';
+                        $attrs['class'][] = 'li1';
             			$def_attr = ' class="de1"';
             		} else {
-                        $attr = ' style="' . $this->line_style1 . '"';
+                        //$attr = ' style="' . $this->line_style1 . '"';
+                        $attrs['style'][] = $this->line_style1;
             			$def_attr = ' style="' . $this->code_style . '"';
             		}
             		$start = "<div$def_attr>";
@@ -2301,17 +2306,25 @@ class GeSHi
             	++$i;
             	// Are we supposed to use ids? If so, add them
             	if ($this->add_ids) {
-            		$attr .= " id=\"{$this->overall_id}-{$i}\"";
+            		//$attr .= " id=\"{$this->overall_id}-{$i}\"";
+                    $attrs['id'][] = "$this->overall_id-$i";
             	}
             	if ($this->use_classes && in_array($i, $this->highlight_extra_lines)) {
-            		$attr .= " class=\"ln-xtra\"";
+            		//$attr .= " class=\"ln-xtra\"";
+                    $attrs['class'][] = 'ln-xtra';
             	}
             	if (!$this->use_classes && in_array($i, $this->highlight_extra_lines)) {
-            		$attr .= " style=\"{$this->highlight_extra_lines_style}\"";
+            		//$attr .= " style=\"{$this->highlight_extra_lines_style}\"";
+                    $attrs['style'][] = $this->highlight_extra_lines_style;
             	}
 
             	// Add in the line surrounded by appropriate list HTML
-            	$parsed_code .= "<li$attr>$start$line$end</li>$ls";
+                $attr_string = ' ';
+                foreach ($attrs as $key => $attr) {
+                    $attr_string .= $key . '="' . implode(' ', $attr) . '"';
+                }
+            	$parsed_code .= "<li$attr_string>$start$line$end</li>$ls";
+                $attrs = array();
         	}
         } else {
             // No line numbers, but still need to handle highlighting lines extra.
@@ -2329,7 +2342,8 @@ class GeSHi
             		} else {
             			$parsed_code .= "<div style=\"{$this->highlight_extra_lines_style}\">";
             		}
-            		$parsed_code .= $line . "</div>\n";
+                    // Remove \n because it stuffs up <pre> header
+            		$parsed_code .= $line . "</div>";
             	} else {
             		$parsed_code .= $line . "\n";
             	}

@@ -2,12 +2,12 @@
  /************************************************************************************* 
  * mysql.php 
  * --------- 
- * Author: Carl Fürstenberg (azatoth@gmail.com) 
- * Copyright: (c) 2005 Carl Fürstenberg, Nigel McNie (http://qbnz.com/highlighter) 
- * Release Version: 1.0.7.8
- * CVS Revision Version: $Revision: 1.6 $ 
+ * Author: Carl Fï¿½rstenberg (azatoth@gmail.com) 
+ * Copyright: (c) 2005 Carl Fï¿½rstenberg, Nigel McNie (http://qbnz.com/highlighter) 
+ * Release Version: 1.0.7.9
+ * CVS Revision Version: $Revision: 1.9 $ 
  * Date Started: 2004/06/04 
- * Last Modified: $Date: 2006/03/11 21:44:08 $ 
+ * Last Modified: $Date: 2006/04/23 01:14:42 $ 
  * 
  * MySQL language file for GeSHi. 
  * 
@@ -62,12 +62,13 @@ $language_data = array (
   /* Control Flow Functions */ 
   'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 
   /* String Functions */ 
-  'BIN', 'BIT_LENGTH', 'CHAR_LENGTH', 'CHARACTER_LENGTH', 'COMPRESS', 'CONCAT', 
+  'UNHEX', 'BIN', 'BIT_LENGTH', 'CHAR_LENGTH', 'CHARACTER_LENGTH', 'COMPRESS', 'CONCAT', 
   'CONCAT_WS', 'CONV', 'ELT', 'EXPORT_SET', 'FIELD', 'FIND_IN_SET', 'FORMAT', 'HEX',  
   'INSERT', 'INSTR', 'LCASE', 'LEFT', 'LENGTH', 'LOAD_FILE', 'LOCATE', 'LOWER', 'LPAD', 
   'LTRIM', 'MAKE_SET', 'MID', 'OCT', 'OCTET_LENGTH', 'ORD', 'POSITION', 'QUOTE', 'REPEAT', 
   'REPLACE', 'REVERSE', 'RIGHT', 'RPAD', 'RTRIM', 'SOUNDEX', 'SPACE', 'SUBSTRING',  
-  'SUBSTRING_INDEX', 'TRIM', 'UCASE', 'UPPER', 'UNCOMPRESS', 'UNCOMPRESSD_LENGTH', 'UNHEX',  
+  'SUBSTRING_INDEX', 'TRIM', 'UCASE', 'UPPER', 'UNCOMPRESS', 'UNCOMPRESSD_LENGTH',
+  'MD5', 'SHA1',  
   /* Numeric Functions */ 
   'ABS', 'ACOS', 'ASIN', 'ATAN', 'ATAN2', 'CEILING', 'CEIL', 'COS', 'COT', 'CRC32', 'DEGREES', 
   'EXP', 'FLOOR', 'LN', 'LOG', 'LOG2', 'LOG10', 'MOD', 'PI', 'POW', 'POWER', 'RADIANS', 'RAND', 
