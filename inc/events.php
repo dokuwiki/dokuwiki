@@ -53,7 +53,10 @@ class Doku_Event {
   function advise_before($enablePreventDefault=true) {
     global $EVENT_HANDLER;
 
-    return $EVENT_HANDLER->process_event($this,'BEFORE');
+    $this->canPreventDefault = $enablePrevent;
+    $EVENT_HANDLER->process_event($this,'BEFORE');
+
+    return (!$enablePreventDefault || $this->_default);
   }
 
   function advise_after() {
@@ -79,20 +82,15 @@ class Doku_Event {
   function trigger($action=NULL, $enablePrevent=true) {
 
     if (!is_callable($action)) $enablePrevent = false;
-    $this->canPreventDefault = $enablePrevent;
-    
-    $this->advise_before($enablePrevent);
 
-    if (is_callable($action)) {
-      if (!$enablePrevent || $this->_default) {
-        if (is_array($action)) {
-          list($obj,$method) = $action;
-          $this->result = $obj->$method($this->data);
-        } else {
-          $this->result = $action($this->data);
-        }
+    if ($this->advise_before($enablePrevent) && is_callable($action)) {
+      if (is_array($action)) {
+        list($obj,$method) = $action;
+        $this->result = $obj->$method($this->data);
+      } else {
+        $this->result = $action($this->data);
       }
-    } 
+    }
     
     $this->advise_after();
     
@@ -172,14 +170,25 @@ class Doku_Event_Handler {
 
       } while ($event->_continue && $hook = next($this->_hooks[$evt_name]));
     }
-
-    return $event->_default;
   }
 }
 
-// function wrapper to enable one line event triggering
+/**
+ *  trigger_event
+ *
+ *  function wrapper to process (create, trigger and destroy) an event
+ *
+ *  @PARAM  $name               (string)   name for the event
+ *  @PARAM  $data               (mixed)    event data
+ *  @PARAM  $action             (callback) (optional, default=NULL) default action, a php callback function
+ *  @PARAM  $canPreventDefault  (bool)     (optional, default=true) can hooks prevent the default action
+ *
+ *  @RETURN (mixed)                        the event results value after all event processing is complete
+ *                                         by default this is the return value of the default action however
+ *                                         it can be set or modified by event handler hooks
+ */
 function trigger_event($name, &$data, $action=NULL, $canPreventDefault=true) {
-  
+
   $evt = new Doku_Event($name, $data);
   return $evt->trigger($action, $canPreventDefault);
 }
