@@ -24,9 +24,8 @@ function act_dispatch(){
   global $conf;
 
   // give plugins an opportunity to process the action
-  $evt = new event('ACTION_DISPATCH',$ACT);
-  $evt->trigger();
-  if ($evt->_default) {
+  $evt = new Doku_Event('ACTION_ACT_PREPROCESS',$ACT);
+  if ($evt->advise_before()) {
 
     //sanitize $ACT
     $ACT = act_clean($ACT);
@@ -104,12 +103,13 @@ function act_dispatch(){
           }
       }
     }
-  }
+  }  // end event ACTION_ACT_PREPROCESS default action
+  $evt->advise_after();
+  unset($evt);
 
   //call template FIXME: all needed vars available?
   $headers[] = 'Content-Type: text/html; charset=utf-8';
-  $evt = new event('SEND_HEADERS',$headers,act_sendheaders);
-  $evt->trigger();
+  trigger_event('ACTION_HEADERS_SEND',$headers,act_sendheaders);
 
   include(template('main.php'));
   // output for the commands is now handled in inc/templates.php

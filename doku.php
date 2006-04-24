@@ -62,9 +62,7 @@
   //prepare breadcrumbs (initialize a static var)
   breadcrumbs();
 
-  $evt = new event('DOKUWIKI_START',$tmp=array());
-  $evt->advise();
-  unset($evt);
+  trigger_event('DOKUWIKI_STARTED',$tmp=array());
 
   //close session
   session_write_close();
@@ -72,8 +70,7 @@
   //do the work
   act_dispatch($ACT);
 
-  $evt = new event('DOKUWIKI_END', $tmp=array());
-  $evt->advise();
+  trigger_event('DOKUWIKI_DONE', $tmp=array());
 
 //  xdebug_dump_function_profile(1);
 ?>

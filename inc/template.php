@@ -41,14 +41,11 @@ function tpl_content() {
 
   ob_start();
 
-  $evt = new event('TPL_ACTION_HTML',$ACT,tpl_content_core);
-  $evt->trigger();
+  trigger_event('TPL_ACT_RENDER',$ACT,tpl_content_core);
 
   $html_output = ob_get_clean();
 
-  $evt = new event('TPL_DISPLAY_HTML',$html_output,ptln);
-  $evt->trigger();
-
+  trigger_event('TPL_CONTENT_DISPLAY',$html_output,ptln);
 }
 
 function tpl_content_core(){
@@ -124,9 +121,11 @@ function tpl_content_core(){
       tpl_admin();
       break;
     default:
-      $evt = new event('ACTION_TEMPLATE',$ACT);
-      if ($evt->advise())
+      $evt = new Doku_Event('TPL_ACT_UNKNOWN',$ACT);
+      if ($evt->advise_before())
         msg("Failed to handle command: ".hsc($ACT),-1);
+      $evt->advise_after();
+      unset($evt);
   }
 }
 
