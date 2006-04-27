@@ -89,7 +89,8 @@ $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed linker til';
 
 /* Target options */
-$lang['target____wiki']      = 'Destinationsvindue til interne links';/$lang['target____interwiki'] = 'Destinationsvindue til interwiki links';
+$lang['target____wiki']      = 'Destinationsvindue til interne links';
+$lang['target____interwiki'] = 'Destinationsvindue til interwiki links';
 $lang['target____extern']    = 'Destinationsvindue til externe links';
 $lang['target____media']     = 'Destinationsvindue til medie links';
 $lang['target____windows']   = 'Destinationsvindue til Windows links';
