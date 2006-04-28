@@ -157,7 +157,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
   $id = pathID($file);
 
   //check hidden
-  if($type=='f' && isHiddenPage($id)){
+  if(isHiddenPage($id)){
     return false;
   }
 
