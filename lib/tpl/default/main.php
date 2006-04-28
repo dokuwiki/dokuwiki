@@ -13,26 +13,6 @@
  * @link   http://wiki.splitbrain.org/wiki:tpl:templates
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-
-/* event testing ...*/
-
-function hello($data) { print $data; return strrev($data); };
-function hook($param, &$event) {
-  print('this is a hook ['.$param.']');
-	switch ($param) {
-	  case 'param1' : $event->preventDefault(); break;
-	  case 'param2' : $event->stopPropagation(); break;
-	  case 'param3' : print('action results['.$event->result.']');
-	}
-}
-
-global $EVENT_HANDLER;
-$EVENT_HANDLER->register_hook('TEMPLATE','BEFORE',$tmp=NULL,hook,'param2');
-$EVENT_HANDLER->register_hook('TEMPLATE','AFTER',$tmp=NULL,hook,'param3');
- 
-trigger_event('TEMPLATE',$tmp2='hello!',hello);
-#*/
- 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>"
  lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction']?>">
