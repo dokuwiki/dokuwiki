@@ -15,6 +15,11 @@
  * This function recurses into a given base directory
  * and calls the supplied function for each file and directory
  *
+ * @param   array ref $data The results of the search are stored here
+ * @param   string    $base Where to start the search
+ * @param   callback  $func Callback (function name or arayy with object,method)
+ * @param   string    $dir  Current directory beyond $base
+ * @param   int       $lvl  Recursion Level
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
@@ -41,14 +46,38 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
 
   //give directories to userfunction then recurse
   foreach($dirs as $dir){
-    if ($func($data,$base,$dir,'d',$lvl,$opts)){
+    if (search_callback($func,$data,$base,$dir,'d',$lvl,$opts)){
       search($data,$base,$func,$opts,$dir,$lvl+1);
     }
   }
   //now handle the files
   foreach($files as $file){
-    $func($data,$base,$file,'f',$lvl,$opts);
+    search_callback($func,$data,$base,$file,'f',$lvl,$opts);
   }
+}
+
+/**
+ * Used to run the a user callback
+ *
+ * Makes sure the $data array is passed by reference (unlike when using
+ * call_user_func())
+ *
+ * @todo If this can be generalized it may be useful elsewhere in the code
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
+  if(is_array($func)){
+    if(is_object($func[0])){
+      // instanciated object
+      return $func[0]->$func[1]($data,$base,$file,$type,$lvl,$opts);
+    }else{
+      // static call
+      $f = $func[0].'::'.$func[1];
+      return $f($data,$base,$file,$type,$lvl,$opts);
+    }
+  }
+  // simple function call
+  return $func($data,$base,$file,$type,$lvl,$opts);
 }
 
 /**
