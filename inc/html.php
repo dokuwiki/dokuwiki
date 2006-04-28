@@ -248,7 +248,7 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 
   $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
   if($akey){
-    $ret .= 'title="ALT+'.strtoupper($akey).'" ';
+    $ret .= 'title="[ALT+'.strtoupper($akey).']" ';
     $ret .= 'accesskey="'.$akey.'" ';
   }
   $ret .= '/>';
