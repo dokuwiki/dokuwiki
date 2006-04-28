@@ -420,24 +420,25 @@ function tpl_actionlink($type,$pre='',$suf=''){
                    $pre.$lang['btn_show'].$suf,
                    'class="action show" accesskey="v" rel="nofollow"');
       }
-      break;
+      return true;
     case 'history':
       tpl_link(wl($ID,'do=revisions'),$pre.$lang['btn_revs'].$suf,'class="action revisions" accesskey="o"');
-      break;
+      return true;
     case 'recent':
       tpl_link(wl($ID,'do=recent'),$pre.$lang['btn_recent'].$suf,'class="action recent" accesskey="r"');
-      break;
+      return true;
     case 'index':
       tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action index" accesskey="x"');
-      break;
+      return true;
     case 'top':
       print '<a href="#dokuwiki__top" class="action top" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
-      break;
+      return true;
     case 'back':
       if ($ID = tpl_getparent($ID)) {
         tpl_link(wl($ID,'do=show'),$pre.$lang['btn_back'].$suf,'class="action back" accesskey="b"');
+        return true;
       }
-      break;
+      return false;
     case 'login':
       if($conf['useacl']){
         if($_SERVER['REMOTE_USER']){
@@ -445,12 +446,15 @@ function tpl_actionlink($type,$pre='',$suf=''){
         }else{
           tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action logout"');
         }
+        return true;
       }
-      break;
+      return false;
     case 'admin':
-      if($INFO['perm'] == AUTH_ADMIN)
+      if($INFO['perm'] == AUTH_ADMIN){
         tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action admin"');
-      break;
+        return true;
+      }
+      return false;
    case 'subscribe':
    case 'subscription':
       if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
@@ -460,20 +464,23 @@ function tpl_actionlink($type,$pre='',$suf=''){
           } else {
             tpl_link(wl($ID,'do=subscribe'),$pre.$lang['btn_subscribe'].$suf,'class="action subscribe"');
           }
+          return true;
         }
       }
-      break;
+      return false;
     case 'backlink':
       tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink"');
-      break;
+      return true;
     case 'profile':
       if($conf['useacl'] && $_SERVER['REMOTE_USER'] &&
          $auth->canDo('Profile') && ($ACT!='profile')){
         tpl_link(wl($ID,'do=profile'),$pre.$lang['btn_profile'].$suf, 'class="action profile"');
+        return true;
       }
-      break;
+      return false;
     default:
       print '[unknown link type]';
+      return true;
   }
 }
 
