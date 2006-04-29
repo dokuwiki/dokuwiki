@@ -111,10 +111,13 @@ class HTTPClient {
      *
      * Returns the wanted page or false on an error;
      *
+     * @param  string $url       The URL to fetch
+     * @param  bool   $sloppy304 Return body on 304 not modified
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function get($url){
+    function get($url,$sloppy304=false){
         if(!$this->sendRequest($url)) return false;
+        if($this->status == 304 && $sloppy304) return $this->resp_body;
         if($this->status != 200) return false;
         return $this->resp_body;
     }

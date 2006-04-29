@@ -25,9 +25,11 @@ class FeedParser extends SimplePie {
 
     /**
      * Fetch an URL using our own HTTPClient
+     *
+     * Overrides SimplePie's own method
      */
-    function getFile($url){
+    function get_file($url){
         $http = new DokuHTTPClient();
-        return $http->get($url);
+        return $http->get($url,true);
     }
 }
