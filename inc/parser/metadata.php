@@ -26,7 +26,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   var $doc  = '';
   var $meta = array();
-  
+
   var $headers = array();
   var $capture = true;
   var $store   = '';
@@ -73,7 +73,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         'level' => $level-$conf['toptoclevel']+1
       );
     }
-    
+
     // add to summary
     if ($this->capture && ($level > 1)) $this->doc .= DOKU_LF.$text.DOKU_LF;
   }
@@ -88,7 +88,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function p_open(){
     if ($this->capture) $this->doc .= DOKU_LF;
   }
-  
+
   function p_close(){
     if ($this->capture){
       if (strlen($this->doc) > 250) $this->capture = false;
@@ -112,7 +112,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   function emphasis_open(){}
   function emphasis_close(){}
-  
+
   function underline_open(){}
   function underline_close(){}
 
@@ -144,7 +144,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
       $this->doc   = '';
     }
   }
-  
+
   /**
    * Callback for footnote end syntax
    *
@@ -160,11 +160,11 @@ class Doku_Renderer_metadata extends Doku_Renderer {
       $this->store = '';
     }
   }
-    
+
   function listu_open(){
     if ($this->capture) $this->doc .= DOKU_LF;
   }
-  
+
   function listu_close(){
     if ($this->capture && (strlen($this->doc) > 250)) $this->capture = false;
   }
@@ -172,7 +172,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function listo_open(){
     if ($this->capture) $this->doc .= DOKU_LF;
   }
-  
+
   function listo_close(){
     if ($this->capture && (strlen($this->doc) > 250)) $this->capture = false;
   }
@@ -180,7 +180,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function listitem_open($level){
     if ($this->capture) $this->doc .= str_repeat(DOKU_TAB, $level).'* ';
   }
-  
+
   function listitem_close(){
     if ($this->capture) $this->doc .= DOKU_LF;
   }
@@ -211,7 +211,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function quote_open(){
     if ($this->capture) $this->doc .= DOKU_LF.DOKU_TAB.'“';
   }
-  
+
   function quote_close(){
     if ($this->capture){
       $this->doc .= '”';
@@ -247,7 +247,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function singlequoteopening(){
     if ($this->capture) $this->doc .= '‘';
   }
-  
+
   function singlequoteclosing(){
     if ($this->capture) $this->doc .= '’';
   }
@@ -255,7 +255,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function doublequoteopening(){
     if ($this->capture) $this->doc .= '“';
   }
-  
+
   function doublequoteclosing(){
     if ($this->capture) $this->doc .= '”';
   }
@@ -271,30 +271,30 @@ class Doku_Renderer_metadata extends Doku_Renderer {
    */
   function internallink($id, $name = NULL){
     global $ID;
-    
+
     $default = $this->_simpleTitle($id);
-    
+
     // first resolve and clean up the $id
     resolve_pageid(getNS($ID), $id, $exists);
     list($id, $hash) = split('#', $id, 2);
-    
+
     // set metadata
     $this->meta['relation']['references'][$id] = $exists;
     // $data = array('relation' => array('isreferencedby' => array($ID => true)));
     // p_set_metadata($id, $data);
-    
+
     // add link title to summary
     if ($this->capture){
       $name = $this->_getLinkTitle($name, $default, $id);
       $this->doc .= $name;
-    } 
+    }
   }
 
   function externallink($url, $name = NULL){
     if ($this->capture){
       if ($name) $this->doc .= $name;
       else $this->doc .= '<'.$url.'>';
-    } 
+    }
   }
 
   function interwikilink($match, $name = NULL, $wikiName, $wikiUri){
@@ -302,21 +302,21 @@ class Doku_Renderer_metadata extends Doku_Renderer {
       list($wikiUri, $hash) = explode('#', $wikiUri, 2);
       $name = $this->_getLinkTitle($name, $wikiName.'>'.$wikiUri);
       $this->doc .= $name;
-    } 
+    }
   }
 
   function windowssharelink($url, $name = NULL){
     if ($this->capture){
       if ($name) $this->doc .= $name;
       else $this->doc .= '<'.$url.'>';
-    } 
+    }
   }
 
   function emaillink($address, $name = NULL){
     if ($this->capture){
       if ($name) $this->doc .= $name;
       else $this->doc .= '<'.$address.'>';
-    } 
+    }
   }
 
   function internalmedia($src, $title=NULL, $align=NULL, $width=NULL,
@@ -412,7 +412,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
       return '['.$title.']';
     }
   }
-    
+
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

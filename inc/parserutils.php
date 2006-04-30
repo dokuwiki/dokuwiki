@@ -239,23 +239,23 @@ function p_get_instructions($text){
  */
 function p_get_metadata($id, $key=false, $render=false){
   $file = metaFN($id, '.meta');
-  
+
   if (@file_exists($file)) $meta = unserialize(io_readFile($file, false));
   else $meta = array();
-  
+
   // metadata has never been rendered before - do it!
   if ($render && !$meta['description']['abstract']){
     $meta = p_render_metadata($id, $meta);
     io_saveFile($file, serialize($meta));
   }
-  
+
   // filter by $key
   if ($key){
     list($key, $subkey) = explode(' ', $key, 2);
     if (trim($subkey)) return $meta[$key][$subkey];
     else return $meta[$key];
   }
-  
+
   return $meta;
 }
 
@@ -266,35 +266,37 @@ function p_get_metadata($id, $key=false, $render=false){
  */
 function p_set_metadata($id, $data, $render=false){
   if (!is_array($data)) return false;
-  
+
   $orig = p_get_metadata($id);
-  
+
   // render metadata first?
   if ($render) $meta = p_render_metadata($id, $orig);
   else $meta = $orig;
-    
+
   // now add the passed metadata
   $protected = array('description', 'date', 'contributor');
   foreach ($data as $key => $value){
-    
+
     // be careful with sub-arrays of $meta['relation']
     if ($key == 'relation'){
       foreach ($value as $subkey => $subvalue){
         $meta[$key][$subkey] = array_merge($meta[$key][$subkey], $subvalue);
       }
-      
+
     // be careful with some senisitive arrays of $meta
     } elseif (in_array($key, $protected)){
       if (is_array($value)){
+        #FIXME not sure if this is the intended thing:
+        if(!is_array($meta[$key])) $meta[$key] = array($meta[$key]);
         $meta[$key] = array_merge($meta[$key], $value);
       }
-    
+
     // no special treatment for the rest
     } else {
       $meta[$key] = $value;
     }
   }
-  
+
   // save only if metadata changed
   if ($meta == $orig) return true;
   return io_saveFile(metaFN($id, '.meta'), serialize($meta));
@@ -314,13 +316,13 @@ function p_render_metadata($id, $orig){
   // set up the renderer
   $renderer = & new Doku_Renderer_metadata();
   $renderer->meta = $orig;
-  
+
   // loop through the instructions
   foreach ($instructions as $instruction){
     // execute the callback against the renderer
     call_user_func_array(array(&$renderer, $instruction[0]), $instruction[1]);
   }
-  
+
   return $renderer->meta;
 }
 
@@ -476,15 +478,11 @@ function p_render($mode,$instructions,& $info){
 /**
  * Gets the first heading from a file
  *
- * @author Jan Decaluwe <jan@jandecaluwe.com>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_get_first_heading($id){
-  $file = wikiFN($id);
-  if (@file_exists($file)) {
-    $instructions = p_cached_instructions($file,true);
-		$meta = $instructions[0][1];
-		return isset($meta[0]['first_heading']) ? trim($meta[0]['first_heading']) : NULL;
-  }
+  $meta = p_get_metadata($id);
+  if($meta['title']) return $meta['title'];
   return NULL;
 }
 

@@ -21,7 +21,7 @@ sendGIF();
 if(!$_REQUEST['debug']) ob_start();
 
 // run one of the jobs
-runIndexer() or runSitemapper();
+runIndexer() or metaUpdate() or runSitemapper();
 
 if(!$_REQUEST['debug']) ob_end_clean();
 exit;
@@ -71,6 +71,32 @@ function runIndexer(){
     io_saveFile(metaFN($ID,'.indexed'),' ');
     @rmdir($lock);
     print "runIndexer(): finished".NL;
+    return true;
+}
+
+/**
+ * Will render the metadata for the page if not exists yet
+ *
+ * This makes sure pages which are created from outside DokuWiki will
+ * gain their data when viewed for the first time.
+ */
+function metaUpdate(){
+    print "metaUpdate(): started".NL;
+
+    $ID = cleanID($_REQUEST['id']);
+    if(!$ID) return false;
+    $file = metaFN($ID, '.meta');
+
+    // rendering needed?
+    if (@file_exists($file)) return false;
+
+    require_once(DOKU_INC.'inc/parserutils.php');
+
+    $meta = array();
+    $meta = p_render_metadata($ID, $meta);
+    io_saveFile($file, serialize($meta));
+
+    print "metaUpdate(): finished".NL;
     return true;
 }
 
