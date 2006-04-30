@@ -23,7 +23,7 @@
 
 #config__manager tr.protected .input,
 #config__manager tr.protected input,
-#config__manager tr.default textarea,
+#config__manager tr.protected textarea,
 #config__manager tr.protected select {
   background-color: #ffcccc;
 }

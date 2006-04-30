@@ -3,7 +3,7 @@
  * Metadata for configuration manager plugin
  *
  * Note:  This file should be included within a function to ensure it
- *        doesn't class with the settings it is describing.
+ *        doesn't clash with the settings it is describing.
  *
  * Format:
  *   $meta[<setting name>] = array(<handler class id>,<param name> => <param value>);
