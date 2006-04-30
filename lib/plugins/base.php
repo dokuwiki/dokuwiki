@@ -19,6 +19,7 @@ class DokuWiki_Plugin {
   var $localised = false;        // set to true by setupLocale() after loading language dependent strings
   var $lang = array();           // array to hold language dependent strings, best accessed via ->getLang()
   var $configloaded = false;     // set to true by loadConfig() after loading plugin configuration variables
+  var $conf = array();           // array to hold plugin settings, best accessed via ->getConf()
 
   /**
    * General Info
@@ -110,48 +111,62 @@ class DokuWiki_Plugin {
   
   // configuration methods
   /**
-   * getConf($id)
+   * getConf($setting)
    * 
    * use this function to access plugin configuration variables
    */
-  function getConf($id){
-    global $conf;
-    
-    $plugin = $this->getPluginName();
-    
-    if (!$this->configloaded){
-      if ($pconf = $this->loadConfig() !== false){
-        foreach ($pconf as $key => $value){
-          if (isset($conf['plugin'][$plugin][$key])) continue;
-          $conf['plugin'][$plugin][$key] = $value;
-        }
-        $this->configloaded = true;
-      }
-    }
+  function getConf($setting){
 
-    return $conf['plugin'][$plugin][$id];
+    if (!$this->configloaded){ $this->loadConfig(); }
+
+    return $this->conf[$setting];
   }
   
   /**
    * loadConfig()
-   * reads all plugin configuration variables into $this->conf
-   * this function is automatically called by getConf()
+   * merges the plugin's default settings with any local settings
+   * this function is automatically called through getConf()
    */
   function loadConfig(){
-        
+    global $conf;
+
+    $defaults = $this->readDefaultSettings();
+    $plugin = $this->getPluginName();
+
+    foreach ($defaults as $key => $value) {
+      if (isset($conf['plugin'][$plugin][$key])) continue;
+      $conf['plugin'][$plugin][$key] = $value;
+    }
+
+    $this->configloaded = true;
+    $this->conf =& $conf['plugin'][$plugin];    
+  }
+
+  /**
+   * read the plugin's default configuration settings from conf/default.php
+   * this function is automatically called through getConf()
+   *
+   * @return    array    setting => value
+   */
+  function readDefaultSettings() {
+
     $path = DOKU_PLUGIN.$this->getPluginName().'/conf/';
     $conf = array();
-    
-    if (!@file_exists($path.'default.php')) return false;
-    
-    // load default config file
-    include($path.'default.php');
-    
+
+    if (@file_exists($path.'default.php')) {
+      include($path.'default.php');
+    }
+
     return $conf;
   }
-	
+
   // standard functions for outputing email addresses and links
   // use these to avoid having to duplicate code to produce links in line with the installation configuration
+
+  /**
+   * email
+   * standardised function to generate an email link according to obfuscation settings
+   */
   function email($email, $name='', $class='', $more='') {
     if (!$email) return $name;
     $email = obfuscate($email);
@@ -159,28 +174,34 @@ class DokuWiki_Plugin {
     $class = "class='".($class ? $class : 'mail')."'";
     return "<a href='mailto:$email' $class title='$email' $more>$name</a>";
   }
-  
+
+  /**
+   * external_link
+   * standardised function to generate an external link according to conf settings
+   */
   function external_link($link, $title='', $class='', $target='', $more='') {
     global $conf;
-    
+
     $link = htmlentities($link);
     if (!$title) $title = $link;
     if (!$target) $target = $conf['target']['extern'];
     if ($conf['relnofollow']) $more .= ' rel="nofollow"';
-    
+
     if ($class) $class = " class='$class'";
     if ($target) $target = " target='$target'";
     if ($more) $more = " ".trim($more);
-                
+
     return "<a href='$link'$class$target$more>$title</a>";
   }
-                
-  // output text string through the parser, allows dokuwiki markup to be used
-  // very ineffecient for small pieces of data - try not to use
+
+  /**           
+   * output text string through the parser, allows dokuwiki markup to be used
+   * very ineffecient for small pieces of data - try not to use
+   */
   function render($text, $format='xhtml') {
     return p_render($format, p_get_instructions($text),$info); 
   }
-  
+
   // deprecated functions
   function plugin_localFN($id) { return $this->localFN($id); }
   function plugin_locale_xhtml($id) { return $this->locale_xhtml($id); }
