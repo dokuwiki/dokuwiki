@@ -680,7 +680,7 @@ class ap_manage {
 
         } else {
             if (!@copy($src,$dst)) return false;
-            touch($dst,filemtime($src));
+            @touch($dst,filemtime($src));
         }
 
         return true;
