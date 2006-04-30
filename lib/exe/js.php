@@ -77,7 +77,9 @@ function js_out(){
 
     // load files
     foreach($files as $file){
+        echo "\n\n/* XXXXXXXXXX begin of $file XXXXXXXXXX */\n\n";
         @readfile($file);
+        echo "\n\n/* XXXXXXXXXX end of $file XXXXXXXXXX */\n\n";
     }
 
     // init stuff
@@ -115,7 +117,9 @@ function js_out(){
 
     // load plugin scripts (suppress warnings for missing ones)
     foreach($plugins as $plugin){
+        echo "\n\n/* XXXXXXXXXX begin of $file XXXXXXXXXX */\n\n";
         @readfile($plugin);
+        echo "\n\n/* XXXXXXXXXX end of $file XXXXXXXXXX */\n\n";
     }
 
     // load user script
