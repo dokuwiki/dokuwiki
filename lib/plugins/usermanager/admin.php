@@ -44,7 +44,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!isset($auth)) { 
           $this->disabled = $this->lang['noauth'];
         } else if (!$auth->canDo('getUsers')) {
-          $this->disabled = $this->lang['notsupported'];
+          $this->disabled = $this->lang['nosupport'];
         } else {
 
           // we're good to go
@@ -75,7 +75,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!is_null($this->_auth)) 
           return parent::getMenuText($language);
 
-        return $this->getLang["menu"].' '.$this->disabled;
+        return $this->getLang('menu').' '.$this->disabled;
     }
 
     /**
