@@ -221,9 +221,10 @@ function css_loadfile($file,$location=''){
     $css = io_readFile($file);
     if(!$location) return $css;
 
-    $css = preg_replace('!(url\( *)([^/])!','\\1'.$location.'\\2',$css);
+    $css = preg_replace('#(url\([ \'"]*)((?!/|http://|https://| |\'|"))#','\\1'.$location.'\\3',$css);
     return $css;
 }
+
 
 /**
  * Returns a list of possible Plugin Styles (no existance check here)
