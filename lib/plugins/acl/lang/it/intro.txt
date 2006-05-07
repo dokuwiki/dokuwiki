@@ -1,4 +1,4 @@
-====== Access Control List Management ======
+====== Gestione Lista Controllo Accessi (ACL) ======
 
 In questa pagina puoi aggiungere o rimuovere permessi per la pagina corrente
 e per tutte le [[doku>wiki:namespaces|categorie]] di cui fa parte.

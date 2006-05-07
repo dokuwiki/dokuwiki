@@ -1,0 +1,6 @@
+====== Gestione Plugin ======
+
+Su questa pagina puoi gestire tutto ciò che riguarda i [[doku>wiki:plugins|plugin]] di Docuwiki.
+Per poter scaricare e installare un plugin, il webserver deve avere accesso in scrittura alla
+cartella dei plugin.
+

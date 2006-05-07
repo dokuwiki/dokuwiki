@@ -1,13 +1,13 @@
 <?php
 /**
- * italian language file
+ * Italian language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author     Roberto Bolli <http://www.rbnet.it/>
  */
 
-$lang['admin_acl']  = 'Gestione Access Control List';
+$lang['admin_acl']  = 'Gestione Lista Controllo Accessi (ACL)';
 $lang['acl_group']  = 'Gruppo';
 $lang['acl_user']   = 'Utente';
 $lang['acl_perms']  = 'Permessi per';
