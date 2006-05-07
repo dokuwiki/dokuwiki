@@ -89,11 +89,11 @@ if (!class_exists('configuration')) {
       // backup current file (remove any existing backup)
       if (@file_exists($file) && $backup) {
         if (@file_exists($file.'.bak')) @unlink($file.'.bak');
-        if (!@rename($file, $file.'.bak')) return false;
+        if (!io_rename($file, $file.'.bak')) return false;
       }
 
       if (!$fh = @fopen($file, 'wb')) {
-        @rename($file.'.bak', $file);     // problem opening, restore the backup
+        io_rename($file.'.bak', $file);     // problem opening, restore the backup
         return false;
       }
 

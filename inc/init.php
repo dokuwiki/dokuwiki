@@ -313,7 +313,7 @@ function scriptify($file) {
   }
   fclose($fh);
   //try to rename the old file
-  @rename($file,"$file.old");
+  io_rename($file,"$file.old");
 }
 
 /**
