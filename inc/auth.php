@@ -53,6 +53,12 @@
 
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
+    // if no credentials were given try to use HTTP auth (for SSO)
+    if(!$_REQUEST['u'] && !$_COOKIE[DOKU_COOKIE] && $_SERVER['PHP_AUTH_USER']){
+      $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
+      $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
+    }
+
     // external trust mechanism in place?
     if(!is_null($auth) && $auth->canDo('external')){
       $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
