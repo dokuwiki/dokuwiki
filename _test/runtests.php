@@ -2,6 +2,10 @@
 <?php
 ini_set('memory_limit','128M');
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+
+require_once(DOKU_INC.'inc/init.php');
+require_once(DOKU_INC.'inc/events.php');
+
 define('TEST_ROOT', dirname(__FILE__));
 define('TMPL_FILESCHEME_PATH', TEST_ROOT . '/filescheme/');
 error_reporting(E_ALL ^ E_NOTICE);

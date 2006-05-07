@@ -31,13 +31,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   var $capture = true;
   var $store   = '';
 
-  function meta($data) {
-    if (is_array($data)){
-      $this->meta = $data;
-      if (!$this->meta['title']) $this->meta['title'] = $data['first_heading'];
-    }
-  }
-
   function document_start(){
     //reset some variables
     $this->meta['description']['abstract'] = '';
@@ -59,6 +52,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   function header($text, $level, $pos) {
     global $conf;
+
+    if (!$this->meta['title']) $this->meta['title'] = $text;
 
     // create a unique header id
     $hid = $this->_headerToLink($text,'true');

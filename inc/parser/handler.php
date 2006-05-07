@@ -9,10 +9,6 @@ class Doku_Handler {
 
     var $calls = array();
 
-    var $meta = array(
-        'first_heading' => '',
-    );
-
     var $status = array(
         'section' => FALSE,
     );
@@ -43,7 +39,6 @@ class Doku_Handler {
         trigger_event('PARSER_HANDLER_DONE',$this);
 
         array_unshift($this->calls,array('document_start',array(),0));
-        array_unshift($this->calls,array('meta',array($this->meta),0));
         $last_call = end($this->calls);
         array_push($this->calls,array('document_end',array(),$last_call[2]));
     }
@@ -87,9 +82,11 @@ class Doku_Handler {
 
     function header($match, $state, $pos) {
         // get level and title
-        $level = 7 - strspn($match,'=');
+        $title = trim($match);
+        $level = 7 - strspn($title,'=');
         if($level < 1) $level = 1;
-        $title = trim($match,'= ');
+        $title = trim($title,'=');
+        $title = trim($title);
 
         if ($this->status['section']) $this->_addCall('section_close',array(),$pos);
 
@@ -97,7 +94,6 @@ class Doku_Handler {
 
         $this->_addCall('section_open',array($level),$pos);
         $this->status['section'] = TRUE;
-        if (!$this->meta['first_heading']) $this->meta['first_heading'] = $title;
         return TRUE;
     }
 

@@ -8,6 +8,7 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/auth.php');
+require_once(DOKU_INC.'inc/events.php');
 session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
@@ -86,6 +87,7 @@ function metaUpdate(){
     $ID = cleanID($_REQUEST['id']);
     if(!$ID) return false;
     $file = metaFN($ID, '.meta');
+    echo "meta file: $file".NL;
 
     // rendering needed?
     if (@file_exists($file)) return false;
@@ -96,7 +98,7 @@ function metaUpdate(){
     $meta = p_render_metadata($ID, $meta);
     io_saveFile($file, serialize($meta));
 
-    print "metaUpdate(): finished".NL;
+    echo "metaUpdate(): finished".NL;
     return true;
 }
 
