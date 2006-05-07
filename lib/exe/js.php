@@ -8,6 +8,7 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
+if(!defined('NL')) define('NL',"\n");
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/io.php');
@@ -130,10 +131,10 @@ function js_out(){
     js_runonstart('scrollToMarker()');
 
     // initialize init pseudo event
-    echo 'if (document.addEventListener) {';
-    echo '    document.addEventListener("DOMContentLoaded", window.fireoninit, null);';
-    echo '}';
-    echo 'addEvent(window,"load",window.fireoninit);';
+    echo 'if (document.addEventListener) {'.NL;
+    echo '    document.addEventListener("DOMContentLoaded", window.fireoninit, null);'.NL;
+    echo '}'.NL;
+    echo 'addEvent(window,"load",window.fireoninit);'.NL;
 
     // end output buffering and get contents
     $js = ob_get_contents();
@@ -205,7 +206,7 @@ function js_escape($string){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function js_runonstart($func){
-    echo "addInitEvent(function(){ $func; });\n";
+    echo "addInitEvent(function(){ $func; });".NL;
 }
 
 /**
