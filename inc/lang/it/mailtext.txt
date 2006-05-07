@@ -2,8 +2,8 @@ Una pagina su DokuWiki è stata aggiunta o modificata. Questi sono i dettagli:
 
 Data                   : @DATE@
 Browser                : @BROWSER@
-IP-Address             : @IPADDRESS@
-Hostname               : @HOSTNAME@
+Indirizzo IP           : @IPADDRESS@
+Nome host              : @HOSTNAME@
 Vecchia revisione      : @OLDPAGE@
 Nuova revisione        : @NEWPAGE@
 Oggetto della modifica : @SUMMARY@
