@@ -97,6 +97,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
       $this->setupLocale(true);
 
+      $this->_print_config_toc();
       print $this->locale_xhtml('intro');
 
       ptln('<div id="config__manager">');
@@ -109,22 +110,48 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         ptln('<div class="success">'.$this->getLang('updated').'</div>');
 
       ptln('<form action="'.wl($ID).'" method="post">');
-      ptln('  <table class="inline">');
+      $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
+      $in_fieldset = false;
+      $first_plugin_fieldset = true;
+      $first_template_fieldset = true;
       foreach($this->_config->setting as $setting) {
+        if (is_a($setting, 'setting_fieldset')) {
+          // config setting group
+          if ($in_fieldset) {
+            ptln('  </table>');
+            ptln('  </fieldset>');
+          } else {
+            $in_fieldset = true;
+          }
+          if ($first_plugin_fieldset && substr($setting->_key, 0, 10)=='plugin'.CM_KEYMARKER) {
+            $this->_print_h1('plugin_settings', $this->getLang('_header_plugin'));
+            $first_plugin_fieldset = false;
+          } else if ($first_template_fieldset && substr($setting->_key, 0, 7)=='tpl'.CM_KEYMARKER) {
+            $this->_print_h1('template_settings', $this->getLang('_header_template'));
+            $first_template_fieldset = false;
+          }
+          ptln('  <fieldset name="'.$setting->_key.'" id="'.$setting->_key.'">');
+          ptln('  <legend>'.$setting->prompt($this).'</legend>');
+          ptln('  <table class="inline">');
+        } else {
+          // config settings
+          list($label,$input) = $setting->html($this, $this->_error);
 
-        list($label,$input) = $setting->html($this, $this->_error);
+          $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');
+          $error = $setting->error() ? ' class="value error"' : ' class="value"';
 
-        $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');
-        $error = $setting->error() ? ' class="error"' : '';
-
-        ptln('    <tr'.$class.'>');
-        ptln('      <td>'.$label.'</td>');
-        ptln('      <td'.$error.'>'.$input.'</td>');
-        ptln('    </tr>');
+          ptln('    <tr'.$class.'>');
+          ptln('      <td><a class="nolink" title="$'.$this->_config->_name.'[\''.$setting->_out_key().'\']">'.$label.'</a></td>');
+          ptln('      <td'.$error.'>'.$input.'</td>');
+          ptln('    </tr>');
+        }
       }
 
       ptln('  </table>');
+      if ($in_fieldset) {
+        ptln('  </fieldset>');
+      }
 
       ptln('<p>');
       ptln('  <input type="hidden" name="do"     value="admin" />');
@@ -204,6 +231,12 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
               $this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
             }
           }
+
+          // fill in the plugin name if missing (should exist for plugins with settings)
+          if (!isset($this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'])) {
+            $this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] =
+              ucwords(str_replace('_', ' ', $plugin)).' '.$this->getLang('_plugin_sufix');
+          }
         }
         closedir($dh);
       }
@@ -219,8 +252,91 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }
       }
+
+      // fill in the template name if missing (should exist for templates with settings)
+      if (!isset($this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'])) {
+        $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] =
+          ucwords(str_replace('_', ' ', $tpl)).' '.$this->getLang('_template_sufix');
+      }
       
       return true;
     }
+
+    /**
+    * Generates a two-level table of contents for the config plugin.
+    * Uses inc/parser/xhtml.php#render_TOC to format the output.
+    * Relies on internal data structures in the Doku_Renderer_xhtml class.
+    *
+    * @author Ben Coburn <btcoburn@silicodon.net>
+    */
+    function _print_config_toc() {
+      // gather toc data
+      $toc = array('conf'=>array(), 'plugin'=>array(), 'template'=>null);
+      foreach($this->_config->setting as $setting) {
+        if (is_a($setting, 'setting_fieldset')) {
+          if (substr($setting->_key, 0, 10)=='plugin'.CM_KEYMARKER) {
+            $toc['plugin'][] = $setting;
+          } else if (substr($setting->_key, 0, 7)=='tpl'.CM_KEYMARKER) {
+            $toc['template'] = $setting;
+          } else {
+            $toc['conf'][] = $setting;
+          }
+        }
+      }
+
+      // build toc list
+      $xhtml_toc = array();
+      $xhtml_toc[] = array('hid' => 'configuration_manager',
+          'title' => $this->getLang('_configuration_manager'),
+          'type'  => 'ul',
+          'level' => 1);
+      $xhtml_toc[] = array('hid' => 'dokuwiki_settings',
+          'title' => $this->getLang('_header_dokuwiki'),
+          'type'  => 'ul',
+          'level' => 1);
+      foreach($toc['conf'] as $setting) {
+        $name = $setting->prompt($this);
+        $xhtml_toc[] = array('hid' => $setting->_key,
+            'title' => $name,
+            'type'  => 'ul',
+            'level' => 2);
+      }
+      if (!empty($toc['plugin'])) {
+        $xhtml_toc[] = array('hid' => 'plugin_settings',
+            'title' => $this->getLang('_header_plugin'),
+            'type'  => 'ul',
+            'level' => 1);
+      }
+      foreach($toc['plugin'] as $setting) {
+        $name = $setting->prompt($this);
+        $xhtml_toc[] = array('hid' => $setting->_key,
+            'title' => $name,
+            'type'  => 'ul',
+            'level' => 2);
+      }
+      if (isset($toc['template'])) {
+        $xhtml_toc[] = array('hid' => 'template_settings',
+            'title' => $this->getLang('_header_template'),
+            'type'  => 'ul',
+            'level' => 1);
+        $setting = $toc['template'];
+        $name = $setting->prompt($this);
+        $xhtml_toc[] = array('hid' => $setting->_key,
+            'title' => $name,
+            'type'  => 'ul',
+            'level' => 2);
+      }
+
+      // use the xhtml renderer to make the toc
+      require_once(DOKU_INC.'inc/parser/xhtml.php');
+      $r = new Doku_Renderer_xhtml;
+      $r->toc = $xhtml_toc;
+      print $r->render_TOC();
+    }
+
+    function _print_h1($id, $text) {
+      ptln('<h1><a name="'.$id.'" id="'.$id.'">'.$text.'</a></h1>');
+    }
+
 
 }

@@ -222,7 +222,11 @@ if (!class_exists('configuration')) {
           if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
             $meta = array();
             @include(DOKU_PLUGIN.$plugin.$file);
+            if (!empty($meta)) {
+              $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = array('fieldset');
+            }
             foreach ($meta as $key => $value){
+              if ($value[0]=='fieldset') { continue; } //plugins only get one fieldset
               $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
             }
           }
@@ -234,7 +238,11 @@ if (!class_exists('configuration')) {
       if (@file_exists(DOKU_TPLINC.$file)){
         $meta = array();
         @include(DOKU_TPLINC.$file);
+        if (!empty($meta)) {
+          $metadata['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] = array('fieldset');
+        }
         foreach ($meta as $key => $value){
+          if ($value[0]=='fieldset') { continue; } //template only gets one fieldset
           $metadata['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }
       }

@@ -17,6 +17,27 @@ $lang['nochoice']   = '(no other choices available)';
 $lang['locked']     = 'The settings file can not be updated, if this is unintentional, <br />
                        ensure the local settings file name and permissions are correct.';
 
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = 'Configuration Manager'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'DokuWiki Settings';
+$lang['_header_plugin'] = 'Plugin Settings';
+$lang['_header_template'] = 'Template Settings';
+
+/* --- Config Setting Groups --- */
+$lang['_basic'] = 'Basic Settings';
+$lang['_display'] = 'Display Settings';
+$lang['_authentication'] = 'Authentication Settings';
+$lang['_anti_spam'] = 'Anti-Spam Settings';
+$lang['_editing'] = 'Editing Settings';
+$lang['_links'] = 'Link Settings';
+$lang['_advanced'] = 'Advanced Settings';
+$lang['_network'] = 'Network Settings';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'Plugin Settings';
+$lang['_template_sufix'] = 'Template Settings';
 
 /* -------------------- Config Options --------------------------- */
 
@@ -49,8 +70,8 @@ $lang['refshow']     = 'Number of media references to show';
 $lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
 
 $lang['usewordblock']= 'Block spam based on wordlist';
-$lang['indexdelay']  = 'Time delay before indexing';
-$lang['relnofollow'] = 'Use rel="nofollow"';
+$lang['indexdelay']  = 'Time delay before indexing (sec)';
+$lang['relnofollow'] = 'Use rel="nofollow" on external links';
 $lang['mailguard']   = 'Obfuscate email addresses';
 
 /* Authentication Options */
@@ -102,10 +123,10 @@ $lang['proxy____host'] = 'Proxy servername';
 $lang['proxy____port'] = 'Proxy port';
 $lang['proxy____user'] = 'Proxy user name';
 $lang['proxy____pass'] = 'Proxy password';
-$lang['proxy____ssl']  = 'use ssl to connect to Proxy';
+$lang['proxy____ssl']  = 'Use ssl to connect to Proxy';
 
 /* Safemode Hack */
-$lang['safemodehack'] = 'enable safemode hack';
+$lang['safemodehack'] = 'Enable safemode hack';
 $lang['ftp____host'] = 'FTP server for safemode hack';
 $lang['ftp____port'] = 'FTP port for safemode hack';
 $lang['ftp____user'] = 'FTP user name for safemode hack';

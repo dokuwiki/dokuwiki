@@ -1,18 +1,43 @@
 /* plugin:configmanager */
-#config__manager {margin: 1em;}
 #config__manager div.success,
 #config__manager div.error,
 #config__manager div.info {
   background-position: 0.5em;
   padding: 0.5em;
-  text-align:center
+  text-align:center;
+}
+
+#config__manager fieldset {
+  margin: 1em;
+  width: auto;
+  margin-bottom: 2em;
+  background-color: __medium__;
+}
+#config__manager legend {
+    font-size: 1.25em;
 }
 
 #config__manager form { }
-#config__manager table {margin: 1em 0;}
-#config__manager td input.edit {width: 30em;}
+#config__manager table {
+    margin: 0.5em;
+    width: 100%;
+}
+
+#config__manager fieldset td {
+    text-align: left;
+}
+#config__manager fieldset td.value {
+    /* fixed data column width */
+    width: 30em;
+}
+#config__manager td input.edit {
+    width: 30em;
+}
 #config__manager td select.edit { }
-#config__manager td textarea.edit {width: 27.5em; height: 4em;}
+#config__manager td textarea.edit {
+    width: 27.5em;
+    height: 4em;
+}
 
 #config__manager tr.default .input,
 #config__manager tr.default input,
@@ -28,6 +53,17 @@
   background-color: #ffcccc;
 }
 
-#config__manager td.error  {background-color: red;}
+#config__manager td.error  { background-color: red; }
+
+#config__manager a.nolink { text-decoration: none; }
+#config__manager a.nolink,
+#config__manager a.nolink:link,
+#config__manager a.nolink:visited,
+#config__manager a.nolink:hover {
+    color: __black__;
+}
+#config__manager a.nolink:active {
+    color: __dark__;
+}
 
 /* end plugin:configmanager */

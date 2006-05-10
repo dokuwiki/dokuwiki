@@ -21,6 +21,8 @@
  *   'password'     - password input, minimal input validation, setting output plain text in quotes
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
  *                    parameter (required)
+ *   'fieldset'     - used to group configuration settings, but is not itself a setting. To make this clear in
+ *                    the language files the keys for this type should start with '_'.
  *
  *  Single Setting
  *  --------------
@@ -66,24 +68,24 @@ $file['protected'] = "DOKU_CONF.'local.protected.php'";  // optional
 // - any settings not mentioned will come after the last setting listed and
 //   will use the default class with no parameters
 
+$meta['_basic']   = array('fieldset');
 $meta['title']    = array('string');
 $meta['start']    = array('string');
-$meta['savedir']  = array('savedir');
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/');
-
-$meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
-$meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
+$meta['savedir']  = array('savedir');
 $meta['basedir']  = array('string');
 $meta['baseurl']  = array('string');
+$meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
+$meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3}/');  // only accept octal representation
+$meta['allowdebug']  = array('onoff');
 
-$meta['fullpath']    = array('onoff');
+$meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
 $meta['breadcrumbs'] = array('numeric');
 $meta['youarehere']  = array('onoff');
+$meta['fullpath']    = array('onoff');
 $meta['typography']  = array('onoff');
-$meta['htmlok']      = array('onoff');
-$meta['phpok']       = array('onoff');
 $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
 $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
@@ -94,13 +96,8 @@ $meta['deaccent']    = array('multichoice','_choices' => array(0,1,2));
 $meta['useheading']  = array('onoff');
 $meta['refcheck']    = array('onoff');
 $meta['refshow']     = array('numeric');
-$meta['allowdebug']  = array('onoff');
 
-$meta['usewordblock']= array('onoff');
-$meta['indexdelay']  = array('numeric');
-$meta['relnofollow'] = array('onoff');
-$meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','none'));
-
+$meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['openregister']= array('onoff');
 $meta['autopasswd']  = array('onoff');
@@ -111,43 +108,54 @@ $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['profileconfirm'] = array('onoff');
 
-$meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
-$meta['useslash']    = array('onoff');
+$meta['_anti_spam']  = array('fieldset');
+$meta['usewordblock']= array('onoff');
+$meta['relnofollow'] = array('onoff');
+$meta['indexdelay']  = array('numeric');
+$meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','none'));
+
+$meta['_editing']    = array('fieldset');
 $meta['usedraft']    = array('onoff');
-$meta['sepchar']     = array('sepchar');
-$meta['canonical']   = array('onoff');
-$meta['autoplural']  = array('onoff');
-$meta['usegzip']     = array('onoff');
-$meta['cachetime']   = array('numeric');
+$meta['spellchecker']= array('onoff');
+$meta['htmlok']      = array('onoff');
+$meta['phpok']       = array('onoff');
+$meta['notify']      = array('email');
+$meta['subscribers'] = array('onoff');
 $meta['purgeonadd']  = array('onoff');
 $meta['locktime']    = array('numeric');
-$meta['notify']      = array('email');
-$meta['mailfrom']    = array('email');
-$meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
-$meta['im_convert']  = array('im_convert');
-$meta['spellchecker']= array('onoff');
-$meta['subscribers'] = array('onoff');
-$meta['compress']    = array('onoff');
-$meta['hidepages']   = array('string');
-$meta['send404']     = array('onoff');
-$meta['sitemap']     = array('numeric');
+$meta['cachetime']   = array('numeric');
 
-$meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom'));
-$meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
-$meta['rss_update']  = array('numeric');
-
+$meta['_links']    = array('fieldset');
 $meta['target____wiki']      = array('string');
 $meta['target____interwiki'] = array('string');
 $meta['target____extern']    = array('string');
 $meta['target____media']     = array('string');
 $meta['target____windows']   = array('string');
 
+$meta['_advanced']   = array('fieldset');
+$meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
+$meta['useslash']    = array('onoff');
+$meta['sepchar']     = array('sepchar');
+$meta['canonical']   = array('onoff');
+$meta['autoplural']  = array('onoff');
+$meta['usegzip']     = array('onoff');
+$meta['mailfrom']    = array('email');
+$meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
+$meta['im_convert']  = array('im_convert');
+$meta['compress']    = array('onoff');
+$meta['hidepages']   = array('string');
+$meta['send404']     = array('onoff');
+$meta['sitemap']     = array('numeric');
+$meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom'));
+$meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
+$meta['rss_update']  = array('numeric');
+
+$meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');
 $meta['proxy____port'] = array('numeric');
 $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password');
 $meta['proxy____ssl']  = array('onoff');
-
 $meta['safemodehack'] = array('onoff');
 $meta['ftp____host']  = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');
 $meta['ftp____port']  = array('numeric');
