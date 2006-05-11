@@ -212,6 +212,7 @@ if (!class_exists('configuration')) {
      */
     function get_plugintpl_metadata($tpl){
       $file     = '/conf/metadata.php';
+      $class    = '/conf/settings.class.php';
       $metadata = array();
 
       if ($dh = opendir(DOKU_PLUGIN)) {
@@ -222,6 +223,7 @@ if (!class_exists('configuration')) {
           if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
             $meta = array();
             @include(DOKU_PLUGIN.$plugin.$file);
+						@include(DOKU_PLUGIN.$plugin.$class);
             if (!empty($meta)) {
               $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = array('fieldset');
             }
@@ -308,7 +310,7 @@ if (!class_exists('setting')) {
     }
 
     /**
-     *  recieves current values for the setting $key
+     *  receives current values for the setting $key
      */
     function initialize($default, $local, $protected) {
         if (isset($default)) $this->_default = $default;

@@ -13,7 +13,8 @@
  * Defined classes:
  *   Generic
  *   -------------
- *   ''             - default class ('setting'), text input, minimal input validation, setting output in quotes
+ *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
+ *   'string'       - single line text input, minimal input validation, setting output in quotes
  *   'numeric'      - text input, accepts numbers and arithmetic operators, setting output without quotes
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
