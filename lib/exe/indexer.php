@@ -91,10 +91,31 @@ function metaUpdate(){
 
     // rendering needed?
     if (@file_exists($file)) return false;
+    if (!@file_exists(wikiFN($ID))) return false;
 
+    require_once(DOKU_INC.'inc/common.php');
     require_once(DOKU_INC.'inc/parserutils.php');
+    global $conf;
+
+
+    // gather some additional info from changelog
+    $info = io_grep($conf['changelog'],
+                    '/^(\d+)\t(\d+\.\d+\.\d+\.\d+)\t'.preg_quote($ID,'/').'\t([^\t]+)\t([^\t\n]+)/',
+                    0,true);
 
     $meta = array();
+    if(count($info)){
+        $meta['date']['created'] = $info[0][1];
+        foreach($info as $item){
+            if($item[4] != '*'){
+                $meta['date']['modified'] = $item[1];
+                if($item[3]){
+                    $meta['contributor'][$item[3]] = $item[3];
+                }
+            }
+        }
+    }
+
     $meta = p_render_metadata($ID, $meta);
     io_saveFile($file, serialize($meta));
 

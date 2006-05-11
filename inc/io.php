@@ -366,4 +366,45 @@ function io_runcmd($cmd){
   return $ret;
 }
 
+/**
+ * Search a file for matching lines
+ *
+ * This is probably not faster than file()+preg_grep() but less
+ * memory intensive because not the whole file needs to be loaded
+ * at once.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string $file    The file to search
+ * @param  string $pattern PCRE pattern
+ * @param  int    $max     How many lines to return (0 for all)
+ * @param  bool   $baxkref When true returns array with backreferences instead of lines
+ * @return matching lines or backref, false on error
+ */
+function io_grep($file,$pattern,$max=0,$backref=false){
+  $fh = @fopen($file,'r');
+  if(!$fh) return false;
+  $matches = array();
+
+  $cnt  = 0;
+  $line = '';
+  while (!feof($fh)) {
+    $line .= fgets($fh, 4096);  // read full line
+    if(substr($line,-1) != "\n") continue;
+
+    // check if line matches
+    if(preg_match($pattern,$line,$match)){
+      if($backref){
+        $matches[] = $match;
+      }else{
+        $matches[] = $line;
+      }
+      $cnt++;
+    }
+    if($max && $max == $cnt) break;
+    $line = '';
+  }
+  fclose($fh);
+  return $matches;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
