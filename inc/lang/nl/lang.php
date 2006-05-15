@@ -37,15 +37,21 @@ $lang['btn_backlink']    = 'Referenties';
 $lang['btn_backtomedia'] = 'Terug naar Bestand selectie';
 $lang['btn_subscribe']   = 'Volg wijzigingen';
 $lang['btn_unsubscribe'] = 'Stop volgen wijzigingen';
+$lang['btn_profile'] = 'Profiel Aanpassen';
+$lang['btn_reset'] = 'Wissen';
+$lang['btn_resendpwd'] = 'Stuur een nieuw wachtwoord';
 
 $lang['loggedinas'] = 'Ingelogd als';
 $lang['user']       = 'Gebruikersnaam';
 $lang['pass']       = 'Wachtwoord';
+$lang['newpass'] = 'Nieuw wachtwoord';
+$lang['oldpass'] = 'Bevestig huidig wachtwoord';
 $lang['passchk']    = 'nogmaals';
 $lang['remember']   = 'Bewaar';
 $lang['fullname']   = 'Volledige naam';
 $lang['email']      = 'E-mail';
 $lang['register']   = 'Registreren';
+$lang['profile'] = 'Gebruikersprofiel';
 $lang['badlogin']   = 'Gebruikersnaam en/of Wachtwoord kloppen niet';
 $lang['minoredit']  = 'Kleine wijziging';
 
@@ -58,6 +64,18 @@ $lang['regbadmail'] = 'Het opgegeven e-mailadres lijkt ongeldig - als je denkt d
 $lang['regbadpass'] = 'De twee ingevoerde wachtwoorden zijn niet identiek. Probeer het nog eens.';
 $lang['regpwmail']  = 'Je DokuWiki wachtwoord';
 $lang['reghere']    = 'Je hebt nog geen account? Vraag er eentje aan';
+
+$lang['profna'] = 'Dit wiki ondersteunt geen profielwijzigingen';
+$lang['profnochange'] = 'Geen wijzigingen, niets gedaan';
+$lang['profnoempty'] = 'Een lege gebruikersnaam of e-mailadres is niet toegestaan';
+$lang['profchanged'] = 'Gebruikersprofiel succesvol aangepast';
+
+$lang['pwdforget'] = 'Je wachtwoord vergeten? Vraag een nieuw wachtwoord aan';
+$lang['resendna'] = 'Dit wiki ondersteunt niet het verzenden van wachtwoorden';
+$lang['resendpwd'] = 'Stuur een nieuw wachtwoord voor';
+$lang['resendpwdmissing'] = 'Sorry, je moet alle velden invullen';
+$lang['resendpwdnouser'] = 'Sorry, we kunnen deze gebruikersnaam niet vinden in onze database';
+$lang['resendpwdsuccess'] = 'Je nieuwe wachtwoord is per e-mail verzonden';
 
 $lang['txt_upload']   = 'Selecteer een bestand om te uploaden';
 $lang['txt_filename'] = 'Vul wiki-naam in (optioneel)';
@@ -94,6 +112,7 @@ $lang['yours']      = 'Jouw versie';
 $lang['diff']       = 'toon verschillen met huidige revisie';
 $lang['line']       = 'Regel';
 $lang['breadcrumb'] = 'Pad';
+$lang['youarehere'] = 'Je bent hier';
 $lang['lastmod']    = 'Laatst gewijzigd';
 $lang['by']         = 'door';
 $lang['deleted']    = 'verwijderd';
@@ -110,7 +129,7 @@ $lang['qb_alert']   = 'Voer de tekst in die je wilt opmaken.\nDe tekst wordt toe
 $lang['qb_bold']    = 'Vette tekst';
 $lang['qb_italic']  = 'Cursieve tekst';
 $lang['qb_underl']  = 'Onderstreepte tekst';
-$lang['qb_strike']  = 'Doorgehaalde tekst';
+$lang['qb_strike']  = 'Doorgestreepte tekst';
 $lang['qb_code']    = 'Code tekst';
 $lang['qb_h1']      = 'Niveau 1 kop';
 $lang['qb_h2']      = 'Niveau 2 kop';
@@ -124,6 +143,8 @@ $lang['qb_ol']      = 'Geordende lijst item';
 $lang['qb_ul']      = 'Ongeordende lijst item';
 $lang['qb_media']   = 'Voeg plaatjes en andere bestanden toe';
 $lang['qb_sig']     = 'Handtekening invoegen';
+$lang['qb_smileys'] = 'Smileys';
+$lang['qb_chars'] = 'Speciale tekens';
 
 $lang['del_confirm']= 'Dit item verwijderen?';
 $lang['admin_register']= 'Nieuwe gebruiker toevoegen';
