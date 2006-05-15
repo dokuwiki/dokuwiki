@@ -1,0 +1,11 @@
+====== Gestion des accès ======
+
+Sur cette page, vous pouvez ajouter ou enlever des permissions
+pour la zone courante (incluant tout ce qui touche aux [[doku>wiki:namespaces|namespaces]]).
+Pour mieux comprendre comment marche la gestion des accès,
+veuillez lire le [[doku>wiki:acl|document officiel sur ACL]].
+
+La page affiche toutes les permissions significatives pour celle accédée à l'instant.
+Les permissions concernant d'autres pages ne sont pas prises en compte.
+Pour pouvoir éditer d'autres permissions, veuillez accéder au namespace désiré
+via [[this>doku.php?do=index|browse]], puis passer sur l'administration ACL de ce dernier.
