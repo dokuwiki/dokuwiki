@@ -76,6 +76,7 @@ $conf['purgeonadd']  = 1;                //purge cache when a new file is added 
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
+$conf['gzip_output'] = 1;                //use gzip content encodeing for the output xhtml (if allowed by browser)
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
 $conf['jpg_quality'] = '70';             //quality of compression when scaling jpg images (0-100)
