@@ -30,6 +30,7 @@ $lang['_authentication'] = 'Authentication Settings';
 $lang['_anti_spam'] = 'Anti-Spam Settings';
 $lang['_editing'] = 'Editing Settings';
 $lang['_links'] = 'Link Settings';
+$lang['_media'] = 'Media Settings';
 $lang['_advanced'] = 'Advanced Settings';
 $lang['_network'] = 'Network Settings';
 // The settings group name for plugins and templates can be set with
@@ -100,6 +101,7 @@ $lang['notify']      = 'Send change notifications to this email address';
 $lang['mailfrom']    = 'Email address to use for automatic mails';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
+$lang['jpg_quality'] = 'JPG compression quality (0-100)';
 $lang['spellchecker']= 'Enable spellchecker';
 $lang['subscribers'] = 'Enable page subscription support';
 $lang['compress']    = 'Compress CSS and javascript files';

@@ -133,6 +133,11 @@ $meta['target____extern']    = array('string');
 $meta['target____media']     = array('string');
 $meta['target____windows']   = array('string');
 
+$meta['_media']      = array('fieldset');
+$meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
+$meta['im_convert']  = array('im_convert');
+$meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
+
 $meta['_advanced']   = array('fieldset');
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
 $meta['useslash']    = array('onoff');
@@ -141,8 +146,6 @@ $meta['canonical']   = array('onoff');
 $meta['autoplural']  = array('onoff');
 $meta['usegzip']     = array('onoff');
 $meta['mailfrom']    = array('email');
-$meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
-$meta['im_convert']  = array('im_convert');
 $meta['compress']    = array('onoff');
 $meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');

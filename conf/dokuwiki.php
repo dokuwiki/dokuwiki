@@ -78,6 +78,7 @@ $conf['notify']      = '';               //send change info to this email (leave
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
+$conf['jpg_quality'] = '70';             //quality of compression when scaling jpg images (0-100)
 $conf['spellchecker']= 0;                //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 $conf['subscribers'] = 0;                //enable change notice subscription support
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0

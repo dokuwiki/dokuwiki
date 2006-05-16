@@ -262,6 +262,9 @@ function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   // prepare command
   $cmd  = $conf['im_convert'];
   $cmd .= ' -resize '.$to_w.'x'.$to_h.'!';
+  if ($ext == 'jpg' || $ext == 'jpeg') {
+      $cmd .= ' -quality '.$conf['jpg_quality'];
+  }
   $cmd .= " $from $to";
 
   @exec($cmd,$out,$retval);
@@ -328,7 +331,7 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
     if(!function_exists('imagejpeg')){
       $okay = false;
     }else{
-      $okay = imagejpeg($newimg, $to, 70);
+      $okay = imagejpeg($newimg, $to, $conf['jpg_quality']);
     }
   }elseif($ext == 'png') {
     if(!function_exists('imagepng')){
