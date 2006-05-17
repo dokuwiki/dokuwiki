@@ -181,7 +181,11 @@ function io_lock($file){
     //waited longer than 3 seconds? -> stale lock
     if ((time() - $timeStart) > 3) break;
     $locked = @mkdir($lockDir, $conf['dmode']);
-    if($locked && $conf['dperm']) chmod($lockDir, $conf['dperm']);
+    if($locked){
+      if($conf['dperm']) chmod($lockDir, $conf['dperm']);
+      break;
+    }
+    usleep(50);
   } while ($locked === false);
 }
 
