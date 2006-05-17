@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Linas Valiukas <shirshegsm@gmail.com>
+ * @author     Edmondas Girkantas <eg@zemaitija.net>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -34,15 +35,21 @@ $lang['btn_backlink'] = 'Atgalinės nuorodos';
 $lang['btn_backtomedia'] = 'Atgal į Mediabylos išsirinkimą';
 $lang['btn_subscribe'] = 'Užsisakyti keitimų prenumeratą';
 $lang['btn_unsubscribe'] = 'Atsisakyti keitimų prenumeratos';
+$lang['btn_profile']     = 'Atnaujinti profilį';
+$lang['btn_reset']       = 'Atstata';
+$lang['btn_resendpwd']   = 'Išsiųsti naują slaptažodį';
 
 $lang['loggedinas'] = 'Prisijungęs kaip';
 $lang['user']       = 'Vartotojo vardas';
 $lang['pass']       = 'Slaptažodis';
+$lang['newpass']    = 'Naujas slaptažodis';
+$lang['oldpass']    = 'Patvirtinti esamą slaptažodį';
 $lang['passchk']    = 'dar kartą';
 $lang['remember']   = 'Prisiminti mane';
 $lang['fullname']   = 'Visas vardas';
 $lang['email']      = 'El. pašto adresas';
 $lang['register']   = 'Registruotis';
+$lang['profile']    = 'Vartotojo profilis';
 $lang['badlogin']   = 'Nurodėte blogą vartotojo vardą arba slaptažodį.';
 $lang['minoredit']  = 'Nedidelis pataisymas';
 
@@ -55,6 +62,18 @@ $lang['regbadmail'] = 'Nurodytas el. pašto adresas yra neteisingas - jei manote
 $lang['regbadpass'] = 'Įvesti slaptažodžiai nesutampa, bandykite dar kartą.';
 $lang['regpwmail']  = 'Jūsų DokuWiki slaptažodis';
 $lang['reghere']    = 'Dar neužsiregistravote? Padarykite tai dabar';
+
+$lang['profna']       = 'Ši vikisvetainė neleidžia pakeisti profilio';
+$lang['profnochange'] = 'Nėra pakeitimų, todėl nėra ką atlikti.';
+$lang['profnoempty']  = 'Tuščias vardo arba el. pašto adreso laukas nėra leidžiamas.';
+$lang['profchanged']  = 'Vartotojo profilis sėkmingai atnaujintas.';
+
+$lang['pwdforget'] = 'Pamiršote slaptažodį? Gaukite naują';
+$lang['resendna']  = 'Ši vikisvetainė neleidžia persiųsti slaptažodžių.';
+$lang['resendpwd'] = 'Atsiųsti naują slaptažodį';
+$lang['resendpwdmissing'] = 'Jūs turite užpildyti visus laukus.';
+$lang['resendpwdnouser']  = 'Tokio vartotojo nėra duomenų bazėje.';
+$lang['resendpwdsuccess'] = 'Jūsų naujas slaptažodis buvo išsiųstas el. paštu.';
 
 $lang['txt_upload']   = 'Išsirinkite atsiunčiamą bylą';
 $lang['txt_filename'] = 'Įveskite wikivardą (nebūtina)';
@@ -91,6 +110,7 @@ $lang['yours']      = 'Jūsų versija';
 $lang['diff']       = 'rodyti skirtumus tarp šios ir esamos versijos';
 $lang['line']       = 'Linija';
 $lang['breadcrumb'] = 'Kelias';
+$lang['youarehere'] = 'Jūs esate čia';
 $lang['lastmod']    = 'Keista';
 $lang['by']         = 'vartotojo';
 $lang['deleted']    = 'ištrintas';
@@ -121,8 +141,10 @@ $lang['qb_ol']      = 'Numeruotas sąrašas';
 $lang['qb_ul']      = 'Nenumetuotas sąrašas';
 $lang['qb_media']   = 'Paveikslėliai ir kitos bylos';
 $lang['qb_sig']     = 'Įterpti parašą';
+$lang['qb_smileys'] = 'Šypsenėlės';
+$lang['qb_chars']   = 'Specialūs simboliai';
 
-$lang['del_confirm']= 'Ištrinti šį įrašą?';
+$lang['del_confirm']= 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
 $lang['admin_register']= 'Sukurti naują vartotoją';
 
 $lang['spell_start'] = 'Patikrinti rašybą';
@@ -152,5 +174,8 @@ $lang['subscribe_error']    = '%s užsakant "%s" prenumeratą įvyko klaida';
 $lang['subscribe_noaddress']= 'Jūs nesatė nurodęs el. pašto adreso, todėl negalima Jums užsakyti prenumeratos';
 $lang['unsubscribe_success']= '%s ištrintas iš "%s" prenumeratos';
 $lang['unsubscribe_error']  = '%s trinant iš "%s" prenumeratos įvyko klaida';
+
+$lang['authmodfailed']   = 'Bloga vartotojo tapatumo nustatymo konfigūracija. Praneškite apie tai savo administratoriui.';
+$lang['authtempfail']    = 'Vartotojo tapatumo nustatymas laikinai nepasiekiamas. Jei ši situacija kartojasi, tai praneškite savo administratoriui.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
