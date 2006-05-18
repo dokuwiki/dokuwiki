@@ -365,6 +365,18 @@ function html_search(){
   print p_locale_xhtml('searchpage');
   flush();
 
+  //check if search is restricted to namespace
+  if(preg_match('/([^@]*)@([^@]*)/',$QUERY,$match)) {
+      $id = cleanID($match[1]);
+      if(empty($id)) {
+        print '<div class="nothing">'.$lang['nothingfound'].'</div>';
+        flush();
+        return;
+      }
+  } else {
+      $id = cleanID($QUERY);
+  }
+
   //show progressbar
   print '<div class="centeralign" id="dw__loading">';
   print '<br /></div>';
@@ -375,7 +387,8 @@ function html_search(){
 
   //do quick pagesearch
   $data = array();
-  $data = ft_pageLookup(cleanID($QUERY));
+
+  $data = ft_pageLookup($id);
   if(count($data)){
     sort($data);
     print '<div class="search_quickresult">';

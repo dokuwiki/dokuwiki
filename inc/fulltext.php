@@ -49,6 +49,15 @@ function ft_pageSearch($query,&$poswords){
     $hidden = array_filter(array_keys($docs),'isHiddenPage');
     $not = array_merge($not,$hidden);
 
+    // filter unmatched namespaces
+    if(!empty($q['ns'])) {
+        foreach($docs as $key => $val) {
+            if(!preg_match('/^'.$q['ns'].'/',$key)) {
+                unset($docs[$key]);
+            }
+        }
+    }
+
     // remove negative matches
     foreach($not as $n){
         unset($docs[$n]);
@@ -254,9 +263,16 @@ function ft_queryParser($query){
 
     $q = array();
     $q['query']   = $query;
+    $q['ns']      = '';
     $q['phrases'] = array();
     $q['and']     = array();
     $q['not']     = array();
+
+    // strip namespace from query
+    if(preg_match('/([^@]*)@([^@]*)/',$query,$match))  {
+        $query = $match[1];
+        $q['ns'] = $match[2];
+    }
 
     // handle phrase searches
     while(preg_match('/"(.*?)"/',$query,$match)){
