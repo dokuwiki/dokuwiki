@@ -51,8 +51,9 @@ function ft_pageSearch($query,&$poswords){
 
     // filter unmatched namespaces
     if(!empty($q['ns'])) {
+        $pattern = implode('|^',$q['ns']);
         foreach($docs as $key => $val) {
-            if(!preg_match('/^'.$q['ns'].'/',$key)) {
+            if(!preg_match('/^'.$pattern.'/',$key)) {
                 unset($docs[$key]);
             }
         }
@@ -263,15 +264,15 @@ function ft_queryParser($query){
 
     $q = array();
     $q['query']   = $query;
-    $q['ns']      = '';
+    $q['ns']      = array();
     $q['phrases'] = array();
     $q['and']     = array();
     $q['not']     = array();
 
     // strip namespace from query
-    if(preg_match('/([^@]*)@([^@]*)/',$query,$match))  {
+    if(preg_match('/([^@]*)@(.*)/',$query,$match))  {
         $query = $match[1];
-        $q['ns'] = $match[2];
+        $q['ns'] = explode('@',preg_replace("/ /",'',$match[2]));
     }
 
     // handle phrase searches
