@@ -60,6 +60,14 @@
   // make session rewrites XHTML compliant
   @ini_set('arg_separator.output', '&amp;');
 
+  // enable gzip compression
+  if ($conf['gzip_output'] &&
+      !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
+      function_exists('ob_gzhandler') &&
+      preg_match('/gzip|deflate/', $_SERVER['HTTP_ACCEPT_ENCODING'])) {
+    ob_start('ob_gzhandler');
+  }
+
   // init session
   if (!headers_sent() && !defined('NOSESSION')){
     session_name("DokuWiki");

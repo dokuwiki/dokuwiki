@@ -19,10 +19,6 @@
 function template($tpl){
   global $conf;
 
-  if ($conf['gzip_output'] && extension_loaded('zlib') && preg_match('/gzip|deflate/', $_SERVER['HTTP_ACCEPT_ENCODING'])) {
-    ob_start('ob_gzhandler');
-  }
-
   if(@is_readable(DOKU_INC.'lib/tpl/'.$conf['template'].'/'.$tpl))
     return DOKU_INC.'lib/tpl/'.$conf['template'].'/'.$tpl;
 

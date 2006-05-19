@@ -7,6 +7,7 @@
  */
 
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
+  define('DOKU_DISABLE_GZIP_OUTPUT', 1);
   require_once(DOKU_INC.'inc/init.php');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/pageutils.php');
