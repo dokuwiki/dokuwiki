@@ -104,7 +104,7 @@ $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
 
 $lang['js']['keepopen'] = 'Keep window open on selection';
-$lang['js']['idtouse']  = 'Please use the following ID to reference this file:';
+$lang['mediausage']  = 'Use the following syntax to reference this file:';
 
 $lang['reference']   = 'References for';
 $lang['ref_inuse']   = 'The file can\'t be deleted, because it\'s still used by the following pages:';

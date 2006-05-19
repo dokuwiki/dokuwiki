@@ -295,6 +295,8 @@ function media_fileactions($item,$auth){
  * Formats and prints one file in the list
  */
 function media_printfile($item,$auth,$jump){
+    global $lang;
+
     // Prepare zebra coloring
     // I always wanted to use this variable name :-D
     static $twibble = 1;
@@ -331,6 +333,9 @@ function media_printfile($item,$auth,$jump){
     echo '<a name="h_'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
     echo '<span class="info">('.$info.')</span>'.NL;
     media_fileactions($item,$auth);
+    echo '<div class="example" id="ex_'.$item['id'].'">';
+    echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}<code>';
+    echo '</div>';
     if($item['isimg']) media_printimgdetail($item);
     echo '<div class="clearer"></div>'.NL;
     echo '</div>'.NL;

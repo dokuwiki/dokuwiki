@@ -2,17 +2,28 @@
  * The CSS in here cotrols the appearance of the media manager
  */
 
+#media__manager {
+    height: 100%;
+    overflow: hide;
+}
+
 #media__left {
     width: 30%;
-    float: left;
     border-right: solid 1px __dark__;
+
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
 }
 
 #media__right {
-    width: 68%;
-    float: left;
-    border-left: solid 1px __dark__;
-    margin-left: -1px;
+    width: 69.9%;
+
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    right: 0;
 }
 
 #media__tree img {
@@ -69,6 +80,11 @@
 
 #media__content img.btn {
     vertical-align: text-bottom;
+}
+
+#media__content div.example {
+    color: __darkgray__;
+    margin-left: 1em;
 }
 
 /* --- upload form --- */
