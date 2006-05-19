@@ -1,0 +1,115 @@
+/**
+ * The CSS in here cotrols the appearance of the media manager
+ */
+
+#media__left {
+    width: 30%;
+    float: left;
+    border-right: solid 1px __dark__;
+}
+
+#media__right {
+    width: 68%;
+    float: left;
+    border-left: solid 1px __dark__;
+    margin-left: -1px;
+}
+
+#media__tree img {
+    float:left;
+    padding: 0.5em 0.3em 0 0;
+}
+
+#media__tree ul {
+    list-style-type: none;
+    list-style-image: none;
+}
+
+#media__tree li {
+    clear: left;
+    list-style-type: none;
+    list-style-image: none;
+}
+
+/* --- file list --- */
+
+#media__content img.load {
+    margin: 1em auto;
+}
+
+#media__content #scroll__here {
+    border: 1px dashed __dark__;
+}
+
+#media__content .odd {
+    background-color: __lighter__;
+    padding: 0.4em;
+}
+
+#media__content .even {
+    padding: 0.4em;
+}
+
+#media__content a.mediafile {
+    margin-right: 1.5em;
+    font-weight: bold;
+}
+
+#media__content div.detail {
+    padding: 0.3em 0 0.3em 2em;
+}
+
+#media__content div.detail div.thumb {
+    float: left;
+    width: 130px;
+    text-align: center;
+    margin-right: 0.4em;
+}
+
+
+#media__content img.btn {
+    vertical-align: text-bottom;
+}
+
+/* --- upload form --- */
+
+#media__content form.upload {
+    display: block;
+    border-bottom: solid 1px __dark__;
+    padding: 0 0 1em 2em;
+}
+
+/* --- meta edit form --- */
+
+#media__content form.meta {
+    display: block;
+    padding: 0 0 1em 0;
+}
+
+#media__content form.meta label {
+    display: block;
+    width: 20%;
+    float: left;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 1em;
+}
+
+#media__content form.meta .edit {
+    float: left;
+    width: 75%;
+}
+
+#media__content form.meta textarea.edit {
+    height: 6em;
+}
+
+#media__content form.meta div.metafield {
+    clear: left;
+}
+
+#media__content form.meta div.buttons {
+    clear: left;
+    margin-left: 20%;
+    padding-left: 1em;
+}

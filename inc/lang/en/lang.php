@@ -91,7 +91,7 @@ $lang['notsavedyet'] = 'Unsaved changes will be lost.\nReally continue?';
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Nothing was found.';
 
-$lang['mediaselect'] = 'Mediafile Selection';
+$lang['mediaselect'] = 'Mediafiles';
 $lang['fileupload']  = 'Mediafile Upload';
 $lang['uploadsucc']  = 'Upload successful';
 $lang['uploadfail']  = 'Upload failed. Maybe wrong permissions?';
@@ -102,6 +102,9 @@ $lang['deletefail']  = '"%s" couldn\'t be deleted - check permissions.';
 $lang['mediainuse']  = 'The file "%s" hasn\'t been deleted - it is still in use.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
+
+$lang['js']['keepopen'] = 'Keep window open on selection';
+$lang['js']['idtouse']  = 'Please use the following ID to reference this file:';
 
 $lang['reference']   = 'References for';
 $lang['ref_inuse']   = 'The file can\'t be deleted, because it\'s still used by the following pages:';

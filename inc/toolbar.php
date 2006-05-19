@@ -145,9 +145,9 @@ function toolbar_JSdefines($varname){
             'type'   => 'mediapopup',
             'title'  => $lang['qb_media'],
             'icon'   => 'image.png',
-            'url'    => DOKU_BASE.'lib/exe/media.php?ns=',
+            'url'    => DOKU_BASE.'lib/exe/mediamanager.php?ns=',
             'name'   => 'mediaselect',
-            'options'=> 'width=600,height=320,left=70,top=50,scrollbars=yes,resizable=yes',
+            'options'=> 'width=750,height=500,left=20,top=20,scrollbars=yes,resizable=yes',
             ),
       array(
             'type'   => 'picker',

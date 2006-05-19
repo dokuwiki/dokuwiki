@@ -4,8 +4,7 @@
 /**
  * DokuWiki Default Template
  *
- * This is the template for displaying references to a media file.
- * It is displayed in the media popup.
+ * This is the template for the media manager popup
  *
  * You should leave the doctype at the very top - It should
  * always be the very first line of a document.
@@ -18,33 +17,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><?php echo hsc($lang['mediaselect'])?> [<?php echo hsc($conf['title'])?>]</title>
-
   <?php tpl_metaheaders()?>
-
   <link rel="shortcut icon" href="<?php echo DOKU_TPL?>images/favicon.ico" />
-
 </head>
 
 <body>
-<div class="dokuwiki">
-  <?php html_msgarea()?>
+<div id="media__manager" class="dokuwiki">
+    <?html_msgarea()?>
+    <div id="media__left">
+        <h1><?php echo hsc($lang['mediaselect'])?></h1>
 
-  <h1><?php echo hsc($lang['reference'])?> <code><?php echo hsc(noNS($DEL))?></code></h1>
+        <?php tpl_mediaTree() ?>
 
-  <div class="mediaref">
-    <div class="mediaref_head">
-      <p><?php echo hsc($lang['ref_inuse'])?></p>
+        <?php /* keep the id! additional elements are inserted via JS here */?>
+        <div id="media__opts"></div>
     </div>
 
-    <?php tpl_showreferences($mediareferences)?>
-
-  <div class="mediaref_footer">
-    <hr />
-      <?php tpl_button('backtomedia')?>
+    <div id="media__right">
+        <?php tpl_mediaContent() ?>
     </div>
-  </div>
-
 </div>
 </body>
 </html>
-

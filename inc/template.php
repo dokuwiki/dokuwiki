@@ -210,7 +210,11 @@ function tpl_metaheaders($alt=true){
   // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover') ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
-  if($js_edit && $js_write){
+  if(defined('DOKU_MEDIAMANAGER')){
+    $js_edit  = 1;
+    $js_write = 0;
+  }
+  if(($js_edit && $js_write) || defined('DOKU_MEDIAMANAGER')){
     ptln('<script type="text/javascript" charset="utf-8">',$it);
     ptln("NS='".$INFO['namespace']."';",$it+2);
     if($conf['useacl'] && $_SERVER['REMOTE_USER']){
@@ -666,183 +670,6 @@ function tpl_pageinfo(){
 }
 
 /**
- * Print a list of namespaces containing media files
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function tpl_medianamespaces(){
-    global $conf;
-
-  $data = array();
-  search($data,$conf['mediadir'],'search_namespaces',array());
-  print html_buildlist($data,'idx',media_html_list_namespaces);
-}
-
-/**
- * Print a list of mediafiles in the current namespace
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function tpl_mediafilelist(){
-  global $conf;
-  global $lang;
-  global $NS;
-  global $AUTH;
-  $dir = utf8_encodeFN(str_replace(':','/',$NS));
-
-  $data = array();
-  search($data,$conf['mediadir'],'search_media',array(),$dir);
-
-  if(!count($data)){
-    ptln('<div class="nothing">'.$lang['nothingfound'].'</div>');
-    return;
-  }
-
-  ptln('<ul>',2);
-  foreach($data as $item){
-    if(!$item['isimg']){
-      // add file icons
-      list($ext,$mime) = mimetype($item['file']);
-      $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
-      $class = ' class="mediafile mf_'.$class.'"';
-    }else{
-      $class = '';
-    }
-
-    ptln('<li><div class="li">',4);
-    ptln('<a href="javascript:mediaSelect(\':'.$item['id'].'\')"'.$class.'>'.
-         utf8_decodeFN($item['file']).
-         '</a>',6);
-
-    //prepare deletion button
-    if($AUTH >= AUTH_DELETE){
-      $ask  = addslashes($lang['del_confirm']).'\\n';
-      $ask .= addslashes($item['id']);
-
-      $del = '<a href="'.DOKU_BASE.'lib/exe/media.php?delete='.rawurlencode($item['id']).'" '.
-             'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
-             '<img src="'.DOKU_BASE.'lib/images/del.png" alt="'.$lang['btn_delete'].'" '.
-             'title="'.$lang['btn_delete'].'" /></a>';
-    }else{
-      $del = '';
-    }
-
-    if($item['isimg']){
-      $w = (int) $item['meta']->getField('File.Width');
-      $h = (int) $item['meta']->getField('File.Height');
-
-      ptln('('.$w.'&#215;'.$h.' '.filesize_h($item['size']).')',6);
-      ptln($del.'<br />',6);
-      ptln('<div class="imagemeta">',6);
-
-      //build thumbnail
-      print '<a href="javascript:mediaSelect(\':'.$item['id'].'\')">';
-
-      if($w>120 || $h>120){
-        $ratio = $item['meta']->getResizeRatio(120);
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-      }
-
-      $src = ml($item['id'],array('w'=>$w,'h'=>$h));
-
-      $p = array();
-      $p['width']  = $w;
-      $p['height'] = $h;
-      $p['alt']    = $item['id'];
-      $p['class']  = 'thumb';
-      $att = buildAttributes($p);
-
-      print '<img src="'.$src.'" '.$att.' />';
-      print '</a>';
-
-      //read EXIF/IPTC data
-      $t = $item['meta']->getField('IPTC.Headline');
-      if($t) print '<strong>'.htmlspecialchars($t).'</strong><br />';
-
-      $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
-                                         'EXIF.TIFFImageDescription',
-                                         'EXIF.TIFFUserComment'));
-      if($t) print htmlspecialchars($t).'<br />';
-
-      $t = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
-      if($t) print '<em>'.htmlspecialchars($t).'</em><br />';
-
-      //add edit button
-      if($AUTH >= AUTH_UPLOAD && $item['meta']->getField('File.Mime') == 'image/jpeg'){
-        print '<a href="'.DOKU_BASE.'lib/exe/media.php?edit='.rawurlencode($item['id']).'">';
-        print '<img src="'.DOKU_BASE.'lib/images/edit.gif" alt="'.$lang['metaedit'].'" title="'.$lang['metaedit'].'" />';
-        print '</a>';
-      }
-
-      ptln('</div>',6);
-    }else{
-      ptln ('('.filesize_h($item['size']).')',6);
-      ptln($del,6);
-    }
-    ptln('</div></li>',4);
-  }
-  ptln('</ul>',2);
-}
-
-/**
- * show references to a media file
- * References uses the same visual as search results and share
- * their CSS tags except pagenames won't be links.
- *
- * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
- */
-function tpl_showreferences(&$data){
-  global $lang;
-
-  $hidden=0; //count of hits without read permission
-
-  if(count($data)){
-    usort($data,'sort_search_fulltext');
-    foreach($data as $row){
-      if(auth_quickaclcheck($row['id']) >= AUTH_READ){
-        print '<div class="search_result">';
-        print '<span class="mediaref_ref">'.$row['id'].'</span>';
-        print ': <span class="search_cnt">'.$row['count'].' '.$lang['hits'].'</span><br />';
-        print '<div class="search_snippet">'.$row['snippet'].'</div>';
-        print '</div>';
-      }else
-        $hidden++;
-    }
-    if ($hidden){
-      print '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
-    }
-  }
-}
-
-/**
- * Print the media upload form if permissions are correct
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function tpl_mediauploadform(){
-  global $NS;
-  global $UPLOADOK;
-  global $AUTH;
-  global $lang;
-
-  if(!$UPLOADOK) return;
-
-  ptln('<form action="'.DOKU_BASE.'lib/exe/media.php" id="dw__upload"'.
-       ' method="post" enctype="multipart/form-data">',2);
-  ptln($lang['txt_upload'].':<br />',4);
-  ptln('<input type="file" name="upload" class="edit" onchange="suggestWikiname();" />',4);
-  ptln('<input type="hidden" name="ns" value="'.hsc($NS).'" /><br />',4);
-  ptln($lang['txt_filename'].'<br />',4);
-  ptln('<input type="text" name="id" class="edit" />',4);
-  ptln('<input type="submit" class="button" value="'.$lang['btn_upload'].'" accesskey="s" />',4);
-  if($AUTH >= AUTH_DELETE){
-    ptln('<label for="dw__ow"><input type="checkbox" name="ow" value="1" id="dw__ow" />'.$lang['txt_overwrt'].'</label>',4);
-  }
-  ptln('</form>',2);
-}
-
-/**
  * Prints or returns the name of the given page (current one if none given).
  *
  * If useheading is enabled this will use the first headline else
@@ -880,15 +707,18 @@ function tpl_pagetitle($id=null, $ret=false){
  * and _iptcTagNames() in inc/jpeg.php (You need to prepend IPTC
  * to the names of the latter one)
  *
- * Only allowed in: detail.php, mediaedit.php
+ * Only allowed in: detail.php
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_img_getTag($tags,$alt=''){
+function tpl_img_getTag($tags,$alt='',$src=null){
   // Init Exif Reader
   global $SRC;
+
+  if(is_null($src)) $src = $SRC;
+
   static $meta = null;
-  if(is_null($meta)) $meta = new JpegMeta($SRC);
+  if(is_null($meta)) $meta = new JpegMeta($src);
   if($meta === false) return $alt;
   $info = $meta->getField($tags);
   if($info == false) return $alt;
@@ -975,15 +805,15 @@ function tpl_indexerWebBug(){
 // configuration methods
 /**
  * tpl_getConf($id)
- * 
+ *
  * use this function to access template configuration variables
  */
 function tpl_getConf($id){
   global $conf;
   global $tpl_configloaded;
-  
+
   $tpl = $conf['template'];
-  
+
   if (!$tpl_configloaded){
     $tconf = tpl_loadConfig();
     if ($tconf !== false){
@@ -1004,16 +834,60 @@ function tpl_getConf($id){
  * this function is automatically called by tpl_getConf()
  */
 function tpl_loadConfig(){
-      
+
   $file = DOKU_TPLINC.'/conf/default.php';
   $conf = array();
-  
+
   if (!@file_exists($file)) return false;
-  
+
   // load default config file
   include($file);
-  
+
   return $conf;
+}
+
+/**
+ * prints the "main content" in the mediamanger popup
+ *
+ * Depending on the user's actions this may be a list of
+ * files in a namespace, the meta editing dialog or
+ * a message of referencing pages
+ *
+ * Only allowed in mediamanager.php
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_mediaContent(){
+  global $IMG;
+  global $AUTH;
+  global $INUSE;
+  global $NS;
+  global $JUMPTO;
+
+  ptln('<div id="media__content">');
+  if($_REQUEST['edit']){
+    media_metaform($IMG,$AUTH);
+  }elseif($INUSE){
+    media_filesinuse($INUSE,$IMG);
+  }else{
+    media_filelist($NS,$AUTH,$JUMPTO);
+  }
+  ptln('</div>');
+}
+
+/**
+ * prints the namespace tree in the mediamanger popup
+ *
+ * Only allowed in mediamanager.php
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_mediaTree(){
+  global $NS;
+
+  ptln('<div id="media__tree">');
+  media_nstree($NS);
+  ptln('</div>');
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

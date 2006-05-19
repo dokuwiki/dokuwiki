@@ -12,6 +12,7 @@ if(!defined('NL')) define('NL',"\n");
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/io.php');
+require_once(DOKU_INC.'inc/JSON.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
@@ -39,17 +40,21 @@ function js_out(){
     // Array of needed files
     $files = array(
                 DOKU_INC.'lib/scripts/events.js',
+                DOKU_INC.'lib/scripts/cookie.js',
                 DOKU_INC.'lib/scripts/script.js',
                 DOKU_INC.'lib/scripts/tw-sack.js',
                 DOKU_INC.'lib/scripts/ajax.js',
                 DOKU_INC.'lib/scripts/domLib.js',
                 DOKU_INC.'lib/scripts/domTT.js',
              );
-    if($edit && $write){
-        $files[] = DOKU_INC.'lib/scripts/edit.js';
-        if($conf['spellchecker']){
-            $files[] = DOKU_INC.'lib/scripts/spellcheck.js';
+    if($edit){
+        if($write){
+            $files[] = DOKU_INC.'lib/scripts/edit.js';
+            if($conf['spellchecker']){
+                $files[] = DOKU_INC.'lib/scripts/spellcheck.js';
+            }
         }
+        $files[] = DOKU_INC.'lib/scripts/media.js';
     }
     $files[] = DOKU_TPLINC.'script.js';
 
@@ -70,11 +75,17 @@ function js_out(){
     // start output buffering and build the script
     ob_start();
 
-    // add some translation strings and global variables
+    // add some global variables
+    print "var DOKU_BASE   = '".DOKU_BASE."';";
+
+    //FIXME: move thes into LANG
     print "var alertText   = '".js_escape($lang['qb_alert'])."';";
     print "var notSavedYet = '".js_escape($lang['notsavedyet'])."';";
     print "var reallyDel   = '".js_escape($lang['del_confirm'])."';";
-    print "var DOKU_BASE   = '".DOKU_BASE."';";
+
+    // load JS specific translations
+    $json = new JSON();
+    echo 'LANG = '.$json->encode($lang['js']).";\n";
 
     // load files
     foreach($files as $file){

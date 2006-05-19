@@ -97,6 +97,8 @@ function ajax_lock(){
 
 /**
  * Delete a draft
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_draftdel(){
   $id = cleanID($_POST['id']);
@@ -107,6 +109,40 @@ function ajax_draftdel(){
 
   $cname = getCacheName($client.$id,'.draft');
   @unlink($cname);
+}
+
+/**
+ * Return subnamespaces for the Mediamanager
+ */
+function ajax_medians(){
+  global $conf;
+  require_once(DOKU_INC.'inc/search.php');
+  require_once(DOKU_INC.'inc/media.php');
+
+  // wanted namespace
+  $ns  = cleanID($_POST['ns']);
+  $dir  = utf8_encodeFN(str_replace(':','/',$ns));
+
+  $lvl = count(explode(':',$ns));
+
+  $data = array();
+  search($data,$conf['mediadir'],'search_index',array(),$dir);
+  foreach($data as $item){
+    $item['level'] = $lvl+1;
+    echo media_nstree_li($item);
+    echo media_nstree_item($item);
+    echo '</div></li>';
+  }
+}
+
+/**
+ * Return subnamespaces for the Mediamanager
+ */
+function ajax_medialist(){
+  global $conf;
+  require_once(DOKU_INC.'inc/media.php');
+
+  media_filelist($_POST['ns']);
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -191,7 +191,7 @@ function html_backtomedia_button($params,$akey=''){
   global $conf;
   global $lang;
 
-  $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/media.php"><div class="no">';
+  $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/mediamanager.php"><div class="no">';
 
   reset($params);
   while (list($key, $val) = each($params)) {
