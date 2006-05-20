@@ -1,8 +1,9 @@
 <?php
-/*
+/**
  *  Configuration Class and generic setting classes
  *
  *  @author  Chris Smith <chris@jalakai.co.uk>
+ *  @author  Ben Coburn <btcoburn@silicodon.net>
  */
 
 if (!class_exists('configuration')) {
@@ -51,6 +52,7 @@ if (!class_exists('configuration')) {
 
     function retrieve_settings() {
         global $conf;
+        $no_default_check = array('setting_fieldset', 'setting_undefined', 'setting_no_class');
 
         if (!$this->_loaded) {
           $default = array_merge($this->_read_config($this->_default_file), $this->get_plugintpl_default($conf['template']));
@@ -64,12 +66,19 @@ if (!class_exists('configuration')) {
             if (isset($this->_metadata[$key])) {
               $class = $this->_metadata[$key][0];
               $class = ($class && class_exists('setting_'.$class)) ? 'setting_'.$class : 'setting';
+              if ($class=='setting') {
+                $this->setting[] = new setting_no_class($key,$param);
+              }
 
               $param = $this->_metadata[$key];
               array_shift($param);
             } else {
-              $class = 'setting';
+              $class = 'setting_undefined';
               $param = NULL;
+            }
+
+            if (!in_array($class, $no_default_check) && !isset($default[$key])) {
+              $this->setting[] = new setting_no_default($key,$param);
             }
 
             $this->setting[$key] = new $class($key,$param);
@@ -223,7 +232,7 @@ if (!class_exists('configuration')) {
           if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
             $meta = array();
             @include(DOKU_PLUGIN.$plugin.$file);
-						@include(DOKU_PLUGIN.$plugin.$class);
+            @include(DOKU_PLUGIN.$plugin.$class);
             if (!empty($meta)) {
               $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = array('fieldset');
             }
@@ -240,6 +249,7 @@ if (!class_exists('configuration')) {
       if (@file_exists(DOKU_TPLINC.$file)){
         $meta = array();
         @include(DOKU_TPLINC.$file);
+        @include(DOKU_TPLINC.$class);
         if (!empty($meta)) {
           $metadata['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] = array('fieldset');
         }
@@ -612,6 +622,41 @@ if (!class_exists('setting_dirchoice')) {
 
       parent::initialize($default,$local,$protected);
     }
+  }
+}
+
+
+if (!class_exists('setting_hidden')) {
+  class setting_hidden extends setting {
+      // Used to explicitly ignore a setting in the configuration manager.
+  }
+}
+
+if (!class_exists('setting_fieldset')) {
+  class setting_fieldset extends setting {
+      // A do-nothing class used to detect the 'fieldset' type.
+      // Used to start a new settings "display-group".
+  }
+}
+
+if (!class_exists('setting_undefined')) {
+  class setting_undefined extends setting_hidden {
+      // A do-nothing class used to detect settings with no metadata entry.
+      // Used internaly to hide undefined settings, and generate the undefined settings list.
+  }
+}
+
+if (!class_exists('setting_no_class')) {
+  class setting_no_class extends setting_undefined {
+      // A do-nothing class used to detect settings with a missing setting class.
+      // Used internaly to hide undefined settings, and generate the undefined settings list.
+  }
+}
+
+if (!class_exists('setting_no_default')) {
+  class setting_no_default extends setting_undefined {
+      // A do-nothing class used to detect settings with no default value.
+      // Used internaly to hide undefined settings, and generate the undefined settings list.
   }
 }
 

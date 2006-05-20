@@ -79,8 +79,3 @@ if (!class_exists('setting_im_convert')) {
   }
 }
 
-if (!class_exists('setting_fieldset')) {
-  class setting_fieldset extends setting_string {
-      //do-nothing class used to detect the 'fieldset' type.
-  }
-}

@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
+ * @author     Ben Coburn <btcoburn@silicodon.net>
  */
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
@@ -91,6 +92,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * output appropriate html
      */
     function html() {
+      $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
       global $lang;
       global $ID;
 
@@ -112,11 +114,19 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       ptln('<form action="'.wl($ID).'" method="post">');
       $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
+      $undefined_settings = array();
       $in_fieldset = false;
       $first_plugin_fieldset = true;
       $first_template_fieldset = true;
       foreach($this->_config->setting as $setting) {
-        if (is_a($setting, 'setting_fieldset')) {
+        if (is_a($setting, 'setting_hidden')) {
+          // skip hidden (and undefined) settings
+          if ($allow_debug && is_a($setting, 'setting_undefined')) {
+            $undefined_settings[] = $setting;
+          } else {
+            continue;
+          }
+        } else if (is_a($setting, 'setting_fieldset')) {
           // config setting group
           if ($in_fieldset) {
             ptln('  </table>');
@@ -131,7 +141,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             $this->_print_h1('template_settings', $this->getLang('_header_template'));
             $first_template_fieldset = false;
           }
-          ptln('  <fieldset name="'.$setting->_key.'" id="'.$setting->_key.'">');
+          ptln('  <fieldset id="'.$setting->_key.'">');
           ptln('  <legend>'.$setting->prompt($this).'</legend>');
           ptln('  <table class="inline">');
         } else {
@@ -153,6 +163,30 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         ptln('  </fieldset>');
       }
 
+      // show undefined settings list
+      if ($allow_debug && !empty($undefined_settings)) {
+        function _setting_natural_comparison($a, $b) { return strnatcmp($a->_key, $b->_key); }
+        usort($undefined_settings, '_setting_natural_comparison');
+        $this->_print_h1('undefined_settings', $this->getLang('_header_undefined'));
+        ptln('<fieldset>');
+        ptln('<table class="inline">');
+        $undefined_setting_match = array();
+        foreach($undefined_settings as $setting) {
+          if (preg_match('/^(?:plugin|tpl)'.CM_KEYMARKER.'.*?'.CM_KEYMARKER.'(.*)$/', $setting->_key, $undefined_setting_match)) {
+            $undefined_setting_key = $undefined_setting_match[1];
+          } else {
+            $undefined_setting_key = $setting->_key;
+          }
+          ptln('  <tr>');
+          ptln('    <td><a class="nolink" title="$meta[\''.$undefined_setting_key.'\']">$'.$this->_config->_name.'[\''.$setting->_out_key().'\']</a></td>');
+          ptln('    <td>'.$this->getLang('_msg_'.get_class($setting)).'</td>');
+          ptln('  </tr>');
+        }
+        ptln('</table>');
+        ptln('</fieldset>');
+      }
+
+      // finish up form
       ptln('<p>');
       ptln('  <input type="hidden" name="do"     value="admin" />');
       ptln('  <input type="hidden" name="page"   value="config" />');
@@ -270,7 +304,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     * @author Ben Coburn <btcoburn@silicodon.net>
     */
     function _print_config_toc() {
+      $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
+
       // gather toc data
+      $has_undefined = false;
       $toc = array('conf'=>array(), 'plugin'=>array(), 'template'=>null);
       foreach($this->_config->setting as $setting) {
         if (is_a($setting, 'setting_fieldset')) {
@@ -281,6 +318,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           } else {
             $toc['conf'][] = $setting;
           }
+        } else if (!$has_undefined && is_a($setting, 'setting_undefined')) {
+          $has_undefined = true;
         }
       }
 
@@ -325,6 +364,12 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             'title' => $name,
             'type'  => 'ul',
             'level' => 2);
+      }
+      if ($has_undefined && $allow_debug) {
+        $xhtml_toc[] = array('hid' => 'undefined_settings',
+            'title' => $this->getLang('_header_undefined'),
+            'type'  => 'ul',
+            'level' => 1);
       }
 
       // use the xhtml renderer to make the toc

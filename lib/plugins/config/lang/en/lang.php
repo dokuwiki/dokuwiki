@@ -22,6 +22,7 @@ $lang['_configuration_manager'] = 'Configuration Manager'; //same as heading in 
 $lang['_header_dokuwiki'] = 'DokuWiki Settings';
 $lang['_header_plugin'] = 'Plugin Settings';
 $lang['_header_template'] = 'Template Settings';
+$lang['_header_undefined'] = 'Undefined Settings';
 
 /* --- Config Setting Groups --- */
 $lang['_basic'] = 'Basic Settings';
@@ -39,6 +40,11 @@ $lang['_network'] = 'Network Settings';
 // from the plugin or template name and the localized suffix.
 $lang['_plugin_sufix'] = 'Plugin Settings';
 $lang['_template_sufix'] = 'Template Settings';
+
+/* --- Undefined Setting Messages --- */
+$lang['_msg_setting_undefined'] = 'No setting metadata.';
+$lang['_msg_setting_no_class'] = 'No setting class.';
+$lang['_msg_setting_no_default'] = 'No default value.';
 
 /* -------------------- Config Options --------------------------- */
 
