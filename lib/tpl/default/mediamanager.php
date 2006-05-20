@@ -23,8 +23,8 @@
 
 <body>
 <div id="media__manager" class="dokuwiki">
-    <?html_msgarea()?>
     <div id="media__left">
+        <?html_msgarea()?>
         <h1><?php echo hsc($lang['mediaselect'])?></h1>
 
         <?php tpl_mediaTree() ?>

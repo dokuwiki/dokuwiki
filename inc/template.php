@@ -863,7 +863,7 @@ function tpl_mediaContent(){
   ptln('<div id="media__content">');
   if($_REQUEST['edit']){
     media_metaform($IMG,$AUTH);
-  }elseif($INUSE){
+  }elseif(is_array($INUSE)){
     media_filesinuse($INUSE,$IMG);
   }else{
     media_filelist($NS,$AUTH,$JUMPTO);

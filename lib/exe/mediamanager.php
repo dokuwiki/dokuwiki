@@ -36,6 +36,7 @@
     // handle upload
     if($_FILES['upload']['tmp_name']){
         $JUMPTO = media_upload($NS,$AUTH);
+        if($JUMPTO) $NS = getNS($JUMPTO);
     }
 
     // handle meta saving
