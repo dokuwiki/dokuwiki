@@ -103,7 +103,8 @@ $lang['mediainuse']  = 'The file "%s" hasn\'t been deleted - it is still in use.
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
 
-$lang['js']['keepopen'] = 'Keep window open on selection';
+$lang['js']['keepopen']    = 'Keep window open on selection';
+$lang['js']['hidedetails'] = 'Hide Details';
 $lang['mediausage']  = 'Use the following syntax to reference this file:';
 
 $lang['reference']   = 'References for';
