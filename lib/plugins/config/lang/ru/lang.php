@@ -17,7 +17,37 @@ $lang['nochoice']   = '(нет других вариантов)';
 $lang['locked']     = 'Файл настройки недоступен для изменения. Если это не специально, <br />
                        убедитесь, что файл локальной настройки имеет правильное имя и права доступа.';
 
-// settings prompts
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = 'Настройки Вики'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'Параметры ДокуВики';
+$lang['_header_plugin'] = 'Параметры плагинов';
+$lang['_header_template'] = 'Параметры шаблонов';
+$lang['_header_undefined'] = 'Прочие параметры';
+
+/* --- Config Setting Groups --- */
+$lang['_basic'] = 'Основные параметры';
+$lang['_display'] = 'Параметры отображения';
+$lang['_authentication'] = 'Параметры аутентификации';
+$lang['_anti_spam'] = 'Параметры блокировки спама';
+$lang['_editing'] = 'Параметры правки';
+$lang['_links'] = 'Параметры ссылок';
+$lang['_media'] = 'Параметры медиа-файлов';
+$lang['_advanced'] = 'Тонкая настройка';
+$lang['_network'] = 'Параметры сети';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'Параметры плагина';
+$lang['_template_sufix'] = 'Параметры шаблона';
+
+/* --- Undefined Setting Messages --- */
+$lang['_msg_setting_undefined'] = 'Не найдены метаданные настроек.';
+$lang['_msg_setting_no_class'] = 'Не найден класс настроек.';
+$lang['_msg_setting_no_default'] = 'Не задано значение по умолчанию.';
+
+/* -------------------- Config Options --------------------------- */
+
 $lang['fmode']       = 'Права для создаваемых файлов';         //directory mask accordingly
 $lang['dmode']       = 'Права для создаваемых директорий';    //directory mask accordingly
 $lang['lang']        = 'Язык';           //your language
@@ -65,6 +95,7 @@ $lang['profileconfirm'] = 'Пароль для изменения профиля
 /* Advanced Options */
 $lang['userewrite']  = 'Удобочитаемые адреса (URL)';             //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $lang['useslash']    = 'Использовать слэш';                 //use slash instead of colon? only when rewrite is on
+$lang['usedraft']    = 'Автоматически сохранять черновик в время правки';
 $lang['sepchar']     = 'Разделитель слов в имени страницы';  //word separator character in page names; may be a
 $lang['canonical']   = 'Полные канонические адреса (URL)';  //Should all URLs use full canonical http://... style?
 $lang['autoplural']  = 'Автоматическое мн. число';               //try (non)plural form of nonexisting files?
@@ -74,8 +105,10 @@ $lang['purgeonadd']  = 'Обнулять кэш при создании стра
 $lang['locktime']    = 'Время блокировки страницы (сек.)';  //maximum age for lockfiles (defaults to 15 minutes)
 $lang['notify']      = 'Е-мэйл для извещений';      //send change info to this email (leave blank for nobody)
 $lang['mailfrom']    = 'Е-мэйл Вики (От:)';            //use this email when sending mails
+$lang['gzip_output'] = 'Использовать gzip Content-Encoding для xhtml';
 $lang['gdlib']       = 'Версия GD Lib';              //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $lang['im_convert']  = 'Путь к imagemagick';            //path to ImageMagicks convert (will be used instead of GD)
+$lang['jpg_quality'] = 'Качество сжатия JPG (0-100)';
 $lang['spellchecker']= 'Включить проверку орфографии';         //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
 $lang['subscribers'] = 'Разрешить подписку на изменения'; //enable change notice subscription support
 $lang['compress']    = 'Сжимать файлы CSS и javascript';  //Strip whitespaces and comments from Styles and JavaScript? 1|0
@@ -85,6 +118,7 @@ $lang['sitemap']     = 'Карта сайта для Google (дни)';   //Creat
 
 $lang['rss_type']    = 'Тип RSS';             //type of RSS feed to provide, by default:
 $lang['rss_linkto']  = 'Ссылки в RSS';              //what page RSS entries link to:
+$lang['rss_update']  = 'XML feed update interval (sec)';
 
 //Set target to use when creating links - leave empty for same window
 $lang['target____wiki']      = 'target для внутренних ссылок';

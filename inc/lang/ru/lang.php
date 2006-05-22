@@ -39,6 +39,9 @@ $lang['btn_unsubscribe'] = 'Отписаться';
 $lang['btn_profile']= 'Профиль';
 $lang['btn_reset']  = 'Сброс';
 $lang['btn_resendpwd'] = 'Послать новый пароль';
+$lang['btn_draft']    = 'Править черновик';
+$lang['btn_recover']  = 'Восстановить черновик';
+$lang['btn_draftdel'] = 'Удалить черновик';
 
 $lang['loggedinas'] = 'Вы';
 $lang['user']       = 'Имя пользователя';
@@ -53,6 +56,7 @@ $lang['register']   = 'Зарегистрироваться';
 $lang['profile']    = 'Профиль пользователя';
 $lang['badlogin']   = 'Извините, неверное имя пользователя или пароль.';
 $lang['minoredit']  = 'Небольшие изменения';
+$lang['draftdate']  = 'Черновик сохранен'; // full dformat date will be added
 
 $lang['regmissing'] = 'Извините, вам следует заполнить все поля.';
 $lang['reguexists'] = 'Извините, пользователь с таким логином уже существует.';
