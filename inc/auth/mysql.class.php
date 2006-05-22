@@ -756,6 +756,7 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _queryDB($query) {
+      $resultarray = array();
       if ($this->dbcon) {
         $result = @mysql_query($query,$this->dbcon);
         if ($result) {
