@@ -136,12 +136,14 @@ function html_editbutton(){
 function html_secedit_button($section,$p){
   global $ID;
   global $lang;
+  global $INFO;
   $secedit  = '';
 #  if($p) $secedit .= "</p>\n";
   $secedit .= '<div class="secedit">';
   $secedit .= html_btn('secedit',$ID,'',
                         array('do'      => 'edit',
-                              'lines'   => "$section"),
+                              'lines'   => "$section",
+                              'rev' => $INFO['lastmod']),
                               'post');
   $secedit .= '</div>';
 #  if($p) $secedit .= "\n<p>";
