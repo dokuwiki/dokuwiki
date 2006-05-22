@@ -130,23 +130,21 @@ function html_editbutton(){
 
 /**
  * prints a section editing button
+ * used as a callback in html_secedit
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_secedit_button($section,$p){
+function html_secedit_button($matches){
   global $ID;
   global $lang;
-  global $INFO;
   $secedit  = '';
-#  if($p) $secedit .= "</p>\n";
   $secedit .= '<div class="secedit">';
   $secedit .= html_btn('secedit',$ID,'',
                         array('do'      => 'edit',
                               'lines'   => "$section",
                               'rev' => $INFO['lastmod']),
-                              'post');
+                              'post', $name);
   $secedit .= '</div>';
-#  if($p) $secedit .= "\n<p>";
   return $secedit;
 }
 
@@ -157,16 +155,14 @@ function html_secedit_button($section,$p){
  */
 function html_secedit($text,$show=true){
   global $INFO;
+
   if($INFO['writable'] && $show && !$INFO['rev']){
-    $text = preg_replace('#<!-- SECTION \[(\d+-\d+)\] -->#e',
-                         "html_secedit_button('\\1',true)",
-                         $text);
-    $text = preg_replace('#<!-- SECTION \[(\d+-)\] -->#e',
-                         "html_secedit_button('\\1',false)",
-                         $text);
+    $text = preg_replace_callback('#<!-- SECTION "(.*?)" \[(\d+-\d*)\] -->#',
+                         'html_secedit_button', $text);
   }else{
-    $text = preg_replace('#<!-- SECTION \[(\d*-\d*)\] -->#e','',$text);
+    $text = preg_replace('#<!-- SECTION "(.*?)" \[(\d+-\d*)\] -->#','',$text);
   }
+
   return $text;
 }
 
@@ -214,16 +210,18 @@ function html_backtomedia_button($params,$akey=''){
 
 /**
  * Displays a button (using its own form)
+ * If tooltip exists, the access key tooltip is replaced.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_btn($name,$id,$akey,$params,$method='get'){
+function html_btn($name,$id,$akey,$params,$method='get',$tooltip=''){
   global $conf;
   global $lang;
 
   $label = $lang['btn_'.$name];
 
   $ret = '';
+  $tip = '';
 
   //filter id (without urlencoding)
   $id = idfilter($id,false);
@@ -250,9 +248,13 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 
   $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
   if($akey){
-    $ret .= 'title="[ALT+'.strtoupper($akey).']" ';
+    $tip = '[ALT+'.strtoupper($akey).']';
     $ret .= 'accesskey="'.$akey.'" ';
   }
+  if ($tooltip!='') {
+      $tip = htmlspecialchars($tooltip);
+  }
+  $ret .= 'title="'.$tip.'" ';
   $ret .= '/>';
   $ret .= '</div></form>';
 

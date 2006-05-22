@@ -43,6 +43,8 @@ class Doku_Renderer {
 
     function header($text, $level, $pos) {}
 
+    function section_edit($start, $end, $level, $name) {}
+
     function section_open($level) {}
 
     function section_close() {}

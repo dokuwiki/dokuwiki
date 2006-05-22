@@ -11,6 +11,9 @@ class Doku_Handler {
 
     var $status = array(
         'section' => FALSE,
+        'section_edit_start' => -1,
+        'section_edit_level' => 1,
+        'section_edit_title' => ''
     );
 
     var $rewriteBlocks = TRUE;
@@ -29,6 +32,8 @@ class Doku_Handler {
         if ( $this->status['section'] ) {
            $last_call = end($this->calls);
            array_push($this->calls,array('section_close',array(), $last_call[2]));
+           array_push($this->calls,array('section_edit',array($this->status['section_edit_start'], 0,
+             $this->status['section_edit_level'], $this->status['section_edit_title']), $last_call[2]));
         }
 
         if ( $this->rewriteBlocks ) {
@@ -89,6 +94,11 @@ class Doku_Handler {
         $title = trim($title);
 
         if ($this->status['section']) $this->_addCall('section_close',array(),$pos);
+
+        $this->_addCall('section_edit',array($this->status['section_edit_start'], $pos-1, $this->status['section_edit_level'], $this->status['section_edit_title']), $pos);
+        $this->status['section_edit_start'] = $pos;
+        $this->status['section_edit_level'] = $level;
+        $this->status['section_edit_title'] = $title;
 
         $this->_addCall('header',array($title,$level,$pos), $pos);
 

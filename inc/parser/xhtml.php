@@ -52,9 +52,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function document_end() {
-        // add button for last section if any and more than one
-        if($this->lastsec > 1) $this->_secedit($this->lastsec,'');
-
         if ( count ($this->footnotes) > 0 ) {
             $this->doc .= '<div class="footnotes">'.DOKU_LF;
 
@@ -126,13 +123,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     function header($text, $level, $pos) {
         global $conf;
-        //handle section editing
-        if($level <= $conf['maxseclevel']){
-            // add button for last section if any
-            if($this->lastsec) $this->_secedit($this->lastsec,$pos-1);
-            // remember current position
-            $this->lastsec = $pos;
-        }
 
         // create a unique header id
         $hid = $this->_headerToLink($text,'true');
@@ -150,6 +140,22 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$hid.'" id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
         $this->doc .= "</a></h$level>".DOKU_LF;
+    }
+
+     /**
+     * Section edit marker is replaced by an edit button when
+     * the page is editable. Replacement done in 'inc/html.php#html_secedit'
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Ben Coburn   <btcoburn@silicodon.net>
+     */
+    function section_edit($start, $end, $level, $name) {
+        global $conf;
+
+        if ($start!=-1 && $level<=$conf['maxseclevel']) {
+            $name = str_replace('"', '', $name);
+            $this->doc .= '<!-- SECTION "'.$name.'" ['.$start.'-'.(($end===0)?'':$end).'] -->';
+        }
     }
 
     function section_open($level) {
@@ -1037,18 +1043,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         return $title;
-    }
-
-    /**
-     * Adds code for section editing button
-     *
-     * This is just aplaceholder and gets replace by the button if
-     * section editing is allowed
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    function _secedit($f, $t){
-        $this->doc .= '<!-- SECTION ['.$f.'-'.$t.'] -->';
     }
 
     /**
