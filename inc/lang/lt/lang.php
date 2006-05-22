@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Linas Valiukas <shirshegsm@gmail.com>
  * @author     Edmondas Girkantas <eg@zemaitija.net>
+ * @author     Arūnas Vaitekūnas <aras@fan.lt>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -38,6 +39,10 @@ $lang['btn_unsubscribe'] = 'Atsisakyti keitimų prenumeratos';
 $lang['btn_profile']     = 'Atnaujinti profilį';
 $lang['btn_reset']       = 'Atstata';
 $lang['btn_resendpwd']   = 'Išsiųsti naują slaptažodį';
+$lang['btn_draft']    = 'Redaguoti juodraštį';
+$lang['btn_recover']  = 'Atkurti juodraštį';
+$lang['btn_draftdel'] = 'Šalinti juodraštį';
+$lang['draftdate']  = 'Juodraštis automatiškai išsaugotas';
 
 $lang['loggedinas'] = 'Prisijungęs kaip';
 $lang['user']       = 'Vartotojo vardas';
