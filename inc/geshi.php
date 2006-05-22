@@ -28,7 +28,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.36 2006/04/23 00:15:26 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.40 2006/05/21 00:01:20 oracleshinoda Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.9');
+define('GESHI_VERSION', '1.0.7.10');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -123,6 +123,9 @@ define('GESHI_BEFORE', 3);
 /** The key of the regex array defining what bracket group in a
     matched search to put after the replacement */ 
 define('GESHI_AFTER', 4);
+/** The key of the regex array defining a custom keyword to use
+    for this regexp's html tag class */
+define('GESHI_CLASS', 5);
 
 /** Used in language files to mark comments */
 define('GESHI_COMMENTS', 0);
@@ -461,6 +464,7 @@ class GeSHi
 	function set_source ($source)
 	{
 		$this->source = $source;
+        $this->highlight_extra_lines = array();
 	}
 
 	/**
@@ -2142,7 +2146,13 @@ class GeSHi
 				if (!$this->use_classes) {
 					$attributes = ' style="' . $this->language_data['STYLES']['REGEXPS'][$key] . '"';
 				} else {
-					$attributes = ' class="re' . $key . '"';
+                   if(is_array($this->language_data['REGEXPS'][$key]) &&
+                            array_key_exists(GESHI_CLASS, $this->language_data['REGEXPS'][$key])) {
+                        $attributes = ' class="'
+                            . $this->language_data['REGEXPS'][$key][GESHI_CLASS] . '"';
+                    } else {
+					   $attributes = ' class="re' . $key . '"';
+                    }
 				}
 				$stuff_to_parse = str_replace("!REG3XP$key!", "$attributes", $stuff_to_parse);
 			}
@@ -2205,6 +2215,7 @@ class GeSHi
 	 */
 	function load_language ($file_name)
 	{
+        $this->enable_highlighting();
         $language_data = array();
 		require $file_name;
 		// Perhaps some checking might be added here later to check that
@@ -2225,7 +2236,6 @@ class GeSHi
         foreach ($this->language_data['REGEXPS'] as $key => $regexp) {
             $this->lexic_permissions['REGEXPS'][$key] = true;
         }
-		$this->enable_highlighting();
 		// Set default class for CSS
 		$this->overall_class = $this->language;
 	}
@@ -2672,7 +2682,15 @@ class GeSHi
 		foreach ($this->language_data['STYLES']['REGEXPS'] as $group => $styles) {
 			if (!$economy_mode || !($economy_mode && $styles == '') && !($economy_mode &&
                 !$this->lexic_permissions['REGEXPS'][$group])) {
-				$stylesheet .= "$selector.re$group {{$styles}}\n";
+                if (is_array($this->language_data['REGEXPS'][$group]) &&
+                         array_key_exists(GESHI_CLASS,
+                                    $this->language_data['REGEXPS'][$group])) {
+                    $stylesheet .= "$selector.";
+                    $stylesheet .= $this->language_data['REGEXPS'][$group][GESHI_CLASS];
+                    $stylesheet .= " {{$styles}}\n";
+                } else {
+				    $stylesheet .= "$selector.re$group {{$styles}}\n";
+                }
 			}
 		}
 

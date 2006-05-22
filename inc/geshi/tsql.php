@@ -4,10 +4,10 @@
  * --------
  * Author: Duncan Lock (dunc@dflock.co.uk)
  * Copyright: (c) 2006 Duncan Lock (http://dflock.co.uk/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.9
- * CVS Revision Version: $Revision: 1.4 $
+ * Release Version: 1.0.7.10
+ * CVS Revision Version: $Revision: 1.7 $
  * Date Started: 2005/11/22
- * Last Modified: $Date: 2006/04/23 01:14:41 $
+ * Last Modified: $Date: 2006/05/19 11:40:10 $
  *
  * T-SQL language file for GeSHi.
  *
