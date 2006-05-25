@@ -35,7 +35,7 @@ function js_out(){
     $write = (bool) $_REQUEST['write'];  // writable?
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('scripts'.$edit.$write,'.js'); 
+    $cache = getCacheName('scripts'.$edit.'x'.$write,'.js'); 
 
     // Array of needed files
     $files = array(
@@ -66,6 +66,7 @@ function js_out(){
     header('Pragma: public');
     if(js_cacheok($cache,array_merge($files,$plugins))){
         http_conditionalRequest(filemtime($cache));
+        if($conf['allowdebug']) header("X-CacheUsed: $cache");
         readfile($cache);
         return;
     } else {

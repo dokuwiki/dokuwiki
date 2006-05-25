@@ -72,6 +72,7 @@ function css_out(){
     header('Pragma: public');
     if(css_cacheok($cache,array_keys($files))){
         http_conditionalRequest(filemtime($cache));
+        if($conf['allowdebug']) header("X-CacheUsed: $cache");
         readfile($cache);
         return;
     } else {

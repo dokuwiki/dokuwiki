@@ -91,8 +91,8 @@ $lang['notsavedyet'] = 'Unsaved changes will be lost.\nReally continue?';
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Nothing was found.';
 
-$lang['mediaselect'] = 'Mediafiles';
-$lang['fileupload']  = 'Mediafile Upload';
+$lang['mediaselect'] = 'Media Files';
+$lang['fileupload']  = 'Media File Upload';
 $lang['uploadsucc']  = 'Upload successful';
 $lang['uploadfail']  = 'Upload failed. Maybe wrong permissions?';
 $lang['uploadwrong'] = 'Upload denied. This file extension is forbidden!';
@@ -106,6 +106,8 @@ $lang['mediafiles']  = 'Available files in';
 $lang['js']['keepopen']    = 'Keep window open on selection';
 $lang['js']['hidedetails'] = 'Hide Details';
 $lang['mediausage']  = 'Use the following syntax to reference this file:';
+$lang['mediaview']   = 'View original file';
+$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your filename separated by colons.';
 
 $lang['reference']   = 'References for';
 $lang['ref_inuse']   = 'The file can\'t be deleted, because it\'s still used by the following pages:';

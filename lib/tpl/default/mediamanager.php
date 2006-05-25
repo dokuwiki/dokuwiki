@@ -27,10 +27,10 @@
         <?html_msgarea()?>
         <h1><?php echo hsc($lang['mediaselect'])?></h1>
 
-        <?php tpl_mediaTree() ?>
-
         <?php /* keep the id! additional elements are inserted via JS here */?>
         <div id="media__opts"></div>
+
+        <?php tpl_mediaTree() ?>
     </div>
 
     <div id="media__right">

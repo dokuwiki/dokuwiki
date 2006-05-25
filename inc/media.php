@@ -114,7 +114,7 @@ function media_metaform($id,$auth){
         echo '<div class="metafield">';
         echo '<label for="meta__'.$key.'">';
         echo ($lang[$field[1]]) ? $lang[$field[1]] : $field[1];
-        echo '</label>';
+        echo ':</label>';
 
         // put input field
         if($field[2] == 'text'){
@@ -268,7 +268,13 @@ function media_filelist($ns,$auth=null,$jump=''){
 function media_fileactions($item,$auth){
     global $lang;
 
-    // no actions if not writable
+    // view button
+    $link = ml($item['id'],'',true);
+    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
+         'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+
+
+    // no further actions if not writable
     if(!$item['writable']) return;
 
     // delete button
@@ -377,6 +383,7 @@ function media_printimgdetail($item){
     $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
                                        'EXIF.TIFFImageDescription',
                                        'EXIF.TIFFUserComment'));
+    if(utf8_strlen($t) > 250) $t = utf8_substr($t,0,250).'...';
     if($t) echo htmlspecialchars($t).'<br />';
 
     $t = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
@@ -396,9 +403,11 @@ function media_uploadform($ns, $auth){
     if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
 
     ?>
+    <div class="upload"><?php echo $lang['mediaupload']?></div>
     <form action="<?php echo DOKU_BASE?>lib/exe/mediamanager.php"
           method="post" enctype="multipart/form-data" class="upload">
         <input type="hidden" name="ns" value="<?php echo hsc($ns)?>" />
+
 
         <?php echo $lang['txt_upload']?>:
         <input type="file" name="upload" class="edit" id="upload__file" /><br />
