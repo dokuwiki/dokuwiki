@@ -1135,12 +1135,14 @@ function getRevisions($id){
   $clid = cleanID($id);
   if(strrpos($clid,':')) $clid = substr($clid,strrpos($clid,':')+1); //remove path
   $clid = utf8_encodeFN($clid);
-
+  $clid_len = strlen($clid);
   if (is_dir($revd) && $dh = opendir($revd)) {
     while (($file = readdir($dh)) !== false) {
-      if (is_dir($revd.'/'.$file)) continue;
-      if (preg_match('/^'.$clid.'\.(\d+)\.txt(\.gz)?$/',$file,$match)){
-        $revs[]=$match[1];
+      if (substr($file, 0, $clid_len)===$clid) {
+        $p = strpos($file, '.', $clid_len+1);
+        if (!$p===false) {
+          $revs[] = substr($file, $clid_len+1, $p-$clid_len-1);
+        }
       }
     }
     closedir($dh);
