@@ -133,8 +133,8 @@ function media_metaform($id,$auth){
          '" title="ALT+S" accesskey="s" class="button" />'.NL;
     echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].
          '" title="ALT+C" accesskey="c" class="button" />'.NL;
+    echo '</div>'.NL;
     echo '</form>'.NL;
-    echo '</div>';
 }
 
 /**
