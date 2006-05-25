@@ -340,7 +340,7 @@ function media_printfile($item,$auth,$jump){
     echo '<span class="info">('.$info.')</span>'.NL;
     media_fileactions($item,$auth);
     echo '<div class="example" id="ex_'.$item['id'].'">';
-    echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}<code>';
+    echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';
     echo '</div>';
     if($item['isimg']) media_printimgdetail($item);
     echo '<div class="clearer"></div>'.NL;
@@ -375,20 +375,22 @@ function media_printimgdetail($item){
     echo '</a>';
     echo '</div>';
 
-    //read EXIF/IPTC data
-    echo '<p>';
+    // read EXIF/IPTC data
     $t = $item['meta']->getField('IPTC.Headline');
-    if($t) echo '<strong>'.htmlspecialchars($t).'</strong><br />';
-
-    $t = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
+    $d = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
                                        'EXIF.TIFFImageDescription',
                                        'EXIF.TIFFUserComment'));
-    if(utf8_strlen($t) > 250) $t = utf8_substr($t,0,250).'...';
-    if($t) echo htmlspecialchars($t).'<br />';
+    if(utf8_strlen($d) > 250) $d = utf8_substr($d,0,250).'...';
+    $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
 
-    $t = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
-    if($t) echo '<em>'.htmlspecialchars($t).'</em>';
-    echo '</p>';
+    // print EXIF/IPTC data
+    if($t || $d || $k ){
+        echo '<p>';
+        if($t) echo '<strong>'.htmlspecialchars($t).'</strong><br />';
+        if($d) echo htmlspecialchars($d).'<br />';
+        if($t) echo '<em>'.htmlspecialchars($k).'</em>';
+        echo '</p>';
+    }
     echo '</div>';
 }
 
