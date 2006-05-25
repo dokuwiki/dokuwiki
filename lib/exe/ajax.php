@@ -131,7 +131,7 @@ function ajax_medians(){
     $item['level'] = $lvl+1;
     echo media_nstree_li($item);
     echo media_nstree_item($item);
-    echo '</div></li>';
+    echo '</li>';
   }
 }
 
