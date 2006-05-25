@@ -493,7 +493,7 @@ function html_revisions(){
 
   foreach($revisions as $rev){
     $date = date($conf['dformat'],$rev);
-    $info = getRevisionInfo($ID,$rev);
+    $info = getRevisionInfo($ID,$rev,true);
 
     print ($info['minor']) ? '<li class="minor">' : '<li>';
     print '<div class="li">';

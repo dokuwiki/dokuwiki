@@ -96,9 +96,9 @@ function pageinfo(){
 
   //who's the editor
   if($REV){
-    $revinfo = getRevisionInfo($ID,$REV);
+    $revinfo = getRevisionInfo($ID,$REV,false);
   }else{
-    $revinfo = getRevisionInfo($ID,$info['lastmod']);
+    $revinfo = getRevisionInfo($ID,$info['lastmod'],false);
   }
   $info['ip']     = $revinfo['ip'];
   $info['user']   = $revinfo['user'];
@@ -928,11 +928,18 @@ function array_dichotomic_search($ar, $value, $compareFunc) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Yann Hamon <yann.hamon@mandragor.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRevisionInfo($id,$rev){
+function getRevisionInfo($id,$rev,$mem_cache=true){
   global $conf;
-
+  global $doku_temporary_revinfo_cache;
+  $cache =& $doku_temporary_revinfo_cache;
   if(!$rev) return(null);
+
+  // check if it's already in the memory cache
+  if (is_array($cache) && isset($cache[$id]) && isset($cache[$id][$rev])) {
+    return $cache[$id][$rev];
+  }
 
   $info = array();
   if(!@is_readable($conf['changelog'])){
@@ -941,32 +948,57 @@ function getRevisionInfo($id,$rev){
   }
   $loglines = file($conf['changelog']);
 
-  // Search for a line with a matching timestamp
-  $index = array_dichotomic_search ($loglines, $rev, hasTimestamp);
-  if ($index == -1)
-    return;
+  if (!$mem_cache) {
+    // Search for a line with a matching timestamp
+    $index = array_dichotomic_search($loglines, $rev, 'hasTimestamp');
+    if ($index == -1)
+      return;
 
-  // The following code is necessary when there is more than
-  // one line with one same timestamp
-  $loglines_matching = array();
-  $loglines_matching[] =  $loglines[$index];
-  for ($i=$index-1;$i>=0 && hasTimestamp($loglines[$i], $rev) == 0; $i--)
-    $loglines_matching[] = $loglines[$i];
-  $logsize = count($loglines);
-  for ($i=$index+1;$i<$logsize && hasTimestamp($loglines[$i], $rev) == 0; $i++)
-    $loglines_matching[] = $loglines[$i];
+    // The following code is necessary when there is more than
+    // one line with one same timestamp
+    $loglines_matching = array();
+    for ($i=$index-1;$i>=0 && hasTimestamp($loglines[$i], $rev) == 0; $i--)
+      $loglines_matching[] = $loglines[$i];
+    $loglines_matching = array_reverse($loglines_matching);
+    $loglines_matching[] =  $loglines[$index];
+    $logsize = count($loglines);
+    for ($i=$index+1;$i<$logsize && hasTimestamp($loglines[$i], $rev) == 0; $i++)
+      $loglines_matching[] = $loglines[$i];
 
-  // Match only lines concerning the document $id
-  $loglines_matching = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines_matching);
+    // pull off the line most recent line with the right id
+    $loglines_matching = array_reverse($loglines_matching); //newest first
+    foreach ($loglines_matching as $logline) {
+      $line = explode("\t", $logline);
+      if ($line[2]==$id) {
+        $info['date']  = $line[0];
+        $info['ip']    = $line[1];
+        $info['user']  = $line[3];
+        $info['sum']   = $line[4];
+        $info['minor'] = isMinor($info['sum']);
+        break;
+      }
+    }
+  } else {
+    // load and cache all the lines with the right id
+    if(!is_array($cache)) { $cache = array(); }
+    if (!isset($cache[$id])) { $cache[$id] = array(); }
+    foreach ($loglines as $logline) {
+      $start = strpos($logline, "\t", strpos($logline, "\t")+1)+1;
+      $end = strpos($logline, "\t", $start);
+      if (substr($logline, $start, $end-$start)==$id) {
+        $line = explode("\t", $logline);
+        $info = array();
+        $info['date']  = $line[0];
+        $info['ip']    = $line[1];
+        $info['user']  = $line[3];
+        $info['sum']   = $line[4];
+        $info['minor'] = isMinor($info['sum']);
+        $cache[$id][$info['date']] = $info;
+      }
+    }
+    $info = $cache[$id][$rev];
+  }
 
-  $loglines_matching = array_reverse($loglines_matching); //reverse sort on timestamp
-  $line = split("\t",$loglines_matching[0]);
-
-  $info['date']  = $line[0];
-  $info['ip']    = $line[1];
-  $info['user']  = $line[3];
-  $info['sum']   = $line[4];
-  $info['minor'] = isMinor($info['sum']);
   return $info;
 }
 
