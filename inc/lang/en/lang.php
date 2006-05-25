@@ -107,6 +107,7 @@ $lang['js']['keepopen']    = 'Keep window open on selection';
 $lang['js']['hidedetails'] = 'Hide Details';
 $lang['mediausage']  = 'Use the following syntax to reference this file:';
 $lang['mediaview']   = 'View original file';
+$lang['mediaroot']   = 'root';
 $lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your filename separated by colons.';
 
 $lang['reference']   = 'References for';

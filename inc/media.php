@@ -435,6 +435,7 @@ function media_uploadform($ns, $auth){
  */
 function media_nstree($ns){
     global $conf;
+    global $lang;
 
     // currently selected namespace
     $ns  = cleanID($ns);
@@ -448,7 +449,8 @@ function media_nstree($ns){
     search($data,$conf['mediadir'],'search_index',array('ns' => $ns));
 
     // wrap a list with the root level around the other namespaces
-    $item = array( 'level' => 0, 'id' => '', 'open' =>'true', 'label' => ':*');
+    $item = array( 'level' => 0, 'id' => '',
+                   'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
 
     echo '<ul class="idx">';
     echo media_nstree_li($item);
