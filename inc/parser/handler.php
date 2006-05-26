@@ -1330,7 +1330,13 @@ class Doku_Handler_Block {
             //remove the whole paragraph
             array_splice($this->calls,$i);
         }else{
-            $this->calls[] = array('p_close',array(), $pos);
+            if ($this->calls[count($this->calls)-1][0] == 'section_edit') {
+                $tmp = array_pop($this->calls);
+                $this->calls[] = array('p_close',array(), $pos);
+                $this->calls[] = $tmp;
+            } else {
+                $this->calls[] = array('p_close',array(), $pos);
+            }
         }
 
         $this->inParagraph = FALSE;

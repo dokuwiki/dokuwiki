@@ -62,12 +62,14 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nFoo\n")),
             array('p_close',array()),
+            array('section_edit',array(-1,4,1,'')),
             array('header',array('Iñtërnâtiônàlizætiøn',3,5)),
             array('section_open',array(3)),
             array('p_open',array()),
             array('cdata',array("\n Bar\n")),
             array('p_close',array()),
             array('section_close',array()),
+            array('section_edit',array(5,0,3,'Iñtërnâtiônàlizætiøn')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
