@@ -136,7 +136,11 @@ function html_editbutton(){
  */
 function html_secedit_button($matches){
   global $ID;
-  global $lang;
+  global $INFO;
+
+  $section = $matches[2];
+  $name = $matches[1];
+
   $secedit  = '';
   $secedit .= '<div class="secedit">';
   $secedit .= html_btn('secedit',$ID,'',
