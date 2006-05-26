@@ -163,7 +163,7 @@ function runSitemapper(){
         $file = wikiFN($id);
 
         //skip hidden, non existing and restricted files
-        if(isHiddenPage($id)) return false;
+        if(isHiddenPage($id)) continue;
         $date = @filemtime($file);
         if(!$date) continue;
         if(auth_aclcheck($id,'','') < AUTH_READ) continue;
