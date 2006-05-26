@@ -108,7 +108,7 @@ $lang['js']['hidedetails'] = 'Hide Details';
 $lang['mediausage']  = 'Use the following syntax to reference this file:';
 $lang['mediaview']   = 'View original file';
 $lang['mediaroot']   = 'root';
-$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your filename separated by colons.';
+$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons.';
 
 $lang['reference']   = 'References for';
 $lang['ref_inuse']   = 'The file can\'t be deleted, because it\'s still used by the following pages:';
