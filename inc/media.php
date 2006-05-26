@@ -235,7 +235,7 @@ function media_filelist($ns,$auth=null,$jump=''){
     // check auth our self if not given (needed for ajax calls)
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<h1>:'.hsc($ns).'</h1>'.NL;
+    echo '<h1 id="media__ns">:'.hsc($ns).'</h1>'.NL;
 
     if($auth < AUTH_READ){
         // FIXME: print permission warning here instead?
