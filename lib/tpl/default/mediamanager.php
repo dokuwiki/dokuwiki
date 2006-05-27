@@ -24,7 +24,7 @@
 <body>
 <div id="media__manager" class="dokuwiki">
     <div id="media__left">
-        <?html_msgarea()?>
+        <?php html_msgarea()?>
         <h1><?php echo hsc($lang['mediaselect'])?></h1>
 
         <?php /* keep the id! additional elements are inserted via JS here */?>
