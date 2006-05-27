@@ -238,7 +238,7 @@ function js_compress($s){
     $len = strlen($s);
 
     // items that don't need spaces next to them
-    $chars = '^&|!+\-*\/%=:;,{}()<>% \t\n\r';
+    $chars = '^&|!+\-*\/%=\?:;,{}()<>% \t\n\r';
 
     ob_start();
     while($i < $len){
@@ -286,11 +286,12 @@ function js_compress($s){
         // double quote strings
         if($ch == '"'){
             $j = 1;
-            while( $s{$i+$j} != '"' ){
-                while( ($s{$i+$j} != '\\') && ($s{$i+$j} != '"') ){
-                    $j = $j + 1;
+            while( $s{$i+$j} != '"' && ($i+$j < $len)){
+                if( $s{$i+$j} == '\\' && $s{$i+$j+1} == '"' ){
+                    $j += 2;
+                }else{
+                    $j += 1;
                 }
-                if($s{$i+$j} == '\\') $j = $j + 2;
             }
             echo substr($s,$i,$j+1);
             $i = $i + $j + 1;
@@ -300,11 +301,12 @@ function js_compress($s){
         // single quote strings
         if($ch == "'"){
             $j = 1;
-            while( $s{$i+$j} != "'" ){
-                while( ($s{$i+$j} != '\\') && ($s{$i+$j} != "'") ){
-                    $j = $j + 1;
+            while( $s{$i+$j} != "'" && ($i+$j < $len)){
+                if( $s{$i+$j} == '\\' && $s{$i+$j+1} == "'" ){
+                    $j += 2;
+                }else{
+                    $j += 1;
                 }
-                if ($s{$i+$j} == '\\') $j = $j + 2;
             }
             echo substr($s,$i,$j+1);
             $i = $i + $j + 1;

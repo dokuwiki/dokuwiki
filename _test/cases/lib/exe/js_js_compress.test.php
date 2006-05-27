@@ -40,13 +40,23 @@ class js_js_compress_test extends UnitTestCase {
     }
 
     function test_dquot1(){
-        $text = 'var foo="Now what \'do we//get /*here*/ ?";';
+        $text = 'var foo="Now what \\" \'do we//get /*here*/ ?";';
         $this->assertEqual(js_compress($text), $text);
     }
 
+    function test_dquotrunaway(){
+        $text = 'var foo="Now where does it end';
+        $this->assertEqual(js_compress($text), "$text\n"); //\n is added by compressor
+    }
+
     function test_squot1(){
-        $text = "var foo='Now what \"do we//get /*here*/ ?';";
+        $text = "var foo='Now what \\' \"do we//get /*here*/ ?';";
         $this->assertEqual(js_compress($text), $text);
+    }
+
+    function test_squotrunaway(){
+        $text = "var foo='Now where does it end";
+        $this->assertEqual(js_compress($text), "$text\n"); //\n is added by compressor
     }
 
     function test_nl1(){
@@ -62,6 +72,12 @@ class js_js_compress_test extends UnitTestCase {
     function test_tws1(){
         $text = "var foo=6;  \t  ";
         $this->assertEqual(js_compress($text), 'var foo=6;');
+    }
+
+    function test_shortcond(){
+        $text = "var foo = (baz) ? 'bar' : 'bla';";
+        $this->assertEqual(js_compress($text), "var foo=(baz)?'bar':'bla';");
+
     }
 }
 
