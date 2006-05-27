@@ -185,13 +185,24 @@ function media_upload($ns,$auth){
     global $lang;
     global $conf;
 
-    // get file
+    // get file and id
     $id   = $_POST['id'];
     $file = $_FILES['upload'];
-    // get id
     if(empty($id)) $id = $file['name'];
-    $id   = cleanID($ns.':'.$id);  //FIXME handle relative and absolute names here
+
+    // check extensions
+    list($fext) = mimetype($file['name']);
+    list($iext) = mimetype($id);
+    if($fext && !$iext){
+        // no extension specified in id - readd original one
+        $id .= '.'.$fext;
+    }elseif($fext && $fext != $iext){
+        // extension was changed, print warning
+        msg(sprintf($lang['mediaextchange'],$fext,$iext));
+    }
+
     // get filename
+    $id   = cleanID($ns.':'.$id);
     $fn   = mediaFN($id);
 
     // get filetype regexp
