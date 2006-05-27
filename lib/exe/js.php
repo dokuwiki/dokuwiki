@@ -141,6 +141,7 @@ function js_out(){
     // add scroll event and tooltip rewriting
     js_runonstart('updateAccessKeyTooltip()');
     js_runonstart('scrollToMarker()');
+    js_runonstart('focusMarker()');
 
     // initialize init pseudo event
     echo 'if (document.addEventListener) {'.NL;

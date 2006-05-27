@@ -52,24 +52,26 @@ function html_login(){
   print p_locale_xhtml('login');
   ?>
     <div class="centeralign">
-    <form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
+    <form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"
+          method="post" name="login">
       <fieldset>
         <legend><?php echo $lang['btn_login']?></legend>
         <input type="hidden" name="id" value="<?php echo $ID?>" />
         <input type="hidden" name="do" value="login" />
         <label class="block">
           <span><?php echo $lang['user']?></span>
-          <input type="text" name="u" value="<?php echo formText($_REQUEST['u'])?>" class="edit" />
+          <input type="text" name="u" value="<?php echo formText($_REQUEST['u'])?>"
+                 class="edit" id="focus__this" />
         </label><br />
         <label class="block">
           <span><?php echo $lang['pass']?></span>
           <input type="password" name="p" class="edit" />
         </label><br />
-        <input type="submit" value="<?php echo $lang['btn_login']?>" class="button" />
         <label for="remember__me" class="simple">
           <input type="checkbox" name="r" id="remember__me" value="1" />
           <span><?php echo $lang['remember']?></span>
         </label>
+        <input type="submit" value="<?php echo $lang['btn_login']?>" class="button" />
       </fieldset>
     </form>
   <?php
