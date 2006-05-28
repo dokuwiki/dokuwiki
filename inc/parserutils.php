@@ -59,7 +59,8 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
  *
  * @param string wiki page id
  * @param reference populated with page title from heading or page id
- * @author Andreas Gohr <hfuecks@gmail.com>
+ * @deprecated
+ * @author Harry Fuecks <hfuecks@gmail.com>
  */
 function p_wiki_xhtml_summary($id, &$title, $rev='', $excuse=true){
   $file = wikiFN($id,$rev);
