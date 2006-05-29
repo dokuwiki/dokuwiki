@@ -138,15 +138,15 @@ function runSitemapper(){
     if(!$conf['sitemap']) return false;
 
     if($conf['usegzip']){
-        $sitemap = DOKU_INC.'sitemap.xml.gz';
+        $sitemap = 'sitemap.xml.gz';
     }else{
-        $sitemap = DOKU_INC.'sitemap.xml';
+        $sitemap = 'sitemap.xml';
     }
     print "runSitemapper(): using $sitemap".NL;
 
-    if(!is_writable($sitemap)) return false;
-    if(@filesize($sitemap) && 
-       @filemtime($sitemap) > (time()-($conf['sitemap']*60*60*24))){
+    if(!is_writable(DOKU_INC.$sitemap)) return false;
+    if(@filesize(DOKU_INC.$sitemap) && 
+       @filemtime(DOKU_INC.$sitemap) > (time()-($conf['sitemap']*60*60*24))){
        print 'runSitemapper(): Sitemap up to date'.NL;
        return false;
     }
@@ -178,7 +178,7 @@ function runSitemapper(){
     ob_end_clean();
 
     //save the new sitemap
-    io_saveFile($sitemap,$data);
+    io_saveFile(DOKU_INC.$sitemap,$data);
 
     print 'runSitemapper(): pinging google'.NL;
     //ping google
