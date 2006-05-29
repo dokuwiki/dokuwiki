@@ -257,6 +257,9 @@ function getBaseURL($abs=false){
   //handle script in lib/exe dir
   $dir = preg_replace('!lib/exe/$!','',$dir);
 
+  //handle script in lib/plugins dir
+  $dir = preg_replace('!lib/plugins/.*$!','',$dir);
+
   //finish here for relative URLs
   if(!$abs) return $dir;
 
