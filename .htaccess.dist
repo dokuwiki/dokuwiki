@@ -11,9 +11,15 @@
     Satisfy All
 </Files>
 
-## Comment these rules in if you want to have nice URLs using
+## Uncomment these rules if you want to have nice URLs using
 ## $conf['rewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
+#
+## Not all installations will require the following line.  If you do, 
+## change "/dokuwiki" to the path to your dokuwiki directory relative
+## to your document root.
+#RewriteBase /dokuwiki
+#
 #RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
 #RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
 #RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
