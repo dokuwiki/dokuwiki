@@ -202,7 +202,7 @@ function rssListNamespace(&$rss,$ns){
         }
 
         $item->link        = wl($id,'rev='.$date,true);
-        $item->description = $meta['description']['abstract']];
+        $item->description = $meta['description']['abstract'];
         $item->date        = date('r',$date);
         $rss->addItem($item);
   }
