@@ -940,7 +940,9 @@ class Doku_Handler_Quote {
                         for ( $i = 1; $i <= $quoteDiff; $i++ ) {
                             $this->quoteCalls[] = array('quote_close',array(),$call[2]);
                         }
-                    }
+                    } else {
+                        if ($call[0] != 'quote_start') $this->quoteCalls[] = array('linebreak',array(),$call[2]);
+                    } 
 
                     $quoteDepth = $quoteLength;
 
