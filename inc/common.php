@@ -1171,7 +1171,7 @@ function getRevisions($id){
   if (is_dir($revd) && $dh = opendir($revd)) {
     while (($file = readdir($dh)) !== false) {
       if (substr($file, 0, $clid_len)===$clid) {
-        $p = strpos($file, '.', $clid_len+1);
+        $p = @strpos($file, '.', $clid_len+1);
         if (!$p===false) {
           $revs[] = substr($file, $clid_len+1, $p-$clid_len-1);
         }
