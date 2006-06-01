@@ -328,19 +328,19 @@ class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
             ),
 
         'subscript'=> array (
-            'entry'=>'<sub>(?=.*\x3C/sub\x3E)',
+            'entry'=>'<sub>(?=.*</sub>)',
             'exit'=>'</sub>',
             'sort'=>110
             ),
 
         'superscript'=> array (
-            'entry'=>'<sup>(?=.*\x3C/sup\x3E)',
+            'entry'=>'<sup>(?=.*</sup>)',
             'exit'=>'</sup>',
             'sort'=>120
             ),
 
         'deleted'=> array (
-            'entry'=>'<del>(?=.*\x3C/del\x3E)',
+            'entry'=>'<del>(?=.*</del>)',
             'exit'=>'</del>',
             'sort'=>130
             ),
@@ -469,7 +469,7 @@ class Doku_Parser_Mode_table extends Doku_Parser_Mode {
 class Doku_Parser_Mode_unformatted extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<nowiki>(?=.*\x3C/nowiki\x3E)',$mode,'unformatted');
+        $this->Lexer->addEntryPattern('<nowiki>(?=.*</nowiki>)',$mode,'unformatted');
         $this->Lexer->addEntryPattern('%%(?=.*%%)',$mode,'unformattedalt');
     }
 
@@ -488,7 +488,7 @@ class Doku_Parser_Mode_unformatted extends Doku_Parser_Mode {
 class Doku_Parser_Mode_php extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<php>(?=.*\x3C/php\x3E)',$mode,'php');
+        $this->Lexer->addEntryPattern('<php>(?=.*</php>)',$mode,'php');
     }
 
     function postConnect() {
@@ -504,7 +504,7 @@ class Doku_Parser_Mode_php extends Doku_Parser_Mode {
 class Doku_Parser_Mode_html extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<html>(?=.*\x3C/html\x3E)',$mode,'html');
+        $this->Lexer->addEntryPattern('<html>(?=.*</html>)',$mode,'html');
     }
 
     function postConnect() {
@@ -543,7 +543,7 @@ class Doku_Parser_Mode_preformatted extends Doku_Parser_Mode {
 class Doku_Parser_Mode_code extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<code(?=.*\x3C/code\x3E)',$mode,'code');
+        $this->Lexer->addEntryPattern('<code(?=.*</code>)',$mode,'code');
     }
 
     function postConnect() {
@@ -559,7 +559,7 @@ class Doku_Parser_Mode_code extends Doku_Parser_Mode {
 class Doku_Parser_Mode_file extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<file>(?=.*\x3C/file\x3E)',$mode,'file');
+        $this->Lexer->addEntryPattern('<file>(?=.*</file>)',$mode,'file');
     }
 
     function postConnect() {
