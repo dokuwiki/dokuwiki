@@ -80,12 +80,14 @@ if(function_exists($call)){
  * the result string and will be checked for
  * spelling errors again.
  *
+ * callback for preg_replace_callback
+ *
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function spaceslink($string, $check=""){
-  $string  = unslash($string);
-  $check   = unslash($check);
+function spaceslink($matches){
+  $string  = unslash($matches[1]);
+  $check   = unslash($matches[2]);
   $result  = '  '; //opening [[
   $result .= str_pad('',utf8_strlen($string),' ');
   $result .= $check;
@@ -122,8 +124,8 @@ function spell_check() {
   $data = explode("\n",$string);
 
   // don't check links and medialinks for spelling errors
-  $string = preg_replace('/\{\{(.*?)(\|(.*?))?(\}\})/e','spaceslink("\\1","\\2")',$string);
-  $string = preg_replace('/\[\[(.*?)(\|(.*?))?(\]\])/e','spaceslink("\\1","\\2")',$string);
+  $string = preg_replace_callback('/\{\{(.*?)(\|(.*?))?(\}\})/','spaceslink',$string);
+  $string = preg_replace_callback('/\[\[(.*?)(\|(.*?))?(\]\])/','spaceslink',$string);
 
   // run aspell in terse sgml mode, ignore nbsp as correct word
   if(!$spell->runAspell($string,$out,$err,array('!','+html','@nbsp'))){
