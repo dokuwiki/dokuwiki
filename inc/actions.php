@@ -199,6 +199,12 @@ function act_permcheck($act){
     }else{
       $permneed = AUTH_ADMIN;
     }
+  }elseif($act == 'resendpwd'){
+    if ($conf['resendpasswd']) {
+      $permneed = AUTH_NONE;
+    }else{
+      $permneed = AUTH_ADMIN+1; // shouldn't get here if $conf['resendpasswd'] is off
+    }
   }elseif($act == 'admin'){
     $permneed = AUTH_ADMIN;
   }else{
