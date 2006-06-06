@@ -18,6 +18,7 @@ div.error{
   font-size: 90%;
   margin: 0px;
   padding-left: 3em;
+	overflow: hidden;
 }
 
 div.info{
@@ -27,6 +28,7 @@ div.info{
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
+	overflow: hidden;
 }
 
 div.success{
@@ -36,6 +38,7 @@ div.success{
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
+	overflow: hidden;
 }
 
 /* image alignment */
