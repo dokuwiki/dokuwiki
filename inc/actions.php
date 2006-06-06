@@ -29,68 +29,68 @@ function act_dispatch(){
 
     //sanitize $ACT
     $ACT = act_clean($ACT);
-    
+
     //check if searchword was given - else just show
     $s = cleanID($QUERY);
     if($ACT == 'search' && empty($s)){
       $ACT = 'show';
     }
-  
+
     //login stuff
     if(in_array($ACT,array('login','logout')))
       $ACT = act_auth($ACT);
-  
+
     //check if user is asking to (un)subscribe a page
     if($ACT == 'subscribe' || $ACT == 'unsubscribe')
       $ACT = act_subscription($ACT);
-  
+
     //check permissions
     $ACT = act_permcheck($ACT);
-  
+
     //register
     if($ACT == 'register' && register()){
       $ACT = 'login';
     }
-  
+
     if ($ACT == 'resendpwd' && act_resendpwd()) {
       $ACT = 'login';
     }
-  
+
     //update user profile
     if (($ACT == 'profile') && updateprofile()) {
       msg($lang['profchanged'],1);
       $ACT = 'show';
     }
-  
+
     //save
     if($ACT == 'save')
       $ACT = act_save($ACT);
-  
+
     //draft deletion
     if($ACT == 'draftdel')
       $ACT = act_draftdel($ACT);
-  
+
     //draft saving on preview
     if($ACT == 'preview')
       $ACT = act_draftsave($ACT);
-  
+
     //edit
     if(($ACT == 'edit' || $ACT == 'preview') && $INFO['editable']){
       $ACT = act_edit($ACT);
     }else{
       unlock($ID); //try to unlock
     }
-  
+
     //handle export
     if(substr($ACT,0,7) == 'export_')
       $ACT = act_export($ACT);
-  
+
     //display some infos
     if($ACT == 'check'){
       check();
       $ACT = 'show';
     }
-  
+
     //handle admin tasks
     if($ACT == 'admin'){
       // retrieve admin plugin name from $_REQUEST['page']
@@ -103,9 +103,13 @@ function act_dispatch(){
           }
       }
     }
+
+    // check permissions again - the action may have changed
+    $ACT = act_permcheck($ACT);
   }  // end event ACTION_ACT_PREPROCESS default action
   $evt->advise_after();
   unset($evt);
+
 
   //call template FIXME: all needed vars available?
   $headers[] = 'Content-Type: text/html; charset=utf-8';
