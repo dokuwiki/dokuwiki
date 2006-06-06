@@ -29,6 +29,8 @@ class Doku_Handler {
 
     function _finalize(){
 
+		    $this->CallWriter->finalise();
+
         if ( $this->status['section'] ) {
            $last_call = end($this->calls);
            array_push($this->calls,array('section_close',array(), $last_call[2]));
@@ -661,6 +663,11 @@ class Doku_Handler_CallWriter {
     function writeCalls($calls) {
         $this->Handler->calls = array_merge($this->Handler->calls, $calls);
     }
+
+    // function is required, but since this call writer is first/highest in
+    // the chain it is not required to do anything
+    function finalise() {
+    }
 }
 
 //------------------------------------------------------------------------
@@ -683,11 +690,20 @@ class Doku_Handler_List {
     // Probably not needed but just in case...
     function writeCalls($calls) {
         $this->calls = array_merge($this->calls, $calls);
-        $this->CallWriter->writeCalls($this->calls);
+#        $this->CallWriter->writeCalls($this->calls);
+    }
+
+    function finalise() {
+        $last_call = end($this->calls);
+        $this->writeCall(array('list_close',array(), $last_call[2]));
+
+        $this->process();
+        $this->CallWriter->finalise();
     }
 
     //------------------------------------------------------------------------
     function process() {
+
         foreach ( $this->calls as $call ) {
             switch ($call[0]) {
                 case 'list_item':
@@ -869,7 +885,15 @@ class Doku_Handler_Preformatted {
     // Probably not needed but just in case...
     function writeCalls($calls) {
         $this->calls = array_merge($this->calls, $calls);
-        $this->CallWriter->writeCalls($this->calls);
+#        $this->CallWriter->writeCalls($this->calls);
+    }
+
+    function finalise() {
+        $last_call = end($this->calls);
+        $this->writeCall(array('preformatted_end',array(), $last_call[2]));
+
+        $this->process();
+        $this->CallWriter->finalise();
     }
 
     function process() {
@@ -890,6 +914,7 @@ class Doku_Handler_Preformatted {
             }
         }
     }
+
 }
 
 //------------------------------------------------------------------------
@@ -912,7 +937,15 @@ class Doku_Handler_Quote {
     // Probably not needed but just in case...
     function writeCalls($calls) {
         $this->calls = array_merge($this->calls, $calls);
-        $this->CallWriter->writeCalls($this->calls);
+#        $this->CallWriter->writeCalls($this->calls);
+    }
+
+    function finalise() {
+        $last_call = end($this->calls);
+        $this->writeCall(array('quote_end',array(), $last_call[2]));
+
+        $this->process();
+        $this->CallWriter->finalise();
     }
 
     function process() {
@@ -1000,7 +1033,15 @@ class Doku_Handler_Table {
     // Probably not needed but just in case...
     function writeCalls($calls) {
         $this->calls = array_merge($this->calls, $calls);
-        $this->CallWriter->writeCalls($this->calls);
+#        $this->CallWriter->writeCalls($this->calls);
+    }
+
+    function finalise() {
+        $last_call = end($this->calls);
+        $this->writeCall(array('table_end',array(), $last_call[2]));
+
+        $this->process();
+        $this->CallWriter->finalise();
     }
 
     //------------------------------------------------------------------------
