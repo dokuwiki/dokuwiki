@@ -813,21 +813,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '<ul class="rss">';
         if($rc){
             for ($x = $start; $x != $end; $x += $mod) {
+                $item = $feed->get_item($x);
                 $this->doc .= '<li><div class="li">';
-                $this->externallink($feed->get_item_permalink($x),
-                                    $feed->get_item_title($x));
+                $this->externallink($item->get_permalink(),
+                                    $item->get_title());
                 if($params['author']){
-                    $this->doc .= ' '.$lang['by'].' '.$feed->get_item_author($x);
+                    $author = $item->get_author(0);
+                    if($author){
+                        $name = $author->get_name();
+                        if(!$name) $name = $author->get_email();
+                        if($name) $this->doc .= ' '.$lang['by'].' '.$name;
+                    }
                 }
                 if($params['date']){
-                    $this->doc .= ' ('.$feed->get_item_date($x,$conf['dformat']).')';
+                    $this->doc .= ' ('.$item->get_date($conf['dformat']).')';
                 }
-                if($params['date']){
+                if($params['details']){
                     $this->doc .= '<div class="detail">';
                     if($htmlok){
-                        $this->doc .= $feed->get_item_description($x);
+                        $this->doc .= $item->get_description();
                     }else{
-                        $this->doc .= strip_tags($feed->get_item_description($x));
+                        $this->doc .= strip_tags($item->get_description());
                     }
                     $this->doc .= '</div>';
                 }
