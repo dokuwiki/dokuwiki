@@ -18,7 +18,7 @@
 }
 
 #media__right {
-    width: 69.8%;
+    width: 69.7%;
 
     height: 100%;
     overflow: auto;
@@ -49,6 +49,10 @@
     list-style-type: none;
     list-style-image: none;
 }
+* html #media__tree li {
+    border: 1px solid __white__;
+}/* I don't understand this, but this fixes a style bug in IE;
+it's dirty, so any "real" fixes are welcome */
 
 /* --- options --- */
 
@@ -61,11 +65,17 @@
     float: left;
     position: absolute;
 }
+* html #media__opts input {
+    position: static;
+}
 
 #media__opts label {
     display: block;
     float: left;
     margin-left: 30px;
+}
+* html #media__opts label {
+    margin-left: 10px;
 }
 
 #media__opts br {
