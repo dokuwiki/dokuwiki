@@ -33,6 +33,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   function document_start(){
     //reset some variables
+    $this->meta['title'] = '';
     $this->meta['description']['abstract'] = '';
     $this->meta['description']['tableofcontents'] = array();
     $this->meta['relation']['haspart'] = array();
