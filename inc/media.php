@@ -504,10 +504,12 @@ function media_nstree_li($item){
     if($item['open']){
         $class .= ' open';
         $img   = DOKU_BASE.'lib/images/minus.gif';
+        $alt   = '&minus;';
     }else{
         $class .= ' closed';
         $img   = DOKU_BASE.'lib/images/plus.gif';
+        $alt   = '+';
     }
     return '<li class="'.$class.'">'.
-           '<img src="'.$img.'" alt="*" />';
+           '<img src="'.$img.'" alt="'.$alt.'" />';
 }
