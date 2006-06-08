@@ -37,6 +37,9 @@ $lang['btn_unsubscribe'] = 'Neodebírat změny mailem';
 $lang['btn_profile']    = 'Upravit profil';
 $lang['btn_reset'] = 'Reset';
 $lang['btn_resendpwd'] = 'Zaslat nové heslo';
+$lang['btn_draft']    = 'Upravit koncept';
+$lang['btn_recover']  = 'Obnovit koncept';
+$lang['btn_draftdel'] = 'Vymazat koncept';
 
 $lang['loggedinas'] = 'Přihlášen(a) jako';
 $lang['user']       = 'Uživatelské jméno';
@@ -50,7 +53,9 @@ $lang['email']      = 'E-Mail';
 $lang['register']   = 'Registrovat';
 $lang['profile']    = 'Uživatelský profil';
 $lang['badlogin']   = 'Zadané uživatelské jméno a heslo není správně.';
-$lanf['minoredit']  = 'Drobné změny';
+$lang['minoredit']  = 'Drobné změny';
+$lang['draftdate']  = 'Koncept automaticky uložen v'; // full dformat date will be added
+
 
 $lang['regmissing'] = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists'] = 'Uživatel se stejným jménem už je zaregistrován.';
@@ -96,6 +101,15 @@ $lang['deletefail']  = 'Soubor "%s" nelze vymazat - zkontrolujte oprávnění.';
 $lang['mediainuse']  = 'Soubor "%s" nebyl vymazán - používá se.';
 $lang['namespaces']  = 'Jmenné prostory';
 $lang['mediafiles']  = 'Dostupné soubory';
+
+$lang['js']['keepopen']    = 'Po vybrání souboru nechat okno otevřené';
+$lang['js']['hidedetails'] = 'Skrýt detaily';
+$lang['mediausage']  = 'K odkázání se na tento soubor použijte následující syntax:';
+$lang['mediaview']   = 'Zobrazit původní soubor';
+$lang['mediaroot']   = 'root';
+$lang['mediaupload'] = 'Přiložit soubor do aktuálního jmenného prostoru. K vytvoření nových jmenných prostorů, přidejte jejich názvy na začátek wiki jména (oddělte dvojtečkou).';
+$lang['mediaextchange'] = 'Přípona souboru byla změněna z .%s na .%s!';
+
 
 $lang['reference']   = 'Odkazy na';
 $lang['ref_inuse']   = 'Soubor nelze vymazat, jelikož ho využívají následující stránky:';
@@ -174,7 +188,7 @@ $lang['subscribe_noaddress']= 'K vašemu uživatelskému profilu chybí e-mailov
 $lang['unsubscribe_success']= 'Uživatel %s byl odebrán ze seznamu pro odběr změn ve stránce %s';
 $lang['unsubscribe_error']  = 'Chyba při odstraňování uživatele %s ze seznamu pro odběru změn ve stránce %s';
 
-$lang['authmodfailed']   = 'Autentikace uživatelů je špatně nastavena. Informujte správce této wiki.';
-$lang['authtempfail']    = 'Autentikace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte správce této wiki.';
+$lang['authmodfailed']   = 'Autentizace uživatelů je špatně nastavena. Informujte správce této wiki.';
+$lang['authtempfail']    = 'Autentizace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte správce této wiki.';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
