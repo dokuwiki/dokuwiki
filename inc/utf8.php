@@ -386,7 +386,7 @@ function utf8_strpos($haystack, $needle,$offset=0) {
   if(UTF8_MBSTRING) return mb_strpos($haystack,$needle,$offset,'utf-8');
 
   if(!$offset){
-    $ar = utf8_explode($needle, $str);
+    $ar = utf8_explode($needle, $haystack);
     if ( count($ar) > 1 ) {
        return utf8_strlen($ar[0]);
     }
@@ -397,9 +397,9 @@ function utf8_strpos($haystack, $needle,$offset=0) {
       return false;
     }
 
-    $str = utf8_substr($str, $offset);
+    $haystack = utf8_substr($haystack, $offset);
 
-    if ( false !== ($pos = utf8_strpos($str,$needle))){
+    if ( false !== ($pos = utf8_strpos($haystack,$needle))){
        return $pos + $offset;
     }
     return false;
