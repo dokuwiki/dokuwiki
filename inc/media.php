@@ -220,8 +220,10 @@ function media_upload($ns,$auth){
         // prepare directory
         io_makeFileDir($fn);
         if(move_uploaded_file($file['tmp_name'], $fn)) {
-            // set the correct permission here
-            if($conf['fperm']) chmod($fn, $conf['fperm']);
+            // Set the correct permission here.
+            // Always chmod media because they may be saved with different permissions than expected from the php umask.
+            // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
+            chmod($fn, $conf['fmode']);
             msg($lang['uploadsucc'],1);
             return $id;
         }else{
