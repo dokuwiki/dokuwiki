@@ -30,20 +30,31 @@ $lang['btn_admin']  = '管理選單';
 $lang['btn_update'] = '更新設定';
 $lang['btn_delete'] = '刪除';
 $lang['btn_back']   = '回上一步';
+$lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = '重新選擇圖檔';
 $lang['btn_subscribe']   = '訂閱更動通知';
 $lang['btn_unsubscribe'] = '退訂更動通知';
+$lang['btn_profile']     = '更新個人資料';
+$lang['btn_reset']       = '資料重設';
+$lang['btn_resendpwd']   = '寄新密碼';
+$lang['btn_draft']    = '編輯草稿';
+$lang['btn_recover']  = '復原草稿';
+$lang['btn_draftdel'] = '捨棄草稿';
 
 $lang['loggedinas'] = '登入為';
 $lang['user']       = '帳號';
 $lang['pass']       = '密碼';
+$lang['newpass']    = '新的密碼';
+$lang['oldpass']    = '再次打新的密碼';
 $lang['passchk']    = '再次確認密碼';
 $lang['remember']   = '記住帳號密碼';
 $lang['fullname']   = '暱稱';
 $lang['email']      = 'E-Mail';
 $lang['register']   = '註冊';
+$lang['profile']    = '使用者個人資料';
 $lang['badlogin']   = '很抱歉，您的使用者名稱或密碼可能有錯誤';
 $lang['minoredit']  = '次要性的修改';
+$lang['draftdate']  = '草稿自動存檔於'; // full dformat date will be added
 
 $lang['regmissing'] = '很抱歉，所有的欄位都要填哦';
 $lang['reguexists'] = '很抱歉，已有人註冊該帳號了喔';
@@ -54,6 +65,11 @@ $lang['regbadmail'] = '您輸入的 email 似乎不對，如果您認為是正�
 $lang['regbadpass'] = '兩次打的密碼不一致，請再重試，謝謝。';
 $lang['regpwmail']  = '您的 DokuWiki 帳號密碼';
 $lang['reghere']    = '您還沒有帳號對吧？來註冊一個吧。';
+
+$lang['profna']       = '本 wiki 不開放修改個人資料';
+$lang['profnochange'] = '未做任何變更';
+$lang['profnoempty']  = '帳號或 email 地址不可以沒有寫喔！';
+$lang['profchanged']  = '個人資料已成功更新囉。';
 
 $lang['txt_upload']   = '請選擇要上傳的檔案';
 $lang['txt_filename'] = '請輸入要存在 wiki 內的檔名 (optional)';
