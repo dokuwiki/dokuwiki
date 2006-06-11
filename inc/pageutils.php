@@ -229,7 +229,7 @@ function localeFN($id){
  *
  * @author <bart at mediawave dot nl>
  */
-function resolve_id($ns,$id){
+function resolve_id($ns,$id,$clean=true){
   // if the id starts with a dot we need to handle the
   // relative stuff
   if($id{0} == '.'){
@@ -260,7 +260,8 @@ function resolve_id($ns,$id){
     $id = $ns.':'.$id;
   }
 
-  return cleanID($id);
+  if($clean) $id = cleanID($id);
+  return $id;
 }
 
 /**
@@ -285,27 +286,52 @@ function resolve_pageid($ns,&$page,&$exists){
 
   //keep hashlink if exists then clean both parts
   list($page,$hash) = split('#',$page,2);
-  $page = resolve_id($ns,$page);
   $hash = cleanID($hash);
+  $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
 
+  // get filename (calls clean itself)
   $file = wikiFN($page);
 
-  //check alternative plural/nonplural form
-  if(!@file_exists($file)){
-    if( $conf['autoplural'] ){
-      if(substr($page,-1) == 's'){
-        $try = substr($page,0,-1);
-      }else{
-        $try = $page.'s';
-      }
-      if(@file_exists(wikiFN($try))){
-        $page   = $try;
-        $exists = true;
-      }
+  // if ends with colon we have a namespace link
+  if(substr($page,-1) == ':'){
+    if(@file_exists(wikiFN($page.$conf['start']))){
+      // start page inside namespace
+      $page = $page.$conf['start'];
+      $exists = true;
+    }elseif(@file_exists(wikiFN($page.noNS(cleanID($page))))){
+      // page named like the NS inside the NS
+      $page = $page.noNS(cleanID($page));
+      $exists = true;
+    }elseif(@file_exists(wikiFN($page))){
+      // page like namespace exists
+      $page = $page;
+      $exists = true;
+    }else{
+      // fall back to default
+      $page = $page.$conf['start'];
+      $exists = false;
     }
   }else{
-    $exists = true;
+    //check alternative plural/nonplural form
+    if(!@file_exists($file)){
+      if( $conf['autoplural'] ){
+        if(substr($page,-1) == 's'){
+          $try = substr($page,0,-1);
+        }else{
+          $try = $page.'s';
+        }
+        if(@file_exists(wikiFN($try))){
+          $page   = $try;
+          $exists = true;
+        }
+      }
+    }else{
+      $exists = true;
+    }
   }
+
+  // now make sure we have a clean page
+  $page = cleanID($page);
 
   //add hash if any
   if(!empty($hash)) $page .= '#'.$hash;
