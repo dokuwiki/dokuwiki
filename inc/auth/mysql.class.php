@@ -339,7 +339,7 @@ class auth_mysql extends auth_basic {
       if($this->_openDB()) {
         $this->_lockTables("READ");
         $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
-        $sql .= " ".$this->cnf['SortOrder']." LIMIT $limit OFFSET $first";
+        $sql .= " ".$this->cnf['SortOrder']." LIMIT $first, $limit";
         $result = $this->_queryDB($sql);
 
         foreach ($result as $user)
