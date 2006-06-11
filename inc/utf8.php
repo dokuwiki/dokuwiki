@@ -734,7 +734,8 @@ if(!UTF8_MBSTRING){
    *
    * @author Andreas Gohr <andi@splitbrain.org>
    */
-  static $UTF8_LOWER_TO_UPPER = array(
+  global $UTF8_LOWER_TO_UPPER;
+  $UTF8_LOWER_TO_UPPER = array(
     0x0061=>0x0041, 0x03C6=>0x03A6, 0x0163=>0x0162, 0x00E5=>0x00C5, 0x0062=>0x0042,
     0x013A=>0x0139, 0x00E1=>0x00C1, 0x0142=>0x0141, 0x03CD=>0x038E, 0x0101=>0x0100,
     0x0491=>0x0490, 0x03B4=>0x0394, 0x015B=>0x015A, 0x0064=>0x0044, 0x03B3=>0x0393,
@@ -788,6 +789,7 @@ if(!UTF8_MBSTRING){
    *
    * @author Andreas Gohr <andi@splitbrain.org>
    */
+  global $UTF8_UPPER_TO_LOWER;
   $UTF8_UPPER_TO_LOWER = @array_flip($UTF8_LOWER_TO_UPPER);
 
 } // end of case lookup tables
@@ -802,6 +804,7 @@ if(!UTF8_MBSTRING){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    utf8_deaccent()
  */
+global $UTF8_LOWER_ACCENTS;
 $UTF8_LOWER_ACCENTS = array(
   'à' => 'a', 'ô' => 'o', 'ď' => 'd', 'ḟ' => 'f', 'ë' => 'e', 'š' => 's', 'ơ' => 'o',
   'ß' => 'ss', 'ă' => 'a', 'ř' => 'r', 'ț' => 't', 'ň' => 'n', 'ā' => 'a', 'ķ' => 'k',
@@ -829,6 +832,7 @@ $UTF8_LOWER_ACCENTS = array(
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    utf8_deaccent()
  */
+global $UTF8_UPPER_ACCENTS;
 $UTF8_UPPER_ACCENTS = array(
   'À' => 'A', 'Ô' => 'O', 'Ď' => 'D', 'Ḟ' => 'F', 'Ë' => 'E', 'Š' => 'S', 'Ơ' => 'O',
   'Ă' => 'A', 'Ř' => 'R', 'Ț' => 'T', 'Ň' => 'N', 'Ā' => 'A', 'Ķ' => 'K',
@@ -861,6 +865,7 @@ $UTF8_UPPER_ACCENTS = array(
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    utf8_stripspecials()
  */
+global $UTF8_SPECIAL_CHARS;
 $UTF8_SPECIAL_CHARS = array(
   0x001a, 0x001b, 0x001c, 0x001d, 0x001e, 0x001f, 0x0020, 0x0021, 0x0022, 0x0023,
   0x0024, 0x0025, 0x0026, 0x0027, 0x0028, 0x0029,         0x002b, 0x002c,
@@ -933,6 +938,7 @@ $UTF8_SPECIAL_CHARS = array(
  * @link   http://en.wikipedia.org/wiki/Royal_Thai_General_System_of_Transcription
  * @link   http://www.btranslations.com/resources/romanization/korean.asp
  */
+global $UTF8_ROMANIZATION;
 $UTF8_ROMANIZATION = array(
   //russian cyrillic
   'а'=>'a','А'=>'A','б'=>'b','Б'=>'B','в'=>'v','В'=>'V','г'=>'g','Г'=>'G',
