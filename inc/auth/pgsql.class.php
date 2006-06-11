@@ -129,7 +129,35 @@ class auth_pgsql extends auth_mysql {
       return $rc;
     }
 
-    // @inherit function retrieveUsers($first=0,$limit=10,$filter=array())
+    /**
+     * Bulk retrieval of user data. [public function]
+     *
+     * @param   first     index of first user to be returned
+     * @param   limit     max number of users to be returned
+     * @param   filter    array of field/pattern pairs
+     * @return  array of userinfo (refer getUserData for internal userinfo details)
+     *
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     */
+    function retrieveUsers($first=0,$limit=10,$filter=array()) {
+      $out   = array();
+
+      if($this->_openDB()) {
+        $this->_lockTables("READ");
+        $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
+        $sql .= " ".$this->cnf['SortOrder']." LIMIT $limit OFFSET $first";
+        $result = $this->_queryDB($sql);
+
+        foreach ($result as $user)
+          if (($info = $this->_getUserInfo($user['user'])))
+            $out[$user['user']] = $info;
+
+        $this->_unlockTables();
+        $this->_closeDB();
+      }
+      return $out;
+    }
+
     // @inherit function joinGroup($user, $group)
     // @inherit function leaveGroup($user, $group) {
 
