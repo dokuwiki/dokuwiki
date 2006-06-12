@@ -71,6 +71,13 @@ $lang['profnochange'] = '未做任何變更';
 $lang['profnoempty']  = '帳號或 email 地址不可以沒有寫喔！';
 $lang['profchanged']  = '個人資料已成功更新囉。';
 
+$lang['pwdforget'] = '忘記密碼嗎？寄新密碼！';
+$lang['resendna']  = '本 wiki 不開放重寄新密碼';
+$lang['resendpwd'] = '寄新密碼給';
+$lang['resendpwdmissing'] = '很抱歉，您必須全填這些資料才可以';
+$lang['resendpwdnouser']  = '很抱歉，資料庫內查無此人';
+$lang['resendpwdsuccess'] = '新密碼函已經以 email 寄出了。';
+
 $lang['txt_upload']   = '請選擇要上傳的檔案';
 $lang['txt_filename'] = '請輸入要存在 wiki 內的檔名 (optional)';
 $lang['txt_overwrt']  = '是否要覆蓋原有檔案';
@@ -94,6 +101,14 @@ $lang['mediainuse']  = '"%s" 檔因還在使用中，故目前尚無法刪除。
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = '可用的檔案有';
 
+$lang['js']['keepopen']    = 'Keep window open on selection';
+$lang['js']['hidedetails'] = 'Hide Details';
+$lang['mediausage']  = 'Use the following syntax to reference this file:';
+$lang['mediaview']   = '檢視原始檔案';
+$lang['mediaroot']   = 'root';
+$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons.';
+$lang['mediaextchange'] = '檔案類型已由 .%s 變更為 .%s 囉!';
+
 $lang['reference']   = '引用到本頁的，合計有';
 $lang['ref_inuse']   = '這檔還不能刪除，因為還有以下的頁面在使用它：';
 $lang['ref_hidden']  = '有些引用到這個的頁面，您目前還沒有權限可讀取喔。';
@@ -106,6 +121,7 @@ $lang['yours']      = '您的版本';
 $lang['diff']       = '顯示跟目前版本的差異';
 $lang['line']       = '行';
 $lang['breadcrumb'] = '目前的足跡';
+$lang['youarehere'] = '(目前所在位置)';
 $lang['lastmod']    = '上一次變更';
 $lang['by']            = '來自';
 $lang['deleted']    = '移除';
@@ -136,6 +152,8 @@ $lang['qb_ol']      = '項目表(數字)';
 $lang['qb_ul']      = '項目表(符號)';
 $lang['qb_media']   = '加入圖片或檔案';
 $lang['qb_sig']     = '插入簽名';
+$lang['qb_smileys'] = '表情符號';
+$lang['qb_chars']   = '特殊字元';
 
 $lang['del_confirm']= '確定要刪除該管理規則?';
 $lang['admin_register']= '新增使用者中';
@@ -176,5 +194,9 @@ $lang['txt_clickhere'] = '按這就會幫您自動放好了';
 $lang['txt_year']      = '年份';
 $lang['txt_month']     = '月份';
 $lang['arr_daysofweek']= array('日','一','二','三','四','五','六');
+
+/* auth.class language support */
+$lang['authmodfailed']   = '帳號認證的設定不正確，請通知該 Wiki 管理員。';
+$lang['authtempfail']    = '帳號認證目前暫不提供，若本狀況持續發生的話，請通知該 Wiki 管理員。';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
