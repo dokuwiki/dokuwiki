@@ -1122,6 +1122,11 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
     if(empty($bcc)) return;
     $to   = '';
     $text = rawLocale('subscribermail');
+  }elseif($who == 'register'){
+    if(empty($conf['registernotify'])) return;
+    $text = rawLocale('registermail');
+    $to   = $conf['registernotify'];
+    $bcc  = '';
   }else{
     return; //just to be safe
   }
@@ -1137,7 +1142,9 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
 
-  if($rev){
+  if($who == 'register'){
+    $subject = $lang['mail_new_user'].' '.$summary;
+  }elseif($rev){
     $subject = $lang['mail_changed'].' '.$id;
     $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true),$text);
     require_once(DOKU_INC.'inc/DifferenceEngine.php');

@@ -123,6 +123,7 @@ $lang['summary']    = 'Zusammenfassung';
 
 $lang['mail_newpage'] = 'Neue Seite:';
 $lang['mail_changed'] = 'Seite geaendert:';
+$lang['mail_new_user'] = 'Neuer Benutzer:';
 
 $lang['nosmblinks'] = 'Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 

@@ -76,6 +76,7 @@ $conf['purgeonadd']  = 1;                //purge cache when a new file is added 
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['fetchsize']   = 2*1024*1024;      //maximum size (bytes) fetch.php may download from extern
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
+$conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['gzip_output'] = 0;                //use gzip content encodeing for the output xhtml (if allowed by browser)
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect

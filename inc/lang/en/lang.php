@@ -133,6 +133,7 @@ $lang['summary']    = 'Edit summary';
 
 $lang['mail_newpage'] = 'page added:';
 $lang['mail_changed'] = 'page changed:';
+$lang['mail_new_user'] = 'New user:';
 
 $lang['nosmblinks'] = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
 
