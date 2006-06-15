@@ -224,8 +224,9 @@ function calc_cache($cache){
 function get_from_URL($url,$ext,$cache){
   global $conf;
 
-  // if 'nocache' just redirect
-  if ($cache==0) { return false; }
+  // if no cache or fetchsize just redirect
+  if ($cache==0)           return false;
+  if (!$conf['fetchsize']) return false;
 
   $local = getCacheName(strtolower($url),".media.$ext");
   $mtime = @filemtime($local); // 0 if not exists
@@ -234,7 +235,7 @@ function get_from_URL($url,$ext,$cache){
   if( ($mtime == 0) ||                           // cache does not exist
       ($cache != -1 && $mtime < time()-$cache)   // 'recache' and cache has expired
     ){
-      if(io_download($url,$local)){
+      if(io_download($url,$local,false,'',$conf['fetchsize'])){
         return $local;
       }else{
         return false;

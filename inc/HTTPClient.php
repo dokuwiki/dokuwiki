@@ -227,9 +227,17 @@ class HTTPClient {
             $r_headers .= fread($socket,1); #FIXME read full lines here?
         }while(!preg_match('/\r\n\r\n$/',$r_headers));
 
+        // check if expected body size exceeds allowance
+        if($this->max_bodysize && preg_match('/\r\nContent-Length:\s*(\d+)\r\n/i',$r_header,$match)){
+            if($match[1] > $this->max_bodysize){
+                $this->error = 'Reported content length exceeds allowed response size';
+                return false;
+            }
+        }
+
         //read body (with chunked encoding if needed)
         $r_body    = '';
-        if(preg_match('/transfer\-(en)?coding:\s+chunked\r\n/i',$r_header)){
+        if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_header)){
             do {
                 unset($chunk_size);
                 do {

@@ -292,10 +292,10 @@ function io_mkdir_ftp($dir){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
  */
-function io_download($url,$file,$useAttachment=false,$defaultName=''){
+function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2097152){
   global $conf;
   $http = new DokuHTTPClient();
-  $http->max_bodysize = 2*1024*1024; //max. 2MB
+  $http->max_bodysize = $maxSize;
   $http->timeout = 25; //max. 25 sec
 
   $data = $http->get($url);
