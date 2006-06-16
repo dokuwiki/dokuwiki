@@ -163,74 +163,122 @@ class Aspell{
      * @link     http://aspell.sf.net/man-html/Through-A-Pipe.html
      */
     function runAspell($text,&$out,&$err,$specials=null){
-        $this->_prepareArgs();
         if(empty($text)) return true;
-        //prepare file descriptors
-        $descspec = array(
-               0 => array('pipe', 'r'),  // stdin is a pipe that the child will read from
-               1 => array('pipe', 'w'),  // stdout is a pipe that the child will write to
-               2 => array('pipe', 'w')    // stderr is a file to write to
-        );
+        $terse = true;
 
-        $process = proc_open(ASPELL_BIN.' -a'.$this->args, $descspec, $pipes);
-        $terse   = 1;   // terse mode active
-        if ($process) {
-            // write specials if given
-            if(is_array($specials)){
-                foreach($specials as $s){
-                    if ($s == '!') $terse = 0;
-                    fwrite($pipes[0],"$s\n");
+        // prepare arguments
+        $this->_prepareArgs();
+        $command = ASPELL_BIN.' -a'.$this->args;
+        $stdin   = '';
+
+        // prepare specials
+        if(is_array($specials)){
+            foreach($specials as $s){
+                if ($s == '!') $terse = false;
+                $stdin .= "$s\n";
+            }
+        }
+
+        // prepare text
+        $stdin .= "^".str_replace("\n", "\n^",$text);
+
+        // run aspell through the pipe
+        $rc = $this->execPipe($command,$stdin,$out,$err);
+        if(is_null($rc)){
+            $err = "Could not run Aspell '".ASPELL_BIN."'";
+            return false;
+        }
+
+        // Aspell has a bug that can't be autodetected because both versions
+        // might produce the same output but under different conditions. So
+        // we check Aspells version number here to divide broken and working
+        // versions of Aspell.
+        $tmp = array();
+        preg_match('/^\@.*Aspell (\d+)\.(\d+).(\d+)/',$out,$tmp);
+        $this->version = $tmp[1]*100 + $tmp[2]*10 + $tmp[3];
+
+        if ($this->version <= 603)  // version 0.60.3
+            $r = $terse ? "\n*\n\$1" : "\n\$1"; // replacement for broken Aspell
+        else
+            $r = $terse ? "\n*\n" : "\n";    // replacement for good Aspell
+
+        // lines starting with a '?' are no realy misspelled words and some
+        // Aspell versions doesn't produce usable output anyway so we filter
+        // them out here.
+        $out = preg_replace('/\n\? [^\n\&\*]*([\n]?)/',$r, $out);
+
+        if ($err){
+            //something went wrong
+            $err = "Aspell returned an error(".ASPELL_BIN." exitcode: $rc ):\n".$err;
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Runs the given command with the given input on STDIN
+     *
+     * STDOUT and STDERR are written to the given vars, the command's
+     * exit code is returned. If the pip couldn't be opened null is returned
+     *
+     * @author <richard at 2006 dot atterer dot net>
+     * @link http://www.php.net/manual/en/function.proc-open.php#64116
+     */
+    function execPipe($command,$stdin,&$stdout,&$stderr){
+        $descriptorSpec = array(0 => array("pipe", "r"),
+                                1 => array('pipe', 'w'),
+                                2 => array('pipe', 'w'));
+        $process = proc_open($command, $descriptorSpec, $pipes);
+        if(!$process) return null;
+
+        $txOff = 0;
+        $txLen = strlen($stdin);
+        $stdoutDone = FALSE;
+        $stderrDone = FALSE;
+
+        stream_set_blocking($pipes[0], 0); // Make stdin/stdout/stderr non-blocking
+        stream_set_blocking($pipes[1], 0);
+        stream_set_blocking($pipes[2], 0);
+
+        if ($txLen == 0) fclose($pipes[0]);
+        while (TRUE) {
+            $rx = array(); // The program's stdout/stderr
+            if (!$stdoutDone) $rx[] = $pipes[1];
+            if (!$stderrDone) $rx[] = $pipes[2];
+            $tx = array(); // The program's stdin
+            if ($txOff < $txLen) $tx[] = $pipes[0];
+            stream_select($rx, $tx, $ex = NULL, NULL, NULL); // Block til r/w possible
+
+            if (!empty($tx)) {
+                $txRet = fwrite($pipes[0], substr($stdin, $txOff, 8192));
+                if ($txRet !== FALSE) $txOff += $txRet;
+                if ($txOff >= $txLen) fclose($pipes[0]);
+            }
+
+            foreach ($rx as $r) {
+                if ($r == $pipes[1]) {
+                    $stdout .= fread($pipes[1], 8192);
+                    if (feof($pipes[1])) {
+                        fclose($pipes[1]);
+                        $stdoutDone = TRUE;
+                    }
+                } else if ($r == $pipes[2]) {
+                    $stderr .= fread($pipes[2], 8192);
+                    if (feof($pipes[2])) {
+                        fclose($pipes[2]);
+                        $stderrDone = TRUE;
+                    }
                 }
             }
-
-            // prepare text for Aspell and handle it over
-            $string = "^".str_replace("\n", "\n^",$text);
-            fwrite($pipes[0],$string);  // send text to Aspell
-            fclose($pipes[0]);
-
-            // read Aspells response from stdin
-            while (!feof($pipes[1])) {
-                $out .= fread($pipes[1], 8192);
-            }
-            fclose($pipes[1]);
-
-            // Aspell has a bug that can't be autodetected because both versions
-            // might produce the same output but under different conditions. So
-            // we check Aspells version number here to divide broken and working
-            // versions of Aspell.
-            $tmp = array();
-            preg_match('/^\@.*Aspell (\d+)\.(\d+).(\d+)/',$out,$tmp);
-            $this->version = $tmp[1]*100 + $tmp[2]*10 + $tmp[3];
-
-            if ($this->version <= 603)  // version 0.60.3
-                $r = $terse ? "\n*\n\$1" : "\n\$1"; // replacement for broken Aspell
-            else
-                $r = $terse ? "\n*\n" : "\n";    // replacement for good Aspell
-
-            // lines starting with a '?' are no realy misspelled words and some
-            // Aspell versions doesn't produce usable output anyway so we filter
-            // them out here.
-            $out = preg_replace('/\n\? [^\n\&\*]*([\n]?)/',$r, $out);
-
-            // read stderr
-            while (!feof($pipes[2])) {
-                $err .= fread($pipes[2], 8192);
-            }
-            fclose($pipes[2]);
-
-            // close process
-            $rc = proc_close($process);
-            if ($err){
-                //something went wrong
-                $err = "Aspell returned an error(".ASPELL_BIN." exitcode: $rc ):\n".$err;
-                return false;
-            }
-            return true;
+            if (!is_resource($process)) break;
+            if ($txOff >= $txLen && $stdoutDone && $stderrDone) break;
         }
-        //opening failed
-        $err = "Could not run Aspell '".ASPELL_BIN."'";
-        return false;
+        return proc_close($process);
     }
+
+
+
 
     /**
      * Checks a single word for correctness

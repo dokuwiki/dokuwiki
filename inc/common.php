@@ -695,6 +695,21 @@ function dbg($msg,$hidden=false){
 }
 
 /**
+ * Print info to a log file
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function dbglog($msg){
+  global $conf;
+  $file = $conf['cachedir'].'/debug.log';
+  $fh = fopen($file,'a');
+  if($fh){
+    fwrite($fh,date('H:i:s ').$_SERVER['REMOTE_ADDR'].': '.$msg."\n");
+    fclose($fh);
+  }
+}
+
+/**
  * Add's an entry to the changelog
  *
  * @author Andreas Gohr <andi@splitbrain.org>
