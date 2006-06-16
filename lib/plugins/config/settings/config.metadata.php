@@ -108,6 +108,7 @@ $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','sha
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['profileconfirm'] = array('onoff');
+$meta['registernotify'] = array('email');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');
@@ -137,6 +138,7 @@ $meta['_media']      = array('fieldset');
 $meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
 $meta['im_convert']  = array('im_convert');
 $meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
+$meta['fetchsize']   = array('numeric');
 
 $meta['_advanced']   = array('fieldset');
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
