@@ -143,11 +143,11 @@ function js_out(){
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
 
-    // initialize init pseudo event
+/*    // initialize init pseudo event
     echo 'if (document.addEventListener) {'.NL;
     echo '    document.addEventListener("DOMContentLoaded", window.fireoninit, null);'.NL;
     echo '}'.NL;
-    echo 'addEvent(window,"load",window.fireoninit);'.NL;
+    echo 'addEvent(window,"load",window.fireoninit);'.NL;*/
 
     // end output buffering and get contents
     $js = ob_get_contents();
@@ -245,8 +245,8 @@ function js_compress($s){
     while($i < $len){
         $ch = $s{$i};
 
-        // multiline comments
-        if($ch == '/' && $s{$i+1} == '*'){
+        // multiline comments (keeping IE conditionals)
+        if($ch == '/' && $s{$i+1} == '*' && $s{$i+2} != '@'){
             $endC = strpos($s,'*/',$i+2);
             if($endC === false) trigger_error('Found invalid /*..*/ comment', E_USER_ERROR);
             $i = $endC + 2;

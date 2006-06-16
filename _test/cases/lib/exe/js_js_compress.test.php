@@ -19,6 +19,11 @@ class js_js_compress_test extends UnitTestCase {
         $this->assertEqual(js_compress($text), 'var foo=6;');
     }
 
+    function test_mlcomcond(){
+        $text = '/*@if (@_win32)';
+        $this->assertEqual(js_compress($text), '/*@if(@_win32)');
+    }
+
     function test_slcom1(){
         $text = '// an comment';
         $this->assertEqual(js_compress($text), '');
