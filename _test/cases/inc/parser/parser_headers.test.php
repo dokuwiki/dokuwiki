@@ -78,14 +78,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',4,6)),
             array('section_open',array(4)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,4,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -99,14 +97,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',5,6)),
             array('section_open',array(5)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,5,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -218,14 +214,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('====== Header ======',5,6)),
             array('section_open',array(5)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,5,'====== Header ======')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
