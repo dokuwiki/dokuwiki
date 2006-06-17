@@ -944,14 +944,21 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function _simpleTitle($name){
         global $conf;
 
+        //if there is a hash we use the ancor name only
+        list($name,$hash) = explode('#',$name,2);
+        if($hash) return $hash;
+
+        //trim colons of a namespace link
+        $name = rtrim($name,':');
+
         if($conf['useslash']){
             $nssep = '[:;/]';
         }else{
             $nssep = '[:;]';
         }
         $name = preg_replace('!.*'.$nssep.'!','',$name);
-        //if there is a hash we use the ancor name only
-        $name = preg_replace('!.*#!','',$name);
+
+        if(!$name) return $this->_simpleTitle($conf['start']);
         return $name;
     }
 
