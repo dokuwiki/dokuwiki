@@ -1,0 +1,30 @@
+<?php
+// use no mbstring help here
+if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
+require_once DOKU_INC.'inc/utf8.php';
+
+class utf8_substr_test extends UnitTestCase {
+
+
+    function test1(){
+        // we test multiple cases here - format: in, offset, length, out
+        $tests   = array();
+        $tests[] = array('asciistring',2,null,'ciistring');
+        $tests[] = array('asciistring',2,4,'ciis');
+        $tests[] = array('asciistring',-4,null,'ring');
+        $tests[] = array('asciistring',2,-4,'ciist');
+        $tests[] = array('asciistring',-6,-2,'stri');
+
+        $tests[] = array('живπά우리をあöä',2,null,'вπά우리をあöä');
+        $tests[] = array('живπά우리をあöä',2,4,'вπά우');
+        $tests[] = array('живπά우리をあöä',-4,null,'をあöä');
+        $tests[] = array('живπά우리をあöä',2,-4,'вπά우리');
+        $tests[] = array('живπά우리をあöä',-6,-2,'우리をあ');
+
+        foreach($tests as $test){
+            $this->assertEqual(utf8_substr($test[0],$test[1],$test[2]),$test[3]);
+        }
+    }
+
+}
+//Setup VIM: ex: et ts=4 enc=utf-8 :
