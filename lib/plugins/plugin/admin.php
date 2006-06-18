@@ -192,7 +192,7 @@ class ap_manage {
             ptln('<form action="'.wl($ID).'" method="post" class="plugins">');
 //            ptln('  <div class="plugins">');
 						
-						ptln('  <fieldset class="buttons">');
+						ptln('  <fieldset class="hidden">');
             ptln('    <input type="hidden" name="do"     value="admin" />');
             ptln('    <input type="hidden" name="page"   value="plugin" />');
 						ptln('  </fieldset>');
