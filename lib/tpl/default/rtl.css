@@ -37,18 +37,18 @@ div.meta div.user {
   float: right
 }
 
-div.meta div.doc{
+div.meta div.doc {
   text-align: left;
 }
 
 /* ------------------  Design corrections  --------------------------------- */
 
-ul,ol {
+ul, ol {
   margin: 0.5em 1.5em 0.5em 0;
 }
 
 a.urlextern,a.interwiki,a.windows{
-  /* should work but dosn't - so we just disable icons here*/
+  /* should work but doesn't - so we just disable icons here*/
   /*
   background-position: right 1px;
   padding-right: 16px;
@@ -83,8 +83,8 @@ div.level5 {margin-left: 0px; margin-right: 83px;}
 /* TOC control */
 div.toc {
   float: left;
-	margin-left: 0;
-	margin-right: 2em;
+  margin-left: 0;
+  margin-right: 2em;
 }
 
 div.tocheader {

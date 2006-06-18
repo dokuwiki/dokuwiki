@@ -7,56 +7,54 @@
 
 /* -------------- top row --------------- */
 div.dokuwiki .header {
-  padding:3px 0 0 2px;
+  padding: 3px 0 0 2px;
 }
 
 div.dokuwiki .pagename {
-  float:left;
-  font-size:200%;
-  font-weight:bolder;
+  float: left;
+  font-size: 200%;
+  font-weight: bolder;
   color: __medium__;
-  text-align:left;
-  vertical-align:middle;
-  padding: 0;
+  text-align: left;
+  vertical-align: middle;
 }
 
-div.dokuwiki .pagename a:link, div.dokuwiki .pagename a:visited, div.dokuwiki .pagename a:hover, div.dokuwiki .pagename a:active {
-  color: __extern__;
-  text-decoration:none;
+div.dokuwiki .pagename a {
+  color: __extern__ !important;
+  text-decoration: none !important;
 }
 
 div.dokuwiki .logo {
-  float:right;
-  font-size:220%;
-  font-weight:bolder;
-  text-align:right;
-  vertical-align:middle;
+  float: right;
+  font-size: 220%;
+  font-weight: bolder;
+  text-align: right;
+  vertical-align: middle;
 }
 
-div.dokuwiki .logo a:link, div.dokuwiki .logo a:visited, div.dokuwiki .logo a:hover, div.dokuwiki .logo a:active {
-  color: __medium__;
-  text-decoration:none;
-  font-variant:small-caps;
-  letter-spacing:2pt;
+div.dokuwiki .logo a {
+  color: __medium__ !important;
+  text-decoration: none !important;
+  font-variant: small-caps;
+  letter-spacing: 2pt;
 }
 
 /* ---------------  top and bottom bar ---------------- */
 div.dokuwiki .bar {
-  border-top:1px solid __dark__;
-  border-bottom:1px solid __dark__;
+  border-top: 1px solid __dark__;
+  border-bottom: 1px solid __dark__;
   background: __medium__;
   padding: 0.1em 0.15em;
-  margin:0;
   clear: both;
 }
 
 div.dokuwiki .bar-left {
-  float:left;
+  float: left;
 }
 
 div.dokuwiki .bar-right {
-  float:right;
-  text-align:right;
+  float: right;
+  text-align: right;
 }
 
 div.dokuwiki #bar__bottom {
@@ -69,58 +67,13 @@ div.dokuwiki div.meta {
   clear: both;
   margin-top: 1em;
   color: __extern__;
-  font-size:70%;
+  font-size: 70%;
 }
 
 div.dokuwiki div.meta div.user {
-  float:left;
+  float: left;
 }
 
-div.dokuwiki div.meta div.doc{
-  text-align:right;
+div.dokuwiki div.meta div.doc {
+  text-align: right;
 }
-
-/* ---------------  Media Selection  ----------------- */
-
-div.dokuwiki div.uploadform {
-  margin-top: 0.5em;
-  border-top: 1px solid __dark__;
-}
-
-div.dokuwiki .mediaselect-left {
-  float:left;
-  padding: 0.5em;
-  width:30%;
-}
-
-div.dokuwiki .mediaselect-right {
-  float:right;
-  border-left: 1px solid __dark__;
-  padding: 0.5em;
-  width:65%;
-}
-
-div.dokuwiki div.mediaref_head {
-  margin-left:0.5em;
-}
-
-div.dokuwiki div.mediaref .search_result {
-  padding-left:1em;
-}
-
-div.dokuwiki .mediaref_ref {
-  color: __existing__;
-}
-
-div.dokuwiki div.mediaref_hidden {
-  margin-top:1em;
-  text-align:center;
-  font-size:1.2em;
-  color: #BB0000;
-}
-
-div.dokuwiki div.mediaref_footer {
-  margin-top:1em;
-  text-align:center;
-}
-

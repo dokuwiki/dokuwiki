@@ -3,7 +3,12 @@
  * regardless of the used template. Templates can override them of course
  */
 
-div.clearer {clear: both; line-height: 0; height: 0; overflow:hidden;}
+div.clearer {
+  clear: both;
+  line-height: 0;
+  height: 0;
+  overflow:hidden;
+}
 
 div.no {
   display: inline;
@@ -11,34 +16,34 @@ div.no {
   padding: 0;
 }
 
-div.error{
+div.error {
   background: #fcc url(../images/error.png) 0.5em 0px no-repeat;
   color: #000;
   border-bottom: 1px solid #faa;
   font-size: 90%;
-  margin: 0px;
+  margin: 0;
   padding-left: 3em;
-	overflow: hidden;
+  overflow: hidden;
 }
 
-div.info{
+div.info {
   background: #ccf url(../images/info.png) 0.5em 0px no-repeat;
   color: #000;
   border-bottom: 1px solid #aaf;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
-	overflow: hidden;
+  overflow: hidden;
 }
 
-div.success{
+div.success {
   background: #cfc url(../images/success.png) 0.5em 0px no-repeat;
   color: #000;
   border-bottom: 1px solid #afa;
   font-size: 90%;
   margin: 0;
   padding-left: 3em;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 /* image alignment */
