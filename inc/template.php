@@ -253,34 +253,14 @@ function tpl_pagelink($id,$name=NULL){
  * Tries to find out which page is parent.
  * returns false if none is available
  *
- * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_getparent($ID){
+function tpl_getparent($id){
   global $conf;
-
-  if ($ID != $conf['start']) {
-    $idparts = explode(':', $ID);
-    $pn = array_pop($idparts);    // get the page name
-
-    for ($n=0; $n < 2; $n++) {
-      if (count($idparts) == 0) {
-        $ID = $conf['start'];     // go to topmost page
-        break;
-      }else{
-        $ns = array_pop($idparts);     // get the last part of namespace
-        if ($pn != $ns) {                 // are we already home?
-          array_push($idparts, $ns, $ns); // no, then add a page with same name
-          $ID = implode (':', $idparts); // as the namespace and recombine $ID
-          break;
-        }
-      }
-    }
-
-    if (@file_exists(wikiFN($ID))) {
-      return $ID;
-    }
-  }
-  return false;
+  $parent = getNS($id).':';
+  resolve_pageid('',$parent,$exists);
+  if($parent == $id) return false;
+  return $parent;
 }
 
 /**
