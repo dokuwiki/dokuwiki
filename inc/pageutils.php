@@ -309,7 +309,6 @@ function resolve_pageid($ns,&$page,&$exists){
     }else{
       // fall back to default
       $page = $page.$conf['start'];
-      $exists = false;
     }
   }else{
     //check alternative plural/nonplural form

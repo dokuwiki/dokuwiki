@@ -482,9 +482,12 @@ function p_render($mode,$instructions,& $info){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_get_first_heading($id){
+  global $conf;
+  if(!$conf['useheading']) return null;
+
   $meta = p_get_metadata($id);
   if($meta['title']) return $meta['title'];
-  return NULL;
+  return null;
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

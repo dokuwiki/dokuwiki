@@ -558,52 +558,54 @@ function tpl_breadcrumbs(){
  * @link   http://wiki.splitbrain.org/wiki:tipsandtricks:hierarchicalbreadcrumbs
  * @todo   May behave strangely in RTL languages
  */
-function tpl_youarehere(){
+function tpl_youarehere($sep=' &raquo; '){
   global $conf;
   global $ID;
   global $lang;
 
-  //check if enabled
+  // check if enabled
   if(!$conf['youarehere']) return;
 
-  $parts     = explode(':', $ID);
+  $parts = explode(':', $ID);
+  $count = count($parts);
 
-  print $lang['youarehere'].': ';
+  echo $lang['youarehere'].': ';
 
-  //always print the startpage
-  if( $a_part[0] != $conf['start']){
-    if($conf['useheading']){
-      $pageName = p_get_first_heading($conf['start']);
+  // always print the startpage
+  $title = p_get_first_heading($conf['start']);
+  if(!$title) $title = $conf['start'];
+  tpl_link(wl($conf['start']),$title,'title="'.$conf['start'].'"');
+
+  // print intermediate namespace links
+  $part = '';
+  for($i=0; $i<$count - 1; $i++){
+    $part .= $parts[$i].':';
+    $page = $part;
+    resolve_pageid('',$page,$exists);
+    if ($page == $conf['start']) continue; // Skip startpage 
+
+    // output
+    echo $sep;
+    if($exists){
+      $title = p_get_first_heading($page);
+      if(!$title) $title = $parts[$i];
+      tpl_link(wl($page),$title,'title="'.$page.'"');
     }else{
-      $pageName = $conf['start'];
+      tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
     }
-    tpl_link(wl($conf['start']),$pageName,'title="'.$pageName.'"');
   }
 
-  $page = '';
-  foreach ($parts as $part){
-        // Skip startpage if already done
-        if ($part == $conf['start']) continue;
-
-          print ' &raquo; ';
-    $page .= $part;
-
-    if(file_exists(wikiFN($page))){
-      if($conf['useheading']){
-        $pageName = p_get_first_heading($page);
-        $partName = $pageName;
-      }else{
-        $pageName = $page;
-        $partName = $part;
-      }
-      tpl_link(wl($page),$partName,'title="'.$pageName.'"');
-    }else{
-      // Print the link, but mark as not-existing, as for other non-existing links
-      tpl_link(wl($page),$part,'title="'.$page.'" class="wikilink2"');
-      //print $page;
-    }
-
-    $page .= ':';
+  // print current page, skipping start page, skipping for namespace index
+  if($page == $part.$parts[$i]) return;
+  $page = $part.$parts[$i];
+  if($page == $conf['start']) return;
+  echo $sep;
+  if(file_exists(wikiFN($page))){
+    $title = p_get_first_heading($page);
+    if(!$title) $title = $parts[$i];
+    tpl_link(wl($page),$title,'title="'.$page.'"');
+  }else{
+    tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
   }
 }
 
