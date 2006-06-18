@@ -357,14 +357,14 @@ function idx_parseIndexLine(&$page_idx,$line){
  */
 function idx_tokenizer($string,&$stopwords,$wc=false){
     $words = array();
-    if(!$wc) $wc = '\*';
+    $wc = ($wc) ? '' : $wc = '\*';
 
     if(preg_match('/[^0-9A-Za-z]/u', $string)){
         // handle asian chars as single words (may fail on older PHP version)
         $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$string);
         if(!is_null($asia)) $string = $asia; //recover from regexp failure
 
-        $arr = explode(' ', utf8_stripspecials($string,' ','._\-:'.$wc));
+        $arr = explode(' ', utf8_stripspecials($string,' ','\._\-:'.$wc));
         foreach ($arr as $w) {
             if (!is_numeric($w) && strlen($w) < 3) continue;
             $w = utf8_strtolower($w);
