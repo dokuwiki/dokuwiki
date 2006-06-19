@@ -259,7 +259,12 @@ function tpl_getparent($id){
   global $conf;
   $parent = getNS($id).':';
   resolve_pageid('',$parent,$exists);
-  if($parent == $id) return false;
+  if($parent == $id) {
+    $pos = strrpos (getNS($id),':');
+    $parent = substr($parent,0,$pos).':';
+    resolve_pageid('',$parent,$exists);
+    if($parent == $id) return false;
+  }
   return $parent;
 }
 
