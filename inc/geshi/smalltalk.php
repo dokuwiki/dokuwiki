@@ -1,27 +1,25 @@
 <?php
 /*************************************************************************************
- * ini.php
+ * smalltalk.php
  * --------
- * Author: deguix (cevo_deguix@yahoo.com.br)
- * Copyright: (c) 2005 deguix
+ * Author: Bananeweizen (Bananeweizen@gmx.de)
+ * Copyright: (c) 2005 Bananeweizen (www.bananeweizen.de)
  * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.14 $
+ * CVS Revision Version: $Revision: 1.1.2.1 $
  * Date Started: 2005/03/27
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/06/17 07:22:51 $
  *
- * INI language file for GeSHi.
+ * Smalltalk language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/12/28 (1.0.1)
- *   -  Removed unnecessary keyword style index
- *   -  Added support for " strings
- * 2005/04/05 (1.0.0)
+ * 2006-05-24 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2005/03/27)
+ * TODO
  * -------------------------
- *
+ * * recognize nested array symbols correctly
+ * 
  *************************************************************************************
  *
  *     This file is part of GeSHi.
@@ -43,25 +41,28 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'ini',
-	'COMMENT_SINGLE' => array(0 => ';'),
-	'COMMENT_MULTI' => array(),
+	'LANG_NAME' => 'Smalltalk',
+	'COMMENT_SINGLE' => array(),
+	'COMMENT_MULTI' => array('"' => '"'),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"'),
+	'QUOTEMARKS' => array("'"),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
+		1 => array('self','super','true','false','nil')
 		),
 	'SYMBOLS' => array(
-		'[', ']', '='
+		'[', ']', '=' , ':=', '(', ')', '#'
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false
+		GESHI_COMMENTS => false,
+		1 => true
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
+			1 => 'color: #7f007f;'
 			),
 		'COMMENTS' => array(
-			0 => 'color: #666666; font-style: italic;'
+			'MULTI' => 'color: #007f00; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 		    0 => ''
@@ -70,10 +71,10 @@ $language_data = array (
 		    0 => ''
 			),
 		'STRINGS' => array(
-		    0 => 'color: #933;'
+		    0 => 'color: #7f0000;'
 			),
 		'NUMBERS' => array(
-		    0 => ''
+		    0 => 'color: #7f0000;'
 			),
 		'METHODS' => array(
 		    0 => ''
@@ -82,9 +83,13 @@ $language_data = array (
 			0 => 'color: #000066; font-weight:bold;'
 			),
 		'REGEXPS' => array(
-			0 => 'color: #000066; font-weight:bold;',
-			1 => 'color: #000099;',
-			2 => 'color: #660066;'
+			0 => 'color: #0000ff;',
+			1 => 'color: #7f0000;',
+			2 => 'color: #7f0000;',
+			3 => 'color: #00007f;',
+			4 => 'color: #7f007f;',
+			5 => 'color: #00007f;',
+			6 => 'color: #00007f;'
 			),
 		'SCRIPT' => array(
 		    0 => ''
@@ -96,23 +101,54 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
-		0 => '\[.+\]',
+		0 => array(
+			GESHI_SEARCH => '([^a-zA-Z0-9_#])([A-Z]+[a-zA-Z0-9_]*)', //class names
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '\\1',
+			GESHI_AFTER => ''
+			),
 		1 => array(
-			GESHI_SEARCH => '([a-zA-Z0-9_]+\s*)=(.+)',
+			GESHI_SEARCH => '(#+)([a-zA-Z0-9_]+)', //symbols
+			GESHI_REPLACE => '\\1\\2',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+		2 => array(
+			GESHI_SEARCH => '(#\s*\([^)]*\))', //array symbols
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => '',
 			GESHI_BEFORE => '',
-			GESHI_AFTER => '=\\2'
-			),
-		2 => array(
-            // Evil hackery to get around GeSHi bug: <>" and ; are added so <span>s can be matched
-            // Explicit match on variable names because if a comment is before the first < of the span
-            // gets chewed up...
-			GESHI_SEARCH => '([<>";a-zA-Z0-9_]+\s*)=(.+)',
-			GESHI_REPLACE => '\\2',
-			GESHI_MODIFIERS => '',
-			GESHI_BEFORE => '\\1=',
 			GESHI_AFTER => ''
+			),
+		3 => array(
+			GESHI_SEARCH => '\|([a-zA-Z0-9_\s]+)\|', //temporary variables
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '|',
+			GESHI_AFTER => '|'
+			),
+		4 => array(
+			GESHI_SEARCH => '(self|super|true|false|nil)', //keywords again (to avoid matching in next regexp)
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+		5 => array(
+			GESHI_SEARCH => '([:(,=[.*/+-]\s*)([a-zA-Z0-9_]+)', //message parameters, message receivers
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => 's',
+			GESHI_BEFORE => '\\1',
+			GESHI_AFTER => ''
+			),
+		6 => array(
+			GESHI_SEARCH => '([a-zA-Z0-9_]+)(\s*:=)', //assignment targets
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => '',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => '\\2'
 			)
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

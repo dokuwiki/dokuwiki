@@ -4,10 +4,10 @@
  * -----------
  * Author: Florian Knorn (floz@gmx.de)
  * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
- * Release Version: 1.0.7.10
- * CVS Revision Version: $Revision: 1.13 $
+ * Release Version: 1.0.7.11
+ * CVS Revision Version: $Revision: 1.15 $
  * Date Started: 2005/02/09
- * Last Modified: $Date: 2006/05/19 11:40:09 $
+ * Last Modified: $Date: 2006/06/08 22:58:11 $
  *
  * Matlab M-file language file for GeSHi. 
  *
@@ -817,20 +817,20 @@ $language_data = array (
             0 => ''
 			),
 		'BRACKETS' => array(
-            0 => ''
+            0 => 'color: #080;'
 			),
 		'STRINGS' => array(
 			//0 => 'color: #A020F0;'
 			),
 		'NUMBERS' => array(
-            0 => ''
+            0 => 'color: #33f;'
 			),
 		'METHODS' => array(
             1 => '',
             2 => ''
 			),
 		'SYMBOLS' => array(
-            0 => ''
+            0 => 'color: #080;'
 			),
 		'REGEXPS' => array(
             0 => 'color:#A020F0;'
