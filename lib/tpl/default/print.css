@@ -112,18 +112,26 @@ img.mediaright {
 ul {
     line-height: 1.5em;
     list-style-type: square;
-    margin: 0 0 1.0em 1.5em;
+    margin: 0 0 0.5em 1.5em;
     padding: 0;
 
 }
 
 /* ordered lists */
 ol {
-    line-height: 1.0em;
-    margin: 0 0 1.0em 1.0em;
+    line-height: 1.5em;
+    margin: 0 0 0.5em 2.5em;
     padding: 0;
     font-weight: normal;
 }
+ol ol {
+    margin: 0 0 0.5em 1.5em;
+}
+
+div.dokuwiki ol {list-style-type: decimal}
+div.dokuwiki ol ol {list-style-type: upper-roman}
+div.dokuwiki ol ol ol {list-style-type: lower-alpha}
+div.dokuwiki ol ol ol ol {list-style-type: lower-greek}
 
 /* the list items overriding the ol definition */
 span.li {
