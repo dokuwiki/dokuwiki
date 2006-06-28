@@ -33,7 +33,7 @@ function css_out(){
     $print = (bool) $_REQUEST['print'];   //print mode?
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('styles'.$print,'.css');
+    $cache = getCacheName('styles'.$conf['template'].$print,'.css');
 
     // load template styles
     $tplstyles = array();
