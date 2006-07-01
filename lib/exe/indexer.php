@@ -15,14 +15,20 @@ if(!defined('NL')) define('NL',"\n");
 // keep running after browser closes connection
 @ignore_user_abort(true);
 
-// send gif
-sendGIF();
+// check if user abort worked, if yes send output early
+if(@ignore_user_abort()){
+    sendGIF(); // send gif
+    $defer = false;
+}else{
+    $defer = true;
+}
 
 // Catch any possible output (e.g. errors)
 if(!$_REQUEST['debug']) ob_start();
 
 // run one of the jobs
 runIndexer() or metaUpdate() or runSitemapper();
+if($defer) sendGIF();
 
 if(!$_REQUEST['debug']) ob_end_clean();
 exit;
