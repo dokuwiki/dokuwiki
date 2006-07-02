@@ -75,14 +75,14 @@ function html_login(){
       </fieldset>
     </form>
   <?php
-    if($auth->canDo('addUser') && $conf['openregister']){
+    if($auth->canDo('addUser') && actionOK('register')){
       print '<p>';
       print $lang['reghere'];
       print ': <a href="'.wl($ID,'do=register').'" class="wikilink1">'.$lang['register'].'</a>';
       print '</p>';
     }
 
-    if ($auth->canDo('modPass') && $conf['resendpasswd']) {
+    if ($auth->canDo('modPass') && actionOK('resendpwd')) {
       print '<p>';
       print $lang['pwdforget'];
       print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
@@ -97,37 +97,6 @@ function html_login(){
     print io_cacheParse('includes/login.txt');
   }
 */
-}
-
-/**
- * shows the edit/source/show/draft button dependent on current mode
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_editbutton(){
-  global $ID;
-  global $REV;
-  global $ACT;
-  global $INFO;
-
-  if($ACT == 'show' || $ACT == 'search'){
-    if($INFO['writable']){
-      if($INFO['draft']){
-          $r = html_btn('draft',$ID,'e',array('do' => 'draft'),'post');
-      }else{
-        if($INFO['exists']){
-          $r = html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
-        }else{
-          $r = html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
-        }
-      }
-    }else{
-      $r = html_btn('source',$ID,'v',array('do' => 'edit','rev' => $REV),'post');
-    }
-  }else{
-    $r = html_btn('show',$ID,'v',array('do' => 'show'));
-  }
-  return $r;
 }
 
 /**
@@ -1046,6 +1015,11 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     if ($REV) print p_locale_xhtml('editrev');
     print p_locale_xhtml($include);
   }else{
+    // check pseudo action 'source'
+    if(!actionOK('source')){
+      msg('Command disabled: source',-1);
+      return;
+    }
     print p_locale_xhtml('read');
     $ro='readonly="readonly"';
   }
@@ -1057,8 +1031,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
    <div class="toolbar">
       <div id="draft__status"><?php if($INFO['draft']) echo $lang['draftdate'].' '.date($conf['dformat']);?></div>
-      <div id="tool__bar"><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
-      target="_blank"><?php echo $lang['mediaselect'] ?></a></div>
+      <div id="tool__bar"><?php if(!$ro){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+      target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
 
       <?php if($wr){?>
       <script type="text/javascript" charset="utf-8">
@@ -1235,11 +1209,6 @@ function html_admin(){
   foreach ($menu as $item) {
     if (!$item['prompt']) continue;
     ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
-  }
-
-  // add in non-plugin functions
-  if (!$conf['openregister']){
-    ptln('<li><div class="li"><a href="'.wl($ID,'do=register').'">'.$lang['admin_register'].'</a></div></li>');
   }
 
   ptln('</ul>');

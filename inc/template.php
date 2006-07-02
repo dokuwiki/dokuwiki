@@ -296,9 +296,29 @@ function tpl_button($type){
   global $conf;
   global $auth;
 
+  if(!actionOK($type)) return;
+
   switch($type){
     case 'edit':
-      print html_editbutton();
+      #most complicated type - we need to decide on current action
+      if($ACT == 'show' || $ACT == 'search'){
+        if($INFO['writable']){
+          if($INFO['draft']){
+            echo html_btn('draft',$ID,'e',array('do' => 'draft'),'post');
+          }else{
+            if($INFO['exists']){
+              echo html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+            }else{
+              echo html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+            }
+          }
+        }else{
+          if(!actionOK('source')) return false; //pseudo action
+          echo html_btn('source',$ID,'v',array('do' => 'edit','rev' => $REV),'post');
+        }
+      }else{
+          echo html_btn('show',$ID,'v',array('do' => 'show'));
+      }
       break;
     case 'history':
       print html_btn('revs',$ID,'o',array('do' => 'revisions'));
@@ -386,6 +406,8 @@ function tpl_actionlink($type,$pre='',$suf=''){
   global $lang;
   global $auth;
 
+  if(!actionOK($type)) return;
+
   switch($type){
     case 'edit':
       #most complicated type - we need to decide on current action
@@ -401,6 +423,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
                      'class="action create" accesskey="e" rel="nofollow"');
           }
         }else{
+          if(!actionOK('source')) return false; //pseudo action
           tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                    $pre.$lang['btn_source'].$suf,
                    'class="action source" accesskey="v" rel="nofollow"');

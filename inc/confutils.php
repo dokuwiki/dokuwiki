@@ -163,5 +163,27 @@ function confToHash($file,$lower=false) {
   return $conf;
 }
 
+/**
+ * check if the given action was disabled in config
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @returns boolean true if enabled, false if disabled
+ */
+function actionOK($action){
+  static $disabled = null;
+  if(is_null($disabled)){
+    global $conf;
+
+    // prepare disabled actions array and handle legacy options
+    $disabled = explode(',',$conf['disableactions']);
+    $disabled = array_map('trim',$disabled);
+    if(isset($conf['openregister']) && !$conf['openregister']) $disabled[] = 'register';
+    if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) $disabled[] = 'resendpwd';
+    $disabled = array_unique($disabled);
+  }
+
+  return !in_array($action,$disabled);
+}
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

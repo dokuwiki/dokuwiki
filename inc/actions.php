@@ -155,6 +155,12 @@ function act_clean($act){
   if($act == 'export_html') $act = 'export_xhtml';
   if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
+  // check if action is disabled
+  if(!actionOK($act)){
+    msg('Command disabled: '.htmlspecialchars($act),-1);
+    return 'show';
+  }
+
   //disable all acl related commands if ACL is disabled
   if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
                                              'subscribe','unsubscribe','profile',
@@ -198,17 +204,9 @@ function act_permcheck($act){
   }elseif(in_array($act,array('login','search','recent','profile'))){
     $permneed = AUTH_NONE;
   }elseif($act == 'register'){
-    if ($conf['openregister']){
-      $permneed = AUTH_NONE;
-    }else{
-      $permneed = AUTH_ADMIN;
-    }
+    $permneed = AUTH_NONE;
   }elseif($act == 'resendpwd'){
-    if ($conf['resendpasswd']) {
-      $permneed = AUTH_NONE;
-    }else{
-      $permneed = AUTH_ADMIN+1; // shouldn't get here if $conf['resendpasswd'] is off
-    }
+    $permneed = AUTH_NONE;
   }elseif($act == 'admin'){
     $permneed = AUTH_ADMIN;
   }else{
