@@ -422,7 +422,7 @@ function html_locked(){
   global $lang;
   global $INFO;
 
-  $locktime = filemtime(wikiFN($ID).'.lock');
+  $locktime = filemtime(wikiLockFN($ID));
   $expire = @date($conf['dformat'], $locktime + $conf['locktime'] );
   $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
 

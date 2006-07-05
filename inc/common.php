@@ -523,7 +523,7 @@ function clientIP($single=false){
  */
 function checklock($id){
   global $conf;
-  $lock = wikiFN($id).'.lock';
+  $lock = wikiLockFN($id);
 
   //no lockfile
   if(!@file_exists($lock)) return false;
@@ -549,7 +549,7 @@ function checklock($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function lock($id){
-  $lock = wikiFN($id).'.lock';
+  $lock = wikiLockFN($id);
   if($_SERVER['REMOTE_USER']){
     io_saveFile($lock,$_SERVER['REMOTE_USER']);
   }else{
@@ -564,7 +564,7 @@ function lock($id){
  * @return bool true if a lock was removed
  */
 function unlock($id){
-  $lock = wikiFN($id).'.lock';
+  $lock = wikiLockFN($id);
   if(@file_exists($lock)){
     $ip = io_readFile($lock);
     if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){

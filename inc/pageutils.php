@@ -152,6 +152,17 @@ function wikiFN($id,$rev=''){
 }
 
 /**
+ * Returns the full path to the file for locking the page while editing.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function wikiLockFN($id) {
+  global $conf;
+  return $conf['lockdir'].'/'.sha1(cleanID($id)).'.lock';
+}
+
+
+/**
  * returns the full path to the meta file specified by ID and extension
  *
  * The filename is URL encoded to protect Unicode chars

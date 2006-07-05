@@ -158,7 +158,7 @@ function clearLock($WIKI_ID) {
 
     unlock($WIKI_ID);
 
-    if ( file_exists(wikiFN($WIKI_ID).'.lock') ) {
+    if ( file_exists(wikiLockFN($WIKI_ID)) ) {
         fwrite( STDERR, "Unable to clear lock for $WIKI_ID\n" );
         exit(1);
     }
@@ -168,7 +168,7 @@ function clearLock($WIKI_ID) {
 #------------------------------------------------------------------------------
 function deleteLock($WIKI_ID) {
 
-    $wikiLockFN = wikiFN($WIKI_ID).'.lock';
+    $wikiLockFN = wikiLockFN($WIKI_ID);
 
     if ( file_exists($wikiLockFN) ) {
         if ( !unlink($wikiLockFN) ) {
