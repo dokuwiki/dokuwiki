@@ -83,14 +83,17 @@ $lang['mailguard']   = 'Obfuscate email addresses';
 
 /* Authentication Options */
 $lang['useacl']      = 'Use access control lists';
-$lang['openregister']= 'Allow everyone to register';
 $lang['autopasswd']  = 'Autogenerate passwords';
-$lang['resendpasswd']= 'Allow resend password';
 $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';
 $lang['defaultgroup']= 'Default group';
 $lang['superuser']   = 'Superuser';
 $lang['profileconfirm'] = 'Confirm profile changes with password';
+$lang['disableactions'] = 'Disable DokuWiki actions';
+$lang['disableactions_check'] = 'Check';
+$lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
+$lang['disableactions_wikicode'] = 'View source/Export Raw';
+$lang['disableactions_other'] = 'Other actions (comma separated)';
 
 /* Advanced Options */
 $lang['userewrite']  = 'Use nice URLs';

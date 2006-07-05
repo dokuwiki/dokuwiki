@@ -11,8 +11,8 @@
  *   <handler class id>  is the handler class name without the "setting_" prefix
  *
  * Defined classes:
- *   Generic
- *   -------------
+ *   Generic (source: settings/config.class.php)
+ *   -------------------------------------------
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
  *   'numeric'      - text input, accepts numbers and arithmetic operators, setting output without quotes
@@ -22,15 +22,18 @@
  *   'password'     - password input, minimal input validation, setting output plain text in quotes
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
  *                    parameter (required)
+ *   'multicheckbox'- a checkbox for each choice plus an "other" string input, config file setting is a comma
+ *                    separated list of checked choices
  *   'fieldset'     - used to group configuration settings, but is not itself a setting. To make this clear in
  *                    the language files the keys for this type should start with '_'.
  *
- *  Single Setting
- *  --------------
+ *  Single Setting (source: settings/extra.class.php)
+ *  -------------------------------------------------
  *   'savedir'     - as 'setting', input tested against initpath() (inc/init.php)
  *   'sepchar'     - as multichoice, selection constructed from string of valid values
  *   'authtype'    - as 'setting', input validated against a valid php file at expected location for auth files
  *   'im_convert'  - as 'setting', input must exist and be an im_convert module
+ *   'disableactions' - as 'setting'
  *
  *  Any setting commented or missing will use 'setting' class - text input, minimal validation, quoted output
  *
@@ -39,9 +42,11 @@
  *                   optional all classes, except onoff, multichoice & dirchoice which ignore it
  *   '_choices'    - array of choices. used to populate a selection box. choice will be replaced by a localised
  *                   language string, indexed by  <setting name>_o_<choice>, if one exists
- *                   required by 'multichoice' class, ignored by other classes
+ *                   required by 'multichoice' & 'multicheckbox' classes, ignored by others
  *   '_dir'        - location of directory to be used to populate choice list
  *                   required by 'dirchoice' class, ignored by other classes
+ *   '_combine'    - complimentary output setting values which can be combined into a single display checkbox
+ *                   optional for 'multicheckbox', ignored by other classes
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
@@ -100,15 +105,16 @@ $meta['refshow']     = array('numeric');
 
 $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
-$meta['openregister']= array('onoff');
 $meta['autopasswd']  = array('onoff');
-$meta['resendpasswd'] = array('onoff');
 $meta['authtype']    = array('authtype');
 $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','sha1','ssha','crypt','mysql','my411'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['registernotify'] = array('email');
+$meta['disableactions'] = array('disableactions',
+                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
+                                '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');

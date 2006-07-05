@@ -79,3 +79,22 @@ if (!class_exists('setting_im_convert')) {
   }
 }
 
+if (!class_exists('setting_disableactions')) {
+  class setting_disableactions extends setting_multicheckbox {
+
+    function html(&$plugin, $echo=false) {
+        global $lang;
+
+        // make some language adjustments (there must be a better way)
+        // transfer some DokuWiki language strings to the plugin
+        if (!$plugin->localised) $this->setupLocale();
+        $plugin->lang[$this->_key.'_revisions'] = $lang['btn_revs'];
+        $plugin->lang[$this->_key.'_register'] = $lang['register'];
+
+        foreach ($this->_choices as $choice)
+          if (isset($lang['btn_'.$choice])) $plugin->lang[$this->_key.'_'.$choice] = $lang['btn_'.$choice];
+
+        return parent::html($plugin, $echo);
+    }
+  }
+}

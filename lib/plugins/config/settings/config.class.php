@@ -660,6 +660,134 @@ if (!class_exists('setting_no_default')) {
   }
 }
 
+if (!class_exists('setting_multicheckbox')) {
+  class setting_multicheckbox extends setting_string {
+
+    var $_choices = array();
+    var $_combine = array();
+
+    function update($input) {
+        if ($this->is_protected()) return false;
+
+        // split any combined values + convert from array to comma separated string
+        $input = ($input) ? $input : array();        
+        $input = $this->_array2str($input);
+
+        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        if ($value == $input) return false;
+
+        if ($this->_pattern && !preg_match($this->_pattern,$input)) {
+          $this->_error = true;
+          $this->_input = $input;
+          return false;
+        }
+
+        $this->_local = $input;
+        return true;
+    }
+
+    function html(&$plugin, $echo=false) {
+
+        $value = '';
+        $disable = '';
+
+        if ($this->is_protected()) {
+          $value = $this->_protected;
+          $disable = 'disabled="disabled"';
+        } else {
+          if ($echo && $this->_error) {
+            $value = $this->_input;
+          } else {
+            $value = is_null($this->_local) ? $this->_default : $this->_local;
+          }
+        }
+
+        $key = htmlspecialchars($this->_key);
+
+        // convert from comma separated list into array + combine complimentary actions
+        $value = $this->_str2array($value);
+
+        $input = '';
+        foreach ($this->_choices as $choice) {
+          $idx = array_search($choice, $value);
+          $checked = ($idx !== false) ? 'checked="checked"' : '';
+
+          $prompt = ($plugin->getLang($this->_key.'_'.$choice) ?
+                          $plugin->getLang($this->_key.'_'.$choice) : htmlspecialchars($choice));
+
+          $input .= '<div class="selection">'."\n";
+          $input .= '<label for="config__'.$key.'_'.$choice.'">'.$prompt."</label>\n";
+          $input .= '<input id="config__'.$key.'_'.$choice.'" name="config['.$key.'][]" type="checkbox" class="checkbox" value="'.$choice.'" '.$disable.' '.$checked."/>\n";
+          $input .= "</div>\n";
+
+          // remove this action from the disabledactions array
+          if ($idx !== false) unset($value[$idx]);
+        }
+
+        // handle any remaining values
+        $other = join(',',$value);
+
+        $input .= '<div class="other">'."\n";
+        $input .= '<label for="config__'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
+        $input .= '<input id="config__'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+        $input .= "</div>\n";
+
+        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        return array($label,$input);
+    }
+
+    /**
+     * convert comma separated list to an array and combine any complimentary values
+     */
+    function _str2array($str) {
+      $array = explode(',',$str);
+
+      if (!empty($this->_combine)) {
+        foreach ($this->_combine as $key => $combinators) {
+          $idx = array();
+          foreach ($combinators as $val) {
+            if  (($idx[] = array_search($val, $array)) === false) break;
+          }
+
+          if (count($idx) && $idx[count($idx)-1] !== false) {
+            foreach ($idx as $i) unset($array[$i]);
+            $array[] = $key;
+          }
+        }
+      }
+
+      return $array;
+    }
+
+    /**
+     * convert array of values + other back to a comma separated list, incl. splitting any combined values
+     */
+    function _array2str($input) {
+
+      // handle other
+      $other = trim($input['other']);
+      $other = !empty($other) ? explode(',',str_replace(' ','',$input['other'])) : array();
+      unset($input['other']);
+
+      $array = array_unique(array_merge($input, $other));
+
+      // deconstruct any combinations
+      if (!empty($this->_combine)) {
+       foreach ($this->_combine as $key => $combinators) {
+
+          $idx = array_search($key,$array);
+          if ($idx !== false) {
+            unset($array[$idx]);
+            $array = array_merge($array, $combinators);
+          }
+        }
+      }
+
+      return join(',',array_unique($array));
+    }
+  }
+}
+
 
 /**
  *  Provide php_strip_whitespace (php5 function) functionality

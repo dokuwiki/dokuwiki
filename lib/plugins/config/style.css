@@ -66,4 +66,26 @@
     color: __dark__;
 }
 
+#config__manager .selection {
+  width: 14em;
+  float: left;
+  padding: 1px 0.3em 1px 0;
+}
+
+#config__manager .selection label {
+  float: right;
+  width: 14em;
+  font-size: 90%;
+}
+
+#config__manager .selection input.checkbox {
+  padding-left: 0.7em;
+}
+
+#config__manager .other {
+  clear: both;
+  padding-top: 1em;
+  font-size: 90%;
+}
+
 /* end plugin:configmanager */
