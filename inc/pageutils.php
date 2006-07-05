@@ -123,8 +123,13 @@ function getNS($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function noNS($id){
-  return preg_replace('/.*:/','',$id);
+function noNS($id) {
+  $pos = strrpos($id, ':');
+  if ($pos!==false) {
+    return substr($id, $pos+1);
+  } else {
+    return $id;
+  }
 }
 
 /**
