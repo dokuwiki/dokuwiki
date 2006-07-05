@@ -218,7 +218,7 @@ function media_upload($ns,$auth){
             return false;
         }
         // prepare directory
-        io_makeFileDir($fn);
+        io_createNamespace($id, 'media');
         if(move_uploaded_file($file['tmp_name'], $fn)) {
             // Set the correct permission here.
             // Always chmod media because they may be saved with different permissions than expected from the php umask.

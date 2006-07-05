@@ -9,23 +9,71 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/HTTPClient.php');
+  require_once(DOKU_INC.'inc/events.php');
+  require_once(DOKU_INC.'inc/utf8.php');
 
 /**
  * Removes empty directories
  *
+ * Sends IO_NAMESPACE_DELETED events for 'pages' and 'media' namespaces.
+ * Event data:
+ * $data[0]    ns: The colon separated namespace path minus the trailing page name.
+ * $data[1]    ns_type: 'pages' or 'media' namespace tree.
+ *
  * @todo use safemode hack
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function io_sweepNS($id,$basedir='datadir'){
   global $conf;
+  $types = array ('datadir'=>'pages', 'mediadir'=>'media');
+  $ns_type = (isset($types[$basedir])?$types[$basedir]:false);
 
   //scan all namespaces
   while(($id = getNS($id)) !== false){
     $dir = $conf[$basedir].'/'.utf8_encodeFN(str_replace(':','/',$id));
 
     //try to delete dir else return
-    if(!@rmdir($dir)) return;
+    if(@rmdir($dir)) {
+      if ($ns_type!==false) {
+        $data = array($id, $ns_type);
+        trigger_event('IO_NAMESPACE_DELETED', $data);
+      }
+    } else { return; }
   }
+}
+
+/**
+ * Used to read in a DokuWiki page from file, and send IO_WIKIPAGE_READ events.
+ *
+ * Generates the action event which delegates to io_readFile().
+ * Action plugins are allowed to modify the page content in transit.
+ * The file path should not be changed.
+ *
+ * Event data:
+ * $data[0]    The raw arguments for io_readFile as an array.
+ * $data[1]    ns: The colon separated namespace path minus the trailing page name. (false if root ns)
+ * $data[2]    page_name: The wiki page name.
+ * $data[3]    rev: The page revision, false for current wiki pages.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function io_readWikiPage($file, $id, $rev=false) {
+    if (empty($rev)) { $rev = false; }
+    $data = array(array($file, false), getNS($id), noNS($id), $rev);
+    return trigger_event('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
+}
+
+/**
+ * Callback adapter for io_readFile().
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function _io_readWikiPage_action($data) {
+    if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
+        return call_user_func_array('io_readFile', $data[0]);
+    } else {
+        return ''; //callback error
+    }
 }
 
 /**
@@ -52,6 +100,41 @@ function io_readFile($file,$clean=true){
   }else{
     return $ret;
   }
+}
+
+/**
+ * Used to write out a DokuWiki page to file, and send IO_WIKIPAGE_WRITE events.
+ *
+ * This generates an action event and delegates to io_saveFile().
+ * Action plugins are allowed to modify the page content in transit.
+ * The file path should not be changed.
+ * (The append parameter is set to false.)
+ *
+ * Event data:
+ * $data[0]    The raw arguments for io_saveFile as an array.
+ * $data[1]    ns: The colon separated namespace path minus the trailing page name. (false if root ns)
+ * $data[2]    page_name: The wiki page name.
+ * $data[3]    rev: The page revision, false for current wiki pages.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function io_writeWikiPage($file, $content, $id, $rev=false) {
+    if (empty($rev)) { $rev = false; }
+    if ($rev===false) { io_createNamespace($id); } // create namespaces as needed
+    $data = array(array($file, $content, false), getNS($id), noNS($id), $rev);
+    return trigger_event('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
+}
+
+/**
+ * Callback adapter for io_saveFile().
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function _io_writeWikiPage_action($data) {
+    if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
+        return call_user_func_array('io_saveFile', $data[0]);
+    } else {
+        return false; //callback error
+    }
 }
 
 /**
@@ -202,6 +285,45 @@ function io_unlock($file){
   $lockDir = $conf['lockdir'].'/'.md5($file);
   @rmdir($lockDir);
   @ignore_user_abort(0);
+}
+
+/**
+ * Create missing namespace directories and send the IO_NAMESPACE_CREATED events
+ * in the order of directory creation. (Parent directories first.)
+ *
+ * Event data:
+ * $data[0]    ns: The colon separated namespace path minus the trailing page name.
+ * $data[1]    ns_type: 'pages' or 'media' namespace tree.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function io_createNamespace($id, $ns_type='pages') {
+    // verify ns_type
+    $types = array('pages'=>'wikiFN', 'media'=>'mediaFN');
+    if (!isset($types[$ns_type])) {
+        trigger_error('Bad $ns_type parameter for io_createNamespace().');
+        return;
+    }
+    // make event list
+    $missing = array();
+    $ns_stack = explode(':', $id);
+    $ns = $id;
+    $tmp = dirname( $file = call_user_func($types[$ns_type], $ns) );
+    while (!@is_dir($tmp) && !(@file_exists($tmp) && !is_dir($tmp))) {
+        array_pop($ns_stack);
+        $ns = implode(':', $ns_stack);
+        if (strlen($ns)==0) { break; }
+        $missing[] = $ns;
+        $tmp = dirname(call_user_func($types[$ns_type], $ns));
+    }
+    // make directories
+    io_makeFileDir($file);
+    // send the events
+    $missing = array_reverse($missing); // inside out
+    foreach ($missing as $ns) {
+        $data = array($ns, $ns_type);
+        trigger_event('IO_NAMESPACE_CREATED', $data);
+    }
 }
 
 /**

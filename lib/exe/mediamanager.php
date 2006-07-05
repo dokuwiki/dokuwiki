@@ -31,7 +31,7 @@
     $AUTH = auth_quickaclcheck("$NS:*");
 
     // create the given namespace (just for beautification)
-    if($AUTH >= AUTH_UPLOAD) io_makeFileDir(mediaFN("$NS:xxx"));
+    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
 
     // handle upload
     if($_FILES['upload']['tmp_name']){

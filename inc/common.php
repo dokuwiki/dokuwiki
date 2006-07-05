@@ -614,7 +614,7 @@ function rawLocale($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawWiki($id,$rev=''){
-  return io_readFile(wikiFN($id,$rev));
+  return io_readWikiPage(wikiFN($id, $rev), $id, $rev);
 }
 
 /**
@@ -649,7 +649,7 @@ function pageTemplate($id){
  */
 function rawWikiSlices($range,$id,$rev=''){
   list($from,$to) = split('-',$range,2);
-  $text = io_readFile(wikiFN($id,$rev));
+  $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
   if(!$from) $from = 0;
   if(!$to)   $to   = strlen($text)+1;
 
@@ -1019,7 +1019,7 @@ function getRevisionInfo($id,$rev,$mem_cache=true){
 
 
 /**
- * Saves a wikitext by calling io_saveFile
+ * Saves a wikitext by calling io_writeWikiPage
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -1045,13 +1045,12 @@ function saveWikiText($id,$text,$summary,$minor=false){
     $del = true;
     // autoset summary on deletion
     if(empty($summary)) $summary = $lang['deleted'];
-    // unlock early
-    unlock($id);
     // remove empty namespaces
-    io_sweepNS($id);
+    io_sweepNS($id, 'datadir');
+    io_sweepNS($id, 'mediadir');
   }else{
-    // save file (datadir is created in io_saveFile)
-    io_saveFile($file,$text);
+    // save file (namespace dir is created in io_writeWikiPage)
+    io_writeWikiPage($file, $text, $id);
     saveMetadata($id, $file, $minor);
     $del = false;
   }
@@ -1100,12 +1099,7 @@ function saveOldRevision($id){
   if(!@file_exists($oldf)) return '';
   $date = filemtime($oldf);
   $newf = wikiFN($id,$date);
-  if(substr($newf,-3)=='.gz'){
-    io_saveFile($newf,rawWiki($id));
-  }else{
-    io_makeFileDir($newf);
-    copy($oldf, $newf);
-  }
+  io_writeWikiPage($newf, rawWiki($id), $id, $date);
   return $date;
 }
 
