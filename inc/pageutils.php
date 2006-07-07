@@ -163,7 +163,7 @@ function wikiFN($id,$rev=''){
  */
 function wikiLockFN($id) {
   global $conf;
-  return $conf['lockdir'].'/'.sha1(cleanID($id)).'.lock';
+  return $conf['lockdir'].'/'.md5(cleanID($id)).'.lock';
 }
 
 
