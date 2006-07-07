@@ -793,9 +793,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $feed->feed_url($url);
 
         //disable warning while fetching
-        $elvl = error_reporting(E_ERROR);
+        if (!defined('DOKU_E_LEVEL')) { $elvl = error_reporting(E_ERROR); }
         $rc = $feed->init();
-        error_reporting($elvl);
+        if (!defined('DOKU_E_LEVEL')) { error_reporting($elvl); }
 
         //decide on start and end
         if($params['reverse']){
