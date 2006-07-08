@@ -45,3 +45,4 @@ $lang['prev']   = 'forrige';
 $lang['next']   = 'næste';
 $lang['last']   = 'sidste';
 
+$lang['edit_usermissing'] = 'Den valgte bruger blev ikke fundet, brugernavnet kan være slettet eller ændret andetsteds.';

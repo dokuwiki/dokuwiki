@@ -69,8 +69,8 @@ $lang['profnochange'] = 'Ingen ændringer, intet modificeret.';
 $lang['profnoempty']  = 'Tomt navn eller e-mail adresse er ikke tilladt.';
 $lang['profchanged']  = 'Brugerprofil opdateret korrekt.';
 
-$lang['pwdforget'] = 'Glemt dit password? F√• et nyt';
-$lang['resendna']  = 'Denne wiki underst√∏tter ikke udsendelse af nyt password.';
+$lang['pwdforget'] = 'Glemt dit password? Få et nyt';
+$lang['resendna']  = 'Denne wiki understøtter ikke udsendelse af nyt password.';
 $lang['resendpwd'] = 'Send nyt password for';
 $lang['resendpwdmissing'] = 'Du skal udfylde alle felter.';
 $lang['resendpwdnouser']  = 'Vi kan ikke finde denne bruger i vores database.';
