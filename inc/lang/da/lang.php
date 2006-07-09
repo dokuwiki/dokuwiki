@@ -39,6 +39,9 @@ $lang['btn_unsubscribe'] = 'Fjern abonnement på ændringer';
 $lang['btn_profile']    = 'Opdater profil';
 $lang['btn_reset']     = 'Nulstil';
 $lang['btn_resendpwd'] = 'Send nyt password';
+$lang['btn_draft']    = 'Rediger kladde';
+$lang['btn_recover']  = 'Gendan kladde';
+$lang['btn_draftdel'] = 'Slet kladde';
 
 $lang['loggedinas'] = 'Logget på som';
 $lang['user']       = 'Brugernavn';
@@ -53,6 +56,7 @@ $lang['register']   = 'Tilmeld';
 $lang['profile']    = 'Brugerprofil';
 $lang['badlogin']   = 'Forkert brugernavn eller password.';
 $lang['minoredit']  = 'Mindre ændringer';
+$lang['draftdate']  = 'Kladde automatisk gemt d.';
 
 $lang['regmissing'] = 'Du skal udfylde alle felter.';
 $lang['reguexists'] = 'Dette brugernavn er allerede i brug.';
@@ -99,6 +103,11 @@ $lang['mediainuse']  = 'Filen "%s" er ikke slettet - den er stadig i brug.';
 $lang['namespaces']  = 'Navnerum';
 $lang['mediafiles']  = 'Tilgængelige filer i';
 
+$lang['js']['keepopen']    = 'Hold vindue åbent ved valg';
+$lang['js']['hidedetails'] = 'Skjul detaljer';
+$lang['mediausage']  = 'Brug den følgende syntaks til at henvise til denne fil:';
+$lang['mediaview']   = 'Vis oprindelig fil';
+
 $lang['reference']   = 'Henvisning til';
 $lang['ref_inuse']   = 'Filen kan ikke slettes, da den stadig er i brug på følgende sider:';
 $lang['ref_hidden']  = 'Nogle henvisninger er i dokumenter du ikke har læserettigheder til';
@@ -121,6 +130,7 @@ $lang['summary']    = 'Redigerings resume';
 
 $lang['mail_newpage'] = 'dokument tilføjet:';
 $lang['mail_changed'] = 'dokument ændret:';
+$lang['mail_new_user'] = 'Ny bruger';
 
 $lang['nosmblinks'] = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.\nDu kan stadig kopiere og indsætte linket.';
 

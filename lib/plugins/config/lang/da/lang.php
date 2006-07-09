@@ -17,6 +17,12 @@ $lang['nochoice']   = '(ingen andre valgmuligheder)';
 $lang['locked']     = 'Indstillingsfilen kunne ikke opdateres, hvis dette er en fejl, <br />
                        sørg da for at den lokale indstillingsfils navn og rettigheder er korrekte.';
 
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = 'Konfigurationsstyring'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'DokuWiki indstillinger';
+$lang['_header_plugin'] = 'Pluginindstillinger';
+$lang['_header_template'] = 'Skabelonindstillinger';
+$lang['_header_undefined'] = 'Udefinerede indstillinger';
 
 /* -------------------- Config Options --------------------------- */
 
@@ -51,33 +57,21 @@ $lang['allowdebug']  = 'Tillad debugging <b>slå fra hvis unødvendig!</b>';
 $lang['usewordblock']= 'Bloker spam baseret på ordliste';
 $lang['indexdelay']  = 'Tidsforsinkelse af indeksering';
 $lang['relnofollow'] = 'Brug rel="nofollow"';
-//$lang['mailguard']   = 'Obfuscate email addresses';
 
 /* Authentication Options */
-//$lang['useacl']      = 'Use access control lists';
-//$lang['openregister']= 'Allow everyon to register';
-//$lang['autopasswd']  = 'Autogenerate passwords';
-//$lang['resendpasswd']= 'Allow resend password';
-//$lang['authtype']    = 'Authentication backend';
-//$lang['passcrypt']   = 'Password encryption method';
-//$lang['defaultgroup']= 'Default group';
+$lang['useacl']      = 'Benyt adgangskontrollister';
 $lang['superuser']   = 'Superbruger';
 $lang['profileconfirm'] = 'Bekræft profilændringer med password';
 
 /* Advanced Options */
 $lang['userewrite']  = 'Brug pæne URLer';
-//$lang['useslash']    = 'Use slash as namespace separator in URLs';
-//$lang['sepchar']     = 'Page name word separator';
-//$lang['canonical']   = 'Use fully canonical URLs';
-//$lang['autoplural']  = 'Check for plural forms in links';
-//$lang['usegzip']     = 'Use gzip (for attic)';
-//$lang['cachetime']   = 'Maximum age for cache (sec)';
 $lang['purgeonadd']  = 'Ryd cache når nye sider tilføjes';
-//$lang['locktime']    = 'Maximum age for lock files (sec)';
 $lang['notify']      = 'Send ændringsnotifikationer til denne e-mailadresse';
 $lang['mailfrom']    = 'Email adresse til brug for automatiske mails';
+$lang['gzip_output'] = 'Benyt gzip Content-Encoding til XHTML';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Sti til ImageMagick\'s convert værktøj';
+$lang['jpg_quality'] = 'JPG komprimeringskvalitet (0-100)';
 $lang['spellchecker']= 'Slå stavekontrol til';
 $lang['subscribers'] = 'Slå understøttelse af abonnement på sider til';
 $lang['compress']    = 'Komprimer CSS og Javascript filer';
@@ -87,6 +81,7 @@ $lang['sitemap']     = 'Generer Google sitemap (dage)';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed linker til';
+$lang['rss_update']  = 'XML feed opdateringsinterval (sek)';
 
 /* Target options */
 $lang['target____wiki']      = 'Destinationsvindue til interne links';
@@ -112,7 +107,7 @@ $lang['ftp____root'] = 'FTP rodkatalog til safemode hack';
 
 /* userewrite options */
 $lang['userewrite_o_0'] = 'ingen';
-$lang['userewrite_o_1'] = 'htaccess';
+$lang['userewrite_o_1'] = '.htaccess';
 $lang['userewrite_o_2'] = 'Dokuwiki intern';
 
 /* deaccent options */
