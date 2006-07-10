@@ -1014,7 +1014,7 @@ class TableDiffFormatter extends DiffFormatter
   }
 
   function emptyLine() {
-    $line = str_replace('  ','&nbsp; ',$line);
+    //$line = str_replace('  ','&nbsp; ',$line);
     return '<td colspan="2">&nbsp;</td>';
   }
 
