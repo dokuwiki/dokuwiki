@@ -42,11 +42,11 @@ function tpl_content() {
 
   ob_start();
 
-  trigger_event('TPL_ACT_RENDER',$ACT,tpl_content_core);
+  trigger_event('TPL_ACT_RENDER',$ACT,'tpl_content_core');
 
   $html_output = ob_get_clean();
 
-  trigger_event('TPL_CONTENT_DISPLAY',$html_output,ptln);
+  trigger_event('TPL_CONTENT_DISPLAY',$html_output,'ptln');
 }
 
 function tpl_content_core(){

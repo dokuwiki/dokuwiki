@@ -371,7 +371,7 @@ function html_search(){
   if(count($data)){
     sort($data);
     print '<div class="search_quickresult">';
-    print '<h3>'.$lang[quickhits].':</h3>';
+    print '<h3>'.$lang['quickhits'].':</h3>';
     print '<ul class="search_quickhits">';
     foreach($data as $id){
       print '<li> ';
@@ -1201,7 +1201,7 @@ function html_admin(){
                    );
   }
 
-  usort($menu, p_sort_modes);
+  usort($menu, 'p_sort_modes');
 
   // output the menu
   ptln('<ul>');

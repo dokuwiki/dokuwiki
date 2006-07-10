@@ -452,7 +452,7 @@ class ap_manage {
           if (!$this->manager->plugin) { return; }
 
           $component_list = ap_plugin_components($this->manager->plugin);
-          usort($component_list, ap_component_sort);
+          usort($component_list, 'ap_component_sort');
 
           foreach ($component_list as $component) {
               if ($obj = & plugin_load($component['type'],$component['name']) === NULL) continue;

@@ -113,7 +113,7 @@ function act_dispatch(){
 
   //call template FIXME: all needed vars available?
   $headers[] = 'Content-Type: text/html; charset=utf-8';
-  trigger_event('ACTION_HEADERS_SEND',$headers,act_sendheaders);
+  trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 
   include(template('main.php'));
   // output for the commands is now handled in inc/templates.php
