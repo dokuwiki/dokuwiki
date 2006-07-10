@@ -623,6 +623,7 @@ function html_index($ns){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_list_index($item){
+  global $ID;
   $ret = '';
   $base = ':'.$item['id'];
   $base = substr($base,strrpos($base,':')+1);
@@ -1014,6 +1015,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   if($wr){
     if ($REV) print p_locale_xhtml('editrev');
     print p_locale_xhtml($include);
+    $ro=false;
   }else{
     // check pseudo action 'source'
     if(!actionOK('source')){

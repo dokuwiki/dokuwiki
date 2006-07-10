@@ -80,7 +80,7 @@ function ajax_lock(){
     $client = $_SERVER['REMOTE_USER'];
     if(!$client) $client = clientIP(true);
 
-    $draft = array('id'     => $ID,
+    $draft = array('id'     => $id,
                    'prefix' => $_POST['prefix'],
                    'text'   => $_POST['wikitext'],
                    'suffix' => $_POST['suffix'],

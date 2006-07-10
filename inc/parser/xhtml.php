@@ -721,6 +721,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['suf']    = '';
         $link['more']   = '';
         $link['target'] = $conf['target']['media'];
+        $noLink = false;
 
         $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
@@ -760,7 +761,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['title']  = $this->_xmlEntities($src);
         $link['url']    = ml($src,array('cache'=>$cache));
         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
-
+        $noLink = false;
 
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){

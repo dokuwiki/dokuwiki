@@ -53,7 +53,7 @@ class Doku_Event {
   function advise_before($enablePreventDefault=true) {
     global $EVENT_HANDLER;
 
-    $this->canPreventDefault = $enablePrevent;
+    $this->canPreventDefault = $enablePreventDefault;
     $EVENT_HANDLER->process_event($this,'BEFORE');
 
     return (!$enablePreventDefault || $this->_default);

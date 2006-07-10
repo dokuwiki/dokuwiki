@@ -20,6 +20,7 @@
   //import variables
   $QUERY = trim($_REQUEST['id']);
   $ID    = getID();
+  $NS    = getNS($ID);
   $REV   = $_REQUEST['rev'];
   $ACT   = $_REQUEST['do'];
   $IDX   = $_REQUEST['idx'];

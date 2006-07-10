@@ -164,6 +164,7 @@ function tpl_admin(){
  */
 function tpl_metaheaders($alt=true){
   global $ID;
+  global $REV;
   global $INFO;
   global $ACT;
   global $lang;
@@ -291,6 +292,7 @@ function tpl_getparent($id){
 function tpl_button($type){
   global $ACT;
   global $ID;
+  global $REV;
   global $NS;
   global $INFO;
   global $conf;
@@ -604,7 +606,7 @@ function tpl_youarehere($sep=' &raquo; '){
   }
 
   // print current page, skipping start page, skipping for namespace index
-  if($page == $part.$parts[$i]) return;
+  if(isset($page) && $page==$part.$parts[$i]) return;
   $page = $part.$parts[$i];
   if($page == $conf['start']) return;
   echo $sep;
