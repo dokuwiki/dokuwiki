@@ -1178,19 +1178,23 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getRevisions($id){
+  global $conf;
+
+  $id   = cleanID($id);
   $revd = dirname(wikiFN($id,'foo'));
+  $id   = noNS($id);
+  $id   = utf8_encodeFN($id);
+  $len  = strlen($id);
+  $xlen = ($conf['usegzip']) ? -7 : -4; // length of extension (.txt.gz or .txt)
+
   $revs = array();
-  $clid = cleanID($id);
-  if(strrpos($clid,':')) $clid = substr($clid,strrpos($clid,':')+1); //remove path
-  $clid = utf8_encodeFN($clid);
-  $clid_len = strlen($clid);
   if (is_dir($revd) && $dh = opendir($revd)) {
     while (($file = readdir($dh)) !== false) {
-      if (substr($file, 0, $clid_len)===$clid) {
-        $p = @strpos($file, '.', $clid_len+1);
-        if (!$p===false) {
-          $revs[] = substr($file, $clid_len+1, $p-$clid_len-1);
-        }
+      if (substr($file,0,$len) === $id) {
+        $time = substr($file,$len+1,$xlen);
+        $time = str_replace('.','FOO',$time); // make sure a dot will make the next test fail
+        $time = (int) $time;
+        if($time) $revs[] = $time;
       }
     }
     closedir($dh);
