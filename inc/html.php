@@ -78,14 +78,14 @@ function html_login(){
     if($auth->canDo('addUser') && actionOK('register')){
       print '<p>';
       print $lang['reghere'];
-      print ': <a href="'.wl($ID,'do=register').'" class="wikilink1">'.$lang['register'].'</a>';
+      print ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>';
       print '</p>';
     }
 
     if ($auth->canDo('modPass') && actionOK('resendpwd')) {
       print '<p>';
       print $lang['pwdforget'];
-      print ': <a href="'.wl($ID,'do=resendpwd').'" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
+      print ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
       print '</p>';
     }
   ?>

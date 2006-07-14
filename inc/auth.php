@@ -570,8 +570,14 @@ function updateprofile() {
 /**
  * Send a  new password
  *
+ * This function handles both phases of the password reset:
+ *
+ *   - handling the first request of password reset
+ *   - validating the password reset auth token
+ *
  * @author Benoit Chesneau <benoit@bchesneau.info>
  * @author Chris Smith <chris@jalakai.co.uk>
+ * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @return bool true on success, false on any error
 */
@@ -580,40 +586,89 @@ function act_resendpwd(){
     global $conf;
     global $auth;
 
-    if(!$_POST['save']) return false;
     if(!actionOK('resendpwd')) return false;
 
     // should not be able to get here without modPass being possible...
     if(!$auth->canDo('modPass')) {
-      msg($lang['resendna'],-1);
-      return false;
+        msg($lang['resendna'],-1);
+        return false;
     }
 
-    if (empty($_POST['login'])) {
-      msg($lang['resendpwdmissing'], -1);
-      return false;
+    $token = preg_replace('/[^a-f0-9]+/','',$_REQUEST['pwauth']);
+
+    if($token){
+        // we're in token phase
+
+        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        if(!@file_exists($tfile)){
+            msg($lang['resendpwdbadauth'],-1);
+            return false;
+        }
+        $user = io_readfile($tfile);
+        @unlink($tfile);
+        $userinfo = $auth->getUserData($user);
+        if(!$userinfo['mail']) {
+            msg($lang['resendpwdnouser'], -1);
+            return false;
+        }
+
+        $pass = auth_pwgen();
+        if (!$auth->modifyUser($user,array('pass' => $pass))) {
+            msg('error modifying user data',-1);
+            return false;
+        }
+
+        if (auth_sendPassword($user,$pass)) {
+            msg($lang['resendpwdsuccess'],1);
+        } else {
+            msg($lang['regmailfail'],-1);
+        }
+        return true;
+
     } else {
-      $user = $_POST['login'];
+        // we're in request phase
+
+        if(!$_POST['save']) return false;
+
+        if (empty($_POST['login'])) {
+            msg($lang['resendpwdmissing'], -1);
+            return false;
+        } else {
+            $user = $_POST['login'];
+        }
+
+        $userinfo = $auth->getUserData($user);
+        if(!$userinfo['mail']) {
+            msg($lang['resendpwdnouser'], -1);
+            return false;
+        }
+
+        // generate auth token
+        $token = md5(auth_cookiesalt().$user); //secret but user based
+        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $url = wl('',array('do'=>'resendpwd','pwauth'=>$token),true,'&');
+
+        io_saveFile($tfile,$user);
+
+        $text = rawLocale('pwconfirm');
+        $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
+        $text = str_replace('@FULLNAME@',$userinfo['name'],$text);
+        $text = str_replace('@LOGIN@',$user,$text);
+        $text = str_replace('@TITLE@',$conf['title'],$text);
+        $text = str_replace('@CONFIRM@',$url,$text);
+
+        if(mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
+                     $lang['regpwmail'],
+                     $text,
+                     $conf['mailfrom'])){
+            msg($lang['resendpwdconfirm'],1);
+        }else{
+            msg($lang['regmailfail'],-1);
+        }
+        return true;
     }
 
-    $userinfo = $auth->getUserData($user);
-    if(!$userinfo['mail']) {
-      msg($lang['resendpwdnouser'], -1);
-      return false;
-    }
-
-    $pass = auth_pwgen();
-    if (!$auth->modifyUser($user,array('pass' => $pass))) {
-      msg('error modifying user data',-1);
-      return false;
-    }
-
-    if (auth_sendPassword($user,$pass)) {
-      msg($lang['resendpwdsuccess'],1);
-    } else {
-      msg($lang['regmailfail'],-1);
-    }
-    return true;
+    return false; // never reached
 }
 
 /**

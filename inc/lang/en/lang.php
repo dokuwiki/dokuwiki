@@ -78,6 +78,8 @@ $lang['resendna']  = 'This wiki does not support password resending.';
 $lang['resendpwd'] = 'Send new password for';
 $lang['resendpwdmissing'] = 'Sorry, you must fill in all fields.';
 $lang['resendpwdnouser']  = 'Sorry, we can\'t find this user in our database.';
+$lang['resendpwdbadauth'] = 'Sorry, this auth code is not valid. Make sure you used the complete confirmation link.';
+$lang['resendpwdconfirm'] = 'A confirmation link has been sent by email.';
 $lang['resendpwdsuccess'] = 'Your new password has been sent by email.';
 
 $lang['txt_upload']   = 'Select file to upload';

@@ -1,5 +1,6 @@
 ====== Send new password ======
 
-Fill in all the information below to get a new password for your account in this wiki.
-Your new password will be sent to your registered email address. The user name should be 
-your wiki user name.
+Please enter your user name in the form below to request a new password for your
+account in this wiki. A confirmation link will be sent to your registered email
+address.
+
