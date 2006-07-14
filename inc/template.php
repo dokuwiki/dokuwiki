@@ -298,7 +298,10 @@ function tpl_button($type){
   global $conf;
   global $auth;
 
-  if(!actionOK($type)) return;
+  // check disabled actions and fix the badly named ones
+  $ctype = $type;
+  if($type == 'history') $ctype='revisions';
+  if(!actionOK($ctype)) return;
 
   switch($type){
     case 'edit':
@@ -408,7 +411,10 @@ function tpl_actionlink($type,$pre='',$suf=''){
   global $lang;
   global $auth;
 
-  if(!actionOK($type)) return;
+  // check disabled actions and fix the badly named ones
+  $ctype = $type;
+  if($type == 'history') $ctype='revisions';
+  if(!actionOK($ctype)) return;
 
   switch($type){
     case 'edit':
