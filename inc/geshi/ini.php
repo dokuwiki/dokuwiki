@@ -4,10 +4,10 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br)
  * Copyright: (c) 2005 deguix
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.14 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.14.2.3 $
  * Date Started: 2005/03/27
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:31 $
  *
  * INI language file for GeSHi.
  *
@@ -43,7 +43,7 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'ini',
+	'LANG_NAME' => 'INI',
 	'COMMENT_SINGLE' => array(0 => ';'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

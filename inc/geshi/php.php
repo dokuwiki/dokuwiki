@@ -4,10 +4,10 @@
  * --------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.14 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.14.2.3 $
  * Date Started: 2004/06/20
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:29 $
  *
  * PHP language file for GeSHi.
  *
@@ -69,7 +69,7 @@ $language_data = array (
 			'false', '&lt;?php', '?&gt;', '&lt;?',
 			'&lt;script language', '&lt;/script&gt;',
 			'true', 'var', 'default',
-			'function', 'class', 'new', '&amp;new',
+			'function', 'class', 'new', '&amp;new', 'public', 'private', 'interface', 'extends',
 			'__FUNCTION__', '__CLASS__', '__METHOD__', 'PHP_VERSION',
 			'PHP_OS', 'DEFAULT_INCLUDE_PATH', 'PEAR_INSTALL_DIR', 'PEAR_EXTENSION_DIR',
 			'PHP_EXTENSION_DIR', 'PHP_BINDIR', 'PHP_LIBDIR', 'PHP_DATADIR', 'PHP_SYSCONFDIR',

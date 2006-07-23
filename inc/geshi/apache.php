@@ -4,10 +4,10 @@
  * ----------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.14 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.14.2.3 $
  * Date Started: 2004/29/07
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:31 $
  *
  * Apache language file for GeSHi.
  * Words are from SciTe configuration file
@@ -45,7 +45,7 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Apache',
+	'LANG_NAME' => 'Apache Log',
 	'COMMENT_SINGLE' => array(1 => '#'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

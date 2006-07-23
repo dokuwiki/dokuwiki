@@ -4,10 +4,10 @@
  * --------
  * Author: Stephan Klimek (http://www.initware.org)
  * Copyright: Stephan Klimek (http://www.initware.org)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.12 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.12.2.3 $
  * Date Started: 2005/07/20
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:26 $
  *
  * AppleScript language file for GeSHi.
  *
@@ -17,6 +17,24 @@
  * TODO 
  * -------------------------
  * URL settings to references
+ *
+ **************************************************************************************
+ *
+ *     This file is part of GeSHi.
+ *
+ *   GeSHi is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   GeSHi is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with GeSHi; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  ************************************************************************************/
 
@@ -53,7 +71,7 @@ $language_data = array (
 			)
 		),
 	'SYMBOLS' => array(
-        ')','+','-','^','*','/','&','<','>=','<','<=','=','­'
+        ')','+','-','^','*','/','&','<','>=','<','<=','=','ï¿½'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,

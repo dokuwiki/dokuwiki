@@ -4,10 +4,10 @@
  * -----------
  * Author: Guy Wicks (Guy.Wicks@rbs.co.uk)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.13 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.13.2.3 $
  * Date Started: 2004/06/04
- * Last Modified: $Date: 2006/05/21 00:06:57 $
+ * Last Modified: $Date: 2006/07/22 11:30:32 $
  *
  * Oracle 8 language file for GeSHi
  *
@@ -40,7 +40,7 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Oracle 8',
+	'LANG_NAME' => 'Oracle 8 SQL',
 	'COMMENT_SINGLE' => array(1 => '--'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
 	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,

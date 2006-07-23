@@ -4,8 +4,8 @@
  * ----------------
  * Author: Roberto Armellin (r.armellin@tin.it)
  * Copyright: (c) 2004 Roberto Armellin, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.13 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.13.2.3 $
  * Date Started: 2004/09/17
  * Last Modified: 2004/09/18
  *
@@ -42,7 +42,7 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'VFP',
+	'LANG_NAME' => 'Visual Fox Pro',
 	'COMMENT_SINGLE' => array(1 => "//", 2 => "\n*"),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

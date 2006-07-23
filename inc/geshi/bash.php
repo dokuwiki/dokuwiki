@@ -4,10 +4,10 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.13 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.13.2.2 $
  * Date Started: 2004/08/20
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:23 $
  *
  * BASH language file for GeSHi.
  *

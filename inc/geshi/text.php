@@ -4,10 +4,10 @@
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.2 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.2.2.3 $
  * Date Started: 04/23/2006
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:23 $
  *
  * Standard Text File (No Syntax Highlighting).
  *
@@ -45,7 +45,7 @@
 
  ************************************************************************************/
 $language_data = array (
-	'LANG_NAME' => 'TEXT',
+	'LANG_NAME' => 'Text',
 	'COMMENT_SINGLE' => array( ),
 	'COMMENT_MULTI' => array( ),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

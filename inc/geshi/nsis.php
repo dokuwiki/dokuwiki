@@ -4,10 +4,10 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br), Tux (http://tux.a4.cz/)
  * Copyright: (c) 2005 deguix, 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.15 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.15.2.3 $
  * Date Started: 2005/12/03
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:28 $
  *
  * Nullsoft Scriptable Install System language file for GeSHi.
  *
@@ -50,7 +50,7 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'nsis',
+	'LANG_NAME' => 'NSIS',
 	'COMMENT_SINGLE' => array(1 => ';', 2 => '#'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

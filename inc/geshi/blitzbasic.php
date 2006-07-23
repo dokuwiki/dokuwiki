@@ -2,12 +2,12 @@
 /*************************************************************************************
  * blitzbasic.php
  * --------------
- * Author: Pàdraig O`Connel (info@moonsword.info)
- * Copyright: (c) 2005 Pàdraig O`Connel (http://moonsword.info)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.11 $
+ * Author: Pï¿½draig O`Connel (info@moonsword.info)
+ * Copyright: (c) 2005 Pï¿½draig O`Connel (http://moonsword.info)
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.11.2.3 $
  * Date Started: 16.10.2005
- * Last Modified: $Date: 2006/05/21 00:06:56 $
+ * Last Modified: $Date: 2006/07/22 11:30:23 $
  *
  * BlitzBasic language file for GeSHi.
  *
@@ -50,7 +50,7 @@
  ************************************************************************************/
 
  $language_data = array (
-  'LANG_NAME' => 'BLITZ BASIC',
+  'LANG_NAME' => 'BlitzBasic',
   'COMMENT_SINGLE' => array(1 => ';'),
   'COMMENT_MULTI' => array(),
   'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

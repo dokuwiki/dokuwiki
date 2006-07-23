@@ -4,10 +4,10 @@
  * --------
  * Author: Bananeweizen (Bananeweizen@gmx.de)
  * Copyright: (c) 2005 Bananeweizen (www.bananeweizen.de)
- * Release Version: 1.0.7.11
- * CVS Revision Version: $Revision: 1.1.2.1 $
+ * Release Version: 1.0.7.12
+ * CVS Revision Version: $Revision: 1.1.2.3 $
  * Date Started: 2005/03/27
- * Last Modified: $Date: 2006/06/17 07:22:51 $
+ * Last Modified: $Date: 2006/07/22 11:30:33 $
  *
  * Smalltalk language file for GeSHi.
  *
