@@ -24,6 +24,28 @@ $lang['_header_plugin'] = 'Pluginindstillinger';
 $lang['_header_template'] = 'Skabelonindstillinger';
 $lang['_header_undefined'] = 'Udefinerede indstillinger';
 
+/* --- Config Setting Groups --- */
+$lang['_basic'] = 'Grundindstillinger';
+//$lang['_display'] = 'Display Settings';
+//$lang['_authentication'] = 'Authentication Settings';
+$lang['_anti_spam'] = 'Anti-spam indstillinger';
+$lang['_editing'] = 'Redigeringsindstillinger';
+$lang['_links'] = 'Linkindstillinger';
+$lang['_media'] = 'Medieindstillinger';
+$lang['_advanced'] = 'Avancerede indstillinger';
+$lang['_network'] = 'Netværksindstillinger';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'Pluginindstillinger';
+$lang['_template_sufix'] = 'Skabelonindstillinger';
+
+/* --- Undefined Setting Messages --- */
+//$lang['_msg_setting_undefined'] = 'No setting metadata.';
+//$lang['_msg_setting_no_class'] = 'No setting class.';
+//$lang['_msg_setting_no_default'] = 'No default value.';
+
 /* -------------------- Config Options --------------------------- */
 
 $lang['fmode']       = 'Filoprettelsestilstand';
@@ -35,7 +57,7 @@ $lang['savedir']     = 'Katalog til opbevaring af data';
 $lang['start']       = 'Startsidens navn';
 $lang['title']       = 'Wiki titel';
 $lang['template']    = 'Skabelon';
-$lang['fullpath']    = 'Vis den fulde stil til siderne i bundlinjen';
+$lang['fullpath']    = 'Vis den fulde sti til siderne i bundlinjen';
 $lang['recent']      = 'Nylige ændringer';
 $lang['breadcrumbs'] = 'Stilængde';
 $lang['youarehere']  = 'Hierarkisk sti';
@@ -57,16 +79,36 @@ $lang['allowdebug']  = 'Tillad debugging <b>slå fra hvis unødvendig!</b>';
 $lang['usewordblock']= 'Bloker spam baseret på ordliste';
 $lang['indexdelay']  = 'Tidsforsinkelse af indeksering';
 $lang['relnofollow'] = 'Brug rel="nofollow"';
+$lang['mailguard']   = 'Slør email adresser';
 
 /* Authentication Options */
 $lang['useacl']      = 'Benyt adgangskontrollister';
+$lang['autopasswd']  = 'Generer passwords automatisk';
+//$lang['authtype']    = 'Authentication backend';
+$lang['passcrypt']   = 'Passwordkrypteringsmetode';
+$lang['defaultgroup']= 'Standardgruppe';
 $lang['superuser']   = 'Superbruger';
 $lang['profileconfirm'] = 'Bekræft profilændringer med password';
+//$lang['disableactions'] = 'Disable DokuWiki actions';
+//$lang['disableactions_check'] = 'Check';
+//$lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
+//$lang['disableactions_wikicode'] = 'View source/Export Raw';
+//$lang['disableactions_other'] = 'Other actions (comma separated)';
 
 /* Advanced Options */
 $lang['userewrite']  = 'Brug pæne URLer';
+$lang['useslash']    = 'Brug skråstreg som navnerumsdeler i URLer';
+$lang['usedraft']    = 'Gem automatisk en kladde under redigering';
+//$lang['sepchar']     = 'Page name word separator';
+//$lang['canonical']   = 'Use fully canonical URLs';
+//$lang['autoplural']  = 'Check for plural forms in links';
+//$lang['usegzip']     = 'Use gzip for attic files';
+//$lang['cachetime']   = 'Maximum age for cache (sec)';
 $lang['purgeonadd']  = 'Ryd cache når nye sider tilføjes';
+//$lang['locktime']    = 'Maximum age for lock files (sec)';
+//$lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern';
 $lang['notify']      = 'Send ændringsnotifikationer til denne e-mailadresse';
+//$lang['registernotify'] = 'Send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Email adresse til brug for automatiske mails';
 $lang['gzip_output'] = 'Benyt gzip Content-Encoding til XHTML';
 $lang['gdlib']       = 'GD Lib version';
@@ -98,7 +140,7 @@ $lang['proxy____pass'] = 'Proxy password';
 $lang['proxy____ssl']  = 'Brug SSL til at forbinde til proxy';
 
 /* Safemode Hack */
-$lang['safemodehack'] = 'slå safemode hack til';
+$lang['safemodehack'] = 'Slå safemode hack til';
 $lang['ftp____host'] = 'FTP server til safemode hack';
 $lang['ftp____port'] = 'FTP port til safemode hack';
 $lang['ftp____user'] = 'FTP brugernavn til safemode hack';

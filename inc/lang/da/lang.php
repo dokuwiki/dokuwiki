@@ -107,6 +107,9 @@ $lang['js']['keepopen']    = 'Hold vindue åbent ved valg';
 $lang['js']['hidedetails'] = 'Skjul detaljer';
 $lang['mediausage']  = 'Brug den følgende syntaks til at henvise til denne fil:';
 $lang['mediaview']   = 'Vis oprindelig fil';
+$lang['mediaroot']   = 'rod';
+$lang['mediaupload'] = 'Upload en fil til det nuværende navnerum her. For at oprette under-navnerum, tilføj dem til "Upload som" filnavnet, adskilt af kolontegn.';
+$lang['mediaextchange'] = 'Filudvidelse ændret fra .%s til .%s!';
 
 $lang['reference']   = 'Henvisning til';
 $lang['ref_inuse']   = 'Filen kan ikke slettes, da den stadig er i brug på følgende sider:';
