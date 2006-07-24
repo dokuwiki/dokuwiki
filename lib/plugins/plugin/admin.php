@@ -669,7 +669,7 @@ class ap_manage {
           if (!$dh = @opendir($src)) return false;
 
           if ($ok = ap_mkdir($dst)) {
-            while ($ok && $f = readdir($dh)) {
+            while ($ok && (false !== ($f = readdir($dh))) {
               if ($f == '..' || $f == '.') continue;
               $ok = ap_copy("$src/$f", "$dst/$f");
             }
