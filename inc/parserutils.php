@@ -228,7 +228,8 @@ function p_get_instructions($text){
   }
 
   // Do the parsing
-  $p    = $Parser->parse($text);
+  trigger_event('PARSER_WIKITEXT_PREPROCESS', $text);
+  $p = $Parser->parse($text);
 //  dbg($p);
   return $p;
 }
@@ -472,7 +473,9 @@ function p_render($mode,$instructions,& $info){
   //set info array
   $info = $Renderer->info;
 
-  // Return the output
+  // Post process and return the output
+  $data = array($mode,& $Renderer->doc);
+  trigger_event('RENDERER_CONTENT_POSTPROCESS',$data);
   return $Renderer->doc;
 }
 
