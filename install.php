@@ -155,7 +155,7 @@ if (isset($_REQUEST['submit'])) {
     $data = cleanText('data', '', '');
     $changeslog = isset($_REQUEST['changeslog']);
     $acl = isset($_REQUEST['acl']);
-    $superuser = cleanText('superuser','','/\S+/', );
+    $superuser = cleanText('superuser','','/\S+/');
     $password = cleanText('password','','/\S+/');
     $confirm = cleanText('confirm','','/^'.preg_quote($password,'/').'$/');
     $fullname = cleanText('fullname','','');
