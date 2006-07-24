@@ -150,7 +150,7 @@ function html_topbtn(){
   global $lang;
 
   $ret  = '';
-  $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" /></a>';
+  $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'" /></a>';
 
   return $ret;
 }
@@ -173,10 +173,12 @@ function html_backtomedia_button($params,$akey=''){
   }
 
   $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_backtomedia']).'" class="button" ';
+  $tit = htmlspecialchars($lang['btn_backtomedia']);
   if($akey){
-    $ret .= 'title="ALT+'.strtoupper($akey).'" ';
+    $tit .= ' [ALT+'.strtoupper($akey).']';
     $ret .= 'accesskey="'.$akey.'" ';
   }
+  $ret .= 'title="'.$tit.'" ';
   $ret .= '/>';
   $ret .= '</div></form>';
 
@@ -221,13 +223,16 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip=''){
     }
   }
 
-  $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
-  if($akey){
-    $tip = '[ALT+'.strtoupper($akey).']';
-    $ret .= 'accesskey="'.$akey.'" ';
-  }
   if ($tooltip!='') {
       $tip = htmlspecialchars($tooltip);
+  }else{
+      $tip = htmlspecialchars($label);
+  }
+
+  $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
+  if($akey){
+    $tip .= ' [ALT+'.strtoupper($akey).']';
+    $ret .= 'accesskey="'.$akey.'" ';
   }
   $ret .= 'title="'.$tip.'" ';
   $ret .= '/>';
@@ -823,7 +828,7 @@ function html_conflict($text,$summary){
     <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
     <input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
 
-    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
+    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" />
     <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" />
   </div>
   </form>
@@ -1062,8 +1067,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <div id="size__ctl"></div>
       <?php if($wr){?>
          <div class="editButtons">
-            <input class="button" id="edbtn__save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" tabindex="4" />
-            <input class="button" id="edbtn__preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" tabindex="5" />
+            <input class="button" id="edbtn__save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" tabindex="4" />
+            <input class="button" id="edbtn__preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="<?php echo $lang['btn_preview']?> [ALT+P]" tabindex="5" />
             <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_cancel']?>" tabindex="6" />
          </div>
       <?php } ?>
