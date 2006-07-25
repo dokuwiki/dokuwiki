@@ -120,7 +120,7 @@ class Doku_Event_Handler {
   // private properties
   var $_hooks = array();          // array of events and their registered handlers
 
-  /*
+  /**
    * event_handler
    *
    * constructor, loads all action plugins and calls their register() method giving them
@@ -139,7 +139,7 @@ class Doku_Event_Handler {
     }
   }
 
-  /*
+  /**
    * register_hook
    *
    * register a hook for an event
@@ -151,7 +151,7 @@ class Doku_Event_Handler {
    * @PARAM  $param   (mixed)    data passed to the event handler
    */ 
   function register_hook($event, $advise, &$obj, $method, $param=NULL) {
-    $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param);
+    $this->_hooks[$event.'_'.$advise][] = array(&$obj, $method, $param);
   }
 
   function process_event(&$event,$advise='') {
@@ -161,7 +161,11 @@ class Doku_Event_Handler {
     if (!empty($this->_hooks[$evt_name])) {
       $hook = reset($this->_hooks[$evt_name]);
       do {
-        list($obj, $method, $param) = $hook;
+//        list($obj, $method, $param) = $hook;
+        $obj =& $hook[0];
+        $method = $hook[1];
+        $param = $hook[2];
+
         if (is_null($obj)) {
           $method($event, $param);
         } else {
