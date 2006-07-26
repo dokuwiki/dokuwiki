@@ -195,4 +195,26 @@ $lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
 $lang['authmodfailed']   = 'Bad user authentication configuration. Please inform your Wiki Admin.';
 $lang['authtempfail']    = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
 
+/* installer strings */
+$lang['i_chooselang'] = 'Choose your language';
+$lang['i_installer']  = 'DokuWiki Installer';
+$lang['i_wikiname']   = 'Wiki Name';
+$lang['i_enableacl']  = 'Enable ACL (recommended)';
+$lang['i_superuser']  = 'Superuser';
+$lang['i_problems']   = 'The installer found some problems, indicated below. You can not continue until you fixed them.';
+$lang['i_modified']   = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
+                         You should either re-extract the files from the downloaded package or consult the complete
+                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installation instructions</a>';
+$lang['i_funcna']     = 'PHP function <code>%s</code> is not available. Maybe your provider disabled it for some reason?';
+$lang['i_permfail']   = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
+$lang['i_confexists'] = '<code>%s</code> already exists';
+$lang['i_writeerr']   = 'Unable to create <code>%s</code>. You will need to check directory/file permissions and create the file manually.';
+$lang['i_badhash']    = 'unrecognised or modified dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - illegal or empty value';
+$lang['i_success']    = 'The configuration was finished successfully. You may delete the install.php file now. Continue to
+                        <a href="doku.php">your new DokuWiki</a>.';
+$lang['i_failure']    = 'Some errors occured while writing the configuration files. You may need to fix them manually before
+                         you can use <a href="doku.php">your new DokuWiki</a>.';
+
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
