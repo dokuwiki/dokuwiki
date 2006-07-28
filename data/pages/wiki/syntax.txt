@@ -157,7 +157,7 @@ Of course, you can add a title (displayed as a tooltip by most browsers), too.
 
 If you specify a filename (external or internal) that is not an image (''gif,jpeg,png''), then it will be displayed as a link instead.
 
-For linking an image to another page see [[Image Links]] above.
+For linking an image to another page see [[#Image Links]] above.
 
 ===== Lists =====
 
