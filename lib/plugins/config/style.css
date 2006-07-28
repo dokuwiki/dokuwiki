@@ -55,17 +55,6 @@
 
 #config__manager td.error  { background-color: red; }
 
-#config__manager a.nolink { text-decoration: none; }
-#config__manager a.nolink,
-#config__manager a.nolink:link,
-#config__manager a.nolink:visited,
-#config__manager a.nolink:hover {
-    color: __black__;
-}
-#config__manager a.nolink:active {
-    color: __dark__;
-}
-
 #config__manager .selection {
   width: 14em;
   float: left;

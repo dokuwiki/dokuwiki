@@ -152,7 +152,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           $error = $setting->error() ? ' class="value error"' : ' class="value"';
 
           ptln('    <tr'.$class.'>');
-          ptln('      <td><a class="nolink" title="$'.$this->_config->_name.'[\''.$setting->_out_key().'\']">'.$label.'</a></td>');
+          ptln('      <td><span title="$'.$this->_config->_name.'[\''.$setting->_out_key().'\']">'.$label.'</span></td>');
           ptln('      <td'.$error.'>'.$input.'</td>');
           ptln('    </tr>');
         }
@@ -178,7 +178,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             $undefined_setting_key = $setting->_key;
           }
           ptln('  <tr>');
-          ptln('    <td><a class="nolink" title="$meta[\''.$undefined_setting_key.'\']">$'.$this->_config->_name.'[\''.$setting->_out_key().'\']</a></td>');
+          ptln('    <td><span title="$meta[\''.$undefined_setting_key.'\']">$'.$this->_config->_name.'[\''.$setting->_out_key().'\']</span></td>');
           ptln('    <td>'.$this->getLang('_msg_'.get_class($setting)).'</td>');
           ptln('  </tr>');
         }
