@@ -389,17 +389,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         } else {
             //strip leading blank line
             $text = preg_replace('/^\s*?\n/','',$text);
-            // Handle with Geshi here
-            require_once(DOKU_INC . 'inc/geshi.php');
-            $geshi = new GeSHi($text, strtolower($language), DOKU_INC . 'inc/geshi');
-            $geshi->set_encoding('utf-8');
-            $geshi->enable_classes();
-            $geshi->set_header_type(GESHI_HEADER_PRE);
-            $geshi->set_overall_class("code $language");
-            $geshi->set_link_target($conf['target']['extern']);
-
-            $text = $geshi->parse_code();
-            $this->doc .= $text;
+            $this->doc .= p_xhtml_cached_geshi($text, $language);
         }
     }
 

@@ -493,4 +493,37 @@ function p_get_first_heading($id){
   return null;
 }
 
+/**
+ * Wrapper for GeSHi Code Highlighter, provides caching of its output
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ */
+function p_xhtml_cached_geshi($code, $language) {
+
+  $cache = getCacheName($language.$code,".code");
+
+  if (@file_exists($cache)) {
+
+    $highlighted_code = io_readFile($cache, false);
+    touch($cache);
+
+  } else {
+
+    require_once(DOKU_INC . 'inc/geshi.php');
+
+    $geshi = new GeSHi($code, strtolower($language), DOKU_INC . 'inc/geshi');
+    $geshi->set_encoding('utf-8');
+    $geshi->enable_classes();
+    $geshi->set_header_type(GESHI_HEADER_PRE);
+    $geshi->set_overall_class("code $language");
+    $geshi->set_link_target($conf['target']['extern']);
+
+    $highlighted_code = $geshi->parse_code();
+
+    io_saveFile($cache,$highlighted_code);
+  }
+
+  return $highlighted_code;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
