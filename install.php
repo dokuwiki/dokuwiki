@@ -240,6 +240,7 @@ function check_data($d){
  * @author  Chris Smith <chris@jalakai.co.uk>
  */
 function store_data($d){
+    global $LC;
     $ok = true;
     $d['policy'] = (int) $d['policy'];
 
@@ -260,6 +261,7 @@ function store_data($d){
 
 EOT;
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
+    $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
     if($d['acl']){
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= '$conf[\'superuser\'] = \''.$d['superuser']."';\n";
