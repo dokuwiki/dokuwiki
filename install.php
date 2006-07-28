@@ -61,7 +61,7 @@ header('Content-Type: text/html; charset=utf-8');
         br.cl { clear:both; }
         code { font-size: 110%; color: #008000; }
         fieldset { border: none }
-        label { display: block;}
+        label { display: block; margin-top: 0.5em; }
         select.text, input.text { width: 30em; margin: 0 0.5em; }
     </style>
     <script type="text/javascript" language="javascript">
@@ -293,7 +293,7 @@ EOT;
         if($d['policy'] == 2){
             $output .=  "*               @ALL          0\n";
             $output .=  "*               @users        8\n";
-        }elseif($d['policy'] == 2){
+        }elseif($d['policy'] == 1){
             $output .=  "*               @ALL          1\n";
             $output .=  "*               @users        8\n";
         }else{
@@ -451,7 +451,7 @@ function langsel(){
         $sel = ($l == $LC) ? 'selected="selected"' : '';
         echo '<option value="'.$l.'" '.$sel.'>'.$l.'</option>';
     }
-    echo '</select>';
+    echo '</select> ';
     echo '<input type="submit" value="'.$lang['btn_update'].'" />';
     echo '</form>';
 }
