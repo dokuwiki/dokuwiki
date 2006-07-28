@@ -7,11 +7,11 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-$lang['menu']         = 'Plugins verwalten'; 
+$lang['menu']         = 'Plugins verwalten';
 
 // custom language strings for the plugin
 $lang['refresh']      = "Liste der installierten Plugins aktualisieren";
-$lang['refresh_x']    = "Benutze diese Option, wenn Du Plugins manuell verändert hast"; 
+$lang['refresh_x']    = "Benutze diese Option, wenn Du Plugins manuell verändert hast";
 $lang['download']     = "Neues Plugin herunterladen und installieren";
 $lang['manage']       = "Installierte Plugins";
 $lang['btn_info']     = 'Info';
@@ -20,6 +20,7 @@ $lang['btn_delete']   = 'Löschen';
 $lang['btn_settings'] = 'Einstellungen';
 $lang['btn_refresh']  = 'Aktualisieren';
 $lang['btn_download'] = 'Herunterladen';
+$lang['btn_enable']   = 'Speichern';
 $lang['url']          = 'URL';
 
 $lang['installed']    = 'Installiert:';
@@ -56,7 +57,7 @@ $lang['type']             = 'Typ:';
 $lang['desc']             = 'Beschreibung:';
 $lang['author']           = 'Entwickler:';
 $lang['www']              = 'Web:';
-	
+
 // error messages
 $lang['error']           = 'Ein unbekannter Fehler ist aufgetreten.';
 $lang['error_download']  = 'Konnte das Plugin %s nicht installieren';

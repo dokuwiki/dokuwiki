@@ -47,4 +47,4 @@ $lang['prev']   = 'Vorherige';
 $lang['next']   = 'Nächste';
 $lang['last']   = 'Ende';
 
-?>
+$lang['edit_usermissing'] = 'Der usgewählte Nutzer wurde nicht gefunden. Möglicherweise wurde er gelöscht oder der Nutzer wurde anderswo geändert.';

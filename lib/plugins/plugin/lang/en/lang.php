@@ -6,7 +6,7 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
 
-$lang['menu'] = 'Manage Plugins'; 
+$lang['menu'] = 'Manage Plugins';
 
 // custom language strings for the plugin
 $lang['download'] = "Download and install a new plugin";
@@ -52,7 +52,7 @@ $lang['type']             = 'Type:';
 $lang['desc']             = 'Description:';
 $lang['author']           = 'Author:';
 $lang['www']              = 'Web:';
-    
+
 // error messages
 $lang['error']            = 'An unknown error occurred.';
 $lang['error_download']   = 'Unable to download the plugin file: %s';

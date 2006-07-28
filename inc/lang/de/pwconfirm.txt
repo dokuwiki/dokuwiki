@@ -1,0 +1,16 @@
+Hallo @FULLNAME@!
+
+Jemand hat ein neues Passwort für Ihren @TITLE@
+login auf @DOKUWIKIURL@ angefordert.
+
+Wenn Sie diese Änderung nicht angefordert haben, ignorieren Sie diese
+E-Mail einfach.
+
+Um die Anforderung zu bestätigen folgen Sie bitte dem unten angegebenen
+Bestätigungslink.
+
+@CONFIRM@
+
+-- 
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@
