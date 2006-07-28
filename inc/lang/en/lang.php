@@ -201,7 +201,7 @@ $lang['i_installer']  = 'DokuWiki Installer';
 $lang['i_wikiname']   = 'Wiki Name';
 $lang['i_enableacl']  = 'Enable ACL (recommended)';
 $lang['i_superuser']  = 'Superuser';
-$lang['i_problems']   = 'The installer found some problems, indicated below. You can not continue until you fixed them.';
+$lang['i_problems']   = 'The installer found some problems, indicated below. You can not continue until you have fixed them.';
 $lang['i_modified']   = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
                          You should either re-extract the files from the downloaded package or consult the complete
                          <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installation instructions</a>';

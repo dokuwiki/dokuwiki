@@ -9,6 +9,10 @@ if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
+// check for error reporting override or set error reporting to sane values
+if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
+else { error_reporting(DOKU_E_LEVEL); }
+
 // kill magic quotes
 if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
     if (!empty($_GET))    remove_magic_quotes($_GET);
