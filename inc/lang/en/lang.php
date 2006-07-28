@@ -205,7 +205,7 @@ $lang['i_problems']   = 'The installer found some problems, indicated below. You
 $lang['i_modified']   = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
                          You should either re-extract the files from the downloaded package or consult the complete
                          <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installation instructions</a>';
-$lang['i_funcna']     = 'PHP function <code>%s</code> is not available. Maybe your provider disabled it for some reason?';
+$lang['i_funcna']     = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?';
 $lang['i_permfail']   = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
 $lang['i_confexists'] = '<code>%s</code> already exists';
 $lang['i_writeerr']   = 'Unable to create <code>%s</code>. You will need to check directory/file permissions and create the file manually.';
@@ -215,6 +215,10 @@ $lang['i_success']    = 'The configuration was finished successfully. You may de
                         <a href="doku.php">your new DokuWiki</a>.';
 $lang['i_failure']    = 'Some errors occured while writing the configuration files. You may need to fix them manually before
                          you can use <a href="doku.php">your new DokuWiki</a>.';
+$lang['i_policy']     = 'Initial ACL policy';
+$lang['i_pol0']       = 'Open Wiki (read, write, upload for everyone)';
+$lang['i_pol1']       = 'Public Wiki (read for everyone, write and upload for registered users)';
+$lang['i_pol2']       = 'Closed Wiki (read, write, upload for registered users only)';
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
