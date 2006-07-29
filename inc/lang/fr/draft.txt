@@ -1,0 +1,11 @@
+====== Un fichier brouillon a été trouvé ======
+
+La dernière édition de cette page ne s'est pas terminée proprement.
+Dokuwiki a enregistré automatiquement un brouillon de votre travail
+que vous pouvez utiliser pour votre édition. Ci-dessous figurent les
+données enregistrées lors de votre dernière session.
+
+À vous de décider si vous souhaitez //récupérer// votre session
+d'édition passée, //supprimer// le brouillon enregistré
+automatiquement ou //annuler// le processus d'édition.
+

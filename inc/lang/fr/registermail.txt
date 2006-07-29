@@ -1,0 +1,10 @@
+Un nouvel utilisateur s'est enregistré. Voici les détails :
+
+Date        : @DATE@
+Navigateur  : @BROWSER@
+Adresse IP  : @IPADDRESS@
+Nom d'hôte  : @HOSTNAME@
+
+-- 
+Ce message a été généré par DokuWiki
+@DOKUWIKIURL@

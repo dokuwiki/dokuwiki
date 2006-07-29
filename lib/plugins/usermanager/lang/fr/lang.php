@@ -1,6 +1,8 @@
 <?php
 /**
  * french language file
+ *
+ * @author     Guy Brand <gb@isis.u-strasbg.fr>
  */
  
 // for admin plugins, the menu prompt to be displayed in the admin menu
@@ -11,7 +13,7 @@ $lang['menu'] = 'Gestion des utilisateurs';
 $lang['noauth']      = '(authentification utilisateur non disponible)';
 $lang['nosupport']   = '(gestion utilisateur non supportée)';
 
-$lang['badauth']     = 'méchanisme d\'authentification invalide';     // should never be displayed!
+$lang['badauth']     = 'mécanisme d\'authentification invalide';     // should never be displayed!
 
 $lang["user_id"] = "Identifiant";
 $lang["user_pass"] = "Mot de passe";
@@ -40,8 +42,11 @@ $lang['update_ok']   = 'utilisateur mis à jour avec succès';
 $lang['update_fail'] = 'échec de la mise à jour utilisateur';
 $lang['update_exists'] = 'échec du changement de nom d\'utilisateur,le nom spécifié (%s) existe déjà (toutes les autres modifications seront effectuées).';
 
-$lang['start']  = 'démarrage';
-$lang['prev']   = 'précédent';
-$lang['next']   = 'suivant';
-$lang['last']   = 'dernier';
+$lang['start']  = 'Démarrage';
+$lang['prev']   = 'Précédent';
+$lang['next']   = 'Suivant';
+$lang['last']   = 'Dernier';
+
+// added after 2006-03-09 release
+$lang['edit_usermissing'] = 'Utilisateur sélectionné non trouvé, cet utilisateur a peut-être été supprimé ou modifié ailleurs.';
 
