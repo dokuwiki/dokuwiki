@@ -78,6 +78,8 @@ $lang['resendna']  = 'Denne wiki understøtter ikke udsendelse af nyt password.'
 $lang['resendpwd'] = 'Send nyt password for';
 $lang['resendpwdmissing'] = 'Du skal udfylde alle felter.';
 $lang['resendpwdnouser']  = 'Vi kan ikke finde denne bruger i vores database.';
+$lang['resendpwdbadauth'] = 'Beklager, denne autoriseringskode er ikke gyldig. Kontroller venligst at du benyttede det fulde link til bekræftelse.';
+$lang['resendpwdconfirm'] = 'Et link med bekræftelse er blevet sendt med email.';
 $lang['resendpwdsuccess'] = 'Dit nye password er blevet sendt med e-mail.';
 
 $lang['txt_upload']   = 'Vælg den fil der skal uploades';

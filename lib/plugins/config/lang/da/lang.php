@@ -26,8 +26,8 @@ $lang['_header_undefined'] = 'Udefinerede indstillinger';
 
 /* --- Config Setting Groups --- */
 $lang['_basic'] = 'Grundindstillinger';
-//$lang['_display'] = 'Display Settings';
-//$lang['_authentication'] = 'Authentication Settings';
+$lang['_display'] = 'Synlighedsindstillinger';
+$lang['_authentication'] = 'Bekræftelsesindstillinger';
 $lang['_anti_spam'] = 'Anti-spam indstillinger';
 $lang['_editing'] = 'Redigeringsindstillinger';
 $lang['_links'] = 'Linkindstillinger';
@@ -42,9 +42,9 @@ $lang['_plugin_sufix'] = 'Pluginindstillinger';
 $lang['_template_sufix'] = 'Skabelonindstillinger';
 
 /* --- Undefined Setting Messages --- */
-//$lang['_msg_setting_undefined'] = 'No setting metadata.';
-//$lang['_msg_setting_no_class'] = 'No setting class.';
-//$lang['_msg_setting_no_default'] = 'No default value.';
+$lang['_msg_setting_undefined'] = 'Ingen indstillingsmetadata.';
+$lang['_msg_setting_no_class'] = 'Ingen indstillingsklasse.';
+$lang['_msg_setting_no_default'] = 'Ingen standardværdi.';
 
 /* -------------------- Config Options --------------------------- */
 
@@ -84,16 +84,16 @@ $lang['mailguard']   = 'Slør email adresser';
 /* Authentication Options */
 $lang['useacl']      = 'Benyt adgangskontrollister';
 $lang['autopasswd']  = 'Generer passwords automatisk';
-//$lang['authtype']    = 'Authentication backend';
+$lang['authtype']    = 'Bekræftelsesbackend';
 $lang['passcrypt']   = 'Passwordkrypteringsmetode';
 $lang['defaultgroup']= 'Standardgruppe';
 $lang['superuser']   = 'Superbruger';
 $lang['profileconfirm'] = 'Bekræft profilændringer med password';
-//$lang['disableactions'] = 'Disable DokuWiki actions';
-//$lang['disableactions_check'] = 'Check';
-//$lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
-//$lang['disableactions_wikicode'] = 'View source/Export Raw';
-//$lang['disableactions_other'] = 'Other actions (comma separated)';
+$lang['disableactions'] = 'Slå DokuWiki muligheder fra';
+$lang['disableactions_check'] = 'Check';
+$lang['disableactions_subscription'] = 'Abonner/Fjern abonnement';
+$lang['disableactions_wikicode'] = 'Vis kilde/eksporter råtekst';
+$lang['disableactions_other'] = 'Andre muligheder (kommasepareret)';
 
 /* Advanced Options */
 $lang['userewrite']  = 'Brug pæne URLer';
@@ -105,10 +105,10 @@ $lang['usedraft']    = 'Gem automatisk en kladde under redigering';
 //$lang['usegzip']     = 'Use gzip for attic files';
 //$lang['cachetime']   = 'Maximum age for cache (sec)';
 $lang['purgeonadd']  = 'Ryd cache når nye sider tilføjes';
-//$lang['locktime']    = 'Maximum age for lock files (sec)';
-//$lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern';
+$lang['locktime']    = 'Maksimum levetid for låsningsfiler (sek)';
+$lang['fetchsize']   = 'Maksimum antal (bytes) fetch.php må downloade fra extern';
 $lang['notify']      = 'Send ændringsnotifikationer til denne e-mailadresse';
-//$lang['registernotify'] = 'Send info on newly registered users to this email address';
+$lang['registernotify'] = 'Send info om nyoprettede brugere til denne email adresse';
 $lang['mailfrom']    = 'Email adresse til brug for automatiske mails';
 $lang['gzip_output'] = 'Benyt gzip Content-Encoding til XHTML';
 $lang['gdlib']       = 'GD Lib version';
