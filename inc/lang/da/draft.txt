@@ -1,0 +1,8 @@
+====== Kladdefil fundet ======
+
+Din sidste redigeringssession på denne side blev ikke afsluttet korrekt. DokuWiki
+har automatisk gemt en kladde mens du arbejdede, som du kan benytte til at fortsætte redigeringen. Forneden kan du se de datader blev gemt fra din sidste session.
+
+Vælg venligst, om du vil //gendanne// din tabte redigering, //slette//
+den gemte kladde eller //afbryde// redigeringen.
+
