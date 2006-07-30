@@ -499,13 +499,12 @@ function p_get_first_heading($id){
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function p_xhtml_cached_geshi($code, $language) {
-
   $cache = getCacheName($language.$code,".code");
 
   if (@file_exists($cache)) {
 
     $highlighted_code = io_readFile($cache, false);
-    touch($cache);
+    @touch($cache);
 
   } else {
 

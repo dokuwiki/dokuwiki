@@ -387,8 +387,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( is_null($language) ) {
             $this->preformatted($text);
         } else {
-            //strip leading blank line
+            //strip leading and trailing blank line
             $text = preg_replace('/^\s*?\n/','',$text);
+            $text = preg_replace('/\s*?\n$/','',$text);
             $this->doc .= p_xhtml_cached_geshi($text, $language);
         }
     }
