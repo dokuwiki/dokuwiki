@@ -130,14 +130,41 @@ it's dirty, so any "real" fixes are welcome */
 /* --- upload form --- */
 
 #media__content div.upload {
-    font-size: 80%;
-    padding: 0.5em 0 0.5em 0.5em;
+    font-size: 90%;
+    padding: 0 0.5em 0.5em 0.5em;
 }
 
 #media__content form.upload {
     display: block;
     border-bottom: solid 1px __dark__;
-    padding: 0 0 1em 2em;
+    padding: 0 0.5em 1em 0.5em;
+}
+#media__content form.upload fieldset {
+    padding: 0;
+    margin: 0;
+    border: none;
+    width: auto;
+}
+#media__content form.upload p {
+    clear: left;
+    text-align: left;
+    padding: 0.25em 0;
+    margin: 0;
+    line-height: 1.0em;
+}
+#media__content form.upload label {
+    float: left;
+    width: 12.0em;
+    margin-right: .5em;
+}
+#media__content form.upload input {
+}
+#media__content form.upload label.check {
+    float: none;
+    width: auto;
+}
+#media__content form.upload input.check {
+    margin-left: 12.0em;
 }
 
 /* --- meta edit form --- */

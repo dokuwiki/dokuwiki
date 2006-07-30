@@ -421,22 +421,27 @@ function media_uploadform($ns, $auth){
     <div class="upload"><?php echo $lang['mediaupload']?></div>
     <form action="<?php echo DOKU_BASE?>lib/exe/mediamanager.php"
           method="post" enctype="multipart/form-data" class="upload">
+      <fieldset>
         <input type="hidden" name="ns" value="<?php echo hsc($ns)?>" />
 
+        <p>
+          <label for="upload__file"><?php echo $lang['txt_upload']?>:</label>
+          <input type="file" name="upload" class="edit" id="upload__file" />
+        </p>
 
-        <?php echo $lang['txt_upload']?>:
-        <input type="file" name="upload" class="edit" id="upload__file" /><br />
-
-        <?php echo $lang['txt_filename']?>:
-        <input type="text" name="id" class="edit" id="upload__name" />
-        <input type="submit" class="button" value="<?php echo $lang['btn_upload']?>" accesskey="s" />
+        <p>
+          <label for="upload__name"><?php echo $lang['txt_filename']?>:</label>
+          <input type="text" name="id" class="edit" id="upload__name" />
+          <input type="submit" class="button" value="<?php echo $lang['btn_upload']?>" accesskey="s" />
+        </p>
 
         <?php if($auth >= AUTH_DELETE){?>
-            <br />
-            <label for="dw__ow">
-            <input type="checkbox" name="ow" value="1" id="dw__ow" /><?php echo $lang['txt_overwrt']?>
-            </label>
+            <p>
+              <input type="checkbox" name="ow" value="1" id="dw__ow" class="check" />
+              <label for="dw__ow" class="check"><?php echo $lang['txt_overwrt']?></label>
+            </p>
         <?php }?>
+      </fieldset>
     </form>
     <?php
 }
