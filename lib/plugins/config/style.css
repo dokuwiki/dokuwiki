@@ -12,6 +12,7 @@
   width: auto;
   margin-bottom: 2em;
   background-color: __medium__;
+  padding: 0 1em;
 }
 #config__manager legend {
     font-size: 1.25em;
@@ -19,7 +20,7 @@
 
 #config__manager form { }
 #config__manager table {
-    margin: 0.5em;
+    margin: 1em 0;
     width: 100%;
 }
 
@@ -42,23 +43,25 @@
 #config__manager tr.default .input,
 #config__manager tr.default input,
 #config__manager tr.default textarea,
-#config__manager tr.default select {
+#config__manager tr.default select,
+#config__manager .selectiondefault {
   background-color: #ccddff;
 }
 
 #config__manager tr.protected .input,
 #config__manager tr.protected input,
 #config__manager tr.protected textarea,
-#config__manager tr.protected select {
-  background-color: #ffcccc;
+#config__manager tr.protected select,
+#config__manager tr.protected .selection {
+  background-color: #ffcccc!important;
 }
 
 #config__manager td.error  { background-color: red; }
 
 #config__manager .selection {
-  width: 14em;
+  width: 14.8em;
   float: left;
-  padding: 1px 0.3em 1px 0;
+  margin: 0 0.3em 2px 0;
 }
 
 #config__manager .selection label {
@@ -67,13 +70,22 @@
   font-size: 90%;
 }
 
+/* IE6 correction */
+* html #config__manager .selection label {
+  padding-top: 2px;
+}
+
 #config__manager .selection input.checkbox {
   padding-left: 0.7em;
 }
 
 #config__manager .other {
   clear: both;
-  padding-top: 1em;
+  padding-top: 0.5em;
+}
+
+#config__manager .other label {
+  padding-left: 2px;
   font-size: 90%;
 }
 

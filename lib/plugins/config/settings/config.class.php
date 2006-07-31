@@ -706,33 +706,46 @@ if (!class_exists('setting_multicheckbox')) {
 
         // convert from comma separated list into array + combine complimentary actions
         $value = $this->_str2array($value);
+        $default = $this->_str2array($this->_default);
 
         $input = '';
         foreach ($this->_choices as $choice) {
           $idx = array_search($choice, $value);
+          $idx_default = array_search($choice,$default);
+
           $checked = ($idx !== false) ? 'checked="checked"' : '';
+
+          // ideally this would be handled using a second class of "default", however IE6 does not
+          // correctly support CSS selectors referencing multiple class names on the same element
+          // (e.g. .default.selection).
+          $class = (($idx !== false) == (false !== $idx_default)) ? " selectiondefault" : "";
 
           $prompt = ($plugin->getLang($this->_key.'_'.$choice) ?
                           $plugin->getLang($this->_key.'_'.$choice) : htmlspecialchars($choice));
 
-          $input .= '<div class="selection">'."\n";
+          $input .= '<div class="selection'.$class.'">'."\n";
           $input .= '<label for="config__'.$key.'_'.$choice.'">'.$prompt."</label>\n";
           $input .= '<input id="config__'.$key.'_'.$choice.'" name="config['.$key.'][]" type="checkbox" class="checkbox" value="'.$choice.'" '.$disable.' '.$checked."/>\n";
           $input .= "</div>\n";
 
           // remove this action from the disabledactions array
           if ($idx !== false) unset($value[$idx]);
+          if ($idx_default !== false) unset($default[$idx_default]);
         }
 
         // handle any remaining values
         $other = join(',',$value);
 
-        $input .= '<div class="other">'."\n";
+        $class = (count($default == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+                        " selectiondefault" : "";
+
+        $input .= '<div class="other'.$class.'">'."\n";
         $input .= '<label for="config__'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
         $input .= '<input id="config__'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
         $input .= "</div>\n";
 
-        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+//        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        $label = $this->prompt($plugin);
         return array($label,$input);
     }
 
