@@ -431,7 +431,7 @@ function media_uploadform($ns, $auth){
 
         <p>
           <label for="upload__name"><?php echo $lang['txt_filename']?>:</label>
-          <span style="white-space:nowrap">
+          <span class="nowrap">
           <input type="text" name="id" class="edit" id="upload__name" /><input
                  type="submit" class="button" value="<?php echo $lang['btn_upload']?>"
                  accesskey="s" />
