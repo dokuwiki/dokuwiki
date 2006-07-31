@@ -49,6 +49,11 @@ class js_js_compress_test extends UnitTestCase {
         $this->assertEqual(js_compress($text), $text);
     }
 
+    function test_dquot2(){
+        $text = 'var foo="Now what \\\\\\" \'do we//get /*here*/ ?";';
+        $this->assertEqual(js_compress($text), $text);
+    }
+
     function test_dquotrunaway(){
         $text = 'var foo="Now where does it end';
         $this->assertEqual(js_compress($text), "$text\n"); //\n is added by compressor
