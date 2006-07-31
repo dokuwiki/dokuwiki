@@ -117,7 +117,8 @@ function spell_check() {
   $string = preg_replace("/(\015\012)|(\015)/","\012",$string);
   $string = htmlspecialchars($string);
 
-  // make sure multiple spaces are kept
+  // make sure multiple spaces and leading are kept
+  $string = preg_replace('/^ /m','&nbsp;',$string);
   $string = preg_replace('/  /','&nbsp; ',$string);
 
   // we need the text as array later
