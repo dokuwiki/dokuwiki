@@ -1,0 +1,16 @@
+Hola @FULLNAME@!
+
+Alguien solicitó una nueva contraseña para su nombre de 
+usuario @TITLE@ en @DOKUWIKIURL@
+
+Si usted no solicitó una nueva contraseña, simplemente ignore este email.
+
+Para confirmar que el requerimiento fue realizado realmente por usted,
+por favor use el siguiente enlace.
+
+@CONFIRM@
+
+
+-- 
+Este mail ha sido generado por DokuWiki en
+@DOKUWIKIURL@

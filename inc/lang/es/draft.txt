@@ -1,0 +1,10 @@
+====== Fichero borrador encontrado ======
+
+Su última sesión de edición en esta página no se completó correctamente. Dokuwiki
+guardó automáticamente un borrador mientras usted trabajaba; puede utilizar
+el borrador para continuar editándolo. Abajo usted puede ver los datos
+que fueron guardados en su última sesión.
+
+Por favor decida si usted desea //recuperar// su sesión perdida, //eliminar//
+el borrador guardado automáticament o //cancelar// el proceso de edición.
+

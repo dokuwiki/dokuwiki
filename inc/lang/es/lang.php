@@ -41,6 +41,9 @@ $lang['btn_subscribe']   = 'Subscribirse a la notificación de cambios';
 $lang['btn_unsubscribe'] = 'Desubscribirse a la notificación de cambios';
 $lang['btn_reset']     = 'Deshacer cambios';
 $lang['btn_resendpwd'] = 'Enviar nueva contraseña';
+$lang['btn_draft']    = 'Editar borrador';
+$lang['btn_recover']  = 'Recuperar borrador';
+$lang['btn_draftdel'] = 'Borrar borrador';
 
 
 $lang['loggedinas'] = 'Conectado como ';
@@ -54,6 +57,7 @@ $lang['register']   = 'Registrarse';
 $lang['badlogin']   = 'El usuario y la contraseña ingresados son incorrectos.';
 $lang['profile']    = 'Datos del usuario';
 $lang['minoredit']  = 'Cambios menores';
+$lang['draftdate']  = 'Borrador guardado automáticamente en'; // full dformat date will be added
 
 $lang['regmissing'] = 'Lo siento, tienes que completar todos los campos.';
 $lang['reguexists'] = 'Lo siento, el nombre de usuario ya existe.';
@@ -81,6 +85,14 @@ $lang['mediainuse']  = 'El fichero %s no ha sido borrado, aun está en uso.';
 $lang['namespaces']  = 'Espacios de nombres';
 $lang['mediafiles']  = 'Ficheros disponibles en';
 
+$lang['js']['keepopen']    = 'Mantener esta ventana abierta durante la selección';
+$lang['js']['hidedetails'] = 'Ocultar detalles';
+$lang['mediausage']  = 'Use la siguiente sintaxis para hacer referencia a este fichero:';
+$lang['mediaview']   = 'Ver el fichero original';
+$lang['mediaroot']   = 'root';
+$lang['mediaupload'] = 'Subir aquí un fichero al espacio de nombres actual. Para crear sub-espacios de nombres, antepóngalos al nombre de fichero separándolos por dos puntos (:) en "Subir como".';
+$lang['mediaextchange'] = 'Extensión del fichero cambiada de .%s a .%s!';
+
 
 $lang['reference']   = 'Referencias para';
 $lang['ref_inuse']   = 'El fichero no ha podido ser borrado, porque es usado en las siguientes páginas:';
@@ -96,6 +108,8 @@ $lang['resendna']  = 'Este wiki no brinda la posibilidad de reenvío de contrase
 $lang['resendpwd'] = 'Enviar una nueva contraseña para';
 $lang['resendpwdmissing'] = 'Perdón, debes completar todos los campos.';
 $lang['resendpwdnouser']  = 'Perdón, no se encuentra este usuario en nuestra base de datos.';
+$lang['resendpwdbadauth'] = 'Perdón, este código de autenticación no es válido. Asegúrese de haber usado el enlace de confirmación entero.';
+$lang['resendpwdconfirm'] = 'Un enlace para confirmación ha sido enviado por correo electrónico.';
 $lang['resendpwdsuccess'] = 'Tu nueva contraseña ha sido enviada por correo electrónico.';
 
 
@@ -120,6 +134,7 @@ $lang['nothingfound']= 'No se ha encontrado nada.';
 
 $lang['mail_newpage'] = 'página añadida:';
 $lang['mail_changed'] = 'página cambiada:';
+$lang['mail_new_user'] = 'Nuevo usuario:';
 
 $lang['qb_bold']    = 'Texto Negrita';
 $lang['qb_italic']  = 'Texto Itálica';
@@ -199,5 +214,31 @@ $lang['subscribe_noaddress']= 'No hay ninguna dirección de correo electrónico 
 
 $lang['authmodfailed']   = 'Está mal configurada la autenticación de usuarios. Por favor, avisale al administrador del wiki.';
 $lang['authtempfail']    = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor, avisale al administrador del wiki.';
+
+/* installer strings */
+$lang['i_chooselang'] = 'Elija su idioma';
+$lang['i_installer']  = 'Instalador de DokuWiki';
+$lang['i_wikiname']   = 'Nombre del Wiki';
+$lang['i_enableacl']  = 'Habilitar ACL (recomendado) (ACL: lista de control de acceso)';
+$lang['i_superuser']  = 'Super-usuario';
+$lang['i_problems']   = 'El instalador encontró algunos problemas, se muestran abajo. No se puede continuar la instalación hasta que usted no los corrija.';
+$lang['i_modified']   = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki.
+		      Usted deberá o bien extraer nuevamente los ficheros del paquete bajado o bien consultar las
+                         <a href="http://wiki.splitbrain.org/wiki:install">instrucciones de instalación de Dokuwiki</a> completas.';
+$lang['i_funcna']     = 'La función de PHP <code>%s</code> no está disponible. Tal vez su proveedor de hosting la ha deshabilitado por alguna razón?';
+$lang['i_permfail']   = '<code>%s</code> no es escribible por DokuWiki. Es necesario que usted establezca correctamente los permisos de este directorio!';
+$lang['i_confexists'] = '<code>%s</code> ya existe';
+$lang['i_writeerr']   = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';
+$lang['i_badhash']    = 'dokuwiki.php no reconocido o modificado (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - ilegal o valor vacío';
+$lang['i_success']    = 'La configuración ha concluido exitosamente. Usted ahora puede eliminar el archivo install.php. Siga a su 
+		      <a href="doku.php">nueva instalación de DokuWiki</a>.';
+$lang['i_failure']    = 'Han ocurrido algunos errores durante la escritura de los ficheros de configuración. Usted puede corregirlos 
+		      manualmente antes de poder usar su <a href="doku.php">nueva instalación de DokuWiki</a>.';
+$lang['i_policy']     = 'Política de ACL inicial';
+$lang['i_pol0']       = 'Wiki abierta (leer, escribir y subir archivos para todos)';
+$lang['i_pol1']       = 'Wiki pública (leer para todos, escribir y subir archivos para usuarios registrados únicamente)';
+$lang['i_pol2']       = 'Wiki cerrada (leer, escribir y subir archivos para usuarios registrados únicamente)';
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
