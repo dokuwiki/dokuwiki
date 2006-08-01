@@ -17,6 +17,7 @@ $lang['btn_update'] = 'обновити';
 $lang['btn_delete'] = 'вилучити';
 $lang['btn_settings'] = 'параметри';
 $lang['btn_download'] = 'Завантажити';
+$lang['btn_enable'] = 'Зберегти';
 
 $lang['url']              = 'Адреса';
 

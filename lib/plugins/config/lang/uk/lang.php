@@ -17,6 +17,36 @@ $lang['nochoice']   = '(інших варіантів не існує)';
 $lang['locked']     = 'Неможливо записати файл параметрів налагодження, якщо це не спеціально <br />
                       переконайтеся, що ім\'я та права доступа для локального файла налагодження вірні';
 
+
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = 'Управління конфігурацією'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'Настройки ДокуВікі';
+$lang['_header_plugin'] = 'Настройки Доданків';
+$lang['_header_template'] = 'Настройки шаблонів';
+$lang['_header_undefined'] = 'Невизначені настройки';
+
+/* --- Config Setting Groups --- */
+$lang['_basic'] = 'Базові настройки';
+$lang['_display'] = 'Настройки дісплея';
+$lang['_authentication'] = 'Настройки автентифікації';
+$lang['_anti_spam'] = 'Настройки Антиспама';
+$lang['_editing'] = 'Настройки редагування';
+$lang['_links'] = 'Настройки посилань';
+$lang['_media'] = 'Натройки медіа';
+$lang['_advanced'] = 'Продвинуті настройки';
+$lang['_network'] = 'Настройки мережі';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'настройки (доданок)';
+$lang['_template_sufix'] = 'настройки (шаблон)';
+
+/* --- Undefined Setting Messages --- */
+$lang['_msg_setting_undefined'] = 'Немає метаданних параметру.';
+$lang['_msg_setting_no_class'] = 'Немає класу параметру.';
+$lang['_msg_setting_no_default'] = 'Намає значення завмовчки.';
+
 /* -------------------- Config Options --------------------------- */
 
 $lang['fmode']       = 'Права для створених файлів';
@@ -62,10 +92,16 @@ $lang['passcrypt']   = 'Метод шифрування паролей';
 $lang['defaultgroup']= 'Група завмовчки';
 $lang['superuser']   = 'Суперкористувач';
 $lang['profileconfirm'] = 'Підтвержувати зміни профайла паролем';
+$lang['disableactions'] = 'Заборонити дії ДокуВікі';
+$lang['disableactions_check'] = 'Перевірити';
+$lang['disableactions_subscription'] = 'Підписатись/Відписатись';
+$lang['disableactions_wikicode'] = 'Переглянути код/Експорт';
+$lang['disableactions_other'] = 'Інші дії (розділені комами)';
 
 /* Advanced Options */
 $lang['userewrite']  = 'Красиві URL';
 $lang['useslash']    = 'Слеш, як розділювач простірів імен в URL';
+$lang['usedraft']    = 'Автоматично зберегати чернетку при редагуванні';
 $lang['sepchar']     = 'Розділювач слів у імені сторінки';
 $lang['canonical']   = 'Каноничні URL';
 $lang['autoplural']  = 'Перевіряти множину у посиланнях';
@@ -73,10 +109,14 @@ $lang['usegzip']     = 'Використовувати gzip (для горища
 $lang['cachetime']   = 'Максимальний від для кеша (сек)';
 $lang['purgeonadd']  = 'Очищувати кеш при доданні нових сторінок';
 $lang['locktime']    = 'Час блокування (сек)';
+$lang['fetchsize']   = 'Максимальний розмір (в байтах), що fetch.php може завантажувати з зовні';
 $lang['notify']      = 'Email для сповіщень';
+$lang['registernotify'] = 'Надсилати інформацію про нових користувачів на цю адресу';
 $lang['mailfrom']    = 'Email для автоматичних повідомлень';
 $lang['gdlib']       = 'Версія GD Lib';
+$lang['gzip_output'] = 'Використовувати gzip, як Content-Encoding для xhtml';
 $lang['im_convert']  = 'Шлях до ImageMagick';
+$lang['jpg_quality'] = 'Якість компресії JPG (0-100)';
 $lang['spellchecker']= 'Дозволити перевірку орфографії';
 $lang['subscribers'] = 'Підписка на зміни';
 $lang['compress']    = 'Стискати файли CSS та javascript';
@@ -86,6 +126,7 @@ $lang['sitemap']     = 'Створювати мапу сайту для Google (
 
 $lang['rss_type']    = 'тип RSS';
 $lang['rss_linkto']  = 'посилання в RSS';
+$lang['rss_update']  = 'Інтервал оновлення RSS (сек)';
 
 /* Target options */
 
