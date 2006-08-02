@@ -39,6 +39,9 @@ $lang['btn_unsubscribe'] = 'Zaprzestań subskrypcji zmian';
 $lang['btn_profile']    = 'Aktualizuj profil';
 $lang['btn_reset']     = 'Resetuj';
 $lang['btn_resendpwd'] = 'Prześlij nowe hasło';
+$lang['btn_draft']    = 'Edytuj szkic';
+$lang['btn_recover']  = 'Przywróć szkic';
+$lang['btn_draftdel'] = 'Usuń szkic';
 
 $lang['loggedinas'] = 'Zalogowany jako';
 $lang['user']       = 'Użytkownik';
@@ -53,6 +56,7 @@ $lang['register']   = 'Zarejestruj się!';
 $lang['profile']    = 'Profil użytkownika';
 $lang['badlogin']   = 'Nazwa użytkownika lub hasło są nieprawidłowe.';
 $lang['minoredit']  = 'Mniejsze zmiany';
+$lang['draftdate']  = 'Czas zachowania szkicu'; // full dformat date will be added
 
 $lang['regmissing'] = 'Wypełnij wszystkie pola.';
 $lang['reguexists'] = 'Użytkownik o tej nazwie już istnieje.';
@@ -75,6 +79,8 @@ $lang['resendpwd'] = 'Prześlij nowe hasło dla';
 $lang['resendpwdmissing'] = 'Wypełnij wszystkie pola.';
 $lang['resendpwdnouser']  = 'Nie można znaleźć tego użytkownika w bazie danych.';
 $lang['resendpwdsuccess'] = 'Hasło zostało przesłane pocztą.';
+$lang['resendpwdconfirm'] = 'Prośba o potwierdzenie została przesłana pocztą.';
+$lang['resendpwdsuccess'] = 'Nowe hasło zostało wysłane pocztą.';
 
 $lang['txt_upload']   = 'Wybierz plik do wysłania';
 $lang['txt_filename'] = 'Nazwa pliku (opcjonalnie)';
@@ -99,6 +105,14 @@ $lang['mediainuse']  = 'Plik "%s" nie został usunięty, ponieważ jest używany
 $lang['namespaces']  = 'Katalogi';
 $lang['mediafiles']  = 'Dostępne pliki';
 
+$lang['js']['keepopen']    = 'Nie zamykaj okna po wyborze';
+$lang['js']['hidedetails'] = 'Ukryj szczegóły';
+$lang['mediausage']  = 'Użyj następującej składni w odnośniku do tego pliku:';
+$lang['mediaview']   = 'Pokaż orginalny plik';
+$lang['mediaroot']   = 'główny';
+$lang['mediaupload'] = 'Umieść plik w aktualnym katalogu. Aby utworzyć podkatalogi, poprzedź nazwę pliku nazwami katalogów odzielonymi dwukropkami.';
+$lang['mediaextchange'] = 'Rozszerzenie pliku zmieniono z .%s na .%s!';
+
 $lang['reference']   = 'Odnośniki do';
 $lang['ref_inuse']   = 'Ten plik nie może być usunięty, ponieważ jest używany na następujących stronach:';
 $lang['ref_hidden']  = 'Odnośniki mogą znajdować się na stronach, do których nie masz uprawnień.';
@@ -121,6 +135,7 @@ $lang['summary']    = 'Opis zmian';
 
 $lang['mail_newpage'] = 'Strona dodana:';
 $lang['mail_changed'] = 'Strona zmieniona:';
+$lang['mail_new_user'] = 'Nowy użytkownik:';
 
 $lang['nosmblinks'] = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer.\n Możesz skopiować odnośnik.';
 
@@ -179,5 +194,31 @@ $lang['unsubscribe_error']  = 'Błąd przu usuwaniu %s z listy subskrypcji stron
 /* auth.class language support */
 $lang['authmodfailed']   = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
 $lang['authtempfail']    = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
+
+/* installer strings */
+$lang['i_chooselang'] = 'Wybierz język';
+$lang['i_installer']  = 'Instalator DokuWiki';
+$lang['i_wikiname']   = 'Nazwa Wiki';
+$lang['i_enableacl']  = 'Włącz mechanizm uprawnień ACL (zalecane)';
+$lang['i_superuser']  = 'Administrator';
+$lang['i_problems']   = 'Instalator napotkał poniższe problemy. Nie można kontynuwać póki nie zostaną usunięte.';
+$lang['i_modified']   = 'Ze względów bezpieczeństwa, ten skrypt działa tylko z nową i niezmodyfikowaną instalacją DokuWiki.
+                         Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z
+                         <a href="http://wiki.splitbrain.org/wiki:install">instrukcją instalacji Dokuwiki</a>';
+$lang['i_funcna']     = 'Funkcja PHP <code>%s</code> jest niedostępna.';
+$lang['i_permfail']   = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
+$lang['i_confexists'] = '<code>%s</code> już istnieje';
+$lang['i_writeerr']   = 'Nie można utworzyć <code>%s</code>. Sprawdź uprawniena do katalogu lub pliku i stwórz plik ręcznie.';
+$lang['i_badhash']    = 'nierozpoznany lub zmodyfikowany plik dokuwiki.php (skrót=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - nieprawidłowa wartość lub jej brak';
+$lang['i_success']    = 'Konfiguracja pomyślnie zakończona. Możesz teraz usunąć plik install.php. Przejdź do
+                         <a href="doku.php">Twojego nowego DokuWiki</a>.';
+$lang['i_failure']    = 'Podczas zapisu plików konfiguracyjnych wystąpiły błędy. Musisz usunąć wszystkie problemy, zanim zaczniesz korzystać z
+                         <a href="doku.php">Twojego nowego DokuWiki</a>.';
+$lang['i_policy']     = 'Wstępna polityka uprawnień ACL';
+$lang['i_pol0']       = 'Otwarte Wiki (odczyt, zapis i dodawanie plików dla wszystkich)';
+$lang['i_pol1']       = 'Publiczne Wiki (odczyt dla wszystkich, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
+$lang['i_pol2']       = 'Zamknięte Wiki (odczyt, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -45,3 +45,6 @@ $lang['prev']   = 'poprzedni';
 $lang['next']   = 'następny';
 $lang['last']   = 'ostatni';
 
+// added after 2006-03-09 release
+$lang['edit_usermissing'] = 'Nie znaleziono wybranego użytkownika, nazwa użytkownika mogła zostać zmieniona lub usunięta.';
+

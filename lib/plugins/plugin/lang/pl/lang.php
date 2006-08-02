@@ -12,13 +12,14 @@ $lang['menu'] = 'Menadżer wtyczek';
 $lang['download'] = "Ściągnij i zainstaluj nową wtyczkę";
 $lang['manage'] = "Zainstalowane Wtyczki";
 
-$lang['btn_info'] = 'info';
-$lang['btn_update'] = 'aktualizuj';
-$lang['btn_delete'] = 'usuń';
-$lang['btn_settings'] = 'ustawienia';
-$lang['btn_download'] = 'pobierz';
+$lang['btn_info'] = 'Informacje';
+$lang['btn_update'] = 'Aktualizuj';
+$lang['btn_delete'] = 'Usuń';
+$lang['btn_settings'] = 'Ustawienia';
+$lang['btn_download'] = 'Pobierz';
+$lang['btn_enable'] = 'Zapisz';
 
-$lang['url'] = 'URL';
+$lang['url'] = 'Adres URL';
 
 $lang['installed'] = 'Instalacja:';
 $lang['lastupdate'] = 'Ostatnio zaktualizowana:';

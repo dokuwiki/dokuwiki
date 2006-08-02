@@ -1,17 +1,10 @@
-Strona w Twoim DokuWiki została dodana lub zmieniona. 
+Zarejestrował się nowy użytkownik.
 Szczegółowe informacje:
 
 Data         : @DATE@
 Przeglądarka : @BROWSER@
 Adres IP     : @IPADDRESS@
 Nazwa DNS    : @HOSTNAME@
-Stara wersja : @OLDPAGE@
-Nowa wersja  : @NEWPAGE@
-Opis zmian   : @SUMMARY@
-Użytkownik   : @USER@
-
-@DIFF@
-
 
 -- 
 List został wygenerowany przez DokuWiki pod adresem

@@ -8,108 +8,154 @@
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
 // if set here, the plugin doesn't need to override the getMenuText() method
-$lang['menu']       = 'Menadżer konfiguracji'; 
+$lang['menu']       = 'Ustawienia'; 
 
 $lang['error']      = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu.
                        <br />Niepoprawne wartości są wyróżnione kolorem czerwonym.';
 $lang['updated']    = 'Ustawienia zostały zmienione.';
 $lang['nochoice']   = '(brak innych możliwości)';
-$lang['locked']     = 'Plik ustawień nie mógł zostać zmieniony, upewnij się, czy uprawnienia do plik są odpowiednie.';
+$lang['locked']     = 'Plik ustawień nie mógł zostać zmieniony, upewnij się, czy uprawnienia do pliku są odpowiednie.';
 
-// settings prompts
-$lang['fmode']       = 'tryb tworzenia pliku';         //directory mask accordingly
-$lang['dmode']       = 'tryb tworzenia katalogu';    //directory mask accordingly
-$lang['lang']        = 'język';           //your language
-$lang['basedir']     = 'katalog główny';     //absolute dir from serveroot - blank for autodetection
-$lang['baseurl']     = 'główny URL';           //URL to server including protocol - blank for autodetect
-$lang['savedir']     = 'katalog z danymi';     //where to store all the files
-$lang['start']       = 'tytuł strony początkowej';    //name of start page
-$lang['title']       = 'tytuł wiki';         //what to show in the title
-$lang['template']    = 'wzorzec';           //see tpl directory
-$lang['fullpath']    = 'wyświetlanie pełnych ścieżek';      //show full path of the document or relative to datadir only? 0|1
-$lang['recent']      = 'ilość ostatnich zmiań';     //how many entries to show in recent
-$lang['breadcrumbs'] = 'długość śladu';        //how many recent visited pages to show
-$lang['typography']  = 'konwersja cudzysłowu, myślników itp.';         //convert quotes, dashes and stuff to typographic equivalents? 0|1
-$lang['htmlok']      = 'wstawki HTML';//may raw HTML be embedded? This may break layout and XHTML validity 0|1
-$lang['phpok']       = 'wstawki PHP'; //may PHP code be embedded? Never do this on the internet! 0|1
-$lang['dformat']     = 'format daty';        //dateformat accepted by PHPs date() function
-$lang['signature']   = 'podpis';          //signature see wiki:langig for details
-$lang['toptoclevel'] = 'minimalny poziom spisu treści';      //Level starting with and below to include in AutoTOC (max. 5)
-$lang['maxtoclevel'] = 'maksymalny poziom spisu treści';      //Up to which level include into AutoTOC (max. 5)
-$lang['maxseclevel'] = 'maksymalny poziom podziału na sekcje edycyjne';   //Up to which level create editable sections (max. 5)
-$lang['camelcase']   = 'bikapitalizacja (CamelCase)';  //Use CamelCase for linking? (I don't like it) 0|1
-$lang['deaccent']    = 'podmieniaj znaki spoza ASCII w nazwach';    //convert accented chars to unaccented ones in pagenames?
-$lang['useheading']  = 'pierwszy nagłówek jako tytuł';        //use the first heading in a page as its name
-$lang['refcheck']    = 'sprawdzanie odwołań przed usunięciem pliku';    //check for references before deleting media files
-$lang['refshow']     = 'ilość pokazywanych odwołań do pliku'; //how many references should be shown, 5 is a good value
-$lang['allowdebug']  = 'debugowanie (niebezpieczne!)';   //make debug possible, disable after install! 0|1
 
-$lang['usewordblock']= 'blokowanie spamu na podstawie słów';  //block spam based on words? 0|1
-$lang['indexdelay']  = 'okres indeksowania w sekundach'; //allow indexing after this time (seconds) default is 5 days
-$lang['relnofollow'] = 'nagłówek rel="nofollow" dla odnośników zewnętrznych';         //use rel="nofollow" for external links?
-$lang['mailguard']   = 'utrudnianie odczytu adresów e-mail';  //obfuscate email addresses against spam harvesters?
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = 'Menadżer konfiguracji'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'Ustawienia DokuWiki';
+$lang['_header_plugin'] = 'Ustawienia wtyczek';
+$lang['_header_template'] = 'Ustawienia motywu';
+$lang['_header_undefined'] = 'Inne ustawienia';
 
-/* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
-$lang['useacl']      = 'kontrola uprawnień ACL';                //Use Access Control Lists to restrict access?
-$lang['openregister']= 'pozwolenie na rejestrację nowych użytkowników';          //Should users to be allowed to register?
-$lang['autopasswd']  = 'automatyczne generowanie haseł'; //autogenerate passwords and email them to user
-$lang['resendpasswd']= 'przypominanie hasła';  //allow resend password function?
-$lang['authtype']    = 'typ autoryzacji'; //which authentication backend should be used
-$lang['passcrypt']   = 'kodowanie hasła';    //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
-$lang['defaultgroup']= 'domyślna grupa';          //Default groups new Users are added to
-$lang['superuser']   = 'administrator';              //The admin can be user or @group
-$lang['profileconfirm'] = 'potwierdzanie zmiany profilu hasłem';     //Require current password to langirm changes to user profile
+/* --- Config Setting Groups --- */
+$lang['_basic'] = 'Podstawowe';
+$lang['_display'] = 'Wygląd';
+$lang['_authentication'] = 'Autoryzacja';
+$lang['_anti_spam'] = 'Spam';
+$lang['_editing'] = 'Edycja';
+$lang['_links'] = 'Odnośniki';
+$lang['_media'] = 'Media';
+$lang['_advanced'] = 'Zaawansowane';
+$lang['_network'] = 'Sieć';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'Wtyczki';
+$lang['_template_sufix'] = 'Motywy';
+
+/* --- Undefined Setting Messages --- */
+$lang['_msg_setting_undefined'] = 'Brak danych o ustawieniu.';
+$lang['_msg_setting_no_class'] = 'Brak kategorii ustawień.';
+$lang['_msg_setting_no_default'] = 'Brak wartości domyślnej.';
+
+/* -------------------- Config Options --------------------------- */
+
+$lang['fmode']       = 'Tryb tworzenia pliku';
+$lang['dmode']       = 'Tryb tworzenia katalogu';
+$lang['lang']        = 'Język';
+$lang['basedir']     = 'Katalog główny';
+$lang['baseurl']     = 'Główny URL';
+$lang['savedir']     = 'Katalog z danymi';
+$lang['start']       = 'Tytuł strony początkowej';
+$lang['title']       = 'Tytuł wiki';
+$lang['template']    = 'Motyw';
+$lang['fullpath']    = 'Wyświetlanie pełnych ścieżek';
+$lang['recent']      = 'Ilość ostatnich zmiań';
+$lang['breadcrumbs'] = 'Długość śladu';
+$lang['youarehere']  = 'Ślad według struktury';
+$lang['typography']  = 'Konwersja cudzysłowu, myślników itp.';
+$lang['htmlok']      = 'Wstawki HTML';
+$lang['phpok']       = 'Wstawki PHP';
+$lang['dformat']     = 'Format daty';
+$lang['signature']   = 'Podpis';
+$lang['toptoclevel'] = 'Minimalny poziom spisu treści';
+$lang['maxtoclevel'] = 'Maksymalny poziom spisu treści';
+$lang['maxseclevel'] = 'Maksymalny poziom podziału na sekcje edycyjne';
+$lang['camelcase']   = 'Bikapitalizacja (CamelCase)';
+$lang['deaccent']    = 'Podmieniaj znaki spoza ASCII w nazwach';
+$lang['useheading']  = 'Pierwszy nagłówek jako tytuł';
+$lang['refcheck']    = 'Sprawdzanie odwołań przed usunięciem pliku';
+$lang['refshow']     = 'Ilość pokazywanych odwołań do pliku';
+$lang['allowdebug']  = 'Debugowanie (niebezpieczne!)';
+
+$lang['usewordblock']= 'Blokowanie spamu na podstawie słów';
+$lang['indexdelay']  = 'Okres indeksowania w sekundach';
+$lang['relnofollow'] = 'Nagłówek rel="nofollow" dla odnośników zewnętrznych';
+$lang['mailguard']   = 'Utrudnianie odczytu adresów e-mail';
+
+/* Authentication Options */
+$lang['useacl']      = 'Kontrola uprawnień ACL';
+$lang['openregister']= 'Pozwolenie na rejestrację nowych użytkowników';
+$lang['autopasswd']  = 'Automatyczne generowanie haseł';
+$lang['resendpasswd']= 'Przypominanie hasła';
+$lang['authtype']    = 'Typ autoryzacji';
+$lang['passcrypt']   = 'Kodowanie hasła';
+$lang['defaultgroup']= 'Domyślna grupa';
+$lang['superuser']   = 'Administrator';
+$lang['profileconfirm'] = 'Potwierdzanie zmiany profilu hasłem';
+$lang['disableactions'] = 'Wyłącz akcje DokuWiki';
+$lang['disableactions_check'] = 'Sprawdzanie';
+$lang['disableactions_subscription'] = 'Subskrypcje';
+$lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
+$lang['disableactions_other'] = 'Inne akcje (oddzielone przecinkiem)';
 
 /* Advanced Options */
-$lang['userewrite']  = 'proste adresy URL';             //this makes nice URLs: 0: off 1: .htaccess 2: internal
-$lang['useslash']    = 'ukośnik';                 //use slash instead of colon? only when rewrite is on
-$lang['sepchar']     = 'znak rozdzielający wyrazy nazw';  //word separator character in page names; may be a
-$lang['canonical']   = 'kanoniczne adresy URL';  //Should all URLs use full canonical http://... style?
-$lang['autoplural']  = 'automatyczne tworzenie liczby mnogiej';               //try (non)plural form of nonexisting files?
-$lang['usegzip']     = 'kompresja gzip dla starych wersji';      //gzip old revisions?
-$lang['cachetime']   = 'maksymalny wiek cache w sekundach';  //maximum age for cachefile in seconds (defaults to a day)
-$lang['purgeonadd']  = 'czyść cache po dodaniu strony';        //purge cache when a new file is added (needed for up to date links)
-$lang['locktime']    = 'maksymalny wiek blockad w sekundach';  //maximum age for lockfiles (defaults to 15 minutes)
-$lang['notify']      = 'wysyłanie powiadomień na adres e-mail';      //send change info to this email (leave blank for nobody)
-$lang['mailfrom']    = 'adres e-mail tego wiki';            //use this email when sending mails
-$lang['gdlib']       = 'wersja biblioteki GDLib';              //the GDlib version (0, 1 or 2) 2 tries to autodetect
-$lang['im_convert']  = 'ścieżka do programu imagemagick';            //path to ImageMagicks convert (will be used instead of GD)
-$lang['spellchecker']= 'sprawdzanie pisownii';         //enable Spellchecker (needs PHP >= 4.3.0 and aspell installed)
-$lang['subscribers'] = 'subskrypcja'; //enable change notice subscription support
-$lang['compress']    = 'kompresja arkuszy CSS & i plików JavaScript';  //Strip whitespaces and comments from Styles and JavaScript? 1|0
-$lang['hidepages']   = 'ukrywanie stron pasujących do wzorca (regex)';      //Regexp for pages to be skipped from RSS, Search and Recent Changes
-$lang['send404']     = 'nagłówek "HTTP404/Page Not Found" dla nieistniejących stron';    //Send a HTTP 404 status for non existing pages?
-$lang['sitemap']     = 'okres generowania Google Sitemap w dniach';   //Create a google sitemap? How often? In days.
+$lang['userewrite']  = 'Proste adresy URL';
+$lang['useslash']    = 'Ukośnik';
+$lang['sepchar']     = 'Znak rozdzielający wyrazy nazw';
+$lang['canonical']   = 'Kanoniczne adresy URL';
+$lang['autoplural']  = 'Automatyczne tworzenie liczby mnogiej';
+$lang['usegzip']     = 'Kompresja gzip dla starych wersji';
+$lang['cachetime']   = 'Maksymalny wiek cache w sekundach';
+$lang['purgeonadd']  = 'Czyść cache po dodaniu strony';
+$lang['locktime']    = 'Maksymalny wiek blockad w sekundach';
+$lang['notify']      = 'Wysyłanie powiadomień na adres e-mail';
+$lang['registernotify'] = 'Prześlij informacje o nowych użytkownikach na adres e-mail';
+$lang['mailfrom']    = 'Adres e-mail tego wiki';
+$lang['gzip_output'] = 'Używaj GZIP dla XHTML';
+$lang['gdlib']       = 'Wersja biblioteki GDLib';
+$lang['im_convert']  = 'Ścieżka do programu imagemagick';
+$lang['jpg_quality'] = 'Jakość kompresji JPG (0-100)';
+$lang['spellchecker']= 'Sprawdzanie pisownii';
+$lang['subscribers'] = 'Subskrypcja';
+$lang['compress']    = 'Kompresja arkuszy CSS & i plików JavaScript';
+$lang['hidepages']   = 'Ukrywanie stron pasujących do wzorca (wyrażenie regularne)';
+$lang['send404']     = 'Nagłówek "HTTP 404/Page Not Found" dla nieistniejących stron';
+$lang['sitemap']     = 'Okres generowania Google Sitemap (w dniach)';
 
-$lang['rss_type']    = 'typ RSS';             //type of RSS feed to provide, by default:
-$lang['rss_linkto']  = 'odnośniki w RSS';              //what page RSS entries link to:
+$lang['rss_type']    = 'Typ RSS';
+$lang['rss_linkto']  = 'Odnośniki w RSS';
+$lang['rss_update']  = 'Okres aktualizacji RSS (w sekundach)';
 
-//Set target to use when creating links - leave empty for same window
-$lang['target____wiki']      = 'okno docelowe odnośników wewnętrznych';
-$lang['target____interwiki'] = 'okno docelowe odnośników do innych wiki';
-$lang['target____extern']    = 'okno docelowe odnośników zewnętrznych';
-$lang['target____media']     = 'okno docelowe odnośników do plików';
-$lang['target____windows']   = 'okno docelowe odnośników zasobów Windows';
+/* Target options */
+$lang['target____wiki']      = 'Okno docelowe odnośników wewnętrznych';
+$lang['target____interwiki'] = 'Okno docelowe odnośników do innych wiki';
+$lang['target____extern']    = 'Okno docelowe odnośników zewnętrznych';
+$lang['target____media']     = 'Okno docelowe odnośników do plików';
+$lang['target____windows']   = 'Okno docelowe odnośników zasobów Windows';
 
-//Proxy setup - if your Server needs a proxy to access the web set these
-$lang['proxy____host'] = 'proxy - serwer';
-$lang['proxy____port'] = 'proxy - port';
-$lang['proxy____user'] = 'proxy - nazwa użytkownika';
-$lang['proxy____pass'] = 'proxy - hasło';
-$lang['proxy____ssl']  = 'proxy - SSL';
+/* Proxy Options */
+$lang['proxy____host'] = 'Proxy - serwer';
+$lang['proxy____port'] = 'Proxy - port';
+$lang['proxy____user'] = 'Proxy - nazwa użytkownika';
+$lang['proxy____pass'] = 'Proxy - hasło';
+$lang['proxy____ssl']  = 'Proxy - SSL';
 
 /* Safemode Hack */
-$lang['safemodehack'] = 'bezpieczny tryb (przez FTP)';  //read http://wiki.splitbrain.org/wiki:safemodehack !
-$lang['ftp____host'] = 'ftp - serwer';
-$lang['ftp____port'] = 'ftp - port';
-$lang['ftp____user'] = 'ftp - nazwa użytkownika';
-$lang['ftp____pass'] = 'ftp - hasło';
-$lang['ftp____root'] = 'ftp - katalog główny';
+$lang['safemodehack'] = 'Bezpieczny tryb (przez FTP)';
+$lang['ftp____host'] = 'FTP - serwer';
+$lang['ftp____port'] = 'FTP - port';
+$lang['ftp____user'] = 'FTP - nazwa użytkownika';
+$lang['ftp____pass'] = 'FTP - hasło';
+$lang['ftp____root'] = 'FTP - katalog główny';
 
 /* userewrite options */
 $lang['userewrite_o_0'] = 'brak';
-$lang['userewrite_o_1'] = 'htaccess';
+$lang['userewrite_o_1'] = '.htaccess';
 $lang['userewrite_o_2'] = 'dokuwiki';
+
+/* deaccent options */
+$lang['deaccent_o_0'] = 'zostaw orginalną pisownię';
+$lang['deaccent_o_1'] = 'usuń litery';
+$lang['deaccent_o_2'] = 'zamień na ASCII';
 
 /* gdlib options */
 $lang['gdlib_o_0'] = 'biblioteka GDLib niedostępna';

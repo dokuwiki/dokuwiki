@@ -4,7 +4,10 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Grzegorz Żur <grzegorz.zur@gmail.com>
+ *
+ *
  */
+
 $lang['admin_acl']  = 'Zarządzanie uprawnieniami';
 $lang['acl_group']  = 'Grupa';
 $lang['acl_user']   = 'Użytkownik';

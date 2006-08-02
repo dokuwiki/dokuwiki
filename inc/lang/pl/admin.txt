@@ -1,4 +1,4 @@
 ====== Administracja ======
 
-Lista dostępnych czynności administracyjnych.
+Czynności administracyjne DokuWiki.
 
