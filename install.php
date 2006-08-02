@@ -54,7 +54,7 @@ header('Content-Type: text/html; charset=utf-8');
  lang="<?php echo $LC?>" dir="<?php echo $lang['direction']?>">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DokuWiki Installer</title>
+    <title><?php echo $lang['i_installer']?></title>
     <style type="text/css">
         body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
         img { border: none }
