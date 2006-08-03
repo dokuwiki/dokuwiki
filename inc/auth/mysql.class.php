@@ -342,9 +342,11 @@ class auth_mysql extends auth_basic {
         $sql .= " ".$this->cnf['SortOrder']." LIMIT $first, $limit";
         $result = $this->_queryDB($sql);
 
-        foreach ($result as $user)
-          if (($info = $this->_getUserInfo($user['user'])))
-            $out[$user['user']] = $info;
+        if (!empty($result)) {
+          foreach ($result as $user)
+            if (($info = $this->_getUserInfo($user['user'])))
+              $out[$user['user']] = $info;
+        }
 
         $this->_unlockTables();
         $this->_closeDB();
