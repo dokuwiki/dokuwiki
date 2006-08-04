@@ -25,12 +25,14 @@
 
   //prepare config array()
   global $conf;
-  $conf = array();
+  if (!defined('DOKU_UNITTEST')) {
+    $conf = array();
 
-  // load the config file(s)
-  require_once(DOKU_CONF.'dokuwiki.php');
-  if(@file_exists(DOKU_CONF.'local.php')){
-    require_once(DOKU_CONF.'local.php');
+    // load the config file(s)
+    require_once(DOKU_CONF.'dokuwiki.php');
+    if(@file_exists(DOKU_CONF.'local.php')){
+      require_once(DOKU_CONF.'local.php');
+    }
   }
 
   //prepare language array

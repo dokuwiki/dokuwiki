@@ -1,7 +1,13 @@
 <?php
+define('DOKU_UNITTEST',true);
+define('DOKU_TESTSCRIPT',$_SERVER['PHP_SELF']);
+
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-define('DOKU_CONF',realpath(dirname(__FILE__).'/../conf').'/'        );
+define('DOKU_CONF',realpath(dirname(__FILE__).'/../conf').'/');
+
 require_once DOKU_CONF . 'dokuwiki.php';
+if(@file_exists(DOKU_CONF.'local.php')){ require_once(DOKU_CONF.'local.php'); }
+
 $conf['lang'] = 'en'; 
 define('TEST_ROOT', dirname(__FILE__));
 define('TMPL_FILESCHEME_PATH', TEST_ROOT . '/filescheme/');
@@ -56,7 +62,7 @@ function DW_TESTS_PaintRunMore() {
         break;
         case DW_TESTS_OUTPUT_HTML:
         default:
-            echo "<p><a href='" . $_SERVER['PHP_SELF'] . "'>Run more tests</a></p>";
+            echo "<p><a href='" . DOKU_TESTSCRIPT . "'>Run more tests</a></p>";
         break;
     }
 }
@@ -94,8 +100,8 @@ function DW_TESTS_PaintSuiteHeader() {
         case DW_TESTS_OUTPUT_HTML:
         default:
             echo "<h1>Dokuwiki: Unit Test Suite</h1>\n";
-            echo "<p><a href='index.php?show=groups'>Test groups</a>";
-            echo " || <a href='index.php?show=cases'>Test cases</a></p>";
+            echo "<p><a href='". DOKU_TESTSCRIPT ."?show=groups'>Test groups</a>";
+            echo " || <a href='". DOKU_TESTSCRIPT ."?show=cases'>Test cases</a></p>";
         break;
     }
 }

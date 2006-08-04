@@ -2,6 +2,9 @@
 require_once DOKU_INC.'inc/utf8.php';
 require_once DOKU_INC.'inc/pageutils.php';
 
+global $conf;
+if (!isset($conf['datadir'])) $conf['datadir'] = $conf['savedir'].'/pages';
+
 class init_resolve_pageid_test extends UnitTestCase {
 
 

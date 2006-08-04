@@ -1341,7 +1341,7 @@ class Doku_Handler_Block {
     function Doku_Handler_Block(){
         global $DOKU_PLUGINS;
         //check if syntax plugins were loaded
-        if(!is_array($DOKU_PLUGINS['syntax'])) return;
+        if(empty($DOKU_PLUGINS['syntax'])) return;
         foreach($DOKU_PLUGINS['syntax'] as $n => $p){
             $ptype = $p->getPType();
             if($ptype == 'block'){

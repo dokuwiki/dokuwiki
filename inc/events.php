@@ -198,4 +198,5 @@ function trigger_event($name, &$data, $action=NULL, $canPreventDefault=true) {
 }
 
 // create the event handler
+global $EVENT_HANDLER;
 $EVENT_HANDLER = new Doku_Event_Handler();

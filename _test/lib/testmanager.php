@@ -47,7 +47,7 @@ class TestManager {
         require_once SIMPLE_TEST . 'web_tester.php';
         require_once SIMPLE_TEST . 'mock_objects.php';
         require_once 'web.inc.php';
-		require_once 'mock_functions.php';
+        require_once 'mock_functions.php';
     }
 
     function runAllTests(&$reporter) {
@@ -286,7 +286,9 @@ class HTMLTestManager extends TestManager {
                 "?case=" . urlencode($testcase) . "'>" .
                 $testcase . "</a></li>\n";
         }
-        return $buffer . "</ul>\n";
+
+        $buffer .= "</ul>\n";
+        return $buffer;
     }
 }
 

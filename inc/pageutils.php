@@ -21,7 +21,7 @@
 function getID($param='id',$clean=true){
   global $conf;
 
-  $id = $_REQUEST[$param];
+  $id = isset($_REQUEST[$param]) ? $_REQUEST[$param] : null;
 
   //construct page id from request URI
   if(empty($id) && $conf['userewrite'] == 2){
@@ -301,7 +301,11 @@ function resolve_pageid($ns,&$page,&$exists){
   $exists = false;
 
   //keep hashlink if exists then clean both parts
-  list($page,$hash) = split('#',$page,2);
+  if (strpos($page,'#')) {
+    list($page,$hash) = split('#',$page,2);
+  } else {
+    $hash = '';
+  }
   $hash = cleanID($hash);
   $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
 

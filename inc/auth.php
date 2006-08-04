@@ -17,6 +17,8 @@
     require_once(DOKU_INC.'inc/blowfish.php');
     require_once(DOKU_INC.'inc/mail.php');
 
+    global $auth;
+
     // load the the backend auth functions and instantiate the auth object
     if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
       require_once(DOKU_INC.'inc/auth/basic.class.php');
@@ -54,10 +56,14 @@
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
     // if no credentials were given try to use HTTP auth (for SSO)
-    if(!$_REQUEST['u'] && !$_COOKIE[DOKU_COOKIE] && $_SERVER['PHP_AUTH_USER']){
+    if(empty($_REQUEST['u']) && !$_COOKIE[DOKU_COOKIE] && $_SERVER['PHP_AUTH_USER']){
       $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
       $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
     }
+
+		if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
+		if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
+		if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
 
     // external trust mechanism in place?
     if(!is_null($auth) && $auth->canDo('external')){
