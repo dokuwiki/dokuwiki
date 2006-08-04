@@ -268,7 +268,9 @@ class HTMLTestManager extends TestManager {
             $buffer .= "<li><a href='" . $manager->getBaseURL() . "?group={$group_test}'>" .
                 $group_test . "</a></li>\n";
         }
-        return $buffer . "</ul>\n";
+
+        $buffer .= "</ul>\n";
+        return $buffer;
     }
 
     function &getTestCaseList($directory = '.') {
