@@ -29,7 +29,7 @@ class Doku_Handler {
 
     function _finalize(){
 
-		    $this->CallWriter->finalise();
+        $this->CallWriter->finalise();
 
         if ( $this->status['section'] ) {
            $last_call = end($this->calls);
@@ -191,7 +191,23 @@ class Doku_Handler {
 
 
     function footnote($match, $state, $pos) {
-        $this->_nestingTag($match, $state, $pos, 'footnote');
+//        $this->_nestingTag($match, $state, $pos, 'footnote');
+        switch ( $state ) {
+            case DOKU_LEXER_ENTER:
+                $ReWriter = & new Doku_Handler_Nest($this->CallWriter,'footnote_close');
+                $this->CallWriter = & $ReWriter;
+                $this->_addCall('footnote_open', array($match), $pos);
+            break;
+            case DOKU_LEXER_EXIT:
+                $this->_addCall('footnote_close', array(), $pos);
+                $this->CallWriter->process();
+                $ReWriter = & $this->CallWriter;
+                $this->CallWriter = & $ReWriter->CallWriter;
+            break;
+            case DOKU_LEXER_UNMATCHED:
+                $this->_addCall('cdata', array($match), $pos);
+            break;
+        }
         return TRUE;
     }
 
@@ -677,6 +693,54 @@ class Doku_Handler_CallWriter {
 }
 
 //------------------------------------------------------------------------
+/**
+ * Generic call writer class to handle nesting of rendering instructions
+ * within a render instruction. Also see nest() method of renderer base class
+ *
+ * @author    Chris Smith <chris@jalakai.co.uk>
+ */
+class Doku_Handler_Nest {
+
+    var $CallWriter;
+    var $calls = array();
+
+    var $closingInstruction;
+
+    /**
+     * constructor
+     *
+     * @param  object     $CallWriter     the renderers current call writer
+     * @param  string     $close          closing instruction name, this is required to properly terminate the
+     *                                    syntax mode if the document ends without a closing pattern
+     */
+    function Doku_Handler_Nest(& $CallWriter, $close="nest_close") {
+        $this->CallWriter = & $CallWriter;
+
+        $this->closingInstruction = $close;
+    }
+
+    function writeCall($call) {
+        $this->calls[] = $call;
+    }
+
+    function writeCalls($calls) {
+        $this->calls = array_merge($this->calls, $calls);
+    }
+
+    function finalise() {
+        $last_call = end($this->calls);
+        $this->writeCall(array($this->closingInstruction,array(), $last_call[2]));
+
+        $this->process();
+        $this->CallWriter->finalise();
+    }
+
+    function process() {
+        $first_call = reset($this->calls);
+        $this->CallWriter->writeCall(array("nest", array($this->calls), $first_call[2]));
+    }
+}
+
 class Doku_Handler_List {
 
     var $CallWriter;

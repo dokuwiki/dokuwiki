@@ -1,6 +1,6 @@
 <?php
 /**
- * Renderer for XHTML output
+ * Renderer output base class
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -34,6 +34,23 @@ class Doku_Renderer {
             $plugin->render($mode,$this,$data);
         }
     }
+
+    /**
+     * handle nested render instructions
+     * this method (and nest_close method) should not be overloaded in actual renderer output classes
+     */
+    function nest($instructions) {
+
+      foreach ( $instructions as $instruction ) {
+        // execute the callback against ourself
+        call_user_func_array(array(&$this, $instruction[0]),$instruction[1]);
+      }
+    }
+
+    // dummy closing instruction issued by Doku_Handler_Nest, normally the syntax mode should
+    // override this instruction when instantiating Doku_Handler_Nest - however plugins will not
+    // be able to - as their instructions require data.
+    function nest_close() {}
 
     function document_start() {}
 
