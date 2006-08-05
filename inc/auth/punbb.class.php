@@ -114,7 +114,7 @@ class auth_punbb extends auth_mysql {
     $sticky ? $sticky = true : $sticky = false; //sanity check
 
     // someone used the login form
-    if(isset($user)){
+    if(!empty($user)){
       if($this->checkPass($user,$pass)){
         $expire = ($sticky) ? time() + 31536000 : 0;
         $uinfo  = $this->getUserData($user);
@@ -157,6 +157,7 @@ class auth_punbb extends auth_mysql {
   function logOff(){
     global $pun_user;
     $pun_user = array();
+    $pun_user['is_guest'] = 1;
     pun_setcookie(1, random_pass(8), time() + 31536000);
   }
 }

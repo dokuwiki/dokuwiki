@@ -55,15 +55,15 @@
 
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
+    if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
+    if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
+    if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
+
     // if no credentials were given try to use HTTP auth (for SSO)
     if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
       $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
       $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
     }
-
-		if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
-		if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
-		if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
 
     // external trust mechanism in place?
     if(!is_null($auth) && $auth->canDo('external')){
@@ -115,7 +115,7 @@ function auth_login($user,$pass,$sticky=false){
   global $auth;
   $sticky ? $sticky = true : $sticky = false; //sanity check
 
-  if(isset($user)){
+  if(!empty($user)){
     //usual login
     if ($auth->checkPass($user,$pass)){
       // make logininfo globally available
