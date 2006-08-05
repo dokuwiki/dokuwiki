@@ -321,7 +321,6 @@ Bar');
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
     
-    // This breaks the parser/render chain badly #701
     function testUnorderedListFootnote() {
         $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
         $this->P->addMode('footnote',new Doku_Parser_Mode_Footnote());
@@ -333,32 +332,39 @@ Bar');
 ');
         $calls = array (
             array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
-            array('footnote_open',array()),
-            array('cdata',array("A")),
-            array('footnote_close',array()),
+            array('nest', array( array(
+                array('footnote_open',array()),
+                array('cdata',array("A")),
+                array('footnote_close',array())
+            ))),
             array('listcontent_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(2)),
             array('listcontent_open',array()),
-            array('footnote_open',array()),
-            array('cdata',array(" B\n  * C")),
-            array('footnote_close',array()),
+            array('nest', array( array(
+                array('footnote_open',array()),
+                array('cdata',array(" B")),
+                array('listu_open',array()),
+                array('listitem_open',array(1)),
+                array('listcontent_open',array()),
+                array('cdata',array(" C )) ")),
+                array('listcontent_close',array()),
+                array('listitem_close',array()),
+                array('listu_close',array()),
+                array('cdata',array("\n\n")),
+                array('footnote_close',array())
+            ))),
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
-            array('p_open',array()),
-            array('cdata',array("\n")),
-            array('p_close',array()),
-            array('document_end',array()),
+            array('document_end',array())
         );
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 }

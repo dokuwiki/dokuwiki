@@ -196,7 +196,7 @@ class Doku_Handler {
             case DOKU_LEXER_ENTER:
                 $ReWriter = & new Doku_Handler_Nest($this->CallWriter,'footnote_close');
                 $this->CallWriter = & $ReWriter;
-                $this->_addCall('footnote_open', array($match), $pos);
+                $this->_addCall('footnote_open', array(), $pos);
             break;
             case DOKU_LEXER_EXIT:
                 $this->_addCall('footnote_close', array(), $pos);

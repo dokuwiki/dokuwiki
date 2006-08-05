@@ -42,6 +42,9 @@ class TestOfDoku_Parser extends UnitTestCase {
 
 function stripByteIndex($call) {
     unset($call[2]);
+    if ($call[0] == "nest") {
+      $call[1][0] = array_map('stripByteIndex',$call[1][0]);
+    }
     return $call;
 }
 

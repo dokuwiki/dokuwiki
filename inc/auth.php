@@ -56,7 +56,7 @@
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
     // if no credentials were given try to use HTTP auth (for SSO)
-    if(empty($_REQUEST['u']) && !$_COOKIE[DOKU_COOKIE] && $_SERVER['PHP_AUTH_USER']){
+    if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
       $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
       $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
     }

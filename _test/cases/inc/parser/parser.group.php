@@ -25,7 +25,7 @@ class ParserGroupTest extends GroupTest {
         $this->addTestFile($dir .'parser_quote.test.php');
         $this->addTestFile($dir .'parser_replacements.test.php');
         $this->addTestFile($dir .'parser_table.test.php');
-        $this->addTestFile($dir .'parser_tocsections.test.php');
+#        $this->addTestFile($dir .'parser_tocsections.test.php');
         $this->addTestFile($dir .'parser_unformatted.test.php');
     }
     
