@@ -9,7 +9,7 @@
 
 #media__left {
     width: 30%;
-    border-right: solid 1px __dark__;
+    border-right: solid 1px __border__;
 
     height: 100%;
     overflow: auto;
@@ -50,7 +50,7 @@
     list-style-image: none;
 }
 * html #media__tree li {
-    border: 1px solid __white__;
+    border: 1px solid __background__;
 }/* I don't understand this, but this fixes a style bug in IE;
 it's dirty, so any "real" fixes are welcome */
 
@@ -89,11 +89,11 @@ it's dirty, so any "real" fixes are welcome */
 }
 
 #media__content #scroll__here {
-    border: 1px dashed __dark__;
+    border: 1px dashed __border__;
 }
 
 #media__content .odd {
-    background-color: __lighter__;
+    background-color: __background_other__;
     padding: 0.4em;
 }
 
@@ -123,7 +123,7 @@ it's dirty, so any "real" fixes are welcome */
 }
 
 #media__content div.example {
-    color: __darkgray__;
+    color: __text_neu__;
     margin-left: 1em;
 }
 
@@ -136,7 +136,7 @@ it's dirty, so any "real" fixes are welcome */
 
 #media__content form.upload {
     display: block;
-    border-bottom: solid 1px __dark__;
+    border-bottom: solid 1px __border__;
     padding: 0 0.5em 1em 0.5em;
 }
 #media__content form.upload fieldset {
@@ -161,7 +161,6 @@ it's dirty, so any "real" fixes are welcome */
     width: auto;
 }
 #media__content form.upload input.check {
-    //margin-left: 12.0em;
     margin-left: 30%;
 }
 
