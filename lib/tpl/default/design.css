@@ -167,7 +167,7 @@ div.dokuwiki .nowrap {
 }
 div.dokuwiki div#draft__status {
   float: right;
-  color: __border__;
+  color: __text_alt__;
 }
 
 /* --------- buttons ------------------- */
@@ -311,7 +311,7 @@ div.dokuwiki a.wikilink2 {
 /* ------------- Page elements ----------------- */
 
 div.dokuwiki div.preview {
-  background-color: __background_other__;
+  background-color: __background_neu__;
   margin: 0 0 0 2em;
   padding: 4px;
   border: 1px dashed __text__;
@@ -575,7 +575,7 @@ div.dokuwiki td.diff-deletedline {
     background-color: #ffffbb;
 }
 div.dokuwiki td.diff-context {
-    background-color: __background_other__;
+    background-color: __background_neu__;
 }
 div.dokuwiki span.diffchange {
   color: red;
@@ -610,7 +610,7 @@ div.insitu-footnote {
   font-size: 80%;
   line-height: 1.2em;
   border: 1px solid __border__;
-  background-color: __background_other2__;
+  background-color: __background_other__;
   text-align: left;
   padding: 4px;
   max-width: 40%;    /* IE's width is handled in javascript */
@@ -689,7 +689,7 @@ div.dokuwiki div.ajax_qsearch {
   font-size: 80%;
   line-height: 1.2em;
   border: 1px solid __border__;
-  background-color: __background_other2__;
+  background-color: __background_other__;
   text-align: left;
   padding: 4px;
 }
@@ -711,7 +711,7 @@ html>body button.toolbutton {
 div.picker {
   width: 250px;
   border: 1px solid __border__;
-  background-color: __background_other2__;
+  background-color: __background_alt__;
 }
 
 button.pickerbutton {
