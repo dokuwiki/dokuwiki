@@ -3,8 +3,8 @@ En ny bruger har registreret. Her er detaljerne:
 Dato        : @DATE@
 Browser     : @BROWSER@
 IP-adresse  : @IPADDRESS@
-Værtsnavn    : @HOSTNAME@
+V√¶rtsnavn    : @HOSTNAME@
 
 -- 
-Denne mail blev genereret af DokuWiki på
+Denne mail blev genereret af DokuWiki p√•
 @DOKUWIKIURL@

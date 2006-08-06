@@ -1,4 +1,4 @@
-﻿Sveiki!
+Sveiki!
 
 Pranešame, kad Wiki tinklalapyje @TITLE@ pakeistas puslapis @PAGE@.
 Štai pakeitimai:
