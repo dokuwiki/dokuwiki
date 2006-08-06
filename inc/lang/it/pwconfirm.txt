@@ -1,0 +1,15 @@
+Ciao @FULLNAME@!
+
+Qualcuno ha richiesto una nuova password per il tuo @TITLE@
+login su @DOKUWIKIURL@
+
+Se non hai richiesto tu la nuova password ignora questa email.
+
+Per confermare che la richiesta è stata realmente inviata da te per favore usa il
+seguente link.
+
+@CONFIRM@
+
+--
+Questa mail è stata generata da DokuWiki su
+@DOKUWIKIURL@

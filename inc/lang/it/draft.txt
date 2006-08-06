@@ -1,0 +1,10 @@
+====== Trovata Bozza ======
+
+La tua ultima sessione di modifica su questa pagina non è stata completata correttamente.
+DokuWiki ha salvato in automatico una bozza durante il tuo lavoro, che puoi ora utilizzare
+per continuare le tue modifiche. Di seguito puoi trovare i dati che sono stati salvati dalla
+tua ultima sessione.
+
+Decidi se vuoi //recuperare// la sessione di modifica, //cancellare//
+la bozza salavata in automatico oppure //annullare// le modifiche.
+

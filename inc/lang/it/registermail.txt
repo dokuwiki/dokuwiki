@@ -1,0 +1,10 @@
+Un nuovo utente è stato registrato. Ecco i dettagli:
+
+Data          : @DATE@
+Browser       : @BROWSER@
+Indirizzo IP  : @IPADDRESS@
+Nome macchina : @HOSTNAME@
+
+-- 
+Questa mail è stata generata da DokuWiki su
+@DOKUWIKIURL@

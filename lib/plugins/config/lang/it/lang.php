@@ -18,6 +18,34 @@ $lang['nochoice']   = '(nessun\'altra scelta disponibile)';
 $lang['locked']     = 'Il file di configurazione non può essere aggiornato, se questo non è intenzionale, <br />
                        assicurati che il nome e i permessi del file contenente la configurazione locale siano corretti.';
 
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = 'Configurazione Wiki'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'Impostazioni DokuWiki';
+$lang['_header_plugin'] = 'Impostazioni Plugin';
+$lang['_header_template'] = 'Impostazioni Template';
+$lang['_header_undefined'] = 'Impostazioni non definite';
+
+/* --- Config Setting Groups --- */
+$lang['_basic'] = 'Impostazioni Base';
+$lang['_display'] = 'Impostazioni Visualizzazione';
+$lang['_authentication'] = 'Impostazioni Autenticazione';
+$lang['_anti_spam'] = 'Impostazioni Anti-Spam';
+$lang['_editing'] = 'Impostazioni Modifica';
+$lang['_links'] = 'Impostazioni Collegamenti';
+$lang['_media'] = 'Impostazioni File';
+$lang['_advanced'] = 'Impostazioni AvanzateA';
+$lang['_network'] = 'Impostazioni Rete';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'Impostazioni Plugin';
+$lang['_template_sufix'] = 'Impostazioni Template';
+
+/* --- Undefined Setting Messages --- */
+$lang['_msg_setting_undefined'] = 'Nessun metadato definito.';
+$lang['_msg_setting_no_class'] = 'Nessuna classe definita.';
+$lang['_msg_setting_no_default'] = 'Nessun valore predefinito.';
 
 /* -------------------- Config Options --------------------------- */
 
@@ -64,6 +92,11 @@ $lang['passcrypt']   = 'Metodo di cifratura password';
 $lang['defaultgroup']= 'Gruppo predefinito';
 $lang['superuser']   = 'Amministratore';
 $lang['profileconfirm'] = 'Richiedi la password per modifiche al profilo';
+$lang['disableactions'] = 'Disabilita azioni DokuWiki';
+$lang['disableactions_check'] = 'Controlla';
+$lang['disableactions_subscription'] = 'Sottoscrivi/Rimuovi sottoscrizione';
+$lang['disableactions_wikicode'] = 'Mostra sorgente/Esporta Raw';
+$lang['disableactions_other'] = 'Altre azioni (separate da virgola)';
 
 /* Advanced Options */
 $lang['userewrite']  = 'Usa il rewrite delle URL';
@@ -76,10 +109,14 @@ $lang['usegzip']     = 'Usa gzip (per l\'archivio)';
 $lang['cachetime']   = 'Durata della cache (sec)';
 $lang['purgeonadd']  = 'Pulisci la cache quando si aggiungono nuove pagine';
 $lang['locktime']    = 'Durata dei file di lock (sec)';
+$lang['fetchsize']   = 'Dimensione massima (bytes) scaricabile da fetch.php da extern';
 $lang['notify']      = 'Invia notifiche sulle modifiche a questo indirizzo';
+$lang['registernotify'] = 'Invia informazioni sui nuovi utenti registrati a questo indirizzo email';
 $lang['mailfrom']    = 'Mittente per le mail automatiche';
+$lang['gzip_output'] = 'Usa il Content-Encoding gzip per xhtml';
 $lang['gdlib']       = 'Versione GD Lib ';
 $lang['im_convert']  = 'Percorso per il convertitore di ImageMagick';
+$lang['jpg_quality'] = 'Qualità di compressione JPG (0-100)';
 $lang['spellchecker']= 'Abilita il controllo ortografico';
 $lang['subscribers'] = 'Abilita la sottoscrizione alle pagine';
 $lang['compress']    = 'Comprimi i file CSS e javascript';

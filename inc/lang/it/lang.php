@@ -59,7 +59,7 @@ $lang['minoredit']  = 'Modifiche minori';
 $lang['draftdate']  = 'Bozza salvata in automatico il'; // full dformat date will be added
 
 $lang['regmissing'] = 'Devi riempire tutti i campi.';
-$lang['reguexists'] = 'Il nome utente inserito esiste già.';
+$lang['reguexists'] = 'Il nome utente inserito esiste già .';
 $lang['regsuccess'] = 'L\'utente è stato creato. La password è stata spedita via e-mail.';
 $lang['regsuccess2']= 'L\'utente è stato creato.';
 $lang['regmailfail']= 'Sembra che ci sia stato un errore nell\'invio della e-mail. Per favore contatta il tuo amministratore!';
@@ -78,6 +78,8 @@ $lang['resendna']  = 'Questo wiki non supporta l\'invio di nuove password.';
 $lang['resendpwd'] = 'Invia nuova password per';
 $lang['resendpwdmissing'] = 'Devi riempire tutti i campi.';
 $lang['resendpwdnouser']  = 'Impossibile trovare questo utente nel database.';
+$lang['resendpwdbadauth'] = 'Spiacente, questo codice di autorizzazione non è valido. Assicurati di aver usato il link completo di conferma.';
+$lang['resendpwdconfirm'] = 'Un link di conferma è stato spedito via email.';
 $lang['resendpwdsuccess'] = 'La nuova password è stata spedita via email.';
 
 $lang['txt_upload']   = 'Seleziona un file da caricare';
@@ -96,12 +98,20 @@ $lang['fileupload']  = 'File caricato';
 $lang['uploadsucc']  = 'Invio riuscito';
 $lang['uploadfail']  = 'Invio fallito. Contatta l\'amministratore.';
 $lang['uploadwrong'] = 'Invio rifiutato. Questa estensione di file non è ammessa';
-$lang['uploadexist'] = 'Il file esiste già. Invio annullato.';
+$lang['uploadexist'] = 'Il file esiste già . Invio annullato.';
 $lang['deletesucc']  = 'Il file "%s" è stato cancellato.';
 $lang['deletefail']  = '"%s" non può essere cancellato - verifica i permessi.';
 $lang['mediainuse']  = 'Il file "%s" non è stato cancellato - è ancora in uso.';
 $lang['namespaces']  = 'Categorie';
 $lang['mediafiles']  = 'File disponibili in';
+
+$lang['js']['keepopen']    = 'Tieni la finestra aperta durante la selezione';
+$lang['js']['hidedetails'] = 'Nascondi Dettagli';
+$lang['mediausage']  = 'Usa la seguente sintassi per riferirti a questo file:';
+$lang['mediaview']   = 'Mostra file originale';
+$lang['mediaroot']   = 'directory principale';
+$lang['mediaupload'] = 'Carica un file nella categoria corrente. Per creare sottocategorie, falle precedere al nome del file nella casella "Carica come", separandole da due punti (:).';
+$lang['mediaextchange'] = 'Estensione del file modificata da .%s a .%s!';
 
 $lang['reference']   = 'Riferimenti a';
 $lang['ref_inuse']   = 'Il file non può essere cancellato in quanto è ancora utilizzato dalle seguenti pagine:';
@@ -125,10 +135,11 @@ $lang['summary']    = 'Oggetto della modifica';
 
 $lang['mail_newpage'] = 'pagina aggiunta:';
 $lang['mail_changed'] = 'pagina modificata:';
+$lang['mail_new_user'] = 'Nuovo utente:';
 
 $lang['nosmblinks'] = 'I collegamenti con le risorse condivise di Windows funzionano solo con Microsoft Internet Explorer.\nPuoi fare un copia/incolla di questo collegamento.';
 
-$lang['qb_alert']   = 'Puoi inserire il testo che vuoi formattare.\nSarà aggiunto alla fine del documento.';
+$lang['qb_alert']   = 'Puoi inserire il testo che vuoi formattare.\nSarÃ  aggiunto alla fine del documento.';
 $lang['qb_bold']    = 'Grassetto';
 $lang['qb_italic']  = 'Corsivo';
 $lang['qb_underl']  = 'Sottolineato';
@@ -183,5 +194,31 @@ $lang['unsubscribe_error']  = 'Si è verificato un errore durante la rimozione d
 /* auth.class language support */
 $lang['authmodfailed']   = 'La configurazione dell\'autenticazione non è corretta. Per favore informa l\'amministratore di questo Wiki.';
 $lang['authtempfail']    = 'L\'autenticazione è temporaneamente non disponibile. Se questa situazione persiste, per favore informa l\'amministratore di questo Wiki.';
+
+/* installer strings */
+$lang['i_chooselang'] = 'Scegli la lingua';
+$lang['i_installer']  = 'Installazione DokuWiki';
+$lang['i_wikiname']   = 'Nome Wiki';
+$lang['i_enableacl']  = 'Abilita ACL (consigliato)';
+$lang['i_superuser']  = 'Amministratore';
+$lang['i_problems']   = 'Si sono verificati problemi durante l\'installazione, indicati di seguito. Non è possibile continuare finché non saranno risolti.';
+$lang['i_modified']   = 'Per motivi di sicurezza questa procedura funziona solamente con un\'installazione Dokuwiki nuova e non modificata.
+                         Dovresti ri-estrarre i file dal pacchetto scaricato oppure consultare tutte le
+                         <a href="http://wiki.splitbrain.org/wiki:install">istruzioni per l\'installazione di Dokuwiki</a>';
+$lang['i_funcna']     = 'La funzione PHP <code>%s</code> non è disponibile. Forse il tuo provider l\'ha disabilitata per qualche motivo?';
+$lang['i_permfail']   = 'DokuWiki non può scrivere <code>%s</code>. E\' necessario correggere i permessi per questa directory!';
+$lang['i_confexists'] = '<code>%s</code> esiste già';
+$lang['i_writeerr']   = 'Impossibile creare <code>%s</code>. E\' necessario verificare i permessi della directory/file e creare il file manualmente.';
+$lang['i_badhash']    = 'dokuwiki.php (hash=<code>%s</code>) non riconosciuto o modificato';
+$lang['i_badval']     = '<code>%s</code> - valore vuoto o non valido';
+$lang['i_success']    = 'La configurazione è stata completata correttamente. E\' ora possibile cancellare il file install.php. Continuare con
+                        <a href="doku.php">il nuovo DokuWiki</a>.';
+$lang['i_failure']    = 'Si sono verificati errori durante la scrittura dei file di configurazione. Potrebbe essere necessario correggerli manualmente prima
+                         di poter utilizzare <a href="doku.php">il nuovo DokuWiki</a>.';
+$lang['i_policy']     = 'Policy di accesso iniziali';
+$lang['i_pol0']       = 'Wiki Aperto (lettura, scrittura, caricamento file per tutti)';
+$lang['i_pol1']       = 'Wiki Pubblico (lettura per tutti, scrittura e caricamento file per gli utenti registrati)';
+$lang['i_pol2']       = 'Wiki Chiuso (lettura, scrittura, caricamento file solamente per gli utenti registrati)';
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
