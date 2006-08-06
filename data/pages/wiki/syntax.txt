@@ -56,14 +56,14 @@ You can use [[wiki:namespaces]] by using a colon in the pagename.
 
 For details about namespaces see [[doku>wiki:namespaces]].
 
-Linking to a specific section is possible, too. Just add the sectionname behind a hash character as known from HTML. This links to [[syntax#internal|this Section]].
+Linking to a specific section is possible, too. Just add the section name behind a hash character as known from HTML. This links to [[syntax#internal|this Section]].
 
   This links to [[syntax#internal|this Section]].
 
 Notes:
 
   * Links to [[wiki:syntax|existing pages]] are shown in a different style from [[wiki:nonexisting]] ones.
-  * DokuWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behaviour can be enabled in the [[doku>config]] file. Hint: If DokuWiki is a link, then it's enabled.
+  * DokuWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behaviour can be enabled in the [[doku>wiki:config]] file. Hint: If DokuWiki is a link, then it's enabled.
   * When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.
 
 ==== Interwiki ====
@@ -82,8 +82,8 @@ Windows shares like [[\\server\share|this]] are recognized, too. Please note tha
 Notes:
 
   * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
-  * For Mozilla and Firefox it can be enabled through the config option [[http://www.mozilla.org/quality/networking/docs/netprefs.html#file|security.checkloaduri]] but this is not recommended
-  * See [[bug>151]] for more info
+  * For Mozilla and Firefox it can be enabled through the config option [[http://www.mozilla.org/quality/networking/docs/netprefs.html#file|security.checkloaduri]] but this is not recommended.
+  * See [[bug>151]] for more info.
 
 ==== Image Links ====
 
@@ -121,7 +121,7 @@ By using four or more dashes, you can make a horizontal line:
 
 ===== Images and other files =====
 
-You can include external and internal [[doku>images]] with curly brackets. Optionally you can specify the size of them.
+You can include external and internal [[doku>wiki:images]] with curly brackets. Optionally you can specify the size of them.
 
 Real size:                        {{wiki:dokuwiki-128.png}}
 
@@ -137,7 +137,7 @@ Resized external image:           {{http://de3.php.net/images/php.gif?200x50}}
   Resized external image:           {{http://de3.php.net/images/php.gif?200x50}}
 
 
-By using left or right whitespaces you can choose the alignment
+By using left or right whitespaces you can choose the alignment.
 
 {{ wiki:dokuwiki-128.png}}
 
@@ -155,7 +155,7 @@ Of course, you can add a title (displayed as a tooltip by most browsers), too.
 
   {{ wiki:dokuwiki-128.png |This is the caption}}
 
-If you specify a filename (external or internal) that is not an image (''gif,jpeg,png''), then it will be displayed as a link instead.
+If you specify a filename (external or internal) that is not an image (''gif, jpeg, png''), then it will be displayed as a link instead.
 
 For linking an image to another page see [[#Image Links]] above.
 
@@ -300,9 +300,9 @@ This is how it looks in the source:
   |left          |         right|    center    |
   | xxxxxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxxxxx |
 
-===== Nonparsed Blocks =====
+===== Non-parsed Blocks =====
 
-You can include non parsed blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags ''code'' or ''file''.
+You can include non-parsed blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags ''code'' or ''file''.
 
 <code>
 This is preformatted code all spaces are preserved: like              <-this
