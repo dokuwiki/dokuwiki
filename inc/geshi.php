@@ -1808,7 +1808,7 @@ class GeSHi
 		$result .= $this->parse_non_string_part($stuff_to_parse);
 
 		// Lop off the very first and last spaces
-		$result = substr($result, 1, strlen($result) - 1);
+		$result = substr($result, 1, -1);
 
 		// Are we still in a string?
 		if ($STRING_OPEN) {
