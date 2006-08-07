@@ -1,0 +1,10 @@
+新しいユーザーが登録されました。ユーザー情報は以下の通りです。
+
+登録日      : @DATE@
+ブラウザ    : @BROWSER@
+IPアドレス  : @IPADDRESS@
+ホスト名    : @HOSTNAME@
+
+-- 
+このメールは次のDokuWikiより自動的に送信されています。
+@DOKUWIKIURL@

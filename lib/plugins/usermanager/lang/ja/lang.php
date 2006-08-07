@@ -45,3 +45,6 @@ $lang['prev']   = '前へ';
 $lang['next']   = '次へ';
 $lang['last']   = '最後';
 
+// added after 2006-03-09 release
+$lang['edit_usermissing'] = '選択したユーザーは見つかりません。削除もしくは変更された可能性があります。';
+

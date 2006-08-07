@@ -1,4 +1,4 @@
-DokuWiki 内の文書が更新されました。詳細は以下の通りです。
+DokuWiki 内の文書が追加もしくは変更されました。詳細は以下の通りです。
 
 日付        : @DATE@
 ブラウザ    : @BROWSER@
@@ -6,7 +6,7 @@ IPアドレス  : @IPADDRESS@
 ホスト名    : @HOSTNAME@
 前リビジョン: @OLDPAGE@
 新リビジョン: @NEWPAGE@
-サマリの変更: @SUMMARY@
+編集のサマリ: @SUMMARY@
 ユーザー名  : @USER@
 
 @DIFF@

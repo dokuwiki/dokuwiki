@@ -39,7 +39,10 @@ $lang['btn_subscribe']   = '変更履歴配信の登録';
 $lang['btn_unsubscribe'] = '変更履歴配信の解除';
 $lang['btn_profile']    = 'ユーザー情報の更新';
 $lang['btn_reset']     = 'リセット';
-$lang['btn_resendpwd'] = 'パスワードの再発行';
+$lang['btn_resendpwd'] = 'パスワード再発行';
+$lang['btn_draft']    = 'ドラフトを編集';
+$lang['btn_recover']  = 'ドラフトを復元';
+$lang['btn_draftdel'] = 'ドラフトを削除';
 
 $lang['loggedinas'] = 'ようこそ';
 $lang['user']       = 'ユーザー名';
@@ -54,6 +57,7 @@ $lang['register']   = 'ユーザー登録';
 $lang['profile']    = 'ユーザー情報';
 $lang['badlogin']   = 'ユーザー名かパスワードが違います。';
 $lang['minoredit']  = '小変更';
+$lang['draftdate']  = 'ドラフト保存日時：'; // full dformat date will be added
 
 $lang['regmissing'] = '全ての項目を入力してください。';
 $lang['reguexists'] = 'このユーザー名は既に存在しています。';
@@ -75,14 +79,16 @@ $lang['resendna']  = 'パスワードの再発行は出来ません。';
 $lang['resendpwd'] = '新しいパスワードを送信します：';
 $lang['resendpwdmissing'] = '全ての項目を入力して下さい。';
 $lang['resendpwdnouser']  = '入力されたユーザーが見つかりませんでした。';
+$lang['resendpwdbadauth'] = '申し訳ありません。この確認コードは有効ではありません。メール内に記載されたリンクを確認してください。';
+$lang['resendpwdconfirm'] = '確認用のリンクを含んだメールを送信しました。';
 $lang['resendpwdsuccess'] = '新しいパスワードがメールで送信されました。';
 
 $lang['txt_upload']   = 'アップロードするファイルを選んでください。';
 $lang['txt_filename'] = '名前を変更してアップロード（オプション）';
 $lang['txt_overwrt']  = '既存のファイルを上書き';
 $lang['lockedby']     = 'この文書は次のユーザによってロックされています';
-$lang['lockexpire']   = '排他期限：';
-$lang['willexpire']   = '編集中の文書は排他期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行ってロックタイマーをリセットしてください。';
+$lang['lockexpire']   = 'ロック期限：';
+$lang['willexpire']   = '編集中の文書はロック期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行って期限をリセットしてください。';
 
 $lang['notsavedyet'] = '変更は保存されません。このまま処理を続けてよろしいですか？';
 $lang['rssfailed']   = 'RSSの取り出しに失敗しました：';
@@ -99,6 +105,14 @@ $lang['deletefail']  = 'ファイル "%s" が削除できません。権限を�
 $lang['mediainuse']  = 'ファイル "%s" は使用中のため、削除されませんでした。';
 $lang['namespaces']  = '名前空間';
 $lang['mediafiles']  = '有効なファイル：';
+
+$lang['js']['keepopen']    = '選択中はウィンドウを閉じない';
+$lang['js']['hidedetails'] = '詳細を非表示';
+$lang['mediausage']  = 'このファイルを使用するためには次の文法を使用する：';
+$lang['mediaview']   = 'オリジナルファイルを閲覧';
+$lang['mediaroot']   = 'ルート';
+$lang['mediaupload'] = 'ファイルを現在の名前空間にアップロードします。副名前空間を使用する場合には、ファイル名の前にコロンで区切って追加してください。';
+$lang['mediaextchange'] = '拡張子が .%s から .%s へ変更されました。';
 
 $lang['reference']   = '参照先';
 $lang['ref_inuse']   = 'このファイルは、次のページで使用中のため削除できません。';
@@ -122,6 +136,7 @@ $lang['summary']    = 'サマリーを編集';
 
 $lang['mail_newpage'] = '文書の追加：';
 $lang['mail_changed'] = '文書の変更：';
+$lang['mail_new_user'] = '新規ユーザー：';
 
 $lang['nosmblinks'] = 'ウィンドウズの共有フォルダへリンクは Microsoft Internet Explorer でのみ可能となります。\n当然、カットアンドペーストが使用できます。';
 
@@ -180,5 +195,29 @@ $lang['unsubscribe_error']  = '変更履歴配信の解除に失敗しました�
 /* auth.class language support */
 $lang['authmodfailed']   = 'ユーザー認証の設定が正しくありません。Wikiの管理者に連絡して下さい。';
 $lang['authtempfail']    = 'ユーザー認証が一時的に使用できなくなっています。この状態が続いているようであれば、Wikiの管理者に連絡して下さい。';
+
+/* installer strings */
+$lang['i_chooselang'] = '使用言語を選択してください';
+$lang['i_installer']  = 'DokuWiki インストーラー';
+$lang['i_wikiname']   = 'Wiki名';
+$lang['i_enableacl']  = 'ACL（アクセス管理）を使用する（推奨）';
+$lang['i_superuser']  = 'スーパーユーザー';
+$lang['i_problems']   = '問題が発見されました。以下に示す問題を解決するまで、インストールを続行できません。';
+$lang['i_modified']   = 'セキュリティの理由から、新規もしくはカスタマイズしていない DokuWiki に対してのみ、このスクリプトは有効です。
+                         ダウンロードしたパッケージを再解凍して使用するか、
+                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
+$lang['i_funcna']     = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている恐れがあります。';
+$lang['i_permfail']   = '<code>%s</code> に書き込みできません。このディレクトリの権限を確認して下さい。';
+$lang['i_confexists'] = '<code>%s</code> は既に存在します';
+$lang['i_writeerr']   = '<code>%s</code> を作成できません。ディレクトリとファイルの権限を確認し、それらを手動で作成する必要があります。';
+$lang['i_badhash']    = 'dokuwiki.php が認識できないか、編集されています（hash=<code>%s</code>）';
+$lang['i_badval']     = '<code>%s</code> - 正しくない、もしくは値が空です';
+$lang['i_success']    = '設定ファイルは正しく作成されました。<a href="doku.php">作成した DokuWiki</a>を使用するには install.php を削除してください。';
+$lang['i_failure']    = '設定ファイルの作成中にエラーが発生しました。<a href="doku.php">作成した DokuWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
+$lang['i_policy']     = 'ACL初期設定';
+$lang['i_pol0']       = 'オープン Wiki（全ての人に、閲覧・書き込み・アップロードを許可）';
+$lang['i_pol1']       = 'パブリック Wiki（閲覧は全ての人が可能、書き込み・アップロードは登録ユーザーのみ）';
+$lang['i_pol2']       = 'クローズド Wiki (登録ユーザーにのみ使用を許可)';
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

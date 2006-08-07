@@ -18,6 +18,34 @@ $lang['nochoice']   = '（他の選択肢はありません）';
 $lang['locked']     = '設定用ファイルを更新できません。もし意図して変更不可にしているのでなければ、<br />
                        ローカル設定ファイルの名前と権限を確認して下さい。';
 
+/* --- Config Setting Headers --- */
+$lang['_configuration_manager'] = '設定管理'; //same as heading in intro.txt
+$lang['_header_dokuwiki'] = 'DokuWiki';
+$lang['_header_plugin'] = 'プラグイン';
+$lang['_header_template'] = 'テンプレート';
+$lang['_header_undefined'] = 'その他';
+
+/* --- Config Setting Groups --- */
+$lang['_basic'] = '基本';
+$lang['_display'] = '表示';
+$lang['_authentication'] = '認証';
+$lang['_anti_spam'] = 'スパム対策';
+$lang['_editing'] = '編集';
+$lang['_links'] = 'リンク';
+$lang['_media'] = 'メディア';
+$lang['_advanced'] = '高度な設定';
+$lang['_network'] = 'ネットワーク';
+// The settings group name for plugins and templates can be set with
+// plugin_settings_name and template_settings_name respectively. If one
+// of these lang properties is not set, the group name will be generated
+// from the plugin or template name and the localized suffix.
+$lang['_plugin_sufix'] = 'プラグイン設定';
+$lang['_template_sufix'] = 'テンプレート設定';
+
+/* --- Undefined Setting Messages --- */
+$lang['_msg_setting_undefined'] = '設定のためのメタデータがありません。';
+$lang['_msg_setting_no_class'] = '設定クラスがありません。';
+$lang['_msg_setting_no_default'] = '初期値が設定されていません。';
 
 /* -------------------- Config Options --------------------------- */
 
@@ -56,18 +84,22 @@ $lang['mailguard']   = 'メールアドレス保護';
 
 /* Authentication Options */
 $lang['useacl']      = 'アクセス管理を行う（ACL）';
-$lang['openregister']= 'ユーザー登録を許可（ACL）';
 $lang['autopasswd']  = 'パスワードの自動生成（ACL）';
-$lang['resendpasswd']= 'パスワードの再発行（ACL）';
 $lang['authtype']    = '認証方法（ACL）';
 $lang['passcrypt']   = '暗号化方法（ACL）';
 $lang['defaultgroup']= 'デフォルトグループ（ACL）';
 $lang['superuser']   = 'スーパーユーザー（ACL）';
 $lang['profileconfirm'] = 'プロフィール変更時に現在のパスワードを要求（ACL）';
+$lang['disableactions'] = 'DokuWiki の動作を無効にする';
+$lang['disableactions_check'] = 'チェック';
+$lang['disableactions_subscription'] = '登録 / 解除';
+$lang['disableactions_wikicode'] = 'ソース閲覧 / 生データ出力';
+$lang['disableactions_other'] = 'その他の動作（カンマ区切り）';
 
 /* Advanced Options */
 $lang['userewrite']  = 'URLの書き換え';
 $lang['useslash']    = 'URL上の名前空間の区切りにスラッシュを使用';
+$lang['usedraft']    = '編集中の自動保存（ドラフト）機能を使用';
 $lang['sepchar']     = 'ページ名の単語区切り文字';
 $lang['canonical']   = 'canonical URL（正準URL）を使用';
 $lang['autoplural']  = '自動複数形処理';
@@ -75,10 +107,14 @@ $lang['usegzip']     = '古い文書にgzipを使用';
 $lang['cachetime']   = 'キャッシュ保持時間（秒）';
 $lang['purgeonadd']  = 'ファイル追加時にキャッシュを破棄';
 $lang['locktime']    = 'ファイルロック期限（秒）';
+$lang['fetchsize']   = '外部からのダウンロード最大サイズ';
 $lang['notify']      = '変更を通知するメールアドレス';
-$lang['mailfrom']    = 'メール送信時のアドレス';
+$lang['registernotify'] = '新規ユーザー登録を通知するメールアドレス';
+$lang['mailfrom']    = 'メール送信時の送信元アドレス';
+$lang['gzip_output'] = 'xhtmlに対するコンテンツ圧縮（gzip）を使用';
 $lang['gdlib']       = 'GDlibバージョン';
 $lang['im_convert']  = 'ImageMagick変換ツールへのパス';
+$lang['jpg_quality'] = 'JPG圧縮品質（0-100）';
 $lang['spellchecker']= 'スペルチェック';
 $lang['subscribers'] = '更新通知機能';
 $lang['compress']    = 'CSSとJavaScriptを圧縮';
@@ -88,6 +124,7 @@ $lang['sitemap']     = 'Googleサイトマップ作成頻度（日数）';
 
 $lang['rss_type']    = 'RSSフィード形式';
 $lang['rss_linkto']  = 'RSS内リンク先';
+$lang['rss_update']  = 'RSSフィードの更新間隔（秒）';
 
 /* Target options */
 $lang['target____wiki']      = '内部リンクの表示先';
@@ -104,7 +141,6 @@ $lang['proxy____pass'] = 'プロキシ - パスワード';
 $lang['proxy____ssl']  = 'プロキシへの接続にsslを使用';
 
 /* Safemode Hack */
-
 $lang['safemodehack'] = 'セーフモード対策を行う';
 $lang['ftp____host'] = 'FTP サーバー名（セーフモード対策）';
 $lang['ftp____port'] = 'FTP ポート（セーフモード対策）';
