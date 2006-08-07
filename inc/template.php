@@ -196,6 +196,8 @@ function tpl_metaheaders($alt=true){
     }else{
       ptln('<meta name="robots" content="noindex,follow" />',$it);
     }
+  }elseif(defined('DOKU_MEDIADETAIL')){
+    ptln('<meta name="robots" content="index,follow" />',$it);
   }else{
     ptln('<meta name="robots" content="noindex,nofollow" />',$it);
   }
