@@ -105,7 +105,8 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
           $this->plugin = null;
       }
 
-      sort($this->plugin_list = plugin_list('', true));
+      $this->plugin_list = plugin_list('', true);
+      sort($this->plugin_list);
 
       // verify $_REQUEST vars
       if (in_array($this->cmd, $this->commands)) {
@@ -134,7 +135,10 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
       $this->setupLocale();
 
       if ($this->handler === NULL) $this->handler = & new ap_manage($this, $this->plugin);
-      if (!$this->plugin_list) sort($this->plugin_list = plugin_list('',true));
+      if (!$this->plugin_list) {
+        $this->plugin_list = plugin_list('',true);
+        sort($this->plugin_list);
+			}
 
       ptln('<div id="plugin__manager">');
       $this->handler->html();
