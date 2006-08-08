@@ -260,7 +260,8 @@ class ap_manage {
          */
         function refresh() {
 
-            sort($this->manager->plugin_list = plugin_list('',true));
+            $this->plugin_list = plugin_list('',true);
+            sort($this->plugin_list);
 
             // expire dokuwiki caches
             // touching local.php expires wiki page, JS and CSS caches
