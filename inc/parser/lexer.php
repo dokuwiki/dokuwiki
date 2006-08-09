@@ -503,15 +503,16 @@ class Doku_Lexer {
         if (isset($this->_mode_handlers[$handler])) {
             $handler = $this->_mode_handlers[$handler];
         }
-    // modes starting with plugin_ are all handled by the same
-    // handler but with an additional parameter
-    if(substr($handler,0,7)=='plugin_'){
-      list($handler,$plugin) = split('_',$handler,2);
-          return $this->_parser->$handler($content, $is_match, $pos, $plugin);
-    }
 
-        return $this->_parser->$handler($content, $is_match, $pos);
-    }
+        // modes starting with plugin_ are all handled by the same
+        // handler but with an additional parameter
+        if(substr($handler,0,7)=='plugin_'){
+          list($handler,$plugin) = split('_',$handler,2);
+              return $this->_parser->$handler($content, $is_match, $pos, $plugin);
+        }
+
+            return $this->_parser->$handler($content, $is_match, $pos);
+        }
 
     /**
      *    Tries to match a chunk of text and if successful

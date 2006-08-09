@@ -49,7 +49,7 @@ function & DW_TESTS_GetReporter() {
             break;
             case DW_TESTS_OUTPUT_HTML:
             default:
-                $Reporter = new HTMLReporter();
+                $Reporter = new HTMLReporter('utf-8');
             break;
         }
     }
