@@ -192,18 +192,18 @@ class Doku_Handler {
 
     function footnote($match, $state, $pos) {
 //        $this->_nestingTag($match, $state, $pos, 'footnote');
-        static $footnote = false;
+        if (!isset($this->_footnote)) $this->_footnote = false;
 
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
                 // footnotes can not be nested - however due to limitations in lexer it can't be prevented
                 // we will still enter a new footnote mode, we just do nothing
-                if ($footnote) {
+                if ($this->_footnote) {
                   $this->_addCall('cdata',array($match), $pos);
                   break;
                 }
 
-                $footnote = true;
+                $this->_footnote = true;
 
                 $ReWriter = & new Doku_Handler_Nest($this->CallWriter,'footnote_close');
                 $this->CallWriter = & $ReWriter;
@@ -211,12 +211,12 @@ class Doku_Handler {
             break;
             case DOKU_LEXER_EXIT:
                 // check whether we have already exitted the footnote mode, can happen if the modes were nested
-                if (!$footnote) {
+                if (!$this->_footnote) {
                   $this->_addCall('cdata',array($match), $pos);
                   break;
                 }
 
-                $footnote = false;
+                $this->_footnote = false;
 
                 $this->_addCall('footnote_close', array(), $pos);
                 $this->CallWriter->process();

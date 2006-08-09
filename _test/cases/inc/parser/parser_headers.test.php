@@ -1,5 +1,5 @@
 <?php
-require_once 'parser.test.php';
+require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
 
@@ -246,11 +246,11 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
     
-    function testNoToc() {
-        $this->P->addMode('notoc',new Doku_Parser_Mode_NoToc());
-        $this->P->parse('abc ~~NOTOC~~ def');
-        $this->assertFalse($this->H->meta['toc']);
-    }
+#    function testNoToc() {
+#        $this->P->addMode('notoc',new Doku_Parser_Mode_NoToc());
+#        $this->P->parse('abc ~~NOTOC~~ def');
+#        $this->assertFalse($this->H->meta['toc']);
+#    }
     
     function testHeader1Eol() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());

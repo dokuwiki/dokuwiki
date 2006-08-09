@@ -1,5 +1,5 @@
 <?php
-require_once 'parser.test.php';
+require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     

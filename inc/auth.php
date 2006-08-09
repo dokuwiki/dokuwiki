@@ -13,6 +13,8 @@
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/io.php');
 
+	global $conf;
+
   if($conf['useacl']){
     require_once(DOKU_INC.'inc/blowfish.php');
     require_once(DOKU_INC.'inc/mail.php');
