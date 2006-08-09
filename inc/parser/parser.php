@@ -197,6 +197,7 @@ class Doku_Parser_Mode_footnote extends Doku_Parser_Mode {
                 $PARSER_MODES['disabled']
             );
 
+        unset($this->allowedModes[array_search('footnote', $this->allowedModes)]);
     }
 
     function connectTo($mode) {
@@ -209,7 +210,6 @@ class Doku_Parser_Mode_footnote extends Doku_Parser_Mode {
         $this->Lexer->addExitPattern(
             '\x29\x29','footnote'
             );
-
     }
 
     function getSort() {
