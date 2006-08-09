@@ -70,16 +70,10 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('nest', array ( array (
               array('footnote_open',array()),
-              array('cdata',array(' x')),
-              array('nest', array ( array (
-                array('footnote_open',array()),
-                array('cdata',array('y')),
-                array('footnote_close',array()),
-              ))),
-              array('cdata',array('z ')),
+              array('cdata',array(' x((y')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array('z )) Bar'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -101,7 +95,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('footnote_close',array()),
             ))),
             array('cdata',array('Y')),
-						array('cdata',array(' ')),
+            array('cdata',array(' ')),
             array('cdata',array(' Bar')),
             array('cdata',array(' ')),
             array('p_close',array()),
@@ -375,6 +369,35 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('p_close',array()),
             array('document_end',array()),
         );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testFootnoteNesting() {
+        $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
+        $this->P->parse("(( a ** (( b )) ** c ))");
+
+        $calls = array(
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n")),
+            array('nest', array ( array (
+              array('footnote_open',array()),
+              array('cdata',array(' a ')),
+              array('strong_open',array()),
+              array('cdata',array(' ')),
+              array('cdata',array('((')),
+              array('cdata',array(' b ')),
+              array('footnote_close',array()),
+            ))),
+            array('cdata',array(" ")),
+            array('strong_close',array()),
+            array('cdata',array(" c ")),
+            array('cdata',array("))")),
+            array('cdata',array("\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 }
