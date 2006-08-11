@@ -207,8 +207,8 @@ $lang['i_enableacl']  = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']  = 'Administrator Nutzername';
 $lang['i_problems']   = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen
                          bevor Sie mit der Installation fortfahren können.';
-$lang['i_modified']   = 'Aus Sicherheitsgründen arbeitet dieses Script nur mit einer neuen, unmodifizierten DokuWiki installation.
-                         Sie sollten entweder alle Dateien nocheinmal frisch installieren oder die
+$lang['i_modified']   = 'Aus Sicherheitsgründen arbeitet dieses Script nur mit einer neuen, unmodifizierten DokuWiki Installation.
+                         Sie sollten entweder alle Dateien noch einmal frisch installieren oder die
                          <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']     = 'Die PHP Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
 $lang['i_permfail']   = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
