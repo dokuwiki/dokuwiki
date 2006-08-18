@@ -1,0 +1,11 @@
+
+Nový užívateľ bol registrovaný. Tu sú detaily:
+
+Dátum          : @DATE@
+Prehliadač     : @BROWSER@
+IP adresa      : @IPADDRESS@
+Meno servera   : @HOSTNAME@
+
+-- 
+Tento mail bol generovaný Dokuwiki na adrese
+@DOKUWIKIURL@

@@ -1,0 +1,15 @@
+Ahoj @FULLNAME@!
+
+Niekto žiadal o nové heslo pre vaše @TITLE@
+konto na @DOKUWIKIURL@
+
+Ak ste nežiadali o nové heslo, potom iba ignorujte tento mail.
+
+Pre potvrdenie, že požiadavka bola skutočne odoslaná vami,
+použite prosím nasledujúci odkaz.
+
+@CONFIRM@
+
+-- 
+Tento mail bol generovaný Dokuwiki na adrese
+@DOKUWIKIURL@

@@ -1,0 +1,9 @@
+====== Nájdený súbor konceptu ======
+
+Vaša posledná editácia tejto stránky nebola ukončená korektne. Dokuwiki
+automaticky uložila počas vašej práce koncept a ten môžete teraz použiť
+pre pokračovanie editácie. Nižšie môžete vidieť dáta, ktoré boli uložené.
+
+Prosím, rozhodnite sa, či chcete //obnoviť// vašu poslednú editáciu, //zmazať//
+automaticky uložený koncept, alebo //stornovať// proces editácie.
+
