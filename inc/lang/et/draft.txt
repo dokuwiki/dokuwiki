@@ -1,0 +1,9 @@
+====== Leidsin katkenud toimetamise ======
+
+Sinu viimane toimetamissessioon ei lõppenud eelmine kord korrapäraselt.
+DokuWiki automaatselt salvestas Sinu pooliku töö, mida võid nüüd kasutada töö
+jätkamiseks. Allpool näed teksti, mis suudeti päästa.
+
+Kas tahad //taastada// kaotused, //kustutada// poolik töö või
+//üldse mitte midagi teha//?
+

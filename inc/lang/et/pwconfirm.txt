@@ -1,0 +1,12 @@
+Tere @FULLNAME@!
+
+Keegi on Sinu parooli uuendust soovinud kasutajale @TITLE@ (@DOKUWIKIURL@).
+
+Kui see ei olnud Sina, siis võid seda meili lihtsalt ignoreerida.
+Kinnitamaks uue parooli saamise soovi mine aadressile:
+
+@CONFIRM@
+
+--
+See meil on saadetud DokuWiki poolt
+@DOKUWIKIURL@

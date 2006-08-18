@@ -1,0 +1,10 @@
+Uus kasutaja on registreeritud. Tema info:
+
+Kuupäev      : @DATE@
+Lehitseja    : @BROWSER@
+IP-Aaddress  : @IPADDRESS@
+Hosti nimi   : @HOSTNAME@
+
+-- 
+See meil on saadetud DokuWiki poolt
+@DOKUWIKIURL@

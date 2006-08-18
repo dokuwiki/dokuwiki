@@ -1,0 +1,17 @@
+Tere!
+
+Lehekülg @PAGE@ on muutunud (@TITLE@).
+Siin on muudatused:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Selle lehe jälgimisest loobumiseks logi wikisse sisse
+@DOKUWIKIURL@ ja siis külasta
+@NEWPAGE@
+ning vali sealt 'Lõpeta jälgimine'.
+
+--
+See meil on saadetud DokuWiki poolt
+@DOKUWIKIURL@
