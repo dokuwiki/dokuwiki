@@ -1111,10 +1111,11 @@ function saveOldRevision($id){
  * @param  int     $rev      Old page revision
  * @param  string  $summary  What changed
  * @param  boolean $minor    Is this a minor edit?
+ * @param  array   $replace  Additional string substitutions, @KEY@ to be replaced by value
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id,$who,$rev='',$summary='',$minor=false){
+function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   global $lang;
   global $conf;
 
@@ -1150,6 +1151,10 @@ function notify($id,$who,$rev='',$summary='',$minor=false){
   $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
+
+  foreach ($replace as $key => $substitution) {
+    $text = str_replace('@'.strtoupper($key).'@',$substitution, $text);
+  }
 
   if($who == 'register'){
     $subject = $lang['mail_new_user'].' '.$summary;
