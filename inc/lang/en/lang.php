@@ -64,7 +64,7 @@ $lang['regsuccess'] = 'The user has been created and the password was sent by em
 $lang['regsuccess2']= 'The user has been created.';
 $lang['regmailfail']= 'Looks like there was an error on sending the password mail. Please contact the admin!';
 $lang['regbadmail'] = 'The given email address looks invalid - if you think this is an error, contact the admin';
-$lang['regbadpass'] = 'The two given passwords are not identically, please try again.';
+$lang['regbadpass'] = 'The two given passwords are not identical, please try again.';
 $lang['regpwmail']  = 'Your DokuWiki password';
 $lang['reghere']    = 'You don\'t have an account yet? Just get one';
 
