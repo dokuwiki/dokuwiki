@@ -1185,7 +1185,9 @@ function getRevisions($id){
   $id   = noNS($id);
   $id   = utf8_encodeFN($id);
   $len  = strlen($id);
-  $xlen = ($conf['usegzip']) ? -7 : -4; // length of extension (.txt.gz or .txt)
+  $xlen = 10; // length of timestamp, strlen(time()) would be more correct, 
+              // but i don't expect dokuwiki still running in 287 years ;)
+              // so this will perform better
 
   $revs = array();
   if (is_dir($revd) && $dh = opendir($revd)) {

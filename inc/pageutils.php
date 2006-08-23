@@ -148,9 +148,16 @@ function wikiFN($id,$rev=''){
     $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
   }else{
     $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
-    if($conf['usegzip'] && !@file_exists($fn)){
-      //return gzip if enabled and plaintext doesn't exist
-      $fn .= '.gz';
+    if($conf['compression']){
+      //test for extensions here, we want to read both compressions
+       if (file_exists($fn . '.gz')){
+          $fn .= '.gz';
+       }else if(file_exists($fn . '.bz2')){
+          $fn .= '.bz2';
+       }else{
+          //file doesnt exist yet, so we take the configured extension
+          $fn .= '.' . $conf['compression'];
+       }
     }
   }
   return $fn;

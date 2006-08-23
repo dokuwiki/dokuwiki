@@ -91,6 +91,8 @@ function io_readFile($file,$clean=true){
   if(@file_exists($file)){
     if(substr($file,-3) == '.gz'){
       $ret = join('',gzfile($file));
+    }else if(substr($file,-4) == '.bz2'){
+      $ret = bzfile($file);
     }else{
       $ret = join('',file($file));
     }
@@ -101,6 +103,21 @@ function io_readFile($file,$clean=true){
     return $ret;
   }
 }
+/**
+* Returns the content of a .bz2 compressed file as string
+* @author marcel senf <marcel@rucksackreinigung.de>
+*/
+
+function bzfile($file){
+  $bz = bzopen($file,"r");
+  while (!feof($bz)){
+    //8192 seems to be the maximum buffersize?
+	  $str = $str . bzread($bz,8192);
+  }
+  bzclose($bz);
+  return $str;
+}
+
 
 /**
  * Used to write out a DokuWiki page to file, and send IO_WIKIPAGE_WRITE events.
@@ -144,6 +161,7 @@ function _io_writeWikiPage_action($data) {
  * will be appended.
  *
  * Uses gzip if extension is .gz
+ * and bz2 if extension is .bz2
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return bool true on success
@@ -163,6 +181,14 @@ function io_saveFile($file,$content,$append=false){
     }
     gzwrite($fh, $content);
     gzclose($fh);
+  }else if(substr($file,-4) == '.bz2'){
+    $fh = @bzopen($file,$mode);
+    if(!$fh){
+      msg("Writing $file failed", -1);
+      return false;
+    }
+    bzwrite($fh, $content);
+    bzclose($fh);
   }else{
     $fh = @fopen($file,$mode);
     if(!$fh){
