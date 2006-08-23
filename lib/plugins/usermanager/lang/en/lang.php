@@ -47,4 +47,11 @@ $lang['last']   = 'last';
 
 // added after 2006-03-09 release
 $lang['edit_usermissing'] = 'Selected user not found, the specified user name may have been deleted or changed elsewhere.';
+$lang['user_notify'] = 'Notify user';
+$lang['note_notify'] = 'Notification emails are only sent if the user is given a new password.';
+$lang['note_group'] = 'New users will be added to the default group (%s) if no group is specified.';
+$lang['add_ok'] = 'User added successfully';
+$lang['add_fail'] = 'User addition failed';
+$lang['notify_ok'] = 'Notification email sent';
+$lang['notify_fail'] = 'Notification email could not be sent';
 
