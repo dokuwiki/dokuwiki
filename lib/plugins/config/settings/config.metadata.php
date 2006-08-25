@@ -157,7 +157,7 @@ $meta['compress']    = array('onoff');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');
-$meta['usegzip']     = array('onoff');
+$meta['compression'] = array('multichoice','_choices' => array('0','gz','bz2'));
 $meta['sitemap']     = array('numeric');
 $meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom'));
 $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));

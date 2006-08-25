@@ -102,7 +102,7 @@ $lang['usedraft']    = 'Automatically save a draft while editing';
 $lang['sepchar']     = 'Page name word separator';
 $lang['canonical']   = 'Use fully canonical URLs';
 $lang['autoplural']  = 'Check for plural forms in links';
-$lang['usegzip']     = 'Use gzip for attic files';
+$lang['compression'] = 'Use compression for attic files';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
 $lang['purgeonadd']  = 'Purge cache when new pages are added';
 $lang['locktime']    = 'Maximum age for lock files (sec)';
@@ -173,4 +173,9 @@ $lang['rss_linkto_o_diff']    = 'difference view';
 $lang['rss_linkto_o_page']    = 'the revised page';
 $lang['rss_linkto_o_rev']     = 'list of revisions';
 $lang['rss_linkto_o_current'] = 'the current page';
+
+/* compression options */
+$lang['compression_o_0']   = 'none';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
 
