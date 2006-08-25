@@ -200,6 +200,18 @@ function ft_snippet($id,$poswords){
     $poswords = preg_quote($poswords,'#');
     $re       = '('.str_replace(' ','|',$poswords).')';
     $text     = rawWiki($id);
+
+// extra code to allow selection of search algorithm - remove before release
+global $conf;
+$algorithm = '';
+if ($conf['allowdebug']) {
+  if (!empty($_REQUEST['_search'])) $algorithm = $_REQUEST['_search'];
+}
+
+switch ($algorithm) {
+  case 'orig' :
+// original code ... dokuwiki
+
     //FIXME caseinsensitive matching doesn't work with UTF-8!?
     preg_match_all('#(.{0,50})'.$re.'(.{0,50})#iu',$text,$matches,PREG_SET_ORDER);
 
@@ -213,6 +225,60 @@ function ft_snippet($id,$poswords){
         $snippet .= htmlspecialchars($match[3]).'... ';
         if($cnt++ == 2) break;
     }
+
+  break;
+
+  case 'opt1' :
+// my snippet algorithm, first cut ... CS 2006-08-25
+// reduce the impact of the original regex
+    $matches = array();
+    preg_match_all('#'.$re.'#iu',$text,$matches,PREG_OFFSET_CAPTURE|PREG_SET_ORDER);
+
+    $cnt = 3;
+    $snippets = array();
+    $len = strlen($text);
+    foreach ($matches as $match) {
+      list($str,$idx) = $match[0];
+      if ($idx < $end) continue;
+
+      $pre = min($idx,50);
+      $start = $idx - $pre;
+      $end = min($idx+100+strlen($str)-$pre,$len);
+      $snippets[] = substr($text,$start,$end-$start);
+      if (!(--$cnt)) break;
+    }
+
+    $m = "\1";
+    $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
+    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));
+
+  break;
+
+  case 'opt2' :
+	default :
+// option 2 ... CS 2006-08-25
+// above + reduce amount of the file searched
+    $match = array();
+    $snippets = array();
+    $offset = 0;
+    $len = strlen($text);
+    for ($cnt=3; --$cnt;) {
+      if (!preg_match('#'.$re.'#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
+
+      list($str,$idx) = $match[0];
+
+      $pre = min($idx,50);
+      $start = $idx - $pre;
+      $end = min($idx+100+strlen($str)-$pre,$len);
+      $snippets[] = substr($text,$start,$end-$start);
+      $offset = $end;
+    }
+    $m = "\1";
+    $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
+    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));
+
+  break;
+}
 
     return $snippet;
 }
