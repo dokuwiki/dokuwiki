@@ -245,7 +245,7 @@ switch ($algorithm) {
       $start = $idx - $pre;
       $end = min($idx+100+strlen($str)-$pre,$len);
       $snippets[] = substr($text,$start,$end-$start);
-      if (!(--$cnt)) break;
+      if (!($cnt--)) break;
     }
 
     $m = "\1";
@@ -262,16 +262,41 @@ switch ($algorithm) {
     $snippets = array();
     $offset = 0;
     $len = strlen($text);
-    for ($cnt=3; --$cnt;) {
+    for ($cnt=3; $cnt--;) {
       if (!preg_match('#'.$re.'#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
 
       list($str,$idx) = $match[0];
 
-      $pre = min($idx,50);
+      // establish context, 100 characters surrounding the match string
+      // first look to see if we can go 100 either side,
+      // then drop to 50 adding any excess if the other side can't go to 50.
+      $pre = min($idx-$offset,100);
+      $post = min($len-$idx-strlen($str),100);
+
+      if ($pre>50 && $post>50) {
+        $pre = $post = 50;
+      } else if ($pre>50) {
+        $pre = min($pre,100-$post);
+      } else if ($post>50) {
+        $post = min($post, 100-$pre);
+      }
+
+      // establish context start and end points, try to append to previous context if possible
       $start = $idx - $pre;
-      $end = min($idx+100+strlen($str)-$pre,$len);
-      $snippets[] = substr($text,$start,$end-$start);
-      $offset = $end;
+      $append = ($start < $end) ? $end : false;   // still the end of the previous context snippet
+      $end = $idx + strlen($str) + $post;         // now set it to the end of this context
+
+      if ($append) {
+        $snippets[count($snippets)-1] .= substr($text,$append,$end-$append);
+      } else {
+        $snippets[] = substr($text,$start,$end-$start);
+      }
+
+      // set $offset for next match attempt
+      //   substract strlen to avoid splitting a potential search success, this is an approximation as the 
+      //   search pattern may match strings of varying length and it will fail if the context snippet 
+      //   boundary breaks a matching string longer than the current match
+      $offset = $end - strlen($str);
     }
     $m = "\1";
     $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
