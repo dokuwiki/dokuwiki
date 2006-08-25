@@ -140,9 +140,9 @@ function noNS($id) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function wikiFN($id,$rev=''){
+function wikiFN($id,$rev='',$clean=true){
   global $conf;
-  $id = cleanID($id);
+  if ($clean) $id = cleanID($id);
   $id = str_replace(':','/',$id);
   if(empty($rev)){
     $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
