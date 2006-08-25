@@ -1033,7 +1033,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _headerToLink($title,$create=false) {
-        $title = str_replace(':','',cleanID($title,true)); //force ASCII
+        $title = str_replace(':','',cleanID($title));
         $title = ltrim($title,'0123456789._-');
         if(empty($title)) $title='section';
 
