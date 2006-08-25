@@ -94,8 +94,11 @@
   @ini_set('magic_quotes_sybase',0);
 
   // disable gzip if not available
-  if($conf['usegzip'] && !function_exists('gzopen')){
-    $conf['usegzip'] = 0;
+  if($conf['compression'] == 'bzip2' && !function_exists('bzopen')){
+    $conf['compression'] = 'gzip';
+  }
+  if($conf['compression'] == 'gzip' && !function_exists('gzopen')){
+    $conf['compression'] = 0;
   }
 
   // precalculate file creation modes
