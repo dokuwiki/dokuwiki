@@ -18,7 +18,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>
      <?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?>
-    [<?php echo hsc($conf['title'])?>]
+    [<?php echo strip_tags($conf['title'])?>]
   </title>
 
   <?php tpl_metaheaders()?>
