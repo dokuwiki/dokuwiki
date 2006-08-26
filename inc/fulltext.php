@@ -305,7 +305,7 @@ switch ($algorithm) {
   break;
 }
 
-    return $snippet;
+    return utf8_bad_replace($snippet);
 }
 
 /**

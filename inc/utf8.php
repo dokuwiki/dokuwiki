@@ -722,6 +722,45 @@ function utf16be_to_utf8(&$str) {
   return unicode_to_utf8($uni);
 }
 
+/**
+ * Replace bad bytes with an alternative character
+ *
+ * ASCII character is recommended for replacement char
+ *
+ * PCRE Pattern to locate bad bytes in a UTF-8 string
+ * Comes from W3 FAQ: Multilingual Forms
+ * Note: modified to include full ASCII range including control chars
+ *
+ * @author Harry Fuecks <hfuecks@gmail.com>
+ * @see http://www.w3.org/International/questions/qa-forms-utf-8
+ * @param string to search
+ * @param string to replace bad bytes with (defaults to '?') - use ASCII
+ * @return string
+ */
+function utf8_bad_replace($str, $replace = '') {
+    $UTF8_BAD =
+     '([\x00-\x7F]'.                          # ASCII (including control chars)
+     '|[\xC2-\xDF][\x80-\xBF]'.               # non-overlong 2-byte
+     '|\xE0[\xA0-\xBF][\x80-\xBF]'.           # excluding overlongs
+     '|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}'.    # straight 3-byte
+     '|\xED[\x80-\x9F][\x80-\xBF]'.           # excluding surrogates
+     '|\xF0[\x90-\xBF][\x80-\xBF]{2}'.        # planes 1-3
+     '|[\xF1-\xF3][\x80-\xBF]{3}'.            # planes 4-15
+     '|\xF4[\x80-\x8F][\x80-\xBF]{2}'.        # plane 16
+     '|(.{1}))';                              # invalid byte
+    ob_start();
+    while (preg_match('/'.$UTF8_BAD.'/S', $str, $matches)) {
+        if ( !isset($matches[2])) {
+            echo $matches[0];
+        } else {
+            echo $replace;
+        }
+        $str = substr($str,strlen($matches[0]));
+    }
+    $result = ob_get_contents();
+    ob_end_clean();
+    return $result;
+}
 
 // only needed if no mb_string available
 if(!UTF8_MBSTRING){
