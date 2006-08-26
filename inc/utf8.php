@@ -762,6 +762,31 @@ function utf8_bad_replace($str, $replace = '') {
     return $result;
 }
 
+/**
+ * adjust a byte index into a utf8 string to a utf8 character boundary
+ *
+ * @param $str   string   utf8 character string
+ * @param $i     int      byte index into $str
+ * @param $next  bool     direction to search for boundary, 
+ *                           false = up (current character)
+ *                           true = down (next character)
+ *
+ * @return int            byte index into $str now pointing to a utf8 character boundary
+ *
+ * @author       chris smith <chris@jalakai.co.uk>
+ */
+function utf8_correctIdx(&$str,$i,$next=false) {
+	
+  if ($next) {
+	  $limit = strlen($str);
+	  while (($i<$limit) && ((ord($str[$i]) & 0xC0) == 0x80)) $i++;
+	} else {
+	  while ($i && ((ord($str[$i]) & 0xC0) == 0x80)) $i--;
+	}
+	
+	return $i;
+}
+
 // only needed if no mb_string available
 if(!UTF8_MBSTRING){
 

@@ -267,9 +267,10 @@ switch ($algorithm) {
 
       list($str,$idx) = $match[0];
 
-      // establish context, 100 characters surrounding the match string
+      // establish context, 100 bytes surrounding the match string
       // first look to see if we can go 100 either side,
-      // then drop to 50 adding any excess if the other side can't go to 50.
+      // then drop to 50 adding any excess if the other side can't go to 50,
+      // NOTE: these are byte adjustments and will have to be corrected for utf-8
       $pre = min($idx-$offset,100);
       $post = min($len-$idx-strlen($str),100);
 
@@ -282,9 +283,9 @@ switch ($algorithm) {
       }
 
       // establish context start and end points, try to append to previous context if possible
-      $start = $idx - $pre;
-      $append = ($start < $end) ? $end : false;   // still the end of the previous context snippet
-      $end = $idx + strlen($str) + $post;         // now set it to the end of this context
+      $start = utf8_correctIdx($text,$idx - $pre);
+      $append = ($start < $end) ? $end : false;                     // still the end of the previous context snippet
+      $end = utf8_correctIdx($text, $idx + strlen($str) + $post);   // now set it to the end of this context
 
       if ($append) {
         $snippets[count($snippets)-1] .= substr($text,$append,$end-$append);
@@ -305,7 +306,7 @@ switch ($algorithm) {
   break;
 }
 
-    return utf8_bad_replace($snippet);
+    return $snippet;
 }
 
 /**
