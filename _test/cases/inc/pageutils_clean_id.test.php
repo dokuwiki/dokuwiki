@@ -4,6 +4,10 @@ require_once DOKU_INC.'inc/pageutils.php';
 
 class init_clean_id_test extends UnitTestCase {
 
+    function teardown() {
+        global $cache_cleanid;
+        $cache_cleanid = array();
+    }
 
     function test_default(){
         // we test multiple cases here
@@ -38,6 +42,8 @@ class init_clean_id_test extends UnitTestCase {
         $conf['useslash'] = 1;
         $tests = array();
         $tests[] = array('page/page',false,'page:page');
+
+        $this->teardown();
 
         foreach($tests as $test){
             $this->assertEqual(cleanID($test[0],$test[1]),$test[2]);

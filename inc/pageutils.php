@@ -58,6 +58,10 @@ function getID($param='id',$clean=true){
   return $id;
 }
 
+// function result cache for cleanID
+global $cache_cleanid;
+$cache_cleanid = array();
+
 /**
  * Remove unwanted chars from ID
  *
@@ -73,7 +77,8 @@ function cleanID($raw_id,$ascii=false){
   global $lang;
   static $sepcharpat = null;
 
-  static $cache = array();
+  global $cache_cleanid;
+  $cache = & $cache_cleanid;
 
   // check if it's already in the memory cache
   if (isset($cache[$raw_id])) {
@@ -140,6 +145,10 @@ function noNS($id) {
   }
 }
 
+// function result cache for wikiFN
+global $cache_wikifn;
+$cache_wikifn = array();
+
 /**
  * returns the full path to the datafile specified by ID and
  * optional revision
@@ -151,7 +160,9 @@ function noNS($id) {
 function wikiFN($raw_id,$rev='',$clean=true){
   global $conf;
 
-  static $cache = array();
+  global $cache_wikifn;
+  $cache = & $cache_wikifn;
+
   if (isset($cache[$raw_id]) && isset($cache[$raw_id][$rev])) {
     return $cache[$raw_id][$rev];
   }
