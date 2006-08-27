@@ -65,19 +65,26 @@ function getID($param='id',$clean=true){
  * converted to unaccented ones
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param  string  $id    The pageid to clean
- * @param  boolean $ascii Force ASCII
+ * @param  string  $raw_id    The pageid to clean
+ * @param  boolean $ascii     Force ASCII
  */
-function cleanID($id,$ascii=false){
+function cleanID($raw_id,$ascii=false){
   global $conf;
   global $lang;
   static $sepcharpat = null;
+
+  static $cache = array();
+
+  // check if it's already in the memory cache
+  if (isset($cache[$raw_id])) {
+    return $cache[$raw_id];
+	}
 
   $sepchar = $conf['sepchar'];
   if($sepcharpat == null) // build string only once to save clock cycles
     $sepcharpat = '#\\'.$sepchar.'+#';
 
-  $id = trim($id);
+  $id = trim($raw_id);
   $id = utf8_strtolower($id);
 
   //alternative namespace seperator
@@ -102,6 +109,7 @@ function cleanID($id,$ascii=false){
   $id = trim($id,':._-');
   $id = preg_replace('#:[:\._\-]+#',':',$id);
 
+  $cache[$raw_id] = $id;
   return($id);
 }
 
@@ -140,8 +148,16 @@ function noNS($id) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function wikiFN($id,$rev='',$clean=true){
+function wikiFN($raw_id,$rev='',$clean=true){
   global $conf;
+
+  static $cache = array();
+  if (isset($cache[$raw_id]) && isset($cache[$raw_id][$rev])) {
+    return $cache[$raw_id][$rev];
+  }
+
+  $id = $raw_id;
+
   if ($clean) $id = cleanID($id);
   $id = str_replace(':','/',$id);
   if(empty($rev)){
@@ -160,6 +176,8 @@ function wikiFN($id,$rev='',$clean=true){
        }
     }
   }
+
+  $cache[$raw_id][$rev] = $fn;
   return $fn;
 }
 
