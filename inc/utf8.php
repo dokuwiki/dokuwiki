@@ -776,15 +776,19 @@ function utf8_bad_replace($str, $replace = '') {
  * @author       chris smith <chris@jalakai.co.uk>
  */
 function utf8_correctIdx(&$str,$i,$next=false) {
-	
+
+  if ($i <= 0) return 0;
+
+  $limit = strlen($str);
+  if ($i>=$limit) return $limit;
+
   if ($next) {
-	  $limit = strlen($str);
-	  while (($i<$limit) && ((ord($str[$i]) & 0xC0) == 0x80)) $i++;
-	} else {
-	  while ($i && ((ord($str[$i]) & 0xC0) == 0x80)) $i--;
-	}
-	
-	return $i;
+    while (($i<$limit) && ((ord($str[$i]) & 0xC0) == 0x80)) $i++;
+  } else {
+    while ($i && ((ord($str[$i]) & 0xC0) == 0x80)) $i--;
+  }
+
+  return $i;
 }
 
 // only needed if no mb_string available
