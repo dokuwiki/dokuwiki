@@ -4,7 +4,7 @@
  * -------
  * Author: Alessandro Staltari (staltari@geocities.com)
  * Copyright: (c) 2005 Alessandro Staltari (http://www.geocities.com/SiliconValley/Vista/8155/)
- * Release Version: 1.0.7.12
+ * Release Version: 1.0.7.13
  * CVS Revision Version: $Revision: 1.14.2.2 $
  * Date Started: 2005/07/05
  * Last Modified: $Date: 2006/07/22 11:30:27 $

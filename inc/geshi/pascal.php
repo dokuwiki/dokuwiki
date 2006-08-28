@@ -4,7 +4,7 @@
  * ----------
  * Author: Tux (tux@inamil.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.12
+ * Release Version: 1.0.7.13
  * CVS Revision Version: $Revision: 1.13.2.2 $
  * Date Started: 2004/07/26
  * Last Modified: $Date: 2006/07/22 11:30:32 $

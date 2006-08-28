@@ -4,7 +4,7 @@
  * --------
  * Author: Bananeweizen (Bananeweizen@gmx.de)
  * Copyright: (c) 2005 Bananeweizen (www.bananeweizen.de)
- * Release Version: 1.0.7.12
+ * Release Version: 1.0.7.13
  * CVS Revision Version: $Revision: 1.1.2.3 $
  * Date Started: 2005/03/27
  * Last Modified: $Date: 2006/07/22 11:30:33 $

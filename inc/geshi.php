@@ -29,7 +29,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.40.2.5 2006/07/22 11:30:40 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.40.2.7 2006/08/07 11:06:41 oracleshinoda Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.12');
+define('GESHI_VERSION', '1.0.7.13');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -578,7 +578,7 @@ class GeSHi
 	 */
 	function set_overall_id ($id)
 	{
-		$this->overall_id = $id;
+        $this->overall_id = $id;
 	}
 
 	/**
@@ -2269,6 +2269,11 @@ class GeSHi
         $parsed_code = preg_replace('#<span[^>]+>(\s*)</span>#', '\\1', $parsed_code);
         $parsed_code = preg_replace('#<div[^>]+>(\s*)</div>#', '\\1', $parsed_code);
 
+        // If we are using IDs for line numbers, there needs to be an overall
+        // ID set to prevent collisions.
+        if ($this->add_ids && !$this->overall_id) {
+            $this->overall_id = 'geshi-' . substr(md5(microtime()), 0, 4);
+        }
         
         // If we're using line numbers, we insert <li>s and appropriate
         // markup to style them (otherwise we don't need to do anything)
@@ -2324,23 +2329,21 @@ class GeSHi
             	++$i;
             	// Are we supposed to use ids? If so, add them
             	if ($this->add_ids) {
-            		//$attr .= " id=\"{$this->overall_id}-{$i}\"";
                     $attrs['id'][] = "$this->overall_id-$i";
             	}
             	if ($this->use_classes && in_array($i, $this->highlight_extra_lines)) {
-            		//$attr .= " class=\"ln-xtra\"";
                     $attrs['class'][] = 'ln-xtra';
             	}
             	if (!$this->use_classes && in_array($i, $this->highlight_extra_lines)) {
-            		//$attr .= " style=\"{$this->highlight_extra_lines_style}\"";
                     $attrs['style'][] = $this->highlight_extra_lines_style;
             	}
 
             	// Add in the line surrounded by appropriate list HTML
                 $attr_string = ' ';
                 foreach ($attrs as $key => $attr) {
-                    $attr_string .= $key . '="' . implode(' ', $attr) . '"';
+                    $attr_string .= $key . '="' . implode(' ', $attr) . '" ';
                 }
+                $attr_string = substr($attr_string, 0, -1);
             	$parsed_code .= "<li$attr_string>$start$line$end</li>$ls";
                 $attrs = array();
         	}
