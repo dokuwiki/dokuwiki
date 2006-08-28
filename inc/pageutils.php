@@ -188,6 +188,7 @@ function wikiFN($raw_id,$rev='',$clean=true){
     }
   }
 
+  if (!isset($cache[$raw_id])) { $cache[$raw_id] = array(); }
   $cache[$raw_id][$rev] = $fn;
   return $fn;
 }

@@ -23,6 +23,10 @@
   if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
   else { error_reporting(DOKU_E_LEVEL); }
 
+  // init memory caches
+  $cache_wikifn = array();
+  $cache_cleanid = array();
+
   //prepare config array()
   global $conf;
   if (!defined('DOKU_UNITTEST')) {
