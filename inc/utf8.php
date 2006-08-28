@@ -137,9 +137,9 @@ function utf8_strlen($string){
 function utf8_substr($str, $offset, $length = null) {
     if(UTF8_MBSTRING){
         if( $length === null ){
-            mb_substr($str, $offset);
+            return (mb_substr($str, $offset));
         }else{
-            mb_substr($str, $offset, $length);
+            return (mb_substr($str, $offset, $length));
         }
     }
 
