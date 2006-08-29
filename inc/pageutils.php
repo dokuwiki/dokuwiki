@@ -58,10 +58,6 @@ function getID($param='id',$clean=true){
   return $id;
 }
 
-// function result cache for cleanID
-global $cache_cleanid;
-$cache_cleanid = array();
-
 /**
  * Remove unwanted chars from ID
  *
@@ -144,10 +140,6 @@ function noNS($id) {
     return $id;
   }
 }
-
-// function result cache for wikiFN
-global $cache_wikifn;
-$cache_wikifn = array();
 
 /**
  * returns the full path to the datafile specified by ID and
