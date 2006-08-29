@@ -105,7 +105,7 @@ $lang['usedraft']    = 'Salva una bozza in automatico in fase di modifica';
 $lang['sepchar']     = 'Separatore di parole nei nomi di pagina';
 $lang['canonical']   = 'Usa URL canoniche';
 $lang['autoplural']  = 'Controlla il plurale nei collegamenti';
-$lang['usegzip']     = 'Usa gzip (per l\'archivio)';
+$lang['compression'] = 'Usa la compressione per i file dell\'archivio';
 $lang['cachetime']   = 'Durata della cache (sec)';
 $lang['locktime']    = 'Durata dei file di lock (sec)';
 $lang['fetchsize']   = 'Dimensione massima (bytes) scaricabile da fetch.php da extern';
@@ -176,3 +176,7 @@ $lang['rss_linkto_o_page']    = 'pagina revisionata';
 $lang['rss_linkto_o_rev']     = 'elenco revisioni';
 $lang['rss_linkto_o_current'] = 'pagina corrente';
 
+/* compression options */
+$lang['compression_o_0']   = 'nessuna';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
