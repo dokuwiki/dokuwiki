@@ -442,19 +442,34 @@ function html_locked(){
  * list old revisions
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function html_revisions(){
+function html_revisions($first=0){
   global $ID;
   global $INFO;
   global $conf;
   global $lang;
-  $revisions = getRevisions($ID);
+  /* we need to get one additionally log entry to be able to
+   * decide if this is the last page or is there another one.
+   * see html_recent()
+   */
+  $revisions = getRevisions($ID, $first, $conf['recent']+1);
+  if(count($revisions)==0 && $first!=0){
+    $first=0;
+    $revisions = getRevisions($ID, $first, $conf['recent']+1);;
+  }
+  $hasNext = false;
+  if (count($revisions)>$conf['recent']) {
+    $hasNext = true;
+    array_pop($revisions); // remove extra log entry
+  }
+
   $date = @date($conf['dformat'],$INFO['lastmod']);
 
   print p_locale_xhtml('revisions');
   print '<ul>';
-  if($INFO['exists']){
-    print ($INFO['minor']) ? '<li class="minor">' : '<li>';
+  if($INFO['exists'] && $first==0){
+    print (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']==='e') ? '<li class="minor">' : '<li>';
     print '<div class="li">';
 
     print $date;
@@ -477,7 +492,7 @@ function html_revisions(){
     $date = date($conf['dformat'],$rev);
     $info = getRevisionInfo($ID,$rev,true);
 
-    print ($info['minor']) ? '<li class="minor">' : '<li>';
+    print ($info['type']==='e') ? '<li class="minor">' : '<li>';
     print '<div class="li">';
     print $date;
 
@@ -507,6 +522,23 @@ function html_revisions(){
     print '</li>';
   }
   print '</ul>';
+
+  print '<div class="pagenav">';
+  $last = $first + $conf['recent'];
+  if ($first > 0) {
+    $first -= $conf['recent'];
+    if ($first < 0) $first = 0;
+    print '<div class="pagenav-prev">';
+    print html_btn('newer','',"p",array('do' => 'revisions', 'first' => $first));
+    print '</div>';
+  }
+  if ($hasNext) {
+    print '<div class="pagenav-next">';
+    print html_btn('older','',"n",array('do' => 'revisions', 'first' => $last));
+    print '</div>';
+  }
+  print '</div>';
+
 }
 
 /**
@@ -514,6 +546,7 @@ function html_revisions(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function html_recent($first=0){
   global $conf;
@@ -526,16 +559,20 @@ function html_recent($first=0){
   $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
   if(count($recents) == 0 && $first != 0){
     $first=0;
-    $recents = getRecents(0,$conf['recent'] + 1,getNS($ID));
+    $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
   }
-  $cnt = count($recents) <= $conf['recent'] ? count($recents) : $conf['recent'];
+  $hasNext = false;
+  if (count($recents)>$conf['recent']) {
+    $hasNext = true;
+    array_pop($recents); // remove extra log entry
+  }
 
   print p_locale_xhtml('recent');
   print '<ul>';
 
   foreach($recents as $recent){
     $date = date($conf['dformat'],$recent['date']);
-    print ($recent['minor']) ? '<li class="minor">' : '<li>';
+    print ($recent['type']==='e') ? '<li class="minor">' : '<li>';
     print '<div class="li">';
 
     print $date.' ';
@@ -587,7 +624,7 @@ function html_recent($first=0){
     print html_btn('newer','',"p",array('do' => 'recent', 'first' => $first));
     print '</div>';
   }
-  if ($conf['recent'] < count($recents)) {
+  if ($hasNext) {
     print '<div class="pagenav-next">';
     print html_btn('older','',"n",array('do' => 'recent', 'first' => $last));
     print '</div>';
@@ -782,7 +819,7 @@ function html_diff($text='',$intro=true){
       $r = $REV;
     }else{
       //use last revision if none given
-      $revs = getRevisions($ID);
+      $revs = getRevisions($ID, 0, 1);
       $r = $revs[0];
     }
 

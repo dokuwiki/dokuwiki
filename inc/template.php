@@ -81,7 +81,8 @@ function tpl_content_core(){
       html_search();
       break;
     case 'revisions':
-      html_revisions();
+      $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
+      html_revisions($first);
       break;
     case 'diff':
       html_diff();

@@ -24,8 +24,8 @@
   else { error_reporting(DOKU_E_LEVEL); }
 
   // init memory caches
-  global $cache_wikifn; $cache_wikifn = array();
-  global $cache_wikifn; $cache_cleanid = array();
+  $cache_wikifn = array();
+  $cache_cleanid = array();
 
   //prepare config array()
   global $conf;
@@ -128,8 +128,7 @@ function init_paths(){
                  'mediadir'  => 'media',
                  'metadir'   => 'meta',
                  'cachedir'  => 'cache',
-                 'lockdir'   => 'locks',
-                 'changelog' => 'changes.log');
+                 'lockdir'   => 'locks');
 
   foreach($paths as $c => $p){
     if(!$conf[$c])   $conf[$c] = $conf['savedir'].'/'.$p;
@@ -139,6 +138,12 @@ function init_paths(){
                                Or maybe you want to <a href=\"install.php\">run the
                                installer</a>?");
   }
+
+  // path to old changelog only needed for upgrading
+  $conf['changelog_old'] = init_path((isset($conf['changelog']))?($conf['changelog']):($conf['savedir'].'/changes.log'));
+  if ($conf['changelog_old']=='') { unset($conf['changelog_old']); }
+  // hardcoded changelog because it is now a cache that lives in meta
+  $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
 }
 
 /**

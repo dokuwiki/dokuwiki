@@ -27,13 +27,80 @@ if(@ignore_user_abort()){
 if(!$_REQUEST['debug']) ob_start();
 
 // run one of the jobs
-runIndexer() or metaUpdate() or runSitemapper();
+runIndexer() or metaUpdate() or runSitemapper() or runTrimRecentChanges();
 if($defer) sendGIF();
 
 if(!$_REQUEST['debug']) ob_end_clean();
 exit;
 
 // --------------------------------------------------------------------
+
+/**
+ * Trims the recent changes cache (or imports the old changelog) as needed.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function runTrimRecentChanges() {
+    global $conf;
+
+    // Import old changelog (if needed)
+    // Uses the imporoldchangelog plugin to upgrade the changelog automaticaly.
+    // FIXME: Remove this from runTrimRecentChanges when it is no longer needed.
+    if (isset($conf['changelog_old']) &&
+        file_exists($conf['changelog_old']) && !file_exists($conf['changelog']) &&
+        !file_exists($conf['changelog'].'_importing') && !file_exists($conf['changelog'].'_tmp')) {
+            $tmp = array(); // no event data
+            trigger_event('TEMPORARY_CHANGELOG_UPGRADE_EVENT', $tmp);
+            return true;
+    }
+
+    // Trim the Recent Changes
+    // Trims the recent changes cache to the last $conf['changes_days'] recent
+    // changes or $conf['recent'] items, which ever is larger.
+    // The trimming is only done once a day.
+    if (file_exists($conf['changelog']) &&
+        (filectime($conf['changelog'])+86400)<time() &&
+        !file_exists($conf['changelog'].'_tmp')) {
+            io_lock($conf['changelog']);
+            $lines = file($conf['changelog']);
+            if (count($lines)<$conf['recent']) {
+                // nothing to trim
+                io_unlock($conf['changelog']);
+                return true;
+            }
+            // trim changelog
+            io_saveFile($conf['changelog'].'_tmp', ''); // presave tmp as 2nd lock
+            $kept = 0;
+            $trim_time = time() - $conf['recent_days']*86400;
+            $out_lines = array();
+            // check lines from newest to oldest
+            for ($i = count($lines)-1; $i >= 0; $i--) {
+                $tmp = parseChangelogLine($lines[$i]);
+                if ($tmp===false) { continue; }
+                if ($tmp['date']>$trim_time || $kept<$conf['recent']) {
+                    array_push($out_lines, implode("\t", $tmp)."\n");
+                    $kept++;
+                } else {
+                    // no more lines worth keeping
+                    break;
+                }
+            }
+            io_saveFile($conf['changelog'].'_tmp', implode('', $out_lines));
+            unlink($conf['changelog']);
+            if (!rename($conf['changelog'].'_tmp', $conf['changelog'])) {
+                // rename failed so try another way...
+                io_unlock($conf['changelog']);
+                io_saveFile($conf['changelog'], implode('', $out_lines));
+                unlink($conf['changelog'].'_tmp');
+            } else {
+                io_unlock($conf['changelog']);
+            }
+            return true;
+    }
+
+    // nothing done
+    return false;
+}
 
 /**
  * Runs the indexer for the current page

@@ -94,16 +94,20 @@ function pageinfo(){
   $info['editable']  = ($info['writable'] && empty($info['lock']));
   $info['lastmod']   = @filemtime($info['filepath']);
 
+  //load page meta data
+  $info['meta'] = p_get_metadata($ID);
+
   //who's the editor
   if($REV){
-    $revinfo = getRevisionInfo($ID,$REV,false);
+    $revinfo = getRevisionInfo($ID, $REV, 1024);
   }else{
-    $revinfo = getRevisionInfo($ID,$info['lastmod'],false);
+    $revinfo = $info['meta']['last_change'];
   }
   $info['ip']     = $revinfo['ip'];
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
-  $info['minor']  = $revinfo['minor'];
+  // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
+  // Use $INFO['meta']['last_change']['type']==='e' in place of $info['minor'].
 
   if($revinfo['user']){
     $info['editor'] = $revinfo['user'];
@@ -710,46 +714,53 @@ function dbglog($msg){
 }
 
 /**
- * Add's an entry to the changelog
+ * Add's an entry to the changelog and saves the metadata for the page
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Esther Brunner <wikidesign@gmail.com>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function addLogEntry($date,$id,$summary='',$minor=false){
-  global $conf;
+function addLogEntry($date, $id, $type='E', $summary='', $extra=''){
+  global $conf, $INFO;
 
-  if(!@is_writable($conf['changelog'])){
-    msg($conf['changelog'].' is not writable!',-1);
-    return;
-  }
+  $id = cleanid($id);
+  $file = wikiFN($id);
+  $created = @filectime($file);
+  $minor = ($type==='e');
+  $wasRemoved = ($type==='D');
 
   if(!$date) $date = time(); //use current time if none supplied
   $remote = $_SERVER['REMOTE_ADDR'];
   $user   = $_SERVER['REMOTE_USER'];
 
-  if($conf['useacl'] && $user && $minor){
-    $summary = '*'.$summary;
-  }else{
-    $summary = ' '.$summary;
+  $logline = array(
+    'date'  => $date,
+    'ip'    => $remote,
+    'type'  => $type,
+    'id'    => $id,
+    'user'  => $user,
+    'sum'   => $summary,
+    'extra' => $extra
+  );
+
+  // update metadata
+  if (!$wasRemoved) {
+    $meta = array();
+    if (!$INFO['exists']){ // newly created
+      $meta['date']['created'] = $created;
+      if ($user) $meta['creator'] = $INFO['userinfo']['name'];
+    } elseif (!$minor) {   // non-minor modification
+      $meta['date']['modified'] = $date;
+      if ($user) $meta['contributor'][$user] = $INFO['userinfo']['name'];
+    }
+    $meta['last_change'] = $logline;
+    p_set_metadata($id, $meta, true);
   }
 
-  $logline = join("\t",array($date,$remote,$id,$user,$summary))."\n";
-  io_saveFile($conf['changelog'],$logline,true);
-}
-
-/**
- * Checks an summary entry if it was a minor edit
- *
- * The summary is cleaned of the marker char
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function isMinor(&$summary){
-  if(substr($summary,0,1) == '*'){
-    $summary = substr($summary,1);
-    return true;
-  }
-  $summary = trim($summary);
-  return false;
+  // add changelog lines
+  $logline = implode("\t", $logline)."\n";
+  io_saveFile(metaFN($id,'.changes'),$logline,true); //page changelog
+  io_saveFile($conf['changelog'],$logline,true); //global changelog cache
 }
 
 /**
@@ -759,58 +770,39 @@ function isMinor(&$summary){
  *
  * @see getRecents()
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function _handleRecent($line,$ns,$flags){
   static $seen  = array();         //caches seen pages and skip them
   if(empty($line)) return false;   //skip empty lines
 
   // split the line into parts
-  list($dt,$ip,$id,$usr,$sum) = explode("\t",$line);
+  $recent = parseChangelogLine($line);
+  if ($recent===false) { return false; }
 
   // skip seen ones
-  if($seen[$id]) return false;
-  $recent = array();
+  if(isset($seen[$recent['id']])) return false;
 
-  // check minors
-  if(isMinor($sum)){
-    // skip minors
-    if($flags & RECENTS_SKIP_MINORS) return false;
-    $recent['minor'] = true;
-  }else{
-    $recent['minor'] = false;
-  }
+  // skip minors
+  if($recent['type']==='e' && ($flags & RECENTS_SKIP_MINORS)) return false;
 
   // remember in seen to skip additional sights
-  $seen[$id] = 1;
+  $seen[$recent['id']] = 1;
 
   // check if it's a hidden page
-  if(isHiddenPage($id)) return false;
+  if(isHiddenPage($recent['id'])) return false;
 
   // filter namespace
-  if (($ns) && (strpos($id,$ns.':') !== 0)) return false;
+  if (($ns) && (strpos($recent['id'],$ns.':') !== 0)) return false;
 
   // exclude subnamespaces
-  if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($id) != $ns)) return false;
+  if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
 
   // check ACL
-  if (auth_quickaclcheck($id) < AUTH_READ) return false;
+  if (auth_quickaclcheck($recent['id']) < AUTH_READ) return false;
 
   // check existance
-  if(!@file_exists(wikiFN($id))){
-    if($flags & RECENTS_SKIP_DELETED){
-      return false;
-    }else{
-      $recent['del'] = true;
-    }
-  }else{
-    $recent['del'] = false;
-  }
-
-  $recent['id']   = $id;
-  $recent['date'] = $dt;
-  $recent['ip']   = $ip;
-  $recent['user'] = $usr;
-  $recent['sum']  = $sum;
+  if((!@file_exists(wikiFN($recent['id']))) && ($flags & RECENTS_SKIP_DELETED)) return false;
 
   return $recent;
 }
@@ -832,7 +824,7 @@ function _handleRecent($line,$ns,$flags){
  * @param string $ns      restrict to given namespace
  * @param bool   $flags   see above
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function getRecents($first,$num,$ns='',$flags=0){
   global $conf;
@@ -842,190 +834,245 @@ function getRecents($first,$num,$ns='',$flags=0){
   if(!$num)
     return $recent;
 
-  if(!@is_readable($conf['changelog'])){
-    msg($conf['changelog'].' is not readable',-1);
-    return $recent;
+  // read all recent changes. (kept short)
+  $lines = file($conf['changelog']);
+
+  // handle lines
+  for($i = count($lines)-1; $i >= 0; $i--){
+    $rec = _handleRecent($lines[$i], $ns, $flags);
+    if($rec !== false) {
+      if(--$first >= 0) continue; // skip first entries
+      $recent[] = $rec;
+      $count++;
+      // break when we have enough entries
+      if($count >= $num){ break; }
+    }
   }
 
-  $fh  = fopen($conf['changelog'],'r');
-  $buf = '';
-  $csz = 4096;                              //chunksize
-  fseek($fh,0,SEEK_END);                    // jump to the end
-  $pos = ftell($fh);                        // position pointer
-
-  // now read backwards into buffer
-  while($pos > 0){
-    $pos -= $csz;                           // seek to previous chunk...
-    if($pos < 0) {                          // ...or rest of file
-      $csz += $pos;
-      $pos = 0;
-    }
-
-    fseek($fh,$pos);
-
-    $buf = fread($fh,$csz).$buf;            // prepend to buffer
-
-    $lines = explode("\n",$buf);            // split buffer into lines
-
-    if($pos > 0){
-      $buf = array_shift($lines);           // first one may be still incomplete
-    }
-
-    $cnt = count($lines);
-    if(!$cnt) continue;                     // no lines yet
-
-    // handle lines
-    for($i = $cnt-1; $i >= 0; $i--){
-      $rec = _handleRecent($lines[$i],$ns,$flags);
-      if($rec !== false){
-        if(--$first >= 0) continue;         // skip first entries
-        $recent[] = $rec;
-        $count++;
-
-        // break while when we have enough entries
-        if($count >= $num){
-          $pos = 0; // will break the while loop
-          break;    // will break the for loop
-        }
-      }
-    }
-  }// end of while
-
-  fclose($fh);
   return $recent;
 }
 
 /**
- * Compare the logline $a to the timestamp $b
- * @author Yann Hamon <yann.hamon@mandragor.org>
- * @return integer 0 if the logline has timestamp $b, <0 if the timestam
- *         of $a is greater than $b, >0 else.
- */
-function hasTimestamp($a, $b)
-{
-  if (strpos($a, $b) === 0)
-    return 0;
-  else
-    return strcmp ($a, $b);
-}
-
-/**
- * performs a dichotomic search on an array using
- * a custom compare function
+ * parses a changelog line into it's components
  *
- * @author Yann Hamon <yann.hamon@mandragor.org>
- */
-function array_dichotomic_search($ar, $value, $compareFunc) {
-  $value = trim($value);
-  if (!$ar || !$value || !$compareFunc) return (null);
-  $len = count($ar);
-
-  $l = 0;
-  $r = $len-1;
-
-  do {
-    $i = floor(($l+$r)/2);
-    if ($compareFunc($ar[$i], $value)<0)
-      $l = $i+1;
-    else
-     $r = $i-1;
-  } while ($compareFunc($ar[$i], $value)!=0 && $l<=$r);
-
-  if ($compareFunc($ar[$i], $value)==0)
-    return $i;
-  else
-    return -1;
-}
-
-/**
- * gets additonal informations for a certain pagerevison
- * from the changelog
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Yann Hamon <yann.hamon@mandragor.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRevisionInfo($id,$rev,$mem_cache=true){
-  global $conf;
-  global $doku_temporary_revinfo_cache;
-  $cache =& $doku_temporary_revinfo_cache;
-  if(!$rev) return(null);
+function parseChangelogLine($line) {
+  $tmp = explode("\t", $line);
+    if ($tmp!==false && count($tmp)>1) {
+      $info = array();
+      $info['date']  = $tmp[0]; // unix timestamp
+      $info['ip']    = $tmp[1]; // IPv4 address (127.0.0.1)
+      $info['type']  = $tmp[2]; // log line type
+      $info['id']    = $tmp[3]; // page id
+      $info['user']  = $tmp[4]; // user name
+      $info['sum']   = $tmp[5]; // edit summary (or action reason)
+      $info['extra'] = rtrim($tmp[6], "\n"); // extra data (varies by line type)
+      return $info;
+  } else { return false; }
+}
+
+/**
+ * Get the changelog information for a specific page id
+ * and revision (timestamp). Adjacent changelog lines
+ * are optimistically parsed and cached to speed up
+ * consecutive calls to getRevisionInfo. For large
+ * changelog files, only the chunk containing the
+ * requested changelog line is read.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function getRevisionInfo($id, $rev, $chunk_size=8192) {
+  global $cache_revinfo;
+  $cache =& $cache_revinfo;
+  if (!isset($cache[$id])) { $cache[$id] = array(); }
+  $rev = max($rev, 0);
 
   // check if it's already in the memory cache
-  if (is_array($cache) && isset($cache[$id]) && isset($cache[$id][$rev])) {
+  if (isset($cache[$id]) && isset($cache[$id][$rev])) {
     return $cache[$id][$rev];
   }
 
-  $info = array();
-  if(!@is_readable($conf['changelog'])){
-    msg($conf['changelog'].' is not readable',-1);
-    return $recent;
-  }
-  $loglines = file($conf['changelog']);
-
-  if (!$mem_cache) {
-    // Search for a line with a matching timestamp
-    $index = array_dichotomic_search($loglines, $rev, 'hasTimestamp');
-    if ($index == -1)
-      return;
-
-    // The following code is necessary when there is more than
-    // one line with one same timestamp
-    $loglines_matching = array();
-    for ($i=$index-1;$i>=0 && hasTimestamp($loglines[$i], $rev) == 0; $i--)
-      $loglines_matching[] = $loglines[$i];
-    $loglines_matching = array_reverse($loglines_matching);
-    $loglines_matching[] =  $loglines[$index];
-    $logsize = count($loglines);
-    for ($i=$index+1;$i<$logsize && hasTimestamp($loglines[$i], $rev) == 0; $i++)
-      $loglines_matching[] = $loglines[$i];
-
-    // pull off the line most recent line with the right id
-    $loglines_matching = array_reverse($loglines_matching); //newest first
-    foreach ($loglines_matching as $logline) {
-      $line = explode("\t", $logline);
-      if ($line[2]==$id) {
-        $info['date']  = $line[0];
-        $info['ip']    = $line[1];
-        $info['user']  = $line[3];
-        $info['sum']   = $line[4];
-        $info['minor'] = isMinor($info['sum']);
-        break;
-      }
-    }
+  $file = metaFN($id, '.changes');
+  if (!file_exists($file)) { return false; }
+  if (filesize($file)<$chunk_size || $chunk_size==0) {
+    // read whole file
+    $lines = file($file);
+    if ($lines===false) { return false; }
   } else {
-    // load and cache all the lines with the right id
-    if(!is_array($cache)) { $cache = array(); }
-    if (!isset($cache[$id])) { $cache[$id] = array(); }
-    foreach ($loglines as $logline) {
-      $start = strpos($logline, "\t", strpos($logline, "\t")+1)+1;
-      $end = strpos($logline, "\t", $start);
-      if (substr($logline, $start, $end-$start)==$id) {
-        $line = explode("\t", $logline);
-        $info = array();
-        $info['date']  = $line[0];
-        $info['ip']    = $line[1];
-        $info['user']  = $line[3];
-        $info['sum']   = $line[4];
-        $info['minor'] = isMinor($info['sum']);
-        $cache[$id][$info['date']] = $info;
+    // read by chunk
+    $fp = fopen($file, 'rb'); // "file pointer"
+    if ($fp===false) { return false; }
+    $head = 0;
+    fseek($fp, 0, SEEK_END);
+    $tail = ftell($fp);
+    $finger = 0;
+    $finger_rev = 0;
+
+    // find chunk
+    while ($tail-$head>$chunk_size) {
+      $finger = $head+floor(($tail-$head)/2.0);
+      fseek($fp, $finger);
+      fgets($fp); // slip the finger forward to a new line
+      $finger = ftell($fp);
+      $tmp = fgets($fp); // then read at that location
+      $tmp = parseChangelogLine($tmp);
+      $finger_rev = $tmp['date'];
+      if ($finger==$head || $finger==$tail) { break; }
+      if ($finger_rev>$rev) {
+        $tail = $finger;
+      } else {
+        $head = $finger;
       }
     }
-    $info = $cache[$id][$rev];
+
+    if ($tail-$head<1) {
+      // cound not find chunk, assume requested rev is missing
+      fclose($fp);
+      return false;
+    }
+
+    // read chunk
+    $chunk = '';
+    $chunk_size = max($tail-$head, 0); // found chunk size
+    $got = 0;
+    fseek($fp, $head);
+    while ($got<$chunk_size && !feof($fp)) {
+      $tmp = fread($fp, max($chunk_size-$got, 0));
+      if ($tmp===false) { break; } //error state
+      $got += strlen($tmp);
+      $chunk .= $tmp;
+    }
+    $lines = explode("\n", $chunk);
+    array_pop($lines); // remove trailing newline
+    fclose($fp);
   }
 
-  return $info;
+  // parse and cache changelog lines
+  foreach ($lines as $value) {
+    $tmp = parseChangelogLine($value);
+    if ($tmp!==false) {
+      $cache[$id][$tmp['date']] = $tmp;
+    }
+  }
+  if (!isset($cache[$id][$rev])) { return false; }
+  return $cache[$id][$rev];
 }
 
+/**
+ * Return a list of page revisions numbers
+ * Does not guarantee that the revision exists in the attic,
+ * only that a line with the date exists in the changelog.
+ * By default the current revision is skipped.
+ *
+ * id:    the page of interest
+ * first: skip the first n changelog lines
+ * num:   number of revisions to return
+ *
+ * The current revision is automatically skipped when the page exists.
+ * See $INFO['meta']['last_change'] for the current revision.
+ *
+ * For efficiency, the log lines are parsed and cached for later
+ * calls to getRevisionInfo. Large changelog files are read
+ * backwards in chunks untill the requested number of changelog
+ * lines are recieved.
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ */
+function getRevisions($id, $first, $num, $chunk_size=8192) {
+  global $cache_revinfo;
+  $cache =& $cache_revinfo;
+  if (!isset($cache[$id])) { $cache[$id] = array(); }
+
+  $revs = array();
+  $lines = array();
+  $count  = 0;
+  $file = metaFN($id, '.changes');
+  $num = max($num, 0);
+  $chunk_size = max($chunk_size, 0);
+  if ($first<0) { $first = 0; }
+  else if (file_exists(wikiFN($id))) {
+     // skip current revision if the page exists
+    $first = max($first+1, 0);
+  }
+
+  if (!file_exists($file)) { return $revs; }
+  if (filesize($file)<$chunk_size || $chunk_size==0) {
+    // read whole file
+    $lines = file($file);
+    if ($lines===false) { return $revs; }
+  } else {
+    // read chunks backwards
+    $fp = fopen($file, 'rb'); // "file pointer"
+    if ($fp===false) { return $revs; }
+    fseek($fp, 0, SEEK_END);
+    $tail = ftell($fp);
+
+    // chunk backwards
+    $finger = max($tail-$chunk_size, 0);
+    while ($count<$num+$first) {
+      fseek($fp, $finger);
+      if ($finger>0) {
+        fgets($fp); // slip the finger forward to a new line
+        $finger = ftell($fp);
+      }
+
+      // read chunk
+      if ($tail<=$finger) { break; }
+      $chunk = '';
+      $read_size = max($tail-$finger, 0); // found chunk size
+      $got = 0;
+      while ($got<$read_size && !feof($fp)) {
+        $tmp = fread($fp, max($read_size-$got, 0));
+        if ($tmp===false) { break; } //error state
+        $got += strlen($tmp);
+        $chunk .= $tmp;
+      }
+      $tmp = explode("\n", $chunk);
+      array_pop($tmp); // remove trailing newline
+
+      // combine with previous chunk
+      $count += count($tmp);
+      $lines = array_merge($tmp, $lines);
+
+      // next chunk
+      if ($finger==0) { break; } // already read all the lines
+      else {
+        $tail = $finger;
+        $finger = max($tail-$chunk_size, 0);
+      }
+    }
+    fclose($fp);
+  }
+
+  // skip parsing extra lines
+  $num = max(min(count($lines)-$first, $num), 0);
+  if      ($first>0 && $num>0)  { $lines = array_slice($lines, max(count($lines)-$first-$num, 0), $num); }
+  else if ($first>0 && $num==0) { $lines = array_slice($lines, 0, max(count($lines)-$first, 0)); }
+  else if ($first==0 && $num>0) { $lines = array_slice($lines, max(count($lines)-$num, 0)); }
+
+  // handle lines in reverse order
+  for ($i = count($lines)-1; $i >= 0; $i--) {
+    $tmp = parseChangelogLine($lines[$i]);
+    if ($tmp!==false) {
+      $cache[$id][$tmp['date']] = $tmp;
+      $revs[] = $tmp['date'];
+    }
+  }
+
+  return $revs;
+}
 
 /**
  * Saves a wikitext by calling io_writeWikiPage
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function saveWikiText($id,$text,$summary,$minor=false){
   global $conf;
   global $lang;
+  global $REV;
   // ignore if no changes were made
   if($text == rawWiki($id,'')){
     return;
@@ -1033,14 +1080,19 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
   $file = wikiFN($id);
   $old  = saveOldRevision($id);
+  $wasRemoved = empty($text);
+  $wasCreated = !file_exists($file);
+  $wasReverted = ($REV==true);
 
-  if (empty($text)){
+  if ($wasRemoved){
     // remove empty file
     @unlink($file);
-    // remove any meta info
+    // remove old meta info...
     $mfiles = metaFiles($id);
+    $changelog = metaFN($id, '.changes');
     foreach ($mfiles as $mfile) {
-      if (file_exists($mfile)) @unlink($mfile);
+      // but keep per-page changelog to preserve page history
+      if (file_exists($mfile) && $mfile!==$changelog) { @unlink($mfile); }
     }
     $del = true;
     // autoset summary on deletion
@@ -1051,11 +1103,21 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }else{
     // save file (namespace dir is created in io_writeWikiPage)
     io_writeWikiPage($file, $text, $id);
-    saveMetadata($id, $file, $minor);
     $del = false;
   }
 
-  addLogEntry(@filemtime($file),$id,$summary,$minor);
+  // select changelog line type
+  $extra = '';
+  $type = 'E';
+  if ($wasReverted) {
+    $type = 'R';
+    $extra = $REV;
+  }
+  else if ($wasCreated) { $type = 'C'; }
+  else if ($wasRemoved) { $type = 'D'; }
+  else if ($minor && $conf['useacl'] && $_SERVER['REMOTE_USER']) { $type = 'e'; } //minor edits only for logged in users
+
+  addLogEntry(@filemtime($file), $id, $type, $summary, $extra);
   // send notify mails
   notify($id,'admin',$old,$summary,$minor);
   notify($id,'subscribers',$old,$summary,$minor);
@@ -1064,27 +1126,6 @@ function saveWikiText($id,$text,$summary,$minor=false){
   if($conf['purgeonadd'] && (!$old || $del)){
     io_saveFile($conf['cachedir'].'/purgefile',time());
   }
-}
-
-/**
- * saves the metadata for a page
- *
- * @author Esther Brunner <wikidesign@gmail.com>
- */
-function saveMetadata($id, $file, $minor){
-  global $INFO;
-  
-  $user = $_SERVER['REMOTE_USER'];
-  
-  $meta = array();
-  if (!$INFO['exists']){ // newly created
-    $meta['date']['created'] = @filectime($file);
-    if ($user) $meta['creator'] = $INFO['userinfo']['name'];
-  } elseif (!$minor) {   // non-minor modification
-    $meta['date']['modified'] = @filemtime($file);
-    if ($user) $meta['contributor'][$user] = $INFO['userinfo']['name'];
-  }
-  p_set_metadata($id, $meta, true);
 }
 
 /**
@@ -1175,39 +1216,6 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   $subject = '['.$conf['title'].'] '.$subject;
 
   mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
-}
-
-/**
- * Return a list of available page revisons
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function getRevisions($id){
-  global $conf;
-
-  $id   = cleanID($id);
-  $revd = dirname(wikiFN($id,'foo'));
-  $id   = noNS($id);
-  $id   = utf8_encodeFN($id);
-  $len  = strlen($id);
-  $xlen = 10; // length of timestamp, strlen(time()) would be more correct, 
-              // but i don't expect dokuwiki still running in 287 years ;)
-              // so this will perform better
-
-  $revs = array();
-  if (is_dir($revd) && $dh = opendir($revd)) {
-    while (($file = readdir($dh)) !== false) {
-      if (substr($file,0,$len) === $id) {
-        $time = substr($file,$len+1,$xlen);
-        $time = str_replace('.','FOO',$time); // make sure a dot will make the next test fail
-        $time = (int) $time;
-        if($time) $revs[] = $time;
-      }
-    }
-    closedir($dh);
-  }
-  rsort($revs);
-  return $revs;
 }
 
 /**
@@ -1339,7 +1347,21 @@ function check(){
   if(is_writable($conf['changelog'])){
     msg('Changelog is writable',1);
   }else{
-    msg('Changelog is not writable',-1);
+    if (file_exists($conf['changelog'])) {
+      msg('Changelog is not writable',-1);
+    }
+  }
+
+  if (isset($conf['changelog_old']) && file_exists($conf['changelog_old'])) {
+    msg('Old changelog exists.', 0);
+  }
+
+  if (file_exists($conf['changelog'].'_failed')) {
+    msg('Importing old changelog failed.', -1);
+  } else if (file_exists($conf['changelog'].'_importing')) {
+    msg('Importing old changelog now.', 0);
+  } else if (file_exists($conf['changelog'].'_import_ok')) {
+    msg('Old changelog imported.', 1);
   }
 
   if(is_writable($conf['datadir'])){

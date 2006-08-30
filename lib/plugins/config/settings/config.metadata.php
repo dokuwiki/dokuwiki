@@ -162,6 +162,7 @@ $meta['sitemap']     = array('numeric');
 $meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom'));
 $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
 $meta['rss_update']  = array('numeric');
+$meta['recent_days'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');

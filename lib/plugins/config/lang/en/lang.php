@@ -124,6 +124,7 @@ $lang['sitemap']     = 'Generate Google sitemap (days)';
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';
 $lang['rss_update']  = 'XML feed update interval (sec)';
+$lang['recent_days'] = 'How many recent changes to keep (days)';
 
 /* Target options */
 $lang['target____wiki']      = 'Target window for internal links';
