@@ -26,5 +26,18 @@ class utf8_substr_test extends UnitTestCase {
         }
     }
 
+    function test2_bug891() {
+        // we test multiple cases here - format: in, offset, length, out
+        $tests   = array();
+
+        $str = str_pad('',strlen('в')*66000,'в').'@@';
+        $tests[] = array($str, 65600, 1, 'в');
+        $tests[] = array($str,0,66000,$str);
+
+        foreach($tests as $test){
+            $this->assertEqual(utf8_substr($test[0],$test[1],$test[2]),$test[3]);
+        }
+    }
+
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :

@@ -333,7 +333,6 @@ switch ($algorithm) {
       // establish context, 100 bytes surrounding the match string
       // first look to see if we can go 100 either side,
       // then drop to 50 adding any excess if the other side can't go to 50,
-      // NOTE: these are byte adjustments and will have to be corrected for utf-8
         $pre = min($utf8_idx-$utf8_offset,100);
         $post = min($len-$utf8_idx-$utf8_len,100);
 
@@ -371,9 +370,9 @@ switch ($algorithm) {
       } else {
         // code for strings too large for utf8_substr
         // use a larger context number as its bytes not characters
-        $pre = 70;
+        // no need to check for short pre, $idx is nearly 64k
         $post = min(strlen($text)-$idx-strlen($str), 70);
-        if ($post < 70) { $pre = 70 - $post; }
+        $pre = ($post < 70) ?  140 - $post : 70;
 
         $start = utf8_correctIdx($text,$idx - $pre);
         $end = utf8_correctIdx($text, $idx + strlen($str) + $post);
