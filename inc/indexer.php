@@ -233,6 +233,8 @@ function idx_lookup($words){
         if(substr($xword,0,1) == '*'){
             $xword = substr($xword,1);
             $wild  = 1;
+            $ptn = '/'.preg_quote($xword,'/').'$/';
+#            $l = -1*strlen($xword)-1;
         }
         if(substr($xword,-1,1) == '*'){
             $xword = substr($xword,0,-1);
@@ -245,8 +247,11 @@ function idx_lookup($words){
             for($wid=0; $wid<$cnt; $wid++){
                 $iword = $word_idx[$wid];
                 if( (($wild==3) && is_int(strpos($iword,$xword))) ||
-                    (($wild==1) && ("$xword\n" == substr($iword,(-1*strlen($xword))-1))) ||
-                    (($wild==2) && ($xword == substr($iword,0,strlen($xword))))
+#                    (($wild==1) && ("$xword\n" == substr($iword,$l))) ||
+                    (($wild==1) && preg_match($ptn,$iword)) ||
+#                    (($wild==2) && ($xword == substr($iword,0,strlen($xword))))
+                    (($wild==2) && (0 === strpos($iword,$xword)))
+
                   ){
                     $wids[] = $wid;
                     $result[$word][] = $wid;

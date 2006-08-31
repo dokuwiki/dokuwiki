@@ -13,6 +13,7 @@
 if(!defined('UTF8_MBSTRING')){
   if(function_exists('mb_substr') && !defined('UTF8_NOMBSTRING')){
     define('UTF8_MBSTRING',1);
+    mb_internal_encoding('UTF-8');
   }else{
     define('UTF8_MBSTRING',0);
   }
