@@ -272,10 +272,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
     // first resolve and clean up the $id
     resolve_pageid(getNS($ID), $id, $exists);
-    list($id, $hash) = split('#', $id, 2);
+    list($page, $hash) = split('#', $id, 2);
 
     // set metadata
-    $this->meta['relation']['references'][$id] = $exists;
+    $this->meta['relation']['references'][$page] = $exists;
     // $data = array('relation' => array('isreferencedby' => array($ID => true)));
     // p_set_metadata($id, $data);
 
@@ -357,7 +357,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $nssep = '[:;]';
     }
     $name = preg_replace('!.*'.$nssep.'!','',$name);
-    //if there is a hash we use the ancor name only
+    //if there is a hash we use the anchor name only
     $name = preg_replace('!.*#!','',$name);
     return $name;
   }
