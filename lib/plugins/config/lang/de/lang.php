@@ -95,7 +95,7 @@ $lang['usedraft']       = 'Während des Bearbeitens automatisch Zwischenentwürf
 $lang['sepchar']        = 'Worttrenner für Seitennamen in URLs';
 $lang['canonical']      = 'Immer Links mit vollständigen URLs erzeugen';
 $lang['autoplural']     = 'Bei Links automatisch nach vorhandenen Pluralformen suchen';
-$lang['usegzip']        = 'Alte Seitenversionen komprimieren';
+$lang['compression']    = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['cachetime']      = 'Maximale Cachespeicherung (Sek.)';
 $lang['purgeonadd']     = 'Seitencache leeren wenn eine neue Seite angelegt wurde';
 $lang['locktime']       = 'Maximales Alter für Seitensperren (Sek.)';
@@ -116,6 +116,7 @@ $lang['sitemap']        = 'Google Sitemap erzeugen (Tage)';
 $lang['rss_type']       = 'XML-Feed Format';
 $lang['rss_linkto']     = 'XML-Feed verlinken auf';
 $lang['rss_update']     = 'XML-Feed Aktualisierungsinterval (sec)';
+$lang['recent_days']    = 'Wieviele letzte Änderungen sollen einsehbar bleiben? (Tage)';
 $lang['target____wiki']      = 'Zielfenster für interne Links (target Attribut)';
 $lang['target____interwiki'] = 'Zielfenster für InterWiki-Links (target Attribut)';
 $lang['target____extern']    = 'Zielfenster für Externe Links (target Attribut)';
@@ -150,4 +151,6 @@ $lang['rss_linkto_o_page']    = 'geänderte Seite';
 $lang['rss_linkto_o_rev']     = 'Liste aller Änderungen';
 $lang['rss_linkto_o_current'] = 'Aktuelle Seite';
 
-
+$lang['compression_o_0']   = 'keine';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';

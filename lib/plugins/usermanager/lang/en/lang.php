@@ -4,9 +4,9 @@
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  */
- 
-$lang['menu'] = 'User Manager'; 
- 
+
+$lang['menu'] = 'User Manager';
+
 // custom language strings for the plugin
 $lang['noauth']      = '(user authentication not available)';
 $lang['nosupport']   = '(user management not supported)';

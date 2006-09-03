@@ -48,3 +48,10 @@ $lang['next']   = 'Nächste';
 $lang['last']   = 'Ende';
 
 $lang['edit_usermissing'] = 'Der usgewählte Nutzer wurde nicht gefunden. Möglicherweise wurde er gelöscht oder der Nutzer wurde anderswo geändert.';
+$lang['user_notify'] = 'Nutzer benachrichtigen';
+$lang['note_notify'] = 'Benachrichtigungsmails werden nur versandt wenn ein neues Passwort vergeben wurde.';
+$lang['note_group']  = 'Neue Nutzer werden der Standard-Gruppe (%s) hinzugefügt, wenn keine Gruppe angegeben wurde.';
+$lang['add_ok']      = 'Nutzer erfolgreich angelegt';
+$lang['add_fail']    = 'Nutzer konnte nicht angelegt werden';
+$lang['notify_ok']   = 'Benachrichtigungsmail wurde versandt';
+$lang['notify_fail'] = 'Benachrichtigungsmail konnte nicht versandt werden';
