@@ -187,7 +187,6 @@ function tpl_metaheaders($alt=true){
   // setup robot tags apropriate for different modes
   if( ($ACT=='show' || $ACT=='export_xhtml') && !$REV){
     if($INFO['exists']){
-      ptln('<meta name="date" content="'.date('Y-m-d\TH:i:sO',$INFO['lastmod']).'" />',$it);
       //delay indexing:
       if((time() - $INFO['lastmod']) >= $conf['indexdelay']){
         ptln('<meta name="robots" content="index,follow" />',$it);
@@ -201,6 +200,23 @@ function tpl_metaheaders($alt=true){
     ptln('<meta name="robots" content="index,follow" />',$it);
   }else{
     ptln('<meta name="robots" content="noindex,nofollow" />',$it);
+  }
+
+  // set metadata
+  if($ACT == 'show' || $ACT=='export_xhtml'){
+    // date of modification
+    if($REV){
+      ptln('<meta name="date" content="'.date('Y-m-d\TH:i:sO',$REV).'" />',$it);
+    }else{
+      ptln('<meta name="date" content="'.date('Y-m-d\TH:i:sO',$INFO['lastmod']).'" />',$it);
+    }
+
+    // keywords (explicit or implicit)
+    if($INFO['meta']['subject']){
+      ptln('<meta name="keywords" content="'.hsc(join(',',$INFO['meta']['subject'])).' />',$it);
+    }else{
+      ptln('<meta name="keywords" content="'.str_replace(':',',',$ID).'" />',$it);
+    }
   }
 
   // load stylesheets
