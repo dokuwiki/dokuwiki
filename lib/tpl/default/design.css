@@ -36,6 +36,7 @@ div.dokuwiki img {
 
 div.dokuwiki p,
 div.dokuwiki blockquote,
+div.dokuwiki table,
 div.dokuwiki pre {
   margin: 0 0 1.0em 0;
 }
