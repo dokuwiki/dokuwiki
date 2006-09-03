@@ -1,5 +1,9 @@
 Uus kasutaja on registreeritud. Tema info:
 
+Kasutaja     : @NEWUSER@
+Täielik nimi : @NEWNAME@
+E-post       : @NEWEMAIL@
+
 Kuupäev      : @DATE@
 Lehitseja    : @BROWSER@
 IP-Aaddress  : @IPADDRESS@

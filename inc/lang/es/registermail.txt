@@ -1,5 +1,9 @@
 Un nuevo usuario ha sido registrado. Aquí están los detalles:
 
+Usuario         : @NEWUSER@
+Nombre completo : @NEWNAME@
+E-Mail          : @NEWEMAIL@
+
 Fecha           : @DATE@
 Browser         : @BROWSER@
 Dirección-IP    : @IPADDRESS@
