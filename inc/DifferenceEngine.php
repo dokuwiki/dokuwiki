@@ -834,7 +834,7 @@ class DiffFormatter
  *
  */
 
-define('NBSP', "\xA0");     // iso-8859-x non-breaking space.
+define('NBSP', "\xC2\xA0");     // utf-8 non-breaking space.
 
 class _HWLDF_WordAccumulator {
   function _HWLDF_WordAccumulator () {
