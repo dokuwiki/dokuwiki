@@ -13,7 +13,16 @@
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/io.php');
 
-	global $conf;
+  // some ACL level defines
+  define('AUTH_NONE',0);
+  define('AUTH_READ',1);
+  define('AUTH_EDIT',2);
+  define('AUTH_CREATE',4);
+  define('AUTH_UPLOAD',8);
+  define('AUTH_DELETE',16);
+  define('AUTH_ADMIN',255);
+
+  global $conf;
 
   if($conf['useacl']){
     require_once(DOKU_INC.'inc/blowfish.php');
@@ -45,15 +54,6 @@
   }
 
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));
-
-  // some ACL level defines
-  define('AUTH_NONE',0);
-  define('AUTH_READ',1);
-  define('AUTH_EDIT',2);
-  define('AUTH_CREATE',4);
-  define('AUTH_UPLOAD',8);
-  define('AUTH_DELETE',16);
-  define('AUTH_ADMIN',255);
 
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
