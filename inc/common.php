@@ -497,7 +497,6 @@ function clientIP($single=false){
   $cnt = count($ip);
   $match = array();
   for($i=0; $i<$cnt; $i++){
-    $ip[$i] = preg_replace('/[^0-9\.]+/','',$ip[$i]);
     if(preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/',$ip[$i],$match)) {
       $ip[$i] = $match[0];
     } else {

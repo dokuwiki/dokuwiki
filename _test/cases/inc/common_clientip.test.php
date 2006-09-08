@@ -141,6 +141,14 @@ class common_clientIP_test extends UnitTestCase {
         $this->assertEqual(clientIP(true),$out);
     }
 
+    function test_malicious(){
+        $_SERVER['REMOTE_ADDR']          = '';
+        $_SERVER['HTTP_X_REAL_IP']       = '';
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '<?php set_time_limit(0);echo \'my_delim\';passthru(123.123.123.123);die;?>';
+        $out = '123.123.123.123';
+        $this->assertEqual(clientIP(),$out);
+    }
+
 
 }
 
