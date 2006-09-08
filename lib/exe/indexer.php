@@ -47,8 +47,8 @@ function runTrimRecentChanges() {
     // Uses the imporoldchangelog plugin to upgrade the changelog automaticaly.
     // FIXME: Remove this from runTrimRecentChanges when it is no longer needed.
     if (isset($conf['changelog_old']) &&
-        file_exists($conf['changelog_old']) && !file_exists($conf['changelog']) &&
-        !file_exists($conf['changelog'].'_importing') && !file_exists($conf['changelog'].'_tmp')) {
+        @file_exists($conf['changelog_old']) && !@file_exists($conf['changelog']) &&
+        !@file_exists($conf['changelog'].'_importing') && !@file_exists($conf['changelog'].'_tmp')) {
             $tmp = array(); // no event data
             trigger_event('TEMPORARY_CHANGELOG_UPGRADE_EVENT', $tmp);
             return true;
@@ -58,9 +58,9 @@ function runTrimRecentChanges() {
     // Trims the recent changes cache to the last $conf['changes_days'] recent
     // changes or $conf['recent'] items, which ever is larger.
     // The trimming is only done once a day.
-    if (file_exists($conf['changelog']) &&
+    if (@file_exists($conf['changelog']) &&
         (filectime($conf['changelog'])+86400)<time() &&
-        !file_exists($conf['changelog'].'_tmp')) {
+        !@file_exists($conf['changelog'].'_tmp')) {
             io_lock($conf['changelog']);
             $lines = file($conf['changelog']);
             if (count($lines)<$conf['recent']) {
@@ -86,12 +86,12 @@ function runTrimRecentChanges() {
                 }
             }
             io_saveFile($conf['changelog'].'_tmp', implode('', $out_lines));
-            unlink($conf['changelog']);
+            @unlink($conf['changelog']);
             if (!rename($conf['changelog'].'_tmp', $conf['changelog'])) {
                 // rename failed so try another way...
                 io_unlock($conf['changelog']);
                 io_saveFile($conf['changelog'], implode('', $out_lines));
-                unlink($conf['changelog'].'_tmp');
+                @unlink($conf['changelog'].'_tmp');
             } else {
                 io_unlock($conf['changelog']);
             }

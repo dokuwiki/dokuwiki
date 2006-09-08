@@ -635,7 +635,7 @@ function tpl_youarehere($sep=' &raquo; '){
   $page = $part.$parts[$i];
   if($page == $conf['start']) return;
   echo $sep;
-  if(file_exists(wikiFN($page))){
+  if(@file_exists(wikiFN($page))){
     $title = p_get_first_heading($page);
     if(!$title) $title = $parts[$i];
     tpl_link(wl($page),$title,'title="'.$page.'"');

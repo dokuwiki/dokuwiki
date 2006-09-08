@@ -73,7 +73,7 @@ function &plugin_load($type,$name){
   }
 
   //try to load the wanted plugin file
-  if (file_exists(DOKU_PLUGIN."$name/$type.php")){
+  if (@file_exists(DOKU_PLUGIN."$name/$type.php")){
     include_once(DOKU_PLUGIN."$name/$type.php");
   }else{
     list($plugin, $component) = preg_split("/_/",$name, 2);

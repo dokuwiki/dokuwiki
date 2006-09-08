@@ -117,7 +117,7 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
     function resetTimer() {
         // Add 5 minutes to the script execution timer...
         // This should be much more than needed.
-        set_time_limit(5*60);
+        @set_time_limit(5*60);
         // Note: Has no effect in safe-mode!
     }
 
@@ -150,7 +150,7 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
         ksort($recent); // ensure correct order of recent changes
         io_unlock($conf['changelog']); // hand off the lock to io_saveFile
         io_saveFile($conf['changelog'], implode('', $recent));
-        unlink($conf['changelog'].'_importing'); // changelog importing unlock
+        @unlink($conf['changelog'].'_importing'); // changelog importing unlock
     }
 
 }
@@ -163,7 +163,7 @@ function importoldchangelog_plugin_shutdown() {
     $path['failed']    = $conf['changelog'].'_failed';
     $path['import_ok'] = $conf['changelog'].'_import_ok';
     io_unlock($path['changelog']); // guarantee unlocking
-    if (file_exists($path['importing'])) {
+    if (@file_exists($path['importing'])) {
         // import did not finish
         rename($path['importing'], $path['failed']) or trigger_error('Importing changelog failed.', E_USER_WARNING);
         @unlink($path['import_ok']);

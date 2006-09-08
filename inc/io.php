@@ -170,7 +170,7 @@ function io_saveFile($file,$content,$append=false){
   global $conf;
   $mode = ($append) ? 'ab' : 'wb';
 
-  $fileexists = file_exists($file);
+  $fileexists = @file_exists($file);
   io_makeFileDir($file);
   io_lock($file);
   if(substr($file,-3) == '.gz'){
@@ -470,7 +470,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
     $file = $file.$name;
   }
 
-  $fileexists = file_exists($file);
+  $fileexists = @file_exists($file);
   $fp = @fopen($file,"w");
   if(!$fp) return false;
   fwrite($fp,$data);

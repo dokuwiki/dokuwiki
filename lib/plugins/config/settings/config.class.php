@@ -190,7 +190,7 @@ if (!class_exists('configuration')) {
       $local = eval('return '.$this->_local_file.';');
 
       if (!is_writable(dirname($local))) return true;
-      if (file_exists($local) && !is_writable($local)) return true;
+      if (@file_exists($local) && !is_writable($local)) return true;
 
       return false;
     }

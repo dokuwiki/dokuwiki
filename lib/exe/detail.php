@@ -35,7 +35,7 @@
   if($AUTH >= AUTH_READ){
     // check if image exists
     $SRC = mediaFN($IMG);
-    if(!file_exists($SRC)){
+    if(!@file_exists($SRC)){
       //doesn't exist!
 
     }

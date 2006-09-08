@@ -17,7 +17,7 @@
   if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
   // check for error reporting override or set error reporting to sane values
-  if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
+  if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
   }
   if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }

@@ -538,7 +538,7 @@ function checklock($id){
 
   //lockfile expired
   if((time() - filemtime($lock)) > $conf['locktime']){
-    unlink($lock);
+    @unlink($lock);
     return false;
   }
 
@@ -898,7 +898,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
   }
 
   $file = metaFN($id, '.changes');
-  if (!file_exists($file)) { return false; }
+  if (!@file_exists($file)) { return false; }
   if (filesize($file)<$chunk_size || $chunk_size==0) {
     // read whole file
     $lines = file($file);
@@ -995,12 +995,12 @@ function getRevisions($id, $first, $num, $chunk_size=8192) {
   $num = max($num, 0);
   $chunk_size = max($chunk_size, 0);
   if ($first<0) { $first = 0; }
-  else if (file_exists(wikiFN($id))) {
+  else if (@file_exists(wikiFN($id))) {
      // skip current revision if the page exists
     $first = max($first+1, 0);
   }
 
-  if (!file_exists($file)) { return $revs; }
+  if (!@file_exists($file)) { return $revs; }
   if (filesize($file)<$chunk_size || $chunk_size==0) {
     // read whole file
     $lines = file($file);
@@ -1085,7 +1085,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
   $file = wikiFN($id);
   $old  = saveOldRevision($id);
   $wasRemoved = empty($text);
-  $wasCreated = !file_exists($file);
+  $wasCreated = !@file_exists($file);
   $wasReverted = ($REV==true);
 
   if ($wasRemoved){
@@ -1096,7 +1096,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
     $changelog = metaFN($id, '.changes');
     foreach ($mfiles as $mfile) {
       // but keep per-page changelog to preserve page history
-      if (file_exists($mfile) && $mfile!==$changelog) { @unlink($mfile); }
+      if (@file_exists($mfile) && $mfile!==$changelog) { @unlink($mfile); }
     }
     $del = true;
     // autoset summary on deletion
@@ -1351,20 +1351,20 @@ function check(){
   if(is_writable($conf['changelog'])){
     msg('Changelog is writable',1);
   }else{
-    if (file_exists($conf['changelog'])) {
+    if (@file_exists($conf['changelog'])) {
       msg('Changelog is not writable',-1);
     }
   }
 
-  if (isset($conf['changelog_old']) && file_exists($conf['changelog_old'])) {
+  if (isset($conf['changelog_old']) && @file_exists($conf['changelog_old'])) {
     msg('Old changelog exists.', 0);
   }
 
-  if (file_exists($conf['changelog'].'_failed')) {
+  if (@file_exists($conf['changelog'].'_failed')) {
     msg('Importing old changelog failed.', -1);
-  } else if (file_exists($conf['changelog'].'_importing')) {
+  } else if (@file_exists($conf['changelog'].'_importing')) {
     msg('Importing old changelog now.', 0);
-  } else if (file_exists($conf['changelog'].'_import_ok')) {
+  } else if (@file_exists($conf['changelog'].'_import_ok')) {
     msg('Old changelog imported.', 1);
   }
 
@@ -1467,7 +1467,7 @@ function subscriber_addresslist($id){
 
   $mlist = array();
   $file=metaFN($id,'.mlist');
-  if (file_exists($file)) {
+  if (@file_exists($file)) {
     $mlist = file($file);
   }
   if(count($mlist) > 0) {

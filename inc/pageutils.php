@@ -169,9 +169,9 @@ function wikiFN($raw_id,$rev='',$clean=true){
     $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
     if($conf['compression']){
       //test for extensions here, we want to read both compressions
-       if (file_exists($fn . '.gz')){
+       if (@file_exists($fn . '.gz')){
           $fn .= '.gz';
-       }else if(file_exists($fn . '.bz2')){
+       }else if(@file_exists($fn . '.bz2')){
           $fn .= '.bz2';
        }else{
           //file doesnt exist yet, so we take the configured extension

@@ -723,7 +723,7 @@ class ap_manage {
       $path = DOKU_PLUGIN.$plugin.'/';
 
       foreach ($plugin_types as $type) {
-        if (file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }
+        if (@file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }
 
         if ($dh = @opendir($path.$type.'/')) {
           while (false !== ($cp = readdir($dh))) {
