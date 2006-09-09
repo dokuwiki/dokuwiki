@@ -1,6 +1,8 @@
 #!/usr/bin/php -d short_open_tag=on
 <?php
 #------------------------------------------------------------------------------
+if ('cli' != php_sapi_name()) die();
+
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/common.php';

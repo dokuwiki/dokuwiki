@@ -1,5 +1,7 @@
 #!/usr/bin/php -d short_open_tag=on
 <?php
+if ('cli' != php_sapi_name()) die();
+
 #------------------------------------------------------------------------------
 ini_set('memory_limit','128M');
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
