@@ -275,7 +275,7 @@ class ap_manage {
           global $lang;
 
           // check the url
-                    $matches = array();
+          $matches = array();
           if (!preg_match("/[^\/]*$/", $url, $matches) || !$matches[0]) {
             $this->manager->error = $this->lang['error_badurl']."\n";
             return false;

@@ -69,7 +69,7 @@ class DokuWiki_Plugin {
    * @return  string  parsed contents of the wiki page in xhtml format
    */
   function locale_xhtml($id) {
-    return p_cached_xhtml($this->localFN($id));
+    return p_cached_output($this->localFN($id));
   }
   
   /**

@@ -119,7 +119,7 @@ function ft_backlinks($id){
     // check instructions for matching links
     foreach($docs as $match){
 /*
-        // orig code, examine each page's instruction list
+// orig code, examine each page's instruction list
         $instructions = p_cached_instructions(wikiFN($match),true);
         if(is_null($instructions)) continue;
 
@@ -137,7 +137,7 @@ function ft_backlinks($id){
             }
         }
 */
-// now with metadata
+// now with metadata (metadata relation reference links are already resolved)
         $links = p_get_metadata($match,"relation references");
         if (isset($links[$id])) $result[] = $match;
     }

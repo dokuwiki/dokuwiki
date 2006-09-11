@@ -12,6 +12,7 @@
   require_once(DOKU_INC.'inc/confutils.php');
   require_once(DOKU_INC.'inc/pageutils.php');
   require_once(DOKU_INC.'inc/pluginutils.php');
+  require_once(DOKU_INC.'inc/cache.php');
 
 /**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
@@ -38,7 +39,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
     }
   }else{
     if(@file_exists($file)){
-      $ret = p_cached_xhtml($file);
+      $ret = p_cached_output($file,'xhtml',$id);
     }elseif($excuse){
       $ret = p_locale_xhtml('newpage');
     }
@@ -114,48 +115,48 @@ function p_wiki_xhtml_summary($id, &$title, $rev='', $excuse=true){
  */
 function p_locale_xhtml($id){
   //fetch parsed locale
-  $html = p_cached_xhtml(localeFN($id));
+  $html = p_cached_output(localeFN($id));
   return $html;
 }
 
 /**
+ *     *** DEPRECATED ***
+ *
+ * use p_cached_output()
+ *
  * Returns the given file parsed to XHTML
  *
  * Uses and creates a cachefile
  *
+ * @deprecated
  * @author Andreas Gohr <andi@splitbrain.org>
  * @todo   rewrite to use mode instead of hardcoded XHTML
  */
 function p_cached_xhtml($file){
+  return p_cached_output($file);
+}
+
+/**
+ * Returns the given file parsed into the requested output format
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Chris Smith <chris@jalakai.co.uk>
+ */
+function p_cached_output($file, $format='xhtml', $id='') {
   global $conf;
-  $cache  = getCacheName($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.xhtml');
-  $purge  = $conf['cachedir'].'/purgefile';
 
-  // check if cache can be used
-  $cachetime = @filemtime($cache); // 0 if not exists
+  $cache = new cache_renderer($id, $file, $format);
+  if ($cache->useCache()) {
+    $parsed = $cache->retrieveCache();
+    if($conf['allowdebug']) $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
+  } else {
+    $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
-  if( @file_exists($file)                                             // does the source exist
-      && $cachetime > @filemtime($file)                               // cache is fresh
-      && ((time() - $cachetime) < $conf['cachetime'])                 // and is cachefile young enough
-      && !isset($_REQUEST['purge'])                                   // no purge param was set
-      && ($cachetime > @filemtime($purge))                            // and newer than the purgefile
-      && ($cachetime > @filemtime(DOKU_CONF.'dokuwiki.php'))      // newer than the config file
-      && ($cachetime > @filemtime(DOKU_CONF.'local.php'))         // newer than the local config file
-      && ($cachetime > @filemtime(DOKU_INC.'inc/parser/xhtml.php'))   // newer than the renderer
-      && ($cachetime > @filemtime(DOKU_INC.'inc/parser/parser.php'))  // newer than the parser
-      && ($cachetime > @filemtime(DOKU_INC.'inc/parser/handler.php')))// newer than the handler
-  {
-    //well then use the cache
-    $parsed = io_readfile($cache);
-    if($conf['allowdebug']) $parsed .= "\n<!-- cachefile $cache used -->\n";
-  }else{
-    $parsed = p_render('xhtml', p_cached_instructions($file),$info); //try to use cached instructions
-
-    if($info['cache']){
-      io_saveFile($cache,$parsed); //save cachefile
+    if ($info['cache']) {
+      $cache->storeCache($parsed);               //save cachefile
       if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, but created -->\n";
     }else{
-      @unlink($cache); //try to delete cachefile
+      $cache->removeCache();                     //try to delete cachefile
       if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
     }
   }
@@ -170,36 +171,17 @@ function p_cached_xhtml($file){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_cached_instructions($file,$cacheonly=false){
+function p_cached_instructions($file,$cacheonly=false,$id='') {
   global $conf;
-  $cache  = getCacheName($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.i');
 
-  // check if cache can be used
-  $cachetime = @filemtime($cache); // 0 if not exists
+  $cache = new cache_instructions($id, $file);
 
-  // cache forced?
-  if($cacheonly){
-    if($cachetime){
-      return unserialize(io_readfile($cache,false));
-    }else{
-      return array();
-    }
-  }
-
-  if( @file_exists($file)                                             // does the source exist
-      && $cachetime > @filemtime($file)                               // cache is fresh
-      && !isset($_REQUEST['purge'])                                   // no purge param was set
-      && ($cachetime > @filemtime(DOKU_CONF.'dokuwiki.php'))      // newer than the config file
-      && ($cachetime > @filemtime(DOKU_CONF.'local.php'))         // newer than the local config file
-      && ($cachetime > @filemtime(DOKU_INC.'inc/parser/parser.php'))  // newer than the parser
-      && ($cachetime > @filemtime(DOKU_INC.'inc/parser/handler.php')))// newer than the handler
-  {
-    //well then use the cache
-    return unserialize(io_readfile($cache,false));
-  }elseif(@file_exists($file)){
+  if ($cacheonly || $cache->useCache()) {
+    return $cache->retrieveCache();
+  } else if (@file_exists($file)) {
     // no cache - do some work
     $ins = p_get_instructions(io_readfile($file));
-    io_savefile($cache,serialize($ins));
+    $cache->storeCache($ins);
     return $ins;
   }
 
@@ -313,7 +295,7 @@ function p_render_metadata($id, $orig){
   require_once DOKU_INC."inc/parser/metadata.php";
 
   // get instructions
-  $instructions = p_cached_instructions(wikiFN($id));
+  $instructions = p_cached_instructions(wikiFN($id),false,$id);
 
   // set up the renderer
   $renderer = & new Doku_Renderer_metadata();
