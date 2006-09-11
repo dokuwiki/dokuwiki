@@ -737,14 +737,15 @@ function addLogEntry($date, $id, $type='E', $summary='', $extra=''){
   $remote = $_SERVER['REMOTE_ADDR'];
   $user   = $_SERVER['REMOTE_USER'];
 
+  $strip = array("\t", "\n");
   $logline = array(
     'date'  => $date,
     'ip'    => $remote,
-    'type'  => $type,
+    'type'  => str_replace($strip, '', $type),
     'id'    => $id,
     'user'  => $user,
-    'sum'   => $summary,
-    'extra' => $extra
+    'sum'   => str_replace($strip, '', $summary),
+    'extra' => str_replace($strip, '', $extra)
   );
 
   // update metadata
@@ -1087,8 +1088,12 @@ function saveWikiText($id,$text,$summary,$minor=false){
   $wasRemoved = empty($text);
   $wasCreated = !@file_exists($file);
   $wasReverted = ($REV==true);
+  $newRev = false;
 
   if ($wasRemoved){
+    // pre-save deleted revision
+    @touch($file);
+    $newRev = saveOldRevision($id);
     // remove empty file
     @unlink($file);
     // remove old meta info...
@@ -1107,6 +1112,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }else{
     // save file (namespace dir is created in io_writeWikiPage)
     io_writeWikiPage($file, $text, $id);
+    $newRev = @filemtime($file);
     $del = false;
   }
 
@@ -1121,7 +1127,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
   else if ($wasRemoved) { $type = 'D'; }
   else if ($minor && $conf['useacl'] && $_SERVER['REMOTE_USER']) { $type = 'e'; } //minor edits only for logged in users
 
-  addLogEntry(@filemtime($file), $id, $type, $summary, $extra);
+  addLogEntry($newRev, $id, $type, $summary, $extra);
   // send notify mails
   notify($id,'admin',$old,$summary,$minor);
   notify($id,'subscribers',$old,$summary,$minor);
@@ -1366,6 +1372,9 @@ function check(){
     msg('Importing old changelog now.', 0);
   } else if (@file_exists($conf['changelog'].'_import_ok')) {
     msg('Old changelog imported.', 1);
+    if (!plugin_isdisabled('importoldchangelog')) {
+      msg('Importoldchangelog plugin not disabled after import.', -1);
+    }
   }
 
   if(is_writable($conf['datadir'])){

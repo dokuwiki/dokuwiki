@@ -38,8 +38,14 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
         $oldline = @explode("\t", $line);
         if ($oldline!==false && count($oldline)>1) {
             // trim summary
-            $wasMinor = (substr($oldline[4], 0, 1)==='*');
-            $sum = rtrim(substr($oldline[4], 1), "\n");
+            $tmp = substr($oldline[4], 0, 1);
+            $wasMinor = ($tmp==='*');
+            if ($tmp==='*' || $tmp===' ') {
+                $sum = rtrim(substr($oldline[4], 1), "\n");
+            } else {
+                // no is_minor prefix in summary
+                $sum = rtrim($oldline[4], "\n");
+            }
             // guess line type
             $type = 'E';
             if ($wasMinor) { $type = 'e'; }
@@ -171,6 +177,7 @@ function importoldchangelog_plugin_shutdown() {
         // import successful
         touch($path['import_ok']);
         @unlink($path['failed']);
+        plugin_disable('importoldchangelog'); // only needs to run once
     }
 }
 
