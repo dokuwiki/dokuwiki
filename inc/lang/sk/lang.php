@@ -37,6 +37,9 @@ $lang['btn_unsubscribe'] = 'Neposielať zmeny';
 $lang['btn_profile']    = 'Aktualizovať profil';
 $lang['btn_reset']     = 'Zrušiť';
 $lang['btn_resendpwd'] = 'Poslať nové heslo';
+$lang['btn_draft']    = 'Upraviť koncept';
+$lang['btn_recover']  = 'Obnoviť koncept';
+$lang['btn_draftdel'] = 'Zmazať koncept';
 
 $lang['loggedinas'] = 'Prihlásený(á) ako';
 $lang['user']       = 'Užívateľské meno';
@@ -51,6 +54,7 @@ $lang['profile']    = 'Užívateľský profil';
 $lang['register']   = 'Registrovať';
 $lang['badlogin']   = 'Zadané užívateľské meno a heslo nie je správne.';
 $lang['minoredit']  = 'Menšie zmeny';
+$lang['draftdate']  = 'Koncept automaticky uložený'; // full dformat date will be added
 
 $lang['regmissing'] = 'Musíte vyplniť všetky údaje.';
 $lang['reguexists'] = 'Užívateľ s rovnakým menom je už zaregistrovaný.';
@@ -71,7 +75,9 @@ $lang['pwdforget'] = 'Zabudli ste heslo? Získajte nové!';
 $lang['resendna']  = 'Toto wiki nepodporuje znovuposielanie hesla.';
 $lang['resendpwd'] = 'Pošli nové heslo pre';
 $lang['resendpwdmissing'] = 'Prepáčte, musíte vyplniť všetky polia.';
-$lang['resendpwdnouser']  = 'Prepáčte, nemôžeme nájsť zadaného užívateľa v databáza.';
+$lang['resendpwdnouser']  = 'Prepáčte, nemôžeme nájsť zadaného užívateľa v databáze.';
+$lang['resendpwdbadauth'] = 'Prepáčte, tento autorizačný kód nie je platný. Uistite sa, či ste použili celý autorizačný odkaz.';
+$lang['resendpwdconfirm'] = 'Autorizačný odkaz bol zaslaný na e-mail.';
 $lang['resendpwdsuccess'] = 'Vaše nové heslo bolo zaslané na e-mail.';
 
 
@@ -98,6 +104,14 @@ $lang['mediainuse']  = 'Súbor "%s" nebol zmazaný - je stále používaný.';
 $lang['namespaces']  = 'Menné priestory';
 $lang['mediafiles']  = 'Dostupné súbory';
 
+$lang['js']['keepopen']    = 'Po vybraní súboru ponechať okno otvorené';
+$lang['js']['hidedetails'] = 'Skryť detaily';
+$lang['mediausage']  = 'Pre odkázanie na súbor použite nasledujúcu syntax:';
+$lang['mediaview']   = 'Zobraziť pôvodný súbor';
+$lang['mediaroot']   = 'root';
+$lang['mediaupload'] = 'Priložiť súbor do aktuálneho menného priestoru. Pre vytvorenie menného podpriestoru, pridajte jeho názov na začiatok wiki mena (oddelený dvojbodkou)';
+$lang['mediaextchange'] = 'Prípona súboru bola zmenená z .%s na .%s!';
+
 $lang['reference']   = 'Referencie pre';
 $lang['ref_inuse']   = 'Súbor nemôže byť zmazaný, pretože je stále používaný nasledujúcimi stránkami:';
 $lang['ref_hidden']  = 'Niektoré referencie sú na stránky pre ktoré nemáte právo na čítanie';
@@ -118,8 +132,9 @@ $lang['created']    = 'vytvorené';
 $lang['restored']   = 'stará verzia bola obnovena';
 $lang['summary']    = 'Komentár k úpravám';
 
-$lang['mail_newpage'] = '[DokuWiki] nová stránka:';
-$lang['mail_changed'] = '[DokuWiki] zmena stránky:';
+$lang['mail_newpage'] = 'stránka pridaná:';
+$lang['mail_changed'] = 'stránka zmenená:';
+$lang['mail_new_user'] = 'Nový užívateľ:';
 
 $lang['nosmblinks'] = 'Odkazovanie na zdielané prostriedky Windows funguje len v Internet Explorer.\nAj napriek tomu tento odkaz môžete skopírovat a vložit inde.';
 
@@ -186,5 +201,27 @@ $lang['noConnect']       = "MySQL: Nie je možné pripojiť sa k '%u@%s'. Prosí
 $lang['joinGroupFailed'] = "Účet pre '%u' nie je vytvorený, pretože nie je možné pridať ho do skupiny '%g'.";
 $lang['modUserFailed']   = "Nie je možné meniť údaje o užívateľovi. Prosím informujte  správcu tohto systému.";
 
+/* installer strings */
+$lang['i_chooselang'] = 'Zvoľte váš jazyk';
+$lang['i_installer']  = 'DokuWiki inštalátor';
+$lang['i_wikiname']   = 'Názov Wiki';
+$lang['i_enableacl']  = 'Aktivovať ACL (doporučené)';
+$lang['i_superuser']  = 'Superužívateľ';
+$lang['i_problems']   = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžte pokračovať, pokým ich neodstránite.';
+$lang['i_modified']   = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balíček, alebo preštudovať <a href="http://wiki.splitbrain.org/wiki:install"> inštalačné inštrukcie Dokuwiki</a>';
+$lang['i_funcna']     = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
+$lang['i_permfail']   = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
+$lang['i_confexists'] = '<code>%s</code> skutočne existuje';
+$lang['i_writeerr']   = 'Nie je možné vytvoriť <code>%s</code>. Potrebujete skontrolovať prístupové práva pre adresár/súbor a vytvoriť ho manuálne.';
+$lang['i_badhash']    = 'nerozpoznaný, alebo zmenený súbor dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - bola zadaná nesprávna, alebo žiadna hodnota';
+$lang['i_success']    = 'Konfigurácia bola úspešne ukončená. Teraz môžte zmazať súbor install.php. Pokračujte vo
+                       <a href="doku.php">vašej novej DokuWiki</a>.';
+$lang['i_failure']    = 'Pri zápise konfiguračného súboru nastali nejaké chyby. Potrebujete ich opraviť manuálne pred tým ako budete môcť používať
+                         <a href="doku.php">vašu novú DokuWiki</a>.';
+$lang['i_policy']     = 'Počiatočná ACL politika';
+$lang['i_pol0']       = 'Otvorená Wiki (čítanie, zápis a nahrávanie pre každého)';
+$lang['i_pol1']       = 'Verejná Wiki (čítanie pre každého, zápis a nahrávanie pre registrovaných užívateľov)';
+$lang['i_pol2']       = 'Uzatvorená Wiki (čítanie, zápis a nahrávanie len pre registrovaných užívateľov)';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
