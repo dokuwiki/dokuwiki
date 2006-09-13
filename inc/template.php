@@ -213,7 +213,7 @@ function tpl_metaheaders($alt=true){
 
     // keywords (explicit or implicit)
     if($INFO['meta']['subject']){
-      ptln('<meta name="keywords" content="'.hsc(join(',',$INFO['meta']['subject'])).' />',$it);
+      ptln('<meta name="keywords" content="'.hsc(join(',',$INFO['meta']['subject'])).'" />',$it);
     }else{
       ptln('<meta name="keywords" content="'.str_replace(':',',',$ID).'" />',$it);
     }
