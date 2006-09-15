@@ -13,11 +13,13 @@ require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/parserutils.php');
 
 class cache {
-  var $key = '';        // primary identifier for this item
-  var $ext = '';        // file ext for cache data, secondary identifier for this item
-  var $cache = '';      // cache file name
+  var $key = '';          // primary identifier for this item
+  var $ext = '';          // file ext for cache data, secondary identifier for this item
+  var $cache = '';        // cache file name
+  var $depends = array(); // array containing cache dependency information,
+                          //   used by _useCache to determine cache validity
 
-  var $_event = '';      // event to be triggered during useCache
+  var $_event = '';       // event to be triggered during useCache
 
   function cache($key,$ext) {
     $this->key = $key;
@@ -39,6 +41,7 @@ class cache {
    */
   function useCache($depends=array()) {
     $this->depends = $depends;
+    $this->_addDependencies();
 
     if ($this->_event) {
       return $this->_stats(trigger_event($this->_event,$this,array($this,'_useCache')));
@@ -47,16 +50,21 @@ class cache {
     }
   }
 
-  /*
+  /**
    * private method containing cache use decision logic
    *
-   * this function can be overridden
+   * this function processes the following keys in the depends array
+   *   purge - force a purge on any non empty value
+   *   age   - expire cache if older than age (seconds)
+   *   files - expire cache if any file in this array was updated more recently than the cache
+   *
+   * can be overridden
    *
    * @return bool               see useCache()
    */
   function _useCache() {
 
-    if (isset($_REQUEST['purge'])) return false;                    // purge requested?
+    if (!empty($this->depends['purge'])) return false;              // purge requested?
     if (!($this->_time = @filemtime($this->cache))) return false;   // cache exists?
 
     // cache too old?
@@ -69,6 +77,17 @@ class cache {
     }
 
     return true;
+  }
+
+  /**
+   * add dependencies to the depends array
+   *
+   * this method should only add dependencies,
+   * it should not remove any existing dependencies and
+   * it should only overwrite a dependency when the new value is more stringent than the old
+   */
+  function _addDependencies() {
+    if (isset($_REQUEST['purge'])) $this->depends['purge'] = true;   // purge requested
   }
 
   /**
@@ -115,21 +134,21 @@ class cache {
 
       foreach ($lines as $line) {
         $i = strpos($line,',');
-	$stats[substr($line,0,$i)] = $line;
+        $stats[substr($line,0,$i)] = $line;
       }
     }
 
     if (isset($stats[$this->ext])) {
-      list($ext,$count,$successes) = explode(',',$stats[$this->ext]);
+      list($ext,$count,$hits) = explode(',',$stats[$this->ext]);
     } else {
       $ext = $this->ext;
       $count = 0;
-      $successes = 0;
+      $hits = 0;
     }
 
     $count++;
-    $successes += $success ? 1 : 0;
-    $stats[$this->ext] = "$ext,$count,$successes";
+    if ($success) $hits++;
+    $stats[$this->ext] = "$ext,$count,$hits";
 
     io_saveFile($file,join("\n",$stats));
 
@@ -153,11 +172,15 @@ class cache_parser extends cache {
   }
 
   function _useCache() {
-    global $conf;
 
     if (!@file_exists($this->file)) return false;                   // source exists?
+    return parent::_useCache();
+  }
 
-    if (!isset($this->depends['age'])) $this->depends['age'] = $conf['cachetime'];
+  function _addDependencies() {
+
+    $this->depends['age'] = isset($this->depends['age']) ? 
+                   min($this->depends['age'],$conf['cachetime']) : $conf['cachetime'];
 
     // parser cache file dependencies ...
     $files = array($this->file,                                     // ... source
@@ -168,7 +191,7 @@ class cache_parser extends cache {
              );
 
     $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
-    return parent::_useCache($depends);
+    parent::_addDependencies();
   }
 
 }
@@ -176,31 +199,40 @@ class cache_parser extends cache {
 class cache_renderer extends cache_parser {
 
   function _useCache() {
-    global $conf;
 
-    // renderer cache file dependencies ...
-    $files = array(
-#                   $conf['cachedir'].'/purgefile',                 // ... purgefile - time of last add
-                   DOKU_INC.'inc/parser/'.$this->mode.'.php',      // ... the renderer
-             );
-
-    if (isset($this->page)) { $files[] = metaFN($this->page,'.meta'); }
-
-    $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
-    if (!parent::_useCache($depends)) return false;
+    if (!parent::_useCache()) return false;
 
     // for wiki pages, check for internal link status changes
     if (isset($this->page)) {
-      $links = p_get_metadata($this->page,"relation references");
 
-      if (!empty($links)) {
-        foreach ($links as $id => $exists) {
-          if ($exists != @file_exists(wikiFN($id,'',false))) return false;
-	}
+      // check the purgefile
+      // - if the cache is more recent that the purgefile we know no links can have been updated
+      if ($this->_time < @filemtime($conf['cachedir'].'/purgefile')) {
+
+        $links = p_get_metadata($this->page,"relation references");
+
+        if (!empty($links)) {
+          foreach ($links as $id => $exists) {
+            if ($exists != @file_exists(wikiFN($id,'',false))) return false;
+          }
+        }
       }
     }
 
     return true;
+  }
+
+  function _addDependencies() {
+
+    // renderer cache file dependencies ...
+    $files = array(
+                   DOKU_INC.'inc/parser/'.$this->mode.'.php',      // ... the renderer
+             );
+
+    if (isset($this->page)) { $files[] = metaFN($this->page,'.meta'); }  // ... the page's own metadata
+
+    $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
+    parent::_addDependencies();
   }
 }
 
