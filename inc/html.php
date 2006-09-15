@@ -1012,8 +1012,9 @@ function html_updateprofile(){
 /**
  * This displays the edit form (lots of logic included)
  *
- * @fixme  this is a huge lump of code and should be modularized
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @fixme    this is a huge lump of code and should be modularized
+ * @triggers HTML_EDIT_PAGETEMPLATE
+ * @author   Andreas Gohr <andi@splitbrain.org>
  */
 function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   global $ID;
@@ -1047,7 +1048,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       }
     }else{
       //try to load a pagetemplate
-      $text = pageTemplate($ID);
+      $text = trigger_event('HTML_EDIT_PAGETEMPLATE',array($ID),'pageTemplate',true);
     }
   }else{
     $pr = true; //preview mode
