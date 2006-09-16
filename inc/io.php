@@ -490,7 +490,7 @@ function io_rename($from,$to){
   global $conf;
   if(!@rename($from,$to)){
     if(@copy($from,$to)){
-      if($conf['fperm']) chmod($file, $conf['fperm']);
+      if($conf['fperm']) chmod($to, $conf['fperm']);
       @unlink($from);
       return true;
     }
