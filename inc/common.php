@@ -631,7 +631,8 @@ function rawWiki($id,$rev=''){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function pageTemplate($id){
+function pageTemplate($data){
+  $id = $data[0];
   global $conf;
   global $INFO;
   $tpl = io_readFile(dirname(wikiFN($id)).'/_template.txt');

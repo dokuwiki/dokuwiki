@@ -1048,7 +1048,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       }
     }else{
       //try to load a pagetemplate
-      $text = trigger_event('HTML_EDIT_PAGETEMPLATE',array($ID),'pageTemplate',true);
+      $data = array($ID);
+      $text = trigger_event('HTML_EDIT_PAGETEMPLATE',$data,'pageTemplate',true);
     }
   }else{
     $pr = true; //preview mode
