@@ -17,6 +17,10 @@ if(isset($_REQUEST['u']))
   $_REQUEST['u'] = cleanID($_REQUEST['u']);
 if(isset($_REQUEST['acl_user']))
   $_REQUEST['acl_user'] = cleanID($_REQUEST['acl_user']);
+// the same goes for password reset requests
+if(isset($_POST['login'])){
+  $_POST['login'] = cleanID($_POST['login']);
+}
 
 class auth_plain extends auth_basic {
 
