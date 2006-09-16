@@ -47,4 +47,11 @@ $lang['last']   = '最後';
 
 // added after 2006-03-09 release
 $lang['edit_usermissing'] = '選択したユーザーは見つかりません。削除もしくは変更された可能性があります。';
+$lang['user_notify'] = '通知するユーザー';
+$lang['note_notify'] = 'ユーザーが新しいパスワードを設定した場合のみ、通知メールが送信されます。';
+$lang['note_group'] = 'グループを指定しない場合は、既定のグループ（%s）に登録されいます。';
+$lang['add_ok'] = 'ユーザーを登録しました';
+$lang['add_fail'] = 'ユーザーの登録に失敗しました';
+$lang['notify_ok'] = '通知メールを送信しました';
+$lang['notify_fail'] = '通知メールを送信できませんでした';
 
