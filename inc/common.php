@@ -151,11 +151,15 @@ function buildURLparams($params, $sep='&amp;'){
 /**
  * Build an string of html tag attributes
  *
+ * Skips keys starting with '_', values get HTML encoded
+ *
  * @author Andreas Gohr
  */
 function buildAttributes($params){
   $url = '';
   foreach($params as $key => $val){
+    if($key{0} == '_') continue;
+
     $url .= $key.'="';
     $url .= htmlspecialchars ($val);
     $url .= '" ';

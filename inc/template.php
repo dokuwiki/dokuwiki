@@ -160,6 +160,7 @@ function tpl_admin(){
  *
  * This has to go into the head section of your template.
  *
+ * @triggers TPL_METAHEADER_PRINT
  * @param  boolean $alt Should feeds and alternative format links be added?
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -172,16 +173,26 @@ function tpl_metaheaders($alt=true){
   global $conf;
   $it=2;
 
+  // prepare the head array
+  $head = array();
+
+
   // the usual stuff
-  ptln('<meta name="generator" content="DokuWiki '.getVersion().'" />',$it);
-  ptln('<link rel="start" href="'.DOKU_BASE.'" />',$it);
-  ptln('<link rel="contents" href="'.wl($ID,'do=index').'" title="'.$lang['index'].'" />',$it);
+  $head['meta'][] = array( 'name'=>'generator', 'content'=>'DokuWiki '.getVersion() );
+  $head['link'][] = array( 'rel'=>'start', 'href'=>'DOKU_BASE' );
+  $head['link'][] = array( 'rel'=>'contents', 'href'=> wl($ID,'do=index',false,'&'),
+                           'title'=>$lang['index'] );
 
   if($alt){
-    ptln('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="'.DOKU_BASE.'feed.php" />',$it);
-    ptln('<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="'.DOKU_BASE.'feed.php?mode=list&amp;ns='.$INFO['namespace'].'" />',$it);
-    ptln('<link rel="alternate" type="text/html" title="Plain HTML" href="'.exportlink($ID, 'xhtml').'" />',$it);
-    ptln('<link rel="alternate" type="text/plain" title="Wiki Markup" href="'.exportlink($ID, 'raw').'" />',$it);
+    $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
+                             'title'=>'Recent Changes', 'href'=>DOKU_BASE.'feed.php');
+    $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
+                             'title'=>'Current Namespace',
+                             'href'=>DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']);
+    $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/html', 'title'=>'Plain HTML',
+                             'href'=>exportlink($ID, 'xhtml', '', false, '&'));
+    $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/plain', 'title'=>'Wiki Markup',
+                             'href'=>exportlink($ID, 'raw', '', false, '&'));
   }
 
   // setup robot tags apropriate for different modes
@@ -189,39 +200,41 @@ function tpl_metaheaders($alt=true){
     if($INFO['exists']){
       //delay indexing:
       if((time() - $INFO['lastmod']) >= $conf['indexdelay']){
-        ptln('<meta name="robots" content="index,follow" />',$it);
+        $head['meta'][] = array( 'name'=>'robots', 'content'=>'index,follow');
       }else{
-        ptln('<meta name="robots" content="noindex,nofollow" />',$it);
+        $head['meta'][] = array( 'name'=>'robots', 'content'=>'noindex,nofollow');
       }
     }else{
-      ptln('<meta name="robots" content="noindex,follow" />',$it);
+      $head['meta'][] = array( 'name'=>'robots', 'content'=>'noindex,follow');
     }
   }elseif(defined('DOKU_MEDIADETAIL')){
-    ptln('<meta name="robots" content="index,follow" />',$it);
+    $head['meta'][] = array( 'name'=>'robots', 'content'=>'index,follow');
   }else{
-    ptln('<meta name="robots" content="noindex,nofollow" />',$it);
+    $head['meta'][] = array( 'name'=>'robots', 'content'=>'noindex,nofollow');
   }
 
   // set metadata
   if($ACT == 'show' || $ACT=='export_xhtml'){
     // date of modification
     if($REV){
-      ptln('<meta name="date" content="'.date('Y-m-d\TH:i:sO',$REV).'" />',$it);
+      $head['meta'][] = array( 'name'=>'date', 'content'=>date('Y-m-d\TH:i:sO',$REV));
     }else{
-      ptln('<meta name="date" content="'.date('Y-m-d\TH:i:sO',$INFO['lastmod']).'" />',$it);
+      $head['meta'][] = array( 'name'=>'date', 'content'=>date('Y-m-d\TH:i:sO',$INFO['lastmod']));
     }
 
     // keywords (explicit or implicit)
     if($INFO['meta']['subject']){
-      ptln('<meta name="keywords" content="'.hsc(join(',',$INFO['meta']['subject'])).'" />',$it);
+      $head['meta'][] = array( 'name'=>'keywords', 'content'=>join(',',$INFO['meta']['subject']));
     }else{
-      ptln('<meta name="keywords" content="'.str_replace(':',',',$ID).'" />',$it);
+      $head['meta'][] = array( 'name'=>'keywords', 'content'=>str_replace(':',',',$ID));
     }
   }
 
   // load stylesheets
-  ptln('<link rel="stylesheet" media="screen" type="text/css" href="'.DOKU_BASE.'lib/exe/css.php" />',$it);
-  ptln('<link rel="stylesheet" media="print" type="text/css" href="'.DOKU_BASE.'lib/exe/css.php?print=1" />',$it);
+  $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
+                          'href'=>DOKU_BASE.'lib/exe/css.php');
+  $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
+                          'href'=>DOKU_BASE.'lib/exe/css.php?print=1');
 
   // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover') ? 1 : 0;
@@ -231,16 +244,45 @@ function tpl_metaheaders($alt=true){
     $js_write = 0;
   }
   if(($js_edit && $js_write) || defined('DOKU_MEDIAMANAGER')){
-    ptln('<script type="text/javascript" charset="utf-8">',$it);
-    ptln("NS='".$INFO['namespace']."';",$it+2);
+    $script = "NS='".$INFO['namespace']."';";
     if($conf['useacl'] && $_SERVER['REMOTE_USER']){
       require_once(DOKU_INC.'inc/toolbar.php');
-      ptln("SIG='".toolbar_signature()."';",$it+2);
+      $script .= "SIG='".toolbar_signature()."';";
     }
-    ptln('</script>',$it);
+    $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8',
+                               '_data'=> $script);
   }
-  ptln('<script type="text/javascript" charset="utf-8" src="'.
-       DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&amp;write='.$js_write.'"></script>',$it);
+  $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=>'',
+                             'src'=>DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&write='.$js_write);
+
+  // trigger event here
+  trigger_event('TPL_METAHEADER_PRINT',$head,'_tpl_metaheaders_action',true);
+}
+
+/**
+ * prints the array build by tpl_metaheaders
+ *
+ * $data is an array of different header tags. Each tag can have multiple
+ * instances. Attributes are given as key value pairs. Values will be HTML
+ * encoded automatically so they should be provided as is in the $data array.
+ *
+ * For tags having a body attribute specify the the body data in the special
+ * attribute '_data'
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function _tpl_metaheaders_action($data){
+  foreach($data as $tag => $inst){
+    foreach($inst as $attr){
+      echo '<',$tag,' ',buildAttributes($attr);
+      if(isset($attr['_data'])){
+        echo '>',htmlspecialchars($attr['_data']),'</',$tag,'>';
+      }else{
+        echo '/>';
+      }
+      echo "\n";
+    }
+  }
 }
 
 /**
