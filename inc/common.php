@@ -979,9 +979,14 @@ function getVersion(){
     //official release
     return 'Release '.trim(io_readfile(DOKU_INC.'/VERSION'));
   }elseif(is_dir('_darcs')){
-    //darcs checkout
-    $inv = file('_darcs/inventory');
-    $inv = preg_grep('#\*\*\d{14}[\]$]#',$inv);
+    //darcs checkout - read last 2000 bytes of inventory
+    $sz   = filesize('_darcs/inventory');
+    $seek = max(0,$sz-2000);
+    $fh   = fopen('_darcs/inventory','rb');
+    fseek($fh,$seek);
+    $chunk = fread($fh,2000);
+    fclose($fh);
+    $inv = preg_grep('#\*\*\d{14}[\]$]#',explode("\n",$chunk));
     $cur = array_pop($inv);
     preg_match('#\*\*(\d{4})(\d{2})(\d{2})#',$cur,$matches);
     return 'Darcs '.$matches[1].'-'.$matches[2].'-'.$matches[3];
