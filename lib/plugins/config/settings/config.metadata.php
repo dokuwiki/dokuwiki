@@ -147,6 +147,7 @@ $meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  
 $meta['fetchsize']   = array('numeric');
 
 $meta['_advanced']   = array('fieldset');
+$meta['updatecheck'] = array('onoff');
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
 $meta['useslash']    = array('onoff');
 $meta['sepchar']     = array('sepchar');

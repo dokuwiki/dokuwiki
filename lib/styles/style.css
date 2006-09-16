@@ -46,6 +46,17 @@ div.success {
   overflow: hidden;
 }
 
+div.notify {
+  background: #ffc url(../images/notify.png) 0.5em 0px no-repeat;
+  color: #000;
+  border-bottom: 1px solid #ffa;
+  font-size: 90%;
+  margin: 0;
+  padding-left: 3em;
+  overflow: hidden;
+}
+
+
 /* image alignment */
 .medialeft {
   float: left;

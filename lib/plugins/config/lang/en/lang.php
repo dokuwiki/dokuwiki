@@ -96,6 +96,7 @@ $lang['disableactions_wikicode'] = 'View source/Export Raw';
 $lang['disableactions_other'] = 'Other actions (comma separated)';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact splitbrain.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['usedraft']    = 'Automatically save a draft while editing';

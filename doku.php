@@ -63,6 +63,9 @@
   //prepare breadcrumbs (initialize a static var)
   breadcrumbs();
 
+  // check upstream
+  checkUpdateMessages();
+
   trigger_event('DOKUWIKI_STARTED',$tmp=array());
 
   //close session

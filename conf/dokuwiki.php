@@ -1,6 +1,10 @@
 <?php
 /**
  * This is DokuWiki's Main Configuration file
+ *
+ * All the default values are kept here, you should not modify it but use
+ * a local.conf.php file instaed to override the settings from here.
+ *
  * This is a piece of PHP code so PHP syntax applies!
  *
  * For help with the configuration see http://www.splitbrain.org/dokuwiki/wiki:config
@@ -62,6 +66,7 @@ $conf['profileconfirm'] = '1';           //Require current password to confirm c
 $conf['disableactions'] = '';            //comma separated list of actions to disable
 
 /* Advanced Options */
+$conf['updatecheck'] = 1;                //automatically check for new releases?
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
 $conf['usedraft']    = 1;                //automatically save a draft while editing (0|1)
