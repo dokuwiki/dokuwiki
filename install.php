@@ -40,7 +40,7 @@ $dokuwiki_hash = array(
     '2005-09-22' => 'e33223e957b0b0a130d0520db08f8fb7',
     '2006-03-05' => '51295727f79ab9af309a2fd9e0b61acc',
     '2006-03-09' => '51295727f79ab9af309a2fd9e0b61acc',
-    'devel'      => '732131839d559198b985e183eefe9a63',
+    'devel'      => 'd28d181b4f5c6a07be223c93502013c2',
 );
 
 
@@ -246,11 +246,6 @@ function store_data($d){
     $ok = true;
     $d['policy'] = (int) $d['policy'];
 
-    // create changes.log
-    if (!@file_exists(DOKU_INC.'data/changes.log')){
-        $ok = $ok && fileWrite(DOKU_INC.'data/changes.log','');
-    }
-
     // create local.php
     $now    = date('r');
     $output = <<<EOT
@@ -265,6 +260,7 @@ EOT;
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
     $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
     if($d['acl']){
+        $output .= '$conf[\'allowdebug\'] = 0'.";\n";
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= '$conf[\'superuser\'] = \''.$d['superuser']."';\n";
     }
