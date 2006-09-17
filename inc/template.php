@@ -160,7 +160,7 @@ function tpl_admin(){
  *
  * This has to go into the head section of your template.
  *
- * @triggers TPL_METAHEADER_PRINT
+ * @triggers TPL_METAHEADER_OUTPUT
  * @param  boolean $alt Should feeds and alternative format links be added?
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -256,7 +256,7 @@ function tpl_metaheaders($alt=true){
                              'src'=>DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&write='.$js_write);
 
   // trigger event here
-  trigger_event('TPL_METAHEADER_PRINT',$head,'_tpl_metaheaders_action',true);
+  trigger_event('TPL_METAHEADER_OUTPUT',$head,'_tpl_metaheaders_action',true);
 }
 
 /**

@@ -1013,7 +1013,7 @@ function html_updateprofile(){
  * This displays the edit form (lots of logic included)
  *
  * @fixme    this is a huge lump of code and should be modularized
- * @triggers HTML_EDIT_PAGETEMPLATE
+ * @triggers HTML_PAGE_FROMTEMPLATE
  * @author   Andreas Gohr <andi@splitbrain.org>
  */
 function html_edit($text=null,$include='edit'){ //FIXME: include needed?
@@ -1049,7 +1049,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     }else{
       //try to load a pagetemplate
       $data = array($ID);
-      $text = trigger_event('HTML_EDIT_PAGETEMPLATE',$data,'pageTemplate',true);
+      $text = trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
     }
   }else{
     $pr = true; //preview mode
