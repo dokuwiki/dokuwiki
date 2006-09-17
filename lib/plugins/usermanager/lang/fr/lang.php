@@ -49,4 +49,11 @@ $lang['last']   = 'Dernier';
 
 // added after 2006-03-09 release
 $lang['edit_usermissing'] = 'Utilisateur sélectionné non trouvé, cet utilisateur a peut-être été supprimé ou modifié ailleurs.';
+$lang['user_notify'] = 'Notifier l\'utilisateur';
+$lang['note_notify'] = 'Envoi de notification par courriel uniquement lorsqu\'un nouveau mot de passe est attribué à l\'utilisateur.';
+$lang['note_group'] = 'Les nouveaux utilisateurs seront ajoutés au groupe par défaut (%s) si aucun groupé n\'est spécifié.';
+$lang['add_ok'] = 'Utilisateur ajouté avec succès';
+$lang['add_fail'] = 'Echec de l\'ajout de l\'utilisateur';
+$lang['notify_ok'] = 'Courriel  de notification expédié';
+$lang['notify_fail'] = 'Echec de l\'expédition du courriel de notification';
 
