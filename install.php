@@ -262,7 +262,7 @@ EOT;
     if($d['acl']){
         $output .= '$conf[\'allowdebug\'] = 0'.";\n";
         $output .= '$conf[\'useacl\'] = 1'.";\n";
-        $output .= '$conf[\'superuser\'] = \''.$d['superuser']."';\n";
+        $output .= "\$conf['superuser'] = '@admin';\n";
     }
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
@@ -270,7 +270,7 @@ EOT;
     if ($d['acl']) {
         // create users.auth.php
         // --- user:MD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'users'));
+        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'admin'));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
@@ -296,6 +296,7 @@ EOT;
             $output .=  "*               @ALL          8\n";
         }
 
+				$output .=  "*               @admin      255\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'acl.auth.php', $output);
     }
     return $ok;
