@@ -25,8 +25,8 @@ function checkUpdateMessages(){
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_CONF.'msg')){
-        $num = file(DOKU_CONF.'msg');
-        $num = (int) $num[0];
+        $num = @file(DOKU_CONF.'msg');
+        $num = is_array($num) ? (int) $num[0] : 0;
         $http = new DokuHTTPClient();
         $http->timeout = 8;
         $data = $http->get(DOKU_MESSAGEURL.$num);
