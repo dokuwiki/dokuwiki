@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://www.splitbrain.org/lib/exe/msg.php?msg=');
+if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
 require_once(DOKU_INC.'inc/HTTPClient.php');
 
 /**
@@ -18,7 +18,7 @@ function checkUpdateMessages(){
     global $conf;
     global $INFO;
     if(!$conf['updatecheck']) return;
-    if($INFO['perm'] < AUTH_ADMIN) return;
+    if($conf['useacl'] && $INFO['perm'] < AUTH_ADMIN) return;
 
     $cf = $conf['cachedir'].'/messages.txt';
     $lm = @filemtime($cf);
