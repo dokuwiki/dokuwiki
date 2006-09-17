@@ -118,7 +118,8 @@ class cache {
   }
 
   /**
-   * record cache hits statistics
+   * Record cache hits statistics.
+   * (Only when debugging allowed, to reduce overhead.)
    *
    * @param    bool   $success   result of this cache use attempt
    * @return   bool              pass-thru $success value
@@ -127,6 +128,8 @@ class cache {
     global $conf;
     static $stats = NULL;
     static $file;
+
+    if (!$conf['allowdebug']) { return $success; }
 
     if (is_null($stats)) {
       $file = $conf['cachedir'].'/cache_stats.txt';
