@@ -19,7 +19,7 @@ $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
 $conf['savedir']     = './data';          //where to store all the files
-$conf['allowdebug']  = 1;                 //make debug possible, disable after install! 0|1
+$conf['allowdebug']  = 0;                 //allow debug output, enable if needed 0|1
 
 /* Display Options */
 

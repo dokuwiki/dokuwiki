@@ -40,7 +40,7 @@ $dokuwiki_hash = array(
     '2005-09-22' => 'e33223e957b0b0a130d0520db08f8fb7',
     '2006-03-05' => '51295727f79ab9af309a2fd9e0b61acc',
     '2006-03-09' => '51295727f79ab9af309a2fd9e0b61acc',
-    'devel'      => 'd28d181b4f5c6a07be223c93502013c2',
+    'devel'      => 'b32d3dd4330a0d24c8ce4ffaeafc6026',
 );
 
 
@@ -260,7 +260,6 @@ EOT;
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
     $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
     if($d['acl']){
-        $output .= '$conf[\'allowdebug\'] = 0'.";\n";
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";
     }
@@ -270,7 +269,7 @@ EOT;
     if ($d['acl']) {
         // create users.auth.php
         // --- user:MD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'admin'));
+        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'admin,user'));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
