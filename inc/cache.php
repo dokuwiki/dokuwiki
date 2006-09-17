@@ -198,7 +198,19 @@ class cache_parser extends cache {
 
 class cache_renderer extends cache_parser {
 
+  function useCache($depends=array()) {
+    $use = parent::useCache($depends);
+
+    // meta data needs to be kept in step with the cache
+    if (!$use && isset($this->page)) {
+      p_set_metadata($this->page,array(),true);
+    }
+
+    return $use;
+  }
+
   function _useCache() {
+    global $conf;
 
     if (!parent::_useCache()) return false;
 
@@ -226,9 +238,8 @@ class cache_renderer extends cache_parser {
 
     // renderer cache file dependencies ...
     $files = array(
-                   DOKU_INC.'inc/parser/'.$this->mode.'.php',      // ... the renderer
+                   DOKU_INC.'inc/parser/'.$this->mode.'.php',            // ... the renderer
              );
-
     if (isset($this->page)) { $files[] = metaFN($this->page,'.meta'); }  // ... the page's own metadata
 
     $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
