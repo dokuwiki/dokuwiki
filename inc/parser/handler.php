@@ -1393,7 +1393,7 @@ class Doku_Handler_Block {
             'table_open','tablerow_open','tablecell_open','tableheader_open',
             'quote_open',
             'section_open', // Needed to prevent p_open between header and section_open
-            'code','file','hr','preformatted',
+            'code','file','hr','preformatted','rss',
         );
 
     var $blockClose = array(
@@ -1402,7 +1402,7 @@ class Doku_Handler_Block {
             'table_close','tablerow_close','tablecell_close','tableheader_close',
             'quote_close',
             'section_close', // Needed to prevent p_close after section_close
-            'code','file','hr','preformatted',
+            'code','file','hr','preformatted','rss',
         );
 
     // Stacks can contain paragraphs
