@@ -1,0 +1,3 @@
+====== Dokument ne postoji ======
+
+Traženi dokument (još) ne postoji. Ukoliko ga želite otvoriti kliknite na ''Novi dokument''.

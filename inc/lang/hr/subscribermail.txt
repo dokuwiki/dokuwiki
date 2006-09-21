@@ -1,0 +1,16 @@
+Pozdrav!
+
+Stranica @PAGE@ na @TITLE@ je promijenjena.
+Slijede promjene:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Ukoliko se želite odjaviti s ove pretplate - prijavite se na:
+@DOKUWIKIURL@ zatim odite na
+@NEWPAGE@
+i odaberite 'Odjava'.
+
+-- 
+@DOKUWIKIURL@
