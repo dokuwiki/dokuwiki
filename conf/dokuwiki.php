@@ -3,7 +3,7 @@
  * This is DokuWiki's Main Configuration file
  *
  * All the default values are kept here, you should not modify it but use
- * a local.conf.php file instaed to override the settings from here.
+ * a local.conf.php file instead to override the settings from here.
  *
  * This is a piece of PHP code so PHP syntax applies!
  *
@@ -12,9 +12,9 @@
 
 
 /* Datastorage and Permissions */
+
 $conf['fmode']       = 0644;              //set file creation mode
 $conf['dmode']       = 0755;              //set directory creation mode
-
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
@@ -56,6 +56,7 @@ $conf['mailguard']   = 'hex';             //obfuscate email addresses against sp
                                           //  'none'    - do not obfuscate addresses
 
 /* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
+
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
 $conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
 $conf['authtype']    = 'plain';          //which authentication backend should be used
@@ -66,6 +67,7 @@ $conf['profileconfirm'] = '1';           //Require current password to confirm c
 $conf['disableactions'] = '';            //comma separated list of actions to disable
 
 /* Advanced Options */
+
 $conf['updatecheck'] = 1;                //automatically check for new releases?
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
@@ -121,6 +123,7 @@ $conf['proxy']['pass'] = '';
 $conf['proxy']['ssl']  = 0;
 
 /* Safemode Hack */
+
 $conf['safemodehack'] = 0;               //read http://wiki.splitbrain.org/wiki:safemodehack !
 $conf['ftp']['host'] = 'localhost';
 $conf['ftp']['port'] = '21';
