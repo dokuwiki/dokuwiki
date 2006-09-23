@@ -468,11 +468,7 @@ function p_render($mode,$instructions,& $info){
  */
 function p_get_first_heading($id){
   global $conf;
-  if(!$conf['useheading']) return null;
-
-  $meta = p_get_metadata($id);
-  if($meta['title']) return $meta['title'];
-  return null;
+  return $conf['useheading'] ? p_get_metadata($id,'title') : null;
 }
 
 /**
