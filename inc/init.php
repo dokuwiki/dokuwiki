@@ -24,9 +24,10 @@
   else { error_reporting(DOKU_E_LEVEL); }
 
   // init memory caches
-  global $cache_revinfo; $cache_revinfo = array();
-  global $cache_wikifn;  $cache_wikifn = array();
-  global $cache_wikifn;  $cache_cleanid = array();
+  global $cache_revinfo;  $cache_revinfo = array();
+  global $cache_wikifn;   $cache_wikifn = array();
+  global $cache_cleanid;  $cache_cleanid = array();
+  global $cache_authname; $cache_authname = array();
 
   //prepare config array()
   global $conf;
