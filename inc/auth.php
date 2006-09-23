@@ -543,7 +543,7 @@ function updateprofile() {
   global $lang;
   global $auth;
 
-  if(!$_POST['save']) return false;
+  if(empty($_POST['save'])) return false;
 
   // should not be able to get here without Profile being possible...
   if(!$auth->canDo('Profile')) {

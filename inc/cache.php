@@ -181,6 +181,7 @@ class cache_parser extends cache {
   }
 
   function _addDependencies() {
+    global $conf;
 
     $this->depends['age'] = isset($this->depends['age']) ? 
                    min($this->depends['age'],$conf['cachetime']) : $conf['cachetime'];

@@ -255,6 +255,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     function _htmlUserForm($cmd,$user='',$userdata=array(),$indent=0) {
         global $conf;
+        global $ID;
 
         $name = $mail = $groups = '';
         $notes = array();

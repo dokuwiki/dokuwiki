@@ -199,7 +199,7 @@ function io_saveFile($file,$content,$append=false){
     fclose($fh);
   }
 
-  if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+  if(!$fileexists and !empty($conf['fperm'])) chmod($file, $conf['fperm']);
   io_unlock($file);
   return true;
 }
@@ -291,7 +291,7 @@ function io_lock($file){
     if ((time() - $timeStart) > 3) break;
     $locked = @mkdir($lockDir, $conf['dmode']);
     if($locked){
-      if($conf['dperm']) chmod($lockDir, $conf['dperm']);
+      if(!empty($conf['dperm'])) chmod($lockDir, $conf['dperm']);
       break;
     }
     usleep(50);

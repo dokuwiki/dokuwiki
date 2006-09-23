@@ -133,9 +133,9 @@ function init_paths(){
                  'lockdir'   => 'locks');
 
   foreach($paths as $c => $p){
-    if(!$conf[$c])   $conf[$c] = $conf['savedir'].'/'.$p;
-    $conf[$c]        = init_path($conf[$c]);
-    if(!$conf[$c])   nice_die("The $c does not exist, isn't accessable or writable.
+    if(empty($conf[$c]))  $conf[$c] = $conf['savedir'].'/'.$p;
+    $conf[$c]             = init_path($conf[$c]);
+    if(empty($conf[$c]))  nice_die("The $c does not exist, isn't accessable or writable.
                                You should check your config and permission settings.
                                Or maybe you want to <a href=\"install.php\">run the
                                installer</a>?");

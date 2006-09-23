@@ -915,11 +915,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $ret  = '';
         $ret .= $link['pre'];
         $ret .= '<a href="'.$link['url'].'"';
-        if($link['class'])  $ret .= ' class="'.$link['class'].'"';
-        if($link['target']) $ret .= ' target="'.$link['target'].'"';
-        if($link['title'])  $ret .= ' title="'.$link['title'].'"';
-        if($link['style'])  $ret .= ' style="'.$link['style'].'"';
-        if($link['more'])   $ret .= ' '.$link['more'];
+        if(!empty($link['class']))  $ret .= ' class="'.$link['class'].'"';
+        if(!empty($link['target'])) $ret .= ' target="'.$link['target'].'"';
+        if(!empty($link['title']))  $ret .= ' title="'.$link['title'].'"';
+        if(!empty($link['style']))  $ret .= ' style="'.$link['style'].'"';
+        if(!empty($link['more']))   $ret .= ' '.$link['more'];
         $ret .= '>';
         $ret .= $link['name'];
         $ret .= '</a>';

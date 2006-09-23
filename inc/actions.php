@@ -94,7 +94,7 @@ function act_dispatch(){
     //handle admin tasks
     if($ACT == 'admin'){
       // retrieve admin plugin name from $_REQUEST['page']
-      if ($_REQUEST['page']) {
+      if (!empty($_REQUEST['page'])) {
           $pluginlist = plugin_list('admin');
           if (in_array($_REQUEST['page'], $pluginlist)) {
             // attempt to load the plugin

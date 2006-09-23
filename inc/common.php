@@ -103,8 +103,9 @@ function pageinfo(){
   if($REV){
     $revinfo = getRevisionInfo($ID, $REV, 1024);
   }else{
-    $revinfo = $info['meta']['last_change'];
+    $revinfo = isset($info['meta']['last_change']) ? $info['meta']['last_change'] : getRevisionInfo($ID,$info['lastmod'],1024);
   }
+
   $info['ip']     = $revinfo['ip'];
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
@@ -455,9 +456,9 @@ function checkwordblock(){
 function clientIP($single=false){
   $ip = array();
   $ip[] = $_SERVER['REMOTE_ADDR'];
-  if($_SERVER['HTTP_X_FORWARDED_FOR'])
+  if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
     $ip = array_merge($ip,explode(',',$_SERVER['HTTP_X_FORWARDED_FOR']));
-  if($_SERVER['HTTP_X_REAL_IP'])
+  if(!empty($_SERVER['HTTP_X_REAL_IP']))
     $ip = array_merge($ip,explode(',',$_SERVER['HTTP_X_REAL_IP']));
 
   // remove any non-IP stuff

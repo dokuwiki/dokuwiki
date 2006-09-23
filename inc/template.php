@@ -139,7 +139,7 @@ function tpl_content_core(){
 function tpl_admin(){
 
     $plugin = NULL;
-    if ($_REQUEST['page']) {
+    if (!empty($_REQUEST['page'])) {
         $pluginlist = plugin_list('admin');
 
         if (in_array($_REQUEST['page'], $pluginlist)) {
@@ -181,7 +181,7 @@ function tpl_metaheaders($alt=true){
   $head['meta'][] = array( 'name'=>'generator', 'content'=>'DokuWiki '.getVersion() );
   $head['link'][] = array( 'rel'=>'start', 'href'=>'DOKU_BASE' );
   $head['link'][] = array( 'rel'=>'contents', 'href'=> wl($ID,'do=index',false,'&'),
-                           'title'=>$lang['index'] );
+                           'title'=>$lang['btn_index'] );
 
   if($alt){
     $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
@@ -223,7 +223,7 @@ function tpl_metaheaders($alt=true){
     }
 
     // keywords (explicit or implicit)
-    if($INFO['meta']['subject']){
+    if(!empty($INFO['meta']['subject'])){
       $head['meta'][] = array( 'name'=>'keywords', 'content'=>join(',',$INFO['meta']['subject']));
     }else{
       $head['meta'][] = array( 'name'=>'keywords', 'content'=>str_replace(':',',',$ID));
@@ -369,7 +369,7 @@ function tpl_button($type){
       #most complicated type - we need to decide on current action
       if($ACT == 'show' || $ACT == 'search'){
         if($INFO['writable']){
-          if($INFO['draft']){
+          if(!empty($INFO['draft'])){
             echo html_btn('draft',$ID,'e',array('do' => 'draft'),'post');
           }else{
             if($INFO['exists']){
