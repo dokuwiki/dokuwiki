@@ -4,10 +4,10 @@
  * ----------------
  * Author: Steffen Krause (Steffen.krause@muse.de)
  * Copyright: (c) 2004 Steffen Krause, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.13
- * CVS Revision Version: $Revision: 1.13.2.3 $
+ * Release Version: 1.0.7.14
+ * CVS Revision Version: $Revision: 1.13.2.4 $
  * Date Started: 2004/06/20
- * Last Modified: $Date: 2006/07/22 11:30:29 $
+ * Last Modified: $Date: 2006/08/22 10:42:34 $
  *
  * Actionscript language file for GeSHi.
  *

@@ -4,10 +4,10 @@
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.13
- * CVS Revision Version: $Revision: 1.2.2.3 $
+ * Release Version: 1.0.7.14
+ * CVS Revision Version: $Revision: 1.2.2.5 $
  * Date Started: 04/23/2006
- * Last Modified: $Date: 2006/07/22 11:30:23 $
+ * Last Modified: $Date: 2006/09/14 09:44:46 $
  *
  * Standard Text File (No Syntax Highlighting).
  *
@@ -75,7 +75,9 @@ $language_data = array (
 	'SCRIPT_DELIMITERS' => array( ),
 	'HIGHLIGHT_STRICT_BLOCK' => array( )
 );
-$this->set_numbers_highlighting(false);
-$this->set_brackets_highlighting(false);
-$this->disable_highlighting();
+if (is_a($this, 'GeSHi')) {
+    $this->set_numbers_highlighting(false);
+    $this->set_brackets_highlighting(false);
+    $this->disable_highlighting();
+}
 ?>

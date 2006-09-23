@@ -4,10 +4,10 @@
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.13
- * CVS Revision Version: $Revision: 1.2.2.3 $
+ * Release Version: 1.0.7.14
+ * CVS Revision Version: $Revision: 1.2.2.5 $
  * Date Started: 03/15/2006
- * Last Modified: $Date: 2006/07/22 11:30:25 $
+ * Last Modified: $Date: 2006/09/14 09:44:45 $
  *
  * Microsoft Registry Editor Language File.
  *
@@ -90,11 +90,11 @@ $language_data = array (
 			 				 2 => 'color: #0000FF;' ),
 		'COMMENTS' => array( 1 => 'color: #009900;' ),
 		'ESCAPE_CHAR' => array(),
-		'BRACKETS' => array(),
+		'BRACKETS' => array(0 => 'color: #000000;'),
 		'STRINGS' => array( 0 => 'color: #009900;' ),
 		'NUMBERS' => array(),
 		'METHODS' => array(),
-		'SYMBOLS' => array(),
+		'SYMBOLS' => array(0 => 'color: #000000;'),
 		'SCRIPT' => array(),
 		'REGEXPS' => array( 
 			0 => '',
@@ -210,5 +210,7 @@ $language_data = array (
 	'HIGHLIGHT_STRICT_BLOCK' => array(
 		)
 );
-$this->set_numbers_highlighting(false);
+if (is_a($this, 'GeSHi')) {
+    $this->set_numbers_highlighting(false);
+}
 ?>

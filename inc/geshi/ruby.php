@@ -4,10 +4,10 @@
  * --------
  * Author: Amit Gupta (http://blog.igeek.info/)
  * Copyright: (c) 2005 Amit Gupta (http://blog.igeek.info/)
- * Release Version: 1.0.7.13
- * CVS Revision Version: $Revision: 1.13.2.2 $
+ * Release Version: 1.0.7.14
+ * CVS Revision Version: $Revision: 1.13.2.3 $
  * Date Started: 2005/09/05
- * Last Modified: $Date: 2006/07/22 11:30:32 $
+ * Last Modified: $Date: 2006/08/22 10:42:36 $
  *
  * Ruby language file for GeSHi
  *

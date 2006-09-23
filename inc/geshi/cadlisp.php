@@ -4,10 +4,10 @@
  * -----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/blog)
- * Release Version: 1.0.7.13
- * CVS Revision Version: $Revision: 1.13.2.3 $
+ * Release Version: 1.0.7.14
+ * CVS Revision Version: $Revision: 1.13.2.4 $
  * Date Started: 2004/08/30
- * Last Modified: $Date: 2006/07/22 11:30:30 $
+ * Last Modified: $Date: 2006/08/22 10:42:34 $
  *
  * AutoCAD/IntelliCAD Lisp language file for GeSHi.
  *

@@ -4,10 +4,10 @@
  * -----------
  * Author: Guy Wicks (Guy.Wicks@rbs.co.uk)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.13
- * CVS Revision Version: $Revision: 1.13.2.3 $
+ * Release Version: 1.0.7.14
+ * CVS Revision Version: $Revision: 1.13.2.4 $
  * Date Started: 2004/06/04
- * Last Modified: $Date: 2006/07/22 11:30:32 $
+ * Last Modified: $Date: 2006/08/22 10:42:36 $
  *
  * Oracle 8 language file for GeSHi
  *

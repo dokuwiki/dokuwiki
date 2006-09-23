@@ -29,7 +29,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.40.2.7 2006/08/07 11:06:41 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.40.2.8 2006/08/22 10:42:32 oracleshinoda Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.13');
+define('GESHI_VERSION', '1.0.7.14');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
