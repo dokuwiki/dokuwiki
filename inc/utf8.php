@@ -366,10 +366,12 @@ function utf8_romanize($string){
  */
 function utf8_stripspecials($string,$repl='',$additional=''){
   global $UTF8_SPECIAL_CHARS;
+  global $UTF8_SPECIAL_CHARS2;
 
   static $specials = null;
   if(is_null($specials)){
-    $specials = preg_quote(unicode_to_utf8($UTF8_SPECIAL_CHARS), '/');
+#    $specials = preg_quote(unicode_to_utf8($UTF8_SPECIAL_CHARS), '/');
+    $specials = preg_quote($UTF8_SPECIAL_CHARS2, '/');
   }
 
   return preg_replace('/['.$additional.'\x00-\x19'.$specials.']/u',$repl,$string);
@@ -987,6 +989,26 @@ $UTF8_SPECIAL_CHARS = array(
   0xf8f1, 0xf8f2, 0xf8f3, 0xf8f4, 0xf8f5, 0xf8f6, 0xf8f7, 0xf8f8, 0xf8f9, 0xf8fa,
   0xf8fb, 0xf8fc, 0xf8fd, 0xf8fe, 0xfe7c, 0xfe7d,
 );
+
+// utf8 version of above data
+global $UTF8_SPECIAL_CHARS2;
+$UTF8_SPECIAL_CHARS2 = 
+    ' !"#$%&\'()+,/;<=>?@[\]^`{|}~�'.
+    '� ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½�'.
+    '�¿×÷ˇ˘˙˚˛˜˝̣̀́̃̉΄΅·βφϑϒϕϖְֱֲֳִֵֶַָֹֻּֽ־ֿ�'.
+    '�ׁׂ׃׳״،؛؟ـًٌٍَُِّْ٪฿‌‍‎‏–—―‗‘’‚“”�'.
+    '��†‡•…‰′″‹›⁄₧₪₫€№℘™Ωℵ←↑→↓↔↕↵'.
+    '⇐⇑⇒⇓⇔∀∂∃∅∆∇∈∉∋∏∑−∕∗∙√∝∞∠∧∨�'.
+    '�∪∫∴∼≅≈≠≡≤≥⊂⊃⊄⊆⊇⊕⊗⊥⋅⌐⌠⌡〈〉⑩─�'.
+    '��┌┐└┘├┤┬┴┼═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠'.
+    '╡╢╣╤╥╦╧╨╩╪╫╬▀▄█▌▐░▒▓■▲▼◆◊●�'.
+    '�★☎☛☞♠♣♥♦✁✂✃✄✆✇✈✉✌✍✎✏✐✑✒✓✔✕�'.
+    '��✗✘✙✚✛✜✝✞✟✠✡✢✣✤✥✦✧✩✪✫✬✭✮✯✰✱'.
+    '✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀❁❂❃❄❅❆❇❈❉❊❋�'.
+    '�❏❐❑❒❖❘❙❚❛❜❝❞❡❢❣❤❥❦❧❿➉➓➔➘➙➚�'.
+    '��➜➝➞➟➠➡➢➣➤➥➦➧➨➩➪➫➬➭➮➯➱➲➳➴➵➶'.
+    '➷➸➹➺➻➼➽➾�'.
+    '�ﹼﹽ';
 
 /**
  * Romanization lookup table
