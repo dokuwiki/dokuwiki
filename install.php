@@ -40,7 +40,7 @@ $dokuwiki_hash = array(
     '2005-09-22' => 'e33223e957b0b0a130d0520db08f8fb7',
     '2006-03-05' => '51295727f79ab9af309a2fd9e0b61acc',
     '2006-03-09' => '51295727f79ab9af309a2fd9e0b61acc',
-    'devel'      => 'b32d3dd4330a0d24c8ce4ffaeafc6026',
+    'devel'      => '20551e468080113a094458401729ad6b',
 );
 
 

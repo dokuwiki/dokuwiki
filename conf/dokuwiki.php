@@ -3,7 +3,7 @@
  * This is DokuWiki's Main Configuration file
  *
  * All the default values are kept here, you should not modify it but use
- * a local.conf.php file instead to override the settings from here.
+ * a local.php file instead to override the settings from here.
  *
  * This is a piece of PHP code so PHP syntax applies!
  *
