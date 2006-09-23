@@ -62,6 +62,7 @@ function runTrimRecentChanges() {
     if (@file_exists($conf['changelog']) &&
         (filectime($conf['changelog'])+86400)<time() &&
         !@file_exists($conf['changelog'].'_tmp')) {
+
             io_lock($conf['changelog']);
             $lines = file($conf['changelog']);
             if (count($lines)<$conf['recent']) {
@@ -69,23 +70,23 @@ function runTrimRecentChanges() {
                 io_unlock($conf['changelog']);
                 return true;
             }
-            // trim changelog
+
             io_saveFile($conf['changelog'].'_tmp', ''); // presave tmp as 2nd lock
-            $kept = 0;
             $trim_time = time() - $conf['recent_days']*86400;
             $out_lines = array();
-            // check lines from newest to oldest
-            for ($i = count($lines)-1; $i >= 0; $i--) {
-                $tmp = parseChangelogLine($lines[$i]);
-                if ($tmp===false) { continue; }
-                if ($tmp['date']>$trim_time || $kept<$conf['recent']) {
-                    array_push($out_lines, implode("\t", $tmp)."\n");
-                    $kept++;
-                } else {
-                    // no more lines worth keeping
-                    break;
-                }
+
+            for ($i=0; $i<count($lines); $i++) {
+              $log = parseChangelogLine($lines[$i]);
+              if ($log === false || $log['date'] < $trim_time) continue;  // discard old lines
+              $out_lines[$log['date']] = $lines[$i];                      // preserve the rest
             }
+
+            ksort($out_lines);                                            // sort lines, just in case!
+            if (count($out_lines) > $conf['recent']) {
+              $out_lines = array_slice($out_lines,-$conf['recent']);      // trim list to one page
+            }
+
+            // save trimmed changelog
             io_saveFile($conf['changelog'].'_tmp', implode('', $out_lines));
             @unlink($conf['changelog']);
             if (!rename($conf['changelog'].'_tmp', $conf['changelog'])) {

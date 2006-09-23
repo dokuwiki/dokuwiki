@@ -111,13 +111,14 @@ function getRecents($first,$num,$ns='',$flags=0){
     $rec = _handleRecent($lines[$i], $ns, $flags);
     if($rec !== false) {
       if(--$first >= 0) continue; // skip first entries
-      $recent[] = $rec;
+      $recent[$rec['date']] = $rec;
       $count++;
       // break when we have enough entries
       if($count >= $num){ break; }
     }
   }
 
+  krsort($recent);
   return $recent;
 }
 
