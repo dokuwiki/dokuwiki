@@ -97,7 +97,6 @@ $lang['canonical']      = 'Immer Links mit vollständigen URLs erzeugen';
 $lang['autoplural']     = 'Bei Links automatisch nach vorhandenen Pluralformen suchen';
 $lang['compression']    = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['cachetime']      = 'Maximale Cachespeicherung (Sek.)';
-$lang['purgeonadd']     = 'Seitencache leeren wenn eine neue Seite angelegt wurde';
 $lang['locktime']       = 'Maximales Alter für Seitensperren (Sek.)';
 $lang['fetchsize']      = 'Maximale Größe (bytes) die fetch.php von extern downloaden darf';
 $lang['notify']         = 'Änderungsmitteilungen and diese E-Mail Adresse versenden';

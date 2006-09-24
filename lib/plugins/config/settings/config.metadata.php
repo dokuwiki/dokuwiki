@@ -129,7 +129,6 @@ $meta['htmlok']      = array('onoff');
 $meta['phpok']       = array('onoff');
 $meta['notify']      = array('email');
 $meta['subscribers'] = array('onoff');
-$meta['purgeonadd']  = array('onoff');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
 

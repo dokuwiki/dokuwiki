@@ -102,7 +102,6 @@ $lang['canonical']   = 'Používat plně kanonická URL';
 $lang['autoplural']  = 'Kontrolovat plurálové tvary v odkazech';
 $lang['usegzip']     = 'Používat gzip pro archivní soubory';
 $lang['cachetime']   = 'Maximální životnost cache (sekundy)';
-$lang['purgeonadd']  = 'Likvidovat cache, jakmile jsou přidány nové stránky';
 $lang['locktime']    = 'Maximální životnost zámkových souborů (sekundy)';
 $lang['notify']      = 'Posílat oznámení o změnách na následující emailovou adresu';
 $lang['mailfrom']    = 'Emailová addresa, která se bude používat pro automatické maily';

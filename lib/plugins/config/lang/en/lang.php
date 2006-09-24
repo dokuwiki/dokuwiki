@@ -105,7 +105,6 @@ $lang['canonical']   = 'Use fully canonical URLs';
 $lang['autoplural']  = 'Check for plural forms in links';
 $lang['compression'] = 'Compression method for attic files';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
-$lang['purgeonadd']  = 'Purge cache when new pages are added';
 $lang['locktime']    = 'Maximum age for lock files (sec)';
 $lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern';
 $lang['notify']      = 'Send change notifications to this email address';

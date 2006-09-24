@@ -105,7 +105,6 @@ $lang['canonical']   = 'Kanoniczne adresy URL';
 $lang['autoplural']  = 'Automatyczne tworzenie liczby mnogiej';
 $lang['usegzip']     = 'Kompresja gzip dla starych wersji';
 $lang['cachetime']   = 'Maksymalny wiek cache w sekundach';
-$lang['purgeonadd']  = 'Czyść cache po dodaniu strony';
 $lang['locktime']    = 'Maksymalny wiek blockad w sekundach';
 $lang['notify']      = 'Wysyłanie powiadomień na adres e-mail';
 $lang['registernotify'] = 'Prześlij informacje o nowych użytkownikach na adres e-mail';

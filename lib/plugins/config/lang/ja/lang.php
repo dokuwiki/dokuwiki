@@ -106,7 +106,6 @@ $lang['canonical']   = 'canonical URL（正準URL）を使用';
 $lang['autoplural']  = '自動複数形処理';
 $lang['compression'] = 'アーカイブファイルの圧縮方法';
 $lang['cachetime']   = 'キャッシュ保持時間（秒）';
-$lang['purgeonadd']  = 'ファイル追加時にキャッシュを破棄';
 $lang['locktime']    = 'ファイルロック期限（秒）';
 $lang['fetchsize']   = '外部からのダウンロード最大サイズ';
 $lang['notify']      = '変更を通知するメールアドレス';

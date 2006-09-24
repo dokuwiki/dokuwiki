@@ -79,7 +79,6 @@ $conf['autoplural']  = 0;                //try (non)plural form of nonexisting f
 $conf['compression'] = 'gz';             //compress old revisions: (0: off) ('gz': gnuzip) ('bz2': bzip)
                                          //  bz2 generates smaller files, but needs more cpu-power
 $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds (defaults to a day)
-$conf['purgeonadd']  = 1;                //purge cache when a new file is added (needed for up to date links)
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['fetchsize']   = 2*1024*1024;      //maximum size (bytes) fetch.php may download from extern
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)

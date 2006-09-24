@@ -502,7 +502,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //keep hash anchor
-        list($id,$hash) = split('#',$id,2);
+        list($id,$hash) = explode('#',$id,2);
 
         //prepare for formating
         $link['target'] = $conf['target']['wiki'];

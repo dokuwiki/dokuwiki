@@ -36,6 +36,7 @@ class cache {
    * @param  array   $depends   array of cache dependencies, support dependecies:
    *                            'age'   => max age of the cache in seconds
    *                            'files' => cache must be younger than mtime of each file
+   *                                       (nb. dependency passes if file doesn't exist)
    *
    * @return bool    true if cache can be used, false otherwise
    */
@@ -218,14 +219,21 @@ class cache_renderer extends cache_parser {
 
     if (!parent::_useCache()) return false;
 
-    // for wiki pages, check for internal link status changes
+    // for wiki pages, check metadata dependencies
     if (isset($this->page)) {
+      $metadata = p_get_metadata($this->page);
 
-      // check the purgefile
+      // page has an expiry time, after which it should be re-rendered (RSS feeds use this)
+      $page_expiry = $metadata['date']['valid']['end'];
+      if (!empty($page_expiry) && (time() > $page_expiry)) return false;
+
+      // check currnent link existence is consistent with cache version
+      // first check the purgefile
       // - if the cache is more recent that the purgefile we know no links can have been updated
       if ($this->_time < @filemtime($conf['cachedir'].'/purgefile')) {
 
-        $links = p_get_metadata($this->page,"relation references");
+#       $links = p_get_metadata($this->page,"relation references");
+        $links = $metadata['relation']['references'];
 
         if (!empty($links)) {
           foreach ($links as $id => $exists) {
@@ -242,9 +250,20 @@ class cache_renderer extends cache_parser {
 
     // renderer cache file dependencies ...
     $files = array(
-                   DOKU_INC.'inc/parser/'.$this->mode.'.php',            // ... the renderer
+                   DOKU_INC.'inc/parser/'.$this->mode.'.php',       // ... the renderer
              );
-    if (isset($this->page)) { $files[] = metaFN($this->page,'.meta'); }  // ... the page's own metadata
+
+    // page implies metadata and possibly some other dependencies
+    if (isset($this->page)) {
+      $metafile = metaFN($this->page,'.meta');
+      if (@file_exists($metafile)) {
+        $files[] = $metafile;                                       // ... the page's own metadata
+        $files[] = DOKU_INC.'inc/parser/metadata.php';              // ... the metadata renderer
+      } else {
+        $this->depends['purge'] = true;                             // ... purging cache will generate metadata
+				return;
+      }
+    }
 
     $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
     parent::_addDependencies();

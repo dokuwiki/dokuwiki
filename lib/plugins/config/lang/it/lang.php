@@ -107,7 +107,6 @@ $lang['canonical']   = 'Usa URL canoniche';
 $lang['autoplural']  = 'Controlla il plurale nei collegamenti';
 $lang['usegzip']     = 'Usa gzip (per l\'archivio)';
 $lang['cachetime']   = 'Durata della cache (sec)';
-$lang['purgeonadd']  = 'Pulisci la cache quando si aggiungono nuove pagine';
 $lang['locktime']    = 'Durata dei file di lock (sec)';
 $lang['fetchsize']   = 'Dimensione massima (bytes) scaricabile da fetch.php da extern';
 $lang['notify']      = 'Invia notifiche sulle modifiche a questo indirizzo';

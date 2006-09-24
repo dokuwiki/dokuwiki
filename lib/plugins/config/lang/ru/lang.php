@@ -101,7 +101,6 @@ $lang['canonical']   = 'Полные канонические адреса (URL)
 $lang['autoplural']  = 'Автоматическое мн. число';               //try (non)plural form of nonexisting files?
 $lang['usegzip']     = 'Использовать gzip (для истории правок)';      //gzip old revisions?
 $lang['cachetime']   = 'Время жизни кэш-файла (сек.)';  //maximum age for cachefile in seconds (defaults to a day)
-$lang['purgeonadd']  = 'Обнулять кэш при создании страницы';        //purge cache when a new file is added (needed for up to date links)
 $lang['locktime']    = 'Время блокировки страницы (сек.)';  //maximum age for lockfiles (defaults to 15 minutes)
 $lang['notify']      = 'Е-мэйл для извещений';      //send change info to this email (leave blank for nobody)
 $lang['mailfrom']    = 'Е-мэйл Вики (От:)';            //use this email when sending mails

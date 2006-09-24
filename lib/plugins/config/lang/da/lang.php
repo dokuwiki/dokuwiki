@@ -104,7 +104,6 @@ $lang['canonical']   = 'Benyt fuldt kanoniske URLer';
 $lang['autoplural']  = 'Check for flertalsendelser i links';
 $lang['usegzip']     = 'Benyt gzip til attic filer';
 $lang['cachetime']   = 'Maksimum levetid for cache (sek)';
-$lang['purgeonadd']  = 'Ryd cache når nye sider tilføjes';
 $lang['locktime']    = 'Maksimum levetid for låsningsfiler (sek)';
 $lang['fetchsize']   = 'Maksimum antal (bytes) fetch.php må downloade fra extern';
 $lang['notify']      = 'Send ændringsnotifikationer til denne e-mailadresse';

@@ -106,7 +106,6 @@ $lang['canonical']   = 'Usar URLs totalmente canónicas';
 $lang['autoplural']  = 'Controlar plurales en enlaces';
 $lang['usegzip']     = 'Usar gzip para archivos del ático';
 $lang['cachetime']   = 'Edad máxima para caché (segundos)';
-$lang['purgeonadd']  = 'Purgar el cache cuando se agregan nuevas páginas';
 $lang['locktime']    = 'Edad máxima para archivos de lock (segundos)';
 $lang['fetchsize']   = 'Tamañao máximo (bytes) que fetch.php puede descargar de sitios externos';
 $lang['notify']      = 'Enviar notificación de cambios a esta dirección de correo electrónico';

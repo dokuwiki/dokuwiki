@@ -722,10 +722,8 @@ function saveWikiText($id,$text,$summary,$minor=false){
   notify($id,'admin',$old,$summary,$minor);
   notify($id,'subscribers',$old,$summary,$minor);
 
-  //purge cache on add by updating the purgefile
-  if($conf['purgeonadd'] && (!$old || $del)){
-    io_saveFile($conf['cachedir'].'/purgefile',time());
-  }
+  // update the purgefile (timestamp of the last time anything within the wiki was changed)
+  io_saveFile($conf['cachedir'].'/purgefile',time());
 }
 
 /**

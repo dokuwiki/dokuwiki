@@ -104,7 +104,6 @@ $lang['canonical']   = 'Utiliser des URLs canoniques';
 $lang['autoplural']  = 'Rechercher les formes plurielles dans les liens';
 $lang['usegzip']     = 'Utiliser gzip pour les fichiers dans attic';
 $lang['cachetime']   = 'Âge maximum d\'un fichier en cache (sec)';
-$lang['purgeonadd']  = 'Purger le cache à l\'ajout de page';
 $lang['locktime']    = 'Âge maximum des fichiers verrous (sec)';
 $lang['fetchsize']   = 'Taille maximale (en octets) du fichier que fetch.php peut télécharger';
 $lang['notify']      = 'Notifier les modifications à cette adresse de courriel';

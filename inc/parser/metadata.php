@@ -325,7 +325,15 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     if ($this->capture && $title) $this->doc .= '['.$title.']';
   }
 
-  function rss($url){}
+  function rss($url,$params) {
+    global $conf;
+
+    $this->meta['relation']['haspart'][$url] = true;
+    $this->meta['date']['valid']['end'] =
+         empty($this->meta['date']['valid']['end']) ?
+             time() + $conf['rss_update'] :
+             min($this->meta['date']['valid']['end'], time() + $conf['rss_update']);
+  }
 
   function table_open($maxcols = NULL, $numrows = NULL){}
   function table_close(){}
