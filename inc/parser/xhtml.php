@@ -794,7 +794,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $mod = -1;
             $start = $feed->get_item_quantity()-1;
             $end   = $start - ($params['max']);
-            $end   = ($end < 0) ? 0 : $end;
+            $end   = ($end < -1) ? -1 : $end;
         }else{
             $mod   = 1;
             $start = 0;
