@@ -59,7 +59,7 @@
  * See www.bitfolge.de for additional changelog info
  */
 // your local timezone, set to "" to disable or for GMT
-define("TIME_ZONE","");
+define("TIME_ZONE",date("O", time()));
 
 
 
@@ -740,8 +740,8 @@ class FeedDate {
      */
     function iso8601() {
         $date = gmdate("Y-m-d\TH:i:sO",$this->unix);
+        if (TIME_ZONE!="") $date = str_replace("+0000",TIME_ZONE,$date);
         $date = substr($date,0,22) . ':' . substr($date,-2);
-        if (TIME_ZONE!="") $date = str_replace("+00:00",TIME_ZONE,$date);
         return $date;
     }
 
