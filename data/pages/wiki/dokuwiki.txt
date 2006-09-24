@@ -42,10 +42,11 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>wiki:plugins|Installing plugins]]
   * [[doku>wiki:development|Development Resources]]
 
-**DokuWiki Feedback**
+**DokuWiki Feedback and Community**
 
   * [[doku>wiki:mailinglist|Join the mailing list]] :!:
   * [[doku>wiki:forum|Check out the user forum]]
+  * [[doku>wiki:irc|Talk to other users in the IRC channel]]
   * [[http://bugs.splitbrain.org/index.php?project=1|Submit bugs and feature wishes]]
   * [[doku>wiki:discussion:discussion|The discussion pages]]
   * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
