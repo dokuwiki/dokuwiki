@@ -62,7 +62,6 @@ function runTrimRecentChanges() {
     if (@file_exists($conf['changelog']) &&
         (filectime($conf['changelog'])+86400)<time() &&
         !@file_exists($conf['changelog'].'_tmp')) {
-
             io_lock($conf['changelog']);
             $lines = file($conf['changelog']);
             if (count($lines)<$conf['recent']) {
@@ -71,19 +70,27 @@ function runTrimRecentChanges() {
                 return true;
             }
 
-            io_saveFile($conf['changelog'].'_tmp', ''); // presave tmp as 2nd lock
+            io_saveFile($conf['changelog'].'_tmp', '');          // presave tmp as 2nd lock
             $trim_time = time() - $conf['recent_days']*86400;
             $out_lines = array();
 
             for ($i=0; $i<count($lines); $i++) {
               $log = parseChangelogLine($lines[$i]);
-              if ($log === false || $log['date'] < $trim_time) continue;  // discard old lines
-              $out_lines[$log['date']] = $lines[$i];                      // preserve the rest
+              if ($log === false) continue;                      // discard junk
+              if ($log['date'] < $trim_time) {
+                $old_lines[$log['date'].".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
+              } else {
+                $out_lines[$log['date'].".$i"] = $lines[$i];     // definitely keep these lines
+              }
             }
 
-            ksort($out_lines);                                            // sort lines, just in case!
-            if (count($out_lines) > $conf['recent']) {
-              $out_lines = array_slice($out_lines,-$conf['recent']);      // trim list to one page
+            // sort the final result, it shouldn't be necessary,
+            //   however the extra robustness in making the changelog cache self-correcting is worth it
+            ksort($out_lines);
+            $extra = $conf['recent'] - count($out_lines);        // do we need extra lines do bring us up to minimum
+            if ($extra > 0) {
+              ksort($old_lines);
+              $out_lines = array_merge(array_slice($old_lines,-$extra),$out_lines);
             }
 
             // save trimmed changelog
