@@ -363,10 +363,10 @@ function html_search(){
 
   //show progressbar
   print '<div class="centeralign" id="dw__loading">';
-  print '<br /></div>';
   print '<script type="text/javascript" charset="utf-8">';
-  print 'showLoadBar("dw__loading");';
+  print 'showLoadBar();';
   print '</script>';
+  print "<br /></div>\n";
   flush();
 
   //do quick pagesearch
