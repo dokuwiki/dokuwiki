@@ -212,7 +212,7 @@ function runSitemapper(){
     print "runSitemapper(): started".NL;
     if(!$conf['sitemap']) return false;
 
-    if($conf['usegzip']){
+    if($conf['compression'] == 'bz2' || $conf['compression'] == 'gz'){
         $sitemap = 'sitemap.xml.gz';
     }else{
         $sitemap = 'sitemap.xml';
