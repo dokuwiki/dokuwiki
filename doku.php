@@ -76,5 +76,8 @@
 
   trigger_event('DOKUWIKI_DONE', $tmp=array());
 
+  //handle metadebug request
+  debug_meta($ID);
+
 //  xdebug_dump_function_profile(1);
 ?>
