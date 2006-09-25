@@ -522,6 +522,13 @@ class Doku_Handler {
         $p['date']    = (preg_match('/\b(date)/',$params));
         $p['details'] = (preg_match('/\b(desc|detail)/',$params));
 
+        if (preg_match('/\b(\d+)([dhm])\b/',$params,$match)) {
+          $period = array('d' => 86400, 'h' => 3600, 'm' => 60);
+          $p['refresh'] = max(600,$match[1]*$period[$match[2]]);  // n * period in seconds, minimum 10 minutes
+        } else {
+          $p['refresh'] = 14400;   // default to 4 hours
+        }
+
         $this->_addCall('rss',array($link,$p),$pos);
         return TRUE;
     }

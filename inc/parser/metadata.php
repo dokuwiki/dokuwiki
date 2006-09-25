@@ -38,6 +38,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     $this->meta['description']['tableofcontents'] = array();
     $this->meta['relation']['haspart'] = array();
     $this->meta['relation']['references'] = array();
+		$this->meta['date']['valid'] = array();
     $this->headers = array();
   }
 
@@ -326,13 +327,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function rss($url,$params) {
-    global $conf;
-
     $this->meta['relation']['haspart'][$url] = true;
-    $this->meta['date']['valid']['end'] =
-         empty($this->meta['date']['valid']['end']) ?
-             time() + $conf['rss_update'] :
-             min($this->meta['date']['valid']['end'], time() + $conf['rss_update']);
+   	$this->meta['date']['valid']['age'] = $params['refresh'];
   }
 
   function table_open($maxcols = NULL, $numrows = NULL){}

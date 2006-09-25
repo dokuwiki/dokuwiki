@@ -223,10 +223,6 @@ class cache_renderer extends cache_parser {
     if (isset($this->page)) {
       $metadata = p_get_metadata($this->page);
 
-      // page has an expiry time, after which it should be re-rendered (RSS feeds use this)
-      $page_expiry = $metadata['date']['valid']['end'];
-      if (!empty($page_expiry) && (time() > $page_expiry)) return false;
-
       // check currnent link existence is consistent with cache version
       // first check the purgefile
       // - if the cache is more recent that the purgefile we know no links can have been updated
@@ -255,13 +251,21 @@ class cache_renderer extends cache_parser {
 
     // page implies metadata and possibly some other dependencies
     if (isset($this->page)) {
+
       $metafile = metaFN($this->page,'.meta');
       if (@file_exists($metafile)) {
         $files[] = $metafile;                                       // ... the page's own metadata
         $files[] = DOKU_INC.'inc/parser/metadata.php';              // ... the metadata renderer
+
+        $valid = p_get_metadata($this->page, 'date valid');
+        if (!empty($valid['age'])) {
+          $this->depends['age'] = isset($this->depends['age']) ?
+                   min($this->depends['age'],$valid['age']) : $valid['age'];
+        }
+
       } else {
         $this->depends['purge'] = true;                             // ... purging cache will generate metadata
-				return;
+        return;
       }
     }
 
