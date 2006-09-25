@@ -97,13 +97,14 @@ $lang['disableactions_wikicode'] = 'ソース閲覧 / 生データ出力';
 $lang['disableactions_other'] = 'その他の動作（カンマ区切り）';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'DokuWikiの更新とセキュリティに関する情報をチェックしますか？ この機能は splitbrain.org への接続が必要です。';
 $lang['userewrite']  = 'URLの書き換え';
 $lang['useslash']    = 'URL上の名前空間の区切りにスラッシュを使用';
 $lang['usedraft']    = '編集中の自動保存（ドラフト）機能を使用';
 $lang['sepchar']     = 'ページ名の単語区切り文字';
 $lang['canonical']   = 'canonical URL（正準URL）を使用';
 $lang['autoplural']  = '自動複数形処理';
-$lang['usegzip']     = '古い文書にgzipを使用';
+$lang['compression'] = 'アーカイブファイルの圧縮方法';
 $lang['cachetime']   = 'キャッシュ保持時間（秒）';
 $lang['purgeonadd']  = 'ファイル追加時にキャッシュを破棄';
 $lang['locktime']    = 'ファイルロック期限（秒）';
@@ -125,6 +126,7 @@ $lang['sitemap']     = 'Googleサイトマップ作成頻度（日数）';
 $lang['rss_type']    = 'RSSフィード形式';
 $lang['rss_linkto']  = 'RSS内リンク先';
 $lang['rss_update']  = 'RSSフィードの更新間隔（秒）';
+$lang['recent_days'] = '最近の変更とする期間（日数）';
 
 /* Target options */
 $lang['target____wiki']      = '内部リンクの表示先';
@@ -174,4 +176,9 @@ $lang['rss_linkto_o_diff']    = '変更点のリスト';
 $lang['rss_linkto_o_page']    = '変更されたページ';
 $lang['rss_linkto_o_rev']     = 'リビジョンのリスト';
 $lang['rss_linkto_o_current'] = '現在のページ';
+
+/* compression options */
+$lang['compression_o_0']   = '圧縮しない';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
 
