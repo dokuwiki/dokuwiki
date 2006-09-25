@@ -478,6 +478,7 @@ function html_revisions($first=0){
 
     print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 
+    print ' &ndash; ';
     print $INFO['sum'];
     print ' <span class="user">';
     print $INFO['editor'];
@@ -496,19 +497,25 @@ function html_revisions($first=0){
     print '<div class="li">';
     print $date;
 
-    print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
-    $p = array();
-    $p['src']    = DOKU_BASE.'lib/images/diff.png';
-    $p['width']  = 15;
-    $p['height'] = 11;
-    $p['title']  = $lang['diff'];
-    $p['alt']    = $lang['diff'];
-    $att = buildAttributes($p);
-    print "<img $att />";
-    print '</a> ';
+    if(@file_exists(wikiFN($ID,$rev))){
+      print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
+      $p = array();
+      $p['src']    = DOKU_BASE.'lib/images/diff.png';
+      $p['width']  = 15;
+      $p['height'] = 11;
+      $p['title']  = $lang['diff'];
+      $p['alt']    = $lang['diff'];
+      $att = buildAttributes($p);
+      print "<img $att />";
+      print '</a> ';
 
-    print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a> ';
+      print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a>';
+    }else{
+      print ' <img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" /> ';
+      print $ID;
+    }
 
+    print ' &ndash; ';
     print htmlspecialchars($info['sum']);
     print ' <span class="user">';
     if($info['user']){
@@ -600,7 +607,7 @@ function html_recent($first=0){
     print '</a> ';
 
     print html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']);
-    print ' '.htmlspecialchars($recent['sum']);
+    print ' &ndash; '.htmlspecialchars($recent['sum']);
 
     print ' <span class="user">';
     if($recent['user']){
