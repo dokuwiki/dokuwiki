@@ -1170,17 +1170,27 @@ function html_debug(){
   global $conf;
   global $lang;
   global $auth;
+  global $INFO;
+
   //remove sensitive data
   $cnf = $conf;
   $cnf['auth']='***';
   $cnf['notify']='***';
   $cnf['ftp']='***';
+  $nfo = $INFO;
+  $nfo['userinfo'] = '***';
+  $ses = $_SESSION;
+  $ses[$conf['title']]['auth'] = '***';
 
   print '<html><body>';
 
   print '<p>When reporting bugs please send all the following ';
   print 'output as a mail to andi@splitbrain.org ';
   print 'The best way to do this is to save this page in your browser</p>';
+
+  print '<b>$INFO:</b><pre>';
+  print_r($nfo);
+  print '</pre>';
 
   print '<b>$_SERVER:</b><pre>';
   print_r($_SERVER);
@@ -1221,7 +1231,7 @@ function html_debug(){
   }
 
   print '<b>$_SESSION:</b><pre>';
-  print_r($_SESSION);
+  print_r($ses);
   print '</pre>';
 
   print '<b>Environment:</b><pre>';

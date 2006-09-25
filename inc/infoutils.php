@@ -247,22 +247,3 @@ function dbglog($msg){
   }
 }
 
-/**
- * Prints the metadata of a given page
- *
- * Only prints when debugging is allowed and the metadebug request
- * parameter is set
- *
- * The data is dumped after tpl_action and thus after the template's
- * closing html tag. This makes the HTML invalid, but this is for
- * debugging only anyway.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function debug_meta($id){
-    global $conf;
-    if(!$conf['allowdebug']) return;
-    if(!$_REQUEST['metadebug']) return;
-
-    dbg(p_get_metadata($id));
-}

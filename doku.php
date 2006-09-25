@@ -46,14 +46,14 @@
   //set default #FIXME not needed here? done in actions?
   if(empty($ACT)) $ACT = 'show';
 
+  //make infos about the selected page available
+  $INFO = pageinfo();
 
+  // handle debugging
   if($conf['allowdebug'] && $ACT == 'debug'){
     html_debug();
     exit;
   }
-
-  //make infos about the selected page available
-  $INFO = pageinfo();
 
   //send 404 for missing pages if configured
   if($conf['send404'] && !$INFO['exists']){
@@ -75,9 +75,6 @@
   act_dispatch($ACT);
 
   trigger_event('DOKUWIKI_DONE', $tmp=array());
-
-  //handle metadebug request
-  debug_meta($ID);
 
 //  xdebug_dump_function_profile(1);
 ?>
