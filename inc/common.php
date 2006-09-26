@@ -412,6 +412,9 @@ function checkwordblock(){
 
   if(!$conf['usewordblock']) return false;
 
+  // we prepare the text a tiny bit to prevent spammers circumventing URL checks
+  $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i','\1http://\2 \2\3',$TEXT);
+
   $wordblocks = getWordblocks();
   //how many lines to read at once (to work around some PCRE limits)
   if(version_compare(phpversion(),'4.3.0','<')){
@@ -433,7 +436,7 @@ function checkwordblock(){
       if(empty($block)) continue;
       $re[]  = $block;
     }
-    if(preg_match('#('.join('|',$re).')#si',$TEXT, $match=array())) {
+    if(preg_match('#('.join('|',$re).')#si',$text, $match=array())) {
       return true;
     }
   }

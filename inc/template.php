@@ -237,7 +237,7 @@ function tpl_metaheaders($alt=true){
                           'href'=>DOKU_BASE.'lib/exe/css.php?print=1');
 
   // load javascript
-  $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover') ? 1 : 0;
+  $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover' || $ACT=='wordblock' ) ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
   if(defined('DOKU_MEDIAMANAGER')){
     $js_edit  = 1;
