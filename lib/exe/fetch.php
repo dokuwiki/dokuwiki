@@ -22,8 +22,8 @@
   //get input
   $MEDIA  = getID('media',false); // no cleaning - maybe external
   $CACHE  = calc_cache($_REQUEST['cache']);
-  $WIDTH  = $_REQUEST['w'];
-  $HEIGHT = $_REQUEST['h'];
+  $WIDTH  = (int) $_REQUEST['w'];
+  $HEIGHT = (int) $_REQUEST['h'];
   list($EXT,$MIME) = mimetype($MEDIA);
   if($EXT === false){
     $EXT  = 'unknown';
@@ -183,6 +183,8 @@ function get_resized($file, $ext, $w, $h=0){
   $info  = getimagesize($file);
   if(!$h) $h = round(($w * $info[1]) / $info[0]);
 
+  // we wont scale up to infinity
+  if($w > 2000 || $h > 2000) return $file;
 
   //cache
   $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
@@ -271,7 +273,6 @@ function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
 
   @exec($cmd,$out,$retval);
   if ($retval == 0) return true;
-
   return false;
 }
 
