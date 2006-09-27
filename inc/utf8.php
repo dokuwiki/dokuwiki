@@ -6,18 +6,18 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-
 /**
  * check for mb_string support
  */
 if(!defined('UTF8_MBSTRING')){
   if(function_exists('mb_substr') && !defined('UTF8_NOMBSTRING')){
     define('UTF8_MBSTRING',1);
-    mb_internal_encoding('UTF-8');
   }else{
     define('UTF8_MBSTRING',0);
   }
 }
+
+if(UTF8_MBSTRING){ mb_internal_encoding('UTF-8'); }
 
 
 /**
@@ -92,12 +92,13 @@ function utf8_strip($str){
  */
 function utf8_check($Str) {
  for ($i=0; $i<strlen($Str); $i++) {
-  if (ord($Str[$i]) < 0x80) continue; # 0bbbbbbb
-  elseif ((ord($Str[$i]) & 0xE0) == 0xC0) $n=1; # 110bbbbb
-  elseif ((ord($Str[$i]) & 0xF0) == 0xE0) $n=2; # 1110bbbb
-  elseif ((ord($Str[$i]) & 0xF8) == 0xF0) $n=3; # 11110bbb
-  elseif ((ord($Str[$i]) & 0xFC) == 0xF8) $n=4; # 111110bb
-  elseif ((ord($Str[$i]) & 0xFE) == 0xFC) $n=5; # 1111110b
+  $b = ord($Str[$i]);
+  if ($b < 0x80) continue; # 0bbbbbbb
+  elseif (($b & 0xE0) == 0xC0) $n=1; # 110bbbbb
+  elseif (($b & 0xF0) == 0xE0) $n=2; # 1110bbbb
+  elseif (($b & 0xF8) == 0xF0) $n=3; # 11110bbb
+  elseif (($b & 0xFC) == 0xF8) $n=4; # 111110bb
+  elseif (($b & 0xFE) == 0xFC) $n=5; # 1111110b
   else return false; # Does not match any model
   for ($j=0; $j<$n; $j++) { # n bytes matching 10bbbbbb follow ?
    if ((++$i == strlen($Str)) || ((ord($Str[$i]) & 0xC0) != 0x80))
@@ -130,6 +131,7 @@ function utf8_strlen($string){
  * when doing so
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
+ * @author Chris Smith <chris@jalakai.co.uk>
  * @param string
  * @param integer number of UTF-8 characters offset (from left)
  * @param integer (optional) length in UTF-8 characters from offset
@@ -144,7 +146,7 @@ function utf8_substr($str, $offset, $length = null) {
         }
     }
 
-    if ( $offset >= 0 && $length >= 0 ) {
+    if ( $offset >= 0 && $length >= 0 && $offset < 65534 && $length < 65534) {
         if ( $length === null ) {
             $length = '*';
         } else {
@@ -169,14 +171,33 @@ function utf8_substr($str, $offset, $length = null) {
         return false;
 
     } else {
-        // Handle negatives using different, slower technique
-        // From: http://www.php.net/manual/en/function.substr.php#44838
-        preg_match_all('/./u', $str, $ar);
-        if( $length !== null ) {
-            return join('',array_slice($ar[0],$offset,$length));
-        } else {
-            return join('',array_slice($ar[0],$offset));
-        }
+
+      // convert character offsets to byte offsets and use normal substr()
+      // 1. normalise paramters into positive offset and length and carry out simple checks
+      $strlen = strlen(utf8_decode($str));
+
+      if ($offset < 0) {
+        $offset = max($strlen+$offset,0);
+      }
+      if ($offset >= $strlen) return false;
+
+      if ($length === null) {
+        // 2a. convert to start byte offset
+        list($start) = _utf8_byteindex($str,$offset);
+				return substr($str,$start);
+      }
+
+      if ($length < 0) {
+        $length = $strlen-$offset+$length;
+        if ($length < 0) return '';
+      }
+
+      if ($length === 0) return '';
+      if ($strlen - $offset < $length) $length = $strlen-$offset;
+
+      // 2b. convert to start and end byte offsets
+      list($start,$end) = _utf8_byteindex($str,$offset,$offset+$length);
+      return substr($str,$start,$end-$start);
     }
 }
 
@@ -792,6 +813,69 @@ function utf8_correctIdx(&$str,$i,$next=false) {
   }
 
   return $i;
+}
+
+/**
+ * determine the byte indexes into a utf-8 string for one or more character offsets
+ * PRIVATE  (could be made public with proper paramter checking)
+ *
+ * @author  Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param   string    $str      utf8 string
+ * @param   int       $offset   any number of character offsets into $str
+ *
+ * @return  array     byte indexes into $str, one index for each offset argument
+ */
+function _utf8_byteindex() {
+
+  $args = func_get_args();
+  $str =& array_shift($args);
+  if (!is_string($str)) return false;
+
+  $result = array();
+
+  // use a short piece of str to estimate bytes per character
+  $i = utf8_correctIdx($str, 300, true);           // $i (& $j) -> byte indexes into $str
+  $c = utf8_strlen(substr($str,0,$i));             // $c -> character offset into $str
+
+  sort($args);                                     // deal with arguments from lowest to highest
+  foreach ($args as $offset) {
+    // sanity checks FIXME
+
+    // 0 is an easy check
+    if ($offset == 0) { $result[] = 0; continue; }
+
+    $safety_valve = 50;                            // ensure no endless looping
+
+    do {
+      $j = (int)($offset * $i/$c);                 // apply latest bytes/character estimate to offset
+      $j = utf8_correctIdx($str, $j, true);        // correct to utf8 character boundary
+
+      if ($j > $i) {
+        $c += utf8_strlen(substr($str,$i,$j-$i));  // determine new character offset
+      } else {
+        $c -= utf8_strlen(substr($str,$j,$i-$j));  // ditto
+      }
+
+      $error = abs($c-$offset);
+
+      $i = $j;                                     // ready for next time around
+    } while (($error > 7) && --$safety_valve) ;    // from 7 it is faster to iterate over the string
+
+    if ($error && $error <= 7) {
+      if ($c < $offset) {
+        // move up
+        while ($error--) { $i = utf8_correctIdx($str,++$i,true); }
+      } else {
+        // move down
+        while ($error--) { $i = utf8_correctIdx($str,--$i,false); }
+      }
+      $c = $offset;                                // ready for next arg
+    }
+    $result[] = $i;
+  }
+
+  return $result;  
 }
 
 // only needed if no mb_string available
