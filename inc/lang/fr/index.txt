@@ -1,5 +1,5 @@
 ====== Index ======
 
 Voici un index de toutes les pages disponibles, triées par
-[[doku>wiki:namespace|catégorie]].
+[[doku>wiki:namespaces|catégorie]].
 
