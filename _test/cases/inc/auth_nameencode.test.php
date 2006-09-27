@@ -5,6 +5,11 @@ require_once DOKU_INC.'inc/auth.php';
 
 class auth_nameencode_test extends UnitTestCase {
 
+    function teardown() {
+        global $cache_authname;
+        $cache_authname = array();
+    }
+
     function test_simple(){
         $in  = 'hey$you';
         $out = 'hey%24you';

@@ -30,9 +30,9 @@ class utf8_substr_test extends UnitTestCase {
         // we test multiple cases here - format: in, offset, length, out
         $tests   = array();
 
-        $str = str_pad('',strlen('в')*66000,'в').'@@';
+        $str = str_repeat('в',66000).'@@';
         $tests[] = array($str, 65600, 1, 'в');
-        $tests[] = array($str,0,66000,$str);
+        $tests[] = array($str,0,66002,$str);
 
         foreach($tests as $test){
             $this->assertEqual(utf8_substr($test[0],$test[1],$test[2]),$test[3]);
