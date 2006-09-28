@@ -328,10 +328,6 @@ switch ($algorithm) {
 
       list($str,$idx) = $match[0];
       
-      // is it ok to use utf8_substr() -- see bug #891,
-      //   check idx against (2^16)-1 - 400 (100x4 byte utf-8 characters)
-      if ($idx <= 65135) {
-
       // convert $idx (a byte offset) into a utf8 character offset
       $utf8_idx = utf8_strlen(substr($text,0,$idx));
       $utf8_len = utf8_strlen($str);
@@ -339,55 +335,42 @@ switch ($algorithm) {
       // establish context, 100 bytes surrounding the match string
       // first look to see if we can go 100 either side,
       // then drop to 50 adding any excess if the other side can't go to 50,
-        $pre = min($utf8_idx-$utf8_offset,100);
-        $post = min($len-$utf8_idx-$utf8_len,100);
+      $pre = min($utf8_idx-$utf8_offset,100);
+      $post = min($len-$utf8_idx-$utf8_len,100);
 
-        if ($pre>50 && $post>50) {
-          $pre = $post = 50;
-        } else if ($pre>50) {
-          $pre = min($pre,100-$post);
-        } else if ($post>50) {
-          $post = min($post, 100-$pre);
-        } else {
-          // both are less than 50, means the context is the whole string
-          // make it so and break out of this loop - there is no need for the complex snippet calculations
-          $snippets = array($text);
-          break;
-        }
-
-        // establish context start and end points, try to append to previous context if possible
-        $start = $utf8_idx - $pre;
-        $append = ($start < $end) ? $end : false;       // still the end of the previous context snippet
-        $end = $utf8_idx + $utf8_len + $post;           // now set it to the end of this context
-
-        if ($append) {
-          $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
-        } else {
-          $snippets[] = utf8_substr($text,$start,$end-$start);
-        }
-
-        // set $offset for next match attempt
-        //   substract strlen to avoid splitting a potential search success, this is an approximation as the
-        //   search pattern may match strings of varying length and it will fail if the context snippet
-        //   boundary breaks a matching string longer than the current match
-        $utf8_offset = $utf8_idx + $post;
-        $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
-        $offset = utf8_correctIdx($text,$offset);
+      if ($pre>50 && $post>50) {
+        $pre = $post = 50;
+      } else if ($pre>50) {
+        $pre = min($pre,100-$post);
+      } else if ($post>50) {
+        $post = min($post, 100-$pre);
       } else {
-        // code for strings too large for utf8_substr
-        // use a larger context number as its bytes not characters
-        // no need to check for short pre, $idx is nearly 64k
-        $post = min(strlen($text)-$idx-strlen($str), 70);
-        $pre = ($post < 70) ?  140 - $post : 70;
-
-        $start = utf8_correctIdx($text,$idx - $pre);
-        $end = utf8_correctIdx($text, $idx + strlen($str) + $post);
-
-        $snippets[] = substr($text,$start,$end-$start);
-        $offset = $end - strlen($str);
+        // both are less than 50, means the context is the whole string
+        // make it so and break out of this loop - there is no need for the complex snippet calculations
+        $snippets = array($text);
+        break;
       }
 
+      // establish context start and end points, try to append to previous context if possible
+      $start = $utf8_idx - $pre;
+      $append = ($start < $end) ? $end : false;       // still the end of the previous context snippet
+      $end = $utf8_idx + $utf8_len + $post;           // now set it to the end of this context
+
+      if ($append) {
+        $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
+      } else {
+        $snippets[] = utf8_substr($text,$start,$end-$start);
+      }
+
+      // set $offset for next match attempt
+      //   substract strlen to avoid splitting a potential search success, this is an approximation as the
+      //   search pattern may match strings of varying length and it will fail if the context snippet
+      //   boundary breaks a matching string longer than the current match
+      $utf8_offset = $utf8_idx + $post;
+      $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
+      $offset = utf8_correctIdx($text,$offset);
     }
+
     $m = "\1";
     $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
     $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));

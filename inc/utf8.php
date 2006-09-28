@@ -127,8 +127,6 @@ function utf8_strlen($string){
  * UTF-8 aware alternative to substr
  *
  * Return part of a string given character offset (and optionally length)
- * Note: supports use of negative offsets and lengths but will be slower
- * when doing so
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Chris Smith <chris@jalakai.co.uk>
@@ -146,61 +144,86 @@ function utf8_substr($str, $offset, $length = null) {
         }
     }
 
-    if ( $offset >= 0 && $length >= 0 && $offset < 65534 && $length < 65534) {
-        if ( $length === null ) {
-            $length = '*';
-        } else {
-            $strlen = strlen(utf8_decode($str));
-            if ( $offset > $strlen ) {
-                return '';
-            }
+    /*
+     * Notes:
+     *
+     * no mb string support, so we'll use pcre regex's with 'u' flag
+     * pcre only supports repetitions of less than 65536, in order to accept up to MAXINT values for
+     * offset and length, we'll repeat a group of 65535 characters when needed (ok, up to MAXINT-65536)
+     *
+     * substr documentation states false can be returned in some cases (e.g. offset > string length)
+     * mb_substr never returns false, it will return an empty string instead.
+     *
+     * calculating the number of characters in the string is a relatively expensive operation, so
+     * we only carry it out when necessary. It isn't necessary for +ve offsets and no specified length
+     */
 
-            if ( ( $offset + $length ) > $strlen ) {
-               $length = '*';
-            } else {
-                $length = '{'.$length.'}';
-            }
-        }
+    // cast parameters to appropriate types to avoid multiple notices/warnings
+    $str = (string)$str;                          // generates E_NOTICE for PHP4 objects, but not PHP5 objects
+    $offset = (int)$offset;
+    if (!is_null($length)) $length = (int)$length;
 
-        $pattern = '/^.{'.$offset.'}(.'.$length.')/us';
-        preg_match($pattern, $str, $matches);
+    // handle trivial cases
+    if ($length === 0) return '';
+    if ($offset < 0 && $length < 0 && $length < $offset) return '';
 
-        if ( isset($matches[1]) ) {
-            return $matches[1];
-        }
-        return false;
+    $offset_pattern = '';
+    $length_pattern = '';
 
+    // normalise -ve offsets (we could use a tail anchored pattern, but they are horribly slow!)
+    if ($offset < 0) {
+      $strlen = strlen(utf8_decode($str));        // see notes
+      $offset = $strlen + $offset;
+      if ($offset < 0) $offset = 0;
+    }
+
+    // establish a pattern for offset, a non-captured group equal in length to offset
+    if ($offset > 0) {
+      $Ox = (int)($offset/65535);
+      $Oy = $offset%65535;
+
+      if ($Ox) $offset_pattern = '(?:.{65535}){'.$Ox.'}';
+      $offset_pattern = '^(?:'.$offset_pattern.'.{'.$Oy.'})';
+    } else {
+      $offset_pattern = '^';                      // offset == 0; just anchor the pattern
+    }
+
+    // establish a pattern for length
+    if (is_null($length)) {
+      $length_pattern = '(.*)$';                  // the rest of the string
     } else {
 
-      // convert character offsets to byte offsets and use normal substr()
-      // 1. normalise paramters into positive offset and length and carry out simple checks
-      $strlen = strlen(utf8_decode($str));
+      if (!isset($strlen)) $strlen = strlen(utf8_decode($str));    // see notes
+      if ($offset > $strlen) return '';           // another trivial case
 
-      if ($offset < 0) {
-        $offset = max($strlen+$offset,0);
+      if ($length > 0) {
+
+        $length = min($strlen-$offset, $length);  // reduce any length that would go passed the end of the string
+
+        $Lx = (int)($length/65535);
+        $Ly = $length%65535;
+
+        // +ve length requires ... a captured group of length characters
+        if ($Lx) $length_pattern = '(?:.{65535}){'.$Lx.'}';
+        $length_pattern = '('.$length_pattern.'.{'.$Ly.'})';
+
+      } else if ($length < 0) {
+
+        if ($length < ($offset - $strlen)) return '';
+
+        $Lx = (int)((-$length)/65535);
+        $Ly = (-$length)%65535;
+
+        // -ve length requires ... capture everything except a group of -length characters 
+        //                         anchored at the tail-end of the string
+        if ($Lx) $length_pattern = '(?:.{65535}){'.$Lx.'}';
+        $length_pattern = '(.*)(?:'.$length_pattern.'.{'.$Ly.'})$';
       }
-      if ($offset >= $strlen) return false;
-
-      if ($length === null) {
-        // 2a. convert to start byte offset
-        list($start) = _utf8_byteindex($str,$offset);
-				return substr($str,$start);
-      }
-
-      if ($length < 0) {
-        $length = $strlen-$offset+$length;
-        if ($length < 0) return '';
-      }
-
-      if ($length === 0) return '';
-      if ($strlen - $offset < $length) $length = $strlen-$offset;
-
-      // 2b. convert to start and end byte offsets
-      list($start,$end) = _utf8_byteindex($str,$offset,$offset+$length);
-      return substr($str,$start,$end-$start);
     }
-}
 
+    if (!preg_match('#'.$offset_pattern.$length_pattern.'#us',$str,$match)) return '';
+    return $match[1];
+}
 
 /**
  * Unicode aware replacement for substr_replace()
@@ -813,69 +836,6 @@ function utf8_correctIdx(&$str,$i,$next=false) {
   }
 
   return $i;
-}
-
-/**
- * determine the byte indexes into a utf-8 string for one or more character offsets
- * PRIVATE  (could be made public with proper paramter checking)
- *
- * @author  Chris Smith <chris@jalakai.co.uk>
- *
- * @param   string    $str      utf8 string
- * @param   int       $offset   any number of character offsets into $str
- *
- * @return  array     byte indexes into $str, one index for each offset argument
- */
-function _utf8_byteindex() {
-
-  $args = func_get_args();
-  $str =& array_shift($args);
-  if (!is_string($str)) return false;
-
-  $result = array();
-
-  // use a short piece of str to estimate bytes per character
-  $i = utf8_correctIdx($str, 300, true);           // $i (& $j) -> byte indexes into $str
-  $c = utf8_strlen(substr($str,0,$i));             // $c -> character offset into $str
-
-  sort($args);                                     // deal with arguments from lowest to highest
-  foreach ($args as $offset) {
-    // sanity checks FIXME
-
-    // 0 is an easy check
-    if ($offset == 0) { $result[] = 0; continue; }
-
-    $safety_valve = 50;                            // ensure no endless looping
-
-    do {
-      $j = (int)($offset * $i/$c);                 // apply latest bytes/character estimate to offset
-      $j = utf8_correctIdx($str, $j, true);        // correct to utf8 character boundary
-
-      if ($j > $i) {
-        $c += utf8_strlen(substr($str,$i,$j-$i));  // determine new character offset
-      } else {
-        $c -= utf8_strlen(substr($str,$j,$i-$j));  // ditto
-      }
-
-      $error = abs($c-$offset);
-
-      $i = $j;                                     // ready for next time around
-    } while (($error > 7) && --$safety_valve) ;    // from 7 it is faster to iterate over the string
-
-    if ($error && $error <= 7) {
-      if ($c < $offset) {
-        // move up
-        while ($error--) { $i = utf8_correctIdx($str,++$i,true); }
-      } else {
-        // move down
-        while ($error--) { $i = utf8_correctIdx($str,--$i,false); }
-      }
-      $c = $offset;                                // ready for next arg
-    }
-    $result[] = $i;
-  }
-
-  return $result;  
 }
 
 // only needed if no mb_string available
