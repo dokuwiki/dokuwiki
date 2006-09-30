@@ -179,7 +179,7 @@ function tpl_metaheaders($alt=true){
 
   // the usual stuff
   $head['meta'][] = array( 'name'=>'generator', 'content'=>'DokuWiki '.getVersion() );
-  $head['link'][] = array( 'rel'=>'start', 'href'=>'DOKU_BASE' );
+  $head['link'][] = array( 'rel'=>'start', 'href'=>DOKU_BASE );
   $head['link'][] = array( 'rel'=>'contents', 'href'=> wl($ID,'do=index',false,'&'),
                            'title'=>$lang['btn_index'] );
 
