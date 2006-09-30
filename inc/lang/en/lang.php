@@ -220,5 +220,6 @@ $lang['i_pol0']       = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']       = 'Public Wiki (read for everyone, write and upload for registered users)';
 $lang['i_pol2']       = 'Closed Wiki (read, write, upload for registered users only)';
 
+$lang['i_retry']      = 'Retry';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

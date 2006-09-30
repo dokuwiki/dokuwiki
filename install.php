@@ -59,7 +59,7 @@ header('Content-Type: text/html; charset=utf-8');
         body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
         img { border: none }
         br.cl { clear:both; }
-        code { font-size: 110%; color: #008000; }
+        code { font-size: 110%; color: #800000; }
         fieldset { border: none }
         label { display: block; margin-top: 0.5em; }
         select.text, input.text { width: 30em; margin: 0 0.5em; }
@@ -110,6 +110,7 @@ header('Content-Type: text/html; charset=utf-8');
             if(! (check_functions() && check_permissions()) ){
                 echo '<p>'.$lang['i_problems'].'</p>';
                 print_errors();
+                print_retry();
             }elseif(!check_configs()){
                 echo '<p>'.$lang['i_modified'].'</p>';
                 print_errors();
@@ -193,6 +194,17 @@ function print_form($d){
     </fieldset>
     </form>
     <?php
+}
+
+function print_retry() {
+  global $lang;
+?>
+    <form action="" method="get">
+      <fieldset>
+        <input class="button" type="submit" value="<?php echo $lang['i_retry'];?>" />
+      </fieldset>
+    </form>
+<?php
 }
 
 /**
@@ -384,7 +396,7 @@ function check_permissions(){
     $ok = true;
     foreach($dirs as $dir){
         if(!@file_exists("$dir/.") || !@is_writable($dir)){
-            $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}/', $dir);
+            $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'],$dir);
             $ok      = false;
         }
@@ -405,6 +417,11 @@ function check_functions(){
                          'glob header ignore_user_abort ini_get mail mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep');
+
+    if (!function_exists('mb_substr')) {
+      $funcs[] = 'utf8_encode';
+      $funcs[] = 'utf8_decode';
+    }
 
     $ok = true;
     foreach($funcs as $func){
