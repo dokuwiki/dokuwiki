@@ -130,6 +130,6 @@ if (!defined('DOKU_INC')) die();
 </div>
 <?php /*old includehook*/ @include(dirname(__FILE__).'/footer.html')?>
 
-<div class="no"><?php tpl_indexerWebBug()?></div>
+<div class="no"><?php /* provide DokuWiki housekeeping, required in all templates */ tpl_indexerWebBug()?></div>
 </body>
 </html>
