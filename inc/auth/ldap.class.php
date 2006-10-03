@@ -10,7 +10,7 @@
 class auth_ldap extends auth_basic {
     var $cnf = null;
     var $con = null;
-    var $bound = false;
+    var $bound = 0; // 0: anonymous, 1: user, 2: superuser
 
     /**
      * Constructor
@@ -22,7 +22,7 @@ class auth_ldap extends auth_basic {
         // ldap extension is needed
         if(!function_exists('ldap_connect')) {
             if ($this->cnf['debug'])
-                msg("LDAP err: PHP LDAP extension not found.",-1);
+                msg("LDAP err: PHP LDAP extension not found.",-1,__LINE__,__FILE__);
             $this->success = false;
             return;
         }
@@ -56,10 +56,10 @@ class auth_ldap extends auth_basic {
             // use superuser credentials
             if(!@ldap_bind($this->con,$this->cnf['binddn'],$this->cnf['bindpw'])){
                 if($this->cnf['debug'])
-                    msg('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
                 return false;
             }
-
+            $this->bound = 2;
         }else if($this->cnf['binddn'] &&
                  $this->cnf['usertree'] &&
                  $this->cnf['userfilter']) {
@@ -77,7 +77,7 @@ class auth_ldap extends auth_basic {
             if(!@ldap_bind($this->con)){
                 msg("LDAP: can not bind anonymously",-1);
                 if($this->cnf['debug'])
-                    msg('LDAP anonymous bind: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP anonymous bind: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
                 return false;
             }
         }
@@ -87,12 +87,12 @@ class auth_ldap extends auth_basic {
             // User/Password bind
             if(!@ldap_bind($this->con,$dn,$pass)){
                 if($this->cnf['debug']){
-                    msg("LDAP: bind with $dn failed", -1);
+                    msg("LDAP: bind with $dn failed", -1,__LINE__,__FILE__);
                     msg('LDAP user dn bind: '.htmlspecialchars(ldap_error($this->con)),0);
                 }
                 return false;
             }
-            $this->bound = true;
+            $this->bound = 1;
             return true;
         }else{
             // See if we can find the user
@@ -106,12 +106,12 @@ class auth_ldap extends auth_basic {
             // Try to bind with the dn provided
             if(!@ldap_bind($this->con,$dn,$pass)){
                 if($this->cnf['debug']){
-                    msg("LDAP: bind with $dn failed", -1);
+                    msg("LDAP: bind with $dn failed", -1,__LINE__,__FILE__);
                     msg('LDAP user bind: '.htmlspecialchars(ldap_error($this->con)),0);
                 }
                 return false;
             }
-            $this->bound = true;
+            $this->bound = 1;
             return true;
         }
 
@@ -119,7 +119,7 @@ class auth_ldap extends auth_basic {
     }
 
     /**
-     * Return user info [ MUST BE OVERRIDDEN ]
+     * Return user info
      *
      * Returns info about the given user needs to contain
      * at least these fields:
@@ -144,17 +144,17 @@ class auth_ldap extends auth_basic {
         global $conf;
         if(!$this->_openLDAP()) return false;
 
-        if(!$this->bound){
-            if($this->cnf['binddn'] && $this->cnf['bindpw']){
-                // use superuser credentials
-                if(!@ldap_bind($this->con,$this->cnf['binddn'],$this->cnf['bindpw'])){
-                    if($this->cnf['debug'])
-                        msg('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)),0);
-                    return false;
-                }
+        // force superuser bind if wanted and not bound as superuser yet
+        if($this->cnf['binddn'] && $this->cnf['bindpw'] && $this->bound < 2){
+            // use superuser credentials
+            if(!@ldap_bind($this->con,$this->cnf['binddn'],$this->cnf['bindpw'])){
+                if($this->cnf['debug'])
+                    msg('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+                return false;
             }
-            $this->bound = true;
+            $this->bound = 2;
         }
+        // with no superuser creds we continue as user or anonymous here
 
         $info['user']   = $user;
         $info['server'] = $this->cnf['server'];
@@ -170,7 +170,7 @@ class auth_ldap extends auth_basic {
         $sr     = @ldap_search($this->con, $base, $filter);
         $result = @ldap_get_entries($this->con, $sr);
         if($this->cnf['debug'])
-            msg('LDAP user search: '.htmlspecialchars(ldap_error($this->con)),0);
+            msg('LDAP user search: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
 
         // Don't accept more or less than one response
         if($result['count'] != 1){
@@ -217,15 +217,18 @@ class auth_ldap extends auth_basic {
             if(!$sr){
                 msg("LDAP: Reading group memberships failed",-1);
                 if($this->cnf['debug'])
-                    msg('LDAP group search: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP group search: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
                 return false;
             }
             $result = ldap_get_entries($this->con, $sr);
             ldap_free_result($sr);
 
             foreach($result as $grp){
-                if(!empty($grp[$this->cnf['groupkey']][0]))
+                if(!empty($grp[$this->cnf['groupkey']][0])){
+                    if($this->cnf['debug'])
+                        msg('LDAP usergroup: '.htmlspecialchars($grp[$this->cnf['groupkey']][0]),0,__LINE__,__FILE__);
                     $info['grps'][] = $grp[$this->cnf['groupkey']][0];
+                }
             }
         }
 
@@ -233,7 +236,6 @@ class auth_ldap extends auth_basic {
         if(!in_array($conf['defaultgroup'],$info['grps'])){
             $info['grps'][] = $conf['defaultgroup'];
         }
-
         return $info;
     }
 
@@ -273,7 +275,7 @@ class auth_ldap extends auth_basic {
     function _openLDAP(){
         if($this->con) return true; // connection already established
 
-        $this->bound = false;
+        $this->bound = 0;
 
         $port = ($this->cnf['port']) ? $this->cnf['port'] : 389;
         $this->con = @ldap_connect($this->cnf['server'],$port);
@@ -288,14 +290,14 @@ class auth_ldap extends auth_basic {
                                  $this->cnf['version'])){
                 msg('Setting LDAP Protocol version '.$this->cnf['version'].' failed',-1);
                 if($this->cnf['debug'])
-                    msg('LDAP version set: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP version set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
             }else{
                 //use TLS (needs version 3)
                 if($this->cnf['starttls']) {
                     if (!@ldap_start_tls($this->con)){
                         msg('Starting TLS failed',-1);
                         if($this->cnf['debug'])
-                            msg('LDAP TLS set: '.htmlspecialchars(ldap_error($this->con)),0);
+                            msg('LDAP TLS set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
                     }
                 }
                 // needs version 3
@@ -304,7 +306,7 @@ class auth_ldap extends auth_basic {
                        $this->cnf['referrals'])){
                         msg('Setting LDAP referrals to off failed',-1);
                         if($this->cnf['debug'])
-                            msg('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)),0);
+                            msg('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
                     }
                 }
             }
@@ -315,7 +317,7 @@ class auth_ldap extends auth_basic {
             if(!@ldap_set_option($this->con, LDAP_OPT_DEREF, $this->cnf['deref'])){
                 msg('Setting LDAP Deref mode '.$this->cnf['deref'].' failed',-1);
                 if($this->cnf['debug'])
-                    msg('LDAP deref set: '.htmlspecialchars(ldap_error($this->con)),0);
+                    msg('LDAP deref set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
             }
         }
 
