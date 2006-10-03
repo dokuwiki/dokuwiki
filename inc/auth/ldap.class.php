@@ -265,13 +265,15 @@ class auth_ldap extends auth_basic {
     }
 
     /**
-     * Opens a connection to the configured LDAP server and sets the wnated
+     * Opens a connection to the configured LDAP server and sets the wanted
      * option on the connection
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function _openLDAP(){
         if($this->con) return true; // connection already established
+
+        $this->bound = false;
 
         $port = ($this->cnf['port']) ? $this->cnf['port'] : 389;
         $this->con = @ldap_connect($this->cnf['server'],$port);
