@@ -53,8 +53,6 @@
     }
   }
 
-  if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5($conf['title']));
-
   // do the login either by cookie or provided credentials
   if($conf['useacl']){
     if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
@@ -131,10 +129,10 @@ function auth_login($user,$pass,$sticky=false){
       setcookie(DOKU_COOKIE,$cookie,$time,'/');
 
       // set session
-      $_SESSION[$conf['title']]['auth']['user'] = $user;
-      $_SESSION[$conf['title']]['auth']['pass'] = $pass;
-      $_SESSION[$conf['title']]['auth']['buid'] = auth_browseruid();
-      $_SESSION[$conf['title']]['auth']['info'] = $USERINFO;
+      $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+      $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+      $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
+      $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
       return true;
     }else{
       //invalid credentials - log off
@@ -147,7 +145,7 @@ function auth_login($user,$pass,$sticky=false){
     $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
     list($user,$sticky,$pass) = split('\|',$cookie,3);
     // get session info
-    $session = $_SESSION[$conf['title']]['auth'];
+    $session = $_SESSION[DOKU_COOKIE]['auth'];
 
     if($user && $pass){
       // we got a cookie - see if we can trust it
@@ -226,12 +224,12 @@ function auth_logoff(){
   global $INFO, $ID;
   global $auth;
 
-  if(isset($_SESSION[$conf['title']]['auth']['user']))
-    unset($_SESSION[$conf['title']]['auth']['user']);
-  if(isset($_SESSION[$conf['title']]['auth']['pass']))
-    unset($_SESSION[$conf['title']]['auth']['pass']);
-  if(isset($_SESSION[$conf['title']]['auth']['info']))
-    unset($_SESSION[$conf['title']]['auth']['info']);
+  if(isset($_SESSION[DOKU_COOKIE]['auth']['user']))
+    unset($_SESSION[DOKU_COOKIE]['auth']['user']);
+  if(isset($_SESSION[DOKU_COOKIE]['auth']['pass']))
+    unset($_SESSION[DOKU_COOKIE]['auth']['pass']);
+  if(isset($_SESSION[DOKU_COOKIE]['auth']['info']))
+    unset($_SESSION[DOKU_COOKIE]['auth']['info']);
   if(isset($_SERVER['REMOTE_USER']))
     unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME

@@ -141,8 +141,8 @@ class auth_punbb extends auth_mysql {
       $USERINFO['grps'] = array($pun_user['g_title']);
 
       $_SERVER['REMOTE_USER'] = $pun_user['username'];
-      $_SESSION[$conf['title']]['auth']['user'] = $pun_user['username'];
-      $_SESSION[$conf['title']]['auth']['info'] = $USERINFO;
+      $_SESSION[DOKU_COOKIE]['auth']['user'] = $pun_user['username'];
+      $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
       return true;
     }
 

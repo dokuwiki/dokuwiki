@@ -183,7 +183,7 @@ function breadcrumbs(){
   global $ID;
   global $ACT;
   global $conf;
-  $crumbs = $_SESSION[$conf['title']]['bc'];
+  $crumbs = $_SESSION[DOKU_COOKIE]['bc'];
 
   //first visit?
   if (!is_array($crumbs)){
@@ -192,7 +192,7 @@ function breadcrumbs(){
   //we only save on show and existing wiki documents
   $file = wikiFN($ID);
   if($ACT != 'show' || !@file_exists($file)){
-    $_SESSION[$conf['title']]['bc'] = $crumbs;
+    $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
     return $crumbs;
   }
 
@@ -218,7 +218,7 @@ function breadcrumbs(){
     array_shift($crumbs);
   }
   //save to session
-  $_SESSION[$conf['title']]['bc'] = $crumbs;
+  $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
   return $crumbs;
 }
 

@@ -147,9 +147,9 @@ class auth_basic {
 #    $USERINFO['mail'] = 'FIXME';
 #    $USERINFO['grps'] = array('FIXME');
 #    $_SERVER['REMOTE_USER'] = $user;
-#    $_SESSION[$conf['title']]['auth']['user'] = $user;
-#    $_SESSION[$conf['title']]['auth']['pass'] = $pass;
-#    $_SESSION[$conf['title']]['auth']['info'] = $USERINFO;
+#    $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+#    $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+#    $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
 #    return true;
   }
 

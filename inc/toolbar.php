@@ -186,8 +186,8 @@ function toolbar_signature(){
   $sig = $conf['signature'];
   $sig = strftime($sig);
   $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
-  $sig = str_replace('@NAME@',$_SESSION[$conf['title']]['auth']['info']['name'],$sig);
-  $sig = str_replace('@MAIL@',$_SESSION[$conf['title']]['auth']['info']['mail'],$sig);
+  $sig = str_replace('@NAME@',$_SESSION[DOKU_COOKIE]['auth']['info']['name'],$sig);
+  $sig = str_replace('@MAIL@',$_SESSION[DOKU_COOKIE]['auth']['info']['mail'],$sig);
   $sig = str_replace('@DATE@',date($conf['dformat']),$sig);
   $sig = str_replace('\\\\n','\\n',addslashes($sig));
   return $sig;
