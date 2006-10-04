@@ -56,6 +56,11 @@ function pageinfo(){
   global $USERINFO;
   global $conf;
 
+  // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
+  // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
+  $info['id'] = $ID;
+  $info['rev'] = $REV;
+
   if($_SERVER['REMOTE_USER']){
     $info['userinfo']   = $USERINFO;
     $info['perm']       = auth_quickaclcheck($ID);

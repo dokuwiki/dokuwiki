@@ -222,15 +222,21 @@ function p_get_instructions($text){
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_get_metadata($id, $key=false, $render=false){
-  $file = metaFN($id, '.meta');
+  global $INFO;
 
-  if (@file_exists($file)) $meta = unserialize(io_readFile($file, false));
-  else $meta = array();
+  if ($id == $INFO['id'] && !empty($INFO['meta'])) {
+    $meta = $INFO['meta'];
+  } else {
+    $file = metaFN($id, '.meta');
 
-  // metadata has never been rendered before - do it!
-  if ($render && !$meta['description']['abstract']){
-    $meta = p_render_metadata($id, $meta);
-    io_saveFile($file, serialize($meta));
+    if (@file_exists($file)) $meta = unserialize(io_readFile($file, false));
+    else $meta = array();
+
+    // metadata has never been rendered before - do it!
+    if ($render && !$meta['description']['abstract']){
+      $meta = p_render_metadata($id, $meta);
+      io_saveFile($file, serialize($meta));
+    }
   }
 
   // filter by $key
@@ -283,6 +289,13 @@ function p_set_metadata($id, $data, $render=false){
 
   // save only if metadata changed
   if ($meta == $orig) return true;
+
+  // check if current page metadata has been altered - if so sync the changes
+  global $INFO;
+  if ($id == $INFO['id'] && isset($INFO['meta'])) {
+    $INFO['meta'] = $meta;
+  }
+
   return io_saveFile(metaFN($id, '.meta'), serialize($meta));
 }
 
