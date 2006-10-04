@@ -212,9 +212,12 @@ function print_retry() {
  *
  * @author Andreas Gohr
  */
-function check_data($d){
+function check_data(&$d){
     global $lang;
     global $error;
+
+    //autolowercase the username
+    $d['superuser'] = strtolower($d['superuser']);
 
     $ok = true;
 
@@ -240,7 +243,7 @@ function check_data($d){
             $error[] = sprintf($lang['i_badval'],$lang['fullname']);
             $ok      = false;
         }
-        if(empty($d['email']) || strstr($d['fullname'],':')){
+        if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
             $error[] = sprintf($lang['i_badval'],$lang['email']);
             $ok      = false;
         }
