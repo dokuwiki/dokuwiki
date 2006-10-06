@@ -482,14 +482,20 @@ function tpl_actionlink($type,$pre='',$suf=''){
       #most complicated type - we need to decide on current action
       if($ACT == 'show' || $ACT == 'search'){
         if($INFO['writable']){
-          if($INFO['exists']){
-            tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                     $pre.$lang['btn_edit'].$suf,
-                     'class="action edit" accesskey="e" rel="nofollow"');
-          }else{
-            tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                     $pre.$lang['btn_create'].$suf,
-                     'class="action create" accesskey="e" rel="nofollow"');
+          if(!empty($INFO['draft'])) {
+            tpl_link(wl($ID,'do=draft'),
+                       $pre.$lang['btn_draft'].$suf,
+                       'class="action edit" acceskey="e" rel="nofollow"');
+          } else {
+            if($INFO['exists']){
+              tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+                       $pre.$lang['btn_edit'].$suf,
+                       'class="action edit" accesskey="e" rel="nofollow"');
+            }else{
+              tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+                       $pre.$lang['btn_create'].$suf,
+                       'class="action create" accesskey="e" rel="nofollow"');
+            }
           }
         }else{
           if(!actionOK('source')) return false; //pseudo action
