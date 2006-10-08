@@ -116,28 +116,9 @@ function ft_backlinks($id){
     if(!count($docs)) return $result;
     require_once(DOKU_INC.'inc/parserutils.php');
 
-    // check instructions for matching links
+    // check metadata for matching links
     foreach($docs as $match){
-/*
-// orig code, examine each page's instruction list
-        $instructions = p_cached_instructions(wikiFN($match),true);
-        if(is_null($instructions)) continue;
-
-        $match_ns =  getNS($match);
-
-        foreach($instructions as $ins){
-            if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
-                $link = $ins[1][0];
-                resolve_pageid($match_ns,$link,$exists); //exists is not used
-                if($link == $id){
-                    //we have a match - finish
-                    $result[] = $match;
-                    break;
-                }
-            }
-        }
-*/
-// now with metadata (metadata relation reference links are already resolved)
+        // metadata relation reference links are already resolved
         $links = p_get_metadata($match,"relation references");
         if (isset($links[$id])) $result[] = $match;
     }
@@ -207,117 +188,6 @@ function ft_snippet($id,$poswords){
     $re       = '('.str_replace(' ','|',$poswords).')';
     $text     = rawWiki($id);
 
-// extra code to allow selection of search algorithm - remove before release
-global $conf;
-$algorithm = '';
-if ($conf['allowdebug']) {
-  if (!empty($_REQUEST['_search'])) $algorithm = $_REQUEST['_search'];
-}
-
-switch ($algorithm) {
-  case 'orig' :
-// original code ... dokuwiki
-
-    //FIXME caseinsensitive matching doesn't work with UTF-8!?
-    preg_match_all('#(.{0,50})'.$re.'(.{0,50})#iu',$text,$matches,PREG_SET_ORDER);
-
-    $cnt = 0;
-    $snippet = '';
-    foreach($matches as $match){
-        $snippet .= '...'.htmlspecialchars($match[1]);
-        $snippet .= '<span class="search_hit">';
-        $snippet .= htmlspecialchars($match[2]);
-        $snippet .= '</span>';
-        $snippet .= htmlspecialchars($match[3]).'... ';
-        if($cnt++ == 2) break;
-    }
-
-  break;
-
-  case 'opt1' :
-// my snippet algorithm, first cut ... CS 2006-08-25
-// reduce the impact of the original regex
-    $matches = array();
-    preg_match_all('#'.$re.'#iu',$text,$matches,PREG_OFFSET_CAPTURE|PREG_SET_ORDER);
-
-    $cnt = 3;
-    $snippets = array();
-    $len = strlen($text);
-    foreach ($matches as $match) {
-      list($str,$idx) = $match[0];
-      if ($idx < $end) continue;
-
-      $pre = min($idx,50);
-      $start = utf8_correctIdx($text, $idx - $pre);
-      $end = utf8_correctIdx($text, min($idx+100+strlen($str)-$pre,$len));
-      $snippets[] = substr($text,$start,$end-$start);
-      if (!($cnt--)) break;
-    }
-
-    $m = "\1";
-    $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
-    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));
-
-  break;
-
-  case 'opt2' :
-// option 2 ... CS 2006-08-25
-// above + reduce amount of the file searched
-    $match = array();
-    $snippets = array();
-    $offset = 0;
-    $len = strlen($text);
-    for ($cnt=3; $cnt--;) {
-      if (!preg_match('#'.$re.'#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
-
-      list($str,$idx) = $match[0];
-
-      // establish context, 100 bytes surrounding the match string
-      // first look to see if we can go 100 either side,
-      // then drop to 50 adding any excess if the other side can't go to 50,
-      // NOTE: these are byte adjustments and will have to be corrected for utf-8
-      $pre = min($idx-$offset,100);
-      $post = min($len-$idx-strlen($str),100);
-
-      if ($pre>50 && $post>50) {
-        $pre = $post = 50;
-      } else if ($pre>50) {
-        $pre = min($pre,100-$post);
-      } else if ($post>50) {
-        $post = min($post, 100-$pre);
-      } else {
-        // means both pre & post are less than 50, the context is the whole string
-        // make it so and break out of this loop - there is no need for the complex snippet calculations
-        $snippets = array($text);
-        break;
-      }
-
-      // establish context start and end points, try to append to previous context if possible
-      $start = utf8_correctIdx($text,$idx - $pre);
-      $append = ($start < $end) ? $end : false;                     // still the end of the previous context snippet
-      $end = utf8_correctIdx($text, $idx + strlen($str) + $post);   // now set it to the end of this context
-
-      if ($append) {
-        $snippets[count($snippets)-1] .= substr($text,$append,$end-$append);
-      } else {
-        $snippets[] = substr($text,$start,$end-$start);
-      }
-
-      // set $offset for next match attempt
-      //   substract strlen to avoid splitting a potential search success, this is an approximation as the 
-      //   search pattern may match strings of varying length and it will fail if the context snippet 
-      //   boundary breaks a matching string longer than the current match
-      $offset = $end - strlen($str);
-    }
-    $m = "\1";
-    $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
-    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));
-
-  break;
-  
-  case 'utf8':
-  default :
-
     $match = array();
     $snippets = array();
     $utf8_offset = $offset = $end = 0;
@@ -327,7 +197,7 @@ switch ($algorithm) {
       if (!preg_match('#'.$re.'#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
 
       list($str,$idx) = $match[0];
-      
+
       // convert $idx (a byte offset) into a utf8 character offset
       $utf8_idx = utf8_strlen(substr($text,0,$idx));
       $utf8_len = utf8_strlen($str);
@@ -346,15 +216,17 @@ switch ($algorithm) {
         $post = min($post, 100-$pre);
       } else {
         // both are less than 50, means the context is the whole string
-        // make it so and break out of this loop - there is no need for the complex snippet calculations
+        // make it so and break out of this loop - there is no need for the
+        // complex snippet calculations
         $snippets = array($text);
         break;
       }
 
-      // establish context start and end points, try to append to previous context if possible
+      // establish context start and end points, try to append to previous
+      // context if possible
       $start = $utf8_idx - $pre;
-      $append = ($start < $end) ? $end : false;       // still the end of the previous context snippet
-      $end = $utf8_idx + $utf8_len + $post;           // now set it to the end of this context
+      $append = ($start < $end) ? $end : false;  // still the end of the previous context snippet
+      $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
       if ($append) {
         $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
@@ -363,8 +235,9 @@ switch ($algorithm) {
       }
 
       // set $offset for next match attempt
-      //   substract strlen to avoid splitting a potential search success, this is an approximation as the
-      //   search pattern may match strings of varying length and it will fail if the context snippet
+      //   substract strlen to avoid splitting a potential search success,
+      //   this is an approximation as the search pattern may match strings
+      //   of varying length and it will fail if the context snippet
       //   boundary breaks a matching string longer than the current match
       $utf8_offset = $utf8_idx + $post;
       $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
@@ -374,8 +247,6 @@ switch ($algorithm) {
     $m = "\1";
     $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
     $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));
-  break;
-}
 
     return $snippet;
 }
@@ -414,7 +285,6 @@ function ft_resultCombine($args){
  * Builds an array of search words from a query
  *
  * @todo support OR and parenthesises?
- * @todo add namespace handling
  */
 function ft_queryParser($query){
     global $conf;

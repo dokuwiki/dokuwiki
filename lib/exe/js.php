@@ -145,12 +145,6 @@ function js_out(){
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
 
-/*    // initialize init pseudo event
-    echo 'if (document.addEventListener) {'.NL;
-    echo '    document.addEventListener("DOMContentLoaded", window.fireoninit, null);'.NL;
-    echo '}'.NL;
-    echo 'addEvent(window,"load",window.fireoninit);'.NL;*/
-
     // end output buffering and get contents
     $js = ob_get_contents();
     ob_end_clean();
