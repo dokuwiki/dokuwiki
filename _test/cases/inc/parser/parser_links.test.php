@@ -2,12 +2,12 @@
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
-    
+
     function TestOfDoku_Parser_Links() {
         $this->UnitTestCase('TestOfDoku_Parser_Links');
     }
-    
-    
+
+
     function testExternalLinkSimple() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo http://www.google.com Bar");
@@ -22,7 +22,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testExternalLinkCase() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo HTTP://WWW.GOOGLE.COM Bar");
@@ -37,7 +37,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testExternalLinkJavascript() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo javascript:alert('XSS'); Bar");
@@ -50,7 +50,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testExternalWWWLink() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo www.google.com Bar");
@@ -65,7 +65,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testExternalFTPLink() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo ftp.sunsite.com Bar");
@@ -81,8 +81,8 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
     function testEmail() {
-/*		$this->fail('The emaillink mode seems to cause php 5.0.5 to segfault');
-		return; //FIXME: is this still true?*/
+/*      $this->fail('The emaillink mode seems to cause php 5.0.5 to segfault');
+        return; //FIXME: is this still true?*/
         $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
         $calls = array (
@@ -96,7 +96,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-	
+
     function testInternalLinkOneChar() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[l]] Bar");
@@ -111,7 +111,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInternalLinkNamespaceNoTitle() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[foo:bar]] Bar");
@@ -126,7 +126,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInternalLinkNamespace() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[x:1:y:foo_bar:z|Test]] Bar");
@@ -141,7 +141,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInternalLinkSectionRef() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[wiki:syntax#internal|Syntax]] Bar");
@@ -156,7 +156,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testExternalInInternalLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[http://www.google.com|Google]] Bar");
@@ -171,7 +171,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInterwikiLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[iw>somepage|Some Page]] Bar");
@@ -186,7 +186,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInterwikiLinkCase() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[IW>somepage|Some Page]] Bar");
@@ -201,7 +201,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInterwikiPedia() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[wp>Callback_(computer_science)|callbacks]] Bar");
@@ -216,7 +216,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testCamelCase() {
         $this->P->addMode('camelcaselink',new Doku_Parser_Mode_CamelCaseLink());
         $this->P->parse("Foo FooBar Bar");
@@ -231,7 +231,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testFileLink() {
         $this->P->addMode('filelink',new Doku_Parser_Mode_FileLink());
         $this->P->parse('Foo file://temp/file.txt Bar');
@@ -246,7 +246,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testFileLinkInternal() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse('Foo [[file://temp/file.txt|Some File]] Bar');
@@ -261,7 +261,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testWindowsShareLink() {
         $this->P->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
         $this->P->parse('Foo \\\server\share Bar');
@@ -276,7 +276,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testWindowsShareLinkInternal() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse('Foo [[\\\server\share|My Documents]] Bar');
@@ -291,7 +291,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInternal() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{img.gif}} Bar');
@@ -306,7 +306,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaNotImage() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{foo.txt?10x10|Some File}} Bar');
@@ -321,7 +321,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInternalLAlign() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{img.gif }} Bar');
@@ -336,7 +336,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInternalRAlign() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{ img.gif}} Bar');
@@ -351,7 +351,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInternalCenter() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{ img.gif }} Bar');
@@ -366,7 +366,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInternalParams() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{img.gif?50x100nocache}} Bar');
@@ -381,7 +381,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInternalTitle() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{img.gif?50x100|Some Image}} Bar');
@@ -396,7 +396,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaExternal() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{http://www.google.com/img.gif}} Bar');
@@ -411,7 +411,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaExternalParams() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{http://www.google.com/img.gif?50x100nocache}} Bar');
@@ -426,7 +426,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaExternalTitle() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{http://www.google.com/img.gif?50x100|Some Image}} Bar');
@@ -442,11 +442,11 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaInInternalLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[x:1:y:foo_bar:z|{{img.gif?10x20nocache|Some Image}}]] Bar");
-        
+
         $image = array(
             'type'=>'internalmedia',
             'src'=>'img.gif',
@@ -455,9 +455,9 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'width'=>10,
             'height'=>20,
             'cache'=>'nocache',
-						'linking'=>'details',
+            'linking'=>'details',
         );
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -469,11 +469,11 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testMediaNoImageInInternalLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[x:1:y:foo_bar:z|{{foo.txt?10x20nocache|Some Image}}]] Bar");
-        
+
         $image = array(
             'type'=>'internalmedia',
             'src'=>'foo.txt',
@@ -482,9 +482,9 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'width'=>10,
             'height'=>20,
             'cache'=>'nocache',
-						'linking'=>'details',
+            'linking'=>'details',
         );
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -496,7 +496,34 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
+    function testMediaInEmailLink() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[foo@example.com|{{img.gif?10x20nocache|Some Image}}]] Bar");
+
+        $image = array(
+            'type'=>'internalmedia',
+            'src'=>'img.gif',
+            'title'=>'Some Image',
+            'align'=>NULL,
+            'width'=>10,
+            'height'=>20,
+            'cache'=>'nocache',
+            'linking'=>'details',
+        );
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('emaillink',array('foo@example.com',$image)),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testNestedMedia() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{img.gif|{{foo.gif|{{bar.gif|Bar}}}}}} Bar');

@@ -672,8 +672,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['more']   = '';
 
-        //we just test for image here - we need to encode the title our self
-        $this->_getLinkTitle($name, $address, $isImage);
+        $name = $this->_getLinkTitle($name, $address, $isImage);
         if ( !$isImage ) {
             $link['class']='mail JSnocheck';
         } else {
@@ -683,11 +682,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $address = $this->_xmlEntities($address);
         $address = obfuscate($address);
         $title   = $address;
+
         if(empty($name)){
             $name = $address;
-        }else{
-            $name = $this->_xmlEntities($name);
         }
+#elseif($isImage{
+#            $name = $this->_xmlEntities($name);
+#        }
 
         if($conf['mailguard'] == 'visible') $address = rawurlencode($address);
 
