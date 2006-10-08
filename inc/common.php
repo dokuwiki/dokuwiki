@@ -41,7 +41,16 @@ function hsc($string){
  */
 function ptln($string,$intend=0){
   for($i=0; $i<$intend; $i++) print ' ';
-  print"$string\n";
+  echo "$string\n";
+}
+
+/**
+ * strips control characters (<32) from the given string
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function stripctl($string){
+  return preg_replace('/[\x00-\x1F]+/s','',$string);
 }
 
 /**

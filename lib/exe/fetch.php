@@ -20,7 +20,7 @@
   $mimetypes = getMimeTypes();
 
   //get input
-  $MEDIA  = getID('media',false); // no cleaning - maybe external
+  $MEDIA  = stripctl(getID('media',false)); // no cleaning except control chars - maybe external
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = (int) $_REQUEST['w'];
   $HEIGHT = (int) $_REQUEST['h'];
