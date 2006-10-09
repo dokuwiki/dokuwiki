@@ -437,9 +437,9 @@ function checkwordblock(){
     //this is very bad performancewise and may even be too high still
     $chunksize = 40;
   }else{
-    //read file in chunks of 600 - this should work around the
+    //read file in chunks of 200 - this should work around the
     //MAX_PATTERN_SIZE in modern PCRE
-    $chunksize = 400;
+    $chunksize = 200;
   }
   while($blocks = array_splice($wordblocks,0,$chunksize)){
     $re = array();
