@@ -302,10 +302,10 @@ EOT;
 EOT;
         if($d['policy'] == 2){
             $output .=  "*               @ALL          0\n";
-            $output .=  "*               @users        8\n";
+            $output .=  "*               @user         8\n";
         }elseif($d['policy'] == 1){
             $output .=  "*               @ALL          1\n";
-            $output .=  "*               @users        8\n";
+            $output .=  "*               @user         8\n";
         }else{
             $output .=  "*               @ALL          8\n";
         }
