@@ -339,6 +339,7 @@ function tpl_getparent($id){
  *  history     - old revisions
  *  recent      - recent changes
  *  login       - login/logout button - if ACL enabled
+ *  profile     - user profile button (if logged in)
  *  index       - The index
  *  admin       - admin page - if enough rights
  *  top         - a back to top button
@@ -346,6 +347,7 @@ function tpl_getparent($id){
  *  backtomedia - returns to the mediafile upload dialog
  *                after references have been displayed
  *  backlink    - links to the list of backlinks
+ *  subscription- subscribe/unsubscribe button
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -449,15 +451,17 @@ function tpl_button($type){
  *
  * Available links are
  *
- *  edit    - edit/create/show button
+ *  edit    - edit/create/show link
  *  history - old revisions
  *  recent  - recent changes
- *  login   - login/logout button - if ACL enabled
+ *  login   - login/logout link - if ACL enabled
+ *  profile - user profile link (if logged in)
  *  index   - The index
  *  admin   - admin page - if enough rights
- *  top     - a back to top button
- *  back    - a back to parent button - if available
- * backlink - links to the list of backlinks
+ *  top     - a back to top link
+ *  back    - a back to parent link - if available
+ *  backlink - links to the list of backlinks
+ *  subscribe/subscription - subscribe/unsubscribe link
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
