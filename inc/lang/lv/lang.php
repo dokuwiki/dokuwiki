@@ -37,6 +37,9 @@ $lang['btn_unsubscribe'] = 'Atteikties no izmaiņu paziņojumiem';
 $lang['btn_profile']    = 'Labot savu profilu';
 $lang['btn_reset']     = 'Atsaukt izmaiņas';
 $lang['btn_resendpwd'] = 'Nosūtīt jaunu paroli';
+$lang['btn_draft']    = 'Labot melnrakstu';
+$lang['btn_recover']  = 'Atjaunot melnrakstu';
+$lang['btn_draftdel'] = 'Dzēst melnrakstu';
 
 $lang['loggedinas'] = 'Pieteicies kā';
 $lang['user']       = 'Lietotājvārds';
@@ -50,7 +53,7 @@ $lang['email']      = 'E-pasts';
 $lang['register']   = 'Reģistrēties';
 $lang['profile']    = 'Lietotāja vārds';
 $lang['badlogin']   = 'Atvaino, lietotājvārds vai parole aplama.';
-$lang['minoredit']  = '*! Minor Changes';
+$lang['draftdate']  = 'Melnraksts automātiski saglabāts'; // full dformat date will be added
 
 $lang['regmissing'] = 'Atvaino, jāaizpilda visas ailes.';
 $lang['reguexists'] = 'Atvaino, tāds lietājs jau ir.';
@@ -73,6 +76,8 @@ $lang['resendpwd'] = 'Nosūtīt jaunu paroli lietotājam';
 $lang['resendpwdmissing'] = 'Atvaino, jāizpilda visas ailes.';
 $lang['resendpwdnouser']  = 'Atvaino, tāda lietotāja nav.';
 $lang['resendpwdsuccess'] = 'Jaunā parole nosūtīta pa e-pastu.';
+$lang['resendpwdbadauth'] = 'Atvaino, šis autorizācijas kods nav derīgs. Pārliecinies, ka lietoji pilnu apstiprināšanas adresi.';
+$lang['resendpwdconfirm'] = 'Apstiprināšanas adrese nosūtīta pa epastu.';
 
 $lang['txt_upload']   = 'Norādi augšupielādējamo failu';
 $lang['txt_filename'] = 'Ievadi wikivārdu (nav obligāts)';
@@ -97,6 +102,14 @@ $lang['mediainuse']  = 'Fails "%s" nav izdzēsts, to lieto.';
 $lang['namespaces']  = 'Nodaļas';
 $lang['mediafiles']  = 'Pieejamie faili';
 
+$lang['js']['keepopen']    = 'Pēc faila izvēles logu paturēt atvērtu';
+$lang['js']['hidedetails'] = 'Slēpt detaļas';
+$lang['mediausage']  = 'Atsaucei uz failu lietot šādu sintaksi:';
+$lang['mediaview']   = 'Skatīt oriģinālo failu';
+$lang['mediaroot']   = 'sakne';
+$lang['mediaupload'] = 'Augšupielādēt failu patreizējā sadaļā. La izveidotu dziļāku sadaļu, pieraksti to, atdalot ar kolu, pirms augšupielādējamā faila vārda.';
+$lang['mediaextchange'] = 'Faila paplašinājums mainīts no .%s uz .%s!';
+
 $lang['reference']   = 'Norādes uz failu';
 $lang['ref_inuse']   = 'Failu nevar dzēst, jo izmanto šādas lapas:';
 $lang['ref_hidden']  = 'Dažas norādes ir lapās, ko nav tiesibu skatīt';
@@ -119,6 +132,7 @@ $lang['summary']    = 'Anotācija';
 
 $lang['mail_newpage'] = 'lapa pievienota:';
 $lang['mail_changed'] = 'lapa mainīta:';
+$lang['mail_new_user'] = 'Jauns lietotājs:';
 
 $lang['nosmblinks'] = 'Saites uz Windows resursiem darbojas tikai Microsoft Internet Explorer.\nProtams, ka vari saiti kopēt un iespraust citā programmā.';
 
@@ -177,5 +191,30 @@ $lang['unsubscribe_error']  = 'Kļūme svītrojot %s  no %s abonentu saraksta';
 /* auth.class language support */
 $lang['authmodfailed']   = 'Aplami konfigurēta lietotāju autentifikācija. Lūdzo ziņo Wiki administratoram.';
 $lang['authtempfail']    = 'Lietotāju autentifikācija pašlaik nedarbojas. Ja tas turpinās ilgstoši, lūduz ziņo Wiki administratoram.';
+
+/* installer strings */
+$lang['i_chooselang'] = 'Izvēlies valodu';
+$lang['i_installer']  = 'DokuWiki instalētājs';
+$lang['i_wikiname']   = 'Wiki vārds';
+$lang['i_enableacl']  = 'Lietot ACL (ieteikts)';
+$lang['i_superuser']  = 'Superuser';
+$lang['i_problems']   = 'Instalētājs atrada zemāk minētās problēmas. Kamēr tās nenovērš, nav iespējam turpināt.';
+$lang['i_modified']   = 'Drošības nolūkos šis skripts darbosies tika ar jaunu nemodificētu Dokuwiki instalāciju.
+                         Vai nu no jauna jāatarhifē fail ino lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā 
+                         <a href="http://wiki.splitbrain.org/wiki:install"></a>';
+$lang['i_writeerr']   = 'Nevar izveidot <code>%s</code>. Jāpārbauda direktorijas/faila tiesības un fails jāizveido pašam.'; 
+$lang['i_confexists'] = '<code>%s</code> jau ir';
+$lang['i_badhash']    = 'nepazīstams via izmainīts dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - neatļauta vai tukša vērtība';
+$lang['i_funcna']     = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
+$lang['i_permfail']   = 'Dokuwiki nevar ierkastīt <code>%s</code>. Jālabo direktorijas tiesības!';
+$lang['i_success']    = 'Konfigurēšana veiksmīgi pabeigta. Tagad vari nodzēst failu install.php. Tālā turpini <a href="doku.php">savā jaunajā DokuWiki</a>.';
+$lang['i_failure']    = 'Rakstot konfigurācijas failu, gadījās dažas kļūmes. 
+                         Pirms lieto <a href="doku.php">savu jauno DokuWiki</a>, tās varbūt jāizlabo.';
+$lang['i_policy']     = 'Sākotnējā ACL politika';
+$lang['i_pol0']       = 'Atvērts Wiki (raksta, lasa un augšupielādē ikviens)';
+$lang['i_pol1']       = 'Publisks Wiki (lasa ikviens, raksta un augšupielādē reģistrēti lietotāji)';
+$lang['i_pol2']       = 'Slēgts Wiki (raksta, lasa un augšupielādē tikai reģistrēti lietotāji)';
+$lang['i_retry']      = 'Atkārtot';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

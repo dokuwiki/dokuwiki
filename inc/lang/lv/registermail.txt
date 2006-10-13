@@ -1,0 +1,14 @@
+Reģistrēts jauns lietotājs. Tā dati:
+
+Lietotājvārds : @NEWUSER@
+Pilns vārds   : @NEWNAME@
+E-pasts       : @NEWEMAIL@
+
+Datums      : @DATE@
+Pārlūks     : @BROWSER@
+IP aderese  : @IPADDRESS@
+Datora vārds: @HOSTNAME@
+
+-- 
+Šo vēstuli ģenerējis DokuWiki no 
+@DOKUWIKIURL

@@ -224,6 +224,6 @@ $lang['i_policy']     = 'Anfangseinstellung für Zugangskontrolle (ACL)';
 $lang['i_pol0']       = 'Offenes Wiki (lesen, schreiben, hochladen für alle)';
 $lang['i_pol1']       = 'Öffentliches Wiki (lesen für alle, schreiben und hochladen für registrierte Nutzer)';
 $lang['i_pol2']       = 'Geschlossenes Wiki (lesen, schreiben, hochladen nur für registrierte Nutzer)';
-
+$lang['i_retry']      = 'Wiederholen';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

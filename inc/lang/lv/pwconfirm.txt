@@ -1,0 +1,14 @@
+Sveiki, @FULLNAME@!
+
+Kāds pieprasījis jaunu paroli tavam @TITLE@ kontam 
+@DOKUWIKIURL@ sistēmā.
+
+Ja paroli neesi prasījis, ignorē šo vēstuli.
+
+Lai apstiprinātu, ka esi paroli pieprasījis  lieto norādīto saiti.
+
+@CONFIRM@
+
+-- 
+Šo vēstuli ģenerējusi DokuWiki no 
+@DOKUWIKIURL

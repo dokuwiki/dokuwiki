@@ -1,0 +1,7 @@
+====== Atrasts melnraksta fails ======
+
+Iepriekšējā šīs lapas labošana nav pabeigta. DokuWiki
+darba laikā automātiski saglabāja melnrakstu, kuru tagad var labot tālāk. Zemāk redzami iepriekšējās labošanas dati.
+
+Nolem, vai vajag //atjaunot// zudusšo labojumus, //dzēst//
+saglabāto melnrakstu vai //atlikt// labošanu.

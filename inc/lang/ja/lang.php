@@ -218,6 +218,6 @@ $lang['i_policy']     = 'ACL初期設定';
 $lang['i_pol0']       = 'オープン Wiki（全ての人に、閲覧・書き込み・アップロードを許可）';
 $lang['i_pol1']       = 'パブリック Wiki（閲覧は全ての人が可能、書き込み・アップロードは登録ユーザーのみ）';
 $lang['i_pol2']       = 'クローズド Wiki (登録ユーザーにのみ使用を許可)';
-
+$lang['i_retry']      = '再試行';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
