@@ -97,7 +97,6 @@ function media_metaform($id,$auth){
     // output
     echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
     echo '<form action="'.DOKU_BASE.'lib/exe/mediamanager.php" accept-charset="utf-8" method="post" class="meta">'.NL;
-    echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
     foreach($fields as $key => $field){
         // get current value
         $tags = array($field[0]);
@@ -124,11 +123,12 @@ function media_metaform($id,$auth){
             echo "<input $att/>".NL;
         }else{
             $att = buildAttributes($p);
-            echo "<textarea $att>".formText($value).'</textarea>'.NL;
+            echo "<textarea $att rows=\"6\" cols=\"50\">".formText($value).'</textarea>'.NL;
         }
         echo '</div>'.NL;
     }
     echo '<div class="buttons">'.NL;
+    echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
     echo '<input name="do[save]" type="submit" value="'.$lang['btn_save'].
          '" title="ALT+S" accesskey="s" class="button" />'.NL;
     echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].

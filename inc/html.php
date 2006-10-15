@@ -53,7 +53,7 @@ function html_login(){
   ?>
     <div class="centeralign">
     <form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"
-          method="post" name="login">
+          method="post" id="dw__login">
       <fieldset>
         <legend><?php echo $lang['btn_login']?></legend>
         <input type="hidden" name="id" value="<?php echo $ID?>" />
