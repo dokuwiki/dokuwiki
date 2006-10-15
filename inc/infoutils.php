@@ -98,17 +98,17 @@ function check(){
   }
 
   if (isset($conf['changelog_old']) && @file_exists($conf['changelog_old'])) {
-    msg('Old changelog exists.', 0);
+    msg('Old changelog exists', 0);
   }
 
   if (@file_exists($conf['changelog'].'_failed')) {
-    msg('Importing old changelog failed.', -1);
+    msg('Importing old changelog failed', -1);
   } else if (@file_exists($conf['changelog'].'_importing')) {
     msg('Importing old changelog now.', 0);
   } else if (@file_exists($conf['changelog'].'_import_ok')) {
-    msg('Old changelog imported.', 1);
+    msg('Old changelog imported', 1);
     if (!plugin_isdisabled('importoldchangelog')) {
-      msg('Importoldchangelog plugin not disabled after import.', -1);
+      msg('Importoldchangelog plugin not disabled after import', -1);
     }
   }
 
@@ -175,7 +175,7 @@ function check(){
   if($INFO['writable']){
     msg('The current page is writable by you',0);
   }else{
-    msg('The current page is not writable you',0);
+    msg('The current page is not writable by you',0);
   }
 }
 
