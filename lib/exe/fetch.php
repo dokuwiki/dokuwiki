@@ -237,7 +237,7 @@ function get_from_URL($url,$ext,$cache){
   if( ($mtime == 0) ||                           // cache does not exist
       ($cache != -1 && $mtime < time()-$cache)   // 'recache' and cache has expired
     ){
-      if(io_download($url,$local,false,'',$conf['fetchsize'])){
+      if(image_download($url,$local)){
         return $local;
       }else{
         return false;
@@ -249,6 +249,30 @@ function get_from_URL($url,$ext,$cache){
 
   //else return false
   return false;
+}
+
+/**
+ * Download image files
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function image_download($url,$file){
+  global $conf;
+  $http = new DokuHTTPClient();
+  $http->max_bodysize = $conf['fetchsize'];
+  $http->timeout = 25; //max. 25 sec
+  $http->header_regexp = '!\r\nContent-Type: image/(jpe?g|gif|png)!i';
+
+  $data = $http->get($url);
+  if(!$data) return false;
+
+  $fileexists = @file_exists($file);
+  $fp = @fopen($file,"w");
+  if(!$fp) return false;
+  fwrite($fp,$data);
+  fclose($fp);
+  if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+  return true;
 }
 
 /**

@@ -59,6 +59,7 @@ class HTTPClient {
     var $referer;
     var $max_redirect;
     var $max_bodysize;  // abort if the response body is bigger than this
+    var $header_regexp; // if set this RE must match against the headers, else abort
     var $headers;
     var $debug;
 
@@ -99,6 +100,7 @@ class HTTPClient {
         $this->http         = '1.0';
         $this->debug        = false;
         $this->max_bodysize = 0;
+        $this->header_regexp= '';
         if(extension_loaded('zlib')) $this->headers['Accept-encoding'] = 'gzip';
         $this->headers['Accept'] = 'text/xml,application/xml,application/xhtml+xml,'.
                                    'text/html,text/plain,image/png,image/jpeg,image/gif,*/*';
@@ -227,12 +229,58 @@ class HTTPClient {
             $r_headers .= fread($socket,1); #FIXME read full lines here?
         }while(!preg_match('/\r\n\r\n$/',$r_headers));
 
+        $this->_debug('response headers',$r_headers);
+
         // check if expected body size exceeds allowance
-        if($this->max_bodysize && preg_match('/\r\nContent-Length:\s*(\d+)\r\n/i',$r_header,$match)){
+        if($this->max_bodysize && preg_match('/\r\nContent-Length:\s*(\d+)\r\n/i',$r_headers,$match)){
             if($match[1] > $this->max_bodysize){
                 $this->error = 'Reported content length exceeds allowed response size';
                 return false;
             }
+        }
+
+        // get Status
+        if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m)) {
+            $this->error = 'Server returned bad answer';
+            return false;
+        }
+        $this->status = $m[2];
+
+        // handle headers and cookies
+        $this->resp_headers = $this->_parseHeaders($r_headers);
+        if(isset($this->resp_headers['set-cookie'])){
+            foreach ($this->resp_headers['set-cookie'] as $c){
+                list($key, $value, $foo) = split('=', $cookie);
+                $this->cookies[$key] = $value;
+            }
+        }
+
+        $this->_debug('Object headers',$this->resp_headers);
+
+        // check server status code to follow redirect
+        if($this->status == 301 || $this->status == 302 ){
+            if (empty($this->resp_headers['location'])){
+                $this->error = 'Redirect but no Location Header found';
+                return false;
+            }elseif($this->redirect_count == $this->max_redirect){
+                $this->error = 'Maximum number of redirects exceeded';
+                return false;
+            }else{
+                $this->redirect_count++;
+                $this->referer = $url;
+                if (!preg_match('/^http/i', $this->resp_headers['location'])){
+                    $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].
+                                                      $this->resp_headers['location'];
+                }
+                // perform redirected request, always via GET (required by RFC)
+                return $this->sendRequest($this->resp_headers['location'],array(),'GET');
+            }
+        }
+
+        // check if headers are as expected
+        if($this->header_regexp && !preg_match($this->header_regexp,$r_headers)){
+            $this->error = 'The received headers did not match the given regexp';
+            return false;
         }
 
         //read body (with chunked encoding if needed)
@@ -284,46 +332,6 @@ class HTTPClient {
         // close socket
         $status = socket_get_status($socket);
         fclose($socket);
-
-        $this->_debug('response headers',$r_headers);
-
-        // get Status
-        if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m)) {
-            $this->error = 'Server returned bad answer';
-            return false;
-        }
-        $this->status = $m[2];
-
-        // handle headers and cookies
-        $this->resp_headers = $this->_parseHeaders($r_headers);
-        if(isset($this->resp_headers['set-cookie'])){
-            foreach ($this->resp_headers['set-cookie'] as $c){
-                list($key, $value, $foo) = split('=', $cookie);
-                $this->cookies[$key] = $value;
-            }
-        }
-
-        $this->_debug('Object headers',$this->resp_headers);
-
-        // check server status code to follow redirect
-        if($this->status == 301 || $this->status == 302 ){
-            if (empty($this->resp_headers['location'])){
-                $this->error = 'Redirect but no Location Header found';
-                return false;
-            }elseif($this->redirect_count == $this->max_redirect){
-                $this->error = 'Maximum number of redirects exceeded';
-                return false;
-            }else{
-                $this->redirect_count++;
-                $this->referer = $url;
-                if (!preg_match('/^http/i', $this->resp_headers['location'])){
-                    $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].
-                                                      $this->resp_headers['location'];
-                }
-                // perform redirected request, always via GET (required by RFC)
-                return $this->sendRequest($this->resp_headers['location'],array(),'GET');
-            }
-        }
 
         // decode gzip if needed
         if($this->resp_headers['content-encoding'] == 'gzip'){
