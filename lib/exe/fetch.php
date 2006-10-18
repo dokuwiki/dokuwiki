@@ -31,9 +31,9 @@
   }
 
   //media to local file
-  if(preg_match('#^(https?|ftp)://#i',$MEDIA)){
-    //handle external media
-    $FILE = get_from_URL($MEDIA,$EXT,$CACHE);
+  if(preg_match('#^(https?)://#i',$MEDIA)){
+    //handle external images 
+    if(strncmp($MIME,'image/',6) == 0) $FILE = get_from_URL($MEDIA,$EXT,$CACHE);
     if(!$FILE){
       //download failed - redirect to original URL
       header('Location: '.$MEDIA);
@@ -272,6 +272,14 @@ function image_download($url,$file){
   fwrite($fp,$data);
   fclose($fp);
   if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+
+  // check if it is really an image
+  $info = @getimagesize($file);
+  if(!$info){
+    @unlink($file);
+    return false;
+  }
+
   return true;
 }
 
