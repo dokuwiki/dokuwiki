@@ -177,6 +177,7 @@ function io_saveFile($file,$content,$append=false){
     $fh = @gzopen($file,$mode.'9');
     if(!$fh){
       msg("Writing $file failed",-1);
+      io_unlock($file);
       return false;
     }
     gzwrite($fh, $content);
@@ -185,6 +186,7 @@ function io_saveFile($file,$content,$append=false){
     $fh = @bzopen($file,$mode);
     if(!$fh){
       msg("Writing $file failed", -1);
+      io_unlock($file);
       return false;
     }
     bzwrite($fh, $content);
@@ -193,6 +195,7 @@ function io_saveFile($file,$content,$append=false){
     $fh = @fopen($file,$mode);
     if(!$fh){
       msg("Writing $file failed",-1);
+      io_unlock($file);
       return false;
     }
     fwrite($fh, $content);
@@ -245,6 +248,7 @@ function io_deleteFromFile($file,$badline,$regex=false){
       $fh = @gzopen($file,'wb9');
       if(!$fh){
         msg("Removing content from $file failed",-1);
+        io_unlock($file);
         return false;
       }
       gzwrite($fh, $content);
@@ -253,6 +257,7 @@ function io_deleteFromFile($file,$badline,$regex=false){
       $fh = @fopen($file,'wb');
       if(!$fh){
         msg("Removing content from $file failed",-1);
+        io_unlock($file);
         return false;
       }
       fwrite($fh, $content);
