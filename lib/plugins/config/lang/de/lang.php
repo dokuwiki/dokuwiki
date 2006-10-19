@@ -89,6 +89,7 @@ $lang['disableactions_check'] = 'Check';
 $lang['disableactions_subscription'] = 'Seiten-Abbonnements';
 $lang['disableactions_wikicode'] = 'Quelltext betrachten/exortieren';
 $lang['disableactions_other'] = 'Andere Aktionen (Kommagetrennt)';
+$lang['updatecheck']    = 'Automatisch nach Updaten und Sicherheitswarnungen suchen? DokuWiki muss sich dafür mit splitbrain.org verbinden.';
 $lang['userewrite']     = 'URL rewriting';
 $lang['useslash']       = 'Schrägstrich (/) als Namensraumtrenner in URLs verwenden';
 $lang['usedraft']       = 'Während des Bearbeitens automatisch Zwischenentwürfe speichern';

@@ -107,7 +107,7 @@ $lang['js']['hidedetails'] = 'Slēpt detaļas';
 $lang['mediausage']  = 'Atsaucei uz failu lietot šādu sintaksi:';
 $lang['mediaview']   = 'Skatīt oriģinālo failu';
 $lang['mediaroot']   = 'sakne';
-$lang['mediaupload'] = 'Augšupielādēt failu patreizējā sadaļā. La izveidotu dziļāku sadaļu, pieraksti to, atdalot ar kolu, pirms augšupielādējamā faila vārda.';
+$lang['mediaupload'] = 'Augšupielādēt failu patreizējā sadaļā. Lai izveidotu dziļāku sadaļu, pieraksti to, atdalot ar kolu, pirms augšupielādējamā faila vārda.';
 $lang['mediaextchange'] = 'Faila paplašinājums mainīts no .%s uz .%s!';
 
 $lang['reference']   = 'Norādes uz failu';
@@ -207,7 +207,7 @@ $lang['i_confexists'] = '<code>%s</code> jau ir';
 $lang['i_badhash']    = 'nepazīstams via izmainīts dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']     = '<code>%s</code> - neatļauta vai tukša vērtība';
 $lang['i_funcna']     = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
-$lang['i_permfail']   = 'Dokuwiki nevar ierkastīt <code>%s</code>. Jālabo direktorijas tiesības!';
+$lang['i_permfail']   = 'Dokuwiki nevar ierakstīt <code>%s</code>. Jālabo direktorijas tiesības!';
 $lang['i_success']    = 'Konfigurēšana veiksmīgi pabeigta. Tagad vari nodzēst failu install.php. Tālā turpini <a href="doku.php">savā jaunajā DokuWiki</a>.';
 $lang['i_failure']    = 'Rakstot konfigurācijas failu, gadījās dažas kļūmes. 
                          Pirms lieto <a href="doku.php">savu jauno DokuWiki</a>, tās varbūt jāizlabo.';
