@@ -526,8 +526,8 @@ function tpl_actionlink($type,$pre='',$suf=''){
       print '<a href="#dokuwiki__top" class="action top" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
       return true;
     case 'back':
-      if ($ID = tpl_getparent($ID)) {
-        tpl_link(wl($ID,'do=show'),$pre.$lang['btn_back'].$suf,'class="action back" accesskey="b"');
+      if ($parent = tpl_getparent($ID)) {
+        tpl_link(wl($parent,'do=show'),$pre.$lang['btn_back'].$suf,'class="action back" accesskey="b"');
         return true;
       }
       return false;
