@@ -814,9 +814,10 @@ function html_diff($text='',$intro=true){
   global $REV;
   global $lang;
   global $conf;
+
   if($text){
-    $df  = new Diff(split("\n",htmlspecialchars(rawWiki($ID,''))),
-                    split("\n",htmlspecialchars(cleanText($text))));
+    $df  = new Diff(explode("\n",htmlspecialchars(rawWiki($ID,''))),
+                    explode("\n",htmlspecialchars(cleanText($text))));
     $left  = '<a class="wikilink1" href="'.wl($ID).'">'.
               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a>'.
               $lang['current'];
@@ -830,10 +831,17 @@ function html_diff($text='',$intro=true){
       $r = $revs[0];
     }
 
-    $df  = new Diff(split("\n",htmlspecialchars(rawWiki($ID,$r))),
-                    split("\n",htmlspecialchars(rawWiki($ID,''))));
-    $left  = '<a class="wikilink1" href="'.wl($ID,"rev=$r").'">'.
-              $ID.' '.date($conf['dformat'],$r).'</a>';
+    if($r){
+      $df  = new Diff(explode("\n",htmlspecialchars(rawWiki($ID,$r))),
+                      explode("\n",htmlspecialchars(rawWiki($ID,''))));
+      $left  = '<a class="wikilink1" href="'.wl($ID,"rev=$r").'">'.
+                $ID.' '.date($conf['dformat'],$r).'</a>';
+    }else{
+      $df  = new Diff(array(''),
+                      explode("\n",htmlspecialchars(rawWiki($ID,''))));
+      $left  = '<a class="wikilink1" href="'.wl($ID).'">'.
+                $ID.'</a>';
+    }
     $right = '<a class="wikilink1" href="'.wl($ID).'">'.
               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
               $lang['current'];
