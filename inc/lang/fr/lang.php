@@ -15,8 +15,8 @@ $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
 
 $lang['btn_edit']   = 'Éditer cette page';
-$lang['btn_source'] = 'Montrer le source de la page';
-$lang['btn_show']   = 'Montrer la page';
+$lang['btn_source'] = 'Afficher le texte source';
+$lang['btn_show']   = 'Afficher la page';
 $lang['btn_create'] = 'Créer cette page';
 $lang['btn_search'] = 'Rechercher';
 $lang['btn_save']   = 'Sauver';
@@ -224,5 +224,6 @@ $lang['i_pol0']       = 'Wiki ouvert (lecture, écriture, envoi de fichiers pour
 $lang['i_pol1']       = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';
 $lang['i_pol2']       = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
 
+$lang['i_retry']      = 'Réessayer';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

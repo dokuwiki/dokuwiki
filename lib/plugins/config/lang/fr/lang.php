@@ -58,25 +58,25 @@ $lang['start']       = 'Nom de la page d\'accueil';
 $lang['title']       = 'Titre du wiki';
 $lang['template']    = 'Template';
 $lang['fullpath']    = 'Utiliser le chemin complet dans le pied de page';
-$lang['recent']      = 'Derniers changements';
-$lang['breadcrumbs'] = 'Nombre de traces';
+$lang['recent']      = 'Nombre de derniers changements à afficher';
+$lang['breadcrumbs'] = 'Nombre de traces à afficher';
 $lang['youarehere']  = 'Traces hiérarchiques';
 $lang['typography']  = 'Effectuer des améliorations typographiques';
 $lang['htmlok']      = 'Permettre html dans les pages';
 $lang['phpok']       = 'Permettre php dans les pages';
 $lang['dformat']     = 'Format de date (cf. fonction <a href="http://www.php.net/date">date</a> de PHP)';
 $lang['signature']   = 'Signature';
-$lang['toptoclevel'] = 'Niveau supérieur pour figurer en toc';
-$lang['maxtoclevel'] = 'Niveau maximum pour figurer en toc';
+$lang['toptoclevel'] = 'Niveau supérieur pour figurer dans la table des matières';
+$lang['maxtoclevel'] = 'Niveau maximum pour figurer dans la table des matières';
 $lang['maxseclevel'] = 'Niveau maximum pour éditer des sections';
 $lang['camelcase']   = 'Utiliser CamelCase pour les liens';
-$lang['deaccent']    = 'Retirer accents dans les noms de pages';
+$lang['deaccent']    = 'Retirer les accents dans les noms de pages';
 $lang['useheading']  = 'Utiliser le titre de premier niveau';
 $lang['refcheck']    = 'Vérifier les références de media';
 $lang['refshow']     = 'Nombre de références de media à montrer';
 $lang['allowdebug']  = 'Déboguer <b>désactivez si vous n\'en n\'avez pas besoin !</b>';
 
-$lang['usewordblock']= 'Bloquer spam selon les mots utilisés';
+$lang['usewordblock']= 'Bloquer le spam selon les mots utilisés';
 $lang['indexdelay']  = 'Délai avant l\'indexation (sec)';
 $lang['relnofollow'] = 'Utiliser rel="nofollow" sur les liens extérieurs';
 $lang['mailguard']   = 'Cacher les adresses de courriel';
@@ -96,13 +96,14 @@ $lang['disableactions_wikicode'] = 'Afficher source/Export natif';
 $lang['disableactions_other'] = 'Autres actions (séparées par des virgules)';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'Vérifier les mises à jour ? DokuWiki doit pouvoir contacter splitbrain.org.';
 $lang['userewrite']  = 'URLs esthétiques';
-$lang['useslash']    = 'Utiliser slash comme séparateur de catégorie dans les URLs';
+$lang['useslash']    = 'Utiliser / comme séparateur de catégorie dans les URLs';
 $lang['usedraft']    = 'Enregistrer automatiquement un brouillon pendant l\'édition';
 $lang['sepchar']     = 'Séparateur de nom de page';
 $lang['canonical']   = 'Utiliser des URLs canoniques';
 $lang['autoplural']  = 'Rechercher les formes plurielles dans les liens';
-$lang['usegzip']     = 'Utiliser gzip pour les fichiers dans attic';
+$lang['compression'] = 'Méthode de compression pour les fichiers dans attic';
 $lang['cachetime']   = 'Âge maximum d\'un fichier en cache (sec)';
 $lang['locktime']    = 'Âge maximum des fichiers verrous (sec)';
 $lang['fetchsize']   = 'Taille maximale (en octets) du fichier que fetch.php peut télécharger';
@@ -118,11 +119,12 @@ $lang['subscribers'] = 'Activer l\'abonnement aux pages';
 $lang['compress']    = 'Compresser CSS & javascript';
 $lang['hidepages']   = 'Cacher pages correspondant à (expression régulière)';
 $lang['send404']     = 'Renvoyer "HTTP 404/Page Not Found" pour les pages introuvables';
-$lang['sitemap']     = 'Générer carte google du site (days)';
+$lang['sitemap']     = 'Générer carte google du site (jours)';
 
 $lang['rss_type']    = 'Type de flux RSS';
 $lang['rss_linkto']  = 'Lien du flux RSS vers';
 $lang['rss_update']  = 'Fréquence de mise à jour du flux RSS (sec)';
+$lang['recent_days'] = 'Signaler les pages modifiées depuis (jours)';
 
 /* Target options */
 $lang['target____wiki']      = 'Target pour liens internes';
@@ -172,4 +174,9 @@ $lang['rss_linkto_o_diff']    = 'liste des différences';
 $lang['rss_linkto_o_page']    = 'page révisée';
 $lang['rss_linkto_o_rev']     = 'liste des révisions';
 $lang['rss_linkto_o_current'] = 'page actuelle';
+
+/* compression options */
+$lang['compression_o_0']   = 'aucune';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
 
