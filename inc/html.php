@@ -297,9 +297,9 @@ function html_draft(){
 
     <div id="draft__status"><?php echo $lang['draftdate'].' '.date($conf['dformat'],filemtime($INFO['draft']))?></div>
 
-    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_recover']?>" tabindex="1" />
-    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_draftdel']?>" tabindex="2" />
-    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="3" />
+    <input class="button" type="submit" name="do[recover]" value="<?php echo $lang['btn_recover']?>" tabindex="1" />
+    <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_draftdel']?>" tabindex="2" />
+    <input class="button" type="submit" name="do[show]" value="<?php echo $lang['btn_cancel']?>" tabindex="3" />
   </form>
   <?php
 }
@@ -880,8 +880,8 @@ function html_conflict($text,$summary){
     <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
     <input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
 
-    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" />
-    <input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" />
+    <input class="button" type="submit" name="do[save]" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" />
+    <input class="button" type="submit" name="do[cancel]" value="<?php echo $lang['btn_cancel']?>" />
   </div>
   </form>
   <br /><br /><br /><br />
@@ -1121,8 +1121,8 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <div id="size__ctl"></div>
       <?php if($wr){?>
          <div class="editButtons">
-            <input class="button" id="edbtn__save" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" tabindex="4" />
-            <input class="button" id="edbtn__preview" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="<?php echo $lang['btn_preview']?> [ALT+P]" tabindex="5" />
+            <input class="button" id="edbtn__save" type="submit" name="do[save]" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" tabindex="4" />
+            <input class="button" id="edbtn__preview" type="submit" name="do[preview]" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="<?php echo $lang['btn_preview']?> [ALT+P]" tabindex="5" />
             <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_cancel']?>" tabindex="6" />
          </div>
       <?php } ?>
