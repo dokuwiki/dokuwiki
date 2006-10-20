@@ -179,7 +179,7 @@ class HTTPClient {
         $headers['Referer']    = $this->referer;
         $headers['Connection'] = 'Close';
         if($method == 'POST'){
-            $post = _postEncode($data);
+            $post = $this->_postEncode($data);
             $headers['Content-Type']   = 'application/x-www-form-urlencoded';
             $headers['Content-Length'] = strlen($post);
         }
@@ -424,7 +424,7 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _postEncode($data){
-        foreach($params as $key => $val){
+        foreach($data as $key => $val){
             if($url) $url .= '&';
             $url .= $key.'='.urlencode($val);
         }
