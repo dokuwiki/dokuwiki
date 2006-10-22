@@ -267,7 +267,7 @@ function tpl_metaheaders($alt=true){
  * encoded automatically so they should be provided as is in the $data array.
  *
  * For tags having a body attribute specify the the body data in the special
- * attribute '_data'
+ * attribute '_data'. This field will NOT BE ESCAPED automatically.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -276,7 +276,7 @@ function _tpl_metaheaders_action($data){
     foreach($inst as $attr){
       echo '<',$tag,' ',buildAttributes($attr);
       if(isset($attr['_data'])){
-        echo '>',htmlspecialchars($attr['_data']),'</',$tag,'>';
+          echo '>',$attr['_data'],'</',$tag,'>';
       }else{
         echo '/>';
       }
