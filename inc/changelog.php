@@ -271,11 +271,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
  * backwards in chunks untill the requested number of changelog
  * lines are recieved.
  *
- * Because there may exist revisions not listed in the changelog
- * the found revisions are merged with the ones found in the attic
- *
  * @author Ben Coburn <btcoburn@silicodon.net>
- * @see    getRevisionsFromAttic()
  */
 function getRevisions($id, $first, $num, $chunk_size=8192) {
   global $cache_revinfo;
@@ -358,37 +354,7 @@ function getRevisions($id, $first, $num, $chunk_size=8192) {
     }
   }
 
-  // merge with attic file info
-  $revs = array_merge($revs,getRevisionsFromAttic($id,false));
-  $revs = array_unique($revs);
-  rsort($revs);
-
   return $revs;
 }
 
-/**
- * Return a list of available and existing page revisons from the attic
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @see    getRevisions()
- */
-function getRevisionsFromAttic($id,$sorted=true){
-  $revd = dirname(wikiFN($id,'foo'));
-  $revs = array();
-  $clid = cleanID($id);
-  if(strrpos($clid,':')) $clid = substr($clid,strrpos($clid,':')+1); //remove path
-  $clid = utf8_encodeFN($clid);
-
-  if (is_dir($revd) && $dh = opendir($revd)) {
-    while (($file = readdir($dh)) !== false) {
-      if (is_dir($revd.'/'.$file)) continue;
-      if (preg_match('/^'.$clid.'\.(\d+)\.txt(\.gz)?$/',$file,$match)){
-        $revs[]=$match[1];
-      }
-    }
-    closedir($dh);
-  }
-  if($sorted) rsort($revs);
-  return $revs;
-}
 

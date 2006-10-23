@@ -691,15 +691,32 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }
 
   $file = wikiFN($id);
-  $old  = saveOldRevision($id);
+  $old = @filemtime($file);
   $wasRemoved = empty($text);
   $wasCreated = !@file_exists($file);
   $wasReverted = ($REV==true);
   $newRev = false;
+  if(!@file_exists(wikiFN($id, $old)) && @file_exists($file)) {
+    // add old revision to the attic if missing
+    saveOldRevision($id);
+    // add a changelog entry if this edit came from outside dokuwiki
+    $oldRev = getRevisions($id, -1, 1, 1024);
+    $oldRev = (int)(empty($oldRev)?0:$oldRev[0]);
+    if ($oldRev!==$old) {
+      addLogEntry($old, $id);
+      // send notify mails
+      notify($id,'admin',$oldRev,'',false);
+      notify($id,'subscribers',$oldRev,'',false);
+      // remove soon to be stale instructions
+      $cache = new cache_instructions($id, $file);
+      $cache->removeCache();
+    }
+  }
 
   if ($wasRemoved){
     // pre-save deleted revision
     @touch($file);
+    clearstatcache();
     $newRev = saveOldRevision($id);
     // remove empty file
     @unlink($file);
@@ -719,7 +736,8 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }else{
     // save file (namespace dir is created in io_writeWikiPage)
     io_writeWikiPage($file, $text, $id);
-    $newRev = @filemtime($file);
+    // pre-save the revision, to keep the attic in sync
+    $newRev = saveOldRevision($id);
     $del = false;
   }
 
