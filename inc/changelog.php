@@ -15,7 +15,7 @@ function parseChangelogLine($line) {
   $tmp = explode("\t", $line);
     if ($tmp!==false && count($tmp)>1) {
       $info = array();
-      $info['date']  = $tmp[0]; // unix timestamp
+      $info['date']  = (int)$tmp[0]; // unix timestamp
       $info['ip']    = $tmp[1]; // IPv4 address (127.0.0.1)
       $info['type']  = $tmp[2]; // log line type
       $info['id']    = $tmp[3]; // page id
