@@ -358,7 +358,8 @@ function check_configs(){
 
 
     // main dokuwiki config file (conf/dokuwiki.php) must not have been modified
-    $installation_hash = md5(@file_get_contents(DOKU_CONF.'dokuwiki.php'));
+    $installation_hash = md5(preg_replace("/(\015\012)|(\015)/","\012",
+                             @file_get_contents(DOKU_CONF.'dokuwiki.php')));
     if (!in_array($installation_hash, $dokuwiki_hash)) {
         $error[] = sprintf($lang['i_badhash'],$installation_hash);
         $ok = false;
