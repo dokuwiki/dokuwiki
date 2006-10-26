@@ -1,16 +1,17 @@
-在您的 DokuWiki 有新增、变动过一页了。以下是细节资料：
+您的 DokuWiki 中有一个页面被添加或更改了。以下是详细资料：
 
 日期        : @DATE@
 浏览器      : @BROWSER@
-IP-Address  : @IPADDRESS@
+IP 地址     : @IPADDRESS@
 机器名称    : @HOSTNAME@
-旧版次      : @OLDPAGE@
-新版次      : @NEWPAGE@
+修订记录    : @OLDPAGE@
+最新修订    : @NEWPAGE@
 编辑摘要    : @SUMMARY@
-User        : @USER@
+用户        : @USER@
 
 @DIFF@
 
 
--- 
-这封信是由 @DOKUWIKIURL@ 的 DokuWiki 自动产生
+--
+本邮件由 DokuWiki 创建
+@DOKUWIKIURL@

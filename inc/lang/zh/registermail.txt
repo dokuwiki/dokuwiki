@@ -1,0 +1,16 @@
+新用户已创建。下面是详细信息：
+
+用户名      : @NEWUSER@
+全名        : @NEWNAME@
+E-mail      : @NEWEMAIL@
+
+日期        : @DATE@
+浏览器      : @BROWSER@
+IP 地址     : @IPADDRESS@
+机器名称    : @HOSTNAME@
+
+-- 
+本邮件由 DokuWiki 创建
+@DOKUWIKIURL@
+
+

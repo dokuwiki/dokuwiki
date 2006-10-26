@@ -1,0 +1,16 @@
+@FULLNAME@ 您好！
+
+有人请求为您在 @DOKUWIKIURL@ 注册的用户名 @TITLE@ 发送新密码
+
+
+如果您没有请求发送新密码，请忽略这封邮件。
+
+为了确认发送新密码请求的确来自您，请使用下面的链接。
+
+@CONFIRM@
+
+--
+本邮件由 DokuWiki 创建
+@DOKUWIKIURL@
+
+
