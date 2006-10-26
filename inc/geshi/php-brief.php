@@ -4,10 +4,10 @@
  * -------------
  * Author: Nigel McNie (oracle.shinoda@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.13.2.4 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.13.2.5 $
  * Date Started: 2004/06/02
- * Last Modified: $Date: 2006/08/22 10:42:36 $
+ * Last Modified: $Date: 2006/09/23 02:05:47 $
  *
  * PHP language file for GeSHi (brief version).
  *

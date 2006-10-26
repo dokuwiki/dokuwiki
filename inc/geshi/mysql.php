@@ -4,10 +4,10 @@
  * --------- 
  * Author: Carl F�rstenberg (azatoth@gmail.com) 
  * Copyright: (c) 2005 Carl F�rstenberg, Nigel McNie (http://qbnz.com/highlighter) 
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.12.2.5 $ 
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.12.2.6 $ 
  * Date Started: 2004/06/04 
- * Last Modified: $Date: 2006/08/22 10:42:35 $ 
+ * Last Modified: $Date: 2006/09/23 02:05:47 $ 
  * 
  * MySQL language file for GeSHi. 
  * 

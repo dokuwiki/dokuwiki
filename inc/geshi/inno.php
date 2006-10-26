@@ -4,10 +4,10 @@
  * ----------
  * Author: Thomas Klingler (hotline@theratech.de) based on delphi.php from Járja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 Járja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.12.2.3 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.12.2.4 $
  * Date Started: 2005/07/29
- * Last Modified: $Date: 2006/08/22 10:42:35 $
+ * Last Modified: $Date: 2006/09/23 02:05:47 $
  *
  * Inno Script language inkl. Delphi (Object Pascal) language file for GeSHi.
  *

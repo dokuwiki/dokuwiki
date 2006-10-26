@@ -4,10 +4,10 @@
  * ----------
  * Author: Zoran Simic (zsimic@axarosenberg.com)
  * Copyright: (c) 2005 Zoran Simic
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.13.2.3 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.13.2.4 $
  * Date Started: 2005/06/30
- * Last Modified: $Date: 2006/08/22 10:42:35 $
+ * Last Modified: $Date: 2006/09/23 02:05:47 $
  *
  * Eiffel language file for GeSHi.
  *

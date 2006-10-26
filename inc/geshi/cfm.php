@@ -4,10 +4,10 @@
  * -------
  * Author: Diego ()
  * Copyright: (c) 2006 Diego
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.7.2.4 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.7.2.5 $
  * Date Started: 2006/02/25
- * Last Modified: $Date: 2006/08/22 10:42:34 $
+ * Last Modified: $Date: 2006/09/23 02:05:46 $
  *
  * ColdFusion language file for GeSHi.
  *

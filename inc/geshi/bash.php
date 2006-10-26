@@ -4,10 +4,10 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.13.2.3 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.13.2.5 $
  * Date Started: 2004/08/20
- * Last Modified: $Date: 2006/08/22 10:42:34 $
+ * Last Modified: $Date: 2006/09/25 05:29:50 $
  *
  * BASH language file for GeSHi.
  *
@@ -46,8 +46,11 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Bash',
-	'COMMENT_SINGLE' => array(1 => '#'),
+    'LANG_NAME' => 'Bash',
+    // Bash DOES have single line comments with # markers. But bash also has
+    // the  $# variable, so comments need special handling (see sf.net
+    // 1564839)
+	'COMMENT_SINGLE' => array(),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
@@ -103,7 +106,9 @@ $language_data = array (
 		'REGEXPS' => array(
 			0 => 'color: #0000ff;',
 			1 => 'color: #0000ff;',
-			2 => 'color: #0000ff;'
+            2 => 'color: #0000ff;',
+            3 => 'color: #808080; font-style: italic;',
+            4 => 'color: #0000ff;'
 			),
 		'SCRIPT' => array(
 			)
@@ -118,7 +123,9 @@ $language_data = array (
 	'REGEXPS' => array(
 		0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
 		1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
-		2 => "([a-zA-Z_][a-zA-Z0-9_]*)="
+        2 => "([a-zA-Z_][a-zA-Z0-9_]*)=",
+        3 => "(?<!\\$)#.*\n",
+        4 => "\\$#"
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(

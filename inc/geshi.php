@@ -29,7 +29,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.40.2.8 2006/08/22 10:42:32 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.40.2.10 2006/10/23 01:54:16 oracleshinoda Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.14');
+define('GESHI_VERSION', '1.0.7.15');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -2720,7 +2720,7 @@ if (!function_exists('geshi_highlight')) {
      * @return string The code highlighted (if $return is true)
      * @since 1.0.2
      */
-	function geshi_highlight ($string, $language, $path, $return = false)
+	function geshi_highlight ($string, $language, $path = null, $return = false)
 	{
 		$geshi = new GeSHi($string, $language, $path);
 		$geshi->set_header_type(GESHI_HEADER_NONE);

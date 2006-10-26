@@ -4,10 +4,10 @@
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.2.2.5 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.2.2.7 $
  * Date Started: 03/15/2006
- * Last Modified: $Date: 2006/09/14 09:44:45 $
+ * Last Modified: $Date: 2006/10/23 01:49:58 $
  *
  * Microsoft Registry Editor Language File.
  *
@@ -210,7 +210,7 @@ $language_data = array (
 	'HIGHLIGHT_STRICT_BLOCK' => array(
 		)
 );
-if (is_a($this, 'GeSHi')) {
+if (isset($this) && is_a($this, 'GeSHi')) {
     $this->set_numbers_highlighting(false);
 }
 ?>

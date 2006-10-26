@@ -4,10 +4,10 @@
  * --------
  * Author: Conny Brunnkvist (conny@fuchsia.se), W. Tasin (tasin@fhm.edu)
  * Copyright: (c) 2004 Fuchsia Open Source Solutions (http://www.fuchsia.se/)
- * Release Version: 1.0.7.14
- * CVS Revision Version: $Revision: 1.14.2.3 $
+ * Release Version: 1.0.7.15
+ * CVS Revision Version: $Revision: 1.14.2.4 $
  * Date Started: 2004/12/29
- * Last Modified: $Date: 2006/08/22 10:42:34 $
+ * Last Modified: $Date: 2006/09/23 02:05:46 $
  *
  * Diff-output language file for GeSHi.
  *
