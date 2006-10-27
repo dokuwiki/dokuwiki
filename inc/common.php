@@ -676,12 +676,19 @@ function con($pre,$text,$suf,$pretty=false){
 }
 
 /**
- * Saves a wikitext by calling io_writeWikiPage
+ * Saves a wikitext by calling io_writeWikiPage.
+ * Also directs changelog and attic updates.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function saveWikiText($id,$text,$summary,$minor=false){
+  /* Note to developers:
+     This code is subtle and delicate. Test the behavior of
+     the attic and changelog with dokuwiki and external edits
+     after any changes. External edits change the wiki page
+     directly without using php or dokuwiki.
+  */
   global $conf;
   global $lang;
   global $REV;
@@ -691,18 +698,18 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }
 
   $file = wikiFN($id);
-  $old = @filemtime($file);
+  $old = @filemtime($file); // from page
   $wasRemoved = empty($text);
   $wasCreated = !@file_exists($file);
   $wasReverted = ($REV==true);
   $newRev = false;
-  if(!@file_exists(wikiFN($id, $old)) && @file_exists($file)) {
+  $oldRev = getRevisions($id, -1, 1, 1024); // from changelog
+  $oldRev = (int)(empty($oldRev)?0:$oldRev[0]);
+  if(!@file_exists(wikiFN($id, $old)) && @file_exists($file) && $old>=$oldRev) {
     // add old revision to the attic if missing
     saveOldRevision($id);
     // add a changelog entry if this edit came from outside dokuwiki
-    $oldRev = getRevisions($id, -1, 1, 1024);
-    $oldRev = (int)(empty($oldRev)?0:$oldRev[0]);
-    if ($oldRev!==$old) {
+    if ($old>$oldRev) {
       addLogEntry($old, $id);
       // send notify mails
       notify($id,'admin',$oldRev,'',false);
