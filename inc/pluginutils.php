@@ -82,7 +82,7 @@ function &plugin_load($type,$name){
     }
   }
 
-  //construct class and instanciate
+  //construct class and instantiate
   $class = $type.'_plugin_'.$name;
   if (!class_exists($class)) return null;
 

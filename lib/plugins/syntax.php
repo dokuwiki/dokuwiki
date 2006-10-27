@@ -133,8 +133,11 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
             foreach($allowedModeTypes as $mt) {
                 $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
             }        
-                
-            unset($this->allowedModes[array_search(substr(get_class($this), 7), $this->allowedModes)]);
+
+            $idx = array_search(substr(get_class($this), 7), $this->allowedModes);
+            if ($idx !== false) {
+              unset($this->allowedModes[$idx]);
+            }
             $this->allowedModesSetup = true;
         }
         
