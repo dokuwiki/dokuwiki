@@ -536,12 +536,12 @@ function html_revisions($first=0){
     $first -= $conf['recent'];
     if ($first < 0) $first = 0;
     print '<div class="pagenav-prev">';
-    print html_btn('newer','',"p",array('do' => 'revisions', 'first' => $first));
+    print html_btn('newer',$ID,"p",array('do' => 'revisions', 'first' => $first));
     print '</div>';
   }
   if ($hasNext) {
     print '<div class="pagenav-next">';
-    print html_btn('older','',"n",array('do' => 'revisions', 'first' => $last));
+    print html_btn('older',$ID,"n",array('do' => 'revisions', 'first' => $last));
     print '</div>';
   }
   print '</div>';
