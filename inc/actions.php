@@ -66,6 +66,10 @@ function act_dispatch(){
     if($ACT == 'save')
       $ACT = act_save($ACT);
 
+    //cancel conflicting edit
+    if($ACT == 'cancel')
+      $ACT = 'show';
+
     //draft deletion
     if($ACT == 'draftdel')
       $ACT = act_draftdel($ACT);
@@ -161,7 +165,7 @@ function act_clean($act){
     return 'show';
   }
 
-  if(!in_array($act,array('login','logout','register','save','edit','draft',
+  if(!in_array($act,array('login','logout','register','save','cancel','edit','draft',
                           'preview','search','show','check','index','revisions',
                           'diff','recent','backlink','admin','subscribe',
                           'unsubscribe','profile','resendpwd','recover','wordblock',
