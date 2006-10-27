@@ -260,8 +260,8 @@ class ap_manage {
          */
         function refresh() {
 
-            $this->plugin_list = plugin_list('',true);
-            sort($this->plugin_list);
+            $this->manager->plugin_list = plugin_list('',true);
+            sort($this->manager->plugin_list);
 
             // expire dokuwiki caches
             // touching local.php expires wiki page, JS and CSS caches
@@ -669,6 +669,7 @@ class ap_manage {
 
     // copy with recursive sub-directory support
     function ap_copy($src, $dst) {
+        global $conf;
 
         if (is_dir($src)) {
           if (!$dh = @opendir($src)) return false;
@@ -684,7 +685,10 @@ class ap_manage {
           return $ok;
 
         } else {
+            $exists = @file_exists($dst);
+
             if (!@copy($src,$dst)) return false;
+            if (!$exists && !empty($conf['fperm'])) chmod($dst, $conf['fperm']);
             @touch($dst,filemtime($src));
         }
 
