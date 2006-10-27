@@ -492,7 +492,8 @@ function p_get_first_heading($id){
 function p_xhtml_cached_geshi($code, $language) {
   $cache = getCacheName($language.$code,".code");
 
-  if (@file_exists($cache) && !$_REQUEST['purge']) {
+  if (@file_exists($cache) && !$_REQUEST['purge'] &&
+     (filemtime($cache) > filemtime(DOKU_INC . 'inc/geshi.php'))) {
 
     $highlighted_code = io_readFile($cache, false);
     @touch($cache);
