@@ -98,11 +98,14 @@ $lang['disableactions_wikicode'] = 'Ver el fuente/Exportar en formato crudo (raw
 $lang['disableactions_other'] = 'Otras acciones (separadas por coma)';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'Comprobar actualizaciones y advertencias de seguridad? Esta característica requiere que Dokuwiki se conecte a splitbrain.org.
+Check for updates and security warnings? DokuWiki needs to contact splitbrain.org for this feature.';
 $lang['userewrite']  = 'Usar URLs bonitas';
 $lang['useslash']    = 'Usar barra (/) como separador de espacios de nombres en las URLs';
 $lang['usedraft']    = 'Guardar automáticamente un borrador mientras se edita';
 $lang['sepchar']     = 'Separador de palabras en nombres de páginas';
 $lang['canonical']   = 'Usar URLs totalmente canónicas';
+$lang['compression'] = 'Método de compresión para archivos en el ático';
 $lang['autoplural']  = 'Controlar plurales en enlaces';
 $lang['usegzip']     = 'Usar gzip para archivos del ático';
 $lang['cachetime']   = 'Edad máxima para caché (segundos)';
@@ -175,3 +178,7 @@ $lang['rss_linkto_o_page']    = 'la página revisada';
 $lang['rss_linkto_o_rev']     = 'lista de revisiones';
 $lang['rss_linkto_o_current'] = 'la página actual';
 
+/* compression options */
+$lang['compression_o_0']   = 'Ninguna';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
