@@ -128,6 +128,7 @@ $lang['sitemap']     = 'Generar sitemap de Google (días)';
 $lang['rss_type']    = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']  = 'Resumen XML enlaza a';
 $lang['rss_update']  = 'Intervalo de actualización de resumen XML (segundos)';
+$lang['recent_days'] = 'Cuántos cambios recientes mantener (días)';
 
 /* Target options */
 $lang['target____wiki']      = 'Ventana para enlaces internos';
