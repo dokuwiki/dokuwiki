@@ -11,6 +11,11 @@
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'rtl';
 
+$lang['btn_draft']  = 'עריכת טיוטה';
+$lang['btn_recover']= 'שחזור טיוטה';
+$lang['btn_draftdel']= 'מחיקת טיוטה';
+$lang['draftdate']  = 'טיוטה נשמרה ב-';
+
 $lang['btn_edit']   = 'עריכה';
 $lang['btn_search'] = 'חפש';
 $lang['btn_save']   = 'שמור';
@@ -23,7 +28,7 @@ $lang['btn_cancel'] = 'בטל';
 $lang['btn_index']  = 'אינדקס';
 $lang['btn_source'] = 'הצג את מקור הדף';
 $lang['btn_show']   = 'הצג דף';
-$lang['btn_create'] = 'צור דף זה';
+$lang['btn_create'] = 'יצירת דף';
 $lang['btn_secedit']= 'עריכה';
 $lang['btn_login']  = 'כניסה';
 $lang['btn_logout'] = 'יציאה';
@@ -118,7 +123,7 @@ $lang['by']         = 'על ידי';
 $lang['deleted']    = 'נמחק';
 $lang['created']    = 'נוצר';
 $lang['restored']   = 'שוחזר';
-$lang['summary']    = 'עריכת תקציר';
+$lang['summary']    = 'תקציר העריכה';
 
 $lang['mail_newpage'] = 'דף נוסף:';
 $lang['mail_changed'] = 'דף שונה:';

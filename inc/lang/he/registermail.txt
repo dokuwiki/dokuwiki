@@ -1,0 +1,14 @@
+משתמש חדש נרשם. הנה הפרטים:
+
+שם משתמש   : @NEWUSER@
+שם מלא     : @NEWNAME@
+דוא"ל      : @NEWEMAIL@
+
+תאריך      : @DATE@
+דפדפן      : @BROWSER@
+כתובת רשת  : @IPADDRESS@
+שם המחשב   : @HOSTNAME@
+
+-- 
+דוא"ל זה נוצר על ידי DokuWiki ב-
+@DOKUWIKIURL@

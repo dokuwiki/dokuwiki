@@ -1,0 +1,29 @@
+# זוהי רשימת מילים ממנה מתעלם סורק התוכן, אחת בכל שורה
+# בעורכך קובץ זה עליך לודא כי נעשה שימוש בסימני סוף שורה של UNIX (שורה חדשה ללא החזרת הסמן)
+# אין צורך לכלול מילים בנות פחות משלוש אותיות - אלו נפסחות בכל מקרה
+# רשימה זו מבוססת על אלו הנמצאות ב- http://www.ranks.nl/stopwords
+about
+are
+and
+you
+your
+them
+their
+com
+for
+from
+into
+how
+that
+the
+this
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www

@@ -13,5 +13,5 @@ User        : @USER@
 
 --
 
-הדף הזה נוצר ע"י DokuWiki ב-
+דף זה נוצר ע"י DokuWiki ב-
 @DOKUWIKIURL@
