@@ -11,10 +11,10 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
 		return array(
 			'author' => 'Ben Coburn',
 			'email'  => 'btcoburn@silicodon.net',
-			'date'   => '2006-08-30',
+			'date'   => '2006-10-29',
 			'name'   => 'Import Old Changelog',
 			'desc'   => 'Imports and converts the single file changelog '.
-                        'from the 2006-03-09b release to the new format. '.
+                        'from the 2006-03-09 release to the new format. '.
                         'Also reconstructs missing changelog data from  '.
                         'old revisions kept in the attic.',
             'url'    => 'http://wiki.splitbrain.org/wiki:changelog'
@@ -53,7 +53,7 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
             if ($sum===$lang['deleted']) { $type = 'D'; }
             // build new log line
             $tmp = array();
-            $tmp['date']  = $oldline[0];
+            $tmp['date']  = (int)$oldline[0];
             $tmp['ip']    = $oldline[1];
             $tmp['type']  = $type;
             $tmp['id']    = $oldline[2];
@@ -86,7 +86,7 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
                     if (!isset($logs[$id])) { $logs[$id] = array(); }
                     if (!isset($logs[$id][$date])) {
                         $tmp = array();
-                        $tmp['date']  = $date;
+                        $tmp['date']  = (int)$date;
                         $tmp['ip']    = '127.0.0.1'; // original ip lost
                         $tmp['type']  = 'E';
                         $tmp['id']    = $id;
@@ -107,17 +107,13 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
 
     }
 
-    function savePerPageChanges($id, &$changes, &$recent, $trim_time) {
-        $out_lines = array();
+    function savePerPageChanges($id, &$changes, &$recent) {
         ksort($changes); // ensure correct order of changes from attic
-        foreach ($changes as $tmp) {
-            $line = implode("\t", $tmp)."\n";
-            array_push($out_lines, $line);
-            if ($tmp['date']>$trim_time) {
-                $recent[$tmp['date']] = $line;
-            }
+        foreach ($changes as $date => $tmp) {
+            $changes[$date] = implode("\t", $tmp)."\n";
+            $recent[$date] = &$changes[$date];
         }
-        io_saveFile(metaFN($id, '.changes'), implode('', $out_lines));
+        io_saveFile(metaFN($id, '.changes'), implode('', $changes));
     }
 
     function resetTimer() {
@@ -147,9 +143,8 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
         // save per-page changelogs
         $this->resetTimer();
         $recent = array();
-        $trim_time = time() - $conf['recent_days']*86400;
         foreach ($log as $id => $page) {
-            $this->savePerPageChanges($id, $page, $recent, $trim_time);
+            $this->savePerPageChanges($id, $page, $recent);
         }
         // save recent changes cache
         $this->resetTimer();
