@@ -1,0 +1,71 @@
+<?php
+/**
+ * hebrew language file
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     DoK <kamberd@yahoo.com>
+ */
+
+$lang['menu'] = 'ניהול הרחבות';
+
+// custom language strings for the plugin
+$lang['download'] = "הורדת והתקנת הרחבה חדשה";
+$lang['manage'] = "הרחבות מותקנות";
+
+$lang['btn_info'] = 'מידע';
+$lang['btn_update'] = 'עידכון';
+$lang['btn_delete'] = 'מחיקה';
+$lang['btn_settings'] = 'הגדרות';
+$lang['btn_download'] = 'הורדה';
+$lang['btn_enable'] = 'שמירה';
+
+$lang['url']              = 'URL';
+
+$lang['installed']        = 'מותקנות:';
+$lang['lastupdate']       = 'עודכנו לאחרונה:';
+$lang['source']           = 'מקור:';
+$lang['unknown']          = 'לא ידוע';
+
+// ..ing = header message
+// ..ed = success message
+
+$lang['updating']         = 'מעדכן ...';
+$lang['updated']          = 'ההרחבה %s עודכנה בהצלחה';
+$lang['updates']          = 'ההרחבות הבאות עודכנו בהצלחה';
+$lang['update_none']      = 'לא נמצאו עידכונים.';
+
+$lang['deleting']         = 'מוחק ...';
+$lang['deleted']          = 'ההרחבה %s נמחקה.';
+
+$lang['downloading']      = 'מוריד ...';
+$lang['downloaded']       = 'ההרחבה %s הותקנה בהצלחה';
+$lang['downloads']        = 'ההרחבות הבאות הותקנו בהצלחה:';
+$lang['download_none']    = 'לא נמצאו הרחבות או שחלה בעיה בלתי ידועה במהלך ההורדה וההתקנה.';
+
+// info titles
+$lang['plugin']           = 'הרחבה:';
+$lang['components']       = 'רכיבים';
+$lang['noinfo']           = 'הרחבה זו לא השיבה מידע, יתכן כי היא אינה בתוקף.';
+$lang['name']             = 'שם:';
+$lang['date']             = 'תאריך:';
+$lang['type']             = 'סוג:';
+$lang['desc']             = 'תיאור:';
+$lang['author']           = 'מחבר:';
+$lang['www']              = 'רשת:';
+
+// error messages
+$lang['error']            = 'שגיאה לא ידועה ארעה.';
+$lang['error_download']   = 'כשל בהורדת קובץ ההרחבה: %s';
+$lang['error_badurl']     = 'כנראה כתובת שגויה - כשל בקביעת שם הקובץ מהכתובת';
+$lang['error_dircreate']  = 'כשל ביצירת תיקיה זמנית לקבלת ההורדה';
+$lang['error_decompress'] = 'מנהל ההרחבות כשל בפרישת הקובץ שהורד. '.
+                            'יתכן כי זו תוצאה של הורדה תקולה ובמקרה זה עליך לנסות שנית; '.
+                            'או שיתכן כי תסדיר הכיווץ אינו ידוע, במקרה זה יהיה עליך '.
+                            'להוריד ולהתקין את ההרחבה ידנית.';
+$lang['error_copy']       = 'חלה שגיאה בהעתקת הקובץ בניסיון להתקין קבצים להרחבה '.
+                            '<em>%s</em>: ייתכן כי הדיסק מלא או שהרשאות הגישה לקבצים שגויות. '.
+                            'יתכן כי בשל כך נוצרה התקנה חלקית של ההרחבה שתשאיר את התקנת הויקי שלך לא יציבה.';
+$lang['error_delete']     = 'חלה שגיאה בעת ניסיון למחיקת ההרחבה <em>%s</em>.  '.
+                            'הסיבה הסבירה ביותר היא הרשאות גישה לקבצים ולספריות שאינן מספקות';
+
+//Setup VIM: ex: et ts=4 enc=utf-8 :
