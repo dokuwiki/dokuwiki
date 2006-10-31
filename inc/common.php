@@ -89,15 +89,16 @@ function pageinfo(){
 
   $info['namespace'] = getNS($ID);
   $info['locked']    = checklock($ID);
-  $info['filepath']  = realpath(wikiFN($ID,$REV));
+  $info['filepath']  = realpath(wikiFN($ID));
   $info['exists']    = @file_exists($info['filepath']);
-  if($REV && !$info['exists']){
+  if($REV){
     //check if current revision was meant
-    $cur = wikiFN($ID);
-    if(@file_exists($cur) && (@filemtime($cur) == $REV)){
-      $info['filepath'] = realpath($cur);
-      $info['exists']   = true;
+    if($info['exists'] && (@filemtime($info['filepath'])==$REV)){
       $REV = '';
+    }else{
+      //really use old revision
+      $info['filepath'] = realpath(wikiFN($ID,$REV));
+      $info['exists']   = @file_exists($info['filepath']);
     }
   }
   $info['rev'] = $REV;
