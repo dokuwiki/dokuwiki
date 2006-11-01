@@ -592,6 +592,9 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   global $lang;
   global $ACT;
 
+  // don't print the search form if search action has been disabled
+  if (!actionOk('search')) return;
+
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
