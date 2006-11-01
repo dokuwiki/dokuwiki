@@ -12,6 +12,7 @@
   width: auto;
   margin-bottom: 2em;
   background-color: __background_alt__;
+  color: __text__;
   padding: 0 1em;
 }
 #config__manager legend {
@@ -40,12 +41,21 @@
     height: 4em;
 }
 
+#config__manager tr .input,
+#config__manager tr input,
+#config__manager tr textarea,
+#config__manager tr select {
+  background-color: #fff;
+  color: #000;
+}
+
 #config__manager tr.default .input,
 #config__manager tr.default input,
 #config__manager tr.default textarea,
 #config__manager tr.default select,
 #config__manager .selectiondefault {
   background-color: #ccddff;
+  color: #000;
 }
 
 #config__manager tr.protected .input,
@@ -54,9 +64,10 @@
 #config__manager tr.protected select,
 #config__manager tr.protected .selection {
   background-color: #ffcccc!important;
+  color: #000 !important;
 }
 
-#config__manager td.error  { background-color: red; }
+#config__manager td.error  { background-color: red; color: #000;}
 
 #config__manager .selection {
   width: 14.8em;
