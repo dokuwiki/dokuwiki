@@ -126,7 +126,7 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
         }else{
             $item->title = $recent['id'];
         }
-        if(!empty($recent['sum'])){
+        if($conf['rss_show_summary'] && !empty($recent['sum'])){
             $item->title .= ' - '.strip_tags($recent['sum']);
         }
 
