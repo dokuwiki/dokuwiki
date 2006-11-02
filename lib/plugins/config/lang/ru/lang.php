@@ -19,7 +19,7 @@ $lang['locked']     = 'Файл настройки недоступен для �
 
 /* --- Config Setting Headers --- */
 $lang['_configuration_manager'] = 'Настройки Вики'; //same as heading in intro.txt
-$lang['_header_dokuwiki'] = 'Параметры ДокуВики';
+$lang['_header_dokuwiki'] = 'Параметры DokuWiki';
 $lang['_header_plugin'] = 'Параметры плагинов';
 $lang['_header_template'] = 'Параметры шаблонов';
 $lang['_header_undefined'] = 'Прочие параметры';
@@ -91,18 +91,26 @@ $lang['passcrypt']   = 'Метод шифрования пароля';    //Used
 $lang['defaultgroup']= 'Группа по умолчанию';          //Default groups new Users are added to
 $lang['superuser']   = 'Администратор';              //The admin can be user or @group
 $lang['profileconfirm'] = 'Пароль для изменения профиля';     //Require current password to langirm changes to user profile
+$lang['disableactions'] = 'Заблокировать операции DokuWiki';
+$lang['disableactions_check'] = 'Проверка';
+$lang['disableactions_subscription'] = 'Подписка/Отмена подписки';
+$lang['disableactions_wikicode'] = 'Показ/экспорт исходного текста';
+$lang['disableactions_other'] = 'Другие операции (через запятую)';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'Проверять наличие обновлений и предупреждений о безопасности? Для этого DokuWiki потребуется связываться со splitbrain.org.';
 $lang['userewrite']  = 'Удобочитаемые адреса (URL)';             //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $lang['useslash']    = 'Использовать слэш';                 //use slash instead of colon? only when rewrite is on
 $lang['usedraft']    = 'Автоматически сохранять черновик в время правки';
 $lang['sepchar']     = 'Разделитель слов в имени страницы';  //word separator character in page names; may be a
 $lang['canonical']   = 'Полные канонические адреса (URL)';  //Should all URLs use full canonical http://... style?
 $lang['autoplural']  = 'Автоматическое мн. число';               //try (non)plural form of nonexisting files?
-$lang['usegzip']     = 'Использовать gzip (для истории правок)';      //gzip old revisions?
+$lang['compression'] = 'Метод сжатия для архивных файлов';
 $lang['cachetime']   = 'Время жизни кэш-файла (сек.)';  //maximum age for cachefile in seconds (defaults to a day)
 $lang['locktime']    = 'Время блокировки страницы (сек.)';  //maximum age for lockfiles (defaults to 15 minutes)
+$lang['fetchsize']   = 'Максимальный размер файла (в байтах) который fetch.php может скачивать с внешнего источника';
 $lang['notify']      = 'Е-мэйл для извещений';      //send change info to this email (leave blank for nobody)
+$lang['registernotify'] = 'Посылать информацию о новых зарегистрированных пользователях на этот адрес е-мэйл';
 $lang['mailfrom']    = 'Е-мэйл Вики (От:)';            //use this email when sending mails
 $lang['gzip_output'] = 'Использовать gzip Content-Encoding для xhtml';
 $lang['gdlib']       = 'Версия GD Lib';              //the GDlib version (0, 1 or 2) 2 tries to autodetect
@@ -117,7 +125,8 @@ $lang['sitemap']     = 'Карта сайта для Google (дни)';   //Creat
 
 $lang['rss_type']    = 'Тип RSS';             //type of RSS feed to provide, by default:
 $lang['rss_linkto']  = 'Ссылки в RSS';              //what page RSS entries link to:
-$lang['rss_update']  = 'XML feed update interval (sec)';
+$lang['rss_update']  = 'Интервал обновления XML-ленты (сек.)';
+$lang['recent_days'] = 'На сколько дней назад сохранять недавние изменения';
 
 //Set target to use when creating links - leave empty for same window
 $lang['target____wiki']      = 'target для внутренних ссылок';
@@ -144,7 +153,7 @@ $lang['ftp____root'] = 'ftp - корневая директория';
 /* userewrite options */
 $lang['userewrite_o_0'] = '(нет)';
 $lang['userewrite_o_1'] = 'htaccess';
-$lang['userewrite_o_2'] = 'средствами ДокуВики';
+$lang['userewrite_o_2'] = 'средствами DokuWiki';
 
 /* deaccent options */
 $lang['deaccent_o_0'] = 'отключить';
@@ -167,4 +176,9 @@ $lang['rss_linkto_o_diff']    = 'отличия от текущей';
 $lang['rss_linkto_o_page']    = 'текст страницы';
 $lang['rss_linkto_o_rev']     = 'история правок';
 $lang['rss_linkto_o_current'] = 'текущая версия';
+
+/* compression options */
+$lang['compression_o_0']   = 'без сжатия';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
 

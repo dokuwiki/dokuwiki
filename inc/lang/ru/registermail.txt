@@ -1,0 +1,14 @@
+Был зарегистрирован новый пользователь. Подробности:
+
+Логин       : @NEWUSER@
+Полное имя  : @NEWNAME@
+E-mail      : @NEWEMAIL@
+
+Дата        : @DATE@
+Броузер     : @BROWSER@
+Адрес IP    : @IPADDRESS@
+Хост        : @HOSTNAME@
+
+-- 
+Это сообщение было сгенерировано DokuWiki по адресу
+@DOKUWIKIURL@
