@@ -471,8 +471,8 @@ function register(){
   $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
   $_POST['login'] = cleanID($_POST['login']);
   //clean fullname and email
-  $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%]+/','',$_POST['fullname']));
-  $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%]+/','',$_POST['email']));
+  $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['fullname']));
+  $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['email']));
 
   if( empty($_POST['login']) ||
       empty($_POST['fullname']) ||
@@ -555,8 +555,8 @@ function updateprofile() {
   }
 
   //clean fullname and email
-  $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%]+/','',$_POST['fullname']));
-  $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%]+/','',$_POST['email']));
+  $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['fullname']));
+  $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['email']));
 
   if (empty($_POST['fullname']) || empty($_POST['email'])) {
     msg($lang['profnoempty'],-1);
