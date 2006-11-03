@@ -149,7 +149,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
     //add but don't recurse
     $return = false;
-  }elseif($type == 'f' && !preg_match('#\.txt$#',$file)){
+  }elseif($type == 'f' && ($opts['nofiles'] || !preg_match('#\.txt$#',$file))){
     //don't add
     return false;
   }

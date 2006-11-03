@@ -133,7 +133,7 @@ function ajax_medians(){
   $lvl = count(explode(':',$ns));
 
   $data = array();
-  search($data,$conf['mediadir'],'search_index',array(),$dir);
+  search($data,$conf['mediadir'],'search_index',array('nofiles' => true),$dir);
   foreach($data as $item){
     $item['level'] = $lvl+1;
     echo media_nstree_li($item);

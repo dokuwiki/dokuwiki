@@ -469,7 +469,7 @@ function media_nstree($ns){
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
     $data = array();
-    search($data,$conf['mediadir'],'search_index',array('ns' => $ns));
+    search($data,$conf['mediadir'],'search_index',array('ns' => $ns, 'nofiles' => true));
 
     // wrap a list with the root level around the other namespaces
     $item = array( 'level' => 0, 'id' => '',
