@@ -654,7 +654,8 @@ function act_resendpwd(){
             msg($lang['resendpwdmissing'], -1);
             return false;
         } else {
-            $user = $_POST['login'];
+            $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
+            $user = cleanID($_POST['login']);
         }
 
         $userinfo = $auth->getUserData($user);
