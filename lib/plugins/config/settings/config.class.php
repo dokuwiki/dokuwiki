@@ -472,7 +472,7 @@ if (!class_exists('setting_password')) {
 
 if (!class_exists('setting_email')) {
   class setting_email extends setting_string {
-    var $_pattern = '#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i';
+    var $_pattern = '#^\s*(([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)(,\s*([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+))*)?\s*$#i';
   }
 }
 
