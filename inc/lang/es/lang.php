@@ -226,6 +226,7 @@ $lang['i_modified']   = 'Por razones de seguridad este script sólo funcionará 
 		      Usted deberá o bien extraer nuevamente los ficheros del paquete bajado o bien consultar las
                          <a href="http://wiki.splitbrain.org/wiki:install">instrucciones de instalación de Dokuwiki</a> completas.';
 $lang['i_funcna']     = 'La función de PHP <code>%s</code> no está disponible. Tal vez su proveedor de hosting la ha deshabilitado por alguna razón?';
+$lang['i_phpver']     = 'Su versión de PHP <code>%s</code> es menor que la necesaria <code>%s</code>. Es necesario que actualice su instalación de PHP.';
 $lang['i_permfail']   = '<code>%s</code> no es escribible por DokuWiki. Es necesario que usted establezca correctamente los permisos de este directorio!';
 $lang['i_confexists'] = '<code>%s</code> ya existe';
 $lang['i_writeerr']   = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';
