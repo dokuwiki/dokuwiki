@@ -48,6 +48,21 @@ function idx_getPageWords($page){
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
 
+// ensure the deaccented or romanised page names of internal links are added to the token array
+// (this is necessary for the backlink function -- there maybe a better way!)
+    if ($conf['deaccent']) {
+      $links = p_get_metadata($page,'relation references');
+
+      $tmp = join(' ',array_keys($links));                // make a single string
+      $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
+      $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
+
+      foreach ($link_tokens as $link_token) {
+        if (isset($tokens[$link_token])) continue;
+        $tokens[$link_token] = 1;
+      }
+    }
+
     $words = array();
     foreach ($tokens as $word => $count) {
         // simple filter to restrict use of utf8_stripspecials

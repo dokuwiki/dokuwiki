@@ -105,12 +105,14 @@ function ft_pageSearch($query,&$poswords){
  */
 function ft_backlinks($id){
     global $conf;
+    $swfile   = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+    $stopwords = @file_exists($swfile) ? file($swfile) : array();
+
     $result = array();
 
     // quick lookup of the pagename
     $page    = noNS($id);
-    $sw      = array(); // we don't use stopwords here
-    $matches = idx_lookup(idx_tokenizer($page,$sw));  // pagename may contain specials (_ or .)
+    $matches = idx_lookup(idx_tokenizer($page,$stopwords));  // pagename may contain specials (_ or .)
     $docs    = array_keys(ft_resultCombine(array_values($matches)));
     $docs    = array_filter($docs,'isVisiblePage'); // discard hidden pages
     if(!count($docs)) return $result;
@@ -119,7 +121,7 @@ function ft_backlinks($id){
     // check metadata for matching links
     foreach($docs as $match){
         // metadata relation reference links are already resolved
-        $links = p_get_metadata($match,"relation references");
+        $links = p_get_metadata($match,'relation references');
         if (isset($links[$id])) $result[] = $match;
     }
 
