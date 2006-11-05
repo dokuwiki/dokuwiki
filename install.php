@@ -310,7 +310,7 @@ EOT;
             $output .=  "*               @ALL          8\n";
         }
 
-				$output .=  "*               @admin      255\n";
+        $output .=  "*               @admin      255\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'acl.auth.php', $output);
     }
     return $ok;
@@ -409,13 +409,20 @@ function check_permissions(){
 }
 
 /**
- * Check the availability of functions used in DokuWiki
+ * Check the availability of functions used in DokuWiki and the PHP version
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function check_functions(){
     global $error;
     global $lang;
+    $ok = true;
+
+    if(version_compare(phpversion(),'4.3.3','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'4.3.3');
+        $ok = false;
+    }
+
     $funcs = explode(' ','addslashes basename call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
                          'glob header ignore_user_abort ini_get mail mkdir '.
@@ -427,7 +434,6 @@ function check_functions(){
       $funcs[] = 'utf8_decode';
     }
 
-    $ok = true;
     foreach($funcs as $func){
         if(!function_exists($func)){
             $error[] = sprintf($lang['i_funcna'],$func);

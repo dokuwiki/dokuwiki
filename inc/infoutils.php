@@ -81,8 +81,8 @@ function check(){
 
   msg('DokuWiki version: '.getVersion(),1);
 
-  if(version_compare(phpversion(),'4.3.0','<')){
-    msg('Your PHP version is too old ('.phpversion().' vs. 4.3.+ recommended)',-1);
+  if(version_compare(phpversion(),'4.3.3','<')){
+    msg('Your PHP version is too old ('.phpversion().' vs. 4.3.3+ recommended)',-1);
   }elseif(version_compare(phpversion(),'4.3.10','<')){
     msg('Consider upgrading PHP to 4.3.10 or higher for security reasons (your version: '.phpversion().')',0);
   }else{
