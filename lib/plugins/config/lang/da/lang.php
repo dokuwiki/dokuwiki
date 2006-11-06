@@ -96,12 +96,14 @@ $lang['disableactions_wikicode'] = 'Vis kilde/eksporter råtekst';
 $lang['disableactions_other'] = 'Andre muligheder (kommasepareret)';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'Tjek for opdateringer og sikkerheds advarsler? DokuWiki er nød til at kontakte splitbrain.org for denne funktion.';
 $lang['userewrite']  = 'Brug pæne URLer';
 $lang['useslash']    = 'Brug skråstreg som navnerumsdeler i URLer';
 $lang['usedraft']    = 'Gem automatisk en kladde under redigering';
 $lang['sepchar']     = 'Orddelingstegn til sidenavne';
 $lang['canonical']   = 'Benyt fuldt kanoniske URLer';
 $lang['autoplural']  = 'Check for flertalsendelser i links';
+$lang['compression'] = 'Kompressions metode for attic filer';
 $lang['usegzip']     = 'Benyt gzip til attic filer';
 $lang['cachetime']   = 'Maksimum levetid for cache (sek)';
 $lang['locktime']    = 'Maksimum levetid for låsningsfiler (sek)';
@@ -123,6 +125,7 @@ $lang['sitemap']     = 'Generer Google sitemap (dage)';
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed linker til';
 $lang['rss_update']  = 'XML feed opdateringsinterval (sek)';
+$lang['recent_days'] = 'Hvor mange nye ændringer der skal beholdes (dage)';
 
 /* Target options */
 $lang['target____wiki']      = 'Destinationsvindue til interne links';
@@ -173,3 +176,7 @@ $lang['rss_linkto_o_page']    = 'den redigerede side';
 $lang['rss_linkto_o_rev']     = 'liste over ændringer';
 $lang['rss_linkto_o_current'] = 'den nuværende side';
 
+/* compression options */
+$lang['compression_o_0']   = 'ingen';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';

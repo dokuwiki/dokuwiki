@@ -191,8 +191,35 @@ $lang['subscribe_noaddress']= 'Ingen adresse knyttet til dit login, du kan ikke 
 $lang['unsubscribe_success']= 'Fjernet %s fra abonnentliste for %s';
 $lang['unsubscribe_error']  = 'Fejl ved fjernelse af %s fra abonnentliste for %s';
 
-+/* auth.class language support */
-+$lang['authmodfailed']   = 'Fejl i brugervalideringens konfiguration. Kontakt venligst wikiens administrator.';
-+$lang['authtempfail']    = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
+/* auth.class language support */
+$lang['authmodfailed']   = 'Fejl i brugervalideringens konfiguration. Kontakt venligst wikiens administrator.';
+$lang['authtempfail']    = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
+
+/* installer strings */
+$lang['i_chooselang'] = 'Vælg dit sprog';
+$lang['i_installer']  = 'DokuWiki Installer';
+$lang['i_wikiname']   = 'Wiki Navn';
+$lang['i_enableacl']  = 'Brug ACL (foreslået)';
+$lang['i_superuser']  = 'Superbruger';
+$lang['i_problems']   = 'Installeren fandt nogle problemer, vist nedenunder. Du kan ikke fortsætte før du har rettet dem.';
+$lang['i_modified']   = 'Af sikkerheds hensyn vil dette script kun virke på en ny og umodificeret Dokuwiki installation.
+                         Du burde enten gen-udpakke filerne fra den downloaded pakke eller tjekke den fuldstændige
+                         <a href="http://wiki.splitbrain.org/wiki:install">DokuWiki installations instruktioner</a>';
+$lang['i_funcna']     = 'PHP funtionen <code>%s</code> er ikke tilgængelig. Måske har din udbyder slået det fra af en eller anden grund?';
+$lang['i_phpver']     = 'Din PHP version <code>%s</code> er mindre en den nødvendige <code>%s</code>. Du er nÃ¸d til at opgradere din PHP installation.';
+$lang['i_permfail']   = 'DokuWiki kan ikke skrive til <code>%s</code>. Du er nød til at rette tilladelses indstillingerne for denne mappe!';
+$lang['i_confexists'] = '<code>%s</code> eksisterer allerede';
+$lang['i_writeerr']   = 'Kunne ikke oprette <code>%s</code>. Du bliver nød til at tjekke mappe/fil- tilladelserne og oprette filen manuelt.';
+$lang['i_badhash']    = 'uigenkendelig eller modificeret dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - ulovlig eller tom vÃ¦rdi';
+$lang['i_success']    = 'Konfigurationen fulførtedes med success.  Du kan nu slette install.php filen. Forsæt til
+                        <a href="doku.php">din nye DokuWiki</a>.';
+$lang['i_failure']    = 'Nogle fejl forekom mens konfigurations filerne skulle skrives. Du er mulighvis nød til at fixe dem manuelt før
+                         du kan bruge <a href="doku.php">din nye DokuWiki</a>.';
+$lang['i_policy']     = 'Begyndende ACL politik';
+$lang['i_pol0']       = 'Åben Wiki (alle kan læse, skrive og uploade)';
+$lang['i_pol1']       = 'Offentlig Wiki (alle kan læse, kun registrerede brugere kan skrive og uploade)';
+$lang['i_pol2']       = 'Lukket Wiki (kun for registerede brugere kan læse, skrive og uploade)';
+$lang['i_retry']      = 'Forsøg igen';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

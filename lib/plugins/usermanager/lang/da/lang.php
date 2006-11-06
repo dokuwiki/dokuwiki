@@ -46,3 +46,10 @@ $lang['next']   = 'næste';
 $lang['last']   = 'sidste';
 
 $lang['edit_usermissing'] = 'Den valgte bruger blev ikke fundet, brugernavnet kan være slettet eller ændret andetsteds.';
+$lang['user_notify'] = 'Meddel bruger';
+$lang['note_notify'] = 'Meddelelses emails er kun sendt hvis brugeren er givet et nyt kodeord.';
+$lang['note_group'] = 'Nye brugere vil blive tilføjet til standard gruppen (%s) hvis ingen gruppe er opgivet.';
+$lang['add_ok'] = 'Bruger succesfuldt tilføjet';
+$lang['add_fail'] = 'Bruger tilføjelse mislykkedes';
+$lang['notify_ok'] = 'Meddelelses email sendt';
+$lang['notify_fail'] = 'Meddelelses email kunne ikke sendes';

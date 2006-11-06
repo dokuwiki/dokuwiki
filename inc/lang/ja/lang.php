@@ -207,6 +207,7 @@ $lang['i_modified']   = 'セキュリティの理由から、新規もしくは�
                          ダウンロードしたパッケージを再解凍して使用するか、
                          <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']     = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている恐れがあります。';
+$lang['i_phpver']     = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_permfail']   = '<code>%s</code> に書き込みできません。このディレクトリの権限を確認して下さい。';
 $lang['i_confexists'] = '<code>%s</code> は既に存在します';
 $lang['i_writeerr']   = '<code>%s</code> を作成できません。ディレクトリとファイルの権限を確認し、それらを手動で作成する必要があります。';

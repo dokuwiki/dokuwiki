@@ -4,9 +4,9 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     גיא שפר <guysoft@ort.org.il>
- * @author     DoK <kamberd@yahoo.com>
  * @link       http://sourceforge.net/projects/hebdokuwiki/
-*  @author Denis Simakov <akinoame1@gmail.com>
+ * @author Denis Simakov <akinoame1@gmail.com>
+ * @author     DoK <kamberd@yahoo.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'rtl';
@@ -15,6 +15,51 @@ $lang['btn_draft']  = 'עריכת טיוטה';
 $lang['btn_recover']= 'שחזור טיוטה';
 $lang['btn_draftdel']= 'מחיקת טיוטה';
 $lang['draftdate']  = 'טיוטה נשמרה ב-';
+$lang['resendpwdbadauth'] = 'סליחה, קוד אימות זה אינו תקף. יש לודא כי נעשה שימוש במלוא קישור האימות.';
+$lang['resendpwdconfirm'] = 'קישור אימות נשלח בדוא"ל.';
+$lang['js']['keepopen']    = 'השאר חלון פתוח בבחירה';
+$lang['js']['hidedetails'] = 'הסתר פרטים';
+$lang['mediausage']  = 'השתמש בתחביר הבא להתיחסות אל קובץ זה:';
+$lang['mediaview']   = 'הצג את הקובץ המקורי';
+$lang['mediaroot']   = 'root';
+$lang['mediaupload'] = 'כאן ניתן להעלות קובץ למרחב השמות הנוכחי. ליצירת תתי-מרחבי שמות צרפם ב-"העלה" לתחילת שם הקובץ מופרדים בפסיקים';
+$lang['mediaextchange'] = 'סיומת הקובץ השתנתה מ-.%s ל-.%s!';
+$lang['mail_new_user'] = 'משתמש חדש:';
+$lang['subscribe_success']  = '%s נוסף לרשימת המכותבים עבור %s';
+$lang['subscribe_error']    = 'שגיאה בהוספת %s לרשימת המכותבים עבור %s';
+$lang['subscribe_noaddress']= 'אין כתובת המשויכת לרישום שלך ולכן אין באפשרותך להצטרף לרשימת המכותבים';
+$lang['unsubscribe_success']= '%s הוסר מרשימת המכותבים עבור %s';
+$lang['unsubscribe_error']  = 'שגיאה בהסרת %s מרשימת המכותבים עבור %s';
+
+/* auth.class language support */
+$lang['authmodfailed']   = 'תצורת אימות משתמשים גרועה. נא לדווח למנהל הויקי.';
+$lang['authtempfail']    = 'אימות משתמשים אינו זמין כרגע. אם מצב זה נמשך נא להודיע למנהל הויקי.';
+
+/* installer strings */
+$lang['i_chooselang'] = 'נא לבחור שפה';
+$lang['i_installer']  = 'DokuWiki Installer';
+$lang['i_wikiname']   = 'שם הויקי';
+$lang['i_enableacl']  = 'אפשר ACL (מומלץ)';
+$lang['i_superuser']  = 'משתמש-על';
+$lang['i_problems']   = 'המתקין זיהה מספר בעיות המצוינות מטה. אין באפשרותך להמשיך לפני תיקונן.';
+$lang['i_modified']   = 'משיקולי אבטחה תסריט זה יעבוד אך ורק עם התקנת DokuWiki חדשה שלא עברה כל שינוי.
+                         עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להעזר בדף
+                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installation instructions</a>';
+$lang['i_funcna']     = 'פונקצית ה-PHP <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
+$lang['i_phpver']     = 'גרסת ה-PHP שלך <code>%s</code> נמוכה מהדרוש. עליך לשדרג את התקנת ה-PHP';
+$lang['i_permfail']   = '<code>%s</code> אינה ברת כתיבה על ידי DokuWiki. עליך לשנות הרשאות ספריה זו!';
+$lang['i_confexists'] = '<code>%s</code> כבר קיים';
+$lang['i_writeerr']   = 'אין אפשרות ליצור את <code>%s</code>. נא לבדוק את הרשאות הקובץ/ספריה וליצור את הקובץ ידנית.';
+$lang['i_badhash']    = 'קובץ Dokuwiki.php לא מזוהה או שעבר שינויים (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - ערך לא חוקי או ריק';
+$lang['i_success']    = 'ההגדרה הסתימה בהצלחה. באפשרותך למחוק עתה את הקובץ install.php ולהמשיך אל <a href="doku.php">DokuWiki החדש שלך</a>.';
+$lang['i_failure']    = 'מספר שגיאות ארעו בעת כתיבת קבצי התצורה. ייתכן כי יהיה צורך לתקנם ידנית לפני שניתן יהיה להשתמש ב<a href="doku.php">DokuWiki החדש שלך</a>.';
+$lang['i_policy']     = 'מדיניות ACL תחילית';
+$lang['i_pol0']       = 'ויקי פתוח (קריאה, כתיבה והעלאה לכולם)';
+$lang['i_pol1']       = ' ויקי ציבורי (קריאה לכולם, כתיבה והעלאה למשתמשים רשומים)';
+$lang['i_pol2']       = 'ויקי סגור (קריאה, כתיבה והעלאה למשתמשים רשומים בלבד)';
+$lang['i_retry']      = 'נסיון נוסף';
+
 
 $lang['btn_edit']   = 'עריכה';
 $lang['btn_search'] = 'חפש';

@@ -219,6 +219,8 @@ $lang['i_pol1']       = '公共的维基（任何人都有读的权限，只有�
 $lang['i_pol2']       = '关闭的维基（只有注册用户才有读、写、上传的权限）';
 
 $lang['i_retry']      = '重试';
+$lang['i_phpver'] = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
 
