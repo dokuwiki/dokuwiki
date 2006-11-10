@@ -287,8 +287,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->footnotes[count($this->footnotes)] = "@@FNT".($i);
         }
 
-        // output the footnote reference and link, incl. onmouseover for insitu footnote popup
-        $this->doc .= '<a href="#fn__'.$id.'" name="fnt__'.$id.'" id="fnt__'.$id.'" class="fn_top" onmouseover="fnt(\''.$id.'\', this, event);">'.$id.')</a>';
+        // output the footnote reference and link
+        $this->doc .= '<a href="#fn__'.$id.'" name="fnt__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a>';
     }
 
     function listu_open() {

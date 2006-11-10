@@ -44,8 +44,6 @@ function js_out(){
                 DOKU_INC.'lib/scripts/script.js',
                 DOKU_INC.'lib/scripts/tw-sack.js',
                 DOKU_INC.'lib/scripts/ajax.js',
-                DOKU_INC.'lib/scripts/domLib.js',
-                DOKU_INC.'lib/scripts/domTT.js',
              );
     if($edit){
         if($write){
