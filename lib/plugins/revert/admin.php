@@ -25,7 +25,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2005-09-04',
+            'date'   => '2005-11-10',
             'name'   => 'Revert Manager',
             'desc'   => 'Allows you to mass revert recent edits',
             'url'    => 'http://wiki.splitbrain.org/plugin:revert',
@@ -49,63 +49,88 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
      * output appropriate html
      */
     function html() {
-        print $this->plugin_locale_xhtml('intro');
 
-        if(is_array($_REQUEST['revert'])) $this->_revert($_REQUEST['revert']);
+        echo $this->plugin_locale_xhtml('intro');
 
+        $this->_searchform();
 
-        echo '<form method="post">';
-        echo '<input type="text" name="filter" class="edit" />';
-        echo '<input type="submit" class="button" />';
-        echo '</form>';
-
-        $this->_list($_REQUEST['filter']);
+        if(is_array($_REQUEST['revert'])){
+            $this->_revert($_REQUEST['revert']);
+        }elseif(isset($_REQUEST['filter'])){
+            $this->_list($_REQUEST['filter']);
+        }
     }
 
+    /**
+     * Display the form for searching spam pages
+     */
+    function _searchform(){
+        global $lang;
+        echo '<form action="" method="post">';
+        echo '<label>'.$this->getLang('filter').': </label>';
+        echo '<input type="text" name="filter" class="edit" value="'.hsc($_REQUEST['filter']).'" />';
+        echo '<input type="submit" class="button" value="'.$lang['btn_search'].'" />';
+        echo ' <span>'.$this->getLang('note').'</span>';
+        echo '</form><br /><br />';
+    }
+
+    /**
+     * Start the reversion process
+     */
     function _revert($revert){
         global $conf;
-        echo '<hr /><div>';
+
+        echo '<hr /><br />';
+        echo '<p>'.$this->getLang('revstart').'</p>';
+
+        echo '<ul>';
         foreach($revert as $id){
             global $REV;
             $old = getRevisions($id, 0, 1);
             $REV = $old[0];
             if($REV){
                 saveWikiText($id,rawWiki($id,$REV),'old revision restored',false);
-                echo "$id reverted to $REV<br />";
+                printf('<li><div class="li">'.$this->getLang('reverted').'</div></li>',$id,$REV);
             }else{
                 saveWikiText($id,'','',false);
-                echo "$id removed<br />";
+                printf('<li><div class="li">'.$this->getLang('removed').'</div></li>',$id,$REV);
             }
             @set_time_limit(10);
             flush();
         }
-        echo '</div><hr />';
+        echo '</ul>';
+
+        echo '<p>'.$this->getLang('revstop').'</p>';
     }
 
+    /**
+     * List recent edits matching the given filter
+     */
     function _list($filter){
         global $conf;
-        echo '<form method="post">';
+        echo '<hr /><br />';
+        echo '<form action="" method="post">';
+        echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
 
         $recents = getRecents(0,800);
-        print '<ul>';
+        echo '<ul>';
 
+
+        $cnt = 0;
         foreach($recents as $recent){
             if($filter){
                 if(strpos(rawWiki($recent['id']),$filter) === false) continue;
             }
 
-
+            $cnt++;
             $date = date($conf['dformat'],$recent['date']);
 
-            print ($recent['type']==='e') ? '<li class="minor">' : '<li>';
-            print '<div class="li">';
+            echo ($recent['type']==='e') ? '<li class="minor">' : '<li>';
+            echo '<div class="li">';
+            echo '<input type="checkbox" name="revert[]" value="'.hsc($recent['id']).'" checked="checked" id="revert__'.$cnt.'" />';
+            echo '<label for="revert__'.$cnt.'">'.$date.'</label> ';
 
-            print '<input type="checkbox" name="revert[]" value="'.hsc($recent['id']).'" checked=checked />';
-
-
-            print $date.' ';
-
-            print '<a href="'.wl($recent['id'],"do=diff").'">';
+            echo '<a href="'.wl($recent['id'],"do=diff").'">';
             $p = array();
             $p['src']    = DOKU_BASE.'lib/images/diff.png';
             $p['width']  = 15;
@@ -113,10 +138,10 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             $p['title']  = $lang['diff'];
             $p['alt']    = $lang['diff'];
             $att = buildAttributes($p);
-            print "<img $att />";
-            print '</a> ';
+            echo "<img $att />";
+            echo '</a> ';
 
-            print '<a href="'.wl($recent['id'],"do=revisions").'">';
+            echo '<a href="'.wl($recent['id'],"do=revisions").'">';
             $p = array();
             $p['src']    = DOKU_BASE.'lib/images/history.png';
             $p['width']  = 12;
@@ -124,25 +149,26 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             $p['title']  = $lang['btn_revs'];
             $p['alt']    = $lang['btn_revs'];
             $att = buildAttributes($p);
-            print "<img $att />";
-            print '</a> ';
+            echo "<img $att />";
+            echo '</a> ';
 
-            print html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']);
-            print ' &ndash; '.htmlspecialchars($recent['sum']);
+            echo html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']);
+            echo ' &ndash; '.htmlspecialchars($recent['sum']);
 
-            print ' <span class="user">';
-                print $recent['user'].' '.$recent['ip'];
-            print '</span>';
+            echo ' <span class="user">';
+                echo $recent['user'].' '.$recent['ip'];
+            echo '</span>';
 
-            print '</div>';
-            print '</li>';
+            echo '</div>';
+            echo '</li>';
 
             @set_time_limit(10);
             flush();
         }
-        print '</ul>';
+        echo '</ul>';
 
-        echo '<input type="submit">';
+        echo '<input type="submit" class="button" value="'.$this->getLang('revert').'" />';
+
         echo '</form>';
     }
 

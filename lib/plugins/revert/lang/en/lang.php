@@ -13,4 +13,14 @@ $lang['menu'] = 'Revert Manager';
 
 // custom language strings for the plugin
 
+$lang['filter']   = 'Search spammy pages';
+$lang['note']     = 'Note: this search is case sensitive';
+$lang['revert']   = 'Revert selected edits';
+$lang['reverted'] = '%s reverted to revision %s';
+$lang['removed']  = '%s removed';
+$lang['revstart'] = 'Reversion process started. This can take a long time. If the
+                     script times out before finishing, you need to revert in smaller
+                     chunks.';
+$lang['revstop']  = 'Reversion process finished successful.';
+
 //Setup VIM: ex: et ts=4 enc=utf-8 :
