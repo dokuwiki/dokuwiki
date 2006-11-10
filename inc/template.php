@@ -179,6 +179,8 @@ function tpl_metaheaders($alt=true){
 
   // the usual stuff
   $head['meta'][] = array( 'name'=>'generator', 'content'=>'DokuWiki '.getVersion() );
+  $head['link'][] = array( 'rel'=>'search', 'type'=>'application/opensearchdescription+xml',
+                           'href'=>DOKU_BASE.'lib/exe/opensearch.php', 'title'=>$conf['title'] );
   $head['link'][] = array( 'rel'=>'start', 'href'=>DOKU_BASE );
   $head['link'][] = array( 'rel'=>'contents', 'href'=> wl($ID,'do=index',false,'&'),
                            'title'=>$lang['btn_index'] );

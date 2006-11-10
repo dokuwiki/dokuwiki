@@ -23,8 +23,12 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 //call the requested function
-if (!isset($_POST['call'])) { return; }
-$call = 'ajax_'.$_POST['call'];
+if(isset($_POST['call']))
+  $call = 'ajax_'.$_POST['call'];
+else if(isset($_GET['call']))
+  $call = 'ajax_'.$_GET['call'];
+else
+  return;
 if(function_exists($call)){
   $call();
 }else{
@@ -47,6 +51,7 @@ function ajax_qsearch(){
   global $lang;
 
   $query = cleanID($_POST['q']);
+  if(empty($query)) $query = cleanID($_GET['q']);
   if(empty($query)) return;
 
   require_once(DOKU_INC.'inc/html.php');
@@ -65,6 +70,48 @@ function ajax_qsearch(){
     print '</li>';
   }
   print '</ul>';
+}
+
+/**
+ * Support OpenSearch suggestions
+ *
+ * @link   http://www.opensearch.org/Specifications/OpenSearch/Extensions/Suggestions/1.0
+ * @author Mike Frysinger <vapier@gentoo.org>
+ */
+function ajax_suggestions() {
+  global $conf;
+  global $lang;
+
+  $query = cleanID($_POST['q']);
+  if(empty($query)) $query = cleanID($_GET['q']);
+  if(empty($query)) return;
+
+  require_once(DOKU_INC.'inc/html.php');
+  require_once(DOKU_INC.'inc/fulltext.php');
+  require_once(DOKU_INC.'inc/JSON.php');
+
+  $data = array();
+  $data = ft_pageLookup($query);
+  if(!count($data)) return;
+
+  // limit results to 15 hits
+  $data = array_slice($data, 0, 15);
+  $data = array_map('trim',$data);
+  $data = array_map('noNS',$data);
+  $data = array_unique($data);
+  sort($data);
+
+  /* now construct a json */
+  $suggestions = array(
+    $query,  // the original query
+    $data,   // some suggestions
+    array(), // no description
+    array()  // no urls
+  );
+  $json = new JSON();
+
+  header('Content-Type: application/x-suggestions+json');
+  print $json->encode($suggestions);
 }
 
 /**
