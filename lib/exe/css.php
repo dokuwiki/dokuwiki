@@ -116,6 +116,8 @@ function css_out(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_cacheok($cache,$files){
+    if($_REQUEST['purge']) return false; //support purge request
+
     $ctime = @filemtime($cache);
     if(!$ctime) return false; //There is no cache
 
