@@ -133,6 +133,7 @@ function init_paths(){
                  'mediadir'  => 'media',
                  'metadir'   => 'meta',
                  'cachedir'  => 'cache',
+                 'indexdir'  => 'index',
                  'lockdir'   => 'locks');
 
   foreach($paths as $c => $p){
@@ -157,9 +158,7 @@ function init_paths(){
 function init_files(){
   global $conf;
 
-  $files = array( $conf['cachedir'].'/word.idx',
-                  $conf['cachedir'].'/page.idx',
-                  $conf['cachedir'].'/index.idx');
+  $files = array( $conf['indexdir'].'/page.idx');
 
   foreach($files as $file){
     if(!@file_exists($file)){

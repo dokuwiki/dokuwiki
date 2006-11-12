@@ -149,7 +149,7 @@ function ft_backlinks($id){
 function ft_pageLookup($id,$pageonly=true){
     global $conf;
     $id    = preg_quote($id,'/');
-    $pages = file($conf['cachedir'].'/page.idx');
+    $pages = file($conf['indexdir'].'/page.idx');
     $pages = array_values(preg_grep('/'.$id.'/',$pages));
 
     $cnt = count($pages);

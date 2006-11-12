@@ -26,16 +26,59 @@ define('IDX_ASIAN','['.
 
 
 /**
+ * Write a list of strings to an index file.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_saveIndex($pre, $wlen, $idx){
+    global $conf;
+    $fn = $conf['indexdir'].'/'.$pre.$wlen;
+    $fh = @fopen($fn.'.tmp','w');
+    if(!$fh) return false;
+    fwrite($fh,join('',$idx));
+    fclose($fh);
+    if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
+    io_rename($fn.'.tmp', $fn.'.idx');
+    return true;
+}
+
+/**
+ * Read the list of words in an index (if it exists).
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_getIndex($pre, $wlen){
+    global $conf;
+    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
+    if(!@file_exists($fn)) return array();
+    return file($fn);
+}
+
+/**
+ * Create an empty index file if it doesn't exist yet.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_touchIndex($pre, $wlen){
+    global $conf;
+    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
+    if(!@file_exists($fn)){
+        touch($fn);
+        if($conf['fperm']) chmod($fn, $conf['fperm']);
+    }
+}
+
+/**
  * Split a page into words
  *
- * Returns an array of of word counts, false if an error occured
+ * Returns an array of word counts, false if an error occured.
+ * Array is keyed on the word length, then the word index.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function idx_getPageWords($page){
     global $conf;
-    $word_idx = file($conf['cachedir'].'/word.idx');
     $swfile   = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
     if(@file_exists($swfile)){
         $stopwords = file($swfile);
@@ -65,47 +108,40 @@ function idx_getPageWords($page){
 
     $words = array();
     foreach ($tokens as $word => $count) {
-        // simple filter to restrict use of utf8_stripspecials
-        if (preg_match('/[^0-9A-Za-z]/u', $word)) {
-            // handle asian chars as single words (may fail on older PHP version)
-            $asia = @preg_replace('/('.IDX_ASIAN.')/u','\1 ',$word);
-            if(!is_null($asia)) $word = $asia; //recover from regexp failure
-            $arr = explode(' ', utf8_stripspecials($word,' ','._\-:\*'));
-            $arr = array_count_values($arr);
-
-            foreach ($arr as $w => $c) {
-                if (!is_numeric($w) && strlen($w) < 3) continue;
-                $w = utf8_strtolower($w);
-                $words[$w] = $c * $count + (isset($words[$w]) ? $words[$w] : 0);
+        $arr = idx_tokenizer($word,$stopwords);
+        $arr = array_count_values($arr);
+        foreach ($arr as $w => $c) {
+            $l = strlen($w);
+            if(isset($words[$l])){
+                $words[$l][$w] = $c * $count + (isset($words[$l][$w])) ? $words[$l][$w] : 0;
+            }else{
+                $words[$l] = array($w => $c * $count);
             }
-        } else {
-            if (!is_numeric($word) && strlen($word) < 3) continue;
-            $word = strtolower($word);
-            $words[$word] = $count + (isset($words[$word]) ? $words[$word] : 0);
         }
     }
 
-    // arrive here with $words = array(word => frequency)
+    // arrive here with $words = array(wordlen => array(word => frequency))
 
     $index = array(); //resulting index
-    foreach ($words as $word => $freq) {
-    if (is_int(array_search("$word\n",$stopwords))) continue;
-        $wid = array_search("$word\n",$word_idx);
-        if(!is_int($wid)){
-            $word_idx[] = "$word\n";
-            $wid = count($word_idx)-1;
+    foreach (array_keys($words) as $wlen){
+        $word_idx = idx_getIndex('w',$wlen);
+        foreach ($words[$wlen] as $word => $freq) {
+            $wid = array_search("$word\n",$word_idx);
+            if(!is_int($wid)){
+                $word_idx[] = "$word\n";
+                $wid = count($word_idx)-1;
+            }
+            if(!isset($index[$wlen]))
+                $index[$wlen] = array();
+            $index[$wlen][$wid] = $freq;
         }
-        $index[$wid] = $freq;
-    }
 
-    // save back word index
-    $fh = fopen($conf['cachedir'].'/word.idx','w');
-    if(!$fh){
-        trigger_error("Failed to write word.idx", E_USER_ERROR);
-        return false;
+        // save back word index
+        if(!idx_saveIndex('w',$wlen,$word_idx)){
+            trigger_error("Failed to write word index", E_USER_ERROR);
+            return false;
+        }
     }
-    fwrite($fh,join('',$word_idx));
-    fclose($fh);
 
     return $index;
 }
@@ -123,7 +159,7 @@ function idx_addPage($page){
     global $conf;
 
     // load known documents
-    $page_idx = file($conf['cachedir'].'/page.idx');
+    $page_idx = idx_getIndex('page','');
 
     // get page id (this is the linenumber in page.idx)
     $pid = array_search("$page\n",$page_idx);
@@ -131,10 +167,8 @@ function idx_addPage($page){
         $page_idx[] = "$page\n";
         $pid = count($page_idx)-1;
         // page was new - write back
-        $fh = fopen($conf['cachedir'].'/page.idx','w');
-        if(!$fh) return false;
-        fwrite($fh,join('',$page_idx));
-        fclose($fh);
+        if (!idx_saveIndex('page','',$page_idx))
+            return false;
     }
 
     // get word usage in page
@@ -142,46 +176,51 @@ function idx_addPage($page){
     if($words === false) return false;
     if(!count($words)) return true;
 
-    // Open index and temp file
-    $idx = fopen($conf['cachedir'].'/index.idx','r');
-    $tmp = fopen($conf['cachedir'].'/index.tmp','w');
-    if(!$idx || !$tmp){
-       trigger_error("Failed to open index files", E_USER_ERROR);
-       return false;
+    foreach(array_keys($words) as $wlen){
+        // Open index and temp file
+        $fn = $conf['indexdir']."/i$wlen";
+        idx_touchIndex('i',$wlen);
+        $idx = fopen($fn.'.idx','r');
+        $tmp = fopen($fn.'.tmp','w');
+        if(!$idx || !$tmp){
+            trigger_error("Failed to open index files", E_USER_ERROR);
+            return false;
+        }
+
+        // copy from index to temp file, modifying where needed
+        $lno = 0;
+        $line = '';
+        while (!feof($idx)) {
+            // read full line
+            $line .= fgets($idx, 4096);
+            if(substr($line,-1) != "\n") continue;
+
+            // write a new Line to temp file
+            idx_writeIndexLine($tmp,$line,$pid,$words[$wlen][$lno]);
+
+            $line = ''; // reset line buffer
+            $lno++;     // increase linecounter
+        }
+        fclose($idx);
+
+        // add missing lines (usually index and word should contain
+        // the same number of lines, however if the page contained
+        // new words the word file has some more lines which need to
+        // be added here
+        $word_idx = idx_getIndex('w',$wlen);
+        $wcnt = count($word_idx);
+        for($lno; $lno<$wcnt; $lno++){
+            idx_writeIndexLine($tmp,'',$pid,$words[$wlen][$lno]);
+        }
+
+        // close the temp file and move it over to be the new one
+        fclose($tmp);
+        if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
+        // try rename first (fast) fallback to copy (slow)
+        io_rename($fn.'.tmp', $fn.'.idx');
     }
 
-    // copy from index to temp file, modifying were needed
-    $lno = 0;
-    $line = '';
-    while (!feof($idx)) {
-        // read full line
-        $line .= fgets($idx, 4096);
-        if(substr($line,-1) != "\n") continue;
-
-        // write a new Line to temp file
-        idx_writeIndexLine($tmp,$line,$pid,$words[$lno]);
-
-        $line = ''; // reset line buffer
-        $lno++;     // increase linecounter
-    }
-    fclose($idx);
-
-    // add missing lines (usually index and word should contain
-    // the same number of lines, however if the page contained
-    // new words the word file has some more lines which need to
-    // be added here
-    $word_idx = file($conf['cachedir'].'/word.idx');
-    $wcnt = count($word_idx);
-    for($lno; $lno<$wcnt; $lno++){
-        idx_writeIndexLine($tmp,'',$pid,$words[$lno]);
-    }
-
-    // close the temp file and move it over to be the new one
-    fclose($tmp);
-    // try rename first (fast) fallback to copy (slow)
-    io_rename($conf['cachedir'].'/index.tmp',
-              $conf['cachedir'].'/index.idx');
-    return false;
+    return true;
 }
 
 /**
@@ -218,6 +257,34 @@ function idx_writeIndexLine($fh,$line,$pid,$count){
 }
 
 /**
+ * Get the word lengths that have been indexed.
+ *
+ * Reads the index directory and returns an array of lengths
+ * that there are indices for.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_indexLengths($minlen){
+    global $conf;
+    $dir = @opendir($conf['indexdir']);
+    if($dir===false)
+        return array();
+    $idx = array();
+    // Exact match first.
+    if(@file_exists($conf['indexdir']."/i$minlen.idx"))
+        $idx[] = $minlen;
+    while (($f = readdir($dir)) !== false) {
+        if (substr($f,0,1) == 'i' && substr($f,-4) == '.idx'){
+            $i = substr($f,1,-4);
+            if (is_numeric($i) && $i > $minlen)
+                $idx[] = $i;
+        }
+    }
+    closedir($dir);
+    return $idx;
+}
+
+/**
  * Lookup words in index
  *
  * Takes an array of word and will return a list of matching
@@ -234,8 +301,7 @@ function idx_lookup($words){
     $result = array();
 
     // load known words and documents
-    $page_idx = file($conf['cachedir'].'/page.idx');
-    $word_idx = file($conf['cachedir'].'/word.idx');
+    $page_idx = idx_getIndex('page','');
 
     // get word IDs
     $wids = array();
@@ -243,80 +309,93 @@ function idx_lookup($words){
         $result[$word] = array();
         $wild = 0;
         $xword = $word;
+        $wlen = strlen($word);
 
         // check for wildcards
         if(substr($xword,0,1) == '*'){
             $xword = substr($xword,1);
             $wild  = 1;
             $ptn = '/'.preg_quote($xword,'/').'$/';
+            $wlen -= 1;
 #            $l = -1*strlen($xword)-1;
         }
         if(substr($xword,-1,1) == '*'){
             $xword = substr($xword,0,-1);
             $wild += 2;
+            $wlen -= 1;
         }
+        if ($wlen < 3 && $wild == 0 && !is_numeric($xword)) continue;
 
         // look for the ID(s) for the given word
         if($wild){  // handle wildcard search
-            $cnt = count($word_idx);
-            for($wid=0; $wid<$cnt; $wid++){
-                $iword = $word_idx[$wid];
-                if( (($wild==3) && is_int(strpos($iword,$xword))) ||
-#                    (($wild==1) && ("$xword\n" == substr($iword,$l))) ||
-                    (($wild==1) && preg_match($ptn,$iword)) ||
-#                    (($wild==2) && ($xword == substr($iword,0,strlen($xword))))
-                    (($wild==2) && (0 === strpos($iword,$xword)))
+            foreach (idx_indexLengths($wlen) as $ixlen){
+                $word_idx = idx_getIndex('w',$ixlen);
+                $cnt = count($word_idx);
+                for($wid=0; $wid<$cnt; $wid++){
+                    $iword = $word_idx[$wid];
+                    if( (($wild==3) && is_int(strpos($iword,$xword))) ||
+#                        (($wild==1) && ("$xword\n" == substr($iword,$l))) ||
+                        (($wild==1) && preg_match($ptn,$iword)) ||
+#                        (($wild==2) && ($xword == substr($iword,0,strlen($xword))))
+                        (($wild==2) && (0 === strpos($iword,$xword)))
 
-                  ){
-                    $wids[] = $wid;
-                    $result[$word][] = $wid;
+                      ){
+                        if(!isset($wids[$ixlen])) $wids[$ixlen] = array();
+                        $wids[$ixlen][] = $wid;
+                        $result[$word][] = "$ixlen*$wid";
+                    }
                 }
             }
         }else{     // handle exact search
+            $word_idx = idx_getIndex('w',$wlen);
             $wid = array_search("$word\n",$word_idx);
             if(is_int($wid)){
-                $wids[] = $wid;
-                $result[$word][] = $wid;
+                $wids[$wlen] = array($wid);
+                $result[$word][] = "$wlen*$wid";
             }else{
                 $result[$word] = array();
             }
         }
     }
-    sort($wids);
-    $wids = array_unique($wids);
 
-    // Open index
-    $idx = fopen($conf['cachedir'].'/index.idx','r');
-    if(!$idx){
-       msg("Failed to open index file",-1);
-       return false;
-    }
-
-    // Walk the index til the lines are found
     $docs = array();                          // hold docs found
-    $lno  = 0;
-    $line = '';
-    $srch = array_shift($wids);               // which word do we look for?
-    while (!feof($idx)) {
-        // read full line
-        $line .= fgets($idx, 4096);
-        if(substr($line,-1) != "\n") continue;
-        if($lno > $srch)             break;   // shouldn't happen
+    foreach(array_keys($wids) as $wlen){
+        sort($wids[$wlen]);
+        $wids[$wlen] = array_unique($wids[$wlen]);
 
-
-        // do we want this line?
-        if($lno == $srch){
-            // add docs to list
-            $docs[$srch] = idx_parseIndexLine($page_idx,$line);
-
-            $srch = array_shift($wids);        // next word to look up
-            if($srch == null) break;           // no more words
+        // Open index
+        idx_touchIndex('i',$wlen);
+        $idx = fopen($conf['indexdir']."/i$wlen.idx",'r');
+        if(!$idx){
+            msg("Failed to open index file",-1);
+            return false;
         }
 
-        $line = ''; // reset line buffer
-        $lno++;     // increase linecounter
+        // Walk the index til the lines are found
+        $lno  = 0;
+        $line = '';
+        $ixids =& $wids[$wlen];
+        $srch = array_shift($ixids);               // which word do we look for?
+        while (!feof($idx)) {
+            // read full line
+            $line .= fgets($idx, 4096);
+            if(substr($line,-1) != "\n") continue;
+            if($lno > $srch)             break;   // shouldn't happen
+
+            // do we want this line?
+            if($lno == $srch){
+                // add docs to list
+                $docs["$wlen*$srch"] = idx_parseIndexLine($page_idx,$line);
+
+                $srch = array_shift($ixids);        // next word to look up
+                if($srch == null) break;           // no more words
+            }
+
+            $line = ''; // reset line buffer
+            $lno++;     // increase linecounter
+        }
+        fclose($idx);
     }
-    fclose($idx);
 
 
     // merge found pages into final result array
