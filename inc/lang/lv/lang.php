@@ -54,6 +54,7 @@ $lang['register']   = 'Reģistrēties';
 $lang['profile']    = 'Lietotāja vārds';
 $lang['badlogin']   = 'Atvaino, lietotājvārds vai parole aplama.';
 $lang['draftdate']  = 'Melnraksts automātiski saglabāts'; // full dformat date will be added
+$lang['minoredit']  = 'Sīkas izmaiņas';
 
 $lang['regmissing'] = 'Atvaino, jāaizpilda visas ailes.';
 $lang['reguexists'] = 'Atvaino, tāds lietājs jau ir.';
@@ -205,6 +206,7 @@ $lang['i_modified']   = 'Drošības nolūkos šis skripts darbosies tika ar jaun
 $lang['i_writeerr']   = 'Nevar izveidot <code>%s</code>. Jāpārbauda direktorijas/faila tiesības un fails jāizveido pašam.'; 
 $lang['i_confexists'] = '<code>%s</code> jau ir';
 $lang['i_badhash']    = 'nepazīstams via izmainīts dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_phpver']     = 'Jūsu PHP versija <code>%s</code> ir par vecu. Vajag versiju <code>%s</code>. Atjaunojiet savu PHP instalāciju.';
 $lang['i_badval']     = '<code>%s</code> - neatļauta vai tukša vērtība';
 $lang['i_funcna']     = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
 $lang['i_permfail']   = 'Dokuwiki nevar ierakstīt <code>%s</code>. Jālabo direktorijas tiesības!';
