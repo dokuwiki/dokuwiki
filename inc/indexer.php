@@ -96,13 +96,15 @@ function idx_getPageWords($page){
     if ($conf['deaccent']) {
       $links = p_get_metadata($page,'relation references');
 
-      $tmp = join(' ',array_keys($links));                // make a single string
-      $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
-      $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
+      if (!empty($links)) {
+        $tmp = join(' ',array_keys($links));                // make a single string
+        $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
+        $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
 
-      foreach ($link_tokens as $link_token) {
-        if (isset($tokens[$link_token])) continue;
-        $tokens[$link_token] = 1;
+        foreach ($link_tokens as $link_token) {
+          if (isset($tokens[$link_token])) continue;
+          $tokens[$link_token] = 1;
+        }
       }
     }
 

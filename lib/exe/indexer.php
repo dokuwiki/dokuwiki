@@ -198,7 +198,7 @@ function metaUpdate(){
                     0,true);
 
     $meta = array();
-    if(count($info)){
+    if(!empty($info)){
         $meta['date']['created'] = $info[0][1];
         foreach($info as $item){
             if($item[4] != '*'){
