@@ -115,7 +115,7 @@ function idx_getPageWords($page){
         foreach ($arr as $w => $c) {
             $l = strlen($w);
             if(isset($words[$l])){
-                $words[$l][$w] = $c * $count + (isset($words[$l][$w])) ? $words[$l][$w] : 0;
+                $words[$l][$w] = $c * $count + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
             }else{
                 $words[$l] = array($w => $c * $count);
             }
