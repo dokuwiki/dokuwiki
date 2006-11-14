@@ -1117,6 +1117,11 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
     <textarea name="wikitext" id="wiki__text" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
 
+    <?php //bad and dirty event insert hook
+    $evdata = array('writable' => $wr);
+    trigger_event('HTML_EDITFORM_INJECTION', $evdata);
+    ?>
+
     <div id="wiki__editbar">
       <div id="size__ctl"></div>
       <?php if($wr){?>

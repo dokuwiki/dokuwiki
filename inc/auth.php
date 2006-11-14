@@ -73,6 +73,7 @@
     }
 
     //load ACL into a global array
+    global $AUTH_ACL;
     if(is_readable(DOKU_CONF.'acl.auth.php')){
       $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
     }else{
