@@ -75,7 +75,7 @@
   $rss->title = $conf['title'].(($ns) ? ' '.$ns : '');
   $rss->link  = DOKU_URL;
   $rss->syndicationURL = DOKU_URL.'feed.php';
-  $rss->cssStyleSheet  = DOKU_URL.'lib/styles/feed.css';
+  $rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
 
   $image = new FeedImage();
   $image->title = $conf['title'];

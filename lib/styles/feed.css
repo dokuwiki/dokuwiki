@@ -1,7 +1,7 @@
 rss channel, feed, RDF {
   font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-  background-color: White;
-  color: Black;
+  background-color: __background__;
+  color: __text__;
   margin: 0;
   padding: 0;
 }
@@ -16,7 +16,7 @@ category, image {
 
 item link, entry id {
   display: block;
-  color:#436976;
+  color:__extern__;
   text-decoration:underline;
 }
 
@@ -24,9 +24,9 @@ channel title, feed title {
   display: block;
   font-size:200%;
   font-weight:bolder;
-  color:#436976;
+  color:__extern__;
   text-decoration:none;
-  border-bottom: 20px solid #dee7ec;
+  border-bottom: 20px solid __background_alt__;
 }
 
 :root:before {
@@ -36,23 +36,23 @@ channel title, feed title {
 item, entry {
   display: block;
   margin: 1em 180px 1em 1em;
-  border-bottom: 1px solid #8cacbb;
+  border-bottom: 1px solid __border__;
   padding-bottom: 1em;
 }
 
 item title, entry title {
   display: block;
   background: transparent none;
-  border: 0px solid #ffffff;
+  border: 0px solid __background_other__;
   padding: 0;
-  color: #222;
+  color: __text_alt__;
   font-size: 1.4em;
   font-weight: bold;
 }
 
 item pubDate, entry modified, item date {
   display: inline;
-  color: #AAA;
+  color: __text_neu__;
   font: 1em trebuchet ms, arial, helvetica, sans-serif;
 }
 

@@ -30,7 +30,15 @@ if(!defined('SIMPLE_TEST')){
 function css_out(){
     global $conf;
     global $lang;
-    $print = (bool) $_REQUEST['print'];   //print mode?
+    switch ($_REQUEST['s']) {
+        case 'print':
+        case 'feed':
+            $style = $_REQUEST['s'];
+        break;
+        default:
+            $style = '';
+        break;
+    }
 
     // The generated script depends on some dynamic options
     $cache = getCacheName('styles'.$conf['template'].$print,'.css');
@@ -48,11 +56,12 @@ function css_out(){
     // are needed to fix relative paths in the stylesheets
     $files   = array();
     if (isset($tplstyles['all'])) $files = array_merge($files, $tplstyles['all']);
-    if($print){
+    if(!empty($style)){
+        $files[DOKU_INC.'lib/styles/'.$style.'.css'] = DOKU_BASE.'lib/styles/';
         // load plugin, template, user styles
-        $files = array_merge($files, css_pluginstyles('print'));
-        if (isset($tplstyles['print'])) $files = array_merge($files, $tplstyles['print']);
-        $files[DOKU_CONF.'userprint.css'] = '';
+        $files = array_merge($files, css_pluginstyles($style));
+        if (isset($tplstyles[$style])) $files = array_merge($files, $tplstyles[$style]);
+        $files[DOKU_CONF.'user'.$style.'.css'] = '';
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
         if($conf['spellchecker']){
@@ -240,6 +249,9 @@ function css_pluginstyles($mode='screen'){
     foreach ($plugins as $p){
         if($mode == 'print'){
             $list[DOKU_PLUGIN."$p/print.css"]  = DOKU_BASE."lib/plugins/$p/";
+            $list[DOKU_PLUGIN."$p/all.css"]  = DOKU_BASE."lib/plugins/$p/";
+        }elseif($mode == 'feed'){
+            $list[DOKU_PLUGIN."$p/feed.css"]  = DOKU_BASE."lib/plugins/$p/";
             $list[DOKU_PLUGIN."$p/all.css"]  = DOKU_BASE."lib/plugins/$p/";
         }else{
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";

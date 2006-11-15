@@ -236,7 +236,7 @@ function tpl_metaheaders($alt=true){
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
                           'href'=>DOKU_BASE.'lib/exe/css.php');
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php?print=1');
+                          'href'=>DOKU_BASE.'lib/exe/css.php?s=print');
 
   // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover' || $ACT=='wordblock' ) ? 1 : 0;
