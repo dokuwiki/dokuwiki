@@ -14,6 +14,9 @@
  * Call the needed action handlers
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @triggers ACTION_ACT_PREPROCESS
+ * @triggers ACTION_REGISTER
+ * @triggers ACTION_HEADERS_SEND
  */
 function act_dispatch(){
   global $INFO;
@@ -48,7 +51,8 @@ function act_dispatch(){
     $ACT = act_permcheck($ACT);
 
     //register
-    if($ACT == 'register' && register()){
+    $nil = array();
+    if($ACT == 'register' && $_POST['save'] && trigger_event('ACTION_REGISTER', $nil, 'register')){
       $ACT = 'login';
     }
 

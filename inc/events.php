@@ -62,7 +62,7 @@ class Doku_Event {
   function advise_after() {
     global $EVENT_HANDLER;
 
-    $this->_continue = true;    
+    $this->_continue = true;
     $EVENT_HANDLER->process_event($this,'AFTER');
   }
 
@@ -71,7 +71,7 @@ class Doku_Event {
    *
    * - advise all registered (<event>_BEFORE) handlers that this event is about to take place
    * - carry out the default action using $this->data based on $enablePrevent and
-   *   $this->_default, all of which may have been modified by the event handlers. 
+   *   $this->_default, all of which may have been modified by the event handlers.
    * - advise all registered (<event>_AFTER) handlers that the event has taken place
    *
    * @return  $event->results
@@ -91,9 +91,9 @@ class Doku_Event {
         $this->result = $action($this->data);
       }
     }
-    
+
     $this->advise_after();
-    
+
     return $this->result;
   }
 
@@ -103,7 +103,7 @@ class Doku_Event {
    * stop any further processing of the event by event handlers
    * this function does not prevent the default action taking place
    */
-  function stopPropagation() { $this->_continue = false;  }  
+  function stopPropagation() { $this->_continue = false;  }
 
   /**
    * preventDefault
@@ -145,11 +145,11 @@ class Doku_Event_Handler {
    * register a hook for an event
    *
    * @PARAM  $event   (string)   name used by the event, (incl '_before' or '_after' for triggers)
-   * @PARAM  $obj     (obj)      object in whose scope method is to be executed, 
+   * @PARAM  $obj     (obj)      object in whose scope method is to be executed,
    *                             if NULL, method is assumed to be a globally available function
    * @PARAM  $method  (function) event handler function
    * @PARAM  $param   (mixed)    data passed to the event handler
-   */ 
+   */
   function register_hook($event, $advise, &$obj, $method, $param=NULL) {
     $this->_hooks[$event.'_'.$advise][] = array(&$obj, $method, $param);
   }

@@ -909,6 +909,7 @@ function html_msgarea(){
  * Prints the registration form
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @triggers HTML_REGISTERFORM_INJECTION
  */
 function html_register(){
   global $lang;
@@ -952,6 +953,10 @@ function html_register(){
       <?php echo $lang['email']?>
       <input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
     </label><br />
+    <?php //bad and dirty event insert hook
+    $evdata = array();
+    trigger_event('HTML_REGISTERFORM_INJECTION', $evdata);
+    ?>
     <input type="submit" class="button" value="<?php echo $lang['register']?>" />
   </fieldset>
   </form>
@@ -1029,6 +1034,7 @@ function html_updateprofile(){
  *
  * @fixme    this is a huge lump of code and should be modularized
  * @triggers HTML_PAGE_FROMTEMPLATE
+ * @triggers HTML_EDITFORM_INJECTION
  * @author   Andreas Gohr <andi@splitbrain.org>
  */
 function html_edit($text=null,$include='edit'){ //FIXME: include needed?
