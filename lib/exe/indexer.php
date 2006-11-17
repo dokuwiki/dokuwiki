@@ -251,7 +251,7 @@ function runSitemapper(){
     // build the sitemap
     ob_start();
     print '<?xml version="1.0" encoding="UTF-8"?>'.NL;
-    print '<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">'.NL;
+    print '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
     foreach($pages as $id){
         $id = trim($id);
         $file = wikiFN($id);
@@ -274,13 +274,33 @@ function runSitemapper(){
     //save the new sitemap
     io_saveFile(DOKU_INC.$sitemap,$data);
 
-    print 'runSitemapper(): pinging google'.NL;
+    //ping search engines...
+    $http = new DokuHTTPClient();
+    $http->timeout = 8;
+
     //ping google
+    print 'runSitemapper(): pinging google'.NL;
     $url  = 'http://www.google.com/webmasters/sitemaps/ping?sitemap=';
     $url .= urlencode(DOKU_URL.$sitemap);
-    $http = new DokuHTTPClient();
-    $http->get($url);
+    $resp = $http->get($url);
     if($http->error) print 'runSitemapper(): '.$http->error.NL;
+    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
+
+    //ping yahoo
+    print 'runSitemapper(): pinging yahoo'.NL;
+    $url  = 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=dokuwiki&url=';
+    $url .= urlencode(DOKU_URL.$sitemap);
+    $resp = $http->get($url);
+    if($http->error) print 'runSitemapper(): '.$http->error.NL;
+    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
+
+    //ping microsoft
+    print 'runSitemapper(): pinging microsoft'.NL;
+    $url  = 'http://search.live.com/ping?sitemap=';
+    $url .= urlencode(DOKU_URL.$sitemap);
+    $resp = $http->get($url);
+    if($http->error) print 'runSitemapper(): '.$http->error.NL;
+    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
 
     print 'runSitemapper(): finished'.NL;
     return true;
