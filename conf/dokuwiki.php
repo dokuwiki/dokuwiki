@@ -130,3 +130,5 @@ $conf['ftp']['user'] = 'user';
 $conf['ftp']['pass'] = 'password';
 $conf['ftp']['root'] = '/home/user/htdocs';
 
+/* FIXME: delete when no longer needed */
+$conf['test_indexer'] = 0;
