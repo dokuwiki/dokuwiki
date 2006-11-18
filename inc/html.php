@@ -6,9 +6,9 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-
-  require_once(DOKU_INC.'inc/parserutils.php');
+if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+if(!defined('NL')) define('NL',"\n");
+require_once(DOKU_INC.'inc/parserutils.php');
 
 /**
  * Convenience function to quickly build a wikilink
@@ -362,11 +362,11 @@ function html_search(){
   }
 
   //show progressbar
-  print '<div class="centeralign" id="dw__loading">';
-  print '<script type="text/javascript" charset="utf-8">';
-  print 'showLoadBar();';
-  print '</script>';
-  print "<br /></div>\n";
+  print '<div class="centeralign" id="dw__loading">'.NL;
+  print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
+  print 'showLoadBar();'.NL;
+  print '//--><!]]></script>'.NL;
+  print '<br /></div>'.NL;
   flush();
 
   //do quick pagesearch
@@ -410,9 +410,9 @@ function html_search(){
   }
 
   //hide progressbar
-  print '<script type="text/javascript" charset="utf-8">';
-  print 'hideLoadBar("dw__loading");';
-  print '</script>';
+  print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
+  print 'hideLoadBar("dw__loading");'.NL;
+  print '//--><!]]></script>'.NL;
   flush();
 }
 
@@ -1102,10 +1102,10 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
 
       <?php if($wr){?>
-      <script type="text/javascript" charset="utf-8">
+      <script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--
         <?php /* sets changed to true when previewed */?>
         textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
-      </script>
+      //--><!]]></script>
       <span id="spell__action"></span>
       <div id="spell__suggest"></div>
       <?php } ?>

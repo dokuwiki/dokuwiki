@@ -278,6 +278,11 @@ function _tpl_metaheaders_action($data){
     foreach($inst as $attr){
       echo '<',$tag,' ',buildAttributes($attr);
       if(isset($attr['_data'])){
+          if($tag == 'script' && $attr['_data'])
+            $attr['_data'] = "<!--//--><![CDATA[//><!--\n".
+                             $attr['_data'].
+                             "\n//--><!]]>";
+
           echo '>',$attr['_data'],'</',$tag,'>';
       }else{
         echo '/>';
