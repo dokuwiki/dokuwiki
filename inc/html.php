@@ -823,11 +823,18 @@ function html_diff($text='',$intro=true){
               $lang['current'];
     $right = $lang['yours'];
   }else{
+    //check if current revision exist
+    if(!@file_exists(wikiFN($ID))){
+      $revs = getRevisions($ID, 0, 2);
+      $rc = $revs[1];
+    }
     if($REV){
       $r = $REV;
     }else{
-      //use last revision if none given
-      $revs = getRevisions($ID, 0, 1);
+      if(empty($revs)){
+        //use last revision if none given
+        $revs = getRevisions($ID, 0, 1);
+      }
       $r = $revs[0];
     }
 
@@ -835,7 +842,7 @@ function html_diff($text='',$intro=true){
       $df  = new Diff(explode("\n",htmlspecialchars(rawWiki($ID,$r))),
                       explode("\n",htmlspecialchars(rawWiki($ID,''))));
       $left  = '<a class="wikilink1" href="'.wl($ID,"rev=$r").'">'.
-                $ID.' '.date($conf['dformat'],$r).'</a>';
+                $ID.' '.date($conf['dformat'],(isset($rc) ? $rc : $r)).'</a>';
     }else{
       $df  = new Diff(array(''),
                       explode("\n",htmlspecialchars(rawWiki($ID,''))));
@@ -843,7 +850,7 @@ function html_diff($text='',$intro=true){
                 $ID.'</a>';
     }
     $right = '<a class="wikilink1" href="'.wl($ID).'">'.
-              $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+              $ID.' '.date($conf['dformat'],(isset($rc) ? $r : @filemtime(wikiFN($ID)))).'</a> '.
               $lang['current'];
   }
   $tdf = new TableDiffFormatter();
