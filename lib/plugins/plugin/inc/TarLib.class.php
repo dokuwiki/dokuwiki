@@ -27,7 +27,7 @@ define('ARCHIVE_DYNAMIC',0);
 define('ARCHIVE_RENAMECOMP',5);
 define('COMPRESS_DETECT',-1);
 
-class CompTar
+class TarLib
 {
   var $_comptype;
   var $_compzlevel;
@@ -36,7 +36,7 @@ class CompTar
   var $_nomf;
   var $_result;
 
-  function CompTar($p_filen = ARCHIVE_DYNAMIC , $p_comptype = COMPRESS_AUTO, $p_complevel = 9)
+  function tarlib($p_filen = ARCHIVE_DYNAMIC , $p_comptype = COMPRESS_AUTO, $p_complevel = 9)
   {
     $this->_nomf = $p_filen; $flag=0;
     if($p_comptype && $p_comptype % 5 == 0){$p_comptype /= ARCHIVE_RENAMECOMP; $flag=1;}
@@ -85,7 +85,7 @@ class CompTar
   function setArchive($p_name='', $p_comp = COMPRESS_AUTO, $p_level=9)
   {
     $this->_CompTar();
-    $this->CompTar($p_name, $p_comp, $p_level);
+    $this->TarLib($p_name, $p_comp, $p_level);
     return $this->_result;
   }
 

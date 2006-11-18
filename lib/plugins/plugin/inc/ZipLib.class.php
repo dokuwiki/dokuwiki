@@ -8,8 +8,7 @@
  *  Modified for Dokuwiki
  *  @author    Christopher Smith <chris@jalakai.co.uk>
  */
-
-class zip
+class ZipLib
 {
 
  var $datasec, $ctrl_dir = array();
