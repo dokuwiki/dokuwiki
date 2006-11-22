@@ -1,7 +1,7 @@
 ======Suche======
 
-Unten sind die Ergebnisse ihrer Suche gelistet. Falls der gesuchte Begriff nicht gefunden wurde,
-können sie direkt eine neue Seite für den Suchbegriff anlegen, indem sie auf den
+Unten sind die Ergebnisse Ihrer Suche gelistet. Falls der gesuchte Begriff nicht gefunden wurde,
+können Sie direkt eine neue Seite für den Suchbegriff anlegen, indem Sie auf den
 **''[Seite anlegen]''** Knopf drücken.
 
 =====Ergebnisse=====

@@ -64,8 +64,8 @@ $lang['regmissing'] = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists'] = 'Der Nutzername existiert leider schon.';
 $lang['regsuccess'] = 'Der neue Nutzer wurde angelegt und das Passwort per Email versandt.';
 $lang['regsuccess2']= 'Der neue Nutzer wurde angelegt.';
-$lang['regmailfail']= 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wenden sie sich an den Wiki-Admin.';
-$lang['regbadmail'] = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden sie sich bitte an den Wiki-Admin.';
+$lang['regmailfail']= 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wenden Sie sich an den Wiki-Admin.';
+$lang['regbadmail'] = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden Sie sich bitte an den Wiki-Admin.';
 $lang['regbadpass'] = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal.';
 $lang['regpwmail']  = 'Ihr DokuWiki Passwort';
 $lang['reghere']    = 'Sie haben noch keinen Zugang? Hier anmelden';
@@ -112,8 +112,7 @@ $lang['js']['hidedetails'] = 'Details ausblenden';
 $lang['mediausage']        = 'Syntax zum Verwenden dieser Datei:';
 $lang['mediaview']         = 'Originaldatai öffnen';
 $lang['mediaroot']         = 'Wurzel';
-$lang['mediaupload']       = 'Laden Sie hier eine Datei in den momentanen Namensraum hoch. Um Unterordner zu erstellen, stellen sie diese dem Dateinamen
-                              im Feld "Hochladen als" durch Doppelpunkt getrennt voran.';
+$lang['mediaupload']       = 'Laden Sie hier eine Datei in den momentanen Namensraum hoch. Um Unterordner zu erstellen, stellen sie diese dem Dateinamen im Feld "Hochladen als" durch Doppelpunkt getrennt voran.';
 $lang['mediaextchange']    = 'Dateiendung vom .%s nach .%s geändert!';
 
 $lang['reference']   = 'Verwendung von';
@@ -127,7 +126,7 @@ $lang['current']    = 'aktuell';
 $lang['yours']      = 'Ihre Version';
 $lang['diff']       = 'Zeige Unterschiede zu aktueller Version';
 $lang['line']       = 'Zeile';
-$lang['breadcrumb'] = 'Spur';
+$lang['breadcrumb'] = 'Zuletzt angesehen';
 $lang['youarehere'] = 'Sie befinden sich hier';
 $lang['lastmod']    = 'Zuletzt geändert';
 $lang['by']         = 'von';
@@ -142,7 +141,7 @@ $lang['mail_new_user'] = 'Neuer Benutzer:';
 
 $lang['nosmblinks'] = 'Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 
-$lang['qb_alert']   = 'Bitte geben sie den zu formatierenden Text ein.\nDieser wird am Ende des Dokuments eingefügt.';
+$lang['qb_alert']   = 'Bitte geben Sie den zu formatierenden Text ein.\nDieser wird am Ende des Dokuments eingefügt.';
 $lang['qb_bold']    = 'Fetter Text';
 $lang['qb_italic']  = 'Kursiver Text';
 $lang['qb_underl']  = 'Unterstrichener Text';
@@ -156,7 +155,7 @@ $lang['qb_h5']      = 'Level 5 Überschrift';
 $lang['qb_link']    = 'Interner Link';
 $lang['qb_extlink'] = 'Externer Link';
 $lang['qb_hr']      = 'Horizontale Linie';
-$lang['qb_ol']      = 'Numerierter Listenpunkt';
+$lang['qb_ol']      = 'Nummerierter Listenpunkt';
 $lang['qb_ul']      = 'Listenpunkt';
 $lang['qb_media']   = 'Bilder und andere Dateien hinzufügen';
 $lang['qb_sig']     = 'Unterschrift einfügen';
@@ -190,7 +189,7 @@ $lang['img_keywords']= 'Schlagwörter';
 
 $lang['subscribe_success']  = '%s hat nun Änderungen der Seite %s abonniert';
 $lang['subscribe_error']    = '%s kann die Änderungen der Seite %s nicht abonnieren';
-$lang['subscribe_noaddress']= 'Weil Deine E-Mail-Adresse fehlt, kannst Du leider das Thema nicht abonnieren';
+$lang['subscribe_noaddress']= 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
 $lang['unsubscribe_success']= 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
 $lang['unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
 
@@ -205,11 +204,8 @@ $lang['i_installer']  = 'DokuWiki Installation';
 $lang['i_wikiname']   = 'Wiki-Name';
 $lang['i_enableacl']  = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']  = 'Administrator Nutzername';
-$lang['i_problems']   = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen
-                         bevor Sie mit der Installation fortfahren können.';
-$lang['i_modified']   = 'Aus Sicherheitsgründen arbeitet dieses Script nur mit einer neuen, unmodifizierten DokuWiki Installation.
-                         Sie sollten entweder alle Dateien noch einmal frisch installieren oder die
-                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_problems']   = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen bevor Sie mit der Installation fortfahren können.';
+$lang['i_modified']   = 'Aus Sicherheitsgründen arbeitet dieses Script nur mit einer neuen, unmodifizierten DokuWiki Installation.  Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']     = 'Die PHP Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
 $lang['i_phpver']     = 'Ihre PHP version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP Installation.';
 $lang['i_permfail']   = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
@@ -219,12 +215,12 @@ $lang['i_badhash']    = 'Unbekannte oder modifizierte dokuwiki.php (Hash=<code>%
 $lang['i_badval']     = '<code>%s</code> - unerlaubter oder leerer Wert';
 $lang['i_success']    = 'Die Konfiguration wurde erfolgreich abgeschlossen. Sie können jetzt die install.php löschen. Ihr
                         <a href="doku.php">neues DokuWiki</a> ist jetzt für Sie bereit.';
-$lang['i_failure']    = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Sie müssen diese vermutlich von Hand beheben bevor Sie
-                         Ihr <a href="doku.php">neues DokuWiki</a> nutzen können.';
+$lang['i_failure']    = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Sie müssen diese vermutlich von Hand beheben bevor Sie Ihr <a href="doku.php">neues DokuWiki</a> nutzen können.';
 $lang['i_policy']     = 'Anfangseinstellung für Zugangskontrolle (ACL)';
 $lang['i_pol0']       = 'Offenes Wiki (lesen, schreiben, hochladen für alle)';
 $lang['i_pol1']       = 'Öffentliches Wiki (lesen für alle, schreiben und hochladen für registrierte Nutzer)';
 $lang['i_pol2']       = 'Geschlossenes Wiki (lesen, schreiben, hochladen nur für registrierte Nutzer)';
 $lang['i_retry']      = 'Wiederholen';
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
