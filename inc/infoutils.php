@@ -50,14 +50,14 @@ function checkUpdateMessages(){
  */
 function getVersion(){
   //import version string
-  if(@file_exists('VERSION')){
+  if(@file_exists(DOKU_INC.'VERSION')){
     //official release
-    return 'Release '.trim(io_readfile(DOKU_INC.'/VERSION'));
-  }elseif(is_dir('_darcs')){
+    return 'Release '.trim(io_readfile(DOKU_INC.'VERSION'));
+  }elseif(is_dir(DOKU_INC.'_darcs')){
     //darcs checkout - read last 2000 bytes of inventory
-    $sz   = filesize('_darcs/inventory');
+    $sz   = filesize(DOKU_INC.'_darcs/inventory');
     $seek = max(0,$sz-2000);
-    $fh   = fopen('_darcs/inventory','rb');
+    $fh   = fopen(DOKU_INC.'_darcs/inventory','rb');
     fseek($fh,$seek);
     $chunk = fread($fh,2000);
     fclose($fh);
