@@ -150,7 +150,7 @@ function ft_pageLookup($id,$pageonly=true){
     global $conf;
     $id    = preg_quote($id,'/');
     $pages = file($conf['indexdir'].'/page.idx');
-    $pages = array_values(preg_grep('/'.$id.'/',$pages));
+    if($id) $pages = array_values(preg_grep('/'.$id.'/',$pages));
 
     $cnt = count($pages);
     for($i=0; $i<$cnt; $i++){
@@ -176,6 +176,7 @@ function ft_pageLookup($id,$pageonly=true){
         }
     }
 
+    $pages = array_map('trim',$pages);
     sort($pages);
     return $pages;
 }
