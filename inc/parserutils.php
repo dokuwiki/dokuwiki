@@ -222,31 +222,33 @@ function p_get_instructions($text){
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_get_metadata($id, $key=false, $render=false){
-  global $INFO;
+  global $ID, $INFO, $cache_metadata;
 
-  if ($id == $INFO['id'] && !empty($INFO['meta'])) {
-    $meta = $INFO['meta'];
-  } else {
-    $file = metaFN($id, '.meta');
+  // cache the current page
+  // Benchmarking shows the current page's metadata is generally the only page metadata
+  // accessed several times. This may catch a few other pages, but that shouldn't be an issue.
+  $cache = ($ID == $id);
+  $meta = p_read_metadata($id, $cache);
 
-    if (@file_exists($file)) $meta = unserialize(io_readFile($file, false));
-    else $meta = array();
+  // metadata has never been rendered before - do it!
+  if ($render && !$meta['description']['abstract']){
+    $meta = p_render_metadata($id, $meta);
+    io_saveFile($file, serialize($meta));
 
-    // metadata has never been rendered before - do it!
-    if ($render && !$meta['description']['abstract']){
-      $meta = p_render_metadata($id, $meta);
-      io_saveFile($file, serialize($meta));
-    }
+    // sync cached copies, including $INFO metadata
+	  if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
   }
 
   // filter by $key
   if ($key){
     list($key, $subkey) = explode(' ', $key, 2);
-    if (trim($subkey)) return $meta[$key][$subkey];
-    else return $meta[$key];
+    if (trim($subkey)) return $meta['current'][$key][$subkey];
+
+    return $meta['current'][$key];
   }
 
-  return $meta;
+  return $meta['current'];
 }
 
 /**
@@ -254,14 +256,17 @@ function p_get_metadata($id, $key=false, $render=false){
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
-function p_set_metadata($id, $data, $render=false){
+function p_set_metadata($id, $data, $render=false, $persistent=true){
   if (!is_array($data)) return false;
 
-  $orig = p_get_metadata($id);
+  global $ID;
+
+  // cache the current page
+  $cache = ($ID == $id);
+  $orig = p_read_metadata($id, $cache);
 
   // render metadata first?
-  if ($render) $meta = p_render_metadata($id, $orig);
-  else $meta = $orig;
+  $meta = $render ? p_render_metadata($id, $orig) : $orig;
 
   // now add the passed metadata
   $protected = array('description', 'date', 'contributor');
@@ -269,34 +274,94 @@ function p_set_metadata($id, $data, $render=false){
 
     // be careful with sub-arrays of $meta['relation']
     if ($key == 'relation'){
+
       foreach ($value as $subkey => $subvalue){
-        $meta[$key][$subkey] = array_merge($meta[$key][$subkey], $subvalue);
+        $meta['current'][$key][$subkey] = array_merge($meta['current'][$key][$subkey], $subvalue);
+        if ($persistent) 
+          $meta['persistent'][$key][$subkey] = array_merge($meta['persistent'][$key][$subkey], $subvalue);
       }
 
     // be careful with some senisitive arrays of $meta
     } elseif (in_array($key, $protected)){
+
       if (is_array($value)){
         #FIXME not sure if this is the intended thing:
-        if(!is_array($meta[$key])) $meta[$key] = array($meta[$key]);
-        $meta[$key] = array_merge($meta[$key], $value);
+        if(!is_array($meta['current'][$key])) $meta['current'][$key] = array($meta['current'][$key]);
+        $meta['current'][$key] = array_merge($meta['current'][$key], $value);
+
+        if ($persistent) {
+          if(!is_array($meta['persistent'][$key])) $meta['persistent'][$key] = array($meta['persistent'][$key]);
+          $meta['persistent'][$key] = array_merge($meta['persistent'][$key], $value);
+        }
       }
 
     // no special treatment for the rest
     } else {
-      $meta[$key] = $value;
+      $meta['current'][$key] = $value;
+      if ($persistent) $meta['persistent'][$key] = $value;
     }
   }
 
   // save only if metadata changed
   if ($meta == $orig) return true;
 
-  // check if current page metadata has been altered - if so sync the changes
-  global $INFO;
-  if ($id == $INFO['id'] && isset($INFO['meta'])) {
-    $INFO['meta'] = $meta;
-  }
+  // sync cached copies, including $INFO metadata
+  global $cache_metadata, $INFO;
+  
+  if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+  if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
 
   return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+}
+
+/**
+ * read the metadata from source/cache for $id
+ * (internal use only - called by p_get_metadata & p_set_metadata)
+ *
+ * this function also converts the metadata from the original format to
+ * the current format ('current' & 'persistent' arrays)
+ *
+ * @author   Christopher Smith <chris@jalakai.co.uk>
+ *
+ * @param    string   $id      absolute wiki page id
+ * @param    bool     $cache   whether or not to cache metadata in memory
+ *                             (only use for metadata likely to be accessed several times)
+ *
+ * @return   array             metadata
+ */
+function p_read_metadata($id,$cache=false) {
+  global $cache_metadata;
+
+  if (isset($cache_metadata[$id])) return $cache_metadata[$id];
+
+  $file = metaFN($id, '.meta');
+  $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
+
+  // convert $meta from old format to new (current+persistent) format
+  if (!isset($meta['current'])) {
+    $meta = array('current'=>$meta,'persistent'=>$meta);
+
+    // remove non-persistent keys
+    unset($meta['persistent']['title']);
+    unset($meta['persistent']['description']['abstract']);
+    unset($meta['persistent']['description']['tableofcontents']);
+    unset($meta['persistent']['relation']['haspart']);
+    unset($meta['persistent']['relation']['references']);
+    unset($meta['persistent']['date']['valid']);
+
+    if (empty($meta['persistent']['description'])) unset($meta['persistent']['description']);
+    if (empty($meta['persistent']['relation'])) unset($meta['persistent']['relation']);
+    if (empty($meta['persistent']['date'])) unset($meta['persistent']['date']);
+
+    // save converted metadata
+    io_saveFile($file, serialize($meta));
+  }
+
+  if ($cache) {
+    $cache_metadata[$id] = $meta;
+  }
+
+  return $meta;
 }
 
 /**
@@ -305,22 +370,33 @@ function p_set_metadata($id, $data, $render=false){
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_render_metadata($id, $orig){
-  require_once DOKU_INC."inc/parser/metadata.php";
 
-  // get instructions
-  $instructions = p_cached_instructions(wikiFN($id),false,$id);
+  // add an extra key for the event - to tell event handlers the page whose metadata this is
+	$orig['page'] = $id;
+  $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
+  if ($evt->advise_before()) {
 
-  // set up the renderer
-  $renderer = & new Doku_Renderer_metadata();
-  $renderer->meta = $orig;
+    require_once DOKU_INC."inc/parser/metadata.php";
 
-  // loop through the instructions
-  foreach ($instructions as $instruction){
-    // execute the callback against the renderer
-    call_user_func_array(array(&$renderer, $instruction[0]), $instruction[1]);
+    // get instructions
+    $instructions = p_cached_instructions(wikiFN($id),false,$id);
+
+    // set up the renderer
+    $renderer = & new Doku_Renderer_metadata();
+    $renderer->meta = $orig['current'];
+    $renderer->persistent = $orig['persistent'];
+
+    // loop through the instructions
+    foreach ($instructions as $instruction){
+      // execute the callback against the renderer
+      call_user_func_array(array(&$renderer, $instruction[0]), $instruction[1]);
+    }
+
+    $evt->result = array('current'=>$renderer->meta,'persistent'=>$renderer->persistent);
   }
+  $evt->advise_after();
 
-  return $renderer->meta;
+  return $evt->result;
 }
 
 /**

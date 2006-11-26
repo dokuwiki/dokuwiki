@@ -26,20 +26,15 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   var $doc  = '';
   var $meta = array();
+  var $persistent = array();
 
   var $headers = array();
   var $capture = true;
   var $store   = '';
 
   function document_start(){
-    //reset some variables
-    $this->meta['title'] = '';
-    $this->meta['description']['abstract'] = '';
-    $this->meta['description']['tableofcontents'] = array();
-    $this->meta['relation']['haspart'] = array();
-    $this->meta['relation']['references'] = array();
-		$this->meta['date']['valid'] = array();
-    $this->headers = array();
+    // reset metadata to persistent values
+    $this->meta = $this->persistent;
   }
 
   function document_end(){

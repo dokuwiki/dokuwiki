@@ -111,7 +111,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * The contents of the $data array depends on what the handler() function above
      * created
      *
-     * @param   $format   string   output format to being Rendered
+     * @param   $format   string   output format being rendered
      * @param   $renderer ref      reference to the current renderer object
      * @param   $data     array    data created by handler()
      * @return  boolean            rendered correctly?

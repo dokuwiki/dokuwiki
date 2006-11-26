@@ -28,6 +28,7 @@
   global $cache_wikifn;   $cache_wikifn = array();
   global $cache_cleanid;  $cache_cleanid = array();
   global $cache_authname; $cache_authname = array();
+  global $cache_metadata; $cache_metadata = array();
 
   //prepare config array()
   global $conf;
