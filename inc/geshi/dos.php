@@ -4,10 +4,10 @@
  * -------
  * Author: Alessandro Staltari (staltari@geocities.com)
  * Copyright: (c) 2005 Alessandro Staltari (http://www.geocities.com/SiliconValley/Vista/8155/)
- * Release Version: 1.0.7.15
- * CVS Revision Version: $Revision: 1.14.2.4 $
+ * Release Version: 1.0.7.16
+ * CVS Revision Version: $Revision: 1.14.2.5 $
  * Date Started: 2005/07/05
- * Last Modified: $Date: 2006/09/23 02:05:47 $
+ * Last Modified: $Date: 2006/10/24 11:07:03 $
  *
  * DOS language file for GeSHi.
  *

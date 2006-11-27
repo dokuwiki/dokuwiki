@@ -4,10 +4,10 @@
  * -----
  * Author: Thomas Kuehne (thomas@kuehne.cn)
  * Copyright: (c) 2005 Thomas Kuehne (http://thomas.kuehne.cn/)
- * Release Version: 1.0.7.15
- * CVS Revision Version: $Revision: 1.13.2.4 $
+ * Release Version: 1.0.7.16
+ * CVS Revision Version: $Revision: 1.13.2.5 $
  * Date Started: 2005/04/22
- * Last Modified: $Date: 2006/09/23 02:05:46 $
+ * Last Modified: $Date: 2006/10/24 11:07:02 $
  *
  * D language file for GeSHi.
  *

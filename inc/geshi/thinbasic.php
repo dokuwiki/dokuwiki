@@ -4,10 +4,10 @@
  * ------
  * Author: Eros Olmi (eros.olmi@thinbasic.com)
  * Copyright: (c) 2006 Eros Olmi (http://www.thinbasic.com), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.15
- * CVS Revision Version: $Revision: 1.1.2.3 $
+ * Release Version: 1.0.7.16
+ * CVS Revision Version: $Revision: 1.1.2.4 $
  * Date Started: 2006/05/12
- * Last Modified: $Date: 2006/10/23 02:34:09 $
+ * Last Modified: $Date: 2006/10/24 11:07:12 $
  *
  * thinBasic language file for GeSHi.
  *

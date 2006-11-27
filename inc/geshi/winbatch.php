@@ -4,10 +4,10 @@
  * ------------
  * Author: Craig Storey (storey.craig@gmail.com)
  * Copyright: (c) 2004 Craig Storey (craig.xcottawa.ca)
- * Release Version: 1.0.7.15
- * CVS Revision Version: $Revision: 1.2.2.5 $
+ * Release Version: 1.0.7.16
+ * CVS Revision Version: $Revision: 1.2.2.6 $
  * Date Started: 2006/05/19
- * Last Modified: $Date: 2006/09/23 02:05:48 $
+ * Last Modified: $Date: 2006/10/24 11:07:13 $
  *
  * WinBatch language file for GeSHi.
  *

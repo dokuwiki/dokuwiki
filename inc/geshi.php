@@ -29,7 +29,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.40.2.10 2006/10/23 01:54:16 oracleshinoda Exp $
+ * @version   $Id: geshi.php,v 1.40.2.13 2006/11/22 19:04:35 oracleshinoda Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.15');
+define('GESHI_VERSION', '1.0.7.16');
 
 /** Set the correct directory separator */
 define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
@@ -450,7 +450,7 @@ class GeSHi
 	 */
 	function get_language_name ()
 	{
-		if (GESHI_ERROR_NO_SUCH_LANG == $this->_error) {
+		if (GESHI_ERROR_NO_SUCH_LANG == $this->error) {
 			return $this->language_data['LANG_NAME'] . ' (Unknown Language)';
 		}
 		return $this->language_data['LANG_NAME'];
@@ -1084,12 +1084,12 @@ class GeSHi
 				'asm' => array('ash', 'asm'),
 				'asp' => array('asp'),
 				'bash' => array('sh'),
-				'c' => array('c'),
-				'c_mac' => array('c'),
+				'c' => array('c', 'h'),
+				'c_mac' => array('c', 'h'),
 				'caddcl' => array(),
 				'cadlisp' => array(),
                 'cdfg' => array('cdfg'),
-				'cpp' => array('cpp'),
+				'cpp' => array('cpp', 'h', 'hpp'),
 				'csharp' => array(),
 				'css' => array('css'),
 				'delphi' => array('dpk', 'dpr'),

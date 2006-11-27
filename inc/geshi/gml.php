@@ -4,10 +4,10 @@
  * --------
  * Author: José Jorge Enríquez (jenriquez@users.sourceforge.net)
  * Copyright: (c) 2005 José Jorge Enríquez Rodríguez (http://www.zonamakers.com)
- * Release Version: 1.0.7.15
- * CVS Revision Version: $Revision: 1.15.2.5 $
+ * Release Version: 1.0.7.16
+ * CVS Revision Version: $Revision: 1.15.2.6 $
  * Date Started: 2005/06/21
- * Last Modified: $Date: 2006/09/23 02:05:47 $
+ * Last Modified: $Date: 2006/10/24 11:07:04 $
  *
  * GML language file for GeSHi.
  *
