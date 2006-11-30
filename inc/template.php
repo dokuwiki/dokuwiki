@@ -638,7 +638,7 @@ function tpl_breadcrumbs(){
     $i++;
     print ' <span class="bcsep">&raquo;</span> ';
     if ($i == $last) print '<span class="curid">';
-    tpl_link(wl($id),$name,'class="breadcrumbs" title="'.$id.'"');
+    tpl_link(wl($id),hsc($name),'class="breadcrumbs" title="'.$id.'"');
     if ($i == $last) print '</span>';
   }
 }
@@ -671,7 +671,7 @@ function tpl_youarehere($sep=' &raquo; '){
   // always print the startpage
   $title = p_get_first_heading($conf['start']);
   if(!$title) $title = $conf['start'];
-  tpl_link(wl($conf['start']),$title,'title="'.$conf['start'].'"');
+  tpl_link(wl($conf['start']),hsc($title),'title="'.$conf['start'].'"');
 
   // print intermediate namespace links
   $part = '';
@@ -686,7 +686,7 @@ function tpl_youarehere($sep=' &raquo; '){
     if($exists){
       $title = p_get_first_heading($page);
       if(!$title) $title = $parts[$i];
-      tpl_link(wl($page),$title,'title="'.$page.'"');
+      tpl_link(wl($page),hsc($title),'title="'.$page.'"');
     }else{
       tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
     }
@@ -700,7 +700,7 @@ function tpl_youarehere($sep=' &raquo; '){
   if(@file_exists(wikiFN($page))){
     $title = p_get_first_heading($page);
     if(!$title) $title = $parts[$i];
-    tpl_link(wl($page),$title,'title="'.$page.'"');
+    tpl_link(wl($page),hsc($title),'title="'.$page.'"');
   }else{
     tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
   }
