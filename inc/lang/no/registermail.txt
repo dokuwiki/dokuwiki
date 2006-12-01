@@ -1,0 +1,14 @@
+En ny bruker har registret seg, her er detaljene:
+
+Brukernavn  : @NEWUSER@
+Fult navn   : @NEWNAME@
+E-post      : @NEWEMAIL@
+
+Dato        : @DATE@
+Nettleser   : @BROWSER@
+IP-adresse  : @IPADDRESS@
+Tjener      : @HOSTNAME@
+
+-- 
+Denne e-posten ble generert av DokuWiki på
+@DOKUWIKIURL@

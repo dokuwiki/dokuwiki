@@ -1,0 +1,15 @@
+Hei @FULLNAME@!
+
+Noen har bedt om nytt passord for din @TITLE@ innlogging
+på @DOKUWIKIURL@
+
+Om du ikke bad om nytt passord kan du bare overse denne e-posten.
+
+For å bekrefte at forespørselen virkelig kom fra deg kan du bruke
+følgende lenke:
+
+@CONFIRM@
+
+--
+Denne e-posten ble generert av DokuWiki på
+@DOKUWIKIURL@
