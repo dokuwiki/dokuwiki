@@ -1011,12 +1011,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     ' pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>'.DOKU_LF;
             $ret .= '</object>'.DOKU_LF;
 
-        }elseif(!is_null($title)){
+        }elseif($title){
             // well at least we have a title to display
             $ret .= $this->_xmlEntities($title);
         }else{
             // just show the sourcename
-            $ret .= $this->_xmlEntities(noNS($src));
+            $ret .= $this->_xmlEntities(basename(noNS($src)));
         }
 
         return $ret;
