@@ -150,7 +150,7 @@ function act_clean($act){
 
   //remove all bad chars
   $act = strtolower($act);
-  $act = preg_replace('/[^a-z_]+/','',$act);
+  $act = preg_replace('/[^1-9a-z_]+/','',$act);
 
   if($act == 'export_html') $act = 'export_xhtml';
   if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
@@ -393,13 +393,11 @@ function act_export($act){
 
   // try to run renderer #FIXME use cached instructions
   $mode = substr($act,7);
-  $text = p_render($mode,p_get_instructions(rawWiki($ID,$REV)),$info);
+  $text = p_cached_output(wikiFN($ID,$REV), $mode);
   if(!is_null($text)){
     print $text;
     exit;
   }
-
-
 
   return 'show';
 }

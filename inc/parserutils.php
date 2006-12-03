@@ -512,15 +512,18 @@ function p_sort_modes($a, $b){
 function p_render($mode,$instructions,& $info){
   if(is_null($instructions)) return '';
 
-  if ($mode=='wiki') { msg("Renderer for $mode not valid",-1); return null; } //FIXME!! remove this line when inc/parser/wiki.php works.
-
   // Create the renderer
-  if(!@file_exists(DOKU_INC."inc/parser/$mode.php")){
+  $file = DOKU_INC.'lib/plugins/'.$mode.'/renderer.php';
+  if(!@file_exists($file)){
+    $file = DOKU_INC."inc/parser/$mode.php";
+  }
+  if(!@file_exists($file)){
     msg("No renderer for $mode found",-1);
     return null;
   }
 
-  require_once DOKU_INC."inc/parser/$mode.php";
+  require_once $file;
+
   $rclass = "Doku_Renderer_$mode";
   if ( !class_exists($rclass) ) {
     trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
