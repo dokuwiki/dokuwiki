@@ -242,6 +242,63 @@ function auth_logoff(){
 }
 
 /**
+ * Check if a user is a manager
+ *
+ * Should usually be called without any parameters to check the current
+ * user.
+ *
+ * The info is available through $INFO['ismanager'], too
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    auth_isadmin
+ * @param  string user      - Username
+ * @param  array  groups    - List of groups the user is in
+ * @param  bool   adminonly - when true checks if user is admin
+ */
+function auth_ismanager($user=null,$groups=null,$adminonly=false){
+  global $conf;
+  global $USERINFO;
+
+  if(!$conf['useacl']) return false;
+  if(is_null($user))   $user   = $_SERVER['REMOTE_USER'];
+  if(is_null($groups)) $groups = $USERINFO['grps'];
+  $user   = auth_nameencode($user);
+
+  // check username against superuser and manager
+  if(auth_nameencode($conf['superuser']) == $user) return true;
+  if(!$adminonly){
+    if(auth_nameencode($conf['manager']) == $user) return true;
+  }
+
+  //prepend groups with @ and nameencode
+  $cnt = count($groups);
+  for($i=0; $i<$cnt; $i++){
+    $groups[$i] = '@'.auth_nameencode($groups[$i]);
+  }
+
+  // check groups against superuser and manager
+  if(in_array(auth_nameencode($conf['superuser'],true), $groups)) return true;
+  if(!$adminonly){
+    if(in_array(auth_nameencode($conf['manager'],true), $groups)) return true;
+  }
+  return false;
+}
+
+/**
+ * Check if a user is admin
+ *
+ * Alias to auth_ismanager with adminonly=true
+ *
+ * The info is available through $INFO['isadmin'], too
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see auth_ismanager
+ */
+function auth_isadmin($user=null,$groups=null){
+  return auth_ismanager($user,$groups,true);
+}
+
+/**
  * Convinience function for auth_aclcheck()
  *
  * This checks the permissions for the current user

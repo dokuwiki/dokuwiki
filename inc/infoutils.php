@@ -18,7 +18,7 @@ function checkUpdateMessages(){
     global $conf;
     global $INFO;
     if(!$conf['updatecheck']) return;
-    if($conf['useacl'] && $INFO['perm'] < AUTH_ADMIN) return;
+    if($conf['useacl'] && !$INFO['ismanager']) return;
 
     $cf = $conf['cachedir'].'/messages.txt';
     $lm = @filemtime($cf);

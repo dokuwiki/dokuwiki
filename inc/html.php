@@ -1274,6 +1274,7 @@ function html_debug(){
 
 function html_admin(){
   global $ID;
+  global $INFO;
   global $lang;
   global $conf;
 
@@ -1284,6 +1285,10 @@ function html_admin(){
   $menu = array();
   foreach ($pluginlist as $p) {
     if($obj =& plugin_load('admin',$p) === NULL) continue;
+
+    // check permissions
+    if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
+
     $menu[] = array('plugin' => $p,
                     'prompt' => $obj->getMenuText($conf['lang']),
                     'sort' => $obj->getMenuSort()

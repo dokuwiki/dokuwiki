@@ -76,6 +76,16 @@ function pageinfo(){
     $info['subscribed'] = is_subscribed($ID,$_SERVER['REMOTE_USER']);
     $info['client']     = $_SERVER['REMOTE_USER'];
 
+    // set info about manager/admin status
+    $info['isadmin']   = false;
+    $info['ismanager'] = false;
+    if($info['perm'] == AUTH_ADMIN){
+      $info['isadmin']   = true;
+      $info['ismanager'] = true;
+    }elseif(auth_ismanager()){
+      $info['ismanager'] = true;
+    }
+
     // if some outside auth were used only REMOTE_USER is set
     if(!$info['userinfo']['name']){
       $info['userinfo']['name'] = $_SERVER['REMOTE_USER'];

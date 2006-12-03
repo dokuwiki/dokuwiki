@@ -208,7 +208,13 @@ function act_permcheck($act){
   }elseif($act == 'resendpwd'){
     $permneed = AUTH_NONE;
   }elseif($act == 'admin'){
-    $permneed = AUTH_ADMIN;
+    if($INFO['ismanager']){
+      // if the manager has the needed permissions for a certain admin
+      // action is checked later
+      $permneed = AUTH_READ;
+    }else{
+      $permneed = AUTH_ADMIN;
+    }
   }else{
     $permneed = AUTH_READ;
   }

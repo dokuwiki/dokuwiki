@@ -137,6 +137,7 @@ function tpl_content_core(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_admin(){
+    global $INFO;
 
     $plugin = NULL;
     if (!empty($_REQUEST['page'])) {
@@ -149,10 +150,16 @@ function tpl_admin(){
         }
     }
 
-    if ($plugin !== NULL)
-        $plugin->html();
-    else
+    if ($plugin !== NULL){
+        if($plugin->forAdminOnly() && !$INFO['isadmin']){
+            msg('For admins only',-1);
+            html_admin();
+        }else{
+            $plugin->html();
+        }
+    }else{
         html_admin();
+    }
 }
 
 /**
@@ -422,7 +429,7 @@ function tpl_button($type){
       }
       break;
     case 'admin':
-      if($INFO['perm'] == AUTH_ADMIN)
+      if($INFO['ismanager'])
         print html_btn('admin',$ID,'',array('do' => 'admin'));
       break;
     case 'backtomedia':
@@ -549,7 +556,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       }
       return false;
     case 'admin':
-      if($INFO['perm'] == AUTH_ADMIN){
+      if($INFO['ismanager']){
         tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action admin"');
         return true;
       }

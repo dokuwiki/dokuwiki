@@ -33,6 +33,13 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * access for managers
+     */
+    function forAdminOnly(){
+        return false;
+    }
+
+    /**
      * return sort order for position in admin menu
      */
     function getMenuSort() {

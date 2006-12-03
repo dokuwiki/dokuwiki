@@ -110,6 +110,7 @@ $meta['authtype']    = array('authtype');
 $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','sha1','ssha','crypt','mysql','my411'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
+$meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['registernotify'] = array('email');
 $meta['disableactions'] = array('disableactions',
