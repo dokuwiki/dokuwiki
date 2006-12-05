@@ -164,6 +164,16 @@ function check(){
     msg('Debugging support is disabled',1);
   }
 
+  if($INFO['userinfo']['name']){
+    global $auth;
+    msg('You are currently logged in as '.$_SESSION[DOKU_COOKIE]['auth']['user'].' ('.$INFO['userinfo']['name'].')',0);
+
+    $info = $auth->getUserData($_SESSION[DOKU_COOKIE]['auth']['user']);
+    msg('You are part of the groups '.implode($info['grps'],', '),0);
+  }else{
+    msg('You are currently not logged in',0);
+  }
+
   msg('Your current permission for this page is '.$INFO['perm'],0);
 
   if(is_writable($INFO['filepath'])){
