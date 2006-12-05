@@ -144,7 +144,7 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
                 break;
             case 'diff':
             default:
-                $item->link = wl($recent['id'],'rev='.$recent['date'].'&do=diff'.$recent['date'],true);
+                $item->link = wl($recent['id'],'rev='.$recent['date'].'&do=diff',true);
         }
 
         $item->description = $meta['description']['abstract'];
