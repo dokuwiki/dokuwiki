@@ -810,6 +810,7 @@ function saveOldRevision($id){
 function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   global $lang;
   global $conf;
+  global $INFO;
 
   // decide if there is something to do
   if($who == 'admin'){
@@ -866,7 +867,12 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   $text = str_replace('@DIFF@',$diff,$text);
   $subject = '['.$conf['title'].'] '.$subject;
 
-  mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
+  $from = $conf['mailfrom'];
+  $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
+  $from = str_replace('@NAME@',$INFO['userinfo']['name'],$from);
+  $from = str_replace('@MAIL@',$INFO['userinfo']['mail'],$from);
+
+  mail_send($to,$subject,$text,$from,'',$bcc);
 }
 
 /**
