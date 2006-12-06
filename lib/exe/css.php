@@ -41,7 +41,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('styles'.$conf['template'].$print,'.css');
+    $cache = getCacheName('styles'.$conf['template'].$style,'.css');
 
     // load template styles
     $tplstyles = array();
