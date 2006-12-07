@@ -761,6 +761,8 @@ function tpl_pageinfo(){
     if($INFO['editor']){
       print ' '.$lang['by'].' ';
       print $INFO['editor'];
+    }else{
+      print ' ('.$lang['external_edit'].')';
     }
     if($INFO['locked']){
       print ' &middot; ';

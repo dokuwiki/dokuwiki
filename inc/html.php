@@ -481,7 +481,7 @@ function html_revisions($first=0){
     print ' &ndash; ';
     print $INFO['sum'];
     print ' <span class="user">';
-    print $INFO['editor'];
+    print (empty($INFO['editor']))?('('.$lang['external_edit'].')'):$INFO['editor'];
     print '</span> ';
 
     print '('.$lang['current'].')';

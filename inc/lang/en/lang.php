@@ -131,6 +131,7 @@ $lang['by']         = 'by';
 $lang['deleted']    = 'removed';
 $lang['created']    = 'created';
 $lang['restored']   = 'old revision restored';
+$lang['external_edit'] = 'external edit';
 $lang['summary']    = 'Edit summary';
 
 $lang['mail_newpage'] = 'page added:';

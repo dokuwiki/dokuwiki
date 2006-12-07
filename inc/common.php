@@ -736,10 +736,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
     saveOldRevision($id);
     // add a changelog entry if this edit came from outside dokuwiki
     if ($old>$oldRev) {
-      addLogEntry($old, $id);
-      // send notify mails
-      notify($id,'admin',$oldRev,'',false);
-      notify($id,'subscribers',$oldRev,'',false);
+      addLogEntry($old, $id, 'E', $lang['external_edit'], '', array('ExternalEdit'=>true));
       // remove soon to be stale instructions
       $cache = new cache_instructions($id, $file);
       $cache->removeCache();

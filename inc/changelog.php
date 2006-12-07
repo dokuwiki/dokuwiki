@@ -33,8 +33,12 @@ function parseChangelogLine($line) {
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function addLogEntry($date, $id, $type='E', $summary='', $extra=''){
+function addLogEntry($date, $id, $type='E', $summary='', $extra='', $flags=null){
   global $conf, $INFO;
+
+  // check for special flags as keys
+  if (!is_array($flags)) { $flags = array(); }
+  $flagExternalEdit = isset($flags['ExternalEdit']);
 
   $id = cleanid($id);
   $file = wikiFN($id);
@@ -43,8 +47,8 @@ function addLogEntry($date, $id, $type='E', $summary='', $extra=''){
   $wasRemoved = ($type==='D');
 
   if(!$date) $date = time(); //use current time if none supplied
-  $remote = $_SERVER['REMOTE_ADDR'];
-  $user   = $_SERVER['REMOTE_USER'];
+  $remote = (!$flagExternalEdit)?$_SERVER['REMOTE_ADDR']:'127.0.0.1';
+  $user   = (!$flagExternalEdit)?$_SERVER['REMOTE_USER']:'';
 
   $strip = array("\t", "\n");
   $logline = array(
