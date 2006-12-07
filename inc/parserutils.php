@@ -229,9 +229,10 @@ function p_get_metadata($id, $key=false, $render=false){
   // accessed several times. This may catch a few other pages, but that shouldn't be an issue.
   $cache = ($ID == $id);
   $meta = p_read_metadata($id, $cache);
+  $file = metaFN($id, '.meta');
 
   // metadata has never been rendered before - do it!
-  if ($render && !$meta['description']['abstract']){
+  if ((!file_exists($file) && file_exists(wikiFN($id))) || ($render && !$meta['description']['abstract'])){
     $meta = p_render_metadata($id, $meta);
     io_saveFile($file, serialize($meta));
 
