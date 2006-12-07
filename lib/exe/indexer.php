@@ -14,7 +14,7 @@ session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
 // Version tag used to force rebuild on upgrade
-define(INDEXER_VERSION, 1);
+define('INDEXER_VERSION', 1);
 
 // keep running after browser closes connection
 @ignore_user_abort(true);
