@@ -47,10 +47,10 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
                 $sum = rtrim($oldline[4], "\n");
             }
             // guess line type
-            $type = 'E';
-            if ($wasMinor) { $type = 'e'; }
-            if ($sum===$lang['created']) { $type = 'C'; }
-            if ($sum===$lang['deleted']) { $type = 'D'; }
+            $type = DOKU_CHANGE_TYPE_EDIT;
+            if ($wasMinor) { $type = DOKU_CHANGE_TYPE_MINOR_EDIT; }
+            if ($sum===$lang['created']) { $type = DOKU_CHANGE_TYPE_CREATE; }
+            if ($sum===$lang['deleted']) { $type = DOKU_CHANGE_TYPE_DELETE; }
             // build new log line
             $tmp = array();
             $tmp['date']  = (int)$oldline[0];
@@ -88,7 +88,7 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
                         $tmp = array();
                         $tmp['date']  = (int)$date;
                         $tmp['ip']    = '127.0.0.1'; // original ip lost
-                        $tmp['type']  = 'E';
+                        $tmp['type']  = DOKU_CHANGE_TYPE_EDIT;
                         $tmp['id']    = $id;
                         $tmp['user']  = ''; // original user lost
                         $tmp['sum']   = '('.$lang['restored'].')'; // original summary lost

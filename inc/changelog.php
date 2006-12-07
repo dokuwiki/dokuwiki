@@ -6,6 +6,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+// Constants for known core changelog line types.
+// Use these in place of string literals for more readable code.
+define('DOKU_CHANGE_TYPE_CREATE',       'C');
+define('DOKU_CHANGE_TYPE_EDIT',         'E');
+define('DOKU_CHANGE_TYPE_MINOR_EDIT',   'e');
+define('DOKU_CHANGE_TYPE_DELETE',       'D');
+define('DOKU_CHANGE_TYPE_REVERT',       'R');
+
 /**
  * parses a changelog line into it's components
  *
@@ -33,7 +41,7 @@ function parseChangelogLine($line) {
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function addLogEntry($date, $id, $type='E', $summary='', $extra='', $flags=null){
+function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
   global $conf, $INFO;
 
   // check for special flags as keys
@@ -43,8 +51,8 @@ function addLogEntry($date, $id, $type='E', $summary='', $extra='', $flags=null)
   $id = cleanid($id);
   $file = wikiFN($id);
   $created = @filectime($file);
-  $minor = ($type==='e');
-  $wasRemoved = ($type==='D');
+  $minor = ($type===DOKU_CHANGE_TYPE_MINOR_EDIT);
+  $wasRemoved = ($type===DOKU_CHANGE_TYPE_DELETE);
 
   if(!$date) $date = time(); //use current time if none supplied
   $remote = (!$flagExternalEdit)?$_SERVER['REMOTE_ADDR']:'127.0.0.1';
@@ -147,7 +155,7 @@ function _handleRecent($line,$ns,$flags){
   if(isset($seen[$recent['id']])) return false;
 
   // skip minors
-  if($recent['type']==='e' && ($flags & RECENTS_SKIP_MINORS)) return false;
+  if($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
 
   // remember in seen to skip additional sights
   $seen[$recent['id']] = 1;

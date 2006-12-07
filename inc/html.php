@@ -469,7 +469,7 @@ function html_revisions($first=0){
   print p_locale_xhtml('revisions');
   print '<ul>';
   if($INFO['exists'] && $first==0){
-    print (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']==='e') ? '<li class="minor">' : '<li>';
+    print (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';
 
     print $date;
@@ -493,7 +493,7 @@ function html_revisions($first=0){
     $date = date($conf['dformat'],$rev);
     $info = getRevisionInfo($ID,$rev,true);
 
-    print ($info['type']==='e') ? '<li class="minor">' : '<li>';
+    print ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';
     print $date;
 
@@ -579,7 +579,7 @@ function html_recent($first=0){
 
   foreach($recents as $recent){
     $date = date($conf['dformat'],$recent['date']);
-    print ($recent['type']==='e') ? '<li class="minor">' : '<li>';
+    print ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';
 
     print $date.' ';

@@ -150,7 +150,7 @@ function pageinfo(){
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
   // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
-  // Use $INFO['meta']['last_change']['type']==='e' in place of $info['minor'].
+  // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
   if($revinfo['user']){
     $info['editor'] = $revinfo['user'];
@@ -736,7 +736,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
     saveOldRevision($id);
     // add a changelog entry if this edit came from outside dokuwiki
     if ($old>$oldRev) {
-      addLogEntry($old, $id, 'E', $lang['external_edit'], '', array('ExternalEdit'=>true));
+      addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=>true));
       // remove soon to be stale instructions
       $cache = new cache_instructions($id, $file);
       $cache->removeCache();
@@ -773,14 +773,14 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
   // select changelog line type
   $extra = '';
-  $type = 'E';
+  $type = DOKU_CHANGE_TYPE_EDIT;
   if ($wasReverted) {
-    $type = 'R';
+    $type = DOKU_CHANGE_TYPE_REVERT;
     $extra = $REV;
   }
-  else if ($wasCreated) { $type = 'C'; }
-  else if ($wasRemoved) { $type = 'D'; }
-  else if ($minor && $conf['useacl'] && $_SERVER['REMOTE_USER']) { $type = 'e'; } //minor edits only for logged in users
+  else if ($wasCreated) { $type = DOKU_CHANGE_TYPE_CREATE; }
+  else if ($wasRemoved) { $type = DOKU_CHANGE_TYPE_DELETE; }
+  else if ($minor && $conf['useacl'] && $_SERVER['REMOTE_USER']) { $type = DOKU_CHANGE_TYPE_MINOR_EDIT; } //minor edits only for logged in users
 
   addLogEntry($newRev, $id, $type, $summary, $extra);
   // send notify mails
