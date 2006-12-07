@@ -128,7 +128,22 @@ function pageinfo(){
   if($REV){
     $revinfo = getRevisionInfo($ID, $REV, 1024);
   }else{
-    $revinfo = isset($info['meta']['last_change']) ? $info['meta']['last_change'] : getRevisionInfo($ID,$info['lastmod'],1024);
+    if (isset($info['meta']['last_change'])) { $revinfo = $info['meta']['last_change']; }
+    else {
+      $revinfo = getRevisionInfo($ID, $info['lastmod'], 1024);
+      // cache most recent changelog line in metadata if missing and still valid
+      if ($revinfo!==false) {
+        $info['meta']['last_change'] = $revinfo;
+        p_set_metadata($ID, array('last_change' => $revinfo));
+      }
+    }
+  }
+  //and check for an external edit
+  if($revinfo!==false && $revinfo['date']!=$info['lastmod']){
+    // cached changelog line no longer valid
+    $revinfo = false;
+    $info['meta']['last_change'] = $revinfo;
+    p_set_metadata($ID, array('last_change' => $revinfo));
   }
 
   $info['ip']     = $revinfo['ip'];
