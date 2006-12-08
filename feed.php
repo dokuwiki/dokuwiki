@@ -54,13 +54,17 @@
   // the feed is dynamic - we need a cache for each combo
   // (but most people just use the default feed so it's still effective)
   $cache = getCacheName($num.$type.$mode.$ns.$ltype.$_SERVER['REMOTE_USER'],'.feed');
+  $cmod = @filemtime($cache); // 0 if not exists
+  if ($cmod && (@filemtime(DOKU_CONF.'local.php')>$cmod || @filemtime(DOKU_CONF.'dokuwiki.php')>$cmod)) {
+    // ignore cache if feed prefs may have changed
+    $cmod = 0;
+  }
 
   // check cacheage and deliver if nothing has changed since last
   // time or the update interval has not passed, also handles conditional requests
   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
   header('Pragma: public');
   header('Content-Type: application/xml; charset=utf-8');
-  $cmod = @filemtime($cache); // 0 if not exists
   if($cmod && (($cmod+$conf['rss_update']>time()) || ($cmod>@filemtime($conf['changelog'])))){
     http_conditionalRequest($cmod);
     if($conf['allowdebug']) header("X-CacheUsed: $cache");
@@ -134,17 +138,17 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
 
         switch ($ltype){
             case 'page':
-                $item->link = wl($recent['id'],'rev='.$recent['date'],true);
+                $item->link = wl($recent['id'],'rev='.$recent['date'],true,'&');
                 break;
             case 'rev':
-                $item->link = wl($recent['id'],'do=revisions&rev='.$recent['date'],true);
+                $item->link = wl($recent['id'],'do=revisions&rev='.$recent['date'],true,'&');
                 break;
             case 'current':
-                $item->link = wl($recent['id'], '', true);
+                $item->link = wl($recent['id'], '', true,'&');
                 break;
             case 'diff':
             default:
-                $item->link = wl($recent['id'],'rev='.$recent['date'].'&do=diff',true);
+                $item->link = wl($recent['id'],'rev='.$recent['date'].'&do=diff',true,'&');
         }
 
         $item->description = $meta['description']['abstract'];
@@ -201,7 +205,7 @@ function rssListNamespace(&$rss,$ns){
             $item->title = $id;
         }
 
-        $item->link        = wl($id,'rev='.$date,true);
+        $item->link        = wl($id,'rev='.$date,true,'&');
         $item->description = $meta['description']['abstract'];
         $item->date        = date('r',$date);
         $rss->addItem($item);
