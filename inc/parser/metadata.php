@@ -323,7 +323,11 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   function rss($url,$params) {
     $this->meta['relation']['haspart'][$url] = true;
-   	$this->meta['date']['valid']['age'] = $params['refresh'];
+
+    $this->meta['date']['valid']['age'] =
+            isset($this->meta['date']['valid']['age']) ?
+                min($this->meta['date']['valid']['age'],$params['refresh']) :
+                $params['refresh'];
   }
 
   function table_open($maxcols = NULL, $numrows = NULL){}
