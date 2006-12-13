@@ -161,7 +161,7 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
         $user = @$recent['user']; // the @ spares time repeating lookup
         $item->author = '';
 
-        if($user){
+        if($user && $conf['useacl']){
             $userInfo = $auth->getUserData($user);
             $item->author = $userInfo['name'];
             if($guardmail) {
@@ -170,6 +170,10 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
             }else{
                 $item->authorEmail = $userInfo['mail'];
             }
+        }elseif($user){
+            // this happens when no ACL but some Apache auth is used
+            $item->author      = $user;
+            $item->authorEmail = $user.'@'.$recent['ip'];
         }else{
             $item->authorEmail = 'anonymous@'.$recent['ip'];
         }
