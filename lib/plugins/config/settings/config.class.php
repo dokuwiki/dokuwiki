@@ -134,7 +134,7 @@ if (!class_exists('configuration')) {
       if ($this->_format == 'php') {
 
         $contents = @php_strip_whitespace($file);
-        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|@include|$))/';
+        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|@include|$))/s';
         $matches=array();
         preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
 
@@ -145,7 +145,7 @@ if (!class_exists('configuration')) {
           $key = preg_replace('/.\]\[./',CM_KEYMARKER,$matches[$i][1]);
 
           // remove quotes from quoted strings & unescape escaped data
-          $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/','$2',$matches[$i][2]);
+          $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$matches[$i][2]);
           $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
 
           $config[$key] = $value;
