@@ -721,7 +721,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
              $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
          }elseif($mime == 'application/x-shockwave-flash'){
              // don't link flash movies
-             $noLink = TRUE;
+             $noLink = true;
          }else{
              // add file icons
              $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
@@ -758,10 +758,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
              // link only jpeg images
-             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = TRUE;
+             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
         }elseif($mime == 'application/x-shockwave-flash'){
              // don't link flash movies
-             $noLink = TRUE;
+             $noLink = true;
         }else{
              // add file icons
              $link['class'] .= ' mediafile mf_'.$ext;
@@ -1059,7 +1059,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function _getLinkTitle($title, $default, & $isImage, $id=NULL) {
         global $conf;
 
-        $isImage = FALSE;
+        $isImage = false;
         if ( is_null($title) ) {
             if ($conf['useheading'] && $id) {
                 $heading = p_get_first_heading($id);
@@ -1071,7 +1071,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         } else if ( is_string($title) ) {
             return $this->_xmlEntities($title);
         } else if ( is_array($title) ) {
-            $isImage = TRUE;
+            $isImage = true;
             return $this->_imageTitle($title);
         }
     }

@@ -31,13 +31,13 @@ if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/
 if (version_compare(phpversion(), '4.3.0', '<') || php_sapi_name() == 'cgi') {
     // Handle output buffering
     @ob_end_flush();
-    ob_implicit_flush(TRUE);
+    ob_implicit_flush(true);
 
     // PHP ini settings
     set_time_limit(0);
-    ini_set('track_errors', TRUE);
-    ini_set('html_errors', FALSE);
-    ini_set('magic_quotes_runtime', FALSE);
+    ini_set('track_errors', true);
+    ini_set('html_errors', false);
+    ini_set('magic_quotes_runtime', false);
 
     // Define stream constants
     define('STDIN', fopen('php://stdin', 'r'));
@@ -306,7 +306,7 @@ class Doku_Cli_Opts_Error {
     }
 
     function isError() {
-        return TRUE;
+        return true;
     }
 
 }
@@ -319,7 +319,7 @@ class Doku_Cli_Opts_Container {
 
     function Doku_Cli_Opts_Container($options) {
         foreach ( $options[0] as $option ) {
-            if ( FALSE !== ( strpos($option[0], '--') ) ) {
+            if ( false !== ( strpos($option[0], '--') ) ) {
                 $opt_name = substr($option[0], 2);
             } else {
                 $opt_name = $option[0];
@@ -356,7 +356,7 @@ class Doku_Cli_Opts_Container {
     }
 
     function isError() {
-        return FALSE;
+        return false;
     }
 
 }

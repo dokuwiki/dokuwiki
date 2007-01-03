@@ -20,7 +20,7 @@ class auth_pgsql extends auth_mysql {
      * Constructor
      *
      * checks if the pgsql interface is available, otherwise it will
-     * set the variable $success of the basis class to FALSE
+     * set the variable $success of the basis class to false
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      * @author Andreas Gohr <andi@splitbrain.org>

@@ -12,17 +12,17 @@ require_once DOKU_INC . 'inc/pluginutils.php';
 
 class Doku_Renderer {
     var $info = array(
-        'cache' => TRUE, // may the rendered result cached?
-        'toc'   => TRUE, // render the TOC?
+        'cache' => true, // may the rendered result cached?
+        'toc'   => true, // render the TOC?
     );
 
 
     function nocache() {
-        $this->info['cache'] = FALSE;
+        $this->info['cache'] = false;
     }
 
     function notoc() {
-        $this->info['toc'] = FALSE;
+        $this->info['toc'] = false;
     }
 
     //handle plugin rendering

@@ -246,7 +246,7 @@ switch ( $OPTS->arg(0) ) {
             exit(1);
         }
 
-        if ( stristr( realpath(dirname($TARGET_FN)), realpath($conf['datadir']) ) !== FALSE ) {
+        if ( stristr( realpath(dirname($TARGET_FN)), realpath($conf['datadir']) ) !== false ) {
             fwrite( STDERR, "Attempt to check out file into data directory - not allowed\n");
             exit(1);
         }

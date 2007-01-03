@@ -24,7 +24,7 @@ class auth_mysql extends auth_basic {
      * Constructor
      *
      * checks if the mysql interface is available, otherwise it will
-     * set the variable $success of the basis class to FALSE
+     * set the variable $success of the basis class to false
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */

@@ -234,15 +234,15 @@ class Aspell{
 
         $txOff = 0;
         $txLen = strlen($stdin);
-        $stdoutDone = FALSE;
-        $stderrDone = FALSE;
+        $stdoutDone = false;
+        $stderrDone = false;
 
         stream_set_blocking($pipes[0], 0); // Make stdin/stdout/stderr non-blocking
         stream_set_blocking($pipes[1], 0);
         stream_set_blocking($pipes[2], 0);
 
         if ($txLen == 0) fclose($pipes[0]);
-        while (TRUE) {
+        while (true) {
             $rx = array(); // The program's stdout/stderr
             if (!$stdoutDone) $rx[] = $pipes[1];
             if (!$stderrDone) $rx[] = $pipes[2];
@@ -252,7 +252,7 @@ class Aspell{
 
             if (!empty($tx)) {
                 $txRet = fwrite($pipes[0], substr($stdin, $txOff, 8192));
-                if ($txRet !== FALSE) $txOff += $txRet;
+                if ($txRet !== false) $txOff += $txRet;
                 if ($txOff >= $txLen) fclose($pipes[0]);
             }
 
@@ -261,13 +261,13 @@ class Aspell{
                     $stdout .= fread($pipes[1], 8192);
                     if (feof($pipes[1])) {
                         fclose($pipes[1]);
-                        $stdoutDone = TRUE;
+                        $stdoutDone = true;
                     }
                 } else if ($r == $pipes[2]) {
                     $stderr .= fread($pipes[2], 8192);
                     if (feof($pipes[2])) {
                         fclose($pipes[2]);
-                        $stderrDone = TRUE;
+                        $stderrDone = true;
                     }
                 }
             }

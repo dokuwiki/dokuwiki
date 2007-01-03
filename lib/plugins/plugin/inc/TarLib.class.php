@@ -119,7 +119,7 @@ class TarLib
     return true;
   }
 
-  function sendClient($name = '', $archive = '', $headers = TRUE)
+  function sendClient($name = '', $archive = '', $headers = true)
   {
     if(!$name && !$this->_nomf) return -9;
     if(!$archive && !$this->_memdat) return -10;
@@ -207,7 +207,7 @@ class TarLib
   function TarErrorStr($i)
   {
     $ecodes = Array(
-         1 => TRUE,
+         1 => true,
          0 => "Undocumented error",
         -1 => "Can't use COMPRESS_GZIP compression : ZLIB extensions are not loaded !",
         -2 => "Can't use COMPRESS_BZIP compression : BZ2 extensions are not loaded !",
@@ -474,7 +474,7 @@ class TarLib
       if(!$fp) return false;
      }
 
-     if(!$this->_writeFileHeader($p_fn, $sname, ($data ? strlen($data) : FALSE))) return false;
+     if(!$this->_writeFileHeader($p_fn, $sname, ($data ? strlen($data) : false))) return false;
 
      if(!$data)
      {

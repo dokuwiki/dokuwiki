@@ -23,10 +23,10 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
     // Namespace these variables to
     // avoid clashes with parent classes
     var $sum_paragraphs = 0;
-    var $sum_capture = TRUE;
-    var $sum_inSection = FALSE;
+    var $sum_capture = true;
+    var $sum_inSection = false;
     var $sum_summary = '';
-    var $sum_pageTitle = FALSE;
+    var $sum_pageTitle = false;
 
     function document_start() {
         $this->doc .= DOKU_LF.'<div>'.DOKU_LF;
@@ -50,7 +50,7 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
     function header($text, $level, $pos) {
         if ( !$this->sum_pageTitle ) {
             $this->info['sum_pagetitle'] = $text;
-            $this->sum_pageTitle = TRUE;
+            $this->sum_pageTitle = true;
         }
         $this->doc .= DOKU_LF.'<h'.$level.'>';
         $this->doc .= $this->_xmlEntities($text);
@@ -59,14 +59,14 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
 
     function section_open($level) {
         if ( $this->sum_capture ) {
-            $this->sum_inSection = TRUE;
+            $this->sum_inSection = true;
         }
     }
 
     function section_close() {
         if ( $this->sum_capture && $this->sum_inSection ) {
             $this->sum_summary .= $this->doc;
-            $this->sum_capture = FALSE;
+            $this->sum_capture = false;
         }
     }
 
@@ -81,7 +81,7 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
         parent :: p_close();
         if ( $this->sum_capture && $this->sum_paragraphs >= 2 ) {
             $this->sum_summary .= $this->doc;
-            $this->sum_capture = FALSE;
+            $this->sum_capture = false;
         }
     }
 

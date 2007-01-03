@@ -398,7 +398,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function _getLinkTitle($title, $default, $id=NULL) {
     global $conf;
 
-    $isImage = FALSE;
+    $isImage = false;
     if (is_null($title)){
       if ($conf['useheading'] && $id){
         $heading = p_get_first_heading($id);

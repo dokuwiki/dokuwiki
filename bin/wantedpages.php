@@ -62,7 +62,7 @@ function dw_get_pages($dir) {
     
     $pages = array();
     $dh = opendir($dir);
-    while ( FALSE !== ( $entry = readdir($dh) ) ) {
+    while ( false !== ( $entry = readdir($dh) ) ) {
         $status = dw_dir_filter($entry, $dir);
         if ( $status == DW_DIR_CONTINUE ) {
             continue;
@@ -86,7 +86,7 @@ function dw_internal_links($page) {
     $instructions = p_get_instructions(file_get_contents($page['file']));
     $links = array();
     $cns = getNS($page['id']);
-    $exists = FALSE;
+    $exists = false;
     foreach($instructions as $ins){
         if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
             $mid = $ins[1][0];

@@ -133,7 +133,7 @@ function utf8_strlen($string){
  * @param string
  * @param integer number of UTF-8 characters offset (from left)
  * @param integer (optional) length in UTF-8 characters from offset
- * @return mixed string or FALSE if failure
+ * @return mixed string or false if failure
  */
 function utf8_substr($str, $offset, $length = null) {
     if(UTF8_MBSTRING){
@@ -249,7 +249,7 @@ function utf8_substr_replace($string, $replacement, $start , $length=0 ){
 function utf8_explode($sep, $str) {
   if ( $sep == '' ) {
     trigger_error('Empty delimiter',E_USER_WARNING);
-    return FALSE;
+    return false;
   }
 
   return preg_split('!'.preg_quote($sep,'!').'!u',$str);
@@ -497,7 +497,7 @@ function utf8_tohtml ($str) {
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @param  string  UTF-8 encoded string
  * @param  boolean Check for invalid sequences?
- * @return mixed array of unicode code points or FALSE if UTF-8 invalid
+ * @return mixed array of unicode code points or false if UTF-8 invalid
  * @see    unicode_to_utf8
  * @link   http://hsivonen.iki.fi/php-utf8/
  * @link   http://sourceforge.net/projects/phputf8/
@@ -576,7 +576,7 @@ function utf8_to_unicode($str,$strict=false) {
                             'in UTF-8 at byte '.$i,
                         E_USER_WARNING
                     );
-                return FALSE;
+                return false;
 
             }
 
@@ -618,7 +618,7 @@ function utf8_to_unicode($str,$strict=false) {
                                     E_USER_WARNING
                                 );
 
-                            return FALSE;
+                            return false;
                         }
 
                     }
@@ -645,7 +645,7 @@ function utf8_to_unicode($str,$strict=false) {
                         E_USER_WARNING
                     );
 
-                return FALSE;
+                return false;
             }
         }
     }
@@ -668,7 +668,7 @@ function utf8_to_unicode($str,$strict=false) {
  *
  * @param  array of unicode code points representing a string
  * @param  boolean Check for invalid sequences?
- * @return mixed UTF-8 string or FALSE if array contains invalid code points
+ * @return mixed UTF-8 string or false if array contains invalid code points
  * @author <hsivonen@iki.fi>
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @see    utf8_to_unicode
@@ -707,7 +707,7 @@ function unicode_to_utf8($arr,$strict=false) {
                         'at index: '.$k.', value: '.$arr[$k],
                     E_USER_WARNING
                     );
-                return FALSE;
+                return false;
             }
 
         # 3 byte sequence
@@ -734,7 +734,7 @@ function unicode_to_utf8($arr,$strict=false) {
                 );
 
             // out of range
-            return FALSE;
+            return false;
         }
     }
 
