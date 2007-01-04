@@ -40,8 +40,7 @@ function hsc($string){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ptln($string,$intend=0){
-  for($i=0; $i<$intend; $i++) print ' ';
-  echo "$string\n";
+  echo str_repeat(' ', $intend)."$string\n";
 }
 
 /**
