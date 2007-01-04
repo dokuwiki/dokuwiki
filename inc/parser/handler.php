@@ -585,9 +585,9 @@ class Doku_Handler {
             case DOKU_LEXER_MATCHED:
                 if ( $match == ' ' ){
                     $this->_addCall('cdata', array($match), $pos);
-                } else if ( preg_match('/\t+/',$match) ) {
+                } else if ( strpos('\t',$match) !== false ) {
                     $this->_addCall('table_align', array($match), $pos);
-                } else if ( preg_match('/ {2,}/',$match) ) {
+                } else if ( strpos('  ',$match) !== false ) {
                     $this->_addCall('table_align', array($match), $pos);
                 } else if ( $match == "\n|" ) {
                     $this->_addCall('table_row', array(), $pos);
@@ -659,9 +659,9 @@ function Doku_Handler_Parse_Media($match) {
     }
 
     //get linking command
-    if(preg_match('/nolink/i',$param)){
+    if(stripos('nolink',$param) !== false){
         $linking = 'nolink';
-    }else if(preg_match('/direct/i',$param)){
+    }else if(stripos('direct',$param) !== false){
         $linking = 'direct';
     }else{
         $linking = 'details';
