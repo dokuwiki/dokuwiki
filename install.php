@@ -427,7 +427,7 @@ function check_functions(){
                          'file file_exists fseek flush filesize ftell fopen '.
                          'glob header ignore_user_abort ini_get mail mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
-                         'rename rmdir serialize session_start unlink usleep'.
+                         'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace');
 
     if (!function_exists('mb_substr')) {
