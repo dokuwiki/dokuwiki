@@ -111,7 +111,7 @@ $lang['current']    = 'huidige';
 $lang['yours']      = 'Jouw versie';
 $lang['diff']       = 'toon verschillen met huidige revisie';
 $lang['line']       = 'Regel';
-$lang['breadcrumb'] = 'Pad';
+$lang['breadcrumb'] = 'Pad historie';
 $lang['youarehere'] = 'Je bent hier';
 $lang['lastmod']    = 'Laatst gewijzigd';
 $lang['by']         = 'door';
@@ -148,7 +148,7 @@ $lang['qb_chars'] = 'Speciale tekens';
 
 $lang['del_confirm']= 'Dit item verwijderen?';
 $lang['admin_register']= 'Nieuwe gebruiker toevoegen';
- 
+
 $lang['spell_start'] = 'Controleer spelling';
 $lang['spell_stop']  = 'Doorgaan met aanpassen';
 $lang['spell_wait']  = 'Even wachten a.u.b...';
