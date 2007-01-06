@@ -207,6 +207,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
   $info['file'] = basename($file);
   $info['size'] = filesize($base.'/'.$file);
+  $info['mtime'] = filemtime($base.'/'.$file);
   $info['writable'] = is_writable($base.'/'.$file);
   if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
     $info['isimg'] = true;

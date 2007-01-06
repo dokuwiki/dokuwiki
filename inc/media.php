@@ -315,6 +315,7 @@ function media_fileactions($item,$auth){
  */
 function media_printfile($item,$auth,$jump){
     global $lang;
+    global $conf;
 
     // Prepare zebra coloring
     // I always wanted to use this variable name :-D
@@ -345,6 +346,8 @@ function media_printfile($item,$auth,$jump){
         $info .= (int) $item['meta']->getField('File.Height');
         $info .= ' ';
     }
+    $info .= '<i>'.date($conf['dformat'],$item['mtime']).'</i>';
+    $info .= ' ';
     $info .= filesize_h($item['size']);
 
     // ouput
