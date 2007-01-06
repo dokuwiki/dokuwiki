@@ -438,6 +438,7 @@ function auth_aclcheck($id,$user,$groups){
 function auth_nameencode($name,$skip_group=false){
   global $cache_authname;
   $cache =& $cache_authname;
+  $name  = (string) $name;
 
   if (!isset($cache[$name][$skip_group])) {
     if($skip_group && $name{0} =='@'){
