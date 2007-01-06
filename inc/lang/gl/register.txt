@@ -1,0 +1,7 @@
+====== Rexistro como novo usuario ======
+
+Cubre toda a información requerida a continuación para crear unha nova conta nesta wiki.
+Asegúrate de fornecer un **enderezo de correo-e válido** - se non se che pide aquí que
+insiras un contrasinal, recibirás un novo nese enderezo.
+O nome de usuario deberá ser un [[doku>wiki:pagename|nome de páxina]] válido.
+

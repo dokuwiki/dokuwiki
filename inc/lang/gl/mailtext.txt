@@ -1,0 +1,17 @@
+Engadiuse ou mudouse unha páxina no teu DokuWiki. Aquí van os pormenores:
+
+Data            : @DATE@
+Navegador       : @BROWSER@
+Enderezo IP     : @IPADDRESS@
+Nome de Host    : @HOSTNAME@
+Antiga Revisión : @OLDPAGE@
+Nova Revision   : @NEWPAGE@
+Resumo da Edción: @SUMMARY@
+Usuario         : @USER@
+
+@DIFF@
+
+
+-- 
+Este correo foi xerado polo DokuWiki en
+@DOKUWIKIURL@

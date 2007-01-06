@@ -1,0 +1,28 @@
+# Isto é unha lista das verbas que o indexador ignora, unha por liña
+# Cando edites este arquivo asegúrate de usar remates de liña UNIX (nova liña única)
+# Non precisas incluir verbas de menos de 3 caracteres - estas son ignoradas de todas formas
+# Esta lista está baseada nas atopadas en http://www.ranks.nl/stopwords/ (en proceso aínda)
+unhas
+unhas
+tamén
+todo
+outro
+outra
+algún
+algunha
+algúns
+algunhas
+está
+están
+estamos
+estades
+estaba
+como
+temos
+tedes
+porén
+antes
+logo
+agás
+pero
+porque
