@@ -107,9 +107,10 @@
  * @param   string  $user    Username
  * @param   string  $pass    Cleartext Password
  * @param   bool    $sticky  Cookie should not expire
+ * @param   bool    $silent  Don't show error on bad auth
  * @return  bool             true on successful auth
 */
-function auth_login($user,$pass,$sticky=false){
+function auth_login($user,$pass,$sticky=false,$silent=false){
   global $USERINFO;
   global $conf;
   global $lang;
@@ -137,7 +138,7 @@ function auth_login($user,$pass,$sticky=false){
       return true;
     }else{
       //invalid credentials - log off
-      msg($lang['badlogin'],-1);
+      if(!$silent) msg($lang['badlogin'],-1);
       auth_logoff();
       return false;
     }
@@ -147,7 +148,6 @@ function auth_login($user,$pass,$sticky=false){
     list($user,$sticky,$pass) = split('\|',$cookie,3);
     // get session info
     $session = $_SESSION[DOKU_COOKIE]['auth'];
-
     if($user && $pass){
       // we got a cookie - see if we can trust it
       if(isset($session) &&
@@ -159,9 +159,9 @@ function auth_login($user,$pass,$sticky=false){
         $USERINFO = $session['info']; //FIXME move all references to session
         return true;
       }
-      // no we don't trust it yet - recheck pass
+      // no we don't trust it yet - recheck pass but silent
       $pass = PMA_blowfish_decrypt($pass,auth_cookiesalt());
-      return auth_login($user,$pass,$sticky);
+      return auth_login($user,$pass,$sticky,true);
     }
   }
   //just to be sure
