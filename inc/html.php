@@ -41,7 +41,8 @@ function html_attbuild($attributes){
 /**
  * The loginform
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @triggers HTML_LOGINFORM_INJECTION
  */
 function html_login(){
   global $lang;
@@ -67,6 +68,12 @@ function html_login(){
           <span><?php echo $lang['pass']?></span>
           <input type="password" name="p" class="edit" />
         </label><br />
+
+        <?php //bad and dirty event insert hook
+        $evdata = array();
+        trigger_event('HTML_LOGINFORM_INJECTION', $evdata);
+        ?>
+
         <label for="remember__me" class="simple">
           <input type="checkbox" name="r" id="remember__me" value="1" />
           <span><?php echo $lang['remember']?></span>
