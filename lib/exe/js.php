@@ -39,6 +39,7 @@ function js_out(){
 
     // Array of needed files
     $files = array(
+                DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/cookie.js',
                 DOKU_INC.'lib/scripts/script.js',
