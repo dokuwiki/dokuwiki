@@ -162,6 +162,8 @@ class Doku_Renderer {
     // $link like 'SomePage'
     function camelcaselink($link) {}
 
+    function locallink($hash, $name = NULL) {}
+
     // $link like 'wiki:syntax', $title could be an array (media)
     function internallink($link, $title = NULL) {}
 
@@ -181,6 +183,12 @@ class Doku_Renderer {
 
 //  function email($address, $title = NULL) {}
     function emaillink($address, $name = NULL) {}
+
+    function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
+                            $height=NULL, $cache=NULL, $linking=NULL) {}
+
+    function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
+                            $height=NULL, $cache=NULL, $linking=NULL) {}
 
     function internalmedialink (
         $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
