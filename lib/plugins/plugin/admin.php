@@ -628,7 +628,7 @@ class ap_manage {
         // .tar, .tar.bz, .tar.gz, .tgz
         if (in_array($ext, array('tar','bz','bz2','gz','tgz'))) {
 
-          require_once(DOKU_PLUGIN."plugin/inc/TarLib.class.php");
+          require_once(DOKU_INC."inc/TarLib.class.php");
 
           if (strpos($ext, 'bz') !== false) $compress_type = COMPRESS_BZIP;
           else if (strpos($ext,'gz') !== false) $compress_type = COMPRESS_GZIP;
@@ -642,7 +642,7 @@ class ap_manage {
 
         } else if ($ext == 'zip') {
 
-          require_once(DOKU_PLUGIN."plugin/inc/ZipLib.class.php");
+          require_once(DOKU_INC."inc/ZipLib.class.php");
 
           $zip = new ZipLib();
           $ok = $zip->Extract($file, $target);
