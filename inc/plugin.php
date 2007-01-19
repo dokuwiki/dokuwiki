@@ -1,18 +1,14 @@
 <?php
 /**
- * Admin Plugin Prototype
- * 
+ * DokuWiki Plugin base class
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 /**
- * All DokuWiki plugins to extend the admin function
- * need to inherit from this class
+ * Do not inherit directly from this class, instead inherit from the specialized
+ * ones in lib/plugin
  */
 class DokuWiki_Plugin {
 
@@ -36,7 +32,7 @@ class DokuWiki_Plugin {
   function getInfo(){
     trigger_error('getInfo() not implemented in '.get_class($this), E_USER_WARNING);
   }
-  
+
   // plugin introspection methods
   // extract from class name, format = <plugin type>_plugin_<name>[_<component name>]
   function getPluginType() { list($t) = explode('_', get_class($this), 2); return $t;  }
@@ -55,10 +51,10 @@ class DokuWiki_Plugin {
    */
   function getLang($id) {
     if (!$this->localised) $this->setupLocale();
-    
+
     return (isset($this->lang[$id]) ? $this->lang[$id] : '');
   }
-  
+
   /**
    * locale_xhtml($id)
    *
@@ -71,7 +67,7 @@ class DokuWiki_Plugin {
   function locale_xhtml($id) {
     return p_cached_output($this->localFN($id));
   }
-  
+
   /**
    * localFN($id)
    * prepends appropriate path for a language dependent filename
@@ -87,9 +83,9 @@ class DokuWiki_Plugin {
     }
     return $file;
   }
-  
+
   /**
-   *  setupLocale() 
+   *  setupLocale()
    *  reads all the plugins language dependent strings into $this->lang
    *  this function is automatically called by getLang()
    */
@@ -100,19 +96,19 @@ class DokuWiki_Plugin {
     $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
 
     $lang = array();
- 
+
     // don't include once, in case several plugin components require the same language file
-    @include($path.'en/lang.php');    
+    @include($path.'en/lang.php');
     if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-    
+
     $this->lang = $lang;
     $this->localised = true;
   }
-  
+
   // configuration methods
   /**
    * getConf($setting)
-   * 
+   *
    * use this function to access plugin configuration variables
    */
   function getConf($setting){
@@ -121,7 +117,7 @@ class DokuWiki_Plugin {
 
     return $this->conf[$setting];
   }
-  
+
   /**
    * loadConfig()
    * merges the plugin's default settings with any local settings
@@ -139,7 +135,7 @@ class DokuWiki_Plugin {
     }
 
     $this->configloaded = true;
-    $this->conf =& $conf['plugin'][$plugin];    
+    $this->conf =& $conf['plugin'][$plugin];
   }
 
   /**
@@ -194,12 +190,12 @@ class DokuWiki_Plugin {
     return "<a href='$link'$class$target$more>$title</a>";
   }
 
-  /**           
+  /**
    * output text string through the parser, allows dokuwiki markup to be used
    * very ineffecient for small pieces of data - try not to use
    */
   function render($text, $format='xhtml') {
-    return p_render($format, p_get_instructions($text),$info); 
+    return p_render($format, p_get_instructions($text),$info);
   }
 
   // deprecated functions

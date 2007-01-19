@@ -1,7 +1,7 @@
 <?php
 /**
  * Syntax Plugin Prototype
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
@@ -47,12 +47,12 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     function getType(){
         trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
     }
-    
+
     /**
      * Allowed Mode Types
      *
-     * Defines the mode types for other dokuwiki markup that maybe nested within the 
-     * plugin's own markup. Needs to return an array of one or more of the mode types 
+     * Defines the mode types for other dokuwiki markup that maybe nested within the
+     * plugin's own markup. Needs to return an array of one or more of the mode types
      * defined in $PARSER_MODES in parser.php
      */
     function getAllowedTypes() {
@@ -95,7 +95,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     /**
      * Handles the actual output creation.
-     * 
+     *
      * The function must not assume any other of the classes methods have been run
      * during the object's current life. The only reliable data it receives are its
      * parameters.
@@ -120,7 +120,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
 
     }
-    
+
     /**
      *  There should be no need to override these functions
      */
@@ -132,7 +132,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
             $allowedModeTypes = $this->getAllowedTypes();
             foreach($allowedModeTypes as $mt) {
                 $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
-            }        
+            }
 
             $idx = array_search(substr(get_class($this), 7), $this->allowedModes);
             if ($idx !== false) {
@@ -140,8 +140,8 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
             }
             $this->allowedModesSetup = true;
         }
-        
-        return parent::accepts($mode);            
+
+        return parent::accepts($mode);
     }
 
     // plugin introspection methods
@@ -163,10 +163,10 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      */
     function getLang($id) {
       if (!$this->localised) $this->setupLocale();
-      
+
       return (isset($this->lang[$id]) ? $this->lang[$id] : '');
     }
-    
+
     /**
      * locale_xhtml($id)
      *
@@ -179,7 +179,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     function locale_xhtml($id) {
       return p_cached_output($this->localFN($id));
     }
-    
+
     /**
      * localFN($id)
      * prepends appropriate path for a language dependent filename
@@ -195,30 +195,30 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
       }
       return $file;
     }
-    
+
     /**
-     *  setupLocale() 
+     *  setupLocale()
      *  reads all the plugins language dependent strings into $this->lang
      *  this function is automatically called by getLang()
      */
     function setupLocale() {
         if ($this->localised) return;
-    
+
       global $conf;            // definitely don't invoke "global $lang"
       $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
-      
+
       // don't include once, in case several plugin components require the same language file
-      @include($path.'en/lang.php');    
+      @include($path.'en/lang.php');
       if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-      
+
       $this->lang = $lang;
       $this->localised = true;
     }
-    
+
   // configuration methods
   /**
    * getConf($setting)
-   * 
+   *
    * use this function to access plugin configuration variables
    */
   function getConf($setting){
@@ -227,7 +227,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
     return $this->conf[$setting];
   }
-  
+
   /**
    * loadConfig()
    * merges the plugin's default settings with any local settings
@@ -245,7 +245,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     }
 
     $this->configloaded = true;
-    $this->conf =& $conf['plugin'][$plugin];    
+    $this->conf =& $conf['plugin'][$plugin];
   }
 
   /**
