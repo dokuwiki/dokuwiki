@@ -8,9 +8,15 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 
 require_once DOKU_INC . 'inc/parser/renderer.php';
+require_once DOKU_INC . 'inc/plugin.php';
 require_once DOKU_INC . 'inc/pluginutils.php';
 
-class Doku_Renderer {
+/**
+ * An empty renderer, produces no output
+ *
+ * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
+ */
+class Doku_Renderer extends DokuWiki_Plugin {
     var $info = array(
         'cache' => true, // may the rendered result cached?
         'toc'   => true, // render the TOC?
