@@ -5,18 +5,18 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
- 
+
 // plugin related constants
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-$plugin_types = array('admin','syntax','action');
- 
+$plugin_types = array('admin','syntax','action','renderer');
+
 /**
  * Returns a list of available plugins of given type
  *
- * @param $type  string, plugin_type name; 
- *               the type of plugin to return, 
+ * @param $type  string, plugin_type name;
+ *               the type of plugin to return,
  *               use empty string for all types
- * @param $all   bool; 
+ * @param $all   bool;
  *               false to only return enabled plugins,
  *               true to return both enabled and disabled plugins
  *
@@ -30,9 +30,9 @@ function plugin_list($type='',$all=false){
     while (false !== ($plugin = readdir($dh))) {
       if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp') continue;
       if (is_file(DOKU_PLUGIN.$plugin)) continue;
-			
-			// if required, skip disabled plugins
-			if (!$all && plugin_isdisabled($plugin)) continue;
+
+      // if required, skip disabled plugins
+      if (!$all && plugin_isdisabled($plugin)) continue;
 
       if ($type=='' || @file_exists(DOKU_PLUGIN."$plugin/$type.php")){
           $plugins[] = $plugin;
