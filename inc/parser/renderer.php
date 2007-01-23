@@ -220,6 +220,38 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function tablecell_close(){}
 
+
+    // util functions follow, you probably won't need to reimplement them
+
+
+    /**
+     * Removes any Namespace from the given name but keeps
+     * casing and special chars
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _simpleTitle($name){
+        global $conf;
+
+        //if there is a hash we use the ancor name only
+        list($name,$hash) = explode('#',$name,2);
+        if($hash) return $hash;
+
+        //trim colons of a namespace link
+        $name = rtrim($name,':');
+
+        if($conf['useslash']){
+            $nssep = '[:;/]';
+        }else{
+            $nssep = '[:;]';
+        }
+        $name = preg_replace('!.*'.$nssep.'!','',$name);
+
+        if(!$name) return $this->_simpleTitle($conf['start']);
+        return $name;
+    }
+
+
 }
 
 

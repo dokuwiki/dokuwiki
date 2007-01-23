@@ -929,33 +929,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-     * Removes any Namespace from the given name but keeps
-     * casing and special chars
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    function _simpleTitle($name){
-        global $conf;
-
-        //if there is a hash we use the ancor name only
-        list($name,$hash) = explode('#',$name,2);
-        if($hash) return $hash;
-
-        //trim colons of a namespace link
-        $name = rtrim($name,':');
-
-        if($conf['useslash']){
-            $nssep = '[:;/]';
-        }else{
-            $nssep = '[:;]';
-        }
-        $name = preg_replace('!.*'.$nssep.'!','',$name);
-
-        if(!$name) return $this->_simpleTitle($conf['start']);
-        return $name;
-    }
-
-    /**
      * Renders internal and external media
      *
      * @author Andreas Gohr <andi@splitbrain.org>
