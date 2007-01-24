@@ -32,17 +32,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
 
     var $headers = array();
-
     var $footnotes = array();
-
-    var $acronyms = array();
-    var $smileys = array();
-    var $badwords = array();
-    var $entities = array();
-    var $interwiki = array();
-
     var $lastsec = 0;
-
     var $store = '';
 
     function document_start() {
@@ -577,13 +568,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        if ( isset($this->interwiki[$wikiName]) ) {
-            $url = $this->interwiki[$wikiName];
-        } else {
-            // Default to Google I'm feeling lucky
-            $url = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
-            $wikiName = 'go';
-        }
+        $url = $this-> _resolveInterWiki($wikiName,$wikiUri);
 
         if ( !$isImage ) {
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
@@ -597,28 +582,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['target'] = $conf['target']['wiki'];
         }
 
-        //split into hash and url part
-        list($wikiUri,$hash) = explode('#',$wikiUri,2);
-
-        //replace placeholder
-        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
-            //use placeholders
-            $url = str_replace('{URL}',rawurlencode($wikiUri),$url);
-            $url = str_replace('{NAME}',$wikiUri,$url);
-            $parsed = parse_url($wikiUri);
-            if(!$parsed['port']) $parsed['port'] = 80;
-            $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
-            $url = str_replace('{HOST}',$parsed['host'],$url);
-            $url = str_replace('{PORT}',$parsed['port'],$url);
-            $url = str_replace('{PATH}',$parsed['path'],$url);
-            $url = str_replace('{QUERY}',$parsed['query'],$url);
-            $link['url'] = $url;
-        }else{
-            //default
-            $link['url'] = $url.rawurlencode($wikiUri);
-        }
-        if($hash) $link['url'] .= '#'.rawurlencode($hash);
-
+        $link['url'] = $url;
         $link['title'] = htmlspecialchars($link['url']);
 
         //output formatted

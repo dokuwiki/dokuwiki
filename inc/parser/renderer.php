@@ -22,6 +22,12 @@ class Doku_Renderer extends DokuWiki_Plugin {
         'toc'   => true, // render the TOC?
     );
 
+    // keep some config options
+    var $acronyms = array();
+    var $smileys = array();
+    var $badwords = array();
+    var $entities = array();
+    var $interwiki = array();
 
     function nocache() {
         $this->info['cache'] = false;
@@ -251,7 +257,42 @@ class Doku_Renderer extends DokuWiki_Plugin {
         return $name;
     }
 
+    /**
+     * Resolve an interwikilink
+     */
+    function _resolveInterWiki(&$shortcut,$reference){
+        //get interwiki URL
+        if ( isset($this->interwiki[$shortcut]) ) {
+            $url = $this->interwiki[$shortcut];
+        } else {
+            // Default to Google I'm feeling lucky
+            $url = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
+            $shortcut = 'go';
+        }
 
+        //split into hash and url part
+        list($wikiUri,$hash) = explode('#',$wikiUri,2);
+
+        //replace placeholder
+        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
+            //use placeholders
+            $url = str_replace('{URL}',rawurlencode($reference),$url);
+            $url = str_replace('{NAME}',$reference,$url);
+            $parsed = parse_url($reference);
+            if(!$parsed['port']) $parsed['port'] = 80;
+            $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
+            $url = str_replace('{HOST}',$parsed['host'],$url);
+            $url = str_replace('{PORT}',$parsed['port'],$url);
+            $url = str_replace('{PATH}',$parsed['path'],$url);
+            $url = str_replace('{QUERY}',$parsed['query'],$url);
+        }else{
+            //default
+            $url = $url.rawurlencode($reference);
+        }
+        if($hash) $url .= '#'.rawurlencode($hash);
+
+        return $url;
+    }
 }
 
 
