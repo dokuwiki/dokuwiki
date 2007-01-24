@@ -4,10 +4,10 @@
  * -----
  * Author: Alberto 'Birckin' de Areba (Birckin@hotmail.com)
  * Copyright: (c) 2006 Alberto de Areba
- * Release Version: 1.0.7.16
- * CVS Revision Version: $Revision: 1.1.2.2 $
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 866 $
  * Date Started: 2006/05/29
- * Last Modified: $LastChangedDate:$
+ * Last Modified: $LastChangedDate: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * mIRC Scripting language file for GeSHi.
  *

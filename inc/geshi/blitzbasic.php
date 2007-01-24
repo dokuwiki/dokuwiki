@@ -4,10 +4,10 @@
  * --------------
  * Author: P�draig O`Connel (info@moonsword.info)
  * Copyright: (c) 2005 P�draig O`Connel (http://moonsword.info)
- * Release Version: 1.0.7.16
- * CVS Revision Version: $Revision: 1.11.2.6 $
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 866 $
  * Date Started: 16.10.2005
- * Last Modified: $Date: 2006/10/24 11:07:01 $
+ * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * BlitzBasic language file for GeSHi.
  *

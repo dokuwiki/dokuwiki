@@ -29,7 +29,7 @@
  * @author    Nigel McNie <nigel@geshi.org>
  * @copyright Copyright &copy; 2004, 2005, Nigel McNie
  * @license   http://gnu.org/copyleft/gpl.html GNU GPL
- * @version   $Id: geshi.php,v 1.40.2.13 2006/11/22 19:04:35 oracleshinoda Exp $
+ * @version   $Id: geshi.php 873 2006-12-27 13:14:20Z oracleshinoda $
  *
  */
 
@@ -41,19 +41,16 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.7.16');
-
-/** Set the correct directory separator */
-define('GESHI_DIR_SEPARATOR', ('WIN' != substr(PHP_OS, 0, 3)) ? '/' : '\\');
+define('GESHI_VERSION', '1.0.7.17');
 
 // Define the root directory for the GeSHi code tree
 if (!defined('GESHI_ROOT')) {
     /** The root directory for GeSHi */
-    define('GESHI_ROOT', dirname(__FILE__) . GESHI_DIR_SEPARATOR);
+    define('GESHI_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 }
 /** The language file directory for GeSHi
     @access private */
-define('GESHI_LANG_ROOT', GESHI_ROOT . 'geshi' . GESHI_DIR_SEPARATOR);
+define('GESHI_LANG_ROOT', GESHI_ROOT . 'geshi' . DIRECTORY_SEPARATOR);
 
 
 // Line numbers - use with enable_line_numbers()

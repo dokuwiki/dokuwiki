@@ -4,7 +4,7 @@
  * --------
  * Author: mastrboy
  * Copyright: (c) 2006 and to GESHi ;)
- * Release Version: 1.0.7.16
+ * Release Version: 1.0.7.17
  * Date Started: 26.01.2006
  *
  * Current bugs & todo:
@@ -193,4 +193,3 @@ $language_data = array (
 );
 
 ?>
-
