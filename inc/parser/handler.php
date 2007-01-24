@@ -590,9 +590,9 @@ class Doku_Handler {
             case DOKU_LEXER_MATCHED:
                 if ( $match == ' ' ){
                     $this->_addCall('cdata', array($match), $pos);
-                } else if ( strpos('\t',$match) !== false ) {
+                } else if ( preg_match('/\t+/',$match) ) {
                     $this->_addCall('table_align', array($match), $pos);
-                } else if ( strpos('  ',$match) !== false ) {
+                } else if ( preg_match('/ {2,}/',$match) ) {
                     $this->_addCall('table_align', array($match), $pos);
                 } else if ( $match == "\n|" ) {
                     $this->_addCall('table_row', array(), $pos);
