@@ -534,15 +534,20 @@ class Doku_Handler {
     }
 
     function externallink($match, $state, $pos) {
-        // Prevent use of multibyte strings in URLs
-        // See: http://www.boingboing.net/2005/02/06/shmoo_group_exploit_.html
-        // Not worried about other charsets so long as page is output as UTF-8
-        /*if ( strlen($match) != utf8_strlen($match) ) {
-            $this->_addCall('cdata',array($match), $pos);
-        } else {*/
+        $url   = $match;
+        $title = null;
 
-            $this->_addCall('externallink',array($match, NULL), $pos);
-        //}
+        // add protocol on simple short URLs
+        if(substr($url,0,3) == 'ftp' && (substr($url,0,6) != 'ftp://')){
+            $title = $url;
+            $url   = 'ftp://'.$url;
+        }
+        if(substr($url,0,3) == 'www' && (substr($url,0,7) != 'http://')){
+            $title = $url;
+            $url = 'http://'.$url;
+        }
+
+        $this->_addCall('externallink',array($url, $title), $pos);
         return true;
     }
 
