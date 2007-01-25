@@ -27,6 +27,11 @@ class Doku_Handler {
         $this->CallWriter->writeCall($call);
     }
 
+    function addPluginCall($plugin, $args, $state, $pos) {
+        $call = array('plugin',array($plugin, $args, $state), $pos);
+        $this->CallWriter->writeCall($call);
+    }
+
     function _finalize(){
 
         $this->CallWriter->finalise();
@@ -75,7 +80,7 @@ class Doku_Handler {
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
         }
-        $this->_addCall('plugin',array($pluginname,$data,$state),$pos);
+        $this->addPluginCall($pluginname,$data,$state,$pos);
         return true;
     }
 
