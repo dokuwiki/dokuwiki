@@ -11,6 +11,7 @@
 require_once DOKU_INC . 'inc/parser/parser.php';
 require_once DOKU_INC . 'inc/parser/handler.php';
 require_once DOKU_INC . 'inc/events.php';
+require_once DOKU_INC . 'inc/mail.php';
 //require_once DOKU . 'parser/renderer.php';
 
 //Mock::generate('Doku_Renderer');
