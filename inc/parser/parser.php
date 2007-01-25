@@ -914,7 +914,8 @@ class Doku_Parser_Mode_windowssharelink extends Doku_Parser_Mode {
 class Doku_Parser_Mode_emaillink extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern("<[\w0-9\-_.]+?@[\w\-]+\.[\w\-\.]+\.*[\w]+>",$mode,'emaillink');
+        // pattern below is defined in inc/mail.php
+        $this->Lexer->addSpecialPattern('<'.PREG_PATTERN_VALID_EMAIL.'>',$mode,'emaillink');
     }
 
     function getSort() {

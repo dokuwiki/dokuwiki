@@ -457,8 +457,8 @@ class Doku_Handler {
                     array($link[0],$link[1]),
                     $pos
                     );
-        }elseif ( preg_match('#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i',$link[0]) ) {
-        // E-Mail
+        }elseif ( preg_match('<'.PREG_PATTERN_VALID_EMAIL.'>',$link[0]) ) {
+        // E-Mail (pattern above is defined in inc/mail.php)
             $this->_addCall(
                 'emaillink',
                 array($link[0],$link[1]),
