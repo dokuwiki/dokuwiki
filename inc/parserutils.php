@@ -229,15 +229,14 @@ function p_get_metadata($id, $key=false, $render=false){
   // accessed several times. This may catch a few other pages, but that shouldn't be an issue.
   $cache = ($ID == $id);
   $meta = p_read_metadata($id, $cache);
-  $file = metaFN($id, '.meta');
 
   // metadata has never been rendered before - do it!
-  if ((!file_exists($file) && file_exists(wikiFN($id))) || ($render && !$meta['description']['abstract'])){
+  if ($render && !$meta['description']['abstract']){
     $meta = p_render_metadata($id, $meta);
-    io_saveFile($file, serialize($meta));
+    io_saveFile(metaFN($id, '.meta'), serialize($meta));
 
     // sync cached copies, including $INFO metadata
-	  if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+    if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
     if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
   }
 
@@ -559,11 +558,19 @@ function p_render($mode,$instructions,& $info){
 /**
  * Gets the first heading from a file
  *
+ * @param   string   $id       dokuwiki page id
+ * @param   bool     $render   rerender if first heading not known
+ *                             default: false  -- this protects against loops where $id requires a 
+ *                                                first heading further pages which eventually result
+ *                                                in a request for a first heading from a page already
+ *                                                in the chain (FS#1010)
+ *
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_get_first_heading($id){
+function p_get_first_heading($id, $render=false){
   global $conf;
-  return $conf['useheading'] ? p_get_metadata($id,'title') : null;
+  return $conf['useheading'] ? p_get_metadata($id,'title',$render) : null;
 }
 
 /**

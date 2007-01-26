@@ -995,7 +995,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $isImage = false;
         if ( is_null($title) ) {
             if ($conf['useheading'] && $id) {
-                $heading = p_get_first_heading($id);
+                $heading = p_get_first_heading($id,true);
                 if ($heading) {
                     return $this->_xmlEntities($heading);
                 }

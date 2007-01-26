@@ -401,7 +401,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     $isImage = false;
     if (is_null($title)){
       if ($conf['useheading'] && $id){
-        $heading = p_get_first_heading($id);
+        $heading = p_get_first_heading($id,false);
         if ($heading) return $heading;
       }
       return $default;
