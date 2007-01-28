@@ -185,7 +185,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
     return $ins;
   }
 
-  return NULL;
+  return null;
 }
 
 /**
@@ -277,7 +277,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
       foreach ($value as $subkey => $subvalue){
         $meta['current'][$key][$subkey] = array_merge($meta['current'][$key][$subkey], $subvalue);
-        if ($persistent) 
+        if ($persistent)
           $meta['persistent'][$key][$subkey] = array_merge($meta['persistent'][$key][$subkey], $subvalue);
       }
 
@@ -307,7 +307,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
   // sync cached copies, including $INFO metadata
   global $cache_metadata, $INFO;
-  
+
   if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
   if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
 
@@ -372,7 +372,7 @@ function p_read_metadata($id,$cache=false) {
 function p_render_metadata($id, $orig){
 
   // add an extra key for the event - to tell event handlers the page whose metadata this is
-	$orig['page'] = $id;
+  $orig['page'] = $id;
   $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
   if ($evt->advise_before()) {
 
@@ -380,6 +380,7 @@ function p_render_metadata($id, $orig){
 
     // get instructions
     $instructions = p_cached_instructions(wikiFN($id),false,$id);
+    if(is_null($instructions)) return null; // something went wrong with the instructions
 
     // set up the renderer
     $renderer = & new Doku_Renderer_metadata();
@@ -560,7 +561,7 @@ function p_render($mode,$instructions,& $info){
  *
  * @param   string   $id       dokuwiki page id
  * @param   bool     $render   rerender if first heading not known
- *                             default: false  -- this protects against loops where $id requires a 
+ *                             default: false  -- this protects against loops where $id requires a
  *                                                first heading further pages which eventually result
  *                                                in a request for a first heading from a page already
  *                                                in the chain (FS#1010)
