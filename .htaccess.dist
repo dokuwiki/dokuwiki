@@ -12,7 +12,7 @@
 </Files>
 
 ## Uncomment these rules if you want to have nice URLs using
-## $conf['rewrite'] = 1 - not needed for rewrite mode 2
+## $conf['userewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
 #
 ## Not all installations will require the following line.  If you do, 
