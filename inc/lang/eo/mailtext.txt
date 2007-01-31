@@ -11,7 +11,6 @@ Uzanto            : @USER@
 
 @DIFF@
 
-
 -- 
-Tiu ĉi mesaĝo estis kreita fare de DokuWiki kiu lokiĝas ĉi tie:
+Tiu ĉi mesaĝo estis kreata de DokuWiki, kiu lokiĝas ĉi tie:
 @DOKUWIKIURL@

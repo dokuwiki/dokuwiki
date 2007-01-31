@@ -1,4 +1,2 @@
 ====== Enhavo ======
 
-Antaŭ vi estas listo de alireblaj paĝoj, ordigita laŭ nomspaco ([[doku>wiki:namespaces|namespaces]]).
-

@@ -1,0 +1,14 @@
+Saluton @FULLNAME@!
+
+Iu petis novan pasvorton por via @TITLE@
+ensalutnomo ĉe @DOKUWIKIURL@
+
+Se ne estas vi, kiu petis tion, do preterlasu tiun ĉi mesaĝon.
+
+Por konfirmi, ke la peto estis vere via, bonvolu musklaki en la jena ligilo.
+
+@CONFIRM@
+
+--
+Tiu ĉi mesaĝo estis kreata de DokuWiki ĉe
+@DOKUWIKIURL@

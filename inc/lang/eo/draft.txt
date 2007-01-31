@@ -1,0 +1,10 @@
+====== Skiza dosiero estis trovata ======
+
+Via lasta sekcio de redakto en tiu ĉi paĝo ne estis korekte kompletata.
+Dokuwiki aŭtomate gardis skizon dum vi laboris, kiun vi nun povas uzi por
+daŭrigi vian redaktadon. Sube vi povas vidi la datenon, kiun estis gardata
+el via lasta sekcio.
+
+Bonvolu decidi ĉu vi volas //restarigi// vian perditan redakton, //elimini//
+la aŭtomate garditan skizon aux //aboli// la redaktan procezon.
+

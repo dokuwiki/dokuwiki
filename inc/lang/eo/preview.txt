@@ -1,4 +1,5 @@
-======Просмотр======
+====== Antaŭrigardo ======
 
-Это просмотр того, как ваш текст будет выглядеть. Напоминание: текст еще **не сохранен!**
+Tiu ĉi estas antaŭrigardo pri kia estos via teksto.
+Memoru: ĝi ankoraŭ **ne estas registrita**!
 

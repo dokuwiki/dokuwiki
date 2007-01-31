@@ -1,4 +1,5 @@
-======Tia revizio ne ekzistas======
+====== Tia revizio ne ekzistas ======
 
-Elektita revizio ne ekzistas. Premu butonon ''"Antaŭaj revizioj"'', por vidi liston de malnovaj revizioj de la dokumento.
+La elektita revizio ne ekzistas. Premu butonon ''"Antaŭaj revizioj"'',
+por vidi liston de malnovaj revizioj de la dokumento.
 

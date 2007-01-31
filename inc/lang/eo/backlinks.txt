@@ -1,4 +1,4 @@
-====== Inversaj referencoj ======
+====== Renversaj referencoj ======
 
-Ĉi tiu listo montras paĝojn, kiuj referencas la antaŭan paĝon. 
+Ĉi tiu listo montras paĝojn, kiuj aludas al la antaŭa paĝo. 
 
