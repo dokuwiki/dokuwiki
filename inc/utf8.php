@@ -456,28 +456,83 @@ function utf8_strpos($haystack, $needle,$offset=0) {
 /**
  * Encodes UTF-8 characters to HTML entities
  *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
  * @author <vpribish at shopping dot com>
  * @link   http://www.php.net/manual/en/function.utf8-decode.php
  */
 function utf8_tohtml ($str) {
-  $ret = '';
-  $max = strlen($str);
-  $last = 0;  // keeps the index of the last regular character
-  for ($i=0; $i<$max; $i++) {
-    $c = $str{$i};
-    $c1 = ord($c);
-    if ($c1>>5 == 6) {  // 110x xxxx, 110 prefix for 2 bytes unicode
-      $ret .= substr($str, $last, $i-$last); // append all the regular characters we've passed
-      $c1 &= 31; // remove the 3 bit two bytes prefix
-      $c2 = ord($str{++$i}); // the next byte
-      $c2 &= 63;  // remove the 2 bit trailing byte prefix
-      $c2 |= (($c1 & 3) << 6); // last 2 bits of c1 become first 2 of c2
-      $c1 >>= 2; // c1 shifts 2 to the right
-      $ret .= '&#' . ($c1 * 100 + $c2) . ';'; // this is the fastest string concatenation
-      $last = $i+1;
+    $ret = '';
+    foreach (utf8_to_unicode($str) as $cp) {
+        if ($cp < 0x80)
+            $ret .= chr($cp);
+        elseif ($cp < 0x100)
+            $ret .= "&#$cp;";
+        else
+            $ret .= '&#x'.dechex($cp).';';
     }
-  }
-  return $ret . substr($str, $last, $i); // append the last batch of regular characters
+    return $ret;
+}
+
+/**
+ * Decodes HTML entities to UTF-8 characters
+ *
+ * Convert any &#..; entity to a codepoint,
+ * The entities flag defaults to only decoding numeric entities.
+ * Pass HTML_ENTITIES and named entities, including &amp; &lt; etc.
+ * are handled as well. Avoids the problem that would occur if you 
+ * had to decode "&amp;#38;&#38;amp;#38;"
+ *
+ * unhtmlspecialchars(utf8_unhtml($s)) -> "&#38;&#38;"
+ * utf8_unhtml(unhtmlspecialchars($s)) -> "&&amp#38;"
+ * what it should be                   -> "&#38;&amp#38;"
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @param  string  $str      UTF-8 encoded string
+ * @param  boolean $entities Flag controlling decoding of named entities.
+ * @return UTF-8 encoded string with numeric (and named) entities replaced.
+ */
+function utf8_unhtml($str, $entities=null) {
+    static $decoder = null;
+    if (is_null($decoder))
+      $decoder = new utf8_entity_decoder();
+    if (is_null($entities))
+        return preg_replace_callback('/(&#([Xx])?([0-9A-Za-z]+);)/m',
+                                     'utf8_decode_numeric', $str);
+    else
+        return preg_replace_callback('/&(#)?([Xx])?([0-9A-Za-z]+);/m', 
+                                     array(&$decoder, 'decode'), $str);
+}
+function utf8_decode_numeric($ent) {
+    switch ($ent[2]) {
+      case 'X':
+      case 'x':
+          $cp = hexdec($ent[3]);
+          break;
+      default:
+          $cp = intval($ent[3]);
+          break;
+    }
+    return unicode_to_utf8(array($cp));
+}
+class utf8_entity_decoder {
+    var $table;
+    function utf8_entity_decoder() {
+        $table = get_html_translation_table(HTML_ENTITIES);
+        $table = array_flip($table);
+        $this->table = array_map(array(&$this,'makeutf8'), $table);
+    }
+    function makeutf8($c) {
+        return unicode_to_utf8(array(ord($c)));
+    }
+    function decode($ent) {
+        if ($ent[1] == '#') {
+            return utf8_decode_numeric($ent);
+        } elseif (array_key_exists($ent[0],$this->table)) {
+            return $this->table[$ent[0]];
+        } else {
+            return $ent[0];
+        }
+    }
 }
 
 /**
