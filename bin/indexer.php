@@ -11,6 +11,10 @@ require_once(DOKU_INC.'inc/indexer.php');
 require_once(DOKU_INC.'inc/cliopts.php');
 session_write_close();
 
+// Version tag used to force rebuild on upgrade
+// Need to keep in sync with lib/exe/indexer.php
+if(!defined('INDEXER_VERSION')) define('INDEXER_VERSION', 1);
+
 // handle options
 $short_opts = 'hcu';
 $long_opts  = array('help', 'clean', 'update');
@@ -73,14 +77,19 @@ function _index($id){
 
     // if not cleared only update changed and new files
     if(!$CLEAR){
-      $last = @filemtime(metaFN($id,'.indexed'));
-      if($last > @filemtime(wikiFN($id))) return;
+        $idxtag = metaFN($id,'.indexed');
+        if(@file_exists($idxtag)){
+            if(io_readFile($idxtag) >= INDEXER_VERSION){
+                $last = @filemtime(metaFN($id,'.indexed'));
+                if($last > @filemtime(wikiFN($id))) return;
+            }
+        }
     }
 
     _lock();
     echo "$id... ";
     idx_addPage($id);
-    io_saveFile(metaFN($id,'.indexed'),' ');
+    io_saveFile(metaFN($id,'.indexed'),INDEXER_VERSION);
     echo "done.\n";
     _unlock();
 }
@@ -126,9 +135,15 @@ function _clearindex(){
     global $conf;
     _lock();
     echo "Clearing index... ";
-    io_saveFile($conf['cachedir'].'/word.idx','');
-    io_saveFile($conf['cachedir'].'/page.idx','');
-    io_saveFile($conf['cachedir'].'/index.idx','');
+    io_saveFile($conf['indexdir'].'/page.idx','');
+    $dir = @opendir($conf['indexdir']);
+    if($dir!==false){
+        while(($f = readdir($dir)) !== false){
+            if(substr($f,-4)=='.idx' &&
+               (substr($f,0,1)=='i' || substr($f,0,1)=='w'))
+                @unlink($conf['indexdir']."/$f");
+        }
+    }
     echo "done.\n";
     _unlock();
 }
