@@ -154,7 +154,7 @@ function p_cached_output($file, $format='xhtml', $id='') {
 
     if ($info['cache']) {
       $cache->storeCache($parsed);               //save cachefile
-      if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, but created -->\n";
+      if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
     }else{
       $cache->removeCache();                     //try to delete cachefile
       if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
