@@ -47,6 +47,8 @@ function tpl_content() {
   $html_output = ob_get_clean();
 
   trigger_event('TPL_CONTENT_DISPLAY',$html_output,'ptln');
+
+  return !empty($html_output);
 }
 
 function tpl_content_core(){
@@ -128,7 +130,9 @@ function tpl_content_core(){
         msg("Failed to handle command: ".hsc($ACT),-1);
       $evt->advise_after();
       unset($evt);
+      return false;
   }
+  return true;
 }
 
 /**
@@ -160,6 +164,7 @@ function tpl_admin(){
     }else{
         html_admin();
     }
+    return true;
 }
 
 /**
@@ -266,6 +271,7 @@ function tpl_metaheaders($alt=true){
 
   // trigger event here
   trigger_event('TPL_METAHEADER_OUTPUT',$head,'_tpl_metaheaders_action',true);
+  return true;
 }
 
 /**
@@ -310,6 +316,7 @@ function tpl_link($url,$name,$more=''){
   print '<a href="'.$url.'" ';
   if ($more) print ' '.$more;
   print ">$name</a>";
+  return true;
 }
 
 /**
@@ -321,6 +328,7 @@ function tpl_link($url,$name,$more=''){
  */
 function tpl_pagelink($id,$name=NULL){
   print html_wikilink($id,$name);
+  return true;
 }
 
 /**
@@ -378,7 +386,7 @@ function tpl_button($type){
   // check disabled actions and fix the badly named ones
   $ctype = $type;
   if($type == 'history') $ctype='revisions';
-  if(!actionOK($ctype)) return;
+  if(!actionOK($ctype)) return false;
 
   switch($type){
     case 'edit':
@@ -401,24 +409,25 @@ function tpl_button($type){
       }else{
           echo html_btn('show',$ID,'v',array('do' => 'show'));
       }
-      break;
+      return true;
     case 'history':
       print html_btn('revs',$ID,'o',array('do' => 'revisions'));
-      break;
+      return true;
     case 'recent':
       print html_btn('recent','','r',array('do' => 'recent'));
-      break;
+      return true;
     case 'index':
       print html_btn('index',$ID,'x',array('do' => 'index'));
-      break;
+      return true;
     case 'back':
       if ($parent = tpl_getparent($ID)) {
         print html_btn('back',$parent,'b',array('do' => 'show'));
+        return true;
       }
-      break;
+      return false;
     case 'top':
       print html_topbtn();
-      break;
+      return true;
     case 'login':
       if($conf['useacl']){
         if($_SERVER['REMOTE_USER']){
@@ -426,15 +435,18 @@ function tpl_button($type){
         }else{
           print html_btn('login',$ID,'',array('do' => 'login'));
         }
+        return true;
       }
-      break;
+      return false;
     case 'admin':
-      if($INFO['ismanager'])
+      if($INFO['ismanager']){
         print html_btn('admin',$ID,'',array('do' => 'admin'));
-      break;
+        return true;
+      }
+      return false;
     case 'backtomedia':
       print html_backtomedia_button(array('ns' => $NS),'b');
-      break;
+      return false;
     case 'subscription':
       if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
@@ -443,20 +455,23 @@ function tpl_button($type){
           } else {
             print html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
           }
+          return true;
         }
       }
-      break;
+      return false;
     case 'backlink':
       print html_btn('backlink',$ID,'',array('do' => 'backlink'));
-      break;
+      return true;
     case 'profile':
       if($conf['useacl'] && $_SERVER['REMOTE_USER'] &&
          $auth->canDo('Profile') && ($ACT!='profile')){
         print html_btn('profile',$ID,'',array('do' => 'profile'));
+        return true;
       }
-      break;
+      return false;
     default:
       print '[unknown button type]';
+      return true;
   }
 }
 
@@ -493,7 +508,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
   // check disabled actions and fix the badly named ones
   $ctype = $type;
   if($type == 'history') $ctype='revisions';
-  if(!actionOK($ctype)) return;
+  if(!actionOK($ctype)) return false;
 
   switch($type){
     case 'edit':
@@ -607,7 +622,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   global $ACT;
 
   // don't print the search form if search action has been disabled
-  if (!actionOk('search')) return;
+  if (!actionOk('search')) return false;
 
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
   print '<input type="hidden" name="do" value="search" />';
@@ -618,6 +633,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
   if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
   print '</div></form>';
+  return true;
 }
 
 /**
@@ -625,12 +641,12 @@ function tpl_searchform($ajax=true,$autocomplete=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_breadcrumbs(){
+function tpl_breadcrumbs($sep='&raquo;'){
   global $lang;
   global $conf;
 
   //check if enabled
-  if(!$conf['breadcrumbs']) return;
+  if(!$conf['breadcrumbs']) return false;
 
   $crumbs = breadcrumbs(); //setup crumb trace
 
@@ -643,11 +659,12 @@ function tpl_breadcrumbs(){
   $i = 0;
   foreach ($crumbs as $id => $name){
     $i++;
-    print ' <span class="bcsep">&raquo;</span> ';
+    print ' <span class="bcsep">'.$sep.'</span> ';
     if ($i == $last) print '<span class="curid">';
     tpl_link(wl($id),hsc($name),'class="breadcrumbs" title="'.$id.'"');
     if ($i == $last) print '</span>';
   }
+  return true;
 }
 
 /**
@@ -668,7 +685,7 @@ function tpl_youarehere($sep=' &raquo; '){
   global $lang;
 
   // check if enabled
-  if(!$conf['youarehere']) return;
+  if(!$conf['youarehere']) return false;
 
   $parts = explode(':', $ID);
   $count = count($parts);
@@ -711,6 +728,7 @@ function tpl_youarehere($sep=' &raquo; '){
   }else{
     tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
   }
+  return true;
 }
 
 /**
@@ -724,8 +742,11 @@ function tpl_youarehere($sep=' &raquo; '){
 function tpl_userinfo(){
   global $lang;
   global $INFO;
-  if($_SERVER['REMOTE_USER'])
+  if($_SERVER['REMOTE_USER']){
     print $lang['loggedinas'].': '.$INFO['userinfo']['name'];
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -770,7 +791,9 @@ function tpl_pageinfo(){
       print ': ';
       print $INFO['locked'];
     }
+    return true;
   }
+  return false;
 }
 
 /**
@@ -798,6 +821,7 @@ function tpl_pagetitle($id=null, $ret=false){
       return hsc($name);
   } else {
       print hsc($name);
+      return true;
   }
 }
 
@@ -880,6 +904,7 @@ function tpl_img($maxwidth=0,$maxheight=0){
   print '<a href="'.$url.'">';
   print '<img src="'.$src.'" '.$p.'/>';
   print '</a>';
+  return true;
 }
 
 /**
@@ -892,9 +917,9 @@ function tpl_img($maxwidth=0,$maxheight=0){
 function tpl_indexerWebBug(){
   global $ID;
   global $INFO;
-  if(!$INFO['exists']) return;
+  if(!$INFO['exists']) return false;
 
-  if(isHiddenPage($ID)) return; //no need to index hidden pages
+  if(isHiddenPage($ID)) return false; //no need to index hidden pages
 
   $p = array();
   $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
@@ -904,6 +929,7 @@ function tpl_indexerWebBug(){
   $p['alt']    = '';
   $att = buildAttributes($p);
   print "<img $att />";
+  return true;
 }
 
 // configuration methods
