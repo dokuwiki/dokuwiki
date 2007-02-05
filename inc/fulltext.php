@@ -11,6 +11,13 @@
 
 
 /**
+ * Wrapper around preg_quote adding the default delimiter
+ */
+function ft_preg_quote_cb($string){
+    return preg_quote($string,'/');
+}
+
+/**
  * The fulltext search
  *
  * Returns a list of matching documents for the given query
@@ -69,7 +76,7 @@ function ft_pageSearch($query,&$poswords){
     if(count($q['phrases'])){
         //build a regexp
         $q['phrases'] = array_map('utf8_strtolower',$q['phrases']);
-        $q['phrases'] = array_map('preg_quote',$q['phrases']);
+        $q['phrases'] = array_map('ft_preg_quote_cb',$q['phrases']);
         $regex = '('.join('|',$q['phrases']).')';
         // check the source of all documents for the exact phrases
         foreach(array_keys($docs) as $id){
