@@ -79,7 +79,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // prepend the TOC
         if($this->info['toc']){
-            $this->doc = $this->render_TOC().$this->doc;
+            $this->doc = $this->render_TOC($this->toc).$this->doc;
         }
 
         // make sure there are no empty paragraphs
@@ -91,15 +91,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function render_TOC(){
-        if(count($this->toc) < 3) return '';
+    function render_TOC($toc){
+        if(count($toc) < 3) return '';
         global $lang;
         $out  = '<div class="toc">'.DOKU_LF;
         $out .= '<div class="tocheader toctoggle" id="toc__header">';
         $out .= $lang['toc'];
         $out .= '</div>'.DOKU_LF;
         $out .= '<div id="toc__inside">'.DOKU_LF;
-        $out .= html_buildlist($this->toc,'toc',array($this,'_tocitem'));
+        $out .= html_buildlist($toc,'toc',array(__CLASS__,'_tocitem'));
         $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
         return $out;
     }
@@ -109,7 +109,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function _tocitem($item){
         return '<span class="li"><a href="#'.$item['hid'].'" class="toc">'.
-               $this->_xmlEntities($item['title']).'</a></span>';
+               Doku_Renderer_xhtml::_xmlEntities($item['title']).'</a></span>';
     }
 
     function toc_additem($id, $text, $level) {
