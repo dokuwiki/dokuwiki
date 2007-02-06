@@ -644,7 +644,7 @@ class Doku_Parser_Mode_smiley extends Doku_Parser_Mode {
     }
 
     function preConnect() {
-        if(!count($this->smileys)) return;
+        if(!count($this->smileys) || $this->pattern != '') return;
 
         $sep = '';
         foreach ( $this->smileys as $smiley ) {
@@ -678,7 +678,7 @@ class Doku_Parser_Mode_wordblock extends Doku_Parser_Mode {
 
     function preConnect() {
 
-        if ( count($this->badwords) == 0 ) {
+        if ( count($this->badwords) == 0 || $this->pattern != '') {
             return;
         }
 
@@ -715,7 +715,7 @@ class Doku_Parser_Mode_entity extends Doku_Parser_Mode {
     }
 
     function preConnect() {
-        if(!count($this->entities)) return;
+        if(!count($this->entities) || $this->pattern != '') return;
 
         $sep = '';
         foreach ( $this->entities as $entity ) {
@@ -837,6 +837,7 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
     var $patterns = array();
 
     function preConnect() {
+        if(count($this->patterns)) return;
 
         $ltrs = '\w';
         $gunk = '/\#~:.?+=&%@!\-';
@@ -854,6 +855,7 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
     }
 
     function connectTo($mode) {
+
         foreach ( $this->patterns as $pattern ) {
             $this->Lexer->addSpecialPattern($pattern,$mode,'externallink');
         }
