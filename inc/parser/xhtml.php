@@ -112,20 +112,25 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                $this->_xmlEntities($item['title']).'</a></span>';
     }
 
-    function header($text, $level, $pos) {
+    function toc_additem($id, $text, $level) {
         global $conf;
-
-        // create a unique header id
-        $hid = $this->_headerToLink($text,'true');
 
         //handle TOC
         if($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']){
             // the TOC is one of our standard ul list arrays ;-)
-            $this->toc[] = array( 'hid'   => $hid,
+            $this->toc[] = array( 'hid'   => $id,
                                   'title' => $text,
                                   'type'  => 'ul',
                                   'level' => $level-$conf['toptoclevel']+1);
         }
+		}
+
+    function header($text, $level, $pos) {
+
+        $hid = $this->_headerToLink($text,true);
+
+        //only add items within configured levels
+        $this->toc_additem($hid, $text, $level);
 
         // write the header
         $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$hid.'" id="'.$hid.'">';

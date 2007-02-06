@@ -47,24 +47,29 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     }
   }
 
-  function header($text, $level, $pos) {
+  function toc_additem($id, $text, $level) {
     global $conf;
 
-    if (!$this->meta['title']) $this->meta['title'] = $text;
-
-    // create a unique header id
-    $hid = $this->_headerToLink($text,'true');
-
-    //handle TOC
+    //only add items within configured levels
     if($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']){
       // the TOC is one of our standard ul list arrays ;-)
       $this->meta['description']['tableofcontents'][] = array(
-        'hid'   => $hid,
+        'hid'   => $id,
         'title' => $text,
         'type'  => 'ul',
         'level' => $level-$conf['toptoclevel']+1
       );
     }
+
+  }
+
+  function header($text, $level, $pos) {
+
+    if (!$this->meta['title']) $this->meta['title'] = $text;
+
+    // add the header to the TOC
+    $hid = $this->_headerToLink($text,'true');
+    $this->toc_additem($hid, $text, $level);
 
     // add to summary
     if ($this->capture && ($level > 1)) $this->doc .= DOKU_LF.$text.DOKU_LF;

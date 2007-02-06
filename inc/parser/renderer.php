@@ -70,6 +70,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function render_TOC() { return ''; }
 
+    function toc_additem($id, $text, $level) {}
+
     function header($text, $level, $pos) {}
 
     function section_edit($start, $end, $level, $name) {}
