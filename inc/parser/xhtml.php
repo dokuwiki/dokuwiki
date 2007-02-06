@@ -961,7 +961,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function _xmlEntities($string) {
-        return htmlspecialchars($string);
+        return htmlspecialchars($string,ENT_QUOTES,'UTF-8');
     }
 
     /**
