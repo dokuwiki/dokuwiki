@@ -2,7 +2,7 @@ Witaj @FULLNAME@!
 
 Potwierdzenie prośby o nowe hasło dla konta @TITLE@ w wiki @DOKUWIKIURL@
 
-Jeśli to nie Ty prosiłeś/aś o nowe hasło, zignoruj ten list.
+Jeśli to nie Ty prosiłeś(aś) o nowe hasło, zignoruj ten list.
 
 Aby potwierdzić prośbę o hasło, przejdź na następującą stronę.
 

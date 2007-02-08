@@ -4,9 +4,9 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Grzegorz Żur <grzegorz.zur@gmail.com>
- *
- *
  */
+
+
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
 
@@ -78,7 +78,7 @@ $lang['resendna']  = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
 $lang['resendpwd'] = 'Prześlij nowe hasło dla';
 $lang['resendpwdmissing'] = 'Wypełnij wszystkie pola.';
 $lang['resendpwdnouser']  = 'Nie można znaleźć tego użytkownika w bazie danych.';
-$lang['resendpwdsuccess'] = 'Hasło zostało przesłane pocztą.';
+$lang['resendpwdbadauth'] = 'Błędny kod autoryzacji! Upewnij się, że użyłeś(aś) właściwego odnośnika.';
 $lang['resendpwdconfirm'] = 'Prośba o potwierdzenie została przesłana pocztą.';
 $lang['resendpwdsuccess'] = 'Nowe hasło zostało wysłane pocztą.';
 
@@ -131,6 +131,7 @@ $lang['by']         = 'przez';
 $lang['deleted']    = 'usunięto';
 $lang['created']    = 'utworzono';
 $lang['restored']   = 'przywrócono poprzednią wersję';
+$lang['external_edit'] = 'edycja zewnętrzna';
 $lang['summary']    = 'Opis zmian';
 
 $lang['mail_newpage'] = 'Strona dodana:';
@@ -206,6 +207,7 @@ $lang['i_modified']   = 'Ze względów bezpieczeństwa, ten skrypt działa tylko
                          Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z
                          <a href="http://wiki.splitbrain.org/wiki:install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']     = 'Funkcja PHP <code>%s</code> jest niedostępna.';
+$lang['i_phpver']     = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
 $lang['i_permfail']   = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
 $lang['i_confexists'] = '<code>%s</code> już istnieje';
 $lang['i_writeerr']   = 'Nie można utworzyć <code>%s</code>. Sprawdź uprawniena do katalogu lub pliku i stwórz plik ręcznie.';
@@ -220,5 +222,6 @@ $lang['i_pol0']       = 'Otwarte Wiki (odczyt, zapis i dodawanie plików dla wsz
 $lang['i_pol1']       = 'Publiczne Wiki (odczyt dla wszystkich, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
 $lang['i_pol2']       = 'Zamknięte Wiki (odczyt, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
 
+$lang['i_retry']      = 'Spróbuj ponownie';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

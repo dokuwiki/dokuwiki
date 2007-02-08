@@ -1,4 +1,4 @@
 ====== Odnośnik z innych stron ======
 
-Strony, zawierające odnośniki do aktualnej strony.
+Strony zawierające odnośniki do aktualnej strony.
 

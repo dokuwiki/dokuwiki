@@ -69,7 +69,7 @@ $lang['signature']   = 'Podpis';
 $lang['toptoclevel'] = 'Minimalny poziom spisu treści';
 $lang['maxtoclevel'] = 'Maksymalny poziom spisu treści';
 $lang['maxseclevel'] = 'Maksymalny poziom podziału na sekcje edycyjne';
-$lang['camelcase']   = 'Bikapitalizacja (CamelCase)';
+$lang['camelcase']   = 'Bikapitalizacja odnośników (CamelCase)';
 $lang['deaccent']    = 'Podmieniaj znaki spoza ASCII w nazwach';
 $lang['useheading']  = 'Pierwszy nagłówek jako tytuł';
 $lang['refcheck']    = 'Sprawdzanie odwołań przed usunięciem pliku';
@@ -83,13 +83,12 @@ $lang['mailguard']   = 'Utrudnianie odczytu adresów e-mail';
 
 /* Authentication Options */
 $lang['useacl']      = 'Kontrola uprawnień ACL';
-$lang['openregister']= 'Pozwolenie na rejestrację nowych użytkowników';
 $lang['autopasswd']  = 'Automatyczne generowanie haseł';
-$lang['resendpasswd']= 'Przypominanie hasła';
 $lang['authtype']    = 'Typ autoryzacji';
 $lang['passcrypt']   = 'Kodowanie hasła';
 $lang['defaultgroup']= 'Domyślna grupa';
-$lang['superuser']   = 'Administrator';
+$lang['superuser']   = 'Administrator - grupa lub użytkownik z pełnymi uprawnieniami';
+$lang['manager']     = 'Menadżer - grupa lub użytkownik z uprawnieniami do zarządzania wiki';
 $lang['profileconfirm'] = 'Potwierdzanie zmiany profilu hasłem';
 $lang['disableactions'] = 'Wyłącz akcje DokuWiki';
 $lang['disableactions_check'] = 'Sprawdzanie';
@@ -98,14 +97,17 @@ $lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
 $lang['disableactions_other'] = 'Inne akcje (oddzielone przecinkiem)';
 
 /* Advanced Options */
+$lang['updatecheck'] = 'Sprawdzanie aktualizacji i bezpieczeństwa. DokuWiki będzie kontaktować się z serwerem splitbrain.org.';
 $lang['userewrite']  = 'Proste adresy URL';
-$lang['useslash']    = 'Ukośnik';
+$lang['useslash']    = 'Używanie ukośnika jako separatora w adresie URL';
+$lang['usedraft']    = 'Automatyczne zapisywanie szkicu podczas edycji';
 $lang['sepchar']     = 'Znak rozdzielający wyrazy nazw';
 $lang['canonical']   = 'Kanoniczne adresy URL';
 $lang['autoplural']  = 'Automatyczne tworzenie liczby mnogiej';
-$lang['usegzip']     = 'Kompresja gzip dla starych wersji';
+$lang['compression'] = 'Metoda kompresji dla usuniętych plików';
 $lang['cachetime']   = 'Maksymalny wiek cache w sekundach';
-$lang['locktime']    = 'Maksymalny wiek blockad w sekundach';
+$lang['locktime']    = 'Maksymalny wiek blokad w sekundach';
+$lang['fetchsize']   = 'Maksymalny rozmiar pliku (w bajtach) jaki można pobrać z zewnątrz';
 $lang['notify']      = 'Wysyłanie powiadomień na adres e-mail';
 $lang['registernotify'] = 'Prześlij informacje o nowych użytkownikach na adres e-mail';
 $lang['mailfrom']    = 'Adres e-mail tego wiki';
@@ -115,7 +117,7 @@ $lang['im_convert']  = 'Ścieżka do programu imagemagick';
 $lang['jpg_quality'] = 'Jakość kompresji JPG (0-100)';
 $lang['spellchecker']= 'Sprawdzanie pisownii';
 $lang['subscribers'] = 'Subskrypcja';
-$lang['compress']    = 'Kompresja arkuszy CSS & i plików JavaScript';
+$lang['compress']    = 'Kompresja arkuszy CSS i plików JavaScript';
 $lang['hidepages']   = 'Ukrywanie stron pasujących do wzorca (wyrażenie regularne)';
 $lang['send404']     = 'Nagłówek "HTTP 404/Page Not Found" dla nieistniejących stron';
 $lang['sitemap']     = 'Okres generowania Google Sitemap (w dniach)';
@@ -123,6 +125,8 @@ $lang['sitemap']     = 'Okres generowania Google Sitemap (w dniach)';
 $lang['rss_type']    = 'Typ RSS';
 $lang['rss_linkto']  = 'Odnośniki w RSS';
 $lang['rss_update']  = 'Okres aktualizacji RSS (w sekundach)';
+$lang['recent_days'] = 'Ilość ostatnich zmian (w dniach)';
+$lang['rss_show_summary'] = 'Podsumowanie w tytule';
 
 /* Target options */
 $lang['target____wiki']      = 'Okno docelowe odnośników wewnętrznych';
@@ -173,3 +177,10 @@ $lang['rss_linkto_o_page']    = 'zmodyfikowana strona';
 $lang['rss_linkto_o_rev']     = 'lista zmian';
 $lang['rss_linkto_o_current'] = 'aktualna strona';
 
+/* compression options */
+$lang['compression_o_0']   = 'brak';
+$lang['compression_o_gz']  = 'gzip';
+$lang['compression_o_bz2'] = 'bz2';
+
+/* FIXME: delete when no longer needed */
+$lang['test_indexer'] = 'Nowy rodzaj indeksowania: 0x1 -> przeszukiwanie z sortowaniem';

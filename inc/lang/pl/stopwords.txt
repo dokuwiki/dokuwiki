@@ -1,7 +1,7 @@
 # Lista słów ignorowanych przy indeksowaniu treści.
 # W jednej linii powinno znajdować się tylko jedno słowo.
 # Przy edycji tego pliku pamiętaj o używaniu uniksowego końca linii (LF).
-# Nie ma potrzeby wpisywania słów krótszych niż 3 znaki ponieważ one są zawsze ignorowane.
+# Nie ma potrzeby wpisywania słów krótszych niż 3 znaki, ponieważ one są zawsze ignorowane.
 # Lista oparta na danych ze strony http://www.ranks.nl/stopwords/
 aby
 ale

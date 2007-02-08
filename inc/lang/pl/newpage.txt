@@ -1,5 +1,5 @@
 ====== Ta strona jeszcze nie istnieje ======
 
 Jesteś na stronie, która jeszcze nie istnieje.
-Możesz utworzyć tę stronę klikając ''utwórz stronę''.
+Jeśli masz wystarczające uprawnienia, możesz utworzyć tę stronę klikając ''utwórz stronę''.
 

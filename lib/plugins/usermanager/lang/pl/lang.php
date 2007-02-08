@@ -47,4 +47,11 @@ $lang['last']   = 'ostatni';
 
 // added after 2006-03-09 release
 $lang['edit_usermissing'] = 'Nie znaleziono wybranego użytkownika, nazwa użytkownika mogła zostać zmieniona lub usunięta.';
+$lang['user_notify'] = 'Powiadamianie użytkownika';
+$lang['note_notify'] = 'Powiadomiena wysyłane są tylko jeżeli zmieniono hasło użytkownika.';
+$lang['note_group'] = 'Nowy użytkownik zostanie dodany do grupy domyślnej (%s) jeśli nie podano innej grupy.';
+$lang['add_ok'] = 'Dodano użytkownika';
+$lang['add_fail'] = 'Dodawanie użytkownika nie powiodło się';
+$lang['notify_ok'] = 'Powiadomienie zostało wysłane';
+$lang['notify_fail'] = 'Wysyłanie powiadomienia nie powiodło się';
 
