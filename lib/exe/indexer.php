@@ -20,7 +20,7 @@ define('INDEXER_VERSION', 1);
 @ignore_user_abort(true);
 
 // check if user abort worked, if yes send output early
-if(@ignore_user_abort()){
+if(@ignore_user_abort() && !$conf['broken_iua']){
     sendGIF(); // send gif
     $defer = false;
 }else{

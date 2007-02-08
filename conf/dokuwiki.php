@@ -108,6 +108,7 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
 $conf['rss_update'] = 5*60;              //Update the RSS feed every n minutes (defaults to 5 minutes)
 $conf['recent_days'] = 7;                //How many days of recent changes to keep. (days)
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
+$conf['broken_iua']  = 0;                //Platform with broken ignore_user_abort (IIS+CGI) 0|1
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';

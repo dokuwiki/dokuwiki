@@ -165,6 +165,7 @@ $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','re
 $meta['rss_update']  = array('numeric');
 $meta['recent_days'] = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
+$meta['broken_iua']  = array('onoff');
 $meta['test_indexer'] = array('numeric'); // FIXME: delete when no longer needed
 
 $meta['_network']    = array('fieldset');

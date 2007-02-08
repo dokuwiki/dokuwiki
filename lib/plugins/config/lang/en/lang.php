@@ -121,6 +121,7 @@ $lang['compress']    = 'Compact CSS and javascript output';
 $lang['hidepages']   = 'Hide matching pages (regular expressions)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['sitemap']     = 'Generate Google sitemap (days)';
+$lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.splitbrain.org/?do=details&id=852">Bug 852</a> for more info.';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';
