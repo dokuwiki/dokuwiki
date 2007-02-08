@@ -91,7 +91,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function render_TOC($toc){
+    function render_TOC($toc=null){
+        if(is_null($toc) && is_array($this->toc)) $toc = $this->toc;
+
         if(count($toc) < 3) return '';
         global $lang;
         $out  = '<div class="toc">'.DOKU_LF;
