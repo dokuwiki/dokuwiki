@@ -1,0 +1,29 @@
+# 색인이 만들어 지지 않는 단어 목록입니다.(한줄에 한단어)
+# 이 파일을 편집한다면 UNIX줄 종료문자를 사용해야합니다.(단일 개행문자) 
+# 3문자이하 단어는 자동으로 무시되므로 3문자보다 짧은 단어는 포함시킬 필요가 없습니다.
+# http://www.ranks.nl/stopwords/을 기준으로 만들어진 목록입니다.
+about
+are
+and
+you
+your
+them
+their
+com
+for
+from
+into
+how
+that
+the
+this
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www

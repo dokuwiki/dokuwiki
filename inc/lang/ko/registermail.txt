@@ -1,0 +1,14 @@
+새로운 사용자가 등록되었습니다:
+
+사용자 이름     : @NEWUSER@
+사용자 실제 이름 : @NEWNAME@
+이메일         : @NEWEMAIL@
+
+날짜           : @DATE@
+브라우저        : @BROWSER@
+IP주소         : @IPADDRESS@
+호스트 이름     : @HOSTNAME@
+
+--
+
+@DOKUWIKIURL@의 DokuWiki가 자동으로 만들어낸 메일입니다.
