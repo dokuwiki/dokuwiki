@@ -9,6 +9,10 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '“';//&ldquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '‘';//&lsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
 
 $lang['btn_edit']   = 'Edit this page';
 $lang['btn_source'] = 'Show pagesource';

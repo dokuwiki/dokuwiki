@@ -6,6 +6,10 @@
  * @author     Jaka Kranjc <lynxlupodian@hotmail.com>
  */
 $lang['encoding']   = 'utf-8';
+$lang['doublequoteopening']  = '„';//&bdquo;
+$lang['doublequoteclosing']  = '“';//&ldquo;
+$lang['singlequoteopening']  = '‚';//&sbquo;
+$lang['singlequoteclosing']  = '‘';//&lsquo;
 
 $lang['btn_edit']   = 'Uredi to stran';
 $lang['btn_source'] = 'Prikaži izvorno kodo strani';

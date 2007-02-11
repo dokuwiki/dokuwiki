@@ -8,6 +8,10 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '”';//&rdquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '’';//&rsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
 
 $lang['btn_edit']   = 'Muokkaa tätä sivua';
 $lang['btn_source'] = 'Näytä sivun lähdekoodi';

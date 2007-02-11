@@ -7,6 +7,10 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'rtl';
+$lang['doublequoteopening']  = '“';//&ldquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '‘';//&lsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
 
 $lang['btn_edit']   = 'حرر هذه الصفحة';
 $lang['btn_source'] = 'اعرض مصدر الصفحة';

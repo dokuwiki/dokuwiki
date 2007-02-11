@@ -206,12 +206,12 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function quote_open(){
-    if ($this->capture) $this->doc .= DOKU_LF.DOKU_TAB.'“';
+    if ($this->capture) $this->doc .= DOKU_LF.DOKU_TAB.'"';
   }
 
   function quote_close(){
     if ($this->capture){
-      $this->doc .= '”';
+      $this->doc .= '"';
       if (strlen($this->doc) > 250) $this->capture = false;
       else $this->doc .= DOKU_LF;
     }
@@ -242,19 +242,23 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function singlequoteopening(){
-    if ($this->capture) $this->doc .= '‘';
+    global $lang;
+    if ($this->capture) $this->doc .= $lang['singlequoteopening'];
   }
 
   function singlequoteclosing(){
-    if ($this->capture) $this->doc .= '’';
+    global $lang;
+    if ($this->capture) $this->doc .= $lang['singlequoteclosing'];
   }
 
   function doublequoteopening(){
-    if ($this->capture) $this->doc .= '“';
+    global $lang;
+    if ($this->capture) $this->doc .= $lang['doublequoteopening'];
   }
 
   function doublequoteclosing(){
-    if ($this->capture) $this->doc .= '”';
+    global $lang;
+    if ($this->capture) $this->doc .= $lang['doublequoteclosing'];
   }
 
   function camelcaselink($link) {

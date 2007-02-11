@@ -7,6 +7,10 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '„';//&bdquo;
+$lang['doublequoteclosing']  = '“';//&ldquo;
+$lang['singlequoteopening']  = '‚';//&sbquo;
+$lang['singlequoteclosing']  = '‘';//&lsquo;
 
 $lang['btn_edit']   = 'Oldal szerkesztése';
 $lang['btn_source'] = 'Oldalforrás megtekintése';

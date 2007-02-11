@@ -9,6 +9,10 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '„';//&bdquo;
+$lang['doublequoteclosing']  = '“';//&ldquo;
+$lang['singlequoteopening']  = '‚';//&sbquo;
+$lang['singlequoteclosing']  = '‘';//&lsquo;
 
 $lang['btn_edit']   = 'Redaguoti šį puslapį';
 $lang['btn_source'] = 'Parodyti puslapio kodą';

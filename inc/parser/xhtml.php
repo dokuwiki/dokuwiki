@@ -441,19 +441,23 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function singlequoteopening() {
-        $this->doc .= "&lsquo;";
+        global $lang;
+        $this->doc .= $lang['singlequoteopening'];
     }
 
     function singlequoteclosing() {
-        $this->doc .= "&rsquo;";
+        global $lang;
+        $this->doc .= $lang['singlequoteclosing'];
     }
 
     function doublequoteopening() {
-        $this->doc .= "&ldquo;";
+        global $lang;
+        $this->doc .= $lang['doublequoteopening'];
     }
 
     function doublequoteclosing() {
-        $this->doc .= "&rdquo;";
+        global $lang;
+        $this->doc .= $lang['doublequoteclosing'];
     }
 
     /**

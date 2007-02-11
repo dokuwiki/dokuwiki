@@ -10,6 +10,10 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'rtl';
+$lang['doublequoteopening']  = '“';//&ldquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '‘';//&lsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
 
 $lang['btn_draft']  = 'עריכת טיוטה';
 $lang['btn_recover']= 'שחזור טיוטה';

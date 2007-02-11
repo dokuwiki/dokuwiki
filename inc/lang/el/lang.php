@@ -7,6 +7,11 @@
  * @author     Anika Henke <henke@cosmocode.de>
  * @author     Thanos Massias <tm@navarino.gr>
  */
+$lang['doublequoteopening']  = '“';//&ldquo;
+$lang['doublequoteclosing']  = '„';//&bdquo;
+$lang['singlequoteopening']  = '‘';//&lsquo;
+$lang['singlequoteclosing']  = '‚';//&sbquo;
+
 $lang['admin_register']         = 'Προσθήκη νέου χρήστη...';
 $lang['authmodfailed']          = 'Κακή ρύθμιση λίστας χρηστών. Παρακαλούμε ενημερώστε τον διαχειριστή του wiki.';
 $lang['authtempfail']           = 'Η είσοδος χρηστών δεν λειτουργεί αυτή την στιγμή. Εάν αυτό διαρκεί για πολύ χρόνο, παρακαλούμε ενημερώστε τον διαχειριστή του wiki.';
