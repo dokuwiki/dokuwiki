@@ -245,6 +245,8 @@ function tpl_metaheaders($alt=true){
   }
 
   // load stylesheets
+  $head['link'][] = array('rel'=>'stylesheet', 'media'=>'all', 'type'=>'text/css',
+                          'href'=>DOKU_BASE.'lib/exe/css.php?s=all');
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
                           'href'=>DOKU_BASE.'lib/exe/css.php');
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',

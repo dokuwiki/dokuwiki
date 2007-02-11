@@ -31,6 +31,7 @@ function css_out(){
     global $conf;
     global $lang;
     switch ($_REQUEST['s']) {
+    	case 'all':
         case 'print':
         case 'feed':
             $style = $_REQUEST['s'];
@@ -55,7 +56,7 @@ function css_out(){
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
     $files   = array();
-    if (isset($tplstyles['all'])) $files = array_merge($files, $tplstyles['all']);
+    //if (isset($tplstyles['all'])) $files = array_merge($files, $tplstyles['all']);
     if(!empty($style)){
         $files[DOKU_INC.'lib/styles/'.$style.'.css'] = DOKU_BASE.'lib/styles/';
         // load plugin, template, user styles
@@ -247,16 +248,15 @@ function css_pluginstyles($mode='screen'){
     $list = array();
     $plugins = plugin_list();
     foreach ($plugins as $p){
-        if($mode == 'print'){
-            $list[DOKU_PLUGIN."$p/print.css"]  = DOKU_BASE."lib/plugins/$p/";
+        if($mode == 'all'){
             $list[DOKU_PLUGIN."$p/all.css"]  = DOKU_BASE."lib/plugins/$p/";
+        }elseif($mode == 'print'){
+            $list[DOKU_PLUGIN."$p/print.css"]  = DOKU_BASE."lib/plugins/$p/";
         }elseif($mode == 'feed'){
             $list[DOKU_PLUGIN."$p/feed.css"]  = DOKU_BASE."lib/plugins/$p/";
-            $list[DOKU_PLUGIN."$p/all.css"]  = DOKU_BASE."lib/plugins/$p/";
         }else{
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
             $list[DOKU_PLUGIN."$p/screen.css"] = DOKU_BASE."lib/plugins/$p/";
-            $list[DOKU_PLUGIN."$p/all.css"]  = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;
