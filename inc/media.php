@@ -191,11 +191,12 @@ function media_upload($ns,$auth){
     if(empty($id)) $id = $file['name'];
 
     // check extensions
-    list($fext) = mimetype($file['name']);
-    list($iext) = mimetype($id);
+    list($fext,$fmime) = mimetype($file['name']);
+    list($iext,$imime) = mimetype($id);
     if($fext && !$iext){
-        // no extension specified in id - readd original one
-        $id .= '.'.$fext;
+        // no extension specified in id - read original one
+        $id   .= '.'.$fext;
+        $imime = $fmime;
     }elseif($fext && $fext != $iext){
         // extension was changed, print warning
         msg(sprintf($lang['mediaextchange'],$fext,$iext));
@@ -217,6 +218,16 @@ function media_upload($ns,$auth){
             msg($lang['uploadexist'],0);
             return false;
         }
+        // check for valid content
+        $ok = media_contentcheck($file['tmp_name'],$imime);
+        if($ok == -1){
+            msg(sprintf($lang['uploadbadcontent'],".$iext"),-1);
+            return false;
+        }elseif($ok == -2){
+            msg($lang['uploadspam'],-1);
+            return false;
+        }
+
         // prepare directory
         io_createNamespace($id, 'media');
         if(move_uploaded_file($file['tmp_name'], $fn)) {
@@ -235,7 +246,38 @@ function media_upload($ns,$auth){
     return false;
 }
 
-
+/**
+ * This function checks if the uploaded content is really what the
+ * mimetype says it is. We also do spam checking for text types here
+ *
+ * We need to do this stuff because we can not rely on the browser
+ * to do this check correctly. Yes, IE is broken as usual.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @link   http://weblog.philringnalda.com/2004/04/06/getting-around-ies-mime-type-mangling
+ * @fixme  check all 26 magic IE filetypes here?
+ */
+function media_contentcheck($file,$mime){
+    if(substr($mime,0,6) == 'image/'){
+        $info = @getimagesize($file);
+        if($mime == 'image/gif' && $info[2] != 1){
+            return -1;
+        }elseif($mime == 'image/jpeg' && $info[2] != 2){
+            return -1;
+        }elseif($mime == 'image/png' && $info[2] != 3){
+            return -1;
+        }
+        # fixme maybe check other images types as well
+    }elseif(substr($mime,0,5) == 'text/'){
+        global $TEXT;
+        $TEXT = io_readFile($file);
+        if(checkwordblock()){
+            msg('Content seems to be spam',-1);
+            return -2;
+        }
+    }
+    return 0;
+}
 
 /**
  * List all files in a given Media namespace
