@@ -140,9 +140,10 @@ $lang['restored']   = 'old revision restored';
 $lang['external_edit'] = 'external edit';
 $lang['summary']    = 'Edit summary';
 
-$lang['mail_newpage'] = 'page added:';
-$lang['mail_changed'] = 'page changed:';
-$lang['mail_new_user'] = 'New user:';
+$lang['mail_newpage']  = 'page added:';
+$lang['mail_changed']  = 'page changed:';
+$lang['mail_new_user'] = 'new user:';
+$lang['mail_upload']   = 'file uploaded:';
 
 $lang['nosmblinks'] = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
 

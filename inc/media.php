@@ -236,6 +236,7 @@ function media_upload($ns,$auth){
             // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
             chmod($fn, $conf['fmode']);
             msg($lang['uploadsucc'],1);
+            media_notify($id,$fn,$imime);
             return $id;
         }else{
             msg($lang['uploadfail'],-1);
@@ -277,6 +278,37 @@ function media_contentcheck($file,$mime){
         }
     }
     return 0;
+}
+
+/**
+ * Send a notify mail on uploads
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function media_notify($id,$file,$mime){
+    global $lang;
+    global $conf;
+    if(empty($conf['notify'])) return; //notify enabled?
+
+    $text = rawLocale('uploadmail');
+    $text = str_replace('@DATE@',date($conf['dformat']),$text);
+    $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
+    $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
+    $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
+    $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
+    $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
+    $text = str_replace('@MIME@',$mime,$text);
+    $text = str_replace('@MEDIA@',DOKU_URL.ml($id,'',true,'&'),$text);
+    $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
+
+    $from = $conf['mailfrom'];
+    $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
+    $from = str_replace('@NAME@',$INFO['userinfo']['name'],$from);
+    $from = str_replace('@MAIL@',$INFO['userinfo']['mail'],$from);
+
+    $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+
+    mail_send($conf['notify'],$subject,$text,$from);
 }
 
 /**
