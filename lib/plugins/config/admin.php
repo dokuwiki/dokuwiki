@@ -299,7 +299,6 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     /**
     * Generates a two-level table of contents for the config plugin.
     * Uses inc/parser/xhtml.php#render_TOC to format the output.
-    * Relies on internal data structures in the Doku_Renderer_xhtml class.
     *
     * @author Ben Coburn <btcoburn@silicodon.net>
     */
@@ -323,59 +322,34 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
       }
 
-      // build toc list
-      $xhtml_toc = array();
-      $xhtml_toc[] = array('hid' => 'configuration_manager',
-          'title' => $this->getLang('_configuration_manager'),
-          'type'  => 'ul',
-          'level' => 1);
-      $xhtml_toc[] = array('hid' => 'dokuwiki_settings',
-          'title' => $this->getLang('_header_dokuwiki'),
-          'type'  => 'ul',
-          'level' => 1);
-      foreach($toc['conf'] as $setting) {
-        $name = $setting->prompt($this);
-        $xhtml_toc[] = array('hid' => $setting->_key,
-            'title' => $name,
-            'type'  => 'ul',
-            'level' => 2);
-      }
-      if (!empty($toc['plugin'])) {
-        $xhtml_toc[] = array('hid' => 'plugin_settings',
-            'title' => $this->getLang('_header_plugin'),
-            'type'  => 'ul',
-            'level' => 1);
-      }
-      foreach($toc['plugin'] as $setting) {
-        $name = $setting->prompt($this);
-        $xhtml_toc[] = array('hid' => $setting->_key,
-            'title' => $name,
-            'type'  => 'ul',
-            'level' => 2);
-      }
-      if (isset($toc['template'])) {
-        $xhtml_toc[] = array('hid' => 'template_settings',
-            'title' => $this->getLang('_header_template'),
-            'type'  => 'ul',
-            'level' => 1);
-        $setting = $toc['template'];
-        $name = $setting->prompt($this);
-        $xhtml_toc[] = array('hid' => $setting->_key,
-            'title' => $name,
-            'type'  => 'ul',
-            'level' => 2);
-      }
-      if ($has_undefined && $allow_debug) {
-        $xhtml_toc[] = array('hid' => 'undefined_settings',
-            'title' => $this->getLang('_header_undefined'),
-            'type'  => 'ul',
-            'level' => 1);
-      }
-
       // use the xhtml renderer to make the toc
       require_once(DOKU_INC.'inc/parser/xhtml.php');
       $r = new Doku_Renderer_xhtml;
-      $r->toc = $xhtml_toc;
+
+      // build toc
+      $r->toc_additem('configuration_manager', $this->getLang('_configuration_manager'), 1);
+      $r->toc_additem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
+      foreach($toc['conf'] as $setting) {
+        $name = $setting->prompt($this);
+        $r->toc_additem($setting->_key, $name, 2);
+      }
+      if (!empty($toc['plugin'])) {
+        $r->toc_additem('plugin_settings', $this->getLang('_header_plugin'), 1);
+      }
+      foreach($toc['plugin'] as $setting) {
+        $name = $setting->prompt($this);
+        $r->toc_additem($setting->_key, $name, 2);
+      }
+      if (isset($toc['template'])) {
+        $r->toc_additem('template_settings', $this->getLang('_header_template'), 1);
+        $setting = $toc['template'];
+        $name = $setting->prompt($this);
+        $r->toc_additem($setting->_key, $name, 2);
+      }
+      if ($has_undefined && $allow_debug) {
+        $r->toc_additem('undefined_settings', $this->getLang('_header_undefined'), 1);
+      }
+
       print $r->render_TOC();
     }
 
