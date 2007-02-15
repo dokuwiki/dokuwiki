@@ -39,8 +39,11 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
     $subject = utf8_strip($subject);
   }
 
-  if(!utf8_isASCII($subject))
+  if(!utf8_isASCII($subject)) {
     $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
+    // Spaces must be encoded according to rfc2047. Use the "_" shorthand
+    $subject = preg_replace('/ /', '_', $subject);
+  }
 
   $header  = '';
 
