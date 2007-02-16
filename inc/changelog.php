@@ -116,7 +116,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     return $recent;
 
   // read all recent changes. (kept short)
-  $lines = file($conf['changelog']);
+  $lines = @file($conf['changelog']);
 
 
   // handle lines
