@@ -341,8 +341,8 @@ function resolve_pageid($ns,&$page,&$exists){
   // get filename (calls clean itself)
   $file = wikiFN($page);
 
-  // if ends with colon we have a namespace link
-  if(substr($page,-1) == ':'){
+  // if ends with colon or slash we have a namespace link
+  if(substr($page,-1) == ':' || ($conf['useslash'] && substr($page,-1) == '/')){
     if(@file_exists(wikiFN($page.$conf['start']))){
       // start page inside namespace
       $page = $page.$conf['start'];
