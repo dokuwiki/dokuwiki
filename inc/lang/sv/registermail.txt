@@ -1,0 +1,14 @@
+En ny användare har registrerat sig. Här är detaljerna:
+
+Användarnamn : @NEWUSER@
+Namn         : @NEWNAME@
+E-post       : @NEWEMAIL@
+
+Datum        : @DATE@
+Webbläsare   : @BROWSER@
+IP-adress    : @IPADDRESS@
+Datornamn    : @HOSTNAME@
+
+-- 
+Detta meddelande har skapats av DokuWiki på
+@DOKUWIKIURL@

@@ -1,4 +1,5 @@
-======Skillnader======
+====== Skillnader ======
 
-Här visas skillnader mellan den valda versionen och den nuvarande versionen av dokumentet.
+Här visas skillnader mellan den valda versionen och den nuvarande versionen av
+sidan.
 

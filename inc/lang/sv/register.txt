@@ -1,4 +1,8 @@
-======Registrera dig som användare======
+====== Registrera dig som användare ======
 
-Ange all information som efterfrågas i formuläret nedan för att skapa ett nytt användarkonto för denna wiki. Var särskilt noga med att ange en **giltig e-postadress** - ditt lösenord kommer att skickas till den e-postadress du anger. Användarnamnet skall vara ett giltigt [[doku>wiki:pagename|pagename]].
+Fyll i all information som efterfrågas i formuläret nedan för att skapa ett
+nytt konto i denna wiki. Var särskilt noga med att ange en **giltig
+e-postadress** - om du inte blir ombedd att ange ett lösenord här kommer ett
+nytt lösenord att skickas till den adressen.  Användarnamnet skall vara ett
+giltigt [[doku>wiki:pagename|sidnamn]].
 

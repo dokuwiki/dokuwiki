@@ -1,0 +1,8 @@
+====== Hantera insticksmoduler ======
+
+På den här sidan kan man hantera allting som har att göra med Dokuwikis
+[[doku>wiki:plugins|insticksmoduler]].
+För att man ska kunna ladda ned och installera en modul måste
+katalogen för insticksmoduler vara skrivbar av webbservern.
+
+

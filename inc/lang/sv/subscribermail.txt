@@ -1,0 +1,18 @@
+Hej!
+
+Sidan @PAGE@ i wikin @TITLE@ har ändrats.
+Här är ändringarna:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+För att säga upp prenumerationen på den här sidan,
+logga in i wikin på
+@DOKUWIKIURL@ och gå till
+@NEWPAGE@
+där du väljer 'Säg upp prenumeration på ändringar'.
+
+--
+Detta meddelande har skapats av DokuWiki på
+@DOKUWIKIURL@

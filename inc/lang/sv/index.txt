@@ -1,4 +1,4 @@
-====== Index ======
+====== Innehållsförteckning ======
 
-Detta är ett index eller en förteckning över alla tillgängliga sidor, sorterad efter [[doku>wiki:namespaces|wikinamn]].
+Detta är en innehållsförteckning över alla tillgängliga sidor, sorterad efter [[doku>wiki:namespaces|namnrymder]].
 

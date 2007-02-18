@@ -1,0 +1,10 @@
+====== Utkast hittat ======
+
+Din senaste redigering av sidan avslutades inte på ett korrekt sätt. DokuWiki
+sparade automatiskt ett utkast under tiden du arbetade, och nu kan du använda
+det för att fortsätta redigeringen. Nedan kan du se det innehåll som sparats
+från din förra session.
+
+Bestäm om du vill //återskapa// din förlorade redigeringssession, //radera//
+det automatiskt sparade utkastet eller //avbryta// redigeringen.
+

@@ -1,7 +1,9 @@
-======Det finns en senare version======
+====== Det finns en senare version ======
 
-Det finns en senare version av dokumentet du har redigerat. Detta kan hända när en annan användare redigerar dokumentet samtidigt som dig.
+Det finns en senare version av dokumentet du har redigerat. Detta kan hända
+när en annan användare redigerar dokumentet samtidigt som du.
 
-Granska skillnaderna som visas nedan noga, och välj sedan vilken version du vill behålla. Om du väljer ''**Spara**'', så kommer din version att sparas. Välj ''**Avbryt**'' för att behålla den senare versionen (inte din).
+Granska skillnaderna som visas nedan noga, och välj sedan vilken version du
+vill behålla. Om du väljer ''spara'', så kommer din version att sparas.
+Välj ''avbryt'' för att behålla den nuvarande versionen.
 
-A newer version of the document you edited exists. This happens when another user changed the document while you were editing it.

@@ -1,0 +1,6 @@
+====== Skicka nytt lösenord ======
+
+Fyll i ditt användarnamn i formuläret nedan för att få ett nytt lösenord till
+ditt konto i denna wiki. En länk för verifiering kommer att skickas till din
+registrerade e-postadress.
+

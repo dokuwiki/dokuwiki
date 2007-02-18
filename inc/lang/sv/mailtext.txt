@@ -1,17 +1,17 @@
-En sida i din DokuWiki har lagts till eller ändrats; uppgifter om förändringen:
+En sida i din DokuWiki har lagts till eller ändrats. Här är detaljerna:
 
 Datum                : @DATE@
 Webbläsare           : @BROWSER@
 IP-adress            : @IPADDRESS@
-Värdnamn             : @HOSTNAME@
+Datornamn            : @HOSTNAME@
 Tidigare version     : @OLDPAGE@
 Aktuell version      : @NEWPAGE@
 Redigeringskommentar : @SUMMARY@
-User                 : @USER@
+Användare            : @USER@
 
 @DIFF@
 
 
 -- 
-Detta meddelande har skapats av DokuWiki
+Detta meddelande har skapats av DokuWiki på
 @DOKUWIKIURL@

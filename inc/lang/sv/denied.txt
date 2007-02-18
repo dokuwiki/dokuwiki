@@ -1,4 +1,5 @@
-======Åtkomst nekad======
+====== Åtkomst nekad ======
 
-Tyvärr har du inte behörighet att fortsätta. Kanske har du glömt att logga in?
+Tyvärr, du har inte behörighet att fortsätta. Kanske har du glömt att logga
+in?
 

@@ -1,0 +1,16 @@
+Hej @FULLNAME@!
+
+Någon har bett om ett nytt lösenord för ditt konto på @TITLE@
+(@DOKUWIKIURL@)
+
+Om det inte var du som bad om ett nytt lösenord kan du helt
+enkelt ignorera det här brevet.
+
+För att bekräfta att förfrågan verkligen kom från dig, var vänlig
+och använd följande länk.
+
+@CONFIRM@
+
+--
+Detta meddelande har skapats av DokuWiki på
+@DOKUWIKIURL@

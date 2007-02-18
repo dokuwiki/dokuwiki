@@ -1,0 +1,5 @@
+====== Administration ======
+
+Nedan hittar du en lista över de tillgängliga administrativa
+uppgifterna i DokuWiki.
+

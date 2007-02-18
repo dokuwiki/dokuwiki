@@ -1,3 +1,5 @@
-======Dokumentet är låst======
+====== Sidan låst ======
 
-Detta dokument är för närvarande låst för redigering av en annan användare. Du måste vänta tills den användaren är klar med sin redigering, eller tills dess att dokumentlåset upphör att gälla.
+Den här sidan är för närvarande låst för redigering av en annan användare.
+Du måste vänta tills den användaren är klar med sin redigering, eller tills
+dess att dokumentlåset upphör att gälla.

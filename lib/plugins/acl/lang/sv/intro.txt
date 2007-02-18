@@ -1,0 +1,15 @@
+====== Hantera behörighetslistan (ACL) ======
+
+//ACL betyder "Access Control List" och är en grundläggande term som man
+behöver känna till för att hänga med i den engelska dokumentationen.//
+
+På den här sidan kan man lägga till och ta bort behörigheter för den aktuella
+sidan och alla [[doku>wiki:namespaces|namnrymder]] den ingår i.
+Man bör läsa den [[doku>wiki:acl|officiella dokumentationen om ACL]]
+för att fullt ut förstår hur behörigheter fungerar.
+
+Den här sidan visar alla behörigheter som är meningsfulla för den aktuella
+sidan. Behörigheter för andra sidor visas inte -- för att ändra deras
+behörigheter, [[this>doku.php?do=index|gå till sidan]] och välj därefter
+att hantera behörighetslistan.
+

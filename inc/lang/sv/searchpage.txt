@@ -1,5 +1,6 @@
 ======Sök======
 
-Du ser resultatet av sökningen här nedanför. Om du inte hittar det du letar efter, så kan du skapa en ny sida med samma namn som ditt sökvilkor genom att klicka på ''**Skapa den här sidan**''-knappen.
+Nedan ser du resultatet av sökningen. Om du inte hittar det du letar
+efter, så kan du skapa eller redigera sidan med någon av knapparna.
 
 =====Resultat=====

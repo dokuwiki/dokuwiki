@@ -1,0 +1,6 @@
+====== Hantera återställningar ======
+
+Den här sidan hjälper till med automatiskt återställning efter en
+spamattack. För att hitta spammade sidor, ange först en söksträng
+(till exempel en webbadress). Kontrollera sedan att sidorna som hittades
+verkligen är spam, och återställ sedan redigeringarna.
