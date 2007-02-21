@@ -761,7 +761,11 @@ function tpl_pageinfo(){
   global $lang;
   global $INFO;
   global $REV;
-
+  global $ID;
+  
+  // return if we are not allowed to view the page
+  if (!auth_quickaclcheck($ID)) { return; }
+  
   // prepare date and path
   $fn = $INFO['filepath'];
   if(!$conf['fullpath']){
