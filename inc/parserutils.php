@@ -231,7 +231,7 @@ function p_get_metadata($id, $key=false, $render=false){
   $meta = p_read_metadata($id, $cache);
 
   // metadata has never been rendered before - do it!
-  if ($render && !$meta['description']['abstract']){
+  if ($render && !$meta['current']['description']['abstract']){
     $meta = p_render_metadata($id, $meta);
     io_saveFile(metaFN($id, '.meta'), serialize($meta));
 
