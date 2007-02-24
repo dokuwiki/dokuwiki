@@ -34,6 +34,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>wiki:manual|The manual]] :!:
   * [[doku>wiki:FAQ|Frequently Asked Questions (FAQ)]]
   * [[doku>wiki:glossary|Glossary]]
+  * [[http://search.dokuwiki.org|Search for DokuWiki help and documentation]]
 
 **Customizing DokuWiki**
 

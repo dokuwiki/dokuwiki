@@ -73,6 +73,7 @@ DokuWiki supports [[doku>wiki:interwiki|Interwiki]] links. These are quick links
   DokuWiki supports [[doku>wiki:interwiki|Interwiki]] links. These are quick links to other Wikis.
   For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
+
 ==== Windows Shares ====
 
 Windows shares like [[\\server\share|this]] are recognized, too. Please note that these only make sense in a homogenous user group like a corporate [[wp>Intranet]].
@@ -83,7 +84,7 @@ Notes:
 
   * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
   * For Mozilla and Firefox it can be enabled through the config option [[http://www.mozilla.org/quality/networking/docs/netprefs.html#file|security.checkloaduri]] but this is not recommended.
-  * See [[bug>151]] for more info.
+  * See [[dokubug>151]] for more info.
 
 ==== Image Links ====
 
