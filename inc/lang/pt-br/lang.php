@@ -44,7 +44,7 @@ $lang['btn_profile']     = 'Atualizar perfil';
 $lang['btn_reset']       = 'Limpar';
 $lang['btn_resendpwd']   = 'Enviar nova senha';
 
-$lang['loggedinas']   = 'Autenticar-se como';
+$lang['loggedinas']   = 'Autenticado(a) como';
 $lang['user']         = 'Nome de usuário';
 $lang['pass']         = 'Senha';
 $lang['newpass']      = 'Nova senha';
