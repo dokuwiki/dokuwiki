@@ -62,4 +62,4 @@ The content published in the DokuWiki at http://www.splitbrain.org/dokuwiki/ is 
 
 An exception is made for the content which distributed in the download tarball((files inside the ''data'' directory -- eg: ''dokuwiki.txt'', ''syntax.txt'', ''dokuwiki-128.png'')) which is, for compatibility reasons, licensed under the GNU General Public License Version 2 as well.
 
-Not sure what this means? See the [[doku>wiki:faq#licenses_explained|FAQ on the Licenses]].
+Not sure what this means? See the [[doku>wiki:faq:license|FAQ on the Licenses]].
