@@ -154,3 +154,8 @@ $lang['rss_linkto_o_current'] = 'Aktuelle Seite';
 $lang['compression_o_0']   = 'keine';
 $lang['compression_o_gz']  = 'gzip';
 $lang['compression_o_bz2'] = 'bz2';
+
+$lang['iexssprotect']     = 'Hochgeladene Dateien auf bösartigen JavaScript- und HTML-Code untersuchen.';
+$lang['manager']          = 'Manager - Eine Gruppe oder Nutzer mit Zugriff auf einige Administrationswerkzeuge.';
+$lang['broken_iua']       = 'Falls die ignore_user_abort Funktion auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&id=852">Bug 852</a>.';
+$lang['rss_show_summary'] = 'Bearbeitungs-Zusammenfassung im XML Feed anzeigen';

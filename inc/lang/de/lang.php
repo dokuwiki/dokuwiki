@@ -105,6 +105,9 @@ $lang['uploadsucc']  = 'Datei wurde erfolgreich hochgeladen';
 $lang['uploadfail']  = 'Hochladen fehlgeschlagen. Keine Berechtigung?';
 $lang['uploadwrong'] = 'Hochladen verweigert. Diese Dateiendung ist nicht erlaubt.';
 $lang['uploadexist'] = 'Datei existiert bereits. Keine Änderungen vorgenommen.';
+$lang['uploadbadcontent'] = 'Die hochgeladenen Daten stimmen nicht mit der Dateiendung % überein.';
+$lang['uploadspam']  = 'Hochladen verweigert: Treffer auf der Spamliste.';
+$lang['uploadxss']   = 'Hochladen verweigert: Daten scheinen Schadcode zu enthalten.';
 $lang['deletesucc']  = 'Die Datei "%s" wurde gelöscht.';
 $lang['deletefail']  = '"%s" konnte nicht gelöscht werden - prüfen Sie die Berechtigungen.';
 $lang['mediainuse']  = 'Die Datei "%s" wurde nicht gelöscht - sie wird noch verwendet.';
@@ -137,11 +140,13 @@ $lang['by']         = 'von';
 $lang['deleted']    = 'gelöscht';
 $lang['created']    = 'angelegt';
 $lang['restored']   = 'alte Version wieder hergestellt';
+$lang['external_edit'] = 'Externe Bearbeitung';
 $lang['summary']    = 'Zusammenfassung';
 
-$lang['mail_newpage'] = 'Neue Seite:';
-$lang['mail_changed'] = 'Seite geaendert:';
+$lang['mail_newpage']  = 'Neue Seite:';
+$lang['mail_changed']  = 'Seite geaendert:';
 $lang['mail_new_user'] = 'Neuer Benutzer:';
+$lang['mail_upload']   = 'Datei hochgeladen:';
 
 $lang['nosmblinks'] = 'Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 

@@ -1,13 +1,13 @@
-Eine Seite in deinem DokuWiki wurde geändert oder neu angelegt. Hier sind die Details:
+Eine Seite in Ihrem Wiki wurde geändert oder neu angelegt. Hier sind die Details:
 
-Datum       : @DATE@
-Browser     : @BROWSER@
-IP-Adresse  : @IPADDRESS@
-Hostname    : @HOSTNAME@
-Alte Version: @OLDPAGE@
-Neue Version: @NEWPAGE@
-Edit Summary: @SUMMARY@
-User        : @USER@
+Datum          : @DATE@
+Browser        : @BROWSER@
+IP-Adresse     : @IPADDRESS@
+Hostname       : @HOSTNAME@
+Alte Version   : @OLDPAGE@
+Neue Version   : @NEWPAGE@
+Zusammenfassung: @SUMMARY@
+Benutzer       : @USER@
 
 @DIFF@
 
