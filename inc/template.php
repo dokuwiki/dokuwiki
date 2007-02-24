@@ -567,7 +567,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
         if($_SERVER['REMOTE_USER']){
           tpl_link(wl($ID,'do=logout'),$pre.$lang['btn_logout'].$suf,'class="action logout"');
         }else{
-          tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action logout"');
+          tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action login"');
         }
         return true;
       }
