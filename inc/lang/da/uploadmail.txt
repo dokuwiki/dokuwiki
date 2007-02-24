@@ -1,0 +1,14 @@
+En fil blev uploaded til din DokuWiki. Her er detaljerne:
+
+Fil         : @MEDIA@
+Dato        : @DATE@
+Browser     : @BROWSER@
+IP-adresse  : @IPADDRESS@
+Værtsnavn   : @HOSTNAME@
+Størrelse   : @SIZE@
+MIME Type   : @MIME@
+Bruger      : @USER@
+
+--
+Denne e-mail blev genereret af DokuWiki på
+@DOKUWIKIURL@
