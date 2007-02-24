@@ -80,6 +80,7 @@ $lang['usewordblock']= 'Block spam based on wordlist';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['relnofollow'] = 'Use rel="nofollow" on external links';
 $lang['mailguard']   = 'Obfuscate email addresses';
+$lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';
 
 /* Authentication Options */
 $lang['useacl']      = 'Use access control lists';

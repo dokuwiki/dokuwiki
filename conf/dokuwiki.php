@@ -54,6 +54,7 @@ $conf['mailguard']   = 'hex';             //obfuscate email addresses against sp
                                           //  'visible' - replace @ with [at], . with [dot] and - with [dash]
                                           //  'hex'     - use hex entities to encode the mail address
                                           //  'none'    - do not obfuscate addresses
+$conf['iexssprotect']= 1;                 // check for JavaScript and HTML in uploaded files 0|1
 
 /* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
 

@@ -226,6 +226,9 @@ function media_upload($ns,$auth){
         }elseif($ok == -2){
             msg($lang['uploadspam'],-1);
             return false;
+        }elseif($ok == -3){
+            msg($lang['uploadxss'],-1);
+            return false;
         }
 
         // prepare directory
@@ -249,16 +252,27 @@ function media_upload($ns,$auth){
 
 /**
  * This function checks if the uploaded content is really what the
- * mimetype says it is. We also do spam checking for text types here
+ * mimetype says it is. We also do spam checking for text types here.
  *
  * We need to do this stuff because we can not rely on the browser
  * to do this check correctly. Yes, IE is broken as usual.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @link   http://weblog.philringnalda.com/2004/04/06/getting-around-ies-mime-type-mangling
+ * @link   http://www.splitbrain.org/blog/2007-02/12-internet_explorer_facilitates_cross_site_scripting
  * @fixme  check all 26 magic IE filetypes here?
  */
 function media_contentcheck($file,$mime){
+    global $conf;
+    if($conf['iexssprotect']){
+        $fh = @fopen($file, 'rb');
+        if($fh){
+            $bytes = fread($fh, 256);
+            fclose($fh);
+            if(preg_match('/<(script|a|img|html|body|iframe)[\s>]/i',$bytes)){
+                return -3;
+            }
+        }
+    }
     if(substr($mime,0,6) == 'image/'){
         $info = @getimagesize($file);
         if($mime == 'image/gif' && $info[2] != 1){
@@ -273,7 +287,6 @@ function media_contentcheck($file,$mime){
         global $TEXT;
         $TEXT = io_readFile($file);
         if(checkwordblock()){
-            msg('Content seems to be spam',-1);
             return -2;
         }
     }

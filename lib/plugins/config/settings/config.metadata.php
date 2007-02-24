@@ -122,6 +122,7 @@ $meta['usewordblock']= array('onoff');
 $meta['relnofollow'] = array('onoff');
 $meta['indexdelay']  = array('numeric');
 $meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','none'));
+$meta['iexssprotect']= array('onoff');
 
 $meta['_editing']    = array('fieldset');
 $meta['usedraft']    = array('onoff');
