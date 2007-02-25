@@ -103,6 +103,9 @@ $lang['uploadsucc']  = 'Wysyłanie powiodło się!';
 $lang['uploadfail']  = 'Błąd wysyłania pliku. Czy prawa do katalogów są poprawne?';
 $lang['uploadwrong'] = 'Wysyłanie zabronione. Nie można wysłać plików z takim rozszerzeniem';
 $lang['uploadexist'] = 'Plik już istnieje, nie wykonano operacji.';
+$lang['uploadbadcontent'] = 'Typ pliku "%s" nie odpowiadał jego rozszerzeniu.';
+$lang['uploadspam']  = 'Plik zablokowany przez filtr antyspamowy.';
+$lang['uploadxss']   = 'Plik zablokowany ze względu na podejrzaną zawartość.';
 $lang['deletesucc']  = 'Plik "%s" został usunięty.';
 $lang['deletefail']  = 'Plik "%s" nie został usunięty, sprawdź uprawnienia.';
 $lang['mediainuse']  = 'Plik "%s" nie został usunięty, ponieważ jest używany.';
@@ -141,6 +144,7 @@ $lang['summary']    = 'Opis zmian';
 $lang['mail_newpage'] = 'Strona dodana:';
 $lang['mail_changed'] = 'Strona zmieniona:';
 $lang['mail_new_user'] = 'Nowy użytkownik:';
+$lang['mail_upload']   = 'Umieszczono plik:';
 
 $lang['nosmblinks'] = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer.\n Możesz skopiować odnośnik.';
 
