@@ -253,8 +253,8 @@ function idx_writeIndexLine($fh,$line,$pid,$count){
 /**
  * Modify an index line with new information
  *
- * This returns a line of the index. It removes the 
- * given document from the line and readds it if 
+ * This returns a line of the index. It removes the
+ * given document from the line and readds it if
  * $count is >0.
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -324,72 +324,19 @@ function idx_indexLengths(&$filter){
 /**
  * Find the the index number of each search term.
  *
- * There are two variation: Simple and Sorted.
- * The simple version just takes the words one at a time.
- * The sorted version will group together words that appear in the same index.
+ * This will group together words that appear in the same index.
  * So it should perform better, because it only opens each index once.
  * Actually, it's not that great. (in my experience) Probably because of the disk cache.
  * And the sorted function does more work, making it slightly slower in some cases.
  *
- * For now, you can choose to use the sorted version by setting $conf['test_indexer'] = 1
- * Eventually, the more worthy will be chosen and the loser cast into the deepest depths.
- *
  * @param array    $words   The query terms. Words should only contain valid characters,
  *                          with a '*' at either the beginning or end of the word (or both)
- * @param arrayref $result  Set to word => array("length*id" ...), use this to merge the 
+ * @param arrayref $result  Set to word => array("length*id" ...), use this to merge the
  *                          index locations with the appropriate query term.
  * @return array            Set to length => array(id ...)
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_getIndexWordsSimple($words, &$result){
-    // get word IDs
-    $wids = array();
-    foreach($words as $word){
-        $result[$word] = array();
-        $wild = 0;
-        $xword = $word;
-        $wlen = wordlen($word);
-
-        // check for wildcards
-        if(substr($xword,0,1) == '*'){
-            $xword = substr($xword,1);
-            $wild |= 1;
-            $wlen -= 1;
-        }
-        if(substr($xword,-1,1) == '*'){
-            $xword = substr($xword,0,-1);
-            $wild |= 2;
-            $wlen -= 1;
-        }
-        if ($wlen < 3 && $wild == 0 && !is_numeric($xword)) continue;
-
-        // look for the ID(s) for the given word
-        if($wild){  // handle wildcard search
-            $ptn = preg_quote($xword,'/');
-            if(($wild&1) == 0) $ptn = '^'.$ptn;
-            if(($wild&2) == 0) $ptn = $ptn.'$';
-            $ptn = '/'.$ptn.'/';
-            foreach (idx_indexLengths($wlen) as $ixlen){
-                $word_idx = idx_getIndex('w',$ixlen);
-                foreach(array_keys(preg_grep($ptn,$word_idx)) as $wid){
-                    $wids[$ixlen][] = $wid;
-                    $result[$word][] = "$ixlen*$wid";
-                }
-            }
-        }else{     // handle exact search
-            $word_idx = idx_getIndex('w',$wlen);
-            $wid = array_search("$word\n",$word_idx);
-            if(is_int($wid)){
-                $wids[$wlen][] = $wid;
-                $result[$word][] = "$wlen*$wid";
-            }else{
-                $result[$word] = array();
-            }
-        }
-    }
-    return $wids;
-}
 function idx_getIndexWordsSorted($words,&$result){
     // parse and sort tokens
     $tokens = array();
@@ -480,15 +427,12 @@ function idx_lookup($words){
 
     $result = array();
 
-    if(isset($conf['test_indexer']) && ($conf['test_indexer']&1))
-        $wids = idx_getIndexWordsSorted($words, $result);
-    else
-        $wids = idx_getIndexWordsSimple($words, $result);
+    $wids = idx_getIndexWordsSorted($words, $result);
     if(empty($wids)) return array();
 
     // load known words and documents
     $page_idx = idx_getIndex('page','');
-    
+
     $docs = array();                          // hold docs found
     foreach(array_keys($wids) as $wlen){
         $wids[$wlen] = array_unique($wids[$wlen]);

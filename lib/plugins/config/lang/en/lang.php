@@ -184,5 +184,3 @@ $lang['compression_o_0']   = 'none';
 $lang['compression_o_gz']  = 'gzip';
 $lang['compression_o_bz2'] = 'bz2';
 
-/* FIXME: delete when no longer needed */
-$lang['test_indexer'] = 'New Indexer testing bitfield: 0x1 -> sorted searching';
