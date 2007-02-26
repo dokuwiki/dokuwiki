@@ -4,10 +4,8 @@
  * -------
  * Author: Victor Engmark <victor.engmark@gmail.com>
  * Copyright: (c) 2006 Victor Engmark (http://l0b0.net/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.18
  * Date Started: 2006/10/26
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * Oracle 9.2 PL/SQL language file for GeSHi.
  * Formatting is based on the default setup of TOAD 8.6.

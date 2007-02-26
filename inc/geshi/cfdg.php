@@ -4,10 +4,8 @@
  * --------
  * Author: John Horigan <john@glyphic.com>
  * Copyright: (c) 2006 John Horigan http://www.ozonehouse.com/john/
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 870 $
+ * Release Version: 1.0.7.18
  * Date Started: 2006/03/11
- * Last Modified: $Date: 2006-12-10 22:48:21 +1300 (Sun, 10 Dec 2006) $
  *
  * CFDG language file for GeSHi.
  *

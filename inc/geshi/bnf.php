@@ -4,10 +4,8 @@
  * --------
  * Author: Rowan Rodrik van der Molen (rowan@bigsmoke.us)
  * Copyright: (c) 2006 Rowan Rodrik van der Molen (http://www.bigsmoke.us/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.18
  * Date Started: 2006/09/28
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * BNF (Backus-Naur form) language file for GeSHi.
  *

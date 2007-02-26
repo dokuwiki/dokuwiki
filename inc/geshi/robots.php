@@ -4,10 +4,8 @@
  * --------
  * Author: Christian Lescuyer (cl@goelette.net)
  * Copyright: (c) 2006 Christian Lescuyer http://xtian.goelette.info
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.18
  * Date Started: 2006/02/17
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * robots.txt language file for GeSHi.
  *

@@ -4,10 +4,8 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2006 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.18
  * Date Started: 2006/09/23
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * Io language file for GeSHi. Thanks to Johnathan Wright for the suggestion and help
  * with this language :)
