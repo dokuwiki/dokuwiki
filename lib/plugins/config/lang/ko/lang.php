@@ -80,6 +80,7 @@ $lang['usewordblock']= '금지단어를 사용해 스팸 막기';
 $lang['indexdelay']  = '색인 연기 시간(초)';
 $lang['relnofollow'] = '외부 링크에 rel="nofollow" 사용';
 $lang['mailguard']   = '이메일 주소를 알아볼 수 없게';
+$lang['iexssprotect']= '업로드 파일의 악성 Javascript, HTML 코드 가능성 여부를 검사';
 
 /* Authentication Options */
 $lang['useacl']      = '접근 제어 목록(ACL) 사용';
@@ -88,6 +89,7 @@ $lang['authtype']    = '인증 백-엔드';
 $lang['passcrypt']   = '패스워드 암호화 방법';
 $lang['defaultgroup']= '기본 그룹';
 $lang['superuser']   = '슈퍼 유저';
+$lang['manager']     = '관리자 - 관리 기능들을 사용할 수 있는 그룹이나 사용자';
 $lang['profileconfirm'] = '개인정보 변경시 암호 재확인';
 $lang['disableactions'] = 'DokuWiki Action 금지';
 $lang['disableactions_check'] = '검사';
@@ -120,11 +122,13 @@ $lang['compress']    = '최적화된 CSS, javascript 출력';
 $lang['hidepages']   = '매칭된 페이지 숨기기(정규식 매칭)';
 $lang['send404']     = '존재하지 않는 페이지에 대해 "HTTP 404/Page Not Found" 응답';
 $lang['sitemap']     = '구글 사이트맵 생성(날짜)';
+$lang['broken_iua']  = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있으면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.splitbrain.org/?do=details&id=852">Bug 852</a>를 참고하기 바랍니다.';
 
 $lang['rss_type']    = 'XML feed 타잎';
 $lang['rss_linkto']  = 'XML feed 링크 정보';
 $lang['rss_update']  = 'XML feed 갱신 주기(초)';
 $lang['recent_days'] = '최근 바뀐 페이지 기준 시간(날짜)';
+$lang['rss_show_summary'] = 'XML feed 제목에서 요약정보 보여주기';
 
 /* Target options */
 $lang['target____wiki']      = '내부 링크들에 대한 타겟 윈도우 ';

@@ -98,9 +98,12 @@ $lang['uploadsucc']  = '업로드 성공';
 $lang['uploadfail']  = '업로드 실패. 잘못된 권한 때문일지도 모릅니다.';
 $lang['uploadwrong'] = '업로드 거부. 금지된 확장자입니다!';
 $lang['uploadexist'] = '이미 파일이 존재합니다.';
+$lang['uploadbadcontent'] = '업로드된 파일이 파일 확장자 %s와 일치하지 않습니다.';
+$lang['uploadspam']  = '스팸 차단기가 업로드를 취소하였습니다.';
+$lang['uploadxss']   = '악성 코드의 가능성이 있어 업로드를 취소하였습니다.';
 $lang['deletesucc']  = '"%s" 파일이 삭제되었습니다.';
 $lang['deletefail']  = '"%s" 파일을 삭제할 수 없습니다. - 삭제 권한이 있는지 확인하기 바랍니다.';
-$lang['mediainuse']  = '"%s" 파일을 삭제할 수 없습니다. - 아직 사용 중입니다.';/*new*/ 
+$lang['mediainuse']  = '"%s" 파일을 삭제할 수 없습니다. - 아직 사용 중입니다.';
 $lang['namespaces']  = '네임스페이스';
 $lang['mediafiles']  = '사용 가능한 파일 목록';
 
@@ -124,17 +127,19 @@ $lang['yours']      = '버전';
 $lang['diff']       = '현재 버전과의 차이 보기';
 $lang['line']       = '줄';
 $lang['breadcrumb'] = '추적';
-$lang['youarehere'] = '현재 여기에 있습니다.';
+$lang['youarehere'] = '현재 위치';
 $lang['lastmod']    = '마지막 수정';
 $lang['by']         = '작성자';
 $lang['deleted']    = '삭제';
 $lang['created']    = '새로 만듬';
 $lang['restored']   = '옛 버전 복구';
 $lang['summary']    = '편집 요약'; 
+$lang['external_edit'] = '외부 편집기';
 
 $lang['mail_newpage'] = '페이지 추가:';
 $lang['mail_changed'] = '페이지 변경:';
 $lang['mail_new_user'] = '새로운 사용자:';
+$lang['mail_upload']   = '파일 첨부:';
 
 $lang['nosmblinks'] = '윈도우 공유 파일과의 연결은 MS 인터넷 익스플로러에서만 동작합니다.\n그러나 링크를 복사하거나 붙여넣기를 할 수 있습니다.';
 
