@@ -1027,7 +1027,10 @@ function html_updateprofile(){
       <input type="password" name="oldpass" class="edit" size="50" />
     </label><br />
     <?php } ?>
-
+    <?php //bad and dirty event insert hook
+    $evdata = array();
+    trigger_event('HTML_PROFILEFORM_INJECTION', $evdata);
+    ?>
     <input type="submit" class="button" value="<?php echo $lang['btn_save']?>" />
     <input type="reset" class="button" value="<?php echo $lang['btn_reset']?>" />
   </fieldset>
