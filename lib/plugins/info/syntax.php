@@ -4,6 +4,7 @@
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author     Esther Brunner <wikidesign@gmail.com>
  */
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
@@ -24,7 +25,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2005-08-03',
+            'date'   => '2006-12-09',
             'name'   => 'Info Plugin',
             'desc'   => 'Displays information about various DokuWiki internals',
             'url'    => 'http://wiki.splitbrain.org/plugin:info',
@@ -86,7 +87,22 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                     $renderer->doc .= $this->_syntaxtypes_xhtml();
                     break;
                 case 'syntaxplugins':
-                    $this->_syntaxplugins_xhtml($renderer);
+                    $this->_plugins_xhtml('syntax', $renderer);
+                    break;
+                case 'adminplugins':
+                    $this->_plugins_xhtml('admin', $renderer);
+                    break;
+                case 'actionplugins':
+                    $this->_plugins_xhtml('action', $renderer);
+                    break;
+                case 'rendererplugins':
+                    $this->_plugins_xhtml('renderer', $renderer);
+                    break;
+                case 'helperplugins':
+                    $this->_plugins_xhtml('helper', $renderer);
+                    break;
+                case 'helpermethods':
+                    $this->_helpermethods_xhtml($renderer);
                     break;
                 default:
                     $renderer->doc .= "no info about ".htmlspecialchars($data[0]);
@@ -97,17 +113,17 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * list all installed syntax plugins
+     * list all installed plugins
      *
      * uses some of the original renderer methods
      */
-    function _syntaxplugins_xhtml(& $renderer){
+    function _plugins_xhtml($type, &$renderer){
         global $lang;
         $renderer->doc .= '<ul>';
 
-        $plugins = plugin_list('syntax');
+        $plugins = plugin_list($type);
         foreach($plugins as $p){
-            if (!$po =& plugin_load('syntax',$p)) continue;
+            if (!$po =& plugin_load($type,$p)) continue;
             $info = $po->getInfo();
 
             $renderer->doc .= '<li><div class="li">';
@@ -119,12 +135,64 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= ' ';
             $renderer->emaillink($info['email'],$info['author']);
             $renderer->doc .= '<br />';
-            $renderer->doc .= strtr(htmlspecialchars($info['desc']),array("\n"=>"<br />"));
+            $renderer->doc .= strtr(hsc($info['desc']),array("\n"=>"<br />"));
             $renderer->doc .= '</div></li>';
             unset($po);
         }
 
         $renderer->doc .= '</ul>';
+    }
+    
+    /**
+     * list all installed plugins
+     *
+     * uses some of the original renderer methods
+     */
+    function _helpermethods_xhtml(&$renderer){
+        global $lang;
+        
+        $plugins = plugin_list('helper');
+        foreach($plugins as $p){
+            if (!$po =& plugin_load('helper',$p)) continue;
+            
+            if (!method_exists($po, 'getMethods')) continue;
+            $methods = $po->getMethods();
+            $info = $po->getInfo();
+            
+            $hid = $this->_addToTOC($info['name'], 2, $renderer);
+            $doc = '<h2><a name="'.$hid.'" id="'.$hid.'">'.hsc($info['name']).'</a></h2>';
+            $doc .= '<div class="level2">';
+            $doc .= '<p>'.strtr(hsc($info['desc']), array("\n"=>"<br />")).'</p>';
+            $doc .= '<pre class="code">$'.$p." =& plugin_load('helper', '".$p."');</pre>";
+            $doc .= '</div>';
+            foreach ($methods as $method){
+                $title = '$'.$p.'->'.$method['name'].'()';
+                $hid = $this->_addToTOC($title, 3, $renderer);
+                $doc .= '<h3><a name="'.$hid.'" id="'.$hid.'">'.hsc($title).'</a></h3>';
+                $doc .= '<div class="level3">';
+                $doc .= '<table class="inline"><tbody>';
+                $doc .= '<tr><th>Description</th><td colspan="2">'.$method['desc'].
+                    '</td></tr>';
+                if ($method['params']){
+                    $c = count($method['params']);
+                    $doc .= '<tr><th rowspan="'.$c.'">Parameters</th><td>';
+                    $params = array();
+                    foreach ($method['params'] as $desc => $type){
+                        $params[] = hsc($desc).'</td><td>'.hsc($type);
+                    }
+                    $doc .= join($params, '</td></tr><tr><td>').'</td></tr>';
+                }
+                if ($method['return']){
+                    $doc .= '<tr><th>Return value</th><td>'.hsc(key($method['return'])).
+                        '</td><td>'.hsc(current($method['return'])).'</td></tr>';
+                }
+                $doc .= '</tbody></table>';
+                $doc .= '</div>';
+            }
+            unset($po);
+            
+            $renderer->doc .= $doc;
+        }
     }
 
     /**
@@ -160,6 +228,24 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $doc .= $mode['mode'].' ('.$mode['sort'].'), ';
         }
         return $doc;
+    }
+    
+    /**
+     * Adds a TOC item
+     */
+    function _addToTOC($text, $level, &$renderer){
+        global $conf;
+        
+        if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){ 
+            $hid  = $renderer->_headerToLink($text, 'true'); 
+            $renderer->toc[] = array( 
+                'hid'   => $hid, 
+                'title' => $text, 
+                'type'  => 'ul', 
+                'level' => $level - $conf['toptoclevel'] + 1 
+            );
+        }
+        return $hid;
     }
 }
 
