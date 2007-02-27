@@ -119,7 +119,12 @@ function idx_getPageWords($page){
         $stopwords = array();
     }
 
-    $body   = rawWiki($page);
+    $body = '';
+    $evt = new Doku_Event('INDEXER_PAGE_ADD', array($page, $body));
+    if ($evt->advise_before()) $body .= rawWiki($page);
+    $evt->advise_after();
+    unset($evt);
+    
     $body   = strtr($body, "\r\n\t", '   ');
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
