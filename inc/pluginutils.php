@@ -8,7 +8,7 @@
 
 // plugin related constants
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-$plugin_types = array('admin','syntax','action','renderer');
+$plugin_types = array('admin','syntax','action','renderer', 'helper');
 
 /**
  * Returns a list of available plugins of given type

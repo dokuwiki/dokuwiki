@@ -155,6 +155,23 @@ class DokuWiki_Plugin {
 
     return $conf;
   }
+  
+  /**
+   * Loads a given helper plugin (if enabled)
+   *
+   * @author  Esther Brunner <wikidesign@gmail.com>
+   *
+   * @param   $name   name of plugin to load
+   * @param   $msg    message to display in case the plugin is not available
+   * 
+   * @return  object  helper plugin object
+   */
+  function loadHelper($name, $msg){
+    if (!plugin_isdiabled($name)) $obj =& plugin_load('helper',$name);
+    else $obj = NULL;
+    if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.",-1);
+    return $obj;
+  }
 
   // standard functions for outputing email addresses and links
   // use these to avoid having to duplicate code to produce links in line with the installation configuration
