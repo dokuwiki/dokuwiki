@@ -76,6 +76,9 @@
     global $AUTH_ACL;
     if(is_readable(DOKU_CONF.'acl.auth.php')){
       $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+      if(isset($_SERVER['REMOTE_USER']){
+        $AUTH_ACL = str_replace('@USER@',$_SERVER['REMOTE_USER'],$AUTH_ACL);
+      }
     }else{
       $AUTH_ACL = array();
     }
