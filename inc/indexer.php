@@ -120,17 +120,20 @@ function idx_getPageWords($page){
     }
 
     $body = '';
-    $evt = new Doku_Event('INDEXER_PAGE_ADD', array($page, $body));
-    if ($evt->advise_before()) $body .= rawWiki($page);
+    $data = array($page, $body);
+    $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
+    if ($evt->advise_before()) $data[1] .= rawWiki($page);
     $evt->advise_after();
     unset($evt);
+
+    list($page,$body) = $data;
     
     $body   = strtr($body, "\r\n\t", '   ');
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
 
-// ensure the deaccented or romanised page names of internal links are added to the token array
-// (this is necessary for the backlink function -- there maybe a better way!)
+    // ensure the deaccented or romanised page names of internal links are added to the token array
+    // (this is necessary for the backlink function -- there maybe a better way!)
     if ($conf['deaccent']) {
       $links = p_get_metadata($page,'relation references');
 
