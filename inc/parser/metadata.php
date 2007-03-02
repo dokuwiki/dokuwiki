@@ -363,6 +363,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function _simpleTitle($name){
     global $conf;
 
+    if(is_array($name)) return '';
+
     if($conf['useslash']){
         $nssep = '[:;/]';
     }else{
