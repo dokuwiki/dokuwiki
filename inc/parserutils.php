@@ -148,16 +148,16 @@ function p_cached_output($file, $format='xhtml', $id='') {
   $cache = new cache_renderer($id, $file, $format);
   if ($cache->useCache()) {
     $parsed = $cache->retrieveCache();
-    if($conf['allowdebug']) $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
+    if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
   } else {
     $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
     if ($info['cache']) {
       $cache->storeCache($parsed);               //save cachefile
-      if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
+      if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
     }else{
       $cache->removeCache();                     //try to delete cachefile
-      if($conf['allowdebug']) $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
+      if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
     }
   }
 
