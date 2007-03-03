@@ -32,6 +32,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   var $capture = true;
   var $store   = '';
 
+  function getFormat(){
+    return 'metadata';
+  }
+
   function document_start(){
     // reset metadata to persistent values
     $this->meta = $this->persistent;

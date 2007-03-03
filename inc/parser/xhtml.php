@@ -36,6 +36,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $lastsec = 0;
     var $store = '';
 
+    function getFormat(){
+        return 'xhtml';
+    }
+
+
     function document_start() {
         //reset some internals
         $this->toc     = array();

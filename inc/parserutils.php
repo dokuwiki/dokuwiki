@@ -516,7 +516,6 @@ function p_sort_modes($a, $b){
 function p_render($mode,$instructions,& $info){
   if(is_null($instructions)) return '';
 
-
   // try default renderer first:
   $file = DOKU_INC."inc/parser/$mode.php";
   if(@file_exists($file)){

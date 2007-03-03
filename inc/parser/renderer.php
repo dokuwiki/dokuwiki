@@ -37,13 +37,21 @@ class Doku_Renderer extends DokuWiki_Plugin {
         $this->info['toc'] = false;
     }
 
+    /**
+     * Returns the format produced by this renderer.
+     *
+     * Has to be overidden by decendend classes
+     */
+    function getFormat(){
+        trigger_error('getFormat() not implemented in '.get_class($this), E_USER_WARNING);
+    }
+
+
     //handle plugin rendering
     function plugin($name,$data){
         $plugin =& plugin_load('syntax',$name);
         if($plugin != null){
-            // determine mode from renderer class name - format = "Doku_Renderer_<mode>"
-            $mode = substr(get_class($this), 14);
-            $plugin->render($mode,$this,$data);
+            $plugin->render($this->getFormat(),$this,$data);
         }
     }
 
