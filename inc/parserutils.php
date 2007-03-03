@@ -173,15 +173,18 @@ function p_cached_output($file, $format='xhtml', $id='') {
  */
 function p_cached_instructions($file,$cacheonly=false,$id='') {
   global $conf;
+  static $run = null;
+  if(is_null($run)) $run = array();
 
   $cache = new cache_instructions($id, $file);
 
-  if ($cacheonly || $cache->useCache()) {
+  if ($cacheonly || $cache->useCache() || isset($run[$file])) {
     return $cache->retrieveCache();
   } else if (@file_exists($file)) {
     // no cache - do some work
     $ins = p_get_instructions(io_readfile($file));
     $cache->storeCache($ins);
+    $run[$file] = true; // we won't rebuild these instructions in the same run again
     return $ins;
   }
 
