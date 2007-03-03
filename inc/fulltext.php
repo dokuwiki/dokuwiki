@@ -32,6 +32,7 @@ function ft_pageSearch($query,&$poswords){
     $words  = array_merge($q['and'],$q['not']);
     if(!count($words)) return array();
     $result = idx_lookup($words);
+    if(!count($result)) return array();
 
     // merge search results with query
     foreach($q['and'] as $pos => $w){
