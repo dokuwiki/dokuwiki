@@ -246,7 +246,12 @@ function runSitemapper(){
     }
     print "runSitemapper(): using $sitemap".NL;
 
-    if(!is_writable(DOKU_INC.$sitemap)) return false;
+    if(@file_exists(DOKU_INC.$sitemap)){
+        if(!is_writable(DOKU_INC.$sitemap)) return false;
+    }else{
+        if(!is_writable(DOKU_INC)) return false;
+    }
+
     if(@filesize(DOKU_INC.$sitemap) && 
        @filemtime(DOKU_INC.$sitemap) > (time()-($conf['sitemap']*60*60*24))){
        print 'runSitemapper(): Sitemap up to date'.NL;
