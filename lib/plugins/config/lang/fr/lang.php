@@ -80,6 +80,7 @@ $lang['usewordblock']= 'Bloquer le spam selon les mots utilisés';
 $lang['indexdelay']  = 'Délai avant l\'indexation (sec)';
 $lang['relnofollow'] = 'Utiliser rel="nofollow" sur les liens extérieurs';
 $lang['mailguard']   = 'Cacher les adresses de courriel';
+$lang['iexssprotect']= 'Vérifier la présence de code JavaScript ou HTML malveillant dans les fichiers envoyés';
 
 /* Authentication Options */
 $lang['useacl']      = 'Utiliser les listes de contrôle d\'accès';
@@ -88,6 +89,7 @@ $lang['authtype']    = 'Backend d\'authentification';
 $lang['passcrypt']   = 'Méthode de cryptage des mots de passe';
 $lang['defaultgroup']= 'Groupe par défaut';
 $lang['superuser']   = 'Super-utilisateur';
+$lang['manager']     = 'Manager - un groupe ou un utilisateur ayant accès à certaines fonctions de gestion';
 $lang['profileconfirm'] = 'Confirmer par mot de passe les modifications de profil';
 $lang['disableactions'] = 'Désactiver les actions dans DokuWiki';
 $lang['disableactions_check'] = 'Vérifier';
@@ -120,11 +122,14 @@ $lang['compress']    = 'Compresser CSS & javascript';
 $lang['hidepages']   = 'Cacher pages correspondant à (expression régulière)';
 $lang['send404']     = 'Renvoyer "HTTP 404/Page Not Found" pour les pages introuvables';
 $lang['sitemap']     = 'Générer carte google du site (jours)';
+$lang['broken_iua']  = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
+CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&id=852">bug 852</a> pour plus d\'info.';
 
 $lang['rss_type']    = 'Type de flux RSS';
 $lang['rss_linkto']  = 'Lien du flux RSS vers';
 $lang['rss_update']  = 'Fréquence de mise à jour du flux RSS (sec)';
 $lang['recent_days'] = 'Signaler les pages modifiées depuis (jours)';
+$lang['rss_show_summary'] = 'Le flux XML affiche le résumé dans le titre';
 
 /* Target options */
 $lang['target____wiki']      = 'Target pour liens internes';

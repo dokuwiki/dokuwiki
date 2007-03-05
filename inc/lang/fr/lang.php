@@ -107,6 +107,9 @@ $lang['uploadsucc']  = 'Envoi réussi.';
 $lang['uploadfail']  = 'L\'envoi n\'a pas réussi. Veuillez contacter l\'administrateur';
 $lang['uploadwrong'] = 'Envoi refusé. Cette extension de fichier est interdite';
 $lang['uploadexist'] = 'Le fichier existe. Rien n\'est fait';
+$lang['uploadbadcontent'] = 'Le contenu envoyé ne correspond pas à l\'extension du fichier %s.';
+$lang['uploadspam']  = 'L\'envoi a été bloqué par la liste noire antispam.';
+$lang['uploadxss']   = 'L\'envoi a été bloqué en raison car son contenu est peut-être malveillant.';
 $lang['deletesucc']  = 'Le fichier "%s" a été effacé';
 $lang['deletefail']  = 'Le fichier "%s" n\'a pu être effacé - vérifier les permissions';
 $lang['mediainuse']  = 'Le fichier "%s" n\'a pas été effacé - il est en cours d\'utilisation';
@@ -139,11 +142,13 @@ $lang['by']         = 'par';
 $lang['deleted']    = 'effacée';
 $lang['created']    = 'créée';
 $lang['restored']   = 'ancienne révision restaurée';
+$lang['external_edit'] = 'édition externe';
 $lang['summary']    = 'Résumé';
 
 $lang['mail_newpage'] = 'page ajoutée :';
 $lang['mail_changed'] = 'page changée :';
 $lang['mail_new_user'] = 'Nouvel utilisateur :';
+$lang['mail_upload']   = 'fichier envoyé:';
 
 $lang['nosmblinks'] = 'Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.\nVous pouvez toujours faire un copier/coller du lien.';
 
