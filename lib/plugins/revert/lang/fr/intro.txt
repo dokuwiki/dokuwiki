@@ -1,0 +1,6 @@
+====== Gestionnaire de réversion ======
+
+Cette page peut vous aider à restaurer des pages après une attaque
+de spam. Pour trouver la liste des pages victimes des spammeurs,
+entrez un motif de recherche (tel qu'une URL de spam), puis confirmez
+que les pages trouvées contiennent du spam et annulez leurs éditions.
