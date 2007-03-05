@@ -257,3 +257,38 @@ function dbglog($msg){
   }
 }
 
+/**
+ * Print a reversed, prettyprinted backtrace
+ *
+ * @author Gary Owen <gary_owen@bigfoot.com>
+ */
+function dbg_backtrace(){
+  // Get backtrace
+  $backtrace = debug_backtrace();
+
+  // Unset call to debug_print_backtrace
+  array_shift($backtrace);
+
+  // Iterate backtrace
+  $calls = array();
+  $depth = count($backtrace) - 1;
+  foreach ($backtrace as $i => $call) {
+    $location = $call['file'] . ':' . $call['line'];
+    $function = (isset($call['class'])) ?
+    $call['class'] . $call['type'] . $call['function'] : $call['function'];
+
+    $params = '';
+    if (isset($call['args'])) {
+      $params = implode(', ', $call['args']);
+    }
+
+    $calls[$depth - $i] = sprintf('%s(%s) called at [%s]',
+                          $function,
+                          str_replace("\n", '\n', $params),
+                          $location);
+  }
+  ksort($calls);
+
+  return implode("\n", $calls);
+}
+
