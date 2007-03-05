@@ -15,11 +15,11 @@ $lang['download'] = "Télécharger et installer un nouveau plugin";
 $lang['manage'] = "Plugins installés";
 
 $lang['btn_info'] = 'info';
-$lang['btn_update'] = 'update';
+$lang['btn_update'] = 'raffraîchir';
 $lang['btn_delete'] = 'effacer';
 $lang['btn_settings'] = 'paramètres';
 $lang['btn_refresh'] = 'Actualiser';
-$lang['btn_download'] = 'Ramener';
+$lang['btn_download'] = 'Télécharger';
 $lang['btn_enable'] = 'Sauver';
 
 $lang['url'] = 'URL';
@@ -33,18 +33,18 @@ $lang['unknown'] = 'inconnu';
 // ..ing = header message
 // ..ed = success message
 
-$lang['refreshing'] = 'Actualisation ...';
+$lang['refreshing'] = 'Actualisation...';
 $lang['refreshed'] = 'Actualisation du plugin terminée.';
 
-$lang['updating'] = 'Mise à jour ...';
+$lang['updating'] = 'Mise à jour...';
 $lang['updated'] = 'Plugin %s mis à jour avec succès';
 $lang['updates'] = 'Les plugins suivant ont été mis à jour avec succès';
 $lang['update_none'] = 'Aucune mise à jour n\'a été trouvée.';
 
-$lang['deleting'] = 'Suppression ...';
+$lang['deleting'] = 'Suppression...';
 $lang['deleted'] = 'Plugin %s supprimé.';
 
-$lang['downloading'] = 'Téléchargement ...';
+$lang['downloading'] = 'Téléchargement...';
 $lang['downloaded'] = 'Plugin %s installé avec succès';
 $lang['downloads'] = 'Les plugins suivant ont été installés avec succès:';
 $lang['download_none'] = 'Aucun plugin trouvé, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
