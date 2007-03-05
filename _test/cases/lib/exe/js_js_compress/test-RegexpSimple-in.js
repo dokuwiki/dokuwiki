@@ -1,0 +1,3 @@
+
+
+var r   =   /simple/g ;

@@ -89,6 +89,20 @@ class js_js_compress_test extends UnitTestCase {
         $this->assertEqual(js_compress($text), "var foo=(baz)?'bar':'bla';");
 
     }
+
+    /**
+     * Test the files provided with the original JsStrip
+     */
+    function test_original(){
+        $files = glob(dirname(__FILE__).'/js_js_compress/test-*-in.js');
+
+        foreach($files as $file){
+            $info = "Using file $file";
+            $this->signal('failinfo',$info);
+            $this->assertEqual(js_compress(file_get_contents($file)),
+                               file_get_contents(substr($file,0,-5).'out.js'));
+        };
+    }
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

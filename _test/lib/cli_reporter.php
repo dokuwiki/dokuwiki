@@ -23,6 +23,7 @@ if (version_compare(phpversion(), '4.3.0', '<') ||
 class CLIReporter extends SimpleReporter {
 
     var $faildetail_separator = ST_FAILDETAIL_SEPARATOR;
+    var $_failinfo;
 
     function CLIReporter($faildetail_separator = NULL) {
         $this->SimpleReporter();
@@ -54,6 +55,10 @@ class CLIReporter extends SimpleReporter {
         parent::paintFail($message);
         fwrite(STDERR, 'FAIL' . $this->faildetail_separator .
                $this->_paintTestFailDetail($message));
+        if($this->_failinfo){
+            fwrite(STDERR, '  additional info was: '.$this->_failinfo."\n");
+            $this->_failinfo = '';
+        }
     }
 
     /**
@@ -64,6 +69,16 @@ class CLIReporter extends SimpleReporter {
         fwrite(STDERR, 'EXCEPTION' . $this->faildetail_separator .
                $this->_paintTestFailDetail($message));
     }
+
+    /**
+     * Handle failinfo message
+     */
+    function paintSignal($type,$message) {
+        parent::paintSignal($type,$message);
+        if($type = 'failinfo') $this->_failinfo = $message;
+    }
+
+
 
     /**
      * Paint a footer with test case name, timestamp, counts of fails and
