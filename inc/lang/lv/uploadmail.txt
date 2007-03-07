@@ -1,0 +1,14 @@
+Fails augšupielādēts DokuWiki. Sīkākas ziņas:
+
+Fails         : @MEDIA@
+Datums        : @DATE@
+Pārlūks       : @BROWSER@
+IP adrese     : @IPADDRESS@
+Datora vārds  : @HOSTNAME@
+Izmērs        : @SIZE@
+MIME tips     : @MIME@
+Lietotājs     : @USER@
+
+-- 
+Vēstuli nosūtījusi DokuWiki programma no 
+@DOKUWIKIURL@ datora.

@@ -7,10 +7,11 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
-$lang['doublequoteopening']  = '„';//&bdquo;
-$lang['doublequoteclosing']  = '“';//&ldquo;
-$lang['singlequoteopening']  = '‚';//&sbquo;
-$lang['singlequoteclosing']  = '‘';//&lsquo;
+
+$lang['doublequoteopening']  = '„';  // &bdquo; U+201E (8222)
+$lang['doublequoteclosing']  = '“'; // &ldquo;  U+201C (8220)
+$lang['singlequoteopening']  = '‚'; // &sbquo; U+201A (8218)
+$lang['singlequoteclosing']  = '‘'; // &lsquo; U+2018 (8216)
 
 $lang['btn_edit']   = 'Labot lapu';
 $lang['btn_source'] = 'Parādīt lapas kodu';
@@ -114,6 +115,9 @@ $lang['mediaview']   = 'Skatīt oriģinālo failu';
 $lang['mediaroot']   = 'sakne';
 $lang['mediaupload'] = 'Augšupielādēt failu patreizējā sadaļā. Lai izveidotu dziļāku sadaļu, pieraksti to, atdalot ar kolu, pirms augšupielādējamā faila vārda.';
 $lang['mediaextchange'] = 'Faila paplašinājums mainīts no .%s uz .%s!';
+$lang['uploadbadcontent'] = 'Augšupielādētā saturs neatbilst faila paplašinājumam %s.';
+$lang['uploadspam']  = 'Augšupielāde bloķēta ar melno sarakstu.';
+$lang['uploadxss']   = 'Augšupielāde bloķēta iespējama slikta satura dēļ.';
 
 $lang['reference']   = 'Norādes uz failu';
 $lang['ref_inuse']   = 'Failu nevar dzēst, jo izmanto šādas lapas:';
@@ -138,6 +142,7 @@ $lang['summary']    = 'Anotācija';
 $lang['mail_newpage'] = 'lapa pievienota:';
 $lang['mail_changed'] = 'lapa mainīta:';
 $lang['mail_new_user'] = 'Jauns lietotājs:';
+$lang['mail_upload']   = 'augšupielādētais fails:';
 
 $lang['nosmblinks'] = 'Saites uz Windows resursiem darbojas tikai Microsoft Internet Explorer.\nProtams, ka vari saiti kopēt un iespraust citā programmā.';
 
