@@ -35,7 +35,7 @@ function js_out(){
     $write = (bool) $_REQUEST['write'];  // writable?
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('scripts'.$edit.'x'.$write,'.js'); 
+    $cache = getCacheName('scripts'.$edit.'x'.$write,'.js');
 
     // Array of needed files
     $files = array(
@@ -222,26 +222,36 @@ function js_runonstart($func){
 /**
  * Strip comments and whitespaces from given JavaScript Code
  *
- * This is a rewrite of Nick Galbreaths python tool jsstrip.py which is
+ * This is a port of Nick Galbreath's python tool jsstrip.py which is
  * released under BSD license. See link for original code.
  *
  * @author Nick Galbreath <nickg@modp.com>
  * @author Andreas Gohr <andi@splitbrain.org>
- * @link http://modp.com/release/jsstrip/
+ * @link   http://code.google.com/p/jsstrip/
  */
 function js_compress($s){
-    $i = 0;
-    $line = 0;
+    $s = ltrim($s);     // strip all initial whitespace
     $s .= "\n";
-    $len = strlen($s);
+    $i = 0;             // char index for input string
+    $j = 0;             // char forward index for input string
+    $line = 0;          // line number of file (close to it anyways)
+    $slen = strlen($s); // size of input string
+    $lch  = '';         // last char added
+    $result = '';       // we store the final result here
 
     // items that don't need spaces next to them
-    $chars = '^&|!+\-*\/%=\?:;,{}()<>% \t\n\r';
+    $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"[]";
 
-    ob_start();
-    while($i < $len){
+    while($i < $slen){
+        // skip all "boring" characters.  This is either
+        // reserved word (e.g. "for", "else", "if") or a
+        // variable/object/method (e.g. "foo.color")
+        while ($i < $slen && (strpos($chars,$s[$i]) === false) ){
+            $result .= $s{$i};
+            $i = $i + 1;
+        }
+
         $ch = $s{$i};
-
         // multiline comments (keeping IE conditionals)
         if($ch == '/' && $s{$i+1} == '*' && $s{$i+2} != '@'){
             $endC = strpos($s,'*/',$i+2);
@@ -275,7 +285,7 @@ function js_compress($s){
                     }
                     if($s{$i+$j} == '\\') $j = $j + 2;
                 }
-                echo substr($s,$i,$j+1);
+                $result .= substr($s,$i,$j+1);
                 $i = $i + $j + 1;
                 continue;
             }
@@ -284,14 +294,14 @@ function js_compress($s){
         // double quote strings
         if($ch == '"'){
             $j = 1;
-            while( $s{$i+$j} != '"' && ($i+$j < $len)){
+            while( $s{$i+$j} != '"' && ($i+$j < $slen)){
                 if( $s{$i+$j} == '\\' && ($s{$i+$j+1} == '"' || $s{$i+$j+1} == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;
                 }
             }
-            echo substr($s,$i,$j+1);
+            $result .= substr($s,$i,$j+1);
             $i = $i + $j + 1;
             continue;
         }
@@ -299,51 +309,44 @@ function js_compress($s){
         // single quote strings
         if($ch == "'"){
             $j = 1;
-            while( $s{$i+$j} != "'" && ($i+$j < $len)){
+            while( $s{$i+$j} != "'" && ($i+$j < $slen)){
                 if( $s{$i+$j} == '\\' && ($s{$i+$j+1} == "'" || $s{$i+$j+1} == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;
                 }
             }
-            echo substr($s,$i,$j+1);
+            $result .= substr($s,$i,$j+1);
             $i = $i + $j + 1;
             continue;
         }
 
-        // newlines
-        if($ch == "\n" || $ch == "\r"){
-            $i = $i+1;
-            continue;
-        }
-
-        // leading spaces
-        if( ( $ch == ' ' ||
-              $ch == "\n" ||
-              $ch == "\t" ) &&
-            !preg_match('/['.$chars.']/',$s{$i+1}) ){
-            $i = $i+1;
-            continue;
-        }
-
-        // trailing spaces
-        if( ( $ch == ' ' ||
-              $ch == "\n" ||
-              $ch == "\t" ) &&
-            !preg_match('/['.$chars.']/',$s{$i-1}) ){
-            $i = $i+1;
-            continue;
+        // whitespaces
+        if( $ch == ' ' || $ch == "\r" || $ch == "\n" || $ch == "\t" ){
+            // leading spaces
+            if($i+1 < $slen && (strpos($chars,$s[$i+1]) !== false)){
+                $i = $i + 1;
+                continue;
+            }
+            // trailing spaces
+            //  if this ch is space AND the last char processed
+            //  is special, then skip the space
+            $lch = substr($result,-1);
+            if($lch && (strpos($chars,$lch) !== false)){
+                $i = $i + 1;
+                continue;
+            }
+            // else after all of this convert the "whitespace" to
+            // a single space.  It will get appended below
+            $ch = ' ';
         }
 
         // other chars
-        echo $ch;
+        $result .= $ch;
         $i = $i + 1;
     }
 
-
-    $out = ob_get_contents();
-    ob_end_clean();
-    return $out;
+    return trim($result);
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
