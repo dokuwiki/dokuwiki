@@ -153,6 +153,8 @@ function js_out(){
         $js = js_compress($js);
     }
 
+    $js .= "\n"; // https://bugzilla.mozilla.org/show_bug.cgi?id=316033
+
     // save cache file
     io_saveFile($cache,$js);
 
