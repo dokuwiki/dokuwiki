@@ -20,16 +20,50 @@ class FeedParser extends SimplePie {
      */
     function FeedParser(){
         $this->SimplePie();
-        $this->caching = false;
+        $this->enable_caching(false);
+        $this->set_file_class('FeedParser_File');
     }
+}
+
+/**
+ * Fetch an URL using our own HTTPClient
+ *
+ * Replaces SimplePie's own class
+ */
+class FeedParser_File extends SimplePie_File {
+    var $http;
+    var $useragent;
+    var $success = true;
+    var $headers = array();
+    var $body;
+    var $error;
 
     /**
-     * Fetch an URL using our own HTTPClient
+     * Inititializes the HTTPClient
      *
-     * Overrides SimplePie's own method
+     * We ignore all given parameters - they are set in DokuHTTPClient
      */
-    function get_file($url){
-        $http = new DokuHTTPClient();
-        return $http->get($url,true);
+    function FeedParser_File($url, $timeout=10, $redirects=5,
+                             $headers=null, $useragent=null, $force_fsockopen=false) {
+        $this->http    = new DokuHTTPClient();
+        $this->success = $this->http->sendRequest($url);
+
+        $this->headers = $this->http->resp_headers;
+        $this->body    = $this->http->resp_body;
+        $this->error   = $this->http->error;
+        return $this->success;
     }
+
+    function headers(){
+        return $this->headers;
+    }
+
+    function body(){
+        return $this->body;
+    }
+
+    function close(){
+        return true;
+    }
+
 }
