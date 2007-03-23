@@ -167,7 +167,7 @@ class DokuWiki_Plugin {
    * @return  object  helper plugin object
    */
   function loadHelper($name, $msg){
-    if (!plugin_isdiabled($name)) $obj =& plugin_load('helper',$name);
+    if (!plugin_isdisabled($name)) $obj =& plugin_load('helper',$name);
     else $obj = NULL;
     if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.",-1);
     return $obj;
