@@ -2,7 +2,9 @@
 
 require_once DOKU_INC.'inc/html.php';
 
-if ( !extension_loaded('runkit') ) {
+if ( !extension_loaded('runkit') &&
+     !@dl('runkit.dll') &&
+     !@dl('runkit.so' ) ){
     SimpleTestOptions::ignore('html_hilight_test');
     trigger_error('Skipping html_hilight_test - http://www.php.net/runkit required');
 }
@@ -15,17 +17,17 @@ function html_hilight_test_unslash($string,$char="'"){
 class html_hilight_test extends UnitTestCase{
 
   function setup() {
-	if ( function_exists('unslash') ) {
-		runkit_function_rename('unslash','html_hilight_test_unslash_real');
-	}
+    if ( function_exists('unslash') ) {
+        runkit_function_rename('unslash','html_hilight_test_unslash_real');
+    }
     runkit_function_rename('html_hilight_test_unslash','unslash');
   }
-  
+
   function teardown() {
-	runkit_function_rename('unslash','html_hilight_test_unslash');
-	if ( function_exists('html_hilight_test_unslash_real') ) {
-		runkit_function_rename('html_hilight_test_unslash_real','unslash');
-	}
+    runkit_function_rename('unslash','html_hilight_test_unslash');
+    if ( function_exists('html_hilight_test_unslash_real') ) {
+        runkit_function_rename('html_hilight_test_unslash_real','unslash');
+    }
   }
 
   function testHighlightOneWord() {
@@ -35,7 +37,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'bar')
       );
   }
-  
+
   function testHighlightTwoWords() {
     $html = 'Foo bar Foo php Foo';
     $this->assertPattern(
@@ -43,7 +45,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'bar php')
       );
   }
-  
+
   function testHighlightTwoWordsHtml() {
     $html = 'Foo <b>bar</b> <i>Foo</i> php Foo';
     $this->assertPattern(
@@ -51,7 +53,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'bar php')
       );
   }
-  
+
   function testNoHighlight() {
     $html = 'Foo bar Foo';
     $this->assertPattern(
@@ -59,7 +61,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'php')
       );
   }
-  
+
   function testHighlightPHP() {
     $html = 'Foo $_GET[\'bar\'] Foo';
     $this->assertEqual(
@@ -67,7 +69,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'$_GET[\'bar\']')
       );
   }
-  
+
   function testMatchAttribute() {
     $html = 'Foo <b class="x">bar</b> Foo';
     $this->assertPattern(
@@ -75,7 +77,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'class="x"')
       );
   }
-  
+
   function testMatchAttributeWord() {
     $html = 'Foo <b class="x">bar</b> Foo';
     $this->assertEqual(
@@ -91,7 +93,7 @@ class html_hilight_test extends UnitTestCase{
       html_hilight($html,'*')
       );
   }
-  
+
   function testRegexInjectionSlash() {
     $html = 'Foo bar Foo';
     $this->assertPattern(

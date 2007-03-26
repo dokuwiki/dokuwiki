@@ -12,7 +12,7 @@ class xhtml_links_test extends UnitTestCase {
         $p = new Doku_Renderer_xhtml();
         $p->emaillink('foo@example.com','<script>alert(\'"alert"\');</script>');
 
-        $expect = '<a href="mailto:foo%20%5Bat%5D%20example%20%5Bdot%5D%20com" class="mail JSnocheck" title="foo [at] example [dot] com">&lt;script&gt;alert(\'&quot;alert&quot;\');&lt;/script&gt;</a>';
+        $expect = '<a href="mailto:foo%20%5Bat%5D%20example%20%5Bdot%5D%20com" class="mail JSnocheck" title="foo [at] example [dot] com">&lt;script&gt;alert(&#039;&quot;alert&quot;&#039;);&lt;/script&gt;</a>';
 
         $this->assertEqual($p->doc,$expect);
     }
