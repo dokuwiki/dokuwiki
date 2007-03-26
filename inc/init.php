@@ -87,6 +87,7 @@
   // init session
   if (!headers_sent() && !defined('NOSESSION')){
     session_name("DokuWiki");
+    session_set_cookie_params(0, DOKU_BASE);
     session_start();
   }
 
