@@ -84,7 +84,7 @@ $lang['resendna']      = 'Passwörter versenden ist in diesem Wiki nicht möglic
 $lang['resendpwd']      = 'Neues Passwort schicken für';
 $lang['resendpwdmissing'] = 'Es tut mir Leid, aber Sie müssen alle Felder ausfüllen.';
 $lang['resendpwdnouser']  = 'Es tut mir Leid, aber der Benutzer existiert nicht in unserer Datenbank.';
-$lang['resendpwdbadauth'] = 'Es tut mir Leid, aber dieser Authentifizierungscode ist ungültig. Stellen Sie sicher, dass sie den kompletten Bestätigungslink verwendet haben.';
+$lang['resendpwdbadauth'] = 'Es tut mir Leid, aber dieser Authentifizierungscode ist ungültig. Stellen Sie sicher, dass Sie den kompletten Bestätigungslink verwendet haben.';
 $lang['resendpwdconfirm'] = 'Ein Bestätigungslink wurde per E-Mail versandt.';
 $lang['resendpwdsuccess'] = 'Ihr neues Passwort wurde per E-Mail versandt.';
 
@@ -119,7 +119,7 @@ $lang['js']['hidedetails'] = 'Details ausblenden';
 $lang['mediausage']        = 'Syntax zum Verwenden dieser Datei:';
 $lang['mediaview']         = 'Originaldatai öffnen';
 $lang['mediaroot']         = 'Wurzel';
-$lang['mediaupload']       = 'Laden Sie hier eine Datei in den momentanen Namensraum hoch. Um Unterordner zu erstellen, stellen sie diese dem Dateinamen im Feld "Hochladen als" durch Doppelpunkt getrennt voran.';
+$lang['mediaupload']       = 'Laden Sie hier eine Datei in den momentanen Namensraum hoch. Um Unterordner zu erstellen, stellen Sie diese dem Dateinamen im Feld "Hochladen als" durch Doppelpunkt getrennt voran.';
 $lang['mediaextchange']    = 'Dateiendung vom .%s nach .%s geändert!';
 
 $lang['reference']   = 'Verwendung von';
@@ -216,15 +216,15 @@ $lang['i_superuser']  = 'Administrator Nutzername';
 $lang['i_problems']   = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen bevor Sie mit der Installation fortfahren können.';
 $lang['i_modified']   = 'Aus Sicherheitsgründen arbeitet dieses Script nur mit einer neuen, unmodifizierten DokuWiki Installation.  Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']     = 'Die PHP Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
-$lang['i_phpver']     = 'Ihre PHP version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP Installation.';
+$lang['i_phpver']     = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP Installation.';
 $lang['i_permfail']   = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists'] = '<code>%s</code> existiert bereits';
-$lang['i_writeerr']   = '<code>%s</code> kontte nicht erzeugt werden. Sie sollten die Verzeichnis/Datei-Rechte überprüfen und die Datei manuell anlegen.';
+$lang['i_writeerr']   = '<code>%s</code> konnte nicht erzeugt werden. Sie sollten die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
 $lang['i_badhash']    = 'Unbekannte oder modifizierte dokuwiki.php (Hash=<code>%s</code>)';
 $lang['i_badval']     = '<code>%s</code> - unerlaubter oder leerer Wert';
 $lang['i_success']    = 'Die Konfiguration wurde erfolgreich abgeschlossen. Sie können jetzt die install.php löschen. Ihr
                         <a href="doku.php">neues DokuWiki</a> ist jetzt für Sie bereit.';
-$lang['i_failure']    = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Sie müssen diese vermutlich von Hand beheben bevor Sie Ihr <a href="doku.php">neues DokuWiki</a> nutzen können.';
+$lang['i_failure']    = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Sie müssen diese vermutlich von Hand beheben, bevor Sie Ihr <a href="doku.php">neues DokuWiki</a> nutzen können.';
 $lang['i_policy']     = 'Anfangseinstellung für Zugangskontrolle (ACL)';
 $lang['i_pol0']       = 'Offenes Wiki (lesen, schreiben, hochladen für alle)';
 $lang['i_pol1']       = 'Öffentliches Wiki (lesen für alle, schreiben und hochladen für registrierte Nutzer)';

@@ -5,6 +5,6 @@ hat während Ihrer Arbeit automatisch einen Zwischenentwurf gespeichert, den Sie
 jetzt nutzen können, um Ihre Arbeit fortzusetzen. Unten sehen Sie die Daten, die bei
 Ihrer letzten Sitzung gespeichert wurden.
 
-Bitte entscheiden Sie, ob sie den Entwurf //wieder herstellen// oder //löschen//
+Bitte entscheiden Sie, ob Sie den Entwurf //wieder herstellen// oder //löschen//
 wollen oder ob Sie die Bearbeitung abbrechen möchten.
 
