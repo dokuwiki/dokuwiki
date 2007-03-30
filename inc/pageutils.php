@@ -52,6 +52,25 @@ function getID($param='id',$clean=true){
     //strip leading slashes
     $id = preg_replace('!^/+!','',$id);
   }
+
+  // Namespace autolinking from URL
+  if(substr($id,-1) == ':' || ($conf['useslash'] && substr($id,-1) == '/')){
+    if(@file_exists(wikiFN($id.$conf['start']))){
+      // start page inside namespace
+      $id = $id.$conf['start'];
+    }elseif(@file_exists(wikiFN($id.noNS(cleanID($id))))){
+      // page named like the NS inside the NS
+      $id = $id.noNS(cleanID($id));
+    }elseif(@file_exists(wikiFN($id))){
+      // page like namespace exists
+      $id = $id;
+    }else{
+      // fall back to default
+      $id = $id.$conf['start'];
+    }
+    header("Location: ".wl($id,'',true));
+  }
+
   if($clean) $id = cleanID($id);
   if(empty($id) && $param=='id') $id = $conf['start'];
 
