@@ -279,7 +279,8 @@ function ft_resultCombine($args){
     }
 
     $result = array();
-    foreach ($args[0] as $key1 => $value1) {
+    if ($array_count > 1) {
+      foreach ($args[0] as $key1 => $value1) {
         for ($i = 1; $i !== $array_count; $i++) {
             foreach ($args[$i] as $key2 => $value2) {
                 if ((string) $key1 === (string) $key2) {
@@ -288,6 +289,7 @@ function ft_resultCombine($args){
                 }
             }
         }
+      }
     }
     return $result;
 }
