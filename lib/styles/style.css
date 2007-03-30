@@ -78,6 +78,9 @@ em.u {
   font-style: normal;
   text-decoration: underline;
 }
+em em.u {
+  font-style: italic;
+}
 
 
 /* syntax highlighting code */
