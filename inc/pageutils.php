@@ -98,7 +98,7 @@ function cleanID($raw_id,$ascii=false){
   // check if it's already in the memory cache
   if (isset($cache[$raw_id])) {
     return $cache[$raw_id];
-	}
+    }
 
   $sepchar = $conf['sepchar'];
   if($sepcharpat == null) // build string only once to save clock cycles
@@ -158,6 +158,33 @@ function noNS($id) {
   } else {
     return $id;
   }
+}
+
+/**
+* Returns the current namespace
+*
+* @author Nathan Fritz <fritzn@crown.edu>
+*/
+function curNS($id) {
+    return noNS(getNS($id));
+}
+
+/**
+* Returns the ID without the namespace or current namespace for 'start' pages
+*
+* @author Nathan Fritz <fritzn@crown.edu>
+*/
+function noNSorNS($id) {
+    global $conf;
+
+    $p = noNS($id);
+    if ($p == $conf['start']) {
+        $p = curNS($id);
+        if ($p == false) {
+            return noNS($id);
+        }
+    }
+    return $p;
 }
 
 /**

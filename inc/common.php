@@ -236,7 +236,7 @@ function breadcrumbs(){
   }
 
   // page names
-  $name = noNS($ID);
+  $name = noNSorNS($ID);
   if ($conf['useheading']) {
     // get page title
     $title = p_get_first_heading($ID);
