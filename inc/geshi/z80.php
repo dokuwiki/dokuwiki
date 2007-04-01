@@ -4,7 +4,7 @@
  * -------
  * Author: Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2007 Benny Baumann (http://www.omorphia.de/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.18
+ * Release Version: 1.0.7.19
  * Date Started: 2007/02/06
  *
  * ZiLOG Z80 Assembler language file for GeSHi.

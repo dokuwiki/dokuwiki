@@ -4,7 +4,7 @@
  * --------
  * Author: José Jorge Enríquez (jenriquez@users.sourceforge.net)
  * Copyright: (c) 2005 José Jorge Enríquez Rodríguez (http://www.zonamakers.com)
- * Release Version: 1.0.7.18
+ * Release Version: 1.0.7.19
  * Date Started: 2005/06/21
  *
  * GML language file for GeSHi.

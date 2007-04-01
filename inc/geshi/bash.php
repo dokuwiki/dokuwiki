@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.18
+ * Release Version: 1.0.7.19
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -122,7 +122,7 @@ $language_data = array (
 		0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
 		1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
         2 => "([a-zA-Z_][a-zA-Z0-9_]*)=",
-        3 => "(?<!\\$)#.*\n",
+        3 => "(?<!\\$)#[^\n]*",
         4 => "\\$#"
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
