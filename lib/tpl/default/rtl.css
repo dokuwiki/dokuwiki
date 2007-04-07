@@ -43,18 +43,22 @@ div.meta div.doc {
 
 /* ------------------  Design corrections  --------------------------------- */
 
-ul, ol {
+div.dokuwiki ul, ol {
   margin: 0.5em 1.5em 0.5em 0;
 }
 
-a.urlextern,a.interwiki,a.windows{
+div.dokuwiki a.urlextern,
+div.dokuwiki a.interwiki,
+div.dokuwiki a.windows,
+div.dokuwiki a.mail,
+div.dokuwiki a.mail.JSnocheck {
   /* should work but doesn't - so we just disable icons here*/
   /*
   background-position: right 1px;
   padding-right: 16px;
   */
   background-image: none !important;
-  padding: 0;
+  padding: 0px 0px 0px 0px;
 }
 
 div.secedit input.button {
@@ -62,50 +66,53 @@ div.secedit input.button {
 }
 
 /* headlines */
-h1, h2, h3, h4, h5 {
+div.dokuwiki h1, div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki h5 {
   clear: right;
 }
 
 /* special headlines */
-h1 {margin-left: 0px; margin-right: 0px;}
-h2 {margin-left: 0px; margin-right: 20px;}
-h3 {margin-left: 0px; margin-right: 40px;}
-h4 {margin-left: 0px; margin-right: 60px;}
-h5 {margin-left: 0px; margin-right: 80px;}
+div.dokuwiki h1 {margin-left: 0px; margin-right: 0px;}
+div.dokuwiki h2 {margin-left: 0px; margin-right: 20px;}
+div.dokuwiki h3 {margin-left: 0px; margin-right: 40px;}
+div.dokuwiki h4 {margin-left: 0px; margin-right: 60px;}
+div.dokuwiki h5 {margin-left: 0px; margin-right: 80px;}
 
 /* indent different sections */
-div.level1 {margin-left: 0px; margin-right: 3px;}
-div.level2 {margin-left: 0px; margin-right: 23px;}
-div.level3 {margin-left: 0px; margin-right: 43px;}
-div.level4 {margin-left: 0px; margin-right: 63px;}
-div.level5 {margin-left: 0px; margin-right: 83px;}
+div.dokuwiki div.level1 {margin-left: 0px; margin-right: 3px;}
+div.dokuwiki div.level2 {margin-left: 0px; margin-right: 23px;}
+div.dokuwiki div.level3 {margin-left: 0px; margin-right: 43px;}
+div.dokuwiki div.level4 {margin-left: 0px; margin-right: 63px;}
+div.dokuwiki div.level5 {margin-left: 0px; margin-right: 83px;}
 
 /* TOC control */
-div.toc {
+div.dokuwiki div.toc {
   float: left;
-  margin-left: 0;
-  margin-right: 2em;
 }
 
-div.tocheader {
+div.dokuwiki div.tocheader {
   text-align: right;
 }
 
-#tocinside {
+div.dokuwiki #toc__inside {
   text-align: right;
 }
 
-ul.toc {
+div.dokuwiki ul.toc {
   padding: 0;
   padding-right: 1em;
 }
 
-ul.toc li {
+div.dokuwiki ul.toc li {
   background-position: right 0.6em;
+  padding-right:0.4em;
+  direction: rtl;
+}
+
+div.dokuwiki ul.toc li.clear {
   padding-right:0.4em;
 }
 
-ul.toc li.clear {
-  padding-right:0.4em;
+div.dokuwiki pre {
+	text-align: left;
 }
 
