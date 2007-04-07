@@ -31,7 +31,7 @@ function css_out(){
     global $conf;
     global $lang;
     switch ($_REQUEST['s']) {
-    	case 'all':
+        case 'all':
         case 'print':
         case 'feed':
             $style = $_REQUEST['s'];
@@ -147,7 +147,7 @@ function css_cacheok($cache,$files){
 }
 
 /**
- * Does placeholder replacements in the style according to 
+ * Does placeholder replacements in the style according to
  * the ones defined in a templates style.ini file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -245,6 +245,7 @@ function css_loadfile($file,$location=''){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_pluginstyles($mode='screen'){
+    global $lang;
     $list = array();
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -257,6 +258,9 @@ function css_pluginstyles($mode='screen'){
         }else{
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
             $list[DOKU_PLUGIN."$p/screen.css"] = DOKU_BASE."lib/plugins/$p/";
+        }
+        if($lang['direction'] == 'rtl'){
+            $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;
