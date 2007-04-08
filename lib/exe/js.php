@@ -77,6 +77,7 @@ function js_out(){
 
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
+    print "var DOKU_TPL    = '".DOKU_TPL."';";
 
     //FIXME: move thes into LANG
     print "var alertText   = '".js_escape($lang['qb_alert'])."';";
