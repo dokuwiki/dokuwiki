@@ -8,6 +8,7 @@
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
 // if set here, the plugin doesn't need to override the getMenuText() method
+$lang['direction']  = 'rtl';
 $lang['menu']       = 'הגדרות תצורה';
 
 $lang['error']      = 'ההגדרות לא עודכנו בגלל ערך לא תקף, נא לעיין בשינויים ולשלוח שנית.
@@ -98,7 +99,7 @@ $lang['disableactions_other'] = 'פעולות אחרות (מופרדות בפס�
 /* Advanced Options */
 $lang['updatecheck'] = 'בדיקת עידכוני אבטחה והתראות? על DokuWiki להתקשר אל splitbrain.org לצורך כך.';
 $lang['userewrite']  = 'השתמש בכתובות URL יפות';
-$lang['useslash']    = 'השתמש בלוכסן להרדת מרחבי שמות בכתובות';
+$lang['useslash']    = 'השתמש בלוכסן להגדרת מרחבי שמות בכתובות';
 $lang['usedraft']    = 'שמור טיוטות באופן אוטומטי בעת עריכה';
 $lang['sepchar']     = 'מפריד בין מילות שם-דף';
 $lang['canonical']   = 'השתמש בכתובות URL מלאות';
