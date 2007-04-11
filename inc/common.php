@@ -127,8 +127,9 @@ function pageinfo(){
   if($REV){
     $revinfo = getRevisionInfo($ID, $REV, 1024);
   }else{
-    if (isset($info['meta']['last_change'])) { $revinfo = $info['meta']['last_change']; }
-    else {
+    if (is_array($info['meta']['last_change'])) {
+       $revinfo = $info['meta']['last_change'];
+    } else {
       $revinfo = getRevisionInfo($ID, $info['lastmod'], 1024);
       // cache most recent changelog line in metadata if missing and still valid
       if ($revinfo!==false) {
