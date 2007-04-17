@@ -184,5 +184,3 @@ $lang['compression_o_0']   = 'brak';
 $lang['compression_o_gz']  = 'gzip';
 $lang['compression_o_bz2'] = 'bz2';
 
-/* FIXME: delete when no longer needed */
-$lang['test_indexer'] = 'Nowy rodzaj indeksowania: 0x1 -> przeszukiwanie z sortowaniem';

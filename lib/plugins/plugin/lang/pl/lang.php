@@ -61,9 +61,11 @@ $lang['error_dircreate'] = 'Nie powiodło się stworzenie tymczasowego katalogu 
 $lang['error_decompress'] = 'Menadżer wtyczek nie był w stanie rozpakować ściągniętego pliku. '.
             'Może to być spowodowane przez nieudany transfer (w takim przypadku powinieneś spróbować ponownie) '.
             'lub nieznany format kompresji (w takim przypadku będziesz musiał ściągnąć i zainstalować wtyczkę ręcznie).';
+
 $lang['error_copy'] = 'Wystąpił błąd podczas kopiowania pliku w trakcie instalacji wtyczki %s: '.
             'być może dysk jest pełny lub prawa dostępu są niepoprawne. '.
             'Efektem może być częściowo zainstalowana wtyczka co może spowodować niestabilność Twojej instalacji wiki.';   
+
 $lang['error_delete']     = 'Wystąpił błąd przy próbie usunięcia wtyczki <em>%s</em>. '.
                             'Prawdopodobną przyczyną są niewystarczające uprawnienia do katalogu.';
 
