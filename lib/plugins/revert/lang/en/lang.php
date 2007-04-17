@@ -21,6 +21,6 @@ $lang['removed']  = '%s removed';
 $lang['revstart'] = 'Reversion process started. This can take a long time. If the
                      script times out before finishing, you need to revert in smaller
                      chunks.';
-$lang['revstop']  = 'Reversion process finished successful.';
+$lang['revstop']  = 'Reversion process finished successfully.';
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
