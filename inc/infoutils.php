@@ -277,12 +277,23 @@ function dbg_backtrace(){
     $function = (isset($call['class'])) ?
     $call['class'] . $call['type'] . $call['function'] : $call['function'];
 
-    $params = '';
-    if (isset($call['args'])) {
-      $params = implode(', ', $call['args']);
+    $params = array();
+    if (isset($call['args'])){
+        foreach($call['args'] as $arg){
+            if(is_object($arg)){
+                $params[] = '[Object '.get_class($arg).']';
+            }elseif(is_array($arg)){
+                $params[] = '[Array]';
+            }elseif(is_null($arg)){
+                $param[] = '[NULL]';
+            }else{
+                $params[] = (string) '"'.$arg.'"';
+            }
+        }
     }
+    $params = implode(', ',$params);
 
-    $calls[$depth - $i] = sprintf('%s(%s) called at [%s]',
+    $calls[$depth - $i] = sprintf('%s(%s) called at %s',
                           $function,
                           str_replace("\n", '\n', $params),
                           $location);
