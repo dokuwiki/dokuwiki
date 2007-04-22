@@ -61,7 +61,7 @@ div.dokuwiki a.mail.JSnocheck {
   padding: 0px 0px 0px 0px;
 }
 
-div.secedit input.button {
+div.dokuwiki div.secedit input.button {
   float: left;
 }
 
@@ -113,6 +113,6 @@ div.dokuwiki ul.toc li.clear {
 }
 
 div.dokuwiki pre {
-	text-align: left;
+  text-align: left;
 }
 
