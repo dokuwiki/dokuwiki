@@ -1,4 +1,4 @@
 ====== Connexion ======
 
-Vous n'êtes pas connecté! Entrez vos identifiants ci-dessous pour vous connecter.
+Vous n'êtes pas connecté ! Entrez vos identifiants ci-dessous pour vous connecter.
 Votre navigateur doit accepter les cookies pour pouvoir vous connecter.

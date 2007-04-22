@@ -23,7 +23,7 @@ $lang['btn_source'] = 'Afficher le texte source';
 $lang['btn_show']   = 'Afficher la page';
 $lang['btn_create'] = 'Créer cette page';
 $lang['btn_search'] = 'Rechercher';
-$lang['btn_save']   = 'Sauver';
+$lang['btn_save']   = 'Enregistrer';
 $lang['btn_preview']= 'Aperçu';
 $lang['btn_top']    = 'Haut de page';
 $lang['btn_newer']  = '<< plus récent';
@@ -51,7 +51,7 @@ $lang['btn_draft']    = 'Éditer brouillon';
 $lang['btn_recover']  = 'Récupérer brouillon';
 $lang['btn_draftdel'] = 'Effacer brouillon';
 
-$lang['loggedinas'] = 'Connecté en tant que';
+$lang['loggedinas'] = 'Connecté en tant que ';
 $lang['user']       = 'Utilisateur';
 $lang['pass']       = 'Mot de passe';
 $lang['newpass']    = 'Nouveau mot de passe';
@@ -74,14 +74,14 @@ $lang['regmailfail'] = 'Il semble y avoir un problème à l\'envoi du courriel.
 $lang['regbadmail']  = 'L\'adresse mail semble incorrecte - Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass'] = 'Les deux mots de passe donnés sont différents, recommencez SVP';
 $lang['regpwmail']   = 'Votre mot de passe DokuWiki';
-$lang['reghere']     = 'Vous n\'avez pas encore de compte ? Enregistrez-vous ici';
+$lang['reghere']     = 'Vous n\'avez pas encore de compte ? Enregistrez-vous ici ';
 
 $lang['profna']       = 'Ce wiki ne permet pas de modifier les profils';
 $lang['profnochange'] = 'Pas de changement, rien à faire.';
 $lang['profnoempty']  = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
 $lang['profchanged']  = 'Mise à jour du profil réussie.';
 
-$lang['pwdforget'] = 'Mot de passe oublié ? Faites-vous envoyer votre mot de passe';
+$lang['pwdforget'] = 'Mot de passe oublié ? Faites-vous envoyer votre mot de passe ';
 $lang['resendna']  = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd'] = 'Renvoyer le mot de passe de';
 $lang['resendpwdmissing'] = 'Désolé, vous devez remplir tous les champs.';
@@ -122,7 +122,7 @@ $lang['mediausage']  = 'Utilisez la syntaxe suivante pour faire référence à c
 $lang['mediaview']   = 'Voir fichier original';
 $lang['mediaroot']   = 'root';
 $lang['mediaupload'] = 'Envoyer un fichier dans la catégorie courante ici. Pour créer des sous-catégories, préfixez le nom du fichier par le nom de la sous-catégorie séparée par un double point.';
-$lang['mediaextchange'] = 'Extension du fichier changée de .%s en .%s!';
+$lang['mediaextchange'] = 'Extension du fichier changée de .%s en .%s !';
 
 $lang['reference']   = 'Références pour';
 $lang['ref_inuse']   = 'Le fichier ne peut être effacé, il est toujours utilisé par les pages suivantes:';

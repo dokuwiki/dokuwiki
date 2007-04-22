@@ -20,7 +20,7 @@ $lang['btn_delete'] = 'effacer';
 $lang['btn_settings'] = 'paramètres';
 $lang['btn_refresh'] = 'Actualiser';
 $lang['btn_download'] = 'Télécharger';
-$lang['btn_enable'] = 'Sauver';
+$lang['btn_enable'] = 'Enregistrer';
 
 $lang['url'] = 'URL';
 //$lang[''] = '';

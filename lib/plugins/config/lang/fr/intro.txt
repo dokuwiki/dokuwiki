@@ -9,7 +9,7 @@ Les paramètres affichés sur un fond bleu sont les valeurs par défaut et les v
 à votre installation sont affichées sur un fond blanc. Les paramètres bleus et blancs peuvent
 être modifiés.
 
-N'oubliez pas d'utiliser le bouton **Sauver** avant de quitter cette page, sinon vos modifications
+N'oubliez pas d'utiliser le bouton **Enregistrer** avant de quitter cette page, sinon vos modifications
 seront perdues.
 
 
