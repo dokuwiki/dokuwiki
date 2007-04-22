@@ -9,7 +9,11 @@ require_once(DOKU_INC.'inc/changelog.php');
  * need to inherit from this class
  */
 class admin_plugin_revert extends DokuWiki_Admin_Plugin {
-        var $cmd;
+    var $cmd;
+    // some vars which might need tuning later
+    var $max_lines = 800; // lines to read from changelog
+    var $max_revs  = 20;  // numer of old revisions to check
+
 
     /**
      * Constructor
@@ -25,7 +29,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2005-11-10',
+            'date'   => '2007-04-22',
             'name'   => 'Revert Manager',
             'desc'   => 'Allows you to mass revert recent edits',
             'url'    => 'http://wiki.splitbrain.org/plugin:revert',
@@ -62,7 +66,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         $this->_searchform();
 
         if(is_array($_REQUEST['revert'])){
-            $this->_revert($_REQUEST['revert']);
+            $this->_revert($_REQUEST['revert'],$_REQUEST['filter']);
         }elseif(isset($_REQUEST['filter'])){
             $this->_list($_REQUEST['filter']);
         }
@@ -77,14 +81,14 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         echo '<label>'.$this->getLang('filter').': </label>';
         echo '<input type="text" name="filter" class="edit" value="'.hsc($_REQUEST['filter']).'" />';
         echo '<input type="submit" class="button" value="'.$lang['btn_search'].'" />';
-        echo ' <span>'.$this->getLang('note').'</span>';
+        echo ' <span>'.$this->getLang('note1').'</span>';
         echo '</form><br /><br />';
     }
 
     /**
      * Start the reversion process
      */
-    function _revert($revert){
+    function _revert($revert,$filter){
         global $conf;
 
         echo '<hr /><br />';
@@ -93,14 +97,23 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         echo '<ul>';
         foreach($revert as $id){
             global $REV;
-            $old = getRevisions($id, 0, 1);
-            $REV = $old[0];
-            if($REV){
-                saveWikiText($id,rawWiki($id,$REV),'old revision restored',false);
+
+            // find the last non-spammy revision
+            $data = '';
+            $old  = getRevisions($id, 0, $this->max_revs);
+            if(count($old)){
+                foreach($old as $REV){
+                    $data = rawWiki($id,$REV);
+                    if(strpos($data,$filter) === false) break;
+                }
+            }
+
+            if($data){
+                saveWikiText($id,$data,'old revision restored',false);
                 printf('<li><div class="li">'.$this->getLang('reverted').'</div></li>',$id,$REV);
             }else{
                 saveWikiText($id,'','',false);
-                printf('<li><div class="li">'.$this->getLang('removed').'</div></li>',$id,$REV);
+                printf('<li><div class="li">'.$this->getLang('removed').'</div></li>',$id);
             }
             @set_time_limit(10);
             flush();
@@ -119,7 +132,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         echo '<form action="" method="post">';
         echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
 
-        $recents = getRecents(0,800);
+        $recents = getRecents(0,$this->max_lines);
         echo '<ul>';
 
 
@@ -174,7 +187,10 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         }
         echo '</ul>';
 
-        echo '<input type="submit" class="button" value="'.$this->getLang('revert').'" />';
+        echo '<p>';
+        echo '<input type="submit" class="button" value="'.$this->getLang('revert').'" /> ';
+        printf($this->getLang('note2'),hsc($filter));
+        echo '</p>';
 
         echo '</form>';
     }

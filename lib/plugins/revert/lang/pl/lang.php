@@ -14,7 +14,7 @@ $lang['menu'] = 'Menadżer przywracania';
 // custom language strings for the plugin
 
 $lang['filter']   = 'Wyszukaj uszkodzone strony';
-$lang['note']     = 'Uwaga: duże i małe litery są rozróżniane';
+$lang['note1']    = 'Uwaga: duże i małe litery są rozróżniane';
 $lang['revert']   = 'Napraw zaznaczone strony';
 $lang['reverted'] = 'Stronę %s zastąpiono wersją %s';
 $lang['removed']  = 'Stronę %s usunięto';

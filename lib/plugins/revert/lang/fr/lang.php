@@ -14,7 +14,7 @@ $lang['menu'] = 'Gestionnaire de réversion';
 // custom language strings for the plugin
 
 $lang['filter']   = 'Trouver les pages spammées ';
-$lang['note']     = 'Note : cette recherche est insensible à la casse';
+$lang['note1']    = 'Note : cette recherche est insensible à la casse';
 $lang['revert']   = 'Annuler les éditions sélectionnées';
 $lang['reverted'] = '%s restauré à la révision %s';
 $lang['removed']  = '%s supprimé';

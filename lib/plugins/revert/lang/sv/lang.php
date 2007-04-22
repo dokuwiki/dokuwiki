@@ -16,7 +16,7 @@ $lang['menu'] = 'Hantera återställningar';
 // custom language strings for the plugin
 
 $lang['filter']   = 'Sök efter spamsidor';
-$lang['note']     = 'OBS: sökningen skiljer på stora och små bokstäver';
+$lang['note1']    = 'OBS: sökningen skiljer på stora och små bokstäver';
 $lang['revert']   = 'Återställ markerade redigeringar';
 $lang['reverted'] = '%s återställd till version %s';
 $lang['removed']  = '%s borttagen';
