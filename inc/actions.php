@@ -15,7 +15,6 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @triggers ACTION_ACT_PREPROCESS
- * @triggers ACTION_REGISTER
  * @triggers ACTION_HEADERS_SEND
  */
 function act_dispatch(){
@@ -52,7 +51,7 @@ function act_dispatch(){
 
     //register
     $nil = array();
-    if($ACT == 'register' && $_POST['save'] && trigger_event('ACTION_REGISTER', $nil, 'register')){
+    if($ACT == 'register' && $_POST['save'] && register()){
       $ACT = 'login';
     }
 
@@ -391,7 +390,7 @@ function act_export($act){
     exit;
   }
 
-  // try to run renderer #FIXME use cached instructions
+  // try to run renderer
   $mode = substr($act,7);
   $text = p_cached_output(wikiFN($ID,$REV), $mode);
   if(!is_null($text)){
