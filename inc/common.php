@@ -476,7 +476,7 @@ function checkwordblock(){
       if(empty($block)) continue;
       $re[]  = $block;
     }
-    if(preg_match('#('.join('|',$re).')#si',$text, $match=array())) {
+    if(preg_match('#('.join('|',$re).')#si',$text)) {
       return true;
     }
   }
