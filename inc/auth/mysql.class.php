@@ -718,6 +718,9 @@ class auth_mysql extends auth_basic {
               $this->dbsub = $result[3];
             }
             $this->dbcon = $con;
+            if(!empty($this->cnf['charset'])){
+                 mysql_query('SET CHARACTER SET "' . $this->cnf['charset'] . '"', $con);
+            }
             return true;   // connection and database successfully opened
           } else {
             mysql_close ($con);
