@@ -141,7 +141,7 @@ function init_paths(){
   foreach($paths as $c => $p){
     if(empty($conf[$c]))  $conf[$c] = $conf['savedir'].'/'.$p;
     $conf[$c]             = init_path($conf[$c]);
-    if(empty($conf[$c]))  nice_die("The $c ('$p') does not exist, isn't accessable or writable.
+    if(empty($conf[$c]))  nice_die("The $c ('$p') does not exist, isn't accessible or writable.
                                You should check your config and permission settings.
                                Or maybe you want to <a href=\"install.php\">run the
                                installer</a>?");
