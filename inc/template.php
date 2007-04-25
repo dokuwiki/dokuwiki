@@ -652,8 +652,13 @@ function tpl_breadcrumbs($sep='&raquo;'){
 
   $crumbs = breadcrumbs(); //setup crumb trace
 
-  //reverse crumborder in right-to-left mode
-  if($lang['direction'] == 'rtl') $crumbs = array_reverse($crumbs,true);
+  //reverse crumborder in right-to-left mode, add RLM character to fix heb/eng display mixups
+  if($lang['direction'] == 'rtl') {
+    $crumbs = array_reverse($crumbs,true);
+    $crumbs_sep = ' &#8207;<span class="bcsep">'.$sep.'</span>&#8207; ';
+  } else {
+    $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
+  }
 
   //render crumbs, highlight the last one
   print $lang['breadcrumb'].':';
@@ -661,7 +666,7 @@ function tpl_breadcrumbs($sep='&raquo;'){
   $i = 0;
   foreach ($crumbs as $id => $name){
     $i++;
-    print ' <span class="bcsep">'.$sep.'</span> ';
+    echo $crumbs_sep;
     if ($i == $last) print '<span class="curid">';
     tpl_link(wl($id),hsc($name),'class="breadcrumbs" title="'.$id.'"');
     if ($i == $last) print '</span>';
