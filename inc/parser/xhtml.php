@@ -931,6 +931,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 if($cap){
                     $ret .= ' title="'.$this->_xmlEntities($cap).'"';
                     $ret .= ' alt="'.$this->_xmlEntities($cap).'"';
+                }else{
+                    $ret .= ' alt=""';
                 }
             }else{
                 $ret .= ' alt=""';
