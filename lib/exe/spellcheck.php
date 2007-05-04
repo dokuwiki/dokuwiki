@@ -251,6 +251,7 @@ function spell_resume(){
 
   // restore spaces
   $text = preg_replace('/&nbsp;/',' ',$text);
+  $text = preg_replace('/\xC2\xA0/',' ',$text);
 
   // restore quoted special chars
   $text = unhtmlspecialchars($text);
