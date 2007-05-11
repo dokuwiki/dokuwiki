@@ -1,0 +1,14 @@
+Бе качен файл на вашето DokuWiki. Ето детайлите
+
+Файл        : @MEDIA@
+Дата        : @DATE@
+Браузeр     : @BROWSER@
+IP-Адрес    : @IPADDRESS@
+Име на хост : @HOSTNAME@
+Размер      : @SIZE@
+MIME Тип    : @MIME@
+Потребител  : @USER@
+
+--
+Tова писмо е генерирано от DokuWiki на:
+@DOKUWIKIURL@
