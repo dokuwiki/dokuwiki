@@ -116,6 +116,7 @@ $meta['registernotify'] = array('email');
 $meta['disableactions'] = array('disableactions',
                                 '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
                                 '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
+$meta['sneaky_index'] = array('onoff');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');

@@ -142,6 +142,7 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
+  global $conf;
   $return = true;
 
   $item = array();
@@ -156,8 +157,8 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
 
   $id = pathID($file);
 
-  if($type=='d' && auth_quickaclcheck($id.':') < AUTH_READ){
-	  return false;
+  if($type=='d' && $conf['sneaky_index'] && auth_quickaclcheck($id.':') < AUTH_READ){
+    return false;
   }
 
   //check hidden
