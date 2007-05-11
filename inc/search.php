@@ -156,6 +156,10 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
 
   $id = pathID($file);
 
+  if($type=='d' && auth_quickaclcheck($id.':') < AUTH_READ){
+	  return false;
+  }
+
   //check hidden
   if(isHiddenPage($id)){
     return false;
