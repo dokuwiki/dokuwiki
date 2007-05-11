@@ -309,8 +309,6 @@ EOT;
         }else{
             $output .=  "*               @ALL          8\n";
         }
-
-        $output .=  "*               @admin      255\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'acl.auth.php', $output);
     }
     return $ok;
