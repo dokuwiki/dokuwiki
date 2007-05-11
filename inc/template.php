@@ -783,8 +783,8 @@ function tpl_pageinfo(){
   $fn = utf8_decodeFN($fn);
   $date = date($conf['dformat'],$INFO['lastmod']);
 
-  // print it
-  if($INFO['exists']){
+  // print it, but hide if user/group is not allowed to access (FS#970)
+  if(act_permcheck($ACT) != "denied" && $INFO['exists']){
     print $fn;
     print ' &middot; ';
     print $lang['lastmod'];
