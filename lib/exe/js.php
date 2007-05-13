@@ -91,7 +91,7 @@ function js_out(){
     // load files
     foreach($files as $file){
         echo "\n\n/* XXXXXXXXXX begin of $file XXXXXXXXXX */\n\n";
-        @readfile($file);
+        js_load($file);
         echo "\n\n/* XXXXXXXXXX end of $file XXXXXXXXXX */\n\n";
     }
 
@@ -132,7 +132,7 @@ function js_out(){
     foreach($plugins as $plugin){
         if (@file_exists($plugin)) {
           echo "\n\n/* XXXXXXXXXX begin of $plugin XXXXXXXXXX */\n\n";
-          @readfile($plugin);
+          js_load($plugin);
           echo "\n\n/* XXXXXXXXXX end of $plugin XXXXXXXXXX */\n\n";
         }
     }
@@ -161,6 +161,27 @@ function js_out(){
 
     // finally send output
     print $js;
+}
+
+/**
+ * Load the given file, handle include calls and print it
+ */
+function js_load($file){
+    if(!@file_exists($file)) return;
+
+    $data = io_readFile($file);
+    while(preg_match('#/\*\s*!!include\s+([\w\./]+)\s*\*/#',$data,$match)){
+        $ifile = $match[1];
+        if($ifile{0} != '/') $ifile = dirname($file).'/'.$ifile;
+
+        if(@file_exists($ifile)){
+            $idata = io_readFile($ifile);
+        }else{
+            $idata = '';
+        }
+        $data  = str_replace($match[0],$idata,$data);
+    }
+    echo $data;
 }
 
 /**
