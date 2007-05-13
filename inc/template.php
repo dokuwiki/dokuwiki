@@ -203,10 +203,16 @@ function tpl_metaheaders($alt=true){
     $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
                              'title'=>'Current Namespace',
                              'href'=>DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']);
-    $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/html', 'title'=>'Plain HTML',
-                             'href'=>exportlink($ID, 'xhtml', '', false, '&'));
-    $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/plain', 'title'=>'Wiki Markup',
-                             'href'=>exportlink($ID, 'raw', '', false, '&'));
+
+    if(actionOK('export_xhtml')){
+      $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/html', 'title'=>'Plain HTML',
+                               'href'=>exportlink($ID, 'xhtml', '', false, '&'));
+    }
+
+    if(actionOK('export_raw')){
+      $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/plain', 'title'=>'Wiki Markup',
+                               'href'=>exportlink($ID, 'raw', '', false, '&'));
+    }
   }
 
   // setup robot tags apropriate for different modes
