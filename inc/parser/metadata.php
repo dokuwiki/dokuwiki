@@ -255,6 +255,11 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     if ($this->capture) $this->doc .= $lang['singlequoteclosing'];
   }
 
+  function apostrophe() {
+    global $lang;
+    $this->doc .= $lang['apostrophe'];
+  }
+
   function doublequoteopening(){
     global $lang;
     if ($this->capture) $this->doc .= $lang['doublequoteopening'];

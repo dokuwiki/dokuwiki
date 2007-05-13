@@ -455,6 +455,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= $lang['singlequoteclosing'];
     }
 
+    function apostrophe() {
+        global $lang;
+        $this->doc .= $lang['singlequoteclosing'];
+    }
+
     function doublequoteopening() {
         global $lang;
         $this->doc .= $lang['doublequoteopening'];

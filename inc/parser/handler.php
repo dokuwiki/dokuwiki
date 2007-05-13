@@ -407,6 +407,11 @@ class Doku_Handler {
         return true;
     }
 
+    function apostrophe($match, $state, $pos) {
+        $this->_addCall('apostrophe',array(), $pos);
+        return true;
+    }
+
     function doublequoteopening($match, $state, $pos) {
         $this->_addCall('doublequoteopening',array(), $pos);
         return true;

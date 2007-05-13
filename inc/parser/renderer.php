@@ -177,6 +177,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function singlequoteclosing() {}
 
+    function apostrophe() {}
+
     function doublequoteopening() {}
 
     function doublequoteclosing() {}
