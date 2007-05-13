@@ -163,36 +163,6 @@ function html_topbtn(){
 }
 
 /**
- * Just the back to media window button in its own form
- *
- * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
- */
-function html_backtomedia_button($params,$akey=''){
-  global $conf;
-  global $lang;
-
-  $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/mediamanager.php"><div class="no">';
-
-  reset($params);
-  while (list($key, $val) = each($params)) {
-    $ret .= '<input type="hidden" name="'.$key.'" ';
-    $ret .= 'value="'.htmlspecialchars($val).'" />';
-  }
-
-  $ret .= '<input type="submit" value="'.htmlspecialchars($lang['btn_backtomedia']).'" class="button" ';
-  $tit = htmlspecialchars($lang['btn_backtomedia']);
-  if($akey){
-    $tit .= ' [ALT+'.strtoupper($akey).']';
-    $ret .= 'accesskey="'.$akey.'" ';
-  }
-  $ret .= 'title="'.$tit.'" ';
-  $ret .= '/>';
-  $ret .= '</div></form>';
-
-  return $ret;
-}
-
-/**
  * Displays a button (using its own form)
  * If tooltip exists, the access key tooltip is replaced.
  *

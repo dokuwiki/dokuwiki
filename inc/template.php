@@ -374,8 +374,6 @@ function tpl_getparent($id){
  *  admin       - admin page - if enough rights
  *  top         - a back to top button
  *  back        - a back to parent button - if available
- *  backtomedia - returns to the mediafile upload dialog
- *                after references have been displayed
  *  backlink    - links to the list of backlinks
  *  subscription- subscribe/unsubscribe button
  *
@@ -451,9 +449,6 @@ function tpl_button($type){
         print html_btn('admin',$ID,'',array('do' => 'admin'));
         return true;
       }
-      return false;
-    case 'backtomedia':
-      print html_backtomedia_button(array('ns' => $NS),'b');
       return false;
     case 'subscription':
       if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
