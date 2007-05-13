@@ -554,7 +554,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       tpl_link(wl($ID,'do=revisions'),$pre.$lang['btn_revs'].$suf,'class="action revisions" accesskey="o" rel="nofollow"');
       return true;
     case 'recent':
-      tpl_link(wl($ID,'do=recent'),$pre.$lang['btn_recent'].$suf,'class="action recent" accesskey="r" rel="nofollow"');
+      tpl_link(wl('','do=recent'),$pre.$lang['btn_recent'].$suf,'class="action recent" accesskey="r" rel="nofollow"');
       return true;
     case 'index':
       tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action index" accesskey="x" rel="nofollow"');
