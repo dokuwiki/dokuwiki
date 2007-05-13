@@ -16,6 +16,7 @@
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
  *   'numeric'      - text input, accepts numbers and arithmetic operators, setting output without quotes
+ *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
  *   'email'        - text input, input must conform to email address format, setting output in quotes
@@ -170,14 +171,14 @@ $meta['rss_show_summary'] = array('onoff');
 $meta['broken_iua']  = array('onoff');
 
 $meta['_network']    = array('fieldset');
-$meta['proxy____host'] = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');
-$meta['proxy____port'] = array('numeric');
+$meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
+$meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password');
 $meta['proxy____ssl']  = array('onoff');
 $meta['safemodehack'] = array('onoff');
-$meta['ftp____host']  = array('string','_pattern' => '#^[a-z0-9\-\.+]+?#i');
-$meta['ftp____port']  = array('numeric');
+$meta['ftp____host']  = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
+$meta['ftp____port']  = array('numericopt');
 $meta['ftp____user']  = array('string');
 $meta['ftp____pass']  = array('password');
 $meta['ftp____root']  = array('string');

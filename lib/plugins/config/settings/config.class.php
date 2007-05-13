@@ -500,6 +500,13 @@ if (!class_exists('setting_numeric')) {
   }
 }
 
+if (!class_exists('setting_numericopt')) {
+    class setting_numericopt extends setting_numeric {
+        // just allow an empty config
+        var $_pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
+    }
+}
+
 if (!class_exists('setting_onoff')) {
   class setting_onoff extends setting_numeric {
 
