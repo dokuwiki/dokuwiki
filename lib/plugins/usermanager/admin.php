@@ -40,8 +40,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         global $auth;
 
         $this->setupLocale();
-                
-        if (!isset($auth)) { 
+
+        if (!isset($auth)) {
           $this->disabled = $this->lang['noauth'];
         } else if (!$auth->canDo('getUsers')) {
           $this->disabled = $this->lang['nosupport'];
@@ -49,7 +49,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
           // we're good to go
           $this->_auth = & $auth;
-                
+
         }
     }
 
@@ -72,7 +72,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     function getMenuText($language) {
 
-        if (!is_null($this->_auth)) 
+        if (!is_null($this->_auth))
           return parent::getMenuText($language);
 
         return $this->getLang('menu').' '.$this->disabled;
@@ -84,7 +84,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     function getMenuSort() {
         return 2;
     }
- 
+
     /**
      * handle user request
      */
@@ -120,9 +120,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                           $this->_start = 0;
                           break;
         }
-          
+
         $this->_user_total = $this->_auth->canDo('getUserCount') ? $this->_auth->getUserCount($this->_filter) : -1;
-  
+
         // page handling
         switch($cmd){
           case 'start' : $this->_start = 0; break;
@@ -149,7 +149,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $page_buttons = $this->_pagination();
         $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
-        
+
         if ($this->_auth->canDo('UserMod')) {
             $edit_disable = '';
             $img_useredit = 'user_edit.png';
@@ -163,7 +163,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         ptln("<div id=\"user__manager\">");
         ptln("<div class=\"level2\">");
-        
+
         if ($this->_user_total > 0) {
           ptln("<p>".sprintf($this->lang['summary'],$this->_start+1,$this->_last,$this->_user_total,$this->_auth->getUserCount())."</p>");
         } else {
@@ -298,7 +298,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         // save current $user, we need this to access details if the name is changed
         if ($user)
           ptln("          <input type=\"hidden\" name=\"userid_old\"  value=\"".$user."\" />",$indent);
-          
+
         $this->_htmlFilterSettings($indent+10);
 
         ptln("          <input type=\"submit\" name=\"fn[".$cmd."]\" class=\"button\" value=\"".$this->lang[$cmd]."\" />",$indent);
@@ -312,7 +312,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         ptln("</form>",$indent);
     }
-    
+
     function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
         $disabled = $cando ? "" : " disabled=\"disabled\"";
         $class = $cando ? "" : " class=\"disabled\"";
@@ -334,11 +334,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     function _addUser(){
-    
+
         if (!$this->_auth->canDo('addUser')) return false;
 
         list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
         if (empty($user)) return false;
+        if (empty($pass) || empty($name) || empty($mail)){
+          msg($this->lang['add_fail'], -1);
+          return false;
+        }
 
         if ($ok = $this->_auth->createUser($user,$pass,$name,$mail,$grps)) {
 
@@ -348,7 +352,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $this->_notifyUser($user,$pass);
           }
         } else {
-          msg($this->lang['add_fail'], 1);
+          msg($this->lang['add_fail'], -1);
         }
 
         return $ok;
@@ -408,14 +412,14 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         // get currently valid  user data
         $olduser = cleanID(preg_replace('/.*:/','',$_REQUEST['userid_old']));
         $oldinfo = $this->_auth->getUserData($olduser);
-    
+
         // get new user data subject to change
         list($newuser,$newpass,$newname,$newmail,$newgrps) = $this->_retrieveUser();
         if (empty($newuser)) return false;
 
         $changes = array();
         if ($newuser != $olduser) {
-        
+
           if (!$this->_auth->canDo('modLogin')) {        // sanity check, shouldn't be possible
             msg($this->lang['update_fail'],-1);
             return false;
@@ -430,7 +434,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           }
         }
 
-        if (!empty($newpass) && $this->_auth->canDo('modPass')) 
+        if (!empty($newpass) && $this->_auth->canDo('modPass'))
           $changes['pass'] = $newpass;
         if (!empty($newname) && $this->_auth->canDo('modName') && $newname != $oldinfo['name'])
           $changes['name'] = $newname;
@@ -478,7 +482,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @return  array(user, password, full name, email, array(groups))
      */
     function _retrieveUser($clean=true) {
-  
+
         $user[0] = ($clean) ? cleanID(preg_replace('/.*:/','',$_REQUEST['userid'])) : $_REQUEST['userid'];
         $user[1] = $_REQUEST['userpass'];
         $user[2] = $_REQUEST['username'];
