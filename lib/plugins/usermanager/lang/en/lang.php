@@ -36,7 +36,7 @@ $lang['summary']     = 'Displaying users %1$d-%2$d of %3$d found. %4$d users tot
 $lang['nonefound']   = 'No users found. %d users total.';
 $lang['delete_ok']   = '%d users deleted';
 $lang['delete_fail'] = '%d failed deleting.';
-$lang['update_ok']   = 'User updated sucessfully';
+$lang['update_ok']   = 'User updated successfully';
 $lang['update_fail'] = 'User update failed';
 $lang['update_exists'] = 'User name change failed, the specified user name (%s) already exists (any other changes will be applied).';
 
