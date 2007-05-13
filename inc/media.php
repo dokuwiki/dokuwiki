@@ -442,7 +442,7 @@ function media_printfile($item,$auth,$jump){
     echo '<a name="h_'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
     echo '<span class="info">('.$info.')</span>'.NL;
     media_fileactions($item,$auth);
-    echo '<div class="example" id="ex_'.$item['id'].'">';
+    echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
     echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';
     echo '</div>';
     if($item['isimg']) media_printimgdetail($item);
@@ -512,6 +512,7 @@ function media_uploadform($ns, $auth){
     <form action="<?php echo DOKU_BASE?>lib/exe/mediamanager.php"
           method="post" enctype="multipart/form-data" class="upload">
       <fieldset>
+        <legend class="hidden"><?php echo $lang['btn_upload']?></legend>
         <input type="hidden" name="ns" value="<?php echo hsc($ns)?>" />
 
         <p>

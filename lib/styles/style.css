@@ -16,6 +16,10 @@ div.no {
   padding: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 div.error {
   background: #fcc url(../images/error.png) 0.5em 0px no-repeat;
   color: #000;
