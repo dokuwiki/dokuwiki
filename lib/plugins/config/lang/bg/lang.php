@@ -122,7 +122,7 @@ $lang['compress']    = 'Компактен  CSS и  javascript изход';
 $lang['hidepages']   = 'Скриване на съвпадащи имена на страници(regular expressions)';
 $lang['send404']     = 'Пращане на "HTTP 404/Page Not Found" за несъществуващи страници';
 $lang['sitemap']     = 'Генериране на Google sitemap (дни)';
-$lang['broken_iua']  = 'Отметнете, ако ignore_user_abort функцията не работи, търсенето може да не се извършва правилно.Известно е, че комбинацията IIS+PHP/CGI е лоша. Вижте  <a href="http://bugs.splitbrain.org/?do=details&amp;id=852">Грешка 852</a> за повече информация.';
+$lang['broken_iua']  = 'Отметнете, ако ignore_user_abort функцията не работи, търсенето може да не се извършва правилно.Известно е, че комбинацията IIS+PHP/CGI е лоша. Вижте  <a href="http://http://bugs.splitbrain.org/?do=details&amp;task_id=852">Грешка 852</a> за повече информация.';
 
 $lang['rss_type']    = 'Вид на XML източника(feed)';
 $lang['rss_linkto']  = 'XML feed links to';

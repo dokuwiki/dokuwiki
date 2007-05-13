@@ -123,7 +123,7 @@ $lang['hidepages']   = 'Cacher pages correspondant à (expression régulière)';
 $lang['send404']     = 'Renvoyer "HTTP 404/Page Not Found" pour les pages introuvables';
 $lang['sitemap']     = 'Générer carte google du site (jours)';
 $lang['broken_iua']  = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
-CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;id=852">bug 852</a> pour plus d\'info.';
+CGI dysfonctionne. Voir le <a href="http://http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'info.';
 
 $lang['rss_type']    = 'Type de flux RSS';
 $lang['rss_linkto']  = 'Lien du flux RSS vers';
