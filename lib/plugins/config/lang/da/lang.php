@@ -123,7 +123,7 @@ $lang['compress']    = 'Komprimer CSS og Javascript filer';
 $lang['hidepages']   = 'Skjul matchende sider (regulÃ¦re udtryk)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for ikke-eksisterende sider';
 $lang['sitemap']     = 'Generer Google sitemap (dage)';
-$lang['broken_iua']  = 'Er ignore_user_abort funktionen i stykker på dit system? Dette kunne forudsage et ikke virkende søgeindeks. IIS+PHP/CGI er kendt for ikke at virke. Se <a href="http://bugs.splitbrain.org/?do=details&id=852">Bug 852</a> for mere information.';
+$lang['broken_iua']  = 'Er ignore_user_abort funktionen i stykker pï¿½ dit system? Dette kunne forudsage et ikke virkende sï¿½geindeks. IIS+PHP/CGI er kendt for ikke at virke. Se <a href="http://bugs.splitbrain.org/?do=details&amp;id=852">Bug 852</a> for mere information.';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed linker til';

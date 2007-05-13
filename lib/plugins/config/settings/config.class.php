@@ -372,8 +372,8 @@ if (!class_exists('setting')) {
         $key = htmlspecialchars($this->_key);
         $value = htmlspecialchars($value);
 
-        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<textarea rows="3" cols="40" id="config__'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
+        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<textarea rows="3" cols="40" id="config___'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
         return array($label,$input);
     }
 
@@ -432,8 +432,8 @@ if (!class_exists('setting_string')) {
         $key = htmlspecialchars($this->_key);
         $value = htmlspecialchars($value);
 
-        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<input id="config___'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
         return array($label,$input);
     }
   }
@@ -463,8 +463,8 @@ if (!class_exists('setting_password')) {
 
         $key = htmlspecialchars($this->_key);
 
-        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config__'.$key.'" name="config['.$key.']" type="password" class="edit" value="" '.$disable.'/>';
+        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<input id="config___'.$key.'" name="config['.$key.']" type="password" class="edit" value="" '.$disable.'/>';
         return array($label,$input);
     }
   }
@@ -524,8 +524,8 @@ if (!class_exists('setting_onoff')) {
         $key = htmlspecialchars($this->_key);
         $checked = ($value) ? ' checked="checked"' : '';
 
-        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<div class="input"><input id="config__'.$key.'" name="config['.$key.']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
+        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+        $input = '<div class="input"><input id="config___'.$key.'" name="config['.$key.']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
         return array($label,$input);
     }
 
@@ -570,10 +570,10 @@ if (!class_exists('setting_multichoice')) {
 
         $key = htmlspecialchars($this->_key);
 
-        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
 
         $input = "<div class=\"input\">\n";
-        $input .= '<select class="edit" id="config__'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";
+        $input .= '<select class="edit" id="config___'.$key.'" name="config['.$key.']"'.$disable.'>'."\n";
         foreach ($this->_choices as $choice) {
             $selected = ($value == $choice) ? ' selected="selected"' : '';
             $option = $plugin->getLang($this->_key.'_o_'.$choice);
@@ -731,8 +731,8 @@ if (!class_exists('setting_multicheckbox')) {
                           $plugin->getLang($this->_key.'_'.$choice) : htmlspecialchars($choice));
 
           $input .= '<div class="selection'.$class.'">'."\n";
-          $input .= '<label for="config__'.$key.'_'.$choice.'">'.$prompt."</label>\n";
-          $input .= '<input id="config__'.$key.'_'.$choice.'" name="config['.$key.'][]" type="checkbox" class="checkbox" value="'.$choice.'" '.$disable.' '.$checked."/>\n";
+          $input .= '<label for="config___'.$key.'_'.$choice.'">'.$prompt."</label>\n";
+          $input .= '<input id="config___'.$key.'_'.$choice.'" name="config['.$key.'][]" type="checkbox" class="checkbox" value="'.$choice.'" '.$disable.' '.$checked."/>\n";
           $input .= "</div>\n";
 
           // remove this action from the disabledactions array
@@ -747,11 +747,11 @@ if (!class_exists('setting_multicheckbox')) {
                         " selectiondefault" : "";
 
         $input .= '<div class="other'.$class.'">'."\n";
-        $input .= '<label for="config__'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
-        $input .= '<input id="config__'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+        $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
+        $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
         $input .= "</div>\n";
 
-//        $label = '<label for="config__'.$key.'">'.$this->prompt($plugin).'</label>';
+//        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
         $label = $this->prompt($plugin);
         return array($label,$input);
     }
