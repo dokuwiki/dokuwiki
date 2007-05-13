@@ -165,13 +165,24 @@ function js_out(){
 
 /**
  * Load the given file, handle include calls and print it
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function js_load($file){
     if(!@file_exists($file)) return;
+    static $loaded = array();
 
     $data = io_readFile($file);
-    while(preg_match('#/\*\s*!!include\s+([\w\./]+)\s*\*/#',$data,$match)){
-        $ifile = $match[1];
+    while(preg_match('#/\*\s*DOKUWIKI:include(_once)\s+([\w\./]+)\s*\*/#',$data,$match)){
+        $ifile = $match[2];
+
+        // is it a include_once?
+        if($match[1]){
+            $base = basename($ifile);
+            if($loaded[$base]) continue;
+            $loaded[$base] = true;
+        }
+
         if($ifile{0} != '/') $ifile = dirname($file).'/'.$ifile;
 
         if(@file_exists($ifile)){
