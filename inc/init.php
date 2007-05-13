@@ -97,12 +97,14 @@
     if (!empty($_POST))   remove_magic_quotes($_POST);
     if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
     if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-#    if (!empty($_SESSION)) remove_magic_quotes($_SESSION); #FIXME needed ?
     @ini_set('magic_quotes_gpc', 0);
     define('MAGIC_QUOTES_STRIPPED',1);
   }
   @set_magic_quotes_runtime(0);
   @ini_set('magic_quotes_sybase',0);
+
+  // don't let cookies ever interfere with request vars
+  $_REQUEST = array_merge($_GET,$_POST);
 
   // disable gzip if not available
   if($conf['compression'] == 'bz' && !function_exists('bzopen')){
