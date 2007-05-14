@@ -515,7 +515,6 @@ div.dokuwiki span.toc_close {
     float: right;
     display: block;
     margin: 0.4em 3px 0 0;
-    cursor: pointer;
 }
 
 div.dokuwiki span.toc_open span,
