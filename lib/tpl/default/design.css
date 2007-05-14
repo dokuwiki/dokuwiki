@@ -660,6 +660,8 @@ div.dokuwiki .search_sep {
 div.dokuwiki .search_hit {
   color: __text__;
   background-color: __highlight__;
+}
+div.dokuwiki strong.search_hit {
   font-weight: normal;
 }
 

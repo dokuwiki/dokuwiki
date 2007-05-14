@@ -305,7 +305,7 @@ function html_hilight($html,$query){
 function html_hilight_callback($m) {
   $hlight = unslash($m[0]);
   if ( !isset($m[2])) {
-    $hlight = '<strong class="search_hit">'.$hlight.'</strong>';
+    $hlight = '<span class="search_hit">'.$hlight.'</span>';
   }
   return $hlight;
 }
