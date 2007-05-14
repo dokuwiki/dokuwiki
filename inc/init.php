@@ -76,6 +76,9 @@
   // make session rewrites XHTML compliant
   @ini_set('arg_separator.output', '&amp;');
 
+  // make sure global zlib does not interfere FS#1132
+  @ini_set('zlib.output_compression', 'off');
+
   // enable gzip compression
   if ($conf['gzip_output'] &&
       !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
