@@ -110,7 +110,7 @@
   $_REQUEST = array_merge($_GET,$_POST);
 
   // disable gzip if not available
-  if($conf['compression'] == 'bz' && !function_exists('bzopen')){
+  if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
     $conf['compression'] = 'gz';
   }
   if($conf['compression'] == 'gz' && !function_exists('gzopen')){
