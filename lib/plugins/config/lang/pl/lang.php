@@ -122,7 +122,7 @@ $lang['compress']    = 'Kompresja arkuszy CSS i plików JavaScript';
 $lang['hidepages']   = 'Ukrywanie stron pasujących do wzorca (wyrażenie regularne)';
 $lang['send404']     = 'Nagłówek "HTTP 404/Page Not Found" dla nieistniejących stron';
 $lang['sitemap']     = 'Okres generowania Google Sitemap (w dniach)';
-$lang['broken_iua']  = 'Czy funkcja "ignore_user_abort" działa? Jeśli nie, może to powodować problemy z indeksem przeszukiwania. Funkcja nie działa przy konfiguracji oprogramowania IIS+PHP/CGI. Sczegółowe informacje: <a href="http://http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
+$lang['broken_iua']  = 'Czy funkcja "ignore_user_abort" działa? Jeśli nie, może to powodować problemy z indeksem przeszukiwania. Funkcja nie działa przy konfiguracji oprogramowania IIS+PHP/CGI. Sczegółowe informacje: <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 
 $lang['rss_type']    = 'Typ RSS';
 $lang['rss_linkto']  = 'Odnośniki w RSS';

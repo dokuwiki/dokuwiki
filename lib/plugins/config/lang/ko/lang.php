@@ -122,7 +122,7 @@ $lang['compress']    = '최적화된 CSS, javascript 출력';
 $lang['hidepages']   = '매칭된 페이지 숨기기(정규식 매칭)';
 $lang['send404']     = '존재하지 않는 페이지에 대해 "HTTP 404/Page Not Found" 응답';
 $lang['sitemap']     = '구글 사이트맵 생성(날짜)';
-$lang['broken_iua']  = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있으면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>를 참고하기 바랍니다.';
+$lang['broken_iua']  = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있으면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>를 참고하기 바랍니다.';
 
 $lang['rss_type']    = 'XML feed 타잎';
 $lang['rss_linkto']  = 'XML feed 링크 정보';

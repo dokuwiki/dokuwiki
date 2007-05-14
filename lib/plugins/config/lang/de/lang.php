@@ -157,5 +157,5 @@ $lang['compression_o_bz2'] = 'bz2';
 
 $lang['iexssprotect']     = 'Hochgeladene Dateien auf bösartigen JavaScript- und HTML-Code untersuchen.';
 $lang['manager']          = 'Manager - Eine Gruppe oder Nutzer mit Zugriff auf einige Administrationswerkzeuge.';
-$lang['broken_iua']       = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
+$lang['broken_iua']       = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['rss_show_summary'] = 'Bearbeitungs-Zusammenfassung im XML Feed anzeigen';
