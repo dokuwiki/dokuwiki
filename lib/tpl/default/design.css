@@ -509,12 +509,28 @@ div.dokuwiki div.tocheader {
   margin-bottom: 2px;
 }
 
-div.dokuwiki div.tocheader img {
-  width: 0.8em;
-  height: 0.8em;
-  float: right;
-  margin: 0.3em 3px 0 0;
-  cursor: pointer;
+div.dokuwiki span.toc_open,
+div.dokuwiki span.toc_close {
+    border: 0.4em solid __background_alt__;
+    float: right;
+    display: block;
+    margin: 0.4em 3px 0 0;
+    cursor: pointer;
+}
+
+div.dokuwiki span.toc_open span,
+div.dokuwiki span.toc_close span {
+    display: none;
+}
+
+div.dokuwiki span.toc_open {
+    margin-top: 0.4em;
+    border-top: 0.4em solid __text__;
+}
+
+div.dokuwiki span.toc_close {
+    margin-top: 0;
+    border-bottom: 0.4em solid __text__;
 }
 
 div.dokuwiki #toc__inside {
