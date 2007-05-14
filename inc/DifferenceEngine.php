@@ -847,7 +847,7 @@ class _HWLDF_WordAccumulator {
   function _flushGroup ($new_tag) {
     if ($this->_group !== '') {
     if ($this->_tag == 'mark')
-      $this->_line .= '<span class="diffchange">'.$this->_group.'</span>';
+      $this->_line .= '<strong>'.$this->_group.'</strong>';
     else
     $this->_line .= $this->_group;
   }

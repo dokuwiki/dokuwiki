@@ -65,7 +65,7 @@ class html_hilight_test extends UnitTestCase{
   function testHighlightPHP() {
     $html = 'Foo $_GET[\'bar\'] Foo';
     $this->assertEqual(
-      'Foo <span class="search_hit">$_GET</span>[\'<span class="search_hit">bar</span>\'] Foo',
+      'Foo <strong class="search_hit">$_GET</strong>[\'<strong class="search_hit">bar</strong>\'] Foo',
       html_hilight($html,'$_GET[\'bar\']')
       );
   }
@@ -81,7 +81,7 @@ class html_hilight_test extends UnitTestCase{
   function testMatchAttributeWord() {
     $html = 'Foo <b class="x">bar</b> Foo';
     $this->assertEqual(
-      'Foo <b class="x"><span class="search_hit">bar</span></b> Foo',
+      'Foo <b class="x"><strong class="search_hit">bar</strong></b> Foo',
       html_hilight($html,'class="x">bar')
       );
   }

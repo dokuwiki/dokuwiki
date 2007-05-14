@@ -465,7 +465,7 @@ function search_regex(&$data,$base,$file,$reg,$words){
                htmlspecialchars(utf8_substr($text,$f,$l)).
                '<span class="search_sep"> ... </span>';
     $mark    = '('.join('|', $words).')';
-    $snippet = preg_replace('#'.$mark.'#si','<span class="search_hit">\\1</span>',$snippet);
+    $snippet = preg_replace('#'.$mark.'#si','<strong class="search_hit">\\1</strong>',$snippet);
 
     $data[] = array(
       'id'       => pathID($file),

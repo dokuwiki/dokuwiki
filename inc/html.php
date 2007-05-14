@@ -305,7 +305,7 @@ function html_hilight($html,$query){
 function html_hilight_callback($m) {
   $hlight = unslash($m[0]);
   if ( !isset($m[2])) {
-    $hlight = '<span class="search_hit">'.$hlight.'</span>';
+    $hlight = '<strong class="search_hit">'.$hlight.'</strong>';
   }
   return $hlight;
 }
@@ -654,9 +654,9 @@ function html_list_index($item){
   $base = ':'.$item['id'];
   $base = substr($base,strrpos($base,':')+1);
   if($item['type']=='d'){
-    $ret .= '<a href="'.wl($ID,'idx='.$item['id']).'" class="idx_dir">';
+    $ret .= '<a href="'.wl($ID,'idx='.$item['id']).'" class="idx_dir"><strong>';
     $ret .= $base;
-    $ret .= '</a>';
+    $ret .= '</strong></a>';
   }else{
     $ret .= html_wikilink(':'.$item['id']);
   }

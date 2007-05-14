@@ -257,7 +257,7 @@ function ft_snippet($id,$poswords){
 
     $m = "\1";
     $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
-    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<span class="search_hit">$1</span>',hsc(join('... ',$snippets)));
+    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
 
     return $snippet;
 }

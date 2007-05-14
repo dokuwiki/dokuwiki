@@ -595,8 +595,9 @@ div.dokuwiki td.diff-deletedline {
 div.dokuwiki td.diff-context {
     background-color: __background_neu__;
 }
-div.dokuwiki span.diffchange {
-  color: red;
+div.dokuwiki table.diff td.diff-addedline strong,
+div.dokuwiki table.diff td.diff-deletedline strong {
+    color: red;
 }
 
 /* --------------------- footnotes -------------------------------- */
@@ -659,6 +660,7 @@ div.dokuwiki .search_sep {
 div.dokuwiki .search_hit {
   color: __text__;
   background-color: __highlight__;
+  font-weight: normal;
 }
 
 div.dokuwiki div.search_quickresult {
