@@ -307,8 +307,10 @@ function act_auth($act){
   global $INFO;
 
   //already logged in?
-  if($_SERVER['REMOTE_USER'] && $act=='login')
-    return 'show';
+  if($_SERVER['REMOTE_USER'] && $act=='login'){
+    header("Location: ".wl($ID,'',true));
+    exit;
+  }
 
   //handle logout
   if($act=='logout'){
