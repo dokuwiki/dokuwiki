@@ -130,7 +130,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                                   'type'  => 'ul',
                                   'level' => $level-$conf['toptoclevel']+1);
         }
-		}
+    }
 
     function header($text, $level, $pos) {
 
@@ -347,6 +347,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
     }
 
+    function phpblock($text) {
+        $this->php($text);
+    }
+
     /**
      * Insert HTML if allowed
      *
@@ -359,6 +363,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }else{
           $this->file($text);
         }
+    }
+
+    function htmlblock($text) {
+        $this->html($text);
     }
 
     function preformatted($text) {

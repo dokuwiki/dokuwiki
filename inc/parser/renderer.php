@@ -150,7 +150,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function php($text) {}
 
+    function phpblock($text) {}
+
     function html($text) {}
+
+    function htmlblock($text) {}
 
     function preformatted($text) {}
 

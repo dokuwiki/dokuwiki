@@ -277,11 +277,35 @@ class Doku_Handler {
         return true;
     }
 
+    function phpblock($match, $state, $pos) {
+        global $conf;
+        if ( $state == DOKU_LEXER_UNMATCHED ) {
+            if ($conf['phpok']) {
+                $this->_addCall('phpblock',array($match), $pos);
+            } else {
+                $this->_addCall('file',array($match), $pos);
+            }
+        }
+        return true;
+    }
+
     function html($match, $state, $pos) {
         global $conf;
         if ( $state == DOKU_LEXER_UNMATCHED ) {
             if($conf['htmlok']){
                 $this->_addCall('html',array($match), $pos);
+            } else {
+                $this->_addCall('file',array($match), $pos);
+            }
+        }
+        return true;
+    }
+
+    function htmlblock($match, $state, $pos) {
+        global $conf;
+        if ( $state == DOKU_LEXER_UNMATCHED ) {
+            if($conf['htmlok']){
+                $this->_addCall('htmlblock',array($match), $pos);
             } else {
                 $this->_addCall('file',array($match), $pos);
             }
@@ -1416,6 +1440,7 @@ class Doku_Handler_Block {
             'quote_open',
             'section_open', // Needed to prevent p_open between header and section_open
             'code','file','hr','preformatted','rss',
+            'htmlblock','phpblock',
         );
 
     var $blockClose = array(
@@ -1425,6 +1450,7 @@ class Doku_Handler_Block {
             'quote_close',
             'section_close', // Needed to prevent p_close after section_close
             'code','file','hr','preformatted','rss',
+            'htmlblock','phpblock',
         );
 
     // Stacks can contain paragraphs

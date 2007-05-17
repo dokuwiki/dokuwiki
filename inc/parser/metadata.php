@@ -195,7 +195,11 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   function php($text){}
 
+  function phpblock($text){}
+
   function html($text){}
+
+  function htmlblock($text){}
 
   function preformatted($text){
     if ($this->capture) $this->doc .= $text;
