@@ -336,15 +336,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function php($text) {
-        global $conf;
-        if($conf['phpok']){
-            ob_start();
-            eval($text);
-            $this->doc .= ob_get_contents();
-            ob_end_clean();
-        }else{
-            $this->file($text);
-        }
+        ob_start();
+        eval($text);
+        $this->doc .= ob_get_contents();
+        ob_end_clean();
     }
 
     function phpblock($text) {
@@ -357,12 +352,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function html($text) {
-        global $conf;
-        if($conf['htmlok']){
-          $this->doc .= $text;
-        }else{
-          $this->file($text);
-        }
+        $this->doc .= $text;
     }
 
     function htmlblock($text) {
