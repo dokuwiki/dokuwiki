@@ -5,7 +5,7 @@
 E-mail      : @NEWEMAIL@
 
 Дата        : @DATE@
-Броузер     : @BROWSER@
+Браузер     : @BROWSER@
 Адрес IP    : @IPADDRESS@
 Хост        : @HOSTNAME@
 
