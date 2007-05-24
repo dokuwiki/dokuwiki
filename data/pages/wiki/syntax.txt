@@ -321,10 +321,6 @@ This is some text which contains addresses like this: http://www.splitbrain.org 
 
 See the source of this page to see how to use these blocks.
 
-
-
-
-
 ===== Syntax Highlighting =====
 
 [[DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax is the same like in the code block in the previous section, but this time the name of the used language is inserted inside the tag. Eg. ''<nowiki><code java></nowiki>''.
@@ -342,6 +338,25 @@ class HelloWorldApp {
 </code>
 
 The following language strings are currently recognized: //actionscript-french, actionscript, ada, apache, applescript, asm, asp, autoit, bash, blitzbasic, bnf, caddcl, cadlisp, cfdg, cfm, c_mac, c, cpp, cpp-qt, csharp, css, delphi, diff, div, dos, d, eiffel, fortran, freebasic, gml, groovy, html, idl, ini, inno, io, java5, java, javascript, latex, lisp, lua, matlab, mirc, mpasm, mysql, nsis, objc, ocaml-brief, ocaml, oobas, oracle8, pascal, perl, php-brief, php, plsql, python, qbasic, rails, reg, robots, ruby, sas, scheme, sdlbasic, smalltalk, smarty, sql, tcl, text, thinbasic, tsql, vbnet, vb, vhdl, visualfoxpro, winbatch, xml, xpp, z80//
+
+===== RSS/ATOM Feed Aggregation =====
+[[DokuWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
+
+^ Parameter  ^ Description ^
+| any number | will be used as maximum number items to show, defaults to 8 |
+| reverse    | display the last items in the feed first |
+| author     | show item authors names |
+| date       | show item dates |
+| description| show the item description. If [[doku>wiki:config#htmlok|HTML]] is disabled all tags will be stripped |
+| //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
+
+The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+
+**Example:**
+
+  {{ss>http://slashdot.org/index.rss 5 author date 1h }}
+
+{{rss>http://slashdot.org/index.rss 5 author date 1h }}
 
 ===== Embedding HTML and PHP =====
 
