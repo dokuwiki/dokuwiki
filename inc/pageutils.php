@@ -63,7 +63,7 @@ function getID($param='id',$clean=true){
       $id = $id.noNS(cleanID($id));
     }elseif(@file_exists(wikiFN($id))){
       // page like namespace exists
-      $id = $id;
+      $id = substr($id,0,-1);
     }else{
       // fall back to default
       $id = $id.$conf['start'];
