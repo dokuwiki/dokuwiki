@@ -138,6 +138,8 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
       $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
       $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
       $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+      $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
+
       return true;
     }else{
       //invalid credentials - log off
@@ -154,6 +156,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     if($user && $pass){
       // we got a cookie - see if we can trust it
       if(isset($session) &&
+        ($session['time'] >= time()-$conf['auth_security_timeout']) &&
         ($session['user'] == $user) &&
         ($session['pass'] == $pass) &&  //still crypted
         ($session['buid'] == auth_browseruid()) ){
