@@ -56,7 +56,9 @@
   }
 
   //send 404 for missing pages if configured
-  if($conf['send404'] && !$INFO['exists']){
+  if($conf['send404'] &&
+     ($ACT == 'show' || substr($ACT,0,7) == 'export_') &&
+     !$INFO['exists']){
     header('HTTP/1.0 404 Not Found');
   }
 
