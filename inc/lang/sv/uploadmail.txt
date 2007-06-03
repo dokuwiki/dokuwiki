@@ -1,0 +1,14 @@
+En fil har laddats upp till din DokuWiki. Här är detaljerna:
+
+Fil         : @MEDIA@
+Datum       : @DATE@
+Webbläsare  : @BROWSER@
+IP-adress   : @IPADDRESS@
+Datornamn   : @HOSTNAME@
+Storlek     : @SIZE@
+MIME-typ    : @MIME@
+Användare   : @USER@
+
+--
+Detta meddelande har skapats av DokuWiki på
+@DOKUWIKIURL@

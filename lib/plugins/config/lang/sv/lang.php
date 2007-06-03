@@ -80,6 +80,7 @@ $lang['usewordblock']= 'Blockera spam baserat på ordlista';
 $lang['indexdelay']  = 'Tidsfördröjning före indexering (sek)';
 $lang['relnofollow'] = 'Använd rel="nofollow" för externa länkar';
 $lang['mailguard']   = 'Koda e-postadresser';
+$lang['iexssprotect']= 'Kontrollera om uppladdade filer innehåller eventuellt skadlig JavaScript eller HTML-kod';
 
 /* Authentication Options */
 $lang['useacl']      = 'Använd behörighetslista (ACL)';
@@ -95,6 +96,7 @@ $lang['disableactions_check'] = 'Kontroll';
 $lang['disableactions_subscription'] = 'Prenumerera/Säg upp prenumeration';
 $lang['disableactions_wikicode'] = 'Visa källkod/Exportera råtext';
 $lang['disableactions_other'] = 'Andra funktioner (kommaseparerade)';
+$lang['sneaky_index'] = 'Som standard visar DokuWiki alla namnrymder på indexsidan. Genom att aktivera det här valet döljer man namnrymder som användaren inte har behörighet att läsa. Det kan leda till att man döljer åtkomliga undernamnrymder, och gör indexet oanvändbart med vissa ACL-inställningar.';
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Kontrollera uppdateringar och säkerhetsvarningar? DokuWiki behöver kontakta splitbrain.org för den här funktionen.';
@@ -121,6 +123,7 @@ $lang['compress']    = 'Komprimera CSS och javascript';
 $lang['hidepages']   = 'Dölj matchande sidor (reguljära uttryck)';
 $lang['send404']     = 'Skicka "HTTP 404/Page Not Found" för sidor som inte finns';
 $lang['sitemap']     = 'Skapa Google sitemap (dagar)';
+$lang['broken_iua']  = 'Är funktionen ignore_user_abort trasig på ditt system? Det kan i så fall leda till att indexering av sökningar inte fungerar. Detta är ett känt problem med IIS+PHP/CGI. Se <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> för mer info.';
 
 $lang['rss_type']    = 'Typ av XML-flöde';
 $lang['rss_linkto']  = 'XML-flöde pekar på';
@@ -182,5 +185,3 @@ $lang['compression_o_0']   = 'none';
 $lang['compression_o_gz']  = 'gzip';
 $lang['compression_o_bz2'] = 'bz2';
 
-/* FIXME: delete when no longer needed */
-$lang['test_indexer'] = 'Den nya indexeringen testar bitfält: 0x1 -> sorterad sökning';

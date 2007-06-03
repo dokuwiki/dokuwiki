@@ -12,6 +12,6 @@ bakgrund har ändrats i den här installationen. Både blåa och vita
 inställningar kan ändras.
 
 Kom i håg att trycka på knappen **Spara** innan du lämnar den här sidan,
-annars går ändringarna förlorade,
+annars går ändringarna förlorade.
 
 

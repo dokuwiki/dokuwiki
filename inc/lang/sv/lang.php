@@ -8,6 +8,11 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '”';//&rdquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '’';//&rsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
+$lang['apostrophe']          = '’';//&rsquo;
 
 $lang['btn_edit']   = 'Redigera sidan';
 $lang['btn_source'] = 'Visa källkod';
@@ -98,6 +103,9 @@ $lang['uploadsucc']  = 'Uppladdningen lyckades';
 $lang['uploadfail']  = 'Uppladdningen misslyckades, fel filskydd?';
 $lang['uploadwrong'] = 'Uppladdning nekad. Filändelsen är inte tillåten!';
 $lang['uploadexist'] = 'Filen finns redan. Gjorde ingenting.';
+$lang['uploadbadcontent'] = 'Det uppladdade innehållet stämde inte överens med filändelsen %s.';
+$lang['uploadspam']  = 'Uppladdningen stoppades av spärrlistan för spam.';
+$lang['uploadxss']   = 'Uppladdningen stoppades på grund av eventuellt skadligt innehåll.';
 $lang['deletesucc']  = 'Filen "%s" har raderats.';
 $lang['deletefail']  = 'Kunde inte radera "%s" - kontrollera filskydd.';
 $lang['mediainuse']  = 'Filen "%s" har inte raderats - den används fortfarande.';
@@ -136,6 +144,7 @@ $lang['summary']    = 'Redigeringskommentar';
 $lang['mail_newpage'] = 'sida tillagd:';
 $lang['mail_changed'] = 'sida ändrad:';
 $lang['mail_new_user'] = 'Ny användare:';
+$lang['mail_upload']   = 'fil uppladdad:';
 
 $lang['nosmblinks'] = 'Länkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.\nDu kan klippa och klistra in länken om du använder en annan webbläsare än MSIE..';
 
