@@ -53,8 +53,16 @@
   }
 
   // define baseURL
-  if(!defined('DOKU_BASE')) define('DOKU_BASE',getBaseURL());
-  if(!defined('DOKU_URL'))  define('DOKU_URL',getBaseURL(true));
+  if(!defined('DOKU_REL')) define('DOKU_REL',getBaseURL(false));
+  if(!defined('DOKU_URL')) define('DOKU_URL',getBaseURL(true));
+  if(!defined('DOKU_BASE')){
+    if($conf['canonical']){
+      define('DOKU_BASE',DOKU_URL);
+    }else{
+      define('DOKU_BASE',DOKU_REL);
+    }
+  }
+
 
   // define cookie and session id
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_URL));
@@ -90,7 +98,7 @@
   // init session
   if (!headers_sent() && !defined('NOSESSION')){
     session_name("DokuWiki");
-    session_set_cookie_params(0, DOKU_BASE);
+    session_set_cookie_params(0, DOKU_REL);
     session_start();
   }
 
@@ -263,10 +271,10 @@ function remove_magic_quotes(&$array) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getBaseURL($abs=false){
+function getBaseURL($abs=null){
   global $conf;
   //if canonical url enabled always return absolute
-  if($conf['canonical']) $abs = true;
+  if(is_null($abs)) $abs = $conf['canonical'];
 
   if($conf['basedir']){
     $dir = $conf['basedir'].'/';
