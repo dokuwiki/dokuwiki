@@ -10,6 +10,11 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '“';//&ldquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '‘';//&lsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
+$lang['apostrophe']          = '’';//&rsquo;
 
 $lang['btn_edit']   = '文書の編集';
 $lang['btn_source'] = 'ソースの表示';
@@ -100,6 +105,9 @@ $lang['uploadsucc']  = 'アップロード完了';
 $lang['uploadfail']  = 'アップロードに失敗しました。権限がありません。';
 $lang['uploadwrong'] = 'アップロードは拒否されました。この拡張子は許可されていません。';
 $lang['uploadexist'] = '同名のファイルが存在するため、アップロードできません。';
+$lang['uploadbadcontent'] = 'アップロードされたファイルの内容は、拡張子 %s と一致しません。';
+$lang['uploadspam']  = 'スパムブラックリストによりアップロードが遮断されました。';
+$lang['uploadxss']   = '悪意のある内容である可能性により、アップロードが遮断されました。';
 $lang['deletesucc']  = 'ファイル "%s" は削除されました。';
 $lang['deletefail']  = 'ファイル "%s" が削除できません。権限を確認して下さい。';
 $lang['mediainuse']  = 'ファイル "%s" は使用中のため、削除されませんでした。';
@@ -132,11 +140,13 @@ $lang['by']         = 'by';
 $lang['deleted']    = '削除';
 $lang['created']    = '作成';
 $lang['restored']   = '以前のバージョンを復元';
+$lang['external_edit'] = '外部編集';
 $lang['summary']    = 'サマリーを編集';
 
 $lang['mail_newpage'] = '文書の追加：';
 $lang['mail_changed'] = '文書の変更：';
 $lang['mail_new_user'] = '新規ユーザー：';
+$lang['mail_upload']   = 'ファイルのアップロード：';
 
 $lang['nosmblinks'] = 'ウィンドウズの共有フォルダへリンクは Microsoft Internet Explorer でのみ可能となります。\n当然、カットアンドペーストが使用できます。';
 

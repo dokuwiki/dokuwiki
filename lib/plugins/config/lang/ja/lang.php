@@ -81,6 +81,7 @@ $lang['usewordblock']= '単語リストに基づくスパムブロック';
 $lang['indexdelay']  = 'インデックスを許可（何秒後）';
 $lang['relnofollow'] = 'rel="nofollow"を付加';
 $lang['mailguard']   = 'メールアドレス保護';
+$lang['iexssprotect']= 'アップロードファイルに悪意のあるJavaScriptやHTMLが含まれていないかチェックする';
 
 /* Authentication Options */
 $lang['useacl']      = 'アクセス管理を行う（ACL）';
@@ -89,12 +90,15 @@ $lang['authtype']    = '認証方法（ACL）';
 $lang['passcrypt']   = '暗号化方法（ACL）';
 $lang['defaultgroup']= 'デフォルトグループ（ACL）';
 $lang['superuser']   = 'スーパーユーザー（ACL）';
+$lang['manager']     = 'マネージャー（特定の管理機能を使用可能なユーザーもしくはグループ）';
 $lang['profileconfirm'] = 'プロフィール変更時に現在のパスワードを要求（ACL）';
 $lang['disableactions'] = 'DokuWiki の動作を無効にする';
 $lang['disableactions_check'] = 'チェック';
 $lang['disableactions_subscription'] = '登録 / 解除';
 $lang['disableactions_wikicode'] = 'ソース閲覧 / 生データ出力';
 $lang['disableactions_other'] = 'その他の動作（カンマ区切り）';
+$lang['sneaky_index'] = 'デフォルトでは索引にすべての名前空間を表示しますが、この機能はユーザーに閲覧権限のない名前空間を非表示にします。ただし、閲覧が可能な副名前空間まで表示されなくなるため、ACLの設定が適正でない場合は索引機能が使えなくなる場合があります。';
+$lang['auth_security_timeout'] = '認証タイムアウト設定（秒）';
 
 /* Advanced Options */
 $lang['updatecheck'] = 'DokuWikiの更新とセキュリティに関する情報をチェックしますか？ この機能は splitbrain.org への接続が必要です。';
@@ -121,11 +125,13 @@ $lang['compress']    = 'CSSとJavaScriptを圧縮';
 $lang['hidepages']   = '非公開ページ（Regex）';
 $lang['send404']     = '文書が存在しないページに"HTTP404/Page Not Found"を使用';
 $lang['sitemap']     = 'Googleサイトマップ作成頻度（日数）';
+$lang['broken_iua']  = 'ignore_user_abort関数が破損している恐れがあります。そのため、検索インデックスが動作しない可能性があります。IIS+PHP/CGIの組み合わせで破損することが判明しています。詳しくは<a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>を参照してください。';
 
 $lang['rss_type']    = 'RSSフィード形式';
 $lang['rss_linkto']  = 'RSS内リンク先';
 $lang['rss_update']  = 'RSSフィードの更新間隔（秒）';
 $lang['recent_days'] = '最近の変更とする期間（日数）';
+$lang['rss_show_summary'] = 'フィードのタイトルにサマリーを表示';
 
 /* Target options */
 $lang['target____wiki']      = '内部リンクの表示先';

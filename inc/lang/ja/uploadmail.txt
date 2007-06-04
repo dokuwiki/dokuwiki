@@ -1,0 +1,14 @@
+お使いのDokuWikiにファイルがアップロードされました。詳細は以下の通りです。
+
+ファイル    : @MEDIA@
+日付        : @DATE@
+ブラウザ    : @BROWSER@
+IPアドレス  : @IPADDRESS@
+ホスト名    : @HOSTNAME@
+サイズ      : @SIZE@
+MIMEタイプ  : @MIME@
+ユーザー名  : @USER@
+
+--
+このメールは次のDokuWikiより自動的に送信されています。
+@DOKUWIKIURL@
