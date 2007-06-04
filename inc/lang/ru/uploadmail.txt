@@ -1,0 +1,14 @@
+В вашу DokuWiki был закачан файл. Подробная информация:
+
+Файл        : @MEDIA@
+Дата        : @DATE@
+Браузер     : @BROWSER@
+Адрес IP    : @IPADDRESS@
+Хост        : @HOSTNAME@
+Размер      : @SIZE@
+Тип MIME    : @MIME@
+Пользователь: @USER@
+
+--
+Это письмо было сгенерировано DokuWiki по адресу
+@DOKUWIKIURL@

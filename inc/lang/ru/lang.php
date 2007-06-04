@@ -10,6 +10,11 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '«';//&ldquo;
+$lang['doublequoteclosing']  = '»';//&rdquo;
+$lang['singlequoteopening']  = '„';//&lsquo;
+$lang['singlequoteclosing']  = '“';//&rsquo;
+$lang['apostrophe']          = '’';//&rsquo;
 
 $lang['btn_edit']   = 'Править страницу';
 $lang['btn_source'] = 'Показать исходный текст';
@@ -100,6 +105,9 @@ $lang['uploadsucc']  = 'Закачка произведена успешно';
 $lang['uploadfail']  = 'Закачка не удалась. Возможно, проблемы с правами доступа?';
 $lang['uploadwrong'] = 'В закачке отказано. Файлы с таким расширением запрещены. ';
 $lang['uploadexist'] = 'Файл с таким именем существует. Загрузка не произведена.';
+$lang['uploadbadcontent'] = 'Содержание файла не соответствует расширению %s.';
+$lang['uploadspam']  = 'Закачка заблокирована спам-фильтром.';
+$lang['uploadxss']   = 'Закачка заблокирована по соображениям безопасности.';
 $lang['deletesucc']  = 'Файл "%s" был удалён.';
 $lang['deletefail']  = 'Невозможно удалить файл "%s". Проверьте права доступа к файлу.';
 $lang['mediainuse']  = 'Файл "%s" не был удалён - файл всё ещё используется.';
@@ -132,11 +140,13 @@ $lang['by']         = ' ';
 $lang['deleted']    = 'удалено';
 $lang['created']    = 'создано';
 $lang['restored']   = 'старая ревизия восстановлена';
+$lang['external_edit'] = 'внешнее изменение';
 $lang['summary']    = 'Сводка изменений';
 
-$lang['mail_newpage'] = 'Страница добавлена:';
-$lang['mail_changed'] = 'Страница изменена:';
-$lang['mail_new_user'] = 'Новый пользователь:';
+$lang['mail_newpage'] = 'страница добавлена:';
+$lang['mail_changed'] = 'страница изменена:';
+$lang['mail_new_user'] = 'новый пользователь:';
+$lang['mail_upload']   = 'файл закачан:';
 
 $lang['nosmblinks'] = 'Ссылка на сетевые каталоги Windows работает только из Интернет Эксплорера\nНо Вы можете скопировать ссылку.';
 

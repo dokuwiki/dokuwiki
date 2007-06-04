@@ -80,6 +80,7 @@ $lang['usewordblock']= 'Блокировать спам по ключевым с
 $lang['indexdelay']  = 'Задержка перед индексированием'; //allow indexing after this time (seconds) default is 5 days
 $lang['relnofollow'] = 'rel="nofollow" для внешних ссылок';         //use rel="nofollow" for external links?
 $lang['mailguard']   = 'Кодировать адреса е-мэйл';  //obfuscate email addresses against spam harvesters?
+$lang['iexssprotect']= 'Проверять закачанные файлы на наличие потенциально опасного кода JavaScript или HTML';
 
 /* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
 $lang['useacl']      = 'Использовать списки прав доступа';                //Use Access Control Lists to restrict access?
@@ -90,12 +91,15 @@ $lang['authtype']    = 'Механизм аутентификации'; //which 
 $lang['passcrypt']   = 'Метод шифрования пароля';    //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
 $lang['defaultgroup']= 'Группа по умолчанию';          //Default groups new Users are added to
 $lang['superuser']   = 'Администратор';              //The admin can be user or @group
+$lang['manager']     = 'Менеджер - группа или пользователь с доступом к определенным функциям администрирования';
 $lang['profileconfirm'] = 'Пароль для изменения профиля';     //Require current password to langirm changes to user profile
 $lang['disableactions'] = 'Заблокировать операции DokuWiki';
 $lang['disableactions_check'] = 'Проверка';
 $lang['disableactions_subscription'] = 'Подписка/Отмена подписки';
 $lang['disableactions_wikicode'] = 'Показ/экспорт исходного текста';
 $lang['disableactions_other'] = 'Другие операции (через запятую)';
+$lang['sneaky_index'] = 'По умолчанию, DokuWiki показывает в индексе страниц все пространства имен. Включение этой опции скроет пространства имен, для которых пользователь не имеет прав чтения. Это может привести к скрытию доступных вложенных пространств имен и потере функциональности индекса страниц при некоторых конфигурациях прав доступа.';
+$lang['auth_security_timeout'] = 'Интервал для безопасности авторизации (сек.)';
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Проверять наличие обновлений и предупреждений о безопасности? Для этого DokuWiki потребуется связываться со splitbrain.org.';
@@ -122,11 +126,13 @@ $lang['compress']    = 'Сжимать файлы CSS и javascript';  //Strip w
 $lang['hidepages']   = 'Скрыть страницы (рег. выражение)';      //Regexp for pages to be skipped from RSS, Search and Recent Changes
 $lang['send404']     = 'Посылать "HTTP404/Page Not Found"';    //Send a HTTP 404 status for non existing pages?
 $lang['sitemap']     = 'Карта сайта для Google (дни)';   //Create a google sitemap? How often? In days.
+$lang['broken_iua']  = 'Возможно, функция ignore_user_abort не работает в вашей системе? Это может привести к потере функциональности индексирования поиска. Эта проблема присутствует, например, в IIS+PHP/CGI. Для дополнительной информации смотрите <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">баг 852</a>.';
 
 $lang['rss_type']    = 'Тип RSS';             //type of RSS feed to provide, by default:
 $lang['rss_linkto']  = 'Ссылки в RSS';              //what page RSS entries link to:
 $lang['rss_update']  = 'Интервал обновления XML-ленты (сек.)';
 $lang['recent_days'] = 'На сколько дней назад сохранять недавние изменения';
+$lang['rss_show_summary'] = 'Показывать краткую выдержку в заголовках XML-ленты';
 
 //Set target to use when creating links - leave empty for same window
 $lang['target____wiki']      = 'target для внутренних ссылок';
