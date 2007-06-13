@@ -154,6 +154,11 @@ $lang['ftp____user'] = 'FTP user name for safemode hack';
 $lang['ftp____pass'] = 'FTP password for safemode hack';
 $lang['ftp____root'] = 'FTP root directory for safemode hack';
 
+/* typography options */
+$lang['typography_o_0'] = 'none';
+$lang['typography_o_1'] = 'Double quotes only';
+$lang['typography_o_2'] = 'All quotes (might not always work)';
+
 /* userewrite options */
 $lang['userewrite_o_0'] = 'none';
 $lang['userewrite_o_1'] = '.htaccess';

@@ -702,9 +702,6 @@ class Doku_Parser_Mode_wordblock extends Doku_Parser_Mode {
 }
 
 //-------------------------------------------------------------------
-/**
-* @TODO Quotes and 640x480 are not supported - just straight replacements here
-*/
 class Doku_Parser_Mode_entity extends Doku_Parser_Mode {
     // A list
     var $entities = array();
@@ -758,18 +755,23 @@ class Doku_Parser_Mode_multiplyentity extends Doku_Parser_Mode {
 class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
 
     function connectTo($mode) {
+        global $conf;
+
         $ws  =  '[\s/\#~:+=&%@\-;,\x28\x29\]\[{}><"\']';   // whitespace
         $nws = '[^\s/\#~:+=&%@\-;,\x28\x29\]\[{}><"\']';  // non whitespace
 
-        $this->Lexer->addSpecialPattern(
-                    "(?<=^|$ws)'(?=$nws)",$mode,'singlequoteopening'
-                );
-        $this->Lexer->addSpecialPattern(
-                    "(?<=^|$nws)'(?=$|$ws)",$mode,'singlequoteclosing'
-                );
-        $this->Lexer->addSpecialPattern(
-                    "(?<=^|$nws)'(?=$|$nws)",$mode,'apostrophe'
-                );
+        if($conf['typography'] == 2){
+            $this->Lexer->addSpecialPattern(
+                        "(?<=^|$ws)'(?=$nws)",$mode,'singlequoteopening'
+                    );
+            $this->Lexer->addSpecialPattern(
+                        "(?<=^|$nws)'(?=$|$ws)",$mode,'singlequoteclosing'
+                    );
+            $this->Lexer->addSpecialPattern(
+                        "(?<=^|$nws)'(?=$|$nws)",$mode,'apostrophe'
+                    );
+        }
+
         $this->Lexer->addSpecialPattern(
                     "(?<=^|$ws)\"(?=$nws)",$mode,'doublequoteopening'
                 );

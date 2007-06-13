@@ -92,7 +92,7 @@ $meta['recent']      = array('numeric');
 $meta['breadcrumbs'] = array('numeric');
 $meta['youarehere']  = array('onoff');
 $meta['fullpath']    = array('onoff');
-$meta['typography']  = array('onoff');
+$meta['typography']  = array('multichoice','_choices' => array(0,1,2));
 $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
 $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
