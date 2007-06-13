@@ -132,7 +132,7 @@ function mail_encode_address($string,$header='',$names=true){
 
     // add to header comma seperated and in new line to avoid too long headers
     if($headers != '') $headers .= ','.MAILHEADER_EOL.' ';
-    $headers .= $text.$addr;
+    $headers .= $text.' '.$addr;
   }
 
   if(empty($headers)) return null;
