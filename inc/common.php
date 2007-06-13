@@ -850,7 +850,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
   $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
-  $text = str_replace('@NEWPAGE@',wl($id,'',true),$text);
+  $text = str_replace('@NEWPAGE@',wl($id,'',true,'&'),$text);
   $text = str_replace('@PAGE@',$id,$text);
   $text = str_replace('@TITLE@',$conf['title'],$text);
   $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
@@ -865,7 +865,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     $subject = $lang['mail_new_user'].' '.$summary;
   }elseif($rev){
     $subject = $lang['mail_changed'].' '.$id;
-    $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true),$text);
+    $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true,'&'),$text);
     require_once(DOKU_INC.'inc/DifferenceEngine.php');
     $df  = new Diff(split("\n",rawWiki($id,$rev)),
                     split("\n",rawWiki($id)));
