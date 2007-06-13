@@ -758,8 +758,8 @@ class Doku_Parser_Mode_multiplyentity extends Doku_Parser_Mode {
 class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $ws  =  '[\s/\#~:\.?+=&%@!\-;,\x28\x29\]\[{}><"\']';   // whitespace
-        $nws = '[^\s/\#~:\.?+=&%@!\-;,\x28\x29\]\[{}><"\']';  // non whitespace
+        $ws  =  '[\s/\#~:+=&%@\-;,\x28\x29\]\[{}><"\']';   // whitespace
+        $nws = '[^\s/\#~:+=&%@\-;,\x28\x29\]\[{}><"\']';  // non whitespace
 
         $this->Lexer->addSpecialPattern(
                     "(?<=^|$ws)'(?=$nws)",$mode,'singlequoteopening'
