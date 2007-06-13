@@ -311,7 +311,7 @@ function media_notify($id,$file,$mime){
     $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
     $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
     $text = str_replace('@MIME@',$mime,$text);
-    $text = str_replace('@MEDIA@',DOKU_URL.ml($id,'',true,'&'),$text);
+    $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
 
     $from = $conf['mailfrom'];

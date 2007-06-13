@@ -368,7 +368,7 @@ function exportlink($id='',$format='raw',$more='',$abs=false,$sep='&amp;'){
  *
  * Will return a link to the detail page if $direct is false
  */
-function ml($id='',$more='',$direct=true,$sep='&amp;'){
+function ml($id='',$more='',$direct=true,$sep='&amp;',$abs=false){
   global $conf;
   if(is_array($more)){
     $more = buildURLparams($more,$sep);
@@ -376,7 +376,11 @@ function ml($id='',$more='',$direct=true,$sep='&amp;'){
     $more = str_replace(',',$sep,$more);
   }
 
-  $xlink = DOKU_BASE;
+  if($abs){
+    $xlink = DOKU_URL;
+  }else{
+    $xlink = DOKU_BASE;
+  }
 
   // external URLs are always direct without rewriting
   if(preg_match('#^(https?|ftp)://#i',$id)){
