@@ -622,9 +622,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         //Display error on browsers other than IE
         $link['more'] = 'onclick="if(document.all == null){alert(\''.
-                        $this->_xmlEntities($lang['nosmblinks'],ENT_QUOTES).
+                        str_replace('\\\\n','\\n',addslashes($lang['nosmblinks'])).
                         '\');}" onkeypress="if(document.all == null){alert(\''.
-                        $this->_xmlEntities($lang['nosmblinks'],ENT_QUOTES).'\');}"';
+                        str_replace('\\\\n','\\n',addslashes($lang['nosmblinks'])).'\');}"';
 
         $link['name'] = $this->_getLinkTitle($name, $url, $isImage);
         if ( !$isImage ) {
