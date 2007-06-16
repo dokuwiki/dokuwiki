@@ -173,7 +173,7 @@ function js_load($file){
     static $loaded = array();
 
     $data = io_readFile($file);
-    while(preg_match('#/\*\s*DOKUWIKI:include(_once)\s+([\w\./]+)\s*\*/#',$data,$match)){
+    while(preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\./]+)\s*\*/#',$data,$match)){
         $ifile = $match[2];
 
         // is it a include_once?
