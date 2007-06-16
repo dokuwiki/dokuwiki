@@ -43,7 +43,8 @@ div.meta div.doc {
 
 /* ------------------  Design corrections  --------------------------------- */
 
-div.dokuwiki ul, ol {
+div.dokuwiki ul,
+div.dokuwiki ol {
   margin: 0.5em 1.5em 0.5em 0;
 }
 
