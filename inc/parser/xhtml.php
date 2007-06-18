@@ -818,6 +818,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->doc .= '<li><div class="li">';
             $this->doc .= '<em>'.$lang['rssfailed'].'</em>';
             $this->externallink($url);
+            if($conf['allowdebug']){
+                $this->doc .= '<!--'.hsc($feed->error).'-->';
+            }
             $this->doc .= '</div></li>';
         }
         $this->doc .= '</ul>';
