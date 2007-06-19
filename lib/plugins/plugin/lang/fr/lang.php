@@ -9,8 +9,6 @@
 $lang['menu'] = 'Gérer les plugins'; 
 
 // custom language strings for the plugin
-$lang['refresh'] = "Actualiser la liste des plugins installés";
-$lang['refresh_x'] = "Utiliser cette option si vous avez altéré manuellement un plugin"; 
 $lang['download'] = "Télécharger et installer un nouveau plugin";
 $lang['manage'] = "Plugins installés";
 
@@ -18,12 +16,10 @@ $lang['btn_info'] = 'info';
 $lang['btn_update'] = 'raffraîchir';
 $lang['btn_delete'] = 'effacer';
 $lang['btn_settings'] = 'paramètres';
-$lang['btn_refresh'] = 'Actualiser';
 $lang['btn_download'] = 'Télécharger';
 $lang['btn_enable'] = 'Enregistrer';
 
 $lang['url'] = 'URL';
-//$lang[''] = '';
 
 $lang['installed'] = 'Installé :';
 $lang['lastupdate'] = 'Dernière mise à jour:';
@@ -33,12 +29,9 @@ $lang['unknown'] = 'inconnu';
 // ..ing = header message
 // ..ed = success message
 
-$lang['refreshing'] = 'Actualisation...';
-$lang['refreshed'] = 'Actualisation du plugin terminée.';
-
 $lang['updating'] = 'Mise à jour...';
 $lang['updated'] = 'Plugin %s mis à jour avec succès';
-$lang['updates'] = 'Les plugins suivant ont été mis à jour avec succès';
+$lang['updates'] = 'Les plugins suivants ont été mis à jour avec succès';
 $lang['update_none'] = 'Aucune mise à jour n\'a été trouvée.';
 
 $lang['deleting'] = 'Suppression...';
@@ -46,7 +39,7 @@ $lang['deleted'] = 'Plugin %s supprimé.';
 
 $lang['downloading'] = 'Téléchargement...';
 $lang['downloaded'] = 'Plugin %s installé avec succès';
-$lang['downloads'] = 'Les plugins suivant ont été installés avec succès:';
+$lang['downloads'] = 'Les plugins suivants ont été installés avec succès';
 $lang['download_none'] = 'Aucun plugin trouvé, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
 
 // info titles
@@ -56,7 +49,7 @@ $lang['noinfo'] = 'Ce plugin n\'a transmis aucune information, il pourrait être
 $lang['name'] = 'Nom :';
 $lang['date'] = 'Date :';
 $lang['type'] = 'Type :';
-$lang['desc'] = 'Description :';
+$lang['desc'] = 'Description&nbsp;:';
 $lang['author'] = 'Auteur :';
 $lang['www'] = 'Web :';
     

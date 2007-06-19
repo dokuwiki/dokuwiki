@@ -1,6 +1,6 @@
 ====== Gestionnaire de configuration ======
 
-Utilisez cette page pour contrôler les paramètres de votre installation de Dokuwiki.
+Utilisez cette page pour contrôler les paramètres de votre installation de DokuWiki.
 Pour de l'aide sur chaque paramètre, reportez vous à [[doku>wiki:config]].
 Pour d'autres détails concernant ce plugin, reportez vous à [[doku>plugin:config]].
 

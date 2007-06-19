@@ -79,7 +79,7 @@ $lang['allowdebug']  = 'Déboguer <b>désactivez si vous n\'en n\'avez pas besoi
 $lang['usewordblock']= 'Bloquer le spam selon les mots utilisés';
 $lang['indexdelay']  = 'Délai avant l\'indexation (sec)';
 $lang['relnofollow'] = 'Utiliser rel="nofollow" sur les liens extérieurs';
-$lang['mailguard']   = 'Cacher les adresses de courriel';
+$lang['mailguard']   = 'Brouiller les adresses de courriel';
 $lang['iexssprotect']= 'Vérifier la présence de code JavaScript ou HTML malveillant dans les fichiers envoyés';
 
 /* Authentication Options */
@@ -96,11 +96,13 @@ $lang['disableactions_check'] = 'Vérifier';
 $lang['disableactions_subscription'] = 'Abonnement/Désabonnement';
 $lang['disableactions_wikicode'] = 'Afficher source/Export natif';
 $lang['disableactions_other'] = 'Autres actions (séparées par des virgules)';
+$lang['sneaky_index'] = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher celles pour lesquelles l\'utilisateur n\'a pas la permission de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certaines ACL.';
+$lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Vérifier les mises à jour ? DokuWiki doit pouvoir contacter splitbrain.org.';
 $lang['userewrite']  = 'URLs esthétiques';
-$lang['useslash']    = 'Utiliser / comme séparateur de catégorie dans les URLs';
+$lang['useslash']    = 'Utiliser slash comme séparateur de catégorie dans les URLs';
 $lang['usedraft']    = 'Enregistrer automatiquement un brouillon pendant l\'édition';
 $lang['sepchar']     = 'Séparateur de nom de page';
 $lang['canonical']   = 'Utiliser des URLs canoniques';

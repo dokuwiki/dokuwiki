@@ -1,4 +1,4 @@
-====== Ce sujet n'existe pas encore ====== 
+====== Cette page n'existe pas encore ====== 
  
-Vous avez suivi un lien vers un sujet qui n'existe pas encore.
+Vous avez suivi un lien vers une page qui n'existe pas encore.
 Si vos droits sont suffisants, vous pouvez utiliser le bouton ''Créer cette page''.
