@@ -199,9 +199,9 @@ class auth_plain extends auth_basic {
       }
 
       // problem deleting, reload the user list and count the difference
-      $count = count($this->users());
+      $count = count($this->users);
       $this->_loadUserData();
-      $count -= $count($this->users());
+      $count -= count($this->users);
       return $count;
     }
 
