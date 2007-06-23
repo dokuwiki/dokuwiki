@@ -500,6 +500,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $ID;
         // default name is based on $id as given
         $default = $this->_simpleTitle($id);
+
         // now first resolve and clean up the $id
         resolve_pageid(getNS($ID),$id,$exists);
         $name = $this->_getLinkTitle($name, $default, $isImage, $id);
@@ -515,6 +516,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         //keep hash anchor
         list($id,$hash) = explode('#',$id,2);
+        $hash = $this->_headerToLink($hash);
 
         //prepare for formating
         $link['target'] = $conf['target']['wiki'];
