@@ -2,4 +2,3 @@
 
 Sube vi povas trovi liston de admnistraj taskoj disponeblaj en 
 DokuWiki.
-

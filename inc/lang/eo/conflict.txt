@@ -1,8 +1,8 @@
-====== Ekzistas pli nova versio de la dokumento ======
+====== Pli nova versio ekzistas ======
 
 Ekzistas pli nova versio de la dokumento. Tio okazas kiam iu alia uzanto 
 ŝanĝigis enhavon de la dokumento dum vi redaktis ĝin.
 
-Atente esploru distingojn kaj decidu kiun version vi restigos. 
+Atente esploru distingojn kaj decidu kiun version vi tenigos.
 Se vi premos ''"Konservi"'', do via versio estos konservita. 
-Presonte butonon ''Aboli'' vi restigos kurantan version.
+Presonte butonon ''Rezigni'' vi restigos kurantan version.

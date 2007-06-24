@@ -1,5 +1,2 @@
 Redaktu paĝon kaj poste premu butonon titolitan ''"Konservi"''. Bonvolu tralegi
-la [[vikio:sintakso|vikian sintakson]] por kompreni kiel vi povas krei paĝojn. Bonvolu
-redakti nur se vi planas **plibonigi** la enhavon de la paĝo. Se vi volas nur testi ion, do
-bonvolu uzi specialan paĝon: [[ludejo:ludejo|ludejo]].
-
+la [[vikio:sintakso|vikian sintakson]] por kompreni kiel vi povas krei paĝojn. Bonvolu redakti nur se vi planas **plibonigi** la enhavon de la paĝo. Se vi volas nur testi ion, do bonvolu uzi specialan paĝon: [[vikio:ludejo|ludejo]].

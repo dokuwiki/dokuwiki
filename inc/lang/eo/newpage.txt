@@ -1,5 +1,4 @@
 ====== Ĉi tiu paĝo ankoraŭ ne ekzistas ======
 
-Vi pasis laŭ referenco, kiu kondukas al ne ekzistanta paĝo. Vi povas
-krei tiun ĉi paĝon ekpremante butonon ''"Krei paĝon"''.
+Vi sekvis ligilon, kiu kondukas al artikolo ankoraŭ ne ekzistanta. Se vi rajtas, tiel vi povas krei tiun ĉi paĝon ekpremante la butonon ''"Krei paĝon"''.
 
