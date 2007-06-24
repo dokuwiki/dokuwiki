@@ -1,0 +1,14 @@
+====== Xestor de Configuración ======
+
+Usa esta páxina para controlar a configuración da túa instalación do Dokuwiki.  
+Para atopar axuda verbo de cada opción da configuración vai a [[doku>wiki:config]].
+Para obter pormenores deste plugin bota un ollo a [[doku>plugin:config]].
+
+As opcións que amosan un fondo de cor vermella clara están protexidas e non poden ser alteradas 
+con este plugin.
+As opcións que amosan un fondo de cor azul son valores predeterminados e as opcións que teñen 
+fondo branco foron configuradas de xeito local para esta instalación en concreto. Ámbalas dúas, 
+as opcións azuis e brancas, poden ser alteradas.
+
+Lembra premer no boton **GARDAR** denantes de sair desta páxina ou, en caso contrario, os teus 
+trocos perderanse.

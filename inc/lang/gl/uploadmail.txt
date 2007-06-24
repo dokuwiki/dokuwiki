@@ -1,0 +1,14 @@
+Subiuse un arquivo ao teu DokuWiki. Aquí van os pormenores:
+
+Arquivo : @MEDIA@
+Data : @DATE@
+Navegador : @BROWSER@
+Enderezo IP : @IPADDRESS@
+Nome de Host : @HOSTNAME@
+Tamaño : @SIZE@
+Tipo MIME : @MIME@
+Usuario : @USER@
+
+--
+Este correo foi xerado polo DokuWiki en
+@DOKUWIKIURL@

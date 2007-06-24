@@ -1,0 +1,3 @@
+====== Xestor de Reversión ======
+
+Esta páxina axudarache a revertir automaticamente un ataque de spam. Para atopar unha lista de páxina que conteñan spam, primeiro debes inserir unha cadea de procura (p.e. un URL de spam), e logo confirmar que as páxinas atopadas conteñen realmente spam e reverter as edicións.
