@@ -2,7 +2,7 @@
 
 Tutaj możesz zmieniać uprawnienia do aktualnej strony i wszystkich 
 [[doku>wiki:namespaces|katalogów]], w który ona się znajduje.
-Aby dowiedzieć się wiecej na temat uprawnień, przeczytaj 
+Aby dowiedzieć się więcej na temat uprawnień, przeczytaj 
 [[doku>wiki:acl|oficjalną dokumentację mechanizmu uprawnień]].
 
 Poniżej znajdują się uprawnienia dla aktualnej strony.
