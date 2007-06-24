@@ -133,7 +133,11 @@ if (!class_exists('configuration')) {
 
       if ($this->_format == 'php') {
 
-        $contents = @php_strip_whitespace($file);
+        if(@file_exists($file)){
+            $contents = @php_strip_whitespace($file);
+        }else{
+            $contents = '';
+        }
         $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|@include|$))/s';
         $matches=array();
         preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
