@@ -1,28 +1,60 @@
 <?php
+/**
+ * TAR format class - Creates TAR archives
+ *
+ * This class is part or the MaxgComp suite and originally named
+ * MaxgTar class.
+ *
+ * Modified for Dokuwiki
+ *
+ * @license GPL
+ * @link    http://docs.maxg.info
+ * @author  Bouchon <tarlib@bouchon.org> (Maxg)
+ * @author  Christopher Smith <chris@jalakai.co.uk>
+ */
 
-/*
- +---------------------------------------------+
- |   TAR format class - Creates TAR archives   |
- +---------------------------------------------+
- |   This class is part or the MaxgComp suite  |
- +---------------------------------------------+
- |   Created by the Maxg Network (maxg.info)   |
- |  http://docs.maxg.info for help & license.  |
- +---------------------------------------------+
- | Author: Bouchon <tarlib@bouchon.org> (Maxg) |
- +---------------------------------------------+
-*  Modified for Dokuwiki
-*  @author    Christopher Smith <chris@jalakai.co.uk>
-*/
 
+/**
+ * Those constants represent the compression method to use.
+ * COMPRESS_GZIP is used for the GZIP compression; COMPRESS_BZIP for
+ * BZIP2 and COMPRESS_NONE for no compression.
+ *
+ * On the other hand, COMPRESS_AUTO is a bit harder. It will first check
+ * if the zlib extensions are loaded.
+ * If it is, GZIP will be used. Else it will check if the bz2 extensions
+ * are loaded. If it is, BZIP2 will be used. Else no compression will be
+ * performed.
+ *
+ * You can then use getCompression() to know the compression chosen.
+ *
+ * If you selected a compression which can't be used (i.e extension not
+ * present), it will be just disabled, and won't produce any error !
+ * As a consequence, getCompression() will return COMPRESS_NONE
+ *
+ * ARCHIVE_DYNAMIC can be passed as the first argument of the constructor, to
+ * create an archive in memory instead of a file. See also: MaxgTar(),
+ * getDynamicArchive() and writeArchive()
+ *
+ * ARCHIVE_RENAMECOMP is a flag that can be multiplied by the compression method
+ * (i.e COMPRESS_AUTO * ARCHIVE_RENAMECOMP). This will add the correct extension
+ * to the archive name, which is useful with COMPRESS_AUTO, ie .bz2 if you gave
+ * COMPRESS_BZIP. See also getCompression(TRUE) which does exactly the
+ * same
+ *
+ * COMPRESS_DETECT does exactly the opposite and try to detect the
+ * compression to use to read the archive depending on its extension. (i.e if
+ * the archive ends with .tar.gz TarLib will try to decompress it with
+ * GZIP). See also setCompression()
+ *
+ * FULL_ARCHIVE is a -1 constant that means "the complete archive" when
+ * extracting. This is explained in Extract()
+ */
 define('COMPRESS_GZIP',1);
 define('COMPRESS_BZIP',2);
 define('COMPRESS_AUTO',3);
 define('COMPRESS_NONE',0);
-
 define('TARLIB_VERSION','1.2');
 define('FULL_ARCHIVE',-1);
-
 define('ARCHIVE_DYNAMIC',0);
 define('ARCHIVE_RENAMECOMP',5);
 define('COMPRESS_DETECT',-1);
@@ -36,6 +68,36 @@ class TarLib
   var $_nomf;
   var $_result;
 
+  /**
+   * constructor, initialize the class
+   *
+   * The constructor initialize the variables and prepare the class for the
+   * archive, and return the object created. Note that you can use multiple
+   * instances of the MaxgTar class, if you call this function another time and
+   * store the object in an other variable.
+   *
+   * In fact, MaxgTar accepts the following arguments (all are optional) :
+   *
+   * filename can be either a file name (absolute or relative). In this
+   * case, it can be used both for reading and writing. You can also open
+   * remote archive if you add a protocole name at the beginning of the file
+   * (ie https://host.dom/archive.tar.gz), but for reading only and if the
+   * directive allow_url_fopen is enabled in PHP.INI (this can be checked with
+   * TarInfo()). If you pass a file that doesn't exist, the script
+   * will try to create it. If the archive already exists and contains files,
+   * you can use Add() to append files.But by default this parameter
+   * is ARCHIVE_DYNAMIC (write only) so the archive is created in memory and
+   * can be sent to a file [writeArchive()] or to the client
+   * [sendClient()]
+   *
+   * compression_type should be a constant that represents a type of
+   * compression, or its integer value. The different values are described in
+   * the constants.
+   *
+   * compression_level is an integer between 1 and 9 (by default) an
+   * represent the GZIP or BZIP compression level.  1 produce fast compression,
+   * and 9 produce smaller files. See the RFC 1952 for more infos.
+   */
   function tarlib($p_filen = ARCHIVE_DYNAMIC , $p_comptype = COMPRESS_AUTO, $p_complevel = 9)
   {
     $this->_nomf = $p_filen; $flag=0;
@@ -82,6 +144,12 @@ class TarLib
     $this->_result = true;
   }
 
+  /**
+   * Recycle a TAR object.
+   *
+   * This function does exactly the same as TarLib (constructor), except it
+   * returns a status code.
+   */
   function setArchive($p_name='', $p_comp = COMPRESS_AUTO, $p_level=9)
   {
     $this->_CompTar();
@@ -89,6 +157,23 @@ class TarLib
     return $this->_result;
   }
 
+  /**
+   * Get the compression used to generate the archive
+   *
+   * This is a very useful function when you're using dynamical archives.
+   * Besides, if you let the script chose which compression to use, you'll have
+   * a problem when you'll want to send it to the client if you don't know
+   * which compression was used.
+   *
+   * There are two ways to call this function : if you call it without argument
+   * or with FALSE, it will return the compression constants, explained on the
+   * MaxgTar Constants.  If you call it with GetExtension on TRUE it will
+   * return the extension without starting dot (ie "tar" or "tar.bz2" or
+   * "tar.gz")
+   *
+   * NOTE: This can be done with the flag ARCHIVE_RENAMECOMP, see the
+   * MaxgTar Constants
+   */
   function getCompression($ext = false)
   {
     $exts = Array('tar','tar.gz','tar.bz2');
@@ -96,19 +181,42 @@ class TarLib
     return $this->_comptype;
   }
 
+  /**
+   * Change the compression mode.
+   *
+   * This function will change the compression methode to read or write
+   * the archive. See the MaxgTar Constants to see which constants you can use.
+   * It may look strange, but it returns the GZIP compression level.
+   */
   function setCompression($p_comp = COMPRESS_AUTO)
   {
     $this->setArchive($this->_nomf, $p_comp, $this->_compzlevel);
     return $this->_compzlevel;
   }
 
+  /**
+   * Returns the compressed dynamic archive.
+   *
+   * When you're working with dynamic archives, use this function to grab
+   * the final compressed archive in a string ready to be put in a SQL table or
+   * in a file.
+   */
   function getDynamicArchive()
   {
     return $this->_encode($this->_memdat);
   }
 
-  function writeArchive($p_archive)
-  {
+  /**
+   * Write a dynamical archive into a file
+   *
+   * This function attempts to write a dynamicaly-genrated archive into
+   * TargetFile on the webserver.  It returns a TarErrorStr() status
+   * code.
+   *
+   * To know the extension to add to the file if you're using AUTO_DETECT
+   * compression, you can use getCompression().
+   */
+  function writeArchive($p_archive) {
     if(!$this->_memdat) return -7;
     $fp = @fopen($p_archive, 'wb');
     if(!$fp) return -6;
@@ -119,6 +227,29 @@ class TarLib
     return true;
   }
 
+  /**
+   * Send a TAR archive to the client browser.
+   *
+   * This function will send an archive to the client, and return a status
+   * code, but can behave differently depending on the arguments you give. All
+   * arguments are optional.
+   *
+   * ClientName is used to specify the archive name to give to the browser. If
+   * you don't give one, it will send the constructor filename or return an
+   * error code in case of dynamical archive.
+   *
+   * FileName is optional and used to send a specific archive. Leave it blank
+   * to send dynamical archives or the current working archive.
+   *
+   * If SendHeaders is enabled (by default), the library will send the HTTP
+   * headers itself before it sends the contents. This headers are :
+   * Content-Type, Content-Disposition, Content-Length and Accept-Range.
+   *
+   * Please note that this function DOES NOT stops the script so don't forget
+   * to exit() to avoid your script sending other data and corrupt the archive.
+   * Another note : for AUTO_DETECT dynamical archives you can know the
+   * extension to add to the name with getCompression()
+   */
   function sendClient($name = '', $archive = '', $headers = true)
   {
     if(!$name && !$this->_nomf) return -9;
@@ -151,6 +282,32 @@ class TarLib
     return true;
   }
 
+  /**
+   * Extract part or totality of the archive.
+   *
+   * This function can extract files from an archive, and returns then a
+   * status codes that can be converted with TarErrorStr() into a
+   * human readable message.
+   *
+   * Only the first argument is required, What and it can be either the
+   * constant FULL_ARCHIVE or an indexed array containing each file you want to
+   * extract.
+   *
+   * To contains the target folder to extract the archive. It is optional and
+   * the default value is '.' which means the current folder. If the target
+   * folder doesn't exist, the script attempts to create it and give it
+   * permissions 0777 by default.
+   *
+   * RemovePath is very usefull when you want to extract files from a subfoler
+   * in the archive to a root folder. For instance, if you have a file in the
+   * archive called some/sub/folder/test.txt and you want to extract it to the
+   * script folder, you can call Extract with To = '.' and RemovePath =
+   * 'some/sub/folder/'
+   *
+   * FileMode is optional and its default value is 0755. It is in fact the UNIX
+   * permission in octal mode (prefixed with a 0) that will be given on each
+   * extracted file.
+   */
   function Extract($p_what = FULL_ARCHIVE, $p_to = '.', $p_remdir='', $p_mode = 0755)
   {
     if(!$this->_OpenRead()) return -4;
@@ -163,6 +320,41 @@ class TarLib
     return $ok;
   }
 
+  /**
+   * Create a new package with the given files
+   *
+   * This function will attempt to create a new archive with global headers
+   * then add the given files into.  If the archive is a real file, the
+   * contents are written directly into the file, if it is a dynamic archive
+   * contents are only stored in memory. This function should not be used to
+   * add files to an existing archive, you should use Add() instead.
+   *
+   * The FileList supports actually three différents modes :
+   *
+   * - You can pass a string containing filenames separated by pipes '|'.
+   *   In this case the file are read from the webserver filesystem and the
+   *   root folder is the folder where the script using the MaxgTar is called.
+   *
+   * - You can also give a unidimensional indexed array containing the
+   *   filenames. The behaviour for the content reading is the same that a
+   *   '|'ed string.
+   *
+   * - The more useful usage is to pass bidimentional arrays, where the
+   *   first element contains the filename and the second contains the file
+   *   contents. You can even add empty folders to the package if the filename
+   *   has a leading '/'. Once again, have a look at the exemples to understand
+   *   better.
+   *
+   * Note you can also give arrays with both dynamic contents and static files.
+   *
+   * The optional parameter RemovePath can be used to delete a part of the tree
+   * of the filename you're adding, for instance if you're adding in the root
+   * of a package a file that is stored somewhere in the server tree.
+   *
+   * On the contrary the parameter AddPath can be used to add a prefix folder
+   * to the file you store. Note also that the RemovePath is applied before the
+   * AddPath is added, so it HAS a sense to use both parameters together.
+   */
   function Create($p_filelist,$p_add='',$p_rem='')
   {
     if(!$fl = $this->_fetchFilelist($p_filelist)) return -5;
@@ -176,15 +368,45 @@ class TarLib
     return $ok;
   }
 
-  function Add($p_filelist, $p_add = '', $p_rem = '')
-  {
-    if (($this->_nomf != ARCHIVE_DYNAMIC && @is_file($this->_nomf)) || ($this->_nomf == ARCHIVE_DYNAMIC && !$this->_memdat))
-      return $this->Create($p_filelist, $p_add, $p_rem);
+  /**
+   * Add files to an existing package.
+   *
+   * This function does exactly the same than Create() exept it
+   * will append the given files at the end of the archive.  Please not the is
+   * safe to call Add() on a newly created archive whereas the
+   * contrary will fail !
+   *
+   * This function returns a status code, you can use TarErrorStr() on
+   * it to get the human-readable description of the error.
+   */
+  function Add($p_filelist, $p_add = '', $p_rem = '') { if (($this->_nomf
+!= ARCHIVE_DYNAMIC && @is_file($this->_nomf)) || ($this->_nomf ==
+ARCHIVE_DYNAMIC && !$this->_memdat)) return $this->Create($p_filelist,
+$p_add, $p_rem);
 
     if(!$fl = $this->_fetchFilelist($p_filelist)) return -5;
     return $this->_append($fl, $p_add, $p_rem);
   }
 
+  /**
+   * Read the contents of a TAR archive
+   *
+   * This function attempts to get the list of the files stored in the
+   * archive, and return either an error code or an indexed array of
+   * associative array containing for each file the following informations :
+   *
+   * checksum    Tar Checksum of the file
+   * filename    The full name of the stored file (up to 100 c.)
+   * mode        UNIX permissions in DECIMAL, not octal
+   * uid         The Owner ID
+   * gid         The Group ID
+   * size        Uncompressed filesize
+   * mtime       Timestamp of last modification
+   * typeflag    Empty for files, set for folders
+   * link        For the links, did you guess it ?
+   * uname       Owner name
+   * gname       Group name
+   */
   function ListContents()
   {
     if(!$this->_nomf) return -3;
@@ -204,6 +426,13 @@ class TarLib
     return  $result;
   }
 
+  /**
+   * Convert a status code into a human readable message
+   *
+   * Some MaxgTar functions like Create(), Add() ... return numerical
+   * status code.  You can pass them to this function to grab their english
+   * equivalent.
+   */
   function TarErrorStr($i)
   {
     $ecodes = Array(
@@ -225,6 +454,17 @@ class TarLib
     return isset($ecodes[$i]) ? $ecodes[$i] : $ecodes[0];
   }
 
+  /**
+   * Display informations about the MaxgTar Class.
+   *
+   * This function will display vaious informations about the server
+   * MaxgTar is running on.
+   *
+   * The optional parameter DispHeaders is used to generate a full page with
+   * HTML headers (TRUE by default) or just the table with the informations
+   * (FALSE).  Note that the HTML page generated is verified compatible XHTML
+   * 1.0, but not HTML 4.0 compatible.
+   */
   function TarInfo($headers = true)
   {
     if($headers)
@@ -655,7 +895,7 @@ class TarLib
 function _dirApp($d)
   {
 //  map to dokuwiki function (its more robust)
-    return ap_mkdir($d);  
+    return ap_mkdir($d);
 /*
     $d = explode('/', $d);
     $base = '';
@@ -669,7 +909,7 @@ function _dirApp($d)
       }
       $base .= "$f/";
     }
-*/    
+*/
   }
 
 }
