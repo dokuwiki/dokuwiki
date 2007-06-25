@@ -39,11 +39,10 @@
       if (class_exists($auth_class)) {
         $auth = new $auth_class();
         if ($auth->success == false) {
+          // degrade to unauthenticated user
           unset($auth);
+          auth_logoff();
           msg($lang['authtempfail'], -1);
-
-          // turn acl config setting off for the rest of this page
-          $conf['useacl'] = 0;
         }
       } else {
         nice_die($lang['authmodfailed']);
@@ -54,7 +53,7 @@
   }
 
   // do the login either by cookie or provided credentials
-  if($conf['useacl']){
+  if($conf['useacl'] && $auth){
     if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
     if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
     if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
@@ -125,7 +124,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     if ($auth->checkPass($user,$pass)){
       // make logininfo globally available
       $_SERVER['REMOTE_USER'] = $user;
-      $USERINFO = $auth->getUserData($user); //FIXME move all references to session
+      $USERINFO = $auth->getUserData($user);
 
       // set cookie
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());

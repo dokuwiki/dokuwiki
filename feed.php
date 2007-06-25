@@ -161,7 +161,7 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
         $user = @$recent['user']; // the @ spares time repeating lookup
         $item->author = '';
 
-        if($user && $conf['useacl']){
+        if($user && $conf['useacl'] && $auth){
             $userInfo = $auth->getUserData($user);
             $item->author = $userInfo['name'];
             if($guardmail) {
