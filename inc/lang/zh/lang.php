@@ -7,6 +7,11 @@
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
+$lang['doublequoteopening']  = '“';//&ldquo;
+$lang['doublequoteclosing']  = '”';//&rdquo;
+$lang['singlequoteopening']  = '‘';//&lsquo;
+$lang['singlequoteclosing']  = '’';//&rsquo;
+$lang['apostrophe']          = '’';//&rsquo;
 
 $lang['btn_edit']   = '编辑本页';
 $lang['btn_source'] = '显示源文件';
@@ -97,6 +102,9 @@ $lang['uploadsucc']  = '上传成功';
 $lang['uploadfail']  = '上传失败。也许是上传权限错误。';
 $lang['uploadwrong'] = '上传失败。该扩展名被禁止。';
 $lang['uploadexist'] = '文件已存在。不进行操作。';
+$lang['uploadbadcontent'] = '上传的文件与扩展名 %s 不符。';
+$lang['uploadspam']  = '上传操作被垃圾信息黑名单阻止。';
+$lang['uploadxss']   = '上传操作因可能存在恶意内容而被阻止。';
 $lang['deletesucc']  = '文件“%s”已经被删除。';
 $lang['deletefail']  = '无法删除“%s”- 请检查权限。';
 $lang['mediainuse']  = '文件“%s”无法删除 - 它正被使用中。';
@@ -129,11 +137,13 @@ $lang['by']         = '由';
 $lang['deleted']    = '移除';
 $lang['created']    = '创建';
 $lang['restored']   = '已恢复为旧版';
+$lang['external_edit'] = '外部编辑';
 $lang['summary']    = '编辑摘要';
 
 $lang['mail_newpage'] = '添加页面：';
 $lang['mail_changed'] = '更改页面：';
 $lang['mail_new_user'] = '新用户：';
+$lang['mail_upload']   = '已上传的文件：';
 
 $lang['nosmblinks'] = '连接到 Windows 共享功能只有在 IE 浏览器中才能正常使用。\n但您仍能复制并粘贴该链接。';
 

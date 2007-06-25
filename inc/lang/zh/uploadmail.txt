@@ -1,0 +1,20 @@
+您好！
+
+一个文件被上传到您的 DokuWiki 站点。下面是详细信息：
+
+文件名 : @MEDIA@
+日期 : @DATE@
+浏览器 : @BROWSER@
+IP 地址 : @IPADDRESS@
+主机名 : @HOSTNAME@
+大小 : @SIZE@
+MIME 类型 : @MIME@
+用户 : @USER@
+
+-- 
+本邮件由 DokuWiki 自动创建
+@DOKUWIKIURL@
+
+
+
+

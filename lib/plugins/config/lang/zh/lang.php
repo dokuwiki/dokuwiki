@@ -80,20 +80,24 @@ $lang['usewordblock']= '根据 wordlist 阻止垃圾评论';
 $lang['indexdelay']  = '构建索引前的时间延滞（秒）';
 $lang['relnofollow'] = '对外部链接使用 rel="nofollow" 标签';
 $lang['mailguard']   = '弄乱邮件地址（保护用户的邮件地址）';
+$lang['iexssprotect']= '检验上传的文件以避免可能存在的恶意 JavaScript 或 HTML 代码';
 
 /* Authentication Options */
 $lang['useacl']      = '使用访问控制列表（ACL）';
 $lang['autopasswd']  = '自动生成密码';
 $lang['authtype']    = '认证后台管理方式';
 $lang['passcrypt']   = '密码加密方法';
-$lang['defaultgroup']= '默认的组';
-$lang['superuser']   = '超级用户';
+$lang['defaultgroup']= '默认组';
+$lang['superuser']   = '超级用户 - 不论 ACL 如何设置，都能访问所有页面与功能的用户组/用户';
+$lang['manager']     = '管理员 - 能访问相应管理功能的用户组/用户';
 $lang['profileconfirm'] = '更新个人信息时需要输入当前密码';
 $lang['disableactions'] = '停用 DokuWiki 功能';
 $lang['disableactions_check'] = '检查';
 $lang['disableactions_subscription'] = '订阅/退订';
 $lang['disableactions_wikicode'] = '查看源文件/导出源文件';
 $lang['disableactions_other'] = '其他功能（用英文逗号分隔）';
+$lang['sneaky_index'] = '默认情况下，DokuWiki 在索引页会显示所有 namespace。启用该选项能隐藏那些用户没有权限阅读的页面。但也可能将用户能够阅读的子页面一并隐藏。这有可能导致在特定 ACL 设置下，索引功能不可用。';
+$lang['auth_security_timeout'] = '认证安全超时（秒）';
 
 /* Advanced Options */
 $lang['updatecheck'] = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 splitbrain.org。';
@@ -120,11 +124,13 @@ $lang['compress']    = '使 CSS 和 javascript 输出更紧密';
 $lang['hidepages']   = '隐藏匹配的界面（正则表达式）';
 $lang['send404']     = '发送 "HTTP 404/页面没有找到" 错误信息给不存在的页面';
 $lang['sitemap']     = '生成 Google sitemap（天）';
+$lang['broken_iua']  = 'ignore_user_abort 功能失效了？这有可能导致搜索索引不可用。IIS+PHP/CGI 已损坏。请参阅 <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> 获取更多信息。';
 
 $lang['rss_type']    = 'XML feed 类型';
 $lang['rss_linkto']  = 'XML feed 链接到';
 $lang['rss_update']  = 'XML feed 升级间隔（秒）';
 $lang['recent_days'] = '保留多少天的最近更改（天）';
+$lang['rss_show_summary'] = 'XML feed 在标题中显示摘要';
 
 /* Target options */
 $lang['target____wiki']      = '内部链接的目标窗口';
@@ -147,6 +153,11 @@ $lang['ftp____port'] = 'Safemode Hack 的 FTP 端口';
 $lang['ftp____user'] = 'Safemode Hack 的 FTP 用户名';
 $lang['ftp____pass'] = 'Safemode Hack 的 FTP 密码';
 $lang['ftp____root'] = 'Safemode Hack 的 FTP 根路径';
+
+/* typography options */
+$lang['typography_o_0'] = '无';
+$lang['typography_o_1'] = '仅限双引号';
+$lang['typography_o_2'] = '所有引号（不一定能正常运行）';
 
 /* userewrite options */
 $lang['userewrite_o_0'] = '无';
