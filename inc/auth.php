@@ -53,22 +53,24 @@
   }
 
   // do the login either by cookie or provided credentials
-  if($conf['useacl'] && $auth){
-    if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
-    if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
-    if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
+  if($conf['useacl']){
+    if($auth){
+      if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
+      if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
+      if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
 
-    // if no credentials were given try to use HTTP auth (for SSO)
-    if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
-      $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
-      $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
-    }
+      // if no credentials were given try to use HTTP auth (for SSO)
+      if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
+        $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
+        $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
+      }
 
-    // external trust mechanism in place?
-    if(!is_null($auth) && $auth->canDo('external')){
-      $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
-    }else{
-      auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+      // external trust mechanism in place?
+      if(!is_null($auth) && $auth->canDo('external')){
+        $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+      }else{
+        auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+      }
     }
 
     //load ACL into a global array
