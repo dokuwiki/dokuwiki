@@ -1,0 +1,14 @@
+Eine Datei wurde in Ihrem Wiki hochgeladen. Hier sind die Details:
+
+Datei      : @MEDIA@
+Datum      : @DATE@
+Browser    : @BROWSER@
+IP-Adresse : @IPADDRESS@
+Hostname   : @HOSTNAME@
+Größe      : @SIZE@
+MIME-Typ   : @MIME@
+Benutzer   : @USER@
+
+-- 
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@

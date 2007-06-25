@@ -1,0 +1,7 @@
+====== Seiten wieder herstellen ======
+
+Dieses Plugin dient der automatischen Wiederherstellung von Seiten nach einem
+Spam Angriff. Geben Sie zunächst einen Suchbegriff (z.B. eine Spam URL) ein um
+eine Liste betroffener Seiten zu erhalten. Nachdem Sie sich vergewissert haben,
+dass die gefundenen Seiten wirklich Spam enthalten, können Sie die Seiten
+wieder herstellen.
