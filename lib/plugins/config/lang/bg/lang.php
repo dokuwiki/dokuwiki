@@ -3,184 +3,147 @@
  * bulgarian language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Nikolay Vladimirov <nikolay@vladimiroff.com
+ * @author Nikolay Vladimirov <nikolay@vladimiroff.com
+ * @author Nikolay Vladimirof <nikolay@vladimiroff.com>
  */
-
-// for admin plugins, the menu prompt to be displayed in the admin menu
-// if set here, the plugin doesn't need to override the getMenuText() method
-$lang['menu']       = 'Настройки';
-
-$lang['error']      = 'Невъзможно е обновяването на настройките, поради невалидна стойност, моля, прегледайте промените си и пробвайте отново.
+$lang[menu]                    = 'Настройки';
+$lang[error]                   = 'Невъзможно е обновяването на настройките, поради невалидна стойност, моля, прегледайте промените си и пробвайте отново.
                        <br />Неверните стойности ще бъдат обградени от червена рамка.';
-$lang['updated']    = 'Обновяването на настройките бе успешно.';
-$lang['nochoice']   = '(няма друг възможен избор)';
-$lang['locked']     = 'Невъзможно е обновяването на файлът с настройките, ако това не е нарочно, проверете,<br />
+$lang[updated]                 = 'Обновяването на настройките бе успешно.';
+$lang[nochoice]                = '(няма друг възможен избор)';
+$lang[locked]                  = 'Невъзможно е обновяването на файлът с настройките, ако това не е нарочно, проверете,<br />
                         дали локалните име на файл  и права са верни.';
-
-/* --- Config Setting Headers --- */
-$lang['_configuration_manager'] = 'Управление на настройките'; //same as heading in intro.txt
-$lang['_header_dokuwiki'] = 'DokuWiki настройки';
-$lang['_header_plugin'] = 'Настройки на приставките';
-$lang['_header_template'] = 'Настройки на шаблоните';
-$lang['_header_undefined'] = 'Неопределени настройки';
-
-/* --- Config Setting Groups --- */
-$lang['_basic'] = 'Основни настройки';
-$lang['_display'] = 'Настройки на изгледа';
-$lang['_authentication'] = 'Настройки на идентификацията';
-$lang['_anti_spam'] = 'Анти-спам настройки';
-$lang['_editing'] = 'Настройки на редактирането';
-$lang['_links'] = 'Настройки на препратките';
-$lang['_media'] = 'Настройки на медията';
-$lang['_advanced'] = 'Допълнителни настройки';
-$lang['_network'] = 'Мрежови настройки';
-// The settings group name for plugins and templates can be set with
-// plugin_settings_name and template_settings_name respectively. If one
-// of these lang properties is not set, the group name will be generated
-// from the plugin or template name and the localized suffix.
-$lang['_plugin_sufix'] = 'Настройки на приставките';
-$lang['_template_sufix'] = 'Настройки на шаблони';
-
-/* --- Undefined Setting Messages --- */
-$lang['_msg_setting_undefined'] = 'Няма метаданни на настройките.';
-$lang['_msg_setting_no_class'] = 'Няма клас настройки.';
-$lang['_msg_setting_no_default'] = 'Няма стандартна стойност.';
-
-/* -------------------- Config Options --------------------------- */
-
-$lang['fmode']       = 'Режим(права) на създаване на файловете';
-$lang['dmode']       = 'Режим(права) за създаване на директориите';
-$lang['lang']        = 'Език';
-$lang['basedir']     = 'Главна директория';
-$lang['baseurl']     = 'Главен адрес(URL)';
-$lang['savedir']     = 'Директория за записване на данните';
-$lang['start']       = 'Име на началната страница';
-$lang['title']       = 'Име на Уикито';
-$lang['template']    = 'Шаблон';
-$lang['fullpath']    = 'Показване на пълният път към страниците в края(footer)';
-$lang['recent']      = 'Последни промени';
-$lang['breadcrumbs'] = 'Брой на следите';
-$lang['youarehere']  = 'Йерархични следи';
-$lang['typography']  = 'Do typographical replacements';
-$lang['htmlok']      = 'Позволяване на HTML';
-$lang['phpok']       = 'Позволяване на PHP';
-$lang['dformat']     = 'Формат на датата (виж. <a href="http://www.php.net/date">date</a> функцията на PHP)';
-$lang['signature']   = 'Подпис';
-$lang['toptoclevel'] = 'Главно ниво за съдържанието';
-$lang['maxtoclevel'] = 'Максимално ниво на съдържанието';
-$lang['maxseclevel'] = 'Максимално ниво на редактиране на секция';
-$lang['camelcase']   = 'Използване CamelCase за препратки';
-$lang['deaccent']    = 'Чисти имена на страници';
-$lang['useheading']  = 'Използване на първото заглавие за име на страница';
-$lang['refcheck']    = 'Проверка за препратка на медия';
-$lang['refshow']     = 'Number of media references to show';
-$lang['allowdebug']  = 'Пускане на debug <b>изключете, ако не е нужен!</b>';
-
-$lang['usewordblock']= 'Блокиране на спам базирано на списък от думи';
-$lang['indexdelay']  = 'Забавяне преди индексиране(секунди)';
-$lang['relnofollow'] = 'Използване на rel="nofollow" за външни връзки';
-$lang['mailguard']   = 'Обезобразяване на адреса на е-пощата';
-$lang['iexssprotect']= 'Проверяване на качените файлове за възможно зловреден JavaScript и HTML код';
-
-/* Authentication Options */
-$lang['useacl']      = 'Използване на списъци за достъп';
-$lang['autopasswd']  = 'Автоматично генериране на пароли';
-$lang['authtype']    = 'Метод на идентификация';
-$lang['passcrypt']   = 'Метод за криптиране на паролите';
-$lang['defaultgroup']= 'Група по подразбиране';
-$lang['superuser']   = 'Суперпотребител - група или потребител с пълен достъп до всички страници и функции без значение от настройките на списъците за достъп(ACL)';
-$lang['manager']     = 'Управител - група или потребител, с достъп до определени управляващи фунции ';
-$lang['profileconfirm'] = 'Потвърждаване на промени в профила с парола';
-$lang['disableactions'] = 'Изключване на DokuWiki действия ';
-$lang['disableactions_check'] = 'Проверка';
-$lang['disableactions_subscription'] = 'Записване/Отписване';
-$lang['disableactions_wikicode'] = 'Преглед на кода/Експортиране на Rаw';
-$lang['disableactions_other'] = 'Други действия (разделени с запетая)';
-
-/* Advanced Options */
-$lang['updatecheck'] = 'Проверка за нови версии и предупреждения за сигурност? Dokiwiki трябва да може да се свърже със  splitbrain.org за тази функционалност.';
-$lang['userewrite']  = 'Използване на приятни URL';
-$lang['useslash']    = 'Използване на наклонена черта за разделител на именнипространсвта в  URLs';
-$lang['usedraft']    = 'Автоматично запазване на чернова при редактиране';
-$lang['sepchar']     = 'Разделител между думите в имената на страници';
-$lang['canonical']   = 'Използване само на правилни(cannonical) URL';
-$lang['autoplural']  = 'Проверка за множествено число в препратките';
-$lang['compression'] = 'Метод за компресия на  attic файлове';
-$lang['cachetime']   = 'Максимална възраст на кеша (сек)';
-$lang['locktime']    = 'Максимална възраст на заключващите файлове (сек)';
-$lang['fetchsize']   = 'Максимален размер (байтове), който fetch.php може да дърпа';
-$lang['notify']      = 'Пращане на съобщения за промени на тази e-поща';
-$lang['registernotify'] = 'Пращане информация на нови потребители на тази е-поща';
-$lang['mailfrom']    = 'Адрес на е-поща, който да се използва за пращане на автоматичната поща';
-$lang['gzip_output'] = 'Използване gzip Кодиране на съдържанието(Content-Encoding) за xhtml';
-$lang['gdlib']       = 'Версия на GD Lib';
-$lang['im_convert']  = 'Път до инструмента за трансформация на ImageMagick';
-$lang['jpg_quality'] = 'JPG качество на компресия (0-100)';
-$lang['spellchecker']= 'Проверка за правопис ';
-$lang['subscribers'] = 'Поддръжка за абониране към страница';
-$lang['compress']    = 'Компактен  CSS и  javascript изход';
-$lang['hidepages']   = 'Скриване на съвпадащи имена на страници(regular expressions)';
-$lang['send404']     = 'Пращане на "HTTP 404/Page Not Found" за несъществуващи страници';
-$lang['sitemap']     = 'Генериране на Google sitemap (дни)';
-$lang['broken_iua']  = 'Отметнете, ако ignore_user_abort функцията не работи, търсенето може да не се извършва правилно.Известно е, че комбинацията IIS+PHP/CGI е лоша. Вижте  <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Грешка 852</a> за повече информация.';
-
-$lang['rss_type']    = 'Вид на XML източника(feed)';
-$lang['rss_linkto']  = 'XML feed links to';
-$lang['rss_update']  = 'Интервал на обновяване XML източника (сек)';
-$lang['recent_days'] = 'Колко последни промени да се пазят (дни)';
-$lang['rss_show_summary'] = 'XML feed show summary in title';
-
-/* Target options */
-$lang['target____wiki']      = 'Прозорец за вътрешни препратки';
-$lang['target____interwiki'] = 'Прозорец за вътрешни уики препратки';
-$lang['target____extern']    = 'Прозорец за външни препратки';
-$lang['target____media']     = 'Прозорец за препратки към медия';
-$lang['target____windows']   = 'Прозорец за препратки към прозорци';
-
-/* Proxy Options */
-$lang['proxy____host'] = 'Име на прокси сървър';
-$lang['proxy____port'] = 'Порт на проксито';
-$lang['proxy____user'] = 'Потребител за проксито';
-$lang['proxy____pass'] = 'Парола за проксито';
-$lang['proxy____ssl']  = 'Използване на ssl за връзка към проксито';
-
-/* Safemode Hack */
-$lang['safemodehack'] = 'safemode хак';
-$lang['ftp____host'] = 'FTP сървър за safemode хака';
-$lang['ftp____port'] = 'FTP порт за safemode хака';
-$lang['ftp____user'] = 'FTP потребител за safemode хака';
-$lang['ftp____pass'] = 'FTP парола за safemode хака';
-$lang['ftp____root'] = 'FTP главна директория safemode хака';
-
-/* userewrite options */
-$lang['userewrite_o_0'] = 'без';
-$lang['userewrite_o_1'] = '.htaccess';
-$lang['userewrite_o_2'] = 'вътрешно от DokuWiki ';
-
-/* deaccent options */
-$lang['deaccent_o_0'] = 'изключено';
-$lang['deaccent_o_1'] = 'премахване на акценти';
-$lang['deaccent_o_2'] = 'романизация';
-
-/* gdlib options */
-$lang['gdlib_o_0'] = 'GD Lib не е достъпна';
-$lang['gdlib_o_1'] = 'Версия 1.x';
-$lang['gdlib_o_2'] = 'Автоматично разпознаване';
-
-/* rss_type options */
-$lang['rss_type_o_rss']  = 'RSS 0.91';
-$lang['rss_type_o_rss1'] = 'RSS 1.0';
-$lang['rss_type_o_rss2'] = 'RSS 2.0';
-$lang['rss_type_o_atom'] = 'Atom 0.3';
-
-/* rss_linkto options */
-$lang['rss_linkto_o_diff']    = 'изглед на разликите';
-$lang['rss_linkto_o_page']    = 'променената страница';
-$lang['rss_linkto_o_rev']     = 'списък на текущите версии';
-$lang['rss_linkto_o_current'] = 'текущата страница';
-
-/* compression options */
-$lang['compression_o_0']   = 'без';
-$lang['compression_o_gz']  = 'gzip';
-$lang['compression_o_bz2'] = 'bz2';
-
+$lang[_configuration_manager]  = 'Управление на настройките';
+$lang[_header_dokuwiki]        = 'DokuWiki настройки';
+$lang[_header_plugin]          = 'Настройки на приставките';
+$lang[_header_template]        = 'Настройки на шаблоните';
+$lang[_header_undefined]       = 'Неопределени настройки';
+$lang[_basic]                  = 'Основни настройки';
+$lang[_display]                = 'Настройки на изгледа';
+$lang[_authentication]         = 'Настройки на идентификацията';
+$lang[_anti_spam]              = 'Анти-спам настройки';
+$lang[_editing]                = 'Настройки на редактирането';
+$lang[_links]                  = 'Настройки на препратките';
+$lang[_media]                  = 'Настройки на медията';
+$lang[_advanced]               = 'Допълнителни настройки';
+$lang[_network]                = 'Мрежови настройки';
+$lang[_plugin_sufix]           = 'Настройки на приставките';
+$lang[_template_sufix]         = 'Настройки на шаблони';
+$lang[_msg_setting_undefined]  = 'Няма метаданни на настройките.';
+$lang[_msg_setting_no_class]   = 'Няма клас настройки.';
+$lang[_msg_setting_no_default] = 'Няма стандартна стойност.';
+$lang[fmode]                   = 'Режим(права) на създаване на файловете';
+$lang[dmode]                   = 'Режим(права) за създаване на директориите';
+$lang[lang]                    = 'Език';
+$lang[basedir]                 = 'Главна директория';
+$lang[baseurl]                 = 'Главен адрес(URL)';
+$lang[savedir]                 = 'Директория за записване на данните';
+$lang[start]                   = 'Име на началната страница';
+$lang[title]                   = 'Име на Уикито';
+$lang[template]                = 'Шаблон';
+$lang[fullpath]                = 'Показване на пълния път до страниците в долния им край.';
+$lang[recent]                  = 'Последни промени';
+$lang[breadcrumbs]             = 'Брой на следите';
+$lang[youarehere]              = 'Йерархични следи';
+$lang[typography]              = 'Поправяне на разместени букви';
+$lang[htmlok]                  = 'Позволяване на HTML';
+$lang[phpok]                   = 'Позволяване на PHP';
+$lang[dformat]                 = 'Формат на датата (виж. <a href="http://www.php.net/date">date</a> функцията на PHP)';
+$lang[signature]               = 'Подпис';
+$lang[toptoclevel]             = 'Главно ниво за съдържанието';
+$lang[maxtoclevel]             = 'Максимално ниво на съдържанието';
+$lang[maxseclevel]             = 'Максимално ниво на редактиране на секция';
+$lang[camelcase]               = 'Използване CamelCase за препратки';
+$lang[deaccent]                = 'Чисти имена на страници';
+$lang[useheading]              = 'Използване на първото заглавие за име на страница';
+$lang[refcheck]                = 'Проверка за препратка на медия';
+$lang[refshow]                 = 'Number of media references to show';
+$lang[allowdebug]              = 'Пускане на debug <b>изключете, ако не е нужен!</b>';
+$lang[usewordblock]            = 'Блокиране на спам базирано на списък от думи';
+$lang[indexdelay]              = 'Забавяне преди индексиране(секунди)';
+$lang[relnofollow]             = 'Използване на rel="nofollow" за външни връзки';
+$lang[mailguard]               = 'Обезобразяване на адреса на е-пощата';
+$lang[iexssprotect]            = 'Проверяване на качените файлове за възможно зловреден JavaScript и HTML код';
+$lang[useacl]                  = 'Използване на списъци за достъп';
+$lang[autopasswd]              = 'Автоматично генериране на пароли';
+$lang[authtype]                = 'Метод на идентификация';
+$lang[passcrypt]               = 'Метод за криптиране на паролите';
+$lang[defaultgroup]            = 'Група по подразбиране';
+$lang[superuser]               = 'Суперпотребител - група или потребител с пълен достъп до всички страници и функции без значение от настройките на списъците за достъп(ACL)';
+$lang[manager]                 = 'Управител - група или потребител, с достъп до определени управляващи фунции ';
+$lang[profileconfirm]          = 'Потвърждаване на промени в профила с парола';
+$lang[disableactions]          = 'Изключване на DokuWiki действия ';
+$lang[disableactions_check]    = 'Проверка';
+$lang[disableactions_subscription] = 'Записване/Отписване';
+$lang[disableactions_wikicode] = 'Преглед на кода/Експортиране на Rаw';
+$lang[disableactions_other]    = 'Други действия (разделени с запетая)';
+$lang[sneaky_index]            = 'По подразбиране DokuWiki ще показва всички именнипространства в Индекса. Избирането на настройката ще доведе до скриване на тези, за които потребителят няма права за четене. Това може да означава и скриване на достъпните подименнипространства. Това може да направи индекса неизползваем при определени настрокйки на списъците за контрол на достъп(ACL). ';
+$lang[updatecheck]             = 'Проверка за нови версии и предупреждения за сигурност? Dokiwiki трябва да може да се свърже със  splitbrain.org за тази функционалност.';
+$lang[userewrite]              = 'Използване на приятни URL';
+$lang[useslash]                = 'Използване на наклонена черта за разделител на именнипространсвта в  URL';
+$lang[usedraft]                = 'Автоматично запазване на чернова при редактиране';
+$lang[sepchar]                 = 'Разделител между думите в имената на страници';
+$lang[canonical]               = 'Използване на уеднаквени URL';
+$lang[autoplural]              = 'Проверка за множествено число в препратките';
+$lang[compression]             = 'Метод за компресия на  attic файлове';
+$lang[cachetime]               = 'Максимална възраст на кеша (сек)';
+$lang[locktime]                = 'Максимална възраст на заключващите файлове (сек)';
+$lang[fetchsize]               = 'Максимален размер (байтове), който fetch.php може да дърпа';
+$lang[notify]                  = 'Пращане на съобщения за промени на тази e-поща';
+$lang[registernotify]          = 'Пращане информация на нови потребители на тази е-поща';
+$lang[mailfrom]                = 'Адрес на е-поща, който да се използва за пращане на автоматичната поща';
+$lang[gzip_output]             = 'Използване gzip Кодиране на съдържанието(Content-Encoding) за xhtml';
+$lang[gdlib]                   = 'Версия на GD Lib';
+$lang[im_convert]              = 'Път до инструмента за трансформация на ImageMagick';
+$lang[jpg_quality]             = 'Kачество на JPG компресията (0-100)';
+$lang[spellchecker]            = 'Проверка за правопис ';
+$lang[subscribers]             = 'Поддръжка за абониране към страница';
+$lang[compress]                = 'Компактен  CSS и  javascript изход';
+$lang[hidepages]               = 'Скриване на съвпадащи имена на страници(regular expressions)';
+$lang[send404]                 = 'Пращане на "HTTP 404/Page Not Found" за несъществуващи страници';
+$lang[sitemap]                 = 'Генериране на Google sitemap (дни)';
+$lang[broken_iua]              = 'Отметнете, ако ignore_user_abort функцията не работи, търсенето може да не се извършва правилно.Известно е, че комбинацията IIS+PHP/CGI е лоша. Вижте  <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Грешка 852</a> за повече информация.';
+$lang[rss_type]                = 'Вид на XML източника(feed)';
+$lang[rss_linkto]              = 'XML feed links to';
+$lang[rss_update]              = 'Интервал на обновяване XML източника (сек)';
+$lang[recent_days]             = 'Колко последни промени да се пазят (дни)';
+$lang[rss_show_summary]        = 'XML feed show summary in title';
+$lang[target____wiki]          = 'Прозорец за вътрешни препратки';
+$lang[target____interwiki]     = 'Прозорец за вътрешни уики препратки';
+$lang[target____extern]        = 'Прозорец за външни препратки';
+$lang[target____media]         = 'Прозорец за препратки към медия';
+$lang[target____windows]       = 'Прозорец за препратки към прозорци';
+$lang[proxy____host]           = 'Име на прокси сървър';
+$lang[proxy____port]           = 'Порт на проксито';
+$lang[proxy____user]           = 'Потребител за проксито';
+$lang[proxy____pass]           = 'Парола за проксито';
+$lang[proxy____ssl]            = 'Използване на ssl за връзка към проксито';
+$lang[safemodehack]            = 'safemode хак';
+$lang[ftp____host]             = 'FTP сървър за safemode хака';
+$lang[ftp____port]             = 'FTP порт за safemode хака';
+$lang[ftp____user]             = 'FTP потребител за safemode хака';
+$lang[ftp____pass]             = 'FTP парола за safemode хака';
+$lang[ftp____root]             = 'FTP главна директория safemode хака';
+$lang[typography_o_0]          = 'без';
+$lang[typography_o_1]          = 'Само кавички';
+$lang[typography_o_2]          = 'Всякакви апострофи(не винаги работи)';
+$lang[userewrite_o_0]          = 'без';
+$lang[userewrite_o_1]          = '.htaccess';
+$lang[userewrite_o_2]          = 'вътрешно от DokuWiki ';
+$lang[deaccent_o_0]            = 'изключено';
+$lang[deaccent_o_1]            = 'премахване на акценти';
+$lang[deaccent_o_2]            = 'романизация';
+$lang[gdlib_o_0]               = 'GD Lib не е достъпна';
+$lang[gdlib_o_1]               = 'Версия 1.x';
+$lang[gdlib_o_2]               = 'Автоматично разпознаване';
+$lang[rss_type_o_rss]          = 'RSS 0.91';
+$lang[rss_type_o_rss1]         = 'RSS 1.0';
+$lang[rss_type_o_rss2]         = 'RSS 2.0';
+$lang[rss_type_o_atom]         = 'Atom 0.3';
+$lang[rss_linkto_o_diff]       = 'изглед на разликите';
+$lang[rss_linkto_o_page]       = 'променената страница';
+$lang[rss_linkto_o_rev]        = 'списък на текущите версии';
+$lang[rss_linkto_o_current]    = 'текущата страница';
+$lang[compression_o_0]         = 'без';
+$lang[compression_o_gz]        = 'gzip';
+$lang[compression_o_bz2]       = 'bz2';
