@@ -3,6 +3,12 @@ require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
+    function setup() {
+        parent::setup();
+        global $conf;
+        $conf['typography'] = 2;
+    }
+
     function TestOfDoku_Parser_Quotes() {
         $this->UnitTestCase('TestOfDoku_Parser_Quotes');
     }
@@ -255,7 +261,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('cdata',array('s world')),
             array('singlequoteclosing',array()),
             array('doublequoteclosing',array()),
-            array('cdata',array('.'."\n")),
+            array('cdata',array(".\n")),
             array('p_close',array()),
             array('document_end',array()),
         );

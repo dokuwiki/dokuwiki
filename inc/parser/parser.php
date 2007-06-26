@@ -757,26 +757,26 @@ class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
     function connectTo($mode) {
         global $conf;
 
-        $ws  =  '[\s/\#~:+=&%@\-;,\x28\x29\]\[{}><"\']';   // whitespace
-        $nws = '[^\s/\#~:+=&%@\-;,\x28\x29\]\[{}><"\']';  // non whitespace
+        $ws   =  '\s/\#~:+=&%@\-\x28\x29\]\[{}><"\'';   // whitespace
+        $punc =  ';,\.?!';
 
         if($conf['typography'] == 2){
             $this->Lexer->addSpecialPattern(
-                        "(?<=^|$ws)'(?=$nws)",$mode,'singlequoteopening'
+                        "(?<=^|[$ws])'(?=[^$ws$punc])",$mode,'singlequoteopening'
                     );
             $this->Lexer->addSpecialPattern(
-                        "(?<=^|$nws)'(?=$|$ws)",$mode,'singlequoteclosing'
+                        "(?<=^|[^$ws]|[$punc])'(?=$|[$ws$punc])",$mode,'singlequoteclosing'
                     );
             $this->Lexer->addSpecialPattern(
-                        "(?<=^|$nws)'(?=$|$nws)",$mode,'apostrophe'
+                        "(?<=^|[^$ws$punc])'(?=$|[^$ws$punc])",$mode,'apostrophe'
                     );
         }
 
         $this->Lexer->addSpecialPattern(
-                    "(?<=^|$ws)\"(?=$nws)",$mode,'doublequoteopening'
+                    "(?<=^|[$ws])\"(?=[^$ws$punc])",$mode,'doublequoteopening'
                 );
         $this->Lexer->addSpecialPattern(
-                    "(?<=^|$nws)\"",$mode,'doublequoteclosing'
+                    "\"",$mode,'doublequoteclosing'
                 );
 
 
