@@ -39,7 +39,7 @@ function plugin_list($type='',$all=false){
       } else {
         if ($dp = @opendir(DOKU_PLUGIN."$plugin/$type/")) {
           while (false !== ($component = readdir($dp))) {
-            if ($component == '.' || $component == '..' || strtolower(substr($component, -4)) != ".php") continue;
+            if (substr($component,0,1) == '.' || strtolower(substr($component, -4)) != ".php") continue;
             if (is_file(DOKU_PLUGIN."$plugin/$type/$component")) {
               $plugins[] = $plugin.'_'.substr($component, 0, -4);
             }
