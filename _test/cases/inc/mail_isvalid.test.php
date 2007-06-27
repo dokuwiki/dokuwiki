@@ -20,6 +20,8 @@ class mail_isvalid extends UnitTestCase {
         $tests[] = array('bugs@php.net.',false);
         $tests[] = array('bu(g)s@php.net1',false);
         $tests[] = array('bu[g]s@php.net1',false);
+        $tests[] = array('somebody@somewhere.museum',true);
+        $tests[] = array('somebody@somewhere.travel',true);
 
         foreach($tests as $test){
             $this->assertEqual($test[0].'('.mail_isvalid($test[0]).')',$test[0].'('.(int)$test[1].')');
