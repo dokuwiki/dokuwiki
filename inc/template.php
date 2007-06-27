@@ -435,7 +435,7 @@ function tpl_button($type){
       print html_topbtn();
       return true;
     case 'login':
-      if($conf['useacl']){
+      if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
           print html_btn('logout',$ID,'',array('do' => 'logout',));
         }else{
@@ -451,7 +451,7 @@ function tpl_button($type){
       }
       return false;
     case 'subscription':
-      if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
+      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']){
             print html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
@@ -466,7 +466,7 @@ function tpl_button($type){
       print html_btn('backlink',$ID,'',array('do' => 'backlink'));
       return true;
     case 'profile':
-      if($conf['useacl'] && $_SERVER['REMOTE_USER'] &&
+      if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $auth &&
          $auth->canDo('Profile') && ($ACT!='profile')){
         print html_btn('profile',$ID,'',array('do' => 'profile'));
         return true;
@@ -564,7 +564,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       }
       return false;
     case 'login':
-      if($conf['useacl']){
+      if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
           tpl_link(wl($ID,'do=logout'),$pre.$lang['btn_logout'].$suf,'class="action logout" rel="nofollow"');
         }else{
@@ -581,7 +581,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       return false;
    case 'subscribe':
    case 'subscription':
-      if($conf['useacl'] && $ACT == 'show' && $conf['subscribers'] == 1){
+      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']) {
             tpl_link(wl($ID,'do=unsubscribe'),$pre.$lang['btn_unsubscribe'].$suf,'class="action unsubscribe" rel="nofollow"');
@@ -596,7 +596,7 @@ function tpl_actionlink($type,$pre='',$suf=''){
       tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink" rel="nofollow"');
       return true;
     case 'profile':
-      if($conf['useacl'] && $_SERVER['REMOTE_USER'] &&
+      if($conf['useacl'] && $auth && $_SERVER['REMOTE_USER'] &&
          $auth->canDo('Profile') && ($ACT!='profile')){
         tpl_link(wl($ID,'do=profile'),$pre.$lang['btn_profile'].$suf, 'class="action profile" rel="nofollow"');
         return true;
