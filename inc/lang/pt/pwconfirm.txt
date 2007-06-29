@@ -1,0 +1,13 @@
+Olá @FULLNAME@!
+
+Alguém efectuou um pedido para uma nova senha para o seu perfil @TITLE@ em @DOKUWIKIURL@
+
+Se não foi você que efectuou o pedido então por favor ignore esta mensagem.
+
+Senão, para confirmar o pedido, por favor siga este link:
+
+@CONFIRM@
+
+--
+
+Esta mensagem foi gerada automaticamente pelo motor DokuWiki em @DOKUWIKIURL@

@@ -17,4 +17,4 @@ User          : @USER@
 
 ----
 
-Esta mensagem foi gerada automaticamente pelo motor DokuWiki.
+Esta mensagem foi gerada automaticamente pelo motor DokuWiki em @DOKUWIKIURL@

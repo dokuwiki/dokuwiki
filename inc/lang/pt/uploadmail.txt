@@ -1,0 +1,14 @@
+Um ficheiro foi carregado. Aqui estão os detalhes:
+
+Ficheiro : @MEDIA@
+Data : @DATE@
+Browser : @BROWSER@
+Endereço IP : @IPADDRESS@
+Hostname : @HOSTNAME@
+Tamanho : @SIZE@
+MIME Type : @MIME@
+Utilizador : @USER@
+
+----
+
+Esta mensagem foi gerada pelo DokuWiki em @DOKUWIKIURL@

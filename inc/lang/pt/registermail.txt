@@ -1,0 +1,14 @@
+Inscrição de um novo utilizador. Aqui estão os detalhes:
+
+Username : @NEWUSER@
+Nome Completo : @NEWNAME@
+E-mail : @NEWEMAIL@
+
+Data : @DATE@
+Browser : @BROWSER@
+Endereço IP : @IPADDRESS@
+Hostname : @HOSTNAME@
+
+----
+
+Esta mensagem foi gerada pelo DokuWiki em @DOKUWIKIURL@
