@@ -1,0 +1,5 @@
+====== Obnova zaspamovaných stránek ======
+
+Tato stránka pomůže při automatické obnově po spamovém útoku.  Pro nalezení
+seznamu zaspamovaných stránek nedřív zadejte hledaný výraz (např. spamové URL)
+a pak potvrďte, že nalezené stránky opravdu obsahují spam a mohou být obnoveny.

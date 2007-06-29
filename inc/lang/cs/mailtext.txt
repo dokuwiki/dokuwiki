@@ -1,4 +1,4 @@
-Stránka ve vašem DokuWiki byla změněna. Zde jsou podrobnosti:
+Stránka ve vaší DokuWiki byla změněna. Zde jsou podrobnosti:
 
 Datum       : @DATE@
 Prohlížeč   : @BROWSER@
@@ -13,5 +13,5 @@ Uživatel    : @USER@
 
 
 -- 
-Tato zpráva byla vygenerována systémem DokuWiki:
+Tato zpráva byla vygenerována systémem DokuWiki
 @DOKUWIKIURL@

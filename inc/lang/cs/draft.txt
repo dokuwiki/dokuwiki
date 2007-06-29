@@ -1,0 +1,10 @@
+====== Nalezen koncept ======
+
+Vaše minulá editace této stránky nebyla korektně dokončena. DokuWiki
+během editace automaticky uložila koncept, který nyní můžete
+použít a pokračovat v editaci. Níže je vidět text uložený během
+minulé editace.
+
+Prosím rozhodněte se, jestli chcete automaticky uložený koncept
+//obnovit// a pokračovat v editaci, nebo jej chcete //vymazat//, nebo
+úplně //zrušit// celý proces editace.

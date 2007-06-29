@@ -1,6 +1,5 @@
 ====== Správa pluginů ======
 
 Na této stránce lze spravovat pluginy DokuWiki [[doku>wiki:plugins|plugins]].
-Aby bylo možné stahovat a instalovat pluginy, musí mít webový server přístup
-pro zápis do adresáře //plugin//.
-
+Aby bylo možné stahovat a instalovat pluginy, musí mít webový
+server přístup pro zápis do adresáře //plugin//.

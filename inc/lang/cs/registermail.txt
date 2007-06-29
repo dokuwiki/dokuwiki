@@ -1,0 +1,14 @@
+Zaregistroval se nový uživatel. Zde jsou detaily:
+
+Uživatelské jméno : @NEWUSER@
+Celé jméno : @NEWNAME@
+E-mail : @NEWEMAIL@
+
+Datum : @DATE@
+Prohlížeč : @BROWSER@
+IP adresa : @IPADDRESS@
+Hostitel : @HOSTNAME
+
+-- 
+Tato zpráva byla vygenerována systémem DokuWiki
+@DOKUWIKIURL@

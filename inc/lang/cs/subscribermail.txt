@@ -9,8 +9,8 @@ Tady jsou detaily:
 
 Pro odhlášení z odběru změn pro tuto stránku se přihlašte do wiki
 @DOKUWIKIURL@ a vstupte na stránku
-@NEWPAGE@, kde stisknete tlačítko 'Neodebírat změny mailem'.
+@NEWPAGE@, kde stisknete tlačítko "Neodebírat změny mailem".
 
 -- 
-Tato zpráva byla vygenerována systémem DokuWiki:
+Tato zpráva byla vygenerována systémem DokuWiki
 @DOKUWIKIURL@

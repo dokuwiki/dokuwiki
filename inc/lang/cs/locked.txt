@@ -1,4 +1,4 @@
 ====== Stránka je zamknutá ======
 
-Tato stránka je právě zamknutá pro úpravy jiným uživatelem. Musíte počkat než
-onen uživatel dokončí své úpravy, nebo než tento zámek vyprší.
+Tato stránka je právě zamknutá pro úpravy jiným uživatelem. Musíte počkat, než
+onen uživatel dokončí své úpravy nebo než tento zámek vyprší.
