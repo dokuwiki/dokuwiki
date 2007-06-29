@@ -92,7 +92,7 @@ $lang['lockedby']     = 'Práve zamknuté:';
 $lang['lockexpire']   = 'Zámok vyprší:';
 $lang['willexpire']   = 'Váš zámok pre editáciu za chvílu vyprší.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
 
-$lang['notsavedyet'] = 'Neuložené zmeny budú ztratené.\nChcete naozaj pokračovať?';
+$lang['notsavedyet'] = 'Neuložené zmeny budú stratené.\nChcete naozaj pokračovať?';
 $lang['rssfailed']   = 'Nastala chyba pri vytváraní tohto RSS: ';
 $lang['nothingfound']= 'Nič nenájdené.';
 
@@ -123,7 +123,7 @@ $lang['ref_hidden']  = 'Niektoré referencie sú na stránky pre ktoré nemáte 
 $lang['hits']       = '- počet výskytov';
 $lang['quickhits']  = 'Zodpovedajúce stránky';
 $lang['toc']        = 'Obsah';
-$lang['current']    = 'aktualné';
+$lang['current']    = 'aktuálne';
 $lang['yours']      = 'Vaša verzia';
 $lang['diff']       = 'zobrazit rozdiely voči aktuálnej verzii';
 $lang['line']       = 'Riadok';

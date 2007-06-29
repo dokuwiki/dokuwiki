@@ -10,7 +10,7 @@ Tu sú zmeny:
 Pre odhlásenie sa z tejto stránky choďte na
 @DOKUWIKIURL@, potom navštívte
 @NEWPAGE@
-a zvolte 'Neposielať zmeny'.
+a zvoľte 'Neposielať zmeny'.
 
 --
 Tento mail bol vygenerovaný DokuWiki na
