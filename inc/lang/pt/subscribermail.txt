@@ -1,0 +1,15 @@
+Olá,
+
+A página @PAGE@ em @TITLE@ foi alterda.
+Aqui estão as diferenças:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Para receber mais notificações desta página alterada, por favor, entre no Wiki em @DOKUWIKIURL@ e aceda a @NEWPAGE@ para depois poder clicar no botão [ Não Subscrever ].
+
+
+----
+
+Esta mensagem foi gerada pelo DokuWiki em @DOKUWIKIURL@

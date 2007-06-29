@@ -1,0 +1,3 @@
+====== Enviar nova senha ======
+
+Por favor, insira o seu nome de utilizador neste formulário para requerer uma nova senha para esta conta/perfil. Um link de confirmação será enviado para o endereço de e-mail associado.

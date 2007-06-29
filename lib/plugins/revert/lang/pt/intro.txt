@@ -1,0 +1,3 @@
+====== Gerir Reversões ======
+
+Esta página ajuda a reverter automaticamente de um ataque spam. Para encontrar as páginas afectadas insira primeiro um texto de pesquisa (i.e spam URL), confirme as páginas encontradas como sendo resultantes de um ataque spam e reverta essas edições.
