@@ -412,7 +412,13 @@ if (!class_exists('setting')) {
     function is_default() { return !$this->is_protected() && is_null($this->_local); }
     function error() { return $this->_error; }
 
-    function _out_key() { return str_replace(CM_KEYMARKER,"']['",$this->_key); }
+    function _out_key($pretty=false) {
+        if($pretty){
+            return str_replace(CM_KEYMARKER,"&raquo;",$this->_key);
+        }else{
+            return str_replace(CM_KEYMARKER,"']['",$this->_key);
+        }
+    }
   }
 }
 

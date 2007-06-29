@@ -32,6 +32,23 @@
     /* fixed data column width */
     width: 30em;
 }
+
+#config__manager td.label {
+    padding: 0.8em 0 0.6em 1em;
+    vertical-align: top;
+}
+
+#config__manager td.label span.outkey {
+    font-size: 70%;
+    margin-top: -1.7em;
+    margin-left: -1em;
+    display: block;
+    background-color: __background__;
+    color: __text_neu__;
+    float: left;
+    padding: 0 0.1em;
+}
+
 #config__manager td input.edit {
     width: 30em;
 }
@@ -80,6 +97,7 @@
   width: 14em;
   font-size: 90%;
 }
+
 
 /* IE6 correction */
 * html #config__manager .selection label {
