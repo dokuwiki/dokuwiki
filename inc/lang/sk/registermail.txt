@@ -1,4 +1,3 @@
-
 Nový užívateľ bol registrovaný. Tu sú detaily:
 
 Užívateľské meno : @NEWUSER@

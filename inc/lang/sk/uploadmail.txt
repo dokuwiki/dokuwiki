@@ -1,0 +1,14 @@
+Súbor bol nahraný do DokuWiki. Tu sú podrobnosti:
+
+Súbor : @MEDIA@
+Dátum : @DATE@
+Prehliadač : @BROWSER@
+IP adresa : @IPADDRESS@
+Názov hostiteľa : @HOSTNAME@
+Veľkosť : @SIZE@
+MIME Typ : @MIME@
+Užívateľ : @USER@
+
+--
+Tento mail vygenerovalo DokuWiki na
+@DOKUWIKIURL@
