@@ -1,0 +1,14 @@
+En fil ble lastet opp på din DokuWiki. Her er detaljene:
+
+Fil : @MEDIA@
+Dato : @DATE@
+Nettleser : @BROWSER@
+IP-adresse : @IPADDRESS@
+Vertnavn : @HOSTNAME@
+Størrelse : @SIZE@
+MIME-type : @MIME@
+Bruker : @USER@
+
+--
+Denne e-posten ble generert av DokuWiki på
+@DOKUWIKIURL@

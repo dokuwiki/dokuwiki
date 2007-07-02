@@ -1,0 +1,6 @@
+====== Tilbakestillingsbehandler ======
+
+Denne siden hjelper deg å automatisk reversere forsøpling av sidene.
+For å finne en liste over forsøplede sider, skriv inn en søkestreng
+(f.eks. en søppel-URL). Bekreft deretter at de funnede sidene
+virkelig er forsøplet og tilbakestill endringene.

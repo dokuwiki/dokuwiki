@@ -1,0 +1,11 @@
+====== Konfigurasjonsinnstillinger ======
+
+Bruk denne siden for å kontrollere innstillingene for din DokuWiki.
+For hjelp om hver enkelt innstilling, se [[doku>wiki:config]].
+For mer detaljer om denne innstillingssiden, se [[doku>plugin:config]].
+
+Innstillinger vist med lys rød bakgrunn er beskyttet og kan ikke endres på denne siden.
+Innstillinger vist med blå bakgrunn er standardverdier og innstillinger med hvit bakgrunn
+har blitt satt lokalt for denne installasjonen. Både blå og hvite innstillinger kan endres.
+
+Husk å trykke på **Lagre**-knappen før du forlater siden. Hvis ikke går endringene tapt.

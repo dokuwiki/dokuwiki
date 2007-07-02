@@ -1,0 +1,5 @@
+====== Behandle tillegg ======
+
+På denne siden kan du behandle alt som har å gjøre med DokuWikis [[doku>wiki:plugins|tillegg]].
+For å kunne laste ned og installere et tillegg må webserveren ha skrivetilgang
+til mappen for tillegg.

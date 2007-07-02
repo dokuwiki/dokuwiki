@@ -1,7 +1,7 @@
-====== Administrasjon av Access Control List ======
+====== Administrasjon av lister for adgangskontroll (ACL) ======
 
 På denne siden kan du legge til og fjerne rettigheter for den nåværende 
-siden og alle [[doku>wiki:namespaces|sidenavn]] den befinner seg på. 
+siden og alle [[doku>wiki:namespaces|navnerom]] den befinner seg på. 
 Du burde lese den [[doku>wiki:acl|offisielle dokumentasjonen for ACL]] for 
 å forstå hvordan tilgangskontroll fungerer.
 
