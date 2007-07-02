@@ -1,10 +1,10 @@
 <?php
 /*************************************************************************************
- * asm.php
+ * z80.php
  * -------
  * Author: Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2007 Benny Baumann (http://www.omorphia.de/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2007/02/06
  *
  * ZiLOG Z80 Assembler language file for GeSHi.
@@ -13,6 +13,8 @@
  *
  * CHANGES
  * -------
+ * 2007/06/03 (1.0.1)
+ *   -  Fixed two typos in the language file
  * 2007/02/06 (1.0.0)
  *   -  First Release
  *
@@ -49,15 +51,15 @@ $language_data = array (
 	'KEYWORDS' => array(
 		/*CPU*/
 		1 => array(
-			'adc','add'.'and','bit','call','ccf','cp','cpd','cpdr','cpir','cpi',
+			'adc','add','and','bit','call','ccf','cp','cpd','cpdr','cpir','cpi',
 			'cpl','daa','dec','di','djnz','ei','ex','exx','halt','im','in',
 			'in0','inc','ind','indr','inir','ini','jp','jr','ld','ldd','lddr',
 			'ldir','ldi','mlt','neg','nop','or','otdm','otdmr','otdr','otim',
-			'otimr','otir','out','out0','outd','outi','pop','push','res'.'ret',
+			'otimr','otir','out','out0','outd','outi','pop','push','res','ret',
 			'reti','retn','rl','rla','rlc','rlca','rld','rr','rra','rrc','rrca',
 			'rrd','rst','sbc','scf','set','sla','sl1','sll','slp','sra','srl',
 			'sub','tst','tstio','xor'
-		  ),
+			),
 		/*registers*/
 		2 => array(
 			'a','b','c','d','e','h','l',
@@ -119,15 +121,16 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
-		0 => '0[0-9a-fA-F][0-9a-fA-F]*[hH]',
-		1 => '\%[01]+[bB]',
-		2 => '^[_a-zA-Z][_a-zA-Z0-9]*\:'
+		0 => '0[0-9a-fA-F]{1,32}[hH]',
+		1 => '\%[01]{1,64}[bB]',
+		2 => '^[_a-zA-Z][_a-zA-Z0-9]{0,50}\:'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'TAB_WIDTH' => 8
 );
 
 ?>

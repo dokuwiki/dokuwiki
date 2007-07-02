@@ -4,7 +4,7 @@
  * -----
  * Author: Alberto 'Birckin' de Areba (Birckin@hotmail.com)
  * Copyright: (c) 2006 Alberto de Areba
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2006/05/29
  *
  * mIRC Scripting language file for GeSHi.
@@ -48,6 +48,32 @@ $language_data = array (
 		2 => array(
 			'if', 'elseif', 'else', 'while', 'return', 'goto',
 			),
+		3 => array(
+			'/action','/ajinvite','/alias','/amsg','/ame','/anick','/aop',
+			'/auser','/avoice','/auto','/autojoin','/away','/background','/ban',
+			'/beep','/channel','/clear','/clearall','/clipboard','/close',
+			'/closemsg','/color','/copy','/creq','/ctcp','/ctcpreply','/ctcps',
+			'/dcc','/dde','/ddeserver','/debug','/describe','/disable',
+			'/disconnect','/dlevel','/dll','/dns','/dqwindow','/ebeeps','/echo',
+			'/editbox','/emailaddr','/enable','/events','/exit','/filter',
+			'/findtext','/finger','/flash','/flood','/flush','/flushini',
+			'/font','/fsend','/fserve','/fullname','/ghide','/gload','/gmove',
+			'/gopts','/gplay','/gpoint','/gqreq','/groups','/gshow','/gsize',
+			'/gstop','/gtalk','/gunload','/guser','/help','/hop','/ignore',
+			'/invite','/join','/kick','/linesep','/links','/list','/load',
+			'/loadbuf','/localinfo','/log','/me','/mdi','/mkdir','/mnick',
+			'/mode','/msg','/names','/nick','/noop','/notice','/notify',
+			'/omsg','/onotice','/part','/partall','/pdcc','/perform','/ping',
+			'/play','/pop','/protect','/pvoice','/qmsg','/qme','/query',
+			'/queryrn','/quit','/raw','/remini','/remote','/remove','/rename',
+			'renwin','/resetidle','/rlevel','/rmdir','/run','/ruser','/save',
+			'/savebuf','/save','/saveini','/say','/server','/showmirc','/sline',
+			'/sound','/speak','/splay','/sreq','/strip','/time',
+			//'/timer[N/name]', //Handled as a regular expression below ...
+			'/timers','/timestamp','/titlebar','/tnick','/tokenize','/topic',
+			'/ulist','/unload','/updatenl','/url','/uwho','window','/winhelp',
+			'/write','/writeini','/who','/whois','/whowas'
+			)
 		),
 	'SYMBOLS' => array(
 		'(', ')', '{', '}', '[', ']', '|',
@@ -61,6 +87,7 @@ $language_data = array (
 		'KEYWORDS' => array(
 			1 => 'color: #994444;',
 			2 => 'color: #000000; font-weight: bold;',
+			3 => 'color: #990000; font-weight: bold;',
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080; font-style: italic;',
@@ -87,6 +114,7 @@ $language_data = array (
 			3 => 'color: #888800;',
 			4 => 'color: #000099;',
 			5 => 'color: #000099;',
+			6 => 'color: #990000; font-weight: bold;',
 			),
 		'SCRIPT' => array(
 			)
@@ -114,6 +142,7 @@ $language_data = array (
 			GESHI_AFTER => ''
 			),*/
         5 => 'raw (\d|\*):',
+		6 => '\/timer(?!s\b)[0-9a-zA-Z_]+',
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(

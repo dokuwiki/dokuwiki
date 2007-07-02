@@ -4,7 +4,7 @@
  * -------
  * Author: Simon Butcher (simon@butcher.name)
  * Copyright: (c) 2007 Simon Butcher (http://simon.butcher.name/)
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * CVS Revision Version: $Revision: 1.0 $
  * Date Started: 2007/02/27
  * Last Modified: $Date: 2007/02/28 00:00:00 $

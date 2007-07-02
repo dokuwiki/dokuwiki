@@ -4,7 +4,7 @@
  * -----------
  * Author: Cedric Arrabie (cedric.arrabie@univ-pau.fr)
  * Copyright: (C) 2006 Cetric Arrabie
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2006/04/22
  * 
  * Fortran language file for GeSHi.

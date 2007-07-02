@@ -4,7 +4,7 @@
  * ----------------
  * Author: Roberto Armellin (r.armellin@tin.it)
  * Copyright: (c) 2004 Roberto Armellin, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2004/09/17
  *
  * Visual FoxPro language file for GeSHi.

@@ -4,7 +4,7 @@
  * ---------
  * Author: Moises Deniz
  * Copyright: (c) 2005 Moises Deniz
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2007/03/21
  *
  * Ruby language and Ruby on Rails Framework file for GeSHi

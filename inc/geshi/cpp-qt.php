@@ -4,7 +4,7 @@
  * -------
  * Author: Iulian M
  * Copyright: (c) 2006 Iulian M
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2004/09/27
  *
  * C++ language file for GeSHi, with QT extensions.
@@ -260,7 +260,8 @@ $language_data = array (
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'TAB_WIDTH' => 4
 );
 
 ?>

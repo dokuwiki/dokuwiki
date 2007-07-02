@@ -4,7 +4,7 @@
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 03/15/2006
  *
  * Microsoft Registry Editor Language File.

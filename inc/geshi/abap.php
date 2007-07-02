@@ -1,29 +1,23 @@
 <?php
 /*************************************************************************************
- * pascal.php
- * ----------
- * Author: Tux (tux@inamil.cz)
- * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
+ * abap.php
+ * --------
+ * Author: Andres Picazo (andres@andrespicazo.com)
+ * Copyright: (c) 2007 Andres Picazo
  * Release Version: 1.0.7.20
- * Date Started: 2004/07/26
+ * CVS Revision Version: $Revision: 1.6 $
+ * Date Started: 2004/06/04
+ * Last Modified: $Date: 2005/11/20 07:47:40 $
  *
- * Pascal language file for GeSHi.
+ * ABAP language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2004/11/27 (1.0.2)
- *  -  Added support for multiple object splitters
- * 2004/10/27 (1.0.1)
- *   -  Added support for URLs
- * 2004/08/05 (1.0.0)
- *   -  Added support for symbols
- * 2004/07/27 (0.9.1)
- *   -  Pascal is OO language. Some new words.
- * 2004/07/26 (0.9.0)
+ * 2007/06/27 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/11/27)
- * -------------------------
+ * TODO
+ * ----
  *
  *************************************************************************************
  *
@@ -46,38 +40,37 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Pascal',
-	'COMMENT_SINGLE' => array(1 => '//'),
-	'COMMENT_MULTI' => array('{' => '}','(*' => '*)'),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '\\',
+	'LANG_NAME' => 'ABAP',
+    'COMMENT_SINGLE' => array(1 => '"', 2 => '*'),
+    'CASE_KEYWORDS' => 0,
+	'QUOTEMARKS' => array("'"),
+    'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
-			'if', 'while', 'until', 'repeat', 'default',
-			'do', 'else', 'for', 'switch', 'goto','label','asm','begin','end',
-			'assembler','case', 'downto', 'to','div','mod','far','forward','in','inherited',
-			'inline','interrupt','label','library','not','var','of','then','stdcall',
-			'cdecl','end.','raise','try','except','name','finally','resourcestring','override','overload',
-			'default','public','protected','private','property','published','stored','catch'
+			'if', 'return', 'while', 'case', 'default',
+            'do', 'else', 'for', 'endif', 'elseif', 'eq',
+            'not', 'and'
 			),
 		2 => array(
-			'nil', 'false', 'break', 'true', 'function', 'procedure','implementation','interface',
-			'unit','program','initialization','finalization','uses'
+			'data', 'types', 'seletion-screen', 'parameters', 'field-symbols', 'extern', 'inline'
 			),
 		3 => array(
-			'abs', 'absolute','and','arc','arctan','chr','constructor','destructor',
-			'dispose','cos','eof','eoln','exp','get','index','ln','new','xor','write','writeln',
-			'shr','sin','sqrt','succ','pred','odd','read','readln','ord','ordinal','blockread','blockwrite'
+			'report', 'write', 'append', 'select', 'endselect', 'call method', 'call function',
+			'loop', 'endloop', 'raise', 'read table', 'concatenate', 'split', 'shift',
+			'condense', 'describe', 'clear', 'endfunction', 'assign', 'create data', 'translate',
+			'continue', 'start-of-selection', 'at selection-screen', 'modify', 'call screen',
+			'create object', 'perform', 'form', 'endform',
+			'reuse_alv_block_list_init', 'zbcialv', 'include'
 			),
 		4 => array(
-			'array', 'char', 'const', 'boolean',  'real', 'integer', 'longint',
-			'word', 'shortint', 'record','byte','bytebool','string',
-			'type','object','export','exports','external','file','longbool','pointer','set',
-			'packed','ansistring','union'
+			'type ref to', 'type', 'begin of',  'end of', 'like', 'into',
+			'from', 'where', 'order by', 'with key', 'into', 'string', 'separated by',
+            'exporting', 'importing', 'to upper case', 'to', 'exceptions', 'tables',
+            'using', 'changing'
 			),
 		),
 	'SYMBOLS' => array(
+		'(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
@@ -90,7 +83,7 @@ $language_data = array (
 		'KEYWORDS' => array(
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
-			3 => '',
+			3 => 'color: #000066;',
 			4 => 'color: #993333;'
 			),
 		'COMMENTS' => array(
@@ -111,7 +104,8 @@ $language_data = array (
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
-			1 => 'color: #202020;'
+			1 => 'color: #202020;',
+			2 => 'color: #202020;'
 			),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66;'
@@ -124,12 +118,13 @@ $language_data = array (
 	'URLS' => array(
 		1 => '',
 		2 => '',
-		3 => '',
+		3 => 'http://sap4.com/wiki/index.php?title={FNAME}',
 		4 => ''
 		),
 	'OOLANG' => true,
 	'OBJECT_SPLITTERS' => array(
-		1 => '.'
+		1 => '.',
+		2 => '::'
 		),
 	'REGEXPS' => array(
 		),
@@ -137,8 +132,7 @@ $language_data = array (
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-        ),
-    'TAB_WIDTH' => 4
+		)
 );
 
 ?>

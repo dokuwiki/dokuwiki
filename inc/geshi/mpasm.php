@@ -4,7 +4,7 @@
  * ---------
  * Author: Bakalex (bakalex@gmail.com)
  * Copyright: (c) 2004 Bakalex, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.19
+ * Release Version: 1.0.7.20
  * Date Started: 2004/12/6
  *
  * Microchip Assembler language file for GeSHi.
@@ -145,8 +145,8 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
-		0 => '[0-9a-fA-F][0-9a-fA-F]*[hH]',
-		1 => '[01][01]*[bB]'
+		0 => '[0-9a-fA-F]{1,32}[hH]',
+		1 => '[01]{1,64}[bB]'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(
