@@ -1047,13 +1047,25 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       }else{
         $text = rawWiki($ID,$REV);
       }
+      $check = md5($text);
+      $mod = false;
     }else{
       //try to load a pagetemplate
       $data = array($ID);
       $text = trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
+      $check = md5('');
+      $mod = $text!=='';
     }
   }else{
     $pr = true; //preview mode
+    if (isset($_REQUEST['changecheck'])) {
+      $check = $_REQUEST['changecheck'];
+      $mod = md5($text)!==$check;
+    } else {
+      // Why? Assume default text is unmodified.
+      $check = md5($text);
+      $mod = false;
+    }
   }
 
   $wr = $INFO['writable'];
@@ -1084,7 +1096,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <?php if($wr){?>
       <script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--
         <?php /* sets changed to true when previewed */?>
-        textChanged = <?php ($pr) ? print 'true' : print 'false' ?>;
+        textChanged = <?php ($mod) ? print 'true' : print 'false' ?>;
       //--><!]]></script>
       <span id="spell__action"></span>
       <div id="spell__suggest"></div>
@@ -1099,6 +1111,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <input type="hidden" name="date" value="<?php echo $DATE?>" />
       <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
       <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
+      <input type="hidden" name="changecheck" value="<?php echo $check?>" />
     </div>
 
     <textarea name="wikitext" id="wiki__text" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
