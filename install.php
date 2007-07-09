@@ -395,6 +395,7 @@ function check_permissions(){
         'meta'      => DOKU_INC.'data/meta',
         'cache'     => DOKU_INC.'data/cache',
         'locks'     => DOKU_INC.'data/locks',
+        'index'     => DOKU_INC.'data/index',
     );
 
     $ok = true;
