@@ -321,6 +321,11 @@ function localeFN($id){
  * @author <bart at mediawave dot nl>
  */
 function resolve_id($ns,$id,$clean=true){
+  global $conf;
+
+  // some pre cleaning for useslash:
+  if($conf['useslash']) $id = str_replace('/',':',$id);
+
   // if the id starts with a dot we need to handle the
   // relative stuff
   if($id{0} == '.'){
