@@ -128,6 +128,7 @@ $lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system?
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';
+$lang['rss_content'] = 'What to display in the XML feed items?';
 $lang['rss_update']  = 'XML feed update interval (sec)';
 $lang['recent_days'] = 'How many recent changes to keep (days)';
 $lang['rss_show_summary'] = 'XML feed show summary in title';
@@ -175,10 +176,17 @@ $lang['gdlib_o_1'] = 'Version 1.x';
 $lang['gdlib_o_2'] = 'Autodetection';
 
 /* rss_type options */
-$lang['rss_type_o_rss']  = 'RSS 0.91';
-$lang['rss_type_o_rss1'] = 'RSS 1.0';
-$lang['rss_type_o_rss2'] = 'RSS 2.0';
-$lang['rss_type_o_atom'] = 'Atom 0.3';
+$lang['rss_type_o_rss']   = 'RSS 0.91';
+$lang['rss_type_o_rss1']  = 'RSS 1.0';
+$lang['rss_type_o_rss2']  = 'RSS 2.0';
+$lang['rss_type_o_atom']  = 'Atom 0.3';
+$lang['rss_type_o_atom1'] = 'Atom 1.0';
+
+/* rss_content options */
+$lang['rss_content_o_abstract'] = 'Abstract';
+$lang['rss_content_o_diff']     = 'Unified Diff';
+$lang['rss_content_o_htmldiff'] = 'HTML formatted diff table';
+$lang['rss_content_o_html']     = 'Full HTML page content';
 
 /* rss_linkto options */
 $lang['rss_linkto_o_diff']    = 'difference view';

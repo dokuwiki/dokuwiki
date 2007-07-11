@@ -916,7 +916,12 @@ class RSSCreator091 extends FeedCreator {
             $feed.= "        <pubDate>".htmlspecialchars($pubDate->rfc822())."</pubDate>\n";
         }
         if ($this->category!="") {
-            $feed.= "        <category>".htmlspecialchars($this->category)."</category>\n";
+            // Changed for DokuWiki: multiple categories are possible
+            if(is_array($this->category)) foreach($this->category as $cat){
+                $feed.= "        <category>".htmlspecialchars($cat)."</category>\n";
+            }else{
+                $feed.= "        <category>".htmlspecialchars($this->category)."</category>\n";
+            }
         }
         if ($this->docs!="") {
             $feed.= "        <docs>".FeedCreator::iTrunc(htmlspecialchars($this->docs),500)."</docs>\n";

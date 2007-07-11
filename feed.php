@@ -18,42 +18,12 @@
   //close session
   session_write_close();
 
-
-  $num   = $_REQUEST['num'];
-  $type  = $_REQUEST['type'];
-  $mode  = $_REQUEST['mode'];
-  $minor = $_REQUEST['minor'];
-  $ns    = $_REQUEST['ns'];
-  $ltype = $_REQUEST['linkto'];
-
-  if($type == '')
-    $type = $conf['rss_type'];
-
-  switch ($type){
-    case 'rss':
-       $type = 'RSS0.91';
-       $mime = 'text/xml';
-       break;
-    case 'rss2':
-       $type = 'RSS2.0';
-       $mime = 'text/xml';
-       break;
-    case 'atom':
-       $type = 'ATOM0.3';
-       $mime = 'application/xml';
-       break;
-    case 'atom1':
-       $type = 'ATOM1.0';
-       $mime = 'application/atom+xml';
-       break;
-    default:
-       $type = 'RSS1.0';
-       $mime = 'application/xml';
-  }
+  // get params
+  $opt = rss_parseOptions();
 
   // the feed is dynamic - we need a cache for each combo
   // (but most people just use the default feed so it's still effective)
-  $cache = getCacheName($num.$type.$mode.$ns.$ltype.$_SERVER['REMOTE_USER'],'.feed');
+  $cache = getCacheName(array_values($opt).$_SERVER['REMOTE_USER'],'.feed');
   $cmod = @filemtime($cache); // 0 if not exists
   if ($cmod && (@filemtime(DOKU_CONF.'local.php')>$cmod || @filemtime(DOKU_CONF.'dokuwiki.php')>$cmod)) {
     // ignore cache if feed prefs may have changed
@@ -76,7 +46,7 @@
 
   // create new feed
   $rss = new DokuWikiFeedCreator();
-  $rss->title = $conf['title'].(($ns) ? ' '.$ns : '');
+  $rss->title = $conf['title'].(($opt['namespace']) ? ' '.$opt['namespace'] : '');
   $rss->link  = DOKU_URL;
   $rss->syndicationURL = DOKU_URL.'feed.php';
   $rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
@@ -87,13 +57,13 @@
   $image->link = DOKU_URL;
   $rss->image = $image;
 
-  if($mode == 'list'){
+  if($opt['feed_mode'] == 'list'){
     rssListNamespace($rss,$ns);
   }else{
-    rssRecentChanges($rss,$num,$ltype,$ns,$minor);
+    rssRecentChanges($rss,$opt);
   }
 
-  $feed = $rss->createFeed($type,'utf-8');
+  $feed = $rss->createFeed($opt['feed_type'],'utf-8');
 
   // save cachefile
   io_saveFile($cache,$feed);
@@ -104,67 +74,159 @@
 // ---------------------------------------------------------------- //
 
 /**
- * Add recent changed pages to a feed object
+ * Get URL parameters and config options and return a initialized option array
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
+function rss_parseOptions(){
     global $conf;
-    global $auth;
 
-    if(!$num) $num = $conf['recent'];
-    $guardmail = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
+    $opt['items']        = (int) $_REQUEST['num'];
+    $opt['feed_type']    = $_REQUEST['type'];
+    $opt['feed_mode']    = $_REQUEST['mode'];
+    $opt['show_minor']   = $_REQUEST['minor'];
+    $opt['namespace']    = $_REQUEST['ns'];
+    $opt['link_to']      = $_REQUEST['linkto'];
+    $opt['item_content'] = $_REQUEST['content'];
 
+    if($opt['feed_type']    == '') $opt['feed_type']    = $conf['rss_type'];
+    if($opt['item_content'] == '') $opt['item_content'] = $conf['rss_content'];
+    if(!$opt['items']) $opt['items'] = $conf['recent'];
+    $opt['guardmail']  = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
-    $flags = RECENTS_SKIP_DELETED;
-    if(!$minor) $flags += RECENTS_SKIP_MINORS;
+    switch ($opt['feed_type']){
+      case 'rss':
+         $opt['feed_type'] = 'RSS0.91';
+         $opt['mime_type'] = 'text/xml';
+         break;
+      case 'rss2':
+         $opt['feed_type'] = 'RSS2.0';
+         $opt['mime_type'] = 'text/xml';
+         break;
+      case 'atom':
+         $opt['feed_type'] = 'ATOM0.3';
+         $opt['mime_type'] = 'application/xml';
+         break;
+      case 'atom1':
+         $opt['feed_type'] = 'ATOM1.0';
+         $opt['mime_type'] = 'application/atom+xml';
+         break;
+      default:
+         $opt['feed_type'] = 'RSS1.0';
+         $opt['mime_type'] = 'application/xml';
+    }
+    return $opt;
+}
 
-    $recents = getRecents(0,$num,$ns,$flags);
+/**
+ * Add recent changed pages to a feed object
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  object $rss - the FeedCreator Object
+ * @param  array $data - the items to add
+ * @param  array $opt  - the feed options
+ */
+function rss_buildItems(&$rss,&$data,$opt){
+    global $conf;
+    global $lang;
 
-    foreach($recents as $recent){
+    foreach($data as $ditem){
         $item = new FeedItem();
-        $meta = p_get_metadata($recent['id']);
+        $id   = $ditem['id'];
+        $meta = p_get_metadata($id);
 
+        // add date
+        if($ditem['date']){
+            $date = $ditem['date'];
+        }elseif($meta['date']['modified']){
+            $date = $meta['date']['modified'];
+        }else{
+            $date = @filemtime(wikiFN($id));
+        }
+        if($date) $item->date = date('r',$date);
+
+        // add title
         if($conf['useheading'] && $meta['title']){
             $item->title = $meta['title'];
         }else{
-            $item->title = $recent['id'];
+            $item->title = $ditem['id'];
         }
-        if($conf['rss_show_summary'] && !empty($recent['sum'])){
-            $item->title .= ' - '.strip_tags($recent['sum']);
+        if($conf['rss_show_summary'] && !empty($ditem['sum'])){
+            $item->title .= ' - '.strip_tags($ditem['sum']);
         }
 
-        if(empty($ltype)) $ltype = $conf['rss_linkto'];
-
-        switch ($ltype){
+        // add item link
+        switch ($opt['link_to']){
             case 'page':
-                $item->link = wl($recent['id'],'rev='.$recent['date'],true,'&');
+                $item->link = wl($id,'rev='.$date,true,'&');
                 break;
             case 'rev':
-                $item->link = wl($recent['id'],'do=revisions&rev='.$recent['date'],true,'&');
+                $item->link = wl($id,'do=revisions&rev='.$date,true,'&');
                 break;
             case 'current':
-                $item->link = wl($recent['id'], '', true,'&');
+                $item->link = wl($id, '', true,'&');
                 break;
             case 'diff':
             default:
-                $item->link = wl($recent['id'],'rev='.$recent['date'].'&do=diff',true,'&');
+                $item->link = wl($id,'rev='.$date.'&do=diff',true,'&');
         }
 
-        $item->description = $meta['description']['abstract'];
-        $item->date        = date('r',$recent['date']);
-        $cat = getNS($recent['id']);
-        if($cat) $item->category = $cat;
+        // add item content
+        switch ($opt['item_content']){
+            case 'diff':
+            case 'htmldiff':
+                require_once(DOKU_INC.'inc/DifferenceEngine.php');
+                $revs = getRevisions($id, 0, 1);
+                $rev = $revs[0];
 
-        // FIXME should the user be pulled from metadata as well?
+                if($rev){
+                    $df  = new Diff(explode("\n",htmlspecialchars(rawWiki($id,$rev))),
+                                    explode("\n",htmlspecialchars(rawWiki($id,''))));
+                }else{
+                    $df  = new Diff(array(''),
+                                    explode("\n",htmlspecialchars(rawWiki($id,''))));
+                }
+
+                if($opt['item_content'] == 'htmldiff'){
+                    $tdf = new TableDiffFormatter();
+                    $content  = '<table>';
+                    $content .= '<tr><th colspan="2" width="50%">'.$rev.'</th>';
+                    $content .= '<th colspan="2" width="50%">'.$lang['current'].'</th></tr>';
+                    $content .= $tdf->format($df);
+                    $content .= '</table>';
+                }else{
+                    $udf = new UnifiedDiffFormatter();
+                    $content = "<pre>\n".$udf->format($df)."\n</pre>";
+                }
+                break;
+            case 'html':
+                $content = p_wiki_xhtml($id,$date,false);
+                // no TOC in feeds
+                $content = preg_replace('/(<!-- TOC START -->).*(<!-- TOC END -->)/s','',$content);
+
+                // make URLs work when canonical is not set, regexp instead of rerendering!
+                if(!$conf['canonical']){
+                    $base = preg_quote(DOKU_REL,'/');
+                    $content = preg_replace('/(<a href|<img src)="('.$base.')/s','$1="'.DOKU_URL,$content);
+                }
+
+                break;
+            case 'abstract':
+            default:
+                $content = $meta['description']['abstract'];
+        }
+        $item->description = $content; //FIXME a plugin hook here could be senseful
+
+
+        // add user
+        # FIXME should the user be pulled from metadata as well?
         $user = null;
-        $user = @$recent['user']; // the @ spares time repeating lookup
+        $user = @$ditem['user']; // the @ spares time repeating lookup
         $item->author = '';
-
         if($user && $conf['useacl'] && $auth){
             $userInfo = $auth->getUserData($user);
             $item->author = $userInfo['name'];
-            if($guardmail) {
+            if($opt['guardmail']) {
             //cannot obfuscate because some RSS readers may check validity
                 $item->authorEmail = $user.'@'.$recent['ip'];
             }else{
@@ -177,8 +239,36 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
         }else{
             $item->authorEmail = 'anonymous@'.$recent['ip'];
         }
+
+        // add category
+        if($meta['subject']){
+            $item->category = $meta['subject'];
+        }else{
+           $cat = getNS($id);
+           if($cat) $item->category = $cat;
+        }
+
+        // finally add the item to the feed object
         $rss->addItem($item);
     }
+}
+
+
+/**
+ * Add recent changed pages to a feed object
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function rssRecentChanges(&$rss,$opt){
+    global $conf;
+    global $auth;
+
+    $flags = RECENTS_SKIP_DELETED;
+    if(!$opt['show_minor']) $flags += RECENTS_SKIP_MINORS;
+
+    $recents = getRecents(0,$opt['items'],$opt['namespace'],$flags);
+
+    rss_buildItems($rss,$recents,$opt);
 }
 
 /**
@@ -186,35 +276,21 @@ function rssRecentChanges(&$rss,$num,$ltype,$ns,$minor){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rssListNamespace(&$rss,$ns){
+function rssListNamespace(&$rss,$opt){
     require_once(DOKU_INC.'inc/search.php');
     global $conf;
 
-    $ns=':'.cleanID($ns);
+    $ns=':'.cleanID($opt['namespace']);
     $ns=str_replace(':','/',$ns);
 
     $data = array();
     sort($data);
     search($data,$conf['datadir'],'search_list','',$ns);
-    foreach($data as $row){
-        $item = new FeedItem();
 
-        $id   = $row['id'];
-        $date = filemtime(wikiFN($id));
-        $meta = p_get_metadata($id);
-
-        if($conf['useheading'] && $meta['title']){
-            $item->title = $meta['title'];
-        }else{
-            $item->title = $id;
-        }
-
-        $item->link        = wl($id,'rev='.$date,true,'&');
-        $item->description = $meta['description']['abstract'];
-        $item->date        = date('r',$date);
-        $rss->addItem($item);
-  }
+    rss_buildItems($rss,$data,$opt);
 }
+
+
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 ?>

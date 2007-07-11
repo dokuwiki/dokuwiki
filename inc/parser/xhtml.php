@@ -101,13 +101,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if(count($toc) < 3) return '';
         global $lang;
-        $out  = '<div class="toc">'.DOKU_LF;
+        $out  = '<!-- TOC START -->'.DOKU_LF;
+        $out .= '<div class="toc">'.DOKU_LF;
         $out .= '<div class="tocheader toctoggle" id="toc__header">';
         $out .= $lang['toc'];
         $out .= '</div>'.DOKU_LF;
         $out .= '<div id="toc__inside">'.DOKU_LF;
         $out .= html_buildlist($toc,'toc',array(__CLASS__,'_tocitem'));
         $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
+        $out .= '<!-- TOC END -->'.DOKU_LF;
         return $out;
     }
 
@@ -927,6 +929,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             //add image tag
             $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
             $ret .= ' class="media'.$align.'"';
+
+            // make left/right alignment for no-CSS view work (feeds)
+            if($align == 'right') $ret .= ' align="right"';
+            if($align == 'left')  $ret .= ' align="left"';
 
             if (!is_null($title)) {
                 $ret .= ' title="'.$this->_xmlEntities($title).'"';

@@ -103,11 +103,17 @@ $conf['rss_type']    = 'rss1';           //type of RSS feed to provide, by defau
                                          //  'rss1' - RSS 1.0
                                          //  'rss2' - RSS 2.0
                                          //  'atom' - Atom 0.3
+                                         //  'atom1' - Atom 1.0
 $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'diff'    - page showing revision differences
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
+$conf['rss_content'] = 'abstract';       // what to put in the items by deafult?
+                                         //  'abstract' - plain text, first paragraph or so
+                                         //  'diff'     - plain text unified diff wrapped in <pre> tags
+                                         //  'htmldiff' - diff as HTML table
+                                         //  'html'     - the full page rendered in XHTML
 $conf['rss_update'] = 5*60;              //Update the RSS feed every n minutes (defaults to 5 minutes)
 $conf['recent_days'] = 7;                //How many days of recent changes to keep. (days)
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
