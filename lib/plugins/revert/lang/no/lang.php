@@ -4,16 +4,14 @@
  *
  * @author Thomas Nygreen <nygreen@gmail.com>
  */
-$lang[encoding]                = 'utf-8';
-$lang[direction]               = 'ltr';
-$lang[menu]                    = 'Tilbakestillingsbehandler';
-$lang[filter]                  = 'Søk etter søppelmeldinger';
-$lang[revert]                  = 'Tilbakestill valgte sider';
-$lang[reverted]                = '%s tilbakestilt til revisjon %s';
-$lang[removed]                 = '%s fjernet';
-$lang[revstart]                = 'Prosessen med tilbakestilling er startet. Hvis det skjer et
+$lang['menu']                    = 'Tilbakestillingsbehandler';
+$lang['filter']                  = 'Søk etter søppelmeldinger';
+$lang['revert']                  = 'Tilbakestill valgte sider';
+$lang['reverted']                = '%s tilbakestilt til revisjon %s';
+$lang['removed']                 = '%s fjernet';
+$lang['revstart']                = 'Prosessen med tilbakestilling er startet. Hvis det skjer et
 tidsavbrudd før prosessen er ferdig, må du tilbakestille
 færre sider om gangen.';
-$lang[revstop]                 = 'Tilbakestillingen er fullført.';
-$lang[note1]                   = 'Merk: søket skiller mellom store og små bokstaver';
-$lang[note2]                   = 'Merk: siden vil bli tilbakestilt til den siste versjonen som ikke inneholder det oppgitte søppel-ordet <i>%s</i>.';
+$lang['revstop']                 = 'Tilbakestillingen er fullført.';
+$lang['note1']                   = 'Merk: søket skiller mellom store og små bokstaver';
+$lang['note2']                   = 'Merk: siden vil bli tilbakestilt til den siste versjonen som ikke inneholder det oppgitte søppel-ordet <i>%s</i>.';
