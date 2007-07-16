@@ -480,7 +480,7 @@ function checkwordblock(){
       if(empty($block)) continue;
       $re[]  = $block;
     }
-    if(preg_match('#('.join('|',$re).')#si',$text)) {
+    if(count($re) && preg_match('#('.join('|',$re).')#si',$text)) {
       return true;
     }
   }
