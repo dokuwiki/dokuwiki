@@ -634,11 +634,14 @@ function html_index($ns){
   }
   $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
-  print p_locale_xhtml('index');
+  echo p_locale_xhtml('index');
+  echo '<div id="index__tree">';
 
   $data = array();
   search($data,$conf['datadir'],'search_index',array('ns' => $ns));
-  print html_buildlist($data,'idx','html_list_index','html_li_index');
+  echo html_buildlist($data,'idx','html_list_index','html_li_index');
+
+  echo '</div>';
 }
 
 /**

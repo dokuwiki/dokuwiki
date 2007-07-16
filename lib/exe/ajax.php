@@ -28,7 +28,7 @@ if(isset($_POST['call']))
 else if(isset($_GET['call']))
   $call = 'ajax_'.$_GET['call'];
 else
-  return;
+  exit;
 if(function_exists($call)){
   $call();
 }else{
@@ -167,6 +167,8 @@ function ajax_draftdel(){
 
 /**
  * Return subnamespaces for the Mediamanager
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_medians(){
   global $conf;
@@ -190,13 +192,43 @@ function ajax_medians(){
 }
 
 /**
- * Return subnamespaces for the Mediamanager
+ * Return list of files for the Mediamanager
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_medialist(){
   global $conf;
   require_once(DOKU_INC.'inc/media.php');
 
   media_filelist($_POST['ns']);
+}
+
+/**
+ * Return sub index for index view
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function ajax_index(){
+  global $conf;
+  require_once(DOKU_INC.'inc/search.php');
+  require_once(DOKU_INC.'inc/html.php');
+
+  // wanted namespace
+  $ns  = cleanID($_POST['idx']);
+  $dir  = utf8_encodeFN(str_replace(':','/',$ns));
+
+  $lvl = count(explode(':',$ns));
+
+  $data = array();
+  search($data,$conf['datadir'],'search_index',array('ns' => $ns),$dir);
+  foreach($data as $item){
+    $item['level'] = $lvl+1;
+    echo html_li_index($item);
+    echo '<div class="li">';
+    echo html_list_index($item);
+    echo '</div>';
+    echo '</li>';
+  }
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
