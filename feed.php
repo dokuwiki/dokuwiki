@@ -23,7 +23,7 @@
 
   // the feed is dynamic - we need a cache for each combo
   // (but most people just use the default feed so it's still effective)
-  $cache = getCacheName(array_values($opt).$_SERVER['REMOTE_USER'],'.feed');
+  $cache = getCacheName(join('',array_values($opt)).$_SERVER['REMOTE_USER'],'.feed');
   $cmod = @filemtime($cache); // 0 if not exists
   if ($cmod && (@filemtime(DOKU_CONF.'local.php')>$cmod || @filemtime(DOKU_CONF.'dokuwiki.php')>$cmod)) {
     // ignore cache if feed prefs may have changed
@@ -58,7 +58,7 @@
   $rss->image = $image;
 
   if($opt['feed_mode'] == 'list'){
-    rssListNamespace($rss,$ns);
+    rssListNamespace($rss,$opt);
   }else{
     rssRecentChanges($rss,$opt);
   }
@@ -89,9 +89,10 @@ function rss_parseOptions(){
     $opt['link_to']      = $_REQUEST['linkto'];
     $opt['item_content'] = $_REQUEST['content'];
 
-    if($opt['feed_type']    == '') $opt['feed_type']    = $conf['rss_type'];
-    if($opt['item_content'] == '') $opt['item_content'] = $conf['rss_content'];
-    if(!$opt['items']) $opt['items'] = $conf['recent'];
+    if(!$opt['feed_type'])    $opt['feed_type']    = $conf['rss_type'];
+    if(!$opt['item_content']) $opt['item_content'] = $conf['rss_content'];
+    if(!$opt['link_to'])      $opt['link_to']      = $conf['rss_linkto'];
+    if(!$opt['items'])        $opt['items']        = $conf['recent'];
     $opt['guardmail']  = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
     switch ($opt['feed_type']){
