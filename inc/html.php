@@ -444,10 +444,12 @@ function html_revisions($first=0){
   $date = @date($conf['dformat'],$INFO['lastmod']);
 
   print p_locale_xhtml('revisions');
+  print '<form action="'.wl($ID).'" method="post" id="page__revisions">';
   print '<ul>';
   if($INFO['exists'] && $first==0){
     print (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';
+    print '<input type="checkbox" name="rev2[]" value="current" /> ';
 
     print $date;
 
@@ -467,14 +469,22 @@ function html_revisions($first=0){
   }
 
   foreach($revisions as $rev){
-    $date = date($conf['dformat'],$rev);
-    $info = getRevisionInfo($ID,$rev,true);
+    $date   = date($conf['dformat'],$rev);
+    $info   = getRevisionInfo($ID,$rev,true);
+    $exists = @file_exists(wikiFN($ID,$rev)); 
+
+
 
     print ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';
+    if($exists){
+      print '<input type="checkbox" name="rev2[]" value="'.$rev.'" /> ';
+    }else{
+      print '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="14" height="11" alt="" /> ';
+    }
     print $date;
 
-    if(@file_exists(wikiFN($ID,$rev))){
+    if($exists){
       print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
       $p = array();
       $p['src']    = DOKU_BASE.'lib/images/diff.png';
@@ -506,6 +516,8 @@ function html_revisions($first=0){
     print '</li>';
   }
   print '</ul>';
+  print '<input name="do[diff]" type="submit" value="'.$lang['diff2'].'" class="button" />';
+  print '</form>';
 
   print '<div class="pagenav">';
   $last = $first + $conf['recent'];
@@ -788,54 +800,75 @@ function html_diff($text='',$intro=true){
   global $lang;
   global $conf;
 
-  if($text){
-    $df  = new Diff(explode("\n",htmlspecialchars(rawWiki($ID,''))),
-                    explode("\n",htmlspecialchars(cleanText($text))));
-    $left  = '<a class="wikilink1" href="'.wl($ID).'">'.
-              $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a>'.
-              $lang['current'];
-    $right = $lang['yours'];
+  // we're trying to be clever here, revisions to compare can be either
+  // given as rev and rev2 parameters, with rev2 being optional. Or in an
+  // array in rev2.
+  $rev1 = $REV;
+  if(is_array($_REQUEST['rev2'])){
+    $rev1 = (int) $_REQUEST['rev2'][0];
+    $rev2 = (int) $_REQUEST['rev2'][1];
   }else{
-    //check if current revision exist
-    if(!@file_exists(wikiFN($ID))){
-      $revs = getRevisions($ID, 0, 2);
-      $rc = $revs[1];
-    }
-    if($REV){
-      $r = $REV;
-    }else{
-      if(empty($revs)){
-        //use last revision if none given
-        $revs = getRevisions($ID, 0, 1);
+    $rev2 = (int) $_REQUEST['rev2'];
+  }
+
+  if($text){                      // compare text to the most current revision
+    $l_rev   = '';
+    $l_text  = rawWiki($ID,'');
+    $l_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
+               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+               $lang['current'];
+
+    $r_rev   = '';
+    $r_text  = cleanText($text);
+    $r_head  = $lang['yours'];
+  }else{
+    if($rev1 && $rev2){            // two specific revisions wanted
+      // make sure order is correct (older on the right)
+      if($rev1 < $rev2){
+        $l_rev = $rev1;
+        $r_rev = $rev2;
+      }else{
+        $l_rev = $rev2;
+        $r_rev = $rev1;
       }
-      $r = $revs[0];
+    }elseif($rev1){                // single revision given, compare to current
+      $r_rev = '';
+      $l_rev = $rev1;
+    }else{                        // no revision was given, compare previous to current
+      $r_rev = '';
+      $revs = getRevisions($ID, 0, 1);
+      $l_rev = $revs[0];
     }
 
-    if($r){
-      $df  = new Diff(explode("\n",htmlspecialchars(rawWiki($ID,$r))),
-                      explode("\n",htmlspecialchars(rawWiki($ID,''))));
-      $left  = '<a class="wikilink1" href="'.wl($ID,"rev=$r").'">'.
-                $ID.' '.date($conf['dformat'],(isset($rc) ? $rc : $r)).'</a>';
+    $l_text = rawWiki($ID,$l_rev);
+    $r_text = rawWiki($ID,$r_rev);
+
+    $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
+              $ID.' '.date($conf['dformat'],$l_rev).'</a>';
+
+    if($r_rev){
+      $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
+                $ID.' '.date($conf['dformat'],$r_rev).'</a>';
     }else{
-      $df  = new Diff(array(''),
-                      explode("\n",htmlspecialchars(rawWiki($ID,''))));
-      $left  = '<a class="wikilink1" href="'.wl($ID).'">'.
-                $ID.'</a>';
+      $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
+               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+               $lang['current'];
     }
-    $right = '<a class="wikilink1" href="'.wl($ID).'">'.
-              $ID.' '.date($conf['dformat'],(isset($rc) ? $r : @filemtime(wikiFN($ID)))).'</a> '.
-              $lang['current'];
   }
+
+  $df = new Diff(explode("\n",htmlspecialchars($l_text)),
+                 explode("\n",htmlspecialchars($r_text)));
+
   $tdf = new TableDiffFormatter();
   if($intro) print p_locale_xhtml('diff');
   ?>
     <table class="diff">
       <tr>
         <th colspan="2">
-          <?php echo $left?>
+          <?php echo $l_head?>
         </th>
         <th colspan="2">
-          <?php echo $right?>
+          <?php echo $r_head?>
         </th>
       </tr>
       <?php echo $tdf->format($df)?>
