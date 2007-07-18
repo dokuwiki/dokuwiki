@@ -263,7 +263,7 @@ function rss_buildItems(&$rss,&$data,$opt){
                         'opt'   => &$opt,
                         'ditem' => &$ditem,
                         'rss'   => &$rss);
-        $evt = new Doku_Event('RSS_ITEM', $evdata);
+        $evt = new Doku_Event('FEED_ITEM_ADD', $evdata);
         if ($evt->advise_before()){
           $rss->addItem($item);
         }
