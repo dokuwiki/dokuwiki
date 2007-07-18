@@ -59,6 +59,8 @@
 
   if($opt['feed_mode'] == 'list'){
     rssListNamespace($rss,$opt);
+  }elseif($opt['feed_mode'] == 'search'){
+    rssSearch($rss,$opt);
   }else{
     rssRecentChanges($rss,$opt);
   }
@@ -88,6 +90,7 @@ function rss_parseOptions(){
     $opt['namespace']    = $_REQUEST['ns'];
     $opt['link_to']      = $_REQUEST['linkto'];
     $opt['item_content'] = $_REQUEST['content'];
+    $opt['search_query'] = $_REQUEST['q'];
 
     if(!$opt['feed_type'])    $opt['feed_type']    = $conf['rss_type'];
     if(!$opt['item_content']) $opt['item_content'] = $conf['rss_content'];
@@ -132,6 +135,11 @@ function rss_buildItems(&$rss,&$data,$opt){
     global $lang;
 
     foreach($data as $ditem){
+        if(!is_array($ditem)){
+            // not an array? then only a list of IDs was given
+            $ditem = array( 'id' => $ditem );
+        }
+
         $item = new FeedItem();
         $id   = $ditem['id'];
         $meta = p_get_metadata($id);
@@ -256,7 +264,7 @@ function rss_buildItems(&$rss,&$data,$opt){
 
 
 /**
- * Add recent changed pages to a feed object
+ * Add recent changed pages to the feed object
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -273,7 +281,7 @@ function rssRecentChanges(&$rss,$opt){
 }
 
 /**
- * Add all pages of a namespace to a feedobject
+ * Add all pages of a namespace to the feed object
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -291,7 +299,20 @@ function rssListNamespace(&$rss,$opt){
     rss_buildItems($rss,$data,$opt);
 }
 
+/**
+ * Add the result of a full text search to the feed object
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function rssSearch(&$rss,$opt){
+    if(!$opt['search_query']) return;
 
+    require_once(DOKU_INC.'inc/fulltext.php');
+    $data = array();
+    $data = ft_pageSearch($opt['search_query'],$poswords);
+    $data = array_keys($data);
+    rss_buildItems($rss,$data,$opt);
+}
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 ?>

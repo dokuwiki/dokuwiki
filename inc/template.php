@@ -181,6 +181,7 @@ function tpl_metaheaders($alt=true){
   global $REV;
   global $INFO;
   global $ACT;
+  global $QUERY;
   global $lang;
   global $conf;
   $it=2;
@@ -203,6 +204,11 @@ function tpl_metaheaders($alt=true){
     $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
                              'title'=>'Current Namespace',
                              'href'=>DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']);
+    if($ACT == 'search'){
+      $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
+                               'title'=>'Search Result',
+                               'href'=>DOKU_BASE.'feed.php?mode=search&q='.$QUERY);
+    }
 
     if(actionOK('export_xhtml')){
       $head['link'][] = array( 'rel'=>'alternate', 'type'=>'text/html', 'title'=>'Plain HTML',
