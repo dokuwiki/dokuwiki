@@ -41,7 +41,7 @@ define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two charact
                    '\x{30C3}\x{30E3}\x{30E5}\x{30E7}\x{30EE}\x{30F5}\x{30F6}\x{30FB}\x{30FC}'.
                    '\x{31F0}-\x{31FF}'.
                    ']?');
-
+define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
 
 /**
  * Measure the length of a string.
