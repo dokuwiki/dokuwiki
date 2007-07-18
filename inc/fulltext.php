@@ -324,7 +324,7 @@ function ft_queryParser($query){
     // handle phrase searches
     while(preg_match('/"(.*?)"/',$query,$match)){
         $q['phrases'][] = $match[1];
-        $q['and'] = array_merge(idx_tokenizer($match[0],$stopwords));
+        $q['and'] = array_merge($q['and'], idx_tokenizer($match[0],$stopwords));
         $query = preg_replace('/"(.*?)"/','',$query,1);
     }
 
