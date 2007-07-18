@@ -134,6 +134,7 @@ function rss_buildItems(&$rss,&$data,$opt){
     global $conf;
     global $lang;
 
+
     foreach($data as $ditem){
         if(!is_array($ditem)){
             // not an array? then only a list of IDs was given
@@ -257,8 +258,16 @@ function rss_buildItems(&$rss,&$data,$opt){
            if($cat) $item->category = $cat;
         }
 
-        // finally add the item to the feed object
-        $rss->addItem($item);
+        // finally add the item to the feed object, after handing it to registered plugins
+        $evdata = array('item'  => &$item,
+                        'opt'   => &$opt,
+                        'ditem' => &$ditem,
+                        'rss'   => &$rss);
+        $evt = new Doku_Event('RSS_ITEM', $evdata);
+        if ($evt->advise_before()){
+          $rss->addItem($item);
+        }
+        $evt->advise_after(); // for completeness
     }
 }
 
