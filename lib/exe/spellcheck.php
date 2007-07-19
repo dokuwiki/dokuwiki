@@ -272,7 +272,8 @@ function spell_resume(){
  * Just send data back as received for UTF-8 testing
  */
 function spell_utf8test(){
-  print $_POST['data'];
+  // we need to return the raw value - substr protects against XSS
+  print substr($_POST['data'],0,3);
 }
 
 /**
