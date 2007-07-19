@@ -240,40 +240,6 @@ function utf8_substr_replace($string, $replacement, $start , $length=0 ){
 }
 
 /**
- * Unicode aware replacement for explode
- *
- * @TODO   support third limit arg
- * @author Harry Fuecks <hfuecks@gmail.com>
- * @see    explode();
- */
-function utf8_explode($sep, $str) {
-  if ( $sep == '' ) {
-    trigger_error('Empty delimiter',E_USER_WARNING);
-    return false;
-  }
-
-  return preg_split('!'.preg_quote($sep,'!').'!u',$str);
-}
-
-/**
- * Unicode aware replacement for strrepalce()
- *
- * @todo   support PHP5 count (fourth arg)
- * @author Harry Fuecks <hfuecks@gmail.com>
- * @see    strreplace();
- */
-function utf8_str_replace($s,$r,$str){
-  if(!is_array($s)){
-    $s = '!'.preg_quote($s,'!').'!u';
-  }else{
-    foreach ($s as $k => $v) {
-      $s[$k] = '!'.preg_quote($v).'!u';
-    }
-  }
-  return preg_replace($s,$r,$str);
-}
-
-/**
  * Unicode aware replacement for ltrim()
  *
  * @author Andreas Gohr <andi@splitbrain.org>
