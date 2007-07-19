@@ -766,7 +766,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         require_once(DOKU_INC.'inc/FeedParser.php');
         $feed = new FeedParser();
-        $feed->feed_url($url);
+        $feed->set_feed_url($url);
 
         //disable warning while fetching
         if (!defined('DOKU_E_LEVEL')) { $elvl = error_reporting(E_ERROR); }

@@ -20,7 +20,7 @@ class FeedParser extends SimplePie {
      */
     function FeedParser(){
         $this->SimplePie();
-        $this->enable_caching(false);
+        $this->enable_cache(false);
         $this->set_file_class('FeedParser_File');
     }
 }
