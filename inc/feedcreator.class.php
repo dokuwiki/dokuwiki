@@ -956,8 +956,14 @@ class RSSCreator091 extends FeedCreator {
             }
             */
             if ($this->items[$i]->category!="") {
-                $feed.= "            <category>".htmlspecialchars($this->items[$i]->category)."</category>\n";
+                // Changed for DokuWiki: multiple categories are possible
+                if(is_array($this->items[$i]->category)) foreach($this->items[$i]->category as $cat){
+                    $feed.= "        <category>".htmlspecialchars($cat)."</category>\n";
+                }else{
+                    $feed.= "        <category>".htmlspecialchars($this->items[$i]->category)."</category>\n";
+                }
             }
+
             if ($this->items[$i]->comments!="") {
                 $feed.= "            <comments>".htmlspecialchars($this->items[$i]->comments)."</comments>\n";
             }
