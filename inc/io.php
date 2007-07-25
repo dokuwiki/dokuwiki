@@ -94,7 +94,7 @@ function io_readFile($file,$clean=true){
     }else if(substr($file,-4) == '.bz2'){
       $ret = bzfile($file);
     }else{
-      $ret = join('',file($file));
+      $ret = file_get_contents($file);
     }
   }
   if($clean){
@@ -112,7 +112,7 @@ function bzfile($file){
   $bz = bzopen($file,"r");
   while (!feof($bz)){
     //8192 seems to be the maximum buffersize?
-	  $str = $str . bzread($bz,8192);
+    $str = $str . bzread($bz,8192);
   }
   bzclose($bz);
   return $str;
