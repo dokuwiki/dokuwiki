@@ -51,13 +51,13 @@ define('SIMPLEPIE_NAME', 'SimplePie');
 /**
  * SimplePie Version
  */
-define('SIMPLEPIE_VERSION', '1.0');
+define('SIMPLEPIE_VERSION', '1.0.1');
 
 /**
  * SimplePie Build
  * @todo Hardcode for release (there's no need to have to call SimplePie_Misc::parse_date() only every load of simplepie.inc)
  */
-define('SIMPLEPIE_BUILD', '20070715235228');
+define('SIMPLEPIE_BUILD', 20070719221955);
 
 /**
  * SimplePie Website URL
@@ -4884,11 +4884,25 @@ class SimplePie_Item
 
 			foreach ((array) $this->get_item_tags(SIMPLEPIE_NAMESPACE_ATOM_10, 'link') as $link)
 			{
-				if (isset($link['attribs']['']['href']) && isset($link['attribs']['']['rel']) && $link['attribs']['']['rel'] == 'enclosure')
+				if (isset($link['attribs']['']['href']) && !empty($link['attribs']['']['rel']) && $link['attribs']['']['rel'] == 'enclosure')
 				{
-					$url = $this->sanitize($link['attribs']['']['href'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($link));
-					$type = null;
+					// Attributes
+					$bitrate = null;
+					$channels = null;
+					$duration = null;
+					$expression = null;
+					$framerate = null;
+					$height = null;
+					$javascript = null;
+					$lang = null;
 					$length = null;
+					$medium = null;
+					$samplingrate = null;
+					$type = null;
+					$url = null;
+					$width = null;
+
+					$url = $this->sanitize($link['attribs']['']['href'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($link));
 					if (isset($link['attribs']['']['type']))
 					{
 						$type = $this->sanitize($link['attribs']['']['type'], SIMPLEPIE_CONSTRUCT_TEXT);
@@ -4899,17 +4913,31 @@ class SimplePie_Item
 					}
 
 					// Since we don't have group or content for these, we'll just pass the '*_parent' variables directly to the constructor
-					$this->data['enclosures'][] =& new $this->feed->enclosure_class($url, $type, $length, $this->feed->javascript);
+					$this->data['enclosures'][] =& new $this->feed->enclosure_class($url, $type, $length, $this->feed->javascript, $bitrate, $captions_parent, $categories_parent, $channels, $copyrights_parent, $credits_parent, $description_parent, $duration_parent, $expression, $framerate, $hashes_parent, $height, $keywords_parent, $lang, $medium, $player_parent, $ratings_parent, $restrictions_parent, $samplingrate, $thumbnails_parent, $title_parent, $width);
 				}
 			}
 
 			foreach ((array) $this->get_item_tags(SIMPLEPIE_NAMESPACE_ATOM_03, 'link') as $link)
 			{
-				if (isset($link['attribs']['']['href']) && isset($link['attribs']['']['rel']) && $link['attribs']['']['rel'] == 'enclosure')
+				if (isset($link['attribs']['']['href']) && !empty($link['attribs']['']['rel']) && $link['attribs']['']['rel'] == 'enclosure')
 				{
-					$url = $this->sanitize($link['attribs']['']['href'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($link));
-					$type = null;
+					// Attributes
+					$bitrate = null;
+					$channels = null;
+					$duration = null;
+					$expression = null;
+					$framerate = null;
+					$height = null;
+					$javascript = null;
+					$lang = null;
 					$length = null;
+					$medium = null;
+					$samplingrate = null;
+					$type = null;
+					$url = null;
+					$width = null;
+
+					$url = $this->sanitize($link['attribs']['']['href'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($link));
 					if (isset($link['attribs']['']['type']))
 					{
 						$type = $this->sanitize($link['attribs']['']['type'], SIMPLEPIE_CONSTRUCT_TEXT);
@@ -4920,7 +4948,7 @@ class SimplePie_Item
 					}
 
 					// Since we don't have group or content for these, we'll just pass the '*_parent' variables directly to the constructor
-					$this->data['enclosures'][] =& new $this->feed->enclosure_class($url, $type, $length, $this->feed->javascript);
+					$this->data['enclosures'][] =& new $this->feed->enclosure_class($url, $type, $length, $this->feed->javascript, $bitrate, $captions_parent, $categories_parent, $channels, $copyrights_parent, $credits_parent, $description_parent, $duration_parent, $expression, $framerate, $hashes_parent, $height, $keywords_parent, $lang, $medium, $player_parent, $ratings_parent, $restrictions_parent, $samplingrate, $thumbnails_parent, $title_parent, $width);
 				}
 			}
 
@@ -4928,9 +4956,23 @@ class SimplePie_Item
 			{
 				if (isset($enclosure[0]['attribs']['']['url']))
 				{
-					$url = $this->sanitize($enclosure[0]['attribs']['']['url'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($enclosure[0]));
-					$type = null;
+					// Attributes
+					$bitrate = null;
+					$channels = null;
+					$duration = null;
+					$expression = null;
+					$framerate = null;
+					$height = null;
+					$javascript = null;
+					$lang = null;
 					$length = null;
+					$medium = null;
+					$samplingrate = null;
+					$type = null;
+					$url = null;
+					$width = null;
+
+					$url = $this->sanitize($enclosure[0]['attribs']['']['url'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($enclosure[0]));
 					if (isset($enclosure[0]['attribs']['']['type']))
 					{
 						$type = $this->sanitize($enclosure[0]['attribs']['']['type'], SIMPLEPIE_CONSTRUCT_TEXT);
@@ -4941,7 +4983,7 @@ class SimplePie_Item
 					}
 
 					// Since we don't have group or content for these, we'll just pass the '*_parent' variables directly to the constructor
-					$this->data['enclosures'][] =& new $this->feed->enclosure_class($url, $type, $length, $this->feed->javascript);
+					$this->data['enclosures'][] =& new $this->feed->enclosure_class($url, $type, $length, $this->feed->javascript, $bitrate, $captions_parent, $categories_parent, $channels, $copyrights_parent, $credits_parent, $description_parent, $duration_parent, $expression, $framerate, $hashes_parent, $height, $keywords_parent, $lang, $medium, $player_parent, $ratings_parent, $restrictions_parent, $samplingrate, $thumbnails_parent, $title_parent, $width);
 				}
 			}
 			$this->data['enclosures'] = array_values(SimplePie_Misc::array_unique($this->data['enclosures']));
@@ -5105,7 +5147,8 @@ class SimplePie_Author
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_name()
@@ -5161,7 +5204,8 @@ class SimplePie_Category
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_term()
@@ -5271,7 +5315,8 @@ class SimplePie_Enclosure
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_bitrate()
@@ -6173,7 +6218,8 @@ class SimplePie_Caption
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_endtime()
@@ -6253,7 +6299,8 @@ class SimplePie_Credit
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_role()
@@ -6307,7 +6354,8 @@ class SimplePie_Copyright
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_url()
@@ -6349,7 +6397,8 @@ class SimplePie_Rating
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_scheme()
@@ -6393,7 +6442,8 @@ class SimplePie_Restriction
 
 	function __toString()
 	{
-		return md5(serialize($this->data));
+		// There is no $this->data here
+		return md5(serialize($this));
 	}
 
 	function get_relationship()
@@ -6564,7 +6614,21 @@ class SimplePie_File
 					{
 						socket_set_timeout($fp, $timeout);
 					}
-					$get = (isset($url_parts['query'])) ? "$url_parts[path]?$url_parts[query]" : $url_parts['path'];
+					if (isset($url_parts['path']))
+					{
+						if (isset($url_parts['query']))
+						{
+							$get = "$url_parts[path]?$url_parts[query]";
+						}
+						else
+						{
+							$get = $url_parts['path'];
+						}
+					}
+					else
+					{
+						$get = '/';
+					}
 					$out = "GET $get HTTP/1.0\r\n";
 					$out .= "Host: $url_parts[host]\r\n";
 					$out .= "User-Agent: $useragent\r\n";
@@ -7506,7 +7570,7 @@ class SimplePie_Misc
 			return SimplePie_Misc::fix_protocol(SimplePie_Misc::compress_parse_url('http', $parsed['authority'], $parsed['path'], $parsed['query'], $parsed['fragment']), $http);
 		}
 		
-		if ($parsed['scheme'] === '' && $parsed['authority'] === '')
+		if ($parsed['scheme'] === '' && $parsed['authority'] === '' && !file_exists($url))
 		{
 			return SimplePie_Misc::fix_protocol(SimplePie_Misc::compress_parse_url('http', $parsed['path'], '', $parsed['query'], $parsed['fragment']), $http);
 		}
