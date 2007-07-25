@@ -197,10 +197,11 @@ function buildURLparams($params, $sep='&amp;'){
  *
  * @author Andreas Gohr
  */
-function buildAttributes($params){
+function buildAttributes($params,$skipempty=false){
   $url = '';
   foreach($params as $key => $val){
     if($key{0} == '_') continue;
+    if(empty($val) && $skipempty) continue;
 
     $url .= $key.'="';
     $url .= htmlspecialchars ($val);
