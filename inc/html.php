@@ -9,6 +9,7 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 if(!defined('NL')) define('NL',"\n");
 require_once(DOKU_INC.'inc/parserutils.php');
+require_once(DOKU_INC.'inc/form.php');
 
 /**
  * Convenience function to quickly build a wikilink
@@ -42,7 +43,6 @@ function html_attbuild($attributes){
  * The loginform
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
- * @triggers HTML_LOGINFORM_INJECTION
  */
 function html_login(){
   global $lang;
@@ -51,59 +51,32 @@ function html_login(){
   global $auth;
 
   print p_locale_xhtml('login');
-  ?>
-    <div class="centeralign">
-    <form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"
-          method="post" id="dw__login">
-      <fieldset>
-        <legend><?php echo $lang['btn_login']?></legend>
-        <input type="hidden" name="id" value="<?php echo $ID?>" />
-        <input type="hidden" name="do" value="login" />
-        <label class="block">
-          <span><?php echo $lang['user']?></span>
-          <input type="text" name="u" value="<?php echo formText($_REQUEST['u'])?>"
-                 class="edit" id="focus__this" />
-        </label><br />
-        <label class="block">
-          <span><?php echo $lang['pass']?></span>
-          <input type="password" name="p" class="edit" />
-        </label><br />
+  print '<div class="centeralign">'.NL;
+  $form = new Doku_Form('dw__login');
+  $form->startFieldset($lang['btn_login']);
+  $form->addHidden('id', $ID);
+  $form->addHidden('do', 'login');
+  $form->addElement(form_makeTextField('u', $_REQUEST['u'], $lang['user'], 'focus__this', 'block'));
+  $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
+  $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
+  $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
+  $form->endFieldset();
+  html_form('login', $form);
 
-        <?php //bad and dirty event insert hook
-        $evdata = array();
-        trigger_event('HTML_LOGINFORM_INJECTION', $evdata);
-        ?>
-
-        <label for="remember__me" class="simple">
-          <input type="checkbox" name="r" id="remember__me" value="1" />
-          <span><?php echo $lang['remember']?></span>
-        </label>
-        <input type="submit" value="<?php echo $lang['btn_login']?>" class="button" />
-      </fieldset>
-    </form>
-  <?php
-    if($auth && $auth->canDo('addUser') && actionOK('register')){
-      print '<p>';
-      print $lang['reghere'];
-      print ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>';
-      print '</p>';
-    }
-
-    if ($auth && $auth->canDo('modPass') && actionOK('resendpwd')) {
-      print '<p>';
-      print $lang['pwdforget'];
-      print ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
-      print '</p>';
-    }
-  ?>
-    </div>
-  <?php
-/*
- FIXME provide new hook
-  if(@file_exists('includes/login.txt')){
-    print io_cacheParse('includes/login.txt');
+  if($auth && $auth->canDo('addUser') && actionOK('register')){
+    print '<p>';
+    print $lang['reghere'];
+    print ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>';
+    print '</p>';
   }
-*/
+
+  if ($auth && $auth->canDo('modPass') && actionOK('resendpwd')) {
+    print '<p>';
+    print $lang['pwdforget'];
+    print ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
+    print '</p>';
+  }
+  print '</div>'.NL;
 }
 
 /**
@@ -264,21 +237,18 @@ function html_draft(){
   $draft = unserialize(io_readFile($INFO['draft'],false));
   $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
 
-  echo p_locale_xhtml('draft');
-  ?>
-  <form id="dw__editform" method="post" action="<?php echo script()?>"
-   accept-charset="<?php echo $lang['encoding']?>"><div class="no">
-    <input type="hidden" name="id"   value="<?php echo $ID?>" />
-    <input type="hidden" name="date" value="<?php echo $draft['date']?>" /></div>
-    <textarea name="wikitext" id="wiki__text" readonly="readonly" cols="80" rows="10" class="edit"><?php echo "\n".formText($text)?></textarea>
-
-    <div id="draft__status"><?php echo $lang['draftdate'].' '.date($conf['dformat'],filemtime($INFO['draft']))?></div>
-
-    <input class="button" type="submit" name="do[recover]" value="<?php echo $lang['btn_recover']?>" tabindex="1" />
-    <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_draftdel']?>" tabindex="2" />
-    <input class="button" type="submit" name="do[show]" value="<?php echo $lang['btn_cancel']?>" tabindex="3" />
-  </form>
-  <?php
+  print p_locale_xhtml('draft');
+  $form = new Doku_Form('dw__editform');
+  $form->addHidden('id', $ID);
+  $form->addHidden('date', $draft['date']);
+  $form->addElement(form_makeWikiText($text, array('readonly'=>'readonly')));
+  $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
+  $form->addElement($lang['draftdate'].' '. date($conf['dformat'],filemtime($INFO['draft'])));
+  $form->addElement(form_makeCloseTag('div'));
+  $form->addElement(form_makeButton('submit', 'recover', $lang['btn_recover'], array('tabindex'=>'1')));
+  $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_draftdel'], array('tabindex'=>'2')));
+  $form->addElement(form_makeButton('submit', 'show', $lang['btn_cancel'], array('tabindex'=>'3')));
+  html_form('draft', $form);
 }
 
 /**
@@ -886,19 +856,14 @@ function html_conflict($text,$summary){
   global $lang;
 
   print p_locale_xhtml('conflict');
-  ?>
-  <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
-  <div class="centeralign">
-    <input type="hidden" name="id" value="<?php echo $ID?>" />
-    <input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
-    <input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
-
-    <input class="button" type="submit" name="do[save]" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" />
-    <input class="button" type="submit" name="do[cancel]" value="<?php echo $lang['btn_cancel']?>" />
-  </div>
-  </form>
-  <br /><br /><br /><br />
-  <?php
+  $form = new Doku_Form('dw__editform');
+  $form->addHidden('id', $ID);
+  $form->addHidden('wikitext', $text);
+  $form->addHidden('summary', $summary);
+  $form->addElement(form_makeButton('submit', 'save', $lang['btn_save'], array('accesskey'=>'s')));
+  $form->addElement(form_makeButton('submit', 'cancel', $lang['btn_cancel']));
+  html_form('conflict', $form);
+  print '<br /><br /><br /><br />'.NL;
 }
 
 /**
@@ -922,7 +887,6 @@ function html_msgarea(){
  * Prints the registration form
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @triggers HTML_REGISTERFORM_INJECTION
  */
 function html_register(){
   global $lang;
@@ -930,51 +894,23 @@ function html_register(){
   global $ID;
 
   print p_locale_xhtml('register');
-?>
-  <div class="centeralign">
-  <form id="dw__register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
-  <fieldset>
-    <input type="hidden" name="do" value="register" />
-    <input type="hidden" name="save" value="1" />
+  print '<div class="centeralign">'.NL;
+  $form = new Doku_Form('dw__register', wl($ID));
+  $form->startFieldset($lang['register']);
+  $form->addHidden('do', 'register');
+  $form->addHidden('save', '1');
+  $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], null, 'block', array('size'=>'50')));
+  if (!$conf['autopasswd']) {
+    $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
+  }
+  $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', array('size'=>'50')));
+  $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', array('size'=>'50')));
+  $form->addElement(form_makeButton('submit', '', $lang['register']));
+  $form->endFieldset();
+  html_form('register', $form);
 
-    <legend><?php echo $lang['register']?></legend>
-    <label class="block">
-      <?php echo $lang['user']?>
-      <input type="text" name="login" class="edit" size="50" value="<?php echo formText($_POST['login'])?>" />
-    </label><br />
-
-    <?php
-      if (!$conf['autopasswd']) {
-    ?>
-      <label class="block">
-        <?php echo $lang['pass']?>
-        <input type="password" name="pass" class="edit" size="50" />
-      </label><br />
-      <label class="block">
-        <?php echo $lang['passchk']?>
-        <input type="password" name="passchk" class="edit" size="50" />
-      </label><br />
-    <?php
-      }
-    ?>
-
-    <label class="block">
-      <?php echo $lang['fullname']?>
-      <input type="text" name="fullname" class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
-    </label><br />
-    <label class="block">
-      <?php echo $lang['email']?>
-      <input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
-    </label><br />
-    <?php //bad and dirty event insert hook
-    $evdata = array();
-    trigger_event('HTML_REGISTERFORM_INJECTION', $evdata);
-    ?>
-    <input type="submit" class="button" value="<?php echo $lang['register']?>" />
-  </fieldset>
-  </form>
-  </div>
-<?php
+  print '</div>'.NL;
 }
 
 /**
@@ -994,55 +930,30 @@ function html_updateprofile(){
 
   if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
   if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
-?>
-  <div class="centeralign">
-  <form id="dw__register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
-  <fieldset style="width: 80%;">
-    <input type="hidden" name="do" value="profile" />
-    <input type="hidden" name="save" value="1" />
-
-    <legend><?php echo $lang['profile']?></legend>
-    <label class="block">
-      <?php echo $lang['user']?>
-      <input type="text" name="fullname" disabled="disabled" class="edit" size="50" value="<?php echo formText($_SERVER['REMOTE_USER'])?>" />
-    </label><br />
-    <label class="block">
-      <?php echo $lang['fullname']?>
-      <input type="text" name="fullname" <?php if(!$auth->canDo('modName')) echo 'disabled="disabled"'?> class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
-    </label><br />
-    <label class="block">
-      <?php echo $lang['email']?>
-      <input type="text" name="email" <?php if(!$auth->canDo('modName')) echo 'disabled="disabled"'?> class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
-    </label><br /><br />
-
-    <?php if($auth->canDo('modPass')) { ?>
-    <label class="block">
-      <?php echo $lang['newpass']?>
-      <input type="password" name="newpass" class="edit" size="50" />
-    </label><br />
-    <label class="block">
-      <?php echo $lang['passchk']?>
-      <input type="password" name="passchk" class="edit" size="50" />
-    </label><br />
-    <?php } ?>
-
-    <?php if ($conf['profileconfirm']) { ?>
-      <br />
-      <label class="block">
-      <?php echo $lang['oldpass']?>
-      <input type="password" name="oldpass" class="edit" size="50" />
-    </label><br />
-    <?php } ?>
-    <?php //bad and dirty event insert hook
-    $evdata = array();
-    trigger_event('HTML_PROFILEFORM_INJECTION', $evdata);
-    ?>
-    <input type="submit" class="button" value="<?php echo $lang['btn_save']?>" />
-    <input type="reset" class="button" value="<?php echo $lang['btn_reset']?>" />
-  </fieldset>
-  </form>
-  </div>
-<?php
+  print '<div class="centeralign">'.NL;
+  $form = new Doku_Form('dw__register', wl($ID));
+  $form->startFieldset($lang['profile']);
+  $form->addHidden('do', 'profile');
+  $form->addHidden('save', '1');
+  $form->addElement(form_makeTextField('fullname', $_SERVER['REMOTE_USER'], $lang['user'], '', 'block', array('size'=>'50', 'disabled'=>'disabled')));
+  $attr = array('size'=>'50');
+  if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
+  $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', $attr));
+  $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', $attr));
+  $form->addElement(form_makeTag('br'));
+  if ($auth->canDo('modPass')) {
+    $form->addElement(form_makePasswordField('newpass', $lang['newpass'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
+  }
+  if ($conf['profileconfirm']) {
+    $form->addElement(form_makeTag('br'));
+    $form->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50')));
+  }
+  $form->addElement(form_makeButton('submit', '', $lang['btn_save']));
+  $form->addElement(form_makeButton('reset', '', $lang['btn_reset']));
+  $form->endFieldset();
+  html_form('updateprofile', $form);
+  print '</div>'.NL;
 }
 
 /**
@@ -1108,7 +1019,6 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   if($wr){
     if ($REV) print p_locale_xhtml('editrev');
     print p_locale_xhtml($include);
-    $ro=false;
   }else{
     // check pseudo action 'source'
     if(!actionOK('source')){
@@ -1116,7 +1026,6 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       return;
     }
     print p_locale_xhtml('read');
-    $ro='readonly="readonly"';
   }
   if(!$DATE) $DATE = $INFO['lastmod'];
 
@@ -1126,7 +1035,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
    <div class="toolbar">
       <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.date($conf['dformat']);?></div>
-      <div id="tool__bar"><?php if(!$ro){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+      <div id="tool__bar"><?php if($wr){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
       target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
 
       <?php if($wr){?>
@@ -1139,44 +1048,35 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
       <?php } ?>
    </div>
    <div id="spell__result"></div>
-
-
-   <form id="dw__editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>"><div class="no">
-      <input type="hidden" name="id"   value="<?php echo $ID?>" />
-      <input type="hidden" name="rev"  value="<?php echo $REV?>" />
-      <input type="hidden" name="date" value="<?php echo $DATE?>" />
-      <input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
-      <input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
-      <input type="hidden" name="changecheck" value="<?php echo $check?>" />
-    </div>
-
-    <textarea name="wikitext" id="wiki__text" <?php echo $ro?> cols="80" rows="10" class="edit" tabindex="1"><?php echo "\n".formText($text)?></textarea>
-
-    <?php //bad and dirty event insert hook
-    $evdata = array('writable' => $wr);
-    trigger_event('HTML_EDITFORM_INJECTION', $evdata);
-    ?>
-
-    <div id="wiki__editbar">
-      <div id="size__ctl"></div>
-      <?php if($wr){?>
-         <div class="editButtons">
-            <input class="button" id="edbtn__save" type="submit" name="do[save]" value="<?php echo $lang['btn_save']?>" accesskey="s" title="<?php echo $lang['btn_save']?> [ALT+S]" tabindex="4" />
-            <input class="button" id="edbtn__preview" type="submit" name="do[preview]" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="<?php echo $lang['btn_preview']?> [ALT+P]" tabindex="5" />
-            <input class="button" type="submit" name="do[draftdel]" value="<?php echo $lang['btn_cancel']?>" tabindex="6" />
-         </div>
-      <?php } ?>
-      <?php if($wr){ ?>
-        <div class="summary">
-           <label for="edit__summary" class="nowrap"><?php echo $lang['summary']?>:</label>
-           <input type="text" class="edit" name="summary" id="edit__summary" size="50" value="<?php echo formText($SUM)?>" tabindex="2" />
-           <?php html_minoredit()?>
-        </div>
-      <?php }?>
-    </div>
-  </form>
-  </div>
 <?php
+  $form = new Doku_Form('dw__editform');
+  $form->addHidden('id', $ID);
+  $form->addHidden('rev', $REV);
+  $form->addHidden('date', $DATE);
+  $form->addHidden('prefix', $PRE);
+  $form->addHidden('suffix', $SUF);
+  $form->addHidden('changecheck', $check);
+  $attr = array('tabindex'=>'1');
+  if (!$wr) $attr['readonly'] = 'readonly';
+  $form->addElement(form_makeWikiText($text, $attr));
+  $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar')));
+  $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
+  $form->addElement(form_makeCloseTag('div'));
+  if ($wr) {
+    $form->addElement(form_makeOpenTag('div', array('class'=>'editButtons')));
+    $form->addElement(form_makeButton('submit', 'save', $lang['btn_save'], array('id'=>'edbtn__save', 'accesskey'=>'s', 'tabindex'=>'4')));
+    $form->addElement(form_makeButton('submit', 'preview', $lang['btn_preview'], array('id'=>'edbtn__preview', 'accesskey'=>'p', 'tabindex'=>'5')));
+    $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_cancel'], array('tabindex'=>'6')));
+    $form->addElement(form_makeCloseTag('div'));
+    $form->addElement(form_makeOpenTag('div', array('class'=>'summary')));
+    $form->addElement(form_makeTextField('summary', $SUM, $lang['summary'], 'edit__summary', 'nowrap', array('size'=>'50', 'tabindex'=>'2')));
+    $elem = html_minoredit();
+    if ($elem) $form->addElement($elem);
+    $form->addElement(form_makeCloseTag('div'));
+  }
+  $form->addElement(form_makeCloseTag('div'));
+  html_form('edit', $form);
+  print '</div>'.NL;
 }
 
 /**
@@ -1189,24 +1089,13 @@ function html_minoredit(){
   global $lang;
   // minor edits are for logged in users only
   if(!$conf['useacl'] || !$_SERVER['REMOTE_USER']){
-    return;
+    return false;
   }
 
   $p = array();
-  $p['name']     = 'minor';
-  $p['type']     = 'checkbox';
-  $p['id']       = 'minoredit';
   $p['tabindex'] = 3;
-  $p['value']    = '1';
   if(!empty($_REQUEST['minor'])) $p['checked']='checked';
-  $att = buildAttributes($p);
-
-  print '<span class="nowrap">';
-  print "<input $att />";
-  print '<label for="minoredit">';
-  print $lang['minoredit'];
-  print '</label>';
-  print '</span>';
+  return form_makeCheckboxField('minor', '1', $lang['minoredit'], 'minoredit', 'nowrap', $p);
 }
 
 /**
@@ -1341,23 +1230,39 @@ function html_resendpwd() {
   global $ID;
 
   print p_locale_xhtml('resendpwd');
-?>
-  <div class="centeralign">
-  <form id="dw__resendpwd" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
-    <fieldset>
-      <br />
-      <legend><?php echo $lang['resendpwd']?></legend>
-      <input type="hidden" name="do" value="resendpwd" />
-      <input type="hidden" name="save" value="1" />
-      <label class="block">
-        <span><?php echo $lang['user']?></span>
-        <input type="text" name="login" value="<?php echo formText($_POST['login'])?>" class="edit" /><br /><br />
-      </label><br />
-      <input type="submit" value="<?php echo $lang['btn_resendpwd']?>" class="button" />
-    </fieldset>
-  </form>
-  </div>
-<?php
+  print '<div class="centeralign">'.NL;
+  $form = new Doku_Form('dw__resendpwd', wl($ID));
+  $form->startFieldset($lang['resendpwd']);
+  $form->addHidden('do', 'resendpwd');
+  $form->addHidden('save', '1');
+  $form->addElement(form_makeTag('br'));
+  $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block'));
+  $form->addElement(form_makeTag('br'));
+  $form->addElement(form_makeTag('br'));
+  $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));
+  $form->endFieldset();
+  html_form('resendpwd', $form);
+  print '</div>'.NL;
+}
+
+/**
+ * Output a Doku_Form object.
+ * Triggers an event with the form name: HTML_{$name}FORM_OUTPUT
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function html_form($name, &$form) {
+  // Safety check in case the caller forgets.
+  $form->endFieldset();
+  trigger_event('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
+}
+
+/**
+ * Form print function.
+ * Just calls printForm() on the data object.
+ */
+function html_form_output($data) {
+  $data->printForm();
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
