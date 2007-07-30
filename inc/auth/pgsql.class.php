@@ -43,7 +43,7 @@ class auth_pgsql extends auth_mysql {
       $this->defaultgroup = $conf['defaultgroup'];
 
       // set capabilities based upon config strings set
-      if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
+      if (empty($this->cnf['user']) ||
           empty($this->cnf['password']) || empty($this->cnf['database'])){
         if ($this->cnf['debug'])
           msg("PgSQL err: insufficient configuration.",-1,__LINE__,__FILE__);
@@ -281,7 +281,7 @@ class auth_pgsql extends auth_mysql {
      */
     function _openDB() {
       if (!$this->dbcon) {
-        $dsn  = 'host='.$this->cnf['server'];
+        $dsn  = $this->cnf['server'] ? 'host='.$this->cnf['server'] : '';
         $dsn .= ' port='.$this->cnf['port'];
         $dsn .= ' dbname='.$this->cnf['database'];
         $dsn .= ' user='.$this->cnf['user'];
