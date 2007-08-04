@@ -18,9 +18,9 @@ require_once(DOKU_INC.'inc/html.php');
  * When printed, the form class calls functions named 'form_$type' for each
  * element it contains.
  *
- * Standard practice is for non-attribute keys in a pseudo-element to start 
+ * Standard practice is for non-attribute keys in a pseudo-element to start
  * with '_'. Other keys are HTML attributes that will be included in the element
- * tag. That way, the element output functions can pass the pseudo-element 
+ * tag. That way, the element output functions can pass the pseudo-element
  * directly to buildAttributes.
  *
  * See the form_make* functions later in this file.
@@ -99,7 +99,7 @@ class Doku_Form {
    * formText() before printing.
    *
    * @param   string  $name   Field name.
-   * @param   string  $value  Field value. If null, remove a previously added field.                              
+   * @param   string  $value  Field value. If null, remove a previously added field.
    * @author  Tom N Harris <tnharris@whoopdedo.org>
    */
   function addHidden($name, $value) {
@@ -114,7 +114,7 @@ class Doku_Form {
    *
    * Appends a content element to the form.
    * The element can be either a pseudo-tag or string.
-   * If string, it is printed without escaping special chars.   * 
+   * If string, it is printed without escaping special chars.   *
    *
    * @param   string  $elem   Pseudo-tag or string to add to the form.
    * @author  Tom N Harris <tnharris@whoopdedo.org>
@@ -207,7 +207,7 @@ class Doku_Form {
    * getElementAt
    *
    * Returns a reference to the element at a position.
-   * A position out-of-bounds will return either the 
+   * A position out-of-bounds will return either the
    * first (underflow) or last (overflow) element.
    *
    * @param   int     $pos    0-based index
@@ -237,7 +237,7 @@ class Doku_Form {
     print '>'.NL;
     if (!empty($this->_hidden)) {
       print '<div class="no">';
-      foreach ($this->_hidden as $name=>$value) 
+      foreach ($this->_hidden as $name=>$value)
         print form_hidden(array('name'=>$name, 'value'=>$value));
       print '</div>'.NL;
     }
@@ -455,7 +455,7 @@ function form_makeRadioField($name, $value='1', $label=null, $id='', $class='', 
  * The list of values can be strings, arrays of (value,text),
  * or an associative array with the values as keys and labels as values.
  * An item is selected by supplying its value or integer index.
- * If the list of values is an associative array, the selected item must be 
+ * If the list of values is an associative array, the selected item must be
  * a string.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
@@ -644,7 +644,7 @@ function form_field($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span>';
-  $s .= '<input '.buildAttributes($attrs,true).'/></label>';
+  $s .= ' <input '.buildAttributes($attrs,true).'/></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
@@ -664,7 +664,7 @@ function form_fieldright($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input '.buildAttributes($attrs,true).'/>';
-  $s .= '<span>'.$attrs['_text'].'</span></label>';
+  $s .= ' <span>'.$attrs['_text'].'</span></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
@@ -683,7 +683,7 @@ function form_fieldright($attrs) {
 function form_textfield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-  $s .= '><span>'.$attrs['_text'].'</span>';
+  $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<input type="text" class="edit" '.buildAttributes($attrs,true).'/></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
@@ -703,7 +703,7 @@ function form_textfield($attrs) {
 function form_passwordfield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-  $s .= '><span>'.$attrs['_text'].'</span>';
+  $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<input type="password" class="edit" '.buildAttributes($attrs,true).'/></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
@@ -724,7 +724,7 @@ function form_checkboxfield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input type="checkbox" '.buildAttributes($attrs,true).'/>';
-  $s .= '<span>'.$attrs['_text'].'</span></label>';
+  $s .= ' <span>'.$attrs['_text'].'</span></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
@@ -744,7 +744,7 @@ function form_radiofield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input type="radio" '.buildAttributes($attrs,true).'/>';
-  $s .= '<span>'.$attrs['_text'].'</span></label>';
+  $s .= ' <span>'.$attrs['_text'].'</span></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
@@ -768,7 +768,7 @@ function form_menufield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span>';
-  $s .= '<select '.buildAttributes($attrs,true).'>'.NL;
+  $s .= ' <select '.buildAttributes($attrs,true).'>'.NL;
   if (!empty($attrs['_options'])) {
     $selected = false;
     for($n=0;$n<count($attrs['_options']);$n++){
@@ -808,7 +808,7 @@ function form_menufield($attrs) {
 function form_listboxfield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-  $s .= '><span>'.$attrs['_text'].'</span>';
+  $s .= '><span>'.$attrs['_text'].'</span> ';
   $s = '<select '.buildAttributes($attrs,true).'>'.NL;
   if (!empty($attrs['_options'])) {
     foreach ($attrs['_options'] as $opt) {
