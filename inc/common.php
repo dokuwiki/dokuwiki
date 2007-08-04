@@ -893,20 +893,27 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
 }
 
 /**
- * extracts the query from a google referer
+ * extracts the query from a search engine referrer
  *
- * @todo   should be more generic and support yahoo et al
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Todd Augsburger <todd@rollerorgans.com>
  */
 function getGoogleQuery(){
   $url = parse_url($_SERVER['HTTP_REFERER']);
   if(!$url) return '';
 
-  if(!preg_match("#google\.#i",$url['host'])) return '';
   $query = array();
   parse_str($url['query'],$query);
+  if(isset($query['q']))
+    return $query['q'];        // google, live/msn, aol, ask, altavista, alltheweb, gigablast
+  elseif(isset($query['p']))
+    return $query['p'];        // yahoo
+  elseif(isset($query['query']))
+    return $query['query'];    // lycos, netscape, clusty, hotbot
+  elseif(preg_match("#a9\.com#i",$url['host'])) // a9
+    return urldecode(ltrim($url['path'],'/'));
 
-  return $query['q'];
+  return '';
 }
 
 /**
