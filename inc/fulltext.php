@@ -78,12 +78,14 @@ function ft_pageSearch($query,&$poswords){
         //build a regexp
         $q['phrases'] = array_map('utf8_strtolower',$q['phrases']);
         $q['phrases'] = array_map('ft_preg_quote_cb',$q['phrases']);
-        $regex = '('.join('|',$q['phrases']).')';
         // check the source of all documents for the exact phrases
         foreach(array_keys($docs) as $id){
             $text  = utf8_strtolower(rawWiki($id));
-            if(!preg_match('/'.$regex.'/usi',$text)){
-                unset($docs[$id]); // no hit - remove
+            foreach($q['phrases'] as $phrase){
+                if(!preg_match('/'.$phrase.'/usi',$text)){
+                    unset($docs[$id]); // no hit - remove
+                    break;
+                }
             }
         }
     }
@@ -280,14 +282,14 @@ function ft_resultCombine($args){
 
     $result = array();
     if ($array_count > 1) {
-      foreach ($args[0] as $key1 => $value1) {
+      foreach ($args[0] as $key => $value) {
+        $result[$key] = $value;
         for ($i = 1; $i !== $array_count; $i++) {
-            foreach ($args[$i] as $key2 => $value2) {
-                if ((string) $key1 === (string) $key2) {
-                    if(!isset($result[$key1])) $result[$key1] = $value1;
-                    $result[$key1] += $value2;
-                }
+            if (!isset($args[$i][$key])) {
+                unset($result[$key]);
+                break;
             }
+            $result[$key] += $args[$i][$key];
         }
       }
     }
