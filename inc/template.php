@@ -505,7 +505,7 @@ function tpl_button($type){
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @see    tpl_button
  */
-function tpl_actionlink($type,$pre='',$suf=''){
+function tpl_actionlink($type,$pre='',$suf='',$inner=''){
   global $ID;
   global $INFO;
   global $REV;
@@ -526,62 +526,77 @@ function tpl_actionlink($type,$pre='',$suf=''){
         if($INFO['writable']){
           if(!empty($INFO['draft'])) {
             tpl_link(wl($ID,'do=draft'),
-                       $pre.$lang['btn_draft'].$suf,
+                       $pre.(($inner)?$inner:$lang['btn_draft']).$suf,
                        'class="action edit" acceskey="e" rel="nofollow"');
           } else {
             if($INFO['exists']){
               tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                       $pre.$lang['btn_edit'].$suf,
+                       $pre.(($inner)?$inner:$lang['btn_edit']).$suf,
                        'class="action edit" accesskey="e" rel="nofollow"');
             }else{
               tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                       $pre.$lang['btn_create'].$suf,
+                       $pre.(($inner)?$inner:$lang['btn_create']).$suf,
                        'class="action create" accesskey="e" rel="nofollow"');
             }
           }
         }else{
           if(!actionOK('source')) return false; //pseudo action
           tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                   $pre.$lang['btn_source'].$suf,
+                   $pre.(($inner)?$inner:$lang['btn_source']).$suf,
                    'class="action source" accesskey="v" rel="nofollow"');
         }
       }else{
           tpl_link(wl($ID,'do=show'),
-                   $pre.$lang['btn_show'].$suf,
+                   $pre.(($inner)?$inner:$lang['btn_show']).$suf,
                    'class="action show" accesskey="v" rel="nofollow"');
       }
       return true;
     case 'history':
-      tpl_link(wl($ID,'do=revisions'),$pre.$lang['btn_revs'].$suf,'class="action revisions" accesskey="o" rel="nofollow"');
+      tpl_link(wl($ID,'do=revisions'),
+               $pre.(($inner)?$inner:$lang['btn_revs']).$suf,
+               'class="action revisions" accesskey="o" rel="nofollow"');
       return true;
     case 'recent':
-      tpl_link(wl('','do=recent'),$pre.$lang['btn_recent'].$suf,'class="action recent" accesskey="r" rel="nofollow"');
+      tpl_link(wl('','do=recent'),
+               $pre.(($inner)?$inner:$lang['btn_recent']).$suf,
+              'class="action recent" accesskey="r" rel="nofollow"');
       return true;
     case 'index':
-      tpl_link(wl($ID,'do=index'),$pre.$lang['btn_index'].$suf,'class="action index" accesskey="x" rel="nofollow"');
+      tpl_link(wl($ID,'do=index'),
+               $pre.(($inner)?$inner:$lang['btn_index']).$suf,
+              'class="action index" accesskey="x" rel="nofollow"');
       return true;
     case 'top':
-      print '<a href="#dokuwiki__top" class="action top" accesskey="x">'.$pre.$lang['btn_top'].$suf.'</a>';
+      print '<a href="#dokuwiki__top" class="action top" accesskey="x">'.
+            $pre.(($inner)?$inner:$lang['btn_top']).$suf.'</a>';
       return true;
     case 'back':
       if ($parent = tpl_getparent($ID)) {
-        tpl_link(wl($parent,'do=show'),$pre.$lang['btn_back'].$suf,'class="action back" accesskey="b" rel="nofollow"');
+        tpl_link(wl($parent,'do=show'),
+        $pre.(($inner)?$inner:$lang['btn_back']).$suf,
+        'class="action back" accesskey="b" rel="nofollow"');
         return true;
       }
       return false;
     case 'login':
       if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
-          tpl_link(wl($ID,'do=logout'),$pre.$lang['btn_logout'].$suf,'class="action logout" rel="nofollow"');
+          tpl_link(wl($ID,'do=logout'),
+                   $pre.(($inner)?$inner:$lang['btn_logout']).$suf,
+                   'class="action logout" rel="nofollow"');
         }else{
-          tpl_link(wl($ID,'do=login'),$pre.$lang['btn_login'].$suf,'class="action login" rel="nofollow"');
+          tpl_link(wl($ID,'do=login'),
+                   $pre.(($inner)?$inner:$lang['btn_login']).$suf,
+                   'class="action login" rel="nofollow"');
         }
         return true;
       }
       return false;
     case 'admin':
       if($INFO['ismanager']){
-        tpl_link(wl($ID,'do=admin'),$pre.$lang['btn_admin'].$suf,'class="action admin" rel="nofollow"');
+        tpl_link(wl($ID,'do=admin'),
+                 $pre.(($inner)?$inner:$lang['btn_admin']).$suf,
+                 'class="action admin" rel="nofollow"');
         return true;
       }
       return false;
@@ -590,21 +605,29 @@ function tpl_actionlink($type,$pre='',$suf=''){
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']) {
-            tpl_link(wl($ID,'do=unsubscribe'),$pre.$lang['btn_unsubscribe'].$suf,'class="action unsubscribe" rel="nofollow"');
+            tpl_link(wl($ID,'do=unsubscribe'),
+                     $pre.(($inner)?$inner:$lang['btn_unsubscribe']).$suf,
+                     'class="action unsubscribe" rel="nofollow"');
           } else {
-            tpl_link(wl($ID,'do=subscribe'),$pre.$lang['btn_subscribe'].$suf,'class="action subscribe" rel="nofollow"');
+            tpl_link(wl($ID,'do=subscribe'),
+                     $pre.(($inner)?$inner:$lang['btn_subscribe']).$suf,
+                     'class="action subscribe" rel="nofollow"');
           }
           return true;
         }
       }
       return false;
     case 'backlink':
-      tpl_link(wl($ID,'do=backlink'),$pre.$lang['btn_backlink'].$suf, 'class="action backlink" rel="nofollow"');
+      tpl_link(wl($ID,'do=backlink'),
+               $pre.(($inner)?$inner:$lang['btn_backlink']).$suf,
+               'class="action backlink" rel="nofollow"');
       return true;
     case 'profile':
       if($conf['useacl'] && $auth && $_SERVER['REMOTE_USER'] &&
          $auth->canDo('Profile') && ($ACT!='profile')){
-        tpl_link(wl($ID,'do=profile'),$pre.$lang['btn_profile'].$suf, 'class="action profile" rel="nofollow"');
+        tpl_link(wl($ID,'do=profile'),
+                 $pre.(($inner)?$inner:$lang['btn_profile']).$suf,
+                 'class="action profile" rel="nofollow"');
         return true;
       }
       return false;
