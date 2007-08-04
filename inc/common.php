@@ -201,7 +201,7 @@ function buildAttributes($params,$skipempty=false){
   $url = '';
   foreach($params as $key => $val){
     if($key{0} == '_') continue;
-    if(empty($val) && $skipempty) continue;
+    if($val === '' && $skipempty) continue;
 
     $url .= $key.'="';
     $url .= htmlspecialchars ($val);
