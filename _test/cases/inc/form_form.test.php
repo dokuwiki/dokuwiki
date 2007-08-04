@@ -24,11 +24,11 @@ class form_test extends UnitTestCase {
     $realoutput .= '<div class="no"><input type="hidden" name="summary" value="changes &amp;c" /></div>';
     $realoutput .= "\n";
     $realoutput .= "<fieldset ><legend>Test</legend>\n";
-    $realoutput .= '<label class="block" for="text__id"><span>Text</span>';
+    $realoutput .= '<label class="block" for="text__id"><span>Text</span> ';
     $realoutput .= '<input type="text" class="edit" id="text__id" name="t" value="v" /></label><br />';
     $realoutput .= "\n";
     $realoutput .= '<label class="simple" for="check__id">';
-    $realoutput .= '<input type="checkbox" id="check__id" name="r" value="1" />';
+    $realoutput .= '<input type="checkbox" id="check__id" name="r" value="1" /> ';
     $realoutput .= '<span>Check</span></label>';
     $realoutput .= "\n";
     $realoutput .= '<input class="button" name="do[save]" type="submit" value="Save" accesskey="s" title="Save [ALT+S]" />';
