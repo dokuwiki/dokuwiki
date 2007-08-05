@@ -35,6 +35,7 @@
  *   'authtype'    - as 'setting', input validated against a valid php file at expected location for auth files
  *   'im_convert'  - as 'setting', input must exist and be an im_convert module
  *   'disableactions' - as 'setting'
+ *   'compression' - no additional parameters. checks php installation supports possible compression alternatives
  *
  *  Any setting commented or missing will use 'setting' class - text input, minimal validation, quoted output
  *
@@ -162,7 +163,7 @@ $meta['compress']    = array('onoff');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');
-$meta['compression'] = array('multichoice','_choices' => array('0','gz','bz2'));
+$meta['compression'] = array('compression');
 $meta['sitemap']     = array('numeric');
 $meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom','atom1'));
 $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));

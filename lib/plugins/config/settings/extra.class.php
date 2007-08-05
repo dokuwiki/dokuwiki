@@ -98,3 +98,19 @@ if (!class_exists('setting_disableactions')) {
     }
   }
 }
+
+if (!class_exists('setting_compression')) {
+  class setting_compression extends setting_multichoice {
+
+    var $_choices = array('0');      // 0 = no compression, always supported
+
+    function initialize($default,$local,$protected) {
+
+      // populate _choices with the compression methods supported by this php installation
+      if (function_exists('gzopen')) $this->_choices[] = 'gz';
+      if (function_exists('bzopen')) $this->_choices[] = 'bzip';
+
+      parent::initialize($default,$local,$protected);
+    }
+  }
+}

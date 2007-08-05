@@ -622,7 +622,7 @@ if (!class_exists('setting_dirchoice')) {
 
     function initialize($default,$local,$protected) {
 
-      // populate $this->_choices with a list of available templates
+      // populate $this->_choices with a list of directories
       $list = array();
 
       if ($dh = @opendir($this->_dir)) {
