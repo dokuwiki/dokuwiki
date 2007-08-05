@@ -41,5 +41,9 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
     function forAdminOnly() {
         return true;
     }
+
+    function getTOC(){
+        return array();
+    }
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :

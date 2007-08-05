@@ -12,7 +12,6 @@
 /**
  * Returns the path to the given template, uses
  * default one if the custom version doesn't exist.
- * Also enables gzip compression if configured.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -37,18 +36,17 @@ function template($tpl){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_content() {
-  global $ACT;
+function tpl_content($prependTOC=true) {
+    global $ACT;
+    global $INFO;
+    $INFO['prependTOC'] = $prependTOC;
 
-  ob_start();
+    ob_start();
+    trigger_event('TPL_ACT_RENDER',$ACT,'tpl_content_core');
+    $html_output = ob_get_clean();
+    trigger_event('TPL_CONTENT_DISPLAY',$html_output,'ptln');
 
-  trigger_event('TPL_ACT_RENDER',$ACT,'tpl_content_core');
-
-  $html_output = ob_get_clean();
-
-  trigger_event('TPL_CONTENT_DISPLAY',$html_output,'ptln');
-
-  return !empty($html_output);
+    return !empty($html_output);
 }
 
 function tpl_content_core(){
@@ -136,14 +134,68 @@ function tpl_content_core(){
 }
 
 /**
+ * Places the TOC where the function is called
+ *
+ * If you use this you most probably want to call tpl_content with
+ * a false argument
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_toc($return=false){
+    global $TOC;
+    global $ACT;
+    global $ID;
+    global $REV;
+    global $INFO;
+    $toc = array();
+
+    if(is_array($TOC)){
+        // if a TOC was prepared in global scope, always use it
+        $toc = $TOC;
+    }elseif($ACT == 'show' && !$REV){
+        // get TOC from metadata, render if neccessary
+        $meta = p_get_metadata($ID, false, true);
+        if(isset($meta['internal']['toc'])){
+            $tocok = $meta['internal']['toc'];
+        }else{
+            $tokok = true;
+        }
+        $toc   = $meta['description']['tableofcontents'];
+        if(!$tocok || !is_array($toc) || count($toc) < 3){
+            $toc = array();
+        }
+    }elseif($ACT == 'admin'){
+        // try to load admin plugin TOC FIXME: duplicates code from tpl_admin
+        $plugin = null;
+        if (!empty($_REQUEST['page'])) {
+            $pluginlist = plugin_list('admin');
+            if (in_array($_REQUEST['page'], $pluginlist)) {
+                // attempt to load the plugin
+                $plugin =& plugin_load('admin',$_REQUEST['page']);
+            }
+        }
+        if ( ($plugin !== null) &&
+             (!$plugin->forAdminOnly() || $INFO['isadmin']) ){
+            $toc = $plugin->getTOC();
+            $TOC = $toc; // avoid later rebuild
+        }
+    }
+
+    $html = html_TOC($toc);
+    if($return) return $html;
+    echo $html;
+}
+
+/**
  * Handle the admin page contents
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_admin(){
     global $INFO;
+    global $TOC;
 
-    $plugin = NULL;
+    $plugin = null;
     if (!empty($_REQUEST['page'])) {
         $pluginlist = plugin_list('admin');
 
@@ -154,11 +206,13 @@ function tpl_admin(){
         }
     }
 
-    if ($plugin !== NULL){
+    if ($plugin !== null){
         if($plugin->forAdminOnly() && !$INFO['isadmin']){
             msg('For admins only',-1);
             html_admin();
         }else{
+            if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
+            if($INFO['prependTOC']) tpl_toc();
             $plugin->html();
         }
     }else{
@@ -1061,4 +1115,4 @@ function tpl_mediaTree(){
   ptln('</div>');
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=4 enc=utf-8 :

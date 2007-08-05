@@ -200,6 +200,7 @@ function html_show($txt=''){
   global $ID;
   global $REV;
   global $HIGH;
+  global $INFO;
   //disable section editing for old revisions or in preview
   if($txt || $REV){
     $secedit = false;
@@ -209,18 +210,22 @@ function html_show($txt=''){
 
   if ($txt){
     //PreviewHeader
-    print '<br id="scroll__here" />';
-    print p_locale_xhtml('preview');
-    print '<div class="preview">';
-    print html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
-    print '<div class="clearer"></div>';
-    print '</div>';
+    echo '<br id="scroll__here" />';
+    echo p_locale_xhtml('preview');
+    echo '<div class="preview">';
+    $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
+    if($INFO['prependTOC']) $html = tpl_toc(true).$html;
+    echo $html;
+    echo '<div class="clearer"></div>';
+    echo '</div>';
 
   }else{
     if ($REV) print p_locale_xhtml('showrev');
     $html = p_wiki_xhtml($ID,$REV,true);
     $html = html_secedit($html,$secedit);
-    print html_hilight($html,$HIGH);
+    if($INFO['prependTOC']) $html = tpl_toc(true).$html;
+    $html = html_hilight($html,$HIGH);
+    echo $html;
   }
 }
 
@@ -1243,6 +1248,51 @@ function html_resendpwd() {
   $form->endFieldset();
   html_form('resendpwd', $form);
   print '</div>'.NL;
+}
+
+/**
+ * Return the TOC rendered to XHTML
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function html_TOC($toc){
+    if(!count($toc)) return '';
+    global $lang;
+    $out  = '<!-- TOC START -->'.DOKU_LF;
+    $out .= '<div class="toc">'.DOKU_LF;
+    $out .= '<div class="tocheader toctoggle" id="toc__header">';
+    $out .= $lang['toc'];
+    $out .= '</div>'.DOKU_LF;
+    $out .= '<div id="toc__inside">'.DOKU_LF;
+    $out .= html_buildlist($toc,'toc','html_list_toc');
+    $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
+    $out .= '<!-- TOC END -->'.DOKU_LF;
+    return $out;                                                                                                }
+
+/**
+ * Callback for html_buildlist
+ */
+function html_list_toc($item){
+    return '<span class="li"><a href="'.$item['link'].'" class="toc">'.
+           hsc($item['title']).'</a></span>';
+}
+
+/**
+ * Helper function to build TOC items
+ *
+ * Returns an array ready to be added to a TOC array
+ *
+ * @param string $link  - where to link (if $hash set to '#' it's a local anchor)
+ * @param string $text  - what to display in the TOC
+ * @param int    $level - nesting level
+ * @param string $hash  - is prepended to the given $link, set blank if you want full links
+ */
+function html_mktocitem($link, $text, $level, $hash='#'){
+    global $conf;
+    return  array( 'link'  => $hash.$link,
+                   'title' => $text,
+                   'type'  => 'ul',
+                   'level' => $level-$conf['toptoclevel']+1);
 }
 
 /**

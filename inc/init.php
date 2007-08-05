@@ -63,6 +63,9 @@
     }
   }
 
+  // define whitespace
+  if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
+  if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
   // define cookie and session id
   if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_URL));

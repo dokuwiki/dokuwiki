@@ -32,7 +32,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     var $_changed = false;          // set to true if configuration has altered
     var $_error = false;
     var $_session_started = false;
-        var $_localised_prompts = false;
+    var $_localised_prompts = false;
 
     /**
      * return some info
@@ -42,7 +42,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       return array(
         'author' => 'Christopher Smith',
         'email'  => 'chris@jalakai.co.uk',
-        'date'   => '2006-01-24',
+        'date'   => '2007-08-05',
         'name'   => 'Configuration Manager',
         'desc'   => "Manage Dokuwiki's Configuration Settings",
         'url'    => 'http://wiki.splitbrain.org/plugin:config',
@@ -99,7 +99,6 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
       $this->setupLocale(true);
 
-      $this->_print_config_toc();
       print $this->locale_xhtml('intro');
 
       ptln('<div id="config__manager">');
@@ -277,10 +276,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
         closedir($dh);
       }
-      
+
       // the same for the active template
       $tpl = $conf['template'];
-      
+
       if (@file_exists(DOKU_TPLINC.$enlangfile)){
         $lang = array();
         @include(DOKU_TPLINC.$enlangfile);
@@ -295,17 +294,19 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] =
           ucwords(str_replace('_', ' ', $tpl)).' '.$this->getLang('_template_sufix');
       }
-      
+
       return true;
     }
 
     /**
-    * Generates a two-level table of contents for the config plugin.
-    * Uses inc/parser/xhtml.php#render_TOC to format the output.
-    *
-    * @author Ben Coburn <btcoburn@silicodon.net>
-    */
-    function _print_config_toc() {
+     * Generates a two-level table of contents for the config plugin.
+     *
+     * @author Ben Coburn <btcoburn@silicodon.net>
+     */
+    function getTOC() {
+      if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
+      $this->setupLocale(true);
+
       $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
 
       // gather toc data
@@ -325,35 +326,33 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
       }
 
-      // use the xhtml renderer to make the toc
-      require_once(DOKU_INC.'inc/parser/xhtml.php');
-      $r = new Doku_Renderer_xhtml;
-
       // build toc
-      $r->toc_additem('configuration_manager', $this->getLang('_configuration_manager'), 1);
-      $r->toc_additem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
+      $t = array();
+
+      $t[] = html_mktocitem('configuration_manager', $this->getLang('_configuration_manager'), 1);
+      $t[] = html_mktocitem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
       foreach($toc['conf'] as $setting) {
         $name = $setting->prompt($this);
-        $r->toc_additem($setting->_key, $name, 2);
+        $t[] = html_mktocitem($setting->_key, $name, 2);
       }
       if (!empty($toc['plugin'])) {
-        $r->toc_additem('plugin_settings', $this->getLang('_header_plugin'), 1);
+        $t[] = html_mktocitem('plugin_settings', $this->getLang('_header_plugin'), 1);
       }
       foreach($toc['plugin'] as $setting) {
         $name = $setting->prompt($this);
-        $r->toc_additem($setting->_key, $name, 2);
+        $t[] = html_mktocitem($setting->_key, $name, 2);
       }
       if (isset($toc['template'])) {
-        $r->toc_additem('template_settings', $this->getLang('_header_template'), 1);
+        $t[] = html_mktocitem('template_settings', $this->getLang('_header_template'), 1);
         $setting = $toc['template'];
         $name = $setting->prompt($this);
-        $r->toc_additem($setting->_key, $name, 2);
+        $t[] = html_mktocitem($setting->_key, $name, 2);
       }
       if ($has_undefined && $allow_debug) {
-        $r->toc_additem('undefined_settings', $this->getLang('_header_undefined'), 1);
+        $t[] = html_mktocitem('undefined_settings', $this->getLang('_header_undefined'), 1);
       }
 
-      print $r->render_TOC();
+      return $t;
     }
 
     function _print_h1($id, $text) {

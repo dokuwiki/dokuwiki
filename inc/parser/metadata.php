@@ -42,6 +42,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function document_end(){
+    // store internal info in metadata (notoc,nocache)
+    $this->meta['internal'] = $this->info;
+
     if (!$this->meta['description']['abstract']){
       // cut off too long abstracts
       $this->doc = trim($this->doc);

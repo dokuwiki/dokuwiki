@@ -82,43 +82,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->doc .= '</div>'.DOKU_LF;
         }
 
-        // prepend the TOC
-        if($this->info['toc']){
-            $this->doc = $this->render_TOC($this->toc).$this->doc;
+        // Prepare the TOC
+        if($this->info['toc'] && is_array($this->toc) && count($this->toc) > 2){
+            global $TOC;
+            $TOC = $this->toc;
         }
 
         // make sure there are no empty paragraphs
         $this->doc = preg_replace('#<p>\s*</p>#','',$this->doc);
-    }
-
-    /**
-     * Return the TOC rendered to XHTML
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    function render_TOC($toc=null){
-        if(is_null($toc) && is_array($this->toc)) $toc = $this->toc;
-
-        if(count($toc) < 3) return '';
-        global $lang;
-        $out  = '<!-- TOC START -->'.DOKU_LF;
-        $out .= '<div class="toc">'.DOKU_LF;
-        $out .= '<div class="tocheader toctoggle" id="toc__header">';
-        $out .= $lang['toc'];
-        $out .= '</div>'.DOKU_LF;
-        $out .= '<div id="toc__inside">'.DOKU_LF;
-        $out .= html_buildlist($toc,'toc',array(__CLASS__,'_tocitem'));
-        $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
-        $out .= '<!-- TOC END -->'.DOKU_LF;
-        return $out;
-    }
-
-    /**
-     * Callback for html_buildlist
-     */
-    function _tocitem($item){
-        return '<span class="li"><a href="#'.$item['hid'].'" class="toc">'.
-               Doku_Renderer_xhtml::_xmlEntities($item['title']).'</a></span>';
     }
 
     function toc_additem($id, $text, $level) {
@@ -126,11 +97,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         //handle TOC
         if($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']){
-            // the TOC is one of our standard ul list arrays ;-)
-            $this->toc[] = array( 'hid'   => $id,
-                                  'title' => $text,
-                                  'type'  => 'ul',
-                                  'level' => $level-$conf['toptoclevel']+1);
+            $this->toc[] = html_mktocitem("#$id", $text, $level);
         }
     }
 

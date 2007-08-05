@@ -1,6 +1,6 @@
 <?php
 /**
- * Utilities for collecting data from config files
+ * Utilities for accessing the parser
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Harry Fuecks <hfuecks@gmail.com>
