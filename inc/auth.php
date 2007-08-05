@@ -277,17 +277,22 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     if(auth_nameencode($conf['manager']) == $user) return true;
   }
 
-  //prepend groups with @ and nameencode
-  $cnt = count($groups);
-  for($i=0; $i<$cnt; $i++){
-    $groups[$i] = '@'.auth_nameencode($groups[$i]);
+  // check user's groups against superuser and manager
+  if (!empty($groups)) {
+
+    //prepend groups with @ and nameencode
+    $cnt = count($groups);
+    for($i=0; $i<$cnt; $i++){
+      $groups[$i] = '@'.auth_nameencode($groups[$i]);
+    }
+
+    // check groups against superuser and manager
+    if(in_array(auth_nameencode($conf['superuser'],true), $groups)) return true;
+    if(!$adminonly){
+      if(in_array(auth_nameencode($conf['manager'],true), $groups)) return true;
+    }
   }
 
-  // check groups against superuser and manager
-  if(in_array(auth_nameencode($conf['superuser'],true), $groups)) return true;
-  if(!$adminonly){
-    if(in_array(auth_nameencode($conf['manager'],true), $groups)) return true;
-  }
   return false;
 }
 
