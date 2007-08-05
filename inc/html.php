@@ -1292,7 +1292,7 @@ function html_mktocitem($link, $text, $level, $hash='#'){
     return  array( 'link'  => $hash.$link,
                    'title' => $text,
                    'type'  => 'ul',
-                   'level' => $level-$conf['toptoclevel']+1);
+                   'level' => $level);
 }
 
 /**

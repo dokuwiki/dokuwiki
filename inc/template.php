@@ -158,7 +158,7 @@ function tpl_toc($return=false){
         if(isset($meta['internal']['toc'])){
             $tocok = $meta['internal']['toc'];
         }else{
-            $tokok = true;
+            $tocok = true;
         }
         $toc   = $meta['description']['tableofcontents'];
         if(!$tocok || !is_array($toc) || count($toc) < 3){

@@ -97,7 +97,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         //handle TOC
         if($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']){
-            $this->toc[] = html_mktocitem("#$id", $text, $level);
+            $this->toc[] = html_mktocitem("#$id", $text, $level-$conf['toptoclevel']+1);
         }
     }
 
