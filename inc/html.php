@@ -1273,7 +1273,13 @@ function html_TOC($toc){
  * Callback for html_buildlist
  */
 function html_list_toc($item){
-    return '<span class="li"><a href="'.$item['link'].'" class="toc">'.
+    if($item['hid']){
+        $link = '#'.$item['hid'];
+    }else{
+        $link = $item['link'];
+    }
+
+    return '<span class="li"><a href="'.$link.'" class="toc">'.
            hsc($item['title']).'</a></span>';
 }
 
