@@ -1,0 +1,4 @@
+==== Verstuur een nieuw wachtwoord =====
+
+Voer uw gebruikersnaam in het formulier hieronder in om een nieuw wachtwoord aan te vragen voor deze wiki.
+Een bevestigings link zal worden verzonden naar het geregistreerde e-mail adres.

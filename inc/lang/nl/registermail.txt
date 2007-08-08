@@ -1,0 +1,14 @@
+Een nieuwe gebruiker heeft zich geregistreerd. Dit zijn de details:
+
+Gebruikersnaam : @NEWUSER@
+Volledige naam : @NEWNAME@
+E-mail : @NEWEMAIL@
+
+Datum : @DATE@
+Browser : @BROWSER@
+IP-Adres : @IPADDRESS@
+Hostnaam : @HOSTNAME@
+
+--
+Dit bericht is gegenereerd door DokuWiki op
+@DOKUWIKIURL@

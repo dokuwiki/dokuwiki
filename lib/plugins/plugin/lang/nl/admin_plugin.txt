@@ -1,0 +1,3 @@
+===== Plugin manager =====
+
+Op deze pagina kunt u alle Dokuwiki [[doku>wiki:plugins|plugins]] beheren. Om plugins te kunnen downloaden en installeren, moet de plugin directory schrijfbaar zijn voor de webserver.

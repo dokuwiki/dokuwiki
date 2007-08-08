@@ -1,0 +1,4 @@
+===== Herstel Manager =====
+
+Deze pagina helpt u bij het herstellen van een spam aanval.
+Om een lijst te krijgen van bekladde pagina's, vul een zoek string in (bijvoorbeeld een spam url), bevestig dat de pagina's inderdaad spam bevatten en herstelt u deze wijzigingen.

@@ -1,0 +1,14 @@
+Er is een bestand geüpload naar uw DokuWiki. Hier zijn de details;
+
+Bestand : @MEDIA@
+Datum : @DATE@
+Browser : @BROWSER@
+IP-Adres : @IPADDRESS@
+Hostnaam : @HOSTNAME@
+Grootte : @SIZE@
+MIME Type : @MIME@
+Gebruiker : @USER@
+
+--
+Dit bericht is gegenereerd door DokuWiki op
+@DOKUWIKIURL@
