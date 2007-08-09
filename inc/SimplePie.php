@@ -7681,9 +7681,10 @@ class SimplePie_Misc
 	{
 		if (function_exists('iconv'))
 		{
-			return iconv('UTF-8', 'UTF-8//IGNORE', $str);
+			$out = iconv('UTF-8', 'UTF-8//IGNORE', $str);
+			if($out !== false) return $out;
 		}
-		elseif (function_exists('mb_convert_encoding'))
+		if (function_exists('mb_convert_encoding'))
 		{
 			return mb_convert_encoding($str, 'UTF-8', 'UTF-8');
 		}
