@@ -286,7 +286,7 @@ class ap_manage {
           $tmp = DOKU_PLUGIN."tmp/$folder";
 
           if (!ap_mkdir($tmp)) {
-            $this->manager->error = $this->lang['error_dir_create']."\n";
+            $this->manager->error = $this->lang['error_dircreate']."\n";
             return false;
           }
 
