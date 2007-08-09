@@ -92,7 +92,7 @@ class auth_plain extends auth_basic {
      * Create a new User
      *
      * Returns false if the user already exists, null when an error
-     * occured and true if everything went well.
+     * occurred and true if everything went well.
      *
      * The new user will be added to the default group by this
      * function if grps are not specified (default behaviour).

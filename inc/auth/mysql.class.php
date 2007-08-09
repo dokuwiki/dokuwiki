@@ -170,7 +170,7 @@ class auth_mysql extends auth_basic {
      * [public function]
      *
      * Create a new User. Returns false if the user already exists,
-     * null when an error occured and true if everything went well.
+     * null when an error occurred and true if everything went well.
      *
      * The new user will be added to the default group by this
      * function if grps are not specified (default behaviour).

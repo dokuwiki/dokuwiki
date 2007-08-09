@@ -95,7 +95,7 @@ $lang['lockexpire']   = 'Lock expires at';
 $lang['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
 
 $lang['notsavedyet'] = 'Unsaved changes will be lost.\nReally continue?';
-$lang['rssfailed']   = 'An error occured while fetching this feed: ';
+$lang['rssfailed']   = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']= 'Nothing was found.';
 
 $lang['mediaselect'] = 'Media Files';
@@ -225,7 +225,7 @@ $lang['i_badhash']    = 'unrecognised or modified dokuwiki.php (hash=<code>%s</c
 $lang['i_badval']     = '<code>%s</code> - illegal or empty value';
 $lang['i_success']    = 'The configuration was finished successfully. You may delete the install.php file now. Continue to
                         <a href="doku.php">your new DokuWiki</a>.';
-$lang['i_failure']    = 'Some errors occured while writing the configuration files. You may need to fix them manually before
+$lang['i_failure']    = 'Some errors occurred while writing the configuration files. You may need to fix them manually before
                          you can use <a href="doku.php">your new DokuWiki</a>.';
 $lang['i_policy']     = 'Initial ACL policy';
 $lang['i_pol0']       = 'Open Wiki (read, write, upload for everyone)';

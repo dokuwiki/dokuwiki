@@ -104,7 +104,7 @@ function spaceslink($matches){
  *
  * 0 - No spelling mistakes
  * 1 - Spelling mistakes found
- * 2 - An error occured error message follows
+ * 2 - An error occurred error message follows
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -131,7 +131,7 @@ function spell_check() {
   // run aspell in terse sgml mode, ignore nbsp as correct word
   if(!$spell->runAspell($string,$out,$err,array('!','+html','@nbsp'))){
     print '2'; //to indicate an error
-    print "An error occured while trying to run the spellchecker:\n";
+    print "An error occurred while trying to run the spellchecker:\n";
     print $err;
     return;
   }

@@ -104,7 +104,7 @@ function idx_touchIndex($pre, $wlen){
 /**
  * Split a page into words
  *
- * Returns an array of word counts, false if an error occured.
+ * Returns an array of word counts, false if an error occurred.
  * Array is keyed on the word length, then the word index.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
