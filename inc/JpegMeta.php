@@ -1205,7 +1205,7 @@ class JpegMeta
                 $this->_info['file']['NiceSize'] = round($this->_info['file']['Size'] / 1024) . 'KB';
             }
             elseif ($this->_info['file']['Size'] < (1024 * 1024 * 1024)) {
-                $this->_info['file']['NiceSize'] = round($this->_info['file']['Size'] / 1024) . 'MB';
+                $this->_info['file']['NiceSize'] = round($this->_info['file']['Size'] / (1024*1024)) . 'MB';
             }
             else {
                 $this->_info['file']['NiceSize'] = $this->_info['file']['Size'] . 'B';
