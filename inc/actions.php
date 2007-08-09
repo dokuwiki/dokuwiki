@@ -356,6 +356,9 @@ function act_export($act){
   global $ID;
   global $REV;
 
+  // search engines: never cache exported docs! (Google only currently)
+  header('X-Robots-Tag: noindex');
+
   // no renderer for this
   if($act == 'export_raw'){
     header('Content-Type: text/plain; charset=utf-8');
