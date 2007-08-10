@@ -644,7 +644,7 @@ function html_list_index($item){
   $base = ':'.$item['id'];
   $base = substr($base,strrpos($base,':')+1);
   if($item['type']=='d'){
-    $ret .= '<a href="'.wl($ID,'idx='.$item['id']).'" class="idx_dir"><strong>';
+    $ret .= '<a href="'.wl($ID,'idx='.rawurlencode($item['id'])).'" class="idx_dir"><strong>';
     $ret .= $base;
     $ret .= '</strong></a>';
   }else{
