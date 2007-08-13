@@ -744,23 +744,29 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
  * display backlinks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Klier <chi@chimeric.de>
  */
 function html_backlinks(){
   require_once(DOKU_INC.'inc/fulltext.php');
   global $ID;
   global $conf;
+  global $lang;
 
   print p_locale_xhtml('backlinks');
 
   $data = ft_backlinks($ID);
 
-  print '<ul class="idx">';
-  foreach($data as $blink){
-    print '<li><div class="li">';
-    print html_wikilink(':'.$blink,$conf['useheading']?NULL:$blink);
-    print '</div></li>';
+  if(!empty($data)) {
+      print '<ul class="idx">';
+      foreach($data as $blink){
+        print '<li><div class="li">';
+        print html_wikilink(':'.$blink,$conf['useheading']?NULL:$blink);
+        print '</div></li>';
+      }
+      print '</ul>';
+  } else {
+      print '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
   }
-  print '</ul>';
 }
 
 /**
