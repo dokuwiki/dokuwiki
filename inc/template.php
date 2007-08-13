@@ -745,7 +745,7 @@ function tpl_breadcrumbs($sep='&raquo;'){
   }
 
   //render crumbs, highlight the last one
-  print $lang['breadcrumb'].':';
+  print '<span class="bchead">'.$lang['breadcrumb'].':</span>';
   $last = count($crumbs);
   $i = 0;
   foreach ($crumbs as $id => $name){
@@ -781,7 +781,7 @@ function tpl_youarehere($sep=' &raquo; '){
   $parts = explode(':', $ID);
   $count = count($parts);
 
-  echo $lang['youarehere'].': ';
+  echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
   // always print the startpage
   $title = p_get_first_heading($conf['start']);
