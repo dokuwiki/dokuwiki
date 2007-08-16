@@ -1,4 +1,5 @@
 ====== Käyttöoikeuksien hallinta ======
+
 Tällä sivulla voit lisätä ja poistaa oikeuksia nykyiselle sivulle ja
 [[doku>wiki:namespaces|nimiavaruuksille]]. Lue
 [[doku>wiki:acl|käyttöoikeuksien (ACL) virallinen dokumentaatio]]

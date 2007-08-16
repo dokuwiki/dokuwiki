@@ -1,3 +1,4 @@
 ====== hakemisto ======
+
 Tämä on hakemisto kaikista saatavilla olevista sivuista järjestettynä 
 [[doku>wiki:namespace|nimiavaruuksittain]].

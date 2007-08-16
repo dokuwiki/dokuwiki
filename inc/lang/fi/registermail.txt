@@ -1,0 +1,14 @@
+Uusi käyttäjä on rekisteröitynyt. Tässä tiedot:
+
+Käyttäjänimi : @NEWUSER@
+Kokonimi : @NEWNAME@
+Sähköposti : @NEWEMAIL@
+
+Päivämäärä : @DATE@
+Selain : @BROWSER@
+IP-osoite : @IPADDRESS@
+Hostname : @HOSTNAME@
+
+--
+Tämän postin generoi DokuWiki osoitteessa
+@DOKUWIKIURL@

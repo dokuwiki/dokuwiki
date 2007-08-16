@@ -1,0 +1,14 @@
+Tiedosto ladattiin DokuWikillesi. Tässä yksityiskohtaiset tiedot:
+
+Tiedosto : @MEDIA@
+PVM : @DATE@
+Selain : @BROWSER@
+IP-Osoite : @IPADDRESS@
+Hostname : @HOSTNAME@
+Koko : @SIZE@
+MIME Type : @MIME@
+Käyttäjä : @USER@
+
+--
+Tämän postin generoi DokuWiki osoitteessa
+@DOKUWIKIURL@

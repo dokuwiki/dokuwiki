@@ -1,0 +1,5 @@
+====== Vedos löydetty ======
+
+Edellinen muokkauksesi tälle sivulle ei ole päivittynyt oikein. DokuWiki on automaattisesti tallentanut vedoksen muokkauksen aikana. Voit nyt jatkaa muokkausta. Alla näet tallennetun version edellisestä istunnostasi.
+
+Valitse jos haluat //palauttaa// edellisen muutoksesi, //poistaa// automaattisesti tallennetun vedoksen, vai //peruuttaa// muutokset.
