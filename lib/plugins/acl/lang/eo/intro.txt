@@ -1,0 +1,6 @@
+====== Administrejo de Listo por Kontrolo de Aliro ======
+
+En tiu cxi pagxo vi povas aldoni kaj forigi aliro-rajtojn al la aktuala pagxo kaj al cxiuj [[doku>wiki:eo:namespaces|nomspacoj]] en kiuj gxi estas.
+Vi devus legi la [[doku>wiki:eo:acl|oficialan dokumentajxon pri LKA]] por tute kompreni kiel la kontrolado de aliro funkcias.
+
+La pagxo montras cxiujn permesojn, kiuj estas gravaj por la aktuala pagxo. Permesoj pri aliaj pagxoj ne estas montrataj -- por redakti ilin, unue [[this>doku.php?do=index|krozu]] al la koncernanta pagxo kaj tiam aliru la Administrejon de LKA.
