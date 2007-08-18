@@ -581,7 +581,7 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
           if(!empty($INFO['draft'])) {
             tpl_link(wl($ID,'do=draft'),
                        $pre.(($inner)?$inner:$lang['btn_draft']).$suf,
-                       'class="action edit" acceskey="e" rel="nofollow"');
+                       'class="action edit" accesskey="e" rel="nofollow"');
           } else {
             if($INFO['exists']){
               tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
