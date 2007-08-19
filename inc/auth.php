@@ -455,10 +455,10 @@ function auth_nameencode($name,$skip_group=false){
   if (!isset($cache[$name][$skip_group])) {
     if($skip_group && $name{0} =='@'){
       $cache[$name][$skip_group] = '@'.preg_replace('/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
-                                                    "'%'.dechex(ord('\\1'))",substr($name,1));
+                                                    "'%'.dechex(ord(substr('\\1',-1)))",substr($name,1));
     }else{
       $cache[$name][$skip_group] = preg_replace('/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
-                                                "'%'.dechex(ord('\\1'))",$name);
+                                                "'%'.dechex(ord(substr('\\1',-1)))",$name);
     }
   }
 

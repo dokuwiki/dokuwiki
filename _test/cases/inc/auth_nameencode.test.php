@@ -16,6 +16,12 @@ class auth_nameencode_test extends UnitTestCase {
         $this->assertEqual(auth_nameencode($in),$out);
     }
 
+    function test_quote(){
+        $in  = 'hey"you';
+        $out = 'hey%22you';
+        $this->assertEqual(auth_nameencode($in),$out);
+    }
+
     function test_complex(){
         $in  = 'hey $ you !$%! foo ';
         $out = 'hey%20%24%20you%20%21%24%25%21%20foo%20';
