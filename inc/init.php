@@ -260,11 +260,20 @@ function init_creationmodes(){
  */
 function remove_magic_quotes(&$array) {
   foreach (array_keys($array) as $key) {
-    if (is_array($array[$key])) {
-      remove_magic_quotes($array[$key]);
-    }else {
-      $array[$key] = stripslashes($array[$key]);
-    }
+      // handle magic quotes in keynames (breaks order)
+      $sk = stripslashes($key);
+      if($sk != $key){
+          $array[$sk] = $array[$key];
+          unset($array[$key]);
+          $key = $sk;
+      }
+
+      // do recursion if needed
+      if (is_array($array[$key])) {
+          remove_magic_quotes($array[$key]);
+      }else {
+          $array[$key] = stripslashes($array[$key]);
+      }
   }
 }
 
