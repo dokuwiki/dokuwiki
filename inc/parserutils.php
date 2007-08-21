@@ -563,15 +563,15 @@ function p_render($mode,$instructions,& $info){
  *
  * @param   string   $id       dokuwiki page id
  * @param   bool     $render   rerender if first heading not known
- *                             default: false  -- this protects against loops where $id requires a
- *                                                first heading further pages which eventually result
- *                                                in a request for a first heading from a page already
- *                                                in the chain (FS#1010)
- *
+ *                             default: true  -- must be set to false for calls from the metadata renderer to
+ *                                               protects against loops and excessive resource usage when pages 
+ *                                               for which only a first heading is required will attempt to
+ *                                               render metadata for all the pages for which they require first
+ *                                               headings ... and so on.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_get_first_heading($id, $render=false){
+function p_get_first_heading($id, $render=true){
   global $conf;
   return $conf['useheading'] ? p_get_metadata($id,'title',$render) : null;
 }
