@@ -108,7 +108,7 @@ if (!class_exists('setting_compression')) {
 
       // populate _choices with the compression methods supported by this php installation
       if (function_exists('gzopen')) $this->_choices[] = 'gz';
-      if (function_exists('bzopen')) $this->_choices[] = 'bzip';
+      if (function_exists('bzopen')) $this->_choices[] = 'bz2';
 
       parent::initialize($default,$local,$protected);
     }
