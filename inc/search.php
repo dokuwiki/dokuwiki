@@ -34,9 +34,6 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
     if(is_dir($base.'/'.$dir.'/'.$file)){
       $dirs[] = $dir.'/'.$file;
       continue;
-    }elseif(substr($file,-5) == '.lock'){
-      //skip lockfiles
-      continue;
     }
     $files[] = $dir.'/'.$file;
   }
@@ -57,7 +54,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
 }
 
 /**
- * Used to run the a user callback
+ * Used to run a user callback
  *
  * Makes sure the $data array is passed by reference (unlike when using
  * call_user_func())
@@ -99,7 +96,8 @@ function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
  * All functions should check the ACL for document READ rights
  * namespaces (directories) are NOT checked as this would break
  * the recursion (You can have an nonreadable dir over a readable
- * one deeper nested)
+ * one deeper nested) also make sure to check the file type (for example
+ * in case of lockfiles).
  */
 
 /**
@@ -113,6 +111,9 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'd'){
     return false; //no handling yet
   }
+
+  //only search txt files
+  if(substr($file,-4) != '.txt') return false;
 
   //get id
   $id = pathID($file);
@@ -150,7 +151,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
     //add but don't recurse
     $return = false;
-  }elseif($type == 'f' && ($opts['nofiles'] || !preg_match('#\.txt$#',$file))){
+  }elseif($type == 'f' && ($opts['nofiles'] || substr($file,-4) != '.txt')){
     //don't add
     return false;
   }
@@ -234,13 +235,14 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 function search_list(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
   if($type == 'd') return false;
-  if(preg_match('#\.txt$#',$file)){
+  //only search txt files
+  if(substr($file,-4) == '.txt'){
     //check ACL
     $id = pathID($file);
     if(auth_quickaclcheck($id) < AUTH_READ){
       return false;
     }
-    $data[]['id'] = $id;;
+    $data[]['id'] = $id;
   }
   return false;
 }
@@ -256,7 +258,7 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
   if($type == 'd') return true;
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;
+  if(substr($file,-4) != '.txt') return true;
 
   //simple stringmatching
   if (!empty($opts['query'])){
@@ -281,7 +283,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
   if($type == 'd') return true;
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;
+  if(substr($file,-4) != '.txt') return true;
 
   $data[]['id'] = pathID($file);
   return true;
@@ -298,9 +300,9 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
-  if($type == 'd') return true;;
+  if($type == 'd') return true;
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;;
+  if(substr($file,-4) != '.txt') return true;
 
   //absolute search id
   $sid = cleanID($opts['ns'].':'.$opts['name']);
@@ -345,9 +347,9 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
-  if($type == 'd') return true;;
+  if($type == 'd') return true;
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;;
+  if(substr($file,-4) != '.txt') return true;
 
   //check ACL
   $id = pathID($file);
@@ -414,7 +416,7 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'd') return true;
 
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;
+  if(substr($file,-4) != '.txt') return true;
 
   //we finish after 'cnt' references found. The return value
   //'false' will skip subdirectories to speed search up.
