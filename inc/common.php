@@ -53,6 +53,44 @@ function stripctl($string){
 }
 
 /**
+ * Return a secret token to be used for CSRF attack prevention
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @link    http://en.wikipedia.org/wiki/Cross-site_request_forgery
+ * @link    http://christ1an.blogspot.com/2007/04/preventing-csrf-efficiently.html
+ * @return  string
+ */
+function getSecurityToken(){
+  return md5(auth_cookiesalt().session_id());
+}
+
+/**
+ * Check the secret CSRF token
+ */
+function checkSecurityToken($token=null){
+  if(is_null($token)) $token = $_REQUEST['sectok'];
+  if(getSecurityToken() != $token){
+    msg('Security Token did not match. Possible CSRF attack.',-1);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Print a hidden form field with a secret CSRF token
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
+function formSecurityToken($print=true){
+  $ret = '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'."\n";
+  if($print){
+    echo $ret;
+  }else{
+    return $ret;
+  }
+}
+
+/**
  * Return info about the current document as associative
  * array.
  *

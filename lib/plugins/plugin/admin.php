@@ -116,6 +116,11 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
         $this->plugin = '';
       }
 
+      if(($this->cmd != 'manage' || $this->plugin != '') && !checkSecurityToken()){
+        $this->cmd = 'manage';
+        $this->plugin = '';
+      }
+
       // create object to handle the command
       $class = "ap_".$this->cmd;
       if (!class_exists($class)) $class = 'ap_manage';
@@ -181,6 +186,7 @@ class ap_manage {
           ptln('    <fieldset class="hidden">',4);
           ptln('      <input type="hidden" name="do"   value="admin" />');
           ptln('      <input type="hidden" name="page" value="plugin" />');
+          formSecurityToken();
           ptln('    </fieldset>');
           ptln('    <fieldset>');
           ptln('      <legend>'.$this->lang['download'].'</legend>');
@@ -199,6 +205,7 @@ class ap_manage {
             ptln('  <fieldset class="hidden">');
             ptln('    <input type="hidden" name="do"     value="admin" />');
             ptln('    <input type="hidden" name="page"   value="plugin" />');
+            formSecurityToken();
             ptln('  </fieldset>');
 
             $this->html_pluginlist();

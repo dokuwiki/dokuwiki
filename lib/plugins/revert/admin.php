@@ -67,7 +67,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
 
         $this->_searchform();
 
-        if(is_array($_REQUEST['revert'])){
+        if(is_array($_REQUEST['revert']) && checkSecurityToken()){
             $this->_revert($_REQUEST['revert'],$_REQUEST['filter']);
         }elseif(isset($_REQUEST['filter'])){
             $this->_list($_REQUEST['filter']);
@@ -133,6 +133,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         echo '<hr /><br />';
         echo '<form action="" method="post">';
         echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
+        formSecurityToken();
 
         $recents = getRecents(0,$this->max_lines);
         echo '<ul>';

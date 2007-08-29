@@ -78,7 +78,9 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       if($user == '@all') $user = '@ALL'; //special group! (now case insensitive)
       $perm  = (int) $perm;
       if($perm > AUTH_DELETE) $perm = AUTH_DELETE;
-      //FIXME sanitize scope!!!
+
+      // check token
+      if(!checkSecurityToken()) return;
 
       //nothing to do?
       if(empty($cmd) || empty($scope) || empty($user)) return;
@@ -295,6 +297,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       ptln('    <input type="hidden" name="do"   value="admin" />',4);
       ptln('    <input type="hidden" name="page" value="acl" />',4);
       ptln('    <input type="hidden" name="acl_cmd" value="save" />',4);
+      formSecurityToken();
 
       //scope select
       ptln($this->lang['acl_perms'],4);
@@ -374,6 +377,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // update form
         ptln('<td class="centeralign">',4);
         ptln('  <form method="post" action="'.wl($ID).'"><div class="no">',4);
+        formSecurityToken();
         ptln('    <input type="hidden" name="do"   value="admin" />',4);
         ptln('    <input type="hidden" name="page" value="acl" />',4);
         ptln('    <input type="hidden" name="acl_cmd"   value="save" />',4);
@@ -392,6 +396,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $ask .= $id.'  '.$conf['name'].'  '.$conf['perm'];
         ptln('<td class="centeralign">',4);
         ptln('  <form method="post" action="'.wl($ID).'" onsubmit="return confirm(\''.str_replace('\\\\n','\\n',addslashes($ask)).'\')"><div class="no">',4);
+        formSecurityToken();
         ptln('    <input type="hidden" name="do"        value="admin" />',4);
         ptln('    <input type="hidden" name="page"      value="acl" />',4);
         ptln('    <input type="hidden" name="acl_cmd"   value="delete" />',4);

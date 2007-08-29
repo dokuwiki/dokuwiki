@@ -170,6 +170,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           ptln("<p>".sprintf($this->lang['nonefound'],$this->_auth->getUserCount())."</p>");
         }
         ptln("<form action=\"".wl($ID)."\" method=\"post\">");
+        formSecurityToken();
         ptln("  <table class=\"inline\">");
         ptln("    <thead>");
         ptln("      <tr>");
@@ -268,6 +269,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         ptln("<form action=\"".wl($ID)."\" method=\"post\">",$indent);
+        formSecurityToken();
         ptln("  <table class=\"inline\">",$indent);
         ptln("    <thead>",$indent);
         ptln("      <tr><th>".$this->lang["field"]."</th><th>".$this->lang["value"]."</th></tr>",$indent);
@@ -334,7 +336,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     function _addUser(){
-
+        if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('addUser')) return false;
 
         list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
@@ -362,7 +364,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Delete user
      */
     function _deleteUser(){
-
+        if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('delUser')) return false;
 
         $selected = $_REQUEST['delete'];
@@ -386,6 +388,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Edit user (a user has been selected for editing)
      */
     function _editUser($param) {
+        if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('UserMod')) return false;
 
         $user = cleanID(preg_replace('/.*:/','',$param));
@@ -407,6 +410,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Modify user (modified user data has been recieved)
      */
     function _modifyUser(){
+        if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('UserMod')) return false;
 
         // get currently valid  user data

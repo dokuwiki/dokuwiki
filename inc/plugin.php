@@ -155,7 +155,7 @@ class DokuWiki_Plugin {
 
     return $conf;
   }
-  
+
   /**
    * Loads a given helper plugin (if enabled)
    *
@@ -163,7 +163,7 @@ class DokuWiki_Plugin {
    *
    * @param   $name   name of plugin to load
    * @param   $msg    message to display in case the plugin is not available
-   * 
+   *
    * @return  object  helper plugin object
    */
   function loadHelper($name, $msg){

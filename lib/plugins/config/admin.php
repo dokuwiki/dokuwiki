@@ -58,6 +58,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       global $ID;
 
       if (!$this->_restore_session()) return $this->_close_session();
+      if (!checkSecurityToken()) return $this->_close_session();
       if (!isset($_REQUEST['save']) || ($_REQUEST['save'] != 1)) return $this->_close_session();
 
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
@@ -111,6 +112,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         ptln('<div class="success">'.$this->getLang('updated').'</div>');
 
       ptln('<form action="'.wl($ID).'" method="post">');
+      formSecurityToken();
       $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
       $undefined_settings = array();
