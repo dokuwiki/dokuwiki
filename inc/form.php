@@ -51,6 +51,8 @@ class Doku_Form {
   /**
    * Constructor
    *
+   * Autoadds a security token
+   *
    * @param   string  $id     ID attribute of the form.
    * @param   string  $action (optional) submit URL, defaults to DOKU_SCRIPT
    * @param   string  $method (optional) 'POST' or 'GET', default is post
@@ -60,6 +62,8 @@ class Doku_Form {
     $this->id = $id;
     $this->action = ($action) ? $action : script();
     if ($method) $this->method = $method;
+
+    $this->addHidden('sectok', getSecurityToken());
   }
 
   /**

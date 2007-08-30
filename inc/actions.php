@@ -39,8 +39,13 @@ function act_dispatch(){
     }
 
     //login stuff
-    if(in_array($ACT,array('login','logout')))
-      $ACT = act_auth($ACT);
+    if(in_array($ACT,array('login','logout'))){
+      if(checkSecurityToken()){
+        $ACT = act_auth($ACT);
+      }else{
+        $ACT = 'show';
+      }
+    }
 
     //check if user is asking to (un)subscribe a page
     if($ACT == 'subscribe' || $ACT == 'unsubscribe')
@@ -66,8 +71,13 @@ function act_dispatch(){
     }
 
     //save
-    if($ACT == 'save')
-      $ACT = act_save($ACT);
+    if($ACT == 'save'){
+      if(checkSecurityToken()){
+        $ACT = act_save($ACT);
+      }else{
+        $ACT = 'show';
+      }
+    }
 
     //cancel conflicting edit
     if($ACT == 'cancel')

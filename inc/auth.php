@@ -613,6 +613,7 @@ function updateprofile() {
   global $auth;
 
   if(empty($_POST['save'])) return false;
+  if(!checkSecurityToken()) return false;
 
   // should not be able to get here without Profile being possible...
   if(!$auth->canDo('Profile')) {
