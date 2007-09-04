@@ -497,9 +497,9 @@ function tpl_button($type){
     case 'login':
       if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
-          print html_btn('logout',$ID,'',array('do' => 'logout',));
+          print html_btn('logout',$ID,'',array('do' => 'logout', 'sectok' => getSecurityToken()));
         }else{
-          print html_btn('login',$ID,'',array('do' => 'login'));
+          print html_btn('login',$ID,'',array('do' => 'login', 'sectok' => getSecurityToken()));
         }
         return true;
       }
@@ -635,11 +635,11 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
     case 'login':
       if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
-          tpl_link(wl($ID,'do=logout'),
+          tpl_link(wl($ID,'do=logout&amp;sectok='.getSecurityToken()),
                    $pre.(($inner)?$inner:$lang['btn_logout']).$suf,
                    'class="action logout" rel="nofollow"');
         }else{
-          tpl_link(wl($ID,'do=login'),
+          tpl_link(wl($ID,'do=login&amp;sectok='.getSecurityToken()),
                    $pre.(($inner)?$inner:$lang['btn_login']).$suf,
                    'class="action login" rel="nofollow"');
         }
