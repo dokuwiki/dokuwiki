@@ -62,6 +62,7 @@ class HTTPClient {
     var $header_regexp; // if set this RE must match against the headers, else abort
     var $headers;
     var $debug;
+    var $start = 0; // for timings
 
     // don't set these, read on error
     var $error;
@@ -144,7 +145,8 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function sendRequest($url,$data=array(),$method='GET'){
-        $this->error = '';
+        $this->start  = $this->_time();
+        $this->error  = '';
         $this->status = 0;
 
         // parse URL into bits
@@ -219,7 +221,7 @@ class HTTPClient {
         do{
             if(time()-$start > $this->timeout){
                 $this->status = -100;
-                $this->error = 'Timeout while reading headers';
+                $this->error = sprintf('Timeout while reading headers (%.3fs)',$this->_time() - $this->start);
                 return false;
             }
             if(feof($socket)){
@@ -295,7 +297,7 @@ class HTTPClient {
                     }
                     if(time()-$start > $this->timeout){
                         $this->status = -100;
-                        $this->error = 'Timeout while reading chunk';
+                        $this->error = sprintf('Timeout while reading chunk (%.3fs)',$this->_time() - $this->start);
                         return false;
                     }
                     $byte = fread($socket,1);
@@ -318,13 +320,19 @@ class HTTPClient {
             while (!feof($socket)) {
                 if(time()-$start > $this->timeout){
                     $this->status = -100;
-                    $this->error = 'Timeout while reading response';
+                    $this->error = sprintf('Timeout while reading response (%.3fs)',$this->_time() - $this->start);
                     return false;
                 }
                 $r_body .= fread($socket,4096);
-                if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
+                $r_size = strlen($r_body);
+                if($this->max_bodysize && $r_size > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
                     return false;
+                }
+                if($this->resp_headers['content-length'] && !$this->resp_headers['transfer-encoding'] &&
+                   $this->resp_headers['content-length'] == $r_size){
+                    // we read the content-length, finish here
+                    break;
                 }
             }
         }
@@ -352,12 +360,20 @@ class HTTPClient {
      */
     function _debug($info,$var){
         if(!$this->debug) return;
-        print '<b>'.$info.'</b><br />';
+        print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
         ob_start();
         print_r($var);
         $content = htmlspecialchars(ob_get_contents());
         ob_end_clean();
         print '<pre>'.$content.'</pre>';
+    }
+
+    /**
+     * Return current timestamp in microsecond resolution
+     */
+    function _time(){
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float)$usec + (float)$sec);
     }
 
     /**
