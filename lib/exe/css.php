@@ -42,7 +42,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('styles'.$conf['template'].$style,'.css');
+    $cache = getCacheName('styles'.DOKU_BASE.$conf['template'].$style,'.css');
 
     // load template styles
     $tplstyles = array();
