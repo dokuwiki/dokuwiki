@@ -50,6 +50,7 @@ function media_filesinuse($data,$id){
  */
 function media_metasave($id,$auth,$data){
     if($auth < AUTH_UPLOAD) return false;
+    if(!checkSecurityToken()) return false;
     global $lang;
     $src = mediaFN($id);
 
@@ -97,6 +98,7 @@ function media_metaform($id,$auth){
     // output
     echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
     echo '<form action="'.DOKU_BASE.'lib/exe/mediamanager.php" accept-charset="utf-8" method="post" class="meta">'.NL;
+    formSecurityToken();
     foreach($fields as $key => $field){
         // get current value
         $tags = array($field[0]);
@@ -147,6 +149,7 @@ function media_metaform($id,$auth){
  */
 function media_delete($id,$auth){
     if($auth < AUTH_DELETE) return false;
+    if(!checkSecurityToken()) return false;
     global $conf;
     global $lang;
 
@@ -181,6 +184,7 @@ function media_delete($id,$auth){
  */
 function media_upload($ns,$auth){
     if($auth < AUTH_UPLOAD) return false;
+    if(!checkSecurityToken()) return false;
     require_once(DOKU_INC.'inc/confutils.php');
     global $lang;
     global $conf;
@@ -382,7 +386,8 @@ function media_fileactions($item,$auth){
         $ask  = addslashes($lang['del_confirm']).'\\n';
         $ask .= addslashes($item['id']);
 
-        echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).'" '.
+        echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
+             '&amp;sectoc='.getSecurityToken().'" '.
              'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
              '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
              'title="'.$lang['btn_delete'].'" class="btn" /></a>';
@@ -514,7 +519,7 @@ function media_uploadform($ns, $auth){
       <fieldset>
         <legend class="hidden"><?php echo $lang['btn_upload']?></legend>
         <input type="hidden" name="ns" value="<?php echo hsc($ns)?>" />
-
+        <?php formSecurityToken();?>
         <p>
           <label for="upload__file"><?php echo $lang['txt_upload']?>:</label>
           <input type="file" name="upload" class="edit" id="upload__file" />
