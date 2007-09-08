@@ -186,10 +186,10 @@ class HTTPClient {
             $headers['Content-Length'] = strlen($post);
         }
         if($this->user) {
-            $headers['Authorization'] = 'BASIC '.base64_encode($this->user.':'.$this->pass);
+            $headers['Authorization'] = 'Basic '.base64_encode($this->user.':'.$this->pass);
         }
         if($this->proxy_user) {
-            $headers['Proxy-Authorization'] = 'BASIC '.base64_encode($this->proxy_user.':'.$this->proxy_pass);
+            $headers['Proxy-Authorization'] = 'Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass);
         }
 
         // stop time
