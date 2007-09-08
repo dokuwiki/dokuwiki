@@ -1,3 +1,3 @@
-====== Terkunci... yee... ======
+====== Halaman Terkunci ======
 
 Halaman ini tertutup (terkunci) untuk diedit oleh user lain. Anda harus menunggu sampai user ini menyelesaikan pengeditan, atau masa berlaku penguncian telah berakhir.

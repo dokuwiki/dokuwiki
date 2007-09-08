@@ -1,0 +1,13 @@
+Hai @FULLNAME@!
+
+Seseorang telah meminta password baru untuk @TITLE@ Anda login ke @DOKUWIKIURL@
+
+Jika Anda tidak meminta password baru, mohon mengacuhkan email ini.
+
+Untuk mengkonfirmasi bahwa permintaan tersebut adalah benar dari Anda, silahkan gunakan link dibawah.
+
+@CONFIRM@
+
+--
+Email ini dibuat otomatis  oleh DokuWiki
+@DOKUWIKIURL@

@@ -1,0 +1,5 @@
+====== File Draft ditemukan ======
+
+Proses pengeditan Anda sebelumnya tidak selesai dengan sempurna. DokuWiki secara otomatis meyimpan draft yang dapat Anda pakai untuk melanjutkan pengeditan. Dibawah ini Anda dapat melihat data yang disimpan pada sesi sebelumnya.
+
+Silahkan pilih jika Anda ingin //recover// sesi pengeditan terakhir atau //hapus// draft, atau //batalkan// proses pengeditan.

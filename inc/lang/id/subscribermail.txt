@@ -13,5 +13,5 @@ Untuk unsubscribe dari halaman ini, silahkan login ke wiki di
 dan pilih 'Unsubscribe Changes'.
 
 -- 
-email ini telah digenerate oleh DokuWiki di
+Email ini telah digenerate oleh DokuWiki
 @DOKUWIKIURL@

@@ -1,0 +1,3 @@
+====== Kirim Password Baru ======
+
+Masukkan nama user Anda pada form dibawah untuk permintaan perubahan password account Anda di Wiki ini. Link konfirmasi akan dikirimkan melalui alamat email Anda sewaktu registrasi.

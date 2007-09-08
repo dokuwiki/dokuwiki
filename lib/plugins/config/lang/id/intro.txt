@@ -1,0 +1,8 @@
+====== Manajemen Konfigurasi ======
+
+Gunakan halaman ini untuk mengatur konfigurasi instalasi DokuWiki Anda.
+Untuk bantuan dalam konfigurasi, silahkan lihat di [[doku>wiki:config]].
+Unuk mengetahui lebih lanjut tentang plugin in silahkan lihat [[doku>plugin:config]].
+
+Konfigurasi dengan warna merah dilindungi dan tidak bisa diubah dengan plugin ini.
+Konfigurasi dengan warna biru adalah nilai default, dan konfigurasi dengan latar putih telah diset khusus untuk instalasi ini. Konfigurasi berwarna putih atau b

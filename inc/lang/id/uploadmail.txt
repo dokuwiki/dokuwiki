@@ -1,0 +1,14 @@
+Sebuah file telah diupload di DokuWiki Anda. Berikut detailnya:
+
+File : @MEDIA@
+Date : @DATE@
+Browser : @BROWSER@
+IP-Address : @IPADDRESS@
+Hostname : @HOSTNAME@
+Size : @SIZE@
+MIME Type : @MIME@
+User : @USER@
+
+--
+Email ini dibuat otomatis oleh DokuWiki
+@DOKUWIKIURL@
