@@ -79,11 +79,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
       $perm  = (int) $perm;
       if($perm > AUTH_DELETE) $perm = AUTH_DELETE;
 
-      // check token
-      if(!checkSecurityToken()) return;
-
       //nothing to do?
       if(empty($cmd) || empty($scope) || empty($user)) return;
+
+      // check token
+      if(!checkSecurityToken()) return;
 
 
       if($cmd == 'save'){
