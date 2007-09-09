@@ -179,7 +179,19 @@ function media_delete($id,$auth){
 /**
  * Handles media file uploads
  *
+ * This generates an action event and delegates to _media_upload_action().
+ * Action plugins are allowed to pre/postprocess the uploaded file. 
+ * (The triggered event is preventable.)
+ *
+ * Event data:
+ * $data[0]     fn_tmp: the temporary file name (read from $_FILES)
+ * $data[1]     fn: the file name of the uploaded file
+ * $data[2]     id: the future directory id of the uploaded file
+ * $data[3]     imime: the mimetype of the uploaded file
+ *
+ * @triggers MEDIA_UPLOAD_FINISH
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Klier <chi@chimeric.de>
  * @return mixed false on error, id of the new file on success
  */
 function media_upload($ns,$auth){
@@ -235,23 +247,58 @@ function media_upload($ns,$auth){
             return false;
         }
 
-        // prepare directory
-        io_createNamespace($id, 'media');
-        if(move_uploaded_file($file['tmp_name'], $fn)) {
-            // Set the correct permission here.
-            // Always chmod media because they may be saved with different permissions than expected from the php umask.
-            // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
-            chmod($fn, $conf['fmode']);
-            msg($lang['uploadsucc'],1);
-            media_notify($id,$fn,$imime);
-            return $id;
-        }else{
-            msg($lang['uploadfail'],-1);
-        }
+        // prepare event data
+        $data[0] = $file['tmp_name'];
+        $data[1] = $fn;
+        $data[2] = $id;
+        $data[3] = $imime;
+
+        // trigger event
+        return trigger_event('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
+
     }else{
         msg($lang['uploadwrong'],-1);
     }
     return false;
+}
+
+/**
+ * Callback adapter for media_upload_finish()
+ * @author Michael Klier <chi@chimeric.de>
+ */
+function _media_upload_action($data) {
+    // fixme do further sanity tests of given data?
+    if(is_array($data) && count($data)===4) {
+        return media_upload_finish($data[0], $data[1], $data[2], $data[3]);
+    } else {
+        return false; //callback error
+    }
+}
+
+/**
+ * Saves an uploaded media file
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Klier <chi@chimeric.de>
+ */
+function media_upload_finish($fn_tmp, $fn, $id, $imime) {
+    global $conf;
+    global $lang;
+
+    // prepare directory
+    io_createNamespace($id, 'media');
+
+    if(move_uploaded_file($fn_tmp, $fn)) {
+        // Set the correct permission here.
+        // Always chmod media because they may be saved with different permissions than expected from the php umask.
+        // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
+        chmod($fn, $conf['fmode']);
+        msg($lang['uploadsucc'],1);
+        media_notify($id,$fn,$imime);
+        return $id;
+    }else{
+        msg($lang['uploadfail'],-1);
+    }
 }
 
 /**
