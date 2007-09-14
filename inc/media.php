@@ -387,7 +387,7 @@ function media_fileactions($item,$auth){
         $ask .= addslashes($item['id']);
 
         echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-             '&amp;sectoc='.getSecurityToken().'" '.
+             '&amp;sectok='.getSecurityToken().'" '.
              'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
              '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
              'title="'.$lang['btn_delete'].'" class="btn" /></a>';
