@@ -14,7 +14,7 @@ session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 1);
+define('INDEXER_VERSION', 2);
 
 // keep running after browser closes connection
 @ignore_user_abort(true);
@@ -166,6 +166,10 @@ function runIndexer(){
     if($conf['dperm']) chmod($lock, $conf['dperm']);
 
     require_once(DOKU_INC.'inc/indexer.php');
+
+    // upgrade to version 2
+    if (!@file_exists($conf['indexdir'].'/pageword.idx'))
+        idx_upgradePageWords();
 
     // do the work
     idx_addPage($ID);

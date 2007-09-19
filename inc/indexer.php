@@ -21,7 +21,7 @@ define('IDX_ASIAN1','[\x{0E00}-\x{0E7F}]'); // Thai
 define('IDX_ASIAN2','['.
                    '\x{2E80}-\x{3040}'.  // CJK -> Hangul
                    '\x{309D}-\x{30A0}'.
-                   '\x{30FB}-\x{31EF}\x{3200}-\x{D7AF}'.
+                   '\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}'.
                    '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
                    '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
                    ']');
@@ -216,27 +216,62 @@ function idx_addPage($page){
         }
     }
 
+    $pagewords = array();
     // get word usage in page
     $words = idx_getPageWords($page);
     if($words === false) return false;
-    if(!count($words)) return true;
 
-    foreach(array_keys($words) as $wlen){
-        $index = idx_getIndex('i',$wlen);
-        foreach($words[$wlen] as $wid => $freq){
-            if($wid<count($index)){
-                $index[$wid] = idx_updateIndexLine($index[$wid],$pid,$freq);
-            }else{
-                // New words **should** have been added in increasing order
-                // starting with the first unassigned index.
-                // If someone can show how this isn't true, then I'll need to sort
-                // or do something special.
-                $index[$wid] = idx_updateIndexLine('',$pid,$freq);
+    if(!empty($words)) {
+        foreach(array_keys($words) as $wlen){
+            $index = idx_getIndex('i',$wlen);
+            foreach($words[$wlen] as $wid => $freq){
+                if($wid<count($index)){
+                    $index[$wid] = idx_updateIndexLine($index[$wid],$pid,$freq);
+                }else{
+                    // New words **should** have been added in increasing order
+                    // starting with the first unassigned index.
+                    // If someone can show how this isn't true, then I'll need to sort
+                    // or do something special.
+                    $index[$wid] = idx_updateIndexLine('',$pid,$freq);
+                }
+                $pagewords[] = "$wlen*$wid";
+            }
+            // save back word index
+            if(!idx_saveIndex('i',$wlen,$index)){
+                trigger_error("Failed to write index", E_USER_ERROR);
+                return false;
             }
         }
-        // save back word index
-        if(!idx_saveIndex('i',$wlen,$index)){
-            trigger_error("Failed to write index", E_USER_ERROR);
+    }
+    
+    // Remove obsolete index entries
+    $pageword_idx = idx_getIndex('pageword','');
+    if ($pid<count($pageword_idx)) {
+        $oldwords = explode(':',trim($pageword_idx[$pid]));
+        $delwords = array_diff($oldwords, $pagewords);
+        foreach ($delwords as $word) {
+            if($word=='') continue;
+            list($wlen,$wid) = explode('*',$word);
+            $wid = (int)$wid;
+            // make the disk cache work for its money
+            // $pagewords is sorted, so this shouldn't be a significant penalty
+            $index = idx_getIndex('i',$wlen);
+            $index[$wid] = idx_updateIndexLine($index[$wid],$pid,0);
+            idx_saveIndex('i',$wlen,$index);
+        }
+        if (!empty($delwords)) {
+            // Save the reverse index
+            $pageword_idx[$pid] = join(':',$pagewords)."\n";
+            if(!idx_saveIndex('pageword','',$pageword_idx)){
+                trigger_error("Failed to write word index", E_USER_ERROR);
+                return false;
+            }
+        }
+    } else {
+        // Save the reverse index
+        $pageword_idx[$pid] = join(':',$pagewords)."\n";
+        if(!idx_saveIndex('pageword','',$pageword_idx)){
+            trigger_error("Failed to write word index", E_USER_ERROR);
             return false;
         }
     }
@@ -530,6 +565,42 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
     }
 
     return $words;
+}
+
+/**
+ * Create a pagewords index from the existing index.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_upgradePageWords(){
+    global $conf;
+    $page_idx = idx_getIndex('page','');
+    if (empty($page_idx)) return;
+    $pagewords = array();
+    for ($n=0;$n<count($page_idx);$n++) $pagewords[] = array();
+    unset($page_idx);
+
+    $n=0;
+    foreach (idx_indexLengths($n) as $wlen) {
+        $lines = idx_getIndex('i',$wlen);
+        for ($wid=0;$wid<count($lines);$wid++) {
+            $wkey = "$wlen*$wid";
+            foreach (explode(':',trim($lines[$wid])) as $part) {
+                if($part == '') continue;
+                list($doc,$cnt) = explode('*',$part);
+                $pagewords[(int)$doc][] = $wkey;
+            }
+        }
+    }
+
+    $pageword_idx = array();
+    foreach ($pagewords as $line)
+        $pageword_idx[] = join(':',$line)."\n";
+    if(!idx_saveIndex('pageword','',$pageword_idx)){
+        trigger_error("Failed to write word index", E_USER_ERROR);
+        return false;
+    }
+    return true;
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

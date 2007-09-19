@@ -13,7 +13,7 @@ session_write_close();
 
 // Version tag used to force rebuild on upgrade
 // Need to keep in sync with lib/exe/indexer.php
-if(!defined('INDEXER_VERSION')) define('INDEXER_VERSION', 1);
+if(!defined('INDEXER_VERSION')) define('INDEXER_VERSION', 2);
 
 // handle options
 $short_opts = 'hcuq';
@@ -68,6 +68,14 @@ function _usage() {
 
 function _update(){
     global $conf;
+
+    // upgrade to version 2
+    if (!@file_exists($conf['indexdir'].'/pageword.idx')){
+        _lock();
+        idx_upgradePageWords();
+        _unlock();
+    }
+
     $data = array();
     _quietecho("Searching pages... ");
     search($data,$conf['datadir'],'search_allpages',array());
