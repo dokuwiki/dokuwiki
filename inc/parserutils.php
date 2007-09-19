@@ -289,11 +289,13 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
       if (is_array($value)){
         #FIXME not sure if this is the intended thing:
-        if(!is_array($meta['current'][$key])) $meta['current'][$key] = array($meta['current'][$key]);
+        if(!empty($meta['current'][$key]) && !is_array($meta['current'][$key]))
+          $meta['current'][$key] = array($meta['current'][$key]);
         $meta['current'][$key] = array_merge($meta['current'][$key], $value);
 
         if ($persistent) {
-          if(!is_array($meta['persistent'][$key])) $meta['persistent'][$key] = array($meta['persistent'][$key]);
+          if(!empty($meta['persistent'][$key]) && !is_array($meta['persistent'][$key]))
+            $meta['persistent'][$key] = array($meta['persistent'][$key]);
           $meta['persistent'][$key] = array_merge($meta['persistent'][$key], $value);
         }
       }
