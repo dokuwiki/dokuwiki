@@ -52,6 +52,7 @@ function media_metasave($id,$auth,$data){
     if($auth < AUTH_UPLOAD) return false;
     if(!checkSecurityToken()) return false;
     global $lang;
+    global $conf;
     $src = mediaFN($id);
 
     $meta = new JpegMeta($src);
@@ -67,6 +68,7 @@ function media_metasave($id,$auth,$data){
     }
 
     if($meta->save()){
+        if($conf['fperm']) chmod($src, $conf['fperm']);
         msg($lang['metasaveok'],1);
         return $id;
     }else{
