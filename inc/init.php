@@ -410,10 +410,13 @@ EOT;
  * @link   http://de3.php.net/manual/en/function.realpath.php#75992
  */
 function fullpath($path){
+    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+    if($iswin) $path = str_replace('\\','/',$path); // windows compatibility
 
-    // check if path begins with "/" ie. is absolute
+    // check if path begins with "/" or "c:" ie. is absolute
     // if it isnt concat with script path
-    if (strpos($path,"/") !== 0) {
+    if ((!$iswin && $path{0} !== '/') ||
+        ($iswin && $path{1} !== ':')) {
         $base=dirname($_SERVER['SCRIPT_FILENAME']);
         $path=$base."/".$path;
     }
@@ -421,15 +424,16 @@ function fullpath($path){
     // canonicalize
     $path=explode('/', $path);
     $newpath=array();
-    for ($i=0; $i<sizeof($path); $i++) {
-        if ($path[$i]==='' || $path[$i]==='.') continue;
-           if ($path[$i]==='..') {
+    foreach($path as $p) {
+        if ($p === '' || $p === '.') continue;
+           if ($p==='..') {
               array_pop($newpath);
               continue;
         }
-        array_push($newpath, $path[$i]);
+        array_push($newpath, $p);
     }
-    $finalpath="/".implode('/', $newpath);
+    $finalpath = implode('/', $newpath);
+    if(!$iswin) $finalpath = '/'.$finalpath;
 
     // check then return valid path or filename
     if (file_exists($finalpath)) {
