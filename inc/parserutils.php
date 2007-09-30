@@ -233,8 +233,8 @@ function p_get_metadata($id, $key=false, $render=false){
   $cache = ($ID == $id);
   $meta = p_read_metadata($id, $cache);
 
-  // metadata has never been rendered before - do it!
-  if ($render && !$meta['current']['description']['abstract']){
+  // metadata has never been rendered before - do it! (but not for non-existent pages)
+  if ($render && !$meta['current']['description']['abstract'] && page_exists($id)){
     $meta = p_render_metadata($id, $meta);
     io_saveFile(metaFN($id, '.meta'), serialize($meta));
 
@@ -246,9 +246,13 @@ function p_get_metadata($id, $key=false, $render=false){
   // filter by $key
   if ($key){
     list($key, $subkey) = explode(' ', $key, 2);
-    if (trim($subkey)) return $meta['current'][$key][$subkey];
+    $subkey = trim($subkey);
 
-    return $meta['current'][$key];
+    if ($subkey) {
+      return isset($meta['current'][$key][$subkey]) ? $meta['current'][$key][$subkey] : null;
+    }
+
+    return isset($meta['current'][$key]) ? $meta['current'][$key] : null;
   }
 
   return $meta['current'];
@@ -279,24 +283,20 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
     if ($key == 'relation'){
 
       foreach ($value as $subkey => $subvalue){
-        $meta['current'][$key][$subkey] = array_merge($meta['current'][$key][$subkey], $subvalue);
+        $meta['current'][$key][$subkey] = !empty($meta['current'][$key][$subkey]) ? array_merge($meta['current'][$key][$subkey], $subvalue) : $subvalue;
         if ($persistent)
-          $meta['persistent'][$key][$subkey] = array_merge($meta['persistent'][$key][$subkey], $subvalue);
+          $meta['persistent'][$key][$subkey] = !empty($meta['persistent'][$key][$subkey]) ? array_merge($meta['persistent'][$key][$subkey], $subvalue) : $subvalue;
       }
 
     // be careful with some senisitive arrays of $meta
     } elseif (in_array($key, $protected)){
 
-      if (is_array($value)){
-        #FIXME not sure if this is the intended thing:
-        if(!empty($meta['current'][$key]) && !is_array($meta['current'][$key]))
-          $meta['current'][$key] = array($meta['current'][$key]);
-        $meta['current'][$key] = array_merge($meta['current'][$key], $value);
+      // these keys, must have subkeys - a legitimate value must be an array
+      if (is_array($value)) {
+        $meta['current'][$key] = !empty($meta['current'][$key]) ? array_merge($meta['current'][$key],$value) : $value;
 
         if ($persistent) {
-          if(!empty($meta['persistent'][$key]) && !is_array($meta['persistent'][$key]))
-            $meta['persistent'][$key] = array($meta['persistent'][$key]);
-          $meta['persistent'][$key] = array_merge($meta['persistent'][$key], $value);
+          $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_merge($meta['persistent'][$key],$value) : $value;
         }
       }
 
