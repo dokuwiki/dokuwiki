@@ -13,7 +13,7 @@
 /**
 * Init path constant
 */
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
 
 /**#@+
  * lexer mode constant

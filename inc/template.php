@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_CONF.'dokuwiki.php');
 
 /**
@@ -859,9 +859,9 @@ function tpl_pageinfo(){
   $fn = $INFO['filepath'];
   if(!$conf['fullpath']){
     if($REV){
-      $fn = str_replace(realpath($conf['olddir']).DIRECTORY_SEPARATOR,'',$fn);
+      $fn = str_replace(fullpath($conf['olddir']).DIRECTORY_SEPARATOR,'',$fn);
     }else{
-      $fn = str_replace(realpath($conf['datadir']).DIRECTORY_SEPARATOR,'',$fn);
+      $fn = str_replace(fullpath($conf['datadir']).DIRECTORY_SEPARATOR,'',$fn);
     }
   }
   $fn = utf8_decodeFN($fn);

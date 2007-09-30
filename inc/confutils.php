@@ -6,7 +6,7 @@
  * @author     Harry Fuecks <hfuecks@gmail.com>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 
 /**
  * Returns the (known) extension and mimetype of a given filename

@@ -1,5 +1,5 @@
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
 
 require_once DOKU_INC . 'inc/parser/xhtml.php';
 

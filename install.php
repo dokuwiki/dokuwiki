@@ -5,7 +5,7 @@
  *  @author      Chris Smith <chris@jalakai.co.uk>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__)).'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__)).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 

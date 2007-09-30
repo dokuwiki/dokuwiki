@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/HTTPClient.php');
   require_once(DOKU_INC.'inc/events.php');
@@ -385,7 +385,7 @@ function io_mkdir_p($target){
   //recursion
   if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
     if($conf['safemodehack']){
-      $dir = preg_replace('/^'.preg_quote(realpath($conf['ftp']['root']),'/').'/','', $target);
+      $dir = preg_replace('/^'.preg_quote(fullpath($conf['ftp']['root']),'/').'/','', $target);
       return io_mkdir_ftp($dir);
     }else{
       $ret = @mkdir($target,$conf['dmode']); // crawl back up & create dir tree

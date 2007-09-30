@@ -6,7 +6,7 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 require_once(DOKU_INC.'inc/pluginutils.php');
 
 class Doku_Event {

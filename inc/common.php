@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 require_once(DOKU_CONF.'dokuwiki.php');
 require_once(DOKU_INC.'inc/io.php');
 require_once(DOKU_INC.'inc/changelog.php');
@@ -136,7 +136,7 @@ function pageinfo(){
 
   $info['namespace'] = getNS($ID);
   $info['locked']    = checklock($ID);
-  $info['filepath']  = realpath(wikiFN($ID));
+  $info['filepath']  = fullpath(wikiFN($ID));
   $info['exists']    = @file_exists($info['filepath']);
   if($REV){
     //check if current revision was meant
@@ -144,7 +144,7 @@ function pageinfo(){
       $REV = '';
     }else{
       //really use old revision
-      $info['filepath'] = realpath(wikiFN($ID,$REV));
+      $info['filepath'] = fullpath(wikiFN($ID,$REV));
       $info['exists']   = @file_exists($info['filepath']);
     }
   }

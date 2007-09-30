@@ -11,7 +11,7 @@
   define('DOKU_START_TIME', delta_time());
 
   // define the include path
-  if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 
   // define config path (packagers may want to change this to /etc/dokuwiki/)
   if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
@@ -201,9 +201,9 @@ function init_files(){
  */
 function init_path($path){
   // check existance
-  $p = realpath($path);
+  $p = fullpath($path);
   if(!@file_exists($p)){
-    $p = realpath(DOKU_INC.$path);
+    $p = fullpath(DOKU_INC.$path);
     if(!@file_exists($p)){
       return '';
     }
@@ -398,6 +398,46 @@ function nice_die($msg){
 EOT;
   exit;
 }
+
+
+/**
+ * A realpath() replacement
+ *
+ * This function behaves similar to PHP's realpath() but does not resolve
+ * symlinks or accesses upper directories
+ *
+ * @author <richpageau at yahoo dot co dot uk>
+ * @link   http://de3.php.net/manual/en/function.realpath.php#75992
+ */
+function fullpath($path){
+
+    // check if path begins with "/" ie. is absolute
+    // if it isnt concat with script path
+    if (strpos($path,"/") !== 0) {
+        $base=dirname($_SERVER['SCRIPT_FILENAME']);
+        $path=$base."/".$path;
+    }
+
+    // canonicalize
+    $path=explode('/', $path);
+    $newpath=array();
+    for ($i=0; $i<sizeof($path); $i++) {
+        if ($path[$i]==='' || $path[$i]==='.') continue;
+           if ($path[$i]==='..') {
+              array_pop($newpath);
+              continue;
+        }
+        array_push($newpath, $path[$i]);
+    }
+    $finalpath="/".implode('/', $newpath);
+
+    // check then return valid path or filename
+    if (file_exists($finalpath)) {
+        return ($finalpath);
+    }
+    else return false;
+}
+
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

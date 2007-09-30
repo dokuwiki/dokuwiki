@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 if(!defined('NL')) define('NL',"\n");
 require_once(DOKU_INC.'inc/parserutils.php');
 require_once(DOKU_INC.'inc/form.php');

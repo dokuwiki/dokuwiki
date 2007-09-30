@@ -20,7 +20,7 @@
 // +----------------------------------------------------------------------+
 //
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 
 //------------------------------------------------------------------------------
 /**
@@ -86,7 +86,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
         }
 
         // Compatibility between "php extensions.php" and "./extensions.php"
-        if ( realpath($_SERVER['argv'][0]) == $bin_file ) {
+        if ( fullpath($_SERVER['argv'][0]) == $bin_file ) {
             $options = Doku_Cli_Opts::getOpt($args,$short_options,$long_options);
         } else {
             $options = Doku_Cli_Opts::getOpt2($args,$short_options,$long_options);
