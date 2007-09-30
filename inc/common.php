@@ -39,8 +39,8 @@ function hsc($string){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function ptln($string,$intend=0){
-  echo str_repeat(' ', $intend)."$string\n";
+function ptln($string,$indent=0){
+  echo str_repeat(' ', $indent)."$string\n";
 }
 
 /**
