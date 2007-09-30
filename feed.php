@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__)).'/');
+  if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
   require_once(DOKU_INC.'inc/init.php');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/events.php');
