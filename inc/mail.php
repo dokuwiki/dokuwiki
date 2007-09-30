@@ -34,6 +34,11 @@
  * @see    mail()
  */
 function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=null, $params=null){
+  $message = compact('to','subject','body','from','cc','bcc','headers','params');
+  trigger_event('MAIL_MESSAGE_SEND',$message,'_mail_send');
+}
+
+function _mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=null, $params=null){
   if(defined('MAILHEADER_ASCIIONLY')){
     $subject = utf8_deaccent($subject);
     $subject = utf8_strip($subject);
