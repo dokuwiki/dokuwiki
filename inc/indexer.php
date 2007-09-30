@@ -523,7 +523,7 @@ function idx_parseIndexLine(&$page_idx,$line){
         $doc = trim($page_idx[$doc]);
         if(!$doc) continue;
         // make sure the document still exists
-        if(!@file_exists(wikiFN($doc,'',false))) continue;
+        if(!page_exists($doc,'',false)) continue;
 
         $result[$doc] = $cnt;
     }

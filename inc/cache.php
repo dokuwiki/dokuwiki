@@ -233,7 +233,7 @@ class cache_renderer extends cache_parser {
 
         if (!empty($links)) {
           foreach ($links as $id => $exists) {
-            if ($exists != @file_exists(wikiFN($id,'',false))) return false;
+            if ($exists != page_exists($id,'',false)) return false;
           }
         }
       }

@@ -446,9 +446,7 @@ function html_revisions($first=0){
   foreach($revisions as $rev){
     $date   = date($conf['dformat'],$rev);
     $info   = getRevisionInfo($ID,$rev,true);
-    $exists = @file_exists(wikiFN($ID,$rev)); 
-
-
+    $exists = page_exists($ID,$rev);
 
     print ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';

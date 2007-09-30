@@ -170,7 +170,7 @@ function ft_pageLookup($id,$pageonly=true){
                 continue;
             }
         }
-        if(!@file_exists(wikiFN($pages[$i]))){
+        if(!page_exists($pages[$i])){
             unset($pages[$i]);
             continue;
         }

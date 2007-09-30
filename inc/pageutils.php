@@ -55,13 +55,13 @@ function getID($param='id',$clean=true){
 
   // Namespace autolinking from URL
   if(substr($id,-1) == ':' || ($conf['useslash'] && substr($id,-1) == '/')){
-    if(@file_exists(wikiFN($id.$conf['start']))){
+    if(page_exists($id.$conf['start'])){
       // start page inside namespace
       $id = $id.$conf['start'];
-    }elseif(@file_exists(wikiFN($id.noNS(cleanID($id))))){
+    }elseif(page_exists($id.noNS(cleanID($id)))){
       // page named like the NS inside the NS
       $id = $id.noNS(cleanID($id));
-    }elseif(@file_exists(wikiFN($id))){
+    }elseif(page_exists($id)){
       // page like namespace exists
       $id = substr($id,0,-1);
     }else{
@@ -188,10 +188,25 @@ function noNSorNS($id) {
 }
 
 /**
- * returns the full path to the datafile specified by ID and
- * optional revision
+ *  Wiki page existence check
+ *
+ *  parameters as for wikiFN
+ *
+ *  @author Chris Smith <chris@jalakai.co.uk>
+ */
+function page_exists($id,$rev='',$clean=true) {
+  return @file_exists(wikiFN($id,$rev,$clean));
+}
+
+/**
+ * returns the full path to the datafile specified by ID and optional revision
  *
  * The filename is URL encoded to protect Unicode chars
+ *
+ * @param  $raw_id  string   id of wikipage
+ * @param  $rev     string   page revision, empty string for current
+ * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
+ *                           when $id is guaranteed to have been cleaned already.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -394,15 +409,15 @@ function resolve_pageid($ns,&$page,&$exists){
 
   // if ends with colon or slash we have a namespace link
   if(substr($page,-1) == ':' || ($conf['useslash'] && substr($page,-1) == '/')){
-    if(@file_exists(wikiFN($page.$conf['start']))){
+    if(page_exists($page.$conf['start'])){
       // start page inside namespace
       $page = $page.$conf['start'];
       $exists = true;
-    }elseif(@file_exists(wikiFN($page.noNS(cleanID($page))))){
+    }elseif(page_exists($page.noNS(cleanID($page)))){
       // page named like the NS inside the NS
       $page = $page.noNS(cleanID($page));
       $exists = true;
-    }elseif(@file_exists(wikiFN($page))){
+    }elseif(page_exists($page)){
       // page like namespace exists
       $page = $page;
       $exists = true;
@@ -419,7 +434,7 @@ function resolve_pageid($ns,&$page,&$exists){
         }else{
           $try = $page.'s';
         }
-        if(@file_exists(wikiFN($try))){
+        if(page_exists($try)){
           $page   = $try;
           $exists = true;
         }
