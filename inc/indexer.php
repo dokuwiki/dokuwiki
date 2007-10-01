@@ -425,7 +425,6 @@ function idx_getIndexWordsSorted($words,&$result){
     if(!empty($tokenwild)) sort($indexes_known);
     // get word IDs
     $wids = array();
-    echo "\n";
     foreach($indexes_known as $ixlen){
         $word_idx = idx_getIndex('w',$ixlen);
         // handle exact search
