@@ -320,7 +320,8 @@ function form_makeCloseTag($tag) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeWikiText($text, $attrs=array()) {
-  $elem = array('_elem'=>'wikitext', '_text'=>$text);
+  $elem = array('_elem'=>'wikitext', '_text'=>$text,
+                'class'=>'edit', 'cols'=>'80', 'rows'=>'10');
   return array_merge($elem, $attrs);
 }
 
@@ -341,7 +342,8 @@ function form_makeWikiText($text, $attrs=array()) {
 function form_makeButton($type, $act, $value='', $attrs=array()) {
   if ($value == '') $value = $act;
   //$name = (!empty($act)) ? 'do[$act]' : null;
-  $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act, 'value'=>$value);
+  $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act, 
+                'value'=>$value, 'class'=>'button');
   if (!empty($attrs['accesskey']) && empty($attrs['title'])) {
     $attrs['title'] = $value . ' [ALT+'.strtoupper($attrs['accesskey']).']';
   }
@@ -400,7 +402,7 @@ function form_makeFieldRight($type, $name, $value='', $label=null, $id='', $clas
 function form_makeTextField($name, $value='', $label=null, $id='', $class='', $attrs=array()) {
   if (is_null($label)) $label = $name;
   $elem = array('_elem'=>'textfield', '_text'=>$label, '_class'=>$class,
-                'id'=>$id, 'name'=>$name, 'value'=>$value);
+                'id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>'edit');
   return array_merge($elem, $attrs);
 }
 
@@ -416,7 +418,7 @@ function form_makeTextField($name, $value='', $label=null, $id='', $class='', $a
 function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=array()) {
   if (is_null($label)) $label = $name;
   $elem = array('_elem'=>'passwordfield', '_text'=>$label, '_class'=>$class,
-                'id'=>$id, 'name'=>$name);
+                'id'=>$id, 'name'=>$name, 'class'=>'edit');
   return array_merge($elem, $attrs);
 }
 
@@ -614,7 +616,10 @@ function form_hidden($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_wikitext($attrs) {
-  return '<textarea name="wikitext" id="wiki__text" cols="80" rows="10" class="edit" '
+  // mandatory attributes
+  unset($attrs['name']);
+  unset($attrs['id']);
+  return '<textarea name="wikitext" id="wiki__text" '
          .buildAttributes($attrs,true).'>'.NL
          .formText($attrs['_text'])
          .'</textarea>';
@@ -631,7 +636,7 @@ function form_wikitext($attrs) {
  */
 function form_button($attrs) {
   $p = (!empty($attrs['_action'])) ? 'name="do['.$attrs['_action'].']" ' : '';
-  return '<input class="button" '.$p.buildAttributes($attrs,true).'/>';
+  return '<input '.$p.buildAttributes($attrs,true).'/>';
 }
 
 /**
@@ -685,10 +690,12 @@ function form_fieldright($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_textfield($attrs) {
+  // mandatory attributes
+  unset($attrs['type']);
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
-  $s .= '<input type="text" class="edit" '.buildAttributes($attrs,true).'/></label>';
+  $s .= '<input type="text" '.buildAttributes($attrs,true).'/></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
@@ -705,10 +712,12 @@ function form_textfield($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_passwordfield($attrs) {
+  // mandatory attributes
+  unset($attrs['type']);
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
-  $s .= '<input type="password" class="edit" '.buildAttributes($attrs,true).'/></label>';
+  $s .= '<input type="password" '.buildAttributes($attrs,true).'/></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
@@ -725,6 +734,8 @@ function form_passwordfield($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_checkboxfield($attrs) {
+  // mandatory attributes
+  unset($attrs['type']);
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input type="checkbox" '.buildAttributes($attrs,true).'/>';
@@ -745,6 +756,8 @@ function form_checkboxfield($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_radiofield($attrs) {
+  // mandatory attributes
+  unset($attrs['type']);
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input type="radio" '.buildAttributes($attrs,true).'/>';
