@@ -1,0 +1,11 @@
+====== Administrilo de Agordoj ======
+
+Uzu tiun ĉi paĝon por kontroli la difinojn de via DokuWiki-a instalo.
+Por helpo pri specifaj difinoj aliru al [[doku>wiki:config]].
+Por pli detaloj pri tiu ĉi kromaĵo, vidu [[doku>plugin:config]].
+
+Difinoj montrataj kun hela ruĝa fono estas protektitaj kaj ne povas esti modifataj per tiu ĉi kromaĵo.
+Difinoj kun blua fono estas aprioraj valoroj kaj difinoj montrataj kun blanka fono estis iam difinataj por tiu ĉi specifa instalo.
+Ambaŭ blua kaj blanka difinoj povas esti modifataj.
+
+Memoru premi la butonon **Registri** antaŭ ol eliri tiun ĉi paĝon, male viaj modifoj perdiĝus.

@@ -4,6 +4,7 @@
  *
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
+ * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  */
 $lang['menu']                  = 'Administri Kromaĵojn';
 $lang['download']              = 'Elŝuti kaj instali novan kromaĵon';
@@ -39,8 +40,8 @@ $lang['desc']                  = 'Priskribo:';
 $lang['author']                = 'Aŭtoro:';
 $lang['www']                   = 'Retpaĝo:';
 $lang['error']                 = 'Nekonata eraro okazis.';
-$lang['error_download']        = 'Maleblas elŝuti la dosieron de kromaĵo: %s';
-$lang['error_badurl']          = 'Suspektinda malbona URL - malblas difini la dosieran nomon el la URL';
+$lang['error_download']        = 'Maleblas elŝuti la kromaĵan dosieron: %s';
+$lang['error_badurl']          = 'Suspektinda malbona URL - maleblas difini la dosieran nomon el la URL';
 $lang['error_dircreate']       = 'Maleblas krei intertempa dosierujo por enhavi elŝutaĵon';
 $lang['error_decompress']      = 'La administrilo de kromaĵoj ne kapablis malkompakti la elŝutitan dosieron. Tio povas esti pro malkompleta elŝuto, tiaokaze vi devus provi refoje; aŭ eble la kompakta formato ne estas konata, tiaokaze vi bezonos elŝuti kaj instali la kromaĵon malaŭtomate.';
 $lang['error_copy']            = 'Okazis eraro de dosierkopio dum provo instali dosierojn por la kromaĵo <em>%s</em>: la disko povus esti plenplena aux alir-rajtoj povus esti misdifinitaj. Tio povus rezulti en malkomplete instalita kromaĵo kaj igi vian vikion malstabilan.';

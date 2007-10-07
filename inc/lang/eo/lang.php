@@ -7,6 +7,7 @@
  * @author Felipe Castro <fefcas CXE yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
+ * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

@@ -4,6 +4,7 @@
  *
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
+ * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  */
 $lang['menu']                  = 'Administro de Uzuloj';
 $lang['noauth']                = '(la identiĝo de uzuloj ne disponeblas)';
