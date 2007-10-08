@@ -104,15 +104,27 @@ function sendFile($file,$mime,$cache){
     header('Cache-Control: must-revalidate, no-transform, post-check=0, pre-check=0');
     header('Pragma: public');
   }
-  header('Accept-Ranges: bytes');
   //send important headers first, script stops here if '304 Not Modified' response
   http_conditionalRequest($fmtime);
-  list($start,$len) = http_rangeRequest(filesize($file));
+
 
   //application mime type is downloadable
   if(substr($mime,0,11) == 'application'){
     header('Content-Disposition: attachment; filename="'.basename($file).'";');
   }
+
+  //use x-sendfile header to pass the delivery to compatible webservers
+  if($conf['xsendfile'] == 1){
+    header("X-LIGHTTPD-send-file: $file");
+    exit;
+  }elseif($conf['xsendfile'] == 2){
+    header("X-Sendfile: $file");
+    exit;
+  }
+
+  //support download continueing
+  header('Accept-Ranges: bytes');
+  list($start,$len) = http_rangeRequest(filesize($file));
 
   // send file contents
   $fp = @fopen($file,"rb");

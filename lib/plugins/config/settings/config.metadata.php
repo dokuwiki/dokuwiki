@@ -172,6 +172,7 @@ $meta['rss_update']  = array('numeric');
 $meta['recent_days'] = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
 $meta['broken_iua']  = array('onoff');
+$meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2));
 
 $meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');

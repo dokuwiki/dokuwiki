@@ -125,6 +125,7 @@ $lang['hidepages']   = 'Hide matching pages (regular expressions)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['sitemap']     = 'Generate Google sitemap (days)';
 $lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
+$lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';
@@ -199,3 +200,7 @@ $lang['compression_o_0']   = 'none';
 $lang['compression_o_gz']  = 'gzip';
 $lang['compression_o_bz2'] = 'bz2';
 
+/* xsendfile header */
+$lang['xsendfile_o_0'] = "don't use";
+$lang['xsendfile_o_1'] = 'Propritary lighttpd header (before release 1.5)';
+$lang['xsendfile_o_2'] = 'Standard X-Sendfile header';
