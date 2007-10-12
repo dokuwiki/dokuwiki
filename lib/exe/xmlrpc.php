@@ -1,5 +1,5 @@
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 
 // fix when '<?xml' isn't on the very first line
 if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
@@ -92,11 +92,17 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('struct','string','int'),
             'Returns a struct with infos about the page.'
         );
+
+        $this->addCallback(
+            'wiki.putPage',
+            'this:putPage',
+            array('int', 'string', 'string'),
+            'Saves a wiki page'
+        );
 /*
   FIXME: missing, yet
             'wiki.getRecentChanges'
             'wiki.listLinks'
-            'wiki.putPage'
 */
 
         $this->serve();
@@ -161,6 +167,44 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'version'      => $time
         );
         return $data;
+    }
+
+    /**
+     * Save a wiki page
+     */
+
+    function putPage($put_id, $put_text, $put_summary='', $put_minor=0, $put_rev = '', $put_pre = '', $put_suf = '') {
+
+        global $TEXT;
+
+        $TEXT = $put_text;
+
+        // Check, if page is locked
+
+        if (checklock($put_id) !== false) {
+
+            return 1;
+
+        }
+
+        //spam check
+        if(checkwordblock())
+            return 2;
+
+        // lock the page
+
+        lock($put_id);
+
+        // save it
+
+        saveWikiText($put_id,con($put_pre,$put_text,$put_suf,1),$put_summary,$put_minor); //use pretty mode for con
+
+        // unlock it
+
+        unlock($put_id);
+
+        return 0;
+
     }
 
     /**

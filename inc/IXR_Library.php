@@ -714,8 +714,9 @@ class IXR_IntrospectionServer extends IXR_Server {
         $method = $this->callbacks[$methodname];
         $signature = $this->signatures[$methodname];
         $returnType = array_shift($signature);
-        // Check the number of arguments
-        if (count($args) != count($signature)) {
+        // Check the number of arguments. Check only, if the minimum count of parameters is specified. More parameters are possible.
+        // This is a hack to allow optional parameters...
+        if (count($args) < count($signature)) {
             // print 'Num of args: '.count($args).' Num in signature: '.count($signature);
             return new IXR_Error(-32602, 'server error. wrong number of method parameters');
         }
