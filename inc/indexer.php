@@ -63,12 +63,14 @@ function wordlen($w){
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_saveIndex($pre, $wlen, $idx){
+function idx_saveIndex($pre, $wlen, &$idx){
     global $conf;
     $fn = $conf['indexdir'].'/'.$pre.$wlen;
     $fh = @fopen($fn.'.tmp','w');
     if(!$fh) return false;
-    fwrite($fh,join('',$idx));
+    foreach ($idx as $line) {
+        fwrite($fh,$line);
+    }
     fclose($fh);
     if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
     io_rename($fn.'.tmp', $fn.'.idx');
@@ -90,6 +92,8 @@ function idx_getIndex($pre, $wlen){
 /**
  * Create an empty index file if it doesn't exist yet.
  *
+ * FIXME: This function isn't currently used. It will probably be removed soon.
+ *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_touchIndex($pre, $wlen){
@@ -99,6 +103,77 @@ function idx_touchIndex($pre, $wlen){
         touch($fn);
         if($conf['fperm']) chmod($fn, $conf['fperm']);
     }
+}
+
+/**
+ * Read a line ending with \n.
+ * Returns false on EOF.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function _freadline($fh) {
+    if (feof($fh)) return false;
+    $ln = '';
+    while (($buf = fgets($fh,4096)) !== false) {
+        $ln .= $buf;
+        if (substr($buf,-1) == "\n") break;
+    }
+    if ($ln === '') return false;
+    if (substr($ln,-1) != "\n") $ln .= "\n";
+    return $ln;
+}
+
+/**
+ * Write a line to an index file.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_saveIndexLine($pre, $wlen, $idx, $line){
+    global $conf;
+    if(substr($line,-1) != "\n") $line .= "\n";
+    $fn = $conf['indexdir'].'/'.$pre.$wlen;
+    $fh = @fopen($fn.'.tmp','w');
+    if(!$fh) return false;
+    $ih = @fopen($fn.'.idx','r');
+    if ($ih) {
+        $ln = -1;
+        while (($curline = _freadline($ih)) !== false) {
+            if (++$ln == $idx) {
+                fwrite($fh, $line);
+            } else {
+                fwrite($fh, $curline);
+            }
+        }
+        if ($idx > $ln) {
+            fwrite($fh,$line);
+        }
+        fclose($ih);
+    } else {
+        fwrite($fh,$line);
+    }
+    fclose($fh);
+    if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
+    io_rename($fn.'.tmp', $fn.'.idx');
+    return true;
+}
+
+/**
+ * Read a single line from an index (if it exists).
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_getIndexLine($pre, $wlen, $idx){
+    global $conf;
+    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
+    if(!@file_exists($fn)) return '';
+    $fh = @fopen($fn,'r');
+    if(!$fh) return '';
+    $ln = -1;
+    while (($line = _freadline($fh)) !== false) {
+        if (++$ln == $idx) break;
+    }
+    fclose($fh);
+    return "$line";
 }
 
 /**
@@ -245,35 +320,30 @@ function idx_addPage($page){
     }
     
     // Remove obsolete index entries
-    $pageword_idx = idx_getIndex('pageword','');
-    if ($pid<count($pageword_idx)) {
-        $oldwords = explode(':',trim($pageword_idx[$pid]));
+    $pageword_idx = trim(idx_getIndexLine('pageword','',$pid));
+    if ($pageword_idx !== '') {
+        $oldwords = explode(':',$pageword_idx);
         $delwords = array_diff($oldwords, $pagewords);
+        $upwords = array();
         foreach ($delwords as $word) {
             if($word=='') continue;
             list($wlen,$wid) = explode('*',$word);
             $wid = (int)$wid;
-            // make the disk cache work for its money
-            // $pagewords is sorted, so this shouldn't be a significant penalty
+            $upwords[$wlen][] = $wid;
+        }
+        foreach ($upwords as $wlen => $widx) {
             $index = idx_getIndex('i',$wlen);
-            $index[$wid] = idx_updateIndexLine($index[$wid],$pid,0);
+            foreach ($widx as $wid) {
+                $index[$wid] = idx_updateIndexLine($index[$wid],$pid,0);
+            }
             idx_saveIndex('i',$wlen,$index);
         }
-        if (!empty($delwords)) {
-            // Save the reverse index
-            $pageword_idx[$pid] = join(':',$pagewords)."\n";
-            if(!idx_saveIndex('pageword','',$pageword_idx)){
-                trigger_error("Failed to write word index", E_USER_ERROR);
-                return false;
-            }
-        }
-    } else {
-        // Save the reverse index
-        $pageword_idx[$pid] = join(':',$pagewords)."\n";
-        if(!idx_saveIndex('pageword','',$pageword_idx)){
-            trigger_error("Failed to write word index", E_USER_ERROR);
-            return false;
-        }
+    }
+    // Save the reverse index
+    $pageword_idx = join(':',$pagewords)."\n";
+    if(!idx_saveIndexLine('pageword','',$pid,$pageword_idx)){
+        trigger_error("Failed to write word index", E_USER_ERROR);
+        return false;
     }
 
     return true;
@@ -592,13 +662,18 @@ function idx_upgradePageWords(){
         }
     }
 
-    $pageword_idx = array();
-    foreach ($pagewords as $line)
-        $pageword_idx[] = join(':',$line)."\n";
-    if(!idx_saveIndex('pageword','',$pageword_idx)){
+    $fn = $conf['indexdir'].'/pageword';
+    $fh = @fopen($fn.'.tmp','w');
+    if (!$fh){
         trigger_error("Failed to write word index", E_USER_ERROR);
         return false;
     }
+    foreach ($pagewords as $line){
+        fwrite($fh, join(':',$line)."\n");
+    }
+    fclose($fh);
+    if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
+    io_rename($fn.'.tmp', $fn.'.idx');
     return true;
 }
 
