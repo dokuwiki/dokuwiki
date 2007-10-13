@@ -60,7 +60,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
         'date'   => '2005-08-10',
         'name'   => 'Plugin Manager',
         'desc'   => "Manage Plugins, including automated plugin installer $disabled",
-        'url'    => 'http://wiki.splitbrain.org/plugin:adminplugin',
+        'url'    => 'http://wiki.splitbrain.org/plugin:plugin',
       );
     }
 

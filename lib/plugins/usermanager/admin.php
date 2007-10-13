@@ -64,7 +64,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             'date'   => '2005-11-24',
             'name'   => 'User Manager',
             'desc'   => 'Manage users '.$this->disabled,
-            'url'    => 'http://wiki.splitbrain.org/plugin:user_manager',
+            'url'    => 'http://wiki.splitbrain.org/plugin:usermanager',
         );
     }
      /**
