@@ -23,6 +23,13 @@ class FeedParser extends SimplePie {
         $this->enable_cache(false);
         $this->set_file_class('FeedParser_File');
     }
+
+    /**
+     * Backward compatibility for older plugins
+     */
+    function feed_url($url){
+        $this->set_feed_url($url);
+    }
 }
 
 /**
