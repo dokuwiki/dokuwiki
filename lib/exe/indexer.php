@@ -67,10 +67,10 @@ function runTrimRecentChanges() {
         !@file_exists($conf['changelog'].'_tmp')) {
             io_lock($conf['changelog']);
             $lines = file($conf['changelog']);
-            if (count($lines)<$conf['recent']) {
+            if (count($lines)<=$conf['recent']) {
                 // nothing to trim
                 io_unlock($conf['changelog']);
-                return true;
+                return false;
             }
 
             io_saveFile($conf['changelog'].'_tmp', '');          // presave tmp as 2nd lock
