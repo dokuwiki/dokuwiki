@@ -773,7 +773,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 }
                 if($params['details']){
                     $this->doc .= '<div class="detail">';
-                    if($htmlok){
+                    if($conf['htmlok']){
                         $this->doc .= $item->get_description();
                     }else{
                         $this->doc .= strip_tags($item->get_description());
