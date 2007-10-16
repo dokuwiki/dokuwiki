@@ -408,7 +408,11 @@ function act_export($act){
   // try to run renderer
   $mode = substr($act,7);
   $text = p_cached_output(wikiFN($ID,$REV), $mode);
+  $headers = p_get_metadata($ID,"format $mode");
   if(!is_null($text)){
+    if(is_array($headers)) foreach($headers as $key => $val){
+        header("$key: $val");
+    }
     print $text;
     exit;
   }

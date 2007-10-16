@@ -147,7 +147,7 @@ function p_cached_output($file, $format='xhtml', $id='') {
 
   $cache = new cache_renderer($id, $file, $format);
   if ($cache->useCache()) {
-    $parsed = $cache->retrieveCache();
+    $parsed = $cache->retrieveCache(false);
     if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
   } else {
     $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
