@@ -1,4 +1,4 @@
 ====== Rādītājs ======
 
-Visu piejamo lapu rādītājs. Sakārtots pēc [[doku>wiki:namespaces|sadaļām]].
+Visu pieejamo lapu rādītājs. Sakārtots pēc [[doku>wiki:namespaces|sadaļām]].
 
