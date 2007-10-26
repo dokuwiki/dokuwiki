@@ -1,0 +1,5 @@
+====== Administration ======
+
+Hitanao eo ambany lisitry ny asa fanaovana admin misy amin'ny
+DokuWiki.
+

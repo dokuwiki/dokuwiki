@@ -1,0 +1,8 @@
+====== Fitantanana fahazoan-dalana (Access Control List)  ======
+
+Eto amin'ity pejy ity dia afaka manampy sy mamafa alalana amin'ny pejy misokatra sy ireo [[doku>wiki:namespaces|namespaces]] misy ao. 
+Mila vakianao ny [[doku>wiki:acl|tahirin-kevitra ofisialy momba ny ACL]] mba hahafahanao mahazo ny fomba fiasan'ny ACL.
+
+Miseho eo amin'ny pejy ny alalana rehetra manan-kery ho an'ny pejy misokatra. Ny alalana momba ny pejy hafa dia tsy miseho -- mba hanamboarana
+azy ireny dia [[this>doku.php?do=index|sokafy]] aloha ilay pejy, ary ovay avy eo ny fitantanana ny ACL
+
