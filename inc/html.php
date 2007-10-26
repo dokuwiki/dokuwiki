@@ -163,7 +163,7 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip=''){
     $params['id'] = $id;
   }
 
-  $ret .= '<form class="button" method="'.$method.'" action="'.$script.'"><div class="no">';
+  $ret .= '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
 
   if(is_array($params)){
     reset($params);
