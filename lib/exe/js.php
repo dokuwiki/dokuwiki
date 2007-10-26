@@ -85,6 +85,9 @@ function js_out(){
     print "var notSavedYet = '".js_escape($lang['notsavedyet'])."';";
     print "var reallyDel   = '".js_escape($lang['del_confirm'])."';";
 
+    // load JS strings form plugins
+    $lang['js']['plugins'] = js_pluginstrings();
+    
     // load JS specific translations
     $json = new JSON();
     echo 'LANG = '.$json->encode($lang['js']).";\n";
@@ -234,6 +237,34 @@ function js_pluginscripts(){
         $list[] = DOKU_PLUGIN."$p/script.js";
     }
     return $list;
+}
+
+/**
+ * Return an two-dimensional array with strings from the language file of each plugin.
+ *
+ * - $lang['js'] must be an array. 
+ * - Nothing is returned for plugins without an entry for $lang['js']
+ *
+ * @author Gabriel Birke <birke@d-scribe.de>
+ */
+function js_pluginstrings()
+{
+    global $conf;
+    $pluginstrings = array();
+    $plugins = plugin_list();
+    foreach ($plugins as $p){
+        if (isset($lang)) unset($lang);
+        if (@file_exists(DOKU_PLUGIN."$p/lang/en/lang.php")) {
+            include DOKU_PLUGIN."$p/lang/en/lang.php";
+        }
+        if (isset($conf['lang']) && $conf['lang']!='en' && @file_exists(DOKU_PLUGIN."$p/lang/".$conf['lang']."/lang.php")) {
+            include DOKU_PLUGIN."$p/lang/".$conf['lang']."/lang.php";
+        }
+        if (isset($lang['js'])) {
+            $pluginstrings[$p] = $lang['js'];
+        }
+    }
+    return $pluginstrings;
 }
 
 /**
