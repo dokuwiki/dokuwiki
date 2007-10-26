@@ -1,0 +1,14 @@
+Um arquivo foi enviado para o seu DokuWiki. Os detalhes são:
+
+Arquivo: @MEDIA@
+Data: @DATE@
+Navegador: @BROWSER@
+Endereço IP: @IPADDRESS@
+Nome do host: @HOSTNAME@
+Tamanho: @SIZE@
+Tipo MIME: @MIME@
+Usuário: @USER@
+
+--
+Essa mensagem foi gerada pelo DokuWiki em
+@DOKUWIKIURL@

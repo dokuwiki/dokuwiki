@@ -1,4 +1,4 @@
-Edite a págine e clique em ''Salvar''. Veja [[wiki:syntax]] para a sintaxe
+Edite a págine e clique em ''Salvar''. Veja [[wiki:syntax|aqui]] a sintaxe
 do Wiki. Por favor, edite a página apenas se você puder **aprimorá-la**.
 Se você deseja testar alguma coisa, faça-o no [[playground:playground|playground]].
 

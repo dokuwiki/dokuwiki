@@ -1,13 +1,13 @@
 Uma página em seu DokuWiki foi adicionada ou alterada. Aqui estão os detalhes:
 
-Data            : @DATE@
-Navegador       : @BROWSER@
-Endereço IP     : @IPADDRESS@
-Nome do host    : @HOSTNAME@
-Revisão antiga  : @OLDPAGE@
-Nova revisão    : @NEWPAGE@
+Data: @DATE@
+Navegador: @BROWSER@
+Endereço IP: @IPADDRESS@
+Nome do host: @HOSTNAME@
+Revisão antiga: @OLDPAGE@
+Nova revisão: @NEWPAGE@
 Resumo da edição: @SUMMARY@
-Usuário         : @USER@
+Usuário: @USER@
 
 @DIFF@
 

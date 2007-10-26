@@ -1,0 +1,5 @@
+====== Enviar nova senha ======
+
+Preencha todas as informações abaixo para obter uma nova senha para a sua conta nesse wiki.
+Sua nova senha será enviada para o endereço de e-mail que você forneceu. O nome de usuário
+deve ser preenchido com o seu nome de usuário do wiki.

@@ -1,0 +1,17 @@
+Olá!
+
+A página @PAGE@, no wiki @TITLE@ foi modificada.
+Aqui estão as mudanças:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Para parar de monitorar essa página, identifique-se em
+@DOKUWIKIURL@, vá até
+@NEWPAGE@
+e selecione 'Cancelar monitoramento'.
+
+-- 
+Essa mensagem foi gerada pelo DokuWiki em
+@DOKUWIKIURL@

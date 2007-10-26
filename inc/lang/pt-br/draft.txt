@@ -1,0 +1,5 @@
+====== Rascunho encontrado ======
+
+A sua última sessão de edição não foi concluída corretamente. O DokuWiki automaticamente salvou um rascunho durante o seu trabalho, que você pode usar agora para continuar a sua edição. Abaixo você pode ver os dados que foram salvos na sua última sessão.
+
+Por favor, escolha se você quer //recuperar// sua sessão perdida de edição, //excluir// o rascunho salvo automaticamente ou //cancelar// o processo de edição.
