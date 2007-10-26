@@ -1,7 +1,7 @@
 ====== Arquivo de borrador atopado ======
 
 A túa última sesión de edición desta páxina non foi completada de xeito correcto.
-O DokuWiki gravou automáticamente un borrador durante o teu traballo que agora
+O DokuWiki gravou automaticamente un borrador durante o teu traballo que agora
 podes usar para continuar coa edición. De seguido podes ver os datos que foron
 gardados da túa última sesión.
 
