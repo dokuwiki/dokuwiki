@@ -1,0 +1,5 @@
+====== Taslak Dosyası Bulundu ======
+
+Bu sayfadaki en son oturumunuz düzgün olarak tamamlanmamış. DokuWiki otomatik olarak bir taslak kaydetmiş olduğu için çalışmanıza devam edebilirsiniz.  Aşağıda en son oturumunuzda kaydedilmiş olan taslağı görebilirsiniz.
+
+Bu taslağı //geri getirebilir//, //silebilir// veya düzenleme sürecinden //vazgeçebilirsiniz//.

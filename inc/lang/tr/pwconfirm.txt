@@ -1,0 +1,12 @@
+Merhaba @FULLNAME@!
+
+@DOKUWIKIURL@ adresinde kullanılan @TITLE@ hesabı için şifre talebinde bulunuldu.
+
+Eğer böyle bir talebiniz olmadıysa, bu e-postayı görmezden gelebilirsiniz.
+
+Onaylamak istiyorsanız aşağıdaki linke tıklayınız
+@CONFIRM@
+
+--
+Bu e-posta otomatik olarak oluşturulmuştur.
+@DOKUWIKIURL@

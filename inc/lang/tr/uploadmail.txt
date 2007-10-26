@@ -1,0 +1,14 @@
+Yeni dosya yüklendi, detaylar:
+
+Dosya : @MEDIA@
+Tarih : @DATE@
+Tarayıcı : @BROWSER@
+IP Adresi : @IPADDRESS@
+Host : @HOSTNAME@
+Boyut : @SIZE@
+MIME Type : @MIME@
+Kullanıcı : @USER@
+
+--
+Bu e-posta otomatik olarak oluşturulmuştur
+@DOKUWIKIURL@

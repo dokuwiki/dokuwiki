@@ -1,0 +1,14 @@
+Yeni kullanıcı  kayıt oldu, detaylar:
+
+Kullanıcı adı : @NEWUSER@
+İsim : @NEWNAME@
+E-posta : @NEWEMAIL@
+
+Tarih : @DATE@
+Tarayıcı : @BROWSER@
+IP Numarası : @IPADDRESS@
+Host : @HOSTNAME@
+
+-- 
+Bu e-posta otomatik olarak oluşturulmuştur.
+@DOKUWIKIURL@

@@ -1,0 +1,3 @@
+====== Çevirim Yöneticisi ======
+
+Bu sayfa spam saldırılarına karşı otomatik eski haline çevirim yapmanızı sağlar. Spam içerikli sayfayı bulmak için bir anahtar kelime girin (mesela spam URLsi), daha sonra spame maruz kalan sayfalar olduğundan emin olup eski haline çevirin.
