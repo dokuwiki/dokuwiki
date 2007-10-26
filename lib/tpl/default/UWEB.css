@@ -1,0 +1,17 @@
+/**
+ * This stylesheet adds the Universal Wiki Edit Button log to the edit page button
+ *
+ * For more info about this Wiki community project visit http://www.aboutus.org/uweb
+
+
+html>body div.dokuwiki form.btn_edit input.button {
+  padding: 0.125em 0.4em 0.125em 2em;
+  background:  __background__ url(images/UWEB.png) no-repeat 0.2em 0.2em;
+}
+
+/* nice alphatransparency background except for IE <7 */
+html>body div.dokuwiki form.btn_edit input.button {
+  padding: 0.125em 0.4em 0.125em 2em;
+  background:  __background__ url(images/UWEBshadow.png) no-repeat left bottom;
+}
+
