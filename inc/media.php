@@ -561,40 +561,26 @@ function media_uploadform($ns, $auth){
 
     if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
 
-    ?>
-    <div class="upload"><?php echo $lang['mediaupload']?></div>
-    <form action="<?php echo DOKU_BASE?>lib/exe/mediamanager.php"
-          method="post" enctype="multipart/form-data" class="upload">
-      <fieldset>
-        <legend class="hidden"><?php echo $lang['btn_upload']?></legend>
-        <input type="hidden" name="ns" value="<?php echo hsc($ns)?>" />
-        <?php formSecurityToken();?>
-        <p>
-          <label for="upload__file"><?php echo $lang['txt_upload']?>:</label>
-          <input type="file" name="upload" class="edit" id="upload__file" />
-        </p>
+    print '<div class="upload">' . $lang['mediaupload'] . '</div>';
+    $form = new Doku_Form('dw__upload', DOKU_BASE.'lib/exe/mediamanager.php', false, 'multipart/form-data');
+    $form->addElement(formSecurityToken());
+    $form->addHidden('ns', hsc($ns));
+    $form->addElement(form_makeOpenTag('p'));
+    $form->addElement(form_makeFileField('upload', $lang['txt_upload'].':', 'upload__file'));
+    $form->addElement(form_makeCloseTag('p'));
+    $form->addElement(form_makeOpenTag('p'));
+    $form->addElement(form_makeTextField('id', '', $lang['txt_filename'].':', 'upload__name'));
+    $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
+    $form->addElement(form_makeCloseTag('p'));
 
-        <p>
-          <label for="upload__name"><?php echo $lang['txt_filename']?>:</label>
-          <span class="nowrap">
-          <input type="text" name="id" class="edit" id="upload__name" /><input
-                 type="submit" class="button" value="<?php echo $lang['btn_upload']?>"
-                 accesskey="s" />
-          </span>
-        </p>
+    if($auth >= AUTH_DELETE){
+      $form->addElement(form_makeOpenTag('p'));
+      $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check'));
+      $form->addElement(form_makeCloseTag('p'));
+    }
 
-        <?php if($auth >= AUTH_DELETE){?>
-            <p>
-              <input type="checkbox" name="ow" value="1" id="dw__ow" class="check" />
-              <label for="dw__ow" class="check"><?php echo $lang['txt_overwrt']?></label>
-            </p>
-        <?php }?>
-      </fieldset>
-    </form>
-    <?php
+    html_form('upload', $form);
 }
-
-
 
 /**
  * Build a tree outline of available media namespaces
