@@ -35,6 +35,9 @@ class Doku_Form {
   // Most likely no need to change this
   var $method = 'post';
 
+  // Change for special forms only
+  var $enctype = '';
+
   // Form id attribute
   var $id = '';
 
@@ -58,10 +61,11 @@ class Doku_Form {
    * @param   string  $method (optional) 'POST' or 'GET', default is post
    * @author  Tom N Harris <tnharris@whoopdedo.org>
    */
-  function Doku_Form($id, $action=false, $method=false) {
+  function Doku_Form($id, $action=false, $method=false, $enctype=false) {
     $this->id = $id;
     $this->action = ($action) ? $action : script();
     if ($method) $this->method = $method;
+    if ($enctype) $this->enctype = $enctype;
 
     $this->addHidden('sectok', getSecurityToken());
   }
@@ -238,6 +242,7 @@ class Doku_Form {
     global $lang;
     print '<form action="'.$this->action.'" method="'.$this->method.'" accept-charset="'.$lang['encoding'].'"';
     if (!empty($this->id)) print ' id="'.$this->id.'"';
+    if (!empty($this->enctype)) print ' enctype="'.$this->enctype.'"';
     print '>'.NL;
     if (!empty($this->_hidden)) {
       print '<div class="no">';
