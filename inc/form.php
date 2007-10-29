@@ -428,6 +428,21 @@ function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=ar
 }
 
 /**
+ * form_makeFileField
+ *
+ * Create a form element for a file input element with label
+ * 
+ * @see     form_makeField
+ * @author  Michael Klier <chi@chimeric.de>
+ */
+function form_makeFileField($name, $label=null, $id='', $class='', $attrs=array()) {
+  if (is_null($label)) $label = $name;
+  $elem = array('_elem'=>'filefield', '_text'=>$label, '_class'=>$class,
+                'id'=>$id, 'name'=>$name, 'class'=>'edit');
+  return array_merge($elem, $attrs);
+}
+
+/**
  * form_makeCheckboxField
  *
  * Create a form element for a checkbox input element with label.
@@ -723,6 +738,31 @@ function form_passwordfield($attrs) {
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<input type="password" '.buildAttributes($attrs,true).'/></label>';
+  if (preg_match('/(^| )block($| )/', $attrs['_class']))
+    $s .= '<br />';
+  return $s;
+}
+
+/**
+ * form_filefield
+ *
+ * Print the HTML for a file input field.
+ *   _class     : class attribute used on the label tag
+ *   _text      : Text to display before the input. Not escaped
+ *   _maxlength : Allowed size in byte
+ *   _accept    : Accepted mime-type
+ * Other attributes are passed to buildAttributes() for the input tag
+ *
+ * @author  Michael Klier <chi@chimeric.de>
+ */
+function form_filefield($attrs) {
+  $s = '<label class="'.$attrs['_class'].'"';
+  if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
+  $s .= '><span>'.$attrs['_text'].'</span> ';
+  $s .= '<input type="file" '.buildAttributes($attrs,true);
+  if (!empty($attrs['_maxlength'])) $s .= ' maxlength="'.$attrs['_maxlength'].'"';
+  if (!empty($attrs['_accept'])) $s .= ' accept="'.$attrs['_accept'].'"';
+  $s .= '/></label>';
   if (preg_match('/(^| )block($| )/', $attrs['_class']))
     $s .= '<br />';
   return $s;
