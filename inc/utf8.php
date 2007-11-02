@@ -281,7 +281,7 @@ function  utf8_rtrim($str,$charlist=''){
 function  utf8_trim($str,$charlist='') {
   if($charlist == '') return trim($str);
 
-  return utf8_ltrim(utf8_rtrim($str));
+  return utf8_ltrim(utf8_rtrim($str,$charlist),$charlist);
 }
 
 
