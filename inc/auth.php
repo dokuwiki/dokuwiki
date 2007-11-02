@@ -268,7 +268,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
 
   if(!$conf['useacl']) return false;
   if(is_null($user))   $user   = $_SERVER['REMOTE_USER'];
-  if(is_null($groups)) $groups = $USERINFO['grps'];
+  if(is_null($groups)) $groups = (array) $USERINFO['grps'];
   $user   = auth_nameencode($user);
 
   // check username against superuser and manager
