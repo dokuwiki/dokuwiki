@@ -92,17 +92,21 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('struct','string','int'),
             'Returns a struct with infos about the page.'
         );
-
         $this->addCallback(
             'wiki.putPage',
             'this:putPage',
             array('int', 'string', 'string'),
             'Saves a wiki page'
         );
+        $this->addCallback(
+            'wiki.listLinks',
+            'this:listLinks',
+            array('struct','string'),
+            'Lists all links contained in a wiki page'
+        );
 /*
   FIXME: missing, yet
             'wiki.getRecentChanges'
-            'wiki.listLinks'
 */
 
         $this->serve();
@@ -140,7 +144,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     /**
      * Return a list of backlinks
      */
-    function listBacklinks($id){
+    function listBackLinks($id){
         require_once(DOKU_INC.'inc/fulltext.php');
         return ft_backlinks($id);
     }
@@ -172,39 +176,72 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     /**
      * Save a wiki page
      */
-
-    function putPage($put_id, $put_text, $put_summary='', $put_minor=0, $put_rev = '', $put_pre = '', $put_suf = '') {
-
+    function putPage($put_id, $put_text, $put_summary='', $put_minor=0, $put_rev='', $put_pre='', $put_suf='') {
         global $TEXT;
 
         $TEXT = $put_text;
 
         // Check, if page is locked
-
-        if (checklock($put_id) !== false) {
-
+        if (checklock($put_id) !== false) 
             return 1;
 
-        }
-
         //spam check
-        if(checkwordblock())
+        if(checkwordblock()) 
             return 2;
-
-        // lock the page
 
         lock($put_id);
 
-        // save it
-
-        saveWikiText($put_id,con($put_pre,$put_text,$put_suf,1),$put_summary,$put_minor); //use pretty mode for con
-
-        // unlock it
+        saveWikiText($put_id,con($put_pre,$put_text,$put_suf,1),$put_summary,$put_minor);
 
         unlock($put_id);
 
         return 0;
+    }
 
+    /**
+     * Lists all links contained in a wiki page
+     */
+    function listLinks($id) {
+        if(auth_quickaclcheck($id) < AUTH_READ){
+            return new IXR_Error(1, 'You are not allowed to read this page');
+        }
+        $links = array();
+
+        // resolve page instructions
+        $ins   = p_cached_instructions(wikiFN(cleanID($id)));
+
+        // instantiate new Renderer - needed for interwiki links
+        include(DOKU_INC.'inc/parser/xhtml.php');
+        $Renderer = new Doku_Renderer_xhtml();
+        $Renderer->interwiki = getInterwiki();
+
+        // parse parse instructions
+        foreach($ins as $in) {
+            $link = array();
+            switch($in[0]) {
+                case 'internallink':
+                    $link['type'] = 'local';
+                    $link['page'] = $in[1][0];
+                    $link['href'] = wl($in[1][0]);
+                    array_push($links,$link);
+                    break;
+                case 'externallink':
+                    $link['type'] = 'extern';
+                    $link['page'] = $in[1][0];
+                    $link['href'] = $in[1][0];
+                    array_push($links,$link);
+                    break;    
+                case 'interwikilink':
+                    $url = $Renderer->_resolveInterWiki($in[1][2],$in[1][3]);
+                    $link['type'] = 'extern';
+                    $link['page'] = $url;
+                    $link['href'] = $url;
+                    array_push($links,$link);
+                    break;
+            }
+        }
+
+        return $links;
     }
 
     /**
