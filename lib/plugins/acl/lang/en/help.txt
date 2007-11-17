@@ -1,0 +1,16 @@
+=== Quick Help: ===
+
+On this page you can add and remove permissions for namespaces and
+pages in your wiki.
+
+The left pane displays all available namespaces and pages.
+
+The form above allows you to see and modify the permissions of a
+selected user or group.
+
+In the table below all currently set access control rules are shown.
+You can use it to quickly delete or change multiple rules.
+
+Reading the [[doku>wiki:acl|official documentation on ACL]] might help
+you to fully understand how access control works in DokuWiki.
+
