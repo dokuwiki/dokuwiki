@@ -3,7 +3,9 @@
  * ACL administration functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Frank Schubert <frank@schokilade.de>
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author     Anika Henke <a.c.henke@arcor.de> (concepts)
+ * @author     Frank Schubert <frank@schokilade.de> (old version)
  */
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
@@ -16,85 +18,125 @@ require_once(DOKU_PLUGIN.'admin.php');
  * need to inherit from this class
  */
 class admin_plugin_acl extends DokuWiki_Admin_Plugin {
-
-
-        function admin_plugin_acl(){
-            $this->setupLocale();
-        }
-
+    var $acl = null;
+    var $ns  = null;
+    var $who = '';
+    var $usersgroups = array();
 
 
     /**
      * return some info
      */
     function getInfo(){
-      return array(
-        'author' => 'Frank Schubert',
-        'email'  => 'frank@schokilade.de',
-        'date'   => '2005-08-08',
-        'name'   => 'ACL',
-        'desc'   => 'Manage Page Access Control Lists',
-        'url'    => 'http://wiki.splitbrain.org/wiki:acl',
-      );
+        return array(
+            'author' => 'Andreas Gohr',
+            'email'  => 'andi@splitbrain.org',
+            'date'   => '2007-11-17',
+            'name'   => 'ACL',
+            'desc'   => 'Manage Page Access Control Lists',
+            'url'    => 'http://wiki.splitbrain.org/wiki:acl',
+        );
     }
 
     /**
      * return prompt for admin menu
      */
     function getMenuText($language) {
-        return $this->lang['admin_acl'];
+        return $this->getLang('admin_acl');
     }
 
     /**
      * return sort order for position in admin menu
      */
     function getMenuSort() {
-      return 1;
+        return 1;
     }
 
     /**
      * handle user request
+     *
+     * Initializes internal vars and handles modifications
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     function handle() {
-      global $AUTH_ACL;
+        global $AUTH_ACL;
+        global $ID;
 
-      $cmd   = $_REQUEST['acl_cmd'];
-      $scope = $_REQUEST['acl_scope'];
-      $type  = $_REQUEST['acl_type'];
-      $user  = $_REQUEST['acl_user'];
-      $perm  = $_REQUEST['acl_perm'];
+        // namespace given?
+        if($_REQUEST['ns'] == '*'){
+            $this->ns = '*';
+        }else{
+            $this->ns = cleanID($_REQUEST['ns']);
+        }
 
-      if(is_array($perm)){
-        //use the maximum
-        sort($perm);
-        $perm = array_pop($perm);
-      }else{
-        $perm = 0;
-      }
+        // user or group choosen?
+        $who = trim($_REQUEST['acl_w']);
+        if($_REQUEST['acl_t'] == '__g__' && $who){
+            $this->who = '@'.ltrim($who,'@');
+        }elseif($_REQUEST['acl_t'] == '__u__' && $who){
+            $this->who = ltrim($who,'@');
+        }elseif($_REQUEST['acl_t'] &&
+                $_REQUEST['acl_t'] != '__u__' &&
+                $_REQUEST['acl_t'] != '__g__'){
+            $this->who = $_REQUEST['acl_t'];
+        }elseif($who){
+            $this->who = $who;
+        }
 
-      //sanitize
-      $user  = auth_nameencode($user);
-      if($type == '@') $user = '@'.$user;
-      if($user == '@all') $user = '@ALL'; //special group! (now case insensitive)
-      $perm  = (int) $perm;
-      if($perm > AUTH_DELETE) $perm = AUTH_DELETE;
+        // handle modifications
+        if(isset($_REQUEST['cmd'])){
+            // scope for modifications
+            if($this->ns){
+                if($this->ns == '*'){
+                    $scope = '*';
+                }else{
+                    $scope = $this->ns.':*';
+                }
+            }else{
+                $scope = $ID;
+            }
 
-      //nothing to do?
-      if(empty($cmd) || empty($scope) || empty($user)) return;
+            if(isset($_REQUEST['cmd']['save']) && $scope && $this->who && isset($_REQUEST['acl'])){
+                // handle additions or single modifications
+                $this->_acl_del($scope, $this->who);
+                $this->_acl_add($scope, $this->who, (int) $_REQUEST['acl']);
+            }elseif(isset($_REQUEST['cmd']['del']) && $scope && $this->who){
+                // handle single deletions
+                $this->_acl_del($scope, $this->who);
+            }elseif(isset($_REQUEST['cmd']['update'])){
+                // handle update of the whole file
+                foreach((array) $_REQUEST['del'] as $where => $who){
+                    // remove all rules marked for deletion
+                    unset($_REQUEST['acl'][$where][$who]);
+                }
+                // prepare lines
+                $lines = array();
+                // keep header
+                foreach($AUTH_ACL as $line){
+                    if($line{0} == '#'){
+                        $lines[] = $line;
+                    }else{
+                        break;
+                    }
+                }
+                // re-add all rules
+                foreach((array) $_REQUEST['acl'] as $where => $opt){
+                    foreach($opt as $who => $perm){
+                        $who = auth_nameencode($who,true);
+                        $lines[] = "$where\t$who\t$perm\n";
+                    }
+                }
+                // save it
+                io_saveFile(DOKU_CONF.'acl.auth.php', join('',$lines));
+            }
 
-      // check token
-      if(!checkSecurityToken()) return;
+            // reload ACL config
+            $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+        }
 
-
-      if($cmd == 'save'){
-        $this->admin_acl_del($scope, $user);
-        $this->admin_acl_add($scope, $user, $perm);
-      }elseif($cmd == 'delete'){
-        $this->admin_acl_del($scope, $user);
-      }
-
-      // reload ACL config
-      $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+        // initialize ACL array
+        $this->_init_acl_config();
     }
 
     /**
@@ -107,110 +149,468 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function html() {
-      global $ID;
+        global $ID;
 
-      print $this->locale_xhtml('intro');
+        echo '<div id="acl_manager">'.NL;
+        echo '<h1>'.$this->getLang('admin_acl').'</h1>'.NL;
+        echo '<div class="level1">'.NL;
 
-      ptln('<div id="acl__manager">');
-      ptln('<table class="inline">');
+        echo '<div id="acl__tree">'.NL;
+        $this->_html_explorer($_REQUEST['ns']);
+        echo '</div>'.NL;
 
-      //new
-      $this->admin_acl_html_new();
+        echo '<div id="acl__detail">'.NL;
+        $this->_html_detail();
+        echo '</div>'.NL;
+        echo '</div>'.NL;
 
-      //current config
-      $acls = $this->get_acl_config($ID);
-      foreach ($acls as $id => $acl){
-        $this->admin_acl_html_current($id,$acl);
-      }
+        echo '<div class="clearer"></div>';
+        echo '<h2>'.$this->getLang('current').'</h2>'.NL;
+        echo '<div class="level2">'.NL;
+        $this->_html_table();
+        echo '</div>'.NL;
 
-      ptln('</table>');
-      ptln('</div>');
+        echo '</div>'.NL;
+    }
+
+    /**
+     * returns array with set options for building links
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _get_opts($addopts=null){
+        global $ID;
+        $opts = array(
+                    'do'=>'admin',
+                    'page'=>'acl',
+                );
+        if($this->ns) $opts['ns'] = $this->ns;
+        if($this->who) $opts['acl_w'] = $this->who;
+
+        if(is_null($addopts)) return $opts;
+        return array_merge($opts, $addopts);
+    }
+
+    /**
+     * Display a tree menu to select a page or namespace
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _html_explorer(){
+        require_once(DOKU_INC.'inc/search.php');
+        global $conf;
+        global $ID;
+        global $lang;
+
+        $dir = $conf['datadir'];
+        $ns  = $this->ns;
+        if(empty($ns)){
+            $ns = dirname(str_replace(':','/',$ID));
+            if($ns == '.') $ns ='';
+        }elseif($ns == '*'){
+            $ns ='';
+        }
+        $ns  = utf8_encodeFN(str_replace(':','/',$ns));
+
+
+        $data = array();
+        search($data,$conf['datadir'],'search_index',array('ns' => $ns));
+
+
+        // wrap a list with the root level around the other namespaces
+        $item = array( 'level' => 0, 'id' => '*', 'type' => 'd',
+                   'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
+
+        echo '<ul class="acltree">';
+        echo $this->_html_li_acl($item);
+        echo '<div class="li">';
+        echo $this->_html_list_acl($item);
+        echo '</div>';
+        echo html_buildlist($data,'acl',
+                            array($this,'_html_list_acl'),
+                            array($this,'_html_li_acl'));
+        echo '</li>';
+        echo '</ul>';
+
+    }
+
+    /**
+     * Display the current ACL for selected where/who combination with
+     * selectors and modification form
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _html_detail(){
+        global $conf;
+        global $ID;
+
+        echo '<form action="'.wl().'" method="post" accept-charset="utf-8">'.NL;
+
+        echo '<div id="acl__user">';
+        echo $this->getLang('acl_perms').' ';
+        $inl =  $this->_html_select();
+        echo '<input type="text" name="acl_w" class="edit" value="'.(($inl)?'':hsc(ltrim($this->who,'@'))).'" />'.NL;
+        echo '<input type="submit" value="Select" class="button" />'.NL;
+        echo '</div>'.NL;
+
+        echo '<div id="acl__info">';
+        $this->_html_info();
+        echo '</div>';
+
+        echo '<input type="hidden" name="ns" value="'.hsc($this->ns).'" />'.NL;
+        echo '<input type="hidden" name="id" value="'.hsc($ID).'" />'.NL;
+        echo '<input type="hidden" name="do" value="admin" />'.NL;
+        echo '<input type="hidden" name="page" value="acl" />'.NL;
+        echo '</form>'.NL;
+    }
+
+    /**
+     * Print infos and editor
+     */
+    function _html_info(){
+        global $ID;
+
+        if($this->who){
+            $current = $this->_get_exact_perm();
+
+            // explain current permissions
+            $this->_html_explain($current);
+            // load editor
+            $this->_html_acleditor($current);
+        }else{
+            echo '<p>';
+            if($this->ns){
+                printf($this->getLang('p_choose_ns'),hsc($this->ns));
+            }else{
+                printf($this->getLang('p_choose_id'),hsc($ID));
+            }
+            echo '</p>';
+
+            echo $this->locale_xhtml('help');
+        }
+    }
+
+    /**
+     * Display the ACL editor
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _html_acleditor($current){
+        global $lang;
+
+        echo '<fieldset>';
+        if(is_null($current)){
+            echo '<legend>'.$this->getLang('acl_new').'</legend>';
+        }else{
+            echo '<legend>'.$this->getLang('acl_mod').'</legend>';
+        }
+
+
+        echo $this->_html_checkboxes($current,empty($this->ns),'acl');
+
+        if(is_null($current)){
+            echo '<input type="submit" name="cmd[save]" class="button" value="'.$lang['btn_save'].'" />'.NL;
+        }else{
+            echo '<input type="submit" name="cmd[save]" class="button" value="'.$lang['btn_update'].'" />'.NL;
+            echo '<input type="submit" name="cmd[del]" class="button" value="'.$lang['btn_delete'].'" />'.NL;
+        }
+
+        echo '</fieldset>';
+    }
+
+    /**
+     * Explain the currently set permissions in plain english/$lang
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _html_explain($current){
+        global $ID;
+        global $auth;
+
+        $who = $this->who;
+        $ns  = $this->ns;
+
+        // prepare where to check
+        if($ns){
+            if($ns == '*'){
+                $check='*';
+            }else{
+                $check=$ns.':*';
+            }
+        }else{
+            $check = $ID;
+        }
+
+        // prepare who to check
+        if($who{0} == '@'){
+            $user   = '';
+            $groups = array(ltrim($who,'@'));
+        }else{
+            $user = auth_nameencode($who);
+            $info = $auth->getUserData($user);
+            $groups = $info['groups'];
+        }
+
+        // check the permissions
+        $perm = auth_aclcheck($check,$user,$groups);
+
+        // build array of named permissions
+        $names = array();
+        if($perm){
+            if($ns){
+                if($perm >= AUTH_DELETE) $names[] = $this->getLang('acl_perm16');
+                if($perm >= AUTH_UPLOAD) $names[] = $this->getLang('acl_perm8');
+                if($perm >= AUTH_CREATE) $names[] = $this->getLang('acl_perm4');
+            }
+            if($perm >= AUTH_EDIT) $names[] = $this->getLang('acl_perm2');
+            if($perm >= AUTH_READ) $names[] = $this->getLang('acl_perm1');
+            $names = array_reverse($names);
+        }else{
+            $names[] = $this->getLang('acl_perm0');
+        }
+
+        // print permission explanation
+        echo '<p>';
+        if($user){
+            if($ns){
+                printf($this->getLang('p_user_ns'),hsc($who),hsc($ns),join(', ',$names));
+            }else{
+                printf($this->getLang('p_user_id'),hsc($who),hsc($ID),join(', ',$names));
+            }
+        }else{
+            if($ns){
+                printf($this->getLang('p_group_ns'),hsc(ltrim($who,'@')),hsc($ns),join(', ',$names));
+            }else{
+                printf($this->getLang('p_group_id'),hsc(ltrim($who,'@')),hsc($ID),join(', ',$names));
+            }
+        }
+        echo '</p>';
+
+        // add note if admin
+        if($perm == AUTH_ADMIN){
+            echo '<p>'.$this->getLang('p_isadmin').'</p>';
+        }elseif(is_null($current)){
+            echo '<p>'.$this->getLang('p_inherited').'</p>';
+        }
     }
 
 
     /**
-     * Get matching ACL lines for a page
+     * Item formatter for the tree view
      *
-     * $ID is pagename, reads matching lines from $AUTH_ACL,
-     * also reads acls from namespace
-     * returns multi-array with key=pagename and value=array(user, acl)
+     * User function for html_buildlist()
      *
-     * @todo    Fix comment to make sense
-     * @todo    should this moved to auth.php?
-     * @todo    can this be combined with auth_aclcheck to avoid duplicate code?
-     * @author  Frank Schubert <frank@schokilade.de>
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function get_acl_config($id){
-      global $AUTH_ACL;
-
-      $acl_config=array();
-
-      // match exact name
-      $matches = preg_grep('/^'.$id.'\s+.*/',$AUTH_ACL);
-      if(count($matches)){
-        foreach($matches as $match){
-          $match = preg_replace('/#.*$/','',$match); //ignore comments
-          $acl   = preg_split('/\s+/',$match);
-          //0 is pagename, 1 is user, 2 is acl
-          $acl_config[$acl[0]][] = array( 'name' => $acl[1], 'perm' => $acl[2]);
+    function _html_list_acl($item){
+        global $ID;
+        $ret = '';
+        // what to display
+        if($item['label']){
+            $base = $item['label'];
+        }else{
+            $base = ':'.$item['id'];
+            $base = substr($base,strrpos($base,':')+1);
         }
-      }
 
-      $specific_found=array();
-      // match ns
-      while(($id=getNS($id)) !== false){
-        $matches = preg_grep('/^'.$id.':\*\s+.*/',$AUTH_ACL);
-        if(count($matches)){
-          foreach($matches as $match){
-            $match = preg_replace('/#.*$/','',$match); //ignore comments
-            $acl   = preg_split('/\s+/',$match);
-            //0 is pagename, 1 is user, 2 is acl
-            $acl_config[$acl[0]][] = array( 'name' => $acl[1], 'perm' => $acl[2]);
-            $specific_found[]=$acl[1];
-          }
+        // highlight?
+        if(($item['type']=='d' &&
+            $item['id'] == $this->ns) ||
+            $item['id'] == $ID) $cl = ' cur';
+
+        // namespace or page?
+        if($item['type']=='d'){
+            if($item['open']){
+                $img   = DOKU_BASE.'lib/images/minus.gif';
+                $alt   = '&minus;';
+            }else{
+                $img   = DOKU_BASE.'lib/images/plus.gif';
+                $alt   = '+';
+            }
+            $ret .= '<img src="'.$img.'" alt="'.$alt.'" />';
+            $ret .= '<a href="'.wl('',$this->_get_opts(array('ns'=>$item['id']))).'" class="idx_dir'.$cl.'">';
+            $ret .= $base;
+            $ret .= '</a>';
+        }else{
+            $ret .= '<a href="'.wl('',$this->_get_opts(array('id'=>$item['id'],'ns'=>''))).'" class="wikilink1'.$cl.'">';
+            $ret .= noNS($item['id']);
+            $ret .= '</a>';
         }
-      }
-
-      //include *-config
-      $matches = preg_grep('/^\*\s+.*/',$AUTH_ACL);
-      if(count($matches)){
-        foreach($matches as $match){
-          $match = preg_replace('/#.*$/','',$match); //ignore comments
-          $acl   = preg_split('/\s+/',$match);
-          // only include * for this user if not already found in ns
-          if(!in_array($acl[1], $specific_found)){
-            //0 is pagename, 1 is user, 2 is acl
-            $acl_config[$acl[0]][] = array( 'name' => $acl[1], 'perm' => $acl[2]);
-          }
-        }
-      }
-
-      //sort
-      //FIXME: better sort algo: first sort by key, then sort by first value
-      krsort($acl_config, SORT_STRING);
-
-      return($acl_config);
+        return $ret;
     }
 
+
+    function _html_li_acl($item){
+            return '<li class="level'.$item['level'].'">';
+    }
+
+
+    /**
+     * Get current ACL settings as multidim array
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _init_acl_config(){
+        global $AUTH_ACL;
+        global $conf;
+        $acl_config=array();
+        $usersgroups = array();
+
+        foreach($AUTH_ACL as $line){
+            $line = trim(preg_replace('/#.*$/','',$line)); //ignore comments
+            if(!$line) continue;
+
+            $acl = preg_split('/\s+/',$line);
+            //0 is pagename, 1 is user, 2 is acl
+
+            $acl[1] = rawurldecode($acl[1]);
+            $acl_config[$acl[0]][$acl[1]] = $acl[2];
+
+            // store non-special users and groups for later selection dialog
+            $ug = $acl[1];
+            if($ug == '@ALL') continue;
+            if($ug == $conf['superuser']) continue;
+            if($ug == $conf['manager']) continue;
+            $usersgroups[] = $ug;
+        }
+
+        $usersgroups = array_unique($usersgroups);
+        sort($usersgroups);
+        uksort($acl_config,array($this,'_sort_names'));
+
+        $this->acl = $acl_config;
+        $this->usersgroups = $usersgroups;
+    }
+
+    /**
+     * Custom function to sort the ACLs by namespace names
+     *
+     * @todo This maybe could be improved to resemble the real tree structure?
+     */
+    function _sort_names($a,$b){
+        $ca = substr_count($a,':');
+        $cb = substr_count($b,':');
+        if($ca < $cb){
+            return -1;
+        }elseif($ca > $cb){
+            return 1;
+        }else{
+            return strcmp($a,$b);
+        }
+    }
+
+    /**
+     * Display all currently set permissions in a table
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _html_table(){
+        global $lang;
+        global $ID;
+
+        echo '<form action="'.wl().'" method="post" accept-charset="utf-8">'.NL;
+        if($this->ns){
+            echo '<input type="hidden" name="ns" value="'.hsc($this->ns).'" />'.NL;
+        }else{
+            echo '<input type="hidden" name="id" value="'.hsc($ID).'" />'.NL;
+        }
+        echo '<input type="hidden" name="acl_w" value="'.hsc($this->who).'" />'.NL;
+        echo '<input type="hidden" name="do" value="admin" />'.NL;
+        echo '<input type="hidden" name="page" value="acl" />'.NL;
+        echo '<table class="inline">';
+        echo '<tr>';
+        echo '<th>'.$this->getLang('where').'</th>';
+        echo '<th>'.$this->getLang('who').'</th>';
+        echo '<th>'.$this->getLang('perm').'</th>';
+        echo '<th>'.$lang['btn_delete'].'</th>';
+        echo '</tr>';
+        foreach($this->acl as $where => $set){
+            foreach($set as $who => $perm){
+                echo '<tr>';
+                echo '<td>';
+                if(substr($where,-1) == '*'){
+                    echo '<span class="aclns">'.hsc($where).'</span>';
+                    $ispage = false;
+                }else{
+                    echo '<span class="aclpage">'.hsc($where).'</span>';
+                    $ispage = true;
+                }
+                echo '</td>';
+
+                echo '<td>';
+                if($who{0} == '@'){
+                    echo '<span class="aclgroup">'.hsc($who).'</span>';
+                }else{
+                    echo '<span class="acluser">'.hsc($who).'</span>';
+                }
+                echo '</td>';
+
+                echo '<td>';
+                echo $this->_html_checkboxes($perm,$ispage,'acl['.hsc($where).']['.hsc($who).']');
+                echo '</td>';
+
+                echo '<td align="center">';
+                echo '<input type="checkbox" name="del['.hsc($where).']" value="'.hsc($who).'" class="edit" />';
+                echo '</td>';
+                echo '</tr>';
+            }
+        }
+
+        echo '<tr>';
+        echo '<th align="right" colspan="4">';
+        echo '<input type="submit" value="'.$lang['btn_update'].'" name="cmd[update]" class="button" />';
+        echo '</th>';
+        echo '</tr>';
+        echo '</table>';
+        echo '</form>'.NL;
+    }
+
+
+    /**
+     * Returns the permission which were set for exactly the given user/group
+     * and page/namespace. Returns null if no exact match is available
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _get_exact_perm(){
+        global $ID;
+        if($this->ns){
+            if($this->ns == '*'){
+                $check = '*';
+            }else{
+                $check = $this->ns.':*';
+            }
+        }else{
+            $check = $ID;
+        }
+
+        if(isset($this->acl[$check][auth_nameencode($this->who,true)])){
+            return $this->acl[$check][auth_nameencode($this->who,true)];
+        }else{
+            return null;
+        }
+    }
 
     /**
      * adds new acl-entry to conf/acl.auth.php
      *
      * @author  Frank Schubert <frank@schokilade.de>
      */
-    function admin_acl_add($acl_scope, $acl_user, $acl_level){
-      $acl_config = join("",file(DOKU_CONF.'acl.auth.php'));
+    function _acl_add($acl_scope, $acl_user, $acl_level){
+        $acl_config = file_get_contents(DOKU_CONF.'acl.auth.php');
+        $acl_user = auth_nameencode($acl_user,true);
 
-      // max level for pagenames is edit
-      if(strpos($acl_scope,'*') === false) {
-        if($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
-      }
+        // max level for pagenames is edit
+        if(strpos($acl_scope,'*') === false) {
+            if($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
+        }
 
-      $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
 
-      $new_config = $acl_config.$new_acl;
+        $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
 
-      return io_saveFile(DOKU_CONF.'acl.auth.php', $new_config);
+        $new_config = $acl_config.$new_acl;
+
+        return io_saveFile(DOKU_CONF.'acl.auth.php', $new_config);
     }
 
     /**
@@ -218,233 +618,123 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author  Frank Schubert <frank@schokilade.de>
      */
-    function admin_acl_del($acl_scope, $acl_user){
-      $acl_config = file(DOKU_CONF.'acl.auth.php');
+    function _acl_del($acl_scope, $acl_user){
+        $acl_config = file(DOKU_CONF.'acl.auth.php');
+        $acl_user = auth_nameencode($acl_user,true);
 
-      $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
+        $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
 
-      // save all non!-matching #FIXME invert is available from 4.2.0 only!
-      $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
+        // save all non!-matching
+        $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
 
-      return io_saveFile(DOKU_CONF.'acl.auth.php', join('',$new_config));
+        return io_saveFile(DOKU_CONF.'acl.auth.php', join('',$new_config));
     }
 
-    // --- HTML OUTPUT FUNCTIONS BELOW --- //
-
     /**
-     * print tablerows with the current permissions for one id
+     * print the permission radio boxes
      *
      * @author  Frank Schubert <frank@schokilade.de>
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function admin_acl_html_dropdown($id){
-      $cur = $id;
-      $ret = '';
-      $opt = array();
+    function _html_checkboxes($setperm,$ispage,$name){
+        global $lang;
 
-      //prepare all options
+        static $label = 0; //number labels
+        $ret = '';
 
-      // current page
-      $opt[] = array('key'=> $id, 'val'=> $id.' ('.$this->lang['page'].')');
+        if($ispage && $setperm > AUTH_EDIT) $perm = AUTH_EDIT;
 
-      // additional namespaces
-      while(($id=getNS($id)) !== false){
-        $opt[] = array('key'=> $id.':*', 'val'=> $id.':* ('.$this->lang['namespace'].')');
-      }
+        foreach(array(AUTH_NONE,AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD,AUTH_DELETE) as $perm){
+            $label += 1;
 
-      // the top namespace
-      $opt[] = array('key'=> '*', 'val'=> '* ('.$this->lang['namespace'].')');
+            //general checkbox attributes
+            $atts = array( 'type'  => 'radio',
+                           'id'    => 'pbox'.$label,
+                           'name'  => $name,
+                           'value' => $perm );
+            //dynamic attributes
+            if(!is_null($setperm) && $setperm == $perm) $atts['checked']  = 'checked';
+            if($ispage && $perm > AUTH_EDIT){
+                $atts['disabled'] = 'disabled';
+                $class = ' class="disabled"';
+            }else{
+                $class = '';
+            }
 
-      // set sel on second entry (current namespace)
-      $opt[1]['sel'] = ' selected="selected"';
-
-      // flip options
-      $opt = array_reverse($opt);
-
-      // create HTML
-      $att = array( 'name'  => 'acl_scope',
-                    'class' => 'edit',
-                    'title' => $this->lang['page'].'/'.$this->lang['namespace']);
-      $ret .= '<select '.html_attbuild($att).'>';
-      foreach($opt as $o){
-        $ret .= '<option value="'.$o['key'].'"'.$o['sel'].'>'.$o['val'].'</option>';
-      }
-      $ret .= '</select>';
-
-      return $ret;
+            //build code
+            $ret .= '<label for="pbox'.$label.'" title="'.$this->getLang('acl_perm'.$perm).'"'.$class.'>';
+            $ret .= '<input '.html_attbuild($atts).' />&nbsp;';
+            $ret .= $this->getLang('acl_perm'.$perm);
+            $ret .= '</label>'.NL;
+        }
+        return $ret;
     }
 
     /**
-     * print tablerows with the current permissions for one id
+     * Print a user/group selector (reusing already used users and groups)
      *
-     * @author  Frank Schubert <frank@schokilade.de>
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function admin_acl_html_new(){
-      global $ID;
-            global $lang;
+    function _html_select(){
+        global $conf;
+        $inlist = false;
 
-      // table headers
-      ptln('<tr>',2);
-      ptln('  <th class="leftalign" colspan="3">'.$this->lang['acl_new'].'</th>',2);
-      ptln('</tr>',2);
+        $specials = array('@ALL','@'.$conf['defaultgroup']);
+        if($conf['manager'] && $conf['manager'] != '!!not set!!') $specials[] = $conf['manager'];
 
-      ptln('<tr>',2);
 
-      ptln('<td class="centeralign" colspan="3">',4);
+        if($this->who &&
+           !in_array($this->who,$this->usersgroups) &&
+           !in_array($this->who,$specials)){
 
-      ptln('  <form method="post" action="'.wl($ID).'"><div class="no">',4);
-      ptln('    <input type="hidden" name="do"   value="admin" />',4);
-      ptln('    <input type="hidden" name="page" value="acl" />',4);
-      ptln('    <input type="hidden" name="acl_cmd" value="save" />',4);
-      formSecurityToken();
-
-      //scope select
-      ptln($this->lang['acl_perms'],4);
-      ptln($this->admin_acl_html_dropdown($ID),4);
-
-      $att = array( 'name'  => 'acl_type',
-                    'class' => 'edit',
-                    'title' => $this->lang['acl_user'].'/'.$this->lang['acl_group']);
-      ptln('    <select '.html_attbuild($att).'>',4);
-      ptln('      <option value="@">'.$this->lang['acl_group'].'</option>',4);
-      ptln('      <option value="">'.$this->lang['acl_user'].'</option>',4);
-      ptln('    </select>',4);
-
-      $att = array( 'name'  => 'acl_user',
-                    'type'  => 'text',
-                    'class' => 'edit',
-                    'title' => $this->lang['acl_user'].'/'.$this->lang['acl_group']);
-      ptln('    <input '.html_attbuild($att).' />',4);
-      ptln('    <br />');
-
-      ptln(     $this->admin_acl_html_checkboxes(0,false),8);
-
-      ptln('    <input type="submit" class="button" value="'.$lang['btn_save'].'" />',4);
-      ptln('  </div></form>');
-      ptln('</td>',4);
-      ptln('</tr>',2);
-    }
-
-    /**
-     * print tablerows with the current permissions for one id
-     *
-     * @author  Frank Schubert <frank@schokilade.de>
-     * @author  Andreas Gohr <andi@splitbrain.org>
-     */
-    function admin_acl_html_current($id,$permissions){
-      global $lang;
-      global $ID;
-
-      //is it a page?
-      if(substr($id,-1) == '*'){
-        $ispage = false;
-      }else{
-        $ispage = true;
-      }
-
-      // table headers
-      ptln('  <tr>');
-      ptln('    <th class="leftalign" colspan="3">');
-      ptln($this->lang['acl_perms'],6);
-      if($ispage){
-        ptln($this->lang['page'],6);
-      }else{
-        ptln($this->lang['namespace'],6);
-      }
-      ptln('<em>'.$id.'</em>',6);
-      ptln('    </th>');
-      ptln('  </tr>');
-
-      sort($permissions);
-
-      foreach ($permissions as $conf){
-        //userfriendly group/user display
-        $conf['name'] = rawurldecode($conf['name']);
-        if(substr($conf['name'],0,1)=="@"){
-          $group = $this->lang['acl_group'];
-          $name  = substr($conf['name'],1);
-          $type  = '@';
+            if($this->who{0} == '@'){
+                $gsel = ' selected="selected"';
+            }else{
+                $usel   = ' selected="selected"';
+            }
         }else{
-          $group = $this->lang['acl_user'];
-          $name  = $conf['name'];
-          $type  = '';
+            $usel = '';
+            $gsel = '';
+            $inlist = true;
         }
 
-        ptln('<tr>',2);
-        ptln('<td class="leftalign">'.htmlspecialchars($group.' '.$name).'</td>',4);
 
-        // update form
-        ptln('<td class="centeralign">',4);
-        ptln('  <form method="post" action="'.wl($ID).'"><div class="no">',4);
-        formSecurityToken();
-        ptln('    <input type="hidden" name="do"   value="admin" />',4);
-        ptln('    <input type="hidden" name="page" value="acl" />',4);
-        ptln('    <input type="hidden" name="acl_cmd"   value="save" />',4);
-        ptln('    <input type="hidden" name="acl_scope" value="'.formtext($id).'" />',4);
-        ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
-        ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
-        ptln(     $this->admin_acl_html_checkboxes($conf['perm'],$ispage),8);
-        ptln('    <input type="submit" class="button" value="'.$lang['btn_update'].'" />',4);
-        ptln('  </div></form>');
-        ptln('</td>',4);
+        echo '<select name="acl_t" class="edit">'.NL;
+        echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
+        echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
+        echo '  <optgroup label="&nbsp;">'.NL;
+        foreach($specials as $ug){
+            if($ug == $this->who){
+                $sel    = ' selected="selected"';
+                $inlist = true;
+            }else{
+                $sel = '';
+            }
 
+            if($ug{0} == '@'){
+                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+            }else{
+                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+            }
+        }
+        echo '  </optgroup>'.NL;
+        echo '  <optgroup label="&nbsp;">'.NL;
+        foreach($this->usersgroups as $ug){
+            if($ug == $this->who){
+                $sel    = ' selected="selected"';
+                $inlist = true;
+            }else{
+                $sel = '';
+            }
 
-        // deletion form
-
-        $ask  = $lang['del_confirm'].'\\n';
-        $ask .= $id.'  '.$conf['name'].'  '.$conf['perm'];
-        ptln('<td class="centeralign">',4);
-        ptln('  <form method="post" action="'.wl($ID).'" onsubmit="return confirm(\''.str_replace('\\\\n','\\n',addslashes($ask)).'\')"><div class="no">',4);
-        formSecurityToken();
-        ptln('    <input type="hidden" name="do"        value="admin" />',4);
-        ptln('    <input type="hidden" name="page"      value="acl" />',4);
-        ptln('    <input type="hidden" name="acl_cmd"   value="delete" />',4);
-        ptln('    <input type="hidden" name="acl_scope" value="'.formtext($id).'" />',4);
-        ptln('    <input type="hidden" name="acl_type" value="'.$type.'" />',4);
-        ptln('    <input type="hidden" name="acl_user"  value="'.formtext($name).'" />',4);
-        ptln('    <input type="submit" class="button" value="'.$lang['btn_delete'].'" />',4);
-        ptln('  </div></form>',4);
-        ptln('</td>',4);
-
-        ptln('</tr>',2);
-      }
-
+            if($ug{0} == '@'){
+                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+            }else{
+                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+            }
+        }
+        echo '  </optgroup>'.NL;
+        echo '</select>'.NL;
+        return $inlist;
     }
-
-
-    /**
-     * print the permission checkboxes
-     *
-     * @author  Frank Schubert <frank@schokilade.de>
-     * @author  Andreas Gohr <andi@splitbrain.org>
-     */
-    function admin_acl_html_checkboxes($setperm,$ispage){
-      global $lang;
-
-      static $label = 0; //number labels
-      $ret = '';
-
-      foreach(array(AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD,AUTH_DELETE) as $perm){
-        $label += 1;
-
-        //general checkbox attributes
-        $atts = array( 'type'  => 'checkbox',
-                       'id'    => 'pbox'.$label,
-                       'name'  => 'acl_perm[]',
-                       'value' => $perm );
-        //dynamic attributes
-        if($setperm >= $perm) $atts['checked']  = 'checked';
-    #        if($perm > AUTH_READ) $atts['onchange'] = #FIXME JS to autoadd lower perms
-        if($ispage && $perm > AUTH_EDIT) $atts['disabled'] = 'disabled';
-
-        //build code
-        $ret .= '<label for="pbox'.$label.'" title="'.$this->lang['acl_perm'.$perm].'">';
-        $ret .= '<input '.html_attbuild($atts).' />';
-        $ret .= $this->lang['acl_perm'.$perm];
-        $ret .= "</label>\n";
-      }
-      return $ret;
-    }
-
 }

@@ -1,5 +1,0 @@
-====== Gerenciamento da Lista de Controle de Acesso (ACL) ======
-
-Nessa página você pode adicionar e remover permissões para a página atual e todos os [[doku>wiki:namespaces|namespaces]] onde ela se encontra. Para compreender melhor o funcionamento das ACLs, você pode consultar a [[doku>wiki:acl|documentação oficial]].
-
-Aqui você encontra todas as permissões que são significantes para a página atual. Permissões relativas às outras páginas não são mostradas - para editá-las, navegue até a página desejada e entre novamente a administração das ACLs.

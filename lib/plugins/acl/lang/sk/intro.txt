@@ -1,7 +1,0 @@
-====== Správa prístupových práv (ACL) ======
-
-Na tejto stránke môžete pridať a odobrať oprávnenia pre aktuálnu stránku a všetky [[doku>wiki:namespaces|menné priestory]] v nej. Môžete si prečítať [[doku>wiki:acl|oficiálnu dokumentáciu k ACL]] pre plné porozumenie tomu, ako kontrola prístupu pracuje.
-
-Stránka ukazuje všetky oprávnenia, ktoré sa vzťahujú na aktuálnu stránku. Oprávnenia týkajúce sa iných stránok nie sú zobrazené  -- pre ich zmenu [[this>doku.php?do=index|nalistujte]] príslušnú stránku a potom sa prepnite do Administrácie ACL.
-
-
