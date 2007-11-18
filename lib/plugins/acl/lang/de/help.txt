@@ -1,0 +1,11 @@
+=== Kurzhilfe ===
+
+Auf dieser Seite können sie Zugriffsberechtigungen für Seiten und Namensräume festlegen und ändern.
+
+Die Liste links zeigt alle verfügbaren Namensräume und Seiten.
+
+Das Formular oben erlaubt Anzeige, Ändern und Hinzufügen von Zugriffsregeln für einen ausgewählten Nutzer oder eine Gruppe.
+
+In der Tabelle unten werden alle bestehenden Regeln aufgeführt und können dort modifiziert oder gelöscht werden.
+
+Für ein tiefergehendes Verständnis wie Zugriffsbeschränkungen in DokuWiki funktionieren, sollten Sie die [[doku>wiki:acl|offizielle Dokumentation]] lesen.
