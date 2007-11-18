@@ -1,220 +1,225 @@
 <?php
 /**
- * catalan language file
+ * Valencian/catalan language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Carles Bellver <carles.bellver@cent.uji.es>
+ * @author     Bernat Arlandis i Mañó <berarma@ya.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
-$lang['doublequoteopening']  = '“';//&ldquo;
-$lang['doublequoteclosing']  = '”';//&rdquo;
-$lang['singlequoteopening']  = '‘';//&lsquo;
-$lang['singlequoteclosing']  = '’';//&rsquo;
 
-$lang['btn_edit']   = 'Edita aquesta pàgina';
-$lang['btn_source'] = 'Mostra codi font';
-$lang['btn_show']   = 'Mostra pàgina';
-$lang['btn_create'] = 'Crea aquesta pàgina';
-$lang['btn_search'] = 'Cerca';
-$lang['btn_save']   = 'Desa';
-$lang['btn_preview']= 'Previsualitza';
-$lang['btn_top']    = 'Torna dalt';
-$lang['btn_newer']  = '<< més recent';
-$lang['btn_older']  = 'menys recent >>';
-$lang['btn_revs']   = 'Revisions anteriors';
+$lang['btn_edit']   = 'Editar esta pàgina';
+$lang['btn_source'] = 'Mostrar font';
+$lang['btn_show']   = 'Mostrar pàgina';
+$lang['btn_create'] = 'Crear esta pàgina';
+$lang['btn_search'] = 'Buscar';
+$lang['btn_save']   = 'Guardar';
+$lang['btn_preview']= 'Vista prèvia';
+$lang['btn_top']    = 'Tornar dalt';
+$lang['btn_newer']  = '<< més recents';
+$lang['btn_older']  = 'manco recents >>';
+$lang['btn_revs']   = 'Revisions velles';
 $lang['btn_recent'] = 'Canvis recents';
-$lang['btn_upload'] = 'Penja';
-$lang['btn_cancel'] = 'Cancel·la';
+$lang['btn_upload'] = 'Pujar';
+$lang['btn_cancel'] = 'Cancelar';
 $lang['btn_index']  = 'Índex';
-$lang['btn_secedit']= 'Edita';
-$lang['btn_login']  = 'Entra';
-$lang['btn_logout'] = 'Surt';
-$lang['btn_admin']  = 'Admin';
-$lang['btn_update'] = 'Actualitza';
-$lang['btn_delete'] = 'Suprimeix';
-$lang['btn_back']   = 'Enrere';
-$lang['btn_backtomedia'] = 'Torna a la selecció de fitxers';
-$lang['btn_subscribe']   = 'Subscripció a canvis';
-$lang['btn_unsubscribe'] = 'Cancel·la subscripció';
-$lang['btn_profile']     = 'Actualització del perfil';
-$lang['btn_reset']       = 'Reinicia';
-$lang['btn_resendpwd']   = 'Envia nova contrasenya';
-$lang['btn_draft']    = 'Edita esborrany';
-$lang['btn_recover']  = 'Recupera esborrany';
-$lang['btn_draftdel'] = 'Suprimeix esborrany';
+$lang['btn_secedit']= 'Editar';
+$lang['btn_login']  = 'Identificar-se';
+$lang['btn_logout'] = 'Eixir';
+$lang['btn_admin']  = 'Administrar';
+$lang['btn_update'] = 'Actualisar';
+$lang['btn_delete'] = 'Borrar';
+$lang['btn_back']   = 'Arrere';
+$lang['btn_backlink']    = "Enllaços remitents";
+$lang['btn_backtomedia'] = 'Tornar a la selecció d\'archius de medis';
+$lang['btn_subscribe']   = 'Subscriure\'s als canvis';
+$lang['btn_unsubscribe'] = 'No rebre canvis';
+$lang['btn_profile']     = 'Actualisar perfil';
+$lang['btn_reset']       = 'Reiniciar';
+$lang['btn_resendpwd']   = 'Enviar contrasenya nova';
+$lang['btn_draft']    = 'Editar borrador';
+$lang['btn_recover']  = 'Recuperar borrador';
+$lang['btn_draftdel'] = 'Borrar borrador';
 
-$lang['loggedinas'] = 'Heu entrat com';
+$lang['loggedinas'] = 'Identificat com a';
 $lang['user']       = 'Nom d\'usuari';
-$lang['pass']       = 'Contrassenya';
-$lang['newpass']    = 'Nova contrasenya';
-$lang['oldpass']    = 'Confirmeu la contrasenya actual';
-$lang['passchk']    = 'una altra vegada';
+$lang['pass']       = 'Contrasenya';
+$lang['newpass']    = 'Contrasenya nova';
+$lang['oldpass']    = 'Confirmar la contrasenya actual';
+$lang['passchk']    = 'una atra volta';
 $lang['remember']   = 'Recorda\'m';
 $lang['fullname']   = 'Nom complet';
-$lang['email']      = 'Correu electrònic';
+$lang['email']      = 'E-Mail';
+$lang['register']   = 'Registrar';
 $lang['profile']    = 'Perfil d\'usuari';
-$lang['register']   = 'Registra\'m';
-$lang['badlogin']   = 'Nom d\'usuari o contrasenya incorrectes.';
+$lang['badlogin']   = 'Perdone, pero el nom d\'usuari o la contrasenya estan equivocats.';
 $lang['minoredit']  = 'Canvis menors';
-$lang['draftdate']  = 'L\'esborrany s\'ha desat automàticament'; // full dformat date will be added
+$lang['draftdate']  = 'Borrador gravat a'; // full dformat date will be added
 
-$lang['regmissing'] = 'Heu d\'omplir tots els camps.';
-$lang['reguexists'] = 'Ja existeix un altre usuari amb aquest nom.';
-$lang['regsuccess'] = 'S\'ha creat l\'usuari. La contrasenya s\'ha enviat per correu.';
-$lang['regsuccess2']= 'S\'ha creat l\'usuari.';
-$lang['regmailfail']= 'Sembla que un error ha impedit enviar la contrasenya per correu. Contacteu amb l\'administrador.';
-$lang['regbadmail'] = 'L\'adreça de correu que heu donat no sembla vàlida. Si creieu que això és un error, contacu amb l\'administrador.';
-$lang['regbadpass'] = 'Les dues contrasenyes no són iguals. Torneu a intentar-ho.';
-$lang['regpwmail']  = 'La vostra contrasenya per al Wiki';
-$lang['reghere']    = 'Si no teniu un compte, aquí en podeu obtenir un';
+$lang['regmissing'] = 'Perdone, pero deu omplir tots els camps.';
+$lang['reguexists'] = 'Perdone, pero ya existix un usuari en este nom.';
+$lang['regsuccess'] = 'L\'usuari ha segut creat i la contrasenya s\'ha enviat per correu electrònic.';
+$lang['regsuccess2']= 'L\'usuari ha segut creat.';
+$lang['regmailfail']= 'Pareix que ha hagut un erro enviant la contrasenya per correu. Per favor, ¡contacte en l\'administrador!';
+$lang['regbadmail'] = 'La direcció de correu no pareix vàlida - si pensa que açò es un erro nostre, contacte en  l\'administrador';
+$lang['regbadpass'] = 'Les dos contrasenyes que ha donat no són idèntiques, per favor, torne a intentar-ho.';
+$lang['regpwmail']  = 'La seua contrasenya de DokuWiki';
+$lang['reghere']    = '¿Encara no té un conte? Faça-se\'n u';
 
-$lang['profna']       = 'Aquest wiki no permet modificar el perfil';
-$lang['profnochange'] = 'No heu introduït cap canvi.';
-$lang['profnoempty']  = 'No es pot deixar en blanc el nom o l\'adreça de correu.';
-$lang['profchanged']  = 'El perfil d\'usuari s\'ha actualitzat correctament.';
+$lang['profna']       = 'Este wiki no permet que modifique el seu perfil';
+$lang['profnochange'] = 'Sense canvis, no hi ha res que fer.';
+$lang['profnoempty']  = 'No es permet deixar el nom o la direcció de correu buits.';
+$lang['profchanged']  = 'Pefil de l\'usuari actualisat.';
 
-$lang['pwdforget'] = 'Heu oblidat la contrasenya? Podeu obtenir-ne una de nova.';
-$lang['resendna']  = 'Aquest wiki no permet tornar a enviar la contrasenya.';
-$lang['resendpwd'] = 'Enviament d\'una nova contrasenya per a';
-$lang['resendpwdmissing'] = 'Heu d\'emplenar tots els camps.';
-$lang['resendpwdnouser']  = 'No s\'ha pogut trobar aquest usuari a la base de dades.';
-$lang['resendpwdbadauth'] = 'Aquest codi d\'autenticació no és vàlid. Assegureu-vos d\'utilitzar l\'enllaç de confirmació complet.';
-$lang['resendpwdconfirm'] = 'Se us ha enviat per correu electrònic un enllaç de confirmació.';
-$lang['resendpwdsuccess'] = 'Se us ha enviat la nova contrasenya per correu electrònic.';
+$lang['pwdforget'] = '¿Ha oblidat la contrasenya? Cree una nova';
+$lang['resendna']  = 'Este wiki no permet reenviar la contrasenya.';
+$lang['resendpwd'] = 'Enviar contrasenya nova per a';
+$lang['resendpwdmissing'] = 'Perdone, deu omplir tots els camps.';
+$lang['resendpwdnouser']  = 'Perdone, no trobem est usuari en la base de senyes.';
+$lang['resendpwdbadauth'] = 'Perdone, este còdic d\'autenticació no es vàlit. Assegure\'s d\'utilisar l\'enllaç de confirmació sancer.';
+$lang['resendpwdconfirm'] = 'Li hem enviat un enllaç de confirmació al correu.';
+$lang['resendpwdsuccess'] = 'La seua nova contrasenya li s\'ha enviat al seu correu.';
 
-$lang['txt_upload']   = 'Trieu el fitxer que voleu penjar';
-$lang['txt_filename'] = 'Introduïu el nom wiki (opcional)';
-$lang['txt_overwrt']  = 'Sobreescriu el fitxer actual';
-$lang['lockedby']     = 'Actualment blocat per:';
-$lang['lockexpire']   = 'Venciment del blocatge:';
-$lang['willexpire']   = 'El blocatge per a editar aquesta pàgina venç d\'aquí a un minut.\nUtilitzeu la visualització prèvia per reiniciar el rellotge i evitar conflictes.';
+$lang['txt_upload']   = 'Seleccione l\'archiu que vol pujar';
+$lang['txt_filename'] = 'Pujar com (opcional)';
+$lang['txt_overwrt']  = 'Sobreescriure archius existents';
+$lang['lockedby']     = 'Actualment bloquejat per';
+$lang['lockexpire']   = 'El bloqueig venç a les';
+$lang['willexpire']   = 'El seu bloqueig per a editar esta pàgina està a punt de vencer en un minut.\nPer a evitar conflictes utilise el botó de vista prèvia per a reiniciar el contador.';
 
-$lang['notsavedyet'] = 'Heu fet canvis que es perdran si no els deseu.\nVoleu continuar?';
-$lang['rssfailed']   = 'S\'ha produït un error en recollir aquesta alimentació: ';
+$lang['notsavedyet'] = 'Els canvis no guardats es pedran.\n¿Segur que vol continuar?';
+$lang['rssfailed']   = 'Un erro ha ocorregut solicitant este canal: ';
 $lang['nothingfound']= 'No s\'ha trobat res.';
 
-$lang['mediaselect'] = 'Selecció de fitxers';
-$lang['fileupload']  = 'Càrrega de fitxers';
-$lang['uploadsucc']  = 'S\'ha penjat el fitxer';
-$lang['uploadfail']  = 'No es pot penjar el fitxer. Potser no teniu prou permisos?';
-$lang['uploadwrong'] = 'No es pot penjar el fitxer. Aquesta extensió està prohibida.';
-$lang['uploadexist'] = 'El fitxer ja existeix. No s\'ha penjat.';
-$lang['deletesucc']  = 'S\'ha suprimit el fitxer "%s".';
-$lang['deletefail']  = 'No s\'ha pogut suprimir el fitxer "%s". Comproveu els permisos.';
-$lang['mediainuse']  = 'No s\'ha pogut suprimir el fitxer "%s". Encara s\'està utilitzant.';
-$lang['namespaces']  = 'Espais';
-$lang['mediafiles']  = 'Fitxers disponibles en';
+$lang['mediaselect'] = 'Archius de mijos';
+$lang['fileupload']  = 'Pujar archius de mijos';
+$lang['uploadsucc']  = 'Pujat correctament';
+$lang['uploadfail']  = 'Erro pujant. ¿Potser no tinga permisos?';
+$lang['uploadwrong'] = 'Pujar denegat. ¡Esta extensió d\'archiu està prohibida!';
+$lang['uploadexist'] = 'L\'archiu ya exisitix. No s\'ha fet res.';
+$lang['deletesucc']  = 'S\'ha borrat l\'archiu "%s".';
+$lang['deletefail']  = 'No s\'ha pogut borrar "%s" - comprove els permisos.';
+$lang['mediainuse']  = 'L\'archiu "%s" no s\'ha borrat - encara està utilisant-se.';
+$lang['namespaces']  = 'Espais de noms';
+$lang['mediafiles']  = 'Archius disponibles en';
 
-$lang['js']['keepopen']    = 'Manté la finestra oberta';
-$lang['js']['hidedetails'] = 'Oculta detalls';
-$lang['mediausage']  = 'Utilitzeu la sintaxi següent per referir-vos a aquest enllaç:';
-$lang['mediaview']   = 'Mostra el fitxer original';
-$lang['mediaroot']   = 'arrel';
-$lang['mediaupload'] = 'Pengeu aquí un fitxer dins de l\'espai actual. Per a crear un nou subespai, poseu-ne el nom davant del nom de fitxer i separeu-los amb el signe de dos punts.';
-$lang['mediaextchange'] = 'S\'ha canviat l\'extensió del fitxer de .%s a .%s';
+$lang['js']['keepopen']    = 'Mantindre la finestra oberta al seleccionar';
+$lang['js']['hidedetails'] = 'Ocultar detalls';
+$lang['mediausage']  = 'Utilise la següent sintaxis per a referenciar est archiu:';
+$lang['mediaview']   = 'Vore l\'archiu original';
+$lang['mediaroot']   = 'root';
+$lang['mediaupload'] = 'Pujar un archiu a l\'espai de noms actual. Per a crear sub-espais, afegixca\'ls en dos punts davant del nom d\'archiu que pose en "Pujar com".';
+$lang['mediaextchange'] = '¡Extensió de l\'archiu canviada de .%s a .%s!';
 
 $lang['reference']   = 'Referències per a';
-$lang['ref_inuse']   = 'El fitxer no es pot suprimir perquè l\'estan utilitzant les pàgines següents:';
-$lang['ref_hidden']  = 'Algunes referències apareixen en pàgines per a les quals no teniu permís de lectura';
+$lang['ref_inuse']   = 'No es pot borrar l\'archiu perque encara es gasta en les següents pàgines:';
+$lang['ref_hidden']  = 'Algunes referències estan en pàgines que no té permisos per a vore';
 
-$lang['hits']       = 'Resultats';
-$lang['quickhits']  = 'Noms de pàgina coincidents';
+$lang['hits']       = 'Encerts';
+$lang['quickhits']  = 'Noms de pàgines coincidents';
 $lang['toc']        = 'Taula de continguts';
-$lang['current']    = 'actual';
-$lang['yours']      = 'La vostra versió';
-$lang['diff']       = 'mostra diferències amb la versió actual';
-$lang['line']       = 'Línia';
-$lang['breadcrumb'] = 'Camí';
-$lang['youarehere'] = 'Sou aquí';
-$lang['lastmod']    = 'Darrera modificació';
+$lang['current']    = 'Actual';
+$lang['yours']      = 'La seua versió';
+$lang['diff']       = 'Mostrar diferències en la versió actual';
+$lang['line']       = 'Llínea';
+$lang['breadcrumb'] = 'Traça';
+$lang['youarehere'] = 'Vosté està ací';
+$lang['lastmod']    = 'Última modificació el';
 $lang['by']         = 'per';
-$lang['deleted']    = 'suprimit';
+$lang['deleted']    = 'borrat';
 $lang['created']    = 'creat';
-$lang['restored']   = 's\'ha restaurat una versió anterior';
-$lang['summary']    = 'Resum d\'edició';
+$lang['restored']   = 'restaurada última revisió';
+$lang['summary']    = 'Editar sumari';
 
 $lang['mail_newpage'] = 'pàgina afegida:';
-$lang['mail_changed'] = 'pàgina modificada:';
-$lang['mail_new_user'] = 'Nou usuari:';
+$lang['mail_changed'] = 'pàgina canviada:';
+$lang['mail_new_user'] = 'Usuari nou:';
 
-$lang['nosmblinks'] = 'Els enllaços amb recursos compartits de Windows només funcionen amb el Microsoft Internet Explorer.\nSi voleu podeu copiar i enganxar l\'enllaç.';
+$lang['nosmblinks'] = 'Enllaçar a compartits de Windows només funciona en Microsoft Internet Explorer.\nPero podrà copiar i apegar l\'enllaç.';
 
-$lang['qb_alert']   = 'Introduïu el text que voleu formatar.\nS\'afegirà al final del document.';
+$lang['qb_alert']   = 'Per favor, introduixca el text que vullga formatejar.\nS\'afegirà al final del document.';
 $lang['qb_bold']    = 'Negreta';
-$lang['qb_italic']  = 'Cursiva';
-$lang['qb_underl']  = 'Subratllat';
-$lang['qb_code']    = 'Codi';
-$lang['qb_strike']  = 'Text barrat';
-$lang['qb_h1']      = 'Encapçalament nivell 1';
-$lang['qb_h2']      = 'Encapçalament nivell 2';
-$lang['qb_h3']      = 'Encapçalament nivell 3';
-$lang['qb_h4']      = 'Encapçalament nivell 4';
-$lang['qb_h5']      = 'Encapçalament nivell 5';
+$lang['qb_italic']  = 'Itàlica';
+$lang['qb_underl']  = 'Subrallat';
+$lang['qb_code']    = 'Còdic';
+$lang['qb_strike']  = 'Tachat';
+$lang['qb_h1']      = 'Encapçalament 1';
+$lang['qb_h2']      = 'Encapçalament 2';
+$lang['qb_h3']      = 'Encapçalament 3';
+$lang['qb_h4']      = 'Encapçalament 4';
+$lang['qb_h5']      = 'Encapçalament 5';
 $lang['qb_link']    = 'Enllaç intern';
 $lang['qb_extlink'] = 'Enllaç extern';
-$lang['qb_hr']      = 'Ratlla horitzontal';
-$lang['qb_ol']      = 'Element de llista numerada';
-$lang['qb_ul']      = 'Element de llista de pics';
-$lang['qb_media']   = 'Afegeix imatges o altres fitxers';
-$lang['qb_sig']     = 'Insereix signatura';
-$lang['qb_smileys'] = 'Emoticones';
+$lang['qb_hr']      = 'Llínea horisontal';
+$lang['qb_ol']      = 'Llista numerada';
+$lang['qb_ul']      = 'Llista ';
+$lang['qb_media']   = 'Afegir imàgens i atres archius';
+$lang['qb_sig']     = 'Afegir firma';
+$lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Caràcters especials';
 
-$lang['del_confirm']= 'Suprimiu aquesta entrada?';
-$lang['admin_register']= 'Afegeix nou usuari';
+$lang['del_confirm']= '¿Realment vol borrar el(s) ítem(s) seleccionat(s)?';
+$lang['admin_register']= 'Afegir nou usuari';
 
-$lang['spell_start'] = 'Revisa l\'ortografia';
-$lang['spell_stop']  = 'Torna a edició';
-$lang['spell_wait']  = 'Espereu un moment...';
-$lang['spell_noerr'] = 'No s\'han trobat errors';
-$lang['spell_nosug'] = 'No hi ha suggeriments';
-$lang['spell_change']= 'Canvia';
+$lang['spell_start'] = 'Corregir ortografia';
+$lang['spell_stop']  = 'Continuar editant';
+$lang['spell_wait']  = 'Per favor, espere...';
+$lang['spell_noerr'] = 'No s\'han trobat erros';
+$lang['spell_nosug'] = 'Sense sugerències';
+$lang['spell_change']= 'Canviar';
 
-$lang['metaedit']    = 'Edita metadades';
-$lang['metasaveerr'] = 'No s\'han pogut escriure les metadades';
-$lang['metasaveok']  = 'S\'han desat les metadades';
-$lang['img_backto']  = 'Torna a';
-$lang['img_title']   = 'Títol';
-$lang['img_caption'] = 'Peu d\'imatge';
+$lang['metaedit']    = 'Editar metasenyes';
+$lang['metasaveerr'] = 'Erro escrivint metasenyes';
+$lang['metasaveok']  = 'Metasenyes guardades';
+$lang['img_backto']  = 'Tornar a';
+$lang['img_title']   = 'Títul';
+$lang['img_caption'] = 'Subtítul';
 $lang['img_date']    = 'Data';
-$lang['img_fname']   = 'Nom de fitxer';
-$lang['img_fsize']   = 'Mida';
-$lang['img_artist']  = 'Fotògraf';
+$lang['img_fname']   = 'Nom de l\'archiu';
+$lang['img_fsize']   = 'Tamany';
+$lang['img_artist']  = 'Fotógraf';
 $lang['img_copyr']   = 'Copyright';
 $lang['img_format']  = 'Format';
-$lang['img_camera']  = 'Càmera';
+$lang['img_camera']  = 'Càmara';
 $lang['img_keywords']= 'Paraules clau';
 
-$lang['subscribe_success']  = 'S\'ha afegit %s a la llista de subscripcions de %s';
-$lang['subscribe_error']    = 'S\'ha produït un error en afegir %s a la llista de subscripcions de %s';
-$lang['subscribe_noaddress']= 'No hi ha cap adreça de correu associada al vostre nom d\'usuari. No se us ha pogut afegir a la llista de subscripcions.';
-$lang['unsubscribe_success']= '%s ha estat suprimit de la llista de subscripcions de %s';
-$lang['unsubscribe_error']  = 'S\'ha produït un error en suprimir %s de la llista de subscripcions de %s';
+$lang['subscribe_success']  = '%s afegit a la llista de subscripció per a %s';
+$lang['subscribe_error']    = 'Erro afegint a %s a la llista de subscripció per a %s';
+$lang['subscribe_noaddress']= 'No hi ha cap direcció associada al seu usuari, no es pot afegir a la llista de subscripció';
+$lang['unsubscribe_success']= '%s borrat de la llista de subscripció per a %s';
+$lang['unsubscribe_error']  = 'Erro borrant a %s de la llista de subscripció per a %s';
 
-$lang['authmodfailed']   = 'La configuració de l\'autenticació d\'usuaris és errònia. Informeu els administradors del wiki.';
-$lang['authtempfail']    = 'L\'autenticació d\'usuaris no està disponible temporalment. Si aquesta situació persisteix, si us plau informeu els administradors del wiki.';
+/* auth.class language support */
+$lang['authmodfailed']   = 'Mala configuració de l\'autenticació d\'usuari. Per favor, informe a l\'administrador del Wiki.';
+$lang['authtempfail']    = 'L\'autenticació d\'usuaris està desactivada temporalment. Si la situació persistix, per favor, informe a l\'administrador del Wiki.';
 
-$lang['i_chooselang'] = 'Trieu l\'idioma';
-$lang['i_installer']  = 'Instal·lador de DokuWiki';
-$lang['i_wikiname']   = 'Nom del wiki';
-$lang['i_enableacl']  = 'Habilita ACL (recomanat)';
+/* installer strings */
+$lang['i_chooselang'] = 'Trie l\'idioma';
+$lang['i_installer']  = 'Instalador de DokuWiki';
+$lang['i_wikiname']   = 'Nom del Wiki';
+$lang['i_enableacl']  = 'Activar ACL (recomanat)';
 $lang['i_superuser']  = 'Superusuari';
-$lang['i_problems']   = 'L\'instal·lador ha trobat alguns problemes, que s\'indiquen més avall. No podeu continuar fins que no els hàgiu solucionat.';
-$lang['i_modified']   = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="http://wiki.splitbrain.org/wiki:install">instruccions d\'instal·lació de Dokuwiki</a> completes';
-$lang['i_funcna']     = 'La funció PHP <code>%s</code> no està disponible. Potser el vostre proveïdor de serveis l\'ha inhabilitada per alguna raó';
-$lang['i_phpver']     = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';
-$lang['i_permfail']   = 'DokuWiki no pot escriure <code>%s</code>. Heu d\'arreglar els permisos d\'aquest directori';
-$lang['i_confexists'] = '<code>%s</code> ja existeix';
-$lang['i_writeerr']   = 'No es pot crear <code>%s</code>. Comproveu els permisos del directori i/o del fitxer i creeu el fitxer manualment.';
-$lang['i_badhash']    = 'dokuwiki.php no reconegut o modificat (hash=<code>%s</code>)';
-$lang['i_badval']     = '<code>%s</code> - valor il·legal o buit';
-$lang['i_success']    = 'La configuració s\'ha acabat amb èxit. Ara podeu suprimir el fitxer install.php. Aneu al vostre nou <a href="doku.php">DokuWiki</a>.';
-$lang['i_failure']    = 'S\'han produït alguns errors en escriure els fitxers de configuració. Potser caldrà que els arregleu manualment abans d\'utilitzar el vostre nou <a href="doku.php">DokuWiki</a>.';
-$lang['i_policy']     = 'Política ACL inicial';
-$lang['i_pol0']       = 'Wiki obert (tothom pot llegir, escriure i penjar fitxers)';
-$lang['i_pol1']       = 'Wiki públic (tothom pot llegir, els usuaris registrats poden escriure i penjar fitxers)';
-$lang['i_pol2']       = 'Wiki tancat (només els usuaris registrats poden llegir, escriure i penjar fitxers)';
-$lang['i_retry']      = 'Reintenta';
+$lang['i_problems']   = 'L\'instalador ha tingut els problemes mostrats més avall.. No pot continuar fins que no els arregle.';
+$lang['i_modified']   = 'Per raons de seguritat, este script nomes funcionarà en una instalació nova i verge de DokuWiki.
+                         Deuria tornar a extraure els archius del paquet que ha descarregat o consultar les 
+                         <a href="http://wiki.splitbrain.org/wiki:install">instruccions d\'instalació de Dokuwiki</a> completes';
+$lang['i_funcna']     = 'La funcio de PHP <code>%s</code> no està disponible. ¿Pot ser que el seu proveedor d\'hostage l\'haja desactivada per algun motiu?';
+$lang['i_phpver'] = 'La versió de PHP <code>%s</code> és menor que
+la <code>%s</code> que es necessita. Necessita actualisar PHP.';
+$lang['i_permfail']   = 'DokuWiki no pot escriure en <code>%s</code>. ¡Necessita arreglar els permisos d\'este directori!';
+$lang['i_confexists'] = '<code>%s</code> ya existix';
+$lang['i_writeerr']   = 'No es pot crear <code>%s</code>. Deurà comprovar els permisos del directori/archiu i crear manualment l\'archiu..';
+$lang['i_badhash']    = 'dokuwiki.php substituït o modificat (hash=<code>%s</code>)';
+$lang['i_badval']     = '<code>%s</code> - valor illegal o buit';
+$lang['i_success']    = 'La configuració ha finalisat correctament. Ya pot borrar l\'archiu install.php. Continue en
+                        <a href="doku.php">el seu nou DokuWiki</a>.';
+$lang['i_failure']    = 'Han aparegut alguns erros escrivint els archius de configuració. Deurà arreglar-los manualment ans que
+                         puga utilisar <a href="doku.php">el seu nou DokuWiki</a>.';
+$lang['i_policy']     = 'Política inicial ACL';
+$lang['i_pol0']       = 'Wiki obert (llegir, escriure i pujar per a tots)';
+$lang['i_pol1']       = 'Wiki public (llegir per a tots, escriure i pujar només per a usuaris registrats)';
+$lang['i_pol2']       = 'Wiki tancat (llegir, escriure i pujar només per a usuaris registrats)';
+
+$lang['i_retry']      = 'Reintentar';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

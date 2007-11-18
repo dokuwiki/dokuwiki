@@ -1,5 +1,4 @@
-====== Pàgina blocada ======
+====== Pàgina bloqueada ======
 
-Aquesta pàgina actualment està blocada per a edició per un altre usuari.
-Haureu d'esperar fins que aquest usuari acabe d'editar-la o fins que venci
-el blocatge.
+Esta pàgina està actualment bloquejada per a que la edite un atre usuari.
+Ha d'esperar fins que l'usuari acabe d'editar la pàgina o vença el bloqueig.

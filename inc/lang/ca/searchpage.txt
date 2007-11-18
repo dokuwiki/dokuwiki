@@ -1,5 +1,5 @@
-====== Cerca ======
+======Buscar======
 
-Heus ací els resultats de la cerca. Si no trobeu allò que buscàveu, podeu crear una pàgina nova per mitjà del botó ''Edita aquesta pàgina''.
+Pot trobar els resultats de la seua busca avall. Si no ha trobat lo que estava buscant, pot crear o editar la pàgina nomenada pel text que ha buscat utilisant el botó corresponent.
 
-===== Resultats =====
+=====Resultats=====
