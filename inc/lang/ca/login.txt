@@ -1,5 +1,5 @@
-====== Login ======
+====== Entrada ======
 
-¡Encara no està identificat! Introduixca les seues credencials d'autenticació per a entrar.
-Necessita tindre les galletes activades.
+No heu entrat. Introduïu les vostres credencials d'autenticació en aquest formulari. 
+A partir d'aquest moment heu de tenir les galetes habilitades en el vostre navegador.
 

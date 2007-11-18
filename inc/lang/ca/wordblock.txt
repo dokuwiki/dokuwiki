@@ -1,6 +1,5 @@
-======SPAM bloquejat======
+====== Brossa blocada ======
 
-Els seues canvis *no* s'han guardat perque contenen una o més paraules bloquejades.
-Si ha intentat clavar spam en el wiki.. ¡malament! Si pensa que açò és un erro,
-contacte en l'administrador d'este wiki.
+Els canvis **no** s'han desat perquè contenen una o més paraules blocades. 
+Volíeu inundar el wiki amb brossa? Molt mal fet! Si penseu que això és un error, contacteu amb l'administrador d'aquest Wiki.
 

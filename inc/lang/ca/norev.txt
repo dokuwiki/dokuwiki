@@ -1,5 +1,5 @@
-======No existix la revisió======
+====== No existeix aquesta revisió ======
 
-La revisió especificada no existix. Utilise el botó de ''Revisions velles'' per a vore una llista de revisions velles
-d'este document.
+
+La revisió especificada no existeix. Utilitzeu el botó ''Revisions anteriors'' per obtenir una llista de revisions d'aquest document.
 

@@ -1,4 +1,4 @@
-======Este tema no existix encara======
+====== Aquest tema encara no existeix ======
 
-Ha seguit un enllaç a un tema que encara no existix. Si té els permisos necessaris, pot crear-la utilisant el botó ''Crear esta pàgina''.
-
+Heu seguit un enllaç a un tema que encara no existeix. Podeu crear-lo
+per mitjà del botó ''Crea aquesta pàgina''.

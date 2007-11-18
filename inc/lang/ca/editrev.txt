@@ -1,3 +1,2 @@
-**¡Ha carregat una revisió vella del document!** Si la guarda crearà una nova
-versió a partir d'esta revisió.
+**Heu penjat una revisió vella del document!** Si la deseu, creareu una nova versió amb aquestes dades.
 ----

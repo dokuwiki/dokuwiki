@@ -1,17 +1,16 @@
-S'ha afegit o modificat una pàgina del seu DokuWiki. Els detalls:
+S'ha afegit o modificat una pàgina en el vostre wiki. Ací teniu més detalls:
 
-Data          : @DATE@
-Navegador     : @BROWSER@
-Direccio-IP   : @IPADDRESS@
-Hostname      : @HOSTNAME@
-Revisio vella : @OLDPAGE@
-Revisio nova  : @NEWPAGE@
-Sumari        : @SUMMARY@
-Usuari        : @USER@
+Data           : @DATE@
+Navegador      : @BROWSER@
+IP             : @IPADDRESS@
+Rev. anterior  : @OLDPAGE@
+Rev. actual    : @NEWPAGE@
+Resum d'edició : @SUMMARY@
+Usuari         : @USER@
 
 @DIFF@
 
 
---
-Este correu l'ha generat DokuWiki en
+-- 
+Missatge generat per DokuWiki en
 @DOKUWIKIURL@

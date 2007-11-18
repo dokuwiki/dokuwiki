@@ -1,4 +1,6 @@
-======Revisions velles======
+====== Revisions anteriors ======
 
-Açò son revisions velles del document actual. Per a tornar a una revisió vella, seleccione-la d'ací avall, pulse ''Editar esta pàgina'' i guarde-la.
+Heus ací les revisions anteriors del document actual. Per restaurar una revisió
+anterior, seleccioneu-la de la llista, feu clic en ''Edita aquesta pàgina'' i
+deseu-la.
 

@@ -1,4 +1,4 @@
-====== Enllaços remitents ======
+====== Enllaços ======
 
-Una llista de pàgines que enllacen a la pàgina actual.
+Heus ací una llista de pàgines enllaçades amb la pàgina actual.
 
