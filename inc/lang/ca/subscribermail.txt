@@ -1,0 +1,15 @@
+La pàgina @PAGE@ del wiki @TITLE@ ha estat modificada.
+Heus ací els canvis:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Per cancel·lar la subscripció a aquesta pàgina, entre al wiki en
+@DOKUWIKIURL@, aneu a
+@NEWPAGE@
+i trieu 'Cancel·la subscripció'.
+
+--
+Missatge generat per DokuWiki en
+@DOKUWIKIURL@

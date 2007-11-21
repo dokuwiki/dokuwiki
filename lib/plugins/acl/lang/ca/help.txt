@@ -1,0 +1,11 @@
+=== Ajuda ràpida ===
+
+En aquesta pàgina podeu afegir i treure permisos per a espais i pàgines del vostre wiki.
+
+La subfinestra de l'esquerra mostra tots els espais i pàgines disponibles.
+
+El formulari de dalt us permet veure i modificar els permisos de l'usuari o grup que seleccioneu.
+
+En la taula de baix es mostren totes les regles de control d'accés que hagin estat definides. Podeu utilitzar aquesta taula per suprimir o modificar ràpidament totes les regles que vulgueu.
+
+Llegir la [[doku>wiki:acl|documentació oficial sobre ACL]] us pot ajudar a entendre del tot com funciona el control d'accés en DokuWiki.

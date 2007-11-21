@@ -1,0 +1,14 @@
+S'ha registrat un nou usuari. Heus ací els detalls:
+
+Nom d'usuari: @NEWUSER@
+Nom complet:  @NEWNAME@
+E-mail: @NEWEMAIL@
+
+Data: @DATE@
+Navegador: @BROWSER@
+Adreça IP: @IPADDRESS@
+Ordinador: @HOSTNAME@
+
+-- 
+Missatge generat per DokuWiki en
+@DOKUWIKIURL@

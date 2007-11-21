@@ -1,0 +1,3 @@
+====== Gestió de reversions ======
+
+Aquesta pàgina us ajuda a revertir automàticament els canvis que siguin producte d'un atac amb brossa. Per trobar la llista de pàgines atacades, cerqueu una cadena adequada (p. ex. un URL de propaganda), confirmeu que les pàgines trobades contenen realment brossa i llavors revertiu-les a revisions anteriors.

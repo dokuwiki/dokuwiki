@@ -1,0 +1,3 @@
+====== Actualització del perfil d'usuari ======
+
+Només cal que completeu els camps que vulgueu canviar. El nom d'usuari no es pot canviar.

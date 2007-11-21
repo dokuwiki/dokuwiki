@@ -1,0 +1,3 @@
+====== Gestió de connectors ======
+
+En aquesta pàgina podeu gestionar tot allò referent als [[doku>wiki:plugins|connectors]] de Dokuwiki. Per a baixar i instal·lar connectors, cal que el servidor web tingui permís d'escriptura en la carpeta de connectors.
