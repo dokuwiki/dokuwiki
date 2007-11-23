@@ -118,7 +118,6 @@ $lang['gzip_output'] = '对 xhtml 使用 gzip 内容编码';
 $lang['gdlib']       = 'GD 库版本';
 $lang['im_convert']  = 'ImageMagick 转换工具的路径';
 $lang['jpg_quality'] = 'JPG 压缩质量（0-100）';
-$lang['spellchecker']= '启用拼写检查';
 $lang['subscribers'] = '启用页面订阅支持';
 $lang['compress']    = '使 CSS 和 javascript 输出更紧密';
 $lang['hidepages']   = '隐藏匹配的界面（正则表达式）';

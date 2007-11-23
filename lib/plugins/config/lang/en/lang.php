@@ -118,7 +118,6 @@ $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
 $lang['jpg_quality'] = 'JPG compression quality (0-100)';
-$lang['spellchecker']= 'Enable spellchecker';
 $lang['subscribers'] = 'Enable page subscription support';
 $lang['compress']    = 'Compact CSS and javascript output';
 $lang['hidepages']   = 'Hide matching pages (regular expressions)';

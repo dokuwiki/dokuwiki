@@ -146,13 +146,6 @@ $lang['qb_chars']   = 'Sertekn';
 $lang['del_confirm']= 'Strika post(ar)?';
 $lang['admin_register']= 'Upprætta nýggjan brúkara';
 
-$lang['spell_start']= 'Staveftirlit';
-$lang['spell_stop'] = 'Hald áfram við rætting';
-$lang['spell_wait'] = 'Bíða eitt bil...';
-$lang['spell_noerr']= 'Ongin villa var funnin';
-$lang['spell_nosug']= 'Ongin uppskot funnin';
-$lang['spell_change']= 'Broyt';
-
 $lang['metaedit']    = 'Rætta metadáta';
 $lang['metasaveerr'] = 'Brek við skriving av metadáta';
 $lang['metasaveok']  = 'Metadáta goymt';

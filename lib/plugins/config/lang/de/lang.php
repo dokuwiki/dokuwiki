@@ -97,7 +97,6 @@ $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';
 $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
-$lang['spellchecker']          = 'Rechtschreibprüfung aktivieren';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';

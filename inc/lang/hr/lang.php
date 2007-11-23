@@ -146,13 +146,6 @@ $lang['qb_chars']   = 'Posebni znakovi';
 $lang['del_confirm']= 'Jeste li sigurni da ćelite obrisati?';
 $lang['admin_register']= 'Dodavanje korisnika';
 
-$lang['spell_start'] = 'Provjerite ispravnost teksta';
-$lang['spell_stop']  = 'Nastavite s izmjenama';
-$lang['spell_wait']  = 'Pričekajte trenutak...';
-$lang['spell_noerr'] = 'Nema grešaka';
-$lang['spell_nosug'] = 'Nema prijedloga';
-$lang['spell_change']= 'Izmjena';
-
 $lang['metaedit']    = 'Izmjena metapodataka';
 $lang['metasaveerr'] = 'Izmjena metapodataka nije uspjela';
 $lang['metasaveok']  = 'Meta';

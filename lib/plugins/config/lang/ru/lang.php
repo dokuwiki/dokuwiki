@@ -97,7 +97,6 @@ $lang['gzip_output']           = 'Использовать gzip Content-Encoding
 $lang['gdlib']                 = 'Версия GD Lib';
 $lang['im_convert']            = 'Путь к imagemagick';
 $lang['jpg_quality']           = 'Качество сжатия JPG (0-100)';
-$lang['spellchecker']          = 'Включить проверку орфографии';
 $lang['subscribers']           = 'Разрешить подписку на изменения';
 $lang['compress']              = 'Сжимать файлы CSS и javascript';
 $lang['hidepages']             = 'Скрыть страницы (рег. выражение)';

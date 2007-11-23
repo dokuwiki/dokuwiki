@@ -97,7 +97,6 @@ $lang['gzip_output']             = 'xhtmlに対するコンテンツ圧縮（gzi
 $lang['gdlib']                   = 'GDlibバージョン';
 $lang['im_convert']              = 'ImageMagick変換ツールへのパス';
 $lang['jpg_quality']             = 'JPG圧縮品質（0-100）';
-$lang['spellchecker']            = 'スペルチェック';
 $lang['subscribers']             = '更新通知機能';
 $lang['compress']                = 'CSSとJavaScriptを圧縮';
 $lang['hidepages']               = '非公開ページ（Regex）';

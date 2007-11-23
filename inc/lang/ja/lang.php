@@ -4,9 +4,6 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Yuji Takenaka <webmaster@davilin.com>
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Anika Henke <henke@cosmocode.de>
- * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 $lang['encoding']                = 'utf-8';
 $lang['direction']               = 'ltr';
@@ -158,12 +155,6 @@ $lang['qb_smileys']              = 'スマイリー';
 $lang['qb_chars']                = '特殊文字';
 $lang['del_confirm']             = '選択した項目を本当に削除しますか？';
 $lang['admin_register']          = '新規ユーザー作成';
-$lang['spell_start']             = 'スペルチェック';
-$lang['spell_stop']              = '再開';
-$lang['spell_wait']              = 'しばらくお待ち下さい...';
-$lang['spell_noerr']             = 'スペルエラーなし';
-$lang['spell_nosug']             = '候補なし';
-$lang['spell_change']            = '変更';
 $lang['metaedit']                = 'メタデータ編集';
 $lang['metasaveerr']             = 'メタデータの書き込みに失敗しました';
 $lang['metasaveok']              = 'メタデータは保存されました';

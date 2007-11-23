@@ -129,13 +129,6 @@ $lang['qb_sig']     = 'أضف توقيعك';
 $lang['del_confirm']= 'مسح؟';
 $lang['admin_register']= 'أضف مستخدم جديد';
 
-$lang['spell_start'] = 'تدقيق إملائى';
-$lang['spell_stop']  = 'أكمل التحرير';
-$lang['spell_wait']  = 'برجاء الأنتظار...';
-$lang['spell_noerr'] = 'لا توجد أخطاء';
-$lang['spell_nosug'] = 'لايوجد أقتراحات';
-$lang['spell_change']= 'تعديل';
-
 $lang['metaedit']    = 'حرر البيانات الشمولية ';
 $lang['metasaveerr'] = 'فشل كتابة البيانات الشمولية';
 $lang['metasaveok']  = 'تم حفظ البيانت الشمولية';

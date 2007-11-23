@@ -174,13 +174,6 @@ $lang['qb_chars']   = 'Special Chars';
 $lang['del_confirm']= 'Really delete selected item(s)?';
 $lang['admin_register']= 'Add new user';
 
-$lang['spell_start'] = 'Check Spelling';
-$lang['spell_stop']  = 'Resume Editing';
-$lang['spell_wait']  = 'Please wait...';
-$lang['spell_noerr'] = 'No Mistakes found';
-$lang['spell_nosug'] = 'No Suggestions';
-$lang['spell_change']= 'Change';
-
 $lang['metaedit']    = 'Edit Metadata';
 $lang['metasaveerr'] = 'Writing metadata failed';
 $lang['metasaveok']  = 'Metadata saved';

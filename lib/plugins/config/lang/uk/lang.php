@@ -116,7 +116,6 @@ $lang['gdlib']       = 'Версія GD Lib';
 $lang['gzip_output'] = 'Використовувати gzip, як Content-Encoding для xhtml';
 $lang['im_convert']  = 'Шлях до ImageMagick';
 $lang['jpg_quality'] = 'Якість компресії JPG (0-100)';
-$lang['spellchecker']= 'Дозволити перевірку орфографії';
 $lang['subscribers'] = 'Підписка на зміни';
 $lang['compress']    = 'Стискати файли CSS та javascript';
 $lang['hidepages']   = 'Ховати сторінки (regular expressions)';

@@ -96,7 +96,6 @@ $lang['gzip_output']           = 'Uzi gzip-a Enhav-Enkodigo por XHTML';
 $lang['gdlib']                 = 'Versio e GD Lib';
 $lang['im_convert']            = 'Pado al la konvertilo de ImageMagick';
 $lang['jpg_quality']           = 'Kompaktiga kvalito de JPG (0-100)';
-$lang['spellchecker']          = 'Ebligi literumilon';
 $lang['subscribers']           = 'Ebligi subtenon de avizoj pri ŝanĝoj sur paĝoj';
 $lang['compress']              = 'Kompaktigi CSS-ajn kaj ĵavaskriptajn elmetojn';
 $lang['hidepages']             = 'Kaŝi kongruantajn paĝojn (al regulaj esprimoj)';

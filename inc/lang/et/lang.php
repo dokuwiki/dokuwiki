@@ -70,12 +70,7 @@ $lang['qb_strike'] = 'Läbijoonitud tekst';
 $lang['qb_smileys'] = 'Emotikonid';
 $lang['qb_chars'] = 'Erisümbolid';
 $lang['admin_register'] = 'Lisa kasutaja';
-$lang['spell_start'] = 'Kontrolli õigekirja';
-$lang['spell_stop'] = 'Jätka toimetamist';
-$lang['spell_wait'] = 'Palun oota...';
-$lang['spell_noerr'] = 'Vigu ei leitud';
-$lang['spell_nosug'] = 'Soovitusi ei ole';
-$lang['spell_change'] = 'Muuda';
+
 
 #$lang['reference'] = '';
 #$lang['btn_backlink'] = '';

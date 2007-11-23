@@ -102,7 +102,6 @@ $lang['gzip_output']           = 'Χρήση gzip Content-Encoding για την
 $lang['gdlib']                 = 'Έκδοση βιβλιοθήκης GD';
 $lang['im_convert']            = 'Διαδρομή προς το εργαλείο μετατροπής εικόνων του ImageMagick';
 $lang['jpg_quality']           = 'Ποιότητα συμπίεσης JPG (0-100)';
-$lang['spellchecker']          = 'Ενεργοποίηση ελέγχου ορθογραφίας';
 $lang['subscribers']           = 'Να επιτρέπεται η εγγραφή στην ενημέρωση αλλαγών σελίδας';
 $lang['compress']              = 'Συμπίεση αρχείων CSS και javascript';
 $lang['hidepages']             = 'Φίλτρο απόκρυψης σελίδων (regular expressions)';

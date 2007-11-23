@@ -129,13 +129,6 @@ $lang['qb_sig']     = 'İmza Ekle';
 $lang['del_confirm']= 'Bu girişi sil?';
 $lang['admin_register']= 'Yeni kullanıcı ekle...';
 
-$lang['spell_start'] = 'Hecelemeyi kontrol et';
-$lang['spell_stop']  = 'Değiştirmeye Devam et';
-$lang['spell_wait']  = 'Lütfen bekleyiniz...';
-$lang['spell_noerr'] = 'Hata bulunamadı';
-$lang['spell_nosug'] = 'Öneri yok';
-$lang['spell_change']= 'Değiştir';
-
 $lang['metaedit']    = 'Metaverileri Değiştir';
 $lang['metasaveerr'] = 'Metaveri yazma başarısız ';
 $lang['metasaveok']  = 'Metaveri kaydedildi';

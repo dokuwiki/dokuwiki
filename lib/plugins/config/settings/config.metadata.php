@@ -130,7 +130,6 @@ $meta['iexssprotect']= array('onoff');
 
 $meta['_editing']    = array('fieldset');
 $meta['usedraft']    = array('onoff');
-$meta['spellchecker']= array('onoff');
 $meta['htmlok']      = array('onoff');
 $meta['phpok']       = array('onoff');
 $meta['notify']      = array('email');

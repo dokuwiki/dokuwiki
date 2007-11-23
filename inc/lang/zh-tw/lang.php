@@ -158,13 +158,6 @@ $lang['qb_chars']   = '特殊字元';
 $lang['del_confirm']= '確定要刪除該管理規則?';
 $lang['admin_register']= '新增使用者中';
 
-$lang['spell_start'] = '檢查拼字中';
-$lang['spell_stop']  = '恢復編輯';
-$lang['spell_wait']  = '請稍後...';
-$lang['spell_noerr'] = '未發現任何錯誤';
-$lang['spell_nosug'] = '沒有建議事項';
-$lang['spell_change']= '更改';
-
 $lang['metaedit']    = '更改相片資料(EXIF)';
 $lang['metasaveerr'] = '相片資料(EXIF)儲存失敗喔';
 $lang['metasaveok']  = '相片資料已成功儲存';

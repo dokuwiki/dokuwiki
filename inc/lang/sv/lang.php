@@ -172,13 +172,6 @@ $lang['qb_chars']   = 'Specialtecken';
 $lang['del_confirm']= 'Vill du verkligen radera?';
 $lang['admin_register']= 'Lägg till ny användare';
 
-$lang['spell_start'] = 'Kontrollera stavning';
-$lang['spell_stop']  = 'Tillbaka till redigering';
-$lang['spell_wait']  = 'Vänta...';
-$lang['spell_noerr'] = 'Inga fel hittades';
-$lang['spell_nosug'] = 'Inga förslag';
-$lang['spell_change']= 'Ändra';
-
 $lang['metaedit']    = 'Redigera metadata';
 $lang['metasaveerr'] = 'Skrivning av metadata misslyckades';
 $lang['metasaveok']  = 'Metadata sparad';

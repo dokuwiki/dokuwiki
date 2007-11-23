@@ -170,13 +170,6 @@ $lang['qb_chars']   = 'Īpašās zīmes';
 $lang['del_confirm']= 'Dzēst šo šķirkli?';
 $lang['admin_register']= 'Pievienot jaunu lietotāju';
 
-$lang['spell_start'] = 'Pārbaudīt pareizrakstību';
-$lang['spell_stop']  = 'Turpināt labošanu';
-$lang['spell_wait']  = 'Lūdzu uzgaidīt...';
-$lang['spell_noerr'] = 'Kļūdu nav';
-$lang['spell_nosug'] = 'Ieteikumu nav';
-$lang['spell_change']= 'Aizstāt';
-
 $lang['metaedit']    = 'Labot metadatus';
 $lang['metasaveerr'] = 'Metadati nav saglabāti';
 $lang['metasaveok']  = 'Metadati saglabāti';

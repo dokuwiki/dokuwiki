@@ -1,10 +1,6 @@
 <?php
 /**
- * english language file
- *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Anika Henke <henke@cosmocode.de>
+ * mg language file
  */
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
@@ -136,12 +132,5 @@ $lang['acl_perm4']  = 'Manamboatra';
 $lang['acl_perm8']  = 'Mandefa rakitra';
 $lang['acl_perm16'] = 'Mamafa';
 $lang['acl_new']    = 'Ampio andalana vaovao';
-
-$lang['spell_start'] = 'Ahitsio ny tsipelina';
-$lang['spell_stop']  = 'Resume Editing';
-$lang['spell_wait']  = 'Andraso kely...';
-$lang['spell_noerr'] = 'Tsy nahitana diso';
-$lang['spell_nosug'] = 'Tsy misy soso-kevitra';
-$lang['spell_change']= 'Fiovana';
-
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

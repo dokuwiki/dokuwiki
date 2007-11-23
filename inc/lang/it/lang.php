@@ -167,13 +167,6 @@ $lang['qb_chars']   = 'Caratteri speciali';
 $lang['del_confirm']= 'Cancellare questa voce?';
 $lang['admin_register']= 'Aggiungi un nuovo utente';
 
-$lang['spell_start'] = 'Controllo ortografico';
-$lang['spell_stop']  = 'Interrompi controllo';
-$lang['spell_wait']  = 'Attendere...';
-$lang['spell_noerr'] = 'Nessun errore trovato';
-$lang['spell_nosug'] = 'Nessun suggerimento';
-$lang['spell_change']= 'Cambia';
-
 $lang['metaedit']    = 'Modifica metadati';
 $lang['metasaveerr'] = 'Scrittura metadati fallita';
 $lang['metasaveok']  = 'Metadati salvati';

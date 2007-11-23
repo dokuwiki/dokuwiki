@@ -105,7 +105,7 @@ $lang['uploadwrong'] = 'Upload afvist. Filtypen er ikke tilladt';
 $lang['uploadexist'] = 'Filen eksisterer allerede.';
 $lang['uploadbadcontent'] = 'Upload indhold matchede ikke %s fil-endelsen.';
 $lang['uploadspam']  = 'Upload blev blokeret af spam sortlisten.';
-$lang['uploadxss']   = 'Upload blev blokeret p� grund af mulig skadeligt indhold.';
+$lang['uploadxss']   = 'Upload blev blokeret på grund af mulig skadeligt indhold.';
 $lang['deletesucc']  = 'Filen "%s" er blevet slettet.';
 $lang['deletefail']  = '"%s" kunne ikke slettes - check rettighederne.';
 $lang['mediainuse']  = 'Filen "%s" er ikke slettet - den er stadig i brug.';
@@ -170,13 +170,6 @@ $lang['qb_chars']   = 'Specialtegn';
 
 $lang['del_confirm']= 'Slet valgte post(er)?';
 $lang['admin_register']= 'Tilføj ny bruger';
-
-$lang['spell_start']= 'Stavekontrol';
-$lang['spell_stop'] = 'Fortsæt redigering';
-$lang['spell_wait'] = 'Vent et øjeblik...';
-$lang['spell_noerr']= 'Der blev ikke fundet nogle fejl';
-$lang['spell_nosug']= 'Ingen forslag fundet';
-$lang['spell_change']= 'Ændr';
 
 $lang['metaedit']    = 'Rediger metadata';
 $lang['metasaveerr'] = 'Skrivning af metadata fejlede';

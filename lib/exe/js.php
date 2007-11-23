@@ -50,9 +50,6 @@ function js_out(){
     if($edit){
         if($write){
             $files[] = DOKU_INC.'lib/scripts/edit.js';
-            if($conf['spellchecker']){
-                $files[] = DOKU_INC.'lib/scripts/spellcheck.js';
-            }
         }
         $files[] = DOKU_INC.'lib/scripts/media.js';
     }
@@ -118,17 +115,6 @@ function js_out(){
 
             // add lock timer
             js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
-
-            // load spell checker
-            if($conf['spellchecker']){
-                js_runonstart("ajax_spell.init('".
-                               js_escape($lang['spell_start'])."','".
-                               js_escape($lang['spell_stop'])."','".
-                               js_escape($lang['spell_wait'])."','".
-                               js_escape($lang['spell_noerr'])."','".
-                               js_escape($lang['spell_nosug'])."','".
-                               js_escape($lang['spell_change'])."')");
-            }
         }
     }
 

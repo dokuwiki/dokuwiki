@@ -4,7 +4,6 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
- * @author Nikolay Vladimirof <nikolay@vladimiroff.com>
  */
 $lang['encoding']                = 'utf-8';
 $lang['direction']               = 'ltr';
@@ -155,12 +154,6 @@ $lang['qb_smileys']              = 'Усмивчици';
 $lang['qb_chars']                = 'Специални знаци';
 $lang['del_confirm']             = 'Да бъдат ли изтрити избраните елементи?';
 $lang['admin_register']          = 'Добабяне на нов потребител';
-$lang['spell_start']             = 'Проверка на правописа';
-$lang['spell_stop']              = 'Продължаване на редактирането';
-$lang['spell_wait']              = 'Поля изчакайте...';
-$lang['spell_noerr']             = 'Не бяха намерени грешки';
-$lang['spell_nosug']             = 'Няма предложения';
-$lang['spell_change']            = 'Промяна';
 $lang['metaedit']                = 'Редактиране на метаданните';
 $lang['metasaveerr']             = 'Запазването на метаданните не бе успешно';
 $lang['metasaveok']              = 'Метаданните запазени';

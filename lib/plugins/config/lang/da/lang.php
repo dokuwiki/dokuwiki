@@ -117,7 +117,6 @@ $lang['gzip_output'] = 'Benyt gzip Content-Encoding til XHTML';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Sti til ImageMagick\'s convert værktøj';
 $lang['jpg_quality'] = 'JPG komprimeringskvalitet (0-100)';
-$lang['spellchecker']= 'Slå stavekontrol til';
 $lang['subscribers'] = 'Slå understøttelse af abonnement på sider til';
 $lang['compress']    = 'Komprimer CSS og Javascript filer';
 $lang['hidepages']   = 'Skjul matchende sider (regulære udtryk)';

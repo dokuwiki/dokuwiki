@@ -167,13 +167,6 @@ $lang['qb_chars']   = '특수문자';
 $lang['del_confirm']= '정말로 선택된 항목(들)을 삭제하시겠습니까?';
 $lang['admin_register']= '새로운 사용자 추가';
 
-$lang['spell_start'] = '맞춤법 검사';
-$lang['spell_stop']  = '편집모드로';
-$lang['spell_wait']  = '잠시 기다려주세요.';
-$lang['spell_noerr'] = '틀린 맞춤법이 없습니다.';
-$lang['spell_nosug'] = '제안되는 단어가 없습니다.';
-$lang['spell_change']= '변경';
-
 $lang['metaedit']    = '메타 데이타를 편집합니다.';
 $lang['metasaveerr'] = '메타 데이타 쓰기가 실패했습니다.';
 $lang['metasaveok']  = '메타 데이타가 저장되었습니다.';

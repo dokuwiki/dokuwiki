@@ -116,7 +116,6 @@ $lang['gzip_output'] = 'Usa il Content-Encoding gzip per xhtml';
 $lang['gdlib']       = 'Versione GD Lib ';
 $lang['im_convert']  = 'Percorso per il convertitore di ImageMagick';
 $lang['jpg_quality'] = 'Qualità di compressione JPG (0-100)';
-$lang['spellchecker']= 'Abilita il controllo ortografico';
 $lang['subscribers'] = 'Abilita la sottoscrizione alle pagine';
 $lang['compress']    = 'Comprimi i file CSS e javascript';
 $lang['hidepages']   = 'Nascondi le pagine che soddisfano la condizione (inserire un\'espressione regolare)';

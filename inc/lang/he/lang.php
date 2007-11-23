@@ -203,13 +203,6 @@ $lang['qb_chars']   = 'סימנים מיוחדים';
 $lang['del_confirm']= 'באמת למחוק?';
 $lang['admin_register']= 'להוסיף משתמש חדש';
 
-$lang['spell_start'] = 'בדוק איות';
-$lang['spell_stop']  = 'חזור לעריכה';
-$lang['spell_wait']  = 'נא להמתין...';
-$lang['spell_noerr'] = 'לא נמצאו שגיאות';
-$lang['spell_nosug'] = 'אין הצעות';
-$lang['spell_change']= 'החלף';
-
 $lang['metaedit']    = 'ערוך נתונים';
 $lang['metasaveerr'] = 'כשל בשמירת נתונים';
 $lang['metasaveok']  = 'נתונים נשמרו';

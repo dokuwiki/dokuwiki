@@ -129,13 +129,6 @@ $lang['qb_sig']     = 'Убаци потпис';
 $lang['del_confirm']= 'Обриши овај унос?';
 $lang['admin_register']= 'Додај новог корисника';
 
-$lang['spell_start'] = 'Провери правопис';
-$lang['spell_stop']  = 'Настави са изменама';
-$lang['spell_wait']  = 'Молим Вас, сачекајте...';
-$lang['spell_noerr'] = 'Нису нађене грешке';
-$lang['spell_nosug'] = 'Нема сугестија';
-$lang['spell_change']= 'Измени';
-
 $lang['metaedit']    = 'Измени мета-податке';
 $lang['metasaveerr'] = 'Записивање мета-података није било успешно';
 $lang['metasaveok']  = 'Мета-подаци су сачувани';

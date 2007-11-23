@@ -115,7 +115,6 @@ $lang['gzip_output'] = 'השתמש בקידוד תוכן של gzip עבור xhtm
 $lang['gdlib']       = 'גרסת ספרית ה-GD';
 $lang['im_convert']  = 'נתיב לכלי ה-convert של ImageMagick';
 $lang['jpg_quality'] = 'איכות הדחיסה של JPG (0-100)';
-$lang['spellchecker']= 'השתמש בבודק איות';
 $lang['subscribers'] = 'התר תמיכה ברישום לדפים';
 $lang['compress']    = 'פלט קומפקטי של CSS ו-javascript';
 $lang['hidepages']   = 'הסתר דפים תואמים (ביטויים רגולריים)';

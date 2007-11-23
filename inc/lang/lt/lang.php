@@ -156,13 +156,6 @@ $lang['qb_chars']   = 'Specialūs simboliai';
 $lang['del_confirm']= 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
 $lang['admin_register']= 'Sukurti naują vartotoją';
 
-$lang['spell_start'] = 'Patikrinti rašybą';
-$lang['spell_stop']  = 'Tęsti redagavimą';
-$lang['spell_wait']  = 'Prašau palaukti...';
-$lang['spell_noerr'] = 'Klaidų nerasta';
-$lang['spell_nosug'] = 'Taisymo pasiūlymų nėra';
-$lang['spell_change']= 'Keisti';
-
 $lang['metaedit'] = 'Redaguoti metaduomenis';
 $lang['metasaveerr'] = 'Nepavyko išsaugoti metaduomenų';
 $lang['metasaveok'] = 'Metaduomenys išsaugoti';

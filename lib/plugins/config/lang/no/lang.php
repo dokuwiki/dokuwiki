@@ -96,7 +96,6 @@ $lang['gzip_output']             = 'Bruk gzip Content-Encoding for XHTML';
 $lang['gdlib']                   = 'Versjon av libGD';
 $lang['im_convert']              = 'Sti til ImageMagicks konverteringsverktøy';
 $lang['jpg_quality']             = 'JPEG-kvalitet (0-100)';
-$lang['spellchecker']            = 'Bruk stavekontroll';
 $lang['subscribers']             = 'Åpne for abonnement på endringer av en side';
 $lang['compress']                = 'Kompakt CSS og JavaScript';
 $lang['hidepages']               = 'Skjul sider fra automatiske lister (regulære uttrykk)';

@@ -95,7 +95,6 @@ $lang['gzip_output']           = 'Utilizar Contido-Codificación gzip para o xht
 $lang['gdlib']                 = 'Versión da Libraría GD';
 $lang['im_convert']            = 'Ruta deica a ferramenta de conversión ImageMagick';
 $lang['jpg_quality']           = 'Calidade de compresión dos JPG (0-100)';
-$lang['spellchecker']          = 'Activar corrector ortográfico';
 $lang['subscribers']           = 'Activar posibilidade de subscrición de páxina';
 $lang['compress']              = 'Saída compacta de CSS e javascript';
 $lang['hidepages']             = 'Agochar páxinas que coincidan (expresións regulares)';

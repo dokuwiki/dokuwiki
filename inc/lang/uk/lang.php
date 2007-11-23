@@ -161,13 +161,6 @@ $lang['qb_chars']   = 'Спеціальні символи';
 $lang['del_confirm']= 'Дійсно знищити обрані елементи?';
 $lang['admin_register']= 'Додати нового користувача';
 
-$lang['spell_start'] = 'Перевірити правопис';
-$lang['spell_stop']  = 'Продовжити редагування';
-$lang['spell_wait']  = 'Зачекайте, будь ласка...';
-$lang['spell_noerr'] = 'Помилок не знайдено';
-$lang['spell_nosug'] = 'Немає варіантів';
-$lang['spell_change']= 'Замінити';
-
 $lang['metaedit']    = 'Редагувати метадані';
 $lang['metasaveerr'] = 'Помилка запису метаданих';
 $lang['metasaveok']  = 'Метадані збережено';

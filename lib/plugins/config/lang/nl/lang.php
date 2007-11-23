@@ -95,7 +95,6 @@ $lang['gzip_output']           = 'Gebruik gzip Content-Encoding voor xhtml';
 $lang['gdlib']                 = 'GD Lib versie';
 $lang['im_convert']            = 'Path naar ImageMagick\'s convert tool';
 $lang['jpg_quality']           = 'JPG compressie kwaliteit (0-100)';
-$lang['spellchecker']          = 'Spellingscontrole aanzetten';
 $lang['subscribers']           = 'Page subscription ondersteuning aanzetten';
 $lang['compress']              = 'Compacte CSS en javascript output';
 $lang['hidepages']             = 'Verberg deze pagina\'s (regular expressions)';

@@ -2,12 +2,7 @@
 /**
  * Greek language file
  *
- * Based on DokuWiki Version rc2007-05-24 english language file
- * Original english language file contents included for reference
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Anika Henke <henke@cosmocode.de>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  */
@@ -162,12 +157,6 @@ $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Ειδικοί Χαρακτήρες';
 $lang['del_confirm']           = 'Να διαγραφεί?';
 $lang['admin_register']        = 'Προσθήκη νέου χρήστη';
-$lang['spell_start']           = 'Ορθογραφικός Έλεγχος';
-$lang['spell_stop']            = 'Συνέχιση Ελέγχου';
-$lang['spell_wait']            = 'Παρακαλώ περιμένετε...';
-$lang['spell_noerr']           = 'Δεν βρέθηκαν λάθη';
-$lang['spell_nosug']           = 'Δεν υπάρχουν υποδείξεις';
-$lang['spell_change']          = 'Αλλαγή';
 $lang['metaedit']              = 'Τροποποίηση metadata';
 $lang['metasaveerr']           = 'Η αποθήκευση των metadata απέτυχε';
 $lang['metasaveok']            = 'Επιτυχής αποθήκευση metadata';

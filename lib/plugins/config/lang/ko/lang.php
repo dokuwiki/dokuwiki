@@ -116,7 +116,6 @@ $lang['gzip_output'] = 'xhml내용 gzip압출 여부';
 $lang['gdlib']       = 'GD 라이브러리 버전';
 $lang['im_convert']  = 'ImageMagick 위치';
 $lang['jpg_quality'] = 'JPG 압축 품질 (0-100)';
-$lang['spellchecker']= '맞춤법 검사기 사용';
 $lang['subscribers'] = '페이지 갱신 알람 기능';
 $lang['compress']    = '최적화된 CSS, javascript 출력';
 $lang['hidepages']   = '매칭된 페이지 숨기기(정규식 매칭)';

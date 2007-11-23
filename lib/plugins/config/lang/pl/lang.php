@@ -94,7 +94,6 @@ $lang['gzip_output']             = 'Używaj GZIP dla XHTML';
 $lang['gdlib']                   = 'Wersja biblioteki GDLib';
 $lang['im_convert']              = 'Ścieżka do programu imagemagick';
 $lang['jpg_quality']             = 'Jakość kompresji JPG (0-100)';
-$lang['spellchecker']            = 'Sprawdzanie pisowni';
 $lang['subscribers']             = 'Subskrypcja';
 $lang['compress']                = 'Kompresja arkuszy CSS i plików JavaScript';
 $lang['hidepages']               = 'Ukrywanie stron pasujących do wzorca (wyrażenie regularne)';

@@ -171,13 +171,6 @@ $lang['qb_chars']   = '特殊字符';
 $lang['del_confirm']= '真的要删除选中的项目吗？';
 $lang['admin_register']= '添加新用户';
 
-$lang['spell_start'] = '拼写检查';
-$lang['spell_stop']  = '继续编辑';
-$lang['spell_wait']  = '请等待...';
-$lang['spell_noerr'] = '没有找到拼写错误';
-$lang['spell_nosug'] = '没有建议';
-$lang['spell_change']= '更改';
-
 $lang['metaedit']    = '编辑元数据';
 $lang['metasaveerr'] = '写入元数据失败';
 $lang['metasaveok']  = '元数据已保存';

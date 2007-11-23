@@ -103,7 +103,6 @@ $lang['gzip_output']             = 'Používat pro xhtml Content-Encoding gzip';
 $lang['gdlib']                   = 'Verze GD knihovny';
 $lang['im_convert']              = 'Cesta k nástroji convert z balíku ImageMagick';
 $lang['jpg_quality']             = 'Kvalita komprese JPEG (0-100)';
-$lang['spellchecker']            = 'Zapnout kontrolu pravopisu';
 $lang['subscribers']             = 'Možnost přihlásit se k odběru novinek stránky';
 $lang['compress']                = 'Zahustit CSS a JavaScript výstup';
 $lang['hidepages']               = 'Skrýt stránky odpovídající vzoru (regulární výrazy)';
