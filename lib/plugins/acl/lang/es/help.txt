@@ -1,0 +1,11 @@
+=== Ayuda rápida: ===
+
+En esta página puede agregar o retirar permisos para los espacios de nombres y páginas en su wiki.
+
+El panel de la izquierda muiestra todos los espacios de nombres y páginas
+
+El formulario inferior permite  ver y modificar los permisos del usuario o grupo elegido.
+
+En la tabla anterior se muestran todas  las reglas de control de acceso vigentes  Puede usarla para borrar o cambiar varias reglas rápidamente.
+
+Consultar el  [[doku>wiki:acl|official documentation on ACL]] puede ayudarle a entender completamente como el control de acceso trabaja en DokuWiki.
