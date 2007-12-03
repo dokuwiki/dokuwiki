@@ -142,10 +142,12 @@ function check(){
     msg('Lockdir is not writable',-1);
   }
 
-  if(is_writable(DOKU_CONF.'users.auth.php')){
-    msg('conf/users.auth.php is writable',1);
-  }else{
-    msg('conf/users.auth.php is not writable',0);
+  if($conf['authtype'] == 'plain'){
+    if(is_writable(DOKU_CONF.'users.auth.php')){
+      msg('conf/users.auth.php is writable',1);
+    }else{
+      msg('conf/users.auth.php is not writable',0);
+    }
   }
 
   if(function_exists('mb_strpos')){
