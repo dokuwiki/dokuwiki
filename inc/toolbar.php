@@ -190,12 +190,13 @@ function toolbar_JSdefines($varname){
  */
 function toolbar_signature(){
   global $conf;
+  global $INFO;
 
   $sig = $conf['signature'];
   $sig = strftime($sig);
   $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
-  $sig = str_replace('@NAME@',$_SESSION[DOKU_COOKIE]['auth']['info']['name'],$sig);
-  $sig = str_replace('@MAIL@',$_SESSION[DOKU_COOKIE]['auth']['info']['mail'],$sig);
+  $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
+  $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
   $sig = str_replace('@DATE@',date($conf['dformat']),$sig);
   $sig = str_replace('\\\\n','\\n',addslashes($sig));
   return $sig;
