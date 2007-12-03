@@ -109,7 +109,8 @@ class auth_basic {
    * If this function is implemented it will be used to
    * authenticate a user - all other DokuWiki internals
    * will not be used for authenticating, thus
-   * implementing the functions below becomes optional.
+   * implementing the checkPass() function is not needed
+   * anymore.
    *
    * The function can be used to authenticate against third
    * party cookies or Apache auth mechanisms and replaces
@@ -159,6 +160,8 @@ class auth_basic {
    * Checks if the given user exists and the given
    * plaintext password is correct
    *
+   * May be ommited if trustExternal is used.
+   *
    * @author  Andreas Gohr <andi@splitbrain.org>
    * @return  bool
    */
@@ -181,7 +184,7 @@ class auth_basic {
    * @return  array containing user data or false
    */
   function getUserData($user) {
-    msg("no valid authorisation system in use", -1);
+    if(!$this->cando['external']) msg("no valid authorisation system in use", -1);
     return false;
   }
 

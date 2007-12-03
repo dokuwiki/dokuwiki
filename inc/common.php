@@ -1061,6 +1061,7 @@ function subscriber_addresslist($id){
     foreach ($mlist as $who) {
       $who = rtrim($who);
       $info = $auth->getUserData($who);
+      if($info === false) continue;
       $level = auth_aclcheck($id,$who,$info['grps']);
       if ($level >= AUTH_READ) {
         if (strcasecmp($info['mail'],$conf['notify']) != 0) {

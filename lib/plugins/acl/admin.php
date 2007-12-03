@@ -348,7 +348,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }else{
             $user = auth_nameencode($who);
             $info = $auth->getUserData($user);
-            $groups = $info['groups'];
+            if($info === false){
+                $groups = array();
+            }else{
+                $groups = $info['groups'];
+            }
         }
 
         // check the permissions

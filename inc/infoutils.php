@@ -165,11 +165,8 @@ function check(){
   }
 
   if($INFO['userinfo']['name']){
-    global $auth;
-    msg('You are currently logged in as '.$_SESSION[DOKU_COOKIE]['auth']['user'].' ('.$INFO['userinfo']['name'].')',0);
-
-    if($auth) $info = $auth->getUserData($_SESSION[DOKU_COOKIE]['auth']['user']);
-    msg('You are part of the groups '.implode($info['grps'],', '),0);
+    msg('You are currently logged in as '.$_SERVER['REMOTE_USER'].' ('.$INFO['userinfo']['name'].')',0);
+    msg('You are part of the groups '.join($INFO['userinfo']['grps'],', '),0);
   }else{
     msg('You are currently not logged in',0);
   }

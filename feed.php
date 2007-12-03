@@ -236,11 +236,11 @@ function rss_buildItems(&$rss,&$data,$opt){
         if($user && $conf['useacl'] && $auth){
             $userInfo = $auth->getUserData($user);
             $item->author = $userInfo['name'];
-            if($opt['guardmail']) {
-            //cannot obfuscate because some RSS readers may check validity
-                $item->authorEmail = $user.'@'.$recent['ip'];
-            }else{
+            if($userInfo && !$opt['guardmail']){
                 $item->authorEmail = $userInfo['mail'];
+            }else{
+                //cannot obfuscate because some RSS readers may check validity
+                $item->authorEmail = $user.'@'.$recent['ip'];
             }
         }elseif($user){
             // this happens when no ACL but some Apache auth is used
