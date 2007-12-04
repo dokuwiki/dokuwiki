@@ -359,6 +359,7 @@ The refresh period defaults to 4 hours. Any value below 10 minutes will be treat
 
 {{rss>http://slashdot.org/index.rss 5 author date 1h }}
 
+
 ===== Embedding HTML and PHP =====
 
 You can embed raw HTML or PHP code into your documents by using the ''html'' or ''php'' tags like this:
@@ -403,6 +404,14 @@ echo '</tr></table>';
 </PHP>
 
 **Please Note**: HTML and PHP embedding is disabled by default in the configuration. If disabled, the code is displayed instead of executed.
+
+===== Control Macros =====
+
+Some syntax influences how DokuWiki renders a page without creating any output it self. The following control macros are availble:
+
+^ Macro           ^ Description |
+| %%~~NOTOC~~%%   | If this macro is found on the page, no table of contents will be created |
+| %%~~NOCACHE~~%% | DokuWiki caches all output by default. Sometimes this might not be wanted (eg. when the %%<php>%% syntax above is used), adding this macro will force DokuWiki to rerender a page on every call |
 
 ===== Syntax Plugins =====
 
