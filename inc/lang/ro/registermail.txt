@@ -1,0 +1,14 @@
+Un nou utilizator s-a înregsitrat. Iată detaliile:
+
+Nume utilizator : @NEWUSER@
+Nume complet : @NEWNAME@
+E-mail : @NEWEMAIL@
+
+Data : @DATE@
+Browser : @BROWSER@
+Adresă IP : @IPADDRESS@
+Hostname : @HOSTNAME@
+
+-- 
+Acest mail a fost generat automat de către DokuWiki la
+@DOKUWIKIURL@

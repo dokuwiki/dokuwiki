@@ -1,0 +1,29 @@
+# Aceasta este o listă de cuvinte ignorate la indexare, câte un cuvânt pe linie
+# Când editaţi acest fişier, asiguraţi-vă că folosiţi sfârşituri de linie UNIX (o singură linie nouă)
+# Nu e nevoie să includeţi cuvinte mai scurte de 3 caractere - acestea sunt, oricum, ignorate
+# Această listă se bazează pe cele ce pot fi găsite la http://www.ranks.nl/stopwords/
+about
+are
+and
+you
+your
+them
+their
+com
+for
+from
+into
+how
+that
+the
+this
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www

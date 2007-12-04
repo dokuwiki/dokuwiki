@@ -1,0 +1,3 @@
+====== Actualizare profil utilizator ======
+
+Trebuie să completaţi doar câmpurile pe care doriţi să le modificaţi. Nu puteţi modifica numele de utilizator.

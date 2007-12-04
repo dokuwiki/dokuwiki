@@ -1,0 +1,14 @@
+Un fişier a fost încărcat în DocuWiki. Iată detaliile:
+
+Fişier : @MEDIA@
+Data : @DATE@
+Browser : @BROWSER@
+Adresă IP : @IPADDRESS@
+Hostname : @HOSTNAME@
+Dimensiune : @SIZE@
+MIME Type : @MIME@
+Utilizator : @USER@
+
+--
+Acest mail a fost generat automat de către DokuWiki la
+@DOKUWIKIURL@

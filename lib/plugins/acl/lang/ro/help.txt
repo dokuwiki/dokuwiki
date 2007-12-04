@@ -1,0 +1,11 @@
+=== Quick Help: ===
+
+Pe această pagină puteţi adăuga şi elimina autorizaţiile pentru spaţiile de nume şi paginile din wiki.
+
+Panoul din stânga afişează toate spaţiile de nume şi paginile disponibile.
+
+Formularul de sus vă permite să vedeţi şi să modificaţi autorizaţiile unui anume utilizator sau grup.
+
+In tabelul de jos sunt arătate toate regulile de control a accesului setate. Îl puteţi folosi pentru a şterge sau modifica rapid mai multe reguli.
+
+Consultarea [[doku>wiki:acl|official documentation on ACL]] vă poate ajuta să înţelegeţi deplin cum funcţionează controlul accesului în DocuWiki.
