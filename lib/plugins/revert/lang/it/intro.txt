@@ -1,0 +1,7 @@
+====== Gestore di ripristini ======
+
+Questa pagina aiuta il controllo automatico degli attacchi spam.
+Per cercare una lista delle pagine con spam, inserisci innanzitutto
+una stringa di ricerca (ad esempio l'URL di un sito di spam), quindi
+conferma che le pagine trovate contengono realmente spam e
+ripristinale ad una versione precedente.

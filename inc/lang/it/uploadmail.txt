@@ -1,0 +1,14 @@
+Un file è stato caricato sul tuo DokuWiki. Seguono i dettagli:
+
+File : @MEDIA@
+Data : @DATE@
+Browser : @BROWSER@
+Indirizzo IP : @IPADDRESS@
+Hostname : @HOSTNAME@
+Dimensione : @SIZE@
+MIME Type : @MIME@
+Utente : @USER@
+
+--
+Questa email è stata generata dal DokuWiki di
+@DOKUWIKIURL@
