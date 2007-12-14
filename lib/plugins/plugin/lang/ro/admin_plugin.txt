@@ -1,0 +1,4 @@
+====== Managementul Plugin-urilor ======
+
+In această pagină puteţi administra orice  [[doku>wiki:plugins|plugin]] Dokuwiki.
+Pentru a descărca şi instala un plugin, directorul acestora trebuie să ofere webserver-ului acces la scriere.
