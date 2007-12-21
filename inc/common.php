@@ -787,6 +787,9 @@ function saveWikiText($id,$text,$summary,$minor=false){
   }
 
   if ($wasRemoved){
+    // Send "update" event with empty data, so plugins can react to page deletion
+    $data = array(array($file, '', false), getNS($id), noNS($id), false);
+    trigger_event('IO_WIKIPAGE_WRITE', $data);
     // pre-save deleted revision
     @touch($file);
     clearstatcache();
