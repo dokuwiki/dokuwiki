@@ -324,6 +324,7 @@ function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * resize images using PHP's libGD support
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Sebastian Wienecke <s_wienecke@web.de>
  */
 function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   global $conf;
@@ -349,7 +350,7 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   }
   if(!$image) return false;
 
-  if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor")){
+  if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif'){
     $newimg = @imagecreatetruecolor ($to_w, $to_h);
   }
   if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
@@ -362,6 +363,25 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   if($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')){
     imagealphablending($newimg, false);
     imagesavealpha($newimg,true);
+  }
+
+  //keep gif transparent color if possible
+  if($ext == 'gif' && function_exists('imagefill') && function_exists('imagecolorallocate')) {
+    if(function_exists('imagecolorsforindex') && function_exists('imagecolortransparent')) {
+      $transcolorindex = @imagecolortransparent($image);
+      if($transcolorindex >= 0 ) { //transparent color exists
+        $transcolor = @imagecolorsforindex($image, $transcolorindex);
+        $transcolorindex = @imagecolorallocate($newimg, $transcolor['red'], $transcolor['green'], $transcolor['blue']);
+        @imagefill($newimg, 0, 0, $transcolorindex);
+        @imagecolortransparent($newimg, $transcolorindex);
+      }else{ //filling with white
+        $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
+        @imagefill($newimg, 0, 0, $whitecolorindex);
+      }
+    }else{ //filling with white
+      $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
+      @imagefill($newimg, 0, 0, $whitecolorindex);
+    }
   }
 
   //try resampling first
