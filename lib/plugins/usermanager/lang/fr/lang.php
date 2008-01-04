@@ -4,6 +4,7 @@
  *
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
+ * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification utilisateur non disponible)';

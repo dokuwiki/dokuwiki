@@ -11,6 +11,7 @@
  * @author Fabien Chabreuil <fabien@integralpersonality.com>
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Delassaux Julien <julien@delassaux.fr>
+ * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

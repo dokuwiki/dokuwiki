@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
+ * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez.
@@ -154,3 +155,6 @@ $lang['rss_linkto_o_current']  = 'page actuelle';
 $lang['compression_o_0']       = 'aucune';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
+$lang['xsendfile_o_0']         = 'ne pas utiliser';
+$lang['xsendfile_o_1']         = 'Entête propriétaire lighttpd (avant la version 1.5)';
+$lang['xsendfile_o_2']         = 'Entête standard X-Sendfile';
