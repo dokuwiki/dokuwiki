@@ -3,6 +3,7 @@
  * Dutch language file
  *
  * @author Wouter Schoot <wouter@schoot.org>
+ * @author John de Graaff <john@de-graaff.net>
  */
 $lang['menu']                  = 'Plugins beheren';
 $lang['download']              = 'Download en installeer een nieuwe plugin';

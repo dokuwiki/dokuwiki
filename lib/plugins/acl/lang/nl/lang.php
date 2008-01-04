@@ -8,6 +8,7 @@
  * @author Riny Heijdendael <riny@heijdendael.nl>
  * @author Koen Huybrechts <huybkoen@gmail.com>
  * @author Wouter Schoot <wouter@schoot.org>
+ * @author John de Graaff <john@de-graaff.net>
  */
 $lang['admin_acl']             = 'Toegangsrechten';
 $lang['acl_group']             = 'Groep';

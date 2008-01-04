@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
+ * @author John de Graaff <john@de-graaff.net>
  */
 $lang['menu']                  = 'Configuratie instellingen';
 $lang['error']                 = 'De instellingen zijn niet aangebracht wegens een niet correcte waarde, kijk svp je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde herkennen aan de rode rand.';
@@ -151,3 +152,6 @@ $lang['rss_linkto_o_current']  = 'de huidige pagina';
 $lang['compression_o_0']       = 'geen';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
+$lang['xsendfile_o_0']         = 'niet gebruiken';
+$lang['xsendfile_o_1']         = 'Eigen lighttpd kop (voor release 1.5)';
+$lang['xsendfile_o_2']         = 'Standaard X-Sendfile kop';

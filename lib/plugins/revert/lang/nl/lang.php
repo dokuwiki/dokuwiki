@@ -3,6 +3,7 @@
  * Dutch language file
  *
  * @author Wouter Schoot <wouter@schoot.org>
+ * @author John de Graaff <john@de-graaff.net>
  */
 $lang['menu']                  = 'Herstel Manager';
 $lang['filter']                = 'Zoek naar bekladde pagina\'s';
