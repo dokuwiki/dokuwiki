@@ -1,0 +1,11 @@
+=== Pomoc ===
+
+Na tej stronie możesz zmienić uprawnienia do stron i katalogów w wiki.
+
+Lewy panel pokazuje wszystkie dostępne katalogi i strony.
+
+Formularz powyżej pozwala wyświetlać uprawnienia wybranego użytkownika oraz grupy.
+
+W tabeli poniżej znajdują się wszystkie aktywne reguły dotyczące uprawnień.
+
+Więcej informacji na temat uprawnień w DokuWiki możesz znaleźć w [[doku>wiki:acl|oficjalnej dokumentacji uprawnień]].
