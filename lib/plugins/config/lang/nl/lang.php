@@ -102,6 +102,7 @@ $lang['hidepages']             = 'Verberg deze pagina\'s (regular expressions)';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet bestaande pagina\'s';
 $lang['sitemap']               = 'Genereer Google sitemap (dagen)';
 $lang['broken_iua']            = 'Is de ignore_user_abort functie onbruikbaar op uw systeem? Dit kan een onbruikbare zoek index tot gevolg hebben. IIS+PHP/CGI staat hier bekend om. Zie <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> voor meer informatie.';
+$lang['xsendfile']             = 'Gebruik de X-Sendfile berichtkop om de webserver statische content te laten versturen? De webserver moet dit wel ondersteunen.';
 $lang['rss_type']              = 'XML feed type';
 $lang['rss_linkto']            = 'XML feed linkt naar';
 $lang['rss_content']           = 'Wat moet er in de XML feed items weergegeven worden?';
