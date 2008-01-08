@@ -1,0 +1,4 @@
+====== Page locked ======
+
+This page is currently locked for editing by another user. You have to wait
+until this user finishes editing or the lock expires.
