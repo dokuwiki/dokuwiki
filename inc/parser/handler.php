@@ -268,11 +268,7 @@ class Doku_Handler {
     function php($match, $state, $pos) {
         global $conf;
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            if ($conf['phpok']) {
-                $this->_addCall('php',array($match), $pos);
-            } else {
-                $this->_addCall('file',array($match), $pos);
-            }
+            $this->_addCall('php',array($match), $pos);
         }
         return true;
     }
@@ -292,11 +288,7 @@ class Doku_Handler {
     function html($match, $state, $pos) {
         global $conf;
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            if($conf['htmlok']){
-                $this->_addCall('html',array($match), $pos);
-            } else {
-                $this->_addCall('file',array($match), $pos);
-            }
+            $this->_addCall('html',array($match), $pos);
         }
         return true;
     }
