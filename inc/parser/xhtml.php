@@ -476,6 +476,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $class='wikilink1';
             } else {
                 $class='wikilink2';
+                $link['rel']='nofollow';
             }
         } else {
             $class='media';
@@ -873,6 +874,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(!empty($link['target'])) $ret .= ' target="'.$link['target'].'"';
         if(!empty($link['title']))  $ret .= ' title="'.$link['title'].'"';
         if(!empty($link['style']))  $ret .= ' style="'.$link['style'].'"';
+        if(!empty($link['rel']))    $ret .= ' rel="'.$link['rel'].'"';
         if(!empty($link['more']))   $ret .= ' '.$link['more'];
         $ret .= '>';
         $ret .= $link['name'];
