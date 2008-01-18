@@ -156,7 +156,7 @@ class Doku_Parser_Mode {
     function postConnect() {}
 
     function accepts($mode) {
-        return in_array($mode, $this->allowedModes );
+        return in_array($mode, (array) $this->allowedModes );
     }
 
 }
