@@ -49,6 +49,7 @@
     list-style-type: none;
     list-style-image: none;
 }
+*+html #media__tree li,
 * html #media__tree li {
     border: 1px solid __background__;
 }/* I don't understand this, but this fixes a style bug in IE;
@@ -65,6 +66,7 @@ it's dirty, so any "real" fixes are welcome */
     float: left;
     position: absolute;
 }
+*+html #media__opts input,
 * html #media__opts input {
     position: static;
 }
@@ -74,6 +76,7 @@ it's dirty, so any "real" fixes are welcome */
     float: left;
     margin-left: 30px;
 }
+*+html #media__opts label,
 * html #media__opts label {
     margin-left: 10px;
 }
