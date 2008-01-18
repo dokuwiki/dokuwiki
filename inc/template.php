@@ -152,7 +152,7 @@ function tpl_toc($return=false){
     if(is_array($TOC)){
         // if a TOC was prepared in global scope, always use it
         $toc = $TOC;
-    }elseif($ACT == 'show' && !$REV){
+    }elseif($ACT == 'show' && !$REV && $INFO['exists']){
         // get TOC from metadata, render if neccessary
         $meta = p_get_metadata($ID, false, true);
         if(isset($meta['internal']['toc'])){
