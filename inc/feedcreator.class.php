@@ -802,7 +802,7 @@ class RSSCreator10 extends FeedCreator {
         $feed.= "    </channel>\n";
         if ($this->image!=null) {
             $feed.= "    <image rdf:about=\"".$this->image->url."\">\n";
-            $feed.= "        <title>".$this->image->title."</title>\n";
+            $feed.= "        <title>".htmlspecialchars($this->image->title)."</title>\n";
             $feed.= "        <link>".$this->image->link."</link>\n";
             $feed.= "        <url>".$this->image->url."</url>\n";
             $feed.= "    </image>\n";
