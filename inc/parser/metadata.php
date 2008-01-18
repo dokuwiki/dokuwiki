@@ -49,7 +49,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
       // cut off too long abstracts
       $this->doc = trim($this->doc);
       if (strlen($this->doc) > 500)
-        $this->doc = substr($this->doc, 0, 500).'…';
+        $this->doc = utf8_substr($this->doc, 0, 500).'…';
       $this->meta['description']['abstract'] = $this->doc;
     }
   }
