@@ -15,7 +15,6 @@ session_write_close();  //close session
 require_once(DOKU_INC.'inc/IXR_Library.php');
 
 
-
 /**
  * Contains needed wrapper functions and registers all available
  * XMLRPC functions.
@@ -104,10 +103,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('struct','string'),
             'Lists all links contained in a wiki page'
         );
-/*
-  FIXME: missing, yet
-            'wiki.getRecentChanges'
-*/
+        $this->addCallback(
+            'wiki.getRecentChanges',
+            'this:getRecentChanges',
+            array('struct','int'),
+            'Returns a strukt about all recent changes since given timestamp.'
+        );
 
         $this->serve();
     }
@@ -140,7 +141,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         return ft_pageLookup('');
     }
 
-
     /**
      * Return a list of backlinks
      */
@@ -150,7 +150,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     }
 
     /**
-     * return some basic data about a page
+     * Return some basic data about a page
      */
     function pageInfo($id,$rev=''){
         if(auth_quickaclcheck($id) < AUTH_READ){
@@ -170,11 +170,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'author'       => (($info['user']) ? $info['user'] : $info['ip']),
             'version'      => $time
         );
-        return $data;
+
+        return ($data);
     }
 
     /**
      * Save a wiki page
+     * FIXME check ACL !!!
      */
     function putPage($put_id, $put_text, $put_summary='', $put_minor=0, $put_rev='', $put_pre='', $put_suf='') {
         global $TEXT;
@@ -200,6 +202,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
     /**
      * Lists all links contained in a wiki page
+     *
+     * @author Michael Klier <chi@chimeric.de>
      */
     function listLinks($id) {
         if(auth_quickaclcheck($id) < AUTH_READ){
@@ -241,7 +245,77 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             }
         }
 
-        return $links;
+        return ($links);
+    }
+
+    /**
+     * Returns a list of recent changes since give timestamp
+     *
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    function getRecentChanges($timestamp) {
+        global $conf;
+
+        if(strlen($timestamp) != 10)
+            return new IXR_Error(20, 'The provided value is not a valid timestamp');
+
+        $changes = array();
+
+        require_once(DOKU_INC.'inc/changelog.php');
+        require_once(DOKU_INC.'inc/pageutils.php');
+
+        // read changes
+        $lines = @file($conf['changelog']);
+
+        if(empty($lines)) 
+            return new IXR_Error(10, 'The changelog could not be read');
+
+        // we start searching at the end of the list
+        $lines = array_reverse($lines);
+
+        // cache seen pages and skip them
+        $seen = array(); 
+
+        foreach($lines as $line) {
+
+            if(empty($line)) continue; // skip empty lines
+
+            $logline = parseChangelogLine($line);
+
+            if($logline === false) continue;
+
+            // skip seen ones
+            if(isset($seen[$logline['id']])) continue;
+
+            // skip minors
+            if($logline['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) continue;
+
+            // remember in seen to skip additional sights
+            $seen[$logline['id']] = 1;
+
+            // check if it's a hidden page
+            if(isHiddenPage($logline['id'])) continue;
+
+            // check ACL
+            if(auth_quickaclcheck($logline['id']) < AUTH_READ) continue;
+
+            // check existance
+            if((!@file_exists(wikiFN($logline['id']))) && ($flags & RECENTS_SKIP_DELETED)) continue;
+
+            // check if logline is still in the queried time frame
+            if($logline['date'] >= $timestamp) {
+                $change['name']         = $logline['id'];
+                $change['lastModified'] = $logline['date'];
+                $change['author']       = $logline['user'];
+                $change['version']      = $logline['date'];
+                array_push($changes, $change);
+            } else {
+                $changes = array_reverse($changes);
+                return ($changes);
+            }
+        }
+        // in case we still have nothing at this point
+        return new IXR_Error(30, 'There are no changes in the specified timeframe');
     }
 
     /**
@@ -255,3 +329,4 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
 $server = new dokuwiki_xmlrpc_server();
 
+// vim:ts=4:sw=4:enc=utf-8:
