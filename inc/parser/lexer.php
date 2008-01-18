@@ -113,6 +113,11 @@ class Doku_LexerParallelRegex {
         }
 
         if (! preg_match($this->_getCompoundedRegex(), $subject, $matches)) {
+            if(function_exists('preg_last_error')){
+                $err = preg_last_error();
+                if($err == 2) msg('A PCRE backtrack error occured. Try to increase the pcre.backtrack_limit in php.ini',-1);
+            }
+
             $split = array($subject, "", "");
             return false;
         }
