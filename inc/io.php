@@ -183,7 +183,7 @@ function io_saveFile($file,$content,$append=false){
     gzwrite($fh, $content);
     gzclose($fh);
   }else if(substr($file,-4) == '.bz2'){
-    $fh = @bzopen($file,$mode);
+    $fh = @bzopen($file,$mode{0});
     if(!$fh){
       msg("Writing $file failed", -1);
       io_unlock($file);
