@@ -577,6 +577,21 @@ function clientIP($single=false){
 }
 
 /**
+ * Convert one or more comma separated IPs to hostnames
+ *
+ * @author Glen Harris <astfgl@iamnota.org>
+ * @returns a comma separated list of hostnames
+ */
+function gethostsbyaddrs($ips){
+  $hosts = array();
+  $ips = explode(',',$ips);
+  foreach($ip as $ip){
+    $host[] = gethostbyaddr(trim($ip));
+  }
+  return join(',',$host);;
+}
+
+/**
  * Checks if a given page is currently locked.
  *
  * removes stale lockfiles
@@ -892,10 +907,11 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     return; //just to be safe
   }
 
+  $ip   = clientIP();
   $text = str_replace('@DATE@',date($conf['dformat']),$text);
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
-  $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
-  $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
+  $text = str_replace('@IPADDRESS@',$ip,$text);
+  $text = str_replace('@HOSTNAME@',gethostsbyaddrs($ip),$text);
   $text = str_replace('@NEWPAGE@',wl($id,'',true,'&'),$text);
   $text = str_replace('@PAGE@',$id,$text);
   $text = str_replace('@TITLE@',$conf['title'],$text);
