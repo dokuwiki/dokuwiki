@@ -332,7 +332,7 @@ function html_search(){
     print '<ul class="search_quickhits">';
     foreach($data as $id){
       print '<li> ';
-      print html_wikilink(':'.$id,null);
+      print html_wikilink(':'.$id,noNS($id));
       print '</li> ';
     }
     print '</ul> ';
