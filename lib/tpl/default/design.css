@@ -613,14 +613,7 @@ div.dokuwiki div.fn {
   font-size: 90%;
 }
 
-div.dokuwiki a.fn_top {
-  vertical-align: super;
-  font-size: 80%;
-}
-
 div.dokuwiki a.fn_bot {
-  vertical-align: super;
-  font-size: 80%;
   font-weight: bold;
 }
 
