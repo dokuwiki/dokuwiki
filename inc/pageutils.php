@@ -538,6 +538,9 @@ function http_conditionalRequest($timestamp){
 
   // Nothing has changed since their last request - serve a 304 and exit
   header('HTTP/1.0 304 Not Modified');
+
+  // don't produce output, even if compression is on
+  ob_end_clean();
   exit;
 }
 
