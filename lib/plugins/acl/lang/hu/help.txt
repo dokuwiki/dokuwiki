@@ -1,0 +1,13 @@
+=== Hozzáférési lista (ACL) kezelő ===
+
+Ezen az oldalon jogokat oszthat és vehet el a wiki oldalakhoz 
+és névterekhez.
+
+A bal oldalon látható az összes névtér és oldal.
+
+A felső form segít a kiválasztott felhasználó vagy csoport jogosultságainak megtekintésében vagy változtatásában.
+
+Az alsó táblázat mutatja az összes jelenleg érvényes hozzáférési szabályt. Ennek segítségével gyorsan törölhetők vagy megváltoztathatók a szabályok.
+
+A [[doku>wiki:acl|hivatalos ACL dokumentáció]] segíthet a DokuWiki hozzáférés-kezelés működésének megértésében.
+
