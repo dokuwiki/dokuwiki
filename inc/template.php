@@ -803,7 +803,7 @@ function tpl_youarehere($sep=' &raquo; '){
       if(!$title) $title = $parts[$i];
       tpl_link(wl($page),hsc($title),'title="'.$page.'"');
     }else{
-      tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
+      tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2" rel="nofollow"');
     }
   }
 
@@ -817,7 +817,7 @@ function tpl_youarehere($sep=' &raquo; '){
     if(!$title) $title = $parts[$i];
     tpl_link(wl($page),hsc($title),'title="'.$page.'"');
   }else{
-    tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2"');
+    tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2" rel="nofollow"');
   }
   return true;
 }
