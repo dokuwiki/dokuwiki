@@ -585,10 +585,15 @@ function clientIP($single=false){
 function gethostsbyaddrs($ips){
   $hosts = array();
   $ips = explode(',',$ips);
-  foreach($ip as $ip){
-    $host[] = gethostbyaddr(trim($ip));
+
+  if(is_array($ips)) {
+    foreach($ip as $ip){
+      $hosts[] = gethostbyaddr(trim($ip));
+    }
+    return join(',',$hosts);
+  } else {
+    return gethostbyaddr(trim($ips));
   }
-  return join(',',$host);;
 }
 
 /**
