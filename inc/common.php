@@ -587,7 +587,7 @@ function gethostsbyaddrs($ips){
   $ips = explode(',',$ips);
 
   if(is_array($ips)) {
-    foreach($ip as $ip){
+    foreach($ips as $ip){
       $hosts[] = gethostbyaddr(trim($ip));
     }
     return join(',',$hosts);
