@@ -68,7 +68,7 @@
   if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
   // define cookie and session id
-  if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_URL));
+  if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL));
 
   // define Plugin dir
   if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
