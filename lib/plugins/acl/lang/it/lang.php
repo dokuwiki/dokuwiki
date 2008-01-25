@@ -32,3 +32,4 @@ $lang['acl_perm4']             = 'Creazione';
 $lang['acl_perm8']             = 'Upload';
 $lang['acl_perm16']            = 'Cancellazione';
 $lang['acl_new']               = 'Aggiungi nuovo record';
+$lang['acl_mod']               = 'Modifica record';
