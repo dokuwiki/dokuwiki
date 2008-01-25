@@ -94,7 +94,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $this->addCallback(
             'wiki.putPage',
             'this:putPage',
-            array('int', 'string', 'string'),
+            array('int', 'string', 'string', 'struct'),
             'Saves a wiki page'
         );
         $this->addCallback(
@@ -176,26 +176,39 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
     /**
      * Save a wiki page
-     * FIXME check ACL !!!
+     *
+     * @author Michael Klier <chi@chimeric.de> 
      */
-    function putPage($put_id, $put_text, $put_summary='', $put_minor=0, $put_rev='', $put_pre='', $put_suf='') {
+    function putPage($id, $text, $params) {
         global $TEXT;
 
-        $TEXT = $put_text;
+        $id    = cleanID($id);
+        $TEXT  = trim($text);
+        $sum   = $params['sum'];
+        $minor = $params['minor'];
+
+        if(empty($id))
+            return new IXR_Error(1, 'Empty Page ID');
+
+        if(auth_quickaclcheck($id) < AUTH_WRITE)
+            return new IXR_Error(1, 'You are not allowed to edit this page');
 
         // Check, if page is locked
-        if (checklock($put_id) !== false) 
-            return 1;
+        if(checklock($id))
+            return new IXR_Error(1, 'The page is currently locked');
+
+        if(empty($TEXT))
+            return new IXR_Error(1, 'No Text supplied');
 
         //spam check
         if(checkwordblock()) 
-            return 2;
+            return new IXR_Error(1, 'Positive wordblock check');
 
-        lock($put_id);
+        lock($id);
 
-        saveWikiText($put_id,con($put_pre,$put_text,$put_suf,1),$put_summary,$put_minor);
+        saveWikiText($id,$TEXT,$sum,$minor);
 
-        unlock($put_id);
+        unlock($id);
 
         return 0;
     }
