@@ -318,7 +318,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             // check if logline is still in the queried time frame
             if($logline['date'] >= $timestamp) {
                 $change['name']         = $logline['id'];
-                $change['lastModified'] = $logline['date'];
+                $change['lastModified'] = new IXR_Date($logline['date']);
                 $change['author']       = $logline['user'];
                 $change['version']      = $logline['date'];
                 array_push($changes, $change);
