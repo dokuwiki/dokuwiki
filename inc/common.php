@@ -708,7 +708,25 @@ function pageTemplate($data){
   $id = $data[0];
   global $conf;
   global $INFO;
-  $tpl = io_readFile(dirname(wikiFN($id)).'/_template.txt');
+
+  $path = dirname(wikiFN($id));
+
+  if(@file_exists($path.'/_template.txt')){
+    $tpl = io_readFile($path.'/_template.txt');
+  }else{
+    // search upper namespaces for templates
+    $len = strlen(rtrim($conf['datadir'],'/'));
+    while (strlen($path) >= $len){
+      if(@file_exists($path.'/__template.txt')){
+        $tpl = io_readFile($path.'/__template.txt');
+        break;
+      }
+      $path = substr($path, 0, strrpos($path, '/'));
+    }
+  }
+  if(!$tpl) return '';
+
+  // replace placeholders
   $tpl = str_replace('@ID@',$id,$tpl);
   $tpl = str_replace('@NS@',getNS($id),$tpl);
   $tpl = str_replace('@PAGE@',strtr(noNS($id),'_',' '),$tpl);
@@ -716,6 +734,7 @@ function pageTemplate($data){
   $tpl = str_replace('@NAME@',$INFO['userinfo']['name'],$tpl);
   $tpl = str_replace('@MAIL@',$INFO['userinfo']['mail'],$tpl);
   $tpl = str_replace('@DATE@',date($conf['dformat']),$tpl);
+  $tpl = strftime($tpl);
   return $tpl;
 }
 
