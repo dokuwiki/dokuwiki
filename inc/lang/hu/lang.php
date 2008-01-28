@@ -190,8 +190,13 @@ $lang['i_funcna']              = 'A <code>%s</code> PHP funkció nem elérhető.
 $lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítsd a PHP-det újabb verzióra!';
 $lang['i_permfail']            = 'A DokiWiki nem tudja írni a <code>%s</code> könyvtárat. Be kell állítanod ehhez a könyvtárhoz a megfelelő jogosultságokat!';
 $lang['i_confexists']          = '<code>%s</code> már létezik.';
+$lang['i_writeerr']            = 'Nem tudom ezt létrehozni: <code>%s</code>. Ellenőrizd a könyvtár/fájl jogosultságokat, és hozd létre az állományt kézzel.';
+$lang['i_badhash']             = 'A dokuwiki.php nem felismerhető vagy módosított (hash=<code>%s</code>)';
+$lang['i_badval']              = '<code>%s</code> - nem helyes vagy üres érték';
+$lang['i_success']             = 'A beállítás sikeresen befejeződött. Most már letörölhető az install.php fájl. Látogasd meg az <a href="doku.php">új DokuWikidet</a>!';
+$lang['i_failure']             = 'Hiba lépett fel a konfigurációs állományok írásakor. Ki kell javítanod kézzel, mielőtt használni kezded az <a href="doku.php">új DokuWikidet</a>.';
 $lang['i_policy']              = 'Kezdeti hozzáférési politika';
 $lang['i_pol0']                = 'Nyitott Wiki (mindenki olvashatja, írhatja, és fájlokat tölthet fel)';
-$lang['i_pol1']                = 'Publikus Wiki (mindenki olvashatja, de csak regisztrált flhasználók írhatják, és tölthetnek fel fáljokat)';
+$lang['i_pol1']                = 'Publikus Wiki (mindenki olvashatja, de csak regisztrált felhasználók írhatják, és tölthetnek fel fáljokat)';
 $lang['i_pol2']                = 'Zárt Wiki (csak regisztrált felhasználók olvashatják, írhatják és tölthetnek fel fájlokat)';
 $lang['i_retry']               = 'Újra';

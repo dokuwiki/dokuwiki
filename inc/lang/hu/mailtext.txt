@@ -1,13 +1,13 @@
 A DokuWikidben egy oldalt létrejött, vagy megváltozott. A részletek:
 
-Dátum         : @DATE@
-Böngésző      : @BROWSER@
-IP-cím        : @IPADDRESS@
-Gép neve      : @HOSTNAME@
+Dátum: @DATE@
+Böngésző: @BROWSER@
+IP-cím: @IPADDRESS@
+Gép neve: @HOSTNAME@
 Előző változat: @OLDPAGE@
-Új változat   : @NEWPAGE@
-Összefoglaló  : @SUMMARY@
-User        : @USER@
+Új változat: @NEWPAGE@
+Összefoglaló: @SUMMARY@
+Felhasználó: @USER@
 
 @DIFF@
 
