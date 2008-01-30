@@ -1,0 +1,3 @@
+===== Adminisztrálás ======
+
+Itt találod a DokuWiki adminisztrálási lehetőségeit.

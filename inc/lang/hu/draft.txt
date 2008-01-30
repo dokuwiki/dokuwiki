@@ -1,0 +1,5 @@
+===== Pisztozatot találtunk =====
+
+Az oldal utolsó szerkesztését nem fejezted be rendesen. A DokuWiki elmentette piszkozatként, így most folytathatod a szerkesztést. Lent látható, amit az utolsó szerkesztésből elmentettünk.
+
+Válassz a //helyreállítás// vagy a //törlés// opciók közül a piszkozat sorsát illetően.

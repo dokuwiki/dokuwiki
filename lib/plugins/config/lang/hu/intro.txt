@@ -1,0 +1,11 @@
+====== Beállító központ ======
+
+Ezzel az oldallal finomhangolhatod a DokuWiki rendszeredet.
+Az egyes beállításokhoz [[doku>wiki:config|itt]] kaphatsz segítséget.
+A bővítmények (pluginek) beállításaihoz [[doku>plugin:config|ezt]] az oldalt látogasd meg.
+
+A világospiros hátterű beállítások védettek, ezzel a bővítménnyel nem módosíthatóak.
+
+A kék hátterű beállítások az alapértelmezett értékek, a fehér hátterűek módosítva lettek ebben a rendszerben. Mindkét hátterű beállítások módosíthatóak.
+
+Ne felejtsd a **Mentés** gombot megnyomni, mielőtt elhagyod az oldalt, különben a módosításaid elvesznek!

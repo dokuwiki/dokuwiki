@@ -1,0 +1,3 @@
+====== Visszaállítás kezelő ======
+
+Segítséget nyújtunk SPAM támadások utáni automatikus visszaállításhoz. A fertőzött oldalak kereséséhez meg kell adni egy karaktersorozatot (pl. egy SPAM URL-t). A találatok közül kiválasztva a valóban SPAM-et tartalmazó oldakat, visszaállítjuk őket a lehetséges utolsó SPAM mentes állapotra.

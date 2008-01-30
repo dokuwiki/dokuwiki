@@ -1,0 +1,3 @@
+===== Új jelszó kérése =====
+
+Kérlek add meg a felhasználó neved az új jelszó elküldéséhez. A jelszó cseréjéhez szükséges megerősítő linket a regisztrált e-mail címedre küldjük.

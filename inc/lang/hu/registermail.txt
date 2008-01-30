@@ -1,0 +1,13 @@
+Egy új felhasználó regisztrált a következő adatokkal:
+
+Felhasználói név: @NEWUSER@
+Teljes név: @NEWNAME@
+E-mail: @NEWEMAIL@
+
+Dátum: @DATE@
+Böngésző: @BROWSER@
+IP-cím : @IPADDRESS@
+Gép neve: @HOSTNAME@
+
+-- 
+Ezt a levelet @DOKUWIKIURL@ DokuWiki generálta.

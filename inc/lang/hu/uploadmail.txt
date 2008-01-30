@@ -1,0 +1,13 @@
+Fájlfeltöltés történt a DokuWikidben. Részletek:
+
+Állomány: @MEDIA@
+Dátum: @DATE@
+Böngésző: @BROWSER@
+IP-cím: @IPADDRESS@
+Gépnév: @HOSTNAME@
+Méret: @SIZE@
+MIME-típus: @MIME@
+Felhasználó: @USER@
+
+-- 
+Ezt a levelet @DOKUWIKIURL@ DokuWiki generálta.
