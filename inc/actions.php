@@ -40,11 +40,7 @@ function act_dispatch(){
 
     //login stuff
     if(in_array($ACT,array('login','logout'))){
-      if(checkSecurityToken()){
         $ACT = act_auth($ACT);
-      }else{
-        $ACT = 'show';
-      }
     }
 
     //check if user is asking to (un)subscribe a page
