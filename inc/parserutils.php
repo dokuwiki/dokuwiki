@@ -375,6 +375,11 @@ function p_read_metadata($id,$cache=false) {
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_render_metadata($id, $orig){
+  // make sure the correct ID is in global ID
+  global $ID;
+  $keep = $ID;
+  $ID   = $id;
+
 
   // add an extra key for the event - to tell event handlers the page whose metadata this is
   $orig['page'] = $id;
@@ -385,7 +390,10 @@ function p_render_metadata($id, $orig){
 
     // get instructions
     $instructions = p_cached_instructions(wikiFN($id),false,$id);
-    if(is_null($instructions)) return null; // something went wrong with the instructions
+    if(is_null($instructions)){
+      $ID = $keep;
+      return null; // something went wrong with the instructions
+    }
 
     // set up the renderer
     $renderer = & new Doku_Renderer_metadata();
@@ -402,6 +410,7 @@ function p_render_metadata($id, $orig){
   }
   $evt->advise_after();
 
+  $ID = $keep;
   return $evt->result;
 }
 
@@ -515,7 +524,7 @@ function p_sort_modes($a, $b){
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_render($mode,$instructions,& $info){
+function p_render($mode,$instructions,&$info){
   if(is_null($instructions)) return '';
 
   // try default renderer first:
