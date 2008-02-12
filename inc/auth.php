@@ -349,7 +349,7 @@ function auth_aclcheck($id,$user,$groups){
   $user = auth_nameencode($user);
 
   //if user is superuser return 255 (acl_admin)
-  if(auth_nameencode($conf['superuser']) == $user) { return AUTH_ADMIN; }
+  if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
 
   //make sure groups is an array
   if(!is_array($groups)) $groups = array();
@@ -360,7 +360,7 @@ function auth_aclcheck($id,$user,$groups){
     $groups[$i] = '@'.auth_nameencode($groups[$i]);
   }
   //if user is in superuser group return 255 (acl_admin)
-  if(in_array(auth_nameencode($conf['superuser'],true), $groups)) { return AUTH_ADMIN; }
+  if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
 
   $ns    = getNS($id);
   $perm  = -1;
