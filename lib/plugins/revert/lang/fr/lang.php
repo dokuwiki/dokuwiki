@@ -3,6 +3,7 @@
  * french language file
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
+ * @author Guy Brand <gb@isis.u-strasbg.fr>
  */
 $lang['menu']                  = 'Gestionnaire de réversion';
 $lang['filter']                = 'Trouver les pages spammées ';
