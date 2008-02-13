@@ -640,9 +640,10 @@ function updateprofile() {
     return false;
   }
 
-  if ($_POST['fullname'] != $INFO['userinfo']['name']) $changes['name'] = $_POST['fullname'];
-  if ($_POST['email']    != $INFO['userinfo']['mail']) $changes['mail'] = $_POST['email'];
-  if (!empty($_POST['newpass']))  $changes['pass'] = $_POST['newpass'];
+  if ($_POST['fullname'] != $INFO['userinfo']['name'] && $auth->canDo('modName')) $changes['name'] = $_POST['fullname'];
+  if ($_POST['email'] != $INFO['userinfo']['mail'] && $auth->canDo('modMail')) $changes['mail'] = $_POST['email'];
+  if (!empty($_POST['newpass']) && $auth->canDo['modPass']) $changes['pass'] = $_POST['newpass'];
+
 
   if (!count($changes)) {
     msg($lang['profnochange'], -1);
