@@ -3,6 +3,7 @@
  * Hungarian language file
  *
  * @author Sandor TIHANYI <stihanyi@gmail.com>
+ * @author SandorTIHANYI <stihanyi@gmail.com>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
@@ -76,6 +77,7 @@ $lang['disableactions_subscription'] = 'Feliratkozás/Leiratkozás';
 $lang['disableactions_wikicode'] = 'Forrás megtekintése/Nyers adat exportja';
 $lang['disableactions_other']  = 'Egyéb tevékenységek (vesszővel elválasztva)';
 $lang['sneaky_index']          = 'Alapértelmezetten minden névtér látszik a DokuWiki index oldalán. Ezen opció bekapcsolása után azok nem jelennek meg, melyekhez a felhasználónak nincs olvasás joga. De ezzel eltakarhatunk egyébként elérhető al-névtereket is, így bizonyos ACL beállításoknál használhatatlan indexet eredményez ez a beállítás.';
+$lang['auth_security_timeout'] = 'Authentikációs biztonsági időablak (másodperc)';
 $lang['updatecheck']           = 'Frissítések és biztonsági figyelmeztetések figyelése. Ehhez a DokuWikinek kapcsolatba kell lépnie a splitbrain.org-gal.';
 $lang['userewrite']            = 'Szép URL-ek használata';
 $lang['useslash']              = 'Per-jel használata névtér-elválasztóként az URL-ekben';
@@ -99,6 +101,8 @@ $lang['compress']              = 'CSS és JavaScript fájlok tömörítése';
 $lang['hidepages']             = 'Az itt megadott oldalak elrejtése (regularis kifejezés)';
 $lang['send404']               = '"HTTP 404/Page Not Found" küldése nemlétező oldalak esetén';
 $lang['sitemap']               = 'Hány naponként generáljunk Google sitemap-ot?';
+$lang['broken_iua']            = 'Az ignore_user_abort függvény hibát dob a rendszereden? Ez nem működő keresési indexet eredményezhet. Az IIS+PHP/CGI összeállításról tudjuk, hogy hibát dob. Lásd a <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> oldalt a további infóért.';
+$lang['xsendfile']             = 'Használjuk az X-Sendfile fejlécet, hogy a webszerver statikus állományokat tudjon küldeni? A webszervernek is támogatnia kell ezt a funkciót.';
 $lang['rss_type']              = 'XML hírfolyam típus';
 $lang['rss_linkto']            = 'XML hírfolyam hivatkozás';
 $lang['rss_content']           = 'Mit mutassunk az XML hírfolyam elemekben?';
@@ -149,3 +153,6 @@ $lang['rss_linkto_o_current']  = 'a jelenlegi oldalra';
 $lang['compression_o_0']       = 'nincs tömörítés';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
+$lang['xsendfile_o_0']         = 'nincs használatban';
+$lang['xsendfile_o_1']         = 'lighttpd saját fejléc (1.5-ös verzió előtti)';
+$lang['xsendfile_o_2']         = 'Standard X-Sendfile fejléc';

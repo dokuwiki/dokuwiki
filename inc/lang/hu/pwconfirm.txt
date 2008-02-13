@@ -1,0 +1,14 @@
+Szia @FULLNAME@!
+
+Te vagy más valaki kért egy új jelszót a @DOKUWIKIURL@
+címen lévő @TITLE@ wiki felhasználódhoz.
+
+Ha nem kértél ilyet, hagyd figyelmen kívül ezt a levelet.
+
+Ha Te voltál, az új jelszó kérelmed megerősítéséhez a 
+következő linkre kattints, vagy másold a böngésződbe:
+
+@CONFIRM@
+
+--
+Ezt a levelet a @DOKUWIKIURL@ címen lévő DokuWiki generálta.

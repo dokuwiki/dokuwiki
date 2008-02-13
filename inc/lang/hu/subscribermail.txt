@@ -1,0 +1,18 @@
+Szia!
+
+A(z) @PAGE@ oldal a(z) @TITLE@ wikiben megváltozott.
+Itt vannak a változások:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Ha le szeretnél iratkozni ennek az oldalnak a változás-követéséről, 
+lépj be a wikibe ezen a címen: 
+@DOKUWIKIURL@, majd keresd meg a(z) 
+@NEWPAGE@ oldalt
+és válaszd a 'Oldalváltozások-hírlevél leiratkozás' gombot.
+
+-- 
+Ezt a levelet a @DOKUWIKIURL@ címen lévő DokuWiki alkalmazás generálta.
+

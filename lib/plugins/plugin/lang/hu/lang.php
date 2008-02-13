@@ -3,6 +3,7 @@
  * Hungarian language file
  *
  * @author Sandor TIHANYI <stihanyi@gmail.com>
+ * @author SandorTIHANYI <stihanyi@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
 $lang['download']              = 'Új bővítmény letöltése és telepítése';

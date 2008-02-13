@@ -3,6 +3,7 @@
  * Hungarian language file
  *
  * @author Sandor TIHANYI <stihanyi@gmail.com>
+ * @author SandorTIHANYI <stihanyi@gmail.com>
  */
 $lang['admin_acl']             = 'Hozzáférési lista (ACL) kezelő';
 $lang['acl_group']             = 'Csoport:';
