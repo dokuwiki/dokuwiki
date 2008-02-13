@@ -116,6 +116,30 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
         io_saveFile(metaFN($id, '.changes'), implode('', $changes));
     }
 
+    function savePerPageMetadata($id, &$changes) {
+        global $auth;
+        ksort($changes); // order by date
+        $meta = array();
+        // Run through history and populate the metadata array
+        foreach ($changes as $date => $tmp) {
+            $user = $tmp['user'];
+            if ($tmp['type'] === DOKU_CHANGE_TYPE_CREATE) {
+                $meta['date']['created'] = $tmp['date'];
+                if ($user) {
+                    $userinfo = $auth->getUserData($user);
+                    $meta['creator'] = $userinfo['name'];
+                }
+            } else if ($tmp['type'] === DOKU_CHANGE_TYPE_EDIT) {
+                $meta['date']['modified'] = $tmp['date'];
+                if ($user) {
+                    $userinfo = $auth->getUserData($user);
+                    $meta['contributor'][$user] = $userinfo['name'];
+                }
+            }
+        }
+        p_set_metadata($id, $meta, true);
+    }
+
     function resetTimer() {
         // Add 5 minutes to the script execution timer...
         // This should be much more than needed.
@@ -144,6 +168,7 @@ class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
         $this->resetTimer();
         $recent = array();
         foreach ($log as $id => $page) {
+            $this->savePerPageMetadata($id, $page);
             $this->savePerPageChanges($id, $page, $recent);
         }
         // save recent changes cache
