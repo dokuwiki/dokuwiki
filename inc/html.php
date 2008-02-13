@@ -948,6 +948,8 @@ function html_updateprofile(){
   $attr = array('size'=>'50');
   if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
   $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', $attr));
+  $attr = array('size'=>'50');
+  if (!$auth->canDo('modMail')) $attr['disabled'] = 'disabled';
   $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', $attr));
   $form->addElement(form_makeTag('br'));
   if ($auth->canDo('modPass')) {
