@@ -305,6 +305,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function php($text) {
+        global $conf;
+
         if($conf['phpok']){
           ob_start();
           eval($text);
@@ -325,6 +327,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function html($text) {
+        global $conf;
+
         if($conf['htmlok']){
           $this->doc .= $text;
         } else {
