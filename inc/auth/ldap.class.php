@@ -137,7 +137,8 @@ class auth_ldap extends auth_basic {
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @author  Trouble
      * @author  Dan Allen <dan.j.allen@gmail.com>
-     * @auhtor  <evaldas.auryla@pheur.org>
+     * @author  <evaldas.auryla@pheur.org>
+     * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
      * @return  array containing user data or false
      */
     function getUserData($user) {
@@ -153,8 +154,13 @@ class auth_ldap extends auth_basic {
                 return false;
             }
             $this->bound = 2;
+        }elseif($this->bound == 0) {
+            // in some cases getUserData is called outside the authentication workflow
+            // eg. for sending email notification on subscribed pages. This data might not
+            // be accessible anonymously, so we try to rebind the current user here
+            $pass = PMA_blowfish_decrypt($_SESSION[DOKU_COOKIE]['auth']['pass'],auth_cookiesalt());
+            $this->checkPass($_SESSION[DOKU_COOKIE]['auth']['user'], $pass);
         }
-        // with no superuser creds we continue as user or anonymous here
 
         $info['user']   = $user;
         $info['server'] = $this->cnf['server'];
