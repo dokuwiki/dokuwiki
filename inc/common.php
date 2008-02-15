@@ -986,15 +986,17 @@ function getGoogleQuery(){
   $query = array();
   parse_str($url['query'],$query);
   if(isset($query['q']))
-    return $query['q'];        // google, live/msn, aol, ask, altavista, alltheweb, gigablast
+    $q = $query['q'];        // google, live/msn, aol, ask, altavista, alltheweb, gigablast
   elseif(isset($query['p']))
-    return $query['p'];        // yahoo
+    $q = $query['p'];        // yahoo
   elseif(isset($query['query']))
-    return $query['query'];    // lycos, netscape, clusty, hotbot
+    $q = $query['query'];    // lycos, netscape, clusty, hotbot
   elseif(preg_match("#a9\.com#i",$url['host'])) // a9
-    return urldecode(ltrim($url['path'],'/'));
+    $q = urldecode(ltrim($url['path'],'/'));
 
-  return '';
+  if(!$q) return '';
+  $q = join('|',preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/',$q,-1,PREG_SPLIT_NO_EMPTY));
+  return $q;
 }
 
 /**
