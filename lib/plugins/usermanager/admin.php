@@ -364,6 +364,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Delete user
      */
     function _deleteUser(){
+        global $conf;
+
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('delUser')) return false;
 
@@ -380,6 +382,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           $part2 = str_replace('%d', (count($selected)-$count), $this->lang['delete_fail']);
           msg("$part1, $part2",-1);
         }
+
+        // invalidate all sessions
+        io_saveFile($conf['cachedir'].'/sessionpurge',time());
 
         return true;
     }
@@ -410,6 +415,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Modify user (modified user data has been recieved)
      */
     function _modifyUser(){
+        global $conf;
+
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('UserMod')) return false;
 
@@ -454,6 +461,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $notify = empty($changes['user']) ? $olduser : $newuser;
             $this->_notifyUser($notify,$newpass);
           }
+
+          // invalidate all sessions
+          io_saveFile($conf['cachedir'].'/sessionpurge',time());
 
         } else {
           msg($this->lang['update_fail'],-1);

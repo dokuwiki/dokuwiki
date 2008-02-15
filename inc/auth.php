@@ -157,6 +157,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     if($user && $pass){
       // we got a cookie - see if we can trust it
       if(isset($session) &&
+        ($session['time'] >= @filemtime($conf['cachedir'].'/sessionpurge')) &&
         ($session['time'] >= time()-$conf['auth_security_timeout']) &&
         ($session['user'] == $user) &&
         ($session['pass'] == $pass) &&  //still crypted
