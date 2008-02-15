@@ -23,10 +23,11 @@ function ft_preg_quote_cb($string){
  * Returns a list of matching documents for the given query
  *
  */
-function ft_pageSearch($query,&$poswords){
+function ft_pageSearch($query,&$regex){
     $q = ft_queryParser($query);
-    // use this for higlighting later:
-    $poswords = str_replace('*','',join(' ',$q['and']));
+
+    // remember for hilighting later
+    $regex = str_replace('*','',join('|',$q['words']));
 
     // lookup all words found in the query
     $words  = array_merge($q['and'],$q['not']);
@@ -78,6 +79,9 @@ function ft_pageSearch($query,&$poswords){
         //build a regexp
         $q['phrases'] = array_map('utf8_strtolower',$q['phrases']);
         $q['phrases'] = array_map('ft_preg_quote_cb',$q['phrases']);
+        // use this for higlighting later:
+        if($regex !== '') $regex .= '|';
+        $regex .= join('|',$q['phrases']);
         // check the source of all documents for the exact phrases
         foreach(array_keys($docs) as $id){
             $text  = utf8_strtolower(rawWiki($id));
@@ -196,18 +200,15 @@ function ft_pageLookup($id,$pageonly=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function ft_snippet($id,$poswords){
-    $poswords = preg_quote($poswords,'#');
-    $re       = '('.str_replace(' ','|',$poswords).')';
+function ft_snippet($id,$re){
     $text     = rawWiki($id);
-
     $match = array();
     $snippets = array();
     $utf8_offset = $offset = $end = 0;
     $len = utf8_strlen($text);
 
     for ($cnt=3; $cnt--;) {
-      if (!preg_match('#'.$re.'#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
+      if (!preg_match('#('.$re.')#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
 
       list($str,$idx) = $match[0];
 
@@ -258,7 +259,7 @@ function ft_snippet($id,$poswords){
     }
 
     $m = "\1";
-    $snippets = preg_replace('#'.$re.'#iu',$m.'$1'.$m,$snippets);
+    $snippets = preg_replace('#('.$re.')#iu',$m.'$1'.$m,$snippets);
     $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
 
     return $snippet;
@@ -314,6 +315,7 @@ function ft_queryParser($query){
     $q['query']   = $query;
     $q['ns']      = array();
     $q['phrases'] = array();
+    $q['words']   = array();
     $q['and']     = array();
     $q['not']     = array();
 
@@ -337,12 +339,15 @@ function ft_queryParser($query){
             if(count($token)) $q['not'] = array_merge($q['not'],$token);
         }else{
             // asian "words" need to be searched as phrases
-            if(@preg_match_all('/('.IDX_ASIAN.'+)/u',$w,$matches)){
+            if(@preg_match_all('/(('.IDX_ASIAN.')+)/u',$w,$matches)){
                 $q['phrases'] = array_merge($q['phrases'],$matches[1]);
 
             }
             $token = idx_tokenizer($w,$stopwords,true);
-            if(count($token)) $q['and'] = array_merge($q['and'],$token);
+            if(count($token)){
+                $q['and']   = array_merge($q['and'],$token);
+                $q['words'] = array_merge($q['words'],$token);
+            }
         }
     }
 

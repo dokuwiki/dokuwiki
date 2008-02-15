@@ -262,13 +262,12 @@ function html_draft(){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function html_hilight($html,$query){
-  //split at common delimiters
-  $queries = preg_split ('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/',$query,-1,PREG_SPLIT_NO_EMPTY);
-  foreach ($queries as $q){
-     $q = preg_quote($q,'/');
-     $html = preg_replace_callback("/((<[^>]*)|$q)/i",'html_hilight_callback',$html);
-  }
+function html_hilight($html,$regex){
+  // strip everything that's special except pipes:
+  $regex = preg_replace('![\[\]()/\\\\?\.+*]+!','',$regex);
+
+  if ($regex === '') return $html;
+  $html = preg_replace_callback("/((<[^>]*)|$regex)/i",'html_hilight_callback',$html);
   return $html;
 }
 
@@ -343,15 +342,15 @@ function html_search(){
   flush();
 
   //do fulltext search
-  $data = ft_pageSearch($QUERY,$poswords);
+  $data = ft_pageSearch($QUERY,$regex);
   if(count($data)){
     $num = 1;
     foreach($data as $id => $cnt){
       print '<div class="search_result">';
-      print html_wikilink(':'.$id,$conf['useheading']?NULL:$id,$poswords);
+      print html_wikilink(':'.$id,$conf['useheading']?NULL:$id,$regex);
       print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
       if($num < 15){ // create snippets for the first number of matches only #FIXME add to conf ?
-        print '<div class="search_snippet">'.ft_snippet($id,$poswords).'</div>';
+        print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
       }
       print '</div>';
       flush();

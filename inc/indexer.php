@@ -615,7 +615,7 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
 
     if(preg_match('/[^0-9A-Za-z]/u', $string)){
         // handle asian chars as single words (may fail on older PHP version)
-        $asia = @preg_replace('/('.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')/u',' \1 ',$string);
+        $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$string);
         if(!is_null($asia)) $string = $asia; //recover from regexp failure
 
         $arr = explode(' ', utf8_stripspecials($string,' ','\._\-:'.$wc));
