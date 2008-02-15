@@ -290,5 +290,35 @@ class auth_basic {
     return array();
   }
 
+  /**
+   * Check Session Cache validity [implement only where required/possible]
+   *
+   * DokuWiki caches user info in the user's session for the timespan defined
+   * in $conf['securitytimeout'].
+   *
+   * This makes sure slow authentication backends do not slow down DokuWiki.
+   * This also means that changes to the user database will not be reflected
+   * on currently logged in users.
+   *
+   * To accommodate for this, the user manager plugin will touch a reference
+   * file whenever a change is submitted. This function compares the filetime
+   * of this reference file with the time stored in the session.
+   *
+   * This reference file mechanism does not reflect changes done directly in
+   * the backend's database through other means than the user manager plugin.
+   *
+   * Fast backends might want to return always false, to force rechecks on
+   * each page load. Others might want to use their own checking here. If
+   * unsure, do not override.
+   *
+   * @param  string $user - The username
+   * @author Andreas Gohr <andi@splitbrain.org>
+   * @return bool
+   */
+  function useSessionCache($user){
+    global $conf;
+    return ($_SESSION[DOKU_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'].'/sessionpurge'));
+  }
+
 }
 //Setup VIM: ex: et ts=2 enc=utf-8 :
