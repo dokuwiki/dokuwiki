@@ -21,6 +21,9 @@
  * $data[1]    ns_type: 'pages' or 'media' namespace tree.
  *
  * @todo use safemode hack
+ * @param string $id      - a pageid, the namespace of that id will be tried to deleted
+ * @param string $basadir - the config name of the type to delete (datadir or mediadir usally)
+ * @returns bool - true if at least one namespace was deleted
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
@@ -28,6 +31,8 @@ function io_sweepNS($id,$basedir='datadir'){
   global $conf;
   $types = array ('datadir'=>'pages', 'mediadir'=>'media');
   $ns_type = (isset($types[$basedir])?$types[$basedir]:false);
+
+  $delone = false;
 
   //scan all namespaces
   while(($id = getNS($id)) !== false){
@@ -37,10 +42,12 @@ function io_sweepNS($id,$basedir='datadir'){
     if(@rmdir($dir)) {
       if ($ns_type!==false) {
         $data = array($id, $ns_type);
+        $delone = true; // we deleted at least one dir
         trigger_event('IO_NAMESPACE_DELETED', $data);
       }
-    } else { return; }
+    } else { return $delone; }
   }
+  return $delone;
 }
 
 /**

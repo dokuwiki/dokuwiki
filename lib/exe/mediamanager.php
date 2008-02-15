@@ -11,6 +11,9 @@
     require_once(DOKU_INC.'inc/auth.php');
     session_write_close();  //close session
 
+    // handle passed message
+    if($_REQUEST['msg1']) msg(hsc($_REQUEST['msg1']),1);
+
 
     // get namespace to display (either direct or from deletion order)
     if($_REQUEST['delete']){

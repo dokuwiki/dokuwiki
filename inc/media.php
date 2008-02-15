@@ -165,7 +165,13 @@ function media_delete($id,$auth){
         $file = mediaFN($id);
         if(@unlink($file)){
             msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
-            io_sweepNS($id,'mediadir');
+            $del = io_sweepNS($id,'mediadir');
+            if($del){
+                // current namespace was removed. redirecting to root ns passing msg along
+                header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
+                        rawurlencode(str_replace('%s',noNS($id),$lang['deletesucc'])));
+                exit;
+            }
             return true;
         }
         //something went wrong
