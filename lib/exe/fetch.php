@@ -133,7 +133,7 @@ function sendFile($file,$mime,$cache){
 
     $chunk = ($len > CHUNK_SIZE) ? CHUNK_SIZE : $len;
     while (!feof($fp) && $chunk > 0) {
-      @set_time_limit(); // large files can take a lot of time
+      @set_time_limit(30); // large files can take a lot of time
       print fread($fp, $chunk);
       flush();
       $len -= $chunk;
