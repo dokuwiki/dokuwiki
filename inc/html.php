@@ -267,7 +267,7 @@ function html_hilight($html,$regex){
   $regex = preg_replace('![\[\]()/\\\\?\.+*]+!','',$regex);
 
   if ($regex === '') return $html;
-  $html = preg_replace_callback("/((<[^>]*)|$regex)/i",'html_hilight_callback',$html);
+  $html = preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
   return $html;
 }
 
