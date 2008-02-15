@@ -106,6 +106,7 @@ function media_metaform($id,$auth){
         $tags = array($field[0]);
         if(is_array($field[3])) $tags = array_merge($tags,$field[3]);
         $value = tpl_img_getTag($tags,'',$src);
+        $value = cleanText($value);
 
         // prepare attributes
         $p = array();
