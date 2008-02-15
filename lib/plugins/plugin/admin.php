@@ -542,7 +542,7 @@ class ap_manage {
 
         // simple output filter, make html entities safe and convert new lines to <br />
         function out($text) {
-            return str_replace("\n",'<br />',htmlentities($text));
+            return str_replace("\n",'<br />',htmlspecialchars($text));
         }
 
     }
