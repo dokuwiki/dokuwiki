@@ -652,7 +652,7 @@ function updateprofile() {
   }
 
   if ($conf['profileconfirm']) {
-      if (!auth_verifyPassword($_POST['oldpass'],$INFO['userinfo']['pass'])) {
+    if (!$auth->checkPass($_SERVER['REMOTE_USER'], $_POST['oldpass'])) {
       msg($lang['badlogin'],-1);
       return false;
     }
