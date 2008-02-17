@@ -1,13 +1,13 @@
 DokuWikiisi lisättiin tai siellä muutettiin sivua. Tässä yksityiskohdat
 
-Päivämäärä               : @DATE@
-Selain                   : @BROWSER@
-IP-Osoite                : @IPADDRESS@
-Isäntänimi               : @HOSTNAME@
-Vanha versio             : @OLDPAGE@
-Uusi versio              : @NEWPAGE@
+Päivämäärä : @DATE@
+Selain : @BROWSER@
+IP-Osoite : @IPADDRESS@
+Isäntänimi : @HOSTNAME@
+Vanha versio : @OLDPAGE@
+Uusi versio : @NEWPAGE@
 Yhteenveto muokkauksesta : @SUMMARY@
-User                     : @USER@
+User : @USER@
 
 @DIFF@
 

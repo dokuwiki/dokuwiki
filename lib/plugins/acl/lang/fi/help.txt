@@ -1,0 +1,14 @@
+=== Pika-apu: ===
+
+Tällä sivulla voit lisätä tai poistaa oikeuksia wikisi nimiavaruuksiin tai sivuihin.
+
+Vasen osa näyttää kaikki tarjolla olevat nimiavaruudet ja sivut.
+
+Yllä olevan kaavakkeen avulla voit katsoa ja muokata oikeuksia 
+valitulle käyttäjälle ja ryhmälle.
+
+Alla olevassa taulukossa on näkyvissä päällä olevat pääsyoikeudet.
+Voit käyttää sitä muokatakesi tai poistaaksesi useita oikeuksia.
+
+[[doku>wiki:acl|Virallisen käyttöoikeus (ACL) dokumentaation]]  lukeminen voi helpottaa
+sinua täysin ymmärtämään mitän käyttöoikeudet toimivat DokuWikissä.

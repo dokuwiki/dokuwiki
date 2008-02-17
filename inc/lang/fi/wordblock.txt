@@ -1,4 +1,4 @@
-======SPÄMMI torjuttu======
+====== Roskaposti torjuttu ======
 
 Muutoksiasi **ei** talletettu, koska ne pitivät sisällään yhden tai useampia epäkelpoja sanoja. 
 Jos yritit spämmätä Wikiä, häpeä! Jos pidät tätä virheenä ota yhtettä wikin ylläpitäjään.

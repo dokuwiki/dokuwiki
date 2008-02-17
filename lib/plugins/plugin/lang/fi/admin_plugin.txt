@@ -1,0 +1,4 @@
+====== Liitännäisten hallinta ======
+
+Tällä sivulla voit hallita DokuWikin [[doku>wiki:plugins|liitännäisiä]].
+Voidaksesi ladata ja asentaa liitännäisiä pitää web-palvelimella olla kirjoitusoikeudet  plugin hakemistoon.

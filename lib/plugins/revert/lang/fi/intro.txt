@@ -1,0 +1,4 @@
+====== Palautuksenhallinta ======
+
+Tämä sivu auttaa sinua automaattisen palautuksenhallinnan kanssa spam hyökkäyksen jälkeen.
+Löytääksesi listan spammatyistä sivuista anna ensin hakusana (esim. spm URL), sen jälkeen varmista, että löytyneet sivut todella ovat spammia ja palauta sitten sivut.

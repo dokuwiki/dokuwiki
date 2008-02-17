@@ -1,0 +1,8 @@
+====== Asetusten hallinta ======
+
+Käytä tätä sivua hallitaksesi DokuWikisi asetuksia.
+Apua yksittäisiin asetuksiin löytyy sivulta [[doku>wiki:config]].
+Lisätietoa tästä liitännäisestä katso [[doku>plugin:config]].
+
+Asetukset, jotka näkyvät vaalealla punaisella taustalla ovat suojattuja, eikä niitä voi muutta tämän liitännäisen avulla.
+Asetukset, jotka näkyvät sinisellä taustalla ovat oletusasetuksia ja asetukset valkoisella taustalla on asetettu paikallisesti tätä asennusta varten. Sekä sinisiä, että valkoisia asetuksia voi muokata.

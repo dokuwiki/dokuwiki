@@ -3,5 +3,5 @@
 Muokkaamastasi dokumentintista on olemassa uudempi versio. Näin käy, kun toinen käyttäjä 
 muuttaa dokumenttia sillä aikaa, kun sinä olit muokkaamassa sitä.
 
-Tutki alla näkyvät eroavaisuudet kunnolla ja päätä mikä versio säilytetään. Jos valitse talenna 
+Tutki alla näkyvät eroavaisuudet kunnolla ja päätä mikä versio säilytetään. Jos valitse "talenna" 
 sinun versiosi tallennetaan. Valitse ''peru'' pitääksesi tämänhetkisen version.
