@@ -1,0 +1,19 @@
+====== Popularitäts-Feedback ======
+
+Dieses Werkzeug sammelt verschiedene anonyme Daten über Ihr Wiki und erlaubt es Ihnen
+diese an die DokuWiki-Entwickler zurückzusenden. Diese Daten helfen den
+Entwicklern besser zu verstehen wie DokuWiki eingesetzt wird und stellt sicher,
+dass zukünftige, die Weiterentwicklung von DokuWiki betreffende, Entscheidungen
+auf Basis echter Nutzerdaten getroffen werden.
+
+Bitte wiederholen Sie das Versenden der Daten von Zeit zu Zeit um die Entwickler über
+das Wachstum Ihres Wikis auf dem Laufenden zu halten. Ihre wiederholten Dateneinsendungen
+werden über eine anonyme ID identifieziert.
+
+Die gesammelten Daten enthalten Informationen wie Ihre DokuWiki Version, die Anzahl
+und Größe Ihrer Seiten und Dateien, installierte Plugins und die eingesetzte PHP Installation.
+
+Die zu übertragenen Roh-Daten werden in der untenstehenden Box angezeigt. Bitte
+drücken Sie die "Daten Senden" Schaltfläche um die Information zu übertragen.
+
+

@@ -1,0 +1,19 @@
+====== Popularity Feedback ======
+
+This tool gathers anonymous data about your wiki and allows you to send it back
+to the DokuWiki developers. This helps them to understand them how DokuWiki is
+used by its users and makes sure future development decisions are backed up by
+real world usage statistics.
+
+You are encouraged to repeat this step from time to time to keep developers
+informed when your wiki grows. Your repeated data sets will be identified by an
+anonymous ID.
+
+Data collected contains information like your DokuWiki version, the number and
+size of your pages and files, installed plugins and information about your PHP
+install.
+
+The raw data that will be send is shown below. Please use the "Send Data" button
+to transfer the information.
+
+
