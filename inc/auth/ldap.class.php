@@ -188,6 +188,7 @@ class auth_ldap extends auth_basic {
 
         // general user info
         $info['dn']   = $user_result['dn'];
+        $info['gid']  = $user_result['gidnumber'][0];
         $info['mail'] = $user_result['mail'][0];
         $info['name'] = $user_result['cn'][0];
         $info['grps'] = array();
