@@ -19,7 +19,7 @@ require_once(DOKU_INC.'inc/search.php');
  * need to inherit from this class
  */
 class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
-    var $version = '2008-02-18';
+    var $version = '2008-02-20';
 
 
     /**
@@ -188,6 +188,11 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
 
         // plugins
         $data['plugin'] = plugin_list();
+
+        // pcre info
+        if(defined('PCRE_VERSION')) $data['pcre_version'] = PCRE_VERSION;
+        $data['pcre_backtrack'] = ini_get('pcre.backtrack_limit');
+        $data['pcre_recursion'] = ini_get('pcre.recursion_limit');
 
         // php info
         $data['os'] = PHP_OS;
