@@ -665,37 +665,29 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL, $linking=NULL) {
-        global $conf;
         global $ID;
         resolve_mediaid(getNS($ID),$src, $exists);
 
-        $link = array();
-        $link['class']  = 'media';
-        $link['style']  = '';
-        $link['pre']    = '';
-        $link['suf']    = '';
-        $link['more']   = '';
-        $link['target'] = $conf['target']['media'];
         $noLink = false;
+        $render = ($linking == 'justlink') ? false : true;
+        $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
-        $link['title']  = $this->_xmlEntities($src);
         list($ext,$mime) = mimetype($src);
-        if(substr($mime,0,5) == 'image'){
-             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
-         }elseif($mime == 'application/x-shockwave-flash'){
-             // don't link flash movies
-             $noLink = true;
-         }else{
-             // add file icons
-             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
-             $link['class'] .= ' mediafile mf_'.$class;
-             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
-         }
-         $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
+        if(substr($mime,0,5) == 'image' && $render){
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
+        }elseif($mime == 'application/x-shockwave-flash'){
+            // don't link flash movies
+            $noLink = true;
+        }else{
+            // add file icons
+            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+            $link['class'] .= ' mediafile mf_'.$class;
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+        }
 
-         //output formatted
-         if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
-         else $this->doc .= $this->_formatLink($link);
+        //output formatted
+        if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
+        else $this->doc .= $this->_formatLink($link);
     }
 
     /**
@@ -703,23 +695,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL, $linking=NULL) {
-        global $conf;
-
-        $link = array();
-        $link['class']  = 'media';
-        $link['style']  = '';
-        $link['pre']    = '';
-        $link['suf']    = '';
-        $link['more']   = '';
-        $link['target'] = $conf['target']['media'];
-
-        $link['title']  = $this->_xmlEntities($src);
-        $link['url']    = ml($src,array('cache'=>$cache));
-        $link['name']   = $this->_media ($src, $title, $align, $width, $height, $cache);
         $noLink = false;
+        $render = ($linking == 'justlink') ? false : true;
+        $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
+
+        $link['url']    = ml($src,array('cache'=>$cache));
 
         list($ext,$mime) = mimetype($src);
-        if(substr($mime,0,5) == 'image'){
+        if(substr($mime,0,5) == 'image' && $render){
              // link only jpeg images
              // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
         }elseif($mime == 'application/x-shockwave-flash'){
@@ -901,12 +884,33 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _media ($src, $title=NULL, $align=NULL, $width=NULL,
-                      $height=NULL, $cache=NULL) {
+                      $height=NULL, $cache=NULL, $render = true) {
 
         $ret = '';
 
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }elseif($ext == 'jpg' || $ext == 'jpeg'){
+                //try to use the caption from IPTC/EXIF
+                require_once(DOKU_INC.'inc/JpegMeta.php');
+                $jpeg =& new JpegMeta(mediaFN($src));
+                if($jpeg !== false) $cap = $jpeg->getTitle();
+                if($cap){
+                    $title = $this->_xmlEntities($cap);
+                }
+            }
+            if (!$render) {
+                // if the picture is not supposed to be rendered
+                // return the title of the picture
+                if (!$title) {
+                    // just show the sourcename
+                    $title = $this->_xmlEntities(basename(noNS($src)));
+                }
+                return $title;
+            }
             //add image tag
             $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
             $ret .= ' class="media'.$align.'"';
@@ -915,20 +919,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if($align == 'right') $ret .= ' align="right"';
             if($align == 'left')  $ret .= ' align="left"';
 
-            if (!is_null($title)) {
-                $ret .= ' title="'.$this->_xmlEntities($title).'"';
-                $ret .= ' alt="'.$this->_xmlEntities($title).'"';
-            }elseif($ext == 'jpg' || $ext == 'jpeg'){
-                //try to use the caption from IPTC/EXIF
-                require_once(DOKU_INC.'inc/JpegMeta.php');
-                $jpeg =& new JpegMeta(mediaFN($src));
-                if($jpeg !== false) $cap = $jpeg->getTitle();
-                if($cap){
-                    $ret .= ' title="'.$this->_xmlEntities($cap).'"';
-                    $ret .= ' alt="'.$this->_xmlEntities($cap).'"';
-                }else{
-                    $ret .= ' alt=""';
-                }
+            if ($title) {
+                $ret .= ' title="' . $title . '"';
+                $ret .= ' alt="'   . $title .'"';
             }else{
                 $ret .= ' alt=""';
             }
@@ -1035,6 +1028,38 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                               $img['width'],
                               $img['height'],
                               $img['cache']);
+    }
+
+    /**
+     * _getMediaLinkConf is a helperfunction to internalmedia() and externalmedia()
+     * which returns a basic link to a media.
+     *
+     * @author Pierre Spring <pierre.spring@liip.ch>
+     * @param string $src
+     * @param string $title
+     * @param string $align
+     * @param string $width
+     * @param string $height
+     * @param string $cache
+     * @param string $render
+     * @access protected
+     * @return array
+     */
+    function _getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render)
+    {
+        global $conf;
+
+        $link = array();
+        $link['class']  = 'media';
+        $link['style']  = '';
+        $link['pre']    = '';
+        $link['suf']    = '';
+        $link['more']   = '';
+        $link['target'] = $conf['target']['media'];
+        $link['title']  = $this->_xmlEntities($src);
+        $link['name']   = $this->_media($src, $title, $align, $width, $height, $cache, $render);
+
+        return $link;
     }
 }
 

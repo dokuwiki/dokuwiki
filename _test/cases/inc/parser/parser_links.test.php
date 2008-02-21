@@ -322,6 +322,21 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testMediaInternalJustlink() {
+        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->parse('Foo {{img.gif?justlink}} Bar');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','justlink')),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testMediaNotImage() {
         $this->P->addMode('media',new Doku_Parser_Mode_Media());
         $this->P->parse('Foo {{foo.txt?10x10|Some File}} Bar');

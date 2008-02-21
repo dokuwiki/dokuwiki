@@ -686,6 +686,8 @@ function Doku_Handler_Parse_Media($match) {
         $linking = 'nolink';
     }else if(preg_match('/direct/i',$param)){
         $linking = 'direct';
+    }else if(preg_match('/justlink/i',$param)){
+        $linking = 'justlink';
     }else{
         $linking = 'details';
     }
