@@ -228,13 +228,13 @@ class HTTPClient {
                 $this->error = 'Premature End of File (socket)';
                 return false;
             }
-            $r_headers .= fread($socket,1); #FIXME read full lines here?
-        }while(!preg_match('/\r\n\r\n$/',$r_headers));
+            $r_headers .= fgets($socket,1024);
+        }while(!preg_match('/\r?\n\r?\n$/',$r_headers));
 
         $this->_debug('response headers',$r_headers);
 
         // check if expected body size exceeds allowance
-        if($this->max_bodysize && preg_match('/\r\nContent-Length:\s*(\d+)\r\n/i',$r_headers,$match)){
+        if($this->max_bodysize && preg_match('/\r?\nContent-Length:\s*(\d+)\r?\n/i',$r_headers,$match)){
             if($match[1] > $this->max_bodysize){
                 $this->error = 'Reported content length exceeds allowed response size';
                 return false;
