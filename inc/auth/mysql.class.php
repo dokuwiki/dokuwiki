@@ -489,7 +489,7 @@ class auth_mysql extends auth_basic {
         $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getGroups']);
         $result = $this->_queryDB($sql);
 
-        if(count($result)) {
+        if($result !== false && count($result)) {
           foreach($result as $row)
             $groups[] = $row['group'];
         }
@@ -610,7 +610,7 @@ class auth_mysql extends auth_basic {
     function _getUserInfo($user){
       $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getUserInfo']);
       $result = $this->_queryDB($sql);
-      if(count($result)) {
+      if($result !== false && count($result)) {
         $info = $result[0];
         $info['grps'] = $this->_getGroups($user);
         return $info;
