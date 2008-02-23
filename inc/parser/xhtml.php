@@ -36,6 +36,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $lastsec = 0;
     var $store = '';
 
+    var $_counter = array(); // used as global counter, introduced for table classes
+
     function getFormat(){
         return 'xhtml';
     }
@@ -793,6 +795,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     // $numrows not yet implemented
     function table_open($maxcols = NULL, $numrows = NULL){
+        // initialize the row counter used for classes
+        $this->_counter['row_counter'] = 0;
         $this->doc .= '<table class="inline">'.DOKU_LF;
     }
 
@@ -801,7 +805,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function tablerow_open(){
-        $this->doc .= DOKU_TAB . '<tr>' . DOKU_LF . DOKU_TAB . DOKU_TAB;
+        // initialize the cell counter used for classes
+        $this->_counter['cell_counter'] = 0;
+        $class = 'row' . $this->_counter['row_counter']++;
+        $this->doc .= DOKU_TAB . '<tr class="'.$class.'">' . DOKU_LF . DOKU_TAB . DOKU_TAB;
     }
 
     function tablerow_close(){
@@ -809,11 +816,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function tableheader_open($colspan = 1, $align = NULL){
-        $this->doc .= '<th';
+        $class = 'class="col' . $this->_counter['cell_counter']++;
         if ( !is_null($align) ) {
-            $this->doc .= ' class="'.$align.'align"';
+            $class .= ' '.$align.'align';
         }
+        $class .= '"';
+        $this->doc .= '<th ' . $class;
         if ( $colspan > 1 ) {
+            $this->_counter['cell_counter'] += $colspan;
             $this->doc .= ' colspan="'.$colspan.'"';
         }
         $this->doc .= '>';
@@ -824,11 +834,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function tablecell_open($colspan = 1, $align = NULL){
-        $this->doc .= '<td';
+        $class = 'class="col' . $this->_counter['cell_counter']++;
         if ( !is_null($align) ) {
-            $this->doc .= ' class="'.$align.'align"';
+            $class .= ' '.$align.'align';
         }
+        $class .= '"';
+        $this->doc .= '<td '.$class;
         if ( $colspan > 1 ) {
+            $this->_counter['cell_counter'] += $colspan;
             $this->doc .= ' colspan="'.$colspan.'"';
         }
         $this->doc .= '>';
