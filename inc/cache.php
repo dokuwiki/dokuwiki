@@ -105,10 +105,10 @@ class cache {
    * cache $data
    *
    * @param   string $data   the data to be cached
-   * @return  none
+   * @return  bool           true on success, false otherwise
    */
   function storeCache($data) {
-    io_savefile($this->cache, $data);
+    return io_savefile($this->cache, $data);
   }
 
   /**
@@ -286,6 +286,6 @@ class cache_instructions extends cache_parser {
   }
 
   function storeCache($instructions) {
-    io_savefile($this->cache,serialize($instructions));
+    return io_savefile($this->cache,serialize($instructions));
   }
 }
