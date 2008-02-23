@@ -357,9 +357,12 @@ function wl($id='',$more='',$abs=false,$sep='&amp;'){
   }elseif($conf['userewrite']){
     $xlink .= $id;
     if($more) $xlink .= '?'.$more;
-  }else{
+  }elseif($id){
     $xlink .= DOKU_SCRIPT.'?id='.$id;
     if($more) $xlink .= $sep.$more;
+  }else{
+    $xlink .= DOKU_SCRIPT;
+    if($more) $xlink .= '?'.$more;
   }
 
   return $xlink;
