@@ -47,7 +47,7 @@ $lang['youarehere']            = 'Hierarchische broodkruimels';
 $lang['typography']            = 'Breng typografische wijzigingen aan';
 $lang['htmlok']                = 'Embedded HTML toestaan';
 $lang['phpok']                 = 'Embedded PHP toestaan';
-$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/date">date</a> functie)';
+$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';
 $lang['signature']             = 'Ondertekening';
 $lang['toptoclevel']           = 'Bovenste niveau voor inhoudsopgave';
 $lang['maxtoclevel']           = 'Laagste niveau voor inhoudsopgave';

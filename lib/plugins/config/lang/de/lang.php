@@ -48,7 +48,7 @@ $lang['youarehere']            = 'Hierarchische Pfadnavigation verwenden';
 $lang['typography']            = 'Typographische Ersetzungen';
 $lang['htmlok']                = 'HTML erlauben';
 $lang['phpok']                 = 'PHP erlauben';
-$lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://www.php.net/date">date</a> Funktion)';
+$lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://www.php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftsgröße beginnen';
 $lang['maxtoclevel']           = 'Maximale Überschriftsgröße für Inhaltsverzeichnis';

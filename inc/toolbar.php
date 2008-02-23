@@ -24,10 +24,10 @@ function toolbar_JSdefines($varname){
     global $lang;
 
     $menu = array();
-    
+
     $evt = new Doku_Event('TOOLBAR_DEFINE', $menu);
     if ($evt->advise_before()){
-    
+
         // build button array
         $menu = array_merge($menu, array(
            array(
@@ -197,7 +197,7 @@ function toolbar_signature(){
   $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
   $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
   $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
-  $sig = str_replace('@DATE@',date($conf['dformat']),$sig);
+  $sig = str_replace('@DATE@',strftime($conf['dformat']),$sig);
   $sig = str_replace('\\\\n','\\n',addslashes($sig));
   return $sig;
 }

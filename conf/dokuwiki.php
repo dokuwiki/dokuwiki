@@ -33,7 +33,7 @@ $conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
 $conf['typography']  = 1;                 //smartquote conversion 0=off, 1=doublequotes, 2=all quotes
 $conf['htmlok']      = 0;                 //may raw HTML be embedded? This may break layout and XHTML validity 0|1
 $conf['phpok']       = 0;                 //may PHP code be embedded? Never do this on the internet! 0|1
-$conf['dformat']     = 'Y/m/d H:i';       //dateformat accepted by PHPs date() function
+$conf['dformat']     = '%Y/%m/%d %H:%M';  //dateformat accepted by PHPs strftime() function
 $conf['signature']   = ' --- //[[@MAIL@|@NAME@]] @DATE@//'; //signature see wiki:config for details
 $conf['toptoclevel'] = 1;                 //Level starting with and below to include in AutoTOC (max. 5)
 $conf['maxtoclevel'] = 3;                 //Up to which level include into AutoTOC (max. 5)

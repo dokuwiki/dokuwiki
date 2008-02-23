@@ -47,7 +47,7 @@ $lang['youarehere']            = 'Hierarchikus nyomvonal';
 $lang['typography']            = 'Legyen-e tipográfiai csere';
 $lang['htmlok']                = 'Beágyazott HTML engedélyezése';
 $lang['phpok']                 = 'Beágyazott PHP engedélyezése';
-$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://www.php.net/date">date</a> függvényt)';
+$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://www.php.net/strftime">strftime</a> függvényt)';
 $lang['signature']             = 'Aláírás';
 $lang['toptoclevel']           = 'A tartalomjegyzék felső szintje';
 $lang['maxtoclevel']           = 'A tartalomjegyzék mélysége';

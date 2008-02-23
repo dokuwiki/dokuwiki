@@ -50,7 +50,7 @@ $lang['youarehere']            = 'Hierarchická "drobečková" navigace';
 $lang['typography']            = 'Provádět typografické nahrazování';
 $lang['htmlok']                = 'Povolit vložené HTML';
 $lang['phpok']                 = 'Povolit vložené PHP';
-$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://www.php.net/date">date</a>)';
+$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://www.php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['toptoclevel']           = 'Nejvyšší úroveň, kterou začít automaticky generovaný obsah';
 $lang['maxtoclevel']           = 'Maximální počet úrovní v automaticky generovaném obsahu';

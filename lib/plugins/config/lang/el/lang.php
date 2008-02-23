@@ -52,7 +52,7 @@ $lang['youarehere']            = 'Εμφάνιση ιεραρχικής προβ
 $lang['typography']            = 'Μετατροπή ειδικών χαρακτήρων στο τυπογραφικό ισοδύναμό τους';
 $lang['htmlok']                = 'Να επιτρέπεται η ενσωμάτωση HTML';
 $lang['phpok']                 = 'Να επιτρέπεται η ενσωμάτωση PHP';
-$lang['dformat']               = 'Μορφή ημερομηνίας (βλέπε την <a href="http://www.php.net/date">date</a> function της PHP)';
+$lang['dformat']               = 'Μορφή ημερομηνίας (βλέπε την <a href="http://www.php.net/strftime">strftime</a> function της PHP)';
 $lang['signature']             = 'Υπογραφή';
 $lang['toptoclevel']           = 'Ανώτατο επίπεδο πίνακα περιεχομένων σελίδας';
 $lang['maxtoclevel']           = 'Μέγιστο επίπεδο για πίνακα περιεχομένων σελίδας';

@@ -56,7 +56,7 @@ if (!defined('DOKU_INC')) die();
       <dl class="img_tags">
         <?php
           $t = tpl_img_getTag('Date.EarliestTime');
-          if($t) print '<dt>'.$lang['img_date'].':</dt><dd>'.date($conf['dformat'],$t).'</dd>';
+          if($t) print '<dt>'.$lang['img_date'].':</dt><dd>'.strftime($conf['dformat'],$t).'</dd>';
 
           $t = tpl_img_getTag('File.Name');
           if($t) print '<dt>'.$lang['img_fname'].':</dt><dd>'.hsc($t).'</dd>';

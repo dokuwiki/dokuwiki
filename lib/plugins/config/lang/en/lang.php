@@ -64,7 +64,7 @@ $lang['youarehere']  = 'Hierarchical breadcrumbs';
 $lang['typography']  = 'Do typographical replacements';
 $lang['htmlok']      = 'Allow embedded HTML';
 $lang['phpok']       = 'Allow embedded PHP';
-$lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/date">date</a> function)';
+$lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
 $lang['signature']   = 'Signature';
 $lang['toptoclevel'] = 'Top level for table of contents';
 $lang['maxtoclevel'] = 'Maximum level for table of contents';

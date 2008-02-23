@@ -65,7 +65,7 @@ $lang['youarehere']  = 'Показувати "Ви тут"';
 $lang['typography']  = 'Заміняти типографськи символи';
 $lang['htmlok']      = 'Дозволити HTML';
 $lang['phpok']       = 'Дозволити PHP';
-$lang['dformat']     = 'Формат дати (дивіться функцію <a href="http://www.php.net/date">date</a> PHP)';
+$lang['dformat']     = 'Формат дати (дивіться функцію <a href="http://www.php.net/strftime">strftime</a> PHP)';
 $lang['signature']   = 'Підпис';
 $lang['toptoclevel'] = 'Мінімальний рівень для змісту';
 $lang['maxtoclevel'] = 'Максимальний рівень для змісту';

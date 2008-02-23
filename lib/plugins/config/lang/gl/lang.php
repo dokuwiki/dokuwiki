@@ -46,7 +46,7 @@ $lang['youarehere']            = 'Niveis xerárquicos da estrutura de navegació
 $lang['typography']            = 'Facer substitucións tipográficas';
 $lang['htmlok']                = 'Permitir a inserción de HTML';
 $lang['phpok']                 = 'Permitir a inserción de PHP';
-$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://www.php.net/date">date</a> do PHP)';
+$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://www.php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Sinatura';
 $lang['toptoclevel']           = 'Nivel superior para a táboa de contidos';
 $lang['maxtoclevel']           = 'Nivel máximo para a táboa de contidos';

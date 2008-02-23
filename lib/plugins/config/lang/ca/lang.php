@@ -45,7 +45,7 @@ $lang['youarehere']            = 'Camí d\'engrunes jeràrquic';
 $lang['typography']            = 'Substitucions tipogràfiques';
 $lang['htmlok']                = 'Permet HTML incrustat';
 $lang['phpok']                 = 'Permet PHP incrustat';
-$lang['dformat']               = 'Format de data (vg. la funció PHP <a href="http://www.php.net/date">date</a>)';
+$lang['dformat']               = 'Format de data (vg. la funció PHP <a href="http://www.php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Signatura';
 $lang['toptoclevel']           = 'Nivell superior per a la taula de continguts';
 $lang['maxtoclevel']           = 'Nivell màxim per a la taula de continguts';

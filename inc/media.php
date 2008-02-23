@@ -364,7 +364,7 @@ function media_notify($id,$file,$mime){
     if(empty($conf['notify'])) return; //notify enabled?
 
     $text = rawLocale('uploadmail');
-    $text = str_replace('@DATE@',date($conf['dformat']),$text);
+    $text = str_replace('@DATE@',strftime($conf['dformat']),$text);
     $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
     $text = str_replace('@IPADDRESS@',$_SERVER['REMOTE_ADDR'],$text);
     $text = str_replace('@HOSTNAME@',gethostbyaddr($_SERVER['REMOTE_ADDR']),$text);
@@ -494,7 +494,7 @@ function media_printfile($item,$auth,$jump){
         $info .= (int) $item['meta']->getField('File.Height');
         $info .= ' ';
     }
-    $info .= '<i>'.date($conf['dformat'],$item['mtime']).'</i>';
+    $info .= '<i>'.strftime($conf['dformat'],$item['mtime']).'</i>';
     $info .= ' ';
     $info .= filesize_h($item['size']);
 

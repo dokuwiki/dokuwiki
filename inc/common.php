@@ -733,7 +733,7 @@ function pageTemplate($data){
   $tpl = str_replace('@USER@',$_SERVER['REMOTE_USER'],$tpl);
   $tpl = str_replace('@NAME@',$INFO['userinfo']['name'],$tpl);
   $tpl = str_replace('@MAIL@',$INFO['userinfo']['mail'],$tpl);
-  $tpl = str_replace('@DATE@',date($conf['dformat']),$tpl);
+  $tpl = str_replace('@DATE@',$conf['dformat'],$tpl);
   $tpl = strftime($tpl);
   return $tpl;
 }
@@ -932,7 +932,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   }
 
   $ip   = clientIP();
-  $text = str_replace('@DATE@',date($conf['dformat']),$text);
+  $text = str_replace('@DATE@',strftime($conf['dformat']),$text);
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$ip,$text);
   $text = str_replace('@HOSTNAME@',gethostsbyaddrs($ip),$text);

@@ -48,7 +48,7 @@ $lang['youarehere']            = 'Hierarkiska spår';
 $lang['typography']            = 'Aktivera typografiska ersättningar';
 $lang['htmlok']                = 'Tillåt inbäddad HTML';
 $lang['phpok']                 = 'Tillåt inbäddad PHP';
-$lang['dformat']               = 'Datumformat (se PHP:s <a href="http://www.php.net/date">date</a>-funktion)';
+$lang['dformat']               = 'Datumformat (se PHP:s <a href="http://www.php.net/strftime">strftime</a>-funktion)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Toppnivå för innehållsförteckning';
 $lang['maxtoclevel']           = 'Maximal nivå för innehållsförteckning';

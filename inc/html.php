@@ -248,7 +248,7 @@ function html_draft(){
   $form->addHidden('date', $draft['date']);
   $form->addElement(form_makeWikiText($text, array('readonly'=>'readonly')));
   $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
-  $form->addElement($lang['draftdate'].' '. date($conf['dformat'],filemtime($INFO['draft'])));
+  $form->addElement($lang['draftdate'].' '. strftime($conf['dformat'],filemtime($INFO['draft'])));
   $form->addElement(form_makeCloseTag('div'));
   $form->addElement(form_makeButton('submit', 'recover', $lang['btn_recover'], array('tabindex'=>'1')));
   $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_draftdel'], array('tabindex'=>'2')));
@@ -379,7 +379,7 @@ function html_locked(){
   global $INFO;
 
   $locktime = filemtime(wikiLockFN($ID));
-  $expire = @date($conf['dformat'], $locktime + $conf['locktime'] );
+  $expire = @strftime($conf['dformat'], $locktime + $conf['locktime'] );
   $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
 
   print p_locale_xhtml('locked');
@@ -415,7 +415,7 @@ function html_revisions($first=0){
     array_pop($revisions); // remove extra log entry
   }
 
-  $date = @date($conf['dformat'],$INFO['lastmod']);
+  $date = @strftime($conf['dformat'],$INFO['lastmod']);
 
   print p_locale_xhtml('revisions');
   print '<form action="'.wl($ID).'" method="post" id="page__revisions">';
@@ -443,7 +443,7 @@ function html_revisions($first=0){
   }
 
   foreach($revisions as $rev){
-    $date   = date($conf['dformat'],$rev);
+    $date   = strftime($conf['dformat'],$rev);
     $info   = getRevisionInfo($ID,$rev,true);
     $exists = page_exists($ID,$rev);
 
@@ -539,7 +539,7 @@ function html_recent($first=0){
   print '<ul>';
 
   foreach($recents as $recent){
-    $date = date($conf['dformat'],$recent['date']);
+    $date = strftime($conf['dformat'],$recent['date']);
     print ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
     print '<div class="li">';
 
@@ -793,7 +793,7 @@ function html_diff($text='',$intro=true){
     $l_rev   = '';
     $l_text  = rawWiki($ID,'');
     $l_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+               $ID.' '.strftime($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
                $lang['current'];
 
     $r_rev   = '';
@@ -822,14 +822,14 @@ function html_diff($text='',$intro=true){
     $r_text = rawWiki($ID,$r_rev);
 
     $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-              $ID.' '.date($conf['dformat'],$l_rev).'</a>';
+              $ID.' '.strftime($conf['dformat'],$l_rev).'</a>';
 
     if($r_rev){
       $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
-                $ID.' '.date($conf['dformat'],$r_rev).'</a>';
+                $ID.' '.strftime($conf['dformat'],$r_rev).'</a>';
     }else{
       $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-               $ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+               $ID.' '.strftime($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
                $lang['current'];
     }
   }
@@ -1044,7 +1044,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   <div style="width:99%;">
 
    <div class="toolbar">
-      <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.date($conf['dformat']);?></div>
+      <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.strftime($conf['dformat']);?></div>
       <div id="tool__bar"><?php if($wr){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
       target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
 

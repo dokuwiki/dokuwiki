@@ -865,7 +865,7 @@ function tpl_pageinfo(){
     }
   }
   $fn = utf8_decodeFN($fn);
-  $date = date($conf['dformat'],$INFO['lastmod']);
+  $date = strftime($conf['dformat'],$INFO['lastmod']);
 
   // print it
   if($INFO['exists']){

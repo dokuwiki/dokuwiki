@@ -65,7 +65,7 @@ $lang['youarehere']  = 'עקבות היררכיות להיסטוריה';
 $lang['typography']  = 'שימוש בחלופות טיפוגרפיות';
 $lang['htmlok']      = 'אישור שיבוץ HTML';
 $lang['phpok']       = 'אישור שיבוץ PHP';
-$lang['dformat']     = 'תסדיר תאריך (נא לפנות לפונקציה <a href="http://www.php.net/date">date</a> של PHP)';
+$lang['dformat']     = 'תסדיר תאריך (נא לפנות לפונקציה <a href="http://www.php.net/strftime">strftime</a> של PHP)';
 $lang['signature']   = 'חתימה';
 $lang['toptoclevel'] = 'רמה עליונה בתוכן הענינים';
 $lang['maxtoclevel'] = 'רמה מירבית בתוכן הענינים';

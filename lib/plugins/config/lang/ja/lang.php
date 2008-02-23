@@ -48,7 +48,7 @@ $lang['youarehere']              = '現在位置を表示';
 $lang['typography']              = 'タイポグラフィー変換';
 $lang['htmlok']                  = 'HTML埋め込み';
 $lang['phpok']                   = 'PHP埋め込み';
-$lang['dformat']                 = '日付フォーマット（PHPの<a href="http://www.php.net/date">date</a>関数を参照）';
+$lang['dformat']                 = '日付フォーマット（PHPの<a href="http://www.php.net/strftime">strftime</a>関数を参照）';
 $lang['signature']               = '署名';
 $lang['toptoclevel']             = '目次 トップレベル見出し';
 $lang['maxtoclevel']             = '目次 表示限度見出し';

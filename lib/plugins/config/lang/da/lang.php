@@ -64,7 +64,7 @@ $lang['youarehere']  = 'Hierarkisk sti';
 $lang['typography']  = 'Typografiske erstatninger';
 $lang['htmlok']      = 'Tillad indlejret HTML';
 $lang['phpok']       = 'Tillad indlejret PHP';
-$lang['dformat']     = 'Datoformat (se PHP\'s <a href="http://www.php.net/date">date</a> funktion)';
+$lang['dformat']     = 'Datoformat (se PHP\'s <a href="http://www.php.net/strftime">strftime</a> funktion)';
 $lang['signature']   = 'Signatur';
 $lang['toptoclevel'] = 'Højeste niveau for indholdsfortegnelse';
 $lang['maxtoclevel'] = 'Maksimalt niveau for indholdsfortegnelse';

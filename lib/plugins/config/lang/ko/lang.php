@@ -64,7 +64,7 @@ $lang['youarehere']  = '계층형 위치 추적';
 $lang['typography']  = '기호 대체';
 $lang['htmlok']      = 'HTML 내장 허용';
 $lang['phpok']       = 'PHP 내장 허용';
-$lang['dformat']     = '날짜 포맷 (PHP <a href="http://www.php.net/date">date</a> 기능) 참조';
+$lang['dformat']     = '날짜 포맷 (PHP <a href="http://www.php.net/strftime">strftime</a> 기능) 참조';
 $lang['signature']   = '서명';
 $lang['toptoclevel'] = '목차 최상위 항목';
 $lang['maxtoclevel'] = '목차 최대 단계';

@@ -47,7 +47,7 @@ $lang['youarehere']            = 'Traza jerárquica';
 $lang['typography']            = 'Realizar reemplazos tipográficos';
 $lang['htmlok']                = 'Permitir HTML embebido';
 $lang['phpok']                 = 'Permitir PHP embebido';
-$lang['dformat']               = 'Formato de fecha (ver la función de PHP <a href="http://www.php.net/date">date</a>)';
+$lang['dformat']               = 'Formato de fecha (ver la función de PHP <a href="http://www.php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Firma';
 $lang['toptoclevel']           = 'Nivel superior para la tabla de contenidos';
 $lang['maxtoclevel']           = 'Máximo nivel para la tabla de contenidos';

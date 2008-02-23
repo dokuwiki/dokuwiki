@@ -64,7 +64,7 @@ $lang['youarehere']  = '显示“您在这里”';
 $lang['typography']  = '进行字符替换';
 $lang['htmlok']      = '允许嵌入式 HTML';
 $lang['phpok']       = '允许嵌入式 PHP';
-$lang['dformat']     = '日期格式（参见 PHP 的 <a href="http://www.php.net/date">date</a> 功能）';
+$lang['dformat']     = '日期格式（参见 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 功能）';
 $lang['signature']   = '签名样式';
 $lang['toptoclevel'] = '目录的最顶层';
 $lang['maxtoclevel'] = '目录的最多层次';

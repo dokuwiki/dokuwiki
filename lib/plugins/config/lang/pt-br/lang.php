@@ -45,7 +45,7 @@ $lang['youarehere']            = 'Trilha hierárquica';
 $lang['typography']            = 'Efetuar modificações tipográficas';
 $lang['htmlok']                = 'Permitir incorporação de HTML';
 $lang['phpok']                 = 'Permitir incorporação de PHP';
-$lang['dformat']               = 'Formato da data (veja a função <a href="http://www.php.net/date">date</a> do PHP)';
+$lang['dformat']               = 'Formato da data (veja a função <a href="http://www.php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Assinatura';
 $lang['toptoclevel']           = 'Nível mais alto para a tabela de conteúdos';
 $lang['maxtoclevel']           = 'Nível máximo para a tabela de conteúdos';

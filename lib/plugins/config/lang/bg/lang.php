@@ -48,7 +48,7 @@ $lang['youarehere']              = 'Йерархични следи';
 $lang['typography']              = 'Поправяне на разместени букви';
 $lang['htmlok']                  = 'Позволяване на HTML';
 $lang['phpok']                   = 'Позволяване на PHP';
-$lang['dformat']                 = 'Формат на датата (виж. <a href="http://www.php.net/date">date</a> функцията на PHP)';
+$lang['dformat']                 = 'Формат на датата (виж. <a href="http://www.php.net/strftime">strftime</a> функцията на PHP)';
 $lang['signature']               = 'Подпис';
 $lang['toptoclevel']             = 'Главно ниво за съдържанието';
 $lang['maxtoclevel']             = 'Максимално ниво на съдържанието';

@@ -44,7 +44,7 @@ $lang['youarehere']            = 'Structura ierarhică a "urmelor" lăsate';
 $lang['typography']            = 'Fă înlocuiri topografice';
 $lang['htmlok']                = 'Permite intercalare cod HTML';
 $lang['phpok']                 = 'Permite intercalare cod PHP';
-$lang['dformat']               = 'Format dată (vezi funcţia PHP <a href="http://www.php.net/date">date</a>)';
+$lang['dformat']               = 'Format dată (vezi funcţia PHP <a href="http://www.php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Semnătura';
 $lang['toptoclevel']           = 'Primul nivel pentru cuprins';
 $lang['maxtoclevel']           = 'Nivelul maxim pentru cuprins';

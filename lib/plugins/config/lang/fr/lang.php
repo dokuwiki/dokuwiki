@@ -49,7 +49,7 @@ $lang['youarehere']            = 'Traces hiérarchiques';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['htmlok']                = 'Permettre html dans les pages';
 $lang['phpok']                 = 'Permettre php dans les pages';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://www.php.net/date">date</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://www.php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Signature';
 $lang['toptoclevel']           = 'Niveau supérieur pour figurer dans la table des matières';
 $lang['maxtoclevel']           = 'Niveau maximum pour figurer dans la table des matières';

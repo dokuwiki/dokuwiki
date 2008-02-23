@@ -47,7 +47,7 @@ $lang['youarehere']            = 'Hierarkiaj paneroj';
 $lang['typography']            = 'Fari tipografiajn anstataŭigojn';
 $lang['htmlok']                = 'Ebligi enmeton de HTML-aĵoj';
 $lang['phpok']                 = 'Ebligi enmeton de PHP-aĵoj';
-$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://www.php.net/date">date</a>';
+$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://www.php.net/strftime">strftime</a>';
 $lang['signature']             = 'Subskribo';
 $lang['toptoclevel']           = 'Supera nivelo por la enhavtabelo';
 $lang['maxtoclevel']           = 'Maksimuma nivelo por la enhavtabelo';
