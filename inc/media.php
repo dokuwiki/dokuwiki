@@ -27,13 +27,10 @@ function media_filesinuse($data,$id){
     echo '<p>'.hsc($lang['ref_inuse']).'</p>';
 
     $hidden=0; //count of hits without read permission
-    usort($data,'sort_search_fulltext');
     foreach($data as $row){
-        if(auth_quickaclcheck($row['id']) >= AUTH_READ){
+        if(auth_quickaclcheck($row) >= AUTH_READ && isVisiblePage($row)){
             echo '<div class="search_result">';
-            echo '<span class="mediaref_ref">'.$row['id'].'</span>';
-            echo ': <span class="search_cnt">'.$row['count'].' '.$lang['hits'].'</span><br />';
-            echo '<div class="search_snippet">'.$row['snippet'].'</div>';
+            echo '<span class="mediaref_ref">'.hsc($row).'</span>';
             echo '</div>';
         }else
         $hidden++;
@@ -142,6 +139,7 @@ function media_metaform($id,$auth){
     echo '</form>'.NL;
 }
 
+
 /**
  * Handles media file deletions
  *
@@ -156,9 +154,11 @@ function media_delete($id,$auth){
     global $conf;
     global $lang;
 
+    // check for references if needed
     $mediareferences = array();
     if($conf['refcheck']){
-        search($mediareferences,$conf['datadir'],'search_reference',array('query' => $id));
+        require_once(DOKU_INC.'inc/fulltext.php');
+        $mediareferences = ft_mediause($id,$conf['refshow']);
     }
 
     if(!count($mediareferences)){

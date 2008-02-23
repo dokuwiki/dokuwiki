@@ -18,6 +18,7 @@
     // get namespace to display (either direct or from deletion order)
     if($_REQUEST['delete']){
         $DEL = cleanID($_REQUEST['delete']);
+        $IMG = $DEL;
         $NS  = getNS($DEL);
     }elseif($_REQUEST['edit']){
         $IMG = cleanID($_REQUEST['edit']);

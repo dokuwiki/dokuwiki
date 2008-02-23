@@ -153,6 +153,56 @@ function ft_backlinks($id){
 }
 
 /**
+ * Returns the pages that use a given media file
+ *
+ * Does a quick lookup with the fulltext index, then
+ * evaluates the instructions of the found pages
+ *
+ * Aborts after $max found results
+ */
+function ft_mediause($id,$max){
+    global $conf;
+    $swfile   = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+    $stopwords = @file_exists($swfile) ? file($swfile) : array();
+
+    if(!$max) $max = 1; // need to find at least one
+
+    $result = array();
+
+    // quick lookup of the mediafile
+    $media   = noNS($id);
+    $matches = idx_lookup(idx_tokenizer($media,$stopwords));
+    $docs    = array_keys(ft_resultCombine(array_values($matches)));
+    if(!count($docs)) return $result;
+
+    // go through all found pages
+    $found = 0;
+    $pcre  = preg_quote($media,'/');
+    foreach($docs as $doc){
+        $ns = getNS($doc);
+        preg_match_all('/\{\{([^|}]*'.$pcre.'[^|}]*)(|[^}]+)?\}\}/i',rawWiki($doc),$matches);
+        foreach($matches[1] as $img){
+            $img = trim($img);
+            if(preg_match('/^https?:\/\//i',$img)) continue; // skip external images
+            list($img) = explode('?',$img);                  // remove any parameters
+            resolve_mediaid($ns,$img,$exists);               // resolve the possibly relative img
+
+            if($img == $id){                                 // we have a match
+                $result[] = $doc;
+                $found++;
+                break;
+            }
+        }
+        if($found >= $max) break;
+    }
+
+    sort($result);
+    return $result;
+}
+
+
+
+/**
  * Quicksearch for pagenames
  *
  * By default it only matches the pagename and ignores the
