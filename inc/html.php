@@ -782,6 +782,7 @@ function html_diff($text='',$intro=true){
   // given as rev and rev2 parameters, with rev2 being optional. Or in an
   // array in rev2.
   $rev1 = $REV;
+
   if(is_array($_REQUEST['rev2'])){
     $rev1 = (int) $_REQUEST['rev2'][0];
     $rev2 = (int) $_REQUEST['rev2'][1];
@@ -818,19 +819,31 @@ function html_diff($text='',$intro=true){
       $l_rev = $revs[0];
     }
 
-    $l_text = rawWiki($ID,$l_rev);
+    // when both revisions are empty then the page was created just now
+    if(!$l_rev && !$r_rev){
+      $l_text = '';
+    }else{
+      $l_text = rawWiki($ID,$l_rev);
+    }
     $r_text = rawWiki($ID,$r_rev);
 
-    $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-              $ID.' '.strftime($conf['dformat'],$l_rev).'</a>';
+
+    if(!$l_rev){
+      $l_head = '&mdash;';
+    }else{
+      $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
+                $ID.' '.strftime($conf['dformat'],$l_rev).'</a>';
+    }
 
     if($r_rev){
       $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
                 $ID.' '.strftime($conf['dformat'],$r_rev).'</a>';
-    }else{
+    }elseif($_rev = @filemtime(wikiFN($ID))){
       $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-               $ID.' '.strftime($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+               $ID.' '.strftime($conf['dformat'],$_rev).'</a> '.
                $lang['current'];
+    }else{
+      $r_head = '&mdash; '.$lang['current'];
     }
   }
 
