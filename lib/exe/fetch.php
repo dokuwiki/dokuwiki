@@ -425,7 +425,7 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * Checks if the given amount of memory is available
  *
  * If the memory_get_usage() function is not available the
- * function just assumes $used bytes of already allocated memory
+ * function just assumes $bytes of already allocated memory
  *
  * @param  int $mem  Size of memory you want to allocate in bytes
  * @param  int $used already allocated memory (see above)
@@ -437,27 +437,12 @@ function is_mem_available($mem,$bytes=1048576){
   if(empty($limit)) return true; // no limit set!
 
   // parse limit to bytes
-  $unit = strtolower(substr($limit,-1));
-  switch($unit){
-    case 'g':
-      $limit = substr($limit,0,-1);
-      $limit *= 1024*1024*1024;
-      break;
-    case 'm':
-      $limit = substr($limit,0,-1);
-      $limit *= 1024*1024;
-      break;
-    case 'k':
-      $limit = substr($limit,0,-1);
-      $limit *= 1024;
-      break;
-  }
+  $limit = php_to_byte($limit);
 
   // get used memory if possible
   if(function_exists('memory_get_usage')){
     $used = memory_get_usage();
   }
-
 
   if($used+$mem > $limit){
     return false;

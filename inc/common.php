@@ -1135,4 +1135,31 @@ function unslash($string,$char="'"){
   return str_replace('\\'.$char,$char,$string);
 }
 
+/**
+ * Convert php.ini shorthands to byte
+ *
+ * @author <gilthans dot NO dot SPAM at gmail dot com>
+ * @link   http://de3.php.net/manual/en/ini.core.php#79564
+ */
+function php_to_byte($v){
+    $l = substr($v, -1);
+    $ret = substr($v, 0, -1);
+    switch(strtoupper($l)){
+        case 'P':
+            $ret *= 1024;
+        case 'T':
+            $ret *= 1024;
+        case 'G':
+            $ret *= 1024;
+        case 'M':
+            $ret *= 1024;
+        case 'K':
+            $ret *= 1024;
+        break;
+    }
+    return $ret;
+}
+
+
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
