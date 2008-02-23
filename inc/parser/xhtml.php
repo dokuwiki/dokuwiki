@@ -669,7 +669,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         resolve_mediaid(getNS($ID),$src, $exists);
 
         $noLink = false;
-        $render = ($linking == 'justlink') ? false : true;
+        $render = ($linking == 'linkonly') ? false : true;
         $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
         list($ext,$mime) = mimetype($src);
@@ -696,7 +696,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL, $linking=NULL) {
         $noLink = false;
-        $render = ($linking == 'justlink') ? false : true;
+        $render = ($linking == 'linkonly') ? false : true;
         $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
         $link['url']    = ml($src,array('cache'=>$cache));
