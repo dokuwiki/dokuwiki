@@ -1431,6 +1431,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     // decide if there is something to do, eg. whom to mail
     if($who == 'admin') {
         if(empty($conf['notify'])) return false; //notify enabled?
+        if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return; //skip minors
         $tpl = 'mailtext';
         $to  = $conf['notify'];
     } elseif($who == 'subscribers') {
