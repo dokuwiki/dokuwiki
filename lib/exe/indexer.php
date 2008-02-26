@@ -27,11 +27,21 @@ if(@ignore_user_abort() && !$conf['broken_iua']){
     $defer = true;
 }
 
+$ID = cleanID($_REQUEST['id']);
+
 // Catch any possible output (e.g. errors)
 if(!$_REQUEST['debug']) ob_start();
 
 // run one of the jobs
-runIndexer() or metaUpdate() or runSitemapper() or runTrimRecentChanges();
+$tmp = array();
+$evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
+if ($evt->advise_before()) {
+  runIndexer() or 
+  metaUpdate() or 
+  runSitemapper() or 
+  runTrimRecentChanges() or 
+  $evt->advise_after();
+}
 if($defer) sendGIF();
 
 if(!$_REQUEST['debug']) ob_end_clean();
@@ -120,6 +130,7 @@ function runTrimRecentChanges() {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function runIndexer(){
+    global $ID;
     global $conf;
     print "runIndexer(): started".NL;
 
@@ -135,7 +146,6 @@ function runIndexer(){
         trigger_event('TEMPORARY_INDEX_UPGRADE_EVENT', $tmp);
     }
 
-    $ID = cleanID($_REQUEST['id']);
     if(!$ID) return false;
 
     // check if indexing needed
@@ -188,9 +198,9 @@ function runIndexer(){
  * gain their data when viewed for the first time.
  */
 function metaUpdate(){
+    global $ID;
     print "metaUpdate(): started".NL;
 
-    $ID = cleanID($_REQUEST['id']);
     if(!$ID) return false;
     $file = metaFN($ID, '.meta');
     echo "meta file: $file".NL;
