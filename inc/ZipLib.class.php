@@ -140,7 +140,7 @@ class ZipLib
 
  function Extract ( $zn, $to, $index = Array(-1) )
  {
-   if(!@is_dir($to)) @mkdir($to,0777);
+   if(!@is_dir($to)) $this->_mkdir($to);
    $ok = 0; $zip = @fopen($zn,'rb');
    if(!$zip) return(-1);
    $cdir = $this->ReadCentralDir($zip,$zn);
@@ -346,7 +346,7 @@ class ZipLib
  //--CS start
  // centralize mkdir calls and use dokuwiki io functions  
  function _mkdir($d) {
-    return ap_mkdir($d);  
+    return io_mkdir_p($d);  
  }
  //--CS end
 

@@ -895,7 +895,7 @@ $p_add, $p_rem);
 function _dirApp($d)
   {
 //  map to dokuwiki function (its more robust)
-    return ap_mkdir($d);
+    return io_mkdir_p($d);
 /*
     $d = explode('/', $d);
     $base = '';
