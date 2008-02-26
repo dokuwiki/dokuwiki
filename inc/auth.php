@@ -344,24 +344,22 @@ function auth_aclcheck($id,$user,$groups){
   global $conf;
   global $AUTH_ACL;
 
-  # if no ACL is used always return upload rights
+  // if no ACL is used always return upload rights
   if(!$conf['useacl']) return AUTH_UPLOAD;
-
-  $user = auth_nameencode($user);
-
-  //if user is superuser return 255 (acl_admin)
-  if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
 
   //make sure groups is an array
   if(!is_array($groups)) $groups = array();
+
+  //if user is superuser or in superusergroup return 255 (acl_admin)
+  if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
+
+  $user = auth_nameencode($user);
 
   //prepend groups with @ and nameencode
   $cnt = count($groups);
   for($i=0; $i<$cnt; $i++){
     $groups[$i] = '@'.auth_nameencode($groups[$i]);
   }
-  //if user is in superuser group return 255 (acl_admin)
-  if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
 
   $ns    = getNS($id);
   $perm  = -1;
