@@ -439,6 +439,26 @@ function io_mkdir_ftp($dir){
 }
 
 /**
+ * Creates a unique temporary directory and returns
+ * its path.
+ *
+ * @author Michael Klier <chi@chimeric.de>
+ */
+function io_mktmpdir() {
+    global $conf;
+
+    $base = $conf['savedir'].'/tmp/';
+    $dir  = md5(uniqid(rand(), true));
+    $tmpdir = $base.$dir;
+
+    if(io_mkdir_p($tmpdir)) {
+        return($tmpdir);
+    } else {
+        return false;
+    }
+}
+
+/**
  * downloads a file from the net and saves it
  *
  * if $useAttachment is false,
