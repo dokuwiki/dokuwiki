@@ -130,6 +130,102 @@ class auth_acl_test extends UnitTestCase {
         $this->assertEqual(auth_aclcheck('devel:marketing', 'jane'    ,array('devel'))     , AUTH_UPLOAD);
 
     }
+
+    function test_multiadmin_restricted(){
+        global $conf;
+        global $AUTH_ACL;
+        $conf['superuser'] = 'john,@admin,doe,@roots';
+        $conf['useacl']    = 1;
+
+        $AUTH_ACL = array(
+            '*           @ALL           0',
+            '*           @user          8',
+        );
+
+        // anonymous user
+        $this->assertEqual(auth_aclcheck('page',          '',array()), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:page','',array()), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:*',   '',array()), AUTH_NONE);
+
+        // user with no matching group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo')), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo')), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo')), AUTH_NONE);
+
+        // user with matching group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo','user')), AUTH_UPLOAD);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo','user')), AUTH_UPLOAD);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo','user')), AUTH_UPLOAD);
+
+        // super user john
+        $this->assertEqual(auth_aclcheck('page',          'john',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','john',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'john',array('foo')), AUTH_ADMIN);
+
+        // super user doe
+        $this->assertEqual(auth_aclcheck('page',          'doe',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','doe',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'doe',array('foo')), AUTH_ADMIN);
+
+        // user with matching admin group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo','admin')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo','admin')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo','admin')), AUTH_ADMIN);
+
+        // user with matching another admin group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo','roots')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo','roots')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo','roots')), AUTH_ADMIN);
+    }
+
+    function test_multiadmin_restricted_ropage(){
+        global $conf;
+        global $AUTH_ACL;
+        $conf['superuser'] = 'john,@admin,doe,@roots';
+        $conf['useacl']    = 1;
+
+        $AUTH_ACL = array(
+            '*                  @ALL           0',
+            '*                  @user          8',
+            'namespace:page     @user          1',
+        );
+
+        // anonymous user
+        $this->assertEqual(auth_aclcheck('page',          '',array()), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:page','',array()), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:*',   '',array()), AUTH_NONE);
+
+        // user with no matching group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo')), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo')), AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo')), AUTH_NONE);
+
+        // user with matching group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo','user')), AUTH_UPLOAD);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo','user')), AUTH_READ);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo','user')), AUTH_UPLOAD);
+
+        // super user john
+        $this->assertEqual(auth_aclcheck('page',          'john',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','john',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'john',array('foo')), AUTH_ADMIN);
+
+        // super user doe
+        $this->assertEqual(auth_aclcheck('page',          'doe',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','doe',array('foo')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'doe',array('foo')), AUTH_ADMIN);
+
+        // user with matching admin group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo','admin')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo','admin')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo','admin')), AUTH_ADMIN);
+
+        // user with matching another admin group
+        $this->assertEqual(auth_aclcheck('page',          'jill',array('foo','roots')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:page','jill',array('foo','roots')), AUTH_ADMIN);
+        $this->assertEqual(auth_aclcheck('namespace:*',   'jill',array('foo','roots')), AUTH_ADMIN);
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

@@ -273,9 +273,22 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
   $user   = auth_nameencode($user);
 
   // check username against superuser and manager
-  if(auth_nameencode($conf['superuser']) == $user) return true;
+  $superusers = explode(',', $conf['superuser']);
+  $superusers = array_unique($superusers);
+  $superusers = array_map('trim', $superusers);
+  // prepare an array containing only true values for array_map call
+  $alltrue = array_fill(0, count($superusers), true);
+  $superusers = array_map('auth_nameencode', $superusers, $alltrue);
+  if(in_array($user, $superusers)) return true;
+
   if(!$adminonly){
-    if(auth_nameencode($conf['manager']) == $user) return true;
+    $managers = explode(',', $conf['manager']);
+    $managers = array_unique($managers);
+    $managers = array_map('trim', $managers);
+    // prepare an array containing only true values for array_map call
+    $alltrue = array_fill(0, count($managers), true);
+    $managers = array_map('auth_nameencode', $managers, $alltrue);
+    if(in_array($user, $managers)) return true;
   }
 
   // check user's groups against superuser and manager
@@ -288,9 +301,11 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     }
 
     // check groups against superuser and manager
-    if(in_array(auth_nameencode($conf['superuser'],true), $groups)) return true;
+    foreach($superusers as $supu)
+      if(in_array($supu, $groups)) return true;
     if(!$adminonly){
-      if(in_array(auth_nameencode($conf['manager'],true), $groups)) return true;
+      foreach($managers as $mana)
+        if(in_array($mana, $groups)) return true;
     }
   }
 
