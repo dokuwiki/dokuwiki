@@ -139,8 +139,18 @@ class HTTPClient {
     }
 
     /**
-     * Do an HTTP request
+     * Send an HTTP request
      *
+     * This method handles the whole HTTP communication. It respects set proxy settings,
+     * builds the request headers, follows redirects and parses the response.
+     *
+     * Post data should be passed as associative array. When passed as string it will be
+     * sent as is. You will need to setup your own Content-Type header then.
+     *
+     * @param  string $url    - the complete URL
+     * @param  mixed  $data   - the post data
+     * @param  string $method - HTTP Method usually GET or POST.
+     * @return bool - true on success
      * @author Andreas Goetz <cpuidle@gmx.de>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -181,9 +191,12 @@ class HTTPClient {
         $headers['Referer']    = $this->referer;
         $headers['Connection'] = 'Close';
         if($method == 'POST'){
-            $post = $this->_postEncode($data);
-            $headers['Content-Type']   = 'application/x-www-form-urlencoded';
-            $headers['Content-Length'] = strlen($post);
+            if(is_array($data)){
+                $headers['Content-Type']   = 'application/x-www-form-urlencoded';
+                $data = $this->_postEncode($data);
+            }
+            $headers['Content-Length'] = strlen($data);
+            $rmethod = 'POST';
         }
         if($this->user) {
             $headers['Authorization'] = 'Basic '.base64_encode($this->user.':'.$this->pass);
@@ -210,7 +223,7 @@ class HTTPClient {
         $request .= $this->_buildHeaders($headers);
         $request .= $this->_getCookies();
         $request .= HTTP_NL;
-        $request .= $post;
+        $request .= $data;
 
         $this->_debug('request',$request);
 
