@@ -125,6 +125,7 @@ $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['sitemap']     = 'Generate Google sitemap (days)';
 $lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
 $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';
+$lang['xmlrpc']      = 'Enable/disable XML-RPC interface.';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';

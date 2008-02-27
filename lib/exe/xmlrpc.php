@@ -5,10 +5,12 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 
 
-//EXPERIMENTAL CODE
-die('remove me to get it work');
-
 require_once(DOKU_INC.'inc/init.php');
+
+if(!$conf['xmlrpc']) {
+    die('XML-RPC server not enabled.');
+}
+
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/auth.php');
 session_write_close();  //close session
@@ -33,7 +35,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'dokuwiki.getVersion',
             'getVersion',
             array('string'),
-            'Returns the running DokuWiki version'
+            'Returns the running DokuWiki version.'
         );
 
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
@@ -41,7 +43,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'wiki.getRPCVersionSupported',
             'this:wiki_RPCVersion',
             array('int'),
-            'Returns 2 with the supported RPC API version'
+            'Returns 2 with the supported RPC API version.'
         );
         $this->addCallback(
             'wiki.getPage',
@@ -95,13 +97,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'wiki.putPage',
             'this:putPage',
             array('int', 'string', 'string', 'struct'),
-            'Saves a wiki page'
+            'Saves a wiki page.'
         );
         $this->addCallback(
             'wiki.listLinks',
             'this:listLinks',
             array('struct','string'),
-            'Lists all links contained in a wiki page'
+            'Lists all links contained in a wiki page.'
         );
         $this->addCallback(
             'wiki.getRecentChanges',
@@ -188,7 +190,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $minor = $params['minor'];
 
         if(empty($id))
-            return new IXR_Error(1, 'Empty Page ID');
+            return new IXR_Error(1, 'Empty page ID');
 
         if(auth_quickaclcheck($id) < AUTH_WRITE)
             return new IXR_Error(1, 'You are not allowed to edit this page');
@@ -198,7 +200,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return new IXR_Error(1, 'The page is currently locked');
 
         if(empty($TEXT))
-            return new IXR_Error(1, 'No Text supplied');
+            return new IXR_Error(1, 'No text supplied');
 
         //spam check
         if(checkwordblock()) 
@@ -337,7 +339,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function wiki_RPCVersion(){
         return 2;
     }
-
 }
 
 $server = new dokuwiki_xmlrpc_server();
