@@ -157,7 +157,8 @@ function init_paths(){
                  'metadir'   => 'meta',
                  'cachedir'  => 'cache',
                  'indexdir'  => 'index',
-                 'lockdir'   => 'locks');
+                 'lockdir'   => 'locks',
+                 'tmpdir'    => 'tmp');
 
   foreach($paths as $c => $p){
     if(empty($conf[$c]))  $conf[$c] = $conf['savedir'].'/'.$p;
