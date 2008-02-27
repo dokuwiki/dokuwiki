@@ -767,7 +767,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     }
                 }
                 if($params['date']){
-                    $this->doc .= ' ('.$item->get_date($conf['dformat']).')';
+                    $this->doc .= ' ('.$item->get_local_date($conf['dformat']).')';
                 }
                 if($params['details']){
                     $this->doc .= '<div class="detail">';
