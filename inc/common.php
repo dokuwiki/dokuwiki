@@ -108,10 +108,11 @@ function pageinfo(){
   $info['rev'] = $REV;
 
   if($_SERVER['REMOTE_USER']){
-    $info['userinfo']   = $USERINFO;
-    $info['perm']       = auth_quickaclcheck($ID);
-    $info['subscribed'] = is_subscribed($ID,$_SERVER['REMOTE_USER']);
-    $info['client']     = $_SERVER['REMOTE_USER'];
+    $info['userinfo']     = $USERINFO;
+    $info['perm']         = auth_quickaclcheck($ID);
+    $info['subscribed']   = is_subscribed($ID,$_SERVER['REMOTE_USER'],false);
+    $info['subscribedns'] = is_subscribed($ID,$_SERVER['REMOTE_USER'],true);
+    $info['client']       = $_SERVER['REMOTE_USER'];
 
     // set info about manager/admin status
     $info['isadmin']   = false;
@@ -1071,12 +1072,20 @@ function obfuscate($email) {
 }
 
 /**
- * Let us know if a user is tracking a page
+ * Let us know if a user is tracking a page or a namespace
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function is_subscribed($id,$uid){
-  $file=metaFN($id,'.mlist');
+function is_subscribed($id,$uid,$ns=false){
+  if(!$ns) {
+    $file=metaFN($id,'.mlist');
+  } else {
+    if(!getNS($id)) {
+      $file = metaFN(getNS($id),'.mlist');
+    } else {
+      $file = metaFN(getNS($id),'/.mlist');
+    }
+  }
   if (@file_exists($file)) {
     $mlist = file($file);
     $pos = array_search($uid."\n",$mlist);
@@ -1100,10 +1109,38 @@ function subscriber_addresslist($id){
 
   if (!$conf['subscribers']) return;
 
+  // load the page mlist file content
   $mlist = array();
   $file=metaFN($id,'.mlist');
   if (@file_exists($file)) {
     $mlist = file($file);
+  }
+  if(count($mlist) > 0) {
+    foreach ($mlist as $who) {
+      $who = rtrim($who);
+      $info = $auth->getUserData($who);
+      if($info === false) continue;
+      $level = auth_aclcheck($id,$who,$info['grps']);
+      if ($level >= AUTH_READ) {
+        if (strcasecmp($info['mail'],$conf['notify']) != 0) {
+          if (empty($emails)) {
+            $emails = $info['mail'];
+          } else {
+            $emails = "$emails,".$info['mail'];
+          }
+        }
+      }
+    }
+  }
+
+  // load also the namespace mlist file content
+  if(!getNS($id)) {
+    $nsfile = metaFN(getNS($id),'.mlist');
+  } else {
+    $nsfile = metaFN(getNS($id),'/.mlist');
+  }
+  if (@file_exists($nsfile)) {
+    $mlist = file($nsfile);
   }
   if(count($mlist) > 0) {
     foreach ($mlist as $who) {

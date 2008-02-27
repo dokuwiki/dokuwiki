@@ -518,6 +518,11 @@ function tpl_button($type){
           } else {
             print html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
           }
+          if($INFO['subscribedns']){
+            print html_btn('unsubscribens',$ID,'',array('do' => 'unsubscribens',));
+          } else {
+            print html_btn('subscribens',$ID,'',array('do' => 'subscribens',));
+          }
           return true;
         }
       }

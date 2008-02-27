@@ -47,6 +47,10 @@ function act_dispatch(){
     if($ACT == 'subscribe' || $ACT == 'unsubscribe')
       $ACT = act_subscription($ACT);
 
+    //check if user is asking to (un)subscribe a namespace
+    if($ACT == 'subscribens' || $ACT == 'unsubscribens')
+      $ACT = act_subscriptionns($ACT);
+
     //check permissions
     $ACT = act_permcheck($ACT);
 
@@ -169,7 +173,7 @@ function act_clean($act){
   //disable all acl related commands if ACL is disabled
   if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
                                              'subscribe','unsubscribe','profile',
-                                             'resendpwd',))){
+                                             'resendpwd','subscribens','unsubscribens',))){
     msg('Command unavailable: '.htmlspecialchars($act),-1);
     return 'show';
   }
@@ -178,7 +182,7 @@ function act_clean($act){
                           'preview','search','show','check','index','revisions',
                           'diff','recent','backlink','admin','subscribe',
                           'unsubscribe','profile','resendpwd','recover','wordblock',
-                          'draftdel',)) && substr($act,0,7) != 'export_' ) {
+                          'draftdel','subscribens','unsubscribens',)) && substr($act,0,7) != 'export_' ) {
     msg('Command unknown: '.htmlspecialchars($act),-1);
     return 'show';
   }
@@ -417,7 +421,7 @@ function act_export($act){
 }
 
 /**
- * Handle 'subscribe', 'unsubscribe'
+ * Handle page 'subscribe', 'unsubscribe'
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
  * @todo   localize
@@ -442,6 +446,44 @@ function act_subscription($act){
   } elseif ($act=='unsubscribe' && $INFO['subscribed']){
     if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
       $INFO['subscribed'] = false;
+      msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
+    } else {
+      msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
+    }
+  }
+
+  return 'show';
+}
+
+/**
+ * Handle namespace 'subscribe', 'unsubscribe'
+ *
+ */
+function act_subscriptionns($act){
+  global $ID;
+  global $INFO;
+  global $lang;
+
+  if(!getNS($ID)) {
+    $file = metaFN(getNS($ID),'.mlist');
+  } else {
+    $file = metaFN(getNS($ID),'/.mlist');
+  }
+
+  if ($act=='subscribens' && !$INFO['subscribedns']){
+    if ($INFO['userinfo']['mail']){
+      if (io_saveFile($file,$_SERVER['REMOTE_USER']."\n",true)) {
+        $INFO['subscribedns'] = true;
+        msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
+      } else {
+        msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
+      }
+    } else {
+      msg($lang['subscribe_noaddress']);
+    }
+  } elseif ($act=='unsubscribens' && $INFO['subscribedns']){
+    if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
+      $INFO['subscribedns'] = false;
       msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
     } else {
       msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
