@@ -53,7 +53,7 @@ You can run the tests in three ways. From the command line:
 
 Using a web browser;
 
-	http://localhost/dokuwiki/test/index.php
+	http://localhost/dokuwiki/_test/index.php
 
 As remote tests run on a remote serveri (specified in tests.ini with REMOTE_TEST_URL) and driven locally from the command line using;
 

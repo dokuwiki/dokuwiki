@@ -48,7 +48,7 @@ class init_resolve_pageid_test extends UnitTestCase {
         $tests[] = array('foo','.:','foo:start');
         $tests[] = array('','foo:','foo:start');
         $tests[] = array('foo','foo:','foo:start');
-        $tests[] = array('foo','playground:','playground:playground');
+        $tests[] = array('foo','playground:','playground:start');
 
 
         foreach($tests as $test){
