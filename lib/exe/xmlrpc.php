@@ -199,9 +199,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if(checklock($id))
             return new IXR_Error(1, 'The page is currently locked');
 
-        if(empty($TEXT))
-            return new IXR_Error(1, 'No text supplied');
-
         //spam check
         if(checkwordblock()) 
             return new IXR_Error(1, 'Positive wordblock check');
