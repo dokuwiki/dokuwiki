@@ -183,6 +183,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function putPage($id, $text, $params) {
         global $TEXT;
+        global $lang;
 
         $id    = cleanID($id);
         $TEXT  = trim($text);
@@ -199,9 +200,19 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if(checklock($id))
             return new IXR_Error(1, 'The page is currently locked');
 
-        //spam check
+        // SPAM check
         if(checkwordblock()) 
             return new IXR_Error(1, 'Positive wordblock check');
+
+        // autoset summary on new pages
+        if(!page_exists($id) && empty($sum)) {
+            $sum = $lang['created'];
+        }
+
+        // autoset summary on deleted pages
+        if(page_exists($id) && empty($TEXT) && empty($sum)) {
+            $sum = $lang['deleted'];
+        }
 
         lock($id);
 
