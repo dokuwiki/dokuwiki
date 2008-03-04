@@ -193,6 +193,10 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if(empty($id))
             return new IXR_Error(1, 'Empty page ID');
 
+        if(!page_exists($id) && empty($TEXT)) {
+            return new IXR_ERROR(1, 'Refusing to write an empty new wiki page');
+        }
+
         if(auth_quickaclcheck($id) < AUTH_WRITE)
             return new IXR_Error(1, 'You are not allowed to edit this page');
 
