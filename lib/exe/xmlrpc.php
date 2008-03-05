@@ -94,6 +94,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Returns a struct with infos about the page.'
         );
         $this->addCallback(
+            'wiki.getPageVersions',
+            'this:pageVersions',
+            array('struct','string','int'),
+            'Returns the available revisions of the page.'
+        );
+        $this->addCallback(
             'wiki.putPage',
             'this:putPage',
             array('int', 'string', 'string', 'struct'),
@@ -343,6 +349,57 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         }
         // in case we still have nothing at this point
         return new IXR_Error(30, 'There are no changes in the specified timeframe');
+    }
+
+    /**
+     * Returns a list of available revisions of a given wiki page
+     *
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    function pageVersions($id, $first) {
+        global $conf;
+
+        $versions = array();
+
+        if(empty($id))
+            return new IXR_Error(1, 'Empty page ID');
+
+        require_once(DOKU_INC.'inc/changelog.php');
+
+        $revisions = getRevisions($id, $first, $conf['recent']+1);
+
+        if(count($revisions)==0 && $first!=0) {
+            $first=0;
+            $revisions = getRevisions($id, $first, $conf['recent']+1);
+        }
+
+        $hasNext = false;
+        if (count($revisions)>$conf['recent']) {
+            $hasNext = true;
+            array_pop($revisions); // remove extra log entry
+        }
+
+        if(!empty($revisions)) {
+            foreach($revisions as $rev) {
+                $file = wikiFN($id,$rev);
+                $time = @filemtime($file);
+                if($time){
+                    $info = getRevisionInfo($id, $time, 1024);
+                    if(!empty($info)) {
+                        $data['user'] = $info['user'];
+                        $data['ip']   = $info['ip'];
+                        $data['type'] = $info['type'];
+                        $data['sum']  = $info['sum'];
+                        $data['modified'] = new IXR_Date($info['date']);
+                        $data['version'] = $info['date'];
+                        array_push($versions, $data);
+                    }
+                }
+            }
+            return $versions;
+        } else {
+            return array(); 
+        }
     }
 
     /**
