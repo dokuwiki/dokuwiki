@@ -55,7 +55,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('footnote_close',array()),
             ))),
             array('cdata',array(' Bar')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -87,7 +87,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array('Foo ')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('cdata',array('X')),
             array('nest', array ( array (
               array('footnote_open',array()),
@@ -95,9 +95,9 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('footnote_close',array()),
             ))),
             array('cdata',array('Y')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('cdata',array(' Bar')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -206,7 +206,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('footnote_close',array()),
             ))),
             array('cdata',array(' Bar')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );

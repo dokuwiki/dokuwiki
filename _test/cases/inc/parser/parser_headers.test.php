@@ -108,7 +108,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
-		function testHeader2UnevenSmaller() {
+    function testHeader2UnevenSmaller() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n  ===== Header ==  \n def");
         $calls = array (
@@ -260,14 +260,14 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array('abc ')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',1, 6)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array(' def')),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('section_close',array()),
             array('section_edit',array(6,0,1,'Header')),

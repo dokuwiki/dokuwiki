@@ -212,7 +212,7 @@ Bar');
             array('listu_close',array()),
             array('p_open',array()),
             array('cdata',array("Bar")),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );

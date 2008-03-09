@@ -87,7 +87,7 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
             array('quote_close',array()),
             array('p_open',array()),
             array('cdata',array("klm")),
-            array('cdata',array(' ')),
+            array('cdata',array(DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
             

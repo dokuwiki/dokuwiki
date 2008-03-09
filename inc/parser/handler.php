@@ -1,6 +1,8 @@
 <?php
 if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
 
+if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL'," ");   // add this to make handling test cases simpler
+
 class Doku_Handler {
 
     var $Renderer = NULL;
@@ -1575,7 +1577,7 @@ class Doku_Handler_Block {
 
                         }else{
                             //if this is just a single eol make a space from it
-                            $this->calls[] = array('cdata',array(" "), $call[2]);
+                            $this->calls[] = array('cdata',array(DOKU_PARSER_EOL), $call[2]);
                         }
                     }
 
