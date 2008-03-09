@@ -1,0 +1,20 @@
+====== Enquête de popularité ======
+
+Cet outil collecte des données anonymes concernant votre wiki et vous
+permet de les expédier aux développeurs de DokuWiki. Ceci leur permet
+de mieux comprendre comment DokuWiki est employé par ses utilisateurs
+et d'orienter les décisions sur les développements futurs en tenant
+compte des statistiques d'usage réel.
+
+Vous êtes encouragé à répéter l'opération de collecte et d'envoi des
+données anonymes de temps en temps afin d'informer les développeurs de
+la croissance de votre wiki.
+
+Les données collectées contiennent des informations telle que votre
+version de DokuWiki, le nombre et la taille de vos pages et fichiers,
+les plugins installés ainsi que des informations sur la version de PHP
+installée.
+
+Les données brutes qui sont envoyées sont affichées ci dessous. Merci
+d'utiliser le bouton "Envoyer les données" pour expédier l'information.
+

@@ -1,4 +1,4 @@
-====== Gestionnaire de réversion ======
+====== Gestion des réversions ======
 
 Cette page peut vous aider à restaurer des pages après une attaque
 de spam. Pour trouver la liste des pages victimes des spammeurs,

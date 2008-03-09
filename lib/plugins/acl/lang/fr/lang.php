@@ -12,7 +12,7 @@
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  */
-$lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès';
+$lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
 $lang['acl_group']             = 'Groupe';
 $lang['acl_user']              = 'Utilisateur';
 $lang['acl_perms']             = 'Permission pour';

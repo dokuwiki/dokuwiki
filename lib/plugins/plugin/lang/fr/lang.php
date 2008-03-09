@@ -7,7 +7,7 @@
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  */
-$lang['menu']                  = 'Gérer les plugins';
+$lang['menu']                  = 'Gestion des plugins';
 $lang['download']              = 'Télécharger et installer un nouveau plugin';
 $lang['manage']                = 'Plugins installés';
 $lang['btn_info']              = 'info';

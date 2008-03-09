@@ -5,7 +5,7 @@
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  */
-$lang['menu']                  = 'Gestionnaire de réversion';
+$lang['menu']                  = 'Gestion des réversions';
 $lang['filter']                = 'Trouver les pages spammées ';
 $lang['revert']                = 'Annuler les éditions sélectionnées';
 $lang['reverted']              = '%s restauré à la révision %s';
