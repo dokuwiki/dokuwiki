@@ -116,8 +116,8 @@ $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['registernotify'] = array('email');
 $meta['disableactions'] = array('disableactions',
-                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
-                                '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
+                                '_choices' => array('backlink','index','recent','revisions','search','subscription','nssubscription','register','resendpwd','profile','edit','wikicode','check'),
+                                '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw'), 'nssubscription' => array('subscribens','unsubscribens')));
 $meta['sneaky_index'] = array('onoff');
 $meta['auth_security_timeout'] = array('numeric');
 
