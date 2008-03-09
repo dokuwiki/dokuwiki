@@ -265,7 +265,7 @@ function html_draft(){
 function html_hilight($html,$regex){
   // strip everything that's special except pipes:
   $regex = preg_replace('![\[\]()/\\\\?\.+*]+!','',$regex);
-  $regex = trim($regex,' |');
+  $regex = join('|',array_filter(array_map('trim',explode('|',$regex))));
 
   if ($regex === '') return $html;
   $html = preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
