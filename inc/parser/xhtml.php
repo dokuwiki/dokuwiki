@@ -1020,11 +1020,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 }
             }
             return $this->_xmlEntities($default);
-        } else if ( is_string($title) ) {
-            return $this->_xmlEntities($title);
         } else if ( is_array($title) ) {
             $isImage = true;
             return $this->_imageTitle($title);
+        } else {
+            return $this->_xmlEntities($title);
         }
     }
 
