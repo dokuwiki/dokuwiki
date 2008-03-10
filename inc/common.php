@@ -1197,6 +1197,11 @@ function php_to_byte($v){
     return $ret;
 }
 
-
+/**
+ * Wrapper around preg_quote adding the default delimiter
+ */
+function preg_quote_cb($string){
+    return preg_quote($string,'/');
+}
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

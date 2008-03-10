@@ -517,8 +517,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['title']  = $id;
         //add search string
         if($search){
-            ($conf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
-            $link['url'] .= rawurlencode($search);
+            ($conf['userewrite']) ? $link['url'].='?' : $link['url'].='&amp;';
+            if(is_array($search)){
+                $search = array_map('rawurlencode',$search);
+                $link['url'] .= 's[]='.join('&amp;s[]=',$search);
+            }else{
+                $link['url'] .= 's='.rawurlencode($search);
+            }
         }
 
         //keep hash

@@ -262,10 +262,8 @@ function html_draft(){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function html_hilight($html,$regex){
-  // strip everything that's special except pipes:
-  $regex = preg_replace('![\[\]()/\\\\?\.+*]+!','',$regex);
-  $regex = join('|',array_filter(array_map('trim',explode('|',$regex))));
+function html_hilight($html,$phrases){
+  $regex = join('|',array_map('preg_quote_cb',array_filter((array) $phrases)));
 
   if ($regex === '') return $html;
   $html = preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);

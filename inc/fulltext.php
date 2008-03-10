@@ -11,23 +11,20 @@
 
 
 /**
- * Wrapper around preg_quote adding the default delimiter
- */
-function ft_preg_quote_cb($string){
-    return preg_quote($string,'/');
-}
-
-/**
  * The fulltext search
  *
  * Returns a list of matching documents for the given query
  *
  */
-function ft_pageSearch($query,&$regex){
+function ft_pageSearch($query,&$highlight){
     $q = ft_queryParser($query);
 
+    $highlight = array();
+
     // remember for hilighting later
-    $regex = str_replace('*','',join('|',$q['words']));
+    foreach($q['words'] as $wrd){
+        $highlight[] =  str_replace('*','',$wrd);
+    }
 
     // lookup all words found in the query
     $words  = array_merge($q['and'],$q['not']);
@@ -76,12 +73,10 @@ function ft_pageSearch($query,&$regex){
     if(!count($docs)) return array();
     // handle phrases
     if(count($q['phrases'])){
-        //build a regexp
         $q['phrases'] = array_map('utf8_strtolower',$q['phrases']);
-        $q['phrases'] = array_map('ft_preg_quote_cb',$q['phrases']);
         // use this for higlighting later:
-        if($regex !== '') $regex .= '|';
-        $regex .= join('|',$q['phrases']);
+        $highlight = array_merge($highlight,$q['phrases']);
+        $q['phrases'] = array_map('preg_quote_cb',$q['phrases']);
         // check the source of all documents for the exact phrases
         foreach(array_keys($docs) as $id){
             $text  = utf8_strtolower(rawWiki($id));
@@ -250,12 +245,15 @@ function ft_pageLookup($id,$pageonly=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function ft_snippet($id,$re){
+function ft_snippet($id,$highlight){
     $text     = rawWiki($id);
     $match = array();
     $snippets = array();
     $utf8_offset = $offset = $end = 0;
     $len = utf8_strlen($text);
+
+    // build a regexp from the phrases to highlight
+    $re = join('|',array_map('preg_quote_cb',array_filter((array) $highlight)));
 
     for ($cnt=3; $cnt--;) {
       if (!preg_match('#('.$re.')#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
