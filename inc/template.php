@@ -312,11 +312,11 @@ function tpl_metaheaders($alt=true){
 
   // load stylesheets
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'all', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php?s=all');
+                          'href'=>DOKU_BASE.'lib/exe/css.php?s=all&t='.$conf['template']);
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php');
+                          'href'=>DOKU_BASE.'lib/exe/css.php?t='.$conf['template']);
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php?s=print');
+                          'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template']);
 
   // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover' || $ACT=='wordblock' ) ? 1 : 0;

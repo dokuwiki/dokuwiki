@@ -41,15 +41,24 @@ function css_out(){
         break;
     }
 
+    $tpl = trim(preg_replace('/[^\w]+/','',$_REQUEST['t']));
+    if($tpl){
+        $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
+        $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
+    }else{
+        $tplinc = DOKU_TPLINC;
+        $tpldir = DOKU_TPL;
+    }
+
     // The generated script depends on some dynamic options
-    $cache = getCacheName('styles'.DOKU_BASE.$conf['template'].$style,'.css');
+    $cache = getCacheName('styles'.DOKU_BASE.$tplinc.$style,'.css');
 
     // load template styles
     $tplstyles = array();
-    if(@file_exists(DOKU_TPLINC.'style.ini')){
-        $ini = parse_ini_file(DOKU_TPLINC.'style.ini',true);
+    if(@file_exists($tplinc.'style.ini')){
+        $ini = parse_ini_file($tplinc.'style.ini',true);
         foreach($ini['stylesheets'] as $file => $mode){
-            $tplstyles[$mode][DOKU_TPLINC.$file] = DOKU_TPL;
+            $tplstyles[$mode][$tplinc.$file] = $tpldir;
         }
     }
 
@@ -80,7 +89,7 @@ function css_out(){
     // check cache age & handle conditional request
     header('Cache-Control: public, max-age=3600');
     header('Pragma: public');
-    if(css_cacheok($cache,array_keys($files))){
+    if(css_cacheok($cache,array_keys($files),$tplinc)){
         http_conditionalRequest(filemtime($cache));
         if($conf['allowdebug']) header("X-CacheUsed: $cache");
         readfile($cache);
@@ -106,7 +115,7 @@ function css_out(){
     ob_end_clean();
 
     // apply style replacements
-    $css = css_applystyle($css);
+    $css = css_applystyle($css,$tplinc);
 
     // compress whitespace and comments
     if($conf['compress']){
@@ -125,7 +134,7 @@ function css_out(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_cacheok($cache,$files){
+function css_cacheok($cache,$files,$tplinc){
     if($_REQUEST['purge']) return false; //support purge request
 
     $ctime = @filemtime($cache);
@@ -134,7 +143,7 @@ function css_cacheok($cache,$files){
     // some additional files to check
     $files[] = DOKU_CONF.'dokuwiki.php';
     $files[] = DOKU_CONF.'local.php';
-    $files[] = DOKU_TPLINC.'style.ini';
+    $files[] = $tplinc.'style.ini';
     $files[] = __FILE__;
 
     // now walk the files
@@ -152,9 +161,9 @@ function css_cacheok($cache,$files){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_applystyle($css){
-    if(@file_exists(DOKU_TPLINC.'style.ini')){
-        $ini = parse_ini_file(DOKU_TPLINC.'style.ini',true);
+function css_applystyle($css,$tplinc){
+    if(@file_exists($tplinc.'style.ini')){
+        $ini = parse_ini_file($tplinc.'style.ini',true);
         $css = strtr($css,$ini['replacements']);
     }
     return $css;
