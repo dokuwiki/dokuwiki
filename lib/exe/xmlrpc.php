@@ -373,8 +373,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             $revisions = getRevisions($id, $first, $conf['recent']+1);
         }
 
+        if(count($revisions)>0 && $first==0) {
+            array_unshift($revisions, '');  // include current revision
+            array_pop($revisions);          // remove extra log entry
+        }
+
         $hasNext = false;
-        if (count($revisions)>$conf['recent']) {
+        if(count($revisions)>$conf['recent']) {
             $hasNext = true;
             array_pop($revisions); // remove extra log entry
         }
@@ -383,6 +388,9 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             foreach($revisions as $rev) {
                 $file = wikiFN($id,$rev);
                 $time = @filemtime($file);
+                // we check if the page actually exists, if this is not the
+                // case this can lead to less pages being returned than
+                // specified via $conf['recent']
                 if($time){
                     $info = getRevisionInfo($id, $time, 1024);
                     if(!empty($info)) {
