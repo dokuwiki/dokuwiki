@@ -789,8 +789,23 @@ class Doku_Handler_Nest {
     }
 
     function process() {
+        // merge consecutive cdata
+        $unmerged_calls = $this->calls;
+        $this->calls = array();
+
+        foreach ($unmerged_calls as $call) $this->addCall($call);
+
         $first_call = reset($this->calls);
         $this->CallWriter->writeCall(array("nest", array($this->calls), $first_call[2]));
+    }
+
+    function addCall($call) {
+        $key = count($this->calls);
+        if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
+            $this->calls[$key-1][1][0] .= $call[1][0];
+        } else {
+            $this->calls[] = $call;
+        }
     }
 }
 
@@ -1060,7 +1075,6 @@ class Doku_Handler_Quote {
     // Probably not needed but just in case...
     function writeCalls($calls) {
         $this->calls = array_merge($this->calls, $calls);
-#        $this->CallWriter->writeCalls($this->calls);
     }
 
     function finalise() {
@@ -1156,7 +1170,6 @@ class Doku_Handler_Table {
     // Probably not needed but just in case...
     function writeCalls($calls) {
         $this->calls = array_merge($this->calls, $calls);
-#        $this->CallWriter->writeCalls($this->calls);
     }
 
     function finalise() {
@@ -1577,7 +1590,7 @@ class Doku_Handler_Block {
 
                         }else{
                             //if this is just a single eol make a space from it
-                            $this->calls[] = array('cdata',array(DOKU_PARSER_EOL), $call[2]);
+                            $this->addCall(array('cdata',array(DOKU_PARSER_EOL), $call[2]));
                         }
                     }
 
@@ -1623,7 +1636,7 @@ class Doku_Handler_Block {
                     }
 
                     if ( $storeCall ) {
-                        $this->calls[] = $call;
+                        $this->addCall($call);
                     }
 
                 }
@@ -1640,7 +1653,7 @@ class Doku_Handler_Block {
                     $this->atStart = false;
                     $this->inParagraph = true;
                 } else {
-                    $this->calls[] = $call;
+                    $this->addCall($call);
                     $this->atStart = false;
                 }
 
@@ -1676,6 +1689,15 @@ class Doku_Handler_Block {
         $state = array_pop($this->blockStack);
         $this->atStart = $state[0];
         $this->inParagraph = $state[1];
+    }
+
+    function addCall($call) {
+        $key = count($this->calls);
+        if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
+            $this->calls[$key-1][1][0] .= $call[1][0];
+        } else {
+            $this->calls[] = $call;
+        }
     }
 }
 

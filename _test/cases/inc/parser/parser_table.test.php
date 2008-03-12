@@ -278,8 +278,7 @@ def');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array(DOKU_PARSER_EOL)),
-            array('cdata',array("abc")),
+            array('cdata',array(DOKU_PARSER_EOL."abc")),
             array('p_close',array()),
             array('table_open',array(3,2)),
             array('tablerow_open',array()),
@@ -306,8 +305,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array()),
             array('p_open',array()),
-            array('cdata',array('def')),
-            array('cdata',array(DOKU_PARSER_EOL)),
+            array('cdata',array('def'.DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );

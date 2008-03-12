@@ -13,10 +13,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("Foo")),
-            array('cdata',array(DOKU_PARSER_EOL)),
-            array('cdata',array("Bar")),
-            array('cdata',array(DOKU_PARSER_EOL)),
+            array('cdata',array("Foo".DOKU_PARSER_EOL."Bar".DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -32,10 +29,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('cdata',array("Foo")),
             array('p_close',array()),
             array('p_open',array()),
-            array('cdata',array("bar")),
-            array('cdata',array(DOKU_PARSER_EOL)),
-            array('cdata',array("Foo")),
-            array('cdata',array(DOKU_PARSER_EOL)),
+            array('cdata',array("bar".DOKU_PARSER_EOL."Foo".DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -48,10 +42,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("Foo")),
-            array('cdata',array(DOKU_PARSER_EOL)),
-            array('cdata',array("Bar")),
-            array('cdata',array(DOKU_PARSER_EOL)),
+            array('cdata',array("Foo".DOKU_PARSER_EOL."Bar".DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -85,8 +76,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('linebreak',array()),
             array('p_close',array()),
             array('p_open',array()),
-            array('cdata',array("Bar")),
-            array('cdata',array(DOKU_PARSER_EOL)),
+            array('cdata',array("Bar".DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('document_end',array()),
         );
