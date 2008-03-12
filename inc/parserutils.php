@@ -530,26 +530,10 @@ function p_sort_modes($a, $b){
 function p_render($mode,$instructions,&$info){
   if(is_null($instructions)) return '';
 
-  // try default renderer first:
-  $file = DOKU_INC."inc/parser/$mode.php";
-  if(@file_exists($file)){
-    require_once $file;
-    $rclass = "Doku_Renderer_$mode";
+  $Renderer =& p_get_renderer($mode);
+  if (is_null($Renderer)) return null;
 
-    if ( !class_exists($rclass) ) {
-      trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
-      msg("Renderer for $mode not valid",-1);
-      return null;
-    }
-    $Renderer = & new $rclass();
-  }else{
-    // Maybe a plugin is available?
-    $Renderer =& plugin_load('renderer',$mode);
-    if(is_null($Renderer)){
-      msg("No renderer for $mode found",-1);
-      return null;
-    }
-  }
+  $Renderer->reset();
 
   $Renderer->smileys = getSmileys();
   $Renderer->entities = getEntities();
@@ -570,6 +554,35 @@ function p_render($mode,$instructions,&$info){
   $data = array($mode,& $Renderer->doc);
   trigger_event('RENDERER_CONTENT_POSTPROCESS',$data);
   return $Renderer->doc;
+}
+
+function & p_get_renderer($mode) {
+  global $conf;
+
+  $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
+
+  // try default renderer first:
+  $file = DOKU_INC."inc/parser/$rname.php";
+  if(@file_exists($file)){
+    require_once $file;
+    $rclass = "Doku_Renderer_$rname";
+
+    if ( !class_exists($rclass) ) {
+      trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
+      msg("Renderer '$rname' for $mode not valid",-1);
+      return null;
+    }
+    $Renderer = & new $rclass();
+  }else{
+    // Maybe a plugin is available?
+    $Renderer =& plugin_load('renderer',$rname);
+    if(is_null($Renderer)){
+      msg("No renderer '$rname' found for mode '$mode'",-1);
+      return null;
+    }
+  }
+
+  return $Renderer;
 }
 
 /**

@@ -29,6 +29,10 @@ class Doku_Renderer extends DokuWiki_Plugin {
     var $entities = array();
     var $interwiki = array();
 
+    // allows renderer to be used again, clean out any per-use values
+    function reset() {
+    }
+
     function nocache() {
         $this->info['cache'] = false;
     }
