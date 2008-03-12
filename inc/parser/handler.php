@@ -1,7 +1,7 @@
 <?php
 if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
 
-if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL'," ");   // add this to make handling test cases simpler
+if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL',"\n");   // add this to make handling test cases simpler
 
 class Doku_Handler {
 
