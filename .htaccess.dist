@@ -20,6 +20,12 @@
 ## to your document root.
 #RewriteBase /dokuwiki
 #
+## If you enable DokuWikis XML-RPC interface, you should consider to
+## restrict access to it over HTTPS only! Uncomment the following two
+## rules if your server setup allows HTTPS.
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^lib/exe/xmlrpc.php$      https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
+#
 #RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
 #RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
 #RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
