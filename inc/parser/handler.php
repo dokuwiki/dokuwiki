@@ -1047,7 +1047,9 @@ class Doku_Handler_Preformatted {
                     $this->text .= $call[1][0];
                 break;
                 case 'preformatted_end':
-                    $this->CallWriter->writeCall(array('preformatted',array($this->text),$this->pos));
+                    if (trim($this->text)) {
+                      $this->CallWriter->writeCall(array('preformatted',array($this->text),$this->pos));
+                    }
                 break;
             }
         }
