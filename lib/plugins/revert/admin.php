@@ -79,12 +79,12 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
      */
     function _searchform(){
         global $lang;
-        echo '<form action="" method="post">';
+        echo '<form action="" method="post"><div class="no">';
         echo '<label>'.$this->getLang('filter').': </label>';
         echo '<input type="text" name="filter" class="edit" value="'.hsc($_REQUEST['filter']).'" />';
         echo '<input type="submit" class="button" value="'.$lang['btn_search'].'" />';
         echo ' <span>'.$this->getLang('note1').'</span>';
-        echo '</form><br /><br />';
+        echo '</div></form><br /><br />';
     }
 
     /**
@@ -131,7 +131,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     function _list($filter){
         global $conf;
         echo '<hr /><br />';
-        echo '<form action="" method="post">';
+        echo '<form action="" method="post"><div class="no">';
         echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
         formSecurityToken();
 
@@ -195,7 +195,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         printf($this->getLang('note2'),hsc($filter));
         echo '</p>';
 
-        echo '</form>';
+        echo '</div></form>';
     }
 
 }

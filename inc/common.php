@@ -82,7 +82,7 @@ function checkSecurityToken($token=null){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function formSecurityToken($print=true){
-  $ret = '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'."\n";
+  $ret = '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" /></div>'."\n";
   if($print){
     echo $ret;
   }else{

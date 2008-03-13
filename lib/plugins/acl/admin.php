@@ -244,7 +244,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $conf;
         global $ID;
 
-        echo '<form action="'.wl().'" method="post" accept-charset="utf-8">'.NL;
+        echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
 
         echo '<div id="acl__user">';
         echo $this->getLang('acl_perms').' ';
@@ -261,7 +261,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<input type="hidden" name="id" value="'.hsc($ID).'" />'.NL;
         echo '<input type="hidden" name="do" value="admin" />'.NL;
         echo '<input type="hidden" name="page" value="acl" />'.NL;
-        echo '</form>'.NL;
+        echo '</div></form>'.NL;
     }
 
     /**
@@ -512,7 +512,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $lang;
         global $ID;
 
-        echo '<form action="'.wl().'" method="post" accept-charset="utf-8">'.NL;
+        echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
         if($this->ns){
             echo '<input type="hidden" name="ns" value="'.hsc($this->ns).'" />'.NL;
         }else{
@@ -566,7 +566,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '</th>';
         echo '</tr>';
         echo '</table>';
-        echo '</form>'.NL;
+        echo '</div></form>'.NL;
     }
 
 
