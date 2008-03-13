@@ -31,9 +31,8 @@ div#acl_manager div#acl__tree ul img {
 div#acl_manager div#acl__detail {
     width: 73%;
     height: 300px;
-    float: left;
+    float: right;
     overflow: auto;
-    padding-left: 1em;
 }
 
 div#acl_manager div#acl__detail fieldset {
