@@ -74,6 +74,7 @@ $lang['profileconfirm']        = 'Beállítások változtatásának megerősít�
 $lang['disableactions']        = 'Bizonyos DokuWiki tevékenységek (action) tiltása';
 $lang['disableactions_check']  = 'Ellenőrzés';
 $lang['disableactions_subscription'] = 'Feliratkozás/Leiratkozás';
+$lang['disableactions_nssubscription'] = 'Névtér feliratkozás/Leiratkozás';
 $lang['disableactions_wikicode'] = 'Forrás megtekintése/Nyers adat exportja';
 $lang['disableactions_other']  = 'Egyéb tevékenységek (vesszővel elválasztva)';
 $lang['sneaky_index']          = 'Alapértelmezetten minden névtér látszik a DokuWiki index oldalán. Ezen opció bekapcsolása után azok nem jelennek meg, melyekhez a felhasználónak nincs olvasás joga. De ezzel eltakarhatunk egyébként elérhető al-névtereket is, így bizonyos ACL beállításoknál használhatatlan indexet eredményez ez a beállítás.';
@@ -103,6 +104,7 @@ $lang['send404']               = '"HTTP 404/Page Not Found" küldése nemlétez�
 $lang['sitemap']               = 'Hány naponként generáljunk Google sitemap-ot?';
 $lang['broken_iua']            = 'Az ignore_user_abort függvény hibát dob a rendszereden? Ez nem működő keresési indexet eredményezhet. Az IIS+PHP/CGI összeállításról tudjuk, hogy hibát dob. Lásd a <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> oldalt a további infóért.';
 $lang['xsendfile']             = 'Használjuk az X-Sendfile fejlécet, hogy a webszerver statikus állományokat tudjon küldeni? A webszervernek is támogatnia kell ezt a funkciót.';
+$lang['xmlrpc']                = 'XML-RPC interfész engedélyezése/tiltása';
 $lang['rss_type']              = 'XML hírfolyam típus';
 $lang['rss_linkto']            = 'XML hírfolyam hivatkozás';
 $lang['rss_content']           = 'Mit mutassunk az XML hírfolyam elemekben?';
