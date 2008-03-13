@@ -676,6 +676,22 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
         }
       }
       return false;
+    case 'subscribens':
+      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
+        if($_SERVER['REMOTE_USER']){
+          if($INFO['subscribedns']) {
+            tpl_link(wl($ID,'do=unsubscribens'),
+                     $pre.(($inner)?$inner:$lang['btn_unsubscribens']).$suf,
+                     'class="action unsubscribens" rel="nofollow"');
+          } else {
+            tpl_link(wl($ID,'do=subscribens'),
+                     $pre.(($inner)?$inner:$lang['btn_subscribens']).$suf,
+                     'class="action subscribens" rel="nofollow"');
+          }
+          return true;
+        }
+      }
+      return false;
     case 'backlink':
       tpl_link(wl($ID,'do=backlink'),
                $pre.(($inner)?$inner:$lang['btn_backlink']).$suf,
