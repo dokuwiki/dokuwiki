@@ -114,3 +114,43 @@ if (!class_exists('setting_compression')) {
     }
   }
 }
+
+if (!class_exists('setting_renderer')) {
+  class setting_renderer extends setting_multichoice {
+    var $_prompts = array();
+
+    function initialize($default,$local,$protected) {
+      $format = $this->_format;
+
+      foreach (plugin_list('renderer') as $plugin) {
+        $renderer =& plugin_load('renderer',$plugin);
+        if (method_exists($renderer,'canRender') && $renderer->canRender($format)) {
+          $this->_choices[] = $plugin;
+
+          $info = $renderer->getInfo();
+          $this->_prompts[$plugin] = $info['name'];
+        }
+      }
+
+      parent::initialize($default,$local,$protected);
+    }
+
+    function html(&$plugin, $echo=false) {
+
+      // make some language adjustments (there must be a better way)
+      // transfer some plugin names to the config plugin
+      if (!$plugin->localised) $this->setupLocale();
+
+      foreach ($this->_choices as $choice) {
+        if (!isset($plugin->lang[$this->_key.'_o_'.$choice])) {
+          if (!isset($this->_prompts[$choice])) {
+            $plugin->lang[$this->_key.'_o_'.$choice] = sprintf($plugin->lang['renderer__core'],$choice);
+          } else {
+            $plugin->lang[$this->_key.'_o_'.$choice] = sprintf($plugin->lang['renderer__plugin'],$this->_prompts[$choice]);
+          }
+        }
+      }
+      return parent::html($plugin, $echo);    
+    }
+  }
+}
