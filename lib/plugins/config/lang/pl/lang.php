@@ -72,6 +72,7 @@ $lang['profileconfirm']        = 'Potwierdzanie zmiany profilu hasłem';
 $lang['disableactions']        = 'Wyłącz akcje DokuWiki';
 $lang['disableactions_check']  = 'Sprawdzanie';
 $lang['disableactions_subscription'] = 'Subskrypcje';
+$lang['disableactions_nssubscription'] = 'Subskrypcje katalogów';
 $lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
 $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['sneaky_index']          = 'Domyślnie, Dokuwiki pokazuje wszystkie katalogi w indeksie. Włączenie tej opcji ukryje katalogi, do których użytkownik nie ma praw. Może to spowodować ukrycie podkatalogów, do których użytkownik ma prawa. Ta opcja może spowodować błędne działanie indeksu w połączeniu z pewnymi konfiguracjami praw dostępu.';
@@ -101,6 +102,7 @@ $lang['send404']               = 'Nagłówek "HTTP 404/Page Not Found" dla nieis
 $lang['sitemap']               = 'Okres generowania Google Sitemap (w dniach)';
 $lang['broken_iua']            = 'Czy funkcja "ignore_user_abort" działa? Jeśli nie, może to powodować problemy z indeksem przeszukiwania. Funkcja nie działa przy konfiguracji oprogramowania IIS+PHP/CGI. Szczegółowe informacje: <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesyłania statycznych plików. Serwer HTTP musi obsługiwać ten nagłówek.';
+$lang['xmlrpc']                = 'Włącz/wyłącz interfejs XML-RPC';
 $lang['rss_type']              = 'Typ RSS';
 $lang['rss_linkto']            = 'Odnośniki w RSS';
 $lang['rss_content']           = 'Rodzaj informacji wyświetlanych w RSS ';
