@@ -3,6 +3,7 @@
  * Catalan language file
  *
  * @author Carles Bellver <carles.bellver@gmail.com>
+ * @author carles.bellver@gmail.com
  */
 $lang['menu']                  = 'Gestió d\'usuaris';
 $lang['noauth']                = '(l\'autenticació d\'usuaris no està disponible)';

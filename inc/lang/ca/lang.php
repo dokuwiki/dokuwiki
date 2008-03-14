@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
+ * @author carles.bellver@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -37,8 +38,10 @@ $lang['btn_delete']            = 'Suprimeix';
 $lang['btn_back']              = 'Enrere';
 $lang['btn_backlink']          = 'Què hi enllaça';
 $lang['btn_backtomedia']       = 'Torna a la selecció de fitxers';
-$lang['btn_subscribe']         = 'Subscripció a canvis';
-$lang['btn_unsubscribe']       = 'Cancel·la subscripció';
+$lang['btn_subscribe']         = 'Subscripció a canvis d\'aquesta pàgina';
+$lang['btn_unsubscribe']       = 'Cancel·la subscripció a pàgina';
+$lang['btn_subscribens']       = 'Subscripció a canvis d\'aquest espai';
+$lang['btn_unsubscribens']     = 'Cancel·la subscripció a espai';
 $lang['btn_profile']           = 'Actualització del perfil';
 $lang['btn_reset']             = 'Reinicia';
 $lang['btn_resendpwd']         = 'Envia nova contrasenya';
