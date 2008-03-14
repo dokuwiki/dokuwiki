@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
+ * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';
