@@ -1,0 +1,15 @@
+=== Axuda Rápida: ===
+
+Nesta páxina podes engadir e eliminar permisos para os nomes de espazo e
+as páxinas do teu wiki.
+
+O panel da esquerda amosa todos os nomes de espazo e páxinas dispoñibles.
+
+O formulario de enriba permíteche ver e modificar os permisos do
+usuario ou grupo seleccionado.
+
+Na táboa de embaixo amósanse todas as regras de control de accesos establecidas.
+Podes empregala para mudar ou eliminar varias regras dun xeito rápido.
+
+A lectura da [[doku>wiki:acl|documentación oficial do ACL]] pode servirche de
+axuda para comprender como funciona o control de accesos no Dokuwiki.
