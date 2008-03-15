@@ -171,7 +171,7 @@ $meta['rss_update']  = array('numeric');
 $meta['recent_days'] = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
 $meta['broken_iua']  = array('onoff');
-$meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2));
+$meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
 $meta['xmlrpc']      = array('onoff');
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
 

@@ -120,6 +120,9 @@ function sendFile($file,$mime,$cache){
   }elseif($conf['xsendfile'] == 2){
     header("X-Sendfile: $file");
     exit;
+  }elseif($conf['xsendfile'] == 3){
+    header("X-Accel-Redirect: $file");
+    exit;
   }
 
   //support download continueing
