@@ -31,7 +31,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2007-11-17',
+            'date'   => '2008-03-15',
             'name'   => 'ACL',
             'desc'   => 'Manage Page Access Control Lists',
             'url'    => 'http://wiki.splitbrain.org/wiki:acl',
@@ -554,7 +554,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 echo '</td>';
 
                 echo '<td align="center">';
-                echo '<input type="checkbox" name="del['.hsc($where).']" value="'.hsc($who).'" class="edit" />';
+                echo '<input type="checkbox" name="del['.hsc($where).']" value="'.hsc($who).'" />';
                 echo '</td>';
                 echo '</tr>';
             }

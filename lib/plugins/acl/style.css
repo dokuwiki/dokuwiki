@@ -26,6 +26,7 @@ div#acl_manager div#acl__tree li {
 
 div#acl_manager div#acl__tree ul img {
     margin-right: 0.25em;
+    cursor: pointer;
 }
 
 div#acl_manager div#acl__detail {
