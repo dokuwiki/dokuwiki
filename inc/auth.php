@@ -656,7 +656,7 @@ function updateprofile() {
 
   if ($_POST['fullname'] != $INFO['userinfo']['name'] && $auth->canDo('modName')) $changes['name'] = $_POST['fullname'];
   if ($_POST['email'] != $INFO['userinfo']['mail'] && $auth->canDo('modMail')) $changes['mail'] = $_POST['email'];
-  if (!empty($_POST['newpass']) && $auth->canDo['modPass']) $changes['pass'] = $_POST['newpass'];
+  if (!empty($_POST['newpass']) && $auth->canDo('modPass')) $changes['pass'] = $_POST['newpass'];
 
 
   if (!count($changes)) {
