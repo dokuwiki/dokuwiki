@@ -6,4 +6,3 @@ quando outro usuário modifica o documento enquanto você o está editando.
 Examine as diferenças mostradas abaixo atentamente e então decida qual
 versão deve permanecer. Se você selecionar ''Salvar'', sua versão será
 salva. Pressione ''Cancelar'' para manter a versão atual.
-

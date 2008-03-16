@@ -1,4 +1,4 @@
-====== Gerenciamento de Plugins ======
+====== Gerenciamento de "Plugins" ======
 
 Nessa página você pode gerenciar tudo relacionado aos [[doku>wiki:plugins|plugins]] do DokuWiki.
-Para conseguir transferir e instalar um plugin, o diretório onde ficam os plugins no seu DokuWiki deve dar permissão de escrita para o servidor web.
+Para conseguir transferir e instalar um "plugin", o diretório onde ficam os "plugins" no seu DokuWiki deve dar permissão de escrita para o servidor de internete.

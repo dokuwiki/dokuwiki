@@ -1,5 +1,5 @@
 ====== Esse tópico ainda não existe ======
 
-Você clicou em um link para um tópico que ainda não existe.
+Você clicou em um linque para um tópico que ainda não existe.
 Se for permitido, você poderá criá-lo usando o botão
 ''Criar essa página''.

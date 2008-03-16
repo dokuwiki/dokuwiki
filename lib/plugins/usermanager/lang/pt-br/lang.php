@@ -3,6 +3,7 @@
  * Portuguese language file
  *
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
+ * @author Felipe Castro <fefcas@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
@@ -11,7 +12,7 @@ $lang['badauth']               = 'mecanismo de autenticação inválido';
 $lang['user_id']               = 'Usuário';
 $lang['user_pass']             = 'Senha';
 $lang['user_name']             = 'Nome real';
-$lang['user_mail']             = 'E-mail';
+$lang['user_mail']             = 'Emeil';
 $lang['user_groups']           = 'Grupos';
 $lang['field']                 = 'Campo';
 $lang['value']                 = 'Valor';
@@ -38,9 +39,9 @@ $lang['next']                  = 'próxima';
 $lang['last']                  = 'última';
 $lang['edit_usermissing']      = 'O usuário selecionado não foi encontrado, ele foi excluído ou o seu nome modificado.';
 $lang['user_notify']           = 'Notificar o usuário';
-$lang['note_notify']           = 'E-mails de notificação são enviados apenas se o usuário forneceu uma senha.';
+$lang['note_notify']           = 'Emeils de notificação são enviados apenas se o usuário forneceu uma senha.';
 $lang['note_group']            = 'Novos usuários serão adicionados ao grupo padrão (%s), caso nenhum grupo seja especificado.';
 $lang['add_ok']                = 'O usuário foi adicionado com sucesso';
 $lang['add_fail']              = 'O usuário não foi adicionado';
-$lang['notify_ok']             = 'O e-mail de notificação foi enviado';
-$lang['notify_fail']           = 'Não foi possível enviar o e-mail de notificação';
+$lang['notify_ok']             = 'O emeil de notificação foi enviado';
+$lang['notify_fail']           = 'Não foi possível enviar o emeil de notificação';

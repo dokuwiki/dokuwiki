@@ -6,6 +6,7 @@
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
+ * @author Felipe Castro <fefcas@gmail.com>
  */
 $lang['admin_acl']             = 'Administração da Lista de Controles de Acesso';
 $lang['acl_group']             = 'Grupo';
@@ -29,7 +30,7 @@ $lang['acl_perm0']             = 'Nenhum';
 $lang['acl_perm1']             = 'Ler';
 $lang['acl_perm2']             = 'Editar';
 $lang['acl_perm4']             = 'Criar';
-$lang['acl_perm8']             = 'Upload';
-$lang['acl_perm16']            = 'Deletar';
+$lang['acl_perm8']             = 'Enviar (subir)';
+$lang['acl_perm16']            = 'Apagar';
 $lang['acl_new']               = 'Adicionar nova entrada';
 $lang['acl_mod']               = 'Modificar a entrada';

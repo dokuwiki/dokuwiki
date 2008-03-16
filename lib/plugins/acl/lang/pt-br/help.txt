@@ -1,6 +1,6 @@
 === Ajuda rápida: ===
 
-Nessa página você pode adicionar e remover permissões para ramos e páginas do seu wiki.
+Nessa página você pode adicionar e remover permissões para ramos e páginas do seu "wiki".
 
 O painel à esquerda mostra todos os ramos e páginas disponíveis.
 

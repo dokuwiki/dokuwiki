@@ -1,6 +1,6 @@
 ======Bloqueio de SPAM======
 
 Suas modificações **não** foram salvas porque elas contém uma ou mais palavras bloqueadas.
-Se você tentou enviar spam para o wiki, isso é feio, muito feio! Agora se você acha que 
-esse bloqueio foi indevido, por favor, entre em contato com o administrador desse wiki.
+Se você tentou enviar espam para o "wiki", isso é feio, muito feio! Agora, se você acha que 
+esse bloqueio foi indevido, por favor entre em contato com o administrador desse "wiki".
 
