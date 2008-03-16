@@ -1,13 +1,13 @@
 Dosiero estis alŝutita al via DokuVikio. Jen detaloj:
 
-Dosiero : @MEDIA@
-Dato : @DATE@
-Krozilo : @BROWSER@
-IP-Adreso : @IPADDRESS@
-Ret-nodo : @HOSTNAME@
-Gradeco : @SIZE@
-Dosier-tipo : @MIME@
-Uzulo : @USER@
+Dosiero: @MEDIA@
+Dato: @DATE@
+Foliumilo: @BROWSER@
+IP-Adreso: @IPADDRESS@
+Ret-nodo: @HOSTNAME@
+Gradeco: @SIZE@
+Dosier-tipo: @MIME@
+Uzulo: @USER@
 
 --
 Tiu ĉi mesaĝo estis kreata de DokuWiki ĉe

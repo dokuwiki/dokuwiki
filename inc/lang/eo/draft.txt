@@ -2,7 +2,7 @@
 
 Via lasta sekcio de redakto en tiu ĉi paĝo ne estis korekte kompletata.
 Dokuwiki aŭtomate konservis skizon dum vi laboris, kiun vi nun povas uzi por
-daŭrigi vian redaktadon. Sube vi povas vidi la datenon, kiun estis konservata
+daŭrigi vian redaktadon. Sube vi povas vidi la datenaron, kiun estis konservata
 el via lasta sekcio.
 
 Bonvolu decidi ĉu vi volas //restarigi// vian perditan redakton, //forigi//

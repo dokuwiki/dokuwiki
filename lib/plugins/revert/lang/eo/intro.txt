@@ -1,4 +1,4 @@
 ====== Administro de Restarigo ======
 
 Tiu cxi pagxo helpas vin pri auxtomata restarigo el spama atako.
-Por trovi liston de spamecajn pagxojn, unue mendu sercxan cxenon (ekz. spama URL), do konfirmu, ke la trovitaj pagxoj fakte estas spamaj kaj restarigu la antauxajn versiojn bonajn.
+Por trovi liston de spamecaj pagxoj, unue mendu sercxan liter-cxenon (ekz. spama URL), do konfirmu, ke la trovitaj pagxoj fakte estas spamaj kaj restarigu la antauxajn versiojn bonajn.

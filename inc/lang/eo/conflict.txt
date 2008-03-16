@@ -5,4 +5,4 @@ Ekzistas pli nova versio de la dokumento. Tio okazas kiam iu alia uzanto
 
 Atente esploru distingojn kaj decidu kiun version vi tenigos.
 Se vi premos ''"Konservi"'', do via versio estos konservita. 
-Presonte butonon ''Rezigni'' vi restigos kurantan version.
+Presonte butonon ''Rezigni'' vi tenos la kurantan version.

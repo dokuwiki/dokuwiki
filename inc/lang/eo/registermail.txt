@@ -1,13 +1,13 @@
 Nova uzulo estis registrata. Jen la detaloj:
 
-Uzulnomo      : @NEWUSER@
-Kompleta nomo : @NEWNAME@
-Retadreso     : @NEWEMAIL@
+Uzulnomo: @NEWUSER@
+Kompleta nomo: @NEWNAME@
+Retadreso: @NEWEMAIL@
 
-Dato        : @DATE@
-Krozilo     : @BROWSER@
-IP-Adreso   : @IPADDRESS@
-Provizanto  : @HOSTNAME@
+Dato: @DATE@
+Foliumilo: @BROWSER@
+IP-Adreso: @IPADDRESS@
+Provizanto: @HOSTNAME@
 
 -- 
 Tiu ĉi mesaĝo estis kreata de DokuWiki ĉe

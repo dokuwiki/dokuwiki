@@ -1,4 +1,4 @@
-====== Distingoj ======
+======Diferencoj======
 
-Ĉi tie vi povas ekvidi distingojn inter kuranta versio kaj elektita revizio de la paĝo.
+Ĉi tie vi povas ekvidi diferencojn inter kuranta versio kaj elektita revizio de la paĝo.
 

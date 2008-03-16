@@ -1,0 +1,11 @@
+=== Helpeto: ===
+
+En tiu ĉi paĝo vi povas aldoni kaj forigi rajtojn por nomspacoj kaj paĝoj en via vikio.
+
+La maldekstra panelo montras ĉiujn disponeblajn nomspacojn kaj paĝojn.
+
+La suba agordilo permesas al vi rigardi kaj modifi la rajtojn de elektita uzulo aŭ grupo.
+
+En la suba tabelo ĉiuj aktuale difinitaj alirkontrolaj reguloj estas montritaj. Vi povas uzi ĝin por rapide forigi aŭ ŝanĝi multoblajn regulojn.
+
+Legado de la [[doku>wiki:acl|oficiala dokumentaro pri ACL]] povus helpi vin bone kompreni kiel alirkontrolo funkcias en DokuWiki.
