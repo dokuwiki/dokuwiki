@@ -3,6 +3,7 @@
  * Romanian language file
  *
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
+ * @author s_baltariu@yahoo.com
  */
 $lang['menu']                  = 'Manager Utilizatori';
 $lang['noauth']                = '(autentificarea utilizatorilor nu este disponibilă)';
@@ -20,7 +21,7 @@ $lang['delete']                = 'Şterge';
 $lang['delete_selected']       = 'Şterge selecţia';
 $lang['edit']                  = 'Editează';
 $lang['edit_prompt']           = 'Editează acest utilizator';
-$lang['modify']                = 'Salvează modificările';
+$lang['modify']                = 'Salvează Modificările';
 $lang['search']                = 'Caută';
 $lang['search_prompt']         = 'Se caută';
 $lang['clear']                 = 'Resetează Filtrul de Căutare';

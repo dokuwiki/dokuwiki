@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
+ * @author s_baltariu@yahoo.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -20,7 +21,7 @@ $lang['btn_create']            = 'Crează această pagină';
 $lang['btn_search']            = 'Caută';
 $lang['btn_save']              = 'Salvează';
 $lang['btn_preview']           = 'Previzualizează';
-$lang['btn_top']               = 'Back to top';
+$lang['btn_top']               = 'La început';
 $lang['btn_newer']             = '<< mai recent';
 $lang['btn_older']             = 'mai vechi>>';
 $lang['btn_revs']              = 'Versiuni vechi';
@@ -37,8 +38,10 @@ $lang['btn_delete']            = 'Şterge';
 $lang['btn_back']              = 'Înapoi';
 $lang['btn_backlink']          = 'Legătură anterioară';
 $lang['btn_backtomedia']       = 'Înapoi la Selecţia Mediafile';
-$lang['btn_subscribe']         = 'Trimite Modificările';
-$lang['btn_unsubscribe']       = 'Anulează trimiterea Modificărilor';
+$lang['btn_subscribe']         = 'Subscrie Modificarea Paginii';
+$lang['btn_unsubscribe']       = 'Anulează Subscrierea Modificării Paginii';
+$lang['btn_subscribens']       = 'Subscrie Modificarea Spaţiului de Nume';
+$lang['btn_unsubscribens']     = 'Anulează Subscrierea Modificării Spaţiului de Nume';
 $lang['btn_profile']           = 'Actualizează Profil';
 $lang['btn_reset']             = 'Resetează';
 $lang['btn_resendpwd']         = 'Trimite parola nouă';
@@ -50,8 +53,8 @@ $lang['user']                  = 'Utilizator';
 $lang['pass']                  = 'Parola';
 $lang['newpass']               = 'Parola nouă';
 $lang['oldpass']               = 'Confirmă parola curentă';
-$lang['passchk']               = 'incă o dată';
-$lang['remember']              = 'Aminteşte-mi';
+$lang['passchk']               = 'încă o dată';
+$lang['remember']              = 'Ţine-mă minte';
 $lang['fullname']              = 'Nume complet';
 $lang['email']                 = 'E-Mail';
 $lang['register']              = 'Înregistrează';
@@ -141,11 +144,11 @@ $lang['qb_italic']             = 'Text Italic';
 $lang['qb_underl']             = 'Text Subliniat';
 $lang['qb_code']               = 'Text Cod';
 $lang['qb_strike']             = 'Text Tăiat';
-$lang['qb_h1']                 = 'Linie de început de Nivel 1';
-$lang['qb_h2']                 = 'Linie de început de Nivel 2';
-$lang['qb_h3']                 = 'Linie de început de Nivel 3';
-$lang['qb_h4']                 = 'Linie de început de Nivel 4';
-$lang['qb_h5']                 = 'Linie de început de Nivel 5';
+$lang['qb_h1']                 = 'Titlu de Nivel 1';
+$lang['qb_h2']                 = 'Titlu de Nivel 2';
+$lang['qb_h3']                 = 'Titlu de Nivel 3';
+$lang['qb_h4']                 = 'Titlu de Nivel 4';
+$lang['qb_h5']                 = 'Titlu de Nivel 5';
 $lang['qb_link']               = 'Legătură internă';
 $lang['qb_extlink']            = 'Legătura externă';
 $lang['qb_hr']                 = 'Linie Orizontal';

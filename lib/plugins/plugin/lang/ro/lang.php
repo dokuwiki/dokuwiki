@@ -3,6 +3,7 @@
  * Romanian language file
  *
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
+ * @author s_baltariu@yahoo.com
  */
 $lang['menu']                  = 'Administrează plugin-uri';
 $lang['download']              = 'Descarcă şi instalează un nou plugin';

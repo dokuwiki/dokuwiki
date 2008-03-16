@@ -3,8 +3,9 @@
  * Romanian language file
  *
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
+ * @author s_baltariu@yahoo.com
  */
-$lang['menu']                  = 'Manager reveniri';
+$lang['menu']                  = 'Manager Reveniri';
 $lang['filter']                = 'Caută pagini cu posibil spam';
 $lang['revert']                = 'Revenire pentru paginile selectate';
 $lang['reverted']              = '%s revenită la versiunea %s';

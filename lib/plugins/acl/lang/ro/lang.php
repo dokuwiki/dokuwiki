@@ -3,6 +3,7 @@
  * Romanian language file
  *
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
+ * @author s_baltariu@yahoo.com
  */
 $lang['admin_acl']             = 'Managementul Listei de Control a Accesului';
 $lang['acl_group']             = 'Grup';

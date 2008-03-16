@@ -3,6 +3,7 @@
  * Romanian language file
  *
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
+ * @author s_baltariu@yahoo.com
  */
 $lang['menu']                  = 'Setări de Configurare';
 $lang['error']                 = 'Setări nu au fost actualizate datorită unei valori incorecte; verificaţi modificările şi încercaţi din nou. <br /> Valorile incorecte vor apărea într-un chenar roşu.';
@@ -71,13 +72,14 @@ $lang['profileconfirm']        = 'Confirmă schimbarea profilului cu parola';
 $lang['disableactions']        = 'Dezactivează acţiunile DokuWiki';
 $lang['disableactions_check']  = 'Verifică';
 $lang['disableactions_subscription'] = 'Subscrie/Anulează subscrierea';
+$lang['disableactions_nssubscription'] = 'Subscrie/Anulează subscrierea Spaţiului de nume';
 $lang['disableactions_wikicode'] = 'Vizualizează sursa/Export Raw';
 $lang['disableactions_other']  = 'Alte acţiuni (separate prin virgulă)';
 $lang['sneaky_index']          = 'Implicit, DokuWiki va arăta toate numele de spaţii la vizualizarea indexului. Activând această opţiune vor fi ascunse acelea la care utilizatorul nu are drepturi de citire. Aceasta poate determina ascunderea sub-numelor de spaţii accesibile. Aceasta poate face index-ul  inutilizabil cu anumite setări ale ACL';
 $lang['auth_security_timeout'] = 'Timpul de expirare al Autentificării Securizate (secunde)';
 $lang['updatecheck']           = 'Verificare actualizări şi avertismente privind securitatea? DokuWiki trebuie să contacteze splitbrain.org pentru această facilitate.';
 $lang['userewrite']            = 'Folosire URL-uri "nice"';
-$lang['useslash']              = 'Foloseşte slash-ul ca separator de nume de spaţii în URL-uri';
+$lang['useslash']              = 'Foloseşte slash-ul ca separator de spaţii de nume în URL-uri';
 $lang['usedraft']              = 'Salvează automat o schiţă în timpul editării';
 $lang['sepchar']               = 'Separator cuvinte în numele paginii';
 $lang['canonical']             = 'Foloseşte URL-uri canonice';
@@ -100,6 +102,10 @@ $lang['send404']               = 'Trimite mesajul "HTTP 404/Page Not Found" pent
 $lang['sitemap']               = 'Generează Google sitemap (zile)';
 $lang['broken_iua']            = 'Funcţia ignore_user_abort nu funcţionează pe sistemul dumneavoastră? Aceasta poate determina nefuncţionarea indexului de căutare. IIS+PHP/CGI sunt cunoscute ca fiind nefuncţionale. Mai multe detalii găsiţi la <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>';
 $lang['xsendfile']             = 'Folosiţi header-ul X-Send pentru a-i permite serverului web să trimită fişiere statice? Serverul web trebuie să permită aceasta.';
+$lang['xmlrpc']                = 'Activează/dezactivează interfaţa XML-RPC';
+$lang['renderer_xhtml']        = 'Motorul de randare principal folosit pentru afişarea wiki în format xhtml';
+$lang['renderer__core']        = '%s (nucleu dokuwiki)';
+$lang['renderer__plugin']      = '%s (plugin)';
 $lang['rss_type']              = 'Tip flux XML';
 $lang['rss_linkto']            = 'Fluxul XML se leagă la';
 $lang['rss_content']           = 'Ce să afişez în obiectele fluxurilor XML';
@@ -153,3 +159,4 @@ $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'nu se foloseşte';
 $lang['xsendfile_o_1']         = 'Header proprietar lighttpd (înaintea versiunii 1.5)';
 $lang['xsendfile_o_2']         = 'Header standard X-Sendfile';
+$lang['xsendfile_o_3']         = 'Header proprietar Nginx X-Accel-Redirect';
