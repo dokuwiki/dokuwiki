@@ -160,5 +160,6 @@ $lang['compression_o_0']       = '圧縮しない';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = '使用しない';
-$lang['xsendfile_o_1']         = '独自 lighttpd ヘッダー（リリース1.5以前）';
+$lang['xsendfile_o_1']         = 'lighttpd ヘッダー（リリース1.5以前）';
 $lang['xsendfile_o_2']         = '標準 X-Sendfile ヘッダー';
+$lang['xsendfile_o_3']         = 'Nginx X-Accel-Redirect ヘッダー';
