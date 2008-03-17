@@ -1,0 +1,12 @@
+=== Īsa palīdzība ===
+
+Šajā lapā var uzdot un noņemt tiesības uz lapām un nodalām.
+
+Kreisajā pusē parādītas visas pieejamās nodaļas un lapas.
+
+Formā augšpusē var redzēt un grozīt norādītā lietotāja vai grupas tiesības .
+
+Apakšā tabulā  parādīts visu tiesību saraksts. 
+To var lietot, lia ātri mainītu vairākus pieejas tiesību noteikumus.
+
+[[doku>wiki:acl|Officiālajos piekļuves tiesību noteikumu dokumentos]] var atrasts izvērtu informāciju, kā darbojas DokuWiki sistēmas piekļuves tiesību kontrole.

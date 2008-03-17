@@ -1,5 +1,5 @@
 ======Priekšskats======
 
-Tavs teksts izkatīsies šādi. Ievēro, tas vēl **nav saglabāts** !
+Tavs teksts izskatīsies šādi. Ievēro, tas vēl **nav saglabāts** !
 
 

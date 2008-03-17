@@ -1,0 +1,4 @@
+====== Piemēsloto lapu atjaunotājs ======
+
+Šī lapa palīdzēs automātiski atjaunot saturu pēc huligānisma .
+Lai atrastu piedrazotās lapas ieraksti meklējamo izteiksmi (piem. smaperu URL), tad apstiprini, ka atrastās ir "mēslapas" un atcel izdarītās izmaiņas .
