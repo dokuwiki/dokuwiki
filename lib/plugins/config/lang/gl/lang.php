@@ -160,3 +160,4 @@ $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'non o empregues';
 $lang['xsendfile_o_1']         = 'Cabeceira lighttpd propietaria (denantes da versión 1.5)';
 $lang['xsendfile_o_2']         = 'Cabeceira X-Sendfile estándar';
+$lang['xsendfile_o_3']         = 'Cabeceira X-Accel-Redirect propia de Nginx';
