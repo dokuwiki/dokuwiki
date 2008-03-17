@@ -6,6 +6,7 @@
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author carles.bellver@gmail.com
+ * @author carles.bellver@cent.uji.es
  */
 $lang['admin_acl']             = 'Gestió de la Llista de Control d\'Accés';
 $lang['acl_group']             = 'Grup';

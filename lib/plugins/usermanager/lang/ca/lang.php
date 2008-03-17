@@ -4,6 +4,7 @@
  *
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author carles.bellver@gmail.com
+ * @author carles.bellver@cent.uji.es
  */
 $lang['menu']                  = 'Gestió d\'usuaris';
 $lang['noauth']                = '(l\'autenticació d\'usuaris no està disponible)';

@@ -4,6 +4,7 @@
  *
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author carles.bellver@gmail.com
+ * @author carles.bellver@cent.uji.es
  */
 $lang['menu']                  = 'Paràmetres de configuració';
 $lang['error']                 = 'Els paràmetres no s\'han pogut actualitzar per causa d\'un valor incorrecte Reviseu els canvis i torneu a enviar-los.<br />Els valors incorrectes es ressaltaran amb un marc vermell.';
@@ -103,6 +104,10 @@ $lang['send404']               = 'Envia "HTTP 404/Page Not Found" per a les pàg
 $lang['sitemap']               = 'Genera mapa del lloc en format Google (dies)';
 $lang['broken_iua']            = 'No funciona en el vostre sistema la funció ignore_user_abort? Això podria malmetre l\'índex de cerques. Amb IIS+PHP/CGI se sap que no funciona. Vg. <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> per a més informació.';
 $lang['xsendfile']             = 'Utilitza la capçalera X-Sendfile perquè el servidor web distribueixi fitxers estàtics. No funciona amb tots els servidors web.';
+$lang['xmlrpc']                = 'Habilita/inhabilita la interfície XML-RPC';
+$lang['renderer_xhtml']        = 'Renderitzador que cal utilitzar per a la sortida principal (xhtml) del wiki';
+$lang['renderer__core']        = '% (ànima del dokuwiki)';
+$lang['renderer__plugin']      = '% (connector)';
 $lang['rss_type']              = 'Tipus de canal XML';
 $lang['rss_linkto']            = 'Destinació dels enllaços en el canal XML';
 $lang['rss_content']           = 'Què es mostrarà en els elements del canal XML?';
@@ -156,3 +161,4 @@ $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'no utilitzis';
 $lang['xsendfile_o_1']         = 'Capçalera pròpia de lighttpd (anterior a la versió 1.5)';
 $lang['xsendfile_o_2']         = 'Capçalera X-Sendfile estàndard';
+$lang['xsendfile_o_3']         = 'Capçalera X-Accel-Redirect de propietat de Nginx ';
