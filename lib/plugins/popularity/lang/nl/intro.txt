@@ -1,0 +1,17 @@
+====== Populariteits terugkoppeling ======
+
+Dit onderdeel verzamelt anonieme gegevens over je wiki en stelt je in staat deze te versturen
+naar de DokuWiki ontwikkelaars. Dit helpt hen te begrijpen hoe DokuWiki wordt gebruikt door
+de gebruikers en zorgt er ook voor dat toekomstige ontwikkelkeuzes kunnen worden gestaafd
+door echte gebruikersstatistieken.
+
+Je wordt aangemoedigd om deze stappen van tijd tot tijd te herhalen om ontwikkelaars
+op de hoogte te houden zolang je wiki groeit. De herhaalde data zal worden geïdentificeerd 
+door een uniek, anoniem ID.
+
+De verzamelde gegevens bevat onder andere gegevens over je DokuWiki versie, het aantal- 
+en de grootte van de paginas en bestanden, geïnstalleerde plugins en informatie over de PHP
+installatie.
+
+De ruwe data dat verzonden zal worden staat hieronder. Gebruik de knop "Verstuur" om de
+informatie te verzenden.
