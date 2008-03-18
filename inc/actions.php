@@ -466,17 +466,22 @@ function act_subscriptionns($act){
 
   if(!getNS($ID)) {
     $file = metaFN(getNS($ID),'.mlist');
+    $ns = "root";
   } else {
     $file = metaFN(getNS($ID),'/.mlist');
+    $ns = getNS($ID);
   }
+
+  // reuse strings used to display the status of the subscribe action
+  $act_msg = rtrim($act, 'ns');
 
   if ($act=='subscribens' && !$INFO['subscribedns']){
     if ($INFO['userinfo']['mail']){
       if (io_saveFile($file,$_SERVER['REMOTE_USER']."\n",true)) {
         $INFO['subscribedns'] = true;
-        msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
+        msg(sprintf($lang[$act_msg.'_success'], $INFO['userinfo']['name'], $ns),1);
       } else {
-        msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
+        msg(sprintf($lang[$act_msg.'_error'], $INFO['userinfo']['name'], $ns),1);
       }
     } else {
       msg($lang['subscribe_noaddress']);
@@ -484,9 +489,9 @@ function act_subscriptionns($act){
   } elseif ($act=='unsubscribens' && $INFO['subscribedns']){
     if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
       $INFO['subscribedns'] = false;
-      msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
+      msg(sprintf($lang[$act_msg.'_success'], $INFO['userinfo']['name'], $ns),1);
     } else {
-      msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
+      msg(sprintf($lang[$act_msg.'_error'], $INFO['userinfo']['name'], $ns),1);
     }
   }
 
