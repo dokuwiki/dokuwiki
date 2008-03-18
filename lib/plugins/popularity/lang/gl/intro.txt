@@ -1,0 +1,18 @@
+====== Resposta de Popularidade ======
+
+Esta ferramenta recolle datos anónimos verbo do teu wiki e permíteche enviarllos
+aos desenvolvedores do DokuWiki. Isto axudaralles a ter unha idea do xeito en
+que se emprega o DokuWiki por parte dos seus usuarios, e asegura que as decisións
+de desenvolvemento futuro coincidan coas estatísticas de uso no mundo real.
+
+Animámoste a levar a cabo este proceso de cando en vez para manter informados aos
+desenvolvedores a medida que o teu wiki vaia medrando. Os teus xogos de datos
+repetidos seran identificados por un ID anónimo.
+
+Os datos recompilados conteñen información como a versión do teu Dokuwiki, o
+número e tamaño das túas páxinas e arquivos, os plugins instalados e información verbo
+da túa instalación do PHP.
+
+Os datos en bruto que serán enviados amósanse embaixo. Por favor, emprega o botón
+"Enviar Datos" para transferir a información.
+
