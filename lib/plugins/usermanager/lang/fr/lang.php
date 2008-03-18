@@ -5,6 +5,7 @@
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
+ * @author gb@isis.u-strasbg.fr
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification utilisateur non disponible)';
@@ -44,5 +45,5 @@ $lang['note_notify']           = 'Envoi de notification par courriel uniquement 
 $lang['note_group']            = 'Les nouveaux utilisateurs seront ajoutés au groupe par défaut (%s) si aucun groupe n\'est spécifié.';
 $lang['add_ok']                = 'Utilisateur ajouté avec succès';
 $lang['add_fail']              = 'Échec de l\'ajout de l\'utilisateur';
-$lang['notify_ok']             = 'Courriel  de notification expédié';
+$lang['notify_ok']             = 'Courriel de notification expédié';
 $lang['notify_fail']           = 'Échec de l\'expédition du courriel de notification';

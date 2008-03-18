@@ -6,14 +6,13 @@
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
+ * @author gb@isis.u-strasbg.fr
  */
 $lang['menu']                  = 'Paramètres de configuration';
-$lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez.
-                       <br />La valeur(s) erronée(s) est entourée d\'une bordure rouge.';
+$lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />La valeur(s) erronée(s) est entourée d\'une bordure rouge.';
 $lang['updated']               = 'Paramètres mis à jour avec succès.';
 $lang['nochoice']              = '(aucun autre choix possible)';
-$lang['locked']                = 'Le fichier des paramètres ne peut être modifié, si ceci n\'est pas intentionnel, <br />
-                       vérifiez que le nom et les droits du fichier sont corrects.';
+$lang['locked']                = 'Le fichier des paramètres ne peut être modifié, si ceci n\'est pas intentionnel, <br /> vérifiez que le nom et les droits du fichier sont corrects.';
 $lang['_configuration_manager'] = 'Gestionnaire de configuration';
 $lang['_header_dokuwiki']      = 'Paramètres DokuWiki';
 $lang['_header_plugin']        = 'Paramètres plugin';
@@ -59,7 +58,7 @@ $lang['deaccent']              = 'Retirer les accents dans les noms de pages';
 $lang['useheading']            = 'Utiliser le titre de premier niveau';
 $lang['refcheck']              = 'Vérifier les références de media';
 $lang['refshow']               = 'Nombre de références de media à montrer';
-$lang['allowdebug']            = 'Déboguer <b>désactivez si vous n\'en n\'avez pas besoin !</b>';
+$lang['allowdebug']            = 'Debug (<b>Ne l\'activez que si vous en avez besoin !</b>)';
 $lang['usewordblock']          = 'Bloquer le spam selon les mots utilisés';
 $lang['indexdelay']            = 'Délai avant l\'indexation (sec)';
 $lang['relnofollow']           = 'Utiliser rel="nofollow" sur les liens extérieurs';
@@ -73,10 +72,10 @@ $lang['defaultgroup']          = 'Groupe par défaut';
 $lang['superuser']             = 'Superuser - groupe, utilisateur ou liste séparée par des virgules user1,@group1,user2 ayant un accès complet à toutes les pages quelquesoit le paramétrage des ACL';
 $lang['manager']               = 'Manager - groupe, utilisateur ou liste séparée par des virgules user1,@group1,user2 ayant accès à certaines fonctions de gestion';
 $lang['profileconfirm']        = 'Confirmer par mot de passe les modifications de profil';
-$lang['disableactions']        = 'Désactiver les actions dans DokuWiki';
+$lang['disableactions']        = 'Actions à désactiver dans DokuWiki';
 $lang['disableactions_check']  = 'Vérifier';
-$lang['disableactions_subscription'] = 'Abonner/Désabonner';
-$lang['disableactions_nssubscription'] = 'Abonner/Désabonner aux catégories';
+$lang['disableactions_subscription'] = 'Abonnement aux pages';
+$lang['disableactions_nssubscription'] = 'Abonnement aux catégories';
 $lang['disableactions_wikicode'] = 'Afficher source';
 $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher celles pour lesquelles l\'utilisateur n\'a pas la permission de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certaines ACL.';
@@ -108,6 +107,9 @@ $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérat
 CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'info.';
 $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur Web de délivrer des fichiers statiques ? Votre serveur Web doit supporter cette fonctionnalité.';
 $lang['xmlrpc']                = 'Activer l\'interface XML-RPC.';
+$lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (xhtml)';
+$lang['renderer__core']        = '%s (dokuwiki core)';
+$lang['renderer__plugin']      = '%s (plugin)';
 $lang['rss_type']              = 'Type de flux RSS';
 $lang['rss_linkto']            = 'Lien du flux RSS vers';
 $lang['rss_content']           = 'Quel contenu afficher dans le flux RSS ?';
@@ -147,7 +149,7 @@ $lang['rss_type_o_rss1']       = 'RSS 1.0';
 $lang['rss_type_o_rss2']       = 'RSS 2.0';
 $lang['rss_type_o_atom']       = 'Atom 0.3';
 $lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'Abstract';
+$lang['rss_content_o_abstract'] = 'Résumé';
 $lang['rss_content_o_diff']    = 'Diff Unifié';
 $lang['rss_content_o_htmldiff'] = 'Diff formaté en table HTML';
 $lang['rss_content_o_html']    = 'page complète au format HTML';
@@ -161,3 +163,4 @@ $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'ne pas utiliser';
 $lang['xsendfile_o_1']         = 'Entête propriétaire lighttpd (avant la version 1.5)';
 $lang['xsendfile_o_2']         = 'Entête standard X-Sendfile';
+$lang['xsendfile_o_3']         = 'En-tête propriétaire Nginx X-Accel-Redirect';

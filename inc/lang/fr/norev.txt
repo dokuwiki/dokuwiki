@@ -1,5 +1,4 @@
 ====== Révision non trouvée ======
 
-La révision demandée n'existe pas. Utilisez le bouton 'Anciennes révisions'
-pour une liste des révisions de ce document.
+La révision demandée n'existe pas. Utilisez le bouton 'Anciennes révisions' pour une liste des révisions de ce document.
 

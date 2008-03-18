@@ -1,9 +1,6 @@
 ====== Une version plus récente existe déjà ======
 
-Une version plus récente du document que vous avez édité existe déjà. Celà arrive
-lorsqu'un autre utilisateur enregistre le document pendant que vous l'éditez.
+Une version plus récente du document que vous avez édité existe déjà. Cela se produit lorsqu'un autre utilisateur enregistre le document pendant que vous l'éditez.
 
-Examinez attentivement les différences ci-dessous, et décidez quelle version
-conserver. Si vous choisissez ''Enregistrer'', votre version sera enregistrée.
-Cliquez sur ''Annuler'' pour conserver la version actuelle.
+Examinez attentivement les différences ci-dessous, et décidez quelle version conserver. Si vous choisissez ''Enregistrer'', votre version sera enregistrée. Cliquez sur ''Annuler'' pour conserver la version actuelle.
 

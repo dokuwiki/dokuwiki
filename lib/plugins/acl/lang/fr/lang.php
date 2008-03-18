@@ -11,6 +11,7 @@
  * @author Fabien Chabreuil <fabien@integralpersonality.com>
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
+ * @author gb@isis.u-strasbg.fr
  */
 $lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
 $lang['acl_group']             = 'Groupe';

@@ -1,2 +1,1 @@
-===== Liste =====
-La liste des utilisateurs
+===== Liste des utilisateurs =====

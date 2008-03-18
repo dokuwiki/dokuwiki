@@ -6,6 +6,7 @@
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
+ * @author gb@isis.u-strasbg.fr
  */
 $lang['menu']                  = 'Gestion des plugins';
 $lang['download']              = 'Télécharger et installer un nouveau plugin';
@@ -29,7 +30,7 @@ $lang['deleting']              = 'Suppression...';
 $lang['deleted']               = 'Plugin %s supprimé.';
 $lang['downloading']           = 'Téléchargement...';
 $lang['downloaded']            = 'Plugin %s installé avec succès';
-$lang['downloads']             = 'Les plugins suivants ont été installés avec succès';
+$lang['downloads']             = 'Les plugins suivants ont été installés avec succès :';
 $lang['download_none']         = 'Aucun plugin trouvé, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
 $lang['plugin']                = 'Plugin :';
 $lang['components']            = 'Composants';

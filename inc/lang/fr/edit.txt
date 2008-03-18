@@ -1,4 +1,3 @@
 Modifiez cette page et cliquez sur ''Enregistrer''. Voyez le [[wiki:syntax|Guide de la mise en page]]
-pour une aide à propos du format. Veuillez ne modifier cette page que si vous pouvez l'**améliorer**.
-Si vous souhaitez faire des tests, faites vos premiers pas dans le [[playground:playground|bac à sable]].
+pour une aide à propos du format. Veuillez ne modifier cette page que si vous pouvez l'**améliorer**. Si vous souhaitez faire des tests, faites vos premiers pas dans le [[playground:playground|bac à sable]].
 

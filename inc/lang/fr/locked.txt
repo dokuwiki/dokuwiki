@@ -1,4 +1,3 @@
 ====== Page bloquée ======
 
-Cette page est actuellement bloquée pour édition par un autre utilisateur.
-Vous devez attendre que l'autre utilisateur ait terminé ou que la blocage de la page expire.
+Cette page est actuellement bloquée pour édition par un autre utilisateur. Vous devez attendre que l'autre utilisateur ait terminé ou que le blocage de la page expire.
