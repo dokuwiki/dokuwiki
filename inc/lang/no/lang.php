@@ -8,6 +8,7 @@
  * @author Rune Rasmussen http://www.syntaxerror.no/
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
+ * @author Torkill Bruland <torkar-b@online.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -42,6 +43,8 @@ $lang['btn_backlink']          = 'Tilbakelinker';
 $lang['btn_backtomedia']       = 'Tilbake til valg av mediafil';
 $lang['btn_subscribe']         = 'Abonner på endringer';
 $lang['btn_unsubscribe']       = 'Ikke abonner på endringer';
+$lang['btn_subscribens']       = 'Abonner på endringer i navnerom';
+$lang['btn_unsubscribens']     = 'Stopp abonnement på endringer i navnerom';
 $lang['btn_profile']           = 'Oppdater profil';
 $lang['btn_reset']             = 'Tilbakestill';
 $lang['btn_resendpwd']         = 'Send nytt passord';

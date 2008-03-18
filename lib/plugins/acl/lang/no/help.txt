@@ -1,0 +1,14 @@
+===Lynhjelp===
+
+På denne siden kan du legge til og fjerne tillatelser for navnerom og
+sider i din wiki.
+
+Venstre panel viser alle tilgjengelige navnerom og sider.
+
+Skjemaet over tillater deg å se og modifisere tillatelser for en valgt 
+bruker eller gruppe.
+
+I tabellen nedenfor vises alle nærværende satte adgangskontroll-regler.
+Du kan bruke den til raskt å slette eller endre mange regler i slengen.
+
+Å lese  [[doku>wiki:acl|den offisielle dokumentasjonen for ACL]]  kan hjelpe deg å fullt ut forstå hvordan adgangskontroll fungerer i DokuWiki.

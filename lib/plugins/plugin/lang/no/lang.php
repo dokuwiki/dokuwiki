@@ -4,6 +4,7 @@
  *
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
+ * @author Torkill Bruland <torkar-b@online.no>
  */
 $lang['menu']                  = 'Behandle tillegg';
 $lang['download']              = 'Last ned og installer et tillegg';
