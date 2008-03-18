@@ -206,6 +206,6 @@ $lang['compression_o_bz2'] = 'bz2';
 
 /* xsendfile header */
 $lang['xsendfile_o_0'] = "don't use";
-$lang['xsendfile_o_1'] = 'Propritary lighttpd header (before release 1.5)';
+$lang['xsendfile_o_1'] = 'Proprietary lighttpd header (before release 1.5)';
 $lang['xsendfile_o_2'] = 'Standard X-Sendfile header';
-$lang['xsendfile_o_3'] = 'Propritary Nginx X-Accel-Redirect header';
+$lang['xsendfile_o_3'] = 'Proprietary Nginx X-Accel-Redirect header';
