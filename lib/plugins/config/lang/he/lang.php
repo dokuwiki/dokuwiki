@@ -106,6 +106,7 @@ $lang['sitemap']               = 'צור מפת אתר של Google (ימים)';
 $lang['broken_iua']            = 'האם הפעולה ignore_user_abort תקולה במערכת שלך? הדבר עלול להביא לתוכן חיפוש שאינו תקין. IIS+PHP/CGI ידוע כתקול. ראה את <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">באג 852</a> למידע נוסף';
 $lang['xsendfile']             = 'להשתמש בכותר X-Sendfile כדי לאפשר לשרת לספק קבצים סטטיים? על השרת שלך לתמוך באפשרות זאת.';
 $lang['xmlrpc']                = 'לאפשר.לחסום את מנשק XML-RPC';
+$lang['renderer_xhtml']        = 'מחולל לשימוש עבור פלט הויקי העיקרי (xhtml)';
 $lang['renderer__core']        = '%s (ליבת דוקוויקי)';
 $lang['renderer__plugin']      = '%s (הרחבות)';
 $lang['rss_type']              = 'סוג פלט XML';
