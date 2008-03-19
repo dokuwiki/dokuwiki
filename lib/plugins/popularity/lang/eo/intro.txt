@@ -1,0 +1,9 @@
+====== Populareca Esploro ======
+
+Tiu ĉi ilo prenas anoniman datenaron pri via vikio kaj ebligas al vi sendi ĝin ree al la kodumantoj de DokuWiki. Tio helpas ke ili komprenu kiel DokuWiki estas uzata kaj certigas ke estontaj disvolviĝaj decidoj estos subtenataj de statistikoj pri reala aplikado.
+
+Ni instigas vin ripeti tiun agon iam kaj tiam por teni la disvolvigantojn informitaj, dum via vikio kreskas. Viaj resendotaj datenaroj estos identigitaj per anonima ID.
+
+La kolektita datenaro enhavas informon pri versio de la instalita DokuWiki, nombro kaj grandeco de la paĝoj kaj dosieroj, instalitaj kromaĵoj kaj informoj pri via PHP-sistemo.
+
+La kruda datenaro sendota estas montrita sube. Bonvole uzu la butonon "Sendi Datenaron" por transŝuti tiun informaron.
