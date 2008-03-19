@@ -115,7 +115,20 @@ class Doku_LexerParallelRegex {
         if (! preg_match($this->_getCompoundedRegex(), $subject, $matches)) {
             if(function_exists('preg_last_error')){
                 $err = preg_last_error();
-                if($err == 2) msg('A PCRE backtrack error occured. Try to increase the pcre.backtrack_limit in php.ini',-1);
+                switch($err){
+                    case PREG_BACKTRACK_LIMIT_ERROR:
+                        msg('A PCRE backtrack error occured. Try to increase the pcre.backtrack_limit in php.ini',-1);
+                        break;
+                    case PREG_RECURSION_LIMIT_ERROR:
+                        msg('A PCRE recursion error occured. Try to increase the pcre.recursion_limit in php.ini',-1);
+                        break;
+                    case PREG_BAD_UTF8_ERROR:
+                        msg('A PCRE UTF-8 error occured. This might be caused by a faulty plugin',-1);
+                        break;
+                    case PREG_INTERNAL_ERROR:
+                        msg('A PCRE internal error occured. This might be caused by a faulty plugin',-1);
+                        break;
+                }
             }
 
             $split = array($subject, "", "");
