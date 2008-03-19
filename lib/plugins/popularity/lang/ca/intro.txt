@@ -1,0 +1,9 @@
+====== Retroacció sobre popularitat ======
+
+Aquesta eina recull dades anònimes sobre el vostre wiki i us permet enviar-les als desenvolupadors de DokuWiki. Això els ajudarà a entendre com utilitzen DokuWiki els usuaris i farà que futures decisions de desenvolupament es prenguin sobre la base d'estadístiques d'ús reals.
+
+Els desenvolupadors de DokuWiki us preguen que repetiu aquest pas de tant en tant per tal de mantenir-los ben informats a mesura que creix el vostre wiki. Els conjunts de dades que envieu al llarg del temps quedaran identificats per un ID anònim.
+
+Les dades que es recullen contenen informació com ara la vostra versió de DokuWiki, el nombre i la mida de pàgines i fitxers, els connectors instal·lats i informació sobre la vostra instal·lació de PHP.
+
+Més avall es mostren les dades crues que s'enviaran. Feu servir el botó "Envia dades" per transferir aquesta informació.

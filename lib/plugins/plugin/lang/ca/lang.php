@@ -5,6 +5,7 @@
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author carles.bellver@gmail.com
  * @author carles.bellver@cent.uji.es
+ * @author Carles Bellver <carles.bellver@cent.uji.es>
  */
 $lang['menu']                  = 'Gestió de connectors';
 $lang['download']              = 'Baixa i instal·la un nou connector';
