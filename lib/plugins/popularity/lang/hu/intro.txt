@@ -1,0 +1,9 @@
+====== Visszajelzés a DokuWiki használatáról ======
+
+Ez az eszköz anonimizált adatokat gyűjt a wikidről, és lehetővé teszi, hogy elküldd a DokuWiki fejlesztőinek. Ez segít meglátni, hogy a felhasználók hogyan használják a DokuWikijüket, ezáltal biztosítja, hogy a későbbi fejlesztési döntések hátterében valós használati statisztikák álljanak.
+
+Szeretnénk megkérni, hogy időről időre ismételd meg ezt a műveletet, hogy a fejlesztők értesülhessenek, hogyan nő a wikid mérete. Az ismételt adatküldéseid egy anoním ID-vel lesznek azonosítva.
+
+Ilyen és hasonló információkat gyűjtünk: DokuWiki verziószáma, a lapok, fájlok mérete és darabszáma, feltelepített bővítmények, PHP installáció adatai.
+
+Az elküldendő nyers adat lent látható. Kérjük, az "Adatok elküldése" gombbal juttasd el hozzánk!
