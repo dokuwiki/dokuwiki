@@ -16,6 +16,7 @@ $lang['acl_perms']             = 'Rettigheter for';
 $lang['page']                  = 'Side';
 $lang['namespace']             = 'Navnerom';
 $lang['p_user_id']             = 'Bruker <b class="acluser">%s</b> har for tiden følgende tillatelser i for siden  <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_user_ns']             = 'Bruker <b class="acluser">%s</b> har for tiden følgende tillatelser i navnerom <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Medlemmer av gruppe <b class="aclgroup">%s</b> har for tiden følgende tillatelser i for siden <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Medlemmer av gruppe <b class="aclgroup">%s</b> har for tiden følgende tillatelser i navnerom <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_choose_id']           = '<b>Før inn en bruker eller gruppe</b> i skjemaet over for å vise eller redigere tillatelser satt for siden <b class="aclpage">%s</b>.';
