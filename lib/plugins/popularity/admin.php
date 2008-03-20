@@ -51,16 +51,21 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * Accessible for managers
+     */
+    function forAdminOnly() {
+        return false;
+    }
+
+
+    /**
      * handle user request
-     *
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
      */
     function handle() {
     }
 
     /**
-     * @author  Andreas Gohr <andi@splitbrain.org>
+     * Output HTML form
      */
     function html() {
         echo $this->locale_xhtml('intro');
