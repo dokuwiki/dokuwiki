@@ -208,6 +208,7 @@ function get_resized($file, $ext, $w, $h=0){
   if( $mtime > filemtime($file) ||
       resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
       resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
+    if($conf['fperm']) chmod($local, $conf['fperm']);
     return $local;
   }
   //still here? resizing failed
