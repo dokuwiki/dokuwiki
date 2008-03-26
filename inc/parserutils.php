@@ -323,6 +323,25 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 }
 
 /**
+ * Purges the non-persistant part of the meta data
+ * used on page deletion
+ *
+ * @author Michael Klier <chi@chimeric.de>
+ */
+function p_purge_metadata($id) {
+    $metafn = metaFN('id', '.meta');
+    $meta   = p_read_metadata($id);
+    foreach($meta['current'] as $key => $value) {
+        if(is_array($meta[$key])) {
+            $meta['current'][$key] = array();
+        } else {
+            $meta['current'][$key] = '';
+        }
+    }
+    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+}
+
+/**
  * read the metadata from source/cache for $id
  * (internal use only - called by p_get_metadata & p_set_metadata)
  *

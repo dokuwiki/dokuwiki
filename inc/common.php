@@ -842,10 +842,13 @@ function saveWikiText($id,$text,$summary,$minor=false){
     // remove old meta info...
     $mfiles = metaFiles($id);
     $changelog = metaFN($id, '.changes');
+    $metadata  = metaFN($id, '.meta');
     foreach ($mfiles as $mfile) {
-      // but keep per-page changelog to preserve page history
-      if (@file_exists($mfile) && $mfile!==$changelog) { @unlink($mfile); }
+      // but keep per-page changelog to preserve page history and keep meta data
+      if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata) { @unlink($mfile); }
     }
+    // purge meta data
+    p_purge_metadata($id);
     $del = true;
     // autoset summary on deletion
     if(empty($summary)) $summary = $lang['deleted'];
