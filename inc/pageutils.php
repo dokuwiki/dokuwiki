@@ -279,7 +279,8 @@ function metaFN($id,$ext){
  */
 function metaFiles($id){
    $name   = noNS($id);
-   $dir    = metaFN(getNS($id),'').'/';
+   $ns     = getNS($id);
+   $dir    = ($ns) ? metaFN($ns,'').'/' : metaFN($ns,'');
    $files  = array();
 
    $dh = @opendir($dir);
