@@ -4,7 +4,7 @@
  * -------
  * Author: Iulian M
  * Copyright: (c) 2006 Iulian M
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/09/27
  *
  * C++ language file for GeSHi, with QT extensions.

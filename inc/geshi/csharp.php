@@ -4,7 +4,7 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/06/04
  *
  * C# language file for GeSHi.
@@ -226,7 +226,13 @@
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
         ),
-    'TAB_WIDTH' => 4
+    'TAB_WIDTH' => 4,
+	'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            'DISALLOWED_BEFORE' => "a-zA-Z0-9\$_\|\#>|^",
+            'DISALLOWED_AFTER' => "a-zA-Z0-9_<\|%\\-"
+        )
+	)
 );
 
 ?>

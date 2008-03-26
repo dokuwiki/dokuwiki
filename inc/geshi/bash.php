@@ -4,13 +4,15 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2007/09/05 (1.0.7.21)
+ *  -  PARSER_CONTROL patch using SF #1788408 (BenBE)
  * 2007/06/11 (1.0.7.20)
  *  -  Added a lot of keywords (BenBE / Jan G)
  * 2004/11/27 (1.0.2)
@@ -50,7 +52,7 @@ $language_data = array (
     // Bash DOES have single line comments with # markers. But bash also has
     // the  $# variable, so comments need special handling (see sf.net
     // 1564839)
-	'COMMENT_SINGLE' => array(),
+	'COMMENT_SINGLE' => array('#'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
@@ -88,7 +90,7 @@ $language_data = array (
 			'last', 'lastb', 'ld', 'ld86', 'ldd', 'less', 'lex', 'link', 'ln', 'loadkeys',
 			'loadunimap', 'locate', 'lockfile', 'login', 'logname',
 			'lp', 'lpr', 'ls', 'lsattr', 'lsmod', 'lsmod.old', 'lynx',
-			'm4', 'make', 'man', 'mapscrn', 'mesg', 'mkdir', 'mkfifo', 
+			'm4', 'make', 'man', 'mapscrn', 'mesg', 'mkdir', 'mkfifo',
 			'mknod', 'mktemp', 'more', 'mount', 'msgfmt', 'mv',
 			'namei', 'nano', 'nasm', 'nawk', 'netstat', 'nice',
 			'nisdomainname', 'nl', 'nm', 'nm86', 'nmap', 'nohup', 'nop',
@@ -144,7 +146,7 @@ $language_data = array (
 			3 => 'color: #7a0874; font-weight: bold;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;'
+			0 => 'color: #808080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
@@ -167,7 +169,7 @@ $language_data = array (
 			0 => 'color: #007800;',
 			1 => 'color: #007800;',
 			2 => 'color: #007800;',
-			3 => 'color: #808080; font-style: italic;',
+//			3 => 'color: #808080; font-style: italic;',
 			4 => 'color: #007800;'
 			),
 		'SCRIPT' => array(
@@ -185,14 +187,19 @@ $language_data = array (
 		0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
 		1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
 		2 => "([a-zA-Z_][a-zA-Z0-9_]*)=",
-		3 => "(?<!\\$)#[^\n]*",
-		4 => "\\$#"
+//		3 => "(?<!\\$)#[^\n]*",
+		4 => "\\$[*#\$\\-\\?!]"
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+		),
+	'PARSER_CONTROL' => array(
+	    'COMMENTS' => array(
+	       'DISALLOWED_BEFORE' => '$'
+        )
+    )
 );
 
 ?>

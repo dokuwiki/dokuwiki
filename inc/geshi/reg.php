@@ -3,8 +3,8 @@
  * reg.php
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
- * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.20
+ * Copyright: (c) 2006 Sean Hanna
+ * Release Version: 1.0.7.21
  * Date Started: 03/15/2006
  *
  * Microsoft Registry Editor Language File.
@@ -30,7 +30,7 @@
  *
  * - There are two regexes for the multiline hex value regex. The regex for
  *		all lines after the first does not verify that the previous line contains
- *		a line continuation character '\'. This regex also does not check for 
+ *		a line continuation character '\'. This regex also does not check for
  *		end of line as it should.
  *
  * - If number_highlighting is enabled during processing of this syntax file
@@ -68,11 +68,11 @@ $language_data = array (
 		2 => array()
 	    /* Registry Key Constants Not Used
 		3 => array(
-			'HKEY_LOCAL_MACHINE', 
-			'HKEY_CLASSES_ROOT', 
+			'HKEY_LOCAL_MACHINE',
+			'HKEY_CLASSES_ROOT',
 			'HKEY_CURRENT_USER',
-			'HKEY_USERS', 
-			'HKEY_CURRENT_CONFIG', 
+			'HKEY_USERS',
+			'HKEY_CURRENT_CONFIG',
 			'HKEY_DYN_DATA',
 			'HKLM', 'HKCR', 'HKCU', 'HKU', 'HKCC', 'HKDD'
 			)/***/
@@ -94,7 +94,7 @@ $language_data = array (
 		'METHODS' => array(),
 		'SYMBOLS' => array(0 => 'color: #000000;'),
 		'SCRIPT' => array(),
-		'REGEXPS' => array( 
+		'REGEXPS' => array(
 			0 => '',
 			1 => 'color: #0000FF;',
 			2 => '',
@@ -146,7 +146,7 @@ $language_data = array (
 			GESHI_BEFORE => '\\1',
 			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'kw2'
-			),			
+			),
 		// Highlight variable names
 		4 => array(
 			GESHI_SEARCH => '((\\n|^)\\s*\\&quot\\;)(.*)(\\&quot\\;\\s*=)',

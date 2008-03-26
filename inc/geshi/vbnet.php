@@ -4,7 +4,7 @@
  * ---------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/06/04
  *
  * VB.NET language file for GeSHi.
@@ -65,13 +65,13 @@
 			'WINDOWSFOLDER', 'WINDOWTEXT', 'YELLOW', 'YES', 'YESNO', 'YESNOCANCEL'
 			),
 		2 => array(
-			'As', 'ADDHANDLER', 'ASSEMBLY', 'AUTO', 'Binary', 'ByRef', 'ByVal', 'BEGINEPILOGUE',
-			'Else', 'Empty', 'Error', 'ENDPROLOGUE', 'EXTERNALSOURCE', 'ENVIRON', 'For',
-			'Friend', 'GET', 'HANDLES', 'Input', 'Is', 'Len', 'Lock', 'Me', 'Mid', 'MUSTINHERIT',
+			'AndAlso', 'As', 'ADDHANDLER', 'ASSEMBLY', 'AUTO', 'Binary', 'ByRef', 'ByVal', 'BEGINEPILOGUE',
+			'Else', 'ElseIf', 'Empty', 'Error', 'ENDPROLOGUE', 'EXTERNALSOURCE', 'ENVIRON', 'For',
+			'Friend', 'GET', 'HANDLES', 'Input', 'Is', 'IsNot', 'Len', 'Lock', 'Me', 'Mid', 'MUSTINHERIT',
 			'MYBASE', 'MYCLASS', 'New', 'Next', 'Nothing', 'Null', 'NOTINHERITABLE',
-			'NOTOVERRIDABLE', 'OFF', 'On', 'Option', 'Optional', 'OVERRIDABLE', 'ParamArray',
-			'Print', 'Private', 'Property', 'Public', 'Resume', 'Seek', 'Static', 'Step',
-			'String', 'SHELL', 'SENDKEYS', 'SET', 'Then', 'Time', 'To', 'THROW', 'WithEvents'
+			'NOTOVERRIDABLE', 'OFF', 'On', 'Option', 'Optional', 'Overloads', 'OVERRIDABLE', 'ParamArray',
+			'Print', 'Private', 'Property', 'Public', 'Resume', 'Return', 'Seek', 'Static', 'Step',
+			'String', 'SHELL', 'SENDKEYS', 'SET', 'Shared', 'Then', 'Time', 'To', 'THROW', 'WithEvents'
 			),
 		3 => array(
 			'COLLECTION', 'DEBUG', 'DICTIONARY', 'DRIVE', 'DRIVES', 'ERR', 'FILE', 'FILES',
@@ -86,7 +86,7 @@
 			'GETTYPE', 'LIKE', 'MOD', 'NOT', 'ORXOR'
 			),
 		6 => array(
-			'APPACTIVATE', 'BEEP', 'CALL', 'CHDIR', 'CHDRIVE', 'CLASS', 'CASE', 'CATCH',
+			'APPACTIVATE', 'BEEP', 'CALL', 'CHDIR', 'CHDRIVE', 'CLASS', 'CASE', 'CATCH', 'CONST',
 			'DECLARE', 'DELEGATE', 'DELETESETTING', 'DIM', 'DO', 'DOEVENTS', 'END', 'ENUM',
 			'EVENT', 'EXIT', 'EACH', 'FUNCTION', 'FINALLY', 'IF', 'IMPORTS', 'INHERITS',
 			'INTERFACE', 'IMPLEMENTS', 'KILL', 'LOOP', 'MIDB', 'NAMESPACE', 'OPEN', 'PUT',
@@ -110,7 +110,7 @@
 			'LTRIM$', 'MID$', 'MIDB', 'MIDB$', 'MINUTE', 'MIRR', 'MKDIR', 'MONTH', 'MONTHNAME',
 			'MSGBOX', 'NOW', 'NPER', 'NPV', 'OCT', 'OCT$', 'PARTITION', 'PMT', 'PPMT', 'PV',
 			'RATE', 'REPLACE', 'RIGHT', 'RIGHT$', 'RIGHTB', 'RIGHTB$', 'RMDIR', 'RND', 'RTRIM',
-			'RTRIM$', 'SECOND', 'SIN', 'SLN', 'SPACE', 'SPACE$', 'SPC', 'SPLIT', 'STR', 'STR$',
+			'RTRIM$', 'SECOND', 'SIN', 'SLN', 'SPACE', 'SPACE$', 'SPC', 'SPLIT', 'SQRT', 'STR', 'STR$',
 			'STRCOMP', 'STRCONV', 'STRING$', 'STRREVERSE', 'SYD', 'TAB', 'TAN', 'TIMEOFDAY',
 			'TIMER', 'TIMESERIAL', 'TIMEVALUE', 'TODAY', 'TRIM', 'TRIM$', 'TYPENAME', 'UBOUND',
 			'UCASE', 'UCASE$', 'VAL', 'WEEKDAY', 'WEEKDAYNAME', 'YEAR'

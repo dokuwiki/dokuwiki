@@ -4,7 +4,7 @@
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/08/30
  *
  * Python language file for GeSHi.
@@ -65,13 +65,13 @@ $language_data = array (
 		** http://python.org/doc/current/lib/built-in-funcs.html
 		*/
 		2 => array(
-			'__import__', 'abs', 'basestring', 'bool', 'callable', 'chr', 'classmethod', 'cmp', 
-			'compile', 'complex', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'execfile', 
+			'__import__', 'abs', 'basestring', 'bool', 'callable', 'chr', 'classmethod', 'cmp',
+			'compile', 'complex', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'execfile',
 			'file', 'filter', 'float', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help',
 			'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'list', 'locals',
 			'long', 'map', 'max', 'min', 'object', 'oct', 'open', 'ord', 'pow', 'property', 'range',
 			'raw_input', 'reduce', 'reload', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice',
-			'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'unichr', 'unicode', 
+			'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'unichr', 'unicode',
 			'vars', 'xrange', 'zip',
 			// Built-in constants: http://python.org/doc/current/lib/node35.html
 			'False', 'True', 'None', 'NotImplemented', 'Ellipsis',
@@ -142,14 +142,14 @@ $language_data = array (
 			'translate', 'upper', 'zfill',
 			*/
 			// Basic customization: http://python.org/doc/current/ref/customization.html
-			'__new__', '__init__', '__del__', '__repr__', '__str__', 
+			'__new__', '__init__', '__del__', '__repr__', '__str__',
 			'__lt__', '__le__', '__eq__', '__ne__', '__gt__', '__ge__', '__cmp__', '__rcmp__',
 			'__hash__', '__nonzero__', '__unicode__', '__dict__',
 			// Attribute access: http://python.org/doc/current/ref/attribute-access.html
 			'__setattr__', '__delattr__', '__getattr__', '__getattribute__', '__get__', '__set__',
 			'__delete__', '__slots__',
 			// Class creation, callable objects
-			'__metaclass__', '__call__', 
+			'__metaclass__', '__call__',
 			// Container types: http://python.org/doc/current/ref/sequence-types.html
 			'__len__', '__getitem__', '__setitem__', '__delitem__', '__iter__', '__contains__',
 			'__getslice__', '__setslice__', '__delslice__',

@@ -2,9 +2,9 @@
 /*************************************************************************************
  * sdlbasic.php
  * ------------
- * Author: Roberto Rossi 
+ * Author: Roberto Rossi
  * Copyright: (c) 2005 Roberto Rossi (http://rsoftware.altervista.org)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2005/08/19
  *
  * sdlBasic (http://sdlbasic.sf.net) language file for GeSHi.
@@ -102,7 +102,7 @@
     'acceptsock', 'isserverready', 'connectsock', 'connectionreadysock',
     'isclientready', 'losesock', 'peeksock', 'readsock', 'readbytesock',
     'readlinesock', 'writesock', 'writebytesock', 'writelinesock',
-    'getremoteip', 'getremoteport', 'getlocalip' 
+    'getremoteip', 'getremoteport', 'getlocalip'
       )
 		),
 	'SYMBOLS' => array(

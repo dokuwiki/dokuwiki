@@ -4,9 +4,9 @@
  * --------
  * Author: Alexander 'E-Razor' Krause (admin@erazor-zone.de)
  * Copyright: (c) 2005 Alexander Krause
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2005/06/15
- * 
+ *
  * VHDL (VHSICADL, very high speed integrated circuit HDL) language file for GeSHi.
  *
  * CHANGES
@@ -36,7 +36,7 @@
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  ************************************************************************************/
- 
+
 $language_data = array (
     'LANG_NAME' => 'VHDL',
     'COMMENT_SINGLE' => array(1 => '--'),
@@ -134,5 +134,5 @@ $language_data = array (
     'HIGHLIGHT_STRICT_BLOCK' => array(
         )
 );
- 
+
 ?>

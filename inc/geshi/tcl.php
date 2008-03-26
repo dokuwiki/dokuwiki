@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Reid van Melle (rvanmelle@gmail.com)
  * Copyright: (c) 2004 Reid van Melle (sorry@nowhere)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2006/05/05
  *
  * TCL/iTCL language file for GeSHi.
@@ -62,7 +62,7 @@ $language_data = array (
 		1 => array(
 			'proc', 'global', 'upvar', 'if', 'then', 'else', 'elseif', 'for', 'foreach',
 			'break', 'continue', 'while', 'set', 'eval', 'case', 'in', 'switch',
-			'default', 'exit', 'error', 'proc', 'return', 'uplevel', 'loop', 
+			'default', 'exit', 'error', 'proc', 'return', 'uplevel', 'loop',
 			'for_array_keys', 'for_recursive_glob', 'for_file', 'unwind_protect',
 			'expr', 'catch', 'namespace', 'rename', 'variable',
 			// itcl
@@ -75,7 +75,7 @@ $language_data = array (
 		2 => array(
 			// string handling
 			'append', 'binary', 'format', 're_syntax', 'regexp', 'regsub',
-			'scan', 'string', 'subst', 
+			'scan', 'string', 'subst',
 			// list handling
 			'concat', 'join', 'lappend', 'lindex', 'list', 'llength', 'lrange',
 			'lreplace', 'lsearch', 'lset', 'lsort', 'split',
@@ -83,7 +83,7 @@ $language_data = array (
 			'expr',
 			// procedures and output
 			'incr', 'close', 'eof', 'fblocked', 'fconfigure', 'fcopy', 'file',
-			'fileevent', 'flush', 'gets', 'open', 'puts', 'read', 'seek', 
+			'fileevent', 'flush', 'gets', 'open', 'puts', 'read', 'seek',
 			'socket', 'tell',
 			// packages and source files
 			'load', 'loadTk', 'package', 'pgk::create', 'pgk_mkIndex', 'source',
@@ -96,9 +96,9 @@ $language_data = array (
 			// platform specified
 			'dde', 'registry', 'resource',
 			// special variables
-			'$argc', '$argv', '$errorCode', '$errorInfo', '$argv0', 
-			'$auto_index', '$auto_oldpath', '$auto_path', '$env', 
-			'$tcl_interactive', '$tcl_libpath', '$tcl_library', 
+			'$argc', '$argv', '$errorCode', '$errorInfo', '$argv0',
+			'$auto_index', '$auto_oldpath', '$auto_path', '$env',
+			'$tcl_interactive', '$tcl_libpath', '$tcl_library',
 			'$tcl_pkgPath', '$tcl_platform', '$tcl_precision', '$tcl_traceExec',
 			),
 

@@ -4,10 +4,8 @@
  * ---------------------------------
  * Author: Adrien Friggeri (adrien@friggeri.net)
  * Copyright: (c) 2007 Adrien Friggeri (http://www.friggeri.net)
- * Release Version: 1.0.7.20
- * CVS Revision Version: $Revision: 958 $
+ * Release Version: 1.0.7.21
  * Date Started: 2007/05/30
- * Last Modified: $Date: 2007-04-01 23:51:03 +1200 (Sun, 01 Apr 2007) $
  *
  * dot language file for GeSHi.
  *
@@ -58,7 +56,7 @@ $language_data = array (
           'pagedir', 'peripheries', 'port_label_distance', 'quantum', 'rank', 'rankdir',
           'ranksep', 'ratio', 'regular', 'rotate', 'samehead', 'sametail', 'searchsize',
           'shape', 'shapefile', 'showboxes', 'sides', 'size', 'skew', 'style',
-          'tailclip', 'taillabel', 'tailport', 'toplabel', 'weight', 'width' 
+          'tailclip', 'taillabel', 'tailport', 'toplabel', 'weight', 'width'
         ),
         2 => array('node', 'graph', 'digraph', 'strict', 'edge', 'subgraph'),
         3 => array('FALSE', 'Mcircle', 'Mdiamond', 'Mrecord', 'Msquare', 'TRUE', 'auto', 'back',
@@ -68,7 +66,7 @@ $language_data = array (
           'invhouse', 'invis', 'invodot', 'invtrapezium', 'invtriangle', 'local', 'max',
           'min', 'none', 'normal', 'octagon', 'odot', 'out', 'parallelogram', 'plaintext',
           'polygon', 'record', 'same', 'solid', 'trapezium', 'triangle', 'tripleoctagon',
-          'true' 
+          'true'
         ),
         4 => array('aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'black',
           'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue',
@@ -92,7 +90,7 @@ $language_data = array (
           'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'salmon2', 'sandybrown',
           'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'snow',
           'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet',
-          'violetred', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen' 
+          'violetred', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen'
         )
       ),
     'SYMBOLS' => array(
@@ -145,7 +143,7 @@ $language_data = array (
         3 => ''
     ),
     'OOLANG' => false,
-    'OBJECT_SPLITTER' => '',    
+    'OBJECT_SPLITTER' => '',
     'REGEXPS' => array(),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(),

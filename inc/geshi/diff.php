@@ -4,7 +4,7 @@
  * --------
  * Author: Conny Brunnkvist (conny@fuchsia.se), W. Tasin (tasin@fhm.edu)
  * Copyright: (c) 2004 Fuchsia Open Source Solutions (http://www.fuchsia.se/)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/12/29
  *
  * Diff-output language file for GeSHi.
@@ -13,13 +13,13 @@
  * -------
  * 2006/02/27
  *  -  changing language file to use matching of start (^) and end ($) (wt)
- * 
+ *
  * 2004/12/29 (1.0.0)
  *  -  First Release
  *
  * TODO (updated 2006/02/27)
  * -------------------------
- *    
+ *
  *
  *************************************************************************************
  *
@@ -95,12 +95,12 @@ $language_data = array (
 			0 => 'color: #440088;',
 			1 => 'color: #991111;',
 			2 => 'color: #00b000;',
-            3 => 'color: #888822;', 
-            4 => 'color: #888822;', 
-            5 => 'color: #0011dd;', 
-            6 => 'color: #440088;', 
+            3 => 'color: #888822;',
+            4 => 'color: #888822;',
+            5 => 'color: #0011dd;',
+            6 => 'color: #440088;',
 			7 => 'color: #991111;',
-            8 => 'color: #00b000;', 
+            8 => 'color: #00b000;',
 			9 => 'color: #888822;',
                         ),
 		),

@@ -4,8 +4,8 @@
  * --------
  * Author: big_daddy (robert.i.anthony@gmail.com)
  * Copyright: (c) 2006 and to GESHi ;)
- * Release Version: 1.0.7.20
- * Date Started: 26.01.2006
+ * Release Version: 1.0.7.21
+ * Date Started: 2006/01/26
  *
  * Current bugs & todo:
  * ----------

@@ -4,7 +4,7 @@
  * --------
  * Author: Stephan Klimek (http://www.initware.org)
  * Copyright: Stephan Klimek (http://www.initware.org)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2005/07/20
  *
  * AppleScript language file for GeSHi.
@@ -12,7 +12,7 @@
  * CHANGES
  * -------
  *
- * TODO 
+ * TODO
  * -------------------------
  * URL settings to references
  *

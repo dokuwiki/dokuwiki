@@ -3,8 +3,8 @@
  * text.php
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
- * Copyright: (c) 2006 Sean Hanna 
- * Release Version: 1.0.7.20
+ * Copyright: (c) 2006 Sean Hanna
+ * Release Version: 1.0.7.21
  * Date Started: 04/23/2006
  *
  * Standard Text File (No Syntax Highlighting).
@@ -20,8 +20,8 @@
  *
  * TODO (updated 04/27/2006)
  * -------------------------
- * 
- * 
+ *
+ *
  *************************************************************************************
  *
  *     This file is part of GeSHi.

@@ -4,10 +4,10 @@
  * -----------
  * Author: Florian Knorn (floz@gmx.de)
  * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2005/02/09
  *
- * Matlab M-file language file for GeSHi. 
+ * Matlab M-file language file for GeSHi.
  *
  * CHANGES
  * -------
@@ -49,8 +49,8 @@ $language_data = array (
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
-			'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for', 
-			'function', 'global', 'if', 'otherwise', 'persistent', 'return', 
+			'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for',
+			'function', 'global', 'if', 'otherwise', 'persistent', 'return',
 			'switch', 'try', 'while','...'
 			),
         2 => array(
@@ -62,7 +62,7 @@ $language_data = array (
 							'isa',
 							'logical',
 							'mislocked',
-							
+
 							'builtin',
 							'eval',
 							'evalc',
@@ -118,7 +118,7 @@ $language_data = array (
 							'dbstop',
 							'dbtype',
 							'dbup',
-								
+
 							'blkdiag',
 							'eye',
 							'linspace',
@@ -790,11 +790,11 @@ $language_data = array (
 							'tempdir',
 							'tempname',
 							'matlabrc',
-							'quit',                            
+							'quit',
 )
 		),
-	'SYMBOLS' => array( 
-		'...' 
+	'SYMBOLS' => array(
+		'...'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,

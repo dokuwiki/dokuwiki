@@ -2,9 +2,9 @@
 /*************************************************************************************
  * cfm.php
  * -------
- * Author: Diego ()
+ * Author: Diego
  * Copyright: (c) 2006 Diego
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2006/02/25
  *
  * ColdFusion language file for GeSHi.
@@ -47,28 +47,28 @@ $language_data = array (
 	'KEYWORDS' => array(
 		/* CFM Tags */
 		1 => array(
-			'&lt;cfabort', '&lt;cfapplet', '&lt;cfapplication', '&lt;cfargument', '&lt;cfassociate', '&lt;&lt;cfbreak&gt;', 
-			'&lt;cfcache', '&lt;cfcase', '&lt;cfcatch', '&lt;/cfcatch&gt;', '&lt;cfchart', '&lt;/cfchart&gt;', '&lt;cfchartdata', 
-			'&lt;cfchartseries', '&lt;/cfchartseries&gt;', '&lt;cfcol', '&lt;cfcollection', '&lt;cfcomponent', '&lt;/cfcomponent&gt;', 
-			'&lt;cfcontent', '&lt;cfcookie', '&lt;/cfdefaultcase&gt;', '&lt;cfdirectory', '&lt;cfdocument', '&lt;/cfdocument&gt;', 
-			'&lt;cfdocumentitem', '&lt;/cfdocumentitem&gt;', '&lt;cfdocumentsection', '&lt;/cfdocumentsection&gt;', '&lt;cfdump', 
-			'&lt;cfelse', '&lt;cfelseif', '&lt;cferror', '&lt;cfexecute', '&lt;/cfexecute&gt;', '&lt;cfexit', '&lt;cffile', 
-			'&lt;cfflush', '&lt;cfform', '&lt;/cfform&gt;', '&lt;cfformgroup', '&lt;/cfformgroup', '&lt;cfformitem', 
-			'&lt;/cfformitem&gt;', '&lt;cfftp', '&lt;cffunction', '&lt;/cffunction&gt;', '&lt;cfgrid', '&lt;/cfgrid&gt;', 
-			'&lt;cfgridcolumn', '&lt;cfgridrow', '&lt;cfgridupdate', '&lt;cfheader', '&lt;cfhtmlhead', '&lt;cfhttp', 
-			'&lt;/cfhttp&gt;', '&lt;cfhttpparam', '&lt;cfif', '&lt;/cfif&gt;', '&lt;cfimport', '&lt;cfinclude', '&lt;cfindex', 
-			'&lt;cfinput', '&lt;cfinsert', '&lt;cfinvoke', '&lt;cfinvokeargument', '&lt;cfldap', '&lt;cflocation', '&lt;cflock', 
-			'&lt;/cflock&gt;', '&lt;cflog', '&lt;cflogin', '&lt;/cflogin&gt;', '&lt;cfloginuser', '&lt;cflogout', '&lt;cfloop', 
-			'&lt;/cfloop&gt;', '&lt;cfmail', '&lt;/cfmail&gt;', '&lt;cfmailparam', '&lt;cfmailpart', '&lt;/cfmailpart&gt;', 
-			'&lt;cfmodule', '&lt;cfNTauthenticate', '&lt;cfobject', '&lt;cfobjectcache', '&lt;cfoutput&gt;', '&lt;cfoutput', '&lt;/cfoutput&gt;', 
-			'&lt;cfparam', '&lt;cfpop', '&lt;cfprocessingdirective', '&lt;/cfprocessingdirective&gt;', '&lt;cfprocparam', 
-			'&lt;cfprocresult', '&lt;cfproperty', '&lt;cfquery', '&lt;/cfquery&gt;', '&lt;cfqueryparam', '&lt;cfregistry', 
-			'&lt;/cfregistry&gt;', '&lt;cfreport', '&lt;/cfreport&gt;', '&lt;cfreportparam', '&lt;/cfreportparam&gt;', 
+			'&lt;cfabort', '&lt;cfapplet', '&lt;cfapplication', '&lt;cfargument', '&lt;cfassociate', '&lt;&lt;cfbreak&gt;',
+			'&lt;cfcache', '&lt;cfcase', '&lt;cfcatch', '&lt;/cfcatch&gt;', '&lt;cfchart', '&lt;/cfchart&gt;', '&lt;cfchartdata',
+			'&lt;cfchartseries', '&lt;/cfchartseries&gt;', '&lt;cfcol', '&lt;cfcollection', '&lt;cfcomponent', '&lt;/cfcomponent&gt;',
+			'&lt;cfcontent', '&lt;cfcookie', '&lt;/cfdefaultcase&gt;', '&lt;cfdirectory', '&lt;cfdocument', '&lt;/cfdocument&gt;',
+			'&lt;cfdocumentitem', '&lt;/cfdocumentitem&gt;', '&lt;cfdocumentsection', '&lt;/cfdocumentsection&gt;', '&lt;cfdump',
+			'&lt;cfelse', '&lt;cfelseif', '&lt;cferror', '&lt;cfexecute', '&lt;/cfexecute&gt;', '&lt;cfexit', '&lt;cffile',
+			'&lt;cfflush', '&lt;cfform', '&lt;/cfform&gt;', '&lt;cfformgroup', '&lt;/cfformgroup', '&lt;cfformitem',
+			'&lt;/cfformitem&gt;', '&lt;cfftp', '&lt;cffunction', '&lt;/cffunction&gt;', '&lt;cfgrid', '&lt;/cfgrid&gt;',
+			'&lt;cfgridcolumn', '&lt;cfgridrow', '&lt;cfgridupdate', '&lt;cfheader', '&lt;cfhtmlhead', '&lt;cfhttp',
+			'&lt;/cfhttp&gt;', '&lt;cfhttpparam', '&lt;cfif', '&lt;/cfif&gt;', '&lt;cfimport', '&lt;cfinclude', '&lt;cfindex',
+			'&lt;cfinput', '&lt;cfinsert', '&lt;cfinvoke', '&lt;cfinvokeargument', '&lt;cfldap', '&lt;cflocation', '&lt;cflock',
+			'&lt;/cflock&gt;', '&lt;cflog', '&lt;cflogin', '&lt;/cflogin&gt;', '&lt;cfloginuser', '&lt;cflogout', '&lt;cfloop',
+			'&lt;/cfloop&gt;', '&lt;cfmail', '&lt;/cfmail&gt;', '&lt;cfmailparam', '&lt;cfmailpart', '&lt;/cfmailpart&gt;',
+			'&lt;cfmodule', '&lt;cfNTauthenticate', '&lt;cfobject', '&lt;cfobjectcache', '&lt;cfoutput&gt;', '&lt;cfoutput', '&lt;/cfoutput&gt;',
+			'&lt;cfparam', '&lt;cfpop', '&lt;cfprocessingdirective', '&lt;/cfprocessingdirective&gt;', '&lt;cfprocparam',
+			'&lt;cfprocresult', '&lt;cfproperty', '&lt;cfquery', '&lt;/cfquery&gt;', '&lt;cfqueryparam', '&lt;cfregistry',
+			'&lt;/cfregistry&gt;', '&lt;cfreport', '&lt;/cfreport&gt;', '&lt;cfreportparam', '&lt;/cfreportparam&gt;',
 			'&lt;cfrethrow', '&lt;cfreturn', '&lt;cfsavecontent', '&lt;/cfsavecontent&gt;', '&lt;cfschedule', '&lt;cfscript', '&lt;cfscript&gt;',
-			'&lt;/cfscript&gt;', '&lt;cfsearch', '&lt;cfselect', '&lt;/cfselect&gt;', '&lt;cfset', '&lt;cfsetting', '&lt;cfsilent', 
-			'&lt;/cfsilent&gt;', '&lt;cfstoredproc', '&lt;/cfstoredproc&gt;', '&lt;cfswitch', '&lt;/cfswitch&gt;', '&lt;cftable', 
-			'&lt;/cftable&gt;', '&lt;cftextarea', '&lt;/cftextarea&gt;', '&lt;cfthrow', '&lt;cftimer', '&lt;/cftimer&gt;', 
-			'&lt;cftrace', '&lt;/cftrace&gt;', '&lt;cftransaction', '&lt;/cftransaction&gt;', '&lt;cftree', '&lt;/cftree&gt;', 
+			'&lt;/cfscript&gt;', '&lt;cfsearch', '&lt;cfselect', '&lt;/cfselect&gt;', '&lt;cfset', '&lt;cfsetting', '&lt;cfsilent',
+			'&lt;/cfsilent&gt;', '&lt;cfstoredproc', '&lt;/cfstoredproc&gt;', '&lt;cfswitch', '&lt;/cfswitch&gt;', '&lt;cftable',
+			'&lt;/cftable&gt;', '&lt;cftextarea', '&lt;/cftextarea&gt;', '&lt;cfthrow', '&lt;cftimer', '&lt;/cftimer&gt;',
+			'&lt;cftrace', '&lt;/cftrace&gt;', '&lt;cftransaction', '&lt;/cftransaction&gt;', '&lt;cftree', '&lt;/cftree&gt;',
 			'&lt;cftreeitem', '&lt;cftry', '&lt;/cftry&gt;', '&lt;cfupdate', '&lt;cfwddx','&lt;','&gt;'
 			),
 		/* HTML Tags */

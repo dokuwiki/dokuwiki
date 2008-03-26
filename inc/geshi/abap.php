@@ -4,10 +4,8 @@
  * --------
  * Author: Andres Picazo (andres@andrespicazo.com)
  * Copyright: (c) 2007 Andres Picazo
- * Release Version: 1.0.7.20
- * CVS Revision Version: $Revision: 1.6 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/06/04
- * Last Modified: $Date: 2005/11/20 07:47:40 $
  *
  * ABAP language file for GeSHi.
  *

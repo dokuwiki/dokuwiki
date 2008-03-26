@@ -4,7 +4,7 @@
  * --------
  * Author: José Jorge Enríquez (jenriquez@users.sourceforge.net)
  * Copyright: (c) 2005 José Jorge Enríquez Rodríguez (http://www.zonamakers.com)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2005/06/21
  *
  * GML language file for GeSHi.
@@ -73,7 +73,7 @@ $language_data = array (
 		1 => array(
 			'break', 'continue', 'do', 'until', 'if', 'else',
 			'exit', 'for', 'for', 'repeat', 'return', 'switch',
-			'case', 'default', 'var', 'while', 'with', 'div', 'mod', 
+			'case', 'default', 'var', 'while', 'with', 'div', 'mod',
 			// GML Language overview
 			'self', 'other', 'all', 'noone', 'global',
 			),

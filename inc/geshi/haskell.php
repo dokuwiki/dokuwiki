@@ -2,12 +2,10 @@
 /*************************************************************************************
  * haskell.php
  * ----------
- * Author: Jason Dagit (dagit@codersbase.com) based on ocaml.php by Flaie (fireflaie@gmail.com) 
+ * Author: Jason Dagit (dagit@codersbase.com) based on ocaml.php by Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.20
- * CVS Revision Version: $Revision: 1.6 $
+ * Release Version: 1.0.7.21
  * Date Started: 2005/08/27
- * Last Modified: $Date: 2006/02/25 00:46:33 $
  *
  * Haskell language file for GeSHi.
  *
@@ -50,9 +48,9 @@ $language_data = array (
        /* main haskell keywords */
         1 => array(
            'as',
-           'case', 'of', 'class', 'data', 'default', 
+           'case', 'of', 'class', 'data', 'default',
            'deriving', 'do', 'forall', 'hiding', 'if', 'then',
-           'else', 'import', 'infix', 'infixl', 'infixr', 
+           'else', 'import', 'infix', 'infixl', 'infixr',
            'instance', 'let', 'in', 'module', 'newtype',
            'qualified', 'type', 'where'
             ),
@@ -62,11 +60,11 @@ $language_data = array (
            ),
         /* just link to Prelude functions, cause it's the default opened library when starting Haskell */
         3 => array(
-           'not', 'otherwise', 'maybe', 
+           'not', 'otherwise', 'maybe',
            'either', 'fst', 'snd', 'curry', 'uncurry',
-           'compare', 
+           'compare',
            'max', 'min', 'succ', 'pred', 'toEnum', 'fromEnum',
-           'enumFrom', 'enumFromThen', 'enumFromTo', 
+           'enumFrom', 'enumFromThen', 'enumFromTo',
            'enumFromThenTo', 'minBound', 'maxBound',
            'negate', 'abs', 'signum',
            'fromInteger', 'toRational', 'quot', 'rem',
@@ -107,12 +105,12 @@ $language_data = array (
            ),
         /* here Prelude Types */
         4 => array (
-            'Bool', 'Maybe', 'Either', 'Ord', 'Ordering', 
-            'Char', 'String', 'Eq', 'Enum', 'Bounded', 
+            'Bool', 'Maybe', 'Either', 'Ord', 'Ordering',
+            'Char', 'String', 'Eq', 'Enum', 'Bounded',
             'Int', 'Integer', 'Float', 'Double', 'Rational',
-            'Num', 'Real', 'Integral', 'Fractional', 
+            'Num', 'Real', 'Integral', 'Fractional',
             'Floating', 'RealFrac', 'RealFloat', 'Monad',
-            'Functor', 'Show', 'ShowS', 'Read', 'ReadS', 
+            'Functor', 'Show', 'ShowS', 'Read', 'ReadS',
             'IO'
            ),
         /* finally Prelude Exceptions */
@@ -123,11 +121,11 @@ $language_data = array (
     /* highlighting symbols is really important in Haskell */
     'SYMBOLS' => array(
            '|', '->', '<-', '@', '!', '::', '_', '~', '=',
-           '&&', '||', '==', '/=', '<', '<=', '>', 
-           '>=','+', '-', '*','/',  '**', '^', '^^', 
-           '>>=', '>>', '=<<',  '$', '.',  '$!',  
+           '&&', '||', '==', '/=', '<', '<=', '>',
+           '>=','+', '-', '*','/',  '**', '^', '^^',
+           '>>=', '>>', '=<<',  '$', '.',  '$!',
            '++', '!!'
-            ), 
+            ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => true,
         1 => true,
@@ -164,7 +162,7 @@ $language_data = array (
             ),
         'REGEXPS' => array(
             ),
-        'SYMBOLS' => array( 
+        'SYMBOLS' => array(
             0 => 'color: #66cc66; font-weight: bold;'
             ),
         'SCRIPT' => array(
@@ -176,11 +174,11 @@ $language_data = array (
         /* link to the wanted library */
         2 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/{FNAME}.html',
         /* link to Prelude functions */
-        3 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:{FNAME}', 
+        3 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:{FNAME}',
         /* link to Prelude types */
-        4 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t:{FNAME}', 
+        4 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t:{FNAME}',
         /* link to Prelude exceptions */
-        5 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t:{FNAME}', 
+        5 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t:{FNAME}',
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

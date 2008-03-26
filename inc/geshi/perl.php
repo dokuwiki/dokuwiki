@@ -4,13 +4,15 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org), Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2004 Andreas Gohr, Ben Keen (http://www.benjaminkeen.org/), Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2004/08/20
  *
  * Perl language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/02/15 (1.003)
+ *   -  Fixed SF#1891630 with placebo patch
  * 2006/01/05 (1.0.2)
  *   -  Used hardescape feature for ' strings (Cliff Stanford)
  * 2004/11/27 (1.0.1)
@@ -46,7 +48,17 @@
 $language_data = array (
 	'LANG_NAME' => 'Perl',
 	'COMMENT_SINGLE' => array(1 => '#'),
-	'COMMENT_MULTI' => array( '=pod' => '=cut'),
+	'COMMENT_MULTI' => array(
+        '=back' => '=cut',
+        '=head' => '=cut',
+        '=item' => '=cut',
+        '=over' => '=cut',
+        '=begin' => '=cut',
+        '=end' => '=cut',
+        '=for' => '=cut',
+        '=encoding' => '=cut',
+        '=pod' => '=cut'
+    ),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array('"'),
 	'HARDQUOTE' => array("'", "'"),		    // An optional 2-element array defining the beginning and end of a hard-quoted string

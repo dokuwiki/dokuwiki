@@ -4,9 +4,9 @@
  * -----------
  * Author: Cedric Arrabie (cedric.arrabie@univ-pau.fr)
  * Copyright: (C) 2006 Cetric Arrabie
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.21
  * Date Started: 2006/04/22
- * 
+ *
  * Fortran language file for GeSHi.
  *
  * CHANGES
@@ -14,7 +14,7 @@
  * 2006/04/20 (1.0.0)
  *   -  First Release
  *
- * TODO 
+ * TODO
  * -------------------------
  *  -  Get a list of inbuilt functions to add (and explore fortran more
  *     to complete this rather bare language file)
@@ -50,8 +50,8 @@ $language_data = array (
 		1 => array(
 			'allocate','block','call','case','contains','continue','cycle','deallocate',
 			'default','do','else','elseif','elsewhere','end','enddo','endif','endwhere',
-			'entry','exit','function','go','goto','if','interface','module','nullify','only', 
-			'operator','procedure','program','recursive','return','select','stop', 
+			'entry','exit','function','go','goto','if','interface','module','nullify','only',
+			'operator','procedure','program','recursive','return','select','stop',
 			'subroutine','then','to','where','while',
             'access','action','advance','blank','blocksize','carriagecontrol',
 			'delim','direct','eor','err','exist','file','flen','fmt','form','formatted',

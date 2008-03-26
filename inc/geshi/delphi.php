@@ -2,9 +2,9 @@
 /*************************************************************************************
  * delphi.php
  * ----------
- * Author: Járja Norbert (jnorbi@vipmail.hu)
- * Copyright: (c) 2004 Járja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.20
+ * Author: Járja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
+ * Copyright: (c) 2004 Járja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
+ * Release Version: 1.0.7.21
  * Date Started: 2004/07/26
  *
  * Delphi (Object Pascal) language file for GeSHi.
@@ -211,6 +211,12 @@ $language_data = array (
         3 => false,
         4 => false,
         ),
+    'SYMBOLS' => array(
+        0 => array('(', ')', '[', ']'),
+        1 => array('.', ',', ':', ';'),
+        2 => array('@', '^'),
+        3 => array('=', '+', '-', '*', '/')
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #000000; font-weight: bold;',
@@ -241,7 +247,10 @@ $language_data = array (
             1 => 'color: #ff0000;'
             ),
         'SYMBOLS' => array(
-            0 => 'color: #66cc66;'
+            0 => 'color: #66cc66;',
+            1 => 'color: #66cc66;',
+            2 => 'color: #66cc66;',
+            3 => 'color: #66cc66;'
             ),
         'SCRIPT' => array(
             )
