@@ -625,9 +625,18 @@ function p_get_first_heading($id, $render=true){
 /**
  * Wrapper for GeSHi Code Highlighter, provides caching of its output
  *
+ * @param  string   $code       source code to be highlighted
+ * @param  string   $language   language to provide highlighting
+ * @param  string   $wrapper    html element to wrap the returned highlighted text
+ *
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
-function p_xhtml_cached_geshi($code, $language) {
+function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
+  global $conf;
+
+  // remove any leading or trailing blank lines
+  $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
+
   $cache = getCacheName($language.$code,".code");
 
   if (@file_exists($cache) && !$_REQUEST['purge'] &&
@@ -644,15 +653,20 @@ function p_xhtml_cached_geshi($code, $language) {
     $geshi->set_encoding('utf-8');
     $geshi->enable_classes();
     $geshi->set_header_type(GESHI_HEADER_PRE);
-    $geshi->set_overall_class("code $language");
     $geshi->set_link_target($conf['target']['extern']);
 
-    $highlighted_code = $geshi->parse_code();
-
+    // remove GeSHi's wrapper element (we'll replace it with our own later)
+    // we need to use a GeSHi wrapper to avoid <BR> throughout the highlighted text
+    $highlighted_code = preg_replace('!^<pre[^>]*>|</pre>$!','',$geshi->parse_code());
     io_saveFile($cache,$highlighted_code);
   }
 
-  return $highlighted_code;
+  // add a wrapper element if required
+  if ($wrapper) {
+    return "<$wrapper class=\"code $language\">$highlighted_code</$wrapper>";
+  } else {
+    return $highlighted_code;
+  }
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

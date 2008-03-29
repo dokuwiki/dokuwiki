@@ -304,9 +304,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Execute PHP code if allowed
      *
+     * @param  string   $wrapper   html element to wrap result if $conf['phpok'] is okff
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function php($text) {
+    function php($text, $wrapper='code') {
         global $conf;
 
         if($conf['phpok']){
@@ -315,31 +317,33 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
           $this->doc .= ob_get_contents();
           ob_end_clean();
         } else {
-          $this->code($text, 'php');
+          $this->doc .= p_xhtml_cached_geshi($text, 'php', $wrapper);
         }
     }
 
     function phpblock($text) {
-        $this->php($text);
+        $this->php($text, 'pre');
     }
 
     /**
      * Insert HTML if allowed
      *
+     * @param  string   $wrapper   html element to wrap result if $conf['htmlok'] is okff
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function html($text) {
+    function html($text, $wrapper='code') {
         global $conf;
 
         if($conf['htmlok']){
           $this->doc .= $text;
         } else {
-          $this->code($text, 'html4strict');
+          $this->doc .= p_xhtml_cached_geshi($text, 'html4strict', $wrapper);
         }
     }
 
     function htmlblock($text) {
-        $this->html($text);
+        $this->html($text, 'pre');
     }
 
     function preformatted($text) {
@@ -371,9 +375,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( is_null($language) ) {
             $this->preformatted($text);
         } else {
-            //strip leading and trailing blank line
-            $text = preg_replace('/^\s*?\n/','',$text);
-            $text = preg_replace('/\s*?\n$/','',$text);
             $this->doc .= p_xhtml_cached_geshi($text, $language);
         }
     }
