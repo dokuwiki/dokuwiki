@@ -785,6 +785,11 @@ function html_diff($text='',$intro=true){
   if(is_array($_REQUEST['rev2'])){
     $rev1 = (int) $_REQUEST['rev2'][0];
     $rev2 = (int) $_REQUEST['rev2'][1];
+
+    if(!$rev1){
+        $rev1 = $rev2;
+        unset($rev2);
+    }
   }else{
     $rev2 = (int) $_REQUEST['rev2'];
   }
@@ -801,7 +806,7 @@ function html_diff($text='',$intro=true){
     $r_head  = $lang['yours'];
   }else{
     if($rev1 && $rev2){            // two specific revisions wanted
-      // make sure order is correct (older on the right)
+      // make sure order is correct (older on the left)
       if($rev1 < $rev2){
         $l_rev = $rev1;
         $r_rev = $rev2;
