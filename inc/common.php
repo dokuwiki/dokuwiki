@@ -1002,7 +1002,7 @@ function getGoogleQuery(){
     $q = urldecode(ltrim($url['path'],'/'));
 
   if(!$q) return '';
-  $q = join('|',preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/',$q,-1,PREG_SPLIT_NO_EMPTY));
+  $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/',$q,-1,PREG_SPLIT_NO_EMPTY);
   return $q;
 }
 
