@@ -197,6 +197,8 @@ class HTTPClient {
             }
             $headers['Content-Length'] = strlen($data);
             $rmethod = 'POST';
+        }elseif($method == 'GET'){
+            $data = ''; //no data allowed on GET requests
         }
         if($this->user) {
             $headers['Authorization'] = 'Basic '.base64_encode($this->user.':'.$this->pass);
