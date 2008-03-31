@@ -148,13 +148,13 @@ class HTTPClient {
      * sent as is. You will need to setup your own Content-Type header then.
      *
      * @param  string $url    - the complete URL
-     * @param  mixed  $data   - the post data
+     * @param  mixed  $data   - the post data either as array or raw data
      * @param  string $method - HTTP Method usually GET or POST.
      * @return bool - true on success
      * @author Andreas Goetz <cpuidle@gmx.de>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function sendRequest($url,$data=array(),$method='GET'){
+    function sendRequest($url,$data='',$method='GET'){
         $this->start  = $this->_time();
         $this->error  = '';
         $this->status = 0;
@@ -371,14 +371,16 @@ class HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _debug($info,$var){
+    function _debug($info,$var=null){
         if(!$this->debug) return;
         print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
-        ob_start();
-        print_r($var);
-        $content = htmlspecialchars(ob_get_contents());
-        ob_end_clean();
-        print '<pre>'.$content.'</pre>';
+        if(!is_null($var)){
+            ob_start();
+            print_r($var);
+            $content = htmlspecialchars(ob_get_contents());
+            ob_end_clean();
+            print '<pre>'.$content.'</pre>';
+        }
     }
 
     /**
