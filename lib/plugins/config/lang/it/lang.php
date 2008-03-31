@@ -6,6 +6,7 @@
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Pietro Battiston toobaz@email.it
+ * @author Diego Pierotto ita.translations@tiscali.it
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -76,6 +77,7 @@ $lang['profileconfirm']        = 'Richiedi la password per modifiche al profilo'
 $lang['disableactions']        = 'Disabilita azioni DokuWiki';
 $lang['disableactions_check']  = 'Controlla';
 $lang['disableactions_subscription'] = 'Sottoscrivi/Rimuovi sottoscrizione';
+$lang['disableactions_nssubscription'] = 'Sottoscrivi/Rimuovi sottoscrizione della categoria';
 $lang['disableactions_wikicode'] = 'Mostra sorgente/Esporta Raw';
 $lang['disableactions_other']  = 'Altre azioni (separate da virgola)';
 $lang['sneaky_index']          = 'Normalmente, DokuWiki mostra tutte le categorie nella vista indice. Abilitando questa opzione, saranno nascoste quelle per cui l\'utente non ha il permesso in lettura. Questo potrebbe far sì che alcune sottocategorie accessibili siano nascoste. La pagina indice potrebbe quindi diventare inutilizzabile con alcune configurazioni dell\'ACL.';
@@ -101,10 +103,14 @@ $lang['jpg_quality']           = 'Qualità di compressione JPG (0-100)';
 $lang['subscribers']           = 'Abilita la sottoscrizione alle pagine';
 $lang['compress']              = 'Comprimi i file CSS e javascript';
 $lang['hidepages']             = 'Nascondi le pagine che soddisfano la condizione (inserire un\'espressione regolare)';
-$lang['send404']               = 'Invia "HTTP 404/Page Not Found" per le pagine inesistenti';
+$lang['send404']               = 'Invia "HTTP 404/Pagina non trovata" per le pagine inesistenti';
 $lang['sitemap']               = 'Genera una sitemap Google (giorni)';
 $lang['broken_iua']            = 'La funzione ignore_user_abort non funziona sul tuo sistema? Questo potrebbe far sì che l\'indice di ricerca sia inutilizzabile. È noto che nella configurazione IIS+PHP/CGI non funziona. Vedi il<a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> per maggiori informazioni.';
 $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al webserver di fornire file statici? Questa funzione deve essere supportata dal tuo webserver.';
+$lang['xmlrpc']                = 'Abilita/disabilita interfaccia XML-RPC';
+$lang['renderer_xhtml']        = 'Renderer da usare la visualizzazione del wiki (xhtml)';
+$lang['renderer__core']        = '%s (dokuwiki)';
+$lang['renderer__plugin']      = '%s (plugin)';
 $lang['rss_type']              = 'Tipo di feed XML';
 $lang['rss_linkto']            = 'Collega i feed XML a';
 $lang['rss_content']           = 'Cosa mostrare negli elementi dei feed XML?';
@@ -158,3 +164,4 @@ $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'non usare';
 $lang['xsendfile_o_1']         = 'Header proprietario lighttpd (prima della versione 1.5)';
 $lang['xsendfile_o_2']         = 'Header standard X-Sendfile';
+$lang['xsendfile_o_3']         = 'Header proprietario Nginx X-Accel-Redirect';

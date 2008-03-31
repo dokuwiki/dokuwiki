@@ -1,0 +1,9 @@
+====== Raccolta dati sul wiki ======
+
+Questo strumento raccoglie dati anonimi sul tuo wiki e ti permette di inviarli agli sviluppatori di Dokuwiki. Questo aiuta loro a capire come Dokuwiki viene utilizzato dagli utenti e prendere decisioni future sullo sviluppo in base a quello che sono le reali statistiche di utilizzo da parte degli utenti.
+
+Ti incoraggiamo a ripetere questa operazione più spesso per mantenere informati gli sviluppatori sulla crescita del tuo wiki. L'insieme dei dati raccolti saranno identificati tramite un ID anonimo.
+
+I dati raccolti contengono informazioni come la versione di DokuWiki, il numero e le dimensioni delle pagine e dei files, i plugins installati e qualche informazione sulla versione di PHP presente nel sistema.
+
+A continuazione puoi vedere un'anteprima dei dati che saranno inviati. Utilizza il tasto "Invia dati" per trasferire le informazioni.

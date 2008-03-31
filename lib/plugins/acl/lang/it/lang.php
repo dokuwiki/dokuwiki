@@ -6,6 +6,7 @@
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli <http://www.rbnet.it/>
  * @author Pietro Battiston toobaz@email.it
+ * @author Diego Pierotto ita.translations@tiscali.it
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
 $lang['acl_group']             = 'Gruppo';

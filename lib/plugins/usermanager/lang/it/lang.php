@@ -5,6 +5,7 @@
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Pietro Battiston toobaz@email.it
+ * @author Diego Pierotto ita.translations@tiscali.it
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
@@ -33,7 +34,7 @@ $lang['delete_ok']             = '%d utenti cancellati';
 $lang['delete_fail']           = 'Cancellazione %d fallita.';
 $lang['update_ok']             = 'Aggiornamento utente riuscito';
 $lang['update_fail']           = 'Aggiornamento utente fallito';
-$lang['update_exists']         = 'Modifica nome utente fallita, il nome utente specificato (%s) esiste giÃ  (qualunque altra modifica sarÃ  applicata).';
+$lang['update_exists']         = 'Modifica nome utente fallita, il nome utente specificato (%s) esiste già  (qualunque altra modifica sarà  applicata).';
 $lang['start']                 = 'primo';
 $lang['prev']                  = 'precedente';
 $lang['next']                  = 'successivo';

@@ -3,6 +3,7 @@
  * Italian language file
  *
  * @author Pietro Battiston toobaz@email.it
+ * @author Diego Pierotto ita.translations@tiscali.it
  */
 $lang['menu']                  = 'Gestore di ripristini';
 $lang['filter']                = 'Cerca pagine con spam';
