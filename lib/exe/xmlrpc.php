@@ -128,7 +128,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if(auth_quickaclcheck($id) < AUTH_READ){
             return new IXR_Error(1, 'You are not allowed to read this page');
         }
-        return rawWiki($id,$rev);
+        $text = rawWiki($id,$rev);
+        if(!$text) {
+            $data = array($id);
+            return trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
+        } else {
+            return $text;
+        }
     }
 
     /**
