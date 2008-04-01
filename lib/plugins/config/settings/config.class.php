@@ -628,6 +628,7 @@ if (!class_exists('setting_dirchoice')) {
       if ($dh = @opendir($this->_dir)) {
         while (false !== ($entry = readdir($dh))) {
           if ($entry == '.' || $entry == '..') continue;
+          if ($this->_pattern && !preg_match($this->_pattern,$entry)) continue;
 
           $file = (is_link($this->_dir.$entry)) ? readlink($this->_dir.$entry) : $entry;
           if (is_dir($this->_dir.$file)) $list[] = $entry;

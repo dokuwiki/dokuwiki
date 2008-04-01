@@ -22,7 +22,8 @@
  *   'email'        - text input, input must conform to email address format, setting output in quotes
  *   'password'     - password input, minimal input validation, setting output plain text in quotes
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
- *                    parameter (required)
+ *                    parameter (required). A pattern can be used to restrict the folders to only those which
+ *                    match the pattern.
  *   'multicheckbox'- a checkbox for each choice plus an "other" string input, config file setting is a comma
  *                    separated list of checked choices
  *   'fieldset'     - used to group configuration settings, but is not itself a setting. To make this clear in
@@ -41,7 +42,7 @@
  *
  * Defined parameters:
  *   '_pattern'    - string, a preg pattern. input is tested against this pattern before being accepted
- *                   optional all classes, except onoff, multichoice & dirchoice which ignore it
+ *                   optional all classes, except onoff & multichoice which ignore it
  *   '_choices'    - array of choices. used to populate a selection box. choice will be replaced by a localised
  *                   language string, indexed by  <setting name>_o_<choice>, if one exists
  *                   required by 'multichoice' & 'multicheckbox' classes, ignored by others
@@ -80,7 +81,7 @@ $meta['_basic']   = array('fieldset');
 $meta['title']    = array('string');
 $meta['start']    = array('string');
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
-$meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/');
+$meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
 $meta['savedir']  = array('savedir');
 $meta['basedir']  = array('string');
 $meta['baseurl']  = array('string');

@@ -41,7 +41,7 @@ function css_out(){
         break;
     }
 
-    $tpl = trim(preg_replace('/[^\w]+/','',$_REQUEST['t']));
+    $tpl = trim(preg_replace('/[^\w-]+/','',$_REQUEST['t']));
     if($tpl){
         $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
         $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
