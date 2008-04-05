@@ -485,6 +485,7 @@ class IXR_Client extends DokuHTTPClient {
     var $xmlerror = false;
 
     function IXR_Client($server, $path = false, $port = 80) {
+        $this->DokuHTTPClient();
         if (!$path) {
             // Assume we have been given a URL instead
             $this->posturl = $server;
