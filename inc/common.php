@@ -1108,62 +1108,58 @@ function subscriber_addresslist($id){
   global $conf;
   global $auth;
 
-  $emails = '';
+  if (!$conf['subscribers']) return '';
 
-  if (!$conf['subscribers']) return;
+  $users = array();
+  $emails = array();
 
   // load the page mlist file content
   $mlist = array();
   $file=metaFN($id,'.mlist');
   if (@file_exists($file)) {
     $mlist = file($file);
-  }
-  if(count($mlist) > 0) {
     foreach ($mlist as $who) {
       $who = rtrim($who);
-      $info = $auth->getUserData($who);
-      if($info === false) continue;
-      $level = auth_aclcheck($id,$who,$info['grps']);
-      if ($level >= AUTH_READ) {
-        if (strcasecmp($info['mail'],$conf['notify']) != 0) {
-          if (empty($emails)) {
-            $emails = $info['mail'];
-          } else {
-            $emails = "$emails,".$info['mail'];
-          }
-        }
-      }
+      $users[$who] = true;
     }
   }
 
   // load also the namespace mlist file content
-  if(!getNS($id)) {
-    $nsfile = metaFN(getNS($id),'.mlist');
-  } else {
-    $nsfile = metaFN(getNS($id),'/.mlist');
+  $ns = getNS($id);
+  while ($ns) {
+    $nsfile = metaFN($ns,'/.mlist');
+    if (@file_exists($nsfile)) {
+      $mlist = file($nsfile);
+      foreach ($mlist as $who) {
+        $who = rtrim($who);
+        $users[$who] = true;
+      }
+    }
+    $ns = getNS($ns);
   }
+  // root namespace
+  $nsfile = metaFN('','.mlist');
   if (@file_exists($nsfile)) {
     $mlist = file($nsfile);
-  }
-  if(count($mlist) > 0) {
     foreach ($mlist as $who) {
       $who = rtrim($who);
+      $users[$who] = true;
+    }
+  }
+  if(!empty($users)) {
+    foreach (array_keys($users) as $who) {
       $info = $auth->getUserData($who);
       if($info === false) continue;
       $level = auth_aclcheck($id,$who,$info['grps']);
       if ($level >= AUTH_READ) {
         if (strcasecmp($info['mail'],$conf['notify']) != 0) {
-          if (empty($emails)) {
-            $emails = $info['mail'];
-          } else {
-            $emails = "$emails,".$info['mail'];
-          }
+          $emails[] = $info['mail'];
         }
       }
     }
   }
 
-  return $emails;
+  return implode(',',$emails);
 }
 
 /**
