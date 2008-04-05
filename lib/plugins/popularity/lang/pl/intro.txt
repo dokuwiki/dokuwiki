@@ -1,0 +1,9 @@
+====== Informacja o popularności ======
+
+To narzędzie zbiera anonimowe dane o Twoim wiki i wysyła je do twórców DokuWiki. Zbieranie tych informacji pozwala na lepsze zrozumienie sposobów korzystania z DokuWiki i ułatwia podejmowanie przyszłych decyzji projektowych w oparciu o rzeczywiste dane statystyczne.
+
+Zachęcamy do uruchamiania tej funkcji co pewien czas, by poinformować programistów DokuWiki o rozwoju Twojego wiki. Informacje przesyłane przez Ciebie będą oznaczone anonimowym identyfikatorem.
+
+Zbierane dane zawierają informacje o wersji DokuWiki, ilości i rozmiarze stron i plików, zainstalowanych wtyczkach oraz informację o oprogramowaniu PHP.
+
+Wysyłane dane przedstawione są poniżej. Naciśnij przycisk "Wyślij dane" w celu przesłania informacji.
