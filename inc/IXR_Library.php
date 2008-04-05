@@ -499,7 +499,7 @@ class IXR_Client extends DokuHTTPClient {
         $request = new IXR_Request($method, $args);
         $xml = $request->getXml();
 
-        $this->$headers['Content-Type'] = 'text/xml';
+        $this->headers['Content-Type'] = 'text/xml';
         if(!$this->sendRequest($this->posturl,$xml,'RAW')){
             $this->xmlerror = new IXR_Error(-32300, 'transport error - '.$this->error);
             return false;
