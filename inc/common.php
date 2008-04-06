@@ -738,7 +738,9 @@ function pageTemplate($data){
   $tpl = str_replace('@NAME@',$INFO['userinfo']['name'],$tpl);
   $tpl = str_replace('@MAIL@',$INFO['userinfo']['mail'],$tpl);
   $tpl = str_replace('@DATE@',$conf['dformat'],$tpl);
-  $tpl = strftime($tpl);
+  // we need the callback to work around strftime's char limit
+  $tpl = preg_replace_callback('/%./',create_function('$m','return strftime($m[0]);'),$tpl);
+
   return $tpl;
 }
 
