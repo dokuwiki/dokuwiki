@@ -784,7 +784,8 @@ function con($pre,$text,$suf,$pretty=false){
     if($suf && substr($text,-1) != "\n") $text .= "\n";
   }
 
-  if($pre) $pre .= "\n";
+  // Avoid double newline above section when saving section edit
+  //if($pre) $pre .= "\n";
   if($suf) $text .= "\n";
   return $pre.$text.$suf;
 }
