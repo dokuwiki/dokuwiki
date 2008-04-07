@@ -871,7 +871,7 @@ function form_listboxfield($attrs) {
   $s = '<label class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
-  $s = '<select '.buildAttributes($attrs,true).'>'.NL;
+  $s .= '<select '.buildAttributes($attrs,true).'>'.NL;
   if (!empty($attrs['_options'])) {
     foreach ($attrs['_options'] as $opt) {
       @list($value,$text,$select) = $opt;
