@@ -880,9 +880,9 @@ function tpl_pageinfo(){
   $fn = $INFO['filepath'];
   if(!$conf['fullpath']){
     if($REV){
-      $fn = str_replace(fullpath($conf['olddir']).DIRECTORY_SEPARATOR,'',$fn);
+      $fn = str_replace(fullpath($conf['olddir']).'/','',$fn);
     }else{
-      $fn = str_replace(fullpath($conf['datadir']).DIRECTORY_SEPARATOR,'',$fn);
+      $fn = str_replace(fullpath($conf['datadir']).'/','',$fn);
     }
   }
   $fn = utf8_decodeFN($fn);
