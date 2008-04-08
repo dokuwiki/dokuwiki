@@ -312,18 +312,18 @@ class ap_manage {
                 if (!is_dir("$tmp/$f")) continue;
 
                 // check to make sure we aren't overwriting anything
-                if (!$overwrite && @file_exists(DOKU_PLUGIN."/$f")) {
+                if (!$overwrite && @file_exists(DOKU_PLUGIN.$f)) {
                    // remember our settings, ask the user to confirm overwrite, FIXME
                    continue;
                 }
 
-                $instruction = @file_exists(DOKU_PLUGIN."/$f") ? 'update' : 'install';
+                $instruction = @file_exists(DOKU_PLUGIN.$f) ? 'update' : 'install';
 
                 if (ap_copy("$tmp/$f", DOKU_PLUGIN.$f)) {
                   $this->downloaded[] = $f;
                   $this->plugin_writelog($f, $instruction, array($url));
                 } else {
-                  $this->manager->error .= sprintf($lang['error_copy']."\n", $f);
+                  $this->manager->error .= sprintf($this->lang['error_copy']."\n", $f);
                 }
               }
               closedir($dh);
