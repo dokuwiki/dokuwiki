@@ -289,10 +289,8 @@ class ap_manage {
           }
 
           $file = $matches[0];
-          $folder = "p".md5($file.date('r'));     // tmp folder name - will be empty (should really make sure it doesn't already exist)
-          $tmp = DOKU_PLUGIN."tmp/$folder";
 
-          if (!ap_mkdir($tmp)) {
+          if (!($tmp = io_mktmpdir())) {
             $this->manager->error = $this->lang['error_dircreate']."\n";
             return false;
           }
@@ -305,8 +303,8 @@ class ap_manage {
             $this->manager->error = sprintf($this->lang['error_decompress'],$file)."\n";
           }
 
-          // search tmp/$folder for the folder(s) that has been created
-          // move that folder(s) to lib/plugins/
+          // search $tmp for the folder(s) that has been created
+          // move the folder(s) to lib/plugins/
           if (!$this->manager->error) {
             if ($dh = @opendir("$tmp/")) {
               while (false !== ($f = readdir($dh))) {
@@ -335,7 +333,7 @@ class ap_manage {
           }
 
           // cleanup
-          if ($folder && is_dir(DOKU_PLUGIN."tmp/$folder")) ap_delete(DOKU_PLUGIN."tmp/$folder");
+          if ($tmp) ap_delete($tmp);
 
           if (!$this->manager->error) {
               $this->refresh();
@@ -666,14 +664,6 @@ class ap_manage {
         return false;
     }
 
-    // possibly should use io_MakeFileDir, not sure about using its method of error handling
-    function ap_mkdir($d) {
-        global $conf;
-
-        $ok = io_mkdir_p($d);
-        return $ok;
-    }
-
     // copy with recursive sub-directory support
     function ap_copy($src, $dst) {
         global $conf;
@@ -681,7 +671,7 @@ class ap_manage {
         if (is_dir($src)) {
           if (!$dh = @opendir($src)) return false;
 
-          if ($ok = ap_mkdir($dst)) {
+          if ($ok = io_mkdir_p($dst)) {
             while ($ok && (false !== ($f = readdir($dh)))) {
               if ($f == '..' || $f == '.') continue;
               $ok = ap_copy("$src/$f", "$dst/$f");
