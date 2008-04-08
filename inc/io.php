@@ -447,8 +447,8 @@ function io_mkdir_ftp($dir){
 function io_mktmpdir() {
     global $conf;
 
-    $base = $conf['savedir'].'/tmp/';
-    $dir  = md5(uniqid(rand(), true));
+    $base = $conf['tmpdir'];
+    $dir  = md5(uniqid(mt_rand(), true));
     $tmpdir = $base.$dir;
 
     if(io_mkdir_p($tmpdir)) {
