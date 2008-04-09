@@ -90,6 +90,9 @@
   // make sure global zlib does not interfere FS#1132
   @ini_set('zlib.output_compression', 'off');
 
+  // increase PCRE backtrack limit
+  @ini_set('pcre.backtrack_limit', '20971520');
+
   // enable gzip compression
   if ($conf['gzip_output'] &&
       !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
