@@ -112,6 +112,22 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testEmailCase() {
+        $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
+        $this->P->parse("Foo <bugs@pHp.net> Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('emaillink',array('bugs@pHp.net', NULL)),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+
     function testInternalLinkOneChar() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[l]] Bar");
