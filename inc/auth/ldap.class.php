@@ -96,7 +96,7 @@ class auth_ldap extends auth_basic {
             return true;
         }else{
             // See if we can find the user
-            $info = $this->getUserData($user);
+            $info = $this->getUserData($user,true);
             if(empty($info['dn'])) {
                 return false;
             } else {
@@ -131,8 +131,9 @@ class auth_ldap extends auth_basic {
      * This LDAP specific function returns the following
      * addional fields:
      *
-     * dn   string  distinguished name (DN)
-     * uid  string  Posix User ID
+     * dn     string  distinguished name (DN)
+     * uid    string  Posix User ID
+     * inbind bool    for internal use - avoid loop in binding
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @author  Trouble
@@ -141,7 +142,7 @@ class auth_ldap extends auth_basic {
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
      * @return  array containing user data or false
      */
-    function getUserData($user) {
+    function getUserData($user,$inbind=false) {
         global $conf;
         if(!$this->_openLDAP()) return false;
 
@@ -154,7 +155,7 @@ class auth_ldap extends auth_basic {
                 return false;
             }
             $this->bound = 2;
-        }elseif($this->bound == 0) {
+        }elseif($this->bound == 0 && !$inbind) {
             // in some cases getUserData is called outside the authentication workflow
             // eg. for sending email notification on subscribed pages. This data might not
             // be accessible anonymously, so we try to rebind the current user here
