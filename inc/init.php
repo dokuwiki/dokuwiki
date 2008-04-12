@@ -420,12 +420,14 @@ EOT;
  */
 function fullpath($path){
     $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+    $isunc = 0===strpos($path,'\\\\');
     if($iswin) $path = str_replace('\\','/',$path); // windows compatibility
 
     // check if path begins with "/" or "c:" ie. is absolute
     // if it isnt concat with script path
-    if ((!$iswin && $path{0} !== '/') ||
-        ($iswin && $path{1} !== ':')) {
+    if (!$isunc && 
+        ((!$iswin && $path{0} !== '/') ||
+         ($iswin && $path{1} !== ':'))) {
         $base=dirname($_SERVER['SCRIPT_FILENAME']);
         $path=$base."/".$path;
     }
@@ -442,6 +444,7 @@ function fullpath($path){
         array_push($newpath, $p);
     }
     $finalpath = implode('/', $newpath);
+    if($isunc) $finalpath = '//'.$finalpath;
     if(!$iswin) $finalpath = '/'.$finalpath;
 
     // check then return valid path or filename
