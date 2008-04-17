@@ -33,7 +33,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 
   if($rev){
     if(@file_exists($file)){
-      $ret = p_render('xhtml',p_get_instructions(io_readfile($file)),$info); //no caching on old revisions
+      $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info); //no caching on old revisions
     }elseif($excuse){
       $ret = p_locale_xhtml('norev');
     }
@@ -75,7 +75,7 @@ function p_wiki_xhtml_summary($id, &$title, $rev='', $excuse=true){
   if($rev){
     if(@file_exists($file)){
       //no caching on old revisions
-      $ins = p_get_instructions(io_readfile($file));
+      $ins = p_get_instructions(io_readWikiPage($file,$id,$rev));
     }elseif($excuse){
       $ret = p_locale_xhtml('norev');
       //restore ID (just in case)
@@ -182,7 +182,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
     return $cache->retrieveCache();
   } else if (@file_exists($file)) {
     // no cache - do some work
-    $ins = p_get_instructions(io_readfile($file));
+    $ins = p_get_instructions(io_readWikiPage($file,$id));
     if ($cache->storeCache($ins)) {
       $run[$file] = true; // we won't rebuild these instructions in the same run again
     } else {
