@@ -209,7 +209,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return new IXR_ERROR(1, 'Refusing to write an empty new wiki page');
         }
 
-        if(auth_quickaclcheck($id) < AUTH_WRITE)
+        if(auth_quickaclcheck($id) < AUTH_EDIT)
             return new IXR_Error(1, 'You are not allowed to edit this page');
 
         // Check, if page is locked
