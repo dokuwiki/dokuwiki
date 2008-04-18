@@ -32,7 +32,7 @@ class init_getBaseURL_test extends UnitTestCase {
      *
      * data provided by Hilko Bengen <bengen@hilluzination.de>
      */
-		function test2(){
+    function test2(){
         global $conf;
         $conf['basedir'] = '';
         $conf['baseurl'] = '';
@@ -40,7 +40,7 @@ class init_getBaseURL_test extends UnitTestCase {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/localhost';
         $_SERVER['HTTP_HOST']       = 'localhost';
-				$_SERVER['SCRIPT_FILENAME'] = '/usr/lib/cgi-bin/php4';
+        $_SERVER['SCRIPT_FILENAME'] = '/usr/lib/cgi-bin/php4';
         $_SERVER['REQUEST_URI']     = '/~bengen/dokuwiki/doku.php?do=debug';
         $_SERVER['SCRIPT_NAME']     = '/cgi-bin/php4';
         $_SERVER['PATH_INFO']       = '/~bengen/dokuwiki/doku.php';
@@ -209,6 +209,71 @@ class init_getBaseURL_test extends UnitTestCase {
         $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
 
         $this->assertEqual(getBaseURL(),'/dokuwiki/');
+    }
+
+    /**
+     * Possible user settings of $conf['baseurl'] & absolute baseURL required
+     *
+     * data provided by Andreas Gohr <andi@splitbrain.org>
+     */
+    function test10(){
+        // values for $conf['baseurl'] and expected results
+        $tests = array(
+          'http://www.mysite.com' => 'http://www.mysite.com/dokuwiki/',
+          'http://www.mysite.com/' => 'http://www.mysite.com/dokuwiki/',
+          'http://www.mysite.com/path/to/wiki' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
+          'http://www.mysite.com/path/to/wiki/' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
+         );
+
+        global $conf;
+        $conf['basedir'] = '';
+        $conf['baseurl'] = '';
+
+        $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
+        $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
+        $_SERVER['REQUEST_URI']     = '/dokuwiki/wiki/syntax?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['PATH_INFO']       = null;
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/dokuwiki/doku.php';
+        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
+
+        foreach ($tests as $test => $correct_result) {
+          $conf['baseurl'] = $test;
+          $this->assertEqual(getBaseURL(true),$correct_result);
+        }
+    }
+    /**
+     * Possible user settings of $conf['baseurl'] & absolute baseURL required
+     *
+     * data provided by Andreas Gohr <andi@splitbrain.org>
+     */
+    function test11(){
+        // values for $conf['baseurl'] and expected results
+        $tests = array(
+          'http://www.mysite.com' => 'http://www.mysite.com/dokuwiki/',
+          'http://www.mysite.com/' => 'http://www.mysite.com/dokuwiki/',
+          'http://www.mysite.com/path/to/wiki' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
+          'http://www.mysite.com/path/to/wiki/' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
+         );
+
+        global $conf;
+        $conf['basedir'] = '/dokuwiki';
+        $conf['baseurl'] = '';
+
+        $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
+        $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
+        $_SERVER['REQUEST_URI']     = '/dokuwiki/wiki/syntax?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['PATH_INFO']       = null;
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/dokuwiki/doku.php';
+        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
+
+        foreach ($tests as $test => $correct_result) {
+          $conf['baseurl'] = $test;
+          $this->assertEqual(getBaseURL(true),$correct_result);
+        }
     }
 }
 

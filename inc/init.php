@@ -298,21 +298,21 @@ function getBaseURL($abs=null){
   if(is_null($abs)) $abs = $conf['canonical'];
 
   if($conf['basedir']){
-    $dir = $conf['basedir'].'/';
+    $dir = $conf['basedir'];
   }elseif(substr($_SERVER['SCRIPT_NAME'],-4) == '.php'){
-    $dir = dirname($_SERVER['SCRIPT_NAME']).'/';
+    $dir = dirname($_SERVER['SCRIPT_NAME']);
   }elseif(substr($_SERVER['PHP_SELF'],-4) == '.php'){
-    $dir = dirname($_SERVER['PHP_SELF']).'/';
+    $dir = dirname($_SERVER['PHP_SELF']);
   }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
     $dir = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                          $_SERVER['SCRIPT_FILENAME']);
-    $dir = dirname('/'.$dir).'/';
+    $dir = dirname('/'.$dir);
   }else{
-    $dir = './'; //probably wrong
+    $dir = '.'; //probably wrong
   }
 
-  $dir = str_replace('\\','/',$dir); #bugfix for weird WIN behaviour
-  $dir = preg_replace('#//+#','/',$dir);
+  $dir = str_replace('\\','/',$dir);             // bugfix for weird WIN behaviour
+  $dir = preg_replace('#//+#','/',"/$dir/");     // ensure leading and trailing slashes
 
   //handle script in lib/exe dir
   $dir = preg_replace('!lib/exe/$!','',$dir);
@@ -323,8 +323,8 @@ function getBaseURL($abs=null){
   //finish here for relative URLs
   if(!$abs) return $dir;
 
-  //use config option if available
-  if($conf['baseurl']) return $conf['baseurl'].$dir;
+  //use config option if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
+  if($conf['baseurl']) return rtrim($conf['baseurl'],'/').$dir;
 
   //split hostheader into host and port
   list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
