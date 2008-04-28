@@ -5,6 +5,7 @@
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
+ * @author Rune M. Andersen <rune.andersen@gmail.com>
  */
 $lang['menu']                  = 'Tilbakestillingsbehandler';
 $lang['filter']                = 'Søk etter søppelmeldinger';

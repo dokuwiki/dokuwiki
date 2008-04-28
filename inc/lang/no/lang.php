@@ -9,6 +9,7 @@
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
+ * @author Rune M. Andersen <rune.andersen@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -147,28 +148,28 @@ $lang['qb_italic']             = 'Kursiv tekst';
 $lang['qb_underl']             = 'Understreket tekst';
 $lang['qb_code']               = 'Kodetekst';
 $lang['qb_strike']             = 'Gjennomstreket tekst';
-$lang['qb_h1']                 = 'Nivå 1 Rubrikk';
-$lang['qb_h2']                 = 'Nivå 2 Rubrikk';
-$lang['qb_h3']                 = 'Nivå 3 Rubrikk';
-$lang['qb_h4']                 = 'Nivå 4 Rubrikk';
-$lang['qb_h5']                 = 'Nivå 5 Rubrikk';
-$lang['qb_link']               = 'Intern Lenke';
-$lang['qb_extlink']            = 'Ekstern Lenke';
-$lang['qb_hr']                 = 'Horisontal strek';
-$lang['qb_ol']                 = 'Punkt for sortert punktliste';
-$lang['qb_ul']                 = 'Punkt for usortert punktliste';
+$lang['qb_h1']                 = 'Overskrift nivå 1';
+$lang['qb_h2']                 = 'Overskrift nivå 2';
+$lang['qb_h3']                 = 'Overskrift nivå 3';
+$lang['qb_h4']                 = 'Overskrift nivå 4';
+$lang['qb_h5']                 = 'Overskrift nivå 5';
+$lang['qb_link']               = 'Intern lenke';
+$lang['qb_extlink']            = 'Ekstern lenke';
+$lang['qb_hr']                 = 'Horisontal linje';
+$lang['qb_ol']                 = 'Sortert listepunkt';
+$lang['qb_ul']                 = 'Usortert listepunkt';
 $lang['qb_media']              = 'Legg til bilder og andre filer';
 $lang['qb_sig']                = 'Føy til signatur';
-$lang['qb_smileys']            = 'Humørfjes';
+$lang['qb_smileys']            = 'Smilefjes';
 $lang['qb_chars']              = 'Spesialtegn';
 $lang['del_confirm']           = 'Slett denne oppføringen?';
 $lang['admin_register']        = 'Legg til ny bruker';
-$lang['metaedit']              = 'Rediger Metadata';
+$lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skriving av metadata feilet';
 $lang['metasaveok']            = 'Metadata lagret';
 $lang['img_backto']            = 'Tilbake til';
 $lang['img_title']             = 'Tittel';
-$lang['img_caption']           = 'Billedtekst';
+$lang['img_caption']           = 'Bildetekst';
 $lang['img_date']              = 'Dato';
 $lang['img_fname']             = 'Filnavn';
 $lang['img_fsize']             = 'Størrelse';
@@ -179,10 +180,10 @@ $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Nøkkelord';
 $lang['subscribe_success']     = 'Lagt til %s som abonnent av listen for %s';
 $lang['subscribe_error']       = 'En feil oppstod når %s skulle legges til som abonnent av listen for %s';
-$lang['subscribe_noaddress']   = 'Det er ingen adresse som er assosiert med din login. Du kan dermed ikke bli lagt til som abonnent av listen.';
+$lang['subscribe_noaddress']   = 'Det er ingen adresse assosiert med din login. Du kan dermed ikke bli lagt til som abonnent av listen.';
 $lang['unsubscribe_success']   = 'Fjernet %s som abonnent for listen %s';
 $lang['unsubscribe_error']     = 'En feil oppstod når %s skulle fjernes som abonnent fra listen for %s';
-$lang['authmodfailed']         = 'Dårlig konfigurert brukerautorisasjon. Vennligst innformer Wiki-admin.';
+$lang['authmodfailed']         = 'Feilkonfigurert brukerautorisasjon. Vennligst innformer Wiki-admin.';
 $lang['authtempfail']          = 'Brukerautorisasjon er midlertidig utilgjengelig. Om dette vedvarer, vennligst informer Wiki-admin.';
 $lang['i_chooselang']          = 'Velg ditt språk';
 $lang['i_installer']           = 'DokuWiki-installasjon';
@@ -191,18 +192,18 @@ $lang['i_enableacl']           = 'Aktiver ACL (anbefalt)';
 $lang['i_superuser']           = 'Superbruker';
 $lang['i_problems']            = 'Installasjonen oppdaget noen problemer, disse listes nedenfor. Du kan ikke fortsett før du har løst disse.';
 $lang['i_modified']            = 'For sikkerhets skyld vil dette skriptet bare virke med en ny og uendret Dokuwiki-installsjon.
-                         Du burde enten pakke ut filene på nytt fra den nedlastede pakken, eller konsultere den komplette
+                         Du bør enten pakke ut filene på nytt fra den nedlastede pakken, eller konsultere den komplette
                          <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki-installasjonsinstruksen</a>';
 $lang['i_funcna']              = 'PHP-funksjonen <code>%s</code> er ikke tilgjengelig. Kanskje din leverandør har deaktivert den av noen grunn?';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
-$lang['i_permfail']            = '<code>%s</code> er ikke skrivbar for DokuWiki. Du behøver å fikse rettighetene for denne mappen!';
+$lang['i_permfail']            = '<code>%s</code> er ikke skrivbar for DokuWiki. Du må fikse rettighetene for denne mappen!';
 $lang['i_confexists']          = '<code>%s</code> eksisterer allerede';
 $lang['i_writeerr']            = 'Kunne ikke opprette <code>%s</code>. Du må sjekke mappe-/filrettigheter og opprette filen manuelt.';
 $lang['i_badhash']             = 'ikke gjenkjent eller modifisert dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - ugyldig eller tom verdi';
 $lang['i_success']             = 'Konfigurasjonen ble vellykket fullført. Du kan slette install.php filen nå. Fortsett til
                         <a href="doku.php">din nye DokuWiki</a>.';
-$lang['i_failure']             = 'Noen feil oppstod ved skriving til konfigurasjonsfilene. Du må kanskje fikse de manuelt før
+$lang['i_failure']             = 'En eller flere feil oppstod ved skriving til konfigurasjonsfilene. Du må kanskje fikse dem manuelt før
                          du kan bruke <a href="doku.php">din nye DokuWiki</a>.';
 $lang['i_policy']              = 'Innledende ACL-politikk';
 $lang['i_pol0']                = 'Åpen Wiki (les, skriv og opplasting for alle)';

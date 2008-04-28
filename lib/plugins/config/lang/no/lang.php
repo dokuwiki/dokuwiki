@@ -5,6 +5,7 @@
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
+ * @author Rune M. Andersen <rune.andersen@gmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -49,7 +50,7 @@ $lang['youarehere']            = 'Vis hvor i hvilke(t) navnerom siden er';
 $lang['typography']            = 'Gjør typografiske erstatninger';
 $lang['htmlok']                = 'Tillat HTML';
 $lang['phpok']                 = 'Tillat PHP';
-$lang['dformat']               = 'Datoformat (se <a href="http://www.php.net/date">PHPs datofunksjon</a>)';
+$lang['dformat']               = 'Datoformat (se <a href="http://www.php.net/strftime">PHPs datofunksjon</a>)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Toppnivå for innholdsfortegnelse';
 $lang['maxtoclevel']           = 'Maksimalt antall nivåer i innholdsfortegnelse';
@@ -107,7 +108,7 @@ $lang['sitemap']               = 'Lag Google-sidekart (dager)';
 $lang['broken_iua']            = 'Er funksjonen ignore_user_abort på ditt system ødelagt? Dette kan gjøre at indeksering av søk ikke fungerer. Dette er et kjent problem med IIS+PHP/CGI. Se <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> for mer informasjon.';
 $lang['xsendfile']             = 'Bruk X-Sendfile header for å la webserver levere statiske filer? Din webserver må støtte dette.';
 $lang['xmlrpc']                = 'Slå på/slå av XML-RPC-grensesnitt';
-$lang['renderer_xhtml']        = 'Renderer til bruk for wiki-output (xhtml)';
+$lang['renderer_xhtml']        = 'Renderer til bruk for wiki-output (XHTML)';
 $lang['renderer__core']        = '%s (dokuwikikjerne)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['rss_type']              = 'Type XML-feed';
@@ -124,7 +125,7 @@ $lang['target____windows']     = 'Mål for lenker til nettverksstasjoner i Windo
 $lang['proxy____host']         = 'Navn på proxyserver';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Brukernavn på proxyserver';
-$lang['proxy____pass']         = 'Passors på proxyserver';
+$lang['proxy____pass']         = 'Passord på proxyserver';
 $lang['proxy____ssl']          = 'Bruk SSL for å koble til proxyserver';
 $lang['safemodehack']          = 'Bruk safemode-hack';
 $lang['ftp____host']           = 'FTP-server for safemode-hack';
@@ -149,7 +150,7 @@ $lang['rss_type_o_rss1']       = 'RSS 1.0';
 $lang['rss_type_o_rss2']       = 'RSS 2.0';
 $lang['rss_type_o_atom']       = 'Atom 0.3';
 $lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'Abstakt';
+$lang['rss_content_o_abstract'] = 'Ingress';
 $lang['rss_content_o_diff']    = 'Forent Diff';
 $lang['rss_content_o_htmldiff'] = 'HTML-formatert diff-tabell';
 $lang['rss_content_o_html']    = 'Full HTML sideinnhold';
