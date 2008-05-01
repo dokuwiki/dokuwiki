@@ -6,6 +6,7 @@
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
+ * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -40,6 +41,9 @@ $lang['btn_backlink']          = 'Tillbakalänkar';
 $lang['btn_backtomedia']       = 'Tillbaka till val av Mediafil';
 $lang['btn_subscribe']         = 'Prenumerera på ändringar';
 $lang['btn_unsubscribe']       = 'Säg upp prenumeration på ändringar';
+$lang['btn_subscribens']       = 'Prenumerera på namnrymdsändringar';
+$lang['btn_unsubscribens']     = 'Sluta prenumerera på namnrymdsändringar
+';
 $lang['btn_profile']           = 'Uppdatera profil';
 $lang['btn_reset']             = 'Återställ';
 $lang['btn_resendpwd']         = 'Skicka nytt lösenord';

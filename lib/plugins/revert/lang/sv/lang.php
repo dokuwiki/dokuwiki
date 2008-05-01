@@ -4,6 +4,7 @@
  *
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
+ * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  */
 $lang['menu']                  = 'Hantera återställningar';
 $lang['filter']                = 'Sök efter spamsidor';
