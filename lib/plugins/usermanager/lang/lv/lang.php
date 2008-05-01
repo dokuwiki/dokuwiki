@@ -7,13 +7,13 @@
  */
 $lang['menu']                  = 'Lietotāju pārvaldnieks';
 $lang['noauth']                = '(lietotāju autentifikācijas nav)';
-$lang['nosupport']             = '(lietotāju pārvaldiba netiek uzturēta)';
-$lang['badauth']               = 'nederīgs autentifikāciajs mehānisms';
+$lang['nosupport']             = '(lietotāju pārvaldība netiek uzturēta)';
+$lang['badauth']               = 'nederīgs autentifikācijas mehānisms';
 $lang['user_id']               = 'Lietotājs';
 $lang['user_pass']             = 'Parole';
 $lang['user_name']             = 'Vārds/uzvārds';
 $lang['user_mail']             = 'Epasts';
-$lang['user_groups']           = 'Groupas';
+$lang['user_groups']           = 'Grupas';
 $lang['field']                 = 'Lauks';
 $lang['value']                 = 'Vērtība';
 $lang['add']                   = 'Pielikt';
@@ -27,7 +27,7 @@ $lang['search_prompt']         = 'Meklēt';
 $lang['clear']                 = 'Noņemt meklēšanas filtru';
 $lang['filter']                = 'Filtrs';
 $lang['summary']               = 'Lietotāji %1$d.- %2$d. no %3$d atrastajiem. Pavisam %4$d lietotāji.';
-$lang['nonefound']             = 'Neviens nav atrasts. Pavisma %d lietotāju.';
+$lang['nonefound']             = 'Neviens nav atrasts. Pavisam %d lietotāju.';
 $lang['delete_ok']             = 'Dzēsti %d lietotāji';
 $lang['delete_fail']           = '%d neizdevās izdzēst.';
 $lang['update_ok']             = 'Lietotāja dati saglabāti';

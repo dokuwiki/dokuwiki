@@ -4,7 +4,7 @@
  *
  * @author Aivars Miška <allefm@gmail.com>
  */
-$lang['menu']                  = 'Moduļu pārvladība';
+$lang['menu']                  = 'Moduļu pārvaldība';
 $lang['download']              = 'Lejupielādāt un instalēt jaunu moduli.';
 $lang['manage']                = 'Instalētie moduļi';
 $lang['btn_info']              = 'uzziņa';
@@ -14,7 +14,7 @@ $lang['btn_settings']          = 'parametri';
 $lang['btn_download']          = 'Lejupielādēt';
 $lang['btn_enable']            = 'Saglabāt';
 $lang['url']                   = 'URL';
-$lang['installed']             = 'Instlalēts:';
+$lang['installed']             = 'Instalēts:';
 $lang['lastupdate']            = 'Atjaunināts:';
 $lang['source']                = 'Avots:';
 $lang['unknown']               = 'nav zināms';

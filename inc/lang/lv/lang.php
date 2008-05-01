@@ -195,7 +195,7 @@ $lang['i_confexists']          = '<code>%s</code> jau ir';
 $lang['i_writeerr']            = 'Nevar izveidot <code>%s</code>. Jāpārbauda direktorijas/faila tiesības un fails jāizveido pašam.';
 $lang['i_badhash']             = 'nepazīstams via izmainīts dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - neatļauta vai tukša vērtība';
-$lang['i_success']             = 'Konfigurēšana veiksmīgi pabeigta. Tagad vari nodzēst failu install.php. Tālā turpini <a href="doku.php">savā jaunajā DokuWiki</a>.';
+$lang['i_success']             = 'Konfigurēšana veiksmīgi pabeigta. Tagad vari nodzēst failu install.php. Tālāk turpini <a href="doku.php">savā jaunajā DokuWiki</a>.';
 $lang['i_failure']             = 'Rakstot konfigurācijas failu, gadījās dažas kļūmes. 
                          Pirms lieto <a href="doku.php">savu jauno DokuWiki</a>, tās varbūt jāizlabo.';
 $lang['i_policy']              = 'Sākotnējā ACL politika';
