@@ -250,7 +250,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo $this->getLang('acl_perms').' ';
         $inl =  $this->_html_select();
         echo '<input type="text" name="acl_w" class="edit" value="'.(($inl)?'':hsc(ltrim($this->who,'@'))).'" />'.NL;
-        echo '<input type="submit" value="Select" class="button" />'.NL;
+        echo '<input type="submit" value="'.$this->getLang('btn_select').'" class="button" />'.NL;
         echo '</div>'.NL;
 
         echo '<div id="acl__info">';

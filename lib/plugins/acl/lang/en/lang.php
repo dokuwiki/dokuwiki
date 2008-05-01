@@ -15,6 +15,8 @@ $lang['acl_perms']  = 'Permissions for';
 $lang['page']       = 'Page';
 $lang['namespace']  = 'Namespace';
 
+$lang['btn_select']  = 'Select';
+
 $lang['p_user_id']    = 'User <b class="acluser">%s</b> currently has the following permissions on page <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']    = 'User <b class="acluser">%s</b> currently has the following permissions in namespace <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']   = 'Members of group <b class="aclgroup">%s</b> currently have the following permissions on page <b class="aclpage">%s</b>: <i>%s</i>.';
