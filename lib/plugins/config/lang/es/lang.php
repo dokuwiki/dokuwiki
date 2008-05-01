@@ -6,6 +6,7 @@
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
+ * @author oliver@samera.com.py
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -74,6 +75,7 @@ $lang['profileconfirm']        = 'Confirmar cambios en perfil con contraseña';
 $lang['disableactions']        = 'Deshabilitar acciones DokuWiki';
 $lang['disableactions_check']  = 'Controlar';
 $lang['disableactions_subscription'] = 'Subscribirse/Desubscribirse';
+$lang['disableactions_nssubscription'] = 'Directorio Subscribirse/Desubscribirse';
 $lang['disableactions_wikicode'] = 'Ver el fuente/Exportar en formato crudo (raw)';
 $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
 $lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los namespaces en el index. Habilitando esta opción los ocultará si el usuario no tiene permisos de lectura. Los sub-namespaces pueden resultar inaccesibles. El index puede hacerse poco usable dependiendo de las configuraciones ACL.';
@@ -103,8 +105,13 @@ $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['broken_iua']            = '¿Se ha roto su sistema a causa de la función ignore_user_abort?. Esto puede causar que no funcione el index de búsqueda. Leer el <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>para más información.';
 $lang['xsendfile']             = 'Utilice el X-Sendfile header para permitirle sl servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
+$lang['xmlrpc']                = 'Habilitar/Deshabilitar interfase XML-RPC';
+$lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
+$lang['renderer__core']        = '%s (nucleo dokuwiki)';
+$lang['renderer__plugin']      = '%s (complemento)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';
+$lang['rss_content']           = 'Que mostrar en los itemes del archivo XML?';
 $lang['rss_update']            = 'Intervalo de actualización de feed XML (segundos)';
 $lang['recent_days']           = 'Cuántos cambios recientes mantener (días)';
 $lang['rss_show_summary']      = 'Feed XML muestra el resúmen en el título';
@@ -142,6 +149,7 @@ $lang['rss_type_o_rss2']       = 'RSS 2.0';
 $lang['rss_type_o_atom']       = 'Atom 0.3';
 $lang['rss_type_o_atom1']      = 'Atom 1.0';
 $lang['rss_content_o_abstract'] = 'Resumen';
+$lang['rss_content_o_diff']    = 'Diferencias unificadas';
 $lang['rss_content_o_htmldiff'] = 'Tabla de diferencias en formato HTML';
 $lang['rss_content_o_html']    = 'Página que contiente totalmente código HTML';
 $lang['rss_linkto_o_diff']     = 'ver las diferencias';
@@ -152,3 +160,6 @@ $lang['compression_o_0']       = 'Ninguna';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'No utiliazar';
+$lang['xsendfile_o_1']         = 'Encabezado propietario de lighttpd (antes de la version 1.5)';
+$lang['xsendfile_o_2']         = 'Encabezado X-Sendfile estandar';
+$lang['xsendfile_o_3']         = 'Encabezado propietario Nginx X-Accel-Redirect';

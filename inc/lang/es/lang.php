@@ -11,6 +11,7 @@
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
+ * @author oliver@samera.com.py
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -45,6 +46,8 @@ $lang['btn_backlink']          = 'Backlinks';
 $lang['btn_backtomedia']       = 'Vuelta a la selección de medios';
 $lang['btn_subscribe']         = 'Subscribirse a la notificación de cambios';
 $lang['btn_unsubscribe']       = 'Desubscribirse a la notificación de cambios';
+$lang['btn_subscribens']       = 'Subscribirse a cambios de un directorio';
+$lang['btn_unsubscribens']     = 'Desubscribirse de cambios de un directorio';
 $lang['btn_profile']           = 'Actualizar datos del usuario';
 $lang['btn_reset']             = 'Deshacer cambios';
 $lang['btn_resendpwd']         = 'Enviar nueva contraseña';
