@@ -641,12 +641,10 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
 
   $cache = getCacheName($language.$code,".code");
   $ctime = @filemtime($cache);
-
   if($ctime && !$_REQUEST['purge'] &&
      $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&
      $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&
-     $ctime > filemtime(DOKU_CONF.'dokuwiki.php'){
-
+     $ctime > filemtime(DOKU_CONF.'dokuwiki.php')){
     $highlighted_code = io_readFile($cache, false);
 
   } else {
