@@ -630,26 +630,30 @@ function p_get_first_heading($id, $render=true){
  * @param  string   $wrapper    html element to wrap the returned highlighted text
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
   global $conf;
+  $language = strtolower($language);
 
   // remove any leading or trailing blank lines
   $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
 
   $cache = getCacheName($language.$code,".code");
+  $ctime = @filemtime($cache);
 
-  if (@file_exists($cache) && !$_REQUEST['purge'] &&
-     (filemtime($cache) > filemtime(DOKU_INC . 'inc/geshi.php'))) {
+  if($ctime && !$_REQUEST['purge'] &&
+     $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&
+     $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&
+     $ctime > filemtime(DOKU_CONF.'dokuwiki.php'){
 
     $highlighted_code = io_readFile($cache, false);
-    @touch($cache);
 
   } else {
 
     require_once(DOKU_INC . 'inc/geshi.php');
 
-    $geshi = new GeSHi($code, strtolower($language), DOKU_INC . 'inc/geshi');
+    $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
     $geshi->set_encoding('utf-8');
     $geshi->enable_classes();
     $geshi->set_header_type(GESHI_HEADER_PRE);
