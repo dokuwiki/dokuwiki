@@ -248,7 +248,7 @@ if (!class_exists('configuration')) {
         }
         closedir($dh);
       }
-      
+
       // the same for the active template
       if (@file_exists(DOKU_TPLINC.$file)){
         $meta = array();
@@ -262,7 +262,7 @@ if (!class_exists('configuration')) {
           $metadata['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }
       }
-      
+
       return $metadata;
     }
 
@@ -285,7 +285,7 @@ if (!class_exists('configuration')) {
         }
         closedir($dh);
       }
-      
+
       // the same for the active template
       if (@file_exists(DOKU_TPLINC.$file)){
         $conf = array();
@@ -294,7 +294,7 @@ if (!class_exists('configuration')) {
           $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }
       }
-      
+
       return $default;
     }
 
@@ -485,6 +485,50 @@ if (!class_exists('setting_email')) {
     var $_pattern = '#^\s*(([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)(,\s*([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+))*)?\s*$#i';
   }
 }
+
+if (!class_exists('setting_richemail')) {
+  class setting_richemail extends setting_email {
+
+    /**
+     *  update setting with user provided value $input
+     *  if value fails error check, save it
+     *
+     *  @return true if changed, false otherwise (incl. on error)
+     */
+    function update($input) {
+        if (is_null($input)) return false;
+        if ($this->is_protected()) return false;
+
+        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        if ($value == $input) return false;
+
+        // replace variables with pseudo values
+        $test = $input;
+        $test = str_replace('@USER@','joe',$test);
+        $test = str_replace('@NAME@','Joe Schmoe',$test);
+        $test = str_replace('@MAIL@','joe@example.com',$test);
+
+        // now only check the address part
+        if(preg_match('#(.*?)<(.*?)>#',$test,$matches)){
+          $text = trim($matches[1]);
+          $addr = $matches[2];
+        }else{
+          $addr = $test;
+        }
+
+        if ($this->_pattern && !preg_match($this->_pattern,$addr)) {
+          $this->_error = true;
+          $this->_input = $input;
+          return false;
+        }
+
+        $this->_local = $input;
+        return true;
+    }
+
+  }
+}
+
 
 if (!class_exists('setting_numeric')) {
   class setting_numeric extends setting_string {
@@ -688,7 +732,7 @@ if (!class_exists('setting_multicheckbox')) {
         if ($this->is_protected()) return false;
 
         // split any combined values + convert from array to comma separated string
-        $input = ($input) ? $input : array();        
+        $input = ($input) ? $input : array();
         $input = $this->_array2str($input);
 
         $value = is_null($this->_local) ? $this->_default : $this->_local;

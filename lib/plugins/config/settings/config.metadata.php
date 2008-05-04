@@ -20,6 +20,8 @@
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
  *   'email'        - text input, input must conform to email address format, setting output in quotes
+ *   'richemail'    - text input, input must conform to email address format but accepts variables and
+ *                    emails with a real name prepended (when email address is given in <>)
  *   'password'     - password input, minimal input validation, setting output plain text in quotes
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
  *                    parameter (required). A pattern can be used to restrict the folders to only those which
@@ -158,7 +160,7 @@ $meta['useslash']    = array('onoff');
 $meta['sepchar']     = array('sepchar');
 $meta['canonical']   = array('onoff');
 $meta['autoplural']  = array('onoff');
-$meta['mailfrom']    = array('email');
+$meta['mailfrom']    = array('richemail');
 $meta['compress']    = array('onoff');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');
