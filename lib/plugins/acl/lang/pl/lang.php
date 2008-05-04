@@ -11,6 +11,7 @@ $lang['acl_user']              = 'Użytkownik';
 $lang['acl_perms']             = 'Uprawnienia użytkownika';
 $lang['page']                  = 'Strona';
 $lang['namespace']             = 'Katalog';
+$lang['btn_select']            = 'Wybierz';
 $lang['p_user_id']             = 'Użytkownik <b class="acluser">%s</b> posiada następujące uprawnienia do strony <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Użytkownik <b class="acluser">%s</b> posiada następujące uprawnienia do katalogów <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Członkowie grupy <b class="aclgroup">%s</b> posiadają następujące uprawnienia do strony <b class="aclpage">%s</b>: <i>%s</i>.';
