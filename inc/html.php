@@ -431,9 +431,9 @@ function html_revisions($first=0){
     print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
 
     print ' &ndash; ';
-    print $INFO['sum'];
+    print htmlspecialchars($INFO['sum']);
     print ' <span class="user">';
-    print (empty($INFO['editor']))?('('.$lang['external_edit'].')'):$INFO['editor'];
+    print (empty($INFO['editor']))?('('.$lang['external_edit'].')'):htmlspecialchars($INFO['editor']);
     print '</span> ';
 
     print '('.$lang['current'].')';
@@ -477,7 +477,7 @@ function html_revisions($first=0){
     print htmlspecialchars($info['sum']);
     print ' <span class="user">';
     if($info['user']){
-      print $info['user'];
+      print htmlspecialchars($info['user']);
     }else{
       print $info['ip'];
     }
@@ -571,7 +571,7 @@ function html_recent($first=0){
 
     print ' <span class="user">';
     if($recent['user']){
-      print $recent['user'];
+      print htmlspecialchars($recent['user']);
     }else{
       print $recent['ip'];
     }
