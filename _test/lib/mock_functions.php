@@ -190,7 +190,7 @@
          */
         function setReturnReferenceAt($timing, $function, &$reference, $args = false) {
             $mock = & MockFunction::_instance($function);
-            $mock->setReturnReferenceAt($timing, $function, &$reference, $args);
+            $mock->setReturnReferenceAt($timing, $function, $reference, $args);
         }
         
         /**
