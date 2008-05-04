@@ -201,9 +201,11 @@ function print_form($d){
 
 function print_retry() {
   global $lang;
+  global $LC;
 ?>
     <form action="" method="get">
       <fieldset>
+        <input type="hidden" name="l" value="<?php echo $LC ?>" />
         <input class="button" type="submit" value="<?php echo $lang['i_retry'];?>" />
       </fieldset>
     </form>
