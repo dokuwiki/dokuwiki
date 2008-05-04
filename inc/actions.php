@@ -392,7 +392,9 @@ function act_export($act){
     ptln('</head>');
     ptln('<body>');
     ptln('<div class="dokuwiki export">');
-    print p_wiki_xhtml($ID,$REV,false);
+    $html = p_wiki_xhtml($ID,$REV,false);
+    tpl_toc();
+    echo $html;
     ptln('</div>');
     ptln('</body>');
     ptln('</html>');
@@ -401,7 +403,9 @@ function act_export($act){
 
   // html body only
   if($act == 'export_xhtmlbody'){
-    print p_wiki_xhtml($ID,$REV,false);
+    $html = p_wiki_xhtml($ID,$REV,false);
+    tpl_toc();
+    echo $html;
     exit;
   }
 
