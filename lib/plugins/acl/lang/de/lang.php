@@ -16,6 +16,7 @@ $lang['acl_user']              = 'Benutzer';
 $lang['acl_perms']             = 'Berechtigungen für';
 $lang['page']                  = 'Seite';
 $lang['namespace']             = 'Namensraum';
+$lang['btn_select']            = 'Auswählen';
 $lang['p_user_id']             = 'Nutzer <b class="acluser">%s</b> hat momentan folgende Berechtigungen für die Seite <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Nutzer <b class="acluser">%s</b> hat momentan folgende Berechtigungen im Namensraum <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Mitglieder der Gruppe <b class="aclgroup">%s</b> haben momentan folgende Berechtigungen für die Seite <b class="aclpage">%s</b>: <i>%s</i>.';
