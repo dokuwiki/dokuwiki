@@ -19,6 +19,7 @@ $lang['acl_user']              = 'Utilisateur';
 $lang['acl_perms']             = 'Permission pour';
 $lang['page']                  = 'Page';
 $lang['namespace']             = 'Catégorie';
+$lang['btn_select']            = 'Sélectionner';
 $lang['p_user_id']             = 'Permissions actuelles de l\'utilisateur <b class="acluser">%s</b> sur la page <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Permissions actuelles de l\'utilisateur <b class="acluser">%s</b> sur la catégorie <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Permissions actuelles des membres du groupe <b class="aclgroup">%s</b> sur la page <b class="aclpage">%s</b>: <i>%s</i>.';
