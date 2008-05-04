@@ -4,11 +4,11 @@ Fil         : @MEDIA@
 Dato        : @DATE@
 Browser     : @BROWSER@
 IP-adresse  : @IPADDRESS@
-Værtsnavn   : @HOSTNAME@
-Størrelse   : @SIZE@
+Vï¿½rtsnavn   : @HOSTNAME@
+Stï¿½rrelse   : @SIZE@
 MIME Type   : @MIME@
 Bruger      : @USER@
 
 --
-Denne e-mail blev genereret af DokuWiki på
+Denne e-mail blev genereret af DokuWiki pï¿½
 @DOKUWIKIURL@
