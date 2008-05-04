@@ -31,7 +31,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2007-04-22',
+            'date'   => '2008-05-94',
             'name'   => 'Revert Manager',
             'desc'   => 'Allows you to mass revert recent edits',
             'url'    => 'http://wiki.splitbrain.org/plugin:revert',
@@ -146,7 +146,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             }
 
             $cnt++;
-            $date = date($conf['dformat'],$recent['date']);
+            $date = strftime($conf['dformat'],$recent['date']);
 
             echo ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
             echo '<div class="li">';
