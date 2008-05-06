@@ -301,9 +301,22 @@ function act_save($act){
   //delete draft
   act_draftdel($act);
 
+
+  $go = wl($ID,'',true);
+
+  //get section name when coming from section edit
+  if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+    #FIXME duplicates code from xhtml renderer
+    $title = $match[0];
+    $title = str_replace(':','',cleanID($title));
+    $title = ltrim($title,'0123456789._-');
+    if(empty($title)) $title='section';
+    $go .= '#'.$title;
+  }
+
   //show it
   session_write_close();
-  header("Location: ".wl($ID,'',true));
+  header("Location: $go");
   exit();
 }
 
