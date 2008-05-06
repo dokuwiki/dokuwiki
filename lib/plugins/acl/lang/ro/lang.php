@@ -11,6 +11,7 @@ $lang['acl_user']              = 'Utilizator';
 $lang['acl_perms']             = 'Autorizare pentru';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Spaţiu de nume';
+$lang['btn_select']            = 'Selectează';
 $lang['p_user_id']             = 'Utilizatorul <b class="acluser">%s</b> are următoarele autorizaţii pe pagină <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Utilizatorul <b class="acluser">%s</b> are următoarele autorizaţii pe spaţiul de nume <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Membrii grupului <b class="aclgroup">%s</b> au următoarele autorizaţii pe pagină <b class="aclpage">%s</b>: <i>%s</i>.';
