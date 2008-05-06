@@ -1221,6 +1221,8 @@ $UTF8_ROMANIZATION = array(
   'ط'=>'t\'','ظ'=>'z\'','ع'=>'y','غ'=>'gh','ف'=>'f','ق'=>'q','ك'=>'k',
   'ل'=>'l','م'=>'m','ن'=>'n','ه'=>'x\'','و'=>'u','ي'=>'i',
 
+  // Japanese characters  (last update: 2008-05-05)
+  
   // Japanese hiragana
 
   // 3 character syllables, っ doubles the consonant after
@@ -1267,7 +1269,7 @@ $UTF8_ROMANIZATION = array(
   'は'=>'ha','へ'=>'he','ひ'=>'hi','ほ'=>'ho','ふ'=>'hu',
   'ば'=>'ba','べ'=>'be','び'=>'bi','ぼ'=>'bo','ぶ'=>'bu',
   'ぱ'=>'pa','ぺ'=>'pe','ぴ'=>'pi','ぽ'=>'po','ぷ'=>'pu',
-  'た'=>'ta','て'=>'te','ち'=>'ti','と'=>'to','つ'=>'tu',
+  'た'=>'ta','て'=>'te','ち'=>'chi','と'=>'to','つ'=>'tsu',
   'だ'=>'da','で'=>'de','ぢ'=>'di','ど'=>'do','づ'=>'du',
   'が'=>'ga','げ'=>'ge','ぎ'=>'gi','ご'=>'go','ぐ'=>'gu',
   'か'=>'ka','け'=>'ke','き'=>'ki','こ'=>'ko','く'=>'ku',
@@ -1278,27 +1280,28 @@ $UTF8_ROMANIZATION = array(
   'わ'=>'wa','うぇ'=>'we','うぃ'=>'wi','を'=>'wo',
   'ざ'=>'za','ぜ'=>'ze','じ'=>'zi','ぞ'=>'zo','ず'=>'zu',
   'や'=>'ya','いぇ'=>'ye','よ'=>'yo','ゆ'=>'yu',
+  // old characters
+  'ゑ'=>'we','ゐ'=>'wi',
 
-  // never seen one of those, but better save than sorry
-  'でゃ'=>'dha','でぇ'=>'dhe','でぃ'=>'dhi','でょ'=>'dho','でゅ'=>'dhu',
-  'どぁ'=>'dwa','どぇ'=>'dwe','どぃ'=>'dwi','どぉ'=>'dwo','どぅ'=>'dwu',
-  'ぢゃ'=>'dya','ぢぇ'=>'dye','ぢぃ'=>'dyi','ぢょ'=>'dyo','ぢゅ'=>'dyu',
-  'ふぁ'=>'fwa','ふぇ'=>'fwe','ふぃ'=>'fwi','ふぉ'=>'fwo','ふぅ'=>'fwu',
-  'ふゃ'=>'fya','ふぇ'=>'fye','ふぃ'=>'fyi','ふょ'=>'fyo','ふゅ'=>'fyu',
-  'ぴゃ'=>'pya','ぴぇ'=>'pye','ぴぃ'=>'pyi','ぴょ'=>'pyo','ぴゅ'=>'pyu',
-  'すぁ'=>'swa','すぇ'=>'swe','すぃ'=>'swi','すぉ'=>'swo','すぅ'=>'swu',
-  'てゃ'=>'tha','てぇ'=>'the','てぃ'=>'thi','てょ'=>'tho','てゅ'=>'thu',
-  'つゃ'=>'tsa','つぇ'=>'tse','つぃ'=>'tsi','つょ'=>'tso','つ'=>'tsu',
-  'とぁ'=>'twa','とぇ'=>'twe','とぃ'=>'twi','とぉ'=>'two','とぅ'=>'twu',
-  'ヴゃ'=>'vya','ヴぇ'=>'vye','ヴぃ'=>'vyi','ヴょ'=>'vyo','ヴゅ'=>'vyu',
-  'うぁ'=>'wha','うぇ'=>'whe','うぃ'=>'whi','うぉ'=>'who','うぅ'=>'whu',
-  'ゑ'=>'wye','ゐ'=>'wyi',
-  'じゃ'=>'zha','じぇ'=>'zhe','じぃ'=>'zhi','じょ'=>'zho','じゅ'=>'zhu',
-  'じゃ'=>'zya','じぇ'=>'zye','じぃ'=>'zyi','じょ'=>'zyo','じゅ'=>'zyu',
+  //  convert what's left (probably only kicks in when something's missing above)
+  // 'ぁ'=>'a','ぇ'=>'e','ぃ'=>'i','ぉ'=>'o','ぅ'=>'u',
+  // 'ゃ'=>'ya','ょ'=>'yo','ゅ'=>'yu',
 
-  //  convert what's left (probably only kicks in when something's missing above
-  'ぁ'=>'a','ぇ'=>'e','ぃ'=>'i','ぉ'=>'o','ぅ'=>'u',
-  'ゃ'=>'ya','ょ'=>'yo','ゅ'=>'yu',
+  // never seen one of those (disabled for the moment)
+  // 'でゃ'=>'dha','でぇ'=>'dhe','でぃ'=>'dhi','でょ'=>'dho','でゅ'=>'dhu',
+  // 'どぁ'=>'dwa','どぇ'=>'dwe','どぃ'=>'dwi','どぉ'=>'dwo','どぅ'=>'dwu',
+  // 'ぢゃ'=>'dya','ぢぇ'=>'dye','ぢぃ'=>'dyi','ぢょ'=>'dyo','ぢゅ'=>'dyu',
+  // 'ふぁ'=>'fwa','ふぇ'=>'fwe','ふぃ'=>'fwi','ふぉ'=>'fwo','ふぅ'=>'fwu',
+  // 'ふゃ'=>'fya','ふぇ'=>'fye','ふぃ'=>'fyi','ふょ'=>'fyo','ふゅ'=>'fyu',
+  // 'ぴゃ'=>'pya','ぴぇ'=>'pye','ぴぃ'=>'pyi','ぴょ'=>'pyo','ぴゅ'=>'pyu',
+  // 'すぁ'=>'swa','すぇ'=>'swe','すぃ'=>'swi','すぉ'=>'swo','すぅ'=>'swu',
+  // 'てゃ'=>'tha','てぇ'=>'the','てぃ'=>'thi','てょ'=>'tho','てゅ'=>'thu',
+  // 'つゃ'=>'tsa','つぇ'=>'tse','つぃ'=>'tsi','つょ'=>'tso','つ'=>'tsu',
+  // 'とぁ'=>'twa','とぇ'=>'twe','とぃ'=>'twi','とぉ'=>'two','とぅ'=>'twu',
+  // 'ヴゃ'=>'vya','ヴぇ'=>'vye','ヴぃ'=>'vyi','ヴょ'=>'vyo','ヴゅ'=>'vyu',
+  // 'うぁ'=>'wha','うぇ'=>'whe','うぃ'=>'whi','うぉ'=>'who','うぅ'=>'whu',
+  // 'じゃ'=>'zha','じぇ'=>'zhe','じぃ'=>'zhi','じょ'=>'zho','じゅ'=>'zhu',
+  // 'じゃ'=>'zya','じぇ'=>'zye','じぃ'=>'zyi','じょ'=>'zyo','じゅ'=>'zyu',
 
   // 'spare' characters from other romanization systems
   // 'だ'=>'da','で'=>'de','ぢ'=>'di','ど'=>'do','づ'=>'du',
@@ -1418,8 +1421,9 @@ $UTF8_ROMANIZATION = array(
   'ター'=>'taa','テー'=>'tee','チー'=>'chii','トー'=>'too','ツー'=>'tsuu',
   'ワー'=>'waa','ヲー'=>'woo',
   'ヤー'=>'yaa','ヨー'=>'yoo','ユー'=>'yuu',
-  'ヱー'=>'wyee','ヰー'=>'wyii',
   'ヵー'=>'kaa','ヶー'=>'kee',
+  // old characters
+  'ヱー'=>'wee','ヰー'=>'wii',
 
   // 2 character syllables - doubled consonants
   'ッバ'=>'bba','ッベ'=>'bbe','ッビ'=>'bbi','ッボ'=>'bbo','ッブ'=>'bbu',
@@ -1450,10 +1454,11 @@ $UTF8_ROMANIZATION = array(
   'ダ'=>'da','デ'=>'de','ヂ'=>'di','ド'=>'do','ヅ'=>'du',
   'ワ'=>'wa','ヲ'=>'wo',
   'ヤ'=>'ya','ヨ'=>'yo','ユ'=>'yu',
-  'ヱ'=>'wye','ヰ'=>'wyi',
   'ヵ'=>'ka','ヶ'=>'ke',
+  // old characters
+  'ヱ'=>'we','ヰ'=>'wi',
 
-  //  convert what's left (probably only kicks in when something's missing above
+  //  convert what's left (probably only kicks in when something's missing above)
   'ァ'=>'a','ェ'=>'e','ィ'=>'i','ォ'=>'o','ゥ'=>'u',
   'ャ'=>'ya','ョ'=>'yo','ュ'=>'yu',
 
