@@ -762,8 +762,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             for ($x = $start; $x != $end; $x += $mod) {
                 $item = $feed->get_item($x);
                 $this->doc .= '<li><div class="li">';
-                $this->externallink($item->get_permalink(),
-                                    $item->get_title());
+                // support feeds without links
+                $lnkurl = $item->get_permalink();
+                if($lnkurl){
+                    $this->externallink($item->get_permalink(),
+                                        $item->get_title());
+                }else{
+                    $this->doc .= ' '.$item->get_title();
+                }
                 if($params['author']){
                     $author = $item->get_author(0);
                     if($author){
