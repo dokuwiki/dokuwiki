@@ -12,12 +12,14 @@ class utf8_substr_test extends UnitTestCase {
      */
     function test_japanese(){
         $tests = file(dirname(__FILE__).'/utf8_kanaromaji.txt');
+        $line = 1;
         foreach($tests as $test){
             list($jap,$rom) = explode(';',trim($test));
 
             $chk = utf8_romanize($jap);
-            #if($chk != $rom) echo "$jap\t->\t$chk\t!=\t$rom\n";
+            #if($chk != $rom) echo "$jap\t->\t$chk\t!=\t$rom\t($line)\n";
             $this->assertEqual($chk,$rom);
+            $line++;
         }
     }
 }
