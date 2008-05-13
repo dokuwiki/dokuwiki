@@ -7,6 +7,7 @@
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Pietro Battiston toobaz@email.it
  * @author Diego Pierotto ita.translations@tiscali.it
+ * @author ita.translations@tiscali.it
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.

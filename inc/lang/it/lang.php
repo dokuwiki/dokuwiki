@@ -8,6 +8,7 @@
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Diego Pierotto <ita.translations@tiscali.it>
  * @author Diego Pierotto ita.translations@tiscali.it
+ * @author ita.translations@tiscali.it
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

@@ -7,6 +7,7 @@
  * @author Roberto Bolli <http://www.rbnet.it/>
  * @author Pietro Battiston toobaz@email.it
  * @author Diego Pierotto ita.translations@tiscali.it
+ * @author ita.translations@tiscali.it
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
 $lang['acl_group']             = 'Gruppo';
@@ -14,6 +15,7 @@ $lang['acl_user']              = 'Utente';
 $lang['acl_perms']             = 'Permessi per';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Categoria';
+$lang['btn_select']            = 'Seleziona';
 $lang['p_user_id']             = 'L\'utente <b class="acluser">%s</b> attualmente ha i seguenti permessi sulla pagina <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'L\'utente <b class="acluser">%s</b> attualmente ha i seguenti permessi per la categoria <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'I membri del gruppo<b class="aclgroup">%s</b> attualmente hanno i seguenti permessi sulla pagina <b class="aclpage">%s</b>: <i>%s</i>.';
