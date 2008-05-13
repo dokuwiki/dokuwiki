@@ -6,6 +6,7 @@
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
+ * @author Dennis Karlsson
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
@@ -76,6 +77,7 @@ $lang['profileconfirm']        = 'Bekräfta ändringarna i profilen med lösenor
 $lang['disableactions']        = 'Stäng av funktioner i DokuWiki';
 $lang['disableactions_check']  = 'Kontroll';
 $lang['disableactions_subscription'] = 'Prenumerera/Säg upp prenumeration';
+$lang['disableactions_nssubscription'] = 'Namnrymd Prenumerera/Säg upp prenumeration';
 $lang['disableactions_wikicode'] = 'Visa källkod/Exportera råtext';
 $lang['disableactions_other']  = 'Andra funktioner (kommaseparerade)';
 $lang['sneaky_index']          = 'Som standard visar DokuWiki alla namnrymder på indexsidan. Genom att aktivera det här valet döljer man namnrymder som användaren inte har behörighet att läsa. Det kan leda till att man döljer åtkomliga undernamnrymder, och gör indexet oanvändbart med vissa ACL-inställningar.';
@@ -105,6 +107,10 @@ $lang['send404']               = 'Skicka "HTTP 404/Page Not Found" för sidor so
 $lang['sitemap']               = 'Skapa Google sitemap (dagar)';
 $lang['broken_iua']            = 'Är funktionen ignore_user_abort trasig på ditt system? Det kan i så fall leda till att indexering av sökningar inte fungerar. Detta är ett känt problem med IIS+PHP/CGI. Se <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> för mer info.';
 $lang['xsendfile']             = 'Använd X-Sendfile huvudet för att låta webservern leverera statiska filer? Din webserver behöver stöd för detta.';
+$lang['xmlrpc']                = 'Aktivera/Avaktivera XML-RPC-gränssnitt';
+$lang['renderer_xhtml']        = 'Generera för användning i huvudwikipresentation (xhtml)';
+$lang['renderer__core']        = '%s (dokuwiki core)';
+$lang['renderer__plugin']      = '%s (plugin)';
 $lang['rss_type']              = 'Typ av XML-flöde';
 $lang['rss_linkto']            = 'XML-flöde pekar på';
 $lang['rss_content']           = 'Vad ska visas för saker i XML-flödet?';
@@ -129,6 +135,7 @@ $lang['ftp____pass']           = 'FTP-lösenord för safemode hack';
 $lang['ftp____root']           = 'FTP-rotkatalog för safemode hack';
 $lang['typography_o_0']        = 'Inga';
 $lang['typography_o_1']        = 'Citat tecken enbart';
+$lang['typography_o_2']        = 'All citeringar (fungerar inte alltid)';
 $lang['userewrite_o_0']        = 'av';
 $lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'DokuWiki internt';
@@ -144,7 +151,9 @@ $lang['rss_type_o_rss2']       = 'RSS 2.0';
 $lang['rss_type_o_atom']       = 'Atom 0.3';
 $lang['rss_type_o_atom1']      = 'Atom 1.0';
 $lang['rss_content_o_abstract'] = 'Abstrakt';
+$lang['rss_content_o_diff']    = 'Unified Diff';
 $lang['rss_content_o_htmldiff'] = 'HTML formaterad diff tabell';
+$lang['rss_content_o_html']    = 'Sidans innehåll i full HTML';
 $lang['rss_linkto_o_diff']     = 'lista på skillnader';
 $lang['rss_linkto_o_page']     = 'den reviderade sidan';
 $lang['rss_linkto_o_rev']      = 'lista över ändringar';
@@ -153,4 +162,6 @@ $lang['compression_o_0']       = 'none';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'använd ej';
+$lang['xsendfile_o_1']         = 'Proprietär lighttpd header (before release 1.5)';
 $lang['xsendfile_o_2']         = 'Standard X-Sendfile huvud';
+$lang['xsendfile_o_3']         = 'Proprietär Nginx X-Accel-Redirect header';

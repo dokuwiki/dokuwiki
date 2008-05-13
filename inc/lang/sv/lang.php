@@ -7,6 +7,7 @@
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
+ * @author Dennis Karlsson
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

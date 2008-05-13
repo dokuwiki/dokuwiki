@@ -6,6 +6,7 @@
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
+ * @author Dennis Karlsson
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
 $lang['acl_group']             = 'Grupp';
@@ -13,6 +14,7 @@ $lang['acl_user']              = 'Användare';
 $lang['acl_perms']             = 'Behörighet för';
 $lang['page']                  = 'Sida';
 $lang['namespace']             = 'Namnrymd';
+$lang['btn_select']            = 'Välj';
 $lang['p_user_id']             = 'Användaren <b class="acluser">%s</b> har förnärvarande följande rättigheter på sidan <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Användaren <b class="acluser">%s</b> har för närvarande följande rättigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har för närvarande följande rättigheter på sidan <b class="aclpage">%s</b>: <i>%s</i>.';
