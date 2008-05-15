@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Jaka Kranjc <lynxlupodian@hotmail.com>
+ * @author Boštjan Seničar <senicar@gmail.com>
  */
 $lang['encoding']   = 'utf-8';
 $lang['doublequoteopening']  = '„';//&bdquo;
@@ -28,9 +29,16 @@ $lang['btn_secedit']= 'Uredi';
 $lang['btn_login']  = 'Prijava';
 $lang['btn_logout'] = 'Odjava';
 
+$lang['btn_update']            = 'Posodobi';
+$lang['btn_delete']            = 'Izbriši';
+$lang['btn_back']              = 'Nazaj';
+$lang['btn_profile']           = 'Posodobi profil';
+$lang['btn_draft']             = 'Uredi osnutek';
+$lang['btn_draftdel']          = 'Izbriši osnutek';
 $lang['loggedinas'] = 'Prijavljen kot';
 $lang['user']       = 'Uporabniško ime';
 $lang['pass']       = 'Geslo';
+$lang['newpass']               = 'Novo geslo';
 $lang['remember']   = 'Zapomni si me';
 $lang['fullname']   = 'Pravo ime';
 $lang['email']      = 'Elektronska pošta';
@@ -40,11 +48,13 @@ $lang['badlogin']   = 'Oprostite, uporabniško ime ali geslo ni pravo.';
 $lang['regmissing'] = 'Oprostite, zapolniti morate vsa polja.';
 $lang['reguexists'] = 'Oprostite, uporabnik s tem imenom že obstaja.';
 $lang['regsuccess'] = 'Uporabnik je bil ustvarjen. Geslo je bilo poslano na vaš elektronski naslov.';
+$lang['regsuccess2']           = 'Uporabnik je bil ustvarjen.';
 $lang['regmailfail']= 'Zgleda, da je prišlo do napake pri pošiljanju gesla. Prosimo da stopite v stik z administratorjem!';
 $lang['regbadmail'] = 'Podan elektronski naslov izgleda neveljaven - če mislite da je to napaka, stopite v stik z administratorjem.';
 $lang['regpwmail']  = 'Vaše geslo za DokuWiki';
 $lang['reghere']    = 'Nimate še računa? Priskrbite si ga';
 
+$lang['profchanged']           = 'Uporabniški profil uspešno posodobljen';
 $lang['txt_upload']   = 'Izberite datoteko za pošiljanje';
 $lang['txt_filename'] = 'Vnesite wikiname (neobvezno)';
 $lang['lockedby']     = 'Trenutno zaklenjeno od';
