@@ -24,7 +24,6 @@
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = (int) $_REQUEST['w'];
   $HEIGHT = (int) $_REQUEST['h'];
-  $CROP   = (bool) $_REQUEST['crop'];
   list($EXT,$MIME) = mimetype($MEDIA);
   if($EXT === false){
     $EXT  = 'unknown';
@@ -68,7 +67,7 @@
 
   //handle image resizing/cropping
   if((substr($MIME,0,5) == 'image') && $WIDTH){
-    if($CROP){
+    if($HEIGHT){
         $FILE = get_cropped($FILE,$EXT,$WIDTH,$HEIGHT);
     }else{
         $FILE = get_resized($FILE,$EXT,$WIDTH,$HEIGHT);
