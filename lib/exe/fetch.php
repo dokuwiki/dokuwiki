@@ -24,6 +24,7 @@
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = (int) $_REQUEST['w'];
   $HEIGHT = (int) $_REQUEST['h'];
+  $CROP   = (bool) $_REQUEST['crop'];
   list($EXT,$MIME) = mimetype($MEDIA);
   if($EXT === false){
     $EXT  = 'unknown';
@@ -32,7 +33,7 @@
 
   //media to local file
   if(preg_match('#^(https?)://#i',$MEDIA)){
-    //handle external images 
+    //handle external images
     if(strncmp($MIME,'image/',6) == 0) $FILE = get_from_URL($MEDIA,$EXT,$CACHE);
     if(!$FILE){
       //download failed - redirect to original URL
@@ -65,9 +66,13 @@
     exit;
   }
 
-  //handle image resizing
+  //handle image resizing/cropping
   if((substr($MIME,0,5) == 'image') && $WIDTH){
-    $FILE = get_resized($FILE,$EXT,$WIDTH,$HEIGHT);
+    if($CROP){
+        $FILE = get_cropped($FILE,$EXT,$WIDTH,$HEIGHT);
+    }else{
+        $FILE = get_resized($FILE,$EXT,$WIDTH,$HEIGHT);
+    }
   }
 
   // finally send the file to the client
@@ -216,6 +221,58 @@ function get_resized($file, $ext, $w, $h=0){
 }
 
 /**
+ * Crops the given image to the wanted ratio, then calls get_resized to scale it
+ * to the wanted size
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ */
+function get_cropped($file, $ext, $w, $h=0){
+  global $conf;
+
+  if(!$h) $h = $w;
+  $info = getimagesize($file); //get original size
+
+  // calculate crop size
+  $fr = $info[0]/$info[1];
+  $tr = $w/$h;
+  if($tr >= 1){
+    if($tr > $fr){
+        $cw = $info[0];
+        $ch = (int) $info[0]/$tr;
+    }else{
+        $cw = (int) $info[1]*$tr;
+        $ch = $info[1];
+    }
+  }else{
+    if($tr < $fr){
+        $cw = (int) $info[1]*$tr;
+        $ch = $info[1];
+    }else{
+        $cw = $info[0];
+        $ch = (int) $info[0]/$tr;
+    }
+  }
+  // calculate crop offset
+  $cx = (int) ($info[0]-$cw)/2;
+  $cy = (int) ($info[1]-$ch)/2;
+
+  //cache
+  $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
+  $mtime = @filemtime($local); // 0 if not exists
+
+  if( $mtime > filemtime($file) ||
+      crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
+      resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
+    if($conf['fperm']) chmod($local, $conf['fperm']);
+    return get_resized($local,$ext, $w, $h);
+  }
+
+  //still here? cropping failed
+  return get_resized($file,$ext, $w, $h);
+}
+
+
+/**
  * Returns the wanted cachetime in seconds
  *
  * Resolves named constants
@@ -325,12 +382,36 @@ function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
 }
 
 /**
- * resize images using PHP's libGD support
+ * crop images using external ImageMagick convert program
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
+  global $conf;
+return false;
+  // check if convert is configured
+  if(!$conf['im_convert']) return false;
+
+  // prepare command
+  $cmd  = $conf['im_convert'];
+  $cmd .= ' -crop '.$to_w.'x'.$to_h.'+'.$ofs_x.'+'.$ofs_y;
+  if ($ext == 'jpg' || $ext == 'jpeg') {
+      $cmd .= ' -quality '.$conf['jpg_quality'];
+  }
+  $cmd .= " $from $to";
+
+  @exec($cmd,$out,$retval);
+  if ($retval == 0) return true;
+  return false;
+}
+
+/**
+ * resize or crop images using PHP's libGD support
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Sebastian Wienecke <s_wienecke@web.de>
  */
-function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
+function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=0,$ofs_y=0){
   global $conf;
 
   if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
@@ -390,11 +471,11 @@ function resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
 
   //try resampling first
   if(function_exists("imagecopyresampled")){
-    if(!@imagecopyresampled($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h)) {
-      imagecopyresized($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h);
+    if(!@imagecopyresampled($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h)) {
+      imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
     }
   }else{
-    imagecopyresized($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h);
+    imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
   }
 
   $okay = false;
