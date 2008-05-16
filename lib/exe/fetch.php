@@ -388,7 +388,7 @@ function resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  */
 function crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
   global $conf;
-return false;
+
   // check if convert is configured
   if(!$conf['im_convert']) return false;
 
