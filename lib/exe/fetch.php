@@ -224,6 +224,9 @@ function get_resized($file, $ext, $w, $h=0){
  * Crops the given image to the wanted ratio, then calls get_resized to scale it
  * to the wanted size
  *
+ * Crops are centered horizontally but prefer the upper third of an vertical
+ * image because most pics are more interesting in that area (rule of thirds)
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function get_cropped($file, $ext, $w, $h=0){
@@ -254,7 +257,7 @@ function get_cropped($file, $ext, $w, $h=0){
   }
   // calculate crop offset
   $cx = (int) ($info[0]-$cw)/2;
-  $cy = (int) ($info[1]-$ch)/2;
+  $cy = (int) ($info[1]-$ch)/3;
 
   //cache
   $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
