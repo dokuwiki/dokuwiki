@@ -6,6 +6,7 @@
  * @link       http://www.zonageek.com/software/php/jpeg/index.php
  * @author     Sebastian Delmont <sdelmont@zonageek.com>
  * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author Hakan Sandell <hakan.sandell@mydata.se>
  * @todo       Add support for Maker Notes, Extend for GIF and PNG metadata
  */
 
@@ -137,6 +138,8 @@ class JpegMeta
                 $info = $this->getIPTCField(substr($field,5));
             }elseif(strtolower(substr($field,0,5)) == 'exif.'){
                 $info = $this->getExifField(substr($field,5));
+            }elseif(strtolower(substr($field,0,4)) == 'xmp.'){
+                $info = $this->getXmpField(substr($field,4));
             }elseif(strtolower(substr($field,0,5)) == 'file.'){
                 $info = $this->getFileField(substr($field,5));
             }elseif(strtolower(substr($field,0,5)) == 'date.'){
@@ -286,6 +289,28 @@ class JpegMeta
 
         if (isset($this->_info['exif'][$field])) {
             return $this->_info['exif'][$field];
+        }
+
+        return false;
+    }
+
+    /**
+     * Return an XMP field
+     *
+     * @author Hakan Sandell <hakan.sandell@mydata.se>
+     */
+    function getXmpField($field)
+    {
+        if (!isset($this->_info['xmp'])) {
+            $this->_parseMarkerXmp();
+        }
+
+        if ($this->_markers == null) {
+            return false;
+        }
+
+        if (isset($this->_info['xmp'][$field])) {
+            return $this->_info['xmp'][$field];
         }
 
         return false;
@@ -523,6 +548,7 @@ class JpegMeta
         // try various fields
         $cap = $this->getField(array('Iptc.Headline',
                                      'Iptc.Caption',
+                                     'Xmp.dc:title',
                                      'Exif.UserComment',
                                      'Exif.TIFFUserComment',
                                      'Exif.TIFFImageDescription',
@@ -938,7 +964,7 @@ class JpegMeta
             case 0xC2:    // SOF2
             case 0xC9:    // SOF9
             case 0xE0:    // APP0: JFIF data
-            case 0xE1:    // APP1: EXIF data
+            case 0xE1:    // APP1: EXIF or XMP data
             case 0xED:    // APP13: IPTC / Photoshop data
                 $capture = true;
                 break;
@@ -998,6 +1024,9 @@ class JpegMeta
         }
         if (!isset($this->_info['exif'])) {
             $this->_parseMarkerExif();
+        }
+        if (!isset($this->_info['xmp'])) {
+            $this->_parseMarkerXmp();
         }
         if (!isset($this->_info['adobe'])) {
             $this->_parseMarkerAdobe();
@@ -1426,6 +1455,96 @@ class JpegMeta
         $this->_info['sof']['ColorChannels'] = $this->_getByte($data, $pos + 5);
 
         return true;
+    }
+
+    /**
+     * Parses the XMP data
+     *
+     * @author  Hakan Sandell <hakan.sandell@mydata.se>
+     */
+    function _parseMarkerXmp()
+    {
+        if (!isset($this->_markers)) {
+            $this->_readJPEG();
+        }
+
+        if ($this->_markers == null) {
+            return false;
+        }
+
+        $data = null;
+        $count = count($this->_markers);
+        for ($i = 0; $i < $count; $i++) {
+            if ($this->_markers[$i]['marker'] == 0xE1) {
+                $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 29);
+                if ($signature == "http://ns.adobe.com/xap/1.0/\0") {
+                    $data =& substr($this->_markers[$i]['data'], 29);
+                    break;
+                }
+            }
+        }
+
+        if ($data == null) {
+            $this->_info['xmp'] = false;
+            return false;
+        }
+
+        $parser = xml_parser_create();
+        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+        xml_parse_into_struct($parser, $data, $values, $tags);
+        xml_parser_free($parser);
+
+        $this->_info['xmp'] = array();
+        $count = count($values);
+        for ($i = 0; $i < $count; $i++) {
+            if ($values[$i][tag] == 'rdf:Description' && $values[$i][type] == 'open') {
+
+                while ($values[++$i][tag] != 'rdf:Description') {
+                    $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i][tag]]);
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Parses XMP nodes by recursion
+     *
+     * @author  Hakan Sandell <hakan.sandell@mydata.se>
+     */
+    function _parseXmpNode($values, &$i, &$meta)
+    {
+        if ($values[$i][type] == 'complete') {
+            // Simple Type property
+            $meta = $values[$i][value];
+            return;
+        }
+
+        $i++;
+        if ($values[$i][tag] == 'rdf:Bag' || $values[$i][tag] == 'rdf:Seq') {
+            // Array property
+            $meta = array();
+            while ($values[++$i][tag] == 'rdf:li') {
+                $this->_parseXmpNode($values, $i, $meta[]);
+            }
+            $i++; // skip closing tag
+
+        } elseif ($values[$i][tag] == 'rdf:Alt') {
+            // Language Alternative property, only the first (default) value is used
+            $i++;
+            $this->_parseXmpNode($values, $i, $meta);
+            while ($values[++$i][tag] != 'rdf:Alt');
+            $i++; // skip closing tag
+
+        } else {
+            // Structure property
+            $meta = array();
+            $startTag = $values[$i-1][tag];
+            do {
+                $this->_parseXmpNode($values, $i, $meta[$values[$i][tag]]);
+            } while ($values[++$i][tag] != $startTag);
+        }
     }
 
     /*************************************************************/
