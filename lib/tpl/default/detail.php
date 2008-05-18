@@ -45,10 +45,7 @@ if (!defined('DOKU_INC')) die();
 
     <div class="img_detail">
       <p class="img_caption">
-        <?php print nl2br(hsc(tpl_img_getTag(array('IPTC.Caption',
-                                               'EXIF.UserComment',
-                                               'EXIF.TIFFImageDescription',
-                                               'EXIF.TIFFUserComment')))); ?>
+        <?php print nl2br(hsc(tpl_img_getTag('simple.title'))); ?>
       </p>
 
       <p>&larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?></p>
@@ -76,7 +73,7 @@ if (!defined('DOKU_INC')) die();
           $t = tpl_img_getTag('Simple.Camera');
           if($t) print '<dt>'.$lang['img_camera'].':</dt><dd>'.hsc($t).'</dd>';
 
-          $t = tpl_img_getTag(array('IPTC.Keywords','IPTC.Category'));
+          $t = tpl_img_getTag(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
           if($t) print '<dt>'.$lang['img_keywords'].':</dt><dd>'.hsc($t).'</dd>';
 
         ?>

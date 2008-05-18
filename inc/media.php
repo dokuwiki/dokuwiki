@@ -540,12 +540,12 @@ function media_printimgdetail($item){
     echo '</div>';
 
     // read EXIF/IPTC data
-    $t = $item['meta']->getField('IPTC.Headline');
+    $t = $item['meta']->getField(array('IPTC.Headline','xmp.dc:title'));
     $d = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
                                        'EXIF.TIFFImageDescription',
                                        'EXIF.TIFFUserComment'));
     if(utf8_strlen($d) > 250) $d = utf8_substr($d,0,250).'...';
-    $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category'));
+    $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
 
     // print EXIF/IPTC data
     if($t || $d || $k ){
