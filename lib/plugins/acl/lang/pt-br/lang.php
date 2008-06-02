@@ -14,6 +14,7 @@ $lang['acl_user']              = 'Usuário';
 $lang['acl_perms']             = 'Permissões para';
 $lang['page']                  = 'Página';
 $lang['namespace']             = 'Ramo';
+$lang['btn_select']            = 'Selecionar';
 $lang['p_user_id']             = 'O usuário <b class="acluser">%s</b> possui as seguintes permissões na página <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'O usuário <b class="acluser">%s</b> possui as seguintes permissões no ramo <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Os membros do grupo <b class="aclgroup">%s</b> possuem as seguintes permissões na página <b class="aclpage">%s</b>: <i>%s</i>.';
