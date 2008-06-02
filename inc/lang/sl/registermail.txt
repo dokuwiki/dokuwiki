@@ -1,0 +1,14 @@
+Nov uporabnik registriran. Podatki:
+
+Uporabniško ime: @NEWUSER@
+Polno ime: @NEWNAME@
+E-mail: @NEWEMAIL@
+
+Datum: @DATE@
+Brskalnik: @BROWSER@
+IP naslov: @IPADDRESS@
+Hostname: @HOSTNAME@
+
+--
+To sporočilo je ustvaril DokuWiki na
+@DOKUWIKIURL@
