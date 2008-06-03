@@ -65,8 +65,11 @@
         $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
       }
 
-      // external trust mechanism in place?
-      if(!is_null($auth) && $auth->canDo('external')){
+      if($_REQUEST['authtok']){
+        // when an authentication token is given, trust the session
+        auth_validateToken($_REQUEST['authtok']);
+      }elseif(!is_null($auth) && $auth->canDo('external')){
+        // external trust mechanism in place
         $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
       }else{
         auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
@@ -175,6 +178,45 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
   //just to be sure
   auth_logoff();
   return false;
+}
+
+/**
+ * Checks if a given authentication token was stored in the session
+ *
+ * Will setup authentication data using data from the session if the
+ * token is correct. Will exit with a 401 Status if not.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string $token The authentication token
+ * @return boolean true (or will exit on failure)
+ */
+function auth_validateToken($token){
+    if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']){
+        // bad token
+        header("HTTP/1.0 401 Unauthorized");
+        print 'Invalid auth token - maybe the session timed out';
+        unset($_SESSION[DOKU_COOKIE]['auth']['token']); // no second chance
+        exit;
+    }
+    // still here? trust the session data
+    global $USERINFO;
+    $_SERVER['REMOTE_USER'] = $_SESSION[DOKU_COOKIE]['auth']['user'];
+    $USERINFO = $_SESSION[DOKU_COOKIE]['auth']['info'];
+    return true;
+}
+
+/**
+ * Create an auth token and store it in the session
+ *
+ * NOTE: this is completely unrelated to the getSecurityToken() function
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @return string The auth token
+ */
+function auth_createToken(){
+    $token = md5(mt_rand());
+    $_SESSION[DOKU_COOKIE]['auth']['token'] = $token;
+    return $token;
 }
 
 /**
