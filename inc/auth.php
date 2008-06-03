@@ -215,7 +215,9 @@ function auth_validateToken($token){
  */
 function auth_createToken(){
     $token = md5(mt_rand());
+    @session_start(); // reopen the session if needed
     $_SESSION[DOKU_COOKIE]['auth']['token'] = $token;
+    session_write_close();
     return $token;
 }
 
