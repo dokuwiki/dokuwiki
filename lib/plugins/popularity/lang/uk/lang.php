@@ -1,0 +1,5 @@
+<?php
+/**
+ * Ukrainian language file
+ *
+ */
