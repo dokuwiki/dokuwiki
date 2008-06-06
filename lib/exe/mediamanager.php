@@ -1,6 +1,8 @@
 <?php
     if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
     define('DOKU_MEDIAMANAGER',1);
+
+
     require_once(DOKU_INC.'inc/init.php');
     require_once(DOKU_INC.'inc/lang/en/lang.php');
     require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
@@ -13,6 +15,7 @@
 
     // handle passed message
     if($_REQUEST['msg1']) msg(hsc($_REQUEST['msg1']),1);
+    if($_REQUEST['err']) msg(hsc($_REQUEST['err']),-1);
 
 
     // get namespace to display (either direct or from deletion order)
@@ -36,6 +39,19 @@
 
     // create the given namespace (just for beautification)
     if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
+
+    // handle flash upload
+    if($_FILES['Filedata']['tmp_name']){
+        $_FILES['upload'] =& $_FILES['Filedata'];
+        $JUMPTO = media_upload($NS,$AUTH);
+        if($JUMPTO == false){
+            header("HTTP/1.0 400 Bad Request");
+            echo 'Upload failed';
+        }
+        echo 'ok';
+        exit;
+    }
+
 
     // handle upload
     if($_FILES['upload']['tmp_name']){

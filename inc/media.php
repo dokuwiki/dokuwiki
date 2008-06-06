@@ -189,7 +189,7 @@ function media_delete($id,$auth){
  * Handles media file uploads
  *
  * This generates an action event and delegates to _media_upload_action().
- * Action plugins are allowed to pre/postprocess the uploaded file. 
+ * Action plugins are allowed to pre/postprocess the uploaded file.
  * (The triggered event is preventable.)
  *
  * Event data:
@@ -239,7 +239,7 @@ function media_upload($ns,$auth){
     // because a temp file was created already
     if(preg_match('/\.('.$regex.')$/i',$fn)){
         //check for overwrite
-        if(@file_exists($fn) && (!$_POST['ow'] || $auth < AUTH_DELETE)){
+        if(@file_exists($fn) && (!$_REQUEST['ow'] || $auth < AUTH_DELETE)){
             msg($lang['uploadexist'],0);
             return false;
         }
@@ -568,8 +568,9 @@ function media_uploadform($ns, $auth){
 
     if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
 
-    print '<div class="upload">' . $lang['mediaupload'] . '</div>';
+    // The default HTML upload form
     $form = new Doku_Form('dw__upload', DOKU_BASE.'lib/exe/mediamanager.php', false, 'multipart/form-data');
+    $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
     $form->addElement(form_makeOpenTag('p'));
@@ -585,8 +586,54 @@ function media_uploadform($ns, $auth){
       $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check'));
       $form->addElement(form_makeCloseTag('p'));
     }
-
     html_form('upload', $form);
+
+    // prepare flashvars for multiupload
+    $opt = array(
+        'L_gridname'  => $lang['mu_gridname'] ,
+        'L_gridsize'  => $lang['mu_gridsize'] ,
+        'L_gridstat'  => $lang['mu_gridstat'] ,
+        'L_namespace' => $lang['mu_namespace'] ,
+        'L_overwrite' => $lang['txt_overwrt'],
+        'L_browse'    => $lang['mu_browse'],
+        'L_upload'    => $lang['btn_upload'],
+        'L_toobig'    => $lang['mu_toobig'],
+        'L_ready'     => $lang['mu_ready'],
+        'L_done'      => $lang['mu_done'],
+        'L_fail'      => $lang['mu_fail'],
+        'L_authfail'  => $lang['mu_authfail'],
+        'L_progress'  => $lang['mu_progress'],
+        'L_filetypes' => $lang['mu_filetypes'],
+
+        'O_ns'        => ":$ns",
+        'O_backend'   => 'mediamanager.php?'.session_name().'='.session_id(),
+        'O_size'      => php_to_byte(ini_get('upload_max_filesize')),
+        'O_extensions'=> join('|',array_keys(getMimeTypes())),
+        'O_overwrite' => ($auth >= AUTH_DELETE),
+        'O_sectok'    => getSecurityToken(),
+        'O_authtok'   => auth_createToken(),
+    );
+    $var = buildURLparams($opt,'&');
+    // output the flash uploader
+    ?>
+    <div id="dw__flashupload" style="display:none">
+    <div class="upload"><?php echo $lang['mu_intro']?></div>
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"
+        codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+        <param name="movie" value="multipleUpload.swf?t=<?=time()?>" />
+        <param name="quality" value="high" />
+        <param name="bgcolor" value="#ffffff" />
+        <param name="FlashVars" value="<?php echo $var?>" />
+        <embed src="multipleUpload.swf?t=<?=time()?>" quality="high" bgcolor="#ffffff"
+            width="100%" height="100%" name="fileUpload" align="middle"
+            play="true" loop="false" quality="high" FlashVars="<?php echo $var?>"
+            allowScriptAccess="sameDomain"
+            type="application/x-shockwave-flash"
+            pluginspage="http://www.macromedia.com/go/getflashplayer">
+        </embed>
+    </object>
+    </div>
+    <?php
 }
 
 /**
