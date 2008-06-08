@@ -824,7 +824,7 @@ function tpl_youarehere($sep=' &raquo; '){
     $part .= $parts[$i].':';
     $page = $part;
     resolve_pageid('',$page,$exists);
-    if ($page == $conf['start']) continue; // Skip startpage 
+    if ($page == $conf['start']) continue; // Skip startpage
 
     // output
     echo $sep;
@@ -875,16 +875,16 @@ function tpl_userinfo(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_pageinfo(){
+function tpl_pageinfo($ret=false){
   global $conf;
   global $lang;
   global $INFO;
   global $REV;
   global $ID;
-  
+
   // return if we are not allowed to view the page
-  if (!auth_quickaclcheck($ID)) { return; }
-  
+  if (!auth_quickaclcheck($ID)) { return false; }
+
   // prepare date and path
   $fn = $INFO['filepath'];
   if(!$conf['fullpath']){
@@ -899,24 +899,30 @@ function tpl_pageinfo(){
 
   // print it
   if($INFO['exists']){
-    print $fn;
-    print ' &middot; ';
-    print $lang['lastmod'];
-    print ': ';
-    print $date;
+    $out = '';
+    $out .= $fn;
+    $out .= ' &middot; ';
+    $out .= $lang['lastmod'];
+    $out .= ': ';
+    $out .= $date;
     if($INFO['editor']){
-      print ' '.$lang['by'].' ';
-      print $INFO['editor'];
+      $out .= ' '.$lang['by'].' ';
+      $out .= $INFO['editor'];
     }else{
-      print ' ('.$lang['external_edit'].')';
+      $out .= ' ('.$lang['external_edit'].')';
     }
     if($INFO['locked']){
-      print ' &middot; ';
-      print $lang['lockedby'];
-      print ': ';
-      print $INFO['locked'];
+      $out .= ' &middot; ';
+      $out .= $lang['lockedby'];
+      $out .= ': ';
+      $out .= $INFO['locked'];
     }
-    return true;
+    if($ret){
+        return $out;
+    }else{
+        echo $out;
+        return true;
+    }
   }
   return false;
 }
