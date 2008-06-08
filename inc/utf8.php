@@ -1221,13 +1221,14 @@ $UTF8_ROMANIZATION = array(
   'ط'=>'t\'','ظ'=>'z\'','ع'=>'y','غ'=>'gh','ف'=>'f','ق'=>'q','ك'=>'k',
   'ل'=>'l','م'=>'m','ن'=>'n','ه'=>'x\'','و'=>'u','ي'=>'i',
 
-  // Japanese characters  (last update: 2008-05-08)
-
+  // Japanese characters  (last update: 2008-05-09)
+  
   // Japanese hiragana
 
   // 3 character syllables, っ doubles the consonant after
   'っちゃ'=>'ccha','っちぇ'=>'cche','っちょ'=>'ccho','っちゅ'=>'cchu',
   'っびゃ'=>'bbya','っびぇ'=>'bbye','っびぃ'=>'bbyi','っびょ'=>'bbyo','っびゅ'=>'bbyu',
+  'っぴゃ'=>'ppya','っぴぇ'=>'ppye','っぴぃ'=>'ppyi','っぴょ'=>'ppyo','っぴゅ'=>'ppyu',
   'っちゃ'=>'ccha','っちぇ'=>'cche','っち'=>'cchi','っちょ'=>'ccho','っちゅ'=>'cchu',
   // 'っひゃ'=>'hya','っひぇ'=>'hye','っひぃ'=>'hyi','っひょ'=>'hyo','っひゅ'=>'hyu',
   'っきゃ'=>'kkya','っきぇ'=>'kkye','っきぃ'=>'kkyi','っきょ'=>'kkyo','っきゅ'=>'kkyu',
@@ -1243,9 +1244,10 @@ $UTF8_ROMANIZATION = array(
 
    // 2 character syllables - normal
   'ふぁ'=>'fa','ふぇ'=>'fe','ふぃ'=>'fi','ふぉ'=>'fo',
-  'びゃ'=>'bya','びぇ'=>'bye','びぃ'=>'byi','びょ'=>'byo','びゅ'=>'byu',
   'ちゃ'=>'cha','ちぇ'=>'che','ち'=>'chi','ちょ'=>'cho','ちゅ'=>'chu',
   'ひゃ'=>'hya','ひぇ'=>'hye','ひぃ'=>'hyi','ひょ'=>'hyo','ひゅ'=>'hyu',
+  'びゃ'=>'bya','びぇ'=>'bye','びぃ'=>'byi','びょ'=>'byo','びゅ'=>'byu',
+  'ぴゃ'=>'pya','ぴぇ'=>'pye','ぴぃ'=>'pyi','ぴょ'=>'pyo','ぴゅ'=>'pyu',
   'きゃ'=>'kya','きぇ'=>'kye','きぃ'=>'kyi','きょ'=>'kyo','きゅ'=>'kyu',
   'ぎゃ'=>'gya','ぎぇ'=>'gye','ぎぃ'=>'gyi','ぎょ'=>'gyo','ぎゅ'=>'gyu',
   'みゃ'=>'mya','みぇ'=>'mye','みぃ'=>'myi','みょ'=>'myo','みゅ'=>'myu',
@@ -1267,7 +1269,7 @@ $UTF8_ROMANIZATION = array(
   'っな'=>'nna','っね'=>'nne','っに'=>'nni','っの'=>'nno','っぬ'=>'nnu',
   'っら'=>'rra','っれ'=>'rre','っり'=>'rri','っろ'=>'rro','っる'=>'rru',
   'っさ'=>'ssa','っせ'=>'sse','っし'=>'sshi','っそ'=>'sso','っす'=>'ssu',
-  'っざ'=>'zza','っぜ'=>'zze','っじ'=>'zzi','っぞ'=>'zzo','っず'=>'zzu',
+  'っざ'=>'zza','っぜ'=>'zze','っじ'=>'jji','っぞ'=>'zzo','っず'=>'zzu',
   
   // 1 character syllabels
   'あ'=>'a','え'=>'e','い'=>'i','お'=>'o','う'=>'u','ん'=>'n',
@@ -1299,7 +1301,6 @@ $UTF8_ROMANIZATION = array(
   // 'ぢゃ'=>'dya','ぢぇ'=>'dye','ぢぃ'=>'dyi','ぢょ'=>'dyo','ぢゅ'=>'dyu',
   // 'ふぁ'=>'fwa','ふぇ'=>'fwe','ふぃ'=>'fwi','ふぉ'=>'fwo','ふぅ'=>'fwu',
   // 'ふゃ'=>'fya','ふぇ'=>'fye','ふぃ'=>'fyi','ふょ'=>'fyo','ふゅ'=>'fyu',
-  // 'ぴゃ'=>'pya','ぴぇ'=>'pye','ぴぃ'=>'pyi','ぴょ'=>'pyo','ぴゅ'=>'pyu',
   // 'すぁ'=>'swa','すぇ'=>'swe','すぃ'=>'swi','すぉ'=>'swo','すぅ'=>'swu',
   // 'てゃ'=>'tha','てぇ'=>'the','てぃ'=>'thi','てょ'=>'tho','てゅ'=>'thu',
   // 'つゃ'=>'tsa','つぇ'=>'tse','つぃ'=>'tsi','つょ'=>'tso','つ'=>'tsu',
@@ -1334,7 +1335,9 @@ $UTF8_ROMANIZATION = array(
   'ッリャー'=>'rryaa','ッリェー'=>'rryee','ッリィー'=>'rryii','ッリョー'=>'rryoo','ッリュー'=>'rryuu',
   'ッシャー'=>'sshaa','ッシェー'=>'sshee','ッシー'=>'sshii','ッショー'=>'sshoo','ッシュー'=>'sshuu',
   'ッチャー'=>'cchaa','ッチェー'=>'cchee','ッチー'=>'cchii','ッチョー'=>'cchoo','ッチュー'=>'cchuu',
-
+  'ッティー'=>'ttii',
+  'ッヂィー'=>'ddii',
+  
   // 3 character syllables - doubled vowels
   'ファー'=>'faa','フェー'=>'fee','フィー'=>'fii','フォー'=>'foo',
   'フャー'=>'fyaa','フェー'=>'fyee','フィー'=>'fyii','フョー'=>'fyoo','フュー'=>'fyuu',
@@ -1360,6 +1363,8 @@ $UTF8_ROMANIZATION = array(
   'ヴァー'=>'vaa','ヴェー'=>'vee','ヴィー'=>'vii','ヴォー'=>'voo','ヴー'=>'vuu',
   'ウェー'=>'wee','ウィー'=>'wii',
   'イェー'=>'yee',
+  'ティー'=>'tii',
+  'ヂィー'=>'dii',
 
   // 3 character syllables - doubled consonants
   'ッビャ'=>'bbya','ッビェ'=>'bbye','ッビィ'=>'bbyi','ッビョ'=>'bbyo','ッビュ'=>'bbyu',
@@ -1371,6 +1376,8 @@ $UTF8_ROMANIZATION = array(
   'ッリャ'=>'rrya','ッリェ'=>'rrye','ッリィ'=>'rryi','ッリョ'=>'rryo','ッリュ'=>'rryu',
   'ッシャ'=>'ssha','ッシェ'=>'sshe','ッシ'=>'sshi','ッショ'=>'ssho','ッシュ'=>'sshu',
   'ッチャ'=>'ccha','ッチェ'=>'cche','ッチ'=>'cchi','ッチョ'=>'ccho','ッチュ'=>'cchu',
+  'ッティ'=>'tti',
+  'ッヂィ'=>'ddi',
 
   // 3 character syllables - doubled vowel and consonants
   'ッバー'=>'bbaa','ッベー'=>'bbee','ッビー'=>'bbii','ッボー'=>'bboo','ッブー'=>'bbuu',
@@ -1381,13 +1388,14 @@ $UTF8_ROMANIZATION = array(
   'ッナー'=>'nnaa','ッネー'=>'nnee','ッニー'=>'nnii','ッノー'=>'nnoo','ッヌー'=>'nnuu',
   'ッラー'=>'rraa','ッレー'=>'rree','ッリー'=>'rrii','ッロー'=>'rroo','ッルー'=>'rruu',
   'ッサー'=>'ssaa','ッセー'=>'ssee','ッシー'=>'sshii','ッソー'=>'ssoo','ッスー'=>'ssuu',
-  'ッザー'=>'zzaa','ッゼー'=>'zzee','ッジー'=>'zzii','ッゾー'=>'zzoo','ッズー'=>'zzuu',
-  'ッター'=>'ttaa','ッテー'=>'ttee','ッチー'=>'chii','ットー'=>'ttoo','ッツー'=>'ttssuu',
+  'ッザー'=>'zzaa','ッゼー'=>'zzee','ッジー'=>'jjii','ッゾー'=>'zzoo','ッズー'=>'zzuu',
+  'ッター'=>'ttaa','ッテー'=>'ttee','ッチー'=>'chii','ットー'=>'ttoo','ッツー'=>'ttsuu',
   'ッダー'=>'ddaa','ッデー'=>'ddee','ッヂー'=>'ddii','ッドー'=>'ddoo','ッヅー'=>'dduu',
 
   // 2 character syllables - normal
-  'ファ'=>'fa','フェ'=>'fe','フィ'=>'fi','フォ'=>'fo',
-  'フャ'=>'fya','フェ'=>'fye','フィ'=>'fyi','フョ'=>'fyo','フュ'=>'fyu',
+  'ファ'=>'fa','フェ'=>'fe','フィ'=>'fi','フォ'=>'fo','フゥ'=>'fu',
+  // 'フャ'=>'fya','フェ'=>'fye','フィ'=>'fyi','フョ'=>'fyo','フュ'=>'fyu',
+  'フャ'=>'fa','フェ'=>'fe','フィ'=>'fi','フョ'=>'fo','フュ'=>'fu',
   'ヒャ'=>'hya','ヒェ'=>'hye','ヒィ'=>'hyi','ヒョ'=>'hyo','ヒュ'=>'hyu',
   'ビャ'=>'bya','ビェ'=>'bye','ビィ'=>'byi','ビョ'=>'byo','ビュ'=>'byu',
   'ピャ'=>'pya','ピェ'=>'pye','ピィ'=>'pyi','ピョ'=>'pyo','ピュ'=>'pyu',
@@ -1401,7 +1409,7 @@ $UTF8_ROMANIZATION = array(
   'スァ'=>'swa','スェ'=>'swe','スィ'=>'swi','スォ'=>'swo','スゥ'=>'swu',
   'デァ'=>'da','デェ'=>'de','ディ'=>'di','デォ'=>'do','デゥ'=>'du',
   'チャ'=>'cha','チェ'=>'che','チ'=>'chi','チョ'=>'cho','チュ'=>'chu',
-  'ヂャ'=>'dya','ヂェ'=>'dye','ヂィ'=>'dyi','ヂョ'=>'dyo','ヂュ'=>'dyu',
+  // 'ヂャ'=>'dya','ヂェ'=>'dye','ヂィ'=>'dyi','ヂョ'=>'dyo','ヂュ'=>'dyu',
   'ツャ'=>'tsa','ツェ'=>'tse','ツィ'=>'tsi','ツョ'=>'tso','ツ'=>'tsu',
   'トァ'=>'twa','トェ'=>'twe','トィ'=>'twi','トォ'=>'two','トゥ'=>'twu',
   'ドァ'=>'dwa','ドェ'=>'dwe','ドィ'=>'dwi','ドォ'=>'dwo','ドゥ'=>'dwu',
@@ -1410,6 +1418,8 @@ $UTF8_ROMANIZATION = array(
   'ヴァ'=>'va','ヴェ'=>'ve','ヴィ'=>'vi','ヴォ'=>'vo','ヴ'=>'vu',
   'ウェ'=>'we','ウィ'=>'wi',
   'イェ'=>'ye',
+  'ティ'=>'ti',
+  'ヂィ'=>'di',
 
   // 2 character syllables - doubled vocal
   'アー'=>'aa','エー'=>'ee','イー'=>'ii','オー'=>'oo','ウー'=>'uu',
@@ -1423,7 +1433,7 @@ $UTF8_ROMANIZATION = array(
   'ナー'=>'naa','ネー'=>'nee','ニー'=>'nii','ノー'=>'noo','ヌー'=>'nuu',
   'ラー'=>'raa','レー'=>'ree','リー'=>'rii','ロー'=>'roo','ルー'=>'ruu',
   'サー'=>'saa','セー'=>'see','シー'=>'shii','ソー'=>'soo','スー'=>'suu',
-  'ザー'=>'zaa','ゼー'=>'zee','ジー'=>'zii','ゾー'=>'zoo','ズー'=>'zuu',
+  'ザー'=>'zaa','ゼー'=>'zee','ジー'=>'jii','ゾー'=>'zoo','ズー'=>'zuu',
   'ター'=>'taa','テー'=>'tee','チー'=>'chii','トー'=>'too','ツー'=>'tsuu',
   'ワー'=>'waa','ヲー'=>'woo',
   'ヤー'=>'yaa','ヨー'=>'yoo','ユー'=>'yuu',
@@ -1444,8 +1454,8 @@ $UTF8_ROMANIZATION = array(
   'ッナ'=>'nna','ッネ'=>'nne','ッニ'=>'nni','ッノ'=>'nno','ッヌ'=>'nnu',
   'ッラ'=>'rra','ッレ'=>'rre','ッリ'=>'rri','ッロ'=>'rro','ッル'=>'rru',
   'ッサ'=>'ssa','ッセ'=>'sse','ッシ'=>'sshi','ッソ'=>'sso','ッス'=>'ssu',
-  'ッザ'=>'zza','ッゼ'=>'zze','ッジ'=>'zzi','ッゾ'=>'zzo','ッズ'=>'zzu',
-  'ッタ'=>'tta','ッテ'=>'tte','ッチ'=>'chi','ット'=>'tto','ッツ'=>'ttssu',
+  'ッザ'=>'zza','ッゼ'=>'zze','ッジ'=>'jji','ッゾ'=>'zzo','ッズ'=>'zzu',
+  'ッタ'=>'tta','ッテ'=>'tte','ッチ'=>'cchi','ット'=>'tto','ッツ'=>'ttsu',
   'ッダ'=>'dda','ッデ'=>'dde','ッヂ'=>'ddi','ッド'=>'ddo','ッヅ'=>'ddu',
 
   // 1 character syllables
@@ -1471,6 +1481,10 @@ $UTF8_ROMANIZATION = array(
   //  convert what's left (probably only kicks in when something's missing above)
   'ァ'=>'a','ェ'=>'e','ィ'=>'i','ォ'=>'o','ゥ'=>'u',
   'ャ'=>'ya','ョ'=>'yo','ュ'=>'yu',
+
+  // special characters
+  '・'=>'_','、'=>'_',
+  'ー'=>'_', // when used with hiragana (seldom), this character would not be converted otherwise
 
   // 'ラ'=>'la','レ'=>'le','リ'=>'li','ロ'=>'lo','ル'=>'lu',
   // 'チャ'=>'cya','チェ'=>'cye','チィ'=>'cyi','チョ'=>'cyo','チュ'=>'cyu',

@@ -4893,7 +4893,7 @@
 よく;yoku
 ときどき;tokidoki
 ニュース;nyuusu
-ホーム・ドラマ;hoomu dorama
+ホーム・ドラマ;hoomu_dorama
 どちらも;dochiramo
 あさ;asa
 おきる;okiru
@@ -5083,7 +5083,7 @@
 しゅっぱん;shuppan
 はなし;hanashi
 しゅじんこう;shujinkou
-ファッション・モデル;fasshon moderu
+ファッション・モデル;fasshon_moderu
 スパイ;supai
 ページ;peeji
 おもう;omou
@@ -5113,10 +5113,10 @@
 びん;bin
 ひこうじょう;hikoujou
 むかえる;mukaeru
-エア・ターミナル;ea taaminaru
+エア・ターミナル;ea_taaminaru
 はこざき;hakozaki
 はやい;hayai
-リムジン・バス;rimujin basu
+リムジン・バス;rimujin_basu
 だいじょうぶ;daijoubu
 かならず;kanarazu
 わ;wa
@@ -5242,7 +5242,7 @@
 しずおか;shizuoka
 つかまる;tsukamaru
 ばっきん;bakkin
-パト・カー;pato kaa
+パト・カー;pato_kaa
 はらう;harau
 そのまま;sonomama
 たりる;tariru
@@ -5343,7 +5343,7 @@
 びょうき;byouki
 あたたかい;atatakai
 ちょうし;choushi
-エス・エフ;esu efu
+エス・エフ;esu_efu
 うちゅう;uchuu
 ちきゅう;chikyuu
 ぼうけん;bouken
@@ -5363,7 +5363,7 @@
 こい;koi
 さいご;saigo
 てきこく;tekikoku
-ハッピ・エンド;happi endo
+ハッピ・エンド;happi_endo
 きがする;kigasuru
 きょうみ;kyoumi
 ないよう;naiyou
@@ -5378,7 +5378,7 @@
 らいげつ;raigetsu
 はなれる;hanareru
 しょうご;shougo
-チェック・イン;chekku in
+チェック・イン;chekku_in
 けど;kedo
 だって;datte
 フロア;furoa
@@ -5420,7 +5420,7 @@
 いわい;iwai
 しょうしん;shoushin
 レストラン;resutoran
-カクテル・パーティー;kakuteru paatii
+カクテル・パーティー;kakuteru_paatii
 シャンペン;shanpen
 クラシック;kurashikku
 とくに;tokuni
@@ -5547,7 +5547,7 @@
 かつ;katsu
 あぶない;abunai
 おとなしい;otonashii
-アイス・クリーム;aisu kuriimu
+アイス・クリーム;aisu_kuriimu
 あら;ara
 じゃ;ja
 すな;suna
@@ -5813,7 +5813,7 @@
 ふりそで;furisode
 がまん;gaman
 スキー;sukii
-ウィーク・エンド;wiiku endo
+ウィーク・エンド;wiiku_endo
 あいつ;aitsu
 ひどいめにあう;hidoimeniau
 くん;kun
@@ -5969,7 +5969,7 @@
 とちゅう;tochuu
 みんしゅく;minshuku
 すきま;sukima
-セントラリ・ヒーティング;sentorari hiitingu
+セントラリ・ヒーティング;sentorari_hiitingu
 だて;date
 げんこう;genkou
 ひしょ;hisho
@@ -5978,7 +5978,7 @@
 やまなかこ;yamanakako
 コート;kooto
 ダイヤモンド;daiyamondo
-ハンド・バッグ;hando baggu
+ハンド・バッグ;hando_baggu
 ミンク;minku
 ゆびわ;yubiwa
 わに;wani
@@ -6238,7 +6238,7 @@
 しりつ;shiritsu
 ここのつ;kokonotsu
 みほん;mihon
-エヌ・エッチ・ケー;enu ecchi kee
+エヌ・エッチ・ケー;enu_ecchi_kee
 こうきょう;koukyou
 しゅるい;shurui
 チャンネル;channeru
@@ -6285,7 +6285,7 @@
 むすび;musubi
 いや;iya
 おもい;omoi
-リュック・サック;ryukku sakku
+リュック・サック;ryukku_sakku
 おやつ;oyatsu
 デザート;dezaato
 せんべい;senbei
@@ -6328,8 +6328,8 @@
 とし;toshi
 ごぞんじです;gozonjidesu
 どなたか;donataka
-アップライト・ピアノ;appuraito piano
-グランド・ピアノ;gurando piano
+アップライト・ピアノ;appuraito_piano
+グランド・ピアノ;gurando_piano
 がいこくせい;gaikokusei
 こくさん;kokusan
 くろい;kuroi
@@ -13829,7 +13829,6 @@ AよりBのほうがわかいです;AyoriBnohougawakaidesu
 すます;sumasu
 かたづけ;kataduke
 コップ;koppu
-こおひいぢゃわん;koohiijawan
 ナイフ;naifu
 フォーク;fooku
 スプーン;supuun
@@ -14349,7 +14348,7 @@ AよりBのほうがわかいです;AyoriBnohougawakaidesu
 たいしょうてきだ;taishoutekida
 めん;men
 どうじ;douji
-ルース・ベネディクト;ruusu benedikuto
+ルース・ベネディクト;ruusu_benedikuto
 きく;kiku
 かたな;katana
 こうどうする;koudousuru
@@ -14472,7 +14471,7 @@ AよりBのほうがわかいです;AyoriBnohougawakaidesu
 つもる;tsumoru
 ふりつづく;furitsuduku
 に、さんねん;ni_sannen
-セントラル・ヒーティング;sentoraru hiitingu
+セントラル・ヒーティング;sentoraru_hiitingu
 だんぼう;danbou
 しゅっきん;shukkin
 しゅっきんする;shukkinsuru
@@ -15739,7 +15738,6 @@ AよりBのほうがわかいです;AyoriBnohougawakaidesu
 さらさら;sarasara
 ぶるぶるふるえる;buruburufurueru
 むかう;mukau
-すとーん(と);sutoon(to)
 けろりとなおる;keroritonaoru
 さむがり;samugari
 のびのび(と)くらす;nobinobi(to)kurasu
@@ -20946,7 +20944,6 @@ AよりBのほうがわかいです;AyoriBnohougawakaidesu
 あまのがわ;amanogawa
 おりひめ;orihime
 ハイキング;haikingu
-パーチィー;paatii
 まつおばしょう;matsuobashou
 つめたい;tsumetai
 みじかい;mijikai
