@@ -1,0 +1,7 @@
+====== Berrezartze Kudeatzailea ======
+
+Orri honek spam eraso baten berrezartze automatikoarekin
+laguntzen dizu. Spam-a duten orriak bilatzeko, lehenik sartu
+bilaketa katea (adb. spam URL bat), eta ondoren baieztatu
+bilatutako orriak benetan spam-a dutela, gero aldaketak
+berrezartzeko.

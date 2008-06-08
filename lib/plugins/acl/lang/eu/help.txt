@@ -1,0 +1,17 @@
+=== Laguntza Bizkorra: ===
+
+Orri honetan wiki-ko orri eta izen-espazioen baimenak gehitu eta 
+kendu ahal ditzakezu.
+
+Ezkerreko panelak eskuragarri dauden orri eta izen-espazioak
+erakusten ditu.
+
+Goiko formularioak aukeratutako erabiltzaile edo taldearen baimenak
+ikusi eta aldatzea ahalbidetzen dizu.
+
+Beheko taulan une honetan ezarritako atzipen kontrol arauak daude.
+Hainbat arau bizkor ezabatu edo aldatzeko erabili dezakezu.
+
+[[doku>wiki:acl|Atzipen Kontrol Listen inguruko dokumentazio ofiziala]]
+irakurtzeak atzipen kontrolak DokuWiki-n nola funtzionatzen duen 
+ulertzen lagundu zaitzaike. 
