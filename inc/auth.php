@@ -423,11 +423,11 @@ function auth_aclcheck($id,$user,$groups){
   $ns    = getNS($id);
   $perm  = -1;
 
-  if($user){
+  if($user || count($groups)){
     //add ALL group
     $groups[] = '@ALL';
     //add User
-    $groups[] = $user;
+    if($user) $groups[] = $user;
     //build regexp
     $regexp   = join('|',$groups);
   }else{
