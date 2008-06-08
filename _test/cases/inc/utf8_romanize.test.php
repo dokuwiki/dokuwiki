@@ -3,7 +3,7 @@
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 require_once DOKU_INC.'inc/utf8.php';
 
-class utf8_substr_test extends UnitTestCase {
+class utf8_romanize_test extends UnitTestCase {
 
     /**
      * Check Japanese romanization
