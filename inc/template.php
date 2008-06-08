@@ -510,6 +510,7 @@ function tpl_button($type){
         return true;
       }
       return false;
+    case 'subscribe':
     case 'subscription':
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
@@ -518,6 +519,14 @@ function tpl_button($type){
           } else {
             print html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
           }
+          if($type == 'subscribe') return true;
+        }
+      }
+      if($type == 'subscribe') return false;
+      // fall through for backward compatibility
+    case 'subscribens':
+      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
+        if($_SERVER['REMOTE_USER']){
           if($INFO['subscribedns']){
             print html_btn('unsubscribens',$ID,'',array('do' => 'unsubscribens',));
           } else {
