@@ -5,7 +5,7 @@
  * @author Aivars Miška <allefm@gmail.com>
  */
 $lang['menu']                  = 'Moduļu pārvaldība';
-$lang['download']              = 'Lejupielādāt un instalēt jaunu moduli.';
+$lang['download']              = 'Lejupielādēt un instalēt jaunu moduli.';
 $lang['manage']                = 'Instalētie moduļi';
 $lang['btn_info']              = 'uzziņa';
 $lang['btn_update']            = 'atjaunināt';

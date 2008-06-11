@@ -11,6 +11,7 @@ $lang['acl_user']              = 'Lietotājs';
 $lang['acl_perms']             = 'Tiesības';
 $lang['page']                  = 'Lapa';
 $lang['namespace']             = 'Nodaļa';
+$lang['btn_select']            = 'Izvēlēties';
 $lang['p_user_id']             = 'Lietotājam <b class="acluser">%s</b> ir tiesības <i>%s</i> lapu <b class="aclpage">%s</b> .';
 $lang['p_user_ns']             = 'Lietotājam <b class="acluser">%s</b> nodaļā <b class="aclns">%s</b> ir tiesības <i>%s</i>.';
 $lang['p_group_id']            = 'Grupas <b class="aclgroup">%s</b> biedriem ir tiesības <i>%s</i> lapu <b class="aclpage">%s</b>.';

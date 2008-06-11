@@ -1,0 +1,9 @@
+====== Popularitātes atsauksme ======
+
+Šis rīks savāc anonīmus datus par tavu wiki sistēmu un piedāvā tos nodot DokuWiki izstrādātājiem. Tas ļauj zināt kā izmanto DokuWiki un palīdz tālāko attīstību balstīt patiesas izmantošanas statistikā .
+
+Ierosinām laiku pa laikam atkārtoti nosūtīt datus, lai izstrādātāji zinātu, ka tavs wiki aug. Atkārtotos sūtījumus identificēs pēc anonīmā ID.
+
+Savāktie dati satur ziņas par DokuWiki versiju, lapu skaitu un apjomu, instalētajiem spraudņiem un par PHP instalāciju.
+
+Nosūtāmie dati redzami zemāk. Nospied pogu "Nosūtīt datus", lai nodotu ziņas.
