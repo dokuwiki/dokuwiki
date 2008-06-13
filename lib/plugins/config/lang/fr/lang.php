@@ -7,6 +7,7 @@
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
+ * @author stephane.gully@gmail.com
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />La valeur(s) erronée(s) est entourée d\'une bordure rouge.';

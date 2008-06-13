@@ -13,6 +13,7 @@
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
+ * @author stephane.gully@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -115,6 +116,7 @@ $lang['namespaces']            = 'Catégories';
 $lang['mediafiles']            = 'Fichiers disponibles dans';
 $lang['js']['keepopen']        = 'Gardez la fenêtre ouverte pendant la sélection';
 $lang['js']['hidedetails']     = 'Masquer détails';
+$lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Voir fichier original';
 $lang['mediaroot']             = 'root';
@@ -209,3 +211,16 @@ $lang['i_pol0']                = 'Wiki ouvert (lecture, écriture, envoi de fich
 $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
 $lang['i_retry']               = 'Réessayer';
+$lang['mu_intro']              = 'Ici vous pouvez envoyer plusieurs fichiers en même temps. Cliquez sur le bouton parcourir pour les ajouter. Cliquez sur envoyer lorsque c\'est prêt. ';
+$lang['mu_gridname']           = 'Nom du fichier';
+$lang['mu_gridsize']           = 'Taille';
+$lang['mu_gridstat']           = 'État';
+$lang['mu_namespace']          = 'Catégorie';
+$lang['mu_browse']             = 'Parcourir';
+$lang['mu_toobig']             = 'Trop gros';
+$lang['mu_ready']              = 'Prêt à envoyer';
+$lang['mu_done']               = 'Terminé';
+$lang['mu_fail']               = 'Échoué';
+$lang['mu_authfail']           = 'Session expirée';
+$lang['mu_progress']           = '@PCT@% envoyé';
+$lang['mu_filetypes']          = 'Types de fichiers acceptés';
