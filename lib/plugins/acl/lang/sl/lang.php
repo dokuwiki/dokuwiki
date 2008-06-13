@@ -14,6 +14,7 @@ $lang['perm']                  = 'Dovoljenja';
 $lang['acl_perm1']             = 'Preberi';
 $lang['acl_perm2']             = 'Uredi';
 $lang['acl_perm4']             = 'Ustvari';
+$lang['acl_perm8']             = 'Naloži';
 $lang['acl_perm16']            = 'Zbriši';
 $lang['acl_new']               = 'Dodaj nov zapis';
 $lang['acl_mod']               = 'Spremeni zapis';
