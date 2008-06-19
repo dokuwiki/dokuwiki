@@ -258,6 +258,12 @@ function tpl_metaheaders($alt=true){
     $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
                              'title'=>'Current Namespace',
                              'href'=>DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']);
+    if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']){
+        $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/wiki',
+                                 'title'=>$lang['btn_index'],
+                                 'href'=> wl($ID,'do=edit',false,'&'));
+    }
+
     if($ACT == 'search'){
       $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
                                'title'=>'Search Result',
