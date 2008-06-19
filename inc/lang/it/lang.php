@@ -9,6 +9,7 @@
  * @author Diego Pierotto <ita.translations@tiscali.it>
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
+ * @author Lorenzo Breda <lbreda@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -111,6 +112,7 @@ $lang['namespaces']            = 'Categorie';
 $lang['mediafiles']            = 'File disponibili in';
 $lang['js']['keepopen']        = 'Tieni la finestra aperta durante la selezione';
 $lang['js']['hidedetails']     = 'Nascondi Dettagli';
+$lang['js']['mu_btn']          = 'Carica più di un file alla volta';
 $lang['mediausage']            = 'Usa la seguente sintassi per riferirti a questo file:';
 $lang['mediaview']             = 'Mostra file originale';
 $lang['mediaroot']             = 'directory principale';
@@ -208,3 +210,16 @@ $lang['i_pol0']                = 'Wiki Aperto (lettura, scrittura, caricamento f
 $lang['i_pol1']                = 'Wiki Pubblico (lettura per tutti, scrittura e caricamento file per gli utenti registrati)';
 $lang['i_pol2']                = 'Wiki Chiuso (lettura, scrittura, caricamento file solamente per gli utenti registrati)';
 $lang['i_retry']               = 'Riprova';
+$lang['mu_intro']              = 'Qui si possono caricare più di un file alla volta. Cliccare su "Sfoglia..." per aggiungere i file in coda. Cliccare "Carica" quando si è pronti.';
+$lang['mu_gridname']           = 'Nome del file';
+$lang['mu_gridsize']           = 'Dimensione';
+$lang['mu_gridstat']           = 'Stato';
+$lang['mu_namespace']          = 'Namespace';
+$lang['mu_browse']             = 'Sfoglia...';
+$lang['mu_toobig']             = 'troppo grande';
+$lang['mu_ready']              = 'pronto per l\'upload';
+$lang['mu_done']               = 'completo';
+$lang['mu_fail']               = 'fallito';
+$lang['mu_authfail']           = 'sessione scaduta';
+$lang['mu_progress']           = '@PCT@% caricato';
+$lang['mu_filetypes']          = 'Tipi di file permessi';

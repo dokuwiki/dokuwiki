@@ -8,6 +8,7 @@
  * @author Pietro Battiston toobaz@email.it
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
+ * @author Lorenzo Breda <lbreda@gmail.com>
  */
 $lang['menu']                  = 'Gestione Plugin';
 $lang['download']              = 'Scarica e installa un nuovo plugin';

@@ -8,6 +8,7 @@
  * @author Pietro Battiston toobaz@email.it
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
+ * @author Lorenzo Breda <lbreda@gmail.com>
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
 $lang['acl_group']             = 'Gruppo';
