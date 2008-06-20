@@ -260,7 +260,7 @@ function tpl_metaheaders($alt=true){
                              'href'=>DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']);
     if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']){
         $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/wiki',
-                                 'title'=>$lang['btn_index'],
+                                 'title'=>$lang['btn_edit'],
                                  'href'=> wl($ID,'do=edit',false,'&'));
     }
 
