@@ -4,13 +4,15 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/09/01
  *
  * XML language file for GeSHi. Based on the idea/file by Christian Weiske
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2005/12/28 (1.0.2)
  *   -  Removed escape character for strings
  * 2004/11/27 (1.0.1)
@@ -97,21 +99,21 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
-		0 => array(
+		0 => array(//attribute names
 			GESHI_SEARCH => '([a-z_\-:]+)(=)',
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => 'i',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => '\\2'
 			),
-		1 => array(
+		1 => array(//Initial header line
 			GESHI_SEARCH => '(&lt;[/?|(\?xml)]?[a-z0-9_\-:]*(\??&gt;)?)',
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => 'i',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-		2 => array(
+		2 => array(//Tag end markers
 			GESHI_SEARCH => '(([/|\?])?&gt;)',
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => 'i',
@@ -140,7 +142,7 @@ $language_data = array (
 		2 => false,
 		3 => true
         ),
-    'TAB_WIDTH' => 4
+    'TAB_WIDTH' => 2
 );
 
 ?>

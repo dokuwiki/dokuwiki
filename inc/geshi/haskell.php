@@ -4,7 +4,7 @@
  * ----------
  * Author: Jason Dagit (dagit@codersbase.com) based on ocaml.php by Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2005/08/27
  *
  * Haskell language file for GeSHi.
@@ -41,6 +41,7 @@ $language_data = array (
     'LANG_NAME' => 'Haskell',
     'COMMENT_SINGLE' => array( 1 => '--'),
     'COMMENT_MULTI' => array('{-' => '-}'),
+    'COMMENT_REGEXP' => array(2 => "/-->/"),
     'CASE_KEYWORDS' => 0,
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => "\\",
@@ -120,10 +121,10 @@ $language_data = array (
         ),
     /* highlighting symbols is really important in Haskell */
     'SYMBOLS' => array(
-           '|', '->', '<-', '@', '!', '::', '_', '~', '=',
+           '|', '->', '<-', '@', '!', '::', '_', '~', '=', '?',
            '&&', '||', '==', '/=', '<', '<=', '>',
-           '>=','+', '-', '*','/',  '**', '^', '^^',
-           '>>=', '>>', '=<<',  '$', '.',  '$!',
+           '>=','+', '-', '*','/', '%', '**', '^', '^^',
+           '>>=', '>>', '=<<',  '$', '.', ',', '$!',
            '++', '!!'
             ),
     'CASE_SENSITIVE' => array(
@@ -144,9 +145,11 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color: #5d478b; font-style: italic;',
+            2 => 'color: #339933; font-weight: bold;',
             'MULTI' => 'color: #5d478b; font-style: italic;' /* light purpHle */
             ),
         'ESCAPE_CHAR' => array(
+            0 => 'background-color: #3cb371; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: green;'
@@ -163,7 +166,7 @@ $language_data = array (
         'REGEXPS' => array(
             ),
         'SYMBOLS' => array(
-            0 => 'color: #66cc66; font-weight: bold;'
+            0 => 'color: #339933; font-weight: bold;'
             ),
         'SCRIPT' => array(
             )

@@ -4,13 +4,15 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2007/09/05 (1.0.7.21)
  *  -  PARSER_CONTROL patch using SF #1788408 (BenBE)
  * 2007/06/11 (1.0.7.20)
@@ -54,6 +56,12 @@ $language_data = array (
     // 1564839)
 	'COMMENT_SINGLE' => array('#'),
 	'COMMENT_MULTI' => array(),
+	'COMMENT_REGEXP' => array(
+        //Variables
+        1 => "/\\$\\{[^\\n\\}]*?\\}/i",
+        //BASH-style Heredoc
+        2 => '/<<-?\s*?([\'"]?)([a-zA-Z0-9]+)\1;[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU'
+        ),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '\\',
@@ -131,7 +139,7 @@ $language_data = array (
 			)
 		),
 	'SYMBOLS' => array(
-		'(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;'
+		'(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;', '`'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
@@ -146,7 +154,9 @@ $language_data = array (
 			3 => 'color: #7a0874; font-weight: bold;'
 			),
 		'COMMENTS' => array(
-			0 => 'color: #808080; font-style: italic;'
+			0 => 'color: #666666; font-style: italic;',
+			1 => 'color: #800000;',
+			2 => 'color: #cc0000; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
@@ -184,10 +194,13 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
+        //Variables (will be handled by comment_regexps)
 		0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
+		//Variables without braces
 		1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
+		//Variable assignment
 		2 => "([a-zA-Z_][a-zA-Z0-9_]*)=",
-//		3 => "(?<!\\$)#[^\n]*",
+		//Shorthand shell variables
 		4 => "\\$[*#\$\\-\\?!]"
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
@@ -195,9 +208,13 @@ $language_data = array (
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
 		),
+    'TAB_WIDTH' => 4,
 	'PARSER_CONTROL' => array(
 	    'COMMENTS' => array(
 	       'DISALLOWED_BEFORE' => '$'
+        ),
+        'KEYWORDS' => array(
+            'DISALLOWED_BEFORE' => "\-a-zA-Z0-9\$_\|\#>|^",
         )
     )
 );

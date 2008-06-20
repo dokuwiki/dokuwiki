@@ -1,16 +1,13 @@
 <?php
 /*************************************************************************************
- * robots.php
+ * gettext.php
  * --------
- * Author: Christian Lescuyer (cl@goelette.net)
- * Copyright: (c) 2006 Christian Lescuyer http://xtian.goelette.info
+ * Author: Milian Wolff (mail@milianw.de)
+ * Copyright: (c) 2008 Milian Wolff
  * Release Version: 1.0.7.22
- * Date Started: 2006/02/17
+ * Date Started: 2008/05/25
  *
- * robots.txt language file for GeSHi.
- *
- * 2006/02/17 (1.0.0)
- *   -  First Release
+ * GNU Gettext .po/.pot language file for GeSHi.
  *
  *************************************************************************************
  *
@@ -33,66 +30,41 @@
  ************************************************************************************/
 
 $language_data = array (
-    'LANG_NAME' => 'robots.txt',
-    'COMMENT_SINGLE' => array(1 => '#'),
+    'LANG_NAME' => 'GNU Gettext',
+    'COMMENT_SINGLE' => array('#:', '#.', '#'),
     'COMMENT_MULTI' => array(),
+    'COMMENT_REGEXP' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array(),
-    'ESCAPE_CHAR' => '',
+    'QUOTEMARKS' => array("'", '"'),
+    'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-        1 => array(
-            'User-agent', 'Disallow'
-            )
-        ),
-    'SYMBOLS' => array(
-        ':'
-        ),
+        1 => array('msgid', 'msgstr'),
+    ),
+    'SYMBOLS' => array(),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => true
-        ),
+        1 => true,
+    ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #b1b100;'
-            ),
+            1 => 'color: #000000; font-weight: bold;'
+        ),
         'COMMENTS' => array(
-            1 => 'color: #808080; font-style: italic;',
-            ),
+            0 => 'color: #000099;',
+            1 => 'color: #000099;',
+            2 => 'color: #666666; font-style: italic;',
+        ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-            ),
-        'BRACKETS' => array(
-            0 => 'color: #66cc66;'
-            ),
+        ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
-            ),
-        'NUMBERS' => array(
-            0 => 'color: #cc66cc;'
-            ),
-        'METHODS' => array(
-            ),
-        'SYMBOLS' => array(
-            0 => 'color: #66cc66;'
-            ),
-        'REGEXPS' => array(
-            ),
-        'SCRIPT' => array(
-            )
         ),
-    'URLS' => array(
-        1 => 'http://www.robotstxt.org/wc/norobots.html'
-        ),
+    ),
     'OOLANG' => false,
-    'OBJECT_SPLITTERS' => array(
-        ),
-    'REGEXPS' => array(
-        ),
+    'REGEXPS' => array(),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
-    'SCRIPT_DELIMITERS' => array(
-        ),
-    'HIGHLIGHT_STRICT_BLOCK' => array(
-        )
+    'TAB_WIDTH' => 4,
 );
 
 ?>

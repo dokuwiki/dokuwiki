@@ -1,22 +1,21 @@
 <?php
 /*************************************************************************************
- * div.php
- * ---------------------------------
- * Author: Gabriel Lorenzo (ermakina@gmail.com)
- * Copyright: (c) 2005 Gabriel Lorenzo (http://ermakina.gazpachito.net)
+ * scala.php
+ * ----------
+ * Author: Franco Lombardo (franco@francolombardo.net)
+ * Copyright: (c) 2008 Franco Lombardo, Benny Baumann
  * Release Version: 1.0.7.22
- * Date Started: 2005/06/19
+ * Date Started: 2008/02/08
  *
- * DIV language file for GeSHi.
+ * Scala language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/06/22 (1.0.0)
- *  -  First Release, includes "2nd gen" ELSEIF statement
+ * 2008/02/08 (1.0.7.22)
+ *   -  First Release
  *
- * TODO (updated 2005/06/22)
+ * TODO (updated 2007/04/27)
  * -------------------------
- *  -  I'm pretty satisfied with this, so nothing for now... :P
  *
  *************************************************************************************
  *
@@ -38,82 +37,83 @@
  *
  ************************************************************************************/
 
+
 $language_data = array (
-	'LANG_NAME' => 'DIV',
+	'LANG_NAME' => 'Scala',
 	'COMMENT_SINGLE' => array(1 => '//'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
-	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
+	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '',
+	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
 		1 => array(
-			'while','until','to','switch','step','return','repeat','loop','if','from','frame','for','end','elseif',
-			'else','default','debug','continue','clone','case','break','begin'
-			),
+			'abstract', 'case', 'catch', 'class', 'def',
+			'do', 'else', 'extends', 'false', 'final',
+			'finally', 'for', 'forSome', 'if', 'implicit',
+			'import', 'match', 'new', 'null', 'object',
+			'override', 'package', 'private', 'protected', 'requires',
+			'return', 'sealed', 'super', 'this', 'throw',
+			'trait', 'try', 'true', 'type', 'val',
+			'var', 'while', 'with', 'yield'
+ 		    ),
 		2 => array(
-			'xor','whoami','type','sizeof','pointer','or','offset','not','neg','mod','id','dup','and','_ne','_lt',
-			'_le','_gt','_ge','_eq'
-			),
-		3 => array(
-			'setup_program','program','process','private','local','import','global','function','const',
-			'compiler_options'
-			),
-		4 => array(
-			'word','struct','string','int','byte'
-			),
+			'void', 'double', 'int', 'boolean', 'byte', 'short', 'long', 'char', 'float'
+			)
 		),
 	'SYMBOLS' => array(
-		'(',')','[',']','=','+','-','*','/','!','%','^','&',':',';',',','<','>'
+		'(', ')', '[', ']', '{', '}', '*', '&', '%', '!', ';', '<', '>', '?',
+		'_', ':', '=', '=>', '<<:',
+		'<%', '>:', '#', '@'
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
+		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
-		3 => false,
-		4 => false,
+		3 => true,
+		4 => true
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #0040b1;',
-			2 => 'color: #000000;',
-			3 => 'color: #000066; font-weight: bold;',
-			4 => 'color: #993333;'
+			1 => 'color: #0000ff; font-weight: bold;',
+			2 => 'color: #9999cc; font-weight: bold;',
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
+			1=> 'color: #008000; font-style: italic;',
+			2=> 'color: #008000; font-style: italic;',
+			'MULTI' => 'color: #00ff00; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
-			0 => ''
+			0 => 'color: #0000ff; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #44aa44;'
+			0 => 'color: #F78811;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #ff0000;'
+			0 => 'color: #6666FF;'
 			),
 		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
+			0 => 'color: #F78811;'
 			),
 		'METHODS' => array(
-			0 => 'color: #202020;',
+			1 => 'color: #000000;',
+			2 => 'color: #000000;'
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #44aa44;'
-			),
-		'REGEXPS' => array(
+			0 => 'color: #000080;'
 			),
 		'SCRIPT' => array(
+			),
+		'REGEXPS' => array(
 			)
 		),
 	'URLS' => array(
-		1 => '',
-		2 => '',
-		3 => '',
-		4 => ''
+		1 => 'http://scala-lang.org',
+		2 => ''
 		),
-	'OOLANG' => false,
-	'OBJECT_SPLITTER' => '',
+	'OOLANG' => true,
+	'OBJECT_SPLITTERS' => array(
+		1 => '.'
+		),
 	'REGEXPS' => array(
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

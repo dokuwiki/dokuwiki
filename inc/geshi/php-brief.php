@@ -4,13 +4,15 @@
  * -------------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/06/02
  *
  * PHP language file for GeSHi (brief version).
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.3)
  *  -  Added support for multiple object splitters
  *  -  Fixed &new problem
@@ -49,6 +51,8 @@ $language_data = array (
 	'LANG_NAME' => 'PHP',
 	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
+	//Heredoc and Nowdoc syntax
+	'COMMENT_REGEXP' => array(3 => '/<<<\s*?(\'?)([a-zA-Z0-9]+)\1[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU'),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '\\',
@@ -97,31 +101,32 @@ $language_data = array (
 		'KEYWORDS' => array(
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
-			3 => 'color: #000066;'
+			3 => 'color: #990000;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			2 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
+			1 => 'color: #666666; font-style: italic;',
+			2 => 'color: #666666; font-style: italic;',
+			3 => 'color: #0000cc; font-style: italic;',
+			'MULTI' => 'color: #666666; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #009900;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #ff0000;'
+			0 => 'color: #0000ff;'
 			),
 		'NUMBERS' => array(
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
-			1 => 'color: #006600;',
-			2 => 'color: #006600;'
+			1 => 'color: #004000;',
+			2 => 'color: #004000;'
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #339933;'
 			),
 		'REGEXPS' => array(
 			0 => 'color: #0000ff;'
@@ -145,6 +150,7 @@ $language_data = array (
 		2 => '::'
 		),
 	'REGEXPS' => array(
+        //Variables
 		0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
 		),
 	'STRICT_MODE_APPLIES' => GESHI_MAYBE,

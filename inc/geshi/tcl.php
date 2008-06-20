@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Reid van Melle (rvanmelle@gmail.com)
  * Copyright: (c) 2004 Reid van Melle (sorry@nowhere)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/05/05
  *
  * TCL/iTCL language file for GeSHi.
@@ -16,12 +16,14 @@
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2006/05/05 (1.0.0)
  *  -  First Release
  *
  * TODO (updated 2006/05/05)
  * -------------------------
- * - Get TCL built-in special variables hilighted with a new color..
+ * - Get TCL built-in special variables highlighted with a new color..
  *   currently, these are listed in //special variables in the keywords
  *   section, but they get covered by the general REGEXP for symbols
  * - General cleanup, testing, and verification
@@ -169,6 +171,7 @@ $language_data = array (
 		1 => '::'
 		),
 	'REGEXPS' => array(
+        //Special variables
 		0 => '[\\$]+[a-zA-Z_][a-zA-Z0-9_]*',
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

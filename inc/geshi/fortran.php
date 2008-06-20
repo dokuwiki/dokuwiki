@@ -4,13 +4,15 @@
  * -----------
  * Author: Cedric Arrabie (cedric.arrabie@univ-pau.fr)
  * Copyright: (C) 2006 Cetric Arrabie
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/04/22
  *
  * Fortran language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2006/04/20 (1.0.0)
  *   -  First Release
  *
@@ -43,6 +45,8 @@ $language_data = array (
 	'LANG_NAME'=>'Fortran',
 	'COMMENT_SINGLE'=> array(1 =>'!',2=>'Cf2py'),
 	'COMMENT_MULTI'=> array(),
+	//Fortran Comments
+	'COMMENT_REGEXP' => array(1 => '/^C.*?$/mi'),
 	'CASE_KEYWORDS'=> GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS'=> array("'",'"'),
 	'ESCAPE_CHAR'=>'\\',
@@ -105,7 +109,7 @@ $language_data = array (
 			4 =>'color: #993333;'
 			),
 		'COMMENTS'=> array(
-			1 =>'color: #808080; font-style: italic;',
+			1 =>'color: #666666; font-style: italic;',
 			2 =>'color: #339933;',
 			'MULTI'=>'color: #808080; font-style: italic;'
 			),
@@ -113,7 +117,7 @@ $language_data = array (
 			0 =>'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS'=> array(
-			0 =>'color: #66cc66;'
+			0 =>'color: #009900;'
 			),
 		'STRINGS'=> array(
 			0 =>'color: #ff0000;'
@@ -126,7 +130,7 @@ $language_data = array (
 			2 =>'color: #202020;'
 			),
 		'SYMBOLS'=> array(
-			0 =>'color: #66cc66;'
+			0 =>'color: #339933;'
 			),
 		'REGEXPS'=> array(
 			),

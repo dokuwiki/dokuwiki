@@ -4,16 +4,17 @@
  * --------
  * Author: Conny Brunnkvist (conny@fuchsia.se), W. Tasin (tasin@fhm.edu)
  * Copyright: (c) 2004 Fuchsia Open Source Solutions (http://www.fuchsia.se/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/12/29
  *
  * Diff-output language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2006/02/27
  *  -  changing language file to use matching of start (^) and end ($) (wt)
- *
  * 2004/12/29 (1.0.0)
  *  -  First Release
  *
@@ -109,71 +110,80 @@ $language_data = array (
 	'OOLANG' => false,
 	'OBJECT_SPLITTER' => '',
 	'REGEXPS' => array(
-			0 => "[0-9,]+[acd][0-9,]+",
-			1 => array(
+		0 => "[0-9,]+[acd][0-9,]+",
+		//Removed lines
+		1 => array(
 			GESHI_SEARCH => '^\\&lt;.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			2 => array(
+		//Inserted lines
+		2 => array(
 			GESHI_SEARCH => '^\\&gt;.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			3 => array(
+		//Location line
+		3 => array(
 			GESHI_SEARCH => '^[\\-]{3}\\s.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			4 => array(
+		//Inserted line
+		4 => array(
 			GESHI_SEARCH => '^(\\+){3}\\s.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			5 => array(
+		//Modified line
+		5 => array(
 			GESHI_SEARCH => '^\\!.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			6 => array(
+		//File specification
+		6 => array(
 			GESHI_SEARCH => '^[\\@]{2}.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			7 => array(
+		//Removed line
+		7 => array(
 			GESHI_SEARCH => '^\\-.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			8 => array(
+		//Inserted line
+		8 => array(
 			GESHI_SEARCH => '^\\+.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-			9 => array(
+		//File specification
+		9 => array(
 			GESHI_SEARCH => '^(\\*){3}\\s.*$',
 			GESHI_REPLACE => '\\0',
 			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),
-	),
+		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(
 		),

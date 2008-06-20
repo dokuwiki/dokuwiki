@@ -4,7 +4,7 @@
  * ----------
  * Author: Ivan F. Villanueva B. (geshi_groovy@artificialidea.com)
  * Copyright: (c) 2006 Ivan F. Villanueva B.(http://www.artificialidea.com)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/04/29
  *
  * Groovy language file for GeSHi.
@@ -13,6 +13,8 @@
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2006/04/29 (1.0.0)
  *   -  First Release
  *
@@ -2105,6 +2107,7 @@ $language_data = array (
 		1 => '.'
 		),
 	'REGEXPS' => array(
+        //Variables
 		0 => '\\$\\{[a-zA-Z_][a-zA-Z0-9_]*\\}'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

@@ -4,7 +4,7 @@
  * -----
  * Author: efi, Matthias Pospiech (mail@matthiaspospiech.de)
  * Copyright: (c) 2006 efi, Matthias Pospiech (mail@matthiaspospiech.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/09/23
  *
  * LaTeX language file for GeSHi.
@@ -69,16 +69,19 @@ $language_data = array (
             1 => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
+            0 =>  'color: #000000; font-weight: bold;'
             ),
         'BRACKETS' => array(
             ),
         'STRINGS' => array(
+            0 =>  'color: #000000;'
             ),
         'NUMBERS' => array(
             ),
         'METHODS' => array(
             ),
         'SYMBOLS' => array(
+            1 =>  'color: #800000; font-weight: bold;'
             ),
         'REGEXPS' => array(
             1 => 'color: #00A000; font-weight: bold;',  // Math inner
@@ -92,6 +95,7 @@ $language_data = array (
             //9 => 'color: #F00000; font-weight: normal;',  // Structure
             10 => 'color: #0000D0; font-weight: bold;',  // Environment
             11 => 'color: #0000D0; font-weight: bold;',  // Environment
+            12 => 'color: #800000; font-weight: normal;', // Escaped char
         ),
         'SCRIPT' => array(
             )
@@ -138,7 +142,7 @@ $language_data = array (
         5 => array(
             GESHI_SEARCH => "(\\$)(.+)(\\$)",
             GESHI_REPLACE => '\1\2\3',
-            GESHI_MODIFIERS => '',
+            GESHI_MODIFIERS => 'U',
             GESHI_BEFORE => '',
             GESHI_AFTER => ''
             ),
@@ -166,26 +170,36 @@ $language_data = array (
             GESHI_BEFORE => '',
             GESHI_AFTER => '\\3'
             ),
-// Structure: sections
-/*9 => array(
+        // Structure: sections
+        /*9 => array(
             GESHI_SEARCH => "(\\\\)(part|chapter|section|subsection|subsubsection|paragraph|subparagraph)(?=[^a-zA-Z])",
             GESHI_REPLACE => '\1\\2',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '',
             GESHI_AFTER => '\\3'
             ),*/
-// environment begin
-10 => array(
+
+        // environment begin
+        10 => array(
             GESHI_SEARCH => "(\\\\begin)(\\{)(.*)(\\})",
             GESHI_REPLACE => '\\3',
-            GESHI_MODIFIERS => '',
+            GESHI_MODIFIERS => 'U',
             GESHI_BEFORE => '',
             GESHI_AFTER => ''
             ),
-// environment end
-11 => array(
+        // environment end
+        11 => array(
             GESHI_SEARCH => "(\\\\end)(\\{)(.*)(\\})",
             GESHI_REPLACE => '\\3',
+            GESHI_MODIFIERS => 'U',
+            GESHI_BEFORE => '',
+            GESHI_AFTER => ''
+            ),
+
+        // environment end
+        12 => array(
+            GESHI_SEARCH => "(\\\\[_$%])",
+            GESHI_REPLACE => '\\1',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '',
             GESHI_AFTER => ''
@@ -197,7 +211,12 @@ $language_data = array (
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
+	'PARSER_CONTROL' => array(
+	    'COMMENTS' => array(
+	       'DISALLOWED_BEFORE' => '\\'
         )
+    )
 );
 
 ?>

@@ -4,13 +4,15 @@
  * ----------
  * Author: Tux (tux@inamil.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/07/26
  *
  * Pascal language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.2)
  *  -  Added support for multiple object splitters
  * 2004/10/27 (1.0.1)
@@ -54,27 +56,29 @@ $language_data = array (
 	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
 		1 => array(
-			'if', 'while', 'until', 'repeat', 'default',
-			'do', 'else', 'for', 'switch', 'goto','label','asm','begin','end',
-			'assembler','case', 'downto', 'to','div','mod','far','forward','in','inherited',
-			'inline','interrupt','label','library','not','var','of','then','stdcall',
-			'cdecl','end.','raise','try','except','name','finally','resourcestring','override','overload',
-			'default','public','protected','private','property','published','stored','catch'
+			'absolute','asm','assembler','begin','break','case','catch','cdecl',
+            'const','constructor','default','destructor','div','do','downto',
+            'else','end','except','export','exports','external','far',
+            'finalization','finally','for','forward','function','goto','if',
+            'implementation','in','index','inherited','initialization','inline',
+            'interface','interrupt','label','library','mod','name','not','of',
+            'or','overload','override','private','procedure','program',
+            'property','protected','public','published','raise','repeat',
+            'resourcestring','shl','shr','stdcall','stored','switch','then',
+            'to','try','type','unit','until','uses','var','while','xor'
 			),
 		2 => array(
-			'nil', 'false', 'break', 'true', 'function', 'procedure','implementation','interface',
-			'unit','program','initialization','finalization','uses'
+			'nil', 'false', 'true',
 			),
 		3 => array(
-			'abs', 'absolute','and','arc','arctan','chr','constructor','destructor',
-			'dispose','cos','eof','eoln','exp','get','index','ln','new','xor','write','writeln',
-			'shr','sin','sqrt','succ','pred','odd','read','readln','ord','ordinal','blockread','blockwrite'
+			'abs','and','arc','arctan','blockread','blockwrite','chr','dispose',
+            'cos','eof','eoln','exp','get','ln','new','odd','ord','ordinal',
+            'pred','read','readln','sin','sqrt','succ','write','writeln'
 			),
 		4 => array(
-			'array', 'char', 'const', 'boolean',  'real', 'integer', 'longint',
-			'word', 'shortint', 'record','byte','bytebool','string',
-			'type','object','export','exports','external','file','longbool','pointer','set',
-			'packed','ansistring','union'
+			'ansistring','array','boolean','byte','bytebool','char','file',
+            'integer','longbool','longint','object','packed','pointer','real',
+            'record','set','shortint','smallint','string','union','word'
 			),
 		),
 	'SYMBOLS' => array(
@@ -88,21 +92,21 @@ $language_data = array (
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #b1b100;',
+			1 => 'color: #000000; font-weight: bold;',
 			2 => 'color: #000000; font-weight: bold;',
-			3 => '',
-			4 => 'color: #993333;'
+			3 => 'color: #000066;',
+			4 => 'color: #000066; font-weight: bold;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
+			1 => 'color: #666666; font-style: italic;',
 			2 => 'color: #339933;',
-			'MULTI' => 'color: #808080; font-style: italic;'
+			'MULTI' => 'color: #666666; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #009900;'
 			),
 		'STRINGS' => array(
 			0 => 'color: #ff0000;'
@@ -114,7 +118,7 @@ $language_data = array (
 			1 => 'color: #202020;'
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #339933;'
 			),
 		'REGEXPS' => array(
 			),

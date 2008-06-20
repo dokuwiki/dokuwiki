@@ -4,7 +4,7 @@
  * ------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/08/30
  *
  * Visual Basic language file for GeSHi.
@@ -38,7 +38,8 @@
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  ************************************************************************************/
- $language_data = array (
+
+$language_data = array (
 	'LANG_NAME' => 'Visual Basic',
 	'COMMENT_SINGLE' => array(1 => "'"),
 	'COMMENT_MULTI' => array(),

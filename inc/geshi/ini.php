@@ -4,13 +4,15 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br)
  * Copyright: (c) 2005 deguix
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2005/03/27
  *
  * INI language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2005/12/28 (1.0.1)
  *   -  Removed unnecessary keyword style index
  *   -  Added support for " strings
@@ -94,19 +96,22 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
+        //Section names
 		0 => '\[.+\]',
+		//Entry names
 		1 => array(
-			GESHI_SEARCH => '([a-zA-Z0-9_]+\s*)=(.+)',
-			GESHI_REPLACE => '\\1',
-			GESHI_MODIFIERS => '',
-			GESHI_BEFORE => '',
-			GESHI_AFTER => '=\\2'
+			GESHI_SEARCH => '^(\s*)([a-zA-Z0-9_]+)(\s*=)',
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => 'm',
+			GESHI_BEFORE => '\\1',
+			GESHI_AFTER => '\\3'
 			),
+        //Entry values
 		2 => array(
             // Evil hackery to get around GeSHi bug: <>" and ; are added so <span>s can be matched
             // Explicit match on variable names because if a comment is before the first < of the span
             // gets chewed up...
-			GESHI_SEARCH => '([<>";a-zA-Z0-9_]+\s*)=(.+)',
+			GESHI_SEARCH => '([<>";a-zA-Z0-9_]+\s*)=(.*)',
 			GESHI_REPLACE => '\\2',
 			GESHI_MODIFIERS => '',
 			GESHI_BEFORE => '\\1=',

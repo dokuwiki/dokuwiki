@@ -4,10 +4,17 @@
  * --------
  * Author: Moises Deniz
  * Copyright: (c) 2007 Moises Deniz
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2007/03/21
  *
  * Ruby language file for GeSHi
+ *
+ * CHANGES
+ * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
+ * 2007/03/21 (1.0.7.19)
+ *   -  Initial release
  *
  *************************************************************************************
  *
@@ -121,7 +128,7 @@ $language_data = array (
         ),
     'SYMBOLS' => array(
         '(', ')', '[', ']', '{', '}', '%', '&', '*', '|', '/', '<', '>',
-        '+', '-', '=&gt;', '=>', '<<'
+        '+', '-', '=>', '<<'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -139,7 +146,7 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color:#008000; font-style:italic;',
-                    'MULTI' => 'color:#000080; font-style:italic;'
+            'MULTI' => 'color:#000080; font-style:italic;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color:#000099;'
@@ -181,21 +188,21 @@ $language_data = array (
         1 => '.'
         ),
     'REGEXPS' => array(
-        0 => array(
+        0 => array(//Variables
             GESHI_SEARCH => "([[:space:]])(\\$[a-zA-Z_][a-zA-Z0-9_]*)",
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => ''
             ),
-        1 => array(
+        1 => array(//Arrays
             GESHI_SEARCH => "([[:space:]])(@[a-zA-Z_][a-zA-Z0-9_]*)",
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => ''
             ),
-        2 => "([A-Z][a-zA-Z0-9_]*::)+[A-Z][a-zA-Z0-9_]*",
+        2 => "([A-Z][a-zA-Z0-9_]*::)+[A-Z][a-zA-Z0-9_]*",//Static OOP symbols
         3 => array(
             GESHI_SEARCH => "([[:space:]]|\[|\()(:[a-zA-Z_][a-zA-Z0-9_]*)",
             GESHI_REPLACE => '\\2',

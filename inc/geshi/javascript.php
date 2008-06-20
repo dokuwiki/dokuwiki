@@ -4,13 +4,15 @@
  * --------------
  * Author: Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2004 Ben Keen (ben.keen@gmail.com), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/06/20
  *
  * JavaScript language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.1)
  *  -  Added support for multiple object splitters
  * 2004/10/27 (1.0.0)
@@ -43,6 +45,8 @@ $language_data = array (
   'LANG_NAME' => 'Javascript',
   'COMMENT_SINGLE' => array(1 => '//'),
   'COMMENT_MULTI' => array('/*' => '*/'),
+  //Regular Expressions
+  'COMMENT_REGEXP' => array(2 => "/(?<=[\\s^])s\\/(?:\\\\.|[^\\/\\\\])+\\/(?:\\\\.|[^\\/\\\\])+\\/[gimsu]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])m?\\/(?:\\\\.|[^\\/\\\\])+\\/[gimsu]*(?=[\\s$\\.\\,\\;\\)])/iU"),
   'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
   'QUOTEMARKS' => array("'", '"'),
   'ESCAPE_CHAR' => '\\',
@@ -68,7 +72,11 @@ $language_data = array (
       )
     ),
   'SYMBOLS' => array(
-    '(', ')', '[', ']', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>'
+    '(', ')', '[', ']', '{', '}',
+    '+', '-', '*', '/', '%',
+    '!', '@', '&', '|', '^',
+    '<', '>', '=',
+    ',', ';', '?', ':'
     ),
   'CASE_SENSITIVE' => array(
     GESHI_COMMENTS => false,
@@ -83,14 +91,15 @@ $language_data = array (
       3 => 'color: #000066;'
       ),
     'COMMENTS' => array(
-      1 => 'color: #009900; font-style: italic;',
-      'MULTI' => 'color: #009900; font-style: italic;'
+      1 => 'color: #006600; font-style: italic;',
+      2 => 'color: #009966; font-style: italic;',
+      'MULTI' => 'color: #006600; font-style: italic;'
       ),
     'ESCAPE_CHAR' => array(
       0 => 'color: #000099; font-weight: bold;'
       ),
     'BRACKETS' => array(
-      0 => 'color: #66cc66;'
+      0 => 'color: #009900;'
       ),
     'STRINGS' => array(
       0 => 'color: #3366CC;'
@@ -102,10 +111,9 @@ $language_data = array (
       1 => 'color: #006600;'
       ),
     'SYMBOLS' => array(
-      0 => 'color: #66cc66;'
+      0 => 'color: #339933;'
       ),
     'REGEXPS' => array(
-      0 => 'color: #0066FF;'
       ),
     'SCRIPT' => array(
       0 => '',
@@ -124,7 +132,6 @@ $language_data = array (
   	1 => '.'
 	),
   'REGEXPS' => array(
-    0 => "/.*/([igm]*)?"         // matches js reg exps
     ),
   'STRICT_MODE_APPLIES' => GESHI_MAYBE,
   'SCRIPT_DELIMITERS' => array(

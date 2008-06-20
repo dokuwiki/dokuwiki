@@ -4,20 +4,23 @@
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 03/15/2006
  *
  * Microsoft Registry Editor Language File.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
+ *  -  Updated and optimized most regular expressions
  * 03/15/2006 (0.5.0)
  *  -  Syntax File Created
  * 04/27/2006 (0.9.5)
- *  - Syntax Coloring Cleaned Up
- *  - First Release
+ *  -  Syntax Coloring Cleaned Up
+ *  -  First Release
  * 04/29/2006 (1.0.0)
- *  - Updated a few coloring settings
+ *  -  Updated a few coloring settings
  *
  * TODO (updated 4/27/2006)
  * -------------------------
@@ -77,23 +80,39 @@ $language_data = array (
 			'HKLM', 'HKCR', 'HKCU', 'HKU', 'HKCC', 'HKDD'
 			)/***/
 		),
-	'SYMBOLS' => array( ),
+	'SYMBOLS' => array(
+        '='
+        ),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false
 		),
 	'STYLES' => array(
-		'KEYWORDS' => array( 1 => 'color: #00CCFF;',
-			 				 2 => 'color: #0000FF;' ),
-		'COMMENTS' => array( 1 => 'color: #009900;' ),
-		'ESCAPE_CHAR' => array(),
-		'BRACKETS' => array(0 => 'color: #000000;'),
-		'STRINGS' => array( 0 => 'color: #009900;' ),
-		'NUMBERS' => array(),
-		'METHODS' => array(),
-		'SYMBOLS' => array(0 => 'color: #000000;'),
-		'SCRIPT' => array(),
+		'KEYWORDS' => array(
+            1 => 'color: #00CCFF;',
+			2 => 'color: #0000FF;'
+            ),
+		'COMMENTS' => array(
+            1 => 'color: #009900;'
+            ),
+		'ESCAPE_CHAR' => array(
+            ),
+		'BRACKETS' => array(
+            0 => 'color: #000000;'
+            ),
+		'STRINGS' => array(
+            0 => 'color: #009900;'
+            ),
+		'NUMBERS' => array(
+            ),
+		'METHODS' => array(
+            ),
+		'SYMBOLS' => array(
+            0 => 'color: #000000;'
+            ),
+		'SCRIPT' => array(
+            ),
 		'REGEXPS' => array(
 			0 => '',
 			1 => 'color: #0000FF;',
@@ -103,8 +122,7 @@ $language_data = array (
 			5 => '',
 		 	6 => '',
 		 	7 => '',
-		 	8 => '',
-		 	9 => 'color: #FF6600;',
+		 	8 => 'color: #FF6600;',
 			)
 		),
 	'OOLANG' => false,
@@ -122,81 +140,72 @@ $language_data = array (
 			),
 		// Highlight File Format Header Version 5
 		1 => array(
-			GESHI_SEARCH => '((\\n|^)\\s*)(Windows Registry Editor Version [0-9]+(.)+([0-9]+))((\\n|$)\\s*)',
-			GESHI_REPLACE => '\\3',
-			GESHI_MODIFIERS => '',
+			GESHI_SEARCH => '(^\s*)(Windows Registry Editor Version \d+\.\d+)(\s*$)',
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
-			GESHI_AFTER => '\\6',
+			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'geshi_registry_header'
 			),
 		// Highlight File Format Header Version 4
 		2 => array(
-			GESHI_SEARCH => '((\\n|^)\\s*)(REGEDIT [0-9]+)(\\s*(\\n|$))',
-			GESHI_REPLACE => '\\3',
-			GESHI_MODIFIERS => '',
+			GESHI_SEARCH => '(^\\s*)(REGEDIT\s?\d+)(\s*$)',
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
-			GESHI_AFTER => '\\4',
+			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'geshi_registry_header'
 			),
 		// Highlight dword: 32 bit integer values
 		3 => array(
-			GESHI_SEARCH => '(=\\s*)(dword:[0-9]{8})(\\s*(\\n|$))',
+			GESHI_SEARCH => '(=\s*)(dword:[0-9a-fA-F]{8})(\s*$)',
 			GESHI_REPLACE => '\\2',
-			GESHI_MODIFIERS => '',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
 			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'kw2'
 			),
 		// Highlight variable names
 		4 => array(
-			GESHI_SEARCH => '((\\n|^)\\s*\\&quot\\;)(.*)(\\&quot\\;\\s*=)',
-			GESHI_REPLACE => '\\3',
-			GESHI_MODIFIERS => '',
+			GESHI_SEARCH => '(^\s*)(\&quot;.*?\&quot;)(\s*=)',
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
-			GESHI_AFTER => '\\4',
+			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'geshi_variable'
 			),
 		// Highlight String Values
 		5 => array(
-			GESHI_SEARCH => '(=\\s*)(\\&quot\\;.*\\&quot\\;)(\\s*(\\n|$))',
+			GESHI_SEARCH => '(=\s*)(\&quot;.*?\&quot;)(\s*$)',
 			GESHI_REPLACE => '\\2',
-			GESHI_MODIFIERS => '',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
 			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'st0'
 			),
-		// Highlight Hexadecimal Values
+		// Highlight Hexadecimal Values (Single-Line and Multi-Line)
 		6 => array(
-			GESHI_SEARCH => '(=\\s*)(hex((\\\\\\([0-9]{1,2}\\\\\\))|()):(([0-9a-fA-F]{2},)|(\\s))*(([0-9a-fA-F]{2})|(\\\\\\\\)))(\\s*(\\n|$))',
+			GESHI_SEARCH => '(^\s*)(hex:[0-9a-fA-F]{2}(,(\\\s*\n\s*)?[0-9a-fA-F]{2})*)',
 			GESHI_REPLACE => '\\2',
-			GESHI_MODIFIERS => '',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
-			GESHI_AFTER => '\\12',
-			GESHI_CLASS => 'kw2'
-			),
-		// Highlight Hexadecimal Values (Multi-Line)
-		7 => array(
-			GESHI_SEARCH => '((\\n|^)\\s*)((([0-9a-fA-F]{2},)|(\\s))*(([0-9a-fA-F]{2})|(\\\\\\\\)))',
-			GESHI_REPLACE => '\\3',
-			GESHI_MODIFIERS => '',
-			GESHI_BEFORE => '\\1',
-			GESHI_AFTER => '\\10',
+			GESHI_AFTER => '',
 			GESHI_CLASS => 'kw2'
 			),
 		// Highlight Default Variable
-		8 => array(
-			GESHI_SEARCH => '((\\n|^)\\s*)(@)(\\s*=)',
-			GESHI_REPLACE => '\\3',
-			GESHI_MODIFIERS => '',
+		7 => array(
+			GESHI_SEARCH => '(^\s*)(@)(\s*=)',
+			GESHI_REPLACE => '\\2',
+			GESHI_MODIFIERS => 'm',
 			GESHI_BEFORE => '\\1',
-			GESHI_AFTER => '\\4',
+			GESHI_AFTER => '\\3',
 			GESHI_CLASS => 'geshi_variable'
 			),
 		// Highlight GUID's found anywhere.
-		9 => array(
-			GESHI_SEARCH => '(\\{[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\\})',
+		8 => array(
+			GESHI_SEARCH => '(\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\})',
 			GESHI_REPLACE => '\\1',
-			GESHI_MODIFIERS => '',
+			GESHI_MODIFIERS => 'i',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => '',
 			GESHI_CLASS => 'geshi_guid'

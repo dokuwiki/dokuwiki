@@ -4,13 +4,15 @@
  * --------
  * Author: Stephan Klimek (http://www.initware.org)
  * Copyright: Stephan Klimek (http://www.initware.org)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2005/07/20
  *
  * AppleScript language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  *
  * TODO
  * -------------------------
@@ -121,7 +123,9 @@ $language_data = array (
 		1 => ',+-=&lt;&gt;/?^&amp;*'
 		),
 	'REGEXPS' => array(
+	    //Variables
 		0 => '[\\$%@]+[a-zA-Z_][a-zA-Z0-9_]*',
+		//File descriptors
 		4 => '&lt;[a-zA-Z_][a-zA-Z0-9_]*&gt;',
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

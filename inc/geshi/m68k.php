@@ -4,7 +4,7 @@
  * --------
  * Author: Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2007 Benny Baumann (http://www.omorphia.de/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2007/02/06
  *
  * Motorola 68000 Assembler language file for GeSHi.
@@ -14,6 +14,8 @@
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2007/06/02 (1.0.0)
  *   -  First Release
  *
@@ -120,9 +122,12 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
+        //Hex numbers
 		0 => '#?0[0-9a-fA-F]{1,32}[hH]',
+		//Binary numbers
 		1 => '\%[01]{1,64}[bB]',
-		2 => '^[_a-zA-Z][_a-zA-Z0-9]{0,50}\:'
+		//Labels
+		2 => '^[_a-zA-Z][_a-zA-Z0-9]*?\:'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(

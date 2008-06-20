@@ -4,7 +4,7 @@
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/08/30
  *
  * Python language file for GeSHi.
@@ -46,7 +46,8 @@ $language_data = array (
 	'COMMENT_SINGLE' => array(1 => '#'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"', "'", '"""'),
+	//Longest quotemarks ALWAYS first
+	'QUOTEMARKS' => array('"""', '"', "'"),
 	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
 

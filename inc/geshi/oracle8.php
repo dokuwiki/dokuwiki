@@ -4,7 +4,7 @@
  * -----------
  * Author: Guy Wicks (Guy.Wicks@rbs.co.uk)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/06/04
  *
  * Oracle 8 language file for GeSHi
@@ -432,7 +432,7 @@ $language_data = array (
 			)
 		),
 	'SYMBOLS' => array(
-		'(', ')', '=', '<', '>', '|'
+		'(', ')', '=', '<', '>', '|', '+', '-', '*', '/', ','
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
@@ -471,7 +471,6 @@ $language_data = array (
 		),
 	'URLS' => array(
 		),
-
 	'OOLANG' => false,
 	'OBJECT_SPLITTERS' => array(
 		),

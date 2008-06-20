@@ -4,7 +4,7 @@
  * --------
  * Author: Rowan Rodrik van der Molen (rowan@bigsmoke.us)
  * Copyright: (c) 2006 Rowan Rodrik van der Molen (http://www.bigsmoke.us/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/09/28
  *
  * BNF (Backus-Naur form) language file for GeSHi.
@@ -13,6 +13,9 @@
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
+ *  -  Removed superflicious regexps
  * 2006/09/18 (1.0.0)
  *  -  First Release
  *
@@ -49,7 +52,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(),
     'SYMBOLS' => array(
-        '<', '>', '::=', '|'
+        '(', ')', '<', '>', '::=', '|'
     ),
     'CASE_SENSITIVE' => array(
         //GESHI_COMMENTS => false
@@ -91,33 +94,13 @@ $language_data = array (
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(),
     'REGEXPS' => array(
+        //terminal symbols
         0 => array(
             GESHI_SEARCH => '(&lt;)([^&]+?)(&gt;)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => '\\3'
-        ),
-        1 => array(
-            GESHI_SEARCH => '(&lt;|&gt;)',
-            GESHI_REPLACE => '\\1',
-            GESHI_MODIFIERS => '',
-            GESHI_BEFORE => '',
-            GESHI_AFTER => ''
-        ),
-        2 => array(
-            GESHI_SEARCH => '(::=)',
-            GESHI_REPLACE => '\\1',
-            GESHI_MODIFIERS => '',
-            GESHI_BEFORE => '',
-            GESHI_AFTER => ''
-        ),
-        3 => array(
-            GESHI_SEARCH => '([()])',
-            GESHI_REPLACE => '\\1',
-            GESHI_MODIFIERS => '',
-            GESHI_BEFORE => '',
-            GESHI_AFTER => ''
         ),
     ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,

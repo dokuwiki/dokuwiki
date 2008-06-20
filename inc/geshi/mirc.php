@@ -4,13 +4,15 @@
  * -----
  * Author: Alberto 'Birckin' de Areba (Birckin@hotmail.com)
  * Copyright: (c) 2006 Alberto de Areba
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/05/29
  *
  * mIRC Scripting language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2006/05/29 (1.0.0)
  *   -  First Release
  *
@@ -128,10 +130,14 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
+        //Variable names
 		0 => '\$[a-zA-Z0-9]+',
+        //Variable names
 		1 => '(%|&amp;)[a-zA-Z0-9]+',
-		2 => '(#|@)[a-zA-Z0-9]+',
+		//Channel names
+        2 => '(#|@)[a-zA-Z0-9]+',
 		3 => '-[a-z\d]+',
+        //Client to Client Protocol handling
 		4 => '(on|ctcp) (!|@|&amp;)?(\d|\*):[a-zA-Z]+:',
 		/*4 => array(
 			GESHI_SEARCH => '((on|ctcp) (!|@|&)?(\d|\*):(Action|Active|Agent|AppActive|Ban|Chat|Close|Connect|Ctcp|CtcpReply|DccServer|DeHelp|DeOp|DeVoice|Dialog|Dns|Error|Exit|FileRcvd|FileSent|GetFail|Help|Hotlink|Input|Invite|Join|KeyDown|KeyUp|Kick|Load|Logon|MidiEnd|Mode|Mp3End|Nick|NoSound|Notice|Notify|Op|Open|Part|Ping|Pong|PlayEnd|Quit|Raw|RawMode|SendFail|Serv|ServerMode|ServerOp|Signal|Snotice|Start|Text|Topic|UnBan|Unload|Unotify|User|Mode|Voice|Wallops|WaveEnd):)',
@@ -140,7 +146,9 @@ $language_data = array (
 			GESHI_BEFORE => '',
 			GESHI_AFTER => ''
 			),*/
+        //Raw protocol handling
         5 => 'raw (\d|\*):',
+        //Timer handling
 		6 => '/timer(?!s\b)[0-9a-zA-Z_]+',
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

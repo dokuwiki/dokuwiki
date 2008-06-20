@@ -4,7 +4,7 @@
  * ---------------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/07/10
  *
  * HTML 4.01 strict language file for GeSHi.
@@ -147,7 +147,7 @@ $language_data = array (
 
 			'&lt;ul&gt;', '&lt;u&gt;',
 			'&lt;ul', '&lt;u',
-			'&lt;/ul&gt;', '&lt;/ul&gt;',
+			'&lt;/ul&gt;', '&lt;/u&gt;',
 			'&lt;/ul', '&lt;/u',
 
 			'&lt;var&gt;',

@@ -4,7 +4,7 @@
  * --------
  * Author: Lars Gersmann (lars.gersmann@gmail.com)
  * Copyright: (c) 2007 Lars Gersmann
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2007/06/03
  *
  * Per (forms) (FOURJ's Genero 4GL) language file for GeSHi.
@@ -29,7 +29,7 @@
  *
  ************************************************************************************/
 
- $language_data = array (
+$language_data = array (
     'LANG_NAME' => 'per',
     'COMMENT_SINGLE' => array(1 => '--', 2 => '#'),
     'COMMENT_MULTI' => array('{' => '}'),

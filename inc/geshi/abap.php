@@ -4,7 +4,7 @@
  * --------
  * Author: Andres Picazo (andres@andrespicazo.com)
  * Copyright: (c) 2007 Andres Picazo
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/06/04
  *
  * ABAP language file for GeSHi.

@@ -4,7 +4,7 @@
  * --------
  * Author: Duncan Lock (dunc@dflock.co.uk)
  * Copyright: (c) 2006 Duncan Lock (http://dflock.co.uk/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2005/11/22
  *
  * T-SQL language file for GeSHi.
@@ -46,10 +46,6 @@ $language_data = array (
 	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
 		1 => array(
-			/*
-				This will be highlighted in blue
-			*/
-
 			// Datatypes
 			'bigint', 'int', 'smallint', 'tinyint', 'bit', 'decimal', 'numeric', 'money',
 			'smallmoney', 'float', 'real', 'datetime', 'smalldatetime', 'char', 'varchar',

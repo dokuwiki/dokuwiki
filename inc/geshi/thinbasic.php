@@ -4,7 +4,7 @@
  * ------
  * Author: Eros Olmi (eros.olmi@thinbasic.com)
  * Copyright: (c) 2006 Eros Olmi (http://www.thinbasic.com), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/05/12
  *
  * thinBasic language file for GeSHi.
@@ -36,7 +36,8 @@
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  ************************************************************************************/
- $language_data = array (
+
+$language_data = array (
        'LANG_NAME' => 'thinBasic',
        'COMMENT_SINGLE' => array(1 => "'"),
        'COMMENT_MULTI' => array(),

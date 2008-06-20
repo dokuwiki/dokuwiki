@@ -4,13 +4,15 @@
  * ----------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/06/20
  *
  * QBasic/QuickBASIC language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.3)
  *  -  Added support for multiple object splitters
  * 2004/10/27 (1.0.2)
@@ -49,8 +51,12 @@
  ************************************************************************************/
 $language_data = array (
 	'LANG_NAME' => 'QBasic/QuickBASIC',
-	'COMMENT_SINGLE' => array(1 => "'", 2 => ' REM', 3 => "\tREM"),
+	'COMMENT_SINGLE' => array(1 => "'"),
 	'COMMENT_MULTI' => array(),
+	'COMMENT_REGEXP' => array(
+        //Single-Line Comments using REM command
+        2 => "/\bREM.*?$/i"
+        ),
 	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
 	'QUOTEMARKS' => array('"'),
 	'ESCAPE_CHAR' => '',
@@ -87,7 +93,7 @@ $language_data = array (
 			)
 		),
 	'SYMBOLS' => array(
-		'(', ')'
+		'(', ')', ',', '+', '-', '*', '/', '=', '<', '>'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
@@ -101,8 +107,7 @@ $language_data = array (
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080;',
-			2 => 'color: #808080;',
-			3 => 'color: #808080;'
+			2 => 'color: #808080;'
 			),
 		'BRACKETS' => array(
 			0 => 'color: #66cc66;'

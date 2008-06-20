@@ -4,8 +4,8 @@
  * ----------
  * Author: Lars Gersmann (lars.gersmann@gmail.com)
  * Copyright: (c) 2007 Lars Gersmann, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.21
- * CVS Revision Version: $Revision: 1.4 $
+ * Release Version: 1.0.7.22
+ * Date started: 2007/07/01
  *
  * Genero (FOURJ's Genero 4GL) language file for GeSHi.
  *

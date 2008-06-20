@@ -4,7 +4,7 @@
  * ------------
  * Author: Craig Storey (storey.craig@gmail.com)
  * Copyright: (c) 2004 Craig Storey (craig.xcottawa.ca)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2006/05/19
  *
  * WinBatch language file for GeSHi.
@@ -15,6 +15,8 @@
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  * 2006/05/05 (1.0.0)
  *  -  First Release
  *
@@ -354,7 +356,7 @@ $language_data = array (
 		),
 	'OOLANG' => false,
 	'OBJECT_SPLITTER' => '',
-	'REGEXPS' => array(
+	'REGEXPS' => array(//Variable names
 		0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
 		),
 	'STRICT_MODE_APPLIES' => GESHI_MAYBE,

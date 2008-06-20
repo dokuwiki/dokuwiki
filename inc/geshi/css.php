@@ -4,13 +4,15 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/06/18
  *
  * CSS language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.3)
  *  -  Added support for multiple object splitters
  * 2004/10/27 (1.0.2)
@@ -181,17 +183,22 @@ $language_data = array (
 	'OBJECT_SPLITTERS' => array(
 		),
 	'REGEXPS' => array(
+        //DOM Node ID
 		0 => '\#[a-zA-Z0-9\-_]+',
+		//CSS classname
 		1 => '\.[a-zA-Z0-9\-_]+',
+		//CSS Pseudo classes
         2 => ':[a-zA-Z0-9\-]+',
+        //Measurements
         3 => '(\d+|(\d*\.\d+))(em|ex|pt|px|cm|in|%)',
+        //Links \ referenced resources
         4 => array(
             GESHI_SEARCH    => '(url\()([^)]+)(\))',
             GESHI_REPLACE   => '\\2',
             GESHI_BEFORE    => '\\1',
             GESHI_AFTER     => '\\3',
             GESHI_MODIFIERS => 'si'
-        )
+            )
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(

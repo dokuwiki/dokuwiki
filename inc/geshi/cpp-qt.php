@@ -4,13 +4,15 @@
  * -------
  * Author: Iulian M
  * Copyright: (c) 2006 Iulian M
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2004/09/27
  *
  * C++ language file for GeSHi, with QT extensions.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
  *
  * TODO
  * ----
@@ -39,6 +41,8 @@ $language_data = array (
 	'LANG_NAME' => 'C++ (QT)',
 	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
+	//Multiline-continued Singleline comments
+	'COMMENT_REGEXP' => array(1 => '/\/\/(?:\\\\\\\\|\\\\\\n|.)*$/m'),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '\\',
@@ -261,7 +265,13 @@ $language_data = array (
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
         ),
-    'TAB_WIDTH' => 4
+    'TAB_WIDTH' => 4,
+	'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            'DISALLOWED_BEFORE' => "a-zA-Z0-9\$_\|\#>|^",
+            'DISALLOWED_AFTER' => "a-zA-Z0-9_<\|%\\-"
+        )
+	)
 );
 
 ?>

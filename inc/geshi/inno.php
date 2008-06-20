@@ -4,7 +4,7 @@
  * ----------
  * Author: Thomas Klingler (hotline@theratech.de) based on delphi.php from Járja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 Járja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2005/07/29
  *
  * Inno Script language inkl. Delphi (Object Pascal) language file for GeSHi.
@@ -73,8 +73,6 @@ $language_data = array (
 			'uninsclearvalue','uninsdeleteentry','uninsdeletekey','uninsdeletekeyifempty',
 			'uninsdeletesection','uninsdeletesectionifempty','uninsdeletevalue',
 			'uninsneveruninstall','useapppaths','verysilent','waituntilidle'
-
-
 			),
 		3 => array(
 			'Abs', 'Addr', 'AnsiCompareStr', 'AnsiCompareText', 'AnsiContainsStr', 'AnsiEndsStr', 'AnsiIndexStr', 'AnsiLeftStr',
@@ -134,8 +132,6 @@ $language_data = array (
 			'VersionInfoVersion','VersionInfoCompany','VersionInfoDescription','VersionInfoTextVersion',
 			'WindowResizable','WindowShowCaption','WindowStartMaximized',
 			'WindowVisible','WizardImageBackColor','WizardImageFile','WizardImageStretch','WizardSmallImageBackColor','WizardSmallImageFile','WizardStyle','WorkingDir'
-
-
 			),
 		4 => array(
 			'AnsiChar', 'AnsiString', 'Boolean', 'Byte', 'Cardinal', 'Char', 'Comp', 'Currency', 'Double', 'Extended',
@@ -150,7 +146,6 @@ $language_data = array (
 	'SYMBOLS' => array(
 		'(', ')', '[', ']', '{', '}', '@', '%', '&', '*', '|', '/', '<', '>'
 		),
-
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
 		1 => false,

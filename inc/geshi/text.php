@@ -4,7 +4,7 @@
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 04/23/2006
  *
  * Standard Text File (No Syntax Highlighting).
@@ -12,7 +12,7 @@
  * CHANGES
  * -------
  * 04/23/2006 (0.5.0)
- *  -  Syntax File Created
+ * - Syntax File Created
  *
  * 04/27/2006 (1.0.0)
  * - Documentation Cleaned Up
@@ -40,17 +40,17 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
-
  ************************************************************************************/
+
 $language_data = array (
 	'LANG_NAME' => 'Text',
-	'COMMENT_SINGLE' => array( ),
-	'COMMENT_MULTI' => array( ),
+	'COMMENT_SINGLE' => array(),
+	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array(),
 	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array( ),
-	'SYMBOLS' => array( ),
+	'KEYWORDS' => array(),
+	'SYMBOLS' => array(),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false
 		),
@@ -73,9 +73,11 @@ $language_data = array (
 	'SCRIPT_DELIMITERS' => array( ),
 	'HIGHLIGHT_STRICT_BLOCK' => array( )
 );
+
 if (isset($this) && is_a($this, 'GeSHi')) {
     $this->set_numbers_highlighting(false);
     $this->set_brackets_highlighting(false);
     $this->disable_highlighting();
 }
+
 ?>

@@ -1,22 +1,21 @@
 <?php
 /*************************************************************************************
- * div.php
- * ---------------------------------
- * Author: Gabriel Lorenzo (ermakina@gmail.com)
- * Copyright: (c) 2005 Gabriel Lorenzo (http://ermakina.gazpachito.net)
+ * mxml.php
+ * -------
+ * Author: David Spurr
+ * Copyright: (c) 2007 David Spurr (http://www.defusion.org.uk/)
  * Release Version: 1.0.7.22
- * Date Started: 2005/06/19
+ * Date Started: 2007/10/04
  *
- * DIV language file for GeSHi.
+ * MXML language file for GeSHi. Based on the XML file by Nigel McNie
  *
  * CHANGES
  * -------
- * 2005/06/22 (1.0.0)
- *  -  First Release, includes "2nd gen" ELSEIF statement
+ * 2007/10/04 (1.0.7.22)
+ *   -  First Release
  *
- * TODO (updated 2005/06/22)
- * -------------------------
- *  -  I'm pretty satisfied with this, so nothing for now... :P
+ * TODO
+ * ----
  *
  *************************************************************************************
  *
@@ -39,55 +38,30 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'DIV',
-	'COMMENT_SINGLE' => array(1 => '//'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
-	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
+	'LANG_NAME' => 'MXML',
+	'COMMENT_SINGLE' => array(),
+	'COMMENT_MULTI' => array('<!--' => '-->'),
+	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
-		1 => array(
-			'while','until','to','switch','step','return','repeat','loop','if','from','frame','for','end','elseif',
-			'else','default','debug','continue','clone','case','break','begin'
-			),
-		2 => array(
-			'xor','whoami','type','sizeof','pointer','or','offset','not','neg','mod','id','dup','and','_ne','_lt',
-			'_le','_gt','_ge','_eq'
-			),
-		3 => array(
-			'setup_program','program','process','private','local','import','global','function','const',
-			'compiler_options'
-			),
-		4 => array(
-			'word','struct','string','int','byte'
-			),
 		),
 	'SYMBOLS' => array(
-		'(',')','[',']','=','+','-','*','/','!','%','^','&',':',';',',','<','>'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
-		1 => false,
-		2 => false,
-		3 => false,
-		4 => false,
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #0040b1;',
-			2 => 'color: #000000;',
-			3 => 'color: #000066; font-weight: bold;',
-			4 => 'color: #993333;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
-			0 => ''
+			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #44aa44;'
+			0 => 'color: #66cc66;'
 			),
 		'STRINGS' => array(
 			0 => 'color: #ff0000;'
@@ -96,31 +70,76 @@ $language_data = array (
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
-			0 => 'color: #202020;',
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #44aa44;'
-			),
-		'REGEXPS' => array(
+			0 => 'color: #66cc66;'
 			),
 		'SCRIPT' => array(
+			0 => 'color: #00bbdd;',
+			1 => 'color: #ddbb00;',
+			2 => 'color: #339933;',
+			3 => 'color: #000000;'
+			),
+		'REGEXPS' => array(
+			0 => 'font-weight: bold; color: black;',
+			1 => 'color: #7400FF;',
+			2 => 'color: #7400FF;'
 			)
 		),
 	'URLS' => array(
-		1 => '',
-		2 => '',
-		3 => '',
-		4 => ''
 		),
 	'OOLANG' => false,
-	'OBJECT_SPLITTER' => '',
+	'OBJECT_SPLITTERS' => array(
+		),
 	'REGEXPS' => array(
+		// xml declaration
+		0 => array(
+			GESHI_SEARCH => '(&lt;[/?|(\?xml)]?[a-z0-9_\-:]*(\?&gt;))',
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => 'i',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+		// opening tags
+		1 => array(
+			GESHI_SEARCH => '(&lt;/?[a-z]+:[a-z]+)',
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => 'i',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			),
+		// closing tags
+		2 => array(
+			GESHI_SEARCH => '(/?&gt;)',
+			GESHI_REPLACE => '\\1',
+			GESHI_MODIFIERS => 'i',
+			GESHI_BEFORE => '',
+			GESHI_AFTER => ''
+			)
 		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
+	'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
 	'SCRIPT_DELIMITERS' => array(
-		),
+		0 => array(
+			'<!DOCTYPE' => '>'
+			),
+		1 => array(
+			'&' => ';'
+			),
+		2 => array(
+			//'<![CDATA[' => ']]>'
+			'<mx:Script>' => '</mx:Script>'
+			),
+		3 => array(
+			'<' => '>'
+			)
+	),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+		0 => false,
+		1 => false,
+		2 => false,
+		3 => true
+        ),
+    'TAB_WIDTH' => 4
 );
 
 ?>

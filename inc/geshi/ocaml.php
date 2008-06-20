@@ -4,13 +4,15 @@
  * ----------
  * Author: Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.21
+ * Release Version: 1.0.7.22
  * Date Started: 2005/08/27
  *
  * OCaml (Objective Caml) language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/03/29 (1.0.7.22)
+ *   -  Fixed warnings resulting from missing style information
  * 2005/08/27 (1.0.0)
  *   -  First Release
  *
@@ -47,7 +49,7 @@ $language_data = array (
 	'KEYWORDS' => array(
 	   /* main OCaml keywords */
 		1 => array(
-			'and', 'As', 'asr', 'begin', 'Class', 'Closed', 'constraint', 'do', 'done', 'downto', 'else',
+			'and', 'as', 'asr', 'begin', 'class', 'closed', 'constraint', 'do', 'done', 'downto', 'else',
 			'end', 'exception', 'external', 'failwith', 'false', 'flush', 'for', 'fun', 'function', 'functor',
 			'if', 'in', 'include', 'inherit',  'incr', 'land', 'let', 'load', 'los', 'lsl', 'lsr', 'lxor',
 			'match', 'method', 'mod', 'module', 'mutable', 'new', 'not', 'of', 'open', 'option', 'or', 'parser',
@@ -100,14 +102,18 @@ $language_data = array (
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
 		1 => false,
-		2 => true, /* functions name are case seinsitive */
+		2 => true, /* functions name are case sensitive */
 		3 => true, /* types name too */
 		4 => true  /* finally exceptions too */
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #06c; font-weight: bold;' /* nice blue */
-			),
+			1 => 'color: #06c; font-weight: bold;', /* nice blue */
+			2 => 'color: #06c; font-weight: bold;', /* nice blue */
+			3 => 'color: #06c; font-weight: bold;', /* nice blue */
+			4 => 'color: #06c; font-weight: bold;', /* nice blue */
+			5 => 'color: #06c; font-weight: bold;' /* nice blue */
+            ),
 		'COMMENTS' => array(
 			'MULTI' => 'color: #5d478b; font-style: italic;' /* light purple */
 			),
