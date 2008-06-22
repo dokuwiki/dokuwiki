@@ -337,7 +337,7 @@ class HelloWorldApp {
 }
 </code>
 
-The following language strings are currently recognized: //abap actionscript-french, actionscript, ada, apache, applescript, asm, asp, autoit, bash, basic4gl, blitzbasic, bnf, caddcl, cadlisp, cfdg, cfm, c_mac, c, cpp, cpp-qt, csharp, css, delphi, diff, div, dos, dot, d, eiffel, fortran, freebasic, genero, gml, groovy, haskell, html, idl, ini, inno, io, java5, java, javascript, latex, lisp, lua, m68k, matlab, mirc, mpasm, mysql, nsis, objc, ocaml-brief, ocaml, oobas, oracle8, pascal, perl, per, php-brief, php, plsql, python, qbasic, rails, reg, robots, ruby, sas, scheme, sdlbasic, smalltalk, smarty, sql, tcl, text, thinbasic, tsql, vbnet, vb, vhdl, visualfoxpro, winbatch, xml, xpp, z80//
+The following language strings are currently recognized: //abap actionscript-french, actionscript, actionscript3, ada, apache, applescript, asm, asp, autoit, bash, basic4gl, blitzbasic, bnf, caddcl, cadlisp, cfdg, cfm, c_mac, c, cpp, cpp-qt, csharp, css, delphi, diff, div, dos, dot, d, eiffel, fortran, freebasic, genero, glsl, gml, groovy, gettext, haskell, html, idl, ini, inno, io, java5, java, javascript, kixtart, latex, lisp, lotusformulas, lotusscript, lua, m68k, matlab, mirc, mpasm, mxml, mysql, nsis, objc, ocaml-brief, ocaml, oobas, oracle8, pascal, perl, per, php-brief, php, plsql, python, qbasic, rails, reg, robots, ruby, sas, scala, scheme, sdlbasic, smalltalk, smarty, sql, tcl, text, thinbasic, tsql, vbnet, vb, verilog, vhdl, visualfoxpro, winbatch, xml, xpp, z80//
 
 
 ===== RSS/ATOM Feed Aggregation =====
