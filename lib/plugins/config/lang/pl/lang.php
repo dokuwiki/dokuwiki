@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
+ * @author Mariusz Kujawski <marinespl@gmail.com>
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';

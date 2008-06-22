@@ -3,6 +3,7 @@
  * polish language file
  *
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
+ * @author Mariusz Kujawski <marinespl@gmail.com>
  */
 $lang['menu']                  = 'Menadżer użytkowników';
 $lang['noauth']                = '(uwierzytelnienie użytkownika niemożliwe)';

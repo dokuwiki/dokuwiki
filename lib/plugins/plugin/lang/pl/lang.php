@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Michał Tkacz <mehow@autocom.pl>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
+ * @author Mariusz Kujawski <marinespl@gmail.com>
  */
 $lang['menu']                  = 'Menadżer wtyczek';
 $lang['download']              = 'Ściągnij i zainstaluj nową wtyczkę';

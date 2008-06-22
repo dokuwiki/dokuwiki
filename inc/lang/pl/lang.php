@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
+ * @author Mariusz Kujawski <marinespl@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -201,3 +202,15 @@ $lang['i_pol0']                = 'Otwarte Wiki (odczyt, zapis i dodawanie plikó
 $lang['i_pol1']                = 'Publiczne Wiki (odczyt dla wszystkich, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
 $lang['i_pol2']                = 'Zamknięte Wiki (odczyt, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
 $lang['i_retry']               = 'Spróbuj ponownie';
+$lang['mu_intro']              = 'Możesz tutaj wysłać wiele plików na raz. Kliknij przycisk "Przeglądaj" aby dodać je do kolejki. Kliknij "Wyślij" gdy skończysz.';
+$lang['mu_gridname']           = 'Nazwa pliku';
+$lang['mu_gridsize']           = 'Rozmiar';
+$lang['mu_gridstat']           = 'Stan';
+$lang['mu_browse']             = 'Przeglądaj';
+$lang['mu_toobig']             = 'za duży';
+$lang['mu_ready']              = 'gotowy do wysłania';
+$lang['mu_done']               = 'zakończono';
+$lang['mu_fail']               = 'nie powiodło się';
+$lang['mu_authfail']           = 'sesja wygasła';
+$lang['mu_progress']           = '@PCT@% wysłano';
+$lang['mu_filetypes']          = 'Dozwolone typy plików';
