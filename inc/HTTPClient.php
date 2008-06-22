@@ -58,7 +58,8 @@ class HTTPClient {
     var $cookies;
     var $referer;
     var $max_redirect;
-    var $max_bodysize;  // abort if the response body is bigger than this
+    var $max_bodysize;
+    var $max_bodysize_abort = true;  // if set, abort if the response body is bigger than max_bodysize
     var $header_regexp; // if set this RE must match against the headers, else abort
     var $headers;
     var $debug;
@@ -252,7 +253,8 @@ class HTTPClient {
         if($this->max_bodysize && preg_match('/\r?\nContent-Length:\s*(\d+)\r?\n/i',$r_headers,$match)){
             if($match[1] > $this->max_bodysize){
                 $this->error = 'Reported content length exceeds allowed response size';
-                return false;
+                if ($this->max_bodysize_abort)
+                    return false;
             }
         }
 
@@ -327,7 +329,10 @@ class HTTPClient {
 
                 if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
-                    return false;
+                    if ($this->max_bodysize_abort)
+                        return false;
+                    else
+                        break;
                 }
             } while ($chunk_size);
         }else{
@@ -342,7 +347,10 @@ class HTTPClient {
                 $r_size = strlen($r_body);
                 if($this->max_bodysize && $r_size > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
-                    return false;
+                    if ($this->max_bodysize_abort)
+                        return false;
+                    else
+                        break;
                 }
                 if($this->resp_headers['content-length'] && !$this->resp_headers['transfer-encoding'] &&
                    $this->resp_headers['content-length'] == $r_size){
