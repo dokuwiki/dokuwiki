@@ -36,10 +36,10 @@ if(!$_REQUEST['debug']) ob_start();
 $tmp = array();
 $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
 if ($evt->advise_before()) {
-  runIndexer() or 
-  metaUpdate() or 
-  runSitemapper() or 
-  runTrimRecentChanges() or 
+  runIndexer() or
+  metaUpdate() or
+  runSitemapper() or
+  runTrimRecentChanges() or
   $evt->advise_after();
 }
 if($defer) sendGIF();
@@ -266,7 +266,7 @@ function runSitemapper(){
         if(!is_writable(DOKU_INC)) return false;
     }
 
-    if(@filesize(DOKU_INC.$sitemap) && 
+    if(@filesize(DOKU_INC.$sitemap) &&
        @filemtime(DOKU_INC.$sitemap) > (time()-($conf['sitemap']*60*60*24))){
        print 'runSitemapper(): Sitemap up to date'.NL;
        return false;
@@ -323,7 +323,7 @@ function runSitemapper(){
 
     //ping microsoft
     print 'runSitemapper(): pinging microsoft'.NL;
-    $url  = 'http://search.live.com/ping?sitemap=';
+    $url  = 'http://webmaster.live.com/webmaster/ping.aspx?sitemap=';
     $url .= urlencode(DOKU_URL.$sitemap);
     $resp = $http->get($url);
     if($http->error) print 'runSitemapper(): '.$http->error.NL;
@@ -350,7 +350,7 @@ function date_iso8601($int_date) {
 
 /**
  * Just send a 1x1 pixel blank gif to the browser
- * 
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Harry Fuecks <fuecks@gmail.com>
  */
