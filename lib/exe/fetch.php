@@ -65,6 +65,8 @@
     exit;
   }
 
+  $ORIG = $FILE;
+
   //handle image resizing/cropping
   if((substr($MIME,0,5) == 'image') && $WIDTH){
     if($HEIGHT){
@@ -75,7 +77,18 @@
   }
 
   // finally send the file to the client
-  sendFile($FILE,$MIME,$CACHE);
+  $data = array('file'   => $FILE,
+                'mime'   => $MIME,
+                'cache'  => $CACHE,
+                'orig'   => $ORIG,
+                'ext'    => $EXT,
+                'width'  => $WIDTH,
+                'height' => $HEIGHT);
+
+  $evt = new Doku_Event('MEDIA_SENDFILE', $data);
+  if ($evt->advise_before()) {
+    sendFile($data['file'],$data['mime'],$data['cache']);
+  }
 
 /* ------------------------------------------------------------------------ */
 
