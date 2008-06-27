@@ -13,11 +13,6 @@
   // define the include path
   if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 
-  // trigger DOKUWIKI_INIT event to allow action plugins to overwrite constants
-  // load events.php, external scripts can just include inc/init.php
-  require_once(DOKU_INC.'inc/events.php');
-  trigger_event('DOKUWIKI_INIT', $tmp=array());
-
   // define config path (packagers may want to change this to /etc/dokuwiki/)
   if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
