@@ -231,7 +231,19 @@ class HTTPClient {
         $this->_debug('request',$request);
 
         // send request
-        fputs($socket, $request);
+        $towrite = strlen($request);
+        $written = 0;
+        while($written < $towrite){
+            $ret = fwrite($socket, substr($request,$written));
+            if($ret === false){
+                $this->status = -100;
+                $this->error = 'Failed writing to socket';
+                return false;
+            }
+            $written += $ret;
+        }
+
+
         // read headers from socket
         $r_headers = '';
         do{
