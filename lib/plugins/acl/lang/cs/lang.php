@@ -12,6 +12,7 @@ $lang['acl_user']              = 'Uživatel';
 $lang['acl_perms']             = 'Práva pro';
 $lang['page']                  = 'Stránka';
 $lang['namespace']             = 'Jmenný prostor';
+$lang['btn_select']            = 'Vybrat';
 $lang['p_user_id']             = 'Uživatel <b class="acluser">%s</b> má nyní na stránku <b class="aclpage">%s</b> následující oprávnění: <i>%s</i>.';
 $lang['p_user_ns']             = 'Uživatel <b class="acluser">%s</b> má nyní na jmenný prostor <b class="aclns">%s</b> následující oprávnění: <i>%s</i>.';
 $lang['p_group_id']            = 'Členové skupiny <b class="aclgroup">%s</b> mají nyní na stránku <b class="aclpage">%s</b> následující oprávnění: <i>%s</i>.';
