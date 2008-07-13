@@ -76,6 +76,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Returns a list of all pages. The result is an array of utf8 pagenames.'
         );
         $this->addCallback(
+            'wiki.getAttachments',
+            'this:listAttachments',
+            array('struct'),
+            'Returns a list of all media files.'
+        );
+        $this->addCallback(
             'wiki.getBackLinks',
             'this:listBackLinks',
             array('struct','string'),
@@ -159,6 +165,44 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function listPages(){
         require_once(DOKU_INC.'inc/fulltext.php');
         return ft_pageLookup('');
+    }
+
+    /**
+     * List all media files.
+     */
+    function listAttachments($ns) {
+        global $conf;
+        global $lang;
+
+        $ns = cleanID($ns);
+
+        if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
+            $dir = utf8_encodeFN(str_replace(':', '/', $ns));
+
+            $data = array();
+            require_once(DOKU_INC.'inc/search.php');
+            search($data, $conf['mediadir'], 'search_media', array(), $dir);
+  
+            if(!count($data)) {
+                return array();
+            }
+
+            $files = array();
+            foreach($data as $item) {
+                $file = array();
+                $file['id']       = $item['id'];
+                $file['size']     = $item['size'];
+                $file['mtime']    = $item['mtime'];
+                $file['isimg']    = $item['isimg'];
+                $file['writable'] = $item['writeable'];
+                array_push($files, $file);
+            }
+
+            return $files;
+
+        } else {
+            return new IXR_Error(1, 'You are not allowed to list media files.');
+        }
     }
 
     /**
