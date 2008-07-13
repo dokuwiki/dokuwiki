@@ -9,6 +9,7 @@
  * @author Koen Huybrechts <huybkoen@gmail.com>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
+ * @author Niels Schoot <niels.schoot@quintiq.com>
  */
 $lang['admin_acl']             = 'Toegangsrechten';
 $lang['acl_group']             = 'Groep';
@@ -16,6 +17,7 @@ $lang['acl_user']              = 'Gebruiker';
 $lang['acl_perms']             = 'Permissies voor';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Namespace';
+$lang['btn_select']            = 'Selecteer';
 $lang['p_user_id']             = 'Gebruiker <b class="acluser">%s</b> heeft momenteel de volgende bevoegdheden op pagina <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Gebruiker <b class="acluser">%s</b> heeft momenteel de volgende bevoegdheden op namespace <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Leden van groep <b class="aclgroup">%s</b> hebben momenteel de volgende bevoegdheden op pagina <b class="aclpage">%s</b>: <i>%s</i>.';

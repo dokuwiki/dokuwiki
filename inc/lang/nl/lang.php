@@ -9,6 +9,7 @@
  * @author Koen Huybrechts <huybkoen@gmail.com>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
+ * @author Niels Schoot <niels.schoot@quintiq.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -111,6 +112,7 @@ $lang['namespaces']            = 'Namespaces';
 $lang['mediafiles']            = 'Beschikbare bestanden in';
 $lang['js']['keepopen']        = 'Houd scherm open bij selectie';
 $lang['js']['hidedetails']     = 'Verberg details';
+$lang['js']['mu_btn']          = 'Meerdere bestanden tegelijk uploaden';
 $lang['mediausage']            = 'Gebruik de volgende syntax om aan het bestand te refereren';
 $lang['mediaview']             = 'Bekijk het orginele bestand';
 $lang['mediaroot']             = 'root';
@@ -205,3 +207,16 @@ $lang['i_pol0']                = 'Open Wiki (lezen, schrijven, uploaden voor ied
 $lang['i_pol1']                = 'Publieke Wiki (lezen voor iedereen, schrijven en uploaden voor geregistreerde gebruikers)';
 $lang['i_pol2']                = 'Besloten Wiki (lezen, schrijven en uploaden alleen voor geregistreerde gebruikers)';
 $lang['i_retry']               = 'Opnieuw';
+$lang['mu_intro']              = 'Hier kunt u meerdere bestanden tegelijk uploaden. Klik op de Bladeren knop om ze aan de lijst toe te voegen. Klik op uploaden om te voltooien';
+$lang['mu_gridname']           = 'Bestandsnaam';
+$lang['mu_gridsize']           = 'Grootte';
+$lang['mu_gridstat']           = 'Status';
+$lang['mu_namespace']          = 'Namespace';
+$lang['mu_browse']             = 'Bladeren';
+$lang['mu_toobig']             = 'te groot';
+$lang['mu_ready']              = 'klaar om te uploaden';
+$lang['mu_done']               = 'klaar';
+$lang['mu_fail']               = 'mislukt';
+$lang['mu_authfail']           = 'sessie verlopen';
+$lang['mu_progress']           = '@PCT@% geupload';
+$lang['mu_filetypes']          = 'Toegestande Bestandstypes';

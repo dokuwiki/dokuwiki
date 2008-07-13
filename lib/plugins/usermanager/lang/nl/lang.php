@@ -4,6 +4,7 @@
  *
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
+ * @author Niels Schoot <niels.schoot@quintiq.com>
  */
 $lang['menu']                  = 'Gebruikers Manager';
 $lang['noauth']                = '(gebruikers authenticatie niet beschikbaar)';

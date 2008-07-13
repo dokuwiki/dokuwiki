@@ -6,6 +6,7 @@
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
+ * @author Niels Schoot <niels.schoot@quintiq.com>
  */
 $lang['menu']                  = 'Configuratie instellingen';
 $lang['error']                 = 'De instellingen zijn niet aangebracht wegens een niet correcte waarde, kijk svp je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde herkennen aan de rode rand.';
