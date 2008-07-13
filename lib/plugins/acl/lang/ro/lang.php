@@ -4,6 +4,7 @@
  *
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author s_baltariu@yahoo.com
+ * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  */
 $lang['admin_acl']             = 'Managementul Listei de Control a Accesului';
 $lang['acl_group']             = 'Grup';

@@ -1,0 +1,9 @@
+====== Feedback de popularitate ======
+
+Această unealtă colectează date anonime despre wiki-ul dvs. şi vă permite să le trimiteţi înapoi către dezvoltatorii DokuWiki. Aceasta îi ajută să înţeleagă cum este folosit DokuWiki de către utilizatori şi asigură faptul că viitoarele decizii privind dezvoltarea sunt bazate pe statistici ale utilizării în condiţii reale.
+
+Sunteţi încurajat să repetaţi acest pas din când în când pentru a ţine dezvoltatorii la curent cu dezvoltarea wiki-ului dvs. Seturile de date trimise in mod repetat vor fi identificate printr-un ID anonim.
+
+Datele colectate conţin informaţii precum versiunea DokuWiki, numărul şi mărimea paginilor şi a fişierelor dvs., plugin-urile instalate şi informaţii despre versiunea PHP instalată.
+
+Datele brute ce vor fi trimise sunt afişate mai jos. Vă rugăm utilizaţi butonul "Trimite datele" pentru a transfera informaţiile.

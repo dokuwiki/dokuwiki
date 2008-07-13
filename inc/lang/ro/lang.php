@@ -6,6 +6,7 @@
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author s_baltariu@yahoo.com
+ * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -108,6 +109,7 @@ $lang['namespaces']            = 'Spaţii de nume';
 $lang['mediafiles']            = 'Fişiere disponibile în';
 $lang['js']['keepopen']        = 'Menţine fereastra deschisă la selecţie';
 $lang['js']['hidedetails']     = 'Ascunde Detalii';
+$lang['js']['mu_btn']          = 'Încarcă mai multe fişiere simultan';
 $lang['mediausage']            = 'Folosiţi următoarea sintaxă pentru a face referinţă la acest fişier:';
 $lang['mediaview']             = 'Vizualizează fişierul original';
 $lang['mediaroot']             = 'root';
@@ -203,3 +205,16 @@ $lang['i_pol0']                = 'Wiki Deschisă (citeşte, scrie şi încarcă 
 $lang['i_pol1']                = 'Wiki Deschisă (citeste oricine, scrie şi încarcă doar utilizatorul înregistrat)';
 $lang['i_pol2']                = 'Wiki Închisă (citeşte, scrie şi încarcă doar utilizatorul înregistrat)';
 $lang['i_retry']               = 'Încearcă din nou';
+$lang['mu_intro']              = 'Aici poţi încărca mai multe fişiere simultan. Apasă butonul Răsfoieşte pentru a le adăuga. Apasă Încarcă când ai terminat.';
+$lang['mu_gridname']           = 'Numele fişierului';
+$lang['mu_gridsize']           = 'Mărime';
+$lang['mu_gridstat']           = 'Stare';
+$lang['mu_namespace']          = 'Spaţiu de nume';
+$lang['mu_browse']             = 'Răsfoieşte';
+$lang['mu_toobig']             = 'prea mare';
+$lang['mu_ready']              = 'pregătit pentru încărcare';
+$lang['mu_done']               = 'complet';
+$lang['mu_fail']               = 'eşuat';
+$lang['mu_authfail']           = 'sesiunea a expirat';
+$lang['mu_progress']           = '@PCT@% incărcat';
+$lang['mu_filetypes']          = 'Tipuri de fişiere permise';
