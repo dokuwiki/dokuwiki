@@ -123,12 +123,18 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('struct','int'),
             'Returns a strukt about all recent changes since given timestamp.'
         );
-		$this->addCallback(
-			'wiki.aclCheck',
-			'this:aclCheck',
-			array('struct', 'string'),
-			'Returns the permissions of a given wiki page.'
-		);
+        $this->addCallback(
+                'wiki.aclCheck',
+                'this:aclCheck',
+                array('struct', 'string'),
+                'Returns the permissions of a given wiki page.'
+        );
+        $this->addCallback(
+                'wiki.putAttachment',
+                'this:putAttachment',
+                array('struct', 'string', 'base64', 'struct'),
+                'Upload a file to the wiki.'
+        );
 
         $this->serve();
     }
@@ -289,12 +295,102 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         return 0;
     }
 
-	/**
-	 * Returns the permissions of a given wiki page
-	 */
-	function aclCheck($id) {
-		return auth_quickaclcheck($id);
-	}
+    /**
+     * Uploads a file to the wiki.
+     *
+     * Michael Klier <chi@chimeric.de>
+     */
+    function putAttachment($ns, $file, $params) {
+        global $conf;
+        global $lang;
+
+        $auth = auth_quickaclcheck($ns.':*');
+        if($auth >= AUTH_UPLOAD) {
+            if(!isset($params['name'])) {
+                return new IXR_ERROR(1, 'Filename not given.');
+            }
+
+            $ftmp = $conf['tmpdir'] . '/' . $params['name'];
+            $name = $params['name'];
+
+            // save temporary file
+            @unlink($ftmp);
+            $buff = base64_decode($file);
+            io_saveFile($ftmp, $buff);
+
+            // get filename
+            list($iext, $imime) = mimetype($name);
+            $id = cleanID($ns.':'.$name);
+            $fn = mediaFN($id);
+
+            // get filetype regexp
+            $types = array_keys(getMimeTypes());
+            $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
+            $regex = join('|',$types);
+
+            // because a temp file was created already
+            if(preg_match('/\.('.$regex.')$/i',$fn)) {
+                //check for overwrite
+                if(@file_exists($fn) && (!$params['ow'] || $auth < AUTH_DELETE)) {
+                    return new IXR_ERROR(1, $lang['uploadexist']);
+                }
+                // check for valid content
+                @require_once(DOKU_INC.'inc/media.php');
+                $ok = media_contentcheck($ftmp, $imime);
+                if($ok == -1) {
+                    return new IXR_ERROR(1, sprintf($lang['uploadexist'], ".$iext"));
+                } elseif($ok == -2) {
+                    return new IXR_ERROR(1, $lang['uploadspam']);
+                } elseif($ok == -3) {
+                    return new IXR_ERROR(1, $lang['uploadxss']);
+                }
+
+                // prepare event data
+                $data[0] = $ftmp;
+                $data[1] = $fn;
+                $data[2] = $id;
+                $data[3] = $imime;
+
+                // trigger event
+                require_once(DOKU_INC.'inc/events.php');
+                return trigger_event('MEDIA_UPLOAD_FINISH', $data, array($this, '_media_upload_action'), true);
+
+            } else {
+                return new IXR_ERROR(1, $lang['uploadwrong']);
+            }
+        } else {
+            return new IXR_ERROR(1, "You don't have permissions to upload files.");
+        }
+    }
+
+    /**
+     * Moves the temporary file to its final destination.
+     *
+     * Michael Klier <chi@chimeric.de>
+     */
+    function _media_upload_action($data) {
+        global $conf;
+
+        if(is_array($data) && count($data)===4) {
+            io_createNamespace($data[2], 'media');
+            if(rename($data[0], $data[1])) {
+                chmod($data[1], $conf['fmode']);
+                media_notify($data[2], $data[1], $data[3]);
+                return $data[2];
+            } else {
+                return new IXR_ERROR(1, 'Upload failed.');
+            }
+        } else {
+            return new IXR_ERROR(1, 'Upload failed.');
+        }
+    }
+
+    /**
+    * Returns the permissions of a given wiki page
+    */
+    function aclCheck($id) {
+        return auth_quickaclcheck($id);
+    }
 
     /**
      * Lists all links contained in a wiki page
@@ -483,4 +579,4 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
 $server = new dokuwiki_xmlrpc_server();
 
-// vim:ts=4:sw=4:enc=utf-8:
+// vim:ts=4:sw=4:et:enc=utf-8:
