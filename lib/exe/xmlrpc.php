@@ -117,6 +117,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('struct','int'),
             'Returns a strukt about all recent changes since given timestamp.'
         );
+		$this->addCallback(
+			'wiki.aclCheck',
+			'this:aclCheck',
+			array('struct', 'string'),
+			'Returns the permissions of a given wiki page.'
+		);
 
         $this->serve();
     }
@@ -238,6 +244,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         return 0;
     }
+
+	/**
+	 * Returns the permissions of a given wiki page
+	 */
+	function aclCheck($id) {
+		return auth_quickaclcheck($id);
+	}
 
     /**
      * Lists all links contained in a wiki page
