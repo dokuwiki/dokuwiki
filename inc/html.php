@@ -1138,13 +1138,11 @@ function html_debug(){
 
   //remove sensitive data
   $cnf = $conf;
-  $cnf['auth']='***';
-  $cnf['notify']='***';
-  $cnf['ftp']='***';
+  debug_guard($cnf);
   $nfo = $INFO;
-  $nfo['userinfo'] = '***';
+  debug_guard($nfo);
   $ses = $_SESSION;
-  $ses[$conf['title']]['auth'] = '***';
+  debug_guard($ses);
 
   print '<html><body>';
 

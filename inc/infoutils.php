@@ -316,3 +316,20 @@ function dbg_backtrace(){
   return implode("\n", $calls);
 }
 
+/**
+ * Remove all data from an array where the key seems to point to sensitive data
+ *
+ * This is used to remove passwords, mail addresses and similar data from the
+ * debug output
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function debug_guard(&$data){
+    foreach($data as $key => $value){
+        if(preg_match('/(notify|pass|auth|secret|ftp|userinfo|token|buid|mail|proxy)/i',$key)){
+            $data[$key] = '***';
+            continue;
+        }
+        if(is_array($value)) debug_guard($data[$key]);
+    }
+}
