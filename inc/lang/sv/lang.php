@@ -8,6 +8,7 @@
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Dennis Karlsson
+ * @author Tormod Otter Johansson <tormod@latast.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -111,6 +112,7 @@ $lang['namespaces']            = 'Namnrymder';
 $lang['mediafiles']            = 'Tillgängliga filer i';
 $lang['js']['keepopen']        = 'Lämna fönstret öppet efter val av fil';
 $lang['js']['hidedetails']     = 'Dölj detaljer';
+$lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
 $lang['mediausage']            = 'Använd följande syntax för att referera till denna fil:';
 $lang['mediaview']             = 'Visa originalfilen';
 $lang['mediaroot']             = 'rot';
@@ -209,3 +211,15 @@ $lang['i_pol0']                = 'Öppen wiki (alla får läsa, skriva och ladda
 $lang['i_pol1']                = 'Publik wiki (alla får läsa, registrerade användare för skriva och ladda upp filer)';
 $lang['i_pol2']                = 'Sluten wiki (endast registrerade användare får läsa, skriva och ladda upp filer)';
 $lang['i_retry']               = 'Försök igen';
+$lang['mu_intro']              = 'Här kan du ladda upp flera filer på en gång. Klicka på bläddra-knappen för att lägga till dem i kön. Tryck på ladda upp när du är klar.';
+$lang['mu_gridname']           = 'Filnamn';
+$lang['mu_gridsize']           = 'Storlek';
+$lang['mu_gridstat']           = 'Status';
+$lang['mu_browse']             = 'Bläddra';
+$lang['mu_toobig']             = 'för stor';
+$lang['mu_ready']              = 'redo att ladda upp';
+$lang['mu_done']               = 'komplett';
+$lang['mu_fail']               = 'misslyckades';
+$lang['mu_authfail']           = 'sessionen över tid';
+$lang['mu_progress']           = '@PCT@% uppladdade';
+$lang['mu_filetypes']          = 'Tillåtna filtyper';
