@@ -215,6 +215,12 @@ function media_upload($ns,$auth){
     $file = $_FILES['upload'];
     if(empty($id)) $id = $file['name'];
 
+    // check for data
+    if(!@filesize($file['tmp_name'])){
+        msg('No data uploaded. Disk full?',-1);
+        return false;
+    }
+
     // check extensions
     list($fext,$fmime) = mimetype($file['name']);
     list($iext,$imime) = mimetype($id);
