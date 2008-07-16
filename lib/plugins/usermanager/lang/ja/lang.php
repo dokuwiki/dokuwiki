@@ -3,6 +3,7 @@
  * japanese language file
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Chris Smith <chris@jalakai.co.uk>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['menu']                  = 'ユーザー管理';
 $lang['noauth']                = '（ユーザー認証が無効です）';

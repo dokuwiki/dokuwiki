@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Yuji Takenaka <webmaster@davilin.com>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -106,6 +107,7 @@ $lang['namespaces']            = '名前空間';
 $lang['mediafiles']            = '有効なファイル：';
 $lang['js']['keepopen']        = '選択中はウィンドウを閉じない';
 $lang['js']['hidedetails']     = '詳細を非表示';
+$lang['js']['mu_btn']          = '複数のファイルを一度にアップロード';
 $lang['mediausage']            = 'このファイルを使用するためには次の文法を使用する：';
 $lang['mediaview']             = 'オリジナルファイルを閲覧';
 $lang['mediaroot']             = 'ルート';
@@ -202,3 +204,16 @@ $lang['i_pol0']                = 'オープン Wiki（全ての人に、閲覧�
 $lang['i_pol1']                = 'パブリック Wiki（閲覧は全ての人が可能、書き込み・アップロードは登録ユーザーのみ）';
 $lang['i_pol2']                = 'クローズド Wiki (登録ユーザーにのみ使用を許可)';
 $lang['i_retry']               = '再試行';
+$lang['mu_intro']              = '複数のファイルを一度にアップロードできます。ブラウズボタンをクリックしてファイルを追加してください。追加したら、アップロードボタンをクリックしてください。';
+$lang['mu_gridname']           = 'ファイル名';
+$lang['mu_gridsize']           = 'サイズ';
+$lang['mu_gridstat']           = 'ステータス';
+$lang['mu_namespace']          = '名前空間';
+$lang['mu_browse']             = 'ブラウズ';
+$lang['mu_toobig']             = '大きすぎます';
+$lang['mu_ready']              = 'アップロードできます';
+$lang['mu_done']               = '完了';
+$lang['mu_fail']               = '失敗';
+$lang['mu_authfail']           = 'セッション期限切れ';
+$lang['mu_progress']           = '@PCT@% アップロード完了';
+$lang['mu_filetypes']          = '使用できるファイル形式';

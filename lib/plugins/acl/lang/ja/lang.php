@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Davilin(Yuji Takenaka) <webmaster@davilin.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['admin_acl']             = 'アクセスコントロール管理';
 $lang['acl_group']             = 'グループ';
@@ -12,6 +13,7 @@ $lang['acl_user']              = 'ユーザー';
 $lang['acl_perms']             = '権限を追加';
 $lang['page']                  = '文書';
 $lang['namespace']             = '名前空間';
+$lang['btn_select']            = '選択';
 $lang['p_user_id']             = 'ユーザー <b class="acluser">%s</b> は、ページ <b class="aclpage">%s</b> に対して次の権限を持っています: <i>%s</i>';
 $lang['p_user_ns']             = 'ユーザー <b class="acluser">%s</b> は、名前空間 <b class="aclns">%s</b> に対して次の権限を持っています: <i>%s</i>';
 $lang['p_group_id']            = 'グループ <b class="aclgroup">%s</b> のメンバーは、ページ <b class="aclpage">%s</b> に対して次の権限を持っています: <i>%s</i>';

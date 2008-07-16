@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['menu']                  = 'プラグイン管理';
 $lang['download']              = 'プラグインのダウンロードとインストール';

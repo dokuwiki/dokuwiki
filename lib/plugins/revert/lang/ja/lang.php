@@ -2,6 +2,7 @@
 /**
  * japanese language file
  * @author Yuji Takenaka <webmaster@davilin.com>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['menu']                  = '復元管理';
 $lang['filter']                = 'スパムを受けたページを検索';

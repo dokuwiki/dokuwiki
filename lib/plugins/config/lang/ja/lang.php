@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
