@@ -133,7 +133,7 @@ function rss_parseOptions(){
 function rss_buildItems(&$rss,&$data,$opt){
     global $conf;
     global $lang;
-
+    global $auth;
 
     foreach($data as $ditem){
         if(!is_array($ditem)){
