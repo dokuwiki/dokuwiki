@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Anika Henke <a.c.henke@arcor.de> (concepts)
+ * @author     Anika Henke <anika@selfthinker.org> (concepts)
  * @author     Frank Schubert <frank@schokilade.de> (old version)
  */
 // must be run within Dokuwiki

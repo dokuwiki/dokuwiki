@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Anika Henke <henke@cosmocode.de>
+ * @author     Anika Henke <anika@selfthinker.org>
  * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
 $lang['encoding']   = 'utf-8';
