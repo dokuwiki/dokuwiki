@@ -450,7 +450,7 @@ function media_fileactions($item,$auth){
 
         echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
              '&amp;sectok='.getSecurityToken().'" '.
-             'onclick="return confirm(\''.$ask.'\')" onkeypress="return confirm(\''.$ask.'\')">'.
+             'onclick="return confirm(\''.$ask.'\')">'.
              '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
              'title="'.$lang['btn_delete'].'" class="btn" /></a>';
     }
