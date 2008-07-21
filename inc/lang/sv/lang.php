@@ -9,6 +9,7 @@
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
+ * @author emil@sys.nu
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -215,6 +216,7 @@ $lang['mu_intro']              = 'Här kan du ladda upp flera filer på en gång
 $lang['mu_gridname']           = 'Filnamn';
 $lang['mu_gridsize']           = 'Storlek';
 $lang['mu_gridstat']           = 'Status';
+$lang['mu_namespace']          = 'Namnrymd';
 $lang['mu_browse']             = 'Bläddra';
 $lang['mu_toobig']             = 'för stor';
 $lang['mu_ready']              = 'redo att ladda upp';

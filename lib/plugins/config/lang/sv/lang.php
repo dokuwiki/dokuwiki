@@ -8,6 +8,7 @@
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
+ * @author emil@sys.nu
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.

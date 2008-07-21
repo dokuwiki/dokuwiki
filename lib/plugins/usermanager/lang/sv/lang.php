@@ -7,6 +7,7 @@
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
+ * @author emil@sys.nu
  */
 $lang['menu']                  = 'Hantera användare';
 $lang['noauth']                = '(användarautentisering ej tillgänlig)';

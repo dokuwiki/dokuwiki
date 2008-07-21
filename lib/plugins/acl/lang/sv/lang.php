@@ -8,6 +8,7 @@
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
+ * @author emil@sys.nu
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
 $lang['acl_group']             = 'Grupp';
