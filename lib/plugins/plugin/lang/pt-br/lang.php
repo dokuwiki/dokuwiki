@@ -4,6 +4,7 @@
  *
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
+ * @author Lucien Raven <lucienraven@yahoo.com.br>
  */
 $lang['menu']                  = 'Gerenciar Plugins';
 $lang['download']              = 'Transferir e instalar um novo plugin';

@@ -7,6 +7,7 @@
  * @author Alauton/Loug
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
+ * @author Lucien Raven <lucienraven@yahoo.com.br>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -109,6 +110,7 @@ $lang['namespaces']            = 'Ramos';
 $lang['mediafiles']            = 'Arquivos disponíveis em';
 $lang['js']['keepopen']        = 'Manter a janela aberta na seleção';
 $lang['js']['hidedetails']     = 'Esconder detalhes';
+$lang['js']['mu_btn']          = 'Enviar múltiplos arquivos de uma vez';
 $lang['mediausage']            = 'Use a seguinte sintaxe para se referir a esse arquivo:';
 $lang['mediaview']             = 'Ver arquivo original';
 $lang['mediaroot']             = 'raiz';
@@ -204,3 +206,16 @@ $lang['i_pol0']                = 'Wiki aberto (leitura, escrita e envio de arqui
 $lang['i_pol1']                = 'Wiki público (leitura por todos, escrita e envio de arquivos por usuários registrados)';
 $lang['i_pol2']                = 'Wiki fechado (leitura, escrita e envio de arquivos somente por usuários registrados)';
 $lang['i_retry']               = 'Tentar novamente';
+$lang['mu_intro']              = 'Aqui você pode enviar múltiplos arquivos de uma só vez. Clique no botão de navegação e adicione-os à fila. Pressione enviar quando estiver pronto.';
+$lang['mu_gridname']           = 'Nome do arquivo';
+$lang['mu_gridsize']           = 'Tamanho';
+$lang['mu_gridstat']           = 'Situação';
+$lang['mu_namespace']          = 'Área de nome';
+$lang['mu_browse']             = 'Navegar';
+$lang['mu_toobig']             = 'muito grande';
+$lang['mu_ready']              = 'pronto para enviar';
+$lang['mu_done']               = 'completo';
+$lang['mu_fail']               = 'falhou';
+$lang['mu_authfail']           = 'sessão expirou';
+$lang['mu_progress']           = '@PCT@% carregado';
+$lang['mu_filetypes']          = 'Tipos de arquivo permitidos';
