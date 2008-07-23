@@ -3,6 +3,7 @@
  * Chinese Traditional language file
  *
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  */
 $lang['menu']                  = '管理外掛(Plugins)';
 $lang['download']              = '下載與安裝外掛';
@@ -13,8 +14,10 @@ $lang['btn_delete']            = '刪除';
 $lang['btn_settings']          = '設定';
 $lang['btn_download']          = '下載';
 $lang['btn_enable']            = '儲存';
+$lang['url']                   = 'URL';
 $lang['installed']             = '安裝:';
 $lang['lastupdate']            = '上次更新:';
+$lang['source']                = '来源：';
 $lang['unknown']               = '未知';
 $lang['updating']              = '更新中 ...';
 $lang['updated']               = '外掛(Plugin) %s 成功地更新';
@@ -37,4 +40,8 @@ $lang['author']                = '作者:';
 $lang['www']                   = '網頁:';
 $lang['error']                 = '一個未知的錯誤發生。';
 $lang['error_download']        = '無法下載外掛檔案: %s';
+$lang['error_badurl']          = 'URL 可能有問題 - 從 URL 中無法得知文件名';
 $lang['error_dircreate']       = '無法建立暫存目錄來接收下載的內容';
+$lang['error_decompress']      = '插件管理器無法解壓下載的文件。這可能是由於下載出現錯誤，遇到這種情況，請您再次嘗試;或者是壓縮格式無法識別，遇到這種情況，您需要手動下載並安裝該插件。';
+$lang['error_copy']            = '嘗試安裝插件 <em>%s</em> 的相關文件時產生一個復制錯誤：磁盤空間已滿或文件訪問權限錯誤。這可能是由於一個安裝了一部分的插件，並使得您的維基系統不穩定。';
+$lang['error_delete']          = '嘗試刪除插件 <em>%s</em> 時產生一個錯誤。最有可能的情況是文件或路徑的訪問權限不夠';

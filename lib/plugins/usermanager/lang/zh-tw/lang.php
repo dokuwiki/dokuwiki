@@ -4,6 +4,7 @@
  *
  * @author chinsan <chinsan.tw@gmail.com>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  */
 $lang['menu']                  = '帳號管理員(User Manager)';
 $lang['noauth']                = '(帳號認證尚未開放)';

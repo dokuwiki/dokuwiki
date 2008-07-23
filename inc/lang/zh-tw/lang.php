@@ -5,9 +5,15 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = '編修本頁';
 $lang['btn_source']            = '顯示頁面來源';
 $lang['btn_show']              = '顯示頁面';
@@ -34,6 +40,8 @@ $lang['btn_backlink']          = 'Backlinks';
 $lang['btn_backtomedia']       = '重新選擇圖檔';
 $lang['btn_subscribe']         = '訂閱更動通知';
 $lang['btn_unsubscribe']       = '退訂更動通知';
+$lang['btn_subscribens']       = '訂閱命名空間更改';
+$lang['btn_unsubscribens']     = '退訂命名空間更改';
 $lang['btn_profile']           = '更新個人資料';
 $lang['btn_reset']             = '資料重設';
 $lang['btn_resendpwd']         = '寄新密碼';
@@ -72,6 +80,8 @@ $lang['resendna']              = '本 wiki 不開放重寄新密碼';
 $lang['resendpwd']             = '寄新密碼給';
 $lang['resendpwdmissing']      = '很抱歉，您必須全填這些資料才可以';
 $lang['resendpwdnouser']       = '很抱歉，資料庫內查無此人';
+$lang['resendpwdbadauth']      = '對不起，該認証碼錯誤。請使用完整的確認鏈接。';
+$lang['resendpwdconfirm']      = '確認鏈接已經通過郵件發送給您了。';
 $lang['resendpwdsuccess']      = '新密碼函已經以 email 寄出了。';
 $lang['txt_upload']            = '請選擇要上傳的檔案';
 $lang['txt_filename']          = '請輸入要存在 wiki 內的檔名 (optional)';
@@ -101,7 +111,7 @@ $lang['js']['hidedetails']     = '隱藏詳細內容';
 $lang['mediausage']            = '使用以下的語法來連結此檔案:';
 $lang['mediaview']             = '檢視原始檔案';
 $lang['mediaroot']             = 'root';
-$lang['mediaupload']           = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons.';
+$lang['mediaupload']           = '上傳文件至當前的命名空間。要創建次級命名空間，將其名稱加在“上傳並重命名為”文件名的前面，並用英文冒號隔開';
 $lang['mediaextchange']        = '檔案類型已由 .%s 變更為 .%s 囉!';
 $lang['reference']             = '引用到本頁的，合計有';
 $lang['ref_inuse']             = '這檔還不能刪除，因為還有以下的頁面在使用它：';
@@ -121,6 +131,7 @@ $lang['by']                    = '來自';
 $lang['deleted']               = '移除';
 $lang['created']               = '建立';
 $lang['restored']              = '已恢復為舊版';
+$lang['external_edit']         = '外部編輯';
 $lang['summary']               = '編輯摘要';
 $lang['mail_newpage']          = '增加的頁面:';
 $lang['mail_changed']          = '變更的頁面:';
@@ -171,9 +182,14 @@ $lang['unsubscribe_error']     = '要把『%s』從 %s 訂閱清單中移除時�
 $lang['authmodfailed']         = '帳號認證的設定不正確，請通知該 Wiki 管理員。';
 $lang['authtempfail']          = '帳號認證目前暫不提供，若本狀況持續發生的話，請通知該 Wiki 管理員。';
 $lang['i_chooselang']          = '選擇您的語系';
+$lang['i_installer']           = 'DokuWiki 安裝工具';
 $lang['i_wikiname']            = 'Wiki名稱';
 $lang['i_enableacl']           = '使用ACL(建議)';
+$lang['i_superuser']           = '超級用戶';
 $lang['i_problems']            = 'Installer發現一些問題，顯示如下。您將無法繼續直到您修正它們。';
+$lang['i_modified']            = '由於安全上的考慮，該腳本隻能用於全新且做任何改動的 Dokuwiki 安裝包。
+                         您可以重新解壓下載的程序包，或查閱完整的
+                         <a href=\"http://wiki.splitbrain.org/wiki:install\">Dokuwiki 安裝指南</a>';
 $lang['i_funcna']              = 'PHP function <code>%s</code> 無法使用. 也許你的主機供應者停用它或是其他原因?';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 比所需要的版本 <code>%s</code> 還低. 您需要更新您的PHP.';
 $lang['i_permfail']            = '<code>%s</code> 無法被 DokuWiki 所寫入. 您需要修正該目錄的權限!';

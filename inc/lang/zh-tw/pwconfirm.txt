@@ -1,0 +1,13 @@
+@FULLNAME@ 您好！
+
+有人請求為您在 @DOKUWIKIURL@ 注冊的用戶名 @TITLE@ 發送新密碼
+
+如果您沒有請求發送新密碼，請忽略這封郵件。
+
+為了確認發送新密碼請求的確來自您，請使用下面的鏈接。
+
+@CONFIRM@
+
+--
+本郵件由 DokuWiki 自動創建
+@DOKUWIKIURL@
