@@ -1,0 +1,14 @@
+Нова датотека је послата на Ваш DokuWiki. Ово су њени детањи:
+
+Датотека: @MEDIA@
+Датум: @DATE@
+Веб читач: @BROWSER@
+ИП адреса: @IPADDRESS@
+Домаћин: @HOSTNAME@
+Величина: @SIZE@
+MIME тип: @MIME@
+Корисник: @USER@
+
+--
+Ову поруку је генерисао DokuWiki sa
+@DOKUWIKIURL@
