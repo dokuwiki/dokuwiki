@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html) 
  * @author ZDYX <zhangduyixiong@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -138,7 +139,7 @@ $lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'DokuWiki 内部控制';
 $lang['deaccent_o_0']          = '关闭';
 $lang['deaccent_o_1']          = '移除重音符号';
-$lang['deaccent_o_2']          = 'romanize';
+$lang['deaccent_o_2']          = '用罗马字拼写';
 $lang['gdlib_o_0']             = 'GD 库不可用';
 $lang['gdlib_o_1']             = '1.x 版';
 $lang['gdlib_o_2']             = '自动检测';

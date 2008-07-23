@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author ZDYX <zhangduyixiong@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';

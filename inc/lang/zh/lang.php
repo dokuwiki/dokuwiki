@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html) 
  * @author ZDYX <zhangduyixiong@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -120,6 +121,7 @@ $lang['toc']                   = '目录';
 $lang['current']               = '当前版本';
 $lang['yours']                 = '您的版本';
 $lang['diff']                  = '显示与当前版本的差别';
+$lang['diff2']                 = '显示跟目前版本的差异';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '您的足迹';
 $lang['youarehere']            = '您在这里';

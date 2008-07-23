@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author ZDYX <zhangduyixiong@gmail.com>
+ * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  */
 $lang['menu']                  = '还原管理器';
 $lang['filter']                = '搜索包含垃圾信息的页面';
