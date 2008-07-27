@@ -245,7 +245,8 @@ function get_cropped($file, $ext, $w, $h=0){
   global $conf;
 
   if(!$h) $h = $w;
-  $info = getimagesize($file); //get original size
+  $info = @getimagesize($file); //get original size
+  if($info == false) return $file; // that's no image - it's a spaceship!
 
   // calculate crop size
   $fr = $info[0]/$info[1];
