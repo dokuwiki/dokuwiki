@@ -10,6 +10,7 @@
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
+ * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -112,6 +113,7 @@ $lang['namespaces']            = 'Navnerom';
 $lang['mediafiles']            = 'Tilgjengelige filer i';
 $lang['js']['keepopen']        = 'Hold vindu åpent ved valg';
 $lang['js']['hidedetails']     = 'Skjul detaljer';
+$lang['js']['mu_btn']          = 'Last opp flere filer samtidig';
 $lang['mediausage']            = 'Bruk følgende syntaks til å refferer til denne filen:';
 $lang['mediaview']             = 'Vis original fil';
 $lang['mediaroot']             = 'rot';
@@ -210,3 +212,15 @@ $lang['i_pol0']                = 'Åpen Wiki (les, skriv og opplasting for alle)
 $lang['i_pol1']                = 'Offentlig Wiki (les for alle, skriving og opplasting bare for registrerte brukere)';
 $lang['i_pol2']                = 'Lukket Wiki (les, skriv og opplasting bare for registrerte brukere)';
 $lang['i_retry']               = 'Prøv igjen';
+$lang['mu_intro']              = 'Her kan du laste opp flere filer samtidig. Klikk på utforsk-knappen for å legge dem til i køen. Klikk på "last opp" når du er ferdig med å velge filene. ';
+$lang['mu_gridname']           = 'Filnavn';
+$lang['mu_gridsize']           = 'Størrelse';
+$lang['mu_gridstat']           = 'Status';
+$lang['mu_browse']             = 'Utforsk';
+$lang['mu_toobig']             = 'for stor';
+$lang['mu_ready']              = 'klar for opplasting';
+$lang['mu_done']               = 'komplett';
+$lang['mu_fail']               = 'feilet';
+$lang['mu_authfail']           = 'sesjonen har utløpt';
+$lang['mu_progress']           = '@PCT@% lastet opp';
+$lang['mu_filetypes']          = 'Tillatte filtyper';

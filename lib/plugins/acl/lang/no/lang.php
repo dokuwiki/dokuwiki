@@ -9,6 +9,7 @@
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
+ * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
 $lang['acl_group']             = 'Gruppe';
