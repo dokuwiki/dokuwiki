@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Oleksiy Voronin (ovoronin@gmail.com)
+ * @author serg_stetsuk@ukr.net
  */
 $lang['menu']                  = 'Керування доданками';
 $lang['download']              = 'Завантажити та встановити новий доданок';

@@ -4,9 +4,15 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Oleksiy Voronin <ovoronin@gmail.com>
+ * @author serg_stetsuk@ukr.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Редагувати';
 $lang['btn_source']            = 'Показати вихідний текст';
 $lang['btn_show']              = 'Показати сторінку';
@@ -101,6 +107,7 @@ $lang['namespaces']            = 'Простори імен';
 $lang['mediafiles']            = 'Доступні файли';
 $lang['js']['keepopen']        = 'Тримати вікно відкритим під час вибору';
 $lang['js']['hidedetails']     = 'Сховати деталі';
+$lang['js']['mu_btn']          = 'Завантажити одночасно кілька файлів';
 $lang['mediausage']            = 'Для посилання на цей файл використовуйте такий синтаксіс:';
 $lang['mediaview']             = 'Переглянути оригінальний файл';
 $lang['mediaroot']             = 'корінь';
@@ -199,3 +206,16 @@ $lang['i_pol0']                = 'Відкрита Вікі Wiki (читання
 $lang['i_pol1']                = 'Публічна Вікі (читання для всіх, запис та завантаження для зареєстрованих користувачів)';
 $lang['i_pol2']                = 'Закрита Вікі (читання, запис та завантаження тільки для зареєстрованих користувачів)';
 $lang['i_retry']               = 'Повторити';
+$lang['mu_intro']              = 'Тут ви можете завантажити одночасно кілька файлів. Натисніть кнопку "Вибрати", щоб додати файли в чергу. Після закінчення натисніть кнопку "Завантажити"';
+$lang['mu_gridname']           = 'Назва файлу';
+$lang['mu_gridsize']           = 'Розмір';
+$lang['mu_gridstat']           = 'Статус';
+$lang['mu_namespace']          = 'Простір імен';
+$lang['mu_browse']             = 'Вибрати';
+$lang['mu_toobig']             = 'надто великий';
+$lang['mu_ready']              = 'готовий до завантаження';
+$lang['mu_done']               = 'закінчено';
+$lang['mu_fail']               = 'неуспішне';
+$lang['mu_authfail']           = 'закінчено термін дії сесії';
+$lang['mu_progress']           = 'Завантаження @PCT@%';
+$lang['mu_filetypes']          = 'Дозволені типи файлів';

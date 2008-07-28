@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Oleksiy Voronin <ovoronin@gmail.com>
+ * @author serg_stetsuk@ukr.net
  */
 $lang['menu']                  = 'Налагодження конфігурації';
 $lang['error']                 = 'Параметри не збережені через помилкові значення. Будь ласка, перегляньте ваші зміни та спробуйте ще раз
@@ -37,7 +38,7 @@ $lang['lang']                  = 'Мова';
 $lang['basedir']               = 'Коренева тека';
 $lang['baseurl']               = 'Кореневий URL';
 $lang['savedir']               = 'Тека для збереження даних';
-$lang['start']                 = 'Найменування стартової сторінки';
+$lang['start']                 = 'Назва стартової сторінки';
 $lang['title']                 = 'Назва Вікі';
 $lang['template']              = 'Шаблон';
 $lang['fullpath']              = 'Повний шлях до документу';
@@ -102,9 +103,18 @@ $lang['compress']              = 'Стискати файли CSS та javascrip
 $lang['hidepages']             = 'Ховати сторінки (regular expressions)';
 $lang['send404']               = 'Надсилати "HTTP 404/Сторінка не знайдена " для неіснуючих сторінок';
 $lang['sitemap']               = 'Створювати мапу сайту для Google (дні)';
+$lang['broken_iua']            = 'На вашій системі зіпсута функція ignore_user_abort? Це може зіпсувати пошукову систему. IIS+PHP/CGI зіпсуто. Дивіться <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> для отримання додаткової інформації';
+$lang['xsendfile']             = 'Використовувати заголовок X-Sendfile для доставки статичних файлів веб сервером? Ваш веб сервер повинен підтримувати цю функцію.';
+$lang['xmlrpc']                = 'Дозволити/заборонити XML-RPC інтерфейс';
+$lang['renderer_xhtml']        = 'Транслятор (Renderer) для основного виводу wiki (xhtml)';
+$lang['renderer__core']        = '%s (ядро докувікі)';
+$lang['renderer__plugin']      = '%s (доданок)';
 $lang['rss_type']              = 'тип RSS';
 $lang['rss_linkto']            = 'посилання в RSS';
+$lang['rss_content']           = 'Що відображати в пунктах XML-feed';
 $lang['rss_update']            = 'Інтервал оновлення RSS (сек)';
+$lang['recent_days']           = 'Скільки останніх змін пам\'ятати (дні)';
+$lang['rss_show_summary']      = 'Показувати підсумки змін в заголовку XML-feed';
 $lang['target____wiki']        = 'Target для внутрішніх посилань';
 $lang['target____interwiki']   = 'Target для інтервікі-посилань';
 $lang['target____extern']      = 'Target для зовнішніх посилань';
@@ -121,6 +131,9 @@ $lang['ftp____port']           = 'FTP-порт для хака safemode';
 $lang['ftp____user']           = 'Користувач FTP для хака safemode';
 $lang['ftp____pass']           = 'Пароль FTP для хака safemode';
 $lang['ftp____root']           = 'Коренева тека FTP для хака safemode';
+$lang['typography_o_0']        = 'жодного';
+$lang['typography_o_1']        = 'Лише подвійні лапки';
+$lang['typography_o_2']        = 'Всі лапки (може не завжди працювати)';
 $lang['userewrite_o_0']        = 'немає';
 $lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'Засобами ДокуВікі';
@@ -134,7 +147,19 @@ $lang['rss_type_o_rss']        = 'RSS 0.91';
 $lang['rss_type_o_rss1']       = 'RSS 1.0';
 $lang['rss_type_o_rss2']       = 'RSS 2.0';
 $lang['rss_type_o_atom']       = 'Atom 0.3';
+$lang['rss_type_o_atom1']      = 'Atom 1.0';
+$lang['rss_content_o_abstract'] = 'Короткий зміст';
+$lang['rss_content_o_diff']    = 'Об\'єднані зміни (diff)';
+$lang['rss_content_o_htmldiff'] = 'Таблиця змін у форматі HTML';
+$lang['rss_content_o_html']    = 'Повний зміст сторінки HTML';
 $lang['rss_linkto_o_diff']     = 'перегляд відмінностей';
 $lang['rss_linkto_o_page']     = 'текст сторінки';
 $lang['rss_linkto_o_rev']      = 'перелік ревізій';
 $lang['rss_linkto_o_current']  = 'поточна сторінка';
+$lang['compression_o_0']       = 'немає';
+$lang['compression_o_gz']      = 'gzip';
+$lang['compression_o_bz2']     = 'bz2';
+$lang['xsendfile_o_0']         = 'не використовувати';
+$lang['xsendfile_o_1']         = 'Пропрієтарний lighthttpd заголовок (до версії 1.5)';
+$lang['xsendfile_o_2']         = 'Стандартний X-Sendfile заголовок';
+$lang['xsendfile_o_3']         = 'Пропрієтарний Nginx X-Accel-Redirect заголовок';

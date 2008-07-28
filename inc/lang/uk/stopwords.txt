@@ -1,4 +1,3 @@
-# This is a list of words the indexer ignores, one word per line
-# When you edit this file be sure to use UNIX line endings (single newline)
-# No need to include words shorter than 3 chars - these are ignored anyway
-# This list is based upon the ones found at http://www.ranks.nl/stopwords/
+# Це список ігророваних індексатором слів, одне слово в рядку
+# При редагуванні цього файлу переконайтеся, що використовуєте UNIXові переводи рядка (одиночні)
+# Слова, коротші за 3 символи включати не треба. Вони ігноруються в будь-якому випадку
