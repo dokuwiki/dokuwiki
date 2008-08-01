@@ -71,7 +71,7 @@ function css_out(){
         // load plugin, template, user styles
         $files = array_merge($files, css_pluginstyles($style));
         if (isset($tplstyles[$style])) $files = array_merge($files, $tplstyles[$style]);
-        $files[DOKU_CONF.'user'.$style.'.css'] = '';
+        $files[DOKU_CONF.'user'.$style.'.css'] = DOKU_BASE;
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
         if($conf['spellchecker']){
@@ -83,7 +83,7 @@ function css_out(){
         if($lang['direction'] == 'rtl'){
             if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
         }
-        $files[DOKU_CONF.'userstyle.css'] = '';
+        $files[DOKU_CONF.'userstyle.css'] = DOKU_BASE;
     }
 
     // check cache age & handle conditional request
