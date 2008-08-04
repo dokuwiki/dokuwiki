@@ -96,15 +96,15 @@ function cleanID($raw_id,$ascii=false){
   $cache = & $cache_cleanid;
 
   // check if it's already in the memory cache
-  if (isset($cache[$raw_id])) {
-    return $cache[$raw_id];
+  if (isset($cache[(string)$raw_id])) {
+    return $cache[(string)$raw_id];
     }
 
   $sepchar = $conf['sepchar'];
   if($sepcharpat == null) // build string only once to save clock cycles
     $sepcharpat = '#\\'.$sepchar.'+#';
 
-  $id = trim($raw_id);
+  $id = trim((string)$raw_id);
   $id = utf8_strtolower($id);
 
   //alternative namespace seperator
@@ -129,7 +129,7 @@ function cleanID($raw_id,$ascii=false){
   $id = trim($id,':._-');
   $id = preg_replace('#:[:\._\-]+#',':',$id);
 
-  $cache[$raw_id] = $id;
+  $cache[(string)$raw_id] = $id;
   return($id);
 }
 
@@ -139,9 +139,9 @@ function cleanID($raw_id,$ascii=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getNS($id){
-  $pos = strrpos($id,':');
+  $pos = strrpos((string)$id,':');
   if($pos!==false){
-    return substr($id,0,$pos);
+    return substr((string)$id,0,$pos);
   }
   return false;
 }

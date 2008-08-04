@@ -223,7 +223,7 @@ function buildURLparams($params, $sep='&amp;'){
     if($amp) $url .= $sep;
 
     $url .= $key.'=';
-    $url .= rawurlencode($val);
+    $url .= rawurlencode((string)$val);
     $amp = true;
   }
   return $url;

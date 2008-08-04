@@ -359,7 +359,7 @@ function p_purge_metadata($id) {
 function p_read_metadata($id,$cache=false) {
   global $cache_metadata;
 
-  if (isset($cache_metadata[$id])) return $cache_metadata[$id];
+  if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
 
   $file = metaFN($id, '.meta');
   $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
@@ -385,7 +385,7 @@ function p_read_metadata($id,$cache=false) {
   }
 
   if ($cache) {
-    $cache_metadata[$id] = $meta;
+    $cache_metadata[(string)$id] = $meta;
   }
 
   return $meta;

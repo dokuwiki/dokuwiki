@@ -8,6 +8,7 @@ require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/search.php');
 require_once(DOKU_INC.'inc/indexer.php');
+require_once(DOKU_INC.'inc/auth.php');
 require_once(DOKU_INC.'inc/cliopts.php');
 session_write_close();
 
