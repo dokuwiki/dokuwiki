@@ -100,7 +100,7 @@
  */
 function sendFile($file,$mime,$cache){
   global $conf;
-  $fmtime = filemtime($file);
+  $fmtime = @filemtime($file);
   // send headers
   header("Content-Type: $mime");
   // smart http caching headers
@@ -212,7 +212,9 @@ function http_rangeRequest($size){
 function get_resized($file, $ext, $w, $h=0){
   global $conf;
 
-  $info  = getimagesize($file);
+  $info = @getimagesize($file); //get original size
+  if($info == false) return $file; // that's no image - it's a spaceship!
+
   if(!$h) $h = round(($w * $info[1]) / $info[0]);
 
   // we wont scale up to infinity
