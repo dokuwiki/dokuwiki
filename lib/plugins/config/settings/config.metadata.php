@@ -112,7 +112,7 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','sha1','ssha','crypt','mysql','my411'));
+$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','crypt','mysql','my411'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');
