@@ -11,5 +11,5 @@ zien en aan te passen voor een selecteerde user of groep.
 In de tabel hieronder worden alle momenteel ingestelde toegangsregels weergegeven.
 Je kunt hier snel regels wijzigen of verwijderen.
 
-Het lezen van [[doku>wiki:acl|documentatie over ACLs]] helpt om de mogelijkheden
+Het lezen van [[doku>acl|documentatie over ACLs]] helpt om de mogelijkheden
 volledig te begrijpen.

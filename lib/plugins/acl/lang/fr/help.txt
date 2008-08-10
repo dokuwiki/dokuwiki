@@ -7,4 +7,4 @@ Le formulaire au dessus permet d'afficher et de modifier les permissions d'un ut
 Dans la table ci-dessous toutes les listes de contrôle d'accès actuelles sont affichées.
 Vous pouvez l'utiliser pour supprimer ou modifier rapidement plusieurs ACLs.
 
-La lecture de [[doku>wiki:acl|la documentation officielle des ACLs]] pourra vous permettre de comprendre complètement le fonctionnement du contrôle d'accès dans DokuWiki.
+La lecture de [[doku>acl|la documentation officielle des ACLs]] pourra vous permettre de comprendre complètement le fonctionnement du contrôle d'accès dans DokuWiki.

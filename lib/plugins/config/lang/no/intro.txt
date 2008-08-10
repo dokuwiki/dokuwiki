@@ -1,7 +1,7 @@
 ====== Konfigurasjonsinnstillinger ======
 
 Bruk denne siden for å kontrollere innstillingene for din DokuWiki.
-For hjelp om hver enkelt innstilling, se [[doku>wiki:config]].
+For hjelp om hver enkelt innstilling, se [[doku>config]].
 For mer detaljer om denne innstillingssiden, se [[doku>plugin:config]].
 
 Innstillinger vist med lys rød bakgrunn er beskyttet og kan ikke endres på denne siden.

@@ -8,4 +8,4 @@ Das Formular oben erlaubt Anzeige, Ändern und Hinzufügen von Zugriffsregeln f�
 
 In der Tabelle unten werden alle bestehenden Regeln aufgeführt und können dort modifiziert oder gelöscht werden.
 
-Für ein tiefergehendes Verständnis wie Zugriffsbeschränkungen in DokuWiki funktionieren, sollten Sie die [[doku>wiki:acl|offizielle Dokumentation]] lesen.
+Für ein tiefergehendes Verständnis wie Zugriffsbeschränkungen in DokuWiki funktionieren, sollten Sie die [[doku>acl|offizielle Dokumentation]] lesen.

@@ -1,7 +1,7 @@
 ====== Konfigurationsstyring ======
 
 Brug denne side til at kontrollere indstillingerne for din Dokuwiki installation.  
-For hjælp med specifikke indstillinger, se [[doku>wiki:config]].
+For hjælp med specifikke indstillinger, se [[doku>config]].
 For flere detaljer om dette plugin, se [[doku>plugin:config]].
 
 Indstillinger vist med lys rød baggrund er beskyttede og kan ikke ændres med dette plugin.

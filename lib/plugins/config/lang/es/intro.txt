@@ -2,7 +2,7 @@
 
 Usa esta página para controlar los parámetros de tu instalación
 de Dokuwiki.
-Ayuda sobre [[doku>wiki:config|parámetros individuales]].
+Ayuda sobre [[doku>config|parámetros individuales]].
 Más detalles sobre este [[doku>plugin:config|plugin]].
 
 Los parámetros que se muestran sobre un fondo rosado están protegidos y no pueden ser modificados

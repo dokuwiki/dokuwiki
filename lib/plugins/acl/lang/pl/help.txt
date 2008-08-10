@@ -8,4 +8,4 @@ Formularz powyżej pozwala wyświetlać uprawnienia wybranego użytkownika oraz 
 
 W tabeli poniżej znajdują się wszystkie aktywne reguły dotyczące uprawnień.
 
-Więcej informacji na temat uprawnień w DokuWiki możesz znaleźć w [[doku>wiki:acl|oficjalnej dokumentacji uprawnień]].
+Więcej informacji na temat uprawnień w DokuWiki możesz znaleźć w [[doku>acl|oficjalnej dokumentacji uprawnień]].

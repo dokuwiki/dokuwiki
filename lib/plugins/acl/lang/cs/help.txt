@@ -9,4 +9,4 @@ Formulář výše umožňuje vidět a modifikovat oprávnění vybraného uživa
 V tabulce uvedené níže jsou zobrazeny všechny aktuální pravidla pro řízení přístupu (oprávnění).
 Zde můžete rychle odebírat a měnit více položek (oprávnění) najednou.
 
-Pro detailnější nápovědu si přečtěte stránku [[doku>wiki:acl|oficiální dokumentaci ACL]], která Vám může pomoci plně pochopit princip, jak řízení přístupu na DokuWiki funguje.
+Pro detailnější nápovědu si přečtěte stránku [[doku>acl|oficiální dokumentaci ACL]], která Vám může pomoci plně pochopit princip, jak řízení přístupu na DokuWiki funguje.

@@ -1,7 +1,7 @@
 ====== Manager Configurare ======
 
 Folosiţi această pagină pentru a controla setările instalării DokuWiki.
-Pentru ajutor la probleme punctuale, consultaţi [[doku>wiki:config]].
+Pentru ajutor la probleme punctuale, consultaţi [[doku>config]].
 Pentru mai multe detalii privind acest plugin, consultaţi [[doku>plugin:config]].
 
 Setările pe un fond roşu-deschis sunt protejate şi nu pot fi modificate cu acest plugin.

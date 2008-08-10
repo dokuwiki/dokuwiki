@@ -1,6 +1,6 @@
 ====== Formatting Syntax ======
 
-[[wiki:DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing the //Edit this page// button at the top or bottom of the page. If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>wiki:quickbuttons|quickbuttons]], too.
+[[doku>DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing the //Edit this page// button at the top or bottom of the page. If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>toolbar|quickbuttons]], too.
 
 ===== Basic text formatting =====
 
@@ -44,17 +44,17 @@ External links are recognized automagically: http://www.google.com or simply www
 
 ==== Internal ====
 
-Internal links are created by using square brackets. You can either just give a [[doku>wiki:pagename]] or use an additional [[doku>wiki:pagename|Title Text]]. Wiki pagenames are converted to lowercase automatically, special characters are not allowed. 
+Internal links are created by using square brackets. You can either just give a [[doku>pagename]] or use an additional [[doku>pagename|Title Text]]. Wiki pagenames are converted to lowercase automatically, special characters are not allowed. 
 
   Internal links are created by using square brackets. You can either just give
-  a [[pagename]] or use an additional [[pagename|Title Text]]. Wiki pagenames
+  a [[doku>pagename]] or use an additional [[doku>pagename|Title Text]]. Wiki pagenames
   are converted to lowercase automatically, special chars are not allowed.
 
-You can use [[wiki:namespaces]] by using a colon in the pagename.
+You can use [[namespaces]] by using a colon in the pagename.
 
-  You can use [[wiki:namespaces]] by using a colon in the pagename.
+  You can use [[namespaces]] by using a colon in the pagename.
 
-For details about namespaces see [[doku>wiki:namespaces]].
+For details about namespaces see [[doku>namespaces]].
 
 Linking to a specific section is possible, too. Just add the section name behind a hash character as known from HTML. This links to [[syntax#internal|this Section]].
 
@@ -62,21 +62,21 @@ Linking to a specific section is possible, too. Just add the section name behind
 
 Notes:
 
-  * Links to [[wiki:syntax|existing pages]] are shown in a different style from [[wiki:nonexisting]] ones.
-  * DokuWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behaviour can be enabled in the [[doku>wiki:config]] file. Hint: If DokuWiki is a link, then it's enabled.
+  * Links to [[syntax|existing pages]] are shown in a different style from [[nonexisting]] ones.
+  * DokuWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behavior can be enabled in the [[doku>config]] file. Hint: If DokuWiki is a link, then it's enabled.
   * When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.
 
 ==== Interwiki ====
 
-DokuWiki supports [[doku>wiki:interwiki|Interwiki]] links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
+DokuWiki supports [[doku>Interwiki]] links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
-  DokuWiki supports [[doku>wiki:interwiki|Interwiki]] links. These are quick links to other Wikis.
+  DokuWiki supports [[doku>Interwiki]] links. These are quick links to other Wikis.
   For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
 
 ==== Windows Shares ====
 
-Windows shares like [[\\server\share|this]] are recognized, too. Please note that these only make sense in a homogenous user group like a corporate [[wp>Intranet]].
+Windows shares like [[\\server\share|this]] are recognized, too. Please note that these only make sense in a homogeneous user group like a corporate [[wp>Intranet]].
 
   Windows Shares like [[\\server\share|this]] are recognized, too.
 
@@ -122,7 +122,7 @@ By using four or more dashes, you can make a horizontal line:
 
 ===== Images and other files =====
 
-You can include external and internal [[doku>wiki:images]] with curly brackets. Optionally you can specify the size of them.
+You can include external and internal [[doku>images]] with curly brackets. Optionally you can specify the size of them.
 
 Real size:                        {{wiki:dokuwiki-128.png}}
 
@@ -223,7 +223,7 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
 "He thought 'It's a man's world'..."
 </code>
 
-Please note: These conversions can be turned off through a [[doku>wiki:config#typography|config option]] and a [[doku>wiki:entities|pattern file]].
+Please note: These conversions can be turned off through a [[doku>config:typography|config option]] and a [[doku>entities|pattern file]].
 
 ===== Quoting =====
 
@@ -323,7 +323,7 @@ See the source of this page to see how to use these blocks.
 
 ===== Syntax Highlighting =====
 
-[[DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax is the same like in the code block in the previous section, but this time the name of the used language is inserted inside the tag. Eg. ''<nowiki><code java></nowiki>''.
+[[wiki:DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax is the same like in the code block in the previous section, but this time the name of the used language is inserted inside the tag. Eg. ''<nowiki><code java></nowiki>''.
 
 <code java>
 /** 
@@ -348,10 +348,10 @@ The following language strings are currently recognized: //abap actionscript-fre
 | reverse    | display the last items in the feed first |
 | author     | show item authors names |
 | date       | show item dates |
-| description| show the item description. If [[doku>wiki:config#htmlok|HTML]] is disabled all tags will be stripped |
+| description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
 | //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 
-The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
 
 **Example:**
 
@@ -415,6 +415,6 @@ Some syntax influences how DokuWiki renders a page without creating any output i
 
 ===== Syntax Plugins =====
 
-DokuWiki's syntax can be extended by [[doku>wiki:plugins|Plugins]]. How the installed plugins are used is described on their appropriate description pages. The following syntax plugins are available in this particular DokuWiki installation:
+DokuWiki's syntax can be extended by [[doku>plugins|Plugins]]. How the installed plugins are used is described on their appropriate description pages. The following syntax plugins are available in this particular DokuWiki installation:
 
 ~~INFO:syntaxplugins~~

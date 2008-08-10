@@ -8,4 +8,4 @@
 
 아래 테이블에서 현재 설정된 모든 접근 제어 규칙들을 볼 수 있으며, 즉시 여러 규칙들을 삭제하거나  변경할 수 있습니다.
 
-DokuWiki에서 접근 제어가 어떻게 동작되는지 알려면  [[doku>wiki:acl|official documentation on ACL]] 읽기 바랍니다.
+DokuWiki에서 접근 제어가 어떻게 동작되는지 알려면  [[doku>acl|official documentation on ACL]] 읽기 바랍니다.

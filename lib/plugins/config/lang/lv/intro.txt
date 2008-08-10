@@ -1,7 +1,7 @@
 ====== Konfigurācijas vednis ======
 
 Lapā var uzdot DokuWiki instalācijas iestatījumus.
-Palīdzību par atsevišķiem iestatījumiem meklēt [[doku>wiki:config]].
+Palīdzību par atsevišķiem iestatījumiem meklēt [[doku>config]].
 Sīkākas ziņas par šo moduli skatīt  [[doku>plugin:config]].
 
 Ar sarkanu fonu parādītie iestatījumi ir aizsargāti un ar šo moduli nav labojami.

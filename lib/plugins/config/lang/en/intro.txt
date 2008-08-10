@@ -1,7 +1,7 @@
 ====== Configuration Manager ======
 
 Use this page to control the settings of your DokuWiki installation.  
-For help on individual settings refer to [[doku>wiki:config]].
+For help on individual settings refer to [[doku>config]].
 For more details about this plugin see [[doku>plugin:config]].
 
 Settings shown with a light red background are protected and can not be altered with this plugin.

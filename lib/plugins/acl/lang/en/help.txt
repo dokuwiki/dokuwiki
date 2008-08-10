@@ -11,6 +11,6 @@ selected user or group.
 In the table below all currently set access control rules are shown.
 You can use it to quickly delete or change multiple rules.
 
-Reading the [[doku>wiki:acl|official documentation on ACL]] might help
+Reading the [[doku>acl|official documentation on ACL]] might help
 you to fully understand how access control works in DokuWiki.
 

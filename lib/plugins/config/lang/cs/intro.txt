@@ -1,7 +1,7 @@
 ====== Správa nastavení ======
 
 Tuto stránku můžete používat ke správě nastavení vaší instalace DokuWiki.
-Nápovědu pro konkrétní položky nastavení naleznete na [[doku>wiki:config]].
+Nápovědu pro konkrétní položky nastavení naleznete na [[doku>config]].
 Pro další detaily o tomto pluginu viz [[doku>plugin:config]].
 
 Položky se světle červeným pozadím jsou chráněné a nelze je upravovat tímto

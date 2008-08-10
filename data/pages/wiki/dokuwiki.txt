@@ -11,57 +11,57 @@ DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
 
 ===== Read More =====
 
-All documentation and additional information besides the [[syntax|syntax description]] is maintained in the DokuWiki at [[doku>wiki:dokuwiki|wiki.splitbrain.org]].
+All documentation and additional information besides the [[syntax|syntax description]] is maintained in the DokuWiki at [[doku>|www.dokuwiki.org]].
 
 **About DokuWiki**
 
-  * [[doku>wiki:features|A feature list]] :!:
-  * [[doku>wiki:users|Happy Users]]
-  * [[doku>wiki:press|Who wrote about it]]
-  * [[doku>wiki:blogroll|What Bloggers think]]
+  * [[doku>features|A feature list]] :!:
+  * [[doku>users|Happy Users]]
+  * [[doku>press|Who wrote about it]]
+  * [[doku>blogroll|What Bloggers think]]
   * [[http://www.wikimatrix.org/show/DokuWiki|Compare it with other wiki software]]
 
 **Installing DokuWiki**
 
-  * [[doku>wiki:requirements|System Requirements]]
+  * [[doku>requirements|System Requirements]]
   * [[http://www.splitbrain.org/go/dokuwiki|Download DokuWiki]] :!:
-  * [[doku>wiki:changes|Change Log]]
-  * [[doku>wiki:Install|How to install or upgrade]] :!:
-  * [[doku>wiki:config|Configuration]]
+  * [[doku>changes|Change Log]]
+  * [[doku>Install|How to install or upgrade]] :!:
+  * [[doku>config|Configuration]]
 
 **Using DokuWiki**
 
-  * [[wiki:syntax|Wiki Syntax]]
-  * [[doku>wiki:manual|The manual]] :!:
-  * [[doku>wiki:FAQ|Frequently Asked Questions (FAQ)]]
-  * [[doku>wiki:glossary|Glossary]]
+  * [[doku>syntax|Wiki Syntax]]
+  * [[doku>manual|The manual]] :!:
+  * [[doku>FAQ|Frequently Asked Questions (FAQ)]]
+  * [[doku>glossary|Glossary]]
   * [[http://search.dokuwiki.org|Search for DokuWiki help and documentation]]
 
 **Customizing DokuWiki**
 
-  * [[doku>wiki:tips|Tips and Tricks]]
-  * [[doku>wiki:tpl:templates|How to create and use templates]]
-  * [[doku>wiki:plugins|Installing plugins]]
-  * [[doku>wiki:development|Development Resources]]
+  * [[doku>tips|Tips and Tricks]]
+  * [[doku>Template|How to create and use templates]]
+  * [[doku>plugins|Installing plugins]]
+  * [[doku>development|Development Resources]]
 
 **DokuWiki Feedback and Community**
 
-  * [[doku>wiki:mailinglist|Join the mailing list]] :!:
-  * [[doku>wiki:forum|Check out the user forum]]
-  * [[doku>wiki:irc|Talk to other users in the IRC channel]]
+  * [[doku>mailinglist|Join the mailing list]] :!:
+  * [[http://forum.dokuwiki.org|Check out the user forum]]
+  * [[doku>irc|Talk to other users in the IRC channel]]
   * [[http://bugs.splitbrain.org/index.php?project=1|Submit bugs and feature wishes]]
   * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
-  * [[doku>wiki:thanks|Some humble thanks]]
+  * [[doku>thanks|Some humble thanks]]
 
 
 ===== Copyright =====
 
-2004-2008 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>wiki:mailinglist|mailinglist]] or [[http://forum.dokuwiki.org|forum]] instead))
+2004-2008 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[http://forum.dokuwiki.org|forum]] instead))
 
-The DokuWiki engine is licensed under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>wiki:donate|donating]] a few bucks ;-).
+The DokuWiki engine is licensed under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
 
-The content published in the DokuWiki at http://www.splitbrain.org/dokuwiki/ is licensed under the [[http://creativecommons.org/licenses/by-nc-sa/2.0/|Creative Commons Attribution-NonCommercial-ShareAlike License]] Version 2.0.
+The content published in the DokuWiki at http://www.dokuwiki.org/ is licensed under the [[http://creativecommons.org/licenses/by-nc-sa/2.0/|Creative Commons Attribution-NonCommercial-ShareAlike License]] Version 2.0.
 
 An exception is made for the content which distributed in the download tarball((files inside the ''data'' directory -- eg: ''dokuwiki.txt'', ''syntax.txt'', ''dokuwiki-128.png'')) which is, for compatibility reasons, licensed under the GNU General Public License Version 2 as well.
 
-Not sure what this means? See the [[doku>wiki:faq:license|FAQ on the Licenses]].
+Not sure what this means? See the [[doku>faq:license|FAQ on the Licenses]].

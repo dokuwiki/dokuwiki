@@ -8,4 +8,4 @@ Formularul de sus vă permite să vedeţi şi să modificaţi autorizaţiile unu
 
 In tabelul de jos sunt arătate toate regulile de control a accesului setate. Îl puteţi folosi pentru a şterge sau modifica rapid mai multe reguli.
 
-Consultarea [[doku>wiki:acl|official documentation on ACL]] vă poate ajuta să înţelegeţi deplin cum funcţionează controlul accesului în DocuWiki.
+Consultarea [[doku>acl|official documentation on ACL]] vă poate ajuta să înţelegeţi deplin cum funcţionează controlul accesului în DocuWiki.

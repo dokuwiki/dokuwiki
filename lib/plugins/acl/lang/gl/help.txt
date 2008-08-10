@@ -11,5 +11,5 @@ usuario ou grupo seleccionado.
 Na táboa de embaixo amósanse todas as regras de control de accesos establecidas.
 Podes empregala para mudar ou eliminar varias regras dun xeito rápido.
 
-A lectura da [[doku>wiki:acl|documentación oficial do ACL]] pode servirche de
+A lectura da [[doku>acl|documentación oficial do ACL]] pode servirche de
 axuda para comprender como funciona o control de accesos no Dokuwiki.

@@ -1,7 +1,7 @@
 ====== Hantera inställningar ======
 
 Använd den här sidan för att göra inställningar i din Dokuwiki.
-För hjälp angående specifika inställningar, se [[doku>wiki:config]].
+För hjälp angående specifika inställningar, se [[doku>config]].
 För mer detaljer om den här insticksmodulen, se [[doku>plugin:config]].
 
 Inställningar med en rosa bakgrund är skyddade och kan inte ändras med den här

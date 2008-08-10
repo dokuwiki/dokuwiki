@@ -8,4 +8,4 @@
 
 以下のテープルには、現在設定されているアクセスコントロールのルールが表示されています。このテーブルを使って、複数のルールを素早く変更・削除することが可能です。
 
-DokuWikiのアクセスコントロールについては、[[doku>wiki:acl|official documentation on ACL]] をお読み下さい。
+DokuWikiのアクセスコントロールについては、[[doku>acl|official documentation on ACL]] をお読み下さい。

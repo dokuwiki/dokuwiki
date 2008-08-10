@@ -1,7 +1,7 @@
 ====== Xestor de Configuración ======
 
 Usa esta páxina para controlar a configuración da túa instalación do Dokuwiki.  
-Para atopar axuda verbo de cada opción da configuración vai a [[doku>wiki:config]].
+Para atopar axuda verbo de cada opción da configuración vai a [[doku>config]].
 Para obter pormenores deste plugin bota un ollo a [[doku>plugin:config]].
 
 As opcións que amosan un fondo de cor vermella clara están protexidas e non poden ser alteradas 

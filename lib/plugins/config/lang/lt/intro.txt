@@ -1,7 +1,7 @@
 ====== Konfiguracijos Administravimas ======
 
 Naudokite šį puslapį Dokuwiki instaliacijos tvarkymui.
-Pagalba individualiems nustatymams [[doku>wiki:config]].
+Pagalba individualiems nustatymams [[doku>config]].
 Daugiau informacijos apie šį priedą [[doku>plugin:config]].
 
 Nustatymai raudoname fone yra apsaugoti nuo pakeitimų ir negali būti pakeisti šio įrankio pagalba.

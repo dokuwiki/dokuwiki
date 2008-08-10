@@ -8,4 +8,4 @@ El formulari de dalt us permet veure i modificar els permisos de l'usuari o grup
 
 En la taula de baix es mostren totes les regles de control d'accés que hagin estat definides. Podeu utilitzar aquesta taula per suprimir o modificar ràpidament totes les regles que vulgueu.
 
-Llegir la [[doku>wiki:acl|documentació oficial sobre ACL]] us pot ajudar a entendre del tot com funciona el control d'accés en DokuWiki.
+Llegir la [[doku>acl|documentació oficial sobre ACL]] us pot ajudar a entendre del tot com funciona el control d'accés en DokuWiki.

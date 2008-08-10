@@ -1,7 +1,7 @@
 ====== Asetusten hallinta ======
 
 Käytä tätä sivua hallitaksesi DokuWikisi asetuksia.
-Apua yksittäisiin asetuksiin löytyy sivulta [[doku>wiki:config]].
+Apua yksittäisiin asetuksiin löytyy sivulta [[doku>config]].
 Lisätietoa tästä liitännäisestä katso [[doku>plugin:config]].
 
 Asetukset, jotka näkyvät vaalealla punaisella taustalla ovat suojattuja, eikä niitä voi muutta tämän liitännäisen avulla.

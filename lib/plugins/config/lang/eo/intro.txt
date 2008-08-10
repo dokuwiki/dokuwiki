@@ -1,7 +1,7 @@
 ====== Administrilo de Agordoj ======
 
 Uzu tiun ĉi paĝon por kontroli la difinojn de via DokuWiki-a instalo.
-Por helpo pri specifaj difinoj aliru al [[doku>wiki:config]].
+Por helpo pri specifaj difinoj aliru al [[doku>config]].
 Por pli detaloj pri tiu ĉi kromaĵo, vidu [[doku>plugin:config]].
 
 Difinoj montrataj kun hela ruĝa fono estas protektitaj kaj ne povas esti modifataj per tiu ĉi kromaĵo.
