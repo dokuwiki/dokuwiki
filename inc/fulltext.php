@@ -15,8 +15,21 @@
  *
  * Returns a list of matching documents for the given query
  *
+ * refactored into ft_pageSearch(), _ft_pageSearch() and trigger_event()
+ *
  */
 function ft_pageSearch($query,&$highlight){
+
+  $data['query'] = $query;
+  $data['highlight'] =& $highlight;
+
+  return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
+}
+function _ft_pageSearch(&$data){
+    // split out original parameters
+    $query = $data['query'];
+    $highlight =& $data['highlight'];
+
     $q = ft_queryParser($query);
 
     $highlight = array();
@@ -203,9 +216,20 @@ function ft_mediause($id,$max){
  * By default it only matches the pagename and ignores the
  * namespace. This can be changed with the second parameter
  *
+ * refactored into ft_pageLookup(), _ft_pageLookup() and trigger_event()
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ft_pageLookup($id,$pageonly=true){
+    $data = array('id' => $id, 'pageonly' => $pageonly);
+    return trigger_event('SEARCH_QUERY_PAGELOOKUP',$data,'_ft_pageLookup');
+}
+
+function _ft_pageLookup(&$data){
+    // split out original parameterrs
+    $id = $data['id'];
+    $pageonly = $data['pageonly'];
+
     global $conf;
     $id    = preg_quote($id,'/');
     $pages = file($conf['indexdir'].'/page.idx');
