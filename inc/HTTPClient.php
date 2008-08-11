@@ -479,7 +479,7 @@ class HTTPClient {
     function _postEncode($data){
         foreach($data as $key => $val){
             if($url) $url .= '&';
-            $url .= $key.'='.urlencode($val);
+            $url .= urlencode($key).'='.urlencode($val);
         }
         return $url;
     }
