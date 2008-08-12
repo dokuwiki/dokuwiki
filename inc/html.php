@@ -324,7 +324,6 @@ function html_search(){
 
   $data = ft_pageLookup($id);
   if(count($data)){
-    sort($data);
     print '<div class="search_quickresult">';
     print '<h3>'.$lang['quickhits'].':</h3>';
     print '<ul class="search_quickhits">';
