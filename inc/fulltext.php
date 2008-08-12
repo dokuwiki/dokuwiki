@@ -260,8 +260,24 @@ function _ft_pageLookup(&$data){
     }
 
     $pages = array_map('trim',$pages);
-    sort($pages);
+    usort($pages,'ft_pagesorter');
     return $pages;
+}
+
+/**
+ * Sort pages based on their namespace level first, then on their string
+ * values. This makes higher hierarchy pages rank higher than lower hierarchy
+ * pages.
+ */
+function ft_pagesorter($a, $b){
+    $ac = count(explode(':',$a));
+    $bc = count(explode(':',$b));
+    if($ac < $bc){
+        return -1;
+    }elseif($ac > $bc){
+        return 1;
+    }
+    return strcmp ($a,$b);
 }
 
 /**
