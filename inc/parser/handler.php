@@ -82,7 +82,9 @@ class Doku_Handler {
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
         }
-        $this->addPluginCall($pluginname,$data,$state,$pos);
+        if ($data !== false) {
+          $this->addPluginCall($pluginname,$data,$state,$pos);
+        }
         return true;
     }
 
@@ -92,7 +94,6 @@ class Doku_Handler {
                 $this->_addCall('cdata',array($match), $pos);
                 return true;
             break;
-
         }
     }
 
