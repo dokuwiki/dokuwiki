@@ -594,7 +594,7 @@ function & p_get_renderer($mode) {
     $Renderer = & new $rclass();
   }else{
     // Maybe a plugin is available?
-    $Renderer =& plugin_load('renderer',$rname);
+    $Renderer =& plugin_load('renderer',$rname, true);
     if(is_null($Renderer)){
       msg("No renderer '$rname' found for mode '$mode'",-1);
       return null;

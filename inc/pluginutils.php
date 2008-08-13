@@ -60,16 +60,21 @@ function plugin_list($type='',$all=false){
  *
  * @param  $type string     type of plugin to load
  * @param  $name string     name of the plugin to load
+ * @param  $new  bool       true to return a new instance of the plugin, false to use an already loaded instance
  * @return objectreference  the plugin object or null on failure
  */
-function &plugin_load($type,$name){
+function &plugin_load($type,$name,$new=false){
   //we keep all loaded plugins available in global scope for reuse
   global $DOKU_PLUGINS;
 
-
   //plugin already loaded?
   if(!empty($DOKU_PLUGINS[$type][$name])){
-    return $DOKU_PLUGINS[$type][$name];
+    if ($new) {
+      $class = $type.'_plugin_'.$name;
+      return class_exists($class) ? new $class : null;
+    } else {
+      return $DOKU_PLUGINS[$type][$name];
+    }
   }
 
   //try to load the wanted plugin file
