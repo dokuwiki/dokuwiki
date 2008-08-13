@@ -6,14 +6,15 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 
 
 require_once(DOKU_INC.'inc/init.php');
-
-if(!$conf['xmlrpc']) {
-    die('XML-RPC server not enabled.');
-}
-
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/auth.php');
 session_write_close();  //close session
+
+if(!$conf['xmlrpc']) {
+    die('XML-RPC server not enabled.');
+    // FIXME check for groups allowed
+}
+
 require_once(DOKU_INC.'inc/IXR_Library.php');
 
 
@@ -252,6 +253,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function putPage($id, $text, $params) {
         global $TEXT;
         global $lang;
+        global $conf;
 
         $id    = cleanID($id);
         $TEXT  = trim($text);
@@ -291,6 +293,31 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         saveWikiText($id,$TEXT,$sum,$minor);
 
         unlock($id);
+
+        // run the indexer if page wasn't indexed yet
+        if(!@file_exists(metaFN($id, '.indexed'))) {
+            // try to aquire a lock
+            $lock = $conf['lockdir'].'/_indexer.lock';
+            while(!@mkdir($lock,$conf['dmode'])){
+                usleep(50);
+                if(time()-@filemtime($lock) > 60*5){
+                    // looks like a stale lock - remove it
+                    @rmdir($lock);
+                }else{
+                    return false;
+                }
+            }
+            if($conf['dperm']) chmod($lock, $conf['dperm']);
+
+            require_once(DOKU_INC.'inc/indexer.php');
+
+            // do the work
+            idx_addPage($id);
+
+            // we're finished - save and free lock
+            io_saveFile(metaFN($id,'.indexed'),INDEXER_VERSION);
+            @rmdir($lock);
+        }
 
         return 0;
     }
