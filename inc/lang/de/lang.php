@@ -9,6 +9,7 @@
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Michael Klier <chi@chimeric.de>
+ * @author Leo Moll <leo@yeasoft.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -111,6 +112,7 @@ $lang['namespaces']            = 'Namensräume';
 $lang['mediafiles']            = 'Vorhandene Dateien in';
 $lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
 $lang['js']['hidedetails']     = 'Details ausblenden';
+$lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['mediausage']            = 'Syntax zum Verwenden dieser Datei:';
 $lang['mediaview']             = 'Originaldatai öffnen';
 $lang['mediaroot']             = 'Wurzel';
@@ -206,3 +208,16 @@ $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben, hochladen für
 $lang['i_pol1']                = 'Öffentliches Wiki (lesen für alle, schreiben und hochladen für registrierte Nutzer)';
 $lang['i_pol2']                = 'Geschlossenes Wiki (lesen, schreiben, hochladen nur für registrierte Nutzer)';
 $lang['i_retry']               = 'Wiederholen';
+$lang['mu_intro']              = 'In diesem Bereich können Sie mehrere Dateien gleichzeitig hochladen. Benutzen Sie die Schaltfläche "Durchsuchen" um sie der Warteschlange zuzufügen. Betätigen Sie die Schaltfläche "Hochladen" um die Übertragung zu starten.';
+$lang['mu_gridname']           = 'Dateiname';
+$lang['mu_gridsize']           = 'Größe';
+$lang['mu_gridstat']           = 'Status';
+$lang['mu_namespace']          = 'Namensraum';
+$lang['mu_browse']             = 'Durchsuchen';
+$lang['mu_toobig']             = 'zu groß';
+$lang['mu_ready']              = 'bereit zum hochladen';
+$lang['mu_done']               = 'fertig';
+$lang['mu_fail']               = 'gescheitert';
+$lang['mu_authfail']           = 'Sitzung abgelaufen';
+$lang['mu_progress']           = '@PCT@% hochgeladen';
+$lang['mu_filetypes']          = 'Erlaubte Dateitypen';

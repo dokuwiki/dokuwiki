@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
+ * @author Leo Moll <leo@yeasoft.com>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.

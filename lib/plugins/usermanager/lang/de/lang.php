@@ -5,6 +5,7 @@
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
+ * @author Leo Moll <leo@yeasoft.com>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';

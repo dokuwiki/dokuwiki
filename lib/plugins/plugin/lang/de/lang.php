@@ -6,6 +6,7 @@
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
+ * @author Leo Moll <leo@yeasoft.com>
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Neues Plugin herunterladen und installieren';
