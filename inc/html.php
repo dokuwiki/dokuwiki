@@ -329,7 +329,13 @@ function html_search(){
     print '<ul class="search_quickhits">';
     foreach($data as $id){
       print '<li> ';
-      print html_wikilink(':'.$id,noNS($id));
+      $ns = getNS($id);
+      if($ns){
+        $name = shorten(noNS($id), ' ('.$ns.')',30);
+      }else{
+        $name = $id;
+      }
+      print html_wikilink(':'.$id,$name);
       print '</li> ';
     }
     print '</ul> ';

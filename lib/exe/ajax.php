@@ -66,7 +66,13 @@ function ajax_qsearch(){
   print '<ul>';
   foreach($data as $id){
     print '<li>';
-    print html_wikilink(':'.$id);
+    $ns = getNS($id);
+    if($ns){
+      $name = shorten(noNS($id), ' ('.$ns.')',30);
+    }else{
+      $name = $id;
+    }
+    print html_wikilink(':'.$id,$name);
     print '</li>';
   }
   print '</ul>';
