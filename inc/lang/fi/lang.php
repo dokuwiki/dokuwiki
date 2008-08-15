@@ -184,7 +184,7 @@ $lang['i_wikiname']            = 'Wikin nimi';
 $lang['i_enableacl']           = 'Käytä käyttöoikeuksian hallintaa (ACL) (Suositeltu)';
 $lang['i_superuser']           = 'Pääkäyttäjä';
 $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia ongelmia. Et voi jatkaa ennenkuin ne on korjattu.';
-$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkamattomian Dokuwiki asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki asennusohjeen (Englanniksi)</a>';
+$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkamattomian Dokuwiki asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwiki asennusohjeen (Englanniksi)</a>';
 $lang['i_funcna']              = 'PHP funktio <code>%s</code> ei ole käytettävissä. Ehkä palveluntarjoajasi on poistanut sen jostain syystä?';
 $lang['i_phpver']              = 'PHP versiosi <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP asennukseni pitää päivittää.';
 $lang['i_permfail']            = '<code>%s</code> ei ole DokuWikin kirjoitettavissa. Muokkaa hakemiston oikeuksia!';

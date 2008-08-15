@@ -188,7 +188,7 @@ $lang['i_superuser']           = '超级用户';
 $lang['i_problems']            = '安装工具发现一些问题，已在下面列出。您必须先修复这些问题，才能继续安装。';
 $lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 Dokuwiki 安装包。
                          您可以重新解压下载的程序包，或查阅完整的
-                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki 安装指南</a>';
+                         <a href="http://dokuwiki.org/install">Dokuwiki 安装指南</a>';
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
 $lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';

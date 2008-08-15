@@ -1,4 +1,4 @@
 ====== Indice ======
 
-Este es un índice sobre todas las páginas disponibles ordenado por [[doku>wiki:namespaces|namespaces]].
+Este es un índice sobre todas las páginas disponibles ordenado por [[doku>namespaces|namespaces]].
 

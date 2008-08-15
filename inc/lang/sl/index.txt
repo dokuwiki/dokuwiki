@@ -1,4 +1,4 @@
 ====== Kazalo ======
 
-To je kazalo vseh strani, ki so na voljo, urejenimi po [[doku>wiki:namespaces|imenskih prostorih]].
+To je kazalo vseh strani, ki so na voljo, urejenimi po [[doku>namespaces|imenskih prostorih]].
 

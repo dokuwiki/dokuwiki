@@ -186,7 +186,7 @@ $lang['i_wikiname']            = 'Názov Wiki';
 $lang['i_enableacl']           = 'Aktivovať ACL (doporučené)';
 $lang['i_superuser']           = 'Superužívateľ';
 $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžte pokračovať, pokým ich neodstránite.';
-$lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balíček, alebo preštudovať <a href="http://wiki.splitbrain.org/wiki:install"> inštalačné inštrukcie Dokuwiki</a>';
+$lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balíček, alebo preštudovať <a href="http://dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
 $lang['i_confexists']          = '<code>%s</code> skutočne existuje';

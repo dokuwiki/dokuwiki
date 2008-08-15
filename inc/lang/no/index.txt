@@ -1,4 +1,4 @@
 ====== Indeks ======
 
-Dette er en fortegnelse over alle tilgjengelige sider, sortert etter [[doku>wiki:namespaces|navnerom]].
+Dette er en fortegnelse over alle tilgjengelige sider, sortert etter [[doku>namespaces|navnerom]].
 

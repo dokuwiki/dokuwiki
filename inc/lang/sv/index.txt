@@ -1,4 +1,4 @@
 ====== Innehållsförteckning ======
 
-Detta är en innehållsförteckning över alla tillgängliga sidor, sorterad efter [[doku>wiki:namespaces|namnrymder]].
+Detta är en innehållsförteckning över alla tillgängliga sidor, sorterad efter [[doku>namespaces|namnrymder]].
 

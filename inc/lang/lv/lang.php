@@ -187,7 +187,7 @@ $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'Instalētājs atrada zemāk minētās problēmas. Kamēr tās nenovērš, nav iespējam turpināt.';
 $lang['i_modified']            = 'Drošības nolūkos šis skripts darbosies tika ar jaunu nemodificētu Dokuwiki instalāciju.
                          Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā 
-                         <a href="http://wiki.splitbrain.org/wiki:install"></a>';
+                         <a href="http://dokuwiki.org/install"></a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
 $lang['i_phpver']              = 'Jūsu PHP versija <code>%s</code> ir par vecu. Vajag versiju <code>%s</code>. Atjaunojiet savu PHP instalāciju.';
 $lang['i_permfail']            = 'Dokuwiki nevar ierakstīt <code>%s</code>. Jālabo direktorijas tiesības!';

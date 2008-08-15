@@ -192,7 +192,7 @@ $lang['i_wikiname']            = 'Wiki naam';
 $lang['i_enableacl']           = 'ACLs inschakelen (aanbevolen)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'De installer vond verscheidene problemen, hieronder aangegeven. U dient deze te verhelpen alvorens u door kunt gaan.';
-$lang['i_modified']            = 'Wegens veiligheidsoverwegingen werkt dit script alleen met nieuwe en onaangepaste Dokuwiki installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installatie instructies</a>';
+$lang['i_modified']            = 'Wegens veiligheidsoverwegingen werkt dit script alleen met nieuwe en onaangepaste Dokuwiki installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://dokuwiki.org/install">Dokuwiki installatie instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft uw hosting provder deze uitgeschakeld?';
 $lang['i_phpver']              = 'Uw PHP versie <code>%s</code> is lager dan de vereiste <code>%s</code>. U dient PHP te upgraden.';
 $lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. U dient de permissieinstellingen van deze directory aan te passen.';

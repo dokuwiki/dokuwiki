@@ -191,7 +191,7 @@ $lang['i_superuser']           = 'משתמש-על';
 $lang['i_problems']            = 'המתקין זיהה מספר בעיות המצוינות מטה. אין באפשרותך להמשיך לפני תיקונן.';
 $lang['i_modified']            = 'משיקולי אבטחה תסריט זה יעבוד אך ורק עם התקנת DokuWiki חדשה שלא עברה כל שינוי.
                          עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להעזר בדף
-                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installation instructions</a>';
+                         <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקצית ה-PHP <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
 $lang['i_phpver']              = 'גרסת ה-PHP שלך <code>%s</code> נמוכה מהדרוש. עליך לשדרג את התקנת ה-PHP';
 $lang['i_permfail']            = '<code>%s</code> אינה ברת כתיבה על ידי DokuWiki. עליך לשנות הרשאות ספריה זו!';

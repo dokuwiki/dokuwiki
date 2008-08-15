@@ -187,7 +187,7 @@ $lang['i_superuser']           = 'Super-usuario';
 $lang['i_problems']            = 'O instalador atopou algúns problemas amosados de seguido. Non poderás continuar ata que os soluciones.';
 $lang['i_modified']            = 'Por razóns de seguridade este script só funcionará cunha instalación nova e sen modificar do Dokuwiki.
                          Podes ou ben re-extraer os arquivos dende o paquete descargado ou consultar as
-                         <a href="http://wiki.splitbrain.org/wiki:install">instruccións completas de instalación do Dokuwiki</a>';
+                         <a href="http://dokuwiki.org/install">instruccións completas de instalación do Dokuwiki</a>';
 $lang['i_funcna']              = 'A función <code>%s</code> do PHP non está dispoñible. Pode que o teu provedor de hospedaxe a desactivase por algún motivo?';
 $lang['i_phpver']              = 'A túa versión <code>%s</code> do PHP é inferior á <code>%s</code> precisa. Debes actualizar a túa instalación do PHP.';
 $lang['i_permfail']            = '<code>%s</code> non é escribible polo DokuWiki. Debes corrixir a configuración de permisos deste directorio!';

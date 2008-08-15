@@ -190,7 +190,7 @@ $lang['i_superuser']           = 'Superbruger';
 $lang['i_problems']            = 'Installeren fandt nogle problemer, vist nedenunder. Du kan ikke fortsætte før du har rettet dem.';
 $lang['i_modified']            = 'Af sikkerheds hensyn vil dette script kun virke på en ny og umodificeret Dokuwiki installation.
                          Du burde enten gen-udpakke filerne fra den downloaded pakke eller tjekke den fuldstændige
-                         <a href="http://wiki.splitbrain.org/wiki:install">DokuWiki installations instruktioner</a>';
+                         <a href="http://dokuwiki.org/install">DokuWiki installations instruktioner</a>';
 $lang['i_funcna']              = 'PHP funtionen <code>%s</code> er ikke tilgængelig. Måske har din udbyder slået det fra af en eller anden grund?';
 $lang['i_phpver']              = 'Din PHP version <code>%s</code> er mindre en den nødvendige <code>%s</code>. Du er nÃ¸d til at opgradere din PHP installation.';
 $lang['i_permfail']            = 'DokuWiki kan ikke skrive til <code>%s</code>. Du er nød til at rette tilladelses indstillingerne for denne mappe!';

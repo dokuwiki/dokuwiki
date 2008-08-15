@@ -194,7 +194,7 @@ $lang['i_superuser']           = 'Amministratore';
 $lang['i_problems']            = 'Si sono verificati problemi durante l\'installazione, indicati di seguito. Non è possibile continuare finché non saranno risolti.';
 $lang['i_modified']            = 'Per motivi di sicurezza questa procedura funziona solamente con un\'installazione Dokuwiki nuova e non modificata.
                          Dovresti ri-estrarre i file dal pacchetto scaricato oppure consultare tutte le
-                         <a href="http://wiki.splitbrain.org/wiki:install">istruzioni per l\'installazione di Dokuwiki</a>';
+                         <a href="http://dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
 $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponibile. Forse il tuo provider l\'ha disabilitata per qualche motivo?';
 $lang['i_phpver']              = 'La versione di PHP <code>%s</code> è inferiore a quella richiesta <code>%s</code>. Devi aggiornare l\'installazione di PHP.';
 $lang['i_permfail']            = 'DokuWiki non può scrivere <code>%s</code>. E\' necessario correggere i permessi per questa directory!';

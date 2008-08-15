@@ -195,7 +195,7 @@ $lang['i_superuser']           = 'Användarnamn för administratören';
 $lang['i_problems']            = 'Installationsprogrammet hittade några problem som visas nedan. Du kan inte fortsätta innan du har fixat dem.';
 $lang['i_modified']            = 'Av säkerhetsskäl fungerar det här skriptet bara med en ny och omodifierad installation av Dokuwiki.
                          Du får antingen packa upp det nedladdade paketet på nytt, eller konsultera de kompletta
-                         <a href="http://wiki.splitbrain.org/wiki:install">instruktionerna för installation av Dokuwiki</a>';
+                         <a href="http://dokuwiki.org/install">instruktionerna för installation av Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP-funktionen <code>%s</code> är inte tillgänglig. Kanske ditt webbhotell har avaktiverat den av någon anledning?';
 $lang['i_phpver']              = 'Din PHP-version <code>%s</code> är lägre än vad som krävs <code>%s</code>. Du behöver uppgradera din PHP-installation.';
 $lang['i_permfail']            = '<code>%s</code> är inte skrivbar av DokuWiki. Du behöver ändra filskyddet på den här katalogen!';

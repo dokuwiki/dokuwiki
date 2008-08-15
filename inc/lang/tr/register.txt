@@ -2,5 +2,5 @@
 
 Bu wikide yeni bir hesap açmak için aşağıdaki tüm bilgileri doldurunuz.
 **Doğru e-mail adresi verdiğinizden** emin olun, zira yeni şifreniz oraya gönderilecek.
-Giriş adınız geçerli bir [[doku>wiki:pagename|sayfa adı]] olmalıdır.
+Giriş adınız geçerli bir [[doku>pagename|sayfa adı]] olmalıdır.
 

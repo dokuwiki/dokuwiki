@@ -1,5 +1,5 @@
 ====== İndeks ======
 
-Bu mevcut tüm sayfaların [[doku>wiki:namespaces|isim alanlarına]] 
+Bu mevcut tüm sayfaların [[doku>namespaces|isim alanlarına]] 
 göre sıralı bir indeksidir.
 

@@ -189,7 +189,7 @@ $lang['i_superuser']           = 'スーパーユーザー';
 $lang['i_problems']            = '問題が発見されました。以下に示す問題を解決するまで、インストールを続行できません。';
 $lang['i_modified']            = 'セキュリティの理由から、新規もしくはカスタマイズしていない DokuWiki に対してのみ、このスクリプトは有効です。
                          ダウンロードしたパッケージを再解凍して使用するか、
-                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
+                         <a href="http://dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている恐れがあります。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_permfail']            = '<code>%s</code> に書き込みできません。このディレクトリの権限を確認して下さい。';

@@ -1,4 +1,4 @@
 ====== 索引頁 ======
 
-目前您所看到的是用 [[doku>wiki:zh_tw_namespaces|namespaces]] 來排序目前所有可用的頁面清單。\\
+目前您所看到的是用 [[doku>namespaces|namespaces]] 來排序目前所有可用的頁面清單。\\
 請直接按您想要的頁面或者用「顯示頁面」來檢視目前所在頁面

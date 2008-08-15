@@ -196,7 +196,7 @@ $lang['i_wikiname']            = 'Nom du Wiki';
 $lang['i_enableacl']           = 'Activer les ACL (recommandé)';
 $lang['i_superuser']           = 'Super-utilisateur';
 $lang['i_problems']            = 'L\'installeur a détecté les problèmes indiqués ci-dessous. Vous ne pouvez poursuivre tant qu\'ils n\'auront pas été corrigés.';
-$lang['i_modified']            = 'Pour des raisons de sécurité ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://wiki.splitbrain.org/wiki:install">instructions d\'installation de DokuWiki</a>';
+$lang['i_modified']            = 'Pour des raisons de sécurité ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://dokuwiki.org/install">instructions d\'installation de DokuWiki</a>';
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur l\'a désactivée ?';
 $lang['i_phpver']              = 'Votre version de PHP (<code>%s</code>) est antérieure à la version requise (<code>%s</code>. Vous devez mettre à jour votre installation de PHP.';
 $lang['i_permfail']            = '<code>%s</code> n\'est pas accessible en écriture pour DokuWiki. Vous devez corriger les permissions de ce répertoire !';

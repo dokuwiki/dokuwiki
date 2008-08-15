@@ -188,7 +188,7 @@ $lang['i_wikiname']            = 'Název wiki';
 $lang['i_enableacl']           = 'Zapnout ACL (doporučeno)';
 $lang['i_superuser']           = 'Správce';
 $lang['i_problems']            = 'Instalátor narazil na níže popsané problémy. Nelze pokračovat v instalaci, dokud je neopravíte.';
-$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte souboru z instalačního balíčku nebo se zkuste poradit s <a href="http://wiki.splitbrain.org/wiki:install">instrukcemi pro instalci DokuWiki</a>.';
+$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte souboru z instalačního balíčku nebo se zkuste poradit s <a href="http://dokuwiki.org/install">instrukcemi pro instalci DokuWiki</a>.';
 $lang['i_funcna']              = 'PHP funkce <code>%s</code> není dostupná. Váš webhosting ji možná z nějakého důvodu vypnul.';
 $lang['i_phpver']              = 'Verze vaší instalace PHP <code>%s</code> je nižší než požadovaná <code>%s</code>. Budete muset aktualizovat svou instalaci PHP.';
 $lang['i_permfail']            = 'DokuWiki nemůže zapisovat do <code>%s</code>. Budete muset opravit práva k tomuto adresáři.';

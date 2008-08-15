@@ -195,7 +195,7 @@ $lang['i_superuser']           = 'Superbruker';
 $lang['i_problems']            = 'Installasjonen oppdaget noen problemer, disse listes nedenfor. Du kan ikke fortsett før du har løst disse.';
 $lang['i_modified']            = 'For sikkerhets skyld vil dette skriptet bare virke med en ny og uendret Dokuwiki-installsjon.
                          Du bør enten pakke ut filene på nytt fra den nedlastede pakken, eller konsultere den komplette
-                         <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki-installasjonsinstruksen</a>';
+                         <a href="http://dokuwiki.org/install">Dokuwiki-installasjonsinstruksen</a>';
 $lang['i_funcna']              = 'PHP-funksjonen <code>%s</code> er ikke tilgjengelig. Kanskje din leverandør har deaktivert den av noen grunn?';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
 $lang['i_permfail']            = '<code>%s</code> er ikke skrivbar for DokuWiki. Du må fikse rettighetene for denne mappen!';

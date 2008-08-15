@@ -1,4 +1,4 @@
 ====== Indeks ======
 
 Dette er en oversigt over alle tilgængelige dokumenter, sorteret efter
-[[doku>wiki:navnerum|navnerum]].
+[[doku>namespaces|navnerum]].
