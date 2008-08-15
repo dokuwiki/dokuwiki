@@ -14,7 +14,7 @@ class action_plugin_importoldindex extends DokuWiki_Action_Plugin {
             'date'   => '2006-11-09',
             'name'   => 'Import Old Index',
             'desc'   => 'Moves old index files to a new location, sorted by string length.',
-            'url'    => 'http://whoopdedo.org/doku/wiki'
+            'url'    => 'http://dokuwiki.org/plugin:importoldindex'
             );
     }
 

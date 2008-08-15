@@ -7,23 +7,23 @@ require_once(DOKU_PLUGIN.'action.php');
 
 class action_plugin_importoldchangelog extends DokuWiki_Action_Plugin {
 
-	function getInfo(){
-		return array(
-			'author' => 'Ben Coburn',
-			'email'  => 'btcoburn@silicodon.net',
-			'date'   => '2006-10-29',
-			'name'   => 'Import Old Changelog',
-			'desc'   => 'Imports and converts the single file changelog '.
+    function getInfo(){
+        return array(
+            'author' => 'Ben Coburn',
+            'email'  => 'btcoburn@silicodon.net',
+            'date'   => '2006-10-29',
+            'name'   => 'Import Old Changelog',
+            'desc'   => 'Imports and converts the single file changelog '.
                         'from the 2006-03-09 release to the new format. '.
                         'Also reconstructs missing changelog data from  '.
                         'old revisions kept in the attic.',
-            'url'    => 'http://wiki.splitbrain.org/wiki:changelog'
-			);
-	}
+            'url'    => 'http://dokuwiki.org/plugin:importoldchangelog'
+            );
+    }
 
-	function register(&$controller) {
+    function register(&$controller) {
         $controller->register_hook('TEMPORARY_CHANGELOG_UPGRADE_EVENT', 'BEFORE', $this, 'run_import');
-	}
+    }
 
     function importOldLog($line, &$logs) {
         global $lang;

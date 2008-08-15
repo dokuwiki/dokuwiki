@@ -137,7 +137,7 @@ $conf['proxy']['ssl']  = 0;
 
 /* Safemode Hack */
 
-$conf['safemodehack'] = 0;               //read http://wiki.splitbrain.org/wiki:safemodehack !
+$conf['safemodehack'] = 0;               //read http://www.dokuwiki.org/config:safemodehack !
 $conf['ftp']['host'] = 'localhost';
 $conf['ftp']['port'] = '21';
 $conf['ftp']['user'] = 'user';

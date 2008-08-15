@@ -34,7 +34,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             'date'   => '2008-05-94',
             'name'   => 'Revert Manager',
             'desc'   => 'Allows you to mass revert recent edits',
-            'url'    => 'http://wiki.splitbrain.org/plugin:revert',
+            'url'    => 'http://dokuwiki.org/plugin:revert',
         );
     }
 

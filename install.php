@@ -87,7 +87,7 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body style="">
     <h1 style="float:left">
-        <img src="http://wiki.splitbrain.org/_media/wiki:dokuwiki-64.png"
+        <img src="http://dokuwiki.org/_media/wiki:dokuwiki-64.png"
              style="vertical-align: middle;" alt="" />
         <?php echo $lang['i_installer']?>
     </h1>
@@ -134,7 +134,7 @@ header('Content-Type: text/html; charset=utf-8');
     </div>
 
 <div style="clear: both">
-  <a href="http://wiki.splitbrain.org/wiki:dokuwiki"><img src="lib/tpl/default/images/button-dw.png" alt="driven by DokuWiki" /></a>
+  <a href="http://dokuwiki.org/"><img src="lib/tpl/default/images/button-dw.png" alt="driven by DokuWiki" /></a>
   <a href="http://www.php.net"><img src="lib/tpl/default/images/button-php.gif" alt="powered by PHP" /></a>
 </div>
 </body>

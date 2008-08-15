@@ -45,7 +45,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         'date'   => '2007-08-05',
         'name'   => 'Configuration Manager',
         'desc'   => "Manage Dokuwiki's Configuration Settings",
-        'url'    => 'http://wiki.splitbrain.org/plugin:config',
+        'url'    => 'http://dokuwiki.org/plugin:config',
       );
     }
 

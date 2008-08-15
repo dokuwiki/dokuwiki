@@ -28,7 +28,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             'date'   => '2006-12-09',
             'name'   => 'Info Plugin',
             'desc'   => 'Displays information about various DokuWiki internals',
-            'url'    => 'http://wiki.splitbrain.org/plugin:info',
+            'url'    => 'http://dokuwiki.org/plugin:info',
         );
     }
 

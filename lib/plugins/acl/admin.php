@@ -34,7 +34,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             'date'   => '2008-03-15',
             'name'   => 'ACL',
             'desc'   => 'Manage Page Access Control Lists',
-            'url'    => 'http://wiki.splitbrain.org/wiki:acl',
+            'url'    => 'http://dokuwiki.org/plugin:acl',
         );
     }
 

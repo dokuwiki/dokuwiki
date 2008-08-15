@@ -32,7 +32,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             'date'   => $this->version,
             'name'   => 'Popularity Feedback Plugin',
             'desc'   => 'Send anonymous data about your wiki to the developers.',
-            'url'    => 'http://wiki.splitbrain.org/wiki:popularity',
+            'url'    => 'http://dokuwiki.org/plugin:popularity',
         );
     }
 

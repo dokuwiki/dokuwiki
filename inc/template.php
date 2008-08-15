@@ -803,7 +803,7 @@ function tpl_breadcrumbs($sep='&raquo;'){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Nigel McNie <oracle.shinoda@gmail.com>
  * @author Sean Coates <sean@caedmon.net>
- * @link   http://wiki.splitbrain.org/wiki:tipsandtricks:hierarchicalbreadcrumbs
+ * @author <fredrik@averpil.com>
  * @todo   May behave strangely in RTL languages
  */
 function tpl_youarehere($sep=' &raquo; '){

@@ -20,7 +20,7 @@
  * conf/mediameta.local.php file
  *
  * For a list of available EXIF/IPTC fields refer to
- * http://wiki.splitbrain.org/wiki:tpl:detail.php
+ * http://www.dokuwiki.org/devel:templates:detail.php
  */
 
 
