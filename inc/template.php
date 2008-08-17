@@ -1157,4 +1157,104 @@ function tpl_mediaTree(){
   ptln('</div>');
 }
 
+
+/**
+ * Print a dropdown menu with all DokuWiki actions
+ *
+ * Note: this will not use any pretty URLs
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_actiondropdown($empty='',$button='&gt;'){
+    global $ID;
+    global $INFO;
+    global $REV;
+    global $ACT;
+    global $conf;
+    global $lang;
+    global $auth;
+
+
+    echo '<form method="post" accept-charset="utf-8">'; #FIXME action
+    echo '<input type="hidden" name="id" value="'.$ID.'" />';
+    if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
+    echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+
+    echo '<select name="do" id="action__selector" class="edit">';
+    echo '<option value="">'.$empty.'</option>';
+
+    echo '<optgroup label=" &mdash; ">';
+        // 'edit' - most complicated type, we need to decide on current action
+        if($ACT == 'show' || $ACT == 'search'){
+            if($INFO['writable']){
+                if(!empty($INFO['draft'])) {
+                    echo '<option value="edit">'.$lang['btn_draft'].'</option>';
+                } else {
+                    if($INFO['exists']){
+                        echo '<option value="edit">'.$lang['btn_edit'].'</option>';
+                    }else{
+                        echo '<option value="edit">'.$lang['btn_create'].'</option>';
+                    }
+                }
+            }else if(actionOK('source')) { //pseudo action
+                echo '<option value="edit">'.$lang['btn_source'].'</option>';
+            }
+        }else{
+            echo '<option value="show">'.$lang['btn_show'].'</option>';
+        }
+
+        echo '<option value="revisions">'.$lang['btn_revs'].'</option>';
+        echo '<option value="backlink">'.$lang['btn_backlink'].'</option>';
+    echo '</optgroup>';
+
+    echo '<optgroup label=" &mdash; ">';
+        echo '<option value="recent">'.$lang['btn_recent'].'</option>';
+        echo '<option value="index">'.$lang['btn_index'].'</option>';
+    echo '</optgroup>';
+
+    echo '<optgroup label=" &mdash; ">';
+        if($conf['useacl'] && $auth){
+            if($_SERVER['REMOTE_USER']){
+                echo '<option value="logout">'.$lang['btn_logout'].'</option>';
+            }else{
+                echo '<option value="login">'.$lang['btn_login'].'</option>';
+            }
+        }
+
+        if($conf['useacl'] && $auth && $_SERVER['REMOTE_USER'] &&
+             $auth->canDo('Profile') && ($ACT!='profile')){
+            echo '<option value="profile">'.$lang['btn_profile'].'</option>';
+        }
+
+        if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
+            if($_SERVER['REMOTE_USER']){
+                if($INFO['subscribed']) {
+                    echo '<option value="unsubscribe">'.$lang['btn_unsubscribe'].'</option>';
+                } else {
+                    echo '<option value="subscribe">'.$lang['btn_subscribe'].'</option>';
+                }
+            }
+        }
+
+        if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
+            if($_SERVER['REMOTE_USER']){
+                if($INFO['subscribedns']) {
+                    echo '<option value="unsubscribens">'.$lang['btn_unsubscribens'].'</option>';
+                } else {
+                    echo '<option value="subscribens">'.$lang['btn_subscribens'].'</option>';
+                }
+            }
+        }
+
+        if($INFO['ismanager']){
+            echo '<option value="admin">'.$lang['btn_admin'].'</option>';
+        }
+    echo '</optgroup>';
+
+    echo '</select>';
+    echo '<input type="submit" value="'.$button.'" id="action__selectorbtn" />';
+    echo '</form>';
+}
+
 //Setup VIM: ex: et ts=4 enc=utf-8 :
+
