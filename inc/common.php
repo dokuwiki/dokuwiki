@@ -410,12 +410,28 @@ function exportlink($id='',$format='raw',$more='',$abs=false,$sep='&amp;'){
  * Build a link to a media file
  *
  * Will return a link to the detail page if $direct is false
+ *
+ * The $more parameter should always be given as array, the function then
+ * will strip default parameters to produce even cleaner URLs
+ *
+ * @param string  $id     - the media file id or URL
+ * @param mixed   $more   - string or array with additional parameters
+ * @param boolean $direct - link to detail page if false
+ * @param string  $sep    - URL parameter separator
+ * @param boolean $abs    - Create an absolute URL
  */
 function ml($id='',$more='',$direct=true,$sep='&amp;',$abs=false){
   global $conf;
   if(is_array($more)){
+    // strip defaults for shorter URLs
+    if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
+    if(!$more['w']) unset($more['w']);
+    if(!$more['h']) unset($more['h']);
+    if(isset($more['id']) && $direct) unset($more['id']);
     $more = buildURLparams($more,$sep);
   }else{
+    $more = str_replace('cache=cache','',$more); //skip default
+    $more = str_replace(',,',',',$more);
     $more = str_replace(',',$sep,$more);
   }
 
