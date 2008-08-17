@@ -90,6 +90,38 @@ class auth_basic {
   }
 
   /**
+   * Trigger the AUTH_USERDATA_CHANGE event and call the modification function. [ DO NOT OVERRIDE ]
+   *
+   * You should use this function instead of calling createUser, modifyUser or
+   * deleteUsers directly. The event handlers can prevent the modification, for
+   * example for enforcing a user name schema.
+   *
+   * @author Gabriel Birke <birke@d-scribe.de>
+   * @param string $type Modification type ('create', 'modify', 'delete')
+   * @param array $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
+   * @return mixed Result from the modification function or false if an event handler has canceled the action
+   */
+  function triggerUserMod($type, $params)
+  {
+    $validTypes = array(
+      'create' => 'createUser',
+      'modify' => 'modifyUser',
+      'delete' => 'deleteUsers'
+    );
+    if(empty($validTypes[$type]))
+      return false;
+    $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
+    $evt = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
+    if ($evt->advise_before(true)) {
+      $result = call_user_func_array(array($this, $validTypes[$type]), $params);
+      $evt->data['modification_result'] = $result;
+    }
+    $evt->advise_after();
+    unset($evt);
+    return $result;
+  }
+
+  /**
    * Log off the current user [ OPTIONAL ]
    *
    * Is run in addition to the ususal logoff method. Should
@@ -289,6 +321,7 @@ class auth_basic {
     msg("authorisation method does not support group list retrieval", -1);
     return array();
   }
+
 
   /**
    * Check Session Cache validity [implement only where required/possible]

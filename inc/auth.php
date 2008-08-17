@@ -630,7 +630,7 @@ function register(){
   }
 
   //okay try to create the user
-  if(!$auth->createUser($_POST['login'],$pass,$_POST['fullname'],$_POST['email'])){
+  if(!$auth->triggerUserMod('create', array($_POST['login'],$pass,$_POST['fullname'],$_POST['email']))){
     msg($lang['reguexists'],-1);
     return false;
   }
@@ -715,7 +715,7 @@ function updateprofile() {
     }
   }
 
-  return $auth->modifyUser($_SERVER['REMOTE_USER'], $changes);
+  return $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes));
 }
 
 /**
@@ -764,7 +764,7 @@ function act_resendpwd(){
         }
 
         $pass = auth_pwgen();
-        if (!$auth->modifyUser($user,array('pass' => $pass))) {
+        if (!$auth->triggerUserMod('modify', array($user,array('pass' => $pass)))) {
             msg('error modifying user data',-1);
             return false;
         }

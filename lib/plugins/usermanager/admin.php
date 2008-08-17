@@ -346,7 +346,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           return false;
         }
 
-        if ($ok = $this->_auth->createUser($user,$pass,$name,$mail,$grps)) {
+        if ($ok = $this->_auth->triggerUserMod('create', array($user,$pass,$name,$mail,$grps))) {
 
           msg($this->lang['add_ok'], 1);
 
@@ -373,7 +373,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!is_array($selected) || empty($selected)) return false;
         $selected = array_keys($selected);
 
-        $count = $this->_auth->deleteUsers($selected);
+        $count = $this->_auth->triggerUserMod('delete', array($selected));
         if ($count == count($selected)) {
           $text = str_replace('%d', $count, $this->lang['delete_ok']);
           msg("$text.", 1);
@@ -454,7 +454,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!empty($newgrps) && $this->_auth->canDo('modGroups') && $newgrps != $oldinfo['grps'])
           $changes['grps'] = $newgrps;
 
-        if ($ok = $this->_auth->modifyUser($olduser, $changes)) {
+        if ($ok = $this->_auth->triggerUserMod('modify', array($olduser, $changes))) {
           msg($this->lang['update_ok'],1);
 
           if (!empty($_REQUEST['usernotify']) && $newpass) {
