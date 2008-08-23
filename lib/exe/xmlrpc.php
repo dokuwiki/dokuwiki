@@ -261,9 +261,10 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 $file = array();
                 $file['id']       = $item['id'];
                 $file['size']     = $item['size'];
-                $file['mtime']    = $item['mtime'];
+                $file['lastModified']    = $item['mtime'];
                 $file['isimg']    = $item['isimg'];
                 $file['writable'] = $item['writeable'];
+                $file['perms'] = auth_quickaclcheck(getNS($item['id']).':*');
                 array_push($files, $file);
             }
 
