@@ -67,6 +67,7 @@ class TarLib
   var $_memdat;
   var $_nomf;
   var $_result;
+  var $_initerror;
 
   /**
    * constructor, initialize the class
@@ -100,6 +101,7 @@ class TarLib
    */
   function tarlib($p_filen = ARCHIVE_DYNAMIC , $p_comptype = COMPRESS_AUTO, $p_complevel = 9)
   {
+    $this->_initerror = 0;
     $this->_nomf = $p_filen; $flag=0;
     if($p_comptype && $p_comptype % 5 == 0){$p_comptype /= ARCHIVE_RENAMECOMP; $flag=1;}
 
@@ -116,12 +118,12 @@ class TarLib
     switch($p_comptype)
     {
       case COMPRESS_GZIP:
-        if(!extension_loaded('zlib')) $this->_result = -1;
+        if(!extension_loaded('zlib')) $this->_initerror = -1;
         $this->_comptype = COMPRESS_GZIP;
       break;
 
       case COMPRESS_BZIP:
-        if(!extension_loaded('bz2')) $this->_result = -2;
+        if(!extension_loaded('bz2')) $this->_inierror = -2;
         $this->_comptype = COMPRESS_BZIP;
       break;
 
@@ -138,7 +140,7 @@ class TarLib
         $this->_comptype = COMPRESS_NONE;
     }
 
-    if($this->_result < 0) $this->_comptype = COMPRESS_NONE;
+    if($this->_init_error < 0) $this->_comptype = COMPRESS_NONE;
 
     if($flag) $this->_nomf.= '.'.$this->getCompression(1);
     $this->_result = true;

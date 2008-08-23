@@ -641,6 +641,12 @@ class ap_manage {
           else $compress_type = COMPRESS_NONE;
 
           $tar = new TarLib($file, $compress_type);
+          if($tar->_initerror < 0){
+            if($conf['allowdebug']){
+                msg('TarLib Error: '.$tar->TarErrorStr($tar->_initerror),-1);
+            }
+            return false;
+          }
           $ok = $tar->Extract(FULL_ARCHIVE, $target, '', 0777);
 
           if($ok<1){
