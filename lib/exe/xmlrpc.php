@@ -142,6 +142,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         		array('string'),
         		'Download a file from the wiki.'
         );
+        $this->addCallback(
+        		'wiki.getAttachmentInfo',
+        		'this:getAttachmentInfo',
+        		array('string'),
+        		'Returns a struct with infos about the attachment.'
+        );
 
         $this->serve();
     }
@@ -176,6 +182,27 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 		$data = io_readFile($file, false);
 		$base64 = base64_encode($data);
 		return $base64;
+    }
+    
+    /**
+     * Return info about a media file
+     * 
+     * @author Gina Haeussge <osd@foosel.net>
+     */
+    function getAttachmentInfo($id){
+    	$id = cleanID($id);
+		$info = array(
+			'lastModified' => 0,
+			'size' => 0,
+		);
+		
+		$file = mediaFN($id);
+		if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
+			$info['lastModified'] = new IXR_Date(filemtime($file));
+			$info['size'] = filesize($file);
+		}
+
+    	return $info;
     }
 
     /**
