@@ -188,7 +188,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
             $data = array();
             require_once(DOKU_INC.'inc/search.php');
-            search($data, $conf['mediadir'], 'search_media', array(), $dir);
+            search($data, $conf['mediadir'], 'search_media', array('recursive' => true), $dir);
   
             if(!count($data)) {
                 return array();
