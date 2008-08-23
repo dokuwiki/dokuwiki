@@ -449,7 +449,7 @@ function io_mktmpdir() {
 
     $base = $conf['tmpdir'];
     $dir  = md5(uniqid(mt_rand(), true));
-    $tmpdir = $base.$dir;
+    $tmpdir = $base.'/'.$dir;
 
     if(io_mkdir_p($tmpdir)) {
         return($tmpdir);
