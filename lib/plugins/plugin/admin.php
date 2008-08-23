@@ -625,6 +625,7 @@ class ap_manage {
 
     // decompress wrapper
     function ap_decompress($file, $target) {
+        global $conf;
 
         // decompression library doesn't like target folders ending in "/"
         if (substr($target, -1) == "/") $target = substr($target, 0, -1);
@@ -642,9 +643,13 @@ class ap_manage {
           $tar = new TarLib($file, $compress_type);
           $ok = $tar->Extract(FULL_ARCHIVE, $target, '', 0777);
 
-          // FIXME sort something out for handling tar error messages meaningfully
-          return ($ok<0?false:true);
-
+          if($ok<1){
+            if($conf['allowdebug']){
+                msg('TarLib Error: '.$tar->TarErrorStr($ok),-1);
+            }
+            return false;
+          }
+          return true;
         } else if ($ext == 'zip') {
 
           require_once(DOKU_INC."inc/ZipLib.class.php");
