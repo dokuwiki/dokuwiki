@@ -79,7 +79,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $this->addCallback(
             'wiki.getAttachments',
             'this:listAttachments',
-            array('string', 'struct'),
+            array('struct', 'string', 'struct'),
             'Returns a list of all media files.'
         );
         $this->addCallback(
@@ -125,28 +125,28 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Returns a strukt about all recent changes since given timestamp.'
         );
         $this->addCallback(
-                'wiki.aclCheck',
-                'this:aclCheck',
-                array('struct', 'string'),
-                'Returns the permissions of a given wiki page.'
+            'wiki.aclCheck',
+            'this:aclCheck',
+            array('int', 'string'),
+            'Returns the permissions of a given wiki page.'
         );
         $this->addCallback(
-                'wiki.putAttachment',
-                'this:putAttachment',
-                array('struct', 'string', 'base64', 'struct'),
-                'Upload a file to the wiki.'
+            'wiki.putAttachment',
+            'this:putAttachment',
+            array('struct', 'string', 'base64', 'struct'),
+            'Upload a file to the wiki.'
         );
         $this->addCallback(
-        		'wiki.getAttachment',
-        		'this:getAttachment',
-        		array('string'),
-        		'Download a file from the wiki.'
+            'wiki.getAttachment',
+            'this:getAttachment',
+            array('base64', 'string'),
+            'Download a file from the wiki.'
         );
         $this->addCallback(
-        		'wiki.getAttachmentInfo',
-        		'this:getAttachmentInfo',
-        		array('string'),
-        		'Returns a struct with infos about the attachment.'
+            'wiki.getAttachmentInfo',
+            'this:getAttachmentInfo',
+            array('struct', 'string'),
+            'Returns a struct with infos about the attachment.'
         );
 
         $this->serve();
@@ -170,8 +170,11 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     
     /**
      * Return a media file encoded in base64
+     * 
+     * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachment($id){
+    	$id = cleanID($id);
     	if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
     		return new IXR_Error(1, 'You are not allowed to read this file');
     	
