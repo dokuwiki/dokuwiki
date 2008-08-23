@@ -79,7 +79,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $this->addCallback(
             'wiki.getAttachments',
             'this:listAttachments',
-            array('struct'),
+            array('string', 'struct'),
             'Returns a list of all media files.'
         );
         $this->addCallback(
