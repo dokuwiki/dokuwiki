@@ -201,7 +201,9 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
-  if($type == 'd') return false;
+  if($type == 'd') {
+  	return ($opts['recursive']);
+  } 
 
   $info         = array();
   $info['id']   = pathID($file,true);
