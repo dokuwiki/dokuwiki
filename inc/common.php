@@ -208,6 +208,9 @@ function pageinfo(){
     }
   }
 
+  // mobile detection
+  $info['ismobile'] = clientismobile();
+
   return $info;
 }
 
@@ -595,6 +598,29 @@ function clientIP($single=false){
   // still here? just use the first (last) address
   return $ip[0];
 }
+
+/**
+ * Check if the browser is on a mobile device
+ *
+ * Adapted from the example code at url below
+ *
+ * @link http://www.brainhandles.com/2007/10/15/detecting-mobile-browsers/#code
+ */
+function clientismobile(){
+
+    if(isset($_SERVER['HTTP_X_WAP_PROFILE'])) return true;
+
+    if(preg_match('/wap\.|\.wap/i',$_SERVER['HTTP_ACCEPT'])) return true;
+
+    if(!isset($_SERVER['HTTP_USER_AGENT'])) return false;
+
+    $uamatches = 'midp|j2me|avantg|docomo|novarra|palmos|palmsource|240x320|opwv|chtml|pda|windows ce|mmp\/|blackberry|mib\/|symbian|wireless|nokia|hand|mobi|phone|cdm|up\.b|audio|SIE\-|SEC\-|samsung|HTC|mot\-|mitsu|sagem|sony|alcatel|lg|erics|vx|NEC|philips|mmm|xx|panasonic|sharp|wap|sch|rover|pocket|benq|java|pt|pg|vox|amoi|bird|compal|kg|voda|sany|kdd|dbt|sendo|sgh|gradi|jb|\d\d\di|moto';
+
+    if(preg_match("/$uamatches/i",$_SERVER['HTTP_USER_AGENT'])) return true;
+
+    return false;
+}
+
 
 /**
  * Convert one or more comma separated IPs to hostnames
@@ -1238,7 +1264,7 @@ function preg_quote_cb($string){
  */
 function shorten($keep,$short,$max,$min=9,$char='⌇'){
     $max = $max - utf8_strlen($keep);
-	 if($max < $min) return $keep;
+   if($max < $min) return $keep;
     $len = utf8_strlen($short);
     if($len <= $max) return $keep.$short;
     $half = floor($max/2);
