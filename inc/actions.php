@@ -25,6 +25,8 @@ function act_dispatch(){
   global $lang;
   global $conf;
 
+  $preact = $ACT;
+
   // give plugins an opportunity to process the action
   $evt = new Doku_Event('ACTION_ACT_PREPROCESS',$ACT);
   if ($evt->advise_before()) {
@@ -127,6 +129,10 @@ function act_dispatch(){
   $evt->advise_after();
   unset($evt);
 
+  // when action 'show' and POST, do a redirect
+  if($ACT == 'show' && strtolower($_SERVER['REQUEST_METHOD']) == 'post'){
+    act_redirect($ID,$preact);
+  }
 
   //call template FIXME: all needed vars available?
   $headers[] = 'Content-Type: text/html; charset=utf-8';
@@ -300,9 +306,15 @@ function act_save($act){
 
   //delete draft
   act_draftdel($act);
+  session_write_close();
 
+  // when done, show page
+  return 'show';
+}
 
-  $go = wl($ID,'',true);
+function act_redirect($id,$preact){
+  global $PRE;
+  global $TEXT;
 
   //get section name when coming from section edit
   if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
@@ -311,11 +323,21 @@ function act_save($act){
     $title = str_replace(':','',cleanID($title));
     $title = ltrim($title,'0123456789._-');
     if(empty($title)) $title='section';
-    $go .= '#'.$title;
   }
 
+  $opts = array(
+    'id'       => $id,
+    'fragment' => $title,
+    'preact'   => $preact
+  );
+  trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
+}
+
+function act_redirect_execute($opts){
+  $go = wl($opts['id'],'',true);
+  if($opts['fragment']) $go .= '#'.$opts['fragment'];
+
   //show it
-  session_write_close();
   header("Location: $go");
   exit();
 }
