@@ -136,6 +136,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 array('struct', 'string', 'base64', 'struct'),
                 'Upload a file to the wiki.'
         );
+        $this->addCallback(
+        		'wiki.getAttachment',
+        		'this:getAttachment',
+        		array('string'),
+        		'Download a file from the wiki.'
+        );
 
         $this->serve();
     }
@@ -154,6 +160,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         } else {
             return $text;
         }
+    }
+    
+    /**
+     * Return a media file encoded in base64
+     */
+    function getAttachment($id){
+    	if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
+    		return new IXR_Error(1, 'You are not allowed to read this file');
+    	
+		$file = mediaFN($id);
+		if (!@ file_exists($file))
+			return new IXR_Error(1, 'The requested file does not exist');
+		
+		$data = io_readFile($file, false);
+		$base64 = base64_encode($data);
+		return $base64;
     }
 
     /**
