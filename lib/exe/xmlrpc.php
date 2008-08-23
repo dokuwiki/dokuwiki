@@ -225,26 +225,39 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
     /**
      * List all media files.
+     * 
+     * Available options are 'recursive' for also including the subnamespaces
+     * in the listing, and 'pattern' for filtering the returned files against
+     * a regular expression matching their name.
+     * 
+     * @author Gina Haeussge <osd@foosel.net>
      */
-    function listAttachments($ns) {
+    function listAttachments($ns, $options = array()) {
         global $conf;
         global $lang;
 
         $ns = cleanID($ns);
+
+		if (!is_array($options))
+			$options = array();
+
+		if (!isset($options['recursive'])) $options['recursive'] = false;
 
         if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
             $data = array();
             require_once(DOKU_INC.'inc/search.php');
-            search($data, $conf['mediadir'], 'search_media', array('recursive' => true), $dir);
-  
+            search($data, $conf['mediadir'], 'search_media', array('recursive' => $options['recursive']), $dir);
+
             if(!count($data)) {
                 return array();
             }
 
             $files = array();
             foreach($data as $item) {
+            	if (isset($options['pattern']) && !@preg_match($options['pattern'], $item['id']))
+            		continue;
                 $file = array();
                 $file['id']       = $item['id'];
                 $file['size']     = $item['size'];
