@@ -654,7 +654,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             if(isHiddenPage($logline['id'])) continue;
 
             // check ACL
-            if(auth_quickaclcheck($logline['id']) < AUTH_READ) continue;
+            $perms = auth_quickaclcheck($logline['id']);
+            if($perms < AUTH_READ) continue;
 
             // check existance
             if((!@file_exists(wikiFN($logline['id']))) && ($flags & RECENTS_SKIP_DELETED)) continue;
@@ -665,6 +666,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 $change['lastModified'] = new IXR_Date($logline['date']);
                 $change['author']       = $logline['user'];
                 $change['version']      = $logline['date'];
+                $change['perms']        = $perms;
+                $change['size']         = @filesize(wikiFN($logline['id']));
                 array_push($changes, $change);
             } else {
                 $changes = array_reverse($changes);
