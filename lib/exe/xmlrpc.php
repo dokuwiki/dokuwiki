@@ -252,7 +252,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                     $page['id'] = trim($pages[$idx]);
                     $page['perms'] = $perm;
                     $page['size'] = @filesize(wikiFN($pages[$idx]));
-                    $page['lastModified'] = new IXR_Date(@filemtime($pages[$idx]));
+                    $page['lastModified'] = new IXR_Date(@filemtime(wikiFN($pages[$idx])));
                     $list[] = $page;
                 }
             }
@@ -299,7 +299,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 $file = array();
                 $file['id']       = $item['id'];
                 $file['size']     = $item['size'];
-                $file['lastModified']    = $item['mtime'];
+                $file['lastModified']    = new IXR_Date($item['mtime']);
                 $file['isimg']    = $item['isimg'];
                 $file['writable'] = $item['writeable'];
                 $file['perms'] = auth_quickaclcheck(getNS($item['id']).':*');
