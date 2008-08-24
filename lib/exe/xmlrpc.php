@@ -137,6 +137,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Upload a file to the wiki.'
         );
         $this->addCallback(
+            'wiki.deleteAttachment',
+            'this:deleteAttachment',
+            array('int', 'string'),
+            'Delete a file from the wiki.'
+        );
+        $this->addCallback(
             'wiki.getAttachment',
             'this:getAttachment',
             array('base64', 'string'),
@@ -190,17 +196,17 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachment($id){
-    	$id = cleanID($id);
-    	if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
-    		return new IXR_Error(1, 'You are not allowed to read this file');
-    	
-		$file = mediaFN($id);
-		if (!@ file_exists($file))
-			return new IXR_Error(1, 'The requested file does not exist');
-		
-		$data = io_readFile($file, false);
-		$base64 = base64_encode($data);
-		return $base64;
+        $id = cleanID($id);
+        if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
+            return new IXR_Error(1, 'You are not allowed to read this file');
+        
+        $file = mediaFN($id);
+        if (!@ file_exists($file))
+            return new IXR_Error(1, 'The requested file does not exist');
+        
+        $data = io_readFile($file, false);
+        $base64 = base64_encode($data);
+        return $base64;
     }
     
     /**
@@ -209,19 +215,19 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachmentInfo($id){
-    	$id = cleanID($id);
-		$info = array(
-			'lastModified' => 0,
-			'size' => 0,
-		);
-		
-		$file = mediaFN($id);
-		if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
-			$info['lastModified'] = new IXR_Date(filemtime($file));
-			$info['size'] = filesize($file);
-		}
+        $id = cleanID($id);
+        $info = array(
+            'lastModified' => 0,
+            'size' => 0,
+        );
+        
+        $file = mediaFN($id);
+        if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
+            $info['lastModified'] = new IXR_Date(filemtime($file));
+            $info['size'] = filesize($file);
+        }
 
-    	return $info;
+        return $info;
     }
 
     /**
@@ -276,10 +282,10 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         $ns = cleanID($ns);
 
-		if (!is_array($options))
-			$options = array();
+        if (!is_array($options))
+            $options = array();
 
-		if (!isset($options['recursive'])) $options['recursive'] = false;
+        if (!isset($options['recursive'])) $options['recursive'] = false;
 
         if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
@@ -294,12 +300,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
             $files = array();
             foreach($data as $item) {
-            	if (isset($options['pattern']) && !@preg_match($options['pattern'], $item['id']))
-            		continue;
+                if (isset($options['pattern']) && !@preg_match($options['pattern'], $item['id']))
+                    continue;
                 $file = array();
                 $file['id']       = $item['id'];
                 $file['size']     = $item['size'];
-                $file['lastModified']    = new IXR_Date($item['mtime']);
+                $file['lastModified'] = new IXR_Date($item['mtime']);
                 $file['isimg']    = $item['isimg'];
                 $file['writable'] = $item['writeable'];
                 $file['perms'] = auth_quickaclcheck(getNS($item['id']).':*');
@@ -428,18 +434,17 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      *
      * Michael Klier <chi@chimeric.de>
      */
-    function putAttachment($ns, $file, $params) {
+    function putAttachment($id, $file, $params) {
         global $conf;
         global $lang;
 
-        $auth = auth_quickaclcheck($ns.':*');
+        $auth = auth_quickaclcheck(getNS($id).':*');
         if($auth >= AUTH_UPLOAD) {
-            if(!isset($params['name'])) {
+            if(!isset($id)) {
                 return new IXR_ERROR(1, 'Filename not given.');
             }
 
-            $ftmp = $conf['tmpdir'] . '/' . $params['name'];
-            $name = $params['name'];
+            $ftmp = $conf['tmpdir'] . '/' . $id;
 
             // save temporary file
             @unlink($ftmp);
@@ -447,8 +452,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             io_saveFile($ftmp, $buff);
 
             // get filename
-            list($iext, $imime) = mimetype($name);
-            $id = cleanID($ns.':'.$name);
+            list($iext, $imime) = mimetype($id);
+            $id = cleanID($id);
             $fn = mediaFN($id);
 
             // get filetype regexp
@@ -488,6 +493,38 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             }
         } else {
             return new IXR_ERROR(1, "You don't have permissions to upload files.");
+        }
+    }
+    
+    /**
+     * Deletes a file from the wiki.
+     * 
+     * @author Gina Haeussge <osd@foosel.net>
+     */
+    function deleteAttachment($id){
+        $auth = auth_quickaclcheck(getNS($id).':*');
+        if($auth < AUTH_DELETE) return new IXR_ERROR(1, "You don't have permissions to delete files.");
+        global $conf;
+        global $lang;
+    
+        // check for references if needed
+        $mediareferences = array();
+        if($conf['refcheck']){
+            require_once(DOKU_INC.'inc/fulltext.php');
+            $mediareferences = ft_mediause($id,$conf['refshow']);
+        }
+    
+        if(!count($mediareferences)){
+            $file = mediaFN($id);
+            if(@unlink($file)){
+                msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
+                io_sweepNS($id,'mediadir');
+                return 0;
+            }
+            //something went wrong
+               return new IXR_ERROR(1, 'Could not delete file');
+        } else {
+            return new IXR_ERROR(1, 'File is still referenced');
         }
     }
 
