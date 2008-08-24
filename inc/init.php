@@ -23,8 +23,15 @@
   if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
   }
-  if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
-  else { error_reporting(DOKU_E_LEVEL); }
+  if (!defined('DOKU_E_LEVEL')) {
+    if(defined('E_DEPRECATED')){ // since php 5.3
+      error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    }else{
+      error_reporting(E_ALL ^ E_NOTICE);
+    }
+  } else {
+    error_reporting(DOKU_E_LEVEL);
+  }
 
   // init memory caches
   global $cache_revinfo;  $cache_revinfo = array();
