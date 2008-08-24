@@ -149,6 +149,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Returns a struct with infos about the attachment.'
         );
 
+        /**
+         * Trigger XMLRPC_CALLBACK_REGISTER, action plugins can use this event 
+         * to extend the XMLRPC interface and register their own callbacks.
+         *
+         * Event data:
+         *  The XMLRPC server object:
+         *
+         *  $event->data->addCallback() - register a callback, the second 
+         *  paramter has to be of the form "plugin:<pluginname>:<plugin 
+         *  method>"
+         *
+         *  $event->data->callbacks - an array which holds all awaylable 
+         *  callbacks
+         */
+        trigger_event('XMLRPC_CALLBACK_REGISTER', $this);
+
         $this->serve();
     }
 
