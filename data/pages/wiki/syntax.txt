@@ -35,24 +35,25 @@ DokuWiki supports multiple ways of creating links.
 
 ==== External ====
 
-External links are recognized automagically: http://www.google.com or simply www.google.com - You can set the link text, too: [[http://www.google.com|This Link points to google]]. Email addresses like this one: <andi@splitbrain.org> are recognized, too.
+External links are recognized automagically: http://www.google.com or simply www.google.com - You can set the link text as well: [[http://www.google.com|This Link points to google]]. Email addresses like this one: <andi@splitbrain.org> are recognized, too.
 
   DokuWiki supports multiple ways of creating links. External links are recognized
   automagically: http://www.google.com or simply www.google.com - You can set
-  link text, too: [[http://www.google.com|This Link points to google]]. Email
+  link text as well: [[http://www.google.com|This Link points to google]]. Email
   addresses like this one: <andi@splitbrain.org> are recognized, too.
 
 ==== Internal ====
 
-Internal links are created by using square brackets. You can either just give a [[doku>pagename]] or use an additional [[doku>pagename|link text]]. Wiki pagenames are converted to lowercase automatically, special characters are not allowed. 
+Internal links are created by using square brackets. You can either just give a [[pagename]] or use an additional [[pagename|link text]].
 
   Internal links are created by using square brackets. You can either just give
-  a [[doku>pagename]] or use an additional [[doku>pagename|link text]]. Wiki pagenames
-  are converted to lowercase automatically, special chars are not allowed.
+  a [[pagename]] or use an additional [[pagename|link text]].
 
-You can use [[namespaces]] by using a colon in the pagename.
+[[doku>pagename|Wiki pagenames]] are converted to lowercase automatically, special characters are not allowed. 
 
-  You can use [[namespaces]] by using a colon in the pagename.
+You can use [[some:namespaces]] by using a colon in the pagename.
+
+  You can use [[some:namespaces]] by using a colon in the pagename.
 
 For details about namespaces see [[doku>namespaces]].
 
