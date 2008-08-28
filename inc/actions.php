@@ -392,69 +392,93 @@ function act_edit($act){
 }
 
 /**
- * Handle 'edit', 'preview'
+ * Export a wiki page for various formats
+ *
+ * Triggers ACTION_EXPORT_POSTPROCESS
+ *   
+ *  Event data:
+ *    data['id']      -- page id
+ *    data['mode']    -- requested export mode
+ *    data['headers'] -- export headers
+ *    data['output']  -- export output
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Klier <chi@chimeric.de>
  */
 function act_export($act){
   global $ID;
   global $REV;
+  global $conf;
+  global $lang;
+
+  $pre = '';
+  $post = '';
+  $output = '';
+  $headers = array();
 
   // search engines: never cache exported docs! (Google only currently)
-  header('X-Robots-Tag: noindex');
+  $headers['X-Robots-Tag'] = 'noindex';
 
-  // no renderer for this
-  if($act == 'export_raw'){
-    header('Content-Type: text/plain; charset=utf-8');
-    print rawWiki($ID,$REV);
-    exit;
-  }
-
-  // html export #FIXME what about the template's style?
-  if($act == 'export_xhtml'){
-    global $conf;
-    global $lang;
-    header('Content-Type: text/html; charset=utf-8');
-    ptln('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"');
-    ptln(' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
-    ptln('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$conf['lang'].'"');
-    ptln(' lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">');
-    ptln('<head>');
-    ptln('  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
-    ptln('  <title>'.$ID.'</title>');
-    tpl_metaheaders();
-    ptln('</head>');
-    ptln('<body>');
-    ptln('<div class="dokuwiki export">');
-    $html = p_wiki_xhtml($ID,$REV,false);
-    tpl_toc();
-    echo $html;
-    ptln('</div>');
-    ptln('</body>');
-    ptln('</html>');
-    exit;
-  }
-
-  // html body only
-  if($act == 'export_xhtmlbody'){
-    $html = p_wiki_xhtml($ID,$REV,false);
-    tpl_toc();
-    echo $html;
-    exit;
-  }
-
-  // try to run renderer
   $mode = substr($act,7);
-  $text = p_cached_output(wikiFN($ID,$REV), $mode);
-  $headers = p_get_metadata($ID,"format $mode");
-  if(!is_null($text)){
-    if(is_array($headers)) foreach($headers as $key => $val){
-        header("$key: $val");
-    }
-    print $text;
-    exit;
+  switch($mode) {
+    case 'raw':
+      $headers['Content-Type'] = 'text/plain; charse=utf-8';
+      $output = rawWiki($ID,$REV);
+      break;
+    case 'xhtml':
+      $pre .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"' . DOKU_LF;
+      $pre .= ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . DOKU_LF;
+      $pre .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$conf['lang'].'"' . DOKU_LF;
+      $pre .= ' lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">' . DOKU_LF;
+      $pre .= '<head>' . DOKU_LF;
+      $pre .= '  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . DOKU_LF;
+      $pre .= '  <title>'.$ID.'</title>' . DOKU_LF;
+
+      // get metaheaders
+      ob_start();
+      tpl_metaheaders();
+      $pre .= ob_get_clean();
+
+      $pre .= '</head>' . DOKU_LF;
+      $pre .= '<body>' . DOKU_LF;
+      $pre .= '<div class="dokuwiki export">' . DOKU_LF;
+
+      // get toc
+      $pre .= tpl_toc(true);
+
+      $headers['Content-Type'] = 'text/html; charset=utf-8';
+      $output = p_wiki_xhtml($ID,$REV,false);
+
+      $post .= '</div>' . DOKU_LF;
+      $post .= '</body>' . DOKU_LF;
+      $post .= '</html>' . DOKU_LF;
+      break;
+    case 'xhtmlbody':
+      $headers['Content-Type'] = 'text/html; charset=utf-8';
+      $output = p_wiki_xhtml($ID,$REV,false);
+      break;
+    default:
+      $headers = p_get_metadata($ID,"format $mode");
+      $output = p_cached_output(wikiFN($ID,$REV), $mode);
+      break;
   }
 
+  // prepare event data
+  $data = array();
+  $data['id'] = $ID;
+  $data['mode'] = $mode;
+  $data['headers'] = $headers;
+  $data['output'] =& $output;
+
+  trigger_event('ACTION_EXPORT_POSTPROCESS', $data);
+
+  if(!empty($data['output'])){
+    if(is_array($data['headers'])) foreach($data['headers'] as $key => $val){
+      header("$key: $val");
+    }
+    print $pre.$data['output'].$post;
+    exit;
+  }
   return 'show';
 }
 
