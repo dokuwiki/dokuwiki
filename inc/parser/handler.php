@@ -80,6 +80,7 @@ class Doku_Handler {
         $data = array($match);
         $plugin =& plugin_load('syntax',$pluginname);
         if($plugin != null){
+            $plugin->setMatch($match);
             $data = $plugin->handle($match, $state, $pos, $this);
         }
         if ($data !== false) {

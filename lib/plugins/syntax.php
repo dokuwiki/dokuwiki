@@ -22,7 +22,8 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     var $lang = array();            // array to hold language dependent strings, best accessed via ->getLang()
     var $configloaded = false;      // set to true by loadConfig() after loading plugin configuration variables
     var $conf = array();            // array to hold plugin settings, best accessed via ->getConf()
-
+    var $match = null;              // string containing the match of a syntax plugin, accessed via
+                                    // it's setters and getters setMatch() and getMatch()
     /**
      * General Info
      *
@@ -264,6 +265,30 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     }
 
     return $conf;
+  }
+
+  /**
+   * setMatch is the setter of the match string in a syntax plugin
+   *
+   * @author Pierre Spring <pierre.spring@liip.ch>
+   * @param string $match
+   * @access public
+   * @return void
+   */
+  function setMatch($match)
+  {
+    $this->match = (string) $match;
+  }
+  /**
+   * getMatch is the getter of the match string in a syntax plugin
+   *
+   * @author Pierre Spring <pierre.spring@liip.ch>
+   * @access public
+   * @return string
+   */
+  function getMatch()
+  {
+    return $this->match;
   }
 
 }
