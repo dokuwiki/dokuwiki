@@ -181,6 +181,7 @@ function tpl_toc($return=false){
         }
     }
 
+    trigger_event('TPL_TOC_RENDER', $toc, NULL, false);
     $html = html_TOC($toc);
     if($return) return $html;
     echo $html;
