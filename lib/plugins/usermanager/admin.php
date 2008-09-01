@@ -283,6 +283,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"),$indent+6);
 
         if ($this->_auth->canDo("modPass")) {
+          $notes[] = $this->lang['note_pass'];
           if ($user) {
             $notes[] = $this->lang['note_notify'];
           }
@@ -341,7 +342,14 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
         if (empty($user)) return false;
-        if (empty($pass) || empty($name) || empty($mail)){
+        if (empty($pass)){
+          if(!empty($_REQUEST['usernotify'])){
+            $pass = auth_pwgen();
+          } else {
+            return false;
+          }
+        }
+        if (empty($name) || empty($mail)){
           msg($this->lang['add_fail'], -1);
           return false;
         }
