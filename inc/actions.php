@@ -129,8 +129,8 @@ function act_dispatch(){
   $evt->advise_after();
   unset($evt);
 
-  // when action 'show' and POST, do a redirect
-  if($ACT == 'show' && strtolower($_SERVER['REQUEST_METHOD']) == 'post'){
+  // when action 'show', the intial not 'show' and POST, do a redirect
+  if($ACT == 'show' && $preact != 'show' && strtolower($_SERVER['REQUEST_METHOD']) == 'post'){
     act_redirect($ID,$preact);
   }
 
