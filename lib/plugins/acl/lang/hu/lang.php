@@ -4,6 +4,7 @@
  *
  * @author Sandor TIHANYI <stihanyi@gmail.com>
  * @author SandorTIHANYI <stihanyi@gmail.com>
+ * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
  */
 $lang['admin_acl']             = 'Hozzáférési lista (ACL) kezelő';
 $lang['acl_group']             = 'Csoport:';

@@ -6,6 +6,7 @@
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi@gmail.com>
  * @author SandorTIHANYI <stihanyi@gmail.com>
+ * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -108,6 +109,7 @@ $lang['namespaces']            = 'Névtér';
 $lang['mediafiles']            = 'Elérhető fájlok itt:';
 $lang['js']['keepopen']        = 'Tartsd nyitva ezt az ablakot a kijelöléshez!';
 $lang['js']['hidedetails']     = 'Részletek elrejtése';
+$lang['js']['mu_btn']          = 'Több fájl feltöltése egyszerre';
 $lang['mediausage']            = 'A következő formában hivatkozhatsz erre az állományra:';
 $lang['mediaview']             = 'Eredeti állomány megtekintése';
 $lang['mediaroot']             = 'kiindulási hely';
@@ -203,3 +205,16 @@ $lang['i_pol0']                = 'Nyitott Wiki (mindenki olvashatja, írhatja, �
 $lang['i_pol1']                = 'Publikus Wiki (mindenki olvashatja, de csak regisztrált felhasználók írhatják, és tölthetnek fel fáljokat)';
 $lang['i_pol2']                = 'Zárt Wiki (csak regisztrált felhasználók olvashatják, írhatják és tölthetnek fel fájlokat)';
 $lang['i_retry']               = 'Újra';
+$lang['mu_intro']              = 'Itt több fájlt is fel tudsz tölteni egyszerre. Kattints a "Kiválaszt" gombra és add hozzá a listához. Nyomd meg a Feltöltés gombot, amikor elkészültél.';
+$lang['mu_gridname']           = 'Fájlnév';
+$lang['mu_gridsize']           = 'Méret';
+$lang['mu_gridstat']           = 'Állapot';
+$lang['mu_namespace']          = 'Névtér';
+$lang['mu_browse']             = 'Kiválaszt';
+$lang['mu_toobig']             = 'túl nagy';
+$lang['mu_ready']              = 'feltöltésre kész';
+$lang['mu_done']               = 'kész';
+$lang['mu_fail']               = 'hibás';
+$lang['mu_authfail']           = 'session lejárt';
+$lang['mu_progress']           = '@PCT@% feltöltve';
+$lang['mu_filetypes']          = 'Megengedett Fájltípusok';

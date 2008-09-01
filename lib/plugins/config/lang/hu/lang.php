@@ -4,6 +4,7 @@
  *
  * @author Sandor TIHANYI <stihanyi@gmail.com>
  * @author SandorTIHANYI <stihanyi@gmail.com>
+ * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
