@@ -1,4 +1,4 @@
-Yeni dosya yüklendi, detaylar:
+Yeni dosya yüklendi. Ayrıntıları aşağıda listelenmiştir:
 
 Dosya : @MEDIA@
 Tarih : @DATE@
@@ -10,5 +10,4 @@ MIME Type : @MIME@
 Kullanıcı : @USER@
 
 --
-Bu e-posta otomatik olarak oluşturulmuştur
-@DOKUWIKIURL@
+Bu e-posta @DOKUWIKIURL@ adresindeki DokuWiki tarafından hazırlandı.

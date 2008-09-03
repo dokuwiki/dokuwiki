@@ -1,6 +1,5 @@
 ======Arama======
 
-Aşağıda aramanın sonuçları vardır. Aradığın şeyi bulamadıysan, girdiğin sorgunun adıyla yeni bir sayfa
-oluşturmak için ''sayfayı değiştir'' tuşunu kullan.
+Aşağıda aramanın sonuçları listelenmiştir. Aradığınız şeyi bulamadıysanız, ''Sayfayı değiştir'' tuşuna tıklayarak girdiğiniz sorgu adıyla yeni bir sayfa oluşturabilirsiniz .
 
 =====Sonuçlar=====

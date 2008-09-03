@@ -1,0 +1,11 @@
+=== Hızlı yardım: ===
+
+Bu sayfada Wiki'nizin namespace ve sayfaları için izinleri belirleyebilirsiniz.
+
+Soldaki kısım varolan namespace ve sayfaları listeler.
+
+Yukarıdaki kısım seçilen bir kullanıcı veya grup için izinleri görüp değiştirmenizi sağlar.
+
+Aşağıdaki tablo ise varolan erişim kontrol kurallarını gösterir. Bu tabloyu birden fazla kuralı hızlıca silip değiştirmek için kullanabilirsiniz.
+
+Resmi ACL dökümanını ([[doku>acl|official documentation on ACL]]) okuyarak erişim kontrolünün nasıl çalıştığını öğrenebilirsiniz.

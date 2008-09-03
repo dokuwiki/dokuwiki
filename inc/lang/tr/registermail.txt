@@ -1,4 +1,4 @@
-Yeni kullanıcı  kayıt oldu, detaylar:
+Yeni bir kullanıcı kayıt oldu. Ayrıntıları aşağıda listelenmiştir:
 
 Kullanıcı adı : @NEWUSER@
 İsim : @NEWNAME@
@@ -10,5 +10,4 @@ IP Numarası : @IPADDRESS@
 Host : @HOSTNAME@
 
 -- 
-Bu e-posta otomatik olarak oluşturulmuştur.
-@DOKUWIKIURL@
+Bu e-posta @DOKUWIKIURL@ adresindeki DokuWiki tarafından hazırlandı.

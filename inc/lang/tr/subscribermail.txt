@@ -9,12 +9,10 @@ Değişiklikler aşağıdadır:
 @DIFF@
 --------------------------------------------------------
 
-Bu sayfaya abonelikten çıkmak için 
+Bu sayfaya abonelikten çıkmak için  
 @DOKUWIKIURL@ adresindeki wikiye gir, ardından
 @NEWPAGE@
-sayfasına git ve 'Değişikliklerden çıkı' seç.
+sayfasına git ve 'Sayfa Değişikliklerini Bildirme' butonuna tıkla.
 
 -- 
-Bu mail 
-@DOKUWIKIURL@
-adresindeki DokuWiki tarafından hazırlandı.
+Bu e-posta @DOKUWIKIURL@ adresindeki DokuWiki tarafından hazırlandı.

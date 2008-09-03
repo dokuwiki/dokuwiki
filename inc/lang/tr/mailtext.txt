@@ -4,15 +4,13 @@ Tarih            : @DATE@
 Tarayıcı         : @BROWSER@
 IP-Adresi        : @IPADDRESS@
 Sunucu adı       : @HOSTNAME@
-Eski sürüm       : @OLDPAGE@
-Yeni sürüm       : @NEWPAGE@
-Değiştirme özeti : @SUMMARY@
+Eski Sürüm       : @OLDPAGE@
+Yeni Sürüm       : @NEWPAGE@
+Değiştirme Özeti : @SUMMARY@
 Kullanıcı        : @USER@
 
 @DIFF@
 
 
 -- 
-Bu mail
-@DOKUWIKIURL@
-adresindeki DokuWiki tarafından hazırlandı.
+Bu e-posta @DOKUWIKIURL@ adresindeki DokuWiki tarafından hazırlandı.

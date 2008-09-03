@@ -1,12 +1,13 @@
 Merhaba @FULLNAME@!
 
-@DOKUWIKIURL@ adresinde kullanılan @TITLE@ hesabı için şifre talebinde bulunuldu.
+@DOKUWIKIURL@ adresinde kullanılan @TITLE@ hesabı için parola talebinde bulunuldu.
 
 Eğer böyle bir talebiniz olmadıysa, bu e-postayı görmezden gelebilirsiniz.
 
-Onaylamak istiyorsanız aşağıdaki linke tıklayınız
+Onaylamak istiyorsanız aşağıdaki linke tıklayınız.
+
 @CONFIRM@
 
 --
-Bu e-posta otomatik olarak oluşturulmuştur.
+Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur.
 @DOKUWIKIURL@
