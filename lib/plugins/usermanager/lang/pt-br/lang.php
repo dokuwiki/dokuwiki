@@ -5,6 +5,7 @@
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
@@ -42,6 +43,7 @@ $lang['edit_usermissing']      = 'O usuário selecionado não foi encontrado, el
 $lang['user_notify']           = 'Notificar o usuário';
 $lang['note_notify']           = 'E-mails de notificação são enviados apenas se o usuário forneceu uma senha.';
 $lang['note_group']            = 'Novos usuários serão adicionados ao grupo padrão (%s), caso nenhum grupo seja especificado.';
+$lang['note_pass']             = 'A senha será automaticamente gerada se o campo esquerdo estiver vazio e a notificação de usuário ativada.';
 $lang['add_ok']                = 'O usuário foi adicionado com sucesso';
 $lang['add_fail']              = 'O usuário não foi adicionado';
 $lang['notify_ok']             = 'O e-mail de notificação foi enviado';

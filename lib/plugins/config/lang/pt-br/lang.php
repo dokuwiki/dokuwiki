@@ -5,6 +5,7 @@
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido, por favor, reveja suas mudanças e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';

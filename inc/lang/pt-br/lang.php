@@ -8,6 +8,7 @@
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
