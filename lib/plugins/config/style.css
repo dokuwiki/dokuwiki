@@ -38,6 +38,11 @@
     vertical-align: top;
 }
 
+#config__manager td.label label {
+    clear: both;
+    display: block;
+}
+
 #config__manager td.label span.outkey {
     font-size: 70%;
     margin-top: -1.7em;
@@ -47,6 +52,8 @@
     color: __text_neu__;
     float: left;
     padding: 0 0.1em;
+    position: relative;
+    z-index: 1;
 }
 
 #config__manager td input.edit {

@@ -806,8 +806,7 @@ if (!class_exists('setting_multicheckbox')) {
         $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
         $input .= "</div>\n";
 
-//        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-        $label = $this->prompt($plugin);
+        $label = '<label>'.$this->prompt($plugin).'</label>';
         return array($label,$input);
     }
 
