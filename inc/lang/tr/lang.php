@@ -6,6 +6,7 @@
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
+ * @author yavuzselim@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
