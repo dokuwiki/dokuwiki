@@ -45,6 +45,7 @@ $lang['edit_usermissing']      = 'Utente selezionato non trovato, il nome utente
 $lang['user_notify']           = 'Notifica utente';
 $lang['note_notify']           = 'Le email di notifica sono inviate soltanto se all\'utente è stata assegnata una nuova password.';
 $lang['note_group']            = 'Se non si specifica alcun gruppo, i nuovi utenti saranno aggiunti al gruppo di default (%s).';
+$lang['note_pass']             = 'La password verrà generata automaticamente qualora il campo di inserimento relatvivo venisse lasciato vuoto e le notifiche all\'utente fossero abilitate.';
 $lang['add_ok']                = 'Utente aggiunto correttamente';
 $lang['add_fail']              = 'Aggiunta utente fallita';
 $lang['notify_ok']             = 'Email di notifica inviata';
