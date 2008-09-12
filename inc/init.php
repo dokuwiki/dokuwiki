@@ -458,7 +458,7 @@ function fullpath($path){
     if(!$iswin) $finalpath = '/'.$finalpath;
 
     // check then return valid path or filename
-    if (file_exists($finalpath)) {
+    if (@file_exists($finalpath)) {
         return ($finalpath);
     }
     else return false;
