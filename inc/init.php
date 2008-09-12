@@ -114,7 +114,11 @@
   // init session
   if (!headers_sent() && !defined('NOSESSION')){
     session_name("DokuWiki");
-    session_set_cookie_params(0, DOKU_REL);
+    if (version_compare(PHP_VERSION, '5.2.0', '>')) {
+      session_set_cookie_params(0,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+    }else{
+      session_set_cookie_params(0,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+    }
     session_start();
   }
 
@@ -341,9 +345,7 @@ function getBaseURL($abs=null){
   if(!$port)  $port = $_SERVER['SERVER_PORT'];
   if(!$port)  $port = 80;
 
-  // see if HTTPS is enabled - apache leaves this empty when not available,
-  // IIS sets it to 'off', 'false' and 'disabled' are just guessing
-  if (preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
+  if(!is_ssl()){
     $proto = 'http://';
     if ($port == '80') {
       $port='';
@@ -358,6 +360,22 @@ function getBaseURL($abs=null){
   if($port) $port = ':'.$port;
 
   return $proto.$host.$port.$dir;
+}
+
+/**
+ * Check if accessed via HTTPS
+ *
+ * Apache leaves ,$_SERVER['HTTPS'] empty when not available, IIS sets it to 'off'.
+ * 'false' and 'disabled' are just guessing
+ *
+ * @returns bool true when SSL is active
+ */
+function is_ssl(){
+    if (preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 /**

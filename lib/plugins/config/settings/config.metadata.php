@@ -123,6 +123,7 @@ $meta['disableactions'] = array('disableactions',
                                 '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw'), 'nssubscription' => array('subscribens','unsubscribens')));
 $meta['sneaky_index'] = array('onoff');
 $meta['auth_security_timeout'] = array('numeric');
+$meta['securecookie'] = array('onoff');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');

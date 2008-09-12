@@ -135,7 +135,11 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
       $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
       $cookie = base64_encode("$user|$sticky|$pass");
       if($sticky) $time = time()+60*60*24*365; //one year
-      setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL);
+      if (version_compare(PHP_VERSION, '5.2.0', '>')) {
+          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+      }else{
+          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+      }
 
       // set session
       $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
@@ -286,7 +290,12 @@ function auth_logoff(){
   if(isset($_SERVER['REMOTE_USER']))
     unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
-  setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL);
+
+  if (version_compare(PHP_VERSION, '5.2.0', '>')) {
+    setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,($conf['securecookie'] && is_ssl()),true);
+  }else{
+    setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,($conf['securecookie'] && is_ssl()));
+  }
 
   if($auth && $auth->canDo('logoff')){
     $auth->logOff();
