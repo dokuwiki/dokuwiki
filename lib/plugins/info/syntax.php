@@ -1,7 +1,7 @@
 <?php
 /**
  * Info Plugin: Displays information about various DokuWiki internals
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Esther Brunner <wikidesign@gmail.com>
@@ -25,7 +25,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2006-12-09',
+            'date'   => '2008-09-12',
             'name'   => 'Info Plugin',
             'desc'   => 'Displays information about various DokuWiki internals',
             'url'    => 'http://dokuwiki.org/plugin:info',
@@ -38,7 +38,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     function getType(){
         return 'substition';
     }
-   
+
     /**
      * What about paragraphs?
      */
@@ -48,7 +48,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
      * Where to sort in?
-     */ 
+     */
     function getSort(){
         return 155;
     }
@@ -122,10 +122,17 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         $renderer->doc .= '<ul>';
 
         $plugins = plugin_list($type);
+        $plginfo = array();
+
+        // remove subparts
         foreach($plugins as $p){
             if (!$po =& plugin_load($type,$p)) continue;
-            $info = $po->getInfo();
+            list($name,$part) = explode('_',$p,2);
+            $plginfo[$name] = $po->getInfo();
+        }
 
+        // list them
+        foreach($plginfo as $info){
             $renderer->doc .= '<li><div class="li">';
             $renderer->externallink($info['url'],$info['name']);
             $renderer->doc .= ' ';
@@ -142,7 +149,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         $renderer->doc .= '</ul>';
     }
-    
+
     /**
      * list all installed plugins
      *
@@ -150,15 +157,15 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      */
     function _helpermethods_xhtml(&$renderer){
         global $lang;
-        
+
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
             if (!$po =& plugin_load('helper',$p)) continue;
-            
+
             if (!method_exists($po, 'getMethods')) continue;
             $methods = $po->getMethods();
             $info = $po->getInfo();
-            
+
             $hid = $this->_addToTOC($info['name'], 2, $renderer);
             $doc = '<h2><a name="'.$hid.'" id="'.$hid.'">'.hsc($info['name']).'</a></h2>';
             $doc .= '<div class="level2">';
@@ -190,7 +197,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                 $doc .= '</div>';
             }
             unset($po);
-            
+
             $renderer->doc .= $doc;
         }
     }
@@ -229,20 +236,20 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         }
         return $doc;
     }
-    
+
     /**
      * Adds a TOC item
      */
     function _addToTOC($text, $level, &$renderer){
         global $conf;
-        
-        if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){ 
-            $hid  = $renderer->_headerToLink($text, 'true'); 
-            $renderer->toc[] = array( 
-                'hid'   => $hid, 
-                'title' => $text, 
-                'type'  => 'ul', 
-                'level' => $level - $conf['toptoclevel'] + 1 
+
+        if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){
+            $hid  = $renderer->_headerToLink($text, 'true');
+            $renderer->toc[] = array(
+                'hid'   => $hid,
+                'title' => $text,
+                'type'  => 'ul',
+                'level' => $level - $conf['toptoclevel'] + 1
             );
         }
         return $hid;
