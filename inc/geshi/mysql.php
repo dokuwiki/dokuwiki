@@ -4,7 +4,7 @@
  * ---------
  * Author: Carl F�rstenberg (azatoth@gmail.com)
  * Copyright: (c) 2005 Carl F�rstenberg, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2004/06/04
  *
  * MySQL language file for GeSHi.
@@ -168,6 +168,13 @@ $language_data = array (
             ),
         'REGEXPS' => array(
             )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => '',
+        5 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

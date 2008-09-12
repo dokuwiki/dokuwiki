@@ -4,7 +4,7 @@
  * ----------
  * Author: Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2005/08/27
  *
  * OCaml (Objective Caml) language file for GeSHi.
@@ -38,75 +38,75 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'OCaml',
-	'COMMENT_SINGLE' => array(),
-	'COMMENT_MULTI' => array('(*' => '*)'),
-	'CASE_KEYWORDS' => 0,
-	'QUOTEMARKS' => array('"'),
-	'ESCAPE_CHAR' => "",
-	'KEYWORDS' => array(
+    'LANG_NAME' => 'OCaml (brief)',
+    'COMMENT_SINGLE' => array(),
+    'COMMENT_MULTI' => array('(*' => '*)'),
+    'CASE_KEYWORDS' => 0,
+    'QUOTEMARKS' => array('"'),
+    'ESCAPE_CHAR' => "",
+    'KEYWORDS' => array(
         /* main OCaml keywords */
-		1 => array(
-			'and', 'As', 'asr', 'begin', 'Class', 'Closed', 'constraint', 'do', 'done', 'downto', 'else',
-			'end', 'exception', 'external', 'failwith', 'false', 'flush', 'for', 'fun', 'function', 'functor',
-			'if', 'in', 'include', 'inherit',  'incr', 'land', 'let', 'load', 'los', 'lsl', 'lsr', 'lxor',
-			'match', 'method', 'mod', 'module', 'mutable', 'new', 'not', 'of', 'open', 'option', 'or', 'parser',
-			'private', 'ref', 'rec', 'raise', 'regexp', 'sig', 'struct', 'stdout', 'stdin', 'stderr', 'then',
-			'to', 'true', 'try', 'type', 'val', 'virtual', 'when', 'while', 'with'
-			)
-		),
-	/* highlighting symbols is really important in OCaml */
-	'SYMBOLS' => array(
-			';', '!', ':', '.', '=', '%', '^', '*', '-', '/', '+',
-			'>', '<', '(', ')', '[', ']', '&', '|', '#', "'"
-			),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #06c; font-weight: bold;' /* nice blue */
-			),
-		'COMMENTS' => array(
-			'MULTI' => 'color: #5d478b; font-style: italic;' /* light purple */
-			),
-		'ESCAPE_CHAR' => array(
-			),
-		'BRACKETS' => array(
-			0 => 'color: #6c6;'
-			),
-		'STRINGS' => array(
-			0 => 'color: #3cb371;' /* nice green */
-			),
-		'NUMBERS' => array(
-			0 => 'color: #c6c;' /* pink */
-			),
-		'METHODS' => array(
-			1 => 'color: #060;' /* dark green */
-			),
-		'REGEXPS' => array(
-			),
-		'SYMBOLS' => array(
-			0 => 'color: #a52a2a;' /* maroon */
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
-		1 => '',
-		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
-		1 => '.'
-		),
-	'REGEXPS' => array(
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        1 => array(
+            'and', 'As', 'asr', 'begin', 'Class', 'Closed', 'constraint', 'do', 'done', 'downto', 'else',
+            'end', 'exception', 'external', 'failwith', 'false', 'flush', 'for', 'fun', 'function', 'functor',
+            'if', 'in', 'include', 'inherit',  'incr', 'land', 'let', 'load', 'los', 'lsl', 'lsr', 'lxor',
+            'match', 'method', 'mod', 'module', 'mutable', 'new', 'not', 'of', 'open', 'option', 'or', 'parser',
+            'private', 'ref', 'rec', 'raise', 'regexp', 'sig', 'struct', 'stdout', 'stdin', 'stderr', 'then',
+            'to', 'true', 'try', 'type', 'val', 'virtual', 'when', 'while', 'with'
+            )
+        ),
+    /* highlighting symbols is really important in OCaml */
+    'SYMBOLS' => array(
+            ';', '!', ':', '.', '=', '%', '^', '*', '-', '/', '+',
+            '>', '<', '(', ')', '[', ']', '&', '|', '#', "'"
+            ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => false,
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #06c; font-weight: bold;' /* nice blue */
+            ),
+        'COMMENTS' => array(
+            'MULTI' => 'color: #5d478b; font-style: italic;' /* light purple */
+            ),
+        'ESCAPE_CHAR' => array(
+            ),
+        'BRACKETS' => array(
+            0 => 'color: #6c6;'
+            ),
+        'STRINGS' => array(
+            0 => 'color: #3cb371;' /* nice green */
+            ),
+        'NUMBERS' => array(
+            0 => 'color: #c6c;' /* pink */
+            ),
+        'METHODS' => array(
+            1 => 'color: #060;' /* dark green */
+            ),
+        'REGEXPS' => array(
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #a52a2a;' /* maroon */
+            ),
+        'SCRIPT' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array(
+        1 => '.'
+        ),
+    'REGEXPS' => array(
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        )
 );
 
 ?>

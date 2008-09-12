@@ -4,7 +4,7 @@
  * -------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2004/07/10
  *
  * LUA language file for GeSHi.
@@ -43,29 +43,29 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Lua',
-	'COMMENT_SINGLE' => array(1 => "--"),
-	'COMMENT_MULTI' => array('--[[' => ']]'),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
-			'and','break','do','else','elseif','end','false','for','function','if',
-			'in','local','nil','not','or','repeat','return','then','true','until','while',
-			'_VERSION','assert','collectgarbage','dofile','error','gcinfo','loadfile','loadstring',
-			'print','tonumber','tostring','type','unpack',
-			'_ALERT','_ERRORMESSAGE','_INPUT','_PROMPT','_OUTPUT',
-			'_STDERR','_STDIN','_STDOUT','call','dostring','foreach','foreachi','getn','globals','newtype',
-			'rawget','rawset','require','sort','tinsert','tremove',
-			'abs','acos','asin','atan','atan2','ceil','cos','deg','exp',
-			'floor','format','frexp','gsub','ldexp','log','log10','max','min','mod','rad','random','randomseed',
-			'sin','sqrt','strbyte','strchar','strfind','strlen','strlower','strrep','strsub','strupper','tan',
-			'openfile','closefile','readfrom','writeto','appendto',
-			'remove','rename','flush','seek','tmpfile','tmpname','read','write',
-			'clock','date','difftime','execute','exit','getenv','setlocale','time',
-			'_G','getfenv','getmetatable','ipairs','loadlib','next','pairs','pcall',
-			'rawegal','rawget','rawset','require','setfenv','setmetatable','xpcall',
+    'LANG_NAME' => 'Lua',
+    'COMMENT_SINGLE' => array(1 => "--"),
+    'COMMENT_MULTI' => array('--[[' => ']]'),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+    'QUOTEMARKS' => array("'", '"'),
+    'ESCAPE_CHAR' => '\\',
+    'KEYWORDS' => array(
+        1 => array(
+            'and','break','do','else','elseif','end','false','for','function','if',
+            'in','local','nil','not','or','repeat','return','then','true','until','while',
+            '_VERSION','assert','collectgarbage','dofile','error','gcinfo','loadfile','loadstring',
+            'print','tonumber','tostring','type','unpack',
+            '_ALERT','_ERRORMESSAGE','_INPUT','_PROMPT','_OUTPUT',
+            '_STDERR','_STDIN','_STDOUT','call','dostring','foreach','foreachi','getn','globals','newtype',
+            'rawget','rawset','require','sort','tinsert','tremove',
+            'abs','acos','asin','atan','atan2','ceil','cos','deg','exp',
+            'floor','format','frexp','gsub','ldexp','log','log10','max','min','mod','rad','random','randomseed',
+            'sin','sqrt','strbyte','strchar','strfind','strlen','strlower','strrep','strsub','strupper','tan',
+            'openfile','closefile','readfrom','writeto','appendto',
+            'remove','rename','flush','seek','tmpfile','tmpname','read','write',
+            'clock','date','difftime','execute','exit','getenv','setlocale','time',
+            '_G','getfenv','getmetatable','ipairs','loadlib','next','pairs','pcall',
+            'rawegal','setfenv','setmetatable','xpcall',
             'string.byte','string.char','string.dump','string.find','string.len',
             'string.lower','string.rep','string.sub','string.upper','string.format','string.gfind','string.gsub',
             'table.concat','table.foreach','table.foreachi','table.getn','table.sort','table.insert','table.remove','table.setn',
@@ -78,57 +78,60 @@ $language_data = array (
             'io.stdin','io.stdout','io.stderr',
             'os.clock','os.date','os.difftime','os.execute','os.exit','os.getenv','os.remove','os.rename',
             'os.setlocale','os.time','os.tmpname',
-			'string','table','math','coroutine','io','os','debug'
-			)
-		),
-	'SYMBOLS' => array(
-		'(', ')', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>', '=', ';'
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => true
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #b1b100;'
-			),
-		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
-			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
-			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-      0 => 'color: #b1b100;'
-			),
-		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+            'string','table','math','coroutine','io','os','debug'
+            )
+        ),
+    'SYMBOLS' => array(
+        '(', ')', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>', '=', ';'
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => true
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #b1b100;'
+            ),
+        'COMMENTS' => array(
+            1 => 'color: #808080; font-style: italic;',
+            'MULTI' => 'color: #808080; font-style: italic;'
+            ),
+        'ESCAPE_CHAR' => array(
+            0 => 'color: #000099; font-weight: bold;'
+            ),
+        'BRACKETS' => array(
+            0 => 'color: #66cc66;'
+            ),
+        'STRINGS' => array(
+            0 => 'color: #ff0000;'
+            ),
+        'NUMBERS' => array(
+            0 => 'color: #cc66cc;'
+            ),
+        'METHODS' => array(
+            0 => 'color: #b1b100;'
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #66cc66;'
+            ),
+        'REGEXPS' => array(
+            ),
+        'SCRIPT' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => ''
+        ),
+    'OOLANG' => false,
+    'OBJECT_SPLITTERS' => array(
+        ),
+    'REGEXPS' => array(
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        )
 );
 
 ?>

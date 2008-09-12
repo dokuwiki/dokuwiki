@@ -4,7 +4,7 @@
  * -------
  * Author: Victor Engmark <victor.engmark@gmail.com>
  * Copyright: (c) 2006 Victor Engmark (http://l0b0.net/)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2006/10/26
  *
  * Oracle 9.2 PL/SQL language file for GeSHi.
@@ -13,7 +13,7 @@
  * CHANGES
  * -------
  * 2006/10/27 (1.0.0)
- *	-	First Release
+ *    -    First Release
  *
  * TODO (updated 2006/10/27)
  * -------------------------
@@ -22,33 +22,33 @@
  *
  *************************************************************************************
  *
- *		 This file is part of GeSHi.
+ *         This file is part of GeSHi.
  *
- *	 GeSHi is free software; you can redistribute it and/or modify
- *	 it under the terms of the GNU General Public License as published by
- *	 the Free Software Foundation; either version 2 of the License, or
- *	 (at your option) any later version.
+ *     GeSHi is free software; you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation; either version 2 of the License, or
+ *     (at your option) any later version.
  *
- *	 GeSHi is distributed in the hope that it will be useful,
- *	 but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
- *	 GNU General Public License for more details.
+ *     GeSHi is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the
+ *     GNU General Public License for more details.
  *
- *	 You should have received a copy of the GNU General Public License
- *	 along with GeSHi; if not, write to the Free Software
- *	 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
+ *     You should have received a copy of the GNU General Public License
+ *     along with GeSHi; if not, write to the Free Software
+ *     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA    02111-1307    USA
  *
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'PL/SQL',
-	'COMMENT_SINGLE' => array(1 =>'--'), //http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm#2930
-	'COMMENT_MULTI' => array('/*' => '*/'), //http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm#2950
-	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
-	'QUOTEMARKS' => array("'", '"'), //http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm
-	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		//PL/SQL reserved keywords (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/f_words.htm#LNPLS019)
+    'LANG_NAME' => 'PL/SQL',
+    'COMMENT_SINGLE' => array(1 =>'--'), //http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm#2930
+    'COMMENT_MULTI' => array('/*' => '*/'), //http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm#2950
+    'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
+    'QUOTEMARKS' => array("'", '"'), //http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm
+    'ESCAPE_CHAR' => '\\',
+    'KEYWORDS' => array(
+        //PL/SQL reserved keywords (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/f_words.htm#LNPLS019)
         1 => array('ZONE', 'YEAR', 'WRITE', 'WORK', 'WITH', 'WHILE', 'WHERE',
         'WHENEVER', 'WHEN', 'VIEW', 'VARCHAR2', 'VARCHAR', 'VALUES',
         'VALIDATE', 'USE', 'UPDATE', 'UNIQUE', 'UNION', 'TYPE', 'TRUE',
@@ -76,7 +76,7 @@ $language_data = array (
         'CLUSTER', 'CLOSE', 'CHECK', 'CHAR_BASE', 'CHAR', 'CASE', 'BY', 'BULK',
         'BOOLEAN', 'BODY', 'BINARY_INTEGER', 'BETWEEN', 'BEGIN', 'AUTHID',
         'AT', 'ASC', 'AS', 'ARRAY', 'ANY', 'AND', 'ALTER', 'ALL'),
-		//SQL functions (http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96540/toc.htm & http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96540/functions101a.htm#85925)
+        //SQL functions (http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96540/toc.htm & http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96540/functions101a.htm#85925)
         2 => array('XMLTRANSFORM', 'XMLSEQUENCE', 'XMLFOREST', 'XMLELEMENT',
         'XMLCONCAT', 'XMLCOLATTVAL', 'XMLAGG', 'WIDTH_BUCKET', 'VSIZE',
         'VARIANCE', 'VAR_SAMP', 'VAR_POP', 'VALUE', 'USERENV', 'USER', 'UPPER',
@@ -109,7 +109,7 @@ $language_data = array (
         'COMPOSE', 'COALESCE', 'CHR', 'CHARTOROWID', 'CEIL', 'CAST', 'BITAND',
         'BIN_TO_NUM', 'BFILENAME', 'AVG', 'ATAN2', 'ATAN', 'ASIN', 'ASCIISTR',
         'ASCII', 'ADD_MONTHS', 'ACOS', 'ABS'),
-		//PL/SQL packages (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96612/intro2.htm#1025672)
+        //PL/SQL packages (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96612/intro2.htm#1025672)
         3 => array('UTL_URL', 'UTL_TCP', 'UTL_SMTP', 'UTL_REF', 'UTL_RAW',
         'UTL_PG', 'UTL_INADDR', 'UTL_HTTP', 'UTL_FILE', 'UTL_ENCODE',
         'UTL_COLL', 'SDO_UTIL', 'SDO_TUNE', 'SDO_MIGRATE', 'SDO_LRS',
@@ -139,7 +139,7 @@ $language_data = array (
         'DBMS_DDL', 'DBMS_CAPTURE_ADM', 'DBMS_AW', 'DBMS_AQELM', 'DBMS_AQADM',
         'DBMS_AQ', 'DBMS_APPLY_ADM', 'DBMS_APPLICATION_INFO', 'DBMS_ALERT',
         'CWM2_OLAP_AW_ACCESS'),
-		//PL/SQL predefined exceptions (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/07_errs.htm#784)
+        //PL/SQL predefined exceptions (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/07_errs.htm#784)
         4 => array('ZERO_DIVIDE', 'VALUE_ERROR', 'TOO_MANY_ROWS',
         'TIMEOUT_ON_RESOURCE', 'SYS_INVALID_ROWID', 'SUBSCRIPT_OUTSIDE_LIMIT',
         'SUBSCRIPT_BEYOND_COUNT', 'STORAGE_ERROR', 'SELF_IS_NULL',
@@ -147,7 +147,7 @@ $language_data = array (
         'LOGIN_DENIED', 'INVALID_NUMBER', 'INVALID_CURSOR', 'DUP_VAL_ON_INDEX',
         'CURSOR_ALREADY_OPEN', 'COLLECTION_IS_NULL', 'CASE_NOT_FOUND',
         'ACCESS_INTO_NULL'),
-		//Static data dictionary views (http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96536/ch2.htm)
+        //Static data dictionary views (http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96536/ch2.htm)
         5 => array('USER_REPSITES', 'USER_REPSCHEMA',
         'USER_REPRESOLUTION_STATISTICS', 'USER_REPRESOLUTION_METHOD',
         'USER_REPRESOLUTION', 'USER_REPRESOL_STATS_CONTROL', 'USER_REPPROP',
@@ -189,68 +189,68 @@ $language_data = array (
         'ALL_REPCAT_TEMPLATE_SITES', 'ALL_REPCAT_TEMPLATE_PARMS',
         'ALL_REPCAT_TEMPLATE_OBJECTS', 'ALL_REPCAT_REFRESH_TEMPLATES',
         'ALL_REPCAT', 'ALL_REPAUDIT_COLUMN', 'ALL_REPAUDIT_ATTRIBUTE')
-		),
-	'SYMBOLS' => array(
-		//PL/SQL delimiters (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm#2732)
-		'+', '%', "'", '.', '/', '(', ')', ':', ',', '*', '"', '=', '<', '>', '@', ';', '-', ':=', '=>', '||', '**', '<<', '>>', '/*', '*/', '..', '<>', '!=', '~=', '^=', '<=', '>='
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
-		1 => false,
-		2 => false,
-		3 => false,
-		4 => false,
-		5 => false
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #00F;',
-			2 => 'color: #000;',
-			3 => 'color: #00F;',
-			4 => 'color: #F00;',
-			5 => 'color: #800;'
-			),
-		'COMMENTS' => array(
-			1 => 'color: #080; font-style: italic;',
-			'MULTI' => 'color: #080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
-			0 => 'color: #000; font-weight: bold;'
-			),
-		'BRACKETS' => array(
-			0 => 'color: #00F;'
-			),
-		'STRINGS' => array(
-			0 => 'color: #F00;'
-			),
-		'NUMBERS' => array(
-			0 => 'color: #800;'
-			),
-		'METHODS' => array(
-			0 => 'color: #0F0;'
-			),
-		'SYMBOLS' => array(
-			0 => 'color: #00F;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			0 => 'color: #0F0;'
-			)
-		),
-		'URLS' => array(
-			1 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAME}',
-			2 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAME}',
-			3 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAME}',
-			4 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAME}',
-			5 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAME}'
-			),
-	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(),
-	'REGEXPS' => array(),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(),
-	'HIGHLIGHT_STRICT_BLOCK' => array()
+        ),
+    'SYMBOLS' => array(
+        //PL/SQL delimiters (http://download-uk.oracle.com/docs/cd/B10501_01/appdev.920/a96624/02_funds.htm#2732)
+        '+', '%', "'", '.', '/', '(', ')', ':', ',', '*', '"', '=', '<', '>', '@', ';', '-', ':=', '=>', '||', '**', '<<', '>>', '/*', '*/', '..', '<>', '!=', '~=', '^=', '<=', '>='
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => false,
+        2 => false,
+        3 => false,
+        4 => false,
+        5 => false
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #00F;',
+            2 => 'color: #000;',
+            3 => 'color: #00F;',
+            4 => 'color: #F00;',
+            5 => 'color: #800;'
+            ),
+        'COMMENTS' => array(
+            1 => 'color: #080; font-style: italic;',
+            'MULTI' => 'color: #080; font-style: italic;'
+            ),
+        'ESCAPE_CHAR' => array(
+            0 => 'color: #000; font-weight: bold;'
+            ),
+        'BRACKETS' => array(
+            0 => 'color: #00F;'
+            ),
+        'STRINGS' => array(
+            0 => 'color: #F00;'
+            ),
+        'NUMBERS' => array(
+            0 => 'color: #800;'
+            ),
+        'METHODS' => array(
+            0 => 'color: #0F0;'
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #00F;'
+            ),
+        'REGEXPS' => array(
+            ),
+        'SCRIPT' => array(
+            0 => 'color: #0F0;'
+            )
+        ),
+        'URLS' => array(
+            1 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAMEU}',
+            2 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAMEU}',
+            3 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAMEU}',
+            4 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAMEU}',
+            5 => 'http://www.oracle.com/pls/db92/db92.drilldown?word={FNAMEU}'
+            ),
+    'OOLANG' => false,
+    'OBJECT_SPLITTERS' => array(),
+    'REGEXPS' => array(),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(),
+    'HIGHLIGHT_STRICT_BLOCK' => array()
 );
 
 ?>

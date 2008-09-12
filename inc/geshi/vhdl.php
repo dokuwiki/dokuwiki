@@ -4,7 +4,7 @@
  * --------
  * Author: Alexander 'E-Razor' Krause (admin@erazor-zone.de)
  * Copyright: (c) 2005 Alexander Krause
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2005/06/15
  *
  * VHDL (VHSICADL, very high speed integrated circuit HDL) language file for GeSHi.
@@ -43,14 +43,14 @@
 $language_data = array (
     'LANG_NAME' => 'VHDL',
     'COMMENT_SINGLE' => array(1 => '--'),
-    'COMMENT_MULTI' => array(),
+    'COMMENT_MULTI' => array('%' => '%'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         /*keywords*/
         1 => array(
-            'access','after','alias','all','assert','architecture','begin',
+            'access','after','alias','all','assert','attribute','architecture','begin',
             'block','body','buffer','bus','case','component','configuration','constant',
             'disconnect','downto','else','elsif','end','entity','exit','file','for',
             'function','generate','generic','group','guarded','if','impure','in',
@@ -60,7 +60,8 @@ $language_data = array (
             'reject','report','return','select','severity','signal','shared','subtype',
             'then','to','transport','type','unaffected','units','until','use','variable',
             'wait','when','while','with','note','warning','error','failure','and',
-            'or','xor','not','nor'
+            'or','xor','not','nor','used','memory','segments','dff','dffe','help_id',
+            'mod','info','latch','rising_edge','falling_edge'
         ),
         /*types*/
         2 => array(
@@ -68,34 +69,37 @@ $language_data = array (
             'severity_level','positive','natural','signed','unsigned','line','text',
             'std_logic','std_logic_vector','std_ulogic','std_ulogic_vector','qsim_state',
             'qsim_state_vector','qsim_12state','qsim_12state_vector','qsim_strength',
-            'mux_bit','mux_vector','reg_bit','reg_vector','wor_bit','wor_vector'
+            'mux_bit','mux_vector','reg_bit','reg_vector','wor_bit','wor_vector',
+            'work','ieee','std_logic_signed','std_logic_1164','std_logic_arith',
+            'numeric_std'
+
         ),
         /*operators*/
-        3 => array(
-                '=','<=',':=','=>','=='
-        )
     ),
     'SYMBOLS' => array(
-        '[', ']', '(', ')',';','<','>',':'
+        '[', ']', '(', ')',
+        ';',':',
+        '<','>','=','<=',':=','=>','=='
     ),
     'CASE_SENSITIVE' => array(
-        GESHI_COMMENTS => true,
+        GESHI_COMMENTS => false,
         1 => false,
         2 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #000000; font-weight: bold;',
-            2 => 'color: #aa0000;'
+            1 => 'color: #000080; font-weight: bold;',
+            2 => 'color: #0000ff;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #adadad; font-style: italic;'
+            1 => 'color: #008000; font-style: italic;',
+            'MULTI' => 'color: #008000; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
             ),
         'BRACKETS' => array(
-            0 => 'color: #66cc66;'
+            0 => 'color: #000066;'
             ),
         'STRINGS' => array(
             0 => 'color: #7f007f;'
@@ -106,13 +110,11 @@ $language_data = array (
         'METHODS' => array(
             ),
         'SYMBOLS' => array(
-            0 => 'color: #66cc66;'
+            0 => 'color: #000066;'
             ),
         'REGEXPS' => array(
             0 => 'color: #ff0000;',
-            1 => 'color: #ff0000;',
-            2 => 'color: #ff0000;',
-            3 => 'color: #ff0000;'
+            1 => 'color: #ff0000;'
             ),
         'SCRIPT' => array(
             )
@@ -128,7 +130,7 @@ $language_data = array (
         //Hex numbers and scientific notation for numbers
         0 => '(\b0x[0-9a-fA-F]+|\b\d[0-9a-fA-F]+[hH])|'.
             '(\b\d+?(\.\d+?)?E[+\-]?\d+)|(\bns)|'.
-            "('[0-9a-zA-Z]+)",
+            "('[0-9a-zA-Z]+(?!'))",
         //Number characters?
         1 => "\b(''\d'')"
         ),

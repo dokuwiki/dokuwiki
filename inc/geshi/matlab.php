@@ -4,7 +4,7 @@
  * -----------
  * Author: Florian Knorn (floz@gmx.de)
  * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2005/02/09
  *
  * Matlab M-file language file for GeSHi.
@@ -41,20 +41,20 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'Matlab M',
-	'COMMENT_SINGLE' => array(1 => '%'),
-	'COMMENT_MULTI' => array(),
-	//Matlab Strings
-	'COMMENT_REGEXP' => array(2 => "/(?<!\\w)('[^\\n\\r']*?')/"),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array(),
-	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
-		1 => array(
-			'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for',
-			'function', 'global', 'if', 'otherwise', 'persistent', 'return',
-			'switch', 'try', 'while','...'
-			),
+    'LANG_NAME' => 'Matlab M',
+    'COMMENT_SINGLE' => array(1 => '%'),
+    'COMMENT_MULTI' => array(),
+    //Matlab Strings
+    'COMMENT_REGEXP' => array(2 => "/(?<!\\w)('[^\\n\\r']*?')/"),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+    'QUOTEMARKS' => array(),
+    'ESCAPE_CHAR' => '',
+    'KEYWORDS' => array(
+        1 => array(
+            'break', 'case', 'catch', 'continue', 'elseif', 'else', 'end', 'for',
+            'function', 'global', 'if', 'otherwise', 'persistent', 'return',
+            'switch', 'try', 'while'
+            ),
         2 => array(
             'all','any','exist','find','is','isa','logical','mislocked',
 
@@ -164,69 +164,69 @@ $language_data = array (
             'matlabroot','mkdir','open','pwd','tempdir','tempname','matlabrc',
             'quit'
             )
-		),
-	'SYMBOLS' => array(
-		'...'
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => false,
-		2 => false,
-		//3 => false,
-		//4 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #0000FF;',
+        ),
+    'SYMBOLS' => array(
+        '...'
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => false,
+        2 => false,
+        //3 => false,
+        //4 => false,
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #0000FF;',
             2 => 'color: #0000FF;'
-			),
-		'COMMENTS' => array(
-			1 => 'color: #228B22;',
+            ),
+        'COMMENTS' => array(
+            1 => 'color: #228B22;',
             2 => 'color:#A020F0;'
-			),
-		'ESCAPE_CHAR' => array(
+            ),
+        'ESCAPE_CHAR' => array(
             0 => ''
-			),
-		'BRACKETS' => array(
+            ),
+        'BRACKETS' => array(
             0 => 'color: #080;'
-			),
-		'STRINGS' => array(
-			//0 => 'color: #A020F0;'
-			),
-		'NUMBERS' => array(
+            ),
+        'STRINGS' => array(
+            //0 => 'color: #A020F0;'
+            ),
+        'NUMBERS' => array(
             0 => 'color: #33f;'
-			),
-		'METHODS' => array(
+            ),
+        'METHODS' => array(
             1 => '',
             2 => ''
-			),
-		'SYMBOLS' => array(
+            ),
+        'SYMBOLS' => array(
             0 => 'color: #080;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
+            ),
+        'REGEXPS' => array(
+            ),
+        'SCRIPT' => array(
             0 => ''
-			)
-		),
-	'URLS' => array(
-		1 => '',
-		2 => 'http://www.mathworks.com/access/helpdesk/help/techdoc/ref/{FNAME}.html',
-		3 => '',
-		4 => ''
-		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
-		1 => '.',
-		2 => '::'
-		),
-	'REGEXPS' => array(
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => 'http://www.mathworks.com/access/helpdesk/help/techdoc/ref/{FNAMEL}.html',
+        3 => '',
+        4 => ''
+        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array(
+        1 => '.',
+        2 => '::'
+        ),
+    'REGEXPS' => array(
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        )
 );
 
 ?>

@@ -4,7 +4,7 @@
  * ------------------------
  * Author: Richard Civil (info@richardcivil.net)
  * Copyright: (c) 2008 Richard Civil (info@richardcivil.net), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2008/04/12
  *
  * LotusScript language file for GeSHi.
@@ -41,67 +41,67 @@
 
 $language_data = array (
     'LANG_NAME' => 'LotusScript',
-	'COMMENT_SINGLE' => array(1 => "'"),
-	'COMMENT_MULTI' => array('%REM' => '%END REM'),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"' , "|"),
-	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
+    'COMMENT_SINGLE' => array(1 => "'"),
+    'COMMENT_MULTI' => array('%REM' => '%END REM'),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+    'QUOTEMARKS' => array('"' , "|"),
+    'ESCAPE_CHAR' => '',
+    'KEYWORDS' => array(
         1 => array (
             'Yield', 'Year', 'Xor', 'Write', 'With', 'Width', 'While', 'Wend',
-			'Weekday', 'VarType', 'Variant', 'Val', 'UString', 'UString$',
-			'UseLSX', 'Use', 'Until', 'Unlock', 'Unicode', 'Uni', 'UChr',
-			'UChr$', 'UCase', 'UCase$', 'UBound', 'TypeName', 'Type', 'TRUE',
-			'Trim', 'Trim$', 'Today', 'To', 'TimeValue', 'TimeSerial', 'Timer',
-			'TimeNumber', 'Time', 'Time$', 'Then', 'Text', 'Tan', 'Tab', 'Sub',
-			'StrToken', 'StrToken$', 'StrRightBack', 'StrRightBack$',
-			'StrRight', 'StrRight$', 'StrLeftBack', 'StrLeftBack$', 'StrLeft',
-			'StrLeft$', 'String', 'String$', 'StrConv', 'StrCompare', 'StrComp',
-			'Str', 'Str$', 'Stop', 'Step', 'Static', 'Sqr', 'Split', 'Spc',
-			'Space', 'Space$', 'Sleep', 'Single', 'Sin', 'Shell', 'Shared',
-			'Sgn', 'SetFileAttr', 'SetAttr', 'Set', 'SendKeys', 'Select',
-			'Seek', 'Second', 'RTrim', 'RTrim$', 'RSet', 'Round', 'Rnd',
-			'RmDir', 'RightC', 'RightC$', 'RightBP', 'RightBP$', 'RightB',
-			'RightB$', 'Right', 'Right$', 'Return', 'Resume', 'Reset',
-			'Replace', 'Remove', 'Rem', 'ReDim', 'Read', 'Randomize',
-			'Random', 'Put', 'Public', 'Property', 'Private', 'Print',
-			'Preserve', 'Pitch', 'PI', 'Output', 'Or', 'Option', 'Open', 'On',
-			'Oct', 'Oct$', 'NULL', 'Now', 'NOTHING', 'Not', 'NoPitch', 'NoCase',
-			'Next', 'New', 'Name', 'MsgBox', 'Month', 'Mod', 'MkDir', 'Minute',
-			'MidC', 'MidC$', 'MidBP', 'MidBP$', 'MidB', 'MidB$', 'Mid', 'Mid$',
-			'MessageBox', 'Me', 'LTrim', 'LTrim$', 'LSServer', 'LSI_Info',
-			'LSet', 'Loop', 'Long', 'Log', 'LOF', 'Lock', 'LOC', 'LMBCS',
-			'ListTag', 'List', 'Line', 'Like', 'Lib', 'Let', 'LenC', 'LenBP',
-			'LenB', 'Len', 'LeftC', 'LeftC$', 'LeftBP', 'LeftBP$', 'LeftB',
-			'LeftB$', 'Left', 'Left$', 'LCase', 'LCase$', 'LBound', 'Kill',
-			'Join', 'IsUnknown', 'IsScalar', 'IsObject', 'IsNumeric', 'IsNull',
-			'IsList', 'IsEmpty', 'IsElement', 'IsDate', 'IsArray', 'IsA', 'Is',
-			'Integer', 'Int', 'InStrC', 'InStrBP', 'InStrB', 'InStr', 'InputBP',
-			'InputBP$', 'InputBox', 'InputBox$', 'InputB', 'InputB$', 'Input',
-			'Input$', 'In', 'IMSetMode', 'Implode', 'Implode$', 'Imp',
-			'IMEStatus', 'If', 'Hour', 'Hex', 'Hex$', 'Goto', 'GoSub',
-			'GetThreadInfo', 'GetFileAttr', 'GetAttr', 'Get', 'Function',
-			'FullTrim', 'From', 'FreeFile', 'Fraction', 'Format', 'Format$',
-			'ForAll', 'For', 'Fix', 'FileLen', 'FileDateTime', 'FileCopy',
-			'FileAttr', 'FALSE', 'Explicit', 'Exp', 'Exit', 'Execute', 'Event',
-			'Evaluate', 'Error', 'Error$', 'Err', 'Erl', 'Erase', 'Eqv', 'EOF',
-			'Environ', 'Environ$', 'End', 'ElseIf', 'Else', 'Double', 'DoEvents',
-			'Do', 'Dir', 'Dir$', 'Dim', 'DestroyLock', 'Delete', 'DefVar',
-			'DefStr', 'DefSng', 'DefLng', 'DefInt', 'DefDbl', 'DefCur',
-			'DefByte', 'DefBool', 'Declare', 'Day', 'DateValue', 'DateSerial',
-			'DateNumber', 'Date', 'Date$', 'DataType', 'CVDate', 'CVar',
-			'Currency', 'CurDrive', 'CurDrive$', 'CurDir', 'CurDir$', 'CStr',
-			'CSng', 'CreateLock', 'Cos', 'Const', 'Compare', 'Command',
-			'Command$', 'CodeUnlock', 'CodeLockCheck', 'CodeLock', 'Close',
-			'CLng', 'Class', 'CInt', 'Chr', 'Chr$', 'ChDrive', 'ChDir', 'CDbl',
-			'CDat', 'CCur', 'CByte', 'CBool', 'Case', 'Call', 'ByVal', 'Byte',
-			'Boolean', 'Bind', 'Binary', 'Bin', 'Bin$', 'Beep', 'Base', 'Atn2',
-			'Atn', 'ASin', 'Asc', 'As', 'ArrayUnique', 'ArrayReplace',
-			'ArrayGetIndex', 'ArrayAppend', 'Append', 'AppActivate', 'Any',
-			'And', 'Alias', 'ActivateApp', 'ACos', 'Access', 'Abs', '%Include',
-			'%If', '%END', '%ElseIf', '%Else'
-			),
-		2 => array (
+            'Weekday', 'VarType', 'Variant', 'Val', 'UString', 'UString$',
+            'UseLSX', 'Use', 'Until', 'Unlock', 'Unicode', 'Uni', 'UChr',
+            'UChr$', 'UCase', 'UCase$', 'UBound', 'TypeName', 'Type', 'TRUE',
+            'Trim', 'Trim$', 'Today', 'To', 'TimeValue', 'TimeSerial', 'Timer',
+            'TimeNumber', 'Time', 'Time$', 'Then', 'Text', 'Tan', 'Tab', 'Sub',
+            'StrToken', 'StrToken$', 'StrRightBack', 'StrRightBack$',
+            'StrRight', 'StrRight$', 'StrLeftBack', 'StrLeftBack$', 'StrLeft',
+            'StrLeft$', 'String', 'String$', 'StrConv', 'StrCompare', 'StrComp',
+            'Str', 'Str$', 'Stop', 'Step', 'Static', 'Sqr', 'Split', 'Spc',
+            'Space', 'Space$', 'Sleep', 'Single', 'Sin', 'Shell', 'Shared',
+            'Sgn', 'SetFileAttr', 'SetAttr', 'Set', 'SendKeys', 'Select',
+            'Seek', 'Second', 'RTrim', 'RTrim$', 'RSet', 'Round', 'Rnd',
+            'RmDir', 'RightC', 'RightC$', 'RightBP', 'RightBP$', 'RightB',
+            'RightB$', 'Right', 'Right$', 'Return', 'Resume', 'Reset',
+            'Replace', 'Remove', 'Rem', 'ReDim', 'Read', 'Randomize',
+            'Random', 'Put', 'Public', 'Property', 'Private', 'Print',
+            'Preserve', 'Pitch', 'PI', 'Output', 'Or', 'Option', 'Open', 'On',
+            'Oct', 'Oct$', 'NULL', 'Now', 'NOTHING', 'Not', 'NoPitch', 'NoCase',
+            'Next', 'New', 'Name', 'MsgBox', 'Month', 'Mod', 'MkDir', 'Minute',
+            'MidC', 'MidC$', 'MidBP', 'MidBP$', 'MidB', 'MidB$', 'Mid', 'Mid$',
+            'MessageBox', 'Me', 'LTrim', 'LTrim$', 'LSServer', 'LSI_Info',
+            'LSet', 'Loop', 'Long', 'Log', 'LOF', 'Lock', 'LOC', 'LMBCS',
+            'ListTag', 'List', 'Line', 'Like', 'Lib', 'Let', 'LenC', 'LenBP',
+            'LenB', 'Len', 'LeftC', 'LeftC$', 'LeftBP', 'LeftBP$', 'LeftB',
+            'LeftB$', 'Left', 'Left$', 'LCase', 'LCase$', 'LBound', 'Kill',
+            'Join', 'IsUnknown', 'IsScalar', 'IsObject', 'IsNumeric', 'IsNull',
+            'IsList', 'IsEmpty', 'IsElement', 'IsDate', 'IsArray', 'IsA', 'Is',
+            'Integer', 'Int', 'InStrC', 'InStrBP', 'InStrB', 'InStr', 'InputBP',
+            'InputBP$', 'InputBox', 'InputBox$', 'InputB', 'InputB$', 'Input',
+            'Input$', 'In', 'IMSetMode', 'Implode', 'Implode$', 'Imp',
+            'IMEStatus', 'If', 'Hour', 'Hex', 'Hex$', 'Goto', 'GoSub',
+            'GetThreadInfo', 'GetFileAttr', 'GetAttr', 'Get', 'Function',
+            'FullTrim', 'From', 'FreeFile', 'Fraction', 'Format', 'Format$',
+            'ForAll', 'For', 'Fix', 'FileLen', 'FileDateTime', 'FileCopy',
+            'FileAttr', 'FALSE', 'Explicit', 'Exp', 'Exit', 'Execute', 'Event',
+            'Evaluate', 'Error', 'Error$', 'Err', 'Erl', 'Erase', 'Eqv', 'EOF',
+            'Environ', 'Environ$', 'End', 'ElseIf', 'Else', 'Double', 'DoEvents',
+            'Do', 'Dir', 'Dir$', 'Dim', 'DestroyLock', 'Delete', 'DefVar',
+            'DefStr', 'DefSng', 'DefLng', 'DefInt', 'DefDbl', 'DefCur',
+            'DefByte', 'DefBool', 'Declare', 'Day', 'DateValue', 'DateSerial',
+            'DateNumber', 'Date', 'Date$', 'DataType', 'CVDate', 'CVar',
+            'Currency', 'CurDrive', 'CurDrive$', 'CurDir', 'CurDir$', 'CStr',
+            'CSng', 'CreateLock', 'Cos', 'Const', 'Compare', 'Command',
+            'Command$', 'CodeUnlock', 'CodeLockCheck', 'CodeLock', 'Close',
+            'CLng', 'Class', 'CInt', 'Chr', 'Chr$', 'ChDrive', 'ChDir', 'CDbl',
+            'CDat', 'CCur', 'CByte', 'CBool', 'Case', 'Call', 'ByVal', 'Byte',
+            'Boolean', 'Bind', 'Binary', 'Bin', 'Bin$', 'Beep', 'Base', 'Atn2',
+            'Atn', 'ASin', 'Asc', 'As', 'ArrayUnique', 'ArrayReplace',
+            'ArrayGetIndex', 'ArrayAppend', 'Append', 'AppActivate', 'Any',
+            'And', 'Alias', 'ActivateApp', 'ACos', 'Access', 'Abs', '%Include',
+            '%If', '%END', '%ElseIf', '%Else'
+            ),
+        2 => array (
             'NotesXSLTransformer', 'NotesXMLProcessor', 'NotesViewNavigator',
             'NotesViewEntryCollection', 'NotesViewEntry', 'NotesViewColumn',
             'NotesView', 'NotesUIWorkspace', 'NotesUIView', 'NotesUIScheduler',
@@ -129,57 +129,62 @@ $language_data = array (
             'NotesDatabase', 'NotesColorObject', 'NotesAgent',
             'NotesAdministrationProcess', 'NotesACLEntry', 'NotesACL',
             'Navigator', 'Field', 'Button'
-			)
-		) ,
-	'SYMBOLS' => array(
+            )
+        ) ,
+    'SYMBOLS' => array(
         '(', ')'
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
-		1 => false
-		),
-	'STYLES' => array(
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => false,
+        2 => false
+        ),
+    'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #0000FF;',
-			2 => 'color: #0000EE;'
-			),
-		'COMMENTS' => array(
+            2 => 'color: #0000EE;'
+            ),
+        'COMMENTS' => array(
             1 => 'color: #008000;'
-			),
-		'BRACKETS' => array(
+            ),
+        'BRACKETS' => array(
             0 => 'color: #000000;'
-			),
-		'STRINGS' => array(
+            ),
+        'STRINGS' => array(
             0 => 'color: #000000;'
-			),
-		'NUMBERS' => array(
+            ),
+        'NUMBERS' => array(
             0 => 'color: #FF00FF;'
-			),
-		'METHODS' => array(
+            ),
+        'METHODS' => array(
             1 => 'color: #0000AA;'
-			),
-		'SYMBOLS' => array(
+            ),
+        'SYMBOLS' => array(
             0 => 'color: #006600;'
-			),
-		'ESCAPE_CHAR' => array(
+            ),
+        'ESCAPE_CHAR' => array(
             0 => 'color: #000099;'
-			),
-		'SCRIPT' => array(
-			),
-		'REGEXPS' => array(
-			)
-		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+            ),
+        'SCRIPT' => array(
+            ),
+        'REGEXPS' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => ''
+        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array(
         1 => '.'
-		),
-	'REGEXPS' => array(
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		),
+        ),
+    'REGEXPS' => array(
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
     'TAB_WIDTH' => 2
 );
 

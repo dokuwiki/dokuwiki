@@ -4,8 +4,8 @@
  * ----------
  * Author: Lars Gersmann (lars.gersmann@gmail.com)
  * Copyright: (c) 2007 Lars Gersmann, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.22
- * Date started: 2007/07/01
+ * Release Version: 1\.0\.8
+ * Date Started: 2007/07/01
  *
  * Genero (FOURJ's Genero 4GL) language file for GeSHi.
  *
@@ -34,7 +34,7 @@
  *
  ************************************************************************************/
 
- $language_data = array (
+$language_data = array (
     'LANG_NAME' => 'genero',
     'COMMENT_SINGLE' => array(1 => '--', 2 => '#'),
     'COMMENT_MULTI' => array('{' => '}'),
@@ -43,7 +43,7 @@
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-          "ABSOLUTE",
+            "ABSOLUTE",
             "ACCEPT",
             "ACTION",
             "ADD",
@@ -63,7 +63,6 @@
             "BEFORE",
             "BEGIN",
             "BETWEEN",
-            "BORDER",
             "BORDER",
             "BOTTOM",
             "BREAKPOINT",
@@ -351,7 +350,7 @@
             "WRAP"
             ),
         2 => array(
-            '&AMP;IFDEF', '&AMP;ENDIF'
+            '&amp;IFDEF', '&amp;ENDIF'
             ),
         3 => array(
             "ARRAY",
@@ -400,7 +399,7 @@
         '(', ')', '[', ']'
         ),
     'CASE_SENSITIVE' => array(
-        GESHI_COMMENTS => true,
+        GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => false,

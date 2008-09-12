@@ -2,9 +2,9 @@
 /*************************************************************************************
  * delphi.php
  * ----------
- * Author: Járja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
- * Copyright: (c) 2004 Járja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Author: Jï¿½rja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
+ * Copyright: (c) 2004 Jï¿½rja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
+ * Release Version: 1\.0\.8
  * Date Started: 2004/07/26
  *
  * Delphi (Object Pascal) language file for GeSHi.
@@ -67,7 +67,7 @@ $language_data = array (
             'Protected', 'Public', 'Published', 'Raise', 'Record', 'Register',
             'Repeat', 'Requires', 'Resourcestring', 'Set', 'Shl', 'Shr', 'Then',
             'ThreadVar', 'To', 'Try', 'Type', 'Unit', 'Until', 'Uses', 'Var',
-            'Virtual', 'While', 'With', 'Xor', 'assembler', 'cdecl', 'far',
+            'Virtual', 'While', 'With', 'Xor', 'assembler', 'far',
             'near', 'pascal', 'register', 'cdecl', 'safecall', 'stdcall', 'varargs'
             ),
         2 => array(
@@ -210,7 +210,7 @@ $language_data = array (
             ),
         ),
     'CASE_SENSITIVE' => array(
-        GESHI_COMMENTS => true,
+        GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => false,

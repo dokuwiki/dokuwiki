@@ -4,10 +4,10 @@
  * ---------
  * Author: Moises Deniz
  * Copyright: (c) 2005 Moises Deniz
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2007/03/21
  *
- * Ruby language and Ruby on Rails Framework file for GeSHi
+ * Ruby (with Ruby on Rails Framework) language file for GeSHi.
  *
  *************************************************************************************
  *
@@ -360,7 +360,9 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => ''
+        3 => '',
+        4 => '',
+        5 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

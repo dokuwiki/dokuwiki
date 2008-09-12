@@ -4,7 +4,7 @@
  * ----------
  * Author: Jason Dagit (dagit@codersbase.com) based on ocaml.php by Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2005/08/27
  *
  * Haskell language file for GeSHi.
@@ -46,64 +46,64 @@ $language_data = array (
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => "\\",
     'KEYWORDS' => array(
-       /* main haskell keywords */
+        /* main haskell keywords */
         1 => array(
-           'as',
-           'case', 'of', 'class', 'data', 'default',
-           'deriving', 'do', 'forall', 'hiding', 'if', 'then',
-           'else', 'import', 'infix', 'infixl', 'infixr',
-           'instance', 'let', 'in', 'module', 'newtype',
-           'qualified', 'type', 'where'
+            'as',
+            'case', 'of', 'class', 'data', 'default',
+            'deriving', 'do', 'forall', 'hiding', 'if', 'then',
+            'else', 'import', 'infix', 'infixl', 'infixr',
+            'instance', 'let', 'in', 'module', 'newtype',
+            'qualified', 'type', 'where'
             ),
         /* define names of main librarys, so we can link to it */
         2 => array(
-           'Foreign', 'Numeric', 'Prelude'
-           ),
+            'Foreign', 'Numeric', 'Prelude'
+            ),
         /* just link to Prelude functions, cause it's the default opened library when starting Haskell */
         3 => array(
-           'not', 'otherwise', 'maybe',
-           'either', 'fst', 'snd', 'curry', 'uncurry',
-           'compare',
-           'max', 'min', 'succ', 'pred', 'toEnum', 'fromEnum',
-           'enumFrom', 'enumFromThen', 'enumFromTo',
-           'enumFromThenTo', 'minBound', 'maxBound',
-           'negate', 'abs', 'signum',
-           'fromInteger', 'toRational', 'quot', 'rem',
-           'div', 'mod', 'quotRem', 'divMod', 'toInteger',
-           'recip', 'fromRational', 'pi', 'exp',
-           'log', 'sqrt', 'logBase', 'sin', 'cos',
-           'tan', 'asin', 'acos', 'atan', 'sinh', 'cosh',
-           'tanh', 'asinh', 'acosh', 'atanh',
-           'properFraction', 'truncate', 'round', 'ceiling',
-           'floor', 'floatRadix', 'floatDigits', 'floatRange',
-           'decodeFloat', 'encodeFloat', 'exponent',
-           'significand', 'scaleFloat', 'isNaN', 'isInfinite',
-           'isDenomalized', 'isNegativeZero', 'isIEEE',
-           'atan2', 'subtract', 'even', 'odd', 'gcd',
-           'lcm', 'fromIntegral', 'realToFrac',
-           'return', 'fail', 'fmap',
-           'mapM', 'mapM_', 'sequence', 'sequence_',
-           'id', 'const','flip',
-           'until', 'asTypeOf', 'error', 'undefined',
-           'seq','map','filter', 'head',
-           'last', 'tail', 'init', 'null', 'length',
-           'reverse', 'foldl', 'foldl1', 'foldr',
-           'foldr1', 'and', 'or', 'any', 'all', 'sum',
-           'product', 'concat', 'concatMap', 'maximum',
-           'minimum', 'scanl', 'scanl1', 'scanr', 'scanr1',
-           'iterate', 'repeat', 'cycle', 'take', 'drop',
-           'splitAt', 'teakWhile', 'dropWhile', 'span',
-           'break', 'elem', 'notElem', 'lookup', 'zip',
-           'zip3', 'zipWith', 'zipWith3', 'unzip', 'unzip3',
-           'unzip', 'unzip3', 'lines', 'words', 'unlines',
-           'unwords', 'showPrec', 'show', 'showList',
-           'shows', 'showChar', 'showString', 'showParen',
-           'readsPrec', 'readList', 'reads', 'readParen',
-           'read', 'lex', 'putChar', 'putStr', 'putStrLn',
-           'print', 'getChar', 'getLine', 'getContents',
-           'interact', 'readFile', 'writeFile', 'appendFile',
-           'readIO', 'readLn', 'ioError', 'userError', 'catch'
-           ),
+            'not', 'otherwise', 'maybe',
+            'either', 'fst', 'snd', 'curry', 'uncurry',
+            'compare',
+            'max', 'min', 'succ', 'pred', 'toEnum', 'fromEnum',
+            'enumFrom', 'enumFromThen', 'enumFromTo',
+            'enumFromThenTo', 'minBound', 'maxBound',
+            'negate', 'abs', 'signum',
+            'fromInteger', 'toRational', 'quot', 'rem',
+            'div', 'mod', 'quotRem', 'divMod', 'toInteger',
+            'recip', 'fromRational', 'pi', 'exp',
+            'log', 'sqrt', 'logBase', 'sin', 'cos',
+            'tan', 'asin', 'acos', 'atan', 'sinh', 'cosh',
+            'tanh', 'asinh', 'acosh', 'atanh',
+            'properFraction', 'truncate', 'round', 'ceiling',
+            'floor', 'floatRadix', 'floatDigits', 'floatRange',
+            'decodeFloat', 'encodeFloat', 'exponent',
+            'significand', 'scaleFloat', 'isNaN', 'isInfinite',
+            'isDenomalized', 'isNegativeZero', 'isIEEE',
+            'atan2', 'subtract', 'even', 'odd', 'gcd',
+            'lcm', 'fromIntegral', 'realToFrac',
+            'return', 'fail', 'fmap',
+            'mapM', 'mapM_', 'sequence', 'sequence_',
+            'id', 'const','flip',
+            'until', 'asTypeOf', 'error', 'undefined',
+            'seq','map','filter', 'head',
+            'last', 'tail', 'init', 'null', 'length',
+            'reverse', 'foldl', 'foldl1', 'foldr',
+            'foldr1', 'and', 'or', 'any', 'all', 'sum',
+            'product', 'concat', 'concatMap', 'maximum',
+            'minimum', 'scanl', 'scanl1', 'scanr', 'scanr1',
+            'iterate', 'repeat', 'cycle', 'take', 'drop',
+            'splitAt', 'teakWhile', 'dropWhile', 'span',
+            'break', 'elem', 'notElem', 'lookup', 'zip',
+            'zip3', 'zipWith', 'zipWith3', 'unzip', 'unzip3',
+            'lines', 'words', 'unlines',
+            'unwords', 'showPrec', 'show', 'showList',
+            'shows', 'showChar', 'showString', 'showParen',
+            'readsPrec', 'readList', 'reads', 'readParen',
+            'read', 'lex', 'putChar', 'putStr', 'putStrLn',
+            'print', 'getChar', 'getLine', 'getContents',
+            'interact', 'readFile', 'writeFile', 'appendFile',
+            'readIO', 'readLn', 'ioError', 'userError', 'catch'
+            ),
         /* here Prelude Types */
         4 => array (
             'Bool', 'Maybe', 'Either', 'Ord', 'Ordering',
@@ -113,7 +113,7 @@ $language_data = array (
             'Floating', 'RealFrac', 'RealFloat', 'Monad',
             'Functor', 'Show', 'ShowS', 'Read', 'ReadS',
             'IO'
-           ),
+            ),
         /* finally Prelude Exceptions */
         5 => array (
             'IOError', 'IOException'
@@ -121,14 +121,14 @@ $language_data = array (
         ),
     /* highlighting symbols is really important in Haskell */
     'SYMBOLS' => array(
-           '|', '->', '<-', '@', '!', '::', '_', '~', '=', '?',
-           '&&', '||', '==', '/=', '<', '<=', '>',
-           '>=','+', '-', '*','/', '%', '**', '^', '^^',
-           '>>=', '>>', '=<<',  '$', '.', ',', '$!',
-           '++', '!!'
-            ),
+        '|', '->', '<-', '@', '!', '::', '_', '~', '=', '?',
+        '&&', '||', '==', '/=', '<', '<=', '>',
+        '>=','+', '-', '*','/', '%', '**', '^', '^^',
+        '>>=', '>>', '=<<',  '$', '.', ',', '$!',
+        '++', '!!'
+        ),
     'CASE_SENSITIVE' => array(
-        GESHI_COMMENTS => true,
+        GESHI_COMMENTS => false,
         1 => true,
         2 => true, /* functions name are case seinsitive */
         3 => true, /* types name too */

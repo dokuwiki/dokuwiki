@@ -4,7 +4,7 @@
  * ------------------------
  * Author: Richard Civil (info@richardcivil.net)
  * Copyright: (c) 2008 Richard Civil (info@richardcivil.net), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2008/04/12
  *
  * @Formula/@Command language file for GeSHi.
@@ -41,12 +41,12 @@
 
 $language_data = array (
     'LANG_NAME' => 'Lotus Notes @Formulas',
-	'COMMENT_SINGLE' => array(1 => "'"),
-	'COMMENT_MULTI' => array('REM' => ';'),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"'),
-	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
+    'COMMENT_SINGLE' => array(1 => "'"),
+    'COMMENT_MULTI' => array('REM' => ';'),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+    'QUOTEMARKS' => array('"'),
+    'ESCAPE_CHAR' => '',
+    'KEYWORDS' => array(
         1 => array (
             '[ZoomPreview]', '[WorkspaceStackReplicaIcons]',
             '[WorkspaceProperties]', '[WindowWorkspace]',
@@ -192,8 +192,8 @@ $language_data = array (
             '[AdminCrossCertifyIDFile]', '[AdminCreateGroup]', '[AdminCertify]',
             '[AddToIMContactList]', '[AddDatabaseRepID]', '[AddDatabase]',
             '[AddBookmark]'
-			),
-		2 => array(
+            ),
+        2 => array(
             'SELECT', 'FIELD', 'ENVIRONMENT', 'DEFAULT', '@Zone ', '@Yesterday',
             '@Yes', '@Year', '@Word', '@Wide', '@While', '@Weekday',
             '@WebDbName', '@ViewTitle', '@ViewShowThisUnread', '@Version',
@@ -256,59 +256,63 @@ $language_data = array (
             '@AllDescendants', '@AllChildren', '@All', '@AdminECLIsLocked',
             '@Adjust', '@AddToFolder', '@ACos', '@Accessed', '@AbstractSimple',
             '@Abstract', '@Abs'
-			)
-		),
-	'SYMBOLS' => array(
+            )
+        ),
+    'SYMBOLS' => array(
         '(', ')'
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
-		1 => false,
-		2 => false
-		),
-	'STYLES' => array(
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => false,
+        2 => false
+        ),
+    'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #800000;',
-			2 => 'color: #0000FF;'
-			),
-		'COMMENTS' => array(
+            2 => 'color: #0000FF;'
+            ),
+        'COMMENTS' => array(
             1 => 'color: #008000;'
-			),
-		'BRACKETS' => array(
+            ),
+        'BRACKETS' => array(
             0 => 'color: #000000;'
-			),
-		'STRINGS' => array(
+            ),
+        'STRINGS' => array(
             0 => 'color: #FF00FF;'
-			),
-		'NUMBERS' => array(
+            ),
+        'NUMBERS' => array(
             0 => 'color: #FF00FF;'
-			),
-		'METHODS' => array(
+            ),
+        'METHODS' => array(
             1 => 'color: #0000AA;'
-			),
-		'SYMBOLS' => array(
+            ),
+        'SYMBOLS' => array(
             0 => 'color: #66cc66;'
-			),
-		'ESCAPE_CHAR' => array(
+            ),
+        'ESCAPE_CHAR' => array(
             0 => 'color: #000099;'
-			),
-		'SCRIPT' => array(
-			),
-		'REGEXPS' => array(
-			)
-		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+            ),
+        'SCRIPT' => array(
+            ),
+        'REGEXPS' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => ''
+        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array(
         1 => '.'
-		),
-	'REGEXPS' => array(
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		),
+        ),
+    'REGEXPS' => array(
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
     'TAB_WIDTH' => 2
-	);
+    );
 
 ?>

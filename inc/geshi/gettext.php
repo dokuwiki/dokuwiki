@@ -4,10 +4,17 @@
  * --------
  * Author: Milian Wolff (mail@milianw.de)
  * Copyright: (c) 2008 Milian Wolff
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2008/05/25
  *
  * GNU Gettext .po/.pot language file for GeSHi.
+ *
+ * CHANGES
+ * -------
+ * 2008/08/02 (1.0.8)
+ *  -  New comments: flags and previous-fields
+ *  -  New keywords: msgctxt, msgid_plural
+ *  -  Msgstr array indices
  *
  *************************************************************************************
  *
@@ -31,14 +38,14 @@
 
 $language_data = array (
     'LANG_NAME' => 'GNU Gettext',
-    'COMMENT_SINGLE' => array('#:', '#.', '#'),
+    'COMMENT_SINGLE' => array('#:', '#.', '#,', '#|', '#'),
     'COMMENT_MULTI' => array(),
     'COMMENT_REGEXP' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-        1 => array('msgid', 'msgstr'),
+        1 => array('msgctxt', 'msgid_plural', 'msgid', 'msgstr'),
     ),
     'SYMBOLS' => array(),
     'CASE_SENSITIVE' => array(
@@ -52,7 +59,9 @@ $language_data = array (
         'COMMENTS' => array(
             0 => 'color: #000099;',
             1 => 'color: #000099;',
-            2 => 'color: #666666; font-style: italic;',
+            2 => 'color: #000099;',
+            3 => 'color: #006666;',
+            4 => 'color: #666666; font-style: italic;',
         ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
@@ -60,10 +69,28 @@ $language_data = array (
         'STRINGS' => array(
             0 => 'color: #ff0000;'
         ),
+        'REGEXPS' => array(),
+        'SYMBOLS' => array(),
+        'NUMBERS' => array(
+            0 => 'color: #000099;'
+        ),
+        'METHODS' => array(),
+        'SCRIPT' => array(),
+        'BRACKETS' => array(
+            0 => 'color: #000099;'
+        ),
     ),
+    'URLS' => array(
+        1 => ''
+        ),
     'OOLANG' => false,
+    'OBJECT_SPLITTERS' => array(),
     'REGEXPS' => array(),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
     'TAB_WIDTH' => 4,
 );
 

@@ -4,7 +4,7 @@
  * --------
  * Author: Riley McArdle (riley@glyff.net)
  * Copyright: (c) 2007 Riley McArdle (http://www.glyff.net/)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2007/08/31
  *
  * PHP language file for GeSHi.
@@ -277,7 +277,6 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;',
-            2 => 'color: #808080; font-style: italic;',
             'MULTI' => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
@@ -305,10 +304,9 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        1 => 'http://www.kixtart.org/manual/Commands/{FNAME}.htm',
+        1 => 'http://www.kixtart.org/manual/Commands/{FNAMEL}.htm',
         2 => '',
-        3 => 'http://www.kixtart.org/manual/Functions/{FNAME}.htm',
-        4 => ''
+        3 => 'http://www.kixtart.org/manual/Functions/{FNAMEL}.htm'
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

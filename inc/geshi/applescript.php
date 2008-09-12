@@ -4,7 +4,7 @@
  * --------
  * Author: Stephan Klimek (http://www.initware.org)
  * Copyright: Stephan Klimek (http://www.initware.org)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2005/07/20
  *
  * AppleScript language file for GeSHi.
@@ -39,25 +39,29 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'AppleScript',
-	'COMMENT_SINGLE' => array(1 => '--'),
-	'COMMENT_MULTI' => array( '(*' => '*)'),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"',"'"),
-	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
-            'script','property','prop','end','copy','to','set','global','local','on','to','of',
+    'LANG_NAME' => 'AppleScript',
+    'COMMENT_SINGLE' => array(1 => '--'),
+    'COMMENT_MULTI' => array( '(*' => '*)'),
+    'COMMENT_REGEXP' => array(
+        2 => '/(?<=[a-z])\'/i',
+        3 => '/(?<![a-z])\'.*?\'/i',
+        ),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+    'QUOTEMARKS' => array('"'),
+    'ESCAPE_CHAR' => '\\',
+    'KEYWORDS' => array(
+        1 => array(
+            'script','property','prop','end','to','set','global','local','on','of',
             'in','given','with','without','return','continue','tell','if','then','else','repeat',
             'times','while','until','from','exit','try','error','considering','ignoring','timeout',
             'transaction','my','get','put','into','is'
-			),
-		2 => array(
+            ),
+        2 => array(
             'each','some','every','whose','where','id','index','first','second','third','fourth',
             'fifth','sixth','seventh','eighth','ninth','tenth','last','front','back','st','nd',
             'rd','th','middle','named','through','thru','before','after','beginning','the'
-			),
-		3 => array(
+            ),
+        3 => array(
             'close','copy','count','delete','duplicate','exists','launch','make','move','open',
             'print','quit','reopen','run','save','saving',
             'it','me','version','pi','result','space','tab','anything','case','diacriticals','expansion',
@@ -68,71 +72,75 @@ $language_data = array (
             'mar','april','apr','may','june','jun','july','jul','august','aug','september',
             'sep','october','oct','november','nov','december','dec','minutes','hours',
             'days','weeks','div','mod','and','not','or','as','contains','equal','equals','isnt'
-			)
-		),
-	'SYMBOLS' => array(
+            )
+        ),
+    'SYMBOLS' => array(
         ')','+','-','^','*','/','&','<','>=','<','<=','=','�'
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => false,
-		2 => false,
-		3 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #b1b100;',
-			2 => 'color: #000000; font-weight: bold;',
-			3 => 'color: #000066;'
-			),
-		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
-			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
-			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-			1 => 'color: #006600;',
-			2 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
-			0 => 'color: #0000ff;',
-			4 => 'color: #009999;',
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
-		3 => ''
-		),
-	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
-		1 => ',+-=&lt;&gt;/?^&amp;*'
-		),
-	'REGEXPS' => array(
-	    //Variables
-		0 => '[\\$%@]+[a-zA-Z_][a-zA-Z0-9_]*',
-		//File descriptors
-		4 => '&lt;[a-zA-Z_][a-zA-Z0-9_]*&gt;',
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => false,
+        2 => false,
+        3 => false,
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #b1b100;',
+            2 => 'color: #000000; font-weight: bold;',
+            3 => 'color: #000066;'
+            ),
+        'COMMENTS' => array(
+            1 => 'color: #808080; font-style: italic;',
+            2 => '',
+            3 => 'color: #ff0000;',
+            'MULTI' => 'color: #808080; font-style: italic;'
+            ),
+        'ESCAPE_CHAR' => array(
+            0 => 'color: #000099; font-weight: bold;'
+            ),
+        'BRACKETS' => array(
+            0 => 'color: #66cc66;'
+            ),
+        'STRINGS' => array(
+            0 => 'color: #ff0000;'
+            ),
+        'NUMBERS' => array(
+            0 => 'color: #cc66cc;'
+            ),
+        'METHODS' => array(
+            1 => 'color: #006600;',
+            2 => 'color: #006600;'
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #66cc66;'
+            ),
+        'REGEXPS' => array(
+            0 => 'color: #0000ff;',
+            4 => 'color: #009999;',
+            ),
+        'SCRIPT' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => ''
+        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array(
+        1 => ',+-=&lt;&gt;/?^&amp;*'
+        ),
+    'REGEXPS' => array(
+        //Variables
+        0 => '[\\$%@]+[a-zA-Z_][a-zA-Z0-9_]*',
+        //File descriptors
+        4 => '&lt;[a-zA-Z_][a-zA-Z0-9_]*&gt;',
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        )
 );
 
 ?>

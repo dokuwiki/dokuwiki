@@ -4,13 +4,16 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/06/21 (1.0.8)
+ *  -  Added loads of keywords and commands of GNU/Linux
+ *  -  Added support for parameters starting with a dash
  * 2008/05/23 (1.0.7.22)
  *  -  Added description of extra language features (SF#1970248)
  * 2007/09/05 (1.0.7.21)
@@ -54,167 +57,201 @@ $language_data = array (
     // Bash DOES have single line comments with # markers. But bash also has
     // the  $# variable, so comments need special handling (see sf.net
     // 1564839)
-	'COMMENT_SINGLE' => array('#'),
-	'COMMENT_MULTI' => array(),
-	'COMMENT_REGEXP' => array(
+    'COMMENT_SINGLE' => array('#'),
+    'COMMENT_MULTI' => array(),
+    'COMMENT_REGEXP' => array(
         //Variables
         1 => "/\\$\\{[^\\n\\}]*?\\}/i",
         //BASH-style Heredoc
         2 => '/<<-?\s*?([\'"]?)([a-zA-Z0-9]+)\1;[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU'
         ),
-	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
-			'case', 'do', 'done', 'elif', 'else', 'esac', 'fi', 'for', 'function',
-			'if', 'in', 'select', 'set', 'then', 'until', 'while', 'time'
-			),
-		2 => array(
-			'aclocal', 'aconnect', 'aplay', 'apm', 'apmsleep', 'apropos',
-			'ar', 'arch', 'arecord', 'as', 'as86', 'autoconf', 'autoheader',
-			'automake', 'awk',
-			'basename', 'bc', 'bison', 'bunzip2', 'bzip2', 'bzcat',
-			'bzcmp', 'bzdiff', 'bzegrep', 'bzegrep', 'bzfgrep', 'bzgrep',
-			'bzip2', 'bzip2recover', 'bzless', 'bzmore',
-			'c++', 'cal', 'cat', 'chattr', 'cc', 'cdda2wav', 'cdparanoia',
-			'cdrdao', 'cd-read', 'cdrecord', 'chfn', 'chgrp', 'chmod',
-			'chown', 'chroot', 'chsh', 'chvt', 'clear', 'cmp', 'comm', 'co',
-			'col', 'cp', 'cpio', 'cpp', 'cut',
-			'date', 'dd', 'dc', 'dcop', 'deallocvt', 'df', 'diff', 'diff3', 'dir',
-			'dircolors', 'directomatic', 'dirname', 'dmesg',
-			'dnsdomainname', 'domainname', 'du', 'dumpkeys',
-			'ed', 'egrep', 'env', 'expr',
-			'false', 'fbset', 'fgconsole','fgrep', 'find', 'file', 'flex', 'flex++',
-			'fmt', 'free', 'ftp', 'funzip', 'fuser',
-			'g++', 'gawk', 'gc','gcc', 'gdb', 'getent', 'getkeycodes',
-			'getopt', 'gettext', 'gettextize', 'gimp', 'gimp-remote',
-			'gimptool', 'gmake', 'gocr', 'grep', 'groups', 'gs', 'gunzip',
-			'gzexe', 'gzip',
-			'head', 'hexdump', 'hostname',
-			'id', 'igawk', 'install',
-			'join',
-			'kbd_mode','kbdrate', 'kdialog', 'kfile', 'kill', 'killall',
-			'last', 'lastb', 'ld', 'ld86', 'ldd', 'less', 'lex', 'link', 'ln', 'loadkeys',
-			'loadunimap', 'locate', 'lockfile', 'login', 'logname',
-			'lp', 'lpr', 'ls', 'lsattr', 'lsmod', 'lsmod.old', 'lynx',
-			'm4', 'make', 'man', 'mapscrn', 'mesg', 'mkdir', 'mkfifo',
-			'mknod', 'mktemp', 'more', 'mount', 'msgfmt', 'mv',
-			'namei', 'nano', 'nasm', 'nawk', 'netstat', 'nice',
-			'nisdomainname', 'nl', 'nm', 'nm86', 'nmap', 'nohup', 'nop',
-			'od', 'openvt',
-			'passwd', 'patch', 'pcregrep', 'pcretest', 'perl', 'perror',
-			'pgawk', 'pidof', 'ping', 'pr', 'procmail', 'prune', 'ps', 'pstree',
-			'ps2ascii', 'ps2epsi', 'ps2frag', 'ps2pdf', 'ps2ps', 'psbook',
-			'psmerge', 'psnup', 'psresize', 'psselect', 'pstops',
-			'rbash', 'rcs', 'read', 'readlink', 'red', 'resizecons', 'rev', 'rm',
-			'rmdir', 'run-parts',
-			'sash', 'sed', 'setfont', 'setkeycodes', 'setleds',
-			'setmetamode', 'setserial', 'scp', 'seq', 'setterm', 'sh',
-			'showkey', 'shred', 'size', 'size86', 'skill', 'sleep', 'slogin',
-			'snice', 'sort', 'sox', 'split', 'ssed', 'ssh', 'ssh-add',
-			'ssh-agent', 'ssh-keygen', 'ssh-keyscan', 'stat', 'strings',
-			'strip', 'stty', 'su', 'sudo', 'suidperl', 'sum', 'sync',
-			'tac', 'tail', 'tar', 'tee', 'tempfile', 'touch', 'tr', 'true',
-			'umount', 'uname', 'unicode_start', 'unicode_stop', 'uniq',
-			'unlink', 'unzip', 'updatedb', 'updmap', 'uptime', 'users',
-			'utmpdump', 'uuidgen',
-			'vdir', 'vmstat',
-			'w', 'wall', 'wc', 'wget', 'whatis', 'whereis', 'which', 'who',
-			'whoami', 'write',
-			'xargs', 'xhost', 'xmodmap', 'xset',
-			'yacc', 'yes', 'ypdomainname',
-			'zcat', 'zcmp', 'zdiff', 'zegrep', 'zfgrep', 'zforce', 'zgrep',
-			'zip', 'zless', 'zmore', 'znew', 'zsh', ' zsoelim'
-			),
-		3 => array(
-			'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command',
-			'compgen', 'complete', 'continue', 'declare', 'dirs', 'disown',
-			'echo', 'enable', 'eval', 'exec', 'exit', 'export', 'fc',
-			'fg', 'getopts', 'hash', 'help', 'history', 'jobs', 'kill', 'let',
-			'local', 'logout', 'popd', 'printf', 'pushd', 'pwd', 'readonly',
-			'return', 'shift', 'shopt', 'source', 'suspend', 'test', 'times',
-			'trap', 'type', 'typeset', 'ulimit', 'umask', 'unalias', 'unset',
-			'wait'
-			)
-		),
-	'SYMBOLS' => array(
-		'(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;', '`'
-		),
-	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
-		1 => true,
-		2 => true,
-		3 => true
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
-			1 => 'color: #000000; font-weight: bold;',
-			2 => 'color: #c20cb9; font-weight: bold;',
-			3 => 'color: #7a0874; font-weight: bold;'
-			),
-		'COMMENTS' => array(
-			0 => 'color: #666666; font-style: italic;',
-			1 => 'color: #800000;',
-			2 => 'color: #cc0000; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
-			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
-			0 => 'color: #7a0874; font-weight: bold;'
-			),
-		'STRINGS' => array(
-			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
-			0 => 'color: #000000;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
-			0 => 'color: #000000; font-weight: bold;'
-			),
-		'REGEXPS' => array(
-			0 => 'color: #007800;',
-			1 => 'color: #007800;',
-			2 => 'color: #007800;',
-//			3 => 'color: #808080; font-style: italic;',
-			4 => 'color: #007800;'
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
-		1 => '',
-		2 => '',
-		3 => ''
-	),
-	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+    'QUOTEMARKS' => array("'", '"'),
+    'ESCAPE_CHAR' => '\\',
+    'KEYWORDS' => array(
+        1 => array(
+            'case', 'do', 'done', 'elif', 'else', 'esac', 'fi', 'for', 'function',
+            'if', 'in', 'select', 'set', 'then', 'until', 'while', 'time'
+            ),
+        2 => array(
+            'aclocal', 'aconnect', 'aplay', 'apm', 'apmsleep', 'apropos',
+            'apt-cache', 'apt-get', 'apt-key', 'aptitude',
+            'ar', 'arch', 'arecord', 'as', 'as86', 'ash', 'autoconf',
+            'autoheader', 'automake', 'awk',
+
+            'basename', 'bash', 'bc', 'bison', 'bunzip2', 'bzcat',
+            'bzcmp', 'bzdiff', 'bzegrep', 'bzfgrep', 'bzgrep',
+            'bzip2', 'bzip2recover', 'bzless', 'bzmore',
+
+            'c++', 'cal', 'cat', 'chattr', 'cc', 'cdda2wav', 'cdparanoia',
+            'cdrdao', 'cd-read', 'cdrecord', 'chfn', 'chgrp', 'chmod',
+            'chown', 'chroot', 'chsh', 'chvt', 'clear', 'cmp', 'comm', 'co',
+            'col', 'cp', 'cpio', 'cpp', 'csh', 'cut', 'cvs', 'cvs-pserver',
+
+            'dash', 'date', 'dd', 'dc', 'dcop', 'deallocvt', 'df', 'dialog',
+            'diff', 'diff3', 'dir', 'dircolors', 'directomatic', 'dirname',
+            'dmesg', 'dnsdomainname', 'domainname', 'dpkg', 'dselect', 'du',
+            'dumpkeys',
+
+            'ed', 'egrep', 'env', 'expr',
+
+            'false', 'fbset', 'ffmpeg', 'fgconsole','fgrep', 'file', 'find',
+            'flex', 'flex++', 'fmt', 'free', 'ftp', 'funzip', 'fuser',
+
+            'g++', 'gawk', 'gc','gcc', 'gdb', 'getent', 'getkeycodes',
+            'getopt', 'gettext', 'gettextize', 'gimp', 'gimp-remote',
+            'gimptool', 'gmake', 'gocr', 'grep', 'groups', 'gs', 'gunzip',
+            'gzexe', 'gzip',
+
+            'head', 'hexdump', 'hostname',
+
+            'id', 'ifconfig', 'igawk', 'install',
+
+            'join',
+
+            'kbd_mode','kbdrate', 'kdialog', 'kfile', 'kill', 'killall',
+
+            'lame', 'last', 'lastb', 'ld', 'ld86', 'ldd', 'less', 'lex', 'link',
+            'ln', 'loadkeys', 'loadunimap', 'locate', 'lockfile', 'login',
+            'logname', 'lp', 'lpr', 'ls', 'lsattr', 'lsmod', 'lsmod.old',
+            'lspci', 'ltrace', 'lynx',
+
+            'm4', 'make', 'man', 'mapscrn', 'mesg', 'mkdir', 'mkfifo',
+            'mknod', 'mktemp', 'more', 'mount', 'mplayer', 'msgfmt', 'mv',
+
+            'namei', 'nano', 'nasm', 'nawk', 'netstat', 'nice',
+            'nisdomainname', 'nl', 'nm', 'nm86', 'nmap', 'nohup', 'nop',
+
+            'od', 'openvt',
+
+            'passwd', 'patch', 'pcregrep', 'pcretest', 'perl', 'perror',
+            'pgawk', 'pidof', 'ping', 'pr', 'procmail', 'prune', 'ps', 'pstree',
+            'ps2ascii', 'ps2epsi', 'ps2frag', 'ps2pdf', 'ps2ps', 'psbook',
+            'psmerge', 'psnup', 'psresize', 'psselect', 'pstops',
+
+            'rbash', 'rcs', 'rcs2log', 'read', 'readlink', 'red', 'resizecons',
+            'rev', 'rm', 'rmdir', 'rsh', 'run-parts',
+
+            'sash', 'scp', 'screen', 'sed', 'seq', 'sendmail', 'setfont',
+            'setkeycodes', 'setleds', 'setmetamode', 'setserial', 'setterm',
+            'sh', 'showkey', 'shred', 'size', 'size86', 'skill', 'sleep',
+            'slogin', 'snice', 'sort', 'sox', 'split', 'ssed', 'ssh', 'ssh-add',
+            'ssh-agent', 'ssh-keygen', 'ssh-keyscan', 'stat', 'strace',
+            'strings', 'strip', 'stty', 'su', 'sudo', 'suidperl', 'sum', 'svn',
+            'svnadmin', 'svndumpfilter', 'svnlook', 'svnmerge', 'svnmucc',
+            'svnserve', 'svnshell', 'svnsync', 'svnversion', 'svnwrap', 'sync',
+
+            'tac', 'tail', 'tar', 'tee', 'tempfile', 'touch', 'tr', 'tree',
+            'true',
+
+            'umount', 'uname', 'unicode_start', 'unicode_stop', 'uniq',
+            'unlink', 'unzip', 'updatedb', 'updmap', 'uptime', 'users',
+            'utmpdump', 'uuidgen',
+
+            'valgrind', 'vdir', 'vi', 'vim', 'vmstat',
+
+            'w', 'wall', 'wc', 'wget', 'whatis', 'whereis', 'which', 'whiptail',
+            'who', 'whoami', 'write',
+
+            'xargs', 'xhost', 'xmodmap', 'xset',
+
+            'yacc', 'yes', 'ypdomainname',
+
+            'zcat', 'zcmp', 'zdiff', 'zdump', 'zegrep', 'zfgrep', 'zforce',
+            'zgrep', 'zip', 'zipgrep', 'zipinfo', 'zless', 'zmore', 'znew',
+            'zsh', 'zsoelim'
+            ),
+        3 => array(
+            'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command',
+            'compgen', 'complete', 'continue', 'declare', 'dirs', 'disown',
+            'echo', 'enable', 'eval', 'exec', 'exit', 'export', 'fc',
+            'fg', 'getopts', 'hash', 'help', 'history', 'jobs', 'let',
+            'local', 'logout', 'popd', 'printf', 'pushd', 'pwd', 'readonly',
+            'return', 'shift', 'shopt', 'source', 'suspend', 'test', 'times',
+            'trap', 'type', 'typeset', 'ulimit', 'umask', 'unalias', 'unset',
+            'wait'
+            )
+        ),
+    'SYMBOLS' => array(
+        '(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;', '`'
+        ),
+    'CASE_SENSITIVE' => array(
+        GESHI_COMMENTS => false,
+        1 => true,
+        2 => true,
+        3 => true
+        ),
+    'STYLES' => array(
+        'KEYWORDS' => array(
+            1 => 'color: #000000; font-weight: bold;',
+            2 => 'color: #c20cb9; font-weight: bold;',
+            3 => 'color: #7a0874; font-weight: bold;'
+            ),
+        'COMMENTS' => array(
+            0 => 'color: #666666; font-style: italic;',
+            1 => 'color: #800000;',
+            2 => 'color: #cc0000; font-style: italic;'
+            ),
+        'ESCAPE_CHAR' => array(
+            0 => 'color: #000099; font-weight: bold;'
+            ),
+        'BRACKETS' => array(
+            0 => 'color: #7a0874; font-weight: bold;'
+            ),
+        'STRINGS' => array(
+            0 => 'color: #ff0000;'
+            ),
+        'NUMBERS' => array(
+            0 => 'color: #000000;'
+            ),
+        'METHODS' => array(
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #000000; font-weight: bold;'
+            ),
+        'REGEXPS' => array(
+            0 => 'color: #007800;',
+            1 => 'color: #007800;',
+            2 => 'color: #007800;',
+            4 => 'color: #007800;',
+            5 => 'color: #660033;'
+            ),
+        'SCRIPT' => array(
+            )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => ''
+        ),
+    'OOLANG' => false,
+    'OBJECT_SPLITTERS' => array(
+        ),
+    'REGEXPS' => array(
         //Variables (will be handled by comment_regexps)
-		0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
-		//Variables without braces
-		1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
-		//Variable assignment
-		2 => "([a-zA-Z_][a-zA-Z0-9_]*)=",
-		//Shorthand shell variables
-		4 => "\\$[*#\$\\-\\?!]"
-		),
-	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		),
+        0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
+        //Variables without braces
+        1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
+        //Variable assignment
+        2 => "(?<![\.a-zA-Z_])([a-zA-Z_][a-zA-Z0-9_]*?)(?==)",
+        //Shorthand shell variables
+        4 => "\\$[*#\$\\-\\?!]",
+        //Parameters of commands
+        5 => "(?<=\s)-[0-9a-zA-Z\-]+(?=[\s=]|$)"
+        ),
+    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'SCRIPT_DELIMITERS' => array(
+        ),
+    'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
     'TAB_WIDTH' => 4,
-	'PARSER_CONTROL' => array(
-	    'COMMENTS' => array(
-	       'DISALLOWED_BEFORE' => '$'
+    'PARSER_CONTROL' => array(
+        'COMMENTS' => array(
+            'DISALLOWED_BEFORE' => '$'
         ),
         'KEYWORDS' => array(
-            'DISALLOWED_BEFORE' => "\-a-zA-Z0-9\$_\|\#>|^",
+            'DISALLOWED_BEFORE' => "(?<![\.\-a-zA-Z0-9_\$\#])",
+            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%])"
         )
     )
 );

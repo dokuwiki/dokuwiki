@@ -4,7 +4,7 @@
  * -------
  * Author: Galen Johnson (solitaryr@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2005/12/27
  *
  * SAS language file for GeSHi. Based on the sas vim file.
@@ -176,7 +176,7 @@ $language_data = array (
             9 => 'color: #0000ff;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #006400; font-style: italic;',
+//            1 => 'color: #006400; font-style: italic;',
             'MULTI' => 'color: #006400; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(

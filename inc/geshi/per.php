@@ -4,7 +4,7 @@
  * --------
  * Author: Lars Gersmann (lars.gersmann@gmail.com)
  * Copyright: (c) 2007 Lars Gersmann
- * Release Version: 1.0.7.22
+ * Release Version: 1\.0\.8
  * Date Started: 2007/06/03
  *
  * Per (forms) (FOURJ's Genero 4GL) language file for GeSHi.
@@ -244,7 +244,7 @@ $language_data = array (
         '(', ')', '[', ']'
         ),
     'CASE_SENSITIVE' => array(
-        GESHI_COMMENTS => true,
+        GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         ),
