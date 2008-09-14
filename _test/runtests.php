@@ -2,6 +2,7 @@
 <?php
 ini_set('memory_limit','128M');
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+define('DOKU_UNITTEST',true);
 
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/events.php');
