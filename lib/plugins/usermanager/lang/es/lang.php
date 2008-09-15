@@ -6,6 +6,7 @@
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
  * @author oliver@samera.com.py
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autentiación de usuariosuser no está disponible)';
@@ -43,6 +44,7 @@ $lang['edit_usermissing']      = 'El usuario seleccionado no ha sido encontrado;
 $lang['user_notify']           = 'Notificar al usuario';
 $lang['note_notify']           = 'El correo electrónico de notificación sólo será enviado si se actualizo la contraseña del usuario.';
 $lang['note_group']            = 'Si no se especifica ningún grupo, los nuevos usuarios serán agregados al grupo por defecto (%s).';
+$lang['note_pass']             = 'Se generará una clave automáticamente si el campo izquierdo es vacío y se esta activo la notificación de usuario. ';
 $lang['add_ok']                = 'El usuario fue creado exitosamente.';
 $lang['add_fail']              = 'Falló la creación del usuario';
 $lang['notify_ok']             = 'Se envió la notificación por correo electrónico';
