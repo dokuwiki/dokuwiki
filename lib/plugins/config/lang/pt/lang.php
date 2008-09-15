@@ -3,6 +3,7 @@
  * Portugueselanguage file
  *
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['menu']                  = 'Parâmetros de Configuração';
 $lang['error']                 = 'Parâmetros de Configuração não actualizados devido a valores inválidos. Por favor, reveja as modificações que pretende efectuar antes de re-submetê-las.<br /> Os valores incorrectos serão mostrados dentro de uma "moldura" vermelha.';
@@ -52,20 +53,30 @@ $lang['autopasswd']            = 'Auto-gerar senhas';
 $lang['passcrypt']             = 'Método de cifragem da senha';
 $lang['defaultgroup']          = 'Grupo por omissão';
 $lang['disableactions']        = 'Desactivar acções DokuWiki';
+$lang['disableactions_check']  = 'Checar';
 $lang['disableactions_subscription'] = 'Subscrever/Não Subscrver';
+$lang['disableactions_nssubscription'] = 'Subscrever / Dessubscrever Espaço de Nome';
 $lang['disableactions_wikicode'] = 'Ver fonte/Exportar em bruto';
 $lang['disableactions_other']  = 'Outras acções (separadas por vírgula)';
 $lang['compression']           = 'Método de compressão para histórico';
 $lang['cachetime']             = 'Idade máxima para cache (seg.)';
 $lang['locktime']              = 'Idade máxima para locks (seg.)';
+$lang['gdlib']                 = 'Versão GD Lib';
 $lang['jpg_quality']           = 'Compressão/Qualidade JPG (0-100)';
 $lang['sitemap']               = 'Gerar Sitemap Google (dias)';
+$lang['renderer__plugin']      = '%s (plugin)';
+$lang['rss_type']              = 'Tipo de feed XML';
+$lang['rss_linkto']            = 'Links de feed XML ara';
+$lang['proxy____port']         = 'Porta de Proxy';
+$lang['proxy____user']         = 'Nome de utilizador Proxy';
+$lang['proxy____pass']         = 'Password de Proxy ';
 $lang['typography_o_0']        = 'nenhum';
 $lang['typography_o_1']        = 'Apenas entre aspas';
 $lang['typography_o_2']        = 'Entre aspas e apóstrofes';
 $lang['userewrite_o_0']        = 'nenhum';
 $lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'interno (DokuWiki)';
+$lang['deaccent_o_0']          = 'desligado';
 $lang['deaccent_o_1']          = 'remover acentos';
 $lang['gdlib_o_1']             = 'Versão 1.x';
 $lang['gdlib_o_2']             = 'Auto-detecção';

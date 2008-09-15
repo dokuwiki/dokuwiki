@@ -3,6 +3,7 @@
  * Portugueselanguage file
  *
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';
@@ -40,6 +41,7 @@ $lang['edit_usermissing']      = 'Utilizador seleccionado não encontrado. Terá
 $lang['user_notify']           = 'Notificar utilizador';
 $lang['note_notify']           = 'Notificações só são enviadas se for atribuída uma nova senha ao utilizador.';
 $lang['note_group']            = 'Os novos utilizadores são adicionados ao grupo por omissão (%s) se não for especificado nenhum grupo.';
+$lang['note_pass']             = 'A password será automáticamente gerada se o campo esquerdo estiver vazio e a notificação de utilizador estiver activada.';
 $lang['add_ok']                = 'Utilizador adicionado.';
 $lang['add_fail']              = 'Utilizador não adicionado.';
 $lang['notify_ok']             = 'Mensagem de notificação enviada.';

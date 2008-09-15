@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
+ * @author Enrico Nicoletto <liverig@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -39,6 +40,8 @@ $lang['btn_backlink']          = 'Backlinks';
 $lang['btn_backtomedia']       = 'Voltar à Selecção de Media';
 $lang['btn_subscribe']         = 'Subscrever Alterações';
 $lang['btn_unsubscribe']       = 'Não Subscrever Alterações';
+$lang['btn_subscribens']       = 'Subscrever Mudanças de Espaço de Nome';
+$lang['btn_unsubscribens']     = 'Dessubscrever Mudanças de Espaço de Nome';
 $lang['btn_profile']           = 'Actualizar Perfil';
 $lang['btn_reset']             = 'Limpar';
 $lang['btn_resendpwd']         = 'Enviar nova senha';
@@ -105,8 +108,10 @@ $lang['namespaces']            = 'Grupos';
 $lang['mediafiles']            = 'Ficheiros disponíveis em';
 $lang['js']['keepopen']        = 'Mantenha a janela aberta durante a selecção';
 $lang['js']['hidedetails']     = 'Esconder Detalhes';
+$lang['js']['mu_btn']          = 'Enviar múltiplos ficheiros de uma vez';
 $lang['mediausage']            = 'Use a seguinte sintaxe para referenciar este ficheiro:';
 $lang['mediaview']             = 'Ver ficheiro original';
+$lang['mediaroot']             = 'root';
 $lang['mediaupload']           = 'Carregar ficheiros para o grupo actual aqui. Para criar sub-grupos: escrever o nome do sub-grupo seguido de : antes do nome do ficheiro no campo "Carregar como".';
 $lang['mediaextchange']        = 'Extensão alterada de .%s para .%s!';
 $lang['reference']             = 'Referências para';
@@ -197,3 +202,17 @@ $lang['i_policy']              = 'Politica ACL inicial';
 $lang['i_pol0']                = 'Wiki Aberto (ler, escrever e carregar para todos)';
 $lang['i_pol1']                = 'Wiki Público (ler para todos, escrever e carregar para utilizadores inscritos)';
 $lang['i_pol2']                = 'Wiki Fechado (ler, escrever e carregar somente para utilizadores inscritos)';
+$lang['i_retry']               = 'Repetir';
+$lang['mu_intro']              = 'Aqui podes enviar múltiplos ficheiros de uma vez. Clique no botão de navegação para adicioná-los na fila. Premir upload quando pronto.';
+$lang['mu_gridname']           = 'Nome do ficheiro';
+$lang['mu_gridsize']           = 'Tamanho';
+$lang['mu_gridstat']           = 'Estado';
+$lang['mu_namespace']          = 'Espaço de Nomes';
+$lang['mu_browse']             = 'Navegar';
+$lang['mu_toobig']             = 'demasiado grande';
+$lang['mu_ready']              = 'pronto para upload';
+$lang['mu_done']               = 'completo';
+$lang['mu_fail']               = 'falhou';
+$lang['mu_authfail']           = 'sessão expirada';
+$lang['mu_progress']           = '@PCT@% uploaded';
+$lang['mu_filetypes']          = 'Tipos de Ficheiros Permitidos';
