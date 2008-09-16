@@ -619,18 +619,18 @@ function media_uploadform($ns, $auth){
         'O_sectok'    => getSecurityToken(),
         'O_authtok'   => auth_createToken(),
     );
-    $var = buildURLparams($opt,'&');
+    $var = buildURLparams($opt);
     // output the flash uploader
     ?>
     <div id="dw__flashupload" style="display:none">
     <div class="upload"><?php echo $lang['mu_intro']?></div>
     <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"
         codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
-        <param name="movie" value="multipleUpload.swf?t=<?=time()?>" />
+        <param name="movie" value="multipleUpload.swf?t=<?php echo time()?>" />
         <param name="quality" value="high" />
         <param name="bgcolor" value="#ffffff" />
         <param name="FlashVars" value="<?php echo $var?>" />
-        <embed src="multipleUpload.swf?t=<?=time()?>" quality="high" bgcolor="#ffffff"
+        <embed src="multipleUpload.swf?t=<?php echo time()?>" quality="high" bgcolor="#ffffff"
             width="100%" height="100%" name="fileUpload" align="middle"
             play="true" loop="false" quality="high" FlashVars="<?php echo $var?>"
             allowScriptAccess="sameDomain"
