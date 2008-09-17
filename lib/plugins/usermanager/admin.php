@@ -61,7 +61,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Chris Smith',
             'email'  => 'chris@jalakai.co.uk',
-            'date'   => '2005-11-24',
+            'date'   => '2008-09-17',
             'name'   => 'User Manager',
             'desc'   => 'Manage users '.$this->disabled,
             'url'    => 'http://dokuwiki.org/plugin:usermanager',
@@ -317,9 +317,21 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
-        $disabled = $cando ? "" : " disabled=\"disabled\"";
-        $class = $cando ? "" : " class=\"disabled\"";
-        ptln("<tr".$class."><td><label for=\"".$id."\" >".$label.": </label></td><td><input type=\"text\" id=\"".$id."\" name=\"".$name."\" value=\"".$value."\"".$disabled." class=\"edit\" /></td></tr>",$indent);
+        $class = $cando ? '' : ' class="disabled"';
+        $disabled = $cando ? '' : ' disabled="disabled"';
+        echo str_pad('',$indent);
+
+        echo "<tr $class>";
+        echo "<td><label for=\"$id\" >$label: </label></td>";
+        echo "<td>";
+        if($cando){
+            echo "<input type=\"text\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit\" />";
+        }else{
+            echo "<input type=\"hidden\" name=\"$name\" value=\"$value\" />";
+            echo "<input type=\"text\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
+        }
+        echo "</td>";
+        echo "</tr>";
     }
 
     function _htmlFilter($key) {
