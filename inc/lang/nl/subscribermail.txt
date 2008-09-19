@@ -9,7 +9,7 @@ Hier zijn de aanpassingen:
 
 Om deze berichten niet meer te ontvangen van @DOKUWIKIURL@ , ga dan naar
 @NEWPAGE@
-en kies 'Stop volgen wijzigingen'.
+en kies 'Uitschrijven wijzigingen'.
 
 --
 Dit bericht is gegenereerd door DokuWiki op

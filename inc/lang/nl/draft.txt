@@ -1,5 +1,5 @@
 ===== Concept bestand gevonden =====
 
-Uw laatste bewerking op deze pagina is niet volledig afgerond. DokuWiki heeft automatisch een concept van uw werk opgeslagen welke u nu kunt hervatten. Hieronder treft u uw concept aan.
+Je laatste bewerking op deze pagina is niet volledig afgerond. DokuWiki heeft automatisch een concept van je werk opgeslagen waarmee je nu verder kunt gaan. Hieronder tref je het concept aan.
 
-Kiest u of u het concept wilt //herstellen//, //verwijderen// of //annuleren//.
+Beslis of je het concept wilt //herstellen//, //verwijderen// of //annuleren//.

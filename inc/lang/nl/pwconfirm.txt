@@ -1,10 +1,10 @@
-Hoi @FULLNAME@!
+Beste @FULLNAME@!
 
 Iemand heeft een nieuw wachtwoord aangevraagd voor je @TITLE@ login op @DOKUWIKIURL@
 
 Als je geen nieuw wachtwoord hebt aangevraagd kunt u deze e-mail negeren.
 
-Om te bevestigen dat u inderdaad een nieuw wachtwoord wil, volgt u de volgende link.
+Om te bevestigen dat je inderdaad een nieuw wachtwoord wil, volgt u de volgende link.
 
 @CONFIRM@
 
