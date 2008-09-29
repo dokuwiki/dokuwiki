@@ -312,9 +312,24 @@ function act_save($act){
   return 'show';
 }
 
+/**
+ * Do a redirect after receiving post data
+ *
+ * Tries to add the section id as hash mark after section editing
+ */
 function act_redirect($id,$preact){
   global $PRE;
   global $TEXT;
+  global $MSG;
+
+  //are there any undisplayed messages? keep them in session for display
+  //on the next page
+  if(isset($MSG) && count($MSG)){
+    //reopen session, store data and close session again
+    @session_start();
+    $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
+    session_write_close();
+  }
 
   //get section name when coming from section edit
   if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){

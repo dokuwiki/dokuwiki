@@ -118,6 +118,12 @@
       session_set_cookie_params(0,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
     }
     session_start();
+
+    // load left over messages
+    if(isset($_SESSION[DOKU_COOKIE]['msg'])){
+      $MSG = $_SESSION[DOKU_COOKIE]['msg'];
+      unset($_SESSION[DOKU_COOKIE]['msg']);
+    }
   }
 
   // kill magic quotes
