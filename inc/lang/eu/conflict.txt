@@ -1,0 +1,5 @@
+====== Bertsio berriago bat existitzen da ======
+
+Editatu duzun dokumentua baino bertsio berriago existitzen da. Editatzen ari zarela beste erabiltzaile batek dokumentua aldatzen duenean gertatzen da hau. 
+
+Aztertu arretaz behean erakutsitako desberdintasunak eta erabaki zein bertsio mantendu. Zure aukera "Gorde" bada, zure bertsioa gordeko da. Uneko bertsioa mantentzeko "ezeztatu" sakatu.

@@ -35,7 +35,7 @@ $lang['btn_admin']             = 'Admin';
 $lang['btn_update']            = 'Eguneratu';
 $lang['btn_delete']            = 'Ezabatu';
 $lang['btn_back']              = 'Atzera';
-$lang['btn_backlink']          = 'Atzera estekak';
+$lang['btn_backlink']          = 'Itzulera estekak';
 $lang['btn_backtomedia']       = 'Atzera Media Fitxategiaren Aukeraketara';
 $lang['btn_subscribe']         = 'Harpidetu Orri Aldaketetara';
 $lang['btn_unsubscribe']       = 'Utzi Harpidetza Orri Aldaketetara';
@@ -215,4 +215,3 @@ $lang['mu_fail']               = 'hutsegitea';
 $lang['mu_authfail']           = 'saioa iraungita';
 $lang['mu_progress']           = '@PCT@% igota';
 $lang['mu_filetypes']          = 'Onartutako Fitxategi Motak';
-

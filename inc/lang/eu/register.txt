@@ -1,0 +1,3 @@
+====== Erregistratu erabiltzaile berri bezala ======
+
+Bete beheko informazio guztia wiki honetan kontu berri bat sortzeko. Ziurtatu **baliozko posta-e helbide** bat ematen duzula - ez bazaizu hemen eskatzen pasahitzik sartzeko, berri bat bidaliko zaizu helbide horretara. Saioa hasteko izenak baliozko [[doku>pagename|orri izena]] izan behar du.

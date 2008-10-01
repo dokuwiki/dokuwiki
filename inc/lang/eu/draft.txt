@@ -1,0 +1,5 @@
+====== Zirriborro fitxategia aurkitu da ======
+
+Zure azken edizio saioa orri honetan ez zen zuzen burutu. DokuWiki-k automatikoki zirriborro bat gorde zuen lanean ari zinen bitartean eta orain zure edizioa jarraitzeko erabili dezakezu. Behean ikusi dezakezu zure asken saioan gorde ziren datuak.
+
+Erabaki mesedez zure edizio saio galdua //berreskuratu// nahi duzun, automatikoki gordetako zirriborroa //ezabatu// nahi duzun edo edizio prozesua //ezeztatu// nahi duzun.

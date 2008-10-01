@@ -1,0 +1,26 @@
+# Lista hau, indexatzaileak alde batera uzten dituen hitzen zerrenda da, hitz bat lerroko
+# Fitxategi hau editatzean, ziurtatu UNIX lerro bukaerak (lerro berri bakarra) erabiltzen duzula
+# Ez dago 3 letra baino motzagoak diren hitzik sartu beharrik - bestela ere baztertuak dira
+# This list is based upon the ones found at http://www.ranks.nl/stopwords/ 
+# FITXATEGI HONEK BEGIRATU BAT BEHAR DU!
+buruz
+dira
+da
+eta
+zure
+haiek
+haien
+com
+nondik
+nora
+nola
+zer
+hau
+zen
+noiz
+non
+nor
+nork
+und
+the
+www

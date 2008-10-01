@@ -1,0 +1,13 @@
+Fitxategi bat igo da zure DokuWikira. Hona hemen xehetasunak:
+
+Fitxategia : @MEDIA@
+Data : @DATE@
+Nabigatzailea : @BROWSER@
+IP-Helbide : @IPADDRESS@
+Hostalari izena : @HOSTNAME@
+Tamaina : @SIZE@
+MIME Mota : @MIME@
+Erabiltzailea : @USER@
+
+-- 
+Posta hau @DOKUWIKIURL@ gunean DokuWikik sortua izan da.

@@ -1,0 +1,12 @@
+Kaixo @FULLNAME@!
+
+Norbaitek zure @TITLE@ erabiltzailearentzat pasahitz berria eskatu du @DOKUWIKIURL@ gunean.
+
+Ez baduzu zuk eskatu pasahitz berria, ez kasurik egin posta honi.
+
+Eskakizuna zuk bidalia dela egiaztatzeko, mesedez, ondorengo esteka erabili.
+
+@CONFIRM@
+
+-- 
+Posta hau @DOKUWIKIURL@ gunean DokuWikik sortua izan da.

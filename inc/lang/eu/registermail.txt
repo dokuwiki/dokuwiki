@@ -1,0 +1,13 @@
+Erabiltzaile berri bat erregistratu da. Hona hemen xehetasunak:
+
+Erabiltzaile izena : @NEWUSER@
+Izen osoa : @NEWNAME@
+Posta-e : @NEWEMAIL@
+
+Data : @DATE@
+Nabigatzailea : @BROWSER@
+IP-Helbidea : @IPADDRESS@
+Hostalari izena : @HOSTNAME@
+
+-- 
+Posta hau @DOKUWIKIURL@ gunean DokuWikik sortua izan da.
