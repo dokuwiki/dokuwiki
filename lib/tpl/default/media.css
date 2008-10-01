@@ -64,6 +64,8 @@ it's dirty, so any "real" fixes are welcome */
 
 #media__opts input {
     float: left;
+    display: block;
+    margin-top: 4px;
     position: absolute;
 }
 *+html #media__opts input,
@@ -74,7 +76,8 @@ it's dirty, so any "real" fixes are welcome */
 #media__opts label {
     display: block;
     float: left;
-    margin-left: 30px;
+    margin-left: 20px;
+    margin-bottom: 4px;
 }
 *+html #media__opts label,
 * html #media__opts label {
