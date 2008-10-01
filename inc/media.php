@@ -163,17 +163,28 @@ function media_delete($id,$auth){
 
     if(!count($mediareferences)){
         $file = mediaFN($id);
-        if(@unlink($file)){
-            msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
-            $del = io_sweepNS($id,'mediadir');
-            if($del){
-                // current namespace was removed. redirecting to root ns passing msg along
-                header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
-                        rawurlencode(str_replace('%s',noNS($id),$lang['deletesucc'])));
-                exit;
+
+        // trigger an event - MEDIA_DELETE_FILE
+        $data['name'] = basename($file);
+        $data['path'] = $file;
+        $data['size'] = (@file_exists($file)) ? filesize($file) : 0;
+        $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
+        if ($evt->advise_before()) {
+            if(@unlink($file)){
+                msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
+                $del = io_sweepNS($id,'mediadir');
+                if($del){
+                    // current namespace was removed. redirecting to root ns passing msg along
+                    header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
+                            rawurlencode(str_replace('%s',noNS($id),$lang['deletesucc'])));
+                    exit;
+                }
+                return true;
             }
-            return true;
         }
+        $evt->advise_after();
+        unset($evt);
+
         //something went wrong
         msg(str_replace('%s',$file,$lang['deletefail']),-1);
         return false;
