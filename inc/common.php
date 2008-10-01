@@ -1271,4 +1271,41 @@ function shorten($keep,$short,$max,$min=9,$char='⌇'){
     return $keep.utf8_substr($short,0,$half-1).$char.utf8_substr($short,$len-$half);
 }
 
+/**
+ * Return the users realname or e-mail address for use
+ * in page footer and recent changes pages
+ *
+ * @author Andy Webber <dokuwiki AT andywebber DOT com>
+ */
+function editorinfo($username){
+    global $conf;
+    global $auth;
+
+    switch($conf['showuseras']){
+      case 'username':
+      case 'email':
+      case 'email_link':
+        $info = $auth->getUserData($username);
+        break;
+      default:
+        return hsc($username);
+    }
+
+    if(isset($info) && $info) {
+        switch($conf['showuseras']){
+          case 'username':
+            return hsc($info['name']);
+          case 'email':
+            return obfuscate($info['mail']);
+          case 'email_link':
+            $mail=obfuscate($info['mail']);
+            return '<a href="mailto:'.$mail.'">'.$mail.'</a>';
+          default:
+            return hsc($username);
+        }
+    } else {
+        return hsc($username); 
+    }
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -81,6 +81,7 @@ $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['relnofollow'] = 'Use rel="nofollow" on external links';
 $lang['mailguard']   = 'Obfuscate email addresses';
 $lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';
+$lang['showuseras']  = 'What to display when showing the user that last edited a page';
 
 /* Authentication Options */
 $lang['useacl']      = 'Use access control lists';
@@ -210,3 +211,9 @@ $lang['xsendfile_o_0'] = "don't use";
 $lang['xsendfile_o_1'] = 'Proprietary lighttpd header (before release 1.5)';
 $lang['xsendfile_o_2'] = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3'] = 'Proprietary Nginx X-Accel-Redirect header';
+
+/* Display user info */
+$lang['showuseras_o_loginname']  = 'Login name';
+$lang['showuseras_o_username']   = "User's full name";
+$lang['showuseras_o_email']      = "User's e-mail addresss (obfuscated according to mailguard setting)";
+$lang['showuseras_o_email_link'] = "User's e-mail addresss as a mailto: link";

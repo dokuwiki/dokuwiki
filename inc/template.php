@@ -869,9 +869,8 @@ function tpl_youarehere($sep=' &raquo; '){
  */
 function tpl_userinfo(){
   global $lang;
-  global $INFO;
   if($_SERVER['REMOTE_USER']){
-    print $lang['loggedinas'].': '.$INFO['userinfo']['name'];
+    print $lang['loggedinas'].': '.editorinfo($_SERVER['REMOTE_USER']);
     return true;
   }
   return false;
@@ -914,7 +913,7 @@ function tpl_pageinfo($ret=false){
     $out .= $date;
     if($INFO['editor']){
       $out .= ' '.$lang['by'].' ';
-      $out .= $INFO['editor'];
+      $out .= editorinfo($INFO['editor']);
     }else{
       $out .= ' ('.$lang['external_edit'].')';
     }
@@ -922,7 +921,7 @@ function tpl_pageinfo($ret=false){
       $out .= ' &middot; ';
       $out .= $lang['lockedby'];
       $out .= ': ';
-      $out .= $INFO['locked'];
+      $out .= editorinfo($INFO['locked']);
     }
     if($ret){
         return $out;

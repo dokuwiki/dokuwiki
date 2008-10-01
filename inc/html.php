@@ -438,7 +438,7 @@ function html_revisions($first=0){
     print ' &ndash; ';
     print htmlspecialchars($INFO['sum']);
     print ' <span class="user">';
-    print (empty($INFO['editor']))?('('.$lang['external_edit'].')'):htmlspecialchars($INFO['editor']);
+    print (empty($INFO['editor']))?('('.$lang['external_edit'].')'):editorinfo($INFO['editor']);
     print '</span> ';
 
     print '('.$lang['current'].')';
@@ -482,7 +482,7 @@ function html_revisions($first=0){
     print htmlspecialchars($info['sum']);
     print ' <span class="user">';
     if($info['user']){
-      print htmlspecialchars($info['user']);
+      print editorinfo($info['user']);
     }else{
       print $info['ip'];
     }
@@ -576,7 +576,7 @@ function html_recent($first=0){
 
     print ' <span class="user">';
     if($recent['user']){
-      print htmlspecialchars($recent['user']);
+      print editorinfo($recent['user']);
     }else{
       print $recent['ip'];
     }
