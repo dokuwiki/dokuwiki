@@ -1,0 +1,9 @@
+====== Konfigurazio Kudeatzailea ======
+
+Erabili orri hau zure DokiWiki instalazioaren aukerak kontrolatzeko.
+Aukera zehatzei buruz laguntza eskuratzeko ikusi [[doku>config]].
+Plugin honi buruzko xehetasun gehiago eskuratzeko ikusi [[doku>plugin:config]].
+
+Atzealde gorri argi batez erakusten diren aukerak babestuak daude eta ezin dira plugin honekin aldatu. Atzealde urdin batez erakusten diren aukerak balio lehenetsiak dira eta atzealde zuriz erakutsiak modu lokalean ezarriak izan dira instalazio honentzat. Aukera urdin eta zuriak aldatuak izan daitezke.
+
+Gogoratu **GORDE** botoia sakatzeaz orri hau utzi baino lehen, bestela zure aldaketak galdu egingo baitira.

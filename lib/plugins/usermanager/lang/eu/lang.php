@@ -6,7 +6,7 @@
  */
 $lang['menu']                  = 'Erabiltzaile Kudeatzailea';
 $lang['noauth']                = '(erabiltzaile kautotzea ez dago erabilgarri)';
-$lang['nosupport']             = '(erabiltzaile kudeaketa ez dago earbilgarri)';
+$lang['nosupport']             = '(erabiltzaile kudeaketa ez dago erabilgarri)';
 $lang['badauth']               = 'kautotze mekanismo baliogabea';
 $lang['user_id']               = 'Erabiltzailea';
 $lang['user_pass']             = 'Pasahitza';
