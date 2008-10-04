@@ -7,11 +7,11 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
-$lang['singlequoteopening']    = '\'';
-$lang['singlequoteclosing']    = '\'';
-$lang['apostrophe']            = '\'';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Haogö nga\'örö da\'a';
 $lang['btn_source']            = 'Oroma\'ö nga\'örö sindruhu';
 $lang['btn_show']              = 'Foroma\'ö nga\'örö';
@@ -32,7 +32,7 @@ $lang['btn_login']             = 'Felalö bakha';
 $lang['btn_logout']            = 'Möi baero';
 $lang['btn_admin']             = 'Admin';
 $lang['btn_update']            = 'Bohouni';
-$lang['btn_delete']            = 'Tibo\'ö';
+$lang['btn_delete']            = 'Heta';
 $lang['btn_back']              = 'Fulifuri';
 $lang['btn_backlink']          = 'Link fangawuli';
 $lang['btn_backtomedia']       = 'Angawuli ba filianö Mediafile';
