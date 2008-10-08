@@ -4,6 +4,7 @@
  *
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
+ * @author Manuel Meco <manuel.meco@gmail.com>
  */
 $lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
 $lang['submit']                = 'Enviar datos';

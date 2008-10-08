@@ -4,9 +4,9 @@ Usuario         : @NEWUSER@
 Nombre completo : @NEWNAME@
 E-Mail          : @NEWEMAIL@
 
-Fecha           : @DATE@
-Browser         : @BROWSER@
-Dirección-IP    : @IPADDRESS@
+Fecha : @DATE@
+Navegador : @BROWSER@
+Dirección-IP : @IPADDRESS@
 Nombre del host : @HOSTNAME@
 
 -- 

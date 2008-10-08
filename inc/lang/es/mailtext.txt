@@ -4,10 +4,10 @@ Fecha          : @DATE@
 Navegador      : @BROWSER@
 Dirección-IP   : @IPADDRESS@
 Nombre de Host : @HOSTNAME@
-Revision Vieja : @OLDPAGE@
-Revision Nueva : @NEWPAGE@
-Edit Summary   : @SUMMARY@
-User           : @USER@
+Revisión Anterior: @OLDPAGE@
+Revisión Nueva : @NEWPAGE@
+Editar sumario   : @SUMMARY@
+Usuario          : @USER@
 
 @DIFF@
 

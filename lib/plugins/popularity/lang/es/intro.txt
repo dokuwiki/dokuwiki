@@ -1,9 +1,9 @@
 ====== Retroalimentación (feedback) del plugin Popularity ======
 
 Esta herramienta recopila datos anónimos sobre tu wiki y te permite enviarlos a
-los desarrolladores de Dokuwiki. Esto les ayuda a entenderles cómo usan Dokuwiki
+los desarrolladores de Dokuwiki. Esto les ayuda a comprender cómo usan Dokuwiki
 sus usuarios y asegura que las decisiones del desarrollo futuro del programa
-estén basadas por las estadísticas de uso del mundo real.
+estén basadas en las estadísticas de uso del mundo real.
 
 Te animamos a repetir este paso de vez en cuando para mantener informados a los
 desarrolladores a medida que tu wiki crece. Tus paquetes repetidos de datos se
