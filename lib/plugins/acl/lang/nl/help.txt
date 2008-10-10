@@ -1,15 +1,14 @@
-=== Snel Help: ===
+=== Snelle hulp: ===
 
 Op deze pagina kun je bevoegdheden toevoegen en verwijderen voor 
 namespaces en pagina's in je wiki.
 
-Het linker panel geeft alle beschikbare namespaces en pagina's weer.
+Het linkerpaneel geeft alle beschikbare namespaces en pagina's weer.
 
-Het formulier hierboven geeft de mogelijkheid om bevoegdheden te 
-zien en aan te passen voor een selecteerde user of groep.
+In het formulier hierboven kun je bevoegdheden zien en aanpassen voor een selecteerde gebruiker of groep.
 
 In de tabel hieronder worden alle momenteel ingestelde toegangsregels weergegeven.
 Je kunt hier snel regels wijzigen of verwijderen.
 
-Het lezen van [[doku>acl|documentatie over ACLs]] helpt om de mogelijkheden
+Lees de  [[doku>acl|documentatie over ACLs]] om de mogelijkheden
 volledig te begrijpen.
