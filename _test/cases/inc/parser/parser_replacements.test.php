@@ -59,18 +59,47 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
 
     }
-    //
 
-    function testSingleSmiley() {
+    function testSingleSmileyFail() {
         $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)')));
         $this->P->parse('abc:-)xyz');
 
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\n".'abc')),
+            array('cdata',array("\nabc:-)xyz\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testSingleSmiley() {
+        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)')));
+        $this->P->parse('abc :-) xyz');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc ')),
             array('smiley',array(':-)')),
-            array('cdata',array('xyz'."\n")),
+            array('cdata',array(' xyz'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testMultipleSmileysFail() {
+        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)','^_^')));
+        $this->P->parse('abc:-)x^_^yz');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\nabc:-)x^_^yz\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -80,25 +109,24 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
     function testMultipleSmileys() {
         $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)','^_^')));
-        $this->P->parse('abc:-)x^_^yz');
+        $this->P->parse('abc :-) x ^_^ yz');
 
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\n".'abc')),
+            array('cdata',array("\n".'abc ')),
             array('smiley',array(':-)')),
-            array('cdata',array('x')),
+            array('cdata',array(' x ')),
             array('smiley',array('^_^')),
-            array('cdata',array('yz'."\n")),
+            array('cdata',array(' yz'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
 
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
-
     }
 
-    function testBackslashSmiley() {
+    function testBackslashSmileyFail() {
         // This smiley is really :-\\ but escaping makes like interesting
         $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-\\\\')));
         $this->P->parse('abc:-\\\xyz');
@@ -106,9 +134,25 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\n".'abc')),
+            array('cdata',array("\nabc".':-\\\\'."xyz\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testBackslashSmiley() {
+        // This smiley is really :-\\ but escaping makes like interesting
+        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-\\\\')));
+        $this->P->parse('abc :-\\\ xyz');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc ')),
             array('smiley',array(':-\\\\')),
-            array('cdata',array('xyz'."\n")),
+            array('cdata',array(' xyz'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
