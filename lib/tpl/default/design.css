@@ -405,7 +405,7 @@ div.dokuwiki ul {
   line-height: 1.5em;
   list-style-type: square;
   list-style-image: none;
-  margin: 0 0 0.5em 1.5em;
+  margin: 0 0 1em 3.5em;
   color: __text_alt__;
 }
 
@@ -413,9 +413,17 @@ div.dokuwiki ul {
 div.dokuwiki ol {
   line-height: 1.5em;
   list-style-image: none;
-  margin: 0 0 0.5em 1.5em;
+  margin: 0 0 1em 3.5em;
   color: __text_alt__;
   font-weight: bold;
+}
+
+/* no gap in between nested lists */
+div.dokuwiki li ul {
+  margin-bottom: 0;
+}
+div.dokuwiki li ol {
+  margin-bottom: 0;
 }
 
 /* the list items overriding the ul/ol definition */
