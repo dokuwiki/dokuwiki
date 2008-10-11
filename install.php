@@ -88,7 +88,7 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body style="">
     <h1 style="float:left">
-        <img src="http://dokuwiki.org/_media/wiki:dokuwiki-64.png"
+        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png&w=64"
              style="vertical-align: middle;" alt="" />
         <?php echo $lang['i_installer']?>
     </h1>
