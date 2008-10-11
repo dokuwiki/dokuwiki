@@ -487,7 +487,7 @@ function tpl_button($type){
       print html_btn('revs',$ID,'o',array('do' => 'revisions'));
       return true;
     case 'recent':
-      print html_btn('recent','','r',array('do' => 'recent'));
+      print html_btn('recent',$ID,'r',array('do' => 'recent'));
       return true;
     case 'index':
       print html_btn('index',$ID,'x',array('do' => 'index'));
