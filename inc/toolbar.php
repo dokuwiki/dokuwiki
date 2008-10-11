@@ -144,7 +144,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'insert',
                 'title'  => $lang['qb_hr'],
                 'icon'   => 'hr.png',
-                'insert' => '----\n',
+                'insert' => '\n----\n',
                 ),
            array(
                 'type'   => 'mediapopup',
