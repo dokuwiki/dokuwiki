@@ -632,7 +632,7 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
                'class="action revisions" accesskey="o" rel="nofollow"');
       return true;
     case 'recent':
-      tpl_link(wl('','do=recent'),
+      tpl_link(wl($ID,'do=recent'),
                $pre.(($inner)?$inner:$lang['btn_recent']).$suf,
               'class="action recent" accesskey="r" rel="nofollow"');
       return true;
