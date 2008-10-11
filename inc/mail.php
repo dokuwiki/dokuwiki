@@ -73,8 +73,8 @@ function _mail_send_action($data) {
 
   // On Unix set the envelope headers correctly:
   if($usenames){
-    if($from) $params = ((string) $params).' -f '.escapeshellarg($from);
-    if($to)   $params = ((string) $params).' '.escapeshellarg($to);
+    if($from) $params = ((string) $params).' -f '.escapeshellarg(mail_encode_address($from,'',false));
+    if($to)   $params = ((string) $params).' '.escapeshellarg(mail_encode_address($to,'',false));
   }
 
   $to = mail_encode_address($to,'',$usenames);
@@ -157,8 +157,11 @@ function mail_encode_address($string,$header='',$names=true){
       $text = '';
     }
 
-    // add to header comma seperated and in new line to avoid too long headers
-    if($headers != '') $headers .= ','.MAILHEADER_EOL.' ';
+    // add to header comma seperated
+    if($headers != ''){
+        $headers .= ',';
+        if($header) $headers .= MAILHEADER_EOL.' '; // avoid overlong mail headers
+    }
     $headers .= $text.' '.$addr;
   }
 
