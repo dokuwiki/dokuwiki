@@ -579,7 +579,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        $url = $this-> _resolveInterWiki($wikiName,$wikiUri);
+        $url = $this->_resolveInterWiki($wikiName,$wikiUri);
 
         if ( !$isImage ) {
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
