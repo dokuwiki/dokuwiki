@@ -35,6 +35,7 @@
   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
   header('Pragma: public');
   header('Content-Type: application/xml; charset=utf-8');
+  header('X-Robots-Tag: noindex');
   if($cmod && (($cmod+$conf['rss_update']>time()) || ($cmod>@filemtime($conf['changelog'])))){
     http_conditionalRequest($cmod);
     if($conf['allowdebug']) header("X-CacheUsed: $cache");
