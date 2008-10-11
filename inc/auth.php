@@ -281,6 +281,9 @@ function auth_logoff(){
   global $INFO, $ID;
   global $auth;
 
+  // reopen session
+  @session_start();
+
   if(isset($_SESSION[DOKU_COOKIE]['auth']['user']))
     unset($_SESSION[DOKU_COOKIE]['auth']['user']);
   if(isset($_SESSION[DOKU_COOKIE]['auth']['pass']))
@@ -300,6 +303,9 @@ function auth_logoff(){
   if($auth && $auth->canDo('logoff')){
     $auth->logOff();
   }
+
+  // close session again
+  session_write_close();
 }
 
 /**
