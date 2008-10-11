@@ -310,7 +310,7 @@ class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
             ),
 
         'emphasis'=> array (
-            'entry'=>'//(?=[^\x00]*[^:]//)', //hack for bug #384
+            'entry'=>'//(?=[^\x00]*[^:])', //hack for bugs #384 #763 #1468
             'exit'=>'//',
             'sort'=>80
             ),
