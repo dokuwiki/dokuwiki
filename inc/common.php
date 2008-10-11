@@ -926,6 +926,16 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
   // update the purgefile (timestamp of the last time anything within the wiki was changed)
   io_saveFile($conf['cachedir'].'/purgefile',time());
+
+  // if useheading is enabled, purge the cache of all linking pages
+  if($conf['useheading']){
+    require_once(DOKU_INC.'inc/fulltext.php');
+    $pages = ft_backlinks($id);
+    foreach ($pages as $page) {
+      $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
+      $cache->removeCache();
+    }
+  }
 }
 
 /**
