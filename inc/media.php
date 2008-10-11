@@ -245,7 +245,7 @@ function media_upload($ns,$auth){
     }
 
     // get filename
-    $id   = cleanID($ns.':'.$id);
+    $id   = cleanID($ns.':'.$id,false,true);
     $fn   = mediaFN($id);
 
     // get filetype regexp

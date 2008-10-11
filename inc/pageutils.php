@@ -86,8 +86,9 @@ function getID($param='id',$clean=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
+ * @param  boolean $media     Allow leading or trailing _ for media files
  */
-function cleanID($raw_id,$ascii=false){
+function cleanID($raw_id,$ascii=false,$media=false){
   global $conf;
   global $lang;
   static $sepcharpat = null;
@@ -126,7 +127,7 @@ function cleanID($raw_id,$ascii=false){
   //clean up
   $id = preg_replace($sepcharpat,$sepchar,$id);
   $id = preg_replace('#:+#',':',$id);
-  $id = trim($id,':._-');
+  $id = ($media ? trim($id,':.-') : trim($id,':._-'));
   $id = preg_replace('#:[:\._\-]+#',':',$id);
 
   $cache[(string)$raw_id] = $id;
