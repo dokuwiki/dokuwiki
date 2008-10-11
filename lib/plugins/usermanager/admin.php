@@ -393,6 +393,11 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!is_array($selected) || empty($selected)) return false;
         $selected = array_keys($selected);
 
+		if(in_array($_SERVER['REMOTE_USER'], $selected)) {
+			msg("You can't delete yourself!", -1);
+			return false;
+		}
+
         $count = $this->_auth->triggerUserMod('delete', array($selected));
         if ($count == count($selected)) {
           $text = str_replace('%d', $count, $this->lang['delete_ok']);
