@@ -120,7 +120,7 @@ $lang['summary']    = 'Samandráttur';
 $lang['mail_newpage'] = 'skjal skoyta uppí:';
 $lang['mail_changed'] = 'skjal broytt:';
 
-$lang['nosmblinks'] = 'Ávísingar til Windows shares virka bert í Microsoft Internet Explorer.\nTú kanst enn avrita og sata inn slóðina.';
+$lang['js']['nosmblinks'] = "Ávísingar til Windows shares virka bert í Microsoft Internet Explorer.\nTú kanst enn avrita og sata inn slóðina.";
 
 $lang['qb_alert']   = 'Skriva tann tekst tú ynskir at forsniða.\nHann verður skoyttur uppí í endanum av skjalinum.';
 $lang['qb_bold']    = 'Feit';

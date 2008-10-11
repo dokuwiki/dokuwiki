@@ -150,7 +150,7 @@ $lang['mail_changed']  = 'page changed:';
 $lang['mail_new_user'] = 'new user:';
 $lang['mail_upload']   = 'file uploaded:';
 
-$lang['nosmblinks'] = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
+$lang['js']['nosmblinks'] = "Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.";
 
 $lang['qb_alert']   = 'Please enter the text you want to format.\nIt will be appended to the end of the document.';
 $lang['qb_bold']    = 'Bold Text';

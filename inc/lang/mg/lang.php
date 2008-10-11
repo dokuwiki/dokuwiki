@@ -94,7 +94,7 @@ $lang['summary']    = 'Fanovana teo';
 $lang['mail_newpage'] = 'pejy niampy:';
 $lang['mail_changed'] = 'pejy niova:';
 
-$lang['nosmblinks'] = 'rohy mankamin\'ny fizarana Windows dia amin\'ny Microsoft Internet Explorer ihany no miasa.\nAzo atao ihany anefa ny manao dika-petaka ny rohy.';
+$lang['js']['nosmblinks'] = "rohy mankamin\'ny fizarana Windows dia amin\'ny Microsoft Internet Explorer ihany no miasa.\nAzo atao ihany anefa ny manao dika-petaka ny rohy.";
 
 $lang['qb_alert']   = 'Ampidiro ny soratra tianao hamboarina format.\n Hiampy any @ farany izy avy eo.';
 $lang['qb_bold']    = 'Matavy';

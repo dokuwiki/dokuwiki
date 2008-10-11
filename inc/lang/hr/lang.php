@@ -120,7 +120,7 @@ $lang['summary']    = 'Sažetak izmjena';
 $lang['mail_newpage'] = 'stranica dodana:';
 $lang['mail_changed'] = 'stranica kreirana:';
 
-$lang['nosmblinks'] = 'Linkovi na share-ane foldere rade samo s Internet Explorerom. ';
+$lang['js']['nosmblinks'] = "Linkovi na share-ane foldere rade samo s Internet Explorerom. ";
 
 $lang['qb_alert']   = 'Unesite tekst kojeg želite formatirati.\nBiti će dodan na kraju dokumenta.';
 $lang['qb_bold']    = 'Podebljani tekst';

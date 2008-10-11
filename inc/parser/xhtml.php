@@ -610,10 +610,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['pre']    = '';
         $link['suf']   = '';
         $link['style']  = '';
-        //Display error on browsers other than IE
-        $link['more'] = 'onclick="if(document.all == null){alert(\''.
-                        str_replace('\\\\n','\\n',addslashes($lang['nosmblinks'])).
-                        '\');}"';
 
         $link['name'] = $this->_getLinkTitle($name, $url, $isImage);
         if ( !$isImage ) {

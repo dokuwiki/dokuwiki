@@ -81,7 +81,7 @@ $lang['summary']    = 'Tóm tắt biên soạn';
 $lang['mail_newpage'] = 'Trang được thêm:';
 $lang['mail_changed'] = 'Trang thay đổi:';
 
-$lang['nosmblinks'] = 'Nối với các Windows shares chỉ có hiệu lực với Microsoft Internet Explorer.\nBạn vẫn có thể sao và chép các mốc nối.';
+$lang['js']['nosmblinks'] = "Nối với các Windows shares chỉ có hiệu lực với Microsoft Internet Explorer.\nBạn vẫn có thể sao và chép các mốc nối.";
 
 $lang['qb_alert']   = 'Xin bạn điền đoạn văn để định dạng.\nĐoạn này sẽ được nối vào cuối văn kiện.';
 $lang['qb_bold']    = 'Chữ đậm';

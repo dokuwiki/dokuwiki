@@ -130,7 +130,7 @@ $lang['summary']    = 'Redaguoti santrauką';
 $lang['mail_newpage'] = '[DokuWiki] puslapis pridėtas:';
 $lang['mail_changed'] = '[DokuWiki] puslapis pakeistas:';
 
-$lang['nosmblinks'] = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.\nVis dėlto, jūs galite nukopijuoti šią nuorodą.';
+$lang['js']['nosmblinks'] = "Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.\nVis dėlto, jūs galite nukopijuoti šią nuorodą.";
 
 $lang['qb_alert']   = 'Įveskite formatuojamą tekstą.\nJis bus pridėtas dokumento apačioje.';
 $lang['qb_bold']    = 'Pusjuodis';
