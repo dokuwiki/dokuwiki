@@ -682,7 +682,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime) = mimetype($src);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
-        }elseif($mime == 'application/x-shockwave-flash'){
+        }elseif($mime == 'application/x-shockwave-flash' && $render){
             // don't link flash movies
             $noLink = true;
         }else{
@@ -701,9 +701,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         else $this->doc .= $this->_formatLink($link);
     }
 
-    /**
-     * @todo don't add link for flash
-     */
     function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL, $linking=NULL) {
         $noLink = false;
@@ -716,7 +713,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(substr($mime,0,5) == 'image' && $render){
              // link only jpeg images
              // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
-        }elseif($mime == 'application/x-shockwave-flash'){
+        }elseif($mime == 'application/x-shockwave-flash' && $render){
              // don't link flash movies
              $noLink = true;
         }else{
@@ -963,6 +960,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $ret .= ' />';
 
         }elseif($mime == 'application/x-shockwave-flash'){
+            if (!$render) {
+                // if the flash is not supposed to be rendered
+                // return the title of the flash
+                if (!$title) {
+                    // just show the sourcename
+                    $title = $this->_xmlEntities(basename(noNS($src)));
+                }
+                return $title;
+            }
+
             $ret .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'.
                     ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"';
             if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
