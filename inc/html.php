@@ -542,7 +542,7 @@ function html_recent($first=0){
   print p_locale_xhtml('recent');
 
   if (getNS($ID) != '')
-    print '<div class="level1"><p>' . sprintf($lang['recent_global'], wl('', 'do=recent')) . '</p></div>';
+    print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
 
   print '<ul>';
 
