@@ -22,5 +22,15 @@ class utf8_romanize_test extends UnitTestCase {
             $line++;
         }
     }
+
+    /**
+     * Test romanization of character that would usually be deaccented in a different
+     * way FS#1117
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function test_deaccented(){
+        $this->assertEqual("a A a A a o O",utf8_romanize("å Å ä Ä ä ö Ö"));
+    }
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :

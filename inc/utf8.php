@@ -1184,6 +1184,9 @@ $UTF8_SPECIAL_CHARS2 =
  */
 global $UTF8_ROMANIZATION;
 $UTF8_ROMANIZATION = array(
+  // scandinavian - differs from what we do in deaccent
+  'å'=>'a','Å'=>'A','ä'=>'a','Ä'=>'A','ö'=>'o','Ö'=>'O', 
+
   //russian cyrillic
   'а'=>'a','А'=>'A','б'=>'b','Б'=>'B','в'=>'v','В'=>'V','г'=>'g','Г'=>'G',
   'д'=>'d','Д'=>'D','е'=>'e','Е'=>'E','ё'=>'jo','Ё'=>'Jo','ж'=>'zh','Ж'=>'Zh',
