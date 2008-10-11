@@ -250,8 +250,10 @@ function tpl_metaheaders($alt=true){
   $head['link'][] = array( 'rel'=>'search', 'type'=>'application/opensearchdescription+xml',
                            'href'=>DOKU_BASE.'lib/exe/opensearch.php', 'title'=>$conf['title'] );
   $head['link'][] = array( 'rel'=>'start', 'href'=>DOKU_BASE );
-  $head['link'][] = array( 'rel'=>'contents', 'href'=> wl($ID,'do=index',false,'&'),
+  if(actionOK('index')){
+    $head['link'][] = array( 'rel'=>'contents', 'href'=> wl($ID,'do=index',false,'&'),
                            'title'=>$lang['btn_index'] );
+  }
 
   if($alt){
     $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/rss+xml',
@@ -484,12 +486,18 @@ function tpl_button($type){
       }
       return true;
     case 'history':
+      if(!actionOK('revisions'))
+        return false;
       print html_btn('revs',$ID,'o',array('do' => 'revisions'));
       return true;
     case 'recent':
+      if(!actionOK('recent'))
+        return false;
       print html_btn('recent',$ID,'r',array('do' => 'recent'));
       return true;
     case 'index':
+      if(!actionOK('index'))
+        return false;
       print html_btn('index',$ID,'x',array('do' => 'index'));
       return true;
     case 'back':
@@ -522,8 +530,12 @@ function tpl_button($type){
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']){
+            if(!actionOK('unsubscribe'))
+              return false;
             print html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
           } else {
+            if(!actionOK('subscribe'))
+              return false;
             print html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
           }
           if($type == 'subscribe') return true;
@@ -535,8 +547,12 @@ function tpl_button($type){
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribedns']){
+            if(!actionOK('unsubscribens'))
+              return false;
             print html_btn('unsubscribens',$ID,'',array('do' => 'unsubscribens',));
           } else {
+            if(!actionOK('subscribens'))
+              return false;
             print html_btn('subscribens',$ID,'',array('do' => 'subscribens',));
           }
           return true;
@@ -544,6 +560,8 @@ function tpl_button($type){
       }
       return false;
     case 'backlink':
+      if(!actionOK('backlink'))
+        return false;
       print html_btn('backlink',$ID,'',array('do' => 'backlink'));
       return true;
     case 'profile':
@@ -627,16 +645,22 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
       }
       return true;
     case 'history':
+      if(!actionOK('revisions'))
+        return false;
       tpl_link(wl($ID,'do=revisions'),
                $pre.(($inner)?$inner:$lang['btn_revs']).$suf,
                'class="action revisions" accesskey="o" rel="nofollow"');
       return true;
     case 'recent':
+      if(!actionOK('recent'))
+        return false;
       tpl_link(wl($ID,'do=recent'),
                $pre.(($inner)?$inner:$lang['btn_recent']).$suf,
               'class="action recent" accesskey="r" rel="nofollow"');
       return true;
     case 'index':
+      if(!actionOK('index'))
+        return false;
       tpl_link(wl($ID,'do=index'),
                $pre.(($inner)?$inner:$lang['btn_index']).$suf,
               'class="action index" accesskey="x" rel="nofollow"');
@@ -680,10 +704,14 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']) {
+            if(!actionOK('unsubscribe'))
+              return false;
             tpl_link(wl($ID,'do=unsubscribe'),
                      $pre.(($inner)?$inner:$lang['btn_unsubscribe']).$suf,
                      'class="action unsubscribe" rel="nofollow"');
           } else {
+            if(!actionOK('subscribe'))
+              return false;
             tpl_link(wl($ID,'do=subscribe'),
                      $pre.(($inner)?$inner:$lang['btn_subscribe']).$suf,
                      'class="action subscribe" rel="nofollow"');
@@ -696,10 +724,14 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribedns']) {
+            if(!actionOK('unsubscribens'))
+              return false;
             tpl_link(wl($ID,'do=unsubscribens'),
                      $pre.(($inner)?$inner:$lang['btn_unsubscribens']).$suf,
                      'class="action unsubscribens" rel="nofollow"');
           } else {
+            if(!actionOK('subscribens'))
+              return false;
             tpl_link(wl($ID,'do=subscribens'),
                      $pre.(($inner)?$inner:$lang['btn_subscribens']).$suf,
                      'class="action subscribens" rel="nofollow"');
@@ -709,6 +741,8 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
       }
       return false;
     case 'backlink':
+      if(!actionOK('backlink'))
+        return false;
       tpl_link(wl($ID,'do=backlink'),
                $pre.(($inner)?$inner:$lang['btn_backlink']).$suf,
                'class="action backlink" rel="nofollow"');
