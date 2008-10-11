@@ -383,7 +383,7 @@ function act_auth($act){
     // rebuild info array
     $INFO = pageinfo();
 
-    return 'login';
+    act_redirect($ID,'login');
   }
 
   return $act;

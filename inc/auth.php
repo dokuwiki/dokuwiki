@@ -290,6 +290,8 @@ function auth_logoff(){
     unset($_SESSION[DOKU_COOKIE]['auth']['pass']);
   if(isset($_SESSION[DOKU_COOKIE]['auth']['info']))
     unset($_SESSION[DOKU_COOKIE]['auth']['info']);
+  if(isset($_SESSION[DOKU_COOKIE]['bc']))
+    unset($_SESSION[DOKU_COOKIE]['bc']);
   if(isset($_SERVER['REMOTE_USER']))
     unset($_SERVER['REMOTE_USER']);
   $USERINFO=null; //FIXME
