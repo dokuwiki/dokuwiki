@@ -47,6 +47,7 @@ if (!class_exists('setting_authtype')) {
       // populate $this->_choices with a list of available auth mechanisms
       $authtypes = glob(DOKU_INC.'inc/auth/*.class.php');
       $authtypes = preg_replace('#^.*/([^/]*)\.class\.php$#i','$1', $authtypes);
+      unset($authtypes[array_search('basic', $authtypes)]);
       sort($authtypes);
 
       $this->_choices = $authtypes;
