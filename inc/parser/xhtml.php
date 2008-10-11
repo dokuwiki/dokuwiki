@@ -692,6 +692,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
         }
 
+        //markup non existing files
+        if (!$exists)
+          $link['class'] .= ' wikilink2';
+
         //output formatted
         if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
         else $this->doc .= $this->_formatLink($link);
