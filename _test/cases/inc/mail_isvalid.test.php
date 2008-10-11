@@ -15,7 +15,7 @@ class mail_isvalid extends UnitTestCase {
         $tests[] = array('username+tag@domain.com',true); // FS#1447
         $tests[] = array("rfc2822+allthesechars_#*!'`/-={}are.legal@somewhere.com.au",true);
         $tests[] = array('_foo@test.com',true); // FS#1049
-        $tests[] = array('bugs@php.net1',false);
+        $tests[] = array('bugs@php.net1',true); // new ICAN rulez seem to allow this
         $tests[] = array('.bugs@php.net1',false);
         $tests[] = array('bu..gs@php.net',false);
         $tests[] = array('bugs@php..net',false);

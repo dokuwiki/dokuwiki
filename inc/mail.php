@@ -8,6 +8,7 @@
 
   if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
   require_once(DOKU_INC.'inc/utf8.php');
+  require_once(DOKU_INC.'inc/EmailAddressValidator.php');
 
   // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
   // think different
@@ -174,26 +175,14 @@ function mail_encode_address($string,$header='',$names=true){
 }
 
 /**
- * Uses a regular expresion to check if a given mail address is valid
- *
- * May not be completly RFC conform!
- * @link    http://www.faqs.org/rfcs/rfc2822.html    (paras 3.4.1 & 3.2.4)
- *
- * @author  Chris Smith <chris@jalakai.co.uk>
+ * Check if a given mail address is valid
  *
  * @param   string $email the address to check
  * @return  bool          true if address is valid
  */
-
-// patterns for use in email detection and validation
-// NOTE: there is an unquoted '/' in RFC2822_ATEXT, it must remain unquoted to be used in the parser
-//       the pattern uses non-capturing groups as captured groups aren't allowed in the parser
-//       select pattern delimiters with care!
-if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
-if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,4}|museum|travel)');
-
 function mail_isvalid($email){
-  return preg_match('<^'.PREG_PATTERN_VALID_EMAIL.'$>i', $email);
+    $validator = new EmailAddressValidator;
+    return $validator->check_email_address($email);
 }
 
 /**
