@@ -479,7 +479,9 @@ function getCacheName($data,$ext=''){
  */
 function isHiddenPage($id){
   global $conf;
+  global $ACT;
   if(empty($conf['hidepages'])) return false;
+  if($ACT == 'admin') return false;
 
   if(preg_match('/'.$conf['hidepages'].'/ui',':'.$id)){
     return true;
