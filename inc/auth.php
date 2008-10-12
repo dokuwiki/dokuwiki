@@ -59,6 +59,7 @@
       if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
       if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
       $_REQUEST['http_credentials'] = false;
+      if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
       // if no credentials were given try to use HTTP auth (for SSO)
       if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){

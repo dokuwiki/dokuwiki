@@ -133,6 +133,7 @@ $lang['xmlrpc']      = 'Enable/disable XML-RPC interface.';
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['rememberme'] = 'Enable/disable rememberme on login';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';

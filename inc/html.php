@@ -58,7 +58,9 @@ function html_login(){
   $form->addHidden('do', 'login');
   $form->addElement(form_makeTextField('u', ((!$_REQUEST['http_credentials']) ? $_REQUEST['u'] : ''), $lang['user'], 'focus__this', 'block'));
   $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
-  $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
+  if($conf['rememberme']) {
+      $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
+  }
   $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
   $form->endFieldset();
   html_form('login', $form);
