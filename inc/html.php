@@ -424,28 +424,48 @@ function html_revisions($first=0){
   $date = @strftime($conf['dformat'],$INFO['lastmod']);
 
   print p_locale_xhtml('revisions');
-  print '<form action="'.wl($ID).'" method="post" id="page__revisions">';
-  print '<ul>';
+
+  $form = new Doku_Form('page__revisions', wl($ID));
+  $form->addElement(form_makeOpenTag('ul'));
   if($INFO['exists'] && $first==0){
-    print (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
-    print '<div class="li">';
-    print '<input type="checkbox" name="rev2[]" value="current" /> ';
+    if (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
+      $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
+    else
+      $form->addElement(form_makeOpenTag('li'));
+    $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
+    $form->addElement(form_makeTag('input', array(
+      'type' => 'checkbox',
+      'name' => 'rev2[]',
+      'value' => 'current')));
 
-    print $date;
+    $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
+    $form->addElement($date);
+    $form->addElement(form_makeCloseTag('span'));
 
-    print ' <img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" /> ';
+    $form->addElement(form_makeTag('img', array(
+      'src' =>  DOKU_BASE.'lib/images/blank.gif',
+      'width' => '15',
+      'height' => '11',
+      'alt'    => '')));
 
-    print '<a class="wikilink1" href="'.wl($ID).'">'.$ID.'</a> ';
+    $form->addElement(form_makeOpenTag('a', array(
+      'class' => 'wikilink1',
+      'href'  => wl($ID))));
+    $form->addElement($ID);
+    $form->addElement(form_makeCloseTag('a'));
 
-    print ' &ndash; ';
-    print htmlspecialchars($INFO['sum']);
-    print ' <span class="user">';
-    print (empty($INFO['editor']))?('('.$lang['external_edit'].')'):editorinfo($INFO['editor']);
-    print '</span> ';
+    $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
+    $form->addElement(' &ndash; ');
+    $form->addElement(htmlspecialchars($INFO['sum']));
+    $form->addElement(form_makeCloseTag('span'));
 
-    print '('.$lang['current'].')';
-    print '</div>';
-    print '</li>';
+    $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
+    $form->addElement((empty($INFO['editor']))?('('.$lang['external_edit'].')'):editorinfo($INFO['editor']));
+    $form->addElement(form_makeCloseTag('span'));
+
+    $form->addElement('('.$lang['current'].')');
+    $form->addElement(form_makeCloseTag('div'));
+    $form->addElement(form_makeCloseTag('li'));
   }
 
   foreach($revisions as $rev){
@@ -453,49 +473,69 @@ function html_revisions($first=0){
     $info   = getRevisionInfo($ID,$rev,true);
     $exists = page_exists($ID,$rev);
 
-    print ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
-    print '<div class="li">';
+    if ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
+      $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
+    else
+      $form->addElement(form_makeOpenTag('li'));
+    $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
     if($exists){
-      print '<input type="checkbox" name="rev2[]" value="'.$rev.'" /> ';
+      $form->addElement(form_makeTag('input', array(
+        'type' => 'checkbox',
+        'name' => 'rev2[]',
+        'value' => $rev)));
     }else{
-      print '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="14" height="11" alt="" /> ';
-    }
-    print $date;
-
-    if($exists){
-      print ' <a href="'.wl($ID,"rev=$rev,do=diff").'">';
-      $p = array();
-      $p['src']    = DOKU_BASE.'lib/images/diff.png';
-      $p['width']  = 15;
-      $p['height'] = 11;
-      $p['title']  = $lang['diff'];
-      $p['alt']    = $lang['diff'];
-      $att = buildAttributes($p);
-      print "<img $att />";
-      print '</a> ';
-
-      print '<a class="wikilink1" href="'.wl($ID,"rev=$rev").'">'.$ID.'</a>';
-    }else{
-      print ' <img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" /> ';
-      print $ID;
+      $form->addElement(form_makeTag('img', array(
+        'src' => DOKU_BASE.'lib/images/blank.gif',
+        'width' => 14,
+        'height' => 11,
+        'alt' => '')));
     }
 
-    print ' &ndash; ';
-    print htmlspecialchars($info['sum']);
-    print ' <span class="user">';
+    $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
+    $form->addElement($date);
+    $form->addElement(form_makeCloseTag('span'));
+
+    if($exists){
+      $form->addElement(form_makeOpenTag('a', array('href' => wl($ID,"rev=$rev,do=diff", false, '&'), 'class' => 'diff_link')));
+      $form->addElement(form_makeTag('img', array(
+        'src'    => DOKU_BASE.'lib/images/diff.png',
+        'width'  => 15,
+        'height' => 11,
+        'title'  => $lang['diff'],
+        'alt'    => $lang['diff'])));
+      $form->addElement(form_makeCloseTag('a'));
+
+      $form->addElement(form_makeOpenTag('a', array('href' => wl($ID,"rev=$rev",false,'&'), 'class' => 'wikilink1')));
+      $form->addElement($ID);
+      $form->addElement(form_makeCloseTag('a'));
+    }else{
+      $form->addElement(form_makeTag('img', array(
+        'src' => DOKU_BASE.'lib/images/blank.gif',
+        'width' => '15',
+        'height' => '11',
+        'alt'   => '')));
+      $form->addElement($ID);
+    }
+
+    $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
+    $form->addElement(' &ndash; ');
+    $form->addElement(htmlspecialchars($info['sum']));
+    $form->addElement(form_makeCloseTag('span'));
+
+    $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
     if($info['user']){
-      print editorinfo($info['user']);
+      $form->addElement(editorinfo($info['user']));
     }else{
-      print $info['ip'];
+      $form->addElement($info['ip']);
     }
-    print '</span>';
+    $form->addElement(form_makeCloseTag('span'));
 
-    print '</div>';
-    print '</li>';
+    $form->addElement(form_makeCloseTag('div'));
+    $form->addElement(form_makeCloseTag('li'));
   }
-  print '</ul>';
-  print '<input name="do[diff]" type="submit" value="'.$lang['diff2'].'" class="button" />';
-  print '</form>';
+  $form->addElement(form_makeCloseTag('ul'));
+  $form->addElement(form_makeButton('submit', 'diff', $lang['diff2']));
+  html_form('revisions', $form);
 
   print '<div class="pagenav">';
   $last = $first + $conf['recent'];
