@@ -250,11 +250,11 @@ class auth_mysql extends auth_basic {
             $grpdel = array_diff($groups, $changes['grps']);
 
             foreach($grpadd as $group)
-              if (($this->_addUserToGroup($uid, $group, 1)) == false)
+              if (($this->_addUserToGroup($user, $group, 1)) == false)
                 $rc = false;
 
             foreach($grpdel as $group)
-              if (($this->_delUserFromGroup($uid, $group)) == false)
+              if (($this->_delUserFromGroup($user, $group)) == false)
                 $rc = false;
           }
         }
@@ -368,8 +368,7 @@ class auth_mysql extends auth_basic {
 
       if ($this->_openDB()) {
         $this->_lockTables("WRITE");
-        $uid = $this->_getUserID($user);
-        $rc  = $this->_addUserToGroup($uid, $group);
+        $rc  = $this->_addUserToGroup($user, $group);
         $this->_unlockTables();
         $this->_closeDB();
       }
@@ -391,7 +390,7 @@ class auth_mysql extends auth_basic {
       if ($this->_openDB()) {
         $this->_lockTables("WRITE");
         $uid = $this->_getUserID($user);
-        $rc  = $this->_delUserFromGroup($uid, $group);
+        $rc  = $this->_delUserFromGroup($user, $group);
         $this->_unlockTables();
         $this->_closeDB();
       }
@@ -408,17 +407,17 @@ class auth_mysql extends auth_basic {
      * recommended to call this function only after all participating
      * tables (group and usergroup) have been locked.
      *
-     * @param   $uid     user id to add to a group
+     * @param   $user    user to add to a group
      * @param   $group   name of the group
      * @param   $force   '1' create missing groups
      * @return  bool     'true' on success, 'false' on error
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
-    function _addUserToGroup($uid, $group, $force=0) {
+    function _addUserToGroup($user, $group, $force=0) {
       $newgroup = 0;
 
-      if (($this->dbcon) && ($uid)) {
+      if (($this->dbcon) && ($user)) {
         $gid = $this->_getGroupID($group);
         if (!$gid) {
           if ($force) {  // create missing groups
@@ -429,7 +428,11 @@ class auth_mysql extends auth_basic {
           if (!$gid) return false; // group didn't exist and can't be created
         }
 
-        $sql = str_replace('%{uid}',  $this->_escape($uid),$this->cnf['addUserGroup']);
+        $sql = $this->cnf['addUserGroup'];
+        if(strpos($sql,'%{uid}') !== false){
+            $uid = $this->_getUserID($user);
+            $sql = str_replace('%{uid}',  $this->_escape($uid),$sql);
+        }
         $sql = str_replace('%{user}', $this->_escape($user),$sql);
         $sql = str_replace('%{gid}',  $this->_escape($gid),$sql);
         $sql = str_replace('%{group}',$this->_escape($group),$sql);
@@ -447,19 +450,24 @@ class auth_mysql extends auth_basic {
     /**
      * Remove user from a group
      *
-     * @param   $uid     user id that leaves a group
+     * @param   $user    user that leaves a group
      * @param   $group   group to leave
      * @return  bool     true on success, false on error
      *
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
-    function _delUserFromGroup($uid, $group) {
+    function _delUserFromGroup($user, $group) {
       $rc = false;
 
-      if (($this->dbcon) && ($uid)) {
+
+      if (($this->dbcon) && ($user)) {
+        $sql = $this->cnf['delUserGroup'];
+        if(strpos($sql,'%{uid}') !== false){
+            $uid = $this->_getUserID($user);
+            $sql = str_replace('%{uid}',  $this->_escape($uid),$sql);
+        }
         $gid = $this->_getGroupID($group);
         if ($gid) {
-          $sql = str_replace('%{uid}',  $this->_escape($uid),$this->cnf['delUserGroup']);
           $sql = str_replace('%{user}', $this->_escape($user),$sql);
           $sql = str_replace('%{gid}',  $this->_escape($gid),$sql);
           $sql = str_replace('%{group}',$this->_escape($group),$sql);
@@ -547,7 +555,7 @@ class auth_mysql extends auth_basic {
 
         if ($uid) {
           foreach($grps as $group) {
-            $gid = $this->_addUserToGroup($uid, $group, 1);
+            $gid = $this->_addUserToGroup($user, $group, 1);
             if ($gid === false) break;
           }
 

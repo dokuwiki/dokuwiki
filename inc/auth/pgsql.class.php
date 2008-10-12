@@ -169,7 +169,7 @@ class auth_pgsql extends auth_mysql {
      * The database connection must already be established. Otherwise
      * this function does nothing and returns 'false'.
      *
-     * @param   $uid     user id to add to a group
+     * @param   $user    user to add to a group
      * @param   $group   name of the group
      * @param   $force   '1' create missing groups
      * @return  bool     'true' on success, 'false' on error
@@ -177,10 +177,10 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      * @author Andreas Gohr   <andi@splitbrain.org>
      */
-    function _addUserToGroup($uid, $group, $force=0) {
+    function _addUserToGroup($user, $group, $force=0) {
       $newgroup = 0;
 
-      if (($this->dbcon) && ($uid)) {
+      if (($this->dbcon) && ($user)) {
         $gid = $this->_getGroupID($group);
         if (!$gid) {
           if ($force) {  // create missing groups
@@ -191,10 +191,13 @@ class auth_pgsql extends auth_mysql {
             $newgroup = 1;  // group newly created
           }
         }
-
         if (!$gid) return false; // group didn't exist and can't be created
 
-        $sql = str_replace('%{uid}',  addslashes($uid),$this->cnf['addUserGroup']);
+        $sql = $this->cnf['addUserGroup'];
+        if(strpos($sql,'%{uid}') !== false){
+            $uid = $this->_getUserID($user);
+            $sql = str_replace('%{uid}', $sql);
+        }
         $sql = str_replace('%{user}', addslashes($user),$sql);
         $sql = str_replace('%{gid}',  addslashes($gid),$sql);
         $sql = str_replace('%{group}',addslashes($group),$sql);
@@ -209,7 +212,7 @@ class auth_pgsql extends auth_mysql {
       return false;
     }
 
-    // @inherit function _delUserFromGroup($uid, $group)
+    // @inherit function _delUserFromGroup($user $group)
     // @inherit function _getGroups($user)
     // @inherit function _getUserID($user)
 
@@ -245,7 +248,7 @@ class auth_pgsql extends auth_mysql {
 
         if ($uid) {
           foreach($grps as $group) {
-            $gid = $this->_addUserToGroup($uid, $group, 1);
+            $gid = $this->_addUserToGroup($user, $group, 1);
             if ($gid === false) break;
           }
 
