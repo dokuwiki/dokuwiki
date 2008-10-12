@@ -16,6 +16,24 @@
   #define('MAILHEADER_ASCIIONLY',1);
 
 /**
+ * Patterns for use in email detection and validation
+ *
+ * NOTE: there is an unquoted '/' in RFC2822_ATEXT, it must remain unquoted to be used in the parser
+ * the pattern uses non-capturing groups as captured groups aren't allowed in the parser
+ * select pattern delimiters with care!
+ *
+ * May not be completly RFC conform!
+ * @link http://www.faqs.org/rfcs/rfc2822.html (paras 3.4.1 & 3.2.4)
+ *
+ * @author Chris Smith <chris@jalakai.co.uk>
+ * Check if a given mail address is valid
+*/
+if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
+if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,4}|museum|travel)');
+
+
+
+/**
  * UTF-8 autoencoding replacement for PHPs mail function
  *
  * Email address fields (To, From, Cc, Bcc can contain a textpart and an address
