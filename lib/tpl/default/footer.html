@@ -12,7 +12,12 @@ $tgt = ($conf['target']['extern']) ? 'target="'.$conf['target']['extern'].'"' : 
 <div class="footerinc">
   <a <?php echo $tgt?> href="<?php echo DOKU_BASE; ?>feed.php" title="Recent changes RSS feed"><img src="<?php echo DOKU_TPL; ?>images/button-rss.png" width="80" height="15" alt="Recent changes RSS feed" /></a>
 
-  <a <?php echo $tgt?> href="http://creativecommons.org/licenses/by-nc-sa/2.0/" rel="license" title="Creative Commons License"><img src="<?php echo DOKU_TPL; ?>images/button-cc.gif" width="80" height="15" alt="Creative Commons License" /></a>
+  <?php
+    $lic = license_img('button');
+    if($lic){
+  ?>
+      <a <?php echo $tgt?> href="<?php echo $license[$conf['license']]['url']?>" rel="license" title="<?php echo $license[$conf['license']]['name']?>"><img src="<?php echo DOKU_BASE.$lic ?>" width="80" height="15" alt="" /></a>
+  <?php } ?>
 
   <a <?php echo $tgt?> href="http://dokuwiki.org/donate" title="Donate"><img src="<?php echo DOKU_TPL; ?>images/button-donate.gif" alt="Donate" width="80" height="15" /></a>
 
@@ -24,42 +29,11 @@ $tgt = ($conf['target']['extern']) ? 'target="'.$conf['target']['extern'].'"' : 
 
   <a <?php echo $tgt?> href="http://dokuwiki.org/" title="Driven by DokuWiki"><img src="<?php echo DOKU_TPL; ?>images/button-dw.png" width="80" height="15" alt="Driven by DokuWiki" /></a>
 
-
-<?php
-/*
- * The following stuff in HTML comments declares a Creative Commons
- * License - remove this if you don't want this license for your Wiki
- */
-?>
-
-<!--
-
-<rdf:RDF xmlns="http://web.resource.org/cc/"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-<Work rdf:about="">
-   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
-   <license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.0/" />
-</Work>
-
-<License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.0/">
-   <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
-   <permits rdf:resource="http://web.resource.org/cc/Distribution" />
-   <requires rdf:resource="http://web.resource.org/cc/Notice" />
-   <requires rdf:resource="http://web.resource.org/cc/Attribution" />
-   <prohibits rdf:resource="http://web.resource.org/cc/CommercialUse" />
-   <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
-   <requires rdf:resource="http://web.resource.org/cc/ShareAlike" />
-</License>
-
-</rdf:RDF>
-
--->
-
 <?php
 if ($conf['allowdebug']) {
     echo '<!-- page made in '.round(delta_time(DOKU_START_TIME), 3).' seconds -->';
 }
 ?>
+
 
 </div>
