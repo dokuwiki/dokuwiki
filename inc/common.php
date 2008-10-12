@@ -1024,7 +1024,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   }elseif($who == 'subscribers'){
     if(!$conf['subscribers']) return; //subscribers enabled?
     if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return; //skip minors
-    $bcc  = subscriber_addresslist($id);
+    $bcc  = subscriber_addresslist($id,false);
     if(empty($bcc)) return;
     $to   = '';
     $text = rawLocale('subscribermail');
@@ -1203,7 +1203,7 @@ function is_subscribed($id,$uid,$ns=false){
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
  */
-function subscriber_addresslist($id){
+function subscriber_addresslist($id,$self=true){
   global $conf;
   global $auth;
 
@@ -1219,6 +1219,7 @@ function subscriber_addresslist($id){
     $mlist = file($file);
     foreach ($mlist as $who) {
       $who = rtrim($who);
+      if(!$self && $who == $_SERVER['REMOTE_USER']) continue;
       $users[$who] = true;
     }
   }
@@ -1231,6 +1232,7 @@ function subscriber_addresslist($id){
       $mlist = file($nsfile);
       foreach ($mlist as $who) {
         $who = rtrim($who);
+        if(!$self && $who == $_SERVER['REMOTE_USER']) continue;
         $users[$who] = true;
       }
     }
@@ -1242,6 +1244,7 @@ function subscriber_addresslist($id){
     $mlist = file($nsfile);
     foreach ($mlist as $who) {
       $who = rtrim($who);
+      if(!$self && $who == $_SERVER['REMOTE_USER']) continue;
       $users[$who] = true;
     }
   }
