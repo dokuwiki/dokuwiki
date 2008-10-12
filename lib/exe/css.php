@@ -51,7 +51,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('styles'.DOKU_BASE.$tplinc.$style,'.css');
+    $cache = getCacheName('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$style,'.css');
 
     // load template styles
     $tplstyles = array();

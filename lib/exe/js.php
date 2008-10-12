@@ -35,7 +35,7 @@ function js_out(){
     $write = (bool) $_REQUEST['write'];  // writable?
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('scripts'.$edit.'x'.$write,'.js');
+    $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$edit.'x'.$write,'.js');
 
     // Array of needed files
     $files = array(
