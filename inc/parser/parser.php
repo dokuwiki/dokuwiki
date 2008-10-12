@@ -652,7 +652,7 @@ class Doku_Parser_Mode_smiley extends Doku_Parser_Mode {
 
         $sep = '';
         foreach ( $this->smileys as $smiley ) {
-            $this->pattern .= $sep.'(?<=\W)'.Doku_Lexer_Escape($smiley).'(?=\W)';
+            $this->pattern .= $sep.'(?<=\W|^)'.Doku_Lexer_Escape($smiley).'(?=\W|$)';
             $sep = '|';
         }
     }
