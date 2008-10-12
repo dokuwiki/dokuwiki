@@ -565,7 +565,7 @@ function html_recent($first=0){
     $form->addElement($date);
     $form->addElement(form_makeCloseTag('span'));
 
-    $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => wl($recent['id'],"do=diff"))));
+    $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => wl($recent['id'],"do=diff", false, '&'))));
     $form->addElement(form_makeTag('img', array(
       'src'   => DOKU_BASE.'lib/images/diff.png',
       'width' => 15,
@@ -575,7 +575,7 @@ function html_recent($first=0){
     )));
     $form->addElement(form_makeCloseTag('a'));
 
-    $form->addElement(form_makeOpenTag('a', array('class' => 'revisions_link', 'href' => wl($recent['id'],"do=revisions"))));
+    $form->addElement(form_makeOpenTag('a', array('class' => 'revisions_link', 'href' => wl($recent['id'],"do=revisions",false,'&'))));
     $form->addElement(form_makeTag('img', array(
       'src'   => DOKU_BASE.'lib/images/history.png',
       'width' => 12,
@@ -613,7 +613,9 @@ function html_recent($first=0){
     $form->addElement(form_makeTag('input', array(
       'type'  => 'submit',
       'name'  => 'first['.$first.']',
-      'value' => $lang['btn_newer']
+      'value' => $lang['btn_newer'],
+      'accesskey' => 'n',
+      'title' => '[ALT+N]'
     )));
     $form->addElement(form_makeCloseTag('div'));
   }
@@ -622,7 +624,9 @@ function html_recent($first=0){
     $form->addElement(form_makeTag('input', array(
       'type'  => 'submit',
       'name'  => 'first['.$last.']',
-      'value' => $lang['btn_older']
+      'value' => $lang['btn_older'],
+      'accesskey' => 'p',
+      'title'  => '[ALT+P]'
     )));
     $form->addElement(form_makeCloseTag('div'));
   }
