@@ -107,6 +107,7 @@ function tpl_content_core(){
       break;
     case 'locked':
       html_locked();
+      html_edit();
       break;
     case 'login':
       html_login();

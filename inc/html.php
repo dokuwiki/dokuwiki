@@ -1074,7 +1074,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     }
   }
 
-  $wr = $INFO['writable'];
+  $wr = $INFO['writable'] && !$INFO['locked'];
   if($wr){
     if ($REV) print p_locale_xhtml('editrev');
     print p_locale_xhtml($include);
