@@ -638,7 +638,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['more']   = '';
 
-        $name = $this->_getLinkTitle($name, '', $isImage);
+        $name = $this->_getLinkTitle($name, $address, $isImage);
         if ( !$isImage ) {
             $link['class']='mail JSnocheck';
         } else {
