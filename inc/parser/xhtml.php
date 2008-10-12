@@ -1030,7 +1030,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         $isImage = false;
-        if ( is_null($title) ) {
+        if ( is_null($title) || trim($title)=='') {
             if ($conf['useheading'] && $id) {
                 $heading = p_get_first_heading($id,true);
                 if ($heading) {
