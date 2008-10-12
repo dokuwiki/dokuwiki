@@ -9,8 +9,6 @@ Here are the changes:
 
 Date        : @DATE@
 User        : @USER@
-IP-Address  : @IPADDRESS@
-Hostname    : @HOSTNAME@
 Edit Summary: @SUMMARY@
 
 To cancel the page notifications, log into the wiki at
