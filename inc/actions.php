@@ -24,6 +24,7 @@ function act_dispatch(){
   global $QUERY;
   global $lang;
   global $conf;
+  global $license;
 
   $preact = $ACT;
 

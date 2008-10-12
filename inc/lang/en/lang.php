@@ -89,6 +89,9 @@ $lang['resendpwdbadauth'] = 'Sorry, this auth code is not valid. Make sure you u
 $lang['resendpwdconfirm'] = 'A confirmation link has been sent by email.';
 $lang['resendpwdsuccess'] = 'Your new password has been sent by email.';
 
+$lang['license']   = 'Except where otherwise noted, content on this wiki is licensed under the following license:';
+$lang['licenseok'] = 'Note: By editing this page you agree to license your content under the following license:';
+
 $lang['txt_upload']   = 'Select file to upload';
 $lang['txt_filename'] = 'Upload as (optional)';
 $lang['txt_overwrt']  = 'Overwrite existing file';

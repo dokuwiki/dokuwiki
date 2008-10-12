@@ -57,6 +57,7 @@ $lang['savedir']     = 'Directory for saving data';
 $lang['start']       = 'Start page name';
 $lang['title']       = 'Wiki title';
 $lang['template']    = 'Template';
+$lang['license']     = 'Under which license should your content be released?';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['recent']      = 'Recent changes';
 $lang['breadcrumbs'] = 'Number of breadcrumbs';
@@ -161,6 +162,8 @@ $lang['ftp____port'] = 'FTP port for safemode hack';
 $lang['ftp____user'] = 'FTP user name for safemode hack';
 $lang['ftp____pass'] = 'FTP password for safemode hack';
 $lang['ftp____root'] = 'FTP root directory for safemode hack';
+
+$lang['license_o_'] = 'None chosen';
 
 /* typography options */
 $lang['typography_o_0'] = 'none';

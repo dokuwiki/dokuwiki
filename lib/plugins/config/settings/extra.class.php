@@ -116,6 +116,25 @@ if (!class_exists('setting_compression')) {
   }
 }
 
+if (!class_exists('setting_license')) {
+  class setting_license extends setting_multichoice {
+
+    var $_choices = array('');      // none choosen
+
+    function initialize($default,$local,$protected) {
+      global $license;
+
+      foreach($license as $key => $data){
+        $this->_choices[] = $key;
+        $this->lang[$this->_key.'_o_'.$key] = $data['name'];
+      }
+
+      parent::initialize($default,$local,$protected);
+    }
+  }
+}
+
+
 if (!class_exists('setting_renderer')) {
   class setting_renderer extends setting_multichoice {
     var $_prompts = array();

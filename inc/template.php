@@ -1290,5 +1290,39 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '</form>';
 }
 
+/**
+ * Print a informational line about the used license
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string $img    - print image? (|button|badge)
+ * @param  bool   $return - when true don't print, but return HTML
+ */
+function tpl_license($img='badge',$return=false){
+    global $license;
+    global $conf;
+    global $lang;
+    if(!$conf['license']) return '';
+    if(!is_array($license[$conf['license']])) return '';
+    $lic = $license[$conf['license']];
+
+    $out  = '<p class="license">';
+    if($img){
+        $src = license_img($img);
+        if($src){
+            $out .= '<a href="'.$lic['url'].'" rel="license"';
+            if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
+            $out .= '><img src="'.DOKU_BASE.$src.'" class="lic'.$button.'" alt="'.$lic['name'].'" align="left" /></a>';
+        }
+    }
+    $out .= $lang['license'];
+    $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
+    if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
+    $out .= '> '.$lic['name'].'</a>';
+    $out .= '</p>';
+
+    if($return) return $out;
+    echo $out;
+}
+
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 

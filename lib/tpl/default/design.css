@@ -171,8 +171,17 @@ div.dokuwiki div#draft__status {
   color: __text_alt__;
 }
 
-/* --------- buttons ------------------- */
+div.dokuwiki form#dw__editform div.license {
+  clear: left;
+  font-size: 90%;
+}
 
+div.dokuwiki p.license {
+  font-size: 90%;
+  text-align: center;
+}
+
+/* --------- buttons ------------------- */
 
 div.dokuwiki input.button,
 div.dokuwiki button.button {

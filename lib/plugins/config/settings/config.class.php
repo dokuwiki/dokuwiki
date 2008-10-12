@@ -631,6 +631,7 @@ if (!class_exists('setting_multichoice')) {
         foreach ($this->_choices as $choice) {
             $selected = ($value == $choice) ? ' selected="selected"' : '';
             $option = $plugin->getLang($this->_key.'_o_'.$choice);
+            if (!$option && isset($this->lang[$this->_key.'_o_'.$choice])) $option = $this->lang[$this->_key.'_o_'.$choice];
             if (!$option) $option = $choice;
 
             $choice = htmlspecialchars($choice);

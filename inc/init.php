@@ -60,6 +60,16 @@
     require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
   }
 
+  //prepare license array()
+  global $license;
+  $license = array();
+
+  // load the license file(s)
+  require_once(DOKU_CONF.'license.php');
+  if(@file_exists(DOKU_CONF.'license.php')){
+    require_once(DOKU_CONF.'license.php');
+  }
+
   // define baseURL
   if(!defined('DOKU_REL')) define('DOKU_REL',getBaseURL(false));
   if(!defined('DOKU_URL')) define('DOKU_URL',getBaseURL(true));

@@ -1011,6 +1011,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   global $SUM;
   global $lang;
   global $conf;
+  global $license;
 
   //set summary default
   if(!$SUM){
@@ -1111,6 +1112,15 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     $form->addElement(form_makeCloseTag('div'));
   }
   $form->addElement(form_makeCloseTag('div'));
+  if($conf['license']){
+    $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
+    $out  = $lang['licenseok'];
+    $out .= '<a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
+    if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
+    $out .= '> '.$license[$conf['license']]['name'].'</a>';
+    $form->addElement($out);
+    $form->addElement(form_makeCloseTag('div'));
+  }
   html_form('edit', $form);
   print '</div>'.NL;
 }

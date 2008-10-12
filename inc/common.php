@@ -1314,8 +1314,33 @@ function editorinfo($username){
             return hsc($username);
         }
     } else {
-        return hsc($username); 
+        return hsc($username);
     }
+}
+
+/**
+ * Returns the path to a image file for the currently chosen license.
+ * When no image exists, returns an empty string
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string $type - type of image 'badge' or 'button'
+ */
+function license_img($type){
+    global $license;
+    global $conf;
+    if(!$conf['license']) return '';
+    if(!is_array($license[$conf['license']])) return '';
+    $lic = $license[$conf['license']];
+    $try = array();
+    $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.png';
+    $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.gif';
+    if(substr($conf['license'],0,3) == 'cc-'){
+        $try[] = 'lib/images/license/'.$type.'/cc.png';
+    }
+    foreach($try as $src){
+        if(@file_exists(DOKU_INC.$src)) return $src;
+    }
+    return '';
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
