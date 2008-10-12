@@ -58,11 +58,13 @@
       if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
       if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
       if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
+      $_REQUEST['http_credentials'] = false;
 
       // if no credentials were given try to use HTTP auth (for SSO)
       if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
         $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
         $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
+        $_REQUEST['http_credentials'] = true;
       }
 
       if($_REQUEST['authtok']){
@@ -72,7 +74,7 @@
         // external trust mechanism in place
         $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
       }else{
-        auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+        auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r'],$_REQUEST['http_credentials']);
       }
     }
 
