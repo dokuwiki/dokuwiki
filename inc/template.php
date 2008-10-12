@@ -903,8 +903,9 @@ function tpl_youarehere($sep=' &raquo; '){
  */
 function tpl_userinfo(){
   global $lang;
+  global $INFO;
   if($_SERVER['REMOTE_USER']){
-    print $lang['loggedinas'].': '.editorinfo($_SERVER['REMOTE_USER']);
+    print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')';
     return true;
   }
   return false;
