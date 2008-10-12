@@ -132,6 +132,21 @@ function getWordblocks() {
 }
 
 
+function getSchemes() {
+  static $schemes = NULL;
+  if ( !$schemes ) {
+    $schemes = file(DOKU_CONF.'scheme.conf');
+    if (@file_exists(DOKU_CONF.'scheme.local.conf')) {
+      $local = file(DOKU_CONF.'scheme.local.conf');
+      $schemes = array_merge($schemes, $local);
+    }
+  }
+  $schemes = array_map('trim', $schemes);
+  $schemes = preg_replace('/^#.*/', '', $schemes);
+  $schemes = array_filter($schemes);
+  return $schemes;
+}
+
 /**
  * Builds a hash from a configfile
  *

@@ -845,7 +845,7 @@ class Doku_Parser_Mode_rss extends Doku_Parser_Mode {
 
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
-    var $schemes = array('http','https','telnet','gopher','wais','ftp','ed2k','irc','ldap');
+    var $schemes = array();
     var $patterns = array();
 
     function preConnect() {
@@ -857,13 +857,13 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
         $host = $ltrs.$punc;
         $any  = $ltrs.$gunk.$punc;
 
+        $this->schemes = getSchemes();
         foreach ( $this->schemes as $scheme ) {
             $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         }
 
         $this->patterns[] = '\b(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         $this->patterns[] = '\b(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
-
     }
 
     function connectTo($mode) {
