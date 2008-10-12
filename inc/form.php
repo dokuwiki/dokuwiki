@@ -350,7 +350,7 @@ function form_makeButton($type, $act, $value='', $attrs=array()) {
   $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act, 
                 'value'=>$value, 'class'=>'button');
   if (!empty($attrs['accesskey']) && empty($attrs['title'])) {
-    $attrs['title'] = $value . ' [ALT+'.strtoupper($attrs['accesskey']).']';
+    $attrs['title'] = $value . ' ['.strtoupper($attrs['accesskey']).']';
   }
   return array_merge($elem, $attrs);
 }

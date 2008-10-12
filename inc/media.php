@@ -132,9 +132,9 @@ function media_metaform($id,$auth){
     echo '<div class="buttons">'.NL;
     echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
     echo '<input name="do[save]" type="submit" value="'.$lang['btn_save'].
-         '" title="ALT+S" accesskey="s" class="button" />'.NL;
+         '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
     echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].
-         '" title="ALT+C" accesskey="c" class="button" />'.NL;
+         '" title="'.$lang['btn_cancel'].' [C]" accesskey="c" class="button" />'.NL;
     echo '</div>'.NL;
     echo '</form>'.NL;
 }
