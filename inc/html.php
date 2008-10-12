@@ -546,68 +546,88 @@ function html_recent($first=0){
   if (getNS($ID) != '')
     print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
 
-  print '<ul>';
+  $form = new Doku_Form('dw__recent', script(), 'get');
+  $form->addHidden('sectok', null);
+  $form->addHidden('do', 'recent');
+  $form->addHidden('id', $ID);
+  $form->addElement(form_makeOpenTag('ul'));
 
   foreach($recents as $recent){
     $date = strftime($conf['dformat'],$recent['date']);
-    print ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
-    print '<div class="li">';
+    if ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
+      $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
+    else
+      $form->addElement(form_makeOpenTag('li'));
 
-    print $date.' ';
+    $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
 
-    print '<a href="'.wl($recent['id'],"do=diff").'">';
-    $p = array();
-    $p['src']    = DOKU_BASE.'lib/images/diff.png';
-    $p['width']  = 15;
-    $p['height'] = 11;
-    $p['title']  = $lang['diff'];
-    $p['alt']    = $lang['diff'];
-    $att = buildAttributes($p);
-    print "<img $att />";
-    print '</a> ';
+    $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
+    $form->addElement($date);
+    $form->addElement(form_makeCloseTag('span'));
 
-    print '<a href="'.wl($recent['id'],"do=revisions").'">';
-    $p = array();
-    $p['src']    = DOKU_BASE.'lib/images/history.png';
-    $p['width']  = 12;
-    $p['height'] = 14;
-    $p['title']  = $lang['btn_revs'];
-    $p['alt']    = $lang['btn_revs'];
-    $att = buildAttributes($p);
-    print "<img $att />";
-    print '</a> ';
+    $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => wl($recent['id'],"do=diff"))));
+    $form->addElement(form_makeTag('img', array(
+      'src'   => DOKU_BASE.'lib/images/diff.png',
+      'width' => 15,
+      'height'=> 11,
+      'title' => $lang['diff'],
+      'alt'   => $lang['diff']
+    )));
+    $form->addElement(form_makeCloseTag('a'));
 
-    print html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']);
-    print ' &ndash; '.htmlspecialchars($recent['sum']);
+    $form->addElement(form_makeOpenTag('a', array('class' => 'revisions_link', 'href' => wl($recent['id'],"do=revisions"))));
+    $form->addElement(form_makeTag('img', array(
+      'src'   => DOKU_BASE.'lib/images/history.png',
+      'width' => 12,
+      'height'=> 14,
+      'title' => $lang['btn_revs'],
+      'alt'   => $lang['btn_revs']
+    )));
+    $form->addElement(form_makeCloseTag('a'));
 
-    print ' <span class="user">';
+    $form->addElement(html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']));
+
+    $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
+    $form->addElement(' &ndash; '.htmlspecialchars($recent['sum']));
+    $form->addElement(form_makeCloseTag('span'));
+
+    $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
     if($recent['user']){
-      print editorinfo($recent['user']);
+      $form->addElement(editorinfo($recent['user']));
     }else{
-      print $recent['ip'];
+      $form->addElement($recent['ip']);
     }
-    print '</span>';
+    $form->addElement(form_makeCloseTag('span'));
 
-    print '</div>';
-    print '</li>';
+    $form->addElement(form_makeCloseTag('div'));
+    $form->addElement(form_makeCloseTag('li'));
   }
-  print '</ul>';
+  $form->addElement(form_makeCloseTag('ul'));
 
-  print '<div class="pagenav">';
+  $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav')));
   $last = $first + $conf['recent'];
   if ($first > 0) {
     $first -= $conf['recent'];
     if ($first < 0) $first = 0;
-    print '<div class="pagenav-prev">';
-    print html_btn('newer','',"p",array('do' => 'recent', 'first' => $first));
-    print '</div>';
+    $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav-prev')));
+    $form->addElement(form_makeTag('input', array(
+      'type'  => 'submit',
+      'name'  => 'first['.$first.']',
+      'value' => $lang['btn_newer']
+    )));
+    $form->addElement(form_makeCloseTag('div'));
   }
   if ($hasNext) {
-    print '<div class="pagenav-next">';
-    print html_btn('older','',"n",array('do' => 'recent', 'first' => $last));
-    print '</div>';
+    $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav-next')));
+    $form->addElement(form_makeTag('input', array(
+      'type'  => 'submit',
+      'name'  => 'first['.$last.']',
+      'value' => $lang['btn_older']
+    )));
+    $form->addElement(form_makeCloseTag('div'));
   }
-  print '</div>';
+  $form->addElement(form_makeCloseTag('div'));
+  html_form('recent', $form);
 }
 
 /**

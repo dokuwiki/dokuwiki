@@ -88,6 +88,10 @@ function tpl_content_core(){
       html_diff();
       break;
     case 'recent':
+      if (is_array($_REQUEST['first'])) {
+        $_REQUEST['first'] = array_keys($_REQUEST['first']);
+        $_REQUEST['first'] = $_REQUEST['first'][0];
+      }
       $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
       html_recent($first);
       break;
