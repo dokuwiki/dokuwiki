@@ -510,11 +510,26 @@ function script($script='doku.php'){
  * Checks the wikitext against a list of blocked expressions
  * returns true if the text contains any bad words
  *
+ * Triggers COMMON_WORDBLOCK_BLOCKED
+ *
+ *  Action Plugins can use this event to inspect the blocked data
+ *  and gain information about the user who was blocked.
+ *
+ *  Event data:
+ *    data['matches']  - array of matches
+ *    data['userinfo'] - information about the blocked user
+ *      [ip]           - ip address
+ *      [user]         - username (if logged in)
+ *      [mail]         - mail address (if logged in)
+ *      [name]         - real name (if logged in)
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * Michael Klier <chi@chimeric.de>
  */
 function checkwordblock(){
   global $TEXT;
   global $conf;
+  global $INFO;
 
   if(!$conf['usewordblock']) return false;
 
@@ -542,8 +557,17 @@ function checkwordblock(){
       if(empty($block)) continue;
       $re[]  = $block;
     }
-    if(count($re) && preg_match('#('.join('|',$re).')#si',$text)) {
-      return true;
+    if(count($re) && preg_match('#('.join('|',$re).')#si',$text,$matches)) {
+      //prepare event data
+      $data['matches'] = $matches;
+      $data['userinfo']['ip'] = $_SERVER['REMOTE_ADDR'];
+      if($_SERVER['REMOTE_USER']) {
+          $data['userinfo']['user'] = $_SERVER['REMOTE_USER'];
+          $data['userinfo']['name'] = $INFO['userinfo']['name'];
+          $data['userinfo']['mail'] = $INFO['userinfo']['mail'];
+      }
+      $callback = create_function('', 'return true;');
+      return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true); 
     }
   }
   return false;
