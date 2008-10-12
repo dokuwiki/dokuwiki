@@ -456,12 +456,8 @@ function media_fileactions($item,$auth){
 
     // delete button
     if($auth >= AUTH_DELETE){
-        $ask  = addslashes($lang['del_confirm']).'\\n';
-        $ask .= addslashes($item['id']);
-
         echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-             '&amp;sectok='.getSecurityToken().'" '.
-             'onclick="return confirm(\''.$ask.'\')">'.
+             '&amp;sectok='.getSecurityToken().'" class="btn_media_delete" title="'.$item['id'].'">'.
              '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
              'title="'.$lang['btn_delete'].'" class="btn" /></a>';
     }
