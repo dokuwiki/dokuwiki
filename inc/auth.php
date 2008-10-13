@@ -861,7 +861,7 @@ function auth_cryptPassword($clear,$method='',$salt=null){
 
     switch(strtolower($method)){
         case 'smd5':
-            if(defined('CRYPT_MD5')) return crypt($clear,'$1$'.substr($salt,0,8).'$');
+            if(defined('CRYPT_MD5') && CRYPT_MD5) return crypt($clear,'$1$'.substr($salt,0,8).'$');
             // when crypt can't handle SMD5, falls through to pure PHP implementation
             $magic = '1';
         case 'apr1':
