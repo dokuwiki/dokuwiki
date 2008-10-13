@@ -90,12 +90,6 @@ function _mail_send_action($data) {
   // No named recipients for To: in Windows (see FS#652)
   $usenames = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
 
-  // On Unix set the envelope headers correctly:
-  if($usenames){
-    if($from) $params = ((string) $params).' -f '.escapeshellarg(mail_encode_address($from,'',false));
-    if($to)   $params = ((string) $params).' '.escapeshellarg(mail_encode_address($to,'',false));
-  }
-
   $to = mail_encode_address($to,'',$usenames);
   $header .= mail_encode_address($from,'From');
   $header .= mail_encode_address($cc,'Cc');
