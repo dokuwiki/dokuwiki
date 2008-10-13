@@ -833,20 +833,6 @@ function act_resendpwd(){
 }
 
 /**
- * Uses a regular expresion to check if a given mail address is valid
- *
- * May not be completly RFC conform!
- *
- * @link    http://www.webmasterworld.com/forum88/135.htm
- *
- * @param   string $email the address to check
- * @return  bool          true if address is valid
- */
-function isvalidemail($email){
-  return eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email);
-}
-
-/**
  * Encrypts a password using the given method and salt
  *
  * If the selected method needs a salt and none was given, a random one
