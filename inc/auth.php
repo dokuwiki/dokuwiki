@@ -132,25 +132,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     if ($auth->checkPass($user,$pass)){
       // make logininfo globally available
       $_SERVER['REMOTE_USER'] = $user;
-      $USERINFO = $auth->getUserData($user);
-
-      // set cookie
-      $pass   = PMA_blowfish_encrypt($pass,auth_cookiesalt());
-      $cookie = base64_encode("$user|$sticky|$pass");
-      if($sticky) $time = time()+60*60*24*365; //one year
-      if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
-      }else{
-          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
-      }
-
-      // set session
-      $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-      $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
-      $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
-      $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
-      $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
-
+      auth_setCookie($user,PMA_blowfish_encrypt($pass,auth_cookiesalt()),$sticky);
       return true;
     }else{
       //invalid credentials - log off
@@ -735,7 +717,14 @@ function updateprofile() {
     }
   }
 
-  return $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes));
+  if ($result = $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes))) {
+    // update cookie and session with the changed data
+    $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
+    list($user,$sticky,$pass) = split('\|',$cookie,3);
+    if ($changes['pass']) $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt());
+
+    auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);
+  }
 }
 
 /**
@@ -991,6 +980,36 @@ function auth_verifyPassword($clear,$crypt){
         return true;
     }
     return false;
+}
+
+/**
+ * Set the authentication cookie and add user identification data to the session
+ *
+ * @param string  $user       username
+ * @param string  $pass       encrypted password
+ * @param bool    $sticky     whether or not the cookie will last beyond the session
+ */
+function auth_setCookie($user,$pass,$sticky) {
+	  global $conf;
+	  global $auth;
+
+      $USERINFO = $auth->getUserData($user);
+
+      // set cookie
+      $cookie = base64_encode("$user|$sticky|$pass");
+      if($sticky) $time = time()+60*60*24*365; //one year
+      if (version_compare(PHP_VERSION, '5.2.0', '>')) {
+          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+      }else{
+          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+      }
+
+      // set session
+      $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+      $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+      $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
+      $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+      $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
