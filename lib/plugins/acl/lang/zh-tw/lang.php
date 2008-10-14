@@ -6,13 +6,14 @@
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
+ * @author Wayne San <waynesan@zerozone.tw>
  */
 $lang['admin_acl']             = '設定 ACL 存取名單';
 $lang['acl_group']             = '群組';
 $lang['acl_user']              = '帳號';
 $lang['acl_perms']             = '設定權限於';
-$lang['page']                  = 'Page';
-$lang['namespace']             = 'Namespace';
+$lang['page']                  = '頁面';
+$lang['namespace']             = '命名空間';
 $lang['btn_select']            = '選擇';
 $lang['p_user_id']             = '使用者 <b class="acluser">%s</b> 在頁面 <b class="aclpage">%s</b>目前擁有以下的權限: <i>%s</i>.';
 $lang['p_user_ns']             = '用戶 <b class=\"acluser\">%s</b> 當前在命名空間 <b class=\"aclns\">%s</b> 擁有以下權限：<i>%s</i>。';

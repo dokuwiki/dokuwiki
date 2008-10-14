@@ -6,6 +6,7 @@
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
+ * @author Wayne San <waynesan@zerozone.tw>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -36,7 +37,7 @@ $lang['btn_admin']             = '管理選單';
 $lang['btn_update']            = '更新設定';
 $lang['btn_delete']            = '刪除';
 $lang['btn_back']              = '回上一步';
-$lang['btn_backlink']          = 'Backlinks';
+$lang['btn_backlink']          = '反向連結';
 $lang['btn_backtomedia']       = '重新選擇圖檔';
 $lang['btn_subscribe']         = '訂閱更動通知';
 $lang['btn_unsubscribe']       = '退訂更動通知';
@@ -84,7 +85,7 @@ $lang['resendpwdbadauth']      = '對不起，該認証碼錯誤。請使用完�
 $lang['resendpwdconfirm']      = '確認鏈接已經通過郵件發送給您了。';
 $lang['resendpwdsuccess']      = '新密碼函已經以 email 寄出了。';
 $lang['txt_upload']            = '請選擇要上傳的檔案';
-$lang['txt_filename']          = '請輸入要存在 wiki 內的檔名 (optional)';
+$lang['txt_filename']          = '請輸入要存在 wiki 內的檔案名稱 (非必要)';
 $lang['txt_overwrt']           = '是否要覆蓋原有檔案';
 $lang['lockedby']              = '目前已被下列人員鎖定';
 $lang['lockexpire']            = '預計解除鎖定於';
@@ -104,10 +105,13 @@ $lang['uploadxss']             = '因為可能惡意的內容被限制上傳';
 $lang['deletesucc']            = '"%s" 檔已刪除完畢。';
 $lang['deletefail']            = '"%s" 檔無法刪除，請先檢查權限設定。';
 $lang['mediainuse']            = '"%s" 檔因還在使用中，故目前尚無法刪除。';
-$lang['namespaces']            = 'Namespaces';
+$lang['namespaces']            = '命名空間';
 $lang['mediafiles']            = '可用的檔案有';
 $lang['js']['keepopen']        = '於選擇時保持視窗開啟';
 $lang['js']['hidedetails']     = '隱藏詳細內容';
+$lang['js']['nosmblinks']      = '只有在 Microsoft IE 下才能執行「連結到 Windows shares」。
+不過您仍可拷貝、複製這連結';
+$lang['js']['mu_btn']          = '上傳多個檔案';
 $lang['mediausage']            = '使用以下的語法來連結此檔案:';
 $lang['mediaview']             = '檢視原始檔案';
 $lang['mediaroot']             = 'root';
@@ -137,7 +141,6 @@ $lang['mail_newpage']          = '增加的頁面:';
 $lang['mail_changed']          = '變更的頁面:';
 $lang['mail_new_user']         = '新使用者:';
 $lang['mail_upload']           = '已上傳檔案:';
-$lang['js']['nosmblinks']            = "只有在 Microsoft IE 下才能執行「連結到 Windows shares」。\n不過您仍可拷貝、複製這連結";
 $lang['qb_alert']              = '請輸入想要格式化的文字，\n這會附加到文件的結尾。';
 $lang['qb_bold']               = '粗體';
 $lang['qb_italic']             = '斜體';
@@ -205,3 +208,16 @@ $lang['i_pol0']                = '開放的 Wiki (可被任何人讀, 寫, 上�
 $lang['i_pol1']                = '公開的 Wiki (可被任何人讀, 但是只能被註冊的使用者寫與上傳)';
 $lang['i_pol2']                = '封閉的 Wiki (只能被註冊的使用者讀, 寫, 上傳)';
 $lang['i_retry']               = '重試';
+$lang['mu_intro']              = '您可以在這裡一次上傳多個檔案。按下瀏覽按鈕加入檔案，然後按上傳按鈕開始上傳。';
+$lang['mu_gridname']           = '檔案名稱';
+$lang['mu_gridsize']           = '檔案大小';
+$lang['mu_gridstat']           = '狀態';
+$lang['mu_namespace']          = '命名空間';
+$lang['mu_browse']             = '瀏覽';
+$lang['mu_toobig']             = '太大';
+$lang['mu_ready']              = '準備上傳';
+$lang['mu_done']               = '完成';
+$lang['mu_fail']               = '失敗';
+$lang['mu_authfail']           = '作業階段逾時';
+$lang['mu_progress']           = '@PCT@% 已上傳';
+$lang['mu_filetypes']          = '接受的檔案類型';

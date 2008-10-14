@@ -4,6 +4,7 @@
  *
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
+ * @author Wayne San <waynesan@zerozone.tw>
  */
 $lang['menu']                  = '系統配置設定';
 $lang['error']                 = '設定因為不合法的值而失敗，請檢查您的改變並重新送出。
@@ -108,6 +109,7 @@ $lang['xmlrpc']                = '啟用/停用 XML-RPC 介面';
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s (dokuwiki 核心)';
 $lang['renderer__plugin']      = '%s (外掛)';
+$lang['rememberme']            = '是否在登入畫面顯示記住我';
 $lang['rss_type']              = 'XML feed 類型';
 $lang['rss_linkto']            = 'XML feed 連結到';
 $lang['rss_content']           = 'XML feed 項目中顯示什麼呢？';
@@ -162,3 +164,5 @@ $lang['xsendfile_o_0']         = '不使用';
 $lang['xsendfile_o_1']         = '專有 lighttpd 頭（1.5 發布前）';
 $lang['xsendfile_o_2']         = '標准 X-Sendfile 頭';
 $lang['xsendfile_o_3']         = '專有 Nginx X-Accel-Redirect 頭';
+$lang['showuseras_o_loginname'] = '登入名稱';
+$lang['showuseras_o_username'] = '完整姓名';
