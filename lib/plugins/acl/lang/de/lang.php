@@ -10,6 +10,7 @@
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
+ * @author Florian Anderiasch <fa@art-core.org>
  */
 $lang['admin_acl']             = 'Zugangsverwaltung';
 $lang['acl_group']             = 'Gruppe';

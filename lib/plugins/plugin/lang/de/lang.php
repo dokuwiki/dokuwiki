@@ -7,6 +7,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
+ * @author Florian Anderiasch <fa@art-core.org>
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Neues Plugin herunterladen und installieren';

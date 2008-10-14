@@ -10,6 +10,7 @@
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
+ * @author Florian Anderiasch <fa@art-core.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -87,6 +88,8 @@ $lang['resendpwdnouser']       = 'Es tut mir Leid, aber der Benutzer existiert n
 $lang['resendpwdbadauth']      = 'Es tut mir Leid, aber dieser Authentifizierungscode ist ungültig. Stellen Sie sicher, dass Sie den kompletten Bestätigungslink verwendet haben.';
 $lang['resendpwdconfirm']      = 'Ein Bestätigungslink wurde per E-Mail versandt.';
 $lang['resendpwdsuccess']      = 'Ihr neues Passwort wurde per E-Mail versandt.';
+$lang['license']               = 'Falls nicht anders bezeichnet ist der Inhalt dieses Wikis unter der folgenden Lizenz veröffentlicht:';
+$lang['licenseok']             = 'Hinweis: Durch das Bearbeiten dieser Seite geben Sie Ihr Einverständnis, dass Ihr Inhalt unter der folgenden Lizenz veröffentlicht wird:';
 $lang['txt_upload']            = 'Datei zum Hochladen auswählen';
 $lang['txt_filename']          = 'Hochladen als (optional)';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
@@ -112,6 +115,8 @@ $lang['namespaces']            = 'Namensräume';
 $lang['mediafiles']            = 'Vorhandene Dateien in';
 $lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
 $lang['js']['hidedetails']     = 'Details ausblenden';
+$lang['js']['nosmblinks']      = 'Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.
+Der Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 $lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['mediausage']            = 'Syntax zum Verwenden dieser Datei:';
 $lang['mediaview']             = 'Originaldatai öffnen';
@@ -142,7 +147,6 @@ $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geaendert:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
 $lang['mail_upload']           = 'Datei hochgeladen:';
-$lang['js']['nosmblinks']            = "Das Verlinken von Windows Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.";
 $lang['qb_alert']              = 'Bitte geben Sie den zu formatierenden Text ein.\nDieser wird am Ende des Dokuments eingefügt.';
 $lang['qb_bold']               = 'Fetter Text';
 $lang['qb_italic']             = 'Kursiver Text';
@@ -221,3 +225,4 @@ $lang['mu_fail']               = 'gescheitert';
 $lang['mu_authfail']           = 'Sitzung abgelaufen';
 $lang['mu_progress']           = '@PCT@% hochgeladen';
 $lang['mu_filetypes']          = 'Erlaubte Dateitypen';
+$lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';

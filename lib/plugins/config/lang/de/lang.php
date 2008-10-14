@@ -6,6 +6,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
+ * @author Florian Anderiasch <fa@art-core.org>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
@@ -42,6 +43,7 @@ $lang['savedir']               = 'Speicherverzeichnis';
 $lang['start']                 = 'Startseitenname';
 $lang['title']                 = 'Titel des Wikis';
 $lang['template']              = 'Designvorlage (Template)';
+$lang['license']               = 'Unter welcher Lizenz sollen Ihre Inhalte veröffentlicht werden?';
 $lang['fullpath']              = 'Den kompletten Dateipfad im Footer anzeigen';
 $lang['recent']                = 'Anzahl der Einträge in der Änderungsliste';
 $lang['breadcrumbs']           = 'Anzahl der Einträge im "Krümelpfad"';
@@ -65,6 +67,7 @@ $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt is
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
 $lang['mailguard']             = 'E-Mail-Adressen schützen';
 $lang['iexssprotect']          = 'Hochgeladene Dateien auf bösartigen JavaScript- und HTML-Code untersuchen.';
+$lang['showuseras']            = 'Was angezeigt werden soll wenn der Benutzer, der zuletzt eine Seite bearbeitet hat angezeigt wird';
 $lang['useacl']                = 'Zugangskontrolle verwenden';
 $lang['autopasswd']            = 'Passwort automatisch generieren';
 $lang['authtype']              = 'Authentifizierungsmechanismus';
@@ -81,6 +84,7 @@ $lang['disableactions_wikicode'] = 'Quelltext betrachten/exportieren';
 $lang['disableactions_other']  = 'Andere Aktionen (durch Komma getrennt)';
 $lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Übersicht. Wenn diese Option aktiviert wird, werden alle Namensräume, für die der Benutzer keine Lese-Rechte hat, nicht angezeigt. Dies kann unter Umständen dazu führen, das lesbare Unter-Namensräume nicht angezeigt werden und macht die Übersicht evtl. unbrauchbar in Kombination mit bestimmten ACL Einstellungen.';
 $lang['auth_security_timeout'] = 'Authentifikations-Timeout (Sekunden)';
+$lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktivieren Sie diese Option, wenn nur der Login Ihres Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
 $lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit splitbrain.org verbinden.';
 $lang['userewrite']            = 'URL rewriting';
 $lang['useslash']              = 'Schrägstrich (/) als Namensraumtrenner in URLs verwenden';
@@ -110,6 +114,7 @@ $lang['xmlrpc']                = 'XML-RPC Zugriff erlauben.';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Plugin)';
+$lang['rememberme']            = 'Permanente Login-Cookies erlauben (Auf diesem Computer eingeloggt bleiben)';
 $lang['rss_type']              = 'XML-Feed Format';
 $lang['rss_linkto']            = 'XML-Feed verlinken auf';
 $lang['rss_content']           = 'Welche Inhalte sollen im XML-Feed dargestellt werden?';
@@ -132,6 +137,7 @@ $lang['ftp____port']           = 'FTP-Port für Safemodehack';
 $lang['ftp____user']           = 'FTP Nutzername für Safemodehack';
 $lang['ftp____pass']           = 'FTP Passwort für Safemodehack';
 $lang['ftp____root']           = 'FTP Wurzelverzeichnis für Safemodehack';
+$lang['license_o_']            = 'Keine gewählt';
 $lang['typography_o_0']        = 'keine';
 $lang['typography_o_1']        = 'Nur Doppelte Anführungszeichen';
 $lang['typography_o_2']        = 'Alle Anführungszeichen (funktioniert nicht immer)';
@@ -164,3 +170,7 @@ $lang['xsendfile_o_0']         = 'nicht benutzen';
 $lang['xsendfile_o_1']         = 'Proprietärer lighttpd Header (vor Release 1.5)';
 $lang['xsendfile_o_2']         = 'Standard X-Sendfile Header';
 $lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect Header';
+$lang['showuseras_o_loginname'] = 'Loginname';
+$lang['showuseras_o_username'] = 'Vollständiger Name des Benutzers';
+$lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
+$lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
