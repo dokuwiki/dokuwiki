@@ -119,6 +119,7 @@ $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
+$meta['rememberme'] = array('onoff');
 $meta['registernotify'] = array('email');
 $meta['disableactions'] = array('disableactions',
                                 '_choices' => array('backlink','index','recent','revisions','search','subscription','nssubscription','register','resendpwd','profile','edit','wikicode','check'),
@@ -180,7 +181,6 @@ $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
 $meta['xmlrpc']      = array('onoff');
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
-$meta['rememberme'] = array('onoff');
 
 $meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
