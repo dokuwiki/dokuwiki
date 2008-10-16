@@ -99,8 +99,10 @@ function formSecurityToken($print=true){
 function pageinfo(){
   global $ID;
   global $REV;
+  global $RANGE;
   global $USERINFO;
   global $conf;
+  global $lang;
 
   // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
   // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
@@ -143,6 +145,11 @@ function pageinfo(){
     //check if current revision was meant
     if($info['exists'] && (@filemtime($info['filepath'])==$REV)){
       $REV = '';
+    }elseif($RANGE){
+      //section editing does not work with old revisions!
+      $REV   = '';
+      $RANGE = '';
+      msg($lang['nosecedit'],0);
     }else{
       //really use old revision
       $info['filepath'] = fullpath(wikiFN($ID,$REV));
