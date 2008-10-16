@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
+ * @author exusik@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -107,6 +108,8 @@ $lang['namespaces']            = 'Menné priestory';
 $lang['mediafiles']            = 'Dostupné súbory';
 $lang['js']['keepopen']        = 'Po vybraní súboru ponechať okno otvorené';
 $lang['js']['hidedetails']     = 'Skryť detaily';
+$lang['js']['nosmblinks']      = 'Odkazovanie na zdielané prostriedky Windows funguje len v Internet Explorer.
+Aj napriek tomu tento odkaz môžete skopírovat a vložit inde.';
 $lang['mediausage']            = 'Pre odkázanie na súbor použite nasledujúcu syntax:';
 $lang['mediaview']             = 'Zobraziť pôvodný súbor';
 $lang['mediaroot']             = 'root';
@@ -136,7 +139,6 @@ $lang['mail_newpage']          = 'stránka pridaná:';
 $lang['mail_changed']          = 'stránka zmenená:';
 $lang['mail_new_user']         = 'Nový užívateľ:';
 $lang['mail_upload']           = 'nahraný súbor:';
-$lang['js']['nosmblinks']            = "Odkazovanie na zdielané prostriedky Windows funguje len v Internet Explorer.\nAj napriek tomu tento odkaz môžete skopírovat a vložit inde.";
 $lang['qb_alert']              = 'Vložte prosím text, ktorý chcete formátovať.\nTen bude pridaný na koniec dokumentu.';
 $lang['qb_bold']               = 'Tučné';
 $lang['qb_italic']             = 'Kurzíva';
@@ -202,3 +204,12 @@ $lang['i_pol0']                = 'Otvorená Wiki (čítanie, zápis a nahrávani
 $lang['i_pol1']                = 'Verejná Wiki (čítanie pre každého, zápis a nahrávanie pre registrovaných užívateľov)';
 $lang['i_pol2']                = 'Uzatvorená Wiki (čítanie, zápis a nahrávanie len pre registrovaných užívateľov)';
 $lang['i_retry']               = 'Skúsiť znovu';
+$lang['mu_gridname']           = 'Názov súboru';
+$lang['mu_gridsize']           = 'Veľkosť';
+$lang['mu_gridstat']           = 'Status';
+$lang['mu_namespace']          = 'Oblasť mien';
+$lang['mu_browse']             = 'Prezrieť si';
+$lang['mu_toobig']             = 'príliš veľký';
+$lang['mu_done']               = 'dokončený';
+$lang['mu_fail']               = 'neúspešný';
+$lang['mu_filetypes']          = 'Povolené typy súborov';

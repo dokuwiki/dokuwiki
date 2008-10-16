@@ -4,6 +4,7 @@
  *
  * @author Ondrej Végh <ov@vsieti.sk>
  * @author Michal Mesko <michal.mesko@gmail.com>
+ * @author exusik@gmail.com
  */
 $lang['menu']                  = 'Správa pluginov';
 $lang['download']              = 'Stiahnuť a nainštalovať  plugin';

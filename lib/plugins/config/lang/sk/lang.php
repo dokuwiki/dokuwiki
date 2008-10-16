@@ -3,6 +3,7 @@
  * Slovaklanguage file
  *
  * @author Michal Mesko <michal.mesko@gmail.com>
+ * @author exusik@gmail.com
  */
 $lang['menu']                  = 'Nastavenia konfigurácie';
 $lang['error']                 = 'Nastavenia neboli aktualizované kvôli neplatnej hodnote, prosím skontrolujte vaše zmeny a znovu ich pošlite. <br />Nesprávna hodnota(y) bude ohraničená červeným okrajom.';
