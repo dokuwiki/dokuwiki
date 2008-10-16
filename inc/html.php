@@ -655,7 +655,7 @@ function html_recent($first=0){
       'name'  => 'first['.$first.']',
       'value' => $lang['btn_newer'],
       'accesskey' => 'n',
-      'title' => '[ALT+N]',
+      'title' => $lang['btn_newer'].' [N]',
       'class' => 'button'
     )));
     $form->addElement(form_makeCloseTag('div'));
@@ -667,7 +667,7 @@ function html_recent($first=0){
       'name'  => 'first['.$last.']',
       'value' => $lang['btn_older'],
       'accesskey' => 'p',
-      'title' => '[ALT+P]',
+      'title' => $lang['btn_older'].' [P]',
       'class' => 'button'
     )));
     $form->addElement(form_makeCloseTag('div'));
