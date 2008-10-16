@@ -831,7 +831,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $class .= '"';
         $this->doc .= '<th ' . $class;
         if ( $colspan > 1 ) {
-            $this->_counter['cell_counter'] += $colspan;
+            $this->_counter['cell_counter'] += $colspan-1;
             $this->doc .= ' colspan="'.$colspan.'"';
         }
         $this->doc .= '>';
@@ -849,7 +849,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $class .= '"';
         $this->doc .= '<td '.$class;
         if ( $colspan > 1 ) {
-            $this->_counter['cell_counter'] += $colspan;
+            $this->_counter['cell_counter'] += $colspan-1;
             $this->doc .= ' colspan="'.$colspan.'"';
         }
         $this->doc .= '>';
