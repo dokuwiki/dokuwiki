@@ -131,7 +131,6 @@ function js_out(){
     @readfile(DOKU_CONF.'userscript.js');
 
     // add scroll event and tooltip rewriting
-    js_runonstart('updateAccessKeyTooltip()');
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
 
