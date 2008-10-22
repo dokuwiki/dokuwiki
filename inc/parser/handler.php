@@ -29,8 +29,8 @@ class Doku_Handler {
         $this->CallWriter->writeCall($call);
     }
 
-    function addPluginCall($plugin, $args, $state, $pos) {
-        $call = array('plugin',array($plugin, $args, $state), $pos);
+    function addPluginCall($plugin, $args, $state, $pos, $match) {
+        $call = array('plugin',array($plugin, $args, $state, $match), $pos);
         $this->CallWriter->writeCall($call);
     }
 
@@ -80,11 +80,10 @@ class Doku_Handler {
         $data = array($match);
         $plugin =& plugin_load('syntax',$pluginname);
         if($plugin != null){
-            $plugin->setMatch($match);
             $data = $plugin->handle($match, $state, $pos, $this);
         }
         if ($data !== false) {
-          $this->addPluginCall($pluginname,$data,$state,$pos);
+          $this->addPluginCall($pluginname,$data,$state,$pos,$match);
         }
         return true;
     }
