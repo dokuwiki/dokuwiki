@@ -7,6 +7,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
+ * @author VictorCastelan <victorcastelan@gmail.com>
  */
 $lang['menu']                  = 'Restaurador';
 $lang['filter']                = 'Buscar páginas con spam';

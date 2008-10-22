@@ -9,6 +9,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
+ * @author VictorCastelan <victorcastelan@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -43,6 +44,7 @@ $lang['savedir']               = 'Directorio para guardar los datos';
 $lang['start']                 = 'Nombre de la página inicial';
 $lang['title']                 = 'Título del Wiki';
 $lang['template']              = 'Plantilla';
+$lang['license']               = '¿Bajo qué licencia será liberado tu contenido?';
 $lang['fullpath']              = 'Camino (path) completo en el pié de página';
 $lang['recent']                = 'Cambios recientes';
 $lang['breadcrumbs']           = 'Número de pasos de traza';
@@ -114,6 +116,7 @@ $lang['xmlrpc']                = 'Habilitar/Deshabilitar interfase XML-RPC';
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
 $lang['renderer__core']        = '%s (nucleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (complemento)';
+$lang['rememberme']            = 'Permitir cookies para acceso permanente (recordarme)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';
 $lang['rss_content']           = 'Que mostrar en los itemes del archivo XML?';
@@ -136,6 +139,7 @@ $lang['ftp____port']           = 'Puerto del servidor FTP  para modo seguro';
 $lang['ftp____user']           = 'Nombre de usuario para el servidor FTP  para modo seguro';
 $lang['ftp____pass']           = 'Contraseña para el servidor FTP  para modo seguro';
 $lang['ftp____root']           = 'Directorio raiz para el servidor FTP  para modo seguro';
+$lang['license_o_']            = 'No se eligió ninguna';
 $lang['typography_o_0']        = 'ninguno';
 $lang['typography_o_1']        = 'Dobles comillas solamente';
 $lang['typography_o_2']        = 'Todas las comillas (puede ser que no siempre funcione)';

@@ -14,6 +14,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
+ * @author VictorCastelan <victorcastelan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -70,6 +71,7 @@ $lang['profile']               = 'Datos del usuario';
 $lang['badlogin']              = 'El usuario o contraseña ingresados son incorrectos.';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente en';
+$lang['nosecedit']             = 'La página ha cambiado en el lapso, información de sección estuvo fuera de tiempo, en su lugar se cargó la página completa.';
 $lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
 $lang['reguexists']            = 'Lo siento, el nombre de usuario ya existe.';
 $lang['regsuccess']            = 'El usuario ha sido creado. La contraseña se ha enviado por correo.';
@@ -91,6 +93,8 @@ $lang['resendpwdnouser']       = 'Lo siento, no se encuentra este usuario en nue
 $lang['resendpwdbadauth']      = 'Lo siento, este código de autenticación no es válido. Asegúrate de haber usado el enlace de confirmación entero.';
 $lang['resendpwdconfirm']      = 'Un enlace para confirmación ha sido enviado por correo electrónico.';
 $lang['resendpwdsuccess']      = 'Tu nueva contraseña ha sido enviada por correo electrónico.';
+$lang['license']               = 'Excepto donde se indique lo contrario, el contenido de esta wiki se autoriza bajo la siguiente licencia:';
+$lang['licenseok']             = 'Nota: Al editar esta página, estás de acuerdo en autorizar su contenido bajo la siguiente licencia:';
 $lang['txt_upload']            = 'Selecciona el fichero a cargar';
 $lang['txt_filename']          = 'Subir como (opcional)';
 $lang['txt_overwrt']           = 'Sobreescribe el fichero existente';
@@ -116,6 +120,8 @@ $lang['namespaces']            = 'Espacios de nombres';
 $lang['mediafiles']            = 'Ficheros disponibles en';
 $lang['js']['keepopen']        = 'Mantener esta ventana abierta durante la selección';
 $lang['js']['hidedetails']     = 'Ocultar detalles';
+$lang['js']['nosmblinks']      = 'Enlazar a recursos compartidos de Windows sólo funciona en Microsoft Internet Explorer.
+Lo que si puedes hacer es copiar y pegar el enlace.';
 $lang['js']['mu_btn']          = 'Subir varios archivos a la vez';
 $lang['mediausage']            = 'Use la siguiente sintaxis para hacer referencia a este fichero:';
 $lang['mediaview']             = 'Ver el fichero original';
@@ -146,7 +152,6 @@ $lang['mail_newpage']          = 'página añadida:';
 $lang['mail_changed']          = 'página cambiada:';
 $lang['mail_new_user']         = 'Nuevo usuario:';
 $lang['mail_upload']           = 'archivo subido:';
-$lang['js']['nosmblinks']            = "Enlazar a recursos compartidos de Windows sólo funciona en Microsoft Internet Explorer.\nLo que si puedes hacer es copiar y pegar el enlace.";
 $lang['qb_alert']              = 'Por favor, pega el texto al que quieres dar formato.\n Será añadido al final del documento.';
 $lang['qb_bold']               = 'Negrita';
 $lang['qb_italic']             = 'Itálica';
@@ -224,3 +229,4 @@ $lang['mu_fail']               = 'falló';
 $lang['mu_authfail']           = 'sesión caducada';
 $lang['mu_progress']           = '@PCT@% transferido';
 $lang['mu_filetypes']          = 'Tipos de archivos permitidos';
+$lang['recent_global']         = 'Actualmente estás viendo los cambios dentro del namespace <b>%s</b>. También puedes <a href="%s">ver los cambios recientes en la wiki completa</a>.';

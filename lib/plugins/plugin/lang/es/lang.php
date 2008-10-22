@@ -9,6 +9,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
+ * @author VictorCastelan <victorcastelan@gmail.com>
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';

@@ -9,6 +9,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
+ * @author VictorCastelan <victorcastelan@gmail.com>
  */
 $lang['admin_acl']             = 'Administración de lista de control de acceso';
 $lang['acl_group']             = 'Grupo';

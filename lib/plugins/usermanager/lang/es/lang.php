@@ -8,6 +8,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
+ * @author VictorCastelan <victorcastelan@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autentiación de usuariosuser no está disponible)';
