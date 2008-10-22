@@ -12,6 +12,7 @@ $lang['acl_user']              = 'Felhasználó:';
 $lang['acl_perms']             = 'Jogosultság ehhez:';
 $lang['page']                  = 'oldal';
 $lang['namespace']             = 'névtér';
+$lang['btn_select']            = 'Kiválaszt';
 $lang['p_user_id']             = 'A(z) <b class="acluser">%s</b> felhasználónak jelenleg a következő jogosultsága van ezen az oldalon:  <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'A(z) <b class="acluser">%s</b> felhasználónak jelenleg a következő jogosultsága van ebben a névtérben: <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'A(z) <b class="aclgroup">%s</b> csoport tagjainak jelenleg a következő jogosultsága van ezen az oldalon:  <b class="aclpage">%s</b>: <i>%s</i>.';

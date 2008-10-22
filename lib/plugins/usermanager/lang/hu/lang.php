@@ -42,6 +42,7 @@ $lang['edit_usermissing']      = 'A kiválasztott felhasználót nem találom, a
 $lang['user_notify']           = 'Felhasználó értesítése';
 $lang['note_notify']           = 'Csak akkor küld értesítő e-mailt, ha a felhasználó új jelszót kapott.';
 $lang['note_group']            = 'Ha nincs csoport meghatározva, az új felhasználó az alapértelmezett csoportba (%s) kerül.';
+$lang['note_pass']             = 'Ha a baloldali mező üres, és a felhasználó értesítés aktív, akkor generált jelszó lesz.';
 $lang['add_ok']                = 'A felhasználó sikeresen hozzáadva.';
 $lang['add_fail']              = 'A felhasználó hozzáadása nem sikerült.';
 $lang['notify_ok']             = 'Értesítő levél elküldve.';
