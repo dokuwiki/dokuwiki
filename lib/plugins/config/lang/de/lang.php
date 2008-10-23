@@ -7,6 +7,7 @@
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
  * @author Florian Anderiasch <fa@art-core.org>
+ * @author Robin Kluth <commi1993@gmail.com>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.

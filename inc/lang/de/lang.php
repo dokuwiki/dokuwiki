@@ -11,6 +11,7 @@
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
  * @author Florian Anderiasch <fa@art-core.org>
+ * @author Robin Kluth <commi1993@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,6 +68,7 @@ $lang['profile']               = 'Benutzerprofil';
 $lang['badlogin']              = 'Nutzername oder Passwort sind falsch.';
 $lang['minoredit']             = 'kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
+$lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, Sektionsinfo ist veraltet, lade stattdessen volle Seite.';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists']            = 'Der Nutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Nutzer wurde angelegt und das Passwort per Email versandt.';
@@ -80,7 +82,7 @@ $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki n
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muß ein Name und eine E-Mail Adresse angegeben werden.';
 $lang['profchanged']           = 'Benuzerprofil erfolgreich geändert.';
-$lang['pwdforget']             = 'Passwort vergessen? Kein Problem';
+$lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort schicken für';
 $lang['resendpwdmissing']      = 'Es tut mir Leid, aber Sie müssen alle Felder ausfüllen.';
