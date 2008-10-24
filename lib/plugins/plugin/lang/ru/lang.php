@@ -6,6 +6,7 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Hikaru Nakajima <jisatsu@mail.ru>
  */
 $lang['menu']                  = 'Управление плагинами';
 $lang['download']              = 'Скачать и установить новый плагин';

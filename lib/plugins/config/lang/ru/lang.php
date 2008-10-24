@@ -6,6 +6,7 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Hikaru Nakajima <jisatsu@mail.ru>
  */
 $lang['menu']                  = 'Настройки Вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте ваши изменения и попробуйте еще раз.
@@ -42,6 +43,7 @@ $lang['savedir']               = 'Директория для данных';
 $lang['start']                 = 'Имя стартовой страницы';
 $lang['title']                 = 'Название Вики';
 $lang['template']              = 'Шаблон';
+$lang['license']               = 'На условиях какой лицензии будет предоставляться содержимое вики?';
 $lang['fullpath']              = 'Полный путь к документу';
 $lang['recent']                = 'Недавние изменения (кол-во)';
 $lang['breadcrumbs']           = 'Вы посетили (кол-во)';
@@ -65,6 +67,7 @@ $lang['indexdelay']            = 'Задержка перед индексиро
 $lang['relnofollow']           = 'rel="nofollow" для внешних ссылок';
 $lang['mailguard']             = 'Кодировать адреса е-мэйл';
 $lang['iexssprotect']          = 'Проверять закачанные файлы на наличие потенциально опасного кода JavaScript или HTML';
+$lang['showuseras']            = 'Что отображать при показе пользователя, редактировавшего страницу последним';
 $lang['useacl']                = 'Использовать списки прав доступа';
 $lang['autopasswd']            = 'Автогенерация паролей';
 $lang['authtype']              = 'Механизм аутентификации';
@@ -81,6 +84,7 @@ $lang['disableactions_wikicode'] = 'Показ/экспорт исходного
 $lang['disableactions_other']  = 'Другие операции (через запятую)';
 $lang['sneaky_index']          = 'По умолчанию, DokuWiki показывает в индексе страниц все пространства имен. Включение этой опции скроет пространства имен, для которых пользователь не имеет прав чтения. Это может привести к скрытию доступных вложенных пространств имен и потере функциональности индекса страниц при некоторых конфигурациях прав доступа.';
 $lang['auth_security_timeout'] = 'Интервал для безопасности авторизации (сек.)';
+$lang['securecookie']          = 'Должны ли cookies, выставленные через HTTPS, отправляться браузером только через HTTPS. Отключите эту опцию в случае, когда только логин вашей вики передаётся через SSL, а обычный просмотр осуществляется в небезопасном режиме.';
 $lang['updatecheck']           = 'Проверять наличие обновлений и предупреждений о безопасности? Для этого DokuWiki потребуется связываться со splitbrain.org.';
 $lang['userewrite']            = 'Удобочитаемые адреса (URL)';
 $lang['useslash']              = 'Использовать слэш';
@@ -107,8 +111,10 @@ $lang['sitemap']               = 'Карта сайта для Google (дни)';
 $lang['broken_iua']            = 'Возможно, функция ignore_user_abort не работает в вашей системе? Это может привести к потере функциональности индексирования поиска. Эта проблема присутствует, например, в IIS+PHP/CGI. Для дополнительной информации смотрите <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">баг 852</a>.';
 $lang['xsendfile']             = 'Используете заголовок X-Sendfile для загрузки файлов на вебсервер? Ваш вебсервер должен поддерживать это.';
 $lang['xmlrpc']                = 'Включить/выключить XML-RPC интерфейс.';
+$lang['renderer_xhtml']        = 'Обработчик основного (xhtml) вывода вики';
 $lang['renderer__core']        = '% (ядро dokuwiki)';
 $lang['renderer__plugin']      = '% (плагин)';
+$lang['rememberme']            = 'Разрешить перманентные cookies для входа (запомнить меня)';
 $lang['rss_type']              = 'Тип RSS';
 $lang['rss_linkto']            = 'Ссылки в RSS';
 $lang['rss_content']           = 'Что отображать в строках фида XML?';
@@ -131,6 +137,7 @@ $lang['ftp____port']           = 'ftp - порт';
 $lang['ftp____user']           = 'ftp - имя пользователя';
 $lang['ftp____pass']           = 'ftp - пароль';
 $lang['ftp____root']           = 'ftp - корневая директория';
+$lang['license_o_']            = 'Не выбрано';
 $lang['typography_o_0']        = 'нет';
 $lang['typography_o_1']        = 'Только двойные кавычки';
 $lang['typography_o_2']        = 'Все кавычки (может не всегда работать)';
@@ -162,3 +169,8 @@ $lang['compression_o_bz2']     = 'bz2';
 $lang['xsendfile_o_0']         = 'не используется';
 $lang['xsendfile_o_1']         = 'проприетарный lighttpd заголовок (перед релизом 1.5)';
 $lang['xsendfile_o_2']         = 'Стандартный заголовок X-Sendfile';
+$lang['xsendfile_o_3']         = 'Проприетарный заголовок Nginx X-Accel-Redirect';
+$lang['showuseras_o_loginname'] = 'Логин';
+$lang['showuseras_o_username'] = 'Полное имя пользователя';
+$lang['showuseras_o_email']    = 'E-mail пользователя (зашифрован согласно настройкам mailguard)';
+$lang['showuseras_o_email_link'] = 'E-mail пользователя в виде ссылки mailto:';

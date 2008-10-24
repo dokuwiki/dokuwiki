@@ -6,6 +6,7 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Hikaru Nakajima <jisatsu@mail.ru>
  */
 $lang['menu']                  = 'Управление пользователями';
 $lang['noauth']                = '(авторизация пользователей недоступна)';
@@ -43,6 +44,7 @@ $lang['edit_usermissing']      = 'Выбранный пользователь н
 $lang['user_notify']           = 'Сообщить пользователю';
 $lang['note_notify']           = 'Е-мэйлы с уведомлением посылаются только в случае получения нового пароля.';
 $lang['note_group']            = 'Если группа не указана, новые пользователи будут добавлены в группу по умолчанию (%s).';
+$lang['note_pass']             = 'Пароль будет сгенерирован автоматически, если поле оставлено пустым и включено уведомление пользователя.';
 $lang['add_ok']                = 'Пользователь успешно добавлен';
 $lang['add_fail']              = 'Не удалось добавить пользователя';
 $lang['notify_ok']             = 'Е-мэйл с уведомлением был послан';
