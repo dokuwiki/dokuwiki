@@ -1424,4 +1424,34 @@ function license_img($type){
     return '';
 }
 
+/**
+ * Checks if the given amount of memory is available
+ *
+ * If the memory_get_usage() function is not available the
+ * function just assumes $bytes of already allocated memory
+ *
+ * @param  int $mem  Size of memory you want to allocate in bytes
+ * @param  int $used already allocated memory (see above)
+ * @author Filip Oscadal <webmaster@illusionsoftworks.cz>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function is_mem_available($mem,$bytes=1048576){
+  $limit = trim(ini_get('memory_limit'));
+  if(empty($limit)) return true; // no limit set!
+
+  // parse limit to bytes
+  $limit = php_to_byte($limit);
+
+  // get used memory if possible
+  if(function_exists('memory_get_usage')){
+    $used = memory_get_usage();
+  }
+
+  if($used+$mem > $limit){
+    return false;
+  }
+
+  return true;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
