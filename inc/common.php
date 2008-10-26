@@ -824,13 +824,40 @@ function pageTemplate($data){
   if(!$tpl) return '';
 
   // replace placeholders
-  $tpl = str_replace('@ID@',$id,$tpl);
-  $tpl = str_replace('@NS@',getNS($id),$tpl);
-  $tpl = str_replace('@PAGE@',strtr(noNS($id),'_',' '),$tpl);
-  $tpl = str_replace('@USER@',$_SERVER['REMOTE_USER'],$tpl);
-  $tpl = str_replace('@NAME@',$INFO['userinfo']['name'],$tpl);
-  $tpl = str_replace('@MAIL@',$INFO['userinfo']['mail'],$tpl);
-  $tpl = str_replace('@DATE@',$conf['dformat'],$tpl);
+  $file = noNS($id);
+  $page = strtr($file,'_',' ');
+
+  $tpl = str_replace(array(
+                        '@ID@',
+                        '@NS@',
+                        '@FILE@',
+                        '@!FILE@',
+                        '@!FILE!@',
+                        '@PAGE@',
+                        '@!PAGE@',
+                        '@!!PAGE@',
+                        '@!PAGE!@',
+                        '@USER@',
+                        '@NAME@',
+                        '@MAIL@',
+                        '@DATE@',
+                     ),
+                     array(
+                        $id,
+                        getNS($id),
+                        $file,
+                        utf8_ucfirst($file),
+                        utf8_strtoupper($file),
+                        $page,
+                        utf8_ucfirst($page),
+                        utf8_ucwords($page),
+                        utf8_strtoupper($page),
+                        $_SERVER['REMOTE_USER'],
+                        $INFO['userinfo']['name'],
+                        $INFO['userinfo']['mail'],
+                        $conf['dformat'],
+                     ), $tpl);
+
   // we need the callback to work around strftime's char limit
   $tpl = preg_replace_callback('/%./',create_function('$m','return strftime($m[0]);'),$tpl);
 
