@@ -121,7 +121,7 @@ $lang['js']['nosmblinks']      = 'Das Verlinken von Windows Freigaben funktionie
 Der Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 $lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['mediausage']            = 'Syntax zum Verwenden dieser Datei:';
-$lang['mediaview']             = 'Originaldatai öffnen';
+$lang['mediaview']             = 'Originaldatei öffnen';
 $lang['mediaroot']             = 'Wurzel';
 $lang['mediaupload']           = 'Laden Sie hier eine Datei in den momentanen Namensraum hoch. Um Unterordner zu erstellen, stellen Sie diese dem Dateinamen im Feld "Hochladen als" durch Doppelpunkt getrennt voran.';
 $lang['mediaextchange']        = 'Dateiendung vom .%s nach .%s geändert!';
