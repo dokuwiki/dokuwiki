@@ -4,5 +4,6 @@
  *
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
+ * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
  */
 $lang['signature']             = 'हस्ताक्शर';
