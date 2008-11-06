@@ -11,6 +11,7 @@
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
+ * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,6 +68,7 @@ $lang['profile']               = 'Brukerprofil';
 $lang['badlogin']              = 'Ugyldig brukernavn og/eller passord.';
 $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
+$lang['nosecedit']             = 'Siden ble endret i mellomtiden, seksjonsinfo har blitt foreldet - lastet full side istedet.';
 $lang['regmissing']            = 'Vennligst fyll ut alle felt.';
 $lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
 $lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';
@@ -88,6 +90,8 @@ $lang['resendpwdnouser']       = 'Beklager, vi kan ikke finne denne brukeren i v
 $lang['resendpwdbadauth']      = 'Beklager, denne autorisasjonskoden er ikke gyldig. Sjekk at du brukte hele bekreftelseslenken.';
 $lang['resendpwdconfirm']      = 'En bekreftelseslenke er blitt sendt på e-post.';
 $lang['resendpwdsuccess']      = 'Ditt nye passord er blitt sendt på e-post.';
+$lang['license']               = 'Der annet ikke er særskilt beskrevet, er innholdet på denne wiki regulert av følgende lisens:';
+$lang['licenseok']             = 'Merk: Ved å endre på denne siden godtar du at ditt innhold blir regulert av følgende lisens:';
 $lang['txt_upload']            = 'Velg fil som skal lastes opp';
 $lang['txt_filename']          = 'Skriv inn wikinavn (alternativt)';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
@@ -113,6 +117,8 @@ $lang['namespaces']            = 'Navnerom';
 $lang['mediafiles']            = 'Tilgjengelige filer i';
 $lang['js']['keepopen']        = 'Hold vindu åpent ved valg';
 $lang['js']['hidedetails']     = 'Skjul detaljer';
+$lang['js']['nosmblinks']      = 'Lenker til Windows-ressurser fungerer bare i Microsoft sin Internet Explorer.
+Du kan fortsatt kopiere og lime inn lenken.';
 $lang['js']['mu_btn']          = 'Last opp flere filer samtidig';
 $lang['mediausage']            = 'Bruk følgende syntaks til å refferer til denne filen:';
 $lang['mediaview']             = 'Vis original fil';
@@ -143,7 +149,6 @@ $lang['mail_newpage']          = 'side lagt til:';
 $lang['mail_changed']          = 'side endret:';
 $lang['mail_new_user']         = 'ny bruker:';
 $lang['mail_upload']           = 'fil opplastet:';
-$lang['js']['nosmblinks']            = "Lenker til Windows-ressurser fungerer bare i Microsoft sin Internet Explorer.\nDu kan fortsatt kopiere og lime inn lenken.";
 $lang['qb_alert']              = 'Vennligst skriv inn teksten du ønsker å formatere.\nDen vil bli lagt til mot slutten av dokumentet.';
 $lang['qb_bold']               = 'Fet tekst';
 $lang['qb_italic']             = 'Kursiv tekst';
@@ -216,6 +221,7 @@ $lang['mu_intro']              = 'Her kan du laste opp flere filer samtidig. Kli
 $lang['mu_gridname']           = 'Filnavn';
 $lang['mu_gridsize']           = 'Størrelse';
 $lang['mu_gridstat']           = 'Status';
+$lang['mu_namespace']          = 'Navnerom (Namespace)';
 $lang['mu_browse']             = 'Utforsk';
 $lang['mu_toobig']             = 'for stor';
 $lang['mu_ready']              = 'klar for opplasting';
@@ -224,3 +230,4 @@ $lang['mu_fail']               = 'feilet';
 $lang['mu_authfail']           = 'sesjonen har utløpt';
 $lang['mu_progress']           = '@PCT@% lastet opp';
 $lang['mu_filetypes']          = 'Tillatte filtyper';
+$lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';

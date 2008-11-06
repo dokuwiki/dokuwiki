@@ -7,6 +7,7 @@
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
+ * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -44,6 +45,7 @@ $lang['savedir']               = 'Mappe for lagring av data';
 $lang['start']                 = 'Sidenavn på forsiden';
 $lang['title']                 = 'Navn på Wikien';
 $lang['template']              = 'Mal';
+$lang['license']               = 'Under hvilken lisens skal ditt innhold utgis?';
 $lang['fullpath']              = 'Vis full sti til sider i bunnteksten';
 $lang['recent']                = 'Siste endringer';
 $lang['breadcrumbs']           = 'Antall nylig besøkte sider som vises';
@@ -83,6 +85,7 @@ $lang['disableactions_wikicode'] = 'Vis kildekode/eksporter rådata';
 $lang['disableactions_other']  = 'Andre kommandoer (kommaseparert)';
 $lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerom i innholdsfortegnelsen. Hvis du skrur på dette alternativet vil brukere bare se de navnerommene der de har lesetilgang. Dette kan føre til at tilgjengelige undernavnerom skjules. Det kan gjøre innholdsfortegnelsen ubrukelig med enkelte ACL-oppsett.';
 $lang['auth_security_timeout'] = 'Autentisering utløper etter (sekunder)';
+$lang['securecookie']          = 'Skal informasjonskapsler satt via HTTPS kun sendes via HTTPS av nettleseren? Skal ikke velges dersom bare innloggingen til din wiki er sikret med SSL, og annen navigering  på wikien er usikret.';
 $lang['updatecheck']           = 'Se etter oppdateringer og sikkerhetsadvarsler? Denne funksjonen er avhengig av å kontakte splitbrain.org.';
 $lang['userewrite']            = 'Bruk pene URLer';
 $lang['useslash']              = 'Bruk / som skilletegn mellom navnerom i URLer';
@@ -112,6 +115,7 @@ $lang['xmlrpc']                = 'Slå på/slå av XML-RPC-grensesnitt';
 $lang['renderer_xhtml']        = 'Renderer til bruk for wiki-output (XHTML)';
 $lang['renderer__core']        = '%s (dokuwikikjerne)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['rememberme']            = 'Tillat permanente informasjonskapsler for innlogging (husk meg)';
 $lang['rss_type']              = 'Type XML-feed';
 $lang['rss_linkto']            = 'XML-feed lenker til';
 $lang['rss_content']           = 'Hva skal vises i XML-feed elementer?';
@@ -134,6 +138,7 @@ $lang['ftp____port']           = 'FTP-port for safemode-hack';
 $lang['ftp____user']           = 'FTP-brukernavn for safemode-hack';
 $lang['ftp____pass']           = 'FTP-passord for safemode-hack';
 $lang['ftp____root']           = 'FTP-rotmappe for safemode-hack';
+$lang['license_o_']            = 'Ingen valgt';
 $lang['typography_o_0']        = 'ingen';
 $lang['typography_o_1']        = 'Kun doble anførselstegn';
 $lang['typography_o_2']        = 'Alle anførselstegn (virker ikke alltid)';

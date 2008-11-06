@@ -10,6 +10,7 @@
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
+ * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
 $lang['acl_group']             = 'Gruppe';
@@ -17,6 +18,7 @@ $lang['acl_user']              = 'Bruker';
 $lang['acl_perms']             = 'Rettigheter for';
 $lang['page']                  = 'Side';
 $lang['namespace']             = 'Navnerom';
+$lang['btn_select']            = 'Velg';
 $lang['p_user_id']             = 'Bruker <b class="acluser">%s</b> har for tiden følgende tillatelser i for siden  <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Bruker <b class="acluser">%s</b> har for tiden følgende tillatelser i navnerom <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Medlemmer av gruppe <b class="aclgroup">%s</b> har for tiden følgende tillatelser i for siden <b class="aclpage">%s</b>: <i>%s</i>.';

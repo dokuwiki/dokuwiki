@@ -7,6 +7,7 @@
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
+ * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  */
 $lang['menu']                  = 'Behandle tillegg';
 $lang['download']              = 'Last ned og installer et tillegg';
