@@ -874,7 +874,7 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             for($i = $len; $i > 0; $i -= 16) { $text .= substr($bin, 0, min(16, $i)); }
             for($i = $len; $i > 0; $i >>= 1) { $text .= ($i & 1) ? chr(0) : $clear{0}; }
             $bin = pack("H32", md5($text));
-            for($i = 0; $i < 1000; $i++) { 
+            for($i = 0; $i < 1000; $i++) {
                 $new = ($i & 1) ? $clear : $bin;
                 if ($i % 3) $new .= $salt;
                 if ($i % 7) $new .= $clear;
@@ -884,7 +884,7 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             $tmp = '';
             for ($i = 0; $i < 5; $i++) {
                 $k = $i + 6;
-                $j = $i + 12; 
+                $j = $i + 12;
                 if ($j == 16) $j = 5;
                 $tmp = $bin[$i].$bin[$k].$bin[$j].$tmp;
             }
@@ -976,8 +976,9 @@ function auth_verifyPassword($clear,$crypt){
  * @param bool    $sticky     whether or not the cookie will last beyond the session
  */
 function auth_setCookie($user,$pass,$sticky) {
-	  global $conf;
-	  global $auth;
+    global $conf;
+    global $auth;
+    global $USERINFO;
 
       $USERINFO = $auth->getUserData($user);
 
