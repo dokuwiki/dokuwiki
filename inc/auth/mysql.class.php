@@ -42,6 +42,9 @@ class auth_mysql extends auth_basic {
         return;
       }
 
+      // default to UTF-8, you rarely want something else
+      if(!isset($this->cnf['charset'])) $this->cnf['charset'] = 'utf8';
+
       $this->defaultgroup = $conf['defaultgroup'];
 
       // set capabilities based upon config strings set
