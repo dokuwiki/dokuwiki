@@ -1,0 +1,3 @@
+===== Gendannelses Manager =====
+
+Denne side hjælper dig med at automatisk gendande revisioner efter et spam angreb. For at finde en liste af sider med mulig spam så skriv en søge streng (for eksempel. et spam URL), også bekræft at de funde sider virkelig er spam og gendan ændringerne.

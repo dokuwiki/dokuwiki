@@ -4,6 +4,7 @@
  *
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
+ * @author Esben Laursen <hyber@hyber.dk>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(brugervalidering er ikke tilgængelig)';
@@ -41,6 +42,7 @@ $lang['edit_usermissing']      = 'Den valgte bruger blev ikke fundet, brugernavn
 $lang['user_notify']           = 'Meddel bruger';
 $lang['note_notify']           = 'Meddelelses emails er kun sendt hvis brugeren er givet et nyt kodeord.';
 $lang['note_group']            = 'Nye brugere vil blive tilføjet til standard gruppen (%s) hvis ingen gruppe er opgivet.';
+$lang['note_pass']             = 'Adgangskoden vil blive autogenereret hvis feltet er tomt og underretning af brugeren er aktiveret.';
 $lang['add_ok']                = 'Bruger succesfuldt tilføjet';
 $lang['add_fail']              = 'Bruger tilføjelse mislykkedes';
 $lang['notify_ok']             = 'Meddelelses email sendt';

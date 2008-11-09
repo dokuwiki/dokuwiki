@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
+ * @author Esben Laursen <hyber@hyber.dk>
  */
 $lang['menu']                  = 'Konfigurationsindstillinger';
 $lang['error']                 = 'Indstillingerne blev ikke opdateret på grund af en ugyldig værdi, gennemse venligst dine ændringer og gem dem igen.
@@ -41,6 +42,7 @@ $lang['savedir']               = 'Katalog til opbevaring af data';
 $lang['start']                 = 'Startsidens navn';
 $lang['title']                 = 'Wiki titel';
 $lang['template']              = 'Skabelon';
+$lang['license']               = 'Under hvilken licens skal dit indhold frigives?';
 $lang['fullpath']              = 'Vis den fulde sti til siderne i bundlinjen';
 $lang['recent']                = 'Nylige ændringer';
 $lang['breadcrumbs']           = 'Stilængde';
@@ -64,6 +66,7 @@ $lang['indexdelay']            = 'Tidsforsinkelse af indeksering';
 $lang['relnofollow']           = 'Brug rel="nofollow"';
 $lang['mailguard']             = 'Slør email adresser';
 $lang['iexssprotect']          = 'Tjek uploadede filer for mulig skadelig JavaScript eller HTML kode.';
+$lang['showuseras']            = 'Hvad skal vises når den sidste bruger der har ændret siden vises';
 $lang['useacl']                = 'Benyt adgangskontrollister';
 $lang['autopasswd']            = 'Generer passwords automatisk';
 $lang['authtype']              = 'Bekræftelsesbackend';
@@ -129,6 +132,7 @@ $lang['ftp____port']           = 'FTP port til safemode hack';
 $lang['ftp____user']           = 'FTP brugernavn til safemode hack';
 $lang['ftp____pass']           = 'FTP adgangskode til safemode hack';
 $lang['ftp____root']           = 'FTP rodkatalog til safemode hack';
+$lang['license_o_']            = 'Ingen valgt';
 $lang['typography_o_0']        = 'ingen';
 $lang['typography_o_1']        = 'Gåseøjne tegn kun';
 $lang['typography_o_2']        = 'All citationstegn (vil måske ikke altid virke)';
@@ -161,3 +165,7 @@ $lang['xsendfile_o_0']         = 'brug ikke';
 $lang['xsendfile_o_1']         = 'Proprietær lighttpd header (før version 1.5)';
 $lang['xsendfile_o_2']         = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3']         = 'Proprietær Nginx X-Accel-Redirect header';
+$lang['showuseras_o_loginname'] = 'Login navn';
+$lang['showuseras_o_username'] = 'Brugerens fulde navn';
+$lang['showuseras_o_email']    = 'brugerens email adresse (manipuleret i forhold til mailguard indstillingerne)';
+$lang['showuseras_o_email_link'] = 'Brugers email adresse som et mailto: link';

@@ -7,6 +7,7 @@
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
+ * @author Esben Laursen <hyber@hyber.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,6 +64,7 @@ $lang['profile']               = 'Brugerprofil';
 $lang['badlogin']              = 'Forkert brugernavn eller password.';
 $lang['minoredit']             = 'Mindre ændringer';
 $lang['draftdate']             = 'Kladde automatisk gemt d.';
+$lang['nosecedit']             = 'Siden blev ændret i mellemtiden, sektions information var for gammel, hentede hele siden i stedet.';
 $lang['regmissing']            = 'Du skal udfylde alle felter.';
 $lang['reguexists']            = 'Dette brugernavn er allerede i brug.';
 $lang['regsuccess']            = 'Du er nu oprettet som bruger. Dit password bliver sendt til dig i en e-mail.';
@@ -84,6 +86,8 @@ $lang['resendpwdnouser']       = 'Vi kan ikke finde denne bruger i vores databas
 $lang['resendpwdbadauth']      = 'Beklager, denne autoriseringskode er ikke gyldig. Kontroller venligst at du benyttede det fulde link til bekræftelse.';
 $lang['resendpwdconfirm']      = 'Et link med bekræftelse er blevet sendt med email.';
 $lang['resendpwdsuccess']      = 'Dit nye password er blevet sendt med e-mail.';
+$lang['license']               = 'Med mindre andet angivet, vil indhold på denne wiki blive frigjort under følgende licens:';
+$lang['licenseok']             = 'Note: ved at ændre denne side, acceptere du at dit indhold bliver frigivet under følgende licens:';
 $lang['txt_upload']            = 'Vælg den fil der skal uploades';
 $lang['txt_filename']          = 'Indtast wikinavn (valgfrit)';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
@@ -109,6 +113,9 @@ $lang['namespaces']            = 'Navnerum';
 $lang['mediafiles']            = 'Tilgængelige filer i';
 $lang['js']['keepopen']        = 'Hold vindue åbent ved valg';
 $lang['js']['hidedetails']     = 'Skjul detaljer';
+$lang['js']['nosmblinks']      = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.
+Du kan stadig kopiere og indsætte linket.';
+$lang['js']['mu_btn']          = 'Upload flere filer på en gang';
 $lang['mediausage']            = 'Brug den følgende syntaks til at henvise til denne fil:';
 $lang['mediaview']             = 'Vis oprindelig fil';
 $lang['mediaroot']             = 'rod';
@@ -138,7 +145,6 @@ $lang['mail_newpage']          = 'dokument tilføjet:';
 $lang['mail_changed']          = 'dokument ændret:';
 $lang['mail_new_user']         = 'Ny bruger';
 $lang['mail_upload']           = 'fil uploadet:';
-$lang['js']['nosmblinks']            = "Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.\nDu kan stadig kopiere og indsætte linket.";
 $lang['qb_alert']              = 'Skriv den tekst du ønsker at formatere.\nDen vil blive tilføjet i slutningen af dokumentet.';
 $lang['qb_bold']               = 'Fed';
 $lang['qb_italic']             = 'Kursiv';
@@ -207,3 +213,17 @@ $lang['i_pol0']                = 'Åben Wiki (alle kan læse, skrive og uploade)
 $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrerede brugere kan skrive og uploade)';
 $lang['i_pol2']                = 'Lukket Wiki (kun for registerede brugere kan læse, skrive og uploade)';
 $lang['i_retry']               = 'Forsøg igen';
+$lang['mu_intro']              = 'Her kan du uploade flere filer af gangen. Klik på gennemse for at tilføje dem til køen. Tryk upload når du er klar.';
+$lang['mu_gridname']           = 'Filnavn';
+$lang['mu_gridsize']           = 'Størelse';
+$lang['mu_gridstat']           = 'Status';
+$lang['mu_namespace']          = 'Navnerum';
+$lang['mu_browse']             = 'gennemse';
+$lang['mu_toobig']             = 'for stor';
+$lang['mu_ready']              = 'klar til upload';
+$lang['mu_done']               = 'færdig';
+$lang['mu_fail']               = 'fejlede';
+$lang['mu_authfail']           = 'session udløb';
+$lang['mu_progress']           = '@PCT@% upload';
+$lang['mu_filetypes']          = 'Tilladte filtyper';
+$lang['recent_global']         = 'Du ser lige nu ændringerne i <b>%s</b> navnerummet. Du kan også <a href="%s">Se de sidste ændringer for hele wiki siden </a>';
