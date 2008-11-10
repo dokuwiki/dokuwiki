@@ -525,6 +525,9 @@ function html_revisions($first=0){
     $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
     if($info['user']){
       $form->addElement(editorinfo($info['user']));
+      if(auth_ismanager()){
+        $form->addElement(' ('.$info['ip'].')');
+      }
     }else{
       $form->addElement($info['ip']);
     }
@@ -634,6 +637,9 @@ function html_recent($first=0){
     $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
     if($recent['user']){
       $form->addElement(editorinfo($recent['user']));
+      if(auth_ismanager()){
+        $form->addElement(' ('.$recent['ip'].')');
+      }
     }else{
       $form->addElement($recent['ip']);
     }
