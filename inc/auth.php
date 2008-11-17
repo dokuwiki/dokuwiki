@@ -724,6 +724,7 @@ function updateprofile() {
     if ($changes['pass']) $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt());
 
     auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);
+    return true;
   }
 }
 

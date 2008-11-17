@@ -68,9 +68,15 @@ function act_dispatch(){
     }
 
     //update user profile
-    if (($ACT == 'profile') && updateprofile()) {
-      msg($lang['profchanged'],1);
-      $ACT = 'show';
+    if ($ACT == 'profile') {
+      if(!$_SERVER['REMOTE_USER']) {
+        $ACT = 'login';
+      } else {
+        if(updateprofile()) {
+          msg($lang['profchanged'],1);
+          $ACT = 'show';
+        }
+      }
     }
 
     //save
