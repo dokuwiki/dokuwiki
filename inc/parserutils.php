@@ -618,8 +618,7 @@ function & p_get_renderer($mode) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_get_first_heading($id, $render=true){
-  global $conf;
-  return $conf['useheading'] ? p_get_metadata($id,'title',$render) : null;
+  return p_get_metadata($id,'title',$render);
 }
 
 /**

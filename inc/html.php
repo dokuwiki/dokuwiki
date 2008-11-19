@@ -23,7 +23,7 @@ function html_wikilink($id,$name=NULL,$search=''){
     $xhtml_renderer = new Doku_Renderer_xhtml();
   }
 
-  return $xhtml_renderer->internallink($id,$name,$search,true);
+  return $xhtml_renderer->internallink($id,$name,$search,true,'navigation');
 }
 
 /**
@@ -353,7 +353,7 @@ function html_search(){
     $num = 1;
     foreach($data as $id => $cnt){
       print '<div class="search_result">';
-      print html_wikilink(':'.$id,$conf['useheading']?NULL:$id,$regex);
+      print html_wikilink(':'.$id,useHeading('navigation')?NULL:$id,$regex);
       print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
       if($num < 15){ // create snippets for the first number of matches only #FIXME add to conf ?
         print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
@@ -628,7 +628,7 @@ function html_recent($first=0){
     )));
     $form->addElement(form_makeCloseTag('a'));
 
-    $form->addElement(html_wikilink(':'.$recent['id'],$conf['useheading']?NULL:$recent['id']));
+    $form->addElement(html_wikilink(':'.$recent['id'],useHeading('navigation')?NULL:$recent['id']));
 
     $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
     $form->addElement(' &ndash; '.htmlspecialchars($recent['sum']));
@@ -839,7 +839,7 @@ function html_backlinks(){
       print '<ul class="idx">';
       foreach($data as $blink){
         print '<li><div class="li">';
-        print html_wikilink(':'.$blink,$conf['useheading']?NULL:$blink);
+        print html_wikilink(':'.$blink,useHeading('navigation')?NULL:$blink);
         print '</div></li>';
       }
       print '</ul>';

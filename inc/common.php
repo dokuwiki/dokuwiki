@@ -288,7 +288,7 @@ function breadcrumbs(){
 
   // page names
   $name = noNSorNS($ID);
-  if ($conf['useheading']) {
+  if (useHeading('navigation')) {
     // get page title
     $title = p_get_first_heading($ID,true);
     if ($title) {
@@ -1006,7 +1006,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
   io_saveFile($conf['cachedir'].'/purgefile',time());
 
   // if useheading is enabled, purge the cache of all linking pages
-  if($conf['useheading']){
+  if(useHeading('content')){
     require_once(DOKU_INC.'inc/fulltext.php');
     $pages = ft_backlinks($id);
     foreach ($pages as $page) {

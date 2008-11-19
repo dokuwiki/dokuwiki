@@ -221,3 +221,10 @@ $lang['showuseras_o_loginname']  = 'Login name';
 $lang['showuseras_o_username']   = "User's full name";
 $lang['showuseras_o_email']      = "User's e-mail addresss (obfuscated according to mailguard setting)";
 $lang['showuseras_o_email_link'] = "User's e-mail addresss as a mailto: link";
+
+/* useheading options */
+$lang['useheading_o_0'] = 'Never';
+$lang['useheading_o_navigation'] = 'Navigation Only';
+$lang['useheading_o_content'] = 'Wiki Content Only';
+$lang['useheading_o_1'] = 'Always';
+

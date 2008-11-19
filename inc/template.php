@@ -860,7 +860,7 @@ function tpl_youarehere($sep=' &raquo; '){
   echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
   // always print the startpage
-  $title = p_get_first_heading($conf['start']);
+  $title = useHeading('navigation') ? p_get_first_heading($conf['start']) : $conf['start'];
   if(!$title) $title = $conf['start'];
   tpl_link(wl($conf['start']),hsc($title),'title="'.$conf['start'].'"');
 
@@ -875,7 +875,7 @@ function tpl_youarehere($sep=' &raquo; '){
     // output
     echo $sep;
     if($exists){
-      $title = p_get_first_heading($page);
+      $title = useHeading($page) ? p_get_first_heading($page) : $page;
       if(!$title) $title = $parts[$i];
       tpl_link(wl($page),hsc($title),'title="'.$page.'"');
     }else{
@@ -889,7 +889,7 @@ function tpl_youarehere($sep=' &raquo; '){
   if($page == $conf['start']) return;
   echo $sep;
   if(page_exists($page)){
-    $title = p_get_first_heading($page);
+    $title = useHeading($page) ? p_get_first_heading($page) : $page;
     if(!$title) $title = $parts[$i];
     tpl_link(wl($page),hsc($title),'title="'.$page.'"');
   }else{
@@ -989,7 +989,7 @@ function tpl_pagetitle($id=null, $ret=false){
   }
 
   $name = $id;
-  if ($conf['useheading']) {
+  if (useHeading('navigation')) {
     $title = p_get_first_heading($id);
     if ($title) $name = $title;
   }

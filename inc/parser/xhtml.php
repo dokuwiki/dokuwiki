@@ -472,12 +472,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Render an internal Wiki Link
      *
-     * $search and $returnonly are not for the renderer but are used
+     * $search,$returnonly & $linktype are not for the renderer but are used
      * elsewhere - no need to implement them in other renderers
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function internallink($id, $name = NULL, $search=NULL,$returnonly=false) {
+    function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
         // default name is based on $id as given
@@ -485,7 +485,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // now first resolve and clean up the $id
         resolve_pageid(getNS($ID),$id,$exists);
-        $name = $this->_getLinkTitle($name, $default, $isImage, $id);
+        $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if ( !$isImage ) {
             if ( $exists ) {
                 $class='wikilink1';
@@ -1026,12 +1026,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      */
-    function _getLinkTitle($title, $default, & $isImage, $id=NULL) {
+    function _getLinkTitle($title, $default, & $isImage, $id=NULL, $linktype='content') {
         global $conf;
 
         $isImage = false;
         if ( is_null($title) || trim($title)=='') {
-            if ($conf['useheading'] && $id) {
+            if (useHeading($linktype) && $id) {
                 $heading = p_get_first_heading($id,true);
                 if ($heading) {
                     return $this->_xmlEntities($heading);

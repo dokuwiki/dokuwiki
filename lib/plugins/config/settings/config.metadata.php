@@ -106,7 +106,7 @@ $meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
 $meta['maxseclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5)); // 0 for no sec edit buttons
 $meta['camelcase']   = array('onoff');
 $meta['deaccent']    = array('multichoice','_choices' => array(0,1,2));
-$meta['useheading']  = array('onoff');
+$meta['useheading']  = array('multichoice','_choices' => array(0,'navigation','content',1));
 $meta['refcheck']    = array('onoff');
 $meta['refshow']     = array('numeric');
 

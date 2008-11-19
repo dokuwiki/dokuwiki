@@ -205,5 +205,36 @@ function actionOK($action){
   return !in_array($action,$disabled);
 }
 
+/**
+ * check if headings should be used as link text for the specified link type
+ *
+ * @author Chris Smith <chris@jalakai.co.uk> 
+ *
+ * @param   string  $linktype   'content'|'navigation', content applies to links in wiki text
+ *                                                      navigation applies to all other links
+ * @returns boolean             true if headings should be used for $linktype, false otherwise
+ */
+function useHeading($linktype) {
+  static $useHeading = null;
+
+  if (is_null($useHeading)) {
+    global $conf;
+
+    if (!empty($conf['useheading'])) {
+      switch ($conf['useheading']) {
+        case 'content'    : $useHeading['content'] = true; break;
+        case 'navigation' : $useHeading['navigation'] = true; break;
+        default:
+          $useHeading['content'] = true;
+          $useHeading['navigation'] = true;
+      }
+    } else {
+      $useHeading = array();
+    }
+  }
+
+  return (!empty($useHeading[$linktype]));
+}
+
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
