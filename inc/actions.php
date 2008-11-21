@@ -444,7 +444,7 @@ function act_export($act){
   $mode = substr($act,7);
   switch($mode) {
     case 'raw':
-      $headers['Content-Type'] = 'text/plain; charse=utf-8';
+      $headers['Content-Type'] = 'text/plain; charset=utf-8';
       $output = rawWiki($ID,$REV);
       break;
     case 'xhtml':
