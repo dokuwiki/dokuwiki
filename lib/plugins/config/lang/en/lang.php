@@ -168,8 +168,8 @@ $lang['license_o_'] = 'None chosen';
 
 /* typography options */
 $lang['typography_o_0'] = 'none';
-$lang['typography_o_1'] = 'Double quotes only';
-$lang['typography_o_2'] = 'All quotes (might not always work)';
+$lang['typography_o_1'] = 'excluding single quotes';
+$lang['typography_o_2'] = 'including single quotes (might not always work)';
 
 /* userewrite options */
 $lang['userewrite_o_0'] = 'none';
