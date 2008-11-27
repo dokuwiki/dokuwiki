@@ -107,6 +107,8 @@ $lang['namespaces']            = 'Katalogi';
 $lang['mediafiles']            = 'Dostępne pliki';
 $lang['js']['keepopen']        = 'Nie zamykaj okna po wyborze';
 $lang['js']['hidedetails']     = 'Ukryj szczegóły';
+$lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer. 
+Możesz skopiować odnośnik.';
 $lang['js']['mu_btn']          = 'Wyślij wiele plików na raz';
 $lang['mediausage']            = 'Użyj następującej składni w odnośniku do tego pliku:';
 $lang['mediaview']             = 'Pokaż oryginalny plik';
@@ -137,7 +139,6 @@ $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
 $lang['mail_new_user']         = 'Nowy użytkownik:';
 $lang['mail_upload']           = 'Umieszczono plik:';
-$lang['js']['nosmblinks']            = "Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer. \nMożesz skopiować odnośnik.";
 $lang['qb_alert']              = 'Wpisz tekst, który chcesz sformatować. \nBędzie on dołączony na koniec strony.';
 $lang['qb_bold']               = 'Pogrubienie';
 $lang['qb_italic']             = 'Pochylenie';
