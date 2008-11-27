@@ -3,6 +3,7 @@
  * Persian language file
  *
  * @author behrad eslamifar <behrad_es@yahoo.com)
+ * @author Mohsen Firoozmandan <info@mambolearn.com>
  */
 $lang['menu']                  = 'مدیریت کاربر';
 $lang['user_id']               = 'کاربر';
@@ -21,3 +22,6 @@ $lang['search']                = 'جستجو';
 $lang['search_prompt']         = 'انجام جستجو';
 $lang['clear']                 = 'بازنویسی فیلترهای جستجو';
 $lang['filter']                = 'فیلتر';
+$lang['start']                 = 'شروع';
+$lang['prev']                  = 'قبلی';
+$lang['next']                  = 'بعدی';

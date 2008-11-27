@@ -3,6 +3,7 @@
  * Persian language file
  *
  * @author behrad eslamifar <behrad_es@yahoo.com)
+ * @author Mohsen Firoozmandan <info@mambolearn.com>
  */
 $lang['admin_acl']             = 'مدیریت کنترل دسترسی ها';
 $lang['acl_group']             = 'گروه';

@@ -9,6 +9,7 @@
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesFa.php?view=co
  * @author behrad eslamifar <behrad_es@yahoo.com)
+ * @author Mohsen Firoozmandan <info@mambolearn.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -99,13 +100,16 @@ $lang['js']['mu_btn']          = 'بار گزاری همزمان چندین فا
 $lang['mediaview']             = 'مشاهده فایل اصلی';
 $lang['mediaroot']             = 'ریشه';
 $lang['ref_inuse']             = 'این فایل نمی تواند حذف شود، زیرا همچنان در این صفحه استفاده شده است:';
+$lang['hits']                  = 'بازدید';
 $lang['toc']                   = 'فهرست مندرجات';
 $lang['current']               = 'فعلی';
 $lang['yours']                 = 'نسخه شما';
 $lang['diff']                  = 'تفاوت ها را با نسخه فعلی نمایش بده.';
 $lang['diff2']                 = 'تفوت ها را با نسخه انتخابی نمایش بده.';
 $lang['line']                  = 'خط';
+$lang['youarehere']            = 'محل شما';
 $lang['lastmod']               = 'آخرین ویرایش';
+$lang['deleted']               = 'حذف شد';
 $lang['created']               = 'ایجاد شد';
 $lang['restored']              = 'به نسخهٔ قدیمی‌تر واگردانده شد.';
 $lang['summary']               = 'پیش‌نمایش';
@@ -115,6 +119,8 @@ $lang['mail_new_user']         = 'کاربر جدید:';
 $lang['mail_upload']           = 'بارگزاری فایل:';
 $lang['qb_bold']               = 'متن پُررنگ';
 $lang['qb_italic']             = 'متن ایتالیک';
+$lang['qb_underl']             = 'متن زیر خط دار';
+$lang['qb_code']               = 'کد';
 $lang['qb_link']               = 'پیوند داخلی';
 $lang['qb_extlink']            = 'پیوند به بیرون (پیشوند http:// را فراموش نکنید)';
 $lang['qb_hr']                 = 'خط افقی (در کاربرد آن امساک کنید)';
