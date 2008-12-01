@@ -5,6 +5,7 @@
  * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author yavuzselim@gmail.com
+ * @author Cihan Kahveci kahvecicihan@gmail.com
  */
 $lang['btn_info']              = 'bilgi';
 $lang['btn_update']            = 'güncelle';

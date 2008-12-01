@@ -7,6 +7,7 @@
  * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author yavuzselim@gmail.com
+ * @author Cihan Kahveci kahvecicihan@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -139,7 +140,6 @@ $lang['mail_newpage']          = 'sayfa eklenme:';
 $lang['mail_changed']          = 'sayfa değiştirilme:';
 $lang['mail_new_user']         = 'yeni kullanıcı';
 $lang['mail_upload']           = 'dosya yüklendi:';
-$lang['js']['nosmblinks']            = "Windows paylaşımlarına link verme özelliği sadece Microsoft Internet Explorer ile çalışır.\nYine de linki kopyalayıp yapıştırırabilirsiniz.";
 $lang['qb_alert']              = 'Lütfen biçimlendirmek istediğin yazıyı gir.\nSayfanın sonuna eklenecektir.';
 $lang['qb_bold']               = 'Kalın Yazı';
 $lang['qb_italic']             = 'Eğik Yazı';

@@ -5,6 +5,7 @@
  * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author yavuzselim@gmail.com
+ * @author Cihan Kahveci kahvecicihan@gmail.com
  */
 $lang['_header_dokuwiki']      = 'DokuWiki Ayarları';
 $lang['lang']                  = 'Lisan';
