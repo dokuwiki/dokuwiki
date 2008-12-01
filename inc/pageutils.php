@@ -162,19 +162,19 @@ function noNS($id) {
 }
 
 /**
-* Returns the current namespace
-*
-* @author Nathan Fritz <fritzn@crown.edu>
-*/
+ * Returns the current namespace
+ *
+ * @author Nathan Fritz <fritzn@crown.edu>
+ */
 function curNS($id) {
     return noNS(getNS($id));
 }
 
 /**
-* Returns the ID without the namespace or current namespace for 'start' pages
-*
-* @author Nathan Fritz <fritzn@crown.edu>
-*/
+ * Returns the ID without the namespace or current namespace for 'start' pages
+ *
+ * @author Nathan Fritz <fritzn@crown.edu>
+ */
 function noNSorNS($id) {
     global $conf;
 
@@ -187,6 +187,36 @@ function noNSorNS($id) {
     }
     return $p;
 }
+
+/**
+ * Creates a XHTML valid linkid from a given headline title
+ *
+ * @param string  $title   The headline title
+ * @param array   $check   List of existing IDs
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function sectionID($title,&$check=null) {
+    $title = str_replace(':','',cleanID($title));
+    $new = ltrim($title,'0123456789._-');
+    if(empty($new)){
+        $title = 'section'.preg_replace('/[^0-9]+/','',$title); //keep numbers from headline
+    }else{
+        $title = $new;
+    }
+
+    if(!is_null($check) && is_array($check)){
+        // make sure tiles are unique
+        $num = '';
+        while(in_array($title.$num,$check)){
+            ($num) ? $num++ : $num = 1;
+        }
+        $title = $title.$num;
+        $check[] = $title;
+    }
+
+    return $title;
+}
+
 
 /**
  *  Wiki page existence check

@@ -1004,21 +1004,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _headerToLink($title,$create=false) {
-        $title = str_replace(':','',cleanID($title));
-        $title = ltrim($title,'0123456789._-');
-        if(empty($title)) $title='section';
-
         if($create){
-            // make sure tiles are unique
-            $num = '';
-            while(in_array($title.$num,$this->headers)){
-                ($num) ? $num++ : $num = 1;
-            }
-            $title = $title.$num;
-            $this->headers[] = $title;
+            return sectionID($title,$this->headers);
+        }else{
+            return sectionID($title);
         }
-
-        return $title;
     }
 
     /**

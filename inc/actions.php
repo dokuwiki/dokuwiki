@@ -340,11 +340,7 @@ function act_redirect($id,$preact){
 
   //get section name when coming from section edit
   if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
-    #FIXME duplicates code from xhtml renderer
-    $title = $match[0];
-    $title = str_replace(':','',cleanID($title));
-    $title = ltrim($title,'0123456789._-');
-    if(empty($title)) $title='section';
+    $title = sectionID($match[0]);
   }
 
   $opts = array(
