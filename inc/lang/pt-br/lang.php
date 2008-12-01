@@ -9,6 +9,7 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
+ * @author Flávio Veras <flaviove@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -65,6 +66,7 @@ $lang['profile']               = 'Perfil de usuário';
 $lang['badlogin']              = 'Desculpe, mas o nome de usuário ou a senha estão incorretos.';
 $lang['minoredit']             = 'Alterações mínimas';
 $lang['draftdate']             = 'Rascunho salvo automaticamente em';
+$lang['nosecedit']             = 'A página foi modificada nesse intervalo de tempo, a seção de informação está desatualizada a página foi carregada completamente ao invez disso.';
 $lang['regmissing']            = 'Desculpe, mas você precisa preencher todos os campos.';
 $lang['reguexists']            = 'Desculpe, mas já existe um usuário com esse nome.';
 $lang['regsuccess']            = 'O usuário foi criado e a senha enviada para seu e-mail.';
@@ -86,6 +88,8 @@ $lang['resendpwdnouser']       = 'Desculpe, não foi possível encontrar esse us
 $lang['resendpwdbadauth']      = 'Desculpe, esse código de autorização é inválido. Certifique-se de que você usou o link de confirmação inteiro.';
 $lang['resendpwdconfirm']      = 'Um link de confirmação foi enviado por e-mail.';
 $lang['resendpwdsuccess']      = 'Sua nova senha foi enviada por e-mail.';
+$lang['license']               = 'Exceto onde de outra maneira observado, o conteúdo neste wiki é licenciado sob a seguinte da licença:';
+$lang['licenseok']             = 'Observe: editando esta página você aceita autorizar o seu conteúdo sob a seguinte da licença:';
 $lang['txt_upload']            = 'Selecione o arquivo a ser enviado';
 $lang['txt_filename']          = 'Enviar como (opcional)';
 $lang['txt_overwrt']           = 'Substituir o arquivo existente';
@@ -111,6 +115,8 @@ $lang['namespaces']            = 'Ramos';
 $lang['mediafiles']            = 'Arquivos disponíveis em';
 $lang['js']['keepopen']        = 'Manter a janela aberta na seleção';
 $lang['js']['hidedetails']     = 'Esconder detalhes';
+$lang['js']['nosmblinks']      = 'Atalhos para pastas Windows compartilhadas funcionam apenas no Microsoft Internet Explorer.
+Entretanto, você ainda pode copiar e colar o atalho.';
 $lang['js']['mu_btn']          = 'Enviar múltiplos arquivos de uma vez';
 $lang['mediausage']            = 'Use a seguinte sintaxe para se referir a esse arquivo:';
 $lang['mediaview']             = 'Ver arquivo original';
@@ -141,7 +147,6 @@ $lang['mail_newpage']          = 'página adicionada:';
 $lang['mail_changed']          = 'página modificada:';
 $lang['mail_new_user']         = 'novo usuário:';
 $lang['mail_upload']           = 'arquivo enviado:';
-$lang['js']['nosmblinks']            = "Atalhos para pastas Windows compartilhadas funcionam apenas no Microsoft Internet Explorer.\nEntretanto, você ainda pode copiar e colar o atalho.";
 $lang['qb_alert']              = 'Por favor, insira o texto que você deseja formatar.\nEle será adicionado ao final do documento.';
 $lang['qb_bold']               = 'Texto em negrito';
 $lang['qb_italic']             = 'Texto em itálico';
@@ -220,3 +225,4 @@ $lang['mu_fail']               = 'falhou';
 $lang['mu_authfail']           = 'sessão expirou';
 $lang['mu_progress']           = '@PCT@% carregado';
 $lang['mu_filetypes']          = 'Tipos de arquivo permitidos';
+$lang['recent_global']         = 'Você está olhando atualmente as modificações dentro <b> %s </b> namespace. Você pode também <a href = "% s"> examinar as modificações recentes de todo o wiki </a>.';

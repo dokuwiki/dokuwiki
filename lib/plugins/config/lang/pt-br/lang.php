@@ -6,6 +6,7 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
+ * @author Flávio Veras <flaviove@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido, por favor, reveja suas mudanças e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -41,6 +42,7 @@ $lang['savedir']               = 'Diretório para salvar os dados';
 $lang['start']                 = 'Nome da página inicial';
 $lang['title']                 = 'Título do Wiki';
 $lang['template']              = 'Modelo';
+$lang['license']               = 'Sob que licença o seu conteúdo deve ser disponibilizado?';
 $lang['fullpath']              = 'Revela o caminho completo das páginas no rodapé';
 $lang['recent']                = 'Modificações recentes';
 $lang['breadcrumbs']           = 'Número de elementos na trilha';
@@ -64,6 +66,7 @@ $lang['indexdelay']            = 'Tempo de espera antes da indexação (seg)';
 $lang['relnofollow']           = 'Usar rel="nofollow" em links externos';
 $lang['mailguard']             = 'Obscurecer endereços de e-mail';
 $lang['iexssprotect']          = 'Checar os arquivos enviados contra possíveis códigos maliciosos em HTML ou JavaScript';
+$lang['showuseras']            = 'O que expor quando mostrar ao usuário a última página editada';
 $lang['useacl']                = 'Usar listas de controle de acesso';
 $lang['autopasswd']            = 'Gerar senhas automaticamente';
 $lang['authtype']              = 'Forma de autenticação';
@@ -80,6 +83,7 @@ $lang['disableactions_wikicode'] = 'Visualização da fonte/Exportação bruta';
 $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
 $lang['sneaky_index']          = 'Por padrão, o DokuWiki irá exibir todos os ramos na visualização do índice. Ao habilitar essa opção, serão escondidos aqueles que o usuário não tiver permissão de leitura. Isso pode resultar na omissão de sub-ramos acessíveis, tornando o índice inútil para certas configurações de ACL.';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
+$lang['securecookie']          = 'Os cookies devem ser estabelecidos via HTTPS e só ser enviado via HTTPS pelo browser? Inutilize esta opção somente quando o login do seu wiki é segurado com SSL mas a navegação do wiki é insegura.';
 $lang['updatecheck']           = 'Checar por atualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efetuar esse recurso.';
 $lang['userewrite']            = 'Usar URLs limpas';
 $lang['useslash']              = 'Usar a barra como separador de ramos nas URLs';
@@ -109,6 +113,7 @@ $lang['xmlrpc']                = 'Habilitar/desabilitar interface XML-RPC.';
 $lang['renderer_xhtml']        = 'Estética a aplicar para a saída principal (xhtml) do "wiki"';
 $lang['renderer__core']        = '%s (núcleo DokuWiki)';
 $lang['renderer__plugin']      = '%s ("plugin")';
+$lang['rememberme']            = 'Permitir cookies permanentes de login (lembre-se de mim)';
 $lang['rss_type']              = 'Tipo de alimentador XML';
 $lang['rss_linkto']            = 'Links do alimentador XML para';
 $lang['rss_content']           = 'O que deve ser exibido nos itens do alimentador XML?';
@@ -131,6 +136,7 @@ $lang['ftp____port']           = 'Porta do FTP para o modo de segurança';
 $lang['ftp____user']           = 'Nome do usuário FTP para o modo de segurança';
 $lang['ftp____pass']           = 'Senha do usuário FTP para o modo de segurança';
 $lang['ftp____root']           = 'Diretório raiz do FTP para o modo de segurança';
+$lang['license_o_']            = 'Nenhuma escolhida';
 $lang['typography_o_0']        = 'nenhuma';
 $lang['typography_o_1']        = 'apenas aspas duplas';
 $lang['typography_o_2']        = 'todas as aspas (nem sempre funciona)';
@@ -163,3 +169,7 @@ $lang['xsendfile_o_0']         = 'não usar';
 $lang['xsendfile_o_1']         = 'Cabeçalho proprietário lighttpd (anterior à versão 1.5)';
 $lang['xsendfile_o_2']         = 'Cabeçalho X-Sendfile padrão';
 $lang['xsendfile_o_3']         = 'Cabeçalho proprietário Nginx X-Accel-Redirect';
+$lang['showuseras_o_loginname'] = 'Nome para login';
+$lang['showuseras_o_username'] = 'Nome completo do usuário';
+$lang['showuseras_o_email']    = 'Endereço de email do usário (ofuscado segundo estabelecido pelo mailguard)';
+$lang['showuseras_o_email_link'] = 'O endereço de e-mail de usuário como um mailto: conexão';

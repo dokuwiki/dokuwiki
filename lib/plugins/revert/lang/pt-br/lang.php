@@ -6,6 +6,7 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
+ * @author Flávio Veras <flaviove@gmail.com>
  */
 $lang['menu']                  = 'Gerenciador de reversões';
 $lang['filter']                = 'Procura por páginas com spam';
