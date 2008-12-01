@@ -1,4 +1,3 @@
 ====== Pagină blocată ======
 
-Pagina este momentan blocată de alt utilizator. Trebuie să aştepţi pînă cînd
-acest utilizator termină editarea ori expiră blocarea.
+Pagina este momentan blocată de alt utilizator. Trebuie să aştepţi pînă cînd acest utilizator termină editarea ori expiră blocarea.

@@ -1,5 +1,4 @@
 ====== Prijava ======
 
-Niste prijavljeni! Spodaj vnesite svoje podatke in se prijavite.
-Da se lahko prijavite, morate imeti omogočene piškotke.
+Niste prijavljeni! Spodaj vnesite svoje podatke in se prijavite. Da se lahko prijavite, morate imeti omogočene piškotke.
 

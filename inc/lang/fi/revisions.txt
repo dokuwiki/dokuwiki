@@ -1,4 +1,3 @@
 ====== Vanha versio ======
 
-Nämä ovat vanhoja versioita nykyisestä dokumentista. Jos haluat palauttaa vanhan version 
-valitse se alhaalta, paina ''Muokkaa tätä sivua'' ja tallenna se.
+Nämä ovat vanhoja versioita nykyisestä dokumentista. Jos haluat palauttaa vanhan version valitse se alhaalta, paina ''Muokkaa tätä sivua'' ja tallenna se.

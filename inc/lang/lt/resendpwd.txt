@@ -1,5 +1,3 @@
 ====== Siųsti naują slaptažodį ======
 
-Naujo slaptažodžio gavimui, užpildykite visus žemiau esančius laukus.
-Naujas slaptažodis bus atsiųstas į jūsų užregistruotą el. pašto adresą.
-Vartotojo vardas turi būti toks pat kaip ir wiki sistemoje.
+Naujo slaptažodžio gavimui, užpildykite visus žemiau esančius laukus. Naujas slaptažodis bus atsiųstas į jūsų užregistruotą el. pašto adresą. Vartotojo vardas turi būti toks pat kaip ir wiki sistemoje.

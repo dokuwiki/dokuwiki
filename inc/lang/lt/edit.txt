@@ -1,3 +1,2 @@
-Modifikuokite šį puslapį ir paspauskite ''Išsaugoti''. Apie wiki sintaksę galite paskaityti [[wiki:syntax|čia]].
-Prašome redaguoti šį puslapį tik tada, kai galite jį **patobulinti**. Jei tik norite išbandyti wiki galimybes, prašytume tai daryti [[playground:playground|čia]].
+Modifikuokite šį puslapį ir paspauskite ''Išsaugoti''. Apie wiki sintaksę galite paskaityti [[wiki:syntax|čia]]. Prašome redaguoti šį puslapį tik tada, kai galite jį **patobulinti**. Jei tik norite išbandyti wiki galimybes, prašytume tai daryti [[playground:playground|čia]].
 

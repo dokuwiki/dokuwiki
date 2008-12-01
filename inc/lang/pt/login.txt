@@ -1,7 +1,6 @@
 ====== Sessão ======
 
-Não está actualmente em sessão!\\
-Introduza as suas credenciais de autenticação para entrar em sessão.
+Não está actualmente em sessão!\\ Introduza as suas credenciais de autenticação para entrar em sessão.
 
 **Nota**: Precisa de ter //cookies// activos no seu browser.
 

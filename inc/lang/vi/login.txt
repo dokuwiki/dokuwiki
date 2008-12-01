@@ -1,4 +1,3 @@
 ====== Đăng nhập ======
 
-Hiện bạn chưa đăng nhập! Điền vào những chi tiết chứng minh ở phía dưới.
-Máy của bạn cần đặt chế độ nhận cookies để đăng nhập.
+Hiện bạn chưa đăng nhập! Điền vào những chi tiết chứng minh ở phía dưới. Máy của bạn cần đặt chế độ nhận cookies để đăng nhập.

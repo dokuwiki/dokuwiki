@@ -1,4 +1,3 @@
 ====== Moduļu pārvaldīšana ======
 
-Šajā lapā varat pārvaldīt visu, kas saistīts ar Dokuwiki [[doku>plugins|moduļiem]].
-Lai varētu lejupielādēt un uzstādīt moduļus, to direktorijai serverī vajag rakstīšanas tiesības.
+Šajā lapā varat pārvaldīt visu, kas saistīts ar Dokuwiki [[doku>plugins|moduļiem]]. Lai varētu lejupielādēt un uzstādīt moduļus, to direktorijai serverī vajag rakstīšanas tiesības.

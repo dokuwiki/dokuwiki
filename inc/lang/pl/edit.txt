@@ -1,5 +1,4 @@
 Zredaguj tę stronę i naciśnij ''zapisz''.
 
-Na stronie ze [[wiki:syntax|składnią]] znajdziesz opis znaczników wiki.
-Jeśli chcesz poćwiczyć zajrzyj do [[playground:playground|piaskownicy]].
+Na stronie ze [[wiki:syntax|składnią]] znajdziesz opis znaczników wiki. Jeśli chcesz poćwiczyć zajrzyj do [[playground:playground|piaskownicy]].
 

@@ -1,5 +1,4 @@
 ====== Aperçu ======
 
-Ceci est un aperçu de votre document. Attention ! Il n'est **pas encore
-enregistré** !
+Ceci est un aperçu de votre document. Attention ! Il n'est **pas encore enregistré** !
 

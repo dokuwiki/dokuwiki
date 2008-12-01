@@ -1,4 +1,3 @@
 ====== SPAM nebol povolený ======
 
-Vaše zmeny **neboli uložené**, pretože obsahujú jedno alebo viacej nepovolených slov.
-Wiki si nepotrpí na spam! Pokiaľ sa domnievate, že ide o omyl, kontaktujte správcu.
+Vaše zmeny **neboli uložené**, pretože obsahujú jedno alebo viacej nepovolených slov. Wiki si nepotrpí na spam! Pokiaľ sa domnievate, že ide o omyl, kontaktujte správcu.

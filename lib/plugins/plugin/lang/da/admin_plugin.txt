@@ -1,6 +1,5 @@
 ====== Pluginstyring ======
 
-På denne side kan du kontrollere alle Dokuwikis [[doku>plugins|plugins]].
-For at downloade og installere et plugin, må din plugin mappe kunne skrives til af webserveren.
+På denne side kan du kontrollere alle Dokuwikis [[doku>plugins|plugins]]. For at downloade og installere et plugin, må din plugin mappe kunne skrives til af webserveren.
 
 

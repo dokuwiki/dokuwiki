@@ -1,7 +1,6 @@
 === Hozzáférési lista (ACL) kezelő ===
 
-Ezen az oldalon jogokat oszthat és vehet el a wiki oldalakhoz 
-és névterekhez.
+Ezen az oldalon jogokat oszthat és vehet el a wiki oldalakhoz és névterekhez.
 
 A bal oldalon látható az összes névtér és oldal.
 

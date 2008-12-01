@@ -1,4 +1,3 @@
 ====== Menadżer przywracania ======
 
-Menadżer przywracania przeznaczony jest do automatycznego naprawiania stron, które uległy wandalizmom.
-W celu naprawienia uszkodzonych stron, wyszukaj je a następnie oznacz i przywróć poprzednie wersje.
+Menadżer przywracania przeznaczony jest do automatycznego naprawiania stron, które uległy wandalizmom. W celu naprawienia uszkodzonych stron, wyszukaj je a następnie oznacz i przywróć poprzednie wersje.

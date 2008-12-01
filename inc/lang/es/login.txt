@@ -1,4 +1,3 @@
 ====== Login ======
 
-¡Actualmente no estás identificado! Introduce abajo tus datos de identificación para abrir una sesión.
-Necesitas tener las cookies activadas para identificarte.
+¡Actualmente no estás identificado! Introduce abajo tus datos de identificación para abrir una sesión. Necesitas tener las cookies activadas para identificarte.

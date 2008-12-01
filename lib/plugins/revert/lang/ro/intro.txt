@@ -1,4 +1,3 @@
 ====== Manager Reveniri ======
 
-Această pagină ajută revenirea automată în cazul unui atac spam.
-Pentru a găsi o listă a paginilor cu spam, întroduceţi mai întâi un şir de căutat (de ex. Un URL spam), apoi confirmaţi dacă paginile găsite conţin într-adevăr spam şi anulaţi editările.
+Această pagină ajută revenirea automată în cazul unui atac spam. Pentru a găsi o listă a paginilor cu spam, întroduceţi mai întâi un şir de căutat (de ex. Un URL spam), apoi confirmaţi dacă paginile găsite conţin într-adevăr spam şi anulaţi editările.

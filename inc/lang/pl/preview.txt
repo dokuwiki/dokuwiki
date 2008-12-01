@@ -1,5 +1,4 @@
 ====== Podgląd ======
 
-To jest podgląd edytowanej strony. 
-Pamiętaj, że ta strona **nie** jest jeszcze zapisana!
+To jest podgląd edytowanej strony. Pamiętaj, że ta strona **nie** jest jeszcze zapisana!
 

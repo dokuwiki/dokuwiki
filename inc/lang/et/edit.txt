@@ -1,4 +1,2 @@
-Toimeta seda lehte ja klõpsa ''Salvesta'' peal. Wikis teksti kujundamise vahenditega tutvumiseks, st.
-kuidas teha rasvast ja kaldkirja jne., vaata [[wiki:syntax|süntaksitutvustus lehelt]].
-Kui Sa tahad midagi testida, saad seda teha [[playground:playground|mängualal]].
+Toimeta seda lehte ja klõpsa ''Salvesta'' peal. Wikis teksti kujundamise vahenditega tutvumiseks, st. kuidas teha rasvast ja kaldkirja jne., vaata [[wiki:syntax|süntaksitutvustus lehelt]]. Kui Sa tahad midagi testida, saad seda teha [[playground:playground|mängualal]].
 

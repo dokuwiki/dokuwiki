@@ -1,4 +1,3 @@
 ====== Trang bị khoá ======
 
-Trang này đang bị khoá để một bạn khác biên soạn. Bạn cần đợi cho đến khi nào
-bạn kia đã biên soạn xong, hoặc khoá hết hạn.
+Trang này đang bị khoá để một bạn khác biên soạn. Bạn cần đợi cho đến khi nào bạn kia đã biên soạn xong, hoặc khoá hết hạn.

@@ -1,6 +1,5 @@
 ====== Página em Edição ======
 
-Esta página está bloqueada por outro utilizador, que se encontra a editá-la neste momento.\\
-Terá que aguardar que o utilizador termine a edição e grava as alterações ou então que temporizador de bloqueio expire.
+Esta página está bloqueada por outro utilizador, que se encontra a editá-la neste momento.\\ Terá que aguardar que o utilizador termine a edição e grava as alterações ou então que temporizador de bloqueio expire.
 
 ----

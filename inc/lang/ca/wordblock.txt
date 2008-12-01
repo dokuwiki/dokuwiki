@@ -1,5 +1,4 @@
 ====== Brossa blocada ======
 
-Els canvis **no** s'han desat perquè contenen una o més paraules blocades. 
-Volíeu inundar el wiki amb brossa? Molt mal fet! Si penseu que això és un error, contacteu amb l'administrador d'aquest Wiki.
+Els canvis **no** s'han desat perquè contenen una o més paraules blocades. Volíeu inundar el wiki amb brossa? Molt mal fet! Si penseu que això és un error, contacteu amb l'administrador d'aquest Wiki.
 

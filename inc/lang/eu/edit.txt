@@ -1,3 +1,1 @@
-Egin aldaketak eta ''Gorde'' pultsatu. Begiratu [[wiki:syntax]] Wiki-aren
-sintaxiarentzat. Mesedez aldaketak orrialdea **hobetzeko** bakarrik egin itzazu.
-Probak egin nahi badituzu, ikas ezazu [[playground:playground]] erabiltzen.
+Egin aldaketak eta ''Gorde'' pultsatu. Begiratu [[wiki:syntax]] Wiki-aren sintaxiarentzat. Mesedez aldaketak orrialdea **hobetzeko** bakarrik egin itzazu. Probak egin nahi badituzu, ikas ezazu [[playground:playground]] erabiltzen.

@@ -1,6 +1,5 @@
 ====== Wyszukiwanie ======
 
-Wyniki wyszukiwania.
-Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.
+Wyniki wyszukiwania. Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.
 
 ===== Wyniki =====

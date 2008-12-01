@@ -1,4 +1,1 @@
-Upravte stránku a stiskněte ''Uložit''. Na stránce [[wiki:syntax]] se můžete
-dozvědět více o wiki syntaxi. Prosím upravujte stránky pouze, pokud je můžete
-**vylepšit**. V případě, že si chcete něco pouze vyzkoušet, použijte raději
-[[playground:playground|pískoviště]].
+Upravte stránku a stiskněte ''Uložit''. Na stránce [[wiki:syntax]] se můžete dozvědět více o wiki syntaxi. Prosím upravujte stránky pouze, pokud je můžete **vylepšit**. V případě, že si chcete něco pouze vyzkoušet, použijte raději [[playground:playground|pískoviště]].

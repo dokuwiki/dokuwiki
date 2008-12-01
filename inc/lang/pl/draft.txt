@@ -1,8 +1,6 @@
 ====== Znaleziono szkic strony ======
 
-Twoja ostatnia sesja edycji nie została poprawnie zakończona.
-DokuWiki automatycznie zachowało szkic strony podczas Twojej pracy abyś mógł (mogła) ją dokończyć.
-Poniżej możesz zobaczyć co zostało zapisane w czasie ostatnie sesji.
+Twoja ostatnia sesja edycji nie została poprawnie zakończona. DokuWiki automatycznie zachowało szkic strony podczas Twojej pracy abyś mógł (mogła) ją dokończyć. Poniżej możesz zobaczyć co zostało zapisane w czasie ostatnie sesji.
 
 Zdecyduj czy chcesz //przywrócić// ostatnią sesję, //usunąć// ją lub //anulować//.
 

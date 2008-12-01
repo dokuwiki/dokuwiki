@@ -1,4 +1,3 @@
 ====== Yönetim ======
 
-Aşağıda DokuWiki için yapılabilecek yönetim işleri
-vardır.
+Aşağıda DokuWiki için yapılabilecek yönetim işleri vardır.

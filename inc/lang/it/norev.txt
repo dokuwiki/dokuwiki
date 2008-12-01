@@ -1,4 +1,3 @@
 ======Revisione inesistente======
 
-La revisione richiesta non esiste. Usa il pulsante ''Revisioni precedenti''
-per ottenere una lista di revisioni precedenti di questo documento.
+La revisione richiesta non esiste. Usa il pulsante ''Revisioni precedenti'' per ottenere una lista di revisioni precedenti di questo documento.

@@ -1,4 +1,3 @@
 ====== Sivu lukittu ======
 
-Tämä sivu on tällä hetkellä lukittuna, koska se on toisen käyttäjän muokkauksessa. Joudut 
-odottamaan, kunnes hän lopettaa muokkauksen, tai kunnes lukko aukeaa.
+Tämä sivu on tällä hetkellä lukittuna, koska se on toisen käyttäjän muokkauksessa. Joudut odottamaan, kunnes hän lopettaa muokkauksen, tai kunnes lukko aukeaa.

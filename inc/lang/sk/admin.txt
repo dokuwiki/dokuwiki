@@ -1,6 +1,5 @@
 ====== Administrácia ======
 
-Nižšie môžte nájsť zoznam administratívnych úloch, ktoré môžte vykonávať v
-DokuWiki.
+Nižšie môžte nájsť zoznam administratívnych úloch, ktoré môžte vykonávať v DokuWiki.
 
 

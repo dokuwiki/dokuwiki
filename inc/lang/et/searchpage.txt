@@ -1,6 +1,5 @@
 ======Otsi ======
 
-Leiad vasted oma otsingule. Kui Sa otsitavat ei leidnud võid tekitada oma otsingu nimelise uue lehe 
-kasutades ''Toimeta seda lehte'' nuppu.
+Leiad vasted oma otsingule. Kui Sa otsitavat ei leidnud võid tekitada oma otsingu nimelise uue lehe kasutades ''Toimeta seda lehte'' nuppu.
 
 =====Vasted=====

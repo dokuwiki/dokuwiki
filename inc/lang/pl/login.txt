@@ -1,5 +1,4 @@
 ====== Logowanie ======
 
-Wprowadź nazwę użytkownika i hasło aby się zalogować.
-Twoja przeglądarka musi mieć włączoną obsługę ciasteczek (cookies).
+Wprowadź nazwę użytkownika i hasło aby się zalogować. Twoja przeglądarka musi mieć włączoną obsługę ciasteczek (cookies).
 

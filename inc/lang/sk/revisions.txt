@@ -1,4 +1,3 @@
 ====== Staršia verzia ======
 
-Tu sú staršie verzie daného dokumentu. Pre návrat ku staršej verzii si ju zvoľte
-zo zoznamu nižšie, stlačte tlačidlo ''Upraviť stránku'' a uložte ju.
+Tu sú staršie verzie daného dokumentu. Pre návrat ku staršej verzii si ju zvoľte zo zoznamu nižšie, stlačte tlačidlo ''Upraviť stránku'' a uložte ju.

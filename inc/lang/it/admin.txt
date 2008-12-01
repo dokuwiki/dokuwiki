@@ -1,5 +1,4 @@
 ====== Amministrazione ======
 
-Qui sotto puoi trovare una lista delle possibili azioni amministrative
-attualmente disponibili in Dokuwiki.
+Qui sotto puoi trovare una lista delle possibili azioni amministrative attualmente disponibili in Dokuwiki.
 

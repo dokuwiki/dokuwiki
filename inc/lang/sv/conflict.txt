@@ -1,9 +1,6 @@
 ====== Det finns en senare version ======
 
-Det finns en senare version av dokumentet du har redigerat. Detta kan hända
-när en annan användare redigerar dokumentet samtidigt som du.
+Det finns en senare version av dokumentet du har redigerat. Detta kan hända när en annan användare redigerar dokumentet samtidigt som du.
 
-Granska skillnaderna som visas nedan noga, och välj sedan vilken version du
-vill behålla. Om du väljer ''spara'', så kommer din version att sparas.
-Välj ''avbryt'' för att behålla den nuvarande versionen.
+Granska skillnaderna som visas nedan noga, och välj sedan vilken version du vill behålla. Om du väljer ''spara'', så kommer din version att sparas. Välj ''avbryt'' för att behålla den nuvarande versionen.
 

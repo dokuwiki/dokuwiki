@@ -1,2 +1,1 @@
-Muokkaa sivua ja paina ''Tallenna''. Katso [[wiki:syntax]] nähdäksesi Wikisyntaksi. Muuta sivua
-vain jos voit **parantaa** sitä. Jos haluat kokeilla Wikiä hyvä paikka siihen on [[playground:playground]].
+Muokkaa sivua ja paina ''Tallenna''. Katso [[wiki:syntax]] nähdäksesi Wikisyntaksi. Muuta sivua vain jos voit **parantaa** sitä. Jos haluat kokeilla Wikiä hyvä paikka siihen on [[playground:playground]].

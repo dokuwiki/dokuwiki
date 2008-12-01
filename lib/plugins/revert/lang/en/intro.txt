@@ -1,6 +1,3 @@
 ====== Revert Manager ======
 
-This page helps you with the automatic reversion of a spam attack.
-To find a list of spammy pages first enter a search string (eg. a
-spam URL), then confirm that the found pages are really spam and
-revert the edits.
+This page helps you with the automatic reversion of a spam attack. To find a list of spammy pages first enter a search string (eg. a spam URL), then confirm that the found pages are really spam and revert the edits.

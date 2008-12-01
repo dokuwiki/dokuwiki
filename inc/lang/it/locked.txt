@@ -1,4 +1,3 @@
 ====== Pagina bloccata ======
 
-Questa pagina è attualmente bloccata poiché un altro utente sta effettuando delle modifiche.
-Devi attendere che l'utente concluda le modifiche o che il blocco scada.
+Questa pagina è attualmente bloccata poiché un altro utente sta effettuando delle modifiche. Devi attendere che l'utente concluda le modifiche o che il blocco scada.

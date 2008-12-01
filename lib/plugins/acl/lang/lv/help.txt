@@ -6,7 +6,6 @@ Kreisajā pusē parādītas visas pieejamās nodaļas un lapas.
 
 Formā augšpusē var redzēt un grozīt norādītā lietotāja vai grupas tiesības .
 
-Apakšā tabulā  parādīts visu tiesību saraksts. 
-To var lietot, lai ātri mainītu vairākus pieejas tiesību noteikumus.
+Apakšā tabulā  parādīts visu tiesību saraksts. To var lietot, lai ātri mainītu vairākus pieejas tiesību noteikumus.
 
 [[doku>acl|Officiālajos piekļuves tiesību noteikumu dokumentos]] var atrast izvērstu informāciju, kā darbojas DokuWiki sistēmas piekļuves tiesību kontrole.

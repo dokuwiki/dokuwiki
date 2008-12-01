@@ -1,4 +1,3 @@
 ====== Přihlášení ======
 
-Momentálně nejste přihlášen(a)! Prosím vložte své identifikační údaje níže.
-Pro přihlášení musíte mít zapnuté cookies.
+Momentálně nejste přihlášen(a)! Prosím vložte své identifikační údaje níže. Pro přihlášení musíte mít zapnuté cookies.

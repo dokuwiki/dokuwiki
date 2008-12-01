@@ -1,9 +1,6 @@
 ====== Istnieje nowsza wersja strony ======
 
-Istnieje nowsza wersja edytowanej strony. 
-Prawdopodobnie ktoś zmienił tę stronę w trakcie Twojej pracy.
+Istnieje nowsza wersja edytowanej strony. Prawdopodobnie ktoś zmienił tę stronę w trakcie Twojej pracy.
 
-Przeglądnij dokładnie poniższe różnice i zdecyduj, którą wersję zatrzymać.
-Jeśli naciśniesz ''zapisz'' to Twoja wersja zostanie zapisana. 
-Jeśli naciśniesz ''anuluj'' to zostanie wybrana aktualna wersja strony.
+Przeglądnij dokładnie poniższe różnice i zdecyduj, którą wersję zatrzymać. Jeśli naciśniesz ''zapisz'' to Twoja wersja zostanie zapisana. Jeśli naciśniesz ''anuluj'' to zostanie wybrana aktualna wersja strony.
 

@@ -6,10 +6,17 @@
  * create your own complete new template instead.
  */
 
+if($ID == 'dokuwiki'){
+  echo '<div style="margin: 0.5em" class="dokuwiki">DokuWiki is currently sponsored by: AOE media GmbH - <a class="urlextern" href="http://www.aoemedia.de/typo3-agentur.html">TYPO3 Agentur</a></div>';
+}
+
+
 $tgt = ($conf['target']['extern']) ? 'target="'.$conf['target']['extern'].'"' : '';
 ?>
 
 <div class="footerinc">
+  <a href="http://www.splitbrain.org/personal#imprint" style="float:right; text-decoration: none; color:#333">Imprint</a>
+
   <a <?php echo $tgt?> href="<?php echo DOKU_BASE; ?>feed.php" title="Recent changes RSS feed"><img src="<?php echo DOKU_TPL; ?>images/button-rss.png" width="80" height="15" alt="Recent changes RSS feed" /></a>
 
   <?php
@@ -37,3 +44,4 @@ if ($conf['allowdebug']) {
 
 
 </div>
+<?php include(dirname(__FILE__).'/dwtb.html') ?>

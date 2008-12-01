@@ -1,4 +1,3 @@
 ====== Gerenciador de Reversões ======
 
-Essa página ajuda a reverter automaticamente um ataque de spam.
-Para encontrar as páginas que sofreram ataque, primeiro entre com um termo na busca (ex.: a URL do espam), então confirme que as páginas encontradas são realmente espam e reverta as edições.
+Essa página ajuda a reverter automaticamente um ataque de spam. Para encontrar as páginas que sofreram ataque, primeiro entre com um termo na busca (ex.: a URL do espam), então confirme que as páginas encontradas são realmente espam e reverta as edições.

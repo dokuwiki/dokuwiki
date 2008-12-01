@@ -1,4 +1,3 @@
 ====== Administrado de Kromaĵoj ======
 
-En tiu cxi pagxo vi povas administri cxion pri DokuWiki-aj [[doku>plugins|kromajxoj]].
-Por sukcesi elsxuti kaj instali kromajxon, via dosierujo de kromajxoj devas esti konservebla por la retservilo.
+En tiu cxi pagxo vi povas administri cxion pri DokuWiki-aj [[doku>plugins|kromajxoj]]. Por sukcesi elsxuti kaj instali kromajxon, via dosierujo de kromajxoj devas esti konservebla por la retservilo.

@@ -1,8 +1,5 @@
 ====== Existe uma nova versão ======
 
-Existe uma versão mais nova do documento que você editou. Isso acontece
-quando outro usuário modifica o documento enquanto você o está editando.
+Existe uma versão mais nova do documento que você editou. Isso acontece quando outro usuário modifica o documento enquanto você o está editando.
 
-Examine as diferenças mostradas abaixo atentamente e então decida qual
-versão deve permanecer. Se você selecionar ''Salvar'', sua versão será
-salva. Pressione ''Cancelar'' para manter a versão atual.
+Examine as diferenças mostradas abaixo atentamente e então decida qual versão deve permanecer. Se você selecionar ''Salvar'', sua versão será salva. Pressione ''Cancelar'' para manter a versão atual.

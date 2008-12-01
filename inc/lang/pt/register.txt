@@ -2,7 +2,6 @@
 
 Por favor, preencha todos os campos com a informação correspondente, para poder criar uma nova conta neste SiteWiki.
 
-**Nota**: O nome de utilizador deve cumprir as mesmas regras de nomeação de documentos Wiki válidos.\\
-**Atenção**: Verifique que o endereço de correio electrónico que preencheu é válido, pois a sua senha será enviada por e-mail.
+**Nota**: O nome de utilizador deve cumprir as mesmas regras de nomeação de documentos Wiki válidos.\\ **Atenção**: Verifique que o endereço de correio electrónico que preencheu é válido, pois a sua senha será enviada por e-mail.
 
 ----

@@ -1,4 +1,3 @@
 ====== Administrasjon ======
 
-Nedenfor finner du en liste over administrative oppgaver tilgjengelig i 
-DokuWiki.
+Nedenfor finner du en liste over administrative oppgaver tilgjengelig i DokuWiki.

@@ -1,6 +1,3 @@
 ====== Zaregistrujte se jako nový uživatel ======
 
-Abyste získali uživatelský účet, vyplňte prosím všechny informace v následujícím
-formuláři. Zadejte **platnou** mailovou adresu, na níž bude zasláno heslo.
-Uživatelské jméno musí být v platném [[doku>pagename|formátu]] (který je
-stejný jako formát názvu stránky).
+Abyste získali uživatelský účet, vyplňte prosím všechny informace v následujícím formuláři. Zadejte **platnou** mailovou adresu, na níž bude zasláno heslo. Uživatelské jméno musí být v platném [[doku>pagename|formátu]] (který je stejný jako formát názvu stránky).

@@ -1,5 +1,3 @@
 ====== Đăng ký mới ======
 
-Xin điền vào mọi thông tin sau đây để tạo một username mới cho wiki này.
-Bạn cần cung cấp **e-mail chính xác** - để gởi password mới của bạn đến đấy.
-Username cần là một [[doku>pagename|pagename]] hợp lệ.
+Xin điền vào mọi thông tin sau đây để tạo một username mới cho wiki này. Bạn cần cung cấp **e-mail chính xác** - để gởi password mới của bạn đến đấy. Username cần là một [[doku>pagename|pagename]] hợp lệ.

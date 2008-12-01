@@ -1,5 +1,2 @@
-Editeu la pàgina i premeu ''Desa''. Per a més informació sobre la sintaxi
-Wiki vegeu [[wiki:syntax|sintaxi]]. Si us plau, editeu la pàgina només si podeu
-**millorar-la**. Si voleu fer proves, aprengueu a donar les primeres passes
-al [[playground:playground|pati]].
+Editeu la pàgina i premeu ''Desa''. Per a més informació sobre la sintaxi Wiki vegeu [[wiki:syntax|sintaxi]]. Si us plau, editeu la pàgina només si podeu **millorar-la**. Si voleu fer proves, aprengueu a donar les primeres passes al [[playground:playground|pati]].
 

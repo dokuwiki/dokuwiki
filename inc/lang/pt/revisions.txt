@@ -1,11 +1,5 @@
 ====== Revisões ======
 
-Estas são as revisões ao documento corrente.\\
-Para reverter o documento para uma destas revisões:
-  * Escolha a revisão do documento da lista abaixo;
-  * Clique depois no botão <Editar Página>;
-  * Faça as alterações que veja necessárias - opcional;
-  * Grava a revisão antiga como sendo a revisão actual do documento.
-Após a gravação, o documento da versão actual será substituído pelo documento da revisão escolhida.
+Estas são as revisões ao documento corrente.\\ Para reverter o documento para uma destas revisões:   * Escolha a revisão do documento da lista abaixo;   * Clique depois no botão <Editar Página>;   * Faça as alterações que veja necessárias - opcional;   * Grava a revisão antiga como sendo a revisão actual do documento. Após a gravação, o documento da versão actual será substituído pelo documento da revisão escolhida.
 
 ----

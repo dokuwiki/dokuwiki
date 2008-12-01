@@ -1,4 +1,3 @@
 ====== Evnisyvirlit ======
 
-Hetta er eitt yvirlit yvur øll atkomandi skjøl, flokka eftir
-[[doku>namespaces|navnarúm]].
+Hetta er eitt yvirlit yvur øll atkomandi skjøl, flokka eftir [[doku>namespaces|navnarúm]].

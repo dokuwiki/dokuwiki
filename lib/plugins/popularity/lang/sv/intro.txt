@@ -1,11 +1,8 @@
 ====== Popularitetsfeedback ======
 
-Detta verktyg samlar anonyma data om din wiki och låter dig skicka dessa till DokuWikis utvecklare.
-Det hjälper utvecklarna att förstå hur DokuWiki används och gör att framtida beslut om DokuWikis
-utveckling kan grundas på statistik från verkligt bruk.
+Detta verktyg samlar anonyma data om din wiki och låter dig skicka dessa till DokuWikis utvecklare. Det hjälper utvecklarna att förstå hur DokuWiki används och gör att framtida beslut om DokuWikis utveckling kan grundas på statistik från verkligt bruk.
 
-Upprepa gärna detta steg då och då allteftersom din Wiki växer.
-Dina rapporter kommer att bli identifierade med hjälp av ett anonymt id.
+Upprepa gärna detta steg då och då allteftersom din Wiki växer. Dina rapporter kommer att bli identifierade med hjälp av ett anonymt id.
 
 Data som samlas in innehåller information om bland annat din DokuWiki-version, antalet och storleken på sidorna, installerade plugins samt information om din PHP-installation.
 
