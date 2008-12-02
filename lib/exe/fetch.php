@@ -25,10 +25,11 @@
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = (int) $_REQUEST['w'];
   $HEIGHT = (int) $_REQUEST['h'];
-  list($EXT,$MIME) = mimetype($MEDIA);
+  list($EXT,$MIME,$DL) = mimetype($MEDIA);
   if($EXT === false){
     $EXT  = 'unknown';
     $MIME = 'application/octet-stream';
+    $DL   = true;
   }
 
   //media to local file
@@ -78,17 +79,18 @@
   }
 
   // finally send the file to the client
-  $data = array('file'   => $FILE,
-                'mime'   => $MIME,
-                'cache'  => $CACHE,
-                'orig'   => $ORIG,
-                'ext'    => $EXT,
-                'width'  => $WIDTH,
-                'height' => $HEIGHT);
+  $data = array('file'     => $FILE,
+                'mime'     => $MIME,
+                'download' => $DL,
+                'cache'    => $CACHE,
+                'orig'     => $ORIG,
+                'ext'      => $EXT,
+                'width'    => $WIDTH,
+                'height'   => $HEIGHT);
 
   $evt = new Doku_Event('MEDIA_SENDFILE', $data);
   if ($evt->advise_before()) {
-    sendFile($data['file'],$data['mime'],$data['cache']);
+    sendFile($data['file'],$data['mime'],$data['download'],$data['cache']);
   }
 
 /* ------------------------------------------------------------------------ */
@@ -99,7 +101,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function sendFile($file,$mime,$cache){
+function sendFile($file,$mime,$dl,$cache){
   global $conf;
   $fmtime = @filemtime($file);
   // send headers
@@ -126,9 +128,11 @@ function sendFile($file,$mime,$cache){
   http_conditionalRequest($fmtime);
 
 
-  //application mime type is downloadable
-  if(substr($mime,0,11) == 'application'){
+  //download or display?
+  if($dl){
     header('Content-Disposition: attachment; filename="'.basename($file).'";');
+  }else{
+    header('Content-Disposition: inline; filename="'.basename($file).'";');
   }
 
   //use x-sendfile header to pass the delivery to compatible webservers

@@ -233,8 +233,8 @@ function media_upload($ns,$auth){
     }
 
     // check extensions
-    list($fext,$fmime) = mimetype($file['name']);
-    list($iext,$imime) = mimetype($id);
+    list($fext,$fmime,$dl) = mimetype($file['name']);
+    list($iext,$imime,$dl) = mimetype($id);
     if($fext && !$iext){
         // no extension specified in id - read original one
         $id   .= '.'.$fext;
@@ -492,7 +492,7 @@ function media_printfile($item,$auth,$jump){
     }
 
     // Prepare fileicons
-    list($ext,$mime) = mimetype($item['file']);
+    list($ext,$mime,$dl) = mimetype($item['file']);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
 

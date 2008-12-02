@@ -675,7 +675,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $render = ($linking == 'linkonly') ? false : true;
         $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
-        list($ext,$mime) = mimetype($src);
+        list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
         }elseif($mime == 'application/x-shockwave-flash' && $render){
@@ -705,7 +705,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['url']    = ml($src,array('cache'=>$cache));
 
-        list($ext,$mime) = mimetype($src);
+        list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image' && $render){
              // link only jpeg images
              // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
@@ -909,7 +909,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $ret = '';
 
-        list($ext,$mime) = mimetype($src);
+        list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             // first get the $title
             if (!is_null($title)) {

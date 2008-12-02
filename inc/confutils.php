@@ -14,7 +14,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function mimetype($file){
-  $ret    = array(false,false); // return array
+  $ret    = array(false,false,false); // return array
   $mtypes = getMimeTypes();     // known mimetypes
   $exts   = join('|',array_keys($mtypes));  // known extensions (regexp)
   if(preg_match('#\.('.$exts.')$#i',$file,$matches)){
@@ -22,7 +22,11 @@ function mimetype($file){
   }
 
   if($ext && $mtypes[$ext]){
-    $ret = array($ext, $mtypes[$ext]);
+    if($mtypes[$ext][0] == '!'){
+        $ret = array($ext, substr($mtypes[$ext],1), true);
+    }else{
+        $ret = array($ext, $mtypes[$ext], false);
+    }
   }
 
   return $ret;

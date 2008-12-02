@@ -452,7 +452,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             io_saveFile($ftmp, $buff);
 
             // get filename
-            list($iext, $imime) = mimetype($id);
+            list($iext, $imime,$dl) = mimetype($id);
             $id = cleanID($id);
             $fn = mediaFN($id);
 
