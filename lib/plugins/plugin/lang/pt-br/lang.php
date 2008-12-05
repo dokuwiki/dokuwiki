@@ -7,6 +7,7 @@
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
+ * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  */
 $lang['menu']                  = 'Gerenciar Plugins';
 $lang['download']              = 'Transferir e instalar um novo plugin';

@@ -7,6 +7,7 @@
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
+ * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido, por favor, reveja suas mudanças e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -173,3 +174,7 @@ $lang['showuseras_o_loginname'] = 'Nome para login';
 $lang['showuseras_o_username'] = 'Nome completo do usuário';
 $lang['showuseras_o_email']    = 'Endereço de email do usário (ofuscado segundo estabelecido pelo mailguard)';
 $lang['showuseras_o_email_link'] = 'O endereço de e-mail de usuário como um mailto: conexão';
+$lang['useheading_o_0']        = 'Nunca';
+$lang['useheading_o_navigation'] = 'Somente Navegação';
+$lang['useheading_o_content']  = 'Somente Conteúdo Wiki';
+$lang['useheading_o_1']        = 'Sempre';
