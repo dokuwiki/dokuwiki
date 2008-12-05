@@ -8,6 +8,7 @@
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
+ * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />La valeur(s) erronée(s) est entourée d\'une bordure rouge.';
@@ -42,6 +43,7 @@ $lang['savedir']               = 'Répertoire de stockage';
 $lang['start']                 = 'Nom de la page d\'accueil';
 $lang['title']                 = 'Titre du wiki';
 $lang['template']              = 'Template';
+$lang['license']               = 'Sous quelle licence doit être placée votre contribution ?';
 $lang['fullpath']              = 'Utiliser le chemin complet dans le pied de page';
 $lang['recent']                = 'Nombre de derniers changements à afficher';
 $lang['breadcrumbs']           = 'Nombre de traces à afficher';
@@ -81,6 +83,7 @@ $lang['disableactions_wikicode'] = 'Afficher source';
 $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher celles pour lesquelles l\'utilisateur n\'a pas la permission de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certaines ACL.';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
+$lang['securecookie']          = 'Les cookies mis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Ne désactivez cette option que si la connexion à votre wiki est sécurisée avec SSL mais que la navigation sur le wiki n\'est pas sécurisée';
 $lang['updatecheck']           = 'Vérifier les mises à jour ? DokuWiki doit pouvoir contacter splitbrain.org.';
 $lang['userewrite']            = 'URLs esthétiques';
 $lang['useslash']              = 'Utiliser slash comme séparateur de catégorie dans les URLs';
@@ -111,6 +114,7 @@ $lang['xmlrpc']                = 'Activer l\'interface XML-RPC.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['rememberme']            = 'Permettre de conserver de manière permanente les cookies de connexion (mémoriser)';
 $lang['rss_type']              = 'Type de flux RSS';
 $lang['rss_linkto']            = 'Lien du flux RSS vers';
 $lang['rss_content']           = 'Quel contenu afficher dans le flux RSS ?';
@@ -165,3 +169,5 @@ $lang['xsendfile_o_0']         = 'ne pas utiliser';
 $lang['xsendfile_o_1']         = 'Entête propriétaire lighttpd (avant la version 1.5)';
 $lang['xsendfile_o_2']         = 'Entête standard X-Sendfile';
 $lang['xsendfile_o_3']         = 'En-tête propriétaire Nginx X-Accel-Redirect';
+$lang['useheading_o_0']        = 'Jamais';
+$lang['useheading_o_1']        = 'Toujours';

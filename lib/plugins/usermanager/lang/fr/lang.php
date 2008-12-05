@@ -7,6 +7,7 @@
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
+ * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification utilisateur non disponible)';
@@ -44,6 +45,7 @@ $lang['edit_usermissing']      = 'Utilisateur sélectionné non trouvé, cet uti
 $lang['user_notify']           = 'Notifier l\'utilisateur ';
 $lang['note_notify']           = 'Envoi de notification par courriel uniquement lorsqu\'un nouveau mot de passe est attribué à l\'utilisateur.';
 $lang['note_group']            = 'Les nouveaux utilisateurs seront ajoutés au groupe par défaut (%s) si aucun groupe n\'est spécifié.';
+$lang['note_pass']             = 'Le mot de passe sera généré automatiquement si le champ est laissé vide et si la notification de l\'utilisateur est activée';
 $lang['add_ok']                = 'Utilisateur ajouté avec succès';
 $lang['add_fail']              = 'Échec de l\'ajout de l\'utilisateur';
 $lang['notify_ok']             = 'Courriel de notification expédié';

@@ -13,6 +13,7 @@
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
+ * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
 $lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
 $lang['acl_group']             = 'Groupe';

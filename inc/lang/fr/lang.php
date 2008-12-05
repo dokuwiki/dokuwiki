@@ -14,6 +14,7 @@
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
+ * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -91,6 +92,7 @@ $lang['resendpwdnouser']       = 'Désolé, cet utilisateur est introuvable dans
 $lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez vous d\'avoir utilisé le lien de confirmation.';
 $lang['resendpwdconfirm']      = 'Un lien de confirmation vous a été envoyé par courriel.';
 $lang['resendpwdsuccess']      = 'Votre nouveau mot de passe vous a été expédié par courriel.';
+$lang['licenseok']             = 'Note : En éditant cette page vous acceptez que le contenu soit placé sous les termes de la licence suivante :';
 $lang['txt_upload']            = 'Sélectionnez un fichier à envoyer ';
 $lang['txt_filename']          = 'Donnez un "wikiname" (optionnel) ';
 $lang['txt_overwrt']           = 'Écraser le fichier cible';
@@ -116,6 +118,8 @@ $lang['namespaces']            = 'Catégories';
 $lang['mediafiles']            = 'Fichiers disponibles dans';
 $lang['js']['keepopen']        = 'Gardez la fenêtre ouverte pendant la sélection';
 $lang['js']['hidedetails']     = 'Masquer détails';
+$lang['js']['nosmblinks']      = 'Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.
+Vous pouvez toujours faire un copier/coller du lien.';
 $lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Voir fichier original';
@@ -146,7 +150,6 @@ $lang['mail_newpage']          = 'page ajoutée :';
 $lang['mail_changed']          = 'page changée :';
 $lang['mail_new_user']         = 'nouvel utilisateur :';
 $lang['mail_upload']           = 'fichier envoyé :';
-$lang['js']['nosmblinks']            = "Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.\nVous pouvez toujours faire un copier/coller du lien.";
 $lang['qb_alert']              = 'SVP, entrez le texte que vous souhaitez formater.\nIl sera ajouté à la fin du document.';
 $lang['qb_bold']               = 'Gras';
 $lang['qb_italic']             = 'Italique';
@@ -224,3 +227,4 @@ $lang['mu_fail']               = 'Échoué';
 $lang['mu_authfail']           = 'Session expirée';
 $lang['mu_progress']           = '@PCT@% envoyé';
 $lang['mu_filetypes']          = 'Types de fichiers acceptés';
+$lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein du namespace <b>%s</b>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>';

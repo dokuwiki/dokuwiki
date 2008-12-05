@@ -6,6 +6,7 @@
  * @author Guy Brand <gb@isis.u-strasbg.fr>
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
+ * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
 $lang['menu']                  = 'Gestion des réversions';
 $lang['filter']                = 'Trouver les pages spammées ';

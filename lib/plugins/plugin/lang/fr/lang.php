@@ -8,6 +8,7 @@
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
+ * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
 $lang['menu']                  = 'Gestion des plugins';
 $lang['download']              = 'Télécharger et installer un nouveau plugin';
