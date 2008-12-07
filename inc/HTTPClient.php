@@ -122,7 +122,7 @@ class HTTPClient {
     function get($url,$sloppy304=false){
         if(!$this->sendRequest($url)) return false;
         if($this->status == 304 && $sloppy304) return $this->resp_body;
-        if($this->status != 200) return false;
+        if($this->status < 200 || $this->status > 206) return false;
         return $this->resp_body;
     }
 
@@ -135,7 +135,7 @@ class HTTPClient {
      */
     function post($url,$data){
         if(!$this->sendRequest($url,$data,'POST')) return false;
-        if($this->status != 200) return false;
+        if($this->status < 200 || $this->status > 206) return false;
         return $this->resp_body;
     }
 
