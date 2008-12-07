@@ -175,3 +175,7 @@ $lang['showuseras_o_loginname'] = 'Loginname';
 $lang['showuseras_o_username'] = 'Vollständiger Name des Benutzers';
 $lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
 $lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
+$lang['useheading_o_0']        = 'Nie';
+$lang['useheading_o_navigation'] = 'Nur Navigation';
+$lang['useheading_o_content']  = 'Nur Wikiinhalt';
+$lang['useheading_o_1']        = 'Immer';
