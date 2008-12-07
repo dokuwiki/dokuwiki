@@ -12,6 +12,9 @@
   require_once(DOKU_INC.'inc/utf8.php');
   require_once(DOKU_INC.'inc/parserutils.php');
 
+// set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
+if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',3);
+
 // Asian characters are handled as words. The following regexp defines the
 // Unicode-Ranges for Asian characters
 // Ranges taken from http://en.wikipedia.org/wiki/Unicode_block
@@ -472,7 +475,7 @@ function idx_getIndexWordsSorted($words,&$result){
             $wild |= 2;
             $wlen -= 1;
         }
-        if ($wlen < 3 && $wild == 0 && !is_numeric($xword)) continue;
+        if ($wlen < IDX_MINWORDLENGTH && $wild == 0 && !is_numeric($xword)) continue;
         if(!isset($tokens[$xword])){
             $tokenlength[$wlen][] = $xword;
         }
@@ -620,14 +623,14 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
 
         $arr = explode(' ', utf8_stripspecials($string,' ','\._\-:'.$wc));
         foreach ($arr as $w) {
-            if (!is_numeric($w) && strlen($w) < 3) continue;
+            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
             $w = utf8_strtolower($w);
             if($stopwords && is_int(array_search("$w\n",$stopwords))) continue;
             $words[] = $w;
         }
     }else{
         $w = $string;
-        if (!is_numeric($w) && strlen($w) < 3) return $words;
+        if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) return $words;
         $w = strtolower($w);
         if(is_int(array_search("$w\n",$stopwords))) return $words;
         $words[] = $w;
