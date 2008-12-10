@@ -2,7 +2,6 @@
     if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
     define('DOKU_MEDIAMANAGER',1);
 
-
     require_once(DOKU_INC.'inc/init.php');
     require_once(DOKU_INC.'inc/lang/en/lang.php');
     require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
@@ -11,6 +10,8 @@
     require_once(DOKU_INC.'inc/search.php');
     require_once(DOKU_INC.'inc/template.php');
     require_once(DOKU_INC.'inc/auth.php');
+
+    trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
     session_write_close();  //close session
 
     // handle passed message
