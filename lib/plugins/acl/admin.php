@@ -588,8 +588,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $check = $ID;
         }
 
-        if(isset($this->acl[$check][auth_nameencode($this->who,true)])){
-            return $this->acl[$check][auth_nameencode($this->who,true)];
+        if(isset($this->acl[$check][$this->who])){
+            return $this->acl[$check][$this->who];
         }else{
             return null;
         }
