@@ -33,6 +33,9 @@
     error_reporting(DOKU_E_LEVEL);
   }
 
+  // we don't want a purge URL to be digged
+  if($_REQUEST['purge'] && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
+
   // init memory caches
   global $cache_revinfo;  $cache_revinfo = array();
   global $cache_wikifn;   $cache_wikifn = array();
