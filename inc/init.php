@@ -33,9 +33,6 @@
     error_reporting(DOKU_E_LEVEL);
   }
 
-  // we don't want a purge URL to be digged
-  if($_REQUEST['purge'] && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
-
   // init memory caches
   global $cache_revinfo;  $cache_revinfo = array();
   global $cache_wikifn;   $cache_wikifn = array();
@@ -153,6 +150,9 @@
 
   // don't let cookies ever interfere with request vars
   $_REQUEST = array_merge($_GET,$_POST);
+
+  // we don't want a purge URL to be digged
+  if($_REQUEST['purge'] && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
 
   // disable gzip if not available
   if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
