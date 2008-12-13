@@ -464,7 +464,7 @@ EOT;
  * @author <richpageau at yahoo dot co dot uk>
  * @link   http://de3.php.net/manual/en/function.realpath.php#75992
  */
-function fullpath($path){
+function fullpath($path,$exists=false){
     static $run = 0; 
     $root  = '';
     $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || $GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
@@ -490,7 +490,7 @@ function fullpath($path){
         $path = $base.'/'.$path;
         if($run == 0){ // avoid endless recursion when base isn't absolute for some reason
             $run++;
-            return fullpath($path,1);
+            return fullpath($path,$exists);
         }
     }
     $run = 0;
@@ -508,8 +508,8 @@ function fullpath($path){
     }
     $finalpath = $root.implode('/', $newpath);
 
-    // check for existance (except when unit testing)
-    if(!defined('DOKU_UNITTEST') && !@file_exists($finalpath)) {
+    // check for existance when needed (except when unit testing)
+    if($exists && !defined('DOKU_UNITTEST') && !@file_exists($finalpath)) {
         return false;
     }
     return $finalpath;
