@@ -6,8 +6,7 @@
  * @author     Chris Smith <chris@jalakai.co.uk>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
-
+if(!defined('DOKU_INC')) die('meh.');
 require_once(DOKU_INC.'inc/io.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/parserutils.php');

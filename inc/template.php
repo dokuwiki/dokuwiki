@@ -6,8 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_CONF.'dokuwiki.php');
+if(!defined('DOKU_INC')) die('meh.');
+require_once(DOKU_CONF.'dokuwiki.php');
 
 /**
  * Returns the path to the given template, uses

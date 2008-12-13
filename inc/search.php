@@ -6,8 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_INC.'inc/common.php');
+if(!defined('DOKU_INC')) die('meh.');
+require_once(DOKU_INC.'inc/common.php');
 
 /**
  * recurse direcory
@@ -55,7 +55,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
 
 /**
  * Wrapper around call_user_func_array.
- * 
+ *
  * @deprecated
  */
 function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
@@ -187,8 +187,8 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
   if($type == 'd') {
-  	return ($opts['recursive']);
-  } 
+    return ($opts['recursive']);
+  }
 
   $info         = array();
   $info['id']   = pathID($file,true);

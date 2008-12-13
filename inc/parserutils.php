@@ -7,12 +7,11 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
-
-  require_once(DOKU_INC.'inc/confutils.php');
-  require_once(DOKU_INC.'inc/pageutils.php');
-  require_once(DOKU_INC.'inc/pluginutils.php');
-  require_once(DOKU_INC.'inc/cache.php');
+if(!defined('DOKU_INC')) die('meh.');
+require_once(DOKU_INC.'inc/confutils.php');
+require_once(DOKU_INC.'inc/pageutils.php');
+require_once(DOKU_INC.'inc/pluginutils.php');
+require_once(DOKU_INC.'inc/cache.php');
 
 /**
  * Returns the parsed Wikitext in XHTML for the given id and revision.

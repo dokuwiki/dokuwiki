@@ -6,14 +6,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_INC.'inc/utf8.php');
-  require_once(DOKU_INC.'inc/EmailAddressValidator.php');
+if(!defined('DOKU_INC')) die('meh.');
+require_once(DOKU_INC.'inc/utf8.php');
+require_once(DOKU_INC.'inc/EmailAddressValidator.php');
 
-  // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-  // think different
-  if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
-  #define('MAILHEADER_ASCIIONLY',1);
+// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
+// think different
+if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
+#define('MAILHEADER_ASCIIONLY',1);
 
 /**
  * Patterns for use in email detection and validation

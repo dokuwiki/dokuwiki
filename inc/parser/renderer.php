@@ -5,8 +5,7 @@
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
-
+if(!defined('DOKU_INC')) die('meh.');
 require_once DOKU_INC . 'inc/parser/renderer.php';
 require_once DOKU_INC . 'inc/plugin.php';
 require_once DOKU_INC . 'inc/pluginutils.php';

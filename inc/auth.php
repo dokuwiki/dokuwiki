@@ -9,7 +9,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
+  if(!defined('DOKU_INC')) die('meh.');
   require_once(DOKU_INC.'inc/common.php');
   require_once(DOKU_INC.'inc/io.php');
 

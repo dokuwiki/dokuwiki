@@ -6,9 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
-
 require_once(DOKU_INC.'inc/html.php');
 require_once(DOKU_INC.'inc/search.php');
 require_once(DOKU_INC.'inc/JpegMeta.php');

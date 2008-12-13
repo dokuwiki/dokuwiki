@@ -4,8 +4,7 @@
  *
  * @author Esther Brunner <wikidesign@gmail.com>
  */
-
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
+if(!defined('DOKU_INC')) die('meh.');
 
 if ( !defined('DOKU_LF') ) {
     // Some whitespace to help View > Source

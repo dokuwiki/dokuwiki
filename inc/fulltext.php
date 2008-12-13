@@ -6,8 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
-  require_once(DOKU_INC.'inc/indexer.php');
+if(!defined('DOKU_INC')) die('meh.');
+require_once(DOKU_INC.'inc/indexer.php');
 
 
 /**

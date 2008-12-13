@@ -5,8 +5,7 @@
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../../').'/');
+if(!defined('DOKU_INC')) die('meh.');
 
 if ( !defined('DOKU_LF') ) {
     // Some whitespace to help View > Source
