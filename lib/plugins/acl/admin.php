@@ -22,7 +22,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     var $ns  = null;
     var $who = '';
     var $usersgroups = array();
-
+    var $specials = array();
 
     /**
      * return some info
@@ -31,7 +31,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-03-15',
+            'date'   => '2008-12-16',
             'name'   => 'ACL',
             'desc'   => 'Manage Page Access Control Lists',
             'url'    => 'http://dokuwiki.org/plugin:acl',
@@ -460,6 +460,18 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $acl_config=array();
         $usersgroups = array();
 
+        // get special users and groups
+        $this->specials[] = '@ALL';
+        $this->specials[] = '@'.$conf['defaultgroup'];
+        if($conf['manager'] != '!!not set!!'){
+            $this->specials = array_merge($this->specials,
+                                          array_map('trim',
+                                                    explode(',',$conf['manager'])));
+        }
+        $this->specials = array_filter($this->specials);
+        $this->specials = array_unique($this->specials);
+        sort($this->specials);
+
         foreach($AUTH_ACL as $line){
             $line = trim(preg_replace('/#.*$/','',$line)); //ignore comments
             if(!$line) continue;
@@ -472,9 +484,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
             // store non-special users and groups for later selection dialog
             $ug = $acl[1];
-            if($ug == '@ALL') continue;
-            if($ug == $conf['superuser']) continue;
-            if($ug == $conf['manager']) continue;
+            if(in_array($ug,$this->specials)) continue;
             $usersgroups[] = $ug;
         }
 
@@ -683,10 +693,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $conf;
         $inlist = false;
 
-        $specials = array('@ALL','@'.$conf['defaultgroup']);
-        if($conf['manager'] && $conf['manager'] != '!!not set!!') $specials[] = $conf['manager'];
-
-
         if($this->who &&
            !in_array($this->who,$this->usersgroups) &&
            !in_array($this->who,$specials)){
@@ -707,7 +713,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
         echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
         echo '  <optgroup label="&nbsp;">'.NL;
-        foreach($specials as $ug){
+        foreach($this->specials as $ug){
             if($ug == $this->who){
                 $sel    = ' selected="selected"';
                 $inlist = true;
