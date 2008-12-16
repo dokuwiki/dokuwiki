@@ -699,7 +699,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         if($this->who &&
            !in_array($this->who,$this->usersgroups) &&
-           !in_array($this->who,$specials)){
+           !in_array($this->who,$this->specials)){
 
             if($this->who{0} == '@'){
                 $gsel = ' selected="selected"';
