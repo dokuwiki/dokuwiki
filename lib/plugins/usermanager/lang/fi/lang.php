@@ -3,6 +3,7 @@
  * Finnish language file
  *
  * @author otto@valjakko.net
+ * @author Otto Vainio <otto@valjakko.net>
  */
 $lang['menu']                  = 'Käyttäjähallinta';
 $lang['noauth']                = '(aautentikointi ei ole käytössä)';
@@ -40,6 +41,7 @@ $lang['edit_usermissing']      = 'Valittua käyttäjää ei löytynyt. Käyttäj
 $lang['user_notify']           = 'Tiedotä käyttäjälle';
 $lang['note_notify']           = 'Tiedotus lähetetään vain, jos käyttäjälle on määritelty uusi salasana.';
 $lang['note_group']            = 'Uudelle käyttäjälle määritellään oletusryhmä (%s), jos ryhmää ei erikseen määritellä.';
+$lang['note_pass']             = 'Salasana luodaan automaattisesti, mikäli kenttä jätetään tyhjäksi ja jos käyttäjän tiedotus on päällä.';
 $lang['add_ok']                = 'Käyttäjä lisätty onnistuneesti';
 $lang['add_fail']              = 'Käyttäjän lisäys epäonnistui';
 $lang['notify_ok']             = 'Ilmoitus sähköpostilla lähetetty';

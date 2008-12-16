@@ -3,6 +3,7 @@
  * Finnish language file
  *
  * @author otto@valjakko.net
+ * @author Otto Vainio <otto@valjakko.net>
  */
 $lang['admin_acl']             = 'Käyttöoikeudet (ACL)';
 $lang['acl_group']             = 'Ryhmä';
@@ -10,6 +11,7 @@ $lang['acl_user']              = 'Käyttäjä';
 $lang['acl_perms']             = 'Oikeudet';
 $lang['page']                  = 'Sivu';
 $lang['namespace']             = 'Nimiavaruus';
+$lang['btn_select']            = 'Valitse';
 $lang['p_user_id']             = 'Käyttäjällä <b class="acluser">%s</b> on tällä hetkellä seuraavat oikeudet sivulla <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Käyttäjällä <b class="acluser">%s</b> on tällä hetkellä seuraavat oikeudet nimiavaruudessa <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Ryhmän <b class="aclgroup">%s</b> jäsenillä on tällä hetkellä seuraavat oikeudet sivulla <b class="aclpage">%s</b>: <i>%s</i>.';

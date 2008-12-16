@@ -7,10 +7,16 @@ Tässä muutokset:
 @DIFF@
 --------------------------------------------------------
 
+Päivä : @DATE@
+Käyttäjä : @USER@
+Yhteenveto: @SUMMARY@
+Vanha revisio: @OLDPAGE@
+Uusi revisio: @NEWPAGE@
+
 Poistaaksesi sivun seurannan, kirjaudu wikiin osoitteessa
 @DOKUWIKIURL@ ja siirry sivulle
 @NEWPAGE@
-ja valitse 'Lopeta tarkkailu'.
+ja valitse 'Lopeta sivun ja/tai nimiavaruuden tarkkailu'.
 
 -- 
 Tämän viestin generoi DokuWiki osoitteessa

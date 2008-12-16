@@ -3,6 +3,7 @@
  * Finnish language file
  *
  * @author otto@valjakko.net
+ * @author Otto Vainio <otto@valjakko.net>
  */
 $lang['menu']                  = 'Ylläpidä liitännäisiä';
 $lang['download']              = 'Lataa ja asenna uusi liitännäinen';

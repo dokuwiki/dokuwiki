@@ -3,6 +3,7 @@
  * Finnish language file
  *
  * @author otto@valjakko.net
+ * @author Otto Vainio <otto@valjakko.net>
  */
 $lang['menu']                  = 'Palautuksenhallinta';
 $lang['filter']                = 'Etsi spammattyjä sivuja';

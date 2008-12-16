@@ -1,0 +1,9 @@
+====== Suosion palaute ======
+
+Tämä työkalu kerää tietoja wikistäsi ilman tunnistetietoja, jotka voit lähettää DokuWikin kehittäjille. Tämä auttaa heitä ymmärtämään, kuinka DokuWikiä käytetään ja varmistaa, että tulevaisuuden kehityspäätökset tehdään tosielämän käyttökokemusten perusteella.
+
+Toivomme sinun toistavan tämän aiheen silloin tällöin, jotta kehittäjät pysyvät tietoisina, miten wikisi kehittyy. Uudelleenlähettämäsi tiedot identifioidaan tunnisteella, jota ei voida jäljittää takaisin sinuun.
+
+Kerätty tieto pitää sisällään tietoa esimerkiksi DokuWikisi versiosta, sivujen koosta ja lukumäärästä, asennetuista liitännäisistä, sekä PHP asennuksestasi.
+
+Raaka tieto, joka lähetetään näkyy alla. Lähetä tieto painamalla "Lähetä tiedot" nappia.
