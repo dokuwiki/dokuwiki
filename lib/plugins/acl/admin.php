@@ -63,6 +63,9 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $AUTH_ACL;
         global $ID;
 
+        // fresh 1:1 copy without replacements
+        $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+
         // namespace given?
         if($_REQUEST['ns'] == '*'){
             $this->ns = '*';
