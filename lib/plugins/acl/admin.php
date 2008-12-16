@@ -356,7 +356,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             if($info === false){
                 $groups = array();
             }else{
-                $groups = $info['groups'];
+                $groups = $info['grps'];
             }
         }
 
