@@ -170,6 +170,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $this->_html_table();
         echo '</div>'.NL;
 
+        echo '<div class="footnotes"><div class="fn">'.NL;
+        echo '<sup><a id="fn__1" class="fn_bot" name="fn__1" href="#fnt__1">1)</a></sup>'.NL;
+        echo $this->getLang('p_include');
+        echo '</div></div>';
+
         echo '</div>'.NL;
     }
 
@@ -535,7 +540,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<tr>';
         echo '<th>'.$this->getLang('where').'</th>';
         echo '<th>'.$this->getLang('who').'</th>';
-        echo '<th>'.$this->getLang('perm').'</th>';
+        echo '<th>'.$this->getLang('perm').'<sup><a id="fnt__1" class="fn_top" name="fnt__1" href="#fn__1">1)</a></sup></th>';
         echo '<th>'.$lang['btn_delete'].'</th>';
         echo '</tr>';
         foreach($this->acl as $where => $set){

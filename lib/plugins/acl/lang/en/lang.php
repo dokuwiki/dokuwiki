@@ -28,6 +28,7 @@ $lang['p_choose_ns']  = 'Please <b>enter a user or group</b> in the form above t
 
 $lang['p_inherited']  = 'Note: Those permissions were not set explicitly but were inherited from other groups or higher namespaces.';
 $lang['p_isadmin']    = 'Note: The selected group or user has always full permissions because it is configured as superuser.';
+$lang['p_include']    = 'Higher permissions include lower ones. Create, Upload and Delete permissions only apply to namespaces, not pages.';
 
 $lang['current'] = 'Current ACL Rules';
 $lang['where'] = 'Page/Namespace';
