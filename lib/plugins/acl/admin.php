@@ -497,27 +497,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         $usersgroups = array_unique($usersgroups);
         sort($usersgroups);
-        uksort($acl_config,array($this,'_sort_names'));
+        ksort($acl_config);
 
         $this->acl = $acl_config;
         $this->usersgroups = $usersgroups;
-    }
-
-    /**
-     * Custom function to sort the ACLs by namespace names
-     *
-     * @todo This maybe could be improved to resemble the real tree structure?
-     */
-    function _sort_names($a,$b){
-        $ca = substr_count($a,':');
-        $cb = substr_count($b,':');
-        if($ca < $cb){
-            return -1;
-        }elseif($ca > $cb){
-            return 1;
-        }else{
-            return strcmp($a,$b);
-        }
     }
 
     /**
