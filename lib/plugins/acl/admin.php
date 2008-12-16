@@ -567,7 +567,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 echo '</td>';
 
                 echo '<td>';
-                echo $this->_html_checkboxes($perm,$ispage,'acl['.hsc($where).']['.hsc($who).']');
+                echo $this->_html_checkboxes($perm,$ispage,'acl['.$where.']['.$who.']');
                 echo '</td>';
 
                 echo '<td align="center">';
