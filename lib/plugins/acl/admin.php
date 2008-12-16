@@ -423,9 +423,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // highlight?
-        if(($item['type']=='d' &&
-            $item['id'] == $this->ns) ||
-            $item['id'] == $ID) $cl = ' cur';
+        if( ($item['type']=='d' && $item['id'] == $this->ns) ||
+            ($item['type']!='d' && $item['id'] == $ID)) $cl = ' cur';
 
         // namespace or page?
         if($item['type']=='d'){
