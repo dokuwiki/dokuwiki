@@ -591,12 +591,12 @@ class JpegMeta
             $aux{7} = "-";
             $t = strtotime($aux);
 
-            if ($t > $latestTime) {
+            if ($t && $t > $latestTime) {
                 $latestTime = $t;
                 $latestTimeSource = "ExifDateTime";
             }
 
-            if ($t < $earliestTime) {
+            if ($t && $t < $earliestTime) {
                 $earliestTime = $t;
                 $earliestTimeSource = "ExifDateTime";
             }
@@ -610,12 +610,12 @@ class JpegMeta
             $aux{7} = "-";
             $t = strtotime($aux);
 
-            if ($t > $latestTime) {
+            if ($t && $t > $latestTime) {
                 $latestTime = $t;
                 $latestTimeSource = "ExifDateTimeOriginal";
             }
 
-            if ($t < $earliestTime) {
+            if ($t && $t < $earliestTime) {
                 $earliestTime = $t;
                 $earliestTimeSource = "ExifDateTimeOriginal";
             }
@@ -629,12 +629,12 @@ class JpegMeta
             $aux{7} = "-";
             $t = strtotime($aux);
 
-            if ($t > $latestTime) {
+            if ($t && $t > $latestTime) {
                 $latestTime = $t;
                 $latestTimeSource = "ExifDateTimeDigitized";
             }
 
-            if ($t < $earliestTime) {
+            if ($t && $t < $earliestTime) {
                 $earliestTime = $t;
                 $earliestTimeSource = "ExifDateTimeDigitized";
             }
@@ -647,12 +647,12 @@ class JpegMeta
             $aux = substr($aux, 0, 4) . "-" . substr($aux, 4, 2) . "-" . substr($aux, 6, 2);
             $t = strtotime($aux);
 
-            if ($t > $latestTime) {
+            if ($t && $t > $latestTime) {
                 $latestTime = $t;
                 $latestTimeSource = "IPTCDateCreated";
             }
 
-            if ($t < $earliestTime) {
+            if ($t && $t < $earliestTime) {
                 $earliestTime = $t;
                 $earliestTimeSource = "IPTCDateCreated";
             }
@@ -663,12 +663,12 @@ class JpegMeta
 
             $t = $this->_info['file']['UnixTime'];
 
-            if ($t > $latestTime) {
+            if ($t && $t > $latestTime) {
                 $latestTime = $t;
                 $latestTimeSource = "FileModified";
             }
 
-            if ($t < $earliestTime) {
+            if ($t && $t < $earliestTime) {
                 $earliestTime = $t;
                 $earliestTimeSource = "FileModified";
             }
