@@ -1020,6 +1020,9 @@ class JpegMeta
     /*************************************************************/
     function _parseAll()
     {
+        if (!isset($this->_info['file'])) {
+            $this->_parseFileInfo();
+        }
         if (!isset($this->_markers)) {
             $this->_readJPEG();
         }
@@ -1042,9 +1045,6 @@ class JpegMeta
         }
         if (!isset($this->_info['adobe'])) {
             $this->_parseMarkerAdobe();
-        }
-        if (!isset($this->_info['file'])) {
-            $this->_parseFileInfo();
         }
     }
 
