@@ -571,8 +571,20 @@ class JpegMeta
     function getDates()
     {
         $this->_parseAll();
-
         if ($this->_markers == null) {
+            if (@isset($this->_info['file']['UnixTime'])) {
+                $dates['FileModified'] = $this->_info['file']['UnixTime'];
+                $dates['Time'] = $this->_info['file']['UnixTime'];
+                $dates['TimeSource'] = 'FileModified';
+                $dates['TimeStr'] = date("Y-m-d H:i:s", $this->_info['file']['UnixTime']);
+                $dates['EarliestTime'] = $this->_info['file']['UnixTime'];
+                $dates['EarliestTimeSource'] = 'FileModified';
+                $dates['EarliestTimeStr'] = date("Y-m-d H:i:s", $this->_info['file']['UnixTime']);
+                $dates['LatestTime'] = $this->_info['file']['UnixTime'];
+                $dates['LatestTimeSource'] = 'FileModified';
+                $dates['LatestTimeStr'] = date("Y-m-d H:i:s", $this->_info['file']['UnixTime']);
+                return $dates;
+            }
             return false;
         }
 
@@ -895,9 +907,9 @@ class JpegMeta
     function _readJPEG()
     {
         unset($this->_markers);
-        unset($this->_info);
+        //unset($this->_info);
         $this->_markers = array();
-        $this->_info = array();
+        //$this->_info = array();
 
         $this->_fp = @fopen($this->_fileName, 'rb');
         if ($this->_fp) {
