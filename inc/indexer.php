@@ -80,6 +80,21 @@ function idx_saveIndex($pre, $wlen, &$idx){
 }
 
 /**
+ * Append a given line to an index file.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function idx_appendIndex($pre, $wlen, $line){
+    global $conf;
+    $fn = $conf['indexdir'].'/'.$pre.$wlen;
+    $fh = @fopen($fn.'.idx','a');
+    if(!$fh) return false;
+    fwrite($fh,$line);
+    fclose($fh);
+    return true;
+}
+
+/**
  * Read the list of words in an index (if it exists).
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -204,7 +219,7 @@ function idx_getPageWords($page){
     unset($evt);
 
     list($page,$body) = $data;
-    
+
     $body   = strtr($body, "\r\n\t", '   ');
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
@@ -284,14 +299,14 @@ function idx_addPage($page){
     // get page id (this is the linenumber in page.idx)
     $pid = array_search("$page\n",$page_idx);
     if(!is_int($pid)){
-        $page_idx[] = "$page\n";
         $pid = count($page_idx)-1;
         // page was new - write back
-        if (!idx_saveIndex('page','',$page_idx)){
+        if (!idx_appendIndex('page','',"$page\n")){
             trigger_error("Failed to write page index", E_USER_ERROR);
             return false;
         }
     }
+    unset($page_idx); // free memory
 
     $pagewords = array();
     // get word usage in page
@@ -320,7 +335,7 @@ function idx_addPage($page){
             }
         }
     }
-    
+
     // Remove obsolete index entries
     $pageword_idx = trim(idx_getIndexLine('pageword','',$pid));
     if ($pageword_idx !== '') {
@@ -648,13 +663,15 @@ function idx_upgradePageWords(){
     $page_idx = idx_getIndex('page','');
     if (empty($page_idx)) return;
     $pagewords = array();
-    for ($n=0;$n<count($page_idx);$n++) $pagewords[] = array();
+    $len = count($page_idx);
+    for ($n=0;$n<$len;$n++) $pagewords[] = array();
     unset($page_idx);
 
     $n=0;
     foreach (idx_indexLengths($n) as $wlen) {
         $lines = idx_getIndex('i',$wlen);
-        for ($wid=0;$wid<count($lines);$wid++) {
+        $len = count($lines);
+        for ($wid=0;$wid<$len;$wid++) {
             $wkey = "$wlen*$wid";
             foreach (explode(':',trim($lines[$wid])) as $part) {
                 if($part == '') continue;
