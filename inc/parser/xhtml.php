@@ -1006,7 +1006,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($create){
             return sectionID($title,$this->headers);
         }else{
-            return sectionID($title);
+            $check = false;
+            return sectionID($title,$check);
         }
     }
 

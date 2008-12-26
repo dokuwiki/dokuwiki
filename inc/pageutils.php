@@ -195,7 +195,7 @@ function noNSorNS($id) {
  * @param array   $check   List of existing IDs
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function sectionID($title,&$check=null) {
+function sectionID($title,&$check) {
     $title = str_replace(':','',cleanID($title));
     $new = ltrim($title,'0123456789._-');
     if(empty($new)){
@@ -204,7 +204,7 @@ function sectionID($title,&$check=null) {
         $title = $new;
     }
 
-    if(!is_null($check) && is_array($check)){
+    if(is_array($check)){
         // make sure tiles are unique
         $num = '';
         while(in_array($title.$num,$check)){

@@ -340,7 +340,8 @@ function act_redirect($id,$preact){
 
   //get section name when coming from section edit
   if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
-    $title = sectionID($match[0]);
+    $check = false;
+    $title = sectionID($match[0],$check);
   }
 
   $opts = array(
