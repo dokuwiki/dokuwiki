@@ -875,7 +875,7 @@ function tpl_youarehere($sep=' &raquo; '){
     // output
     echo $sep;
     if($exists){
-      $title = useHeading($page) ? p_get_first_heading($page) : $page;
+      $title = useHeading('navigation') ? p_get_first_heading($page) : $page;
       if(!$title) $title = $parts[$i];
       tpl_link(wl($page),hsc($title),'title="'.$page.'"');
     }else{
@@ -889,7 +889,7 @@ function tpl_youarehere($sep=' &raquo; '){
   if($page == $conf['start']) return;
   echo $sep;
   if(page_exists($page)){
-    $title = useHeading($page) ? p_get_first_heading($page) : $page;
+    $title = useHeading('navigation') ? p_get_first_heading($page) : $page;
     if(!$title) $title = $parts[$i];
     tpl_link(wl($page),hsc($title),'title="'.$page.'"');
   }else{
