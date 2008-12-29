@@ -10297,6 +10297,13 @@ class SimplePie_Parser
 		xml_set_character_data_handler($this->xml, 'cdata');
 		xml_set_element_handler($this->xml, 'tag_open', 'tag_close');
 
+    // workound for a bug in PHP/libxml2 as described on http://bugs.simplepie.org/issues/show/101
+    $data = str_replace('&lt;', '&#60;', $data);
+    $data = str_replace('&gt;', '&#62;', $data);
+    $data = str_replace('&amp;', '&#38;', $data);
+    $data = str_replace('&apos;', '&#39;', $data);
+    $data = str_replace('&quot;', '&#34;', $data);
+
 		// Parse!
 		if (!xml_parse($this->xml, $data, true))
 		{

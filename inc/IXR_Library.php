@@ -144,6 +144,12 @@ class IXR_Message {
     function parse() {
         // first remove the XML declaration
         $this->message = preg_replace('/<\?xml(.*)?\?'.'>/', '', $this->message);
+        // workaround for a bug in PHP/libxml2, see http://bugs.php.net/bug.php?id=45996
+        $this->message = str_replace('&lt;', '&#60;', $this->message);
+        $this->message = str_replace('&gt;', '&#62;', $this->message);
+        $this->message = str_replace('&amp;', '&#38;', $this->message);
+        $this->message = str_replace('&apos;', '&#39;', $this->message);
+        $this->message = str_replace('&quot;', '&#34;', $this->message);
         if (trim($this->message) == '') {
             return false;
         }
