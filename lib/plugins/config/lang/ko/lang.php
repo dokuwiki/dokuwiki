@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author jk Lee
+ * @author dongnak@gmail.com
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값때문에 설정들을 변경할 수 없습니다. 수정한 값들을 검사하고 확인을 누르기 바랍니다.
@@ -39,6 +40,7 @@ $lang['savedir']               = '데이타 저장 디렉토리';
 $lang['start']                 = '시작 페이지 이름';
 $lang['title']                 = '위키 제목';
 $lang['template']              = '템플릿';
+$lang['license']               = '컨텐트에 어떤 라이센스 정책을 적용하시겠습니까?';
 $lang['fullpath']              = '페이지 하단에 전체 경로 보여주기';
 $lang['recent']                = '최근에 바뀐 것';
 $lang['breadcrumbs']           = '위치 추적 수';
@@ -62,6 +64,7 @@ $lang['indexdelay']            = '색인 연기 시간(초)';
 $lang['relnofollow']           = '외부 링크에 rel="nofollow" 사용';
 $lang['mailguard']             = '이메일 주소를 알아볼 수 없게';
 $lang['iexssprotect']          = '업로드 파일의 악성 Javascript, HTML 코드 가능성 여부를 검사';
+$lang['showuseras']            = '마지막으로 페이지를 수정한 사용자를 보여줄지 여부';
 $lang['useacl']                = '접근 제어 목록(ACL) 사용';
 $lang['autopasswd']            = '자동으로 만들어진 패스워드';
 $lang['authtype']              = '인증 백-엔드';
@@ -80,6 +83,7 @@ $lang['sneaky_index']          = '기본적으로, DokuWiki는 색인 목록에 
 이 옵션을 설정하면 사용자가 읽기 권한을 가지고 있지 않은 네임스페이스들은 보여주지 않습니다. 접근 가능한 하위 네임스페이스들 보이지않게 설정하면 자동으로 설정됩니다.
 특정 ACL 설정은 색인 사용이 불가능하게 할 수도 있습니다.';
 $lang['auth_security_timeout'] = '인증 보안 초과 시간(초)';
+$lang['securecookie']          = 'HTTPS로 보내진 쿠키는 HTTPS에만 적용 할까요? 위키의 로그인 페이지만 SSL로 암호화 하고 위키 페이지는 그렇지 않은경우 꺼야 합니다.';
 $lang['updatecheck']           = '업데이트와 보안 문제를 검사(DokuWiki를 splitbrain.org에 연결해야 합니다.)';
 $lang['userewrite']            = 'URL rewriting기능 사용';
 $lang['useslash']              = 'URL에서 네임스페이스 구분자로 슬래쉬 문자 사용';
@@ -110,6 +114,7 @@ $lang['xmlrpc']                = 'XML-RPC 인터페이스 지원/무시';
 $lang['renderer_xhtml']        = '주 (xhtml) 위키 출력 처리기';
 $lang['renderer__core']        = '%s (DokuWiki 내부 기능)';
 $lang['renderer__plugin']      = '%s (DokuWiki 플러그인)';
+$lang['rememberme']            = '로그인 정보 저장 허용';
 $lang['rss_type']              = 'XML feed 타잎';
 $lang['rss_linkto']            = 'XML feed 링크 정보';
 $lang['rss_content']           = 'XML feed 항목들에 표시되는 내용은?';
@@ -132,6 +137,7 @@ $lang['ftp____port']           = 'safemode hack의 FTP port';
 $lang['ftp____user']           = 'safemode hack의 FTP 사용자 이름';
 $lang['ftp____pass']           = 'safemode hack의 FTP 패스워드';
 $lang['ftp____root']           = 'safemode hack의 FTP 루트 디렉토리';
+$lang['license_o_']            = '선택하지 않음';
 $lang['typography_o_0']        = '사용 안함';
 $lang['typography_o_1']        = '이중 인용부호("")만 지원';
 $lang['typography_o_2']        = '모든 가능한 인용 부호 (동작 안될 수도 있음)';
@@ -164,3 +170,11 @@ $lang['xsendfile_o_0']         = '사용 불가';
 $lang['xsendfile_o_1']         = '비공개 lighttpd 헤더 (1.5 이전 버전)';
 $lang['xsendfile_o_2']         = '표준 X-Sendfile 헤더';
 $lang['xsendfile_o_3']         = '비공개 Nginx X-Accel-Redirect 헤더';
+$lang['showuseras_o_loginname'] = '로그인 이름';
+$lang['showuseras_o_username'] = '사용자 이름';
+$lang['showuseras_o_email']    = '사용자 e-mail 주소(메일주소 보호 셋팅에 따라 안보일 수 있음)';
+$lang['showuseras_o_email_link'] = 'mailto: link로 표현될 사용자 e-mail 주소';
+$lang['useheading_o_0']        = '아니요';
+$lang['useheading_o_navigation'] = '네비게이션에만';
+$lang['useheading_o_content']  = '위키 내용에만';
+$lang['useheading_o_1']        = '항상';

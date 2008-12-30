@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
+ * @author dongnak@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,6 +62,7 @@ $lang['profile']               = '개인 정보';
 $lang['badlogin']              = '잘못된 사용자 이름이거나 패스워드입니다.';
 $lang['minoredit']             = '일부 내용 변경';
 $lang['draftdate']             = '문서 초안 자동저장 시간';
+$lang['nosecedit']             = '페이지가 수정되어 섹션정보가 달라져 페이지 전부를 다시 읽습니다.';
 $lang['regmissing']            = '모든 항목을 입력해야 합니다.';
 $lang['reguexists']            = '같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자를 만들었습니다. 패스워드는 이메일로 보냈습니다.';
@@ -82,6 +84,8 @@ $lang['resendpwdnouser']       = '등록된 사용자가 아닙니다. 다시 �
 $lang['resendpwdbadauth']      = '인증 코드가 틀립니다. 잘못된 링크인지 확인 바랍니다.';
 $lang['resendpwdconfirm']      = '확인 링크를 이메일로 보냈습니다.';
 $lang['resendpwdsuccess']      = '새로운 패스워드는 이메일로 보내드립니다.';
+$lang['license']               = '이 위키의 내용은 다음의 라이센스에 따릅니다 :';
+$lang['licenseok']             = '주의 : 이 페이지를 수정한다는 다음의 라이센스에 동의함을 의미합니다 :';
 $lang['txt_upload']            = '업로드 파일을 선택합니다.';
 $lang['txt_filename']          = '업로드 파일 이름을 입력합니다.(선택 사항)';
 $lang['txt_overwrt']           = '새로운 파일로 이전 파일을 교체합니다.';
@@ -107,6 +111,8 @@ $lang['namespaces']            = '네임스페이스';
 $lang['mediafiles']            = '사용 가능한 파일 목록';
 $lang['js']['keepopen']        = '선택할 때 윈도우를 열어놓으시기 바랍니다.';
 $lang['js']['hidedetails']     = '자세한 정보 감추기';
+$lang['js']['nosmblinks']      = '윈도우 공유 파일과의 연결은 MS 인터넷 익스플로러에서만 동작합니다.
+그러나 링크를 복사하거나 붙여넣기를 할 수 있습니다.';
 $lang['js']['mu_btn']          = '여러 파일들을 한번에 업로드합니다.';
 $lang['mediausage']            = '이 파일을 참조하려면 다음 문법을 사용하기 바랍니다:';
 $lang['mediaview']             = '원본 파일 보기';
@@ -137,7 +143,6 @@ $lang['mail_newpage']          = '페이지 추가:';
 $lang['mail_changed']          = '페이지 변경:';
 $lang['mail_new_user']         = '새로운 사용자:';
 $lang['mail_upload']           = '파일 첨부:';
-$lang['js']['nosmblinks']            = "윈도우 공유 파일과의 연결은 MS 인터넷 익스플로러에서만 동작합니다.\n그러나 링크를 복사하거나 붙여넣기를 할 수 있습니다.";
 $lang['qb_alert']              = '포맷하려는 텍스트를 선택하세요.\n문서 맨 끝에 추가됩니다.';
 $lang['qb_bold']               = '굵은 글';
 $lang['qb_italic']             = '이탤릭체 글';
@@ -217,3 +222,5 @@ $lang['mu_done']               = '업로드가 완료되었습니다.';
 $lang['mu_fail']               = '업로드가 실패했습니다.';
 $lang['mu_authfail']           = '세션 기간이 종료되었습니다.';
 $lang['mu_progress']           = '@PCT@% 업로드되었습니다.';
+$lang['mu_filetypes']          = '허용된 파일타입';
+$lang['recent_global']         = '<b>%s</b> 네임스페이스를 구독중입니다. <a href="%s">전체위키 변경사항 </a>도 보실수 있습니다.';
