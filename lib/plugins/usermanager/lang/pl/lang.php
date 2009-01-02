@@ -41,6 +41,7 @@ $lang['edit_usermissing']      = 'Nie znaleziono wybranego użytkownika, nazwa u
 $lang['user_notify']           = 'Powiadamianie użytkownika';
 $lang['note_notify']           = 'Powiadomienia wysyłane są tylko jeżeli zmieniono hasło użytkownika.';
 $lang['note_group']            = 'Nowy użytkownik zostanie dodany do grupy domyślnej (%s) jeśli nie podano innej grupy.';
+$lang['note_pass']             = 'Jeśli pole będzie puste i powiadamianie użytkownika jest włączone, hasło zostanie automatyczne wygenerowane.';
 $lang['add_ok']                = 'Dodano użytkownika';
 $lang['add_fail']              = 'Dodawanie użytkownika nie powiodło się';
 $lang['notify_ok']             = 'Powiadomienie zostało wysłane';

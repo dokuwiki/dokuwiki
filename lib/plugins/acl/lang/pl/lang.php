@@ -21,6 +21,7 @@ $lang['p_choose_id']           = 'Podaj <b>nazwę użytkownika lub grupy</b> w p
 $lang['p_choose_ns']           = 'Podaj <b>nazwę użytkownika lub grupy</b> w powyższym formularzu, by wyświetlić lub zmienić uprawnienia do katalogu <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Uwaga: Uprawnienia nie zostały nadane wprost ale są dziedziczone z grupy lub katalogu.';
 $lang['p_isadmin']             = 'Uwaga: Wybrana grupa lub użytkownika zawsze dysponuje pełnymi uprawnieniami ponieważ posiada uprawnienia administratora.';
+$lang['p_include']             = 'Szersze uprawnienia zawierają węższe. Tworzenie, przesyłanie plików oraz usuwanie mają znaczenie tylko dla katalogów, nie dla stron.';
 $lang['current']               = 'Aktywne reguły zarządzania uprawnieniami';
 $lang['where']                 = 'Strona/Katalog';
 $lang['who']                   = 'Użytkownik/Grupa';
