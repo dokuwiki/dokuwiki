@@ -25,6 +25,7 @@ $lang['p_choose_id']           = 'Per favore <b>inserisci un utente o gruppo</b>
 $lang['p_choose_ns']           = 'Per favore <b>inserisci un utente o un gruppo</b> nel campo sopra per modificare i permessi impostati per la categoria <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Nota: Questi permessi non sono stati esplicitamente impostati, ma sono stati ereditati da altri gruppi o da categorie superiori.';
 $lang['p_isadmin']             = 'Nota: Il gruppo o utente selezionato ha sempre tutti i permessi perché è configurato come amministratore.';
+$lang['p_include']             = 'I permessi più elevati includono i permessi inferiori. I permessi di Creazione, Upload e Cancellazione si applicano soltanto alle categorie e non alle pagine.';
 $lang['current']               = 'Regole ACL attuali';
 $lang['where']                 = 'Pagina/Categoria';
 $lang['who']                   = 'Utente/Gruppo';

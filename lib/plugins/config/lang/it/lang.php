@@ -176,3 +176,7 @@ $lang['showuseras_o_loginname'] = 'Nome accesso';
 $lang['showuseras_o_username'] = 'Nome completo dell\'utente';
 $lang['showuseras_o_email']    = 'Indirizzo email dell\'utente (offuscato in base alle impostazioni di sicurezza posta)';
 $lang['showuseras_o_email_link'] = 'Indirizzo email dell\'utente come collegamento mailto:';
+$lang['useheading_o_0']        = 'Mai';
+$lang['useheading_o_navigation'] = 'Solo navigazione';
+$lang['useheading_o_content']  = 'Solo contenuto wiki';
+$lang['useheading_o_1']        = 'Sempre';
