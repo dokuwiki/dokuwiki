@@ -27,6 +27,7 @@ $lang['p_choose_id']           = 'Vul een <b>gebruiker of groep</b> in in het bo
 $lang['p_choose_ns']           = 'Vul een <b>gebruiker of groep</b> in in het bovenstaande formulier om de bevoegdheden te bekijken of te bewerken voor de namespace <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Let op: Deze permissies zijn niet expliciet ingesteld maar overerfd van andere groepen of hogere namespaces.';
 $lang['p_isadmin']             = 'Let op: De geselecteerde groep of gebruiker heeft altijd volledige toegangsrechten omdat hij als superuser geconfigureerd is.';
+$lang['p_include']             = 'Hogere permissies bevatten ook de lagere. Aanmaken, uploaden en verwijderen gelden alleen voor namespaces, niet voor pagina\'s.';
 $lang['current']               = 'Huidige ACL regels';
 $lang['where']                 = 'Pagina/namespace';
 $lang['who']                   = 'Gebruiker/Groep';
