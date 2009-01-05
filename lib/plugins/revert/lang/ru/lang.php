@@ -5,6 +5,7 @@
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
+ * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  */
 $lang['menu']                  = 'Менеджер откаток';
 $lang['filter']                = 'Поиск спам-страниц';

@@ -7,6 +7,7 @@
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
+ * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  */
 $lang['menu']                  = 'Настройки Вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте ваши изменения и попробуйте еще раз.
@@ -174,3 +175,7 @@ $lang['showuseras_o_loginname'] = 'Логин';
 $lang['showuseras_o_username'] = 'Полное имя пользователя';
 $lang['showuseras_o_email']    = 'E-mail пользователя (зашифрован согласно настройкам mailguard)';
 $lang['showuseras_o_email_link'] = 'E-mail пользователя в виде ссылки mailto:';
+$lang['useheading_o_0']        = 'Никогда';
+$lang['useheading_o_navigation'] = 'Только навигация';
+$lang['useheading_o_content']  = 'Только содержимое вики';
+$lang['useheading_o_1']        = 'Всегда';
