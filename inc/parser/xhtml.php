@@ -668,6 +668,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL, $linking=NULL) {
         global $ID;
+        list($src,$hash) = explode('#',$src,2);
         resolve_mediaid(getNS($ID),$src, $exists);
 
         $noLink = false;
@@ -687,6 +688,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
         }
 
+        if($hash) $link['url'] .= '#'.$hash;
+
         //markup non existing files
         if (!$exists)
           $link['class'] .= ' wikilink2';
@@ -698,6 +701,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
                             $height=NULL, $cache=NULL, $linking=NULL) {
+        list($src,$hash) = explode('#',$src,2);
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
         $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
@@ -714,7 +718,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }else{
              // add file icons
              $link['class'] .= ' mediafile mf_'.$ext;
-         }
+        }
+
+        if($hash) $link['url'] .= '#'.$hash;
 
         //output formatted
         if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
