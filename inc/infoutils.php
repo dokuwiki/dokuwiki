@@ -262,6 +262,10 @@ function dbg($msg,$hidden=false){
  */
 function dbglog($msg){
   global $conf;
+  if(is_object($msg) || is_array($msg)){
+    $msg = print_r($msg,true);
+  }
+
   $file = $conf['cachedir'].'/debug.log';
   $fh = fopen($file,'a');
   if($fh){
