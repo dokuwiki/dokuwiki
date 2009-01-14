@@ -1317,11 +1317,11 @@ function tpl_license($img='badge',$return=false){
         if($src){
             $out .= '<a href="'.$lic['url'].'" rel="license"';
             if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
-            $out .= '><img src="'.DOKU_BASE.$src.'" class="lic'.$button.'" alt="'.$lic['name'].'" align="left" /></a>';
+            $out .= '><img src="'.DOKU_BASE.$src.'" class="lic'.$img.'" alt="'.$lic['name'].'" align="left" /></a> ';
         }
     }
     $out .= $lang['license'];
-    $out .= ' <a href="'.$lic['url'].'" rel="license" class="urlextern"';
+    $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
     if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
     $out .= '>'.$lic['name'].'</a>';
     $out .= '</p>';
