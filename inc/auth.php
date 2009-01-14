@@ -61,6 +61,12 @@
       $_REQUEST['http_credentials'] = false;
       if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
+      // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
+      isset($_SERVER['HTTP_AUTHORIZATION']){
+        list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
+          explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+      }
+
       // if no credentials were given try to use HTTP auth (for SSO)
       if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
         $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
