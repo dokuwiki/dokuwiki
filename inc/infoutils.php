@@ -200,6 +200,23 @@ function check(){
   }else{
     msg('The current page is not writable by you',0);
   }
+
+  require_once(DOKU_INC.'inc/HTTPClient.php');
+  $check = wl('','',true).'data/_dummy';
+  $http = new DokuHTTPClient();
+  $http->timeout = 6;
+  $res = $http->get($check);
+  if(strpos($res,'data directory') !== false){
+    msg('It seems like the data directory is accessible from the web.
+         Make sure this directory is properly protected
+         (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
+  }elseif($http->status == 404 || $http->status == 403){
+    msg('The data directory seems to be properly protected',1);
+  }else{
+    msg('Failed to check if the data directory is accessible from the web.
+         Make sure this directory is properly protected
+         (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
+  }
 }
 
 /**
