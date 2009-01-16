@@ -1434,4 +1434,81 @@ function html_form_output($data) {
   $data->printForm();
 }
 
+/**
+ * Embed a flash object in HTML
+ *
+ * This will create the needed HTML to embed a flash movie in a cross browser
+ * compatble way using valid XHTML
+ *
+ * The parameters $params, $flashvars and $atts need to be associative arrays.
+ * No escaping needs to be done for them. The alternative content *has* to be
+ * escaped because it is used as is. If no alternative content is given
+ * $lang['noflash'] is used.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @link   http://latrine.dgx.cz/how-to-correctly-insert-a-flash-into-xhtml
+ *
+ * @param string $swf      - the SWF movie to embed
+ * @param int $width       - width of the flash movie in pixels
+ * @param int $height      - height of the flash movie in pixels
+ * @param array $params    - additional parameters (<param>)
+ * @param array $flashvars - parameters to be passed in the flashvar parameter
+ * @param array $atts      - additional attributes for the <object> tag
+ * @param string $alt      - alternative content (is NOT automatically escaped!)
+ * @returns string         - the XHTML markup
+ */
+function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts=null,$alt=''){
+    global $lang;
+
+    $out = '';
+
+    // prepare the object attributes
+    if(is_null($atts)) $atts = array();
+    $atts['width']  = (int) $width;
+    $atts['height'] = (int) $heigh;
+    if(!$atts['width'])  $atts['width']  = 425;
+    if(!$atts['height']) $atts['height'] = 350;
+
+    // add object attributes for standard compliant browsers
+    $std = $atts;
+    $std['type'] = 'application/x-shockwave-flash';
+    $std['data'] = $swf;
+
+    // add object attributes for IE
+    $ie  = $atts;
+    $ie['classid'] = 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000';
+
+    // open object (with conditional comments)
+    $out .= '<!--[if !IE]> -->'.NL;
+    $out .= '<object '.buildAttributes($std).'>'.NL;
+    $out .= '<!-- <![endif]-->'.NL;
+    $out .= '<!--[if IE]>'.NL;
+    $out .= '<object '.buildAttributes($ie).'>'.NL;
+    $out .= '    <param name="movie" value="'.hsc($swf).'" />'.NL;
+    $out .= '<!--><!--dgx-->'.NL;
+
+    // print params
+    if(is_array($params)) foreach($params as $key => $val){
+        $out .= '  <param name="'.hsc($key).'" value="'.hsc($val).'" />'.NL;
+    }
+
+    // add flashvars
+    if(is_array($flashvars)){
+        $out .= '  <param name="flashvars" value="'.hsc(buildURLparams($flashvars)).'" />'.NL;
+    }
+
+    // alternative content
+    if($alt){
+        $out .= $alt.NL;
+    }else{
+        $out .= $lang['noflash'].NL;
+    }
+
+    // finish
+    $out .= '</object>'.NL;
+    $out .= '<!-- <![endif]-->'.NL;
+
+    return $out;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

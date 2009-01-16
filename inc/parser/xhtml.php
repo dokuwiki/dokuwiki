@@ -966,26 +966,20 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the flash
                 if (!$title) {
                     // just show the sourcename
-                    $title = $this->_xmlEntities(basename(noNS($src)));
+                    $title = basename(noNS($src));
                 }
-                return $title;
+                return $this->_xmlEntities($title);
             }
 
-            $ret .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'.
-                    ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"';
-            if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
-            if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
-            $ret .= '>'.DOKU_LF;
-            $ret .= '<param name="movie" value="'.ml($src).'" />'.DOKU_LF;
-            $ret .= '<param name="quality" value="high" />'.DOKU_LF;
-            $ret .= '<embed src="'.ml($src).'"'.
-                    ' quality="high"';
-            if ( !is_null($width) ) $ret .= ' width="'.$this->_xmlEntities($width).'"';
-            if ( !is_null($height) ) $ret .= ' height="'.$this->_xmlEntities($height).'"';
-            $ret .= ' type="application/x-shockwave-flash"'.
-                    ' pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>'.DOKU_LF;
-            $ret .= '</object>'.DOKU_LF;
-
+            $att = array();
+            $att['class'] = "media$align";
+            if($align == 'right') $att['align'] = 'right';
+            if($align == 'left')  $att['align'] = 'left';
+            $ret .= html_flashobject($src,$width,$height,
+                                     array('quality' => 'high'),
+                                     null,
+                                     $att,
+                                     $this->_xmlEntities($title));
         }elseif($title){
             // well at least we have a title to display
             $ret .= $this->_xmlEntities($title);
