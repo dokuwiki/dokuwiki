@@ -169,6 +169,9 @@ function check(){
       msg('mb_string extension is available but will not be used',0);
     }else{
       msg('mb_string extension is available and will be used',1);
+      if(ini_get('mbstring.func_overload') != 0){
+        msg('mb_string function overloading is enabled, this will cause problems and should be disabled',-1);
+      }
     }
   }else{
     msg('mb_string extension not available - PHP only replacements will be used',0);
