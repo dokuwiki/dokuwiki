@@ -11,6 +11,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
+ * @author jair.henrique@gmail.com
  */
 $lang['admin_acl']             = 'Administração da Lista de Controles de Acesso';
 $lang['acl_group']             = 'Grupo';
@@ -27,6 +28,7 @@ $lang['p_choose_id']           = 'Por favor <b>digite um usuário ou grupo</b> n
 $lang['p_choose_ns']           = 'Por favor <b>digite um usuário ou grupo</b> no formulário acima para ver ou editar as permissões para o ramo <b class="aclpage">%s</b>.';
 $lang['p_inherited']           = 'Nota: Essas permissões não foram definidas explicitamente, mas sim herdadas de outros grupos ou ramos superiores.';
 $lang['p_isadmin']             = 'Nota: O grupo ou usuário selecionado sempre tem permissões completas, porque ele está configurado como superusuário.';
+$lang['p_include']             = 'Permissões superiores incluem permissões inferiores. Criar, Carregar e Apagar permissões se aplicam apenas aos nomes, e não páginas.';
 $lang['current']               = 'Regras atuais da ACL';
 $lang['where']                 = 'Página/Ramo';
 $lang['who']                   = 'Usuário/Grupo';

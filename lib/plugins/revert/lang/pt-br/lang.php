@@ -8,6 +8,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
+ * @author jair.henrique@gmail.com
  */
 $lang['menu']                  = 'Gerenciador de reversões';
 $lang['filter']                = 'Procura por páginas com spam';

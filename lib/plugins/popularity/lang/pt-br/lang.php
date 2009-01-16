@@ -7,6 +7,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
+ * @author jair.henrique@gmail.com
  */
 $lang['name']                  = 'Retorno de popularidade (pode demorar um pouco para carregar)';
 $lang['submit']                = 'Enviar dados';
