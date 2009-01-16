@@ -150,13 +150,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $page_buttons = $this->_pagination();
         $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
 
-        if ($this->_auth->canDo('UserMod')) {
-            $edit_disable = '';
-            $img_useredit = 'user_edit.png';
-        } else {
-            $edit_disable = 'disabled="disabled"';
-            $img_useredit = 'no_user_edit.png';
-        }
+        $editable = ($this->_auth->canDo('UserMod')) ? 1 : 0;
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -174,11 +168,11 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("  <table class=\"inline\">");
         ptln("    <thead>");
         ptln("      <tr>");
-        ptln("        <th colspan=\"2\">&nbsp;</th><th>".$this->lang["user_id"]."</th><th>".$this->lang["user_name"]."</th><th>".$this->lang["user_mail"]."</th><th>".$this->lang["user_groups"]."</th>");
+        ptln("        <th>&nbsp;</th><th>".$this->lang["user_id"]."</th><th>".$this->lang["user_name"]."</th><th>".$this->lang["user_mail"]."</th><th>".$this->lang["user_groups"]."</th>");
         ptln("      </tr>");
 
         ptln("      <tr>");
-        ptln("        <td colspan=\"2\" class=\"rightalign\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" /></td>");
+        ptln("        <td class=\"rightalign\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" class=\"button\" /></td>");
         ptln("        <td><input type=\"text\" name=\"userid\" class=\"edit\" value=\"".$this->_htmlFilter('user')."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"username\" class=\"edit\" value=\"".$this->_htmlFilter('name')."\" /></td>");
         ptln("        <td><input type=\"text\" name=\"usermail\" class=\"edit\" value=\"".$this->_htmlFilter('mail')."\" /></td>");
@@ -193,15 +187,19 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $groups = join(', ',$grps);
             ptln("    <tr class=\"user_info\">");
             ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".$user."]\" ".$delete_disable." /></td>");
-            ptln("      <td class=\"centeralign\"><input type=\"image\" name=\"fn[edit][".$user."]\" ".$edit_disable." src=\"".DOKU_PLUGIN_IMAGES.$img_useredit."\" title=\"".$this->lang['edit_prompt']."\" alt=\"".$this->lang['edit']."\"/></td>");
-            ptln("      <td>".hsc($user)."</td><td>".hsc($name)."</td><td>".hsc($mail)."</td><td>".hsc($groups)."</td>");
+            if ($editable) {
+              ptln("    <td><a href=\"".wl($ID,'fn[edit]['.$user.']=1&amp;do=admin&amp;page=usermanager&amp;start='.$this->_start.'&amp;sectok='.getSecurityToken())."\" title=\"".$this->lang['edit_prompt']."\">".hsc($user)."</a></td>");
+            } else {
+              ptln("    <td>".hsc($user)."</td>");
+            }
+            ptln("      <td>".hsc($name)."</td><td>".hsc($mail)."</td><td>".hsc($groups)."</td>");
             ptln("    </tr>");
           }
           ptln("    </tbody>");
         }
 
         ptln("    <tbody>");
-        ptln("      <tr><td colspan=\"6\" class=\"centeralign\">");
+        ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
         ptln("        <span class=\"medialeft\">");
         ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." class=\"button\" value=\"".$this->lang['delete_selected']."\" id=\"usrmgr__del\" />");
         ptln("        </span>");
@@ -393,10 +391,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!is_array($selected) || empty($selected)) return false;
         $selected = array_keys($selected);
 
-		if(in_array($_SERVER['REMOTE_USER'], $selected)) {
-			msg("You can't delete yourself!", -1);
-			return false;
-		}
+        if(in_array($_SERVER['REMOTE_USER'], $selected)) {
+            msg("You can't delete yourself!", -1);
+            return false;
+        }
 
         $count = $this->_auth->triggerUserMod('delete', array($selected));
         if ($count == count($selected)) {
