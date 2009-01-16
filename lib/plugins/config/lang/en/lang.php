@@ -68,6 +68,7 @@ $lang['phpok']       = 'Allow embedded PHP';
 $lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
 $lang['signature']   = 'Signature';
 $lang['toptoclevel'] = 'Top level for table of contents';
+$lang['tocminheads'] = 'Minimum amount of headlines that determines whether the TOC is built';
 $lang['maxtoclevel'] = 'Maximum level for table of contents';
 $lang['maxseclevel'] = 'Maximum section edit level';
 $lang['camelcase']   = 'Use CamelCase for links';

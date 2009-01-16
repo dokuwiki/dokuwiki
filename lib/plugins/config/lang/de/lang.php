@@ -56,6 +56,7 @@ $lang['phpok']                 = 'PHP erlauben';
 $lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://www.php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftsgröße beginnen';
+$lang['tocminheads']           = 'Mindestanzahl der Überschriften, die entscheidet ob ein Inhaltsverzeichnis erscheinen soll';
 $lang['maxtoclevel']           = 'Maximale Überschriftsgröße für Inhaltsverzeichnis';
 $lang['maxseclevel']           = 'Abschnitte bis zu dieser Stufe einzeln editierbar machen';
 $lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';

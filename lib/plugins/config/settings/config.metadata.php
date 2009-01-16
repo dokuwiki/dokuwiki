@@ -102,6 +102,7 @@ $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
 $meta['showuseras']  = array('multichoice','_choices' => array('loginname','username','email','email_link'));
 $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
+$meta['tocminheads'] = array('multichoice','_choices' => array(0,1,2,3,4,5,10,15,20));
 $meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
 $meta['maxseclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5)); // 0 for no sec edit buttons
 $meta['camelcase']   = array('onoff');
