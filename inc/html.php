@@ -1485,7 +1485,7 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     $out .= '<!--[if IE]>'.NL;
     $out .= '<object '.buildAttributes($ie).'>'.NL;
     $out .= '    <param name="movie" value="'.hsc($swf).'" />'.NL;
-    $out .= '<!--><!--dgx-->'.NL;
+    $out .= '<!--><!-- -->'.NL;
 
     // print params
     if(is_array($params)) foreach($params as $key => $val){
