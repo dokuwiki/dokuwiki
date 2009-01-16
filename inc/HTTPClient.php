@@ -333,9 +333,11 @@ class HTTPClient {
 
                 $byte = fread($socket,1);     // readtrailing \n
                 $chunk_size = hexdec($chunk_size);
-                $this_chunk = fread($socket,$chunk_size);
-                $r_body    .= $this_chunk;
-                if ($chunk_size) $byte = fread($socket,2); // read trailing \r\n
+                if ($chunk_size) {
+                    $this_chunk = fread($socket,$chunk_size);
+                    $r_body    .= $this_chunk;
+                    $byte = fread($socket,2); // read trailing \r\n
+                }
 
                 if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';

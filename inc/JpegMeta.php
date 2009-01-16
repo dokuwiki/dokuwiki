@@ -995,7 +995,10 @@ class JpegMeta
             $this->_markers[$count]['length'] = $length;
 
             if ($capture) {
-                $this->_markers[$count]['data'] =& fread($this->_fp, $length);
+                if ($length)
+                    $this->_markers[$count]['data'] =& fread($this->_fp, $length);
+                else
+                    $this->_markers[$count]['data'] = "";
             }
             elseif (!$done) {
                 $result = @fseek($this->_fp, $length, SEEK_CUR);
@@ -1213,12 +1216,12 @@ class JpegMeta
         else {
             if ($marker == 0xDA) {  // Copy until EOF
                 while (!feof($this->_fp)) {
-                    $data =& fread($this->_fp, 1024 * 16);
+                    $data = fread($this->_fp, 1024 * 16);
                     fputs($this->_fpout, $data, strlen($data));
                 }
             }
             else { // Copy only $length bytes
-                $data =& fread($this->_fp, $length);
+                $data = @fread($this->_fp, $length);
                 fputs($this->_fpout, $data, $length);
             }
         }

@@ -250,7 +250,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
     $got = 0;
     fseek($fp, $head);
     while ($got<$chunk_size && !feof($fp)) {
-      $tmp = fread($fp, max($chunk_size-$got, 0));
+      $tmp = @fread($fp, max($chunk_size-$got, 0));
       if ($tmp===false) { break; } //error state
       $got += strlen($tmp);
       $chunk .= $tmp;
@@ -335,7 +335,7 @@ function getRevisions($id, $first, $num, $chunk_size=8192) {
       $read_size = max($tail-$finger, 0); // found chunk size
       $got = 0;
       while ($got<$read_size && !feof($fp)) {
-        $tmp = fread($fp, max($read_size-$got, 0));
+        $tmp = @fread($fp, max($read_size-$got, 0));
         if ($tmp===false) { break; } //error state
         $got += strlen($tmp);
         $chunk .= $tmp;
