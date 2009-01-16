@@ -144,19 +144,19 @@ function media_metaform($id,$auth){
  * @author Michael Klier <chi@chimeric.de>
  */
 function media_inuse($id) {
-	global $conf;
+    global $conf;
     $mediareferences = array();
     if($conf['refcheck']){
         require_once(DOKU_INC.'inc/fulltext.php');
         $mediareferences = ft_mediause($id,$conf['refshow']);
-		if(!count($mediareferences)) {
-			return true;
-		} else {
-			return $mediareferences;
-		}
+        if(!count($mediareferences)) {
+            return true;
+        } else {
+            return $mediareferences;
+        }
     } else {
-		return false;
-	}
+        return false;
+    }
 }
 
 /**
@@ -173,34 +173,34 @@ function media_delete($id,$auth){
     global $conf;
     global $lang;
 
-	$file = mediaFN($id);
+    $file = mediaFN($id);
 
-	// trigger an event - MEDIA_DELETE_FILE
-	$data['id']   = $id;
-	$data['name'] = basename($file);
-	$data['path'] = $file;
-	$data['size'] = (@file_exists($file)) ? filesize($file) : 0;
+    // trigger an event - MEDIA_DELETE_FILE
+    $data['id']   = $id;
+    $data['name'] = basename($file);
+    $data['path'] = $file;
+    $data['size'] = (@file_exists($file)) ? filesize($file) : 0;
 
-	$data['unl'] = false;
-	$data['del'] = false;
-	$evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
-	if ($evt->advise_before()) {
-		$data['unl'] = @unlink($file);
-		if($data['unl']){
-			$data['del'] = io_sweepNS($id,'mediadir');
-		}
-	}
-	$evt->advise_after();
-	unset($evt);
+    $data['unl'] = false;
+    $data['del'] = false;
+    $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
+    if ($evt->advise_before()) {
+        $data['unl'] = @unlink($file);
+        if($data['unl']){
+            $data['del'] = io_sweepNS($id,'mediadir');
+        }
+    }
+    $evt->advise_after();
+    unset($evt);
 
-	if($data['unl'] && $data['del']){
-		// current namespace was removed. redirecting to root ns passing msg along
-		header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
-				rawurlencode(str_replace('%s',noNS($id),$lang['deletesucc'])));
-		exit;
-	}   
+    if($data['unl'] && $data['del']){
+        // current namespace was removed. redirecting to root ns passing msg along
+        header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
+                rawurlencode(sprintf(noNS($id),$lang['deletesucc'])));
+        exit;
+    }
 
-	return $data['unl'];
+    return $data['unl'];
 }
 
 /**
@@ -1020,3 +1020,4 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
   return $okay;
 }
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

@@ -80,14 +80,14 @@
         $INUSE = media_inuse($DEL);
         if(!$INUSE) {
             if(media_delete($DEL,$AUTH)) {
-			    msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
+                msg(sprintf(noNS($id),$lang['deletesucc']),1);
             } else {
-         	    msg(str_replace('%s',noNS($DEL),$lang['deletefail']),-1);
+                msg(sprintf(noNS($DEL),$lang['deletefail']),-1);
             }
-		} else {
+        } else {
             if(!$conf['refshow']) {
                 unset($INUSE);
-                msg(str_replace('%s',noNS($DEL),$lang['mediainuse']),0);
+                msg(sprintf(noNS($DEL),$lang['mediainuse']),0);
             }
         }
     }
@@ -95,3 +95,5 @@
     // finished - start output
     header('Content-Type: text/html; charset=utf-8');
     include(template('mediamanager.php'));
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
