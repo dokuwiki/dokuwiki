@@ -109,9 +109,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 $this->_acl_del($scope, $this->who);
             }elseif(isset($_REQUEST['cmd']['update'])){
                 // handle update of the whole file
-                foreach((array) $_REQUEST['del'] as $where => $who){
+                foreach((array) $_REQUEST['del'] as $where => $names){
                     // remove all rules marked for deletion
-                    unset($_REQUEST['acl'][$where][$who]);
+                    foreach($names as $who)
+                        unset($_REQUEST['acl'][$where][$who]);
                 }
                 // prepare lines
                 $lines = array();
@@ -554,7 +555,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 echo '</td>';
 
                 echo '<td align="center">';
-                echo '<input type="checkbox" name="del['.hsc($where).']" value="'.hsc($who).'" />';
+                echo '<input type="checkbox" name="del['.hsc($where).'][]" value="'.hsc($who).'" />';
                 echo '</td>';
                 echo '</tr>';
             }
