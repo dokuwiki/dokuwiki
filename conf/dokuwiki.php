@@ -37,6 +37,7 @@ $conf['phpok']       = 0;                 //may PHP code be embedded? Never do t
 $conf['dformat']     = '%Y/%m/%d %H:%M';  //dateformat accepted by PHPs strftime() function
 $conf['signature']   = ' --- //[[@MAIL@|@NAME@]] @DATE@//'; //signature see wiki:config for details
 $conf['toptoclevel'] = 1;                 //Level starting with and below to include in AutoTOC (max. 5)
+$conf['tocminheads'] = 3;                 //Minimum amount of headlines that determines if a TOC is built
 $conf['maxtoclevel'] = 3;                 //Up to which level include into AutoTOC (max. 5)
 $conf['maxseclevel'] = 3;                 //Up to which level create editable sections (max. 5)
 $conf['camelcase']   = 0;                 //Use CamelCase for linking? (I don't like it) 0|1
@@ -126,7 +127,7 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['xmlrpc'] = 0;                     //Enable/disable XML-RPC interface
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
-$conf['rememberme'] = 1;				 //Enable/disable remember me on login
+$conf['rememberme'] = 1;                 //Enable/disable remember me on login
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';

@@ -152,6 +152,7 @@ function tpl_toc($return=false){
     global $ID;
     global $REV;
     global $INFO;
+    global $conf;
     $toc = array();
 
     if(is_array($TOC)){
@@ -166,7 +167,7 @@ function tpl_toc($return=false){
             $tocok = true;
         }
         $toc   = $meta['description']['tableofcontents'];
-        if(!$tocok || !is_array($toc) || count($toc) < 3){
+        if(!$tocok || !is_array($toc) || !$conf['tocminheads'] || count($toc) < $conf['tocminheads']){
             $toc = array();
         }
     }elseif($ACT == 'admin'){

@@ -84,7 +84,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // Prepare the TOC
-        if($this->info['toc'] && is_array($this->toc) && count($this->toc) > 2){
+        global $conf;
+        if($this->info['toc'] && is_array($this->toc) && $conf['tocminheads'] && count($this->toc) >= $conf['tocminheads']){
             global $TOC;
             $TOC = $this->toc;
         }
