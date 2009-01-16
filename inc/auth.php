@@ -172,7 +172,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     }
   }
   //just to be sure
-  auth_logoff();
+  auth_logoff(true);
   return false;
 }
 
@@ -262,12 +262,15 @@ function auth_cookiesalt(){
 }
 
 /**
- * This clears all authenticationdata and thus log the user
- * off
+ * Log out the current user
+ *
+ * This clears all authentication data and thus log the user
+ * off. It also clears session data.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @param bool $keepbc - when true, the breadcrumb data is not cleared
  */
-function auth_logoff(){
+function auth_logoff($keepbc=false){
   global $conf;
   global $USERINFO;
   global $INFO, $ID;
@@ -282,7 +285,7 @@ function auth_logoff(){
     unset($_SESSION[DOKU_COOKIE]['auth']['pass']);
   if(isset($_SESSION[DOKU_COOKIE]['auth']['info']))
     unset($_SESSION[DOKU_COOKIE]['auth']['info']);
-  if(isset($_SESSION[DOKU_COOKIE]['bc']))
+  if(!$keepbc && isset($_SESSION[DOKU_COOKIE]['bc']))
     unset($_SESSION[DOKU_COOKIE]['bc']);
   if(isset($_SERVER['REMOTE_USER']))
     unset($_SERVER['REMOTE_USER']);
