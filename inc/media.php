@@ -138,6 +138,26 @@ function media_metaform($id,$auth){
     echo '</form>'.NL;
 }
 
+/**
+ * Conveinience function to check if a media file is still in use
+ *
+ * @author Michael Klier <chi@chimeric.de>
+ */
+function media_inuse($id) {
+	global $conf;
+    $mediareferences = array();
+    if($conf['refcheck']){
+        require_once(DOKU_INC.'inc/fulltext.php');
+        $mediareferences = ft_mediause($id,$conf['refshow']);
+		if(!count($mediareferences)) {
+			return true;
+		} else {
+			return $mediareferences;
+		}
+    } else {
+		return false;
+	}
+}
 
 /**
  * Handles media file deletions
@@ -153,46 +173,34 @@ function media_delete($id,$auth){
     global $conf;
     global $lang;
 
-    // check for references if needed
-    $mediareferences = array();
-    if($conf['refcheck']){
-        require_once(DOKU_INC.'inc/fulltext.php');
-        $mediareferences = ft_mediause($id,$conf['refshow']);
-    }
+	$file = mediaFN($id);
 
-    if(!count($mediareferences)){
-        $file = mediaFN($id);
+	// trigger an event - MEDIA_DELETE_FILE
+	$data['id']   = $id;
+	$data['name'] = basename($file);
+	$data['path'] = $file;
+	$data['size'] = (@file_exists($file)) ? filesize($file) : 0;
 
-        // trigger an event - MEDIA_DELETE_FILE
-        $data['name'] = basename($file);
-        $data['path'] = $file;
-        $data['size'] = (@file_exists($file)) ? filesize($file) : 0;
-        $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
-        if ($evt->advise_before()) {
-            if(@unlink($file)){
-                msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
-                $del = io_sweepNS($id,'mediadir');
-                if($del){
-                    // current namespace was removed. redirecting to root ns passing msg along
-                    header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
-                            rawurlencode(str_replace('%s',noNS($id),$lang['deletesucc'])));
-                    exit;
-                }
-                return true;
-            }
-        }
-        $evt->advise_after();
-        unset($evt);
+	$data['unl'] = false;
+	$data['del'] = false;
+	$evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
+	if ($evt->advise_before()) {
+		$data['unl'] = @unlink($file);
+		if($data['unl']){
+			$data['del'] = io_sweepNS($id,'mediadir');
+		}
+	}
+	$evt->advise_after();
+	unset($evt);
 
-        //something went wrong
-        msg(str_replace('%s',$file,$lang['deletefail']),-1);
-        return false;
-    }elseif(!$conf['refshow']){
-        msg(str_replace('%s',noNS($id),$lang['mediainuse']),0);
-        return false;
-    }
+	if($data['unl'] && $data['del']){
+		// current namespace was removed. redirecting to root ns passing msg along
+		header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
+				rawurlencode(str_replace('%s',noNS($id),$lang['deletesucc'])));
+		exit;
+	}   
 
-    return $mediareferences;
+	return $data['unl'];
 }
 
 /**

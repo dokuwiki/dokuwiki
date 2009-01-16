@@ -77,7 +77,19 @@
 
     // handle deletion
     if($DEL) {
-        $INUSE = media_delete($DEL,$AUTH);
+        $INUSE = media_inuse($DEL);
+        if(!$INUSE) {
+            if(media_delete($DEL,$AUTH)) {
+			    msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
+            } else {
+         	    msg(str_replace('%s',noNS($DEL),$lang['deletefail']),-1);
+            }
+		} else {
+            if(!$conf['refshow']) {
+                unset($INUSE);
+                msg(str_replace('%s',noNS($DEL),$lang['mediainuse']),0);
+            }
+        }
     }
 
     // finished - start output
