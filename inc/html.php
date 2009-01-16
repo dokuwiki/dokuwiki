@@ -1465,7 +1465,7 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     // prepare the object attributes
     if(is_null($atts)) $atts = array();
     $atts['width']  = (int) $width;
-    $atts['height'] = (int) $heigh;
+    $atts['height'] = (int) $height;
     if(!$atts['width'])  $atts['width']  = 425;
     if(!$atts['height']) $atts['height'] = 350;
 
@@ -1494,7 +1494,7 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
 
     // add flashvars
     if(is_array($flashvars)){
-        $out .= '  <param name="flashvars" value="'.hsc(buildURLparams($flashvars)).'" />'.NL;
+        $out .= '  <param name="FlashVars" value="'.buildURLparams($flashvars).'" />'.NL;
     }
 
     // alternative content
