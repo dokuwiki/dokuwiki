@@ -150,7 +150,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $page_buttons = $this->_pagination();
         $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
 
-        $editable = ($this->_auth->canDo('UserMod')) ? 1 : 0;
+        $editable = $this->_auth->canDo('UserMod');
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -188,7 +188,11 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             ptln("    <tr class=\"user_info\">");
             ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".$user."]\" ".$delete_disable." /></td>");
             if ($editable) {
-              ptln("    <td><a href=\"".wl($ID,'fn[edit]['.$user.']=1&amp;do=admin&amp;page=usermanager&amp;start='.$this->_start.'&amp;sectok='.getSecurityToken())."\" title=\"".$this->lang['edit_prompt']."\">".hsc($user)."</a></td>");
+              ptln("    <td><a href=\"".wl($ID,array('fn[edit]['.hsc($user).']' => 1,
+                                                     'do' => 'admin',
+                                                     'page' => 'usermanager',
+                                                     'sectok' => getSecurityToken())).
+                   "\" title=\"".$this->lang['edit_prompt']."\">".hsc($user)."</a></td>");
             } else {
               ptln("    <td>".hsc($user)."</td>");
             }
