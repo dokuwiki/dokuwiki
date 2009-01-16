@@ -113,6 +113,7 @@ $lang['uploadexist'] = 'File already exists. Nothing done.';
 $lang['uploadbadcontent'] = 'The uploaded content did not match the %s file extension.';
 $lang['uploadspam']  = 'The upload was blocked by the spam blacklist.';
 $lang['uploadxss']   = 'The upload was blocked for possibly malicious content.';
+$lang['uploadsize']  = 'The uploaded file was too big. (max. %s)';
 $lang['deletesucc']  = 'The file "%s" has been deleted.';
 $lang['deletefail']  = '"%s" couldn\'t be deleted - check permissions.';
 $lang['mediainuse']  = 'The file "%s" hasn\'t been deleted - it is still in use.';

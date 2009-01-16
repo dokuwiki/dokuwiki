@@ -53,6 +53,16 @@
         exit;
     }
 
+    // give info on PHP catched upload errors
+    if($_FILES['upload']['error']) switch($_FILES['upload']['error']){
+        case 1:
+        case 2:
+            msg(sprintf($lang['uploadsize'],
+                filesize_h(php_to_byte(ini_get('upload_max_filesize')))),-1);
+            break;
+        default:
+            msg($lang['uploadfail'],-1);
+    }
 
     // handle upload
     if($_FILES['upload']['tmp_name']){
