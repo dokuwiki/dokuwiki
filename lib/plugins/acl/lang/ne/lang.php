@@ -3,6 +3,7 @@
  * Nepali language file
  *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
+ * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
  */
 $lang['admin_acl']             = 'एक्सेस कन्ट्रोल लिस्ट व्यवस्थापन';
 $lang['acl_group']             = 'समूह';

@@ -3,6 +3,7 @@
  * Nepali language file
  *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
+ * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
  */
 $lang['nochoice']              = '(अरु विकल्पहरु अनुपलव्ध)';
 $lang['_configuration_manager'] = 'नियन्त्रण व्यवस्थापक';
@@ -23,3 +24,19 @@ $lang['_plugin_sufix']         = 'प्लगइन सेटिंङ्ग';
 $lang['_template_sufix']       = 'टेम्प्लेट सेटिंङ्ग';
 $lang['_msg_setting_undefined'] = 'सेटिंङ्ग मेटाडाटा नभएको';
 $lang['_msg_setting_no_class'] = 'सेटिंङ्ग वर्ग नभएको';
+$lang['_msg_setting_no_default'] = 'कुनै पूर्व निर्धारित मान छैन ।';
+$lang['fmode']                 = 'फाइल निर्माण स्थिति';
+$lang['dmode']                 = 'डाइरेक्टरी निर्माण स्थिति';
+$lang['lang']                  = 'भाषा';
+$lang['basedir']               = 'आधार डाइरेक्टरी';
+$lang['baseurl']               = 'आधार URL';
+$lang['savedir']               = 'सामग्री वचत गर्ने डाइरेक्टरी';
+$lang['start']                 = 'पृष्ट नाम सुरुगर्नुहोस्';
+$lang['title']                 = 'विकि शिर्षक';
+$lang['template']              = 'ढाँचा';
+$lang['license']               = 'कुन प्रमाण पत्रको आधारमा सामग्री प्रकाशन गरिनु पर्छ ?';
+$lang['fullpath']              = 'पष्ठको पूरा बाटो निम्नशिर्षकमा देखाउने';
+$lang['recent']                = 'हालैको परिवर्तन';
+$lang['htmlok']                = 'इम्बेडगरिएको HTML खुला गर्नुहोस ।';
+$lang['phpok']                 = 'इम्बेडगरिएको PHP खुला गर्नुहोस ।';
+$lang['signature']             = 'दस्तखत';
