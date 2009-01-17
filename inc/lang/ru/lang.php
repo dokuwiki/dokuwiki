@@ -109,6 +109,7 @@ $lang['uploadexist']           = 'Файл с таким именем сущес
 $lang['uploadbadcontent']      = 'Содержание файла не соответствует расширению %s.';
 $lang['uploadspam']            = 'Закачка заблокирована спам-фильтром.';
 $lang['uploadxss']             = 'Закачка заблокирована по соображениям безопасности.';
+$lang['uploadsize']            = 'Загруженный файл был слишком большой. (макс. %s)';
 $lang['deletesucc']            = 'Файл "%s" был удалён.';
 $lang['deletefail']            = 'Невозможно удалить файл "%s". Проверьте права доступа к файлу.';
 $lang['mediainuse']            = 'Файл "%s" не был удалён - файл всё ещё используется.';
@@ -144,6 +145,7 @@ $lang['created']               = 'создано';
 $lang['restored']              = 'старая ревизия восстановлена';
 $lang['external_edit']         = 'внешнее изменение';
 $lang['summary']               = 'Сводка изменений';
+$lang['noflash']               = 'Для просмотра этого содержимого требуется <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['mail_newpage']          = 'страница добавлена:';
 $lang['mail_changed']          = 'страница изменена:';
 $lang['mail_new_user']         = 'новый пользователь:';
