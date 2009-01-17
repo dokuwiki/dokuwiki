@@ -976,7 +976,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $att['class'] = "media$align";
             if($align == 'right') $att['align'] = 'right';
             if($align == 'left')  $att['align'] = 'left';
-            $ret .= html_flashobject($src,$width,$height,
+            $ret .= html_flashobject(ml($src,array('cache'=>$cache)),$width,$height,
                                      array('quality' => 'high'),
                                      null,
                                      $att,
