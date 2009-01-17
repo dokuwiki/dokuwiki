@@ -111,6 +111,7 @@ $lang['uploadexist']           = 'Datei existiert bereits. Keine Änderungen vor
 $lang['uploadbadcontent']      = 'Die hochgeladenen Daten stimmen nicht mit der Dateiendung % überein.';
 $lang['uploadspam']            = 'Hochladen verweigert: Treffer auf der Spamliste.';
 $lang['uploadxss']             = 'Hochladen verweigert: Daten scheinen Schadcode zu enthalten.';
+$lang['uploadsize']            = 'Die hochgeladene Datei war zu groß. (max. %s)';
 $lang['deletesucc']            = 'Die Datei "%s" wurde gelöscht.';
 $lang['deletefail']            = '"%s" konnte nicht gelöscht werden - prüfen Sie die Berechtigungen.';
 $lang['mediainuse']            = 'Die Datei "%s" wurde nicht gelöscht - sie wird noch verwendet.';
@@ -146,6 +147,7 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wieder hergestellt';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
+$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Ihnalt anzuzeigen.';
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geaendert:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
