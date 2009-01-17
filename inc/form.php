@@ -557,7 +557,7 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_tag($attrs) {
-  return '<'.$attrs['_tag'].' '.buildAttributes($attrs,true).'/>';
+  return '<'.$attrs['_tag'].' '.buildAttributes($attrs).'/>';
 }
 
 /**
