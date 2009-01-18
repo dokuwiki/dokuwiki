@@ -40,14 +40,55 @@
   global $cache_authname; $cache_authname = array();
   global $cache_metadata; $cache_metadata = array();
 
+  //set the configuration cascade - but only if its not already been set in preload.php
+  global $config_cascade;
+  if (empty($config_cascade)) {
+    $config_cascade = array(
+      'main' => array(
+        'default'   => array(DOKU_CONF.'dokuwiki.php'),
+        'local'     => array(DOKU_CONF.'local.php'),
+        'protected' => array(DOKU_CONF.'local.protected.php'),
+      ),
+      'acronyms'  => array(
+        'default'   => array(DOKU_CONF.'acronyms.php'),
+        'local'     => array(DOKU_CONF.'acronyms.local.php'),
+      ),
+      'entities'  => array(
+        'default'   => array(DOKU_CONF.'entities.php'),
+        'local'     => array(DOKU_CONF.'entities.local.php'),
+      ),
+      'interwiki' => array(
+        'default'   => array(DOKU_CONF.'interwiki.php'),
+        'local'     => array(DOKU_CONF.'interwiki.local.php'),
+      ),
+      'mime'      => array(
+        'default'   => array(DOKU_CONF.'mime.php'),
+        'local'     => array(DOKU_CONF.'mime.local.php'),
+      ),
+      'scheme'    => array(
+        'default'   => array(DOKU_CONF.'scheme.php'),
+        'local'     => array(DOKU_CONF.'scheme.local.php'),
+      ),
+      'smileys'   => array(
+        'default'   => array(DOKU_CONF.'smileys.php'),
+        'local'     => array(DOKU_CONF.'smileys.local.php'),
+      ),
+      'wordblock' => array(
+        'default'   => array(DOKU_CONF.'wordblock.php'),
+        'local'     => array(DOKU_CONF.'wordblock.local.php'),
+      ),
+    );
+  }
+
   //prepare config array()
   global $conf;
   $conf = array();
 
-  // load the config file(s)
-  require_once(DOKU_CONF.'dokuwiki.php');
-  if(@file_exists(DOKU_CONF.'local.php')){
-    require_once(DOKU_CONF.'local.php');
+  // load the global config file(s)
+  foreach ($config_cascade['main'] as $config_group) {
+    foreach ($config_group as $config_file) {
+      @include($config_file);
+    }
   }
 
   //prepare language array

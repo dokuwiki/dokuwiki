@@ -18,16 +18,18 @@ if (!class_exists('configuration')) {
     var $setting = array();        // array of setting objects
     var $locked = false;           // configuration is considered locked if it can't be updated
 
-    // filenames, these will be eval()'d prior to use so maintain any constants in output
-    var $_default_file  = '';
-    var $_local_file = '';
-    var $_protected_file = '';
+    // configuration filenames
+    var $_default_files  = array();
+    var $_local_files = array();      // updated configuration is written to the first file
+    var $_protected_files = array();
+    
+    var $_plugin_list = null;
 
     /**
      *  constructor
      */
     function configuration($datafile) {
-        global $conf;
+        global $conf, $config_cascade;
 
         if (!@file_exists($datafile)) {
           msg('No configuration metadata found at - '.htmlspecialchars($datafile),-1);
@@ -39,9 +41,13 @@ if (!class_exists('configuration')) {
         if (isset($config['format'])) $this->_format = $config['format'];
         if (isset($config['heading'])) $this->_heading = $config['heading'];
 
-        if (isset($file['default'])) $this->_default_file = $file['default'];
-        if (isset($file['local'])) $this->_local_file = $file['local'];
-        if (isset($file['protected'])) $this->_protected_file = $file['protected'];
+        $this->_default_files = $config_cascade['main']['default'];
+        $this->_local_files = $config_cascade['main']['local'];
+        $this->_protected_files = $config_cascade['main']['protected'];
+
+#        if (isset($file['default'])) $this->_default_file = $file['default'];
+#        if (isset($file['local'])) $this->_local_file = $file['local'];
+#        if (isset($file['protected'])) $this->_protected_file = $file['protected'];
 
         $this->locked = $this->_is_locked();
 
@@ -55,9 +61,9 @@ if (!class_exists('configuration')) {
         $no_default_check = array('setting_fieldset', 'setting_undefined', 'setting_no_class');
 
         if (!$this->_loaded) {
-          $default = array_merge($this->_read_config($this->_default_file), $this->get_plugintpl_default($conf['template']));
-          $local = $this->_read_config($this->_local_file);
-          $protected = $this->_read_config($this->_protected_file);
+          $default = array_merge($this->get_plugintpl_default($conf['template']), $this->_read_config_group($this->_default_files));
+          $local = $this->_read_config_group($this->_local_files);
+          $protected = $this->_read_config_group($this->_protected_files);
 
           $keys = array_merge(array_keys($this->_metadata),array_keys($default), array_keys($local), array_keys($protected));
           $keys = array_unique($keys);
@@ -93,7 +99,8 @@ if (!class_exists('configuration')) {
 
       if ($this->locked) return false;
 
-      $file = eval('return '.$this->_local_file.';');
+#      $file = eval('return '.$this->_local_file.';');
+      $file = $this->_local_files[0];
 
       // backup current file (remove any existing backup)
       if (@file_exists($file) && $backup) {
@@ -120,6 +127,15 @@ if (!class_exists('configuration')) {
       fclose($fh);
       return true;
     }
+    
+    function _read_config_group($files) {
+      $config = array();
+      foreach ($files as $file) {
+        $config = array_merge($config, $this->_read_config($file));
+      }
+      
+      return $config;
+    }
 
     /**
      * return an array of config settings
@@ -129,7 +145,7 @@ if (!class_exists('configuration')) {
       if (!$file) return array();
 
       $config = array();
-      $file = eval('return '.$file.';');
+#      $file = eval('return '.$file.';');
 
       if ($this->_format == 'php') {
 
@@ -177,9 +193,9 @@ if (!class_exists('configuration')) {
     function _out_footer() {
       $out = '';
       if ($this->_format == 'php') {
-          if ($this->_protected_file) {
-            $out .= "\n@include(".$this->_protected_file.");\n";
-          }
+ #         if ($this->_protected_file) {
+ #           $out .= "\n@include(".$this->_protected_file.");\n";
+ #         }
           $out .= "\n// end auto-generated content\n";
       }
 
@@ -189,9 +205,10 @@ if (!class_exists('configuration')) {
     // configuration is considered locked if there is no local settings filename
     // or the directory its in is not writable or the file exists and is not writable
     function _is_locked() {
-      if (!$this->_local_file) return true;
+      if (!$this->_local_files) return true;
 
-      $local = eval('return '.$this->_local_file.';');
+#      $local = eval('return '.$this->_local_file.';');
+      $local = $this->_local_files[0];
 
       if (!is_writable(dirname($local))) return true;
       if (@file_exists($local) && !is_writable($local)) return true;

@@ -39,11 +39,7 @@ function mimetype($file){
 function getMimeTypes() {
   static $mime = NULL;
   if ( !$mime ) {
-    $mime = confToHash(DOKU_CONF.'mime.conf');
-    if (@file_exists(DOKU_CONF.'mime.local.conf')) {
-      $local = confToHash(DOKU_CONF.'mime.local.conf');
-      $mime = array_merge($mime, $local);
-    }
+    $mime = retrieveConfig('mime','confToHash');
   }
   return $mime;
 }
@@ -56,11 +52,7 @@ function getMimeTypes() {
 function getAcronyms() {
   static $acronyms = NULL;
   if ( !$acronyms ) {
-    $acronyms = confToHash(DOKU_CONF.'acronyms.conf');
-    if (@file_exists(DOKU_CONF.'acronyms.local.conf')) {
-      $local = confToHash(DOKU_CONF.'acronyms.local.conf');
-      $acronyms = array_merge($acronyms, $local);
-    }
+    $acronyms = retrieveConfig('acronyms','confToHash');
   }
   return $acronyms;
 }
@@ -73,11 +65,7 @@ function getAcronyms() {
 function getSmileys() {
   static $smileys = NULL;
   if ( !$smileys ) {
-    $smileys = confToHash(DOKU_CONF.'smileys.conf');
-    if (@file_exists(DOKU_CONF.'smileys.local.conf')) {
-      $local = confToHash(DOKU_CONF.'smileys.local.conf');
-      $smileys = array_merge($smileys, $local);
-    }
+    $smileys = retrieveConfig('smileys','confToHash');
   }
   return $smileys;
 }
@@ -90,11 +78,7 @@ function getSmileys() {
 function getEntities() {
   static $entities = NULL;
   if ( !$entities ) {
-    $entities = confToHash(DOKU_CONF.'entities.conf');
-    if (@file_exists(DOKU_CONF.'entities.local.conf')) {
-      $local = confToHash(DOKU_CONF.'entities.local.conf');
-      $entities = array_merge($entities, $local);
-    }
+    $entities = retrieveConfig('entities','confToHash');
   }
   return $entities;
 }
@@ -107,11 +91,7 @@ function getEntities() {
 function getInterwiki() {
   static $wikis = NULL;
   if ( !$wikis ) {
-    $wikis = confToHash(DOKU_CONF.'interwiki.conf',true);
-    if (@file_exists(DOKU_CONF.'interwiki.local.conf')) {
-      $local = confToHash(DOKU_CONF.'interwiki.local.conf');
-      $wikis = array_merge($wikis, $local);
-    }
+    $wikis = retrieveConfig('interwiki','confToHash');
   }
   //add sepecial case 'this'
   $wikis['this'] = DOKU_URL.'{NAME}';
@@ -125,11 +105,7 @@ function getInterwiki() {
 function getWordblocks() {
   static $wordblocks = NULL;
   if ( !$wordblocks ) {
-    $wordblocks = file(DOKU_CONF.'wordblock.conf');
-    if (@file_exists(DOKU_CONF.'wordblock.local.conf')) {
-      $local = file(DOKU_CONF.'wordblock.local.conf');
-      $wordblocks = array_merge($wordblocks, $local);
-    }
+    $wordblocks = retrieveConfig('wordblock','file');
   }
   return $wordblocks;
 }
@@ -138,11 +114,7 @@ function getWordblocks() {
 function getSchemes() {
   static $schemes = NULL;
   if ( !$schemes ) {
-    $schemes = file(DOKU_CONF.'scheme.conf');
-    if (@file_exists(DOKU_CONF.'scheme.local.conf')) {
-      $local = file(DOKU_CONF.'scheme.local.conf');
-      $schemes = array_merge($schemes, $local);
-    }
+    $schemes = retrieveConfig('scheme','file');
   }
   $schemes = array_map('trim', $schemes);
   $schemes = preg_replace('/^#.*/', '', $schemes);
@@ -180,6 +152,30 @@ function confToHash($file,$lower=false) {
   }
 
   return $conf;
+}
+
+/**
+ * Retrieve the requested configuration information
+ * 
+ * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param  string   $type     the configuration settings to be read, must correspond to a key/array in $config_cascade
+ * @param  callback $fn       the function used to process the configuration file into an array
+ * @return array    configuration values
+ */
+function retrieveConfig($type,$fn) {
+  global $config_cascade;
+
+  $combined = array();
+  if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
+  foreach ($config_cascade[$type] as $file) {
+    if (@file_exists($file)) {
+      $config = $fn($file);
+      $combined = array_merge($combined, $config);
+    }
+  }
+
+  return $combined;
 }
 
 /**
