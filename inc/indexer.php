@@ -299,7 +299,7 @@ function idx_addPage($page){
     // get page id (this is the linenumber in page.idx)
     $pid = array_search("$page\n",$page_idx);
     if(!is_int($pid)){
-        $pid = count($page_idx)-1;
+        $pid = count($page_idx);
         // page was new - write back
         if (!idx_appendIndex('page','',"$page\n")){
             trigger_error("Failed to write page index", E_USER_ERROR);
