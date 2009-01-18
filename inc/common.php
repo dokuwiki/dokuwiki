@@ -20,6 +20,7 @@ require_once(DOKU_INC.'inc/infoutils.php');
 define('RECENTS_SKIP_DELETED',2);
 define('RECENTS_SKIP_MINORS',4);
 define('RECENTS_SKIP_SUBSPACES',8);
+define('RECENTS_MEDIA_CHANGES',16);
 
 /**
  * Wrapper around htmlspecialchars()

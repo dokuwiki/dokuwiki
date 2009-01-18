@@ -187,6 +187,7 @@ function media_delete($id,$auth){
     if ($evt->advise_before()) {
         $data['unl'] = @unlink($file);
         if($data['unl']){
+            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
             $data['del'] = io_sweepNS($id,'mediadir');
         }
     }
@@ -215,6 +216,7 @@ function media_delete($id,$auth){
  * $data[1]     fn: the file name of the uploaded file
  * $data[2]     id: the future directory id of the uploaded file
  * $data[3]     imime: the mimetype of the uploaded file
+ * $data[4]     overwrite: if an existing file is going to be overwritten
  *
  * @triggers MEDIA_UPLOAD_FINISH
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -263,7 +265,8 @@ function media_upload($ns,$auth){
     // because a temp file was created already
     if(preg_match('/\.('.$regex.')$/i',$fn)){
         //check for overwrite
-        if(@file_exists($fn) && (!$_REQUEST['ow'] || $auth < AUTH_DELETE)){
+        $overwrite = @file_exists($fn);
+        if($overwrite && (!$_REQUEST['ow'] || $auth < AUTH_DELETE)){
             msg($lang['uploadexist'],0);
             return false;
         }
@@ -285,6 +288,7 @@ function media_upload($ns,$auth){
         $data[1] = $fn;
         $data[2] = $id;
         $data[3] = $imime;
+        $data[4] = $overwrite;
 
         // trigger event
         return trigger_event('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
@@ -301,8 +305,8 @@ function media_upload($ns,$auth){
  */
 function _media_upload_action($data) {
     // fixme do further sanity tests of given data?
-    if(is_array($data) && count($data)===4) {
-        return media_upload_finish($data[0], $data[1], $data[2], $data[3]);
+    if(is_array($data) && count($data)===5) {
+        return media_upload_finish($data[0], $data[1], $data[2], $data[3], $data[4]);
     } else {
         return false; //callback error
     }
@@ -314,7 +318,7 @@ function _media_upload_action($data) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  */
-function media_upload_finish($fn_tmp, $fn, $id, $imime) {
+function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite) {
     global $conf;
     global $lang;
 
@@ -328,6 +332,12 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime) {
         chmod($fn, $conf['fmode']);
         msg($lang['uploadsucc'],1);
         media_notify($id,$fn,$imime);
+        // add a log entry to the media changelog
+        if ($overwrite) {
+            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_EDIT);
+        } else {
+            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_CREATE);
+        }
         return $id;
     }else{
         msg($lang['uploadfail'],-1);

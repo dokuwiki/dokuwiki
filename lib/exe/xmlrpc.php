@@ -122,7 +122,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'wiki.getRecentChanges',
             'this:getRecentChanges',
             array('struct','int'),
-            'Returns a strukt about all recent changes since given timestamp.'
+            'Returns a struct about all recent changes since given timestamp.'
+        );
+        $this->addCallback(
+            'wiki.getRecentMediaChanges',
+            'this:getRecentMediaChanges',
+            array('struct','int'),
+            'Returns a struct about all recent media changes since given timestamp.'
         );
         $this->addCallback(
             'wiki.aclCheck',
@@ -464,7 +470,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             // because a temp file was created already
             if(preg_match('/\.('.$regex.')$/i',$fn)) {
                 //check for overwrite
-                if(@file_exists($fn) && (!$params['ow'] || $auth < AUTH_DELETE)) {
+                $overwrite = @file_exists($fn);
+                if($overwrite && (!$params['ow'] || $auth < AUTH_DELETE)) {
                     return new IXR_ERROR(1, $lang['uploadexist']);
                 }
                 // check for valid content
@@ -483,6 +490,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 $data[1] = $fn;
                 $data[2] = $id;
                 $data[3] = $imime;
+                $data[4] = $overwrite;
 
                 // trigger event
                 require_once(DOKU_INC.'inc/events.php');
@@ -517,7 +525,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if(!count($mediareferences)){
             $file = mediaFN($id);
             if(@unlink($file)){
-                msg(str_replace('%s',noNS($id),$lang['deletesucc']),1);
+                require_once(DOKU_INC.'inc/changelog.php');
+                addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
                 io_sweepNS($id,'mediadir');
                 return 0;
             }
@@ -536,11 +545,18 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function _media_upload_action($data) {
         global $conf;
 
-        if(is_array($data) && count($data)===4) {
+        if(is_array($data) && count($data)===5) {
             io_createNamespace($data[2], 'media');
             if(rename($data[0], $data[1])) {
                 chmod($data[1], $conf['fmode']);
                 media_notify($data[2], $data[1], $data[3]);
+                // add a log entry to the media changelog
+                require_once(DOKU_INC.'inc/changelog.php');
+                if ($data[4]) {
+                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_EDIT);
+                } else {
+                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_CREATE);
+                }
                 return $data[2];
             } else {
                 return new IXR_ERROR(1, 'Upload failed.');
@@ -608,74 +624,73 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     /**
      * Returns a list of recent changes since give timestamp
      *
+     * @author Michael Hamann <michael@content-space.de>
      * @author Michael Klier <chi@chimeric.de>
      */
     function getRecentChanges($timestamp) {
-        global $conf;
-
         if(strlen($timestamp) != 10)
             return new IXR_Error(20, 'The provided value is not a valid timestamp');
-
-        $changes = array();
 
         require_once(DOKU_INC.'inc/changelog.php');
         require_once(DOKU_INC.'inc/pageutils.php');
 
-        // read changes
-        $lines = @file($conf['changelog']);
+        $recents = getRecentsSince($timestamp);
 
-        if(empty($lines)) 
-            return new IXR_Error(10, 'The changelog could not be read');
+        $changes = array();
 
-        // we start searching at the end of the list
-        $lines = array_reverse($lines);
-
-        // cache seen pages and skip them
-        $seen = array(); 
-
-        foreach($lines as $line) {
-
-            if(empty($line)) continue; // skip empty lines
-
-            $logline = parseChangelogLine($line);
-
-            if($logline === false) continue;
-
-            // skip seen ones
-            if(isset($seen[$logline['id']])) continue;
-
-            // skip minors
-            if($logline['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) continue;
-
-            // remember in seen to skip additional sights
-            $seen[$logline['id']] = 1;
-
-            // check if it's a hidden page
-            if(isHiddenPage($logline['id'])) continue;
-
-            // check ACL
-            $perms = auth_quickaclcheck($logline['id']);
-            if($perms < AUTH_READ) continue;
-
-            // check existance
-            if((!@file_exists(wikiFN($logline['id']))) && ($flags & RECENTS_SKIP_DELETED)) continue;
-
-            // check if logline is still in the queried time frame
-            if($logline['date'] >= $timestamp) {
-                $change['name']         = $logline['id'];
-                $change['lastModified'] = new IXR_Date($logline['date']);
-                $change['author']       = $logline['user'];
-                $change['version']      = $logline['date'];
-                $change['perms']        = $perms;
-                $change['size']         = @filesize(wikiFN($logline['id']));
-                array_push($changes, $change);
-            } else {
-                $changes = array_reverse($changes);
-                return ($changes);
-            }
+        foreach ($recents as $recent) {
+            $change = array();
+            $change['name']         = $recent['id'];
+            $change['lastModified'] = new IXR_Date($recent['date']);
+            $change['author']       = $recent['user'];
+            $change['version']      = $recent['date'];
+            $change['perms']        = $recent['perms'];
+            $change['size']         = @filesize(wikiFN($recent['id']));
+            array_push($changes, $change);
         }
-        // in case we still have nothing at this point
-        return new IXR_Error(30, 'There are no changes in the specified timeframe');
+
+        if (!empty($changes)) {
+            return $changes;
+        } else {
+            // in case we still have nothing at this point
+            return new IXR_Error(30, 'There are no changes in the specified timeframe');
+        } 
+    }
+
+    /**
+     * Returns a list of recent media changes since give timestamp
+     *
+     * @author Michael Hamann <michael@content-space.de>
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    function getRecentMediaChanges($timestamp) {
+        if(strlen($timestamp) != 10)
+            return new IXR_Error(20, 'The provided value is not a valid timestamp');
+
+        require_once(DOKU_INC.'inc/changelog.php');
+        require_once(DOKU_INC.'inc/pageutils.php');
+
+        $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
+
+        $changes = array();
+
+        foreach ($recents as $recent) {
+            $change = array();
+            $change['name']         = $recent['id'];
+            $change['lastModified'] = new IXR_Date($recent['date']);
+            $change['author']       = $recent['user'];
+            $change['version']      = $recent['date'];
+            $change['perms']        = $recent['perms'];
+            $change['size']         = @filesize(wikiFN($recent['id']));
+            array_push($changes, $change);
+        }
+
+        if (!empty($changes)) {
+            return $changes;
+        } else {
+            // in case we still have nothing at this point
+            return new IXR_Error(30, 'There are no changes in the specified timeframe');
+        } 
     }
 
     /**

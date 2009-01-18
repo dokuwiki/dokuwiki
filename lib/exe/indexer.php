@@ -40,6 +40,7 @@ if ($evt->advise_before()) {
   metaUpdate() or
   runSitemapper() or
   runTrimRecentChanges() or
+  runTrimRecentChanges(true) or
   $evt->advise_after();
 }
 if($defer) sendGIF();
@@ -52,15 +53,18 @@ exit;
 /**
  * Trims the recent changes cache (or imports the old changelog) as needed.
  *
+ * @param media_changes If the media changelog shall be trimmed instead of
+ * the page changelog
+ *
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function runTrimRecentChanges() {
+function runTrimRecentChanges($media_changes = false) {
     global $conf;
 
     // Import old changelog (if needed)
     // Uses the imporoldchangelog plugin to upgrade the changelog automaticaly.
     // FIXME: Remove this from runTrimRecentChanges when it is no longer needed.
-    if (isset($conf['changelog_old']) &&
+    if (!$media_changes && isset($conf['changelog_old']) &&
         @file_exists($conf['changelog_old']) && !@file_exists($conf['changelog']) &&
         !@file_exists($conf['changelog'].'_importing') && !@file_exists($conf['changelog'].'_tmp')) {
             $tmp = array(); // no event data
@@ -68,22 +72,24 @@ function runTrimRecentChanges() {
             return true;
     }
 
+    $fn = ($media_changes ? $conf['media_changelog'] : $conf['changelog']);
+
     // Trim the Recent Changes
     // Trims the recent changes cache to the last $conf['changes_days'] recent
     // changes or $conf['recent'] items, which ever is larger.
     // The trimming is only done once a day.
-    if (@file_exists($conf['changelog']) &&
-        (filectime($conf['changelog'])+86400)<time() &&
-        !@file_exists($conf['changelog'].'_tmp')) {
-            io_lock($conf['changelog']);
-            $lines = file($conf['changelog']);
+    if (@file_exists($fn) &&
+        (filectime($fn)+86400)<time() &&
+        !@file_exists($fn.'_tmp')) {
+            io_lock($fn);
+            $lines = file($fn);
             if (count($lines)<=$conf['recent']) {
                 // nothing to trim
-                io_unlock($conf['changelog']);
+                io_unlock($fn);
                 return false;
             }
 
-            io_saveFile($conf['changelog'].'_tmp', '');          // presave tmp as 2nd lock
+            io_saveFile($fn.'_tmp', '');          // presave tmp as 2nd lock
             $trim_time = time() - $conf['recent_days']*86400;
             $out_lines = array();
 
@@ -107,15 +113,15 @@ function runTrimRecentChanges() {
             }
 
             // save trimmed changelog
-            io_saveFile($conf['changelog'].'_tmp', implode('', $out_lines));
-            @unlink($conf['changelog']);
-            if (!rename($conf['changelog'].'_tmp', $conf['changelog'])) {
+            io_saveFile($fn.'_tmp', implode('', $out_lines));
+            @unlink($fn);
+            if (!rename($fn.'_tmp', $fn)) {
                 // rename failed so try another way...
-                io_unlock($conf['changelog']);
-                io_saveFile($conf['changelog'], implode('', $out_lines));
-                @unlink($conf['changelog'].'_tmp');
+                io_unlock($fn);
+                io_saveFile($fn, implode('', $out_lines));
+                @unlink($fn.'_tmp');
             } else {
-                io_unlock($conf['changelog']);
+                io_unlock($fn);
             }
             return true;
     }
