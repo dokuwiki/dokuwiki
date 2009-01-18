@@ -12,6 +12,7 @@
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
+ * @author Luis Dantas <luis@dantas.com>
  */
 $lang['admin_acl']             = 'Administração da Lista de Controles de Acesso';
 $lang['acl_group']             = 'Grupo';

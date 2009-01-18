@@ -12,6 +12,7 @@
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
+ * @author Luis Dantas <luis@dantas.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -110,6 +111,7 @@ $lang['uploadexist']           = 'O arquivo já existe. Não foi feito nada.';
 $lang['uploadbadcontent']      = 'O conteúdo enviado não corresponde à extensão do arquivo %s.';
 $lang['uploadspam']            = 'O envio foi bloqueado pela lista negra de espams.';
 $lang['uploadxss']             = 'O envio foi bloqueado por conter conteúdo possivelmente malicioso.';
+$lang['uploadsize']            = 'O arquivo transmitido era grande demais. (max. %s)';
 $lang['deletesucc']            = 'O arquivo "%s" foi excluído.';
 $lang['deletefail']            = 'Não foi possível excluir "%s" - verifique as permissões.';
 $lang['mediainuse']            = 'O arquivo "%s" não foi excluído - ele ainda está em uso.';
@@ -145,6 +147,7 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'revisão anterior restaurada.';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
+$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a> é necessário para mostrar este conteúdo.';
 $lang['mail_newpage']          = 'página adicionada:';
 $lang['mail_changed']          = 'página modificada:';
 $lang['mail_new_user']         = 'novo usuário:';

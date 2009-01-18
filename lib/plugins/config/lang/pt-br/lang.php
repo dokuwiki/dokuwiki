@@ -9,6 +9,7 @@
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
+ * @author Luis Dantas <luis@dantas.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido, por favor, reveja suas mudanças e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -55,6 +56,7 @@ $lang['phpok']                 = 'Permitir incorporação de PHP';
 $lang['dformat']               = 'Formato da data (veja a função <a href="http://www.php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Assinatura';
 $lang['toptoclevel']           = 'Nível mais alto para a tabela de conteúdos';
+$lang['tocminheads']           = 'Quantidade mínima de cabeçalhos que determina se a TOC (tabela de conteúdo) deve ser construída.';
 $lang['maxtoclevel']           = 'Nível máximo para a tabela de conteúdos';
 $lang['maxseclevel']           = 'Nível máximo da seção de edição';
 $lang['camelcase']             = 'Usar WikiWords para links';

@@ -9,6 +9,7 @@
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
+ * @author Luis Dantas <luis@dantas.com>
  */
 $lang['menu']                  = 'Gerenciar Plugins';
 $lang['download']              = 'Transferir e instalar um novo plugin';
