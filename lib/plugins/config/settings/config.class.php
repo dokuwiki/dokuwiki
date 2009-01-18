@@ -237,6 +237,21 @@ if (!class_exists('configuration')) {
         return $out;
     }
 
+    function get_plugin_list() {
+      if (is_null($this->_plugin_list)) {
+        $list = plugin_list('',true);     // all plugins, including disabled ones
+
+        // remove this plugin from the list
+        $idx = array_search('config',$list);
+        unset($list[$idx]);
+
+        trigger_event('PLUGIN_CONFIG_PLUGINLIST',$list);
+        $this->_plugin_list = $list;
+      }
+
+      return $this->_plugin_list;
+    }
+
     /**
      * load metadata for plugin and template settings
      */
@@ -245,25 +260,20 @@ if (!class_exists('configuration')) {
       $class    = '/conf/settings.class.php';
       $metadata = array();
 
-      if ($dh = opendir(DOKU_PLUGIN)) {
-        while (false !== ($plugin = readdir($dh))) {
-          if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
-          if (is_file(DOKU_PLUGIN.$plugin)) continue;
-
-          if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
-            $meta = array();
-            @include(DOKU_PLUGIN.$plugin.$file);
-            @include(DOKU_PLUGIN.$plugin.$class);
-            if (!empty($meta)) {
-              $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = array('fieldset');
-            }
-            foreach ($meta as $key => $value){
-              if ($value[0]=='fieldset') { continue; } //plugins only get one fieldset
-              $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
-            }
+      foreach ($this->get_plugin_list() as $plugin) {
+        $plugin_dir = plugin_directory($plugin);
+        if (@file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
+          $meta = array();
+          @include(DOKU_PLUGIN.$plugin_dir.$file);
+          @include(DOKU_PLUGIN.$plugin_dir.$class);
+          if (!empty($meta)) {
+             $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = array('fieldset');
+          }
+          foreach ($meta as $key => $value){
+            if ($value[0]=='fieldset') { continue; } //plugins only get one fieldset
+            $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
           }
         }
-        closedir($dh);
       }
 
       // the same for the active template
@@ -290,17 +300,15 @@ if (!class_exists('configuration')) {
       $file    = '/conf/default.php';
       $default = array();
 
-      if ($dh = opendir(DOKU_PLUGIN)) {
-        while (false !== ($plugin = readdir($dh))) {
-          if (@file_exists(DOKU_PLUGIN.$plugin.$file)){
-            $conf = array();
-            @include(DOKU_PLUGIN.$plugin.$file);
-            foreach ($conf as $key => $value){
-              $default['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
-            }
+      foreach ($this->get_plugin_list() as $plugin) {
+        $plugin_dir = plugin_directory($plugin);
+        if (@file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
+          $conf = array();
+          @include(DOKU_PLUGIN.$plugin_dir.$file);
+          foreach ($conf as $key => $value){
+            $default['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
           }
         }
-        closedir($dh);
       }
 
       // the same for the active template

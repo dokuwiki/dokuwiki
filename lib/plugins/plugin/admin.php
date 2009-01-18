@@ -105,8 +105,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
           $this->plugin = null;
       }
 
-      $this->plugin_list = plugin_list('', true);
-      sort($this->plugin_list);
+      $this->_get_plugin_list();
 
       // verify $_REQUEST vars
       if (in_array($this->cmd, $this->commands)) {
@@ -127,6 +126,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
 
       $this->handler = & new $class($this, $this->plugin);
       $this->msg = $this->handler->process();
+
     }
 
     /**
@@ -138,16 +138,23 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
 
       // enable direct access to language strings
       $this->setupLocale();
+      $this->_get_plugin_list();
 
       if ($this->handler === NULL) $this->handler = & new ap_manage($this, $this->plugin);
-      if (!$this->plugin_list) {
-        $this->plugin_list = plugin_list('',true);
-        sort($this->plugin_list);
-      }
 
       ptln('<div id="plugin__manager">');
       $this->handler->html();
       ptln('</div><!-- #plugin_manager -->');
+    }
+
+    function _get_plugin_list() {
+      if (empty($this->plugin_list)) {
+        $list = plugin_list('',true);     // all plugins, including disabled ones
+        sort($list);
+        trigger_event('PLUGIN_PLUGINMANAGER_PLUGINLIST',$list);
+        $this->plugin_list = $list;
+      }
+      return $this->plugin_list;
     }
 
 }
@@ -266,16 +273,23 @@ class ap_manage {
          *  Refresh plugin list
          */
         function refresh() {
+            global $MSG;
 
-            $this->manager->plugin_list = plugin_list('',true);
-            sort($this->manager->plugin_list);
+            //are there any undisplayed messages? keep them in session for display
+            if (isset($MSG) && count($MSG)){
+                //reopen session, store data and close session again
+                @session_start();
+                $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
+                session_write_close();
+            }
 
             // expire dokuwiki caches
             // touching local.php expires wiki page, JS and CSS caches
             @touch(DOKU_CONF.'local.php');
 
             // update latest plugin date - FIXME
-            return (!$this->manager->error);
+            header('Location: '.wl($ID).'?do=admin&page=plugin');
+            exit();
         }
 
         function download($url, $overwrite=false) {
@@ -336,6 +350,7 @@ class ap_manage {
           if ($tmp) ap_delete($tmp);
 
           if (!$this->manager->error) {
+              msg('Plugin package ('.count($this->downloaded).' plugin'.(count($this->downloaded) != 1?'s':'').': '.join(',',$this->downloaded).') successfully installed.',1);
               $this->refresh();
               return true;
           }
@@ -368,7 +383,7 @@ class ap_manage {
 
         function plugin_readlog($plugin, $field) {
             static $log = array();
-            $file = DOKU_PLUGIN.$plugin.'/manager.dat';
+            $file = DOKU_PLUGIN.plugin_directory($plugin).'/manager.dat';
 
             if (!isset($log[$plugin])) {
                 $tmp = @file_get_contents($file);
@@ -380,7 +395,7 @@ class ap_manage {
                 return $log[$plugin];
             }
 
-                        $match = array();
+            $match = array();
             if (preg_match_all('/'.$field.'=(.*)$/m',$log[$plugin], $match))
                 return implode("\n", $match[1]);
 
@@ -429,9 +444,10 @@ class ap_manage {
 
         function process() {
 
-            if (!ap_delete(DOKU_PLUGIN.$this->manager->plugin)) {
+            if (!ap_delete(DOKU_PLUGIN.plugin_directory($this->manager->plugin))) {
               $this->manager->error = sprintf($this->lang['error_delete'],$this->manager->plugin);
             } else {
+              msg("Plugin {$this->manager->plugin} successfully deleted.");
               $this->refresh();
             }
         }
@@ -589,6 +605,7 @@ class ap_manage {
 
       function process() {
         global $plugin_protected;
+        $count_enabled = $count_disabled = 0;
 
         $this->enabled = isset($_REQUEST['enabled']) ? $_REQUEST['enabled'] : array();
 
@@ -601,14 +618,23 @@ class ap_manage {
           if ($new != $old) {
             switch ($new) {
               // enable plugin
-              case true : plugin_enable($plugin); break;
-              case false: plugin_disable($plugin); break;
+              case true :
+                plugin_enable($plugin);
+                $count_enabled++;
+                break;
+              case false:
+                plugin_disable($plugin);
+                $count_disabled++;
+                break;
             }
           }
         }
 
         // refresh plugins, including expiring any dokuwiki cache(s)
-        $this->refresh();
+        if ($count_enabled || $count_disabled) {
+          msg("Plugin state saved, $count_enabled plugins enabled, $count_disabled plugins disabled.");
+          $this->refresh();
+        }
       }
 
     }
@@ -732,7 +758,7 @@ class ap_manage {
       global $plugin_types;
 
       $components = array();
-      $path = DOKU_PLUGIN.$plugin.'/';
+      $path = DOKU_PLUGIN.plugin_directory($plugin).'/';
 
       foreach ($plugin_types as $type) {
         if (@file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }

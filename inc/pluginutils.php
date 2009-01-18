@@ -8,93 +8,174 @@
 
 // plugin related constants
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
+
 $plugin_types = array('admin','syntax','action','renderer', 'helper');
 
+global $plugin_controller_class, $plugin_controller;
+if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
+
+$plugin_controller = new $plugin_controller_class();
+
 /**
- * Returns a list of available plugins of given type
- *
- * @param $type  string, plugin_type name;
- *               the type of plugin to return,
- *               use empty string for all types
- * @param $all   bool;
- *               false to only return enabled plugins,
- *               true to return both enabled and disabled plugins
- *
- * @return       array of plugin names
- *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * Original plugin functions, remain for backwards compatibility
  */
-function plugin_list($type='',$all=false){
-  $plugins = array();
-  if ($dh = opendir(DOKU_PLUGIN)) {
-    while (false !== ($plugin = readdir($dh))) {
-      if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp') continue;
-      if (is_file(DOKU_PLUGIN.$plugin)) continue;
+function plugin_list($type='',$all=false) { global $plugin_controller; return $plugin_controller->getList($type,$all); }
+function &plugin_load($type,$name,$new=false) { global $plugin_controller; return $plugin_controller->load($type,$name,$new); }
+function plugin_isdisabled($plugin) { global $plugin_controller; return $plugin_controller->isdisabled($plugin); }
+function plugin_enable($plugin) { global $plugin_controller; return $plugin_controller->enable($plugin); }
+function plugin_disable($plugin) { global $plugin_controller; return $plugin_controller->disable($plugin); }
+function plugin_directory($plugin) { global $plugin_controller; return $plugin_controller->get_directory($plugin); }
 
-      // if required, skip disabled plugins
-      if (!$all && plugin_isdisabled($plugin)) continue;
+class Doku_Plugin_Controller {
 
-      if ($type=='' || @file_exists(DOKU_PLUGIN."$plugin/$type.php")){
-          $plugins[] = $plugin;
+  var $list_enabled = array();
+  var $list_disabled = array();
+  var $list_bytype = array();
+
+  function Doku_Plugin_Controller() {
+    $this->_populateMasterList();
+  }
+
+  /**
+   * Returns a list of available plugins of given type
+   *
+   * @param $type  string, plugin_type name;
+   *               the type of plugin to return,
+   *               use empty string for all types
+   * @param $all   bool;
+   *               false to only return enabled plugins,
+   *               true to return both enabled and disabled plugins
+   *
+   * @return       array of plugin names
+   *
+   * @author Andreas Gohr <andi@splitbrain.org>
+   */
+  function getList($type='',$all=false){
+
+    // request the complete list
+    if (!$type) {
+      return $all ? array_merge($this->list_enabled,$this->list_disabled) : $this->list_enabled;
+    }
+
+    if (!isset($this->list_bytype[$type]['enabled'])) {
+      $this->list_bytype[$type]['enabled'] = $this->_getListByType($type,true);
+    }
+    if ($all && !isset($this->list_bytype[$type]['disabled'])) {
+      $this->list_bytype[$type]['disabled'] = $this->_getListByType($type,false);
+    }
+
+    return $all ? array_merge($this->list_bytype[$type]['enabled'],$this->list_bytype[$type]['disabled']) : $this->list_bytype[$type]['enabled'];
+  }
+
+  /**
+   * Loads the given plugin and creates an object of it
+   *
+   * @author Andreas Gohr <andi@splitbrain.org>
+   *
+   * @param  $type string     type of plugin to load
+   * @param  $name string     name of the plugin to load
+   * @param  $new  bool       true to return a new instance of the plugin, false to use an already loaded instance
+   * @return objectreference  the plugin object or null on failure
+   */
+  function &load($type,$name,$new=false){
+    //we keep all loaded plugins available in global scope for reuse
+    global $DOKU_PLUGINS;
+
+    //plugin already loaded?
+    if(!empty($DOKU_PLUGINS[$type][$name])){
+      if ($new) {
+        $class = $type.'_plugin_'.$name;
+        return class_exists($class) ? new $class : null;
       } else {
-        if ($dp = @opendir(DOKU_PLUGIN."$plugin/$type/")) {
+        return $DOKU_PLUGINS[$type][$name];
+      }
+    }
+
+    //try to load the wanted plugin file
+    list($plugin,$component) = $this->_splitName($name);
+    $dir = !$this->isdisabled($plugin) ? $plugin : $plugin.'.disabled';
+    $file = $component ? "$type/$component.php" : "$type.php";
+
+    if (!include_once(DOKU_PLUGIN."$dir/$file")) {
+      return null;
+    }
+
+    //construct class and instantiate
+    $class = $type.'_plugin_'.$name;
+    if (!class_exists($class)) return null;
+
+    $DOKU_PLUGINS[$type][$name] = new $class;
+    return $DOKU_PLUGINS[$type][$name];
+  }
+
+  function isdisabled($plugin) {
+    return (array_search($plugin, $this->list_enabled) === false);
+  }
+
+  function enable($plugin) {
+    if (array_search($plugin, $this->list_disabled) !== false) {
+      return @rename(DOKU_PLUGIN.$plugin.'.disabled',DOKU_PLUGIN.$plugin);
+    }
+    return false;
+  }
+
+  function disable($plugin) {
+   if (array_search($plugin, $this->list_enabled) !== false) {
+      return @rename(DOKU_PLUGIN.$plugin,DOKU_PLUGIN.$plugin.'.disabled');
+    }
+    return false;
+  }
+
+  function get_directory($plugin) {
+    return $this->isdisabled($plugin) ? $plugin.'.disabled' : $plugin;
+  }
+
+  function _populateMasterList() {
+    if ($dh = opendir(DOKU_PLUGIN)) {
+      while (false !== ($plugin = readdir($dh))) {
+        if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp') continue;
+        if (is_file(DOKU_PLUGIN.$plugin)) continue;
+
+        if (substr($plugin,-9) == '.disabled') {
+          $this->list_disabled[] = substr($plugin,0,-9);
+        } else {
+          $this->list_enabled[] = $plugin;
+        }
+      }
+    }
+  }
+
+  function _getListByType($type, $enabled) {
+    $master_list = $enabled ? $this->list_enabled : $this->list_disabled;
+
+    $plugins = array();
+    foreach ($master_list as $plugin) {
+      $dir = $enabled ? $plugin : $plugin.'.disabled';
+
+      if (@file_exists(DOKU_PLUGIN."$dir/$type.php")){
+        $plugins[] = $plugin;
+      } else {
+        if ($dp = @opendir(DOKU_PLUGIN."$dir/$type/")) {
           while (false !== ($component = readdir($dp))) {
             if (substr($component,0,1) == '.' || strtolower(substr($component, -4)) != ".php") continue;
-            if (is_file(DOKU_PLUGIN."$plugin/$type/$component")) {
-              $plugins[] = $plugin.'_'.substr($component, 0, -4);
+            if (is_file(DOKU_PLUGIN."$dir/$type/$component")) {
+                $plugins[] = $plugin.'_'.substr($component, 0, -4);
             }
           }
         closedir($dp);
         }
       }
     }
-    closedir($dh);
+
+    return $plugins;
   }
-  return $plugins;
-}
 
-/**
- * Loads the given plugin and creates an object of it
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param  $type string     type of plugin to load
- * @param  $name string     name of the plugin to load
- * @param  $new  bool       true to return a new instance of the plugin, false to use an already loaded instance
- * @return objectreference  the plugin object or null on failure
- */
-function &plugin_load($type,$name,$new=false){
-  //we keep all loaded plugins available in global scope for reuse
-  global $DOKU_PLUGINS;
-
-  //plugin already loaded?
-  if(!empty($DOKU_PLUGINS[$type][$name])){
-    if ($new) {
-      $class = $type.'_plugin_'.$name;
-      return class_exists($class) ? new $class : null;
-    } else {
-      return $DOKU_PLUGINS[$type][$name];
+  function _splitName($name) {
+    if (array_search($name, $this->list_enabled + $this->list_disabled) === false) {
+      return explode('_',$name,2);
     }
+
+    return array($name,'');
   }
 
-  //try to load the wanted plugin file
-  if (@file_exists(DOKU_PLUGIN."$name/$type.php")){
-    include_once(DOKU_PLUGIN."$name/$type.php");
-  }else{
-    list($plugin, $component) = preg_split("/_/",$name, 2);
-    if (!$component || !include_once(DOKU_PLUGIN."$plugin/$type/$component.php")) {
-        return null;
-    }
-  }
-
-  //construct class and instantiate
-  $class = $type.'_plugin_'.$name;
-  if (!class_exists($class)) return null;
-
-  $DOKU_PLUGINS[$type][$name] = new $class;
-  return $DOKU_PLUGINS[$type][$name];
 }
-
-function plugin_isdisabled($name) { return @file_exists(DOKU_PLUGIN.$name.'/disabled'); }
-function plugin_enable($name) { return @unlink(DOKU_PLUGIN.$name.'/disabled'); }
-function plugin_disable($name) { return @touch(DOKU_PLUGIN.$name.'/disabled'); }
