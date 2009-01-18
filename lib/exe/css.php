@@ -92,7 +92,20 @@ function css_out(){
     if(css_cacheok($cache,array_keys($files),$tplinc)){
         http_conditionalRequest(filemtime($cache));
         if($conf['allowdebug']) header("X-CacheUsed: $cache");
-        readfile($cache);
+
+        // finally send output
+        if (http_accepts_gzip() && http_gzip_valid($cache)) {
+          header('Vary: Accept-Encoding');
+          header('Content-Encoding: gzip');
+          if (!http_sendfile($cache.'.gz')) readfile($cache.".gz");
+#        } else if (http_accepts_deflate()) {
+#          header('Vary: Accept-Encoding');
+#          header('Content-Encoding: deflate');
+#          readfile($cache.".zip");
+        } else {
+          if (!http_sendfile($cache)) readfile($cache);
+        }
+
         return;
     } else {
         http_conditionalRequest(time());
@@ -124,9 +137,20 @@ function css_out(){
 
     // save cache file
     io_saveFile($cache,$css);
+    copy($cache,"compress.zlib://$cache.gz");
 
     // finally send output
-    print $css;
+    if (http_accepts_gzip()) {
+      header('Vary: Accept-Encoding');
+      header('Content-Encoding: gzip');
+      print gzencode($css,9,FORCE_GZIP);
+#    } else if (http_accepts_deflate()) {
+#      header('Vary: Accept-Encoding');
+#      header('Content-Encoding: deflate');
+#      print gzencode($css,9,FORCE_DEFLATE);
+    } else {
+      print $css;
+    }
 }
 
 /**

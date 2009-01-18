@@ -578,6 +578,9 @@ function http_conditionalRequest($timestamp){
   exit;
 }
 
+/**
+ *   common routines for handling communication with the client (browser)
+ */
 function http_sendfile($file) {
   global $conf;
 
@@ -596,4 +599,23 @@ function http_sendfile($file) {
   return false;
 }
 
+function http_accepts_gzip() {
+  return !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
+}
+
+function http_accepts_deflate() {
+  return !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'deflate') !== false);    
+}
+/**
+ * return true if there exists a gzip version of the uncompressed file (samepath/samefilename.sameext.gz)
+ * created after the uncompressed file
+ */
+function http_gzip_valid($uncompressed_file) {
+  $gzip = $uncompressed_file.'.gz';
+  if (filemtime($gzip) < filemtime($uncompressed_file)) {    // filemtime returns false (0) if file doesn't exist
+    return copy($uncompressed_file, 'compress.zlib://'.$gzip);
+  }
+
+  return true;
+}
 //Setup VIM: ex: et ts=2 enc=utf-8 :
