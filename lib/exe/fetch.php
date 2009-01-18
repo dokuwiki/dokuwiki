@@ -14,6 +14,7 @@
   require_once(DOKU_INC.'inc/pageutils.php');
   require_once(DOKU_INC.'inc/confutils.php');
   require_once(DOKU_INC.'inc/auth.php');
+
   //close sesseion
   session_write_close();
   if(!defined('CHUNK_SIZE')) define('CHUNK_SIZE',16*1024);
@@ -136,16 +137,7 @@ function sendFile($file,$mime,$dl,$cache){
   }
 
   //use x-sendfile header to pass the delivery to compatible webservers
-  if($conf['xsendfile'] == 1){
-    header("X-LIGHTTPD-send-file: $file");
-    exit;
-  }elseif($conf['xsendfile'] == 2){
-    header("X-Sendfile: $file");
-    exit;
-  }elseif($conf['xsendfile'] == 3){
-    header("X-Accel-Redirect: $file");
-    exit;
-  }
+  if (http_sendfile($file)) exit;
 
   //support download continueing
   header('Accept-Ranges: bytes');

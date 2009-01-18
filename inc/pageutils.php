@@ -578,4 +578,22 @@ function http_conditionalRequest($timestamp){
   exit;
 }
 
+function http_sendfile($file) {
+  global $conf;
+
+  //use x-sendfile header to pass the delivery to compatible webservers
+  if($conf['xsendfile'] == 1){
+    header("X-LIGHTTPD-send-file: $file");
+    return true;
+  }elseif($conf['xsendfile'] == 2){
+    header("X-Sendfile: $file");
+    return true;
+  }elseif($conf['xsendfile'] == 3){
+    header("X-Accel-Redirect: $file");
+    return true;
+  }
+
+  return false;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
