@@ -22,7 +22,8 @@
  *   'email'        - text input, input must conform to email address format, setting output in quotes
  *   'richemail'    - text input, input must conform to email address format but accepts variables and
  *                    emails with a real name prepended (when email address is given in <>)
- *   'password'     - password input, minimal input validation, setting output plain text in quotes
+ *   'password'     - password input, minimal input validation, setting output text in quotes, maybe encoded
+ *                    according to the _code parameter
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
  *                    parameter (required). A pattern can be used to restrict the folders to only those which
  *                    match the pattern.
@@ -52,6 +53,7 @@
  *                   required by 'dirchoice' class, ignored by other classes
  *   '_combine'    - complimentary output setting values which can be combined into a single display checkbox
  *                   optional for 'multicheckbox', ignored by other classes
+ *   '_code'       - encoding method to use, accepted values: 'base64','uuencode','plain'.  defaults to plain.
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
@@ -189,12 +191,12 @@ $meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
-$meta['proxy____pass'] = array('password');
+$meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['safemodehack'] = array('onoff');
 $meta['ftp____host']  = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['ftp____port']  = array('numericopt');
 $meta['ftp____user']  = array('string');
-$meta['ftp____pass']  = array('password');
+$meta['ftp____pass']  = array('password','_code' => 'base64');
 $meta['ftp____root']  = array('string');
 

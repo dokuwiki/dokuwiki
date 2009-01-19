@@ -32,7 +32,7 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_host = $conf['proxy']['host'];
         $this->proxy_port = $conf['proxy']['port'];
         $this->proxy_user = $conf['proxy']['user'];
-        $this->proxy_pass = $conf['proxy']['pass'];
+        $this->proxy_pass = conf_decodeString($conf['proxy']['pass']);
         $this->proxy_ssl  = $conf['proxy']['ssl'];
     }
 }

@@ -238,5 +238,34 @@ function useHeading($linktype) {
   return (!empty($useHeading[$linktype]));
 }
 
-
+/**
+ * obscure config data so information isn't plain text
+ *
+ * @param string       $str     data to be encoded
+ * @param string       $code    encoding method, values: plain, base64, uuencode.
+ * @return string               the encoded value
+ */
+function conf_encodeString($str,$code) {
+  switch ($code) {
+  	case 'base64'   : return '<b>'.base64_encode($str);
+  	case 'uuencode' : return '<u>'.convert_uuencode($str);
+  	case 'plain':
+  	default:
+  	  return $str;
+  }
+}
+/**
+ * return obscured data as plain text
+ *
+ * @param  string      $str   encoded data
+ * @return string             plain text
+ */
+function conf_decodeString($str) {
+	switch (substr($str,0,3)) {
+	  case '<b>' : return base64_decode(substr($str,3));
+	  case '<u>' : return convert_uudecode(substr($str,3));
+	  default:  // not encode (or unknown)
+	  	return $str;
+	}
+}
 //Setup VIM: ex: et ts=2 enc=utf-8 :

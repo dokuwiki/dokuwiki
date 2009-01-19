@@ -22,7 +22,7 @@ if (!class_exists('configuration')) {
     var $_default_files  = array();
     var $_local_files = array();      // updated configuration is written to the first file
     var $_protected_files = array();
-    
+
     var $_plugin_list = null;
 
     /**
@@ -127,13 +127,13 @@ if (!class_exists('configuration')) {
       fclose($fh);
       return true;
     }
-    
+
     function _read_config_group($files) {
       $config = array();
       foreach ($files as $file) {
         $config = array_merge($config, $this->_read_config($file));
       }
-      
+
       return $config;
     }
 
@@ -477,6 +477,8 @@ if (!class_exists('setting_string')) {
 if (!class_exists('setting_password')) {
   class setting_password extends setting_string {
 
+    var $_code = 'plain';  // mechanism to be used to obscure passwords
+
     function update($input) {
         if ($this->is_protected()) return false;
         if (!$input) return false;
@@ -487,7 +489,7 @@ if (!class_exists('setting_password')) {
           return false;
         }
 
-        $this->_local = $input;
+        $this->_local = conf_encodeString($input,$this->_code);
         return true;
     }
 
@@ -887,7 +889,6 @@ if (!class_exists('setting_multicheckbox')) {
     }
   }
 }
-
 
 /**
  *  Provide php_strip_whitespace (php5 function) functionality

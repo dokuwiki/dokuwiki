@@ -424,7 +424,7 @@ function io_mkdir_ftp($dir){
     return false;
   }
 
-  if(!@ftp_login($conn, $conf['ftp']['user'], $conf['ftp']['pass'])){
+  if(!@ftp_login($conn, $conf['ftp']['user'], conf_decodeString($conf['ftp']['pass']))){
     msg("FTP login failed",-1);
     return false;
   }
