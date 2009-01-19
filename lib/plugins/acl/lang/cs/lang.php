@@ -21,6 +21,7 @@ $lang['p_choose_id']           = 'Prosím, <b>vložte uživatele nebo skupinu</b
 $lang['p_choose_ns']           = 'Prosím, <b>vložte uživatele nebo skupinu</b> ve formě uvedené výše, abyste mohli prohlížet a editovat množinu oprávnění pro jmenný prostor <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Poznámka: Tato oprávnění nebyla nastavena explicitně, ale jsou zděděna z jiné skupiny nebo z nadřazeného jmenného prostoru.';
 $lang['p_isadmin']             = 'Poznámka: Vybraná skupina nebo uživatel má vždy plná oprávnění, protože je nastaven jako správce (superuser).';
+$lang['p_include']             = 'Vyšší oprávnění zahrnují nižší oprávnění. Vytvořit, Nahrát a Smazat se vztahují jen k jmenným prostorů, nikoliv ke stránkám.';
 $lang['current']               = 'Aktuální ACL pravidla';
 $lang['where']                 = 'Stránka/Jmenný prostor';
 $lang['who']                   = 'Uživatel/Skupina';
