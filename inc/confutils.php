@@ -168,10 +168,13 @@ function retrieveConfig($type,$fn) {
 
   $combined = array();
   if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
-  foreach ($config_cascade[$type] as $file) {
-    if (@file_exists($file)) {
-      $config = $fn($file);
-      $combined = array_merge($combined, $config);
+  foreach (array('default','local','protected') as $config_group) {
+    if (empty($config_cascade[$type][$config_group])) continue;
+    foreach ($config_cascade[$type][$config_group] as $file) {
+      if (@file_exists($file)) {
+        $config = $fn($file);
+        $combined = array_merge($combined, $config);
+      }
     }
   }
 

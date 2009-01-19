@@ -50,32 +50,32 @@
         'protected' => array(DOKU_CONF.'local.protected.php'),
       ),
       'acronyms'  => array(
-        'default'   => array(DOKU_CONF.'acronyms.php'),
-        'local'     => array(DOKU_CONF.'acronyms.local.php'),
+        'default'   => array(DOKU_CONF.'acronyms.conf'),
+        'local'     => array(DOKU_CONF.'acronyms.local.conf'),
       ),
       'entities'  => array(
-        'default'   => array(DOKU_CONF.'entities.php'),
-        'local'     => array(DOKU_CONF.'entities.local.php'),
+        'default'   => array(DOKU_CONF.'entities.conf'),
+        'local'     => array(DOKU_CONF.'entities.local.conf'),
       ),
       'interwiki' => array(
-        'default'   => array(DOKU_CONF.'interwiki.php'),
-        'local'     => array(DOKU_CONF.'interwiki.local.php'),
+        'default'   => array(DOKU_CONF.'interwiki.conf'),
+        'local'     => array(DOKU_CONF.'interwiki.local.conf'),
       ),
       'mime'      => array(
-        'default'   => array(DOKU_CONF.'mime.php'),
-        'local'     => array(DOKU_CONF.'mime.local.php'),
+        'default'   => array(DOKU_CONF.'mime.conf'),
+        'local'     => array(DOKU_CONF.'mime.local.conf'),
       ),
       'scheme'    => array(
-        'default'   => array(DOKU_CONF.'scheme.php'),
-        'local'     => array(DOKU_CONF.'scheme.local.php'),
+        'default'   => array(DOKU_CONF.'scheme.conf'),
+        'local'     => array(DOKU_CONF.'scheme.local.conf'),
       ),
       'smileys'   => array(
-        'default'   => array(DOKU_CONF.'smileys.php'),
-        'local'     => array(DOKU_CONF.'smileys.local.php'),
+        'default'   => array(DOKU_CONF.'smileys.conf'),
+        'local'     => array(DOKU_CONF.'smileys.local.conf'),
       ),
       'wordblock' => array(
-        'default'   => array(DOKU_CONF.'wordblock.php'),
-        'local'     => array(DOKU_CONF.'wordblock.local.php'),
+        'default'   => array(DOKU_CONF.'wordblock.conf'),
+        'local'     => array(DOKU_CONF.'wordblock.local.conf'),
       ),
     );
   }
@@ -85,8 +85,8 @@
   $conf = array();
 
   // load the global config file(s)
-  foreach ($config_cascade['main'] as $config_group) {
-    foreach ($config_group as $config_file) {
+  foreach (array('default','local','protected') as $config_group) {
+    foreach ($config_cascade['main'][$config_group] as $config_file) {
       @include($config_file);
     }
   }
