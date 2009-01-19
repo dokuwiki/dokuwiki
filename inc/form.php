@@ -243,12 +243,10 @@ class Doku_Form {
     print '<form action="'.$this->action.'" method="'.$this->method.'" accept-charset="'.$lang['encoding'].'"';
     if (!empty($this->id)) print ' id="'.$this->id.'"';
     if (!empty($this->enctype)) print ' enctype="'.$this->enctype.'"';
-    print '>'.NL;
+    print '><div class="no">'.NL;
     if (!empty($this->_hidden)) {
-      print '<div class="no">';
       foreach ($this->_hidden as $name=>$value)
         print form_hidden(array('name'=>$name, 'value'=>$value));
-      print '</div>'.NL;
     }
     foreach ($this->_content as $element) {
       if (is_array($element)) {
@@ -261,7 +259,7 @@ class Doku_Form {
       }
     }
     if ($this->_infieldset) print form_closefieldset().NL;
-    print '</form>'.NL;
+    print '</div></form>'.NL;
   }
 
 }
