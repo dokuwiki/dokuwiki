@@ -12,7 +12,7 @@ require_once(DOKU_INC.'inc/utf8.php');
 require_once(DOKU_INC.'inc/parserutils.php');
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
-if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',3);
+if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
 
 // Asian characters are handled as words. The following regexp defines the
 // Unicode-Ranges for Asian characters

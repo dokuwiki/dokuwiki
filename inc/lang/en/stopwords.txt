@@ -4,6 +4,8 @@
 # This list is based upon the ones found at http://www.ranks.nl/stopwords/
 about
 are
+as
+an
 and
 you
 your
@@ -13,10 +15,18 @@ com
 for
 from
 into
+if
+in
+is
+it
 how
+of
+on
+or
 that
 the
 this
+to
 was
 what
 when

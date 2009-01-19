@@ -50,6 +50,8 @@ hinter
 ich
 ihr
 ihre
+in
+im
 ist
 jede
 jedem
@@ -98,6 +100,7 @@ unter
 vom
 von
 vor
+um
 wann
 warum
 was
