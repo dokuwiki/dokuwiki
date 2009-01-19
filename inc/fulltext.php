@@ -254,7 +254,7 @@ function _ft_pageLookup(&$data){
 
     // check ACL permissions
     foreach(array_keys($pages) as $idx){
-        if(auth_quickaclcheck($pages[$idx]) < AUTH_READ){
+        if(auth_quickaclcheck(trim($pages[$idx])) < AUTH_READ){
             unset($pages[$idx]);
         }
     }
