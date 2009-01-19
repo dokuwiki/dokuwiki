@@ -668,7 +668,8 @@ function form_button($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_field($attrs) {
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span>';
   $s .= ' <input '.buildAttributes($attrs,true).'/></label>';
@@ -688,7 +689,8 @@ function form_field($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_fieldright($attrs) {
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input '.buildAttributes($attrs,true).'/>';
   $s .= ' <span>'.$attrs['_text'].'</span></label>';
@@ -710,7 +712,8 @@ function form_fieldright($attrs) {
 function form_textfield($attrs) {
   // mandatory attributes
   unset($attrs['type']);
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<input type="text" '.buildAttributes($attrs,true).'/></label>';
@@ -732,7 +735,8 @@ function form_textfield($attrs) {
 function form_passwordfield($attrs) {
   // mandatory attributes
   unset($attrs['type']);
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<input type="password" '.buildAttributes($attrs,true).'/></label>';
@@ -754,7 +758,8 @@ function form_passwordfield($attrs) {
  * @author  Michael Klier <chi@chimeric.de>
  */
 function form_filefield($attrs) {
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<input type="file" '.buildAttributes($attrs,true);
@@ -779,7 +784,8 @@ function form_filefield($attrs) {
 function form_checkboxfield($attrs) {
   // mandatory attributes
   unset($attrs['type']);
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input type="checkbox" '.buildAttributes($attrs,true).'/>';
   $s .= ' <span>'.$attrs['_text'].'</span></label>';
@@ -801,7 +807,8 @@ function form_checkboxfield($attrs) {
 function form_radiofield($attrs) {
   // mandatory attributes
   unset($attrs['type']);
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><input type="radio" '.buildAttributes($attrs,true).'/>';
   $s .= ' <span>'.$attrs['_text'].'</span></label>';
@@ -825,7 +832,8 @@ function form_radiofield($attrs) {
  */
 function form_menufield($attrs) {
   $attrs['size'] = '1';
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span>';
   $s .= ' <select '.buildAttributes($attrs,true).'>'.NL;
@@ -866,7 +874,8 @@ function form_menufield($attrs) {
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_listboxfield($attrs) {
-  $s = '<label class="'.$attrs['_class'].'"';
+  $s = '<label';
+  if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
   if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
   $s .= '><span>'.$attrs['_text'].'</span> ';
   $s .= '<select '.buildAttributes($attrs,true).'>'.NL;
