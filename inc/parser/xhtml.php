@@ -104,6 +104,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function header($text, $level, $pos) {
+        if(!$text) return; //skip empty headlines
 
         $hid = $this->_headerToLink($text,true);
 
