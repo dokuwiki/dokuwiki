@@ -48,6 +48,11 @@ class action_plugin_upgradeplugindirectory extends DokuWiki_Action_Plugin {
 
       if (empty($plugin_controller)) return;
 
+      if(!is_writable(DOKU_INC.'lib/plugins')) {
+          msg("Plugin Directory Upgrade, lib/plugins isn't writable for the webserver, no action taken!", -1);
+          return;
+      }
+
       $plugins = $plugin_controller->getList('',true);    // get all plugins
       foreach ($plugins as $plugin) {
       	if ($this->plugin_isdisabled_oldstyle($plugin)) {
