@@ -176,3 +176,5 @@ $lang['showuseras_o_loginname'] = 'Nombre de entrada';
 $lang['showuseras_o_username'] = 'Nombre completo del usuario';
 $lang['showuseras_o_email']    = 'Dirección de correo electrónico del usuario (Ofuscada según la configuración de "mailguard")';
 $lang['showuseras_o_email_link'] = 'Dirección de correo de usuario como enlace de envío de correo';
+$lang['useheading_o_content']  = 'Contenido Wiki solamente';
+$lang['useheading_o_1']        = 'Siempre';
