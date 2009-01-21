@@ -918,17 +918,44 @@ function html_diff($text='',$intro=true){
     if(!$l_rev){
       $l_head = '&mdash;';
     }else{
+      $l_info   = getRevisionInfo($ID,$l_rev,true);
+      if($l_info['user']){ $l_user = editorinfo($l_info['user']);
+        if(auth_ismanager()) $l_user .= ' ('.$l_info['ip'].')';
+      } else { $l_user = $l_info['ip']; }
+      $l_user  = '<span class="user">'.$l_user.'</span>';
+      $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
+      if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
+
       $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-                $ID.' '.strftime($conf['dformat'],$l_rev).'</a>';
+                $ID.' '.strftime($conf['dformat'],$l_rev).'</a>'.
+                '<br />'.$l_user.' '.$l_sum;
     }
 
     if($r_rev){
+      $r_info   = getRevisionInfo($ID,$r_rev,true);
+      if($r_info['user']){ $r_user = editorinfo($r_info['user']);
+        if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
+      } else { $r_user = $r_info['ip']; }
+      $r_user = '<span class="user">'.$r_user.'</span>';
+      $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
+      if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
+
       $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
-                $ID.' '.strftime($conf['dformat'],$r_rev).'</a>';
+                $ID.' '.strftime($conf['dformat'],$r_rev).'</a>'.
+                '<br />'.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime(wikiFN($ID))){
+      $_info   = getRevisionInfo($ID,$_rev,true);
+      if($_info['user']){ $_user = editorinfo($_info['user']);
+        if(auth_ismanager()) $_user .= ' ('.$_info['ip'].')';
+      } else { $_user = $_info['ip']; }
+      $_user = '<span class="user">'.$_user.'</span>';
+      $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
+      if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
+
       $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
                $ID.' '.strftime($conf['dformat'],$_rev).'</a> '.
-               $lang['current'];
+               $lang['current'].
+                '<br />'.$_user.' '.$_sum;
     }else{
       $r_head = '&mdash; '.$lang['current'];
     }
@@ -942,10 +969,10 @@ function html_diff($text='',$intro=true){
   ?>
     <table class="diff">
       <tr>
-        <th colspan="2">
+        <th colspan="2" <?php echo $l_minor?>>
           <?php echo $l_head?>
         </th>
-        <th colspan="2">
+        <th colspan="2" <?php echo $r_minor?>>
           <?php echo $r_head?>
         </th>
       </tr>

@@ -599,6 +599,9 @@ div.dokuwiki table.diff th {
   font-weight: normal;
   text-align: left;
 }
+div.dokuwiki table.diff th.minor {
+  font-style: italic;
+}
 div.dokuwiki table.diff td {
   font-family: monospace;
   font-size: 100%;
