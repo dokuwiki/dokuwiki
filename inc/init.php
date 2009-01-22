@@ -11,7 +11,8 @@
   define('DOKU_START_TIME', delta_time());
 
   // if available load a preload config file
-  @include(fullpath(dirname(__FILE__)).'/preload.php');
+  $preload = fullpath(dirname(__FILE__)).'/preload.php';
+  if (@file_exists($preload)) include($preload);
 
   // define the include path
   if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
