@@ -48,9 +48,8 @@ class action_plugin_upgradeplugindirectory extends DokuWiki_Action_Plugin {
 
       if (empty($plugin_controller)) return;
 
-      if(!is_writable(DOKU_INC.'lib/plugins')) {
-          msg("Plugin Directory Upgrade, lib/plugins isn't writable for the webserver, no action taken!", -1);
-          return;
+      if(!is_writable(DOKU_INC.'lib/plugins') && !auth_isAdmin()) {
+        return;
       }
 
       $plugins = $plugin_controller->getList('',true);    // get all plugins
@@ -70,6 +69,7 @@ class action_plugin_upgradeplugindirectory extends DokuWiki_Action_Plugin {
       	}
       }
 
+      // note: only send messages when the user is an admin
       if ($attempts && auth_isAdmin()) {
       	$level = $failures ? -1 : ($badclean ? 2 : 1);
       	msg("Plugin Directory Upgrade, $updated/$attempts plugins updated, $success/$attempts cleaned.",$level);
@@ -77,16 +77,24 @@ class action_plugin_upgradeplugindirectory extends DokuWiki_Action_Plugin {
       	if ($failures) {
       	  msg("- the following disabled plugins couldn't be updated, please update by hand: ".join(',',$failures),$level);
         }
-        msg("For more information see http://www.dokuwiki.org/update",$level);
+        $morelink = true;
       }
 
       // no failures, our job is done, disable ourself
       if (!$failures) {
-        $plugin_controller->disable($this->getPluginName());
-        // redirect to let dokuwiki start cleanly with plugins disabled.
-        act_redirect($ID,'upgradeplugindirectory');
+        if ($plugin_controller->disable($this->getPluginName())) {
+          // redirect to let dokuwiki start cleanly with plugins disabled.
+          act_redirect($ID,'upgradeplugindirectory');
+        } else {
+          if (auth_isAdmin()) {
+            if (!$attempts) msg('Plugin Directory Upgrade: Your plugin directory is up-to-date.',1);
+            msg('Plugin Directory Upgrade: Could not disable the upgrade plugin, please disable or delete it manually.',-1);
+            $morelink = true;
+            $level = -1;
+          }
+        }
       }
-
+      if ($morelink) msg('For more information see <a href="http://www.dokuwiki.org/update">http://www.dokuwiki.org/update</a>',$level);
     }
 
     /* old style plugin isdisabled function */
