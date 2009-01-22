@@ -181,18 +181,17 @@ class cache_parser extends cache {
   }
 
   function _addDependencies() {
-    global $conf;
+    global $conf, $config_cascade;
 
     $this->depends['age'] = isset($this->depends['age']) ? 
                    min($this->depends['age'],$conf['cachetime']) : $conf['cachetime'];
 
     // parser cache file dependencies ...
     $files = array($this->file,                                     // ... source
-                   DOKU_CONF.'dokuwiki.php',                        // ... config
-                   DOKU_CONF.'local.php',                           // ... local config
                    DOKU_INC.'inc/parser/parser.php',                // ... parser
                    DOKU_INC.'inc/parser/handler.php',               // ... handler
              );
+    $files = array_merge($files, getConfigFiles('main'));           // ... wiki settings
 
     $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
     parent::_addDependencies();

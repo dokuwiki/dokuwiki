@@ -7,7 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_CONF.'dokuwiki.php');
 
 /**
  * Returns the path to the given template, uses

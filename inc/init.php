@@ -62,6 +62,14 @@
         'default'   => array(DOKU_CONF.'interwiki.conf'),
         'local'     => array(DOKU_CONF.'interwiki.local.conf'),
       ),
+      'license' => array(
+        'default'   => array(DOKU_CONF.'license.php'),
+        'local'     => array(DOKU_CONF.'license.local.php'),
+      ),
+      'mediameta' => array(
+        'default'   => array(DOKU_CONF.'mediameta.php'),
+        'local'     => array(DOKU_CONF.'mediameta.local.php'),
+      ),
       'mime'      => array(
         'default'   => array(DOKU_CONF.'mime.conf'),
         'local'     => array(DOKU_CONF.'mime.local.conf'),
@@ -87,8 +95,11 @@
 
   // load the global config file(s)
   foreach (array('default','local','protected') as $config_group) {
+    if (empty($config_cascade['main'][$config_group])) continue;
     foreach ($config_cascade['main'][$config_group] as $config_file) {
-      @include($config_file);
+      if (@file_exists($config_file)) {
+        include($config_file);
+      }
     }
   }
 
@@ -107,9 +118,13 @@
   $license = array();
 
   // load the license file(s)
-  require_once(DOKU_CONF.'license.php');
-  if(@file_exists(DOKU_CONF.'license.php')){
-    require_once(DOKU_CONF.'license.php');
+  foreach (array('default','local') as $config_group) {
+    if (empty($config_cascade['license'][$config_group])) continue;
+    foreach ($config_cascade['license'][$config_group] as $config_file) {
+      if(@file_exists($config_file)){
+        include($config_file);
+      }
+    }
   }
 
   // define baseURL

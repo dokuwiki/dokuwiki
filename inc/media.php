@@ -80,15 +80,19 @@ function media_metasave($id,$auth,$data){
  */
 function media_metaform($id,$auth){
     if($auth < AUTH_UPLOAD) return false;
-    global $lang;
+    global $lang, $config_cascade;
 
     // load the field descriptions
     static $fields = null;
     if(is_null($fields)){
-        include(DOKU_CONF.'mediameta.php');
-        if(@file_exists(DOKU_CONF.'mediameta.local.php')){
-            include(DOKU_CONF.'mediameta.local.php');
+
+      foreach (array('default','local') as $config_group) {
+        if (empty($config_cascade['mediameta'][$config_group])) continue;
+        foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
+        if(@file_exists($config_file)){
+          include($config_file);
         }
+      }
     }
 
     $src = mediaFN($id);

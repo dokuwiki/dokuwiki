@@ -159,14 +159,15 @@ function css_out(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_cacheok($cache,$files,$tplinc){
+    global $config_cascade;
+
     if($_REQUEST['purge']) return false; //support purge request
 
     $ctime = @filemtime($cache);
     if(!$ctime) return false; //There is no cache
 
     // some additional files to check
-    $files[] = DOKU_CONF.'dokuwiki.php';
-    $files[] = DOKU_CONF.'local.php';
+    $files = array_merge($files, getConfigFiles('main'));
     $files[] = $tplinc.'style.ini';
     $files[] = __FILE__;
 

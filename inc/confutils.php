@@ -182,6 +182,27 @@ function retrieveConfig($type,$fn) {
 }
 
 /**
+ * Include the requested configuration information
+ *
+ * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param  string   $type     the configuration settings to be read, must correspond to a key/array in $config_cascade
+ * @return array              list of files, default before local before protected
+ */
+function getConfigFiles($type) {
+  global $config_cascade;
+  $files = array();
+
+  if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
+  foreach (array('default','local','protected') as $config_group) {
+    if (empty($config_cascade[$type][$config_group])) continue;
+  	$files = array_merge($files, $config_cascade[$type][$config_group]);
+  }
+
+  return $files;
+}
+
+/**
  * check if the given action was disabled in config
  *
  * @author Andreas Gohr <andi@splitbrain.org>

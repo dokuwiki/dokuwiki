@@ -273,7 +273,7 @@ class ap_manage {
          *  Refresh plugin list
          */
         function refresh() {
-            global $MSG;
+            global $MSG,$config_cascade;
 
             //are there any undisplayed messages? keep them in session for display
             if (isset($MSG) && count($MSG)){
@@ -285,7 +285,7 @@ class ap_manage {
 
             // expire dokuwiki caches
             // touching local.php expires wiki page, JS and CSS caches
-            @touch(DOKU_CONF.'local.php');
+            @touch(reset($config_cascade['main']['local']));
 
             // update latest plugin date - FIXME
             header('Location: '.wl($ID).'?do=admin&page=plugin');

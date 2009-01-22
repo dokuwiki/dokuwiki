@@ -220,8 +220,7 @@ function js_cacheok($cache,$files){
     if(!$ctime) return false; //There is no cache
 
     // some additional files to check
-    $files[] = DOKU_CONF.'dokuwiki.php';
-    $files[] = DOKU_CONF.'local.php';
+    $files = array_merge($files, getConfigFiles('main'));
     $files[] = DOKU_CONF.'userscript.js';
     $files[] = __FILE__;
 

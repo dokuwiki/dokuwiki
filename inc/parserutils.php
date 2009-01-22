@@ -631,7 +631,7 @@ function p_get_first_heading($id, $render=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
-  global $conf;
+  global $conf, $config_cascade;
   $language = strtolower($language);
 
   // remove any leading or trailing blank lines
@@ -640,9 +640,9 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
   $cache = getCacheName($language.$code,".code");
   $ctime = @filemtime($cache);
   if($ctime && !$_REQUEST['purge'] &&
-     $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&
-     $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&
-     $ctime > filemtime(DOKU_CONF.'dokuwiki.php')){
+     $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&                 // geshi changed
+     $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&  // language syntax definition changed
+     $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
     $highlighted_code = io_readFile($cache, false);
 
   } else {
