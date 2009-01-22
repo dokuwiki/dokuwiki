@@ -510,7 +510,7 @@ EOT;
 function fullpath($path,$exists=false){
     static $run = 0; 
     $root  = '';
-    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || $GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
+    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || @$GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
 
     // find the (indestructable) root of the path - keeps windows stuff intact
     if($path{0} == '/'){
