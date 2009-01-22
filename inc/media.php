@@ -89,8 +89,9 @@ function media_metaform($id,$auth){
       foreach (array('default','local') as $config_group) {
         if (empty($config_cascade['mediameta'][$config_group])) continue;
         foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
-        if(@file_exists($config_file)){
-          include($config_file);
+          if(@file_exists($config_file)){
+            include($config_file);
+          }
         }
       }
     }
