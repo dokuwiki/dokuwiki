@@ -168,11 +168,11 @@
   // increase PCRE backtrack limit
   @ini_set('pcre.backtrack_limit', '20971520');
 
-  // enable gzip compression
+  // enable gzip compression if supported
+  $conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
   if ($conf['gzip_output'] &&
       !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
-      function_exists('ob_gzhandler') &&
-      preg_match('/gzip|deflate/', $_SERVER['HTTP_ACCEPT_ENCODING'])) {
+      function_exists('ob_gzhandler')) {
     ob_start('ob_gzhandler');
   }
 

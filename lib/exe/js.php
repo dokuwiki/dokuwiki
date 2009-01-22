@@ -9,6 +9,7 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL',"\n");
+if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/io.php');
@@ -66,14 +67,10 @@ function js_out(){
         if($conf['allowdebug']) header("X-CacheUsed: $cache");
 
         // finally send output
-        if (http_accepts_gzip() && http_gzip_valid($cache)) {
+        if ($conf['gzip_output'] && http_gzip_valid($cache)) {
           header('Vary: Accept-Encoding');
           header('Content-Encoding: gzip');
-          if (!http_sendfile($cache.'.gz')) readfile($cache.".gz");
-#        } else if (http_accepts_deflate()) {
-#          header('Vary: Accept-Encoding');
-#          header('Content-Encoding: deflate');
-#          readfile($cache.".zip");
+          readfile($cache.".gz");
         } else {
           if (!http_sendfile($cache)) readfile($cache);
         }
@@ -97,7 +94,7 @@ function js_out(){
 
     // load JS strings form plugins
     $lang['js']['plugins'] = js_pluginstrings();
-    
+
     // load JS specific translations
     $json = new JSON();
     echo 'LANG = '.$json->encode($lang['js']).";\n";
@@ -163,14 +160,10 @@ function js_out(){
     copy($cache,"compress.zlib://$cache.gz");
 
     // finally send output
-    if (http_accepts_gzip()) {
+    if ($conf['gzip_output']) {
       header('Vary: Accept-Encoding');
       header('Content-Encoding: gzip');
       print gzencode($js,9,FORCE_GZIP);
-#    } else if (http_accepts_deflate()) {
-#      header('Vary: Accept-Encoding');
-#      header('Content-Encoding: deflate');
-#      print gzencode($js,9,FORCE_DEFLATE);
     } else {
       print $js;
     }
@@ -250,7 +243,7 @@ function js_pluginscripts(){
 /**
  * Return an two-dimensional array with strings from the language file of each plugin.
  *
- * - $lang['js'] must be an array. 
+ * - $lang['js'] must be an array.
  * - Nothing is returned for plugins without an entry for $lang['js']
  *
  * @author Gabriel Birke <birke@d-scribe.de>

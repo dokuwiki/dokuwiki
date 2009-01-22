@@ -534,7 +534,7 @@ function isVisiblePage($id){
  * @author   Simon Willison <swillison@gmail.com>
  * @link     http://simon.incutio.com/archive/2003/04/23/conditionalGet
  * @param    timestamp $timestamp lastmodified time of the cache file
- * @returns  void or void with previously header() commands executed
+ * @returns  void or exits with previously header() commands executed
  */
 function http_conditionalRequest($timestamp){
   // A PHP implementation of conditional get, see
@@ -579,7 +579,10 @@ function http_conditionalRequest($timestamp){
 }
 
 /**
- *   common routines for handling communication with the client (browser)
+ * Let the webserver send the given file vi x-sendfile method
+ *
+ * @author Chris Smith <chris.eureka@jalakai.co.uk>
+ * @returns  void or exits with previously header() commands executed
  */
 function http_sendfile($file) {
   global $conf;
@@ -587,28 +590,28 @@ function http_sendfile($file) {
   //use x-sendfile header to pass the delivery to compatible webservers
   if($conf['xsendfile'] == 1){
     header("X-LIGHTTPD-send-file: $file");
-    return true;
+    ob_end_clean();
+    exit;
   }elseif($conf['xsendfile'] == 2){
     header("X-Sendfile: $file");
-    return true;
+    ob_end_clean();
+    exit;
   }elseif($conf['xsendfile'] == 3){
     header("X-Accel-Redirect: $file");
-    return true;
+    ob_end_clean();
+    exit;
   }
 
   return false;
 }
 
-function http_accepts_gzip() {
-  return !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
-}
-
-function http_accepts_deflate() {
-  return !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'deflate') !== false);    
-}
 /**
- * return true if there exists a gzip version of the uncompressed file (samepath/samefilename.sameext.gz)
- * created after the uncompressed file
+ * Check for a gzipped version and create if necessary
+ *
+ * return true if there exists a gzip version of the uncompressed file
+ * (samepath/samefilename.sameext.gz) created after the uncompressed file
+ *
+ * @author Chris Smith <chris.eureka@jalakai.co.uk>
  */
 function http_gzip_valid($uncompressed_file) {
   $gzip = $uncompressed_file.'.gz';

@@ -8,6 +8,7 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
+if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/io.php');
@@ -94,14 +95,10 @@ function css_out(){
         if($conf['allowdebug']) header("X-CacheUsed: $cache");
 
         // finally send output
-        if (http_accepts_gzip() && http_gzip_valid($cache)) {
+        if ($conf['gzip_output'] && http_gzip_valid($cache)) {
           header('Vary: Accept-Encoding');
           header('Content-Encoding: gzip');
-          if (!http_sendfile($cache.'.gz')) readfile($cache.".gz");
-#        } else if (http_accepts_deflate()) {
-#          header('Vary: Accept-Encoding');
-#          header('Content-Encoding: deflate');
-#          readfile($cache.".zip");
+          readfile($cache.".gz");
         } else {
           if (!http_sendfile($cache)) readfile($cache);
         }
@@ -140,14 +137,10 @@ function css_out(){
     copy($cache,"compress.zlib://$cache.gz");
 
     // finally send output
-    if (http_accepts_gzip()) {
+    if ($conf['gzip_output']) {
       header('Vary: Accept-Encoding');
       header('Content-Encoding: gzip');
       print gzencode($css,9,FORCE_GZIP);
-#    } else if (http_accepts_deflate()) {
-#      header('Vary: Accept-Encoding');
-#      header('Content-Encoding: deflate');
-#      print gzencode($css,9,FORCE_DEFLATE);
     } else {
       print $css;
     }
