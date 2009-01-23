@@ -594,10 +594,21 @@ div.dokuwiki td.diff-blockheader {
 }
 div.dokuwiki table.diff th {
   border-bottom: 1px solid __border__;
-  font-size: 120%;
+  font-size: 110%;
   width: 50%;
   font-weight: normal;
   text-align: left;
+}
+div.dokuwiki table.diff th a {
+    font-weight: bold;
+}
+div.dokuwiki table.diff th span.user {
+    color: __text__;
+    font-size: 80%;
+}
+div.dokuwiki table.diff th span.sum {
+    font-size: 80%;
+    font-weight: bold;
 }
 div.dokuwiki table.diff th.minor {
   font-style: italic;

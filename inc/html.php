@@ -927,7 +927,7 @@ function html_diff($text='',$intro=true){
       if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
 
       $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-                $ID.' '.strftime($conf['dformat'],$l_rev).'</a>'.
+                $ID.' ['.strftime($conf['dformat'],$l_rev).']</a>'.
                 '<br />'.$l_user.' '.$l_sum;
     }
 
@@ -941,7 +941,7 @@ function html_diff($text='',$intro=true){
       if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
       $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
-                $ID.' '.strftime($conf['dformat'],$r_rev).'</a>'.
+                $ID.' ['.strftime($conf['dformat'],$r_rev).']</a>'.
                 '<br />'.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime(wikiFN($ID))){
       $_info   = getRevisionInfo($ID,$_rev,true);
@@ -953,11 +953,11 @@ function html_diff($text='',$intro=true){
       if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
       $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-               $ID.' '.strftime($conf['dformat'],$_rev).'</a> '.
-               $lang['current'].
+               $ID.' ['.strftime($conf['dformat'],$_rev).']</a> '.
+               '('.$lang['current'].')'.
                 '<br />'.$_user.' '.$_sum;
     }else{
-      $r_head = '&mdash; '.$lang['current'];
+      $r_head = '&mdash; ('.$lang['current'].')';
     }
   }
 
