@@ -6,7 +6,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
     function TestOfDoku_Parser_Formatting() {
         $this->UnitTestCase('TestOfDoku_Parser_Formatting');
     }
-    
+
     function testStrong() {
         $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
         $this->P->parse('abc **bar** def');
@@ -23,7 +23,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testNotStrong() {
         $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
         $this->P->parse('abc **bar def');
@@ -53,7 +53,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testNotEm() {
         $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
         $this->P->parse('abc //bar def');
@@ -113,7 +113,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testNotMonospace() {
         $this->P->addMode('monospace',new Doku_Parser_Mode_Formatting('monospace'));
         $this->P->parse("abc ''bar def");
@@ -143,7 +143,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testNotSubscript() {
         $this->P->addMode('subscript',new Doku_Parser_Mode_Formatting('subscript'));
         $this->P->parse('abc <sub>bar def');
@@ -156,7 +156,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testSuperscript() {
         $this->P->addMode('superscript',new Doku_Parser_Mode_Formatting('superscript'));
         $this->P->parse("abc <sup>bar</sup> def");
@@ -203,7 +203,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testNotDeleted() {
         $this->P->addMode('deleted',new Doku_Parser_Mode_Formatting('deleted'));
         $this->P->parse('abc <del>bar def');
@@ -238,7 +238,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testIllegalNestedFormatting() {
         $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
         $this->P->parse('abc **a**b**c** def');

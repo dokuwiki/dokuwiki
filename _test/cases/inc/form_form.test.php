@@ -1,5 +1,6 @@
 <?php
 
+require_once DOKU_INC.'inc/auth.php';
 require_once DOKU_INC.'inc/form.php';
 
 class form_test extends UnitTestCase {
@@ -22,7 +23,7 @@ class form_test extends UnitTestCase {
     $realoutput .= 'accept-charset="'.$lang['encoding'].'" id="dw__testform">';
     $realoutput .= "\n";
     $realoutput .= '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
-    $realoutput .= '<input type="hidden" name="summary" value="changes &amp;c" /></div>';
+    $realoutput .= '<input type="hidden" name="summary" value="changes &amp;c" />';
     $realoutput .= "\n";
     $realoutput .= "<fieldset ><legend>Test</legend>\n";
     $realoutput .= '<label class="block" for="text__id"><span>Text</span> ';
@@ -32,12 +33,16 @@ class form_test extends UnitTestCase {
     $realoutput .= '<input type="checkbox" id="check__id" name="r" value="1" /> ';
     $realoutput .= '<span>Check</span></label>';
     $realoutput .= "\n";
-    $realoutput .= '<input name="do[save]" type="submit" value="Save" class="button" accesskey="s" title="Save [ALT+S]" />';
+    $realoutput .= '<input name="do[save]" type="submit" value="Save" class="button" accesskey="s" title="Save [S]" />';
     $realoutput .= "\n";
     $realoutput .= '<input name="do[cancel]" type="submit" value="Cancel" class="button" />';
     $realoutput .= "\n";
-    $realoutput .= "</fieldset>\n</form>\n";
+    $realoutput .= "</fieldset>\n</div></form>\n";
     return $realoutput;
+  }
+
+  function _ignoreTagWS($data){
+    return preg_replace('/>\s+</','><',$data);
   }
 
   function test_form_print() {
@@ -47,7 +52,7 @@ class form_test extends UnitTestCase {
     $output = ob_get_contents();
     ob_end_clean();
     $form->addHidden('sectok', getSecurityToken());
-    $this->assertEqual($output,$this->_realoutput());
+    $this->assertEqual($this->_ignoreTagWS($output),$this->_ignoreTagWS($this->_realoutput()));
   }
 
   function test_get_element_at() {
@@ -94,7 +99,7 @@ class form_test extends UnitTestCase {
     $form->printForm();
     $output = ob_get_contents();
     ob_end_clean();
-    $this->assertEqual($output,$this->_realoutput());
+    $this->assertEqual($this->_ignoreTagWS($output),$this->_ignoreTagWS($this->_realoutput()));
   }
 
 }

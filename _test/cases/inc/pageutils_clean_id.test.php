@@ -28,7 +28,11 @@ class init_clean_id_test extends UnitTestCase {
         $tests[] = array('pa$%^*#ge',false,'pa_ge');
         $tests[] = array('*page*',false,'page');
         $tests[] = array('ښ',false,'ښ');
-        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈ');
+        $tests[] = array('päge',false,'paege');
+        $tests[] = array('foo bar',false,'foo_bar');
+        $tests[] = array('PÄGÖ',false,'paegoe');
+        $tests[] = array('Faß','false','fass');
+        $tests[] = array('ښ侧化并곦  β',false,'ښ侧化并곦_β');
         $tests[] = array('page:page',false,'page:page');
         $tests[] = array('page;page',false,'page:page');
 
@@ -80,7 +84,7 @@ class init_clean_id_test extends UnitTestCase {
         $tests[] = array('pagĖ',false,'pagė');
         $tests[] = array('pagĒēĔĕĖėĘęĚě',false,'pagēēĕĕėėęęěě');
         $tests[] = array('ښ',false,'ښ');
-        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈ');
+        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈβ');
 
         foreach($tests as $test){
             $this->assertEqual(cleanID($test[0],$test[1]),$test[2]);
@@ -100,7 +104,7 @@ class init_clean_id_test extends UnitTestCase {
         $tests[] = array('pagĖ',false,'page');
         $tests[] = array('pagĒēĔĕĖėĘęĚě',false,'pageeeeeeeeee');
         $tests[] = array('ښ',false,'ښ');
-        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈ');
+        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈβ');
 
         foreach($tests as $test){
             $this->assertEqual(cleanID($test[0],$test[1]),$test[2]);
