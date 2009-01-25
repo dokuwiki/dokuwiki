@@ -61,17 +61,6 @@ exit;
 function runTrimRecentChanges($media_changes = false) {
     global $conf;
 
-    // Import old changelog (if needed)
-    // Uses the imporoldchangelog plugin to upgrade the changelog automaticaly.
-    // FIXME: Remove this from runTrimRecentChanges when it is no longer needed.
-    if (!$media_changes && isset($conf['changelog_old']) &&
-        @file_exists($conf['changelog_old']) && !@file_exists($conf['changelog']) &&
-        !@file_exists($conf['changelog'].'_importing') && !@file_exists($conf['changelog'].'_tmp')) {
-            $tmp = array(); // no event data
-            trigger_event('TEMPORARY_CHANGELOG_UPGRADE_EVENT', $tmp);
-            return true;
-    }
-
     $fn = ($media_changes ? $conf['media_changelog'] : $conf['changelog']);
 
     // Trim the Recent Changes
