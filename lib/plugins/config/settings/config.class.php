@@ -96,6 +96,7 @@ if (!class_exists('configuration')) {
     }
 
     function save_settings($id, $header='', $backup=true) {
+      global $conf;
 
       if ($this->locked) return false;
 
@@ -125,6 +126,7 @@ if (!class_exists('configuration')) {
 
       @fwrite($fh, $out);
       fclose($fh);
+      if($conf['fperm']) chmod($file, $conf['fperm']);
       return true;
     }
 
