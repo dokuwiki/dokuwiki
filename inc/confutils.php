@@ -91,7 +91,7 @@ function getEntities() {
 function getInterwiki() {
   static $wikis = NULL;
   if ( !$wikis ) {
-    $wikis = retrieveConfig('interwiki','confToHash');
+    $wikis = retrieveConfig('interwiki','confToHash',array(true));
   }
   //add sepecial case 'this'
   $wikis['this'] = DOKU_URL.'{NAME}';
@@ -156,15 +156,18 @@ function confToHash($file,$lower=false) {
 
 /**
  * Retrieve the requested configuration information
- * 
+ *
  * @author Chris Smith <chris@jalakai.co.uk>
  *
  * @param  string   $type     the configuration settings to be read, must correspond to a key/array in $config_cascade
  * @param  callback $fn       the function used to process the configuration file into an array
+ * @param  array    $param    optional additional params to pass to the callback
  * @return array    configuration values
  */
-function retrieveConfig($type,$fn) {
+function retrieveConfig($type,$fn,$params=null) {
   global $config_cascade;
+
+  if(!is_array($params)) $params = array();
 
   $combined = array();
   if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
@@ -172,7 +175,7 @@ function retrieveConfig($type,$fn) {
     if (empty($config_cascade[$type][$config_group])) continue;
     foreach ($config_cascade[$type][$config_group] as $file) {
       if (@file_exists($file)) {
-        $config = $fn($file);
+        $config = call_user_func_array($fn,array_merge(array($file),$params));
         $combined = array_merge($combined, $config);
       }
     }
@@ -196,7 +199,7 @@ function getConfigFiles($type) {
   if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
   foreach (array('default','local','protected') as $config_group) {
     if (empty($config_cascade[$type][$config_group])) continue;
-  	$files = array_merge($files, $config_cascade[$type][$config_group]);
+    $files = array_merge($files, $config_cascade[$type][$config_group]);
   }
 
   return $files;
@@ -231,7 +234,7 @@ function actionOK($action){
 /**
  * check if headings should be used as link text for the specified link type
  *
- * @author Chris Smith <chris@jalakai.co.uk> 
+ * @author Chris Smith <chris@jalakai.co.uk>
  *
  * @param   string  $linktype   'content'|'navigation', content applies to links in wiki text
  *                                                      navigation applies to all other links
@@ -268,11 +271,11 @@ function useHeading($linktype) {
  */
 function conf_encodeString($str,$code) {
   switch ($code) {
-  	case 'base64'   : return '<b>'.base64_encode($str);
-  	case 'uuencode' : return '<u>'.convert_uuencode($str);
-  	case 'plain':
-  	default:
-  	  return $str;
+    case 'base64'   : return '<b>'.base64_encode($str);
+    case 'uuencode' : return '<u>'.convert_uuencode($str);
+    case 'plain':
+    default:
+      return $str;
   }
 }
 /**
@@ -282,11 +285,11 @@ function conf_encodeString($str,$code) {
  * @return string             plain text
  */
 function conf_decodeString($str) {
-	switch (substr($str,0,3)) {
-	  case '<b>' : return base64_decode(substr($str,3));
-	  case '<u>' : return convert_uudecode(substr($str,3));
-	  default:  // not encode (or unknown)
-	  	return $str;
-	}
+  switch (substr($str,0,3)) {
+    case '<b>' : return base64_decode(substr($str,3));
+    case '<u>' : return convert_uudecode(substr($str,3));
+    default:  // not encode (or unknown)
+      return $str;
+  }
 }
 //Setup VIM: ex: et ts=2 enc=utf-8 :
