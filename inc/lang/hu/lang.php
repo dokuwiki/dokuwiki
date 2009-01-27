@@ -4,8 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Ziegler Gábor <gziegler@freemail.hu>
- * @author Sandor TIHANYI <stihanyi@gmail.com>
- * @author SandorTIHANYI <stihanyi@gmail.com>
+ * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -105,6 +104,7 @@ $lang['uploadexist']           = 'A fájl már létezik, nem történt semmi.';
 $lang['uploadbadcontent']      = 'A feltöltött tartalom nem egyezik a %s fájl kiterjesztéssel.';
 $lang['uploadspam']            = 'A feltöltést visszautasítottuk spam-gyanú miatt.';
 $lang['uploadxss']             = 'A feltöltést visszautasítottuk, mert lehetséges, hogy kártékony kódot tartalmaz.';
+$lang['uploadsize']            = 'A feltöltött fájl túl nagy. (max. %s)';
 $lang['deletesucc']            = 'A "%s" fájlt töröltük.';
 $lang['deletefail']            = 'A "%s" fájl nem törölhető. - Ellenőrizd a jogosultságokat!';
 $lang['mediainuse']            = 'A "%s" fájl nem törlődött - még használat alatt van.';
@@ -140,6 +140,7 @@ $lang['created']               = 'létrehozva';
 $lang['restored']              = 'az előző változat helyreállítva';
 $lang['external_edit']         = 'külső szerkesztés';
 $lang['summary']               = 'A változások összefoglalása';
+$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> szükséges.';
 $lang['mail_newpage']          = 'új oldal jött létre:';
 $lang['mail_changed']          = 'oldal megváltozott:';
 $lang['mail_new_user']         = 'Új felhasználó:';

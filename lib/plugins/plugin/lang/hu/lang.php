@@ -2,9 +2,7 @@
 /**
  * Hungarian language file
  *
- * @author Sandor TIHANYI <stihanyi@gmail.com>
- * @author SandorTIHANYI <stihanyi@gmail.com>
- * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
+ * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
 $lang['download']              = 'Új bővítmény letöltése és telepítése';

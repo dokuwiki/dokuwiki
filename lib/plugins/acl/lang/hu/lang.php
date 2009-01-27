@@ -2,9 +2,7 @@
 /**
  * Hungarian language file
  *
- * @author Sandor TIHANYI <stihanyi@gmail.com>
- * @author SandorTIHANYI <stihanyi@gmail.com>
- * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
+ * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['admin_acl']             = 'Hozzáférési lista (ACL) kezelő';
 $lang['acl_group']             = 'Csoport:';
@@ -21,6 +19,7 @@ $lang['p_choose_id']           = 'A felső formon <b>adjon meg egy felhasználó
 $lang['p_choose_ns']           = 'A felső formon <b>adjon meg egy felhasználót vagy csoportot</b>, akinek a(z) <b class="aclns">%s</b> névtérhez beállított jogosultságait megtekinteni vagy változtatni szeretné.';
 $lang['p_inherited']           = 'Megjegyzés: ezek a jogok nem itt lettek explicit beállítva, hanem öröklődtek egyéb csoportokból vagy felsőbb névterekből.';
 $lang['p_isadmin']             = 'Megjegyzés: a kiválasztott csoportnak vagy felhasználónak mindig teljes jogosultsága lesz, mert Wiki-gazdának van beállítva.';
+$lang['p_include']             = 'A magasabb jogok tartalmazzák az alacsonyabbakat.  A Létrehozás, Feltöltés és Törlés jogosultságok csak névterekre alkalmazhatók, az egyes oldalakra nem.';
 $lang['current']               = 'Jelenlegi hozzáférési szabályok';
 $lang['where']                 = 'Oldal/névtér';
 $lang['who']                   = 'Felhasználó/Csoport';

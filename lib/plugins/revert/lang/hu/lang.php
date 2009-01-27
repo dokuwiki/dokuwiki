@@ -2,9 +2,7 @@
 /**
  * Hungarian language file
  *
- * @author Sandor TIHANYI <stihanyi@gmail.com>
- * @author SandorTIHANYI <stihanyi@gmail.com>
- * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
+ * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['menu']                  = 'Visszaállítás kezelő (anti-SPAM)';
 $lang['filter']                = 'SPAM tartalmú oldalak keresése';

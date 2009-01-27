@@ -2,9 +2,7 @@
 /**
  * Hungarian language file
  *
- * @author Sandor TIHANYI <stihanyi@gmail.com>
- * @author SandorTIHANYI <stihanyi@gmail.com>
- * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
+ * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
@@ -52,6 +50,7 @@ $lang['phpok']                 = 'Beágyazott PHP engedélyezése';
 $lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://www.php.net/strftime">strftime</a> függvényt)';
 $lang['signature']             = 'Aláírás';
 $lang['toptoclevel']           = 'A tartalomjegyzék felső szintje';
+$lang['tocminheads']           = 'Legalább ennyi címsor hatására generálódjon tartalomjegyzék';
 $lang['maxtoclevel']           = 'A tartalomjegyzék mélysége';
 $lang['maxseclevel']           = 'A szakasz-szerkesztés maximális szintje';
 $lang['camelcase']             = 'CamelCase használata hivatkozásként';
@@ -172,3 +171,7 @@ $lang['showuseras_o_loginname'] = 'Azonosító';
 $lang['showuseras_o_username'] = 'Teljes név';
 $lang['showuseras_o_email']    = 'E-mail cím (olvashatatlanná téve az e-mailcím védelem beállítása szerint)';
 $lang['showuseras_o_email_link'] = 'E-mail cím mailto: linkként';
+$lang['useheading_o_0']        = 'Soha';
+$lang['useheading_o_navigation'] = 'Csak navigációhoz';
+$lang['useheading_o_content']  = 'Csak Wiki tartalomhoz';
+$lang['useheading_o_1']        = 'Mindig';
