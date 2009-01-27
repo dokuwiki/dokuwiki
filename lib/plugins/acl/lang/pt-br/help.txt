@@ -1,11 +1,11 @@
 === Ajuda rápida: ===
 
-Nessa página você pode adicionar e remover permissões para ramos e páginas do seu "wiki".
+Nessa página você pode adicionar e remover permissões para espaços de nomes e páginas do seu wiki.
 
-O painel à esquerda mostra todos os ramos e páginas disponíveis.
+O painel à esquerda mostra todos os espaços de nomes e páginas disponíveis.
 
 O formulário acima permite a visualização e modificação das permissões de um determinado usuário ou grupo.
 
-Na tabela abaixo são exibidas todas as regras de controle de acesso definidas. Você pode usá-la para excluir ou mudar rapidamente várias regras ao mesmo tempo.
+Na tabela abaixo são exibidas todas as regras de controle de acesso definidas. Você pode usá-la para excluir ou mudar rapidamente várias regras.
 
 A leitura da [[doku>acl|documentação oficial sobre ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no DokuWiki.

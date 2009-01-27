@@ -7,10 +7,17 @@ Aqui estão as mudanças:
 @DIFF@
 --------------------------------------------------------
 
-Para parar de monitorar essa página, identifique-se em
+Data : @DATE@
+Usuário : @USER@
+Resumo da edição: @SUMMARY@
+Revisão antiga: @OLDPAGE@
+Revisão nova: @NEWPAGE@
+
+Para cancelar as notificações dessa página, identifique-se em
 @DOKUWIKIURL@, vá até
 @NEWPAGE@
-e selecione 'Cancelar monitoramento'.
+e cancele o monitoramento das alterações da página e/ou do
+espaço de nomes.
 
 -- 
 Essa mensagem foi gerada pelo DokuWiki em

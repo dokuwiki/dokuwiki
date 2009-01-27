@@ -9,6 +9,7 @@
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
  * @author Luis Dantas <luis@dantas.com>
+ * @author Frederico Guimarães <frederico@teia.bio.br>
  */
 $lang['name']                  = 'Retorno de popularidade (pode demorar um pouco para carregar)';
 $lang['submit']                = 'Enviar dados';
