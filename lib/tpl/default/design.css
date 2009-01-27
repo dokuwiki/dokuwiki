@@ -171,14 +171,15 @@ div.dokuwiki div#draft__status {
   color: __text_alt__;
 }
 
+div.dokuwiki div.license {
+  padding: 0.5em;
+  font-size: 90%;
+  text-align: center;
+}
+
 div.dokuwiki form#dw__editform div.license {
   clear: left;
   font-size: 90%;
-}
-
-div.dokuwiki p.license {
-  font-size: 90%;
-  text-align: center;
 }
 
 /* --------- buttons ------------------- */

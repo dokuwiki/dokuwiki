@@ -1303,7 +1303,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
  * @param  string $img    - print image? (|button|badge)
  * @param  bool   $return - when true don't print, but return HTML
  */
-function tpl_license($img='badge',$return=false){
+function tpl_license($img='badge',$imgonly=false,$return=false){
     global $license;
     global $conf;
     global $lang;
@@ -1311,7 +1311,7 @@ function tpl_license($img='badge',$return=false){
     if(!is_array($license[$conf['license']])) return '';
     $lic = $license[$conf['license']];
 
-    $out  = '<p class="license">';
+    $out  = '<div class="license">';
     if($img){
         $src = license_img($img);
         if($src){
@@ -1320,11 +1320,13 @@ function tpl_license($img='badge',$return=false){
             $out .= '><img src="'.DOKU_BASE.$src.'" class="medialeft lic'.$img.'" alt="'.$lic['name'].'" /></a> ';
         }
     }
-    $out .= $lang['license'];
-    $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
-    if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
-    $out .= '>'.$lic['name'].'</a>';
-    $out .= '</p>';
+    if(!$imgonly) {
+        $out .= $lang['license'];
+        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
+        if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
+        $out .= '>'.$lic['name'].'</a>';
+        $out .= '</div>';
+    }
 
     if($return) return $out;
     echo $out;
