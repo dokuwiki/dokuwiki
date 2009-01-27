@@ -20,6 +20,7 @@ $lang['p_choose_id']           = 'Ole hyvä ja <b>syötä ryhmän nimi</b> yllä
 $lang['p_choose_ns']           = 'Ole hyvä ja <b>syötä ryhmän nimi</b> yllä olevaan kaavakkeeseen katsoaksesi tai muokataksesi oikeuksia nimiavaruuteen <b class="aclpage">%s</b>.';
 $lang['p_inherited']           = 'Muomaa: Oikeuksia ei ole erikseen asetettu, vaan ne on peritty toiselta ryhmältä tai ylemmältä nimiavaruudelta.';
 $lang['p_isadmin']             = 'Huomaa: Valitulla ryhmällä tai käyttäjällä on aina täydet oikeudet, koska se on määritelty pääkäyttäjäksi (Superuser)';
+$lang['p_include']             = 'Korkeammat oikeudet sisältävät matalammat. Luonti-, Lähetys- ja Poisto-oikeudet vaikuttavat vain nimiavaruuksiin, ei sivuihin.';
 $lang['current']               = 'Tämänhetkiset käyttöoikeudet (ACL)';
 $lang['where']                 = 'Sivu/Nimiavaruus';
 $lang['who']                   = 'Käyttäjä/Ryhmä';
@@ -28,7 +29,7 @@ $lang['acl_perm0']             = 'Ei mitään';
 $lang['acl_perm1']             = 'Luku';
 $lang['acl_perm2']             = 'Muokkaus';
 $lang['acl_perm4']             = 'Luonti';
-$lang['acl_perm8']             = 'Lataus';
+$lang['acl_perm8']             = 'Lähetys';
 $lang['acl_perm16']            = 'Poisto';
 $lang['acl_new']               = 'Lisää uusi';
 $lang['acl_mod']               = 'Muokkaa';
