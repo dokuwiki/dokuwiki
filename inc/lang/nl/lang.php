@@ -108,6 +108,7 @@ $lang['uploadexist']           = 'Bestand bestaat reeds. Er is niets gewijzigd.'
 $lang['uploadbadcontent']      = 'Het geüploade bestand heeft niet de bestandsextensie %s.';
 $lang['uploadspam']            = 'De upload is geblokkeerd door de spam blacklist.';
 $lang['uploadxss']             = 'De upload is geblokkeerd wegens mogelijk onveilige inhoud.';
+$lang['uploadsize']            = 'Het geüploade bestand is te groot. (max. %s)';
 $lang['deletesucc']            = 'Het bestand "%s" is verwijderd.';
 $lang['deletefail']            = '"%s" kan niet worden verwijderd - controleer permissies.';
 $lang['mediainuse']            = 'Het bestand "%s" is niet verwijderd - het is nog in gebruik.';
@@ -143,6 +144,7 @@ $lang['created']               = 'aangemaakt';
 $lang['restored']              = 'oude revisie hersteld';
 $lang['external_edit']         = 'Externe bewerking';
 $lang['summary']               = 'Samenvatting wijziging';
+$lang['noflash']               = 'De <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
 $lang['mail_newpage']          = 'pagina toegevoegd:';
 $lang['mail_changed']          = 'pagina aangepast:';
 $lang['mail_new_user']         = 'nieuwe gebruiker:';

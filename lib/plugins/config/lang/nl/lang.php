@@ -53,6 +53,7 @@ $lang['phpok']                 = 'Embedded PHP toestaan';
 $lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';
 $lang['signature']             = 'Ondertekening';
 $lang['toptoclevel']           = 'Bovenste niveau voor inhoudsopgave';
+$lang['tocminheads']           = 'Minimum aantal koppen dat bepaald of een index gemaakt wordt';
 $lang['maxtoclevel']           = 'Laagste niveau voor inhoudsopgave';
 $lang['maxseclevel']           = 'Laagste sectiewijzigingsniveau';
 $lang['camelcase']             = 'CamelCase gebruiken voor links';
