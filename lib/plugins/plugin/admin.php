@@ -619,12 +619,20 @@ class ap_manage {
             switch ($new) {
               // enable plugin
               case true :
-                plugin_enable($plugin);
-                $count_enabled++;
+                if(plugin_enable($plugin)){
+                    msg(sprintf($this->lang['enabled'],$plugin),1);
+                    $count_enabled++;
+                }else{
+                    msg(sprintf($this->lang['notenabled'],$plugin),-1);
+                }
                 break;
               case false:
-                plugin_disable($plugin);
-                $count_disabled++;
+                if(plugin_disable($plugin)){
+                    msg(sprintf($this->lang['disabled'],$plugin),1);
+                    $count_disabled++;
+                }else{
+                    msg(sprintf($this->lang['notdisabled'],$plugin),-1);
+                }
                 break;
             }
           }
@@ -632,7 +640,6 @@ class ap_manage {
 
         // refresh plugins, including expiring any dokuwiki cache(s)
         if ($count_enabled || $count_disabled) {
-          msg("Plugin state saved, $count_enabled plugins enabled, $count_disabled plugins disabled.");
           $this->refresh();
         }
       }

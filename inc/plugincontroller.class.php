@@ -97,14 +97,14 @@ class Doku_Plugin_Controller {
 
   function enable($plugin) {
     if (array_search($plugin, $this->list_disabled) !== false) {
-      return @rename(DOKU_PLUGIN.$plugin.'.disabled',DOKU_PLUGIN.$plugin);
+      return @unlink(DOKU_PLUGIN.$plugin.'/disabled');
     }
     return false;
   }
 
   function disable($plugin) {
-   if (array_search($plugin, $this->list_enabled) !== false) {
-      return @rename(DOKU_PLUGIN.$plugin,DOKU_PLUGIN.$plugin.'.disabled');
+    if (array_search($plugin, $this->list_enabled) !== false) {
+      return @touch(DOKU_PLUGIN.$plugin.'/disabled');
     }
     return false;
   }
@@ -120,7 +120,11 @@ class Doku_Plugin_Controller {
         if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
         if (substr($plugin,-9) == '.disabled') {
-          $this->list_disabled[] = substr($plugin,0,-9);
+          // the plugin was disabled by rc2009-01-26
+          // disabling mechanism was changed back very soon again
+          // to keep everything simple we just skip the plugin completely
+        }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled')){
+          $this->list_disabled[] = $plugin;
         } else {
           $this->list_enabled[] = $plugin;
         }

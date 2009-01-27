@@ -69,4 +69,9 @@ $lang['error_copy']       = 'There was a file copy error while attempting to ins
 $lang['error_delete']     = 'There was an error while attempting to delete plugin <em>%s</em>.  '.
                             'The most probably cause is insufficient file or directory access permissions';
 
+$lang['enabled']          = 'Plugin %s enabled.';
+$lang['notenabled']       = 'Plugin %s could not be enabled, check file permissions.';
+$lang['disabled']         = 'Plugin %s disabled.';
+$lang['notdisabled']      = 'Plugin %s could not be disabled, check file permissions.';
+
 //Setup VIM: ex: et ts=4 enc=utf-8 :
