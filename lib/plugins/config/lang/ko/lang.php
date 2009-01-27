@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author jk Lee
  * @author dongnak@gmail.com
+ * @author Song Younghwan <purluno@gmail.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값때문에 설정들을 변경할 수 없습니다. 수정한 값들을 검사하고 확인을 누르기 바랍니다.
@@ -51,6 +52,7 @@ $lang['phpok']                 = 'PHP 내장 허용';
 $lang['dformat']               = '날짜 포맷 (PHP <a href="http://www.php.net/strftime">strftime</a> 기능) 참조';
 $lang['signature']             = '서명';
 $lang['toptoclevel']           = '목차 최상위 항목';
+$lang['tocminheads']           = '목차 표시 여부를 결정할 최소한의 표제 항목의 수';
 $lang['maxtoclevel']           = '목차 최대 단계';
 $lang['maxseclevel']           = '섹션 최대 편집 단계';
 $lang['camelcase']             = '링크에 CamelCase 사용';

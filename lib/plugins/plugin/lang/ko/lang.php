@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author jk Lee
  * @author dongnak@gmail.com
+ * @author Song Younghwan <purluno@gmail.com>
  */
 $lang['menu']                  = '플러그인 관리자';
 $lang['download']              = '새로운 플러그인 다운로드 및 설치';

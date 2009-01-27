@@ -6,6 +6,7 @@
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
  * @author dongnak@gmail.com
+ * @author Song Younghwan <purluno@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -104,6 +105,7 @@ $lang['uploadexist']           = '이미 파일이 존재합니다.';
 $lang['uploadbadcontent']      = '업로드된 파일이 파일 확장자 %s와 일치하지 않습니다.';
 $lang['uploadspam']            = '스팸 차단기가 업로드를 취소하였습니다.';
 $lang['uploadxss']             = '악성 코드의 가능성이 있어 업로드를 취소하였습니다.';
+$lang['uploadsize']            = '업로드한 파일이 너무 큽니다. (최대 %s)';
 $lang['deletesucc']            = '"%s" 파일이 삭제되었습니다.';
 $lang['deletefail']            = '"%s" 파일을 삭제할 수 없습니다. - 삭제 권한이 있는지 확인하기 바랍니다.';
 $lang['mediainuse']            = '"%s" 파일을 삭제할 수 없습니다. - 아직 사용 중입니다.';
@@ -135,10 +137,11 @@ $lang['youarehere']            = '현재 위치';
 $lang['lastmod']               = '마지막 수정';
 $lang['by']                    = '작성자';
 $lang['deleted']               = '삭제';
-$lang['created']               = '새로 만듬';
+$lang['created']               = '새로 만듦';
 $lang['restored']              = '옛 버전 복구';
 $lang['external_edit']         = '외부 편집기';
 $lang['summary']               = '편집 요약';
+$lang['noflash']               = '이 컨텐츠를 표시하기 위해서 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>이 필요합니다.';
 $lang['mail_newpage']          = '페이지 추가:';
 $lang['mail_changed']          = '페이지 변경:';
 $lang['mail_new_user']         = '새로운 사용자:';

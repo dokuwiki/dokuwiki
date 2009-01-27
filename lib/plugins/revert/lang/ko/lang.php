@@ -4,6 +4,7 @@
  *
  * @author jk lee
  * @author dongnak@gmail.com
+ * @author Song Younghwan <purluno@gmail.com>
  */
 $lang['menu']                  = '복구 관리자';
 $lang['filter']                = '스팸 페이지 검색 ';

@@ -8,6 +8,7 @@
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author jk Lee
  * @author dongnak@gmail.com
+ * @author Song Younghwan <purluno@gmail.com>
  */
 $lang['admin_acl']             = '접근 제어 목록 관리';
 $lang['acl_group']             = '그룹';
