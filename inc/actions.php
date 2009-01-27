@@ -357,8 +357,7 @@ function act_redirect_execute($opts){
   if($opts['fragment']) $go .= '#'.$opts['fragment'];
 
   //show it
-  header("Location: $go");
-  exit();
+  send_redirect($go);
 }
 
 /**

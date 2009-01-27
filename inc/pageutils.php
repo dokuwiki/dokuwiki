@@ -68,7 +68,7 @@ function getID($param='id',$clean=true){
       // fall back to default
       $id = $id.$conf['start'];
     }
-    header("Location: ".wl($id,'',true));
+    send_redirect("Location: ".wl($id,'',true));
   }
 
   if($clean) $id = cleanID($id);

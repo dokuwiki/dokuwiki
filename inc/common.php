@@ -1454,4 +1454,25 @@ function is_mem_available($mem,$bytes=1048576){
   return true;
 }
 
+/**
+ * Send a HTTP redirect to the browser
+ *
+ * Works arround Microsoft IIS cookie sending bug. Exits the script.
+ *
+ * @link   http://support.microsoft.com/kb/q176113/
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function send_redirect($url){
+    // check if running on IIS < 6 with CGI-PHP
+    if( isset($_SERVER['SERVER_SOFTWARE']) && isset($_SERVER['GATEWAY_INTERFACE']) &&
+        (strpos($_SERVER['GATEWAY_INTERFACE'],'CGI') !== false) &&
+        (preg_match('|^Microsoft-IIS/(\d)\.\d$|', trim($_SERVER['SERVER_SOFTWARE']), $matches)) &&
+        $matches[1] < 6 ){
+        header('Refresh: 0;url='.$url);
+    }else{
+        header('Location: '.$url);
+    }
+    exit;
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

@@ -201,9 +201,8 @@ function media_delete($id,$auth){
 
     if($data['unl'] && $data['del']){
         // current namespace was removed. redirecting to root ns passing msg along
-        header('Location: '.DOKU_URL.'lib/exe/mediamanager.php?msg1='.
+        send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
                 rawurlencode(sprintf(noNS($id),$lang['deletesucc'])));
-        exit;
     }
 
     return $data['unl'];
