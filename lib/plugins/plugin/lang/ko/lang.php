@@ -6,6 +6,7 @@
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
+ * @author SONG Younghwan <purluno@gmail.com>
  */
 $lang['menu']                  = '플러그인 관리자';
 $lang['download']              = '새로운 플러그인 다운로드 및 설치';
@@ -47,3 +48,7 @@ $lang['error_dircreate']       = '다운로드를 받기 위한 임시 디렉토
 $lang['error_decompress']      = '플러그인 매니저가 다운로드 받은 파일을 압축해제할 수 없습니다.잘못 다운로드 받았을 수도 있으니 다시 한번 시도해보기 바랍니다; 압축 포맷을 알 수 없는 경우에는 다운로드 후 수동으로 직접 설치하기 바랍니다.';
 $lang['error_copy']            = '플러그인 설치하는 동안 파일 복사 에러가 발생했습니다. <em>%s</em>: 디스크가 꽉 찼거나 파일 접근 권한이 잘못된 경우입니다. 플러그인 설치가 부분적으로만 이루어졌을 것입니다.설치가 불완전합니다.';
 $lang['error_delete']          = '<em>%s</em> 플러그인 삭제 도중 에러가 발생했습니다. 대부분의 경우, 불완전한 파일이거나 디렉토리 접근 권한이 잘못된 경우입니다.';
+$lang['enabled']               = '%s 플러그인을 켰습니다.';
+$lang['notenabled']            = '%s 플러그인을 킬 수 없습니다. 파일 권한을 확인하십시오.';
+$lang['disabled']              = '%s 플러그인을 껐습니다.';
+$lang['notdisabled']           = '%s 플러그인을 끌 수 없습니다. 파일 권한을 확인하십시오.';

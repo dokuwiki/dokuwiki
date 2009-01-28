@@ -6,6 +6,7 @@
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
+ * @author SONG Younghwan <purluno@gmail.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값때문에 설정들을 변경할 수 없습니다. 수정한 값들을 검사하고 확인을 누르기 바랍니다.
