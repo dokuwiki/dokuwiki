@@ -51,3 +51,7 @@ $lang['error_dircreate']       = 'Konnte keinen temporären Ordner für die Down
 $lang['error_decompress']      = 'Der Plugin Manager konnte das Plugin archiv nicht entpacken. Entweder ist der Download fehlerhaft oder das Komprimierungsverfahren wird nicht unterstützt. Bitte versuchen Sie es erneut oder downloaden und installieren Sie das Plugin manuell';
 $lang['error_copy']            = 'Beim kopieren der Dateien des Plugins trat ein Fehler auf <em>%s</em>: möglicherweise ist die Festplatte voll oder die Dateiberechtigungen falsch. Möglicherweise wurde das Plugin nur teilweise installiert, sie sollten das Plugin manuell entfernen um Instabilitäten zu vermeiden.';
 $lang['error_delete']          = 'Es gab einem Fehler beim Versuch das Plugin zu löschen <em>%s</em>. Dies liegt warscheinlich an fehlenden Dateiberechtigungen.';
+$lang['enabled']               = 'Plugin %s wurde aktiviert.';
+$lang['notenabled']            = 'Plugin %s konnte nicht aktiviert werden, überprüfen Sie die Dateirechte.';
+$lang['disabled']              = 'Plugin %s wurde deaktiviert.';
+$lang['notdisabled']           = 'Plugin %s konnte nicht deaktiviert werden, überprüfen Sie die Dateirechte.';
