@@ -9,6 +9,7 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
+ * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  */
 $lang['menu']                  = 'Hantera insticksmoduler';
 $lang['download']              = 'Ladda ned och installera en ny insticksmodul';
@@ -43,10 +44,14 @@ $lang['type']                  = 'Typ:';
 $lang['desc']                  = 'Beskrivning:';
 $lang['author']                = 'Författare:';
 $lang['www']                   = 'Webb:';
-$lang['error']                 = 'Ett okänt fel kar inträffat.';
+$lang['error']                 = 'Ett okänt fel har inträffat.';
 $lang['error_download']        = 'Kan inte ladda ned fil till insticksmodul: %s';
 $lang['error_badurl']          = 'Misstänkt felaktig webbadress - kan inte bestämma filnamnet från webbadressen';
 $lang['error_dircreate']       = 'Kan inte skapa tillfällig katalog för nedladdade filer';
 $lang['error_decompress']      = 'Hanteraren för insticksmoduler kunde inte dekomprimera den nedladdade filen. Detta kan vara resultatet av en misslyckad nedladdning, och i så fall bör du försöka igen; eller så kan det komprimerade formatet vara okänt, och då måste du ladda ned och installera insticksmodulen manuellt.';
 $lang['error_copy']            = 'Ett filkopieringsfel uppstod under försöket att installera filerna till insticksmodulen <em>%s</em>: disken kan vara full eller så kan filskyddet vara felaktigt. Detta kan ha lett till en delvis installerad insticksmodul, och gjort din wiki-installation instabil.';
 $lang['error_delete']          = 'Ett fel uppstod vid försöket att radera insticksmodulen <em>%s</em>.  Den troligaste orsaken är otillräcklig behörighet till filer eller kataloger';
+$lang['enabled']               = 'Tilläggsmodulen %s är aktiverad.';
+$lang['notenabled']            = 'Tilläggsmodulen %s kunde inte aktiveras, kontrollera filrättigheterna.';
+$lang['disabled']              = 'Tiläggsmodulen %s är avaktiverad.';
+$lang['notdisabled']           = 'Tilläggsmodulen %s kunde inte avaktiveras, kontrollera filrättigheterna.';

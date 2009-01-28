@@ -8,6 +8,7 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
+ * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  */
 $lang['menu']                  = 'Hantera återställningar';
 $lang['filter']                = 'Sök efter spamsidor';

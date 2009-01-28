@@ -8,6 +8,7 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
+ * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  */
 $lang['menu']                  = 'Hantera användare';
 $lang['noauth']                = '(användarautentisering ej tillgänlig)';
@@ -45,6 +46,7 @@ $lang['edit_usermissing']      = 'Vald användare hittades inte. Den angivna anv
 $lang['user_notify']           = 'Meddela användaren';
 $lang['note_notify']           = 'E-postmeddelanden skickas bara om användaren har fått ett nytt lösenord.';
 $lang['note_group']            = 'Nya användare läggs till i standardgruppen (%s) om inga grupper anges.';
+$lang['note_pass']             = 'Lösenordet kommer att autogenereras om fältet är tomt och e-postmeddelanden till användaren är påslaget.';
 $lang['add_ok']                = 'Användaren tillagd';
 $lang['add_fail']              = 'Användare kunde inte läggas till';
 $lang['notify_ok']             = 'E-postmeddelande skickat';

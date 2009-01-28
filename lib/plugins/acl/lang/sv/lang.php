@@ -9,6 +9,7 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
+ * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
 $lang['acl_group']             = 'Grupp';
@@ -25,6 +26,7 @@ $lang['p_choose_id']           = 'Vänligen <b>ange en användare eller grupp</b
 $lang['p_choose_ns']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovaan för att visa eller ändra rättigheterna för namnrymden <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Notering: De här rättigheterna är inte explicit satta utan var ärvda från andra grupper eller högre namnrymder.';
 $lang['p_isadmin']             = 'Notering: Den valda gruppen eller användaren har alltid fulla rättigheter på grund av att den är konfigurerad som superanvändare.';
+$lang['p_include']             = 'Högre rättigheter inkluderar lägre. Rättigheter för Skapa, Ladda upp och Radera är endast applicerbara namnrymder, inte sidor.';
 $lang['current']               = 'Nuvarande ACL regler';
 $lang['where']                 = 'Sida/Namnrymd';
 $lang['who']                   = 'Användare/Grupp';

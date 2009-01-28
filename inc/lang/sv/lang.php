@@ -10,6 +10,7 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
+ * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -60,13 +61,14 @@ $lang['newpass']               = 'Nytt lösenord';
 $lang['oldpass']               = 'Bekräfta nuvarande lösenord';
 $lang['passchk']               = 'en gång till';
 $lang['remember']              = 'Kom ihåg mig';
-$lang['fullname']              = 'Namm';
+$lang['fullname']              = 'Namn';
 $lang['email']                 = 'E-post';
 $lang['register']              = 'Registrera';
 $lang['profile']               = 'Användarprofil';
 $lang['badlogin']              = 'Felaktigt användarnamn eller lösenord.';
 $lang['minoredit']             = 'Små ändringar';
 $lang['draftdate']             = 'Utkast automatiskt sparat';
+$lang['nosecedit']             = 'Sidan ändrades medan du skrev, sektionsinformationen var inte uppdaterad. Laddar hela sidan istället.';
 $lang['regmissing']            = 'Du måste fylla i alla fälten.';
 $lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
 $lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';
@@ -77,7 +79,7 @@ $lang['regbadpass']            = 'De två angivna lösenorden är inte identiska
 $lang['regpwmail']             = 'Ditt DokuWikilösenord';
 $lang['reghere']               = 'Har du inte ett konto än? Skaffa ett';
 $lang['profna']                = 'Denna wiki stödjer inte ändringar av profiler';
-$lang['profnochange']          = 'Ingenting ändrades, gör ingenting.';
+$lang['profnochange']          = 'Ingenting ändrades, inget att göra.';
 $lang['profnoempty']           = 'Namn och e-postadress måste fyllas i.';
 $lang['profchanged']           = 'Användarprofilen uppdaterad.';
 $lang['pwdforget']             = 'Glömt ditt lösenord? Ordna ett nytt';
@@ -88,6 +90,8 @@ $lang['resendpwdnouser']       = 'Den här användaren hittas inte i databasen.'
 $lang['resendpwdbadauth']      = 'Den här verifieringskoden är inte giltig. Kontrollera att du använde hela verifieringslänken.';
 $lang['resendpwdconfirm']      = 'En verifieringslänk har skickats med e-post.';
 $lang['resendpwdsuccess']      = 'Ditt nya lösenord har skickats med e-post.';
+$lang['license']               = 'Om inte annat angivet, innehållet i denna wiki är licensierat under följande licenser:';
+$lang['licenseok']             = 'Notera: Genom att ändra i denna sidan så accepterar du att licensiera ditt bidrag under följande licenser:';
 $lang['txt_upload']            = 'Välj fil att ladda upp';
 $lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt)';
 $lang['txt_overwrt']           = 'Skriv över befintlig fil';
@@ -106,6 +110,7 @@ $lang['uploadexist']           = 'Filen finns redan. Gjorde ingenting.';
 $lang['uploadbadcontent']      = 'Det uppladdade innehållet stämde inte överens med filändelsen %s.';
 $lang['uploadspam']            = 'Uppladdningen stoppades av spärrlistan för spam.';
 $lang['uploadxss']             = 'Uppladdningen stoppades på grund av eventuellt skadligt innehåll.';
+$lang['uploadsize']            = 'Den uppladdade filen är för stor. (max. %s)';
 $lang['deletesucc']            = 'Filen "%s" har raderats.';
 $lang['deletefail']            = 'Kunde inte radera "%s" - kontrollera filskydd.';
 $lang['mediainuse']            = 'Filen "%s" har inte raderats - den används fortfarande.';
@@ -113,6 +118,8 @@ $lang['namespaces']            = 'Namnrymder';
 $lang['mediafiles']            = 'Tillgängliga filer i';
 $lang['js']['keepopen']        = 'Lämna fönstret öppet efter val av fil';
 $lang['js']['hidedetails']     = 'Dölj detaljer';
+$lang['js']['nosmblinks']      = 'Länkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.
+Du kan klippa och klistra in länken om du använder en annan webbläsare än MSIE..';
 $lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
 $lang['mediausage']            = 'Använd följande syntax för att referera till denna fil:';
 $lang['mediaview']             = 'Visa originalfilen';
@@ -139,11 +146,11 @@ $lang['created']               = 'skapad';
 $lang['restored']              = 'tidigare version återställd';
 $lang['external_edit']         = 'extern redigering';
 $lang['summary']               = 'Redigeringskommentar';
+$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
 $lang['mail_newpage']          = 'sida tillagd:';
 $lang['mail_changed']          = 'sida ändrad:';
 $lang['mail_new_user']         = 'Ny användare:';
 $lang['mail_upload']           = 'fil uppladdad:';
-$lang['js']['nosmblinks']            = "Länkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.\nDu kan klippa och klistra in länken om du använder en annan webbläsare än MSIE..";
 $lang['qb_alert']              = 'Ange den text du vill formattera.\nDen kommer att läggas till i slutet av dokumentet.';
 $lang['qb_bold']               = 'Fet text';
 $lang['qb_italic']             = 'Kursiv text';
@@ -225,3 +232,4 @@ $lang['mu_fail']               = 'misslyckades';
 $lang['mu_authfail']           = 'sessionen över tid';
 $lang['mu_progress']           = '@PCT@% uppladdade';
 $lang['mu_filetypes']          = 'Tillåtna filtyper';
+$lang['recent_global']         = 'Du bevakar ändringar i namnrymden <b>%s</b>. Du kan också titta på <a href="%s">senaste ändringar för hela wikin</a>.';

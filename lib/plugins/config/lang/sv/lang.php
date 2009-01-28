@@ -9,6 +9,7 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
+ * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
@@ -45,6 +46,7 @@ $lang['savedir']               = 'Katalog för att spara data';
 $lang['start']                 = 'Startsidans namn';
 $lang['title']                 = 'Wikins namn';
 $lang['template']              = 'Mall';
+$lang['license']               = 'Under vilken licens skall ditt innehåll publiceras?';
 $lang['fullpath']              = 'Visa fullständig sökväg i sidfoten';
 $lang['recent']                = 'Antal poster under "Nyligen ändrat"';
 $lang['breadcrumbs']           = 'Antal spår';
@@ -55,6 +57,7 @@ $lang['phpok']                 = 'Tillåt inbäddad PHP';
 $lang['dformat']               = 'Datumformat (se PHP:s <a href="http://www.php.net/strftime">strftime</a>-funktion)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Toppnivå för innehållsförteckning';
+$lang['tocminheads']           = 'Minimalt antal rubriker för att avgöra om innehållsförteckning byggs';
 $lang['maxtoclevel']           = 'Maximal nivå för innehållsförteckning';
 $lang['maxseclevel']           = 'Maximal nivå för redigering av rubriker';
 $lang['camelcase']             = 'Använd CamelCase för länkar';
@@ -68,6 +71,7 @@ $lang['indexdelay']            = 'Tidsfördröjning före indexering (sek)';
 $lang['relnofollow']           = 'Använd rel="nofollow" för externa länkar';
 $lang['mailguard']             = 'Koda e-postadresser';
 $lang['iexssprotect']          = 'Kontrollera om uppladdade filer innehåller eventuellt skadlig JavaScript eller HTML-kod';
+$lang['showuseras']            = 'Vad som skall visas när man visar den användare som senast redigerade en sida';
 $lang['useacl']                = 'Använd behörighetslista (ACL)';
 $lang['autopasswd']            = 'Autogenerera lösenord';
 $lang['authtype']              = 'System för autentisering';
@@ -84,6 +88,7 @@ $lang['disableactions_wikicode'] = 'Visa källkod/Exportera råtext';
 $lang['disableactions_other']  = 'Andra funktioner (kommaseparerade)';
 $lang['sneaky_index']          = 'Som standard visar DokuWiki alla namnrymder på indexsidan. Genom att aktivera det här valet döljer man namnrymder som användaren inte har behörighet att läsa. Det kan leda till att man döljer åtkomliga undernamnrymder, och gör indexet oanvändbart med vissa ACL-inställningar.';
 $lang['auth_security_timeout'] = 'Autentisieringssäkerhets timeout (sekunder)';
+$lang['securecookie']          = 'Skall cookies som sätts via HTTPS endast skickas via HTTPS från webbläsaren? Avaktivera detta alternativ endast om inloggningen till din wiki är säkrad med SSL men läsning av wikin är osäkrad.';
 $lang['updatecheck']           = 'Kontrollera uppdateringar och säkerhetsvarningar? DokuWiki behöver kontakta splitbrain.org för den här funktionen.';
 $lang['userewrite']            = 'Använd rena webbadresser';
 $lang['useslash']              = 'Använd snedstreck för att separera namnrymder i webbadresser';
@@ -113,6 +118,7 @@ $lang['xmlrpc']                = 'Aktivera/Avaktivera XML-RPC-gränssnitt';
 $lang['renderer_xhtml']        = 'Generera för användning i huvudwikipresentation (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['rememberme']            = 'Tillåt permanenta inloggningscookies (kom ihåg mig)';
 $lang['rss_type']              = 'Typ av XML-flöde';
 $lang['rss_linkto']            = 'XML-flöde pekar på';
 $lang['rss_content']           = 'Vad ska visas för saker i XML-flödet?';
@@ -135,6 +141,7 @@ $lang['ftp____port']           = 'FTP-port för safemode hack';
 $lang['ftp____user']           = 'FTP-användarnamn för safemode hack';
 $lang['ftp____pass']           = 'FTP-lösenord för safemode hack';
 $lang['ftp____root']           = 'FTP-rotkatalog för safemode hack';
+$lang['license_o_']            = 'Ingen vald';
 $lang['typography_o_0']        = 'Inga';
 $lang['typography_o_1']        = 'Citat tecken enbart';
 $lang['typography_o_2']        = 'All citeringar (fungerar inte alltid)';
@@ -167,3 +174,11 @@ $lang['xsendfile_o_0']         = 'använd ej';
 $lang['xsendfile_o_1']         = 'Proprietär lighttpd header (before release 1.5)';
 $lang['xsendfile_o_2']         = 'Standard X-Sendfile huvud';
 $lang['xsendfile_o_3']         = 'Proprietär Nginx X-Accel-Redirect header';
+$lang['showuseras_o_loginname'] = 'Användarnamn';
+$lang['showuseras_o_username'] = 'Namn';
+$lang['showuseras_o_email']    = 'Användarens e-postadress (obfuskerad enligt inställningarna i mailguard)';
+$lang['showuseras_o_email_link'] = 'Användarens e-postadress som mailto: länk';
+$lang['useheading_o_0']        = 'Aldrig';
+$lang['useheading_o_navigation'] = 'Endst navigering';
+$lang['useheading_o_content']  = 'Endast innehåll i wiki';
+$lang['useheading_o_1']        = 'Alltid';
