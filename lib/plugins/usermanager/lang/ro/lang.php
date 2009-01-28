@@ -42,6 +42,7 @@ $lang['edit_usermissing']      = 'Utilizatorul selectat nu a fost găsit. E posi
 $lang['user_notify']           = 'Notificare utilizator';
 $lang['note_notify']           = 'Emailurile de notificare sunt trimise numai dacă utilizatorului îi este dată o nouă parolă.';
 $lang['note_group']            = 'Noii utilizatori vor fi adăugaţi la grupul implicit (%s) dacă nu se specifică grupul.';
+$lang['note_pass']             = 'Parola va fi regenerată automat dacă câmpul este lăsat gol şi notificarea utilizatorului este activată.';
 $lang['add_ok']                = 'Utilizator adăugat cu succes';
 $lang['add_fail']              = 'Adăugarea utilizatorului a eşuat';
 $lang['notify_ok']             = 'Emailul de notificare a fost trimis';

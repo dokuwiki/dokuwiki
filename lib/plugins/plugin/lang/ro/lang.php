@@ -46,3 +46,7 @@ $lang['error_dircreate']       = 'Nu a putut fi creat directorul temporar pentru
 $lang['error_decompress']      = 'Administratorul de plugin-uri nu a putut dezarhiva fişierul descărcat. Aceasta se poate datora unei erori la descărcare, caz în care trebuie să încercaţi din nou; sau formatul de arhivare este necunoscut, caz în care va trebui să descărcaţi şi să instalaţi plugin-ul manual.';
 $lang['error_copy']            = 'O eroare la copiere a apărut la instalarea fişierelor plugin-ului <em>%s</em>: discul poate fi plin sau drepturile de acces ale fişierelor sunt incorecte. Aceasta poate avea ca rezultat o instalare parţială a plugin-ului şi o instabilitate a instalării wiki.';
 $lang['error_delete']          = 'O eroare a apărut la ştergerea plugin-ului <em>%s</em>. Cea mai probabilă cauză sunt drepturile de acces insuficiente ale fişierului sau directorului.';
+$lang['enabled']               = 'Plugin %s activat.';
+$lang['notenabled']            = 'Plugin-ul %s nu poate fi activat, verificaţi permisiunile fişierului.';
+$lang['disabled']              = 'Plugin %s dezactivat.';
+$lang['notdisabled']           = 'Plugin-ul %s nu poate fi dezactivat, verificaţi permisiunile fişierului.';

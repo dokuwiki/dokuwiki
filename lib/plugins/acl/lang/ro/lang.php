@@ -21,6 +21,7 @@ $lang['p_choose_id']           = '<b>Introduceţi un utilizator sau un grup</b> 
 $lang['p_choose_ns']           = '<b>Introduceţi un utilizator sau un grup</b> în formularul de mai sus pentru a vizualiza sau edita autorizaţiile spaţiului de nume <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Notă: Aceste autorizaţii nu au fost setate explicit ci au fost moştenite de la alte grupuri sau spaţii de nume superioare ierarhic.';
 $lang['p_isadmin']             = 'Notă: Grupul sau utilizatorul selectat are intotdeauna toate autorizatiile întrucât este configurat ca superutilizator.';
+$lang['p_include']             = 'Permisiunile superioare le includ pe cele inferioare. Permisiunile de Creare, Upload şi Ştergere se aplică doar numelor de spaţiu, nu paginilor.';
 $lang['current']               = 'Reguli ACL actuale';
 $lang['where']                 = 'Pagină/Spaţiu de nume';
 $lang['who']                   = 'Utilizator/Grup';
