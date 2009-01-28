@@ -48,3 +48,7 @@ $lang['error_dircreate']       = 'Nelze vytvořit dočasný adresář ke stažen
 $lang['error_decompress']      = 'Správce pluginů nemůže rozbalit stažený soubor. Toto může být způsobeno chybou při stahování. Můžete se pokusit stahování opakovat. Chyba může být také v kompresním formátu souboru. V tom případě bude nutné stáhnout a nainstalovat plugin ručně.';
 $lang['error_copy']            = 'Došlo k chybě při instalaci pluginu <em>%s</em>. Je možné, že na disku není volné místo, nebo mohou být špatně nastavena přístupová práva. Pozor, mohlo dojít k častečné a tudíž chybné instalaci pluginu a tím může být ohrožena stabilita wiki.';
 $lang['error_delete']          = 'Došlo k chybě při pokusu o smazání pluginu <em>%s</em>. Nejspíše je chyba v nastavení přístupových práv k některým souborům či adresářům.';
+$lang['enabled']               = 'Plugin %s aktivován.';
+$lang['notenabled']            = 'Plugin %s nelze aktivovat, zkontrolujte práva k souborům.';
+$lang['disabled']              = 'Plugin %s deaktivován.';
+$lang['notdisabled']           = 'Plugin %s nelze deaktivovat, zkontrolujte práva k souborům.';
