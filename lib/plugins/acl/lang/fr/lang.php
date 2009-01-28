@@ -30,6 +30,7 @@ $lang['p_choose_id']           = 'Saisissez un nom <b>d\'utilisateur ou de group
 $lang['p_choose_ns']           = 'Saisissez un nom <b>d\'utilisateur ou de groupe</b> dans le formulaire ci-dessous pour afficher ou éditer les permissions relatives à la catégorie <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Note : Ces permissions n\'ont pas été explicitement fixées mais sont héritées d\'autres groupes ou catégories supérieures.';
 $lang['p_isadmin']             = 'Note : Le groupe ou l\'utilisateur sélectionné dispose de toutes les permissions car il est paramétré en tant que superutilisateur.';
+$lang['p_include']             = 'Les permissions les plus élevées induisent les plus faibles. Création, Télécharger, et Effacer, ne s\'appliquent qu\'aux catégories ; pas aux pages';
 $lang['current']               = 'ACL actuelles';
 $lang['where']                 = 'Page/Catégorie';
 $lang['who']                   = 'Utilisateur/Groupe';
