@@ -43,6 +43,7 @@ $lang['edit_usermissing']      = 'L\'usuari seleccionat no s\'ha pogut trobar. P
 $lang['user_notify']           = 'Notificació a l\'usuari';
 $lang['note_notify']           = 'Els correus de notificació només s\'envien si es canvia la contrasenya de l\'usuari.';
 $lang['note_group']            = 'Els nous usuaris s\'afegeixen al grup per defecte (%s) si no s\'especifica un altre grup.';
+$lang['note_pass']             = 'La contrasenya es generarà automàticament si el camp es deixa en blanc i les notificacions estan habilitades per a aquest usuari.';
 $lang['add_ok']                = 'L\'usuari s\'ha afegit amb èxit';
 $lang['add_fail']              = 'No s\'ha pogut afegir l\'usuari';
 $lang['notify_ok']             = 'S\'ha enviat el correu de notificació';

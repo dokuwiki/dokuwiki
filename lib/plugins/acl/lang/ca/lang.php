@@ -14,6 +14,7 @@ $lang['acl_user']              = 'Usuari';
 $lang['acl_perms']             = 'Permisos per a';
 $lang['page']                  = 'Pàgina';
 $lang['namespace']             = 'Espai';
+$lang['btn_select']            = 'Selecciona';
 $lang['p_user_id']             = 'L\'usuari <b class="acluser">%s</b> té a hores d\'ara els permisos següents en la pàgina <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'L\'usuari <b class="acluser">%s</b> té a hores d\'ara els permisos següents en l\'espai <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Els membres del grup <b class="aclgroup">%s</b> tenen a hores d\'ara els permisos següents en la pàgina <b class="aclpage">%s</b>: <i>%s</i>.';
@@ -22,6 +23,7 @@ $lang['p_choose_id']           = '<b>Introduïu un usuari o grup</b> en el formu
 $lang['p_choose_ns']           = '<b>Introduïu un usuari o grup</b> en el formulari de dalt per veure o editar els seus permisos en l\'espai <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Nota: aquests permisos no s\'han definit explícitament, sinó que són heretats d\'altres grups o d\'espais d\'ordre superior.';
 $lang['p_isadmin']             = 'Nota: l\'usuari o grup seleccionat té sempre tots els permisos perquè ha estat configurat com a superusuari.';
+$lang['p_include']             = 'Els permisos més alts inclouen tots els permisos inferiors. Els permisos per a crear, penjar i suprimir només s\'apliquen als espais, no a pàgines.';
 $lang['current']               = 'Regles ACL actuals';
 $lang['where']                 = 'Pàgina/espai';
 $lang['who']                   = 'Usuari/grup';

@@ -47,3 +47,7 @@ $lang['error_dircreate']       = 'No s\'ha pogut crear una carpeta temporal per 
 $lang['error_decompress']      = 'El gestor de connectors no ha pogut descomprimir el fitxer baixat. Potser no s\'ha baixat correctament, en el qual cas podríeu tornar a intentar-ho. O el format de compressió podria ser desconegut, en el qual cas hauríeu de baixar i instal·lar el connector manualment.';
 $lang['error_copy']            = 'S\'ha produït un error de còpia de fitxers quan s\'estaven instal·lant els fitxers del connector <em>%s</em>: potser el disc està ple o els permisos d\'accés són incorrectes. Això pot haver causat una instal·lació incompleta del connector i per tant el vostre wiki pot haver quedat en un estat inestable.';
 $lang['error_delete']          = 'S\'ha produït un error quan s\'intentava suprimir el connector <em>%s</em>. La causa més probable d\'això són uns permisos d\'accés insuficients al fitxer o al directori. ';
+$lang['enabled']               = 'S\'ha habilitat el connector %s.';
+$lang['notenabled']            = 'No s\'ha pogut habilitar el connector %s. Comproveu els permisos dels fitxers.';
+$lang['disabled']              = 'S\'ha inhabilitat el connector %s.';
+$lang['notdisabled']           = 'No s\'ha pogut inhabilitar el connector %s. Comproveu els permisos dels fitxers.';
