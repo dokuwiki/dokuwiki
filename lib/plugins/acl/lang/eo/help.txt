@@ -4,7 +4,7 @@ En tiu ĉi paĝo vi povas aldoni kaj forigi rajtojn por nomspacoj kaj paĝoj en 
 
 La maldekstra panelo montras ĉiujn disponeblajn nomspacojn kaj paĝojn.
 
-La suba agordilo permesas al vi rigardi kaj modifi la rajtojn de elektita uzulo aŭ grupo.
+La suba agordilo permesas al vi rigardi kaj modifi la rajtojn de elektita uzanto aŭ grupo.
 
 En la suba tabelo ĉiuj aktuale difinitaj alirkontrolaj reguloj estas montritaj. Vi povas uzi ĝin por rapide forigi aŭ ŝanĝi multoblajn regulojn.
 

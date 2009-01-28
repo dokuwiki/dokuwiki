@@ -9,5 +9,5 @@ La retpaĝo @PAGE@ en la vikio @TITLE@ ŝanĝis. Jen la ŝanĝoj:
 Por malaliĝi el tiu ĉi paĝo, ensalutu en la vikio ĉe @DOKUWIKIURL@ kaj aliru @NEWPAGE@ kaj elektu 'Malaliĝi el avizoj pri ŝanĝoj'.
 
 --
-Tiu ĉi mesaĝo estis kreata de DokuWiki ĉe
+Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe
 @DOKUWIKIURL@

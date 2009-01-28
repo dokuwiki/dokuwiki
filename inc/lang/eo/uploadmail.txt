@@ -10,5 +10,5 @@ Dosier-tipo: @MIME@
 Uzulo: @USER@
 
 --
-Tiu ĉi mesaĝo estis kreata de DokuWiki ĉe
+Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe
 @DOKUWIKIURL@
