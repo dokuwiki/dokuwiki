@@ -5,6 +5,7 @@
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
  * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
+ * @author shantanoo@gmail.com
  */
 $lang['menu']                  = 'फेर बदल व्यवस्थापक';
 $lang['filter']                = 'भंकस पाने शोधा';

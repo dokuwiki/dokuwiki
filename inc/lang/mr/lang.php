@@ -11,6 +11,7 @@
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
  * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
+ * @author shantanoo@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -27,6 +28,8 @@ $lang['btn_search']            = 'शोधा';
 $lang['btn_save']              = 'सुरक्षित';
 $lang['btn_preview']           = 'झलक';
 $lang['btn_top']               = 'परत वर';
+$lang['btn_newer']             = 'जास्त अलीकडचे';
+$lang['btn_older']             = 'कमी अलीकडचे';
 $lang['btn_revs']              = 'जून्या आव्रुत्ती';
 $lang['btn_recent']            = 'अलीकडील बदल';
 $lang['btn_upload']            = 'अपलोड';

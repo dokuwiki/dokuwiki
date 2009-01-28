@@ -5,6 +5,7 @@
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
  * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
+ * @author shantanoo@gmail.com
  */
 $lang['menu']                  = 'कॉन्फिगरेशन सेटिंग';
 $lang['error']                 = 'चुकीचा शब्द टाकल्यामुळे सेटिंग अद्ययावत केलेली नाहीत. कृपया तुमचे बदल परत तपासा आणि परत सबमिट करा. <br /> चुकीच्या शब्दांभोवती लाल बॉर्डर दाखवली जाईल.';
@@ -169,3 +170,5 @@ $lang['showuseras_o_loginname'] = 'लॉगिन  नाम';
 $lang['showuseras_o_username'] = 'सदस्याचे पूर्ण नाव';
 $lang['showuseras_o_email']    = 'सदस्याचा ईमेल ( मेल सुरक्षिततेच्या सेटिंग अनुसार दुर्बोध केलेला ) ';
 $lang['showuseras_o_email_link'] = 'सदस्याचा ईमेल maito: लिंक   स्वरूपात';
+$lang['useheading_o_0']        = 'कधीच नाही';
+$lang['useheading_o_1']        = 'नेहमी';

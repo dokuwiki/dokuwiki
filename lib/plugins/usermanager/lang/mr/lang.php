@@ -5,6 +5,7 @@
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
  * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
+ * @author shantanoo@gmail.com
  */
 $lang['menu']                  = 'सदस्य व्यवस्थापक';
 $lang['noauth']                = '( सदस्य अधिकृत करण्याची सुविधा नाही )';

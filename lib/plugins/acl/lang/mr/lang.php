@@ -5,6 +5,7 @@
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
  * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
+ * @author shantanoo@gmail.com
  */
 $lang['admin_acl']             = 'Access Control List  व्यवस्थापन';
 $lang['acl_group']             = 'गट';
