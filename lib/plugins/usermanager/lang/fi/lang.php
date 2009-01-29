@@ -6,7 +6,7 @@
  * @author Otto Vainio <otto@valjakko.net>
  */
 $lang['menu']                  = 'Käyttäjähallinta';
-$lang['noauth']                = '(aautentikointi ei ole käytössä)';
+$lang['noauth']                = '(autentikointi ei ole käytössä)';
 $lang['nosupport']             = '(käyttäjähallinta ei ole tuettu)';
 $lang['badauth']               = 'Viallinen autentikointimenetelmä';
 $lang['user_id']               = 'Käyttäjä';
@@ -34,11 +34,11 @@ $lang['update_ok']             = 'Käyttäjän päivitys onnistui';
 $lang['update_fail']           = 'Käyttäjän päivitys epäonnistui';
 $lang['update_exists']         = 'Käyttäjän nimen vaihto epäonnistui. Nimi (%s) on jo olemassa (muut muutokset ok)';
 $lang['start']                 = 'alku';
-$lang['prev']                  = 'edellien';
+$lang['prev']                  = 'edellinen';
 $lang['next']                  = 'seuraava';
 $lang['last']                  = 'viimeinen';
 $lang['edit_usermissing']      = 'Valittua käyttäjää ei löytynyt. Käyttäjä on voitu päivittää tai poistaa muualta.';
-$lang['user_notify']           = 'Tiedotä käyttäjälle';
+$lang['user_notify']           = 'Tiedota käyttäjälle';
 $lang['note_notify']           = 'Tiedotus lähetetään vain, jos käyttäjälle on määritelty uusi salasana.';
 $lang['note_group']            = 'Uudelle käyttäjälle määritellään oletusryhmä (%s), jos ryhmää ei erikseen määritellä.';
 $lang['note_pass']             = 'Salasana luodaan automaattisesti, mikäli kenttä jätetään tyhjäksi ja jos käyttäjän tiedotus on päällä.';

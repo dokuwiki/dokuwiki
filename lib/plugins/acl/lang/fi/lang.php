@@ -18,7 +18,7 @@ $lang['p_group_id']            = 'Ryhmän <b class="aclgroup">%s</b> jäsenillä
 $lang['p_group_ns']            = 'Ryhmän <b class="aclgroup">%s</b> jäsenillä on tällä hetkellä seuraavat oikeudet nimiavaruudessa <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_choose_id']           = 'Ole hyvä ja <b>syötä ryhmän nimi</b> yllä olevaan kaavakkeeseen katsoaksesi tai muokataksesi oikeuksia sivulle <b class="aclpage">%s</b>.';
 $lang['p_choose_ns']           = 'Ole hyvä ja <b>syötä ryhmän nimi</b> yllä olevaan kaavakkeeseen katsoaksesi tai muokataksesi oikeuksia nimiavaruuteen <b class="aclpage">%s</b>.';
-$lang['p_inherited']           = 'Muomaa: Oikeuksia ei ole erikseen asetettu, vaan ne on peritty toiselta ryhmältä tai ylemmältä nimiavaruudelta.';
+$lang['p_inherited']           = 'Huomaa: Oikeuksia ei ole erikseen asetettu, vaan ne on peritty toiselta ryhmältä tai ylemmältä nimiavaruudelta.';
 $lang['p_isadmin']             = 'Huomaa: Valitulla ryhmällä tai käyttäjällä on aina täydet oikeudet, koska se on määritelty pääkäyttäjäksi (Superuser)';
 $lang['p_include']             = 'Korkeammat oikeudet sisältävät matalammat. Luonti-, Lähetys- ja Poisto-oikeudet vaikuttavat vain nimiavaruuksiin, ei sivuihin.';
 $lang['current']               = 'Tämänhetkiset käyttöoikeudet (ACL)';
