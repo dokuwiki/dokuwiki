@@ -40,6 +40,7 @@ $lang['edit_usermissing']      = 'Non se atopou o usuario seleccionado, pode que
 $lang['user_notify']           = 'Notificar ao usuario';
 $lang['note_notify']           = 'Os correos-e de notificación envíanse só se o usuario obtén un novo contrasinal.';
 $lang['note_group']            = 'Os novos usuarios serán engadidos ao grupo por defecto (%s) se non se especifica outro.';
+$lang['note_pass']             = 'Se deixas o campo baleiro e a notificación ao usuario está activada xerarase automaticamente o contrasinal.';
 $lang['add_ok']                = 'Usuario engadido correctamente';
 $lang['add_fail']              = 'Non se puido engadir o usuario';
 $lang['notify_ok']             = 'Correo-e de notificación enviado';

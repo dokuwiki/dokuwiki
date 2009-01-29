@@ -44,3 +44,7 @@ $lang['error_dircreate']       = 'Non se puido crear un cartafol temporal para r
 $lang['error_decompress']      = 'O xestor de plugins non foi quen de descomprimir o arquivo descargado. Isto podería ser causado por unha descarga corrupta, polo que, en tal caso, podes tentalo de novo; ou pode que o formato de compresión sexa descoñecido, co que precisarás descargar e instalar o plugin de xeito manual.';
 $lang['error_copy']            = 'Houbo un erro de copia de arquivo ao tentar instalar o plugin <em>%s</em>: pode que o disco estea cheo ou que os permisos de acceso sexan incorrectos. Isto podería dar lugar a unha instalación parcial do plugin e facer que a túa instalación do wiki se volva inestable.';
 $lang['error_delete']          = 'Houbo un erro ao tentar eliminar o plugin <em>%s</em>. O máis probable é que sexa causado por permisos de acceso ao arquivo ou directorio insuficientes.';
+$lang['enabled']               = 'Complemento %s activado.';
+$lang['notenabled']            = 'O complemento %s non puido ser activado, comproba os permisos de arquivo.';
+$lang['disabled']              = 'Complemento %s desactivado.';
+$lang['notdisabled']           = 'O complemento %s non puido ser desactivado, comproba os permisos de arquivo.';
