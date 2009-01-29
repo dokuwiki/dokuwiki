@@ -1,0 +1,2 @@
+Edite la pàgina, pulse en ''Vista prèvia'' per a comprovar els canvis, i si està tot correcte pulse ''Guardar''. Consulte la sintaxis del Wiki en [[wiki:syntax|Sintaxis]]. Per favor, edite la pàgina només si pot **millorar-la**. Si vol fer proves, deprenga a utilisar el Wiki en  [[playground:playground|l'espai de proves]].
+

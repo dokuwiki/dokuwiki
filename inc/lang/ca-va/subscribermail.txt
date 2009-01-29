@@ -1,0 +1,17 @@
+¡Hola!
+
+La pàgina @PAGE@ del wiki @TITLE@ ha canviat.
+Estos són els canvis.
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Per a cancelar les notificacions de canvis en pàgines, inicie sessió en el wiki en 
+@DOKUWIKIURL@, visite
+@NEWPAGE@
+i desubscriga's dels canvis de la pàgina o de l'espai de noms.
+
+--
+Este correu l'ha generat DokuWiki en
+@DOKUWIKIURL@

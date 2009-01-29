@@ -1,0 +1,3 @@
+====== Pàgina bloquejada ======
+
+Esta pàgina està actualment bloquejada mentres l'edita un atre usuari. Ha d'esperar fins que l'usuari acabe d'editar la pàgina o vença el bloqueig.

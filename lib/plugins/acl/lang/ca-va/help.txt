@@ -1,0 +1,12 @@
+=== Ajuda ràpida: ===
+
+En esta pàgina pot afegir i llevar permissos per a espais de noms i
+pàgines del wiki.
+
+El panel esquerre mostra tots els espais de noms i pàgines disponibles. El formulari de dalt permet vore i modificar els permissos de un usuari
+o grup seleccionat. En la taula de baix es mostren totes les regles d'accés actuals. Pot
+usar-la per a canviar o borrar ràpidament vàries regles.
+
+Llegir la [[doku>wiki:acl|documentació oficial sobre ACL]] pot ajudar
+a comprendre millor com funciona el control d'accés en DokuWiki.
+

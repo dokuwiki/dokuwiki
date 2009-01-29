@@ -1,0 +1,6 @@
+====== Gestor de reversions ======
+
+Esta pàgina ajuda en la reversió automàtica d'atacs de spam. Per a
+trobar una llista de pàgines que tinguen spam introduïxca una cadena de busca
+(p.e. una URL de spam), confirme que les pàgines trobades tenen realment
+spam i revertixca les edicions.

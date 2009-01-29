@@ -1,0 +1,6 @@
+====== Borrador pendent ======
+
+La seua última edició d'esta pàgina no es completà correctament. DokuWiki guarda automàticament un borrador que ara pot recuperar per a continuar editant. Avall pot vore la data en que es guardà l'últim borrador.
+
+Per favor, decidixca si vol //recuperar// la sessió que pergué, //borrar// el borrador o //cancelar// l'edició.
+

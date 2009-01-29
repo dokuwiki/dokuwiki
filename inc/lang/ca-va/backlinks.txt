@@ -1,0 +1,4 @@
+====== Vínculs remitents ======
+
+Una llista de pàgines que enllacen a la pàgina actual.
+

@@ -1,0 +1,4 @@
+====== Registrar-se com a nou usuari ======
+
+Escriga tota la informació que se li demana avall per a crear un nou conte en este wiki. Assegure's de donar una **direcció de correu vàlida** - si no se li demana una contrasenya ací, se li enviarà a eixa direcció. El nom d'usuari deuria ser un nom vàlit de [[doku>wiki:pagename|pàgina wiki]].
+
