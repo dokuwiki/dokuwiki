@@ -1,0 +1,9 @@
+====== Popülerlik Geribeslemesi ======
+
+Bu araç wiki'niz hakkında genel bilgileri toplayarak bunları DokuWiki geliştiricilerine geri göndermenizi sağlar. Böylece geliştiriciler DokuWiki'nin kullanıcılar tarafından nasıl kullanıldığını anlamalarını sağlar ve ileride gerçek kullanım istatistiklerine göre geliştirme kararları verebilirler.
+  
+Wiki'nizin büyümesiyle beraber bu bölümü zaman zaman çalıştırmanız geliştiricileri bilgilendirecektir. Tekrar gönderilen veriler anonim olarak gönderilecektir.
+
+Bu veriler DokuWiki sürümünü, sayısını, sayfaların ve dosyalarım büyüklüklerini, yüklü eklentileri ve PHP sürümünü içermektedir.
+
+Gönderilecek işlenmemiş veriler aşağıda gösterilmektedir. Lütfen "Verileri Gönder" butonuna tıklayarak bilgileri gönderin.

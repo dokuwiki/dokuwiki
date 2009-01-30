@@ -7,4 +7,5 @@
  * @author yavuzselim@gmail.com
  * @author Cihan Kahveci kahvecicihan@gmail.com
  */
+$lang['name']                  = 'Popülerlik Geribeslemesi (yüklemesi uzun sürebilir)';
 $lang['submit']                = 'Verileri Gönder';

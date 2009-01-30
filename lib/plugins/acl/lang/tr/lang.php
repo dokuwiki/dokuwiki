@@ -24,6 +24,7 @@ $lang['p_choose_id']           = 'Lütfen <b class="aclpage">%s</b> sayfasına i
 $lang['p_choose_ns']           = 'Lütfen <b class="aclpage">%s</b> namespace\'ie izin verilen yetkileri görmek veya değiştirmek için yukarıdaki forma <b>bir kullanıcı veya grup adı</b> girin.';
 $lang['p_inherited']           = 'Not: Bu izinler doğrudan ayarlanmadan başka grup veya üst namespace\'lerden gelmektedir.';
 $lang['p_isadmin']             = 'Not: Seçili grup veya kullanıcı, "Ana kullanıcı" olarak atandığından tüm izinlere sahiptir.';
+$lang['p_include']             = 'Üst seviye izinler alt izinleri içermektedir. Oluşturma, Yükleme ve Silme yetkisi sadece namespace\'e uygulanmaktadır. Bu yetki sayfalara uygulanmaz.';
 $lang['current']               = 'Şimdiki ACL(İzin Kontrol listesi) kuralları';
 $lang['where']                 = 'Sayfa/Namespace';
 $lang['who']                   = 'Kullanıcı/Grup';

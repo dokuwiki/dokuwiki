@@ -1,0 +1,7 @@
+====== Site Ayarları Yönetimi ======
+
+Bu sayfayı DokuWiki kurulumunun ayarlarını değiştirmek için kullanabilirsiniz. Ayarların ayrıntıları için [[doku>config]] sayfasını kullanınız. Bu eklenti ile ilgili daha ayrıntılı bilgi için [[doku>plugin:config]] sayfasına bakınız.
+
+Açık kırmızı renkle gösterilenler bu eklenti ile değiştirilemez. Mavi ile gösterilenler varsayılan değerlerdir. Beyaz altyazı ile gösterilenler is bu kuruluma özel değiştirilmiş ayarlardır. Mavi ve beyaz ayarlar değiştirilebilir.
+
+Değişiklik yapmanız durumunda **Kaydet** tuşuna basmayı unutmayınız. Aksi takdirde sayfayı kapattığınızda tüm ayarlar silinecektir.
