@@ -201,6 +201,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
     // $link is full URL with scheme, $title could be an array (media)
     function externallink($link, $title = NULL) {}
 
+    function rss ($url,$params) {}
+
     // $link is the original link - probably not much use
     // $wikiName is an indentifier for the wiki
     // $wikiUri is the URL fragment to append to some known URL
