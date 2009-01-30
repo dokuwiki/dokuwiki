@@ -292,9 +292,9 @@ function auth_logoff($keepbc=false){
   $USERINFO=null; //FIXME
 
   if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-    setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,($conf['securecookie'] && is_ssl()),true);
+    setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
   }else{
-    setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,($conf['securecookie'] && is_ssl()));
+    setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
   }
 
   if($auth && $auth->canDo('logoff')){
@@ -1001,7 +1001,6 @@ function auth_setCookie($user,$pass,$sticky) {
       }else{
           setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
       }
-
       // set session
       $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
       $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
