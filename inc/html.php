@@ -1011,6 +1011,8 @@ function html_msgarea(){
 
   if(!isset($MSG)) return;
 
+  $MSG = array_unique($MSG); // no double messages
+
   foreach($MSG as $msg){
     print '<div class="'.$msg['lvl'].'">';
     print $msg['msg'];
