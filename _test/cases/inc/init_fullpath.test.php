@@ -51,6 +51,20 @@ class init_fullpath_test extends UnitTestCase {
                         'c:foo/bar/..' => 'c:foo',
                         'c:foo/bar/../../../baz' => 'c:baz',
 
+                        'c:/foo/bar/baz' => 'c:foo/bar/baz',
+                        'c:/foo//bar/baz' => 'c:foo/bar/baz',
+                        'c:/foo/../bar/baz' => 'c:bar/baz',
+                        'c:/foo/./bar/baz' => 'c:foo/bar/baz',
+                        'c:/foo/bar/..' => 'c:foo',
+                        'c:/foo/bar/../../../baz' => 'c:baz',
+
+                        'c:\\foo\\bar\\baz' => 'c:foo/bar/baz',
+                        'c:\\foo\\\\bar\\baz' => 'c:foo/bar/baz',
+                        'c:\\foo\\..\\bar\\baz' => 'c:bar/baz',
+                        'c:\\foo\\.\\bar\\baz' => 'c:foo/bar/baz',
+                        'c:\\foo\\bar\\..' => 'c:foo',
+                        'c:\\foo\\bar\\..\\..\\..\\baz' => 'c:baz',
+
                         '\\\\server\\share/foo/bar/baz' => '\\\\server\\share/foo/bar/baz',
                         '\\\\server\\share/foo//bar/baz' => '\\\\server\\share/foo/bar/baz',
                         '\\\\server\\share/foo/../bar/baz' => '\\\\server\\share/bar/baz',
