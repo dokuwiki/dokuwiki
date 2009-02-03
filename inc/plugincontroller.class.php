@@ -76,7 +76,7 @@ class Doku_Plugin_Controller {
 
     //try to load the wanted plugin file
     list($plugin,$component) = $this->_splitName($name);
-    $dir = !$this->isdisabled($plugin) ? $plugin : $plugin.'.disabled';
+    $dir = $this->get_directory($plugin);
     $file = $component ? "$type/$component.php" : "$type.php";
 
     if (!include_once(DOKU_PLUGIN."$dir/$file")) {
@@ -110,7 +110,7 @@ class Doku_Plugin_Controller {
   }
 
   function get_directory($plugin) {
-    return $this->isdisabled($plugin) ? $plugin.'.disabled' : $plugin;
+    return $plugin;
   }
 
   function _populateMasterList() {
@@ -137,7 +137,7 @@ class Doku_Plugin_Controller {
 
     $plugins = array();
     foreach ($master_list as $plugin) {
-      $dir = $enabled ? $plugin : $plugin.'.disabled';
+      $dir = $this->get_directory($plugin);
 
       if (@file_exists(DOKU_PLUGIN."$dir/$type.php")){
         $plugins[] = $plugin;
