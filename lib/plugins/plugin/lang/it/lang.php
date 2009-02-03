@@ -50,3 +50,7 @@ $lang['error_dircreate']       = 'Impossibile creare la directory temporanea dov
 $lang['error_decompress']      = 'Impossibile decomprimere il file scaricato. Questo potrebbe essere il risultato di un download incompleto, in tal caso dovresti provare di nuovo; oppure il formato di compressione potrebbe essere sconosciuto, in questo caso è necessario scaricare e installare il plugin manualmente.';
 $lang['error_copy']            = 'Si è verificato un errore nella copia di un file durante l\'installazione del plugin <em>%s</em>: il disco potrebbe essere pieno oppure i permessi di accesso al file potrebbero non essere corretti. Il plugin potrebbe essere stato installato solo parzialmente, questo potrebbe causare instabilità al sistema.';
 $lang['error_delete']          = 'Si è verificato un errore durante la cancellazione del plugin <em>%s</em>.  Molto probabilmente i permessi di acesso ai file o alla directory non sono sufficienti';
+$lang['enabled']               = 'Plugin %s abilitato.';
+$lang['notenabled']            = 'Impossibile abilitare il plugin %s, verifica i permessi dei file.';
+$lang['disabled']              = 'Plugin %s disabilitato.';
+$lang['notdisabled']           = 'Impossibile disabilitare il plugin %s, verifica i permessi dei file.';

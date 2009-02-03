@@ -56,6 +56,7 @@ $lang['phpok']                 = 'Consenti PHP incorporato';
 $lang['dformat']               = 'Formato delle date (vedi la funzione <a href="http://www.php.net/date">data</a> di PHP)';
 $lang['signature']             = 'Firma';
 $lang['toptoclevel']           = 'Livello superiore per l\'indice';
+$lang['tocminheads']           = 'Ammontare minimo di intestazioni che determinano la creazione del TOC';
 $lang['maxtoclevel']           = 'Numero massimo di livelli per l\'indice';
 $lang['maxseclevel']           = 'Livello massimo per le sezioni modificabili';
 $lang['camelcase']             = 'Usa CamelCase per i collegamenti';
