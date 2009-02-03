@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html) 
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
+ * @author George Sheraton guxd@163.com
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -41,6 +42,7 @@ $lang['savedir']               = '保存数据的目录';
 $lang['start']                 = '开始页面的名称';
 $lang['title']                 = '维基站点的标题';
 $lang['template']              = '模版';
+$lang['license']               = '您愿意让你贡献的内容在何种许可方式下发布？';
 $lang['fullpath']              = '在页面底部显示完整路径';
 $lang['recent']                = '最近更新';
 $lang['breadcrumbs']           = '显示“足迹”的数量';
@@ -51,6 +53,7 @@ $lang['phpok']                 = '允许嵌入式 PHP';
 $lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 功能）';
 $lang['signature']             = '签名样式';
 $lang['toptoclevel']           = '目录的最顶层';
+$lang['tocminheads']           = '头条数目的最小数目，这将用于决定是否创建目录列表（TOC）';
 $lang['maxtoclevel']           = '目录的最多层次';
 $lang['maxseclevel']           = '段落编辑的最多层次';
 $lang['camelcase']             = '对链接使用 CamelCase';
@@ -80,6 +83,7 @@ $lang['disableactions_wikicode'] = '查看源文件/导出源文件';
 $lang['disableactions_other']  = '其他功能（用英文逗号分隔）';
 $lang['sneaky_index']          = '默认情况下，DokuWiki 在索引页会显示所有 namespace。启用该选项能隐藏那些用户没有权限阅读的页面。但也可能将用户能够阅读的子页面一并隐藏。这有可能导致在特定 ACL 设置下，索引功能不可用。';
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
+$lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
 $lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 splitbrain.org。';
 $lang['userewrite']            = '使用更整洁的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
@@ -109,6 +113,7 @@ $lang['xmlrpc']                = '启用/禁用 XML-RPC 交互界面。';
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s（DokuWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';
+$lang['rememberme']            = '允许在本地机长期保留登录cookies信息（记住我）';
 $lang['rss_type']              = 'XML feed 类型';
 $lang['rss_linkto']            = 'XML feed 链接到';
 $lang['rss_content']           = 'XML feed 项目中显示什么呢？';
@@ -131,6 +136,7 @@ $lang['ftp____port']           = 'Safemode Hack 的 FTP 端口';
 $lang['ftp____user']           = 'Safemode Hack 的 FTP 用户名';
 $lang['ftp____pass']           = 'Safemode Hack 的 FTP 密码';
 $lang['ftp____root']           = 'Safemode Hack 的 FTP 根路径';
+$lang['license_o_']            = '什么都没有选';
 $lang['typography_o_0']        = '无';
 $lang['typography_o_1']        = '仅限双引号';
 $lang['typography_o_2']        = '所有引号（不一定能正常运行）';
@@ -163,3 +169,11 @@ $lang['xsendfile_o_0']         = '不要使用';
 $lang['xsendfile_o_1']         = '专有 lighttpd 头（1.5 发布前）';
 $lang['xsendfile_o_2']         = '标准 X-Sendfile 头';
 $lang['xsendfile_o_3']         = '专有 Nginx X-Accel-Redirect 头';
+$lang['showuseras_o_loginname'] = '登录名';
+$lang['showuseras_o_username'] = '用户全名';
+$lang['showuseras_o_email']    = '用户的电子邮箱（按邮箱保护设置加扰）';
+$lang['showuseras_o_email_link'] = '以mailto：形式显示用户的电子邮箱';
+$lang['useheading_o_0']        = '从不';
+$lang['useheading_o_navigation'] = '仅限导航';
+$lang['useheading_o_content']  = '仅限维基内容内';
+$lang['useheading_o_1']        = '一直';
