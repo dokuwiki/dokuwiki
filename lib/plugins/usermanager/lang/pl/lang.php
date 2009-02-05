@@ -4,6 +4,7 @@
  *
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
+ * @author Maciej Kurczewski <pipijajko@gmail.com>
  */
 $lang['menu']                  = 'Menadżer użytkowników';
 $lang['noauth']                = '(uwierzytelnienie użytkownika niemożliwe)';

@@ -3,6 +3,7 @@
  * polish language file
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
+ * @author Maciej Kurczewski <pipijajko@gmail.com>
  */
 $lang['menu']                  = 'Menadżer przywracania';
 $lang['filter']                = 'Wyszukaj uszkodzone strony';

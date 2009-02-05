@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
+ * @author Maciej Kurczewski <pipijajko@gmail.com>
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';
@@ -50,6 +51,7 @@ $lang['phpok']                 = 'Wstawki PHP';
 $lang['dformat']               = 'Format daty';
 $lang['signature']             = 'Podpis';
 $lang['toptoclevel']           = 'Minimalny poziom spisu treści';
+$lang['tocminheads']           = 'Minimalna liczba nagłówków niezbędna do wytworzenia spisu treści.';
 $lang['maxtoclevel']           = 'Maksymalny poziom spisu treści';
 $lang['maxseclevel']           = 'Maksymalny poziom podziału na sekcje edycyjne';
 $lang['camelcase']             = 'Bikapitalizacja odnośników (CamelCase)';
