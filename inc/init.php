@@ -533,7 +533,7 @@ function fullpath($path,$exists=false){
     }elseif($iswin){
         // match drive letter and UNC paths
         if(preg_match('!^([a-zA-z]:)(.*)!',$path,$match)){
-            $root = $match[1];
+            $root = $match[1].'/';
             $path = $match[2];
         }else if(preg_match('!^(\\\\\\\\[^\\\\/]+\\\\[^\\\\/]+[\\\\/])(.*)!',$path,$match)){
             $root = $match[1];
