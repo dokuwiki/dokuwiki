@@ -155,7 +155,7 @@ function media_inuse($id) {
         require_once(DOKU_INC.'inc/fulltext.php');
         $mediareferences = ft_mediause($id,$conf['refshow']);
         if(!count($mediareferences)) {
-            return true;
+            return false;
         } else {
             return $mediareferences;
         }
