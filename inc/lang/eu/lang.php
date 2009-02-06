@@ -103,6 +103,7 @@ $lang['uploadexist']           = 'Fitxategia lehenagotik existitzen da. Ez da ez
 $lang['uploadbadcontent']      = 'Igotako edukia ez dator bat %s fitxategi-luzapenarekin.';
 $lang['uploadspam']            = 'Igoera spam zerrenda beltzak blokeatu du.';
 $lang['uploadxss']             = 'Igoera blokeatua izan da eduki maltzurra edukitzeko susmoagatik.';
+$lang['uploadsize']            = 'Igotako fitxategia handiegia zen. (max. %s)';
 $lang['deletesucc']            = 'Ezabatua izan da "%s" fitxategia.';
 $lang['deletefail']            = 'Ezin izan da "%s" ezabatu - egiaztatu baimenak.';
 $lang['mediainuse']            = 'Ez da "%s" fitxategia ezabatu - oraindik erabilia izaten ari da.';
@@ -138,6 +139,7 @@ $lang['created']               = 'sortua';
 $lang['restored']              = 'bertsio zaharra berrezarria';
 $lang['external_edit']         = 'kanpoko aldaketa';
 $lang['summary']               = 'Aldatu laburpena';
+$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> beharrezkoa da eduki hau bistaratzeko.';
 $lang['mail_newpage']          = '[DokuWiki] gehitutako orria:';
 $lang['mail_changed']          = '[DokuWiki] aldatutako orria:';
 $lang['mail_new_user']         = 'erabiltzaile berria:';

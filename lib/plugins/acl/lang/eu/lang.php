@@ -19,6 +19,7 @@ $lang['p_choose_id']           = 'Mesedez <b>sartu erabiltzaile edo taldea</b> g
 $lang['p_choose_ns']           = 'Mesedez <b>sartu erabiltzaile edo taldea</b> goiko formularioan <b class="aclns">%s</b> izen-espazioan ezarritako baimenak ikusi edo aldatzeko.';
 $lang['p_inherited']           = 'Oharra: Baimen horiek ez dira esplizituki jarriak, beste talde batzuetatik edo goragoko izen-espazioetatik heredatuak baizik.';
 $lang['p_isadmin']             = 'Oharra: Aukeratutako talde edo erabiltzaileak beti daika baimen osoa, supererabiltzaile gisa konfiguratuta  baitago.';
+$lang['p_include']             = 'Baimen handiagoek baimen txikiagoak barneratzen dituzte. Sortu, Igo eta Ezabatu baimenak izen-espazioei soilik aplikatzen zaizkie, ez orriei.';
 $lang['current']               = 'Uneko AKL Arauak';
 $lang['where']                 = 'Orria/Izen-espazioa';
 $lang['who']                   = 'Erabiltzailea/Taldea';

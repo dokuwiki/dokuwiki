@@ -44,3 +44,7 @@ $lang['error_dircreate']       = 'Ezin izan da aldiroko karpeta sortu deskarga j
 $lang['error_decompress']      = 'Plugin kudeatzaileak ezin izan du deskargatutako fitxategia erauzi. Deskarga oker baten ondorioa izan daiteke, eta hala bada berriz saiatu beharko zenuke; edo agian trinkotze formatua ezezaguna da, hala izanik plugin-a eskuz deskargatu eta instalatu beharko zenuelarik.';
 $lang['error_copy']            = 'Fitxategi kopia akats bat egon da <em>%s</em> plugin-arentzat fitxategiak instalatzen saiatzean: diska betea egon liteke edo fitxategi atzipen baimena okerra izan daiteke. Honek partzialki instalatutako plugin bat eta wiki instalazioa ezegonkor utzi dezake.';
 $lang['error_delete']          = 'Akats bat gertatu da <em>%s</em> plugin-a ezabatzeko saiakera egitean. Arrazoia ziurrenik fitxategi edo direktorio atzipen baimen nahikoak ez izatea da.';
+$lang['enabled']               = '%s Plugin-a gaitua.';
+$lang['notenabled']            = '%s Plugin-a ezin izan da gaitu, egiaztatu fitxategi baimenak.';
+$lang['disabled']              = '%s Plugin-a ezgaitua.';
+$lang['notdisabled']           = '%s Plugin-a ezin izan da ezgaitu, egiaztatu fitxategi baimenak. ';
