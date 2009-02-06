@@ -1,7 +1,7 @@
 Un nouvel utilisateur s'est enregistré. Voici les détails :
 
 Utilisateur         : @NEWUSER@
-Nom complet         : @NEWNAME@
+Nom         : @NEWNAME@
 Adresse de courriel : @NEWEMAIL@
 
 Date                : @DATE@
