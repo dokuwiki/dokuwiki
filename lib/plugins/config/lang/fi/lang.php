@@ -48,7 +48,7 @@ $lang['youarehere']            = 'Hierarkkiset leivänmurut';
 $lang['typography']            = 'Tee typografiset korvaukset';
 $lang['htmlok']                = 'Salli upotettu HTML';
 $lang['phpok']                 = 'Salli upotettu PHP';
-$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://www.php.net/strftime">strftime</a> functiota)';
+$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://www.php.net/strftime">strftime</a> funktiota)';
 $lang['signature']             = 'Allekirjoitus';
 $lang['toptoclevel']           = 'Ylätason sisällysluettelo';
 $lang['tocminheads']           = 'Pienin otsikkorivien määrä, jotta sisällysluettelo tehdään';
