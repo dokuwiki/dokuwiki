@@ -276,7 +276,7 @@ function auth_logoff($keepbc=false){
   global $INFO, $ID;
   global $auth;
 
-  // reopen session
+  // make sure the session is writable (it usually is)
   @session_start();
 
   if(isset($_SESSION[DOKU_COOKIE]['auth']['user']))
@@ -300,9 +300,6 @@ function auth_logoff($keepbc=false){
   if($auth && $auth->canDo('logoff')){
     $auth->logOff();
   }
-
-  // close session again
-  session_write_close();
 }
 
 /**

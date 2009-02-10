@@ -1463,6 +1463,9 @@ function is_mem_available($mem,$bytes=1048576){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function send_redirect($url){
+    // always close the session
+    session_write_close();
+
     // check if running on IIS < 6 with CGI-PHP
     if( isset($_SERVER['SERVER_SOFTWARE']) && isset($_SERVER['GATEWAY_INTERFACE']) &&
         (strpos($_SERVER['GATEWAY_INTERFACE'],'CGI') !== false) &&
