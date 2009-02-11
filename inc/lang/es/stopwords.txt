@@ -1,7 +1,7 @@
-# This is a list of words the indexer ignores, one word per line
-# When you edit this file be sure to use UNIX line endings (single newline)
-# No need to include words shorter than 3 chars - these are ignored anyway
-# This list is based upon the ones found at http://www.ranks.nl/stopwords/
+# Esta es una lista de palabras que estan ignoradas por el indexador, una palabra por línea
+# Cuando se edita este archivo, asegúrese de usar la línea de terminaciones UNIX  (una sola nueva línea)
+# No necesita incluir palabras cortas con 3 caracteres - estas son ignoradas de todos modos
+#Esta lista esta basada en las que encontramos en la siguiente url http://www.ranks.nl/stopwords/
 una
 unas
 unos

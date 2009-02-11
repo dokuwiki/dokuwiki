@@ -10,6 +10,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author VictorCastelan <victorcastelan@gmail.com>
+ * @author Jordan Mero  hack.jord@gmail.com
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';
@@ -51,3 +52,7 @@ $lang['error_dircreate']       = 'Incapaz de crear el directorio temporal para l
 $lang['error_decompress']      = 'El administrador de plugin fue incapaz de descomprimir el fichero descargado esto puede ser por una descarga errónea, en ese caso debieras intentar nuevamente; o el formato de compresión es desconocido, en este caso deberás descargar e instalar el plugin manualmente.';
 $lang['error_copy']            = 'Hubo un error al copiar el fichero mientras se intentaban instalar ficheros para el plugin <em>%s</em>: el disco puede estar lleno o los permisos del fichero pueden ser incorrectos. Esto puede haber terminado con una instalación parcial del plugin y haber dejado la instalación del wiki en una situación inestable';
 $lang['error_delete']          = 'Hubo un error al intentar eliminar el plugin <em>%s</em>. La causa más probable es que no se cuente con los permisos necesarios en el fichero o en el directorio';
+$lang['enabled']               = 'Plugin %s habilitado.';
+$lang['notenabled']            = 'Plugin %s no puede ser habilitado, verifica los permisos del archivo.';
+$lang['disabled']              = 'Plugin %s desabilitado.';
+$lang['notdisabled']           = 'Plugin %s no puede ser desabilitado, verifica los permisos de archivo.';

@@ -9,6 +9,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author VictorCastelan <victorcastelan@gmail.com>
+ * @author Jordan Mero  hack.jord@gmail.com
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autentiación de usuariosuser no está disponible)';

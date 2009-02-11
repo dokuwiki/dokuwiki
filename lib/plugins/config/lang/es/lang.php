@@ -10,6 +10,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author VictorCastelan <victorcastelan@gmail.com>
+ * @author Jordan Mero  hack.jord@gmail.com
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -55,6 +56,7 @@ $lang['phpok']                 = 'Permitir PHP embebido';
 $lang['dformat']               = 'Formato de fecha (ver la función de PHP <a href="http://www.php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Firma';
 $lang['toptoclevel']           = 'Nivel superior para la tabla de contenidos';
+$lang['tocminheads']           = 'La cantidad mínima de titulares que determina si el TOC es construido';
 $lang['maxtoclevel']           = 'Máximo nivel para la tabla de contenidos';
 $lang['maxseclevel']           = 'Máximo nivel para edición de sección';
 $lang['camelcase']             = 'Usar CamelCase para enlaces';
@@ -176,5 +178,7 @@ $lang['showuseras_o_loginname'] = 'Nombre de entrada';
 $lang['showuseras_o_username'] = 'Nombre completo del usuario';
 $lang['showuseras_o_email']    = 'Dirección de correo electrónico del usuario (Ofuscada según la configuración de "mailguard")';
 $lang['showuseras_o_email_link'] = 'Dirección de correo de usuario como enlace de envío de correo';
+$lang['useheading_o_0']        = 'Nunca';
+$lang['useheading_o_navigation'] = 'Solamente Navegacion';
 $lang['useheading_o_content']  = 'Contenido Wiki solamente';
 $lang['useheading_o_1']        = 'Siempre';
