@@ -215,6 +215,15 @@ class DokuWiki_Plugin {
     return p_render($format, p_get_instructions($text),$info);
   }
 
+  /**
+   * Allow the plugin to prevent DokuWiki creating a second instance of itself
+   *
+   * @return bool   true if the plugin can not be instantiated more than once
+   */
+  function isSingleton() {
+    return false;
+  }
+
   // deprecated functions
   function plugin_localFN($id) { return $this->localFN($id); }
   function plugin_locale_xhtml($id) { return $this->locale_xhtml($id); }
