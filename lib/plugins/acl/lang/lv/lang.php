@@ -20,6 +20,7 @@ $lang['p_choose_id']           = 'Lūdzu <b>ieraksti lietotāju vai grupu</b> au
 $lang['p_choose_ns']           = 'Lūdzu <b>ieraksti lietotāju vai grupu</b> augstāk norādītajā laukā, lai skatītu vai labotu tiesības nodaļai <b class="aclpage">%s</b>.';
 $lang['p_inherited']           = 'Ievēro: Šīs tiesības nav tieši uzdotas, bet mantotas no citām grupām vai augstākām nodaļām. ';
 $lang['p_isadmin']             = 'Ievēro: Norādītajai grupai vai lietotājam vienmēr ir visas tiesības, jo tas konfigurēts kā <i>superuser</i>.';
+$lang['p_include']             = 'Augstāka atļauja iekļauj arī zemākās tiesības. Izveidošanas, augšupielādēšanas un dzēšanas tiesības attiecas tikai uz nodaļām, nevis lapām.';
 $lang['current']               = 'Patreizējo tiesību saraksts (ACL)';
 $lang['where']                 = 'Lapa/nodaļa';
 $lang['who']                   = 'Lietotājs/grupa';

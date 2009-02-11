@@ -41,6 +41,7 @@ $lang['edit_usermissing']      = 'Norādītais lietotājs nav atrasts, varbūt t
 $lang['user_notify']           = 'Paziņot lietotājam';
 $lang['note_notify']           = 'Paziņojumus izsūta tikai tad, ja lietotājam dod jaunu paroli.';
 $lang['note_group']            = 'Ja nenorāda grupu, lietotāju pievieno noklusētajai grupai (%s).';
+$lang['note_pass']             = 'Ja paroles lauku atstāj tukšu un atzīmē paziņošanu lietotājam, parole tiks ģenerēta automātiski.';
 $lang['add_ok']                = 'Lietotājs veiksmīgi pievienots';
 $lang['add_fail']              = 'Lietotājs nav pievienots.';
 $lang['notify_ok']             = 'Paziņojums izsūtīts.';

@@ -44,3 +44,7 @@ $lang['error_dircreate']       = 'Nevar izveidot pagaidu direktoriju, kur saglab
 $lang['error_decompress']      = 'Moduļu pārvaldnieks nevar atspiest lejupielādēto failu. Vai nu neizdevusi es lejupielāde, mēģiniet atkārtot, vai arī nezinām arhīva formāts un tad  modulis jāielādē un jāinstalē tev pašam.';
 $lang['error_copy']            = 'Faila kopēšanas kļūda instalējot moduli<em>%s</em>: disks pārpildīts vai aplamas piekļuves tiesības. Rezultātā var iegūt daļēji instalētu moduli un nestabilu Wiki sistēmu.';
 $lang['error_delete']          = 'Kļūme dzēšot moduli <em>%s</em>. Ticamākais iemesls ir direktorijas pieejas tiesību trūkums. ';
+$lang['enabled']               = 'Modulis %s pieslēgts.';
+$lang['notenabled']            = 'Moduli %s nevar pieslēgt, pārbaudi failu tiesības.';
+$lang['disabled']              = 'Modulis %s atslēgts.';
+$lang['notdisabled']           = 'Moduli %s nevar atslēgt, pārbaudi failu tiesības.';
