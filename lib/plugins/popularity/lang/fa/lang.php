@@ -4,5 +4,7 @@
  *
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
+ * @author omidmr@gmail.com
  */
-$lang['name']                  = 'Mohsen Firoozmandan - محسن فیروزمندان';
+$lang['name']                  = 'بازخورد محبوبیت (ممکن است اندکی زمان ببرد)';
+$lang['submit']                = 'ارسال اطلاعات';
