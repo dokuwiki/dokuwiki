@@ -5,6 +5,7 @@
  * @author Ondrej Végh <ov@vsieti.sk>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
+ * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['menu']                  = 'Správa užívateľov';
 $lang['noauth']                = '(autentifikácia užívateľov nie je dostupná)';
@@ -42,6 +43,7 @@ $lang['edit_usermissing']      = 'Vybraný užívateľ nebol nájdený, mohol by
 $lang['user_notify']           = 'Upozorniť užívateľa';
 $lang['note_notify']           = 'Notifikačné e-maily iba vtedy, ak dostane užívateľ nové heslo';
 $lang['note_group']            = 'Noví užívatelia budú pridaní do východej skupiny (%s), ak nie je pre nich špecifikovaná iná skupina.';
+$lang['note_pass']             = 'Heslo bude vygenegované automaticky, ak bude pole prázdne a je zapnutá notifikácia používateľa.';
 $lang['add_ok']                = 'Používateľ úspešne pridaný';
 $lang['add_fail']              = 'Pridávanie užívateľa nebolo úspešné';
 $lang['notify_ok']             = 'Notifikačný e-mail bol poslaný';

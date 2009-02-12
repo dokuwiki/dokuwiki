@@ -6,6 +6,7 @@
  * @author Ondrej Vegh <ov@vsieti.sk>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
+ * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['admin_acl']             = 'Správa zoznamu prístupových práv';
 $lang['acl_group']             = 'Skupina';

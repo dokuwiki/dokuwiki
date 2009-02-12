@@ -6,6 +6,7 @@
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
+ * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -135,6 +136,7 @@ $lang['created']               = 'vytvorené';
 $lang['restored']              = 'stará verzia bola obnovena';
 $lang['external_edit']         = 'externá úprava';
 $lang['summary']               = 'Komentár k úpravám';
+$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['mail_newpage']          = 'stránka pridaná:';
 $lang['mail_changed']          = 'stránka zmenená:';
 $lang['mail_new_user']         = 'Nový užívateľ:';
@@ -190,6 +192,7 @@ $lang['i_superuser']           = 'Superužívateľ';
 $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžte pokračovať, pokým ich neodstránite.';
 $lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balíček, alebo preštudovať <a href="http://dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
+$lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu instaláciu PHP.';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
 $lang['i_confexists']          = '<code>%s</code> skutočne existuje';
 $lang['i_writeerr']            = 'Nie je možné vytvoriť <code>%s</code>. Potrebujete skontrolovať prístupové práva pre adresár/súbor a vytvoriť ho manuálne.';

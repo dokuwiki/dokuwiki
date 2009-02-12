@@ -5,6 +5,7 @@
  * @author Ondrej Végh <ov@vsieti.sk>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
+ * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['menu']                  = 'Správa pluginov';
 $lang['download']              = 'Stiahnuť a nainštalovať  plugin';
@@ -46,3 +47,7 @@ $lang['error_dircreate']       = 'Nie je možné vytvoriť dočasný adresár pr
 $lang['error_decompress']      = 'Správca pluginov nedokáže dekomprimovať stiahnutý súbor. Môže to byť dôsledok zlého stiahnutia, v tom prípade to skúste znovu, alebo môže ísť o neznámy formát súboru, v tom prípade musítestiahnuť a nainštalovať plugin manuálne.';
 $lang['error_copy']            = 'Nastala chyba kopírovania súboru počas pokusu inštalovať súbory pluginu<em>%s</em>: disk môže byť plný, alebo prístupové práva k súboru môžu byť nesprávne. Toto môže mať za následok čiastočne nainštalovanie pluginu a nestabilitu vašej DokuWiki.';
 $lang['error_delete']          = 'Nastala chyba počas pokusu o zmazanie pluginu <em>%s</em>.  Najpravdepodobnejším dôvodom môžu byť nedostatočné prístupové práva pre súbor, alebo adresár';
+$lang['enabled']               = 'Plugin %s aktivovaný.';
+$lang['notenabled']            = 'Plugin %s nemôže byť aktivovaný, skotrolujte prístupové práva.';
+$lang['disabled']              = 'Plugin %s deaktivovaný.';
+$lang['notdisabled']           = 'Plugin %s nemôže byť deaktivovaný, skotrolujte prístupové práva.';
