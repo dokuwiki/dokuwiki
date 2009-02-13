@@ -1007,17 +1007,18 @@ function html_conflict($text,$summary){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_msgarea(){
-  global $MSG;
+    global $MSG;
+    if(!isset($MSG)) return;
 
-  if(!isset($MSG)) return;
-
-  $MSG = array_unique($MSG); // no double messages
-
-  foreach($MSG as $msg){
-    print '<div class="'.$msg['lvl'].'">';
-    print $msg['msg'];
-    print '</div>';
-  }
+    $shown = array();
+    foreach($MSG as $msg){
+        $hash = md5($msg['msg']);
+        if(isset($shown[$hash])) continue; // skip double messages
+        print '<div class="'.$msg['lvl'].'">';
+        print $msg['msg'];
+        print '</div>';
+        $shown[$hash] = 1;
+    }
 }
 
 /**
