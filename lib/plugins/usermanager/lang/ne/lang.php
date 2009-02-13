@@ -4,6 +4,7 @@
  *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
+ * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
 $lang['menu']                  = 'प्रयोगकर्ता व्यवस्थापक';
 $lang['noauth']                = '(प्रयोगकर्ता  प्रमाणिकरण  उपलब्ध छैन)';

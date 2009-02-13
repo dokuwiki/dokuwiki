@@ -4,6 +4,7 @@
  *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
+ * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
 $lang['menu']                  = 'पूर्वस्थिती व्यवस्थापक';
 $lang['filter']                = 'स्प्यामयुक्त पृष्ठहरु खोज्नुहोस् ';

@@ -4,6 +4,7 @@
  *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
+ * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
 $lang['nochoice']              = '(अरु विकल्पहरु अनुपलव्ध)';
 $lang['_configuration_manager'] = 'नियन्त्रण व्यवस्थापक';
@@ -40,3 +41,30 @@ $lang['recent']                = 'हालैको परिवर्तन';
 $lang['htmlok']                = 'इम्बेडगरिएको HTML खुला गर्नुहोस ।';
 $lang['phpok']                 = 'इम्बेडगरिएको PHP खुला गर्नुहोस ।';
 $lang['signature']             = 'दस्तखत';
+$lang['renderer__core']        = '	%s (dokuwiki core)';
+$lang['renderer__plugin']      = '	%s (plugin)';
+$lang['rss_type']              = 'XML फिड प्रकार';
+$lang['rss_linkto']            = 'को XML फिड';
+$lang['gdlib_o_1']             = 'संस्करण १.x';
+$lang['gdlib_o_2']             = 'आफै पत्तालगाउनु होस् ';
+$lang['rss_type_o_rss']        = 'आरसस ०॒.९१';
+$lang['rss_type_o_rss1']       = 'आरसस १.०';
+$lang['rss_type_o_rss2']       = 'आरसस २.०';
+$lang['rss_type_o_atom']       = 'एटम ०.३';
+$lang['rss_type_o_atom1']      = 'एटम १.०';
+$lang['rss_content_o_abstract'] = 'सारांस';
+$lang['rss_content_o_diff']    = 'एकिकृत फरक';
+$lang['rss_content_o_htmldiff'] = 'HTML ढाँचाको फरक सुची';
+$lang['rss_content_o_html']    = 'पूरा HTML पृष्टमा रहेको वस्तु';
+$lang['rss_linkto_o_diff']     = 'फरक अवलोकन';
+$lang['rss_linkto_o_rev']      = 'पुन:संस्करण सुची';
+$lang['rss_linkto_o_current']  = 'चालु पृष्ठ';
+$lang['compression_o_0']       = 'कुनै पनि होइन ';
+$lang['compression_o_gz']      = 'gzip';
+$lang['compression_o_bz2']     = 'bz2';
+$lang['xsendfile_o_0']         = 'प्रयोग नगर्नुहोस्';
+$lang['showuseras_o_loginname'] = 'प्रवेश नाम';
+$lang['showuseras_o_username'] = 'प्रयोगकर्ताको पूरा नाम';
+$lang['useheading_o_0']        = 'कहिले पनि ';
+$lang['useheading_o_content']  = 'विकी विषयवस्तु मात्र';
+$lang['useheading_o_1']        = 'सधैँ';

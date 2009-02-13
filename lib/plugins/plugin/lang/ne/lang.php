@@ -4,6 +4,7 @@
  *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
+ * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
 $lang['menu']                  = 'प्लगिन व्यवस्थापन गर्नुहोस।';
 $lang['download']              = 'नयाँ प्लगिन डाउनलोड गरी स्थापना गर्नुहोस्';
