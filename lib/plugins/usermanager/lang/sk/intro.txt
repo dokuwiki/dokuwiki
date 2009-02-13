@@ -1,2 +1,2 @@
-====== Správca užívateľov ======
+====== Správa používateľov ======
 

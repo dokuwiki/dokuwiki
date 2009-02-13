@@ -6,4 +6,5 @@
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
+$lang['name']                  = 'Prieskum používania (môže chvíľu trvať)';
 $lang['submit']                = 'Poslať dáta';

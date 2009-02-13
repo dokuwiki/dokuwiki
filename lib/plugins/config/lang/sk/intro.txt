@@ -1,0 +1,7 @@
+====== Správa konfigurácie ======
+
+Túto stránku môžete používať na zmenu nastavení Vašej DokuWiki inštalácie. Popis jednotlivých nastavení je uvedený v [[doku>config]]. Viac detailov o tomto plugine nájdete v [[doku>plugin:config]].
+
+Nastavenia zobrazené na červenom pozadí sú neprístupné a nemôžu byť týmto pluginom zmenené. Nastavenia s modrým pozadím obsahujú prednastavené hodnoty a nastavenia s bielym pozadím boli nastavené lokálne pre túto konkrétnu inštaláciu. Nastavenia s modrým a bielym pozadím môžu byť zmenené.
+
+Nezabudnite stlačiť tlačidlo **Uložiť** pred opustením stránky, inak Vaše zmeny budu stratené.

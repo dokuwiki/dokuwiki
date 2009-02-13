@@ -7,7 +7,7 @@
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
-$lang['menu']                  = 'Správa užívateľov';
+$lang['menu']                  = 'Správa používateľov';
 $lang['noauth']                = '(autentifikácia užívateľov nie je dostupná)';
 $lang['nosupport']             = '(správa užívateľov nie je podporovaná)';
 $lang['badauth']               = 'vadný autorizačný mechanizmus';

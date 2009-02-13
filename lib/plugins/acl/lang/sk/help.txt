@@ -1,0 +1,11 @@
+=== Krátka nápoveda: ===
+
+Na tejto stránke môžete pridávať alebo rušiť oprávnenia pre menné priestory a stránky vo Vašej wiki.
+
+Ľavý panel zobrazuje všetky dostupné menné priestory a stránky.
+
+Formulár zobrazený vyššie Vam dovoľuje prehliadať a meniť oprávnenia pre vybraného používateľa alebo skupinu.
+
+V tabuľke nižšie sú zobrazené všetky aktuálne prístupové pravidlá. Môžete v nej rýchlo rušiť alebo meniť viacero pravidiel naraz.
+
+Prečítanie [[doku>acl|oficiálnej dokumentácie ACL]] Vám môže pomôcť plne pochopiť spôsob ako fungujú prístupové pravidlá (oprávnenia) v DokuWiki.
