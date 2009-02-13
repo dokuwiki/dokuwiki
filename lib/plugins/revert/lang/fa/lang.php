@@ -5,6 +5,7 @@
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
+ * @author Omid Mottaghi <omidmr@gmail.com>
  */
 $lang['menu']                  = 'مدیریت برگشت‌ها';
 $lang['filter']                = 'جستجوی صفحات اسپم شده';

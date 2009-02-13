@@ -5,6 +5,7 @@
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
+ * @author Omid Mottaghi <omidmr@gmail.com>
  */
 $lang['admin_acl']             = 'مدیریت کنترل دسترسی‌ها';
 $lang['acl_group']             = 'گروه';
@@ -30,7 +31,7 @@ $lang['acl_perm0']             = 'هیچ‌کدام';
 $lang['acl_perm1']             = 'خواندن';
 $lang['acl_perm2']             = 'ویزایش';
 $lang['acl_perm4']             = 'ایجاد';
-$lang['acl_perm8']             = 'بارگزاری';
+$lang['acl_perm8']             = 'ارسال';
 $lang['acl_perm16']            = 'حذف';
 $lang['acl_new']               = 'اضافه کردن ورودی جدید';
 $lang['acl_mod']               = 'ویرایش ورودی';
