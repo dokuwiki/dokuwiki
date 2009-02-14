@@ -711,6 +711,10 @@ div.dokuwiki ul.search_quickhits li {
   width: 30%;
 }
 
+div.dokuwiki div.section_highlight {
+  background-color: __background_alt__;
+}
+
 /* ------------------ Additional ---------------------- */
 
 div.footerinc {
