@@ -1,0 +1,14 @@
+یک فایل به ویکی ارسال شد:
+
+فایل: @MEDIA@
+تاریخ: @DATE@
+مرورگر: @BROWSER@
+آدرس IP: @IPADDRESS@
+نام هوست: @HOSTNAME@
+اندازه: @SIZE@
+MIME: @MIME@
+کاربر: @USER@
+
+-- 
+این ایمیل توسط DokuWiki تولید شده است
+@DOKUWIKIURL@

@@ -1,0 +1,14 @@
+یک کاربر تازه با مشخصات زیر عضو ویکی شده است:
+
+نام کاربری: @NEWUSER@
+اسم کامل: @NEWNAME@
+ایمیل: @NEWEMAIL@
+
+تاریخ: @DATE@
+مرورگر: @BROWSER@
+آدرس IP: @IPADDRESS@
+نام هوست: @HOSTNAME@
+
+-- 
+این ایمیل توسط DokuWiki تولید شده است
+@DOKUWIKIURL@
