@@ -476,8 +476,8 @@ function act_export($act){
       $output = p_wiki_xhtml($ID,$REV,false);
       break;
     default:
-      $headers = p_get_metadata($ID,"format $mode");
       $output = p_cached_output(wikiFN($ID,$REV), $mode);
+      $headers = p_get_metadata($ID,"format $mode");
       break;
   }
 
