@@ -743,7 +743,7 @@ class Doku_Parser_Mode_multiplyentity extends Doku_Parser_Mode {
     function connectTo($mode) {
 
         $this->Lexer->addSpecialPattern(
-                    '(?<=\b)\d+[xX]\d+(?=\b)',$mode,'multiplyentity'
+                    '(?<=\b)(?:[1-9]|\d{2,})[xX]\d+(?=\b)',$mode,'multiplyentity'
                 );
 
     }
