@@ -104,6 +104,7 @@ $lang['uploadexist']           = 'Plik już istnieje, nie wykonano operacji.';
 $lang['uploadbadcontent']      = 'Typ pliku "%s" nie odpowiadał jego rozszerzeniu.';
 $lang['uploadspam']            = 'Plik zablokowany przez filtr antyspamowy.';
 $lang['uploadxss']             = 'Plik zablokowany ze względu na podejrzaną zawartość.';
+$lang['uploadsize']            = 'Plik jest za duży (maksymalny rozmiar %s)';
 $lang['deletesucc']            = 'Plik "%s" został usunięty.';
 $lang['deletefail']            = 'Plik "%s" nie został usunięty, sprawdź uprawnienia.';
 $lang['mediainuse']            = 'Plik "%s" nie został usunięty, ponieważ jest używany.';
