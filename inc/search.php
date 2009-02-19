@@ -269,16 +269,36 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
 /**
  * Just lists all documents
  *
+ * $opts['depth']  recursion level, 0 for all
+ * $opts['hash']   do md5 sum of content?
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
-  //we do nothing with directories
-  if($type == 'd') return true;
-  //only search txt files
-  if(substr($file,-4) != '.txt') return true;
+    //we do nothing with directories
+    if($type == 'd'){
+        if(!$opts['depth']) return true; // recurse forever
+        $parts = explode('/',$file);
+        if(count($parts) == $opts['depth']) return false; // depth reached
+        return true;
+    }
 
-  $data[]['id'] = pathID($file);
-  return true;
+    //only search txt files
+    if(substr($file,-4) != '.txt') return true;
+
+    $item['id']   = pathID($file);
+    if(!$opts['skipacl'] && auth_quickaclcheck($id) < AUTH_READ){
+      return false;
+    }
+
+    $item['rev']  = filemtime($base.'/'.$file);
+    $item['size'] = filesize($base.'/'.$file);
+    if($opts['hash']){
+        $item['hash'] = md5(trim(rawWiki($item['id'])));
+    }
+
+    $data[] = $item;
+    return true;
 }
 
 /**
