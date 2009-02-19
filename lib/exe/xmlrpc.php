@@ -39,6 +39,20 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Returns the running DokuWiki version.'
         );
 
+        $this->addCallback(
+            'dokuwiki.getPagelist',
+            'this:readNamespace',
+            array('struct','string','struct'),
+            'List all pages within the given namespace.'
+        );
+
+        $this->addCallback(
+            'dokuwiki.getTime',
+            'time',
+            array('int'),
+            'Return the current time at the wiki server.'
+        );
+
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
         $this->addCallback(
             'wiki.getRPCVersionSupported',
@@ -162,17 +176,17 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         );
 
         /**
-         * Trigger XMLRPC_CALLBACK_REGISTER, action plugins can use this event 
+         * Trigger XMLRPC_CALLBACK_REGISTER, action plugins can use this event
          * to extend the XMLRPC interface and register their own callbacks.
          *
          * Event data:
          *  The XMLRPC server object:
          *
-         *  $event->data->addCallback() - register a callback, the second 
-         *  paramter has to be of the form "plugin:<pluginname>:<plugin 
+         *  $event->data->addCallback() - register a callback, the second
+         *  paramter has to be of the form "plugin:<pluginname>:<plugin
          *  method>"
          *
-         *  $event->data->callbacks - an array which holds all awaylable 
+         *  $event->data->callbacks - an array which holds all awaylable
          *  callbacks
          */
         trigger_event('XMLRPC_CALLBACK_REGISTER', $this);
@@ -195,29 +209,29 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return $text;
         }
     }
-    
+
     /**
      * Return a media file encoded in base64
-     * 
+     *
      * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachment($id){
         $id = cleanID($id);
         if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
             return new IXR_Error(1, 'You are not allowed to read this file');
-        
+
         $file = mediaFN($id);
         if (!@ file_exists($file))
             return new IXR_Error(1, 'The requested file does not exist');
-        
+
         $data = io_readFile($file, false);
         $base64 = base64_encode($data);
         return $base64;
     }
-    
+
     /**
      * Return info about a media file
-     * 
+     *
      * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachmentInfo($id){
@@ -226,7 +240,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'lastModified' => 0,
             'size' => 0,
         );
-        
+
         $file = mediaFN($id);
         if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
             $info['lastModified'] = new IXR_Date(filemtime($file));
@@ -274,12 +288,30 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     }
 
     /**
+     * List all pages in the given namespace (and below)
+     */
+    function readNamespace($ns,$opts){
+        global $conf;
+
+        if(!is_array($opts)) $opts=array();
+
+        $ns = cleanID($ns);
+        $dir = utf8_encodeFN(str_replace(':', '/', $ns));
+dbglog('ggg');
+        $data = array();
+        require_once(DOKU_INC.'inc/search.php');
+        search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
+dbglog($data);
+        return $data;
+    }
+
+    /**
      * List all media files.
-     * 
+     *
      * Available options are 'recursive' for also including the subnamespaces
      * in the listing, and 'pattern' for filtering the returned files against
      * a regular expression matching their name.
-     * 
+     *
      * @author Gina Haeussge <osd@foosel.net>
      */
     function listAttachments($ns, $options = array()) {
@@ -361,7 +393,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     /**
      * Save a wiki page
      *
-     * @author Michael Klier <chi@chimeric.de> 
+     * @author Michael Klier <chi@chimeric.de>
      */
     function putPage($id, $text, $params) {
         global $TEXT;
@@ -388,7 +420,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return new IXR_Error(1, 'The page is currently locked');
 
         // SPAM check
-        if(checkwordblock()) 
+        if(checkwordblock())
             return new IXR_Error(1, 'Positive wordblock check');
 
         // autoset summary on new pages
@@ -503,10 +535,10 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return new IXR_ERROR(1, "You don't have permissions to upload files.");
         }
     }
-    
+
     /**
      * Deletes a file from the wiki.
-     * 
+     *
      * @author Gina Haeussge <osd@foosel.net>
      */
     function deleteAttachment($id){
@@ -514,14 +546,14 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if($auth < AUTH_DELETE) return new IXR_ERROR(1, "You don't have permissions to delete files.");
         global $conf;
         global $lang;
-    
+
         // check for references if needed
         $mediareferences = array();
         if($conf['refcheck']){
             require_once(DOKU_INC.'inc/fulltext.php');
             $mediareferences = ft_mediause($id,$conf['refshow']);
         }
-    
+
         if(!count($mediareferences)){
             $file = mediaFN($id);
             if(@unlink($file)){
@@ -607,7 +639,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                     $link['page'] = $in[1][0];
                     $link['href'] = $in[1][0];
                     array_push($links,$link);
-                    break;    
+                    break;
                 case 'interwikilink':
                     $url = $Renderer->_resolveInterWiki($in[1][2],$in[1][3]);
                     $link['type'] = 'extern';
@@ -654,7 +686,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         } else {
             // in case we still have nothing at this point
             return new IXR_Error(30, 'There are no changes in the specified timeframe');
-        } 
+        }
     }
 
     /**
@@ -690,7 +722,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         } else {
             // in case we still have nothing at this point
             return new IXR_Error(30, 'There are no changes in the specified timeframe');
-        } 
+        }
     }
 
     /**
@@ -748,7 +780,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             }
             return $versions;
         } else {
-            return array(); 
+            return array();
         }
     }
 
@@ -758,6 +790,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function wiki_RPCVersion(){
         return 2;
     }
+
 }
 
 $server = new dokuwiki_xmlrpc_server();
