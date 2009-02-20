@@ -8,6 +8,7 @@
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Knut Staring <knutst@gmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -56,6 +57,7 @@ $lang['phpok']                 = 'Tillat PHP';
 $lang['dformat']               = 'Datoformat (se <a href="http://www.php.net/strftime">PHPs datofunksjon</a>)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Toppnivå for innholdsfortegnelse';
+$lang['tocminheads']           = 'Minimum antall overskrifter som bestemmer om innholdsbetegnelse skal bygges.';
 $lang['maxtoclevel']           = 'Maksimalt antall nivåer i innholdsfortegnelse';
 $lang['maxseclevel']           = 'Maksimalt nivå for redigering av seksjon';
 $lang['camelcase']             = 'Gjør CamelCase til lenke automatisk';
@@ -69,6 +71,7 @@ $lang['indexdelay']            = 'Forsinkelse før indeksering (sekunder)';
 $lang['relnofollow']           = 'Bruk rel="nofollow" på eksterne lenker';
 $lang['mailguard']             = 'Beskytt e-postadresser';
 $lang['iexssprotect']          = 'Sjekk om opplastede filer inneholder skadelig JavaScrips- eller HTML-kode';
+$lang['showuseras']            = 'Hva som skal med når man viser brukeren som sist redigerte en side.';
 $lang['useacl']                = 'Bruk lister for adgangskontroll (ACL)';
 $lang['autopasswd']            = 'Generer passord automatisk';
 $lang['authtype']              = 'Autentiseringsmetode';
@@ -171,3 +174,10 @@ $lang['xsendfile_o_0']         = 'ikke bruk';
 $lang['xsendfile_o_1']         = 'Proprietær lighttpd header (før release 1.5)';
 $lang['xsendfile_o_2']         = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3']         = 'Priprietær Nginx X-Accel-Redirect header';
+$lang['showuseras_o_loginname'] = 'Brukernavn';
+$lang['showuseras_o_username'] = 'Brukerens fulle navn';
+$lang['showuseras_o_email']    = 'Brukerens epostadresse (tilpasset i henhold til mailguar-instilling)';
+$lang['showuseras_o_email_link'] = 'Brukerens epost-addresse som "mailto:"-lenke';
+$lang['useheading_o_navigation'] = 'Kun navigering';
+$lang['useheading_o_content']  = 'Kun wiki-innhold';
+$lang['useheading_o_1']        = 'Alltid';

@@ -12,6 +12,7 @@
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Knut Staring <knutst@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -145,6 +146,7 @@ $lang['created']               = 'opprettet';
 $lang['restored']              = 'gjenopprettet til en tidligere versjon';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigeringskommentar';
+$lang['noflash']               = 'For at dette innholdet skal vises må du ha <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['mail_newpage']          = 'side lagt til:';
 $lang['mail_changed']          = 'side endret:';
 $lang['mail_new_user']         = 'ny bruker:';

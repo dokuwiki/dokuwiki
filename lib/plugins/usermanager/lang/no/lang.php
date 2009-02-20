@@ -8,6 +8,7 @@
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Knut Staring <knutst@gmail.com>
  */
 $lang['menu']                  = 'Behandle brukere';
 $lang['noauth']                = '(autentisering av brukere ikke tilgjengelig)';

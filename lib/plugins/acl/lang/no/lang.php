@@ -11,6 +11,7 @@
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Knut Staring <knutst@gmail.com>
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
 $lang['acl_group']             = 'Gruppe';
@@ -27,6 +28,7 @@ $lang['p_choose_id']           = '<b>Før inn en bruker eller gruppe</b> i skjem
 $lang['p_choose_ns']           = '<b>Før inn en bruker eller gruppe</b> i skjemaet over for å vise eller redigere tillatelser satt for navnerommet <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Merk: Disse tillatelser ble ikke eksplisitt satt, men ble arvet fra andre grupper eller høyere navnerom.';
 $lang['p_isadmin']             = 'Merk: Den valgte gruppen eller bruker har altid fulle tillatelser fordi vedkommende er konfigurert som superbruker.';
+$lang['p_include']             = 'Høyere tillgangsrettigheter inkluderer lavere. Rettigheter for å opprette, laste opp og slette gjelder bare  for navnerom, ikke enkeltsider.';
 $lang['current']               = 'Någjeldende ACL-regler';
 $lang['where']                 = 'Side/Navnerom';
 $lang['who']                   = 'Bruker/Gruppe';

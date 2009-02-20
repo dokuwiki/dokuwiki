@@ -8,6 +8,7 @@
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Knut Staring <knutst@gmail.com>
  */
 $lang['menu']                  = 'Behandle tillegg';
 $lang['download']              = 'Last ned og installer et tillegg';
@@ -49,3 +50,7 @@ $lang['error_dircreate']       = 'Klarte ikke å lage en midlertidig mappe for �
 $lang['error_decompress']      = 'Tilleggsbehandleren klarte ikke å dekomprimere den nedlastede filen. Dette kan være på grunn av en feilet nedlasting, i så fall bør du prøve igjen, eller kompresjonsformatet kan være ukjent, i så fall må du laste ned og installere tillegget manuelt.';
 $lang['error_copy']            = 'Det skjedde en feil ved kopiering av en fil under installasjonen av <em>%s</em>: disken kan være full eller rettighetene satt feil. Dette kan ha ført til et delvist installert tillegg og gjort wikien ubrukelig.';
 $lang['error_delete']          = 'Det skjedde en feil under forsøket på å slette tillegget <em>%s</em>. Den mest sannsynlige grunnen er utilstrekkelige rettigheter for filene eller mappene.';
+$lang['enabled']               = 'Plugin %s aktivert';
+$lang['notenabled']            = 'Plugin %s kunne ikke aktiveres, sjekk filrettighetene.';
+$lang['disabled']              = 'Plugin %s deaktivert';
+$lang['notdisabled']           = 'Plugin %s kunne ikke deaktiveres, sjekk filrettighetene.';
