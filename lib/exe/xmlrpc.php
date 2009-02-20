@@ -53,6 +53,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'Return the current time at the wiki server.'
         );
 
+        $this->addCallback(
+            'dokuwiki.setLocks',
+            'this:setLocks',
+            array('struct','struct'),
+            'Lock or unlock pages.'
+        );
+
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
         $this->addCallback(
             'wiki.getRPCVersionSupported',
@@ -789,6 +796,47 @@ dbglog($data);
      */
     function wiki_RPCVersion(){
         return 2;
+    }
+
+
+    /**
+     * Locks or unlocks a given batch of pages
+     *
+     * Give an associative array with two keys: lock and unlock. Both should contain a
+     * list of pages to lock or unlock
+     *
+     * Returns an associative array with the keys locked, lockfail, unlocked and
+     * unlockfail, each containing lists of pages.
+     */
+    function setLocks($set){
+        $locked     = array();
+        $lockfail   = array();
+        $unlocked   = array();
+        $unlockfail = array();
+
+        foreach((array) $set['lock'] as $id){
+            if(checklock($id)){
+                $lockfail[] = $id;
+            }else{
+                lock($id);
+                $locked[] = $id;
+            }
+        }
+
+        foreach((array) $set['unlock'] as $id){
+            if(unlock($id)){
+                $unlocked[] = $id;
+            }else{
+                $unlockfail[] = $id;
+            }
+        }
+
+        return array(
+            'locked'     => $locked,
+            'lockfail'   => $lockfail,
+            'unlocked'   => $unlocked,
+            'unlockfail' => $unlockfail,
+        );
     }
 
 }
