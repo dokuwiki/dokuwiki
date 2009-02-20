@@ -79,7 +79,11 @@ class Doku_Plugin_Controller {
     $dir = $this->get_directory($plugin);
     $file = $component ? "$type/$component.php" : "$type.php";
 
-    if (!@include_once(DOKU_PLUGIN."$dir/$file")) {
+    if(!is_file(DOKU_PLUGIN."$dir/$file")){
+      return null;
+    }
+
+    if (!include_once(DOKU_PLUGIN."$dir/$file")) {
       return null;
     }
 
