@@ -525,12 +525,12 @@ class IXR_Client extends DokuHTTPClient {
         $this->message = new IXR_Message($this->resp_body);
         if (!$this->message->parse()) {
             // XML error
-            $this->error = new IXR_Error(-32700, 'parse error. not well formed');
+            $this->xmlerror = new IXR_Error(-32700, 'parse error. not well formed');
             return false;
         }
         // Is the message a fault?
         if ($this->message->messageType == 'fault') {
-            $this->error = new IXR_Error($this->message->faultCode, $this->message->faultString);
+            $this->xmlerror = new IXR_Error($this->message->faultCode, $this->message->faultString);
             return false;
         }
         // Message must be OK
