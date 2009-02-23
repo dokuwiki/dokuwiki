@@ -330,35 +330,21 @@ dbglog($data);
         if (!is_array($options))
             $options = array();
 
-        if (!isset($options['recursive'])) $options['recursive'] = false;
 
         if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
             $data = array();
             require_once(DOKU_INC.'inc/search.php');
-            search($data, $conf['mediadir'], 'search_media', array('recursive' => $options['recursive']), $dir);
+            search($data, $conf['mediadir'], 'search_media', $options, $dir);
+            $len = count($data);
+            if(!$len) return array();
 
-            if(!count($data)) {
-                return array();
+            for($i=0; $i<$len; $i++) {
+                unset($data[$i]['meta']);
+                $data[$i]['lastModified'] = new IXR_Date($data[$i]['mtime']);
             }
-
-            $files = array();
-            foreach($data as $item) {
-                if (isset($options['pattern']) && !@preg_match($options['pattern'], $item['id']))
-                    continue;
-                $file = array();
-                $file['id']       = $item['id'];
-                $file['size']     = $item['size'];
-                $file['lastModified'] = new IXR_Date($item['mtime']);
-                $file['isimg']    = $item['isimg'];
-                $file['writable'] = $item['writeable'];
-                $file['perms'] = auth_quickaclcheck(getNS($item['id']).':*');
-                array_push($files, $file);
-            }
-
-            return $files;
-
+            return $data;
         } else {
             return new IXR_Error(1, 'You are not allowed to list media files.');
         }
@@ -511,13 +497,13 @@ dbglog($data);
                 //check for overwrite
                 $overwrite = @file_exists($fn);
                 if($overwrite && (!$params['ow'] || $auth < AUTH_DELETE)) {
-                    return new IXR_ERROR(1, $lang['uploadexist']);
+                    return new IXR_ERROR(1, $lang['uploadexist'].'1');
                 }
                 // check for valid content
                 @require_once(DOKU_INC.'inc/media.php');
                 $ok = media_contentcheck($ftmp, $imime);
                 if($ok == -1) {
-                    return new IXR_ERROR(1, sprintf($lang['uploadexist'], ".$iext"));
+                    return new IXR_ERROR(1, sprintf($lang['uploadexist'].'2', ".$iext"));
                 } elseif($ok == -2) {
                     return new IXR_ERROR(1, $lang['uploadspam']);
                 } elseif($ok == -3) {

@@ -185,38 +185,52 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
-  //we do nothing with directories
-  if($type == 'd') {
-    return ($opts['recursive']);
-  }
+    //we do nothing with directories
+    if($type == 'd') {
+        if(!$opts['depth']) return true; // recurse forever
+        $parts = explode('/',$file);
+        if(count($parts) == $opts['depth']) return false; // depth reached
+        return true;
+        return ($opts['recursive']);
+    }
 
-  $info         = array();
-  $info['id']   = pathID($file,true);
-  if($info['id'] != cleanID($info['id'])){
-    if($opts['showmsg'])
-      msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
-    return false; // skip non-valid files
-  }
+    $info         = array();
+    $info['id']   = pathID($file,true);
+    if($info['id'] != cleanID($info['id'])){
+        if($opts['showmsg'])
+            msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
+        return false; // skip non-valid files
+    }
 
-  //check ACL for namespace (we have no ACL for mediafiles)
-  if(auth_quickaclcheck(getNS($info['id']).':*') < AUTH_READ){
+    //check ACL for namespace (we have no ACL for mediafiles)
+    $info['perm'] = auth_quickaclcheck(getNS($info['id']).':*');
+    if(!$opts['skipacl'] && $info['perm'] < AUTH_READ){
+        return false;
+    }
+
+    //check pattern filter
+    if($opts['pattern'] && !@preg_match($opts['pattern'], $info['id'])){
+        return false;
+    }
+
+    $info['file']     = basename($file);
+    $info['size']     = filesize($base.'/'.$file);
+    $info['mtime']    = filemtime($base.'/'.$file);
+    $info['writable'] = is_writable($base.'/'.$file);
+    if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
+        $info['isimg'] = true;
+        require_once(DOKU_INC.'inc/JpegMeta.php');
+        $info['meta']  = new JpegMeta($base.'/'.$file);
+    }else{
+        $info['isimg'] = false;
+    }
+    if($opts['hash']){
+        $info['hash'] = md5(io_readFile(wikiFN($info['id']),false));
+    }
+
+    $data[] = $info;
+
     return false;
-  }
-
-  $info['file'] = basename($file);
-  $info['size'] = filesize($base.'/'.$file);
-  $info['mtime'] = filemtime($base.'/'.$file);
-  $info['writable'] = is_writable($base.'/'.$file);
-  if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
-    $info['isimg'] = true;
-    require_once(DOKU_INC.'inc/JpegMeta.php');
-    $info['meta']  = new JpegMeta($base.'/'.$file);
-  }else{
-    $info['isimg'] = false;
-  }
-  $data[] = $info;
-
-  return false;
 }
 
 /**
@@ -269,8 +283,9 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
 /**
  * Just lists all documents
  *
- * $opts['depth']  recursion level, 0 for all
- * $opts['hash']   do md5 sum of content?
+ * $opts['depth']   recursion level, 0 for all
+ * $opts['hash']    do md5 sum of content?
+ * $opts['skipacl'] list everything regardless of ACL
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
@@ -291,8 +306,9 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
       return false;
     }
 
-    $item['rev']  = filemtime($base.'/'.$file);
-    $item['size'] = filesize($base.'/'.$file);
+    $item['rev']   = filemtime($base.'/'.$file);
+    $item['mtime'] = $item['rev'];
+    $item['size']  = filesize($base.'/'.$file);
     if($opts['hash']){
         $item['hash'] = md5(trim(rawWiki($item['id'])));
     }
