@@ -1,0 +1,5 @@
+<?php
+/**
+ * Afrikaans language file
+ *
+ */
