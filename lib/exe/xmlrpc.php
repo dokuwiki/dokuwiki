@@ -706,7 +706,7 @@ dbglog($data);
             $change['author']       = $recent['user'];
             $change['version']      = $recent['date'];
             $change['perms']        = $recent['perms'];
-            $change['size']         = @filesize(wikiFN($recent['id']));
+            $change['size']         = @filesize(mediaFN($recent['id']));
             array_push($changes, $change);
         }
 
