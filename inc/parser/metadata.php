@@ -30,6 +30,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   var $headers = array();
   var $capture = true;
   var $store   = '';
+  var $firstimage = '';
 
   function getFormat(){
     return 'metadata';
@@ -51,6 +52,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $this->doc = utf8_substr($this->doc, 0, 500).'…';
       $this->meta['description']['abstract'] = $this->doc;
     }
+
+    $this->meta['relation']['firstimage'] = $this->firstimage;
   }
 
   function toc_additem($id, $text, $level) {
@@ -70,7 +73,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function header($text, $level, $pos) {
-
     if (!$this->meta['title']) $this->meta['title'] = $text;
 
     // add the header to the TOC
@@ -288,6 +290,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function internallink($id, $name = NULL){
     global $ID;
 
+    if(is_array($name))
+        $this->_firstimage($name['src']);
+
     $default = $this->_simpleTitle($id);
 
     // first resolve and clean up the $id
@@ -307,6 +312,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function externallink($url, $name = NULL){
+    if(is_array($name))
+        $this->_firstimage($name['src']);
+
     if ($this->capture){
       if ($name) $this->doc .= $name;
       else $this->doc .= '<'.$url.'>';
@@ -314,6 +322,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function interwikilink($match, $name = NULL, $wikiName, $wikiUri){
+    if(is_array($name))
+        $this->_firstimage($name['src']);
+
     if ($this->capture){
       list($wikiUri, $hash) = explode('#', $wikiUri, 2);
       $name = $this->_getLinkTitle($name, $wikiName.'>'.$wikiUri);
@@ -322,6 +333,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function windowssharelink($url, $name = NULL){
+    if(is_array($name))
+        $this->_firstimage($name['src']);
+
     if ($this->capture){
       if ($name) $this->doc .= $name;
       else $this->doc .= '<'.$url.'>';
@@ -329,6 +343,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function emaillink($address, $name = NULL){
+    if(is_array($name))
+        $this->_firstimage($name['src']);
+
     if ($this->capture){
       if ($name) $this->doc .= $name;
       else $this->doc .= '<'.$address.'>';
@@ -338,11 +355,13 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function internalmedia($src, $title=NULL, $align=NULL, $width=NULL,
                          $height=NULL, $cache=NULL, $linking=NULL){
     if ($this->capture && $title) $this->doc .= '['.$title.']';
+    $this->_firstimage($src);
   }
 
   function externalmedia($src, $title=NULL, $align=NULL, $width=NULL,
                          $height=NULL, $cache=NULL, $linking=NULL){
     if ($this->capture && $title) $this->doc .= '['.$title.']';
+    $this->_firstimage($src);
   }
 
   function rss($url,$params) {
@@ -434,10 +453,22 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     } else if (is_string($title)){
       return $title;
     } else if (is_array($title)){
-      return '['.$title.']';
+      return '['.$title['title'].']';
     }
   }
 
+  function _firstimage($src){
+    if($this->firstimage) return;
+    global $ID;
+
+    list($src,$hash) = explode('#',$src,2);
+    if(!preg_match('/^https?:\/\//i',$src)){
+        resolve_mediaid(getNS($ID),$src, $exists);
+    }
+    if(preg_match('/.(jpe?g|gif|png)$/i',$src)){
+        $this->firstimage = $src;
+    }
+  }
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
