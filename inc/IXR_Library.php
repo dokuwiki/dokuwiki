@@ -600,12 +600,12 @@ class IXR_Date {
         }
     }
     function parseTimestamp($timestamp) {
-        $this->year = date('Y', $timestamp);
-        $this->month = date('m', $timestamp);
-        $this->day = date('d', $timestamp);
-        $this->hour = date('H', $timestamp);
-        $this->minute = date('i', $timestamp);
-        $this->second = date('s', $timestamp);
+        $this->year = gmdate('Y', $timestamp);
+        $this->month = gmdate('m', $timestamp);
+        $this->day = gmdate('d', $timestamp);
+        $this->hour = gmdate('H', $timestamp);
+        $this->minute = gmdate('i', $timestamp);
+        $this->second = gmdate('s', $timestamp);
     }
     function parseIso($iso) {
         $this->year = substr($iso, 0, 4);
@@ -622,7 +622,7 @@ class IXR_Date {
         return '<dateTime.iso8601>'.$this->getIso().'</dateTime.iso8601>';
     }
     function getTimestamp() {
-        return mktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year);
+        return gmmktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year);
     }
 }
 
