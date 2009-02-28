@@ -42,6 +42,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function document_end(){
+    global $ID;
+
     // store internal info in metadata (notoc,nocache)
     $this->meta['internal'] = $this->info;
 
@@ -54,6 +56,20 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     }
 
     $this->meta['relation']['firstimage'] = $this->firstimage;
+
+    // create missing data on externally created pages
+
+    if(!$this->meta['date']['modified']){
+        $this->meta['date']['modified'] = filemtime(wikiFN($ID));
+    }
+
+    if(!$this->meta['date']['created']){
+        $this->meta['date']['created'] = $this->meta['date']['modified'];
+    }
+
+    if(!isset($this->meta['creator'])){
+        $this->meta['creator'] = '';
+    }
   }
 
   function toc_additem($id, $text, $level) {
