@@ -37,6 +37,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function document_start(){
+    global $ID;
+    // external pages are missing create date
+    if(!$this->persistent['date']['created']){
+        $this->persistent['date']['created'] = filectime(wikiFN($ID));
+    }
+    if(!isset($this->persistent['creator'])){
+        $this->persistent['creator'] = '';
+    }
     // reset metadata to persistent values
     $this->meta = $this->persistent;
   }
@@ -57,19 +65,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
     $this->meta['relation']['firstimage'] = $this->firstimage;
 
-    // create missing data on externally created pages
-
     if(!$this->meta['date']['modified']){
         $this->meta['date']['modified'] = filemtime(wikiFN($ID));
     }
 
-    if(!$this->meta['date']['created']){
-        $this->meta['date']['created'] = $this->meta['date']['modified'];
-    }
-
-    if(!isset($this->meta['creator'])){
-        $this->meta['creator'] = '';
-    }
   }
 
   function toc_additem($id, $text, $level) {
