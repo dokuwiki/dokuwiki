@@ -280,11 +280,13 @@ function dbg($msg,$hidden=false){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function dbglog($msg){
+function dbglog($msg,$header=''){
   global $conf;
   if(is_object($msg) || is_array($msg)){
     $msg = print_r($msg,true);
   }
+
+  if($header) $msg = "$header\n$msg";
 
   $file = $conf['cachedir'].'/debug.log';
   $fh = fopen($file,'a');
