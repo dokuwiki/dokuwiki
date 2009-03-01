@@ -445,7 +445,8 @@ function media_filelist($ns,$auth=null,$jump=''){
 
     $dir = utf8_encodeFN(str_replace(':','/',$ns));
     $data = array();
-    search($data,$conf['mediadir'],'search_media',array('showmsg'=>true),$dir);
+    search($data,$conf['mediadir'],'search_media',
+           array('showmsg'=>true,'depth'=>1),$dir);
 
     if(!count($data)){
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
