@@ -188,7 +188,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
     if($type == 'd') {
         if(!$opts['depth']) return true; // recurse forever
-        $parts = explode('/',$file);
+        $parts = explode('/',ltrim($file,'/'));
         if(count($parts) == $opts['depth']) return false; // depth reached
         return true;
         return ($opts['recursive']);
@@ -293,7 +293,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
     if($type == 'd'){
         if(!$opts['depth']) return true; // recurse forever
-        $parts = explode('/',$file);
+        $parts = explode('/',ltrim($file,'/'));
         if(count($parts) == $opts['depth']) return false; // depth reached
         return true;
     }
