@@ -191,7 +191,6 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         $parts = explode('/',ltrim($file,'/'));
         if(count($parts) == $opts['depth']) return false; // depth reached
         return true;
-        return ($opts['recursive']);
     }
 
     $info         = array();
