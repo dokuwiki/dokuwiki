@@ -521,6 +521,12 @@ class IXR_Client extends DokuHTTPClient {
             return false;
         }
 
+        // Check HTTP Response code
+        if($this->status < 200 || $this->status > 206){
+            $this->xmlerror = new IXR_Error(-32300, 'transport error - HTTP status '.$this->status);
+            return false;
+        }
+
         // Now parse what we've got back
         $this->message = new IXR_Message($this->resp_body);
         if (!$this->message->parse()) {
