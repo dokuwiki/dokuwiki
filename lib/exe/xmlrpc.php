@@ -4,6 +4,10 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 // fix when '<?xml' isn't on the very first line
 if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 
+/**
+ * Increased whenever the API is changed
+ */
+define('DOKU_XMLRPC_API_VERSION',1);
 
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
@@ -33,10 +37,24 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         /* DokuWiki's own methods */
         $this->addCallback(
+            'dokuwiki.getXMLRPCAPIVersion',
+            'this:getAPIVersion',
+            array('integer'),
+            'Returns the XMLRPC API version.'
+        );
+
+        $this->addCallback(
             'dokuwiki.getVersion',
             'getVersion',
             array('string'),
             'Returns the running DokuWiki version.'
+        );
+
+        $this->addCallback(
+            'dokuwiki.login',
+            'this:login',
+            array('integer','string','string'),
+            'Tries to login with the given credentials and sets auth cookies.'
         );
 
         $this->addCallback(
@@ -825,6 +843,21 @@ dbglog($data);
         );
     }
 
+    function getAPIVersion(){
+        return DOKU_XMLRPC_API_VERSION;
+    }
+
+    function login($user,$pass){
+        global $conf;
+        global $auth;
+        if(!$conf['useacl']) return 0;
+        if(!$auth) return 0;
+        if($auth->canDo('external')){
+            return $auth->trustExternal($user,$pass,false);
+        }else{
+            return auth_login($user,$pass,false,true);
+        }
+    }
 }
 
 $server = new dokuwiki_xmlrpc_server();
