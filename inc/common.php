@@ -1376,7 +1376,7 @@ function editorinfo($username){
       case 'username':
       case 'email':
       case 'email_link':
-        $info = $auth->getUserData($username);
+        if($auth) $info = $auth->getUserData($username);
         break;
       default:
         return hsc($username);
