@@ -266,6 +266,22 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    function testMultiplyEntityHex() {
+    	// the multiply entity pattern should not match hex numbers, eg. 0x123
+        $this->P->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
+        $this->P->parse('Foo 0x123 Bar');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo 0x123 Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
     function testHR() {
         $this->P->addMode('hr',new Doku_Parser_Mode_HR());
         $this->P->parse("Foo \n ---- \n Bar");
