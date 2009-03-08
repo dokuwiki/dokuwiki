@@ -8,6 +8,8 @@
 /**
 * Includes
 */
+require_once DOKU_INC . 'inc/init.php';
+require_once DOKU_INC . 'inc/confutils.php';
 require_once DOKU_INC . 'inc/parser/parser.php';
 require_once DOKU_INC . 'inc/parser/handler.php';
 require_once DOKU_INC . 'inc/events.php';

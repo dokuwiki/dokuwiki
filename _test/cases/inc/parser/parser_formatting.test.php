@@ -54,6 +54,75 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    function testEmColon() {
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('abc //Тест: // def');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc ')),
+            array('emphasis_open',array()),
+            array('cdata',array('Тест: ')),
+            array('emphasis_close',array()),
+            array('cdata',array(' def'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testEmSingleChar() {
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('abc //b// def');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc ')),
+            array('emphasis_open',array()),
+            array('cdata',array('b')),
+            array('emphasis_close',array()),
+            array('cdata',array(' def'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testEmWithUnknownSchema() {
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('abc //foo:// bar// def');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc ')),
+            array('emphasis_open',array()),
+            array('cdata',array('foo:')),
+            array('emphasis_close',array()),
+            array('cdata',array(' bar// def'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testEmWithKnownSchema() {
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse('abc //http://www.domain.com bar// def');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc ')),
+            array('emphasis_open',array()),
+            array('cdata',array('http:// bar')),
+            array('emphasis_close',array()),
+            array('cdata',array(' def'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
     function testNotEm() {
         $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
         $this->P->parse('abc //bar def');
@@ -61,6 +130,36 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\nabc //bar def\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testNotEmSchemaAtOpen() {
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('abc foo://bar// def');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'abc foo:')),
+            array('emphasis_open',array()),
+            array('cdata',array('bar')),
+            array('emphasis_close',array()),
+            array('cdata',array(' def'."\n")),
+                        array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testNotEmSchemaAtClose() {
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('abc //http:// def');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\nabc //http:// def\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
