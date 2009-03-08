@@ -322,11 +322,9 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         $ns = cleanID($ns);
         $dir = utf8_encodeFN(str_replace(':', '/', $ns));
-dbglog('ggg');
         $data = array();
         require_once(DOKU_INC.'inc/search.php');
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
-dbglog($data);
         return $data;
     }
 
