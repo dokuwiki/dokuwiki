@@ -108,13 +108,15 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
     function testEmWithKnownSchema() {
         $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
-        $this->P->parse('abc //http://www.domain.com bar// def');
+        $this->P->parse('abc //foo http://www.google.com bar// def');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'abc ')),
             array('emphasis_open',array()),
-            array('cdata',array('http:// bar')),
+            array('cdata',array('foo ')),
+            array('externallink',array('http://www.google.com', NULL)),
+            array('cdata',array(' bar')),
             array('emphasis_close',array()),
             array('cdata',array(' def'."\n")),
             array('p_close',array()),
