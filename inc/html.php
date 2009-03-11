@@ -302,7 +302,7 @@ function html_search(){
   flush();
 
   //check if search is restricted to namespace
-  if(preg_match('/([^@]*)@([^@]*)/',$QUERY,$match)) {
+  if(preg_match('/@([^@]*)/',$QUERY,$match)) {
       $id = cleanID($match[1]);
       if(empty($id)) {
         print '<div class="nothing">'.$lang['nothingfound'].'</div>';

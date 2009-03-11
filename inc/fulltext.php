@@ -78,6 +78,16 @@ function _ft_pageSearch(&$data){
         }
     }
 
+    // filter unwanted namespaces
+    if(!empty($q['notns'])) {
+        $pattern = implode('|^',$q['notns']);
+        foreach($docs as $key => $val) {
+            if(preg_match('/^'.$pattern.'/',$key)) {
+                unset($docs[$key]);
+            }
+        }
+    }
+
     // remove negative matches
     foreach($not as $n){
         unset($docs[$n]);
@@ -402,16 +412,11 @@ function ft_queryParser($query){
     $q = array();
     $q['query']   = $query;
     $q['ns']      = array();
+    $q['notns']   = array();
     $q['phrases'] = array();
     $q['words']   = array();
     $q['and']     = array();
     $q['not']     = array();
-
-    // strip namespace from query
-    if(preg_match('/([^@]*)@(.*)/',$query,$match))  {
-        $query = $match[1];
-        $q['ns'] = explode('@',preg_replace("/ /",'',$match[2]));
-    }
 
     // handle phrase searches
     while(preg_match('/"(.*?)"/',$query,$match)){
@@ -425,6 +430,12 @@ function ft_queryParser($query){
         if($w{0} == '-'){
             $token = idx_tokenizer($w,$stopwords,true);
             if(count($token)) $q['not'] = array_merge($q['not'],$token);
+        } else if ($w{0} == '@') { // Namespace to search?
+            $w = substr($w,1);
+            $q['ns'] = array_merge($q['ns'],(array)$w);
+        } else if ($w{0} == '^') { // Namespace not to search?
+            $w = substr($w,1);
+            $q['notns'] = array_merge($q['notns'],(array)$w);
         }else{
             // asian "words" need to be searched as phrases
             if(@preg_match_all('/(('.IDX_ASIAN.')+)/u',$w,$matches)){
