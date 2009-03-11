@@ -3,6 +3,7 @@
  * Ukrainian language file
  *
  * @author serg_stetsuk@ukr.net
+ * @author okunia@gmail.com
  */
-$lang['name']                  = 'Відгук популярності (може заняти деякий час)';
+$lang['name']                  = 'Відгук популярності (може зайняти деякий час)';
 $lang['submit']                = 'Передати дані';

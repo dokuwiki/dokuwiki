@@ -3,10 +3,10 @@
 Дата         : @DATE@
 Оглядач      : @BROWSER@
 Адреса IP    : @IPADDRESS@
-Ім'я хоста   : @HOSTNAME@
+Ім'я вузла   : @HOSTNAME@
 Стара ревізія: @OLDPAGE@
 Нова ревізія : @NEWPAGE@
-Підсумок     : @SUMMARY@
+Підсумок змін : @SUMMARY@
 Користувач   : @USER@
 
 @DIFF@

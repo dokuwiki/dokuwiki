@@ -5,7 +5,7 @@
 E-Mail      : @NEWEMAIL@
 
 Дата        : @DATE@
-Оглядач     : @BROWSER@
+Браузер     : @BROWSER@
 Адреса IP   : @IPADDRESS@
 Назва хосту : @HOSTNAME@
 

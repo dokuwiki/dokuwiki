@@ -4,7 +4,7 @@
 Дата : @DATE@
 Браузер : @BROWSER@
 IP-Адреса : @IPADDRESS@
-Назва хоста : @HOSTNAME@
+Назва вузла : @HOSTNAME@
 Розмір : @SIZE@
 Тип MIME : @MIME@
 Користувач : @USER@

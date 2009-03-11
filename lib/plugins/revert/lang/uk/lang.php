@@ -3,6 +3,7 @@
  * Ukrainian language file
  *
  * @author serg_stetsuk@ukr.net
+ * @author okunia@gmail.com
  */
 $lang['menu']                  = 'Менеджер відновлення';
 $lang['filter']                = 'Пошук спамних сторінок';
