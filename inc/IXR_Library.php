@@ -615,11 +615,11 @@ class IXR_Date {
     }
     function parseIso($iso) {
         $this->year = substr($iso, 0, 4);
-        $this->month = substr($iso, 4, 2);
-        $this->day = substr($iso, 6, 2);
-        $this->hour = substr($iso, 9, 2);
-        $this->minute = substr($iso, 12, 2);
-        $this->second = substr($iso, 15, 2);
+        $this->month = substr($iso, 5, 2);
+        $this->day = substr($iso, 8, 2);
+        $this->hour = substr($iso, 11, 2);
+        $this->minute = substr($iso, 14, 2);
+        $this->second = substr($iso, 17, 2);
     }
     function getIso() {
         return $this->year.'-'.$this->month.'-'.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second;
