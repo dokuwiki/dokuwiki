@@ -81,7 +81,23 @@
         // external trust mechanism in place
         $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
       }else{
-        auth_login($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r'],$_REQUEST['http_credentials']);
+        $evdata = array(
+            'action'   => $ACT,
+            'user'     => $_REQUEST['u'],
+            'password' => $_REQUEST['p'],
+            'sticky'   => $_REQUEST['r'],
+            'silent'   => $_REQUEST['http_credentials'],
+        );
+        $evt = new Doku_Event('AUTH_LOGIN_CHECK',$ACT);
+        if($evt->advise_before()){
+            auth_login($evdata['user'],
+                       $evdata['password'],
+                       $evdata['sticky'],
+                       $evdata['silent']);
+        }
+        $evt->advise_after();
+        unset($evt);
+        unset($evdata);
       }
     }
 

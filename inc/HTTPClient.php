@@ -158,6 +158,18 @@ class HTTPClient {
         $this->error  = '';
         $this->status = 0;
 
+        $httpdata = array('url'    => $url,
+                          'data'   => $data,
+                          'method' => $method);
+        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
+        if($evt->advise_before()){
+            $url    = $httpdata['url'];
+            $data   = $httpdata['data'];
+            $method = $httpdata['method'];
+        }
+        $evt->advise_after();
+        unset($evt);
+
         // parse URL into bits
         $uri = parse_url($url);
         $server = $uri['host'];
