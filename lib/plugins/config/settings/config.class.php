@@ -340,6 +340,12 @@ if (!class_exists('setting')) {
     var $_error = false;            // only used by those classes which error check
     var $_input = NULL;             // only used by those classes which error check
 
+    var $_cautionList = array(
+        'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
+        'start' => 'warning', 'camelcase' => 'warning', 'deaccent' => 'warning', 'sepchar' => 'warning', 'compression' => 'warning', 'xsendfile' => 'warning', 'renderer_xhtml' => 'warning',
+        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'xmlrpc' => 'security'
+    );
+
     function setting($key, $params=NULL) {
         $this->_key = $key;
 
@@ -439,9 +445,21 @@ if (!class_exists('setting')) {
     function is_default() { return !$this->is_protected() && is_null($this->_local); }
     function error() { return $this->_error; }
 
-    function _out_key($pretty=false) {
+    function caution() {
+        if (!array_key_exists($this->_key, $this->_cautionList)) return false;
+        return $this->_cautionList[$this->_key];
+    }
+
+    function _out_key($pretty=false,$url=false) {
         if($pretty){
-            return str_replace(CM_KEYMARKER,"&raquo;",$this->_key);
+            $out = str_replace(CM_KEYMARKER,"&raquo;",$this->_key);
+            if ($url && !strstr($out,'&raquo;')) {//provide no urls for plugins, etc.
+                if ($out == 'start') //one exception
+                    return '<a href="http://www.dokuwiki.org/config:startpage">'.$out.'</a>';
+                else
+                    return '<a href="http://www.dokuwiki.org/config:'.$out.'">'.$out.'</a>';
+            }
+            return $out;
         }else{
             return str_replace(CM_KEYMARKER,"']['",$this->_key);
         }

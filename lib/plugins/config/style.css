@@ -30,7 +30,7 @@
 }
 #config__manager fieldset td.value {
     /* fixed data column width */
-    width: 30em;
+    width: 31em;
 }
 
 #config__manager td.label {
@@ -41,6 +41,12 @@
 #config__manager td.label label {
     clear: both;
     display: block;
+    float: left;
+}
+#config__manager td.label img {
+    padding: 0 10px;
+    vertical-align: middle;
+    float: right;
 }
 
 #config__manager td.label span.outkey {
@@ -58,6 +64,9 @@
 
 #config__manager td input.edit {
     width: 30em;
+}
+#config__manager td .input {
+    width: 30.8em;
 }
 #config__manager td select.edit { }
 #config__manager td textarea.edit {

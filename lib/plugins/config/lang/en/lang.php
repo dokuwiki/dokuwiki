@@ -17,6 +17,10 @@ $lang['nochoice']   = '(no other choices available)';
 $lang['locked']     = 'The settings file can not be updated, if this is unintentional, <br />
                        ensure the local settings file name and permissions are correct.';
 
+$lang['danger']     = 'Danger: Changing this option could cause severe damage.';
+$lang['warning']    = 'Warning: Changing this option could cause unintended behaviour.';
+$lang['security']   = 'Security Warning: Changing this option could present a security risk.';
+
 /* --- Config Setting Headers --- */
 $lang['_configuration_manager'] = 'Configuration Manager'; //same as heading in intro.txt
 $lang['_header_dokuwiki'] = 'DokuWiki Settings';

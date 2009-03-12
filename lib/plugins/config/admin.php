@@ -16,6 +16,7 @@ define('CM_KEYMARKER','____');            // used for settings with multiple dim
 
 define('PLUGIN_SELF',dirname(__FILE__).'/');
 define('PLUGIN_METADATA',PLUGIN_SELF.'settings/config.metadata.php');
+if(!defined('DOKU_PLUGIN_IMAGES')) define('DOKU_PLUGIN_IMAGES',DOKU_BASE.'lib/plugins/config/images/');
 
 require_once(PLUGIN_SELF.'settings/config.class.php');  // main configuration class and generic settings classes
 require_once(PLUGIN_SELF.'settings/extra.class.php');   // settings classes specific to these settings
@@ -151,11 +152,12 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
           $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');
           $error = $setting->error() ? ' class="value error"' : ' class="value"';
+          $icon = $setting->caution() ? '<img src="'.DOKU_PLUGIN_IMAGES.$setting->caution().'.png" alt="'.$setting->caution().'" title="'.$this->getLang($setting->caution()).'" />' : '';
 
           ptln('    <tr'.$class.'>');
           ptln('      <td class="label">');
-          ptln('        <span class="outkey">'.$setting->_out_key(true).'</span>');
-          ptln('        '.$label);
+          ptln('        <span class="outkey">'.$setting->_out_key(true, true).'</span>');
+          ptln('        '.$label.$icon);
           ptln('      </td>');
           ptln('      <td'.$error.'>'.$input.'</td>');
           ptln('    </tr>');
