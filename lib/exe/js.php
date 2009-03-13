@@ -12,6 +12,7 @@ if(!defined('NL')) define('NL',"\n");
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/pageutils.php');
+require_once(DOKU_INC.'inc/httputils.php');
 require_once(DOKU_INC.'inc/io.php');
 require_once(DOKU_INC.'inc/JSON.php');
 
