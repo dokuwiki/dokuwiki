@@ -17,7 +17,7 @@ $lang['nochoice']   = '(no other choices available)';
 $lang['locked']     = 'The settings file can not be updated, if this is unintentional, <br />
                        ensure the local settings file name and permissions are correct.';
 
-$lang['danger']     = 'Danger: Changing this option could cause severe damage.';
+$lang['danger']     = 'Danger: Changing this option could make your wiki and the configuration menu inaccessible.';
 $lang['warning']    = 'Warning: Changing this option could cause unintended behaviour.';
 $lang['security']   = 'Security Warning: Changing this option could present a security risk.';
 

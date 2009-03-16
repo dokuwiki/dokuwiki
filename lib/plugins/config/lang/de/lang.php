@@ -17,8 +17,8 @@ $lang['updated']               = 'Einstellungen erfolgreich gespeichert.';
 $lang['nochoice']              = '(keine Auswahlmöglichkeiten vorhanden)';
 $lang['locked']                = 'Die Konfigurationsdatei kann nicht geändert werden, wenn dies unbeabsichtigt ist
                            <br />überprüfen Sie, dass die Dateiberechtigungen korrekt gesetzt sind.';
-$lang['danger']                = 'Gefahr: Die Änderung dieser Option könnte erheblichen Schaden anrichten.';
-$lang['warning']               = 'Warnunng: Die Änderung dieser Option könnte unbeabsichtigtes Verhalten hervorrufen.';
+$lang['danger']                = 'Vorsicht: Die Änderung dieser Option könnte Ihr Wiki und das Konfigurationsmenü unzugänglich machen.';
+$lang['warning']               = 'Hinweis: Die Änderung dieser Option könnte unbeabsichtigtes Verhalten hervorrufen.';
 $lang['security']              = 'Sicherheitswarnung: Die Änderung dieser Option könnte ein Sicherheitsrisiko darstellen.';
 $lang['_configuration_manager']= 'Konfiguration';
 $lang['_header_dokuwiki']      = 'DokuWiki-Konfiguration';
