@@ -154,6 +154,7 @@ function http_rangeRequest($fh,$size,$mime){
             echo HTTP_HEADER_LF.'--'.HTTP_MULTIPART_BOUNDARY.HTTP_HEADER_LF;
             echo "Content-Type: $mime".HTTP_HEADER_LF;
             echo "Content-Range: bytes $start-$end/$size".HTTP_HEADER_LF;
+            echo HTTP_HEADER_LF;
         }else{
             header("Content-Length: $len");
             if($isrange){
