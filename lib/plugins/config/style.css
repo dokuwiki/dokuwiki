@@ -39,9 +39,8 @@
 }
 
 #config__manager td.label label {
-    clear: both;
+    clear: left;
     display: block;
-    float: left;
 }
 #config__manager td.label img {
     padding: 0 10px;

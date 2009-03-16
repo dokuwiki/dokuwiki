@@ -157,7 +157,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           ptln('    <tr'.$class.'>');
           ptln('      <td class="label">');
           ptln('        <span class="outkey">'.$setting->_out_key(true, true).'</span>');
-          ptln('        '.$label.$icon);
+          ptln('        '.$icon.$label);
           ptln('      </td>');
           ptln('      <td'.$error.'>'.$input.'</td>');
           ptln('    </tr>');
