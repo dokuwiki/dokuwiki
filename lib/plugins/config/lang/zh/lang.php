@@ -6,6 +6,7 @@
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
+ * @author Simon zhan <simonzhan@21cn.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -67,6 +68,7 @@ $lang['indexdelay']            = '构建索引前的时间延滞（秒）';
 $lang['relnofollow']           = '对外部链接使用 rel="nofollow" 标签';
 $lang['mailguard']             = '弄乱邮件地址（保护用户的邮件地址）';
 $lang['iexssprotect']          = '检验上传的文件以避免可能存在的恶意 JavaScript 或 HTML 代码';
+$lang['showuseras']            = '显示用户为';
 $lang['useacl']                = '使用访问控制列表（ACL）';
 $lang['autopasswd']            = '自动生成密码';
 $lang['authtype']              = '认证后台管理方式';
