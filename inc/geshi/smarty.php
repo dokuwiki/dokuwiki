@@ -4,7 +4,7 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/07/10
  *
  * Smarty template language file for GeSHi.
@@ -47,8 +47,8 @@ $language_data = array (
     'KEYWORDS' => array(
         1 => array(
             '$smarty', 'now', 'const', 'capture', 'config', 'section', 'foreach', 'template', 'version', 'ldelim', 'rdelim',
-            'config_load', 'foreachelse', 'include', 'include_php', 'insert', 'if', 'elseif', 'else', 'php',
-            'sectionelse', 'clear_all_cache', 'clear_cache', 'is_cached',
+            'foreachelse', 'include', 'include_php', 'insert', 'if', 'elseif', 'else', 'php',
+            'sectionelse', 'is_cached',
             ),
         2 => array(
             'capitalize', 'count_characters', 'cat', 'count_paragraphs', 'count_sentences', 'count_words', 'date_format',
@@ -56,7 +56,7 @@ $language_data = array (
             'strip', 'strip_tags', 'truncate', 'upper', 'wordwrap',
             ),
         3 => array(
-            'assign', 'counter', 'cycle', 'debug', 'eval', 'fetch', 'html_checkboxes', 'html_image', 'html_options',
+            'counter', 'cycle', 'debug', 'eval', 'html_checkboxes', 'html_image', 'html_options',
             'html_radios', 'html_select_date', 'html_select_time', 'html_table', 'math', 'mailto', 'popup_init',
             'popup', 'textformat'
             ),
@@ -72,7 +72,7 @@ $language_data = array (
         5 => array(
             'append', 'append_by_ref', 'assign', 'assign_by_ref', 'clear_all_assign', 'clear_all_cache',
             'clear_assign', 'clear_cache', 'clear_compiled_tpl', 'clear_config', 'config_load', 'display',
-            'fetch', 'get_config_vars', 'get_registered_object', 'get_template_vars', 'is_cached',
+            'fetch', 'get_config_vars', 'get_registered_object', 'get_template_vars',
             'load_filter', 'register_block', 'register_compiler_function', 'register_function',
             'register_modifier', 'register_object', 'register_outputfilter', 'register_postfilter',
             'register_prefilter', 'register_resource', 'trigger_error', 'template_exists', 'unregister_block',
@@ -80,7 +80,7 @@ $language_data = array (
             'unregister_outputfilter', 'unregister_postfilter', 'unregister_prefilter', 'unregister_resource'
             ),
         6 => array(
-            'name', 'assign', 'file', 'scope', 'global', 'key', 'once', 'script',
+            'name', 'file', 'scope', 'global', 'key', 'once', 'script',
             'loop', 'start', 'step', 'max', 'show', 'values', 'value', 'from', 'item'
             ),
         7 => array(
@@ -153,7 +153,8 @@ $language_data = array (
         4 => 'http://smarty.php.net/{FNAMEL}',
         5 => 'http://smarty.php.net/{FNAMEL}',
         6 => '',
-        7 => 'http://smarty.php.net/{FNAMEL}'
+        7 => 'http://smarty.php.net/{FNAMEL}',
+        8 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

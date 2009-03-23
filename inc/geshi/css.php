@@ -4,7 +4,7 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/06/18
  *
  * CSS language file for GeSHi.
@@ -187,12 +187,12 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //DOM Node ID
-        0 => '\#[a-zA-Z0-9\-_]+',
+        0 => '\#[a-zA-Z0-9\-_]+(?:\\\\:[a-zA-Z0-9\-_]+)*',
         //CSS classname
-        1 => '\.(?!\d)[a-zA-Z0-9\-_]+\b(?=[\{\.#\s,:].|<\|)',
+        1 => '\.(?!\d)[a-zA-Z0-9\-_]+(?:\\\\:[a-zA-Z0-9\-_]+)*\b(?=[\{\.#\s,:].|<\|)',
         //CSS Pseudo classes
         //note: & is needed for &gt; (i.e. > )
-        2 => ':(?!\d)[a-zA-Z0-9\-]+\b(?:\s*(?=[\{\.#a-zA-Z,:+*&](.|\n)|<\|))',
+        2 => '(?<!\\\\):(?!\d)[a-zA-Z0-9\-]+\b(?:\s*(?=[\{\.#a-zA-Z,:+*&](.|\n)|<\|))',
         //Measurements
         3 => '[+\-]?(\d+|(\d*\.\d+))(em|ex|pt|px|cm|in|%)',
         ),

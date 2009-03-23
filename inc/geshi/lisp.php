@@ -4,7 +4,7 @@
  * --------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/08/30
  *
  * Generic Lisp language file for GeSHi.
@@ -50,7 +50,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-            'not','defun','princ',
+            'not','defun','princ','when',
             'eval','apply','funcall','quote','identity','function',
             'complement','backquote','lambda','set','setq','setf',
             'defmacro','gensym','make','symbol','intern',
@@ -73,11 +73,16 @@ $language_data = array (
             'rem','min','max','abs','sin','cos','tan','expt','exp','sqrt',
             'random','logand','logior','logxor','lognot','bignums','logeqv',
             'lognand','lognor','logorc2','logtest','logbitp','logcount',
-            'integer','nil'
+            'integer','nil','parse-integer'
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '{', '}', '[', ']', '!', '%', '^', '&', '/','+','-','*','=','<','>',';','|'
+        '(', ')', '{', '}', '[', ']',
+        '!', '%', '^', '&',
+        ' + ',' - ',' * ',' / ',
+        '=','<','>',
+        '.',':',',',';',
+        '|'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -128,6 +133,11 @@ $language_data = array (
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
+    'PARSER_CONTROL' => array(
+        'OOLANG' => array(
+            'MATCH_AFTER' => '[a-zA-Z][a-zA-Z0-9_\-]*'
+            )
         )
 );
 

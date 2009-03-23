@@ -4,7 +4,7 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br)
  * Copyright: (c) 2005 deguix
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2005/03/27
  *
  * INI language file for GeSHi.
@@ -100,7 +100,7 @@ $language_data = array (
         0 => '\[.+\]',
         //Entry names
         1 => array(
-            GESHI_SEARCH => '^(\s*)([a-zA-Z0-9_]+)(\s*=)',
+            GESHI_SEARCH => '^(\s*)([a-zA-Z0-9_\-]+)(\s*=)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',

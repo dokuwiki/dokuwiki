@@ -4,7 +4,7 @@
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 03/15/2006
  *
  * Microsoft Registry Editor language file for GeSHi.
@@ -116,10 +116,10 @@ $language_data = array (
         'SCRIPT' => array(
             ),
         'REGEXPS' => array(
-            0 => '',
+            0 => 'color: #00CCFF;',
             1 => 'color: #0000FF;',
             2 => '',
-            3 => '',
+            3 => 'color: #0000FF;',
             4 => 'color: #0000FF;',
             5 => '',
             6 => '',
@@ -142,8 +142,8 @@ $language_data = array (
             GESHI_REPLACE => '\\3',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1',
-            GESHI_AFTER => '\\5',
-            GESHI_CLASS => 'kw1'
+            GESHI_AFTER => '\\5'
+//            GESHI_CLASS => 'kw1'
             ),
         // Highlight File Format Header Version 5
         1 => array(
@@ -169,8 +169,8 @@ $language_data = array (
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',
-            GESHI_AFTER => '\\3',
-            GESHI_CLASS => 'kw2'
+            GESHI_AFTER => '\\3'
+//            GESHI_CLASS => 'kw2'
             ),
         // Highlight variable names
         4 => array(
@@ -192,7 +192,7 @@ $language_data = array (
             ),
         // Highlight Hexadecimal Values (Single-Line and Multi-Line)
         6 => array(
-            GESHI_SEARCH => '(^\s*)(hex:[0-9a-fA-F]{2}(,(\\\s*\n\s*)?[0-9a-fA-F]{2})*)',
+            GESHI_SEARCH => '(=\s*\n?\s*)(hex:[0-9a-fA-F]{2}(,(\\\s*\n\s*)?[0-9a-fA-F]{2})*)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',

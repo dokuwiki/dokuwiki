@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Frode Aarebrot (frode@aarebrot.net)
  * Copyright: (c) 2008 Frode Aarebrot (http://www.aarebrot.net)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2008/06/20
  *
  * PowerShell language file for GeSHi.
@@ -139,6 +139,16 @@ $language_data = array (
             '-Body', '-BinaryPathName', '-Begin', '-BackgroundColor', '-Average', '-AutoSize', '-Audit',
             '-AsString', '-AsSecureString', '-AsPlainText', '-As', '-ArgumentList', '-AppendPath', '-Append',
             '-Adjust', '-Activity', '-AclObject'
+            ),
+        6 => array(
+            '_','args','DebugPreference','Error','ErrorActionPreference',
+            'foreach','Home','Host','Input','LASTEXITCODE','MaximumAliasCount',
+            'MaximumDriveCount','MaximumFunctionCount','MaximumHistoryCount',
+            'MaximumVariableCount','OFS','PsHome',
+            'ReportErrorShowExceptionClass','ReportErrorShowInnerException',
+            'ReportErrorShowSource','ReportErrorShowStackTrace',
+            'ShouldProcessPreference','ShouldProcessReturnPreference',
+            'StackTrace','VerbosePreference','WarningPreference','PWD'
             )
         ),
     'SYMBOLS' => array(
@@ -151,7 +161,8 @@ $language_data = array (
         2 => false,
         3 => false,
         4 => false,
-        5 => false
+        5 => false,
+        6 => true
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
@@ -160,6 +171,7 @@ $language_data = array (
             3 => 'color: #0000FF;',
             4 => 'color: #FF0000;',
             5 => 'color: #008080; font-style: italic;',
+            6 => 'color: #000080;'
             ),
         'COMMENTS' => array(
             1 => 'color: #008000;',
@@ -199,13 +211,12 @@ $language_data = array (
         3 => '',
         4 => '',
         5 => '',
+        6 => '',
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
         ),
     'REGEXPS' => array(
-        // variables
-        0 => "[\\$][a-zA-Z0-9_]*",
         // special after pipe
         3 => array(
             GESHI_SEARCH => '(\[)(int|long|string|char|bool|byte|double|decimal|float|single|regex|array|xml|scriptblock|switch|hashtable|type|ref|psobject|wmi|wmisearcher|wmiclass|object)((\[.*\])?\])',
@@ -233,18 +244,36 @@ $language_data = array (
             ),
         // Special variables
         6 => array(
-            GESHI_SEARCH => '(\$)(\$|\?|\$\^|_|args|DebugPreference|Error|ErrorActionPreference|foreach|Home|Input|LASTEXITCODE|MaximumAliasCount|MaximumDriveCount|MaximumFunctionCount|MaximumHistoryCount|MaximumVariableCount|PsHome|Host|OFS|ReportErrorShowExceptionClass|ReportErrorShowInnerException|ReportErrorShowSource|ReportErrorShowStackTrace|ShouldProcessPreference|ShouldProcessReturnPreference|StackTrace|VerbosePreference|WarningPreference|PWD)',
+            GESHI_SEARCH => '(\$)(\$[_\^]?|\?)(?!\w)',
             GESHI_REPLACE => '\1\2',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '',
-            GESHI_AFTER => '\3'
+            GESHI_AFTER => ''
             ),
+        // variables
+        //BenBE: Please note that changes here and in Keyword group 6 have to be synchronized in order to work properly.
+        //This Regexp must only match, if keyword group 6 doesn't. If this assumption fails
+        //Highlighting of the keywords will be incomplete or incorrect!
+        0 => "(?<!\\\$|>)[\\\$](?!(?:DebugPreference|Error(?:ActionPreference)?|".
+            "Ho(?:me|st)|Input|LASTEXITCODE|Maximum(?:AliasCount|DriveCount|".
+            "FunctionCount|HistoryCount|VariableCount)|OFS|P(?:WD|sHome)|".
+            "ReportErrorShow(?:ExceptionClass|InnerException|S(?:ource|".
+            "tackTrace))|S(?:houldProcess(?:Preference|ReturnPreference)|".
+            "tackTrace)|VerbosePreference|WarningPreference|_|args|foreach)\W)".
+            "(\w+)(?=[^|\w])",
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         ),
+    'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            6 => array(
+                'DISALLOWED_BEFORE' => '(?<!\$)\$'
+                )
+            )
+        )
 );
 
 ?>

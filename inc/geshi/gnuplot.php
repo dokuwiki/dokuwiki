@@ -4,7 +4,7 @@
  * ----------
  * Author: Milian Wolff (mail@milianw.de)
  * Copyright: (c) 2008 Milian Wolff (http://milianw.de)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2008/07/07
  *
  * Gnuplot script language file for GeSHi.
@@ -41,6 +41,11 @@ $language_data = array (
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('`', '"', "'"),
     'ESCAPE_CHAR' => '\\',
+    'NUMBERS' =>
+        GESHI_NUMBER_INT_BASIC |
+        GESHI_NUMBER_FLT_NONSCI |
+        GESHI_NUMBER_FLT_SCI_SHORT |
+        GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
         // copy output of help command, indent properly and use this replace regexp:
         // ([a-z0-9_\-]+)(( )+|$)          =>     '\1',\3
@@ -64,7 +69,7 @@ $language_data = array (
             'cbtics', 'clabel', 'clip', 'cntrparam',
             'colorbox', 'contour', 'datafile', 'date_specifiers',
             'decimalsign', 'dgrid3d', 'dummy', 'encoding',
-            'fit', 'fontpath', 'format', 'grid',
+            'fontpath', 'format', 'grid',
             'hidden3d', 'historysize', 'isosamples', 'key',
             'label', 'lmargin', 'loadpath', 'locale',
             'log', 'logscale', 'macros', 'mapping',
@@ -72,12 +77,12 @@ $language_data = array (
             'mx2tics', 'mxtics', 'my2tics', 'mytics',
             'mztics', 'object', 'offsets', 'origin',
             'output', 'palette', 'parametric', 'pm3d',
-            'pointsize', 'polar', 'print', 'rmargin',
+            'pointsize', 'polar', 'rmargin',
             'rrange', 'samples', 'size', 'style',
             'surface', 'table', 'term', 'terminal',
             'termoption', 'tics', 'ticscale', 'ticslevel',
             'time_specifiers', 'timefmt', 'timestamp', 'title',
-            'tmargin', 'trange', 'urange', 'view',
+            'trange', 'urange', 'view',
             'vrange', 'x2data', 'x2dtics', 'x2label',
             'x2mtics', 'x2range', 'x2tics', 'x2zeroaxis',
             'xdata', 'xdtics', 'xlabel', 'xmtics',
@@ -139,11 +144,11 @@ $language_data = array (
             'exists', 'exp', 'floor', 'gamma',
             'gprintf', 'ibeta', 'igamma', 'imag',
             'int', 'inverf', 'invnorm', 'lambertw',
-            'lgamma', 'log', 'log10', 'norm',
+            'lgamma', 'log10', 'norm',
             'rand', 'random', 'real', 'sgn',
             'sin', 'sinh', 'sprintf', 'sqrt',
             'stringcolumn', 'strlen', 'strstrt', 'substr',
-            'system', 'tan', 'tanh', 'timecolumn',
+            'tan', 'tanh', 'timecolumn',
             'tm_hour', 'tm_mday', 'tm_min', 'tm_mon',
             'tm_sec', 'tm_wday', 'tm_yday', 'tm_year',
             'valid', 'word', 'words',
@@ -151,12 +156,12 @@ $language_data = array (
         5 => array(
             // mixed arguments
             // there is no sane way to get these ones easily...
-            'notitle', 'autofreq', 'x', 'y', 'z',
+            'autofreq', 'x', 'y', 'z',
             'lt', 'linetype', 'lw', 'linewidth', 'ls', 'linestyle',
             'out', 'rotate by', 'screen',
             'enhanced', 'via',
             // `help set key`
-            'on', 'off', 'default', 'inside', 'outside', 'lmargin', 'rmargin', 'tmargin', 'bmargin',
+            'on', 'off', 'default', 'inside', 'outside', 'tmargin',
             'at', 'left', 'right', 'center', 'top', 'bottom', 'vertical', 'horizontal', 'Left', 'Right',
             'noreverse', 'reverse', 'noinvert', 'invert', 'samplen', 'spacing', 'width', 'height',
             'noautotitle', 'autotitle', 'noenhanced', 'nobox', 'box',
@@ -165,7 +170,7 @@ $language_data = array (
             'landscape', 'portrait', 'eps', 'defaultplex', 'simplex', 'duplex',
             'fontfile', 'add', 'delete', 'nofontfiles', 'level1', 'leveldefault',
             'color', 'colour', 'monochrome', 'solid', 'dashed', 'dashlength', 'dl',
-            'rounded', 'butt', 'palfuncparam', 'size', 'blacktext', 'colortext', 'colourtext',
+            'rounded', 'butt', 'palfuncparam', 'blacktext', 'colortext', 'colourtext',
             'font',
 
             // help set terminal png
@@ -175,10 +180,10 @@ $language_data = array (
 
             // `help plot`
             'acsplines', 'bezier', 'binary', 'csplines',
-            'datafile', 'every',
+            'every',
             'example', 'frequency', 'index', 'matrix',
-            'parametric', 'ranges', 'sbezier', 'smooth',
-            'special-filenames', 'style', 'thru', 'title',
+            'ranges', 'sbezier', 'smooth',
+            'special-filenames', 'thru',
             'unique', 'using', 'with',
 
             // `help plotting styles`

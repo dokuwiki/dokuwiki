@@ -4,7 +4,7 @@
  * --------
  * Author: AUGER Mickael
  * Copyright: Synchronic
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2008/04/16
  *
  * KLone with C language file for GeSHi.
@@ -46,12 +46,12 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(//mots-cles C
-            'if', 'return', 'while', 'case', 'continue', 'default',
+            'if', 'return', 'while', 'case', 'class', 'continue', 'default',
             'do', 'else', 'for', 'switch', 'goto',
             'null', 'break', 'true', 'enum', 'extern', 'inline', 'false'
             ),
         2 => array(//mots-cles KLone
-            '&lt;%=', '&lt;%!', '&lt;%', '%&gt;', 'out', 'request', 'response',
+            'out', 'request', 'response',
             ),
         3 => array(//fonctions C usuelles
             'printf', 'malloc', 'fopen', 'fclose', 'free', 'fputs', 'fgets', 'feof', 'fwrite',
@@ -152,11 +152,16 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '{', '}',
-        '!', '%', '&', '|', '/',
-        '<', '>',
-        '=', '-', '+', '*',
-        '.', ':', ',', ';', '^'
+        1 => array(
+            '<%=', '<%!', '<%', '%>'
+            ),
+        0 => array(
+            '(', ')', '[', ']', '{', '}',
+            '!', '%', '&', '|', '/',
+            '<', '>',
+            '=', '-', '+', '*',
+            '.', ':', ',', ';', '^'
+            )
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -200,7 +205,8 @@ $language_data = array (
             2 => 'color: #006600;'
             ),
         'SYMBOLS' => array(
-            0 => 'color: #000000;'
+            0 => 'color: #000000;',
+            1 => 'color: #000000; font-weight: bold;'
             ),
         'REGEXPS' => array(),
         'SCRIPT' => array(
@@ -265,6 +271,9 @@ $language_data = array (
             6 => array(
                 'DISALLOWED_BEFORE' => '(?<=&lt;|&lt;\/)',
                 'DISALLOWED_AFTER' => '(?=\s|\/|&gt;)',
+            ),
+            7 => array(
+                'DISALLOWED_AFTER' => '(?=\s*=)',
             )
         )
     )

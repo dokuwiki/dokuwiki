@@ -4,7 +4,7 @@
  * -------------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/06/02
  *
  * PHP (brief version) language file for GeSHi.
@@ -58,8 +58,9 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'HARDQUOTE' => array("'", "'"),
     'HARDESCAPE' => array("\'"),
-    'NUMBERS' => GESHI_NUMBER_INT_BASIC |  GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
-                 GESHI_NUMBER_FLT_SCI_ZERO,
+    'NUMBERS' =>
+        GESHI_NUMBER_INT_BASIC |  GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
+        GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
         1 => array(
             'include', 'require', 'include_once', 'require_once',
@@ -68,7 +69,7 @@ $language_data = array (
             ),
         2 => array(
             'null', '__LINE__', '__FILE__',
-            'false', '&lt;?php', '&lt;?', '&lt;?=', '?&gt;', '&lt;%', '&lt;%=', '%&gt;',
+            'false', '&lt;?php',
             'true', 'var', 'default',
             'function', 'class', 'new', '&amp;new', 'public', 'private', 'interface', 'extends',
             'const', 'self'
@@ -90,11 +91,16 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '{', '}',
-        '!', '@', '%', '&', '|', '/',
-        '<', '>',
-        '=', '-', '+', '*',
-        '.', ':', ',', ';'
+        1 => array(
+            '<%', '<%=', '%>', '<?', '<?=', '?>'
+            ),
+        0 => array(
+            '(', ')', '[', ']', '{', '}',
+            '!', '@', '%', '&', '|', '/',
+            '<', '>',
+            '=', '-', '+', '*',
+            '.', ':', ',', ';'
+            )
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -136,7 +142,8 @@ $language_data = array (
             2 => 'color: #004000;'
             ),
         'SYMBOLS' => array(
-            0 => 'color: #339933;'
+            0 => 'color: #339933;',
+            1 => 'color: #000000; font-weight: bold;'
             ),
         'REGEXPS' => array(
             0 => 'color: #0000ff;'
@@ -178,8 +185,8 @@ $language_data = array (
         3 => array(
             '<script language="php">' => '</script>'
             ),
-        4 => "/(<\?(?:php)?)(?:'[^']*?'|\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(\?>|\Z)/sm",
-        5 => "/(<%)(?:'[^']*?'|\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
+        4 => "/(<\?(?:php)?)(?:'(?:[^'\\\\]|\\\\.)*?'|\"(?:[^\"\\\\]|\\\\.)*?\"|\/\*(?!\*\/).*?\*\/|.)*?(\?>|\Z)/sm",
+        5 => "/(<%)(?:'(?:[^'\\\\]|\\\\.)*?'|\"(?:[^\"\\\\]|\\\\.)*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

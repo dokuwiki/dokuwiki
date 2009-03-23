@@ -5,7 +5,7 @@
  * Author: M. Uli Kusterer (witness.of.teachtext@gmx.net)
  * Contributors: Quinn Taylor (quinntaylor@mac.com)
  * Copyright: (c) 2008 Quinn Taylor, 2004 M. Uli Kusterer, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/06/04
  *
  * Objective-C language file for GeSHi.
@@ -49,8 +49,8 @@
 
 $language_data = array (
     'LANG_NAME' => 'Objective-C',
-	'COMMENT_SINGLE' => array(
-	    //Compiler directives
+    'COMMENT_SINGLE' => array(
+        //Compiler directives
         1 => '#',
         //Single line C-Comments
         2 => '//'
@@ -63,12 +63,12 @@ $language_data = array (
         3 => "/@(?=\")/"
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"', "'"),
+    'QUOTEMARKS' => array('"', "'"),
     'ESCAPE_CHAR' => '\\',
 
     'KEYWORDS' => array(
-		// Objective-C keywords
-		1 => array(
+        // Objective-C keywords
+        1 => array(
             'while', 'switch', 'return', 'in', 'if', 'goto', 'foreach', 'for',
             'else', 'do', 'default', 'continue', 'case', '@try', '@throw',
             '@synthesize', '@synchronized', '@selector', '@public', '@protocol',
@@ -76,13 +76,13 @@ $language_data = array (
             '@implementation', '@finally', '@end', '@encode', '@defs', '@class',
             '@catch'
             ),
-		// Macros and constants
-		2 => array(
+        // Macros and constants
+        2 => array(
             'YES', 'USHRT_MAX', 'ULONG_MAX', 'UINT_MAX', 'UCHAR_MAX', 'true',
             'TMP_MAX', 'stdout', 'stdin', 'stderr', 'SIGTERM', 'SIGSEGV',
             'SIGINT', 'SIGILL', 'SIG_IGN', 'SIGFPE', 'SIG_ERR', 'SIG_DFL',
             'SIGABRT', 'SHRT_MIN', 'SHRT_MAX', 'SEEK_SET', 'SEEK_END',
-            'SEEK_CUR', 'SCHAR_MIN', 'SCHAR_MAX', 'RAND_MAX', 'NULL', 'NULL',
+            'SEEK_CUR', 'SCHAR_MIN', 'SCHAR_MAX', 'RAND_MAX', 'NULL',
             'NO', 'nil', 'Nil', 'L_tmpnam', 'LONG_MIN', 'LONG_MAX',
             'LDBL_MIN_EXP', 'LDBL_MIN', 'LDBL_MAX_EXP', 'LDBL_MAX',
             'LDBL_MANT_DIG', 'LDBL_EPSILON', 'LDBL_DIG', 'INT_MIN', 'INT_MAX',
@@ -94,8 +94,8 @@ $language_data = array (
             'CLOCKS_PER_SEC', 'CHAR_MIN', 'CHAR_MAX', 'CHAR_BIT', 'BUFSIZ',
             'break'
             ),
-		// C standard library functions
-		3 => array(
+        // C standard library functions
+        3 => array(
             'vsprintf', 'vprintf', 'vfprintf', 'va_start', 'va_end', 'va_arg',
             'ungetc', 'toupper', 'tolower', 'tmpname', 'tmpfile', 'time',
             'tanh', 'tan', 'system', 'strxfrm', 'strtoul', 'strtol', 'strtok',
@@ -108,7 +108,7 @@ $language_data = array (
             'printf', 'pow', 'perror', 'offsetof', 'modf', 'mktime', 'memset',
             'memmove', 'memcpy', 'memcmp', 'memchr', 'malloc', 'longjmp',
             'log10', 'log', 'localtime', 'ldiv', 'ldexp', 'labs', 'isxdigit',
-            'isupper', 'isspace', 'ispunct', 'ispunct', 'isprint', 'islower',
+            'isupper', 'isspace', 'ispunct', 'isprint', 'islower',
             'isgraph', 'isdigit', 'iscntrl', 'isalpha', 'isalnum', 'gmtime',
             'gets', 'getenv', 'getchar', 'getc', 'fwrite', 'ftell', 'fsetpos',
             'fseek', 'fscanf', 'frexp', 'freopen', 'free', 'fread', 'fputs',
@@ -116,20 +116,20 @@ $language_data = array (
             'fgetc', 'fflush', 'ferror', 'feof', 'fclose', 'fabs', 'exp',
             'exit', 'div', 'difftime', 'ctime', 'cosh', 'cos', 'clock',
             'clearerr', 'ceil', 'calloc', 'bsearch', 'atol', 'atoi', 'atof',
-            'atexit', 'atan2', 'atan2', 'atan', 'atan', 'assert', 'asin',
-            'asin', 'asctime', 'acos', 'acos', 'abs', 'abort'
+            'atexit', 'atan2', 'atan', 'assert', 'asin', 'asctime', 'acos',
+            'abs', 'abort'
             ),
-		// Data types (C, Objective-C, Cocoa)
-		4 => array(
+        // Data types (C, Objective-C, Cocoa)
+        4 => array(
             'volatile', 'void', 'va_list', 'unsigned', 'union', 'typedef', 'tm',
-            'time_t', 'struct', 'string', 'static', 'size_t', 'sizeof',
+            'time_t', 'struct', 'string', 'static', 'size_t',
             'signed', 'signal', 'short', 'SEL', 'register', 'raise',
             'ptrdiff_t', 'NSZone', 'NSRect', 'NSRange', 'NSPoint', 'long',
             'ldiv_t', 'jmp_buf', 'int', 'IMP', 'id', 'fpos_t', 'float', 'FILE',
             'extern', 'double', 'div_t', 'const', 'clock_t', 'Class', 'char',
             'BOOL', 'auto'
             ),
-		// Foundation classes
+        // Foundation classes
         5 => array(
             'NSXMLParser', 'NSXMLNode', 'NSXMLElement', 'NSXMLDTDNode',
             'NSXMLDTD', 'NSXMLDocument', 'NSWhoseSpecifier',
@@ -186,18 +186,18 @@ $language_data = array (
             'NSAppleEventDescriptor', 'NSAffineTransform'
             ),
         // Foundation protocols
-		6 => array(
+        6 => array(
             'NSURLProtocolClient', 'NSURLHandleClient', 'NSURLClient',
             'NSURLAuthenticationChallengeSender', 'NSScriptObjectSpecifiers',
             'NSScriptKeyValueCoding', 'NSScriptingComparisonMethods',
-            'NSObject', 'NSObjCTypeSerializationCallBack', 'NSMutableCopying',
+            'NSObjCTypeSerializationCallBack', 'NSMutableCopying',
             'NSLocking', 'NSKeyValueObserving', 'NSKeyValueCoding',
             'NSFastEnumeration', 'NSErrorRecoveryAttempting',
             'NSDecimalNumberBehaviors', 'NSCopying', 'NSComparisonMethods',
             'NSCoding'
             ),
-		// AppKit classes
-		7 => array(
+        // AppKit classes
+        7 => array(
             'NSWorkspace', 'NSWindowController', 'NSWindow', 'NSViewController',
             'NSViewAnimation', 'NSView', 'NSUserDefaultsController',
             'NSTypesetter', 'NSTreeNode', 'NSTreeController', 'NSTrackingArea',
@@ -245,11 +245,11 @@ $language_data = array (
             'NSArrayController', 'NSApplication', 'NSAnimationContext',
             'NSAnimation', 'NSAlert', 'NSActionCell'
             ),
-		// AppKit protocols
-		8 => array(
+        // AppKit protocols
+        8 => array(
             'NSWindowScripting', 'NSValidatedUserInterfaceItem',
             'NSUserInterfaceValidations', 'NSToolTipOwner',
-            'NSToolbarItemValidation', 'NSTextInput', 'NSTextAttachmentCell',
+            'NSToolbarItemValidation', 'NSTextInput',
             'NSTableDataSource', 'NSServicesRequests',
             'NSPrintPanelAccessorizing', 'NSPlaceholders',
             'NSPathControlDelegate', 'NSPathCellDelegate',
@@ -263,8 +263,8 @@ $language_data = array (
             'NSColorPickingDefault', 'NSColorPickingCustom', 'NSChangeSpelling',
             'NSAnimatablePropertyContainer', 'NSAccessibility'
             ),
-		// CoreData classes
-		9 => array(
+        // CoreData classes
+        9 => array(
             'NSRelationshipDescription', 'NSPropertyMapping',
             'NSPropertyDescription', 'NSPersistentStoreCoordinator',
             'NSPersistentStore', 'NSMigrationManager', 'NSMappingModel',
@@ -280,52 +280,52 @@ $language_data = array (
         '(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':'
         ),
     'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => true,
-		1 => true,
-		2 => true,
-		3 => true,
-		4 => true,
-		5 => true,
-		6 => true,
-		7 => true,
-		8 => true,
-		9 => true
+        GESHI_COMMENTS => true,
+        1 => true,
+        2 => true,
+        3 => true,
+        4 => true,
+        5 => true,
+        6 => true,
+        7 => true,
+        8 => true,
+        9 => true
         ),
-	// Define the colors for the groups listed above
+    // Define the colors for the groups listed above
     'STYLES' => array(
         'KEYWORDS' => array(
-			1 => 'color: #a61390;',	// Objective-C keywords
-			2 => 'color: #a61390;',	// Macros and constants
-			3 => 'color: #a61390;',	// C standard library functions
-			4 => 'color: #a61390;',	// data types
-			5 => 'color: #400080;',	// Foundation classes
-			6 => 'color: #2a6f76;',	// Foundation protocols
-			7 => 'color: #400080;',	// AppKit classes
-			8 => 'color: #2a6f76;',	// AppKit protocols
-			9 => 'color: #400080;'	// CoreData classes
+            1 => 'color: #a61390;', // Objective-C keywords
+            2 => 'color: #a61390;', // Macros and constants
+            3 => 'color: #a61390;', // C standard library functions
+            4 => 'color: #a61390;', // data types
+            5 => 'color: #400080;', // Foundation classes
+            6 => 'color: #2a6f76;', // Foundation protocols
+            7 => 'color: #400080;', // AppKit classes
+            8 => 'color: #2a6f76;', // AppKit protocols
+            9 => 'color: #400080;' // CoreData classes
             ),
         'COMMENTS' => array(
-			1 => 'color: #6e371a;',	// Preprocessor directives
-			2 => 'color: #11740a; font-style: italic;',	// Normal C single-line comments
-			3 => 'color: #bf1d1a;', // Q-sign in front of Strings
-			'MULTI' => 'color: #11740a; font-style: italic;'
+            1 => 'color: #6e371a;', // Preprocessor directives
+            2 => 'color: #11740a; font-style: italic;', // Normal C single-line comments
+            3 => 'color: #bf1d1a;', // Q-sign in front of Strings
+            'MULTI' => 'color: #11740a; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-		    0 => 'color: #2400d9;'
+            0 => 'color: #2400d9;'
             ),
         'BRACKETS' => array(
-		    0 => 'color: #002200;'
+            0 => 'color: #002200;'
             ),
         'STRINGS' => array(
-		    0 => 'color: #bf1d1a;'
+            0 => 'color: #bf1d1a;'
             ),
         'NUMBERS' => array(
-		    0 => 'color: #2400d9;'
+            0 => 'color: #2400d9;'
             ),
         'METHODS' => array(
             ),
         'SYMBOLS' => array(
-		    0 => 'color: #002200;'
+            0 => 'color: #002200;'
             ),
         'REGEXPS' => array(
             ),
@@ -335,13 +335,13 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-		3 => 'http://www.opengroup.org/onlinepubs/009695399/functions/{FNAME}.html',
+        3 => 'http://www.opengroup.org/onlinepubs/009695399/functions/{FNAME}.html',
         4 => '',
-		5 => 'http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/{FNAME}_Class/',
-		6 => 'http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/{FNAME}_Protocol/',
-		7 => 'http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Classes/{FNAME}_Class/',
-		8 => 'http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Protocols/{FNAME}_Protocol/',
-		9 => 'http://developer.apple.com/documentation/Cocoa/Reference/CoreDataFramework/Classes/{FNAME}_Class/'
+        5 => 'http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/{FNAME}_Class/',
+        6 => 'http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/{FNAME}_Protocol/',
+        7 => 'http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Classes/{FNAME}_Class/',
+        8 => 'http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Protocols/{FNAME}_Protocol/',
+        9 => 'http://developer.apple.com/documentation/Cocoa/Reference/CoreDataFramework/Classes/{FNAME}_Class/'
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

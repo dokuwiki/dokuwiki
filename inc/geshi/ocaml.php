@@ -4,7 +4,7 @@
  * ----------
  * Author: Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2005/08/27
  *
  * OCaml (Objective Caml) language file for GeSHi.
@@ -47,10 +47,10 @@ $language_data = array (
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => "",
     'KEYWORDS' => array(
-       /* main OCaml keywords */
+        /* main OCaml keywords */
         1 => array(
             'and', 'as', 'asr', 'begin', 'class', 'closed', 'constraint', 'do', 'done', 'downto', 'else',
-            'end', 'exception', 'external', 'failwith', 'false', 'flush', 'for', 'fun', 'function', 'functor',
+            'end', 'exception', 'external', 'failwith', 'false', 'for', 'fun', 'function', 'functor',
             'if', 'in', 'include', 'inherit',  'incr', 'land', 'let', 'load', 'los', 'lsl', 'lsr', 'lxor',
             'match', 'method', 'mod', 'module', 'mutable', 'new', 'not', 'of', 'open', 'option', 'or', 'parser',
             'private', 'ref', 'rec', 'raise', 'regexp', 'sig', 'struct', 'stdout', 'stdin', 'stderr', 'then',
@@ -68,26 +68,32 @@ $language_data = array (
             ),
         /* just link to the Pervasives functions library, cause it's the default opened library when starting OCaml */
         3 => array(
-            'raise', 'invalid_arg', 'failwith', 'compare', 'min', 'max', 'succ', 'pred', 'mod', 'abs',
-            'max_int', 'min_int', 'sqrt', 'exp', 'log', 'log10', 'cos', 'sin', 'tan', 'acos', 'asin',
-            'atan', 'atan2', 'cosh', 'sinh', 'tanh', 'ceil', 'floor', 'abs_float', 'mod_float', 'frexp',
-            'ldexp', 'modf', 'float', 'float_of_int', 'truncate', 'int_of_float', 'infinity', 'nan',
-            'max_float', 'min_float', 'epsilon_float', 'classify_float', 'int_of_char', 'char_of_int',
-            'ignore', 'string_of_bool', 'bool_of_string', 'string_of_int', 'int_of_string',
-            'string_of_float', 'float_of_string', 'fst', 'snd', 'stdin', 'stdout', 'stderr', 'print_char',
-            'print_string', 'print_int', 'print_float', 'print_endline', 'print_newline', 'prerr_char',
-            'prerr_string', 'prerr_int', 'prerr_float', 'prerr_endline', 'prerr_newline', 'read_line',
-            'read_int', 'read_float', 'open_out', 'open_out_bin', 'open_out_gen', 'flush', 'flush_all',
-            'output_char', 'output_string', 'output', 'output_byte', 'output_binary_int', 'output_value',
-            'seek_out', 'pos_out',  'out_channel_length', 'close_out', 'close_out_noerr', 'set_binary_mode_out',
-            'open_in', 'open_in_bin', 'open_in_gen', 'input_char', 'input_line', 'input', 'really_input',
-            'input_byte', 'input_binary_int', 'input_value', 'seek_in', 'pos_in', 'in_channel_length',
-            'close_in', 'close_in_noerr', 'set_binary_mode_in', 'incr', 'decr', 'string_of_format',
-            'format_of_string', 'exit', 'at_exit'
+            'abs', 'abs_float', 'acos', 'asin', 'at_exit', 'atan', 'atan2',
+            'bool_of_string', 'ceil', 'char_of_int', 'classify_float',
+            'close_in', 'close_in_noerr', 'close_out', 'close_out_noerr',
+            'compare', 'cos', 'cosh', 'decr', 'epsilon_float', 'exit', 'exp',
+            'float', 'float_of_int', 'float_of_string', 'floor', 'flush',
+            'flush_all', 'format_of_string', 'frexp', 'fst', 'ignore',
+            'in_channel_length', 'infinity', 'input', 'input_binary_int',
+            'input_byte', 'input_char', 'input_line', 'input_value',
+            'int_of_char', 'int_of_float', 'int_of_string', 'invalid_arg',
+            'ldexp', 'log', 'log10', 'max', 'max_float', 'max_int', 'min',
+            'min_float', 'min_int', 'mod_float', 'modf', 'nan', 'open_in',
+            'open_in_bin', 'open_in_gen', 'open_out', 'open_out_bin',
+            'open_out_gen', 'out_channel_length', 'output', 'output_binary_int',
+            'output_byte', 'output_char', 'output_string', 'output_value',
+            'pos_in', 'pos_out',  'pred', 'prerr_char', 'prerr_endline',
+            'prerr_float', 'prerr_int', 'prerr_newline', 'prerr_string',
+            'print_char', 'print_endline', 'print_float', 'print_int',
+            'print_newline', 'print_string', 'read_float', 'read_int',
+            'read_line', 'really_input', 'seek_in', 'seek_out',
+            'set_binary_mode_in', 'set_binary_mode_out', 'sin', 'sinh', 'snd',
+            'sqrt', 'string_of_bool', 'string_of_float', 'string_of_format',
+            'string_of_int', 'succ', 'tan', 'tanh', 'truncate'
             ),
         /* here Pervasives Types */
         4 => array (
-            'fpclass', 'in_channel', 'out_channel', 'open_flag', 'Sys_error', 'ref', 'format'
+            'fpclass', 'in_channel', 'out_channel', 'open_flag', 'Sys_error', 'format'
             ),
         /* finally Pervasives Exceptions */
         5 => array (

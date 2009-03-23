@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org), Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2004 Andreas Gohr, Ben Keen (http://www.benjaminkeen.org/), Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/08/20
  *
  * Perl language file for GeSHi.
@@ -63,7 +63,7 @@ $language_data = array (
         '=for' => '=cut',
         '=encoding' => '=cut',
         '=pod' => '=cut'
-    ),
+        ),
     'COMMENT_REGEXP' => array(
         //Regular expressions
         2 => "/(?<=[\\s^])(s|tr|y)\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/(?:\\\\.|(?!\n)[^\\/\\\\])*\\/[msixpogcde]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])(m|q[qrwx]?)?\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/[msixpogc]*(?=[\\s$\\.\\,\\;\\)])/iU",
@@ -72,30 +72,31 @@ $language_data = array (
         //Heredoc
         4 => '/<<\s*?([\'"]?)([a-zA-Z0-9]+)\1;[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
         //Predefined variables
-        5 => '/\$(\^[a-zA-Z]?|[\$`\'&_\.,+\-~:\\\\\/"\|%=\?!@<>\(\)\[\]])|@_/',
-    ),
+        5 => '/\$(\^[a-zA-Z]?|[\*\$`\'&_\.,+\-~:;\\\\\/"\|%=\?!@#<>\(\)\[\]])(?!\w)|@[_+\-]|%[!]|\$(?=\{)/',
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"','`'),
     'HARDQUOTE' => array("'", "'"),            // An optional 2-element array defining the beginning and end of a hard-quoted string
-    'HARDESCAPE' => array('\\\'',),        // Things that must still be escaped inside a hard-quoted string
-                            // If HARDQUOTE is defined, HARDESCAPE must be defined
-                            // This will not work unless the first character of each element is either in the
-                            // QUOTEMARKS array or is the ESCAPE_CHAR
+    'HARDESCAPE' => array('\\\'',),
+        // Things that must still be escaped inside a hard-quoted string
+        // If HARDQUOTE is defined, HARDESCAPE must be defined
+        // This will not work unless the first character of each element is either in the
+        // QUOTEMARKS array or is the ESCAPE_CHAR
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
             'case', 'do', 'else', 'elsif', 'for', 'if', 'then', 'until', 'while', 'foreach', 'my',
-            'or', 'and', 'unless', 'next', 'last', 'redo', 'not', 'our',
-            'reset', 'continue','and', 'cmp', 'ne'
+            'xor', 'or', 'and', 'unless', 'next', 'last', 'redo', 'not', 'our',
+            'reset', 'continue', 'cmp', 'ne', 'eq', 'lt', 'gt', 'le', 'ge',
             ),
         2 => array(
             'use', 'sub', 'new', '__END__', '__DATA__', '__DIE__', '__WARN__', 'BEGIN',
-            'STDIN', 'STDOUT', 'STDERR'
+            'STDIN', 'STDOUT', 'STDERR', 'ARGV', 'ARGVOUT'
             ),
         3 => array(
             'abs', 'accept', 'alarm', 'atan2', 'bind', 'binmode', 'bless',
             'caller', 'chdir', 'chmod', 'chomp', 'chop', 'chown', 'chr',
-            'chroot', 'close', 'closedir', 'connect', 'continue', 'cos',
+            'chroot', 'close', 'closedir', 'connect', 'cos',
             'crypt', 'dbmclose', 'dbmopen', 'defined', 'delete', 'die',
             'dump', 'each', 'endgrent', 'endhostent', 'endnetent', 'endprotoent',
             'endpwent', 'endservent', 'eof', 'eval', 'exec', 'exists', 'exit',
@@ -107,13 +108,13 @@ $language_data = array (
             'getpwnam', 'getpwuid', 'getservbyname', 'getservbyport', 'getservent',
             'getsockname', 'getsockopt', 'glob', 'gmtime', 'goto', 'grep',
             'hex', 'import', 'index', 'int', 'ioctl', 'join', 'keys', 'kill',
-            'last', 'lc', 'lcfirst', 'length', 'link', 'listen', 'local',
+            'lc', 'lcfirst', 'length', 'link', 'listen', 'local',
             'localtime', 'log', 'lstat', 'm', 'map', 'mkdir', 'msgctl', 'msgget',
-            'msgrcv', 'msgsnd', 'my', 'next', 'no', 'oct', 'open', 'opendir',
-            'ord', 'our', 'pack', 'package', 'pipe', 'pop', 'pos', 'print',
+            'msgrcv', 'msgsnd', 'no', 'oct', 'open', 'opendir',
+            'ord', 'pack', 'package', 'pipe', 'pop', 'pos', 'print',
             'printf', 'prototype', 'push', 'qq', 'qr', 'quotemeta', 'qw',
             'qx', 'q', 'rand', 'read', 'readdir', 'readline', 'readlink', 'readpipe',
-            'recv', 'redo', 'ref', 'rename', 'require', 'return',
+            'recv', 'ref', 'rename', 'require', 'return',
             'reverse', 'rewinddir', 'rindex', 'rmdir', 's', 'scalar', 'seek',
             'seekdir', 'select', 'semctl', 'semget', 'semop', 'send', 'setgrent',
             'sethostent', 'setnetent', 'setpgrp', 'setpriority', 'setprotoent',
@@ -129,9 +130,9 @@ $language_data = array (
         ),
     'SYMBOLS' => array(
         '<', '>', '=',
-        '!', '@', '~', '&', '|',
+        '!', '@', '~', '&', '|', '^',
         '+','-', '*', '/', '%',
-        ',', ';', '?', ':'
+        ',', ';', '?', '.', ':'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -193,7 +194,7 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Variable
-        0 => '[\\$%@]+[a-zA-Z_][a-zA-Z0-9_]*',
+        0 => '(?:\$[\$#]?|\\\\(?:[@%*]?|\\\\*\$|&amp;)|%[$]?|@[$]?|\*[$]?|&amp;[$]?)[a-zA-Z_][a-zA-Z0-9_]*',
         //File Descriptor
         4 => '&lt;[a-zA-Z_][a-zA-Z0-9_]*&gt;',
         ),
@@ -204,7 +205,7 @@ $language_data = array (
         ),
     'PARSER_CONTROL' => array(
         'COMMENTS' => array(
-           'DISALLOWED_BEFORE' => '$'
+            'DISALLOWED_BEFORE' => '$'
         )
     )
 );

@@ -4,7 +4,7 @@
  * --------
  * Author: Marcus Griep (neoeinstein+GeSHi@gmail.com)
  * Copyright: (c) 2007 Marcus Griep (http://www.xpdm.us)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2007/10/24
  *
  * CIL (Common Intermediate Language) language file for GeSHi.
@@ -45,7 +45,7 @@ $language_data = array (
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-        'dotted' => array(
+        1 => array(//Dotted
             '.zeroinit', '.vtfixup', '.vtentry', '.vtable', '.ver', '.try', '.subsystem', '.size', '.set', '.removeon',
             '.publickeytoken', '.publickey', '.property', '.permissionset', '.permission', '.pdirect', '.param', '.pack',
             '.override', '.other', '.namespace', '.mresource', '.module', '.method', '.maxstack', '.manifestres', '.locals',
@@ -53,7 +53,7 @@ $language_data = array (
             '.export', '.event', '.entrypoint', '.emitbyte', '.data', '.custom', '.culture', '.ctor', '.corflags', '.class',
             '.cctor', '.assembly', '.addon'
             ),
-        'attr' => array(
+        2 => array(//Attributes
             'wrapper', 'with', 'winapi', 'virtual', 'vector', 'vararg', 'value', 'userdefined', 'unused', 'unmanagedexp',
             'unmanaged', 'unicode', 'to', 'tls', 'thiscall', 'synchronized', 'struct', 'strict', 'storage', 'stdcall',
             'static', 'specialname', 'special', 'serializable', 'sequential', 'sealed', 'runtime', 'rtspecialname', 'request',
@@ -69,20 +69,20 @@ $language_data = array (
             'cf', 'cdecl', 'catch', 'beforefieldinit', 'autochar', 'auto', 'at', 'assert', 'assembly', 'as', 'any', 'ansi',
             'alignment', 'algorithm', 'abstract'
             ),
-        'types' => array(
+        3 => array(//Types
             'wchar', 'void', 'variant', 'unsigned', 'valuetype', 'typedref', 'tbstr', 'sysstring', 'syschar', 'string',
             'streamed_object', 'stream', 'stored_object', 'safearray', 'objectref', 'object', 'nullref', 'method', 'lpwstr',
             'lpvoid', 'lptstr', 'lpstruct', 'lpstr', 'iunknown', 'int64', 'int32', 'int16', 'int8', 'int', 'idispatch',
-            'hresult', 'float64', 'float32', 'float', 'decimal', 'date', 'currency', 'class', 'char', 'carray', 'byvalstr',
+            'hresult', 'float64', 'float32', 'float', 'decimal', 'date', 'currency', 'char', 'carray', 'byvalstr',
             'bytearray', 'boxed', 'bool', 'blob_object', 'blob', 'array'
             ),
-        'prefix' => array(
+        4 => array(//Prefix
             'volatile', 'unaligned', 'tail', 'readonly', 'no', 'constrained'
             ),
-        'suffix' => array(
+        5 => array(//Suffix
             'un', 'u8', 'u4', 'u2', 'u1', 'u', 's', 'ref', 'r8', 'r4', 'm1', 'i8', 'i4', 'i2', 'i1', 'i'#, '.8', '.7', '.6', '.5', '.4', '.3', '.2', '.1', '.0'
             ),
-        'base' => array(
+        6 => array(//Base
             'xor', 'switch', 'sub', 'stloc',
             'stind', 'starg',
             'shr', 'shl', 'ret', 'rem', 'pop', 'or', 'not', 'nop', 'neg', 'mul',
@@ -94,19 +94,19 @@ $language_data = array (
             'brfalse', 'break', 'br', 'bne', 'blt', 'ble', 'bgt', 'bge', 'beq', 'arglist',
             'and', 'add'
             ),
-        'object' => array(
+        7 => array(//Object
             'unbox.any', 'unbox', 'throw', 'stsfld', 'stobj', 'stfld', 'stelem', 'sizeof', 'rethrow', 'refanyval', 'refanytype', 'newobj',
             'newarr', 'mkrefany', 'ldvirtftn', 'ldtoken', 'ldstr', 'ldsflda', 'ldsfld', 'ldobj', 'ldlen', 'ldflda', 'ldfld',
             'ldelema', 'ldelem', 'isinst', 'initobj', 'cpobj', 'castclass',
             'callvirt', 'callmostderived', 'box'
             ),
-        'other' => array(
+        8 => array(//Other
             'prefixref', 'prefix7', 'prefix6', 'prefix5', 'prefix4', 'prefix3', 'prefix2', 'prefix1', 'prefix0'
             ),
-        'literal' => array(
+        9 => array(//Literal
             'true', 'null', 'false'
             ),
-        'commentlike' => array(
+        10 => array(//Comment-like
             '#line', '^THE_END^'
             )
         ),
@@ -115,29 +115,29 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        'dotted' => true,
-        'attr' => true,
-        'types' => true,
-        'prefix' => true,
-        'suffix' => true,
-        'base' => true,
-        'object' => true,
-        'other' => true,
-        'literal' => true,
-        'commentlike' => true
+        1 => true,
+        2 => true,
+        3 => true,
+        4 => true,
+        5 => true,
+        6 => true,
+        7 => true,
+        8 => true,
+        9 => true,
+        10 => true
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            'dotted' => 'color:maroon;font-weight:bold;',
-            'attr' => 'color:blue;font-weight:bold;',
-            'types' => 'color:purple;font-weight:bold;',
-            'prefix' => 'color:teal;',
-            'suffix' => 'color:blue;',
-            'base' => 'color:blue;',
-            'object' => 'color:blue;',
-            'other' => 'color:blue;',
-            'literal' => 'color:00008B',
-            'commentlike' => 'color:gray'
+            1 => 'color:maroon;font-weight:bold;',
+            2 => 'color:blue;font-weight:bold;',
+            3 => 'color:purple;font-weight:bold;',
+            4 => 'color:teal;',
+            5 => 'color:blue;',
+            6 => 'color:blue;',
+            7 => 'color:blue;',
+            8 => 'color:blue;',
+            9 => 'color:00008B',
+            10 => 'color:gray'
             ),
         'COMMENTS' => array(
             0 => 'color:gray;font-style:italic;'
@@ -167,16 +167,16 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        'dotted' => '',
-        'attr' => '',
-        'types' => '',
-        'prefix' => '',
-        'suffix' => '',
-        'base' => '',
-        'object' => '',
-        'other' => '',
-        'literal' => '',
-        'commentlike' => ''
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => '',
+        5 => '',
+        6 => '',
+        7 => '',
+        8 => '',
+        9 => '',
+        10 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

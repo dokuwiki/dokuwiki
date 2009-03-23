@@ -4,7 +4,7 @@
  * --------
  * Author: Marco Aurelio de Pasqual (marcop@hdi.com.br)
  * Copyright: (c) 2008 Marco Aurelio de Pasqual, Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2008/07/11
  *
  * Progress language file for GeSHi.
@@ -76,7 +76,7 @@ $language_data = array(
             'GET','GET-KEY-VALUE','HIDE','IF',
             'IMPORT','INPUT CLEAR','INPUT CLOSE','INPUT FROM','input',
             'INPUT THROUGH','INPUT-OUTPUT CLOSE','INPUT-OUTPUT THROUGH','INSERT',
-            'INTERFACE','LEAVE','LOAD','DELETE','BREAK',
+            'INTERFACE','LEAVE','LOAD','BREAK',
             'LOAD-PICTURE','MESSAGE','method','NEXT','prev',
             'NEXT-PROMPT','ON','OPEN QUERY','OS-APPEND',
             'OS-COMMAND','OS-COPY','OS-CREATE-DIR','OS-DELETE',

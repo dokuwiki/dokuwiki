@@ -4,7 +4,7 @@
  * --------
  * Author: Jan-Philipp Halle (typo3@jphalle.de)
  * Copyright: (c) 2005 Jan-Philipp Halle (http://www.jphalle.de/)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2005/07/29
  *
  * TypoScript language file for GeSHi.
@@ -49,7 +49,7 @@ $language_data = array (
     'QUOTEMARKS' => array(),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
-        // Conditions: http://support.typo3.org/documentation/tsref/conditions/
+        // Conditions: http://documentation.typo3.org/documentation/tsref/conditions/
         1 => array(
             'browser', 'compatVersion', 'dayofmonth', 'dayofweek', 'device',
             'globalString', 'globalVars', 'hostname', 'hour',
@@ -59,7 +59,7 @@ $language_data = array (
             'usergroup', 'version'
             ),
 
-        // Functions: http://support.typo3.org/documentation/tsref/functions/
+        // Functions: http://documentation.typo3.org/documentation/tsref/functions/
         2 => array(
             'addParams', 'encapsLines', 'filelink', 'HTMLparser',
             'HTMLparser_tags', 'if', 'imageLinkWrap',
@@ -68,13 +68,13 @@ $language_data = array (
             'textStyle', 'typolink'
             ),
 
-        // Toplevel objects: http://support.typo3.org/documentation/tsref/tlo-objects/
+        // Toplevel objects: http://documentation.typo3.org/documentation/tsref/tlo-objects/
         3 => array(
             'CARRAY', 'CONFIG', 'CONSTANTS', 'FE_DATA', 'FE_TABLE', 'FRAME',
             'FRAMESET', 'META', 'PAGE', 'plugin'
             ),
 
-        // Content Objects (cObject) : http://support.typo3.org/documentation/tsref/cobjects/
+        // Content Objects (cObject) : http://documentation.typo3.org/documentation/tsref/cobjects/
         4 => array(
             'CASE', 'CLEARGIF', 'COA', 'COA_INT', 'COBJ_ARRAY', 'COLUMNS',
             'CONTENT', 'CTABLE', 'EDITPANEL', 'FILE', 'FORM',
@@ -86,12 +86,12 @@ $language_data = array (
             'USER_INT'
             ),
 
-        // GIFBUILDER toplevel link: http://support.typo3.org/documentation/tsref/gifbuilder/
+        // GIFBUILDER toplevel link: http://documentation.typo3.org/documentation/tsref/gifbuilder/
         5 => array(
             'GIFBUILDER',
             ),
 
-        // GIFBUILDER: http://support.typo3.org/documentation/tsref/gifbuilder/
+        // GIFBUILDER: http://documentation.typo3.org/documentation/tsref/gifbuilder/
         // skipped fields: IMAGE, TEXT
         // NOTE! the IMAGE and TEXT field already are linked in group 4, they
         // cannot be linked twice . . . . unfortunately
@@ -101,14 +101,14 @@ $language_data = array (
             'WORKAREA'
             ),
 
-        // MENU Objects: http://support.typo3.org/documentation/tsref/menu/
+        // MENU Objects: http://documentation.typo3.org/documentation/tsref/menu/
         7 => array(
             'GMENU', 'GMENU_FOLDOUT', 'GMENU_LAYERS', 'IMGMENU',
             'IMGMENUITEM', 'JSMENU', 'JSMENUITEM', 'TMENU',
             'TMENUITEM', 'TMENU_LAYERS'
             ),
 
-        // MENU common properties: http://support.typo3.org/documentation/tsref/menu/common-properties/
+        // MENU common properties: http://documentation.typo3.org/documentation/tsref/menu/common-properties/
         8 => array(
             'alternativeSortingField', 'begin', 'debugItemConf',
             'imgNameNotRandom', 'imgNamePrefix',
@@ -117,7 +117,7 @@ $language_data = array (
             'showAccessRestrictedPages', 'submenuObjSuffixes'
             ),
 
-        // MENU item states: http://support.typo3.org/documentation/tsref/menu/item-states/
+        // MENU item states: http://documentation.typo3.org/documentation/tsref/menu/item-states/
         9 => array(
             'ACT', 'ACTIFSUB', 'ACTIFSUBRO', 'ACTRO', 'CUR', 'CURIFSUB',
             'CURIFSUBRO', 'CURRO', 'IFSUB', 'IFSUBRO', 'NO',
@@ -204,15 +204,15 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        1 => 'http://support.typo3.org/documentation/tsref/conditions/{FNAME}/',
-        2 => 'http://support.typo3.org/documentation/tsref/functions/{FNAME}/',
-        3 => 'http://support.typo3.org/documentation/tsref/tlo-objects/{FNAME}/',
-        4 => 'http://support.typo3.org/documentation/tsref/cobjects/{FNAME}/',
-        5 => 'http://support.typo3.org/documentation/tsref/gifbuilder/',
-        6 => 'http://support.typo3.org/documentation/tsref/gifbuilder/{FNAME}/',
-        7 => 'http://support.typo3.org/documentation/tsref/menu/{FNAME}/',
-        8 => 'http://support.typo3.org/documentation/tsref/menu/common-properties/',
-        9 => 'http://support.typo3.org/documentation/tsref/menu/item-states/'
+        1 => 'http://documentation.typo3.org/documentation/tsref/conditions/{FNAME}/',
+        2 => 'http://documentation.typo3.org/documentation/tsref/functions/{FNAME}/',
+        3 => 'http://documentation.typo3.org/documentation/tsref/tlo-objects/{FNAME}/',
+        4 => 'http://documentation.typo3.org/documentation/tsref/cobjects/{FNAME}/',
+        5 => 'http://documentation.typo3.org/documentation/tsref/gifbuilder/',
+        6 => 'http://documentation.typo3.org/documentation/tsref/gifbuilder/{FNAME}/',
+        7 => 'http://documentation.typo3.org/documentation/tsref/menu/{FNAME}/',
+        8 => 'http://documentation.typo3.org/documentation/tsref/menu/common-properties/',
+        9 => 'http://documentation.typo3.org/documentation/tsref/menu/item-states/'
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

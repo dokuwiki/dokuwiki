@@ -4,7 +4,7 @@
  * --------
  * Author: Duncan Lock (dunc@dflock.co.uk)
  * Copyright: (c) 2006 Duncan Lock (http://dflock.co.uk/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2005/11/22
  *
  * T-SQL language file for GeSHi.
@@ -135,7 +135,7 @@ $language_data = array (
 
             //System Statistical Functions
             '@@CONNECTIONS','@@PACK_RECEIVED','@@CPU_BUSY','@@PACK_SENT',
-            'fn_virtualfilestats','@@TIMETICKS','@@IDLE','@@TOTAL_ERRORS','@@IO_BUSY',
+            '@@TIMETICKS','@@IDLE','@@TOTAL_ERRORS','@@IO_BUSY',
             '@@TOTAL_READ','@@PACKET_ERRORS','@@TOTAL_WRITE',
 
             //Text and Image Functions
@@ -169,8 +169,8 @@ $language_data = array (
 
             //Distributed Queries Procedures
             'sp_addlinkedserver', 'sp_indexes', 'sp_addlinkedsrvlogin', 'sp_linkedservers', 'sp_catalogs',
-            'sp_primarykeys', 'sp_column_privileges_ex', 'sp_serveroption', 'sp_columns_ex',
-            'sp_table_privileges_ex', 'sp_droplinkedsrvlogin', 'sp_tables_ex', 'sp_foreignkeys',
+            'sp_primarykeys', 'sp_column_privileges_ex', 'sp_columns_ex',
+            'sp_table_privileges_ex', 'sp_tables_ex', 'sp_foreignkeys',
 
             //Full-Text Search Procedures
             'sp_fulltext_catalog', 'sp_help_fulltext_catalogs_cursor', 'sp_fulltext_column',
@@ -236,7 +236,7 @@ $language_data = array (
 
             //Security Procedures
             'sp_addalias', 'sp_droprolemember', 'sp_addapprole', 'sp_dropserver', 'sp_addgroup', 'sp_dropsrvrolemember',
-            'sp_addlinkedsrvlogin', 'sp_dropuser', 'sp_addlogin', 'sp_grantdbaccess', 'sp_addremotelogin',
+            'sp_dropuser', 'sp_addlogin', 'sp_grantdbaccess', 'sp_addremotelogin',
             'sp_grantlogin', 'sp_addrole', 'sp_helpdbfixedrole', 'sp_addrolemember', 'sp_helpgroup',
             'sp_addserver', 'sp_helplinkedsrvlogin', 'sp_addsrvrolemember', 'sp_helplogins', 'sp_adduser',
             'sp_helpntgroup', 'sp_approlepassword', 'sp_helpremotelogin', 'sp_changedbowner', 'sp_helprole',

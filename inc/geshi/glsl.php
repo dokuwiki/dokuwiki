@@ -4,7 +4,7 @@
  * -----
  * Author: Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2008 Benny Baumann (BenBE@omorphia.de)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2008/03/20
  *
  * glSlang language file for GeSHi.
@@ -41,6 +41,12 @@ $language_data = array (
     'LANG_NAME' => 'glSlang',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
+    'COMMENT_REGEXP' => array(
+        //Multiline-continued single-line comments
+        1 => '/\/\/(?:\\\\\\\\|\\\\\\n|.)*$/m',
+        //Multiline-continued preprocessor define
+        2 => '/#(?:\\\\\\\\|\\\\\\n|.)*$/m'
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '\\',
@@ -54,7 +60,7 @@ $language_data = array (
             'const', 'uniform', 'attribute', 'centroid', 'varying', 'invariant',
             'in', 'out', 'inout', 'input', 'output', 'typedef', 'volatile',
             'public', 'static', 'extern', 'external', 'packed',
-            'inline', 'noinline'
+            'inline', 'noinline', 'noperspective', 'flat'
             ),
         3 => array(
             'void', 'bool', 'int', 'long', 'short', 'float', 'half', 'fixed',

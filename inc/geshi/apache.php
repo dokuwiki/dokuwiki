@@ -4,7 +4,7 @@
  * ----------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/29/07
  *
  * Apache language file for GeSHi.
@@ -88,8 +88,8 @@ $language_data = array (
             'limitrequestfieldsize','limitrequestline','listen','listenbacklog',
             'loadfile','loadmodule','location','locationmatch',
             'lockfile','logformat','loglevel','maxclients',
-            'maxkeepaliverequests','maxrequestsperchild','maxspareservers','metadir',
-            'metafiles','metasuffix','mimemagicfile','minspareservers',
+            'maxkeepaliverequests','maxrequestsperchild','maxspareservers','maxsparethreads','metadir',
+            'metafiles','metasuffix','mimemagicfile','minspareservers','minsparethreads',
             'mmapfile','namevirtualhost','nocache','options','order',
             'passenv','php_admin_value','php_admin_flag','php_value','pidfile','port','proxyblock','proxydomain',
             'proxypass','proxypassreverse','proxyreceivebuffersize','proxyremote',

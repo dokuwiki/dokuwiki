@@ -4,7 +4,7 @@
  * ----------------
  * Author: Jordi Boggiano (j.boggiano@seld.be)
  * Copyright: (c) 2007 Jordi Boggiano (http://www.seld.be/), Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2007/11/26
  *
  * ActionScript3 language file for GeSHi.
@@ -77,54 +77,6 @@ $language_data = array (
             ),
         4 => array(
             'class', 'package'
-            ),
-        5 => array(
-            'uint', 'int', 'arguments', 'XMLSocket', 'XMLNodeType', 'XMLNode',
-            'XMLList', 'XMLDocument', 'XML', 'Video', 'VerifyError',
-            'URLVariables', 'URLStream', 'URLRequestMethod', 'URLRequestHeader',
-            'URLRequest', 'URLLoaderDataFormat', 'URLLoader', 'URIError',
-            'TypeError', 'Transform', 'TimerEvent', 'Timer', 'TextSnapshot',
-            'TextRenderer', 'TextLineMetrics', 'TextFormatAlign', 'TextFormat',
-            'TextFieldType', 'TextFieldAutoSize', 'TextField', 'TextEvent',
-            'TextDisplayMode', 'TextColorType', 'System', 'SyntaxError',
-            'SyncEvent', 'StyleSheet', 'String', 'StatusEvent', 'StaticText',
-            'StageScaleMode', 'StageQuality', 'StageAlign', 'Stage',
-            'StackOverflowError', 'Sprite', 'SpreadMethod', 'SoundTransform',
-            'SoundMixer', 'SoundLoaderContext', 'SoundChannel', 'Sound',
-            'Socket', 'SimpleButton', 'SharedObjectFlushStatus', 'SharedObject',
-            'Shape', 'SecurityPanel', 'SecurityErrorEvent', 'SecurityError',
-            'SecurityDomain', 'Security', 'ScriptTimeoutError', 'Scene',
-            'SWFVersion', 'Responder', 'RegExp', 'ReferenceError', 'Rectangle',
-            'RangeError', 'QName', 'Proxy', 'ProgressEvent',
-            'PrintJobOrientation', 'PrintJobOptions', 'PrintJob', 'Point',
-            'PixelSnapping', 'ObjectEncoding', 'Object', 'Number', 'NetStream',
-            'NetStatusEvent', 'NetConnection', 'Namespace', 'MovieClip',
-            'MouseEvent', 'Mouse', 'MorphShape', 'Microphone', 'MemoryError',
-            'Matrix', 'Math', 'LocalConnection', 'LoaderInfo', 'LoaderContext',
-            'Loader', 'LineScaleMode', 'KeyboardEvent', 'Keyboard',
-            'KeyLocation', 'JointStyle', 'InvalidSWFError',
-            'InterpolationMethod', 'InteractiveObject', 'IllegalOperationError',
-            'IOErrorEvent', 'IOError', 'IMEEvent', 'IMEConversionMode', 'IME',
-            'IExternalizable', 'IEventDispatcher', 'IDynamicPropertyWriter',
-            'IDynamicPropertyOutput', 'IDataOutput', 'IDataInput', 'ID3Info',
-            'IBitmapDrawable', 'HTTPStatusEvent', 'GridFitType', 'Graphics',
-            'GradientType', 'GradientGlowFilter', 'GradientBevelFilter',
-            'GlowFilter', 'Function', 'FrameLabel', 'FontType', 'FontStyle',
-            'Font', 'FocusEvent', 'FileReferenceList', 'FileReference',
-            'FileFilter', 'ExternalInterface', 'EventPhase', 'EventDispatcher',
-            'Event', 'EvalError', 'ErrorEvent', 'Error', 'Endian', 'EOFError',
-            'DropShadowFilter', 'DisplayObjectContainer', 'DisplayObject',
-            'DisplacementMapFilterMode', 'DisplacementMapFilter', 'Dictionary',
-            'DefinitionError', 'Date', 'DataEvent', 'ConvolutionFilter',
-            'ContextMenuItem', 'ContextMenuEvent', 'ContextMenuBuiltInItems',
-            'ContextMenu', 'ColorTransform', 'ColorMatrixFilter', 'Class',
-            'CapsStyle', 'Capabilities', 'Camera', 'CSMSettings', 'ByteArray',
-            'Boolean', 'BlurFilter', 'BlendMode', 'BitmapFilterType',
-            'BitmapFilterQuality', 'BitmapFilter', 'BitmapDataChannel',
-            'BitmapData', 'Bitmap', 'BevelFilter', 'AsyncErrorEvent', 'Array',
-            'ArgumentError', 'ApplicationDomain', 'AntiAliasType',
-            'ActivityEvent', 'ActionScriptVersion', 'AccessibilityProperties',
-            'Accessibility', 'AVM1Movie'
             ),
         6 => array(
             'flash.xml', 'flash.utils', 'flash.ui', 'flash.text',
@@ -384,6 +336,57 @@ $language_data = array (
             'AMF0', 'ALWAYS', 'ALPHANUMERIC_HALF', 'ALPHANUMERIC_FULL', 'ALPHA',
             'ADVANCED', 'ADDED_TO_STAGE', 'ADDED', 'ADD', 'ACTIVITY',
             'ACTIONSCRIPT3', 'ACTIONSCRIPT2'
+            ),
+        //FIX: Must be last in order to avoid conflicts with keywords present
+        //in other keyword groups, that might get highlighted as part of the URL.
+        //I know this is not a proper work-around, but should do just fine.
+        5 => array(
+            'uint', 'int', 'arguments', 'XMLSocket', 'XMLNodeType', 'XMLNode',
+            'XMLList', 'XMLDocument', 'XML', 'Video', 'VerifyError',
+            'URLVariables', 'URLStream', 'URLRequestMethod', 'URLRequestHeader',
+            'URLRequest', 'URLLoaderDataFormat', 'URLLoader', 'URIError',
+            'TypeError', 'Transform', 'TimerEvent', 'Timer', 'TextSnapshot',
+            'TextRenderer', 'TextLineMetrics', 'TextFormatAlign', 'TextFormat',
+            'TextFieldType', 'TextFieldAutoSize', 'TextField', 'TextEvent',
+            'TextDisplayMode', 'TextColorType', 'System', 'SyntaxError',
+            'SyncEvent', 'StyleSheet', 'String', 'StatusEvent', 'StaticText',
+            'StageScaleMode', 'StageQuality', 'StageAlign', 'Stage',
+            'StackOverflowError', 'Sprite', 'SpreadMethod', 'SoundTransform',
+            'SoundMixer', 'SoundLoaderContext', 'SoundChannel', 'Sound',
+            'Socket', 'SimpleButton', 'SharedObjectFlushStatus', 'SharedObject',
+            'Shape', 'SecurityPanel', 'SecurityErrorEvent', 'SecurityError',
+            'SecurityDomain', 'Security', 'ScriptTimeoutError', 'Scene',
+            'SWFVersion', 'Responder', 'RegExp', 'ReferenceError', 'Rectangle',
+            'RangeError', 'QName', 'Proxy', 'ProgressEvent',
+            'PrintJobOrientation', 'PrintJobOptions', 'PrintJob', 'Point',
+            'PixelSnapping', 'ObjectEncoding', 'Object', 'Number', 'NetStream',
+            'NetStatusEvent', 'NetConnection', 'Namespace', 'MovieClip',
+            'MouseEvent', 'Mouse', 'MorphShape', 'Microphone', 'MemoryError',
+            'Matrix', 'Math', 'LocalConnection', 'LoaderInfo', 'LoaderContext',
+            'Loader', 'LineScaleMode', 'KeyboardEvent', 'Keyboard',
+            'KeyLocation', 'JointStyle', 'InvalidSWFError',
+            'InterpolationMethod', 'InteractiveObject', 'IllegalOperationError',
+            'IOErrorEvent', 'IOError', 'IMEEvent', 'IMEConversionMode', 'IME',
+            'IExternalizable', 'IEventDispatcher', 'IDynamicPropertyWriter',
+            'IDynamicPropertyOutput', 'IDataOutput', 'IDataInput', 'ID3Info',
+            'IBitmapDrawable', 'HTTPStatusEvent', 'GridFitType', 'Graphics',
+            'GradientType', 'GradientGlowFilter', 'GradientBevelFilter',
+            'GlowFilter', 'Function', 'FrameLabel', 'FontType', 'FontStyle',
+            'Font', 'FocusEvent', 'FileReferenceList', 'FileReference',
+            'FileFilter', 'ExternalInterface', 'EventPhase', 'EventDispatcher',
+            'Event', 'EvalError', 'ErrorEvent', 'Error', 'Endian', 'EOFError',
+            'DropShadowFilter', 'DisplayObjectContainer', 'DisplayObject',
+            'DisplacementMapFilterMode', 'DisplacementMapFilter', 'Dictionary',
+            'DefinitionError', 'Date', 'DataEvent', 'ConvolutionFilter',
+            'ContextMenuItem', 'ContextMenuEvent', 'ContextMenuBuiltInItems',
+            'ContextMenu', 'ColorTransform', 'ColorMatrixFilter', 'Class',
+            'CapsStyle', 'Capabilities', 'Camera', 'CSMSettings', 'ByteArray',
+            'Boolean', 'BlurFilter', 'BlendMode', 'BitmapFilterType',
+            'BitmapFilterQuality', 'BitmapFilter', 'BitmapDataChannel',
+            'BitmapData', 'Bitmap', 'BevelFilter', 'AsyncErrorEvent', 'Array',
+            'ArgumentError', 'ApplicationDomain', 'AntiAliasType',
+            'ActivityEvent', 'ActionScriptVersion', 'AccessibilityProperties',
+            'Accessibility', 'AVM1Movie'
             )
         ),
     'SYMBOLS' => array(

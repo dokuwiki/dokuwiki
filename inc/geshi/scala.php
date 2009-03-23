@@ -4,7 +4,7 @@
  * ----------
  * Author: Franco Lombardo (franco@francolombardo.net)
  * Copyright: (c) 2008 Franco Lombardo, Benny Baumann
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2008/02/08
  *
  * Scala language file for GeSHi.
@@ -66,8 +66,8 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => false,
-        2 => false
+        1 => true,
+        2 => true
         ),
     'STYLES' => array(
         'KEYWORDS' => array(

@@ -4,7 +4,7 @@
  * -----------
  * Author: Guy Wicks (Guy.Wicks@rbs.co.uk)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/06/04
  *
  * Oracle 8 language file for GeSHi.
@@ -60,6 +60,7 @@ $language_data = array (
 //Put your table field names here - e.g. select distinct ''''|| lower(column_name) || ''',' from user_tab_columns;
 //        3 => array(
 //            ),
+
 //Put ORACLE reserved keywords here (8.1.7).  I like mine uppercase.
         1 => array(
             'ABS',

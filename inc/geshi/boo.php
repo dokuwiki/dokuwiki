@@ -4,7 +4,7 @@
  * --------
  * Author: Marcus Griep (neoeinstein+GeSHi@gmail.com)
  * Copyright: (c) 2007 Marcus Griep (http://www.xpdm.us)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.3
  * Date Started: 2007/09/10
  *
  * Boo language file for GeSHi.
@@ -48,104 +48,104 @@ $language_data = array (
     'HARDESCAPE' => array('\"""'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-        'namespace' => array(
+        1 => array(//Namespace
             'namespace', 'import', 'from'
             ),
-        'jump' => array(
+        2 => array(//Jump
             'yield', 'return', 'goto', 'continue', 'break'
             ),
-        'conditional' => array(
+        3 => array(//Conditional
             'while', 'unless', 'then', 'in', 'if', 'for', 'else', 'elif'
             ),
-        'property' => array(
+        4 => array(//Property
             'set', 'get'
             ),
-        'exception' => array(
+        5 => array(//Exception
             'try', 'raise', 'failure', 'except', 'ensure'
             ),
-        'visibility' => array(
+        6 => array(//Visibility
             'public', 'private', 'protected', 'internal'
             ),
-        'define' => array(
+        7 => array(//Define
             'struct', 'ref', 'of', 'interface', 'event', 'enum', 'do', 'destructor', 'def', 'constructor', 'class'
             ),
-        'cast' => array(
+        8 => array(//Cast
             'typeof', 'cast', 'as'
             ),
-        'bimacro' => array(
+        9 => array(//BiMacro
             'yieldAll', 'using', 'unchecked', 'rawArayIndexing', 'print', 'normalArrayIndexing', 'lock',
             'debug', 'checked', 'assert'
             ),
-        'biattr' => array(
+        10 => array(//BiAttr
             'required', 'property', 'meta', 'getter', 'default'
             ),
-        'bifunc' => array(
+        11 => array(//BiFunc
             'zip', 'shellp', 'shellm', 'shell', 'reversed', 'range', 'prompt',
             'matrix', 'map', 'len', 'join', 'iterator', 'gets', 'enumerate', 'cat', 'array'
             ),
-        'hifunc' => array(
+        12 => array(//HiFunc
             '__switch__', '__initobj__', '__eval__', '__addressof__', 'quack'
             ),
-        'primitive' => array(
+        13 => array(//Primitive
             'void', 'ushort', 'ulong', 'uint', 'true', 'timespan', 'string', 'single',
             'short', 'sbyte', 'regex', 'object', 'null', 'long', 'int', 'false', 'duck',
             'double', 'decimal', 'date', 'char', 'callable', 'byte', 'bool'
             ),
-        'operator' => array(
+        14 => array(//Operator
             'not', 'or', 'and', 'is', 'isa',
             ),
-        'modifier' => array(
+        15 => array(//Modifier
             'virtual', 'transient', 'static', 'partial', 'override', 'final', 'abstract'
             ),
-        'access' => array(
+        16 => array(//Access
             'super', 'self'
             ),
-        'pass' => array(
+        17 => array(//Pass
             'pass'
             )
         ),
     'SYMBOLS' => array(
-         '[|', '|]', '${', '(', ')', '[', ']', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>', '+', '-', ';'
+        '[|', '|]', '${', '(', ')', '[', ']', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>', '+', '-', ';'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        'namespace' => true,
-        'jump' => true,
-        'conditional' => true,
-        'property' => true,
-        'exception' => true,
-        'visibility' => true,
-        'define' => true,
-        'cast' => true,
-        'bimacro' => true,
-        'biattr' => true,
-        'bifunc' => true,
-        'hifunc' => true,
-        'primitive' => true,
-        'operator' => true,
-        'modifier' => true,
-        'access' => true,
-        'pass' => true
+        1 => true,
+        2 => true,
+        3 => true,
+        4 => true,
+        5 => true,
+        6 => true,
+        7 => true,
+        8 => true,
+        9 => true,
+        10 => true,
+        11 => true,
+        12 => true,
+        13 => true,
+        14 => true,
+        15 => true,
+        16 => true,
+        17 => true
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            'namespace' => 'color:green;font-weight:bold;',
-            'jump' => 'color:navy;',
-            'conditional' => 'color:blue;font-weight:bold;',
-            'property' => 'color:#8B4513;',
-            'exception' => 'color:teal;font-weight:bold;',
-            'visibility' => 'color:blue;font-weight:bold;',
-            'define' => 'color:blue;font-weight:bold;',
-            'cast' => 'color:blue;font-weight:bold;',
-            'bimacro' => 'color:maroon;',
-            'biattr' => 'color:maroon;',
-            'bifunc' => 'color:purple;',
-            'hifunc' => 'color:#4B0082;',
-            'primitive' => 'color:purple;font-weight:bold;',
-            'operator' => 'color:#008B8B;font-weight:bold;',
-            'modifier' => 'color:brown;',
-            'access' => 'color:black;font-weight:bold;',
-            'pass' => 'color:gray;'
+            1 => 'color:green;font-weight:bold;',
+            2 => 'color:navy;',
+            3 => 'color:blue;font-weight:bold;',
+            4 => 'color:#8B4513;',
+            5 => 'color:teal;font-weight:bold;',
+            6 => 'color:blue;font-weight:bold;',
+            7 => 'color:blue;font-weight:bold;',
+            8 => 'color:blue;font-weight:bold;',
+            9 => 'color:maroon;',
+            10 => 'color:maroon;',
+            11 => 'color:purple;',
+            12 => 'color:#4B0082;',
+            13 => 'color:purple;font-weight:bold;',
+            14 => 'color:#008B8B;font-weight:bold;',
+            15 => 'color:brown;',
+            16 => 'color:black;font-weight:bold;',
+            17 => 'color:gray;'
             ),
         'COMMENTS' => array(
             1 => 'color: #999999; font-style: italic;',
@@ -180,28 +180,28 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        'namespace' => '',
-        'jump' => '',
-        'conditional' => '',
-        'property' => '',
-        'exception' => '',
-        'visibility' => '',
-        'define' => '',
-        'cast' => '',
-        'bimacro' => '',
-        'biattr' => '',
-        'bifunc' => '',
-        'hifunc' => '',
-        'primitive' => '',
-        'operator' => '',
-        'modifier' => '',
-        'access' => '',
-        'pass' => ''
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => '',
+        5 => '',
+        6 => '',
+        7 => '',
+        8 => '',
+        9 => '',
+        10 => '',
+        11 => '',
+        12 => '',
+        13 => '',
+        14 => '',
+        15 => '',
+        16 => '',
+        17 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
-            0 => '.',
-            1 => '::'
+        0 => '.',
+        1 => '::'
         ),
     'REGEXPS' => array(
         #0 => '%(@)?\/(?:(?(1)[^\/\\\\\r\n]+|[^\/\\\\\r\n \t]+)|\\\\[\/\\\\\w+()|.*?$^[\]{}\d])+\/%'

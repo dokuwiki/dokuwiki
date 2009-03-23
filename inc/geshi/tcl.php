@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Reid van Melle (rvanmelle@gmail.com)
  * Copyright: (c) 2004 Reid van Melle (sorry@nowhere)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2006/05/05
  *
  * TCL/iTCL language file for GeSHi.
@@ -84,8 +84,6 @@ $language_data = array (
             // list handling
             'concat', 'join', 'lappend', 'lindex', 'list', 'llength', 'lrange',
             'lreplace', 'lsearch', 'lset', 'lsort', 'split',
-            // math
-            'expr',
             // procedures and output
             'incr', 'close', 'eof', 'fblocked', 'fconfigure', 'fcopy', 'file',
             'fileevent', 'flush', 'gets', 'open', 'puts', 'read', 'seek',
@@ -97,7 +95,7 @@ $language_data = array (
             // library routines
             'enconding', 'http', 'msgcat',
             // system related
-            'cd', 'clock', 'exec', 'exit', 'glob', 'pid', 'pwd', 'time',
+            'cd', 'clock', 'exec', 'glob', 'pid', 'pwd', 'time',
             // platform specified
             'dde', 'registry', 'resource',
             // special variables
@@ -111,8 +109,7 @@ $language_data = array (
          * Set 3: standard library
          */
         3 => array(
-            'comment', 'dde', 'filename', 'http', 'library', 'memory',
-            'packagens', 'registry', 'resource', 'tcltest', 'tclvars',
+            'comment', 'filename', 'library', 'packagens', 'tcltest', 'tclvars',
             ),
 
         /*

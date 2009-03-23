@@ -4,7 +4,7 @@
  * -----
  * Author: Alberto 'Birckin' de Areba (Birckin@hotmail.com)
  * Copyright: (c) 2006 Alberto de Areba
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2006/05/29
  *
  * mIRC Scripting language file for GeSHi.
@@ -48,7 +48,7 @@ $language_data = array (
             'alias', 'menu', 'dialog',
             ),
         2 => array(
-            'if', 'elseif', 'else', 'while', 'return', 'goto',
+            'if', 'elseif', 'else', 'while', 'return', 'goto','var'
             ),
         3 => array(
             'action','ajinvite','amsg','ame','anick','aop','auser',
@@ -76,7 +76,7 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '{', '}', '[', ']',
+        '(', ')', '{', '}', '[', ']'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -104,6 +104,7 @@ $language_data = array (
             0 => '',
             ),
         'METHODS' => array(
+            0 => 'color: #008000;'
             ),
         'SYMBOLS' => array(
             0 => 'color: #FF0000;',
@@ -111,11 +112,12 @@ $language_data = array (
         'REGEXPS' => array(
             0 => 'color: #000099;',
             1 => 'color: #990000;',
-            2 => 'color: #888800;',
+            2 => 'color: #000099;',
             3 => 'color: #888800;',
-            4 => 'color: #000099;',
+            4 => 'color: #888800;',
             5 => 'color: #000099;',
             6 => 'color: #990000; font-weight: bold;',
+            7 => 'color: #990000; font-weight: bold;'
             ),
         'SCRIPT' => array(
             )
@@ -125,19 +127,15 @@ $language_data = array (
         2 => '',
         3 => 'http://www.mirc.com/{FNAMEL}'
         ),
-    'OOLANG' => false,
-    'OBJECT_SPLITTERS' => array(
-        ),
+    'OOLANG' => true,
+    'OBJECT_SPLITTERS' => array('.'),
     'REGEXPS' => array(
         //Variable names
         0 => '\$[a-zA-Z0-9]+',
         //Variable names
-        1 => '(%|&amp;)[a-zA-Z0-9]+',
-        //Channel names
-        2 => '(#|@)[a-zA-Z0-9]+',
-        3 => '-[a-z\d]+',
+        1 => '(%|&amp;)[a-zA-Z0-9äöü]+',
         //Client to Client Protocol handling
-        4 => '(on|ctcp) (!|@|&amp;)?(\d|\*):[a-zA-Z]+:',
+        2 => '(on|ctcp) (!|@|&amp;)?(\d|\*):[a-zA-Z]+:',
         /*4 => array(
             GESHI_SEARCH => '((on|ctcp) (!|@|&)?(\d|\*):(Action|Active|Agent|AppActive|Ban|Chat|Close|Connect|Ctcp|CtcpReply|DccServer|DeHelp|DeOp|DeVoice|Dialog|Dns|Error|Exit|FileRcvd|FileSent|GetFail|Help|Hotlink|Input|Invite|Join|KeyDown|KeyUp|Kick|Load|Logon|MidiEnd|Mode|Mp3End|Nick|NoSound|Notice|Notify|Op|Open|Part|Ping|Pong|PlayEnd|Quit|Raw|RawMode|SendFail|Serv|ServerMode|ServerOp|Signal|Snotice|Start|Text|Topic|UnBan|Unload|Unotify|User|Mode|Voice|Wallops|WaveEnd):)',
             GESHI_REPLACE => '\\1',
@@ -145,10 +143,15 @@ $language_data = array (
             GESHI_BEFORE => '',
             GESHI_AFTER => ''
             ),*/
+        //Channel names
+        3 => '(#|@)[a-zA-Z0-9]+',
+        4 => '-[a-z\d]+',
         //Raw protocol handling
         5 => 'raw (\d|\*):',
         //Timer handling
         6 => '\/timer(?!s\b)[0-9a-zA-Z_]+',
+        // /...
+        7 => '\/[a-zA-Z0-9]+'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
@@ -157,7 +160,12 @@ $language_data = array (
         ),
     'PARSER_CONTROL' => array(
         'ENABLE_FLAGS' => array(
-            'NUMBERS' => GESHI_NEVER,
+            'NUMBERS' => GESHI_NEVER
+            ),
+        'KEYWORDS' => array(
+            2 => array(
+                'DISALLOWED_BEFORE' => '(?<![a-zA-Z0-9\$_\|\#;>^&\/])'
+            )
         )
     )
 );

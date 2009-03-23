@@ -4,7 +4,7 @@
  * ----------
  * Author: Thomas Klingler (hotline@theratech.de) based on delphi.php from J�rja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 J�rja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2005/07/29
  *
  * Inno Script language inkl. Delphi (Object Pascal) language file for GeSHi.
@@ -185,7 +185,7 @@ $language_data = array (
         'REGEXPS' => array(
             ),
         'SYMBOLS' => array(
-            0 => 'color:  #000000; font-weight: bold;',
+            0 => 'color: #000000; font-weight: bold;',
             ),
         'SCRIPT' => array(
             )

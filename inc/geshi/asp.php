@@ -4,7 +4,7 @@
  * --------
  * Author: Amit Gupta (http://blog.igeek.info/)
  * Copyright: (c) 2004 Amit Gupta (http://blog.igeek.info/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/08/13
  *
  * ASP language file for GeSHi.
@@ -53,7 +53,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
-            'include', 'file', 'Dim', 'Option', 'Explicit', 'Implicit', 'Set', 'Select', 'ReDim', 'Preserve',
+            'include', 'file', 'Const', 'Dim', 'Option', 'Explicit', 'Implicit', 'Set', 'Select', 'ReDim', 'Preserve',
             'ByVal', 'ByRef', 'End', 'Private', 'Public', 'If', 'Then', 'Else', 'ElseIf', 'Case', 'With', 'NOT',
             'While', 'Wend', 'For', 'Loop', 'Do', 'Request', 'Response', 'Server', 'ADODB', 'Session', 'Application',
             'Each', 'In', 'Get', 'Next', 'INT', 'CINT', 'CBOOL', 'CDATE', 'CBYTE', 'CCUR', 'CDBL', 'CLNG', 'CSNG',
@@ -62,9 +62,8 @@ $language_data = array (
             ),
         2 => array(
             'Null', 'Nothing', 'And',
-            'False', '&lt;%', '%&gt;',
-            '&lt;script language=', '&lt;/script&gt;',
-            'True', 'var', 'Or', 'BOF', 'EOF',
+            'False',
+            'True', 'var', 'Or', 'BOF', 'EOF', 'xor',
             'Function', 'Class', 'New', 'Sub'
             ),
         3 => array(
@@ -78,8 +77,12 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>',
-        ';', ':', '?', '='
+        1 => array(
+            '<%', '%>'
+            ),
+        0 => array(
+            '(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>',
+            ';', ':', '?', '='),
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -102,7 +105,7 @@ $language_data = array (
             0 => 'color: #000099; font-weight: bold;'
             ),
         'BRACKETS' => array(
-            0 => 'color: #006600; font-weight:bold'
+            0 => 'color: #006600; font-weight:bold;'
             ),
         'STRINGS' => array(
             0 => 'color: #cc0000;'
@@ -114,7 +117,8 @@ $language_data = array (
             1 => 'color: #9900cc;'
             ),
         'SYMBOLS' => array(
-            0 => 'color: #006600; font-weight: bold'
+            0 => 'color: #006600; font-weight: bold;',
+            1 => 'color: #000000; font-weight: bold;'
             ),
         'REGEXPS' => array(
             ),

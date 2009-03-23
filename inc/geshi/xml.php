@@ -4,7 +4,7 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.3
  * Date Started: 2004/09/01
  *
  * XML language file for GeSHi. Based on the idea/file by Christian Weiske
@@ -100,14 +100,14 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         0 => array(//attribute names
-            GESHI_SEARCH => '([a-z0-9_\-:]+)(=)',
+            GESHI_SEARCH => '([a-z_:][\w\-\.:]*)(=)',
             GESHI_REPLACE => '\\1',
             GESHI_MODIFIERS => 'i',
             GESHI_BEFORE => '',
             GESHI_AFTER => '\\2'
             ),
         1 => array(//Initial header line
-            GESHI_SEARCH => '(&lt;[\/?|(\?xml)]?[a-z0-9_\-:]*(\??&gt;)?)',
+            GESHI_SEARCH => '(&lt;[\/?|(\?xml)]?[a-z_:][\w\-\.:]*(\??&gt;)?)',
             GESHI_REPLACE => '\\1',
             GESHI_MODIFIERS => 'i',
             GESHI_BEFORE => '',
