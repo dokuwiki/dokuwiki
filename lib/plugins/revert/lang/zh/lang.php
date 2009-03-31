@@ -7,6 +7,7 @@
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
+ * @author mr.jinyi@gmail.com
  */
 $lang['menu']                  = '还原管理器';
 $lang['filter']                = '搜索包含垃圾信息的页面';

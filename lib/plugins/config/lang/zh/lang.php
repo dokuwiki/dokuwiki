@@ -7,6 +7,7 @@
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
+ * @author mr.jinyi@gmail.com
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -15,6 +16,9 @@ $lang['updated']               = '设置更新成功。';
 $lang['nochoice']              = '（没有其他可用选项）';
 $lang['locked']                = '设置文件无法更新。如果这是您没有意料到的，<br />
                        请确保本地设置文件的名称和权限设置正确。';
+$lang['danger']                = '危险：更改这个选项可能会使用你的Wiki页面和配置菜单无法进入。';
+$lang['warning']               = '注意：更改这个选项可能会造成未知结果。';
+$lang['security']              = '安全提示：更改这个选项可能会有安全隐患。';
 $lang['_configuration_manager'] = '配置管理器';
 $lang['_header_dokuwiki']      = 'DokuWiki 设置';
 $lang['_header_plugin']        = '插件设置';
