@@ -1,7 +1,7 @@
 ====== Asetusten hallinta ======
 
-Käytä tätä sivua hallitaksesi DokuWikisi asetuksia. Apua yksittäisiin asetuksiin löytyy sivulta [[doku>config]]. Lisätietoa tästä liitännäisestä katso [[doku>plugin:config]].
+Käytä tätä sivua hallitaksesi DokuWikisi asetuksia. Apua yksittäisiin asetuksiin löytyy sivulta [[doku>config]]. Lisätietoa tästä liitännäisestä löytyy sivulta [[doku>plugin:config]].
 
-Asetukset, jotka näkyvät vaalealla punaisella taustalla ovat suojattuja, eikä niitä voi muutta tämän liitännäisen avulla. Asetukset, jotka näkyvät sinisellä taustalla ovat oletusasetuksia ja asetukset valkoisella taustalla on asetettu paikallisesti tätä asennusta varten. Sekä sinisiä, että valkoisia asetuksia voi muokata.
+Asetukset, jotka näkyvät vaaleanpunaisella taustalla ovat suojattuja, eikä niitä voi muutta tämän liitännäisen avulla. Asetukset, jotka näkyvät sinisellä taustalla ovat oletusasetuksia. Asetukset valkoisella taustalla ovat asetettu paikallisesti tätä asennusta varten. Sekä sinisiä että valkoisia asetuksia voi muokata.
 
-Muista painaa **TALLENNA** nappia ennen, kuin poistut sivulta. Muuten muutoksesi häviävät.
+Muista painaa **TALLENNA**-nappia ennen kuin poistut sivulta. Muuten muutoksesi häviävät.

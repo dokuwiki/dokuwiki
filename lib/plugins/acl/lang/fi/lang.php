@@ -4,6 +4,7 @@
  *
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
+ * @author Teemu Mattila <ghcsystems@gmail.com>
  */
 $lang['admin_acl']             = 'Käyttöoikeudet (ACL)';
 $lang['acl_group']             = 'Ryhmä';

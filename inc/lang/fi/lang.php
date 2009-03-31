@@ -7,6 +7,7 @@
  * @author Matti Pöllä <mpo@iki.fi>
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
+ * @author Teemu Mattila <ghcsystems@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -86,7 +87,7 @@ $lang['resendpwdbadauth']      = 'Tunnistuskoodi on virheellinen. Varmista, ett�
 $lang['resendpwdconfirm']      = 'Varmistuslinkki on lähetetty sähköpostilla';
 $lang['resendpwdsuccess']      = 'Uusi salasanasi on lähetetty sähköpostilla.';
 $lang['license']               = 'Jollei muuta ole mainittu, niin sisältö tässä wikissä on lisensoitu seuraavalla lisenssillä:';
-$lang['licenseok']             = 'Huom: Muokkaamalla tätä sivua suostut lisensoimaan sisällön seuraavan lisenssin alla:';
+$lang['licenseok']             = 'Huom: Muokkaamalla tätä sivua suostut lisensoimaan sisällön seuraavan lisenssin mukaisesti:';
 $lang['txt_upload']            = 'Valitse tiedosto lähetettäväksi';
 $lang['txt_filename']          = 'Lähetä nimellä (valinnainen)';
 $lang['txt_overwrt']           = 'Ylikirjoita olemassa oleva';
@@ -141,7 +142,7 @@ $lang['created']               = 'luotu';
 $lang['restored']              = 'vanha versio palautettu';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
-$lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash pluginnin</a> nähdäksesi tämän sisällön.';
+$lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
 $lang['mail_newpage']          = 'sivu lisätty:';
 $lang['mail_changed']          = 'sivu muutettu:';
 $lang['mail_new_user']         = 'uusi käyttäjä:';
@@ -195,9 +196,9 @@ $lang['i_wikiname']            = 'Wikin nimi';
 $lang['i_enableacl']           = 'Käytä käyttöoikeuksien hallintaa (ACL) (Suositeltu)';
 $lang['i_superuser']           = 'Pääkäyttäjä';
 $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia ongelmia. Et voi jatkaa ennen kuin ne on korjattu.';
-$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattoman Dokuwiki asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwiki asennusohjeen (Englanniksi)</a>';
-$lang['i_funcna']              = 'PHP funktio <code>%s</code> ei ole käytettävissä. Ehkä palveluntarjoajasi on poistanut sen jostain syystä?';
-$lang['i_phpver']              = 'PHP versiosi <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP asennukseni pitää päivittää.';
+$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
+$lang['i_funcna']              = 'PHP:n funktio <code>%s</code> ei ole käytettävissä. Palveluntarjoajasi on saattanut poistaa sen jostain syystä.';
+$lang['i_phpver']              = 'Käyttämäsi PHP-ohjelmiston versio <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP-asennuksesi pitää päivittää.';
 $lang['i_permfail']            = '<code>%s</code> ei ole DokuWikin kirjoitettavissa. Muokkaa hakemiston oikeuksia!';
 $lang['i_confexists']          = '<code>%s</code> on jo olemassa';
 $lang['i_writeerr']            = '<code>%s</code>n luonti epäonnistui. Tarkista hakemiston/tiedoston oikeudet ja luo tiedosto käsin.';
@@ -205,8 +206,8 @@ $lang['i_badhash']             = 'tunnistamaton tai muokattu dokuwiki.php (tarki
 $lang['i_badval']              = '<code>%s</code> - väärä tai tyhjä arvo';
 $lang['i_success']             = 'Kokoonpano tehty onnistuneesti. Voit poistaa install.php tiedoston. Jatka <a href="doku.php">uuteen DokuWikiisi</a>.';
 $lang['i_failure']             = 'Joitain virheitä tapahtui kirjoitettaessa vaadittavia tiedostoja. Sinun pitää korjata ne käsin ennen kuin voit käyttää <a href="doku.php">uutta DokuWikiäsi</a>.';
-$lang['i_policy']              = 'Käyttöoikeuksien oletus menettelytapa';
-$lang['i_pol0']                = 'Avoin Wiki (luku, kirjoitus, tiedostojen lähetys kaikille)';
+$lang['i_policy']              = 'Käyttöoikeuksien oletusmenettelytapa';
+$lang['i_pol0']                = 'Avoin Wiki (luku, kirjoitus, tiedostojen lähetys on sallittu kaikille)';
 $lang['i_pol1']                = 'Julkinen Wiki (luku kaikilla, kirjoitus ja tiedostojen lähetys rekisteröidyillä käyttäjillä)';
 $lang['i_pol2']                = 'Suljettu Wiki (luku, kirjoitus ja tiedostojen lähetys vain rekisteröityneillä käyttäjillä)';
 $lang['i_retry']               = 'Yritä uudelleen';

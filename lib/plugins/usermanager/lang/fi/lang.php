@@ -4,6 +4,7 @@
  *
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
+ * @author Teemu Mattila <ghcsystems@gmail.com>
  */
 $lang['menu']                  = 'Käyttäjähallinta';
 $lang['noauth']                = '(autentikointi ei ole käytössä)';
@@ -32,7 +33,7 @@ $lang['delete_ok']             = '%d käyttäjää poistettu';
 $lang['delete_fail']           = '%d poistoa epäonnistui';
 $lang['update_ok']             = 'Käyttäjän päivitys onnistui';
 $lang['update_fail']           = 'Käyttäjän päivitys epäonnistui';
-$lang['update_exists']         = 'Käyttäjän nimen vaihto epäonnistui. Nimi (%s) on jo olemassa (muut muutokset ok)';
+$lang['update_exists']         = 'Käyttäjän nimen vaihto epäonnistui. Nimi (%s) on jo olemassa (muut muutokset onnistuivat)';
 $lang['start']                 = 'alku';
 $lang['prev']                  = 'edellinen';
 $lang['next']                  = 'seuraava';

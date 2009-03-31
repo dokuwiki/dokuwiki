@@ -4,6 +4,7 @@
  *
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
+ * @author Teemu Mattila <ghcsystems@gmail.com>
  */
 $lang['menu']                  = 'Ylläpidä liitännäisiä';
 $lang['download']              = 'Lataa ja asenna uusi liitännäinen';
@@ -40,7 +41,7 @@ $lang['author']                = 'Tekijä:';
 $lang['www']                   = 'Web:';
 $lang['error']                 = 'Tapahtui tuntematon virhe.';
 $lang['error_download']        = 'Liitännäistiedoston %s latauksessa tapahtui tuntematon virhe.';
-$lang['error_badurl']          = 'Url näyttää olleen väärä. Ei pystytty päättelemään tiedoston nimeä siitä.';
+$lang['error_badurl']          = 'URL vaikuttaa olleen virheellinen. Siitä ei pystytty päättelemään tiedoston nimeä';
 $lang['error_dircreate']       = 'Ei pystytty luomaan väliaikaista hakemistoa latausta varten';
 $lang['error_decompress']      = 'Liitännäishallinta ei pystynyt purkamaan ladattua tiedostoa. Lataus voi olla epäonnistunut. Siinä tapauksessa voit yrittää uudestaan. Pakkaustapa voi myös olla tuntematon. Siinä tapauksessa sinun pitää ladata ja asentaa liitännäinen käsin.';
 $lang['error_copy']            = 'Tiedoston kopioinnissa tapahtui liitännäisen <em>%s</em> asennuksen aikana virhe. Levy voi olla täynnä tai kansioiden oikeudet voivat olla väärin. Liitännäinen voi olla osittain asennettu ja tämä voi jättää wikiasennukseesi epävakaaseen tilaan.';

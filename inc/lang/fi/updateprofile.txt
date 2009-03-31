@@ -1,3 +1,3 @@
 ====== Päivitä käyttäjätilisi profiilia ======
 
-Täytä vain ne kentät, joita haluat muuttaa. Käyttäjä tunnustasi et voi muuttaa.
+Täytä vain ne kentät, joita haluat muuttaa. Et voi muuttaa käyttäjätunnustasi.
