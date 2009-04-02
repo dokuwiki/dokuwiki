@@ -7,6 +7,12 @@ Här är ändringarna:
 @DIFF@
 --------------------------------------------------------
 
+Datum        : @DATE@
+Användare    : @USER@
+Kommentar    : @SUMMARY@
+Gammal sida  : @OLDPAGE@
+Ny sida      : @NEWPAGE@
+
 För att säga upp prenumerationen på den här sidan,
 logga in i wikin på
 @DOKUWIKIURL@ och gå till
