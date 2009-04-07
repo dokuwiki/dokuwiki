@@ -6,11 +6,12 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['menu']                  = 'Administrado de Uzantoj';
 $lang['noauth']                = '(identiĝo de uzantoj ne disponeblas)';
 $lang['nosupport']             = '(admnistro de uzantoj ne estas subtenata)';
-$lang['badauth']               = 'tiu identigxa procezo ne validas';
+$lang['badauth']               = 'tiu identiĝa procezo ne validas';
 $lang['user_id']               = 'Uzanto';
 $lang['user_pass']             = 'Pasvorto';
 $lang['user_name']             = 'Vera Nomo';
@@ -29,7 +30,7 @@ $lang['search_prompt']         = 'Fari serĉon';
 $lang['clear']                 = 'Reekigi Serĉan Filtron';
 $lang['filter']                = 'Filtro';
 $lang['summary']               = 'Montriĝas uzantoj %1$d-%2$d el %3$d trovitaj. %4$d uzantoj entute.';
-$lang['nonefound']             = 'Neniu uzantoj trovigxas. %d uzantoj entute.';
+$lang['nonefound']             = 'Neniu uzantoj troviĝas. %d uzantoj entute.';
 $lang['delete_ok']             = '%d uzantoj estis forigitaj';
 $lang['delete_fail']           = '%d malsukcesis esti forigitaj.';
 $lang['update_ok']             = 'Tiu uzulo estis sukcese ĝisdatigita';

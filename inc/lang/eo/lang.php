@@ -9,6 +9,7 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -135,7 +136,7 @@ $lang['diff']                  = 'Montri diferencojn el la aktuala versio';
 $lang['diff2']                 = 'Montri diferencojn inter la elektitaj revizioj';
 $lang['line']                  = 'Linio';
 $lang['breadcrumb']            = 'Paŝoj';
-$lang['youarehere']            = 'Vi ĉi tie';
+$lang['youarehere']            = 'Vi estas ĉi tie';
 $lang['lastmod']               = 'Lastaj ŝanĝoj';
 $lang['by']                    = 'de';
 $lang['deleted']               = 'forigita';

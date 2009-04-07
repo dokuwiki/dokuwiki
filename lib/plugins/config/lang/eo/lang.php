@@ -6,13 +6,17 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: kompleze reviziu viajn ŝanĝojn kaj resubmetu ilin.
-<br />La malkorekta(j) valoro(j) estas ĉirkaŭita(j) de ruĝa randaĵo.';
+<br />La malkorekta(j) valoro(j) estas ĉirkaŭita(j) de ruĝa kadro.';
 $lang['updated']               = 'La difinoj estis sukcese ĝisdatigitaj.';
 $lang['nochoice']              = '(neniu alia elekto disponeblas)';
 $lang['locked']                = 'La difin-dosiero ne povas esti ĝisdatigita; se tio ne estas intenca, <br /> certiĝu, ke la dosieroj de lokaj difinoj havas korektajn nomojn kaj permesojn.';
+$lang['danger']                = 'Danĝero: ŝanĝo tiun opcion povus igi vian vikion kaj la agordan menuon neatingebla.';
+$lang['warning']               = 'Averto: ŝanĝi tiun opcion povus rezulti en neatendita konduto.';
+$lang['security']              = 'Sekureca averto: ŝanĝi tiun opcion povus krei sekurecan riskon.';
 $lang['_configuration_manager'] = 'Administrilo de Agordoj';
 $lang['_header_dokuwiki']      = 'Difinoj por DokuWiki';
 $lang['_header_plugin']        = 'Difinoj por Kromaĵoj';

@@ -1,3 +1,3 @@
 ====== Administro de Restarigo ======
 
-Tiu cxi paĝo helpas vin pri aŭtomata restarigo el spama atako. Por trovi liston de spamecaj paĝoj, unue mendu serĉan liter-ĉenon (ekz. spama URL), do konfirmu, ke la trovitaj pagxoj fakte estas spamaj kaj restarigu la antaŭajn versiojn bonajn.
+Tiu ĉi paĝo helpas vin pri aŭtomata restarigo el spama atako. Por trovi liston de spamecaj paĝoj, unue mendu serĉan liter-ĉenon (ekz. spama URL), do konfirmu, ke la trovitaj paĝoj fakte estas spamaj kaj restarigu la antaŭajn versiojn bonajn.
