@@ -10,6 +10,7 @@
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
+ * @author snarchio@alice.it
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

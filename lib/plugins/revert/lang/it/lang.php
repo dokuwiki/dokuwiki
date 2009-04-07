@@ -6,6 +6,7 @@
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
+ * @author snarchio@alice.it
  */
 $lang['menu']                  = 'Gestore di ripristini';
 $lang['filter']                = 'Cerca pagine con spam';

@@ -9,6 +9,7 @@
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
+ * @author snarchio@alice.it
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -17,6 +18,9 @@ $lang['updated']               = 'Aggiornamento impostazioni riuscito.';
 $lang['nochoice']              = '(nessun\'altra scelta disponibile)';
 $lang['locked']                = 'Il file di configurazione non può essere aggiornato, se questo non è intenzionale, <br />
                        assicurati che il nome e i permessi del file contenente la configurazione locale siano corretti.';
+$lang['danger']                = 'Attenzione: Cambiare questa opzione può rendere inaccessibile la tua wiki e il menu di configurazione.';
+$lang['warning']               = 'Avviso: Cambiare questa opzione può causare comportamenti indesiderati.';
+$lang['security']              = 'Avviso di sicurezza: Cambiare questa opzione può esporre a rischi di sicurezza.';
 $lang['_configuration_manager'] = 'Configurazione Wiki';
 $lang['_header_dokuwiki']      = 'Impostazioni DokuWiki';
 $lang['_header_plugin']        = 'Impostazioni Plugin';
