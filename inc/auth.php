@@ -88,7 +88,7 @@
             'sticky'   => $_REQUEST['r'],
             'silent'   => $_REQUEST['http_credentials'],
         );
-        $evt = new Doku_Event('AUTH_LOGIN_CHECK',$ACT);
+        $evt = new Doku_Event('AUTH_LOGIN_CHECK',$evdata);
         if($evt->advise_before()){
             auth_login($evdata['user'],
                        $evdata['password'],
