@@ -55,7 +55,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
   $wasRemoved = ($type===DOKU_CHANGE_TYPE_DELETE);
 
   if(!$date) $date = time(); //use current time if none supplied
-  $remote = (!$flagExternalEdit)?$_SERVER['REMOTE_ADDR']:'127.0.0.1';
+  $remote = (!$flagExternalEdit)?clientIP(true):'127.0.0.1';
   $user   = (!$flagExternalEdit)?$_SERVER['REMOTE_USER']:'';
 
   $strip = array("\t", "\n");
@@ -109,7 +109,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
   $id = cleanid($id);
 
   if(!$date) $date = time(); //use current time if none supplied
-  $remote = $_SERVER['REMOTE_ADDR'];
+  $remote = clientIP(true);
   $user   = $_SERVER['REMOTE_USER'];
 
   $strip = array("\t", "\n");

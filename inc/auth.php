@@ -245,12 +245,13 @@ function auth_createToken(){
  * @return  string  a MD5 sum of various browser headers
  */
 function auth_browseruid(){
+  $ip   = clientIP(true);
   $uid  = '';
   $uid .= $_SERVER['HTTP_USER_AGENT'];
   $uid .= $_SERVER['HTTP_ACCEPT_ENCODING'];
   $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
   $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
-  $uid .= substr($_SERVER['REMOTE_ADDR'],0,strpos($_SERVER['REMOTE_ADDR'],'.'));
+  $uid .= substr($ip,0,strpos($ip,'.'));
   return md5($uid);
 }
 
