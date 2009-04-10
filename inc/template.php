@@ -267,7 +267,7 @@ function tpl_metaheaders($alt=true){
                              'title'=>'Current Namespace',
                              'href'=>DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']);
     if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']){
-        $head['link'][] = array( 'rel'=>'alternate', 'type'=>'application/wiki',
+        $head['link'][] = array( 'rel'=>'edit',
                                  'title'=>$lang['btn_edit'],
                                  'href'=> wl($ID,'do=edit',false,'&'));
     }
