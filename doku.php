@@ -63,7 +63,7 @@
   }
 
   //prepare breadcrumbs (initialize a static var)
-  breadcrumbs();
+  if ($conf['breadcrumbs']) breadcrumbs();
 
   // check upstream
   checkUpdateMessages();
