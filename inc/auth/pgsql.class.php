@@ -196,7 +196,7 @@ class auth_pgsql extends auth_mysql {
         $sql = $this->cnf['addUserGroup'];
         if(strpos($sql,'%{uid}') !== false){
             $uid = $this->_getUserID($user);
-            $sql = str_replace('%{uid}', $uid, $sql);
+            $sql = str_replace('%{uid}', addslashes($uid), $sql);
         }
         $sql = str_replace('%{user}', addslashes($user),$sql);
         $sql = str_replace('%{gid}',  addslashes($gid),$sql);
