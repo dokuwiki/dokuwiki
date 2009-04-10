@@ -6,6 +6,7 @@
  * @author Oleksiy Voronin (ovoronin@gmail.com)
  * @author serg_stetsuk@ukr.net
  * @author okunia@gmail.com
+ * @author Oleksandr Kunytsia <okunia@gmail.com>
  */
 $lang['menu']                  = 'Керування доданками';
 $lang['download']              = 'Завантажити та встановити новий доданок';

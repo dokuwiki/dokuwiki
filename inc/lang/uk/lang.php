@@ -6,6 +6,7 @@
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
  * @author okunia@gmail.com
+ * @author Oleksandr Kunytsia <okunia@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -17,7 +18,6 @@ $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Редагувати';
 $lang['btn_source']            = 'Показати вихідний текст';
 $lang['btn_show']              = 'Показати сторінку';
-$lang['btn_show_print_view']   = 'Версія для друку';
 $lang['btn_create']            = 'Створити сторінку';
 $lang['btn_search']            = 'Пошук';
 $lang['btn_save']              = 'Зберегти';
