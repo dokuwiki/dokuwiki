@@ -38,6 +38,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
   function document_start(){
     global $ID;
+
+    $this->headers = array();
+
     // external pages are missing create date
     if(!$this->persistent['date']['created']){
         $this->persistent['date']['created'] = filectime(wikiFN($ID));
@@ -433,21 +436,12 @@ class Doku_Renderer_metadata extends Doku_Renderer {
    * @author Andreas Gohr <andi@splitbrain.org>
    */
   function _headerToLink($title, $create=false) {
-    $title = str_replace(':','',cleanID($title));
-    $title = ltrim($title,'0123456789._-');
-    if(empty($title)) $title='section';
-
-    if($create){
-      // make sure tiles are unique
-      $num = '';
-      while(in_array($title.$num,$this->headers)){
-        ($num) ? $num++ : $num = 1;
+      if($create){
+          return sectionID($title,$this->headers);
+      }else{
+          $check = false;
+          return sectionID($title,$check);
       }
-      $title = $title.$num;
-      $this->headers[] = $title;
-    }
-
-    return $title;
   }
 
   /**
