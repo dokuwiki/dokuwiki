@@ -11,6 +11,7 @@
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
+ * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
