@@ -1,13 +1,13 @@
-Engadiuse ou mudouse unha páxina no teu DokuWiki. Aquí van os pormenores:
+Engadiuse ou modificouse unha páxina do seu DokuWiki. Aquí van os detalles:
 
-Data            : @DATE@
-Navegador       : @BROWSER@
-Enderezo IP     : @IPADDRESS@
-Nome de Host    : @HOSTNAME@
-Antiga Revisión : @OLDPAGE@
-Nova Revision   : @NEWPAGE@
-Resumo da Edción: @SUMMARY@
-Usuario         : @USER@
+Data              : @DATE@
+Navegador         : @BROWSER@
+Enderezo IP       : @IPADDRESS@
+Nome do host      : @HOSTNAME@
+Revisión antiga   : @OLDPAGE@
+Revision nova     : @NEWPAGE@
+Resumo da edición : @SUMMARY@
+Usuaria/o         : @USER@
 
 @DIFF@
 

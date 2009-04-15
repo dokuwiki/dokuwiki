@@ -1,18 +1,18 @@
 Ola!
 
 A páxina @PAGE@ na wiki @TITLE@ foi mudada.
-Aquí van os trocos:
+Aquí van as modificacións:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Para desubscribirte deste rexistro de trocos de páxina
+Para desubscribirte deste rexistro de cambios de páxina
 na wiki en
 @DOKUWIKIURL@
 fai unha visita a
 @NEWPAGE@
-e escolle 'Xa non me avises dos trocos'.
+e selecciona 'Non avisar dos cambios'.
 
 -- 
 Este correo foi xerado polo DokuWiki en

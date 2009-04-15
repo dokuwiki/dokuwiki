@@ -1,4 +1,4 @@
-====== Ligazóns con isto ======
+====== Ligazóns entrantes ======
 
-Isto é unha lista de páxinas que semellan ligar coa páxina actual.
+Isto é unha listaxe de páxinas que parecen estar vinculadas á páxina actual.
 
