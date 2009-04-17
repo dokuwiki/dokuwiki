@@ -6,6 +6,7 @@
  * @author Davilin(Yuji Takenaka) <webmaster@davilin.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
+ * @author Daniel Dupriest <kououken@gmail.com>
  */
 $lang['admin_acl']             = 'アクセスコントロール管理';
 $lang['acl_group']             = 'グループ';

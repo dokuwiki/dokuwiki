@@ -6,6 +6,7 @@
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
+ * @author Daniel Dupriest <kououken@gmail.com>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
@@ -14,6 +15,9 @@ $lang['updated']               = '設定は正しく更新されました。';
 $lang['nochoice']              = '（他の選択肢はありません）';
 $lang['locked']                = '設定用ファイルを更新できません。もし意図して変更不可にしているのでなければ、<br />
                        ローカル設定ファイルの名前と権限を確認して下さい。';
+$lang['danger']                = '危険：この設定を変更するとウィキや設定管理画面にアクセスできなくなる恐れがあります。';
+$lang['warning']               = '注意：この設定を変更すると意図しない作動につながる可能性があります。';
+$lang['security']              = '警告：この設定を変更するとセキュリティに悪影響する恐れがあります。';
 $lang['_configuration_manager'] = '設定管理';
 $lang['_header_dokuwiki']      = 'DokuWiki';
 $lang['_header_plugin']        = 'プラグイン';
