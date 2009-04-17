@@ -11,12 +11,16 @@
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author VictorCastelan <victorcastelan@gmail.com>
  * @author Jordan Mero  hack.jord@gmail.com
+ * @author Felipe Martinez <metalmartinez@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
 $lang['updated']               = 'Los parámetros se actualizaron con exito.';
 $lang['nochoice']              = '(no hay otras alternativas disponibles)';
 $lang['locked']                = 'El archivo de configuración no ha podido ser actualizado, si esto no es lo deseado, <br /> asegúrese que el nombre del archivo local de configuraciones y los permisos sean los correctos.';
+$lang['danger']                = 'Atención: Cambiar esta opción podría hacer inaccesible el wiki y su menu de configuración.';
+$lang['warning']               = 'Advertencia:  Cambiar esta opción podría causar comportamientos inintencionales.';
+$lang['security']              = 'Advertencia de Seguridad: Cambiar esta opción podría representar un riesgo de seguridad.';
 $lang['_configuration_manager'] = 'Administrador de configuración';
 $lang['_header_dokuwiki']      = 'Parámetros de DokuWiki';
 $lang['_header_plugin']        = 'Parámetros de Plugin';

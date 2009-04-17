@@ -11,6 +11,7 @@
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author VictorCastelan <victorcastelan@gmail.com>
  * @author Jordan Mero  hack.jord@gmail.com
+ * @author Felipe Martinez <metalmartinez@gmail.com>
  */
 $lang['admin_acl']             = 'Administración de lista de control de acceso';
 $lang['acl_group']             = 'Grupo';
