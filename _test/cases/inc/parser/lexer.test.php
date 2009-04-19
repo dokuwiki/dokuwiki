@@ -446,7 +446,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
 		$handler->expectCallCount("caught", 5);
         
 		$lexer = &new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern('<file>(?=.*\x3C/file\x3E)', "ignore", "caught");
+		$lexer->addEntryPattern('<file>(?=.*</file>)', "ignore", "caught");
 		$lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
         $lexer->mapHandler('special','caught');
@@ -590,7 +590,36 @@ class TestOfLexerByteIndices extends UnitTestCase {
 		$this->assertTrue($lexer->parse($doc));
 		$handler->tally();
 	}
-    
+
+    /**
+     * This test is primarily to ensure the correct match is chosen
+     * when there are non-captured elements in the pattern.
+     */
+    function testIndexSelectCorrectMatch() {
+        $doc = "ALL FOOLS ARE FOO";
+        $pattern = '\bFOO\b';
+
+        $handler = &new MockTestParserByteIndex($this);
+        $handler->setReturnValue("ignore", true);
+        $handler->setReturnValue("caught", true);
+
+        $matches = array();
+        preg_match('/'.$pattern.'/',$doc,$matches,PREG_OFFSET_CAPTURE);
+
+        $handler->expectArgumentsAt(
+            0,
+            "caught",
+            array("FOO", DOKU_LEXER_SPECIAL, $matches[0][1])
+            );
+        $handler->expectCallCount("caught", 1);
+
+        $lexer = &new Doku_Lexer($handler, "ignore");
+        $lexer->addSpecialPattern($pattern,'ignore','caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $handler->tally();
+    }
+
 }
 
 ?>

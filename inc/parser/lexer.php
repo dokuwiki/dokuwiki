@@ -136,10 +136,9 @@ class Doku_LexerParallelRegex {
         }
 
         $idx = count($matches)-2;
-
         list($pre, $post) = preg_split($this->_patterns[$idx].$this->_getPerlMatchingFlags(), $subject, 2);
-
         $split = array($pre, $matches[0], $post);
+
         return isset($this->_labels[$idx]) ? $this->_labels[$idx] : true;
     }
 

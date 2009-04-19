@@ -40,6 +40,23 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    function testPickAcronymCorrectly() {
+        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO')));
+        $this->P->parse('ALL FOOLS ARE FOO');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'ALL FOOLS ARE ')),
+            array('acronym',array('FOO')),
+            array('cdata',array("\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
     function testMultipleAcronyms() {
         $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO','BAR')));
         $this->P->parse('abc FOO def BAR xyz');
