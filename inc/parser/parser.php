@@ -611,6 +611,7 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
     var $pattern = '';
 
     function Doku_Parser_Mode_acronym($acronyms) {
+    	usort($acronyms,array($this,'_compare'));
         $this->acronyms = $acronyms;
     }
 
@@ -632,6 +633,21 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
 
     function getSort() {
         return 240;
+    }
+
+    /**
+     * sort callback to order by string length descending
+     */
+    function _compare($a,$b) {
+        $a_len = strlen($a);
+        $b_len = strlen($b);
+        if ($a_len > $b_len) {
+          return -1;
+        } else if ($a_len < $b_len) {
+          return 1;
+        }
+
+    	return 0;
     }
 }
 
