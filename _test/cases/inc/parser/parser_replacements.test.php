@@ -42,12 +42,12 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
     function testPickAcronymCorrectly() {
         $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO')));
-        $this->P->parse('ALL FOOLS ARE FOO');
+        $this->P->parse('FOOBAR FOO');
 
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\n".'ALL FOOLS ARE ')),
+            array('cdata',array("\n".'FOOBAR ')),
             array('acronym',array('FOO')),
             array('cdata',array("\n")),
             array('p_close',array()),
@@ -75,6 +75,52 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
 
+    }
+
+    function testMultipleAcronymsWithSubset1() {
+        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO','A.FOO','FOO.1','A.FOO.1')));
+        $this->P->parse('FOO A.FOO FOO.1 A.FOO.1');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n")),
+            array('acronym',array('FOO')),
+            array('cdata',array(" ")),
+            array('acronym',array('A.FOO')),
+            array('cdata',array(" ")),
+            array('acronym',array('FOO.1')),
+            array('cdata',array(" ")),
+            array('acronym',array('A.FOO.1')),
+            array('cdata',array("\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testMultipleAcronymsWithSubset2() {
+        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('A.FOO.1','FOO.1','A.FOO','FOO')));
+        $this->P->parse('FOO A.FOO FOO.1 A.FOO.1');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n")),
+            array('acronym',array('FOO')),
+            array('cdata',array(" ")),
+            array('acronym',array('A.FOO')),
+            array('cdata',array(" ")),
+            array('acronym',array('FOO.1')),
+            array('cdata',array(" ")),
+            array('acronym',array('A.FOO.1')),
+            array('cdata',array("\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
     function testSingleSmileyFail() {
