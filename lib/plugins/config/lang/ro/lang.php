@@ -5,12 +5,16 @@
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author s_baltariu@yahoo.com
  * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
+ * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  */
 $lang['menu']                  = 'Setări de Configurare';
 $lang['error']                 = 'Setări nu au fost actualizate datorită unei valori incorecte; verificaţi modificările şi încercaţi din nou. <br /> Valorile incorecte vor apărea într-un chenar roşu.';
 $lang['updated']               = 'Setările au fost actualizate cu succes.';
 $lang['nochoice']              = '(nici o altă opţiune nu este disponibilă)';
 $lang['locked']                = 'Fişierul de setări nu poate fi actualizat. Dacă nu s-a dorit aceasta, asiguraţi-vă că numele şi drepturile de acces ale fişierului de setări localizate sunt corecte.';
+$lang['danger']                = 'Pericol: Modificarea aceastei opțiuni poate conduce la imposibilitatea accesării wiki-ului și a meniului de configurare!';
+$lang['warning']               = 'Atenție: Modificarea aceastei opțiuni poate duce la evenimente nedorite!';
+$lang['security']              = 'Alertă de securitate: Modificarea acestei opțiuni poate prezenta un risc de securitate!';
 $lang['_configuration_manager'] = 'Manager Configurare';
 $lang['_header_dokuwiki']      = 'Setări DokuWiki';
 $lang['_header_plugin']        = 'Setări Plugin-uri';
