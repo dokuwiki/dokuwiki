@@ -9,6 +9,7 @@
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
+ * @author Lisa Ditlefsen <lisa@vervesearch.com>
  */
 $lang['menu']                  = 'Behandle tillegg';
 $lang['download']              = 'Last ned og installer et tillegg';

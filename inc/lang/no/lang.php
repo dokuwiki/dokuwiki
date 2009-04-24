@@ -13,6 +13,7 @@
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
+ * @author Lisa Ditlefsen <lisa@vervesearch.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -111,6 +112,7 @@ $lang['uploadexist']           = 'Filen eksisterer. Ingenting har blitt gjort.';
 $lang['uploadbadcontent']      = 'Det opplastede innholdet passer ikke til filendelsen %s.';
 $lang['uploadspam']            = 'Opplastingen ble blokkert av svartelisten for spam.';
 $lang['uploadxss']             = 'Opplastingen ble blokkert på grunn av mulig skadelig innhold.';
+$lang['uploadsize']            = 'Den opplastede filen var for stor. (max. %s)';
 $lang['deletesucc']            = 'Filen "%s" har blitt slettet.';
 $lang['deletefail']            = '"%s" kunne ikke slettes - sjekk rettighetene.';
 $lang['mediainuse']            = 'Filen "%s" har ikke biltt slettet - den er fortsatt i bruk.';

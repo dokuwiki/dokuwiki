@@ -9,6 +9,7 @@
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
+ * @author Lisa Ditlefsen <lisa@vervesearch.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -18,6 +19,11 @@ $lang['nochoice']              = '(ingen andre mulige valg)';
 $lang['locked']                = 'Innstillingene kan ikke oppdateres. Hvis dette ikke er meningen,<br />
 forsikre deg om at fila med de lokale innstillingene har korrekt filnavn<br/>
 og tillatelser.';
+$lang['danger']                = 'Advarsel: Endrig av dette valget kan føre til at wiki og konfigurasjon menyen ikke blir tilgjengelig.';
+$lang['warning']               = 'Advarsel: Endring av dette valget kan føre til utilsiktede atferd.
+
+';
+$lang['security']              = 'Sikkerhets Advarsel: Endring av dette valget kan føre til sikkerhetsrisiko.';
 $lang['_configuration_manager'] = 'Konfigurasjonsinnstillinger';
 $lang['_header_dokuwiki']      = 'Innstillinger for DokuWiki';
 $lang['_header_plugin']        = 'Innstillinger for tillegg';
@@ -178,6 +184,7 @@ $lang['showuseras_o_loginname'] = 'Brukernavn';
 $lang['showuseras_o_username'] = 'Brukerens fulle navn';
 $lang['showuseras_o_email']    = 'Brukerens epostadresse (tilpasset i henhold til mailguar-instilling)';
 $lang['showuseras_o_email_link'] = 'Brukerens epost-addresse som "mailto:"-lenke';
+$lang['useheading_o_0']        = 'Aldri';
 $lang['useheading_o_navigation'] = 'Kun navigering';
 $lang['useheading_o_content']  = 'Kun wiki-innhold';
 $lang['useheading_o_1']        = 'Alltid';

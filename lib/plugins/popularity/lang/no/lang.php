@@ -6,6 +6,7 @@
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
+ * @author Lisa Ditlefsen <lisa@vervesearch.com>
  */
 $lang['name']                  = 'Popularitetsfeedback (kan ta litt tid å laste)';
 $lang['submit']                = 'Send data';
