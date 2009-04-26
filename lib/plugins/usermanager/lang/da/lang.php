@@ -5,6 +5,7 @@
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
+ * @author Harith <haj@berlingske.dk>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(brugervalidering er ikke tilgængelig)';

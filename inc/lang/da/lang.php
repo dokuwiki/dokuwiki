@@ -8,6 +8,7 @@
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
+ * @author Harith <haj@berlingske.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -106,6 +107,7 @@ $lang['uploadexist']           = 'Filen eksisterer allerede.';
 $lang['uploadbadcontent']      = 'Upload indhold matchede ikke %s fil-endelsen.';
 $lang['uploadspam']            = 'Upload blev blokeret af spam sortlisten.';
 $lang['uploadxss']             = 'Upload blev blokeret på grund af mulig skadeligt indhold.';
+$lang['uploadsize']            = 'Den oploadede fil var for stor (max. %s)';
 $lang['deletesucc']            = 'Filen "%s" er blevet slettet.';
 $lang['deletefail']            = '"%s" kunne ikke slettes - check rettighederne.';
 $lang['mediainuse']            = 'Filen "%s" er ikke slettet - den er stadig i brug.';
@@ -141,6 +143,7 @@ $lang['created']               = 'oprettet';
 $lang['restored']              = 'gammel udgave reetableret';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigerings resume';
+$lang['noflash']               = 'Den <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> er nødvendig til at vise denne indehold.';
 $lang['mail_newpage']          = 'dokument tilføjet:';
 $lang['mail_changed']          = 'dokument ændret:';
 $lang['mail_new_user']         = 'Ny bruger';

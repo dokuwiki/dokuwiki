@@ -4,6 +4,7 @@
  *
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
+ * @author Harith <haj@berlingske.dk>
  */
 $lang['menu']                  = 'Gendannelses Manager';
 $lang['filter']                = 'Søg efter sider som ligner spam';

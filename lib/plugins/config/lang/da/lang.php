@@ -6,6 +6,7 @@
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
+ * @author Harith <haj@berlingske.dk>
  */
 $lang['menu']                  = 'Konfigurationsindstillinger';
 $lang['error']                 = 'Indstillingerne blev ikke opdateret på grund af en ugyldig værdi, gennemse venligst dine ændringer og gem dem igen.
@@ -14,6 +15,9 @@ $lang['updated']               = 'Indstillingerne blev opdateret korrekt.';
 $lang['nochoice']              = '(ingen andre valgmuligheder)';
 $lang['locked']                = 'Indstillingsfilen kunne ikke opdateres, hvis dette er en fejl, <br />
                        sørg da for at den lokale indstillingsfils navn og rettigheder er korrekte.';
+$lang['danger']                = 'Fare: Ændring af denne mulighed kan gøre din wiki og konfiguration menu utilgænglig.';
+$lang['warning']               = 'Advarelse: Ændring af denne mulighed kan forårsage utilsigtet opførsel.';
+$lang['security']              = 'Sikkerheds advarelse: Ændring af denne mulighed kan forårsage en sikkerhedsrisiko.';
 $lang['_configuration_manager'] = 'Konfigurationsstyring';
 $lang['_header_dokuwiki']      = 'DokuWiki indstillinger';
 $lang['_header_plugin']        = 'Pluginindstillinger';

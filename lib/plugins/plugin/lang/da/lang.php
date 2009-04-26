@@ -6,6 +6,7 @@
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
+ * @author Harith <haj@berlingske.dk>
  */
 $lang['menu']                  = 'Håndter plugins';
 $lang['download']              = 'Download og installer nyt plugin';
@@ -47,3 +48,7 @@ $lang['error_dircreate']       = 'Kunne ikke oprette midlertidig mappe til downl
 $lang['error_decompress']      = 'Pluginhåndtering kunne ikke dekomprimere den downloadede fil. Det kan skyldes et fejlagtigt download, og i så fald så prøv igen; eller komprimeringsformatet kan være ukendt, så du er nødt til at downloade og installere plugin\'et manuelt.';
 $lang['error_copy']            = 'Der opstod en filkopieringsfejl under forsøget på at installere filerne til plugin <em>%s</em>: disken kan være fuld eller filadgangsrettighederne kan være forkert sat. Dette kan have ført til et delvist installeret plugin og efterladt din wiki installation ustabil.';
 $lang['error_delete']          = 'Der opstod en fejl ved forsøget på at slette plugin <em>%s</em>.  Dette skyldes sandsynligvis utilstrækkelig adgang til filer eller mapper.';
+$lang['enabled']               = 'Plugin %s aktiveret.';
+$lang['notenabled']            = 'Plugin %s kunne ikke aktiveres, tjek fil tilladelser.';
+$lang['disabled']              = 'Plugin %s ikke aktiveret.';
+$lang['notdisabled']           = 'Plugin %s kunne ikke aktiveres, tjek fil tilladelser.';
