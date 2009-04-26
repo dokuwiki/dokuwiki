@@ -6,6 +6,7 @@
  * @author John de Graaff <john@de-graaff.net>
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
+ * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  */
 $lang['menu']                  = 'Plugins beheren';
 $lang['download']              = 'Download en installeer een nieuwe plugin';

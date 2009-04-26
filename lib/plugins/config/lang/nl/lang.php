@@ -8,12 +8,16 @@
  * @author John de Graaff <john@de-graaff.net>
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
+ * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
 $lang['updated']               = 'Instellingen met succes opgeslagen.';
 $lang['nochoice']              = '(geen andere keuzemogelijkheden)';
 $lang['locked']                = 'Het bestand met instellingen kan niet worden gewijzigd. Als dit niet de bedoeling <br /> is, controleer dan de naam en de permissies voor het lokale installingenbestand.';
+$lang['danger']                = 'Gevaar: Het wijzigen van deze optie kan er voor zorgen dat uw wiki en het configuratiemenu niet langer toegankelijk zijn.';
+$lang['warning']               = 'Waarschuwing: Het wijzigen van deze optie kan onverwachte gedragingen veroorzaken.';
+$lang['security']              = 'Beveiligingswaarschuwing: Het wijzigen van deze optie kan een beveiligingsrisico inhouden.';
 $lang['_configuration_manager'] = 'Configuratiemanager';
 $lang['_header_dokuwiki']      = 'DokuWiki-instellingen';
 $lang['_header_plugin']        = 'Plugin-instellingen';

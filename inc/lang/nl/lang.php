@@ -10,6 +10,7 @@
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
  * @author Dion Nicolaas <dion@nicolaas.net>
+ * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
