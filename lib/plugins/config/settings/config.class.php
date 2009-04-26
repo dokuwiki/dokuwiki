@@ -528,8 +528,35 @@ if (!class_exists('setting_password')) {
 }
 
 if (!class_exists('setting_email')) {
+
+  require_once(DOKU_INC.'inc/mail.php');
+  if (!defined('SETTING_EMAIL_PATTERN')) define('SETTING_EMAIL_PATTERN','<^'.PREG_PATTERN_VALID_EMAIL.'$>');
+
   class setting_email extends setting_string {
-    var $_pattern = '#^\s*(([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)(,\s*([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+))*)?\s*$#i';
+    var $_pattern = SETTING_EMAIL_PATTERN;       // no longer required, retained for backward compatibility - FIXME, may not be necessary
+
+    /**
+     *  update setting with user provided value $input
+     *  if value fails error check, save it
+     *
+     *  @return true if changed, false otherwise (incl. on error)
+     */
+    function update($input) {
+        if (is_null($input)) return false;
+        if ($this->is_protected()) return false;
+
+        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        if ($value == $input) return false;
+
+        if (!mail_isvalid($input)) {
+          $this->_error = true;
+          $this->_input = $input;
+          return false;
+        }
+
+        $this->_local = $input;
+        return true;
+    }
   }
 }
 
@@ -563,7 +590,7 @@ if (!class_exists('setting_richemail')) {
           $addr = $test;
         }
 
-        if ($this->_pattern && !preg_match($this->_pattern,$addr)) {
+        if (!mail_isvalid($addr)) {
           $this->_error = true;
           $this->_input = $input;
           return false;
