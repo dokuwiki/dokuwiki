@@ -824,7 +824,7 @@ $p_add, $p_rem);
 
   function _extractList($p_to, $p_files, $p_remdir, $p_mode = 0755)
   {
-    if (!$p_to || ($p_to[0]!="/"&&substr($p_to,0,3)!="../"&&substr($p_to,1,2)!=":\\")) /*" // <- PHP Coder bug */
+    if (!$p_to || ($p_to[0]!="/"&&substr($p_to,0,3)!="../"&&substr($p_to,1,3)!=":\\"&&substr($p_to,1,2)!=":/")) /*" // <- PHP Coder bug */
       $p_to = "./$p_to";
 
     if ($p_remdir && substr($p_remdir,-1)!='/') $p_remdir .= '/';
