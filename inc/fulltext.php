@@ -303,10 +303,18 @@ function ft_snippet($id,$highlight){
     $len = utf8_strlen($text);
 
     // build a regexp from the phrases to highlight
-    $re = join('|',array_map('preg_quote_cb',array_filter((array) $highlight)));
+    $re1 = '('.join('|',array_map('preg_quote_cb',array_filter((array) $highlight))).')';
+    $re2 = "$re1.{0,75}(?!\\1)$re1";
+    $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
-    for ($cnt=3; $cnt--;) {
-      if (!preg_match('#('.$re.')#iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) break;
+    for ($cnt=4; $cnt--;) {
+      if (0) {
+      } else if (preg_match('/'.$re3.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+      } else if (preg_match('/'.$re2.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+      } else if (preg_match('/'.$re1.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+      } else {
+        break;
+      }
 
       list($str,$idx) = $match[0];
 
@@ -357,8 +365,8 @@ function ft_snippet($id,$highlight){
     }
 
     $m = "\1";
-    $snippets = preg_replace('#('.$re.')#iu',$m.'$1'.$m,$snippets);
-    $snippet = preg_replace('#'.$m.'([^'.$m.']*?)'.$m.'#iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
+    $snippets = preg_replace('/'.$re1.'/iu',$m.'$1'.$m,$snippets);
+    $snippet = preg_replace('/'.$m.'([^'.$m.']*?)'.$m.'/iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
 
     return $snippet;
 }
