@@ -24,18 +24,21 @@ header('Content-Type: text/html; charset=utf-8');
 
 //call the requested function
 if(isset($_POST['call']))
-  $call = 'ajax_'.$_POST['call'];
+  $call = $_POST['call'];
 else if(isset($_GET['call']))
-  $call = 'ajax_'.$_GET['call'];
+  $call = $_GET['call'];
 else
   exit;
-if(function_exists($call)){
-  $call();
+
+$callfn = 'ajax_'.$call;
+
+if(function_exists($callfn)){
+  $callfn();
 }else{
-  $call = $_POST['call'];
   $evt = new Doku_Event('AJAX_CALL_UNKNOWN', $call);
   if ($evt->advise_before()) {
-    print "AJAX call '".htmlspecialchars($_POST['call'])."' unknown!\n";
+    print "AJAX call '".htmlspecialchars($call)."' unknown!\n";
+    exit;
   }
   $evt->advise_after();
   unset($evt);
