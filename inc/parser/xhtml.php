@@ -32,7 +32,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     var $headers = array();
     var $footnotes = array();
-    var $lastsec = 0;
+    var $pnid = 0;
+    var $lastlevel = 0;
+    var $node = array(0,0,0,0,0);
     var $store = '';
 
     var $_counter = array(); // used as global counter, introduced for table classes
@@ -92,6 +94,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // make sure there are no empty paragraphs
         $this->doc = preg_replace('#<p>\s*</p>#','',$this->doc);
+        if ($conf['purplenumbers']) $this->doc = preg_replace('#<p[^>]*>\s*<!--PN-->.*?(?:</p>)#','',$this->doc);
     }
 
     function toc_additem($id, $text, $level) {
@@ -104,6 +107,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function header($text, $level, $pos) {
+        global $conf;
+        global $lang;
         if(!$text) return; //skip empty headlines
 
         $hid = $this->_headerToLink($text,true);
@@ -111,10 +116,22 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //only add items within configured levels
         $this->toc_additem($hid, $text, $level);
 
+        // adjust $node to reflect hierarchy of levels
+        $this->node[$level-1]++;
+        if ($level < $this->lastlevel) {
+            for ($i = 0; $i < $this->lastlevel-$level; $i++) {
+                $this->node[$this->lastlevel-$i-1] = 0;
+            }
+        }
+        $this->pnid = 0;
+        $this->lastlevel = $level;
+
         // write the header
         $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$hid.'" id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</a></h$level>".DOKU_LF;
+        $this->doc .= "</a>";
+        if ($conf['purplenumbers']) $this->doc .= " <a href='#$hid' class='pn' title='".$lang['sectionlink']."'>§</a>";
+        $this->doc .= "</h$level>".DOKU_LF;
     }
 
      /**
@@ -146,11 +163,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function p_open() {
-        $this->doc .= DOKU_LF.'<p>'.DOKU_LF;
+        $this->doc .= DOKU_LF.'<p'.$this->_getPurpleNumberID().'>'.DOKU_LF;
     }
 
     function p_close() {
-        $this->doc .= DOKU_LF.'</p>'.DOKU_LF;
+        $this->doc .= DOKU_LF.$this->_getPurpleNumberLink().'</p>'.DOKU_LF;
     }
 
     function linebreak() {
@@ -283,7 +300,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function listitem_open($level) {
-        $this->doc .= '<li class="level'.$level.'">';
+        $this->doc .= '<li class="level'.$level.'"'.$this->_getPurpleNumberID().'>';
     }
 
     function listitem_close() {
@@ -295,7 +312,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function listcontent_close() {
-        $this->doc .= '</div>'.DOKU_LF;
+        $this->doc .= $this->_getPurpleNumberLink().'</div>'.DOKU_LF;
     }
 
     function unformatted($text) {
@@ -348,11 +365,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function preformatted($text) {
-        $this->doc .= '<pre class="code">' . $this->_xmlEntities($text) . '</pre>'. DOKU_LF;
+        $this->doc .= '<pre class="code"'.$this->_getPurpleNumberID().'>' . trim($this->_xmlEntities($text)) . $this->_getPurpleNumberLink(). '</pre>'. DOKU_LF;
     }
 
     function file($text) {
-        $this->doc .= '<pre class="file">' . $this->_xmlEntities($text). '</pre>'. DOKU_LF;
+        $this->doc .= '<pre class="file"'.$this->_getPurpleNumberID().'>' . trim($this->_xmlEntities($text)). $this->_getPurpleNumberLink(). '</pre>'. DOKU_LF;
     }
 
     function quote_open() {
@@ -812,11 +829,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function table_open($maxcols = NULL, $numrows = NULL){
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
-        $this->doc .= '<table class="inline">'.DOKU_LF;
+        $this->doc .= '<table class="inline"'.$this->_getPurpleNumberID().'>'.DOKU_LF;
     }
 
     function table_close(){
-        $this->doc .= '</table>'.DOKU_LF;
+        $this->doc .= '</table>'.$this->_getPurpleNumberLink(1).DOKU_LF;
     }
 
     function tablerow_open(){
@@ -1084,6 +1101,61 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         return $link;
     }
+
+    /**
+     * Builds unique Hierarchical ID:
+     * If $conf['purplenumbers'] is 2, it is unique per site,
+     * otherwise it is unique per page.
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     */
+    function _getHID($noprefix=0) {
+        global $conf;
+        if ($noprefix) {
+            $prefix = '';
+        } else if ($conf['purplenumbers']==2) {
+            global $ID;
+            $prefix = $ID.'.';
+        } else {
+            $prefix = 'HID';
+        }
+        return $prefix.rtrim(join('.',$this->node),'.0').rtrim(':'.$this->pnid,':0');
+    }
+
+    /**
+     * Equips each designated element with a Purple Number (Hierarchical ID).
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     */
+    function _getPurpleNumberID() {
+        global $conf;
+        $this->pnid++;
+        if ($conf['purplenumbers']) {
+            return ' id="'.$this->_getHID().'"';
+        }
+        return '';
+    }
+
+    /**
+     * Creates a link to the current Purple Number (Hierarchical ID).
+     * If the link cannot be inside its corresponding element (e.g. tables),
+     * $outside is set and p.pnlink is added around the link.
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     */
+    function _getPurpleNumberLink($outside=0) {
+        global $conf;
+        if ($conf['purplenumbers']) {
+            global $lang;
+            $pnlink = '<a href="#'.$this->_getHID().'" class="pn" title="'.$lang['sectionlink'].'">¶</a>';
+            if ($outside) {
+                return '<p class="pnlink">'.$pnlink.'</p>';
+            }
+            return ' <!--PN-->'.$pnlink;
+        }
+        return '';
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
