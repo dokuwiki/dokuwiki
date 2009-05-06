@@ -1122,7 +1122,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         } else {
             $prefix = 'HID';
         }
-        return $prefix.preg_replace('/[\.0]*$/','',join('.',$this->node)).str_replace(':0','',':'.$this->pnid);
+        return $prefix.preg_replace('/(\.0)*$/','',join('.',$this->node)).str_replace(':0','',':'.$this->pnid);
     }
 
     /**
