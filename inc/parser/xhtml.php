@@ -94,7 +94,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // make sure there are no empty paragraphs
         $this->doc = preg_replace('#<p>\s*</p>#','',$this->doc);
-        if ($conf['purplenumbers']) $this->doc = preg_replace('#<p[^>]*>\s*<!--PN-->.*?(?:</p>)#','',$this->doc);
+        if ($conf['purplenumbers']) {
+            $this->doc = preg_replace('#<p[^>]*>\s*<!--PN-->.*?(?:</p>)#','',$this->doc);
+            $this->doc = preg_replace('/<!--PN-->/','',$this->doc);
+        }
     }
 
     function toc_additem($id, $text, $level) {
@@ -1119,7 +1122,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         } else {
             $prefix = 'HID';
         }
-        return $prefix.rtrim(join('.',$this->node),'.0').rtrim(':'.$this->pnid,':0');
+        return $prefix.preg_replace('/[\.0]*$/','',join('.',$this->node)).str_replace(':0','',':'.$this->pnid);
     }
 
     /**
