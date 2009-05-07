@@ -12,6 +12,8 @@ $lang['updated']               = 'Nastavenia úspešne aktualizované.';
 $lang['nochoice']              = '(žiadne ďalšie dostupné voľby)';
 $lang['locked']                = 'Súbor s nastaveniami nemôže byť aktualizovaný, ak toto nie je zámerom, <br />
 uistite sa, že názov a práva lokálneho súboru sú správne.';
+$lang['danger']                = 'Nebezpečie: Zmeny tohto nastavenia môžu spôsobiť nedostupnosť wiki a nastavovacieho menu.';
+$lang['security']              = 'Bezpečnostné riziko: Zmenou tohto nastavenie môže vzniknúť bezpečnostné riziko.';
 $lang['_configuration_manager'] = 'Správa konfigurácie';
 $lang['_header_dokuwiki']      = 'Nastavenia DokuWiki';
 $lang['_header_plugin']        = 'Nastavenia plug-inov';
@@ -28,6 +30,8 @@ $lang['_advanced']             = 'Rozšírené nastavenia';
 $lang['_network']              = 'Nastavenia siete';
 $lang['_plugin_sufix']         = 'Nastavenia plug-inu';
 $lang['_template_sufix']       = 'Nastavenia šablóny';
+$lang['_msg_setting_undefined'] = 'Nenastavené metadata.';
+$lang['_msg_setting_no_class'] = 'Nenastavená trieda.';
 $lang['_msg_setting_no_default'] = 'Žiadna predvolená hodnota.';
 $lang['fmode']                 = 'Spôsob vytvárania súborov';
 $lang['dmode']                 = 'Spôsob vytvárania adresárov';
