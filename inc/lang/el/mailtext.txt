@@ -5,7 +5,7 @@
 Φυλλομετρητής   : @BROWSER@
 IP-Διεύθυνση    : @IPADDRESS@
 Όνομα υπολογιστή: @HOSTNAME@
-Παλία έκδοση    : @OLDPAGE@
+Παλιά έκδοση    : @OLDPAGE@
 Νέα έκδοση      : @NEWPAGE@
 Σύνοψη          : @SUMMARY@
 Χρήστης         : @USER@
