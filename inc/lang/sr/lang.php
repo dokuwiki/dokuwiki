@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Filip Brcic <brcha@users.sourceforge.net>
  * @author Иван Петровић petrovicivan@ubuntusrbija.org
+ * @author Ivan Petrovic <petrovicivan@ubuntusrbija.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -36,7 +37,7 @@ $lang['btn_update']            = 'Ажурирај';
 $lang['btn_delete']            = 'Избриши';
 $lang['btn_back']              = 'Натраг';
 $lang['btn_backlink']          = 'Повратне везе';
-$lang['btn_backtomedia']       = 'Врати се на избор медијског фајла';
+$lang['btn_backtomedia']       = 'Врати се на избор медијске датотеке';
 $lang['btn_subscribe']         = 'Пријави се на измене';
 $lang['btn_unsubscribe']       = 'Одјави се са измена';
 $lang['btn_subscribens']       = 'Претплати се на промене у именском простору';
@@ -49,18 +50,19 @@ $lang['btn_recover']           = 'Опорави нацрт';
 $lang['btn_draftdel']          = 'Обриши нацрт';
 $lang['loggedinas']            = 'Пријављен као';
 $lang['user']                  = 'Корисничко име';
-$lang['pass']                  = 'Шифра';
+$lang['pass']                  = 'Лозинка';
 $lang['newpass']               = 'Нова лозинка';
 $lang['oldpass']               = 'Потврди нову лозинку';
 $lang['passchk']               = 'поново';
 $lang['remember']              = 'Запамти ме';
-$lang['fullname']              = 'Пуно име';
+$lang['fullname']              = 'Име и презиме';
 $lang['email']                 = 'Е-адреса';
 $lang['register']              = 'Региструј се';
 $lang['profile']               = 'Кориснички профил';
 $lang['badlogin']              = 'Извините, није добро корисничко име или шифра.';
 $lang['minoredit']             = 'Мала измена';
 $lang['draftdate']             = 'Нацрт је аутоматски сачуван';
+$lang['nosecedit']             = 'Страна је у међувремену промењена, поглавље је застарело и поново се учитава цела страна.';
 $lang['regmissing']            = 'Извините, морате да попуните сва поља.';
 $lang['reguexists']            = 'Извините, корисник са истим именом већ постоји.';
 $lang['regsuccess']            = 'Корисник је направљен и лозинка је послата путем е-поште.';
@@ -82,6 +84,8 @@ $lang['resendpwdnouser']       = 'Жао ми је, овај корисник н
 $lang['resendpwdbadauth']      = 'Жао ми је, потврдни код није исправан. Проверите да ли сте користили комплетан потврдни линк.';
 $lang['resendpwdconfirm']      = 'Потврдни линк је постат као е-порука.';
 $lang['resendpwdsuccess']      = 'Ваша нова лозинка је послата као е-порука.';
+$lang['license']               = 'Осим где је другачије назначено, материјал на овом викију је под следећом лиценцом:';
+$lang['licenseok']             = 'Напомена: Изменом ове стране слажете се да ће ваше измене бити под следећом лиценцом:';
 $lang['txt_upload']            = 'Изаберите датотеку за слање';
 $lang['txt_filename']          = 'Унесите вики-име (опционо)';
 $lang['txt_overwrt']           = 'Препишите тренутни фајл';
@@ -100,12 +104,16 @@ $lang['uploadexist']           = 'Датотека већ постоји. Ниш
 $lang['uploadbadcontent']      = 'Материјал који шаљете не одговара %s ';
 $lang['uploadspam']            = 'Слање је блокирано јер се налазите на црној листи пошиљаоца.';
 $lang['uploadxss']             = 'Слање је блокирано јер је потенцијално малициозног садржаја.';
+$lang['uploadsize']            = 'Послата датотека је превелика. (максимум је %s)';
 $lang['deletesucc']            = 'Фајл "%s" је избрисан.';
 $lang['deletefail']            = '"%s" није могао да буде избрисан - проверите дозволе.';
 $lang['mediainuse']            = 'Фајл "%s" није избрисан - још је у употреби.';
 $lang['namespaces']            = 'Именски простори';
 $lang['mediafiles']            = 'Доступни фајлови у';
+$lang['js']['keepopen']        = 'Задржи отворен прозор након одабира';
 $lang['js']['hidedetails']     = 'Сакриј детаље';
+$lang['js']['nosmblinks']      = 'Повезивање са Windows дељеним фолдерима ради само у Мајкрософтовом Интернет Претраживачу.
+Ипак, можете да ископирате и залепите везу.';
 $lang['js']['mu_btn']          = 'Слање више датотека одједном';
 $lang['mediausage']            = 'Користите следећу синтаксу за референцу ка овој датотеци:';
 $lang['mediaview']             = 'Прикажи оригиналну датотеку';
@@ -132,11 +140,11 @@ $lang['created']               = 'направљено';
 $lang['restored']              = 'стара верзија повраћена';
 $lang['external_edit']         = 'спољна измена';
 $lang['summary']               = 'Сажетак измене';
+$lang['noflash']               = 'За приказивање ове врсте материјала потребан вам је <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['mail_newpage']          = 'страница додата:';
 $lang['mail_changed']          = 'страница измењена:';
 $lang['mail_new_user']         = 'нови корисник:';
 $lang['mail_upload']           = 'послата датотека:';
-$lang['js']['nosmblinks']            = "Повезивање са Windows дељеним фолдерима ради само у Мајкрософтовом Интернет Претраживачу.\nИпак, можете да ископирате и залепите везу.";
 $lang['qb_alert']              = 'Молим вас, унесите текст који желите да форматизујете.\nБиће додат на крај документа.';
 $lang['qb_bold']               = 'Мастан текст';
 $lang['qb_italic']             = 'Курзивни текст';
@@ -214,3 +222,4 @@ $lang['mu_fail']               = 'није успело';
 $lang['mu_authfail']           = 'сесија је истекла';
 $lang['mu_progress']           = '@PCT@% послато';
 $lang['mu_filetypes']          = 'Дозвољени типови датотека';
+$lang['recent_global']         = 'Тренутно пратите промене у именском простору <b>%s</b>. Такође, можете пратити <a href="%s">прмене на целом викију</a>.';

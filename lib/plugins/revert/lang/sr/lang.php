@@ -3,6 +3,7 @@
  * Serbian language file
  *
  * @author Иван Петровић petrovicivan@ubuntusrbija.org
+ * @author Ivan Petrovic <petrovicivan@ubuntusrbija.org>
  */
 $lang['menu']                  = 'Управљач за враћање';
 $lang['filter']                = 'Претрага спам страница';
