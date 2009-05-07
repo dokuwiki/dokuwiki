@@ -6,6 +6,7 @@
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
+ * @author tomas@valenta.cz
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

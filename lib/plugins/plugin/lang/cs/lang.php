@@ -6,6 +6,7 @@
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
+ * @author tomas@valenta.cz
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';

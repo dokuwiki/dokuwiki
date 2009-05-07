@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
+ * @author tomas@valenta.cz
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -15,6 +16,9 @@ $lang['nochoice']              = '(nejsou k dispozici žádné další volby)';
 $lang['locked']                = 'Nelze upravovat soubor s nastavením. Pokud to není záměrné,
 ujistěte se, <br /> že název a přístupová práva souboru s lokálním
 nastavením jsou v pořádku.';
+$lang['danger']                = 'Pozor: Změna tohoto nastavení může způsobit nedostupnost wiki a konfiguračních menu.';
+$lang['warning']               = 'Varování: Změna nastavení může mít za následek chybné chování.';
+$lang['security']              = 'Bezpečnostní varování: Změna tohoto nastavení může způsobit bezpečnostní riziko.';
 $lang['_configuration_manager'] = 'Správa nastavení';
 $lang['_header_dokuwiki']      = 'Nastavení DokuWiki';
 $lang['_header_plugin']        = 'Nastavení pluginů';
