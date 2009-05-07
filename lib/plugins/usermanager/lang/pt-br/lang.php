@@ -11,6 +11,7 @@
  * @author jair.henrique@gmail.com
  * @author Luis Dantas <luis@dantas.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
+ * @author Jair Henrique <jair.henrique@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';

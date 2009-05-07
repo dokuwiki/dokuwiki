@@ -11,6 +11,7 @@
  * @author jair.henrique@gmail.com
  * @author Luis Dantas <luis@dantas.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
+ * @author Jair Henrique <jair.henrique@gmail.com>
  */
 $lang['menu']                  = 'Gerenciar Plugins';
 $lang['download']              = 'Baixar e instalar um novo plugin';
@@ -52,3 +53,7 @@ $lang['error_dircreate']       = 'Não foi possível criar a pasta temporária p
 $lang['error_decompress']      = 'O gerenciador de plug-ins não conseguiu descompactar o arquivo transferido. Isso pode ser resultado de: uma corrupção do arquivo durante a transferência, nesse caso, você deve tentar novamente; ou o formato da compactação pode ser desconhecido, nesse caso você deve transferir e instalar o plug-in manualmente.';
 $lang['error_copy']            = 'Ocorreu um erro na cópia do arquivo na tentativa de instalar o plugin <em>%s</em>: o disco pode estar cheio ou as permissões de acesso do arquivo podem estar erradas. Isso pode resultar em um plug-in parcialmente instalado e deixar a instalação do seu wiki instável.';
 $lang['error_delete']          = 'Ocorreu um erro na tentativa de excluir o plug-in <em>%s</em>. A causa mais provável é a permissão de acesso ao diretório ou ao arquivo insuficiente.';
+$lang['enabled']               = 'Plugin %s habilitado.';
+$lang['notenabled']            = 'Plugin %s não pode ser habilitado, verifique as permissões.';
+$lang['disabled']              = 'Plugin %s desabilitado.';
+$lang['notdisabled']           = 'Plugin %s não pode ser desabilitado, verifique as permissões.';

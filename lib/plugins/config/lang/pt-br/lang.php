@@ -11,16 +11,19 @@
  * @author jair.henrique@gmail.com
  * @author Luis Dantas <luis@dantas.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
+ * @author Jair Henrique <jair.henrique@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido, por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
 $lang['updated']               = 'As configurações foram atualizadas com sucesso.';
 $lang['nochoice']              = '(nenhuma outra opção disponível)';
-$lang['locked']                = '
-The settings file can not be updated, if this is unintentional, <br />
+$lang['locked']                = 'The settings file can not be updated, if this is unintentional, <br />
 O arquivo de configurações não pode ser atualizado. Se isso <br />
 não for intencional, certifique-se de que o nome e as permissões <br />
 do arquivo de configurações estejam corretos.';
+$lang['danger']                = 'Perigo: Alterar esta opção poderá tornar o seu wiki e menu de configuração inacessíveis.';
+$lang['warning']               = 'Aviso: A alteração desta opção pode causar comportamento involuntário.';
+$lang['security']              = 'Aviso de segurança: Alterar esta opção pode apresentar um risco de segurança.';
 $lang['_configuration_manager'] = 'Gerenciador de configurações';
 $lang['_header_dokuwiki']      = 'Configurações do DokuWiki';
 $lang['_header_plugin']        = 'Configurações de plug-ins';
