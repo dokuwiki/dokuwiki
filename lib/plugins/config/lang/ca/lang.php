@@ -13,6 +13,9 @@ $lang['updated']               = 'Els paràmetres s\'han actualitzat amb èxit.'
 $lang['nochoice']              = '(no hi altres opcions disponibles)';
 $lang['locked']                = 'El fitxer de paràmetres no es pot actualitzar. Si això és involuntari, <br />
 assegureu-vos que el nom i els permisos del fitxer local de paràmetres són correctes.';
+$lang['danger']                = 'Alerta: si canvieu aquesta opció podeu fer que el wiki i el menú de configuració no siguin accessibles.';
+$lang['warning']               = 'Avís: modificar aquesta opció pot provocar un comportament no desitjat.';
+$lang['security']              = 'Avís de seguretat: modificar aquesta opció pot implicar un risc de seguretat.';
 $lang['_configuration_manager'] = 'Gestió de la configuració';
 $lang['_header_dokuwiki']      = 'Paràmetres de DokuWiki';
 $lang['_header_plugin']        = 'Paràmetres de connectors';
