@@ -3,6 +3,7 @@
  * Hungarian language file
  *
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
+ * @author Siaynoq Mage <siaynoqmage@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
 $lang['download']              = 'Új bővítmény letöltése és telepítése';
@@ -44,3 +45,7 @@ $lang['error_dircreate']       = 'Nem tudom létrehozni az átmeneti könyvtára
 $lang['error_decompress']      = 'A Bővítménykezelő nem tudta a letöltött állományt kicsomagolni. Ennek oka lehet hibás letöltés, ebben az esetben újra letöltéssel próbálkozhatsz, esetleg a tömörítés módja ismeretlen, ebben az esetben kézzel kell letölteni és telepíteni a bővítményt.';
 $lang['error_copy']            = 'Fájl másolási hiba történt a(z) <em>%s</em> bővítmény telepítése közben: vagy a lemezterület fogyott el, vagy az állomány hozzáférési jogosultságok nem megfelelőek. Emiatt előfordulhat, hogy a bővítményt csak részben sikerült telepíteni, és a wiki összeomolhat.';
 $lang['error_delete']          = 'Hiba történt a(z) <em>%s</em> bővítmény eltávolítása közben. A legvalószínűbb ok, hogy a könyvtár vagy állomány hozzáférési jogosultságok nem megfelelőek.';
+$lang['enabled']               = 'A(z) %s bővítmény bekapcsolva.';
+$lang['notenabled']            = 'A(z) %s bővítmény engedélyezése nem sikerült. Ellenőrizze a fájl-hozzáférési engedélyeket.';
+$lang['disabled']              = 'A(z) %s bővítmény kikapcsolva.';
+$lang['notdisabled']           = 'A(z) %s bővítmény kikapcsolása nem sikerült. Ellenőrizze a fájl-hozzáférési engedélyeket.';

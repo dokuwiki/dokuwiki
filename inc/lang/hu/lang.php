@@ -6,6 +6,7 @@
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
+ * @author Siaynoq Mage <siaynoqmage@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

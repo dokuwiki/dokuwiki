@@ -3,6 +3,7 @@
  * Hungarian language file
  *
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
+ * @author Siaynoq Mage <siaynoqmage@gmail.com>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
@@ -11,6 +12,9 @@ $lang['updated']               = 'A módosítások sikeresen beállítva.';
 $lang['nochoice']              = '(nincs egyéb lehetőség)';
 $lang['locked']                = 'A beállításokat tartalmazó fájlt nem tudtam frissíteni.<br />
 Nézd meg, hogy a fájl neve és jogosultságai helyesen vannak-e beállítva!';
+$lang['danger']                = 'Figyelem: ezt a beállítást megváltoztatva a konfigurációs menü hozzáférhetetlenné válhat.';
+$lang['warning']               = 'Figyelmeztetés: a beállítás megváltoztatása nem kívánt viselkedést okozhat.';
+$lang['security']              = 'Biztonsági figyelmeztetés: a beállítás megváltoztatása biztonsági veszélyforrást okozhat.';
 $lang['_configuration_manager'] = 'Beállító Központ';
 $lang['_header_dokuwiki']      = 'DokuWiki beállítások';
 $lang['_header_plugin']        = 'Bővítmények beállításai';
