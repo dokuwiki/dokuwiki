@@ -19,6 +19,7 @@ $lang['acl_perms']             = 'Δικαιώματα για';
 $lang['page']                  = 'Σελίδα';
 $lang['namespace']             = 'Φάκελος';
 $lang['btn_select']            = 'Επιλογή';
+$lang['p_user_id']             = 'Ο χρήστης <b class="acluser">%s</b> έχει τα ακόλουθα δικαιώματα πρόσβασης στην σελίδα <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Ο χρήστης <b class="acluser">%s</b> έχει τα ακόλουθα δικαιώματα πρόσβασης στον φάκελο <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Τα μέλη της ομάδας <b class="aclgroup">%s</b> έχουν τα ακόλουθα δικαιώματα πρόσβασης στην σελίδα <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Τα μέλη της ομάδας <b class="aclgroup">%s</b> έχουν τα ακόλουθα δικαιώματα πρόσβασης στον φάκελο <b class="aclns">%s</b>: <i>%s</i>.';
