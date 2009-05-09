@@ -222,6 +222,7 @@ $lang['mu_toobig']             = 'príliš veľký';
 $lang['mu_ready']              = 'pripravený na nahratie';
 $lang['mu_done']               = 'dokončený';
 $lang['mu_fail']               = 'neúspešný';
+$lang['mu_authfail']           = 'spojenie vypršalo';
 $lang['mu_progress']           = '@PCT@% nahraných';
 $lang['mu_filetypes']          = 'Povolené typy súborov';
 $lang['recent_global']         = 'Práve prehliadate zmeny v mennom priestore <b>%s</b>. Môžete si tiež pozrieť <a href="%s">aktuálne zmeny celej wiki</a>.';

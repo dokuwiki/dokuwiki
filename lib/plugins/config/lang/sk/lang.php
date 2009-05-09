@@ -13,6 +13,7 @@ $lang['nochoice']              = '(žiadne ďalšie dostupné voľby)';
 $lang['locked']                = 'Súbor s nastaveniami nemôže byť aktualizovaný, ak toto nie je zámerom, <br />
 uistite sa, že názov a práva lokálneho súboru sú správne.';
 $lang['danger']                = 'Nebezpečie: Zmeny tohto nastavenia môžu spôsobiť nedostupnosť wiki a nastavovacieho menu.';
+$lang['warning']               = 'Varovanie: Zmena tohto nastavenia môže viesť neželanému správaniu.';
 $lang['security']              = 'Bezpečnostné riziko: Zmenou tohto nastavenie môže vzniknúť bezpečnostné riziko.';
 $lang['_configuration_manager'] = 'Správa konfigurácie';
 $lang['_header_dokuwiki']      = 'Nastavenia DokuWiki';
