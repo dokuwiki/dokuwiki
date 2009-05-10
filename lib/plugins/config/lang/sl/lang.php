@@ -3,8 +3,10 @@
  * Slovenian language file
  *
  * @author Dejan Levec <webphp@gmail.com>
+ * @author Boštjan Seničar <senicar@gmail.com>
  */
 $lang['lang']                  = 'Jezik';
+$lang['template']              = 'Predloga';
 $lang['recent']                = 'Zadnje spremembe';
 $lang['signature']             = 'Podpis';
 $lang['defaultgroup']          = 'Privzeta skupina';

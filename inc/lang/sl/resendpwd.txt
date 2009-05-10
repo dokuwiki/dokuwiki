@@ -1,0 +1,3 @@
+====== Pošlji novo geslo ======
+
+Za pridobitev novega gesla, vnesite vaše uporabniško ime v obrazec spodaj. Na vaš email naslov bo poslano sporočilo s povezavo za potrditev avtentičnosti.

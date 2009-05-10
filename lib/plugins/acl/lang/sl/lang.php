@@ -3,6 +3,7 @@
  * Slovenian language file
  *
  * @author Dejan Levec <webphp@gmail.com>
+ * @author Boštjan Seničar <senicar@gmail.com>
  */
 $lang['acl_group']             = 'Skupina';
 $lang['acl_user']              = 'Uporabnik';
