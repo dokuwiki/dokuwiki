@@ -7,3 +7,4 @@
  * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
  * @author shantanoo@gmail.com
  */
+$lang['submit']                = 'माहीती पाठवा';
