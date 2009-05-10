@@ -10,6 +10,7 @@
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
+ * @author Tormod Johansson tormod.otter.johansson@gmail.com
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
@@ -18,6 +19,9 @@ $lang['updated']               = 'Inställningarna uppdaterade.';
 $lang['nochoice']              = '(inga andra val tillgängliga)';
 $lang['locked']                = 'Filen med inställningar kan inte uppdateras. Om det inte är meningen att det ska vara så, <br />
                        kontrollera att filen med lokala inställningar har rätt namn och filskydd.';
+$lang['danger']                = 'Risk: Denna förändring kan göra wikin och inställningarna otillgängliga.';
+$lang['warning']               = 'Varning: Denna förändring kan orsaka oväntade resultat.';
+$lang['security']              = 'Säkerhetsvarning: Denna förändring kan innebära en säkerhetsrisk.';
 $lang['_configuration_manager'] = 'Hantera inställningar';
 $lang['_header_dokuwiki']      = 'Inställningar för DokuWiki';
 $lang['_header_plugin']        = 'Inställningar för insticksmoduler';
