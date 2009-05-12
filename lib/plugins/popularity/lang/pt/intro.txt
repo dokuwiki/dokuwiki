@@ -1,0 +1,9 @@
+====== Retorno de Popularidade ======
+
+Esta ferramenta junta dados anónimos sobre o seu wiki e permite estes sejam enviados para a equipa de desenvolvimento do DokuWiki. Isto ajuda-os a compreender como o DokuWiki é usado pelos seus utilizadores de forma a permitir que desenvolvimentos futuros sejam baseadas em estatísticas de uso real.
+
+Você é encorajado a repetir este passo regularmente para manter a equipa informada quando o seu wiki crescer. Os seus dados permanecerão sempre anónimos.
+
+Os dados colectados contêm informação como a versão do DokuWiki que você utiliza, o número e tamanho das suas páginas e ficheiros, os plugins instalados e informação sobre a sua instalação do PHP.
+
+Os dados que serão enviados são mostrados abaixo. Use o botão "Enviar Dados" para transferir a informação.

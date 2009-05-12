@@ -1,5 +1,5 @@
 ====== Permissão Negada ======
 
-Não possui direitos e permissões suficientes para continuar. Por acaso, não se esqueceu de entrar em sessão?
+Não possui direitos e permissões suficientes para continuar. Talvez se tenha esquecido de entrar em sessão?
 
 ----

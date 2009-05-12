@@ -4,6 +4,7 @@
  *
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
+ * @author Fil <fil@meteopt.com>
  */
 $lang['menu']                  = 'Gerir Plugins';
 $lang['download']              = 'Descarregar e instalar um novo plugin';
@@ -42,3 +43,10 @@ $lang['error']                 = 'Ocorreu um erro desconhecido.';
 $lang['error_download']        = 'Impossível descarregar o ficheiro do plugin: %s';
 $lang['error_badurl']          = 'URL suspeito ou errado - impossível determinar o ficheiro a partir do URL';
 $lang['error_dircreate']       = 'Impossível criar pasta temporária para receber os ficheiros a descarregar';
+$lang['error_decompress']      = 'O gestor de plugins foi incapaz de descomprimir o ficheiro transferido. Isto pode ter sido causado por uma má transferência, caso no qual você deverá tentar de novo, ou por um formato de compressão desconhecido, caso no qual você deve instalar o plugin manualmente.';
+$lang['error_copy']            = 'Ocorreu um erro na cópia do ficheiro na tentativa de instalar o plugin <em>%s</em>: o disco pode estar cheio ou as permissões de acesso do ficheiro podem estar erradas. Isto pode resultar em um plugin parcialmente instalado e deixar a instalação do seu wiki instável.';
+$lang['error_delete']          = 'Ocorreu um erro na tentativa de remover o plug-in <em>%s</em>. A causa mais provável é a permissão de acesso à directoria ou ao ficheiro insuficiente.';
+$lang['enabled']               = 'Plugin %s habilitado.';
+$lang['notenabled']            = 'Plugin %s não pôde ser habilitado, verifique as permissões.';
+$lang['disabled']              = 'Plugin %s desabilitado.';
+$lang['notdisabled']           = 'Plugin %s não pôde ser desabilitado, verifique as permissões.';

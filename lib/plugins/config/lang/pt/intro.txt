@@ -1,0 +1,7 @@
+====== Gerenciador de Configurações ======
+
+Use esta página para controlar as definições da instalação do seu DokuWiki. Para ajuda acerca dos itens, consulte [[doku>config]]. Para mais detalhes sobre este plugin, veja [[doku>plugin:config]].
+
+Definições que apresentem um fundo vermelho claro são protegidas e não podem ser alteradas com este plugin. Definições com um fundo azul são padrão e definições com um fundo branco foram configuradas localmente para essa instalação em particular. Tanto as definições em azul como em branco podem ser alteradas.
+
+Lembre-se de pressionar o botão **Guardar** antes de sair desta página, caso contrário, as suas definições serão perdidas.

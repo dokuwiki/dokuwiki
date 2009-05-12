@@ -4,6 +4,7 @@
  *
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
+ * @author Fil <fil@meteopt.com>
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';
