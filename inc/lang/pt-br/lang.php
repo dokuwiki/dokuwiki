@@ -149,7 +149,7 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'revisão anterior restaurada';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
-$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a> é necessário para exibir este conteúdo.';
+$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['mail_newpage']          = 'página adicionada:';
 $lang['mail_changed']          = 'página modificada:';
 $lang['mail_new_user']         = 'novo usuário:';
