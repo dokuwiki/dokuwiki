@@ -45,5 +45,21 @@ class init_getID_test extends UnitTestCase {
         $this->assertEqual(getID('media',false), 'wiki/discussion/button-dw.png');
     }
 
+    /**
+     * getID with given id in url and userewrite=2, no basedir set, dokuwiki not in document root.
+     */
+    function test3() {
+        global $conf;
+        $conf['basedir'] = '';
+        $conf['userewrite'] = '2';
+        $conf['baseurl'] = '';
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/';
+        $_SERVER['SCRIPT_FILENAME'] = '/usr/share/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_NAME'] = '/dokuwiki/doku.php';
+        $_SERVER['REQUEST_URI'] = '/dokuwiki/doku.php/wiki:dokuwiki';
+
+        $this->assertEqual(getID(), 'wiki:dokuwiki');
+    }
+
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :
