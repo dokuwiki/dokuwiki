@@ -40,6 +40,7 @@ function usage($action) {
     OPTIONS
         -h, --help=<action>: get help
         -f: force obtaining a lock for the page (generally bad idea)
+        -t, trivial: minor change
         -m (required): Summary message describing the change
 ";
         break;
@@ -189,11 +190,12 @@ $SYSTEM_ID = '127.0.0.1';
 #------------------------------------------------------------------------------
 $OPTS = Doku_Cli_Opts::getOptions(
     __FILE__,
-    'h::fm:u:s:',
+    'h::fm:u:s:t',
     array(
         'help==',
         'user=',
         'system=',
+        'trivial',
         )
 );
 
@@ -313,7 +315,7 @@ switch ( $OPTS->arg(0) ) {
 
         obtainLock($WIKI_ID);
 
-        saveWikiText($WIKI_ID, file_get_contents($TARGET_FN), $OPTS->get('m'));
+        saveWikiText($WIKI_ID, file_get_contents($TARGET_FN), $OPTS->get('m'), $OPTS->has('t'));
 
         clearLock($WIKI_ID);
 
