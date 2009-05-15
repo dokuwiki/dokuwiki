@@ -51,6 +51,7 @@ function js_out(){
              );
     if($edit){
         if($write){
+            $files[] = DOKU_INC.'lib/scripts/toolbar.js';
             $files[] = DOKU_INC.'lib/scripts/edit.js';
         }
         $files[] = DOKU_INC.'lib/scripts/media.js';
