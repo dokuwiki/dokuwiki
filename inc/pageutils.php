@@ -23,6 +23,8 @@ function getID($param='id',$clean=true){
 
   $id = isset($_REQUEST[$param]) ? $_REQUEST[$param] : null;
 
+  $request = $_SERVER['REQUEST_URI'];
+
   //construct page id from request URI
   if(empty($id) && $conf['userewrite'] == 2){
     //get the script URL
@@ -32,6 +34,10 @@ function getID($param='id',$clean=true){
         $relpath = 'lib/exe/';
       }
       $script = $conf['basedir'].$relpath.basename($_SERVER['SCRIPT_FILENAME']);
+
+    }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['PATH_TRANSLATED']){
+      $request = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
+                              $_SERVER['PATH_TRANSLATED']);
     }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
       $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                               $_SERVER['SCRIPT_FILENAME']);
@@ -42,7 +48,7 @@ function getID($param='id',$clean=true){
 
     //clean script and request (fixes a windows problem)
     $script  = preg_replace('/\/\/+/','/',$script);
-    $request = preg_replace('/\/\/+/','/',$_SERVER['REQUEST_URI']);
+    $request = preg_replace('/\/\/+/','/',$request);
 
     //remove script URL and Querystring to gain the id
     if(preg_match('/^'.preg_quote($script,'/').'(.*)/',$request, $match)){

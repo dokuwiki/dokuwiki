@@ -57,6 +57,9 @@ class init_getID_test extends UnitTestCase {
         $_SERVER['SCRIPT_FILENAME'] = '/usr/share/dokuwiki/doku.php';
         $_SERVER['SCRIPT_NAME'] = '/dokuwiki/doku.php';
         $_SERVER['REQUEST_URI'] = '/dokuwiki/doku.php/wiki:dokuwiki';
+        $_SERVER['PATH_INFO'] = '/wiki:dokuwiki';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/wiki:dokuwiki';
+        $_SERVER['PHP_SELF'] = '/dokuwiki/doku.php/wiki:dokuwiki';
 
         $this->assertEqual(getID(), 'wiki:dokuwiki');
     }
