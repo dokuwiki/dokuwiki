@@ -185,11 +185,12 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
+
     //we do nothing with directories
     if($type == 'd') {
         if(!$opts['depth']) return true; // recurse forever
-        $parts = explode('/',ltrim($file,'/'));
-        if(count($parts) == $opts['depth']) return false; // depth reached
+        $depth = substr_count(ltrim($file,'/'),'/');
+        if($depth >= $opts['depth']) return false; // depth reached
         return true;
     }
 
