@@ -395,8 +395,7 @@ function _tpl_metaheaders_action($data){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_link($url,$name,$more='',$return=false){
-  $out = '';
-  $out .= '<a href="'.$url.'" ';
+  $out = '<a href="'.$url.'" ';
   if ($more) $out .= ' '.$more;
   $out .= ">$name</a>";
   if ($return) return $out;
@@ -748,6 +747,22 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
   if ($return) return $out;
   print $out;
   return $out ? true : false;
+}
+
+/**
+ * Wrapper around tpl_button() and tpl_actionlink()
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_action($type,$link=0,$wrapper=false,$return=false,$pre='',$suf='',$inner='') {
+    $out = '';
+    if ($link) $out .= tpl_actionlink($type,$pre,$suf,$inner,1);
+    else $out .= tpl_button($type,1);
+    if ($out && $wrapper) $out = "<$wrapper>$out</$wrapper>";
+
+    if ($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
