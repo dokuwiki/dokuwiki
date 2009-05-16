@@ -72,6 +72,7 @@ $lang['badlogin']              = 'Desculpe, mas o nome de usuário ou a senha es
 $lang['minoredit']             = 'Alterações mínimas';
 $lang['draftdate']             = 'O rascunho foi salvo automaticamente em';
 $lang['nosecedit']             = 'A página foi modificada nesse intervalo de tempo. Como a informação da seção estava desatualizada, foi carregada a página inteira.';
+$lang['sectionlink']           = 'Link para esta sessão';
 $lang['regmissing']            = 'Desculpe, mas você precisa preencher todos os campos.';
 $lang['reguexists']            = 'Desculpe, mas já existe um usuário com esse nome.';
 $lang['regsuccess']            = 'O usuário foi criado e a senha enviada para seu e-mail.';
