@@ -2,6 +2,6 @@
 
 Acaba de tentar aceder a um documento que ainda não existe.
 
-Pode criar o conteúdo deste novo documento após clicar no botão <Editar Página>.
+Pode criar o conteúdo deste novo documento após clicar no botão <Criar página>.
 
 ----

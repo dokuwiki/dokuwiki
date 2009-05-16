@@ -1,7 +1,7 @@
 ====== Pesquisa ======
 
-Pode encontrar os resultados da sua pesquisa na secção mais abaixo.
+Os resultados da sua pesquisa encontram-se mais abaixo.
 
-Se não encontrou o que procurava, pode criar uma nova página com o nome da pergunta, usando o botão <Editar Página>.
+Se não encontrou o que procurava, pode criar uma nova página com o nome da sua pesquisa, usando o botão <Editar página>.
 
 ===== Resultados =====
