@@ -72,6 +72,7 @@ $lang['badlogin']              = 'L\'utilisateur ou le mot de passe est incorrec
 $lang['minoredit']             = 'Mineur';
 $lang['draftdate']             = 'Brouillon auto-enregistré le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
+$lang['sectionlink']           = 'lien à cette section';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
@@ -231,4 +232,4 @@ $lang['mu_fail']               = 'Échoué';
 $lang['mu_authfail']           = 'Session expirée';
 $lang['mu_progress']           = '@PCT@% envoyé';
 $lang['mu_filetypes']          = 'Types de fichiers acceptés';
-$lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein du namespace <b>%s</b>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>';
+$lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein du namespace <b>%s</b>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>.';
