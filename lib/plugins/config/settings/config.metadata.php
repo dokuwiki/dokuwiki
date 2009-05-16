@@ -133,6 +133,8 @@ $meta['disableactions'] = array('disableactions',
 $meta['sneaky_index'] = array('onoff');
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
+$meta['xmlrpc']       = array('onoff');
+$meta['xmlrpcuser']   = array('string');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');
@@ -185,7 +187,6 @@ $meta['recent_days'] = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
 $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
-$meta['xmlrpc']      = array('onoff');
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
 
 $meta['_network']    = array('fieldset');

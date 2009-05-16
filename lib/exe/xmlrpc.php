@@ -7,17 +7,14 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',1);
+define('DOKU_XMLRPC_API_VERSION',2);
 
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/auth.php');
 session_write_close();  //close session
 
-if(!$conf['xmlrpc']) {
-    die('XML-RPC server not enabled.');
-    // FIXME check for groups allowed
-}
+if(!$conf['xmlrpc']) die('XML-RPC server not enabled.');
 
 require_once(DOKU_INC.'inc/IXR_Library.php');
 
@@ -27,7 +24,61 @@ require_once(DOKU_INC.'inc/IXR_Library.php');
  * XMLRPC functions.
  */
 class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
-    var $methods = array();
+    var $methods       = array();
+    var $public_methods = array();
+
+    /**
+     * Checks if the current user is allowed to execute non anonymous methods
+     */
+    function checkAuth(){
+        global $conf;
+        global $USERINFO;
+
+        if(!$conf['useacl']) return true; //no ACL - then no checks
+
+        $allowed = explode(',',$conf['xmlrpcuser']);
+        $allowed = array_map('trim', $allowed);
+        $allowed = array_unique($allowed);
+        $allowed = array_filter($allowed);
+
+        if(!count($allowed)) return true; //no restrictions
+
+        $user   = $_SERVER['REMOTE_USER'];
+        $groups = (array) $USERINFO['grps'];
+
+        if(in_array($user,$allowed)) return true; //user explicitly mentioned
+
+        //check group memberships
+        foreach($groups as $group){
+            if(in_array('@'.$group,$allowed)) return true;
+        }
+
+        //still here? no access!
+        return false;
+    }
+
+    /**
+     * Adds a callback, extends parent method
+     *
+     * add another parameter to define if anonymous access to
+     * this method should be granted.
+     */
+    function addCallback($method, $callback, $args, $help, $public=false){
+        if($public) $this->public_methods[] = $method;
+        return parent::addCallback($method, $callback, $args, $help);
+    }
+
+    /**
+     * Execute a call, extends parent method
+     *
+     * Checks for authentication first
+     */
+    function call($methodname, $args){
+        if(!in_array($methodname,$this->public_methods) && !$this->checkAuth()){
+            return new IXR_Error(-32603, 'server error. not authorized to call method "'.$methodname.'".');
+        }
+        return parent::call($methodname, $args);
+    }
 
     /**
      * Constructor. Register methods and run Server
@@ -40,21 +91,24 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'dokuwiki.getXMLRPCAPIVersion',
             'this:getAPIVersion',
             array('integer'),
-            'Returns the XMLRPC API version.'
+            'Returns the XMLRPC API version.',
+            true
         );
 
         $this->addCallback(
             'dokuwiki.getVersion',
             'getVersion',
             array('string'),
-            'Returns the running DokuWiki version.'
+            'Returns the running DokuWiki version.',
+            true
         );
 
         $this->addCallback(
             'dokuwiki.login',
             'this:login',
             array('integer','string','string'),
-            'Tries to login with the given credentials and sets auth cookies.'
+            'Tries to login with the given credentials and sets auth cookies.',
+            true
         );
 
         $this->addCallback(
@@ -83,7 +137,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'wiki.getRPCVersionSupported',
             'this:wiki_RPCVersion',
             array('int'),
-            'Returns 2 with the supported RPC API version.'
+            'Returns 2 with the supported RPC API version.',
+            true
         );
         $this->addCallback(
             'wiki.getPage',
@@ -856,6 +911,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return auth_login($user,$pass,false,true);
         }
     }
+
+
 }
 
 $server = new dokuwiki_xmlrpc_server();

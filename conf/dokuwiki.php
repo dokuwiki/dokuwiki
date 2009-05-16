@@ -78,6 +78,9 @@ $conf['sneaky_index']   = 0;             //check for namespace read permission i
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 
+$conf['xmlrpc']      = 0;                //Enable/disable XML-RPC interface
+$conf['xmlrpcuser']  = '!!not set!!';    //Restrict XML-RPC access to this groups/users
+
 /* Advanced Options */
 
 $conf['updatecheck'] = 1;                //automatically check for new releases?
@@ -126,7 +129,6 @@ $conf['recent_days'] = 7;                //How many days of recent changes to ke
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
 $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abort (IIS+CGI) 0|1
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
-$conf['xmlrpc'] = 0;                     //Enable/disable XML-RPC interface
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
 
