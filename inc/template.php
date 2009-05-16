@@ -394,10 +394,13 @@ function _tpl_metaheaders_action($data){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_link($url,$name,$more=''){
-  print '<a href="'.$url.'" ';
-  if ($more) print ' '.$more;
-  print ">$name</a>";
+function tpl_link($url,$name,$more='',$return=false){
+  $out = '';
+  $out .= '<a href="'.$url.'" ';
+  if ($more) $out .= ' '.$more;
+  $out .= ">$name</a>";
+  if ($return) return $out;
+  print $out;
   return true;
 }
 
@@ -454,7 +457,7 @@ function tpl_getparent($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
-function tpl_button($type){
+function tpl_button($type,$return=false){
   global $ACT;
   global $ID;
   global $REV;
@@ -468,118 +471,107 @@ function tpl_button($type){
   if($type == 'history') $ctype='revisions';
   if(!actionOK($ctype)) return false;
 
+  $out = '';
   switch($type){
     case 'edit':
       #most complicated type - we need to decide on current action
       if($ACT == 'show' || $ACT == 'search'){
         if($INFO['writable']){
           if(!empty($INFO['draft'])){
-            echo html_btn('draft',$ID,'e',array('do' => 'draft'),'post');
+            $out .= html_btn('draft',$ID,'e',array('do' => 'draft'),'post');
           }else{
             if($INFO['exists']){
-              echo html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+              $out .= html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
             }else{
-              echo html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+              $out .= html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
             }
           }
         }else{
           if(!actionOK('source')) return false; //pseudo action
-          echo html_btn('source',$ID,'v',array('do' => 'edit','rev' => $REV),'post');
+          $out .= html_btn('source',$ID,'v',array('do' => 'edit','rev' => $REV),'post');
         }
       }else{
-          echo html_btn('show',$ID,'v',array('do' => 'show'));
+          $out .= html_btn('show',$ID,'v',array('do' => 'show'));
       }
-      return true;
+      break;
     case 'history':
-      if(!actionOK('revisions'))
-        return false;
-      print html_btn('revs',$ID,'o',array('do' => 'revisions'));
-      return true;
+      if(actionOK('revisions'))
+        $out .= html_btn('revs',$ID,'o',array('do' => 'revisions'));
+      break;
     case 'recent':
-      if(!actionOK('recent'))
-        return false;
-      print html_btn('recent',$ID,'r',array('do' => 'recent'));
-      return true;
+      if(actionOK('recent'))
+        $out .= html_btn('recent',$ID,'r',array('do' => 'recent'));
+      break;
     case 'index':
-      if(!actionOK('index'))
-        return false;
-      print html_btn('index',$ID,'x',array('do' => 'index'));
-      return true;
+      if(actionOK('index'))
+        $out .= html_btn('index',$ID,'x',array('do' => 'index'));
+      break;
     case 'back':
       if ($parent = tpl_getparent($ID)) {
-        print html_btn('back',$parent,'b',array('do' => 'show'));
-        return true;
+        $out .= html_btn('back',$parent,'b',array('do' => 'show'));
       }
-      return false;
+      break;
     case 'top':
-      print html_topbtn();
-      return true;
+      $out .= html_topbtn();
+      break;
     case 'login':
       if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
-          print html_btn('logout',$ID,'',array('do' => 'logout', 'sectok' => getSecurityToken()));
+          $out .= html_btn('logout',$ID,'',array('do' => 'logout', 'sectok' => getSecurityToken()));
         }else{
-          print html_btn('login',$ID,'',array('do' => 'login', 'sectok' => getSecurityToken()));
+          $out .= html_btn('login',$ID,'',array('do' => 'login', 'sectok' => getSecurityToken()));
         }
-        return true;
       }
-      return false;
+      break;
     case 'admin':
       if($INFO['ismanager']){
-        print html_btn('admin',$ID,'',array('do' => 'admin'));
-        return true;
+        $out .= html_btn('admin',$ID,'',array('do' => 'admin'));
       }
-      return false;
+      break;
     case 'subscribe':
     case 'subscription':
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']){
-            if(!actionOK('unsubscribe'))
-              return false;
-            print html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
+            if(actionOK('unsubscribe'))
+              $out .= html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
           } else {
-            if(!actionOK('subscribe'))
-              return false;
-            print html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
+            if(actionOK('subscribe'))
+              $out .= html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
           }
-          if($type == 'subscribe') return true;
         }
       }
-      if($type == 'subscribe') return false;
-      // fall through for backward compatibility
+      if($type == 'subscribe') break;
+      // else: fall through for backward compatibility
     case 'subscribens':
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribedns']){
-            if(!actionOK('unsubscribens'))
-              return false;
-            print html_btn('unsubscribens',$ID,'',array('do' => 'unsubscribens',));
+            if(actionOK('unsubscribens'))
+              $out .= html_btn('unsubscribens',$ID,'',array('do' => 'unsubscribens',));
           } else {
-            if(!actionOK('subscribens'))
-              return false;
-            print html_btn('subscribens',$ID,'',array('do' => 'subscribens',));
+            if(actionOK('subscribens'))
+              $out .= html_btn('subscribens',$ID,'',array('do' => 'subscribens',));
           }
-          return true;
         }
       }
-      return false;
+      break;
     case 'backlink':
-      if(!actionOK('backlink'))
-        return false;
-      print html_btn('backlink',$ID,'',array('do' => 'backlink'));
-      return true;
+      if(actionOK('backlink'))
+        $out .= html_btn('backlink',$ID,'',array('do' => 'backlink'));
     case 'profile':
       if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $auth &&
-         $auth->canDo('Profile') && ($ACT!='profile')){
-        print html_btn('profile',$ID,'',array('do' => 'profile'));
-        return true;
+          $auth->canDo('Profile') && ($ACT!='profile')){
+        $out .= html_btn('profile',$ID,'',array('do' => 'profile'));
       }
-      return false;
+      break;
     default:
-      print '[unknown button type]';
-      return true;
+      $out .= '[unknown button type]';
+      break;
   }
+  if ($return) return $out;
+  print $out;
+  return $out ? true : false;
 }
 
 /**
@@ -603,7 +595,7 @@ function tpl_button($type){
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @see    tpl_button
  */
-function tpl_actionlink($type,$pre='',$suf='',$inner=''){
+function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
   global $ID;
   global $INFO;
   global $REV;
@@ -617,154 +609,145 @@ function tpl_actionlink($type,$pre='',$suf='',$inner=''){
   if($type == 'history') $ctype='revisions';
   if(!actionOK($ctype)) return false;
 
+  $out = '';
   switch($type){
     case 'edit':
       #most complicated type - we need to decide on current action
       if($ACT == 'show' || $ACT == 'search'){
         if($INFO['writable']){
           if(!empty($INFO['draft'])) {
-            tpl_link(wl($ID,'do=draft'),
+            $out .= tpl_link(wl($ID,'do=draft'),
                        $pre.(($inner)?$inner:$lang['btn_draft']).$suf,
-                       'class="action edit" accesskey="e" rel="nofollow"');
+                       'class="action edit" accesskey="e" rel="nofollow"',1);
           } else {
             if($INFO['exists']){
-              tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+              $out .= tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                        $pre.(($inner)?$inner:$lang['btn_edit']).$suf,
-                       'class="action edit" accesskey="e" rel="nofollow"');
+                       'class="action edit" accesskey="e" rel="nofollow"',1);
             }else{
-              tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+              $out .= tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                        $pre.(($inner)?$inner:$lang['btn_create']).$suf,
-                       'class="action create" accesskey="e" rel="nofollow"');
+                       'class="action create" accesskey="e" rel="nofollow"',1);
             }
           }
         }else{
-          if(!actionOK('source')) return false; //pseudo action
-          tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
+          if(actionOK('source')) //pseudo action
+            $out .= tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
                    $pre.(($inner)?$inner:$lang['btn_source']).$suf,
-                   'class="action source" accesskey="v" rel="nofollow"');
+                   'class="action source" accesskey="v" rel="nofollow"',1);
         }
       }else{
-          tpl_link(wl($ID,'do=show'),
+          $out .= tpl_link(wl($ID,'do=show'),
                    $pre.(($inner)?$inner:$lang['btn_show']).$suf,
-                   'class="action show" accesskey="v" rel="nofollow"');
+                   'class="action show" accesskey="v" rel="nofollow"',1);
       }
-      return true;
+      break;
     case 'history':
-      if(!actionOK('revisions'))
-        return false;
-      tpl_link(wl($ID,'do=revisions'),
+      if(actionOK('revisions'))
+        $out .= tpl_link(wl($ID,'do=revisions'),
                $pre.(($inner)?$inner:$lang['btn_revs']).$suf,
-               'class="action revisions" accesskey="o" rel="nofollow"');
-      return true;
+               'class="action revisions" accesskey="o" rel="nofollow"',1);
+      break;
     case 'recent':
-      if(!actionOK('recent'))
-        return false;
-      tpl_link(wl($ID,'do=recent'),
+      if(actionOK('recent'))
+        $out .= tpl_link(wl($ID,'do=recent'),
                $pre.(($inner)?$inner:$lang['btn_recent']).$suf,
-              'class="action recent" accesskey="r" rel="nofollow"');
-      return true;
+              'class="action recent" accesskey="r" rel="nofollow"',1);
+      break;
     case 'index':
-      if(!actionOK('index'))
-        return false;
-      tpl_link(wl($ID,'do=index'),
+      if(actionOK('index'))
+        $out .= tpl_link(wl($ID,'do=index'),
                $pre.(($inner)?$inner:$lang['btn_index']).$suf,
-              'class="action index" accesskey="x" rel="nofollow"');
-      return true;
+              'class="action index" accesskey="x" rel="nofollow"',1);
+      break;
     case 'top':
-      print '<a href="#dokuwiki__top" class="action top" accesskey="x">'.
+      $out .= '<a href="#dokuwiki__top" class="action top" accesskey="x">'.
             $pre.(($inner)?$inner:$lang['btn_top']).$suf.'</a>';
-      return true;
+      break;
     case 'back':
       if ($parent = tpl_getparent($ID)) {
-        tpl_link(wl($parent,'do=show'),
+        $out .= tpl_link(wl($parent,'do=show'),
         $pre.(($inner)?$inner:$lang['btn_back']).$suf,
-        'class="action back" accesskey="b" rel="nofollow"');
-        return true;
+        'class="action back" accesskey="b" rel="nofollow"',1);
       }
-      return false;
+      break;
     case 'login':
       if($conf['useacl'] && $auth){
         if($_SERVER['REMOTE_USER']){
-          tpl_link(wl($ID,'do=logout&amp;sectok='.getSecurityToken()),
+          $out .= tpl_link(wl($ID,'do=logout&amp;sectok='.getSecurityToken()),
                    $pre.(($inner)?$inner:$lang['btn_logout']).$suf,
-                   'class="action logout" rel="nofollow"');
+                   'class="action logout" rel="nofollow"',1);
         }else{
-          tpl_link(wl($ID,'do=login&amp;sectok='.getSecurityToken()),
+          $out .= tpl_link(wl($ID,'do=login&amp;sectok='.getSecurityToken()),
                    $pre.(($inner)?$inner:$lang['btn_login']).$suf,
-                   'class="action login" rel="nofollow"');
+                   'class="action login" rel="nofollow"',1);
         }
-        return true;
       }
-      return false;
+      break;
     case 'admin':
       if($INFO['ismanager']){
-        tpl_link(wl($ID,'do=admin'),
+        $out .= tpl_link(wl($ID,'do=admin'),
                  $pre.(($inner)?$inner:$lang['btn_admin']).$suf,
-                 'class="action admin" rel="nofollow"');
-        return true;
+                 'class="action admin" rel="nofollow"',1);
       }
-      return false;
+      break;
    case 'subscribe':
    case 'subscription':
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribed']) {
-            if(!actionOK('unsubscribe'))
-              return false;
-            tpl_link(wl($ID,'do=unsubscribe'),
+            if(actionOK('unsubscribe'))
+              $out .= tpl_link(wl($ID,'do=unsubscribe'),
                      $pre.(($inner)?$inner:$lang['btn_unsubscribe']).$suf,
-                     'class="action unsubscribe" rel="nofollow"');
+                     'class="action unsubscribe" rel="nofollow"',1);
           } else {
-            if(!actionOK('subscribe'))
-              return false;
-            tpl_link(wl($ID,'do=subscribe'),
+            if(actionOK('subscribe'))
+              $out .= tpl_link(wl($ID,'do=subscribe'),
                      $pre.(($inner)?$inner:$lang['btn_subscribe']).$suf,
-                     'class="action subscribe" rel="nofollow"');
+                     'class="action subscribe" rel="nofollow"',1);
           }
-          return true;
         }
       }
-      return false;
+      if($type == 'subscribe') break;
+      // else: fall through for backward compatibility
     case 'subscribens':
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
         if($_SERVER['REMOTE_USER']){
           if($INFO['subscribedns']) {
-            if(!actionOK('unsubscribens'))
-              return false;
-            tpl_link(wl($ID,'do=unsubscribens'),
+            if(actionOK('unsubscribens'))
+              $out .= tpl_link(wl($ID,'do=unsubscribens'),
                      $pre.(($inner)?$inner:$lang['btn_unsubscribens']).$suf,
-                     'class="action unsubscribens" rel="nofollow"');
+                     'class="action unsubscribens" rel="nofollow"',1);
           } else {
-            if(!actionOK('subscribens'))
-              return false;
-            tpl_link(wl($ID,'do=subscribens'),
+            if(actionOK('subscribens'))
+              $out .= tpl_link(wl($ID,'do=subscribens'),
                      $pre.(($inner)?$inner:$lang['btn_subscribens']).$suf,
-                     'class="action subscribens" rel="nofollow"');
+                     'class="action subscribens" rel="nofollow"',1);
           }
-          return true;
         }
       }
-      return false;
+      break;
     case 'backlink':
-      if(!actionOK('backlink'))
-        return false;
-      tpl_link(wl($ID,'do=backlink'),
+      if(actionOK('backlink'))
+        $out .= tpl_link(wl($ID,'do=backlink'),
                $pre.(($inner)?$inner:$lang['btn_backlink']).$suf,
-               'class="action backlink" rel="nofollow"');
-      return true;
+               'class="action backlink" rel="nofollow"',1);
+      break;
     case 'profile':
       if($conf['useacl'] && $auth && $_SERVER['REMOTE_USER'] &&
          $auth->canDo('Profile') && ($ACT!='profile')){
-        tpl_link(wl($ID,'do=profile'),
+        $out .= tpl_link(wl($ID,'do=profile'),
                  $pre.(($inner)?$inner:$lang['btn_profile']).$suf,
-                 'class="action profile" rel="nofollow"');
-        return true;
+                 'class="action profile" rel="nofollow"',1);
       }
-      return false;
+      break;
     default:
-      print '[unknown link type]';
-      return true;
+      $out .= '[unknown link type]';
+      break;
   }
+  if ($return) return $out;
+  print $out;
+  return $out ? true : false;
 }
 
 /**
