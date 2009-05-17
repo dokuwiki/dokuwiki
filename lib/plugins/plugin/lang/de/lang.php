@@ -10,6 +10,7 @@
  * @author Florian Anderiasch <fa@art-core.org>
  * @author Robin Kluth <commi1993@gmail.com>
  * @author Arne Pelka <mail@arnepelka.de>
+ * @author Dirk Einecke <dirk@dirkeinecke.de>
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Neues Plugin herunterladen und installieren';
@@ -48,8 +49,8 @@ $lang['error']                 = 'Ein unbekannter Fehler ist aufgetreten.';
 $lang['error_download']        = 'Konnte das Plugin %s nicht installieren';
 $lang['error_badurl']          = 'Wahrscheinlich ungültige URL, konnte keinen Dateinamen ausfindig machen';
 $lang['error_dircreate']       = 'Konnte keinen temporären Ordner für die Downloads erstellen';
-$lang['error_decompress']      = 'Der Plugin Manager konnte das Plugin archiv nicht entpacken. Entweder ist der Download fehlerhaft oder das Komprimierungsverfahren wird nicht unterstützt. Bitte versuchen Sie es erneut oder downloaden und installieren Sie das Plugin manuell';
-$lang['error_copy']            = 'Beim kopieren der Dateien des Plugins trat ein Fehler auf <em>%s</em>: möglicherweise ist die Festplatte voll oder die Dateiberechtigungen falsch. Möglicherweise wurde das Plugin nur teilweise installiert, sie sollten das Plugin manuell entfernen um Instabilitäten zu vermeiden.';
+$lang['error_decompress']      = 'Der Plugin Manager konnte das Plugin-Archiv nicht entpacken. Entweder ist der Download fehlerhaft oder das Komprimierungsverfahren wird nicht unterstützt. Bitte versuchen Sie es erneut oder downloaden und installieren Sie das Plugin manuell.';
+$lang['error_copy']            = 'Beim Kopieren der Dateien des Plugins trat ein Fehler auf <em>%s</em>: möglicherweise ist die Festplatte voll oder die Dateiberechtigungen falsch. Möglicherweise wurde das Plugin nur teilweise installiert. Sie sollten das Plugin manuell entfernen um Instabilitäten zu vermeiden.';
 $lang['error_delete']          = 'Es gab einem Fehler beim Versuch das Plugin zu löschen <em>%s</em>. Dies liegt warscheinlich an fehlenden Dateiberechtigungen.';
 $lang['enabled']               = 'Plugin %s wurde aktiviert.';
 $lang['notenabled']            = 'Plugin %s konnte nicht aktiviert werden, überprüfen Sie die Dateirechte.';

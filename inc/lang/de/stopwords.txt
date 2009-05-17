@@ -1,7 +1,7 @@
-# This is a list of words the indexer ignores, one word per line
-# When you edit this file be sure to use UNIX line endings (single newline)
-# No need to include words shorter than 3 chars - these are ignored anyway
-# This list is based upon the ones found at http://www.ranks.nl/stopwords/
+# Die Wörter dieser Liste werden bei der Indexierung ignoriert. Jedes Wort steht in einer neuen Zeile.
+# Beachten Sie beim Bearbeiten der Datei darauf, dass Sie UNIX-Zeilenumbrüche verwenden (einfacher Zeilenumbruch).
+# Wörter, die kürzer als 3 Buchstaben sind, brauchen Sie nicht in die Liste mit aufnehmen. Diese werden automatisch ignoriert.
+# Diese Liste basiert auf der folgenden: http://www.ranks.nl/stopwords/
 aber
 als
 auch

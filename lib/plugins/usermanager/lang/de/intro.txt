@@ -1,1 +1,1 @@
-====== Benutzer pflegen... ======
+====== Benutzer-Manager ======

@@ -9,6 +9,7 @@
  * @author Florian Anderiasch <fa@art-core.org>
  * @author Robin Kluth <commi1993@gmail.com>
  * @author Arne Pelka <mail@arnepelka.de>
+ * @author Dirk Einecke <dirk@dirkeinecke.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';
@@ -44,9 +45,9 @@ $lang['next']                  = 'Nächste';
 $lang['last']                  = 'Ende';
 $lang['edit_usermissing']      = 'Der ausgewählte Nutzer wurde nicht gefunden. Möglicherweise wurde er gelöscht oder der Nutzer wurde anderswo geändert.';
 $lang['user_notify']           = 'Nutzer benachrichtigen';
-$lang['note_notify']           = 'Benachrichtigungsmails werden nur versandt wenn ein neues Passwort vergeben wurde.';
+$lang['note_notify']           = 'Benachrichtigungs-E-Mails werden nur versandt, wenn ein neues Passwort vergeben wurde.';
 $lang['note_group']            = 'Neue Nutzer werden der Standard-Gruppe (%s) hinzugefügt, wenn keine Gruppe angegeben wurde.';
-$lang['note_pass']             = 'Das Password wird automatisch generiert wenn das entsprechende Feld leergelassen wird und die Benachrichtigung des Nutzers aktiviert ist.';
+$lang['note_pass']             = 'Das Password wird automatisch generiert, wenn das entsprechende Feld leergelassen wird und die Benachrichtigung des Nutzers aktiviert ist.';
 $lang['add_ok']                = 'Nutzer erfolgreich angelegt';
 $lang['add_fail']              = 'Nutzer konnte nicht angelegt werden';
 $lang['notify_ok']             = 'Benachrichtigungsmail wurde versandt';
