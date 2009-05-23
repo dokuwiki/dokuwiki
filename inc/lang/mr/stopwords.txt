@@ -1,0 +1,39 @@
+# ही अशा शब्दांची यादी आहे जी अनुक्रमक (इंडेक्सर) दुर्लक्षित करतो, जर एक ओळित एक शब्द आला तरच.  
+# ही यादी बदलल्यास केवळ यूनिक्स पद्धतीची लाइन एंडिंग वापरा. तीन अक्षरापेक्षा लहान शब्द टाकण्याची 
+# गरज नाही - ते आपोआपच दुर्लक्षित केले जातात. ही यादी http://www.ranks.nl/stopwords/ येथील यादीवर 
+# आधारित आहे.
+about
+are
+as
+an
+and
+you
+your
+them
+their
+com
+for
+from
+into
+if
+in
+is
+it
+how
+of
+on
+or
+that
+the
+this
+to
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www
