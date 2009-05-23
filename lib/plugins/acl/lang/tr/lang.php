@@ -8,6 +8,7 @@
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author yavuzselim@gmail.com
  * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Yavuz Selim <yavuzselim@gmail.com>
  */
 $lang['admin_acl']             = 'Erişim Kontrol Listesi (ACL) Yönetimi';
 $lang['acl_group']             = 'Grup';

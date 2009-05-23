@@ -8,6 +8,7 @@
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author yavuzselim@gmail.com
  * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Yavuz Selim <yavuzselim@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -16,7 +17,7 @@ $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
-$lang['btn_edit']              = 'Sayfayı değiştir';
+$lang['btn_edit']              = 'Sayfayı düzenle';
 $lang['btn_source']            = 'Kaynağı göster';
 $lang['btn_show']              = 'Sayfayı göster';
 $lang['btn_create']            = 'Bu sayfayı oluştur';
@@ -31,7 +32,7 @@ $lang['btn_recent']            = 'En son değişiklikler';
 $lang['btn_upload']            = 'Yükle';
 $lang['btn_cancel']            = 'İptal';
 $lang['btn_index']             = 'İndeks';
-$lang['btn_secedit']           = 'Değiştir';
+$lang['btn_secedit']           = 'Düzenle';
 $lang['btn_login']             = 'Giriş yap';
 $lang['btn_logout']            = 'Çıkış yap';
 $lang['btn_admin']             = 'Yönetici';
@@ -65,6 +66,7 @@ $lang['badlogin']              = 'Üzgünüz, Kullanıcı adı veya şifre yanl�
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
+$lang['sectionlink']           = 'bu bölüme linkle';
 $lang['regmissing']            = 'Üzgünüz, tüm alanları doldurmalısınız.';
 $lang['reguexists']            = 'Üzgünüz, bu isime sahip bir kullanıcı zaten mevcut.';
 $lang['regsuccess']            = 'Kullanıcı oluşturuldu ve şifre e-posta adresine gönderildi.';

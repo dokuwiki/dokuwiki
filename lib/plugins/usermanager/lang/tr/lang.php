@@ -6,6 +6,7 @@
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author yavuzselim@gmail.com
  * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Yavuz Selim <yavuzselim@gmail.com>
  */
 $lang['menu']                  = 'Kullanıcı Yönetimi';
 $lang['noauth']                = '(kullanıcı onaylaması yoktur)';
