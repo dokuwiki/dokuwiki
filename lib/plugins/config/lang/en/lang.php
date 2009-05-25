@@ -67,7 +67,6 @@ $lang['recent']      = 'Recent changes';
 $lang['breadcrumbs'] = 'Number of breadcrumbs';
 $lang['youarehere']  = 'Hierarchical breadcrumbs';
 $lang['typography']  = 'Do typographical replacements';
-$lang['purplenumbers']= 'Show Purple Numbers';
 $lang['htmlok']      = 'Allow embedded HTML';
 $lang['phpok']       = 'Allow embedded PHP';
 $lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
@@ -177,11 +176,6 @@ $lang['license_o_'] = 'None chosen';
 $lang['typography_o_0'] = 'none';
 $lang['typography_o_1'] = 'excluding single quotes';
 $lang['typography_o_2'] = 'including single quotes (might not always work)';
-
-/* purplenumbers options */
-$lang['purplenumbers_o_0'] = 'off';
-$lang['purplenumbers_o_1'] = 'create IDs unique per page';
-$lang['purplenumbers_o_2'] = 'create IDs completely unique per site';
 
 /* userewrite options */
 $lang['userewrite_o_0'] = 'none';

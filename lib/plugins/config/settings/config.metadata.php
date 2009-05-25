@@ -102,7 +102,6 @@ $meta['breadcrumbs'] = array('numeric');
 $meta['youarehere']  = array('onoff');
 $meta['fullpath']    = array('onoff');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));
-$meta['purplenumbers']= array('multichoice','_choices' => array(0,1,2));
 $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
 $meta['showuseras']  = array('multichoice','_choices' => array('loginname','username','email','email_link'));

@@ -799,34 +799,3 @@ div.dokuwiki div.imagemeta img.thumb {
   float:left;
   margin-right: 0.1em;
 }
-
-/* ---------------  Purple Numbers  ----------------- */
-
-/* show only on hover */
-.dokuwiki a.pn {
-    visibility: hidden;
-    color: __text_other__ !important;
-}
-.dokuwiki h1:hover a.pn,
-.dokuwiki h2:hover a.pn,
-.dokuwiki h3:hover a.pn,
-.dokuwiki h4:hover a.pn,
-.dokuwiki h5:hover a.pn,
-.dokuwiki p:hover a.pn,
-.dokuwiki li:hover a.pn,
-.dokuwiki pre:hover a.pn,
-.dokuwiki table.inline:hover + .pnlink a.pn {
-    visibility: visible !important;
-}
-/* nested lists */
-.dokuwiki li:hover li a.pn {
-    visibility: hidden !important;
-}
-.dokuwiki li li:hover a.pn {
-    visibility: visible !important;
-}
-
-/* if PN needs to be outside of its section */
-.dokuwiki .pnlink {
-    margin: -1.0em 0 0 0;
-}

@@ -32,7 +32,6 @@ $conf['recent']      = 20;                //how many entries to show in recent
 $conf['breadcrumbs'] = 10;                //how many recent visited pages to show
 $conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
 $conf['typography']  = 1;                 //smartquote conversion 0=off, 1=doublequotes, 2=all quotes
-$conf['purplenumbers']= 0;                //show purple numbers? 0=off, 1=create IDs unique per page, 2=create IDs unique per site
 $conf['htmlok']      = 0;                 //may raw HTML be embedded? This may break layout and XHTML validity 0|1
 $conf['phpok']       = 0;                 //may PHP code be embedded? Never do this on the internet! 0|1
 $conf['dformat']     = '%Y/%m/%d %H:%M';  //dateformat accepted by PHPs strftime() function

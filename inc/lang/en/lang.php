@@ -65,7 +65,6 @@ $lang['badlogin']   = 'Sorry, username or password was wrong.';
 $lang['minoredit']  = 'Minor Changes';
 $lang['draftdate']  = 'Draft autosaved on'; // full dformat date will be added
 $lang['nosecedit']  = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
-$lang['sectionlink']= 'link to this section';
 
 $lang['regmissing'] = 'Sorry, you must fill in all fields.';
 $lang['reguexists'] = 'Sorry, a user with this login already exists.';
