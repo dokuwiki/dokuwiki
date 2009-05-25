@@ -10,6 +10,7 @@
  * @author VictorCastelan <victorcastelan@gmail.com>
  * @author Jordan Mero  hack.jord@gmail.com
  * @author Felipe Martinez <metalmartinez@gmail.com>
+ * @author Javier Aranda <internet@javierav.com>
  */
 $lang['menu']                  = 'Restaurador';
 $lang['filter']                = 'Buscar páginas con spam';

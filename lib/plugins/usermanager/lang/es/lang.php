@@ -11,6 +11,7 @@
  * @author VictorCastelan <victorcastelan@gmail.com>
  * @author Jordan Mero  hack.jord@gmail.com
  * @author Felipe Martinez <metalmartinez@gmail.com>
+ * @author Javier Aranda <internet@javierav.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autentiación de usuariosuser no está disponible)';

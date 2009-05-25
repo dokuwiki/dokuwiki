@@ -12,6 +12,7 @@
  * @author VictorCastelan <victorcastelan@gmail.com>
  * @author Jordan Mero  hack.jord@gmail.com
  * @author Felipe Martinez <metalmartinez@gmail.com>
+ * @author Javier Aranda <internet@javierav.com>
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -55,6 +56,7 @@ $lang['recent']                = 'Cambios recientes';
 $lang['breadcrumbs']           = 'Número de pasos de traza';
 $lang['youarehere']            = 'Traza jerárquica';
 $lang['typography']            = 'Realizar reemplazos tipográficos';
+$lang['purplenumbers']         = 'Mostrar Números Morados';
 $lang['htmlok']                = 'Permitir HTML embebido';
 $lang['phpok']                 = 'Permitir PHP embebido';
 $lang['dformat']               = 'Formato de fecha (ver la función de PHP <a href="http://www.php.net/strftime">strftime</a>)';
@@ -93,6 +95,8 @@ $lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los name
 $lang['auth_security_timeout'] = 'Tiempo de Autenticación (en segundos), por motivos de seguridad';
 $lang['securecookie']          = 'Las cookies establecidas por HTTPS, el naveagdor solo puede enviarlas por HTTPS?
 Inhabilite esta opción cuando solo se asegure la entrada , pero no la navegación de su wiki.';
+$lang['xmlrpc']                = 'Habilitar/Deshabilitar interfase XML-RPC';
+$lang['xmlrpcuser']            = 'Restringir el acceso XML-RPC a los grupos o usuarios separados por coma facilitados aquí. Dejar en blanco para dar acceso a todo el mundo. ';
 $lang['updatecheck']           = 'Comprobar actualizaciones y advertencias de seguridad? Esta característica requiere que Dokuwiki se conecte a splitbrain.org.';
 $lang['userewrite']            = 'Usar URLs bonitas';
 $lang['useslash']              = 'Usar barra (/) como separador de espacios de nombres en las URLs';
@@ -118,7 +122,6 @@ $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['broken_iua']            = '¿Se ha roto su sistema a causa de la función ignore_user_abort?. Esto puede causar que no funcione el index de búsqueda. Leer el <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>para más información.';
 $lang['xsendfile']             = 'Utilice el X-Sendfile header para permitirle sl servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
-$lang['xmlrpc']                = 'Habilitar/Deshabilitar interfase XML-RPC';
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
 $lang['renderer__core']        = '%s (nucleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (complemento)';
@@ -149,6 +152,9 @@ $lang['license_o_']            = 'No se eligió ninguna';
 $lang['typography_o_0']        = 'ninguno';
 $lang['typography_o_1']        = 'Dobles comillas solamente';
 $lang['typography_o_2']        = 'Todas las comillas (puede ser que no siempre funcione)';
+$lang['purplenumbers_o_0']     = 'inactivo';
+$lang['purplenumbers_o_1']     = 'crear IDs únicas por página';
+$lang['purplenumbers_o_2']     = 'crear IDs completamente únicas por sitio';
 $lang['userewrite_o_0']        = 'ninguno';
 $lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'Interno de DokuWiki';
