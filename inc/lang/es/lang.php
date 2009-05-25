@@ -75,7 +75,6 @@ $lang['badlogin']              = 'El usuario o contraseña ingresados son incorr
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente en';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, información de sección estuvo fuera de tiempo, en su lugar se cargó la página completa.';
-$lang['sectionlink']           = 'enlace a esta sección';
 $lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
 $lang['reguexists']            = 'Lo siento, el nombre de usuario ya existe.';
 $lang['regsuccess']            = 'El usuario ha sido creado. La contraseña se ha enviado por correo.';

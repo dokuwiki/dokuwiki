@@ -52,7 +52,6 @@ $lang['recent']                = 'En son değiştirilenler';
 $lang['breadcrumbs']           = 'Ekmek kırıntıların sayısı';
 $lang['youarehere']            = 'hiyerarşik ekmek kırıntıları';
 $lang['typography']            = 'Tipografik değiştirmeleri yap';
-$lang['purplenumbers']         = 'Mor Sayıları Göster';
 $lang['htmlok']                = 'Gömülü HTML koduna izin ver';
 $lang['phpok']                 = 'Gömülü PHP koduna izin ver';
 $lang['dformat']               = 'Tarih biçimi (PHP\'nin <a href="http://www.php.net/strftime">strftime</a> fonksiyonuna bakın)';
@@ -101,9 +100,6 @@ $lang['ftp____user']           = 'Safemod hackı için kullanılacak FTP kullan�
 $lang['ftp____pass']           = 'Safemod hackı için kullanılacak FTP parolası';
 $lang['license_o_']            = 'Seçilmedi';
 $lang['typography_o_0']        = 'Yok';
-$lang['purplenumbers_o_0']     = 'kapalı';
-$lang['purplenumbers_o_1']     = 'Her sayfaya benzersiz ve tek olan ID yarat';
-$lang['purplenumbers_o_2']     = 'her siteye benzersiz ve tek olan ID yarat';
 $lang['userewrite_o_0']        = 'hiçbiri';
 $lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'DokuWiki dahili';

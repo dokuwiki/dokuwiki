@@ -66,7 +66,6 @@ $lang['badlogin']              = 'Üzgünüz, Kullanıcı adı veya şifre yanl�
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
-$lang['sectionlink']           = 'bu bölüme linkle';
 $lang['regmissing']            = 'Üzgünüz, tüm alanları doldurmalısınız.';
 $lang['reguexists']            = 'Üzgünüz, bu isime sahip bir kullanıcı zaten mevcut.';
 $lang['regsuccess']            = 'Kullanıcı oluşturuldu ve şifre e-posta adresine gönderildi.';

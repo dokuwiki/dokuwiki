@@ -62,7 +62,6 @@ $lang['badlogin']              = 'Krivo korisničko ime ili lozinka.';
 $lang['minoredit']             = 'Manja promjena';
 $lang['draftdate']             = 'Privremeni dokument automatski snimljen na';
 $lang['nosecedit']             = 'Ova stranica se u medjuvremenu promijenila. Informacija o sekciji je ostarila i umjesto nje kompletna stranica je uploadovana.';
-$lang['sectionlink']           = 'Link na ovu sekciju';
 $lang['regmissing']            = 'Morate popuniti sva polja.';
 $lang['reguexists']            = 'Korisnik s tim korisničkim imenom već postoji.';
 $lang['regsuccess']            = 'Novi korisnik je uspješno unesen i poslana mu je lozinka mailom.';
