@@ -1,8 +1,5 @@
 <?php
-
-/* $Id: blowfish.php,v 2.4 2004/12/16 18:26:43 lem9 Exp $ */
-// vim: expandtab sw=4 ts=4 sts=4:
-
+/* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
  * The Cipher_blowfish:: class implements the Cipher interface enryption data
  * using the Blowfish algorithm.
@@ -15,15 +12,15 @@
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
  * @author  Mike Cochrane <mike@graftonhall.co.nz>
- * @version $Revision: 2.4 $
+ * @version $Id: blowfish.php 11081 2008-01-25 09:35:48Z cybot_tm $
  * @since   Horde 2.2
  * @package horde.cipher
  */
 
 // Change for phpMyAdmin by lem9:
 //class Horde_Cipher_blowfish extends Horde_Cipher {
-class Horde_Cipher_blowfish {
-
+class Horde_Cipher_blowfish
+{
     /* Pi Array */
     var $p = array(
             0x243F6A88, 0x85A308D3, 0x13198A2E, 0x03707344,
@@ -297,11 +294,6 @@ class Horde_Cipher_blowfish {
     /* The number of rounds to do */
     var $_rounds = 16;
 
-    /* Constructor */
-    function Cipher_blowfish($params = null)
-    {
-    }
-
     /**
      * Set the key to be used for en/decryption
      *
@@ -362,16 +354,6 @@ class Horde_Cipher_blowfish {
     }
 
     /**
-     * Return the size of the blocks that this cipher needs
-     *
-     * @return Integer  The number of characters per block
-     */
-    function getBlockSize()
-    {
-        return 8;
-    }
-
-    /**
      * Encrypt a block on data.
      *
      * @param String $block         The data to encrypt
@@ -389,7 +371,7 @@ class Horde_Cipher_blowfish {
         $parts = $this->_encryptBlock($L, $R);
         return pack("NN", $parts['L'], $parts['R']);
     }
-    
+
     /**
      * Encrypt a block on data.
      *
@@ -441,10 +423,10 @@ class Horde_Cipher_blowfish {
         $R = null;
 
         $retarray = array_values(unpack('N*', $block));
-        if(isset($retarray[0])) {
+        if (isset($retarray[0])) {
             $L = $retarray[0];
         }
-        if(isset($retarray[1])) {
+        if (isset($retarray[1])) {
             $R = $retarray[1];
         }
 // end change for phpMyAdmin
@@ -484,38 +466,6 @@ class Horde_Cipher_blowfish {
 }
 
 // higher-level functions:
-
-/**
- * String padding
- *
- * @param   string  input string
- * @param   integer length of the result
- * @param   string  the filling string
- * @param   integer padding mode
- *
- * @return  string  the padded string
- *
- * @access  public
- */
-function full_str_pad($input, $pad_length, $pad_string = '', $pad_type = 0) {
-    $str = '';
-    $length = $pad_length - strlen($input);
-    if ($length > 0) { // str_repeat doesn't like negatives
-        if ($pad_type == STR_PAD_RIGHT) { // STR_PAD_RIGHT == 1
-            $str = $input.str_repeat($pad_string, $length);
-        } elseif ($pad_type == STR_PAD_BOTH) { // STR_PAD_BOTH == 2
-            $str = str_repeat($pad_string, floor($length/2));
-            $str .= $input;
-            $str .= str_repeat($pad_string, ceil($length/2));
-        } else { // defaults to STR_PAD_LEFT == 0
-            $str = str_repeat($pad_string, $length).$input;
-        }
-    } else { // if $length is negative or zero we don't need to do anything
-        $str = $input;
-    }
-    return $str;
-}
-
 /**
  * Encryption using blowfish algorithm
  *
@@ -528,15 +478,19 @@ function full_str_pad($input, $pad_length, $pad_string = '', $pad_type = 0) {
  *
  * @author  lem9
  */
-function PMA_blowfish_encrypt($data, $secret) {
+function PMA_blowfish_encrypt($data, $secret) 
+{
     $pma_cipher = new Horde_Cipher_blowfish;
     $encrypt = '';
-    for ($i=0; $i<strlen($data); $i+=8) {
-        $block = substr($data, $i, 8);
-        if (strlen($block) < 8) {
-            $block = full_str_pad($block,8,"\0", 1);
-        }
-        $encrypt .= $pma_cipher->encryptBlock($block, $secret);
+    
+    $mod = strlen($data) % 8;
+    
+    if ($mod > 0) {
+        $data .= str_repeat("\0", 8 - $mod);
+    }
+    
+    foreach (str_split($data, 8) as $chunk) {
+        $encrypt .= $pma_cipher->encryptBlock($chunk, $secret);
     }
     return base64_encode($encrypt);
 }
@@ -553,15 +507,16 @@ function PMA_blowfish_encrypt($data, $secret) {
  *
  * @author  lem9
  */
-function PMA_blowfish_decrypt($encdata, $secret) {
+function PMA_blowfish_decrypt($encdata, $secret)
+{
     $pma_cipher = new Horde_Cipher_blowfish;
     $decrypt = '';
     $data = base64_decode($encdata);
-    for ($i=0; $i<strlen($data); $i+=8) {
-        $decrypt .= $pma_cipher->decryptBlock(substr($data, $i, 8), $secret);
+    
+    foreach (str_split($data, 8) as $chunk) {
+        $decrypt .= $pma_cipher->decryptBlock($chunk, $secret);
     }
     return trim($decrypt);
 }
 
-
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+?>
