@@ -137,6 +137,7 @@ div.dokuwiki textarea.edit[disabled],
 div.dokuwiki textarea.edit[readonly],
 div.dokuwiki input.edit[disabled],
 div.dokuwiki input.edit[readonly],
+div.dokuwiki input.button[disabled],
 div.dokuwiki select.edit[disabled] {
   background-color: __background_neu__!important;
   color: __text_neu__!important;
