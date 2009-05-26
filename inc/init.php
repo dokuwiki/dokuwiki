@@ -10,6 +10,9 @@
   }
   define('DOKU_START_TIME', delta_time());
 
+  global $config_cascade;
+  $config_cascade = '';
+
   // if available load a preload config file
   $preload = fullpath(dirname(__FILE__)).'/preload.php';
   if (@file_exists($preload)) include($preload);
@@ -42,7 +45,6 @@
   global $cache_metadata; $cache_metadata = array();
 
   //set the configuration cascade - but only if its not already been set in preload.php
-  global $config_cascade;
   if (empty($config_cascade)) {
     $config_cascade = array(
       'main' => array(
