@@ -531,17 +531,23 @@ function script($script='doku.php'){
  *      [name]         - real name (if logged in)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * Michael Klier <chi@chimeric.de>
+ * @author Michael Klier <chi@chimeric.de>
+ * @param  string $text - optional text to check, if not given the globals are used
+ * @return bool         - true if a spam word was found
  */
-function checkwordblock(){
+function checkwordblock($text=''){
   global $TEXT;
+  global $PRE;
+  global $SUF;
   global $conf;
   global $INFO;
 
   if(!$conf['usewordblock']) return false;
 
+  if(!$text) $text = "$PRE $TEXT $SUF";
+
   // we prepare the text a tiny bit to prevent spammers circumventing URL checks
-  $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i','\1http://\2 \2\3',$TEXT);
+  $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i','\1http://\2 \2\3',$text);
 
   $wordblocks = getWordblocks();
   //how many lines to read at once (to work around some PCRE limits)
