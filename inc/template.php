@@ -855,6 +855,12 @@ function tpl_youarehere($sep=' &raquo; '){
   $parts = explode(':', $ID);
   $count = count($parts);
 
+  if($GLOBALS['ACT'] == 'search')
+  {
+    $parts = array($conf['start']);
+    $count = 1;
+  }
+
   echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
   // always print the startpage
