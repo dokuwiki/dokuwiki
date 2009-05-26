@@ -323,14 +323,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $disabled = $cando ? '' : ' disabled="disabled"';
         echo str_pad('',$indent);
 
+        $fieldtype = ($name == "userpass") ? 'password'  : 'text';
+
         echo "<tr $class>";
         echo "<td><label for=\"$id\" >$label: </label></td>";
         echo "<td>";
         if($cando){
-            echo "<input type=\"text\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit\" />";
+            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit\" />";
         }else{
             echo "<input type=\"hidden\" name=\"$name\" value=\"$value\" />";
-            echo "<input type=\"text\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
+            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
         }
         echo "</td>";
         echo "</tr>";
