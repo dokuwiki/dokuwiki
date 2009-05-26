@@ -327,7 +327,7 @@ class auth_basic {
    * Check Session Cache validity [implement only where required/possible]
    *
    * DokuWiki caches user info in the user's session for the timespan defined
-   * in $conf['securitytimeout'].
+   * in $conf['auth_security_timeout'].
    *
    * This makes sure slow authentication backends do not slow down DokuWiki.
    * This also means that changes to the user database will not be reflected
