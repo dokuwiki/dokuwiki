@@ -7,7 +7,7 @@
  *  - Jack Lloyd (lloyd@randombit.net)
  *  - Michael Mol (mikemol@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/04
  *
  * C language file for GeSHi.
@@ -69,7 +69,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'ESCAPE_REGEXP' => array(
         //Simple Single Char Escapes
-        1 => "#\\\\[abfnrtv\\'\"?\n]#i",
+        1 => "#\\\\[\\\\abfnrtv\'\"?\n]#i",
         //Hexadecimal Char Specs
         2 => "#\\\\x[\da-fA-F]{2}#",
         //Hexadecimal Char Specs

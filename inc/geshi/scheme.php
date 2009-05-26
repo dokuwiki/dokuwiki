@@ -4,7 +4,7 @@
  * ----------
  * Author: Jon Raphaelson (jonraphaelson@gmail.com)
  * Copyright: (c) 2005 Jon Raphaelson, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/30
  *
  * Scheme language file for GeSHi.

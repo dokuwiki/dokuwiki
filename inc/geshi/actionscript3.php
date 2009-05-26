@@ -4,7 +4,7 @@
  * ----------------
  * Author: Jordi Boggiano (j.boggiano@seld.be)
  * Copyright: (c) 2007 Jordi Boggiano (http://www.seld.be/), Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2007/11/26
  *
  * ActionScript3 language file for GeSHi.
@@ -58,6 +58,10 @@ $language_data = array (
     'LANG_NAME' => 'ActionScript 3',
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array('/*' => '*/'),
+    'COMMENT_REGEXP' => array(
+        //Regular expressions
+        2 => "/(?<=[\\s^])(s|tr|y)\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/(?:\\\\.|(?!\n)[^\\/\\\\])*\\/[msixpogcde]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])(m|q[qrwx]?)?\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/[msixpogc]*(?=[\\s$\\.\\,\\;\\)])/iU",
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '\\',
@@ -67,7 +71,8 @@ $language_data = array (
             'throw', 'this', 'switch', 'super', 'set', 'return', 'public', 'protected',
             'private', 'null', 'new', 'is', 'internal', 'instanceof', 'in',
             'import', 'if', 'get', 'for', 'false', 'else', 'each', 'do',
-            'delete', 'default', 'continue', 'catch', 'case', 'break', 'as'
+            'delete', 'default', 'continue', 'catch', 'case', 'break', 'as',
+            'extends'
             ),
         2 => array(
             'var'
@@ -390,7 +395,7 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '{', '}', '!', '%', '&', '*', '|', '/', '<', '>', '^', '-', '+', '~', '?', ':'
+        '(', ')', '[', ']', '{', '}', '!', '%', '&', '*', '|', '/', '<', '>', '^', '-', '+', '~', '?', ':', ';', '.', ','
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -415,7 +420,8 @@ $language_data = array (
             8 => 'color: #004993;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #009900;',
+            1 => 'color: #009900; font-style: italic;',
+            2 => 'color: #009966; font-style: italic;',
             'MULTI' => 'color: #3f5fbf;'
             ),
         'ESCAPE_CHAR' => array(
@@ -434,7 +440,7 @@ $language_data = array (
             0 => 'color: #000000;',
             ),
         'SYMBOLS' => array(
-            0 => 'color: #000000; font-weight: bold;'
+            0 => 'color: #000066; font-weight: bold;'
             ),
         'REGEXPS' => array(
             ),
@@ -446,7 +452,7 @@ $language_data = array (
         2 => '',
         3 => '',
         4 => '',
-        5 => 'http://www.google.com/search?q={FNAMEL}%20inurl:http://livedocs.adobe.com/flex/201/langref/%20inurl:{FNAMEL}.html&amp;filter=0&amp;num=100&amp;btnI=lucky',
+        5 => 'http://www.google.com/search?q={FNAMEL}%20inurl:http://livedocs.adobe.com/flex/201/langref/%20inurl:{FNAMEL}.html',
         6 => '',
         7 => '',
         8 => ''

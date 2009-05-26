@@ -4,7 +4,7 @@
  * -----
  * Author: Alberto 'Birckin' de Areba (Birckin@hotmail.com)
  * Copyright: (c) 2006 Alberto de Areba
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2006/05/29
  *
  * mIRC Scripting language file for GeSHi.
@@ -48,7 +48,7 @@ $language_data = array (
             'alias', 'menu', 'dialog',
             ),
         2 => array(
-            'if', 'elseif', 'else', 'while', 'return', 'goto','var'
+            'if', 'elseif', 'else', 'while', 'return', 'goto', 'var'
             ),
         3 => array(
             'action','ajinvite','amsg','ame','anick','aop','auser',
@@ -76,7 +76,7 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '{', '}', '[', ']'
+        '(', ')', '{', '}', '[', ']', '/'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -133,7 +133,7 @@ $language_data = array (
         //Variable names
         0 => '\$[a-zA-Z0-9]+',
         //Variable names
-        1 => '(%|&amp;)[a-zA-Z0-9äöü]+',
+        1 => '(%|&amp;)[\w\x80-\xFE]+',
         //Client to Client Protocol handling
         2 => '(on|ctcp) (!|@|&amp;)?(\d|\*):[a-zA-Z]+:',
         /*4 => array(
@@ -149,9 +149,9 @@ $language_data = array (
         //Raw protocol handling
         5 => 'raw (\d|\*):',
         //Timer handling
-        6 => '\/timer(?!s\b)[0-9a-zA-Z_]+',
+        6 => '(?<!>|:|\/)\/timer(?!s\b)[0-9a-zA-Z_]+',
         // /...
-        7 => '\/[a-zA-Z0-9]+'
+        7 => '(?<!>|:|\/|\w)\/[a-zA-Z][a-zA-Z0-9]*(?!>)'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
@@ -163,9 +163,7 @@ $language_data = array (
             'NUMBERS' => GESHI_NEVER
             ),
         'KEYWORDS' => array(
-            2 => array(
-                'DISALLOWED_BEFORE' => '(?<![a-zA-Z0-9\$_\|\#;>^&\/])'
-            )
+            'DISALLOWED_BEFORE' => '(?<![\w\$\|\#;<^&])'
         )
     )
 );

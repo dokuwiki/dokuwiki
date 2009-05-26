@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Frode Aarebrot (frode@aarebrot.net)
  * Copyright: (c) 2008 Frode Aarebrot (http://www.aarebrot.net)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2008/06/20
  *
  * PowerShell language file for GeSHi.
@@ -47,7 +47,7 @@
  ************************************************************************************/
 
 $language_data = array (
-    'LANG_NAME' => 'posh',
+    'LANG_NAME' => 'PowerShell',
     'COMMENT_SINGLE' => array(1 => '#'),
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
@@ -187,7 +187,7 @@ $language_data = array (
             0 => 'color: #800000;'
             ),
         'NUMBERS' => array(
-            0 => 'color: #000000;'
+            0 => 'color: #804000;'
             ),
         'METHODS' => array(
             0 => 'color: pink;'
@@ -211,7 +211,7 @@ $language_data = array (
         3 => '',
         4 => '',
         5 => '',
-        6 => '',
+        6 => 'about:blank',
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
@@ -254,13 +254,7 @@ $language_data = array (
         //BenBE: Please note that changes here and in Keyword group 6 have to be synchronized in order to work properly.
         //This Regexp must only match, if keyword group 6 doesn't. If this assumption fails
         //Highlighting of the keywords will be incomplete or incorrect!
-        0 => "(?<!\\\$|>)[\\\$](?!(?:DebugPreference|Error(?:ActionPreference)?|".
-            "Ho(?:me|st)|Input|LASTEXITCODE|Maximum(?:AliasCount|DriveCount|".
-            "FunctionCount|HistoryCount|VariableCount)|OFS|P(?:WD|sHome)|".
-            "ReportErrorShow(?:ExceptionClass|InnerException|S(?:ource|".
-            "tackTrace))|S(?:houldProcess(?:Preference|ReturnPreference)|".
-            "tackTrace)|VerbosePreference|WarningPreference|_|args|foreach)\W)".
-            "(\w+)(?=[^|\w])",
+        0 => "(?<!\\\$|>)[\\\$](\w+)(?=[^|\w])",
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
@@ -269,8 +263,12 @@ $language_data = array (
         ),
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
+            4 => array(
+                'DISALLOWED_AFTER' => '(?![a-zA-Z])',
+                'DISALLOWED_BEFORE' => ''
+                ),
             6 => array(
-                'DISALLOWED_BEFORE' => '(?<!\$)\$'
+                'DISALLOWED_BEFORE' => '(?<!\$>)\$'
                 )
             )
         )

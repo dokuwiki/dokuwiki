@@ -7,7 +7,7 @@
  *  - Sandra Rossi (sandra.rossi@gmail.com)
  *  - Jacob Laursen (jlu@kmd.dk)
  * Copyright: (c) 2007 Andres Picazo
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/04
  *
  * ABAP language file for GeSHi.
@@ -24,11 +24,6 @@
  *    highlighted for "ref to data", then secondly for "ref to". It is very important to
  *    position "ref to" after "ref to data" otherwise "data" wouldn't be highlighted because
  *    of the previous highlight.
- * Styles used : keywords are all displayed in upper case, and they are organized into 4 categories :
- *    1) control statements (blue), 2) declarative statements (red-maroon),
- *    3) other statements (blue-green), 4) keywords (violet).
- *    + GeSHi : literals (red) + symbols (green) + methods/attributes (mauve)
- *    + unchanged style for other words.
  * Control, declarative and other statements are assigned URLs to sap documentation website:
  *    http://help.sap.com/abapdocu/en/ABAP<statement_name>.htm
  *
@@ -823,7 +818,6 @@ $language_data = array(
             'byte-na',
             'byte-ns',
 
-            'c',
             'ca',
             'calling',
             'casting',
@@ -857,7 +851,6 @@ $language_data = array(
             'comparing',
             'components',
             'condition',
-            'constructor',
             'context',
             'copies',
             'count',
@@ -879,7 +872,6 @@ $language_data = array(
             'cx_root',
             'cx_dynamic_check',
 
-            'd',
             'dangerous',
             'database',
             'datainfo',
@@ -906,7 +898,6 @@ $language_data = array(
             'div',
             'dummy',
 
-            'e',
             'encoding',
             'end-lines',
             'engineering',
@@ -944,7 +935,6 @@ $language_data = array(
             'from_mixed',
             'friends',
             'from',
-            'f',
 
             'giving',
             'ge',
@@ -960,7 +950,6 @@ $language_data = array(
             'hold',
             'hotspot',
 
-            'i',
             'id',
             'ids',
             'immediately',
@@ -1047,7 +1036,6 @@ $language_data = array(
             'non-unicode',
             'no',
             'number',
-            'n',
             'nmax',
             'nmin',
             'not',
@@ -1085,7 +1073,6 @@ $language_data = array(
             'priority',
             'public',
             'pushbutton',
-            'p',
 
             'queue-only',
             'quickinfo',
@@ -1161,7 +1148,6 @@ $language_data = array(
             'supplied',
             'switch',
 
-            't',
             'tan',
             'tanh',
             'table_line',
@@ -1208,7 +1194,6 @@ $language_data = array(
             'with-heading',
             'with-title',
 
-            'x',
             'xsequence',
             'xstring',
             'xstrlen',
@@ -1317,10 +1302,14 @@ $language_data = array(
         ),
     'SYMBOLS' => array(
         0 => array(
-            '='
+            '->*', '->', '=>',
+            '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '!', '%', '^', '&', ':', ',', '.'
             ),
         1 => array(
-            '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '!', '%', '^', '&', ':'
+            '>=', '<=', '<', '>', '='
+            ),
+        2 => array(
+            '?='
             )
         ),
     'CASE_SENSITIVE' => array(
@@ -1369,8 +1358,9 @@ $language_data = array(
             2 => 'color: #202020;'
             ),
         'SYMBOLS' => array(
-            0 => 'color: #800080;',
-            1 => 'color: #808080;'
+            0 => 'color: #808080;',
+            1 => 'color: #800080;',
+            2 => 'color: #0000ff;'
             ),
         'REGEXPS' => array(
             ),

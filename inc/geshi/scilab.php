@@ -4,7 +4,7 @@
  * --------
  * Author: Christophe David (geshi@christophedavid.org)
  * Copyright: (c) 2008 Christophe David (geshi@christophedavid.org)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2008/08/04
  *
  * SciLab language file for GeSHi.
@@ -41,7 +41,7 @@ $language_data = array (
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array(),
     'COMMENT_REGEXP' => array(
-        2 => "/\w+'/"
+        2 => "/(?<=\)|\]|\w)'/"
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"'),

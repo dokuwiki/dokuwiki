@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Reid van Melle (rvanmelle@gmail.com)
  * Copyright: (c) 2004 Reid van Melle (sorry@nowhere)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2006/05/05
  *
  * TCL/iTCL language file for GeSHi.

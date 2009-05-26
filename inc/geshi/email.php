@@ -4,7 +4,7 @@
  * ---------------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2008 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2008/10/19
  *
  * Email (mbox \ eml \ RFC format) language file for GeSHi.
@@ -177,7 +177,7 @@ $language_data = array (
         ),
     'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
     'SCRIPT_DELIMITERS' => array(
-        0 => "/(^)[A-Z][a-zA-Z0-9\-]*\s*:\s*(?:.|(?=\n\s)\n)*($)/m"
+        0 => "/(?<start>^)[A-Z][a-zA-Z0-9\-]*\s*:\s*(?:.|(?=\n\s)\n)*(?<end>$)/m"
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

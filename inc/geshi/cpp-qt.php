@@ -4,7 +4,7 @@
  * -------
  * Author: Iulian M
  * Copyright: (c) 2006 Iulian M
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/09/27
  *
  * C++ (with QT extensions) language file for GeSHi.
@@ -52,7 +52,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'ESCAPE_REGEXP' => array(
         //Simple Single Char Escapes
-        1 => "#\\\\[abfnrtv\\'\"?\n]#i",
+        1 => "#\\\\[\\\\abfnrtv\'\"?\n]#i",
         //Hexadecimal Char Specs
         2 => "#\\\\x[\da-fA-F]{2}#",
         //Hexadecimal Char Specs

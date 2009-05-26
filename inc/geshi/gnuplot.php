@@ -4,7 +4,7 @@
  * ----------
  * Author: Milian Wolff (mail@milianw.de)
  * Copyright: (c) 2008 Milian Wolff (http://milianw.de)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2008/07/07
  *
  * Gnuplot script language file for GeSHi.
@@ -216,7 +216,7 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Variable assignment
-        0 => "([a-zA-Z_][a-zA-Z0-9_]*)\s*=",
+        0 => "(?<![?;>\w])([a-zA-Z_][a-zA-Z0-9_]*)\s*=",
         //Numbers with unit
         1 => "(?<=^|\s)([0-9]*\.?[0-9]+\s*cm)"
         ),

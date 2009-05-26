@@ -4,7 +4,7 @@
  * --------
  * Author: Amit Gupta (http://blog.igeek.info/)
  * Copyright: (c) 2004 Amit Gupta (http://blog.igeek.info/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/13
  *
  * ASP language file for GeSHi.
@@ -151,7 +151,7 @@ $language_data = array (
         2 => array(
             '<script language="javascript" runat="server">' => '</script>'
             ),
-        3 => "/(<%=?)(?:\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
+        3 => "/(?<start><%=?)(?:\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(?<end>%>|\Z)/sm"
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/20
  *
  * PHP language file for GeSHi.
@@ -54,9 +54,6 @@ $language_data = array(
     'LANG_NAME' => 'PHP',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
-    'HARDQUOTE' => array("'", "'"),
-    'HARDESCAPE' => array("'", "\\"),
-    'HARDCHAR' => "\\",
     'COMMENT_REGEXP' => array(
         //Heredoc and Nowdoc syntax
         3 => '/<<<\s*?(\'?)([a-zA-Z0-9]+?)\1[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
@@ -82,8 +79,11 @@ $language_data = array(
         //Format String support in ""-Strings
         6 => "#%(?:%|(?:\d+\\\\\\\$)?\\+?(?:\x20|0|'.)?-?(?:\d+|\\*)?(?:\.\d+)?[bcdefFosuxX])#"
         ),
+    'HARDQUOTE' => array("'", "'"),
+    'HARDESCAPE' => array("'", "\\"),
+    'HARDCHAR' => "\\",
     'NUMBERS' =>
-        GESHI_NUMBER_INT_BASIC |  GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
+        GESHI_NUMBER_INT_BASIC | GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
         GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
         1 => array(
@@ -974,7 +974,7 @@ $language_data = array(
         ),
     'SYMBOLS' => array(
         1 => array(
-            '<%', '<%=', '%>', '<?', '<?=', '?>'
+            '<'.'%', '<'.'%=', '%'.'>', '<'.'?', '<'.'?=', '?'.'>'
             ),
         0 => array(
             '(', ')', '[', ']', '{', '}',
@@ -1066,19 +1066,39 @@ $language_data = array(
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
         0 => array(
-            '<?php' => '?>'
+            '<'.'?php' => '?'.'>'
             ),
         1 => array(
-            '<?' => '?>'
+            '<'.'?' => '?'.'>'
             ),
         2 => array(
-            '<%' => '%>'
+            '<'.'%' => '%'.'>'
             ),
         3 => array(
             '<script language="php">' => '</script>'
             ),
-        4 => "/(<\?(?:php)?)(?:'(?:[^'\\\\]|\\\\.)*?'|\"(?:[^\"\\\\]|\\\\.)*?\"|\/\*(?!\*\/).*?\*\/|.)*?(\?>|\Z)/sm",
-        5 => "/(<%)(?:'(?:[^'\\\\]|\\\\.)*?'|\"(?:[^\"\\\\]|\\\\.)*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
+        4 => "/(?<start><\\?(?>php\b)?)(?:".
+            "(?>[^\"'?\\/<]+)|".
+            "\\?(?!>)|".
+            "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
+            "(?>\"(?>[^\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
+            "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
+            "\\/\\/(?>.*?$)|".
+            "\\/(?=[^*\\/])|".
+            "<(?!<<)|".
+            "<<<(?<phpdoc>\w+)\s.*?\s\k<phpdoc>".
+            ")*(?<end>\\?>|\Z)/sm",
+        5 => "/(?<start><%)(?:".
+            "(?>[^\"'%\\/<]+)|".
+            "%(?!>)|".
+            "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
+            "(?>\"(?>[^\\\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
+            "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
+            "\\/\\/(?>.*?$)|".
+            "\\/(?=[^*\\/])|".
+            "<(?!<<)|".
+            "<<<(?<phpdoc>\w+)\s.*?\s\k<phpdoc>".
+            ")*(?<end>%>)/sm",
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

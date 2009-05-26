@@ -4,7 +4,7 @@
  * ----------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/29/07
  *
  * Apache language file for GeSHi.
@@ -57,81 +57,355 @@ $language_data = array (
     'KEYWORDS' => array(
         /*keywords*/
         1 => array(
-            'accessconfig','accessfilename','action','addalt',
-            'addaltbyencoding','addaltbytype','addcharset',
-            'adddefaultcharset','adddescription',
-            'addencoding','addhandler','addicon','addiconbyencoding',
-            'addiconbytype','addlanguage','addmodule','addmoduleinfo',
-            'addtype','agentlog','alias','aliasmatch',
-            'allow','allowconnect','allowoverride','anonymous',
-            'anonymous_authoritative','anonymous_logemail','anonymous_mustgiveemail',
-            'anonymous_nouserid','anonymous_verifyemail','authauthoritative',
-            'authdbauthoritative','authdbgroupfile','authdbmauthoritative',
-            'authdbmgroupfile','authdbuserfile','authdbmuserfile',
-            'authdigestfile','authgroupfile','authname','authtype',
-            'authuserfile','bindaddress','browsermatch','browsermatchnocase',
-            'bs2000account','cachedefaultexpire','cachedirlength','cachedirlevels',
-            'cacheforcecompletion','cachegcinterval','cachelastmodifiedfactor','cachemaxexpire',
-            'cachenegotiateddocs','cacheroot','cachesize','checkspelling',
-            'clearmodulelist','contentdigest','cookieexpires','cookielog',
-            'cookietracking','coredumpdirectory','customlog',
-            'defaulticon','defaultlanguage','defaulttype','define',
-            'deny','directory','directorymatch','directoryindex',
-            'documentroot','errordocument','errorlog','example',
-            'expiresactive','expiresbytype','expiresdefault','extendedstatus',
-            'fancyindexing','files','filesmatch','forcetype',
-            'group','header','headername','hostnamelookups',
-            'identitycheck','ifdefine','ifmodule','imapbase',
-            'imapdefault','imapmenu','include','indexignore','indexorderdefault',
-            'indexoptions','keepalive','keepalivetimeout','languagepriority',
-            'limit','limitexcept','limitrequestbody','limitrequestfields',
-            'limitrequestfieldsize','limitrequestline','listen','listenbacklog',
-            'loadfile','loadmodule','location','locationmatch',
-            'lockfile','logformat','loglevel','maxclients',
-            'maxkeepaliverequests','maxrequestsperchild','maxspareservers','maxsparethreads','metadir',
-            'metafiles','metasuffix','mimemagicfile','minspareservers','minsparethreads',
-            'mmapfile','namevirtualhost','nocache','options','order',
-            'passenv','php_admin_value','php_admin_flag','php_value','pidfile','port','proxyblock','proxydomain',
-            'proxypass','proxypassreverse','proxyreceivebuffersize','proxyremote',
-            'proxyrequests','proxyvia','qsc','readmename',
-            'redirect','redirectmatch','redirectpermanent','redirecttemp',
-            'refererignore','refererlog','removehandler','require',
-            'resourceconfig','rewritebase','rewritecond','rewriteengine',
-            'rewritelock','rewritelog','rewriteloglevel','rewritemap',
-            'rewriteoptions','rewriterule','rlimitcpu','rlimitmem',
-            'rlimitnproc','satisfy','scoreboardfile','script',
-            'scriptalias','scriptaliasmatch','scriptinterpretersource','scriptlog',
-            'scriptlogbuffer','scriptloglength','sendbuffersize',
-            'serveradmin','serveralias','servername','serverpath',
-            'serverroot','serversignature','servertokens','servertype',
-            'setenv','setenvif','setenvifnocase','sethandler',
-            'singlelisten','startservers','threadsperchild','timeout',
-            'transferlog','typesconfig','unsetenv','usecanonicalname',
-            'user','userdir','virtualhost','virtualdocumentroot',
-            'virtualdocumentrootip','virtualscriptalias','virtualscriptaliasip',
-            'xbithack','from','all'
+            //core.c
+            'AcceptFilter','AcceptPathInfo','AccessConfig','AccessFileName',
+            'AddDefaultCharset','AddOutputFilterByType','AllowEncodedSlashes',
+            'AllowOverride','AuthName','AuthType','ContentDigest',
+            'CoreDumpDirectory','DefaultType','DocumentRoot','EnableMMAP',
+            'EnableSendfile','ErrorDocument','ErrorLog','FileETag','ForceType',
+            'HostnameLookups','Include','LimitInternalRecursion',
+            'LimitRequestBody','LimitRequestFields','LimitRequestFieldsize',
+            'LimitRequestLine','LimitXMLRequestBody','LogLevel','MaxMemFree',
+            'MaxRequestsPerChild','NameVirtualHost','Options','PidFile','Port',
+            'Protocol','Require','RLimitCPU','RLimitMEM','RLimitNPROC',
+            'Satisfy','ScoreBoardFile','ServerAdmin','ServerAlias','ServerName',
+            'ServerPath','ServerRoot','ServerSignature','ServerTokens',
+            'SetHandler','SetInputFilter','SetOutputFilter','ThreadStackSize',
+            'Timeout','TraceEnable','UseCanonicalName',
+            'UseCanonicalPhysicalPort',
+
+            //http_core.c
+            'KeepAlive','KeepAliveTimeout','MaxKeepAliveRequests',
+
+            //mod_actions.c
+            'Action','Script',
+
+            //mod_alias.c
+            'Alias','AliasMatch','Redirect','RedirectMatch','RedirectPermanent',
+            'RedirectTemp','ScriptAlias','ScriptAliasMatch',
+
+            //mod_asis.c
+
+            //mod_auth_basic.c
+            'AuthBasicAuthoritative','AuthBasicProvider',
+
+            //mod_auth_digest.c
+            'AuthDigestAlgorithm','AuthDigestDomain','AuthDigestNcCheck',
+            'AuthDigestNonceFormat','AuthDigestNonceLifetime',
+            'AuthDigestProvider','AuthDigestQop','AuthDigestShmemSize',
+
+            //mod_authn_alias.c
+
+            //mod_authn_anon.c
+            'Anonymous','Anonymous_LogEmail','Anonymous_MustGiveEmail',
+            'Anonymous_NoUserId','Anonymous_VerifyEmail',
+
+            //mod_authn_dbd.c
+            'AuthDBDUserPWQuery','AuthDBDUserRealmQuery',
+
+            //mod_authn_dbm.c
+            'AuthDBMType','AuthDBMUserFile',
+
+            //mod_authn_default.c
+            'AuthDefaultAuthoritative',
+
+            //mod_authn_file.c
+            'AuthUserFile',
+
+            //mod_authnz_ldap.c
+            'AuthLDAPBindDN','AuthLDAPBindPassword','AuthLDAPCharsetConfig',
+            'AuthLDAPCompareDNOnServer','AuthLDAPDereferenceAliases',
+            'AuthLDAPGroupAttribute','AuthLDAPGroupAttributeIsDN',
+            'AuthLDAPRemoteUserAttribute','AuthLDAPRemoteUserIsDN',
+            'AuthLDAPURL','AuthzLDAPAuthoritative',
+
+            //mod_authz_dbm.c
+            'AuthDBMGroupFile','AuthzDBMAuthoritative','AuthzDBMType',
+
+            //mod_authz_default.c
+            'AuthzDefaultAuthoritative',
+
+            //mod_authz_groupfile.c
+            'AuthGroupFile','AuthzGroupFileAuthoritative',
+
+            //mod_authz_host.c
+            'Allow','Deny','Order',
+
+            //mod_authz_owner.c
+            'AuthzOwnerAuthoritative',
+
+            //mod_authz_svn.c
+            'AuthzForceUsernameCase','AuthzSVNAccessFile','AuthzSVNAnonymous',
+            'AuthzSVNAuthoritative','AuthzSVNNoAuthWhenAnonymousAllowed',
+
+            //mod_authz_user.c
+            'AuthzUserAuthoritative',
+
+            //mod_autoindex.c
+            'AddAlt','AddAltByEncoding','AddAltByType','AddDescription',
+            'AddIcon','AddIconByEncoding','AddIconByType','DefaultIcon',
+            'FancyIndexing','HeaderName','IndexHeadInsert','IndexIgnore',
+            'IndexOptions','IndexOrderDefault','IndexStyleSheet','ReadmeName',
+
+            //mod_bt.c
+            'Tracker','TrackerDetailURL','TrackerFlags','TrackerHashMaxAge',
+            'TrackerHashMinAge','TrackerHashWatermark','TrackerHome',
+            'TrackerReturnInterval','TrackerReturnMax',
+            'TrackerReturnPeerFactor','TrackerReturnPeers','TrackerRootInclude',
+            'TrackerStyleSheet',
+
+            //mod_bw.c
+            'BandWidth','BandWidthError','BandWidthModule','BandWidthPacket',
+            'ForceBandWidthModule','LargeFileLimit','MaxConnection',
+            'MinBandWidth',
+
+            //mod_cache.c
+            'CacheDefaultExpire','CacheDisable','CacheEnable',
+            'CacheIgnoreCacheControl','CacheIgnoreHeaders',
+            'CacheIgnoreNoLastMod','CacheIgnoreQueryString',
+            'CacheLastModifiedFactor','CacheMaxExpire','CacheStoreNoStore',
+            'CacheStorePrivate',
+
+            //mod_cern_meta.c
+            'MetaDir','MetaFiles','MetaSuffix',
+
+            //mod_cgi.c
+            'ScriptLog','ScriptLogBuffer','ScriptLogLength',
+
+            //mod_charset_lite.c
+            'CharsetDefault','CharsetOptions','CharsetSourceEnc',
+
+            //mod_dav.c
+            'DAV','DAVDepthInfinity','DAVMinTimeout',
+
+            //mod_dav_fs.c
+            'DAVLockDB',
+
+            //mod_dav_lock.c
+            'DAVGenericLockDB',
+
+            //mod_dav_svn.c
+            'SVNActivitiesDB','SVNAllowBulkUpdates','SVNAutoversioning',
+            'SVNIndexXSLT','SVNListParentPath','SVNMasterURI','SVNParentPath',
+            'SVNPath','SVNPathAuthz','SVNReposName','SVNSpecialURI',
+
+            //mod_dbd.c
+            'DBDExptime','DBDKeep','DBDMax','DBDMin','DBDParams','DBDPersist',
+            'DBDPrepareSQL','DBDriver',
+
+            //mod_deflate.c
+            'DeflateBufferSize','DeflateCompressionLevel','DeflateFilterNote',
+            'DeflateMemLevel','DeflateWindowSize',
+
+            //mod_dir.c
+            'DirectoryIndex','DirectorySlash',
+
+            //mod_disk_cache.c
+            'CacheDirLength','CacheDirLevels','CacheMaxFileSize',
+            'CacheMinFileSize','CacheRoot',
+
+            //mod_dumpio.c
+            'DumpIOInput','DumpIOLogLevel','DumpIOOutput',
+
+            //mod_env.c
+            'PassEnv','SetEnv','UnsetEnv',
+
+            //mod_expires.c
+            'ExpiresActive','ExpiresByType','ExpiresDefault',
+
+            //mod_ext_filter.c
+            'ExtFilterDefine','ExtFilterOptions',
+
+            //mod_file_cache.c
+            'cachefile','mmapfile',
+
+            //mod_filter.c
+            'FilterChain','FilterDeclare','FilterProtocol','FilterProvider',
+            'FilterTrace',
+
+            //mod_gnutls.c
+            'GnuTLSCache','GnuTLSCacheTimeout','GnuTLSCertificateFile',
+            'GnuTLSKeyFile','GnuTLSPGPCertificateFile','GnuTLSPGPKeyFile',
+            'GnuTLSClientVerify','GnuTLSClientCAFile','GnuTLSPGPKeyringFile',
+            'GnuTLSEnable','GnuTLSDHFile','GnuTLSRSAFile','GnuTLSSRPPasswdFile',
+            'GnuTLSSRPPasswdConfFile','GnuTLSPriorities',
+            'GnuTLSExportCertificates',
+
+            //mod_headers.c
+            'Header','RequestHeader',
+
+            //mod_imagemap.c
+            'ImapBase','ImapDefault','ImapMenu',
+
+            //mod_include.c
+            'SSIAccessEnable','SSIEndTag','SSIErrorMsg','SSIStartTag',
+            'SSITimeFormat','SSIUndefinedEcho','XBitHack',
+
+            //mod_ident.c
+            'IdentityCheck','IdentityCheckTimeout',
+
+            //mod_info.c
+            'AddModuleInfo',
+
+            //mod_isapi.c
+            'ISAPIAppendLogToErrors','ISAPIAppendLogToQuery','ISAPICacheFile',
+            'ISAPIFakeAsync','ISAPILogNotSupported','ISAPIReadAheadBuffer',
+
+            //mod_log_config.c
+            'BufferedLogs','CookieLog','CustomLog','LogFormat','TransferLog',
+
+            //mod_log_forensic.c
+            'ForensicLog',
+
+            //mod_log_rotate.c
+            'RotateInterval','RotateLogs','RotateLogsLocalTime',
+
+            //mod_logio.c
+
+            //mod_mem_cache.c
+            'MCacheMaxObjectCount','MCacheMaxObjectSize',
+            'MCacheMaxStreamingBuffer','MCacheMinObjectSize',
+            'MCacheRemovalAlgorithm','MCacheSize',
+
+            //mod_mime.c
+            'AddCharset','AddEncoding','AddHandler','AddInputFilter',
+            'AddLanguage','AddOutputFilter','AddType','DefaultLanguage',
+            'ModMimeUsePathInfo','MultiviewsMatch','RemoveCharset',
+            'RemoveEncoding','RemoveHandler','RemoveInputFilter',
+            'RemoveLanguage','RemoveOutputFilter','RemoveType','TypesConfig',
+
+            //mod_mime_magic.c
+            'MimeMagicFile',
+
+            //mod_negotiation.c
+            'CacheNegotiatedDocs','ForceLanguagePriority','LanguagePriority',
+
+            //mod_php5.c
+            'php_admin_flag','php_admin_value','php_flag','php_value',
+            'PHPINIDir',
+
+            //mod_proxy.c
+            'AllowCONNECT','BalancerMember','NoProxy','ProxyBadHeader',
+            'ProxyBlock','ProxyDomain','ProxyErrorOverride',
+            'ProxyFtpDirCharset','ProxyIOBufferSize','ProxyMaxForwards',
+            'ProxyPass','ProxyPassInterpolateEnv','ProxyPassMatch',
+            'ProxyPassReverse','ProxyPassReverseCookieDomain',
+            'ProxyPassReverseCookiePath','ProxyPreserveHost',
+            'ProxyReceiveBufferSize','ProxyRemote','ProxyRemoteMatch',
+            'ProxyRequests','ProxySet','ProxyStatus','ProxyTimeout','ProxyVia',
+
+            //mod_proxy_ajp.c
+
+            //mod_proxy_balancer.c
+
+            //mod_proxy_connect.c
+
+            //mod_proxy_ftp.c
+
+            //mod_proxy_http.c
+
+            //mod_rewrite.c
+            'RewriteBase','RewriteCond','RewriteEngine','RewriteLock',
+            'RewriteLog','RewriteLogLevel','RewriteMap','RewriteOptions',
+            'RewriteRule',
+
+            //mod_setenvif.c
+            'BrowserMatch','BrowserMatchNoCase','SetEnvIf','SetEnvIfNoCase',
+
+            //mod_so.c
+            'LoadFile','LoadModule',
+
+            //mod_speling.c
+            'CheckCaseOnly','CheckSpelling',
+
+            //mod_ssl.c
+            'SSLCACertificateFile','SSLCACertificatePath','SSLCADNRequestFile',
+            'SSLCADNRequestPath','SSLCARevocationFile','SSLCARevocationPath',
+            'SSLCertificateChainFile','SSLCertificateFile',
+            'SSLCertificateKeyFile','SSLCipherSuite','SSLCryptoDevice',
+            'SSLEngine','SSLHonorCipherOrder','SSLMutex','SSLOptions',
+            'SSLPassPhraseDialog','SSLProtocol','SSLProxyCACertificateFile',
+            'SSLProxyCACertificatePath','SSLProxyCARevocationFile',
+            'SSLProxyCARevocationPath','SSLProxyCipherSuite','SSLProxyEngine',
+            'SSLProxyMachineCertificateFile','SSLProxyMachineCertificatePath',
+            'SSLProxyProtocol','SSLProxyVerify','SSLProxyVerifyDepth',
+            'SSLRandomSeed','SSLRenegBufferSize','SSLRequire','SSLRequireSSL',
+            'SSLSessionCache','SSLSessionCacheTimeout','SSLUserName',
+            'SSLVerifyClient','SSLVerifyDepth',
+
+            //mod_status.c
+            'ExtendedStatus','SeeRequestTail',
+
+            //mod_substitute.c
+            'Substitute',
+
+            //mod_suexec.c
+            'SuexecUserGroup',
+
+            //mod_unique_id.c
+
+            //mod_userdir.c
+            'UserDir',
+
+            //mod_usertrack.c
+            'CookieDomain','CookieExpires','CookieName','CookieStyle',
+            'CookieTracking',
+
+            //mod_version.c
+
+            //mod_vhost_alias.c
+            'VirtualDocumentRoot','VirtualDocumentRootIP',
+            'VirtualScriptAlias','VirtualScriptAliasIP',
+
+            //mod_view.c
+            'ViewEnable',
+
+            //mod_win32.c
+            'ScriptInterpreterSource',
+
+            //mpm_winnt.c
+            'Listen','ListenBacklog','ReceiveBufferSize','SendBufferSize',
+            'ThreadLimit','ThreadsPerChild','Win32DisableAcceptEx',
+
+            //mpm_common.c
+            'AcceptMutex','AddModule','ClearModuleList','EnableExceptionHook',
+            'Group','LockFile','MaxClients','MaxSpareServers','MaxSpareThreads',
+            'MinSpareServers','MinSpareThreads','ServerLimit','StartServers',
+            'StartThreads','User',
+
+            //util_ldap.c
+            'LDAPCacheEntries','LDAPCacheTTL','LDAPConnectionTimeout',
+            'LDAPOpCacheEntries','LDAPOpCacheTTL','LDAPSharedCacheFile',
+            'LDAPSharedCacheSize','LDAPTrustedClientCert',
+            'LDAPTrustedGlobalCert','LDAPTrustedMode','LDAPVerifyServerCert',
+
+            //Unknown Mods ...
+            'AgentLog','BindAddress','bs2000account','CacheForceCompletion',
+            'CacheGCInterval','CacheSize','NoCache','qsc','RefererIgnore',
+            'RefererLog','Resourceconfig','ServerType','SingleListen'
             ),
         /*keywords 2*/
         2 => array(
-            'on','off','standalone','inetd','indexes',
+            'all','on','off','standalone','inetd','indexes',
             'force-response-1.0','downgrade-1.0','nokeepalive',
-            'ndexes','includes','followsymlinks','none',
+            'includes','followsymlinks','none',
             'x-compress','x-gzip'
         ),
         /*keywords 3*/
         3 => array(
-            'Directory',
-            'DirectoryMatch',
-            'Files',
-            'FilesMatch',
-            'IfDefine',
-            'IfModule',
-            'IfVersion',
-            'Location',
-            'LocationMatch',
-            'Proxy',
-            'ProxyMatch',
-            'VirtualHost'
+            //core.c
+            'Directory','DirectoryMatch','Files','FilesMatch','IfDefine',
+            'IfModule','Limit','LimitExcept','Location','LocationMatch',
+            'VirtualHost',
+
+            //mod_authn_alias.c
+            'AuthnProviderAlias',
+
+            //mod_proxy.c
+            'Proxy','ProxyMatch',
+
+            //mod_version.c
+            'IfVersion'
         )
     ),
     'SYMBOLS' => array(

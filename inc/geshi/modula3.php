@@ -4,7 +4,7 @@
  * ----------
  * Author: mbishop (mbishop@esoteriq.org)
  * Copyright: (c) 2009 mbishop (mbishop@esoteriq.org)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2009/01/21
  *
  * Modula-3 language file for GeSHi.

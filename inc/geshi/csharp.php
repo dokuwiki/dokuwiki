@@ -4,7 +4,7 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/04
  *
  * C# language file for GeSHi.
@@ -52,7 +52,8 @@ $language_data = array (
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'HARDQUOTE' => array('@"', '"'),
-    'HARDESCAPE' => array('""'),
+    'HARDESCAPE' => array('"'),
+    'HARDCHAR' => '"',
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
