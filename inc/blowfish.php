@@ -516,7 +516,7 @@ function PMA_blowfish_decrypt($encdata, $secret)
     foreach (str_split($data, 8) as $chunk) {
         $decrypt .= $pma_cipher->decryptBlock($chunk, $secret);
     }
-    return trim($decrypt);
+    return trim($decrypt,"\0"); // triming fixed for DokuWiki FS#1690
 }
 
 ?>
