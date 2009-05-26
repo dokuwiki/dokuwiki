@@ -265,7 +265,8 @@ function html_draft(){
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
 function html_hilight($html,$phrases){
-  $regex = join('|',array_map('preg_quote_cb',array_filter((array) $phrases)));
+  $phrases = array_filter((array) $phrases);
+  $regex = join('|',array_map('preg_quote_cb',$phrases));
 
   if ($regex === '') return $html;
   $html = preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
