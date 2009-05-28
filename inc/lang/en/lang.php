@@ -169,6 +169,13 @@ $lang['qb_h2']      = 'Level 2 Headline';
 $lang['qb_h3']      = 'Level 3 Headline';
 $lang['qb_h4']      = 'Level 4 Headline';
 $lang['qb_h5']      = 'Level 5 Headline';
+
+$lang['qb_h']       = 'Headline';
+$lang['qb_hs']      = 'Select Headline';
+$lang['qb_hplus']   = 'Higher Headline';
+$lang['qb_hminus']  = 'Lower Headline';
+$lang['qb_hequal']  = 'Same Level Headline';
+
 $lang['qb_link']    = 'Internal Link';
 $lang['qb_extlink'] = 'External Link';
 $lang['qb_hr']      = 'Horizontal Rule';
