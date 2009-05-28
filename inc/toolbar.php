@@ -172,6 +172,9 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'sig.png',
                 'key'    => 'y',
                ),
+
+
+
         ));
     } // end event TOOLBAR_DEFINE default action
     $evt->advise_after();
