@@ -363,7 +363,7 @@ class Doku_Handler {
     function code($match, $state, $pos) {
         switch ( $state ) {
             case DOKU_LEXER_UNMATCHED:
-                $matches = preg_split('/>/u',$match,2);
+                $matches = explode('>',$match,2);
                 $matches[0] = trim($matches[0]);
                 if ( trim($matches[0]) == '' ) {
                     $matches[0] = NULL;
@@ -444,7 +444,7 @@ class Doku_Handler {
         $link = preg_replace(array('/^\[\[/','/\]\]$/u'),'',$match);
 
         // Split title from URL
-        $link = preg_split('/\|/u',$link,2);
+        $link = explode('|',$link,2);
         if ( !isset($link[1]) ) {
             $link[1] = NULL;
         } else if ( preg_match('/^\{\{[^\}]+\}\}$/',$link[1]) ) {
@@ -457,7 +457,7 @@ class Doku_Handler {
 
         if ( preg_match('/^[a-zA-Z0-9\.]+>{1}.*$/u',$link[0]) ) {
         // Interwiki
-            $interwiki = preg_split('/>/u',$link[0]);
+            $interwiki = explode('>',$link[0],2);
             $this->_addCall(
                 'interwikilink',
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
@@ -638,7 +638,7 @@ function Doku_Handler_Parse_Media($match) {
     $link = preg_replace(array('/^\{\{/','/\}\}$/u'),'',$match);
 
     // Split title from URL
-    $link = preg_split('/\|/u',$link,2);
+    $link = explode('|',$link,2);
 
 
     // Check alignment
@@ -997,7 +997,9 @@ class Doku_Handler_List {
         } else {
             $type = 'o';
         }
-        return count(explode('  ',str_replace("\t",'  ',$match)));
+        // Is the +1 needed? It used to be count(explode(...))
+        // but I don't think the number is seen outside this handler
+        return substr_count(str_replace("\t",'  ',$match), '  ') + 1;
     }
 }
 

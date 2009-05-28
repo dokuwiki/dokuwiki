@@ -125,7 +125,7 @@ function _mail_send_action($data) {
  */
 function mail_encode_address($string,$header='',$names=true){
   $headers = '';
-  $parts = split(',',$string);
+  $parts = explode(',',$string);
   foreach ($parts as $part){
     $part = trim($part);
 

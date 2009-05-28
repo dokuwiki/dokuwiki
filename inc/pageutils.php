@@ -435,7 +435,7 @@ function resolve_pageid($ns,&$page,&$exists){
 
   //keep hashlink if exists then clean both parts
   if (strpos($page,'#')) {
-    list($page,$hash) = split('#',$page,2);
+    list($page,$hash) = explode('#',$page,2);
   } else {
     $hash = '';
   }

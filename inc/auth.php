@@ -166,7 +166,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
   }else{
     // read cookie information
     $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
-    list($user,$sticky,$pass) = split('\|',$cookie,3);
+    list($user,$sticky,$pass) = explode('|',$cookie,3);
     // get session info
     $session = $_SESSION[DOKU_COOKIE]['auth'];
     if($user && $pass){
@@ -744,7 +744,7 @@ function updateprofile() {
   if ($result = $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes))) {
     // update cookie and session with the changed data
     $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
-    list($user,$sticky,$pass) = split('\|',$cookie,3);
+    list($user,$sticky,$pass) = explode('|',$cookie,3);
     if ($changes['pass']) $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt());
 
     auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);

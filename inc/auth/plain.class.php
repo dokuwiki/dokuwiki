@@ -278,8 +278,8 @@ class auth_plain extends auth_basic {
         $line = trim($line);
         if(empty($line)) continue;
 
-        $row    = split(":",$line,5);
-        $groups = split(",",$row[4]);
+        $row    = explode(":",$line,5);
+        $groups = array_values(array_filter(explode(",",$row[4])));
 
         $this->users[$row[0]]['pass'] = $row[1];
         $this->users[$row[0]]['name'] = urldecode($row[2]);
