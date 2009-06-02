@@ -1,4 +1,3 @@
 ======No existix la versió======
 
-La versió especificada no existix. Utilise el botó de ''Version antigues'' per a vore una llista de versions antigues d'este document.
-
+La versió especificada no existix. Utilise el botó ''Versions antigues'' per a vore una llista de versions antigues d'este document.

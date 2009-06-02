@@ -7,7 +7,13 @@ Estos són els canvis.
 @DIFF@
 --------------------------------------------------------
 
-Per a cancelar les notificacions de canvis en pàgines, inicie sessió en el wiki en 
+Data: @DATE@
+Usuari: @USER@
+Resum: @SUMMARY@
+Revisió anterior: @OLDPAGE@
+Nova revisió: @NEWPAGE@
+
+Per a cancelar les notificacions de pàgina, inicie sessió en el wiki en 
 @DOKUWIKIURL@, visite
 @NEWPAGE@
 i desubscriga's dels canvis de la pàgina o de l'espai de noms.

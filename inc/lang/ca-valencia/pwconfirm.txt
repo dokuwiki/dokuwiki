@@ -1,9 +1,9 @@
 ¡Hola @FULLNAME@!
 
-Algú ha solicitat una contrasenya per a entrar en
+Algú ha solicitat una nova contrasenya per a entrar en
 @TITLE en @DOKUWIKIURL@
 
-Si no ha solicitat vosté la nova contrasenya ignore este correu.
+Si no ha segut vosté qui ha solicitat la nova contrasenya ignore este correu.
 
 Per a confirmar que la petició ha segut feta realment per vosté
 utilise el següent víncul.

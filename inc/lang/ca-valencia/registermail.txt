@@ -1,13 +1,13 @@
 S'ha registrat un usuari nou. Estes són les senyes:
 
-Nom d'usuari  : @NEWUSER@
-Nom complet   : @NEWNAME@
-E-mail        : @NEWEMAIL@
+Nom d'usuari : @NEWUSER@
+Nom complet : @NEWNAME@
+Correu electrònic : @NEWEMAIL@
 
-Data          : @DATE@
-Navegador     : @BROWSER@
-Direcció-IP   : @IPADDRESS@
-Hostname      : @HOSTNAME@
+Data : @DATE@
+Navegador : @BROWSER@
+Direcció IP : @IPADDRESS@
+Nom de la màquina : @HOSTNAME@
 
 -- 
 Este correu l'ha generat DokuWiki en

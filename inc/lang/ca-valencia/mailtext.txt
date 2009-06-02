@@ -1,13 +1,13 @@
-S'ha afegit o modificat una pàgina en el seu DokuWiki. Els detalls:
+S'ha afegit o modificat una pàgina en el seu DokuWiki. Les senyes:
 
-Data          : @DATE@
-Navegador     : @BROWSER@
-Direccio-IP   : @IPADDRESS@
-Hostname      : @HOSTNAME@
-Revisio vella : @OLDPAGE@
-Revisio nova  : @NEWPAGE@
-Sumari        : @SUMMARY@
-Usuari        : @USER@
+Data: @DATE@
+Navegador: @BROWSER@
+Direcció IP: @IPADDRESS@
+Nom de la màquina: @HOSTNAME@
+Revisió anterior: @OLDPAGE@
+Nova revisió: @NEWPAGE@
+Resum: @SUMMARY@
+Usuari: @USER@
 
 @DIFF@
 
