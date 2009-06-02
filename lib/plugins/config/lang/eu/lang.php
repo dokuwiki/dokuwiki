@@ -10,6 +10,9 @@ $lang['updated']               = 'Ezarpenak arrakastaz eguneratuak.';
 $lang['nochoice']              = '(ez dago beste aukerarik)';
 $lang['locked']                = 'Ezarpenen fitxategia ezin da eguneratu, eta intentzioa hau ez bada, <br />
 ziurtatu ezarpen lokalen izena eta baimenak zuzenak direla.';
+$lang['danger']                = 'Kontuz: Aukera hau aldatzeak zure wikia eta konfigurazio menua eskuraezin utzi dezake.';
+$lang['warning']               = 'Oharra: Aukera hau aldatzeak ustekabeko portaera bat sortu dezake.';
+$lang['security']              = 'Segurtasun Oharra: Aukera hau aldatzeak segurtasun arrisku bat sortu dezake.';
 $lang['_configuration_manager'] = 'Konfigurazio Kudeatzailea';
 $lang['_header_dokuwiki']      = 'DokuWiki Ezarpenak';
 $lang['_header_plugin']        = 'Plugin Ezarpenak';
@@ -81,6 +84,8 @@ $lang['disableactions_other']  = 'Beste ekintzak (komaz bereiztuak)';
 $lang['sneaky_index']          = 'Lehenespenez, DokuWiki-k izen-espazio guztiak indize bistan erakutsiko ditu. Aukera hau gaituta, erabiltzaieak irakurtzeko baimenik ez dituen izen-espazioak ezkutatuko dira. Honek atzigarriak diren azpi izen-espazioak ezkutatzen ditu. Agian honek indizea erabili ezin ahal izatea eragingo du AKL ezarpen batzuetan.';
 $lang['auth_security_timeout'] = 'Kautotze Segurtasun Denbora-Muga (segunduak)';
 $lang['securecookie']          = 'HTTPS bidez ezarritako cookie-ak HTTPS bidez bakarrik bidali beharko lituzke nabigatzaileak? Ezgaitu aukera hau bakarrik saio hasierak SSL bidezko segurtasuna badu baina wiki-areb nabigazioa modu ez seguruan egiten bada. ';
+$lang['xmlrpc']                = 'Gaitu/ezgaitu XML-RPC interfazea.';
+$lang['xmlrpcuser']            = 'XML-RPC atzipena mugatu hemen emandako komaz bereiztutako talde eta erabiltzaileei. Utzi hutsik atzipena guztiei emateko.';
 $lang['updatecheck']           = 'Konprobatu eguneratze eta segurtasun oharrak? DokuWiki-k honetarako splitbrain.org kontaktatu behar du.';
 $lang['userewrite']            = 'Erabili URL politak';
 $lang['useslash']              = 'Erabili barra (/) izen-espazio banatzaile moduan URLetan';
@@ -106,7 +111,6 @@ $lang['send404']               = 'Bidali "HTTP 404/Ez Da Orria Aurkitu" existitz
 $lang['sitemap']               = 'Sortu Google gune-mapa (egunak)';
 $lang['broken_iua']            = 'Zure sisteman ignore_user_abort (erabiltzailearen bertan behera uztea kontuan ez hartu) funtzioa hautsia al dago? Honek funtzionatzen ez duen bilaketa indize bat eragin dezake. ISS+PHP/CGI hautsiak daude. Ikusi <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> informazio gehiago jasotzeko.';
 $lang['xsendfile']             = 'X-Sendfile goiburua erabili web zerbitzariari fitxategi estatikoak bidaltzen uzteko? Zure web zerbitzariak hau ahalbidetuta eduki beharko du.';
-$lang['xmlrpc']                = 'Gaitu/ezgaitu XML-RPC interfazea.';
 $lang['renderer_xhtml']        = 'Erabiliko den errenderizatzailea wiki irteera (xhtml) nagusiarentzat';
 $lang['renderer__core']        = '%s (dokuwiki-ren nukleoa)';
 $lang['renderer__plugin']      = '%s (plugina)';
