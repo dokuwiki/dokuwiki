@@ -116,6 +116,7 @@ $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérat
 CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'info.';
 $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur Web de délivrer des fichiers statiques ? Votre serveur Web doit supporter cette fonctionnalité.';
 $lang['xmlrpc']                = 'Activer l\'interface XML-RPC.';
+$lang['xmlrpcuser']            = 'Restreindre l\'accès à XML-RPC aux groupes et utilisateurs indiqués ici. Laisser vide afin que tout le monde y ait accès.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
