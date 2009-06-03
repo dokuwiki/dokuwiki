@@ -292,7 +292,7 @@ class HTTPClient {
         if(isset($this->resp_headers['set-cookie'])){
             foreach ((array) $this->resp_headers['set-cookie'] as $cookie){
                 list($cookie)   = explode(';',$cookie,2);
-                list($key,$val) = explode('=',$cookie,3);
+                list($key,$val) = explode('=',$cookie,2);
                 $key = trim($key);
                 if($val == 'deleted'){
                     if(isset($this->cookies[$key])){
