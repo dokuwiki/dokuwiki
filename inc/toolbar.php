@@ -166,6 +166,7 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'ol.png',
                 'open'   => '  - ',
                 'close'  => '\n',
+                'key'    => '-',
                 ),
            array(
                 'type'   => 'format',
@@ -173,6 +174,7 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'ul.png',
                 'open'   => '  * ',
                 'close'  => '\n',
+                'key'    => '.',
                 ),
            array(
                 'type'   => 'insert',
