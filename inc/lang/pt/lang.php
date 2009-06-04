@@ -7,6 +7,7 @@
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
+ * @author André Neves <drakferion@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -157,6 +158,11 @@ $lang['qb_h2']                 = 'Cabeçalho Nível 2';
 $lang['qb_h3']                 = 'Cabeçalho Nível 3';
 $lang['qb_h4']                 = 'Cabeçalho Nível 4';
 $lang['qb_h5']                 = 'Cabeçalho Nível 5';
+$lang['qb_h']                  = 'Cabeçalho';
+$lang['qb_hs']                 = 'Seleccionar Cabeçalho';
+$lang['qb_hplus']              = 'Cabeçalho Maior';
+$lang['qb_hminus']             = 'Cabeçalho Menor';
+$lang['qb_hequal']             = 'Cabeçalho de Nível Semelhante';
 $lang['qb_link']               = 'Ligação Interna';
 $lang['qb_extlink']            = 'Ligação Externa';
 $lang['qb_hr']                 = 'Barra Horizontal';

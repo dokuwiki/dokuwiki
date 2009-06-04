@@ -7,6 +7,7 @@
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
+ * @author André Neves <drakferion@gmail.com>
  */
 $lang['admin_acl']             = 'Gestão de ACLs';
 $lang['acl_group']             = 'Grupo';
