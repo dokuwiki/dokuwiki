@@ -641,10 +641,12 @@ function media_uploadform($ns, $auth){
         'L_authfail'  => $lang['mu_authfail'],
         'L_progress'  => $lang['mu_progress'],
         'L_filetypes' => $lang['mu_filetypes'],
+        'L_info'      => $lang['mu_info'],
+        'L_lasterr'   => $lang['mu_lasterr'],
 
         'O_ns'        => ":$ns",
         'O_backend'   => 'mediamanager.php?'.session_name().'='.session_id(),
-        'O_size'      => php_to_byte(ini_get('upload_max_filesize')),
+        'O_maxsize'   => php_to_byte(ini_get('upload_max_filesize')),
         'O_extensions'=> join('|',array_keys(getMimeTypes())),
         'O_overwrite' => ($auth >= AUTH_DELETE),
         'O_sectok'    => getSecurityToken(),

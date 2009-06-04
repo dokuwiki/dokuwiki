@@ -256,6 +256,8 @@ $lang['mu_fail']      = 'failed';
 $lang['mu_authfail']  = 'session expired';
 $lang['mu_progress']  = '@PCT@% uploaded';
 $lang['mu_filetypes'] = 'Allowed Filetypes';
+$lang['mu_info']      = 'files uploaded.';
+$lang['mu_lasterr']   = 'Last error:';
 
 $lang['recent_global'] = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 

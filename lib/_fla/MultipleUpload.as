@@ -35,6 +35,12 @@ class MultipleUpload {
     private var ns_label:Label;
     private var overwrite_cb:CheckBox;
 
+    private var url:String;
+    private var upurl:String;
+    private var current:Number;
+    private var done:Number;
+    private var lasterror:String;
+
     /**
      * Constructor.
      *
@@ -127,20 +133,18 @@ class MultipleUpload {
     }
 
     /**
-     * Upload selected files
+     * Initiates the upload process
      */
     private function upload() {
         // prepare backend URL
-        var url:String;
-        url  = _root.O_backend; // from flashvars
-        url += '&ns='+escape(ns_input.text);
+        this.url  = _root.O_backend; // from flashvars
+        this.url += '&ns='+escape(ns_input.text);
 
         // prepare upload url
-        var upurl:String;
-        upurl = url;
-        upurl += '&sectok='+escape(_root.O_sectok);
-        upurl += '&authtok='+escape(_root.O_authtok);
-        if(overwrite_cb.selected) upurl += '&ow=1';
+        this.upurl = this.url;
+        this.upurl += '&sectok='+escape(_root.O_sectok);
+        this.upurl += '&authtok='+escape(_root.O_authtok);
+        if(overwrite_cb.selected) this.upurl += '&ow=1';
 
         // disable buttons
         upload_btn.enabled = false;
@@ -148,15 +152,54 @@ class MultipleUpload {
         ns_input.enabled = false;
         overwrite_cb.enabled = false;
 
-        // upload the files
-        for(var i:Number = 0; i < list.length; i++) {
-            var file = list[i];
+        // init states
+        this.current = -1;
+        this.done = 0;
+        this.lasterror = '';
+
+        // start process detached
+        _global.setTimeout(this,'uploadNext',100);
+        nextFrame();
+    }
+
+    /**
+     * Uploads the next file in the list
+     */
+    private function uploadNext(){
+        this.current++;
+        if(this.current >= this.list.length){
+            return this.uploadDone();
+        }
+
+        var file = this.list[this.current];
+
+        if(_root.O_maxsize && (file.size > _root.O_maxsize)){
+            this.lasterror = (_root.L_toobig ? _root.L_toobig : 'too big');
+            _global.setTimeout(this,'uploadNext',100);
+            nextFrame();
+        }else{
             file.addListener(fileRefListener);
             file.upload(upurl);
+            // continues in the handlers
+        }
+    }
+
+    /**
+     * Redirect to the namespace and set a success/error message
+     *
+     * Called when all files in the list where processed
+     */
+    private function uploadDone(){
+        var info = (_root.L_info ? _root.L_info : 'files uploaded');
+        if(this.done == this.list.length){
+            this.url += '&msg1='+escape(this.done+'/'+this.list.length+' '+info);
+        }else{
+            var lasterr = (_root.L_lasterr ? _root.L_lasterr : 'Last error:');
+            this.url += '&err='+escape(this.done+'/'+this.list.length+' '+info+' '+lasterr+' '+this.lasterror);
         }
 
         // when done redirect
-        getURL(url,'_self');
+        getURL(this.url,'_self');
     }
 
     /**
@@ -166,6 +209,8 @@ class MultipleUpload {
         for(var i:Number = 0; i < list.length; i++) {
             if (list[i].name == file.name) {
                 files_dg.editField(i, 'status', msg);
+                nextFrame();
+                return;
             }
         }
     }
@@ -241,19 +286,25 @@ class MultipleUpload {
      */
     private function onComplete(file:FileReference) {
         this.setStatus(file,(_root.L_done ? _root.L_done : 'complete'));
+        this.done++;
+        uploadNext();
     }
 
     /**
      * Handle upload errors
      */
     private function onHTTPError(file:FileReference, httpError:Number) {
+        var error;
         if(httpError == 400){
-            this.setStatus(file,(_root.L_fail ? _root.L_fail : 'failed'));
+            error = (_root.L_fail ? _root.L_fail : 'failed');
         }else if(httpError == 401){
-            this.setStatus(file,(_root.L_authfail ? _root.L_authfail : 'auth failed'));
+            error = (_root.L_authfail ? _root.L_authfail : 'auth failed');
         }else{
-            this.setStatus(file,"HTTP Error " + httpError);
+            error = "HTTP Error " + httpError
         }
+        this.setStatus(file,error);
+        this.lasterror = error;
+        uploadNext();
     }
 
     /**
@@ -261,6 +312,8 @@ class MultipleUpload {
      */
     private function onIOError(file:FileReference) {
         this.setStatus(file,"IO Error");
+        this.lasterror = "IO Error";
+        uploadNext();
     }
 
     /**
@@ -268,6 +321,8 @@ class MultipleUpload {
      */
     private function onSecurityError(file:FileReference, errorString:String) {
         this.setStatus(file,"SecurityError: " + errorString);
+        this.lasterror = "SecurityError: " + errorString;
+        uploadNext();
     }
 
 

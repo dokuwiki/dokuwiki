@@ -42,7 +42,7 @@
     if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
 
     // handle flash upload
-    if($_FILES['Filedata']['tmp_name']){
+    if(isset($_FILES['Filedata'])){
         $_FILES['upload'] =& $_FILES['Filedata'];
         $JUMPTO = media_upload($NS,$AUTH);
         if($JUMPTO == false){
