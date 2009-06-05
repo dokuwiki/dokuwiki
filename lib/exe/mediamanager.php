@@ -80,14 +80,14 @@
         $INUSE = media_inuse($DEL);
         if(!$INUSE) {
             if(media_delete($DEL,$AUTH)) {
-                msg(sprintf(noNS($id),$lang['deletesucc']),1);
+                msg(sprintf($lang['deletesucc'],noNS($id)),1);
             } else {
-                msg(sprintf(noNS($DEL),$lang['deletefail']),-1);
+                msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
             }
         } else {
             if(!$conf['refshow']) {
                 unset($INUSE);
-                msg(sprintf(noNS($DEL),$lang['mediainuse']),0);
+                msg(sprintf($lang['mediainuse'],noNS($DEL)),0);
             }
         }
     }
