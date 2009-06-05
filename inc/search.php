@@ -189,7 +189,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
     if($type == 'd') {
         if(!$opts['depth']) return true; // recurse forever
-        $depth = substr_count(ltrim($file,'/'),'/');
+        $depth = substr_count($file,'/');
         if($depth >= $opts['depth']) return false; // depth reached
         return true;
     }
