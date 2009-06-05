@@ -1334,5 +1334,22 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
     echo $out;
 }
 
+
+/**
+ * Includes the rendered XHTML of a given page
+ *
+ * This function is useful to populate sidebars or similar features in a
+ * template
+ */
+function tpl_include_page($pageid,$print=true){
+    global $ID;
+    $oldid = $ID;
+    $html = p_wiki_xhtml($pageid,'',false);
+    $ID = $oldid;
+
+    if(!$print) return $html;
+    echo $html;
+}
+
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 
