@@ -35,6 +35,29 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_pass = conf_decodeString($conf['proxy']['pass']);
         $this->proxy_ssl  = $conf['proxy']['ssl'];
     }
+
+
+    /**
+     * Wraps an event around the parent function
+     *
+     * @triggers HTTPCLIENT_REQUEST_SEND
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     */
+    function sendRequest($url,$data='',$method='GET'){
+        $httpdata = array('url'    => $url,
+                          'data'   => $data,
+                          'method' => $method);
+        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
+        if($evt->advise_before()){
+            $url    = $httpdata['url'];
+            $data   = $httpdata['data'];
+            $method = $httpdata['method'];
+        }
+        $evt->advise_after();
+        unset($evt);
+        return parent::sendRequest($url,$data,$method);
+    }
+
 }
 
 /**
@@ -164,19 +187,6 @@ class HTTPClient {
            $this->headers['Accept-encoding'] == 'gzip'){
             unset($this->headers['Accept-encoding']);
         }
-
-
-        $httpdata = array('url'    => $url,
-                          'data'   => $data,
-                          'method' => $method);
-        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
-        if($evt->advise_before()){
-            $url    = $httpdata['url'];
-            $data   = $httpdata['data'];
-            $method = $httpdata['method'];
-        }
-        $evt->advise_after();
-        unset($evt);
 
         // parse URL into bits
         $uri = parse_url($url);
