@@ -158,6 +158,14 @@ class HTTPClient {
         $this->error  = '';
         $this->status = 0;
 
+        // don't accept gzip if truncated bodies might occur
+        if($this->max_bodysize &&
+           !$this->max_bodysize_abort &&
+           $this->headers['Accept-encoding'] == 'gzip'){
+            unset($this->headers['Accept-encoding']);
+        }
+
+
         $httpdata = array('url'    => $url,
                           'data'   => $data,
                           'method' => $method);
