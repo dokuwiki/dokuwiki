@@ -1332,40 +1332,93 @@ function html_debug(){
   print '</body></html>';
 }
 
+/**
+ * List available Administration Tasks
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Håkan Sandell <hakan.sandell@home.se>
+ */
 function html_admin(){
-  global $ID;
-  global $INFO;
-  global $lang;
-  global $conf;
+    global $ID;
+    global $INFO;
+    global $lang;
+    global $conf;
+    global $auth;
 
-  print p_locale_xhtml('admin');
+    // build menu of admin functions from the plugins that handle them
+    $pluginlist = plugin_list('admin');
+    $menu = array();
+    foreach ($pluginlist as $p) {
+        if($obj =& plugin_load('admin',$p) === NULL) continue;
 
-  // build menu of admin functions from the plugins that handle them
-  $pluginlist = plugin_list('admin');
-  $menu = array();
-  foreach ($pluginlist as $p) {
-    if($obj =& plugin_load('admin',$p) === NULL) continue;
+        // check permissions
+        if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
 
-    // check permissions
-    if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
+        $menu[$p] = array('plugin' => $p,
+                          'prompt' => $obj->getMenuText($conf['lang']),
+                          'sort' => $obj->getMenuSort()
+                         );
+    }
 
-    $menu[] = array('plugin' => $p,
-                    'prompt' => $obj->getMenuText($conf['lang']),
-                    'sort' => $obj->getMenuSort()
-                   );
-  }
+    print p_locale_xhtml('admin');
 
-  usort($menu, 'p_sort_modes');
+    // Admin Tasks
+    if($INFO['isadmin']){
+        ptln('<ul class="admin_tasks">');
 
-  // output the menu
-  ptln('<ul>');
+        if($auth && $auth->canDo('getUsers')){
+            ptln('  <li class="admin_usermanager"><div class="li">'.
+                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'usermanager')).'">'.
+                    $menu['usermanager']['prompt'].'</a></div></li>');
+        }
+        unset($menu['usermanager']);
 
-  foreach ($menu as $item) {
-    if (!$item['prompt']) continue;
-    ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
-  }
+        ptln('  <li class="admin_acl"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'acl')).'">'.
+                $menu['acl']['prompt'].'</a></div></li>');
+        unset($menu['acl']);
 
-  ptln('</ul>');
+        ptln('  <li class="admin_plugin"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'plugin')).'">'.
+                $menu['plugin']['prompt'].'</a></div></li>');
+        unset($menu['plugin']);
+
+        ptln('  <li class="admin_config"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'config')).'">'.
+                $menu['config']['prompt'].'</a></div></li>');
+        unset($menu['config']);
+    }
+    ptln('</ul>');
+
+    // Manager Tasks
+    ptln('<ul class="admin_tasks">');
+
+    ptln('  <li class="admin_revert"><div class="li">'.
+            '<a href="'.wl($ID, array('do' => 'admin','page' => 'revert')).'">'.
+            $menu['revert']['prompt'].'</a></div></li>');
+    unset($menu['revert']);
+
+    ptln('  <li class="admin_popularity"><div class="li">'.
+            '<a href="'.wl($ID, array('do' => 'admin','page' => 'popularity')).'">'.
+            $menu['popularity']['prompt'].'</a></div></li>');
+    unset($menu['popularity']);
+
+    ptln('</ul>');
+
+
+    // print the rest as sorted list
+    if(count($menu)){
+        usort($menu, 'p_sort_modes');
+        // output the menu
+        ptln('<div class="clearer"></div>');
+        print p_locale_xhtml('adminplugins');
+        ptln('<ul>');
+        foreach ($menu as $item) {
+            if (!$item['prompt']) continue;
+            ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
+        }
+        ptln('</ul>');
+    }
 }
 
 /**
