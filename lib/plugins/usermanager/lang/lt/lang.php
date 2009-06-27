@@ -4,6 +4,7 @@
  *
  * @author grawity <grawity@gmail.com>
  * @author audrius.klevas@gmail.com
+ * @author Arunas Vaitekunas <aras@fan.lt>
  */
 $lang['menu']                  = 'Vartotojų administravimas';
 $lang['noauth']                = '(vartotojų autentifikacija neprieinama)';

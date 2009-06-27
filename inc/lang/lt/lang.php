@@ -7,6 +7,7 @@
  * @author Edmondas Girkantas <eg@zemaitija.net>
  * @author Arūnas Vaitekūnas <aras@fan.lt>
  * @author audrius.klevas@gmail.com
+ * @author Arunas Vaitekunas <aras@fan.lt>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -86,6 +87,7 @@ $lang['resendpwdbadauth']      = 'Atsiprašome, bet šis tapatybės nustatymo ko
 $lang['resendpwdconfirm']      = 'Patvirtinimo nuoroda išsiųsta el. paštu.';
 $lang['resendpwdsuccess']      = 'Jūsų naujas slaptažodis buvo išsiųstas el. paštu.';
 $lang['license']               = 'Jei nenurodyta kitaip, šio wiki turinys ginamas tokia licencija:';
+$lang['licenseok']             = 'Pastaba: Redaguodami šį puslapį jūs sutinkate jog jūsų turinys atitinka licencijavima pagal šią licenciją';
 $lang['txt_upload']            = 'Išsirinkite atsiunčiamą bylą';
 $lang['txt_filename']          = 'Įveskite wikivardą (nebūtina)';
 $lang['txt_overwrt']           = 'Perrašyti egzistuojančią bylą';
@@ -101,6 +103,10 @@ $lang['uploadsucc']            = 'Atsiuntimas pavyko';
 $lang['uploadfail']            = 'Atsiuntimas nepavyko. Blogi priėjimo leidimai??';
 $lang['uploadwrong']           = 'Atsiuntimas atmestas. Bylos tipas neleistinas';
 $lang['uploadexist']           = 'Tokia byla jau egzistuoja. Veiksmai atšaukti.';
+$lang['uploadbadcontent']      = 'Įkeltas turinys neatitinka %s failo išplėtimo.';
+$lang['uploadspam']            = 'Įkėlimas blokuotas pagal šiukšlintojų juodajį šąrašą.';
+$lang['uploadxss']             = 'Įkėlimas blokuotas greičiausiai dėl netinkamo teksto.';
+$lang['uploadsize']            = 'Įkeltas failas per didelis (maks. %s)';
 $lang['deletesucc']            = 'Byla "%s" ištrinta.';
 $lang['deletefail']            = 'Byla "%s" negali būti ištrinta - patikrinkite leidimus.';
 $lang['mediainuse']            = 'Byla "%s" nebuvo ištrinta - ji vis dar naudojama.';
