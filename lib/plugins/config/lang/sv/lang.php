@@ -11,6 +11,7 @@
  * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
+ * @author Emil Lind <emil@sys.nu>
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
@@ -93,6 +94,7 @@ $lang['disableactions_other']  = 'Andra funktioner (kommaseparerade)';
 $lang['sneaky_index']          = 'Som standard visar DokuWiki alla namnrymder på indexsidan. Genom att aktivera det här valet döljer man namnrymder som användaren inte har behörighet att läsa. Det kan leda till att man döljer åtkomliga undernamnrymder, och gör indexet oanvändbart med vissa ACL-inställningar.';
 $lang['auth_security_timeout'] = 'Autentisieringssäkerhets timeout (sekunder)';
 $lang['securecookie']          = 'Skall cookies som sätts via HTTPS endast skickas via HTTPS från webbläsaren? Avaktivera detta alternativ endast om inloggningen till din wiki är säkrad med SSL men läsning av wikin är osäkrad.';
+$lang['xmlrpc']                = 'Aktivera/Avaktivera XML-RPC-gränssnitt';
 $lang['updatecheck']           = 'Kontrollera uppdateringar och säkerhetsvarningar? DokuWiki behöver kontakta splitbrain.org för den här funktionen.';
 $lang['userewrite']            = 'Använd rena webbadresser';
 $lang['useslash']              = 'Använd snedstreck för att separera namnrymder i webbadresser';
@@ -118,7 +120,6 @@ $lang['send404']               = 'Skicka "HTTP 404/Page Not Found" för sidor so
 $lang['sitemap']               = 'Skapa Google sitemap (dagar)';
 $lang['broken_iua']            = 'Är funktionen ignore_user_abort trasig på ditt system? Det kan i så fall leda till att indexering av sökningar inte fungerar. Detta är ett känt problem med IIS+PHP/CGI. Se <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> för mer info.';
 $lang['xsendfile']             = 'Använd X-Sendfile huvudet för att låta webservern leverera statiska filer? Din webserver behöver stöd för detta.';
-$lang['xmlrpc']                = 'Aktivera/Avaktivera XML-RPC-gränssnitt';
 $lang['renderer_xhtml']        = 'Generera för användning i huvudwikipresentation (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';

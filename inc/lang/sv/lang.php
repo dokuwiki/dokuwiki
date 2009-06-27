@@ -12,6 +12,7 @@
  * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
+ * @author Emil Lind <emil@sys.nu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -163,6 +164,11 @@ $lang['qb_h2']                 = 'Rubrik nivå 2';
 $lang['qb_h3']                 = 'Rubrik nivå 3';
 $lang['qb_h4']                 = 'Rubrik nivå 4';
 $lang['qb_h5']                 = 'Rubrik nivå 5';
+$lang['qb_h']                  = 'Rubrik';
+$lang['qb_hs']                 = 'Välj Rubrik';
+$lang['qb_hplus']              = 'Större Rubrik';
+$lang['qb_hminus']             = 'Mindre Rubrik';
+$lang['qb_hequal']             = 'Rubrik samma nivå.';
 $lang['qb_link']               = 'Intern Länk';
 $lang['qb_extlink']            = 'Extern Länk';
 $lang['qb_hr']                 = 'Horisontell linje';
