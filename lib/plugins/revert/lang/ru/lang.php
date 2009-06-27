@@ -7,6 +7,7 @@
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
+ * @author Alexander Sorkin <kibizoid@gmail.com>
  */
 $lang['menu']                  = 'Менеджер откаток';
 $lang['filter']                = 'Поиск спам-страниц';

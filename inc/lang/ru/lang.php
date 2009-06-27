@@ -12,6 +12,7 @@
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
+ * @author Alexander Sorkin <kibizoid@gmail.com>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -44,10 +45,10 @@ $lang['btn_delete']            = 'Удалить';
 $lang['btn_back']              = 'Назад';
 $lang['btn_backlink']          = 'Ссылки сюда';
 $lang['btn_backtomedia']       = 'Вернуться к выбору медиа-файла';
-$lang['btn_subscribe']         = 'Подписаться';
-$lang['btn_unsubscribe']       = 'Отписаться';
-$lang['btn_subscribens']       = 'Подписаться на уведомления об изменениях в пространстве имён';
-$lang['btn_unsubscribens']     = 'Отказаться от подписки на уведомления об изменениях в пространстве имён';
+$lang['btn_subscribe']         = 'Подписаться (все правки)';
+$lang['btn_unsubscribe']       = 'Отписаться (все правки)';
+$lang['btn_subscribens']       = 'Подписаться (правки этого раздела)';
+$lang['btn_unsubscribens']     = 'Отписаться (правки этого раздела)';
 $lang['btn_profile']           = 'Профиль';
 $lang['btn_reset']             = 'Сброс';
 $lang['btn_resendpwd']         = 'Послать новый пароль';
@@ -162,6 +163,11 @@ $lang['qb_h2']                 = 'Заголовок уровня 2';
 $lang['qb_h3']                 = 'Заголовок уровня 3';
 $lang['qb_h4']                 = 'Заголовок уровня 4';
 $lang['qb_h5']                 = 'Заголовок уровня 5';
+$lang['qb_h']                  = 'Заголовок';
+$lang['qb_hs']                 = 'Выбор заголовка';
+$lang['qb_hplus']              = 'Заголовок более высокого уровня';
+$lang['qb_hminus']             = 'Заголовок более низкого уровня (подзаголовок)';
+$lang['qb_hequal']             = 'Заголовок текущего уровня';
 $lang['qb_link']               = 'Внутренняя ссылка';
 $lang['qb_extlink']            = 'Внешняя ссылка';
 $lang['qb_hr']                 = 'Разделитель';
@@ -224,11 +230,11 @@ $lang['mu_gridsize']           = 'Размер';
 $lang['mu_gridstat']           = 'Статус';
 $lang['mu_namespace']          = 'Пространство имён';
 $lang['mu_browse']             = 'Обзор';
-$lang['mu_toobig']             = 'Слишком большой';
-$lang['mu_ready']              = 'Готово к загрузке';
-$lang['mu_done']               = 'Завершено';
-$lang['mu_fail']               = 'Провалено';
-$lang['mu_authfail']           = 'Истекло время сессии';
+$lang['mu_toobig']             = 'слишком большой';
+$lang['mu_ready']              = 'готово к загрузке';
+$lang['mu_done']               = 'завершено';
+$lang['mu_fail']               = 'провалено';
+$lang['mu_authfail']           = 'истекло время сессии';
 $lang['mu_progress']           = '@PCT@% загружено';
 $lang['mu_filetypes']          = 'Допустимые типы файлов';
 $lang['recent_global']         = 'Вы просматриваете изменения в пространстве имён <b>%s</b>. Вы можете также <a href="%s">просмотреть недавние изменения на всей вики</a>.';
