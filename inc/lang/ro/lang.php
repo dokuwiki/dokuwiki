@@ -230,4 +230,6 @@ $lang['mu_fail']               = 'eşuat';
 $lang['mu_authfail']           = 'sesiunea a expirat';
 $lang['mu_progress']           = '@PCT@% incărcat';
 $lang['mu_filetypes']          = 'Tipuri de fişiere permise';
+$lang['mu_info']               = 'fişiere încărcate';
+$lang['mu_lasterr']            = 'Ultima eroare:';
 $lang['recent_global']         = 'Acum vizualizaţi modificările în interiorul numelui de spaţiu <b>%s</b>. De asemenea puteţi <a href="%s">vizualiza modificările recente ale întregului wiki</a>.';
