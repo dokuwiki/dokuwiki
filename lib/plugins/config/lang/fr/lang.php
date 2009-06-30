@@ -89,6 +89,8 @@ $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher celles pour lesquelles l\'utilisateur n\'a pas la permission de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certaines ACL.';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 $lang['securecookie']          = 'Les cookies mis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Ne désactivez cette option que si la connexion à votre wiki est sécurisée avec SSL mais que la navigation sur le wiki n\'est pas sécurisée.';
+$lang['xmlrpc']                = 'Activer l\'interface XML-RPC.';
+$lang['xmlrpcuser']            = 'Restreindre l\'accès à XML-RPC aux groupes et utilisateurs indiqués ici. Laisser vide afin que tout le monde y ait accès.';
 $lang['updatecheck']           = 'Vérifier les mises à jour ? DokuWiki doit pouvoir contacter splitbrain.org.';
 $lang['userewrite']            = 'URLs esthétiques';
 $lang['useslash']              = 'Utiliser slash comme séparateur de catégorie dans les URLs';
@@ -115,8 +117,6 @@ $lang['sitemap']               = 'Générer une carte google du site tous les (j
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
 CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'info.';
 $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur Web de délivrer des fichiers statiques ? Votre serveur Web doit supporter cette fonctionnalité.';
-$lang['xmlrpc']                = 'Activer l\'interface XML-RPC.';
-$lang['xmlrpcuser']            = 'Restreindre l\'accès à XML-RPC aux groupes et utilisateurs indiqués ici. Laisser vide afin que tout le monde y ait accès.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
