@@ -14,6 +14,7 @@
  * @author Robin Kluth <commi1993@gmail.com>
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
+ * @author Blitzi94@gmx.de
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -164,6 +165,11 @@ $lang['qb_h2']                 = 'Level 2 Überschrift';
 $lang['qb_h3']                 = 'Level 3 Überschrift';
 $lang['qb_h4']                 = 'Level 4 Überschrift';
 $lang['qb_h5']                 = 'Level 5 Überschrift';
+$lang['qb_h']                  = 'Übersschrift';
+$lang['qb_hs']                 = 'Wähle die Überschrift';
+$lang['qb_hplus']              = 'Obere Überschrift';
+$lang['qb_hminus']             = 'Untere Überschrift';
+$lang['qb_hequal']             = 'Gleichzeilige Überschrift';
 $lang['qb_link']               = 'Interner Link';
 $lang['qb_extlink']            = 'Externer Link';
 $lang['qb_hr']                 = 'Horizontale Linie';
@@ -230,4 +236,6 @@ $lang['mu_fail']               = 'gescheitert';
 $lang['mu_authfail']           = 'Sitzung abgelaufen';
 $lang['mu_progress']           = '@PCT@% hochgeladen';
 $lang['mu_filetypes']          = 'Erlaubte Dateitypen';
+$lang['mu_info']               = 'Dateien hochgeladen!';
+$lang['mu_lasterr']            = 'Letzter Fehler:';
 $lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';

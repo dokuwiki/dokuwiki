@@ -9,6 +9,7 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
+ * @author Blitzi94@gmx.de
  */
 $lang['menu']                  = 'Seiten wieder herstellen';
 $lang['filter']                = 'Nach betroffenen Seiten suchen';
