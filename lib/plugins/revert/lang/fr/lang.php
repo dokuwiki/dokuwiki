@@ -8,7 +8,7 @@
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  */
-$lang['menu']                  = 'Gestion des réversions';
+$lang['menu']                  = 'Gestionnaire de réversions';
 $lang['filter']                = 'Trouver les pages spammées ';
 $lang['revert']                = 'Annuler les éditions sélectionnées';
 $lang['reverted']              = '%s restauré à la révision %s';
