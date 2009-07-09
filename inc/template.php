@@ -298,6 +298,7 @@ function tpl_metaheaders($alt=true){
       }else{
         $head['meta'][] = array( 'name'=>'robots', 'content'=>'noindex,nofollow');
       }
+      $head['link'][] = array( 'rel'=>'canonical', 'href'=>wl($ID,'',true,'&') );
     }else{
       $head['meta'][] = array( 'name'=>'robots', 'content'=>'noindex,follow');
     }
