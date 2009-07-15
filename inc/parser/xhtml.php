@@ -358,11 +358,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function preformatted($text) {
-        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text)) . '</pre>'. DOKU_LF;
+        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text),"\n\r") . '</pre>'. DOKU_LF;
     }
 
     function file($text) {
-        $this->doc .= '<pre class="file">' . trim($this->_xmlEntities($text)). '</pre>'. DOKU_LF;
+        $this->doc .= '<pre class="file">' . trim($this->_xmlEntities($text),"\n\r"). '</pre>'. DOKU_LF;
     }
 
     function quote_open() {

@@ -657,7 +657,7 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
 
     // remove GeSHi's wrapper element (we'll replace it with our own later)
     // we need to use a GeSHi wrapper to avoid <BR> throughout the highlighted text
-    $highlighted_code = preg_replace('!^<pre[^>]*>|</pre>$!','',$geshi->parse_code());
+    $highlighted_code = trim(preg_replace('!^<pre[^>]*>|</pre>$!','',$geshi->parse_code()),"\n\r");
     io_saveFile($cache,$highlighted_code);
   }
 
