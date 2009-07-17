@@ -7,6 +7,7 @@
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
+ * @author Kirill Krasnov <krasnovforum@gmail.com>
  */
 $lang['name']                  = 'Сбор информации о популярности (для загрузки может потребоваться некоторое время)';
 $lang['submit']                = 'Отправить данные';

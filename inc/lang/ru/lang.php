@@ -13,6 +13,7 @@
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
+ * @author Kirill Krasnov <krasnovforum@gmail.com>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -237,4 +238,6 @@ $lang['mu_fail']               = 'провалено';
 $lang['mu_authfail']           = 'истекло время сессии';
 $lang['mu_progress']           = '@PCT@% загружено';
 $lang['mu_filetypes']          = 'Допустимые типы файлов';
+$lang['mu_info']               = 'файлов загружено.';
+$lang['mu_lasterr']            = 'Последняя ошибка:';
 $lang['recent_global']         = 'Вы просматриваете изменения в пространстве имён <b>%s</b>. Вы можете также <a href="%s">просмотреть недавние изменения на всей вики</a>.';

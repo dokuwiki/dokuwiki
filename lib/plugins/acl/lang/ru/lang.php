@@ -9,6 +9,7 @@
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
+ * @author Kirill Krasnov <krasnovforum@gmail.com>
  */
 $lang['admin_acl']             = 'Управление списками контроля доступа';
 $lang['acl_group']             = 'Группа';

@@ -10,6 +10,7 @@
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
+ * @author Kirill Krasnov <krasnovforum@gmail.com>
  */
 $lang['menu']                  = 'Настройки Вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте ваши изменения и попробуйте еще раз.
@@ -93,6 +94,7 @@ $lang['sneaky_index']          = 'По умолчанию, DokuWiki показы
 $lang['auth_security_timeout'] = 'Интервал для безопасности авторизации (сек.)';
 $lang['securecookie']          = 'Должны ли cookies, выставленные через HTTPS, отправляться браузером только через HTTPS. Отключите эту опцию в случае, когда только логин вашей вики передаётся через SSL, а обычный просмотр осуществляется в небезопасном режиме.';
 $lang['xmlrpc']                = 'Включить/выключить XML-RPC интерфейс.';
+$lang['xmlrpcuser']            = 'Запретить XML-RPC доступ для списка групп и пользователей, перечисленных через запятую. Оставьте пустым, если хотите оставить доступ всем.';
 $lang['updatecheck']           = 'Проверять наличие обновлений и предупреждений о безопасности? Для этого DokuWiki потребуется связываться со splitbrain.org.';
 $lang['userewrite']            = 'Удобочитаемые адреса (URL)';
 $lang['useslash']              = 'Использовать слэш';

@@ -10,6 +10,7 @@
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
+ * @author Kirill Krasnov <krasnovforum@gmail.com>
  */
 $lang['menu']                  = 'Управление плагинами';
 $lang['download']              = 'Скачать и установить новый плагин';
