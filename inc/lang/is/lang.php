@@ -1,0 +1,130 @@
+<?php
+/**
+ * is language file
+ *
+ * This file was initially built by fetching translations from other
+ * Wiki projects. See the @url lines below. Additional translations
+ * and fixes where done for DokuWiki by the people mentioned in the
+ * lines starting with @author
+ *
+ * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesIs.php?view=co
+ * @author Hrannar Baldursson <hrannar.baldursson@gmail.com>
+ * @author Ólafur Gunnlaugsson <oli@audiotools.com>
+ */
+$lang['encoding']              = 'utf-8';
+$lang['direction']             = 'ltr';
+$lang['doublequoteopening']    = '„';
+$lang['doublequoteclosing']    = '“';
+$lang['singlequoteopening']    = '‚';
+$lang['singlequoteclosing']    = '‘';
+$lang['apostrophe']            = '\'';
+$lang['btn_edit']              = 'Breyta þessari síðu';
+$lang['btn_source']            = 'Skoða wikikóða';
+$lang['btn_show']              = 'Sýna síðu';
+$lang['btn_create']            = 'Búa til þessa síðu';
+$lang['btn_search']            = 'Leit';
+$lang['btn_save']              = 'Vista';
+$lang['btn_preview']           = 'Forskoða';
+$lang['btn_top']               = 'Efst á síðu';
+$lang['btn_newer']             = '<< nýrra';
+$lang['btn_older']             = 'eldra >>';
+$lang['btn_revs']              = 'breytingaskrá';
+$lang['btn_recent']            = 'Nýlegar breytingar';
+$lang['btn_upload']            = 'Hlaða upp';
+$lang['btn_cancel']            = 'Hætta við';
+$lang['btn_index']             = 'Atriðaskrá';
+$lang['btn_secedit']           = 'Breyta';
+$lang['btn_login']             = 'Innskrá';
+$lang['btn_logout']            = 'Útskrá';
+$lang['btn_admin']             = 'Stjórnandi';
+$lang['btn_update']            = 'Uppfæra';
+$lang['btn_delete']            = 'Eyða';
+$lang['btn_back']              = 'Til baka';
+$lang['btn_backlink']          = 'Hvað tengist hingað';
+$lang['btn_backtomedia']       = 'Aftur til Mediafile';
+$lang['btn_subscribe']         = 'Vakta';
+$lang['btn_unsubscribe']       = 'Afvakta';
+$lang['btn_subscribens']       = 'Vakta breytingar á Namespace';
+$lang['btn_unsubscribens']     = 'Afvakta breytingar á Namespace';
+$lang['btn_profile']           = 'Uppfæra notanda';
+$lang['btn_reset']             = 'Endurstilla';
+$lang['btn_resendpwd']         = 'Senda nýtt lykilorð með tölvupósti';
+$lang['btn_draft']             = 'Breyta uppkasti';
+$lang['btn_recover']           = 'Endurheimta uppkast';
+$lang['btn_draftdel']          = 'Eyða uppkasti';
+$lang['loggedinas']            = 'Innskráning sem';
+$lang['user']                  = 'Notandanafn';
+$lang['pass']                  = 'Lykilorð';
+$lang['newpass']               = 'Nýtt Lykilorð';
+$lang['oldpass']               = 'Gamla lykilorðið';
+$lang['passchk']               = 'Lykilorð (aftur)';
+$lang['remember']              = 'Muna.';
+$lang['fullname']              = 'Fullt nafn þitt*';
+$lang['email']                 = 'Tölvupóstfangið þitt*';
+$lang['register']              = 'Skráning';
+$lang['profile']               = 'Notandastillingar';
+$lang['badlogin']              = 'Innskráningarvilla';
+$lang['minoredit']             = 'Minniháttar breyting';
+$lang['draftdate']             = 'Uppkast vistað sjálfkrafa';
+$lang['nosecedit']             = 'Síðunni var breytt á meðan, upplýsingar um svæðið voru úreltar og öll síðan því endurhlaðin.';
+$lang['regmissing']            = 'Afsakið, en þú verður að fylla út í allar eyður.';
+$lang['reguexists']            = 'Afsakið, notandi með þessu nafni er þegar skráður inn.';
+$lang['regsuccess']            = 'Notandi hefur verið búinn til og lykilorð sent í tölvupósti.';
+$lang['regsuccess2']           = 'Notandi hefur verið búinn til.';
+$lang['regmailfail']           = 'Það lítur út fyrir villu við sendingu lykilorðs. Vinsamlegast hafðu samband við stjórnanda.';
+$lang['regbadmail']            = 'Uppgefinn tölvupóstur virðist ógildur - teljir þú þetta vera villu, hafðu þá samband við stjórnanda.';
+$lang['regbadpass']            = 'Lykilorðin tvö eru ekki eins, vinsamlegast reyndu aftur.';
+$lang['regpwmail']             = 'DokuWiki lykilorðið þitt';
+$lang['reghere']               = 'Ertu ekki með reikning? Skráðu þig';
+$lang['profna']                = 'Þessi wiki leyfir ekki breytingar á notendaupplýsingum';
+$lang['profnochange']          = 'Enga breytingar vistaðar';
+$lang['profchanged']           = 'Notendaupplýsingum breytt';
+$lang['pwdforget']             = 'Gleymt lykilorð? Fáðu nýtt';
+$lang['resendna']              = 'Þessi wiki styður ekki endursendingar lykilorðs';
+$lang['resendpwd']             = 'Senda nýtt lykilorð fyrir';
+$lang['resendpwdnouser']       = 'Notandi finnst ekki';
+$lang['nothingfound']          = 'Ekkert fannst';
+$lang['fileupload']            = 'Hlaða inn skrá';
+$lang['uploadsucc']            = 'Innhlaðning tókst';
+$lang['uploadfail']            = 'Villa í innhlaðningu';
+$lang['uploadwrong']           = 'Upphleðslu neitað. Skrár með þessari endingu eru ekki leyfðar.';
+$lang['deletesucc']            = 'Skrá %s hefur verið eytt.';
+$lang['mediaview']             = 'Sjá upprunalega skrá';
+$lang['mediaroot']             = 'rót';
+$lang['toc']                   = 'Efnisyfirlit';
+$lang['current']               = 'nú';
+$lang['line']                  = 'Lína';
+$lang['lastmod']               = 'Síðast breytt';
+$lang['by']                    = 'af';
+$lang['deleted']               = 'eytt';
+$lang['restored']              = 'Breytt aftur til fyrri útgáfu';
+$lang['summary']               = 'Forskoða';
+$lang['noflash']               = 'Það þarf <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash viðbót</a> til að sýna sumt efnið á þessari síðu';
+$lang['mail_newpage']          = 'síðu bætt við:';
+$lang['mail_changed']          = 'síðu breytt:';
+$lang['mail_new_user']         = 'nýr notandi:';
+$lang['qb_bold']               = 'Feitletraður texti';
+$lang['qb_italic']             = 'Skáletraður texti';
+$lang['qb_h']                  = 'Fyrirsögn';
+$lang['qb_hs']                 = 'Veldu Fyrirsögn';
+$lang['qb_link']               = 'Innri tengill';
+$lang['qb_extlink']            = 'Ytri tengill (muna að setja http:// á undan)';
+$lang['qb_hr']                 = 'Lárétt lína (notist sparlega)';
+$lang['qb_media']              = 'Bæta inn myndum og öðrum skrám';
+$lang['qb_sig']                = 'Undirskrift þín auk tímasetningu';
+$lang['qb_smileys']            = 'Broskallar';
+$lang['admin_register']        = 'Setja nýjan notenda inn';
+$lang['metaedit']              = 'Breyta lýsigögnum';
+$lang['metasaveerr']           = 'Vistun lýsigagna mistókst';
+$lang['metasaveok']            = 'Lýsigögn vistuð';
+$lang['img_backto']            = 'Aftur til';
+$lang['img_title']             = 'Heiti';
+$lang['img_caption']           = 'Skýringartexti';
+$lang['img_date']              = 'Dagsetning';
+$lang['img_fname']             = 'Skrárnafn';
+$lang['img_fsize']             = 'Stærð';
+$lang['img_artist']            = 'Myndsmiður';
+$lang['img_copyr']             = 'Útgáfuréttur';
+$lang['img_format']            = 'Forsnið';
+$lang['img_camera']            = 'Myndavél';
+$lang['img_keywords']          = 'Lykilorð';
