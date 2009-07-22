@@ -12,6 +12,7 @@
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
+ * @author Bogge Bogge <bogge@bogge.com>
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
@@ -95,6 +96,7 @@ $lang['sneaky_index']          = 'Som standard visar DokuWiki alla namnrymder p�
 $lang['auth_security_timeout'] = 'Autentisieringssäkerhets timeout (sekunder)';
 $lang['securecookie']          = 'Skall cookies som sätts via HTTPS endast skickas via HTTPS från webbläsaren? Avaktivera detta alternativ endast om inloggningen till din wiki är säkrad med SSL men läsning av wikin är osäkrad.';
 $lang['xmlrpc']                = 'Aktivera/Avaktivera XML-RPC-gränssnitt';
+$lang['xmlrpcuser']            = 'Begränsa XML-RPC tillträde till komma separerade grupper eller användare som ges här. Lämna tomt för att ge tillgång till alla.';
 $lang['updatecheck']           = 'Kontrollera uppdateringar och säkerhetsvarningar? DokuWiki behöver kontakta splitbrain.org för den här funktionen.';
 $lang['userewrite']            = 'Använd rena webbadresser';
 $lang['useslash']              = 'Använd snedstreck för att separera namnrymder i webbadresser';

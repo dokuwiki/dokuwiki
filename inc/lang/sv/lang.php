@@ -13,6 +13,7 @@
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
+ * @author Bogge Bogge <bogge@bogge.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -239,4 +240,6 @@ $lang['mu_fail']               = 'misslyckades';
 $lang['mu_authfail']           = 'sessionen över tid';
 $lang['mu_progress']           = '@PCT@% uppladdade';
 $lang['mu_filetypes']          = 'Tillåtna filtyper';
+$lang['mu_info']               = 'filerna uppladdade.';
+$lang['mu_lasterr']            = 'Senaste fel:';
 $lang['recent_global']         = 'Du bevakar ändringar i namnrymden <b>%s</b>. Du kan också titta på <a href="%s">senaste ändringar för hela wikin</a>.';
