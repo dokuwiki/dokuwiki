@@ -8,6 +8,13 @@
 $lang['menu']                  = 'Stillingar';
 $lang['error']                 = 'Stillingum ekki breitt þar sem rangar upplýsingar voru settar inn, vinsamlegast yfirfarið stillingar merktar með rauðu';
 $lang['updated']               = 'Stillingum breitt';
+$lang['nochoice']              = '(engir aðrir valmöguleikar fyrir hendi)';
+$lang['title']                 = 'Heiti wikis';
+$lang['template']              = 'Mát';
+$lang['passcrypt']             = 'Dulritunaraðferð lykilorðs';
+$lang['defaultgroup']          = 'Sjálfgefinn hópur';
+$lang['superuser']             = 'Hópur kerfisstjóra ';
+$lang['profileconfirm']        = 'Staðfestu breytingar með lykilorði';
 $lang['mailfrom']              = 'Rafpóstfang fyrir sjálfvirkar póstsendingar';
 $lang['gdlib']                 = 'Útgáfa af GD Lib';
 $lang['jpg_quality']           = 'JPG gæðastilling (0-100)';
