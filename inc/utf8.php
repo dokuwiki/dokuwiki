@@ -62,13 +62,10 @@ if(!function_exists('utf8_isASCII')){
     /**
      * Checks if a string contains 7bit ASCII only
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Andreas Haerter <netzmeister@andreas-haerter.de>
      */
     function utf8_isASCII($str){
-      for($i=0; $i<strlen($str); $i++){
-        if(ord($str{$i}) >127) return false;
-      }
-      return true;
+        return (preg_match('/(?:[^\x00-\x7F])/', $str) !== 1);
     }
 }
 
