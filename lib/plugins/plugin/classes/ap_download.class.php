@@ -120,16 +120,21 @@ class ap_download extends ap_manage {
 
         // decompression library doesn't like target folders ending in "/"
         if (substr($target, -1) == "/") $target = substr($target, 0, -1);
-        $ext = substr($file, strrpos($file,'.')+1);
 
-        // .tar, .tar.bz, .tar.gz, .tgz
-        if (in_array($ext, array('tar','bz','bz2','gz','tgz'))) {
-
+        $ext = $this->guess_archive($file);
+        if (in_array($ext, array('tar','bz','gz'))) {
             require_once(DOKU_INC."inc/TarLib.class.php");
 
-            if (strpos($ext, 'bz') !== false) $compress_type = COMPRESS_BZIP;
-            else if (strpos($ext,'gz') !== false) $compress_type = COMPRESS_GZIP;
-            else $compress_type = COMPRESS_NONE;
+            switch($ext){
+                case 'bz':
+                    $compress_type = COMPRESS_BZIP;
+                    break;
+                case 'gz':
+                    $compress_type = COMPRESS_GZIP;
+                    break;
+                default:
+                    $compress_type = COMPRESS_NONE;
+            }
 
             $tar = new TarLib($file, $compress_type);
             if($tar->_initerror < 0){
@@ -148,7 +153,6 @@ class ap_download extends ap_manage {
             }
             return true;
         } else if ($ext == 'zip') {
-
             require_once(DOKU_INC."inc/ZipLib.class.php");
 
             $zip = new ZipLib();
@@ -157,13 +161,31 @@ class ap_download extends ap_manage {
             // FIXME sort something out for handling zip error messages meaningfully
             return ($ok==-1?false:true);
 
-        }  else if ($ext == "rar") {
-            // not yet supported -- fix me
-            return false;
         }
 
         // unsupported file type
         return false;
+    }
+
+    /**
+     * Determine the archive type of the given file
+     *
+     * Reads the first magic bytes of the given file for content type guessing,
+     * if neither bz, gz or zip are recognized, tar is assumed.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @returns false if the file can't be read, otherwise an "extension"
+     */
+    function guess_archive($file){
+        $fh = fopen($file,'rb');
+        if(!$fh) return false;
+        $magic = fread($fh,5);
+        fclose($fh);
+
+        if(strpos($magic,"\x42\x5a") === 0) return 'bz';
+        if(strpos($magic,"\x1f\x8b") === 0) return 'gz';
+        if(strpos($magic,"\x50\x4b\x03\x04") === 0) return 'zip';
+        return 'tar';
     }
 
     /**
