@@ -1366,26 +1366,32 @@ function html_admin(){
     if($INFO['isadmin']){
         ptln('<ul class="admin_tasks">');
 
-        if($auth && $auth->canDo('getUsers')){
+        if($menu['usermanager'] && $auth && $auth->canDo('getUsers')){
             ptln('  <li class="admin_usermanager"><div class="li">'.
                     '<a href="'.wl($ID, array('do' => 'admin','page' => 'usermanager')).'">'.
                     $menu['usermanager']['prompt'].'</a></div></li>');
         }
         unset($menu['usermanager']);
 
-        ptln('  <li class="admin_acl"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'acl')).'">'.
-                $menu['acl']['prompt'].'</a></div></li>');
+        if($menu['acl']){
+            ptln('  <li class="admin_acl"><div class="li">'.
+                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'acl')).'">'.
+                    $menu['acl']['prompt'].'</a></div></li>');
+        }
         unset($menu['acl']);
 
-        ptln('  <li class="admin_plugin"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'plugin')).'">'.
-                $menu['plugin']['prompt'].'</a></div></li>');
+        if($menu['plugin']){
+            ptln('  <li class="admin_plugin"><div class="li">'.
+                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'plugin')).'">'.
+                    $menu['plugin']['prompt'].'</a></div></li>');
+        }
         unset($menu['plugin']);
 
-        ptln('  <li class="admin_config"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'config')).'">'.
-                $menu['config']['prompt'].'</a></div></li>');
+        if($menu['config']){
+            ptln('  <li class="admin_config"><div class="li">'.
+                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'config')).'">'.
+                    $menu['config']['prompt'].'</a></div></li>');
+        }
         unset($menu['config']);
     }
     ptln('</ul>');
@@ -1393,14 +1399,18 @@ function html_admin(){
     // Manager Tasks
     ptln('<ul class="admin_tasks">');
 
-    ptln('  <li class="admin_revert"><div class="li">'.
-            '<a href="'.wl($ID, array('do' => 'admin','page' => 'revert')).'">'.
-            $menu['revert']['prompt'].'</a></div></li>');
+    if($menu['revert']){
+        ptln('  <li class="admin_revert"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'revert')).'">'.
+                $menu['revert']['prompt'].'</a></div></li>');
+    }
     unset($menu['revert']);
 
-    ptln('  <li class="admin_popularity"><div class="li">'.
-            '<a href="'.wl($ID, array('do' => 'admin','page' => 'popularity')).'">'.
-            $menu['popularity']['prompt'].'</a></div></li>');
+    if($menu['popularity']){
+        ptln('  <li class="admin_popularity"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'popularity')).'">'.
+                $menu['popularity']['prompt'].'</a></div></li>');
+    }
     unset($menu['popularity']);
 
     ptln('</ul>');
