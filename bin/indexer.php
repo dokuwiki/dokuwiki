@@ -79,7 +79,7 @@ function _update(){
 
     $data = array();
     _quietecho("Searching pages... ");
-    search($data,$conf['datadir'],'search_allpages',array());
+    search($data,$conf['datadir'],'search_allpages',array('skipacl' => true));
     _quietecho(count($data)." pages found.\n");
 
     foreach($data as $val){
