@@ -415,8 +415,8 @@ class HTTPClient {
         fclose($socket);
 
         // decode gzip if needed
-        if($this->resp_headers['content-encoding'] == 'gzip'){
-            $this->resp_body = gzinflate(substr($r_body, 10));
+        if($this->resp_headers['content-encoding'] == 'gzip' && strlen($r_body) > 10 && substr($r_body,0,3)=="\x1f\x8b\x08"){
+            $this->resp_body = @gzinflate(substr($r_body, 10));
         }else{
             $this->resp_body = $r_body;
         }
