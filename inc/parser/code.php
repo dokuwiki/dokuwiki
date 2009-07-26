@@ -34,8 +34,8 @@ class Doku_Renderer_code extends Doku_Renderer {
     /**
      * Wraps around code()
      */
-    function file($text) {
-        $this->code($text);
+    function file($text, $language = NULL, $filename='') {
+        $this->code($text, $language, $filename);
     }
 
     /**
