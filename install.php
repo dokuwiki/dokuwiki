@@ -424,8 +424,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'4.3.3','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'4.3.3');
+    if(version_compare(phpversion(),'5.0.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.0.0');
         $ok = false;
     }
 
@@ -434,7 +434,7 @@ function check_functions(){
                          'glob header ignore_user_abort ini_get mail mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
-                         'preg_replace file_get_contents');
+                         'preg_replace file_get_contents htmlspecialchars_decode');
 
     if (!function_exists('mb_substr')) {
       $funcs[] = 'utf8_encode';
