@@ -775,8 +775,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // support feeds without links
                 $lnkurl = $item->get_permalink();
                 if($lnkurl){
+                    // title is escaped by SimplePie, we unescape here because it
+                    // is escaped again in externallink() FS#1705
                     $this->externallink($item->get_permalink(),
-                                        $item->get_title());
+                                        htmlspecialchars_decode($item->get_title()));
                 }else{
                     $this->doc .= ' '.$item->get_title();
                 }
