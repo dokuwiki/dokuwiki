@@ -358,14 +358,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->html($text, 'pre');
     }
 
-    function preformatted($text) {
-        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text)) . '</pre>'. DOKU_LF;
-    }
-
-    function file($text) {
-        $this->doc .= '<pre class="file">' . trim($this->_xmlEntities($text)). '</pre>'. DOKU_LF;
-    }
-
     function quote_open() {
         $this->doc .= '<blockquote><div class="no">'.DOKU_LF;
     }
