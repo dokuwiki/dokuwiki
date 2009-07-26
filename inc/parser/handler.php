@@ -323,13 +323,6 @@ class Doku_Handler {
         return true;
     }
 
-    function file($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->_addCall('file',array($match), $pos);
-        }
-        return true;
-    }
-
     function quote($match, $state, $pos) {
 
         switch ( $state ) {
@@ -360,23 +353,28 @@ class Doku_Handler {
         return true;
     }
 
-    function code($match, $state, $pos) {
-        switch ( $state ) {
-            case DOKU_LEXER_UNMATCHED:
-                $matches = explode('>',$match,2);
-                $matches[0] = trim($matches[0]);
-                if ( trim($matches[0]) == '' ) {
-                    $matches[0] = NULL;
-                }
-                # $matches[0] contains name of programming language
-                # if available, We shortcut html here.
-                if($matches[0] == 'html') $matches[0] = 'html4strict';
-                $this->_addCall(
-                        'code',
-                        array($matches[1],$matches[0]),
-                        $pos
-                    );
-            break;
+    function file($match, $state, $pos) {
+        return $this->code($match, $state, $pos, 'file');
+    }
+
+    function code($match, $state, $pos, $type='code') {
+        if ( $state == DOKU_LEXER_UNMATCHED ) {
+            $matches = explode('>',$match,2);
+            $matches[0] = trim($matches[0]);
+
+            list($language,$filename) = explode(' ',$matches[0],2);
+            $language = trim($language);
+            $filename = trim($filename);
+            if ( $language == '' )  $language = null;
+            if ( $language == '-' ) $language = null;
+            if ( $filename == '' )  $filename = null;
+            # We shortcut html here.
+            if($language == 'html') $language = 'html4strict';
+            $this->_addCall(
+                    $type,
+                    array($matches[1],$language,$filename),
+                    $pos
+                );
         }
         return true;
     }

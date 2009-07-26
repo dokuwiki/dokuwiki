@@ -150,6 +150,7 @@ $lang['restored']   = 'old revision restored';
 $lang['external_edit'] = 'external edit';
 $lang['summary']    = 'Edit summary';
 $lang['noflash']    = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
+$lang['download']   = 'Download Snippet';
 
 $lang['mail_newpage']  = 'page added:';
 $lang['mail_changed']  = 'page changed:';

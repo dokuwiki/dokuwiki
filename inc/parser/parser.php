@@ -561,7 +561,7 @@ class Doku_Parser_Mode_code extends Doku_Parser_Mode {
 class Doku_Parser_Mode_file extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<file>(?=.*</file>)',$mode,'file');
+        $this->Lexer->addEntryPattern('<file(?=.*</file>)',$mode,'file');
     }
 
     function postConnect() {

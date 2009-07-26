@@ -161,13 +161,13 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function preformatted($text) {}
 
-    function file($text) {}
-
     function quote_open() {}
 
     function quote_close() {}
 
-    function code($text, $lang = NULL) {}
+    function file($text, $lang = null, $file = null ) {}
+
+    function code($text, $lang = null, $file = null ) {}
 
     function acronym($acronym) {}
 

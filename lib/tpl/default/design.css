@@ -481,14 +481,45 @@ div.dokuwiki pre.code {
   background-color: __background_other__;
 }
 
-/* inline code words */
-div.dokuwiki code {
-  font-size: 120%;
-}
-
 /* code blocks by file tag */
 div.dokuwiki pre.file {
   background-color: __background_alt__;
+}
+
+/* filenames for file and code blocks */
+div.dokuwiki dl.file,
+div.dokuwiki dl.code {
+    margin-top: 2em;
+    margin-bottom: 2.5em;
+}
+
+div.dokuwiki dl.file dt,
+div.dokuwiki dl.code dt {
+    border: 1px dashed __border__;
+    display: inline;
+    padding: 0.1em 1em;
+    margin-left: 2em;
+}
+
+div.dokuwiki dl.code dt a,
+div.dokuwiki dl.file dt a {
+    color: __text__;
+}
+
+div.dokuwiki dl.code dt {
+    background-color: __background_other__;
+    border-bottom: 1px solid __background_other__;
+}
+
+div.dokuwiki dl.file dt {
+    background-color: __background_alt__;
+    border-bottom: 1px solid __background_alt__;
+}
+
+
+/* inline code words */
+div.dokuwiki code {
+  font-size: 120%;
 }
 
 /* inline tables */

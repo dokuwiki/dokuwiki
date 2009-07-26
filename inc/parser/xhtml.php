@@ -36,7 +36,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $node = array(0,0,0,0,0);
     var $store = '';
 
-    var $_counter = array(); // used as global counter, introduced for table classes
+    var $_counter   = array(); // used as global counter, introduced for table classes
+    var $_codeblock = 0; // counts the code and file blocks, used to provide download links
 
     function getFormat(){
         return 'xhtml';
@@ -358,11 +359,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function preformatted($text) {
-        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text),"\n\r") . '</pre>'. DOKU_LF;
+        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text)) . '</pre>'. DOKU_LF;
     }
 
     function file($text) {
-        $this->doc .= '<pre class="file">' . trim($this->_xmlEntities($text),"\n\r"). '</pre>'. DOKU_LF;
+        $this->doc .= '<pre class="file">' . trim($this->_xmlEntities($text)). '</pre>'. DOKU_LF;
     }
 
     function quote_open() {
@@ -373,21 +374,49 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</div></blockquote>'.DOKU_LF;
     }
 
+    function preformatted($text) {
+        $this->doc .= '<pre class="'.$class.'">' . trim($this->_xmlEntities($text)) . '</pre>'. DOKU_LF;
+    }
+
+    function file($text, $language=null, $filename=null) {
+        $this->_highlight('file',$text,$language,$filename);
+    }
+
+    function code($text, $language=null, $filename=null) {
+        $this->_highlight('code',$text,$language,$filename);
+    }
+
     /**
-     * Callback for code text
-     *
-     * Uses GeSHi to highlight language syntax
+     * Use GeSHi to highlight language syntax in code and file blocks
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function code($text, $language = NULL) {
+    function _highlight($type, $text, $language=null, $filename=null) {
         global $conf;
+        global $ID;
+        global $lang;
+
+        if($filename){
+            $this->doc .= '<dl class="'.$type.'">'.DOKU_LF;
+            $this->doc .= '<dt><a href="'.exportlink($ID,'code',array('codeblock'=>$this->_codeblock)).'" title="'.$lang['download'].'">';
+            $this->doc .= hsc($filename);
+            $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
+        }
 
         if ( is_null($language) ) {
-            $this->preformatted($text);
+            $this->doc .= '<pre class="'.$type.'">'.$this->_xmlEntities($text).'</pre>'.DOKU_LF;
         } else {
-            $this->doc .= p_xhtml_cached_geshi($text, $language);
+            $class = 'code'; //we always need the code class to make the syntax highlighting apply
+            if($type != 'code') $class .= ' '.$type;
+
+            $this->doc .= "<pre class=\"$class $language\">".p_xhtml_cached_geshi($text, $language, '').'</pre>'.DOKU_LF;
         }
+
+        if($filename){
+            $this->doc .= '</dd></dl>'.DOKU_LF;
+        }
+
+        $this->_codeblock++;
     }
 
     function acronym($acronym) {
