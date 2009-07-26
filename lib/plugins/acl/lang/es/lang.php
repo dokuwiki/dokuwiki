@@ -13,6 +13,7 @@
  * @author Jordan Mero  hack.jord@gmail.com
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
+ * @author Zerial <fernando@zerial.org>
  */
 $lang['admin_acl']             = 'Administración de lista de control de acceso';
 $lang['acl_group']             = 'Grupo';

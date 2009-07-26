@@ -18,6 +18,7 @@
  * @author Jordan Mero  hack.jord@gmail.com
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
+ * @author Zerial <fernando@zerial.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -168,6 +169,11 @@ $lang['qb_h2']                 = 'Título 2';
 $lang['qb_h3']                 = 'Título 3';
 $lang['qb_h4']                 = 'Título 4';
 $lang['qb_h5']                 = 'Título 5';
+$lang['qb_h']                  = 'Título';
+$lang['qb_hs']                 = 'Selecciona el título';
+$lang['qb_hplus']              = 'Título alto';
+$lang['qb_hminus']             = 'Título bajo';
+$lang['qb_hequal']             = 'Título del mismo nivel';
 $lang['qb_link']               = 'Enlace Interno';
 $lang['qb_extlink']            = 'Enlace Externo';
 $lang['qb_hr']                 = 'Línea horizontal';
@@ -234,4 +240,6 @@ $lang['mu_fail']               = 'falló';
 $lang['mu_authfail']           = 'sesión caducada';
 $lang['mu_progress']           = '@PCT@% transferido';
 $lang['mu_filetypes']          = 'Tipos de archivos permitidos';
+$lang['mu_info']               = 'Archivos subidos:';
+$lang['mu_lasterr']            = 'Último error:';
 $lang['recent_global']         = 'Actualmente estás viendo los cambios dentro del namespace <b>%s</b>. También puedes <a href="%s">ver los cambios recientes en la wiki completa</a>.';
