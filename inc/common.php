@@ -1361,7 +1361,7 @@ function preg_quote_cb($string){
  * @param int    $min    minimum number of chars to have left for middle shortening
  * @param string $char   the shortening character to use
  */
-function shorten($keep,$short,$max,$min=9,$char='⌇'){
+function shorten($keep,$short,$max,$min=9,$char='…'){
     $max = $max - utf8_strlen($keep);
    if($max < $min) return $keep;
     $len = utf8_strlen($short);
