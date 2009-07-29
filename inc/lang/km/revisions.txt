@@ -1,10 +1,4 @@
-﻿====== ប្រវត្តិទំព័រចាស់ ======
-ទាំងនេះគឺប្រវត្តិទំព័រចាស់រុបសអត្ថបទនេះ។ 
+====== ប្រវត្តិទំព័រចាស់ ======
+ទាំងនេះគឺប្រវត្តិទំព័រចាស់រុបសអត្ថបទនេះ។
 ជ្រើសខ្សែទំព័រពីខាងក្រោមហើយ ចុត «កែទំព័រនេះ» រួចហើយរក្សាវាទុក។
-
-======Old Revisions======
-
-These are the older revisons of the current document. 
-To revert to an old revision, select it from below, 
-click ''Edit this page'' and save it.
 
