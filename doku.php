@@ -79,4 +79,3 @@
   trigger_event('DOKUWIKI_DONE', $tmp=array());
 
 //  xdebug_dump_function_profile(1);
-?>
