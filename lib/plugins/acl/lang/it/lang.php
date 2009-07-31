@@ -10,6 +10,7 @@
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
+ * @author robocap <robocap1@gmail.com>
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
 $lang['acl_group']             = 'Gruppo';

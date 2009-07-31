@@ -10,6 +10,7 @@
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
+ * @author robocap <robocap1@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -92,6 +93,8 @@ $lang['disableactions_other']  = 'Altre azioni (separate da virgola)';
 $lang['sneaky_index']          = 'Normalmente, DokuWiki mostra tutte le categorie nella vista indice. Abilitando questa opzione, saranno nascoste quelle per cui l\'utente non ha il permesso in lettura. Questo potrebbe far sì che alcune sottocategorie accessibili siano nascoste. La pagina indice potrebbe quindi diventare inutilizzabile con alcune configurazioni dell\'ACL.';
 $lang['auth_security_timeout'] = 'Timeout di sicurezza per l\'autenticazione (secondi)';
 $lang['securecookie']          = 'Devono i cookies impostati tramite HTTPS essere inviati al browser solo tramite HTTPS? Disattiva questa opzione solo quando l\'accesso al tuo wiki viene effettuato con il protocollo SSL ma la navigazione del wiki non risulta sicura.';
+$lang['xmlrpc']                = 'Abilita/disabilita interfaccia XML-RPC';
+$lang['xmlrpcuser']            = 'Limita l\'accesso XML-RPC ai gruppi o utenti indicati qui (separati da virgola). Lascia il campo vuoto per dare accesso a tutti.';
 $lang['updatecheck']           = 'Controllare aggiornamenti e avvisi di sicurezza? DokuWiki deve contattare splitbrain.org per questa funzione.';
 $lang['userewrite']            = 'Usa il rewrite delle URL';
 $lang['useslash']              = 'Usa lo slash come separatore nelle URL';
@@ -117,7 +120,6 @@ $lang['send404']               = 'Invia "HTTP 404/Pagina non trovata" per le pag
 $lang['sitemap']               = 'Genera una sitemap Google (giorni)';
 $lang['broken_iua']            = 'La funzione ignore_user_abort non funziona sul tuo sistema? Questo potrebbe far sì che l\'indice di ricerca sia inutilizzabile. È noto che nella configurazione IIS+PHP/CGI non funziona. Vedi il<a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> per maggiori informazioni.';
 $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al webserver di fornire file statici? Questa funzione deve essere supportata dal tuo webserver.';
-$lang['xmlrpc']                = 'Abilita/disabilita interfaccia XML-RPC';
 $lang['renderer_xhtml']        = 'Renderer da usare la visualizzazione del wiki (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';

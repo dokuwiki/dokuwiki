@@ -7,6 +7,7 @@
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
+ * @author robocap <robocap1@gmail.com>
  */
 $lang['menu']                  = 'Gestore di ripristini';
 $lang['filter']                = 'Cerca pagine con spam';

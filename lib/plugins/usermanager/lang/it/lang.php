@@ -9,6 +9,7 @@
  * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
+ * @author robocap <robocap1@gmail.com>
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
