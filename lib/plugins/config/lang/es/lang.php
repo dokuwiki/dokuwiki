@@ -14,6 +14,7 @@
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
+ * @author Marvin Ortega <maty1206@maryanlinux.com>
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';

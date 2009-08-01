@@ -19,6 +19,7 @@
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
+ * @author Marvin Ortega <maty1206@maryanlinux.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -154,6 +155,7 @@ $lang['restored']              = 'Se ha restaurado la vieja versión';
 $lang['external_edit']         = 'editor externo';
 $lang['summary']               = 'Edita el resumen';
 $lang['noflash']               = 'El <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a> es necesario para exibir este contenido.';
+$lang['download']              = 'Descargar trozo de código fuente';
 $lang['mail_newpage']          = 'página añadida:';
 $lang['mail_changed']          = 'página cambiada:';
 $lang['mail_new_user']         = 'Nuevo usuario:';

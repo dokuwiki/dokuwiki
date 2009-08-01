@@ -14,6 +14,7 @@
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
+ * @author Marvin Ortega <maty1206@maryanlinux.com>
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';
