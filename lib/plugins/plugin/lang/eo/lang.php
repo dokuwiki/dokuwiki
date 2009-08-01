@@ -7,6 +7,7 @@
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Erik Pedersen <erik pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Administri Kromaĵojn';
 $lang['download']              = 'Elŝuti kaj instali novan kromaĵon';

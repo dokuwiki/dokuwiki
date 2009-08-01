@@ -7,6 +7,7 @@
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Erik Pedersen <erik pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: kompleze reviziu viajn ŝanĝojn kaj resubmetu ilin.
@@ -56,7 +57,7 @@ $lang['phpok']                 = 'Ebligi enmeton de PHP-aĵoj';
 $lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://www.php.net/strftime">strftime</a>';
 $lang['signature']             = 'Subskribo';
 $lang['toptoclevel']           = 'Supera nivelo por la enhavtabelo';
-$lang['tocminheads']           = 'Minimuma kvanto da kaplinioj, kiu difinas ĉu la TOC estas kreita.';
+$lang['tocminheads']           = 'Minimuma kvanto da ĉeftitoloj, kiu difinas ĉu la TOC estas kreita.';
 $lang['maxtoclevel']           = 'Maksimuma nivelo por la enhavtabelo';
 $lang['maxseclevel']           = 'Maksimuma nivelo por redakti sekciojn';
 $lang['camelcase']             = 'Uzi KamelUsklecon por ligiloj';
@@ -76,8 +77,8 @@ $lang['autopasswd']            = 'Aŭtomate krei pasvortojn';
 $lang['authtype']              = 'Tipo de identiĝo';
 $lang['passcrypt']             = 'Metodo por ĉifri pasvortojn';
 $lang['defaultgroup']          = 'Antaŭdifinita grupo';
-$lang['superuser']             = 'Superanto - grupo aŭ uzanto, kiu plene alireblas al ĉiuj paĝoj kaj funkcioj, sendepende de la reguloj ACL';
-$lang['manager']               = 'Administranto - grupo aŭ uzanto, kiu havas alirpermeson al kelkaj administraj funkcioj';
+$lang['superuser']             = 'Superanto - grupo, uzanto aŭ listo (apartite per komoj), kiu plene alireblas al ĉiuj paĝoj kaj funkcioj, sendepende de la reguloj ACL';
+$lang['manager']               = 'Administranto - grupo, uzanto aŭ listo (apartite per komoj), kiu havas alirpermeson al kelkaj administraj funkcioj';
 $lang['profileconfirm']        = 'Konfirmi ŝanĝojn en la trajtaro per pasvorto';
 $lang['disableactions']        = 'Malebligi DokuWiki-ajn agojn';
 $lang['disableactions_check']  = 'Kontroli';
@@ -88,6 +89,8 @@ $lang['disableactions_other']  = 'Aliaj agoj (apartite per komoj)';
 $lang['sneaky_index']          = 'Apriore, DokuWiki montras ĉiujn nomspacojn en la indica modo. Ebligi tiun ĉi elekteblon kaŝus tion, kion la uzulon ne rajtas legi laŭ AKL. Tio povus rezulti ankaŭan kaŝon de alireblaj subnomspacoj. Kaj tiel la indekso estus neuzebla por kelkaj agordoj de AKL.';
 $lang['auth_security_timeout'] = 'Sekureca Templimo por Aŭtentikigo (sekundoj)';
 $lang['securecookie']          = 'Ĉu kuketoj difinitaj per HTTPS nur estu sendita de la foliumilo per HTTPS? Malebligu tiun ĉi opcion kiam nur la ensaluto al via vikio estas sekurigita per SSL, sed foliumado de la vikio estas farita malsekure.';
+$lang['xmlrpc']                = 'Ebligi/malebligi la interfacon XML-RPC.';
+$lang['xmlrpcuser']            = 'Permesi XML-RPC-an aliron al certaj grupoj aŭ uzantoj, bonvolu meti iliajn komoseparitajn nomojn tie ĉi. Alirebli de ĉiu, ĝin lasu malplenan.';
 $lang['updatecheck']           = 'Ĉu kontroli aktualigojn kaj sekurecajn avizojn? DokuWiki bezonas kontakti splitbrain.org por tiu ĉi trajto.';
 $lang['userewrite']            = 'Uzi malaĉajn URL-ojn';
 $lang['useslash']              = 'Uzi frakcistrekon kiel apartigsignaĵo por nomspacoj en URL-oj';
@@ -113,7 +116,6 @@ $lang['send404']               = 'Sendi la mesaĝon "HTTP 404/Ne Trovita Paĝo" 
 $lang['sitemap']               = 'Krei Guglan paĝarmapon "sitemap" (po kiom tagoj)';
 $lang['broken_iua']            = 'Ĉu la funkcio "ignore_user_abort" difektas en via sistemo? Tio povus misfunkciigi la serĉindekson. IIS+PHP/CGI estas konata kiel fuŝaĵo. Vidu <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Cimon 852</a> por pli da informoj.';
 $lang['xsendfile']             = 'Ĉu oni uzu la kaplinion X-Sendfile por ebligi al la retservilo liveri fiksajn dosierojn? Via retservilo bezonus subteni tion.';
-$lang['xmlrpc']                = 'Ebligi/malebligi la interfacon XML-RPC.';
 $lang['renderer_xhtml']        = 'Estetiko por la ĉefa vikia rezulto (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki-a nukleo)';
 $lang['renderer__plugin']      = '%s (kromaĵo)';

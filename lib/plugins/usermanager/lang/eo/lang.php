@@ -7,6 +7,7 @@
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Erik Pedersen <erik pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Administrado de Uzantoj';
 $lang['noauth']                = '(identiĝo de uzantoj ne disponeblas)';

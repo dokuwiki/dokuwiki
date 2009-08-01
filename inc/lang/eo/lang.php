@@ -10,6 +10,7 @@
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Erik Pedersen <erik pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -145,6 +146,7 @@ $lang['restored']              = 'malnova revizio restarigita';
 $lang['external_edit']         = 'ekstera redakto';
 $lang['summary']               = 'Bulteno de ŝanĝoj';
 $lang['noflash']               = 'La <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> estas bezonata por montrigi tiun ĉi enhavon.';
+$lang['download']              = 'Elŝuti Eltiraĵo';
 $lang['mail_newpage']          = 'paĝo aldonita:';
 $lang['mail_changed']          = 'paĝo modifita:';
 $lang['mail_new_user']         = 'Nova uzanto:';
@@ -160,6 +162,11 @@ $lang['qb_h2']                 = 'Titolo de 2-a nivelo';
 $lang['qb_h3']                 = 'Titolo de 3-a nivelo';
 $lang['qb_h4']                 = 'Titolo de 4-a nivelo';
 $lang['qb_h5']                 = 'Titolo de 5-a nivelo';
+$lang['qb_h']                  = 'Ĉeftitolo';
+$lang['qb_hs']                 = 'Elektu ĉeftitolo';
+$lang['qb_hplus']              = 'Altnivela titolo';
+$lang['qb_hminus']             = 'Subnivela titolo';
+$lang['qb_hequal']             = 'Samnivela titolo';
 $lang['qb_link']               = 'Interna ligilo';
 $lang['qb_extlink']            = 'Ekstera ligilo';
 $lang['qb_hr']                 = 'Horizontala streko';
