@@ -236,7 +236,7 @@ function p_get_metadata($id, $key=false, $render=false){
   $meta = p_read_metadata($id, $cache);
 
   // metadata has never been rendered before - do it! (but not for non-existent pages)
-  if ($render && !$meta['current']['description']['abstract'] && page_exists($id)){
+  if ($render && !isset($meta['current']['description']['abstract']) && page_exists($id)){
     $meta = p_render_metadata($id, $meta);
     io_saveFile(metaFN($id, '.meta'), serialize($meta));
 
