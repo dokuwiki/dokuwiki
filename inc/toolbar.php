@@ -161,19 +161,19 @@ function toolbar_JSdefines($varname){
                 'sample' => 'http://example.com|'.$lang['qb_extlink'],
                 ),
            array(
-                'type'   => 'format',
+                'type'   => 'formatln',
                 'title'  => $lang['qb_ol'],
                 'icon'   => 'ol.png',
                 'open'   => '  - ',
-                'close'  => '\n',
+                'close'  => '',
                 'key'    => '-',
                 ),
            array(
-                'type'   => 'format',
+                'type'   => 'formatln',
                 'title'  => $lang['qb_ul'],
                 'icon'   => 'ul.png',
                 'open'   => '  * ',
-                'close'  => '\n',
+                'close'  => '',
                 'key'    => '.',
                 ),
            array(
