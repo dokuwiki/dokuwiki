@@ -31,8 +31,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-12-16',
-            'name'   => 'ACL',
+            'date'   => '2009-08-07',
+            'name'   => 'ACL Manager',
             'desc'   => 'Manage Page Access Control Lists',
             'url'    => 'http://dokuwiki.org/plugin:acl',
         );
@@ -221,10 +221,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
         $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
-
-        $data = array();
-        search($data,$conf['datadir'],'search_index',array('ns' => $ns));
-
+        $data = $this->_get_tree($ns);
 
         // wrap a list with the root level around the other namespaces
         $item = array( 'level' => 0, 'id' => '*', 'type' => 'd',
@@ -241,6 +238,48 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '</li>';
         echo '</ul>';
 
+    }
+
+    /**
+     * get a combined list of media and page files
+     *
+     * @param string $folder an already converted filesystem folder of the current namespace
+     * @param string $limit  limit the search to this folder
+     */
+    function _get_tree($folder,$limit=''){
+        global $conf;
+
+        // read tree structure from pages and media
+        $data = array();
+        search($data,$conf['datadir'],'search_index',array('ns' => $folder),$limit);
+        $media = array();
+        search($media,$conf['mediadir'],'search_index',array('ns' => $folder, 'nofiles' => true),$limit);
+        $data = array_merge($data,$media);
+        unset($media);
+
+        // combine by sorting and removing duplicates
+        usort($data,array($this,'_tree_sort'));
+        $count = count($data);
+        if($count>0) for($i=1; $i<$count; $i++){
+            if($data[$i]['type'] == 'f') break; // namespaces come first, we're done
+            if($data[$i-1]['id'] == $data[$i]['id']) unset($data[$i]);
+        }
+        return $data;
+    }
+
+    /**
+     * usort callback
+     *
+     * Sorts the combined trees of media and page files
+     */
+    function _tree_sort($a,$b){
+        if($a['type'] == 'd' && $b['type'] == 'f'){
+            return -1;
+        }elseif($a['type'] == 'f' && $b['type'] == 'd'){
+            return 1;
+        }else{
+            return strcmp($a['id'],$b['id']);
+        }
     }
 
     /**

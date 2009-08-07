@@ -45,8 +45,7 @@ if($ajax == 'info'){
     $lvl = count(explode(':',$ns));
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
-    $data = array();
-    search($data,$conf['datadir'],'search_index',array('ns' => $ns),$ns);
+    $data = $acl->_get_tree($ns,$ns);
 
     foreach($data as $item){
         $item['level'] = $lvl+1;
