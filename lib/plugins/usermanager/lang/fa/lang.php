@@ -6,6 +6,7 @@
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
  * @author Omid Mottaghi <omidmr@gmail.com>
+ * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  */
 $lang['menu']                  = 'مدیریت کاربر';
 $lang['noauth']                = '(معتبرسازی کاربر ممکن نیست)';

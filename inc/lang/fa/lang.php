@@ -12,6 +12,7 @@
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
  * @author Omid Mottaghi <omidmr@gmail.com>
+ * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -147,6 +148,7 @@ $lang['restored']              = 'یک نگارش پیشین واگردانی ش
 $lang['external_edit']         = 'ویرایش خارجی';
 $lang['summary']               = 'پیش‌نمایش';
 $lang['noflash']               = 'برای نمایش محتویات <a href="http://www.adobe.com/products/flashplayer/">افزونه‌ی فلش</a> مورد نیاز است.';
+$lang['download']              = 'دیافت فایل منقطع گردید';
 $lang['mail_newpage']          = 'صفحه اضافه شد:';
 $lang['mail_changed']          = 'صفحه تغییر داده شد:';
 $lang['mail_new_user']         = 'کاربر جدید:';
@@ -162,6 +164,11 @@ $lang['qb_h2']                 = 'عنوان سطح ۲';
 $lang['qb_h3']                 = 'عنوان سطح ۳';
 $lang['qb_h4']                 = 'عنوان سطح ۴';
 $lang['qb_h5']                 = 'عنوان سطح ۵';
+$lang['qb_h']                  = 'تیتر';
+$lang['qb_hs']                 = 'تیتر مورد نظر را انتخاب نمایید';
+$lang['qb_hplus']              = 'تیتر بالاتر';
+$lang['qb_hminus']             = 'تیتر پایین تر';
+$lang['qb_hequal']             = 'تیتر در یک سطح';
 $lang['qb_link']               = 'پیوند داخلی';
 $lang['qb_extlink']            = 'پیوند به بیرون (پیشوند http:// را فراموش نکنید)';
 $lang['qb_hr']                 = 'خط افقی';
@@ -228,4 +235,6 @@ $lang['mu_fail']               = 'شکست خورد';
 $lang['mu_authfail']           = 'سشن به پایان رسید';
 $lang['mu_progress']           = '@PCT@% ارسال شد';
 $lang['mu_filetypes']          = 'توسعه‌های مجاز';
+$lang['mu_info']               = 'فایل ارسال گردید';
+$lang['mu_lasterr']            = 'آخرین خطا:';
 $lang['recent_global']         = 'شما هم‌اکنون تغییرات فضای‌نام <b>%s</b> را مشاهده می‌کنید. شما هم‌چنین می‌توانید <a href="%s">تغییرات اخیر در کل ویکی را مشاهده نمایید</a>.';
