@@ -11,6 +11,7 @@
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik pedersen@shaw.ca>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -234,4 +235,6 @@ $lang['mu_fail']               = 'malsukcesite';
 $lang['mu_authfail']           = 'sekcio tro longdaŭris';
 $lang['mu_progress']           = '@PCT@% alŝutite';
 $lang['mu_filetypes']          = 'Permesitaj Dosiertipoj';
+$lang['mu_info']               = 'alŝutitaj dosieroj.';
+$lang['mu_lasterr']            = 'Lasta eraro:';
 $lang['recent_global']         = 'Vi nune rigardas la ŝanĝojn ene de la nomspaco <b>%s</b>. Vi povas ankaŭ <a href="%s">vidi la freŝajn ŝanĝojn de la tuta vikio</a>.';

@@ -7,6 +7,7 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik pedersen@shaw.ca>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['admin_acl']             = 'Administrado de Alirkontrola Listo (ACL)';
 $lang['acl_group']             = 'Grupo';
