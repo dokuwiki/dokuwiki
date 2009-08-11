@@ -14,6 +14,7 @@
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -149,6 +150,7 @@ $lang['restored']              = 'gjenopprettet til en tidligere versjon';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigeringskommentar';
 $lang['noflash']               = 'For at dette innholdet skal vises må du ha <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['download']              = 'Last ned utdraget';
 $lang['mail_newpage']          = 'side lagt til:';
 $lang['mail_changed']          = 'side endret:';
 $lang['mail_new_user']         = 'ny bruker:';
@@ -164,6 +166,11 @@ $lang['qb_h2']                 = 'Overskrift nivå 2';
 $lang['qb_h3']                 = 'Overskrift nivå 3';
 $lang['qb_h4']                 = 'Overskrift nivå 4';
 $lang['qb_h5']                 = 'Overskrift nivå 5';
+$lang['qb_h']                  = 'Overskrift';
+$lang['qb_hs']                 = 'Velg overskrift';
+$lang['qb_hplus']              = 'Høyere overskrift';
+$lang['qb_hminus']             = 'Lavere overskrift';
+$lang['qb_hequal']             = 'Overskrift på samme nivå';
 $lang['qb_link']               = 'Intern lenke';
 $lang['qb_extlink']            = 'Ekstern lenke';
 $lang['qb_hr']                 = 'Horisontal linje';
@@ -234,4 +241,6 @@ $lang['mu_fail']               = 'feilet';
 $lang['mu_authfail']           = 'sesjonen har utløpt';
 $lang['mu_progress']           = '@PCT@% lastet opp';
 $lang['mu_filetypes']          = 'Tillatte filtyper';
+$lang['mu_info']               = 'filer lastet opp.';
+$lang['mu_lasterr']            = 'Siste feilen:';
 $lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';

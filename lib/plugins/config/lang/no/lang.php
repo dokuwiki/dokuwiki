@@ -10,6 +10,7 @@
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -32,7 +33,7 @@ $lang['_header_undefined']     = 'Udefinerte innstillinger';
 $lang['_basic']                = 'Grunnleggende innstillinger';
 $lang['_display']              = 'Innstillinger for visning av sider';
 $lang['_authentication']       = 'Innstillinger for autentisering';
-$lang['_anti_spam']            = 'Anti-spam-innstillinger';
+$lang['_anti_spam']            = 'Motsøppel-innstillinger';
 $lang['_editing']              = 'Innstillinger for redigering';
 $lang['_links']                = 'Innstillinger for lenker';
 $lang['_media']                = 'Innstillinger for media-filer';
@@ -66,7 +67,7 @@ $lang['toptoclevel']           = 'Toppnivå for innholdsfortegnelse';
 $lang['tocminheads']           = 'Minimum antall overskrifter som bestemmer om innholdsbetegnelse skal bygges.';
 $lang['maxtoclevel']           = 'Maksimalt antall nivåer i innholdsfortegnelse';
 $lang['maxseclevel']           = 'Maksimalt nivå for redigering av seksjon';
-$lang['camelcase']             = 'Gjør CamelCase til lenke automatisk';
+$lang['camelcase']             = 'Gjør KamelKasse til lenke automatisk';
 $lang['deaccent']              = 'Rensk sidenavn';
 $lang['useheading']            = 'Bruk første overskrift som tittel';
 $lang['refcheck']              = 'Sjekk referanser før mediafiler slettes';
@@ -83,8 +84,8 @@ $lang['autopasswd']            = 'Generer passord automatisk';
 $lang['authtype']              = 'Autentiseringsmetode';
 $lang['passcrypt']             = 'Metode for kryptering av passord';
 $lang['defaultgroup']          = 'Standardgruppe';
-$lang['superuser']             = 'Superbruker - en gruppe eller bruker med full tilgang til alle sider og funksjoner uavhengig av ACL-innstillingene';
-$lang['manager']               = 'Administrator - en gruppe eller bruker med tilgang til visse administratorfunksjoner';
+$lang['superuser']             = 'Superbruker - en gruppe, bruker eller liste (kommaseparert) med full tilgang til alle sider og funksjoner uavhengig av ACL-innstillingene';
+$lang['manager']               = 'Administrator - en gruppe, bruker eller liste (kommaseparert) med tilgang til visse administratorfunksjoner';
 $lang['profileconfirm']        = 'Bekreft profilendringer med passord';
 $lang['disableactions']        = 'Skru av følgende DokuWiki-kommandoer';
 $lang['disableactions_check']  = 'Sjekk';
@@ -95,6 +96,9 @@ $lang['disableactions_other']  = 'Andre kommandoer (kommaseparert)';
 $lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerom i innholdsfortegnelsen. Hvis du skrur på dette alternativet vil brukere bare se de navnerommene der de har lesetilgang. Dette kan føre til at tilgjengelige undernavnerom skjules. Det kan gjøre innholdsfortegnelsen ubrukelig med enkelte ACL-oppsett.';
 $lang['auth_security_timeout'] = 'Autentisering utløper etter (sekunder)';
 $lang['securecookie']          = 'Skal informasjonskapsler satt via HTTPS kun sendes via HTTPS av nettleseren? Skal ikke velges dersom bare innloggingen til din wiki er sikret med SSL, og annen navigering  på wikien er usikret.';
+$lang['xmlrpc']                = 'Slå på/slå av XML-RPC-grensesnitt';
+$lang['xmlrpcuser']            = 'Å tillate XML-RPC-adgang til bestemte grupper eller brukere, sette deres navne (kommaseparert) her. Slik får du tilgang til alle, la feltet tomt.
+';
 $lang['updatecheck']           = 'Se etter oppdateringer og sikkerhetsadvarsler? Denne funksjonen er avhengig av å kontakte splitbrain.org.';
 $lang['userewrite']            = 'Bruk pene URLer';
 $lang['useslash']              = 'Bruk / som skilletegn mellom navnerom i URLer';
@@ -120,7 +124,6 @@ $lang['send404']               = 'Send "HTTP 404/Page Not Found" for ikke-eksist
 $lang['sitemap']               = 'Lag Google-sidekart (dager)';
 $lang['broken_iua']            = 'Er funksjonen ignore_user_abort på ditt system ødelagt? Dette kan gjøre at indeksering av søk ikke fungerer. Dette er et kjent problem med IIS+PHP/CGI. Se <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> for mer informasjon.';
 $lang['xsendfile']             = 'Bruk X-Sendfile header for å la webserver levere statiske filer? Din webserver må støtte dette.';
-$lang['xmlrpc']                = 'Slå på/slå av XML-RPC-grensesnitt';
 $lang['renderer_xhtml']        = 'Renderer til bruk for wiki-output (XHTML)';
 $lang['renderer__core']        = '%s (dokuwikikjerne)';
 $lang['renderer__plugin']      = '%s (plugin)';
