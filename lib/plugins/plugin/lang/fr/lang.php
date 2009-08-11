@@ -9,9 +9,10 @@
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
-$lang['menu']                  = 'Gestion des plugins';
-$lang['download']              = 'Télécharger et installer un nouveau plugin';
+$lang['menu']                  = 'Gestion des module externes';
+$lang['download']              = 'Télécharger et installer un nouveau module';
 $lang['manage']                = 'Plugins installés';
 $lang['btn_info']              = 'info';
 $lang['btn_update']            = 'rafraîchir';
@@ -26,17 +27,17 @@ $lang['source']                = 'Source :';
 $lang['unknown']               = 'inconnu';
 $lang['updating']              = 'Mise à jour...';
 $lang['updated']               = 'Plugin %s mis à jour avec succès';
-$lang['updates']               = 'Les plugins suivants ont été mis à jour avec succès';
+$lang['updates']               = 'Les modules suivants ont été mis à jour avec succès';
 $lang['update_none']           = 'Aucune mise à jour n\'a été trouvée.';
 $lang['deleting']              = 'Suppression...';
 $lang['deleted']               = 'Plugin %s supprimé.';
 $lang['downloading']           = 'Téléchargement...';
 $lang['downloaded']            = 'Plugin %s installé avec succès';
-$lang['downloads']             = 'Les plugins suivants ont été installés avec succès :';
-$lang['download_none']         = 'Aucun plugin trouvé, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
+$lang['downloads']             = 'Les modules suivants ont été installés avec succès :';
+$lang['download_none']         = 'Aucun module n\'était trouvé, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
 $lang['plugin']                = 'Plugin :';
 $lang['components']            = 'Composants';
-$lang['noinfo']                = 'Ce plugin n\'a transmis aucune information, il pourrait être invalide.';
+$lang['noinfo']                = 'Ce module externe n\'a transmis aucune information, il pourrait être invalide.';
 $lang['name']                  = 'Nom :';
 $lang['date']                  = 'Date :';
 $lang['type']                  = 'Type :';

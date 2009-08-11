@@ -15,6 +15,7 @@
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -150,6 +151,7 @@ $lang['restored']              = 'ancienne révision restaurée';
 $lang['external_edit']         = 'édition externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'L"extension <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> est nécessaire pour afficher ce contenu.';
+$lang['download']              = 'Télécharger un extrait';
 $lang['mail_newpage']          = 'page ajoutée :';
 $lang['mail_changed']          = 'page changée :';
 $lang['mail_new_user']         = 'nouvel utilisateur :';

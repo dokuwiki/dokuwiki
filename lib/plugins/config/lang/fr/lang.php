@@ -9,6 +9,7 @@
  * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
+ * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />La valeur(s) erronée(s) est entourée d\'une bordure rouge.';
@@ -110,10 +111,10 @@ $lang['gdlib']                 = 'Version de GD Lib';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion d\'ImageMagick';
 $lang['jpg_quality']           = 'Qualité de la compression JPG (0-100)';
 $lang['subscribers']           = 'Activer l\'abonnement aux pages';
-$lang['compress']              = 'Compresser CSS & javascript';
+$lang['compress']              = 'Compresser CSS & JavaScript';
 $lang['hidepages']             = 'Cacher les pages correspondant à (expression régulière)';
-$lang['send404']               = 'Renvoyer "HTTP 404/Page Not Found" pour les pages introuvables';
-$lang['sitemap']               = 'Générer une carte google du site tous les (jours)';
+$lang['send404']               = 'Renvoyer "HTTP 404/Page Non Trouvée" pour les pages introuvables';
+$lang['sitemap']               = 'Générer une carte G|oogle du site tous les (jours)';
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
 CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'info.';
 $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur Web de délivrer des fichiers statiques ? Votre serveur Web doit supporter cette fonctionnalité.';
