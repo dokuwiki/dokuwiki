@@ -543,4 +543,107 @@ function pathID($path,$keeptxt=false){
 }
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+/**
+ * This is a very universal callback for the search() function, replacing
+ * many of the former individual functions at the cost of a more complex
+ * setup.
+ *
+ * How the function behaves, depends on the options passed in the $opts
+ * array, where the following settings can be used.
+ *
+ * depth      int     recursion depth. 0 for unlimited
+ * keeptxt    bool    keep .txt extension for IDs
+ * listfiles  bool    include files in listing
+ * listdirs   bool    include namespaces in listing
+ * pagesonly  bool    restrict files to pages
+ * skipacl    bool    do not check for READ permission
+ * sneakyacl  bool    don't recurse into nonreadable dirs
+ * hash       bool    create MD5 hash for files
+ * meta       bool    return file metadata
+ * filematch  string  match files against this regexp
+ * dirmatch   string  match namespaces against this regexp when adding
+ * recmatch   string  match namespaces against this regexp when recursing
+ * showmsg    bool    warn about non-ID files
+ * showhidden bool    show hidden files too
+ * firsthead  bool    return first heading for pages
+ *
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ */
+function search_universal(&$data,$base,$file,$type,$lvl,$opts){
+    $item   = array();
+    $return = true;
+
+    // get ID and check if it is a valid one
+    $item['id'] = pathID($file);
+    if($info['id'] != cleanID($info['id'])){
+        if($opts['showmsg'])
+            msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
+        return false; // skip non-valid files
+    }
+
+    if($type == 'd') {
+        // decide if to recursion into this directory is wanted
+        if(!$opts['depth']){
+            $return = true; // recurse forever
+        }else{
+            $depth = substr_count($file,'/');
+            if($depth >= $opts['depth']){
+                $return = false; // depth reached
+            }else{
+                $return = true;
+            }
+        }
+        if($return && !preg_match('/'.$opts['recmatch'].'/',$file)){
+            $return = false; // doesn't match
+        }
+    }
+
+    // check ACL
+    if(!$opts['skipacl']){
+        if($type == 'd'){
+            $item['perm'] = auth_quickaclcheck($item['id'].':*');
+        }else{
+            $item['perm'] = auth_quickaclcheck($item['id']); //FIXME check namespace for media files
+        }
+    }else{
+        $item['perm'] = AUTH_DELETE;
+    }
+
+    // are we done here maybe?
+    if($type == 'd'){
+        if(!$opts['listdirs']) return $return;
+        if(!$opts['skipacl'] && $opts['sneakyacl'] && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
+        if($opts['dirmatch'] && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
+    }else{
+        if(!$opts['listfiles']) return $return;
+        if(!$opts['skipacl'] && $item['perm'] < AUTH_READ) return $return;
+        if($opts['pagesonly'] && (substr($file,-4) != '.txt')) return $return;
+        if(!$conf['showhidden'] && isHiddenPage($id)) return $return;
+        if($opts['filematch'] && !preg_match('/'.$opts['filematch'].'/',$file)) return $return;
+    }
+
+    // still here? prepare the item
+    $item['type'] = $type;
+    $item['lvl']  = $lvl;
+    $item['open'] = $return;
+
+    if($opts['meta']){
+        $item['file']       = basename($file);
+        $item['size']       = filesize($base.'/'.$file);
+        $item['mtime']      = filemtime($base.'/'.$file);
+        $item['rev']        = $item['mtime'];
+        $item['writable']   = is_writable($base.'/'.$file);
+        $item['executable'] = is_executable($base.'/'.$file);
+    }
+
+    if($type == 'f'){
+        if($opts['hash']) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
+        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],false);
+    }
+
+    // finally add the item
+    $data[] = $item;
+    return $return;
+}
+
+//Setup VIM: ex: et ts=4 enc=utf-8 :
