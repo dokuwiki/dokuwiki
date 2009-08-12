@@ -55,6 +55,7 @@ function js_out(){
             $files[] = DOKU_INC.'lib/scripts/textselection.js';
             $files[] = DOKU_INC.'lib/scripts/toolbar.js';
             $files[] = DOKU_INC.'lib/scripts/edit.js';
+            $files[] = DOKU_INC.'lib/scripts/linkwiz.js';
         }
         $files[] = DOKU_INC.'lib/scripts/media.js';
     }

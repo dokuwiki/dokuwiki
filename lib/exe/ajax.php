@@ -240,5 +240,114 @@ function ajax_index(){
   }
 }
 
+/**
+ * List matching namespaces and pages for the link wizard
+ */
+function ajax_linkwiz(){
+  global $conf;
+  global $lang;
+  require_once(DOKU_INC.'inc/html.php');
+
+  $q  = ltrim($_POST['q'],':');
+  $id = noNS($q);
+  $ns = getNS($q);
+
+  $ns = cleanID($ns);
+  $id = cleanID($id);
+
+  $nsd  = utf8_encodeFN(str_replace(':','/',$ns));
+  $idd  = utf8_encodeFN(str_replace(':','/',$id));
+
+  $data = array();
+  if($q && !$ns){
+
+    // use index to lookup matching pages
+    require_once(DOKU_INC.'inc/fulltext.php');
+    require_once(DOKU_INC.'inc/parserutils.php');
+    $pages = array();
+    $pages = ft_pageLookup($id,false);
+
+    // result contains matches in pages and namespaces
+    // we now extract the matching namespaces to show
+    // them seperately
+    $dirs  = array();
+    $count = count($pages);
+    for($i=0; $i<$count; $i++){
+      if(strpos(noNS($pages[$i]),$id) === false){
+        // match was in the namespace
+        $dirs[getNS($pages[$i])] = 1; // assoc array avoids dupes
+      }else{
+        // it is a matching page, add it to the result
+        $data[] = array(
+          'id'    => $pages[$i],
+          'title' => p_get_first_heading($pages[$i],false),
+          'type'  => 'f',
+        );
+      }
+      unset($pages[$i]);
+    }
+    foreach($dirs as $dir => $junk){
+      $data[] = array(
+        'id'   => $dir,
+        'type' => 'd',
+      );
+    }
+
+  }else{
+
+    require_once(DOKU_INC.'inc/search.php');
+    $opts = array(
+      'depth' => 1,
+      'listfiles' => true,
+      'listdirs'  => true,
+      'pagesonly' => true,
+      'firsthead' => true,
+    );
+    if($id) $opts['filematch'] = '^.*\/'.$id;
+    if($id) $opts['dirmatch']  = '^.*\/'.$id;
+    search($data,$conf['datadir'],'search_universal',$opts,$nsd);
+
+    // add back to upper
+    if($ns){
+        array_unshift($data,array(
+            'id'   => getNS($ns),
+            'type' => 'u',
+        ));
+    }
+  }
+
+  // fixme sort results in a useful way ?
+
+  if(!count($data)){
+    echo $lang['nothingfound'];
+    exit;
+  }
+
+  // output the found data
+  $even = 1;
+  foreach($data as $item){
+    $even *= -1; //zebra
+
+    if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id']) $item['id'] .= ':';
+    $link = wl($item['id']);
+
+    echo '<div class="'.(($even > 0)?'even':'odd').' type_'.$item['type'].'">';
+
+
+    if($item['type'] == 'u'){
+        $name = 'back to upper';
+    }else{
+        $name = htmlspecialchars($item['id']);
+    }
+
+    echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
+
+    if($item['title']){
+      echo '<span>'.htmlspecialchars($item['title']).'</span>';
+    }
+    echo '</div>';
+  }
+
+}
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :
-?>
