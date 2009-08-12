@@ -1,4 +1,3 @@
-
 #link__wiz {
     position: absolute;
     display: block;
@@ -56,3 +55,8 @@
     color: __text_neu__
 }
 
+/*FIXME maybe move to a more general style sheet*/
+.ondrag {
+    cursor: move;
+    opacity: 0.8;
+}
