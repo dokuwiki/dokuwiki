@@ -103,7 +103,6 @@ $lang['mail_changed'] = 'page changed:';
 
 $lang['js']['nosmblinks'] = "Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.";
 
-$lang['qb_alert']   = 'Please enter the text you want to format.\nIt will be appended to the end of the document.';
 $lang['qb_bold']    = 'Bold Text';
 $lang['qb_italic']  = 'Italic Text';
 $lang['qb_underl']  = 'Underlined Text';
@@ -122,7 +121,7 @@ $lang['qb_ul']      = 'Unordered List Item';
 $lang['qb_media']   = 'Add Images and other files';
 $lang['qb_sig']     = 'Insert Signature';
 
-$lang['del_confirm']= 'Delete this entry?';
+$lang['js']['del_confirm']= 'Delete this entry?';
 
 $lang['admin_acl']  = 'Access Control List Management...';
 $lang['admin_register']= 'Add new user...';

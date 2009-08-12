@@ -122,7 +122,6 @@ $lang['mail_changed'] = 'skjal broytt:';
 
 $lang['js']['nosmblinks'] = "Ávísingar til Windows shares virka bert í Microsoft Internet Explorer.\nTú kanst enn avrita og sata inn slóðina.";
 
-$lang['qb_alert']   = 'Skriva tann tekst tú ynskir at forsniða.\nHann verður skoyttur uppí í endanum av skjalinum.';
 $lang['qb_bold']    = 'Feit';
 $lang['qb_italic']  = 'Skák';
 $lang['qb_underl']  = 'Undurstrika';
@@ -143,7 +142,7 @@ $lang['qb_sig']     = 'Set inn undirskrift';
 $lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Sertekn';
 
-$lang['del_confirm']= 'Strika post(ar)?';
+$lang['js']['del_confirm']= 'Strika post(ar)?';
 $lang['admin_register']= 'Upprætta nýggjan brúkara';
 
 $lang['metaedit']    = 'Rætta metadáta';

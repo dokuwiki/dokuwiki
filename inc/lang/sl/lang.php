@@ -118,7 +118,6 @@ $lang['mail_newpage']          = '[DokuWiki] stran dodana:';
 $lang['mail_changed']          = '[DokuWiki] stran spremenjena:';
 $lang['mail_new_user']         = 'nov uporabnik.';
 $lang['mail_upload']           = 'naložena datoteka:';
-$lang['qb_alert']              = 'Prosimo vnesite besedilo, ki ga želite oblikovati.\nDodano bo na konec dokumenta.';
 $lang['qb_bold']               = 'Krepki tisk';
 $lang['qb_italic']             = 'Ležeči tisk';
 $lang['qb_underl']             = 'Podčrtano besedilo';

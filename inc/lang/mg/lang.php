@@ -96,7 +96,6 @@ $lang['mail_changed'] = 'pejy niova:';
 
 $lang['js']['nosmblinks'] = "rohy mankamin\'ny fizarana Windows dia amin\'ny Microsoft Internet Explorer ihany no miasa.\nAzo atao ihany anefa ny manao dika-petaka ny rohy.";
 
-$lang['qb_alert']   = 'Ampidiro ny soratra tianao hamboarina format.\n Hiampy any @ farany izy avy eo.';
 $lang['qb_bold']    = 'Matavy';
 $lang['qb_italic']  = 'Mandry';
 $lang['qb_underl']  = 'Voatsipika';
@@ -115,7 +114,7 @@ $lang['qb_ul']      = 'Tanisa tsy milahatra';
 $lang['qb_media']   = 'Hanampy sary na rakitra hafa';
 $lang['qb_sig']     = 'Manisy sonia';
 
-$lang['del_confirm']= 'Hofafana ilay andalana?';
+$lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 
 $lang['admin_acl']  = 'Fitantanana ACL (Access Control List)...';
 $lang['admin_register']= 'Ampio mpampiasa vaovao...';

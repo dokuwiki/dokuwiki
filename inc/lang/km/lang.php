@@ -148,7 +148,6 @@ $lang['mail_upload']   = 'រុញអក្សាលើង';
 
 $lang['nosmblinks'] = 'ខ្សែបន្តទៅ «Windows share» ប្រើបានក្នុង «Microsoft IE»។ អ្នកអាច កាត់ឬបិត ខ្សែនេះ។';
 
-$lang['qb_alert']   = 'សុំចុតឃ្វាមអ្នកចង់ធ្វើ​ទ្រង់ទ្រាយ វាគងទែបន្ថែមពីចុងអត្ថបទ';
 $lang['qb_bold']    = 'ឃ្វាមក្រស';
 $lang['qb_italic']  = 'ឃ្វាមជ្រៀង';
 $lang['qb_underl']  = 'ឃ្វាម';
@@ -169,7 +168,7 @@ $lang['qb_sig']     = 'ស៊កហត្ថលេខា';
 $lang['qb_smileys'] = 'សញ្ញាអារម្មណ៍';
 $lang['qb_chars']   = 'អក្ខរៈពិសេស';
 
-$lang['del_confirm']= 'លុប';
+$lang['js']['del_confirm']= 'លុប';
 $lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
 
 $lang['spell_start'] = 'ពិនិត្យអក្ខរាវិរុទ្ធ';//'Check Spelling';

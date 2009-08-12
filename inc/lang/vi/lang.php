@@ -83,7 +83,6 @@ $lang['mail_changed'] = 'Trang thay đổi:';
 
 $lang['js']['nosmblinks'] = "Nối với các Windows shares chỉ có hiệu lực với Microsoft Internet Explorer.\nBạn vẫn có thể sao và chép các mốc nối.";
 
-$lang['qb_alert']   = 'Xin bạn điền đoạn văn để định dạng.\nĐoạn này sẽ được nối vào cuối văn kiện.';
 $lang['qb_bold']    = 'Chữ đậm';
 $lang['qb_italic']  = 'Chữ nghiêng';
 $lang['qb_underl']  = 'Chữ gạch dưới';
@@ -101,7 +100,7 @@ $lang['qb_ul']      = 'Điểm trong danh sách không đánh số';
 $lang['qb_media']   = 'Thêm ảnh và tệp khác';
 $lang['qb_sig']     = 'Đặt chữ ký';
 
-$lang['del_confirm']= 'Xoá mục này?';
+$lang['js']['del_confirm']= 'Xoá mục này?';
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

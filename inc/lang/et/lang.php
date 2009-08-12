@@ -183,7 +183,6 @@ $lang['mail_changed'] = 'leht muudetud';
 $lang['nosmblinks'] = 'Windowsis võrguarvutiga ühendamine toimib ainult Internet Exploreris ja 
 sisevõrgus.\nAga Sa saad õnneks omale lingi kopeerida ja hiljem kuhugi kleepida.';
 
-$lang['qb_alert']   = 'Sisesta palun tekst, mida Sa tahad kujundada.\nSee lisatakse dokumendi lõppu..'; 
 $lang['qb_bold']    = 'Rasvane kiri';
 $lang['qb_italic']  = 'Kaldkiri';
 $lang['qb_underl']  = 'Alajoonega kiri';
@@ -204,7 +203,7 @@ $lang['qb_sig']     = 'Lisa allkiri!';
 $lang['authmodfailed'] = 'Vigane kasutajate autentimise konfiguratsioon. Palun teavita sellest serveri haldajat.';
 $lang['authtempfail'] = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
 
-$lang['del_confirm']= 'Kas kustutame selle kirje?';
+$lang['js']['del_confirm']= 'Kas kustutame selle kirje?';
 
 #$lang['subscribe_success'] = '';
 #$lang['subscribe_error'] = '';
