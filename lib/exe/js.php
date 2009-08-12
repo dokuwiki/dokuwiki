@@ -33,13 +33,11 @@ if(!defined('SIMPLE_TEST')){
 function js_out(){
     global $conf;
     global $lang;
-    $edit  = (bool) $_REQUEST['edit'];   // edit or preview mode?
-    $write = (bool) $_REQUEST['write'];  // writable?
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$edit.'x'.$write,'.js');
+    $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
 
-    // Array of needed files
+    // array of core files
     $files = array(
                 DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
@@ -49,37 +47,33 @@ function js_out(){
                 DOKU_INC.'lib/scripts/ajax.js',
                 DOKU_INC.'lib/scripts/index.js',
                 DOKU_INC.'lib/scripts/drag.js',
-             );
-    if($edit){
-        if($write){
-            $files[] = DOKU_INC.'lib/scripts/textselection.js';
-            $files[] = DOKU_INC.'lib/scripts/toolbar.js';
-            $files[] = DOKU_INC.'lib/scripts/edit.js';
-            $files[] = DOKU_INC.'lib/scripts/linkwiz.js';
-        }
-        $files[] = DOKU_INC.'lib/scripts/media.js';
-    }
-    $files[] = DOKU_TPLINC.'script.js';
+                DOKU_INC.'lib/scripts/textselection.js',
+                DOKU_INC.'lib/scripts/toolbar.js',
+                DOKU_INC.'lib/scripts/edit.js',
+                DOKU_INC.'lib/scripts/linkwiz.js',
+                DOKU_INC.'lib/scripts/media.js',
+                DOKU_TPLINC.'script.js',
+            );
 
-    // get possible plugin scripts
-    $plugins = js_pluginscripts();
+    // add possible plugin scripts and userscript
+    $files   = array_merge($files,js_pluginscripts());
+    $files[] = DOKU_CONF.'userscript.js';
 
     // check cache age & handle conditional request
     header('Cache-Control: public, max-age=3600');
     header('Pragma: public');
-    if(js_cacheok($cache,array_merge($files,$plugins))){
+    if(js_cacheok($cache,$files)){
         http_conditionalRequest(filemtime($cache));
         if($conf['allowdebug']) header("X-CacheUsed: $cache");
 
         // finally send output
         if ($conf['gzip_output'] && http_gzip_valid($cache)) {
-          header('Vary: Accept-Encoding');
-          header('Content-Encoding: gzip');
-          readfile($cache.".gz");
+            header('Vary: Accept-Encoding');
+            header('Content-Encoding: gzip');
+            readfile($cache.".gz");
         } else {
-          if (!http_sendfile($cache)) readfile($cache);
+            if (!http_sendfile($cache)) readfile($cache);
         }
-
         return;
     } else {
         http_conditionalRequest(time());
@@ -92,17 +86,14 @@ function js_out(){
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".DOKU_TPL."';";
 
-    //FIXME: move thes into LANG
-    print "var alertText   = '".js_escape($lang['qb_alert'])."';";
-    print "var notSavedYet = '".js_escape($lang['notsavedyet'])."';";
-    print "var reallyDel   = '".js_escape($lang['del_confirm'])."';";
-
-    // load JS strings form plugins
-    $lang['js']['plugins'] = js_pluginstrings();
-
     // load JS specific translations
     $json = new JSON();
+    $lang['js']['plugins'] = js_pluginstrings();
     echo 'LANG = '.$json->encode($lang['js']).";\n";
+
+    // load toolbar
+    require_once(DOKU_INC.'inc/toolbar.php');
+    toolbar_JSdefines('toolbar');
 
     // load files
     foreach($files as $file){
@@ -111,41 +102,15 @@ function js_out(){
         echo "\n\n/* XXXXXXXXXX end of $file XXXXXXXXXX */\n\n";
     }
 
+
     // init stuff
     js_runonstart("ajax_qsearch.init('qsearch__in','qsearch__out')");
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart('addTocToggle()');
-
-    if($edit){
-        // size controls
-        js_runonstart("initSizeCtl('size__ctl','wiki__text')");
-
-        if($write){
-            require_once(DOKU_INC.'inc/toolbar.php');
-            toolbar_JSdefines('toolbar');
-            js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
-
-            // add pageleave check
-            js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");
-
-            // add lock timer
-            js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
-        }
-    }
-
-    // load plugin scripts (suppress warnings for missing ones)
-    foreach($plugins as $plugin){
-        if (@file_exists($plugin)) {
-          echo "\n\n/* XXXXXXXXXX begin of $plugin XXXXXXXXXX */\n\n";
-          js_load($plugin);
-          echo "\n\n/* XXXXXXXXXX end of $plugin XXXXXXXXXX */\n\n";
-        }
-    }
-
-    // load user script
-    @readfile(DOKU_CONF.'userscript.js');
-
-    // add scroll event and tooltip rewriting
+    js_runonstart("initSizeCtl('size__ctl','wiki__text')");
+    js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
+    js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");
+    js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
 
@@ -166,11 +131,11 @@ function js_out(){
 
     // finally send output
     if ($conf['gzip_output']) {
-      header('Vary: Accept-Encoding');
-      header('Content-Encoding: gzip');
-      print gzencode($js,9,FORCE_GZIP);
+        header('Vary: Accept-Encoding');
+        header('Content-Encoding: gzip');
+        print gzencode($js,9,FORCE_GZIP);
     } else {
-      print $js;
+        print $js;
     }
 }
 
