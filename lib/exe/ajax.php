@@ -242,6 +242,8 @@ function ajax_index(){
 
 /**
  * List matching namespaces and pages for the link wizard
+ *
+ * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function ajax_linkwiz(){
   global $conf;
@@ -335,7 +337,7 @@ function ajax_linkwiz(){
 
 
     if($item['type'] == 'u'){
-        $name = 'back to upper';
+        $name = $lang['upperns'];
     }else{
         $name = htmlspecialchars($item['id']);
     }

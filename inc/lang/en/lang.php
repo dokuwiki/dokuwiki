@@ -186,6 +186,10 @@ $lang['qb_sig']     = 'Insert Signature';
 $lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Special Chars';
 
+$lang['upperns']    = 'back to parent namespace';
+$lang['js']['linkwiz'] = 'Link Wizard';
+$lang['js']['linkto']  = 'Link to:';
+
 $lang['js']['del_confirm']= 'Really delete selected item(s)?';
 $lang['admin_register']= 'Add new user';
 
