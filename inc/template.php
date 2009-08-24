@@ -1190,8 +1190,11 @@ function tpl_mediaContent($fromajax=false){
   global $NS;
   global $JUMPTO;
 
-  if(is_array($_REQUEST['do'])){
-    $do = array_shift(array_keys($_REQUEST['do']));
+  ptln('<div id="media__content">');
+  if($_REQUEST['edit']){
+    media_metaform($IMG,$AUTH);
+  }elseif(is_array($INUSE)){
+    media_filesinuse($INUSE,$IMG);
   }else{
     $do = $_REQUEST['do'];
   }

@@ -461,6 +461,56 @@ function media_filelist($ns,$auth=null,$jump=''){
 }
 
 /**
+ * List all files found by the search request
+ */
+function media_searchlist($ns,$auth=null,$jump=''){
+    global $conf;
+    global $lang;
+    $ns = cleanID($ns);
+
+    // check auth our self if not given (needed for ajax calls)
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<h1 id="media__ns">Search</h1>'.NL;
+
+    if($auth < AUTH_READ){
+        // FIXME: print permission warning here instead?
+        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+        return;
+    }
+
+    media_searchform($ns, $auth);
+
+    if (isset($_REQUEST['key']) && strlen($_REQUEST['key']) > 2) {
+
+        if (isset($_REQUEST['key_relative'])) {
+            $dir = utf8_encodeFN(str_replace(':','/',$ns));
+        } else {
+            $dir = '';
+        }
+
+        $data = array();
+        $evt = new Doku_Event('ACTION_MEDIA_SEARCH', $dir);
+        if ($evt->advise_before()) {
+            $pattern = '#'.str_replace('#', '\#', $_REQUEST['key']).'#';
+            search($data,$conf['mediadir'],'search_media', array('showmsg'=>true,'pattern'=>$pattern),$dir);
+
+        }
+        $evt->advise_after();
+        unset($evt);
+
+        if(!count($data)){
+            echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+            return;
+        }
+
+        foreach($data as $item){
+            media_printfile($item,$auth,$jump,$display_namespace=true);
+        }
+    }
+}
+
+/**
  * Print action links for a file depending on filetype
  * and available permissions
  *
@@ -498,7 +548,7 @@ function media_fileactions($item,$auth){
 /**
  * Formats and prints one file in the list
  */
-function media_printfile($item,$auth,$jump){
+function media_printfile($item,$auth,$jump,$display_namespace=false){
     global $lang;
     global $conf;
 
@@ -537,7 +587,7 @@ function media_printfile($item,$auth,$jump){
 
     // ouput
     echo '<div class="'.$zebra.'"'.$jump.'>'.NL;
-    echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
+    echo '<a name="h_'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
     echo '<span class="info">('.$info.')</span>'.NL;
     media_fileactions($item,$auth);
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
@@ -660,6 +710,39 @@ function media_uploadform($ns, $auth){
     <?php echo html_flashobject('multipleUpload.swf','500','190',null,$opt); ?>
     </div>
     <?php
+}
+
+/**
+ * Print the search field form
+ *
+ * @author Tobias Sarnowski <sarnowski@cosmocode.de>
+ */
+function media_searchform($ns, $auth){
+    global $lang;
+
+    if (!isset($_REQUEST['key'])) {
+        $default = '';
+    } else {
+        $default = htmlspecialchars($_REQUEST['key']);
+    }
+
+    // The default HTML search form
+    $form = new Doku_Form('dw__mediasearch', DOKU_BASE.'lib/exe/mediamanager.php', false);
+    $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
+    $form->addElement(formSecurityToken());
+    $form->addHidden('ns', hsc($ns));
+    $form->addHidden('call', 'mediasearchlist');
+    $form->addElement(form_makeOpenTag('p'));
+    $form->addElement(form_makeTextField('key', $default, $lang['txt_searchmediakey'].':', 'searchmedia__key'));
+    $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
+    $form->addElement(form_makeCloseTag('p'));
+    if ($ns) {
+        $form->addElement(form_makeOpenTag('p'));
+        $form->addElement(form_makeCheckboxField('key_relative', true, sprintf($lang['txt_searchrelative'], $ns), 'dw__relative', 'check', isset($_REQUEST['key_relative'])?array('checked' => 'checked'):array()));
+        $form->addElement(form_makeCloseTag('p'));
+    }
+
+    html_form('searchmedia', $form);
 }
 
 /**
