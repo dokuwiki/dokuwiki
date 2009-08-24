@@ -493,7 +493,7 @@ function media_searchlist($ns,$auth=null,$jump=''){
         $evt = new Doku_Event('ACTION_MEDIA_SEARCH', $dir);
         if ($evt->advise_before()) {
             $pattern = '#'.str_replace('#', '\#', $_REQUEST['key']).'#';
-            search($data,$conf['mediadir'],'search_media', array('showmsg'=>true,'pattern'=>$pattern),$dir);
+            search($data,$conf['mediadir'],'search_media', array('showmsg'=>false,'pattern'=>$pattern),$dir);
 
         }
         $evt->advise_after();
