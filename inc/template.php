@@ -781,6 +781,7 @@ function tpl_action($type,$link=0,$wrapper=false,$return=false,$pre='',$suf='',$
 function tpl_searchform($ajax=true,$autocomplete=true){
   global $lang;
   global $ACT;
+  global $QUERY;
 
   // don't print the search form if search action has been disabled
   if (!actionOk('search')) return false;
@@ -788,7 +789,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
   print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
   print '<input type="hidden" name="do" value="search" />';
   print '<input type="text" ';
-  if($ACT == 'search') print 'value="'.htmlspecialchars($_REQUEST['id']).'" ';
+  if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
   if(!$autocomplete) print 'autocomplete="off" ';
   print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
   print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
