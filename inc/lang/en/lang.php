@@ -186,7 +186,7 @@ $lang['qb_sig']     = 'Insert Signature';
 $lang['qb_smileys'] = 'Smileys';
 $lang['qb_chars']   = 'Special Chars';
 
-$lang['upperns']    = 'back to parent namespace';
+$lang['upperns']       = 'jump to parent namespace';
 $lang['js']['linkwiz'] = 'Link Wizard';
 $lang['js']['linkto']  = 'Link to:';
 
