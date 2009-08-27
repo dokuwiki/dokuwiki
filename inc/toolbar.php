@@ -154,14 +154,6 @@ function toolbar_JSdefines($varname){
                 ),
            array(
                 'type'   => 'format',
-                'title'  => $lang['qb_link'],
-                'icon'   => 'link.png',
-                'key'    => '',
-                'open'   => '[[',
-                'close'  => ']]',
-                ),
-           array(
-                'type'   => 'format',
                 'title'  => $lang['qb_extlink'],
                 'icon'   => 'linkextern.png',
                 'open'   => '[[',
