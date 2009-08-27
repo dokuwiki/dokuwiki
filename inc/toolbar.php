@@ -100,6 +100,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'picker',
                 'title'  => $lang['qb_hs'],
                 'icon'   => 'h.png',
+                'class'  => 'pk_hl',
                 'list'   => array(
                                array(
                                     'type'   => 'format',

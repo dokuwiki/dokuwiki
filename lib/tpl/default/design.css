@@ -797,6 +797,10 @@ div.picker {
   background-color: __background_alt__;
 }
 
+div.pk_hl {
+  width: 125px;
+}
+
 button.pickerbutton {
   padding: 0px;
   margin: 0 1px 1px 0;
