@@ -91,33 +91,12 @@ function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
-  $item = array();
-
-  if($type == 'd'){
-    return false; //no handling yet
-  }
-
-  //only search txt files
-  if(substr($file,-4) != '.txt') return false;
-
-  //get id
-  $id = pathID($file);
-
-  //check if it matches the query
-  if(!preg_match('/^'.preg_quote($opts['query'],'/').'/u',$id)){
-    return false;
-  }
-
-  //check ACL
-  if(auth_quickaclcheck($id) < AUTH_READ){
-    return false;
-  }
-
-  $data[]=array( 'id'    => $id,
-                 'type'  => $type,
-                 'level' => 1,
-                 'open'  => true);
-  return true;
+    $opts = array(
+        'idmatch'   => '(^|:)'.preg_quote($opts['query'],'/').'/',
+        'listfiles' => true,
+        'pagesonly' => true,
+    );
+    return search_universal($data,$base,$file,$type,$lvl,$opts);
 }
 
 /**
@@ -170,13 +149,10 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
-  if($type == 'f') return true; //nothing to do on files
-
-  $id = pathID($file);
-  $data[]=array( 'id'    => $id,
-                 'type'  => $type,
-                 'level' => $lvl );
-  return true;
+    $opts = array(
+        'listdirs' => true,
+    );
+    return search_universal($data,$base,$file,$type,$lvl,$opts);
 }
 
 /**
@@ -561,8 +537,10 @@ function pathID($path,$keeptxt=false){
  * hash       bool    create MD5 hash for files
  * meta       bool    return file metadata
  * filematch  string  match files against this regexp
- * dirmatch   string  match namespaces against this regexp when adding
- * recmatch   string  match namespaces against this regexp when recursing
+ * idmatch    string  match full ID against this regexp
+ * dirmatch   string  match directory against this regexp when adding
+ * nsmatch    string  match namespace against this regexp when adding
+ * recmatch   string  match directory against this regexp when recursing
  * showmsg    bool    warn about non-ID files
  * showhidden bool    show hidden files too
  * firsthead  bool    return first heading for pages
@@ -580,6 +558,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
             msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
         return false; // skip non-valid files
     }
+    $item['ns']  = getNS($item['id']);
 
     if($type == 'd') {
         // decide if to recursion into this directory is wanted
@@ -614,12 +593,14 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
         if(!$opts['listdirs']) return $return;
         if(!$opts['skipacl'] && $opts['sneakyacl'] && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
         if($opts['dirmatch'] && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
+        if($opts['nsmatch'] && !preg_match('/'.$opts['nsmatch'].'/',$item['ns'])) return $return;
     }else{
         if(!$opts['listfiles']) return $return;
         if(!$opts['skipacl'] && $item['perm'] < AUTH_READ) return $return;
         if($opts['pagesonly'] && (substr($file,-4) != '.txt')) return $return;
         if(!$conf['showhidden'] && isHiddenPage($id)) return $return;
         if($opts['filematch'] && !preg_match('/'.$opts['filematch'].'/',$file)) return $return;
+        if($opts['idmatch'] && !preg_match('/'.$opts['idmatch'].'/',$item['id'])) return $return;
     }
 
     // still here? prepare the item
