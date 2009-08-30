@@ -1166,24 +1166,54 @@ function tpl_loadConfig(){
  *
  * Only allowed in mediamanager.php
  *
+ * @triggers MEDIAMANAGER_CONTENT_OUTPUT
+ * @param bool $fromajax - set true when calling this function via ajax
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_mediaContent(){
+function tpl_mediaContent($fromajax=false){
   global $IMG;
   global $AUTH;
   global $INUSE;
   global $NS;
   global $JUMPTO;
 
-  ptln('<div id="media__content">');
-  if($_REQUEST['edit']){
-    media_metaform($IMG,$AUTH);
-  }elseif(is_array($INUSE)){
-    media_filesinuse($INUSE,$IMG);
+  if(is_array($_REQUEST['do'])){
+    $do = array_shift(array_keys($_REQUEST['do']));
   }else{
-    media_filelist($NS,$AUTH,$JUMPTO);
+    $do = $_REQUEST['do'];
   }
-  ptln('</div>');
+  if(in_array($do,array('save','cancel'))) $do = '';
+
+  if(!$do){
+      if($_REQUEST['edit']){
+        $do = 'metaform';
+      }elseif(is_array($INUSE)){
+        $do = 'filesinuse';
+      }else{
+        $do = 'filelist';
+      }
+  }
+
+  // output the content pane, wrapped in an event.
+  if(!$fromajax) ptln('<div id="media__content">');
+  $data = array( 'do' => $do);
+  $evt = new Doku_Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
+  if ($evt->advise_before()) {
+    $do = $data['do'];
+    if($do == 'metaform'){
+      media_metaform($IMG,$AUTH);
+    }elseif($do == 'filesinuse'){
+      media_filesinuse($INUSE,$IMG);
+    }elseif($do == 'filelist'){
+      media_filelist($NS,$AUTH,$JUMPTO);
+    }else{
+      msg('Unknown action '.hsc($do),-1);
+    }
+  }
+  $evt->advise_after();
+  unset($evt);
+  if(!$fromajax) ptln('</div>');
+
 }
 
 /**

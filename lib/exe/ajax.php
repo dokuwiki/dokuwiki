@@ -207,9 +207,12 @@ function ajax_medians(){
  */
 function ajax_medialist(){
   global $conf;
+  global $NS;
   require_once(DOKU_INC.'inc/media.php');
+  require_once(DOKU_INC.'inc/template.php');
 
-  media_filelist($_POST['ns']);
+  $NS = $_POST['ns'];
+  tpl_mediaContent(true);
 }
 
 /**
