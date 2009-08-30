@@ -106,6 +106,9 @@ class HTTPClient {
     var $proxy_pass;
     var $proxy_ssl; //boolean set to true if your proxy needs SSL
 
+    // what we use as boundary on multipart/form-data posts
+    var $boundary = '---DokuWikiHTTPClient--4523452351';
+
     /**
      * Constructor.
      *
@@ -221,8 +224,13 @@ class HTTPClient {
         $headers['Connection'] = 'Close';
         if($method == 'POST'){
             if(is_array($data)){
-                $headers['Content-Type']   = 'application/x-www-form-urlencoded';
-                $data = $this->_postEncode($data);
+                if($headers['Content-Type'] == 'multipart/form-data'){
+                    $headers['Content-Type']   = 'multipart/form-data; boundary='.$this->boundary;
+                    $data = $this->_postMultipartEncode($data);
+                }else{
+                    $headers['Content-Type']   = 'application/x-www-form-urlencoded';
+                    $data = $this->_postEncode($data);
+                }
             }
             $headers['Content-Length'] = strlen($data);
             $rmethod = 'POST';
@@ -511,7 +519,6 @@ class HTTPClient {
     /**
      * Encode data for posting
      *
-     * @todo handle mixed encoding for file upoads
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _postEncode($data){
@@ -521,6 +528,37 @@ class HTTPClient {
         }
         return $url;
     }
+
+    /**
+     * Encode data for posting using multipart encoding
+     *
+     * @fixme use of urlencode might be wrong here
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function _postMultipartEncode($data){
+        $boundary = '--'.$this->boundary;
+        $out = '';
+        foreach($data as $key => $val){
+            $out .= $boundary.HTTP_NL;
+            if(!is_array($val)){
+                $out .= 'Content-Disposition: form-data; name="'.urlencode($key).'"'.HTTP_NL;
+                $out .= HTTP_NL; // end of headers
+                $out .= $val;
+                $out .= HTTP_NL;
+            }else{
+                $out .= 'Content-Disposition: form-data; name="'.urlencode($key).'"';
+                if($val['filename']) $out .= '; filename="'.urlencode($val['filename']).'"';
+                $out .= HTTP_NL;
+                if($val['mimetype']) $out .= 'Content-Type: '.$val['mimetype'].HTTP_NL;
+                $out .= HTTP_NL; // end of headers
+                $out .= $val['body'];
+                $out .= HTTP_NL;
+            }
+        }
+        $out .= "$boundary--".HTTP_NL;
+        return $out;
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
