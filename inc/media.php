@@ -537,7 +537,7 @@ function media_printfile($item,$auth,$jump){
 
     // ouput
     echo '<div class="'.$zebra.'"'.$jump.'>'.NL;
-    echo '<a name="h_'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
+    echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
     echo '<span class="info">('.$info.')</span>'.NL;
     media_fileactions($item,$auth);
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
@@ -571,7 +571,7 @@ function media_printimgdetail($item){
     // output
     echo '<div class="detail">';
     echo '<div class="thumb">';
-    echo '<a name="d_'.$item['id'].'" class="select">';
+    echo '<a name="d_:'.$item['id'].'" class="select">';
     echo '<img src="'.$src.'" '.$att.' />';
     echo '</a>';
     echo '</div>';
