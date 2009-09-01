@@ -1190,11 +1190,8 @@ function tpl_mediaContent($fromajax=false){
   global $NS;
   global $JUMPTO;
 
-  ptln('<div id="media__content">');
-  if($_REQUEST['edit']){
-    media_metaform($IMG,$AUTH);
-  }elseif(is_array($INUSE)){
-    media_filesinuse($INUSE,$IMG);
+  if(is_array($_REQUEST['do'])){
+    $do = array_shift(array_keys($_REQUEST['do']));
   }else{
     $do = $_REQUEST['do'];
   }
@@ -1222,6 +1219,8 @@ function tpl_mediaContent($fromajax=false){
       media_filesinuse($INUSE,$IMG);
     }elseif($do == 'filelist'){
       media_filelist($NS,$AUTH,$JUMPTO);
+    }elseif($do == 'searchlist'){
+      media_searchlist($_REQUEST['q'],$NS,$AUTH);
     }else{
       msg('Unknown action '.hsc($do),-1);
     }

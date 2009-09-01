@@ -458,12 +458,18 @@ function media_filelist($ns,$auth=null,$jump=''){
     foreach($data as $item){
         media_printfile($item,$auth,$jump);
     }
+
+    media_searchform($ns);
 }
 
 /**
  * List all files found by the search request
+ *
+ * @author Tobias Sarnowski <sarnowski@cosmocode.de>
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ * @triggers MEDIA_SEARCH
  */
-function media_searchlist($ns,$auth=null,$jump=''){
+function media_searchlist($query,$ns,$auth=null){
     global $conf;
     global $lang;
     $ns = cleanID($ns);
@@ -479,9 +485,9 @@ function media_searchlist($ns,$auth=null,$jump=''){
         return;
     }
 
-    media_searchform($ns, $auth);
+    media_searchform($ns,$query);
 
-    if (isset($_REQUEST['key']) && strlen($_REQUEST['key']) > 2) {
+    if ($query) {
 
         if (isset($_REQUEST['key_relative'])) {
             $dir = utf8_encodeFN(str_replace(':','/',$ns));
@@ -490,11 +496,10 @@ function media_searchlist($ns,$auth=null,$jump=''){
         }
 
         $data = array();
-        $evt = new Doku_Event('ACTION_MEDIA_SEARCH', $dir);
+        $evt = new Doku_Event('MEDIA_SEARCH', $dir);
         if ($evt->advise_before()) {
-            $pattern = '#'.str_replace('#', '\#', $_REQUEST['key']).'#';
+            $pattern = '#'.preg_quote($query,'#').'#';
             search($data,$conf['mediadir'],'search_media', array('showmsg'=>false,'pattern'=>$pattern),$dir);
-
         }
         $evt->advise_after();
         unset($evt);
@@ -505,7 +510,7 @@ function media_searchlist($ns,$auth=null,$jump=''){
         }
 
         foreach($data as $item){
-            media_printfile($item,$auth,$jump,$display_namespace=true);
+            media_printfile($item,$auth,'',$display_namespace=true);
         }
     }
 }
@@ -585,9 +590,13 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     $info .= ' ';
     $info .= filesize_h($item['size']);
 
-    // ouput
+    // output
     echo '<div class="'.$zebra.'"'.$jump.'>'.NL;
-    echo '<a name="h_'.$item['id'].'" class="'.$class.'">'.$file.'</a> ';
+    if (!$display_namespace) {
+        echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
+    } else {
+        echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
+    }
     echo '<span class="info">('.$info.')</span>'.NL;
     media_fileactions($item,$auth);
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
@@ -717,23 +726,17 @@ function media_uploadform($ns, $auth){
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
  */
-function media_searchform($ns, $auth){
+function media_searchform($ns,$query=''){
     global $lang;
-
-    if (!isset($_REQUEST['key'])) {
-        $default = '';
-    } else {
-        $default = htmlspecialchars($_REQUEST['key']);
-    }
 
     // The default HTML search form
     $form = new Doku_Form('dw__mediasearch', DOKU_BASE.'lib/exe/mediamanager.php', false);
     $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
     $form->addElement(formSecurityToken());
-    $form->addHidden('ns', hsc($ns));
-    $form->addHidden('call', 'mediasearchlist');
+    $form->addHidden('ns', $ns);
+    $form->addHidden('do', 'searchlist');
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('key', $default, $lang['txt_searchmediakey'].':', 'searchmedia__key'));
+    $form->addElement(form_makeTextField('q', $query, $lang['txt_searchmediakey'].':', 'searchmedia__key'));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
     $form->addElement(form_makeCloseTag('p'));
     if ($ns) {
