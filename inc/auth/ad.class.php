@@ -150,7 +150,7 @@ class auth_ad extends auth_basic {
         }
 
         // always add the default group to the list of groups
-        if(!in_array($conf['defaultgroup'],$info['grps'])){
+        if(!is_array($info['grps']) || !in_array($conf['defaultgroup'],$info['grps'])){
             $info['grps'][] = $conf['defaultgroup'];
         }
 
