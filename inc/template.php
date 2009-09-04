@@ -559,6 +559,7 @@ function tpl_button($type,$return=false){
     case 'backlink':
       if(actionOK('backlink'))
         $out .= html_btn('backlink',$ID,'',array('do' => 'backlink'));
+      break;
     case 'profile':
       if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $auth &&
           $auth->canDo('Profile') && ($ACT!='profile')){
