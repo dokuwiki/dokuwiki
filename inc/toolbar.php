@@ -70,15 +70,6 @@ function toolbar_JSdefines($varname){
                 'close'   => '</del>',
                 ),
 
-
-           array(
-                'type'   => 'autohead',
-                'title'  => $lang['qb_hplus'],
-                'icon'   => 'hplus.png',
-                'key'    => '',
-                'text'   => $lang['qb_h'],
-                'mod'    => -1
-               ),
            array(
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hequal'],
@@ -94,6 +85,14 @@ function toolbar_JSdefines($varname){
                 'key'    => '',
                 'text'   => $lang['qb_h'],
                 'mod'    => 1
+               ),
+           array(
+                'type'   => 'autohead',
+                'title'  => $lang['qb_hplus'],
+                'icon'   => 'hplus.png',
+                'key'    => '',
+                'text'   => $lang['qb_h'],
+                'mod'    => -1
                ),
 
            array(
