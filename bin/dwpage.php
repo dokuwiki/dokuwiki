@@ -1,8 +1,9 @@
-#!/usr/bin/php -d short_open_tag=on
+#!/usr/bin/php
 <?php
 #------------------------------------------------------------------------------
 if ('cli' != php_sapi_name()) die();
 
+ini_set('memory_limit','128M');
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
 require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/common.php';

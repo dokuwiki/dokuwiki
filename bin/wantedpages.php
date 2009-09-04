@@ -1,4 +1,4 @@
-#!/usr/bin/php -d short_open_tag=on
+#!/usr/bin/php
 <?php
 if ('cli' != php_sapi_name()) die();
 
