@@ -343,9 +343,15 @@ class HTTPClient {
             }else{
                 $this->redirect_count++;
                 $this->referer = $url;
+                // handle non-RFC-compliant relative redirects
                 if (!preg_match('/^http/i', $this->resp_headers['location'])){
-                    $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].
-                                                      $this->resp_headers['location'];
+                    if($this->resp_headers['location'][0] != '/'){
+                        $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
+                                                          dirname($uri['path']).'/'.$this->resp_headers['location'];
+                    }else{
+                        $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
+                                                          $this->resp_headers['location'];
+                    }
                 }
                 // perform redirected request, always via GET (required by RFC)
                 return $this->sendRequest($this->resp_headers['location'],array(),'GET');
