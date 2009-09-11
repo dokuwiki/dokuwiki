@@ -49,6 +49,7 @@ $lang['btn_resendpwd']   = 'Send new password';
 $lang['btn_draft']    = 'Edit draft';
 $lang['btn_recover']  = 'Recover draft';
 $lang['btn_draftdel'] = 'Delete draft';
+$lang['btn_revert'] = 'Restore';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';

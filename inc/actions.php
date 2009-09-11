@@ -79,6 +79,15 @@ function act_dispatch(){
       }
     }
 
+    //revert
+    if($ACT == 'revert'){
+      if(checkSecurityToken()){
+        $ACT = act_revert($ACT);
+      }else{
+        $ACT = 'show';
+      }
+    }
+
     //save
     if($ACT == 'save'){
       if(checkSecurityToken()){
@@ -185,7 +194,7 @@ function act_clean($act){
 
   //disable all acl related commands if ACL is disabled
   if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
-                                             'subscribe','unsubscribe','profile',
+                                             'subscribe','unsubscribe','profile','revert',
                                              'resendpwd','subscribens','unsubscribens',))){
     msg('Command unavailable: '.htmlspecialchars($act),-1);
     return 'show';
@@ -193,7 +202,7 @@ function act_clean($act){
 
   if(!in_array($act,array('login','logout','register','save','cancel','edit','draft',
                           'preview','search','show','check','index','revisions',
-                          'diff','recent','backlink','admin','subscribe',
+                          'diff','recent','backlink','admin','subscribe','revert',
                           'unsubscribe','profile','resendpwd','recover','wordblock',
                           'draftdel','subscribens','unsubscribens',)) && substr($act,0,7) != 'export_' ) {
     msg('Command unknown: '.htmlspecialchars($act),-1);
@@ -225,6 +234,9 @@ function act_permcheck($act){
     }
   }elseif(in_array($act,array('login','search','recent','profile'))){
     $permneed = AUTH_NONE;
+  }elseif($act == 'revert'){
+    $permneed = AUTH_ADMIN;
+    if($INFO['ismanager']) $permneed = AUTH_EDIT;
   }elseif($act == 'register'){
     $permneed = AUTH_NONE;
   }elseif($act == 'resendpwd'){
@@ -317,6 +329,43 @@ function act_save($act){
 
   // when done, show page
   return 'show';
+}
+
+/**
+ * Revert to a certain revision
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_revert($act){
+    global $ID;
+    global $REV;
+    global $lang;
+
+    // when no revision is given, delete current one
+    // FIXME this feature is not exposed in the GUI currently
+    $text = '';
+    $sum  = $lang['deleted'];
+    if($REV){
+        $text = rawWiki($ID,$REV);
+        if(!$text) return 'show'; //something went wrong
+        $sum  = $lang['restored'];
+    }
+
+    // spam check
+    if(checkwordblock($Text))
+        return 'wordblock';
+
+    saveWikiText($ID,$text,$sum,false);
+    msg($sum,1);
+
+    //delete any draft
+    act_draftdel($act);
+    session_write_close();
+
+    // when done, show current page
+    $_SERVER['REQUEST_METHOD'] = 'post'; //should force a redirect
+    $REV = '';
+    return 'show';
 }
 
 /**

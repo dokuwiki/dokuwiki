@@ -528,6 +528,11 @@ function tpl_button($type,$return=false){
         $out .= html_btn('admin',$ID,'',array('do' => 'admin'));
       }
       break;
+    case 'revert':
+      if($INFO['ismanager'] && $REV && $INFO['writable'] && actionOK('revert')){
+        $out .= html_btn('revert',$ID,'',array('do' => 'revert', 'rev' => $REV, 'sectok' => getSecurityToken()));
+      }
+      break;
     case 'subscribe':
     case 'subscription':
       if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
@@ -690,6 +695,13 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
         $out .= tpl_link(wl($ID,'do=admin'),
                  $pre.(($inner)?$inner:$lang['btn_admin']).$suf,
                  'class="action admin" rel="nofollow"',1);
+      }
+      break;
+    case 'revert':
+      if($INFO['ismanager'] && $REV && $INFO['writable'] && actionOK('revert')){
+        $out .= tpl_link(wl($ID,array('do' => 'revert', 'rev' => $REV, 'sectok' => getSecurityToken())),
+                 $pre.(($inner)?$inner:$lang['btn_revert']).$suf,
+                 'class="action revert" rel="nofollow"',1);
       }
       break;
    case 'subscribe':
@@ -1279,6 +1291,9 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
         }
 
         echo '<option value="revisions">'.$lang['btn_revs'].'</option>';
+        if($INFO['ismanager'] && $REV && $INFO['writable'] && actionOK('revert')){
+            echo '<option value="revert">'.$lang['btn_revert'].'</option>';
+        }
         echo '<option value="backlink">'.$lang['btn_backlink'].'</option>';
     echo '</optgroup>';
 
