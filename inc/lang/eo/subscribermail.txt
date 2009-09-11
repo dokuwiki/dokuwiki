@@ -1,12 +1,22 @@
 Saluton!
 
-La retpaĝo @PAGE@ en la vikio @TITLE@ ŝanĝis. Jen la ŝanĝoj:
+La retpaĝo @PAGE@ en la vikio @TITLE@ ŝanĝiĝis.
+Jen la ŝanĝoj:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Por malaliĝi el tiu ĉi paĝo, ensalutu en la vikio ĉe @DOKUWIKIURL@ kaj aliru @NEWPAGE@ kaj elektu 'Malaliĝi el avizoj pri ŝanĝoj'.
+Dato : @DATE@
+Uzanto : @USER@
+Modifa rezumo: @SUMMARY@
+Malnova revizio: @OLDPAGE@
+Nova revizio: @NEWPAGE@
+
+Por nuligi la avizojn pri paĝoŝanĝoj, ensalutu en la vikio ĉe
+@DOKUWIKIURL@ kaj aliru 
+@NEWPAGE@ 
+kaj malaliĝu al avizoj pri paĝaj kaj/aŭ nomspacaj ŝanĝoj.
 
 --
 Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe

@@ -5,7 +5,7 @@ ensalutnomo ĉe @DOKUWIKIURL@
 
 Se ne estas vi, kiu petis tion, do preterlasu tiun ĉi mesaĝon.
 
-Por konfirmi, ke la peto estis vere via, bonvolu musklaki en la jena ligilo.
+Por konfirmi, ke la peto estis vere via, bonvolu musklaki la jenan ligilon.
 
 @CONFIRM@
 

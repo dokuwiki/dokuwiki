@@ -8,5 +8,5 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
-$lang['name']                  = 'Populareca Esploro (eble la ŝargo prokrastos iomete)';
-$lang['submit']                = 'Sendi Datenaron';
+$lang['name']                  = 'Populareca enketo (eble la ŝargo prokrastos iomete)';
+$lang['submit']                = 'Sendi datenaron';

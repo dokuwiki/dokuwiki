@@ -12,7 +12,7 @@
  */
 $lang['menu']                  = 'Administri Kromaĵojn';
 $lang['download']              = 'Elŝuti kaj instali novan kromaĵon';
-$lang['manage']                = 'Instalitaj Kromaĵoj';
+$lang['manage']                = 'Instalitaj kromaĵoj';
 $lang['btn_info']              = 'info';
 $lang['btn_update']            = 'ĝisdatigo';
 $lang['btn_delete']            = 'forigi';
@@ -47,8 +47,8 @@ $lang['error']                 = 'Nekonata eraro okazis.';
 $lang['error_download']        = 'Maleblas elŝuti la kromaĵan dosieron: %s';
 $lang['error_badurl']          = 'Suspektinda malbona URL - maleblas difini la dosieran nomon el la URL';
 $lang['error_dircreate']       = 'Maleblas krei provizoran dosierujon por ricevi elŝutaĵon';
-$lang['error_decompress']      = 'La administrilo de kromaĵoj ne kapablis malkompakti la elŝutitan dosieron. Tio povas esti pro malkompleta elŝuto, tiaokaze vi devus provi refoje; aŭ eble la kompakta formato ne estas konata, tiaokaze vi bezonos elŝuti kaj instali la kromaĵon malaŭtomate.';
-$lang['error_copy']            = 'Okazis eraro de dosierkopio dum provo instali dosierojn por la kromaĵo <em>%s</em>: la disko povus esti plenplena aŭ aliro-rajtoj povus esti misdifinitaj. Tio povus rezulti en malkomplete instalita kromaĵo kaj igi vian vikion malstabilan.';
+$lang['error_decompress']      = 'La administrilo de kromaĵoj ne kapablis malkompakti la elŝutitan dosieron. Tio povas esti pro malkompleta elŝuto, tiaokaze vi devus provi refoje; aŭ eble la kompakta formato ne estas konata, tiaokaze vi bezonos elŝuti kaj instali la kromaĵon permane.';
+$lang['error_copy']            = 'Okazis eraro de dosierkopio dum provo instali dosierojn por la kromaĵo <em>%s</em>: la disko povus esti plenplena aŭ aliro-rajtoj povus esti misdifinitaj. Tio povus rezulti en malkomplete instalita kromaĵo kaj igi vian vikion malstabila.';
 $lang['error_delete']          = 'Okazis eraro dum provo forigi la kromaĵon <em>%s</em>. Plejprobable tio sekvas de nesufiĉa rajto por aliri la dosieron aŭ ties ujon.';
 $lang['enabled']               = 'La kromaĵo %s estas ebligita.';
 $lang['notenabled']            = 'La kromaĵo %s ne povis esti ebligita, kontrolu dosier-permesojn.';

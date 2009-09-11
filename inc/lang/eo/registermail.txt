@@ -1,6 +1,6 @@
 Nova uzulo estis registrata. Jen la detaloj:
 
-Uzulnomo: @NEWUSER@
+Uzantonomo: @NEWUSER@
 Kompleta nomo: @NEWNAME@
 Retadreso: @NEWEMAIL@
 

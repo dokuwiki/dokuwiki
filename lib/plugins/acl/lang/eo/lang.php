@@ -20,8 +20,8 @@ $lang['p_user_id']             = 'Uzanto <b class="acluser">%s</b> aktuale havas
 $lang['p_user_ns']             = 'Uzanto <b class="acluser">%s</b> aktuale havas la jenajn rajtojn en la nomspaco <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Anoj de la grupo <b class="aclgroup">%s</b> aktuale havas la jenajn rajtojn en la paĝo <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Anoj de la grupo <b class="aclgroup">%s</b> aktuale havas la jenajn rajtojn en la nomspaco <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Bonvole <b>enmeti uzulon aŭ grupon</b> en la suba agordilo por rigardi aŭ redakti la aron da rajtoj por la paĝo <b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Bonvole <b>enmeti uzulon aŭ grupon</b> en la suba agordilo por rigardi aŭ redakti la aron da rajtoj por la nomspaco <b class="aclns">%s</b>.';
+$lang['p_choose_id']           = 'Bonvole <b>enmeti uzanton aŭ grupon</b> en la suba agordilo por rigardi aŭ redakti la aron da rajtoj por la paĝo <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Bonvole <b>enmeti uzanton aŭ grupon</b> en la suba agordilo por rigardi aŭ redakti la aron da rajtoj por la nomspaco <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Rimarko: tiuj rajtoj ne estis rekte difinitaj, sed ili estis hereditaj el aliaj pli superaj grupoj aŭ nomspacoj.';
 $lang['p_isadmin']             = 'Rimarko: la elektita grupo aŭ uzanto ĉiam havas plenan rajtaron ĉar ĝi estas difinita kiel superuzanto.';
 $lang['p_include']             = 'Plialtaj permesoj inkluzivas malpli altajn. La permesoj por Krei, Alŝuti kaj Forigi nur aplikeblas al nomspacoj, ne al paĝoj.';

@@ -10,7 +10,7 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
-$lang['menu']                  = 'Administrado de Restarigo';
+$lang['menu']                  = 'Administrado de restarigo';
 $lang['filter']                = 'Serĉi spamecajn paĝojn';
 $lang['revert']                = 'Restarigi la elektitajn paĝojn';
 $lang['reverted']              = '%s estas restarigita al revizio %s';
