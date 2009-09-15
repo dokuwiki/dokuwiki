@@ -50,6 +50,7 @@ $lang['btn_resendpwd']         = 'Trimite parola nouă';
 $lang['btn_draft']             = 'Editează schiţă';
 $lang['btn_recover']           = 'Recuperează schiţă';
 $lang['btn_draftdel']          = 'Şterge schiţă';
+$lang['btn_revert']            = 'Revenire';
 $lang['loggedinas']            = 'Logat ca şi';
 $lang['user']                  = 'Utilizator';
 $lang['pass']                  = 'Parola';
