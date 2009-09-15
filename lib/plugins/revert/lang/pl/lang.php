@@ -4,6 +4,7 @@
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
+ * @author Sławomir Boczek <slawkens@gmail.com>
  */
 $lang['menu']                  = 'Menadżer przywracania';
 $lang['filter']                = 'Wyszukaj uszkodzone strony';

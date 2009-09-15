@@ -6,6 +6,7 @@
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
+ * @author Sławomir Boczek <slawkens@gmail.com>
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';
@@ -86,6 +87,7 @@ $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['sneaky_index']          = 'Domyślnie, Dokuwiki pokazuje wszystkie katalogi w indeksie. Włączenie tej opcji ukryje katalogi, do których użytkownik nie ma praw. Może to spowodować ukrycie podkatalogów, do których użytkownik ma prawa. Ta opcja może spowodować błędne działanie indeksu w połączeniu z pewnymi konfiguracjami praw dostępu.';
 $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekundach)';
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
+$lang['xmlrpc']                = 'Włącz/wyłącz interfejs XML-RPC';
 $lang['updatecheck']           = 'Sprawdzanie aktualizacji i bezpieczeństwa. DokuWiki będzie kontaktować się z serwerem splitbrain.org.';
 $lang['userewrite']            = 'Proste adresy URL';
 $lang['useslash']              = 'Używanie ukośnika jako separatora w adresie URL';
@@ -111,7 +113,6 @@ $lang['send404']               = 'Nagłówek "HTTP 404/Page Not Found" dla nieis
 $lang['sitemap']               = 'Okres generowania Google Sitemap (w dniach)';
 $lang['broken_iua']            = 'Czy funkcja "ignore_user_abort" działa? Jeśli nie, może to powodować problemy z indeksem przeszukiwania. Funkcja nie działa przy konfiguracji oprogramowania IIS+PHP/CGI. Szczegółowe informacje: <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesyłania statycznych plików. Serwer HTTP musi obsługiwać ten nagłówek.';
-$lang['xmlrpc']                = 'Włącz/wyłącz interfejs XML-RPC';
 $lang['renderer_xhtml']        = 'Mechanizm renderowania głównej treści strony (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (wtyczka)';

@@ -6,6 +6,7 @@
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
+ * @author Sławomir Boczek <slawkens@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -48,6 +49,7 @@ $lang['btn_resendpwd']         = 'Prześlij nowe hasło';
 $lang['btn_draft']             = 'Edytuj szkic';
 $lang['btn_recover']           = 'Przywróć szkic';
 $lang['btn_draftdel']          = 'Usuń szkic';
+$lang['btn_revert']            = 'Przywróć';
 $lang['loggedinas']            = 'Zalogowany jako';
 $lang['user']                  = 'Użytkownik';
 $lang['pass']                  = 'Hasło';
@@ -114,6 +116,8 @@ $lang['js']['keepopen']        = 'Nie zamykaj okna po wyborze';
 $lang['js']['hidedetails']     = 'Ukryj szczegóły';
 $lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer. 
 Możesz skopiować odnośnik.';
+$lang['js']['linkto']          = 'Link do';
+$lang['js']['del_confirm']     = 'Czy na pewno usunąć?';
 $lang['js']['mu_btn']          = 'Wyślij wiele plików na raz';
 $lang['mediausage']            = 'Użyj następującej składni w odnośniku do tego pliku:';
 $lang['mediaview']             = 'Pokaż oryginalny plik';
@@ -141,6 +145,7 @@ $lang['restored']              = 'przywrócono poprzednią wersję';
 $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
 $lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
+$lang['download']              = 'Pobierz zrzut';
 $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
 $lang['mail_new_user']         = 'Nowy użytkownik:';
@@ -155,6 +160,11 @@ $lang['qb_h2']                 = 'Nagłówek 2 stopnia';
 $lang['qb_h3']                 = 'Nagłówek 3 stopnia';
 $lang['qb_h4']                 = 'Nagłówek 4 stopnia';
 $lang['qb_h5']                 = 'Nagłówek 5 stopnia';
+$lang['qb_h']                  = 'Nagłówek';
+$lang['qb_hs']                 = 'Wybierz nagłówek';
+$lang['qb_hplus']              = 'Nagłówek wyższego stopnia';
+$lang['qb_hminus']             = 'Nagłówek niższego stopnia';
+$lang['qb_hequal']             = 'Nagłówek tego samego stopnia';
 $lang['qb_link']               = 'Odnośnik wewnętrzny';
 $lang['qb_extlink']            = 'Odnośnik zewnętrzny';
 $lang['qb_hr']                 = 'Linia pozioma';
@@ -164,7 +174,7 @@ $lang['qb_media']              = 'Dodaj obrazek lub inny plik';
 $lang['qb_sig']                = 'Wstaw podpis';
 $lang['qb_smileys']            = 'Emotikony';
 $lang['qb_chars']              = 'Znaki specjalne';
-$lang['js']['del_confirm']           = 'Czy na pewno usunąć?';
+$lang['upperns']               = 'Skok piętro wyżej';
 $lang['admin_register']        = 'Dodawanie użytkownika';
 $lang['metaedit']              = 'Edytuj metadane';
 $lang['metasaveerr']           = 'Zapis metadanych nie powiódł się';
@@ -222,4 +232,6 @@ $lang['mu_fail']               = 'nie powiodło się';
 $lang['mu_authfail']           = 'sesja wygasła';
 $lang['mu_progress']           = '@PCT@% wysłano';
 $lang['mu_filetypes']          = 'Dozwolone typy plików';
+$lang['mu_info']               = 'wysłanych plików.';
+$lang['mu_lasterr']            = 'Ostatni błąd:';
 $lang['recent_global']         = 'W tej chwili przeglądasz zmiany w katalogu <b>%s</b>. Możesz przejrzeć także <a href="%s">zmiany w całym wiki</a>.';
