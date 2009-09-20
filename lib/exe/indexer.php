@@ -68,8 +68,9 @@ function runTrimRecentChanges($media_changes = false) {
     // changes or $conf['recent'] items, which ever is larger.
     // The trimming is only done once a day.
     if (@file_exists($fn) &&
-        (filectime($fn)+86400)<time() &&
+        (@filemtime($fn.'.trimmed')+86400)<time() &&
         !@file_exists($fn.'_tmp')) {
+            @touch($fn.'.trimmed');
             io_lock($fn);
             $lines = file($fn);
             if (count($lines)<=$conf['recent']) {
@@ -90,6 +91,13 @@ function runTrimRecentChanges($media_changes = false) {
               } else {
                 $out_lines[$log['date'].".$i"] = $lines[$i];     // definitely keep these lines
               }
+            }
+
+            if (count($lines)==count($out_lines)) {
+              // nothing to trim
+              @unlink($fn.'_tmp');
+              io_unlock($fn);
+              return false;
             }
 
             // sort the final result, it shouldn't be necessary,
