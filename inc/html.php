@@ -305,11 +305,6 @@ function html_search(){
   //check if search is restricted to namespace
   if(preg_match('/@([^@]*)/',$QUERY,$match)) {
       $id = cleanID($match[1]);
-      if(empty($id)) {
-        print '<div class="nothing">'.$lang['nothingfound'].'</div>';
-        flush();
-        return;
-      }
   } else {
       $id = cleanID($QUERY);
   }
@@ -325,7 +320,7 @@ function html_search(){
   //do quick pagesearch
   $data = array();
 
-  $data = ft_pageLookup($id);
+  if($id) $data = ft_pageLookup($id);
   if(count($data)){
     print '<div class="search_quickresult">';
     print '<h3>'.$lang['quickhits'].':</h3>';
@@ -355,13 +350,15 @@ function html_search(){
     foreach($data as $id => $cnt){
       print '<div class="search_result">';
       print html_wikilink(':'.$id,useHeading('navigation')?NULL:$id,$regex);
-      print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
-      if($num < 15){ // create snippets for the first number of matches only #FIXME add to conf ?
-        print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
+      if($cnt !== 0){
+        print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
+        if($num < 15){ // create snippets for the first number of matches only #FIXME add to conf ?
+          print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
+        }
+        $num++;
       }
       print '</div>';
       flush();
-      $num++;
     }
   }else{
     print '<div class="nothing">'.$lang['nothingfound'].'</div>';
