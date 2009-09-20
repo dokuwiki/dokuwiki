@@ -16,6 +16,7 @@
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
+ * @author olivier duperray <duperray.olivier@laposte.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -58,6 +59,7 @@ $lang['btn_resendpwd']         = 'Envoyer le mot de passe';
 $lang['btn_draft']             = 'Éditer brouillon';
 $lang['btn_recover']           = 'Récupérer brouillon';
 $lang['btn_draftdel']          = 'Effacer brouillon';
+$lang['btn_revert']            = 'Restaurer';
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
 $lang['pass']                  = 'Mot de passe';
@@ -124,6 +126,9 @@ $lang['js']['keepopen']        = 'Gardez la fenêtre ouverte pendant la sélecti
 $lang['js']['hidedetails']     = 'Masquer détails';
 $lang['js']['nosmblinks']      = 'Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.
 Vous pouvez toujours faire un copier/coller du lien.';
+$lang['js']['linkwiz']         = 'Assistant Lien';
+$lang['js']['linkto']          = 'Lien vers:';
+$lang['js']['del_confirm']     = 'Effacer cette entrée ?';
 $lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Voir fichier original';
@@ -180,7 +185,7 @@ $lang['qb_media']              = 'Ajouter des images et autres fichiers';
 $lang['qb_sig']                = 'Insérer une signature';
 $lang['qb_smileys']            = 'Émoticons';
 $lang['qb_chars']              = 'Caractères spéciaux';
-$lang['js']['del_confirm']           = 'Effacer cette entrée ?';
+$lang['upperns']               = 'Aller à la catégorie parente';
 $lang['admin_register']        = 'Ajouter un nouvel utilisateur';
 $lang['metaedit']              = 'Éditer les métadonnées';
 $lang['metasaveerr']           = 'Erreur à l\'écriture des métadonnées';

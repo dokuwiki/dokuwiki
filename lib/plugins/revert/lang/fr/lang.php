@@ -8,6 +8,7 @@
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
+ * @author olivier duperray <duperray.olivier@laposte.net>
  */
 $lang['menu']                  = 'Gestionnaire de réversions';
 $lang['filter']                = 'Trouver les pages spammées ';
