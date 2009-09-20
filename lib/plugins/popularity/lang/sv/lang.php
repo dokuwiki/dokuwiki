@@ -10,6 +10,7 @@
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
+ * @author Peter Åström <eaustreum@gmail.com>
  */
-$lang['name']                  = 'Popularitetsfeedback (det kan ta en stund att ladda sidan)';
+$lang['name']                  = 'Popularitets-feedback (det kan ta en stund att ladda sidan)';
 $lang['submit']                = 'Sänd data';

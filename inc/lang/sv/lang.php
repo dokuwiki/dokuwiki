@@ -14,6 +14,7 @@
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
+ * @author Peter Åström <eaustreum@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +58,7 @@ $lang['btn_resendpwd']         = 'Skicka nytt lösenord';
 $lang['btn_draft']             = 'Redigera utkast';
 $lang['btn_recover']           = 'Återskapa utkast';
 $lang['btn_draftdel']          = 'Radera utkast';
+$lang['btn_revert']            = 'Återställ';
 $lang['loggedinas']            = 'Inloggad som';
 $lang['user']                  = 'Användarnamn';
 $lang['pass']                  = 'Lösenord';
@@ -109,7 +111,7 @@ $lang['fileupload']            = 'Ladda upp mediafiler';
 $lang['uploadsucc']            = 'Uppladdningen lyckades';
 $lang['uploadfail']            = 'Uppladdningen misslyckades, fel filskydd?';
 $lang['uploadwrong']           = 'Uppladdning nekad. Filändelsen är inte tillåten!';
-$lang['uploadexist']           = 'Filen finns redan. Gjorde ingenting.';
+$lang['uploadexist']           = 'Filen finns redan. Ingenting gjordes.';
 $lang['uploadbadcontent']      = 'Det uppladdade innehållet stämde inte överens med filändelsen %s.';
 $lang['uploadspam']            = 'Uppladdningen stoppades av spärrlistan för spam.';
 $lang['uploadxss']             = 'Uppladdningen stoppades på grund av eventuellt skadligt innehåll.';
@@ -122,7 +124,9 @@ $lang['mediafiles']            = 'Tillgängliga filer i';
 $lang['js']['keepopen']        = 'Lämna fönstret öppet efter val av fil';
 $lang['js']['hidedetails']     = 'Dölj detaljer';
 $lang['js']['nosmblinks']      = 'Länkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.
-Du kan klippa och klistra in länken om du använder en annan webbläsare än MSIE..';
+Du kan fortfarande klippa och klistra in länken om du använder en annan webbläsare än MSIE.';
+$lang['js']['linkto']          = 'Länk till:';
+$lang['js']['del_confirm']     = 'Vill du verkligen radera?';
 $lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
 $lang['mediausage']            = 'Använd följande syntax för att referera till denna fil:';
 $lang['mediaview']             = 'Visa originalfilen';
@@ -178,7 +182,7 @@ $lang['qb_media']              = 'Lägg till bilder och andra filer';
 $lang['qb_sig']                = 'Infoga signatur';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Specialtecken';
-$lang['js']['del_confirm']           = 'Vill du verkligen radera?';
+$lang['upperns']               = 'hoppa till föräldernamnrymd';
 $lang['admin_register']        = 'Lägg till ny användare';
 $lang['metaedit']              = 'Redigera metadata';
 $lang['metasaveerr']           = 'Skrivning av metadata misslyckades';

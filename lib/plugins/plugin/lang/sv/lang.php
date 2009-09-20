@@ -13,6 +13,7 @@
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
+ * @author Peter Åström <eaustreum@gmail.com>
  */
 $lang['menu']                  = 'Hantera insticksmoduler';
 $lang['download']              = 'Ladda ned och installera en ny insticksmodul';

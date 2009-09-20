@@ -12,6 +12,7 @@
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
+ * @author Peter Åström <eaustreum@gmail.com>
  */
 $lang['menu']                  = 'Hantera återställningar';
 $lang['filter']                = 'Sök efter spamsidor';

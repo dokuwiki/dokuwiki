@@ -13,6 +13,7 @@
  * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
+ * @author Peter Åström <eaustreum@gmail.com>
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
 $lang['acl_group']             = 'Grupp';
