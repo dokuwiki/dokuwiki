@@ -389,8 +389,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $lang;
 
         if($filename){
+            // add icon
+            list($ext) = mimetype($filename);
+            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+            $class = 'mediafile mf_'.$class;
+
             $this->doc .= '<dl class="'.$type.'">'.DOKU_LF;
-            $this->doc .= '<dt><a href="'.exportlink($ID,'code',array('codeblock'=>$this->_codeblock)).'" title="'.$lang['download'].'">';
+            $this->doc .= '<dt><a href="'.exportlink($ID,'code',array('codeblock'=>$this->_codeblock)).'" title="'.$lang['download'].'" class="'.$class.'">';
             $this->doc .= hsc($filename);
             $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
         }
