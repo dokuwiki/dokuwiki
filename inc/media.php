@@ -440,25 +440,20 @@ function media_filelist($ns,$auth=null,$jump=''){
     if($auth < AUTH_READ){
         // FIXME: print permission warning here instead?
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-        return;
+    }else{
+        media_uploadform($ns, $auth);
+
+        $dir = utf8_encodeFN(str_replace(':','/',$ns));
+        $data = array();
+        search($data,$conf['mediadir'],'search_media',
+               array('showmsg'=>true,'depth'=>1),$dir);
+
+        if(!count($data)){
+            echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+        }else foreach($data as $item){
+            media_printfile($item,$auth,$jump);
+        }
     }
-
-    media_uploadform($ns, $auth);
-
-    $dir = utf8_encodeFN(str_replace(':','/',$ns));
-    $data = array();
-    search($data,$conf['mediadir'],'search_media',
-           array('showmsg'=>true,'depth'=>1),$dir);
-
-    if(!count($data)){
-        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-        return;
-    }
-
-    foreach($data as $item){
-        media_printfile($item,$auth,$jump);
-    }
-
     media_searchform($ns);
 }
 
@@ -474,44 +469,33 @@ function media_searchlist($query,$ns,$auth=null){
     global $lang;
     $ns = cleanID($ns);
 
-    // check auth our self if not given (needed for ajax calls)
-    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
-
-    echo '<h1 id="media__ns">Search</h1>'.NL;
-
-    if($auth < AUTH_READ){
-        // FIXME: print permission warning here instead?
-        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-        return;
-    }
-
-    media_searchform($ns,$query);
-
     if ($query) {
-
-        if (isset($_REQUEST['key_relative'])) {
-            $dir = utf8_encodeFN(str_replace(':','/',$ns));
-        } else {
-            $dir = '';
-        }
-
-        $data = array();
-        $evt = new Doku_Event('MEDIA_SEARCH', $dir);
+        $evdata = array(
+            'ns'    => $ns,
+            'data'  => array(),
+            'query' => $query
+        );
+        $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
-            $pattern = '#'.preg_quote($query,'#').'#';
-            search($data,$conf['mediadir'],'search_media', array('showmsg'=>false,'pattern'=>$pattern),$dir);
+            $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
+            $pattern = '/'.preg_quote($evdata['query'],'/').'/i';
+            search($evdata['data'],
+                   $conf['mediadir'],
+                   'search_media',
+                   array('showmsg'=>false,'pattern'=>$pattern),
+                   $dir);
         }
         $evt->advise_after();
         unset($evt);
+    }
 
-        if(!count($data)){
-            echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-            return;
-        }
+    echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'],hsc($ns).':*').'</h1>'.NL;
+    media_searchform($ns,$query);
 
-        foreach($data as $item){
-            media_printfile($item,$auth,'',$display_namespace=true);
-        }
+    if(!count($evdata['data'])){
+        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+    }else foreach($evdata['data'] as $item){
+        media_printfile($item,$item['perm'],'',true);
     }
 }
 
@@ -736,15 +720,9 @@ function media_searchform($ns,$query=''){
     $form->addHidden('ns', $ns);
     $form->addHidden('do', 'searchlist');
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('q', $query, $lang['txt_searchmediakey'].':', 'searchmedia__key'));
+    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
     $form->addElement(form_makeCloseTag('p'));
-    if ($ns) {
-        $form->addElement(form_makeOpenTag('p'));
-        $form->addElement(form_makeCheckboxField('key_relative', true, sprintf($lang['txt_searchrelative'], $ns), 'dw__relative', 'check', isset($_REQUEST['key_relative'])?array('checked' => 'checked'):array()));
-        $form->addElement(form_makeCloseTag('p'));
-    }
-
     html_form('searchmedia', $form);
 }
 
