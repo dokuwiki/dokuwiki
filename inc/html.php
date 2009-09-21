@@ -902,6 +902,7 @@ function html_diff($text='',$intro=true){
       $r_rev = '';
       $revs = getRevisions($ID, 0, 1);
       $l_rev = $revs[0];
+      $REV = $l_rev; // store revision back in $REV
     }
 
     // when both revisions are empty then the page was created just now
