@@ -463,7 +463,7 @@ function ft_queryParser($query){
      *     -()
      *   operators:
      *     and ('and' is the default operator: you can always omit this)
-     *     or  (lower precedence than 'and')
+     *     or  (or pipe symbol '|', lower precedence than 'and')
      *
      * e.g. a query [ aa "bb cc" @dd:ee ] means "search pages which contain
      *      a word 'aa', a phrase 'bb cc' and are within a namespace 'dd:ee'".
@@ -499,6 +499,9 @@ function ft_queryParser($query){
             $term = str_replace(')'  , ' ) ', $term);
             $term = str_replace('('  , ' ( ', $term);
             $term = str_replace('- (', ' -(', $term);
+
+            // treat pipe symbols as 'OR' operators
+            $term = str_replace('|', ' or ', $term);
 
             // treat ideographic spaces (U+3000) as search term separators
             // FIXME: some more separators?
