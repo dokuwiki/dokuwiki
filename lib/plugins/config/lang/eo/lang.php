@@ -9,6 +9,7 @@
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
+ * @author Robert Bogenschneider <robog@GMX.de>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: kompleze reviziu viajn ŝanĝojn kaj resubmetu ilin.

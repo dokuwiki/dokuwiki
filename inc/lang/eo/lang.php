@@ -12,6 +12,7 @@
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
+ * @author Robert Bogenschneider <robog@GMX.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -54,6 +55,7 @@ $lang['btn_resendpwd']         = 'Sendi novan pasvorton';
 $lang['btn_draft']             = 'Redakti skizon';
 $lang['btn_recover']           = 'Restarigi skizon';
 $lang['btn_draftdel']          = 'Forigi skizon';
+$lang['btn_revert']            = 'Restarigi';
 $lang['loggedinas']            = 'Ensalutita kiel';
 $lang['user']                  = 'Uzant-nomo';
 $lang['pass']                  = 'Pasvorto';
@@ -92,6 +94,8 @@ $lang['resendpwdconfirm']      = 'Konfirmiga ligilo estas sendita per retpoŝto.
 $lang['resendpwdsuccess']      = 'Via nova pasvorto estas sendita per retpoŝto.';
 $lang['license']               = 'Krom kie rekte indikite, enhavo de tiu ĉi vikio estas publikigita laŭ la jena permesilo:';
 $lang['licenseok']             = 'Rimarku: redaktante tiun ĉi paĝon vi konsentas publikigi vian enhavon laŭ la jena permesilo:';
+$lang['searchmedia']           = 'Serĉi dosiernomon:';
+$lang['searchmedia_in']        = 'Serĉi en %s';
 $lang['txt_upload']            = 'Elektu dosieron por alŝuto';
 $lang['txt_filename']          = 'Alŝuti kiel (laŭvole)';
 $lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
@@ -116,6 +120,7 @@ $lang['deletefail']            = '"%s" ne povis esti forigita - kontrolu permes-
 $lang['mediainuse']            = 'La dosiero "%s" ne estis forigita - ĝi ankoraŭ estas uzata.';
 $lang['namespaces']            = 'Nomspacoj';
 $lang['mediafiles']            = 'Disponeblaj dosieroj';
+$lang['js']['searchmedia']     = 'Serĉi dosierojn';
 $lang['js']['keepopen']        = 'Tenu la fenestron malfermata dum elekto';
 $lang['js']['hidedetails']     = 'Kaŝi detalojn';
 $lang['js']['nosmblinks']      = 'Tio ĉi nur funkcias en la Vindozaĉa "Microsoft Internet Explorer".
