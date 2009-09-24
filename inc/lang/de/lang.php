@@ -15,6 +15,7 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
+ * @author Robert Bogenschneider <robog@GMX.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +58,7 @@ $lang['btn_resendpwd']         = 'Sende neues Passwort';
 $lang['btn_draft']             = 'Entwurf bearbeiten';
 $lang['btn_recover']           = 'Entwurf wieder herstellen';
 $lang['btn_draftdel']          = 'Entwurf löschen';
+$lang['btn_revert']            = 'Wiederherstellen';
 $lang['loggedinas']            = 'Angemeldet als';
 $lang['user']                  = 'Benutzername';
 $lang['pass']                  = 'Passwort';
@@ -95,6 +97,8 @@ $lang['resendpwdconfirm']      = 'Ein Bestätigungslink wurde per E-Mail versand
 $lang['resendpwdsuccess']      = 'Ihr neues Passwort wurde per E-Mail versandt.';
 $lang['license']               = 'Falls nicht anders bezeichnet, ist der Inhalt dieses Wikis unter der folgenden Lizenz veröffentlicht:';
 $lang['licenseok']             = 'Hinweis: Durch das Bearbeiten dieser Seite geben Sie Ihr Einverständnis, dass Ihr Inhalt unter der folgenden Lizenz veröffentlicht wird:';
+$lang['searchmedia']           = 'Suche Dateinamen:';
+$lang['searchmedia_in']        = 'Suche in %s';
 $lang['txt_upload']            = 'Datei zum Hochladen auswählen';
 $lang['txt_filename']          = 'Hochladen als (optional)';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
@@ -119,10 +123,14 @@ $lang['deletefail']            = '"%s" konnte nicht gelöscht werden - prüfen S
 $lang['mediainuse']            = 'Die Datei "%s" wurde nicht gelöscht - sie wird noch verwendet.';
 $lang['namespaces']            = 'Namensräume';
 $lang['mediafiles']            = 'Vorhandene Dateien in';
+$lang['js']['searchmedia']     = 'Suche Dateien';
 $lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
 $lang['js']['hidedetails']     = 'Details ausblenden';
 $lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet Explorer.
 Der Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
+$lang['js']['linkwiz']         = 'Link-Assistent';
+$lang['js']['linkto']          = 'Link nach:';
+$lang['js']['del_confirm']     = 'Eintrag wirklich löschen?';
 $lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['mediausage']            = 'Syntax zum Verwenden dieser Datei:';
 $lang['mediaview']             = 'Originaldatei öffnen';
@@ -150,6 +158,7 @@ $lang['restored']              = 'alte Version wieder hergestellt';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Ihnalt anzuzeigen.';
+$lang['download']              = 'Schnipsel herunterladen';
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geaendert:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
@@ -178,7 +187,7 @@ $lang['qb_media']              = 'Bilder und andere Dateien hinzufügen';
 $lang['qb_sig']                = 'Unterschrift einfügen';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Sonderzeichen';
-$lang['js']['del_confirm']           = 'Eintrag wirklich löschen?';
+$lang['upperns']               = 'zum übergeordneten Namensraum springen';
 $lang['admin_register']        = 'Neuen Benutzer anmelden';
 $lang['metaedit']              = 'Metadaten bearbeiten';
 $lang['metasaveerr']           = 'Die Metadaten konnten nicht gesichert werden';
