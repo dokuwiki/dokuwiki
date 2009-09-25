@@ -555,7 +555,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     }
 
     // Prepare fileicons
-    list($ext,$mime,$dl) = mimetype($item['file']);
+    list($ext,$mime,$dl) = mimetype($item['file'],false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
 

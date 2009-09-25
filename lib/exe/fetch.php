@@ -26,7 +26,7 @@
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = (int) $_REQUEST['w'];
   $HEIGHT = (int) $_REQUEST['h'];
-  list($EXT,$MIME,$DL) = mimetype($MEDIA);
+  list($EXT,$MIME,$DL) = mimetype($MEDIA,false);
   if($EXT === false){
     $EXT  = 'unknown';
     $MIME = 'application/octet-stream';

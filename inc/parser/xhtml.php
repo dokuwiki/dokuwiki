@@ -390,7 +390,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if($filename){
             // add icon
-            list($ext) = mimetype($filename);
+            list($ext) = mimetype($filename,false);
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
             $class = 'mediafile mf_'.$class;
 
@@ -710,7 +710,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $render = ($linking == 'linkonly') ? false : true;
         $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
-        list($ext,$mime,$dl) = mimetype($src);
+        list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
         }elseif($mime == 'application/x-shockwave-flash' && $render){
@@ -743,16 +743,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['url']    = ml($src,array('cache'=>$cache));
 
-        list($ext,$mime,$dl) = mimetype($src);
+        list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
-             // link only jpeg images
-             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
+            // link only jpeg images
+            // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
         }elseif($mime == 'application/x-shockwave-flash' && $render){
-             // don't link flash movies
-             $noLink = true;
+            // don't link flash movies
+            $noLink = true;
         }else{
-             // add file icons
-             $link['class'] .= ' mediafile mf_'.$ext;
+            // add file icons
+            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+            $link['class'] .= ' mediafile mf_'.$class;
         }
 
         if($hash) $link['url'] .= '#'.$hash;

@@ -238,18 +238,25 @@ function css_filetypes(){
     echo '}';
 
     // additional styles when icon available
-    $mimes = getMimeTypes();
-    foreach(array_keys($mimes) as $mime){
-        $class = preg_replace('/[^_\-a-z0-9]+/i','_',$mime);
-        if(@file_exists(DOKU_INC.'lib/images/fileicons/'.$mime.'.png')){
-            echo "a.mf_$class {";
-            echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$mime.'.png)';
-            echo '}';
-        }elseif(@file_exists(DOKU_INC.'lib/images/fileicons/'.$mime.'.gif')){
-            echo "a.mf_$class {";
-            echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$mime.'.gif)';
-            echo '}';
+    // scan directory for all icons
+    $exts = array();
+    if($dh = opendir(DOKU_INC.'lib/images/fileicons')){
+        while(false !== ($file = readdir($dh))){
+            if(preg_match('/([_\-a-z0-9]+(?:\.[_\-a-z0-9]+)*?)\.(png|gif)/i',$file,$match)){
+                $ext = strtolower($match[1]);
+                $type = '.'.strtolower($match[2]);
+                if($ext!='file' && (!isset($exts[$ext]) || $type=='.png')){
+                    $exts[$ext] = $type;
+                }
+            }
         }
+        closedir($dh);
+    }
+    foreach($exts as $ext=>$type){
+        $class = preg_replace('/[^_\-a-z0-9]+/','_',$ext);
+        echo "a.mf_$class {";
+        echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.$type.')';
+        echo '}';
     }
 }
 
