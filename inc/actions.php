@@ -462,7 +462,7 @@ function act_edit($act){
  * Export a wiki page for various formats
  *
  * Triggers ACTION_EXPORT_POSTPROCESS
- *   
+ *
  *  Event data:
  *    data['id']      -- page id
  *    data['mode']    -- requested export mode
@@ -490,6 +490,7 @@ function act_export($act){
   switch($mode) {
     case 'raw':
       $headers['Content-Type'] = 'text/plain; charset=utf-8';
+      $headers['Content-Disposition'] = 'attachment; filename='.noNS($ID).'.txt';
       $output = rawWiki($ID,$REV);
       break;
     case 'xhtml':
