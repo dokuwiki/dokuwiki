@@ -33,7 +33,7 @@ function mimetype($file, $knownonly=true){
       }else{
           $ret = array($ext, $mtypes[$ext], false);
       }
-    elseif(!$knownonly){
+    }elseif(!$knownonly){
       $ret = array($ext, 'application/octet-stream', true);
     }
   }
