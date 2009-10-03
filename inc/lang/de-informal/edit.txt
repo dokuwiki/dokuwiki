@@ -1,0 +1,4 @@
+Bitte nur editieren, falls das Dokument **verbessert** werden kann.
+
+Nach dem Bearbeiten den **''[Speichern]''**-Knopf drücken. Siehe [[wiki:syntax]] zur Wiki-Syntax. Zum Testen bitte erst im [[playground:playground|Spielplatz]] üben.
+

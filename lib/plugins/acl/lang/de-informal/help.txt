@@ -1,0 +1,11 @@
+=== Schnellhilfe ===
+
+Auf dieser Seite kannst Du Rechte für Namensräume und Seiten in deinem Wiki hinzufügen oder entfernen.
+
+Der linke Bereich zeigt alle Namensräume und Seiten.
+
+Das obere Formular zeigt die die Rechte der ausgewählten Gruppe bzw. Benutzers.
+
+In der Tabelle unten werden alle momentan gesetzten Zugriffsregeln gezeigt. Hier kannst Du schnell mehrere Regeln löschen oder ändern.
+
+Das Lesen von [[doku>acl|official documentation on ACL]] kann Dir helfen zu verstehen, wie die Zugriffskontrole in DokuWiki funktioniert.

@@ -1,0 +1,4 @@
+====== Zugang verweigert ======
+
+Du hast nicht die erforderlichen Rechte, um diese Aktion durchzuführen. Eventuell bist du nicht beim Wiki angemeldet?
+

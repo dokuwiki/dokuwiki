@@ -1,0 +1,14 @@
+Ein neuer Benutzer hat sich registriert. Hier sind die Details:
+
+Benutzername : @NEWUSER@
+Voller Name  : @NEWNAME@
+E-Mail       : @NEWEMAIL@
+
+Date         : @DATE@
+Browser      : @BROWSER@
+IP-Address   : @IPADDRESS@
+Hostname     : @HOSTNAME@
+
+-- 
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@

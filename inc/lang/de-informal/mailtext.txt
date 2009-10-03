@@ -1,0 +1,17 @@
+Eine Seite in deinem Wiki wurde geändert oder neu angelegt. Hier sind die Details:
+
+Datum          : @DATE@
+Browser        : @BROWSER@
+IP-Adresse     : @IPADDRESS@
+Hostname       : @HOSTNAME@
+Alte Version   : @OLDPAGE@
+Neue Version   : @NEWPAGE@
+Zusammenfassung: @SUMMARY@
+Benutzer       : @USER@
+
+@DIFF@
+
+
+-- 
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@
