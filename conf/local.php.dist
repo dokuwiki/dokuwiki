@@ -1,8 +1,11 @@
 <?php
-/*
-  This is an example of how a local.php coul look like.
-  Simply copy the options you want to change from dokuwiki.php
-  to this file and change them
+/**
+ * This is an example of how a local.php coul look like.
+ * Simply copy the options you want to change from dokuwiki.php
+ * to this file and change them.
+ *
+ * When using the installer, a correct local.php file be generated for
+ * you automatically.
  */
 
 
@@ -11,7 +14,8 @@
 //$conf['useacl']      = 1;                //Use Access Control Lists to restrict access?
 //$conf['superuser']   = 'joe';
 
-/* The following options are usefull, if you use a MySQL
+/**
+ * The following options are usefull, if you use a MySQL
  * database as autentication backend. Have a look into
  * mysql.conf.php too and adjust the options to match
  * your database installation.
