@@ -1050,6 +1050,9 @@ class Doku_Handler_Preformatted {
                     if (trim($this->text)) {
                       $this->CallWriter->writeCall(array('preformatted',array($this->text),$this->pos));
                     }
+                    // see FS#1699 & FS#1652, add 'eol' instructions to ensure proper triggering of following p_open
+                    $this->CallWriter->writeCall(array('eol',array(),$this->pos));
+                    $this->CallWriter->writeCall(array('eol',array(),$this->pos));
                 break;
             }
         }
