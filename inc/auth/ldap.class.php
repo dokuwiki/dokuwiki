@@ -176,8 +176,10 @@ class auth_ldap extends auth_basic {
 
         $sr     = @ldap_search($this->con, $base, $filter);
         $result = @ldap_get_entries($this->con, $sr);
-        if($this->cnf['debug'])
+        if($this->cnf['debug']){
             msg('LDAP user search: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+            msg('LDAP search at: '.htmlspecialchars($base.' '.$filter),0,__LINE__,__FILE__);
+        }
 
         // Don't accept more or less than one response
         if(!is_array($result) || $result['count'] != 1){
@@ -225,7 +227,7 @@ class auth_ldap extends auth_basic {
                 msg("LDAP: Reading group memberships failed",-1);
                 if($this->cnf['debug']){
                     msg('LDAP group search: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
-                    msg('LDAP filter was: '.htmlspecialchars($filter),0,__LINE__,__FILE__);
+                    msg('LDAP search at: '.htmlspecialchars($base.' '.$filter),0,__LINE__,__FILE__);
                 }
                 return false;
             }
