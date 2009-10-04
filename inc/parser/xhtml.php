@@ -1058,7 +1058,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         $isImage = false;
-        if ( is_null($title) || trim($title)=='') {
+        if ( is_array($title) ) {
+            $isImage = true;
+            return $this->_imageTitle($title);
+        } elseif ( is_null($title) || trim($title)=='') {
             if (useHeading($linktype) && $id) {
                 $heading = p_get_first_heading($id,true);
                 if ($heading) {
@@ -1066,9 +1069,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 }
             }
             return $this->_xmlEntities($default);
-        } else if ( is_array($title) ) {
-            $isImage = true;
-            return $this->_imageTitle($title);
         } else {
             return $this->_xmlEntities($title);
         }
