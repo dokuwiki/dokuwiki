@@ -403,7 +403,7 @@ function auth_isadmin($user=null,$groups=null){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @param  string  $id  page ID
+ * @param  string  $id  page ID (needs to be resolved and cleaned)
  * @return int          permission level
  */
 function auth_quickaclcheck($id){
@@ -420,7 +420,7 @@ function auth_quickaclcheck($id){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @param  string  $id     page ID
+ * @param  string  $id     page ID (needs to be resolved and cleaned)
  * @param  string  $user   Username
  * @param  array   $groups Array of groups the user is in
  * @return int             permission level
