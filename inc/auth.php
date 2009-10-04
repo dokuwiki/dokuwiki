@@ -165,8 +165,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     }
   }else{
     // read cookie information
-    $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
-    list($user,$sticky,$pass) = explode('|',$cookie,3);
+    list($user,$sticky,$pass) = auth_getCookie();
     // get session info
     $session = $_SESSION[DOKU_COOKIE]['auth'];
     if($user && $pass){
@@ -1005,22 +1004,35 @@ function auth_setCookie($user,$pass,$sticky) {
     global $auth;
     global $USERINFO;
 
-      $USERINFO = $auth->getUserData($user);
+    $USERINFO = $auth->getUserData($user);
 
-      // set cookie
-      $cookie = base64_encode("$user|$sticky|$pass");
-      if($sticky) $time = time()+60*60*24*365; //one year
-      if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
-      }else{
-          setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
-      }
-      // set session
-      $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-      $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
-      $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
-      $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
-      $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
+    // set cookie
+    $cookie = base64_encode($user).'|'.((int) $sticky).'|'.base64_encode($pass);
+    if($sticky) $time = time()+60*60*24*365; //one year
+    if (version_compare(PHP_VERSION, '5.2.0', '>')) {
+        setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+    }else{
+        setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+    }
+    // set session
+    $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+    $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+    $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
+    $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+    $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
+}
+
+/**
+ * Returns the user, (encrypted) password and sticky bit from cookie
+ *
+ * @returns array
+ */
+function auth_getCookie(){
+    list($user,$sticky,$pass) = explode('|',$_COOKIE[DOKU_COOKIE],3);
+    $sticky = (bool) $sticky;
+    $pass   = base64_decode($pass);
+    $user   = base64_decode($user);
+    return array($user,$sticky,$pass);
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
