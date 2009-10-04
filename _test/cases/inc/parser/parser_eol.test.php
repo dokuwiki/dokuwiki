@@ -57,7 +57,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nFoo")),
             array('linebreak',array()),
-            array('cdata',array(" Bar\n")),
+            array('cdata',array("Bar\n")),
             array('p_close',array()),
             array('document_end',array()),
         );

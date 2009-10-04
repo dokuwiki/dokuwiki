@@ -260,7 +260,7 @@ class Doku_Parser_Mode_nocache extends Doku_Parser_Mode {
 class Doku_Parser_Mode_linebreak extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('\x5C{2}(?=\s)',$mode,'linebreak');
+        $this->Lexer->addSpecialPattern('\x5C{2}(?:[ \t]|(?=\n))',$mode,'linebreak');
     }
 
     function getSort() {

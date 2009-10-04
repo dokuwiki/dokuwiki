@@ -430,7 +430,7 @@ def');
             array('tablecell_open',array(1,'left')),
             array('cdata',array(' Row 0')),
             array('linebreak',array()),
-            array('cdata',array(' Col 1    ')),
+            array('cdata',array('Col 1    ')),
             array('tablecell_close',array()),
             array('tablecell_open',array(1,'left')),
             array('cdata',array(' Row 0 Col 2     ')),

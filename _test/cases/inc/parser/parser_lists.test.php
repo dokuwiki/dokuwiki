@@ -299,7 +299,7 @@ Bar');
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('linebreak',array()),
-            array('cdata',array(" D")),
+            array('cdata',array("D")),
             array('listcontent_close',array()),
             array('listu_open',array()),
             array('listitem_open',array(2)),
@@ -312,6 +312,33 @@ Bar');
             array('listitem_open',array(1)),
             array('listcontent_open',array()),
             array('cdata',array(' C')),
+            array('listcontent_close',array()),
+            array('listitem_close',array()),
+            array('listu_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+    
+    function testUnorderedListLinebreak2() {
+        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
+        $this->P->parse('
+  *A\\\\
+  * B
+');
+        $calls = array (
+            array('document_start',array()),
+            array('listu_open',array()),
+            array('listitem_open',array(1)),
+            array('listcontent_open',array()),
+            array('cdata',array("A")),
+            array('linebreak',array()),
+            array('listcontent_close',array()),
+            array('listitem_close',array()),
+            array('listitem_open',array(1)),
+            array('listcontent_open',array()),
+            array('cdata',array(' B')),
             array('listcontent_close',array()),
             array('listitem_close',array()),
             array('listu_close',array()),
