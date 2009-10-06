@@ -97,9 +97,9 @@ function js_out(){
 
     // load files
     foreach($files as $file){
-        echo "\n\n/* XXXXXXXXXX begin of $file XXXXXXXXXX */\n\n";
+        echo "\n\n/* XXXXXXXXXX begin of ".str_replace(DOKU_INC, '', $file) ." XXXXXXXXXX */\n\n";
         js_load($file);
-        echo "\n\n/* XXXXXXXXXX end of $file XXXXXXXXXX */\n\n";
+        echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
 
 
