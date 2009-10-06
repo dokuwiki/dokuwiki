@@ -6,6 +6,7 @@
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
+ * @author Marijn Hofstra hofstra.m@gmail.com
  */
 $lang['name']                  = 'Populariteitsfeedback (kan even duren om in te laden)';
 $lang['submit']                = 'Verstuur';

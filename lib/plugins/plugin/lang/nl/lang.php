@@ -7,6 +7,7 @@
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
+ * @author Marijn Hofstra hofstra.m@gmail.com
  */
 $lang['menu']                  = 'Plugins beheren';
 $lang['download']              = 'Download en installeer een nieuwe plugin';

@@ -11,6 +11,7 @@
  * @author John de Graaff <john@de-graaff.net>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
+ * @author Marijn Hofstra hofstra.m@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -53,6 +54,7 @@ $lang['btn_resendpwd']         = 'Stuur een nieuw wachtwoord';
 $lang['btn_draft']             = 'Bewerk concept';
 $lang['btn_recover']           = 'Herstel concept';
 $lang['btn_draftdel']          = 'Verwijder concept';
+$lang['btn_revert']            = 'Herstellen';
 $lang['loggedinas']            = 'Ingelogd als';
 $lang['user']                  = 'Gebruikersnaam';
 $lang['pass']                  = 'Wachtwoord';
@@ -91,6 +93,8 @@ $lang['resendpwdconfirm']      = 'Een bevestigingslink is per e-mail verzonden.'
 $lang['resendpwdsuccess']      = 'Je nieuwe wachtwoord is per e-mail verzonden.';
 $lang['license']               = 'Tenzij anders vermeld, inhoud van deze wiki is voorzien van de volgende licentie:';
 $lang['licenseok']             = 'Let op: Door deze pagina aan te passen ga je akkoord met het licenseren van de inhoud onder de volgende licentie:';
+$lang['searchmedia']           = 'Bestandsnaam zoeken:';
+$lang['searchmedia_in']        = 'Zoek in %s';
 $lang['txt_upload']            = 'Selecteer een bestand om te uploaden';
 $lang['txt_filename']          = 'Vul nieuwe naam in (optioneel)';
 $lang['txt_overwrt']           = 'Overschrijf bestaand bestand';
@@ -115,10 +119,14 @@ $lang['deletefail']            = '"%s" kan niet worden verwijderd - controleer p
 $lang['mediainuse']            = 'Het bestand "%s" is niet verwijderd - het is nog in gebruik.';
 $lang['namespaces']            = 'Namespaces';
 $lang['mediafiles']            = 'Beschikbare bestanden in';
+$lang['js']['searchmedia']     = 'Zoek naar bestanden';
 $lang['js']['keepopen']        = 'Houd scherm open bij selectie';
 $lang['js']['hidedetails']     = 'Verberg details';
 $lang['js']['nosmblinks']      = 'Linken naar Windows shares werkt alleen in Microsoft Internet Explorer.
 Je kan de link wel kopiëren en plakken.';
+$lang['js']['linkwiz']         = 'Linkwizard';
+$lang['js']['linkto']          = 'Link naar:';
+$lang['js']['del_confirm']     = 'Item(s) verwijderen?';
 $lang['js']['mu_btn']          = 'Meerdere files tegelijk uploaden';
 $lang['mediausage']            = 'Gebruik de volgende syntax om aan het bestand te refereren:';
 $lang['mediaview']             = 'Bekijk het orginele bestand';
@@ -146,6 +154,7 @@ $lang['restored']              = 'oude revisie hersteld';
 $lang['external_edit']         = 'Externe bewerking';
 $lang['summary']               = 'Samenvatting wijziging';
 $lang['noflash']               = 'De <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
+$lang['download']              = 'Download fragment';
 $lang['mail_newpage']          = 'pagina toegevoegd:';
 $lang['mail_changed']          = 'pagina aangepast:';
 $lang['mail_new_user']         = 'nieuwe gebruiker:';
@@ -160,6 +169,11 @@ $lang['qb_h2']                 = 'Niveau 2 kop';
 $lang['qb_h3']                 = 'Niveau 3 kop';
 $lang['qb_h4']                 = 'Niveau 4 kop';
 $lang['qb_h5']                 = 'Niveau 5 kop';
+$lang['qb_h']                  = 'Koptekst';
+$lang['qb_hs']                 = 'Kies koptekst';
+$lang['qb_hplus']              = 'Hogere koptekst';
+$lang['qb_hminus']             = 'Lagere koptekst';
+$lang['qb_hequal']             = 'Koptekst op zelfde niveau';
 $lang['qb_link']               = 'Interne link';
 $lang['qb_extlink']            = 'Externe link';
 $lang['qb_hr']                 = 'Horizontale lijn';
@@ -169,7 +183,7 @@ $lang['qb_media']              = 'Voeg plaatjes en andere bestanden toe';
 $lang['qb_sig']                = 'Handtekening invoegen';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Speciale tekens';
-$lang['js']['del_confirm']           = 'Item(s) verwijderen?';
+$lang['upperns']               = 'Spring naar bovenliggende namespace';
 $lang['admin_register']        = 'Nieuwe gebruiker toevoegen';
 $lang['metaedit']              = 'Metadata wijzigen';
 $lang['metasaveerr']           = 'Schrijven van metadata mislukt';
@@ -226,4 +240,6 @@ $lang['mu_fail']               = 'mislukt';
 $lang['mu_authfail']           = 'sessie beëindigd';
 $lang['mu_progress']           = '@PCT@% geüpload';
 $lang['mu_filetypes']          = 'Toegestane bestandstypes';
+$lang['mu_info']               = 'bestanden geüpload.';
+$lang['mu_lasterr']            = 'Laatste foutmelding:';
 $lang['recent_global']         = 'Je bekijkt momenteel de wijzigingen binnen de <b>%s</b> namespace. Je kunt ook de <a href="%s">recente wijzigingen van de hele wiki</a> bekijken.';

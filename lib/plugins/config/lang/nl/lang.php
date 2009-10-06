@@ -9,6 +9,7 @@
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
+ * @author Marijn Hofstra hofstra.m@gmail.com
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -89,6 +90,8 @@ $lang['disableactions_other']  = 'Andere akties (gescheiden door komma\'s)';
 $lang['sneaky_index']          = 'Met de standaardinstellingen zal DokuWiki alle namespaces laten zien in de index. Het inschakelen van deze optie zorgt ervoor dat de namespaces waar de gebruiker geen leestoegang tot heeft, verborgen worden. Dit kan resulteren in het verbergen van subnamespaces waar de gebruiker wel toegang to heeft. Dit kan de index onbruikbaar maken met bepaalde ACL-instellingen.';
 $lang['auth_security_timeout'] = 'Authenticatiebeveiligings-timeout (seconden)';
 $lang['securecookie']          = 'Moeten cookies die via HTTPS gezet zijn alleen via HTTPS verzonden worden door de browser? Zet deze optie uit als alleen het inloggen op de wiki beveiligd is, maar het gebruik verder niet.';
+$lang['xmlrpc']                = 'Inschakelen/uitschakelen XML-RPC interface.';
+$lang['xmlrpcuser']            = 'Beperk XML-RPC toegang tot de lijst met kommagescheiden groepen of gebruikers die hier zijn opgegeven. Laat leeg om iedereen toegang te geven.';
 $lang['updatecheck']           = 'Controleer op nieuwe versies en beveiligingswaarschuwingen? DokuWiki moet hiervoor contact opnemen met splitbrain.org.';
 $lang['userewrite']            = 'Gebruik nette URL\'s';
 $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepaces in URL\'s';
@@ -114,7 +117,6 @@ $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-best
 $lang['sitemap']               = 'Genereer Google sitemap (dagen)';
 $lang['broken_iua']            = 'Is de ignore_user_abort functie onbruikbaar op uw systeem? Dit kan een onbruikbare zoekindex tot gevolg hebben. IIS+PHP/CGI staat hier bekend om. Zie <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> voor meer informatie.';
 $lang['xsendfile']             = 'Gebruik de X-Sendfile header om de webserver statische content te laten versturen? De webserver moet dit wel ondersteunen.';
-$lang['xmlrpc']                = 'Inschakelen/uitschakelen XML-RPC interface.';
 $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki-uitvoer';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
