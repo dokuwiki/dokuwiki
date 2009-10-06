@@ -7,6 +7,7 @@
  * @author serg_stetsuk@ukr.net
  * @author okunia@gmail.com
  * @author Oleksandr Kunytsia <okunia@gmail.com>
+ * @author Uko uko@uar.net
  */
 $lang['menu']                  = 'Керування доданками';
 $lang['download']              = 'Завантажити та встановити новий доданок';
