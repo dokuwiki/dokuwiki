@@ -456,11 +456,13 @@ function ml($id='',$more='',$direct=true,$sep='&amp;',$abs=false){
   // external URLs are always direct without rewriting
   if(preg_match('#^(https?|ftp)://#i',$id)){
     $xlink .= 'lib/exe/fetch.php';
+    // add hash:
+    $xlink .= '?hash='.substr(md5(auth_cookiesalt().$id),0,6);
     if($more){
-      $xlink .= '?'.$more;
+      $xlink .= $sep.$more;
       $xlink .= $sep.'media='.rawurlencode($id);
     }else{
-      $xlink .= '?media='.rawurlencode($id);
+      $xlink .= $sep.'media='.rawurlencode($id);
     }
     return $xlink;
   }

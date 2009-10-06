@@ -35,6 +35,12 @@
 
   //media to local file
   if(preg_match('#^(https?)://#i',$MEDIA)){
+    //check hash
+    if(substr(md5(auth_cookiesalt().$MEDIA),0,6) != $_REQUEST['hash']){
+      header("HTTP/1.0 412 Precondition Failed");
+      print 'Precondition Failed';
+      exit;
+    }
     //handle external images
     if(strncmp($MIME,'image/',6) == 0) $FILE = media_get_from_URL($MEDIA,$EXT,$CACHE);
     if(!$FILE){
