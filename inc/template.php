@@ -1377,8 +1377,8 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
         $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
         if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
         $out .= '>'.$lic['name'].'</a>';
-        $out .= '</div>';
     }
+    $out .= '</div>';
 
     if($return) return $out;
     echo $out;
