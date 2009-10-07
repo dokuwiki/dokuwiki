@@ -152,7 +152,7 @@ function ajax_lock(){
                   );
     $cname = getCacheName($draft['client'].$id,'.draft');
     if(io_saveFile($cname,serialize($draft))){
-      echo $lang['draftdate'].' '.strftime($conf['dformat']);
+      echo $lang['draftdate'].' '.dformat();
     }
   }
 

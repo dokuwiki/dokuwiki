@@ -247,3 +247,10 @@ $lang['mu_filetypes']          = 'Erlaubte Dateitypen';
 $lang['mu_info']               = 'Dateien hochgeladen!';
 $lang['mu_lasterr']            = 'Letzter Fehler:';
 $lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
+
+$lang['years']   = 'vor %d Jahren';
+$lang['months']  = 'vor %d Monaten';
+$lang['weeks']   = 'vor %d Wochen';
+$lang['days']    = 'vor %d Tagen';
+$lang['hours']   = 'vor %d Stunden';
+$lang['seconds'] = 'vor %d Sekunden';

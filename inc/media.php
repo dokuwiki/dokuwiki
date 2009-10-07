@@ -404,7 +404,7 @@ function media_notify($id,$file,$mime){
     $ip = clientIP();
 
     $text = rawLocale('uploadmail');
-    $text = str_replace('@DATE@',strftime($conf['dformat']),$text);
+    $text = str_replace('@DATE@',dformat(),$text);
     $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
     $text = str_replace('@IPADDRESS@',$ip,$text);
     $text = str_replace('@HOSTNAME@',gethostsbyaddrs($ip),$text);
@@ -570,7 +570,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
         $info .= (int) $item['meta']->getField('File.Height');
         $info .= ' ';
     }
-    $info .= '<i>'.strftime($conf['dformat'],$item['mtime']).'</i>';
+    $info .= '<i>'.dformat($item['mtime']).'</i>';
     $info .= ' ';
     $info .= filesize_h($item['size']);
 

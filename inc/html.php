@@ -249,7 +249,7 @@ function html_draft(){
   $form->addHidden('date', $draft['date']);
   $form->addElement(form_makeWikiText($text, array('readonly'=>'readonly')));
   $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
-  $form->addElement($lang['draftdate'].' '. strftime($conf['dformat'],filemtime($INFO['draft'])));
+  $form->addElement($lang['draftdate'].' '. dformat(filemtime($INFO['draft'])));
   $form->addElement(form_makeCloseTag('div'));
   $form->addElement(form_makeButton('submit', 'recover', $lang['btn_recover'], array('tabindex'=>'1')));
   $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_draftdel'], array('tabindex'=>'2')));
@@ -382,7 +382,7 @@ function html_locked(){
   global $INFO;
 
   $locktime = filemtime(wikiLockFN($ID));
-  $expire = @strftime($conf['dformat'], $locktime + $conf['locktime'] );
+  $expire = dformat($locktime + $conf['locktime']);
   $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
 
   print p_locale_xhtml('locked');
@@ -418,7 +418,7 @@ function html_revisions($first=0){
     array_pop($revisions); // remove extra log entry
   }
 
-  $date = @strftime($conf['dformat'],$INFO['lastmod']);
+  $date = dformat($INFO['lastmod']);
 
   print p_locale_xhtml('revisions');
 
@@ -466,7 +466,7 @@ function html_revisions($first=0){
   }
 
   foreach($revisions as $rev){
-    $date   = strftime($conf['dformat'],$rev);
+    $date   = dformat($rev);
     $info   = getRevisionInfo($ID,$rev,true);
     $exists = page_exists($ID,$rev);
 
@@ -593,7 +593,7 @@ function html_recent($first=0){
   $form->addElement(form_makeOpenTag('ul'));
 
   foreach($recents as $recent){
-    $date = strftime($conf['dformat'],$recent['date']);
+    $date = dformat($recent['date']);
     if ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
       $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
     else
@@ -878,7 +878,7 @@ function html_diff($text='',$intro=true){
     $l_rev   = '';
     $l_text  = rawWiki($ID,'');
     $l_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-               $ID.' '.strftime($conf['dformat'],@filemtime(wikiFN($ID))).'</a> '.
+               $ID.' '.dformat((int) @filemtime(wikiFN($ID))).'</a> '.
                $lang['current'];
 
     $r_rev   = '';
@@ -925,7 +925,7 @@ function html_diff($text='',$intro=true){
       if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
 
       $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-                $ID.' ['.strftime($conf['dformat'],$l_rev).']</a>'.
+                $ID.' ['.dformat($l_rev).']</a>'.
                 '<br />'.$l_user.' '.$l_sum;
     }
 
@@ -939,7 +939,7 @@ function html_diff($text='',$intro=true){
       if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
       $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
-                $ID.' ['.strftime($conf['dformat'],$r_rev).']</a>'.
+                $ID.' ['.dformat($r_rev).']</a>'.
                 '<br />'.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime(wikiFN($ID))){
       $_info   = getRevisionInfo($ID,$_rev,true);
@@ -951,7 +951,7 @@ function html_diff($text='',$intro=true){
       if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
       $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-               $ID.' ['.strftime($conf['dformat'],$_rev).']</a> '.
+               $ID.' ['.dformat($_rev).']</a> '.
                '('.$lang['current'].')'.
                 '<br />'.$_user.' '.$_sum;
     }else{
@@ -1173,7 +1173,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
   <div style="width:99%;">
 
    <div class="toolbar">
-      <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.strftime($conf['dformat']);?></div>
+      <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
       <div id="tool__bar"><?php if($wr){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
       target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
 

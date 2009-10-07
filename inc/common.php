@@ -1082,7 +1082,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
   }
 
   $ip   = clientIP();
-  $text = str_replace('@DATE@',strftime($conf['dformat']),$text);
+  $text = str_replace('@DATE@',dformat(),$text);
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
   $text = str_replace('@IPADDRESS@',$ip,$text);
   $text = str_replace('@HOSTNAME@',gethostsbyaddrs($ip),$text);
@@ -1221,6 +1221,26 @@ function datetime_h($dt){
   }
   return sprintf($lang['seconds'], $ago);
 
+}
+
+/**
+ * Wraps around strftime but provides support for fuzzy dates
+ *
+ * The format default to $conf['dformat']. It is passed to
+ * strftime - %f can be used to get the value from datetime_h()
+ *
+ * @see datetime_h
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ */
+function dformat($dt=null,$format=''){
+  global $conf;
+
+  if(is_null($dt)) $dt = time();
+  $dt = (int) $dt;
+  if(!$format) $format = $conf['dformat'];
+
+  $format = str_replace('%f',datetime_h($dt),$format);
+  return strftime($format,$dt);
 }
 
 /**
