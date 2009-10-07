@@ -269,4 +269,11 @@ $lang['mu_lasterr']   = 'Last error:';
 
 $lang['recent_global'] = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 
+$lang['years']   = '%d years';
+$lang['months']  = '%d months';
+$lang['weeks']   = '%d weeks';
+$lang['days']    = '%d days';
+$lang['hours']   = '%d hours';
+$lang['seconds'] = '%d seconds';
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

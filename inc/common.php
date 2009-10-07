@@ -1193,6 +1193,37 @@ function filesize_h($size, $dec = 1){
 }
 
 /**
+ * Return the given timestamp as human readable, fuzzy age
+ *
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ */
+function datetime_h($dt){
+  global $lang;
+
+  $ago = time() - $dt;
+  if($ago > 24*60*60*30*12*2){
+    return sprintf($lang['years'], round($ago/(24*60*60*30*12)));
+  }
+  if($ago > 24*60*60*30*2){
+    return sprintf($lang['months'], round($ago/(24*60*60*30)));
+  }
+  if($ago > 24*60*60*7*2){
+    return sprintf($lang['weeks'], round($ago/(24*60*60*7)));
+  }
+  if($ago > 24*60*60*2){
+    return sprintf($lang['days'], round($ago/(24*60*60)));
+  }
+  if($ago > 60*60*2){
+    return sprintf($lang['hours'], round($ago/(60*60)));
+  }
+  if($ago > 60*2){
+    return sprintf($lang['minutes'], round($ago/(60)));
+  }
+  return sprintf($lang['seconds'], $ago);
+
+}
+
+/**
  * return an obfuscated email address in line with $conf['mailguard'] setting
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
