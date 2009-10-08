@@ -253,4 +253,5 @@ $lang['months']  = 'vor %d Monaten';
 $lang['weeks']   = 'vor %d Wochen';
 $lang['days']    = 'vor %d Tagen';
 $lang['hours']   = 'vor %d Stunden';
+$lang['minutes'] = 'vor %d Minuten';
 $lang['seconds'] = 'vor %d Sekunden';

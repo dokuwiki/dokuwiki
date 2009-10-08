@@ -274,6 +274,7 @@ $lang['months']  = '%d months ago';
 $lang['weeks']   = '%d weeks ago';
 $lang['days']    = '%d days ago';
 $lang['hours']   = '%d hours ago';
+$lang['minutes'] = '%d minutes ago';
 $lang['seconds'] = '%d seconds ago';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
