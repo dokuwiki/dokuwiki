@@ -326,7 +326,7 @@ function runSitemapper(){
 
     //ping microsoft
     print 'runSitemapper(): pinging microsoft'.NL;
-    $url  = 'http://webmaster.live.com/webmaster/ping.aspx?sitemap=';
+    $url  = 'http://www.bing.com/webmaster/ping.aspx?siteMap=';
     $url .= urlencode(DOKU_URL.$sitemap);
     $resp = $http->get($url);
     if($http->error) print 'runSitemapper(): '.$http->error.NL;
