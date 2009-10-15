@@ -872,6 +872,7 @@ function act_resendpwd(){
  *   crypt - Unix crypt
  *   mysql - MySQL password (old method)
  *   my411 - MySQL 4.1.1 password
+ *   kmd5  - Salted MD5 hashing as used by UNB
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  string  The crypted password
@@ -942,6 +943,11 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             return sprintf("%08x%08x", ($nr & 0x7fffffff), ($nr2 & 0x7fffffff));
         case 'my411':
             return '*'.sha1(pack("H*", sha1($clear)));
+        case 'kmd5':
+            $key = substr($salt, 16, 2);
+            $hash1 = strtolower(md5($key . md5($clear)));
+            $hash2 = substr($hash1, 0, 16) . $key . substr($hash1, 16);
+            return $hash2;
         default:
             msg("Unsupported crypt method $method",-1);
     }
@@ -980,6 +986,9 @@ function auth_verifyPassword($clear,$crypt){
         $method = 'mysql';
     }elseif($len == 41 && $crypt[0] == '*'){
         $method = 'my411';
+    }elseif($len == 34){
+        $method = 'kmd5';
+        $salt   = $crypt;
     }else{
         $method = 'crypt';
         $salt   = substr($crypt,0,2);
