@@ -1,0 +1,9 @@
+====== Tilbagemelding om popularitet ======
+
+Dette værktøj samler anonyme oplysninge rom din wiki og giver dig mulighed for at sende det tilbage til DokuWiki-udviklerne. Dette hjælper dem til at sætte sig ind i, hvordan DokuWiki bruges af dets brugere og sikrer, at fremtidige beslutninger inden for udviklingen har grund i faktiske brugsstatistikker.
+
+Vi anbefaler dig til at gentage dette trin fra tid til anden for at holde udviklerne underrettede eftersom din wiki vokser. Dine anonyme datasamlinger vil blive tilkendegivet ved et anonymt navn.
+
+Opsamlede data indeholder oplysninger som eksempelvis din udgave af DokuWiki, antallet og størrelsen af dens sider, tilføjede udvidelse og oplysninger om din PHP-opsætning.
+
+De egentlige data, som vil blive sendt, er vist herunder. Brug venligst knappen 'Send Data' for at videresende oplysningerne.

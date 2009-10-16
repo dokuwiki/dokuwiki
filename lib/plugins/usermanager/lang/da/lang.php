@@ -6,11 +6,12 @@
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
+ * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  */
 $lang['menu']                  = 'Brugerstyring';
-$lang['noauth']                = '(brugervalidering er ikke tilgængelig)';
-$lang['nosupport']             = '(brugerstyring er ikke understøttet)';
-$lang['badauth']               = 'ugyldig valideringsmekanisme';
+$lang['noauth']                = '(Brugervalidering er ikke tilgængelig)';
+$lang['nosupport']             = '(Brugerstyring er ikke understøttet)';
+$lang['badauth']               = 'Ugyldig brugerbekræftelsesfunktion';
 $lang['user_id']               = 'Bruger';
 $lang['user_pass']             = 'Adgangskode';
 $lang['user_name']             = 'Navn';
@@ -39,12 +40,12 @@ $lang['start']                 = 'start';
 $lang['prev']                  = 'forrige';
 $lang['next']                  = 'næste';
 $lang['last']                  = 'sidste';
-$lang['edit_usermissing']      = 'Den valgte bruger blev ikke fundet, brugernavnet kan være slettet eller ændret andetsteds.';
+$lang['edit_usermissing']      = 'Den valgte bruger blev ikke fundet, Brugernavnet kan være slettet eller ændret andetsteds.';
 $lang['user_notify']           = 'Meddel bruger';
-$lang['note_notify']           = 'Meddelelses emails er kun sendt hvis brugeren er givet et nyt kodeord.';
-$lang['note_group']            = 'Nye brugere vil blive tilføjet til standard gruppen (%s) hvis ingen gruppe er opgivet.';
-$lang['note_pass']             = 'Adgangskoden vil blive autogenereret hvis feltet er tomt og underretning af brugeren er aktiveret.';
-$lang['add_ok']                = 'Bruger succesfuldt tilføjet';
-$lang['add_fail']              = 'Bruger tilføjelse mislykkedes';
-$lang['notify_ok']             = 'Meddelelses email sendt';
-$lang['notify_fail']           = 'Meddelelses email kunne ikke sendes';
+$lang['note_notify']           = 'Meddelelser bliver kun sendt, hvis brugeren får givet et nyt kodeord.';
+$lang['note_group']            = 'Nye brugere vil blive tilføjet til standardgruppen (%s), hvis ingen gruppe er opgivet.';
+$lang['note_pass']             = 'Adgangskoden vil blive dannet automatisk, hvis feltet er tomt og underretning af brugeren er aktiveret.';
+$lang['add_ok']                = 'Bruger tilføjet uden fejl.';
+$lang['add_fail']              = 'Tilføjelse af bruger mislykkedes';
+$lang['notify_ok']             = 'Meddelelse sendt';
+$lang['notify_fail']           = 'Meddelelse kunne ikke sendes';

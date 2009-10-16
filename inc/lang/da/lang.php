@@ -9,6 +9,7 @@
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
+ * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -117,6 +118,7 @@ $lang['js']['keepopen']        = 'Hold vindue åbent ved valg';
 $lang['js']['hidedetails']     = 'Skjul detaljer';
 $lang['js']['nosmblinks']      = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.
 Du kan stadig kopiere og indsætte linket.';
+$lang['js']['del_confirm']     = 'Slet valgte post(er)?';
 $lang['js']['mu_btn']          = 'Upload flere filer på en gang';
 $lang['mediausage']            = 'Brug den følgende syntaks til at henvise til denne fil:';
 $lang['mediaview']             = 'Vis oprindelig fil';
@@ -167,7 +169,6 @@ $lang['qb_media']              = 'Tilføj billeder og andre filer';
 $lang['qb_sig']                = 'Indsæt signatur';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Specialtegn';
-$lang['js']['del_confirm']           = 'Slet valgte post(er)?';
 $lang['admin_register']        = 'Tilføj ny bruger';
 $lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skrivning af metadata fejlede';

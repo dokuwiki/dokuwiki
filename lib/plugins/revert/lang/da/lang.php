@@ -5,13 +5,14 @@
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
+ * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  */
-$lang['menu']                  = 'Gendannelses Manager';
-$lang['filter']                = 'Søg efter sider som ligner spam';
+$lang['menu']                  = 'Gendannelsesstyring';
+$lang['filter']                = 'Søg efter uønskede sider';
 $lang['revert']                = 'Gendan valgte sider';
-$lang['reverted']              = '%s gendandet til revision %s';
+$lang['reverted']              = '%s gendannet til ændring %s';
 $lang['removed']               = '%s fjernet';
-$lang['revstart']              = 'Gendannelses processen er startet. Dette kan tage et stykke tid. Hvis scriptet giver time out før processen færdiggøres, skal du gendanne i mindre dele.';
-$lang['revstop']               = 'Gendannelses processen fuldført med success';
-$lang['note1']                 = 'Note: der er forkel på store og små bogstaver i søgningen';
-$lang['note2']                 = 'Note: denne side vil blive gendandet til den seneste version der ikke indeholder det givne spam udtryk <i>%s</i>.';
+$lang['revstart']              = 'Gendannelsesforløbet er startet. Dette kan tage et stykke tid. Hvis kodefilen giver "time out" før processen færdiggøres, skal du gendanne i mindre dele.';
+$lang['revstop']               = 'Gendannelsesforløbet fuldført uden fejl';
+$lang['note1']                 = 'Bemærk: Der er forskel på store og små bogstaver i søgningen';
+$lang['note2']                 = 'Bemærk: Denne side vil blive gendannet til den seneste udgave, der ikke indeholder det givne uønskede udtryk <i>%s</i>.';

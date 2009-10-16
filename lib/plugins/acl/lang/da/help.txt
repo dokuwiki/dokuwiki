@@ -1,0 +1,11 @@
+=== Vejledning ===
+
+På denne side kan du tilføje og fjerne tilladelser for navnerum og sider i din wiki.
+
+Panelet i venstre side viser alle tilgængelige navnerum og sider.
+
+I kassen for oven giver dig mulighed for at se og ændre tilladelser for en bestemt bruger eller gruppe.
+
+Nedenstående skema viser dig alle de satte regler for adgangskontrol. Du kan bruge den til hurtigt at slette eller ændre nogle af dem.
+
+Ved at læse [[doku>acl|den officielle vejledning til ACL]] kan du opnå yderligere hjælp til at blive sat helt ind i, hvordan adgangskontrol virker i DokuWiki.
