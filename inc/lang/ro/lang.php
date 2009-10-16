@@ -8,6 +8,7 @@
  * @author s_baltariu@yahoo.com
  * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
+ * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -89,6 +90,8 @@ $lang['resendpwdconfirm']      = 'Un link de confirmare a fost trimis prin email
 $lang['resendpwdsuccess']      = 'Parola nouă';
 $lang['license']               = 'Exceptând locurile unde este altfel specificat, conţinutul acestui wiki este licenţiat sub următoarea licenţă:';
 $lang['licenseok']             = 'Notă: Prin editarea acestei pagini sunteţi de acord să vă licenţiaţi conţintul sub următoarea licenţă:';
+$lang['searchmedia']           = 'Caută numele fişierului:';
+$lang['searchmedia_in']        = 'Caută în %s';
 $lang['txt_upload']            = 'Selectează fisierul de încărcat';
 $lang['txt_filename']          = 'Încarcă fişierul ca (opţional)';
 $lang['txt_overwrt']           = 'Suprascrie fişierul existent';
@@ -113,6 +116,7 @@ $lang['deletefail']            = '"%s" nu a putut fi şters - verificaţi dreptu
 $lang['mediainuse']            = 'Fişierul "%s" nu a fost şters - este încă în uz.';
 $lang['namespaces']            = 'Spaţii de nume';
 $lang['mediafiles']            = 'Fişiere disponibile în';
+$lang['js']['searchmedia']     = 'Caută fişiere';
 $lang['js']['keepopen']        = 'Menţine fereastra deschisă la selecţie';
 $lang['js']['hidedetails']     = 'Ascunde Detalii';
 $lang['js']['nosmblinks']      = 'Legăturile către sharing-uri Windows funcţioneaza numai in Microsoft Internet Explorer.
