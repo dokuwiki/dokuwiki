@@ -8,6 +8,6 @@ Pentru a confirma că cererea a fost într-adevăr trimisă de dumneavoastră, f
 
 @CONFIRM@
 
---
-Acest mail a fost generat de DocuWiki la 
+-- 
+Acest mail a fost generat de DocuWiki la
 @DOKUWIKIURL@

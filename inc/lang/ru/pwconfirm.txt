@@ -8,6 +8,6 @@
 
 @CONFIRM@
 
---
+-- 
 Это сообщение было сгенерировано DokuWiki по адресу
 @DOKUWIKIURL@

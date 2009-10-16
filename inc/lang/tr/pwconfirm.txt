@@ -8,6 +8,6 @@ Onaylamak istiyorsanız aşağıdaki linke tıklayınız.
 
 @CONFIRM@
 
---
+-- 
 Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur.
 @DOKUWIKIURL@

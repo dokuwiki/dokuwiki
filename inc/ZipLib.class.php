@@ -91,25 +91,25 @@ class ZipLib
     pack('V', strlen($ctrldir)) . pack('V', strlen($data)) . "\x00\x00";
  }
 
- function add_dir($name) 
- { 
-   $name = str_replace("\\", "/", $name); 
-   $fr = "\x50\x4b\x03\x04\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00"; 
+ function add_dir($name)
+ {
+   $name = str_replace("\\", "/", $name);
+   $fr = "\x50\x4b\x03\x04\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00";
 
-   $fr .= pack("V",0).pack("V",0).pack("V",0).pack("v", strlen($name) ); 
-   $fr .= pack("v", 0 ).$name.pack("V", 0).pack("V", 0).pack("V", 0); 
+   $fr .= pack("V",0).pack("V",0).pack("V",0).pack("v", strlen($name) );
+   $fr .= pack("v", 0 ).$name.pack("V", 0).pack("V", 0).pack("V", 0);
    $this -> datasec[] = $fr;
 
-   $new_offset = strlen(implode("", $this->datasec)); 
+   $new_offset = strlen(implode("", $this->datasec));
 
-   $cdrec = "\x50\x4b\x01\x02\x00\x00\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00"; 
-   $cdrec .= pack("V",0).pack("V",0).pack("V",0).pack("v", strlen($name) ); 
-   $cdrec .= pack("v", 0 ).pack("v", 0 ).pack("v", 0 ).pack("v", 0 ); 
-   $ext = "\xff\xff\xff\xff"; 
-   $cdrec .= pack("V", 16 ).pack("V", $this -> old_offset ).$name; 
+   $cdrec = "\x50\x4b\x01\x02\x00\x00\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+   $cdrec .= pack("V",0).pack("V",0).pack("V",0).pack("v", strlen($name) );
+   $cdrec .= pack("v", 0 ).pack("v", 0 ).pack("v", 0 ).pack("v", 0 );
+   $ext = "\xff\xff\xff\xff";
+   $cdrec .= pack("V", 16 ).pack("V", $this -> old_offset ).$name;
 
-   $this -> ctrl_dir[] = $cdrec; 
-   $this -> old_offset = $new_offset; 
+   $this -> ctrl_dir[] = $cdrec;
+   $this -> old_offset = $new_offset;
    $this -> dirs[] = $name;
  }
 
@@ -165,7 +165,7 @@ class ZipLib
      $timearray['mday'] = 1; $timearray['hours'] = 0;
      $timearray['minutes'] = 0; $timearray['seconds'] = 0;
    }
-   return (($timearray['year'] - 1980) << 25) | ($timearray['mon'] << 21) |     ($timearray['mday'] << 16) | ($timearray['hours'] << 11) | 
+   return (($timearray['year'] - 1980) << 25) | ($timearray['mon'] << 21) |     ($timearray['mday'] << 16) | ($timearray['hours'] << 11) |
     ($timearray['minutes'] << 5) | ($timearray['seconds'] >> 1);
  }
 
@@ -194,7 +194,7 @@ class ZipLib
      @rewind($zip); fseek($zip, $header['offset']);
      if(in_array("-1",$index)||in_array($i,$index))
       $stat[$header['filename']]=$this->ExtractFile($header, $to, $zip);
-      
+
    }
    fclose($zip);
    return $stat;
@@ -378,17 +378,17 @@ class ZipLib
   }}
   return true;
  }
- 
+
  //--CS start
- // centralize mkdir calls and use dokuwiki io functions  
+ // centralize mkdir calls and use dokuwiki io functions
  function _mkdir($d) {
-    return io_mkdir_p($d);  
+    return io_mkdir_p($d);
  }
  //--CS end
 
 
  function ExtractStr($zn, $name) {
-   $ok = 0; 
+   $ok = 0;
    $zip = @fopen($zn,'rb');
    if(!$zip) return(NULL);
    $cdir = $this->ReadCentralDir($zip,$zn);
@@ -398,28 +398,28 @@ class ZipLib
    {
      @fseek($zip, $pos_entry);
      $header = $this->ReadCentralFileHeaders($zip);
-     $header['index'] = $i; 
+     $header['index'] = $i;
      $pos_entry = ftell($zip);
-     @rewind($zip); 
+     @rewind($zip);
      fseek($zip, $header['offset']);
      if ($name == $header['stored_filename'] || $name == $header['filename']) {
        $str = $this->ExtractStrFile($header, $zip);
        fclose($zip);
        return $str;
      }
-      
+
    }
    fclose($zip);
    return null;
  }
-  
+
   function ExtractStrFile($header,$zip) {
     $hdr = $this->readfileheader($zip);
     $binary_data = '';
     if (!($header['external']==0x41FF0010) && !($header['external']==16))
       {
 	if ($header['compression']==0)
-	  { 
+	  {
 	    while ($size != 0)
 	      {
 		$read_size = ($size < 2048 ? $size : 2048);
@@ -454,7 +454,7 @@ class ZipLib
       }
     return NULL;
   }
-  
+
  function _ret_bytes($val) {
    $val = trim($val);
    $last = $val{strlen($val)-1};

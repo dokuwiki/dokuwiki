@@ -9,6 +9,6 @@ Storlek     : @SIZE@
 MIME-typ    : @MIME@
 Användare   : @USER@
 
---
+-- 
 Detta meddelande har skapats av DokuWiki på
 @DOKUWIKIURL@

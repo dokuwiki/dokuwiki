@@ -10,6 +10,6 @@ følgende lenke:
 
 @CONFIRM@
 
---
+-- 
 Denne e-posten ble generert av DokuWiki på
 @DOKUWIKIURL@

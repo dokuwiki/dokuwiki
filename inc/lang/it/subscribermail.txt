@@ -7,7 +7,7 @@ Qui sotto sono elencate le modifiche apportate:
 @DIFF@
 --------------------------------------------------------
 
-Per cancellare la tua sottoscrizione alla lista di controllo 
+Per cancellare la tua sottoscrizione alla lista di controllo
 per questa pagina collegati al wiki
 @DOKUWIKIURL@ poi spostati su
 @NEWPAGE@

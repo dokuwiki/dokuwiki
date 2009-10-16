@@ -525,7 +525,7 @@ EOT;
  * @link   http://de3.php.net/manual/en/function.realpath.php#75992
  */
 function fullpath($path,$exists=false){
-    static $run = 0; 
+    static $run = 0;
     $root  = '';
     $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || @$GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
 

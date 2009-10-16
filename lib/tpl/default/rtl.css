@@ -34,7 +34,7 @@ label.simple {
 }
 
 div.meta div.user {
-  float: right
+  float: right;
 }
 
 div.meta div.doc {
@@ -72,18 +72,18 @@ div.dokuwiki h1, div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki
 }
 
 /* special headlines */
-div.dokuwiki h1 {margin-left: 0px; margin-right: 0px;}
-div.dokuwiki h2 {margin-left: 0px; margin-right: 20px;}
-div.dokuwiki h3 {margin-left: 0px; margin-right: 40px;}
-div.dokuwiki h4 {margin-left: 0px; margin-right: 60px;}
-div.dokuwiki h5 {margin-left: 0px; margin-right: 80px;}
+div.dokuwiki h1 { margin-left: 0px; margin-right: 0px; }
+div.dokuwiki h2 { margin-left: 0px; margin-right: 20px; }
+div.dokuwiki h3 { margin-left: 0px; margin-right: 40px; }
+div.dokuwiki h4 { margin-left: 0px; margin-right: 60px; }
+div.dokuwiki h5 { margin-left: 0px; margin-right: 80px; }
 
 /* indent different sections */
-div.dokuwiki div.level1 {margin-left: 0px; margin-right: 3px;}
-div.dokuwiki div.level2 {margin-left: 0px; margin-right: 23px;}
-div.dokuwiki div.level3 {margin-left: 0px; margin-right: 43px;}
-div.dokuwiki div.level4 {margin-left: 0px; margin-right: 63px;}
-div.dokuwiki div.level5 {margin-left: 0px; margin-right: 83px;}
+div.dokuwiki div.level1 { margin-left: 0px; margin-right: 3px; }
+div.dokuwiki div.level2 { margin-left: 0px; margin-right: 23px; }
+div.dokuwiki div.level3 { margin-left: 0px; margin-right: 43px; }
+div.dokuwiki div.level4 { margin-left: 0px; margin-right: 63px; }
+div.dokuwiki div.level5 { margin-left: 0px; margin-right: 83px; }
 
 /* TOC control */
 div.dokuwiki div.toc {
@@ -105,12 +105,12 @@ div.dokuwiki ul.toc {
 
 div.dokuwiki ul.toc li {
   background-position: right 0.6em;
-  padding-right:0.4em;
+  padding-right: 0.4em;
   direction: rtl;
 }
 
 div.dokuwiki ul.toc li.clear {
-  padding-right:0.4em;
+  padding-right: 0.4em;
 }
 
 div.dokuwiki pre {

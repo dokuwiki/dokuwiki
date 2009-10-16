@@ -9,6 +9,6 @@ Mida: @SIZE@
 Tipus MIME: @MIME@
 Usuari: @USER@
 
---
+-- 
 Missatge generat per DokuWiki en
 @DOKUWIKIURL@

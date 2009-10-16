@@ -9,6 +9,6 @@ Dimensione : @SIZE@
 MIME Type : @MIME@
 Utente : @USER@
 
---
+-- 
 Questa email è stata generata dal DokuWiki di
 @DOKUWIKIURL@

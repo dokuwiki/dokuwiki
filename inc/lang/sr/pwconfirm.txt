@@ -8,6 +8,6 @@
 
 @CONFIRM@
 
---
+-- 
 Ову поруку је генерисао DokuWiki sa
 @DOKUWIKIURL@

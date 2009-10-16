@@ -11,7 +11,7 @@ User        : @USER@
 
 @DIFF@
 
---
+-- 
 
 דף זה נוצר ע"י DokuWiki ב-
 @DOKUWIKIURL@

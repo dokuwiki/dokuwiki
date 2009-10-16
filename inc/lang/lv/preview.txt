@@ -1,4 +1,4 @@
-======Priekšskats======
+====== Priekšskats ======
 
 Tavs teksts izskatīsies šādi. Ievēro, tas vēl **nav saglabāts** !
 

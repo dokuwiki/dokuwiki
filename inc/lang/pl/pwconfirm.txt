@@ -8,6 +8,6 @@ Aby potwierdzić prośbę o hasło, przejdź na następującą stronę.
 
 @CONFIRM@
 
---
+-- 
 List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@

@@ -4,7 +4,7 @@
 #config__manager div.info {
   background-position: 0.5em;
   padding: 0.5em;
-  text-align:center;
+  text-align: center;
 }
 
 #config__manager fieldset {
@@ -99,7 +99,7 @@
   color: #000 !important;
 }
 
-#config__manager td.error  { background-color: red; color: #000;}
+#config__manager td.error  { background-color: red; color: #000; }
 
 #config__manager .selection {
   width: 14.8em;

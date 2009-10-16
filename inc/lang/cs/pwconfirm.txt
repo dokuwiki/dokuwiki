@@ -8,6 +8,6 @@ Pro potvrzení, že jste tento požadavek poslali opravdu vy, prosím otevřete 
 
 @CONFIRM@
 
---
+-- 
 Tento mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@

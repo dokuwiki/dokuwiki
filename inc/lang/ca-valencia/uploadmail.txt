@@ -9,6 +9,6 @@ Tamany: @SIZE@
 Tipo MIME: @MIME@
 Usuari: @USER@
 
---
+-- 
 Este correu ha segut generat per DokuWiki en
 @DOKUWIKIURL@

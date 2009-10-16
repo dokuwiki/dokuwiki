@@ -9,6 +9,6 @@ Selain : @BROWSER@
 IP-osoite : @IPADDRESS@
 Hostname : @HOSTNAME@
 
---
+-- 
 Tämän postin generoi DokuWiki osoitteessa
 @DOKUWIKIURL@

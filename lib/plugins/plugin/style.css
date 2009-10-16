@@ -42,9 +42,9 @@
 #plugin__manager .plugins fieldset.buttons .button { float: left; }
 
 #plugin__manager .pm_info h3 { margin-left: 0; }
-#plugin__manager .pm_info dl { margin: 1em 0; padding: 0;}
-#plugin__manager .pm_info dt { width: 6em; float: left; clear: left; margin:0; padding: 0;}
-#plugin__manager .pm_info dd { margin:0 0 0 7em; padding: 0; background: none;}
+#plugin__manager .pm_info dl { margin: 1em 0; padding: 0; }
+#plugin__manager .pm_info dt { width: 6em; float: left; clear: left; margin: 0; padding: 0; }
+#plugin__manager .pm_info dd { margin: 0 0 0 7em; padding: 0; background: none; }
 
 #plugin__manager .plugins .enable { float: left; width: auto; margin-right: 0.5em;}
 

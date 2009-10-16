@@ -7,6 +7,6 @@ Kinnitamaks uue parooli saamise soovi mine aadressile:
 
 @CONFIRM@
 
---
+-- 
 See meil on saadetud DokuWiki poolt
 @DOKUWIKIURL@

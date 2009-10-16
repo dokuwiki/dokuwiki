@@ -1,4 +1,4 @@
-======Det fins en nyere versjon======
+====== Det fins en nyere versjon ======
 
 Det fins en nyere versjon av dokumentet du har redigert. Dette kan skje når en annen bruker redigerer dokumentet samtidig med deg.
 

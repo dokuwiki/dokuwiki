@@ -1,4 +1,4 @@
-Strona w Twoim DokuWiki została dodana lub zmieniona. 
+Strona w Twoim DokuWiki została dodana lub zmieniona.
 Szczegółowe informacje:
 
 Data         : @DATE@

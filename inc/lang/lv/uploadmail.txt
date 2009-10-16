@@ -10,5 +10,5 @@ MIME tips     : @MIME@
 Lietotājs     : @USER@
 
 -- 
-Vēstuli nosūtījusi DokuWiki programma no 
+Vēstuli nosūtījusi DokuWiki programma no
 @DOKUWIKIURL@ datora.

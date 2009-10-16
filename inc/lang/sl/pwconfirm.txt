@@ -8,6 +8,6 @@ Za potrditev novega gesla, kliknite spodnjo povezavo.
 
 @CONFIRM@
 
---
+-- 
 To sporočilo je ustvaril DokuWiki na
 @DOKUWIKIURL@

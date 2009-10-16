@@ -7569,7 +7569,7 @@ class SimplePie_Misc
 		{
 			return SimplePie_Misc::fix_protocol(SimplePie_Misc::compress_parse_url('http', $parsed['authority'], $parsed['path'], $parsed['query'], $parsed['fragment']), $http);
 		}
-		
+
 		if ($parsed['scheme'] === '' && $parsed['authority'] === '' && !file_exists($url))
 		{
 			return SimplePie_Misc::fix_protocol(SimplePie_Misc::compress_parse_url('http', $parsed['path'], '', $parsed['query'], $parsed['fragment']), $http);
@@ -9779,7 +9779,7 @@ class SimplePie_Misc
 	 			trigger_error('needle is not a string or an integer', E_USER_WARNING);
 	 			return false;
 	 		}
-	 
+
 	 		return strpos(strtolower($haystack), $needle, $offset);
 	 	}
 	 }

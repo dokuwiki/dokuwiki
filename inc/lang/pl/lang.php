@@ -114,7 +114,7 @@ $lang['namespaces']            = 'Katalogi';
 $lang['mediafiles']            = 'Dostępne pliki';
 $lang['js']['keepopen']        = 'Nie zamykaj okna po wyborze';
 $lang['js']['hidedetails']     = 'Ukryj szczegóły';
-$lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer. 
+$lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer.
 Możesz skopiować odnośnik.';
 $lang['js']['linkto']          = 'Link do';
 $lang['js']['del_confirm']     = 'Czy na pewno usunąć?';

@@ -12,6 +12,6 @@ Selle lehe jälgimisest loobumiseks logi wikisse sisse
 @NEWPAGE@
 ning vali sealt 'Lõpeta jälgimine'.
 
---
+-- 
 See meil on saadetud DokuWiki poolt
 @DOKUWIKIURL@

@@ -1,4 +1,4 @@
-======Perbedaan======
+====== Perbedaan ======
 
 Ini menunjukkan perbedaan antara versi yang terpilih dengan versi yang sedang aktif.
 

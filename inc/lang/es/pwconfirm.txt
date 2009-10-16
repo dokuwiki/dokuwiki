@@ -1,6 +1,6 @@
 Hola @FULLNAME@!
 
-Alguien solicitó una nueva contraseña para su nombre de 
+Alguien solicitó una nueva contraseña para su nombre de
 usuario @TITLE@ en @DOKUWIKIURL@
 
 Si usted no solicitó una nueva contraseña, simplemente ignore este email.

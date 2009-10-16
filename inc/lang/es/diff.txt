@@ -1,4 +1,4 @@
-======Diferencias======
+====== Diferencias ======
 
 Muestra las diferencias entre la revision seleccionada y la versión actual de esta página.
 

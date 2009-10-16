@@ -9,6 +9,6 @@ Por konfirmi, ke la peto estis vere via, bonvolu musklaki la jenan ligilon.
 
 @CONFIRM@
 
---
+-- 
 Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe
 @DOKUWIKIURL@

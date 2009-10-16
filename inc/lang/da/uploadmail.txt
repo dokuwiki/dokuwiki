@@ -9,6 +9,6 @@ St�rrelse   : @SIZE@
 MIME Type   : @MIME@
 Bruger      : @USER@
 
---
+-- 
 Denne e-mail blev genereret af DokuWiki p�
 @DOKUWIKIURL@

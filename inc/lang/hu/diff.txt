@@ -1,4 +1,4 @@
-======Különbségek======
+====== Különbségek ======
 
 A kiválasztott változat és az aktuális verzió közötti különbséget mutatjuk.
 

@@ -7,9 +7,9 @@ Itt vannak a változások:
 @DIFF@
 --------------------------------------------------------
 
-Ha le szeretnél iratkozni ennek az oldalnak a változás-követéséről, 
-lépj be a wikibe ezen a címen: 
-@DOKUWIKIURL@, majd keresd meg a(z) 
+Ha le szeretnél iratkozni ennek az oldalnak a változás-követéséről,
+lépj be a wikibe ezen a címen:
+@DOKUWIKIURL@, majd keresd meg a(z)
 @NEWPAGE@ oldalt
 és válaszd a 'Oldalváltozások-hírlevél leiratkozás' gombot.
 

@@ -367,7 +367,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
               msg($this->lang['add_fail'], -1);
               return false;
             }
-          } 
+          }
         } else {
           if (!empty($pass)){
             msg($this->lang['add_fail'], -1);

@@ -1,4 +1,4 @@
-======Bu başlık henüz mevcut değil======
+====== Bu başlık henüz mevcut değil ======
 
 Henüz mevcut olmayan bir başlığın linkiyle geldiniz. ''bu sayfayı oluştur'' tuşuna tıklayarak sayfayı oluşturabilirsiniz.
 

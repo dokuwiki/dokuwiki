@@ -12,6 +12,6 @@ Bruker               : @USER@
 @DIFF@
 
 
---
+-- 
 Denne meldingen ble laget av DokuWiki
 @DOKUWIKIURL@

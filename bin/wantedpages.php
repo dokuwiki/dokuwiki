@@ -13,13 +13,13 @@ require_once DOKU_INC.'inc/cliopts.php';
 #------------------------------------------------------------------------------
 function usage() {
     print "Usage: wantedpages.php [wiki:namespace]
-    
+
     Outputs a list of wanted pages (pages which have
     internal links but do not yet exist).
-    
+
     If the optional [wiki:namespace] is not provided,
     defaults to the root wiki namespace
-    
+
     OPTIONS
         -h, --help get help
 ";
@@ -54,12 +54,12 @@ function dw_get_pages($dir) {
         global $conf;
         $trunclen = strlen($conf['datadir'].':');
     }
-    
+
     if ( !is_dir($dir) ) {
         fwrite( STDERR, "Unable to read directory $dir\n");
         exit(1);
     }
-    
+
     $pages = array();
     $dh = opendir($dir);
     while ( false !== ( $entry = readdir($dh) ) ) {

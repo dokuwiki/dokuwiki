@@ -8,4 +8,4 @@ Goiko formularioak aukeratutako erabiltzaile edo taldearen baimenak ikusi eta al
 
 Beheko taulan une honetan ezarritako atzipen kontrol arauak daude. Hainbat arau bizkor ezabatu edo aldatzeko erabili dezakezu.
 
-[[doku>acl|Atzipen Kontrol Listen inguruko dokumentazio ofiziala]] irakurtzeak atzipen kontrolak DokuWiki-n nola funtzionatzen duen ulertzen lagundu zaitzaike. 
+[[doku>acl|Atzipen Kontrol Listen inguruko dokumentazio ofiziala]] irakurtzeak atzipen kontrolak DokuWiki-n nola funtzionatzen duen ulertzen lagundu zaitzaike.

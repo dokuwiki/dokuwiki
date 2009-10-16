@@ -137,9 +137,9 @@ $lang['badlogin']   = 'Oops, Sinu kasutajanimi või parool oli vale.';
 $lang['regmissing'] = 'Kõik väljad tuleb ära täita.';
 $lang['reguexists'] = 'Tegelikult on sellise nimega kasutaja juba olemas.';
 $lang['regsuccess'] = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';
-$lang['regmailfail']= 'Ilmselt tekkis e-posti teel parooli saatmisel mingi tõrge. Palun suhtle sel teemal 
+$lang['regmailfail']= 'Ilmselt tekkis e-posti teel parooli saatmisel mingi tõrge. Palun suhtle sel teemal
 oma serveri administraatoriga!';
-$lang['regbadmail'] = 'Tundub, et Sinu antud e-posti aadress ei toimi - kui Sa arvad, et tegemist on 
+$lang['regbadmail'] = 'Tundub, et Sinu antud e-posti aadress ei toimi - kui Sa arvad, et tegemist on
 ekstitusega, suhtle oma serveri administraatoriga';
 $lang['regpwmail']  = 'Sinu DokuWiki parool';
 $lang['reghere']    = 'Sul ei olegi veel kasutajakontot? No aga tekita see siis endale!';
@@ -150,14 +150,14 @@ $lang['lockedby']     = 'Praegu on selle lukustanud';
 $lang['lockexpire']   = 'Lukustus aegub';
 $lang['willexpire']   = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
 
-$lang['notsavedyet'] = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.\nKas Sa ikka tahad edasi liikuda?'; 
+$lang['notsavedyet'] = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.\nKas Sa ikka tahad edasi liikuda?';
 $lang['rssfailed']   = 'Sinu soovitud info ammutamisel tekkis viga: ';
 $lang['nothingfound']= 'Oops, aga mitte muhvigi ei leitud.';
 
 $lang['mediaselect'] = 'Hunnik faile';
 $lang['fileupload']  = 'Faili üleslaadimine';
 $lang['uploadsucc']  = 'Üleslaadimine läks ootuspäraselt hästi';
-$lang['uploadfail']  = 'Üleslaadimine läks nässu. Äkki pole Sa selleks lihtsalt piisavalt võimukas tegija?'; 
+$lang['uploadfail']  = 'Üleslaadimine läks nässu. Äkki pole Sa selleks lihtsalt piisavalt võimukas tegija?';
 $lang['uploadwrong'] = 'Ei saa Sa midagi üles laadida. Oops, aga seda tüüpi faili sul lihtsalt ei lubata üles laadida';
 $lang['namespaces']  = 'Alajaotus';
 $lang['mediafiles']  = 'Failid on Sulle kättesaadavad';
@@ -180,7 +180,7 @@ $lang['summary']    = 'kokkuvõte muudatustest';
 $lang['mail_newpage'] = 'leht lisatud:';
 $lang['mail_changed'] = 'leht muudetud';
 
-$lang['nosmblinks'] = 'Windowsis võrguarvutiga ühendamine toimib ainult Internet Exploreris ja 
+$lang['nosmblinks'] = 'Windowsis võrguarvutiga ühendamine toimib ainult Internet Exploreris ja
 sisevõrgus.\nAga Sa saad õnneks omale lingi kopeerida ja hiljem kuhugi kleepida.';
 
 $lang['qb_bold']    = 'Rasvane kiri';

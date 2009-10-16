@@ -8,6 +8,6 @@ Senão, para confirmar o pedido, por favor siga este link:
 
 @CONFIRM@
 
---
+-- 
 
 Esta mensagem foi gerada automaticamente pelo motor DokuWiki em @DOKUWIKIURL@

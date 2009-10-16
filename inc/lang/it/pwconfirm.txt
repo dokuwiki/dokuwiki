@@ -10,6 +10,6 @@ seguente link.
 
 @CONFIRM@
 
---
+-- 
 Questa mail è stata generata da DokuWiki su
 @DOKUWIKIURL@

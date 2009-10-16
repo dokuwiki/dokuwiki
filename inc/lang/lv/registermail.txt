@@ -10,5 +10,5 @@ IP aderese  : @IPADDRESS@
 Datora vārds: @HOSTNAME@
 
 -- 
-Šo vēstuli ģenerējis DokuWiki no 
+Šo vēstuli ģenerējis DokuWiki no
 @DOKUWIKIURL

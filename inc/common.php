@@ -584,7 +584,7 @@ function checkwordblock($text=''){
           $data['userinfo']['mail'] = $INFO['userinfo']['mail'];
       }
       $callback = create_function('', 'return true;');
-      return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true); 
+      return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
     }
   }
   return false;

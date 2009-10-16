@@ -45,7 +45,7 @@ $conf['deaccent']    = 1;                 //deaccented chars in pagenames (1) or
 $conf['useheading']  = 0;                 //use the first heading in a page as its name
 $conf['refcheck']    = 1;                 //check for references before deleting media files
 $conf['refshow']     = 0;                 //how many references should be shown, 5 is a good value
-$conf['showuseras']  = 'loginname';       // 'loginname' users login name 
+$conf['showuseras']  = 'loginname';       // 'loginname' users login name
                                           // 'username' users full name
                                           // 'email' e-mail address (will be obfuscated as per mailguard)
                                           // 'email_link' e-mail address as a mailto: link (obfuscated)

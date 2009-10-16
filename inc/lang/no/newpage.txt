@@ -1,3 +1,3 @@
-======Det fins ikke noe innhold======
+====== Det fins ikke noe innhold ======
 
 Du har klikket på en lenke til et emne som ikke finnes ennå. Du kan skape det gjennom å klikke på ''**Lag denne siden**''.

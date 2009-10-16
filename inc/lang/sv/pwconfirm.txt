@@ -11,6 +11,6 @@ och använd följande länk.
 
 @CONFIRM@
 
---
+-- 
 Detta meddelande har skapats av DokuWiki på
 @DOKUWIKIURL@

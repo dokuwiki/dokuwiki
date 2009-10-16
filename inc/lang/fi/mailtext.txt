@@ -12,6 +12,6 @@ Käyttäjä : @USER@
 @DIFF@
 
 
---
+-- 
 Tämän postin generoi DokuWiki
 @DOKUWIKIURL@

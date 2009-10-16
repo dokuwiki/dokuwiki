@@ -29,7 +29,7 @@ class cache {
   /**
    * public method to determine whether the cache can be used
    *
-   * to assist in cetralisation of event triggering and calculation of cache statistics, 
+   * to assist in cetralisation of event triggering and calculation of cache statistics,
    * don't override this function override _useCache()
    *
    * @param  array   $depends   array of cache dependencies, support dependecies:
@@ -183,7 +183,7 @@ class cache_parser extends cache {
   function _addDependencies() {
     global $conf, $config_cascade;
 
-    $this->depends['age'] = isset($this->depends['age']) ? 
+    $this->depends['age'] = isset($this->depends['age']) ?
                    min($this->depends['age'],$conf['cachetime']) : $conf['cachetime'];
 
     // parser cache file dependencies ...

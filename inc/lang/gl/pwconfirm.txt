@@ -10,6 +10,6 @@ por favor, visite a seguinte ligazón.
 
 @CONFIRM@
 
---
+-- 
 Este correo foi xerador polo DokuWiki de
 @DOKUWIKIURL@

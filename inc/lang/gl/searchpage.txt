@@ -1,5 +1,5 @@
-======Procurar======
+====== Procurar ======
 
 Podes encontrar os resultados da súa procura a continuación. Se non encontrou o que estaba a procurar, pode crear ou editar a páxina co nome relacionado coa súa procura co botón axeitado.
 
-=====Resultados=====
+===== Resultados =====

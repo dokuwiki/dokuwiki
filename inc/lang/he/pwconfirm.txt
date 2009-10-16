@@ -8,6 +8,6 @@
 
 @CONFIRM@
 
---
+-- 
 דואר זה נוצר על ידי DokuWiki ב-
 @DOKUWIKIURL@

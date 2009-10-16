@@ -16,16 +16,16 @@ category, image {
 
 item link, entry id {
   display: block;
-  color:__extern__;
-  text-decoration:underline;
+  color: __extern__;
+  text-decoration: underline;
 }
 
 channel title, feed title {
   display: block;
-  font-size:200%;
-  font-weight:bolder;
-  color:__extern__;
-  text-decoration:none;
+  font-size: 200%;
+  font-weight: bolder;
+  color: __extern__;
+  text-decoration: none;
   border-bottom: 20px solid __background_alt__;
 }
 

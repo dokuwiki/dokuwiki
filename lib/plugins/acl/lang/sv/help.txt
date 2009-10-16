@@ -3,6 +3,6 @@ På den här sidan kan du lägga till och ta bort åtkomsträttigheter för namn
 
 Till vänster visas alla tillgängliga namnrymder och sidor du kan välja.  I formuläret ovanför kan du sedan välja användare eller grupp för vilken åtkomsträttigheterna ska visas eller ändras.
 
-Tabellen nedanför visar samtliga uppsatta regler för åtkomsträttigheter. Den kan du använda för att snabbt ta bort eller ändra flera regler på en gång. 
+Tabellen nedanför visar samtliga uppsatta regler för åtkomsträttigheter. Den kan du använda för att snabbt ta bort eller ändra flera regler på en gång.
 
 Läs gärna [[doku>acl|den officiella dokumentationen för ACL]] som kan hjälpa dig till fullo förstå hur åtkomsträttigheter fungerar i DokuWiki.

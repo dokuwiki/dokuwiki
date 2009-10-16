@@ -1,4 +1,4 @@
-======Ta različica ne obstaja======
+====== Ta različica ne obstaja ======
 
 Podana različica ne obstaja. Uporabite gumb ''Stare različice'' za seznam starih različic tega dokumenta.
 

@@ -10,6 +10,6 @@ l'enllaç següent:
 
 @CONFIRM@
 
---
+-- 
 Missatge generat per DokuWiki en
 @DOKUWIKIURL@

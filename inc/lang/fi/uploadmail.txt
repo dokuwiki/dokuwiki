@@ -9,6 +9,6 @@ Koko : @SIZE@
 MIME Type : @MIME@
 Käyttäjä : @USER@
 
---
+-- 
 Tämän postin generoi DokuWiki osoitteessa
 @DOKUWIKIURL@

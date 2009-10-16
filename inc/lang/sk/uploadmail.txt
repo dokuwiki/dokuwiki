@@ -9,6 +9,6 @@ Veľkosť : @SIZE@
 MIME Typ : @MIME@
 Užívateľ : @USER@
 
---
+-- 
 Tento mail vygenerovalo DokuWiki na
 @DOKUWIKIURL@

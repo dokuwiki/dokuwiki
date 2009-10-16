@@ -1117,7 +1117,7 @@ class Doku_Handler_Quote {
                         }
                     } else {
                         if ($call[0] != 'quote_start') $this->quoteCalls[] = array('linebreak',array(),$call[2]);
-                    } 
+                    }
 
                     $quoteDepth = $quoteLength;
 
@@ -1623,7 +1623,7 @@ class Doku_Handler_Block {
                             $cname_plusone = $calls[$key+1][0];
                             if ($cname_plusone == 'plugin') {
                                 $cname_plusone = 'plugin'.$calls[$key+1][1][0];
-                                
+
                                 // plugin test, true if plugin has a state which precludes it requiring blockOpen or blockClose
                                 $plugin_plusone = true;
                                 $plugin_test = ($call[$key+1][1][2] == DOKU_LEXER_MATCHED) || ($call[$key+1][1][2] == DOKU_LEXER_MATCHED);

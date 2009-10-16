@@ -8,6 +8,6 @@ Se você realmente deseja receber uma nova senha, por favor, utilize o link abai
 
 @CONFIRM@
 
---
+-- 
 Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@

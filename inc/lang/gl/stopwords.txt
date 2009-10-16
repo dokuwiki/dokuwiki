@@ -2,7 +2,7 @@
 # Cando edite este ficheiro asegúrese de usar os fins de liña UNIX (nova liña única)
 # Non precisa incluír palabras de menos de 3 caracteres - estas son ignoradas de todas as formas
 # Esta listaxe está baseada nas encontradas en http://www.ranks.nl/stopwords/ (aínda en proceso)
-#	Actualizouse a listaxe a partir as stopwords dispoñibilizadas por Paulo Malvar en: 
+#	Actualizouse a listaxe a partir as stopwords dispoñibilizadas por Paulo Malvar en:
 # http://d108.dinaserver.com/hosting/paulomalvar.com/Paulo_Malvar_personal_webpage/Resources_files/Galician_single_and_multiword_stopwords_Verbal_Periphrases_and_Abbreviations.tgz
 # e tamén as listaxes de palabras gramaticais na Galipedia: http://gl.wikipedia.org/wiki/Categoría_gramatical
 abaixo

@@ -345,7 +345,7 @@ function form_makeWikiText($text, $attrs=array()) {
 function form_makeButton($type, $act, $value='', $attrs=array()) {
   if ($value == '') $value = $act;
   //$name = (!empty($act)) ? 'do[$act]' : null;
-  $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act, 
+  $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act,
                 'value'=>$value, 'class'=>'button');
   if (!empty($attrs['accesskey']) && empty($attrs['title'])) {
     $attrs['title'] = $value . ' ['.strtoupper($attrs['accesskey']).']';
@@ -429,7 +429,7 @@ function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=ar
  * form_makeFileField
  *
  * Create a form element for a file input element with label
- * 
+ *
  * @see     form_makeField
  * @author  Michael Klier <chi@chimeric.de>
  */

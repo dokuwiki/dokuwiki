@@ -12,6 +12,6 @@ en @DOKUWIKIURL@ y luego visita la página:
 @NEWPAGE@
 y elige 'Unsubscribe Changes'.
 
---
+-- 
 Este mail fue generado por DokuWiki en
 @DOKUWIKIURL@

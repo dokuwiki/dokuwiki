@@ -9,5 +9,5 @@ Boyut : @SIZE@
 MIME Type : @MIME@
 Kullanıcı : @USER@
 
---
+-- 
 Bu e-posta @DOKUWIKIURL@ adresindeki DokuWiki tarafından hazırlandı.

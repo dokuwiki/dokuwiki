@@ -8,6 +8,6 @@
 
 @CONFIRM@
 
---
+-- 
 本郵件由 DokuWiki 自動創建
 @DOKUWIKIURL@

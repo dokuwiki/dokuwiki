@@ -9,6 +9,6 @@ Tamanho: @SIZE@
 Tipo MIME: @MIME@
 Usuário: @USER@
 
---
+-- 
 Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@

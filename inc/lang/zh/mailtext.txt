@@ -12,6 +12,6 @@ IP 地址     : @IPADDRESS@
 @DIFF@
 
 
---
+-- 
 本邮件由 DokuWiki 自动创建
 @DOKUWIKIURL@

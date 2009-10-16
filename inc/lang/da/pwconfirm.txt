@@ -9,6 +9,6 @@ For at bekræfte at det var dig der bad om dette, benyt venligst det følgende l
 
 @CONFIRM@
 
---
+-- 
 Denne e-mail blev genereret af DokuWiki på
 @DOKUWIKIURL@

@@ -1,4 +1,4 @@
-======Nincs ilyen változat======
+====== Nincs ilyen változat ======
 
 A megadott változat nem létezik. Használd az ''Előző változatok'' nyomógombot az előzmények listájának megtekintéséhez.
 

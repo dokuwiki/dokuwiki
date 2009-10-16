@@ -9,6 +9,6 @@ Brskalnik: @BROWSER@
 IP naslov: @IPADDRESS@
 Hostname: @HOSTNAME@
 
---
+-- 
 To sporočilo je ustvaril DokuWiki na
 @DOKUWIKIURL@

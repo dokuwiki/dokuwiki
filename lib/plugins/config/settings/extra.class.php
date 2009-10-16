@@ -170,7 +170,7 @@ if (!class_exists('setting_renderer')) {
           }
         }
       }
-      return parent::html($plugin, $echo);    
+      return parent::html($plugin, $echo);
     }
   }
 }

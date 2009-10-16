@@ -10,6 +10,6 @@
 Домаћин: @HOSTNAME@
 
 
---
+-- 
 Ову поруку је генерисао DokuWiki sa
 @DOKUWIKIURL@

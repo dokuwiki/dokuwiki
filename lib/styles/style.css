@@ -7,7 +7,7 @@ div.clearer {
   clear: both;
   line-height: 0;
   height: 0;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 div.no {
@@ -74,9 +74,9 @@ div.notify {
   margin-right: auto;
 }
 
-.leftalign {text-align: left;}
-.centeralign {text-align: center;}
-.rightalign {text-align: right;}
+.leftalign { text-align: left; }
+.centeralign { text-align: center; }
+.rightalign { text-align: right; }
 
 em.u {
   font-style: normal;

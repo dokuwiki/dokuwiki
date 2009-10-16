@@ -1302,7 +1302,7 @@ if(empty($UTF8_SPECIAL_CHARS2)) $UTF8_SPECIAL_CHARS2 =
 global $UTF8_ROMANIZATION;
 if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   // scandinavian - differs from what we do in deaccent
-  'å'=>'a','Å'=>'A','ä'=>'a','Ä'=>'A','ö'=>'o','Ö'=>'O', 
+  'å'=>'a','Å'=>'A','ä'=>'a','Ä'=>'A','ö'=>'o','Ö'=>'O',
 
   //russian cyrillic
   'а'=>'a','А'=>'A','б'=>'b','Б'=>'B','в'=>'v','В'=>'V','г'=>'g','Г'=>'G',
@@ -1342,7 +1342,7 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   'ل'=>'l','م'=>'m','ن'=>'n','ه'=>'x\'','و'=>'u','ي'=>'i',
 
   // Japanese characters  (last update: 2008-05-09)
-  
+
   // Japanese hiragana
 
   // 3 character syllables, っ doubles the consonant after
@@ -1390,7 +1390,7 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   'っら'=>'rra','っれ'=>'rre','っり'=>'rri','っろ'=>'rro','っる'=>'rru',
   'っさ'=>'ssa','っせ'=>'sse','っし'=>'sshi','っそ'=>'sso','っす'=>'ssu',
   'っざ'=>'zza','っぜ'=>'zze','っじ'=>'jji','っぞ'=>'zzo','っず'=>'zzu',
-  
+
   // 1 character syllabels
   'あ'=>'a','え'=>'e','い'=>'i','お'=>'o','う'=>'u','ん'=>'n',
   'は'=>'ha','へ'=>'he','ひ'=>'hi','ほ'=>'ho','ふ'=>'fu',
@@ -1457,7 +1457,7 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   'ッチャー'=>'cchaa','ッチェー'=>'cchee','ッチー'=>'cchii','ッチョー'=>'cchoo','ッチュー'=>'cchuu',
   'ッティー'=>'ttii',
   'ッヂィー'=>'ddii',
-  
+
   // 3 character syllables - doubled vowels
   'ファー'=>'faa','フェー'=>'fee','フィー'=>'fii','フォー'=>'foo',
   'フャー'=>'fyaa','フェー'=>'fyee','フィー'=>'fyii','フョー'=>'fyoo','フュー'=>'fyuu',
@@ -1639,7 +1639,7 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   'ิว'=>'io','็ว'=>'eo','ียว'=>'iao',
   '่'=>'','้'=>'','๊'=>'','๋'=>'','็'=>'',
   '์'=>'','๎'=>'','ํ'=>'','ฺ'=>'',
-  'ๆ'=>'2','๏'=>'o','ฯ'=>'-','๚'=>'-','๛'=>'-', 
+  'ๆ'=>'2','๏'=>'o','ฯ'=>'-','๚'=>'-','๛'=>'-',
 	'๐'=>'0','๑'=>'1','๒'=>'2','๓'=>'3','๔'=>'4',
   '๕'=>'5','๖'=>'6','๗'=>'7','๘'=>'8','๙'=>'9',
 

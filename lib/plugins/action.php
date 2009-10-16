@@ -1,7 +1,7 @@
 <?php
 /**
  * Action Plugin Prototype
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */

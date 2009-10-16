@@ -8,6 +8,6 @@
 
 @CONFIRM@
 
---
+-- 
 このメールは次のDokuWikiより自動的に送信されています。
 @DOKUWIKIURL@

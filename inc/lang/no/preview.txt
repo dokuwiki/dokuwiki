@@ -1,4 +1,4 @@
-======Forhåndsvisning======
+====== Forhåndsvisning ======
 
 Dette er en forhåndsvisning av hvordan din tekst kommer til å se ut når den blir vist. Husk at den er **ikke lagret** ennå!
 

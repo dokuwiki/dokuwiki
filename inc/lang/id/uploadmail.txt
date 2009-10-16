@@ -9,6 +9,6 @@ Size : @SIZE@
 MIME Type : @MIME@
 User : @USER@
 
---
+-- 
 Email ini dibuat otomatis oleh DokuWiki
 @DOKUWIKIURL@

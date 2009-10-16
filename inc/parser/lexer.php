@@ -156,11 +156,11 @@ class Doku_LexerParallelRegex {
             for ($i = 0; $i < $cnt; $i++) {
 
                 /*
-                 * decompose the input pattern into "(", "(?", ")", 
-                 * "[...]", "[]..]", "[^]..]", "[...[:...:]..]", "\x"... 
+                 * decompose the input pattern into "(", "(?", ")",
+                 * "[...]", "[]..]", "[^]..]", "[...[:...:]..]", "\x"...
                  * elements.
-                 */ 
-                preg_match_all('/\\\\.|' . 
+                 */
+                preg_match_all('/\\\\.|' .
                                '\(\?|' .
                                '[()]|' .
                                '\[\^?\]?(?:\\\\.|\[:[^]]*:\]|[^]\\\\])*\]|' .
@@ -171,7 +171,7 @@ class Doku_LexerParallelRegex {
 
                 foreach ($elts[0] as $elt) {
                     /*
-                     * for "(", ")" remember the nesting level, add "\" 
+                     * for "(", ")" remember the nesting level, add "\"
                      * only to the non-"(?" ones.
                      */
 

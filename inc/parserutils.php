@@ -612,7 +612,7 @@ function & p_get_renderer($mode) {
  * @param   string   $id       dokuwiki page id
  * @param   bool     $render   rerender if first heading not known
  *                             default: true  -- must be set to false for calls from the metadata renderer to
- *                                               protects against loops and excessive resource usage when pages 
+ *                                               protects against loops and excessive resource usage when pages
  *                                               for which only a first heading is required will attempt to
  *                                               render metadata for all the pages for which they require first
  *                                               headings ... and so on.

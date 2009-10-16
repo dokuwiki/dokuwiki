@@ -9,6 +9,6 @@ Tamaño       : @SIZE@
 Tipo MIME    : @MIME@
 Usuaria/o    : @USER@
 
---
+-- 
 Este correo foi xerado polo DokuWiki en
 @DOKUWIKIURL@

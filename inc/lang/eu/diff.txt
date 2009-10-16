@@ -1,4 +1,4 @@
-======Aldaketak======
+====== Aldaketak ======
 
 Aukeratutako bertsioaren eta egungo bertsioaren arteko aldaketak aurkezten ditu.
 

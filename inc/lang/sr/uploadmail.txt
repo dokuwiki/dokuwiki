@@ -9,6 +9,6 @@
 MIME тип: @MIME@
 Корисник: @USER@
 
---
+-- 
 Ову поруку је генерисао DokuWiki sa
 @DOKUWIKIURL@

@@ -9,6 +9,6 @@ IPアドレス  : @IPADDRESS@
 MIMEタイプ  : @MIME@
 ユーザー名  : @USER@
 
---
+-- 
 このメールは次のDokuWikiより自動的に送信されています。
 @DOKUWIKIURL@

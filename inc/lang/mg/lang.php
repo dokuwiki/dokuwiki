@@ -131,5 +131,5 @@ $lang['acl_perm4']  = 'Manamboatra';
 $lang['acl_perm8']  = 'Mandefa rakitra';
 $lang['acl_perm16'] = 'Mamafa';
 $lang['acl_new']    = 'Ampio andalana vaovao';
-
+
 //Setup VIM: ex: et ts=2 enc=utf-8 :

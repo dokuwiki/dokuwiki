@@ -8,6 +8,6 @@ Untuk mengkonfirmasi bahwa permintaan tersebut adalah benar dari Anda, silahkan 
 
 @CONFIRM@
 
---
+-- 
 Email ini dibuat otomatis  oleh DokuWiki
 @DOKUWIKIURL@

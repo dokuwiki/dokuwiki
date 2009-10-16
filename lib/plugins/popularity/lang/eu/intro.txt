@@ -1,6 +1,6 @@
 ====== Popularitate Feedback-a ======
 
-Tresna honek datu anonimoak hartzen ditu zure wiki-ari buruz eta hauek DokuWiki garatzaileei bidaltzea ahalbidetzen dizu. Honek, DokuWiki erabiltzaileek nola erabiltzen duten ulertzen laguntzen die, etorkizuneko garapen erabakiak mundu errealeko erabilpen estatistikekin indartuz. 
+Tresna honek datu anonimoak hartzen ditu zure wiki-ari buruz eta hauek DokuWiki garatzaileei bidaltzea ahalbidetzen dizu. Honek, DokuWiki erabiltzaileek nola erabiltzen duten ulertzen laguntzen die, etorkizuneko garapen erabakiak mundu errealeko erabilpen estatistikekin indartuz.
 
 Pauso hau denboran zehar errepikatzera animatzen zaitugu, modu horretan garatzaileak informatuz zure wiki-a handitzen den ahala. Zure datu bidalketak identifikatzaile anonimo batez identifikatuak izango dira.
 

@@ -1,4 +1,4 @@
-======Primerjaj izbrane različice======
+====== Primerjaj izbrane različice ======
 
 Prikazana je razlika med izbrano in trenutno različico te strani.
 

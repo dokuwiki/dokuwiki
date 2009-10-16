@@ -9,6 +9,6 @@ Navegador: @BROWSER@
 Endereço IP: @IPADDRESS@
 Nome do host: @HOSTNAME@
 
---
+-- 
 Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@

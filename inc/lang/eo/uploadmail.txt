@@ -9,6 +9,6 @@ Grandeco: @SIZE@
 Dosier-tipo: @MIME@
 Uzanto: @USER@
 
---
+-- 
 Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe
 @DOKUWIKIURL@

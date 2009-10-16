@@ -197,7 +197,7 @@ $lang['i_enableacl']           = 'Lietot ACL (ieteikts)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'Instalētājs atrada zemāk minētās problēmas. Kamēr tās nenovērš, nav iespējam turpināt.';
 $lang['i_modified']            = 'Drošības nolūkos šis skripts darbosies tika ar jaunu nemodificētu Dokuwiki instalāciju.
-                         Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā 
+                         Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā
                          <a href="http://dokuwiki.org/install"></a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
 $lang['i_phpver']              = 'Jūsu PHP versija <code>%s</code> ir par vecu. Vajag versiju <code>%s</code>. Atjaunojiet savu PHP instalāciju.';
@@ -207,7 +207,7 @@ $lang['i_writeerr']            = 'Nevar izveidot <code>%s</code>. Jāpārbauda d
 $lang['i_badhash']             = 'nepazīstams via izmainīts dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - neatļauta vai tukša vērtība';
 $lang['i_success']             = 'Konfigurēšana veiksmīgi pabeigta. Tagad vari nodzēst failu install.php. Tālāk turpini <a href="doku.php">savā jaunajā DokuWiki</a>.';
-$lang['i_failure']             = 'Rakstot konfigurācijas failu, gadījās dažas kļūmes. 
+$lang['i_failure']             = 'Rakstot konfigurācijas failu, gadījās dažas kļūmes.
                          Pirms lieto <a href="doku.php">savu jauno DokuWiki</a>, tās varbūt jāizlabo.';
 $lang['i_policy']              = 'Sākotnējā ACL politika';
 $lang['i_pol0']                = 'Atvērts Wiki (raksta, lasa un augšupielādē ikviens)';

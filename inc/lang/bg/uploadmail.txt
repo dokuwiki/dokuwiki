@@ -9,6 +9,6 @@ IP-Адрес    : @IPADDRESS@
 MIME Тип    : @MIME@
 Потребител  : @USER@
 
---
+-- 
 Tова писмо е генерирано от DokuWiki на:
 @DOKUWIKIURL@

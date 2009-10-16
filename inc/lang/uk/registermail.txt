@@ -9,6 +9,6 @@ E-Mail      : @NEWEMAIL@
 Адреса IP   : @IPADDRESS@
 Назва хосту : @HOSTNAME@
 
---
+-- 
 Це повідомлення створене ДокуВікі з
 @DOKUWIKIURL@

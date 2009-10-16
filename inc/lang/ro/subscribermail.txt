@@ -7,11 +7,11 @@ Iată modificările:
 @DIFF@
 --------------------------------------------------------
 
-Pentru a vă dezabona, logaţi-vă la wiki la 
+Pentru a vă dezabona, logaţi-vă la wiki la
 @DOKUWIKIURL@, apoi vizitaţi
 @NEWPAGE@
 şi alegeţi 'Anulează modificările'.
 
---
+-- 
 Acest mail a fost generat automat de către DokuWiki la
 @DOKUWIKIURL@

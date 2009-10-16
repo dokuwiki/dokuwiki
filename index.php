@@ -6,4 +6,3 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 header("Location: doku.php");
-?>

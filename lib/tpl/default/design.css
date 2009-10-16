@@ -405,11 +405,11 @@ div.dokuwiki h4 {font-size: 120%; margin-left: 60px; border-bottom: none; font-w
 div.dokuwiki h5 {font-size: 100%; margin-left: 80px; border-bottom: none; font-weight: bold;}
 
 /* indent different sections */
-div.dokuwiki div.level1 {margin-left: 3px;}
-div.dokuwiki div.level2 {margin-left: 23px;}
-div.dokuwiki div.level3 {margin-left: 43px;}
-div.dokuwiki div.level4 {margin-left: 63px;}
-div.dokuwiki div.level5 {margin-left: 83px;}
+div.dokuwiki div.level1 { margin-left: 3px; }
+div.dokuwiki div.level2 { margin-left: 23px; }
+div.dokuwiki div.level3 { margin-left: 43px; }
+div.dokuwiki div.level4 { margin-left: 63px; }
+div.dokuwiki div.level5 { margin-left: 83px; }
 
 /* unordered lists */
 div.dokuwiki ul {
@@ -443,10 +443,10 @@ div.dokuwiki .li {
   font-weight: normal;
 }
 
-div.dokuwiki ol {list-style-type: decimal}
-div.dokuwiki ol ol {list-style-type: upper-roman}
-div.dokuwiki ol ol ol {list-style-type: lower-alpha}
-div.dokuwiki ol ol ol ol {list-style-type: lower-greek}
+div.dokuwiki ol { list-style-type: decimal; }
+div.dokuwiki ol ol { list-style-type: upper-roman; }
+div.dokuwiki ol ol ol { list-style-type: lower-alpha; }
+div.dokuwiki ol ol ol ol { list-style-type: lower-greek; }
 
 div.dokuwiki li.open {
   list-style-image: url(images/open.gif);
@@ -739,7 +739,7 @@ div.dokuwiki ul.search_quickhits {
 
 div.dokuwiki ul.search_quickhits li {
   margin: 0 1.0em 0 1.0em;
-  float:left;
+  float: left;
   width: 30%;
 }
 
@@ -832,6 +832,6 @@ div.dokuwiki div.imagemeta {
 }
 
 div.dokuwiki div.imagemeta img.thumb {
-  float:left;
+  float: left;
   margin-right: 0.1em;
 }
