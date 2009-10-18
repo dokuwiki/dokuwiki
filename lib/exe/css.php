@@ -135,7 +135,7 @@ function css_out(){
 
     // save cache file
     io_saveFile($cache,$css);
-    copy($cache,"compress.zlib://$cache.gz");
+    if(function_exists('gzopen')) io_saveFile("$cache.gz",$css);
 
     // finally send output
     if ($conf['gzip_output']) {

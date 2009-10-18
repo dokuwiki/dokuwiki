@@ -127,7 +127,7 @@ function js_out(){
 
     // save cache file
     io_saveFile($cache,$js);
-    copy($cache,"compress.zlib://$cache.gz");
+    if(function_exists('gzopen')) io_saveFile("$cache.gz",$js);
 
     // finally send output
     if ($conf['gzip_output']) {
