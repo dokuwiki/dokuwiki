@@ -1,0 +1,18 @@
+This directory contains the Coding Standard tests to be used with PHP
+CodeSniffer on DokuWiki's code.
+
+1. Install PHP CodeSniffer:
+
+  #> pear install PHP_CodeSniffer
+
+2. Link the Coding Standard to the CodeSniffer directory:
+
+  #> ln -s /path/to/dokuwiki/_cs/DokuWiki /usr/share/pear/PHP/CodeSniffer/Standards/DokuWiki
+
+3. Set DokuWiki to be the default standard:
+
+  #> phpcs --config-set default_standard DokuWiki
+
+
+
+The coding standard is work in progress.
