@@ -13,7 +13,7 @@ require_once(DOKU_INC.'inc/JSON.php');
 /**
  * Prepares and prints an JavaScript array with all toolbar buttons
  *
- * @todo add toolbar plugins
+ * @emits  TOOLBAR_DEFINE
  * @param  string $varname Name of the JS variable to fill
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -209,9 +209,6 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'sig.png',
                 'key'    => 'y',
                ),
-
-
-
         ));
     } // end event TOOLBAR_DEFINE default action
     $evt->advise_after();
@@ -228,17 +225,17 @@ function toolbar_JSdefines($varname){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function toolbar_signature(){
-  global $conf;
-  global $INFO;
+    global $conf;
+    global $INFO;
 
-  $sig = $conf['signature'];
-  $sig = strftime($sig);
-  $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
-  $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
-  $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
-  $sig = str_replace('@DATE@',dformat(),$sig);
-  $sig = str_replace('\\\\n','\\n',addslashes($sig));
-  return $sig;
+    $sig = $conf['signature'];
+    $sig = strftime($sig);
+    $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
+    $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
+    $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
+    $sig = str_replace('@DATE@',dformat(),$sig);
+    $sig = str_replace('\\\\n','\\n',addslashes($sig));
+    return $sig;
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

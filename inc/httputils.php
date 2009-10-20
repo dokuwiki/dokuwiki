@@ -19,45 +19,45 @@ define('HTTP_CHUNK_SIZE',16*1024);
  * @returns  void or exits with previously header() commands executed
  */
 function http_conditionalRequest($timestamp){
-  // A PHP implementation of conditional get, see
-  //   http://fishbowl.pastiche.org/archives/001132.html
-  $last_modified = substr(gmdate('r', $timestamp), 0, -5).'GMT';
-  $etag = '"'.md5($last_modified).'"';
-  // Send the headers
-  header("Last-Modified: $last_modified");
-  header("ETag: $etag");
-  // See if the client has provided the required headers
-  if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])){
-    $if_modified_since = stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-  }else{
-    $if_modified_since = false;
-  }
+    // A PHP implementation of conditional get, see
+    //   http://fishbowl.pastiche.org/archives/001132.html
+    $last_modified = substr(gmdate('r', $timestamp), 0, -5).'GMT';
+    $etag = '"'.md5($last_modified).'"';
+    // Send the headers
+    header("Last-Modified: $last_modified");
+    header("ETag: $etag");
+    // See if the client has provided the required headers
+    if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])){
+        $if_modified_since = stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+    }else{
+        $if_modified_since = false;
+    }
 
-  if (isset($_SERVER['HTTP_IF_NONE_MATCH'])){
-    $if_none_match = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
-  }else{
-    $if_none_match = false;
-  }
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH'])){
+        $if_none_match = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
+    }else{
+        $if_none_match = false;
+    }
 
-  if (!$if_modified_since && !$if_none_match){
-    return;
-  }
+    if (!$if_modified_since && !$if_none_match){
+        return;
+    }
 
-  // At least one of the headers is there - check them
-  if ($if_none_match && $if_none_match != $etag) {
-    return; // etag is there but doesn't match
-  }
+    // At least one of the headers is there - check them
+    if ($if_none_match && $if_none_match != $etag) {
+        return; // etag is there but doesn't match
+    }
 
-  if ($if_modified_since && $if_modified_since != $last_modified) {
-    return; // if-modified-since is there but doesn't match
-  }
+    if ($if_modified_since && $if_modified_since != $last_modified) {
+        return; // if-modified-since is there but doesn't match
+    }
 
-  // Nothing has changed since their last request - serve a 304 and exit
-  header('HTTP/1.0 304 Not Modified');
+    // Nothing has changed since their last request - serve a 304 and exit
+    header('HTTP/1.0 304 Not Modified');
 
-  // don't produce output, even if compression is on
-  ob_end_clean();
-  exit;
+    // don't produce output, even if compression is on
+    ob_end_clean();
+    exit;
 }
 
 /**
@@ -67,24 +67,24 @@ function http_conditionalRequest($timestamp){
  * @returns  void or exits with previously header() commands executed
  */
 function http_sendfile($file) {
-  global $conf;
+    global $conf;
 
-  //use x-sendfile header to pass the delivery to compatible webservers
-  if($conf['xsendfile'] == 1){
-    header("X-LIGHTTPD-send-file: $file");
-    ob_end_clean();
-    exit;
-  }elseif($conf['xsendfile'] == 2){
-    header("X-Sendfile: $file");
-    ob_end_clean();
-    exit;
-  }elseif($conf['xsendfile'] == 3){
-    header("X-Accel-Redirect: $file");
-    ob_end_clean();
-    exit;
-  }
+    //use x-sendfile header to pass the delivery to compatible webservers
+    if($conf['xsendfile'] == 1){
+        header("X-LIGHTTPD-send-file: $file");
+        ob_end_clean();
+        exit;
+    }elseif($conf['xsendfile'] == 2){
+        header("X-Sendfile: $file");
+        ob_end_clean();
+        exit;
+    }elseif($conf['xsendfile'] == 3){
+        header("X-Accel-Redirect: $file");
+        ob_end_clean();
+        exit;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -166,11 +166,11 @@ function http_rangeRequest($fh,$size,$mime){
         fseek($fh,$start); //seek to start of range
         $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
         while (!feof($fh) && $chunk > 0) {
-          @set_time_limit(30); // large files can take a lot of time
-          print fread($fh, $chunk);
-          flush();
-          $len -= $chunk;
-          $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
+            @set_time_limit(30); // large files can take a lot of time
+            print fread($fh, $chunk);
+            flush();
+            $len -= $chunk;
+            $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
         }
     }
     if($parts > 1){

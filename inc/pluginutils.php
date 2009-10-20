@@ -20,10 +20,28 @@ $plugin_controller = new $plugin_controller_class();
 /**
  * Original plugin functions, remain for backwards compatibility
  */
-function plugin_list($type='',$all=false) { global $plugin_controller; return $plugin_controller->getList($type,$all); }
-function &plugin_load($type,$name,$new=false) { global $plugin_controller; return $plugin_controller->load($type,$name,$new); }
-function plugin_isdisabled($plugin) { global $plugin_controller; return $plugin_controller->isdisabled($plugin); }
-function plugin_enable($plugin) { global $plugin_controller; return $plugin_controller->enable($plugin); }
-function plugin_disable($plugin) { global $plugin_controller; return $plugin_controller->disable($plugin); }
-function plugin_directory($plugin) { global $plugin_controller; return $plugin_controller->get_directory($plugin); }
+function plugin_list($type='',$all=false) {
+    global $plugin_controller;
+    return $plugin_controller->getList($type,$all);
+}
+function &plugin_load($type,$name,$new=false) {
+    global $plugin_controller;
+    return $plugin_controller->load($type,$name,$new);
+}
+function plugin_isdisabled($plugin) {
+    global $plugin_controller;
+    return $plugin_controller->isdisabled($plugin);
+}
+function plugin_enable($plugin) {
+    global $plugin_controller;
+    return $plugin_controller->enable($plugin);
+}
+function plugin_disable($plugin) {
+    global $plugin_controller;
+    return $plugin_controller->disable($plugin);
+}
+function plugin_directory($plugin) {
+    global $plugin_controller;
+    return $plugin_controller->get_directory($plugin);
+}
 

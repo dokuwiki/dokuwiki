@@ -23,34 +23,34 @@ require_once(DOKU_INC.'inc/common.php');
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
-  $dirs   = array();
-  $files  = array();
+    $dirs   = array();
+    $files  = array();
 
-  //read in directories and files
-  $dh = @opendir($base.'/'.$dir);
-  if(!$dh) return;
-  while(($file = readdir($dh)) !== false){
-    if(preg_match('/^[\._]/',$file)) continue; //skip hidden files and upper dirs
-    if(is_dir($base.'/'.$dir.'/'.$file)){
-      $dirs[] = $dir.'/'.$file;
-      continue;
+    //read in directories and files
+    $dh = @opendir($base.'/'.$dir);
+    if(!$dh) return;
+    while(($file = readdir($dh)) !== false){
+        if(preg_match('/^[\._]/',$file)) continue; //skip hidden files and upper dirs
+        if(is_dir($base.'/'.$dir.'/'.$file)){
+            $dirs[] = $dir.'/'.$file;
+            continue;
+        }
+        $files[] = $dir.'/'.$file;
     }
-    $files[] = $dir.'/'.$file;
-  }
-  closedir($dh);
-  sort($files);
-  sort($dirs);
+    closedir($dh);
+    sort($files);
+    sort($dirs);
 
-  //give directories to userfunction then recurse
-  foreach($dirs as $dir){
-    if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
-      search($data,$base,$func,$opts,$dir,$lvl+1);
+    //give directories to userfunction then recurse
+    foreach($dirs as $dir){
+        if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
+            search($data,$base,$func,$opts,$dir,$lvl+1);
+        }
     }
-  }
-  //now handle the files
-  foreach($files as $file){
-    call_user_func_array($func, array(&$data,$base,$file,'f',$lvl,$opts));
-  }
+    //now handle the files
+    foreach($files as $file){
+        call_user_func_array($func, array(&$data,$base,$file,'f',$lvl,$opts));
+    }
 }
 
 /**
@@ -59,7 +59,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
  * @deprecated
  */
 function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
-  return call_user_func_array($func, array(&$data,$base,$file,$type,$lvl,$opts));
+    return call_user_func_array($func, array(&$data,$base,$file,$type,$lvl,$opts));
 }
 
 /**
@@ -92,10 +92,10 @@ function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
-        'idmatch'   => '(^|:)'.preg_quote($opts['query'],'/').'/',
-        'listfiles' => true,
-        'pagesonly' => true,
-    );
+            'idmatch'   => '(^|:)'.preg_quote($opts['query'],'/').'/',
+            'listfiles' => true,
+            'pagesonly' => true,
+            );
     return search_universal($data,$base,$file,$type,$lvl,$opts);
 }
 
@@ -107,40 +107,40 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
-  global $conf;
-  $return = true;
+    global $conf;
+    $return = true;
 
-  $item = array();
+    $item = array();
 
-  if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
-    //add but don't recurse
-    $return = false;
-  }elseif($type == 'f' && ($opts['nofiles'] || substr($file,-4) != '.txt')){
-    //don't add
-    return false;
-  }
+    if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
+        //add but don't recurse
+        $return = false;
+    }elseif($type == 'f' && ($opts['nofiles'] || substr($file,-4) != '.txt')){
+        //don't add
+        return false;
+    }
 
-  $id = pathID($file);
+    $id = pathID($file);
 
-  if($type=='d' && $conf['sneaky_index'] && auth_quickaclcheck($id.':') < AUTH_READ){
-    return false;
-  }
+    if($type=='d' && $conf['sneaky_index'] && auth_quickaclcheck($id.':') < AUTH_READ){
+        return false;
+    }
 
-  //check hidden
-  if(isHiddenPage($id)){
-    return false;
-  }
+    //check hidden
+    if(isHiddenPage($id)){
+        return false;
+    }
 
-  //check ACL
-  if($type=='f' && auth_quickaclcheck($id) < AUTH_READ){
-    return false;
-  }
+    //check ACL
+    if($type=='f' && auth_quickaclcheck($id) < AUTH_READ){
+        return false;
+    }
 
-  $data[]=array( 'id'    => $id,
-                 'type'  => $type,
-                 'level' => $lvl,
-                 'open'  => $return );
-  return $return;
+    $data[]=array( 'id'    => $id,
+            'type'  => $type,
+            'level' => $lvl,
+            'open'  => $return );
+    return $return;
 }
 
 /**
@@ -150,8 +150,8 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
-        'listdirs' => true,
-    );
+            'listdirs' => true,
+            );
     return search_universal($data,$base,$file,$type,$lvl,$opts);
 }
 
@@ -215,18 +215,18 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_list(&$data,$base,$file,$type,$lvl,$opts){
-  //we do nothing with directories
-  if($type == 'd') return false;
-  //only search txt files
-  if(substr($file,-4) == '.txt'){
-    //check ACL
-    $id = pathID($file);
-    if(auth_quickaclcheck($id) < AUTH_READ){
-      return false;
+    //we do nothing with directories
+    if($type == 'd') return false;
+    //only search txt files
+    if(substr($file,-4) == '.txt'){
+        //check ACL
+        $id = pathID($file);
+        if(auth_quickaclcheck($id) < AUTH_READ){
+            return false;
+        }
+        $data[]['id'] = $id;
     }
-    $data[]['id'] = $id;
-  }
-  return false;
+    return false;
 }
 
 /**
@@ -237,23 +237,23 @@ function search_list(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
-  //we do nothing with directories
-  if($type == 'd') return true;
-  //only search txt files
-  if(substr($file,-4) != '.txt') return true;
+    //we do nothing with directories
+    if($type == 'd') return true;
+    //only search txt files
+    if(substr($file,-4) != '.txt') return true;
 
-  //simple stringmatching
-  if (!empty($opts['query'])){
-    if(strpos($file,$opts['query']) !== false){
-      //check ACL
-      $id = pathID($file);
-      if(auth_quickaclcheck($id) < AUTH_READ){
-        return false;
-      }
-      $data[]['id'] = $id;
+    //simple stringmatching
+    if (!empty($opts['query'])){
+        if(strpos($file,$opts['query']) !== false){
+            //check ACL
+            $id = pathID($file);
+            if(auth_quickaclcheck($id) < AUTH_READ){
+                return false;
+            }
+            $data[]['id'] = $id;
+        }
     }
-  }
-  return true;
+    return true;
 }
 
 /**
@@ -279,7 +279,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 
     $item['id']   = pathID($file);
     if(!$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
-      return false;
+        return false;
     }
 
     $item['rev']   = filemtime($base.'/'.$file);
@@ -303,42 +303,42 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
  * @deprecated Replaced by ft_backlinks()
  */
 function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
-  //we do nothing with directories
-  if($type == 'd') return true;
-  //only search txt files
-  if(substr($file,-4) != '.txt') return true;
+    //we do nothing with directories
+    if($type == 'd') return true;
+    //only search txt files
+    if(substr($file,-4) != '.txt') return true;
 
-  //absolute search id
-  $sid = cleanID($opts['ns'].':'.$opts['name']);
+    //absolute search id
+    $sid = cleanID($opts['ns'].':'.$opts['name']);
 
-  //current id and namespace
-  $cid = pathID($file);
-  $cns = getNS($cid);
+    //current id and namespace
+    $cid = pathID($file);
+    $cns = getNS($cid);
 
-  //check ACL
-  if(auth_quickaclcheck($cid) < AUTH_READ){
-    return false;
-  }
-
-  //fetch instructions
-  require_once(DOKU_INC.'inc/parserutils.php');
-  $instructions = p_cached_instructions($base.$file,true);
-  if(is_null($instructions)) return false;
-
-  //check all links for match
-  foreach($instructions as $ins){
-    if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
-      $mid = $ins[1][0];
-      resolve_pageid($cns,$mid,$exists); //exists is not used
-      if($mid == $sid){
-        //we have a match - finish
-        $data[]['id'] = $cid;
-        break;
-      }
+    //check ACL
+    if(auth_quickaclcheck($cid) < AUTH_READ){
+        return false;
     }
-  }
 
-  return false;
+    //fetch instructions
+    require_once(DOKU_INC.'inc/parserutils.php');
+    $instructions = p_cached_instructions($base.$file,true);
+    if(is_null($instructions)) return false;
+
+    //check all links for match
+    foreach($instructions as $ins){
+        if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
+            $mid = $ins[1][0];
+            resolve_pageid($cns,$mid,$exists); //exists is not used
+            if($mid == $sid){
+                //we have a match - finish
+                $data[]['id'] = $cid;
+                break;
+            }
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -350,86 +350,86 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
  * @deprecated - fulltext indexer is used instead
  */
 function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
-  //we do nothing with directories
-  if($type == 'd') return true;
-  //only search txt files
-  if(substr($file,-4) != '.txt') return true;
+    //we do nothing with directories
+    if($type == 'd') return true;
+    //only search txt files
+    if(substr($file,-4) != '.txt') return true;
 
-  //check ACL
-  $id = pathID($file);
-  if(auth_quickaclcheck($id) < AUTH_READ){
-    return false;
-  }
-
-  //create regexp from queries
-  $poswords = array();
-  $negwords = array();
-  $qpreg = preg_split('/\s+/',$opts['query']);
-
-  foreach($qpreg as $word){
-    switch(substr($word,0,1)){
-      case '-':
-        if(strlen($word) > 1){  // catch single '-'
-          array_push($negwords,preg_quote(substr($word,1),'#'));
-        }
-        break;
-      case '+':
-        if(strlen($word) > 1){  // catch single '+'
-          array_push($poswords,preg_quote(substr($word,1),'#'));
-        }
-        break;
-      default:
-        array_push($poswords,preg_quote($word,'#'));
-        break;
+    //check ACL
+    $id = pathID($file);
+    if(auth_quickaclcheck($id) < AUTH_READ){
+        return false;
     }
-  }
 
-  // a search without any posword is useless
-  if (!count($poswords)) return true;
+    //create regexp from queries
+    $poswords = array();
+    $negwords = array();
+    $qpreg = preg_split('/\s+/',$opts['query']);
 
-  $reg  = '^(?=.*?'.join(')(?=.*?',$poswords).')';
-  $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
-  search_regex($data,$base,$file,$reg,$poswords);
-  return true;
-}
+    foreach($qpreg as $word){
+        switch(substr($word,0,1)){
+            case '-':
+                if(strlen($word) > 1){  // catch single '-'
+                    array_push($negwords,preg_quote(substr($word,1),'#'));
+                }
+                break;
+            case '+':
+                if(strlen($word) > 1){  // catch single '+'
+                    array_push($poswords,preg_quote(substr($word,1),'#'));
+                }
+                break;
+            default:
+                array_push($poswords,preg_quote($word,'#'));
+                break;
+        }
+    }
 
-/**
- * Reference search
- * This fuction searches for existing references to a given media file
- * and returns an array with the found pages. It doesn't pay any
- * attention to ACL permissions to find every reference. The caller
- * must check if the user has the appropriate rights to see the found
- * page and eventually have to prevent the result from displaying.
- *
- * @param array  $data Reference to the result data structure
- * @param string $base Base usually $conf['datadir']
- * @param string $file current file or directory relative to $base
- * @param char   $type Type either 'd' for directory or 'f' for file
- * @param int    $lvl  Current recursion depht
- * @param mixed  $opts option array as given to search()
- *
- * $opts['query'] is the demanded media file name
- *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
- */
+    // a search without any posword is useless
+    if (!count($poswords)) return true;
+
+    $reg  = '^(?=.*?'.join(')(?=.*?',$poswords).')';
+            $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
+            search_regex($data,$base,$file,$reg,$poswords);
+            return true;
+            }
+
+            /**
+             * Reference search
+             * This fuction searches for existing references to a given media file
+             * and returns an array with the found pages. It doesn't pay any
+             * attention to ACL permissions to find every reference. The caller
+             * must check if the user has the appropriate rights to see the found
+             * page and eventually have to prevent the result from displaying.
+             *
+             * @param array  $data Reference to the result data structure
+             * @param string $base Base usually $conf['datadir']
+             * @param string $file current file or directory relative to $base
+             * @param char   $type Type either 'd' for directory or 'f' for file
+             * @param int    $lvl  Current recursion depht
+             * @param mixed  $opts option array as given to search()
+             *
+             * $opts['query'] is the demanded media file name
+             *
+             * @author  Andreas Gohr <andi@splitbrain.org>
+             * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+             */
 function search_reference(&$data,$base,$file,$type,$lvl,$opts){
-  global $conf;
+    global $conf;
 
-  //we do nothing with directories
-  if($type == 'd') return true;
+    //we do nothing with directories
+    if($type == 'd') return true;
 
-  //only search txt files
-  if(substr($file,-4) != '.txt') return true;
+    //only search txt files
+    if(substr($file,-4) != '.txt') return true;
 
-  //we finish after 'cnt' references found. The return value
-  //'false' will skip subdirectories to speed search up.
-  $cnt = $conf['refshow'] > 0 ? $conf['refshow'] : 1;
-  if(count($data) >= $cnt) return false;
+    //we finish after 'cnt' references found. The return value
+    //'false' will skip subdirectories to speed search up.
+    $cnt = $conf['refshow'] > 0 ? $conf['refshow'] : 1;
+    if(count($data) >= $cnt) return false;
 
-  $reg = '\{\{ *\:?'.$opts['query'].' *(\|.*)?\}\}';
-  search_regex($data,$base,$file,$reg,array($opts['query']));
-  return true;
+    $reg = '\{\{ *\:?'.$opts['query'].' *(\|.*)?\}\}';
+    search_regex($data,$base,$file,$reg,array($opts['query']));
+    return true;
 }
 
 /* ------------- helper functions below -------------- */
@@ -453,35 +453,35 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_regex(&$data,$base,$file,$reg,$words){
 
-  //get text
-  $text = io_readfile($base.'/'.$file);
-  //lowercase text (u modifier does not help with case)
-  $lctext = utf8_strtolower($text);
+    //get text
+    $text = io_readfile($base.'/'.$file);
+    //lowercase text (u modifier does not help with case)
+    $lctext = utf8_strtolower($text);
 
-  //do the fulltext search
-  $matches = array();
-  if($cnt = preg_match_all('#'.$reg.'#usi',$lctext,$matches)){
-    //this is not the best way for snippet generation but the fastest I could find
-    $q = $words[0];  //use first word for snippet creation
-    $p = utf8_strpos($lctext,$q);
-    $f = $p - 100;
-    $l = utf8_strlen($q) + 200;
-    if($f < 0) $f = 0;
-    $snippet = '<span class="search_sep"> ... </span>'.
-               htmlspecialchars(utf8_substr($text,$f,$l)).
-               '<span class="search_sep"> ... </span>';
-    $mark    = '('.join('|', $words).')';
-    $snippet = preg_replace('#'.$mark.'#si','<strong class="search_hit">\\1</strong>',$snippet);
+    //do the fulltext search
+    $matches = array();
+    if($cnt = preg_match_all('#'.$reg.'#usi',$lctext,$matches)){
+        //this is not the best way for snippet generation but the fastest I could find
+        $q = $words[0];  //use first word for snippet creation
+        $p = utf8_strpos($lctext,$q);
+        $f = $p - 100;
+        $l = utf8_strlen($q) + 200;
+        if($f < 0) $f = 0;
+        $snippet = '<span class="search_sep"> ... </span>'.
+            htmlspecialchars(utf8_substr($text,$f,$l)).
+            '<span class="search_sep"> ... </span>';
+        $mark    = '('.join('|', $words).')';
+        $snippet = preg_replace('#'.$mark.'#si','<strong class="search_hit">\\1</strong>',$snippet);
 
-    $data[] = array(
-      'id'       => pathID($file),
-      'count'    => preg_match_all('#'.$mark.'#usi',$lctext,$matches),
-      'poswords' => join(' ',$words),
-      'snippet'  => $snippet,
-    );
-  }
+        $data[] = array(
+                'id'       => pathID($file),
+                'count'    => preg_match_all('#'.$mark.'#usi',$lctext,$matches),
+                'poswords' => join(' ',$words),
+                'snippet'  => $snippet,
+                );
+    }
 
-  return true;
+    return true;
 }
 
 
@@ -494,13 +494,13 @@ function search_regex(&$data,$base,$file,$reg,$words){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function sort_search_fulltext($a,$b){
-  if($a['count'] > $b['count']){
-    return -1;
-  }elseif($a['count'] < $b['count']){
-    return 1;
-  }else{
-    return strcmp($a['id'],$b['id']);
-  }
+    if($a['count'] > $b['count']){
+        return -1;
+    }elseif($a['count'] < $b['count']){
+        return 1;
+    }else{
+        return strcmp($a['id'],$b['id']);
+    }
 }
 
 /**
@@ -510,12 +510,12 @@ function sort_search_fulltext($a,$b){
  * @todo    move to pageutils
  */
 function pathID($path,$keeptxt=false){
-  $id = utf8_decodeFN($path);
-  $id = str_replace('/',':',$id);
-  if(!$keeptxt) $id = preg_replace('#\.txt$#','',$id);
-  $id = preg_replace('#^:+#','',$id);
-  $id = preg_replace('#:+$#','',$id);
-  return $id;
+    $id = utf8_decodeFN($path);
+    $id = str_replace('/',':',$id);
+    if(!$keeptxt) $id = preg_replace('#\.txt$#','',$id);
+    $id = preg_replace('#^:+#','',$id);
+    $id = preg_replace('#:+$#','',$id);
+    return $id;
 }
 
 

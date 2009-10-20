@@ -32,10 +32,10 @@ function media_filesinuse($data,$id){
             echo '<span class="mediaref_ref">'.hsc($row).'</span>';
             echo '</div>';
         }else
-        $hidden++;
+            $hidden++;
     }
     if ($hidden){
-      print '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
+        print '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
     }
 }
 
@@ -86,14 +86,14 @@ function media_metaform($id,$auth){
     static $fields = null;
     if(is_null($fields)){
 
-      foreach (array('default','local') as $config_group) {
-        if (empty($config_cascade['mediameta'][$config_group])) continue;
-        foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
-          if(@file_exists($config_file)){
-            include($config_file);
-          }
+        foreach (array('default','local') as $config_group) {
+            if (empty($config_cascade['mediameta'][$config_group])) continue;
+            foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
+                if(@file_exists($config_file)){
+                    include($config_file);
+                }
+            }
         }
-      }
     }
 
     $src = mediaFN($id);
@@ -136,9 +136,9 @@ function media_metaform($id,$auth){
     echo '<div class="buttons">'.NL;
     echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
     echo '<input name="do[save]" type="submit" value="'.$lang['btn_save'].
-         '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
+        '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
     echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].
-         '" title="'.$lang['btn_cancel'].' [C]" accesskey="c" class="button" />'.NL;
+        '" title="'.$lang['btn_cancel'].' [C]" accesskey="c" class="button" />'.NL;
     echo '</div>'.NL;
     echo '</form>'.NL;
 }
@@ -446,7 +446,7 @@ function media_filelist($ns,$auth=null,$jump=''){
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
         search($data,$conf['mediadir'],'search_media',
-               array('showmsg'=>true,'depth'=>1),$dir);
+                array('showmsg'=>true,'depth'=>1),$dir);
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
@@ -471,19 +471,19 @@ function media_searchlist($query,$ns,$auth=null){
 
     if ($query) {
         $evdata = array(
-            'ns'    => $ns,
-            'data'  => array(),
-            'query' => $query
-        );
+                'ns'    => $ns,
+                'data'  => array(),
+                'query' => $query
+                );
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
             $pattern = '/'.preg_quote($evdata['query'],'/').'/i';
             search($evdata['data'],
-                   $conf['mediadir'],
-                   'search_media',
-                   array('showmsg'=>false,'pattern'=>$pattern),
-                   $dir);
+                    $conf['mediadir'],
+                    'search_media',
+                    array('showmsg'=>false,'pattern'=>$pattern),
+                    $dir);
         }
         $evt->advise_after();
         unset($evt);
@@ -502,8 +502,6 @@ function media_searchlist($query,$ns,$auth=null){
 /**
  * Print action links for a file depending on filetype
  * and available permissions
- *
- * @todo contains inline javascript
  */
 function media_fileactions($item,$auth){
     global $lang;
@@ -511,8 +509,7 @@ function media_fileactions($item,$auth){
     // view button
     $link = ml($item['id'],'',true);
     echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-         'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
-
+        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
 
     // no further actions if not writable
     if(!$item['writable']) return;
@@ -520,16 +517,16 @@ function media_fileactions($item,$auth){
     // delete button
     if($auth >= AUTH_DELETE){
         echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-             '&amp;sectok='.getSecurityToken().'" class="btn_media_delete" title="'.$item['id'].'">'.
-             '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
-             'title="'.$lang['btn_delete'].'" class="btn" /></a>';
+            '&amp;sectok='.getSecurityToken().'" class="btn_media_delete" title="'.$item['id'].'">'.
+            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
+            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
     }
 
     // edit button
     if($auth >= AUTH_UPLOAD && $item['isimg'] && $item['meta']->getField('File.Mime') == 'image/jpeg'){
         echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']).'">'.
-             '<img src="'.DOKU_BASE.'lib/images/pencil.png" alt="'.$lang['metaedit'].'" '.
-             'title="'.$lang['metaedit'].'" class="btn" /></a>';
+            '<img src="'.DOKU_BASE.'lib/images/pencil.png" alt="'.$lang['metaedit'].'" '.
+            'title="'.$lang['metaedit'].'" class="btn" /></a>';
     }
 
 }
@@ -622,8 +619,8 @@ function media_printimgdetail($item){
     // read EXIF/IPTC data
     $t = $item['meta']->getField(array('IPTC.Headline','xmp.dc:title'));
     $d = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
-                                       'EXIF.TIFFImageDescription',
-                                       'EXIF.TIFFUserComment'));
+                'EXIF.TIFFImageDescription',
+                'EXIF.TIFFUserComment'));
     if(utf8_strlen($d) > 250) $d = utf8_substr($d,0,250).'...';
     $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
 
@@ -662,47 +659,47 @@ function media_uploadform($ns, $auth){
     $form->addElement(form_makeCloseTag('p'));
 
     if($auth >= AUTH_DELETE){
-      $form->addElement(form_makeOpenTag('p'));
-      $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check'));
-      $form->addElement(form_makeCloseTag('p'));
+        $form->addElement(form_makeOpenTag('p'));
+        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check'));
+        $form->addElement(form_makeCloseTag('p'));
     }
     html_form('upload', $form);
 
     // prepare flashvars for multiupload
     $opt = array(
-        'L_gridname'  => $lang['mu_gridname'] ,
-        'L_gridsize'  => $lang['mu_gridsize'] ,
-        'L_gridstat'  => $lang['mu_gridstat'] ,
-        'L_namespace' => $lang['mu_namespace'] ,
-        'L_overwrite' => $lang['txt_overwrt'],
-        'L_browse'    => $lang['mu_browse'],
-        'L_upload'    => $lang['btn_upload'],
-        'L_toobig'    => $lang['mu_toobig'],
-        'L_ready'     => $lang['mu_ready'],
-        'L_done'      => $lang['mu_done'],
-        'L_fail'      => $lang['mu_fail'],
-        'L_authfail'  => $lang['mu_authfail'],
-        'L_progress'  => $lang['mu_progress'],
-        'L_filetypes' => $lang['mu_filetypes'],
-        'L_info'      => $lang['mu_info'],
-        'L_lasterr'   => $lang['mu_lasterr'],
+            'L_gridname'  => $lang['mu_gridname'] ,
+            'L_gridsize'  => $lang['mu_gridsize'] ,
+            'L_gridstat'  => $lang['mu_gridstat'] ,
+            'L_namespace' => $lang['mu_namespace'] ,
+            'L_overwrite' => $lang['txt_overwrt'],
+            'L_browse'    => $lang['mu_browse'],
+            'L_upload'    => $lang['btn_upload'],
+            'L_toobig'    => $lang['mu_toobig'],
+            'L_ready'     => $lang['mu_ready'],
+            'L_done'      => $lang['mu_done'],
+            'L_fail'      => $lang['mu_fail'],
+            'L_authfail'  => $lang['mu_authfail'],
+            'L_progress'  => $lang['mu_progress'],
+            'L_filetypes' => $lang['mu_filetypes'],
+            'L_info'      => $lang['mu_info'],
+            'L_lasterr'   => $lang['mu_lasterr'],
 
-        'O_ns'        => ":$ns",
-        'O_backend'   => 'mediamanager.php?'.session_name().'='.session_id(),
-        'O_maxsize'   => php_to_byte(ini_get('upload_max_filesize')),
-        'O_extensions'=> join('|',array_keys(getMimeTypes())),
-        'O_overwrite' => ($auth >= AUTH_DELETE),
-        'O_sectok'    => getSecurityToken(),
-        'O_authtok'   => auth_createToken(),
-    );
+            'O_ns'        => ":$ns",
+            'O_backend'   => 'mediamanager.php?'.session_name().'='.session_id(),
+            'O_maxsize'   => php_to_byte(ini_get('upload_max_filesize')),
+            'O_extensions'=> join('|',array_keys(getMimeTypes())),
+            'O_overwrite' => ($auth >= AUTH_DELETE),
+            'O_sectok'    => getSecurityToken(),
+            'O_authtok'   => auth_createToken(),
+            );
     $var = buildURLparams($opt);
     // output the flash uploader
     ?>
-    <div id="dw__flashupload" style="display:none">
-    <div class="upload"><?php echo $lang['mu_intro']?></div>
-    <?php echo html_flashobject('multipleUpload.swf','500','190',null,$opt); ?>
-    </div>
-    <?php
+        <div id="dw__flashupload" style="display:none">
+        <div class="upload"><?php echo $lang['mu_intro']?></div>
+        <?php echo html_flashobject('multipleUpload.swf','500','190',null,$opt); ?>
+        </div>
+        <?php
 }
 
 /**
@@ -748,7 +745,7 @@ function media_nstree($ns){
 
     // wrap a list with the root level around the other namespaces
     $item = array( 'level' => 0, 'id' => '',
-                   'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
+            'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
 
     echo '<ul class="idx">';
     echo media_nstree_li($item);
@@ -796,7 +793,7 @@ function media_nstree_li($item){
         $alt   = '+';
     }
     return '<li class="'.$class.'">'.
-           '<img src="'.$img.'" alt="'.$alt.'" />';
+        '<img src="'.$img.'" alt="'.$alt.'" />';
 }
 
 /**
@@ -805,28 +802,28 @@ function media_nstree_li($item){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function media_resize_image($file, $ext, $w, $h=0){
-  global $conf;
+    global $conf;
 
-  $info = @getimagesize($file); //get original size
-  if($info == false) return $file; // that's no image - it's a spaceship!
+    $info = @getimagesize($file); //get original size
+    if($info == false) return $file; // that's no image - it's a spaceship!
 
-  if(!$h) $h = round(($w * $info[1]) / $info[0]);
+    if(!$h) $h = round(($w * $info[1]) / $info[0]);
 
-  // we wont scale up to infinity
-  if($w > 2000 || $h > 2000) return $file;
+    // we wont scale up to infinity
+    if($w > 2000 || $h > 2000) return $file;
 
-  //cache
-  $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
-  $mtime = @filemtime($local); // 0 if not exists
+    //cache
+    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
+    $mtime = @filemtime($local); // 0 if not exists
 
-  if( $mtime > filemtime($file) ||
-      media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
-      media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
-    if($conf['fperm']) chmod($local, $conf['fperm']);
-    return $local;
-  }
-  //still here? resizing failed
-  return $file;
+    if( $mtime > filemtime($file) ||
+            media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
+            media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
+        if($conf['fperm']) chmod($local, $conf['fperm']);
+        return $local;
+    }
+    //still here? resizing failed
+    return $file;
 }
 
 /**
@@ -839,49 +836,49 @@ function media_resize_image($file, $ext, $w, $h=0){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function media_crop_image($file, $ext, $w, $h=0){
-  global $conf;
+    global $conf;
 
-  if(!$h) $h = $w;
-  $info = @getimagesize($file); //get original size
-  if($info == false) return $file; // that's no image - it's a spaceship!
+    if(!$h) $h = $w;
+    $info = @getimagesize($file); //get original size
+    if($info == false) return $file; // that's no image - it's a spaceship!
 
-  // calculate crop size
-  $fr = $info[0]/$info[1];
-  $tr = $w/$h;
-  if($tr >= 1){
-    if($tr > $fr){
-        $cw = $info[0];
-        $ch = (int) $info[0]/$tr;
+    // calculate crop size
+    $fr = $info[0]/$info[1];
+    $tr = $w/$h;
+    if($tr >= 1){
+        if($tr > $fr){
+            $cw = $info[0];
+            $ch = (int) $info[0]/$tr;
+        }else{
+            $cw = (int) $info[1]*$tr;
+            $ch = $info[1];
+        }
     }else{
-        $cw = (int) $info[1]*$tr;
-        $ch = $info[1];
+        if($tr < $fr){
+            $cw = (int) $info[1]*$tr;
+            $ch = $info[1];
+        }else{
+            $cw = $info[0];
+            $ch = (int) $info[0]/$tr;
+        }
     }
-  }else{
-    if($tr < $fr){
-        $cw = (int) $info[1]*$tr;
-        $ch = $info[1];
-    }else{
-        $cw = $info[0];
-        $ch = (int) $info[0]/$tr;
+    // calculate crop offset
+    $cx = (int) ($info[0]-$cw)/2;
+    $cy = (int) ($info[1]-$ch)/3;
+
+    //cache
+    $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
+    $mtime = @filemtime($local); // 0 if not exists
+
+    if( $mtime > filemtime($file) ||
+            media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
+            media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
+        if($conf['fperm']) chmod($local, $conf['fperm']);
+        return media_resize_image($local,$ext, $w, $h);
     }
-  }
-  // calculate crop offset
-  $cx = (int) ($info[0]-$cw)/2;
-  $cy = (int) ($info[1]-$ch)/3;
 
-  //cache
-  $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
-  $mtime = @filemtime($local); // 0 if not exists
-
-  if( $mtime > filemtime($file) ||
-      media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
-      media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-    if($conf['fperm']) chmod($local, $conf['fperm']);
-    return media_resize_image($local,$ext, $w, $h);
-  }
-
-  //still here? cropping failed
-  return media_resize_image($file,$ext, $w, $h);
+    //still here? cropping failed
+    return media_resize_image($file,$ext, $w, $h);
 }
 
 /**
@@ -894,31 +891,31 @@ function media_crop_image($file, $ext, $w, $h=0){
  * @author  Pavel Vitis <Pavel.Vitis@seznam.cz>
  */
 function media_get_from_URL($url,$ext,$cache){
-  global $conf;
+    global $conf;
 
-  // if no cache or fetchsize just redirect
-  if ($cache==0)           return false;
-  if (!$conf['fetchsize']) return false;
+    // if no cache or fetchsize just redirect
+    if ($cache==0)           return false;
+    if (!$conf['fetchsize']) return false;
 
-  $local = getCacheName(strtolower($url),".media.$ext");
-  $mtime = @filemtime($local); // 0 if not exists
+    $local = getCacheName(strtolower($url),".media.$ext");
+    $mtime = @filemtime($local); // 0 if not exists
 
-  //decide if download needed:
-  if( ($mtime == 0) ||                           // cache does not exist
-      ($cache != -1 && $mtime < time()-$cache)   // 'recache' and cache has expired
-    ){
-      if(media_image_download($url,$local)){
-        return $local;
-      }else{
-        return false;
-      }
-  }
+    //decide if download needed:
+    if( ($mtime == 0) ||                           // cache does not exist
+            ($cache != -1 && $mtime < time()-$cache)   // 'recache' and cache has expired
+      ){
+        if(media_image_download($url,$local)){
+            return $local;
+        }else{
+            return false;
+        }
+    }
 
-  //if cache exists use it else
-  if($mtime) return $local;
+    //if cache exists use it else
+    if($mtime) return $local;
 
-  //else return false
-  return false;
+    //else return false
+    return false;
 }
 
 /**
@@ -927,30 +924,30 @@ function media_get_from_URL($url,$ext,$cache){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_image_download($url,$file){
-  global $conf;
-  $http = new DokuHTTPClient();
-  $http->max_bodysize = $conf['fetchsize'];
-  $http->timeout = 25; //max. 25 sec
-  $http->header_regexp = '!\r\nContent-Type: image/(jpe?g|gif|png)!i';
+    global $conf;
+    $http = new DokuHTTPClient();
+    $http->max_bodysize = $conf['fetchsize'];
+    $http->timeout = 25; //max. 25 sec
+    $http->header_regexp = '!\r\nContent-Type: image/(jpe?g|gif|png)!i';
 
-  $data = $http->get($url);
-  if(!$data) return false;
+    $data = $http->get($url);
+    if(!$data) return false;
 
-  $fileexists = @file_exists($file);
-  $fp = @fopen($file,"w");
-  if(!$fp) return false;
-  fwrite($fp,$data);
-  fclose($fp);
-  if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+    $fileexists = @file_exists($file);
+    $fp = @fopen($file,"w");
+    if(!$fp) return false;
+    fwrite($fp,$data);
+    fclose($fp);
+    if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
 
-  // check if it is really an image
-  $info = @getimagesize($file);
-  if(!$info){
-    @unlink($file);
-    return false;
-  }
+    // check if it is really an image
+    $info = @getimagesize($file);
+    if(!$info){
+        @unlink($file);
+        return false;
+    }
 
-  return true;
+    return true;
 }
 
 /**
@@ -960,22 +957,22 @@ function media_image_download($url,$file){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
-  global $conf;
+    global $conf;
 
-  // check if convert is configured
-  if(!$conf['im_convert']) return false;
+    // check if convert is configured
+    if(!$conf['im_convert']) return false;
 
-  // prepare command
-  $cmd  = $conf['im_convert'];
-  $cmd .= ' -resize '.$to_w.'x'.$to_h.'!';
-  if ($ext == 'jpg' || $ext == 'jpeg') {
-      $cmd .= ' -quality '.$conf['jpg_quality'];
-  }
-  $cmd .= " $from $to";
+    // prepare command
+    $cmd  = $conf['im_convert'];
+    $cmd .= ' -resize '.$to_w.'x'.$to_h.'!';
+    if ($ext == 'jpg' || $ext == 'jpeg') {
+        $cmd .= ' -quality '.$conf['jpg_quality'];
+    }
+    $cmd .= " $from $to";
 
-  @exec($cmd,$out,$retval);
-  if ($retval == 0) return true;
-  return false;
+    @exec($cmd,$out,$retval);
+    if ($retval == 0) return true;
+    return false;
 }
 
 /**
@@ -984,22 +981,22 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
-  global $conf;
+    global $conf;
 
-  // check if convert is configured
-  if(!$conf['im_convert']) return false;
+    // check if convert is configured
+    if(!$conf['im_convert']) return false;
 
-  // prepare command
-  $cmd  = $conf['im_convert'];
-  $cmd .= ' -crop '.$to_w.'x'.$to_h.'+'.$ofs_x.'+'.$ofs_y;
-  if ($ext == 'jpg' || $ext == 'jpeg') {
-      $cmd .= ' -quality '.$conf['jpg_quality'];
-  }
-  $cmd .= " $from $to";
+    // prepare command
+    $cmd  = $conf['im_convert'];
+    $cmd .= ' -crop '.$to_w.'x'.$to_h.'+'.$ofs_x.'+'.$ofs_y;
+    if ($ext == 'jpg' || $ext == 'jpeg') {
+        $cmd .= ' -quality '.$conf['jpg_quality'];
+    }
+    $cmd .= " $from $to";
 
-  @exec($cmd,$out,$retval);
-  if ($retval == 0) return true;
-  return false;
+    @exec($cmd,$out,$retval);
+    if ($retval == 0) return true;
+    return false;
 }
 
 /**
@@ -1009,98 +1006,98 @@ function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$o
  * @author Sebastian Wienecke <s_wienecke@web.de>
  */
 function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=0,$ofs_y=0){
-  global $conf;
+    global $conf;
 
-  if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
+    if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
 
-  // check available memory
-  if(!is_mem_available(($from_w * $from_h * 4) + ($to_w * $to_h * 4))){
-    return false;
-  }
-
-  // create an image of the given filetype
-  if ($ext == 'jpg' || $ext == 'jpeg'){
-    if(!function_exists("imagecreatefromjpeg")) return false;
-    $image = @imagecreatefromjpeg($from);
-  }elseif($ext == 'png') {
-    if(!function_exists("imagecreatefrompng")) return false;
-    $image = @imagecreatefrompng($from);
-
-  }elseif($ext == 'gif') {
-    if(!function_exists("imagecreatefromgif")) return false;
-    $image = @imagecreatefromgif($from);
-  }
-  if(!$image) return false;
-
-  if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif'){
-    $newimg = @imagecreatetruecolor ($to_w, $to_h);
-  }
-  if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
-  if(!$newimg){
-    imagedestroy($image);
-    return false;
-  }
-
-  //keep png alpha channel if possible
-  if($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')){
-    imagealphablending($newimg, false);
-    imagesavealpha($newimg,true);
-  }
-
-  //keep gif transparent color if possible
-  if($ext == 'gif' && function_exists('imagefill') && function_exists('imagecolorallocate')) {
-    if(function_exists('imagecolorsforindex') && function_exists('imagecolortransparent')) {
-      $transcolorindex = @imagecolortransparent($image);
-      if($transcolorindex >= 0 ) { //transparent color exists
-        $transcolor = @imagecolorsforindex($image, $transcolorindex);
-        $transcolorindex = @imagecolorallocate($newimg, $transcolor['red'], $transcolor['green'], $transcolor['blue']);
-        @imagefill($newimg, 0, 0, $transcolorindex);
-        @imagecolortransparent($newimg, $transcolorindex);
-      }else{ //filling with white
-        $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
-        @imagefill($newimg, 0, 0, $whitecolorindex);
-      }
-    }else{ //filling with white
-      $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
-      @imagefill($newimg, 0, 0, $whitecolorindex);
+    // check available memory
+    if(!is_mem_available(($from_w * $from_h * 4) + ($to_w * $to_h * 4))){
+        return false;
     }
-  }
 
-  //try resampling first
-  if(function_exists("imagecopyresampled")){
-    if(!@imagecopyresampled($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h)) {
-      imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
+    // create an image of the given filetype
+    if ($ext == 'jpg' || $ext == 'jpeg'){
+        if(!function_exists("imagecreatefromjpeg")) return false;
+        $image = @imagecreatefromjpeg($from);
+    }elseif($ext == 'png') {
+        if(!function_exists("imagecreatefrompng")) return false;
+        $image = @imagecreatefrompng($from);
+
+    }elseif($ext == 'gif') {
+        if(!function_exists("imagecreatefromgif")) return false;
+        $image = @imagecreatefromgif($from);
     }
-  }else{
-    imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
-  }
+    if(!$image) return false;
 
-  $okay = false;
-  if ($ext == 'jpg' || $ext == 'jpeg'){
-    if(!function_exists('imagejpeg')){
-      $okay = false;
+    if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif'){
+        $newimg = @imagecreatetruecolor ($to_w, $to_h);
+    }
+    if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
+    if(!$newimg){
+        imagedestroy($image);
+        return false;
+    }
+
+    //keep png alpha channel if possible
+    if($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')){
+        imagealphablending($newimg, false);
+        imagesavealpha($newimg,true);
+    }
+
+    //keep gif transparent color if possible
+    if($ext == 'gif' && function_exists('imagefill') && function_exists('imagecolorallocate')) {
+        if(function_exists('imagecolorsforindex') && function_exists('imagecolortransparent')) {
+            $transcolorindex = @imagecolortransparent($image);
+            if($transcolorindex >= 0 ) { //transparent color exists
+                $transcolor = @imagecolorsforindex($image, $transcolorindex);
+                $transcolorindex = @imagecolorallocate($newimg, $transcolor['red'], $transcolor['green'], $transcolor['blue']);
+                @imagefill($newimg, 0, 0, $transcolorindex);
+                @imagecolortransparent($newimg, $transcolorindex);
+            }else{ //filling with white
+                $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
+                @imagefill($newimg, 0, 0, $whitecolorindex);
+            }
+        }else{ //filling with white
+            $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
+            @imagefill($newimg, 0, 0, $whitecolorindex);
+        }
+    }
+
+    //try resampling first
+    if(function_exists("imagecopyresampled")){
+        if(!@imagecopyresampled($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h)) {
+            imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
+        }
     }else{
-      $okay = imagejpeg($newimg, $to, $conf['jpg_quality']);
+        imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
     }
-  }elseif($ext == 'png') {
-    if(!function_exists('imagepng')){
-      $okay = false;
-    }else{
-      $okay =  imagepng($newimg, $to);
-    }
-  }elseif($ext == 'gif') {
-    if(!function_exists('imagegif')){
-      $okay = false;
-    }else{
-      $okay = imagegif($newimg, $to);
-    }
-  }
 
-  // destroy GD image ressources
-  if($image) imagedestroy($image);
-  if($newimg) imagedestroy($newimg);
+    $okay = false;
+    if ($ext == 'jpg' || $ext == 'jpeg'){
+        if(!function_exists('imagejpeg')){
+            $okay = false;
+        }else{
+            $okay = imagejpeg($newimg, $to, $conf['jpg_quality']);
+        }
+    }elseif($ext == 'png') {
+        if(!function_exists('imagepng')){
+            $okay = false;
+        }else{
+            $okay =  imagepng($newimg, $to);
+        }
+    }elseif($ext == 'gif') {
+        if(!function_exists('imagegif')){
+            $okay = false;
+        }else{
+            $okay = imagegif($newimg, $to);
+        }
+    }
 
-  return $okay;
+    // destroy GD image ressources
+    if($image) imagedestroy($image);
+    if($newimg) imagedestroy($newimg);
+
+    return $okay;
 }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

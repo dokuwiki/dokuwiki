@@ -6,74 +6,74 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
-  require_once(DOKU_INC.'inc/init.php');
-  require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/events.php');
-  require_once(DOKU_INC.'inc/parserutils.php');
-  require_once(DOKU_INC.'inc/feedcreator.class.php');
-  require_once(DOKU_INC.'inc/auth.php');
-  require_once(DOKU_INC.'inc/pageutils.php');
-  require_once(DOKU_INC.'inc/httputils.php');
+if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
+require_once(DOKU_INC.'inc/init.php');
+require_once(DOKU_INC.'inc/common.php');
+require_once(DOKU_INC.'inc/events.php');
+require_once(DOKU_INC.'inc/parserutils.php');
+require_once(DOKU_INC.'inc/feedcreator.class.php');
+require_once(DOKU_INC.'inc/auth.php');
+require_once(DOKU_INC.'inc/pageutils.php');
+require_once(DOKU_INC.'inc/httputils.php');
 
-  //close session
-  session_write_close();
+//close session
+session_write_close();
 
-  // get params
-  $opt = rss_parseOptions();
+// get params
+$opt = rss_parseOptions();
 
-  // the feed is dynamic - we need a cache for each combo
-  // (but most people just use the default feed so it's still effective)
-  $cache = getCacheName(join('',array_values($opt)).$_SERVER['REMOTE_USER'],'.feed');
-  $cmod = @filemtime($cache); // 0 if not exists
-  if ($cmod && (@filemtime(DOKU_CONF.'local.php')>$cmod || @filemtime(DOKU_CONF.'dokuwiki.php')>$cmod)) {
+// the feed is dynamic - we need a cache for each combo
+// (but most people just use the default feed so it's still effective)
+$cache = getCacheName(join('',array_values($opt)).$_SERVER['REMOTE_USER'],'.feed');
+$cmod = @filemtime($cache); // 0 if not exists
+if ($cmod && (@filemtime(DOKU_CONF.'local.php')>$cmod || @filemtime(DOKU_CONF.'dokuwiki.php')>$cmod)) {
     // ignore cache if feed prefs may have changed
     $cmod = 0;
-  }
+}
 
-  // check cacheage and deliver if nothing has changed since last
-  // time or the update interval has not passed, also handles conditional requests
-  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-  header('Pragma: public');
-  header('Content-Type: application/xml; charset=utf-8');
-  header('X-Robots-Tag: noindex');
-  if($cmod && (($cmod+$conf['rss_update']>time()) || ($cmod>@filemtime($conf['changelog'])))){
+// check cacheage and deliver if nothing has changed since last
+// time or the update interval has not passed, also handles conditional requests
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
+header('Content-Type: application/xml; charset=utf-8');
+header('X-Robots-Tag: noindex');
+if($cmod && (($cmod+$conf['rss_update']>time()) || ($cmod>@filemtime($conf['changelog'])))){
     http_conditionalRequest($cmod);
     if($conf['allowdebug']) header("X-CacheUsed: $cache");
     print io_readFile($cache);
     exit;
-  } else {
+} else {
     http_conditionalRequest(time());
-  }
+ }
 
-  // create new feed
-  $rss = new DokuWikiFeedCreator();
-  $rss->title = $conf['title'].(($opt['namespace']) ? ' '.$opt['namespace'] : '');
-  $rss->link  = DOKU_URL;
-  $rss->syndicationURL = DOKU_URL.'feed.php';
-  $rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
+// create new feed
+$rss = new DokuWikiFeedCreator();
+$rss->title = $conf['title'].(($opt['namespace']) ? ' '.$opt['namespace'] : '');
+$rss->link  = DOKU_URL;
+$rss->syndicationURL = DOKU_URL.'feed.php';
+$rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
 
-  $image = new FeedImage();
-  $image->title = $conf['title'];
-  $image->url = DOKU_URL."lib/images/favicon.ico";
-  $image->link = DOKU_URL;
-  $rss->image = $image;
+$image = new FeedImage();
+$image->title = $conf['title'];
+$image->url = DOKU_URL."lib/images/favicon.ico";
+$image->link = DOKU_URL;
+$rss->image = $image;
 
-  if($opt['feed_mode'] == 'list'){
+if($opt['feed_mode'] == 'list'){
     rssListNamespace($rss,$opt);
-  }elseif($opt['feed_mode'] == 'search'){
+}elseif($opt['feed_mode'] == 'search'){
     rssSearch($rss,$opt);
-  }else{
+}else{
     rssRecentChanges($rss,$opt);
-  }
+}
 
-  $feed = $rss->createFeed($opt['feed_type'],'utf-8');
+$feed = $rss->createFeed($opt['feed_type'],'utf-8');
 
-  // save cachefile
-  io_saveFile($cache,$feed);
+// save cachefile
+io_saveFile($cache,$feed);
 
-  // finally deliver
-  print $feed;
+// finally deliver
+print $feed;
 
 // ---------------------------------------------------------------- //
 
@@ -101,25 +101,25 @@ function rss_parseOptions(){
     $opt['guardmail']  = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
     switch ($opt['feed_type']){
-      case 'rss':
-         $opt['feed_type'] = 'RSS0.91';
-         $opt['mime_type'] = 'text/xml';
-         break;
-      case 'rss2':
-         $opt['feed_type'] = 'RSS2.0';
-         $opt['mime_type'] = 'text/xml';
-         break;
-      case 'atom':
-         $opt['feed_type'] = 'ATOM0.3';
-         $opt['mime_type'] = 'application/xml';
-         break;
-      case 'atom1':
-         $opt['feed_type'] = 'ATOM1.0';
-         $opt['mime_type'] = 'application/atom+xml';
-         break;
-      default:
-         $opt['feed_type'] = 'RSS1.0';
-         $opt['mime_type'] = 'application/xml';
+        case 'rss':
+            $opt['feed_type'] = 'RSS0.91';
+            $opt['mime_type'] = 'text/xml';
+            break;
+        case 'rss2':
+            $opt['feed_type'] = 'RSS2.0';
+            $opt['mime_type'] = 'text/xml';
+            break;
+        case 'atom':
+            $opt['feed_type'] = 'ATOM0.3';
+            $opt['mime_type'] = 'application/xml';
+            break;
+        case 'atom1':
+            $opt['feed_type'] = 'ATOM1.0';
+            $opt['mime_type'] = 'application/atom+xml';
+            break;
+        default:
+            $opt['feed_type'] = 'RSS1.0';
+            $opt['mime_type'] = 'application/xml';
     }
     return $opt;
 }
@@ -229,7 +229,6 @@ function rss_buildItems(&$rss,&$data,$opt){
         }
         $item->description = $content; //FIXME a plugin hook here could be senseful
 
-
         // add user
         # FIXME should the user be pulled from metadata as well?
         $user = null;
@@ -256,8 +255,8 @@ function rss_buildItems(&$rss,&$data,$opt){
         if($meta['subject']){
             $item->category = $meta['subject'];
         }else{
-           $cat = getNS($id);
-           if($cat) $item->category = $cat;
+            $cat = getNS($id);
+            if($cat) $item->category = $cat;
         }
 
         // finally add the item to the feed object, after handing it to registered plugins
@@ -267,7 +266,7 @@ function rss_buildItems(&$rss,&$data,$opt){
                         'rss'   => &$rss);
         $evt = new Doku_Event('FEED_ITEM_ADD', $evdata);
         if ($evt->advise_before()){
-          $rss->addItem($item);
+            $rss->addItem($item);
         }
         $evt->advise_after(); // for completeness
     }

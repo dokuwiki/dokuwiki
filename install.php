@@ -1,8 +1,8 @@
 <?php
 /**
- *  Dokuwiki installation assistance
+ * Dokuwiki installation assistance
  *
- *  @author      Chris Smith <chris@jalakai.co.uk>
+ * @author      Chris Smith <chris@jalakai.co.uk>
  */
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
@@ -286,7 +286,6 @@ EOT;
     }
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
-
     if ($d['acl']) {
         // create users.auth.php
         // --- user:MD5password:Real Name:email:groups,comma,seperated
@@ -472,7 +471,6 @@ function langsel(){
     }
     closedir($dh);
     sort($langs);
-
 
     echo '<form action="">';
     echo $lang['i_chooselang'];

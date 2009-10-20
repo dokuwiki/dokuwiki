@@ -8,74 +8,74 @@
 
 //  xdebug_start_profiling();
 
-  if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
-  require_once(DOKU_INC.'inc/init.php');
-  require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/events.php');
-  require_once(DOKU_INC.'inc/pageutils.php');
-  require_once(DOKU_INC.'inc/html.php');
-  require_once(DOKU_INC.'inc/auth.php');
-  require_once(DOKU_INC.'inc/actions.php');
+if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
+require_once(DOKU_INC.'inc/init.php');
+require_once(DOKU_INC.'inc/common.php');
+require_once(DOKU_INC.'inc/events.php');
+require_once(DOKU_INC.'inc/pageutils.php');
+require_once(DOKU_INC.'inc/html.php');
+require_once(DOKU_INC.'inc/auth.php');
+require_once(DOKU_INC.'inc/actions.php');
 
-  //import variables
-  $QUERY = trim($_REQUEST['id']);
-  $ID    = getID();
-  $NS    = getNS($ID);
-  $REV   = $_REQUEST['rev'];
-  $ACT   = $_REQUEST['do'];
-  $IDX   = $_REQUEST['idx'];
-  $DATE  = $_REQUEST['date'];
-  $RANGE = $_REQUEST['lines'];
-  $HIGH  = $_REQUEST['s'];
-  if(empty($HIGH)) $HIGH = getGoogleQuery();
+//import variables
+$QUERY = trim($_REQUEST['id']);
+$ID    = getID();
+$NS    = getNS($ID);
+$REV   = $_REQUEST['rev'];
+$ACT   = $_REQUEST['do'];
+$IDX   = $_REQUEST['idx'];
+$DATE  = $_REQUEST['date'];
+$RANGE = $_REQUEST['lines'];
+$HIGH  = $_REQUEST['s'];
+if(empty($HIGH)) $HIGH = getGoogleQuery();
 
-  $TEXT  = cleanText($_POST['wikitext']);
-  $PRE   = cleanText($_POST['prefix']);
-  $SUF   = cleanText($_POST['suffix']);
-  $SUM   = $_REQUEST['summary'];
+$TEXT  = cleanText($_POST['wikitext']);
+$PRE   = cleanText($_POST['prefix']);
+$SUF   = cleanText($_POST['suffix']);
+$SUM   = $_REQUEST['summary'];
 
-  //sanitize revision
-  $REV = preg_replace('/[^0-9]/','',$REV);
+//sanitize revision
+$REV = preg_replace('/[^0-9]/','',$REV);
 
-  //we accept the do param as HTTP header, too:
-  if(!empty($_SERVER['HTTP_X_DOKUWIKI_DO'])){
+//we accept the do param as HTTP header, too:
+if(!empty($_SERVER['HTTP_X_DOKUWIKI_DO'])){
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
-  }
+}
 
-  if(!empty($IDX)) $ACT='index';
-  //set default #FIXME not needed here? done in actions?
-  if(empty($ACT)) $ACT = 'show';
+if(!empty($IDX)) $ACT='index';
+//set default #FIXME not needed here? done in actions?
+if(empty($ACT)) $ACT = 'show';
 
-  //make infos about the selected page available
-  $INFO = pageinfo();
+//make infos about the selected page available
+$INFO = pageinfo();
 
-  // handle debugging
-  if($conf['allowdebug'] && $ACT == 'debug'){
+// handle debugging
+if($conf['allowdebug'] && $ACT == 'debug'){
     html_debug();
     exit;
-  }
+}
 
-  //send 404 for missing pages if configured or ID has special meaning to bots
-  if(!$INFO['exists'] &&
-     ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/',$ID)) &&
-     ($ACT == 'show' || substr($ACT,0,7) == 'export_') ){
+//send 404 for missing pages if configured or ID has special meaning to bots
+if(!$INFO['exists'] &&
+  ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/',$ID)) &&
+  ($ACT == 'show' || substr($ACT,0,7) == 'export_') ){
     header('HTTP/1.0 404 Not Found');
-  }
+}
 
-  //prepare breadcrumbs (initialize a static var)
-  if ($conf['breadcrumbs']) breadcrumbs();
+//prepare breadcrumbs (initialize a static var)
+if ($conf['breadcrumbs']) breadcrumbs();
 
-  // check upstream
-  checkUpdateMessages();
+// check upstream
+checkUpdateMessages();
 
-  trigger_event('DOKUWIKI_STARTED',$tmp=array());
+trigger_event('DOKUWIKI_STARTED',$tmp=array());
 
-  //close session
-  session_write_close();
+//close session
+session_write_close();
 
-  //do the work
-  act_dispatch($ACT);
+//do the work
+act_dispatch($ACT);
 
-  trigger_event('DOKUWIKI_DONE', $tmp=array());
+trigger_event('DOKUWIKI_DONE', $tmp=array());
 
 //  xdebug_dump_function_profile(1);

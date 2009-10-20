@@ -227,18 +227,18 @@ function idx_getPageWords($page){
     // ensure the deaccented or romanised page names of internal links are added to the token array
     // (this is necessary for the backlink function -- there maybe a better way!)
     if ($conf['deaccent']) {
-      $links = p_get_metadata($page,'relation references');
+        $links = p_get_metadata($page,'relation references');
 
-      if (!empty($links)) {
-        $tmp = join(' ',array_keys($links));                // make a single string
-        $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
-        $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
+        if (!empty($links)) {
+            $tmp = join(' ',array_keys($links));                // make a single string
+            $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
+            $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
 
-        foreach ($link_tokens as $link_token) {
-          if (isset($tokens[$link_token])) continue;
-          $tokens[$link_token] = 1;
+            foreach ($link_tokens as $link_token) {
+                if (isset($tokens[$link_token])) continue;
+                $tokens[$link_token] = 1;
+            }
         }
-      }
     }
 
     $words = array();
@@ -537,7 +537,7 @@ function idx_getIndexWordsSorted($words,&$result){
             }
         }
     }
-  return $wids;
+    return $wids;
 }
 
 /**
@@ -664,7 +664,9 @@ function idx_upgradePageWords(){
     if (empty($page_idx)) return;
     $pagewords = array();
     $len = count($page_idx);
-    for ($n=0;$n<$len;$n++) $pagewords[] = array();
+    for ($n=0;$n<$len;$n++){
+        $pagewords[] = array();
+    }
     unset($page_idx);
 
     $n=0;
