@@ -3,6 +3,7 @@
  * Thai language file
  *
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
+ * @author Kittithat Arnontavilas mrtomyum@gmail.com
  */
 $lang['deaccent_o_0']          = 'ปิด';
 $lang['showuseras_o_loginname'] = 'ชื่อผู้ใช้';
