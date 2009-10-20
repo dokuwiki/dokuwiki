@@ -10,6 +10,7 @@
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesTh.php?view=co
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
+ * @author Arthit Suriyawongkul <arthit@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -205,3 +206,25 @@ $lang['i_wikiname']            = 'ชื่อวิกิ';
 $lang['i_enableacl']           = 'เปิดระบบ ACL(แนะนำ)';
 $lang['i_superuser']           = 'ซุปเปอร์ยูสเซอร์';
 $lang['i_problems']            = 'ตัวติดตั้งพบปัญหาบางประการ ตามที่ระบุด้านล่าง คุณไม่สามารถทำต่อได้จนกว่าจะได้แก้ไขสิ่งเหล่านั้น';
+$lang['i_retry']               = 'ลองใหม่';
+$lang['mu_gridname']           = 'ชื่อแฟ้ม';
+$lang['mu_gridsize']           = 'ขนาด';
+$lang['mu_gridstat']           = 'สถานะ';
+$lang['mu_namespace']          = 'เนมสเปซ';
+$lang['mu_browse']             = 'เรียกดู';
+$lang['mu_toobig']             = 'ใหญ่ไป';
+$lang['mu_ready']              = 'พร้อมอัปโหลด';
+$lang['mu_done']               = 'เสร็จสิ้น';
+$lang['mu_fail']               = 'ล้มเหลว';
+$lang['mu_authfail']           = 'วาระหมดอายุ';
+$lang['mu_progress']           = '@PCT@% อัปโหลดแล้ว';
+$lang['mu_filetypes']          = 'ชนิดแฟ้มที่อนุญาต';
+$lang['mu_info']               = 'แฟ้มอัปโหลดแล้ว';
+$lang['mu_lasterr']            = 'ผิดพลาดล่าสุด:';
+$lang['years']                 = '%d ปีก่อน';
+$lang['months']                = '%d เดือนก่อน';
+$lang['weeks']                 = '%d สัปดาห์ก่อน';
+$lang['days']                  = '%d วันก่อน';
+$lang['hours']                 = '%d ชั่วโมงก่อน';
+$lang['minutes']               = '%d นาทีก่อน';
+$lang['seconds']               = '%d วินาทีก่อน';
