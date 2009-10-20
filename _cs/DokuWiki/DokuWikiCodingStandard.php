@@ -40,9 +40,8 @@ class PHP_CodeSniffer_Standards_DokuWiki_DokuWikiCodingStandard extends PHP_Code
             'Generic/Sniffs/Commenting/TodoSniff.php',
             'Generic/Sniffs/Files/LineEndingsSniff.php',
             'Generic/Sniffs/Formatting/DisallowMultipleStatementsSniff.php',
-            'Generic/Sniffs/Formatting/NoSpaceAfterCastSniff.php',
             'Generic/Sniffs/Metrics/NestingLevelSniff.php',
-            'Generic/Sniffs/Metrics/CyclomaticComplexitySniff.php',
+//            'Generic/Sniffs/Metrics/CyclomaticComplexitySniff.php', //FIXME we might need to tune this first
             'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
             'Generic/Sniffs/PHP/LowerCaseConstantSniff.php',
             'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
@@ -53,7 +52,7 @@ class PHP_CodeSniffer_Standards_DokuWiki_DokuWikiCodingStandard extends PHP_Code
             'PEAR/Sniffs/Functions/ValidDefaultValueSniff.php',
             'Squiz/Sniffs/PHP/EvalSniff.php',
             'Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
-            'Squiz/Sniffs/PHP/CommentedOutCodeSniff.php',
+//            'Squiz/Sniffs/PHP/CommentedOutCodeSniff.php', //FIXME should ignore oneliners
             'Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
 
             'Squiz/Sniffs/CSS/LowercaseStyleDefinitionSniff.php',
