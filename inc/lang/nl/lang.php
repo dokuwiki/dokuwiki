@@ -12,6 +12,7 @@
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  * @author Marijn Hofstra hofstra.m@gmail.com
+ * @author Matthias Carchon webmaster@c-mattic.be
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -243,3 +244,10 @@ $lang['mu_filetypes']          = 'Toegestane bestandstypes';
 $lang['mu_info']               = 'bestanden geüpload.';
 $lang['mu_lasterr']            = 'Laatste foutmelding:';
 $lang['recent_global']         = 'Je bekijkt momenteel de wijzigingen binnen de <b>%s</b> namespace. Je kunt ook de <a href="%s">recente wijzigingen van de hele wiki</a> bekijken.';
+$lang['years']                 = '%d jaar geleden';
+$lang['months']                = '%d maand geleden';
+$lang['weeks']                 = '%d weken geleden';
+$lang['days']                  = '%d dagen geleden';
+$lang['hours']                 = '%d uren geleden';
+$lang['minutes']               = '%d minuten geleden';
+$lang['seconds']               = '%d seconden geleden';
