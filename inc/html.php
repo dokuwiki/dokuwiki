@@ -33,7 +33,7 @@ function html_wikilink($id,$name=null,$search=''){
 function html_attbuild($attributes){
     $ret = '';
     foreach ( $attributes as $key => $value ) {
-        $ret .= $key.'="'.formtext($value).'" ';
+        $ret .= $key.'="'.formText($value).'" ';
     }
     return trim($ret);
 }
@@ -51,7 +51,7 @@ function html_login(){
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form('dw__login');
+    $form = new Doku_Form(array('id' => 'dw__login'));
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
@@ -244,7 +244,7 @@ function html_draft(){
     $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
 
     print p_locale_xhtml('draft');
-    $form = new Doku_Form('dw__editform');
+    $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
     $form->addHidden('date', $draft['date']);
     $form->addElement(form_makeWikiText($text, array('readonly'=>'readonly')));
@@ -422,7 +422,7 @@ function html_revisions($first=0){
 
     print p_locale_xhtml('revisions');
 
-    $form = new Doku_Form('page__revisions', wl($ID));
+    $form = new Doku_Form(array('id' => 'page__revisions'));
     $form->addElement(form_makeOpenTag('ul'));
     if($INFO['exists'] && $first==0){
         if (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
@@ -586,7 +586,7 @@ function html_recent($first=0){
     if (getNS($ID) != '')
         print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
 
-    $form = new Doku_Form('dw__recent', script(), 'get');
+    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET'));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
@@ -997,7 +997,7 @@ function html_conflict($text,$summary){
     global $lang;
 
     print p_locale_xhtml('conflict');
-    $form = new Doku_Form('dw__editform');
+    $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
     $form->addHidden('wikitext', $text);
     $form->addHidden('summary', $summary);
@@ -1039,7 +1039,7 @@ function html_register(){
 
     print p_locale_xhtml('register');
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form('dw__register', wl($ID));
+    $form = new Doku_Form(array('id' => 'dw__register'));
     $form->startFieldset($lang['register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
@@ -1075,7 +1075,7 @@ function html_updateprofile(){
     if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
     if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form('dw__register', wl($ID));
+    $form = new Doku_Form(array('id' => 'dw__register'));
     $form->startFieldset($lang['profile']);
     $form->addHidden('do', 'profile');
     $form->addHidden('save', '1');
@@ -1192,7 +1192,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
             <?php } ?>
         </div>
         <?php
-        $form = new Doku_Form('dw__editform');
+        $form = new Doku_Form(array('id' => 'dw__editform'));
         $form->addHidden('id', $ID);
         $form->addHidden('rev', $REV);
         $form->addHidden('date', $DATE);
@@ -1443,7 +1443,7 @@ function html_resendpwd() {
 
     print p_locale_xhtml('resendpwd');
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form('dw__resendpwd', wl($ID));
+    $form = new Doku_Form(array('id' => 'dw__resendpwd'));
     $form->startFieldset($lang['resendpwd']);
     $form->addHidden('do', 'resendpwd');
     $form->addHidden('save', '1');

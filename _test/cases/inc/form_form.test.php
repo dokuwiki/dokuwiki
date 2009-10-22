@@ -6,7 +6,7 @@ require_once DOKU_INC.'inc/form.php';
 class form_test extends UnitTestCase {
 
   function _testform() {
-    $form = new Doku_Form('dw__testform','/test');
+    $form = new Doku_Form(array('id' => 'dw__testform', 'action' => '/test'));
     $form->startFieldset('Test');
     $form->addHidden('summary', 'changes &c');
     $form->addElement(form_makeTextField('t', 'v', 'Text', 'text__id', 'block'));
@@ -88,7 +88,7 @@ class form_test extends UnitTestCase {
   }
 
   function test_close_fieldset() {
-    $form = new Doku_Form('dw__testform','/test');
+    $form = new Doku_Form(array('id' => 'dw__testform', 'action' => '/test'));
     $form->startFieldset('Test');
     $form->addHidden('summary', 'changes &c');
     $form->addElement(form_makeTextField('t', 'v', 'Text', 'text__id', 'block'));

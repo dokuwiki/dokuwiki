@@ -29,17 +29,8 @@ require_once(DOKU_INC.'inc/html.php');
  */
 class Doku_Form {
 
-  // Usually either DOKU_SCRIPT or wl($ID)
-  var $action = '';
-
-  // Most likely no need to change this
-  var $method = 'post';
-
-  // Change for special forms only
-  var $enctype = '';
-
   // Form id attribute
-  var $id = '';
+  var $params = array();
 
   // Draw a border around form fields.
   // Adds <fieldset></fieldset> around the elements
@@ -54,18 +45,33 @@ class Doku_Form {
   /**
    * Constructor
    *
-   * Autoadds a security token
+   * Sets parameters and autoadds a security token. The old calling convention
+   * with up to four parameters is deprecated, instead the first parameter
+   * should be an array with parameters.
    *
-   * @param   string  $id     ID attribute of the form.
-   * @param   string  $action (optional) submit URL, defaults to DOKU_SCRIPT
-   * @param   string  $method (optional) 'POST' or 'GET', default is post
+   * @param   mixed   $params  Parameters for the HTML form element; Using the
+   *                           deprecated calling convention this is the ID
+   *                           attribute of the form
+   * @param   string  $action  (optional, deprecated) submit URL, defaults to
+   *                                                  current page
+   * @param   string  $method  (optional, deprecated) 'POST' or 'GET', default
+   *                                                  is POST
+   * @param   string  $enctype (optional, deprecated) Encoding type of the
+   *                                                  data
    * @author  Tom N Harris <tnharris@whoopdedo.org>
    */
-  function Doku_Form($id, $action=false, $method=false, $enctype=false) {
-    $this->id = $id;
-    $this->action = ($action) ? $action : script();
-    if ($method) $this->method = $method;
-    if ($enctype) $this->enctype = $enctype;
+  function Doku_Form($params, $action=false, $method=false, $enctype=false) {
+    if(!is_array($params)) {
+        $this->params = array('id' => $params);
+        if ($action !== false) $this->params['action'] = $action;
+        if ($method !== false) $this->params['method'] = $method;
+        if ($enctype !== false) $this->params['enctype'] = $enctype;
+    } else {
+        $this->params = $params;
+    }
+    if (!isset($this->params['method'])) {
+        $this->params['method'] = 'POST';
+    }
 
     $this->addHidden('sectok', getSecurityToken());
   }
@@ -240,10 +246,8 @@ class Doku_Form {
    */
   function printForm() {
     global $lang;
-    print '<form action="'.$this->action.'" method="'.$this->method.'" accept-charset="'.$lang['encoding'].'"';
-    if (!empty($this->id)) print ' id="'.$this->id.'"';
-    if (!empty($this->enctype)) print ' enctype="'.$this->enctype.'"';
-    print '><div class="no">'.NL;
+    $this->params['accept-charset'] = $lang['encoding'];
+    print '<form ' . html_attbuild($this->params) . '><div class="no">' . NL;
     if (!empty($this->_hidden)) {
       foreach ($this->_hidden as $name=>$value)
         print form_hidden(array('name'=>$name, 'value'=>$value));

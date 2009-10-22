@@ -646,7 +646,9 @@ function media_uploadform($ns, $auth){
     if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
 
     // The default HTML upload form
-    $form = new Doku_Form('dw__upload', DOKU_BASE.'lib/exe/mediamanager.php', false, 'multipart/form-data');
+    $form = new Doku_Form(array('id'      => 'dw__upload',
+                                'action'  => DOKU_BASE.'lib/exe/mediamanager.php',
+                                'enctype' => 'multipart/form-data'));
     $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
@@ -711,7 +713,7 @@ function media_searchform($ns,$query=''){
     global $lang;
 
     // The default HTML search form
-    $form = new Doku_Form('dw__mediasearch', DOKU_BASE.'lib/exe/mediamanager.php', false);
+    $form = new Doku_Form(array('id' => 'dw__mediasearch', 'action' => DOKU_BASE.'lib/exe/mediamanager.php'));
     $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', $ns);
