@@ -886,10 +886,8 @@ function form_listboxfield($attrs) {
         foreach ($attrs['_options'] as $opt) {
             @list($value,$text,$select) = $opt;
             $p = '';
-            if (!is_null($text))
-                $p .= ' value="'.formText($value).'"';
-            else
-                $text = $value;
+            if(is_null($text)) $text = $value;
+            $p .= ' value="'.formText($value).'"';
             if (!empty($select)) $p .= ' selected="selected"';
             $s .= '<option'.$p.'>'.formText($text).'</option>';
         }
