@@ -9,6 +9,17 @@
 //  xdebug_start_profiling();
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
+
+if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
+    $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
+} elseif (!empty($IDX)) {
+    $ACT = 'index';
+} elseif (isset($_REQUEST['do'])) {
+    $ACT = $_REQUEST['do'];
+} else {
+    $ACT = 'show';
+}
+
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/events.php');
@@ -22,7 +33,6 @@ $QUERY = trim($_REQUEST['id']);
 $ID    = getID();
 $NS    = getNS($ID);
 $REV   = $_REQUEST['rev'];
-$ACT   = $_REQUEST['do'];
 $IDX   = $_REQUEST['idx'];
 $DATE  = $_REQUEST['date'];
 $RANGE = $_REQUEST['lines'];
@@ -36,15 +46,6 @@ $SUM   = $_REQUEST['summary'];
 
 //sanitize revision
 $REV = preg_replace('/[^0-9]/','',$REV);
-
-//we accept the do param as HTTP header, too:
-if(!empty($_SERVER['HTTP_X_DOKUWIKI_DO'])){
-    $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
-}
-
-if(!empty($IDX)) $ACT='index';
-//set default #FIXME not needed here? done in actions?
-if(empty($ACT)) $ACT = 'show';
 
 //make infos about the selected page available
 $INFO = pageinfo();

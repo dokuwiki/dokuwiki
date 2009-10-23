@@ -82,7 +82,6 @@ if($conf['useacl']){
             $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
         }else{
             $evdata = array(
-                    'action'   => $ACT,
                     'user'     => $_REQUEST['u'],
                     'password' => $_REQUEST['p'],
                     'sticky'   => $_REQUEST['r'],
