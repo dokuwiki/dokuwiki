@@ -858,6 +858,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // modify created table to add rowspan for cells containing :::
         // first preprocess created xhtml table and transfer data to $tbody array
         $table = substr($this->doc, $this->_counter['table_begin_pos']);
+        if (!preg_match('/>\s*?:::\s*?</', $table)) return;
+
         preg_match('/(<table.*?>)(.*?)<\/table>/ims', $table, $matches, PREG_OFFSET_CAPTURE);
         $tbody_prefix = $matches[1][0];
         $nrow = preg_match_all('/(<tr.*?>)(.*?)<\/tr>/ims', $matches[2][0], $matches); // split and get number of rows
