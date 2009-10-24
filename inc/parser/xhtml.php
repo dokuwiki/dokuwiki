@@ -848,11 +848,91 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function table_open($maxcols = NULL, $numrows = NULL){
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
+        $this->_counter['table_begin_pos'] = strlen($this->doc);
         $this->doc .= '<table class="inline">'.DOKU_LF;
     }
 
     function table_close(){
         $this->doc .= '</table>'.DOKU_LF;
+
+        // modify created table to add rowspan for cells containing :::
+        // first preprocess created xhtml table and transfer data to $tbody array
+        $table = substr($this->doc, $this->_counter['table_begin_pos']);
+        preg_match('/(<table.*?>)(.*?)<\/table>/ims', $table, $matches, PREG_OFFSET_CAPTURE);
+        $tbody_prefix = $matches[1][0];
+        $nrow = preg_match_all('/(<tr.*?>)(.*?)<\/tr>/ims', $matches[2][0], $matches); // split and get number of rows
+        $tbody = array('rows_begin' => $matches[1], 'rows_content' => null);
+        foreach($matches[0] as $i_row => $row) { // foreach <tr>
+            preg_match_all('/(<t[d|h].*?>)(.*?)<\/(t[d|h])>/ims', $row, $match_cols);
+            $cols_attrib  = $cols_content = $cols_tag = null;
+            foreach($match_cols[1] as $i_col => $col) { // foreach <th> or <td>
+                preg_match_all('/\s(.*?)="(.*?)"/ims', $col, $match_attribs);
+                for ($i = 0, $col_attrib = null;  $i < count($match_attribs[0]); $i++) { // search for colspan="" in attributes
+                    if ($match_attribs[1][$i] == 'colspan'){
+                        $col_attrib[$match_attribs[1][$i]] = (int)$match_attribs[2][$i];
+                        $col_padding = $col_attrib[$match_attribs[1][$i]];
+                    } else {
+                        $col_attrib[$match_attribs[1][$i]] = $match_attribs[2][$i];
+                    }
+                }
+                if (is_null($col_attrib['colspan'])) // default colspan=1
+                    $col_attrib['colspan'] = 1;
+                $col_attrib['rowspan'] = 1; // rowspan is 1 before processing
+
+                // save data from this row to cols... arrays and $tbody
+                $cols_attrib[]  =      $col_attrib;
+                $cols_content[] = trim($match_cols[2][$i_col]);
+                $cols_tag[]     =      $match_cols[3][$i_col];
+                while (--$col_padding > 0) {// pad with null to normalize array
+                    $cols_attrib[] = $cols_content[] = $cols_tag[] = null;
+                }
+            }
+            $tbody['rows_content']["row${i_row}"] = array(
+                                                        'attrib'  => $cols_attrib,
+                                                        'content' => $cols_content,
+                                                        'tag'     => $cols_tag);
+        }
+
+        // process table array from bottomleft and increment rowspan attributes as indicated by :::
+        foreach($tbody['rows_content'] as $row) { // get leftmost column
+            if(count($row['tag']) > $ncol) {
+                $ncol = count($row['tag']);
+            }
+        }
+        for($r = $nrow - 1; $r > 0 ; $r--) { // from bottom to up
+            for ($c = 0; $c < $ncol; $c++) { // from left to right
+                if ($tbody["rows_content"]["row".($r)  ]["content"][$c] == ":::"){
+                    $tbody["rows_content"]["row".($r-1)]["attrib"][$c]["rowspan"] =
+                    $tbody["rows_content"]["row".($r)  ]["attrib"][$c]["rowspan"] + 1;
+                    $tbody["rows_content"]["row".$r]["tag"][$c] = null; // set cell data to NULL instead of :::
+                    $tbody["rows_content"]["row".$r]["attrib"][$c] = null;
+                    $tbody["rows_content"]["row".$r]["content"][$c] = null;
+                }
+            }
+        }
+
+        // recreate xhtml table from $tbody array
+        $new_table = "$tbody_prefix\n";
+        for ($i_row = 0; $i_row < count($tbody["rows_begin"]); $i_row++) {
+            $new_table .= $tbody["rows_begin"][$i_row];
+            for ($i_col = 0, $cols = $tbody["rows_content"]["row${i_row}"]; $i_col < count($cols['attrib']); $i_col++) {
+                if (is_null($cols['tag'][$i_col])) continue;
+                $new_table .= "\n\t<".$cols['tag'][$i_col];
+                foreach($cols['attrib'][$i_col] as $attrib => $value) {
+                    if (!(($attrib == 'rowspan' || $attrib == 'colspan') && $value == 1)) {
+                        $new_table .= " $attrib=\"$value\"";
+                    }
+                }
+                $new_table .= ">";
+                $new_table .= $cols['content'][$i_col];
+                $new_table .= "</".$cols['tag'][$i_col].">";
+            }
+            $new_table .= "\n</tr>\n";
+        }
+        $new_table .= "</table>";
+
+        // replace table
+        $this->doc = substr($this->doc, 0, $this->_counter['table_begin_pos']).$new_table;
     }
 
     function tablerow_open(){
