@@ -352,6 +352,14 @@ function tpl_metaheaders($alt=true){
   $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=>'',
                              'src'=>DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&write='.$js_write);
 
+  // make $INFO available to JavaScripts
+  require_once(DOKU_INC.'inc/JSON.php');
+  $json = new JSON();
+  $infocpy = $INFO;
+  $infocpy['userinfo']['pass'] = '';
+  $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=> 'var INFO = '.$json->encode($infocpy).';');
+
+
   // trigger event here
   trigger_event('TPL_METAHEADER_OUTPUT',$head,'_tpl_metaheaders_action',true);
   return true;
