@@ -76,9 +76,6 @@ function css_out(){
         $files[DOKU_CONF.'user'.$style.'.css'] = DOKU_BASE;
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
-        if($conf['spellchecker']){
-            $files[DOKU_INC.'lib/styles/spellcheck.css'] = DOKU_BASE.'lib/styles/';
-        }
         // load plugin, template, user styles
         $files = array_merge($files, css_pluginstyles('screen'));
         if (isset($tplstyles['screen'])) $files = array_merge($files, $tplstyles['screen']);
