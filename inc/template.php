@@ -950,7 +950,6 @@ function tpl_pageinfo($ret=false){
   global $conf;
   global $lang;
   global $INFO;
-  global $REV;
   global $ID;
 
   // return if we are not allowed to view the page
@@ -959,7 +958,7 @@ function tpl_pageinfo($ret=false){
   // prepare date and path
   $fn = $INFO['filepath'];
   if(!$conf['fullpath']){
-    if($REV){
+    if($INFO['rev']){
       $fn = str_replace(fullpath($conf['olddir']).'/','',$fn);
     }else{
       $fn = str_replace(fullpath($conf['datadir']).'/','',$fn);
