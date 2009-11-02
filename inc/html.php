@@ -1218,7 +1218,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
             $form->addElement(form_makeCloseTag('div'));
         }
         $form->addElement(form_makeCloseTag('div'));
-        if($conf['license']){
+        if($wr && $conf['license']){
             $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
             $out  = $lang['licenseok'];
             $out .= '<a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
