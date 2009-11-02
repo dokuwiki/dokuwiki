@@ -81,13 +81,6 @@ class auth_ad extends auth_basic {
         $opts['domain_controllers'] = array_map('trim',$opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
-        // connect
-        try {
-            $this->adldap = new adLDAP($opts);
-        } catch (adLDAPException $e) {
-            $this->success = false;
-        }
-
         // we currently just handle authentication, so no capabilities are set
     }
 
@@ -106,6 +99,7 @@ class auth_ad extends auth_basic {
            $_SERVER['REMOTE_USER'] == $user &&
            $this->cnf['sso']) return true;
 
+        if(!$this->_init()) return false;
         return $this->adldap->authenticate($user, $pass);
     }
 
@@ -129,6 +123,8 @@ class auth_ad extends auth_basic {
      */
    function getUserData($user){
         global $conf;
+        if(!$this->_init()) return false;
+
         //get info for given user
         $result = $this->adldap->user_info($user);
 
@@ -171,6 +167,23 @@ class auth_ad extends auth_basic {
         return $sName;
     }
 
+
+    /**
+     * Initialize the AdLDAP library and connect to the server
+     */
+    function _init(){
+        if(!is_null($this->adldap)) return true;
+
+        // connect
+        try {
+            $this->adldap = new adLDAP($opts);
+            return true;
+        } catch (adLDAPException $e) {
+            $this->success = false;
+            $this->adldap  = null;
+        }
+        return false;
+    }
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
