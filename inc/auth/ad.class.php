@@ -34,27 +34,6 @@
 
 require_once(DOKU_INC.'inc/adLDAP.php');
 
-/**
- * Prepare SSO
- */
-if($_SERVER['REMOTE_USER'] && $conf['auth']['ad']['sso']){
-     // remove possible domain prefix
-     list($dom,$usr) = explode('\\',$_SERVER['REMOTE_USER'],2);
-     if(!$usr) $usr = $dom;
-
-     // remove possible Kerberos domain
-     list($usr,$dom) = explode('@',$usr);
-
-     $_SERVER['REMOTE_USER'] = $usr;
-     unset($usr);
-     unset($dom);
-
-     // we need to simulate a login
-     if(empty($_COOKIE[DOKU_COOKIE])){
-         $_REQUEST['u'] = $_SERVER['REMOTE_USER'];
-         $_REQUEST['p'] = 'sso_only';
-     }
-}
 
 class auth_ad extends auth_basic {
     var $cnf = null;
@@ -75,8 +54,34 @@ class auth_ad extends auth_basic {
             return;
         }
 
-        // prepare adLDAP object
+        // Prepare SSO
+        if($_SERVER['REMOTE_USER'] && $this->cnf['sso']){
+             // remove possible NTLM domain
+             list($dom,$usr) = explode('\\',$_SERVER['REMOTE_USER'],2);
+             if(!$usr) $usr = $dom;
+
+             // remove possible Kerberos domain
+             list($usr,$dom) = explode('@',$usr);
+
+             $dom = strtolower($dom);
+             $_SERVER['REMOTE_USER'] = $usr;
+
+             // we need to simulate a login
+             if(empty($_COOKIE[DOKU_COOKIE])){
+                 $_REQUEST['u'] = $_SERVER['REMOTE_USER'];
+                 $_REQUEST['p'] = 'sso_only';
+             }
+        }
+
+        // prepare adLDAP standard configuration
         $opts = $this->cnf;
+
+        // add possible domain specific configuration
+        if($dom && is_array($this->cnf[$dom])) foreach($this->cnf[$dom] as $key => $val){
+            $opts[$key] = $val;
+        }
+
+        // handle multiple AD servers
         $opts['domain_controllers'] = explode(',',$opts['domain_controllers']);
         $opts['domain_controllers'] = array_map('trim',$opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
