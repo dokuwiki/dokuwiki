@@ -4,6 +4,7 @@
  *
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
+ * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
  */
 $lang['menu']                  = 'ตัวจัดการบัญชีผู้ใช้';
 $lang['user_id']               = 'ผู้ใช้';

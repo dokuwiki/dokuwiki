@@ -5,6 +5,7 @@
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
  * @author Arthit Suriyawongkul <arthit@gmail.com>
+ * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
  */
 $lang['typography_o_0']        = 'ไม่มี';
 $lang['userewrite_o_0']        = 'ไม่มี';

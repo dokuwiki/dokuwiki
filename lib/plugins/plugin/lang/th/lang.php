@@ -5,6 +5,7 @@
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
  * @author Arthit Suriyawongkul <arthit@gmail.com>
+ * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
  */
 $lang['menu']                  = 'จัดการปลั๊กอิน';
 $lang['download']              = 'ดาวน์โหลดและติดตั้งปลั๊กอินใหม่';
@@ -30,19 +31,19 @@ $lang['downloading']           = 'กำลังดาวโหลด ...';
 $lang['downloaded']            = 'โปรแกรมเสริม %s ถูกติดตั้งสำเร็จแล้ว';
 $lang['downloads']             = 'โปรแกรมเสริมต่อไปนี้ได้รับการปรับปรุงสำเร็จแล้ว:';
 $lang['download_none']         = 'ไม่พบโปรแกรมเสริม, หรือมีปัญหาบางประการเกิดขึ้นระหว่างการดาวน์โหลด และติดตั้ง';
-$lang['plugin']                = 'โปรแกรมเสริม:';
-$lang['components']            = '่สวนประกอบ';
-$lang['noinfo']                = 'โปรแกรมเสริมนี้ไม่บอกข้อมูล, มันอาจไม่ใช่โปรแกรมเสริมจริง';
+$lang['plugin']                = 'โปรแกรมเสริม(ปลั๊กอิน):';
+$lang['components']            = 'ส่วนประกอบ';
+$lang['noinfo']                = 'ปลั๊กอินนี้ไม่บอกข้อมูล, มันอาจไม่ใช่ปลั๊กอินจริงๆ';
 $lang['name']                  = 'ชื่อ:';
 $lang['date']                  = 'วันที่:';
 $lang['type']                  = 'ชนิด:';
 $lang['desc']                  = 'รายละเอียด:';
 $lang['author']                = 'ผู้แต่ง:';
 $lang['www']                   = 'เว็บ:';
+$lang['error']                 = 'เกิดความผิดพลาดที่ระบุไม่ได้';
 $lang['error_download']        = 'ไม่สามารถดาวน์โหลดไฟล์โปรแกรมเสริม: %s';
 $lang['error_dircreate']       = 'ไม่สามารถสร้างโฟลเดอร์ชั่วคราวเพื่อที่จะรองรับการดาวน์โหลด';
 $lang['enabled']               = 'เปิดใช้งานโปรแกรมเสริม %s แล้ว';
 $lang['notenabled']            = 'โปรแกรมเสริม %s ไม่สามารถเปิดใช้งาน, กรุณาตรวจสอบสิทธิ์ของไฟล์';
 $lang['disabled']              = 'ปิดการใช้งานโปรแกรมเสริม %s แล้ว';
 $lang['notdisabled']           = 'โปรแกรมเสริม %s ไม่สามารถปิดการใช้งานได้, กรุณาตรวจสอบสิทธิ์ของไฟล์';
-$lang['error']                 = 'เกิดความผิดพลาดที่ระบุไม่ได้';

@@ -4,6 +4,7 @@
  *
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
+ * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
  */
 $lang['admin_acl']             = 'จัดการรายชื่อเพื่อควบคุมการเข้าถึง (Access Control List:ACL)';
 $lang['acl_group']             = 'กลุ่ม';
