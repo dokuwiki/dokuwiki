@@ -1408,45 +1408,6 @@ class Doku_Handler_Table {
     }
 }
 
-//------------------------------------------------------------------------
-class Doku_Handler_Section {
-
-    function process($calls) {
-
-        $sectionCalls = array();
-        $inSection = false;
-
-        foreach ( $calls as $call ) {
-
-            if ( $call[0] == 'header' ) {
-
-                if ( $inSection ) {
-                    $sectionCalls[] = array('section_close',array(), $call[2]);
-                }
-
-                $sectionCalls[] = $call;
-                $sectionCalls[] = array('section_open',array($call[1][1]), $call[2]);
-                $inSection = true;
-
-            } else {
-
-                if ($call[0] == 'section_open' )  {
-                    $inSection = true;
-                } else if ($call[0] == 'section_open' ) {
-                    $inSection = false;
-                }
-                $sectionCalls[] = $call;
-            }
-        }
-
-        if ( $inSection ) {
-            $sectionCalls[] = array('section_close',array(), $call[2]);
-        }
-
-        return $sectionCalls;
-    }
-
-}
 
 /**
  * Handler for paragraphs
