@@ -584,7 +584,6 @@ class Doku_Handler {
                 $this->CallWriter = & $ReWriter;
 
                 $this->_addCall('table_start', array(), $pos);
-                //$this->_addCall('table_row', array(), $pos);
                 if ( trim($match) == '^' ) {
                     $this->_addCall('tableheader', array(), $pos);
                 } else {
@@ -608,6 +607,8 @@ class Doku_Handler {
             case DOKU_LEXER_MATCHED:
                 if ( $match == ' ' ){
                     $this->_addCall('cdata', array($match), $pos);
+                } else if ( preg_match('/:::/',$match) ) {
+                    $this->_addCall('rowspan', array($match), $pos);
                 } else if ( preg_match('/\t+/',$match) ) {
                     $this->_addCall('table_align', array($match), $pos);
                 } else if ( preg_match('/ {2,}/',$match) ) {
@@ -1236,19 +1237,6 @@ class Doku_Handler_Table {
         while ( $discard = array_pop($this->tableCalls ) ) {
 
             if ( $discard[0] == 'tablecell_open' || $discard[0] == 'tableheader_open') {
-
-                // Its a spanning element - put it back and close it
-                if ( $discard[1][0] > 1 ) {
-
-                    $this->tableCalls[] = $discard;
-                    if ( strstr($discard[0],'cell') ) {
-                        $name = 'tablecell';
-                    } else {
-                        $name = 'tableheader';
-                    }
-                    $this->tableCalls[] = array($name.'_close',array(),$call[2]);
-                }
-
                 break;
             }
         }
@@ -1272,12 +1260,12 @@ class Doku_Handler_Table {
             }
 
             $this->tableCalls[] = array($this->lastCellType.'_close',array(),$call[2]);
-            $this->tableCalls[] = array($call[0].'_open',array(1,NULL),$call[2]);
+            $this->tableCalls[] = array($call[0].'_open',array(1,NULL,1),$call[2]);
             $this->lastCellType = $call[0];
 
         } else {
 
-            $this->tableCalls[] = array($call[0].'_open',array(1,NULL),$call[2]);
+            $this->tableCalls[] = array($call[0].'_open',array(1,NULL,1),$call[2]);
             $this->lastCellType = $call[0];
             $this->firstCell = false;
 
@@ -1303,6 +1291,7 @@ class Doku_Handler_Table {
 
         $lastRow = 0;
         $lastCell = 0;
+        $cellKey = array();
         $toDelete = array();
 
         // Look for the colspan elements and increment the colspan on the
@@ -1312,11 +1301,13 @@ class Doku_Handler_Table {
 
             if ( $call[0] == 'tablerow_open' ) {
 
-                $lastRow = $key;
+                $lastRow++;
+                $lastCell = 0;
 
             } else if ( $call[0] == 'tablecell_open' || $call[0] == 'tableheader_open' ) {
 
-                $lastCell = $key;
+                $lastCell++;
+                $cellKey[$lastRow][$lastCell] = $key;
 
             } else if ( $call[0] == 'table_align' ) {
 
@@ -1332,10 +1323,10 @@ class Doku_Handler_Table {
 
                 // If the next element is the close of an element, align either center or left
                 } elseif ( $next) {
-                    if ( $this->tableCalls[$lastCell][1][1] == 'right' ) {
-                        $this->tableCalls[$lastCell][1][1] = 'center';
+                    if ( $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] == 'right' ) {
+                        $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'center';
                     } else {
-                        $this->tableCalls[$lastCell][1][1] = 'left';
+                        $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'left';
                     }
 
                 }
@@ -1347,7 +1338,7 @@ class Doku_Handler_Table {
 
                 $this->tableCalls[$key-1][1][0] = false;
 
-                for($i = $key-2; $i > $lastRow; $i--) {
+                for($i = $key-2; $i >= $cellKey[$lastRow][1]; $i--) {
 
                     if ( $this->tableCalls[$i][0] == 'tablecell_open' || $this->tableCalls[$i][0] == 'tableheader_open' ) {
 
@@ -1363,6 +1354,34 @@ class Doku_Handler_Table {
                 $toDelete[] = $key-1;
                 $toDelete[] = $key;
                 $toDelete[] = $key+1;
+
+            } else if ( $call[0] == 'rowspan' ) {
+
+                if ( $this->tableCalls[$key-1][0] == 'cdata' ) {
+                    // ignore rowspan if previous call was cdata (text mixed with :::) we don't have to check next call as that wont match regex
+                    $this->tableCalls[$key][0] = 'cdata';
+
+                } else {
+
+                    $this->tableCalls[$key-1][1][2] = false;
+
+                    for($i = $lastRow-1; $i > 0; $i--) {
+
+                        if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+
+                            if ( false !== $this->tableCalls[$cellKey[$i][$lastCell]][1][2] ) {
+                                $this->tableCalls[$cellKey[$i][$lastCell]][1][2]++;
+                                break;
+                            }
+
+
+                        }
+                    }
+
+                    $toDelete[] = $key-1;
+                    $toDelete[] = $key;
+                    $toDelete[] = $key+1; 
+                }
             }
         }
 

@@ -948,7 +948,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= DOKU_LF . DOKU_TAB . '</tr>' . DOKU_LF;
     }
 
-    function tableheader_open($colspan = 1, $align = NULL){
+    function tableheader_open($colspan = 1, $align = NULL, $rowspan = 1){
         $class = 'class="col' . $this->_counter['cell_counter']++;
         if ( !is_null($align) ) {
             $class .= ' '.$align.'align';
@@ -959,6 +959,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->_counter['cell_counter'] += $colspan-1;
             $this->doc .= ' colspan="'.$colspan.'"';
         }
+        if ( $rowspan > 1 ) {
+            $this->doc .= ' rowspan="'.$rowspan.'"';
+        }
         $this->doc .= '>';
     }
 
@@ -966,7 +969,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</th>';
     }
 
-    function tablecell_open($colspan = 1, $align = NULL){
+    function tablecell_open($colspan = 1, $align = NULL, $rowspan = 1){
         $class = 'class="col' . $this->_counter['cell_counter']++;
         if ( !is_null($align) ) {
             $class .= ' '.$align.'align';
@@ -976,6 +979,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( $colspan > 1 ) {
             $this->_counter['cell_counter'] += $colspan-1;
             $this->doc .= ' colspan="'.$colspan.'"';
+        }
+        if ( $rowspan > 1 ) {
+            $this->doc .= ' rowspan="'.$rowspan.'"';
         }
         $this->doc .= '>';
     }

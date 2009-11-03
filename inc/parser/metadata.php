@@ -397,10 +397,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function tablerow_open(){}
   function tablerow_close(){}
 
-  function tableheader_open($colspan = 1, $align = NULL){}
+  function tableheader_open($colspan = 1, $align = NULL, $rowspan = 1){}
   function tableheader_close(){}
 
-  function tablecell_open($colspan = 1, $align = NULL){}
+  function tablecell_open($colspan = 1, $align = NULL, $rowspan = 1){}
   function tablecell_close(){}
 
   //----------------------------------------------------------

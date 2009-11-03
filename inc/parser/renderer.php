@@ -239,11 +239,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function tablerow_close(){}
 
-    function tableheader_open($colspan = 1, $align = NULL){}
+    function tableheader_open($colspan = 1, $align = NULL, $rowspan = 1){}
 
     function tableheader_close(){}
 
-    function tablecell_open($colspan = 1, $align = NULL){}
+    function tablecell_open($colspan = 1, $align = NULL, $rowspan = 1){}
 
     function tablecell_close(){}
 
