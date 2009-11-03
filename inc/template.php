@@ -333,6 +333,15 @@ function tpl_metaheaders($alt=true){
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
                           'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template']);
 
+  // make $INFO available to JavaScripts
+  require_once(DOKU_INC.'inc/JSON.php');
+  $json = new JSON();
+  $infocpy = $INFO;
+  $infocpy['userinfo']['login'] = $_SERVER['REMOTE_USER'];
+  $infocpy['userinfo']['pass'] = '';
+  $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=> 'var INFO = '.$json->encode($infocpy).';');
+
+
   // load javascript
   $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover' || $ACT=='wordblock' ) ? 1 : 0;
   $js_write = ($INFO['writable']) ? 1 : 0;
@@ -351,13 +360,6 @@ function tpl_metaheaders($alt=true){
   }
   $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=>'',
                              'src'=>DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&write='.$js_write);
-
-  // make $INFO available to JavaScripts
-  require_once(DOKU_INC.'inc/JSON.php');
-  $json = new JSON();
-  $infocpy = $INFO;
-  $infocpy['userinfo']['pass'] = '';
-  $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=> 'var INFO = '.$json->encode($infocpy).';');
 
 
   // trigger event here
