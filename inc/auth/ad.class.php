@@ -34,9 +34,9 @@
 
 require_once(DOKU_INC.'inc/adLDAP.php');
 
-
 class auth_ad extends auth_basic {
     var $cnf = null;
+    var $opts = null;
     var $adldap = null;
 
     /**
@@ -74,17 +74,17 @@ class auth_ad extends auth_basic {
         }
 
         // prepare adLDAP standard configuration
-        $opts = $this->cnf;
+        $this->opts = $this->cnf;
 
         // add possible domain specific configuration
         if($dom && is_array($this->cnf[$dom])) foreach($this->cnf[$dom] as $key => $val){
-            $opts[$key] = $val;
+            $this->opts[$key] = $val;
         }
 
         // handle multiple AD servers
-        $opts['domain_controllers'] = explode(',',$opts['domain_controllers']);
-        $opts['domain_controllers'] = array_map('trim',$opts['domain_controllers']);
-        $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
+        $this->opts['domain_controllers'] = explode(',',$this->opts['domain_controllers']);
+        $this->opts['domain_controllers'] = array_map('trim',$this->opts['domain_controllers']);
+        $this->opts['domain_controllers'] = array_filter($this->opts['domain_controllers']);
 
         // we currently just handle authentication, so no capabilities are set
     }
@@ -181,7 +181,7 @@ class auth_ad extends auth_basic {
 
         // connect
         try {
-            $this->adldap = new adLDAP($opts);
+            $this->adldap = new adLDAP($this->opts);
             return true;
         } catch (adLDAPException $e) {
             $this->success = false;
