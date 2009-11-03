@@ -333,33 +333,24 @@ function tpl_metaheaders($alt=true){
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
                           'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template']);
 
-  // make $INFO available to JavaScripts
+  // make $INFO and other vars available to JavaScripts
   require_once(DOKU_INC.'inc/JSON.php');
   $json = new JSON();
   $infocpy = $INFO;
-  $infocpy['userinfo']['login'] = $_SERVER['REMOTE_USER'];
   $infocpy['userinfo']['pass'] = '';
-  $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=> 'var INFO = '.$json->encode($infocpy).';');
-
-
-  // load javascript
-  $js_edit  = ($ACT=='edit' || $ACT=='preview' || $ACT=='recover' || $ACT=='wordblock' ) ? 1 : 0;
-  $js_write = ($INFO['writable']) ? 1 : 0;
-  if(defined('DOKU_MEDIAMANAGER')){
-    $js_edit  = 1;
-    $js_write = 0;
-  }
-  if(($js_edit && $js_write) || defined('DOKU_MEDIAMANAGER')){
-    $script = "NS='".$INFO['namespace']."';";
-    if($conf['useacl'] && $_SERVER['REMOTE_USER']){
+  $script = "NS='".$INFO['namespace']."';";
+  if($conf['useacl'] && $_SERVER['REMOTE_USER']){
       require_once(DOKU_INC.'inc/toolbar.php');
       $script .= "SIG='".toolbar_signature()."';";
-    }
-    $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8',
-                               '_data'=> $script);
+      $infocpy['userinfo']['login'] = $_SERVER['REMOTE_USER'];
   }
+  $script .= 'var INFO = '.$json->encode($infocpy).';';
+  $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8',
+                               '_data'=> $script);
+
+  // load external javascript
   $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=>'',
-                             'src'=>DOKU_BASE.'lib/exe/js.php?edit='.$js_edit.'&write='.$js_write);
+                             'src'=>DOKU_BASE.'lib/exe/js.php');
 
 
   // trigger event here
