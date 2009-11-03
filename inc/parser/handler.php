@@ -1320,12 +1320,18 @@ class Doku_Handler_Table {
 
             } else if ( $call[0] == 'table_align' ) {
 
+                $prev = in_array($this->tableCalls[$key-1][0], array('tablecell_open', 'tableheader_open'));
+                $next = in_array($this->tableCalls[$key+1][0], array('tablecell_close', 'tableheader_close'));
+                // If the cell is empty, align left
+                if ($prev && $next) {
+                    $this->tableCalls[$key-1][1][1] = 'left';
+
                 // If the previous element was a cell open, align right
-                if ( $this->tableCalls[$key-1][0] == 'tablecell_open' || $this->tableCalls[$key-1][0] == 'tableheader_open' ) {
+                } elseif ($prev) {
                     $this->tableCalls[$key-1][1][1] = 'right';
 
-                // If the next element if the close of an element, align either center or left
-                } else if ( $this->tableCalls[$key+1][0] == 'tablecell_close' || $this->tableCalls[$key+1][0] == 'tableheader_close' ) {
+                // If the next element is the close of an element, align either center or left
+                } elseif ( $next) {
                     if ( $this->tableCalls[$lastCell][1][1] == 'right' ) {
                         $this->tableCalls[$lastCell][1][1] = 'center';
                     } else {
