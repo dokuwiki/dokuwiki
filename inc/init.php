@@ -134,6 +134,9 @@ foreach (array('default','local') as $config_group) {
     }
 }
 
+// set timezone (as in pre 5.3.0 days)
+date_default_timezone_set(@date_default_timezone_get());
+
 // define baseURL
 if(!defined('DOKU_REL')) define('DOKU_REL',getBaseURL(false));
 if(!defined('DOKU_URL')) define('DOKU_URL',getBaseURL(true));
