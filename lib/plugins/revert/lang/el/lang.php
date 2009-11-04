@@ -7,6 +7,7 @@
  *
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
+ * @author Konstantinos Koryllos <koryllos@gmail.com>
  */
 $lang['menu']                  = 'Αποκατάσταση κακόβουλων αλλαγών σελίδων';
 $lang['filter']                = 'Αναζήτηση σελίδων που περιέχουν spam';

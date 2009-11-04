@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
+ * @author Konstantinos Koryllos <koryllos@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -47,6 +48,7 @@ $lang['btn_resendpwd']         = 'Αποστολή νέου κωδικού';
 $lang['btn_draft']             = 'Τροποποίηση αυτόματα αποθηκευμένης σελίδας';
 $lang['btn_recover']           = 'Επαναφορά αυτόματα αποθηκευμένης σελίδας';
 $lang['btn_draftdel']          = 'Διαγραφή αυτόματα αποθηκευμένης σελίδας';
+$lang['btn_revert']            = 'Αποκατάσταση';
 $lang['loggedinas']            = 'Συνδεδεμένος ως';
 $lang['user']                  = 'Όνομα χρήστη';
 $lang['pass']                  = 'Κωδικός';
@@ -85,6 +87,8 @@ $lang['resendpwdconfirm']      = 'Ο σύνδεσμος προς την σελί
 $lang['resendpwdsuccess']      = 'Ο νέος σας κωδικός εστάλη με e-mail.';
 $lang['license']               = 'Εκτός εάν αναφέρεται διαφορετικά, το υλικό αυτού του wiki διατίθεται κάτω από την ακόλουθη άδεια:';
 $lang['licenseok']             = 'Σημείωση: Τροποποιώντας αυτή την σελίδα αποδέχεστε την διάθεση του υλικού σας σύμφωνα με την ακόλουθη άδεια:';
+$lang['searchmedia']           = 'Αναζήτηση αρχείου:';
+$lang['searchmedia_in']        = 'Αναζήτηση σε %s';
 $lang['txt_upload']            = 'Επιλέξτε αρχείο για φόρτωση';
 $lang['txt_filename']          = 'Επιλέξτε νέο όνομα αρχείου (προαιρετικό)';
 $lang['txt_overwrt']           = 'Αντικατάσταση υπάρχοντος αρχείου';
@@ -109,10 +113,14 @@ $lang['deletefail']            = 'Το αρχείο "%s" δεν διαγράφη
 $lang['mediainuse']            = 'Το αρχείο "%s" δεν διαγράφηκε - είναι ακόμα σε χρήση.';
 $lang['namespaces']            = 'Φάκελοι';
 $lang['mediafiles']            = 'Διαθέσιμα αρχεία σε';
+$lang['js']['searchmedia']     = 'Αναζήτηση για αρχεία';
 $lang['js']['keepopen']        = 'Το παράθυρο να μην κλείνει';
 $lang['js']['hidedetails']     = 'Απόκρυψη λεπτομερειών';
 $lang['js']['nosmblinks']      = 'Οι σύνδεσμοι προς Windows shares δουλεύουν μόνο στον Microsoft Internet Explorer.
 Μπορείτε πάντα να κάνετε αντιγραφή και επικόλληση του συνδέσμου.';
+$lang['js']['linkwiz']         = 'Αυτόματος Οδηγός Συνδέσμων';
+$lang['js']['linkto']          = 'Σύνδεση σε:';
+$lang['js']['del_confirm']     = 'Να διαγραφεί?';
 $lang['js']['mu_btn']          = 'Ταυτόχρονη φόρτωση πολλαπλών φακέλων';
 $lang['mediausage']            = 'Χρησιμοποιήστε την ακόλουθη σύνταξη για να παραθέσετε αυτό το αρχείο:';
 $lang['mediaview']             = 'Κανονική προβολή αρχείου';
@@ -140,6 +148,7 @@ $lang['restored']              = 'παλαιότερη έκδοση επαναφ
 $lang['external_edit']         = 'εξωτερική τροποποίηση';
 $lang['summary']               = 'Επεξεργασία σύνοψης';
 $lang['noflash']               = 'Το <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> απαιτείται για την προβολή αυτού του στοιχείου.';
+$lang['download']              = 'Λήψη Κώδικα';
 $lang['mail_newpage']          = 'σελίδα προστέθηκε:';
 $lang['mail_changed']          = 'σελίδα τροποποιήθηκε:';
 $lang['mail_new_user']         = 'νέος χρήστης:';
@@ -154,6 +163,8 @@ $lang['qb_h2']                 = 'Κεφαλίδα 2ου Επιπέδου';
 $lang['qb_h3']                 = 'Κεφαλίδα 3ου Επιπέδου';
 $lang['qb_h4']                 = 'Κεφαλίδα 4ου Επιπέδου';
 $lang['qb_h5']                 = 'Κεφαλίδα 5ου Επιπέδου';
+$lang['qb_h']                  = 'Κεφαλίδα';
+$lang['qb_hs']                 = 'Επιλογή Κεφαλίδας';
 $lang['qb_link']               = 'Εσωτερικός Σύνδεσμος';
 $lang['qb_extlink']            = 'Εξωτερικός Σύνδεσμος';
 $lang['qb_hr']                 = 'Διαχωριστική Γραμμή';
@@ -163,7 +174,6 @@ $lang['qb_media']              = 'Προσθήκη Αρχείων';
 $lang['qb_sig']                = 'Προσθήκη Υπογραφής';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Ειδικοί Χαρακτήρες';
-$lang['js']['del_confirm']           = 'Να διαγραφεί?';
 $lang['admin_register']        = 'Προσθήκη νέου χρήστη';
 $lang['metaedit']              = 'Τροποποίηση metadata';
 $lang['metasaveerr']           = 'Η αποθήκευση των metadata απέτυχε';
@@ -221,4 +231,13 @@ $lang['mu_fail']               = 'απέτυχε';
 $lang['mu_authfail']           = 'η συνεδρία έληξε';
 $lang['mu_progress']           = '@PCT@% φορτώθηκε';
 $lang['mu_filetypes']          = 'Επιτρεπτοί τύποι αρχείων';
+$lang['mu_info']               = 'τα αρχεία ανέβηκαν.';
+$lang['mu_lasterr']            = 'Τελευταίο σφάλμα:';
 $lang['recent_global']         = 'Βλέπετε τις αλλαγές εντός του φακέλου <b>%s</b>. Μπορείτε επίσης να <a href="%s">δείτε τις πρόσφατες αλλαγές σε όλο το wiki</a>.';
+$lang['years']                 = 'πριν από %d χρόνια';
+$lang['months']                = 'πριν από %d μήνες';
+$lang['weeks']                 = 'πριν από %d εβδομάδες';
+$lang['days']                  = 'πριν από %d ημέρες';
+$lang['hours']                 = 'πριν από %d ώρες';
+$lang['minutes']               = 'πριν από %d λεπτά';
+$lang['seconds']               = 'πριν από %d δευτερόλεπτα';
