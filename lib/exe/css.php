@@ -32,15 +32,10 @@ if(!defined('SIMPLE_TEST')){
 function css_out(){
     global $conf;
     global $lang;
-    switch ($_REQUEST['s']) {
-        case 'all':
-        case 'print':
-        case 'feed':
-            $style = $_REQUEST['s'];
-        break;
-        default:
-            $style = '';
-        break;
+    $style = '';
+    if (isset($_REQUEST['s']) &&
+        in_array($_REQUEST['s'], array('all', 'print', 'feed'))) {
+        $style = $_REQUEST['s'];
     }
 
     $tpl = trim(preg_replace('/[^\w-]+/','',$_REQUEST['t']));
@@ -152,7 +147,7 @@ function css_out(){
 function css_cacheok($cache,$files,$tplinc){
     global $config_cascade;
 
-    if($_REQUEST['purge']) return false; //support purge request
+    if(isset($_REQUEST['purge'])) return false; //support purge request
 
     $ctime = @filemtime($cache);
     if(!$ctime) return false; //There is no cache

@@ -387,23 +387,22 @@ function act_redirect($id,$preact){
     session_write_close();
   }
 
-  //get section name when coming from section edit
-  if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
-    $check = false;
-    $title = sectionID($match[0],$check);
-  }
-
   $opts = array(
     'id'       => $id,
-    'fragment' => $title,
     'preact'   => $preact
   );
+  //get section name when coming from section edit
+  if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+    $check = false; //Byref
+    $opts['fragment'] = sectionID($match[0], $check);
+  }
+
   trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
 }
 
 function act_redirect_execute($opts){
   $go = wl($opts['id'],'',true);
-  if($opts['fragment']) $go .= '#'.$opts['fragment'];
+  if(isset($opts['fragment'])) $go .= '#'.$opts['fragment'];
 
   //show it
   send_redirect($go);
@@ -419,7 +418,7 @@ function act_auth($act){
   global $INFO;
 
   //already logged in?
-  if($_SERVER['REMOTE_USER'] && $act=='login'){
+  if(isset($_SERVER['REMOTE_USER']) && $act=='login'){
     return 'show';
   }
 

@@ -485,7 +485,7 @@ function langsel(){
 }
 
 /**
- * Print gloabl error array
+ * Print global error array
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */

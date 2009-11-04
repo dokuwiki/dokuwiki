@@ -74,7 +74,7 @@ if($conf['useacl']){
             $_REQUEST['http_credentials'] = true;
         }
 
-        if($_REQUEST['authtok']){
+        if(isset($_REQUEST['authtok'])){
             // when an authentication token is given, trust the session
             auth_validateToken($_REQUEST['authtok']);
         }elseif(!is_null($auth) && $auth->canDo('external')){
@@ -336,7 +336,13 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     global $USERINFO;
 
     if(!$conf['useacl']) return false;
-    if(is_null($user))   $user   = $_SERVER['REMOTE_USER'];
+    if(is_null($user)) {
+        if (!isset($_SERVER['REMOTE_USER'])) {
+            return false;
+        } else {
+            $user = $_SERVER['REMOTE_USER'];
+        }
+    }
     if(is_null($groups)) $groups = (array) $USERINFO['grps'];
     $user   = auth_nameencode($user);
 
@@ -1019,7 +1025,7 @@ function auth_setCookie($user,$pass,$sticky) {
 
     // set cookie
     $cookie = base64_encode($user).'|'.((int) $sticky).'|'.base64_encode($pass);
-    if($sticky) $time = time()+60*60*24*365; //one year
+    $time = $sticky ? (time()+60*60*24*365) : 0; //one year
     if (version_compare(PHP_VERSION, '5.2.0', '>')) {
         setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
     }else{
@@ -1039,6 +1045,9 @@ function auth_setCookie($user,$pass,$sticky) {
  * @returns array
  */
 function auth_getCookie(){
+    if (!isset($_COOKIE[DOKU_COOKIE])) {
+        return array(null, null, null);
+    }
     list($user,$sticky,$pass) = explode('|',$_COOKIE[DOKU_COOKIE],3);
     $sticky = (bool) $sticky;
     $pass   = base64_decode($pass);

@@ -80,7 +80,7 @@ function tpl_content_core(){
       html_search();
       break;
     case 'revisions':
-      $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
+      $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
       html_revisions($first);
       break;
     case 'diff':
@@ -517,7 +517,7 @@ function tpl_button($type,$return=false){
       break;
     case 'login':
       if($conf['useacl'] && $auth){
-        if($_SERVER['REMOTE_USER']){
+        if(isset($_SERVER['REMOTE_USER'])){
           $out .= html_btn('logout',$ID,'',array('do' => 'logout', 'sectok' => getSecurityToken()));
         }else{
           $out .= html_btn('login',$ID,'',array('do' => 'login', 'sectok' => getSecurityToken()));
@@ -567,7 +567,7 @@ function tpl_button($type,$return=false){
         $out .= html_btn('backlink',$ID,'',array('do' => 'backlink'));
       break;
     case 'profile':
-      if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $auth &&
+      if($conf['useacl'] && isset($_SERVER['REMOTE_USER']) && $auth &&
           $auth->canDo('Profile') && ($ACT!='profile')){
         $out .= html_btn('profile',$ID,'',array('do' => 'profile'));
       }
@@ -927,7 +927,7 @@ function tpl_youarehere($sep=' &raquo; '){
 function tpl_userinfo(){
   global $lang;
   global $INFO;
-  if($_SERVER['REMOTE_USER']){
+  if(isset($_SERVER['REMOTE_USER'])){
     print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')';
     return true;
   }
@@ -1103,7 +1103,7 @@ function tpl_img($maxwidth=0,$maxheight=0){
 
 /**
  * This function inserts a 1x1 pixel gif which in reality
- * is the inexer function.
+ * is the indexer function.
  *
  * Should be called somewhere at the very end of the main.php
  * template
@@ -1375,7 +1375,7 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
     if(!$imgonly) {
         $out .= $lang['license'];
         $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
-        if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
+        if(isset($conf['target']['external'])) $out .= ' target="'.$conf['target']['external'].'"';
         $out .= '>'.$lic['name'].'</a>';
     }
     $out .= '</div>';

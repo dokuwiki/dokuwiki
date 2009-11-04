@@ -1481,7 +1481,7 @@ function html_TOC($toc){
  * Callback for html_buildlist
  */
 function html_list_toc($item){
-    if($item['hid']){
+    if(isset($item['hid'])){
         $link = '#'.$item['hid'];
     }else{
         $link = $item['link'];

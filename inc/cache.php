@@ -278,7 +278,7 @@ class cache_instructions extends cache_parser {
     parent::cache_parser($id, $file, 'i');
   }
 
-  function retrieveCache() {
+  function retrieveCache($clean=true) {
     $contents = io_readFile($this->cache, false);
     return !empty($contents) ? unserialize($contents) : array();
   }

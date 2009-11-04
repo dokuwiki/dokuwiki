@@ -20,20 +20,18 @@ define('INDEXER_VERSION', 2);
 @ignore_user_abort(true);
 
 // check if user abort worked, if yes send output early
-if(@ignore_user_abort() && !$conf['broken_iua']){
+$defer = !@ignore_user_abort() || $conf['broken_iua'];
+if(!$defer){
     sendGIF(); // send gif
-    $defer = false;
-}else{
-    $defer = true;
 }
 
 $ID = cleanID($_REQUEST['id']);
 
 // Catch any possible output (e.g. errors)
-if(!$_REQUEST['debug']) ob_start();
+if(!isset($_REQUEST['debug'])) ob_start();
 
 // run one of the jobs
-$tmp = array();
+$tmp = array(); // No event data
 $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
 if ($evt->advise_before()) {
   runIndexer() or
@@ -45,7 +43,7 @@ if ($evt->advise_before()) {
 }
 if($defer) sendGIF();
 
-if(!$_REQUEST['debug']) ob_end_clean();
+if(!isset($_REQUEST['debug'])) ob_end_clean();
 exit;
 
 // --------------------------------------------------------------------
@@ -358,7 +356,7 @@ function date_iso8601($int_date) {
  * @author Harry Fuecks <fuecks@gmail.com>
  */
 function sendGIF(){
-    if($_REQUEST['debug']){
+    if(isset($_REQUEST['debug'])){
         header('Content-Type: text/plain');
         return;
     }

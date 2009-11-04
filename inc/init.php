@@ -219,7 +219,7 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
 $_REQUEST = array_merge($_GET,$_POST);
 
 // we don't want a purge URL to be digged
-if($_REQUEST['purge'] && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
+if(isset($_REQUEST['purge']) && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
 
 // disable gzip if not available
 if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
@@ -413,8 +413,8 @@ function getBaseURL($abs=null){
     $dir = str_replace('\\','/',$dir);             // bugfix for weird WIN behaviour
     $dir = preg_replace('#//+#','/',"/$dir/");     // ensure leading and trailing slashes
 
-        //handle script in lib/exe dir
-        $dir = preg_replace('!lib/exe/$!','',$dir);
+    //handle script in lib/exe dir
+    $dir = preg_replace('!lib/exe/$!','',$dir);
 
     //handle script in lib/plugins dir
     $dir = preg_replace('!lib/plugins/.*$!','',$dir);
@@ -426,23 +426,27 @@ function getBaseURL($abs=null){
     if($conf['baseurl']) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port
-    list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
-    if(!$port)  $port = $_SERVER['SERVER_PORT'];
-    if(!$port)  $port = 80;
-
+    $addr = explode(':',$_SERVER['HTTP_HOST']);
+    $host = $addr[0];
+    $port = '';
+    if (isset($addr[1])) {
+        $port = $addr[1];
+    } elseif (isset($_SERVER['SERVER_PORT'])) {
+        $port = $_SERVER['SERVER_PORT'];
+    }
     if(!is_ssl()){
         $proto = 'http://';
         if ($port == '80') {
-            $port='';
+            $port = '';
         }
     }else{
         $proto = 'https://';
         if ($port == '443') {
-            $port='';
+            $port = '';
         }
     }
 
-    if($port) $port = ':'.$port;
+    if($port !== '') $port = ':'.$port;
 
     return $proto.$host.$port.$dir;
 }
@@ -456,7 +460,8 @@ function getBaseURL($abs=null){
  * @returns bool true when SSL is active
  */
 function is_ssl(){
-    if (preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
+    if (!isset($_SERVER['HTTPS']) ||
+        preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
         return false;
     }else{
         return true;

@@ -58,7 +58,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     // store internal info in metadata (notoc,nocache)
     $this->meta['internal'] = $this->info;
 
-    if (!$this->meta['description']['abstract']){
+    if (!isset($this->meta['description']['abstract'])){
       // cut off too long abstracts
       $this->doc = trim($this->doc);
       if (strlen($this->doc) > 500)
@@ -91,7 +91,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function header($text, $level, $pos) {
-    if (!$this->meta['title']) $this->meta['title'] = $text;
+    if (!isset($this->meta['title'])) $this->meta['title'] = $text;
 
     // add the header to the TOC
     $hid = $this->_headerToLink($text,'true');
@@ -227,7 +227,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     if ($this->capture) $this->doc .= $text;
   }
 
-  function file($text){
+  function file($text, $lang = null, $file = null){
     if ($this->capture){
       $this->doc .= DOKU_LF.$text;
       if (strlen($this->doc) > 250) $this->capture = false;
@@ -247,7 +247,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     }
   }
 
-  function code($text, $language = NULL){
+  function code($text, $language = NULL, $file = null){
     if ($this->capture){
       $this->doc .= DOKU_LF.$text;
       if (strlen($this->doc) > 250) $this->capture = false;

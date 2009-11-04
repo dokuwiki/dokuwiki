@@ -198,8 +198,8 @@ class HTTPClient {
         if(empty($path)) $path = '/';
         if(!empty($uri['query'])) $path .= '?'.$uri['query'];
         $port = $uri['port'];
-        if($uri['user']) $this->user = $uri['user'];
-        if($uri['pass']) $this->pass = $uri['pass'];
+        if(isset($uri['user'])) $this->user = $uri['user'];
+        if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
         // proxy setup
         if($this->proxy_host){
@@ -366,7 +366,7 @@ class HTTPClient {
 
         //read body (with chunked encoding if needed)
         $r_body    = '';
-        if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_header)){
+        if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_headers)){
             do {
                 unset($chunk_size);
                 do {
@@ -416,7 +416,8 @@ class HTTPClient {
                     else
                         break;
                 }
-                if($this->resp_headers['content-length'] && !$this->resp_headers['transfer-encoding'] &&
+                if(isset($this->resp_headers['content-length']) &&
+                   !isset($this->resp_headers['transfer-encoding']) &&
                    $this->resp_headers['content-length'] == $r_size){
                     // we read the content-length, finish here
                     break;
@@ -429,7 +430,9 @@ class HTTPClient {
         fclose($socket);
 
         // decode gzip if needed
-        if($this->resp_headers['content-encoding'] == 'gzip' && strlen($r_body) > 10 && substr($r_body,0,3)=="\x1f\x8b\x08"){
+        if(isset($this->resp_headers['content-encoding']) &&
+           $this->resp_headers['content-encoding'] == 'gzip' &&
+           strlen($r_body) > 10 && substr($r_body,0,3)=="\x1f\x8b\x08"){
             $this->resp_body = @gzinflate(substr($r_body, 10));
         }else{
             $this->resp_body = $r_body;
@@ -513,12 +516,12 @@ class HTTPClient {
      * @author Andreas Goetz <cpuidle@gmx.de>
      */
     function _getCookies(){
+        $headers = '';
         foreach ($this->cookies as $key => $val){
-            if ($headers) $headers .= '; ';
-            $headers .= $key.'='.$val;
+            $headers .= "$key=$val; ";
         }
-
-        if ($headers) $headers = "Cookie: $headers".HTTP_NL;
+        $headers = substr($headers, 0, -2);
+        if ($headers !== '') $headers = "Cookie: $headers".HTTP_NL;
         return $headers;
     }
 

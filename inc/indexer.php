@@ -74,7 +74,7 @@ function idx_saveIndex($pre, $wlen, &$idx){
         fwrite($fh,$line);
     }
     fclose($fh);
-    if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
+    if(isset($conf['fperm'])) chmod($fn.'.tmp', $conf['fperm']);
     io_rename($fn.'.tmp', $fn.'.idx');
     return true;
 }
@@ -574,12 +574,16 @@ function idx_lookup($words){
 
     // merge found pages into final result array
     $final = array();
-    foreach(array_keys($result) as $word){
+    foreach($result as $word => $res){
         $final[$word] = array();
-        foreach($result[$word] as $wid){
+        foreach($res as $wid){
             $hits = &$docs[$wid];
             foreach ($hits as $hitkey => $hitcnt) {
-                $final[$word][$hitkey] = $hitcnt + $final[$word][$hitkey];
+                if (!isset($final[$word][$hitkey])) {
+                    $final[$word][$hitkey] = $hitcnt;
+                } else {
+                    $final[$word][$hitkey] += $hitcnt;
+                }
             }
         }
     }

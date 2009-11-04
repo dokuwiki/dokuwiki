@@ -69,7 +69,8 @@ if ($conf['breadcrumbs']) breadcrumbs();
 // check upstream
 checkUpdateMessages();
 
-trigger_event('DOKUWIKI_STARTED',$tmp=array());
+$tmp = array(); // No event data
+trigger_event('DOKUWIKI_STARTED',$tmp);
 
 //close session
 session_write_close();
@@ -77,6 +78,7 @@ session_write_close();
 //do the work
 act_dispatch($ACT);
 
-trigger_event('DOKUWIKI_DONE', $tmp=array());
+$tmp = array(); // No event data
+trigger_event('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);

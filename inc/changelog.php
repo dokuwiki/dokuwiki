@@ -382,7 +382,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
  *
  * For efficiency, the log lines are parsed and cached for later
  * calls to getRevisionInfo. Large changelog files are read
- * backwards in chunks untill the requested number of changelog
+ * backwards in chunks until the requested number of changelog
  * lines are recieved.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>

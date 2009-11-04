@@ -56,7 +56,7 @@ function http_conditionalRequest($timestamp){
     header('HTTP/1.0 304 Not Modified');
 
     // don't produce output, even if compression is on
-    ob_end_clean();
+    @ob_end_clean();
     exit;
 }
 

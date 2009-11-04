@@ -111,16 +111,16 @@ function pageinfo(){
   $info['id'] = $ID;
   $info['rev'] = $REV;
 
-  if($_SERVER['REMOTE_USER']){
+    // set info about manager/admin status.
+    $info['isadmin']   = false;
+    $info['ismanager'] = false;
+  if(isset($_SERVER['REMOTE_USER'])){
     $info['userinfo']     = $USERINFO;
     $info['perm']         = auth_quickaclcheck($ID);
     $info['subscribed']   = is_subscribed($ID,$_SERVER['REMOTE_USER'],false);
     $info['subscribedns'] = is_subscribed($ID,$_SERVER['REMOTE_USER'],true);
     $info['client']       = $_SERVER['REMOTE_USER'];
 
-    // set info about manager/admin status
-    $info['isadmin']   = false;
-    $info['ismanager'] = false;
     if($info['perm'] == AUTH_ADMIN){
       $info['isadmin']   = true;
       $info['ismanager'] = true;
@@ -275,12 +275,9 @@ function breadcrumbs(){
   global $ID;
   global $ACT;
   global $conf;
-  $crumbs = $_SESSION[DOKU_COOKIE]['bc'];
 
   //first visit?
-  if (!is_array($crumbs)){
-    $crumbs = array();
-  }
+  $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
   //we only save on show and existing wiki documents
   $file = wikiFN($ID);
   if($ACT != 'show' || !@file_exists($file)){
@@ -1130,11 +1127,14 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
  * @author Todd Augsburger <todd@rollerorgans.com>
  */
 function getGoogleQuery(){
+  if (!isset($_SERVER['HTTP_REFERER'])) {
+    return '';
+  }
   $url = parse_url($_SERVER['HTTP_REFERER']);
-  if(!$url) return '';
 
   $query = array();
   parse_str($url['query'],$query);
+  $q = '';
   if(isset($query['q']))
     $q = $query['q'];        // google, live/msn, aol, ask, altavista, alltheweb, gigablast
   elseif(isset($query['p']))
@@ -1144,7 +1144,7 @@ function getGoogleQuery(){
   elseif(preg_match("#a9\.com#i",$url['host'])) // a9
     $q = urldecode(ltrim($url['path'],'/'));
 
-  if(!$q) return '';
+  if($q === '') return '';
   $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/',$q,-1,PREG_SPLIT_NO_EMPTY);
   return $q;
 }
@@ -1403,7 +1403,7 @@ function preg_quote_cb($string){
 /**
  * Shorten a given string by removing data from the middle
  *
- * You can give the string in two parts, teh first part $keep
+ * You can give the string in two parts, the first part $keep
  * will never be shortened. The second part $short will be cut
  * in the middle to shorten but only if at least $min chars are
  * left to display it. Otherwise it will be left off.
