@@ -54,10 +54,18 @@ function getVersion(){
         //official release
         return 'Release '.trim(io_readfile(DOKU_INC.'VERSION'));
     }elseif(is_dir(DOKU_INC.'_darcs')){
+        if(is_file(DOKU_INC.'_darcs/inventory')){
+            $inventory = DOKU_INC.'_darcs/inventory';
+        }elseif(is_file(DOKU_INC.'_darcs/hashed_inventory')){
+            $inventory = DOKU_INC.'_darcs/hashed_inventory';
+        }else{
+            return 'Darcs unknown';
+        }
+
         //darcs checkout - read last 2000 bytes of inventory
-        $sz   = filesize(DOKU_INC.'_darcs/inventory');
+        $sz   = filesize($inventory);
         $seek = max(0,$sz-2000);
-        $fh   = fopen(DOKU_INC.'_darcs/inventory','rb');
+        $fh   = fopen($inventory,'rb');
         fseek($fh,$seek);
         $chunk = fread($fh,2000);
         fclose($fh);
