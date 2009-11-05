@@ -44,6 +44,21 @@ class js_js_compress_test extends UnitTestCase {
         $this->assertEqual(js_compress($text), 'foo.split(/[a-Z\/]*/);');
     }
 
+    function test_regex_in_array(){
+        $text = '[/"/ , /"/ , /"/]';
+        $this->assertEqual(js_compress($text), '[/"/,/"/,/"/]');
+    }
+
+    function test_regex_in_hash(){
+        $text = '{ a : /"/ }';
+        $this->assertEqual(js_compress($text), '{a:/"/}');
+    }
+
+    function test_regex_preceded_by_spaces_caracters(){
+        $text = "text.replace( \t \r\n  /\"/ , ".'"//" )';
+        $this->assertEqual(js_compress($text), 'text.replace(/"/,"//")');
+    }
+
     function test_dquot1(){
         $text = 'var foo="Now what \\" \'do we//get /*here*/ ?";';
         $this->assertEqual(js_compress($text), $text);

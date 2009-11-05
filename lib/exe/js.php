@@ -282,6 +282,10 @@ function js_compress($s){
     // items that don't need spaces next to them
     $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"[]";
 
+    $regex_starters = array("(", "=", "[", "," , ":");
+
+    $whitespaces_chars = array(" ", "\t", "\n", "\r", "\0", "\x0B");
+
     while($i < $slen){
         // skip all "boring" characters.  This is either
         // reserved word (e.g. "for", "else", "if") or a
@@ -312,10 +316,10 @@ function js_compress($s){
         if($ch == '/'){
             // rewind, skip white space
             $j = 1;
-            while($s{$i-$j} == ' '){
+            while(in_array($s{$i-$j}, $whitespaces_chars)){
                 $j = $j + 1;
             }
-            if( ($s{$i-$j} == '=') || ($s{$i-$j} == '(') ){
+            if( in_array($s{$i-$j}, $regex_starters) ){
                 // yes, this is an re
                 // now move forward and find the end of it
                 $j = 1;
