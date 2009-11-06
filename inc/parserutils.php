@@ -589,8 +589,9 @@ function & p_get_renderer($mode) {
         }
         $Renderer = & new $rclass();
     }else{
-        // Maybe a plugin is available?
-        if (!$plugin_controller->isdisabled($rname)){
+        // Maybe a plugin/component is available?
+        list($plugin, $component) = $plugin_controller->_splitName($rname);
+        if (!$plugin_controller->isdisabled($plugin)){
             $Renderer =& $plugin_controller->load('renderer',$rname, true);
         }
 
