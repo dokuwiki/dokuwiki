@@ -534,6 +534,7 @@ if (!class_exists('setting_email')) {
 
   class setting_email extends setting_string {
     var $_pattern = SETTING_EMAIL_PATTERN;       // no longer required, retained for backward compatibility - FIXME, may not be necessary
+    var $_multiple = false;
 
     /**
      *  update setting with user provided value $input
@@ -548,10 +549,18 @@ if (!class_exists('setting_email')) {
         $value = is_null($this->_local) ? $this->_default : $this->_local;
         if ($value == $input) return false;
 
-        if (!mail_isvalid($input)) {
-          $this->_error = true;
-          $this->_input = $input;
-          return false;
+        if ($this->_multiple) {
+            $mails = array_filter(array_map('trim', split(',', $input)));
+        } else {
+            $mails = array($input);
+        }
+
+        foreach ($mails as $mail) {
+            if (!mail_isvalid($mail)) {
+              $this->_error = true;
+              $this->_input = $input;
+              return false;
+            }
         }
 
         $this->_local = $input;
