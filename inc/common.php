@@ -1040,10 +1040,10 @@ function saveOldRevision($id){
 }
 
 /**
- * Sends a notify mail on page change
+ * Sends a notify mail on page change or registration
  *
  * @param  string  $id       The changed page
- * @param  string  $who      Who to notify (admin|subscribers)
+ * @param  string  $who      Who to notify (admin|subscribers|register)
  * @param  int     $rev      Old page revision
  * @param  string  $summary  What changed
  * @param  boolean $minor    Is this a minor edit?
