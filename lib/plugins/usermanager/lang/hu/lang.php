@@ -4,6 +4,7 @@
  *
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
+ * @author schilling.janos@gmail.com
  */
 $lang['menu']                  = 'Felhasználók kezelése';
 $lang['noauth']                = '(A felhasználói azonosítás nem működik.)';

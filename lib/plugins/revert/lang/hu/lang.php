@@ -4,6 +4,7 @@
  *
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
+ * @author schilling.janos@gmail.com
  */
 $lang['menu']                  = 'Visszaállítás kezelő (anti-SPAM)';
 $lang['filter']                = 'SPAM tartalmú oldalak keresése';
