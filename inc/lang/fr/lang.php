@@ -17,6 +17,7 @@
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
+ * @author Vincent Feltz <psycho@feltzv.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -248,3 +249,10 @@ $lang['mu_filetypes']          = 'Types de fichiers acceptés';
 $lang['mu_info']               = 'fichiers envoyés.';
 $lang['mu_lasterr']            = 'Dernière erreur : ';
 $lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein du namespace <b>%s</b>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>.';
+$lang['years']                 = 'il y a %d an(s)';
+$lang['months']                = 'il y a %d mois';
+$lang['weeks']                 = 'il y a %d semaine(s)';
+$lang['days']                  = 'il y a %d jour(s)';
+$lang['hours']                 = 'il y a %d heure(s)';
+$lang['minutes']               = 'il y a %d minute(s)';
+$lang['seconds']               = 'il y a %d seconde(s)';
