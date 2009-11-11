@@ -58,12 +58,13 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
         return array(
                 'author' => 'Christopher Smith',
                 'email'  => 'chris@jalakai.co.uk',
-                'date'   => '2009-07-25',
+                'date'   => '2009-11-11',
                 'name'   => 'Plugin Manager',
                 'desc'   => "Manage Plugins, including automated plugin installer $disabled",
-                'url'    => 'http://dokuwiki.org/plugin:plugin',
+                'url'    => 'http://www.dokuwiki.org/plugin:plugin',
                 );
     }
+
 
     /**
      * return sort order for position in admin menu
@@ -79,6 +80,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
         // enable direct access to language strings
         $this->setupLocale();
 
+
         $fn = $_REQUEST['fn'];
         if (is_array($fn)) {
             $this->cmd = key($fn);
@@ -87,7 +89,6 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
             $this->cmd = $fn;
             $this->plugin = null;
         }
-
         $this->_get_plugin_list();
 
         // verify $_REQUEST vars

@@ -132,10 +132,12 @@ class ap_manage {
         exit();
     }
 
-    // log
-    function plugin_writelog($plugin, $cmd, $data) {
+    /**
+     * Write a log entry to the given target directory
+     */
+    function plugin_writelog($target, $cmd, $data) {
 
-        $file = DOKU_PLUGIN.$plugin.'/manager.dat';
+        $file = $target.'/manager.dat';
 
         switch ($cmd) {
             case 'install' :

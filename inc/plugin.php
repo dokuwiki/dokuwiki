@@ -30,7 +30,10 @@ class DokuWiki_Plugin {
      * url    - Website with more information on the plugin (eg. syntax description)
      */
     function getInfo(){
-        trigger_error('getInfo() not implemented in '.get_class($this), E_USER_WARNING);
+        $parts = explode('_',get_class($this));
+        $info  = DOKU_PLUGIN.'/'.$parts[2].'/plugin.info.txt';
+        if(@file_exists($info)) return confToHash($info);
+        trigger_error('getInfo() not implemented in '.get_class($this).' and '.$info.' not found', E_USER_WARNING);
     }
 
     // plugin introspection methods

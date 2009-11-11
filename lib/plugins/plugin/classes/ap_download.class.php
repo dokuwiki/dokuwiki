@@ -45,7 +45,6 @@ class ap_download extends ap_manage {
      */
     function download($url, $overwrite=false) {
         global $lang;
-
         // check the url
         $matches = array();
         if (!preg_match("/[^\/]*$/", $url, $matches) || !$matches[0]) {
@@ -71,27 +70,41 @@ class ap_download extends ap_manage {
         // search $tmp for the folder(s) that has been created
         // move the folder(s) to lib/plugins/
         if (!$this->manager->error) {
-            if ($dh = @opendir("$tmp/")) {
-                while (false !== ($f = readdir($dh))) {
-                    if ($f == '.' || $f == '..' || $f == 'tmp') continue;
-                    if (!is_dir("$tmp/$f")) continue;
+            $result = array('old'=>array(), 'new'=>array());
+            if($this->find_folders($result,$tmp)){
+                // choose correct result array
+                if(count($result['new'])){
+                    $install = $result['new'];
+                }else{
+                    $install = $result['old'];
+                }
+
+                // now install all found items
+                foreach($install as $item){
+                    // where to install?
+                    if($item['type'] == 'template'){
+                        $target = DOKU_INC.'lib/tpl/'.$item['base'];
+                    }else{
+                        $target = DOKU_INC.'lib/plugins/'.$item['base'];
+                    }
 
                     // check to make sure we aren't overwriting anything
-                    if (!$overwrite && @file_exists(DOKU_PLUGIN.$f)) {
+                    if (!$overwrite && @file_exists($target)) {
                         // remember our settings, ask the user to confirm overwrite, FIXME
                         continue;
                     }
 
-                    $instruction = @file_exists(DOKU_PLUGIN.$f) ? 'update' : 'install';
+                    $instruction = @file_exists($target) ? 'update' : 'install';
 
-                    if ($this->dircopy("$tmp/$f", DOKU_PLUGIN.$f)) {
-                        $this->downloaded[] = $f;
-                        $this->plugin_writelog($f, $instruction, array($url));
+                    // copy action
+                    if ($this->dircopy($item['tmp'], $target)) {
+                        $this->downloaded[] = $item['base'];
+                        $this->plugin_writelog($target, $instruction, array($url));
                     } else {
-                        $this->manager->error .= sprintf($this->lang['error_copy']."\n", $f);
+                        $this->manager->error .= sprintf($this->lang['error_copy']."\n", $item['base']);
                     }
                 }
-                closedir($dh);
+
             } else {
                 $this->manager->error = $this->lang['error']."\n";
             }
@@ -107,6 +120,67 @@ class ap_download extends ap_manage {
         }
 
         return false;
+    }
+
+    /**
+     * Find out what was in the extracted directory
+     *
+     * Correct folders are searched recursively using the "*.info.txt" configs
+     * as indicator for a root folder. When such a file is found, it's base
+     * setting is used (when set). All folders found by this method are stored
+     * in the 'new' key of the $result array.
+     *
+     * For backwards compatibility all found top level folders are stored as
+     * in the 'old' key of the $result array.
+     *
+     * When no items are found in 'new' the copy mechanism should fall back
+     * the 'old' list.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param arrayref $result - results are stored here
+     * @param string $base - the temp directory where the package was unpacked to
+     * @param string $dir - a subdirectory. do not set. used by recursion
+     * @return bool - false on error
+     */
+    function find_folders(&$result,$base,$dir=''){
+        $dh = @opendir("$base/$dir");
+        if(!$dh) return false;
+        while (false !== ($f = readdir($dh))) {
+            if ($f == '.' || $f == '..' || $f == 'tmp') continue;
+
+            if(!is_dir("$base/$dir/$f")){
+                // it's a file -> check for config
+                if($f == 'plugin.info.txt'){
+                    $info = array();
+                    $info['type'] = 'plugin';
+                    $info['tmp']  = "$base/$dir";
+                    $conf = confToHash("$base/$dir/$f");
+                    $info['base'] = basename($conf['base']);
+                    if(!$info['base']) $info['base'] = basename("$base/$dir");
+                    $result['new'][] = $info;
+                }elseif($f == 'template.info.txt'){
+                    $info = array();
+                    $info['type'] = 'template';
+                    $info['tmp']  = "$base/$dir";
+                    $conf = confToHash("$base/$dir/$f");
+                    $info['base'] = basename($conf['base']);
+                    if(!$info['base']) $info['base'] = basename("$base/$dir");
+                    $result['new'][] = $info;
+                }
+            }else{
+                // it's a directory -> add to dir list for old method, then recurse
+                if(!$dir){
+                    $info = array();
+                    $info['type'] = 'plugin';
+                    $info['tmp']  = "$base/$dir/$f";
+                    $info['base'] = $f;
+                    $result['old'][] = $info;
+                }
+                $this->find_folders($result,$base,"$dir/$f");
+            }
+        }
+        closedir($dh);
+        return true;
     }
 
 
