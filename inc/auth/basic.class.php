@@ -128,7 +128,7 @@ class auth_basic {
    * only be needed when trustExternal is implemented.
    *
    * @see     auth_logoff()
-   * @author  Andreas Gohr
+   * @author  Andreas Gohr <andi@splitbrain.org>
    */
   function logOff(){
   }
@@ -320,6 +320,46 @@ class auth_basic {
   function retrieveGroups($start=0,$limit=0) {
     msg("authorisation method does not support group list retrieval", -1);
     return array();
+  }
+
+  /**
+   * Sanitize a given username [OPTIONAL]
+   *
+   * This function is applied to any user name that is given to
+   * the backend and should also be applied to any user name within
+   * the backend before returning it somewhere.
+   *
+   * This should be used to enforce username restrictions. Eg. when
+   * the backend is case insensitive all usernames should be lowercased
+   * here.
+   *
+   * @author Andreas Gohr <andi@splitbrain.org>
+   * @param string $user - username
+   * @param string - the cleaned username
+   */
+  function cleanUser($user){
+    return $user;
+  }
+
+  /**
+   * Sanitize a given groupname [OPTIONAL]
+   *
+   * This function is applied to any groupname that is given to
+   * the backend and should also be applied to any groupname within
+   * the backend before returning it somewhere.
+   *
+   * This should be used to enforce groupname restrictions. Eg. when
+   * the backend is case insensitive all groupames should be lowercased
+   * here.
+   *
+   * Groupnames are to be passed without a leading '@' here.
+   *
+   * @author Andreas Gohr <andi@splitbrain.org>
+   * @param string $group - groupname
+   * @param string - the cleaned groupname
+   */
+  function cleanGroup($group){
+    return $group;
   }
 
 

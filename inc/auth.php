@@ -74,6 +74,9 @@ if($conf['useacl']){
             $_REQUEST['http_credentials'] = true;
         }
 
+        // apply cleaning
+        $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+
         if(isset($_REQUEST['authtok'])){
             // when an authentication token is given, trust the session
             auth_validateToken($_REQUEST['authtok']);
@@ -90,13 +93,10 @@ if($conf['useacl']){
             $evt = new Doku_Event('AUTH_LOGIN_CHECK',$evdata);
             if($evt->advise_before()){
                 auth_login($evdata['user'],
-                        $evdata['password'],
-                        $evdata['sticky'],
-                        $evdata['silent']);
+                           $evdata['password'],
+                           $evdata['sticky'],
+                           $evdata['silent']);
             }
-            $evt->advise_after();
-            unset($evt);
-            unset($evdata);
         }
     }
 
@@ -104,6 +104,7 @@ if($conf['useacl']){
     global $AUTH_ACL;
     if(is_readable(DOKU_CONF.'acl.auth.php')){
         $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+        //support user wildcard
         if(isset($_SERVER['REMOTE_USER'])){
             $AUTH_ACL = str_replace('%USER%',$_SERVER['REMOTE_USER'],$AUTH_ACL);
             $AUTH_ACL = str_replace('@USER@',$_SERVER['REMOTE_USER'],$AUTH_ACL); //legacy

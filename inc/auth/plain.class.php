@@ -261,6 +261,22 @@ class auth_plain extends auth_basic {
     }
 
     /**
+     * Only valid pageid's (no namespaces) for usernames
+     */
+    function cleanUser($user){
+        global $conf;
+        return cleanID(str_replace(':',$conf['sepchar'],$user));
+    }
+
+    /**
+     * Only valid pageid's (no namespaces) for groupnames
+     */
+    function cleanGroup($user){
+        global $conf;
+        return cleanID(str_replace(':',$conf['sepchar'],$group));
+    }
+
+    /**
      * Load all user data
      *
      * loads the user file into a datastructure
