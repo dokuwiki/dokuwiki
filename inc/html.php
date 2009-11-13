@@ -1189,7 +1189,6 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
                     <?php /* sets changed to true when previewed */?>
                     textChanged = <?php ($mod) ? print 'true' : print 'false' ?>;
                 //--><!]]></script>
-                <span id="spell__action"></span>
             <?php } ?>
         </div>
         <?php
@@ -1223,7 +1222,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
             $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
             $out  = $lang['licenseok'];
             $out .= '<a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
-            if($conf['target']['external']) $out .= ' target="'.$conf['target']['external'].'"';
+            if(isset($conf['target']['external'])) $out .= ' target="'.$conf['target']['external'].'"';
             $out .= '> '.$license[$conf['license']]['name'].'</a>';
             $form->addElement($out);
             $form->addElement(form_makeCloseTag('div'));

@@ -217,24 +217,27 @@ class cache_renderer extends cache_parser {
 
     if (!parent::_useCache()) return false;
 
+    if (!isset($this->page)) {
+      return true;
+    }
+
+    // check current link existence is consistent with cache version
+    // first check the purgefile
+    // - if the cache is more recent than the purgefile we know no links can have been updated
+    if ($this->_time > @filemtime($conf['cachedir'].'/purgefile')) {
+      return true;
+    }
+
     // for wiki pages, check metadata dependencies
-    if (isset($this->page)) {
-      $metadata = p_get_metadata($this->page);
+    $metadata = p_get_metadata($this->page);
 
-      // check currnent link existence is consistent with cache version
-      // first check the purgefile
-      // - if the cache is more recent that the purgefile we know no links can have been updated
-      if ($this->_time < @filemtime($conf['cachedir'].'/purgefile')) {
+    if (!isset($metadata['relation']['references']) ||
+        !empty($metadata['relation']['references'])) {
+      return true;
+    }
 
-#       $links = p_get_metadata($this->page,"relation references");
-        $links = $metadata['relation']['references'];
-
-        if (!empty($links)) {
-          foreach ($links as $id => $exists) {
-            if ($exists != page_exists($id,'',false)) return false;
-          }
-        }
-      }
+    foreach ($metadata['relation']['references'] as $id => $exists) {
+      if ($exists != page_exists($id,'',false)) return false;
     }
 
     return true;

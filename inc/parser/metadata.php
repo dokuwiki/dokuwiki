@@ -68,7 +68,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
     $this->meta['relation']['firstimage'] = $this->firstimage;
 
-    if(!$this->meta['date']['modified']){
+    if(!isset($this->meta['date']['modified'])){
         $this->meta['date']['modified'] = filemtime(wikiFN($ID));
     }
 
