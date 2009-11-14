@@ -12,16 +12,6 @@ require_once(DOKU_AUTH.'/basic.class.php');
 
 define('AUTH_USERFILE',DOKU_CONF.'users.auth.php');
 
-// we only accept page ids for auth_plain
-if(isset($_REQUEST['u']))
-  $_REQUEST['u'] = cleanID($_REQUEST['u']);
-if(isset($_REQUEST['acl_user']))
-  $_REQUEST['acl_user'] = cleanID($_REQUEST['acl_user']);
-// the same goes for password reset requests
-if(isset($_POST['login'])){
-  $_POST['login'] = cleanID($_POST['login']);
-}
-
 class auth_plain extends auth_basic {
 
     var $users = null;

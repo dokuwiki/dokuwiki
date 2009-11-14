@@ -138,15 +138,13 @@ class auth_ad extends auth_basic {
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];
         $info['dn']   = $result[0]['dn'];
-        if(!$info['mail']) $info['mail'] = cleanID($user).'@projektron.de';
-
 
         // handle ActiveDirectory memberOf
         $info['grps'] = $this->adldap->user_groups($user);
 
         if (is_array($info['grps'])) {
             foreach ($info['grps'] as $ndx => $group) {
-                $info['grps'][$ndx] = $this->_sanitizeGroupName($group);
+                $info['grps'][$ndx] = $this->cleanGroup($group);
             }
         }
 
@@ -163,15 +161,21 @@ class auth_ad extends auth_basic {
      *
      * Removes backslashes ('\'), pound signs ('#'), and converts spaces to underscores.
      *
-     *  @author  James Van Lommel (jamesvl@gmail.com)
+     * @author  James Van Lommel (jamesvl@gmail.com)
      */
-    function _sanitizeGroupName($name) {
+    function cleanGroup($name) {
         $sName = str_replace('\\', '', $name);
         $sName = str_replace('#', '', $sName);
         $sName = preg_replace('[\s]', '_', $sName);
         return $sName;
     }
 
+    /**
+     * Sanitize user names
+     */
+    function cleanUser($name) {
+        return $this->cleanGroup($name);
+    }
 
     /**
      * Initialize the AdLDAP library and connect to the server

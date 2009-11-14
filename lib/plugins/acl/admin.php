@@ -62,6 +62,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     function handle() {
         global $AUTH_ACL;
         global $ID;
+        global $auth;
 
         // fresh 1:1 copy without replacements
         $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
@@ -76,9 +77,9 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // user or group choosen?
         $who = trim($_REQUEST['acl_w']);
         if($_REQUEST['acl_t'] == '__g__' && $who){
-            $this->who = '@'.ltrim($who,'@');
+            $this->who = '@'.ltrim($auth->cleanGroup($who),'@');
         }elseif($_REQUEST['acl_t'] == '__u__' && $who){
-            $this->who = ltrim($who,'@');
+            $this->who = ltrim($auth->cleanUser($who),'@');
         }elseif($_REQUEST['acl_t'] &&
                 $_REQUEST['acl_t'] != '__u__' &&
                 $_REQUEST['acl_t'] != '__g__'){

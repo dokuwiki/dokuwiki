@@ -335,6 +335,7 @@ function auth_logoff($keepbc=false){
 function auth_ismanager($user=null,$groups=null,$adminonly=false){
     global $conf;
     global $USERINFO;
+    global $auth;
 
     if(!$conf['useacl']) return false;
     if(is_null($user)) {
@@ -344,7 +345,9 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
             $user = $_SERVER['REMOTE_USER'];
         }
     }
+    $user = $auth->cleanUser($user);
     if(is_null($groups)) $groups = (array) $USERINFO['grps'];
+    $groups = array_map(array($auth,'cleanGroup'),$groups);
     $user   = auth_nameencode($user);
 
     // check username against superuser and manager
@@ -433,6 +436,7 @@ function auth_quickaclcheck($id){
 function auth_aclcheck($id,$user,$groups){
     global $conf;
     global $AUTH_ACL;
+    global $auth;
 
     // if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
@@ -443,6 +447,9 @@ function auth_aclcheck($id,$user,$groups){
     //if user is superuser or in superusergroup return 255 (acl_admin)
     if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
 
+
+    $user = $auth->cleanUser($user);
+    $groups = array_map(array($auth,'cleanGroup'),(array)$groups);
     $user = auth_nameencode($user);
 
     //prepend groups with @ and nameencode
@@ -593,6 +600,7 @@ function auth_sendPassword($user,$password){
     global $auth;
 
     $hdrs  = '';
+    $user     = $auth->cleanUser($user);
     $userinfo = $auth->getUserData($user);
 
     if(!$userinfo['mail']) return false;
@@ -628,8 +636,8 @@ function register(){
     if(!$auth->canDo('addUser')) return false;
 
     //clean username
-    $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
-    $_POST['login'] = cleanID($_POST['login']);
+    $_POST['login'] = trim($auth->cleanUser($_POST['login']));
+
     //clean fullname and email
     $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['fullname']));
     $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['email']));
@@ -823,8 +831,7 @@ function act_resendpwd(){
             msg($lang['resendpwdmissing'], -1);
             return false;
         } else {
-            $_POST['login'] = preg_replace('/.*:/','',$_POST['login']);
-            $user = cleanID($_POST['login']);
+            $user = trim($auth->cleanUser($_POST['login']));
         }
 
         $userinfo = $auth->getUserData($user);
