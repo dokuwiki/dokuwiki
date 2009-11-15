@@ -234,22 +234,22 @@ Typography: [[DokuWiki]] can convert simple text characters to their typographic
 
 The same can be done to produce any kind of HTML, it just needs to be added to the [[doku>entities|pattern file]].
 
-Please note: These conversions can be turned off through a [[doku>config:typography|config option]].
+There are three exceptions which do not come from that pattern file: multiplication entity (640x480), 'single' and "double quotes". They can be turned off through a [[doku>config:typography|config option]].
 
 ===== Quoting =====
 
 Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
 
   I think we should do it
-
+  
   > No we shouldn't
-
+  
   >> Well, I say we should
-
+  
   > Really?
-
+  
   >> Yes!
-
+  
   >>> Then lets do it!
 
 I think we should do it
