@@ -25,11 +25,13 @@ $opt = rss_parseOptions();
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
 $cache = getCacheName(join('',array_values($opt)).$_SERVER['REMOTE_USER'],'.feed');
-$cmod = @filemtime($cache); // 0 if not exists
-if ($cmod && (@filemtime(DOKU_CONF.'local.php')>$cmod || @filemtime(DOKU_CONF.'dokuwiki.php')>$cmod)) {
-    // ignore cache if feed prefs may have changed
-    $cmod = 0;
-}
+$key   = join('', array_values($opt)) . $_SERVER['REMOTE_USER']; 
+$cache = new cache($key, '.feed');
+
+// prepare cache depends
+$depends['files'] = getConfigFiles('main');
+$depends['age']   = $conf['rss_update'];
+$depends['purge'] = ($_REQUEST['purge']) ? true : false;
 
 // check cacheage and deliver if nothing has changed since last
 // time or the update interval has not passed, also handles conditional requests
@@ -37,10 +39,10 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 header('Content-Type: application/xml; charset=utf-8');
 header('X-Robots-Tag: noindex');
-if($cmod && (($cmod+$conf['rss_update']>time()) || ($cmod>@filemtime($conf['changelog'])))){
-    http_conditionalRequest($cmod);
-    if($conf['allowdebug']) header("X-CacheUsed: $cache");
-    print io_readFile($cache);
+if($cache->useCache($depends)) {
+    http_conditionalRequest($cache->_time);
+    if($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
+    print $cache->retrieveCache();
     exit;
 } else {
     http_conditionalRequest(time());
@@ -80,7 +82,7 @@ rss_buildItems($rss, $data, $opt);
 $feed = $rss->createFeed($opt['feed_type'],'utf-8');
 
 // save cachefile
-io_saveFile($cache,$feed);
+$cache->storeCache($feed);
 
 // finally deliver
 print $feed;
