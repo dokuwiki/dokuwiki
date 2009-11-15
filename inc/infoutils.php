@@ -44,22 +44,27 @@ function checkUpdateMessages(){
 
 
 /**
- * Return DokuWikis version
+ * Return DokuWiki's version (split up in date and type)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getVersion(){
+function getVersionData(){
+    $version = array();
     //import version string
     if(@file_exists(DOKU_INC.'VERSION')){
         //official release
-        return 'Release '.trim(io_readfile(DOKU_INC.'VERSION'));
+        $version['date'] = trim(io_readfile(DOKU_INC.'VERSION'));
+        $version['type'] = 'Release';
+        return $version;
     }elseif(is_dir(DOKU_INC.'_darcs')){
         if(is_file(DOKU_INC.'_darcs/inventory')){
             $inventory = DOKU_INC.'_darcs/inventory';
         }elseif(is_file(DOKU_INC.'_darcs/hashed_inventory')){
             $inventory = DOKU_INC.'_darcs/hashed_inventory';
         }else{
-            return 'Darcs unknown';
+            $version['date'] = 'unknown';
+            $version['type'] = 'Darcs';
+            return $version;
         }
 
         //darcs checkout - read last 2000 bytes of inventory
@@ -72,10 +77,24 @@ function getVersion(){
         $inv = preg_grep('#\*\*\d{14}[\]$]#',explode("\n",$chunk));
         $cur = array_pop($inv);
         preg_match('#\*\*(\d{4})(\d{2})(\d{2})#',$cur,$matches);
-        return 'Darcs '.$matches[1].'-'.$matches[2].'-'.$matches[3];
+        $version['date'] = $matches[1].'-'.$matches[2].'-'.$matches[3];
+        $version['type'] = 'Darcs';
+        return $version;
     }else{
-        return 'snapshot?';
+        $version['date'] = 'unknown';
+        $version['type'] = 'snapshot?';
+        return $version;
     }
+}
+
+/**
+ * Return DokuWiki's version (as a string)
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function getVersion(){
+    $version = getVersionData();
+    return $version['type'].' '.$version['date'];
 }
 
 /**
