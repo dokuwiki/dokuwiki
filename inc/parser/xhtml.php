@@ -1087,6 +1087,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _imageTitle($img) {
+        global $ID;
+
+        // some fixes on $img['src']
+        // see internalmedia() and externalmedia()
+        list($img['src'],$hash) = explode('#',$img['src'],2);
+        if ($img['type'] == 'internalmedia') {
+            resolve_mediaid(getNS($ID),$img['src'],$exists);
+        }
+
         return $this->_media($img['src'],
                               $img['title'],
                               $img['align'],
