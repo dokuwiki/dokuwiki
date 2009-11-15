@@ -49,7 +49,7 @@ Internal links are created by using square brackets. You can either just give a 
   Internal links are created by using square brackets. You can either just give
   a [[pagename]] or use an additional [[pagename|link text]].
 
-[[doku>pagename|Wiki pagenames]] are converted to lowercase automatically, special characters are not allowed. 
+[[doku>pagename|Wiki pagenames]] are converted to lowercase automatically, special characters are not allowed.
 
 You can use [[some:namespaces]] by using a colon in the pagename.
 
@@ -234,15 +234,15 @@ Please note: These conversions can be turned off through a [[doku>config:typogra
 Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
 
   I think we should do it
-  
+
   > No we shouldn't
-  
+
   >> Well, I say we should
-  
+
   > Really?
-  
+
   >> Yes!
-  
+
   >>> Then lets do it!
 
 I think we should do it
@@ -259,19 +259,19 @@ I think we should do it
 
 ===== Tables =====
 
-DokuWiki supports a simple syntax to create tables. 
+DokuWiki supports a simple syntax to create tables.
 
 ^ Heading 1      ^ Heading 2       ^ Heading 3          ^
 | Row 1 Col 1    | Row 1 Col 2     | Row 1 Col 3        |
 | Row 2 Col 1    | some colspan (note the double pipe) ||
-| Row 3 Col 1    | Row 2 Col 2     | Row 2 Col 3        |
+| Row 3 Col 1    | Row 3 Col 2     | Row 3 Col 3        |
 
 Table rows have to start and end with a ''|'' for normal rows or a ''^'' for headers.
 
   ^ Heading 1      ^ Heading 2       ^ Heading 3          ^
   | Row 1 Col 1    | Row 1 Col 2     | Row 1 Col 3        |
   | Row 2 Col 1    | some colspan (note the double pipe) ||
-  | Row 3 Col 1    | Row 2 Col 2     | Row 2 Col 3        |
+  | Row 3 Col 1    | Row 3 Col 2     | Row 3 Col 3        |
 
 To connect cells horizontally, just make the next cell completely empty as shown above. Be sure to have always the same amount of cell separators!
 
@@ -289,7 +289,19 @@ As you can see, it's the cell separator before a cell which decides about the fo
   ^ Heading 4    | no colspan this time |                    |
   ^ Heading 5    | Row 2 Col 2          | Row 2 Col 3        |
 
-Note: Vertical spans (rowspan) are not possible.
+You can have rowspans (vertically connected cells) by adding '':::'' into the cells below the one to which they should connect.
+
+^ Heading 1      ^ Heading 2                  ^ Heading 3          ^
+| Row 1 Col 1    | this cell spans vertically | Row 1 Col 3        |
+| Row 2 Col 1    | :::                        | Row 2 Col 3        |
+| Row 3 Col 1    | :::                        | Row 2 Col 3        |
+
+Apart from the rowspan syntax those cells should not contain anything else.
+
+  ^ Heading 1      ^ Heading 2                  ^ Heading 3          ^
+  | Row 1 Col 1    | this cell spans vertically | Row 1 Col 3        |
+  | Row 2 Col 1    | :::                        | Row 2 Col 3        |
+  | Row 3 Col 1    | :::                        | Row 2 Col 3        |
 
 You can align the table contents, too. Just add at least two whitespaces at the opposite end of your text: Add two spaces on the left to align right, two spaces on the right to align left and two spaces at least at both ends for centered text.
 
@@ -305,6 +317,8 @@ This is how it looks in the source:
   |left          |         right|    center    |
   | xxxxxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxxxxx |
 
+Note: Vertical alignment is not supported.
+
 ===== Non-parsed Blocks =====
 
 You can include non-parsed blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags ''code'' or ''file''.
@@ -314,7 +328,7 @@ This is preformatted code all spaces are preserved: like              <-this
 </code>
 
 <file>
-This is pretty much the same, but you could use it to show that you quoted a file.  
+This is pretty much the same, but you could use it to show that you quoted a file.
 </file>
 
 To let the parser ignore an area completely (ie. do no formatting on it), enclose the area either with ''nowiki'' tags or even simpler, with double percent signs ''<nowiki>%%</nowiki>''.
@@ -330,7 +344,7 @@ See the source of this page to see how to use these blocks.
 [[wiki:DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax is the same like in the code and file blocks in the previous section, but this time the name of the used language is inserted inside the tag. Eg. ''<nowiki><code java></nowiki>'' or ''<nowiki><file java></nowiki>''.
 
 <code java>
-/** 
+/**
  * The HelloWorldApp class implements an application that
  * simply displays "Hello World!" to the standard output.
  */
