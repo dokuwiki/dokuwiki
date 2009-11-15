@@ -14,9 +14,10 @@
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
  * @author Marvin Ortega <maty1206@maryanlinux.com>
+ * @author Daniel Castro Alvarado <dancas2@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
-$lang['noauth']                = '(la autentiación de usuariosuser no está disponible)';
+$lang['noauth']                = '(la autenticación de usuarios no está disponible)';
 $lang['nosupport']             = '(la administración de usuarios no está habilitada)';
 $lang['badauth']               = 'Mecanismo de autenticación inválido';
 $lang['user_id']               = 'Usuario';

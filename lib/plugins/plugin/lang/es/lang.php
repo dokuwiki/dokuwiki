@@ -15,6 +15,7 @@
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
  * @author Marvin Ortega <maty1206@maryanlinux.com>
+ * @author Daniel Castro Alvarado <dancas2@gmail.com>
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';
@@ -32,13 +33,13 @@ $lang['source']                = 'Origen:';
 $lang['unknown']               = 'desconocido';
 $lang['updating']              = 'Actualizando ...';
 $lang['updated']               = 'El plugin %s ha sido actualizado con exito';
-$lang['updates']               = 'Los siguientes plugins han sido actualizados con exito:';
+$lang['updates']               = 'Los siguientes plugins han sido actualizados con éxito:';
 $lang['update_none']           = 'No se encontraron actualizaciones.';
 $lang['deleting']              = 'Eliminando ...';
 $lang['deleted']               = 'El plugin %s ha sido eliminado.';
 $lang['downloading']           = 'Descargando ...';
-$lang['downloaded']            = 'El plugin %s ha sido descargado con exito';
-$lang['downloads']             = 'Los siguientes plugins han sido descargados con exito:';
+$lang['downloaded']            = 'El plugin %s ha sido descargado con éxito';
+$lang['downloads']             = 'Los siguientes plugins han sido descargados con éxito:';
 $lang['download_none']         = 'No se han encontrado plugins, o hubo algún problema durante la descarga o la instalación.';
 $lang['plugin']                = 'Plugin:';
 $lang['components']            = 'Componentes';

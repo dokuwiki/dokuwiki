@@ -15,14 +15,15 @@
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
  * @author Marvin Ortega <maty1206@maryanlinux.com>
+ * @author Daniel Castro Alvarado <dancas2@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de Configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
 $lang['updated']               = 'Los parámetros se actualizaron con exito.';
 $lang['nochoice']              = '(no hay otras alternativas disponibles)';
 $lang['locked']                = 'El archivo de configuración no ha podido ser actualizado, si esto no es lo deseado, <br /> asegúrese que el nombre del archivo local de configuraciones y los permisos sean los correctos.';
-$lang['danger']                = 'Atención: Cambiar esta opción podría hacer inaccesible el wiki y su menu de configuración.';
-$lang['warning']               = 'Advertencia:  Cambiar esta opción podría causar comportamientos inintencionales.';
+$lang['danger']                = 'Atención: Cambiar esta opción podría hacer inaccesible el wiki y su menú de configuración.';
+$lang['warning']               = 'Advertencia:  Cambiar esta opción podría causar comportamientos no deseados.';
 $lang['security']              = 'Advertencia de Seguridad: Cambiar esta opción podría representar un riesgo de seguridad.';
 $lang['_configuration_manager'] = 'Administrador de configuración';
 $lang['_header_dokuwiki']      = 'Parámetros de DokuWiki';
@@ -41,7 +42,7 @@ $lang['_network']              = 'Parámetros de Red';
 $lang['_plugin_sufix']         = 'Parámetros de Plugins';
 $lang['_template_sufix']       = 'Parámetros de Plantillas';
 $lang['_msg_setting_undefined'] = 'Sin parámetros de metadata.';
-$lang['_msg_setting_no_class'] = 'Sin Clase (class) establecida.';
+$lang['_msg_setting_no_class'] = 'Sin clase establecida.';
 $lang['_msg_setting_no_default'] = 'Sin valor por defecto.';
 $lang['fmode']                 = 'Modo de creación de ficheros';
 $lang['dmode']                 = 'Modo de creación de directorios';
@@ -53,7 +54,7 @@ $lang['start']                 = 'Nombre de la página inicial';
 $lang['title']                 = 'Título del Wiki';
 $lang['template']              = 'Plantilla';
 $lang['license']               = '¿Bajo qué licencia será liberado tu contenido?';
-$lang['fullpath']              = 'Camino (path) completo en el pié de página';
+$lang['fullpath']              = 'Ruta completa en el pié de página';
 $lang['recent']                = 'Cambios recientes';
 $lang['breadcrumbs']           = 'Número de pasos de traza';
 $lang['youarehere']            = 'Traza jerárquica';
@@ -88,9 +89,9 @@ $lang['manager']               = 'Manager - grupo ó usuario con acceso a cierta
 $lang['profileconfirm']        = 'Confirmar cambios en perfil con contraseña';
 $lang['disableactions']        = 'Deshabilitar acciones DokuWiki';
 $lang['disableactions_check']  = 'Controlar';
-$lang['disableactions_subscription'] = 'Subscribirse/Desubscribirse';
-$lang['disableactions_nssubscription'] = 'Directorio Subscribirse/Desubscribirse';
-$lang['disableactions_wikicode'] = 'Ver el fuente/Exportar en formato crudo (raw)';
+$lang['disableactions_subscription'] = 'Suscribirse/Cancelar Suscripción';
+$lang['disableactions_nssubscription'] = 'Directorio Suscribirse/Cancelar Suscripción';
+$lang['disableactions_wikicode'] = 'Ver la fuente/Exportar en formato raw';
 $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
 $lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los namespaces en el index. Habilitando esta opción los ocultará si el usuario no tiene permisos de lectura. Los sub-namespaces pueden resultar inaccesibles. El index puede hacerse poco usable dependiendo de las configuraciones ACL.';
 $lang['auth_security_timeout'] = 'Tiempo de Autenticación (en segundos), por motivos de seguridad';
@@ -124,7 +125,7 @@ $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['broken_iua']            = '¿Se ha roto su sistema a causa de la función ignore_user_abort?. Esto puede causar que no funcione el index de búsqueda. Leer el <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>para más información.';
 $lang['xsendfile']             = 'Utilice el X-Sendfile header para permitirle sl servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
-$lang['renderer__core']        = '%s (nucleo dokuwiki)';
+$lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (complemento)';
 $lang['rememberme']            = 'Permitir cookies para acceso permanente (recordarme)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
@@ -178,7 +179,7 @@ $lang['rss_linkto_o_current']  = 'la página actual';
 $lang['compression_o_0']       = 'Ninguna';
 $lang['compression_o_gz']      = 'gzip';
 $lang['compression_o_bz2']     = 'bz2';
-$lang['xsendfile_o_0']         = 'No utiliazar';
+$lang['xsendfile_o_0']         = 'No utilizar';
 $lang['xsendfile_o_1']         = 'Encabezado propietario de lighttpd (antes de la versión 1.5)';
 $lang['xsendfile_o_2']         = 'Encabezado X-Sendfile estándar';
 $lang['xsendfile_o_3']         = 'Encabezado propietario Nginx X-Accel-Redirect';
@@ -187,6 +188,6 @@ $lang['showuseras_o_username'] = 'Nombre completo del usuario';
 $lang['showuseras_o_email']    = 'Dirección de correo electrónico del usuario (Ofuscada según la configuración de "mailguard")';
 $lang['showuseras_o_email_link'] = 'Dirección de correo de usuario como enlace de envío de correo';
 $lang['useheading_o_0']        = 'Nunca';
-$lang['useheading_o_navigation'] = 'Solamente Navegacion';
+$lang['useheading_o_navigation'] = 'Solamente Navegación';
 $lang['useheading_o_content']  = 'Contenido Wiki solamente';
 $lang['useheading_o_1']        = 'Siempre';
