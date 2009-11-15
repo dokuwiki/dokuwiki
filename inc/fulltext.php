@@ -53,11 +53,13 @@ function _ft_pageSearch(&$data) {
     foreach ($q['parsed_ary'] as $token) {
         switch (substr($token, 0, 3)) {
             case 'W+:':
-            case 'W-:': // word
+            case 'W-:':
+            case 'W_:': // word
                 $word    = substr($token, 3);
                 $stack[] = (array) $lookup[$word];
                 break;
-            case 'P_:': // phrase
+            case 'P+:':
+            case 'P-:': // phrase
                 $phrase = substr($token, 3);
                 // since phrases are always parsed as ((W1)(W2)...(P)),
                 // the end($stack) always points the pages that contain
@@ -72,7 +74,8 @@ function _ft_pageSearch(&$data) {
                 }
                 $stack[] = $pages_matched;
                 break;
-            case 'N_:': // namespace
+            case 'N+:':
+            case 'N-:': // namespace
                 $ns = substr($token, 3);
                 $pages_matched = array();
                 foreach (array_keys($pages_all) as $id) {
@@ -487,14 +490,13 @@ function ft_queryParser($query){
      *
      * intermediate representation consists of the following parts:
      *
-     *   ( ) - group
-     *   AND - logical and
-     *   OR  - logical or
-     *   NOT - logical not
-     *   W+: - word (needs to be highlighted)
-     *   W-: - word (no need to highlight)
-     *   P_: - phrase
-     *   N_: - namespace
+     *   ( )           - group
+     *   AND           - logical and
+     *   OR            - logical or
+     *   NOT           - logical not
+     *   W+:, W-:, W_: - word      (underscore: no need to highlight)
+     *   P+:, P-:      - phrase    (minus sign: logically in NOT group)
+     *   N+:, N-:      - namespace
      */
     $parsed_query = '';
     $parens_level = 0;
@@ -546,10 +548,10 @@ function ft_queryParser($query){
                     $parsed .= 'OR';
                 } elseif (preg_match('/^(?:\^|-ns:)(.+)$/u', $token, $matches)) {
                     // namespace-exclude
-                    $parsed .= 'NOT(N_:'.$matches[1].')';
+                    $parsed .= 'NOT(N+:'.$matches[1].')';
                 } elseif (preg_match('/^(?:@|ns:)(.+)$/u', $token, $matches)) {
                     // namespace-include
-                    $parsed .= '(N_:'.$matches[1].')';
+                    $parsed .= '(N+:'.$matches[1].')';
                 } elseif (preg_match('/^-(.+)$/', $token, $matches)) {
                     // word-exclude
                     $parsed .= 'NOT('.ft_termParser($matches[1], $stopwords).')';
@@ -573,6 +575,26 @@ function ft_queryParser($query){
     $parsed_query = preg_replace('/\(OR/u'       , '('      , $parsed_query);
     $parsed_query = preg_replace('/^OR|OR$/u'    , ''       , $parsed_query);
     $parsed_query = preg_replace('/\)(NOT)?\(/u' , ')AND$1(', $parsed_query);
+
+    // adjustment: make highlightings right
+    $parens_level     = 0;
+    $notgrp_levels    = array();
+    $parsed_query_new = '';
+    $tokens = preg_split('/(NOT\(|[()])/u', $parsed_query, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+    foreach ($tokens as $token) {
+        if ($token === 'NOT(') {
+            $notgrp_levels[] = ++$parens_level;
+        } elseif ($token === '(') {
+            ++$parens_level;
+        } elseif ($token === ')') {
+            if ($parens_level-- === end($notgrp_levels)) array_pop($notgrp_levels);
+        } elseif (count($notgrp_levels) % 2 === 1) {
+            // turn highlight-flag off if terms are logically in "NOT" group
+            $token = preg_replace('/([WPN])\+\:/u', '$1-:', $token);
+        }
+        $parsed_query_new .= $token;
+    }
+    $parsed_query = $parsed_query_new;
 
     /**
      * convert infix notation string into postfix (Reverse Polish notation) array
@@ -628,31 +650,36 @@ function ft_queryParser($query){
         $body = substr($token, 3);
 
         switch (substr($token, 0, 3)) {
-            case 'N_:':
+            case 'N+:':
                 $q['ns'][]        = $body; // for backward compatibility
+                break;
+            case 'N-:':
+                $q['notns'][]     = $body; // for backward compatibility
+                break;
+            case 'W_:':
+                $q['words'][]     = $body;
                 break;
             case 'W-:':
                 $q['words'][]     = $body;
+                $q['not'][]       = $body; // for backward compatibility
                 break;
             case 'W+:':
                 $q['words'][]     = $body;
                 $q['highlight'][] = str_replace('*', '', $body);
+                $q['and'][]       = $body; // for backward compatibility
                 break;
-            case 'P_:':
+            case 'P-:':
+                $q['phrases'][]   = $body;
+                break;
+            case 'P+:':
                 $q['phrases'][]   = $body;
                 $q['highlight'][] = str_replace('*', '', $body);
                 break;
         }
     }
-    foreach (array('words', 'phrases', 'highlight', 'ns') as $key) {
+    foreach (array('words', 'phrases', 'highlight', 'ns', 'notns', 'and', 'not') as $key) {
         $q[$key] = empty($q[$key]) ? array() : array_values(array_unique($q[$key]));
     }
-
-    // keep backward compatibility (to some extent)
-    // this part can be deleted if no plugins use ft_queryParser() directly
-    $q['and']   = $q['words'];
-    $q['not']   = array(); // difficult to set: imagine [ aaa -(bbb -ccc) ]
-    $q['notns'] = array(); // same as above
 
     return $q;
 }
@@ -677,14 +704,14 @@ function ft_termParser($term, &$stopwords, $consider_asian = true, $phrase_mode 
         $term_noparen = str_replace(array('(', ')'), ' ', $term);
         $words = idx_tokenizer($term_noparen, $stopwords, true);
 
-        // W+: needs to be highlighted, W-: no need to highlight
+        // W_: no need to highlight
         if (empty($words)) {
             $parsed = '()'; // important: do not remove
         } elseif ($words[0] === $term) {
             $parsed = '(W+:'.$words[0].')';
         } elseif ($phrase_mode) {
             $term_encoded = str_replace(array('(', ')'), array('OP', 'CP'), $term);
-            $parsed = '((W-:'.implode(')(W-:', $words).')(P_:'.$term_encoded.'))';
+            $parsed = '((W_:'.implode(')(W_:', $words).')(P+:'.$term_encoded.'))';
         } else {
             $parsed = '((W+:'.implode(')(W+:', $words).'))';
         }
