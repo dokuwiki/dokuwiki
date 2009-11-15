@@ -429,12 +429,10 @@ div.dokuwiki ol {
   font-weight: bold;
 }
 
-/* no gap in between nested lists */
-div.dokuwiki li ul {
-  margin-bottom: 0;
-}
+/* no bottom gap in between and smaller left margin for nested lists */
+div.dokuwiki li ul,
 div.dokuwiki li ol {
-  margin-bottom: 0;
+  margin: 0 0 0 1.5em;
 }
 
 /* the list items overriding the ul/ol definition */
