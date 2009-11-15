@@ -261,7 +261,7 @@ class auth_plain extends auth_basic {
     /**
      * Only valid pageid's (no namespaces) for groupnames
      */
-    function cleanGroup($user){
+    function cleanGroup($group){
         global $conf;
         return cleanID(str_replace(':',$conf['sepchar'],$group));
     }
