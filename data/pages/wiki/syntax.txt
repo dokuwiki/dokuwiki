@@ -2,7 +2,7 @@
 
 [[doku>DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing the //Edit this page// button at the top or bottom of the page. If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>toolbar|quickbuttons]], too.
 
-===== Basic text formatting =====
+===== Basic Text Formatting =====
 
 DokuWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts. Of course you can **__//''combine''//__** all these.
 
@@ -121,7 +121,7 @@ By using four or more dashes, you can make a horizontal line:
 
 ----
 
-===== Images and other files =====
+===== Images and Other Files =====
 
 You can include external and internal [[doku>images]] with curly brackets. Optionally you can specify the size of them.
 
@@ -319,9 +319,25 @@ This is how it looks in the source:
 
 Note: Vertical alignment is not supported.
 
-===== Non-parsed Blocks =====
+===== No Formatting =====
 
-You can include non-parsed blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags ''code'' or ''file''.
+If you need to display text exactly like it is typed (without any formatting), enclose the area either with ''%%<nowiki>%%'' tags or even simpler, with double percent signs ''<nowiki>%%</nowiki>''.
+
+<nowiki>
+This is some text which contains addresses like this: http://www.splitbrain.org and **formatting**, but nothing is done with it.
+</nowiki>
+The same is true for %%//__this__ text// with a smiley ;-)%%.
+
+  <nowiki>
+  This is some text which contains addresses like this: http://www.splitbrain.org and **formatting**, but nothing is done with it.
+  </nowiki>
+  The same is true for %%//__this__ text// with a smiley ;-)%%.
+
+===== Code Blocks =====
+
+You can include code blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags ''%%<code>%%'' or ''%%<file>%%''.
+
+  This is text is indented by two spaces.
 
 <code>
 This is preformatted code all spaces are preserved: like              <-this
@@ -331,15 +347,19 @@ This is preformatted code all spaces are preserved: like              <-this
 This is pretty much the same, but you could use it to show that you quoted a file.
 </file>
 
-To let the parser ignore an area completely (ie. do no formatting on it), enclose the area either with ''nowiki'' tags or even simpler, with double percent signs ''<nowiki>%%</nowiki>''.
+Those blocks were created by this source:
 
-<nowiki>
-This is some text which contains addresses like this: http://www.splitbrain.org and **formatting**, but nothing is done with it.
-</nowiki>
+    This is text is indented by two spaces.
 
-See the source of this page to see how to use these blocks.
+  <code>
+  This is preformatted code all spaces are preserved: like              <-this
+  </code>
 
-===== Syntax Highlighting =====
+  <file>
+  This is pretty much the same, but you could use it to show that you quoted a file.
+  </file>
+
+==== Syntax Highlighting ====
 
 [[wiki:DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax is the same like in the code and file blocks in the previous section, but this time the name of the used language is inserted inside the tag. Eg. ''<nowiki><code java></nowiki>'' or ''<nowiki><file java></nowiki>''.
 
@@ -357,7 +377,7 @@ class HelloWorldApp {
 
 The following language strings are currently recognized: //abap, actionscript-french, actionscript, actionscript3, ada, apache, applescript, asm, asp, autoit, avisynth, bash, basic4gl, bf, bibtex, blitzbasic, bnf, boo, c, c_mac, caddcl, cadlisp, cfdg, cfm, cil, cmake, cobol, cpp, cpp-qt, csharp, css, d, dcs, delphi, diff, div, dos, dot, eiffel, email, erlang, fo, fortran, freebasic, genero, glsl, gml, gnuplot, groovy, gettext, haskell, hq9plus, html, idl, ini, inno, intercal, io, java5, java, javascript, kixtart, klonec, klonecpp, latex, lisp, locobasic, lolcode, lotusformulas, lotusscript, lscript, lsl2, lua, m68k, make, matlab, mirc, modula3, mpasm, mxml, mysql, nsis, oberon2, objc, ocaml-brief, ocaml, oobas, oracle8, oracle11, pascal, perl, per, php-brief, php, pic16, pixelbender, plsql, povray, powershell, progress, prolog, properties, providex, python, qbasic, rails, rebol, reg, robots, ruby, sas, scala, scheme, scilab, sdlbasic, smalltalk, smarty, sql, tcl, teraterm, text, thinbasic, tsql, typoscript, vbnet, vb, verilog, vhdl, vim, visualfoxpro, visualprolog, whitespace, winbatch, whois, xml, xorg_conf, xpp, z80//
 
-===== Downloadable Code Blocks =====
+==== Downloadable Code Blocks ====
 
 When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might want to make the shown code available for download as well. You can to this by specifying a file name after language code like this:
 
@@ -371,32 +391,15 @@ When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might wan
 <?php echo "hello world!"; ?>
 </file>
 
-If you don't want any highlighting but want a downloadable file specify ''-'' as the language code:''%%<code - myfile.foo>%%''.
-
-
-===== RSS/ATOM Feed Aggregation =====
-[[DokuWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
-
-^ Parameter  ^ Description ^
-| any number | will be used as maximum number items to show, defaults to 8 |
-| reverse    | display the last items in the feed first |
-| author     | show item authors names |
-| date       | show item dates |
-| description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
-| //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
-
-The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
-
-**Example:**
-
-  {{rss>http://slashdot.org/index.rss 5 author date 1h }}
-
-{{rss>http://slashdot.org/index.rss 5 author date 1h }}
+If you don't want any highlighting but want a downloadable file, specify a dash (''-'') as the language code: ''%%<code - myfile.foo>%%''.
 
 
 ===== Embedding HTML and PHP =====
 
-You can embed raw HTML or PHP code into your documents by using the ''html'' or ''php'' tags like this:
+You can embed raw HTML or PHP code into your documents by using the ''%%<html>%%'' or ''%%<php>%%'' tags. (Use uppercase tags if you need to enclose block level elements.)
+
+HTML example:
+
 <code>
 <html>
 This is some <span style="color:red;font-size:150%;">inline HTML</span>
@@ -412,6 +415,8 @@ This is some <span style="color:red;font-size:150%;">inline HTML</span>
 <HTML>
 <p style="border:2px dashed red;">And this is some block HTML</p>
 </HTML>
+
+PHP example:
 
 <code>
 <php>
@@ -438,6 +443,26 @@ echo '</tr></table>';
 </PHP>
 
 **Please Note**: HTML and PHP embedding is disabled by default in the configuration. If disabled, the code is displayed instead of executed.
+
+===== RSS/ATOM Feed Aggregation =====
+[[DokuWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
+
+^ Parameter  ^ Description ^
+| any number | will be used as maximum number items to show, defaults to 8 |
+| reverse    | display the last items in the feed first |
+| author     | show item authors names |
+| date       | show item dates |
+| description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
+| //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
+
+The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+
+**Example:**
+
+  {{rss>http://slashdot.org/index.rss 5 author date 1h }}
+
+{{rss>http://slashdot.org/index.rss 5 author date 1h }}
+
 
 ===== Control Macros =====
 
