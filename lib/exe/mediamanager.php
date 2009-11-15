@@ -83,7 +83,7 @@
         $INUSE = media_inuse($DEL);
         if(!$INUSE) {
             if(media_delete($DEL,$AUTH)) {
-                msg(sprintf($lang['deletesucc'],noNS($id)),1);
+                msg(sprintf($lang['deletesucc'],noNS($DEL)),1);
             } else {
                 msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
             }
