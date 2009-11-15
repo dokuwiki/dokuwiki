@@ -11,6 +11,7 @@
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Behandle tillegg';
 $lang['download']              = 'Last ned og installer et tillegg';
@@ -38,7 +39,7 @@ $lang['downloads']             = 'De følgende tilleggene ble installert';
 $lang['download_none']         = 'Ingen tillegg funnet, eller det har vært et ukjent problem under nedlasting og installering.';
 $lang['plugin']                = 'Tillegg:';
 $lang['components']            = 'Komponenter';
-$lang['noinfo']                = 'Dette tillegget ga ikke noe informasjon. Det kan være ugyldig.';
+$lang['noinfo']                = 'Tillegget ga ikke noe informasjon. Det kan være ugyldig.';
 $lang['name']                  = 'Navn:';
 $lang['date']                  = 'Dato:';
 $lang['type']                  = 'Type:';

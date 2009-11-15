@@ -15,6 +15,7 @@
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -45,7 +46,7 @@ $lang['btn_admin']             = 'Admin';
 $lang['btn_update']            = 'Oppdater';
 $lang['btn_delete']            = 'Slett';
 $lang['btn_back']              = 'Tilbake';
-$lang['btn_backlink']          = 'Tilbakelinker';
+$lang['btn_backlink']          = 'Tilbakelenker';
 $lang['btn_backtomedia']       = 'Tilbake til valg av mediafil';
 $lang['btn_subscribe']         = 'Abonner på endringer';
 $lang['btn_unsubscribe']       = 'Ikke abonner på endringer';
@@ -57,6 +58,7 @@ $lang['btn_resendpwd']         = 'Send nytt passord';
 $lang['btn_draft']             = 'Rediger kladd';
 $lang['btn_recover']           = 'Gjennvinn kladd';
 $lang['btn_draftdel']          = 'Slett kladd';
+$lang['btn_revert']            = 'Gjenopprette';
 $lang['loggedinas']            = 'Innlogget som';
 $lang['user']                  = 'Brukernavn';
 $lang['pass']                  = 'Passord';
@@ -95,6 +97,8 @@ $lang['resendpwdconfirm']      = 'En bekreftelseslenke er blitt sendt på e-post
 $lang['resendpwdsuccess']      = 'Ditt nye passord er blitt sendt på e-post.';
 $lang['license']               = 'Der annet ikke er særskilt beskrevet, er innholdet på denne wiki regulert av følgende lisens:';
 $lang['licenseok']             = 'Merk: Ved å endre på denne siden godtar du at ditt innhold blir regulert av følgende lisens:';
+$lang['searchmedia']           = 'Søk filnavn';
+$lang['searchmedia_in']        = 'Søk i %s';
 $lang['txt_upload']            = 'Velg fil som skal lastes opp';
 $lang['txt_filename']          = 'Skriv inn wikinavn (alternativt)';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
@@ -119,10 +123,14 @@ $lang['deletefail']            = '"%s" kunne ikke slettes - sjekk rettighetene.'
 $lang['mediainuse']            = 'Filen "%s" har ikke biltt slettet - den er fortsatt i bruk.';
 $lang['namespaces']            = 'Navnerom';
 $lang['mediafiles']            = 'Tilgjengelige filer i';
+$lang['js']['searchmedia']     = 'Søk for filer';
 $lang['js']['keepopen']        = 'Hold vindu åpent ved valg';
 $lang['js']['hidedetails']     = 'Skjul detaljer';
 $lang['js']['nosmblinks']      = 'Lenker til Windows-ressurser fungerer bare i Microsoft sin Internet Explorer.
 Du kan fortsatt kopiere og lime inn lenken.';
+$lang['js']['linkwiz']         = 'guide til lenker';
+$lang['js']['linkto']          = 'Lenke til:';
+$lang['js']['del_confirm']     = 'Slett denne oppføringen?';
 $lang['js']['mu_btn']          = 'Last opp flere filer samtidig';
 $lang['mediausage']            = 'Bruk følgende syntaks til å refferer til denne filen:';
 $lang['mediaview']             = 'Vis original fil';
@@ -179,7 +187,7 @@ $lang['qb_media']              = 'Legg til bilder og andre filer';
 $lang['qb_sig']                = 'Føy til signatur';
 $lang['qb_smileys']            = 'Smilefjes';
 $lang['qb_chars']              = 'Spesialtegn';
-$lang['js']['del_confirm']           = 'Slett denne oppføringen?';
+$lang['upperns']               = 'gå til overordnet navnerom';
 $lang['admin_register']        = 'Legg til ny bruker';
 $lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skriving av metadata feilet';
@@ -243,3 +251,10 @@ $lang['mu_filetypes']          = 'Tillatte filtyper';
 $lang['mu_info']               = 'filer lastet opp.';
 $lang['mu_lasterr']            = 'Siste feilen:';
 $lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';
+$lang['years']                 = '%d år siden';
+$lang['months']                = '%d måneder siden';
+$lang['weeks']                 = '%d uker siden';
+$lang['days']                  = '%d dager siden';
+$lang['hours']                 = '%d timer siden';
+$lang['minutes']               = '%d minutter siden';
+$lang['seconds']               = '%d sekunder siden';
