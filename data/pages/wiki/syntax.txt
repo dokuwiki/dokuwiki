@@ -187,17 +187,22 @@ Dokuwiki supports ordered and unordered lists. To create a list item, indent you
   - That's it
 </code>
 
-Also take a look at the [[faq:lists|FAQ on list items]].
+Also take a look at the [[doku>faq:lists|FAQ on list items]].
 
-===== Smileys =====
+===== Text Conversions =====
 
-DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents. More smileys can be placed in the ''smiley'' directory and configured in the ''conf/smileys.conf'' file. Here is an overview of Smileys included in DokuWiki.
+DokuWiki can convert certain pre-defined characters or strings into images or other text or HTML.
+
+The text to image conversion is mainly done for smileys. And the text to HTML conversion is used for typography replacements, but can be configured to use other HTML as well.
+
+==== Text to Image Conversions ====
+
+DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents. Those [[doku>Smileys]] and other images can be configured and extended. Here is an overview of Smileys included in DokuWiki:
 
   * 8-) %%  8-)  %%
   * 8-O %%  8-O  %%
   * :-( %%  :-(  %%
   * :-) %%  :-)  %%
-
   * =)  %%  =)   %%
   * :-/ %%  :-/  %%
   * :-\ %%  :-\  %%
@@ -215,9 +220,9 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
   * FIXME %%  FIXME %%
   * DELETEME %% DELETEME %%
 
-===== Typography =====
+==== Text to HTML Conversions ====
 
-[[DokuWiki]] can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.
+Typography: [[DokuWiki]] can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.
 
 -> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r)
 "He thought 'It's a man's world'..."
@@ -227,7 +232,9 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
 "He thought 'It's a man's world'..."
 </code>
 
-Please note: These conversions can be turned off through a [[doku>config:typography|config option]] and a [[doku>entities|pattern file]].
+The same can be done to produce any kind of HTML, it just needs to be added to the [[doku>entities|pattern file]].
+
+Please note: These conversions can be turned off through a [[doku>config:typography|config option]].
 
 ===== Quoting =====
 
