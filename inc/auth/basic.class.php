@@ -323,15 +323,23 @@ class auth_basic {
   }
 
   /**
+   * Return case sensitivity of the backend [OPTIONAL]
+   *
+   * When your backend is caseinsensitive (eg. you can login with USER and
+   * user) then you need to overwrite this method and return false
+   */
+  function isCaseSensitive(){
+    return true;
+  }
+
+  /**
    * Sanitize a given username [OPTIONAL]
    *
    * This function is applied to any user name that is given to
    * the backend and should also be applied to any user name within
    * the backend before returning it somewhere.
    *
-   * This should be used to enforce username restrictions. Eg. when
-   * the backend is case insensitive all usernames should be lowercased
-   * here.
+   * This should be used to enforce username restrictions.
    *
    * @author Andreas Gohr <andi@splitbrain.org>
    * @param string $user - username
@@ -348,9 +356,7 @@ class auth_basic {
    * the backend and should also be applied to any groupname within
    * the backend before returning it somewhere.
    *
-   * This should be used to enforce groupname restrictions. Eg. when
-   * the backend is case insensitive all groupames should be lowercased
-   * here.
+   * This should be used to enforce groupname restrictions.
    *
    * Groupnames are to be passed without a leading '@' here.
    *

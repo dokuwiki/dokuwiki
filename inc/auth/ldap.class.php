@@ -248,6 +248,13 @@ class auth_ldap extends auth_basic {
     }
 
     /**
+     * Most values in LDAP are case-insensitive
+     */
+    function isCaseSensitive(){
+        return false;
+    }
+
+    /**
      * Make LDAP filter strings.
      *
      * Used by auth_getUserData to make the filter

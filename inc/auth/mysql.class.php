@@ -401,6 +401,13 @@ class auth_mysql extends auth_basic {
     }
 
     /**
+     * MySQL is case-insensitive
+     */
+    function isCaseSensitive(){
+        return false;
+    }
+
+    /**
      * Adds a user to a group.
      *
      * If $force is set to '1' non existing groups would be created.

@@ -357,8 +357,17 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     // prepare an array containing only true values for array_map call
     $alltrue = array_fill(0, count($superusers), true);
     $superusers = array_map('auth_nameencode', $superusers, $alltrue);
+
+    // case insensitive?
+    if(!$auth->isCaseSensitive()){
+        $superusers = array_map('utf8_strtolower',$superusers);
+        $user       = utf8_strtolower($user);
+    }
+
+    // check user match
     if(in_array($user, $superusers)) return true;
 
+    // check managers
     if(!$adminonly){
         $managers = explode(',', $conf['manager']);
         $managers = array_unique($managers);
@@ -366,6 +375,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
         // prepare an array containing only true values for array_map call
         $alltrue = array_fill(0, count($managers), true);
         $managers = array_map('auth_nameencode', $managers, $alltrue);
+        if(!$auth->isCaseSensitive()) $managers = array_map('utf8_strtolower',$managers);
         if(in_array($user, $managers)) return true;
     }
 
@@ -376,6 +386,9 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
         $cnt = count($groups);
         for($i=0; $i<$cnt; $i++){
             $groups[$i] = '@'.auth_nameencode($groups[$i]);
+            if(!$auth->isCaseSensitive()){
+                $groups[$i] = utf8_strtolower($groups[$i]);
+            }
         }
 
         // check groups against superuser and manager
@@ -447,6 +460,8 @@ function auth_aclcheck($id,$user,$groups){
     //if user is superuser or in superusergroup return 255 (acl_admin)
     if(auth_isadmin($user,$groups)) { return AUTH_ADMIN; }
 
+    $ci = '';
+    if(!$auth->isCaseSensitive()) $ci = 'ui';
 
     $user = $auth->cleanUser($user);
     $groups = array_map(array($auth,'cleanGroup'),(array)$groups);
@@ -473,7 +488,7 @@ function auth_aclcheck($id,$user,$groups){
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/',$AUTH_ACL);
+    $matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
     if(count($matches)){
         foreach($matches as $match){
             $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -497,7 +512,7 @@ function auth_aclcheck($id,$user,$groups){
     }
 
     do{
-        $matches = preg_grep('/^'.$path.'\s+('.$regexp.')\s+/',$AUTH_ACL);
+        $matches = preg_grep('/^'.$path.'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments

@@ -178,6 +178,13 @@ class auth_ad extends auth_basic {
     }
 
     /**
+     * Most values in LDAP are case-insensitive
+     */
+    function isCaseSensitive(){
+        return false;
+    }
+
+    /**
      * Initialize the AdLDAP library and connect to the server
      */
     function _init(){
