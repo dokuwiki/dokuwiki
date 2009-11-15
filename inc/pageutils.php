@@ -202,8 +202,8 @@ function noNSorNS($id) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function sectionID($title,&$check) {
-    $title = str_replace(':','',cleanID($title));
-    $new = ltrim($title,'0123456789._-');
+    $title = str_replace(array(':','.'),'',cleanID($title));
+    $new = ltrim($title,'0123456789_-');
     if(empty($new)){
         $title = 'section'.preg_replace('/[^0-9]+/','',$title); //keep numbers from headline
     }else{
