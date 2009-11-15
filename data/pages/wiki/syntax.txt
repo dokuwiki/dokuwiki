@@ -84,8 +84,8 @@ Windows shares like [[\\server\share|this]] are recognized, too. Please note tha
 Notes:
 
   * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
-  * For Mozilla and Firefox it can be enabled through the config option [[http://www.mozilla.org/quality/networking/docs/netprefs.html#file|security.checkloaduri]] but this is not recommended.
-  * See [[dokubug>151]] for more info.
+  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_don't_work|Mozilla Knowledge Base]].
+
 
 ==== Image Links ====
 
@@ -186,6 +186,8 @@ Dokuwiki supports ordered and unordered lists. To create a list item, indent you
     - Just use indention for deeper levels
   - That's it
 </code>
+
+Also take a look at the [[faq:lists|FAQ on list items]].
 
 ===== Smileys =====
 
