@@ -8,6 +8,7 @@
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Opsætningsindstillinger';
 $lang['error']                 = 'Indstillingerne blev ikke opdateret på grund af en ugyldig værdi, Gennemse venligst dine ændringer og gem dem igen.
@@ -15,7 +16,7 @@ $lang['error']                 = 'Indstillingerne blev ikke opdateret på grund 
 $lang['updated']               = 'Indstillingerne blev opdateret korrekt.';
 $lang['nochoice']              = '(ingen andre valgmuligheder)';
 $lang['locked']                = 'Indstillingsfilen kunne ikke opdateres, Hvis dette er en fejl, <br />
-                       sørg da for at navnet på den lokale indstillingsfil samt dens rettigheder er korrekte.';
+sørg da for at navnet på den lokale indstillingsfil samt dens rettigheder er korrekte.';
 $lang['danger']                = 'Fare: Ændring af denne mulighed kan gøre din wiki og opsætningsoversigt utilgængelige.';
 $lang['warning']               = 'Advarsel: Ændring af denne mulighed kan forårsage utilsigtet opførsel.';
 $lang['security']              = 'Sikkerhedsadvarsel: Ændring af denne mulighed kan forårsage en sikkerhedsrisiko.';
@@ -61,7 +62,7 @@ $lang['toptoclevel']           = 'Øverste niveau for indholdsfortegnelse';
 $lang['tocminheads']           = 'Mindste antal overskrifter for at danne Indholdsfortegnelsen';
 $lang['maxtoclevel']           = 'Højeste niveau for indholdsfortegnelse';
 $lang['maxseclevel']           = 'Højeste niveau for redigering af sektioner';
-$lang['camelcase']             = 'Brug CamelCase til henvisninger';
+$lang['camelcase']             = 'Brug KamelKasse til henvisninger';
 $lang['deaccent']              = 'Pæne sidenavne';
 $lang['useheading']            = 'Brug første overskrift til sidenavne';
 $lang['refcheck']              = 'Mediehenvisningerkontrol';
@@ -74,9 +75,9 @@ $lang['mailguard']             = 'Slør elektroniske adresser';
 $lang['iexssprotect']          = 'Gennemse oplagte filer for mulig skadelig JavaScript- eller HTML-kode.';
 $lang['showuseras']            = 'Hvad skal vises når den sidste bruger, der har ændret siden, fremstilles';
 $lang['useacl']                = 'Benyt adgangskontrollister';
-$lang['autopasswd']            = 'Generer kodeord automatisk';
+$lang['autopasswd']            = 'Generer adgangskoder automatisk';
 $lang['authtype']              = 'Bekræftelsesgrundlag';
-$lang['passcrypt']             = 'kodeordkrypteringsmetode';
+$lang['passcrypt']             = 'Krypteringsmetode for adgangskoder';
 $lang['defaultgroup']          = 'Standardgruppe';
 $lang['superuser']             = 'Superbruger';
 $lang['manager']               = 'Bestyrer - en gruppe eller bruger med adgang til bestemte styrende funktioner';

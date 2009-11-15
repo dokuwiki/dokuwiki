@@ -5,7 +5,7 @@ login på @DOKUWIKIURL@
 
 Hvis du ikke bad om dette, så ignorer venligst denne email.
 
-For at bekræfte at det var dig der bad om dette, benyt venligst det følgende link.
+For at bekræfte at det var dig der bad om dette, benyt venligst det følgende henvisning.
 
 @CONFIRM@
 

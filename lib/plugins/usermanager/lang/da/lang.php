@@ -7,6 +7,7 @@
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(Brugervalidering er ikke tilgængelig)';
@@ -36,13 +37,13 @@ $lang['delete_fail']           = '%d kunne ikke slettes.';
 $lang['update_ok']             = 'Bruger opdateret korrekt';
 $lang['update_fail']           = 'Brugeropdatering mislykkedes';
 $lang['update_exists']         = 'Ændring af brugernavn mislykkedes, det valgte brugernavn (%s) er allerede optaget (andre ændringer vil blive udført).';
-$lang['start']                 = 'start';
+$lang['start']                 = 'begynde';
 $lang['prev']                  = 'forrige';
 $lang['next']                  = 'næste';
 $lang['last']                  = 'sidste';
-$lang['edit_usermissing']      = 'Den valgte bruger blev ikke fundet, Brugernavnet kan være slettet eller ændret andetsteds.';
+$lang['edit_usermissing']      = 'Den valgte bruger blev ikke fundet. Brugernavnet kan være slettet eller ændret andetsteds.';
 $lang['user_notify']           = 'Meddel bruger';
-$lang['note_notify']           = 'Meddelelser bliver kun sendt, hvis brugeren får givet et nyt kodeord.';
+$lang['note_notify']           = 'Meddelelser bliver kun sendt, hvis brugeren får givet et nyt adgangskode.';
 $lang['note_group']            = 'Nye brugere vil blive tilføjet til standardgruppen (%s), hvis ingen gruppe er opgivet.';
 $lang['note_pass']             = 'Adgangskoden vil blive dannet automatisk, hvis feltet er tomt og underretning af brugeren er aktiveret.';
 $lang['add_ok']                = 'Bruger tilføjet uden fejl.';

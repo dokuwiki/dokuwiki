@@ -10,6 +10,7 @@
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['admin_acl']             = 'Rettighedsadministration';
 $lang['acl_group']             = 'Gruppe';
@@ -35,7 +36,7 @@ $lang['acl_perm0']             = 'Ingen';
 $lang['acl_perm1']             = 'Læs';
 $lang['acl_perm2']             = 'Skriv';
 $lang['acl_perm4']             = 'Opret';
-$lang['acl_perm8']             = 'Læg op';
+$lang['acl_perm8']             = 'Overføre';
 $lang['acl_perm16']            = 'Slet';
 $lang['acl_new']               = 'Tilføj ny post';
 $lang['acl_mod']               = 'Ændre post';

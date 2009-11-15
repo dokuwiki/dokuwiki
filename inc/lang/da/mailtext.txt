@@ -6,7 +6,7 @@ IP-adresse         : @IPADDRESS@
 Hostnavn           : @HOSTNAME@
 Gammel udgave      : @OLDPAGE@
 Ny udgave          : @NEWPAGE@
-Redigerings resume : @SUMMARY@
+Redigerings resumé : @SUMMARY@
 Bruger             : @USER@
 
 @DIFF@

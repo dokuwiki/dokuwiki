@@ -8,6 +8,7 @@
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Håndter udvidelser';
 $lang['download']              = 'Hent og tilføj ny udvidelse';
@@ -29,7 +30,7 @@ $lang['updates']               = 'De følgende udvidelser blev opdateret korrekt
 $lang['update_none']           = 'Ingen opdateringer fundet.';
 $lang['deleting']              = 'Sletter ...';
 $lang['deleted']               = 'Udvidelsen %s slettet.';
-$lang['downloading']           = 'Henter...';
+$lang['downloading']           = 'Henter ...';
 $lang['downloaded']            = 'Udvidelse %s blev korrekt installeret';
 $lang['downloads']             = 'De følgende udvidelser blev installeret korrekt:';
 $lang['download_none']         = 'Ingen udvidelser blev fundet, eller en ukendt fejl opstod under hentning og opsætning';
@@ -50,6 +51,6 @@ $lang['error_decompress']      = 'Udvidelseshåndtering kunne ikke udpakke den h
 $lang['error_copy']            = 'Der opstod en filkopieringsfejl under forsøget på at installere filerne til udvidelsen <em>%s</em>: Disken kan være fuld eller filadgangsrettighederne kan være forkert sat. Dette kan have ført til en delvist installeret udvidelse og efterladt din wiki-opsætning ustabil.';
 $lang['error_delete']          = 'Der opstod en fejl ved forsøget på at slette udvidelsen <em>%s</em>.  Dette skyldes sandsynligvis utilstrækkelig adgang til filer eller mapper.';
 $lang['enabled']               = 'Udvidelsen %s blev aktiveret.';
-$lang['notenabled']            = 'Udvidelsen %s kunne ikke aktiveres, Kontroller filtilladelser.';
+$lang['notenabled']            = 'Udvidelsen %s kunne ikke aktiveres. Kontroller filtilladelser.';
 $lang['disabled']              = 'Udvidelsen %s blev ikke aktiveret.';
-$lang['notdisabled']           = 'Udvidelsen %s kunne ikke aktiveres, Kontroller filtilladelser.';
+$lang['notdisabled']           = 'Udvidelsen %s kunne ikke aktiveres. Kontroller filtilladelser.';

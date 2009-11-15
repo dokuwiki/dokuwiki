@@ -1,13 +1,13 @@
 En ny bruger har registreret. Her er detaljerne:
 
-Brugernavn  : @NEWUSER@
-Navn        : @NEWNAME@
-E-mail      : @NEWEMAIL@
+Brugernavn : @NEWUSER@
+Navn       : @NEWNAME@
+E-mail     : @NEWEMAIL@
 
-Dato        : @DATE@
-Browser     : @BROWSER@
-IP-adresse  : @IPADDRESS@
-Værtsnavn   : @HOSTNAME@
+Dato       : @DATE@
+Browser    : @BROWSER@
+IP-adresse : @IPADDRESS@
+Værtsnavn  : @HOSTNAME@
 
 -- 
 Denne mail blev genereret af DokuWiki på
