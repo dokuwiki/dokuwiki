@@ -4,6 +4,7 @@
  *
  * @author Hrannar Baldursson <hrannar.baldursson@gmail.com>
  * @author Ólafur Gunnlaugsson <oli@audiotools.com>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['menu']                  = 'Umsýsla viðbóta';
 $lang['download']              = 'Hlaða niður og innsetja viðbót';
@@ -42,5 +43,5 @@ $lang['error']                 = 'Óskilgreind villa';
 $lang['error_download']        = 'Niðurhal viðbótar %s mistókst';
 $lang['error_decompress']      = 'Viðbótastjórinn gat ekki afþjappað skránna. Þetta gæti verið vegna misheppnaðs niðurhals, ef svo er reyndu niðurhal aftur. Það er einnig mögulegt að skráin sé þjöppuð með aðferð sem að er Dokuwiki óþekkt, í því tilfelli er best að vista viðhengið á tölvunni þinni, afþjappa hana þar og svo hlaða skránum upp handvirkt.';
 $lang['enabled']               = 'Viðbót %s hefur verið  ræst.';
-$lang['notenabled']            = 'Ekki var hægt að ræsa %s viðbótina, athugaðu stillingar á skráaleyfum.';
+$lang['notenabled']            = 'Ekki var hægt að ræsa %s viðbótina. Athugaðu stillingar á skráaleyfum.';
 $lang['disabled']              = 'Viðbót %s var gerð óvirk';

@@ -13,7 +13,8 @@ Samantekt : @SUMMARY@
 Eldri útgáfa: @OLDPAGE@
 Ný útgáfa: @NEWPAGE@
 
-Ef þú vilt ekki lengur fá tilkynningar um breytingar á síðum, skráðu þig þá inn á @DOKUWIKIURL@, heimsóttu síðan
+Ef þú vilt ekki lengur fá tilkynningar um breytingar á síðum, skráðu þig þá inn á
+@DOKUWIKIURL@, heimsóttu síðan
 @NEWPAGE@
 og afskráðu þig af tilkynningum fyrir síður og/ eða rými fyrir heiti.
 
