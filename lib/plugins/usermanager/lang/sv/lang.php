@@ -13,6 +13,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author Håkan Sandell <hakan.sandell@home.se>
  */
 $lang['menu']                  = 'Hantera användare';
 $lang['noauth']                = '(användarautentisering ej tillgänlig)';

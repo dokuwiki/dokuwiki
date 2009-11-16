@@ -11,6 +11,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author Håkan Sandell <hakan.sandell@home.se>
  */
 $lang['name']                  = 'Popularitets-feedback (det kan ta en stund att ladda sidan)';
 $lang['submit']                = 'Sänd data';

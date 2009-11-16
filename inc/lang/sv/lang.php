@@ -15,6 +15,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author Håkan Sandell <hakan.sandell@home.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -97,6 +98,8 @@ $lang['resendpwdconfirm']      = 'En verifieringslänk har skickats med e-post.'
 $lang['resendpwdsuccess']      = 'Ditt nya lösenord har skickats med e-post.';
 $lang['license']               = 'Om inte annat angivet, innehållet i denna wiki är licensierat under följande licenser:';
 $lang['licenseok']             = 'Notera: Genom att ändra i denna sidan så accepterar du att licensiera ditt bidrag under följande licenser:';
+$lang['searchmedia']           = 'Sök efter filnamn:';
+$lang['searchmedia_in']        = 'Sök i %s';
 $lang['txt_upload']            = 'Välj fil att ladda upp';
 $lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt)';
 $lang['txt_overwrt']           = 'Skriv över befintlig fil';
@@ -121,10 +124,12 @@ $lang['deletefail']            = 'Kunde inte radera "%s" - kontrollera filskydd.
 $lang['mediainuse']            = 'Filen "%s" har inte raderats - den används fortfarande.';
 $lang['namespaces']            = 'Namnrymder';
 $lang['mediafiles']            = 'Tillgängliga filer i';
+$lang['js']['searchmedia']     = 'Sök efter filer';
 $lang['js']['keepopen']        = 'Lämna fönstret öppet efter val av fil';
 $lang['js']['hidedetails']     = 'Dölj detaljer';
 $lang['js']['nosmblinks']      = 'Länkning till Windowsresurser fungerar bara med Microsofts Internet Explorer.
 Du kan fortfarande klippa och klistra in länken om du använder en annan webbläsare än MSIE.';
+$lang['js']['linkwiz']         = 'Snabbguide Länkar';
 $lang['js']['linkto']          = 'Länk till:';
 $lang['js']['del_confirm']     = 'Vill du verkligen radera?';
 $lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
@@ -154,6 +159,7 @@ $lang['restored']              = 'tidigare version återställd';
 $lang['external_edit']         = 'extern redigering';
 $lang['summary']               = 'Redigeringskommentar';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
+$lang['download']              = 'Ladda ner kodfragmentet';
 $lang['mail_newpage']          = 'sida tillagd:';
 $lang['mail_changed']          = 'sida ändrad:';
 $lang['mail_new_user']         = 'Ny användare:';
@@ -246,3 +252,10 @@ $lang['mu_filetypes']          = 'Tillåtna filtyper';
 $lang['mu_info']               = 'filerna uppladdade.';
 $lang['mu_lasterr']            = 'Senaste fel:';
 $lang['recent_global']         = 'Du bevakar ändringar i namnrymden <b>%s</b>. Du kan också titta på <a href="%s">senaste ändringar för hela wikin</a>.';
+$lang['years']                 = '%d år sedan';
+$lang['months']                = '%d månader sedan';
+$lang['weeks']                 = '%d veckor sedan';
+$lang['days']                  = '%d dagar sedan';
+$lang['hours']                 = '%d timmar sedan';
+$lang['minutes']               = '%d minuter sedan';
+$lang['seconds']               = '%d sekunder sedan';

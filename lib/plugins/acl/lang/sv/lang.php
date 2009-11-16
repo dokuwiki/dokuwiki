@@ -14,6 +14,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author Håkan Sandell <hakan.sandell@home.se>
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
 $lang['acl_group']             = 'Grupp';
@@ -26,8 +27,8 @@ $lang['p_user_id']             = 'Användaren <b class="acluser">%s</b> har för
 $lang['p_user_ns']             = 'Användaren <b class="acluser">%s</b> har för närvarande följande rättigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har för närvarande följande rättigheter på sidan <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har för närvarande följande rättigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovan för att visa eller ändra rättigheterna för sidan <b class="aclpage">%s</b';
-$lang['p_choose_ns']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovaan för att visa eller ändra rättigheterna för namnrymden <b class="aclns">%s</b>.';
+$lang['p_choose_id']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovan för att visa eller ändra rättigheterna för sidan <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovan för att visa eller ändra rättigheterna för namnrymden <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Notering: De här rättigheterna är inte explicit satta utan var ärvda från andra grupper eller högre namnrymder.';
 $lang['p_isadmin']             = 'Notering: Den valda gruppen eller användaren har alltid fulla rättigheter på grund av att den är konfigurerad som superanvändare.';
 $lang['p_include']             = 'Högre rättigheter inkluderar lägre. Rättigheter för Skapa, Ladda upp och Radera är endast applicerbara namnrymder, inte sidor.';

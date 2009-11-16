@@ -14,6 +14,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author Håkan Sandell <hakan.sandell@home.se>
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
