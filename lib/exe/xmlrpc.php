@@ -379,6 +379,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $dir = utf8_encodeFN(str_replace(':', '/', $ns));
         $data = array();
         require_once(DOKU_INC.'inc/search.php');
+        $opts['skipacl'] = 0; // no ACL skipping for XMLRPC
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
         return $data;
     }
@@ -398,8 +399,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         $ns = cleanID($ns);
 
-        if (!is_array($options))
-            $options = array();
+        if (!is_array($options)) $options = array();
+        $options['skipacl'] = 0; // no ACL skipping for XMLRPC
 
 
         if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
