@@ -62,21 +62,22 @@ function html_login(){
     }
     $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
     $form->endFieldset();
-    html_form('login', $form);
 
     if($auth && $auth->canDo('addUser') && actionOK('register')){
-        print '<p>';
-        print $lang['reghere'];
-        print ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>';
-        print '</p>';
+        $form->addElement('<p>'
+                          . $lang['reghere']
+                          . ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>'
+                          . '</p>');
     }
 
     if ($auth && $auth->canDo('modPass') && actionOK('resendpwd')) {
-        print '<p>';
-        print $lang['pwdforget'];
-        print ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>';
-        print '</p>';
+        $form->addElement('<p>'
+                          . $lang['pwdforget']
+                          . ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>'
+                          . '</p>');
     }
+
+    html_form('login', $form);
     print '</div>'.NL;
 }
 
