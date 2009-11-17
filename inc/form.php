@@ -242,34 +242,45 @@ class Doku_Form {
     }
 
     /**
-     * printForm
+     * Return the assembled HTML for the form.
      *
-     * Output the form.
      * Each element in the form will be passed to a function named
      * 'form_$type'. The function should return the HTML to be printed.
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function printForm() {
+    function getForm() {
         global $lang;
+        $form = '';
         $this->params['accept-charset'] = $lang['encoding'];
-        print '<form ' . html_attbuild($this->params) . '><div class="no">' . DOKU_LF;
+        $form .= '<form ' . html_attbuild($this->params) . '><div class="no">' . DOKU_LF;
         if (!empty($this->_hidden)) {
             foreach ($this->_hidden as $name=>$value)
-                print form_hidden(array('name'=>$name, 'value'=>$value));
+                $form .= form_hidden(array('name'=>$name, 'value'=>$value));
         }
         foreach ($this->_content as $element) {
             if (is_array($element)) {
                 $elem_type = $element['_elem'];
                 if (function_exists('form_'.$elem_type)) {
-                    print call_user_func('form_'.$elem_type, $element).DOKU_LF;
+                    $form .= call_user_func('form_'.$elem_type, $element).DOKU_LF;
                 }
             } else {
-                print $element;
+                $form .= $element;
             }
         }
-        if ($this->_infieldset) print form_closefieldset().DOKU_LF;
-        print '</div></form>'.DOKU_LF;
+        if ($this->_infieldset) $form .= form_closefieldset().DOKU_LF;
+        $form .= '</div></form>'.DOKU_LF;
+
+        return $form;
+    }
+
+    /**
+     * Print the assembled form
+     *
+     * wraps around getForm()
+     */
+    function printForm(){
+        echo $this->getForm();
     }
 
 }
