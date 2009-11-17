@@ -63,14 +63,20 @@ class Doku_Form {
         if(!is_array($params)) {
             $this->params = array('id' => $params);
             if ($action !== false) $this->params['action'] = $action;
-            if ($method !== false) $this->params['method'] = $method;
+            if ($method !== false) $this->params['method'] = strtolower($method);
             if ($enctype !== false) $this->params['enctype'] = $enctype;
         } else {
             $this->params = $params;
         }
 
         if (!isset($this->params['method'])) {
-            $this->params['method'] = 'POST';
+            $this->params['method'] = 'post';
+        } else {
+            $this->params['method'] = strtolower($this->params['method']);
+        }
+
+        if (!isset($this->params['action'])) {
+            $this->params['action'] = '';
         }
 
         $this->addHidden('sectok', getSecurityToken());
