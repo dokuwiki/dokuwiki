@@ -851,8 +851,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '<table class="inline">'.DOKU_LF;
     }
 
-    function table_close(){
+    function table_close($begin, $end){
         $this->doc .= '</table>'.DOKU_LF;
+        $this->doc .= '<!-- TABLE ['. $begin .'-'.$end.'] -->';
     }
 
     function tablerow_open(){

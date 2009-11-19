@@ -589,10 +589,11 @@ class Doku_Handler {
                 } else {
                     $this->_addCall('tablecell', array(), $pos);
                 }
+                $this->status['table_begin'] = $pos;
             break;
 
             case DOKU_LEXER_EXIT:
-                $this->_addCall('table_end', array(), $pos);
+                $this->_addCall('table_end', array($this->status['table_begin']+1, $pos), $pos);
                 $this->CallWriter->process();
                 $ReWriter = & $this->CallWriter;
                 $this->CallWriter = & $ReWriter->CallWriter;
@@ -1222,7 +1223,7 @@ class Doku_Handler_Table {
     }
 
     function tableEnd($call) {
-        $this->tableCalls[] = array('table_close',array(),$call[2]);
+        $this->tableCalls[] = array('table_close',$call[1],$call[2]);
         $this->finalizeTable();
     }
 
