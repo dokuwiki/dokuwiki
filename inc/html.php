@@ -91,14 +91,18 @@ function html_secedit_button($matches){
     global $ID;
     global $INFO;
 
-    $section = $matches[2];
-    $name = $matches[1];
+    $edittarget = ($matches[1] === 'SECTION') ? 'plain' :
+                  strtolower($matches[1]);
+
+    $section = $matches[3];
+    $name = $matches[2];
 
     $secedit  = '';
     $secedit .= '<div class="secedit">';
     $secedit .= html_btn('secedit',$ID,'',
             array('do'      => 'edit',
-                'lines'   => "$section",
+                'lines'   => $section,
+                'edittarget' => $edittarget,
                 'rev' => $INFO['lastmod']),
             'post', $name);
     $secedit .= '</div>';
@@ -113,11 +117,13 @@ function html_secedit_button($matches){
 function html_secedit($text,$show=true){
     global $INFO;
 
+    $regexp = '#<!-- ([A-Z]+) (?:"(.*)" )?\[(\d+-\d*)\] -->#';
+
     if($INFO['writable'] && $show && !$INFO['rev']){
-        $text = preg_replace_callback('#<!-- SECTION "(.*?)" \[(\d+-\d*)\] -->#',
+        $text = preg_replace_callback($regexp,
                 'html_secedit_button', $text);
     }else{
-        $text = preg_replace('#<!-- SECTION "(.*?)" \[(\d+-\d*)\] -->#','',$text);
+        $text = preg_replace($regexp,'',$text);
     }
 
     return $text;
