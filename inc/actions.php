@@ -558,29 +558,69 @@ function act_export($act){
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function act_subscription($act){
-    global $lang;
-    global $INFO;
-
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         // No post to handle, let tpl_subscribe manage the request.
         return $act;
     }
 
+    // Get and preprocess data.
+    $params = array();
+    foreach(array('target', 'style', 'action') as $param) {
+        if (isset($_POST["subscribe_$param"])) {
+            $params[$param] = $_POST["subscribe_$param"];
+        }
+    }
+
+    // Handle POST data, may throw exception.
+    trigger_event('ACTION_HANDLE_SUBSCRIBE', $params, 'subscription_handle_post');
+
+    $target = $params['target'];
+    $style  = $params['style'];
+    $data   = $params['data'];
+    $action = $params['action'];
+
+    global $lang;
+    global $INFO;
+
+    // Perform action.
+    require_once DOKU_INC . 'inc/subscription.php';
+    if (!subscription_set($_SERVER['REMOTE_USER'], $target, $style, $data)) {
+        throw new Exception(sprintf($lang["subscr_{$action}_error"],
+                                    hsc($INFO['userinfo']['name']),
+                                    prettyprint_id($target)));
+    }
+    $INFO['subscribed'] = get_info_subscribed();
+    msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                prettyprint_id($target)), 1);
+    return $act;
+}
+
+/**
+ * Validate POST data
+ *
+ * Validates POST data for a subscribe or unsubscribe request. This is the
+ * default action for the event ACTION_HANDLE_SUBSCRIBE.
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+function subscription_handle_post($params) {
+    global $INFO;
+    global $lang;
+
     // Get and validate parameters.
-    if (!isset($_POST['subscribe_target'])) {
+    if (!isset($params['target'])) {
         throw new Exception($lang['subscr_no_target']);
     }
-    $target = $_POST['subscribe_target'];
+    $target = $params['target'];
     $valid_styles = array('every', 'digest');
     if (substr($target, -1, 1) === ':') {
         // Allow “list” subscribe style since the target is a namespace.
         $valid_styles[] = 'list';
     }
-    $style  = valid_input_set('subscribe_style', $valid_styles, $_POST,
+    $style  = valid_input_set('style', $valid_styles, $params,
                               $lang['subscr_invalid_style']);
-    $action = valid_input_set('subscribe_action', array('subscribe',
-                                                        'unsubscribe'),
-                              $_POST, $lang['subscr_invalid_action']);
+    $action = valid_input_set('action', array('subscribe', 'unsubscribe'),
+                              $params, $lang['subscr_invalid_action']);
 
     // Check other conditions.
     if ($action === 'subscribe') {
@@ -602,17 +642,8 @@ function act_subscription($act){
         $style = null;
     }
 
-    // Perform action.
-    require_once DOKU_INC . 'inc/subscription.php';
-    if (!subscription_set($target, $_SERVER['REMOTE_USER'], $style)) {
-        throw new Exception(sprintf($lang["subscr_{$action}_error"],
-                                    hsc($INFO['userinfo']['name']),
-                                    prettyprint_id($target)));
-    }
-    $INFO['subscribed'] = get_info_subscribed();
-    msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
-                prettyprint_id($target)), 1);
-    return $act;
+    $data = in_array($style, array('list', 'digest')) ? time() : null;
+    $params = compact('target', 'style', 'data', 'action');
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

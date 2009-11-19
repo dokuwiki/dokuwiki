@@ -50,18 +50,18 @@ function subscription_filename($id) {
  * returned if a subscription should be deleted but the user is not subscribed
  * and the subscription meta file exists.
  *
+ * @param string $user      The subscriber or unsubscriber
  * @param string $page      The target object (page or namespace), specified by
  *                          id; Namespaces are identified by a trailing colon.
- * @param string $user      The user
  * @param string $style     The subscribe style; DokuWiki currently implements
  *                          “every”, “digest”, and “list”.
+ * @param string $data      An optional data blob
  * @param bool   $overwrite Whether an existing subscription may be overwritten
- * @param string $data      An optional data blob; For list and digest, this
- *                          defaults to time().
  *
  * @author Adrian Lang <lang@cosmocode.de>
  */
-function subscription_set($page, $user, $style, $overwrite = false, $data = null) {
+function subscription_set($user, $page, $style, $data = null,
+                          $overwrite = false) {
     global $lang;
     if (is_null($style)) {
         // Delete subscription.
@@ -88,15 +88,15 @@ function subscription_set($page, $user, $style, $overwrite = false, $data = null
             return false;
         }
         // Fail if deletion failed, else continue.
-        if (!subscription_set($page, $user, null)) {
+        if (!subscription_set($user, $page, null)) {
             return false;
         }
     }
 
     $file = subscription_filename($page);
     $content = auth_nameencode($user) . ' ' . $style;
-    if (in_array($style, array('list', 'digest'))) {
-        $content .= ' ' . (!is_null($data) ? $data : time());
+    if (!is_null($data)) {
+        $content .= ' ' . $data;
     }
     return io_saveFile($file, $content . "\n", true);
 }
@@ -116,7 +116,7 @@ function subscription_set($page, $user, $style, $overwrite = false, $data = null
  */
 function subscription_find($page, $pre) {
     // Construct list of files which may contain relevant subscriptions.
-    $filenames = array();
+    $filenames = array(':' => subscription_filename(':'));
     do {
         $filenames[$page] = subscription_filename($page);
         $page = getNS(rtrim($page, ':')) . ':';
@@ -210,15 +210,22 @@ function subscription_regex($pre = array()) {
  * Return a string with the email addresses of all the
  * users subscribed to a page
  *
- * @param string $id   The id of the changed page
- * @param bool   $self Whether a notice should be sent to the editor if he is
- *                     subscribed
+ * This is the default action for COMMON_NOTIFY_ADDRESSLIST.
+ *
+ * @param array $data Containing $id (the page id), $self (whether the author
+ *                    should be notified, $addresslist (current email address
+                      list)
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
+ * @author Adrian Lang <lang@cosmocode.de>
  */
-function subscription_addresslist($id, $self=true){
+function subscription_addresslist($data){
     global $conf;
     global $auth;
+
+    $id = $data['id'];
+    $self = $data['self'];
+    $addresslist = $data['addresslist'];
 
     if (!$conf['subscribers']) {
         return '';
@@ -242,7 +249,7 @@ function subscription_addresslist($id, $self=true){
             }
         }
     }
-    return implode(',', $emails);
+    $data['addresslist'] = trim($addresslist . ',' . implode(',', $emails), ',');
 }
 
 /**

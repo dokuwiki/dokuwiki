@@ -399,7 +399,7 @@ function sendDigest() {
                                          $lastupdate);
             }
             // Update notification time.
-            subscription_set($id, $user, $style, true);
+            subscription_set($user, $id, $style, time(), true);
         }
     }
 }

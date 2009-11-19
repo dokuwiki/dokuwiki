@@ -1061,7 +1061,10 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     }elseif($who == 'subscribers'){
         if(!$conf['subscribers']) return; //subscribers enabled?
         if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return; //skip minors
-        $bcc  = subscription_addresslist($id,false);
+        $data = array('id' => $id, 'addresslist' => '', 'self' => false);
+        trigger_event('COMMON_NOTIFY_ADDRESSLIST', $data,
+                      'subscription_addresslist');
+        $bcc = $data['addresslist'];
         if(empty($bcc)) return;
         $to   = '';
         $text = rawLocale('subscr_single');
