@@ -9,6 +9,7 @@
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
+ * @author Vlad Tsybenko <vlad.development@gmail.com>
  */
 $lang['menu']                  = 'Менеджер откаток';
 $lang['filter']                = 'Поиск спам-страниц';

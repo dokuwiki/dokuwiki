@@ -11,6 +11,7 @@
  * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
+ * @author Vlad Tsybenko <vlad.development@gmail.com>
  */
 $lang['menu']                  = 'Настройки Вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте ваши изменения и попробуйте еще раз.
