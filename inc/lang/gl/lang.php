@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author CiberIrmandade da Fala <infoxeral@ciberirmandade.org>
  * @author Tagen Ata <localizacion@tagenata>
+ * @author Leandro Regueiro <leandro.regueiro@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -47,6 +48,7 @@ $lang['btn_resendpwd']         = 'Enviar un contrasinal novo';
 $lang['btn_draft']             = 'Editar o borrador';
 $lang['btn_recover']           = 'Recuperar o borrador';
 $lang['btn_draftdel']          = 'Eliminar o borrador';
+$lang['btn_revert']            = 'Restaurar';
 $lang['loggedinas']            = 'Iniciou unha sesión como';
 $lang['user']                  = 'Nome de persoa usuaria';
 $lang['pass']                  = 'Contrasinal';
@@ -85,6 +87,8 @@ $lang['resendpwdconfirm']      = 'Enviouse unha ligazón de confirmación por co
 $lang['resendpwdsuccess']      = 'O seu novo contrasinal foi enviado por correo.';
 $lang['license']               = 'O contido deste wiki, agás onde se indique o contrario, ofrécese baixo a seguinte licenza:';
 $lang['licenseok']             = 'Nota: Ao editar esta páxina estás a aceptar o licenciamento do contido baixo a seguinte licenza:';
+$lang['searchmedia']           = 'Buscar nome de ficheiro:';
+$lang['searchmedia_in']        = 'Buscar en %s';
 $lang['txt_upload']            = 'Selecciona o arquivo para subir';
 $lang['txt_filename']          = 'Subir como (opcional)';
 $lang['txt_overwrt']           = 'Sobrescribir o arquivo existente';
@@ -109,10 +113,14 @@ $lang['deletefail']            = '"%s" non puido ser eliminado - comprobe os per
 $lang['mediainuse']            = 'O ficheiro "%s" non foi eliminado - aínda está en uso.';
 $lang['namespaces']            = 'Nomes de espazos';
 $lang['mediafiles']            = 'Ficheiro dispoñíbeis en';
+$lang['js']['searchmedia']     = 'Buscar ficheiros';
 $lang['js']['keepopen']        = 'Manter a xanela aberta na selección';
 $lang['js']['hidedetails']     = 'Ocultar os detalles';
 $lang['js']['nosmblinks']      = 'A ligazón aos compartidos do Windows só funciona co Microsoft Internet Explorer.
 Sempre podes copiar e colar a ligazón.';
+$lang['js']['linkwiz']         = 'Asistente de ligazóns';
+$lang['js']['linkto']          = 'Ligazón a:';
+$lang['js']['del_confirm']     = 'Quere eliminar os elementos seleccionados?';
 $lang['js']['mu_btn']          = 'Subir varios ficheiros dunha vez';
 $lang['mediausage']            = 'Utilice a seguinte sintaxe para referenciar este ficheiro:';
 $lang['mediaview']             = 'Ver o ficheiro orixinal';
@@ -163,7 +171,6 @@ $lang['qb_media']              = 'Engadir imaxes e outros ficheiros';
 $lang['qb_sig']                = 'Inserir unha sinatura';
 $lang['qb_smileys']            = 'Emoticonas';
 $lang['qb_chars']              = 'Caracteres especiais';
-$lang['js']['del_confirm']           = 'Quere eliminar os elementos seleccionados?';
 $lang['admin_register']        = 'Engadir unha persoa usuaria nova';
 $lang['metaedit']              = 'Editar os metadatos';
 $lang['metasaveerr']           = 'Non se puideron escribir os metadatos';
@@ -224,4 +231,13 @@ $lang['mu_fail']               = 'fallou';
 $lang['mu_authfail']           = 'a sesión caducou';
 $lang['mu_progress']           = '@PCT@% subido';
 $lang['mu_filetypes']          = 'Tipos de ficheiro permitidos';
+$lang['mu_info']               = 'ficheiros subidos.';
+$lang['mu_lasterr']            = 'Último erro:';
 $lang['recent_global']         = 'Agora mesmo está a ver os cambios no nome de espazo <b>%s</b>. Tamén pode <a href="%s">ver os cambios recentes en todo o Wiki</a>.';
+$lang['years']                 = 'hai %d anos';
+$lang['months']                = 'hai %d meses';
+$lang['weeks']                 = 'hai %d semanas';
+$lang['days']                  = 'hai %d días';
+$lang['hours']                 = 'hai %d horas';
+$lang['minutes']               = 'hai %d minutos';
+$lang['seconds']               = 'hai %d segundos';

@@ -4,6 +4,7 @@
  *
  * @author CiberIrmandade da Fala <infoxeral@ciberirmandade.org>
  * @author Tagen Ata <localizacion@tagenata.com>
+ * @author Leandro Regueiro <leandro.regueiro@gmail.com>
  */
 $lang['menu']                  = 'Xestionar os plugins';
 $lang['download']              = 'Descargar e instalar un plugin novo';

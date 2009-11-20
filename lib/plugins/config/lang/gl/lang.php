@@ -4,6 +4,7 @@
  *
  * @author CiberIrmandade da Fala <infoxeral@ciberirmandade.org>
  * @author Tagen Ata <localizacion@tagenata.com>
+ * @author Leandro Regueiro <leandro.regueiro@gmail.com>
  */
 $lang['menu']                  = 'Opcións de configuración';
 $lang['error']                 = 'A configuración non foi actualizada debido a un valor non válido; verifique as modificacións feitas e envíeas de novo.
@@ -86,6 +87,8 @@ $lang['disableactions_other']  = 'Outras accións (separadas por vírgulas)';
 $lang['sneaky_index']          = 'O DokuWiki mostrará por defecto todos os nomes de espazo na vista de índice. Se activa isto serán ocultados aqueles onde o usuario non teña permisos de lectura.';
 $lang['auth_security_timeout'] = 'Tempo límite de seguranza de autenticación (en segundos)';
 $lang['securecookie']          = 'Débense enviar só mediante HTTPS as cookies configuradas para HTTPS enviadas polo navegador? Desactive esta opción só cando o inicio de sesión do seu wiki estea asegurado con SSL, mais a navegación no mesmo se faga de modo inseguro.';
+$lang['xmlrpc']                = 'Activar/Desactivar a interface XML-RPC';
+$lang['xmlrpcuser']            = 'Restrinxir o acceso mediante XML-RPC á lista separada por comas dos grupos e/ou usuarios proporcionados aquí. Deixe baleiro para darlle acceso a todo o mundo.';
 $lang['updatecheck']           = 'Débese comprobar se hai actualizacións e avisos de seguranza? O DokuWiki precisa contactar con splitbrain.org para executar esta funcionalidade.';
 $lang['userewrite']            = 'Utilizar URL amigábeis';
 $lang['useslash']              = 'Utilizar a barra oblícua (/) como separador de nome de espazo nos URL';
@@ -111,7 +114,6 @@ $lang['send404']               = 'Enviar "HTTP 404/Páxina non encontrada" para 
 $lang['sitemap']               = 'Xerar o mapa do sitio do Google (en días)';
 $lang['broken_iua']            = 'Está danada a función ignore_user_abort no seu sistema? Isto podería causar que o índice de procura non funcione. Sábese que o IIS+PHP/CGI a dana. Vexa <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> para obter máis información.';
 $lang['xsendfile']             = 'Débese empregar a cabeceira X-Sendfile para que o servidor web envíe ficheiros estáticos? O seu servidor web debe soportar isto.';
-$lang['xmlrpc']                = 'Activar/Desactivar a interface XML-RPC';
 $lang['renderer_xhtml']        = 'Intérprete para empregar na saída principal (XHTML) do Wiki';
 $lang['renderer__core']        = '%s (núcleo do Dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
