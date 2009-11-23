@@ -240,6 +240,7 @@ function tpl_metaheaders($alt=true){
   global $ID;
   global $REV;
   global $INFO;
+  global $JSINFO;
   global $ACT;
   global $QUERY;
   global $lang;
@@ -336,15 +337,12 @@ function tpl_metaheaders($alt=true){
   // make $INFO and other vars available to JavaScripts
   require_once(DOKU_INC.'inc/JSON.php');
   $json = new JSON();
-  $infocpy = $INFO;
-  $infocpy['userinfo']['pass'] = '';
-  $script = "NS='".$INFO['namespace']."';";
+  $script = "var NS='".$INFO['namespace']."';";
   if($conf['useacl'] && $_SERVER['REMOTE_USER']){
       require_once(DOKU_INC.'inc/toolbar.php');
-      $script .= "SIG='".toolbar_signature()."';";
-      $infocpy['userinfo']['login'] = $_SERVER['REMOTE_USER'];
+      $script .= "var SIG='".toolbar_signature()."';";
   }
-  $script .= 'var INFO = '.$json->encode($infocpy).';';
+  $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
   $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8',
                                '_data'=> $script);
 

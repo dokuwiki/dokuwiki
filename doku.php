@@ -50,6 +50,13 @@ $REV = preg_replace('/[^0-9]/','',$REV);
 //make infos about the selected page available
 $INFO = pageinfo();
 
+//export minimal infos to JS, plugins can add more
+$JSINFO = array(
+    'id' => $ID,
+    'namespace' => (string) $INFO['namespace']
+);
+
+
 // handle debugging
 if($conf['allowdebug'] && $ACT == 'debug'){
     html_debug();
