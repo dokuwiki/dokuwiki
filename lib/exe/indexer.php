@@ -342,19 +342,24 @@ function runSitemapper(){
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function sendDigest() {
-    require_once DOKU_INC . 'inc/subscription.php';
     echo 'sendDigest(): start'.NL;
     global $ID;
     global $conf;
     if (!$conf['subscribers']) {
         return;
     }
-
+    require_once DOKU_INC . 'inc/subscription.php';
     $subscriptions = subscription_find($ID, array('style' => '(digest|list)',
                                                   'escaped' => true));
     global $auth;
     global $lang;
     global $conf;
+    global $USERINFO;
+
+    // remember current user info
+    $olduinfo = $USERINFO;
+    $olduser  = $_SERVER['REMOTE_USER'];
+
     foreach($subscriptions as $id => $users) {
         foreach($users as $data) {
             list($user, $style, $lastupdate) = $data;
@@ -363,13 +368,11 @@ function sendDigest() {
                 // Less than a day passed since last update.
                 continue;
             }
-            // TODO: Does that suffice for namespaces?
-            $info = $auth->getUserData($user);
-            if ($info === false) {
-                continue;
-            }
-            $level = auth_aclcheck($id, $user, $info['grps']);
-            if ($level < AUTH_READ) {
+
+            // Work as the user to make sure ACLs apply correctly
+            $USERINFO = $auth->getUserData($user);
+            $_SERVER['REMOTE_USER'] = $user;
+            if ($USERINFO === false) {
                 continue;
             }
 
@@ -389,6 +392,8 @@ function sendDigest() {
                 }
                 // TODO: Handle duplicate subscriptions.
             } else {
+                if(auth_quickacl($id) < AUTH_READ) continue;
+
                 $meta = p_get_metadata($id);
                 $rev = $meta['last_change']['date'];
                 if ($rev < $lastupdate) {
@@ -402,6 +407,10 @@ function sendDigest() {
             subscription_set($user, $id, $style, time(), true);
         }
     }
+
+    // restore current user info
+    $USERINFO = $olduinfo;
+    $_SERVER['REMOTE_USER'] = $olduser;
 }
 
 /**
