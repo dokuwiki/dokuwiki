@@ -1234,7 +1234,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 /**
  * Adds a checkbox for minor edits for logged in users
  *
- * @author Andrea Gohr <andi@splitbrain.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_minoredit(){
     global $conf;
