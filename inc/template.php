@@ -1358,14 +1358,8 @@ function tpl_subscribe() {
     global $INFO;
     global $ID;
     global $lang;
-    $targets = array($ID         => 'the current page',
-                     'namespace' => 'the namespace “%s”');
-    $styles  = array('every'  => 'a notice on every change',
-                     'digest' => 'a digest for each changed page*',
-                     'list'   => 'a list of changed pages*');
 
     echo p_locale_xhtml('subscr_form');
-
     echo '<h2>' . $lang['subscr_m_current_header'] . '</h2>';
     echo '<div class="level2">';
     if ($INFO['subscribed'] === false) {
@@ -1378,7 +1372,7 @@ function tpl_subscribe() {
             if ($sub['target'] !== $ID) {
                 $stgt = '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
             } else {
-                $stgt = '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
+                $stgt = '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
             }
             $sstl = $lang['subscr_style_'.$sub['style']];
             if(!$sstl) $sstl = hsc($sub['style']);
