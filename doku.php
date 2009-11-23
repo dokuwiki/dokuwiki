@@ -51,10 +51,8 @@ $REV = preg_replace('/[^0-9]/','',$REV);
 $INFO = pageinfo();
 
 //export minimal infos to JS, plugins can add more
-$JSINFO = array(
-    'id' => $ID,
-    'namespace' => (string) $INFO['namespace']
-);
+$JSINFO['id']        = $ID;
+$JSINFO['namespace'] = (string) $INFO['namespace'];
 
 
 // handle debugging
