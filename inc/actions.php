@@ -609,7 +609,7 @@ function subscription_handle_post($params) {
 
     // Get and validate parameters.
     if (!isset($params['target'])) {
-        throw new Exception($lang['subscr_no_target']);
+        throw new Exception('no subscription target given');
     }
     $target = $params['target'];
     $valid_styles = array('every', 'digest');
@@ -618,9 +618,9 @@ function subscription_handle_post($params) {
         $valid_styles[] = 'list';
     }
     $style  = valid_input_set('style', $valid_styles, $params,
-                              $lang['subscr_invalid_style']);
+                              'invalid subscription style given');
     $action = valid_input_set('action', array('subscribe', 'unsubscribe'),
-                              $params, $lang['subscr_invalid_action']);
+                              $params, 'invalid subscription action given');
 
     // Check other conditions.
     if ($action === 'subscribe') {
@@ -635,7 +635,8 @@ function subscription_handle_post($params) {
             }
         }
         if ($is === false) {
-            throw new Exception(sprintf($lang['subscr_not_subscribed_you'],
+            throw new Exception(sprintf($lang['subscr_not_subscribed'],
+                                        $_SERVER['REMOTE_USER'],
                                         prettyprint_id($target)));
         }
         // subscription_set deletes a subscription if style = null.

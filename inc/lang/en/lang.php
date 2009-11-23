@@ -215,21 +215,19 @@ $lang['subscr_subscribe_error']    = 'Error adding %s to subscription list for %
 $lang['subscr_subscribe_noaddress']= 'There is no address associated with your login, you cannot be added to the subscription list';
 $lang['subscr_unsubscribe_success']= 'Removed %s from subscription list for %s';
 $lang['subscr_unsubscribe_error']  = 'Error removing %s from subscription list for %s';
-$lang['subscr_no_target'] = 'No subscription target';
-$lang['subscr_invalid_style'] = 'Invalid subscription style';
-$lang['subscr_invalid_action'] = 'Invalid subscription action';
 $lang['subscr_already_subscribed'] = '%s is already subscribed to %s';
-$lang['subscr_not_subscribed'] = '%s is not subscribed to %s';
-$lang['subscr_not_subscribed_you'] = 'You are not subscribed to %s';
+$lang['subscr_not_subscribed']     = '%s is not subscribed to %s';
 // Manage page for subscriptions
-$lang['subscr_m_current_header'] = 'Current subscriptions';
-$lang['subscr_m_current'] = 'Your current subscriptions:';
-$lang['subscr_m_entry'] = 'Subscribed to %s receiving %s.';
-$lang['subscr_m_delete'] = 'Delete';
-$lang['subscr_m_not_subscribed'] = 'You are currently not subscribed to this page.';
-$lang['subscr_m_new_header'] = 'Add subscription';
-$lang['subscr_m_noemail'] =  'You did not set an email address.';
-$lang['subscr_m_subscribe'] = 'Subscribe';
+$lang['subscr_m_not_subscribed']   = 'You are currently not subscribed to the current page or namespace.';
+$lang['subscr_m_new_header']       = 'Add subscription';
+$lang['subscr_m_current_header']   = 'Current subscriptions';
+$lang['subscr_m_unsubscribe']      = 'Unsubscribe';
+$lang['subscr_m_subscribe']        = 'Subscribe';
+
+$lang['subscr_style_every']        = 'email on every change';
+$lang['subscr_style_digest']       = 'digest email of changes for each page';
+$lang['subscr_style_list']         = 'list of changes since last email';
+
 
 /* auth.class language support */
 $lang['authmodfailed']   = 'Bad user authentication configuration. Please inform your Wiki Admin.';

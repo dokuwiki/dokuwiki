@@ -1354,7 +1354,6 @@ function tpl_include_page($pageid,$print=true){
  *
  * @author Adrian Lang <lang@cosmocode.de>
  */
-
 function tpl_subscribe() {
     global $INFO;
     global $ID;
@@ -1368,22 +1367,24 @@ function tpl_subscribe() {
     echo p_locale_xhtml('subscr_form');
 
     echo '<h2>' . $lang['subscr_m_current_header'] . '</h2>';
+    echo '<div class="level2">';
     if ($INFO['subscribed'] === false) {
         echo '<p>' . $lang['subscr_m_not_subscribed'] . '</p>';
     } else {
-        echo '<p>' . $lang['subscr_m_current'] . '</p>';
         echo '<ul>';
+
         foreach($INFO['subscribed'] as $sub) {
             $form = new Doku_Form(array('class' => 'unsubscribe'));
             if ($sub['target'] !== $ID) {
-                $str = sprintf($targets['namespace'], prettyprint_id($sub['target']));
+                $stgt = '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
             } else {
-                $str = $targets[$ID];
+                $stgt = '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
             }
-            $form->addElement('<li><div class="li">' .
-                              sprintf($lang['subscr_m_entry'], $str,
-                                      $styles[$sub['style']]));
-            $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_delete']));
+            $sstl = $lang['subscr_style_'.$sub['style']];
+            if(!$sstl) $sstl = hsc($sub['style']);
+
+            $form->addElement('<li><div class="li">'.$stgt.' ('.$sstl.') ');
+            $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_unsubscribe']));
             $form->addHidden('subscribe_target', $sub['target']);
             $form->addHidden('subscribe_style', $sub['style']);
             $form->addHidden('subscribe_action', 'unsubscribe');
@@ -1392,17 +1393,23 @@ function tpl_subscribe() {
         }
         echo '</ul>';
     }
+    echo '</div>';
 
+    // Add new subscription form
     echo '<h2>' . $lang['subscr_m_new_header'] . '</h2>';
-    if ($INFO['userinfo']['mail'] === '') {
-        echo $lang['subscr_m_noemail'];
-        return;
-    }
-    $styles['list'] = $styles['list'] . ' (Not allowed for single pages)';
+    echo '<div class="level2">';
+    $ns = getNS($ID).':';
+    $targets = array(
+        $ID => '<code class="page">'.prettyprint_id($ID).'</code>',
+        $ns => '<code class="ns">'.prettyprint_id($ns).'</code>',
+    );
+    $styles = array(
+        'every'  => $lang['subscr_style_every'],
+        'digest' => $lang['subscr_style_digest'],
+        'list'   => $lang['subscr_style_list'],
+    );
+
     $form = new Doku_Form(array('id' => 'subscribe'));
-    $ns = getNS($ID). ':';
-    $targets[$ns] = sprintf($targets['namespace'], prettyprint_id($ns));
-    unset($targets['namespace']);
     $form->addElement('<p>' . 'Subscribe to' . '</p>');
     $form->addRadioSet('subscribe_target', $targets);
     $form->addElement('<p>' . 'Receive' . '</p>');
@@ -1410,6 +1417,7 @@ function tpl_subscribe() {
     $form->addHidden('subscribe_action', 'subscribe');
     $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_subscribe']));
     html_form('SUBSCRIBE', $form);
+    echo '</div>';
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
