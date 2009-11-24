@@ -150,6 +150,8 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     global $auth;
     $sticky ? $sticky = true : $sticky = false; //sanity check
 
+    if (!$auth) return false;
+
     if(!empty($user)){
         //usual login
         if ($auth->checkPass($user,$pass)){
@@ -337,7 +339,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     global $USERINFO;
     global $auth;
 
-    if(!$conf['useacl']) return false;
+    if (!$auth) return false;
     if(is_null($user)) {
         if (!isset($_SERVER['REMOTE_USER'])) {
             return false;
@@ -453,6 +455,7 @@ function auth_aclcheck($id,$user,$groups){
 
     // if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
+    if (!$auth) return AUTH_NONE;
 
     //make sure groups is an array
     if(!is_array($groups)) $groups = array();
@@ -613,6 +616,7 @@ function auth_sendPassword($user,$password){
     global $conf;
     global $lang;
     global $auth;
+    if (!$auth) return false;
 
     $hdrs  = '';
     $user     = $auth->cleanUser($user);
@@ -647,6 +651,7 @@ function register(){
     global $conf;
     global $auth;
 
+    if (!$auth) return false;
     if(!$_POST['save']) return false;
     if(!$auth->canDo('addUser')) return false;
 
@@ -724,6 +729,7 @@ function updateprofile() {
     global $lang;
     global $auth;
 
+    if (!$auth) return false;
     if(empty($_POST['save'])) return false;
     if(!checkSecurityToken()) return false;
 
@@ -799,6 +805,7 @@ function act_resendpwd(){
     global $auth;
 
     if(!actionOK('resendpwd')) return false;
+    if (!$auth) return false;
 
     // should not be able to get here without modPass being possible...
     if(!$auth->canDo('modPass')) {
@@ -1044,6 +1051,7 @@ function auth_setCookie($user,$pass,$sticky) {
     global $auth;
     global $USERINFO;
 
+    if (!$auth) return false;
     $USERINFO = $auth->getUserData($user);
 
     // set cookie
