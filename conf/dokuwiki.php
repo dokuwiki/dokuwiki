@@ -123,7 +123,7 @@ $conf['rss_content'] = 'abstract';       // what to put in the items by deafult?
                                          //  'diff'     - plain text unified diff wrapped in <pre> tags
                                          //  'htmldiff' - diff as HTML table
                                          //  'html'     - the full page rendered in XHTML
-$conf['rss_update'] = 5*60;              //Update the RSS feed every n minutes (defaults to 5 minutes)
+$conf['rss_update'] = 5*60;              //Update the RSS feed every n seconds (defaults to 5 minutes)
 $conf['recent_days'] = 7;                //How many days of recent changes to keep. (days)
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
 $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abort (IIS+CGI) 0|1
