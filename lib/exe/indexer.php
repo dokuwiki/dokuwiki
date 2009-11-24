@@ -392,7 +392,7 @@ function sendDigest() {
                 }
                 // TODO: Handle duplicate subscriptions.
             } else {
-                if(auth_quickacl($id) < AUTH_READ) continue;
+                if(auth_quickaclcheck($id) < AUTH_READ) continue;
 
                 $meta = p_get_metadata($id);
                 $rev = $meta['last_change']['date'];
