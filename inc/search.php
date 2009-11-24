@@ -553,9 +553,9 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
 
     // get ID and check if it is a valid one
     $item['id'] = pathID($file);
-    if($info['id'] != cleanID($info['id'])){
+    if($item['id'] != cleanID($item['id'])){
         if($opts['showmsg'])
-            msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
+            msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);
         return false; // skip non-valid files
     }
     $item['ns']  = getNS($item['id']);
