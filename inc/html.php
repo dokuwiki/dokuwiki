@@ -104,7 +104,7 @@ function html_secedit_button($matches){
                 'lines'   => $section,
                 'edittarget' => $edittarget,
                 'rev' => $INFO['lastmod']),
-            'post', $name);
+            'post', $name, 'editbutton_' . $edittarget);
     $secedit .= '</div>';
     return $secedit;
 }
@@ -149,7 +149,7 @@ function html_topbtn(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_btn($name,$id,$akey,$params,$method='get',$tooltip=''){
+function html_btn($name,$id,$akey,$params,$method='get',$tooltip='', $class = ''){
     global $conf;
     global $lang;
 
@@ -187,7 +187,9 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip=''){
         $tip = htmlspecialchars($label);
     }
 
-    $ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
+    $class .= ' button';
+
+    $ret .= '<input type="submit" value="'.hsc($label).'" class="' . hsc($class) . '" ';
     if($akey){
         $tip .= ' ['.strtoupper($akey).']';
         $ret .= 'accesskey="'.$akey.'" ';
