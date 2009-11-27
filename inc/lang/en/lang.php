@@ -226,7 +226,7 @@ $lang['subscr_m_subscribe']        = 'Subscribe';
 
 $lang['subscr_style_every']        = 'email on every change';
 $lang['subscr_style_digest']       = 'digest email of changes for each page';
-$lang['subscr_style_list']         = 'list of changes since last email';
+$lang['subscr_style_list']         = 'list of changed pages since last email';
 
 
 /* auth.class language support */
