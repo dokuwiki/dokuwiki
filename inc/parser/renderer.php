@@ -294,7 +294,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
 
         //split into hash and url part
-        list($wikiUri,$hash) = explode('#',$wikiUri,2);
+        list($reference,$hash) = explode('#',$reference,2);
 
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
