@@ -250,6 +250,13 @@ function tpl_metaheaders($alt=true){
   // prepare the head array
   $head = array();
 
+  // prepare seed for js and css 
+  $tseed = 0;
+  $depends = getConfigFiles('main');
+  foreach($depends as $f) {
+      $time = @filemtime($f);
+      if($time > $tseed) $tseed = $time;
+  }
 
   // the usual stuff
   $head['meta'][] = array( 'name'=>'generator', 'content'=>'DokuWiki '.getVersion() );
@@ -328,11 +335,11 @@ function tpl_metaheaders($alt=true){
 
   // load stylesheets
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'all', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php?s=all&t='.$conf['template']);
+                          'href'=>DOKU_BASE.'lib/exe/css.php?s=all&t='.$conf['template'].'&tseed='.$tseed);
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php?t='.$conf['template']);
+                          'href'=>DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed);
   $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
-                          'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template']);
+                          'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template'].'&tseed='.$tseed);
 
   // make $INFO and other vars available to JavaScripts
   require_once(DOKU_INC.'inc/JSON.php');
@@ -348,7 +355,7 @@ function tpl_metaheaders($alt=true){
 
   // load external javascript
   $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=>'',
-                             'src'=>DOKU_BASE.'lib/exe/js.php');
+                             'src'=>DOKU_BASE.'lib/exe/js.php'.'?tseed='.$tseed);
 
 
   // trigger event here
