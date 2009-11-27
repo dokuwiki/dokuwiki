@@ -603,7 +603,7 @@ function act_subscription($act){
  *
  * @author Adrian Lang <lang@cosmocode.de>
  */
-function subscription_handle_post($params) {
+function subscription_handle_post(&$params) {
     global $INFO;
     global $lang;
 
