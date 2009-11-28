@@ -74,7 +74,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hequal'],
                 'icon'   => 'hequal.png',
-                'key'    => '',
+                'key'    => '8',
                 'text'   => $lang['qb_h'],
                 'mod'    => 0
                ),
@@ -82,7 +82,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hminus'],
                 'icon'   => 'hminus.png',
-                'key'    => '',
+                'key'    => '9',
                 'text'   => $lang['qb_h'],
                 'mod'    => 1
                ),
@@ -90,7 +90,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hplus'],
                 'icon'   => 'hplus.png',
-                'key'    => '',
+                'key'    => '0',
                 'text'   => $lang['qb_h'],
                 'mod'    => -1
                ),
