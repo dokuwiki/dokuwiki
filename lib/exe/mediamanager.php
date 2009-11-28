@@ -2,6 +2,9 @@
     if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
     define('DOKU_MEDIAMANAGER',1);
 
+    // for multi uploader:
+    @ini_set('session.use_only_cookies',0);
+
     require_once(DOKU_INC.'inc/init.php');
     require_once(DOKU_INC.'inc/lang/en/lang.php');
     require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
