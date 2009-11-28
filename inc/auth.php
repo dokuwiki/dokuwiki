@@ -748,12 +748,13 @@ function updateprofile() {
     $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['fullname']));
     $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$_POST['email']));
 
-    if (empty($_POST['fullname']) || empty($_POST['email'])) {
+    if ((empty($_POST['fullname']) && $auth->canDo('modName')) ||
+        (empty($_POST['email']) && $auth->canDo('modMail'))) {
         msg($lang['profnoempty'],-1);
         return false;
     }
 
-    if (!mail_isvalid($_POST['email'])){
+    if (!mail_isvalid($_POST['email']) && $auth->canDo('modMail')){
         msg($lang['regbadmail'],-1);
         return false;
     }
