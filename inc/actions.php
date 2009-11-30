@@ -589,10 +589,14 @@ function act_subscription($act){
                                     hsc($INFO['userinfo']['name']),
                                     prettyprint_id($target)));
     }
-    $INFO['subscribed'] = get_info_subscribed();
     msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
                 prettyprint_id($target)), 1);
-    return $act;
+    global $ID;
+    act_redirect($ID, $act);
+
+    // Assure that we have valid data if act_redirect somehow fails.
+    $INFO['subscribed'] = get_info_subscribed();
+    return 'show';
 }
 
 /**
