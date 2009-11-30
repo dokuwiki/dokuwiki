@@ -1366,24 +1366,21 @@ function tpl_subscribe() {
         echo '<p>' . $lang['subscr_m_not_subscribed'] . '</p>';
     } else {
         echo '<ul>';
-
         foreach($INFO['subscribed'] as $sub) {
-            $form = new Doku_Form(array('class' => 'unsubscribe'));
+            echo '<li><div class="li">';
             if ($sub['target'] !== $ID) {
-                $stgt = '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
+                echo '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
             } else {
-                $stgt = '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
+                echo '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
             }
             $sstl = $lang['subscr_style_'.$sub['style']];
             if(!$sstl) $sstl = hsc($sub['style']);
+            echo ' ('.$sstl.') ';
 
-            $form->addElement('<li><div class="li">'.$stgt.' ('.$sstl.') ');
-            $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_unsubscribe']));
-            $form->addHidden('subscribe_target', $sub['target']);
-            $form->addHidden('subscribe_style', $sub['style']);
-            $form->addHidden('subscribe_action', 'unsubscribe');
-            $form->addElement('</div></li>');
-            html_form('UNSUBSCRIBE', $form);
+            echo '<a href="'.wl($ID,array('do'=>'subscribe','sub_target'=>$sub['target'],'sub_style'=>$sub['style'],'sub_action'=>'unsubscribe')).'" class="unsubscribe">'.$lang['subscr_m_unsubscribe'].'</a>';
+
+
+            echo '</div></li>';
         }
         echo '</ul>';
     }
@@ -1403,12 +1400,15 @@ function tpl_subscribe() {
         'list'   => $lang['subscr_style_list'],
     );
 
-    $form = new Doku_Form(array('id' => 'subscribe'));
-    $form->addElement('<p>' . 'Subscribe to' . '</p>');
-    $form->addRadioSet('subscribe_target', $targets);
-    $form->addElement('<p>' . 'Receive' . '</p>');
-    $form->addRadioSet('subscribe_style', $styles);
-    $form->addHidden('subscribe_action', 'subscribe');
+    $form = new Doku_Form(array('id' => 'subscribe__form'));
+    $form->startFieldset($lang['subscr_m_subscribe']);
+    $form->addRadioSet('sub_target', $targets);
+    $form->startFieldset($lang['subscr_m_receive']);
+    $form->addRadioSet('sub_style', $styles);
+    $form->addHidden('sub_action', 'subscribe');
+    $form->addHidden('do', 'subscribe');
+    $form->addHidden('id', $ID);
+    $form->endFieldset();
     $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_subscribe']));
     html_form('SUBSCRIBE', $form);
     echo '</div>';

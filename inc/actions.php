@@ -558,18 +558,20 @@ function act_export($act){
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function act_subscription($act){
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        // No post to handle, let tpl_subscribe manage the request.
-        return $act;
-    }
+    global $lang;
+    global $INFO;
+    global $ID;
 
-    // Get and preprocess data.
+    // get and preprocess data.
     $params = array();
     foreach(array('target', 'style', 'action') as $param) {
-        if (isset($_POST["subscribe_$param"])) {
-            $params[$param] = $_POST["subscribe_$param"];
+        if (isset($_REQUEST["sub_$param"])) {
+            $params[$param] = $_REQUEST["sub_$param"];
         }
     }
+
+    // any action given? if not just return and show the subscription page
+    if(!$params['action']) return $act;
 
     // Handle POST data, may throw exception.
     trigger_event('ACTION_HANDLE_SUBSCRIBE', $params, 'subscription_handle_post');
@@ -578,9 +580,6 @@ function act_subscription($act){
     $style  = $params['style'];
     $data   = $params['data'];
     $action = $params['action'];
-
-    global $lang;
-    global $INFO;
 
     // Perform action.
     require_once DOKU_INC . 'inc/subscription.php';
@@ -591,7 +590,6 @@ function act_subscription($act){
     }
     msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
                 prettyprint_id($target)), 1);
-    global $ID;
     act_redirect($ID, $act);
 
     // Assure that we have valid data if act_redirect somehow fails.

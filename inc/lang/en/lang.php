@@ -223,7 +223,7 @@ $lang['subscr_m_new_header']       = 'Add subscription';
 $lang['subscr_m_current_header']   = 'Current subscriptions';
 $lang['subscr_m_unsubscribe']      = 'Unsubscribe';
 $lang['subscr_m_subscribe']        = 'Subscribe';
-
+$lang['subscr_m_receive']          = 'Receive';
 $lang['subscr_style_every']        = 'email on every change';
 $lang['subscr_style_digest']       = 'digest email of changes for each page';
 $lang['subscr_style_list']         = 'list of changed pages since last email';

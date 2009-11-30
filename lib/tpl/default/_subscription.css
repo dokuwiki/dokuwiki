@@ -1,0 +1,21 @@
+/**
+ * Styles for the subscription page
+ */
+
+form#subscribe__form {
+    display: block;
+    width: 300px;
+    text-align: center;
+}
+
+form#subscribe__form fieldset {
+    text-align: left;
+    margin: 0.5em 0;
+}
+
+form#subscribe__form label {
+    display:block;
+    margin: 0 0.5em 0.5em;
+}
+
+
