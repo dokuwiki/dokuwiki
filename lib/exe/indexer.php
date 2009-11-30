@@ -384,11 +384,11 @@ function sendDigest() {
                 }
                 if ($style === 'digest') {
                     foreach($changes as $change) {
-                        subscription_send_digest($info['mail'], $change,
+                        subscription_send_digest($USERINFO['mail'], $change,
                                                  $lastupdate);
                     }
                 } elseif ($style === 'list') {
-                    subscription_send_list($info['mail'], $changes, $id);
+                    subscription_send_list($USERINFO['mail'], $changes, $id);
                 }
                 // TODO: Handle duplicate subscriptions.
             } else {
@@ -400,7 +400,7 @@ function sendDigest() {
                     // There is no new revision.
                     continue;
                 }
-                subscription_send_digest($info['mail'], $meta['last_change'],
+                subscription_send_digest($USERINFO['mail'], $meta['last_change'],
                                          $lastupdate);
             }
             // Update notification time.
