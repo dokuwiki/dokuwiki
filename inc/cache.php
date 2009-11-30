@@ -224,7 +224,7 @@ class cache_renderer extends cache_parser {
     // check current link existence is consistent with cache version
     // first check the purgefile
     // - if the cache is more recent than the purgefile we know no links can have been updated
-    if ($this->_time > @filemtime($conf['cachedir'].'/purgefile')) {
+    if ($this->_time >= @filemtime($conf['cachedir'].'/purgefile')) {
       return true;
     }
 
@@ -232,7 +232,7 @@ class cache_renderer extends cache_parser {
     $metadata = p_get_metadata($this->page);
 
     if (!isset($metadata['relation']['references']) ||
-        !empty($metadata['relation']['references'])) {
+         empty($metadata['relation']['references'])) {
       return true;
     }
 
