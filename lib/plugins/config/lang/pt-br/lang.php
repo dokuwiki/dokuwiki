@@ -12,6 +12,7 @@
  * @author Luis Dantas <luis@dantas.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
+ * @author Luis Dantas <luisdantas@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -94,6 +95,7 @@ $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
 $lang['sneaky_index']          = 'Por padrão, o DokuWiki irá exibir todos os espaços de nomes na visualização do índice. Ao habilitar essa opção, serão escondidos aqueles que o usuário não tiver permissão de leitura. Isso pode resultar na omissão de subespaços de nomes, tornando o índice inútil para certas configurações de ACL.';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS devem ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação, de maneira insegura.';
+$lang['xmlrpc']                = 'Habilitar/desabilitar interface XML-RPC.';
 $lang['updatecheck']           = 'Verificar atualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efetuar esse recurso.';
 $lang['userewrite']            = 'Usar URLs "limpas"';
 $lang['useslash']              = 'Usar a barra como separador de espaços de nomes nas URLs';
@@ -119,7 +121,6 @@ $lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para
 $lang['sitemap']               = 'Gerar Google Sitemap (dias)';
 $lang['broken_iua']            = 'A função "ignore_user_abort" está com defeito no seu sistema? Isso pode causar um índice de busca defeituoso. IIS+PHP/CGI reconhecidamente possui esse erro. Veja o <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> para mais informações.';
 $lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir que o servidor web encaminhe arquivos estáticos? Seu servidor web precisa ter suporte a isso.';
-$lang['xmlrpc']                = 'Habilitar/desabilitar interface XML-RPC.';
 $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída principal (xhtml) do wiki';
 $lang['renderer__core']        = '%s (núcleo do DokuWiki)';
 $lang['renderer__plugin']      = '%s ("plug-in")';

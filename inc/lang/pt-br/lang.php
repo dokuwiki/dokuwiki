@@ -15,6 +15,7 @@
  * @author Luis Dantas <luis@dantas.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
+ * @author Luis Dantas <luisdantas@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +58,7 @@ $lang['btn_resendpwd']         = 'Enviar uma nova senha';
 $lang['btn_draft']             = 'Editar o rascunho';
 $lang['btn_recover']           = 'Recuperar o rascunho';
 $lang['btn_draftdel']          = 'Excluir o rascunho';
+$lang['btn_revert']            = 'Restaure';
 $lang['loggedinas']            = 'Autenticado(a) como';
 $lang['user']                  = 'Nome de usuário';
 $lang['pass']                  = 'Senha';
@@ -123,6 +125,8 @@ $lang['js']['keepopen']        = 'Manter a janela aberta na seleção';
 $lang['js']['hidedetails']     = 'Esconder detalhes';
 $lang['js']['nosmblinks']      = 'Atalhos para pastas compartilhadas do Windows funcionam apenas no Microsoft Internet Explorer.
 Entretanto, você ainda pode copiar e colar o atalho.';
+$lang['js']['linkto']          = 'Link para:';
+$lang['js']['del_confirm']     = 'Deseja realmente excluir o(s) item(ns) selecionado(s)?';
 $lang['js']['mu_btn']          = 'Enviar vários arquivos de uma vez';
 $lang['mediausage']            = 'Use a seguinte sintaxe para referenciar esse arquivo:';
 $lang['mediaview']             = 'Ver o arquivo original';
@@ -164,6 +168,7 @@ $lang['qb_h2']                 = 'Cabeçalho de nível 2';
 $lang['qb_h3']                 = 'Cabeçalho de nível 3';
 $lang['qb_h4']                 = 'Cabeçalho de nível 4';
 $lang['qb_h5']                 = 'Cabeçalho de nível 5';
+$lang['qb_h']                  = 'Cabeçalho';
 $lang['qb_link']               = 'Link interno';
 $lang['qb_extlink']            = 'Link externo';
 $lang['qb_hr']                 = 'Linha horizontal';
@@ -173,7 +178,6 @@ $lang['qb_media']              = 'Adicionar imagens e/ou outros arquivos';
 $lang['qb_sig']                = 'Inserir assinatura';
 $lang['qb_smileys']            = 'Carinhas';
 $lang['qb_chars']              = 'Caracteres especiais';
-$lang['js']['del_confirm']           = 'Deseja realmente excluir o(s) item(ns) selecionado(s)?';
 $lang['admin_register']        = 'Adicionar novo usuário';
 $lang['metaedit']              = 'Editar metadados';
 $lang['metasaveerr']           = 'Não foi possível escrever os metadados';
@@ -231,4 +235,13 @@ $lang['mu_fail']               = 'falhou';
 $lang['mu_authfail']           = 'a sessão expirou';
 $lang['mu_progress']           = '@PCT@% enviado';
 $lang['mu_filetypes']          = 'Tipos de arquivo permitidos';
+$lang['mu_info']               = 'arquivos enviados.';
+$lang['mu_lasterr']            = 'Erro mais recente:';
 $lang['recent_global']         = 'Você está observando as alterações dentro do espaço de nomes <b>%s</b>. Também é possível ver as <a href="%s">modificações recentes no wiki inteiro</a>.';
+$lang['years']                 = '%d anos atrás';
+$lang['months']                = '%d meses atrás';
+$lang['weeks']                 = '%d semanas atrás';
+$lang['days']                  = '%d dias atrás';
+$lang['hours']                 = '%d horas atrás';
+$lang['minutes']               = '%d minutos atrás';
+$lang['seconds']               = '%d segundos atrás';
