@@ -111,7 +111,7 @@ $lang['send404']               = 'Envia "HTTP 404/Page Not Found" per a les pàg
 $lang['sitemap']               = 'Genera mapa del lloc en format Google (dies)';
 $lang['broken_iua']            = 'No funciona en el vostre sistema la funció ignore_user_abort? Això podria malmetre l\'índex de cerques. Amb IIS+PHP/CGI se sap que no funciona. Vg. <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> per a més informació.';
 $lang['xsendfile']             = 'Utilitza la capçalera X-Sendfile perquè el servidor web distribuisca fitxers estàtics. No funciona amb tots els servidors web.';
-$lang['renderer_xhtml']        = 'Renderitzador que cal utilitzar per a l'eixida principal (xhtml) del wiki';
+$lang['renderer_xhtml']        = 'Renderitzador que cal utilitzar per a l\'eixida principal (xhtml) del wiki';
 $lang['renderer__core']        = '% (ànima del dokuwiki)';
 $lang['renderer__plugin']      = '% (connector)';
 $lang['rememberme']            = 'Permet galetes de sessió permanents ("recorda\'m")';
