@@ -89,6 +89,8 @@ $lang['disableactions_other']  = 'その他の動作（カンマ区切り）';
 $lang['sneaky_index']          = 'デフォルトでは索引にすべての名前空間を表示しますが、この機能はユーザーに閲覧権限のない名前空間を非表示にします。ただし、閲覧が可能な副名前空間まで表示されなくなるため、ACLの設定が適正でない場合は索引機能が使えなくなる場合があります。';
 $lang['auth_security_timeout'] = '認証タイムアウト設定（秒）';
 $lang['securecookie']          = 'クッキーをHTTPSにてセットする場合は、ブラウザよりHTTPS経由で送信された場合にみに制限しますか？ログインのみをSSLで行う場合は、この機能を無効にしてください。';
+$lang['xmlrpc']                = 'XML-RPCインターフェースを有効/無効にする';
+$lang['xmlrpcuser']            = 'XML-RPCアクセスを指定グループとユーザーに制限します（半角コンマ区切り）。　すべての人にアクセスを許可する場合は空のままにしてください。';
 $lang['updatecheck']           = 'DokuWikiの更新とセキュリティに関する情報をチェックしますか？ この機能は splitbrain.org への接続が必要です。';
 $lang['userewrite']            = 'URLの書き換え';
 $lang['useslash']              = 'URL上の名前空間の区切りにスラッシュを使用';
@@ -114,7 +116,6 @@ $lang['send404']               = '文書が存在しないページに"HTTP404/P
 $lang['sitemap']               = 'Googleサイトマップ作成頻度（日数）';
 $lang['broken_iua']            = 'ignore_user_abort関数が破損している恐れがあります。そのため、検索インデックスが動作しない可能性があります。IIS+PHP/CGIの組み合わせで破損することが判明しています。詳しくは<a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>を参照してください。';
 $lang['xsendfile']             = 'ウェブサーバーが静的ファイルを生成するために X-Sendfile ヘッダーを使用しますか？なお、この機能をウェブサーバーがサポートしている必要があります。';
-$lang['xmlrpc']                = 'XML-RPCインターフェースを有効/無効にする';
 $lang['renderer_xhtml']        = 'Wikiの出力（xhtml）にレンダラーを使用する';
 $lang['renderer__core']        = '%s （Dokuwikiコア）';
 $lang['renderer__plugin']      = '%s （プラグイン）';
