@@ -2,11 +2,11 @@
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
-    
+
     function TestOfDoku_Parser_i18n() {
         $this->UnitTestCase('TestOfDoku_Parser_i18n');
     }
-    
+
     function testFormatting() {
         $formats = array (
             'strong', 'emphasis', 'underline', 'monospace',
@@ -53,7 +53,7 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testHeader() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("Foo\n ==== Iñtërnâtiônàlizætiøn ==== \n Bar");
@@ -74,7 +74,7 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testTable() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->parse('
@@ -89,24 +89,24 @@ def');
             array('p_close',array()),
             array('table_open',array(3,2)),
             array('tablerow_open',array()),
-            array('tablecell_open',array(1,'left')),
+            array('tablecell_open',array(1,'left',1)),
             array('cdata',array(' Row 0 Col 1    ')),
             array('tablecell_close',array()),
-            array('tablecell_open',array(1,'left')),
+            array('tablecell_open',array(1,'left',1)),
             array('cdata',array(' Iñtërnâtiônàlizætiøn     ')),
             array('tablecell_close',array()),
-            array('tablecell_open',array(1,'left')),
+            array('tablecell_open',array(1,'left',1)),
             array('cdata',array(' Row 0 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
             array('tablerow_open',array()),
-            array('tablecell_open',array(1,'left')),
+            array('tablecell_open',array(1,'left',1)),
             array('cdata',array(' Row 1 Col 1    ')),
             array('tablecell_close',array()),
-            array('tablecell_open',array(1,'left')),
+            array('tablecell_open',array(1,'left',1)),
             array('cdata',array(' Iñtërnâtiônàlizætiøn     ')),
             array('tablecell_close',array()),
-            array('tablecell_open',array(1,'left')),
+            array('tablecell_open',array(1,'left',1)),
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
@@ -119,7 +119,7 @@ def');
 
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testAcronym() {
         $t = array('Iñtërnâtiônàlizætiøn');
         $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym($t));
@@ -135,7 +135,7 @@ def');
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testInterwiki() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[wp>Iñtërnâtiônàlizætiøn|Iñtërnâtiônàlizætiøn]] Bar");
@@ -150,7 +150,7 @@ def');
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testInternalLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[x:Iñtërnâtiônàlizætiøn:y:foo_bar:z|Iñtërnâtiônàlizætiøn]] Bar");

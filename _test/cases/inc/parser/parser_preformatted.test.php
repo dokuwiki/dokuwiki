@@ -2,11 +2,11 @@
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
-    
+
     function TestOfDoku_Parser_Preformatted() {
         $this->UnitTestCase('TestOfDoku_Parser_Preformatted');
     }
-    
+
     function testFile() {
         $this->P->addMode('file',new Doku_Parser_Mode_File());
         $this->P->parse('Foo <file>testing</file> Bar');
@@ -15,15 +15,16 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('p_close',array()),
-            array('file',array('testing')),
+            array('file',array('testing',null,null)),
             array('p_open',array()),
             array('cdata',array(' Bar'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testCode() {
         $this->P->addMode('code',new Doku_Parser_Mode_Code());
         $this->P->parse('Foo <code>testing</code> Bar');
@@ -32,7 +33,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('p_close',array()),
-            array('code',array('testing', NULL)),
+            array('code',array('testing', null, null)),
             array('p_open',array()),
             array('cdata',array(' Bar'."\n")),
             array('p_close',array()),
@@ -40,7 +41,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testCodeWhitespace() {
         $this->P->addMode('code',new Doku_Parser_Mode_Code());
         $this->P->parse("Foo <code \n>testing</code> Bar");
@@ -49,7 +50,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('p_close',array()),
-            array('code',array('testing', NULL)),
+            array('code',array('testing', null, null)),
             array('p_open',array()),
             array('cdata',array(' Bar'."\n")),
             array('p_close',array()),
@@ -57,7 +58,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testCodeLang() {
         $this->P->addMode('code',new Doku_Parser_Mode_Code());
         $this->P->parse("Foo <code php>testing</code> Bar");
@@ -66,7 +67,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('p_close',array()),
-            array('code',array('testing', 'php')),
+            array('code',array('testing', 'php', null)),
             array('p_open',array()),
             array('cdata',array(' Bar'."\n")),
             array('p_close',array()),
@@ -74,7 +75,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testPreformatted() {
         $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
         $this->P->parse("F  oo\n  x  \n    y  \nBar\n");
@@ -91,7 +92,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testPreformattedWinEOL() {
         $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
         $this->P->parse("F  oo\r\n  x  \r\n    y  \r\nBar\r\n");
@@ -108,7 +109,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testPreformattedTab() {
         $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
         $this->P->parse("F  oo\n\tx\t\n\t\ty\t\nBar\n");
@@ -125,7 +126,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testPreformattedTabWinEOL() {
         $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
         $this->P->parse("F  oo\r\n\tx\t\r\n\t\ty\t\r\nBar\r\n");
@@ -142,7 +143,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testPreformattedList() {
         $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
         $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
@@ -174,7 +175,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         );
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     // test for php
     function testPHP() {
 
@@ -192,7 +193,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
-    // test with for HTML 
+    // test with for HTML
     function testHTML() {
 
         $this->P->addMode('html',new Doku_Parser_Mode_HTML());
@@ -210,7 +211,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
 
-    
+
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!
         $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());

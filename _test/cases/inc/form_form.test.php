@@ -19,8 +19,8 @@ class form_test extends UnitTestCase {
 
   function _realoutput() {
     global $lang;
-    $realoutput  = '<form action="/test" method="post" ';
-    $realoutput .= 'accept-charset="'.$lang['encoding'].'" id="dw__testform">';
+    $realoutput  = '<form id="dw__testform" action="/test" method="post" ';
+    $realoutput .= 'accept-charset="'.$lang['encoding'].'">';
     $realoutput .= "\n";
     $realoutput .= '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
     $realoutput .= '<input type="hidden" name="summary" value="changes &amp;c" />';
