@@ -802,6 +802,8 @@ class Doku_Handler_Nest {
         $key = count($this->calls);
         if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
             $this->calls[$key-1][1][0] .= $call[1][0];
+        } else if ($call[0] == 'eol') {
+            // do nothing (eol shouldn't be allowed, to counter preformatted fix in #1652 & #1699)
         } else {
             $this->calls[] = $call;
         }

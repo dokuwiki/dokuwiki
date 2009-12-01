@@ -203,6 +203,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('p_close',array()),
             array('document_end',array()),
         );
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
@@ -258,7 +259,6 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('nest', array ( array (
               array('footnote_open',array()),
-              array('cdata',array(' ')),
               array('table_open',array(3,2)),
               array('tablerow_open',array()),
               array('tablecell_open',array(1,'left',1)),
@@ -306,7 +306,6 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('nest', array ( array (
               array('footnote_open',array()),
-              array('cdata',array(' ')),
               array('listu_open',array()),
               array('listitem_open',array(1)),
               array('listcontent_open',array()),
@@ -348,7 +347,6 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('nest', array ( array (
               array('footnote_open',array()),
-              array('cdata',array(' ')),
               array('quote_open',array()),
               array('cdata',array(" def")),
               array('quote_open',array()),
@@ -362,6 +360,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('p_close',array()),
             array('document_end',array()),
         );
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
