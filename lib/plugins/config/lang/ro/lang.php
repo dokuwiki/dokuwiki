@@ -7,6 +7,7 @@
  * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
+ * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  */
 $lang['menu']                  = 'Setări de Configurare';
 $lang['error']                 = 'Setări nu au fost actualizate datorită unei valori incorecte; verificaţi modificările şi încercaţi din nou. <br /> Valorile incorecte vor apărea într-un chenar roşu.';

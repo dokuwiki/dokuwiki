@@ -9,6 +9,7 @@
  * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
+ * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -241,3 +242,10 @@ $lang['mu_filetypes']          = 'Tipuri de fişiere permise';
 $lang['mu_info']               = 'fişiere încărcate';
 $lang['mu_lasterr']            = 'Ultima eroare:';
 $lang['recent_global']         = 'Acum vizualizaţi modificările în interiorul numelui de spaţiu <b>%s</b>. De asemenea puteţi <a href="%s">vizualiza modificările recente ale întregului wiki</a>.';
+$lang['years']                 = 'acum %d ani';
+$lang['months']                = 'acum %d luni';
+$lang['weeks']                 = 'acum %d săptămâni';
+$lang['days']                  = 'acum %d zile';
+$lang['hours']                 = 'acum %d ore';
+$lang['minutes']               = 'acum %d minute';
+$lang['seconds']               = 'acum %d secunde';
