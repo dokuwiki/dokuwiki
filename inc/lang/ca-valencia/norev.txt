@@ -1,3 +1,5 @@
-====== No existix la versió ======
+====== No existeix esta revisió ======
 
-La versió especificada no existix. Utilise el botó ''Versions antigues'' per a vore una llista de versions antigues d'este document.
+
+La revisió especificada no existeix. Utilitzeu el botó ''Revisions anteriors'' per obtindre una llista de revisions d'este document.
+

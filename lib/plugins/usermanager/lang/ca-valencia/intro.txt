@@ -1,1 +1,1 @@
-====== Gestor d'usuaris ======
+======= Gestió d'usuaris ======

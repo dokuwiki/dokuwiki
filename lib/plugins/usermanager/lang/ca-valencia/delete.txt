@@ -1,1 +1,1 @@
-===== Borrar usuari =====
+===== Supressió d'usuari =====

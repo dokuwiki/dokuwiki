@@ -1,6 +1,6 @@
-====== Ya existix una versió més nova ======
+====== Hi ha una versió més recent ======
 
-Existix una versió més nova del document que ha editat. Açò ha passat perque un atre usuari ha modificat el document mentres vosté estava editant-lo.
+Existeix una versió més recent del document que heu editat. Això passa quan un altre usuari canvia el document mentre l'estàveu editant.
 
-Estudie be les diferències mostrades avall i decidixca quina versió vol guardar. Si pulsa ''Guardar'' es guardarà la versió que està editant. Pulse ''Cancelar'' per a conservar la versió modificada per l'atre usuari..
+Examineu detingudament les diferències que es mostren més avall i després decidiu quina versió voleu mantindre. Si trieu ''alça'', s'alçarà la vostra versió. Si trieu ''cancel·la'' es mantindrà la versió actual.
 

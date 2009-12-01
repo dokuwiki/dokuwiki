@@ -1,14 +1,14 @@
-S'ha enviat un archiu al seu DokuWiki. Les senyes:
+S'ha penjat un fitxer al vostre DokuWiki. Heus ací els detalls:
 
-Archiu: @MEDIA@
+Fitxer: @MEDIA@
 Data: @DATE@
 Navegador: @BROWSER@
-Direcció IP: @IPADDRESS@
-Nom de la màquina: @HOSTNAME@
-Tamany: @SIZE@
-Tipo MIME: @MIME@
+Adreça IP: @IPADDRESS@
+Ordinador: @HOSTNAME@
+Grandària: @SIZE@
+Tipus MIME: @MIME@
 Usuari: @USER@
 
 -- 
-Este correu ha segut generat per DokuWiki en
+Missatge generat per DokuWiki en
 @DOKUWIKIURL@

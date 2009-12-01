@@ -1,23 +1,15 @@
-¡Hola!
-
-La pàgina @PAGE@ del wiki @TITLE@ ha canviat.
-Estos són els canvis.
+La pàgina @PAGE@ del wiki @TITLE@ ha estat modificada.
+Heus ací els canvis:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Data: @DATE@
-Usuari: @USER@
-Resum: @SUMMARY@
-Revisió anterior: @OLDPAGE@
-Nova revisió: @NEWPAGE@
-
-Per a cancelar les notificacions de pàgina, inicie sessió en el wiki en 
-@DOKUWIKIURL@, visite
+Per cancel·lar la subscripció a esta pàgina, entre al wiki en
+@DOKUWIKIURL@, aneu a
 @NEWPAGE@
-i desubscriga's dels canvis de la pàgina o de l'espai de noms.
+i trieu 'Cancel·la subscripció'.
 
---
-Este correu l'ha generat DokuWiki en
+-- 
+Missatge generat per DokuWiki en
 @DOKUWIKIURL@
