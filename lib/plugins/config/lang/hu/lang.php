@@ -109,7 +109,7 @@ $lang['im_convert']            = 'Útvonal az ImageMagick csomag convert parancs
 $lang['jpg_quality']           = 'JPG tömörítés minősége (0-100)';
 $lang['subscribers']           = 'Oldalváltozás-listára feliratkozás engedélyezése';
 $lang['compress']              = 'CSS és JavaScript fájlok tömörítése';
-$lang['hidepages']             = 'Az itt megadott oldalak elrejtése (regularis kifejezés)';
+$lang['hidepages']             = 'Az itt megadott oldalak elrejtése (reguláris kifejezés)';
 $lang['send404']               = '"HTTP 404/Page Not Found" küldése nemlétező oldalak esetén';
 $lang['sitemap']               = 'Hány naponként generáljunk Google sitemap-ot?';
 $lang['broken_iua']            = 'Az ignore_user_abort függvény hibát dob a rendszereden? Ez nem működő keresési indexet eredményezhet. Az IIS+PHP/CGI összeállításról tudjuk, hogy hibát dob. Lásd a <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> oldalt a további infóért.';
