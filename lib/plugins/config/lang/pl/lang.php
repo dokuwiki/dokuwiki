@@ -88,6 +88,7 @@ $lang['sneaky_index']          = 'Domyślnie, Dokuwiki pokazuje wszystkie katalo
 $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekundach)';
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
 $lang['xmlrpc']                = 'Włącz/wyłącz interfejs XML-RPC';
+$lang['xmlrpcuser']            = 'Lista użytkowników i grup, którzy mogą korzystać z protokołu XML-RPC. Nazwy grup i użytkowników rozdziel przecinkami, puste pole oznacza dostęp dla wszystkich.';
 $lang['updatecheck']           = 'Sprawdzanie aktualizacji i bezpieczeństwa. DokuWiki będzie kontaktować się z serwerem splitbrain.org.';
 $lang['userewrite']            = 'Proste adresy URL';
 $lang['useslash']              = 'Używanie ukośnika jako separatora w adresie URL';
