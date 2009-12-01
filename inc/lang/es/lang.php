@@ -21,6 +21,7 @@
  * @author Zerial <fernando@zerial.org>
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
+ * @author Fernando J. Gómez <fjgomez@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -110,8 +111,8 @@ $lang['txt_overwrt']           = 'Sobreescribir archivo existente';
 $lang['lockedby']              = 'Actualmente bloqueado por';
 $lang['lockexpire']            = 'El bloqueo expira en';
 $lang['willexpire']            = 'Tu bloqueo para editar esta página expira en un minuto.\nPara evitar conflictos usa el botón previsualizar para reiniciar el contador de tiempo.';
-$lang['notsavedyet']           = 'Hay cambios que no se han guardado que se perderán.\n¿Quieres continuar?';
-$lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos del feed: ';
+$lang['notsavedyet']           = 'Los cambios que no se han guardado se perderán.\n¿Realmente quieres continuar?';
+$lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos de este feed: ';
 $lang['nothingfound']          = 'No se ha encontrado nada.';
 $lang['mediaselect']           = 'Archivos Multimedia';
 $lang['fileupload']            = 'Subida de archivos multimedia';
@@ -161,7 +162,7 @@ $lang['deleted']               = 'borrado';
 $lang['created']               = 'creado';
 $lang['restored']              = 'Se ha restaurado la vieja versión';
 $lang['external_edit']         = 'editor externo';
-$lang['summary']               = 'Edita el resumen';
+$lang['summary']               = 'Resumen de los cambios';
 $lang['noflash']               = 'El <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a> es necesario para mostrar este contenido.';
 $lang['download']              = 'Descargar trozo de código fuente';
 $lang['mail_newpage']          = 'página añadida:';
@@ -196,7 +197,7 @@ $lang['upperns']               = 'Saltar al directorio superior';
 $lang['admin_register']        = 'Añadir nuevo usuario...';
 $lang['metaedit']              = 'Editar los metadatos';
 $lang['metasaveerr']           = 'La escritura de los metadatos ha fallado';
-$lang['metasaveok']            = 'Los metadatos han sido guardados.';
+$lang['metasaveok']            = 'Los metadatos han sido guardados';
 $lang['img_backto']            = 'Volver a';
 $lang['img_title']             = 'Título';
 $lang['img_caption']           = 'Epígrafe';

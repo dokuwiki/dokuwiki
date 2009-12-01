@@ -1,4 +1,4 @@
-Se ha subido un fichero a tu DokuWuki. Detalles del fichero:
+Se ha subido un fichero a tu DokuWuki. Estos son los detalles:
 
 Archivo : @MEDIA@
 Fecha : @DATE@

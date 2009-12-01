@@ -12,6 +12,7 @@
  * @author Zerial <fernando@zerial.org>
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
+ * @author Fernando J. Gómez <fjgomez@gmail.com>
  */
 $lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
 $lang['submit']                = 'Enviar datos';

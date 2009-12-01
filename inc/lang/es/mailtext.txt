@@ -1,13 +1,13 @@
-Se ha cambiado o añadido una pagina en el DokuWiki-Manuales. Aqui están los detalles
+Se ha cambiado o añadido una página en tu DokuWiki. Aquí están los detalles:
 
-Fecha          : @DATE@
-Navegador      : @BROWSER@
-Dirección-IP   : @IPADDRESS@
+Fecha : @DATE@
+Navegador : @BROWSER@
+Dirección-IP : @IPADDRESS@
 Nombre de Host : @HOSTNAME@
 Revisión Anterior: @OLDPAGE@
 Revisión Nueva : @NEWPAGE@
-Editar sumario   : @SUMMARY@
-Usuario          : @USER@
+Resumen de la edición: @SUMMARY@
+Usuario : @USER@
 
 @DIFF@
 
