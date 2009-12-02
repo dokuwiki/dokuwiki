@@ -10,5 +10,5 @@ MIME Type : @MIME@
 Usuario : @USER@
 
 -- 
-Correo generado por DokuWiki en
+Este correo fue generado por DokuWiki en
 @DOKUWIKIURL@
