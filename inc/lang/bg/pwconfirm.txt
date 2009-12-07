@@ -1,4 +1,4 @@
-Привет @FULLNAME@!
+Здравейте @FULLNAME@!
 
 Някой е поискал нова парола за потребителя @TITLE@
 на @DOKUWIKIURL@
@@ -11,5 +11,4 @@
 @CONFIRM@
 
 -- 
-Това писмо е генерирано от DokuWiki на
-@DOKUWIKIURL@
+Това писмо е генерирано от DokuWiki на адрес @DOKUWIKIURL@

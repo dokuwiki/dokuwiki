@@ -10,5 +10,4 @@ MIME Тип    : @MIME@
 Потребител  : @USER@
 
 -- 
-Tова писмо е генерирано от DokuWiki на:
-@DOKUWIKIURL@
+Tова писмо е генерирано от DokuWiki на адрес @DOKUWIKIURL@

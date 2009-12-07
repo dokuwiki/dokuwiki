@@ -3,6 +3,7 @@
  * bulgarian language file
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Nikolay Vladimirof <nikolay@vladimiroff.com>
+ * @author Viktor Usunov <usunov@mail.bg>
  */
 $lang['menu']                  = 'Възстановяване';
 $lang['filter']                = 'Търсене на спамната страници';
