@@ -6,6 +6,7 @@
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
+ * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  */
 $lang['menu']                  = '管理外掛(Plugins)';
 $lang['download']              = '下載與安裝外掛';

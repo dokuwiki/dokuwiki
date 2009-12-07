@@ -8,6 +8,7 @@
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
+ * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  */
 $lang['admin_acl']             = '設定 ACL 存取名單';
 $lang['acl_group']             = '群組';

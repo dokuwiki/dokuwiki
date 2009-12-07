@@ -6,6 +6,7 @@
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
+ * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  */
 $lang['menu']                  = '系統配置設定';
 $lang['error']                 = '設定因為不合法的值而失敗，請檢查您的改變並重新送出。
@@ -88,6 +89,8 @@ $lang['disableactions_other']  = '其他功能(以逗號分隔)';
 $lang['sneaky_index']          = '默認情況下，DokuWiki 在索引頁會顯示所有 namespace。啟用該選項能隱藏那些用戶沒有權限閱讀的頁面。但也可能將用戶能夠閱讀的子頁面一並隱藏。這有可能導致在特定 ACL 設置下，索引功能不可用。';
 $lang['auth_security_timeout'] = '認證確定的 Timeout (秒)';
 $lang['securecookie']          = '「cookies set via HTTPS」是否只能由瀏覽器經 HTTPS 傳送？當你登入 wiki 是被 SSL 所保護但瀏覽 wiki 是沒有被保護時，取消此選項。';
+$lang['xmlrpc']                = '啟用/停用 XML-RPC 介面';
+$lang['xmlrpcuser']            = 'XML-RPC 存取權限將局限於在此提供的群組或使用者（逗點分隔）。若要開放權限給所有人請留白。';
 $lang['updatecheck']           = '檢查更新與安全性警告? 使用此功能, DokuWiki 需要聯繫 splitbrain.org.';
 $lang['userewrite']            = '使用更整潔的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
@@ -113,7 +116,6 @@ $lang['send404']               = '存取不存在的頁面時送出"HTTP 404/Pag
 $lang['sitemap']               = '產生 Google sitemap (天)';
 $lang['broken_iua']            = 'ignore_user_abort 功能失效了？這有可能導致搜索索引不可用。IIS+PHP/CGI 已損壞。請參閱 <a href=\"http://bugs.splitbrain.org/?do=details&task_id=852\">Bug 852</a> 獲取更多信息。';
 $lang['xsendfile']             = '使用 X-Sendfile 頭讓服務器發送狀態文件？您的服務器需要支持該功能。';
-$lang['xmlrpc']                = '啟用/停用 XML-RPC 介面';
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s (dokuwiki 核心)';
 $lang['renderer__plugin']      = '%s (外掛)';

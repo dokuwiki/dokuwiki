@@ -8,6 +8,7 @@
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
+ * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,6 +51,7 @@ $lang['btn_resendpwd']         = '寄新密碼';
 $lang['btn_draft']             = '編輯草稿';
 $lang['btn_recover']           = '復原草稿';
 $lang['btn_draftdel']          = '捨棄草稿';
+$lang['btn_revert']            = '復原';
 $lang['loggedinas']            = '登入為';
 $lang['user']                  = '帳號';
 $lang['pass']                  = '密碼';
@@ -88,6 +90,8 @@ $lang['resendpwdconfirm']      = '確認鏈接已經通過郵件發送給您了�
 $lang['resendpwdsuccess']      = '新密碼函已經以 email 寄出了。';
 $lang['license']               = '如未特別註明，此 wiki 上得內容都是根據以下的授權方式：';
 $lang['licenseok']             = '注意：編輯此頁面表示你已同意以下的授權方式：';
+$lang['searchmedia']           = '搜尋檔名：';
+$lang['searchmedia_in']        = '在 %s 裡搜尋';
 $lang['txt_upload']            = '請選擇要上傳的檔案';
 $lang['txt_filename']          = '請輸入要存在 wiki 內的檔案名稱 (非必要)';
 $lang['txt_overwrt']           = '是否要覆蓋原有檔案';
@@ -112,10 +116,14 @@ $lang['deletefail']            = '"%s" 檔無法刪除，請先檢查權限設�
 $lang['mediainuse']            = '"%s" 檔因還在使用中，故目前尚無法刪除。';
 $lang['namespaces']            = '命名空間';
 $lang['mediafiles']            = '可用的檔案有';
+$lang['js']['searchmedia']     = '搜尋檔案';
 $lang['js']['keepopen']        = '於選擇時保持視窗開啟';
 $lang['js']['hidedetails']     = '隱藏詳細內容';
 $lang['js']['nosmblinks']      = '只有在 Microsoft IE 下才能執行「連結到 Windows shares」。
 不過您仍可拷貝、複製這連結';
+$lang['js']['linkwiz']         = '建立連結精靈';
+$lang['js']['linkto']          = '連至：';
+$lang['js']['del_confirm']     = '確定要刪除該管理規則?';
 $lang['js']['mu_btn']          = '上傳多個檔案';
 $lang['mediausage']            = '使用以下的語法來連結此檔案:';
 $lang['mediaview']             = '檢視原始檔案';
@@ -143,6 +151,7 @@ $lang['restored']              = '已恢復為舊版';
 $lang['external_edit']         = '外部編輯';
 $lang['summary']               = '編輯摘要';
 $lang['noflash']               = '顯示此內容需要<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>';
+$lang['download']              = '下載程式碼片段';
 $lang['mail_newpage']          = '增加的頁面:';
 $lang['mail_changed']          = '變更的頁面:';
 $lang['mail_new_user']         = '新使用者:';
@@ -157,6 +166,11 @@ $lang['qb_h2']                 = 'H2 標題';
 $lang['qb_h3']                 = 'H3 標題';
 $lang['qb_h4']                 = 'H4 標題';
 $lang['qb_h5']                 = 'H5 標題';
+$lang['qb_h']                  = '標題';
+$lang['qb_hs']                 = '選擇標題';
+$lang['qb_hplus']              = '較大標題';
+$lang['qb_hminus']             = '較小標題';
+$lang['qb_hequal']             = '同等標題';
 $lang['qb_link']               = 'WIKI內部連結';
 $lang['qb_extlink']            = '連結外部URL';
 $lang['qb_hr']                 = '水平線';
@@ -166,7 +180,7 @@ $lang['qb_media']              = '加入圖片或檔案';
 $lang['qb_sig']                = '插入簽名';
 $lang['qb_smileys']            = '表情符號';
 $lang['qb_chars']              = '特殊字元';
-$lang['js']['del_confirm']           = '確定要刪除該管理規則?';
+$lang['upperns']               = '前往父命名空間';
 $lang['admin_register']        = '新增使用者中';
 $lang['metaedit']              = '更改相片資料(EXIF)';
 $lang['metasaveerr']           = '相片資料(EXIF)儲存失敗喔';
@@ -226,4 +240,13 @@ $lang['mu_fail']               = '失敗';
 $lang['mu_authfail']           = '作業階段逾時';
 $lang['mu_progress']           = '@PCT@% 已上傳';
 $lang['mu_filetypes']          = '接受的檔案類型';
+$lang['mu_info']               = '檔案已上傳。';
+$lang['mu_lasterr']            = '最新一筆錯誤紀錄：';
 $lang['recent_global']         = '您正在閱讀命名空間： <b>%s</b> 中的變更。您亦可觀看整個 wiki 的<a href="%s">最近更新</a>。';
+$lang['years']                 = '%d 年前';
+$lang['months']                = '%d 個月前';
+$lang['weeks']                 = '%d 週前';
+$lang['days']                  = '%d 天前';
+$lang['hours']                 = '%d 個小時前';
+$lang['minutes']               = '%d 分鐘前';
+$lang['seconds']               = '%s 秒鐘前';
