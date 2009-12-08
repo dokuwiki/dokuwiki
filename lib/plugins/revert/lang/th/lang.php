@@ -6,6 +6,7 @@
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
  * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
+ * @author Thanasak Sompaisansin <jombthep@gmail.com>
  */
 $lang['menu']                  = 'ตัวจัดการคืนสภาพเอกสารฉบับเดิม';
 $lang['filter']                = 'ค้นหาเพจที่ถูกแสปม';
