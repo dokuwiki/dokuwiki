@@ -1,4 +1,4 @@
-====== Previsualització ======
+====== Previsualisació ======
 
-Heus ací una previsualització del vostre text. Recordeu que encara **no l'heu alçat!**
+Açò es una previsualisació per a vore cóm quedarà la pàgina. ¡Recorda que encara no està guardada!
 

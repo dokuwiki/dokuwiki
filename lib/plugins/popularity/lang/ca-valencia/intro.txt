@@ -1,9 +1,9 @@
-====== Retroacció sobre popularitat ======
+====== Retroalimentació de popularitat ======
 
-Esta eina recull dades anònimes sobre el vostre wiki i vos permet enviar-les als desenvolupadors de DokuWiki. Això els ajudarà a entendre com utilitzen DokuWiki els usuaris i farà que futures decisions de desenvolupament es prenguin sobre la base d'estadístiques d'ús reals.
+Esta ferramenta arreplega senyes anònimes sobre el wiki i permet enviar-les als desenrolladors de DokuWiki. Açò els ajuda a comprendre cóm utilisen DokuWiki els usuaris i assegura que les decisions futures de desenroll estaran recolzades per estadístiques d'us real.
 
-Els desenvolupadors de DokuWiki vos preguen que repetiu este pas de tant en tant per tal de mantindre-los ben informats a mesura que creix el vostre wiki. Els conjunts de dades que envieu al llarg del temps quedaran identificats per un ID anònim.
+L'animem a que repetixca este procés de tant en tant per a mantindre informats als desenrolladors quan el wiki creixca. Els teus conjunts reiteratius de senyes s'identificaran en un ID anònim.
 
-Les dades que es recullen contenen informació com ara la vostra versió de DokuWiki, el nombre i la grandària de pàgines i fitxers, els connectors instal·lats i informació sobre la vostra instal·lació de PHP.
+Les senyes arreplegades contenen informació com la versió del DokuWiki, el número i tamany de les pàgines i els archius, plúgins instalats i informació sobre l'instalació de PHP.
 
-Més avall es mostren les dades crues que s'enviaran. Feu servir el botó "Envia dades" per transferir esta informació.
+Les senyes reals que s'enviaran es mostren ací avall. Per favor, utilisa el botó "Enviar senyes" per a transferir l'informació.

@@ -1,4 +1,4 @@
 ====== Índex ======
 
-Heus ací un índex de totes les pàgines disponibles, ordenades per [[doku>namespaces|espais]].
+Un índex de totes les pàgines disponibles ordenades per [[doku>namespaces|espais de noms]].
 

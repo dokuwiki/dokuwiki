@@ -1,7 +1,10 @@
-====== Gestió de la configuració ======
+====== Gestor de configuració ======
 
-Utilitzeu esta pàgina per controlar els paràmetres de la vostra instal·lació de DokuWiki. Ajuda sobre paràmetres individuals en [[doku>config]]. Més detalls sobre este connector en [[doku>plugin:config]].
+Controle des d'esta pàgina els ajusts de DokuWiki.
+Per a obtindre ajuda sobre cada ajust vaja a [[doku>config]].
+Per a més informació al voltant d'este plúgin vaja a [[doku>config]].
 
-Els paràmetres que es visualitzen sobre fons roig clar estan protegits i no es poden modificar amb este connector. Els paràmetres que es visualitzen sobre fons blau tenen valors per defecte. Els de fons blanc s'han configurat localment per a esta instal·lació. Tant els blaus com els blanc es poden modificar.
+Els ajusts mostrats en un fondo roig claret estan protegits i no els pot
+modificar en este plúgin. Els ajusts mostrats en un fondo blau tenen els valors predeterminats i els ajusts mostrats en un fondo blanc han segut modificats localment per ad esta instalació. Abdós ajusts, blaus i blancs, es poden modificar.
 
-Recordeu que cal prémer el botó **DESA** abans d'eixir d'esta pàgina, o si no es perdrien els canvis.
+Recorde pulsar el botó **GUARDAR** ans d'anar-se'n d'esta pàgina o perdrà els canvis que haja fet.

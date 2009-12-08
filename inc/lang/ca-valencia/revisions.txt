@@ -1,4 +1,4 @@
-====== Revisions anteriors ======
+====== Versions antigues ======
 
-Heus ací les revisions anteriors del document actual. Per restaurar una revisió anterior, seleccioneu-la de la llista, feu clic en ''Edita esta pàgina'' i alceu-la.
+Versions antigues del document actual. Per a recuperar una versió anterior de la pàgina, trie-la ací avall, pulse ''Editar esta pàgina'' i guarde-la.
 

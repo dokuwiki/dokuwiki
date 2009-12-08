@@ -1,4 +1,3 @@
-====== Enllaços ======
+====== Vínculs remitents ======
 
-Heus ací una llista de pàgines enllaçades amb la pàgina actual.
-
+Una llista de pàgines que pareixen enllaçar a la pàgina actual.

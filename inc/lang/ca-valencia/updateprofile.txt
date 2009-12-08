@@ -1,3 +1,5 @@
-====== Actualització del perfil d'usuari ======
+====== Actualise el seu perfil ======
 
-Només cal que completeu els camps que vulgueu canviar. El nom d'usuari no es pot canviar.
+Només deu completar els camps que vol canviar. No es pot canviar el nom d'usuari.
+
+

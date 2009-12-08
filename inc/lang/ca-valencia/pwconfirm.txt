@@ -1,15 +1,15 @@
-@FULLNAME@,
+¡Hola @FULLNAME@!
 
-Algú ha sol·licitat una nova contrasenya per al vostre compte d'usuari en @TITLE@
-@DOKUWIKIURL@
+Algú ha solicitat una nova contrasenya per a entrar en
+@TITLE en @DOKUWIKIURL@
 
-Si no heu fet esta sol·licitud, simplement no feu cas de la resta del missatge.
+Si no ha segut vosté qui ha solicitat la nova contrasenya ignore este correu.
 
-Per confirmar que realment heu sol·licitat una nova contrasenya, utilitzeu
-l'enllaç següent:
+Per a confirmar que la petició ha segut feta realment per vosté
+utilise el següent víncul.
 
 @CONFIRM@
 
 -- 
-Missatge generat per DokuWiki en
+Este correu l'ha generat DokuWiki en
 @DOKUWIKIURL@
