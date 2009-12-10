@@ -74,10 +74,10 @@ function getVersionData(){
         fseek($fh,$seek);
         $chunk = fread($fh,2000);
         fclose($fh);
-        $inv = preg_grep('#\*\*\d{14}[\]$]#',explode("\n",$chunk));
-        $cur = array_pop($inv);
-        preg_match('#\*\*(\d{4})(\d{2})(\d{2})#',$cur,$matches);
-        $version['date'] = $matches[1].'-'.$matches[2].'-'.$matches[3];
+
+        preg_match_all('#\*\*(\d{4})(\d{2})(\d{2})\d{6}(?:\]|$)#m', $chunk, $matches,
+                       PREG_SET_ORDER);
+        $version['date'] = implode('-', array_slice(array_pop($matches), 1));
         $version['type'] = 'Darcs';
         return $version;
     }else{
