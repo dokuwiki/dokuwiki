@@ -88,6 +88,7 @@ $lang['sneaky_index']          = 'Per defecte, DokuWiki mostrarà tots els espai
 $lang['auth_security_timeout'] = 'Temps d\'espera de seguretat en l\'autenticació (segons)';
 $lang['securecookie']          = 'Les galetes que s\'han creat via HTTPS, només s\'han d\'enviar des del navegador per HTTPS? Inhabiliteu aquesta opció si només l\'inici de sessió del wiki es fa amb SSL i la navegació del wiki es fa sense seguretat.';
 $lang['xmlrpc']                = 'Habilita/inhabilita la interfície XML-RPC';
+$lang['xmlrpcuser']            = 'Restringeix l\'accés per XML-RPC als usuaris o grups següents, separats per comes. Deixeu aquest camp en blanc per donar accés a tothom.';
 $lang['updatecheck']           = 'Comprova actualitzacions i avisos de seguretat. DokuWiki necessitarà contactar amb splitbrain.org per utilitzar aquesta característica.';
 $lang['userewrite']            = 'Utilitza URL nets';
 $lang['useslash']              = 'Utilitza la barra / com a separador d\'espais en els URL';
