@@ -7,6 +7,7 @@
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
+ * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
@@ -127,7 +128,7 @@ $lang['rss_update']            = 'RSSフィードの更新間隔（秒）';
 $lang['recent_days']           = '最近の変更とする期間（日数）';
 $lang['rss_show_summary']      = 'フィードのタイトルにサマリーを表示';
 $lang['target____wiki']        = '内部リンクの表示先';
-$lang['target____interwiki']   = '内部wikiの表示先';
+$lang['target____interwiki']   = 'InterWikiリンクの表示先';
 $lang['target____extern']      = '外部リンクの表示先';
 $lang['target____media']       = 'メディアリンクの表示先';
 $lang['target____windows']     = 'Windowsリンクの表示先';

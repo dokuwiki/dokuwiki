@@ -6,6 +6,7 @@
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
+ * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -20,7 +21,7 @@ $lang['btn_show']              = '文書の表示';
 $lang['btn_create']            = '文書の作成';
 $lang['btn_search']            = '検索';
 $lang['btn_save']              = '保存';
-$lang['btn_preview']           = '確認';
+$lang['btn_preview']           = 'プレビュー';
 $lang['btn_top']               = '文書の先頭へ';
 $lang['btn_newer']             = '<< より新しい';
 $lang['btn_older']             = 'より古い >>';
@@ -146,9 +147,9 @@ $lang['deleted']               = '削除';
 $lang['created']               = '作成';
 $lang['restored']              = '以前のバージョンを復元';
 $lang['external_edit']         = '外部編集';
-$lang['summary']               = 'サマリーを編集';
+$lang['summary']               = '編集の概要';
 $lang['noflash']               = 'この内容を表示するためには <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> が必要です。';
-$lang['download']              = 'ダウンロードスニペット';
+$lang['download']              = 'この部分をダウンロード';
 $lang['mail_newpage']          = '文書の追加：';
 $lang['mail_changed']          = '文書の変更：';
 $lang['mail_new_user']         = '新規ユーザー：';
@@ -236,7 +237,7 @@ $lang['mu_fail']               = '失敗';
 $lang['mu_authfail']           = 'セッション期限切れ';
 $lang['mu_progress']           = '@PCT@% アップロード完了';
 $lang['mu_filetypes']          = '使用できるファイル形式';
-$lang['mu_info']               = 'ファイルアップロー完了';
+$lang['mu_info']               = 'ファイルアップロード完了';
 $lang['mu_lasterr']            = '直近のエラー：';
 $lang['recent_global']         = '現在、<b>%s</b> 名前空間内の変更点を閲覧中です。<a href="%s">Wiki全体の最近の変更点を確認する</a>ことも可能です。';
 $lang['years']                 = '%d年前';
