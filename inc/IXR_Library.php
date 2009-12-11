@@ -350,6 +350,9 @@ EOD;
 
 # Adjusted for DokuWiki to use call_user_func_array
 
+        // args need to be an array
+        $args = (array) $args;
+
         // Are we dealing with a function or a method?
         if (substr($method, 0, 5) == 'this:') {
             // It's a class method - check it exists
@@ -360,15 +363,15 @@ EOD;
             // Call the method
             #$result = $this->$method($args);
             $result = call_user_func_array(array(&$this,$method),$args);
-		} elseif (substr($method, 0, 7) == 'plugin:') {
-			require_once(DOKU_INC.'inc/pluginutils.php');
-			list($pluginname, $callback) = explode(':', substr($method, 7), 2);
-			if(!plugin_isdisabled($pluginname)) {
-				$plugin = plugin_load('action', $pluginname);
-				return call_user_func_array(array($plugin, $callback), $args);
-			} else {
-				return new IXR_Error(-99999, 'server error');
-			}
+        } elseif (substr($method, 0, 7) == 'plugin:') {
+            require_once(DOKU_INC.'inc/pluginutils.php');
+            list($pluginname, $callback) = explode(':', substr($method, 7), 2);
+            if(!plugin_isdisabled($pluginname)) {
+                $plugin = plugin_load('action', $pluginname);
+                return call_user_func_array(array($plugin, $callback), $args);
+            } else {
+                return new IXR_Error(-99999, 'server error');
+            }
         } else {
             // It's a function - does it exist?
             if (!function_exists($method)) {
