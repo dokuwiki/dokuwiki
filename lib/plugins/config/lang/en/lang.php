@@ -54,9 +54,9 @@ $lang['_msg_setting_no_default'] = 'No default value.';
 
 $lang['fmode']       = 'File creation mode';
 $lang['dmode']       = 'Directory creation mode';
-$lang['lang']        = 'Language';
-$lang['basedir']     = 'Base directory';
-$lang['baseurl']     = 'Base URL';
+$lang['lang']        = 'Interface language';
+$lang['basedir']     = 'Server path (eg. <code>/dokuwiki/</code>). Leave blank for autodetection.';
+$lang['baseurl']     = 'Server URL (eg. <code>http://www.yourserver.com</code>). Leave blank for autodetection.';
 $lang['savedir']     = 'Directory for saving data';
 $lang['start']       = 'Start page name';
 $lang['title']       = 'Wiki title';
