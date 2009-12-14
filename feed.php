@@ -265,14 +265,14 @@ function rss_buildItems(&$rss,&$data,$opt){
                     $item->authorEmail = $userInfo['mail'];
                 }else{
                     //cannot obfuscate because some RSS readers may check validity
-                    $item->authorEmail = $user.'@'.$recent['ip'];
+                    $item->authorEmail = $user.'@'.$ditem['ip'];
                 }
             }elseif($user){
                 // this happens when no ACL but some Apache auth is used
                 $item->author      = $user;
-                $item->authorEmail = $user.'@'.$recent['ip'];
+                $item->authorEmail = $user.'@'.$ditem['ip'];
             }else{
-                $item->authorEmail = 'anonymous@'.$recent['ip'];
+                $item->authorEmail = 'anonymous@'.$ditem['ip'];
             }
 
             // add category
