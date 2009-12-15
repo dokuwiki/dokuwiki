@@ -90,13 +90,7 @@ if($conf['useacl']){
                     'sticky'   => $_REQUEST['r'],
                     'silent'   => $_REQUEST['http_credentials'],
                     );
-            $evt = new Doku_Event('AUTH_LOGIN_CHECK',$evdata);
-            if($evt->advise_before()){
-                auth_login($evdata['user'],
-                           $evdata['password'],
-                           $evdata['sticky'],
-                           $evdata['silent']);
-            }
+            trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
     }
 
@@ -112,6 +106,13 @@ if($conf['useacl']){
     }else{
         $AUTH_ACL = array();
     }
+}
+
+function auth_login_wrapper($evdata) {
+    return auth_login($evdata['user'],
+                      $evdata['password'],
+                      $evdata['sticky'],
+                      $evdata['silent']);
 }
 
 /**
