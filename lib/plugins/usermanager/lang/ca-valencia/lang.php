@@ -4,9 +4,10 @@
  *
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
  * @author Bernat Arlandis <berarma@ya.com>
+ * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
  */
 $lang['menu']                  = 'Gestor d\'usuaris';
-$lang['noauth']                = '(autenticació d\'usuaris no està disponible)';
+$lang['noauth']                = '(autenticació d\'usuaris no disponible)';
 $lang['nosupport']             = '(gestió d\'usuaris no admesa)';
 $lang['badauth']               = 'mecanisme d\'autenticació no vàlit';
 $lang['user_id']               = 'Usuari';
@@ -42,7 +43,7 @@ $lang['user_notify']           = 'Notificar a l\'usuari';
 $lang['note_notify']           = 'Els correus de notificació només s\'envien si a l\'usuari se li assigna una contrasenya nova.';
 $lang['note_group']            = 'Els usuaris nous s\'afegiran al grup predeterminat (%s) si no se n\'especifica atre.';
 $lang['note_pass']             = 'Si es deixa el camp buit i la notificació a l\'usuari està desactivada s\'autogenerarà la contrasenya.';
-$lang['add_ok']                = 'L\'usuar afegit correctament';
+$lang['add_ok']                = 'Usuari afegit correctament';
 $lang['add_fail']              = 'Erro afegint usuari';
 $lang['notify_ok']             = 'Correu de notificació enviat';
 $lang['notify_fail']           = 'Erro enviant el correu de notificació';

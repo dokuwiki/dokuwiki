@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
  * @author Bernat Arlandis <berarma@ya.com>
+ * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
  */
 $lang['admin_acl']             = 'Gestor de les llistes de control d\'accés';
 $lang['acl_group']             = 'Grup';

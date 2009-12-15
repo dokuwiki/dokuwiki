@@ -1,7 +1,7 @@
 ¡Hola!
 
 La pàgina @PAGE@ del wiki @TITLE@ ha canviat.
-Estos són els canvis.
+Estos són els canvis:
 
 --------------------------------------------------------
 @DIFF@
