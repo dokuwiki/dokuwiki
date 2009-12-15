@@ -3,13 +3,12 @@
  * bulgarian language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author Nikolay Vladimirov <nikolay@vladimiroff.com
- * @author Nikolay Vladimirof <nikolay@vladimiroff.com>
- * @author Viktor Usunov <usunov@mail.bg>
+ * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
+ * @author Viktor Usunov <usun0v@mail.bg>
  */
 $lang['menu']                  = 'Настройки';
 $lang['error']                 = 'Невъзможно е обновяването на настройките, поради невалидна стойност, моля, прегледайте промените си и пробвайте отново.
-                       <br />Неверните стойности ще бъдат обградени от червена рамка.';
+                       <br />Неверните стойности ще бъдат обградени с червена рамка.';
 $lang['updated']               = 'Обновяването на настройките бе успешно.';
 $lang['nochoice']              = '(няма друг възможен избор)';
 $lang['locked']                = 'Невъзможно е обновяването на файлът с настройките, ако това не е нарочно, проверете,<br /> дали локалните име на файл  и права са верни.';
@@ -97,7 +96,7 @@ $lang['usedraft']              = 'Автоматично запазване на
 $lang['sepchar']               = 'Разделител между думите в имената на страници';
 $lang['canonical']             = 'Използване на уеднаквени URL';
 $lang['autoplural']            = 'Проверка за множествено число в препратките';
-$lang['compression']           = 'Метод за компресия на  attic файлове';
+$lang['compression']           = 'Метод за компресия на attic файлове';
 $lang['cachetime']             = 'Максимална възраст на кеша (сек)';
 $lang['locktime']              = 'Максимална възраст на заключващите файлове (сек)';
 $lang['fetchsize']             = 'Максимален размер (байтове), който fetch.php може да дърпа';
