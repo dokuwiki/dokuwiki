@@ -13,10 +13,23 @@ class ap_info extends ap_manage {
         $component_list = $this->get_plugin_components($this->manager->plugin);
         usort($component_list, array($this,'component_sort'));
 
+
         foreach ($component_list as $component) {
             if ($obj = & plugin_load($component['type'],$component['name']) === NULL) continue;
 
-            $this->details[] = array_merge($obj->getInfo(), array('type' => $component['type']));
+            $compname = explode('_',$component['name']);
+            if($compname[1]){
+                $compname = '['.$compname[1].']';
+            }else{
+                $compname = '';
+            }
+
+            $this->details[] = array_merge(
+                                    $obj->getInfo(),
+                                    array(
+                                        'type' => $component['type'],
+                                        'compname' => $compname
+                                    ));
             unset($obj);
         }
 
@@ -72,7 +85,7 @@ class ap_info extends ap_manage {
                 foreach ($this->details as $info) {
 
                     ptln("<dl>",4);
-                    ptln("<dt>".$this->manager->getLang('name')."</dt><dd>".$this->out($info['name'])."</dd>",6);
+                    ptln("<dt>".$this->manager->getLang('name')."</dt><dd>".$this->out($info['name'].' '.$info['compname'])."</dd>",6);
                     if (!$this->plugin_info['date']) ptln("<dt>".$this->manager->getLang('date')."</dt><dd>".$this->out($info['date'])."</dd>",6);
                     if (!$this->plugin_info['type']) ptln("<dt>".$this->manager->getLang('type')."</dt><dd>".$this->out($info['type'])."</dd>",6);
                     if (!$this->plugin_info['desc']) ptln("<dt>".$this->manager->getLang('desc')."</dt><dd>".$this->out($info['desc'])."</dd>",6);
@@ -111,11 +124,13 @@ class ap_info extends ap_manage {
             if ($dh = @opendir($path.$type.'/')) {
                 while (false !== ($cp = readdir($dh))) {
                     if ($cp == '.' || $cp == '..' || strtolower(substr($cp,-4)) != '.php') continue;
+
                     $components[] = array('name'=>$plugin.'_'.substr($cp, 0, -4), 'type'=>$type);
                 }
                 closedir($dh);
             }
         }
+
         return $components;
     }
 
