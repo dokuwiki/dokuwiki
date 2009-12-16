@@ -604,9 +604,9 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     }
 
     // still here? prepare the item
-    $item['type'] = $type;
-    $item['lvl']  = $lvl;
-    $item['open'] = $return;
+    $item['type']  = $type;
+    $item['level'] = $lvl;
+    $item['open']  = $return;
 
     if($opts['meta']){
         $item['file']       = basename($file);
