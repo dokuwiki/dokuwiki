@@ -176,6 +176,7 @@ class IXR_Message {
     }
     function tag_open($parser, $tag, $attr) {
         $this->currentTag = $tag;
+        $this->_currentTagContents = '';
         switch($tag) {
             case 'methodCall':
             case 'methodResponse':
@@ -211,7 +212,7 @@ class IXR_Message {
                 $valueFlag = true;
                 break;
             case 'string':
-                $value = (string)trim($this->_currentTagContents);
+                $value = (string)$this->_currentTagContents;
                 $this->_currentTagContents = '';
                 $valueFlag = true;
                 break;

@@ -466,14 +466,14 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         global $conf;
 
         $id    = cleanID($id);
-        $TEXT  = trim($text);
+        $TEXT  = cleanText($text);
         $sum   = $params['sum'];
         $minor = $params['minor'];
 
         if(empty($id))
             return new IXR_Error(1, 'Empty page ID');
 
-        if(!page_exists($id) && empty($TEXT)) {
+        if(!page_exists($id) && trim($TEXT) == '' ) {
             return new IXR_ERROR(1, 'Refusing to write an empty new wiki page');
         }
 
