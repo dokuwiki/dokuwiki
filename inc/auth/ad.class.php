@@ -140,7 +140,7 @@ class auth_ad extends auth_basic {
         $info['dn']   = $result[0]['dn'];
 
         // handle ActiveDirectory memberOf
-        $info['grps'] = $this->adldap->user_groups($user);
+        $info['grps'] = $this->adldap->user_groups($user,(bool) $this->opts['recursive_groups']);
 
         if (is_array($info['grps'])) {
             foreach ($info['grps'] as $ndx => $group) {
