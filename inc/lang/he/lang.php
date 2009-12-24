@@ -8,6 +8,7 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author DoK <kamberd@yahoo.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
+ * @author Moshe Kaplan <mokplan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -108,8 +109,13 @@ $lang['deletefail']            = 'לא יכולתי למחוק "%s" -- בדקו 
 $lang['mediainuse']            = 'קובץ "%s" לא נמחק - הוא עדיין בשימוש';
 $lang['namespaces']            = 'שמות מתחם';
 $lang['mediafiles']            = 'קבצים זמינים ב-';
+$lang['js']['searchmedia']     = 'חיפוש קבצים';
 $lang['js']['keepopen']        = 'השאר חלון פתוח בבחירה';
 $lang['js']['hidedetails']     = 'הסתר פרטים';
+$lang['js']['nosmblinks']      = ':( קישור למערכת קבצים של חלונות פועל רק בדפדפן אינטרנט אקספלורר.
+ זה בסדר, אין צורך לעבור. אפשר להעתיק ולהדביק את הקישור';
+$lang['js']['del_confirm']     = 'באמת למחוק?';
+$lang['js']['mu_btn']          = 'העלאת קבצים מרובים';
 $lang['mediausage']            = 'השתמש בתחביר הבא להתיחסות אל קובץ זה:';
 $lang['mediaview']             = 'הצג את הקובץ המקורי';
 $lang['mediaroot']             = 'root';
@@ -139,7 +145,6 @@ $lang['mail_newpage']          = 'דף נוסף:';
 $lang['mail_changed']          = 'דף שונה:';
 $lang['mail_new_user']         = 'משתמש חדש:';
 $lang['mail_upload']           = 'קובץ הועלה:';
-$lang['js']['nosmblinks']            = ":( קישור למערכת קבצים של חלונות פועל רק בדפדפן אינטרנט אקספלורר.\n זה בסדר, אין צורך לעבור. אפשר להעתיק ולהדביק את הקישור";
 $lang['qb_bold']               = 'טקסט מודגש';
 $lang['qb_italic']             = 'טקסט נטוי';
 $lang['qb_underl']             = 'טקסט עם קו תחתון';
@@ -150,6 +155,8 @@ $lang['qb_h2']                 = 'כותרת רמה 2';
 $lang['qb_h3']                 = 'כותרת רמה 3';
 $lang['qb_h4']                 = 'כותרת רמה 4';
 $lang['qb_h5']                 = 'כותרת רמה 5';
+$lang['qb_h']                  = 'כותרת';
+$lang['qb_hs']                 = 'בחירת כותרת';
 $lang['qb_link']               = 'קישור פנימי';
 $lang['qb_extlink']            = 'קישור חיצוני';
 $lang['qb_hr']                 = 'קו אופקי';
@@ -159,7 +166,6 @@ $lang['qb_media']              = 'תמונות או קובץ אחר';
 $lang['qb_sig']                = 'הזנת חתימה';
 $lang['qb_smileys']            = 'פרצופונים';
 $lang['qb_chars']              = 'סימנים מיוחדים';
-$lang['js']['del_confirm']           = 'באמת למחוק?';
 $lang['admin_register']        = 'להוסיף משתמש חדש';
 $lang['metaedit']              = 'ערוך נתונים';
 $lang['metasaveerr']           = 'כשל בשמירת נתונים';
@@ -205,3 +211,14 @@ $lang['i_pol0']                = 'ויקי פתוח (קריאה, כתיבה וה
 $lang['i_pol1']                = ' ויקי ציבורי (קריאה לכולם, כתיבה והעלאה למשתמשים רשומים)';
 $lang['i_pol2']                = 'ויקי סגור (קריאה, כתיבה והעלאה למשתמשים רשומים בלבד)';
 $lang['i_retry']               = 'נסיון נוסף';
+$lang['mu_intro']              = 'כאן תוכל להעלות קבצים מרובים. לחץ על כפתור החיפוש להוסיף אותם למחסנית. לחץ על העלאה לסיום.';
+$lang['mu_gridname']           = 'שם קובץ';
+$lang['mu_gridsize']           = 'גודל';
+$lang['mu_gridstat']           = 'סטאטןס';
+$lang['mu_browse']             = 'חיפוש';
+$lang['mu_toobig']             = 'גדול מדי';
+$lang['mu_ready']              = 'מוכן להעלאה';
+$lang['mu_done']               = 'סיים';
+$lang['mu_fail']               = 'נכשל';
+$lang['mu_info']               = 'הקבצים הועלו';
+$lang['mu_lasterr']            = 'שגיאה אחרונה:';

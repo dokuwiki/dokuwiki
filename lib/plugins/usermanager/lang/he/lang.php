@@ -4,6 +4,7 @@
  *
  * @author DoK <kamberd@yahoo.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
+ * @author Moshe Kaplan <mokplan@gmail.com>
  */
 $lang['menu']                  = 'מנהל משתמשים';
 $lang['noauth']                = '(אימות משתמשים אינו זמין)';
