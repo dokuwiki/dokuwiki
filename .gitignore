@@ -1,0 +1,6 @@
+/conf/*.local.conf
+/conf/acl.auth.php
+/conf/local.php
+/conf/users.auth.php
+/conf/userstyle.css
+/conf/words.aspell
