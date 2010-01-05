@@ -103,6 +103,8 @@ $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
 $conf['jpg_quality'] = '70';             //quality of compression when scaling jpg images (0-100)
 $conf['subscribers'] = 0;                //enable change notice subscription support
+$conf['subscribe_time'] = 24 * 60 * 60;  //Time after which digests / lists are sent (in sec, default 1 day)
+                                         //Should be larger than the time specified in recent_days
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0
 $conf['hidepages']   = '';               //Regexp for pages to be skipped from RSS, Search and Recent Changes
 $conf['send404']     = 0;                //Send a HTTP 404 status for non existing pages?

@@ -534,4 +534,21 @@ function isVisiblePage($id){
     return !isHiddenPage($id);
 }
 
+/**
+ * Format an id for output to a user
+ *
+ * Namespaces are denoted by a trailing “:*”. The root namespace is
+ * “*”. Output is escaped.
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
 
+function prettyprint_id($id) {
+    if (!$id || $id === ':') {
+        return '*';
+    }
+    if ((substr($id, -1, 1) === ':')) {
+        $id .= '*';
+    }
+    return hsc($id);
+}

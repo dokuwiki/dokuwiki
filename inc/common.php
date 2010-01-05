@@ -13,6 +13,7 @@ require_once(DOKU_INC.'inc/utf8.php');
 require_once(DOKU_INC.'inc/mail.php');
 require_once(DOKU_INC.'inc/parserutils.php');
 require_once(DOKU_INC.'inc/infoutils.php');
+require_once DOKU_INC.'inc/subscription.php';
 
 /**
  * These constants are used with the recents function
@@ -117,8 +118,7 @@ function pageinfo(){
     if(isset($_SERVER['REMOTE_USER'])){
         $info['userinfo']     = $USERINFO;
         $info['perm']         = auth_quickaclcheck($ID);
-        $info['subscribed']   = is_subscribed($ID,$_SERVER['REMOTE_USER'],false);
-        $info['subscribedns'] = is_subscribed($ID,$_SERVER['REMOTE_USER'],true);
+        $info['subscribed']   = get_info_subscribed();
         $info['client']       = $_SERVER['REMOTE_USER'];
 
         if($info['perm'] == AUTH_ADMIN){
@@ -1061,10 +1061,10 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     }elseif($who == 'subscribers'){
         if(!$conf['subscribers']) return; //subscribers enabled?
         if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return; //skip minors
-        $bcc  = subscriber_addresslist($id,false);
+        $bcc  = subscription_addresslist($id,false);
         if(empty($bcc)) return;
         $to   = '';
-        $text = rawLocale('subscribermail');
+        $text = rawLocale('subscr_single');
     }elseif($who == 'register'){
         if(empty($conf['registernotify'])) return;
         $text = rawLocale('registermail');
@@ -1097,7 +1097,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true,'&'),$text);
         require_once(DOKU_INC.'inc/DifferenceEngine.php');
         $df  = new Diff(explode("\n",rawWiki($id,$rev)),
-                explode("\n",rawWiki($id)));
+                        explode("\n",rawWiki($id)));
         $dformat = new UnifiedDiffFormatter();
         $diff    = $dformat->format($df);
     }else{
@@ -1270,97 +1270,6 @@ function obfuscate($email) {
         default :
             return $email;
     }
-}
-
-/**
- * Let us know if a user is tracking a page or a namespace
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function is_subscribed($id,$uid,$ns=false){
-    if(!$ns) {
-        $file=metaFN($id,'.mlist');
-    } else {
-        if(!getNS($id)) {
-            $file = metaFN(getNS($id),'.mlist');
-        } else {
-            $file = metaFN(getNS($id),'/.mlist');
-        }
-    }
-    if (@file_exists($file)) {
-        $mlist = file($file);
-        $pos = array_search($uid."\n",$mlist);
-        return is_int($pos);
-    }
-
-    return false;
-}
-
-/**
- * Return a string with the email addresses of all the
- * users subscribed to a page
- *
- * @author Steven Danz <steven-danz@kc.rr.com>
- */
-function subscriber_addresslist($id,$self=true){
-    global $conf;
-    global $auth;
-
-    if (!$conf['subscribers']) return '';
-
-    $users = array();
-    $emails = array();
-
-    // load the page mlist file content
-    $mlist = array();
-    $file=metaFN($id,'.mlist');
-    if (@file_exists($file)) {
-        $mlist = file($file);
-        foreach ($mlist as $who) {
-            $who = rtrim($who);
-            if(!$self && $who == $_SERVER['REMOTE_USER']) continue;
-            $users[$who] = true;
-        }
-    }
-
-    // load also the namespace mlist file content
-    $ns = getNS($id);
-    while ($ns) {
-        $nsfile = metaFN($ns,'/.mlist');
-        if (@file_exists($nsfile)) {
-            $mlist = file($nsfile);
-            foreach ($mlist as $who) {
-                $who = rtrim($who);
-                if(!$self && $who == $_SERVER['REMOTE_USER']) continue;
-                $users[$who] = true;
-            }
-        }
-        $ns = getNS($ns);
-    }
-    // root namespace
-    $nsfile = metaFN('','.mlist');
-    if (@file_exists($nsfile)) {
-        $mlist = file($nsfile);
-        foreach ($mlist as $who) {
-            $who = rtrim($who);
-            if(!$self && $who == $_SERVER['REMOTE_USER']) continue;
-            $users[$who] = true;
-        }
-    }
-    if(!empty($users)) {
-        foreach (array_keys($users) as $who) {
-            $info = $auth->getUserData($who);
-            if($info === false) continue;
-            $level = auth_aclcheck($id,$who,$info['grps']);
-            if ($level >= AUTH_READ) {
-                if (strcasecmp($info['mail'],$conf['notify']) != 0) {
-                    $emails[] = $info['mail'];
-                }
-            }
-        }
-    }
-
-    return implode(',',$emails);
 }
 
 /**
@@ -1545,4 +1454,30 @@ function send_redirect($url){
     exit;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+/**
+ * Validate a value using a set of valid values
+ *
+ * This function checks whether a specified value is set and in the array
+ * $valid_values. If not, the function returns a default value or, if no
+ * default is specified, throws an exception.
+ *
+ * @param string $param        The name of the parameter
+ * @param array  $valid_values A set of valid values; Optionally a default may
+ *                             be marked by the key “default”.
+ * @param array  $array        The array containing the value (typically $_POST
+ *                             or $_GET)
+ * @param string $exc          The text of the raised exception
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+function valid_input_set($param, $valid_values, $array, $exc = '') {
+    if (isset($array[$param]) && in_array($array[$param], $valid_values)) {
+        return $array[$param];
+    } elseif (isset($valid_values['default'])) {
+        return $valid_values['default'];
+    } else {
+        throw new Exception($exc);
+    }
+}
+
+//Setup VIM: ex: et ts=2 enc=utf-8 :

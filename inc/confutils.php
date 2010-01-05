@@ -248,7 +248,6 @@ function actionOK($action){
         if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) $disabled[] = 'resendpwd';
         if(isset($conf['subscribers']) && !$conf['subscribers']) {
             $disabled[] = 'subscribe';
-            $disabled[] = 'subscribens';
         }
         $disabled = array_unique($disabled);
     }

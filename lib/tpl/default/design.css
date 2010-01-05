@@ -833,3 +833,17 @@ div.dokuwiki div.imagemeta img.thumb {
   float: left;
   margin-right: 0.1em;
 }
+
+form#subscribe p {
+    margin: 0.5em 0;
+}
+
+form#subscribe label {
+    display:block;
+    margin: 0 0.5em 0.5em;
+}
+
+form#subscribe fieldset, form#unsubscribe fieldset {
+    text-align:inherit;
+    margin: 0;
+}

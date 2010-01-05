@@ -1,0 +1,3 @@
+====== Manage subscriptions ======
+
+This form allows you to manage your subscriptions for the current page.

@@ -47,12 +47,13 @@ function act_dispatch(){
         }
 
         //check if user is asking to (un)subscribe a page
-        if($ACT == 'subscribe' || $ACT == 'unsubscribe')
-            $ACT = act_subscription($ACT);
-
-        //check if user is asking to (un)subscribe a namespace
-        if($ACT == 'subscribens' || $ACT == 'unsubscribens')
-            $ACT = act_subscriptionns($ACT);
+        if($ACT == 'subscribe') {
+            try {
+                $ACT = act_subscription($ACT);
+            } catch (Exception $e) {
+                msg($e->getMessage(), -1);
+            }
+        }
 
         //check permissions
         $ACT = act_permcheck($ACT);
@@ -550,81 +551,68 @@ function act_export($act){
 }
 
 /**
- * Handle page 'subscribe', 'unsubscribe'
+ * Handle page 'subscribe'
  *
- * @author Steven Danz <steven-danz@kc.rr.com>
- * @todo   localize
+ * Throws exception on error.
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
  */
 function act_subscription($act){
-    global $ID;
-    global $INFO;
     global $lang;
-
-    $file=metaFN($ID,'.mlist');
-    if ($act=='subscribe' && !$INFO['subscribed']){
-        if ($INFO['userinfo']['mail']){
-            if (io_saveFile($file,$_SERVER['REMOTE_USER']."\n",true)) {
-                $INFO['subscribed'] = true;
-                msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
-            } else {
-                msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
-            }
-        } else {
-            msg($lang['subscribe_noaddress']);
-        }
-    } elseif ($act=='unsubscribe' && $INFO['subscribed']){
-        if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
-            $INFO['subscribed'] = false;
-            msg(sprintf($lang[$act.'_success'], $INFO['userinfo']['name'], $ID),1);
-        } else {
-            msg(sprintf($lang[$act.'_error'], $INFO['userinfo']['name'], $ID),1);
-        }
-    }
-
-    return 'show';
-}
-
-/**
- * Handle namespace 'subscribe', 'unsubscribe'
- *
- */
-function act_subscriptionns($act){
-    global $ID;
     global $INFO;
-    global $lang;
 
-    if(!getNS($ID)) {
-        $file = metaFN(getNS($ID),'.mlist');
-        $ns = "root";
-    } else {
-        $file = metaFN(getNS($ID),'/.mlist');
-        $ns = getNS($ID);
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        // No post to handle, let tpl_subscribe manage the request.
+        return $act;
     }
 
-    // reuse strings used to display the status of the subscribe action
-    $act_msg = rtrim($act, 'ns');
+    // Get and validate parameters.
+    if (!isset($_POST['subscribe_target'])) {
+        throw new Exception($lang['subscr_no_target']);
+    }
+    $target = $_POST['subscribe_target'];
+    $valid_styles = array('every', 'digest');
+    if (substr($target, -1, 1) === ':') {
+        // Allow “list” subscribe style since the target is a namespace.
+        $valid_styles[] = 'list';
+    }
+    $style  = valid_input_set('subscribe_style', $valid_styles, $_POST,
+                              $lang['subscr_invalid_style']);
+    $action = valid_input_set('subscribe_action', array('subscribe',
+                                                        'unsubscribe'),
+                              $_POST, $lang['subscr_invalid_action']);
 
-    if ($act=='subscribens' && !$INFO['subscribedns']){
-        if ($INFO['userinfo']['mail']){
-            if (io_saveFile($file,$_SERVER['REMOTE_USER']."\n",true)) {
-                $INFO['subscribedns'] = true;
-                msg(sprintf($lang[$act_msg.'_success'], $INFO['userinfo']['name'], $ns),1);
-            } else {
-                msg(sprintf($lang[$act_msg.'_error'], $INFO['userinfo']['name'], $ns),1);
+    // Check other conditions.
+    if ($action === 'subscribe') {
+        if ($INFO['userinfo']['mail'] === '') {
+            throw new Exception($lang['subscr_subscribe_noaddress']);
+        }
+    } elseif ($action === 'unsubscribe') {
+        $is = false;
+        foreach($INFO['subscribed'] as $subscr) {
+            if ($subscr['target'] === $target) {
+                $is = true;
             }
-        } else {
-            msg($lang['subscribe_noaddress']);
         }
-    } elseif ($act=='unsubscribens' && $INFO['subscribedns']){
-        if (io_deleteFromFile($file,$_SERVER['REMOTE_USER']."\n")) {
-            $INFO['subscribedns'] = false;
-            msg(sprintf($lang[$act_msg.'_success'], $INFO['userinfo']['name'], $ns),1);
-        } else {
-            msg(sprintf($lang[$act_msg.'_error'], $INFO['userinfo']['name'], $ns),1);
+        if ($is === false) {
+            throw new Exception(sprintf($lang['subscr_not_subscribed_you'],
+                                        prettyprint_id($target)));
         }
+        // subscription_set deletes a subscription if style = null.
+        $style = null;
     }
 
-    return 'show';
+    // Perform action.
+    require_once DOKU_INC . 'inc/subscription.php';
+    if (!subscription_set($target, $_SERVER['REMOTE_USER'], $style)) {
+        throw new Exception(sprintf($lang["subscr_{$action}_error"],
+                                    hsc($INFO['userinfo']['name']),
+                                    prettyprint_id($target)));
+    }
+    $INFO['subscribed'] = get_info_subscribed();
+    msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                prettyprint_id($target)), 1);
+    return $act;
 }
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
