@@ -7,6 +7,7 @@
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
+ * @author ben <ben@livetom.com>
  */
 $lang['menu']                  = '用户管理器';
 $lang['noauth']                = '（用户认证不可用）';
