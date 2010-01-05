@@ -7,13 +7,14 @@
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
+ * @author Piotr JANKOWSKI <jankowski.piotr@gmail.com>
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';
 $lang['updated']               = 'Ustawienia zostały zmienione.';
 $lang['nochoice']              = '(brak innych możliwości)';
 $lang['locked']                = 'Plik ustawień nie mógł zostać zmieniony, upewnij się, czy uprawnienia do pliku są odpowiednie.';
-$lang['danger']                = 'Uwaga: Zmiana tej opcji może uniemożliwić dostęp do twojej wiki oraz konfogiracji.';
+$lang['danger']                = 'Uwaga: Zmiana tej opcji może uniemożliwić dostęp do twojej wiki oraz konfiguracji.';
 $lang['warning']               = 'Ostrzeżenie: Zmiana tej opcji może spowodować nieporządane skutki.';
 $lang['security']              = 'Alert bezpieczeństwa: Zmiana tej opcji może obniżyć bezpieczeństwo.';
 $lang['_configuration_manager'] = 'Menadżer konfiguracji';
