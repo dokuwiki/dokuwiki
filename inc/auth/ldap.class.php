@@ -218,7 +218,7 @@ class auth_ldap extends auth_basic {
         $user_result = array_merge($info,$user_result);
 
         //get groups for given user if grouptree is given
-        if ($this->cnf['grouptree'] && $this->cnf['groupfilter']) {
+        if ($this->cnf['grouptree'] || $this->cnf['groupfilter']) {
             $base   = $this->_makeFilter($this->cnf['grouptree'], $user_result);
             $filter = $this->_makeFilter($this->cnf['groupfilter'], $user_result);
             $sr = $this->_ldapsearch($this->con, $base, $filter, $this->cnf['groupscope'], array($this->cnf['groupkey']));
