@@ -55,36 +55,31 @@ function getVersionData(){
         //official release
         $version['date'] = trim(io_readfile(DOKU_INC.'VERSION'));
         $version['type'] = 'Release';
-        return $version;
-    }elseif(is_dir(DOKU_INC.'_darcs')){
-        if(is_file(DOKU_INC.'_darcs/inventory')){
-            $inventory = DOKU_INC.'_darcs/inventory';
-        }elseif(is_file(DOKU_INC.'_darcs/hashed_inventory')){
-            $inventory = DOKU_INC.'_darcs/hashed_inventory';
-        }else{
-            $version['date'] = 'unknown';
-            $version['type'] = 'Darcs';
-            return $version;
+    }elseif(is_dir(DOKU_INC.'.git')){
+        $version['type'] = 'Git';
+        $version['date'] = 'unknown';
+
+        $inventory = DOKU_INC.'.git/logs/HEAD';
+        if(is_file($inventory)){
+            $sz   = filesize($inventory);
+            $seek = max(0,$sz-2000); // read from back of the file
+            $fh   = fopen($inventory,'rb');
+            fseek($fh,$seek);
+            $chunk = fread($fh,2000);
+            fclose($fh);
+            $chunk = trim($chunk);
+            $chunk = array_pop(explode("\n",$chunk));   //last log line
+            $chunk = array_shift(explode("\t",$chunk)); //strip commit msg
+            $chunk = explode(" ",$chunk);
+            array_pop($chunk); //strip timezone
+            $date = date('Y-m-d',array_pop($chunk));
+            if($date) $version['date'] = $date;
         }
-
-        //darcs checkout - read last 2000 bytes of inventory
-        $sz   = filesize($inventory);
-        $seek = max(0,$sz-2000);
-        $fh   = fopen($inventory,'rb');
-        fseek($fh,$seek);
-        $chunk = fread($fh,2000);
-        fclose($fh);
-
-        preg_match_all('#\*\*(\d{4})(\d{2})(\d{2})\d{6}(?:\]|$)#m', $chunk, $matches,
-                       PREG_SET_ORDER);
-        $version['date'] = implode('-', array_slice(array_pop($matches), 1));
-        $version['type'] = 'Darcs';
-        return $version;
     }else{
         $version['date'] = 'unknown';
         $version['type'] = 'snapshot?';
-        return $version;
     }
+    return $version;
 }
 
 /**
