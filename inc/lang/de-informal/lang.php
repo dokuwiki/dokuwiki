@@ -15,6 +15,7 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author ste-re@web.de
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -247,3 +248,10 @@ $lang['mu_filetypes']          = 'Erlaubte Dateitypen';
 $lang['mu_info']               = 'Dateien hochgeladen.';
 $lang['mu_lasterr']            = 'Letzter Fehler:';
 $lang['recent_global']         = 'Im Moment siehst du die Änderungen im Namensraum <b>%s</b>. Du kannst auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
+$lang['years']                 = 'vor %d Jahren';
+$lang['months']                = 'vor %d Monaten';
+$lang['weeks']                 = 'vor %d Wochen';
+$lang['days']                  = 'vor %d Tagen';
+$lang['hours']                 = 'vor %d Stunden';
+$lang['minutes']               = 'vor %d Minuten';
+$lang['seconds']               = 'vor %d Sekunden';

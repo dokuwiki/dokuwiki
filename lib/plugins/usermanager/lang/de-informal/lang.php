@@ -4,6 +4,7 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author ste-re@web.de
  */
 $lang['menu']                  = 'Benutzerverwalter';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';

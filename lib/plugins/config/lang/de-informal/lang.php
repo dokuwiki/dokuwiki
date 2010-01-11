@@ -4,6 +4,7 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author ste-re@web.de
  */
 $lang['menu']                  = 'Einstellungen';
 $lang['error']                 = 'Einstellungen wurden nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfen Sie Ihre Änderungen und versuchen Sie es erneut.
@@ -30,11 +31,14 @@ $lang['_plugin_sufix']         = 'Ereiterungseinstellungen';
 $lang['_template_sufix']       = 'Vorlageneinstellungen';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
 $lang['lang']                  = 'Sprache';
+$lang['basedir']               = 'Installationsverzeichnis. Für automatische Erkennung frei lassen.';
+$lang['baseurl']               = 'Installationspfad (URL)';
 $lang['savedir']               = 'Ordner zum Speichern von Daten';
 $lang['start']                 = 'Name der Startseite';
 $lang['title']                 = 'Wiki Titel';
 $lang['template']              = 'Vorlage';
 $lang['license']               = 'Unter welcher Lizenz sollte Ihr Inhalt veröffentlicht werden?';
+$lang['fullpath']              = 'Den kompletten Dateipfad im Footer anzeigen';
 $lang['recent']                = 'letzte Änderungen';
 $lang['typography']            = 'Mach drucktechnische Ersetzungen';
 $lang['htmlok']                = 'Erlaube eingebettetes HTML';
