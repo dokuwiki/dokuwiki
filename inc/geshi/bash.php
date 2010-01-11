@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.6
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -119,9 +119,51 @@ $language_data = array (
             'gimptool', 'gmake', 'gocr', 'grep', 'groups', 'gs', 'gunzip',
             'gzexe', 'gzip',
 
+            'git', 'gitaction', 'git-add', 'git-add--interactive', 'git-am',
+            'git-annotate', 'git-apply', 'git-archive', 'git-bisect',
+            'git-bisect--helper', 'git-blame', 'git-branch', 'git-bundle',
+            'git-cat-file', 'git-check-attr', 'git-checkout',
+            'git-checkout-index', 'git-check-ref-format', 'git-cherry',
+            'git-cherry-pick', 'git-clean', 'git-clone', 'git-commit',
+            'git-commit-tree', 'git-config', 'git-count-objects', 'git-daemon',
+            'git-describe', 'git-diff', 'git-diff-files', 'git-diff-index',
+            'git-difftool', 'git-difftool--helper', 'git-diff-tree',
+            'gitdpkgname', 'git-fast-export', 'git-fast-import', 'git-fetch',
+            'git-fetch-pack', 'git-fetch--tool', 'git-filter-branch', 'gitfm',
+            'git-fmt-merge-msg', 'git-for-each-ref', 'git-format-patch',
+            'git-fsck', 'git-fsck-objects', 'git-gc', 'git-get-tar-commit-id',
+            'git-grep', 'git-hash-object', 'git-help', 'git-http-fetch',
+            'git-http-push', 'git-imap-send', 'git-index-pack', 'git-init',
+            'git-init-db', 'git-instaweb', 'gitkeys', 'git-log',
+            'git-lost-found', 'git-ls-files', 'git-ls-remote', 'git-ls-tree',
+            'git-mailinfo', 'git-mailsplit', 'git-merge', 'git-merge-base',
+            'git-merge-file', 'git-merge-index', 'git-merge-octopus',
+            'git-merge-one-file', 'git-merge-ours', 'git-merge-recursive',
+            'git-merge-resolve', 'git-merge-subtree', 'git-mergetool',
+            'git-mergetool--lib', 'git-merge-tree', 'gitmkdirs', 'git-mktag',
+            'git-mktree', 'gitmount', 'git-mv', 'git-name-rev',
+            'git-pack-objects', 'git-pack-redundant', 'git-pack-refs',
+            'git-parse-remote', 'git-patch-id', 'git-peek-remote', 'git-prune',
+            'git-prune-packed', 'gitps', 'git-pull', 'git-push',
+            'git-quiltimport', 'git-read-tree', 'git-rebase',
+            'git-rebase--interactive', 'git-receive-pack', 'git-reflog',
+            'gitregrep', 'git-relink', 'git-remote', 'git-repack',
+            'git-repo-config', 'git-request-pull', 'git-rerere', 'git-reset',
+            'git-revert', 'git-rev-list', 'git-rev-parse', 'gitrfgrep',
+            'gitrgrep', 'git-rm', 'git-send-pack', 'git-shell', 'git-shortlog',
+            'git-show', 'git-show-branch', 'git-show-index', 'git-show-ref',
+            'git-sh-setup', 'git-stage', 'git-stash', 'git-status',
+            'git-stripspace', 'git-submodule', 'git-svn', 'git-symbolic-ref',
+            'git-tag', 'git-tar-tree', 'gitunpack', 'git-unpack-file',
+            'git-unpack-objects', 'git-update-index', 'git-update-ref',
+            'git-update-server-info', 'git-upload-archive', 'git-upload-pack',
+            'git-var', 'git-verify-pack', 'git-verify-tag', 'gitview',
+            'git-web--browse', 'git-whatchanged', 'gitwhich', 'gitwipe',
+            'git-write-tree', 'gitxgrep',
+
             'head', 'hexdump', 'hostname',
 
-            'id', 'ifconfig', 'igawk', 'install',
+            'id', 'ifconfig', 'ifdown', 'ifup', 'igawk', 'install',
 
             'join',
 
@@ -258,7 +300,7 @@ $language_data = array (
         //Variable assignment
         2 => "(?<![\.a-zA-Z_\-])([a-zA-Z_][a-zA-Z0-9_]*?)(?==)",
         //Shorthand shell variables
-        4 => "\\$[*#\$\\-\\?!]",
+        4 => "\\$[*#\$\\-\\?!\d]",
         //Parameters of commands
         5 => "(?<=\s)--?[0-9a-zA-Z\-]+(?=[\s=]|$)"
         ),
@@ -274,7 +316,7 @@ $language_data = array (
         ),
         'KEYWORDS' => array(
             'DISALLOWED_BEFORE' => "(?<![\.\-a-zA-Z0-9_\$\#])",
-            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%\\/])"
+            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%=\\/])"
         )
     )
 );

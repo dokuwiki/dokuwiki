@@ -4,7 +4,7 @@
  * --------
  * Author: Moises Deniz
  * Copyright: (c) 2007 Moises Deniz
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.6
  * Date Started: 2007/03/21
  *
  * Ruby language file for GeSHi.
@@ -50,7 +50,7 @@ $language_data = array (
                 'ensure', 'for', 'if', 'in', 'module', 'while',
                 'next', 'not', 'or', 'redo', 'rescue', 'yield',
                 'retry', 'super', 'then', 'undef', 'unless',
-                'until', 'when', 'BEGIN', 'END', 'include'
+                'until', 'when', 'include'
             ),
         2 => array(
                 '__FILE__', '__LINE__', 'false', 'nil', 'self', 'true',
