@@ -49,7 +49,7 @@ $source = stream_get_contents(STDIN);
 $info = array();
 $result = p_render($RENDERER,p_get_instructions($source),$info);
 if(is_null($result)) die("No such renderer $RENDERER\n");
-
+echo $result;
 
 /**
  * Print usage info
