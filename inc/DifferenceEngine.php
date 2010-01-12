@@ -976,10 +976,17 @@ class TableDiffFormatter extends DiffFormatter
     $this->trailing_context_lines = 2;
   }
 
+    function format($diff) {
+        // Preserve whitespaces by converting some to non-breaking spaces.
+        // Do not convert all of them to allow word-wrap.
+        $val = parent::format($diff);
+        $val = str_replace('  ','&nbsp; ', $val);
+        $val = preg_replace('/ (?=<)|(?<=[ >]) /', '&nbsp;', $val);
+        return $val;
+    }
+
   function _pre($text){
     $text = htmlspecialchars($text);
-    $text = str_replace('  ',' &nbsp;',$text);
-    if($text{0} == ' ') $text = '&nbsp;'.substr($text,1);
     return $text;
   }
 
@@ -1003,27 +1010,21 @@ class TableDiffFormatter extends DiffFormatter
   }
 
   function addedLine( $line ) {
-    $line = str_replace('  ',' &nbsp;',$line);
-    if($line{0} == ' ') $line = '&nbsp;'.substr($line,1);
     return '<td>+</td><td class="diff-addedline">' .
       $line.'</td>';
+
   }
 
   function deletedLine( $line ) {
-    $line = str_replace('  ',' &nbsp;',$line);
-    if($line{0} == ' ') $line = '&nbsp;'.substr($line,1);
     return '<td>-</td><td class="diff-deletedline">' .
       $line.'</td>';
   }
 
   function emptyLine() {
-    //$line = str_replace('  ','&nbsp; ',$line);
     return '<td colspan="2">&nbsp;</td>';
   }
 
   function contextLine( $line ) {
-    $line = str_replace('  ',' &nbsp;',$line);
-    if($line{0} == ' ') $line = '&nbsp;'.substr($line,1);
     return '<td> </td><td class="diff-context">'.$line.'</td>';
   }
 
