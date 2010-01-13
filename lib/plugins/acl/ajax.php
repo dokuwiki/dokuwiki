@@ -16,8 +16,10 @@ require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/auth.php');
-//close sesseion
+//close session
 session_write_close();
+
+if(!auth_ismanager()) die('forbidden');
 
 $ID    = getID();
 
@@ -42,6 +44,7 @@ if($ajax == 'info'){
     if($ns == '*'){
         $ns ='';
     }
+    $ns  = cleanID($ns);
     $lvl = count(explode(':',$ns));
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
