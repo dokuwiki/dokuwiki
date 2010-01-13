@@ -19,7 +19,7 @@ require_once(DOKU_INC.'inc/auth.php');
 //close session
 session_write_close();
 
-if(!auth_ismanager()) die('forbidden');
+if(!auth_isadmin()) die('forbidden');
 
 $ID    = getID();
 
