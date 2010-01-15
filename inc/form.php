@@ -859,7 +859,9 @@ function form_menufield($attrs) {
     $s .= ' <select '.buildAttributes($attrs,true).'>'.DOKU_LF;
     if (!empty($attrs['_options'])) {
         $selected = false;
-        for($n=0;$n<count($attrs['_options']);$n++){
+
+        $cnt = count($attrs['_options']);
+        for($n=0; $n < $cnt; $n++){
             @list($value,$text,$select) = $attrs['_options'][$n];
             $p = '';
             if (!is_null($text))

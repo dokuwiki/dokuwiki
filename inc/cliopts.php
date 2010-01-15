@@ -1,7 +1,7 @@
 <?php
 /**
-* Brutally chopped and modified from http://pear.php.net/package/Console_Getopts
-*/
+ * Brutally chopped and modified from http://pear.php.net/package/Console_Getopts
+ */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
@@ -23,10 +23,10 @@
 
 //------------------------------------------------------------------------------
 /**
-* Sets up CLI environment based on SAPI and PHP version
-* Helps resolve some issues between the CGI and CLI SAPIs
-* as well is inconsistencies between PHP 4.3+ and older versions
-*/
+ * Sets up CLI environment based on SAPI and PHP version
+ * Helps resolve some issues between the CGI and CLI SAPIs
+ * as well is inconsistencies between PHP 4.3+ and older versions
+ */
 if (version_compare(phpversion(), '4.3.0', '<') || php_sapi_name() == 'cgi') {
     // Handle output buffering
     @ob_end_flush();
@@ -67,16 +67,16 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
  * @author Andrei Zmievski <andrei@php.net>
  *
  */
- class Doku_Cli_Opts {
+class Doku_Cli_Opts {
 
     /**
-    * <?php ?>
-    * @see http://www.sitepoint.com/article/php-command-line-1/3
-    * @param string executing file name - this MUST be passed the __FILE__ constant
-    * @param string short options
-    * @param array (optional) long options
-    * @return Doku_Cli_Opts_Container or Doku_Cli_Opts_Error
-    */
+     * <?php ?>
+     * @see http://www.sitepoint.com/article/php-command-line-1/3
+     * @param string executing file name - this MUST be passed the __FILE__ constant
+     * @param string short options
+     * @param array (optional) long options
+     * @return Doku_Cli_Opts_Container or Doku_Cli_Opts_Error
+     */
     function & getOptions($bin_file, $short_options, $long_options = null) {
         $args = Doku_Cli_Opts::readPHPArgv();
 
@@ -168,7 +168,8 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
     }
 
     function _parseShortOption($arg, $short_options, &$opts, &$args) {
-        for ($i = 0; $i < strlen($arg); $i++) {
+        $len = strlen($arg);
+        for ($i = 0; $i < $len; $i++) {
             $opt = $arg{$i};
             $opt_arg = null;
 
@@ -212,8 +213,9 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
     function _parseLongOption($arg, $long_options, &$opts, &$args) {
         @list($opt, $opt_arg) = explode('=', $arg);
         $opt_len = strlen($opt);
+        $opt_cnt = count($long_options);
 
-        for ($i = 0; $i < count($long_options); $i++) {
+        for ($i = 0; $i < $opt_cnt; $i++) {
             $long_opt  = $long_options[$i];
             $opt_start = substr($long_opt, 0, $opt_len);
 
@@ -226,7 +228,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
             /* Check that the options uniquely matches one of the allowed
                options. */
             if ($opt_rest != '' && $opt{0} != '=' &&
-                $i + 1 < count($long_options) &&
+                $i + 1 < $opt_cnt &&
                 $opt == substr($long_options[$i+1], 0, $opt_len)) {
                 return Doku_Cli_Opts::raiseError(
                     DOKU_CLI_OPTS_OPT_ABIGUOUS,
@@ -325,7 +327,6 @@ class Doku_Cli_Opts_Container {
             }
             $this->options[$opt_name] = $option[1];
         }
-
 
         $this->args = $options[1];
     }

@@ -279,7 +279,6 @@ class HTTPClient {
             $written += $ret;
         }
 
-
         // read headers from socket
         $r_headers = '';
         do{

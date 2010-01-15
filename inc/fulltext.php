@@ -20,10 +20,10 @@ require_once(DOKU_INC.'inc/indexer.php');
  */
 function ft_pageSearch($query,&$highlight){
 
-  $data['query'] = $query;
-  $data['highlight'] =& $highlight;
+    $data['query'] = $query;
+    $data['highlight'] =& $highlight;
 
-  return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
+    return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
 
 /**
@@ -189,7 +189,7 @@ function ft_mediause($id,$max){
         foreach($matches[1] as $img){
             $img = trim($img);
             if(preg_match('/^https?:\/\//i',$img)) continue; // skip external images
-            list($img) = explode('?',$img);                  // remove any parameters
+                list($img) = explode('?',$img);                  // remove any parameters
             resolve_mediaid($ns,$img,$exists);               // resolve the possibly relative img
 
             if($img == $id){                                 // we have a match
@@ -286,11 +286,11 @@ function ft_pagesorter($a, $b){
 function ft_snippet($id,$highlight){
     $text = rawWiki($id);
     $evdata = array(
-                'id'        => $id,
-                'text'      => &$text,
-                'highlight' => &$highlight,
-                'snippet'   => '',
-              );
+            'id'        => $id,
+            'text'      => &$text,
+            'highlight' => &$highlight,
+            'snippet'   => '',
+            );
 
     $evt = new Doku_Event('FULLTEXT_SNIPPET_CREATE',$evdata);
     if ($evt->advise_before()) {
@@ -305,60 +305,60 @@ function ft_snippet($id,$highlight){
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
         for ($cnt=4; $cnt--;) {
-          if (0) {
-          } else if (preg_match('/'.$re3.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
-          } else if (preg_match('/'.$re2.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
-          } else if (preg_match('/'.$re1.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
-          } else {
-            break;
-          }
+            if (0) {
+            } else if (preg_match('/'.$re3.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+            } else if (preg_match('/'.$re2.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+            } else if (preg_match('/'.$re1.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+            } else {
+                break;
+            }
 
-          list($str,$idx) = $match[0];
+            list($str,$idx) = $match[0];
 
-          // convert $idx (a byte offset) into a utf8 character offset
-          $utf8_idx = utf8_strlen(substr($text,0,$idx));
-          $utf8_len = utf8_strlen($str);
+            // convert $idx (a byte offset) into a utf8 character offset
+            $utf8_idx = utf8_strlen(substr($text,0,$idx));
+            $utf8_len = utf8_strlen($str);
 
-          // establish context, 100 bytes surrounding the match string
-          // first look to see if we can go 100 either side,
-          // then drop to 50 adding any excess if the other side can't go to 50,
-          $pre = min($utf8_idx-$utf8_offset,100);
-          $post = min($len-$utf8_idx-$utf8_len,100);
+            // establish context, 100 bytes surrounding the match string
+            // first look to see if we can go 100 either side,
+            // then drop to 50 adding any excess if the other side can't go to 50,
+            $pre = min($utf8_idx-$utf8_offset,100);
+            $post = min($len-$utf8_idx-$utf8_len,100);
 
-          if ($pre>50 && $post>50) {
-            $pre = $post = 50;
-          } else if ($pre>50) {
-            $pre = min($pre,100-$post);
-          } else if ($post>50) {
-            $post = min($post, 100-$pre);
-          } else {
-            // both are less than 50, means the context is the whole string
-            // make it so and break out of this loop - there is no need for the
-            // complex snippet calculations
-            $snippets = array($text);
-            break;
-          }
+            if ($pre>50 && $post>50) {
+                $pre = $post = 50;
+            } else if ($pre>50) {
+                $pre = min($pre,100-$post);
+            } else if ($post>50) {
+                $post = min($post, 100-$pre);
+            } else {
+                // both are less than 50, means the context is the whole string
+                // make it so and break out of this loop - there is no need for the
+                // complex snippet calculations
+                $snippets = array($text);
+                break;
+            }
 
-          // establish context start and end points, try to append to previous
-          // context if possible
-          $start = $utf8_idx - $pre;
-          $append = ($start < $end) ? $end : false;  // still the end of the previous context snippet
-          $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
+            // establish context start and end points, try to append to previous
+            // context if possible
+            $start = $utf8_idx - $pre;
+            $append = ($start < $end) ? $end : false;  // still the end of the previous context snippet
+            $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
-          if ($append) {
-            $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
-          } else {
-            $snippets[] = utf8_substr($text,$start,$end-$start);
-          }
+            if ($append) {
+                $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
+            } else {
+                $snippets[] = utf8_substr($text,$start,$end-$start);
+            }
 
-          // set $offset for next match attempt
-          //   substract strlen to avoid splitting a potential search success,
-          //   this is an approximation as the search pattern may match strings
-          //   of varying length and it will fail if the context snippet
-          //   boundary breaks a matching string longer than the current match
-          $utf8_offset = $utf8_idx + $post;
-          $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
-          $offset = utf8_correctIdx($text,$offset);
+            // set $offset for next match attempt
+            //   substract strlen to avoid splitting a potential search success,
+            //   this is an approximation as the search pattern may match strings
+            //   of varying length and it will fail if the context snippet
+            //   boundary breaks a matching string longer than the current match
+            $utf8_offset = $utf8_idx + $post;
+            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
+            $offset = utf8_correctIdx($text,$offset);
         }
 
         $m = "\1";
@@ -391,16 +391,16 @@ function ft_resultCombine($args){
 
     $result = array();
     if ($array_count > 1) {
-      foreach ($args[0] as $key => $value) {
-        $result[$key] = $value;
-        for ($i = 1; $i !== $array_count; $i++) {
-            if (!isset($args[$i][$key])) {
-                unset($result[$key]);
-                break;
+        foreach ($args[0] as $key => $value) {
+            $result[$key] = $value;
+            for ($i = 1; $i !== $array_count; $i++) {
+                if (!isset($args[$i][$key])) {
+                    unset($result[$key]);
+                    break;
+                }
+                $result[$key] += $args[$i][$key];
             }
-            $result[$key] += $args[$i][$key];
         }
-      }
     }
     return $result;
 }
@@ -651,30 +651,30 @@ function ft_queryParser($query){
 
         switch (substr($token, 0, 3)) {
             case 'N+:':
-                $q['ns'][]        = $body; // for backward compatibility
-                break;
+                     $q['ns'][]        = $body; // for backward compatibility
+                     break;
             case 'N-:':
-                $q['notns'][]     = $body; // for backward compatibility
-                break;
+                     $q['notns'][]     = $body; // for backward compatibility
+                     break;
             case 'W_:':
-                $q['words'][]     = $body;
-                break;
+                     $q['words'][]     = $body;
+                     break;
             case 'W-:':
-                $q['words'][]     = $body;
-                $q['not'][]       = $body; // for backward compatibility
-                break;
+                     $q['words'][]     = $body;
+                     $q['not'][]       = $body; // for backward compatibility
+                     break;
             case 'W+:':
-                $q['words'][]     = $body;
-                $q['highlight'][] = str_replace('*', '', $body);
-                $q['and'][]       = $body; // for backward compatibility
-                break;
+                     $q['words'][]     = $body;
+                     $q['highlight'][] = str_replace('*', '', $body);
+                     $q['and'][]       = $body; // for backward compatibility
+                     break;
             case 'P-:':
-                $q['phrases'][]   = $body;
-                break;
+                     $q['phrases'][]   = $body;
+                     break;
             case 'P+:':
-                $q['phrases'][]   = $body;
-                $q['highlight'][] = str_replace('*', '', $body);
-                break;
+                     $q['phrases'][]   = $body;
+                     $q['highlight'][] = str_replace('*', '', $body);
+                     break;
         }
     }
     foreach (array('words', 'phrases', 'highlight', 'ns', 'notns', 'and', 'not') as $key) {

@@ -202,16 +202,16 @@ function print_form($d){
 }
 
 function print_retry() {
-  global $lang;
-  global $LC;
-?>
+    global $lang;
+    global $LC;
+    ?>
     <form action="" method="get">
       <fieldset>
         <input type="hidden" name="l" value="<?php echo $LC ?>" />
         <input class="button" type="submit" value="<?php echo $lang['i_retry'];?>" />
       </fieldset>
     </form>
-<?php
+    <?php
 }
 
 /**
@@ -360,7 +360,6 @@ function check_configs(){
         'auth'  => DOKU_LOCAL.'acl.auth.php'
     );
 
-
     // main dokuwiki config file (conf/dokuwiki.php) must not have been modified
     $installation_hash = md5(preg_replace("/(\015\012)|(\015)/","\012",
                              @file_get_contents(DOKU_CONF.'dokuwiki.php')));
@@ -437,8 +436,8 @@ function check_functions(){
                          'preg_replace file_get_contents htmlspecialchars_decode');
 
     if (!function_exists('mb_substr')) {
-      $funcs[] = 'utf8_encode';
-      $funcs[] = 'utf8_decode';
+        $funcs[] = 'utf8_encode';
+        $funcs[] = 'utf8_decode';
     }
 
     foreach($funcs as $func){
@@ -505,12 +504,12 @@ function print_errors(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function remove_magic_quotes(&$array) {
-  foreach (array_keys($array) as $key) {
-    if (is_array($array[$key])) {
-      remove_magic_quotes($array[$key]);
-    }else {
-      $array[$key] = stripslashes($array[$key]);
+    foreach (array_keys($array) as $key) {
+        if (is_array($array[$key])) {
+            remove_magic_quotes($array[$key]);
+        }else {
+            $array[$key] = stripslashes($array[$key]);
+        }
     }
-  }
 }
 

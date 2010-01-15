@@ -300,7 +300,7 @@ class IXR_Server {
         if (!$data) {
             global $HTTP_RAW_POST_DATA;
             if (!$HTTP_RAW_POST_DATA) {
-               die('XML-RPC server accepts POST requests only.');
+                die('XML-RPC server accepts POST requests only.');
             }
             $data = $HTTP_RAW_POST_DATA;
         }
@@ -342,14 +342,13 @@ EOD;
         $method = $this->callbacks[$methodname];
         // Perform the callback and send the response
 
-# Removed for DokuWiki to have a more consistent interface
-#        if (count($args) == 1) {
-#            // If only one paramater just send that instead of the whole array
-#            $args = $args[0];
-#        }
+        # Removed for DokuWiki to have a more consistent interface
+        #        if (count($args) == 1) {
+        #            // If only one paramater just send that instead of the whole array
+        #            $args = $args[0];
+        #        }
 
-
-# Adjusted for DokuWiki to use call_user_func_array
+        # Adjusted for DokuWiki to use call_user_func_array
 
         // args need to be an array
         $args = (array) $args;
