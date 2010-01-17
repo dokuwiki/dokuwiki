@@ -31,7 +31,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2009-08-07',
+            'date'   => '2010-01-17',
             'name'   => 'ACL Manager',
             'desc'   => 'Manage Page Access Control Lists',
             'url'    => 'http://dokuwiki.org/plugin:acl',
@@ -67,6 +67,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // fresh 1:1 copy without replacements
         $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
 
+
         // namespace given?
         if($_REQUEST['ns'] == '*'){
             $this->ns = '*';
@@ -89,7 +90,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // handle modifications
-        if(isset($_REQUEST['cmd'])){
+        if(isset($_REQUEST['cmd']) && checkSecurityToken()){
+
             // scope for modifications
             if($this->ns){
                 if($this->ns == '*'){
@@ -310,6 +312,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<input type="hidden" name="id" value="'.hsc($ID).'" />'.NL;
         echo '<input type="hidden" name="do" value="admin" />'.NL;
         echo '<input type="hidden" name="page" value="acl" />'.NL;
+        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'.NL;
         echo '</div></form>'.NL;
     }
 
@@ -480,11 +483,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 $alt   = '+';
             }
             $ret .= '<img src="'.$img.'" alt="'.$alt.'" />';
-            $ret .= '<a href="'.wl('',$this->_get_opts(array('ns'=>$item['id']))).'" class="idx_dir'.$cl.'">';
+            $ret .= '<a href="'.wl('',$this->_get_opts(array('ns'=>$item['id'],'sectok'=>getSecurityToken()))).'" class="idx_dir'.$cl.'">';
             $ret .= $base;
             $ret .= '</a>';
         }else{
-            $ret .= '<a href="'.wl('',$this->_get_opts(array('id'=>$item['id'],'ns'=>''))).'" class="wikilink1'.$cl.'">';
+            $ret .= '<a href="'.wl('',$this->_get_opts(array('id'=>$item['id'],'ns'=>'','sectok'=>getSecurityToken()))).'" class="wikilink1'.$cl.'">';
             $ret .= noNS($item['id']);
             $ret .= '</a>';
         }
@@ -562,6 +565,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<input type="hidden" name="acl_w" value="'.hsc($this->who).'" />'.NL;
         echo '<input type="hidden" name="do" value="admin" />'.NL;
         echo '<input type="hidden" name="page" value="acl" />'.NL;
+        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'.NL;
         echo '<table class="inline">';
         echo '<tr>';
         echo '<th>'.$this->getLang('where').'</th>';

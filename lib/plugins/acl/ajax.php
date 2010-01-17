@@ -19,11 +19,11 @@ require_once(DOKU_INC.'inc/auth.php');
 //close session
 session_write_close();
 
-if(!auth_isadmin()) die('forbidden');
+if(!auth_isadmin()) die('for admins only');
+if(!checkSecurityToken()) die('CRSF Attack');
 
 $ID    = getID();
 
-if(!auth_isadmin) die('for admins only');
 require_once(DOKU_INC.'inc/pluginutils.php');
 require_once(DOKU_INC.'inc/html.php');
 $acl = plugin_load('admin','acl');
