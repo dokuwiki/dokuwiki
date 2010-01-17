@@ -111,7 +111,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
             $class = 'ap_manage';
         }
 
-        $this->handler = & new $class($this, $this->plugin);
+        $this->handler = new $class($this, $this->plugin);
         $this->msg = $this->handler->process();
 
     }
@@ -124,7 +124,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
         $this->setupLocale();
         $this->_get_plugin_list();
 
-        if ($this->handler === NULL) $this->handler = & new ap_manage($this, $this->plugin);
+        if ($this->handler === NULL) $this->handler = new ap_manage($this, $this->plugin);
 
         ptln('<div id="plugin__manager">');
         $this->handler->html();
