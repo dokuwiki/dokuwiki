@@ -203,11 +203,25 @@ $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Schlagwörter';
-$lang['subscribe_success']     = '%s hat nun Änderungen der Seite %s abonniert';
-$lang['subscribe_error']       = '%s kann die Änderungen der Seite %s nicht abonnieren';
-$lang['subscribe_noaddress']   = 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
-$lang['unsubscribe_success']   = 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
-$lang['unsubscribe_error']     = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
+
+$lang['subscr_subscribe_success']  = '%s hat nun Änderungen der Seite %s abonniert';
+$lang['subscr_subscribe_error']    = '%s kann die Änderungen der Seite %s nicht abonnieren';
+$lang['subscr_subscribe_noaddress']= 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
+$lang['subscr_unsubscribe_success']= 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
+$lang['subscr_unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
+$lang['subscr_already_subscribed'] = '%s hat %s bereits abonniert';
+$lang['subscr_not_subscribed']     = '%s hat %s nicht abonniert';
+// Manage page for subscriptions
+$lang['subscr_m_not_subscribed']   = 'Sie haben die aktuelle Seite und ihre Namensräume nicht abonniert.';
+$lang['subscr_m_new_header']       = 'Abonnement hinzufügen';
+$lang['subscr_m_current_header']   = 'Aktuelle Abonnements';
+$lang['subscr_m_unsubscribe']      = 'Löschen';
+$lang['subscr_m_subscribe']        = 'Abonnieren';
+
+$lang['subscr_style_every']        = 'Email bei jeder Bearbeitung';
+$lang['subscr_style_digest']       = 'Übersichtsemail für jede veränderte Seite';
+$lang['subscr_style_list']         = 'Email mit Liste der geänderten Seiten';
+
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Systembetreuer.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';

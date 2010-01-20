@@ -148,6 +148,7 @@ $meta['htmlok']      = array('onoff');
 $meta['phpok']       = array('onoff');
 $meta['notify']      = array('email', '_multiple' => true);
 $meta['subscribers'] = array('onoff');
+$meta['subscribe_time'] = array('numeric');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
 

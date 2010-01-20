@@ -39,10 +39,7 @@ $lang['btn_delete'] = 'Delete';
 $lang['btn_back']   = 'Back';
 $lang['btn_backlink']    = "Backlinks";
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
-$lang['btn_subscribe']   = 'Subscribe Page Changes';
-$lang['btn_unsubscribe'] = 'Unsubscribe Page Changes';
-$lang['btn_subscribens']   = 'Subscribe Namespace Changes';
-$lang['btn_unsubscribens'] = 'Unsubscribe Namespace Changes';
+$lang['btn_subscribe']   = 'Manage Subscriptions';
 $lang['btn_profile']     = 'Update Profile';
 $lang['btn_reset']       = 'Reset';
 $lang['btn_resendpwd']   = 'Send new password';
@@ -158,6 +155,7 @@ $lang['download']   = 'Download Snippet';
 
 $lang['mail_newpage']  = 'page added:';
 $lang['mail_changed']  = 'page changed:';
+$lang['mail_subscribe_list'] = 'pages changed in namespace:';
 $lang['mail_new_user'] = 'new user:';
 $lang['mail_upload']   = 'file uploaded:';
 
@@ -212,11 +210,24 @@ $lang['img_format']  = 'Format';
 $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Keywords';
 
-$lang['subscribe_success']  = 'Added %s to subscription list for %s';
-$lang['subscribe_error']    = 'Error adding %s to subscription list for %s';
-$lang['subscribe_noaddress']= 'There is no address associated with your login, you cannot be added to the subscription list';
-$lang['unsubscribe_success']= 'Removed %s from subscription list for %s';
-$lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
+$lang['subscr_subscribe_success']  = 'Added %s to subscription list for %s';
+$lang['subscr_subscribe_error']    = 'Error adding %s to subscription list for %s';
+$lang['subscr_subscribe_noaddress']= 'There is no address associated with your login, you cannot be added to the subscription list';
+$lang['subscr_unsubscribe_success']= 'Removed %s from subscription list for %s';
+$lang['subscr_unsubscribe_error']  = 'Error removing %s from subscription list for %s';
+$lang['subscr_already_subscribed'] = '%s is already subscribed to %s';
+$lang['subscr_not_subscribed']     = '%s is not subscribed to %s';
+// Manage page for subscriptions
+$lang['subscr_m_not_subscribed']   = 'You are currently not subscribed to the current page or namespace.';
+$lang['subscr_m_new_header']       = 'Add subscription';
+$lang['subscr_m_current_header']   = 'Current subscriptions';
+$lang['subscr_m_unsubscribe']      = 'Unsubscribe';
+$lang['subscr_m_subscribe']        = 'Subscribe';
+$lang['subscr_m_receive']          = 'Receive';
+$lang['subscr_style_every']        = 'email on every change';
+$lang['subscr_style_digest']       = 'digest email of changes for each page';
+$lang['subscr_style_list']         = 'list of changed pages since last email';
+
 
 /* auth.class language support */
 $lang['authmodfailed']   = 'Bad user authentication configuration. Please inform your Wiki Admin.';

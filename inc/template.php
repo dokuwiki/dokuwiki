@@ -126,6 +126,9 @@ function tpl_content_core(){
     case 'admin':
       tpl_admin();
       break;
+    case 'subscribe':
+      tpl_subscribe();
+      break;
     default:
       $evt = new Doku_Event('TPL_ACT_UNKNOWN',$ACT);
       if ($evt->advise_before())
@@ -540,31 +543,10 @@ function tpl_button($type,$return=false){
       }
       break;
     case 'subscribe':
-    case 'subscription':
-      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
-        if($_SERVER['REMOTE_USER']){
-          if($INFO['subscribed']){
-            if(actionOK('unsubscribe'))
-              $out .= html_btn('unsubscribe',$ID,'',array('do' => 'unsubscribe',));
-          } else {
-            if(actionOK('subscribe'))
-              $out .= html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
-          }
-        }
-      }
-      if($type == 'subscribe') break;
-      // else: fall through for backward compatibility
-    case 'subscribens':
-      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
-        if($_SERVER['REMOTE_USER']){
-          if($INFO['subscribedns']){
-            if(actionOK('unsubscribens'))
-              $out .= html_btn('unsubscribens',$ID,'',array('do' => 'unsubscribens',));
-          } else {
-            if(actionOK('subscribens'))
-              $out .= html_btn('subscribens',$ID,'',array('do' => 'subscribens',));
-          }
-        }
+      if ($conf['useacl'] && $auth && $ACT == 'show' &&
+          $conf['subscribers'] && isset($_SERVER['REMOTE_USER']) &&
+          actionOK('subscribe')) {
+        $out .= html_btn('subscribe',$ID,'',array('do' => 'subscribe',));
       }
       break;
     case 'backlink':
@@ -712,37 +694,12 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
       break;
    case 'subscribe':
    case 'subscription':
-      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
+      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers']) {
         if($_SERVER['REMOTE_USER']){
-          if($INFO['subscribed']) {
-            if(actionOK('unsubscribe'))
-              $out .= tpl_link(wl($ID,'do=unsubscribe'),
-                     $pre.(($inner)?$inner:$lang['btn_unsubscribe']).$suf,
-                     'class="action unsubscribe" rel="nofollow"',1);
-          } else {
             if(actionOK('subscribe'))
               $out .= tpl_link(wl($ID,'do=subscribe'),
                      $pre.(($inner)?$inner:$lang['btn_subscribe']).$suf,
                      'class="action subscribe" rel="nofollow"',1);
-          }
-        }
-      }
-      if($type == 'subscribe') break;
-      // else: fall through for backward compatibility
-    case 'subscribens':
-      if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
-        if($_SERVER['REMOTE_USER']){
-          if($INFO['subscribedns']) {
-            if(actionOK('unsubscribens'))
-              $out .= tpl_link(wl($ID,'do=unsubscribens'),
-                     $pre.(($inner)?$inner:$lang['btn_unsubscribens']).$suf,
-                     'class="action unsubscribens" rel="nofollow"',1);
-          } else {
-            if(actionOK('subscribens'))
-              $out .= tpl_link(wl($ID,'do=subscribens'),
-                     $pre.(($inner)?$inner:$lang['btn_subscribens']).$suf,
-                     'class="action subscribens" rel="nofollow"',1);
-          }
         }
       }
       break;
@@ -1323,23 +1280,9 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
             echo '<option value="profile">'.$lang['btn_profile'].'</option>';
         }
 
-        if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
+        if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers']){
             if($_SERVER['REMOTE_USER']){
-                if($INFO['subscribed']) {
-                    echo '<option value="unsubscribe">'.$lang['btn_unsubscribe'].'</option>';
-                } else {
                     echo '<option value="subscribe">'.$lang['btn_subscribe'].'</option>';
-                }
-            }
-        }
-
-        if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers'] == 1){
-            if($_SERVER['REMOTE_USER']){
-                if($INFO['subscribedns']) {
-                    echo '<option value="unsubscribens">'.$lang['btn_unsubscribens'].'</option>';
-                } else {
-                    echo '<option value="subscribens">'.$lang['btn_subscribens'].'</option>';
-                }
             }
         }
 
@@ -1404,6 +1347,71 @@ function tpl_include_page($pageid,$print=true){
 
     if(!$print) return $html;
     echo $html;
+}
+
+/**
+ * Display the subscribe form
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+function tpl_subscribe() {
+    global $INFO;
+    global $ID;
+    global $lang;
+
+    echo p_locale_xhtml('subscr_form');
+    echo '<h2>' . $lang['subscr_m_current_header'] . '</h2>';
+    echo '<div class="level2">';
+    if ($INFO['subscribed'] === false) {
+        echo '<p>' . $lang['subscr_m_not_subscribed'] . '</p>';
+    } else {
+        echo '<ul>';
+        foreach($INFO['subscribed'] as $sub) {
+            echo '<li><div class="li">';
+            if ($sub['target'] !== $ID) {
+                echo '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
+            } else {
+                echo '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
+            }
+            $sstl = $lang['subscr_style_'.$sub['style']];
+            if(!$sstl) $sstl = hsc($sub['style']);
+            echo ' ('.$sstl.') ';
+
+            echo '<a href="'.wl($ID,array('do'=>'subscribe','sub_target'=>$sub['target'],'sub_style'=>$sub['style'],'sub_action'=>'unsubscribe')).'" class="unsubscribe">'.$lang['subscr_m_unsubscribe'].'</a>';
+
+
+            echo '</div></li>';
+        }
+        echo '</ul>';
+    }
+    echo '</div>';
+
+    // Add new subscription form
+    echo '<h2>' . $lang['subscr_m_new_header'] . '</h2>';
+    echo '<div class="level2">';
+    $ns = getNS($ID).':';
+    $targets = array(
+        $ID => '<code class="page">'.prettyprint_id($ID).'</code>',
+        $ns => '<code class="ns">'.prettyprint_id($ns).'</code>',
+    );
+    $styles = array(
+        'every'  => $lang['subscr_style_every'],
+        'digest' => $lang['subscr_style_digest'],
+        'list'   => $lang['subscr_style_list'],
+    );
+
+    $form = new Doku_Form(array('id' => 'subscribe__form'));
+    $form->startFieldset($lang['subscr_m_subscribe']);
+    $form->addRadioSet('sub_target', $targets);
+    $form->startFieldset($lang['subscr_m_receive']);
+    $form->addRadioSet('sub_style', $styles);
+    $form->addHidden('sub_action', 'subscribe');
+    $form->addHidden('do', 'subscribe');
+    $form->addHidden('id', $ID);
+    $form->endFieldset();
+    $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_subscribe']));
+    html_form('SUBSCRIBE', $form);
+    echo '</div>';
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

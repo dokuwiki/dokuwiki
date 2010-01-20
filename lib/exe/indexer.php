@@ -37,6 +37,7 @@ if ($evt->advise_before()) {
   runIndexer() or
   metaUpdate() or
   runSitemapper() or
+  sendDigest() or
   runTrimRecentChanges() or
   runTrimRecentChanges(true) or
   $evt->advise_after();
@@ -332,6 +333,84 @@ function runSitemapper(){
 
     print 'runSitemapper(): finished'.NL;
     return true;
+}
+
+/**
+ * Send digest and list mails for all subscriptions which are in effect for the
+ * current page
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+function sendDigest() {
+    echo 'sendDigest(): start'.NL;
+    global $ID;
+    global $conf;
+    if (!$conf['subscribers']) {
+        return;
+    }
+    require_once DOKU_INC . 'inc/subscription.php';
+    $subscriptions = subscription_find($ID, array('style' => '(digest|list)',
+                                                  'escaped' => true));
+    global $auth;
+    global $lang;
+    global $conf;
+    global $USERINFO;
+
+    // remember current user info
+    $olduinfo = $USERINFO;
+    $olduser  = $_SERVER['REMOTE_USER'];
+
+    foreach($subscriptions as $id => $users) {
+        foreach($users as $data) {
+            list($user, $style, $lastupdate) = $data;
+            $lastupdate = (int) $lastupdate;
+            if ($lastupdate + $conf['subscribe_interval'] > time()) {
+                // Less than a day passed since last update.
+                continue;
+            }
+
+            // Work as the user to make sure ACLs apply correctly
+            $USERINFO = $auth->getUserData($user);
+            $_SERVER['REMOTE_USER'] = $user;
+            if ($USERINFO === false) {
+                continue;
+            }
+
+            if (substr($id, -1, 1) === ':') {
+                // The subscription target is a namespace
+                $changes = getRecentsSince($lastupdate, null, getNS($id));
+                if (count($changes) === 0) {
+                    continue;
+                }
+                if ($style === 'digest') {
+                    foreach($changes as $change) {
+                        subscription_send_digest($USERINFO['mail'], $change,
+                                                 $lastupdate);
+                    }
+                } elseif ($style === 'list') {
+                    subscription_send_list($USERINFO['mail'], $changes, $id);
+                }
+                // TODO: Handle duplicate subscriptions.
+            } else {
+                if(auth_quickaclcheck($id) < AUTH_READ) continue;
+
+                $meta = p_get_metadata($id);
+                $rev = $meta['last_change']['date'];
+                if ($rev < $lastupdate) {
+                    // There is no new revision.
+                    continue;
+                }
+                subscription_send_digest($USERINFO['mail'], $meta['last_change'],
+                                         $lastupdate);
+            }
+            // Update notification time.
+            subscription_set($user, $id, $style, time(), true);
+        }
+    }
+
+    // restore current user info
+    $USERINFO = $olduinfo;
+    $_SERVER['REMOTE_USER'] = $olduser;
 }
 
 /**
