@@ -143,6 +143,7 @@ function getSchemes() {
  * @author Gina Haeussge <gina@foosel.net>
  */
 function linesToHash($lines, $lower=false) {
+    $conf = array();
     foreach ( $lines as $line ) {
         //ignore comments (except escaped ones)
         $line = preg_replace('/(?<![&\\\\])#.*$/','',$line);
