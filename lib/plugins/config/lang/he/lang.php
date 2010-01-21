@@ -6,6 +6,7 @@
  * @author DoK <kamberd@yahoo.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
+ * @author Yaron Yogev <yaronyogev@gmail.com>
  */
 $lang['menu']                  = 'הגדרות תצורה';
 $lang['error']                 = 'ההגדרות לא עודכנו בגלל ערך לא תקף, נא לעיין בשינויים ולשלוח שנית.
@@ -164,3 +165,5 @@ $lang['xsendfile_o_0']         = 'אל תשתמש';
 $lang['xsendfile_o_1']         = 'כותר lighttpd קנייני (לפני גרסה 1.5)';
 $lang['xsendfile_o_2']         = 'כותר X-Sendfile רגיל';
 $lang['xsendfile_o_3']         = 'כותר Nginx X-Accel-Redirect קנייני';
+$lang['useheading_o_navigation'] = 'ניווט בלבד';
+$lang['useheading_o_1']        = 'תמיד';
