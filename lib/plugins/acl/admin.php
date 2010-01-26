@@ -130,6 +130,13 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 // re-add all rules
                 foreach((array) $_REQUEST['acl'] as $where => $opt){
                     foreach($opt as $who => $perm){
+                        if ($who[0]=='@') {
+                            if ($who!='@ALL') {
+                                $who = '@'.ltrim($auth->cleanGroup($who),'@');
+                            }
+                        } else {
+                            $who = $auth->cleanUser($who);
+                        }
                         $who = auth_nameencode($who,true);
                         $lines[] = "$where\t$who\t$perm\n";
                     }
