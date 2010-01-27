@@ -82,7 +82,6 @@ $lang['profileconfirm']        = 'Confirmă schimbarea profilului cu parola';
 $lang['disableactions']        = 'Dezactivează acţiunile DokuWiki';
 $lang['disableactions_check']  = 'Verifică';
 $lang['disableactions_subscription'] = 'Subscrie/Anulează subscrierea';
-$lang['disableactions_nssubscription'] = 'Subscrie/Anulează subscrierea Spaţiului de nume';
 $lang['disableactions_wikicode'] = 'Vizualizează sursa/Export Raw';
 $lang['disableactions_other']  = 'Alte acţiuni (separate prin virgulă)';
 $lang['sneaky_index']          = 'Implicit, DokuWiki va arăta toate numele de spaţii la vizualizarea indexului. Activând această opţiune vor fi ascunse acelea la care utilizatorul nu are drepturi de citire. Aceasta poate determina ascunderea sub-numelor de spaţii accesibile. Aceasta poate face index-ul  inutilizabil cu anumite setări ale ACL';

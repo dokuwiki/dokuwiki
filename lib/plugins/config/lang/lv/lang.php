@@ -79,7 +79,6 @@ $lang['profileconfirm']        = 'Profila labošanai vajag paroli';
 $lang['disableactions']        = 'Bloķēt Dokuwiki darbības';
 $lang['disableactions_check']  = 'atzīmēt';
 $lang['disableactions_subscription'] = 'abonēt/atteikties';
-$lang['disableactions_nssubscription'] = 'abonēt nodaļu/atteikties';
 $lang['disableactions_wikicode'] = 'skatīt/eksportēt izejtekstu';
 $lang['disableactions_other']  = 'citas darbības (atdalīt ar komatiem)';
 $lang['sneaky_index']          = 'Pēc noklusētā DokuWiki lapu sarakstā parāda visu nodaļu lapas. Ieslēdzot šo parametru, noslēps tās nodaļas, kuras apmeklētājam nav tiesības lasīt. Bet tad  tiks arī paslēptas dziļākas, bet atļautas nodaļas. Atsevišķos pieejas tiesību konfigurācijas gadījumos lapu saraksts var nedarboties.';

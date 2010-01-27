@@ -80,7 +80,6 @@ $lang['profileconfirm']        = 'Potvrdzovať zmeny profilu heslom';
 $lang['disableactions']        = 'Zakázať DokuWiki akcie';
 $lang['disableactions_check']  = 'Skontrolovať';
 $lang['disableactions_subscription'] = 'Prihlásiť/Odhlásiť informovanie o zmenách stránky';
-$lang['disableactions_nssubscription'] = 'Prihlásiť/Odhlásiť informovanie o zmenách v mennom priestore';
 $lang['disableactions_wikicode'] = 'Pozrieť zdroj/Exportovať zdroj';
 $lang['disableactions_other']  = 'Iné akcie (oddelené čiarkou)';
 $lang['sneaky_index']          = 'DokuWiki implicitne ukazuje v indexe všetky menné priestory. Povolením tejto voľby sa nezobrazia menné priestory, ku ktorým nemá používateľ právo na čítanie. Dôsledkom môže byť nezobrazenie vnorených prístupných menných priestorov. Táto voľba môže mať za následok nepoužiteľnosť indexu s určitými ACL nastaveniami.';

@@ -1,23 +1,18 @@
 Hallo!
 
-Die Seite @PAGE@ im @TITLE@ Wiki wurde bearbeitet.
-Das sind die Änderungen:
+Seite im Namensraum @PAGE@ im @TITLE@ Wiki wurden bearbeitet.
+Das sind die geänderten Seiten:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Datum : @DATE@
-Benutzer : @USER@
-Übersicht: @SUMMARY@
-Alte Revision: @OLDPAGE@
-Neue Revision: @NEWPAGE@
-
 Um das Abonnement für diese Seite aufzulösen, melde Sie sich im Wiki an
 @DOKUWIKIURL@, besuchen dann
-@NEWPAGE@
+@SUBSCRIBE@
 und klicken auf die Taste 'Änderungen abbestellen'.
 
--- 
+--
 Diese Mail kommt vom DokuWiki auf
 @DOKUWIKIURL@
+

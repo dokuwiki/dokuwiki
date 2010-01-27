@@ -85,7 +85,6 @@ $lang['profileconfirm']        = 'Bekræft profilændringer med kodeord';
 $lang['disableactions']        = 'Slå DokuWiki-muligheder fra';
 $lang['disableactions_check']  = 'Tjek';
 $lang['disableactions_subscription'] = 'Tliføj/Fjern opskrivning';
-$lang['disableactions_nssubscription'] = 'Tilmelding / afmelding af navnerum';
 $lang['disableactions_wikicode'] = 'Vis kilde/Eksporter grundkode';
 $lang['disableactions_other']  = 'Andre muligheder (kommasepareret)';
 $lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerum i indholdsfortegnelsen. Ved at slå denne valgmulighed til vil skjule de navnerum, hvor brugeren ikke har læsetilladelse. Dette kan føre til, at tilgængelige undernavnerum bliver skjult. Ligeledes kan det også gøre indholdsfortegnelsen ubrugelig med visse ACL-opsætninger.';

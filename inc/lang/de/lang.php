@@ -159,10 +159,13 @@ $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Ihnalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
+
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geaendert:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
 $lang['mail_upload']           = 'Datei hochgeladen:';
+$lang['mail_subscribe_list']   = 'Geänderte Seiten im Namensraum:';
+
 $lang['qb_bold']               = 'Fetter Text';
 $lang['qb_italic']             = 'Kursiver Text';
 $lang['qb_underl']             = 'Unterstrichener Text';
@@ -217,10 +220,11 @@ $lang['subscr_m_new_header']       = 'Abonnement hinzufügen';
 $lang['subscr_m_current_header']   = 'Aktuelle Abonnements';
 $lang['subscr_m_unsubscribe']      = 'Löschen';
 $lang['subscr_m_subscribe']        = 'Abonnieren';
+$lang['subscr_m_receive']          = 'Benachrichtigung';
 
 $lang['subscr_style_every']        = 'Email bei jeder Bearbeitung';
-$lang['subscr_style_digest']       = 'Übersichtsemail für jede veränderte Seite';
-$lang['subscr_style_list']         = 'Email mit Liste der geänderten Seiten';
+$lang['subscr_style_digest']       = 'Zusammenfassung der Änderungen für jede veränderte Seite';
+$lang['subscr_style_list']         = 'Liste der geänderten Seiten';
 
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Systembetreuer.';

@@ -78,7 +78,6 @@ $lang['profileconfirm']        = 'Profil aldaketak pasahitzaz berretsi';
 $lang['disableactions']        = 'DokuWiki ekintzak ezgaitu';
 $lang['disableactions_check']  = 'Egiaztatu';
 $lang['disableactions_subscription'] = 'Harpidetu/Harpidetza utzi';
-$lang['disableactions_nssubscription'] = 'Izen-espaziora Harpidetu/Harpidetza utzi';
 $lang['disableactions_wikicode'] = 'Ikusi iturburua/Esportatu Raw';
 $lang['disableactions_other']  = 'Beste ekintzak (komaz bereiztuak)';
 $lang['sneaky_index']          = 'Lehenespenez, DokuWiki-k izen-espazio guztiak indize bistan erakutsiko ditu. Aukera hau gaituta, erabiltzaieak irakurtzeko baimenik ez dituen izen-espazioak ezkutatuko dira. Honek atzigarriak diren azpi izen-espazioak ezkutatzen ditu. Agian honek indizea erabili ezin ahal izatea eragingo du AKL ezarpen batzuetan.';

@@ -85,7 +85,6 @@ $lang['profileconfirm']        = 'Bevestig profielwijzigingen met wachtwoord';
 $lang['disableactions']        = 'Aangevinkte DokuWiki-akties uitschakelen';
 $lang['disableactions_check']  = 'Controleer';
 $lang['disableactions_subscription'] = 'Inschrijven/opzeggen';
-$lang['disableactions_nssubscription'] = 'Namespace inschrijven/opzeggen';
 $lang['disableactions_wikicode'] = 'Bron bekijken/exporteer rauw';
 $lang['disableactions_other']  = 'Andere akties (gescheiden door komma\'s)';
 $lang['sneaky_index']          = 'Met de standaardinstellingen zal DokuWiki alle namespaces laten zien in de index. Het inschakelen van deze optie zorgt ervoor dat de namespaces waar de gebruiker geen leestoegang tot heeft, verborgen worden. Dit kan resulteren in het verbergen van subnamespaces waar de gebruiker wel toegang to heeft. Dit kan de index onbruikbaar maken met bepaalde ACL-instellingen.';

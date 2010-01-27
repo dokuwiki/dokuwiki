@@ -82,7 +82,6 @@ $lang['profileconfirm']        = 'Potwierdzanie zmiany profilu hasłem';
 $lang['disableactions']        = 'Wyłącz akcje DokuWiki';
 $lang['disableactions_check']  = 'Sprawdzanie';
 $lang['disableactions_subscription'] = 'Subskrypcje';
-$lang['disableactions_nssubscription'] = 'Subskrypcje katalogów';
 $lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
 $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['sneaky_index']          = 'Domyślnie, Dokuwiki pokazuje wszystkie katalogi w indeksie. Włączenie tej opcji ukryje katalogi, do których użytkownik nie ma praw. Może to spowodować ukrycie podkatalogów, do których użytkownik ma prawa. Ta opcja może spowodować błędne działanie indeksu w połączeniu z pewnymi konfiguracjami praw dostępu.';

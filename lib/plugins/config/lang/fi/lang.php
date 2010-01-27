@@ -81,7 +81,6 @@ $lang['profileconfirm']        = 'Vahvista profiilin päivitys salasanan avulla'
 $lang['disableactions']        = 'Estä DokuWiki-toimintojen käyttö';
 $lang['disableactions_check']  = 'Tarkista';
 $lang['disableactions_subscription'] = 'Tilaa/Peruuta tilaus';
-$lang['disableactions_nssubscription'] = 'Nimiavaruuden tilaus/tilauksen poisto';
 $lang['disableactions_wikicode'] = 'Näytä lähdekoodi/Vie raakana';
 $lang['disableactions_other']  = 'Muut toiminnot (pilkulla erotettuna)';
 $lang['sneaky_index']          = 'Oletuksena DokuWiki näyttää kaikki nimiavaruudet index-näkymäsä. Tämä asetus piilottaa ne, joihin käyttäjällä ei ole lukuoikeuksia. Tämä voi piilottaa joitakin sallittuja alinimiavaruuksia. Tästä johtuen index-näkymä voi olla käyttökelvoton joillakin ACL-asetuksilla';

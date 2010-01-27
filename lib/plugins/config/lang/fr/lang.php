@@ -86,7 +86,6 @@ $lang['profileconfirm']        = 'Confirmer par mot de passe les modifications d
 $lang['disableactions']        = 'Actions à désactiver dans DokuWiki';
 $lang['disableactions_check']  = 'Vérifier';
 $lang['disableactions_subscription'] = 'Abonnement aux pages';
-$lang['disableactions_nssubscription'] = 'Abonnement aux catégories';
 $lang['disableactions_wikicode'] = 'Afficher source';
 $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher celles pour lesquelles l\'utilisateur n\'a pas la permission de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certaines ACL.';

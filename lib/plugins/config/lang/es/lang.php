@@ -91,7 +91,6 @@ $lang['profileconfirm']        = 'Confirmar cambios en perfil con contraseña';
 $lang['disableactions']        = 'Deshabilitar acciones DokuWiki';
 $lang['disableactions_check']  = 'Controlar';
 $lang['disableactions_subscription'] = 'Suscribirse/Cancelar suscripción';
-$lang['disableactions_nssubscription'] = 'Suscribirse/Cancelar suscripción (Espacio de nombres)';
 $lang['disableactions_wikicode'] = 'Ver la fuente/Exportar en formato raw';
 $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
 $lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los namespaces en el index. Habilitando esta opción los ocultará si el usuario no tiene permisos de lectura. Los sub-namespaces pueden resultar inaccesibles. El index puede hacerse poco usable dependiendo de las configuraciones ACL.';

@@ -81,7 +81,6 @@ $lang['profileconfirm']        = 'Confirma amb contrasenya els canvis en el perf
 $lang['disableactions']        = 'Inhabilita accions DokuWiki';
 $lang['disableactions_check']  = 'Revisa';
 $lang['disableactions_subscription'] = 'Subscripció/cancel·lació';
-$lang['disableactions_nssubscription'] = 'Subscripció/cancel·lació a espai';
 $lang['disableactions_wikicode'] = 'Mostra/exporta font';
 $lang['disableactions_other']  = 'Altres accions (separades per comes)';
 $lang['sneaky_index']          = 'Per defecte, DokuWiki mostrarà tots els espai en la visualització d\'índex. Si activeu aquest paràmetre, s\'ocultaran aquells espais en els quals l\'usuari no té accés de lectura. Això pot fer que s\'ocultin subespais que sí que són accessibles. En algunes configuracions ACL pot fer que l\'índex resulti inutilitzable.';

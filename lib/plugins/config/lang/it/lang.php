@@ -87,7 +87,6 @@ $lang['profileconfirm']        = 'Richiedi la password per modifiche al profilo'
 $lang['disableactions']        = 'Disabilita azioni DokuWiki';
 $lang['disableactions_check']  = 'Controlla';
 $lang['disableactions_subscription'] = 'Sottoscrivi/Rimuovi sottoscrizione';
-$lang['disableactions_nssubscription'] = 'Sottoscrivi/Rimuovi sottoscrizione della categoria';
 $lang['disableactions_wikicode'] = 'Mostra sorgente/Esporta Raw';
 $lang['disableactions_other']  = 'Altre azioni (separate da virgola)';
 $lang['sneaky_index']          = 'Normalmente, DokuWiki mostra tutte le categorie nella vista indice. Abilitando questa opzione, saranno nascoste quelle per cui l\'utente non ha il permesso in lettura. Questo potrebbe far sì che alcune sottocategorie accessibili siano nascoste. La pagina indice potrebbe quindi diventare inutilizzabile con alcune configurazioni dell\'ACL.';

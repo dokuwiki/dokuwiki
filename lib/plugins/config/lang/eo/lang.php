@@ -85,7 +85,6 @@ $lang['profileconfirm']        = 'Konfirmi ŝanĝojn en la trajtaro per pasvorto
 $lang['disableactions']        = 'Malebligi DokuWiki-ajn agojn';
 $lang['disableactions_check']  = 'Kontroli';
 $lang['disableactions_subscription'] = 'Aliĝi/Malaliĝi';
-$lang['disableactions_nssubscription'] = 'Aliĝi/Malaliĝi al nomspaco';
 $lang['disableactions_wikicode'] = 'Rigardi vikitekston/Eksporti krudaĵon';
 $lang['disableactions_other']  = 'Aliaj agoj (apartite per komoj)';
 $lang['sneaky_index']          = 'Apriore, DokuWiki montras ĉiujn nomspacojn en la indeksa modo. Ebligi tiun ĉi elekteblon kaŝus tion, kion la uzanto ne rajtas legi laŭ ACL. Tio povus rezulti ankaŭan kaŝon de alireblaj subnomspacoj. Kaj tiel la indekso estus neuzebla por kelkaj agordoj de ACL.';

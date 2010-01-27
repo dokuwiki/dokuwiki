@@ -81,7 +81,6 @@ $lang['profileconfirm']        = 'Beállítások változtatásának megerősít�
 $lang['disableactions']        = 'Bizonyos DokuWiki tevékenységek (action) tiltása';
 $lang['disableactions_check']  = 'Ellenőrzés';
 $lang['disableactions_subscription'] = 'Feliratkozás/Leiratkozás';
-$lang['disableactions_nssubscription'] = 'Névtér feliratkozás/Leiratkozás';
 $lang['disableactions_wikicode'] = 'Forrás megtekintése/Nyers adat exportja';
 $lang['disableactions_other']  = 'Egyéb tevékenységek (vesszővel elválasztva)';
 $lang['sneaky_index']          = 'Alapértelmezetten minden névtér látszik a DokuWiki áttekintő (index) oldalán. Ezen opció bekapcsolása után azok nem jelennek meg, melyekhez a felhasználónak nincs olvasás joga. De ezzel eltakarhatunk egyébként elérhető al-névtereket is, így bizonyos ACL beállításoknál használhatatlan indexet eredményez ez a beállítás.';

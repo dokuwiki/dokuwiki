@@ -57,7 +57,6 @@ $lang['profileconfirm']        = 'Bestätige Profiländerungen mit dem Passwort'
 $lang['disableactions']        = 'Deaktiviere DokuWiki\'s Zugriffe';
 $lang['disableactions_check']  = 'Prüfe';
 $lang['disableactions_subscription'] = 'Bestellen/Abbestellen';
-$lang['disableactions_nssubscription'] = 'Namensraum Bestellen/Abbestellen';
 $lang['disableactions_wikicode'] = 'Zeige Quelle/Exportiere Rohdaten';
 $lang['disableactions_other']  = 'Weitere Aktionen (durch Komma getrennt)';
 $lang['userewrite']            = 'Benutze angenehme URLs';

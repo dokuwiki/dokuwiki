@@ -82,7 +82,6 @@ $lang['profileconfirm']        = '개인정보 변경시 암호 재확인';
 $lang['disableactions']        = 'DokuWiki Action 금지';
 $lang['disableactions_check']  = '검사';
 $lang['disableactions_subscription'] = '구독 신청/해지';
-$lang['disableactions_nssubscription'] = '네임스페이스 구독 신청/해지';
 $lang['disableactions_wikicode'] = '문서 소스 보기';
 $lang['disableactions_other']  = '다른 Action(comma로 구분)';
 $lang['sneaky_index']          = '기본적으로, DokuWiki는 색인 목록에 모든 네임스페이스들을 보여줍니다.

@@ -84,7 +84,6 @@ $lang['profileconfirm']        = 'Potvrdit změny v profilu zadáním hesla';
 $lang['disableactions']        = 'Vypnout DokuWiki akce';
 $lang['disableactions_check']  = 'Zkontrolovat';
 $lang['disableactions_subscription'] = 'Přihlásit se/Odhlásit se ze seznamu pro odběr změn';
-$lang['disableactions_nssubscription'] = 'Přihlásit se/Odhlásit se ze seznamu pro odběr změn ve jmenném prostoru';
 $lang['disableactions_wikicode'] = 'Prohlížet zdrojové kódy/Export wiki textu';
 $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
 $lang['sneaky_index']          = 'Ve výchozím nastavení DokuWiki zobrazuje v indexu všechny

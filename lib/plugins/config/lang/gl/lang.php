@@ -81,7 +81,6 @@ $lang['profileconfirm']        = 'Confirmar as modificacións de perfil mediante
 $lang['disableactions']        = 'Desactivar accións do DokuWiki';
 $lang['disableactions_check']  = 'Comprobar';
 $lang['disableactions_subscription'] = 'Subscribir/Desubscribir';
-$lang['disableactions_nssubscription'] = 'Subscribir/Desubscribir en nomes de espazo';
 $lang['disableactions_wikicode'] = 'Ver o código/Exportar datos raw';
 $lang['disableactions_other']  = 'Outras accións (separadas por vírgulas)';
 $lang['sneaky_index']          = 'O DokuWiki mostrará por defecto todos os nomes de espazo na vista de índice. Se activa isto serán ocultados aqueles onde o usuario non teña permisos de lectura.';

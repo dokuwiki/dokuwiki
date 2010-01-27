@@ -77,7 +77,6 @@ $lang['profileconfirm']        = 'אשר שינוי פרופילים עם סיס
 $lang['disableactions']        = 'בטל פעולות DokuWiki';
 $lang['disableactions_check']  = 'בדיקה';
 $lang['disableactions_subscription'] = 'הרשמה/הסרה מרשימה';
-$lang['disableactions_nssubscription'] = 'הרשמה / הסרת הרשמה ממרחב שם';
 $lang['disableactions_wikicode'] = 'הצגת המקור/יצוא גולמי';
 $lang['disableactions_other']  = 'פעולות אחרות (מופרדות בפסיק)';
 $lang['sneaky_index']          = 'כברירת מחדל, דוקוויקי יציג את כל מרחבי השמות בתצוגת תוכן הענינים. בחירה באפשרות זאת תסתיר את אלו שבהם למשתמש אין הרשאות קריאה. התוצאה עלולה להיות הסתרת תת מרחבי שמות אליהם יש למשתמש גישה. באופן זה תוכן הענינים עלול להפוך לחסר תועלת עם הגדרות ACL מסוימות';
