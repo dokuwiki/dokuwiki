@@ -123,7 +123,7 @@ class TarLib {
                 break;
 
             case COMPRESS_BZIP:
-                if(!extension_loaded('bz2')) $this->_inierror = -2;
+                if(!extension_loaded('bz2')) $this->_initerror = -2;
                 $this->_comptype = COMPRESS_BZIP;
                 break;
 
@@ -140,7 +140,7 @@ class TarLib {
                 $this->_comptype = COMPRESS_NONE;
         }
 
-        if($this->_init_error < 0) $this->_comptype = COMPRESS_NONE;
+        if($this->_initerror < 0) $this->_comptype = COMPRESS_NONE;
 
         if($flag) $this->_nomf.= '.'.$this->getCompression(1);
         $this->_result = true;
