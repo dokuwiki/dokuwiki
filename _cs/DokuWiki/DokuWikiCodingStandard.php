@@ -54,7 +54,7 @@ class PHP_CodeSniffer_Standards_DokuWiki_DokuWikiCodingStandard extends PHP_Code
             'Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
 //            'Squiz/Sniffs/PHP/CommentedOutCodeSniff.php', //FIXME should ignore oneliners
             'Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
-
+            'Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
             'Squiz/Sniffs/CSS/LowercaseStyleDefinitionSniff.php',
             'Squiz/Sniffs/CSS/MissingColonSniff.php',
             'Squiz/Sniffs/CSS/DisallowMultipleStyleDefinitionsSniff.php',
