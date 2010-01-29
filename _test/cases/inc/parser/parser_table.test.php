@@ -42,7 +42,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 121)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -82,7 +82,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 121)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -106,13 +106,13 @@ def');
             array('table_open',array(0,1)),
             array('tablerow_open',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 7)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
-        
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
     
@@ -140,13 +140,13 @@ def');
             array('cdata',array(' Z ')),
             array('tableheader_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 19)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
-        
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
 
     }
@@ -175,13 +175,13 @@ def');
             array('cdata',array('  Z  ')),
             array('tableheader_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 23)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
-        
+
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
     
@@ -218,7 +218,7 @@ def');
             array('tablerow_close',array()),
             array('tablerow_open',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 31)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -266,7 +266,7 @@ def');
             array('cdata',array(':::f')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 51)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -304,7 +304,7 @@ def');
             array('cdata',array('  Z  ')),
             array('tableheader_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 27)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -351,7 +351,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 121)),
             array('p_open',array()),
             array('cdata',array('def'.DOKU_PARSER_EOL)),
             array('p_close',array()),
@@ -403,7 +403,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 129)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -451,7 +451,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 155)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -498,7 +498,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 123)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
@@ -555,7 +555,7 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 129)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),

@@ -1205,7 +1205,7 @@ class Doku_Handler_Table {
                     $this->tableCell($call);
                 break;
                 case 'table_end':
-                    $this->tableRowClose(array('tablerow_close',$call[1],$call[2]));
+                    $this->tableRowClose(array('tablerow_close', array()));
                     $this->tableEnd($call);
                 break;
                 default:

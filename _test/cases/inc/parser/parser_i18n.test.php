@@ -110,13 +110,12 @@ def');
             array('cdata',array(' Row 1 Col 3        ')),
             array('tablecell_close',array()),
             array('tablerow_close',array()),
-            array('table_close',array()),
+            array('table_close',array(6, 153)),
             array('p_open',array()),
             array('cdata',array('def'."\n")),
             array('p_close',array()),
             array('document_end',array()),
         );
-
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 

@@ -282,7 +282,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' Row 1 Col 3        ')),
               array('tablecell_close',array()),
               array('tablerow_close',array()),
-              array('table_close',array()),
+              array('table_close',array(8, 123)),
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
