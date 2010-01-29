@@ -29,8 +29,7 @@
 // | Authors: Sebastian Delmont <sdelmont@zonageek.com>                   |
 // +----------------------------------------------------------------------+
 
-class JpegMeta
-{
+class JpegMeta {
     var $_fileName;
     var $_fp = null;
     var $_type = 'unknown';
@@ -44,8 +43,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function JpegMeta($fileName)
-    {
+    function JpegMeta($fileName) {
 
         $this->_fileName = $fileName;
 
@@ -61,8 +59,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function & getRawInfo()
-    {
+    function & getRawInfo() {
         $this->_parseAll();
 
         if ($this->_markers == null) {
@@ -77,8 +74,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function & getBasicInfo()
-    {
+    function & getBasicInfo() {
         $this->_parseAll();
 
         $info = array();
@@ -91,16 +87,14 @@ class JpegMeta
         if (isset($this->_info['file']['Url'])) {
             $info['Url'] = $this->_info['file']['Url'];
             $info['NiceSize'] = "???KB";
-        }
-        else {
+        } else {
             $info['Size'] = $this->_info['file']['Size'];
             $info['NiceSize'] = $this->_info['file']['NiceSize'];
         }
 
         if (@isset($this->_info['sof']['Format'])) {
             $info['Format'] = $this->_info['sof']['Format'] . " JPEG";
-        }
-        else {
+        } else {
             $info['Format'] = $this->_info['sof']['Format'] . " JPEG";
         }
 
@@ -129,8 +123,7 @@ class JpegMeta
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function getField($fields)
-    {
+    function getField($fields) {
         if(!is_array($fields)) $fields = array($fields);
         $info = false;
         foreach($fields as $field){
@@ -175,8 +168,7 @@ class JpegMeta
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function setField($field, $value)
-    {
+    function setField($field, $value) {
         if(strtolower(substr($field,0,5)) == 'iptc.'){
             return $this->setIPTCField(substr($field,5),$value);
         }elseif(strtolower(substr($field,0,5)) == 'exif.'){
@@ -192,8 +184,7 @@ class JpegMeta
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function deleteField($field)
-    {
+    function deleteField($field) {
         if(strtolower(substr($field,0,5)) == 'iptc.'){
             return $this->deleteIPTCField(substr($field,5));
         }elseif(strtolower(substr($field,0,5)) == 'exif.'){
@@ -208,8 +199,7 @@ class JpegMeta
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function getDateField($field)
-    {
+    function getDateField($field) {
         if (!isset($this->_info['dates'])) {
             $this->_info['dates'] = $this->getDates();
         }
@@ -226,8 +216,7 @@ class JpegMeta
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function getFileField($field)
-    {
+    function getFileField($field) {
         if (!isset($this->_info['file'])) {
             $this->_parseFileInfo();
         }
@@ -258,8 +247,7 @@ class JpegMeta
      *
      * @author Joe Lapp <joe.lapp@pobox.com>
      */
-    function getShutterSpeed()
-    {
+    function getShutterSpeed() {
         if (!isset($this->_info['exif'])) {
             $this->_parseMarkerExif();
         }
@@ -277,8 +265,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getExifField($field)
-    {
+    function getExifField($field) {
         if (!isset($this->_info['exif'])) {
             $this->_parseMarkerExif();
         }
@@ -299,8 +286,7 @@ class JpegMeta
      *
      * @author Hakan Sandell <hakan.sandell@mydata.se>
      */
-    function getXmpField($field)
-    {
+    function getXmpField($field) {
         if (!isset($this->_info['xmp'])) {
             $this->_parseMarkerXmp();
         }
@@ -321,8 +307,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getAdobeField($field)
-    {
+    function getAdobeField($field) {
         if (!isset($this->_info['adobe'])) {
             $this->_parseMarkerAdobe();
         }
@@ -343,8 +328,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getIPTCField($field)
-    {
+    function getIPTCField($field) {
         if (!isset($this->_info['iptc'])) {
             $this->_parseMarkerAdobe();
         }
@@ -366,8 +350,7 @@ class JpegMeta
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      * @author Joe Lapp <joe.lapp@pobox.com>
      */
-    function setExifField($field, $value)
-    {
+    function setExifField($field, $value) {
         if (!isset($this->_info['exif'])) {
             $this->_parseMarkerExif();
         }
@@ -397,8 +380,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function setAdobeField($field, $value)
-    {
+    function setAdobeField($field, $value) {
         if (!isset($this->_info['adobe'])) {
             $this->_parseMarkerAdobe();
         }
@@ -451,8 +433,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function setIPTCField($field, $value)
-    {
+    function setIPTCField($field, $value) {
         if (!isset($this->_info['iptc'])) {
             $this->_parseMarkerAdobe();
         }
@@ -475,8 +456,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function deleteExifField($field)
-    {
+    function deleteExifField($field) {
         if (!isset($this->_info['exif'])) {
             $this->_parseMarkerAdobe();
         }
@@ -497,8 +477,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function deleteAdobeField($field)
-    {
+    function deleteAdobeField($field) {
         if (!isset($this->_info['adobe'])) {
             $this->_parseMarkerAdobe();
         }
@@ -519,8 +498,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function deleteIPTCField($field)
-    {
+    function deleteIPTCField($field) {
         if (!isset($this->_info['iptc'])) {
             $this->_parseMarkerAdobe();
         }
@@ -547,12 +525,12 @@ class JpegMeta
 
         // try various fields
         $cap = $this->getField(array('Iptc.Headline',
-                                     'Iptc.Caption',
-                                     'Xmp.dc:title',
-                                     'Exif.UserComment',
-                                     'Exif.TIFFUserComment',
-                                     'Exif.TIFFImageDescription',
-                                     'File.Name'));
+                    'Iptc.Caption',
+                    'Xmp.dc:title',
+                    'Exif.UserComment',
+                    'Exif.TIFFUserComment',
+                    'Exif.TIFFImageDescription',
+                    'File.Name'));
         if (empty($cap)) return false;
 
         if(!$max) return $cap;
@@ -568,8 +546,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getDates()
-    {
+    function getDates() {
         $this->_parseAll();
         if ($this->_markers == null) {
             if (@isset($this->_info['file']['UnixTime'])) {
@@ -704,8 +681,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getWidth()
-    {
+    function getWidth() {
         if (!isset($this->_info['sof'])) {
             $this->_parseMarkerSOF();
         }
@@ -734,8 +710,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getHeight()
-    {
+    function getHeight() {
         if (!isset($this->_info['sof'])) {
             $this->_parseMarkerSOF();
         }
@@ -764,8 +739,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function getDimStr()
-    {
+    function getDimStr() {
         if ($this->_markers == null) {
             return false;
         }
@@ -781,8 +755,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function hasThumbnail($which = 'any')
-    {
+    function hasThumbnail($which = 'any') {
         if (($which == 'any') || ($which == 'exif')) {
             if (!isset($this->_info['exif'])) {
                 $this->_parseMarkerExif();
@@ -823,8 +796,7 @@ class JpegMeta
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function sendThumbnail($which = 'any')
-    {
+    function sendThumbnail($which = 'any') {
         $data = null;
 
         if (($which == 'any') || ($which == 'exif')) {
@@ -892,8 +864,7 @@ class JpegMeta
     /*************************************************************/
 
     /*************************************************************/
-    function _dispose()
-    {
+    function _dispose() {
         $this->_fileName = $fileName;
 
         $this->_fp = null;
@@ -904,8 +875,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _readJPEG()
-    {
+    function _readJPEG() {
         unset($this->_markers);
         //unset($this->_info);
         $this->_markers = array();
@@ -919,8 +889,7 @@ class JpegMeta
             else {
                 $this->_type = 'url';
             }
-        }
-        else {
+        } else {
             $this->_fp = null;
             return false;  // ERROR: Can't open file
         }
@@ -942,14 +911,14 @@ class JpegMeta
         while (!$done) {
             $capture = false;
 
-          // First, skip any non 0xFF bytes
+            // First, skip any non 0xFF bytes
             $discarded = 0;
             $c = ord(fgetc($this->_fp));
             while (!feof($this->_fp) && ($c != 0xFF)) {
                 $discarded++;
                 $c = ord(fgetc($this->_fp));
             }
-          // Then skip all 0xFF until the marker byte
+            // Then skip all 0xFF until the marker byte
             do {
                 $marker = ord(fgetc($this->_fp));
             } while (!feof($this->_fp) && ($marker == 0xFF));
@@ -971,23 +940,23 @@ class JpegMeta
             $length = $length - 2; // The length we got counts itself
 
             switch ($marker) {
-            case 0xC0:    // SOF0
-            case 0xC1:    // SOF1
-            case 0xC2:    // SOF2
-            case 0xC9:    // SOF9
-            case 0xE0:    // APP0: JFIF data
-            case 0xE1:    // APP1: EXIF or XMP data
-            case 0xED:    // APP13: IPTC / Photoshop data
-                $capture = true;
-                break;
-            case 0xDA:    // SOS: Start of scan... the image itself and the last block on the file
-                $capture = false;
-                $length = -1;  // This field has no length... it includes all data until EOF
-                $done = true;
-                break;
-            default:
-                $capture = true;//false;
-                break;
+                case 0xC0:    // SOF0
+                case 0xC1:    // SOF1
+                case 0xC2:    // SOF2
+                case 0xC9:    // SOF9
+                case 0xE0:    // APP0: JFIF data
+                case 0xE1:    // APP1: EXIF or XMP data
+                case 0xED:    // APP13: IPTC / Photoshop data
+                    $capture = true;
+                    break;
+                case 0xDA:    // SOS: Start of scan... the image itself and the last block on the file
+                    $capture = false;
+                    $length = -1;  // This field has no length... it includes all data until EOF
+                    $done = true;
+                    break;
+                default:
+                    $capture = true;//false;
+                    break;
             }
 
             $this->_markers[$count] = array();
@@ -1002,7 +971,7 @@ class JpegMeta
             }
             elseif (!$done) {
                 $result = @fseek($this->_fp, $length, SEEK_CUR);
-              // fseek doesn't seem to like HTTP 'files', but fgetc has no problem
+                // fseek doesn't seem to like HTTP 'files', but fgetc has no problem
                 if (!($result === 0)) {
                     for ($i = 0; $i < $length; $i++) {
                         fgetc($this->_fp);
@@ -1021,8 +990,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _parseAll()
-    {
+    function _parseAll() {
         if (!isset($this->_info['file'])) {
             $this->_parseFileInfo();
         }
@@ -1052,8 +1020,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _writeJPEG($outputName)
-    {
+    function _writeJPEG($outputName) {
         $this->_parseAll();
 
         $wroteEXIF = false;
@@ -1067,16 +1034,13 @@ class JpegMeta
             else {
                 $this->_type = 'url';
             }
-        }
-        else {
+        } else {
             $this->_fp = null;
             return false;  // ERROR: Can't open file
         }
 
         $this->_fpout = fopen($outputName, 'wb');
-        if ($this->_fpout) {
-        }
-        else {
+        if (!$this->_fpout) {
             $this->_fpout = null;
             fclose($this->_fp);
             $this->_fp = null;
@@ -1100,14 +1064,14 @@ class JpegMeta
         $ok = true;
 
         while (!$done) {
-          // First, skip any non 0xFF bytes
+            // First, skip any non 0xFF bytes
             $discarded = 0;
             $c = ord(fgetc($this->_fp));
             while (!feof($this->_fp) && ($c != 0xFF)) {
                 $discarded++;
                 $c = ord(fgetc($this->_fp));
             }
-          // Then skip all 0xFF until the marker byte
+            // Then skip all 0xFF until the marker byte
             do {
                 $marker = ord(fgetc($this->_fp));
             } while (!feof($this->_fp) && ($marker == 0xFF));
@@ -1156,7 +1120,7 @@ class JpegMeta
 
             if (!$wroteAdobe && (($marker < 0xE0) || ($marker > 0xEF))) {
                 if ((isset($this->_info['adobe']) && is_array($this->_info['adobe']))
-                || (isset($this->_info['iptc']) && is_array($this->_info['iptc']))) {
+                        || (isset($this->_info['iptc']) && is_array($this->_info['iptc']))) {
                     $adobe =& $this->_createMarkerAdobe();
                     $this->_writeJPEGMarker(0xED, strlen($adobe), $adobe, 0);
                     unset($adobe);
@@ -1188,8 +1152,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _writeJPEGMarker($marker, $length, &$data, $origLength)
-    {
+    function _writeJPEGMarker($marker, $length, &$data, $origLength) {
         if ($length <= 0) {
             return false;
         }
@@ -1212,15 +1175,13 @@ class JpegMeta
                     }
                 }
             }
-        }
-        else {
+        } else {
             if ($marker == 0xDA) {  // Copy until EOF
                 while (!feof($this->_fp)) {
                     $data = fread($this->_fp, 1024 * 16);
                     fputs($this->_fpout, $data, strlen($data));
                 }
-            }
-            else { // Copy only $length bytes
+            } else { // Copy only $length bytes
                 $data = @fread($this->_fp, $length);
                 fputs($this->_fpout, $data, $length);
             }
@@ -1235,8 +1196,7 @@ class JpegMeta
      * @author  Sebastian Delmont <sdelmont@zonageek.com>
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function _parseFileInfo()
-    {
+    function _parseFileInfo() {
         if (file_exists($this->_fileName)) {
             $this->_info['file'] = array();
             $this->_info['file']['Name'] = basename($this->_fileName);
@@ -1244,14 +1204,11 @@ class JpegMeta
             $this->_info['file']['Size'] = filesize($this->_fileName);
             if ($this->_info['file']['Size'] < 1024) {
                 $this->_info['file']['NiceSize'] = $this->_info['file']['Size'] . 'B';
-            }
-            elseif ($this->_info['file']['Size'] < (1024 * 1024)) {
+            } elseif ($this->_info['file']['Size'] < (1024 * 1024)) {
                 $this->_info['file']['NiceSize'] = round($this->_info['file']['Size'] / 1024) . 'KB';
-            }
-            elseif ($this->_info['file']['Size'] < (1024 * 1024 * 1024)) {
+            } elseif ($this->_info['file']['Size'] < (1024 * 1024 * 1024)) {
                 $this->_info['file']['NiceSize'] = round($this->_info['file']['Size'] / (1024*1024)) . 'MB';
-            }
-            else {
+            } else {
                 $this->_info['file']['NiceSize'] = $this->_info['file']['Size'] . 'B';
             }
             $this->_info['file']['UnixTime'] = filemtime($this->_fileName);
@@ -1331,8 +1288,7 @@ class JpegMeta
                 default:
                     $this->_info['file']['Mime']   = 'image/unknown';
             }
-        }
-        else {
+        } else {
             $this->_info['file'] = array();
             $this->_info['file']['Name'] = basename($this->_fileName);
             $this->_info['file']['Url'] = $this->_fileName;
@@ -1342,8 +1298,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _parseMarkerJFIF()
-    {
+    function _parseMarkerJFIF() {
         if (!isset($this->_markers)) {
             $this->_readJPEG();
         }
@@ -1372,7 +1327,6 @@ class JpegMeta
         $pos = 0;
         $this->_info['jfif'] = array();
 
-
         $vmaj = $this->_getByte($data, 5);
         $vmin = $this->_getByte($data, 6);
 
@@ -1380,18 +1334,18 @@ class JpegMeta
 
         $units = $this->_getByte($data, 7);
         switch ($units) {
-        case 0:
-            $this->_info['jfif']['Units'] = 'pixels';
-            break;
-        case 1:
-            $this->_info['jfif']['Units'] = 'dpi';
-            break;
-        case 2:
-            $this->_info['jfif']['Units'] = 'dpcm';
-            break;
-        default:
-            $this->_info['jfif']['Units'] = 'unknown';
-            break;
+            case 0:
+                $this->_info['jfif']['Units'] = 'pixels';
+                break;
+            case 1:
+                $this->_info['jfif']['Units'] = 'dpi';
+                break;
+            case 2:
+                $this->_info['jfif']['Units'] = 'dpcm';
+                break;
+            default:
+                $this->_info['jfif']['Units'] = 'unknown';
+                break;
         }
 
         $xdens = $this->_getShort($data, 8);
@@ -1410,8 +1364,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _parseMarkerSOF()
-    {
+    function _parseMarkerSOF() {
         if (!isset($this->_markers)) {
             $this->_readJPEG();
         }
@@ -1424,13 +1377,13 @@ class JpegMeta
         $count = count($this->_markers);
         for ($i = 0; $i < $count; $i++) {
             switch ($this->_markers[$i]['marker']) {
-            case 0xC0: // SOF0
-            case 0xC1: // SOF1
-            case 0xC2: // SOF2
-            case 0xC9: // SOF9
-                $data =& $this->_markers[$i]['data'];
-                $marker = $this->_markers[$i]['marker'];
-                break;
+                case 0xC0: // SOF0
+                case 0xC1: // SOF1
+                case 0xC2: // SOF2
+                case 0xC9: // SOF9
+                    $data =& $this->_markers[$i]['data'];
+                    $marker = $this->_markers[$i]['marker'];
+                    break;
             }
         }
 
@@ -1442,32 +1395,29 @@ class JpegMeta
         $pos = 0;
         $this->_info['sof'] = array();
 
-
         switch ($marker) {
-        case 0xC0: // SOF0
-            $format = 'Baseline';
-            break;
-        case 0xC1: // SOF1
-            $format = 'Progessive';
-            break;
-        case 0xC2: // SOF2
-            $format = 'Non-baseline';
-            break;
-        case 0xC9: // SOF9
-            $format = 'Arithmetic';
-            break;
-        default:
-            return false;
-            break;
+            case 0xC0: // SOF0
+                $format = 'Baseline';
+                break;
+            case 0xC1: // SOF1
+                $format = 'Progessive';
+                break;
+            case 0xC2: // SOF2
+                $format = 'Non-baseline';
+                break;
+            case 0xC9: // SOF9
+                $format = 'Arithmetic';
+                break;
+            default:
+                return false;
+                break;
         }
 
-
-        $this->_info['sof']['Format'] = $format;
-
+        $this->_info['sof']['Format']          = $format;
         $this->_info['sof']['SamplePrecision'] = $this->_getByte($data, $pos + 0);
-        $this->_info['sof']['ImageHeight'] = $this->_getShort($data, $pos + 1);
-        $this->_info['sof']['ImageWidth'] = $this->_getShort($data, $pos + 3);
-        $this->_info['sof']['ColorChannels'] = $this->_getByte($data, $pos + 5);
+        $this->_info['sof']['ImageHeight']     = $this->_getShort($data, $pos + 1);
+        $this->_info['sof']['ImageWidth']      = $this->_getShort($data, $pos + 3);
+        $this->_info['sof']['ColorChannels']   = $this->_getByte($data, $pos + 5);
 
         return true;
     }
@@ -1477,8 +1427,7 @@ class JpegMeta
      *
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
      */
-    function _parseMarkerXmp()
-    {
+    function _parseMarkerXmp() {
         if (!isset($this->_markers)) {
             $this->_readJPEG();
         }
@@ -1513,10 +1462,10 @@ class JpegMeta
         $this->_info['xmp'] = array();
         $count = count($values);
         for ($i = 0; $i < $count; $i++) {
-            if ($values[$i][tag] == 'rdf:Description' && $values[$i][type] == 'open') {
+            if ($values[$i]['tag'] == 'rdf:Description' && $values[$i]['type'] == 'open') {
 
-                while ($values[++$i][tag] != 'rdf:Description') {
-                    $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i][tag]]);
+                while ($values[++$i]['tag'] != 'rdf:Description') {
+                    $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i]['tag']]);
                 }
             }
         }
@@ -1528,43 +1477,41 @@ class JpegMeta
      *
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
      */
-    function _parseXmpNode($values, &$i, &$meta)
-    {
-        if ($values[$i][type] == 'complete') {
+    function _parseXmpNode($values, &$i, &$meta) {
+        if ($values[$i]['type'] == 'complete') {
             // Simple Type property
-            $meta = $values[$i][value];
+            $meta = $values[$i]['value'];
             return;
         }
 
         $i++;
-        if ($values[$i][tag] == 'rdf:Bag' || $values[$i][tag] == 'rdf:Seq') {
+        if ($values[$i]['tag'] == 'rdf:Bag' || $values[$i]['tag'] == 'rdf:Seq') {
             // Array property
             $meta = array();
-            while ($values[++$i][tag] == 'rdf:li') {
+            while ($values[++$i]['tag'] == 'rdf:li') {
                 $this->_parseXmpNode($values, $i, $meta[]);
             }
             $i++; // skip closing tag
 
-        } elseif ($values[$i][tag] == 'rdf:Alt') {
+        } elseif ($values[$i]['tag'] == 'rdf:Alt') {
             // Language Alternative property, only the first (default) value is used
             $i++;
             $this->_parseXmpNode($values, $i, $meta);
-            while ($values[++$i][tag] != 'rdf:Alt');
+            while ($values[++$i]['tag'] != 'rdf:Alt');
             $i++; // skip closing tag
 
         } else {
             // Structure property
             $meta = array();
-            $startTag = $values[$i-1][tag];
+            $startTag = $values[$i-1]['tag'];
             do {
-                $this->_parseXmpNode($values, $i, $meta[$values[$i][tag]]);
-            } while ($values[++$i][tag] != $startTag);
+                $this->_parseXmpNode($values, $i, $meta[$values[$i]['tag']]);
+            } while ($values[++$i]['tag'] != $startTag);
         }
     }
 
     /*************************************************************/
-    function _parseMarkerExif()
-    {
+    function _parseMarkerExif() {
         if (!isset($this->_markers)) {
             $this->_readJPEG();
         }
@@ -1598,11 +1545,9 @@ class JpegMeta
 
         if ($byteAlign == 0x4949) { // "II"
             $isBigEndian = false;
-        }
-        elseif ($byteAlign == 0x4D4D) { // "MM"
+        } elseif ($byteAlign == 0x4D4D) { // "MM"
             $isBigEndian = true;
-        }
-        else {
+        } else {
             return false; // Unexpected data
         }
 
@@ -1612,8 +1557,7 @@ class JpegMeta
 
         if ($isBigEndian) {
             $this->_info['exif']['ByteAlign'] = "Big Endian";
-        }
-        else {
+        } else {
             $this->_info['exif']['ByteAlign'] = "Little Endian";
         }
 
@@ -1629,8 +1573,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _readIFD($data, $base, $offset, $isBigEndian, $mode)
-    {
+    function _readIFD($data, $base, $offset, $isBigEndian, $mode) {
         $EXIFTags = $this->_exifTagNames($mode);
 
         $numEntries = $this->_getShort($data, $base + $offset, $isBigEndian);
@@ -1658,161 +1601,146 @@ class JpegMeta
             if ($dataLength > 4) {
                 $dataOffset = $this->_getLong($data, $base + $offset, $isBigEndian);
                 $rawValue = $this->_getFixedString($data, $base + $dataOffset, $dataLength);
-            }
-            else {
+            } else {
                 $rawValue = $this->_getFixedString($data, $base + $offset, $dataLength);
             }
             $offset += 4;
 
             switch ($type) {
-            case 1:    // UBYTE
-                if ($count == 1) {
-                    $value = $this->_getByte($rawValue, 0);
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++)
-                        $value[$j] = $this->_getByte($rawValue, $j);
-                }
-                break;
-            case 2:    // ASCII
-                $value = $rawValue;
-                break;
-            case 3:    // USHORT
-                if ($count == 1) {
-                    $value = $this->_getShort($rawValue, 0, $isBigEndian);
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++)
-                        $value[$j] = $this->_getShort($rawValue, $j * 2, $isBigEndian);
-                }
-                break;
-            case 4:    // ULONG
-                if ($count == 1) {
-                    $value = $this->_getLong($rawValue, 0, $isBigEndian);
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++)
-                        $value[$j] = $this->_getLong($rawValue, $j * 4, $isBigEndian);
-                }
-                break;
-            case 5:    // URATIONAL
-                if ($count == 1) {
-                    $a = $this->_getLong($rawValue, 0, $isBigEndian);
-                    $b = $this->_getLong($rawValue, 4, $isBigEndian);
-                    $value = array();
-                    $value['val'] = 0;
-                    $value['num'] = $a;
-                    $value['den'] = $b;
-                    if (($a != 0) && ($b != 0)) {
-                        $value['val'] = $a / $b;
-                    }
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++) {
-                        $a = $this->_getLong($rawValue, $j * 8, $isBigEndian);
-                        $b = $this->_getLong($rawValue, ($j * 8) + 4, $isBigEndian);
+                case 1:    // UBYTE
+                    if ($count == 1) {
+                        $value = $this->_getByte($rawValue, 0);
+                    } else {
                         $value = array();
-                        $value[$j]['val'] = 0;
-                        $value[$j]['num'] = $a;
-                        $value[$j]['den'] = $b;
-                        if (($a != 0) && ($b != 0))
-                            $value[$j]['val'] = $a / $b;
+                        for ($j = 0; $j < $count; $j++)
+                            $value[$j] = $this->_getByte($rawValue, $j);
                     }
-                }
-                break;
-            case 6:    // SBYTE
-                if ($count == 1) {
-                    $value = $this->_getByte($rawValue, 0);
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++)
-                        $value[$j] = $this->_getByte($rawValue, $j);
-                }
-                break;
-            case 7:    // UNDEFINED
-                $value = $rawValue;
-                break;
-            case 8:    // SSHORT
-                if ($count == 1) {
-                    $value = $this->_getShort($rawValue, 0, $isBigEndian);
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++)
-                        $value[$j] = $this->_getShort($rawValue, $j * 2, $isBigEndian);
-                }
-                break;
-            case 9:    // SLONG
-                if ($count == 1) {
-                    $value = $this->_getLong($rawValue, 0, $isBigEndian);
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++)
-                        $value[$j] = $this->_getLong($rawValue, $j * 4, $isBigEndian);
-                }
-                break;
-            case 10:   // SRATIONAL
-                if ($count == 1) {
-                    $a = $this->_getLong($rawValue, 0, $isBigEndian);
-                    $b = $this->_getLong($rawValue, 4, $isBigEndian);
-                    $value = array();
-                    $value['val'] = 0;
-                    $value['num'] = $a;
-                    $value['den'] = $b;
-                    if (($a != 0) && ($b != 0))
-                        $value['val'] = $a / $b;
-                }
-                else {
-                    $value = array();
-                    for ($j = 0; $j < $count; $j++) {
-                        $a = $this->_getLong($rawValue, $j * 8, $isBigEndian);
-                        $b = $this->_getLong($rawValue, ($j * 8) + 4, $isBigEndian);
+                    break;
+                case 2:    // ASCII
+                    $value = $rawValue;
+                    break;
+                case 3:    // USHORT
+                    if ($count == 1) {
+                        $value = $this->_getShort($rawValue, 0, $isBigEndian);
+                    } else {
                         $value = array();
-                        $value[$j]['val'] = 0;
-                        $value[$j]['num'] = $a;
-                        $value[$j]['den'] = $b;
-                        if (($a != 0) && ($b != 0))
-                            $value[$j]['val'] = $a / $b;
+                        for ($j = 0; $j < $count; $j++)
+                            $value[$j] = $this->_getShort($rawValue, $j * 2, $isBigEndian);
                     }
-                }
-                break;
-            case 11:   // FLOAT
-                $value = $rawValue;
-                break;
+                    break;
+                case 4:    // ULONG
+                    if ($count == 1) {
+                        $value = $this->_getLong($rawValue, 0, $isBigEndian);
+                    } else {
+                        $value = array();
+                        for ($j = 0; $j < $count; $j++)
+                            $value[$j] = $this->_getLong($rawValue, $j * 4, $isBigEndian);
+                    }
+                    break;
+                case 5:    // URATIONAL
+                    if ($count == 1) {
+                        $a = $this->_getLong($rawValue, 0, $isBigEndian);
+                        $b = $this->_getLong($rawValue, 4, $isBigEndian);
+                        $value = array();
+                        $value['val'] = 0;
+                        $value['num'] = $a;
+                        $value['den'] = $b;
+                        if (($a != 0) && ($b != 0)) {
+                            $value['val'] = $a / $b;
+                        }
+                    } else {
+                        $value = array();
+                        for ($j = 0; $j < $count; $j++) {
+                            $a = $this->_getLong($rawValue, $j * 8, $isBigEndian);
+                            $b = $this->_getLong($rawValue, ($j * 8) + 4, $isBigEndian);
+                            $value = array();
+                            $value[$j]['val'] = 0;
+                            $value[$j]['num'] = $a;
+                            $value[$j]['den'] = $b;
+                            if (($a != 0) && ($b != 0))
+                                $value[$j]['val'] = $a / $b;
+                        }
+                    }
+                    break;
+                case 6:    // SBYTE
+                    if ($count == 1) {
+                        $value = $this->_getByte($rawValue, 0);
+                    } else {
+                        $value = array();
+                        for ($j = 0; $j < $count; $j++)
+                            $value[$j] = $this->_getByte($rawValue, $j);
+                    }
+                    break;
+                case 7:    // UNDEFINED
+                    $value = $rawValue;
+                    break;
+                case 8:    // SSHORT
+                    if ($count == 1) {
+                        $value = $this->_getShort($rawValue, 0, $isBigEndian);
+                    } else {
+                        $value = array();
+                        for ($j = 0; $j < $count; $j++)
+                            $value[$j] = $this->_getShort($rawValue, $j * 2, $isBigEndian);
+                    }
+                    break;
+                case 9:    // SLONG
+                    if ($count == 1) {
+                        $value = $this->_getLong($rawValue, 0, $isBigEndian);
+                    } else {
+                        $value = array();
+                        for ($j = 0; $j < $count; $j++)
+                            $value[$j] = $this->_getLong($rawValue, $j * 4, $isBigEndian);
+                    }
+                    break;
+                case 10:   // SRATIONAL
+                    if ($count == 1) {
+                        $a = $this->_getLong($rawValue, 0, $isBigEndian);
+                        $b = $this->_getLong($rawValue, 4, $isBigEndian);
+                        $value = array();
+                        $value['val'] = 0;
+                        $value['num'] = $a;
+                        $value['den'] = $b;
+                        if (($a != 0) && ($b != 0))
+                            $value['val'] = $a / $b;
+                    } else {
+                        $value = array();
+                        for ($j = 0; $j < $count; $j++) {
+                            $a = $this->_getLong($rawValue, $j * 8, $isBigEndian);
+                            $b = $this->_getLong($rawValue, ($j * 8) + 4, $isBigEndian);
+                            $value = array();
+                            $value[$j]['val'] = 0;
+                            $value[$j]['num'] = $a;
+                            $value[$j]['den'] = $b;
+                            if (($a != 0) && ($b != 0))
+                                $value[$j]['val'] = $a / $b;
+                        }
+                    }
+                    break;
+                case 11:   // FLOAT
+                    $value = $rawValue;
+                    break;
 
-            case 12:   // DFLOAT
-                $value = $rawValue;
-                break;
-            default:
-                return false; // Unexpected Type
+                case 12:   // DFLOAT
+                    $value = $rawValue;
+                    break;
+                default:
+                    return false; // Unexpected Type
             }
 
             $tagName = '';
             if (($mode == 'ifd0') && ($tag == 0x8769)) {  // ExifIFDOffset
                 $this->_readIFD($data, $base, $value, $isBigEndian, 'exif');
-            }
-            elseif (($mode == 'ifd0') && ($tag == 0x8825)) {  // GPSIFDOffset
+            } elseif (($mode == 'ifd0') && ($tag == 0x8825)) {  // GPSIFDOffset
                 $this->_readIFD($data, $base, $value, $isBigEndian, 'gps');
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0111)) {  // TIFFStripOffsets
+            } elseif (($mode == 'ifd1') && ($tag == 0x0111)) {  // TIFFStripOffsets
                 $exifTIFFOffset = $value;
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0117)) {  // TIFFStripByteCounts
+            } elseif (($mode == 'ifd1') && ($tag == 0x0117)) {  // TIFFStripByteCounts
                 $exifTIFFLength = $value;
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0201)) {  // TIFFJFIFOffset
+            } elseif (($mode == 'ifd1') && ($tag == 0x0201)) {  // TIFFJFIFOffset
                 $exifThumbnailOffset = $value;
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0202)) {  // TIFFJFIFLength
+            } elseif (($mode == 'ifd1') && ($tag == 0x0202)) {  // TIFFJFIFLength
                 $exifThumbnailLength = $value;
-            }
-            elseif (($mode == 'exif') && ($tag == 0xA005)) {  // InteropIFDOffset
+            } elseif (($mode == 'exif') && ($tag == 0xA005)) {  // InteropIFDOffset
                 $this->_readIFD($data, $base, $value, $isBigEndian, 'interop');
             }
             // elseif (($mode == 'exif') && ($tag == 0x927C)) {  // MakerNote
@@ -1828,18 +1756,19 @@ class JpegMeta
                         }
 
                         $this->_info['exif'][$tagName][count($this->_info['exif'][$tagName])] = $value;
-                    }
-                    else {
+                    } else {
                         $this->_info['exif'][$tagName] = $value;
                     }
                 }
-                else {
-#echo sprintf("<h1>Unknown tag %02x (t: %d l: %d) %s in %s</h1>", $tag, $type, $count, $mode, $this->_fileName);
+                /*
+                 else {
+                    echo sprintf("<h1>Unknown tag %02x (t: %d l: %d) %s in %s</h1>", $tag, $type, $count, $mode, $this->_fileName);
                     // Unknown Tags will be ignored!!!
                     // That's because the tag might be a pointer (like the Exif tag)
                     // and saving it without saving the data it points to might
                     // create an invalid file.
                 }
+                */
             }
         }
 
@@ -1856,8 +1785,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _createMarkerExif()
-    {
+    function & _createMarkerExif() {
         $data = null;
         $count = count($this->_markers);
         for ($i = 0; $i < $count; $i++) {
@@ -1882,8 +1810,7 @@ class JpegMeta
             $isBigEndian = true;
             $aux = "MM";
             $pos = $this->_putString($data, $pos, $aux);
-        }
-        else {
+        } else {
             $isBigEndian = false;
             $aux = "II";
             $pos = $this->_putString($data, $pos, $aux);
@@ -1901,8 +1828,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _writeIFD(&$data, $pos, $offsetBase, &$entries, $isBigEndian, $hasNext)
-    {
+    function _writeIFD(&$data, $pos, $offsetBase, &$entries, $isBigEndian, $hasNext) {
         $tiffData = null;
         $tiffDataOffsetPos = -1;
 
@@ -1922,24 +1848,21 @@ class JpegMeta
                 $pos = $this->_putLong($data, $pos, $dataPos - $offsetBase, $isBigEndian);
 
                 $dataPos = $this->_writeIFD($data, $dataPos, $offsetBase, $entries[$i]['value'], $isBigEndian, false);
-            }
-            elseif ($type == -98) { // TIFF Data
+            } elseif ($type == -98) { // TIFF Data
                 $pos = $this->_putShort($data, $pos, $tag, $isBigEndian);
                 $pos = $this->_putShort($data, $pos, 0x04, $isBigEndian); // LONG
                 $pos = $this->_putLong($data, $pos, 0x01, $isBigEndian); // Count = 1
                 $tiffDataOffsetPos = $pos;
                 $pos = $this->_putLong($data, $pos, 0x00, $isBigEndian); // For Now
                 $tiffData =& $entries[$i]['value'] ;
-            }
-            else { // Regular Entry
+            } else { // Regular Entry
                 $pos = $this->_putShort($data, $pos, $tag, $isBigEndian);
                 $pos = $this->_putShort($data, $pos, $type, $isBigEndian);
                 $pos = $this->_putLong($data, $pos, $entries[$i]['count'], $isBigEndian);
                 if (strlen($entries[$i]['value']) > 4) {
                     $pos = $this->_putLong($data, $pos, $dataPos - $offsetBase, $isBigEndian);
                     $dataPos = $this->_putString($data, $dataPos, $entries[$i]['value']);
-                }
-                else {
+                } else {
                     $val = str_pad($entries[$i]['value'], 4, "\0");
                     $pos = $this->_putString($data, $pos, $val);
                 }
@@ -1953,8 +1876,7 @@ class JpegMeta
 
         if ($hasNext) {
             $pos = $this->_putLong($data, $pos, $dataPos - $offsetBase, $isBigEndian);
-        }
-        else {
+        } else {
             $pos = $this->_putLong($data, $pos, 0, $isBigEndian);
         }
 
@@ -1962,8 +1884,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _getIFDEntries($isBigEndian, $mode)
-    {
+    function & _getIFDEntries($isBigEndian, $mode) {
         $EXIFNames = $this->_exifTagNames($mode);
         $EXIFTags = $this->_exifNameTags($mode);
         $EXIFTypeInfo = $this->_exifTagTypes($mode);
@@ -1985,60 +1906,47 @@ class JpegMeta
                 else {
                     $value = null;
                 }
-            }
-            elseif (($mode == 'ifd0') && ($tag == 0x8825)) {  // GPSIFDOffset
+            } elseif (($mode == 'ifd0') && ($tag == 0x8825)) {  // GPSIFDOffset
                 if (isset($this->_info['exif']['GPSVersionID'])) {
                     $value =& $this->_getIFDEntries($isBigEndian, "gps");
                     $type = -99;
-                }
-                else {
+                } else {
                     $value = null;
                 }
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0111)) {  // TIFFStripOffsets
+            } elseif (($mode == 'ifd1') && ($tag == 0x0111)) {  // TIFFStripOffsets
                 if (isset($this->_info['exif']['TIFFStrips'])) {
                     $value =& $this->_info['exif']['TIFFStrips'];
                     $type = -98;
-                }
-                else {
+                } else {
                     $value = null;
                 }
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0117)) {  // TIFFStripByteCounts
+            } elseif (($mode == 'ifd1') && ($tag == 0x0117)) {  // TIFFStripByteCounts
                 if (isset($this->_info['exif']['TIFFStrips'])) {
                     $value = strlen($this->_info['exif']['TIFFStrips']);
-                }
-                else {
+                } else {
                     $value = null;
                 }
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0201)) {  // TIFFJFIFOffset
+            } elseif (($mode == 'ifd1') && ($tag == 0x0201)) {  // TIFFJFIFOffset
                 if (isset($this->_info['exif']['JFIFThumbnail'])) {
                     $value =& $this->_info['exif']['JFIFThumbnail'];
                     $type = -98;
-                }
-                else {
+                } else {
                     $value = null;
                 }
-            }
-            elseif (($mode == 'ifd1') && ($tag == 0x0202)) {  // TIFFJFIFLength
+            } elseif (($mode == 'ifd1') && ($tag == 0x0202)) {  // TIFFJFIFLength
                 if (isset($this->_info['exif']['JFIFThumbnail'])) {
                     $value = strlen($this->_info['exif']['JFIFThumbnail']);
-                }
-                else {
+                } else {
                     $value = null;
                 }
-            }
-            elseif (($mode == 'exif') && ($tag == 0xA005)) {  // InteropIFDOffset
+            } elseif (($mode == 'exif') && ($tag == 0xA005)) {  // InteropIFDOffset
                 if (isset($this->_info['exif']['InteroperabilityIndex'])) {
                     $value =& $this->_getIFDEntries($isBigEndian, "interop");
                     $type = -99;
-                }
-                else {
+                } else {
                     $value = null;
                 }
-            }
-            elseif (isset($this->_info['exif'][$name])) {
+            } elseif (isset($this->_info['exif'][$name])) {
                 $origValue =& $this->_info['exif'][$name];
 
                 // This makes it easier to process variable size elements
@@ -2055,235 +1963,235 @@ class JpegMeta
                 $value = " ";
 
                 switch ($type) {
-                case 1:    // UBYTE
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-
-                        $this->_putByte($value, $j, $origValue[$j]);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putByte($value, $j, 0);
-                        $j++;
-                    }
-                    break;
-                case 2:    // ASCII
-                    $v = strval($origValue[0]);
-                    if (($count != 0) && (strlen($v) > $count)) {
-                        $v = substr($v, 0, $count);
-                    }
-                    elseif (($count > 0) && (strlen($v) < $count)) {
-                        $v = str_pad($v, $count, "\0");
-                    }
-
-                    $count = strlen($v);
-
-                    $this->_putString($value, 0, $v);
-                    break;
-                case 3:    // USHORT
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $this->_putShort($value, $j * 2, $origValue[$j], $isBigEndian);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putShort($value, $j * 2, 0, $isBigEndian);
-                        $j++;
-                    }
-                    break;
-                case 4:    // ULONG
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $this->_putLong($value, $j * 4, $origValue[$j], $isBigEndian);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putLong($value, $j * 4, 0, $isBigEndian);
-                        $j++;
-                    }
-                    break;
-                case 5:    // URATIONAL
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $v = $origValue[$j];
-                        if (is_array($v)) {
-                            $a = $v['num'];
-                            $b = $v['den'];
-                        }
-                        else {
-                            $a = 0;
-                            $b = 0;
-                            // TODO: Allow other types and convert them
-                        }
-                        $this->_putLong($value, $j * 8, $a, $isBigEndian);
-                        $this->_putLong($value, ($j * 8) + 4, $b, $isBigEndian);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putLong($value, $j * 8, 0, $isBigEndian);
-                        $this->_putLong($value, ($j * 8) + 4, 0, $isBigEndian);
-                        $j++;
-                    }
-                    break;
-                case 6:    // SBYTE
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $this->_putByte($value, $j, $origValue[$j]);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putByte($value, $j, 0);
-                        $j++;
-                    }
-                    break;
-                case 7:    // UNDEFINED
-                    $v = strval($origValue[0]);
-                    if (($count != 0) && (strlen($v) > $count)) {
-                        $v = substr($v, 0, $count);
-                    }
-                    elseif (($count > 0) && (strlen($v) < $count)) {
-                        $v = str_pad($v, $count, "\0");
-                    }
-
-                    $count = strlen($v);
-
-                    $this->_putString($value, 0, $v);
-                    break;
-                case 8:    // SSHORT
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $this->_putShort($value, $j * 2, $origValue[$j], $isBigEndian);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putShort($value, $j * 2, 0, $isBigEndian);
-                        $j++;
-                    }
-                    break;
-                case 9:    // SLONG
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $this->_putLong($value, $j * 4, $origValue[$j], $isBigEndian);
-                        $j++;
-                    }
-
-                    while ($j < $count) {
-                        $this->_putLong($value, $j * 4, 0, $isBigEndian);
-                        $j++;
-                    }
-                    break;
-                case 10:   // SRATIONAL
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $v = $origValue[$j];
-                        if (is_array($v)) {
-                            $a = $v['num'];
-                            $b = $v['den'];
-                        }
-                        else {
-                            $a = 0;
-                            $b = 0;
-                            // TODO: Allow other types and convert them
+                    case 1:    // UBYTE
+                        if ($count == 0) {
+                            $count = $origCount;
                         }
 
-                        $this->_putLong($value, $j * 8, $a, $isBigEndian);
-                        $this->_putLong($value, ($j * 8) + 4, $b, $isBigEndian);
-                        $j++;
-                    }
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
 
-                    while ($j < $count) {
-                        $this->_putLong($value, $j * 8, 0, $isBigEndian);
-                        $this->_putLong($value, ($j * 8) + 4, 0, $isBigEndian);
-                        $j++;
-                    }
-                    break;
-                case 11:   // FLOAT
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $v = strval($origValue[$j]);
-                        if (strlen($v) > 4) {
-                            $v = substr($v, 0, 4);
+                            $this->_putByte($value, $j, $origValue[$j]);
+                            $j++;
                         }
-                        elseif (strlen($v) < 4) {
-                            $v = str_pad($v, 4, "\0");
-                        }
-                        $this->_putString($value, $j * 4, $v);
-                        $j++;
-                    }
 
-                    while ($j < $count) {
-                        $this->_putString($value, $j * 4, "\0\0\0\0");
-                        $j++;
-                    }
-                    break;
-                case 12:   // DFLOAT
-                    if ($count == 0) {
-                        $count = $origCount;
-                    }
-
-                    $j = 0;
-                    while (($j < $count) && ($j < $origCount)) {
-                        $v = strval($origValue[$j]);
-                        if (strlen($v) > 8) {
-                            $v = substr($v, 0, 8);
+                        while ($j < $count) {
+                            $this->_putByte($value, $j, 0);
+                            $j++;
                         }
-                        elseif (strlen($v) < 8) {
-                            $v = str_pad($v, 8, "\0");
+                        break;
+                    case 2:    // ASCII
+                        $v = strval($origValue[0]);
+                        if (($count != 0) && (strlen($v) > $count)) {
+                            $v = substr($v, 0, $count);
                         }
-                        $this->_putString($value, $j * 8, $v);
-                        $j++;
-                    }
+                        elseif (($count > 0) && (strlen($v) < $count)) {
+                            $v = str_pad($v, $count, "\0");
+                        }
 
-                    while ($j < $count) {
-                        $this->_putString($value, $j * 8, "\0\0\0\0\0\0\0\0");
-                        $j++;
-                    }
-                    break;
-                default:
-                    $value = null;
-                    break;
+                        $count = strlen($v);
+
+                        $this->_putString($value, 0, $v);
+                        break;
+                    case 3:    // USHORT
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $this->_putShort($value, $j * 2, $origValue[$j], $isBigEndian);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putShort($value, $j * 2, 0, $isBigEndian);
+                            $j++;
+                        }
+                        break;
+                    case 4:    // ULONG
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $this->_putLong($value, $j * 4, $origValue[$j], $isBigEndian);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putLong($value, $j * 4, 0, $isBigEndian);
+                            $j++;
+                        }
+                        break;
+                    case 5:    // URATIONAL
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $v = $origValue[$j];
+                            if (is_array($v)) {
+                                $a = $v['num'];
+                                $b = $v['den'];
+                            }
+                            else {
+                                $a = 0;
+                                $b = 0;
+                                // TODO: Allow other types and convert them
+                            }
+                            $this->_putLong($value, $j * 8, $a, $isBigEndian);
+                            $this->_putLong($value, ($j * 8) + 4, $b, $isBigEndian);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putLong($value, $j * 8, 0, $isBigEndian);
+                            $this->_putLong($value, ($j * 8) + 4, 0, $isBigEndian);
+                            $j++;
+                        }
+                        break;
+                    case 6:    // SBYTE
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $this->_putByte($value, $j, $origValue[$j]);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putByte($value, $j, 0);
+                            $j++;
+                        }
+                        break;
+                    case 7:    // UNDEFINED
+                        $v = strval($origValue[0]);
+                        if (($count != 0) && (strlen($v) > $count)) {
+                            $v = substr($v, 0, $count);
+                        }
+                        elseif (($count > 0) && (strlen($v) < $count)) {
+                            $v = str_pad($v, $count, "\0");
+                        }
+
+                        $count = strlen($v);
+
+                        $this->_putString($value, 0, $v);
+                        break;
+                    case 8:    // SSHORT
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $this->_putShort($value, $j * 2, $origValue[$j], $isBigEndian);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putShort($value, $j * 2, 0, $isBigEndian);
+                            $j++;
+                        }
+                        break;
+                    case 9:    // SLONG
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $this->_putLong($value, $j * 4, $origValue[$j], $isBigEndian);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putLong($value, $j * 4, 0, $isBigEndian);
+                            $j++;
+                        }
+                        break;
+                    case 10:   // SRATIONAL
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $v = $origValue[$j];
+                            if (is_array($v)) {
+                                $a = $v['num'];
+                                $b = $v['den'];
+                            }
+                            else {
+                                $a = 0;
+                                $b = 0;
+                                // TODO: Allow other types and convert them
+                            }
+
+                            $this->_putLong($value, $j * 8, $a, $isBigEndian);
+                            $this->_putLong($value, ($j * 8) + 4, $b, $isBigEndian);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putLong($value, $j * 8, 0, $isBigEndian);
+                            $this->_putLong($value, ($j * 8) + 4, 0, $isBigEndian);
+                            $j++;
+                        }
+                        break;
+                    case 11:   // FLOAT
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $v = strval($origValue[$j]);
+                            if (strlen($v) > 4) {
+                                $v = substr($v, 0, 4);
+                            }
+                            elseif (strlen($v) < 4) {
+                                $v = str_pad($v, 4, "\0");
+                            }
+                            $this->_putString($value, $j * 4, $v);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putString($value, $j * 4, "\0\0\0\0");
+                            $j++;
+                        }
+                        break;
+                    case 12:   // DFLOAT
+                        if ($count == 0) {
+                            $count = $origCount;
+                        }
+
+                        $j = 0;
+                        while (($j < $count) && ($j < $origCount)) {
+                            $v = strval($origValue[$j]);
+                            if (strlen($v) > 8) {
+                                $v = substr($v, 0, 8);
+                            }
+                            elseif (strlen($v) < 8) {
+                                $v = str_pad($v, 8, "\0");
+                            }
+                            $this->_putString($value, $j * 8, $v);
+                            $j++;
+                        }
+
+                        while ($j < $count) {
+                            $this->_putString($value, $j * 8, "\0\0\0\0\0\0\0\0");
+                            $j++;
+                        }
+                        break;
+                    default:
+                        $value = null;
+                        break;
                 }
             }
 
@@ -2302,8 +2210,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _parseMarkerAdobe()
-    {
+    function _parseMarkerAdobe() {
         if (!isset($this->_markers)) {
             $this->_readJPEG();
         }
@@ -2359,36 +2266,36 @@ class JpegMeta
             $basePos = $pos;
 
             switch ($type) {
-            case 0x0404: // Caption (IPTC Data)
-                $pos = $this->_readIPTC($data, $pos);
-                if ($pos == false)
-                    return false;
-                break;
-            case 0x040A: // CopyrightFlag
-                $this->_info['adobe']['CopyrightFlag'] = $this->_getByte($data, $pos);
-                $pos += $length;
-                break;
-            case 0x040B: // ImageURL
-                $this->_info['adobe']['ImageURL'] = $this->_getFixedString($data, $pos, $length);
-                $pos += $length;
-                break;
-            case 0x040C: // Thumbnail
-                $aux = $this->_getLong($data, $pos);
-                $pos += 4;
-                if ($aux == 1) {
-                    $this->_info['adobe']['ThumbnailWidth'] = $this->_getLong($data, $pos);
+                case 0x0404: // Caption (IPTC Data)
+                    $pos = $this->_readIPTC($data, $pos);
+                    if ($pos == false)
+                        return false;
+                    break;
+                case 0x040A: // CopyrightFlag
+                    $this->_info['adobe']['CopyrightFlag'] = $this->_getByte($data, $pos);
+                    $pos += $length;
+                    break;
+                case 0x040B: // ImageURL
+                    $this->_info['adobe']['ImageURL'] = $this->_getFixedString($data, $pos, $length);
+                    $pos += $length;
+                    break;
+                case 0x040C: // Thumbnail
+                    $aux = $this->_getLong($data, $pos);
                     $pos += 4;
-                    $this->_info['adobe']['ThumbnailHeight'] = $this->_getLong($data, $pos);
-                    $pos += 4;
+                    if ($aux == 1) {
+                        $this->_info['adobe']['ThumbnailWidth'] = $this->_getLong($data, $pos);
+                        $pos += 4;
+                        $this->_info['adobe']['ThumbnailHeight'] = $this->_getLong($data, $pos);
+                        $pos += 4;
 
-                    $pos += 16; // Skip some data
+                        $pos += 16; // Skip some data
 
-                    $this->_info['adobe']['ThumbnailData'] = $this->_getFixedString($data, $pos, $length - 28);
-                    $pos += $length - 28;
-                }
-                break;
-            default:
-                break;
+                        $this->_info['adobe']['ThumbnailData'] = $this->_getFixedString($data, $pos, $length - 28);
+                        $pos += $length - 28;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             // We save all blocks, even those we recognized
@@ -2404,8 +2311,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _readIPTC(&$data, $pos = 0)
-    {
+    function _readIPTC(&$data, $pos = 0) {
         $totalLength = strlen($data);
 
         $IPTCTags =& $this->_iptcTagNames();
@@ -2426,8 +2332,7 @@ class JpegMeta
 
             if (isset($IPTCTags[$type])) {
                 $label = $IPTCTags[$type];
-            }
-            else {
+            } else {
                 $label = sprintf('IPTC_0x%02x', $type);
             }
 
@@ -2439,8 +2344,7 @@ class JpegMeta
                         $this->_info['iptc'][$label] = $aux;
                     }
                     $this->_info['iptc'][$label][ count($this->_info['iptc'][$label]) ] = $this->_getFixedString($data, $pos, $length);
-                }
-                else {
+                } else {
                     $this->_info['iptc'][$label] = $this->_getFixedString($data, $pos, $length);
                 }
             }
@@ -2451,8 +2355,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _createMarkerAdobe()
-    {
+    function & _createMarkerAdobe() {
         if (isset($this->_info['iptc'])) {
             if (!isset($this->_info['adobe'])) {
                 $this->_info['adobe'] = array();
@@ -2475,11 +2378,11 @@ class JpegMeta
             reset($this->_info['adobe']['raw']);
             while (list($key) = each($this->_info['adobe']['raw'])) {
                 $pos = $this->_write8BIM(
-                            $data,
-                            $pos,
-                            $this->_info['adobe']['raw'][$key]['type'],
-                            $this->_info['adobe']['raw'][$key]['header'],
-                            $this->_info['adobe']['raw'][$key]['data'] );
+                        $data,
+                        $pos,
+                        $this->_info['adobe']['raw'][$key]['type'],
+                        $this->_info['adobe']['raw'][$key]['header'],
+                        $this->_info['adobe']['raw'][$key]['data'] );
             }
         }
 
@@ -2487,8 +2390,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _write8BIM(&$data, $pos, $type, $header, &$value)
-    {
+    function _write8BIM(&$data, $pos, $type, $header, &$value) {
         $signature = "8BIM";
 
         $pos = $this->_putString($data, $pos, $signature);
@@ -2512,15 +2414,13 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _writeIPTC()
-    {
+    function & _writeIPTC() {
         $data = " ";
         $pos = 0;
 
         $IPTCNames =& $this->_iptcNameTags();
 
         reset($this->_info['iptc']);
-
 
         while (list($label) = each($this->_info['iptc'])) {
             $value =& $this->_info['iptc'][$label];
@@ -2535,7 +2435,8 @@ class JpegMeta
 
             if ($type != -1) {
                 if (is_array($value)) {
-                    for ($i = 0; $i < count($value); $i++) {
+                    $vcnt = count($value);
+                    for ($i = 0; $i < $vcnt; $i++) {
                         $pos = $this->_writeIPTCEntry($data, $pos, $type, $value[$i]);
                     }
                 }
@@ -2549,8 +2450,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _writeIPTCEntry(&$data, $pos, $type, &$value)
-    {
+    function _writeIPTCEntry(&$data, $pos, $type, &$value) {
         $pos = $this->_putShort($data, $pos, 0x1C02);
         $pos = $this->_putByte($data, $pos, $type);
         $pos = $this->_putShort($data, $pos, strlen($value));
@@ -2560,8 +2460,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _exifTagNames($mode)
-    {
+    function _exifTagNames($mode) {
         $tags = array();
 
         if ($mode == 'ifd0') {
@@ -2627,8 +2526,7 @@ class JpegMeta
             $tags[0x0214] = 'TIFFReferenceBlackWhite';
             $tags[0x8298] = 'TIFFCopyright';
             $tags[0x9286] = 'TIFFUserComment';
-        }
-        elseif ($mode == 'exif') {
+        } elseif ($mode == 'exif') {
             $tags[0x829A] = 'ExposureTime';
             $tags[0x829D] = 'FNumber';
             $tags[0x8822] = 'ExposureProgram';
@@ -2672,15 +2570,13 @@ class JpegMeta
             $tags[0xA300] = 'FileSource';
             $tags[0xA301] = 'SceneType';
             $tags[0xA302] = 'CFAPattern';
-        }
-        elseif ($mode == 'interop') {
+        } elseif ($mode == 'interop') {
             $tags[0x0001] = 'InteroperabilityIndex';
             $tags[0x0002] = 'InteroperabilityVersion';
             $tags[0x1000] = 'RelatedImageFileFormat';
             $tags[0x1001] = 'RelatedImageWidth';
             $tags[0x1002] = 'RelatedImageLength';
-        }
-        elseif ($mode == 'gps') {
+        } elseif ($mode == 'gps') {
             $tags[0x0000] = 'GPSVersionID';
             $tags[0x0001] = 'GPSLatitudeRef';
             $tags[0x0002] = 'GPSLatitude';
@@ -2714,8 +2610,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _exifTagTypes($mode)
-    {
+    function _exifTagTypes($mode) {
         $tags = array();
 
         if ($mode == 'ifd0') {
@@ -2781,8 +2676,7 @@ class JpegMeta
             $tags[0x0214] = array(5, 6); // TIFFReferenceBlackWhite -> RATIONAL, 6
             $tags[0x8298] = array(2, 0); // TIFFCopyright -> ASCII, Any
             $tags[0x9286] = array(2, 0); // TIFFUserComment -> ASCII, Any
-        }
-        elseif ($mode == 'exif') {
+        } elseif ($mode == 'exif') {
             $tags[0x829A] = array(5, 1); // ExposureTime -> RATIONAL, 1
             $tags[0x829D] = array(5, 1); // FNumber -> RATIONAL, 1
             $tags[0x8822] = array(3, 1); // ExposureProgram -> SHORT, 1
@@ -2826,15 +2720,13 @@ class JpegMeta
             $tags[0xA300] = array(7, 1); // FileSource -> UNDEFINED, 1
             $tags[0xA301] = array(7, 1); // SceneType -> UNDEFINED, 1
             $tags[0xA302] = array(7, 0); // CFAPattern -> UNDEFINED, Any
-        }
-        elseif ($mode == 'interop') {
+        } elseif ($mode == 'interop') {
             $tags[0x0001] = array(2, 0); // InteroperabilityIndex -> ASCII, Any
             $tags[0x0002] = array(7, 4); // InteroperabilityVersion -> UNKNOWN, 4
             $tags[0x1000] = array(2, 0); // RelatedImageFileFormat -> ASCII, Any
             $tags[0x1001] = array(4, 1); // RelatedImageWidth -> LONG (or SHORT), 1
             $tags[0x1002] = array(4, 1); // RelatedImageLength -> LONG (or SHORT), 1
-        }
-        elseif ($mode == 'gps') {
+        } elseif ($mode == 'gps') {
             $tags[0x0000] = array(1, 4); // GPSVersionID -> BYTE, 4
             $tags[0x0001] = array(2, 2); // GPSLatitudeRef -> ASCII, 2
             $tags[0x0002] = array(5, 3); // GPSLatitude -> RATIONAL, 3
@@ -2868,15 +2760,13 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _exifNameTags($mode)
-    {
+    function _exifNameTags($mode) {
         $tags = $this->_exifTagNames($mode);
         return $this->_names2Tags($tags);
     }
 
     /*************************************************************/
-    function _iptcTagNames()
-    {
+    function _iptcTagNames() {
         $tags = array();
         $tags[0x14] = 'SuplementalCategories';
         $tags[0x19] = 'Keywords';
@@ -2903,15 +2793,13 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _iptcNameTags()
-    {
+    function & _iptcNameTags() {
         $tags = $this->_iptcTagNames();
         return $this->_names2Tags($tags);
     }
 
     /*************************************************************/
-    function _names2Tags($tags2Names)
-    {
+    function _names2Tags($tags2Names) {
         $names2Tags = array();
         reset($tags2Names);
         while (list($tag, $name) = each($tags2Names)) {
@@ -2922,14 +2810,12 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _getByte(&$data, $pos)
-    {
+    function _getByte(&$data, $pos) {
         return ord($data{$pos});
     }
 
     /*************************************************************/
-    function _putByte(&$data, $pos, $val)
-    {
+    function _putByte(&$data, $pos, $val) {
         $val = intval($val);
 
         $data{$pos} = chr($val);
@@ -2938,28 +2824,24 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _getShort(&$data, $pos, $bigEndian = true)
-    {
+    function _getShort(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
             return (ord($data{$pos}) << 8)
-                   + ord($data{$pos + 1});
-        }
-        else {
+                + ord($data{$pos + 1});
+        } else {
             return ord($data{$pos})
-                   + (ord($data{$pos + 1}) << 8);
+                + (ord($data{$pos + 1}) << 8);
         }
     }
 
     /*************************************************************/
-    function _putShort(&$data, $pos = 0, $val, $bigEndian = true)
-    {
+    function _putShort(&$data, $pos = 0, $val = 0, $bigEndian = true) {
         $val = intval($val);
 
         if ($bigEndian) {
             $data{$pos + 0} = chr(($val & 0x0000FF00) >> 8);
             $data{$pos + 1} = chr(($val & 0x000000FF) >> 0);
-        }
-        else {
+        } else {
             $data{$pos + 0} = chr(($val & 0x00FF) >> 0);
             $data{$pos + 1} = chr(($val & 0xFF00) >> 8);
         }
@@ -2968,25 +2850,22 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _getLong(&$data, $pos, $bigEndian = true)
-    {
+    function _getLong(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
             return (ord($data{$pos}) << 24)
-                   + (ord($data{$pos + 1}) << 16)
-                   + (ord($data{$pos + 2}) << 8)
-                   + ord($data{$pos + 3});
-        }
-        else {
+                + (ord($data{$pos + 1}) << 16)
+                + (ord($data{$pos + 2}) << 8)
+                + ord($data{$pos + 3});
+        } else {
             return ord($data{$pos})
-                   + (ord($data{$pos + 1}) << 8)
-                   + (ord($data{$pos + 2}) << 16)
-                   + (ord($data{$pos + 3}) << 24);
+                + (ord($data{$pos + 1}) << 8)
+                + (ord($data{$pos + 2}) << 16)
+                + (ord($data{$pos + 3}) << 24);
         }
     }
 
     /*************************************************************/
-    function _putLong(&$data, $pos, $val, $bigEndian = true)
-    {
+    function _putLong(&$data, $pos, $val, $bigEndian = true) {
         $val = intval($val);
 
         if ($bigEndian) {
@@ -2994,8 +2873,7 @@ class JpegMeta
             $data{$pos + 1} = chr(($val & 0x00FF0000) >> 16);
             $data{$pos + 2} = chr(($val & 0x0000FF00) >> 8);
             $data{$pos + 3} = chr(($val & 0x000000FF) >> 0);
-        }
-        else {
+        } else {
             $data{$pos + 0} = chr(($val & 0x000000FF) >> 0);
             $data{$pos + 1} = chr(($val & 0x0000FF00) >> 8);
             $data{$pos + 2} = chr(($val & 0x00FF0000) >> 16);
@@ -3006,16 +2884,14 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _getNullString(&$data, $pos)
-    {
+    function & _getNullString(&$data, $pos) {
         $str = '';
         $max = strlen($data);
 
         while ($pos < $max) {
             if (ord($data{$pos}) == 0) {
                 return $str;
-            }
-            else {
+            } else {
                 $str .= $data{$pos};
             }
             $pos++;
@@ -3025,8 +2901,7 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function & _getFixedString(&$data, $pos, $length = -1)
-    {
+    function & _getFixedString(&$data, $pos, $length = -1) {
         if ($length == -1) {
             $length = strlen($data) - $pos;
         }
@@ -3035,23 +2910,20 @@ class JpegMeta
     }
 
     /*************************************************************/
-    function _putString(&$data, $pos, &$str)
-    {
+    function _putString(&$data, $pos, &$str) {
         $len = strlen($str);
         for ($i = 0; $i < $len; $i++) {
-          $data{$pos + $i} = $str{$i};
+            $data{$pos + $i} = $str{$i};
         }
 
         return $pos + $len;
     }
 
     /*************************************************************/
-    function _hexDump(&$data, $start = 0, $length = -1)
-    {
+    function _hexDump(&$data, $start = 0, $length = -1) {
         if (($length == -1) || (($length + $start) > strlen($data))) {
             $end = strlen($data);
-        }
-        else {
+        } else {
             $end = $start + $length;
         }
 
@@ -3109,8 +2981,7 @@ class JpegMeta
         echo "</tt>\n";
     }
 
-/*****************************************************************/
+    /*****************************************************************/
 }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
-
