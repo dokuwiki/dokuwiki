@@ -214,7 +214,7 @@ function subscription_regex($pre = array()) {
  *
  * @param array $data Containing $id (the page id), $self (whether the author
  *                    should be notified, $addresslist (current email address
-                      list)
+ *                    list)
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
  * @author Adrian Lang <lang@cosmocode.de>
