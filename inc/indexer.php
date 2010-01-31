@@ -1,6 +1,6 @@
 <?php
 /**
- * Common DokuWiki functions
+ * Functions to create the fulltext search index
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
