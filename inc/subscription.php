@@ -135,7 +135,7 @@ function subscription_find($page, $pre) {
                 $subscription = trim($subscription) . " every\n";
             }
             if (preg_match(subscription_regex($pre), $subscription,
-                           &$line_matches) === 0) {
+                           $line_matches) === 0) {
                 continue;
             }
             $match = array_slice($line_matches, 1);
