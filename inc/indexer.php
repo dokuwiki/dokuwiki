@@ -7,9 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/parserutils.php');
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);

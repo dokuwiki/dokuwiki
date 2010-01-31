@@ -8,8 +8,6 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/form.php');
 
 /**
  * Convenience function to quickly build a wikilink

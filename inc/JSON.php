@@ -59,7 +59,6 @@
 
 // for DokuWiki
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/utf8.php');
 
 /**
  * Marker constant for JSON::decode(), used to flag stack state

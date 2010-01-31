@@ -7,8 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/JSON.php');
-
 
 /**
  * Prepares and prints an JavaScript array with all toolbar buttons

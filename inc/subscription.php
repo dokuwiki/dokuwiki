@@ -14,8 +14,6 @@
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-require_once DOKU_INC.'/inc/pageutils.php';
-
 /**
  * Get the name of the metafile tracking subscriptions to target page or
  * namespace

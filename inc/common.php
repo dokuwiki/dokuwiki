@@ -7,13 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/changelog.php');
-require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/mail.php');
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/infoutils.php');
-require_once DOKU_INC.'inc/subscription.php';
 
 /**
  * These constants are used with the recents function

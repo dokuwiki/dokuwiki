@@ -37,6 +37,9 @@ if (!defined('DOKU_E_LEVEL')) {
     error_reporting(DOKU_E_LEVEL);
 }
 
+// load libraries
+require_once(DOKU_INC.'inc/load.php');
+
 // init memory caches
 global $cache_revinfo;
        $cache_revinfo = array();
@@ -245,6 +248,8 @@ init_files();
 scriptify(DOKU_CONF.'users.auth');
 scriptify(DOKU_CONF.'acl.auth');
 
+// setup authentication system
+auth_setup();
 
 /**
  * Checks paths from config file
@@ -526,7 +531,6 @@ EOT;
     exit;
 }
 
-
 /**
  * A realpath() replacement
  *
@@ -587,6 +591,4 @@ function fullpath($path,$exists=false){
     }
     return $finalpath;
 }
-
-
 

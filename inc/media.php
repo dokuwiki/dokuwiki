@@ -8,9 +8,6 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
-require_once(DOKU_INC.'inc/html.php');
-require_once(DOKU_INC.'inc/search.php');
-require_once(DOKU_INC.'inc/JpegMeta.php');
 
 /**
  * Lists pages which currently use a media file selected for deletion

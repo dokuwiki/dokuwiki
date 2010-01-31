@@ -7,7 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/common.php');
 
 /**
  * recurse direcory

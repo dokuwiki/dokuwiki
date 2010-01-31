@@ -7,7 +7,6 @@
  */
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
-require_once(DOKU_INC.'inc/HTTPClient.php');
 
 /**
  * Check for new messages from upstream

@@ -7,8 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/template.php');
-
 
 /**
  * Call the needed action handlers

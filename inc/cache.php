@@ -7,9 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/parserutils.php');
 
 class cache {
     var $key = '';          // primary identifier for this item
