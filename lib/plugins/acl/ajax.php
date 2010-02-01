@@ -13,9 +13,6 @@ if(!count($_POST) && $HTTP_RAW_POST_DATA){
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../../');
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/auth.php');
 //close session
 session_write_close();
 
@@ -24,8 +21,6 @@ if(!checkSecurityToken()) die('CRSF Attack');
 
 $ID    = getID();
 
-require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/html.php');
 $acl = plugin_load('admin','acl');
 $acl->handle();
 
@@ -35,7 +30,6 @@ header('Content-Type: text/html; charset=utf-8');
 if($ajax == 'info'){
     $acl->_html_info();
 }elseif($ajax == 'tree'){
-    require_once(DOKU_INC.'inc/search.php');
     global $conf;
     global $ID;
 

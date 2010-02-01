@@ -20,6 +20,9 @@ if (@file_exists($preload)) include($preload);
 // define the include path
 if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
 
+// define Plugin dir
+if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
+
 // define config path (packagers may want to change this to /etc/dokuwiki/)
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
@@ -158,8 +161,6 @@ if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 // define cookie and session id, append server port when securecookie is configured FS#1664
 if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['securecookie'])?$_SERVER['SERVER_PORT']:'')));
 
-// define Plugin dir
-if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');

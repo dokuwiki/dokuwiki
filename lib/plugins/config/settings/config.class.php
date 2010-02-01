@@ -528,8 +528,6 @@ if (!class_exists('setting_password')) {
 }
 
 if (!class_exists('setting_email')) {
-
-  require_once(DOKU_INC.'inc/mail.php');
   if (!defined('SETTING_EMAIL_PATTERN')) define('SETTING_EMAIL_PATTERN','<^'.PREG_PATTERN_VALID_EMAIL.'$>');
 
   class setting_email extends setting_string {

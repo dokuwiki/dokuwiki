@@ -76,6 +76,11 @@ function load_autoload($name){
         'GeSHi'                 => DOKU_INC.'inc/geshi.php',
         'TarLib'                => DOKU_INC.'inc/TarLib.class.php',
         'ZibLib'                => DOKU_INC.'inc/ZipLib.class.php',
+
+        'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
+        'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
+        'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
+
     );
 
     if(isset($classes[$name])){

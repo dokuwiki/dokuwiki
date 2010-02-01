@@ -197,8 +197,6 @@ class ap_download extends ap_manage {
 
         $ext = $this->guess_archive($file);
         if (in_array($ext, array('tar','bz','gz'))) {
-            require_once(DOKU_INC."inc/TarLib.class.php");
-
             switch($ext){
                 case 'bz':
                     $compress_type = COMPRESS_BZIP;
@@ -227,7 +225,6 @@ class ap_download extends ap_manage {
             }
             return true;
         } else if ($ext == 'zip') {
-            require_once(DOKU_INC."inc/ZipLib.class.php");
 
             $zip = new ZipLib();
             $ok = $zip->Extract($file, $target);
