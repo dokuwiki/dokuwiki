@@ -222,7 +222,6 @@ function check(){
         msg('The current page is not writable by you',0);
     }
 
-    require_once(DOKU_INC.'inc/HTTPClient.php');
     $check = wl('','',true).'data/_dummy';
     $http = new DokuHTTPClient();
     $http->timeout = 6;

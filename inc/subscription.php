@@ -275,7 +275,6 @@ function subscription_send_digest($subscriber_mail, $change, $lastupdate) {
     if (!is_null($rev)) {
         $subject = 'changed';
         $replaces['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-        require_once DOKU_INC.'inc/DifferenceEngine.php';
         $df = new Diff(explode("\n", rawWiki($id, $rev)),
                         explode("\n", rawWiki($id)));
         $dformat = new UnifiedDiffFormatter();

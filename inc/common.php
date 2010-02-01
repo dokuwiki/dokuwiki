@@ -1003,7 +1003,6 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
     // if useheading is enabled, purge the cache of all linking pages
     if(useHeading('content')){
-        require_once(DOKU_INC.'inc/fulltext.php');
         $pages = ft_backlinks($id);
         foreach ($pages as $page) {
             $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
@@ -1091,7 +1090,6 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     }elseif($rev){
         $subject = $lang['mail_changed'].' '.$id;
         $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true,'&'),$text);
-        require_once(DOKU_INC.'inc/DifferenceEngine.php');
         $df  = new Diff(explode("\n",rawWiki($id,$rev)),
                         explode("\n",rawWiki($id)));
         $dformat = new UnifiedDiffFormatter();

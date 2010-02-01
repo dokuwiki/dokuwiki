@@ -133,7 +133,6 @@ function ft_backlinks($id){
     $docs    = array_keys(ft_resultCombine(array_values($matches)));
     $docs    = array_filter($docs,'isVisiblePage'); // discard hidden pages
     if(!count($docs)) return $result;
-    require_once(DOKU_INC.'inc/parserutils.php');
 
     // check metadata for matching links
     foreach($docs as $match){

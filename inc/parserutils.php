@@ -644,8 +644,6 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
 
     } else {
 
-        require_once(DOKU_INC . 'inc/geshi.php');
-
         $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
         $geshi->set_encoding('utf-8');
         $geshi->enable_classes();
