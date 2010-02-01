@@ -11,10 +11,6 @@ if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session o
 if(!defined('NL')) define('NL',"\n");
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/httputils.php');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/JSON.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
@@ -96,7 +92,6 @@ function js_out(){
     echo 'LANG = '.$json->encode($lang['js']).";\n";
 
     // load toolbar
-    require_once(DOKU_INC.'inc/toolbar.php');
     toolbar_JSdefines('toolbar');
 
     // load files
