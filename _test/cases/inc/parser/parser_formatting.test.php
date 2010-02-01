@@ -168,6 +168,48 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    function testEmWithMultiOccurence() {
+        // Case from #763
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('//text:// Blablabla Blablabla
+
+//text:// another Blablabla Blablabla');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n")),
+            array('emphasis_open',array()),
+            array('cdata',array('text:')),
+            array('emphasis_close',array()),
+            array('cdata',array(" Blablabla Blablabla\n\n")),
+            array('emphasis_open',array()),
+            array('cdata',array('text:')),
+            array('emphasis_close',array()),
+            array('cdata',array(" another Blablabla Blablabla\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testEmWithUnicode() {
+        // Case from #1468
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('//Тест://');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n")),
+            array('emphasis_open',array()),
+            array('cdata',array('Тест:')),
+            array('emphasis_close',array()),
+            array('cdata',array("\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
     function testUnderline() {
         $this->P->addMode('underline',new Doku_Parser_Mode_Formatting('underline'));
         $this->P->parse('abc __bar__ def');
