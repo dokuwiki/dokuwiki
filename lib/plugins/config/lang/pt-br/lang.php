@@ -13,6 +13,7 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
+ * @author Sergio Motta sergio@cisne.com.br
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';

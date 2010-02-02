@@ -13,6 +13,7 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
+ * @author Sergio Motta sergio@cisne.com.br
  */
 $lang['menu']                  = 'Gerenciar Plug-ins';
 $lang['download']              = 'Baixar e instalar um novo plug-in';

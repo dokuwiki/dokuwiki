@@ -16,6 +16,7 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
+ * @author Sergio Motta sergio@cisne.com.br
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,9 +50,6 @@ $lang['btn_back']              = 'Voltar';
 $lang['btn_backlink']          = 'Links reversos';
 $lang['btn_backtomedia']       = 'Voltar à seleção do arquivo de mídia';
 $lang['btn_subscribe']         = 'Monitorar alterações na página';
-$lang['btn_unsubscribe']       = 'Cancelar monitoramento da página';
-$lang['btn_subscribens']       = 'Monitorar alterações no espaço de nomes';
-$lang['btn_unsubscribens']     = 'Cancelar monitoramento do espaço de nomes';
 $lang['btn_profile']           = 'Atualizar o perfil';
 $lang['btn_reset']             = 'Limpar';
 $lang['btn_resendpwd']         = 'Enviar uma nova senha';
@@ -97,6 +95,8 @@ $lang['resendpwdconfirm']      = 'Um link de confirmação foi enviado por e-mai
 $lang['resendpwdsuccess']      = 'Sua nova senha foi enviada por e-mail.';
 $lang['license']               = 'Exceto onde for informado ao contrário, o conteúdo neste wiki está sob a seguinte licença:';
 $lang['licenseok']             = 'Observe: editando esta página você aceita disponibilizar o seu conteúdo sob a seguinte licença:';
+$lang['searchmedia']           = 'Buscar arquivo:';
+$lang['searchmedia_in']        = 'Buscar em %s';
 $lang['txt_upload']            = 'Selecione o arquivo a ser enviado';
 $lang['txt_filename']          = 'Enviar como (opcional)';
 $lang['txt_overwrt']           = 'Substituir o arquivo existente';
@@ -121,10 +121,12 @@ $lang['deletefail']            = 'Não foi possível excluir "%s" - verifique as
 $lang['mediainuse']            = 'O arquivo "%s" não foi excluído - ele ainda está em uso.';
 $lang['namespaces']            = 'Espaços de nome';
 $lang['mediafiles']            = 'Arquivos disponíveis em';
+$lang['js']['searchmedia']     = 'Buscar por arquivos';
 $lang['js']['keepopen']        = 'Manter a janela aberta na seleção';
 $lang['js']['hidedetails']     = 'Esconder detalhes';
 $lang['js']['nosmblinks']      = 'Atalhos para pastas compartilhadas do Windows funcionam apenas no Microsoft Internet Explorer.
 Entretanto, você ainda pode copiar e colar o atalho.';
+$lang['js']['linkwiz']         = 'Link Wizard';
 $lang['js']['linkto']          = 'Link para:';
 $lang['js']['del_confirm']     = 'Deseja realmente excluir o(s) item(ns) selecionado(s)?';
 $lang['js']['mu_btn']          = 'Enviar vários arquivos de uma vez';
@@ -156,6 +158,7 @@ $lang['summary']               = 'Resumo da edição';
 $lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['mail_newpage']          = 'página adicionada:';
 $lang['mail_changed']          = 'página modificada:';
+$lang['mail_subscribe_list']   = 'páginas alteradas no namespace:';
 $lang['mail_new_user']         = 'novo usuário:';
 $lang['mail_upload']           = 'arquivo enviado:';
 $lang['qb_bold']               = 'Texto em negrito';
@@ -169,6 +172,10 @@ $lang['qb_h3']                 = 'Cabeçalho de nível 3';
 $lang['qb_h4']                 = 'Cabeçalho de nível 4';
 $lang['qb_h5']                 = 'Cabeçalho de nível 5';
 $lang['qb_h']                  = 'Cabeçalho';
+$lang['qb_hs']                 = 'Escolha o cabeçalho';
+$lang['qb_hplus']              = 'Cabeçalho de nível mais alto';
+$lang['qb_hminus']             = 'Cabeçalho de nível mais baixo';
+$lang['qb_hequal']             = 'Cabeçalho de mesmo nível';
 $lang['qb_link']               = 'Link interno';
 $lang['qb_extlink']            = 'Link externo';
 $lang['qb_hr']                 = 'Linha horizontal';
@@ -178,6 +185,7 @@ $lang['qb_media']              = 'Adicionar imagens e/ou outros arquivos';
 $lang['qb_sig']                = 'Inserir assinatura';
 $lang['qb_smileys']            = 'Carinhas';
 $lang['qb_chars']              = 'Caracteres especiais';
+$lang['upperns']               = 'Pular para namespace acima';
 $lang['admin_register']        = 'Adicionar novo usuário';
 $lang['metaedit']              = 'Editar metadados';
 $lang['metasaveerr']           = 'Não foi possível escrever os metadados';
@@ -193,11 +201,9 @@ $lang['img_copyr']             = 'Direitos autorais';
 $lang['img_format']            = 'Formato';
 $lang['img_camera']            = 'Câmera';
 $lang['img_keywords']          = 'Palavras-chave';
-$lang['subscribe_success']     = '%s foi adicionado à lista de monitoramento de %s';
-$lang['subscribe_error']       = 'Ocorreu um erro ao tentar adicionar %s à lista de monitoramento de %s';
-$lang['subscribe_noaddress']   = 'Não existe nenhum endereço de e-mail associado ao seu usuário, você não pode ser adicionado à lista de monitoramento.';
-$lang['unsubscribe_success']   = '%s foi removido da lista de monitoramento de %s';
-$lang['unsubscribe_error']     = 'Ocorreu um erro ao tentar remover %s da lista de monitoramento de %s';
+$lang['subscr_subscribe_success'] = 'Adicionado %s para a lista de inscrição para %s';
+$lang['subscr_subscribe_error'] = 'Erro adicionando %s para a lista de inscrição para %s';
+$lang['subscr_subscribe_noaddress'] = 'Não há endereço associado com seu login, você não pode ser adicionado à lista de inscrição';
 $lang['authmodfailed']         = 'A configuração da autenticação de usuário está com problemas. Por favor, informe ao administrador do wiki.';
 $lang['authtempfail']          = 'A autenticação de usuários está temporariamente desabilitada. Se essa situação persistir, por favor, informe ao administrador do Wiki.';
 $lang['i_chooselang']          = 'Selecione o seu idioma';
