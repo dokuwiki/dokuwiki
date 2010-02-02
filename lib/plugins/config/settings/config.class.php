@@ -629,7 +629,8 @@ if (!class_exists('setting_numeric')) {
       $out = '';
 
       if ($fmt=='php') {
-        $out .=  '$'.$var."['".$this->_out_key()."'] = ".$this->_local.";\n";
+        $local = $this->_local === '' ? "''" : $this->_local;
+        $out .=  '$'.$var."['".$this->_out_key()."'] = ".$local.";\n";
       }
 
     return $out;
