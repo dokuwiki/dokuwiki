@@ -833,7 +833,7 @@ function pageTemplate($data){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function parsePageTemplate($tpl, $id) {
-    global $INFO;
+    global $USERINFO;
 
     // replace placeholders
     $file = noNS($id);
@@ -865,8 +865,8 @@ function parsePageTemplate($tpl, $id) {
                 utf8_ucwords($page),
                 utf8_strtoupper($page),
                 $_SERVER['REMOTE_USER'],
-                $INFO['userinfo']['name'],
-                $INFO['userinfo']['mail'],
+                $USERINFO['name'],
+                $USERINFO['mail'],
                 $conf['dformat'],
                 ), $tpl);
 
