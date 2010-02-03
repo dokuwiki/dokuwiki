@@ -423,7 +423,7 @@ function p_render_metadata($id, $orig){
         // loop through the instructions
         foreach ($instructions as $instruction){
             // execute the callback against the renderer
-            call_user_func_array(array(&$renderer, $instruction[0]), $instruction[1]);
+            call_user_func_array(array(&$renderer, $instruction[0]), (array) $instruction[1]);
         }
 
         $evt->result = array('current'=>$renderer->meta,'persistent'=>$renderer->persistent);
