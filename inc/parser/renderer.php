@@ -85,8 +85,6 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function header($text, $level, $pos) {}
 
-    function section_edit($start, $end, $level, $name) {}
-
     function section_open($level) {}
 
     function section_close() {}
@@ -231,9 +229,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
         $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
         ) {}
 
-    function table_open($maxcols = NULL, $numrows = NULL){}
+    function table_open($maxcols = NULL, $numrows = NULL, $pos){}
 
-    function table_close($begin, $end){}
+    function table_close($pos){}
 
     function tablerow_open(){}
 

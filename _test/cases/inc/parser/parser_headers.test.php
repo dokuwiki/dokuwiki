@@ -15,14 +15,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',1,6)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array (6,0,1,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -36,14 +34,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',2,6)),
             array('section_open',array(2)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,2,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -57,14 +53,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',3,6)),
             array('section_open',array(3)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,3,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -116,14 +110,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',2,6)),
             array('section_open',array(2)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,2,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -137,14 +129,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',2,6)),
             array('section_open',array(2)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,2,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -158,14 +148,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',1,6)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,1,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -193,14 +181,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('== Header ==',1,6)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,1,'== Header ==')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -233,14 +219,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n== ====== Header\n")),
             array('p_close',array()),
-            array('section_edit',array(-1,22,1,'')),
             array('header',array('',1,23)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(23,0,1,'')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -261,14 +245,12 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array('abc '.DOKU_PARSER_EOL)),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',1, 6)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array(' def'.DOKU_PARSER_EOL)),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,0,1,'Header')),
             array('document_end',array()),
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
@@ -283,21 +265,18 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\nabc \n")),
             array('p_close',array()),
-            array('section_edit',array(-1,5,1,'')),
             array('header',array('Header',1,6)),
             array('section_open',array(1)),
             array('p_open',array()),
             array('cdata',array("\n def abc \n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(6,38,1,'Header')),
             array('header',array('Header2',2,39)),
             array('section_open',array(2)),
             array('p_open',array()),
             array('cdata',array("\n def\n")),
             array('p_close',array()),
             array('section_close',array()),
-            array('section_edit',array(39,0,2,'Header2')),
             array('document_end',array())
         );
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);

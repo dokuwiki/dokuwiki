@@ -12,9 +12,6 @@ class Doku_Handler {
 
     var $status = array(
         'section' => false,
-        'section_edit_start' => -1,
-        'section_edit_level' => 1,
-        'section_edit_title' => ''
     );
 
     var $rewriteBlocks = true;
@@ -40,10 +37,6 @@ class Doku_Handler {
         if ( $this->status['section'] ) {
            $last_call = end($this->calls);
            array_push($this->calls,array('section_close',array(), $last_call[2]));
-           if ($this->status['section_edit_start']>1) {
-               // ignore last edit section if there is only one header
-               array_push($this->calls,array('section_edit',array($this->status['section_edit_start'], 0, $this->status['section_edit_level'], $this->status['section_edit_title']), $last_call[2]));
-           }
         }
 
         if ( $this->rewriteBlocks ) {
@@ -97,8 +90,6 @@ class Doku_Handler {
     }
 
     function header($match, $state, $pos) {
-        global $conf;
-
         // get level and title
         $title = trim($match);
         $level = 7 - strspn($title,'=');
@@ -107,13 +98,6 @@ class Doku_Handler {
         $title = trim($title);
 
         if ($this->status['section']) $this->_addCall('section_close',array(),$pos);
-
-        if ($level<=$conf['maxseclevel']) {
-            $this->_addCall('section_edit',array($this->status['section_edit_start'], $pos-1, $this->status['section_edit_level'], $this->status['section_edit_title']), $pos);
-            $this->status['section_edit_start'] = $pos;
-            $this->status['section_edit_level'] = $level;
-            $this->status['section_edit_title'] = $title;
-        }
 
         $this->_addCall('header',array($title,$level,$pos), $pos);
 
@@ -583,17 +567,16 @@ class Doku_Handler {
                 $ReWriter = new Doku_Handler_Table($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
 
-                $this->_addCall('table_start', array(), $pos);
+                $this->_addCall('table_start', array($pos + 1), $pos);
                 if ( trim($match) == '^' ) {
                     $this->_addCall('tableheader', array(), $pos);
                 } else {
                     $this->_addCall('tablecell', array(), $pos);
                 }
-                $this->status['table_begin'] = $pos;
             break;
 
             case DOKU_LEXER_EXIT:
-                $this->_addCall('table_end', array($this->status['table_begin']+1, $pos), $pos);
+                $this->_addCall('table_end', array($pos), $pos);
                 $this->CallWriter->process();
                 $ReWriter = & $this->CallWriter;
                 $this->CallWriter = & $ReWriter->CallWriter;
@@ -1217,7 +1200,7 @@ class Doku_Handler_Table {
     }
 
     function tableStart($call) {
-        $this->tableCalls[] = array('table_open',array(),$call[2]);
+        $this->tableCalls[] = array('table_open',$call[1],$call[2]);
         $this->tableCalls[] = array('tablerow_open',array(),$call[2]);
         $this->firstCell = true;
     }
@@ -1288,6 +1271,7 @@ class Doku_Handler_Table {
             // Adjust to num cols not num col delimeters
             $this->tableCalls[0][1][] = $this->maxCols - 1;
             $this->tableCalls[0][1][] = $this->maxRows;
+            $this->tableCalls[0][1][] = array_shift($this->tableCalls[0][1]);
         } else {
             trigger_error('First element in table call list is not table_open');
         }
@@ -1505,13 +1489,7 @@ class Doku_Handler_Block {
             //remove the whole paragraph
             array_splice($this->calls,$i);
         }else{
-            if ($this->calls[count($this->calls)-1][0] == 'section_edit') {
-                $tmp = array_pop($this->calls);
-                $this->calls[] = array('p_close',array(), $pos);
-                $this->calls[] = $tmp;
-            } else {
-                $this->calls[] = array('p_close',array(), $pos);
-            }
+            $this->calls[] = array('p_close',array(), $pos);
         }
 
         $this->inParagraph = false;

@@ -259,7 +259,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('nest', array ( array (
               array('footnote_open',array()),
-              array('table_open',array(3,2)),
+              array('table_open',array(3, 2, 8)),
               array('tablerow_open',array()),
               array('tablecell_open',array(1,'left',1)),
               array('cdata',array(' Row 0 Col 1    ')),
@@ -282,7 +282,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' Row 1 Col 3        ')),
               array('tablecell_close',array()),
               array('tablerow_close',array()),
-              array('table_close',array(8, 123)),
+              array('table_close',array(123)),
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),

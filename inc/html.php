@@ -91,22 +91,19 @@ function html_secedit_button($matches){
     global $ID;
     global $INFO;
 
-    $edittarget = ($matches[1] === 'SECTION') ? 'plain' :
-                  strtolower($matches[1]);
+    $nr = $matches[1];
+    $target = strtolower($matches[2]);
 
-    $section = $matches[3];
-    $name = $matches[2];
+    $name = $matches[3];
+    $section = $matches[4];
 
-    $secedit  = '';
-    $secedit .= '<div class="secedit editbutton_' . $edittarget . '">';
-    $secedit .= html_btn('secedit',$ID,'',
+    return "<div class='secedit editbutton_$target editbutton_$nr'>" .
+               html_btn('secedit',$ID,'',
             array('do'      => 'edit',
                 'lines'   => $section,
-                'edittarget' => $edittarget,
+                'edittarget' => $target,
                 'rev' => $INFO['lastmod']),
-            'post', $name);
-    $secedit .= '</div>';
-    return $secedit;
+            'post', $name) . '</div>';
 }
 
 /**
@@ -117,7 +114,7 @@ function html_secedit_button($matches){
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- ([A-Z]+) (?:"(.*)" )?\[(\d+-\d*)\] -->#';
+    $regexp = '#<!-- EDIT(\d+) ([A-Z]+) (?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
 
     if($INFO['writable'] && $show && !$INFO['rev']){
         $text = preg_replace_callback($regexp,
