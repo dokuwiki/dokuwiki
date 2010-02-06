@@ -8,6 +8,7 @@
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author Piotr JANKOWSKI <jankowski.piotr@gmail.com>
+ * @author sleshek@wp.pl
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';
@@ -108,6 +109,7 @@ $lang['gdlib']                 = 'Wersja biblioteki GDLib';
 $lang['im_convert']            = 'Ścieżka do programu imagemagick';
 $lang['jpg_quality']           = 'Jakość kompresji JPG (0-100)';
 $lang['subscribers']           = 'Subskrypcja';
+$lang['subscribe_time']        = 'Czas po którym są wysyłane listy subskrypcji i streszczenia (sek.); Powinna być to wartość większa niż podana w zmiennej recent_days.';
 $lang['compress']              = 'Kompresja arkuszy CSS i plików JavaScript';
 $lang['hidepages']             = 'Ukrywanie stron pasujących do wzorca (wyrażenie regularne)';
 $lang['send404']               = 'Nagłówek "HTTP 404/Page Not Found" dla nieistniejących stron';

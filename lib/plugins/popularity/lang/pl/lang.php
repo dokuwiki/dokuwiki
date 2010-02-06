@@ -6,6 +6,7 @@
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
+ * @author sleshek@wp.pl
  */
 $lang['name']                  = 'Informacja o popularności (ładowanie może zająć dłuższą chwilę)';
 $lang['submit']                = 'Wyślij dane';

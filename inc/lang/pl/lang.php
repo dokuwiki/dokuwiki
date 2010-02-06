@@ -7,6 +7,7 @@
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
+ * @author sleshek@wp.pl
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -40,9 +41,6 @@ $lang['btn_back']              = 'Wstecz';
 $lang['btn_backlink']          = 'Odnośniki';
 $lang['btn_backtomedia']       = 'Powrót do wyboru pliku';
 $lang['btn_subscribe']         = 'Subskrybuj zmiany';
-$lang['btn_unsubscribe']       = 'Zaprzestań subskrypcji zmian';
-$lang['btn_subscribens']       = 'Subskrybuj zmiany w katalogu';
-$lang['btn_unsubscribens']     = 'Zaprzestań subskrypcji zmian w katalogu';
 $lang['btn_profile']           = 'Aktualizuj profil';
 $lang['btn_reset']             = 'Resetuj';
 $lang['btn_resendpwd']         = 'Prześlij nowe hasło';
@@ -150,8 +148,10 @@ $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
 $lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
+$lang['table_edit_title']      = 'Tabela';
 $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
+$lang['mail_subscribe_list']   = 'Zmienione strony w katalogu:';
 $lang['mail_new_user']         = 'Nowy użytkownik:';
 $lang['mail_upload']           = 'Umieszczono plik:';
 $lang['qb_bold']               = 'Pogrubienie';
@@ -194,11 +194,22 @@ $lang['img_copyr']             = 'Prawa autorskie';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Aparat';
 $lang['img_keywords']          = 'Słowa kluczowe';
-$lang['subscribe_success']     = 'Dodano %s do listy subskrypcji strony %s';
-$lang['subscribe_error']       = 'Błąd przy dodawaniu %s do listy subskrypcji strony %s';
-$lang['subscribe_noaddress']   = 'Nie podałeś adresu e-mail przy rejestracji, nie możesz zostać dodany do listy subskrypcji.';
-$lang['unsubscribe_success']   = 'Usunięto %s z listy subskrypcji strony %s';
-$lang['unsubscribe_error']     = 'Błąd przy usuwaniu %s z listy subskrypcji strony %s';
+$lang['subscr_subscribe_success'] = 'Dodano %s do listy subskrypcji %s';
+$lang['subscr_subscribe_error'] = 'Błąd podczas dodawania %s do listy subskrypcji %s';
+$lang['subscr_subscribe_noaddress'] = 'Brak adresu skojarzonego z twoim loginem, nie możesz zostać dodany(a) do listy subskrypcji';
+$lang['subscr_unsubscribe_success'] = 'Usunięto %s z listy subskrypcji %s';
+$lang['subscr_unsubscribe_error'] = 'Błąd podczas usuwania %s z listy subskrypcji %s';
+$lang['subscr_already_subscribed'] = '%s jest już subskrybowany(a) przez %s';
+$lang['subscr_not_subscribed'] = '%s nie jest subskrybowany(a) przez %s';
+$lang['subscr_m_not_subscribed'] = 'Obecnie nie subskrybujesz bieżącej strony lub katalogu.';
+$lang['subscr_m_new_header']   = 'Dodaj subskrypcję';
+$lang['subscr_m_current_header'] = 'Aktualne subskrypcje';
+$lang['subscr_m_unsubscribe']  = 'Zrezygnuj z subskrypcji';
+$lang['subscr_m_subscribe']    = 'Subskrybuj';
+$lang['subscr_m_receive']      = 'Otrzymuj';
+$lang['subscr_style_every']    = 'email przy każdej zmianie';
+$lang['subscr_style_digest']   = 'email ze streszczeniem zmian dla każdej ze stron';
+$lang['subscr_style_list']     = 'lista zmienionych stron od czasu ostatniego emaila';
 $lang['authmodfailed']         = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
 $lang['i_chooselang']          = 'Wybierz język';

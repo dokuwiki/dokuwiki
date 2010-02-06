@@ -5,6 +5,7 @@
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
+ * @author sleshek@wp.pl
  */
 $lang['menu']                  = 'Menadżer przywracania';
 $lang['filter']                = 'Wyszukaj uszkodzone strony';
