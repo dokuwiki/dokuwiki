@@ -219,7 +219,7 @@ function subscription_regex($pre = array()) {
  * @author Steven Danz <steven-danz@kc.rr.com>
  * @author Adrian Lang <lang@cosmocode.de>
  */
-function subscription_addresslist($data){
+function subscription_addresslist(&$data){
     global $conf;
     global $auth;
 
