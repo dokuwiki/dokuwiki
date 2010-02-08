@@ -49,7 +49,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string A marker class for the starting HTML element
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    protected function startSectionEdit($start, $type, $title) {
+    protected function startSectionEdit($start, $type, $title = null) {
         static $lastsecid = 0;
         $this->sectionedits[] = array(++$lastsecid, $start, $type, $title);
         return 'sectionedit' . $lastsecid;
@@ -63,9 +63,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     protected function finishSectionEdit($end) {
         list($id, $start, $type, $title) = array_pop($this->sectionedits);
-        $this->doc .= "<!-- EDIT$id " . strtoupper($type) . ' "' .
-               str_replace('"', '', $title) . "\" [$start-" .
-               ($end === 0 ? '' : $end) . "] -->";
+        $this->doc .= "<!-- EDIT$id " . strtoupper($type) . ' ';
+        if (!is_null($title)) {
+            $this->doc .= '"' . str_replace('"', '', $title) . '" ';
+        }
+        $this->doc .= "[$start-" . ($end === 0 ? '' : $end) . '] -->';
     }
 
     function getFormat(){
@@ -885,7 +887,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $lang;
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
-        $this->doc .= '<table class="inline ' . $this->startSectionEdit($pos, 'table', $lang['table_edit_title']) . '">'.DOKU_LF;
+        $this->doc .= '<table class="inline ' . $this->startSectionEdit($pos, 'table') . '">'.DOKU_LF;
     }
 
     function table_close($pos){

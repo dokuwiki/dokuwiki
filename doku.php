@@ -35,7 +35,7 @@ $NS    = getNS($ID);
 $REV   = $_REQUEST['rev'];
 $IDX   = $_REQUEST['idx'];
 $DATE  = $_REQUEST['date'];
-$RANGE = $_REQUEST['lines'];
+$RANGE = $_REQUEST['range'];
 $HIGH  = $_REQUEST['s'];
 if(empty($HIGH)) $HIGH = getGoogleQuery();
 
