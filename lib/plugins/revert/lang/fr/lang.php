@@ -10,6 +10,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
+ * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  */
 $lang['menu']                  = 'Gestionnaire de réversions';
 $lang['filter']                = 'Trouver les pages spammées ';

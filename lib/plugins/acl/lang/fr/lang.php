@@ -17,6 +17,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
+ * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  */
 $lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
 $lang['acl_group']             = 'Groupe';

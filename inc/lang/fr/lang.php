@@ -18,6 +18,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
+ * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -51,9 +52,6 @@ $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens vers cette page';
 $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
 $lang['btn_subscribe']         = 'S\'abonner à la page';
-$lang['btn_unsubscribe']       = 'Se désabonner de la page';
-$lang['btn_subscribens']       = 'S\'abonner à la catégorie';
-$lang['btn_unsubscribens']     = 'Se désabonner de la catégorie';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
 $lang['btn_resendpwd']         = 'Envoyer le mot de passe';
@@ -161,8 +159,10 @@ $lang['external_edit']         = 'édition externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'L"extension <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> est nécessaire pour afficher ce contenu.';
 $lang['download']              = 'Télécharger un extrait';
+$lang['table_edit_title']      = 'Tableau';
 $lang['mail_newpage']          = 'page ajoutée :';
 $lang['mail_changed']          = 'page changée :';
+$lang['mail_subscribe_list']   = 'pages modifiées dans l\'espace de nommage:';
 $lang['mail_new_user']         = 'nouvel utilisateur :';
 $lang['mail_upload']           = 'fichier envoyé :';
 $lang['qb_bold']               = 'Gras';
@@ -205,11 +205,22 @@ $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Appareil photo';
 $lang['img_keywords']          = 'Mots clef';
-$lang['subscribe_success']     = 'Ajout de %s à la liste d\'abonnés de %s';
-$lang['subscribe_error']       = 'Erreur à l\'ajout de %s à la liste d\'abonnés de %s';
-$lang['subscribe_noaddress']   = 'Aucune adresse associée à votre nom d\'utilisateur, impossible de vous ajouter à la liste d\'abonnés';
-$lang['unsubscribe_success']   = 'Suppression de %s de la liste d\'abonnés de %s';
-$lang['unsubscribe_error']     = 'Erreur à la suppression de %s de la liste d\'abonnés de %s';
+$lang['subscr_subscribe_success'] = 'Ajouté %s à la liste de souscription de %s';
+$lang['subscr_subscribe_error'] = 'Erreur en ajoutant %s à la liste de souscription de %s';
+$lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre login, vous ne pouvez pas être ajouté à la liste de souscription';
+$lang['subscr_unsubscribe_success'] = 'Retiré %s de la liste de souscription de %s';
+$lang['subscr_unsubscribe_error'] = 'Erreur en retirant %s de la liste de souscription de %s';
+$lang['subscr_already_subscribed'] = '%s est déjà souscrit à %s';
+$lang['subscr_not_subscribed'] = '%s n\'est pas souscrit à %s';
+$lang['subscr_m_not_subscribed'] = 'Vous n\'avez pas souscrit pour l\'instant à la page courante ou l\'espace de nommage';
+$lang['subscr_m_new_header']   = 'Ajouter une souscription';
+$lang['subscr_m_current_header'] = 'Souscriptions actives';
+$lang['subscr_m_unsubscribe']  = 'Annuler la souscription';
+$lang['subscr_m_subscribe']    = 'Souscrire';
+$lang['subscr_m_receive']      = 'Recevoir';
+$lang['subscr_style_every']    = 'Envoyer un email à chaque changement';
+$lang['subscr_style_digest']   = 'Email résumé des changements de chaque page';
+$lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier email';
 $lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'informer l\'administrateur du Wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'informer l\'administrateur du Wiki.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
