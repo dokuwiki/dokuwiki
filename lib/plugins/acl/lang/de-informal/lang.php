@@ -4,7 +4,7 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
- * @author ste-re@web.de
+ * @author Marcel Metz <marcel_metz@gmx.de>
  */
 $lang['admin_acl']             = 'Zugriffskontrollsystem Management';
 $lang['acl_group']             = 'Gruppe';
@@ -21,14 +21,14 @@ $lang['p_choose_id']           = 'Bitte <b>gib einen Nutzer oder eine Gruppe</b>
 $lang['p_choose_ns']           = 'Bitte <b>gib einen Nutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen des Namenraumes<b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
 $lang['p_inherited']           = 'Hinweis: Diese Rechte wuredn nicht explizit gesetzt sondern geerbt von anderen Grupen oder übergeordneten Namensräumen.';
 $lang['p_isadmin']             = 'Hinweis: Die gewählte Gruppe oder der Benutzer haben immer die vollen Rechte, weil sie als Superuser konfiguriert sind.';
-$lang['p_include']             = 'Höhere Rechte schließen kleinere mit ein. Hochlade- und Loeschrechte sind nur fuer Namensräume, nicht fuer Seiten.';
+$lang['p_include']             = 'Höhere Rechte schließen kleinere mit ein. Hochlade- und Löschrechte sind nur für Namensräume, nicht für Seiten.';
 $lang['current']               = 'Momentane Zugriffsregeln';
 $lang['where']                 = 'Seite/Namensraum';
 $lang['who']                   = 'Benutzer/Gruppe';
 $lang['perm']                  = 'Rechte';
 $lang['acl_perm0']             = 'Keine';
 $lang['acl_perm1']             = 'Lesen';
-$lang['acl_perm2']             = 'Editieren';
+$lang['acl_perm2']             = 'Bearbeiten';
 $lang['acl_perm4']             = 'Erstellen';
 $lang['acl_perm8']             = 'Hochladen';
 $lang['acl_perm16']            = 'Löschen';

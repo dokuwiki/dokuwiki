@@ -1,7 +1,7 @@
 ===== Einstellungs-Manager =====
 
-Benutze diese Seite zur Kontrolle der Einstellungen deiner DokuWiki-Installation. Für Hilfe zu individuellen Einstellungen gehe zu [[doku>config]]. Für mehr Details über diese Erweiterunge siehe [[doku>plugin:config]].
+Benutze diese Seite zur Kontrolle der Einstellungen deiner DokuWiki-Installation. Für Hilfe zu individuellen Einstellungen gehe zu [[doku>config]]. Für mehr Details über diese Erweiterungen siehe [[doku>plugin:config]].
 
 Einstellungen die mit einem hellroten Hintergrund angezeigt werden, können mit dieser Erweiterung nicht verändert werden. Einstellungen mit einem blauen Hintergrund sind Standardwerte und Einstellungen mit einem weißen Hintergrund wurden lokal gesetzt für diese Installation. Sowohl blaue als auch weiße Einstellungen können angepasst werden.
 
-Denke dran **SAVE** zu drücken bevor du die Seite verläßt, andernfalls werden deine Änderungen nicht übernommen.
+Denke dran **Speichern** zu drücken bevor du die Seite verlässt, andernfalls werden deine Änderungen nicht übernommen.

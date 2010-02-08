@@ -4,7 +4,7 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
- * @author ste-re@web.de
+ * @author Marcel Metz <marcel_metz@gmx.de>
  */
 $lang['menu']                  = 'Benutzerverwalter';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
@@ -20,8 +20,8 @@ $lang['value']                 = 'Wert';
 $lang['add']                   = 'Zufügen';
 $lang['delete']                = 'Löschen';
 $lang['delete_selected']       = 'Lösche ausgewähltes';
-$lang['edit']                  = 'Editieren';
-$lang['edit_prompt']           = 'Editiere den Benutzer';
+$lang['edit']                  = 'Bearbeiten';
+$lang['edit_prompt']           = 'Bearbeite diesen Benutzer';
 $lang['modify']                = 'Änderungen speichern';
 $lang['search']                = 'Suchen';
 $lang['search_prompt']         = 'Suche ausführen';
@@ -45,5 +45,5 @@ $lang['note_group']            = 'Neue Benutzer werden zur Standardgruppe (%s) h
 $lang['note_pass']             = 'Das Passwort wird automatisch erzeugt, wenn das Feld freigelassen wird und der Benutzer Benachrichtigungen aktiviert hat.';
 $lang['add_ok']                = 'Benutzer erfolgreich hinzugefügt';
 $lang['add_fail']              = 'Hinzufügen des Benutzers fehlgeschlagen';
-$lang['notify_ok']             = 'Benachrichtigungsmail wurde versendet';
-$lang['notify_fail']           = 'Benachrichtigungsmail konnte nicht gesendet werden';
+$lang['notify_ok']             = 'Benachrichtigungsemail wurde versendet';
+$lang['notify_fail']           = 'Benachrichtigungsemail konnte nicht gesendet werden';

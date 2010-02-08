@@ -10,5 +10,6 @@ MIME-Typ   : @MIME@
 Benutzer   : @USER@
 
 -- 
-Diese Mail kommt vom DokuWiki auf
+Diese Mail wurde vom DokuWiki auf
 @DOKUWIKIURL@
+erzeugt.
