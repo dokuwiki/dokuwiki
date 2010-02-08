@@ -167,7 +167,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ($level <= $conf['maxseclevel'] &&
             count($this->sectionedits) > 0 &&
             $this->sectionedits[count($this->sectionedits) - 1][2] === 'section') {
-            $this->finishSectionEdit($pos);
+            $this->finishSectionEdit($pos - 1);
         }
 
         // write the header
