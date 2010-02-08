@@ -107,7 +107,7 @@ function html_secedit($text,$show=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_secedit_button($matches){
-    $data = array('id'     => $matches[1],
+    $data = array('secid'  => $matches[1],
                   'target' => strtolower($matches[2]),
                   'range'  => $matches[count($matches) - 1]);
     if (count($matches) === 5) {
@@ -133,8 +133,11 @@ function html_secedit_get_button($data) {
     $name = $data['name'];
     unset($data['name']);
 
+    $secid = $data['secid'];
+    unset($data['secid']);
+
     return "<div class='secedit editbutton_" . $data['target'] .
-                       " editbutton_" . $data['id'] . "'>" .
+                       " editbutton_" . $data['secid'] . "'>" .
            html_btn('secedit', $ID, '',
                     array_merge(array('do'  => 'edit',
                                       'rev' => $INFO['lastmod']), $data),
