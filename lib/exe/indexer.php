@@ -364,7 +364,7 @@ function sendDigest() {
         foreach($users as $data) {
             list($user, $style, $lastupdate) = $data;
             $lastupdate = (int) $lastupdate;
-            if ($lastupdate + $conf['subscribe_interval'] > time()) {
+            if ($lastupdate + $conf['subscribe_time'] > time()) {
                 // Less than the configured time period passed since last
                 // update.
                 continue;
