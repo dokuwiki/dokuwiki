@@ -289,9 +289,15 @@ function msg($message,$lvl=0,$line='',$file=''){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function dbg($msg,$hidden=false){
-    (!$hidden) ? print '<pre class="dbg">' : print "<!--\n";
-    print_r($msg);
-    (!$hidden) ? print '</pre>' : print "\n-->";
+    if($hidden){
+        echo "<!--\n";
+        print_r($msg);
+        echo "\n-->";
+    }else{
+        echo '<pre class="dbg">';
+        echo hsc(print_r($msg,true));
+        echo '</pre>';
+    }
 }
 
 /**
