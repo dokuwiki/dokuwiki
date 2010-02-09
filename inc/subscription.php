@@ -303,13 +303,14 @@ function subscription_send_digest($subscriber_mail, $change, $lastupdate) {
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function subscription_send_list($subscriber_mail, $changes, $id) {
+    global $conf;
     $list = '';
     foreach ($changes as $change) {
-        $list .= '* ' . $change['id'] . NL;
+        $list .= '* ' . wl($change['id'], array(), true) . NL;
     }
     subscription_send($subscriber_mail,
                       array('DIFF'      => rtrim($list),
-                            'SUBSCRIBE' => wl($changes[0]['id'],
+                            'SUBSCRIBE' => wl($id . $conf['start'],
                                               array('do' => 'subscribe'),
                                               true, '&')),
                       'subscribe_list',
