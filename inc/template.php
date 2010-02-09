@@ -1375,9 +1375,14 @@ function tpl_subscribe() {
             if(!$sstl) $sstl = hsc($sub['style']);
             echo ' ('.$sstl.') ';
 
-            echo '<a href="'.wl($ID,array('do'=>'subscribe','sub_target'=>$sub['target'],'sub_style'=>$sub['style'],'sub_action'=>'unsubscribe')).'" class="unsubscribe">'.$lang['subscr_m_unsubscribe'].'</a>';
-
-            echo '</div></li>';
+            echo '<a href="' . wl($ID,
+                                  array('do'=>'subscribe',
+                                        'sub_target'=>$sub['target'],
+                                        'sub_style'=>$sub['style'],
+                                        'sub_action'=>'unsubscribe',
+                                        'sectok' => getSecurityToken())) .
+                 '" class="unsubscribe">'.$lang['subscr_m_unsubscribe'] .
+                 '</a></div></li>';
         }
         echo '</ul>';
     }
