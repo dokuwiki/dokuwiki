@@ -1,0 +1,1 @@
+Modifica le pagina e preme "Salveguardar". Vide [[wiki:syntax]] pro le syntaxe wiki. Per favor modifica le paginas solmente si tu pote **meliorar** lo. Si tu vole testar alcun cosas, apprende facer tu prime passos in le [[playground:playground|parco de jocos]].

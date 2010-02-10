@@ -1,0 +1,17 @@
+Un pagina in tu DokuWiki ha essite addite o modificate. Ecce le detalios:
+
+Data : @DATE@
+Navigator : @BROWSER@
+Adresse IP : @IPADDRESS@
+Nomine host : @HOSTNAME@
+Version ancian: @OLDPAGE@
+Version nove: @NEWPAGE@
+Summario: @SUMMARY@
+Usator : @USER@
+
+@DIFF@
+
+
+-- 
+Iste e-mail ha essite generate per DokuWiki a
+@DOKUWIKIURL@

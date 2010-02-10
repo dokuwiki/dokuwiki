@@ -1,0 +1,38 @@
+# Isto es un lista de parolas que le generator de indices ignora, un parola per linea.
+# Si tu modifica iste file, assecura te de usar le fines de linea UNIX (newline singule).
+# Non es necessari includer parolas plus curte que 3 characteres - istes es ignorate in omne caso.
+a
+ab
+circa
+com
+como
+como
+con
+de
+e
+es
+essera
+esserea
+esseva
+essite
+ex
+illo
+in
+iste
+istes
+le
+le
+les
+lo
+lor
+o
+pro
+quando
+que
+qui
+super
+sur
+tu
+ubi
+un
+www

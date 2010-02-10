@@ -1,0 +1,14 @@
+Salute @FULLNAME@!
+
+Alcuno ha requestate un nove contrasigno pro tu conto de @TITLE@
+a @DOKUWIKIURL@
+
+Si tu non ha requestate un nove contrasigno, alora simplemente ignora iste message.
+
+Pro confirmar que le requesta realmente ha essite inviate per te, per favor usa le ligamine sequente.
+
+@CONFIRM@
+
+-- 
+Iste message ha essite generate per DokuWiki a
+@DOKUWIKIURL@
