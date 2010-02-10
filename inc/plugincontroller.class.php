@@ -120,8 +120,8 @@ class Doku_Plugin_Controller {
     function _populateMasterList() {
         if ($dh = opendir(DOKU_PLUGIN)) {
             while (false !== ($plugin = readdir($dh))) {
-                if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp') continue;
-                if (is_file(DOKU_PLUGIN.$plugin)) continue;
+                if ($plugin[0] == '.') continue;               // skip hidden entries
+                if (is_file(DOKU_PLUGIN.$plugin)) continue;    // skip files, we're only interested in directories
 
                 if (substr($plugin,-9) == '.disabled') {
                     // the plugin was disabled by rc2009-01-26
