@@ -6,6 +6,6 @@ Il pannello di sinistra mostra tutte le categorie e le pagine disponibili.
 
 Il campo sopra ti permette di vedere e modificare i permessi di un utente o gruppo selezionato.
 
-Nella tabella sotto, sono riportate tutte le regole di controllo degli accessi attualmente impostate. Puoi utilizzarla per cancellare o cambiare al volo varie regole.
+Nella tabella sotto, sono riportate tutte le regole di controllo degli accessi attualmente impostate. Puoi utilizzarla per eliminare o cambiare al volo varie regole.
 
-Leggere la [[doku>acl|official documentation on ACL]] può aiutarti a capire pienamente come funziona il controllo degli accessi in DokuWiki.
+Leggere la [[doku>acl|documentazione ufficale delle ACL]] può aiutarti a capire pienamente come funziona il controllo degli accessi in DokuWiki.
