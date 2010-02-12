@@ -16,6 +16,7 @@
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
+ * @author Victor Castelan <victorcastelan@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';

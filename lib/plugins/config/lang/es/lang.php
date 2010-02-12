@@ -17,6 +17,7 @@
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
+ * @author Victor Castelan <victorcastelan@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -117,6 +118,7 @@ $lang['gdlib']                 = 'Versión de GD Lib';
 $lang['im_convert']            = 'Ruta a la herramienta de conversión de ImageMagick';
 $lang['jpg_quality']           = 'Calidad de compresión de JPG (0-100)';
 $lang['subscribers']           = 'Habilitar soporte para suscripción a páginas';
+$lang['subscribe_time']        = 'Tiempo después que alguna lista de suscripción fue enviada (seg); Debe ser menor que el tiempo especificado en días recientes.';
 $lang['compress']              = 'Compactar la salida de CSS y javascript';
 $lang['hidepages']             = 'Ocultar páginas con coincidencias (expresiones regulares)';
 $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas no existentes';

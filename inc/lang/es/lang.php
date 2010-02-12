@@ -22,6 +22,7 @@
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
+ * @author Victor Castelan <victorcastelan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,9 +56,6 @@ $lang['btn_back']              = 'Atrás';
 $lang['btn_backlink']          = 'Enlaces anteriores';
 $lang['btn_backtomedia']       = 'Volver a la selección de archivos multimedia';
 $lang['btn_subscribe']         = 'Suscribirse a cambios de la página';
-$lang['btn_unsubscribe']       = 'Cancelar suscripción a cambios de la página';
-$lang['btn_subscribens']       = 'Suscribirse a cambios del espacio de nombres';
-$lang['btn_unsubscribens']     = 'Cancelar suscripción a cambios del espacio de nombres';
 $lang['btn_profile']           = 'Actualizar perfil';
 $lang['btn_reset']             = 'Restablecer';
 $lang['btn_resendpwd']         = 'Enviar nueva contraseña';
@@ -167,6 +165,7 @@ $lang['noflash']               = 'Para mostrar este contenido es necesario el <a
 $lang['download']              = 'Descargar trozo de código fuente';
 $lang['mail_newpage']          = 'página añadida:';
 $lang['mail_changed']          = 'página cambiada:';
+$lang['mail_subscribe_list']   = 'páginas cambiadas en el espacio de nombre:';
 $lang['mail_new_user']         = 'nuevo usuario:';
 $lang['mail_upload']           = 'archivo subido:';
 $lang['qb_bold']               = 'Negrita';
@@ -209,11 +208,22 @@ $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Formato';
 $lang['img_camera']            = 'Cámara';
 $lang['img_keywords']          = 'Palabras claves';
-$lang['subscribe_success']     = '%s ha sido añadido a la lista de notificación de cambios de %s';
-$lang['subscribe_error']       = 'Ha habido un error al agregar %s a la lista de notificación de cambios de %s';
-$lang['subscribe_noaddress']   = 'No hay ninguna dirección de correo electrónico asociada con tu nombre de usuario, no puedes ser añadido a la lista de notificación de cambios';
-$lang['unsubscribe_success']   = '%s ha sido eliminado de la lista de notificación de cambios de %s';
-$lang['unsubscribe_error']     = 'Ha habido un error al eliminar %s de la lista de notificación de cambios de %s';
+$lang['subscr_subscribe_success'] = 'Se agregó %s a las listas de suscripción para %s';
+$lang['subscr_subscribe_error'] = 'Error al agregar %s a las listas de suscripción para %s';
+$lang['subscr_subscribe_noaddress'] = 'No hay dirección asociada con tu registro, no se puede agregarte a la lista de suscripción';
+$lang['subscr_unsubscribe_success'] = 'Removido %s de la lista de suscripción para %s';
+$lang['subscr_unsubscribe_error'] = 'Error al remover %s de la lista de suscripción para %s';
+$lang['subscr_already_subscribed'] = '%s ya está suscrito a %s';
+$lang['subscr_not_subscribed'] = '%s no está suscrito a %s';
+$lang['subscr_m_not_subscribed'] = 'Actualmente no te encuentras suscrito a esta página o espacio de nombres';
+$lang['subscr_m_new_header']   = 'Agregar suscripción';
+$lang['subscr_m_current_header'] = 'Suscripciones actuales';
+$lang['subscr_m_unsubscribe']  = 'Darse de baja';
+$lang['subscr_m_subscribe']    = 'Suscribirse';
+$lang['subscr_m_receive']      = 'Recibir';
+$lang['subscr_style_every']    = 'enviar correo en cada cambio';
+$lang['subscr_style_digest']   = 'recopilar correo de cambios por cada página';
+$lang['subscr_style_list']     = 'lista de páginas con cambios desde el último correo';
 $lang['authmodfailed']         = 'Está mal configurada la autenticación de usuarios. Por favor, avisa al administrador del wiki.';
 $lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
 $lang['i_chooselang']          = 'Elija su idioma';
