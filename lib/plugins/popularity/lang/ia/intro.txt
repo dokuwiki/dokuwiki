@@ -1,0 +1,9 @@
+====== Datos de popularitate ======
+
+Iste instrumento collige datos anonyme super tu wiki e te permitte inviar los retro al disveloppatores de DokuWiki. Isto les adjuta de comprender como DokuWiki es usate per su usatores e assecura que le decisiones super le disveloppamento futur si basate super statisticas de uso ex le mundo real.
+
+Tu es incoragiate a repeter iste procedura de tempore a tempore pro continuar a informar le disveloppatores quando tu wiki cresce. Tu collectiones repetite de datos essera identificate per un ID anonyme.
+
+Le datos colligite contine informationes como tu version de DokuWiki, le numero e dimension de tu paginas e files, plug-ins installate e information super tu installation de PHP.
+
+Le datos crude que essera inviate es monstrate hic infra. Per favor usa le button "Inviar datos" pro transferer le informationes.

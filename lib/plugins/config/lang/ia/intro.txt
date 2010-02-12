@@ -1,7 +1,7 @@
-====== Administrator de Configuration ======
+====== Gestion de configurationes ======
 
-Usa iste pagina pro controlar le regulationes de tu installation de DokuWiki. Pro adjuta re singule regulationes, refere te a [[doku>config]]. Pro plus detalios re iste insertion, vide [[doku>plugin:config]].
+Usa iste pagina pro controlar le configurationes de tu installation de DokuWiki. Pro adjuta re configurationes individual, refere te a [[doku>config]].
 
-Le regulationes monstrate sur un fundo rosa es protegite e non pote esser alterate con iste insertion. Le regulationes monstrate sur un fundo blau es le valores tacite e le regulationes monstrate sur un fundo blanc esseva definite localmente pro iste particular installation. Sia le regulationes blau que les blanc pote esser alterate.
+Le configurationes monstrate super un fundo rubie clar es protegite e non pote esser alterate con iste plug-in. Le configurationes monstrate super un fundo blau es le valores predefinite e le configurationes monstrate super un fundo blanc ha essite definite localmente pro iste particular installation. Le configurationes blau e blanc pote esser alterate.
 
-Rememora de pressar le button **SALVA** ante de lassar iste pagina, alteremente tu modificationes essera perdite.
+Rememora de premer le button **SALVEGUARDAR** ante de quitar iste pagina, alteremente tu modificationes essera perdite.

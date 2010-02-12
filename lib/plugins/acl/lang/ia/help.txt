@@ -1,0 +1,11 @@
+=== Adjuta rapide: ===
+
+In iste pagina tu pote adder e remover permissiones pro spatios de nomines e paginas in tu wiki.
+
+Le columna sinistre presenta tote le spatios de nomines e paginas disponibile.
+
+Le formulario hic supra permitte vider e modificar le permissiones de un usator o gruppo seligite.
+
+In le tabella hic infra se monstra tote le regulas de controlo de accesso actualmente configurate. Tu pote usar lo pro rapidemente deler o modificar plure regulas.
+
+Es recommendate leger le [[doku>acl|documentation official super ACL]] pro comprender completemente como le controlo de accesso functiona in DokuWiki.
