@@ -23,7 +23,7 @@ $license['cc-by-nc-sa'] = array(
 );
 $license['cc-by-nd'] = array(
     'name' => 'CC Attribution-No Derivative Works 3.0 Unported',
-    'url'  => 'cc-by-nd',
+    'url'  => 'http://creativecommons.org/licenses/by-nd/3.0/',
 );
 $license['cc-by-sa'] = array(
     'name' => 'CC Attribution-Share Alike 3.0 Unported',
