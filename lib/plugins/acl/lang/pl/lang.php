@@ -8,6 +8,7 @@
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author sleshek@wp.pl
+ * @author Leszek Stachowski <shazarre@gmail.com>
  */
 $lang['admin_acl']             = 'Zarządzanie uprawnieniami';
 $lang['acl_group']             = 'Grupa';

@@ -8,6 +8,7 @@
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author sleshek@wp.pl
+ * @author Leszek Stachowski <shazarre@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -148,7 +149,6 @@ $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
 $lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
-$lang['table_edit_title']      = 'Tabela';
 $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
 $lang['mail_subscribe_list']   = 'Zmienione strony w katalogu:';
