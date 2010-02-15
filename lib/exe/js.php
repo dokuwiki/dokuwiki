@@ -113,7 +113,9 @@ function js_out(){
     js_runonstart("initSizeCtl('size__ctl','wiki__text')");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");
-    js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+    if($conf['locktime'] != 0){
+        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+    }
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
 

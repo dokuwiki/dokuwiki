@@ -732,6 +732,12 @@ function checklock($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function lock($id){
+    global $conf;
+
+    if($conf['locktime'] == 0){
+        return;
+    }
+
     $lock = wikiLockFN($id);
     if($_SERVER['REMOTE_USER']){
         io_saveFile($lock,$_SERVER['REMOTE_USER']);
