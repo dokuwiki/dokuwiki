@@ -186,7 +186,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function section_open($level) {
-        $this->doc .= "<div class='level$level'>".DOKU_LF;
+        $this->doc .= '<div class="level' . $level . '">' . DOKU_LF;
     }
 
     function section_close() {
