@@ -60,7 +60,7 @@ function getID($param='id',$clean=true){
     }
 
     // Namespace autolinking from URL
-    if(substr($id,-1) == ':' || ($conf['useslash'] && substr($id,-1) == '/')){
+    if(substr($id,-1) == ':' || ($conf['useslash'] && substr($id,-1) == '/') || $id == ''){
         if(page_exists($id.$conf['start'])){
             // start page inside namespace
             $id = $id.$conf['start'];
