@@ -1,0 +1,14 @@
+Et huet sech e neie Benotzer registréiert. Hei sinn d'Deteiler:
+
+Benotzernumm: @NEWUSER@
+Ganze Numm  : @NEWNAME@
+Email       : @NEWEMAIL@
+
+Datum       : @DATE@
+Browser     : @BROWSER@
+IP-Adress   : @IPADDRESS@
+Hostnumm    : @HOSTNAME@
+
+-- 
+Des Mail gouf generéiert vun DokuWiki op
+@DOKUWIKIURL@

@@ -1,0 +1,7 @@
+====== Konfiguratioun ======
+
+Dëses Plugin hëlleft der bei der Konfiguratioun vun DokuWiki. Hëllef zu deenen eenzelnen Astellungen fënns de ënner [[doku>config]]. Méi Informatiounen zu dësem Plugin kriss de ënner [[doku>plugin:config]].
+
+Astellungen mat engem hellrouden Hannergrond si geséchert a kënnen net mat dësem Plugin verännert ginn. Astellungen mat hellbloem Hannergrond si Virastellungen, wäiss hannerluechte Felder weisen lokal verännert Werter un. Souwuel dié blo wéi och déi wäiss Felder kënne verännert ginn.
+
+Vergiess w.e.g. net **Späicheren** ze drécken iers de d'Säit verléiss, anescht ginn all deng Ännerungen verluer.

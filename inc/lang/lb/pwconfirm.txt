@@ -1,0 +1,15 @@
+Moien @FULLNAME@!
+
+Iergendeen huet e neit Passwuert fir däin @TITLE@ 
+login op @DOKUWIKIURL@ gefrot
+
+Wanns de kee nei Passwuert gefrot hues, dann ignoréier dës Mail.
+
+Fir ze konfirméieren dass du wierklech en neit Passwuert gefrot hues,
+klick op folgende Link.
+
+@CONFIRM@
+
+-- 
+Des Mail gouf generéiert vun DokuWiki op
+@DOKUWIKIURL@
