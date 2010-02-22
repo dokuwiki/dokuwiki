@@ -630,7 +630,7 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
                                 'class="action source" accesskey="v" rel="nofollow"',1);
                 }
             }else{
-                $out .= tpl_link(wl($ID,'do=show'),
+                $out .= tpl_link(wl($ID,''),
                         $pre.(($inner)?$inner:$lang['btn_show']).$suf,
                         'class="action show" accesskey="v" rel="nofollow"',1);
             }
@@ -659,7 +659,7 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
             break;
         case 'back':
             if ($parent = tpl_getparent($ID)) {
-                $out .= tpl_link(wl($parent,'do=show'),
+                $out .= tpl_link(wl($parent,''),
                         $pre.(($inner)?$inner:$lang['btn_back']).$suf,
                         'class="action back" accesskey="b" rel="nofollow"',1);
             }
