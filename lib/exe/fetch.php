@@ -32,9 +32,11 @@
     $MIME = 'application/octet-stream';
     $DL   = true;
   }
-  
-  // prepare data for error handling / clean download handling 
-  list($STATUS, $STATUSMESSAGE) = check4XErrors($MEDIA, $FILE); // here goes the old 4X error checking
+
+  // check for permissions, preconditions and cache external files
+  list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE);
+
+  // prepare data for plugin events
   $data = array('media'           => $MEDIA,
                 'file'            => $FILE,
                 'orig'            => $FILE,
@@ -47,17 +49,26 @@
                 'status'          => $STATUS,
                 'statusmessage'   => $STATUSMESSAGE,
   );
-  
-  // handle any 4XX status messages
-  if ( $STATUS >= 400 && $STATUSMESSAGE < 500 ) {
-    $evt = new Doku_Event('FETCH_MEDIA_4XERROR', $data);
-    if ( $evt->advise_before() ) {
+
+  // handle the file status
+  $evt = new Doku_Event('FETCH_MEDIA_STATUS', $data);
+  if ( $evt->advise_before() ) {
+    // redirects
+    if($data['status'] > 300 && $data['status'] <= 304){
+      send_redirect($data['statusmessage']);
+    }
+    // send any non 200 status
+    if($data['status'] != 200){
       header('HTTP/1.0 ' . $data['status'] . ' ' . $data['statusmessage']);
+    }
+    // die on errors
+    if($data['status'] > 203){
       print $data['statusmessage'];
       exit;
-  	}
-    unset($evt);
+    }
   }
+  $evt->advise_after();
+  unset($evt);
 
   //handle image resizing/cropping
   if((substr($MIME,0,5) == 'image') && $WIDTH){
@@ -67,7 +78,7 @@
         $data['file'] = $FILE  = media_resize_image($data['file'],$EXT,$WIDTH,$HEIGHT);
     }
   }
-  
+
   // finally send the file to the client
   $evt = new Doku_Event('MEDIA_SENDFILE', $data);
   if ($evt->advise_before()) {
@@ -131,21 +142,20 @@ function sendFile($file,$mime,$dl,$cache){
   }
 }
 
-/*
- * File fetch 4XX error checker
- * 
- * Check for preconditions and return 4XX errors if needed
+/**
+ * Check for media for preconditions and return correct status code
+ *
  * READ: MEDIA, MIME, EXT, CACHE
  * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
- * 
+ *
  * @author Gerry Weissbach <gerry.w@gammaproduction.de>
  * @param $media reference to the media id
  * @param $file reference to the file variable
  * @returns array(STATUS, STATUSMESSAGE)
  */
-function check4XErrors(&$media, &$file) {
+function checkFileStatus(&$media, &$file) {
   global $MIME, $EXT, $CACHE;
-  
+
   //media to local file
   if(preg_match('#^(https?)://#i',$media)){
     //check hash
@@ -156,8 +166,7 @@ function check4XErrors(&$media, &$file) {
     if(strncmp($MIME,'image/',6) == 0) $file = media_get_from_URL($media,$EXT,$CACHE);
     if(!$file){
       //download failed - redirect to original URL
-      header('Location: '.$media);
-      exit;
+      return array( 302, $media );
     }
   }else{
     $media = cleanID($media);
@@ -174,11 +183,10 @@ function check4XErrors(&$media, &$file) {
 
   //check file existance
   if(!@file_exists($file)){
-      // FIXME add some default broken image
       return array( 404, 'Not Found' );
   }
-  
-  return array(null, null);
+
+  return array(200, null);
 }
 
 /**
