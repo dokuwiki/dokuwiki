@@ -32,73 +32,49 @@
     $MIME = 'application/octet-stream';
     $DL   = true;
   }
-
-  //media to local file
-  if(preg_match('#^(https?)://#i',$MEDIA)){
-    //check hash
-    if(substr(md5(auth_cookiesalt().$MEDIA),0,6) != $_REQUEST['hash']){
-      header("HTTP/1.0 412 Precondition Failed");
-      print 'Precondition Failed';
+  
+  // prepare data for error handling / clean download handling 
+  list($STATUS, $STATUSMESSAGE) = check4XErrors($MEDIA, $FILE); // here goes the old 4X error checking
+  $data = array('media'           => $MEDIA,
+                'file'            => $FILE,
+                'orig'            => $FILE,
+                'mime'            => $MIME,
+                'download'        => $DL,
+                'cache'           => $CACHE,
+                'ext'             => $EXT,
+                'width'           => $WIDTH,
+                'height'          => $HEIGHT,
+                'status'          => $STATUS,
+                'statusmessage'   => $STATUSMESSAGE,
+  );
+  
+  // handle any 4XX status messages
+  if ( $STATUS >= 400 && $STATUSMESSAGE < 500 ) {
+    $evt = new Doku_Event('FETCH_MEDIA_4XERROR', $data);
+    if ( $evt->advise_before() ) {
+      header('HTTP/1.0 ' . $data['status'] . ' ' . $data['statusmessage']);
+      print $data['statusmessage'];
       exit;
-    }
-    //handle external images
-    if(strncmp($MIME,'image/',6) == 0) $FILE = media_get_from_URL($MEDIA,$EXT,$CACHE);
-    if(!$FILE){
-      //download failed - redirect to original URL
-      header('Location: '.$MEDIA);
-      exit;
-    }
-  }else{
-    $MEDIA = cleanID($MEDIA);
-    if(empty($MEDIA)){
-      header("HTTP/1.0 400 Bad Request");
-      print 'Bad request';
-      exit;
-    }
-
-    //check permissions (namespace only)
-    if(auth_quickaclcheck(getNS($MEDIA).':X') < AUTH_READ){
-      header("HTTP/1.0 401 Unauthorized");
-      //fixme add some image for imagefiles
-      print 'Unauthorized';
-      exit;
-    }
-    $FILE  = mediaFN($MEDIA);
+  	}
+    unset($evt);
   }
-
-  //check file existance
-  if(!@file_exists($FILE)){
-    header("HTTP/1.0 404 Not Found");
-    //FIXME add some default broken image
-    print 'Not Found';
-    exit;
-  }
-
-  $ORIG = $FILE;
 
   //handle image resizing/cropping
   if((substr($MIME,0,5) == 'image') && $WIDTH){
     if($HEIGHT){
-        $FILE = media_crop_image($FILE,$EXT,$WIDTH,$HEIGHT);
+        $data['file'] = $FILE = media_crop_image($data['file'],$EXT,$WIDTH,$HEIGHT);
     }else{
-        $FILE = media_resize_image($FILE,$EXT,$WIDTH,$HEIGHT);
+        $data['file'] = $FILE  = media_resize_image($data['file'],$EXT,$WIDTH,$HEIGHT);
     }
   }
-
+  
   // finally send the file to the client
-  $data = array('file'     => $FILE,
-                'mime'     => $MIME,
-                'download' => $DL,
-                'cache'    => $CACHE,
-                'orig'     => $ORIG,
-                'ext'      => $EXT,
-                'width'    => $WIDTH,
-                'height'   => $HEIGHT);
-
   $evt = new Doku_Event('MEDIA_SENDFILE', $data);
   if ($evt->advise_before()) {
     sendFile($data['file'],$data['mime'],$data['download'],$data['cache']);
   }
+  // Do something after the download finished.
+  $evt->advise_after();
 
 /* ------------------------------------------------------------------------ */
 
@@ -153,6 +129,56 @@ function sendFile($file,$mime,$dl,$cache){
     header("HTTP/1.0 500 Internal Server Error");
     print "Could not read $file - bad permissions?";
   }
+}
+
+/*
+ * File fetch 4XX error checker
+ * 
+ * Check for preconditions and return 4XX errors if needed
+ * READ: MEDIA, MIME, EXT, CACHE
+ * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
+ * 
+ * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ * @param $media reference to the media id
+ * @param $file reference to the file variable
+ * @returns array(STATUS, STATUSMESSAGE)
+ */
+function check4XErrors(&$media, &$file) {
+  global $MIME, $EXT, $CACHE;
+  
+  //media to local file
+  if(preg_match('#^(https?)://#i',$media)){
+    //check hash
+    if(substr(md5(auth_cookiesalt().$media),0,6) != $_REQUEST['hash']){
+      return array( 412, 'Precondition Failed');
+    }
+    //handle external images
+    if(strncmp($MIME,'image/',6) == 0) $file = media_get_from_URL($media,$EXT,$CACHE);
+    if(!$file){
+      //download failed - redirect to original URL
+      header('Location: '.$media);
+      exit;
+    }
+  }else{
+    $media = cleanID($media);
+    if(empty($media)){
+      return array( 400, 'Bad request' );
+    }
+
+    //check permissions (namespace only)
+    if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ){
+      return array( 401, 'Unauthorized' );
+    }
+    $file  = mediaFN($media);
+  }
+
+  //check file existance
+  if(!@file_exists($file)){
+      // FIXME add some default broken image
+      return array( 404, 'Not Found' );
+  }
+  
+  return array(null, null);
 }
 
 /**
