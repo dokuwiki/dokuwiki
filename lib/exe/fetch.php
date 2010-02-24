@@ -176,7 +176,7 @@ function checkFileStatus(&$media, &$file) {
 
     //check permissions (namespace only)
     if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ){
-      return array( 401, 'Unauthorized' );
+      return array( 403, 'Forbidden' );
     }
     $file  = mediaFN($media);
   }
