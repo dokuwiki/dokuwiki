@@ -10,5 +10,5 @@ MIME Type : @MIME@
 Käyttäjä : @USER@
 
 -- 
-Tämän postin generoi DokuWiki osoitteessa
+Tämän postin loi DokuWiki osoitteessa
 @DOKUWIKIURL@

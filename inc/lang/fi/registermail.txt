@@ -10,5 +10,5 @@ IP-osoite : @IPADDRESS@
 Hostname : @HOSTNAME@
 
 -- 
-Tämän postin generoi DokuWiki osoitteessa
+Tämän postin loi DokuWiki osoitteessa
 @DOKUWIKIURL@

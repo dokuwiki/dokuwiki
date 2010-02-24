@@ -1,0 +1,18 @@
+Hei!
+
+Sivut nimiavaruudessa @PAGE@ wikissä @TITLE@ ovat muuttuneet.
+Tässä ovat muuttuneet sivut:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
+@DOKUWIKIURL@ , jonka jälkeen katso
+@SUBSCRIBE@
+ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
+
+
+-- 
+Tämän postin loi DokuWiki osoitteessa
+@DOKUWIKIURL@
