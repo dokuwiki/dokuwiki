@@ -64,5 +64,24 @@ class init_getID_test extends UnitTestCase {
         $this->assertEqual(getID(), 'wiki:dokuwiki');
     }
 
+    /**
+     * getID with given id in url and userewrite=2, no basedir set, Apache and CGI.
+     */
+    function test4() {
+        global $conf;
+        $conf['basedir'] = '';
+        $conf['userewrite'] = '2';
+        $conf['baseurl'] = '';
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/vhosts/example.com/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/vhosts/example.com/htdocs/doku.php';
+        $_SERVER['SCRIPT_NAME'] = '/doku.php';
+        $_SERVER['REQUEST_URI'] = '/doku.php/wiki/dokuwiki';
+        $_SERVER['PATH_INFO'] = '/test/dokuwiki';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/vhosts/example.com/htdocs/doku.php';
+        $_SERVER['PHP_SELF'] = '/doku.php/wiki/dokuwiki';
+
+        $this->assertEqual(getID(), 'wiki:dokuwiki');
+    }
+
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :
