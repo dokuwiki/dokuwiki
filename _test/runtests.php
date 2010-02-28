@@ -9,7 +9,6 @@ require_once(DOKU_INC.'inc/events.php');
 
 define('TEST_ROOT', dirname(__FILE__));
 define('TMPL_FILESCHEME_PATH', TEST_ROOT . '/filescheme/');
-error_reporting(E_ALL ^ E_NOTICE);
 
 require_once 'lib/testmanager.php';
 TestManager::setup();
