@@ -12,6 +12,7 @@
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
+ * @author Aleksey Osadchiy <rfc@nm.ru>
  */
 $lang['menu']                  = 'Настройки Вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте ваши изменения и попробуйте еще раз.
@@ -114,6 +115,7 @@ $lang['gdlib']                 = 'Версия GD Lib';
 $lang['im_convert']            = 'Путь к imagemagick';
 $lang['jpg_quality']           = 'Качество сжатия JPG (0-100)';
 $lang['subscribers']           = 'Разрешить подписку на изменения';
+$lang['subscribe_time']        = 'Интервал рассылки подписок и сводок (сек); Должен быть меньше, чем значение указанное в recent_days.';
 $lang['compress']              = 'Сжимать файлы CSS и javascript';
 $lang['hidepages']             = 'Скрыть страницы (рег. выражение)';
 $lang['send404']               = 'Посылать "HTTP404/Page Not Found"';
