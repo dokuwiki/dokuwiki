@@ -7,7 +7,7 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',2);
+define('DOKU_XMLRPC_API_VERSION',3);
 
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/common.php');
@@ -116,6 +116,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'this:readNamespace',
             array('struct','string','struct'),
             'List all pages within the given namespace.'
+        );
+
+        $this->addCallback(
+            'dokuwiki.search',
+            'this:search',
+            array('struct','string'),
+            'Perform a fulltext search and return a list of matching pages'
         );
 
         $this->addCallback(
@@ -383,6 +390,41 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
         return $data;
     }
+
+    /**
+     * List all pages in the given namespace (and below)
+     */
+    function search($query){
+        require_once(DOKU_INC.'inc/fulltext.php');
+
+        $regex = '';
+        $data  = ft_pageSearch($query,$regex);
+        $pages = array();
+
+        // prepare additional data
+        $idx = 0;
+        foreach($data as $id => $score){
+            $file = wikiFN($id);
+
+            if($idx < FT_SNIPPET_NUMBER){
+                $snippet = ft_snippet($id,$regex);
+                $idx++;
+            }else{
+                $snippet = '';
+            }
+
+            $pages[] = array(
+                'id'      => $id,
+                'score'   => $score,
+                'rev'     => filemtime($file),
+                'mtime'   => filemtime($file),
+                'size'    => filesize($file),
+                'snippet' => $snippet,
+            );
+        }
+        return $data;
+    }
+
 
     /**
      * List all media files.
