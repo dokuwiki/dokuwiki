@@ -111,6 +111,7 @@ $lang['gdlib']                 = 'Versio de GD Lib';
 $lang['im_convert']            = 'Pado al la konvertilo de ImageMagick';
 $lang['jpg_quality']           = 'Kompaktiga kvalito de JPG (0-100)';
 $lang['subscribers']           = 'Ebligi subtenon de avizoj pri ŝanĝoj sur paĝoj';
+$lang['subscribe_time']        = 'Tempo, post kiu abonlistoj kaj kolektaĵoj sendiĝas (sek); Tio estu pli malgranda ol la tempo indikita en recent_days.';
 $lang['compress']              = 'Kompaktigi CSS-ajn kaj ĵavaskriptajn elmetojn';
 $lang['hidepages']             = 'Kaŝi kongruantajn paĝojn (laŭ regulaj esprimoj)';
 $lang['send404']               = 'Sendi la mesaĝon "HTTP 404/Ne Trovita Paĝo" por ne ekzistantaj paĝoj';

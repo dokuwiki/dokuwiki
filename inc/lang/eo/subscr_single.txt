@@ -1,0 +1,23 @@
+Saluton!
+
+La paĝo @PAGE@ en la vikio @TITLE@ ŝanĝiĝis.
+Jen sekvas la ŝanĝoj:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Dato : @DATE@
+Uzanto : @USER@
+Modifa resumo: @SUMMARY@
+Malnova versio: @OLDPAGE@
+Nova versio: @NEWPAGE@
+
+Por nuligi la paĝinformojn, ensalutu la vikion ĉe
+@DOKUWIKIURL@, poste iru al
+@NEWPAGE@
+kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.
+
+--
+Tiu retpoŝtaĵo kreiĝis de DokuWiki ĉe
+@DOKUWIKIURL@

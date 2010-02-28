@@ -1,0 +1,17 @@
+Saluton!
+
+Paĝoj en la nomspaco @PAGE@ en la vikio @TITLE@ ŝanĝiĝis.
+Jen sekvas la ŝanĝitaj paĝoj:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Por nuligi la paĝinformojn, ensalutu la vikion ĉe
+@DOKUWIKIURL@, poste iru al
+@SUBSCRIBE@
+kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.
+
+--
+Tiu retpoŝtaĵo kreiĝis de DokuWiki ĉe
+@DOKUWIKIURL@
