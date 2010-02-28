@@ -373,7 +373,7 @@ function html_search(){
             print html_wikilink(':'.$id,useHeading('navigation')?null:$id,$regex);
             if($cnt !== 0){
                 print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
-                if($num < 15){ // create snippets for the first number of matches only #FIXME add to conf ?
+                if($num < FT_SNIPPET_NUMBER){ // create snippets for the first number of matches only
                     print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
                 }
                 $num++;

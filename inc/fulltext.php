@@ -9,6 +9,10 @@
 if(!defined('DOKU_INC')) die('meh.');
 require_once(DOKU_INC.'inc/indexer.php');
 
+/**
+ * create snippets for the first few results only
+ */
+if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
 
 /**
  * The fulltext search
