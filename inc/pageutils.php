@@ -198,7 +198,7 @@ function noNSorNS($id) {
  * Creates a XHTML valid linkid from a given headline title
  *
  * @param string  $title   The headline title
- * @param array   $check   List of existing IDs
+ * @param array   $check   Existing IDs (title => number)
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function sectionID($title,&$check) {
@@ -212,12 +212,11 @@ function sectionID($title,&$check) {
 
     if(is_array($check)){
         // make sure tiles are unique
-        $num = '';
-        while(in_array($title.$num,$check)){
-            ($num) ? $num++ : $num = 1;
+        if (!array_key_exists ($title,$check)) {
+           $check[$title] = 0;
+        } else {
+           $title .= ++ $check[$title];
         }
-        $title = $title.$num;
-        $check[] = $title;
     }
 
     return $title;
