@@ -319,6 +319,7 @@ function ajax_linkwiz(){
       'listdirs'  => true,
       'pagesonly' => true,
       'firsthead' => true,
+      'sneakyacl' => $conf['sneaky_index'],
     );
     if($id) $opts['filematch'] = '^.*\/'.$id;
     if($id) $opts['dirmatch']  = '^.*\/'.$id;
