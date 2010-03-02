@@ -76,7 +76,7 @@ class init_getID_test extends UnitTestCase {
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/vhosts/example.com/htdocs/doku.php';
         $_SERVER['SCRIPT_NAME'] = '/doku.php';
         $_SERVER['REQUEST_URI'] = '/doku.php/wiki/dokuwiki';
-        $_SERVER['PATH_INFO'] = '/test/dokuwiki';
+        $_SERVER['PATH_INFO'] = '/wiki/dokuwiki';
         $_SERVER['PATH_TRANSLATED'] = '/var/www/vhosts/example.com/htdocs/doku.php';
         $_SERVER['PHP_SELF'] = '/doku.php/wiki/dokuwiki';
 

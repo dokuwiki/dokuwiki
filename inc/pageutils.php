@@ -23,10 +23,11 @@ function getID($param='id',$clean=true){
 
     $id = isset($_REQUEST[$param]) ? $_REQUEST[$param] : null;
 
-    $request = $_SERVER['REQUEST_URI'];
-
     //construct page id from request URI
     if(empty($id) && $conf['userewrite'] == 2){
+        $request = $_SERVER['REQUEST_URI'];
+        $script = '';
+
         //get the script URL
         if($conf['basedir']){
             $relpath = '';
@@ -35,15 +36,14 @@ function getID($param='id',$clean=true){
             }
             $script = $conf['basedir'].$relpath.basename($_SERVER['SCRIPT_FILENAME']);
 
-        }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['PATH_TRANSLATED']){
-            $request = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
-                    $_SERVER['PATH_TRANSLATED']);
+        }elseif($_SERVER['PATH_INFO']){
+            $request = $_SERVER['PATH_INFO'];
+        }elseif($_SERVER['SCRIPT_NAME']){
+            $script = $_SERVER['SCRIPT_NAME'];
         }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
             $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                     $_SERVER['SCRIPT_FILENAME']);
             $script = '/'.$script;
-        }else{
-            $script = $_SERVER['SCRIPT_NAME'];
         }
 
         //clean script and request (fixes a windows problem)
