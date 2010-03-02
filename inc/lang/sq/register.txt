@@ -1,0 +1,3 @@
+====== Regjistrohuni si një përdorues i ri ======
+
+Plotësoni të gjitha informacionet e mëposhtme për të krijuar një llogari në këtë wiki. Sigorohuni që të jepni një **adresë email-i të vlefshme**. Nëse nuk ju kërkohet të futni një fjalëkalim këtu, një fjalëkalim i ri do t'ju dërgohet në adresën e email-it që specifikuat. Emri i hyrjes duhet të një [[doku>pagename|pagename]] e vlefshme.

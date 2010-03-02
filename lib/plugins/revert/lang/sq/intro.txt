@@ -1,0 +1,3 @@
+====== Menaxhuesi Rikthimit ======
+
+Kjo faqe ndihmon për rikthimin automatik në rast të një sulmi spam. Për të gjetur një listë me faqe spam në fillim fut një varg kërkimi (psh një URL spam), dhe pastaj konfirmo që faqet e gjetura janë me të vërtetë spam dhe rikthe redaktimet.

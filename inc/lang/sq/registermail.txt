@@ -1,0 +1,14 @@
+Një përdorues i ri u regjistrua. Këto janë detajet:
+
+Emri përdoruesit: @NEWUSER@
+Emri i plotë i përdoruesit: @NEWNAME@
+E-mail: @NEWEMAIL@
+
+Data: @DATE@
+Shfletuesi: @BROWSER@
+Adresa IP: @IPADDRESS@
+Emri Hostit: @HOSTNAME@
+
+--
+Ky email u gjenerua nga DokuWiki në
+@DOKUWIKIURL@

@@ -1,0 +1,5 @@
+====== Ekziston një version më i ri ======
+
+Ekziston një version më i ri i dokumentit që ju redaktuat. Kjo ndodh kur një përdorues tjetër e ndryshoi dokumentin ndërkohë që ju po e redaktonit atë.
+
+Gjeni ndryshimet e treguara më poshtë dhe pastaj vendosni se kë version doni të mbani. Nëse zgjidhni "ruaj", versioni juaj do të ruhet. Klikon "fshi" për të mbajtur versioni aktual.

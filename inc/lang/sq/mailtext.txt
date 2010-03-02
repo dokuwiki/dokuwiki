@@ -1,0 +1,16 @@
+Një faqe në DokuWiki-n tuaj u shtua ose u ndryshua. Këto janë detajet:
+
+Data: @DATE@
+Shfletuesi: @BROWSER@
+Adresa IP: @IPADDRESS@
+Emri Hostit: @HOSTNAME@
+Rishikimi i vjetër: @OLDPAGE@
+Rishikimi i ri: @NEWPAGE@
+Përmbledhja redaktimit: @SUMMARY@
+Përdoruesi: @USER@
+
+@DIFF@
+
+---
+Ky email u gjenerua nga DokuWiki në 
+@DOKUWIKIURL@

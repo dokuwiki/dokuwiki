@@ -1,0 +1,23 @@
+Përshëndetje!
+
+Faqja @PAGE@ në wiki-n @TITLE@ ndryshoi.
+Këto janë ndryshimet:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Data : @DATE@
+Përdoruesi : @USER@
+Përmbledhja redaktimit: @SUMMARY@
+Rishikimi i vjetër: @OLDPAGE@
+Rishikimi i ri: @NEWPAGE@
+
+Për të fshirë lajmërimet e faqes, hyni në wiki tek
+@DOKUWIKIURL@ dhe pastaj vizitoni
+@NEWPAGE@
+dhe fshini ndryshimet e faqes dhe/ose hapësirës së emrit.
+
+--
+Ky email u gjenerua nga DokuWiki në
+@DOKUWIKIURL@

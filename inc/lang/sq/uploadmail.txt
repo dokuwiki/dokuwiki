@@ -1,0 +1,14 @@
+Një skedar u ngarkua në DokuWiki-n tënd. Detajet janë:
+
+Skedar: @MEDIA@
+Data: @DATE@
+Shfletuesi: @BROWSER@
+Adresa IP: @IPADDRESS@
+Emri Hostit: @HOSTNAME@
+Madhësia: @SIZE@
+Tipi MIME: @MIME@
+Përdoruesi: @USER@
+
+---
+Ky email u gjenerua nga DokuWiki në 
+@DOKUWIKIURL@

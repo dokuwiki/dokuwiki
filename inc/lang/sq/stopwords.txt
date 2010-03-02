@@ -1,0 +1,39 @@
+# Kjo është një listë e fjalëve që indexer-i injoron, një fjalë për rresht
+# Kur të redaktoni këtë faqe sigurohuni që të përdorni fund-rreshtash UNIX (rresht i ri i vetëm)
+# Nuk është nevoja të përfshini fjalë më të shkurtra se tre karaktere - këtë injorohen gjithsesi
+# Kjo listë bazohet mbi ato që gjenden në http://www.ranks.nl/stopwords/
+about
+are
+as
+an
+and
+you
+your
+them
+their
+com
+for
+from
+into
+if
+in
+is
+it
+how
+of
+on
+or
+that
+the
+this
+to
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www

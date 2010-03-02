@@ -1,0 +1,9 @@
+====== Informacioni mbi Popullaritetin ======
+
+Ky mjet mbledh të dhëna anonime rreth wiki-t tuaj dhe ju lejon t'ia dërgoni ato zhvilluesve të DokuWiki-t. Kjo i ndihmon ata të kuptojnë sesi DokuWiki përdoret nga përdoruesit e tij dhe siguron që vendimet për zhvillime të ardhshme të jenë të mbështetura mbi statistika të nxjera nga bota e vërtetë.
+
+Ju jeni të inkurajuar ta përsërisni këtë hap shpesh herë për t'i mbajtur zhvilluesit të informuar kur wiki juaj rritet. Bashkësia e të dhënave tuaja të përsëritura do të identifikohen nga një ID anonime.
+
+Të dhënat e mbledhura përmbajnë informacione si versioni i DokuWiki-t tuaj, numri dhe madhësia e faqeve dhe skedarëve, plugin-et e instaluar dhe informacione rreth instalimit të PHP-së.
+
+Të dhënat e papërpunuara që do të dërgohen janë treguar më poshtë. Ju lutem përdorni buttonin "Dërgo Të Dhëna" për të transferuar informacionin.
