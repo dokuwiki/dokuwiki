@@ -6,6 +6,7 @@
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author tomas@valenta.cz
+ * @author Marek Sacha <sachamar@fel.cvut.cz>
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';

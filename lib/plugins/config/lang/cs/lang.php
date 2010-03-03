@@ -6,6 +6,7 @@
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author tomas@valenta.cz
+ * @author Marek Sacha <sachamar@fel.cvut.cz>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -115,6 +116,7 @@ $lang['gdlib']                 = 'Verze GD knihovny';
 $lang['im_convert']            = 'Cesta k nástroji convert z balíku ImageMagick';
 $lang['jpg_quality']           = 'Kvalita komprese JPEG (0-100)';
 $lang['subscribers']           = 'Možnost přihlásit se k odběru novinek stránky';
+$lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jsou posílány změny a souhrny změn. Interval by neměl být kratší než čas uvedený v recent_days.';
 $lang['compress']              = 'Zahustit CSS a JavaScript výstup';
 $lang['hidepages']             = 'Skrýt stránky odpovídající vzoru (regulární výrazy)';
 $lang['send404']               = 'Posílat "HTTP 404/Page Not Found" pro neexistují stránky';

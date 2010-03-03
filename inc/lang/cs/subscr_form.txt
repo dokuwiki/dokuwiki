@@ -1,0 +1,3 @@
+====== Správa odběratelů změn ======
+
+Tato stránka Vám umožnuje spravovat uživatele přihlášené k odběru změn aktuální stránky nebo jmenného prostoru.

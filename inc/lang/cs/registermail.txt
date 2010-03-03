@@ -10,5 +10,5 @@ IP adresa : @IPADDRESS@
 Hostitel : @HOSTNAME
 
 -- 
-Tato zpráva byla vygenerována systémem DokuWiki
+Tento email byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@
