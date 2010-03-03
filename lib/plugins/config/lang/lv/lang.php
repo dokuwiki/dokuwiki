@@ -105,6 +105,7 @@ $lang['gdlib']                 = 'GD Lib versija';
 $lang['im_convert']            = 'Ceļš uz ImageMagick convert rīku';
 $lang['jpg_quality']           = 'JPG saspiešanas kvalitāte';
 $lang['subscribers']           = 'Atļaut abonēt izmaiņas';
+$lang['subscribe_time']        = 'Pēc cik ilga laika izsūtīt abonētos sarakstus un kopsavilkumus (sekundes); jābūt mazākam par laiku, kas norādīts "recent_days".';
 $lang['compress']              = 'Saspiest CSS un javascript failus';
 $lang['hidepages']             = 'Slēpt lapas (regulāras izteiksmes)';
 $lang['send404']               = 'Par neesošām lapām atbildēt "HTTP 404/Page Not Found" ';
