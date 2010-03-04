@@ -89,7 +89,7 @@ function html_login(){
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(\d+) ([A-Z]+) (?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
+    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
 
     if(!$INFO['writable'] || !$show || $INFO['rev']){
         return preg_replace($regexp,'',$text);

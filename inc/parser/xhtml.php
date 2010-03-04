@@ -49,7 +49,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string A marker class for the starting HTML element
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    protected function startSectionEdit($start, $type, $title = null) {
+    public function startSectionEdit($start, $type, $title = null) {
         static $lastsecid = 0;
         $this->sectionedits[] = array(++$lastsecid, $start, $type, $title);
         return 'sectionedit' . $lastsecid;
@@ -62,7 +62,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                        the page
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    protected function finishSectionEdit($end = null) {
+    public function finishSectionEdit($end = null) {
         list($id, $start, $type, $title) = array_pop($this->sectionedits);
         if (!is_null($end) && $end <= $start) {
             return;
