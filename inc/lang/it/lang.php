@@ -12,6 +12,7 @@
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
+ * @author Matteo Carnevali <rekstorm@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -119,6 +120,27 @@ $lang['mediafiles']            = 'File disponibili in';
 $lang['js']['searchmedia']     = 'Cerca file';
 $lang['js']['keepopen']        = 'Tieni la finestra aperta durante la selezione';
 $lang['js']['hidedetails']     = 'Nascondi Dettagli';
+$lang['js']['mediatitle']      = 'Impostazioni link';
+$lang['js']['mediadisplay']    = 'Tipo link';
+$lang['js']['mediaalign']      = 'Allineamento';
+$lang['js']['mediasize']       = 'Dimensioni immagine';
+$lang['js']['mediatarget']     = 'Target del link';
+$lang['js']['mediaclose']      = 'Chiudi';
+$lang['js']['mediainsert']     = 'Inserisci';
+$lang['js']['mediadisplayimg'] = 'Mostra l\'immagine.';
+$lang['js']['mediadisplaylnk'] = 'Mostra solo il link.';
+$lang['js']['mediasmall']      = 'Versione piccola';
+$lang['js']['mediamedium']     = 'Versione media';
+$lang['js']['medialarge']      = 'Versione grande';
+$lang['js']['mediaoriginal']   = 'Versione originale';
+$lang['js']['medialnk']        = 'Link alla pagina dei dettagli';
+$lang['js']['mediadirect']     = 'Link all\'originale';
+$lang['js']['medianolnk']      = 'No link';
+$lang['js']['medianolink']     = 'Non linkare l\'immagine.';
+$lang['js']['medialeft']       = 'Allinea l\'immagine a sinistra.';
+$lang['js']['mediaright']      = 'Allinea l\'immagine a destra.';
+$lang['js']['mediacenter']     = 'Allinea l\'immagine al centro.';
+$lang['js']['medianoalign']    = 'Non allineare.';
 $lang['js']['nosmblinks']      = 'I collegamenti con le risorse condivise di Windows funzionano solo con Microsoft Internet Explorer.
 Puoi fare un copia/incolla di questo collegamento.';
 $lang['js']['linkwiz']         = 'Collegamento guidato';
