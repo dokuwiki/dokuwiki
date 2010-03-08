@@ -1,4 +1,4 @@
-====== Inicio de sesión ======
+====== Inicio de Sesión ======
 
-Actualmente non ten unha sesión iniciada! Insira as súas credenciais de autenticación para iniciar a sesión. Debe ter as cookies activadas para poder iniciar unha sesión.
+Actualmente non iniciaches sesión ningunha! Insire as túas credenciais de identificación para iniciares a sesión. Debes ter as cookies activadas para poderes iniciar unha sesión.
 

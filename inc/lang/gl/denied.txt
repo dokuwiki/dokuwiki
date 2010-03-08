@@ -1,4 +1,4 @@
-====== Permiso denegado ======
+====== Permiso Denegado ======
 
-Sentímolo, mais non ten os permisos suficientes para continuar. É posíbel que esquecese iniciar unha sesión.
+Sentímolo, mais non tes permisos de abondo para continuares. Pode que esqueceses iniciar a sesión?
 

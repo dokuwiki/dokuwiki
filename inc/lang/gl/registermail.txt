@@ -1,14 +1,14 @@
-Rexistrouse unha persoa usuaria nova. Estes son os detalles:
+Rexistrouse un novo usuario. Aquí van os pormenores:
 
-Nome de usuaria/o   : @NEWUSER@
-Nome completo	    : @NEWNAME@
-Correo	            : @NEWEMAIL@
+Nome de usuario   : @NEWUSER@
+Nome completo	  : @NEWNAME@
+Correo-e	      : @NEWEMAIL@
 
-Data		    : @DATE@
-Navegador     	    : @BROWSER@
-Enderezo IP	    : @IPADDRESS@
-Nome do host	    : @HOSTNAME@
+Data	        : @DATE@
+Navegador     	: @BROWSER@
+Enderezo IP		: @IPADDRESS@
+Nome do Host	: @HOSTNAME@
 
 -- 
-Este correo foi xerado polo DokuWiki de
+Este correo-e foi xerado polo DokuWiki de
 @DOKUWIKIURL@

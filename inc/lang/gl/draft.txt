@@ -1,6 +1,6 @@
-====== Encontrouse un ficheiro de borrador ======
+====== Arquivo de rascuño atopado ======
 
-A súa última sesión de edición desta páxina non terminou de modo correcto. O DokuWiki gardou automaticamente un borrador durante o seu traballo que agora pode usar para continuar coa edición. A continuación pode ver os datos que foron gardados durante a súa última sesión.
+A túa última sesión de edición desta páxina non foi completada de xeito correcto. O DokuWiki gravou automaticamente un rascuño durante o teu traballo que agora podes usar para continuares coa edición. De seguido podes ver os datos que foron gardados da túa última sesión.
 
-Por favor, escolla entre se se quere //Recuperar// a súa sesión de edición perdida, //Eliminar// o borrador gardado automaticamente ou //Cancelar// o proceso de edición.
+Por favor, escolle se queres //Recuperar// a túa sesión de edición perdida, //Eliminar// o borrador autogardado ou //Cancelar// o proceso de edición.
 

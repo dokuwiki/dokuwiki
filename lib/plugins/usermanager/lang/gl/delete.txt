@@ -1,1 +1,1 @@
-===== Eliminar unha persoa usuaria =====
+===== Eliminar usuario =====
