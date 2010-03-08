@@ -10,6 +10,7 @@
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
+ * @author Florian Gaub <floriang@floriang.net>
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargé)';
 $lang['submit']                = 'Envoyer les données';

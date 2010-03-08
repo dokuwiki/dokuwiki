@@ -1,4 +1,4 @@
-Un fichier a été envoyé dans votre DokuWiki. En voici les détails :
+Un fichier a été téléversé dans votre wiki. En voici les détails :
 
 Fichier     : @MEDIA@
 Date        : @DATE@

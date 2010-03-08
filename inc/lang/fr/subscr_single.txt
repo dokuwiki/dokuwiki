@@ -1,0 +1,22 @@
+Bonjour,
+
+La page « @PAGE@ » dans le wiki « @TITLE@ » a été modifiée. Voici ces modifications :
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Date : @DATE@
+Utilisateur : @USER@
+Résumé : @SUMMARY@
+Révision précédente : @OLDPAGE@
+Nouvelle révision : @NEWPAGE@
+
+Pour annuler les notifications de page, connectez-vous au wiki à l'adresse
+@DOKUWIKIURL@ puis visitez
+@SUBSCRIBE@
+et désabonnez-vous de la page ou de la catégorie.
+
+--
+Ce courriel a été généré par Dokuwiki :
+@DOKUWIKIURL@

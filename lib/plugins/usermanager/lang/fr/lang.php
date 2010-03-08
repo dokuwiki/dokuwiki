@@ -12,6 +12,7 @@
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
+ * @author Florian Gaub <floriang@floriang.net>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification utilisateur non disponible)';
@@ -27,8 +28,8 @@ $lang['value']                 = 'Valeur';
 $lang['add']                   = 'Ajouter';
 $lang['delete']                = 'Supprimer';
 $lang['delete_selected']       = 'Supprimer la sélection';
-$lang['edit']                  = 'Éditer';
-$lang['edit_prompt']           = 'Éditer cet utilisateur';
+$lang['edit']                  = 'Modifier';
+$lang['edit_prompt']           = 'Modifier cet utilisateur';
 $lang['modify']                = 'Enregistrer les modifications';
 $lang['search']                = 'Rechercher';
 $lang['search_prompt']         = 'Effectuer la recherche';
@@ -38,9 +39,9 @@ $lang['summary']               = 'Affichage des utilisateurs %1$d-%2$d parmi %3$
 $lang['nonefound']             = 'Aucun utilisateur trouvé. %d utilisateur(s) au total.';
 $lang['delete_ok']             = '%d utilisateurs effacés';
 $lang['delete_fail']           = '%d effacement échoué.';
-$lang['update_ok']             = 'utilisateur mis à jour avec succès';
-$lang['update_fail']           = 'échec de la mise à jour utilisateur';
-$lang['update_exists']         = 'échec du changement de nom d\'utilisateur, le nom spécifié (%s) existe déjà (toutes les autres modifications seront effectuées).';
+$lang['update_ok']             = 'Utilisateur mis à jour avec succès';
+$lang['update_fail']           = 'Échec de la mise à jour utilisateur';
+$lang['update_exists']         = 'Échec du changement de nom d\'utilisateur, le nom spécifié (%s) existe déjà (toutes les autres modifications seront effectuées).';
 $lang['start']                 = 'Démarrage';
 $lang['prev']                  = 'Précédent';
 $lang['next']                  = 'Suivant';
