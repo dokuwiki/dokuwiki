@@ -36,6 +36,7 @@ function toolbar_JSdefines($varname){
                 'key'    => 'b',
                 'open'   => '**',
                 'close'  => '**',
+                'block'  => false
                 ),
            array(
                 'type'   => 'format',
@@ -44,6 +45,7 @@ function toolbar_JSdefines($varname){
                 'key'    => 'i',
                 'open'   => '//',
                 'close'  => '//',
+                'block'  => false
                 ),
            array(
                 'type'   => 'format',
@@ -52,6 +54,7 @@ function toolbar_JSdefines($varname){
                 'key'    => 'u',
                 'open'   => '__',
                 'close'  => '__',
+                'block'  => false
                 ),
            array(
                 'type'   => 'format',
@@ -60,6 +63,7 @@ function toolbar_JSdefines($varname){
                 'key'    => 'c',
                 'open'   => "''",
                 'close'  => "''",
+                'block'  => false
                 ),
            array(
                 'type'   => 'format',
@@ -68,6 +72,7 @@ function toolbar_JSdefines($varname){
                 'key'    => 'd',
                 'open'  => '<del>',
                 'close'   => '</del>',
+                'block'  => false
                 ),
 
            array(
@@ -76,7 +81,8 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'hequal.png',
                 'key'    => '8',
                 'text'   => $lang['qb_h'],
-                'mod'    => 0
+                'mod'    => 0,
+                'block'  => true
                ),
            array(
                 'type'   => 'autohead',
@@ -84,7 +90,8 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'hminus.png',
                 'key'    => '9',
                 'text'   => $lang['qb_h'],
-                'mod'    => 1
+                'mod'    => 1,
+                'block'  => true
                ),
            array(
                 'type'   => 'autohead',
@@ -92,7 +99,8 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'hplus.png',
                 'key'    => '0',
                 'text'   => $lang['qb_h'],
-                'mod'    => -1
+                'mod'    => -1,
+                'block'  => true
                ),
 
            array(
@@ -141,7 +149,8 @@ function toolbar_JSdefines($varname){
                                     'open'   => '== ',
                                     'close'  => ' ==\n',
                                     ),
-                            )
+                            ),
+                'block'  => true
                 ),
 
            array(
@@ -151,6 +160,7 @@ function toolbar_JSdefines($varname){
                 'key'    => 'l',
                 'open'   => '[[',
                 'close'  => ']]',
+                'block'  => false
                 ),
            array(
                 'type'   => 'format',
@@ -159,6 +169,7 @@ function toolbar_JSdefines($varname){
                 'open'   => '[[',
                 'close'  => ']]',
                 'sample' => 'http://example.com|'.$lang['qb_extlink'],
+                'block'  => false
                 ),
            array(
                 'type'   => 'formatln',
@@ -167,6 +178,7 @@ function toolbar_JSdefines($varname){
                 'open'   => '  - ',
                 'close'  => '',
                 'key'    => '-',
+                'block'  => true
                 ),
            array(
                 'type'   => 'formatln',
@@ -175,12 +187,14 @@ function toolbar_JSdefines($varname){
                 'open'   => '  * ',
                 'close'  => '',
                 'key'    => '.',
+                'block'  => true
                 ),
            array(
                 'type'   => 'insert',
                 'title'  => $lang['qb_hr'],
                 'icon'   => 'hr.png',
                 'insert' => '\n----\n',
+                'block'  => true
                 ),
            array(
                 'type'   => 'mediapopup',
@@ -189,6 +203,7 @@ function toolbar_JSdefines($varname){
                 'url'    => 'lib/exe/mediamanager.php?ns=',
                 'name'   => 'mediaselect',
                 'options'=> 'width=750,height=500,left=20,top=20,scrollbars=yes,resizable=yes',
+                'block'  => false
                 ),
           array(
                 'type'   => 'picker',
@@ -196,18 +211,21 @@ function toolbar_JSdefines($varname){
                 'icon'   => 'smiley.png',
                 'list'   => getSmileys(),
                 'icobase'=> 'smileys',
+                'block'  => false
                ),
           array(
                 'type'   => 'picker',
                 'title'  => $lang['qb_chars'],
                 'icon'   => 'chars.png',
                 'list'   => explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ α β Γ γ Δ δ ε ζ η Θ θ ι κ Λ λ μ Ξ ξ Π π ρ Σ σ Τ τ υ Φ φ χ Ψ ψ Ω ω ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″ [ ] { } ~ ( ) % § $ # | @'),
+                'block'  => false
                ),
           array(
                 'type'   => 'signature',
                 'title'  => $lang['qb_sig'],
                 'icon'   => 'sig.png',
                 'key'    => 'y',
+                'block'  => false
                ),
         ));
     } // end event TOOLBAR_DEFINE default action
