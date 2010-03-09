@@ -39,7 +39,9 @@ $RANGE = $_REQUEST['range'];
 $HIGH  = $_REQUEST['s'];
 if(empty($HIGH)) $HIGH = getGoogleQuery();
 
-$TEXT  = cleanText($_POST['wikitext']);
+if (isset($_POST['wikitext'])) {
+    $TEXT  = cleanText($_POST['wikitext']);
+}
 $PRE   = cleanText($_POST['prefix']);
 $SUF   = cleanText($_POST['suffix']);
 $SUM   = $_REQUEST['summary'];

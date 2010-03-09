@@ -1134,54 +1134,26 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     global $ID;
     global $REV;
     global $DATE;
-    global $RANGE;
     global $PRE;
     global $SUF;
     global $INFO;
     global $SUM;
     global $lang;
     global $conf;
+    global $TEXT;
 
-    //set summary default
-    if(!$SUM){
-        if($REV){
-            $SUM = $lang['restored'];
-        }elseif(!$INFO['exists']){
-            $SUM = $lang['created'];
-        }
+    if (isset($_REQUEST['changecheck'])) {
+        $check = $_REQUEST['changecheck'];
+    } elseif(!$INFO['exists']){
+        // $TEXT has been loaded from page template
+        $check = md5('');
+    } else {
+        $check = md5($TEXT);
     }
-
-    //no text? Load it!
-    if(!isset($text)){
-        $pr = false; //no preview mode
-        if($INFO['exists']){
-            if($RANGE){
-                list($PRE,$text,$SUF) = rawWikiSlices($RANGE,$ID,$REV);
-            }else{
-                $text = rawWiki($ID,$REV);
-            }
-            $check = md5($text);
-            $mod = false;
-        }else{
-            //try to load a pagetemplate
-            $data = array($ID);
-            $text = trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
-            $check = md5('');
-            $mod = $text!=='';
-        }
-    }else{
-        $pr = true; //preview mode
-        if (isset($_REQUEST['changecheck'])) {
-            $check = $_REQUEST['changecheck'];
-            $mod = md5($text)!==$check;
-        } else {
-            // Why? Assume default text is unmodified.
-            $check = md5($text);
-            $mod = false;
-        }
-    }
+    $mod = md5($TEXT) !== $check;
 
     $wr = $INFO['writable'] && !$INFO['locked'];
+    $include = 'edit';
     if($wr){
         if ($REV) $include = 'editrev';
     }else{
@@ -1192,7 +1164,6 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
         }
         $include = 'read';
     }
-    if(!$DATE) $DATE = $INFO['lastmod'];
 
     global $license;
 
@@ -1204,7 +1175,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
     $form->addHidden('suffix', $SUF);
     $form->addHidden('changecheck', $check);
 
-    $data = compact('wr', 'text', 'form');
+    $data = compact('wr', 'form');
     $data['media_manager'] = true;
     $data['intro_locale'] = $include;
     trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
@@ -1266,10 +1237,11 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
  * @triggers HTML_EDITFORM_OUTPUT
  */
 function html_edit_form($param) {
+    global $TEXT;
     extract($param);
     $attr = array('tabindex'=>'1');
     if (!$wr) $attr['readonly'] = 'readonly';
-    $form->addElement(form_makeWikiText($text, $attr));
+    $form->addElement(form_makeWikiText($TEXT, $attr));
 }
 
 /**

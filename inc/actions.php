@@ -111,7 +111,7 @@ function act_dispatch(){
             $ACT = act_draftsave($ACT);
 
         //edit
-        if(($ACT == 'edit' || $ACT == 'preview') && $INFO['editable']){
+        if(($ACT == 'edit' || $ACT == 'preview' || $ACT == 'recover') && $INFO['editable']){
             $ACT = act_edit($ACT);
         }else{
             unlock($ID); //try to unlock
@@ -442,13 +442,46 @@ function act_auth($act){
 }
 
 /**
- * Handle 'edit', 'preview'
+ * Handle 'edit', 'preview', 'recover'
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_edit($act){
     global $ID;
     global $INFO;
+
+    global $TEXT;
+    global $RANGE;
+    global $PRE;
+    global $SUF;
+    global $REV;
+    global $SUM;
+    global $lang;
+    global $DATE;
+
+    if (!isset($TEXT)) {
+        if ($INFO['exists']) {
+            if ($RANGE) {
+                list($PRE,$TEXT,$SUF) = rawWikiSlices($RANGE,$ID,$REV);
+            } else {
+                $TEXT = rawWiki($ID,$REV);
+            }
+        } else {
+            $data = array($ID);
+            $TEXT = trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
+        }
+    }
+
+    //set summary default
+    if(!$SUM){
+        if($REV){
+            $SUM = $lang['restored'];
+        }elseif(!$INFO['exists']){
+            $SUM = $lang['created'];
+        }
+    }
+
+    if(!$DATE) $DATE = $INFO['lastmod'];
 
     //check if locked by anyone - if not lock for my self
     $lockedby = checklock($ID);

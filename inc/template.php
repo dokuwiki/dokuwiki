@@ -60,15 +60,15 @@ function tpl_content_core(){
         case 'show':
             html_show();
             break;
-        case 'preview':
-            html_edit($TEXT);
-            html_show($TEXT);
-            break;
-        case 'recover':
-            html_edit($TEXT);
-            break;
+        case 'locked':
+            html_locked();
         case 'edit':
+        case 'recover':
             html_edit();
+            break;
+        case 'preview':
+            html_edit();
+            html_show($TEXT);
             break;
         case 'draft':
             html_draft();
@@ -103,10 +103,6 @@ function tpl_content_core(){
         case 'conflict':
             html_conflict(con($PRE,$TEXT,$SUF),$SUM);
             html_diff(con($PRE,$TEXT,$SUF),false);
-            break;
-        case 'locked':
-            html_locked();
-            html_edit();
             break;
         case 'login':
             html_login();
