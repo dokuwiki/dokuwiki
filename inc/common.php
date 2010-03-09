@@ -840,6 +840,7 @@ function pageTemplate($data){
  */
 function parsePageTemplate($tpl, $id) {
     global $USERINFO;
+    global $conf;
 
     // replace placeholders
     $file = noNS($id);
