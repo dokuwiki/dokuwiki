@@ -1183,28 +1183,18 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
     $wr = $INFO['writable'] && !$INFO['locked'];
     if($wr){
-        if ($REV) print p_locale_xhtml('editrev');
-        print p_locale_xhtml($include);
+        if ($REV) $include = 'editrev';
     }else{
         // check pseudo action 'source'
         if(!actionOK('source')){
             msg('Command disabled: source',-1);
             return;
         }
-        print p_locale_xhtml('read');
+        $include = 'read';
     }
     if(!$DATE) $DATE = $INFO['lastmod'];
 
-    global $conf;
     global $license;
-    global $lang;
-    global $REV;
-    global $DATE;
-    global $PRE;
-    global $SUF;
-    global $INFO;
-    global $SUM;
-    global $ID;
 
     $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
@@ -1216,7 +1206,11 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 
     $data = compact('wr', 'text', 'form');
     $data['media_manager'] = true;
+    $data['intro_locale'] = $include;
     trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
+    if (isset($data['intro_locale'])) {
+        echo p_locale_xhtml($data['intro_locale']);
+    }
 
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
