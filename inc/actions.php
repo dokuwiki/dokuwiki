@@ -204,7 +204,7 @@ function act_clean($act){
     if(!in_array($act,array('login','logout','register','save','cancel','edit','draft',
                     'preview','search','show','check','index','revisions',
                     'diff','recent','backlink','admin','subscribe','revert',
-                    'unsubscribe','profile','resendpwd','recover','wordblock',
+                    'unsubscribe','profile','resendpwd','recover',
                     'draftdel','subscribens','unsubscribens',)) && substr($act,0,7) != 'export_' ) {
         msg('Command unknown: '.htmlspecialchars($act),-1);
         return 'show';
@@ -311,10 +311,13 @@ function act_save($act){
     global $TEXT;
     global $SUF;
     global $SUM;
+    global $lang;
 
     //spam check
-    if(checkwordblock())
-        return 'wordblock';
+    if(checkwordblock()) {
+        msg($lang['wordblock'], -1);
+        return 'edit';
+    }
     //conflict check //FIXME use INFO
     if($DATE != 0 && @filemtime(wikiFN($ID)) > $DATE )
         return 'conflict';
@@ -353,8 +356,11 @@ function act_revert($act){
     }
 
     // spam check
-    if(checkwordblock($Text))
-        return 'wordblock';
+
+    if (checkwordblock($text)) {
+        msg($lang['wordblock'], -1);
+        return 'edit';
+    }
 
     saveWikiText($ID,$text,$sum,false);
     msg($sum,1);

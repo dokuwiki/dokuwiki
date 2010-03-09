@@ -73,9 +73,6 @@ function tpl_content_core(){
         case 'draft':
             html_draft();
             break;
-        case 'wordblock':
-            html_edit($TEXT,'wordblock');
-            break;
         case 'search':
             html_search();
             break;

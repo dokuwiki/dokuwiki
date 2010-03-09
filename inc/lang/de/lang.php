@@ -273,3 +273,6 @@ $lang['days']    = 'vor %d Tagen';
 $lang['hours']   = 'vor %d Stunden';
 $lang['minutes'] = 'vor %d Minuten';
 $lang['seconds'] = 'vor %d Sekunden';
+
+$lang['wordblock'] = 'Deine Bearbeitung wurde nicht gespeichert, da sie gesperrten Text enthielt (Spam).';
+

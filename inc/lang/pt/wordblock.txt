@@ -1,7 +1,0 @@
-====== Bloquear SPAM ======
-
-As suas alterações foram **bloqueadas**, porque contêm uma ou mais palavras consideradas abusivas (SPAM).
-
-Se pensa que isto não está correcto, por favor contacte o administrador deste site Wiki.
-
-----

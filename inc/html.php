@@ -1130,7 +1130,7 @@ function html_updateprofile(){
  * @triggers HTML_PAGE_FROMTEMPLATE
  * @author   Andreas Gohr <andi@splitbrain.org>
  */
-function html_edit($text=null,$include='edit'){ //FIXME: include needed?
+function html_edit(){
     global $ID;
     global $REV;
     global $DATE;

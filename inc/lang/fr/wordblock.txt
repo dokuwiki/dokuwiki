@@ -1,4 +1,0 @@
-====== Modification bloquée ======
-
-Vos modifications n'ont **pas été enregistrées** car elles contiennent un ou plusieurs mots bloqués. Si vous avez essayé de spammer le Wiki, c'est une mauvaise idée ! Si vous pensez que c'est une erreur, contactez l'administrateur de ce Wiki.
-
