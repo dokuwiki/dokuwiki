@@ -1127,7 +1127,6 @@ function html_updateprofile(){
 /**
  * Preprocess edit form data
  *
- * @triggers HTML_PAGE_FROMTEMPLATE
  * @author   Andreas Gohr <andi@splitbrain.org>
  */
 function html_edit(){

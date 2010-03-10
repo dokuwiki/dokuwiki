@@ -290,8 +290,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         }
         $text = rawWiki($id,$rev);
         if(!$text) {
-            $data = array($id);
-            return trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
+            return pageTemplate($id);
         } else {
             return $text;
         }

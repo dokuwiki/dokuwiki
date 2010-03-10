@@ -809,14 +809,16 @@ function rawWiki($id,$rev=''){
 /**
  * Returns the pagetemplate contents for the ID's namespace
  *
+ * @triggers COMMON_PAGE_FROMTEMPLATE
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function pageTemplate($data){
-    $id = $data[0];
+function pageTemplate($id){
     global $conf;
 
-    $path = dirname(wikiFN($id));
+    if (is_array($id)) $id = $id[0];
 
+    $path = dirname(wikiFN($id));
+    $tpl = '';
     if(@file_exists($path.'/_template.txt')){
         $tpl = io_readFile($path.'/_template.txt');
     }else{
@@ -830,15 +832,20 @@ function pageTemplate($data){
             $path = substr($path, 0, strrpos($path, '/'));
         }
     }
-    return isset($tpl) ? parsePageTemplate($tpl, $id) : '';
+    $data = compact('tpl', 'id');
+    trigger_event('COMMON_PAGE_FROMTEMPLATE', $data, 'parsePageTemplate', true);
+    return $data['tpl'];
 }
 
 /**
  * Performs common page template replacements
+ * This is the default action for COMMON_PAGE_FROMTEMPLATE
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function parsePageTemplate($tpl, $id) {
+function parsePageTemplate($data) {
+    extract($data);
+
     global $USERINFO;
     global $conf;
 

@@ -474,8 +474,7 @@ function act_edit($act){
                 $TEXT = rawWiki($ID,$REV);
             }
         } else {
-            $data = array($ID);
-            $TEXT = trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
+            $TEXT = pageTemplate($ID);
         }
     }
 
