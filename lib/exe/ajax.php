@@ -202,17 +202,6 @@ function ajax_medialist(){
 }
 
 /**
- * Return list of search result for the Mediamanager
- *
- * @author Tobias Sarnowski <sarnowski@cosmocode.de>
- */
-function ajax_mediasearchlist(){
-  global $conf;
-
-  media_searchlist($_POST['ns']);
-}
-
-/**
  * Return sub index for index view
  *
  * @author Andreas Gohr <andi@splitbrain.org>
