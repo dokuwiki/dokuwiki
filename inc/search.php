@@ -7,7 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/common.php');
 
 /**
  * recurse direcory
@@ -195,7 +194,6 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     $info['writable'] = is_writable($base.'/'.$file);
     if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
         $info['isimg'] = true;
-        require_once(DOKU_INC.'inc/JpegMeta.php');
         $info['meta']  = new JpegMeta($base.'/'.$file);
     }else{
         $info['isimg'] = false;
@@ -321,7 +319,6 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
     }
 
     //fetch instructions
-    require_once(DOKU_INC.'inc/parserutils.php');
     $instructions = p_cached_instructions($base.$file,true);
     if(is_null($instructions)) return false;
 

@@ -9,14 +9,8 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
   define('DOKU_DISABLE_GZIP_OUTPUT', 1);
   require_once(DOKU_INC.'inc/init.php');
-  require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/media.php');
-  require_once(DOKU_INC.'inc/pageutils.php');
-  require_once(DOKU_INC.'inc/httputils.php');
-  require_once(DOKU_INC.'inc/confutils.php');
-  require_once(DOKU_INC.'inc/auth.php');
 
-  //close sesseion
+  //close session
   session_write_close();
 
   $mimetypes = getMimeTypes();

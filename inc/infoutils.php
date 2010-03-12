@@ -7,7 +7,6 @@
  */
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
-require_once(DOKU_INC.'inc/HTTPClient.php');
 
 /**
  * Check for new messages from upstream
@@ -223,7 +222,6 @@ function check(){
         msg('The current page is not writable by you',0);
     }
 
-    require_once(DOKU_INC.'inc/HTTPClient.php');
     $check = wl('','',true).'data/_dummy';
     $http = new DokuHTTPClient();
     $http->timeout = 6;

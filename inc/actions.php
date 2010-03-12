@@ -7,8 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/template.php');
-
 
 /**
  * Call the needed action handlers
@@ -623,7 +621,6 @@ function act_subscription($act){
     $action = $params['action'];
 
     // Perform action.
-    require_once DOKU_INC . 'inc/subscription.php';
     if (!subscription_set($_SERVER['REMOTE_USER'], $target, $style, $data)) {
         throw new Exception(sprintf($lang["subscr_{$action}_error"],
                                     hsc($INFO['userinfo']['name']),

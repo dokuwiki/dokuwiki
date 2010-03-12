@@ -8,8 +8,6 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 define('DOKU_DISABLE_GZIP_OUTPUT',1);
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/auth.php');
-require_once(DOKU_INC.'inc/events.php');
 session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
@@ -177,8 +175,6 @@ function runIndexer(){
     }
     if($conf['dperm']) chmod($lock, $conf['dperm']);
 
-    require_once(DOKU_INC.'inc/indexer.php');
-
     // upgrade to version 2
     if (!@file_exists($conf['indexdir'].'/pageword.idx'))
         idx_upgradePageWords();
@@ -211,10 +207,7 @@ function metaUpdate(){
     if (@file_exists($file)) return false;
     if (!@file_exists(wikiFN($ID))) return false;
 
-    require_once(DOKU_INC.'inc/common.php');
-    require_once(DOKU_INC.'inc/parserutils.php');
     global $conf;
-
 
     // gather some additional info from changelog
     $info = io_grep($conf['changelog'],
@@ -348,7 +341,6 @@ function sendDigest() {
     if (!$conf['subscribers']) {
         return;
     }
-    require_once DOKU_INC . 'inc/subscription.php';
     $subscriptions = subscription_find($ID, array('style' => '(digest|list)',
                                                   'escaped' => true));
     global $auth;

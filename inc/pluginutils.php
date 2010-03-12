@@ -8,7 +8,6 @@
 
 // plugin related constants
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-require_once(DOKU_INC.'inc/plugincontroller.class.php');
 
 $plugin_types = array('admin','syntax','action','renderer', 'helper');
 

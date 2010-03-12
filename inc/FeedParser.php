@@ -6,9 +6,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/HTTPClient.php');
-require_once(DOKU_INC.'inc/SimplePie.php');
-
 
 /**
  * We override some methods of the original SimplePie class here

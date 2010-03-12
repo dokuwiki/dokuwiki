@@ -13,8 +13,6 @@ if(!defined('DOKU_INC')) die();
 // - allow a plugin to contain extras to be copied to the current template (extra/tpl/)
 // - to images (lib/images/) [ not needed, should go in lib/plugin/images/ ]
 
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-require_once(DOKU_PLUGIN.'admin.php');
 require_once(DOKU_PLUGIN."/plugin/classes/ap_manage.class.php");
 
 //--------------------------[ GLOBALS ]------------------------------------------------

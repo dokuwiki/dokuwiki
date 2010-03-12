@@ -7,7 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/html.php');
 
 /**
  * Class for creating simple HTML forms.

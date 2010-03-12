@@ -6,13 +6,6 @@
     @ini_set('session.use_only_cookies',0);
 
     require_once(DOKU_INC.'inc/init.php');
-    require_once(DOKU_INC.'inc/lang/en/lang.php');
-    require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
-    require_once(DOKU_INC.'inc/media.php');
-    require_once(DOKU_INC.'inc/common.php');
-    require_once(DOKU_INC.'inc/search.php');
-    require_once(DOKU_INC.'inc/template.php');
-    require_once(DOKU_INC.'inc/auth.php');
 
     trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
     session_write_close();  //close session

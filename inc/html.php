@@ -8,8 +8,6 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/form.php');
 
 /**
  * Convenience function to quickly build a wikilink
@@ -313,8 +311,6 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    require_once(DOKU_INC.'inc/search.php');
-    require_once(DOKU_INC.'inc/fulltext.php');
     global $conf;
     global $QUERY;
     global $ID;
@@ -707,7 +703,6 @@ function html_recent($first=0){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_index($ns){
-    require_once(DOKU_INC.'inc/search.php');
     global $conf;
     global $ID;
     $dir = $conf['datadir'];
@@ -845,7 +840,6 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
  * @author Michael Klier <chi@chimeric.de>
  */
 function html_backlinks(){
-    require_once(DOKU_INC.'inc/fulltext.php');
     global $ID;
     global $conf;
     global $lang;
@@ -873,7 +867,6 @@ function html_backlinks(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_diff($text='',$intro=true){
-    require_once(DOKU_INC.'inc/DifferenceEngine.php');
     global $ID;
     global $REV;
     global $lang;

@@ -10,8 +10,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/io.php');
 
 // some ACL level defines
 define('AUTH_NONE',0);
@@ -22,15 +20,23 @@ define('AUTH_UPLOAD',8);
 define('AUTH_DELETE',16);
 define('AUTH_ADMIN',255);
 
-global $conf;
-
-if($conf['useacl']){
-    require_once(DOKU_INC.'inc/blowfish.php');
-    require_once(DOKU_INC.'inc/mail.php');
-
+/**
+ * Initialize the auth system.
+ *
+ * This function is automatically called at the end of init.php
+ *
+ * This used to be the main() of the auth.php
+ *
+ * @todo backend loading maybe should be handled by the class autoloader
+ * @todo maybe split into multiple functions at the XXX marked positions
+ */
+function auth_setup(){
+    global $conf;
     global $auth;
 
-    // load the the backend auth functions and instantiate the auth object
+    if(!$conf['useacl']) return false;
+
+    // load the the backend auth functions and instantiate the auth object XXX
     if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
         require_once(DOKU_INC.'inc/auth/basic.class.php');
         require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
@@ -50,51 +56,49 @@ if($conf['useacl']){
     } else {
         nice_die($lang['authmodfailed']);
     }
-}
 
-// do the login either by cookie or provided credentials
-if($conf['useacl']){
-    if($auth){
-        if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
-        if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
-        if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
-        $_REQUEST['http_credentials'] = false;
-        if (!$conf['rememberme']) $_REQUEST['r'] = false;
+    if(!$auth) return;
 
-        // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
-        if(isset($_SERVER['HTTP_AUTHORIZATION'])){
-            list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
-                explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
-        }
+    // do the login either by cookie or provided credentials XXX
+    if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
+    if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
+    if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
+    $_REQUEST['http_credentials'] = false;
+    if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
-        // if no credentials were given try to use HTTP auth (for SSO)
-        if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
-            $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
-            $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
-            $_REQUEST['http_credentials'] = true;
-        }
-
-        // apply cleaning
-        $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
-
-        if(isset($_REQUEST['authtok'])){
-            // when an authentication token is given, trust the session
-            auth_validateToken($_REQUEST['authtok']);
-        }elseif(!is_null($auth) && $auth->canDo('external')){
-            // external trust mechanism in place
-            $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
-        }else{
-            $evdata = array(
-                    'user'     => $_REQUEST['u'],
-                    'password' => $_REQUEST['p'],
-                    'sticky'   => $_REQUEST['r'],
-                    'silent'   => $_REQUEST['http_credentials'],
-                    );
-            trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
-        }
+    // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
+    if(isset($_SERVER['HTTP_AUTHORIZATION'])){
+        list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
+            explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
     }
 
-    //load ACL into a global array
+    // if no credentials were given try to use HTTP auth (for SSO)
+    if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
+        $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
+        $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
+        $_REQUEST['http_credentials'] = true;
+    }
+
+    // apply cleaning
+    $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+
+    if(isset($_REQUEST['authtok'])){
+        // when an authentication token is given, trust the session
+        auth_validateToken($_REQUEST['authtok']);
+    }elseif(!is_null($auth) && $auth->canDo('external')){
+        // external trust mechanism in place
+        $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+    }else{
+        $evdata = array(
+                'user'     => $_REQUEST['u'],
+                'password' => $_REQUEST['p'],
+                'sticky'   => $_REQUEST['r'],
+                'silent'   => $_REQUEST['http_credentials'],
+                );
+        trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+    }
+
+    //load ACL into a global array XXX
     global $AUTH_ACL;
     if(is_readable(DOKU_CONF.'acl.auth.php')){
         $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');

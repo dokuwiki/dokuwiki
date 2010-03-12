@@ -8,10 +8,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/confutils.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/cache.php');
 
 /**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
@@ -647,8 +643,6 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
         $highlighted_code = io_readFile($cache, false);
 
     } else {
-
-        require_once(DOKU_INC . 'inc/geshi.php');
 
         $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
         $geshi->set_encoding('utf-8');
