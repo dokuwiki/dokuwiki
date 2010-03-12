@@ -8,13 +8,6 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/events.php');
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/feedcreator.class.php');
-require_once(DOKU_INC.'inc/auth.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/httputils.php');
 
 //close session
 session_write_close();

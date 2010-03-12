@@ -9,12 +9,8 @@
 spl_autoload_register('load_autoload');
 
 // require all the common libraries
-// for a e few of these order does matter
-require_once(DOKU_INC.'inc/IXR_Library.php');
-require_once(DOKU_INC.'inc/adLDAP.php');
+// for a few of these order does matter
 require_once(DOKU_INC.'inc/blowfish.php');
-require_once(DOKU_INC.'inc/feedcreator.class.php');
-require_once(DOKU_INC.'inc/geshi.php');
 require_once(DOKU_INC.'inc/actions.php');
 require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
@@ -49,7 +45,7 @@ require_once(DOKU_INC.'inc/auth.php');
  * require()s their associated php files when an object is instantiated.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @todo   add generic loading of plugins here
+ * @todo   add generic loading of plugins and other generically named classes
  */
 function load_autoload($name){
     static $classes = null;
@@ -76,6 +72,8 @@ function load_autoload($name){
         'GeSHi'                 => DOKU_INC.'inc/geshi.php',
         'TarLib'                => DOKU_INC.'inc/TarLib.class.php',
         'ZibLib'                => DOKU_INC.'inc/ZipLib.class.php',
+        'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
+        'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
