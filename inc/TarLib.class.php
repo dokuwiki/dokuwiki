@@ -49,15 +49,15 @@
  * FULL_ARCHIVE is a -1 constant that means "the complete archive" when
  * extracting. This is explained in Extract()
  */
-define('COMPRESS_GZIP',1);
-define('COMPRESS_BZIP',2);
-define('COMPRESS_AUTO',3);
-define('COMPRESS_NONE',0);
-define('TARLIB_VERSION','1.2');
-define('FULL_ARCHIVE',-1);
-define('ARCHIVE_DYNAMIC',0);
-define('ARCHIVE_RENAMECOMP',5);
-define('COMPRESS_DETECT',-1);
+#define('COMPRESS_GZIP',1);
+#define('COMPRESS_BZIP',2);
+#define('COMPRESS_AUTO',3);
+#define('COMPRESS_NONE',0);
+#define('TARLIB_VERSION','1.2');
+#define('FULL_ARCHIVE',-1);
+#define('ARCHIVE_DYNAMIC',0);
+#define('ARCHIVE_RENAMECOMP',5);
+#define('COMPRESS_DETECT',-1);
 
 class TarLib {
     var $_comptype;
@@ -67,6 +67,16 @@ class TarLib {
     var $_nomf;
     var $_result;
     var $_initerror;
+
+    const   COMPRESS_GZIP = 1;
+    const   COMPRESS_BZIP = 2;
+    const   COMPRESS_AUTO = 3;
+    const   COMPRESS_NONE = 0;
+    const   TARLIB_VERSION = '1.2';
+    const   FULL_ARCHIVE = -1;
+    const   ARCHIVE_DYNAMIC = 0;
+    const   ARCHIVE_RENAMECOMP = 5;
+    const   COMPRESS_DETECT = -1;
 
     /**
      * constructor, initialize the class
@@ -98,49 +108,49 @@ class TarLib {
      * represent the GZIP or BZIP compression level.  1 produce fast compression,
      * and 9 produce smaller files. See the RFC 1952 for more infos.
      */
-    function tarlib($p_filen = ARCHIVE_DYNAMIC , $p_comptype = COMPRESS_AUTO, $p_complevel = 9) {
+    function tarlib($p_filen = TarLib::ARCHIVE_DYNAMIC , $p_comptype = TarLib::COMPRESS_AUTO, $p_complevel = 9) {
         $this->_initerror = 0;
         $this->_nomf = $p_filen;
         $flag=0;
         if($p_comptype && $p_comptype % 5 == 0){
-            $p_comptype /= ARCHIVE_RENAMECOMP;
+            $p_comptype /= TarLib::ARCHIVE_RENAMECOMP;
             $flag=1;
         }
 
         if($p_complevel > 0 && $p_complevel <= 9) $this->_compzlevel = $p_complevel;
         else $p_complevel = 9;
 
-        if($p_comptype == COMPRESS_DETECT) {
-            if(strtolower(substr($p_filen,-3)) == '.gz') $p_comptype = COMPRESS_GZIP;
-            elseif(strtolower(substr($p_filen,-4)) == '.bz2') $p_comptype = COMPRESS_BZIP;
-            else $p_comptype = COMPRESS_NONE;
+        if($p_comptype == TarLib::COMPRESS_DETECT) {
+            if(strtolower(substr($p_filen,-3)) == '.gz') $p_comptype = TarLib::COMPRESS_GZIP;
+            elseif(strtolower(substr($p_filen,-4)) == '.bz2') $p_comptype = TarLib::COMPRESS_BZIP;
+            else $p_comptype = TarLib::COMPRESS_NONE;
         }
 
         switch($p_comptype) {
-            case COMPRESS_GZIP:
+        case TarLib::COMPRESS_GZIP:
                 if(!extension_loaded('zlib')) $this->_initerror = -1;
-                $this->_comptype = COMPRESS_GZIP;
+                $this->_comptype = TarLib::COMPRESS_GZIP;
                 break;
 
-            case COMPRESS_BZIP:
+            case TarLib::COMPRESS_BZIP:
                 if(!extension_loaded('bz2')) $this->_initerror = -2;
-                $this->_comptype = COMPRESS_BZIP;
+                $this->_comptype = TarLib::COMPRESS_BZIP;
                 break;
 
-            case COMPRESS_AUTO:
+            case TarLib::COMPRESS_AUTO:
                 if(extension_loaded('zlib'))
-                    $this->_comptype = COMPRESS_GZIP;
+                    $this->_comptype = TarLib::COMPRESS_GZIP;
                 elseif(extension_loaded('bz2'))
-                    $this->_comptype = COMPRESS_BZIP;
+                    $this->_comptype = TarLib::COMPRESS_BZIP;
                 else
-                    $this->_comptype = COMPRESS_NONE;
+                    $this->_comptype = TarLib::COMPRESS_NONE;
                 break;
 
             default:
-                $this->_comptype = COMPRESS_NONE;
+                $this->_comptype = TarLib::COMPRESS_NONE;
         }
 
-        if($this->_initerror < 0) $this->_comptype = COMPRESS_NONE;
+        if($this->_initerror < 0) $this->_comptype = TarLib::COMPRESS_NONE;
 
         if($flag) $this->_nomf.= '.'.$this->getCompression(1);
         $this->_result = true;
@@ -152,7 +162,7 @@ class TarLib {
      * This function does exactly the same as TarLib (constructor), except it
      * returns a status code.
      */
-    function setArchive($p_name='', $p_comp = COMPRESS_AUTO, $p_level=9) {
+    function setArchive($p_name='', $p_comp = TarLib::COMPRESS_AUTO, $p_level=9) {
         $this->_CompTar();
         $this->TarLib($p_name, $p_comp, $p_level);
         return $this->_result;
@@ -188,7 +198,7 @@ class TarLib {
      * the archive. See the MaxgTar Constants to see which constants you can use.
      * It may look strange, but it returns the GZIP compression level.
      */
-    function setCompression($p_comp = COMPRESS_AUTO) {
+    function setCompression($p_comp = TarLib::COMPRESS_AUTO) {
         $this->setArchive($this->_nomf, $p_comp, $this->_compzlevel);
         return $this->_compzlevel;
     }
@@ -301,7 +311,7 @@ class TarLib {
      * permission in octal mode (prefixed with a 0) that will be given on each
      * extracted file.
      */
-    function Extract($p_what = FULL_ARCHIVE, $p_to = '.', $p_remdir='', $p_mode = 0755) {
+    function Extract($p_what = TarLib::FULL_ARCHIVE, $p_to = '.', $p_remdir='', $p_mode = 0755) {
         if(!$this->_OpenRead()) return -4;
         //  if(!@is_dir($p_to)) if(!@mkdir($p_to, 0777)) return -8;   --CS
         if(!@is_dir($p_to)) if(!$this->_dirApp($p_to)) return -8;   //--CS (route through correct dir fn)
@@ -375,8 +385,8 @@ class TarLib {
      * it to get the human-readable description of the error.
      */
     function Add($p_filelist, $p_add = '', $p_rem = '') {
-        if (($this->_nomf != ARCHIVE_DYNAMIC && @is_file($this->_nomf)) ||
-            ($this->_nomf == ARCHIVE_DYNAMIC && !$this->_memdat)){
+        if (($this->_nomf != TarLib::ARCHIVE_DYNAMIC && @is_file($this->_nomf)) ||
+            ($this->_nomf == TarLib::ARCHIVE_DYNAMIC && !$this->_memdat)){
              return $this->Create($p_filelist, $p_add, $p_rem);
         }
 
@@ -524,20 +534,20 @@ class TarLib {
     }
 
     function _seek($p_flen, $tell=0) {
-        if($this->_nomf === ARCHIVE_DYNAMIC)
+        if($this->_nomf === TarLib::ARCHIVE_DYNAMIC)
             $this->_memdat=substr($this->_memdat,0,($tell ? strlen($this->_memdat) : 0) + $p_flen);
-        elseif($this->_comptype == COMPRESS_GZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_GZIP)
             @gzseek($this->_fp, ($tell ? @gztell($this->_fp) : 0)+$p_flen);
-        elseif($this->_comptype == COMPRESS_BZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP)
             @fseek($this->_fp, ($tell ? @ftell($this->_fp) : 0)+$p_flen);
         else
             @fseek($this->_fp, ($tell ? @ftell($this->_fp) : 0)+$p_flen);
     }
 
     function _OpenRead() {
-        if($this->_comptype == COMPRESS_GZIP)
+        if($this->_comptype == TarLib::COMPRESS_GZIP)
             $this->_fp = @gzopen($this->_nomf, 'rb');
-        elseif($this->_comptype == COMPRESS_BZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP)
             $this->_fp = @bzopen($this->_nomf, 'rb');
         else
             $this->_fp = @fopen($this->_nomf, 'rb');
@@ -546,11 +556,11 @@ class TarLib {
     }
 
     function _OpenWrite($add = 'w') {
-        if($this->_nomf === ARCHIVE_DYNAMIC) return true;
+        if($this->_nomf === TarLib::ARCHIVE_DYNAMIC) return true;
 
-        if($this->_comptype == COMPRESS_GZIP)
+        if($this->_comptype == TarLib::COMPRESS_GZIP)
             $this->_fp = @gzopen($this->_nomf, $add.'b'.$this->_compzlevel);
-        elseif($this->_comptype == COMPRESS_BZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP)
             $this->_fp = @bzopen($this->_nomf, $add.'b');
         else
             $this->_fp = @fopen($this->_nomf, $add.'b');
@@ -559,28 +569,28 @@ class TarLib {
     }
 
     function _CompTar() {
-        if($this->_nomf === ARCHIVE_DYNAMIC || !$this->_fp) return;
+        if($this->_nomf === TarLib::ARCHIVE_DYNAMIC || !$this->_fp) return;
 
-        if($this->_comptype == COMPRESS_GZIP) @gzclose($this->_fp);
-        elseif($this->_comptype == COMPRESS_BZIP) @bzclose($this->_fp);
+        if($this->_comptype == TarLib::COMPRESS_GZIP) @gzclose($this->_fp);
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP) @bzclose($this->_fp);
         else @fclose($this->_fp);
     }
 
     function _read($p_len) {
-        if($this->_comptype == COMPRESS_GZIP)
+        if($this->_comptype == TarLib::COMPRESS_GZIP)
             return @gzread($this->_fp,$p_len);
-        elseif($this->_comptype == COMPRESS_BZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP)
             return @bzread($this->_fp,$p_len);
         else
             return @fread($this->_fp,$p_len);
     }
 
     function _write($p_data) {
-        if($this->_nomf === ARCHIVE_DYNAMIC) $this->_memdat .= $p_data;
-        elseif($this->_comptype == COMPRESS_GZIP)
+        if($this->_nomf === TarLib::ARCHIVE_DYNAMIC) $this->_memdat .= $p_data;
+        elseif($this->_comptype == TarLib::COMPRESS_GZIP)
             return @gzwrite($this->_fp,$p_data);
 
-        elseif($this->_comptype == COMPRESS_BZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP)
             return @bzwrite($this->_fp,$p_data);
 
         else
@@ -588,9 +598,9 @@ class TarLib {
     }
 
     function _encode($p_dat) {
-        if($this->_comptype == COMPRESS_GZIP)
+        if($this->_comptype == TarLib::COMPRESS_GZIP)
             return gzencode($p_dat, $this->_compzlevel);
-        elseif($this->_comptype == COMPRESS_BZIP)
+        elseif($this->_comptype == TarLib::COMPRESS_BZIP)
             return bzcompress($p_dat, $this->_compzlevel);
         else return $p_dat;
     }
@@ -637,7 +647,7 @@ class TarLib {
 
     function _addFileList($p_fl, $p_addir, $p_remdir) {
         foreach($p_fl as $file) {
-            if(($file == $this->_nomf && $this->_nomf != ARCHIVE_DYNAMIC) || !$file || (!file_exists($file) && !is_array($file)))
+            if(($file == $this->_nomf && $this->_nomf != TarLib::ARCHIVE_DYNAMIC) || !$file || (!file_exists($file) && !is_array($file)))
                 continue;
 
             if (!$this->_addFile($file, $p_addir, $p_remdir))
@@ -747,7 +757,7 @@ class TarLib {
     function _append($p_filelist, $p_addir="", $p_remdir="") {
         if(!$this->_fp) if(!$this->_OpenWrite('a')) return -6;
 
-        if($this->_nomf == ARCHIVE_DYNAMIC) {
+        if($this->_nomf == TarLib::ARCHIVE_DYNAMIC) {
             $s = strlen($this->_memdat);
             $this->_memdat = substr($this->_memdat,0,-512);
         } else {

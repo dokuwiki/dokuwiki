@@ -199,13 +199,13 @@ class ap_download extends ap_manage {
         if (in_array($ext, array('tar','bz','gz'))) {
             switch($ext){
                 case 'bz':
-                    $compress_type = COMPRESS_BZIP;
+                    $compress_type = TarLib::COMPRESS_BZIP;
                     break;
                 case 'gz':
-                    $compress_type = COMPRESS_GZIP;
+                    $compress_type = TarLib::COMPRESS_GZIP;
                     break;
                 default:
-                    $compress_type = COMPRESS_NONE;
+                    $compress_type = TarLib::COMPRESS_NONE;
             }
 
             $tar = new TarLib($file, $compress_type);
@@ -215,7 +215,7 @@ class ap_download extends ap_manage {
                 }
                 return false;
             }
-            $ok = $tar->Extract(FULL_ARCHIVE, $target, '', 0777);
+            $ok = $tar->Extract(TarLib::FULL_ARCHIVE, $target, '', 0777);
 
             if($ok<1){
                 if($conf['allowdebug']){
