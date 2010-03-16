@@ -334,8 +334,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $this->_firstimage($name['src']);
 
     if ($this->capture){
-      if ($name) $this->doc .= $name;
-      else $this->doc .= '<'.$url.'>';
+      $this->doc .= $this->_getLinkTitle($name, '<' . $url . '>');
     }
   }
 
@@ -345,7 +344,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
     if ($this->capture){
       list($wikiUri, $hash) = explode('#', $wikiUri, 2);
-      $name = $this->_getLinkTitle($name, $wikiName.'>'.$wikiUri);
+      $name = $this->_getLinkTitle($name, $wikiUri);
       $this->doc .= $name;
     }
   }
