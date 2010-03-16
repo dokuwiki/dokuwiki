@@ -66,6 +66,7 @@ function load_autoload($name){
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
         'IXR_Server'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
+        'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'GeSHi'                 => DOKU_INC.'inc/geshi.php',
         'TarLib'                => DOKU_INC.'inc/TarLib.class.php',
