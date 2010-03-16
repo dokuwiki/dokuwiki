@@ -578,7 +578,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 return new IXR_ERROR(1, 'Filename not given.');
             }
 
-            $ftmp = $conf['tmpdir'] . '/' . $id;
+            $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
 
             // save temporary file
             @unlink($ftmp);
