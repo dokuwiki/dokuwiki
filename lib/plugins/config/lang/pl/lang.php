@@ -10,6 +10,7 @@
  * @author Piotr JANKOWSKI <jankowski.piotr@gmail.com>
  * @author sleshek@wp.pl
  * @author Leszek Stachowski <shazarre@gmail.com>
+ * @author maros <dobrimaros@yahoo.pl>
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';

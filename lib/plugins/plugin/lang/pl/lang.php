@@ -10,6 +10,7 @@
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author sleshek@wp.pl
  * @author Leszek Stachowski <shazarre@gmail.com>
+ * @author maros <dobrimaros@yahoo.pl>
  */
 $lang['menu']                  = 'Menadżer wtyczek';
 $lang['download']              = 'Ściągnij i zainstaluj nową wtyczkę';

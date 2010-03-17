@@ -9,6 +9,7 @@
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author sleshek@wp.pl
  * @author Leszek Stachowski <shazarre@gmail.com>
+ * @author maros <dobrimaros@yahoo.pl>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -116,6 +117,27 @@ $lang['mediafiles']            = 'Dostępne pliki';
 $lang['js']['searchmedia']     = 'Szukaj plików';
 $lang['js']['keepopen']        = 'Nie zamykaj okna po wyborze';
 $lang['js']['hidedetails']     = 'Ukryj szczegóły';
+$lang['js']['mediatitle']      = 'Ustawienia odnośników';
+$lang['js']['mediadisplay']    = 'Typ odnośnika';
+$lang['js']['mediaalign']      = 'Położenie';
+$lang['js']['mediasize']       = 'Rozmiar grafiki';
+$lang['js']['mediatarget']     = 'Cel odnośnika';
+$lang['js']['mediaclose']      = 'Zamknij';
+$lang['js']['mediainsert']     = 'Wstaw';
+$lang['js']['mediadisplayimg'] = 'Pokaż grafikę';
+$lang['js']['mediadisplaylnk'] = 'Pokaż tylko odnośnik.';
+$lang['js']['mediasmall']      = 'Mały rozmiar';
+$lang['js']['mediamedium']     = 'Średni rozmiar';
+$lang['js']['medialarge']      = 'Duży rozmiar';
+$lang['js']['mediaoriginal']   = 'Wersja oryginalna';
+$lang['js']['medialnk']        = 'Odnośnik do strony ze szczegółami';
+$lang['js']['mediadirect']     = 'Bezpośredni odnośnik do oryginału';
+$lang['js']['medianolnk']      = 'Bez odnośnika';
+$lang['js']['medianolink']     = 'Nie ustawiaj odnośnika do grafiki';
+$lang['js']['medialeft']       = 'Ustaw położenie po lewej stronie.';
+$lang['js']['mediaright']      = 'Ustaw położenie po prawej stronie.';
+$lang['js']['mediacenter']     = 'Ustaw położenie po środku.';
+$lang['js']['medianoalign']    = 'Nie ustawiaj położenia.';
 $lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer.
 Możesz skopiować odnośnik.';
 $lang['js']['linkwiz']         = 'Tworzenie odnośników';
@@ -257,3 +279,4 @@ $lang['days']                  = '%d dni temu';
 $lang['hours']                 = '%d godzin temu';
 $lang['minutes']               = '%d minut temu';
 $lang['seconds']               = '%d sekund temu';
+$lang['wordblock']             = 'Twoje ustawienia nie zostały zapisane ponieważ zawierają niedozwoloną treść (spam).';
