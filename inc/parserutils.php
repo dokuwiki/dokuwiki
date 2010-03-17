@@ -222,7 +222,7 @@ function p_get_instructions($text){
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
-function p_get_metadata($id, $key=false, $render=false){
+function p_get_metadata($id, $key='', $render=false){
     global $ID, $INFO, $cache_metadata;
 
     // cache the current page
@@ -241,19 +241,17 @@ function p_get_metadata($id, $key=false, $render=false){
         if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
     }
 
+    $val = $meta['current'];
+
     // filter by $key
-    if ($key){
-        list($key, $subkey) = explode(' ', $key, 2);
-        $subkey = trim($subkey);
-
-        if ($subkey) {
-            return isset($meta['current'][$key][$subkey]) ? $meta['current'][$key][$subkey] : null;
+    foreach(explode(' ', trim($key), 2) as $cur_key) {
+        $cur_key = trim($cur_key);
+        if (!isset($val[$cur_key])) {
+            return null;
         }
-
-        return isset($meta['current'][$key]) ? $meta['current'][$key] : null;
+        $val = $val[$cur_key];
     }
-
-    return $meta['current'];
+    return $val;
 }
 
 /**
