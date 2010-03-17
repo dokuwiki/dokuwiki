@@ -105,6 +105,7 @@ $lang['gdlib']                 = 'Versión da Libraría GD';
 $lang['im_convert']            = 'Ruta deica a ferramenta de conversión ImageMagick';
 $lang['jpg_quality']           = 'Calidade de compresión dos JPG (0-100)';
 $lang['subscribers']           = 'Activar posibilidade de subscrición á páxina';
+$lang['subscribe_time']        = 'Tempo despois do cal se enviarán os resumos e listas de subscrición (seg.): isto debe ser inferior ao tempo especificado en recent_days.';
 $lang['compress']              = 'Saída compacta de CSS e Javascript';
 $lang['hidepages']             = 'Agochar páxinas que coincidan (expresións regulares)';
 $lang['send404']               = 'Enviar "HTTP 404/Páxina non atopada" para as páxinas inexistentes';

@@ -1,0 +1,23 @@
+Ola.
+
+Houbo trocos na páxina @PAGE@ do wiki @TITLE@.
+Estes son os trocos:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Data : @DATE@
+Usuario : @USER@
+Resumo do Edición: @SUMMARY@
+Revisión Antiga: @OLDPAGE@
+Revisión Nova: @NEWPAGE@
+
+Para cancelares as notificacións da páxina inicia sesión no wiki en
+@DOKUWIKIURL@ e logo visita
+@SUBSCRIBE@
+e desubscríbete do seguimento dos trocos da páxina e/ou nome de espazo.
+
+--
+Este correo-e foi xerado polo DokuWiki de
+@DOKUWIKIURL@
