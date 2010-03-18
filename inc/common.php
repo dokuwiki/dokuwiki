@@ -158,7 +158,7 @@ function pageinfo(){
     }else{
         $info['writable'] = ($info['perm'] >= AUTH_CREATE);
     }
-    $info['editable']  = ($info['writable'] && empty($info['lock']));
+    $info['editable']  = ($info['writable'] && empty($info['locked']));
     $info['lastmod']   = @filemtime($info['filepath']);
 
     //load page meta data
