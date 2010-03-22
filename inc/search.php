@@ -199,7 +199,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         $info['isimg'] = false;
     }
     if($opts['hash']){
-        $info['hash'] = md5(io_readFile(wikiFN($info['id']),false));
+        $info['hash'] = md5(io_readFile(mediaFN($info['id']),false));
     }
 
     $data[] = $info;
