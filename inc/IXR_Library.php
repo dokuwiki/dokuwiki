@@ -150,6 +150,7 @@ class IXR_Message {
         $this->message = str_replace('&amp;', '&#38;', $this->message);
         $this->message = str_replace('&apos;', '&#39;', $this->message);
         $this->message = str_replace('&quot;', '&#34;', $this->message);
+        $this->message = str_replace("\x0b", ' ', $this->message); //vertical tab
         if (trim($this->message) == '') {
             return false;
         }
