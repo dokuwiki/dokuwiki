@@ -16,6 +16,7 @@
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,9 +50,6 @@ $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
 $lang['btn_backtomedia']       = 'Zurück zur Dateiauswahl';
 $lang['btn_subscribe']         = 'Änderungen abonnieren';
-$lang['btn_unsubscribe']       = 'Änderungen abbestellen';
-$lang['btn_subscribens']       = 'Namensraumänderungen abonnieren';
-$lang['btn_unsubscribens']     = 'Namensraumänderungen abbestellen';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
 $lang['btn_resendpwd']         = 'Sende neues Passwort';
@@ -126,6 +124,27 @@ $lang['mediafiles']            = 'Vorhandene Dateien in';
 $lang['js']['searchmedia']     = 'Suche Dateien';
 $lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
 $lang['js']['hidedetails']     = 'Details ausblenden';
+$lang['js']['mediatitle']      = 'Linkeinstellungen';
+$lang['js']['mediadisplay']    = 'Linktyp';
+$lang['js']['mediaalign']      = 'Anordnung';
+$lang['js']['mediasize']       = 'Bildgrösse';
+$lang['js']['mediatarget']     = 'Linkziel';
+$lang['js']['mediaclose']      = 'Schliessen';
+$lang['js']['mediainsert']     = 'Einfügen';
+$lang['js']['mediadisplayimg'] = 'Bild anzeigen.';
+$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen.';
+$lang['js']['mediasmall']      = 'Kleine Version';
+$lang['js']['mediamedium']     = 'Mittlere Version';
+$lang['js']['medialarge']      = 'Grosse Version';
+$lang['js']['mediaoriginal']   = 'Originalversion';
+$lang['js']['medialnk']        = 'Link zur Detailseite';
+$lang['js']['mediadirect']     = 'Direktlink zum Original';
+$lang['js']['medianolnk']      = 'Kein Link';
+$lang['js']['medianolink']     = 'Bild nicht verlinken';
+$lang['js']['medialeft']       = 'Das Bild links anordnen.';
+$lang['js']['mediaright']      = 'Das Bild in der Mitte anordnen.';
+$lang['js']['mediacenter']     = 'Das Bild rechts anordnen.';
+$lang['js']['medianoalign']    = 'Keine Anordnung benutzen.';
 $lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet Explorer.
 Der Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 $lang['js']['linkwiz']         = 'Link-Assistent';
@@ -159,13 +178,11 @@ $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Ihnalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
-
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geaendert:';
+$lang['mail_subscribe_list']   = 'Geänderte Seiten im Namensraum:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
 $lang['mail_upload']           = 'Datei hochgeladen:';
-$lang['mail_subscribe_list']   = 'Geänderte Seiten im Namensraum:';
-
 $lang['qb_bold']               = 'Fetter Text';
 $lang['qb_italic']             = 'Kursiver Text';
 $lang['qb_underl']             = 'Unterstrichener Text';
@@ -206,26 +223,22 @@ $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Schlagwörter';
-
-$lang['subscr_subscribe_success']  = '%s hat nun Änderungen der Seite %s abonniert';
-$lang['subscr_subscribe_error']    = '%s kann die Änderungen der Seite %s nicht abonnieren';
-$lang['subscr_subscribe_noaddress']= 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
-$lang['subscr_unsubscribe_success']= 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
-$lang['subscr_unsubscribe_error']  = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
+$lang['subscr_subscribe_success'] = '%s hat nun Änderungen der Seite %s abonniert';
+$lang['subscr_subscribe_error'] = '%s kann die Änderungen der Seite %s nicht abonnieren';
+$lang['subscr_subscribe_noaddress'] = 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
+$lang['subscr_unsubscribe_success'] = 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
+$lang['subscr_unsubscribe_error'] = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
 $lang['subscr_already_subscribed'] = '%s hat %s bereits abonniert';
-$lang['subscr_not_subscribed']     = '%s hat %s nicht abonniert';
-// Manage page for subscriptions
-$lang['subscr_m_not_subscribed']   = 'Sie haben die aktuelle Seite und ihre Namensräume nicht abonniert.';
-$lang['subscr_m_new_header']       = 'Abonnement hinzufügen';
-$lang['subscr_m_current_header']   = 'Aktuelle Abonnements';
-$lang['subscr_m_unsubscribe']      = 'Löschen';
-$lang['subscr_m_subscribe']        = 'Abonnieren';
-$lang['subscr_m_receive']          = 'Benachrichtigung';
-
-$lang['subscr_style_every']        = 'Email bei jeder Bearbeitung';
-$lang['subscr_style_digest']       = 'Zusammenfassung der Änderungen für jede veränderte Seite';
-$lang['subscr_style_list']         = 'Liste der geänderten Seiten';
-
+$lang['subscr_not_subscribed'] = '%s hat %s nicht abonniert';
+$lang['subscr_m_not_subscribed'] = 'Sie haben die aktuelle Seite und ihre Namensräume nicht abonniert.';
+$lang['subscr_m_new_header']   = 'Abonnement hinzufügen';
+$lang['subscr_m_current_header'] = 'Aktuelle Abonnements';
+$lang['subscr_m_unsubscribe']  = 'Löschen';
+$lang['subscr_m_subscribe']    = 'Abonnieren';
+$lang['subscr_m_receive']      = 'Benachrichtigung';
+$lang['subscr_style_every']    = 'Email bei jeder Bearbeitung';
+$lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite';
+$lang['subscr_style_list']     = 'Liste der geänderten Seiten';
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Systembetreuer.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
@@ -265,14 +278,11 @@ $lang['mu_filetypes']          = 'Erlaubte Dateitypen';
 $lang['mu_info']               = 'Dateien hochgeladen!';
 $lang['mu_lasterr']            = 'Letzter Fehler:';
 $lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
-
-$lang['years']   = 'vor %d Jahren';
-$lang['months']  = 'vor %d Monaten';
-$lang['weeks']   = 'vor %d Wochen';
-$lang['days']    = 'vor %d Tagen';
-$lang['hours']   = 'vor %d Stunden';
-$lang['minutes'] = 'vor %d Minuten';
-$lang['seconds'] = 'vor %d Sekunden';
-
-$lang['wordblock'] = 'Deine Bearbeitung wurde nicht gespeichert, da sie gesperrten Text enthielt (Spam).';
-
+$lang['years']                 = 'vor %d Jahren';
+$lang['months']                = 'vor %d Monaten';
+$lang['weeks']                 = 'vor %d Wochen';
+$lang['days']                  = 'vor %d Tagen';
+$lang['hours']                 = 'vor %d Stunden';
+$lang['minutes']               = 'vor %d Minuten';
+$lang['seconds']               = 'vor %d Sekunden';
+$lang['wordblock']             = 'Deine Bearbeitung wurde nicht gespeichert, da sie gesperrten Text enthielt (Spam).';

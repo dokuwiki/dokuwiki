@@ -16,6 +16,7 @@
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['admin_acl']             = 'Zugangsverwaltung';
 $lang['acl_group']             = 'Gruppe';
