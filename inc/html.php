@@ -1135,6 +1135,7 @@ function html_edit(){
     global $lang;
     global $conf;
     global $TEXT;
+    global $RANGE;
 
     if (isset($_REQUEST['changecheck'])) {
         $check = $_REQUEST['changecheck'];
