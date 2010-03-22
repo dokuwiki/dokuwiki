@@ -1121,6 +1121,8 @@ function html_updateprofile(){
  * Preprocess edit form data
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
+ *
+ * @triggers HTML_EDITFORM_OUTPUT
  */
 function html_edit(){
     global $ID;
@@ -1167,10 +1169,16 @@ function html_edit(){
     $form->addHidden('suffix', $SUF);
     $form->addHidden('changecheck', $check);
 
-    $data = compact('wr', 'form');
-    $data['media_manager'] = true;
-    $data['intro_locale'] = $include;
-    trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
+    $data = array('form' => $form,
+                  'wr'   => $wr,
+                  'media_manager' => true,
+                  'intro_locale' => $include);
+    if ($wr && $RANGE !== '') {
+        // Only emit event if page is writable and section edit data is valid.
+        trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
+    } else {
+        html_edit_form($data);
+    }
     if (isset($data['intro_locale'])) {
         echo p_locale_xhtml($data['intro_locale']);
     }
@@ -1225,8 +1233,6 @@ function html_edit(){
  * Display the default edit form
  *
  * Is the default action for HTML_EDIT_FORMSELECTION.
- *
- * @triggers HTML_EDITFORM_OUTPUT
  */
 function html_edit_form($param) {
     global $TEXT;
