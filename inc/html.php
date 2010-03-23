@@ -1173,9 +1173,13 @@ function html_edit(){
     $data = array('form' => $form,
                   'wr'   => $wr,
                   'media_manager' => true,
+                  'target' => (isset($_REQUEST['target']) && $wr &&
+                               $RANGE !== '') ? $_REQUEST['target'] : 'section',
                   'intro_locale' => $include);
-    if ($wr && $RANGE !== '') {
-        // Only emit event if page is writable and section edit data is valid.
+
+    if ($data['target'] !== 'section') {
+        // Only emit event if page is writable, section edit data is valid and
+        // edit target is not section.
         trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
     } else {
         html_edit_form($data);
@@ -1237,10 +1241,15 @@ function html_edit(){
  */
 function html_edit_form($param) {
     global $TEXT;
-    extract($param);
+
+    if ($param['target'] !== 'section') {
+        msg('No editor for edit target ' . $param['target'] . ' found.', -1);
+    }
+
     $attr = array('tabindex'=>'1');
-    if (!$wr) $attr['readonly'] = 'readonly';
-    $form->addElement(form_makeWikiText($TEXT, $attr));
+    if (!$param['wr']) $attr['readonly'] = 'readonly';
+
+    $param['form']->addElement(form_makeWikiText($TEXT, $attr));
 }
 
 /**
