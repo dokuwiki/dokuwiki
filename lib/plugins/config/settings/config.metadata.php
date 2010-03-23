@@ -188,6 +188,7 @@ $meta['rss_show_summary'] = array('onoff');
 $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
+$meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');

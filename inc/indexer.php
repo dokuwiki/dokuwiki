@@ -411,40 +411,85 @@ function idx_updateIndexLine($line,$pid,$count){
 }
 
 /**
+ * Get the list of lenghts indexed in the wiki
+ *
+ * Read the index directory or a cache file and returns
+ * a sorted array of lengths of the words used in the wiki.
+ *
+ * @author YoBoY <yoboy.leguesh@gmail.com>
+ */
+function idx_listIndexLengths() {
+    global $conf;
+    // testing what we have to do, create a cache file or not.
+    if ($conf['readdircache'] == 0) {
+        $docache = false;
+    } else {
+        clearstatcache();
+        if (@file_exists($conf['indexdir'].'/lengths.idx') and (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
+            if (($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ) !== false) {
+                $idx = array();
+                foreach ( $lengths as $length) {
+                    $idx[] = (int)$length;
+                }
+                return $idx;
+            }
+        }
+        $docache = true;
+    }
+
+    if ($conf['readdircache'] == 0 or $docache ) {
+        $dir = @opendir($conf['indexdir']);
+        if($dir===false)
+            return array();
+        $idx[] = array();
+        while (($f = readdir($dir)) !== false) {
+            if (substr($f,0,1) == 'i' && substr($f,-4) == '.idx'){
+                $i = substr($f,1,-4);
+                if (is_numeric($i))
+                    $idx[] = (int)$i;
+            }
+        }
+        closedir($dir);
+        sort($idx);
+        // we save this in a file.
+        if ($docache === true) {
+            $handle = @fopen($conf['indexdir'].'/lengths.idx','w');
+            @fwrite($handle, implode("\n",$idx));
+            @fclose($handle);
+        }
+        return $idx;
+    }
+
+    return array();
+}
+
+/**
  * Get the word lengths that have been indexed.
  *
  * Reads the index directory and returns an array of lengths
  * that there are indices for.
  *
- * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @author YoBoY <yoboy.leguesh@gmail.com>
  */
 function idx_indexLengths(&$filter){
     global $conf;
-    $dir = @opendir($conf['indexdir']);
-    if($dir===false)
-        return array();
     $idx = array();
-    if(is_array($filter)){
-        while (($f = readdir($dir)) !== false) {
-            if (substr($f,0,1) == 'i' && substr($f,-4) == '.idx'){
-                $i = substr($f,1,-4);
-                if (is_numeric($i) && isset($filter[(int)$i]))
-                    $idx[] = (int)$i;
+    if (is_array($filter)){
+        // testing if index files exists only
+        foreach ($filter as $key => $value) {
+            if (@file_exists($conf['indexdir']."/i$key.idx")) {
+                $idx[] = $key;
             }
         }
-    }else{
-        // Exact match first.
-        if(@file_exists($conf['indexdir']."/i$filter.idx"))
-            $idx[] = $filter;
-        while (($f = readdir($dir)) !== false) {
-            if (substr($f,0,1) == 'i' && substr($f,-4) == '.idx'){
-                $i = substr($f,1,-4);
-                if (is_numeric($i) && $i > $filter)
-                    $idx[] = (int)$i;
+    } else {
+        $lengths = idx_listIndexLengths();
+        foreach ( $lengths as $key => $length) {
+            // we keep all the values equal or superior 
+            if ((int)$length >= (int)$filter) {
+                $idx[] = $length;
             }
         }
     }
-    closedir($dir);
     return $idx;
 }
 

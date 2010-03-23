@@ -234,3 +234,4 @@ $lang['useheading_o_navigation'] = 'Navigation Only';
 $lang['useheading_o_content'] = 'Wiki Content Only';
 $lang['useheading_o_1'] = 'Always';
 
+$lang['readdircache'] = 'Maximum age for readdir cache (sec)';
