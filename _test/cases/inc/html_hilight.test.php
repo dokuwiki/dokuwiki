@@ -2,9 +2,7 @@
 
 require_once DOKU_INC.'inc/html.php';
 
-if ( !extension_loaded('runkit') &&
-     !@dl('runkit.dll') &&
-     !@dl('runkit.so' ) ){
+if (!extension_loaded('runkit')) {
     SimpleTestOptions::ignore('html_hilight_test');
     trigger_error('Skipping html_hilight_test - http://www.php.net/runkit required');
 }

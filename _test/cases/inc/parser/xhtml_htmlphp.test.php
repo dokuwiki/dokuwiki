@@ -5,9 +5,7 @@ require_once 'parser.inc.php';
 require_once DOKU_INC.'inc/parser/xhtml.php';
 require_once DOKU_INC.'inc/geshi.php';
 
-if ( !extension_loaded('runkit') &&
-     !@dl('runkit.dll') &&
-     !@dl('runkit.so' ) ){
+if (!extension_loaded('runkit')) {
     SimpleTestOptions::ignore('xhtml_htmlphp_test');
     trigger_error('Skipping xhtml_htmlphp_test - http://www.php.net/runkit required');
 }

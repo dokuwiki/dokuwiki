@@ -7,14 +7,13 @@ define('TEST_GROUPS',realpath(dirname(__FILE__).'/../cases'));
 define('TEST_CASES',realpath(dirname(__FILE__).'/../cases'));
 
 // try to load runkit extension
-if (!extension_loaded('runkit')) {
+if (!extension_loaded('runkit') && function_exists('dl')) {
    if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) {
        @dl('php_runkit.dll');
    } else {
        @dl('runkit.so');
    }
 }
-
 
 class TestManager {
     var $_testcase_extension = '.test.php';
