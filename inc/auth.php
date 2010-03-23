@@ -931,7 +931,7 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             $magic = '1';
         case 'apr1':
             //from http://de.php.net/manual/en/function.crypt.php#73619 comment by <mikey_nich at hotmail dot com>
-            if(!$magic) $magic = 'apr1';
+            if(!defined($magic)) $magic = 'apr1';
             $salt = substr($salt,0,8);
             $len = strlen($clear);
             $text = $clear.'$'.$magic.'$'.$salt;
