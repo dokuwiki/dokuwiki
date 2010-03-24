@@ -1188,6 +1188,7 @@ function html_edit(){
         echo p_locale_xhtml($data['intro_locale']);
     }
 
+    $form->addHidden('target', $data['target']);
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
     $form->addElement(form_makeCloseTag('div'));
