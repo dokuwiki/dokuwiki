@@ -75,5 +75,5 @@ $lang['resendpwdnouser']       = 'Bologö dödöu, lö masöndra zangoguna da\'a
 $lang['resendpwdconfirm']      = 'No tefaohe\'ö link famaduhu\'ö ba imele.';
 $lang['resendpwdsuccess']      = 'No tefa\'ohe\'ö kode sibohou ba imele.';
 $lang['txt_upload']            = 'Fili file ni fa\'ohe\'ö';
-$lang['notsavedyet']           = 'Famawu\'a si lö mu\'irö\'ö taya. \nSinduhu ötohugö?';
+$lang['js']['notsavedyet']     = "Famawu\'a si lö mu\'irö\'ö taya. \nSinduhu ötohugö?";
 $lang['mediaselect']           = 'Media file';

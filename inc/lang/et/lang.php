@@ -150,7 +150,7 @@ $lang['lockedby']     = 'Praegu on selle lukustanud';
 $lang['lockexpire']   = 'Lukustus aegub';
 $lang['willexpire']   = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
 
-$lang['notsavedyet'] = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.\nKas Sa ikka tahad edasi liikuda?';
+$lang['js']['notsavedyet'] = "Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.\nKas Sa ikka tahad edasi liikuda?";
 $lang['rssfailed']   = 'Sinu soovitud info ammutamisel tekkis viga: ';
 $lang['nothingfound']= 'Oops, aga mitte muhvigi ei leitud.';
 

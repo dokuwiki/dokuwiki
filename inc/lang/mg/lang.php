@@ -56,7 +56,7 @@ $lang['lockedby']     = 'Mbola voahidin\'i';
 $lang['lockexpire']   = 'Afaka ny hidy amin\'ny';
 $lang['willexpire']   = 'Efa ho lany fotoana afaka iray minitra ny hidy ahafahanao manova ny pejy.\nMba hialana amin\'ny conflit dia ampiasao ny bokotra topi-maso hamerenana ny timer-n\'ny hidy.';
 
-$lang['notsavedyet'] = 'Misy fiovana tsy voarakitra, ho very izany ireo.\nAzo antoka fa hotohizana?';
+$lang['js']['notsavedyet'] = "Misy fiovana tsy voarakitra, ho very izany ireo.\nAzo antoka fa hotohizana?";
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Tsy nahitana n\'inon\'inona.';
 
