@@ -1217,9 +1217,9 @@ function html_edit(){
 
     if ($wr) {
         // sets changed to true when previewed
-        echo '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--';
+        echo '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'. NL;
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
-        echo '//--><!]]></script>';
+        echo '//--><!]]></script>' . NL;
     } ?>
     <div style="width:99%;">
 
