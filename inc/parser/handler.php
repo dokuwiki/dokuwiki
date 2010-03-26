@@ -344,21 +344,16 @@ class Doku_Handler {
     function code($match, $state, $pos, $type='code') {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
             $matches = explode('>',$match,2);
-            $matches[0] = trim($matches[0]);
 
-            list($language,$filename) = explode(' ',$matches[0],2);
-            $language = trim($language);
-            $filename = trim($filename);
-            if ( $language == '' )  $language = null;
-            if ( $language == '-' ) $language = null;
-            if ( $filename == '' )  $filename = null;
-            # We shortcut html here.
-            if($language == 'html') $language = 'html4strict';
-            $this->_addCall(
-                    $type,
-                    array($matches[1],$language,$filename),
-                    $pos
-                );
+            $param = preg_split('/\s+/', $matches[0], 2, PREG_SPLIT_NO_EMPTY);
+            while(count($param) < 2) array_push($param, null);
+
+            // We shortcut html here.
+            if ($param[0] == 'html') $param[0] = 'html4strict';
+            if ($param[0] == '-') $param[0] = null;
+            array_unshift($param, $matches[1]);
+
+            $this->_addCall($type, $param, $pos);
         }
         return true;
     }
