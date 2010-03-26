@@ -318,15 +318,7 @@ function metaFiles($id){
     $ns     = getNS($id);
     $dir    = ($ns) ? metaFN($ns,'').'/' : metaFN($ns,'');
     $files  = array();
-
-    $dh = @opendir($dir);
-    if(!$dh) return $files;
-    while(($file = readdir($dh)) !== false){
-        if(strpos($file,$name.'.') === 0 && !is_dir($dir.$file))
-            $files[] = $dir.$file;
-    }
-    closedir($dh);
-
+    $files  = glob($dir.$name.'.*');
     return $files;
 }
 
