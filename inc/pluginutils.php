@@ -9,13 +9,6 @@
 // plugin related constants
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
-$plugin_types = array('admin','syntax','action','renderer', 'helper');
-
-global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
-
-$plugin_controller = new $plugin_controller_class();
-
 /**
  * Original plugin functions, remain for backwards compatibility
  */
@@ -43,4 +36,3 @@ function plugin_directory($plugin) {
     global $plugin_controller;
     return $plugin_controller->get_directory($plugin);
 }
-

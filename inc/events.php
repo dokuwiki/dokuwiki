@@ -195,7 +195,3 @@ function trigger_event($name, &$data, $action=null, $canPreventDefault=true) {
     $evt = new Doku_Event($name, $data);
     return $evt->trigger($action, $canPreventDefault);
 }
-
-// create the event handler
-global $EVENT_HANDLER;
-$EVENT_HANDLER = new Doku_Event_Handler();
