@@ -244,8 +244,7 @@ function p_get_metadata($id, $key='', $render=false){
     $val = $meta['current'];
 
     // filter by $key
-    foreach(explode(' ', trim($key), 2) as $cur_key) {
-        $cur_key = trim($cur_key);
+    foreach(preg_split('/\s+/', $key, 2, PREG_SPLIT_NO_EMPTY) as $cur_key) {
         if (!isset($val[$cur_key])) {
             return null;
         }
