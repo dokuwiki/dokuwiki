@@ -109,7 +109,7 @@ function act_dispatch(){
             $ACT = act_draftsave($ACT);
 
         //edit
-        if(($ACT == 'edit' || $ACT == 'preview' || $ACT == 'recover') && $INFO['editable']){
+        if(in_array($ACT, array('edit', 'preview', 'recover'))) {
             $ACT = act_edit($ACT);
         }else{
             unlock($ID); //try to unlock
