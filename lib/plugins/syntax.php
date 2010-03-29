@@ -266,13 +266,5 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     return $conf;
   }
 
-  /**
-   * Allow the plugin to prevent DokuWiki creating a second instance of itself
-   *
-   * @return bool   true if the plugin can not be instantiated more than once
-   */
-  function isSingleton() {
-    return false;
-  }
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :

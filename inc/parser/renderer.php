@@ -49,6 +49,15 @@ class Doku_Renderer extends DokuWiki_Plugin {
         trigger_error('getFormat() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
+    /**
+     * Allow the plugin to prevent DokuWiki from reusing an instance
+     *
+     * @return bool   false if the plugin has to be instantiated
+     */
+    function isSingleton() {
+        return false;
+    }
+
 
     //handle plugin rendering
     function plugin($name,$data){

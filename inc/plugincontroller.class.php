@@ -66,7 +66,7 @@ class Doku_Plugin_Controller {
 
         //plugin already loaded?
         if(!empty($DOKU_PLUGINS[$type][$name])){
-            if ($new  && !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
+            if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
                 $class = $type.'_plugin_'.$name;
                 return class_exists($class) ? new $class : null;
             } else {

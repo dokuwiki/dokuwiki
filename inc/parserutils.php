@@ -585,7 +585,7 @@ function & p_get_renderer($mode) {
         // Maybe a plugin/component is available?
         list($plugin, $component) = $plugin_controller->_splitName($rname);
         if (!$plugin_controller->isdisabled($plugin)){
-            $Renderer =& $plugin_controller->load('renderer',$rname, true);
+            $Renderer =& $plugin_controller->load('renderer',$rname);
         }
 
         if(is_null($Renderer)){
