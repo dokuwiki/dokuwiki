@@ -21,11 +21,17 @@ passes is printed on STDOUT. If ANY of the test cases fail (or raise
 errors) details are printed on STDERR and this script returns a non-zero
 exit code.
   -c  --case=NAME         specify a test case by it's ID (see -i for list)
+  --pcase=NAME            specify a plugin test case by it's ID 
+                          (see --plugincaselist for list)
   -f  --file=NAME         specify a test case file (full or relative path)
   -g  --group=NAME        specify a grouptest. If no grouptest is
                           specified, all test cases will be run.
+  --pgroup=NAME           specify a plugin grouptest. If no grouptest is
+                          specified, all test cases will be run.
   -i  --caselist          list individual test cases by their ID
   -l  --grouplist         list available grouptests
+  --plugincaselist        list all individual plugin test cases by their ID
+  --plugingrouplist       list avialable plugin grouptests
   -s, --separator=SEP     set the character(s) used to separate fail
                           details to SEP
   -p, --path              path to SimpleTest installation
@@ -40,14 +46,18 @@ EOD;
 $opt_separator = '->';
 $opt_caselist = FALSE;
 $opt_grouplist = FALSE;
+$opt_plugincaselist = FALSE;
+$opt_plugingrouplist = FALSE;
 $opt_caseid = FALSE;
+$top_plugincaseid = FALSE;
 $opt_casefile = FALSE;
 $opt_groupfile = FALSE;
+$opt_plugingroupfile = FALSE;
 
 include_once(DOKU_INC.'inc/cliopts.php');
 
 $short_opts = "c:f:g:hils:p:";
-$long_opts  = array("case=","caselist","help", "file=", "group=", "grouplist", "separator=", "path=");
+$long_opts  = array("case=","pcase=","caselist","help", "file=", "group=", "pgroup=", "grouplist", "plugincaselist", "plugingrouplist", "separator=", "path=");
 $OPTS = Doku_Cli_Opts::getOptions(__FILE__,$short_opts,$long_opts);
 if ( $OPTS->isError() ) {
     fwrite( STDERR, $OPTS->getMessage() . "\n");
@@ -61,6 +71,9 @@ foreach ($OPTS->options as $key => $val) {
         case 'case':
             $opt_caseid = $val;
             break;
+        case 'pcase':
+            $opt_plugincaseid = $val;
+            break;
         case 'h':
         case 'help':
             usage();
@@ -73,6 +86,9 @@ foreach ($OPTS->options as $key => $val) {
         case 'group':
             $opt_groupfile = $val;
             break;
+        case 'pgroup':
+            $opt_plugingroupfile = $val;
+            break;
         case 'i':
         case 'caselist':
             $opt_caselist = TRUE;
@@ -80,6 +96,12 @@ foreach ($OPTS->options as $key => $val) {
         case 'l':
         case 'grouplist':
             $opt_grouplist = TRUE;
+            break;
+        case 'plugincaselist':
+            $opt_plugincaselist = TRUE;
+            break;
+        case 'plugingrouplist':
+            $opt_plugingrouplist = TRUE;
             break;
         case 's':
         case 'separator':
@@ -110,8 +132,18 @@ if ($opt_caselist) {
     echo CLITestManager::getTestCaseList(TEST_CASES);
 }
 
+/* list plugin test cases */
+if ($opt_plugincaselist) {
+    echo CLITestManager::getPluginTestCaseList(TEST_PLUGINS);
+}
+
+/* list plugin group tests */
+if($opt_plugingrouplist) {
+    echo CLITestManager::getPluginGroupTestList(TEST_PLUGINS);
+}
+
 /* exit if we've displayed a list */
-if ( $opt_grouplist || $opt_caselist ) {
+if ( $opt_grouplist || $opt_caselist || $opt_plugincaselist || $opt_plugingrouplist ) {
     exit(0);
 }
 
@@ -120,17 +152,35 @@ if ($opt_casefile) {
     TestManager::runTestFile($opt_casefile, new CLIReporter($opt_separator));
     exit(0);
 }
-/* run a test case by id*/
+
+/* run a test case by id */
 if ($opt_caseid) {
     TestManager::runTestCase($opt_caseid, TEST_CASES, new CLIReporter($opt_separator));
     exit(0);
 }
+
+/* run a plugin test by case id */
+if ($opt_plugincaseid) {
+    TestManager::runTestCase($opt_plugincaseid, TEST_PLUGINS, new CLIReporter($opt_separator));
+    exit(0);
+}
+
 /* run a grouptest */
 if ($opt_groupfile) {
     TestManager::runGroupTest($opt_groupfile, TEST_GROUPS,
                               new CLIReporter($opt_separator));
     exit(0);
 }
+
+/* run a plugin grouptest */
+if ($opt_plugingroupfile) {
+    TestManager::runGroupTest($opt_plugingroupfile, TEST_PLUGINS,
+                              new CLIReporter($opt_separator));
+    exit(0);
+}
+
+/* run a plugin group test */
+//FIXME
 /* run all tests */
 TestManager::runAllTests(new CLIReporter($opt_separator));
 exit(0);

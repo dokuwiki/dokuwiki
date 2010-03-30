@@ -130,6 +130,30 @@ function DW_TESTS_PaintGroupTestList() {
     }
 }
 
+function DW_TESTS_PaintPluginTestCaseList() {
+    switch ( DW_TESTS_OUTPUT ) {
+        case DW_TESTS_OUTPUT_XML:
+            echo XMLTestManager::getPluginTestCaseList(TEST_PLUGINS);
+        break;
+        case DW_TESTS_OUTPUT_HTML:
+        default:
+            echo HTMLTestManager::getPluginTestCaseList(TEST_PLUGINS);
+        break;
+    }
+}
+
+function DW_TESTS_PaintPluginGroupTestList() {
+    switch ( DW_TESTS_OUTPUT ) {
+        case DW_TESTS_OUTPUT_XML:
+            echo XMLTestManager::getPluginGroupTestList(TEST_PLUGINS);
+        break;
+        case DW_TESTS_OUTPUT_HTML:
+        default:
+            echo HTMLTestManager::getPluginGroupTestList(TEST_PLUGINS);
+        break;
+    }
+}
+
 function DW_TESTS_PaintFooter() {
     switch ( DW_TESTS_OUTPUT ) {
         case DW_TESTS_OUTPUT_XML:
@@ -160,9 +184,29 @@ if (isset($_GET['group'])) {
     exit();
 }
 
+// If it's a plugin group test
+if (isset($_GET['plugin_group'])) {
+    if ('all' == $_GET['plugin_group']) {
+        TestManager::runAllPluginTests(DW_TESTS_GetReporter());
+    } else {
+        TestManager::runGroupTest(ucfirst($_GET['plugin_group']),
+                                  TEST_PLUGINS,
+                                  DW_TESTS_GetReporter());
+    }
+    DW_TESTS_PaintRunMore();
+    exit();
+}
+
 // If it's a single test case
 if (isset($_GET['case'])) {
     TestManager::runTestCase($_GET['case'], TEST_CASES, DW_TESTS_GetReporter());
+    DW_TESTS_PaintRunMore();
+    exit();
+}
+
+// If it's a single plugin test case
+if (isset($_GET['plugin_case'])) {
+    TestManager::runTestCase($_GET['plugin_case'], TEST_PLUGINS, DW_TESTS_GetReporter());
     DW_TESTS_PaintRunMore();
     exit();
 }
@@ -174,9 +218,11 @@ DW_TESTS_PaintSuiteHeader();
 
 if (isset($_GET['show']) && $_GET['show'] == 'cases') {
     DW_TESTS_PaintCaseList();
+    DW_TESTS_PaintPluginTestCaseList();
 } else {
     /* no group specified, so list them all */
     DW_TESTS_PaintGroupTestList();
+    DW_TESTS_PaintPluginGroupTestList();
 }
 
 DW_TESTS_PaintFooter();

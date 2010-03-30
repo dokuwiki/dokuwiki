@@ -5,6 +5,7 @@
 
 define('TEST_GROUPS',realpath(dirname(__FILE__).'/../cases'));
 define('TEST_CASES',realpath(dirname(__FILE__).'/../cases'));
+define('TEST_PLUGINS',realpath(dirname(__FILE__).'/../../lib/plugins'));
 
 // try to load runkit extension
 if (!extension_loaded('runkit') && function_exists('dl')) {
@@ -58,6 +59,17 @@ class TestManager {
         }
         $test->run($reporter);
     }
+
+    function runAllPluginTests(&$reporter) {
+        $manager =& new TestManager();
+        $test_cases =& $manager->_getTestFileList(TEST_PLUGINS);
+        $test =& new GroupTest('All Plugin Tests');
+        foreach ($test_cases as $test_case) {
+            $test->addTestFile($test_case);
+        }
+        $test->run($reporter);
+    }
+
 
     function runTestCase($testcase_name, $test_case_directory, &$reporter) {
         $manager =& new TestManager();
@@ -125,12 +137,12 @@ class TestManager {
     }
 
     function &_getTestCaseList($directory = '.') {
-        $base = TEST_GROUPS . DIRECTORY_SEPARATOR;
         $file_list =& $this->_getTestFileList($directory);
         $testcases = array();
         foreach ($file_list as $testcase_file) {
             $case = str_replace($this->_testcase_extension, '',$testcase_file);
-            $case = str_replace($base, '', $case);
+            $case = str_replace(TEST_GROUPS . DIRECTORY_SEPARATOR, '', $case);
+            $case = str_replace(TEST_PLUGINS . DIRECTORY_SEPARATOR, '', $case);
             $case = str_replace(DIRECTORY_SEPARATOR, ':', $case);
             $testcases[$testcase_file] = $case;
         }
@@ -140,6 +152,16 @@ class TestManager {
     function &_getTestFileList($directory = '.') {
         return $this->_getRecursiveFileList($directory,
                                             array(&$this, '_isTestCaseFile'));
+    }
+
+    function &getPluginTestCaseList($directory = '.') {
+        $manager =& new TestManager();
+        return $manager->_getTestCaseList($directory);
+    }
+
+    function &getPluginGroupTestList($directory = '.') {
+        $manager =& new TestManager();
+        return $manager->_getTestGroupList($directory);
     }
 
     function &getGroupTestList($directory = '.') {
@@ -153,12 +175,12 @@ class TestManager {
     }
 
     function &_getTestGroupList($directory = '.') {
-        $base = TEST_GROUPS . DIRECTORY_SEPARATOR;
         $file_list =& $this->_getTestGroupFileList($directory);
         $grouptests = array();
         foreach ($file_list as $grouptest_file) {
             $group = str_replace($this->_grouptest_extension, '',$grouptest_file);
-            $group = str_replace($base, '', $group);
+            $group = str_replace(TEST_GROUPS . DIRECTORY_SEPARATOR, '', $group);
+            $group = str_replace(TEST_PLUGINS . DIRECTORY_SEPARATOR, '', $group);
             $group = str_replace(DIRECTORY_SEPARATOR, ':', $group);
             $grouptests[$grouptest_file] = $group;
         }
@@ -168,7 +190,7 @@ class TestManager {
 
     function &_getGroupTestClassNames($grouptest_file) {
         $file = implode("\n", file($grouptest_file));
-        preg_match("~lass\s+?(.*)\s+?extends GroupTest~", $file, $matches);
+        preg_match("~lass\s+?(.*)\s+?extends .*?GroupTest~", $file, $matches);
         if (! empty($matches)) {
             unset($matches[0]);
             return $matches;
@@ -242,6 +264,29 @@ class CLITestManager extends TestManager {
         }
         return $buffer . "\n";
     }
+
+    function &getPluginTestCaseList($directory = '.') {
+        $manager =& new CLITestManager();
+        $test_cases =& $manager->_getTestCaseList($directory);
+
+        $buffer = "Available test cases:\n";
+        foreach ($test_cases as $test_case) {
+            $buffer .= "  " . $test_case . "\n";
+        }
+        return $buffer . "\n";
+    }
+
+    function &getPluginGroupTestList($directory = '.') {
+        $manager =& new CLITestManager();
+        $test_cases =& $manager->_getTestGroupList($directory);
+
+        $buffer = "Available test cases:\n";
+        foreach ($test_cases as $test_case) {
+            $buffer .= "  " . $test_case . "\n";
+        }
+        return $buffer . "\n";
+    }
+
 }
 
 class HTMLTestManager extends TestManager {
@@ -289,6 +334,42 @@ class HTMLTestManager extends TestManager {
         $buffer .= "</ul>\n";
         return $buffer;
     }
+
+    function &getPluginTestCaseList($directory = '.') {
+        $manager =& new HTMLTestManager();
+        $testcases =& $manager->_getTestCaseList($directory);
+
+        if (1 > count($testcases)) {
+            return "<p>No plugin test cases set up!</p>";
+        }
+        $buffer = "<p>Available plugin test cases:</p>\n<ul>";
+        foreach ($testcases as $testcase) {
+            $buffer .= "<li><a href='" . $manager->getBaseURL() .
+                "?plugin_case=" . urlencode($testcase) . "'>" .
+                $testcase . "</a></li>\n";
+        }
+
+        $buffer .= "</ul>\n";
+        return $buffer;
+    }
+
+    function &getPluginGroupTestList($directory = '.') {
+        $manager =& new HTMLTestManager();
+        $group_tests =& $manager->_getTestGroupList($directory);
+        if (1 > count($group_tests)) {
+            return "<p>No plugin test groups set up!</p>";
+        }
+        $buffer = "<p>Available plugin groups:</p>\n<ul>";
+        $buffer .= "<li><a href='" . $manager->getBaseURL() . "?plugin_group=all'>All tests</a></li>\n";
+        foreach ($group_tests as $group_test) {
+            $buffer .= "<li><a href='" . $manager->getBaseURL() . "?plugin_group={$group_test}'>" .
+                $group_test . "</a></li>\n";
+        }
+
+        $buffer .= "</ul>\n";
+        return $buffer;
+    }
+
 }
 
 /**
