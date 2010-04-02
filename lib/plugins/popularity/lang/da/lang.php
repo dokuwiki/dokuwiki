@@ -7,6 +7,7 @@
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author rasmus@kinnerup.com
  */
 $lang['name']                  = 'Tilbagemelding om popularitet (vil måske tage en del tid at indlæse)';
 $lang['submit']                = 'Send data';
