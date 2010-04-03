@@ -267,8 +267,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         usort($data,array($this,'_tree_sort'));
         $count = count($data);
         if($count>0) for($i=1; $i<$count; $i++){
-            if($data[$i]['type'] == 'f') break; // namespaces come first, we're done
-            if($data[$i-1]['id'] == $data[$i]['id']) unset($data[$i]);
+            if($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) unset($data[$i]);
         }
         return $data;
     }
@@ -279,13 +278,39 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * Sorts the combined trees of media and page files
      */
     function _tree_sort($a,$b){
-        if($a['type'] == 'd' && $b['type'] == 'f'){
-            return -1;
-        }elseif($a['type'] == 'f' && $b['type'] == 'd'){
-            return 1;
-        }else{
-            return strcmp($a['id'],$b['id']);
+        // handle the trivial cases first
+        if ($a['id'] == '') return -1;
+        if ($b['id'] == '') return 1;
+        // split up the id into parts
+        $a_ids = explode(':', $a['id']);
+        $b_ids = explode(':', $b['id']);
+        // now loop through the parts
+        while (count($a_ids) && count($b_ids)) {
+            // compare each level from upper to lower
+            // until a non-equal component is found
+            $cur_result = strcmp(array_shift($a_ids), array_shift($b_ids));
+            if ($cur_result) {
+                // if one of the components is the last component and is a file
+                // and the other one is either of a deeper level or a directory,
+                // the file has to come after the deeper level or directory
+                if (empty($a_ids) && $a['type'] == 'f' && (count($b_ids) || $b['type'] == 'd')) return 1;
+                if (empty($b_ids) && $b['type'] == 'f' && (count($a_ids) || $a['type'] == 'd')) return -1;
+                return $cur_result;
+            }
         }
+        // The two ids seem to be equal. One of them might however refer
+        // to a page, one to a namespace, the namespace needs to be first.
+        if (empty($a_ids) && empty($b_ids)) {
+            if ($a['type'] == $b['type']) return 0;
+            if ($a['type'] == 'f') return 1;
+            return -1;
+        }
+        // Now the empty part is either a page in the parent namespace
+        // that obviously needs to be after the namespace
+        // Or it is the namespace that contains the other part and should be
+        // before that other part.
+        if (empty($a_ids)) return ($a['type'] == 'd') ? -1 : 1;
+        if (empty($b_ids)) return ($b['type'] == 'd') ? 1 : -1;
     }
 
     /**
