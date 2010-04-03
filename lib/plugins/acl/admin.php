@@ -17,6 +17,15 @@ if(!defined('DOKU_INC')) die();
 class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     var $acl = null;
     var $ns  = null;
+    /** 
+     * The currently selected item, associative array with id and type.
+     * Populated from (in this order):
+     * $_REQUEST['current_ns']
+     * $_REQUEST['current_id']
+     * $ns
+     * $ID
+     */
+    var $current_item = null;
     var $who = '';
     var $usersgroups = array();
     var $specials = array();
@@ -70,6 +79,16 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $this->ns = '*';
         }else{
             $this->ns = cleanID($_REQUEST['ns']);
+        }
+
+        if ($_REQUEST['current_ns']) {
+            $this->current_item = array('id' => cleanID($_REQUEST['current_ns']), 'type' => 'd');
+        } elseif ($_REQUEST['current_id']) {
+            $this->current_item = array('id' => cleanID($_REQUEST['current_id']), 'type' => 'f');
+        } elseif ($this->ns) {
+            $this->current_item = array('id' => $this->ns, 'type' => 'd');
+        } else {
+            $this->current_item = array('id' => $ID, 'type' => 'f');
         }
 
         // user or group choosen?
@@ -167,7 +186,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<div class="level1">'.NL;
 
         echo '<div id="acl__tree">'.NL;
-        $this->_html_explorer($_REQUEST['ns']);
+        $this->_html_explorer();
         echo '</div>'.NL;
 
         echo '<div id="acl__detail">'.NL;
@@ -498,8 +517,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // highlight?
-        if( ($item['type']=='d' && $item['id'] == $this->ns) ||
-            ($item['type']!='d' && $item['id'] == $ID)) $cl = ' cur';
+        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id'])) 
+            $cl = ' cur';
 
         // namespace or page?
         if($item['type']=='d'){
