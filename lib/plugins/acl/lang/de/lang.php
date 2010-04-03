@@ -31,7 +31,7 @@ $lang['p_group_id']            = 'Mitglieder der Gruppe <b class="aclgroup">%s</
 $lang['p_group_ns']            = 'Mitglieder der Gruppe <b class="aclgroup">%s</b> haben momentan folgende Berechtigungen für den Namensraum <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_choose_id']           = 'Bitte geben Sie in obigem Formular eine <b>einen Nutzer oder eine Gruppe</b> an, um die Berechtigungen für die Seite <b class="aclpage">%s</b> zu sehen oder zu ändern.';
 $lang['p_choose_ns']           = 'Bitte geben Sie in obigem Formular eine <b>einen Nutzer oder eine Gruppe</b> an, um die Berechtigungen für den Namensraum <b class="aclns">%s</b> zu sehen oder zu ändern.';
-$lang['p_inherited']           = 'Hinweis: Diese Berechtigungen wurden nicht explizit gesetzt sondern von anderen Gruppen oder höher liegenden Namensräumen geerbt.';
+$lang['p_inherited']           = 'Hinweis: Diese Berechtigungen wurden nicht explizit gesetzt, sondern von anderen Gruppen oder höher liegenden Namensräumen geerbt.';
 $lang['p_isadmin']             = 'Hinweis: Die ausgewählte Gruppe oder Nutzer haben immer alle Berechtigungen das sie als Superuser konfiguriert wurden.';
 $lang['p_include']             = 'Höhere Berechtigungen schließen niedrigere mit ein. Anlegen, Hochladen und Entfernen gilt nur für Namensräume, nicht für einzelne Seiten';
 $lang['current']               = 'Momentane Zugriffsregeln';
