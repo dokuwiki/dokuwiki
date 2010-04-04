@@ -836,7 +836,7 @@ function pageTemplate($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function parsePageTemplate($data) {
+function parsePageTemplate(&$data) {
     extract($data);
 
     global $USERINFO;
@@ -879,7 +879,7 @@ function parsePageTemplate($data) {
 
     // we need the callback to work around strftime's char limit
     $tpl = preg_replace_callback('/%./',create_function('$m','return strftime($m[0]);'),$tpl);
-
+    $data['tpl'] = $tpl;
     return $tpl;
 }
 
