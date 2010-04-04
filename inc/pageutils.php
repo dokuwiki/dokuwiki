@@ -543,3 +543,53 @@ function prettyprint_id($id) {
     }
     return hsc($id);
 }
+
+/**
+ * Encode a UTF-8 filename to use on any filesystem
+ *
+ * Uses the 'fnencode' option to determine encoding
+ *
+ * When the second parameter is true the string will
+ * be encoded only if non ASCII characters are detected -
+ * This makes it safe to run it multiple times on the
+ * same string (default is true)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    urlencode
+ */
+function utf8_encodeFN($file,$safe=true){
+    global $conf;
+    if($conf['fnencode'] == 'utf-8') return $file;
+
+    if($safe && preg_match('#^[a-zA-Z0-9/_\-\.%]+$#',$file)){
+        return $file;
+    }
+
+    if($conf['fnencode'] == 'safe'){
+        return SafeFN::encode($file);
+    }
+
+    $file = urlencode($file);
+    $file = str_replace('%2F','/',$file);
+    return $file;
+}
+
+/**
+ * Decode a filename back to UTF-8
+ *
+ * Uses the 'fnencode' option to determine encoding
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    urldecode
+ */
+function utf8_decodeFN($file){
+    global $conf;
+    if($conf['fnencode'] == 'utf-8') return $file;
+
+    if($conf['fnencode'] == 'safe'){
+        return SafeFN::decode($file);
+    }
+
+    return urldecode($file);
+}
+

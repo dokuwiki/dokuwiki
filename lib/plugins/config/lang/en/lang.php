@@ -116,6 +116,7 @@ $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['usedraft']    = 'Automatically save a draft while editing';
 $lang['sepchar']     = 'Page name word separator';
 $lang['canonical']   = 'Use fully canonical URLs';
+$lang['fnencode']    = 'Method for encoding non-ASCII filenames.';
 $lang['autoplural']  = 'Check for plural forms in links';
 $lang['compression'] = 'Compression method for attic files';
 $lang['cachetime']   = 'Maximum age for cache (sec)';

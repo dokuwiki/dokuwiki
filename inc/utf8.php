@@ -19,45 +19,6 @@ if(!defined('UTF8_MBSTRING')){
 
 if(UTF8_MBSTRING){ mb_internal_encoding('UTF-8'); }
 
-if(!function_exists('utf8_encodeFN')){
-    /**
-     * URL-Encode a filename to allow unicodecharacters
-     *
-     * Slashes are not encoded
-     *
-     * When the second parameter is true the string will
-     * be encoded only if non ASCII characters are detected -
-     * This makes it safe to run it multiple times on the
-     * same string (default is true)
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @see    urlencode
-     */
-    function utf8_encodeFN($file,$safe=true){
-        if($safe && preg_match('#^[a-zA-Z0-9/_\-.%]+$#',$file)){
-            return $file;
-        }
-        $file = urlencode($file);
-        $file = str_replace('%2F','/',$file);
-        return $file;
-    }
-}
-
-if(!function_exists('utf8_decodeFN')){
-    /**
-     * URL-Decode a filename
-     *
-     * This is just a wrapper around urldecode
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @see    urldecode
-     */
-    function utf8_decodeFN($file){
-        $file = urldecode($file);
-        return $file;
-    }
-}
-
 if(!function_exists('utf8_isASCII')){
     /**
      * Checks if a string contains 7bit ASCII only
