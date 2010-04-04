@@ -15,196 +15,142 @@
  */
 class SafeFN {
 
-    private static $plain = '/_-0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
+    // 'safe' characters are a superset of $plain, $pre_indicator and $post_indicator
+    private static $plain = '-/_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
     private static $pre_indicator = '%';
-    private static $post_indicator = '.';                             // this character can be included in "plain" set
-    private static $adjustments = array();                            // must be initialized, use getAdjustments()
+    private static $post_indicator = '.';
 
     /**
      * Convert an UTF-8 string to a safe ASCII String
      *
      *  conversion process
-     *    - if codepoint is a plain character,
-     *      - if previous character was "converted", append post_indicator
-     *        to output
-     *      - append ascii byte for character to output (continue to
-     *        next character)
+     *    - if codepoint is a plain or post_indicator character,
+     *      - if previous character was "converted", append post_indicator to output, clear "converted" flag
+     *      - append ascii byte for character to output
+     *      (continue to next character)
      *
-     *    - reduce codepoint value to fill the holes left by "plain"
-     *    - choose marker character for conversion by taking modulus
-     *      (number of possible pre_indicators) of modified codepoint
-     *    - calculate value for conversion to base36 by integer division
-     *      (number of possible pre_indicators) of modified codepoint
-     *    - convert above value to a base36 string
-     *    - append marker characater followed by base36 string to
-     *      output (continue to next character)
+     *    - if codepoint is a pre_indicator character,
+     *      - append ascii byte for character to output, set "converted" flag
+     *      (continue to next character)
+     *
+     *    (all remaining characters)
+     *    - reduce codepoint value for non-printable ASCII characters (0x00 - 0x1f).  Space becomes our zero.
+     *    - convert reduced value to base36 (0-9a-z)
+     *    - append $pre_indicator characater followed by base36 string to output, set converted flag
+     *      continue to next character)
+     *
+     * @param    string    $filename     a utf8 string, should only include printable characters - not 0x00-0x1f
+     * @return   string    an encoded representation of $filename using only 'safe' ASCII characters
+     *
+     * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    public function encode($utf8) {
-        return self::unicode_safe(self::utf8_unicode($utf8));
+    public function encode($filename) {
+        return self::unicode_to_safe(utf8_to_unicode($filename));
     }
 
     /**
      *  decoding process
-     *    - split the string into substrings at marker characters,
-     *      discarding post_indicator character but keeping
-     *      pre_indicator characters (along with their following
-     *      base36 string)
+     *    - split the string into substrings at any occurrence of pre or post indicator characters
      *    - check the first character of the substring
-     *      - if its not a pre_indicator character, convert each
-     *        character in the substring into its codepoint value
-     *        and append to output (continue to next substring)
-     *      - if it is a pre_indicator character, get its position in the
-     *        pre_indicator string (order is important)
-     *    - convert the remainder of the string from base36 to base10
-     *      and then to an (int).
-     *    - multiply the converted int by the number of pre_indicator
-     *      characters and add the pre_indicator position
-     *    - reverse the conversion adjustment for codepoint holes left by
-     *      "plain" characters
-     *    - append resulting codepoint value to output (continue to next
-     *      substring)
+     *      - if its not a pre_indicator character
+     *        - if previous character was converted, skip over post_indicator character
+     *        - copy codepoint values of remaining characters to the output array
+     *        - clear any converted flag
+     *      (continue to next substring)
+     *
+     *     _ else (its a pre_indicator character)
+     *       - if string length is 1, copy the post_indicator character to the output array
+     *       (continue to next substring)
+     *
+     *       - else (string length > 1)
+     *         - skip the pre-indicator character and convert remaining string from base36 to base10
+     *         - increase codepoint value for non-printable ASCII characters (add 0x20)
+     *         - append codepoint to output array
+     *       (continue to next substring)
+     *
+     * @param    string    $filename     a 'safe' encoded ASCII string,
+     * @return   string    decoded utf8 representation of $filename
+     *
+     * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    public function decode($safe) {
-        return self::unicode_utf8(self::safe_unicode(strtolower($safe)));
+    public function decode($filename) {
+        return unicode_to_utf8(self::safe_to_unicode(strtolower($filename)));
     }
 
     public function validate_printable_utf8($printable_utf8) {
-        return !preg_match('/[\x01-\x1f]/',$printable_utf8);
+        return !preg_match('#[\x01-\x1f]#',$printable_utf8);
     }
 
     public function validate_safe($safe) {
-        return !preg_match('/[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']/',$safe);
+        return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#',$safe);
     }
 
-    private function utf8_unicode($utf8) {
-        return utf8_to_unicode($utf8);
-    }
-
-    private function unicode_utf8($unicode) {
-        return unicode_to_utf8($unicode);
-    }
-
-    private function unicode_safe($unicode) {
+    /**
+     * convert an array of unicode codepoints into 'safe_filename' format
+     *
+     * @param    array  int    $unicode    an array of unicode codepoints
+     * @return   string        the unicode represented in 'safe_filename' format
+     *
+     * @author   Christopher Smith <chris@jalakai.co.uk>
+     */
+    private function unicode_to_safe($unicode) {
 
         $safe = '';
         $converted = false;
 
         foreach ($unicode as $codepoint) {
-            if (self::isPlain($codepoint)) {
+            if ($codepoint < 127 && (strpos(self::$plain.self::$post_indicator,chr($codepoint))!==false)) {
                 if ($converted) {
                     $safe .= self::$post_indicator;
                     $converted = false;
                 }
                 $safe .= chr($codepoint);
 
-            } else if (self::isPreIndicator($codepoint)) {
+            } else if ($codepoint == ord(self::$pre_indicator)) {
+                $safe .= self::$pre_indicator;
                 $converted = true;
-                $safe .= chr($codepoint);
-
             } else {
+                $safe .= self::$pre_indicator.base_convert((string)($codepoint-32),10,36);
                 $converted = true;
-                $adjusted = self::adjustForPlain($codepoint);
-
-                $marker = $adjusted % strlen(self::$pre_indicator);
-                $base = (int) ($adjusted / strlen(self::$pre_indicator));
-
-                $safe .= self::$pre_indicator[$marker];
-                $safe .= base_convert((string)$base,10,36);
             }
         }
         return $safe;
     }
 
-    private function safe_unicode($safe) {
+    /**
+     * convert a 'safe_filename' string into an array of unicode codepoints
+     *
+     * @param   string         $safe     a filename in 'safe_filename' format
+     * @return  array   int    an array of unicode codepoints
+     *
+     * @author   Christopher Smith <chris@jalakai.co.uk>
+     */
+    private function safe_to_unicode($safe) {
+
         $unicode = array();
-        $split = preg_split('/(?=['.self::$post_indicator.self::$pre_indicator.'])/',$safe,-1,PREG_SPLIT_NO_EMPTY);
+        $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#',$safe,-1,PREG_SPLIT_NO_EMPTY);
 
         $converted = false;
         foreach ($split as $sub) {
-            if (($marker = strpos(self::$pre_indicator,$sub[0])) === false) {
-                if ($converted) {
-                    // strip post_indicator
-                    $sub = substr($sub,1);
-                    $converted = false;
-                }
-                for ($i=0; $i < strlen($sub); $i++) {
+            if ($sub[0] != self::$pre_indicator) {
+                // plain (unconverted) characters, optionally starting with a post_indicator
+                // set initial value to skip any post_indicator
+                for ($i=($converted?1:0); $i < strlen($sub); $i++) {
                     $unicode[] = ord($sub[$i]);
                 }
+                $converted = false;
             } else if (strlen($sub)==1) {
-                $converted =  true;
+                // a pre_indicator character in the real data
                 $unicode[] = ord($sub);
-            } else {
-                // a single codepoint in our base
                 $converted = true;
-                $base = (int)base_convert(substr($sub,1),36,10);
-                $adjusted = ($base*strlen(self::$pre_indicator)) + $marker;
-
-                $unicode[] = self::reverseForPlain($adjusted);
+            } else {
+                // a single codepoint in base36, adjusted for initial 32 non-printable chars
+                $unicode[] = 32 + (int)base_convert(substr($sub,1),36,10);
+                $converted = true;
             }
         }
 
         return $unicode;
     }
 
-    private function isPlain($codepoint) {
-        return ($codepoint < 127 && (strpos(self::$plain.self::$post_indicator,chr($codepoint))!==false));
-    }
-
-    private function isPreIndicator($codepoint) {
-        return ($codepoint < 127 && (strpos(self::$pre_indicator,chr($codepoint)) !== false));
-    }
-
-    /**
-     * adjust for plain and non-printable (ascii 0-31)
-     * this makes SPACE (0x20) the first character we allow
-     */
-    private function adjustForPlain($codepoint) {
-        $adjustment = self::getAdjustments();
-
-        // codepoint is higher than that of the plain character with the highest codepoint
-        if ($codepoint > ord($adjustment[count($adjustment)-1])) {
-            $adjusted = $codepoint - count($adjustment);
-        } else if ($codepoint > ord($adjustment[0])) {
-            for ($i=1; $i < count($adjustment); $i++) {
-                if ($codepoint < ord($adjustment[$i])) {
-                    break;
-                }
-            }
-            $adjusted = $codepoint - $i;
-        } else {
-            $adjusted = $codepoint;
-        }
-
-        // substract number of non-printable characters and return
-        return $adjusted - ord(' ');
-    }
-
-    private function reverseForPlain($adjusted) {
-        $adjustment = self::getAdjustments();
-
-        // reverse adjustment for non-printable characters
-        $adjusted += ord(' ');
-
-        if ($adjusted + count($adjustment) > ord($adjustment[count($adjustment)-1])) {
-            $adjusted += count($adjustment);
-        } else if ($adjusted > ord($adjustment[0])) {
-            for ($i=1; $i < count($adjustment); $i++) {
-                if ($adjusted + $i < ord($adjustment[$i])) {
-                    break;
-                }
-            }
-            $adjusted += $i;
-        }
-
-        return $adjusted;
-    }
-
-    private function getAdjustments() {
-        if (empty(self::$adjustments)) {
-            self::$adjustments = str_split(self::$plain.self::$pre_indicator.self::$post_indicator);
-            sort(self::$adjustments);
-        }
-
-        return self::$adjustments;
-    }
 }
