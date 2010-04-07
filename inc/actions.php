@@ -56,6 +56,10 @@ function act_dispatch(){
         //check permissions
         $ACT = act_permcheck($ACT);
 
+        //sitemap
+        if ($ACT == 'sitemap')
+            $ACT = act_sitemap($ACT);
+
         //register
         $nil = array();
         if($ACT == 'register' && $_POST['save'] && register()){
@@ -205,7 +209,7 @@ function act_clean($act){
                     'preview','search','show','check','index','revisions',
                     'diff','recent','backlink','admin','subscribe','revert',
                     'unsubscribe','profile','resendpwd','recover',
-                    'draftdel','subscribens','unsubscribens',)) && substr($act,0,7) != 'export_' ) {
+                    'draftdel','subscribens','unsubscribens','sitemap')) && substr($act,0,7) != 'export_' ) {
         msg('Command unknown: '.htmlspecialchars($act),-1);
         return 'show';
     }
@@ -233,7 +237,8 @@ function act_permcheck($act){
         }else{
             $permneed = AUTH_CREATE;
         }
-    }elseif(in_array($act,array('login','search','recent','profile','index'))){
+    }elseif(in_array($act,array('login','search','recent','profile','index', 'sitemap'))){
+    }elseif(in_array($act,array('login','search','recent','profile','sitemap'))){
         $permneed = AUTH_NONE;
     }elseif($act == 'revert'){
         $permneed = AUTH_ADMIN;
@@ -584,6 +589,54 @@ function act_export($act){
         exit;
     }
     return 'show';
+}
+
+/**
+ * Handle sitemap delivery
+ *
+ * @author Michael Hamann <michael@content-space.de>
+ */
+function act_sitemap($act) {
+    global $conf;
+
+    if (!$conf['sitemap']) {
+        header("HTTP/1.0 404 Not Found");
+        print "Sitemap generation is disabled.";
+        exit;
+    }
+    
+    $sitemap = $conf['cachedir'].'/sitemap.xml';
+    if($conf['compression'] == 'bz2' || $conf['compression'] == 'gz'){
+        $mime = 'application/x-gzip';
+        $sitemap .= '.gz';
+    } else {
+        $mime = 'application/xml; charset=utf-8';
+    }
+
+    // Check if sitemap file exists, otherwise create it
+    if (!is_readable($sitemap)) {
+        require_once DOKU_INC.'inc/sitemap.php';
+        sitemapGenerate();
+    }
+
+    if (is_readable($sitemap)) {
+        // Send headers
+        header('Content-Type: '.$mime);
+
+        // Send file
+        //use x-sendfile header to pass the delivery to compatible webservers
+        if (http_sendfile($sitemap)) exit;
+
+        $fp = @fopen($sitemap,"rb");
+        if($fp){
+            http_rangeRequest($fp,filesize($sitemap),$mime);
+            exit;
+        }
+    }
+
+    header("HTTP/1.0 500 Internal Server Error");
+    print "Could not read $sitemap - bad permissions?";
+    exit;
 }
 
 /**
