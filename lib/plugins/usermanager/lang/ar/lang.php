@@ -3,6 +3,7 @@
  * Arabic language file
  *
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
+ * @author Usama Akkad <uahello@gmail.com>
  */
 $lang['user_id']               = 'اسم المستخدم';
 $lang['user_pass']             = 'كلمة السر';
