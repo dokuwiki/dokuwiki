@@ -4,8 +4,8 @@ Na tejto stránke môžete pridávať alebo rušiť oprávnenia pre menné pries
 
 Ľavý panel zobrazuje všetky dostupné menné priestory a stránky.
 
-Formulár zobrazený vyššie Vam dovoľuje prehliadať a meniť oprávnenia pre vybraného používateľa alebo skupinu.
+Formulár zobrazený vyššie Vám dovoľuje prehliadať a meniť oprávnenia pre vybraného používateľa alebo skupinu.
 
-V tabuľke nižšie sú zobrazené všetky aktuálne prístupové pravidlá. Môžete v nej rýchlo rušiť alebo meniť viacero pravidiel naraz.
+V tabuľke nižšie sú zobrazené všetky aktuálne prístupové pravidlá. Môžete v nej rýchlo rušiť alebo meniť viacero pravidiel súčasne.
 
 Prečítanie [[doku>acl|oficiálnej dokumentácie ACL]] Vám môže pomôcť plne pochopiť spôsob ako fungujú prístupové pravidlá (oprávnenia) v DokuWiki.

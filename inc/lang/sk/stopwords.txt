@@ -1,6 +1,6 @@
-#Toto je zoznam slov ignorovaných indexérom, jedno slovo na riadok
+#Toto je zoznam slov ignorovaných indexáciou, jedno slovo na riadok
 # Keď editujete tento súbor, uistite sa, či používate UNIXové konce riadkov (jednoduchý nový riadok)
-# Nie je potrebné vkladať slová kraťšie ako 3 znaky - tie sú ignorované vždy.
+# Nie je potrebné vkladať slová kratšie ako 3 znaky - tie sú ignorované vždy.
 # Tento zoznam je založený na inom nájdenom na http://www.ranks.nl/stopwords/
 okolo
 tvoj

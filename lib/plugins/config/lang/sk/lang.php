@@ -85,6 +85,7 @@ $lang['disableactions_other']  = 'Iné akcie (oddelené čiarkou)';
 $lang['sneaky_index']          = 'DokuWiki implicitne ukazuje v indexe všetky menné priestory. Povolením tejto voľby sa nezobrazia menné priestory, ku ktorým nemá používateľ právo na čítanie. Dôsledkom môže byť nezobrazenie vnorených prístupných menných priestorov. Táto voľba môže mať za následok nepoužiteľnosť indexu s určitými ACL nastaveniami.';
 $lang['auth_security_timeout'] = 'Časový limit pri prihlasovaní (v sekundách)';
 $lang['securecookie']          = 'Mal by prehliadač posielať cookies nastavené cez HTTPS posielať iba cez HTTPS (bezpečné) pripojenie? Vypnite túto voľbu iba v prípade, ak je prihlasovanie do Vašej wiki zabezpečené SSL, ale prezeranie wiki je nezabezpečené.';
+$lang['xmlrpc']                = 'Povoliť/zakázať XML-RPC rozhranie.';
 $lang['updatecheck']           = 'Kontrolovať aktualizácie a bezpečnostné upozornenia? DokuWiki potrebuje pre túto funkciu prístup k splitbrain.org.';
 $lang['userewrite']            = 'Používať nice URLs';
 $lang['useslash']              = 'Používať lomku (/) ako oddeľovač v URL';
@@ -109,8 +110,7 @@ $lang['hidepages']             = 'Skryť zodpovedajúce stránky (regulárne vý
 $lang['send404']               = 'Poslať "HTTP 404/Page Not Found" pre neexistujúce stránky';
 $lang['sitemap']               = 'Generovať Google sitemap (dni)';
 $lang['broken_iua']            = 'Je vo Vašom systéme funkcia ignore_user_abort poškodená? Môže to mať za následok nefunkčnosť vyhľadávania v indexe. IIS+PHP/CGI je známy tým, že nefunguje správne. Pozrite <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> pre dalšie informácie.';
-$lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručenie statických suborov webserverom? Webserver musí túto funkcionalitu podporovať.';
-$lang['xmlrpc']                = 'Povoliť/zakázať XML-RPC rozhranie.';
+$lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručenie statických súborov webserverom? Webserver musí túto funkcionalitu podporovať.';
 $lang['renderer_xhtml']        = 'Používané vykresľovacie jadro pre hlavný (xhtml) wiki výstup';
 $lang['renderer__core']        = '%s (dokuwiki jadro)';
 $lang['renderer__plugin']      = '%s (plugin)';

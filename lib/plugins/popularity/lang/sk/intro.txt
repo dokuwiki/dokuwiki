@@ -1,9 +1,9 @@
 ====== Prieskum používania ======
 
-Tento nástroj získa anonymné dáta o Vašej wiki a ponúkne Vám možnosť odoslať ich späť k vývojárom DokuWiki. Týmto spôsobom im umožníte lepšie porozumieť, ako je používaná DokuWiki, a podporiť ich budúce rozhodnutia o ďalšom vývoji infomáciami z reálneho používania DokuWiki.
+Tento nástroj získa anonymné dáta o Vašej wiki a ponúkne Vám možnosť odoslať ich späť k vývojárom DokuWiki. Týmto spôsobom im umožníte lepšie porozumieť, ako je používaná DokuWiki, a podporiť ich budúce rozhodnutia o ďalšom vývoji informáciami z reálneho používania DokuWiki.
 
-Doporučujeme Vám opakovať tento krok z času na čas pri napredovaní Vašej wiki a tak pomôcť vývojárom DokuWiki. Vaše data budú označené anonymným ID.
+Doporučujeme Vám opakovať tento krok z času na čas pri napredovaní Vašej wiki a tak pomôcť vývojárom DokuWiki. Vaše dáta budú označené anonymným ID.
 
-Zozbierané data obsahujú informácie ako verziu DokuWiki, počet a veľkosť Vašich stránok a súborov, inštalované pluginy a informácie o inštalovanom PHP.
+Zozbierané dáta obsahujú informácie ako verziu DokuWiki, počet a veľkosť Vašich stránok a súborov, inštalované pluginy a informácie o inštalovanom PHP.
 
 Dáta, ktoré budú poslané sú zobrazené nižšie. Prosím použite tlačidlo "Poslať dáta" na odoslanie týchto informácií.
