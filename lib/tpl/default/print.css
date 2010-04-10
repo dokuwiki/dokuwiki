@@ -143,6 +143,10 @@ span.li {
     font-weight: normal;
 }
 
+pre {
+  font-family: monospace;
+}
+
 /* code blocks by indention */
 pre.pre {
   font-size: 8pt;
