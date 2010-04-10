@@ -38,7 +38,6 @@ div.dokuwiki p,
 div.dokuwiki blockquote,
 div.dokuwiki table,
 div.dokuwiki pre {
-  font-family: monospace;
   margin: 0 0 1.0em 0;
 }
 
@@ -463,6 +462,7 @@ div.dokuwiki blockquote {
 }
 
 div.dokuwiki pre {
+  font-family: monospace;
   font-size: 120%;
   padding: 0.5em;
   border: 1px dashed __border__;
