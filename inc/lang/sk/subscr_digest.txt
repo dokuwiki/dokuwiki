@@ -1,0 +1,20 @@
+Dobrý deň!
+
+Stránka @PAGE@ wiki @TITLE@ bola zmenená.
+Zoznam zmien:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Stará verzia: @OLDPAGE@
+Nová verzia: @NEWPAGE@
+
+Ak si neprajete zasielať tieto správy, prihláste sa do wiki
+@DOKUWIKIURL@, potom prejdite na
+@SUBSCRIBE@
+a odhláste sa z informovania o zmenách stránky alebo menného priestoru.
+
+--
+Táto správa bola zaslaná DokuWiki
+@DOKUWIKIURL@

@@ -8,7 +8,7 @@
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['menu']                  = 'Správa pluginov';
-$lang['download']              = 'Stiahnuť a nainštalovať  plugin';
+$lang['download']              = 'Stiahnuť a nainštalovať plugin';
 $lang['manage']                = 'Nainštalované pluginy';
 $lang['btn_info']              = 'info';
 $lang['btn_update']            = 'aktualizovať';
