@@ -121,4 +121,9 @@ div.dokuwiki .code {
   direction: ltr;
   text-align: left;
 }
-
+div.dokuwiki blockquote {
+  border-left: 0;
+  padding-left: 0;
+  border-right: 2px solid  __border__;
+  padding-right: 3px;
+}
