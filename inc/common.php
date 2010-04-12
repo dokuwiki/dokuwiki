@@ -1107,7 +1107,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     $text = str_replace('@SUMMARY@',$summary,$text);
     $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
     $text = str_replace('@NAME@',$INFO['userinfo']['name'],$text);
-    $text = str_replace('@MAIL',$INFO['userinfo']['mail'],$text);
+    $text = str_replace('@MAIL@',$INFO['userinfo']['mail'],$text);
 
     foreach ($replace as $key => $substitution) {
         $text = str_replace('@'.strtoupper($key).'@',$substitution, $text);
