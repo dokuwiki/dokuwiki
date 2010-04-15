@@ -107,6 +107,7 @@ $lang['gdlib']                 = 'Verzia GD Lib';
 $lang['im_convert']            = 'Cesta k ImageMagick convert tool';
 $lang['jpg_quality']           = 'Kvalita JPG kompresie (0-100)';
 $lang['subscribers']           = 'Povoliť podporu informovania o zmenách stránky';
+$lang['subscribe_time']        = 'Časový inteval, po uplynutí ktorého sú zasielané informácie o zmenách stránky alebo menného priestoru (sek); hodnota by mala byť menšia ako čas zadaný pri položke recent_days.';
 $lang['compress']              = 'Komprimovať CSS a javascript výstup';
 $lang['hidepages']             = 'Skryť zodpovedajúce stránky (regulárne výrazy)';
 $lang['send404']               = 'Poslať "HTTP 404/Page Not Found" pre neexistujúce stránky';
