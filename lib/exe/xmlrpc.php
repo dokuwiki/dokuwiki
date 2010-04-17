@@ -415,7 +415,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 'snippet' => $snippet,
             );
         }
-        return $data;
+        return $pages;
     }
 
 
