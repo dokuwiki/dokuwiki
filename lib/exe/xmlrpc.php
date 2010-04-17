@@ -7,7 +7,7 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',3);
+define('DOKU_XMLRPC_API_VERSION',4);
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
@@ -132,6 +132,15 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'this:setLocks',
             array('struct','struct'),
             'Lock or unlock pages.'
+        );
+
+
+        $this->addCallback(
+            'dokuwiki.getTitle',
+            'this:getTitle',
+            array('string'),
+            'Returns the wiki title.',
+            true
         );
 
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
@@ -418,6 +427,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         return $pages;
     }
 
+    /**
+     * Returns the wiki title.
+     */
+    function getTitle(){
+        global $conf;
+        return $conf['title'];
+    }
 
     /**
      * List all media files.
