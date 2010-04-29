@@ -26,6 +26,10 @@
  *   $conf['auth']['ad']['use_ssl']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
  *
+ *   // get additional informations to the userinfo array
+ *   // add a list of comma separated ldap contact fields.
+ *   $conf['auth']['ad']['additional'] = 'field1,field2';
+ *
  *  @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *  @author  James Van Lommel <jamesvl@gmail.com>
  *  @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
@@ -46,6 +50,12 @@ class auth_ad extends auth_basic {
     function auth_ad() {
         global $conf;
         $this->cnf = $conf['auth']['ad'];
+
+        // additional information fields
+        if (isset($this->cnf['additional'])) {
+            $this->cnf['additional'] = str_replace(' ', '', $this->cnf['additional']);
+            $this->cnf['additional'] = explode(',', $this->cnf['additional']);
+        } else $this->cnf['additional'] = array();
 
         // ldap extension is needed
         if (!function_exists('ldap_connect')) {
@@ -131,14 +141,26 @@ class auth_ad extends auth_basic {
         global $conf;
         if(!$this->_init()) return false;
 
-        //get info for given user
-        $result = $this->adldap->user_info($user);
+        $fields = array('mail','displayname','samaccountname');
 
+        // add additional fields to read
+        $fields = array_merge($fields, $this->cnf['additional']);
+        $fields = array_unique($fields);
+
+        //get info for given user
+        $result = $this->adldap->user_info($user, $fields);
         //general user info
         $info['name'] = $result[0]['displayname'][0];
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];
         $info['dn']   = $result[0]['dn'];
+
+        // additional informations
+        foreach ($this->cnf['additional'] as $field) {
+            if (isset($result[0][strtolower($field)])) {
+                $info[$field] = $result[0][strtolower($field)][0];
+            }
+        }
 
         // handle ActiveDirectory memberOf
         $info['grps'] = $this->adldap->user_groups($user,(bool) $this->opts['recursive_groups']);
