@@ -38,6 +38,7 @@ class auth_ad extends auth_basic {
     var $cnf = null;
     var $opts = null;
     var $adldap = null;
+    var $users = null;
 
     /**
      * Constructor
@@ -185,6 +186,45 @@ class auth_ad extends auth_basic {
     }
 
     /**
+     * Bulk retrieval of user data
+     *
+     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
+     * @param   start     index of first user to be returned
+     * @param   limit     max number of users to be returned
+     * @param   filter    array of field/pattern pairs, null for no filter
+     * @return  array of userinfo (refer getUserData for internal userinfo details)
+     */
+    function retrieveUsers($start=0,$limit=-1,$filter=array()) {
+        if(!$this->_init()) return false;
+
+        if ($this->users === null) {
+            //get info for given user
+            $result = $this->adldap->all_users();
+            if (!$result) return array();
+            $this->users = array_fill_keys($result, false);
+        }
+
+        $i = 0;
+        $count = 0;
+        $this->_constructPattern($filter);
+        $result = array();
+
+        foreach ($this->users as $user => &$info) {
+            if ($i++ < $start) {
+                continue;
+            }
+            if ($info === false) {
+                $info = $this->getUserData($user);
+            }
+            if ($this->_filter($user, $info)) {
+                $result[$user] = $info;
+                if (($limit >= 0) && (++$count >= $limit)) break;
+            }
+        }
+        return $result;
+    }
+
+    /**
      * Initialize the AdLDAP library and connect to the server
      */
     function _init(){
@@ -193,12 +233,41 @@ class auth_ad extends auth_basic {
         // connect
         try {
             $this->adldap = new adLDAP($this->opts);
+            if (isset($this->opts['ad_username']) && isset($this->opts['ad_password'])) {
+                $this->canDo['getUsers'] = true;
+            }
             return true;
         } catch (adLDAPException $e) {
             $this->success = false;
             $this->adldap  = null;
         }
         return false;
+    }
+
+    /**
+     * return 1 if $user + $info match $filter criteria, 0 otherwise
+     *
+     * @author   Chris Smith <chris@jalakai.co.uk>
+     */
+    function _filter($user, $info) {
+        foreach ($this->_pattern as $item => $pattern) {
+            if ($item == 'user') {
+                if (!preg_match($pattern, $user)) return 0;
+            } else if ($item == 'grps') {
+                if (!count(preg_grep($pattern, $info['grps']))) return 0;
+            } else {
+                if (!preg_match($pattern, $info[$item])) return 0;
+            }
+        }
+        return 1;
+    }
+
+    function _constructPattern($filter) {
+        $this->_pattern = array();
+        foreach ($filter as $item => $pattern) {
+//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
+            $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
+        }
     }
 }
 
