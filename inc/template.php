@@ -1347,6 +1347,7 @@ function tpl_subscribe() {
     global $INFO;
     global $ID;
     global $lang;
+    global $conf;
 
     echo p_locale_xhtml('subscr_form');
     echo '<h2>' . $lang['subscr_m_current_header'] . '</h2>';
@@ -1387,10 +1388,11 @@ function tpl_subscribe() {
             $ID => '<code class="page">'.prettyprint_id($ID).'</code>',
             $ns => '<code class="ns">'.prettyprint_id($ns).'</code>',
             );
+    $stime_days = $conf['subscribe_time']/60/60/24;
     $styles = array(
             'every'  => $lang['subscr_style_every'],
-            'digest' => $lang['subscr_style_digest'],
-            'list'   => $lang['subscr_style_list'],
+            'digest' => sprintf($lang['subscr_style_digest'], $stime_days),
+            'list' => sprintf($lang['subscr_style_list'], $stime_days),
             );
 
     $form = new Doku_Form(array('id' => 'subscribe__form'));

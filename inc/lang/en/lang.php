@@ -247,8 +247,8 @@ $lang['subscr_m_unsubscribe']      = 'Unsubscribe';
 $lang['subscr_m_subscribe']        = 'Subscribe';
 $lang['subscr_m_receive']          = 'Receive';
 $lang['subscr_style_every']        = 'email on every change';
-$lang['subscr_style_digest']       = 'digest email of changes for each page';
-$lang['subscr_style_list']         = 'list of changed pages since last email';
+$lang['subscr_style_digest']       = 'digest email of changes for each page (every %.2f days)';
+$lang['subscr_style_list']         = 'list of changed pages since last email (every %.2f days)';
 
 
 /* auth.class language support */
