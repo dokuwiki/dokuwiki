@@ -260,6 +260,9 @@ class auth_ad extends auth_basic {
             }
             return true;
         } catch (adLDAPException $e) {
+            if ($this->cnf['debug']) {
+                msg($e->getMessage(), -1);
+            }
             $this->success = false;
             $this->adldap  = null;
         }
