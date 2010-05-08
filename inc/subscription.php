@@ -9,6 +9,8 @@
  * - subscription_set
  * - get_info_subscribed
  * - subscription_addresslist
+ * - subscription_lock
+ * - subscription_unlock
  *
  * @author  Adrian Lang <lang@cosmocode.de>
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
@@ -34,6 +36,32 @@ function subscription_filename($id) {
         $meta_froot = $id;
     }
     return metaFN($meta_froot, $meta_fname);
+}
+
+/**
+ * Lock subscription info for an ID
+ *
+ * @param string $id The target page or namespace, specified by id; Namespaces
+ *                   are identified by appending a colon.
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+function subscription_lock($id) {
+    $lockf = subscription_filename($id) . '.lock';
+    return !file_exists($lockf) && touch($lockf);
+}
+
+/**
+ * Unlock subscription info for an ID
+ *
+ * @param string $id The target page or namespace, specified by id; Namespaces
+ *                   are identified by appending a colon.
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+function subscription_unlock($id) {
+    $lockf = subscription_filename($id) . '.lock';
+    return file_exists($lockf) && unlink($lockf);
 }
 
 /**
