@@ -45,7 +45,6 @@ function html_login(){
     global $lang;
     global $conf;
     global $ID;
-    global $auth;
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
@@ -61,14 +60,14 @@ function html_login(){
     $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
     $form->endFieldset();
 
-    if($auth && $auth->canDo('addUser') && actionOK('register')){
+    if(actionOK('register')){
         $form->addElement('<p>'
                           . $lang['reghere']
                           . ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>'
                           . '</p>');
     }
 
-    if ($auth && $auth->canDo('modPass') && actionOK('resendpwd')) {
+    if (actionOK('resendpwd')) {
         $form->addElement('<p>'
                           . $lang['pwdforget']
                           . ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>'

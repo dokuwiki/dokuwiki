@@ -343,6 +343,11 @@ function act_revert($act){
     global $ID;
     global $REV;
     global $lang;
+    // FIXME $INFO['writable'] currently refers to the attic version
+    // global $INFO;
+    // if (!$INFO['writable']) {
+    //     return 'show';
+    // }
 
     // when no revision is given, delete current one
     // FIXME this feature is not exposed in the GUI currently

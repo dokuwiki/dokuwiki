@@ -241,6 +241,7 @@ function actionOK($action){
     static $disabled = null;
     if(is_null($disabled)){
         global $conf;
+        global $auth;
 
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',',$conf['disableactions']);
@@ -249,6 +250,12 @@ function actionOK($action){
         if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) $disabled[] = 'resendpwd';
         if(isset($conf['subscribers']) && !$conf['subscribers']) {
             $disabled[] = 'subscribe';
+        }
+        if (is_null($auth) || !$auth->canDo('addUser')) {
+            $disabled[] = 'register';
+        }
+        if (is_null($auth) || !$auth->canDo('modPass')) {
+            $disabled[] = 'resendpwd';
         }
         $disabled = array_unique($disabled);
     }
