@@ -23,6 +23,7 @@
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
  * @author Victor Castelan <victorcastelan@gmail.com>
+ * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -109,7 +110,37 @@ $lang['txt_overwrt']           = 'Sobreescribir archivo existente';
 $lang['lockedby']              = 'Actualmente bloqueado por';
 $lang['lockexpire']            = 'El bloqueo expira en';
 $lang['willexpire']            = 'Tu bloqueo para editar esta página expira en un minuto.\nPara evitar conflictos usa el botón previsualizar para reiniciar el contador de tiempo.';
-$lang['js']['notsavedyet']     = "Los cambios que no se han guardado se perderán.\n¿Realmente quieres continuar?";
+$lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
+¿Realmente quieres continuar?';
+$lang['js']['searchmedia']     = 'Buscar archivos';
+$lang['js']['keepopen']        = 'Mantener la ventana abierta luego de seleccionar';
+$lang['js']['hidedetails']     = 'Ocultar detalles';
+$lang['js']['mediatitle']      = 'Configuración del vínculo';
+$lang['js']['mediadisplay']    = 'Tipo de vínculo';
+$lang['js']['mediaalign']      = 'Alineación';
+$lang['js']['mediasize']       = 'Tamaño de la imagen';
+$lang['js']['mediatarget']     = 'Destino del vínculo';
+$lang['js']['mediaclose']      = 'Cerrar';
+$lang['js']['mediainsert']     = 'Insertar';
+$lang['js']['mediadisplayimg'] = 'Mostrar la imagen.';
+$lang['js']['mediadisplaylnk'] = 'Mostrar solo el vínculo.';
+$lang['js']['mediasmall']      = 'Versión en tamaño pequeño';
+$lang['js']['mediamedium']     = 'Versión en tamaño medio';
+$lang['js']['medialarge']      = 'Versión en tamaño grande';
+$lang['js']['mediaoriginal']   = 'Versión original';
+$lang['js']['medialnk']        = 'Vínculo a la pagina de descripción';
+$lang['js']['mediadirect']     = 'Vínculo al original';
+$lang['js']['medianolnk']      = 'Sin vínculo';
+$lang['js']['medianolink']     = 'No vincular la imagen';
+$lang['js']['medialeft']       = 'Alinear imagen a la izquierda';
+$lang['js']['mediaright']      = 'Alinear imagen a la derecha.';
+$lang['js']['mediacenter']     = 'Alinear imagen en el centro.';
+$lang['js']['nosmblinks']      = 'El enlace a recursos compartidos de Windows sólo funciona en Microsoft Internet Explorer.
+Lo que sí puedes hacer es copiar y pegar el enlace.';
+$lang['js']['linkwiz']         = 'Asistente de enlaces';
+$lang['js']['linkto']          = 'Enlazar a:';
+$lang['js']['del_confirm']     = '¿Quieres realmente borrar lo seleccionado?';
+$lang['js']['mu_btn']          = 'Subir varios archivos a la vez';
 $lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos de este feed: ';
 $lang['nothingfound']          = 'No se ha encontrado nada.';
 $lang['mediaselect']           = 'Archivos Multimedia';
@@ -127,15 +158,6 @@ $lang['deletefail']            = '"%s" no pudo ser borrado; verifique los permis
 $lang['mediainuse']            = 'El fichero "%s" no ha sido borrado, aún está en uso.';
 $lang['namespaces']            = 'Espacios de nombres';
 $lang['mediafiles']            = 'Ficheros disponibles en';
-$lang['js']['searchmedia']     = 'Buscar archivos';
-$lang['js']['keepopen']        = 'Mantener la ventana abierta luego de seleccionar';
-$lang['js']['hidedetails']     = 'Ocultar detalles';
-$lang['js']['nosmblinks']      = 'El enlace a recursos compartidos de Windows sólo funciona en Microsoft Internet Explorer.
-Lo que sí puedes hacer es copiar y pegar el enlace.';
-$lang['js']['linkwiz']         = 'Asistente de enlaces';
-$lang['js']['linkto']          = 'Enlazar a:';
-$lang['js']['del_confirm']     = '¿Quieres realmente borrar lo seleccionado?';
-$lang['js']['mu_btn']          = 'Subir varios archivos a la vez';
 $lang['mediausage']            = 'Use la siguiente sintaxis para hacer referencia a este fichero:';
 $lang['mediaview']             = 'Ver el fichero original';
 $lang['mediaroot']             = 'root';
