@@ -476,7 +476,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Return a list of backlinks
      */
     function listBackLinks($id){
-        return ft_backlinks($id);
+        return ft_backlinks(cleanID($id));
     }
 
     /**
