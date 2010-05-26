@@ -324,8 +324,8 @@ class ZipLib {
             $centd['comment'] = fread($zip, $data['comment_size']);
         } else {
             $centd['comment'] = '';
-            $centd['entries'] = $data['entries'];
         }
+        $centd['entries']      = $data['entries'];
         $centd['disk_entries'] = $data['disk_entries'];
         $centd['offset']       = $data['offset'];
         $centd['disk_start']   = $data['disk_start'];
