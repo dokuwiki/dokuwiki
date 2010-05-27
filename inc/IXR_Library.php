@@ -623,7 +623,7 @@ class IXR_Date {
         $this->second = substr($iso, 17, 2);
     }
     function getIso() {
-        return $this->year.'-'.$this->month.'-'.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second;
+        return $this->year.$this->month.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second;
     }
     function getXml() {
         return '<dateTime.iso8601>'.$this->getIso().'</dateTime.iso8601>';
