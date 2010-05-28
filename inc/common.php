@@ -1324,6 +1324,9 @@ function php_to_byte($v){
         case 'K':
             $ret *= 1024;
         break;
+        default;
+            $ret *= 10;
+        break;
     }
     return $ret;
 }
