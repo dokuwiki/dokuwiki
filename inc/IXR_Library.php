@@ -225,11 +225,9 @@ class IXR_Message {
                 break;
             case 'value':
                 // "If no type is indicated, the type is string."
-                if (trim($this->_currentTagContents) != '') {
-                    $value = (string)$this->_currentTagContents;
-                    $this->_currentTagContents = '';
-                    $valueFlag = true;
-                }
+                $value = (string)$this->_currentTagContents;
+                $this->_currentTagContents = '';
+                $valueFlag = true;
                 break;
             case 'boolean':
                 $value = (boolean)trim($this->_currentTagContents);
