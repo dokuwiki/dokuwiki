@@ -12,7 +12,7 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 
 if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
-} elseif (!empty($IDX)) {
+} elseif (!empty($_REQUEST['idx'])) {
     $ACT = 'index';
 } elseif (isset($_REQUEST['do'])) {
     $ACT = $_REQUEST['do'];
