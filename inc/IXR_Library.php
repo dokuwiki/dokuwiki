@@ -615,12 +615,14 @@ class IXR_Date {
         $this->second = gmdate('s', $timestamp);
     }
     function parseIso($iso) {
-        $this->year = substr($iso, 0, 4);
-        $this->month = substr($iso, 5, 2);
-        $this->day = substr($iso, 8, 2);
-        $this->hour = substr($iso, 11, 2);
-        $this->minute = substr($iso, 14, 2);
-        $this->second = substr($iso, 17, 2);
+        if(preg_match('/^(\d\d\d\d)-?(\d\d)-?(\d\d)([T ](\d\d):(\d\d)(:(\d\d))?)?/',$iso,$match)){
+            $this->year   = (int) $match[1];
+            $this->month  = (int) $match[2];
+            $this->day    = (int) $match[3];
+            $this->hour   = (int) $match[5];
+            $this->minute = (int) $match[6];
+            $this->second = (int) $match[8];
+        }
     }
     function getIso() {
         return $this->year.$this->month.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second;
