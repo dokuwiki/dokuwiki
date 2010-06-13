@@ -387,16 +387,6 @@ function act_revert($act){
 function act_redirect($id,$preact){
     global $PRE;
     global $TEXT;
-    global $MSG;
-
-    //are there any undisplayed messages? keep them in session for display
-    //on the next page
-    if(isset($MSG) && count($MSG)){
-        //reopen session, store data and close session again
-        @session_start();
-        $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
-        session_write_close();
-    }
 
     $opts = array(
             'id'       => $id,
