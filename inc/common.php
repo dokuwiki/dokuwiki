@@ -1464,6 +1464,14 @@ function is_mem_available($mem,$bytes=1048576){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function send_redirect($url){
+    //are there any undisplayed messages? keep them in session for display
+    global $MSG;
+    if (isset($MSG) && count($MSG) && !defined('NOSESSION')){
+        //reopen session, store data and close session again
+        @session_start();
+        $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
+    }
+
     // always close the session
     session_write_close();
 
