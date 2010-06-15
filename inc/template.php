@@ -594,122 +594,115 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
     if(!actionOK($ctype)) return false;
 
     $out = '';
+    $id = $ID;
+    $query = array();
+    $build_link = true;
+    $more = '';
     switch($type){
         case 'edit':
             // most complicated type - we need to decide on current action
             if($ACT == 'show' || $ACT == 'search'){
                 if($INFO['writable']){
+                    $more = 'class="action edit" accesskey="e"';
                     if(!empty($INFO['draft'])) {
-                        $out .= tpl_link(wl($ID,'do=draft'),
-                                $pre.(($inner)?$inner:$lang['btn_draft']).$suf,
-                                'class="action edit" accesskey="e" rel="nofollow"',1);
+                        $type = 'draft';
                     } else {
+                        $query = array('do' => 'edit', 'rev' => $REV);
                         if($INFO['exists']){
-                            $out .= tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                                    $pre.(($inner)?$inner:$lang['btn_edit']).$suf,
-                                    'class="action edit" accesskey="e" rel="nofollow"',1);
+                            $type = 'edit';
                         }else{
-                            $out .= tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                                    $pre.(($inner)?$inner:$lang['btn_create']).$suf,
-                                    'class="action create" accesskey="e" rel="nofollow"',1);
+                            $more = 'class="action create" accesskey="e"';
+                            $type = 'create';
                         }
                     }
                 }else{
-                    if(actionOK('source')) //pseudo action
-                        $out .= tpl_link(wl($ID,'do=edit&amp;rev='.$REV),
-                                $pre.(($inner)?$inner:$lang['btn_source']).$suf,
-                                'class="action source" accesskey="v" rel="nofollow"',1);
+                    if(actionOK('source')) { //pseudo action
+                        $query = array('do' => 'edit', 'rev' => $REV);
+                        $type = 'source';
+                        $more = 'class="action source" accesskey="v"';
+                    }
                 }
             }else{
-                $out .= tpl_link(wl($ID,''),
-                        $pre.(($inner)?$inner:$lang['btn_show']).$suf,
-                        'class="action show" accesskey="v" rel="nofollow"',1);
+                $query = '';
+                $type = 'show';
+                $more = 'class="action show" accesskey="v"';
             }
             break;
         case 'history':
-            if(actionOK('revisions'))
-                $out .= tpl_link(wl($ID,'do=revisions'),
-                        $pre.(($inner)?$inner:$lang['btn_revs']).$suf,
-                        'class="action revisions" accesskey="o" rel="nofollow"',1);
+            $query = array('do' => 'revisions');
+            $type = 'revs';
+            $more = 'class="action revisions" accesskey="o"';
             break;
         case 'recent':
-            if(actionOK('recent'))
-                $out .= tpl_link(wl($ID,'do=recent'),
-                        $pre.(($inner)?$inner:$lang['btn_recent']).$suf,
-                        'class="action recent" accesskey="r" rel="nofollow"',1);
+            $more = 'class="action recent" accesskey="r"';
             break;
         case 'index':
-            if(actionOK('index'))
-                $out .= tpl_link(wl($ID,'do=index'),
-                        $pre.(($inner)?$inner:$lang['btn_index']).$suf,
-                        'class="action index" accesskey="x" rel="nofollow"',1);
+            $more = 'class="action index" accesskey="x"';
             break;
         case 'top':
-            $out .= '<a href="#dokuwiki__top" class="action top" accesskey="x">'.
+            $build_link = false;
+            $out = '<a href="#dokuwiki__top" class="action top" accesskey="x">'.
                 $pre.(($inner)?$inner:$lang['btn_top']).$suf.'</a>';
             break;
         case 'back':
             if ($parent = tpl_getparent($ID)) {
-                $out .= tpl_link(wl($parent,''),
-                        $pre.(($inner)?$inner:$lang['btn_back']).$suf,
-                        'class="action back" accesskey="b" rel="nofollow"',1);
+                $id = $parent;
+                $query = '';
+                $more = 'class="action back" accesskey="b"';
             }
             break;
         case 'login':
             if($conf['useacl'] && $auth){
+                $query = array('sectok' => getSecurityToken());
                 if($_SERVER['REMOTE_USER']){
-                    $out .= tpl_link(wl($ID,'do=logout&amp;sectok='.getSecurityToken()),
-                            $pre.(($inner)?$inner:$lang['btn_logout']).$suf,
-                            'class="action logout" rel="nofollow"',1);
+                    $type = 'logout';
+                    $more = 'class="action logout"';
                 }else{
-                    $out .= tpl_link(wl($ID,'do=login&amp;sectok='.getSecurityToken()),
-                            $pre.(($inner)?$inner:$lang['btn_login']).$suf,
-                            'class="action login" rel="nofollow"',1);
+                    $more = 'class="action login"';
                 }
             }
             break;
         case 'admin':
             if($INFO['ismanager']){
-                $out .= tpl_link(wl($ID,'do=admin'),
-                        $pre.(($inner)?$inner:$lang['btn_admin']).$suf,
-                        'class="action admin" rel="nofollow"',1);
+                $more = 'class="action admin"';
             }
             break;
         case 'revert':
-            if($INFO['ismanager'] && $REV && $INFO['writable'] && actionOK('revert')){
-                $out .= tpl_link(wl($ID,array('do' => 'revert', 'rev' => $REV, 'sectok' => getSecurityToken())),
-                        $pre.(($inner)?$inner:$lang['btn_revert']).$suf,
-                        'class="action revert" rel="nofollow"',1);
+            if($INFO['ismanager'] && $REV && $INFO['writable']) {
+                $query = array('rev' => $REV, 'sectok' => getSecurityToken());
+                $more = 'class="action revert"';
             }
             break;
-        case 'subscribe':
         case 'subscription':
+            $type = 'subscribe';
+        case 'subscribe':
             if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers']) {
                 if($_SERVER['REMOTE_USER']){
-                    if(actionOK('subscribe'))
-                        $out .= tpl_link(wl($ID,'do=subscribe'),
-                                $pre.(($inner)?$inner:$lang['btn_subscribe']).$suf,
-                                'class="action subscribe" rel="nofollow"',1);
+                    $more = 'class="action subscribe"';
                 }
             }
             break;
         case 'backlink':
-            if(actionOK('backlink'))
-                $out .= tpl_link(wl($ID,'do=backlink'),
-                        $pre.(($inner)?$inner:$lang['btn_backlink']).$suf,
-                        'class="action backlink" rel="nofollow"',1);
+            $more = 'class="action backlink"';
             break;
         case 'profile':
             if($conf['useacl'] && $auth && $_SERVER['REMOTE_USER'] &&
                     $auth->canDo('Profile') && ($ACT!='profile')){
-                $out .= tpl_link(wl($ID,'do=profile'),
-                        $pre.(($inner)?$inner:$lang['btn_profile']).$suf,
-                        'class="action profile" rel="nofollow"',1);
+                $more = 'class="action profile"';
             }
             break;
         default:
-            $out .= '[unknown link type]';
+            $build_link = false;
+            $out = '[unknown link type]';
             break;
+    }
+    if ($build_link) {
+        if (is_array($query) && !isset($query['do'])) {
+            $query['do'] = $type;
+        }
+        $out = tpl_link(wl($id, $query),
+                $pre.(($inner)?$inner:$lang['btn_' . $type]).$suf,
+                $more . ' rel="nofollow" title="' . hsc($lang['btn_' . $type]) . '"', 1);
     }
     if ($return) return $out;
     print $out;
