@@ -213,54 +213,55 @@ function ft_mediause($id,$max){
  * Quicksearch for pagenames
  *
  * By default it only matches the pagename and ignores the
- * namespace. This can be changed with the second parameter
+ * namespace. This can be changed with the second parameter.
+ * The third parameter allows to search in titles as well.
+ * If the function should search in titles as well, the return array
+ * has the ids as key and the titles as value.
  *
  * refactored into ft_pageLookup(), _ft_pageLookup() and trigger_event()
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function ft_pageLookup($id,$pageonly=true){
-    $data = array('id' => $id, 'pageonly' => $pageonly);
-    return trigger_event('SEARCH_QUERY_PAGELOOKUP',$data,'_ft_pageLookup');
+function ft_pageLookup($id, $not_in_ns=true, $not_in_title=true){
+    $data = compact('id', 'not_in_ns', 'not_in_title');
+    return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
 function _ft_pageLookup(&$data){
-    // split out original parameterrs
+    // split out original parameters
     $id = $data['id'];
-    $pageonly = $data['pageonly'];
+    $in_ns = !$data['not_in_ns'];
+    $in_title = !$data['not_in_title'];
 
     global $conf;
-    $id    = preg_quote($id,'/');
-    $pages = file($conf['indexdir'].'/page.idx');
-    if($id) $pages = array_values(preg_grep('/'.$id.'/',$pages));
+    $pages  = array_map('rtrim', file($conf['indexdir'].'/page.idx'));
+    $titles = array_map('rtrim', file($conf['indexdir'].'/title.idx'));
+    $pages = array_combine($pages, $titles);
 
-    $cnt = count($pages);
-    for($i=0; $i<$cnt; $i++){
-        if($pageonly){
-            if(!preg_match('/'.$id.'/',noNS($pages[$i]))){
-                unset($pages[$i]);
-                continue;
+    if($id !== '' && cleanID($id) !== '') {
+        $cleaned = cleanID($id);
+        $matched_pages = array();
+        foreach ($pages as $p_id => $p_title) {
+            if ((strpos($in_ns ? $p_id : noNS($p_id), $cleaned) !== false) ||
+                ($in_title && stripos($p_title, $id) !== false)) {
+                $matched_pages[$p_id] = $p_title;
             }
         }
-        if(!page_exists($pages[$i])){
-            unset($pages[$i]);
-            continue;
-        }
+        $pages = $matched_pages;
     }
 
-    $pages = array_filter($pages,'isVisiblePage'); // discard hidden pages
-    if(!count($pages)) return array();
-
+    // discard hidden pages
+    // discard nonexistent pages
     // check ACL permissions
     foreach(array_keys($pages) as $idx){
-        if(auth_quickaclcheck(trim($pages[$idx])) < AUTH_READ){
+        if(!isVisiblePage($idx) || !page_exists($idx) ||
+           auth_quickaclcheck($idx) < AUTH_READ) {
             unset($pages[$idx]);
         }
     }
 
-    $pages = array_map('trim',$pages);
-    usort($pages,'ft_pagesorter');
-    return $pages;
+    uasort($pages,'ft_pagesorter');
+    return $in_title ? $pages : array_keys($pages);
 }
 
 /**

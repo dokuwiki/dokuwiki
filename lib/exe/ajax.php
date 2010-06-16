@@ -50,27 +50,28 @@ function ajax_qsearch(){
   global $conf;
   global $lang;
 
-  $query = cleanID($_POST['q']);
-  if(empty($query)) $query = cleanID($_GET['q']);
+  $query = $_POST['q'];
+  if(empty($query)) $query = $_GET['q'];
   if(empty($query)) return;
 
-  $data = array();
-  $data = ft_pageLookup($query);
+  $data = ft_pageLookup($query, true, false);
 
   if(!count($data)) return;
 
   print '<strong>'.$lang['quickhits'].'</strong>';
   print '<ul>';
-  foreach($data as $id){
-    print '<li>';
-    $ns = getNS($id);
-    if($ns){
-      $name = shorten(noNS($id), ' ('.$ns.')',30);
-    }else{
-      $name = $id;
+  foreach($data as $id => $title){
+    if (useHeading('navigation')) {
+        $name = $title;
+    } else {
+        $ns = getNS($id);
+        if($ns){
+          $name = shorten(noNS($id), ' ('.$ns.')',30);
+        }else{
+          $name = $id;
+        }
     }
-    print html_wikilink(':'.$id,$name);
-    print '</li>';
+    echo '<li>' . html_wikilink(':'.$id,$name) . '</li>';
   }
   print '</ul>';
 }
