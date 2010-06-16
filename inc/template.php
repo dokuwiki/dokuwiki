@@ -596,7 +596,6 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
     $out = '';
     $id = $ID;
     $query = array();
-    $build_link = true;
     $more = '';
     switch($type){
         case 'edit':
@@ -640,7 +639,6 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
             $more = 'class="action index" accesskey="x"';
             break;
         case 'top':
-            $build_link = false;
             $out = '<a href="#dokuwiki__top" class="action top" accesskey="x">'.
                 $pre.(($inner)?$inner:$lang['btn_top']).$suf.'</a>';
             break;
@@ -692,11 +690,10 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
             }
             break;
         default:
-            $build_link = false;
             $out = '[unknown link type]';
             break;
     }
-    if ($build_link) {
+    if ($more !== '') {
         if (is_array($query) && !isset($query['do'])) {
             $query['do'] = $type;
         }
