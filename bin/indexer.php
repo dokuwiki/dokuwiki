@@ -152,6 +152,7 @@ function _clearindex(){
     _lock();
     _quietecho("Clearing index... ");
     io_saveFile($conf['indexdir'].'/page.idx','');
+    io_saveFile($conf['indexdir'].'/title.idx','');
     $dir = @opendir($conf['indexdir']);
     if($dir!==false){
         while(($f = readdir($dir)) !== false){

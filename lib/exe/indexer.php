@@ -255,7 +255,7 @@ function runSitemapper(){
        return false;
     }
 
-    $pages = file($conf['indexdir'].'/page.idx');
+    $pages = idx_getIndex('page', '');
     print 'runSitemapper(): creating sitemap using '.count($pages).' pages'.NL;
 
     // build the sitemap

@@ -304,7 +304,8 @@ function init_paths(){
 function init_files(){
     global $conf;
 
-    $files = array( $conf['indexdir'].'/page.idx');
+    $files = array( $conf['indexdir'].'/page.idx',
+                    $conf['indexdir'].'/title.idx');
 
     foreach($files as $file){
         if(!@file_exists($file)){

@@ -233,9 +233,8 @@ function _ft_pageLookup(&$data){
     $in_ns = !$data['not_in_ns'];
     $in_title = !$data['not_in_title'];
 
-    global $conf;
-    $pages  = array_map('rtrim', file($conf['indexdir'].'/page.idx'));
-    $titles = array_map('rtrim', file($conf['indexdir'].'/title.idx'));
+    $pages  = array_map('rtrim', idx_getIndex('page', ''));
+    $titles = array_map('rtrim', idx_getIndex('title', ''));
     $pages = array_combine($pages, $titles);
 
     if($id !== '' && cleanID($id) !== '') {

@@ -354,24 +354,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * List all pages - we use the indexer list here
      */
     function listPages(){
-        global $conf;
-
         $list  = array();
-        $pages = file($conf['indexdir'] . '/page.idx');
-        $pages = array_filter($pages, 'isVisiblePage');
+        $pages = array_filter(array_filter(idx_getIndex('page', ''),
+                                           'isVisiblePage'),
+                              'page_exists');
 
         foreach(array_keys($pages) as $idx) {
-            if(page_exists($pages[$idx])) {
-                $perm = auth_quickaclcheck($pages[$idx]);
-                if($perm >= AUTH_READ) {
-                    $page = array();
-                    $page['id'] = trim($pages[$idx]);
-                    $page['perms'] = $perm;
-                    $page['size'] = @filesize(wikiFN($pages[$idx]));
-                    $page['lastModified'] = new IXR_Date(@filemtime(wikiFN($pages[$idx])));
-                    $list[] = $page;
-                }
+            $perm = auth_quickaclcheck($pages[$idx]);
+            if($perm < AUTH_READ) {
+                continue;
             }
+            $page = array();
+            $page['id'] = trim($pages[$idx]);
+            $page['perms'] = $perm;
+            $page['size'] = @filesize(wikiFN($pages[$idx]));
+            $page['lastModified'] = new IXR_Date(@filemtime(wikiFN($pages[$idx])));
+            $list[] = $page;
         }
 
         return $list;
