@@ -242,7 +242,7 @@ function _ft_pageLookup(&$data){
         $cleaned = cleanID($id);
         $matched_pages = array();
         foreach ($pages as $p_id => $p_title) {
-            if ((strpos($in_ns ? $p_id : noNS($p_id), $cleaned) !== false) ||
+            if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false) ||
                 ($in_title && stripos($p_title, $id) !== false)) {
                 $matched_pages[$p_id] = $p_title;
             }
