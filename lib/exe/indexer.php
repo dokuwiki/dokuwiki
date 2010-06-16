@@ -134,18 +134,6 @@ function runIndexer(){
     global $conf;
     print "runIndexer(): started".NL;
 
-    // Move index files (if needed)
-    // Uses the importoldindex plugin to upgrade the index automatically.
-    // FIXME: Remove this from runIndexer when it is no longer needed.
-    if (@file_exists($conf['cachedir'].'/page.idx') &&
-        (!@file_exists($conf['indexdir'].'/page.idx') ||
-         !filesize($conf['indexdir'].'/page.idx'))  &&
-        !@file_exists($conf['indexdir'].'/index_importing')) {
-        echo "trigger TEMPORARY_INDEX_UPGRADE_EVENT\n";
-        $tmp = array(); // no event data
-        trigger_event('TEMPORARY_INDEX_UPGRADE_EVENT', $tmp);
-    }
-
     if(!$ID) return false;
 
     // check if indexing needed
