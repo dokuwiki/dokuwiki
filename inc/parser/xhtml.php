@@ -559,6 +559,18 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
+
+        $params = array();
+
+        if (preg_match('/^([^?]*)\?([^?]+)$/', $id, $matches) !== false) {
+            $id = $matches[1];
+            preg_match_all('/(?<=[&^])([^=]+)=([^=]*)(?:&|$)/', $matches[2],
+                           $matches, PREG_SET_ORDER);
+            foreach($matches as &$param) {
+                $params[$param[1]] = $param[2];
+            }
+        }
+
         // default name is based on $id as given
         $default = $this->_simpleTitle($id);
 
@@ -592,7 +604,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $link['more']   = '';
         $link['class']  = $class;
-        $link['url']    = wl($id);
+        $link['url']    = wl($id, $params);
         $link['name']   = $name;
         $link['title']  = $id;
         //add search string
