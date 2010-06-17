@@ -562,7 +562,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $params = array();
 
-        if (preg_match('/^([^?]*)\?([^?]+)$/', $id, $matches) !== false) {
+        if (preg_match('/^([^?]*)\?([^?]+)$/', $id, $matches)) {
             $id = $matches[1];
             preg_match_all('/(?<=[&^])([^=]+)=([^=]*)(?:&|$)/', $matches[2],
                            $matches, PREG_SET_ORDER);
