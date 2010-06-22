@@ -320,9 +320,7 @@ function auth_logoff($keepbc=false){
         setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
     }
 
-    if($auth && $auth->canDo('logoff')){
-        $auth->logOff();
-    }
+    if($auth) $auth->logOff();
 }
 
 /**

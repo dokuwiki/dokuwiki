@@ -587,7 +587,7 @@ function tpl_get_action($type) {
             }
             $params['sectok'] = getSecurityToken();
             if(isset($_SERVER['REMOTE_USER'])){
-                if (!$auth->canDo('logoff')) {
+                if (!$auth->canDo('logout')) {
                     return false;
                 }
                 $params['do'] = 'logout';
