@@ -114,7 +114,7 @@ function js_out(){
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
     // init hotkeys - must have been done after init of toolbar
-    js_runonstart('initializeHotkeys()');
+#FIXME disabled for FS#1958    js_runonstart('initializeHotkeys()');
 
     // end output buffering and get contents
     $js = ob_get_contents();
