@@ -14,6 +14,7 @@
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Matthias Carchon webmaster@c-mattic.be
+ * @author Marijn Hofstra <hofstra.m@gmail.com>
  */
 $lang['admin_acl']             = 'Toegangsrechten';
 $lang['acl_group']             = 'Groep';

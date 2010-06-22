@@ -11,6 +11,7 @@
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Matthias Carchon webmaster@c-mattic.be
+ * @author Marijn Hofstra <hofstra.m@gmail.com>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -98,6 +99,7 @@ $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepac
 $lang['usedraft']              = 'Sla automatisch een concept op tijdens het wijzigen';
 $lang['sepchar']               = 'Woordscheider in paginanamen';
 $lang['canonical']             = 'Herleid URL\'s tot hun basisvorm';
+$lang['fnencode']              = 'Methode om niet-ASCII bestandsnamen te coderen.';
 $lang['autoplural']            = 'Controleer op meervoudsvormen in links';
 $lang['compression']           = 'Compressiemethode voor attic-bestanden';
 $lang['cachetime']             = 'Maximum leeftijd voor cache (sec)';
@@ -111,6 +113,7 @@ $lang['gdlib']                 = 'Versie GD Lib ';
 $lang['im_convert']            = 'Path naar ImageMagick\'s convert tool';
 $lang['jpg_quality']           = 'JPG compressiekwaliteit (0-100)';
 $lang['subscribers']           = 'Ondersteuning pagina-inschrijving aanzetten';
+$lang['subscribe_time']        = 'Inschrijvingsmeldingen en samenvattingen worden na deze tijdsduur (in seconden) verzonden. Deze waarde dient kleiner te zijn dan de tijd ingevuld bij "Hoeveel recente wijzigingen bewaren (dagen)"';
 $lang['compress']              = 'Compacte CSS en javascript output';
 $lang['hidepages']             = 'Verberg deze pagina\'s (regular expressions)';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
@@ -184,3 +187,4 @@ $lang['useheading_o_0']        = 'Nooit';
 $lang['useheading_o_navigation'] = 'Alleen navigatie';
 $lang['useheading_o_content']  = 'Alleen wiki inhoud';
 $lang['useheading_o_1']        = 'Altijd';
+$lang['readdircache']          = 'Maximale leeftijd voor readdir cache (in seconden)';

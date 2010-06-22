@@ -9,6 +9,7 @@
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Matthias Carchon webmaster@c-mattic.be
+ * @author Marijn Hofstra <hofstra.m@gmail.com>
  */
 $lang['menu']                  = 'Herstelmanager';
 $lang['filter']                = 'Zoek naar bekladde pagina\'s';

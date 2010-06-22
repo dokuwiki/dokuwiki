@@ -1,0 +1,15 @@
+Halllo!
+
+De pagina @PAGE@ in de @TITLE@ wiki is veranderd. Hier zijn de wijzigingen:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Vorige revisie: @OLDPAGE@
+Nieuwe revisie: @NEWPAGE@
+
+Om het verzenden van deze wijzigingsberichtente te stoppen, logt u in op het wiki op @DOKUWIKIURL@ en navigeert u naar @SUBSCRIBE@. Vervolgens kunt u zich voor elke gewenste pagina of namespace uitschrijven.
+
+--
+Deze email is gegenereerd door DokuWiki op @DOKUWIKIURL@
