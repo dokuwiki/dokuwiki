@@ -11,6 +11,7 @@
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
+ * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargé)';
 $lang['submit']                = 'Envoyer les données';

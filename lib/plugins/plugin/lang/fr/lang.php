@@ -14,6 +14,7 @@
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
+ * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  */
 $lang['menu']                  = 'Gestion des modules externes';
 $lang['download']              = 'Télécharger et installer un nouveau module';

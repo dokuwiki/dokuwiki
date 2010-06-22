@@ -20,6 +20,7 @@
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
+ * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -106,24 +107,8 @@ $lang['txt_overwrt']           = 'Écraser le fichier cible';
 $lang['lockedby']              = 'Actuellement bloqué par';
 $lang['lockexpire']            = 'Le blocage expire à';
 $lang['willexpire']            = 'Votre blocage pour modifier cette page expire dans une minute.\nPour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
-$lang['js']['notsavedyet']     = "Les modifications non enregistrées seront perdues.\nVoulez-vous vraiment continuer ?";
-$lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
-$lang['nothingfound']          = 'Pas de réponse.';
-$lang['mediaselect']           = 'Sélection de fichier';
-$lang['fileupload']            = 'Envoi de fichier';
-$lang['uploadsucc']            = 'Téléversement réussi';
-$lang['uploadfail']            = 'Le téléversement n\'a pas réussi. Les permissions sont-elles correctes ?';
-$lang['uploadwrong']           = 'Téléversement refusé. Cette extension de fichier est interdite !';
-$lang['uploadexist']           = 'Le fichier existe. Téléversement avorté.';
-$lang['uploadbadcontent']      = 'Le contenu envoyé ne correspond pas à l\'extension du fichier %s.';
-$lang['uploadspam']            = 'Le téléversement a été bloqué par la liste noire antispam.';
-$lang['uploadxss']             = 'Le téléversement a été bloqué car son contenu est peut-être malveillant.';
-$lang['uploadsize']            = 'Le fichier téléversé était trop gros. (max. %s)';
-$lang['deletesucc']            = 'Le fichier « %s » a été effacé.';
-$lang['deletefail']            = 'Le fichier « %s » n\'a pu être effacé, vérifier les permissions.';
-$lang['mediainuse']            = 'Le fichier « %s » n\'a pas été effacé, il est en cours d\'utilisation.';
-$lang['namespaces']            = 'Catégories';
-$lang['mediafiles']            = 'Fichiers disponibles dans';
+$lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues.
+Voulez-vous vraiment continuer ?';
 $lang['js']['searchmedia']     = 'Chercher des fichiers';
 $lang['js']['keepopen']        = 'Gardez la fenêtre ouverte pendant la sélection';
 $lang['js']['hidedetails']     = 'Masquer détails';
@@ -154,6 +139,23 @@ $lang['js']['linkwiz']         = 'Assistant Lien';
 $lang['js']['linkto']          = 'Lien vers :';
 $lang['js']['del_confirm']     = 'Effacer cette entrée ?';
 $lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
+$lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
+$lang['nothingfound']          = 'Pas de réponse.';
+$lang['mediaselect']           = 'Sélection de fichier';
+$lang['fileupload']            = 'Envoi de fichier';
+$lang['uploadsucc']            = 'Téléversement réussi';
+$lang['uploadfail']            = 'Le téléversement n\'a pas réussi. Les permissions sont-elles correctes ?';
+$lang['uploadwrong']           = 'Téléversement refusé. Cette extension de fichier est interdite !';
+$lang['uploadexist']           = 'Le fichier existe. Téléversement avorté.';
+$lang['uploadbadcontent']      = 'Le contenu envoyé ne correspond pas à l\'extension du fichier %s.';
+$lang['uploadspam']            = 'Le téléversement a été bloqué par la liste noire antispam.';
+$lang['uploadxss']             = 'Le téléversement a été bloqué car son contenu est peut-être malveillant.';
+$lang['uploadsize']            = 'Le fichier téléversé était trop gros. (max. %s)';
+$lang['deletesucc']            = 'Le fichier « %s » a été effacé.';
+$lang['deletefail']            = 'Le fichier « %s » n\'a pu être effacé, vérifier les permissions.';
+$lang['mediainuse']            = 'Le fichier « %s » n\'a pas été effacé, il est en cours d\'utilisation.';
+$lang['namespaces']            = 'Catégories';
+$lang['mediafiles']            = 'Fichiers disponibles dans';
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Afficher le fichier original';
 $lang['mediaroot']             = 'racine';
@@ -288,3 +290,4 @@ $lang['days']                  = 'il y a %d jours';
 $lang['hours']                 = 'il y a %d heures';
 $lang['minutes']               = 'il y a %d minutes';
 $lang['seconds']               = 'il y a %d secondes';
+$lang['wordblock']             = 'Vos modifications n\'ont pas été sauvegardées parce qu\'elles contiennent des textes non autorisé (spam).';
