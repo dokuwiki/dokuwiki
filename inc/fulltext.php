@@ -229,7 +229,13 @@ function ft_pageLookup($id, $not_in_ns=true, $not_in_title=true){
 
 function _ft_pageLookup(&$data){
     // split out original parameters
+
     $id = $data['id'];
+    if (preg_match('/(?:^| )@(\w+)/', $id, $matches)) {
+        $ns = cleanID($matches[1]) . ':';
+        $id = str_replace($matches[0], '', $id);
+    }
+
     $in_ns = !$data['not_in_ns'];
     $in_title = !$data['not_in_title'];
 
@@ -241,8 +247,9 @@ function _ft_pageLookup(&$data){
         $cleaned = cleanID($id);
         $matched_pages = array();
         foreach ($pages as $p_id => $p_title) {
-            if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false) ||
-                ($in_title && stripos($p_title, $id) !== false)) {
+            if (((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false) ||
+                 ($in_title && stripos($p_title, $id) !== false)) &&
+                (!isset($ns) || strpos($p_id, $ns) === 0)) {
                 $matched_pages[$p_id] = $p_title;
             }
         }
