@@ -560,15 +560,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
         global $ID;
 
-        $params = array();
-
-        if (preg_match('/^([^?]*)\?([^?]+)$/', $id, $matches)) {
-            $id = $matches[1];
-            preg_match_all('/(?<=[&^])([^=]+)=([^=]*)(?:&|$)/', $matches[2],
-                           $matches, PREG_SET_ORDER);
-            foreach($matches as &$param) {
-                $params[$param[1]] = $param[2];
-            }
+        $params = '';
+        $parts = explode('?', $id, 2);
+        if (count($parts) === 2) {
+            $id = $parts[0];
+            $params = $parts[1];
         }
 
         // default name is based on $id as given
