@@ -7,9 +7,6 @@
  * @author     Chris Smith <chris@jalakai.co.uk>
  */
 
-define('DOKU_AUTH', dirname(__FILE__));
-require_once(DOKU_AUTH.'/basic.class.php');
-
 define('AUTH_USERFILE',DOKU_CONF.'users.auth.php');
 
 class auth_plain extends auth_basic {

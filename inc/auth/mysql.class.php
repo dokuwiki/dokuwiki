@@ -8,9 +8,6 @@
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
 */
 
-define('DOKU_AUTH', dirname(__FILE__));
-require_once(DOKU_AUTH.'/basic.class.php');
-
 class auth_mysql extends auth_basic {
 
     var $dbcon        = 0;

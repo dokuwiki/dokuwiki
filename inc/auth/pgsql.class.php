@@ -11,8 +11,7 @@
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
 */
 
-define('DOKU_AUTH', dirname(__FILE__));
-require_once(DOKU_AUTH.'/mysql.class.php');
+require_once(DOKU_INC.'inc/auth/mysql.class.php');
 
 class auth_pgsql extends auth_mysql {
 
