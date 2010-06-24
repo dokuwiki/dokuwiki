@@ -1,3 +1,3 @@
-====== Subscription Management ======
+====== Abonnementverwaltung ======
 
-This page allows you to manage your subscriptions for the current page and namespace.
+Hier kannst du deine Abonnements für die aktuelle Seite oder den aktuellen [[doku>Namespaces|Namespace]] verwalten.
