@@ -398,7 +398,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           }
         } else {
           if (!empty($mail)){
-          	return false;
+            return false;
           }
         }
 
@@ -504,6 +504,11 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           } else {
             $changes['user'] = $newuser;
           }
+        }
+
+        // generate password if left empty and notification is on
+        if(!empty($_REQUEST['usernotify']) && empty($newpass)){
+            $newpass = auth_pwgen();
         }
 
         if (!empty($newpass) && $this->_auth->canDo('modPass'))
