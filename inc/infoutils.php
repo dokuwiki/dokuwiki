@@ -100,7 +100,9 @@ function check(){
     global $conf;
     global $INFO;
 
-    msg('DokuWiki version: '.getVersion(),1);
+    if ($INFO['isadmin'] || $INFO['ismanager']){
+        msg('DokuWiki version: '.getVersion(),1);
+    }
 
     if(version_compare(phpversion(),'5.1.2','<')){
         msg('Your PHP version is too old ('.phpversion().' vs. 5.1.2+ needed)',-1);

@@ -4,8 +4,8 @@
 ## global config. Symlinks maybe needed for URL rewriting.
 #Options -Indexes -MultiViews +FollowSymLinks
 
-## make sure nobody gets the htaccess files
-<Files ~ "^[\._]ht">
+## make sure nobody gets the htaccess, README, COPYING or VERSION files
+<Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
     Order allow,deny
     Deny from all
     Satisfy All
