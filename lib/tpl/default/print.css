@@ -21,6 +21,10 @@ a {
   background: none !important;
 }
 
+a.interwiki {
+  padding-left: 0px !important;
+}
+
 
 div.meta {
   clear: both;
