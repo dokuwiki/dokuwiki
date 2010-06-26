@@ -96,7 +96,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         if($_REQUEST['acl_t'] == '__g__' && $who){
             $this->who = '@'.ltrim($auth->cleanGroup($who),'@');
         }elseif($_REQUEST['acl_t'] == '__u__' && $who){
-            $this->who = ltrim($auth->cleanUser($who),'@');
+            $this->who = ltrim($who,'@');
+            if($this->who != '%USER%'){ #keep wildcard as is
+                $this->who = $auth->cleanUser($this->who);
+            }
         }elseif($_REQUEST['acl_t'] &&
                 $_REQUEST['acl_t'] != '__u__' &&
                 $_REQUEST['acl_t'] != '__g__'){
@@ -150,7 +153,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                             if ($who!='@ALL') {
                                 $who = '@'.ltrim($auth->cleanGroup($who),'@');
                             }
-                        } else {
+                        } elseif ($who != '%USER%'){ #keep wildcard as is
                             $who = $auth->cleanUser($who);
                         }
                         $who = auth_nameencode($who,true);
