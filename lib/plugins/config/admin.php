@@ -109,7 +109,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       elseif ($this->_changed)
         ptln('<div class="success">'.$this->getLang('updated').'</div>');
 
-      ptln('<form action="'.wl($ID).'" method="post">');
+      ptln('<form action="'.script().'" method="post">');
       formSecurityToken();
       $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
