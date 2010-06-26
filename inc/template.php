@@ -916,8 +916,13 @@ function tpl_img_getTag($tags,$alt='',$src=null){
  * Prints the image with a link to the full sized version
  *
  * Only allowed in: detail.php
+ *
+ * @param $maxwidth  int - maximal width of the image
+ * @param $maxheight int - maximal height of the image
+ * @param $link bool     - link to the orginal size?
+ * @param $params array  - additional image attributes
  */
-function tpl_img($maxwidth=0,$maxheight=0){
+function tpl_img($maxwidth=0,$maxheight=0,$link=true,$params=null){
     global $IMG;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
@@ -943,12 +948,16 @@ function tpl_img($maxwidth=0,$maxheight=0){
     }
 
     //prepare URLs
-    $url=ml($IMG,array('cache'=>$_REQUEST['cache']));
-    $src=ml($IMG,array('cache'=>$_REQUEST['cache'],'w'=>$w,'h'=>$h));
+    $url=ml($IMG,array('cache'=>$_REQUEST['cache']),true,'&');
+    $src=ml($IMG,array('cache'=>$_REQUEST['cache'],'w'=>$w,'h'=>$h),true,'&');
 
     //prepare attributes
     $alt=tpl_img_getTag('Simple.Title');
-    $p = array();
+    if(is_null($params)){
+        $p = array();
+    }else{
+        $p = $params;
+    }
     if($w) $p['width']  = $w;
     if($h) $p['height'] = $h;
     $p['class']  = 'img_detail';
@@ -958,11 +967,21 @@ function tpl_img($maxwidth=0,$maxheight=0){
     }else{
         $p['alt'] = '';
     }
-    $p = buildAttributes($p);
+    $p['src'] = $src;
 
-    print '<a href="'.$url.'">';
-    print '<img src="'.$src.'" '.$p.'/>';
-    print '</a>';
+    $data = array('url'=>($link?$url:null), 'params'=>$p);
+    return trigger_event('TPL_IMG_DISPLAY',$data,'_tpl_img_action',true);
+}
+
+/**
+ * Default action for TPL_IMG_DISPLAY
+ */
+function _tpl_img_action($data, $param=NULL) {
+    $p = buildAttributes($data['params']);
+
+    if($data['url']) print '<a href="'.hsc($data['url']).'">';
+    print '<img '.$p.'/>';
+    if($data['url']) print '</a>';
     return true;
 }
 
