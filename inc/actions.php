@@ -596,6 +596,9 @@ function act_subscription($act){
     global $INFO;
     global $ID;
 
+    // subcriptions work for logged in users only
+    if(!$_SERVER['REMOTE_USER']) return 'show';
+
     // get and preprocess data.
     $params = array();
     foreach(array('target', 'style', 'action') as $param) {
