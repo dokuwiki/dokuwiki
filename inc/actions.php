@@ -615,8 +615,7 @@ function act_sitemap($act) {
 
     // Check if sitemap file exists, otherwise create it
     if (!is_readable($sitemap)) {
-        require_once DOKU_INC.'inc/sitemap.php';
-        sitemapGenerate();
+        Sitemapper::generate();
     }
 
     if (is_readable($sitemap)) {

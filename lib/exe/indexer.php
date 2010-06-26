@@ -233,8 +233,7 @@ function metaUpdate(){
  */
 function runSitemapper(){
     print "runSitemapper(): started".NL;
-    require_once DOKU_INC.'inc/sitemap.php';
-    $result = sitemapGenerate() && sitemapPingSearchEngines();
+    $result = Sitemapper::generate() && Sitemapper::pingSearchEngines();
     print 'runSitemapper(): finished'.NL;
     return $result;
 }
