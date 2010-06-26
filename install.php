@@ -45,7 +45,8 @@ $dokuwiki_hash = array(
     '2007-06-26'   => 'b3ca19c7a654823144119980be73cd77',
     '2008-05-04'   => '1e5c42eac3219d9e21927c39e3240aad',
     '2009-02-14'   => 'ec8c04210732a14fdfce0f7f6eead865',
-    '2009-12-25' => '993c4b2b385643efe5abf8e7010e11f4',
+    '2009-12-25'   => '993c4b2b385643efe5abf8e7010e11f4',
+    'devel'        => 'f065247541c4041e5f103b41b393fcb3'
 );
 
 
@@ -68,6 +69,7 @@ header('Content-Type: text/html; charset=utf-8');
         fieldset { border: none }
         label { display: block; margin-top: 0.5em; }
         select.text, input.text { width: 30em; margin: 0 0.5em; }
+        a {text-decoration: none}
     </style>
     <script type="text/javascript" language="javascript">
         function acltoggle(){
@@ -150,6 +152,8 @@ function print_form($d){
     global $lang;
     global $LC;
 
+    include(DOKU_CONF.'license.php');
+
     if(!is_array($d)) $d = array();
     $d = array_map('htmlspecialchars',$d);
 
@@ -190,7 +194,24 @@ function print_form($d){
                     <option value="1" <?php echo ($d['policy'] == 1)?'selected="selected"':'' ?>><?php echo $lang['i_pol1']?></option>
                     <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
                 </select>
+
             </fieldset>
+        </fieldset>
+
+        <fieldset>
+            <p><?php echo $lang['i_license']?></p>
+            <?php
+            array_unshift($license,array('name' => 'None', 'url'=>''));
+            if(!isset($d['license'])) $d['license'] = 'cc-by-sa';
+            foreach($license as $key => $lic){
+                echo '<label for="lic_'.$key.'">';
+                echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
+                     (($d['license'] == $key)?'checked="checked"':'').'>';
+                echo htmlspecialchars($lic['name']);
+                if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
+                echo '</label>';
+            }
+            ?>
         </fieldset>
 
     </fieldset>
@@ -281,6 +302,7 @@ function store_data($d){
 EOT;
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
     $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
+    $output .= '$conf[\'license\'] = \''.addslashes($d['license'])."';\n";
     if($d['acl']){
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";

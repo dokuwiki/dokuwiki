@@ -282,6 +282,7 @@ $lang['i_pol1']       = 'Public Wiki (read for everyone, write and upload for re
 $lang['i_pol2']       = 'Closed Wiki (read, write, upload for registered users only)';
 
 $lang['i_retry']      = 'Retry';
+$lang['i_license']    = 'Please choose the license you want to put your content under:';
 
 $lang['mu_intro']     = 'Here you can upload multiple files at once. Click the browse button to add them to the queue. Press upload when done.';
 $lang['js']['mu_btn'] = 'Upload multiple files at once';
