@@ -336,18 +336,22 @@ function html_search(){
     //do quick pagesearch
     $data = array();
 
-    if($id) $data = ft_pageLookup($id);
+    if($id) $data = ft_pageLookup($id,true,useHeading('navigation'));
     if(count($data)){
         print '<div class="search_quickresult">';
         print '<h3>'.$lang['quickhits'].':</h3>';
         print '<ul class="search_quickhits">';
-        foreach($data as $id){
+        foreach($data as $id => $title){
             print '<li> ';
-            $ns = getNS($id);
-            if($ns){
-                $name = shorten(noNS($id), ' ('.$ns.')',30);
+            if (useHeading('navigation')) {
+                $name = $title;
             }else{
-                $name = $id;
+                $ns = getNS($id);
+                if($ns){
+                    $name = shorten(noNS($id), ' ('.$ns.')',30);
+                }else{
+                    $name = $id;
+                }
             }
             print html_wikilink(':'.$id,$name);
             print '</li> ';

@@ -54,7 +54,7 @@ function ajax_qsearch(){
   if(empty($query)) $query = $_GET['q'];
   if(empty($query)) return;
 
-  $data = ft_pageLookup($query, true, false);
+  $data = ft_pageLookup($query, true, useHeading('navigation'));
 
   if(!count($data)) return;
 
@@ -93,6 +93,7 @@ function ajax_suggestions() {
   $data = array();
   $data = ft_pageLookup($query);
   if(!count($data)) return;
+  $data = array_keys($data);
 
   // limit results to 15 hits
   $data = array_slice($data, 0, 15);
@@ -252,26 +253,27 @@ function ajax_linkwiz(){
 
     // use index to lookup matching pages
     $pages = array();
-    $pages = ft_pageLookup($id,false);
+    $pages = ft_pageLookup($id,true);
 
     // result contains matches in pages and namespaces
     // we now extract the matching namespaces to show
     // them seperately
     $dirs  = array();
-    $count = count($pages);
-    for($i=0; $i<$count; $i++){
-      if(strpos(noNS($pages[$i]),$id) === false){
+
+
+    foreach($pages as $pid => $title){
+      if(strpos(noNS($pid),$id) === false){
         // match was in the namespace
-        $dirs[getNS($pages[$i])] = 1; // assoc array avoids dupes
+        $dirs[getNS($pid)] = 1; // assoc array avoids dupes
       }else{
         // it is a matching page, add it to the result
         $data[] = array(
-          'id'    => $pages[$i],
-          'title' => p_get_first_heading($pages[$i],false),
+          'id'    => $pid,
+          'title' => $title,
           'type'  => 'f',
         );
       }
-      unset($pages[$i]);
+      unset($pages[$pid]);
     }
     foreach($dirs as $dir => $junk){
       $data[] = array(

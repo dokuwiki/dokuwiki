@@ -215,29 +215,29 @@ function ft_mediause($id,$max){
  * By default it only matches the pagename and ignores the
  * namespace. This can be changed with the second parameter.
  * The third parameter allows to search in titles as well.
- * If the function should search in titles as well, the return array
- * has the ids as key and the titles as value.
  *
- * refactored into ft_pageLookup(), _ft_pageLookup() and trigger_event()
+ * The function always returns titles as well
  *
+ * @triggers SEARCH_QUERY_PAGELOOKUP
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Adrian Lang <lang@cosmocode.de>
  */
-function ft_pageLookup($id, $not_in_ns=true, $not_in_title=true){
-    $data = compact('id', 'not_in_ns', 'not_in_title');
+function ft_pageLookup($id, $in_ns=false, $in_title=false){
+    $data = compact('id', 'in_ns', 'in_title');
+    $data['has_titles'] = true; // for plugin backward compatibility check
     return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
 function _ft_pageLookup(&$data){
     // split out original parameters
-
     $id = $data['id'];
     if (preg_match('/(?:^| )@(\w+)/', $id, $matches)) {
         $ns = cleanID($matches[1]) . ':';
         $id = str_replace($matches[0], '', $id);
     }
 
-    $in_ns = !$data['not_in_ns'];
-    $in_title = !$data['not_in_title'];
+    $in_ns    = $data['in_ns'];
+    $in_title = $data['in_title'];
 
     $pages  = array_map('rtrim', idx_getIndex('page', ''));
     $titles = array_map('rtrim', idx_getIndex('title', ''));
@@ -267,7 +267,7 @@ function _ft_pageLookup(&$data){
     }
 
     uasort($pages,'ft_pagesorter');
-    return $in_title ? $pages : array_keys($pages);
+    return $pages;
 }
 
 /**
