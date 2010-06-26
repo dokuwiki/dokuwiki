@@ -253,7 +253,18 @@ function rss_buildItems(&$rss,&$data,$opt){
             $item->author = '';
             if($user && $conf['useacl'] && $auth){
                 $userInfo = $auth->getUserData($user);
-                $item->author = $userInfo['name'];
+                if ($userInfo){
+                    switch ($conf['showuseras']){
+                        case 'username':
+                            $item->author = $userInfo['name'];
+                            break;
+                        default:
+                            $item->author = $user;
+                            break;
+                    }
+                } else {
+                    $item->author = $user;
+                }
                 if($userInfo && !$opt['guardmail']){
                     $item->authorEmail = $userInfo['mail'];
                 }else{
