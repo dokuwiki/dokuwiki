@@ -197,6 +197,7 @@ $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
+$meta['proxy____except'] = array('string');
 $meta['safemodehack'] = array('onoff');
 $meta['ftp____host']  = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['ftp____port']  = array('numericopt');

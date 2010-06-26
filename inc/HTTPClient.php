@@ -29,11 +29,12 @@ class DokuHTTPClient extends HTTPClient {
         $this->HTTPClient();
 
         // set some values from the config
-        $this->proxy_host = $conf['proxy']['host'];
-        $this->proxy_port = $conf['proxy']['port'];
-        $this->proxy_user = $conf['proxy']['user'];
-        $this->proxy_pass = conf_decodeString($conf['proxy']['pass']);
-        $this->proxy_ssl  = $conf['proxy']['ssl'];
+        $this->proxy_host   = $conf['proxy']['host'];
+        $this->proxy_port   = $conf['proxy']['port'];
+        $this->proxy_user   = $conf['proxy']['user'];
+        $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
+        $this->proxy_ssl    = $conf['proxy']['ssl'];
+        $this->proxy_except = $conf['proxy']['except'];
     }
 
 
@@ -105,6 +106,7 @@ class HTTPClient {
     var $proxy_user;
     var $proxy_pass;
     var $proxy_ssl; //boolean set to true if your proxy needs SSL
+    var $proxy_except; // regexp of URLs to exclude from proxy
 
     // what we use as boundary on multipart/form-data posts
     var $boundary = '---DokuWikiHTTPClient--4523452351';
@@ -202,7 +204,7 @@ class HTTPClient {
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
         // proxy setup
-        if($this->proxy_host){
+        if($this->proxy_host && (!$this->proxy_except || !preg_match('/'.$this->proxy_except.'/i',$url)) ){
             $request_url = $url;
             $server      = $this->proxy_host;
             $port        = $this->proxy_port;

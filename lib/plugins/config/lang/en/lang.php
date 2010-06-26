@@ -157,11 +157,12 @@ $lang['target____media']     = 'Target window for media links';
 $lang['target____windows']   = 'Target window for windows links';
 
 /* Proxy Options */
-$lang['proxy____host'] = 'Proxy servername';
-$lang['proxy____port'] = 'Proxy port';
-$lang['proxy____user'] = 'Proxy user name';
-$lang['proxy____pass'] = 'Proxy password';
-$lang['proxy____ssl']  = 'Use ssl to connect to Proxy';
+$lang['proxy____host']    = 'Proxy servername';
+$lang['proxy____port']    = 'Proxy port';
+$lang['proxy____user']    = 'Proxy user name';
+$lang['proxy____pass']    = 'Proxy password';
+$lang['proxy____ssl']     = 'Use SLL to connect to proxy';
+$lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped for.';
 
 /* Safemode Hack */
 $lang['safemodehack'] = 'Enable safemode hack';

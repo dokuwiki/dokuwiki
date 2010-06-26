@@ -142,11 +142,12 @@ $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 
 //Proxy setup - if your Server needs a proxy to access the web set these
-$conf['proxy']['host'] = '';
-$conf['proxy']['port'] = '';
-$conf['proxy']['user'] = '';
-$conf['proxy']['pass'] = '';
-$conf['proxy']['ssl']  = 0;
+$conf['proxy']['host']    = '';
+$conf['proxy']['port']    = '';
+$conf['proxy']['user']    = '';
+$conf['proxy']['pass']    = '';
+$conf['proxy']['ssl']     = 0;
+$conf['proxy']['except']  = '';
 
 /* Safemode Hack */
 
