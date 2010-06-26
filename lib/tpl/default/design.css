@@ -91,7 +91,10 @@ div.dokuwiki textarea.edit {
   background-color: __background__;
   border: 1px solid __border__;
   padding: 0.3em 0 0 0.3em;
-  width: 100%;
+  /* should just be "width: 100%", but IE8 doesn't like it, see FS#1910 + FS#1667 */
+  width: 700px;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 /* nice alphatransparency background except for IE <7 */
