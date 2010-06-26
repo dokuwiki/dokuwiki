@@ -304,8 +304,7 @@ function init_paths(){
 function init_files(){
     global $conf;
 
-    $files = array( $conf['indexdir'].'/page.idx',
-                    $conf['indexdir'].'/title.idx');
+    $files = array($conf['indexdir'].'/page.idx');
 
     foreach($files as $file){
         if(!@file_exists($file)){
@@ -316,6 +315,22 @@ function init_files(){
             }else{
                 nice_die("$file is not writable. Check your permissions settings!");
             }
+        }
+    }
+
+    # create title index (needs to have same length as page.idx)
+    $file = $conf['indexdir'].'/title.idx';
+    if(!@file_exists($file)){
+        $pages = file($conf['indexdir'].'/page.idx');
+        $pages = count($pages);
+        $fh = @fopen($file,'a');
+        if($fh){
+            for($i=0; $i<$pages; $i++){
+                fwrite($fh,"\n");
+            }
+            fclose($fh);
+        }else{
+            nice_die("$file is not writable. Check your permissions settings!");
         }
     }
 }
