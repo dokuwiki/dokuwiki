@@ -69,6 +69,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $AUTH_ACL;
         global $ID;
         global $auth;
+        global $config_cascade;
 
         // fresh 1:1 copy without replacements
         $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
@@ -161,11 +162,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                     }
                 }
                 // save it
-                io_saveFile(DOKU_CONF.'acl.auth.php', join('',$lines));
+                io_saveFile($config_cascade['acl']['default'], join('',$lines));
             }
 
             // reload ACL config
-            $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+            $AUTH_ACL = file($config_cascade['acl']['default']);
         }
 
         // initialize ACL array
@@ -696,7 +697,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Frank Schubert <frank@schokilade.de>
      */
     function _acl_add($acl_scope, $acl_user, $acl_level){
-        $acl_config = file_get_contents(DOKU_CONF.'acl.auth.php');
+        global $config_cascade;
+        $acl_config = file_get_contents($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
         // max level for pagenames is edit
@@ -718,7 +720,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Frank Schubert <frank@schokilade.de>
      */
     function _acl_del($acl_scope, $acl_user){
-        $acl_config = file(DOKU_CONF.'acl.auth.php');
+        global $config_cascade;
+        $acl_config = file($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
         $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
