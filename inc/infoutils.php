@@ -16,6 +16,7 @@ if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki
 function checkUpdateMessages(){
     global $conf;
     global $INFO;
+    global $updateVersion;
     if(!$conf['updatecheck']) return;
     if($conf['useacl'] && !$INFO['ismanager']) return;
 
@@ -23,12 +24,10 @@ function checkUpdateMessages(){
     $lm = @filemtime($cf);
 
     // check if new messages needs to be fetched
-    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_CONF.'msg')){
-        $num = @file(DOKU_CONF.'msg');
-        $num = is_array($num) ? (int) $num[0] : 0;
+    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.'doku.php')){
         $http = new DokuHTTPClient();
         $http->timeout = 8;
-        $data = $http->get(DOKU_MESSAGEURL.$num);
+        $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
     }else{
         $data = io_readFile($cf);

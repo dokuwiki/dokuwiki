@@ -6,6 +6,9 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+// update message version
+$updateVersion = 25;
+
 //  xdebug_start_profiling();
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
