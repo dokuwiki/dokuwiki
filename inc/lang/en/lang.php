@@ -119,6 +119,7 @@ $lang['deletefail']  = '"%s" couldn\'t be deleted - check permissions.';
 $lang['mediainuse']  = 'The file "%s" hasn\'t been deleted - it is still in use.';
 $lang['namespaces']  = 'Namespaces';
 $lang['mediafiles']  = 'Available files in';
+$lang['accessdenied'] = 'You are not allowed to view this page.';
 
 $lang['js']['searchmedia']    = 'Search for files';
 $lang['js']['keepopen']    = 'Keep window open on selection';

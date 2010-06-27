@@ -35,6 +35,7 @@ function auth_setup(){
     global $auth;
     global $AUTH_ACL;
     global $lang;
+    global $config_cascade;
     $AUTH_ACL = array();
 
     if(!$conf['useacl']) return false;
@@ -102,8 +103,8 @@ function auth_setup(){
     }
 
     //load ACL into a global array XXX
-    if(is_readable(DOKU_CONF.'acl.auth.php')){
-        $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+    if(is_readable($config_cascade['acl']['default'])){
+        $AUTH_ACL = file($config_cascade['acl']['default']);
         //support user wildcard
         if(isset($_SERVER['REMOTE_USER'])){
             $AUTH_ACL = str_replace('%USER%',$_SERVER['REMOTE_USER'],$AUTH_ACL);
