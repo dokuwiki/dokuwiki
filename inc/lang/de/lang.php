@@ -103,8 +103,7 @@ $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['lockedby']              = 'Momentan gesperrt von';
 $lang['lockexpire']            = 'Sperre läuft ab am';
 $lang['willexpire']            = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
-$lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!
-Weitermachen?';
+$lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
 $lang['js']['searchmedia']     = 'Suche Dateien';
 $lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
 $lang['js']['hidedetails']     = 'Details ausblenden';
