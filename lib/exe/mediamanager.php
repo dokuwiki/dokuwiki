@@ -34,6 +34,12 @@
     // check auth
     $AUTH = auth_quickaclcheck("$NS:*");
 
+    // do not display the manager if user does not have read access
+    if($AUTH < AUTH_READ) {
+        header('HTTP/1.0 403 Forbidden');
+        die($lang['accessdenied']);
+    }
+
     // create the given namespace (just for beautification)
     if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
 
