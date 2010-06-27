@@ -692,6 +692,7 @@ div.insitu-footnote {
   text-align: left;
   padding: 4px;
   max-width: 40%;    /* IE's width is handled in javascript */
+  min-width: 5em;
 }
 
 /* overcome IE issue with one line code or file boxes which require h. scrolling */
