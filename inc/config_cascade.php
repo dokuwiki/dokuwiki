@@ -47,6 +47,15 @@ $config_cascade = array(
             'default'   => array(DOKU_CONF.'wordblock.conf'),
             'local'     => array(DOKU_CONF.'wordblock.local.conf'),
             ),
+        'userstyle' => array(
+            'default' => DOKU_CONF.'userstyle.css',
+            'print'   => DOKU_CONF.'printstyle.css',
+            'feed'    => DOKU_CONF.'feedstyle.css',
+            'all'     => DOKU_CONF.'allstyle.css',
+            ),
+        'userscript' => array(
+            'default' => DOKU_CONF.'userscript.js'
+            ),
         'acl'       => array(
             'default'   => DOKU_CONF.'acl.auth.php',
             ),

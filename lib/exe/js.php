@@ -29,6 +29,7 @@ if(!defined('SIMPLE_TEST')){
 function js_out(){
     global $conf;
     global $lang;
+    global $config_cascade;
 
     // The generated script depends on some dynamic options
     $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
@@ -56,7 +57,9 @@ function js_out(){
 
     // add possible plugin scripts and userscript
     $files   = array_merge($files,js_pluginscripts());
-    $files[] = DOKU_CONF.'userscript.js';
+    if(isset($config_cascade['userscript']['default'])){
+        $files[] = $config_cascade['userscript']['default'];
+    }
 
     // check cache age & handle conditional request
     header('Cache-Control: public, max-age=3600');
