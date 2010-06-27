@@ -61,7 +61,7 @@ if($conf['allowdebug'] && $ACT == 'debug'){
 //send 404 for missing pages if configured or ID has special meaning to bots
 if(!$INFO['exists'] &&
   ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/',$ID)) &&
-  ($ACT == 'show' || substr($ACT,0,7) == 'export_') ){
+  ($ACT == 'show' || (!is_array($ACT) && substr($ACT,0,7) == 'export_')) ){
     header('HTTP/1.0 404 Not Found');
 }
 

@@ -156,7 +156,7 @@ function ajax_lock(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_draftdel(){
-  $id = cleanID($_POST['id']);
+  $id = cleanID($_REQUEST['id']);
   if(empty($id)) return;
 
   $client = $_SERVER['REMOTE_USER'];
