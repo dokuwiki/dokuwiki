@@ -991,6 +991,12 @@ function html_diff($text='',$intro=true){
 
     $tdf = new TableDiffFormatter();
     if($intro) print p_locale_xhtml('diff');
+
+    if (!$text) {
+        ptln('<div class="level1"><p>');
+        ptln('  <a class="wikilink1" href="'.wl($ID, 'do=diff&rev2[]='.$l_rev.'&rev2[]='.$r_rev).'">'.$lang['difflink'].'</a>');
+        ptln('</p></div>');
+    }
     ?>
     <table class="diff">
     <tr>

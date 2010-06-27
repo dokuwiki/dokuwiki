@@ -163,6 +163,7 @@ $lang['current']    = 'current';
 $lang['yours']      = 'Your Version';
 $lang['diff']       = 'Show differences to current revisions';
 $lang['diff2']      = 'Show differences between selected revisions';
+$lang['difflink']   = 'Link to this diff output';
 $lang['line']       = 'Line';
 $lang['breadcrumb'] = 'Trace';
 $lang['youarehere'] = 'You are here';
