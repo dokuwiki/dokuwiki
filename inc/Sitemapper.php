@@ -33,40 +33,47 @@ class Sitemapper {
         }
 
         if(@filesize($sitemap) &&
-            @filemtime($sitemap) > (time()-($conf['sitemap']*60*60*24))){
-                dbglog('runSitemapper(): Sitemap up to date');
-                return false;
-            }
+           @filemtime($sitemap) > (time()-($conf['sitemap']*60*60*24))){
+            dbglog('runSitemapper(): Sitemap up to date');
+            return false;
+        }
 
         $pages = idx_getIndex('page', '');
         dbglog('runSitemapper(): creating sitemap using '.count($pages).' pages');
+        $items = array();
 
-        // build the sitemap
+        // build the sitemap items
+        foreach($pages as $id){
+            //skip hidden, non existing and restricted files
+            if(isHiddenPage($id)) continue;
+            if(auth_aclcheck($id,'','') < AUTH_READ) continue;
+            $items[] = SitemapItem::createFromID($id);
+        }
+
+        $eventData = array('items' => &$items, 'sitemap' => &$sitemap);
+        $event = new Doku_Event('SITEMAP_GENERATE', $eventData);
+        if ($event->advise_before(true)) {
+            //save the new sitemap
+            $result = io_saveFile($sitemap, Sitemapper::getXML($items));
+        }
+        $event->advise_after();
+
+        return $result;
+    }
+
+    private function getXML($items) {
         ob_start();
         print '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         print '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
-        foreach($pages as $id){
-            $id = trim($id);
-            $file = wikiFN($id);
-
-            //skip hidden, non existing and restricted files
-            if(isHiddenPage($id)) continue;
-            $date = @filemtime($file);
-            if(!$date) continue;
-            if(auth_aclcheck($id,'','') < AUTH_READ) continue;
-
-            print '  <url>'.NL;
-            print '    <loc>'.wl($id,'',true).'</loc>'.NL;
-            print '    <lastmod>'.date_iso8601($date).'</lastmod>'.NL;
-            print '  </url>'.NL;
+        foreach ($items as $item) {
+            print $item->toXML();
         }
         print '</urlset>'.NL;
-        $data = ob_get_contents();
+        $result = ob_get_contents();
         ob_end_clean();
-
-        //save the new sitemap
-        return io_saveFile($sitemap,$data);
+        return $result;
     }
+
 
     public function getFilePath() {
         global $conf;
@@ -91,13 +98,50 @@ class Sitemapper {
             'microsoft' => 'http://www.bing.com/webmaster/ping.aspx?siteMap='.$encoded_sitemap_url,
         );
 
-        foreach ($ping_urls as $name => $url) {
-            dbglog("sitemapPingSearchEngines(): pinging $name");
-            $resp = $http->get($url);
-            if($http->error) dbglog("runSitemapper(): $http->error");
-            dbglog('runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)));
+        $event = new Doku_Event('SITEMAP_PING', $ping_urls);
+        if ($event->advise_before(true)) {
+            foreach ($ping_urls as $name => $url) {
+                dbglog("sitemapPingSearchEngines(): pinging $name");
+                $resp = $http->get($url);
+                if($http->error) dbglog("runSitemapper(): $http->error");
+                dbglog('runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)));
+            }
         }
+        $event->advise_after();
 
         return true;
+    }
+}
+
+class SitemapItem {
+    public $url;
+    public $lastmod;
+    public $changefreq;
+    public $priority;
+
+    public function __construct($url, $lastmod, $changefreq = null, $priority = null) {
+        $this->url = $url;
+        $this->lastmod = $lastmod;
+        $this->changefreq = $changefreq;
+        $this->priority = $priority;
+    }
+
+    public static function createFromID($id, $changefreq = null, $priority = null) {
+        $id = trim($id);
+        $date = @filemtime(wikiFN($id));
+        if(!$date) return NULL;
+        return new SitemapItem(wl($id, '', true), $date, $changefreq, $priority);
+    }
+
+    public function toXML() {
+        $result = '  <url>'.NL;
+        $result .= '    <loc>'.hsc($this->url).'</loc>'.NL;
+        $result .= '    <lastmod>'.date_iso8601($this->lastmod).'</lastmod>'.NL;
+        if ($this->changefreq !== NULL)
+            $result .= '    <changefreq>'.hsc($this->changefreq).'</changefreq>'.NL;
+        if ($this->priority !== NULL)
+            $result .= '    <priority>'.hsc($this->priority).'</priority>'.NL;
+        $result .= '  </url>'.NL;
+        return $result;
     }
 }
