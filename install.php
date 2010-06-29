@@ -255,7 +255,7 @@ function check_data(&$d){
         $ok      = false;
     }
     if($d['acl']){
-        if(!preg_match('/^[a-z1-9_]+$/',$d['superuser'])){
+        if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
             $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
             $ok      = false;
         }
