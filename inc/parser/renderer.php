@@ -271,20 +271,12 @@ class Doku_Renderer extends DokuWiki_Plugin {
         list($name,$hash) = explode('#',$name,2);
         if($hash) return $hash;
 
-        //trim colons or slash of a namespace link
-        $name = rtrim($name,':');
-        if($conf['useslash'])
-          $name = rtrim($name,'/');
-
+        $name = strtr($name,';',':');
         if($conf['useslash']){
-            $nssep = '[:;/]';
-        }else{
-            $nssep = '[:;]';
+            $name = strtr($name,'/',':');
         }
-        $name = preg_replace('!.*'.$nssep.'!','',$name);
 
-        if(!$name) return $this->_simpleTitle($conf['start']);
-        return $name;
+        return noNSorNS($name);
     }
 
     /**

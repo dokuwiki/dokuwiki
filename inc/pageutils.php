@@ -185,10 +185,10 @@ function noNSorNS($id) {
     global $conf;
 
     $p = noNS($id);
-    if ($p == $conf['start']) {
+    if ($p == $conf['start'] || $p == false) {
         $p = curNS($id);
         if ($p == false) {
-            return noNS($id);
+            return $conf['start'];
         }
     }
     return $p;
