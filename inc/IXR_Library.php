@@ -136,6 +136,7 @@ class IXR_Message {
     var $_value;
     var $_currentTag;
     var $_currentTagContents;
+    var $_lastseen;
     // The XML parser
     var $_parser;
     function IXR_Message ($message) {
@@ -194,6 +195,7 @@ class IXR_Message {
                 $this->_arraystructs[] = array();
                 break;
         }
+        $this->_lastseen = $tag;
     }
     function cdata($parser, $cdata) {
         $this->_currentTagContents .= $cdata;
@@ -225,9 +227,11 @@ class IXR_Message {
                 break;
             case 'value':
                 // "If no type is indicated, the type is string."
-                $value = (string)$this->_currentTagContents;
-                $this->_currentTagContents = '';
-                $valueFlag = true;
+                if($this->_lastseen == 'value'){
+                    $value = (string)$this->_currentTagContents;
+                    $this->_currentTagContents = '';
+                    $valueFlag = true;
+                }
                 break;
             case 'boolean':
                 $value = (boolean)trim($this->_currentTagContents);
@@ -278,6 +282,7 @@ class IXR_Message {
                 $this->params[] = $value;
             }
         }
+        $this->_lastseen = $tag;
     }
 }
 
