@@ -906,7 +906,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $lang;
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
-        $this->doc .= '<div class="table"><table class="inline ' . $this->startSectionEdit($pos, 'table') . '">'.DOKU_LF;
+        $this->doc .= '<div class="table ' . $this->startSectionEdit($pos, 'table') . '"><table class="inline">'.DOKU_LF;
     }
 
     function table_close($pos){
