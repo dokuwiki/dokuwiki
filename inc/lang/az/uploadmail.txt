@@ -1,0 +1,15 @@
+Sizin DokuWiki-yə fayl yuklənildi. Ətraflı məlumat:
+
+Fayl        : @MEDIA@
+Tarix       : @DATE@
+Brauzer     : @BROWSER@
+IP Adres    : @IPADDRESS@
+Host        : @HOSTNAME@
+Həcm        : @SIZE@
+MIME Növ    : @MIME@
+İstifadəçi  : @USER@
+
+-- 
+Bu məktub DokuWiki tərəfindən yaradıldı.
+DokuWiki aşağıdakı adresdə yerləşir:
+@DOKUWIKIURL@

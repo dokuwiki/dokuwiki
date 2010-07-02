@@ -1,0 +1,5 @@
+====== Qaralama tapılıb ======
+
+Bu səhifənin son düzəlişi düzgün başa çatdırılmamışdir. Düzəliş zamanı qaralama avtomatik yadda saxlanılmışdır. İndi Siz onu açıb düzəlişi davam edə bilərsiniz. Qaralama versiyası aşağıda göstərilib.
+
+İtmiş versiyanı //qaytarmaq//, qaralamanı //silmək//, və ya düzəlişi //imtina// etmək istədiyinizi təyin edin.

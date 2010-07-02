@@ -1,0 +1,1 @@
+Səhifədə düzəliş edin və ''Yadda Saxla'' düyməsini sıxın. Sintaksis ilə tanış olmaq üçün [[wiki:syntax]] səhifəsini oxuyun. Ançaq səhifəni **daha yaxşı** etməki istədiyiniz halda düzəliş etməyinizi xahiş edirik. Əgər Siz nəyi isə ancaq test etmək istəyirsiniz sə, onda [[playground:playground]] xüsusi səhifədən istifadə edin.

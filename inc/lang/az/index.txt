@@ -1,0 +1,4 @@
+====== Mündəricat ======
+
+Burada mövcud olan səhifələr Namespace-lərə ([[doku>namespaces|namespaces]]) görə sıralanmış halda göstərilib.
+

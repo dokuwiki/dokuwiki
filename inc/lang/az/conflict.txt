@@ -1,0 +1,5 @@
+====== Daha yeni versiya var ======
+
+Düzəliş etdiyiniz sənədin daha yeni versiyası var. Siz və başqa istifadəçi eyni zamanda eyni sənədi düzəliş edən zaman belə vəziyyət yaranır.
+
+Aşağıda göstərilən fərqlər ilə tanış olun və lazım olan versiyanı təyin edin. Əgər ''Yadda Saxla'' düyməsini sıxsanız, onda sizin versiya seçilmiş olur. ''İmtina'' düyməsini sıxsanız isə onda hazırki versiya seçilmiş olur.
