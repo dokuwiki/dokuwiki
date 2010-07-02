@@ -12,6 +12,7 @@
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus@kinnerup.com
+ * @author Michael Pedersen subben@gmail.com
  */
 $lang['encoding']              = 'ISO 8859-1 ';
 $lang['direction']             = 'ltr';
@@ -98,7 +99,36 @@ $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
 $lang['lockedby']              = 'Midlertidig låst af';
 $lang['lockexpire']            = 'Lås udløber kl.';
 $lang['willexpire']            = 'Din lås på dette dokument udløber om et minut.\nTryk på Forhåndsvisning-knappen for at undgå konflikter.';
-$lang['notsavedyet']           = 'Der er lavet ændringer i dokumentet. Hvis du fortsætter vil ændringerne gå tabt.\nØnsker du at fortsætte?';
+$lang['js']['notsavedyet']     = 'Ugemte ændringer vil blive mistet
+Fortsæt alligevel?';
+$lang['js']['searchmedia']     = 'Søg efter filer';
+$lang['js']['keepopen']        = 'Hold vindue åbent ved valg';
+$lang['js']['hidedetails']     = 'Skjul detaljer';
+$lang['js']['mediatitle']      = 'Link indstillinger';
+$lang['js']['mediadisplay']    = 'Link type';
+$lang['js']['mediaalign']      = 'Juster';
+$lang['js']['mediasize']       = 'Billede størrelse';
+$lang['js']['mediaclose']      = 'Luk';
+$lang['js']['mediainsert']     = 'Indsæt';
+$lang['js']['mediadisplayimg'] = 'Vis billedet';
+$lang['js']['mediadisplaylnk'] = 'Vis kun linket';
+$lang['js']['mediasmall']      = 'Lille version';
+$lang['js']['mediamedium']     = 'Medium version';
+$lang['js']['medialarge']      = 'Stor version';
+$lang['js']['mediaoriginal']   = 'Original version';
+$lang['js']['mediadirect']     = 'Direkte link til originalen';
+$lang['js']['medianolnk']      = 'Intet link';
+$lang['js']['medianolink']     = 'Link ikke billedet';
+$lang['js']['medialeft']       = 'Juster billedet til venstre';
+$lang['js']['mediaright']      = 'Juster billedet til højre';
+$lang['js']['mediacenter']     = 'Centreret';
+$lang['js']['medianoalign']    = 'Brug ingen justering';
+$lang['js']['nosmblinks']      = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.
+Du kan stadig kopiere og indsætte linket.';
+$lang['js']['linkwiz']         = 'guiden til henvisninger';
+$lang['js']['linkto']          = 'Henvise til:';
+$lang['js']['del_confirm']     = 'Slet valgte post(er)?';
+$lang['js']['mu_btn']          = 'Overføre flere filer på en gang';
 $lang['rssfailed']             = 'Der opstod en fejl ved indhentning af: ';
 $lang['nothingfound']          = 'Søgningen gav intet resultat.';
 $lang['mediaselect']           = 'Vælg mediefil';
@@ -116,15 +146,6 @@ $lang['deletefail']            = '"%s" kunne ikke slettes - check rettighederne.
 $lang['mediainuse']            = 'Filen "%s" er ikke slettet - den er stadig i brug.';
 $lang['namespaces']            = 'Navnerum';
 $lang['mediafiles']            = 'Tilgængelige filer i';
-$lang['js']['searchmedia']     = 'Søg efter filer';
-$lang['js']['keepopen']        = 'Hold vindue åbent ved valg';
-$lang['js']['hidedetails']     = 'Skjul detaljer';
-$lang['js']['nosmblinks']      = 'Henvisninger til Windows shares virker kun i Microsoft Internet Explorer.
-Du kan stadig kopiere og indsætte linket.';
-$lang['js']['linkwiz']         = 'guiden til henvisninger';
-$lang['js']['linkto']          = 'Henvise til:';
-$lang['js']['del_confirm']     = 'Slet valgte post(er)?';
-$lang['js']['mu_btn']          = 'Overføre flere filer på en gang';
 $lang['mediausage']            = 'Brug den følgende syntaks til at henvise til denne fil:';
 $lang['mediaview']             = 'Vis oprindelig fil';
 $lang['mediaroot']             = 'rod';
@@ -197,6 +218,13 @@ $lang['img_copyr']             = 'Ophavsret';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Emneord';
+$lang['subscr_subscribe_success'] = 'Tilføjede %s til abonnement listen for %s';
+$lang['subscr_subscribe_error'] = 'Fejl ved tilføjelse af %s til abonnement listen for %s';
+$lang['subscr_unsubscribe_success'] = 'Fjernede %s fra abonnement listen for %s';
+$lang['subscr_unsubscribe_error'] = 'Fejl ved fjernelse af %s fra abonnement listen for %s';
+$lang['subscr_m_receive']      = 'Modtag';
+$lang['subscr_style_every']    = 'email på hver ændring';
+$lang['subscr_style_list']     = 'list af ændrede sider siden sidste email (hver %.2f dage)';
 $lang['authmodfailed']         = 'Fejl i brugervalideringens konfiguration. Kontakt venligst wikiens administrator.';
 $lang['authtempfail']          = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
 $lang['i_chooselang']          = 'Vælg dit sprog';
@@ -222,6 +250,7 @@ $lang['i_pol0']                = 'Åben Wiki (alle kan læse, skrive og uploade)
 $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrerede brugere kan skrive og overføre)';
 $lang['i_pol2']                = 'Lukket Wiki (kun for registerede brugere kan læse, skrive og overføre)';
 $lang['i_retry']               = 'Forsøg igen';
+$lang['i_license']             = 'Vælg venligst licensen du vil tilføje dit indhold under:';
 $lang['mu_intro']              = 'Her kan du overføre flere filer af gangen. Klik på gennemse for at tilføje dem til køen. Tryk på overføre knappen når du er klar.';
 $lang['mu_gridname']           = 'Filnavn';
 $lang['mu_gridsize']           = 'Størrelse';

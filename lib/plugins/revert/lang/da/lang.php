@@ -8,6 +8,7 @@
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus@kinnerup.com
+ * @author Michael Pedersen subben@gmail.com
  */
 $lang['menu']                  = 'Gendannelsesstyring';
 $lang['filter']                = 'Søg efter uønskede sider';

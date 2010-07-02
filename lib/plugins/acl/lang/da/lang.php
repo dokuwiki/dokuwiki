@@ -12,6 +12,7 @@
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus@kinnerup.com
+ * @author Michael Pedersen subben@gmail.com
  */
 $lang['admin_acl']             = 'Rettighedsadministration';
 $lang['acl_group']             = 'Gruppe';
