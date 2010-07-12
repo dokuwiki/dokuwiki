@@ -10,6 +10,7 @@
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
+ * @author George Petsagourakis <petsagouris@gmail.com>
  */
 $lang['menu']                  = 'Ρυθμίσεις';
 $lang['error']                 = 'Οι ρυθμίσεις σας δεν έγιναν δεκτές λόγω λανθασμένης τιμής κάποιας ρύθμισης. Διορθώστε την λάθος τιμή και προσπαθήστε ξανά.
@@ -98,6 +99,7 @@ $lang['useslash']              = 'Χρήση slash σαν διαχωριστικ
 $lang['usedraft']              = 'Αυτόματη αποθήκευση αντιγράφων κατά την τροποποίηση σελίδων';
 $lang['sepchar']               = 'Διαχωριστικός χαρακτήρας για κανονικοποίηση ονόματος σελίδας';
 $lang['canonical']             = 'Πλήρη και κανονικοποιημένα URLs';
+$lang['fnencode']              = 'Μέθοδος κωδικοποίησης για ονόματα αρχείων μη-ASCII';
 $lang['autoplural']            = 'Ταίριασμα πληθυντικού στους συνδέσμους';
 $lang['compression']           = 'Μέθοδος συμπίεσης για αρχεία attic';
 $lang['cachetime']             = 'Μέγιστη ηλικία cache (sec)';
@@ -111,6 +113,7 @@ $lang['gdlib']                 = 'Έκδοση βιβλιοθήκης GD';
 $lang['im_convert']            = 'Διαδρομή προς το εργαλείο μετατροπής εικόνων του ImageMagick';
 $lang['jpg_quality']           = 'Ποιότητα συμπίεσης JPG (0-100)';
 $lang['subscribers']           = 'Να επιτρέπεται η εγγραφή στην ενημέρωση αλλαγών σελίδας';
+$lang['subscribe_time']        = 'Χρόνος μετά τον οποίο οι λίστες ειδοποιήσεων και τα συνοπτικά θα αποστέλλονται (δευτερόλεπτα). Αυτό θα πρέπει να είναι μικρότερο από τον χρόνο που έχει η ρύθμιση recent_days.';
 $lang['compress']              = 'Συμπίεση αρχείων CSS και javascript';
 $lang['hidepages']             = 'Φίλτρο απόκρυψης σελίδων (regular expressions)';
 $lang['send404']               = 'Αποστολή "HTTP 404/Page Not Found" για σελίδες που δεν υπάρχουν';
@@ -137,6 +140,7 @@ $lang['proxy____port']         = 'Θύρα Proxy';
 $lang['proxy____user']         = 'Όνομα χρήστη Proxy';
 $lang['proxy____pass']         = 'Κωδικός χρήστη Proxy';
 $lang['proxy____ssl']          = 'Χρήση ssl για σύνδεση με διακομιστή Proxy';
+$lang['proxy____except']       = 'Regular expression για να πιάνει τα URLs για τα οποία θα παρακάμπτεται το proxy.';
 $lang['safemodehack']          = 'Ενεργοποίηση safemode hack';
 $lang['ftp____host']           = 'Διακομιστής FTP για safemode hack';
 $lang['ftp____port']           = 'Θύρα FTP για safemode hack';
@@ -184,3 +188,4 @@ $lang['useheading_o_0']        = 'Ποτέ';
 $lang['useheading_o_navigation'] = 'Μόνο κατά την πλοήγηση';
 $lang['useheading_o_content']  = 'Μόνο για τα περιεχόμενα του wiki';
 $lang['useheading_o_1']        = 'Πάντα';
+$lang['readdircache']          = 'Μέγιστος χρόνος διατήρησης για το cache του readdir (δευτερόλεπτα)';

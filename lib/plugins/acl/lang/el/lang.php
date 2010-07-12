@@ -12,6 +12,7 @@
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
+ * @author George Petsagourakis <petsagouris@gmail.com>
  */
 $lang['admin_acl']             = 'Διαχείριση Δικαιωμάτων Πρόσβασης';
 $lang['acl_group']             = 'Ομάδα';
