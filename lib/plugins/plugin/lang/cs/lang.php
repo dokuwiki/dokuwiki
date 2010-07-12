@@ -8,6 +8,7 @@
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
+ * @author Lefty <lefty@multihost.cz>
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';

@@ -7,6 +7,7 @@
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
+ * @author Lefty <lefty@multihost.cz>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -103,6 +104,7 @@ $lang['useslash']              = 'Používat lomítko jako oddělovač jmenných
 $lang['usedraft']              = 'Během editace ukládat koncept automaticky';
 $lang['sepchar']               = 'Znak pro oddělování slov v názvech stránek';
 $lang['canonical']             = 'Používat plně kanonická URL';
+$lang['fnencode']              = 'Metoda pro kódování ne-ASCII názvů souborů';
 $lang['autoplural']            = 'Kontrolovat plurálové tvary v odkazech';
 $lang['compression']           = 'Metoda komprese pro staré verze';
 $lang['cachetime']             = 'Maximální životnost cache (v sekundách)';
@@ -143,6 +145,7 @@ $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy uživatelské jméno';
 $lang['proxy____pass']         = 'Proxy heslo';
 $lang['proxy____ssl']          = 'Použít SSL při připojení k proxy';
+$lang['proxy____except']       = 'Regulární výrazy pro URL, pro které bude přeskočena proxy.';
 $lang['safemodehack']          = 'Zapnout safemode hack';
 $lang['ftp____host']           = 'FTP server pro safemode hack';
 $lang['ftp____port']           = 'FTP port pro safemode hack';
@@ -190,3 +193,4 @@ $lang['useheading_o_0']        = 'Nikdy';
 $lang['useheading_o_navigation'] = 'Pouze pro navigaci';
 $lang['useheading_o_content']  = 'Pouze pro wiki obsah';
 $lang['useheading_o_1']        = 'Vždy';
+$lang['readdircache']          = 'Maximální stáří readdir cache (sec)';
