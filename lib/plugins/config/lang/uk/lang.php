@@ -8,6 +8,7 @@
  * @author okunia@gmail.com
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  * @author Uko uko@uar.net
+ * @author Ulrikhe Lukoie  <lukoie@gmail>.com
  */
 $lang['menu']                  = 'Настройка конфігурації';
 $lang['error']                 = 'Параметри не збережено через помилкові значення. Будь ласка, перегляньте ваші зміни та спробуйте ще раз
@@ -97,6 +98,7 @@ $lang['useslash']              = 'Слеш, як розділювач прост
 $lang['usedraft']              = 'Автоматично зберігати чернетку при редагуванні';
 $lang['sepchar']               = 'Розділювач слів у імені сторінки';
 $lang['canonical']             = 'Канонічні URL';
+$lang['fnencode']              = 'Метод для кодування імен файлів, що містять не ASCII символи.';
 $lang['autoplural']            = 'Перевіряти множину у посиланнях';
 $lang['compression']           = 'Метод стиснення attic файлів';
 $lang['cachetime']             = 'Максимальний вік кешу (сек)';
@@ -110,6 +112,7 @@ $lang['gdlib']                 = 'Версія GD Lib';
 $lang['im_convert']            = 'Шлях до ImageMagick';
 $lang['jpg_quality']           = 'Якість компресії JPG (0-100)';
 $lang['subscribers']           = 'Підписка на зміни';
+$lang['subscribe_time']        = 'Час, після якого список підписки та дайджести будуть надіслані (сек.); Має бути меншим за час, вказаний у перемінній recent_days';
 $lang['compress']              = 'Стискати файли CSS та javascript';
 $lang['hidepages']             = 'Ховати сторінки (regular expressions)';
 $lang['send404']               = 'Надсилати "HTTP 404/Сторінка не знайдена " для неіснуючих сторінок';
@@ -136,6 +139,7 @@ $lang['proxy____port']         = 'Порт Proxy';
 $lang['proxy____user']         = 'Користувач Proxy';
 $lang['proxy____pass']         = 'Пароль Proxy';
 $lang['proxy____ssl']          = 'Використовувати ssl для з\'єднання з Proxy';
+$lang['proxy____except']       = 'Регулярний вираз для веб-адреси, яку проксі-сервер пропустить.';
 $lang['safemodehack']          = 'Увімкнути хак safemode';
 $lang['ftp____host']           = 'FTP-сервер для хаку safemode';
 $lang['ftp____port']           = 'FTP-порт для хаку safemode';
@@ -183,3 +187,4 @@ $lang['useheading_o_0']        = 'Ніколи';
 $lang['useheading_o_navigation'] = 'Лише для навігації';
 $lang['useheading_o_content']  = 'Лише у змісті';
 $lang['useheading_o_1']        = 'Завжди';
+$lang['readdircache']          = 'Макссимальний вік для файлів кешу (сек.)';
