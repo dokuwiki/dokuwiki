@@ -344,8 +344,7 @@ function tpl_metaheaders($alt=true){
         $script .= "var SIG='".toolbar_signature()."';";
     }
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
-    $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8',
-            '_data'=> $script);
+    $head['script'][] = array( 'type'=>'text/javascript', '_data'=> $script);
 
     // load external javascript
     $head['script'][] = array( 'type'=>'text/javascript', 'charset'=>'utf-8', '_data'=>'',
