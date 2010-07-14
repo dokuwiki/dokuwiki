@@ -227,7 +227,7 @@ function buildURLparams($params, $sep='&amp;'){
     foreach($params as $key => $val){
         if($amp) $url .= $sep;
 
-        $url .= $key.'=';
+        $url .= rawurlencode($key).'=';
         $url .= rawurlencode((string)$val);
         $amp = true;
     }
