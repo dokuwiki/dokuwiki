@@ -9,6 +9,7 @@
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
+ * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -144,6 +145,7 @@ $lang['deletefail']            = 'A "%s" fájl nem törölhető. - Ellenőrizd a
 $lang['mediainuse']            = 'A "%s" fájl nem törlődött - még használat alatt van.';
 $lang['namespaces']            = 'Névtér';
 $lang['mediafiles']            = 'Elérhető fájlok itt:';
+$lang['accessdenied']          = 'Nincsen jogod az oldal megtekintésére.';
 $lang['mediausage']            = 'A következő formában hivatkozhatsz erre az állományra:';
 $lang['mediaview']             = 'Eredeti állomány megtekintése';
 $lang['mediaroot']             = 'kiindulási hely';
@@ -159,6 +161,7 @@ $lang['current']               = 'aktuális';
 $lang['yours']                 = 'A te változatod';
 $lang['diff']                  = 'a különbségeket mutatja az aktuális változathoz képest';
 $lang['diff2']                 = 'a különbségeket mutatja a kiválasztott változatok között';
+$lang['difflink']              = 'Összehasonlító nézet linkje';
 $lang['line']                  = 'sorszám';
 $lang['breadcrumb']            = 'Nyomvonal';
 $lang['youarehere']            = 'Itt vagy';
@@ -256,6 +259,7 @@ $lang['i_pol0']                = 'Nyitott Wiki (mindenki olvashatja, írhatja, �
 $lang['i_pol1']                = 'Publikus Wiki (mindenki olvashatja, de csak regisztrált felhasználók írhatják, és tölthetnek fel fájlokat)';
 $lang['i_pol2']                = 'Zárt Wiki (csak regisztrált felhasználók olvashatják, írhatják és tölthetnek fel fájlokat)';
 $lang['i_retry']               = 'Újra';
+$lang['i_license']             = 'Kérlek válassz licenszt a feltöltött tartalomhoz:';
 $lang['mu_intro']              = 'Itt több fájlt is fel tudsz tölteni egyszerre. Kattints a "Kiválaszt" gombra és add hozzá a listához. Nyomd meg a Feltöltés gombot, amikor elkészültél.';
 $lang['mu_gridname']           = 'Fájlnév';
 $lang['mu_gridsize']           = 'Méret';

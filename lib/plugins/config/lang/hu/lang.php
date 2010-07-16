@@ -6,6 +6,7 @@
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
+ * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
@@ -136,6 +137,7 @@ $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy felhasználó név';
 $lang['proxy____pass']         = 'Proxy jelszó';
 $lang['proxy____ssl']          = 'SSL használata a proxyhoz csatlakozáskor';
+$lang['proxy____except']       = 'URL szabály azokra a webcímekre, amit szeretnél, hogy ne kezeljen a proxy.';
 $lang['safemodehack']          = 'A PHP safemode beállítás megkerülésének engedélyezése';
 $lang['ftp____host']           = 'FTP szerver a safemode megkerüléshez';
 $lang['ftp____port']           = 'FTP port a safemode megkerüléshez';

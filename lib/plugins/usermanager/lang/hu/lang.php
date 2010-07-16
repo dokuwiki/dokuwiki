@@ -6,6 +6,7 @@
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
+ * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  */
 $lang['menu']                  = 'Felhasználók kezelése';
 $lang['noauth']                = '(A felhasználói azonosítás nem működik.)';
