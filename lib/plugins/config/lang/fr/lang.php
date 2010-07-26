@@ -144,6 +144,7 @@ $lang['proxy____port']         = 'Proxy - Numéro de port';
 $lang['proxy____user']         = 'Proxy - Identifiant';
 $lang['proxy____pass']         = 'Proxy - Mot de passe';
 $lang['proxy____ssl']          = 'Proxy - Utilisation de SSL';
+$lang['proxy____except']       = 'Expression régulière de test des URLs pour lesquelles le proxy ne devrait pas être utilisé.';
 $lang['safemodehack']          = 'Activer l\'option Mode sans échec';
 $lang['ftp____host']           = 'FTP - Serveur hôte pour Mode sans échec';
 $lang['ftp____port']           = 'FTP - Numéro de port pour Mode sans échec';
