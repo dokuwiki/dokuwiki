@@ -1,0 +1,23 @@
+Bună ziua!
+
+Pagina @PAGE@ în @TITLE@ wiki s-a modificat.
+Acestea sunt modificările:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Data: @DATE@
+Utilizator: @USER@
+Sumarul editării: @SUMMARY@
+Vechea revizie: @OLDPAGE@
+Noua revizie: @NEWPAGE@
+
+Pentru a anula notificarea paginii, logaţi-vă pe wiki la
+@DOKUWIKIURL@ apoi navigaţi la
+@SUBSCRIBE@
+şi dezabonaţi-vă de la pagină şi/sau modificările numelui de spaţiu.
+
+--
+Acest mail a fost generat de DokuWiki la
+@DOKUWIKIURL@

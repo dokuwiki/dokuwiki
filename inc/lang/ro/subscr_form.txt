@@ -1,0 +1,3 @@
+====== Administrarea abonărilor ======
+
+Această pagină vă permite să vă administraţi abonările pentru pagina curentă şi numele de spaţiu.
