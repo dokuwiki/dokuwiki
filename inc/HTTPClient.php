@@ -153,6 +153,29 @@ class HTTPClient {
     }
 
     /**
+     * Simple function to do a GET request with given parameters
+     *
+     * Returns the wanted page or false on an error.
+     *
+     * This is a convenience wrapper around get(). The given parameters
+     * will be correctly encoded and added to the given base URL.
+     *
+     * @param  string $url       The URL to fetch
+     * @param  string $data      Associative array of parameters
+     * @param  bool   $sloppy304 Return body on 304 not modified
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function dget($url,$data,$sloppy304=false){
+        if(strpos($url,'?')){
+            $url .= '&';
+        }else{
+            $url .= '?';
+        }
+        $url .= $this->_postEncode($data);
+        return $this->get($url,$sloppy304);
+    }
+
+    /**
      * Simple function to do a POST request
      *
      * Returns the resulting page or false on an error;
