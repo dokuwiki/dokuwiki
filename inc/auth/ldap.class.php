@@ -271,11 +271,11 @@ class auth_ldap extends auth_basic {
         if (!isset($this->users)) {
             // Perform the search and grab all their details
             if(!empty($this->cnf['userfilter'])) {
-                $filter = str_replace('%{user}', '*', $this->cnf['userfilter']);
+                $all_filter = str_replace('%{user}', '*', $this->cnf['userfilter']);
             } else {
-                $filter = "(ObjectClass=*)";
+                $all_filter = "(ObjectClass=*)";
             }
-            $sr=ldap_search($this->con,$this->cnf['usertree'],$filter);
+            $sr=ldap_search($this->con,$this->cnf['usertree'],$all_filter);
             $entries = ldap_get_entries($this->con, $sr);
             $users_array = array();
             for ($i=0; $i<$entries["count"]; $i++){
