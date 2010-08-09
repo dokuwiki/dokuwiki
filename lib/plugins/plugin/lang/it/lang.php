@@ -11,6 +11,7 @@
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
+ * @author Osman Tekin osman.tekin93@hotmail.it
  */
 $lang['menu']                  = 'Gestione Plugin';
 $lang['download']              = 'Scarica e installa un nuovo plugin';

@@ -11,6 +11,7 @@
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
+ * @author Osman Tekin osman.tekin93@hotmail.it
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -100,6 +101,7 @@ $lang['useslash']              = 'Usa la barra rovescia (slash) come separatore 
 $lang['usedraft']              = 'Salva una bozza in automatico in fase di modifica';
 $lang['sepchar']               = 'Separatore di parole nei nomi di pagina';
 $lang['canonical']             = 'Usa URL canoniche';
+$lang['fnencode']              = 'Metodo per codificare i filenames non-ASCII.';
 $lang['autoplural']            = 'Controlla il plurale nei collegamenti';
 $lang['compression']           = 'Usa la compressione per i file dell\'archivio';
 $lang['cachetime']             = 'Durata della cache (sec)';
@@ -140,6 +142,7 @@ $lang['proxy____port']         = 'Porta proxy';
 $lang['proxy____user']         = 'Nome utente proxy';
 $lang['proxy____pass']         = 'Password proxy';
 $lang['proxy____ssl']          = 'Usa SSL per connetterti al proxy';
+$lang['proxy____except']       = 'Espressioni regolari per far corrispondere le URLs per i quali i proxy dovrebbero essere ommessi.';
 $lang['safemodehack']          = 'Abilita safemode hack';
 $lang['ftp____host']           = 'Server FTP per safemode hack';
 $lang['ftp____port']           = 'Porta FTP per safemode hack';
@@ -187,3 +190,4 @@ $lang['useheading_o_0']        = 'Mai';
 $lang['useheading_o_navigation'] = 'Solo navigazione';
 $lang['useheading_o_content']  = 'Solo contenuto wiki';
 $lang['useheading_o_1']        = 'Sempre';
+$lang['readdircache']          = 'Tempo massimo per le readdir cache (sec)';

@@ -8,6 +8,7 @@
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
+ * @author Osman Tekin osman.tekin93@hotmail.it
  */
 $lang['menu']                  = 'Gestore di ripristini';
 $lang['filter']                = 'Cerca pagine con spam';
