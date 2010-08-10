@@ -363,30 +363,40 @@ function sendDigest() {
             if (substr($id, -1, 1) === ':') {
                 // The subscription target is a namespace
                 $changes = getRecentsSince($lastupdate, null, getNS($id));
-                if (count($changes) === 0) {
-                    continue;
-                }
-                if ($style === 'digest') {
-                    foreach($changes as $change) {
-                        subscription_send_digest($USERINFO['mail'], $change,
-                                                 $lastupdate);
-                    }
-                } elseif ($style === 'list') {
-                    subscription_send_list($USERINFO['mail'], $changes, $id);
-                }
-                // TODO: Handle duplicate subscriptions.
             } else {
                 if(auth_quickaclcheck($id) < AUTH_READ) continue;
 
                 $meta = p_get_metadata($id);
-                $rev = $meta['last_change']['date'];
-                if ($rev < $lastupdate) {
-                    // There is no new revision.
-                    continue;
-                }
-                subscription_send_digest($USERINFO['mail'], $meta['last_change'],
-                                         $lastupdate);
+                $changes = array($meta['last_change']);
             }
+
+            // Filter out pages only changed in small and own edits
+            $change_ids = array();
+            foreach($changes as $rev) {
+                $n = 0;
+                while (!is_null($rev) && $rev['date'] >= $lastupdate &&
+                       ($_SERVER['REMOTE_USER'] === $rev['user'] ||
+                        $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)) {
+                    $rev = getRevisions($rev['id'], $n++, 1);
+                    $rev = (count($rev) > 0) ? $rev[0] : null;
+                }
+
+                if (!is_null($rev) && $rev['date'] >= $lastupdate) {
+                    // Some change was not a minor one and not by myself
+                    $change_ids[] = $rev['id'];
+                }
+            }
+
+            if ($style === 'digest') {
+                foreach($change_ids as $change_id) {
+                    subscription_send_digest($USERINFO['mail'], $change_id,
+                                             $lastupdate);
+                }
+            } elseif ($style === 'list') {
+                subscription_send_list($USERINFO['mail'], $change_ids, $id);
+            }
+            // TODO: Handle duplicate subscriptions.
+
             // Update notification time.
             subscription_set($user, $id, $style, time(), true);
         }
