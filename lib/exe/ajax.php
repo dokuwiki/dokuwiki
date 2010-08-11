@@ -139,7 +139,7 @@ function ajax_lock(){
                    'prefix' => $_POST['prefix'],
                    'text'   => $_POST['wikitext'],
                    'suffix' => $_POST['suffix'],
-                   'date'   => $_POST['date'],
+                   'date'   => (int) $_POST['date'],
                    'client' => $client,
                   );
     $cname = getCacheName($draft['client'].$id,'.draft');
