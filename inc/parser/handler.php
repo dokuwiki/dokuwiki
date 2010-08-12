@@ -1279,7 +1279,8 @@ class Doku_Handler_Table {
         // Look for the colspan elements and increment the colspan on the
         // previous non-empty opening cell. Once done, delete all the cells
         // that contain colspans
-        foreach ( $this->tableCalls as $key => $call ) {
+        for ($key = 0 ; $key < count($this->tableCalls) ; ++$key) {
+            $call = $this->tableCalls[$key];
 
             switch ($call[0]) {
             case 'tablerow_open':
@@ -1351,25 +1352,46 @@ class Doku_Handler_Table {
 
                 } else {
 
-                    $this->tableCalls[$key-1][1][2] = false;
-
+                    $spanning_cell = null;
                     for($i = $lastRow-1; $i > 0; $i--) {
 
                         if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
 
-                            if ( false !== $this->tableCalls[$cellKey[$i][$lastCell]][1][2] ) {
-                                $this->tableCalls[$cellKey[$i][$lastCell]][1][2]++;
+                            if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
+                                $spanning_cell = $i;
                                 break;
                             }
 
 
                         }
                     }
+                    if (is_null($spanning_cell)) {
+                        // No spanning cell found, so convert this cell to
+                        // an empty one to avoid broken tables
+                        $this->tableCells[$key][1][1] = '';
+                        continue;
+                    }
+                    $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
+
+                    $this->tableCalls[$key-1][1][2] = false;
 
                     $toDelete[] = $key-1;
                     $toDelete[] = $key;
                     $toDelete[] = $key+1;
                 }
+                break;
+
+            case 'tablerow_close':
+
+                // Fix broken tables by adding missing cells
+                while (++$lastCell < $this->maxCols) {
+                    array_splice($this->tableCalls, $key, 0, array(
+                           array('tablecell_open', array(1, null, 1), $call[2]),
+                           array('cdata', array(''), $call[2]),
+                           array('tablecell_close', array(), $call[2])));
+                    $key += 3;
+                }
+
                 break;
 
             }
