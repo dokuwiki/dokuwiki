@@ -6,6 +6,7 @@
  * @link http://blog.vixiom.com/2006/09/08/multiple-file-upload-with-flash-and-ruby-on-rails/
  * @author Alastair Dawson
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @license MIT <http://www.opensource.org/licenses/mit-license.php>
  */
 
 // delegate
