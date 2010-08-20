@@ -12,6 +12,7 @@
  * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
+ * @author Timon Van Overveldt <timonvo@gmail.com>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -140,6 +141,7 @@ $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy gebruikersnaam';
 $lang['proxy____pass']         = 'Proxy wachtwoord';
 $lang['proxy____ssl']          = 'Gebruik SSL om een connectie te maken met de proxy';
+$lang['proxy____except']       = 'Reguliere expressie om URL\'s te bepalen waarvoor de proxy overgeslaan moet worden.';
 $lang['safemodehack']          = 'Safemode hack aanzetten';
 $lang['ftp____host']           = 'FTP server voor safemode hack';
 $lang['ftp____port']           = 'FTP port voor safemode hack';

@@ -14,6 +14,7 @@
  * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
+ * @author Timon Van Overveldt <timonvo@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -149,6 +150,7 @@ $lang['deletefail']            = '"%s" kan niet worden verwijderd - controleer p
 $lang['mediainuse']            = 'Het bestand "%s" is niet verwijderd - het is nog in gebruik.';
 $lang['namespaces']            = 'Namespaces';
 $lang['mediafiles']            = 'Beschikbare bestanden in';
+$lang['accessdenied']          = 'U heeft geen toegang tot deze pagina.';
 $lang['mediausage']            = 'Gebruik de volgende syntax om aan het bestand te refereren:';
 $lang['mediaview']             = 'Bekijk het orginele bestand';
 $lang['mediaroot']             = 'root';
@@ -164,6 +166,7 @@ $lang['current']               = 'huidige';
 $lang['yours']                 = 'Jouw versie';
 $lang['diff']                  = 'Toon verschillen met huidige revisie';
 $lang['diff2']                 = 'Toon verschillen tussen geselecteerde revisies';
+$lang['difflink']              = 'Link naar deze vergelijking';
 $lang['line']                  = 'Regel';
 $lang['breadcrumb']            = 'Spoor';
 $lang['youarehere']            = 'Je bent hier';
@@ -260,6 +263,7 @@ $lang['i_pol0']                = 'Open wiki (lezen, schrijven, uploaden voor ied
 $lang['i_pol1']                = 'Publieke wiki (lezen voor iedereen, schrijven en uploaden voor geregistreerde gebruikers)';
 $lang['i_pol2']                = 'Besloten wiki (lezen, schrijven en uploaden alleen voor geregistreerde gebruikers)';
 $lang['i_retry']               = 'Opnieuw';
+$lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
 $lang['mu_intro']              = 'Hiier kun je meerdere bestanden tegelijk uploaden. Klik de blader-knop om ze aan de lijst toe te voegen. Klik Upload als je klaar bent.';
 $lang['mu_gridname']           = 'Bestandsnaam';
 $lang['mu_gridsize']           = 'Grootte';
