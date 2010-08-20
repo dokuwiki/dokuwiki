@@ -243,17 +243,21 @@ function _ft_pageLookup(&$data){
     $titles = array_map('rtrim', idx_getIndex('title', ''));
     $pages = array_combine($pages, $titles);
 
-    if($id !== '' && cleanID($id) !== '') {
+    if ($id !== '' && cleanID($id) !== '') {
         $cleaned = cleanID($id);
-        $matched_pages = array();
         foreach ($pages as $p_id => $p_title) {
-            if (((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false) ||
-                 ($in_title && stripos($p_title, $id) !== false)) &&
-                (!isset($ns) || strpos($p_id, $ns) === 0)) {
-                $matched_pages[$p_id] = $p_title;
+            if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) === false) &&
+                ($in_title && stripos($p_title, $id) === false)) {
+                unset($pages[$p_id]);
             }
         }
-        $pages = $matched_pages;
+    }
+    if (isset($ns)) {
+        foreach (array_keys($pages) as $p_id) {
+            if (strpos($p_id, $ns) !== 0) {
+                unset($pages[$p_id]);
+            }
+        }
     }
 
     // discard hidden pages
