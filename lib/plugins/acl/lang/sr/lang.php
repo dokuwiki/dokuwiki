@@ -6,6 +6,7 @@
  * @author Filip Brcic <brcha@users.sourceforge.net>
  * @author Иван Петровић petrovicivan@ubuntusrbija.org
  * @author Ivan Petrovic <petrovicivan@ubuntusrbija.org>
+ * @author Miroslav Šolti <solti.miroslav@gmail.com>
  */
 $lang['admin_acl']             = 'Управљање листом контроле приступа';
 $lang['acl_group']             = 'Група';

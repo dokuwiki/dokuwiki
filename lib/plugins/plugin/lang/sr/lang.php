@@ -4,6 +4,7 @@
  *
  * @author Иван Петровић petrovicivan@ubuntusrbija.org
  * @author Ivan Petrovic <petrovicivan@ubuntusrbija.org>
+ * @author Miroslav Šolti <solti.miroslav@gmail.com>
  */
 $lang['menu']                  = 'Управљач додацима';
 $lang['download']              = 'Преузми и инсталирај нови додатак';
