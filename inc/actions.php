@@ -185,6 +185,8 @@ function act_clean($act){
     if($act == 'export_html') $act = 'export_xhtml';
     if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
+    if($act === '') $act = 'show';
+
     // check if action is disabled
     if(!actionOK($act)){
         msg('Command disabled: '.htmlspecialchars($act),-1);

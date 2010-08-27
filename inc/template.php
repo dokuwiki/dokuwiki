@@ -491,7 +491,7 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
     return true;
 }
 
- /**
+/**
  * Check the actions and get data for buttons and links
  *
  * Available actions are
@@ -1147,7 +1147,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     global $auth;
 
     echo '<form method="post" accept-charset="utf-8">'; #FIXME action
-        echo '<input type="hidden" name="id" value="'.$ID.'" />';
+    echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
 
@@ -1155,60 +1155,39 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '<option value="">'.$empty.'</option>';
 
     echo '<optgroup label=" &mdash; ">';
-    // 'edit' - most complicated type, we need to decide on current action
-    if($ACT == 'show' || $ACT == 'search'){
-        if($INFO['writable']){
-            if(!empty($INFO['draft'])) {
-                echo '<option value="edit">'.$lang['btn_draft'].'</option>';
-            } else {
-                if($INFO['exists']){
-                    echo '<option value="edit">'.$lang['btn_edit'].'</option>';
-                }else{
-                    echo '<option value="edit">'.$lang['btn_create'].'</option>';
-                }
-            }
-        }else if(actionOK('source')) { //pseudo action
-            echo '<option value="edit">'.$lang['btn_source'].'</option>';
-        }
-    }else{
-        echo '<option value="show">'.$lang['btn_show'].'</option>';
-    }
+        $act = tpl_get_action('edit');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-    echo '<option value="revisions">'.$lang['btn_revs'].'</option>';
-    if($INFO['ismanager'] && $REV && $INFO['writable'] && actionOK('revert')){
-        echo '<option value="revert">'.$lang['btn_revert'].'</option>';
-    }
-    echo '<option value="backlink">'.$lang['btn_backlink'].'</option>';
+        $act = tpl_get_action('revisions');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
+        $act = tpl_get_action('revert');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
+        $act = tpl_get_action('backlink');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
     echo '</optgroup>';
 
     echo '<optgroup label=" &mdash; ">';
-    echo '<option value="recent">'.$lang['btn_recent'].'</option>';
-    echo '<option value="index">'.$lang['btn_index'].'</option>';
+        $act = tpl_get_action('recent');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
+        $act = tpl_get_action('index');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
     echo '</optgroup>';
 
     echo '<optgroup label=" &mdash; ">';
-    if($conf['useacl'] && $auth){
-        if($_SERVER['REMOTE_USER']){
-            echo '<option value="logout">'.$lang['btn_logout'].'</option>';
-        }else{
-            echo '<option value="login">'.$lang['btn_login'].'</option>';
-        }
-    }
+        $act = tpl_get_action('login');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-    if($conf['useacl'] && $auth && $_SERVER['REMOTE_USER'] &&
-            $auth->canDo('Profile') && ($ACT!='profile')){
-        echo '<option value="profile">'.$lang['btn_profile'].'</option>';
-    }
+        $act = tpl_get_action('profile');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-    if($conf['useacl'] && $auth && $ACT == 'show' && $conf['subscribers']){
-        if($_SERVER['REMOTE_USER']){
-            echo '<option value="subscribe">'.$lang['btn_subscribe'].'</option>';
-        }
-    }
+        $act = tpl_get_action('subscribe');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-    if($INFO['ismanager']){
-        echo '<option value="admin">'.$lang['btn_admin'].'</option>';
-    }
+        $act = tpl_get_action('admin');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
     echo '</optgroup>';
 
     echo '</select>';
