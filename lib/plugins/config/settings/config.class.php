@@ -597,7 +597,7 @@ if (!class_exists('setting_richemail')) {
           $addr = $test;
         }
 
-        if (!mail_isvalid($addr)) {
+        if ($test !== '' && !mail_isvalid($addr)) {
           $this->_error = true;
           $this->_input = $input;
           return false;
