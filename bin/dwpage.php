@@ -98,12 +98,12 @@ function usage($action) {
 #------------------------------------------------------------------------------
 function getUser() {
     $user = getenv('USER');
-    if (empty ($username)) {
+    if (empty ($user)) {
         $user = getenv('USERNAME');
     } else {
         return $user;
     }
-    if (empty ($username)) {
+    if (empty ($user)) {
         $user = 'admin';
     }
     return $user;
