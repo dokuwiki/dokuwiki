@@ -350,7 +350,8 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
             $user = $_SERVER['REMOTE_USER'];
         }
     }
-    $user = $auth->cleanUser($user);
+    $user = trim($auth->cleanUser($user));
+    if($user === '') return false;
     if(is_null($groups)) $groups = (array) $USERINFO['grps'];
     $groups = array_map(array($auth,'cleanGroup'),$groups);
     $user   = auth_nameencode($user);
@@ -359,6 +360,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     $superusers = explode(',', $conf['superuser']);
     $superusers = array_unique($superusers);
     $superusers = array_map('trim', $superusers);
+    $superusers = array_filter($superusers);
     // prepare an array containing only true values for array_map call
     $alltrue = array_fill(0, count($superusers), true);
     $superusers = array_map('auth_nameencode', $superusers, $alltrue);
@@ -377,6 +379,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
         $managers = explode(',', $conf['manager']);
         $managers = array_unique($managers);
         $managers = array_map('trim', $managers);
+        $managers = array_filter($managers);
         // prepare an array containing only true values for array_map call
         $alltrue = array_fill(0, count($managers), true);
         $managers = array_map('auth_nameencode', $managers, $alltrue);
