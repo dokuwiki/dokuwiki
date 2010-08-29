@@ -4,7 +4,7 @@
  * -----------
  * Author: Florian Knorn (floz@gmx.de)
  * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2005/02/09
  *
  * Matlab M-file language file for GeSHi.
@@ -215,7 +215,7 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Complex numbers
-        0 => '(?<![\\w])[+-]?[\\d]*([\\d]\\.|\\.[\\d])?[\\d]*[ij](?![\\w])'
+        0 => '(?<![\\w\\/])[+-]?[\\d]*([\\d]\\.|\\.[\\d])?[\\d]*[ij](?![\\w]|\<DOT>html)'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

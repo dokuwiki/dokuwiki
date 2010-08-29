@@ -101,7 +101,6 @@ $lang['profileconfirm'] = 'Confirm profile changes with password';
 $lang['disableactions'] = 'Disable DokuWiki actions';
 $lang['disableactions_check'] = 'Check';
 $lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
-$lang['disableactions_nssubscription'] = 'Namespace Subscribe /Unsubscribe';
 $lang['disableactions_wikicode'] = 'View source/Export Raw';
 $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the index view. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces. This may make the index unusable with certain ACL setups.';
@@ -117,6 +116,7 @@ $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['usedraft']    = 'Automatically save a draft while editing';
 $lang['sepchar']     = 'Page name word separator';
 $lang['canonical']   = 'Use fully canonical URLs';
+$lang['fnencode']    = 'Method for encoding non-ASCII filenames.';
 $lang['autoplural']  = 'Check for plural forms in links';
 $lang['compression'] = 'Compression method for attic files';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
@@ -130,6 +130,7 @@ $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
 $lang['jpg_quality'] = 'JPG compression quality (0-100)';
 $lang['subscribers'] = 'Enable page subscription support';
+$lang['subscribe_time'] = 'Time after which subscription lists and digests are sent (sec); This should be smaller than the time specified in recent_days.';
 $lang['compress']    = 'Compact CSS and javascript output';
 $lang['hidepages']   = 'Hide matching pages (regular expressions)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
@@ -156,11 +157,12 @@ $lang['target____media']     = 'Target window for media links';
 $lang['target____windows']   = 'Target window for windows links';
 
 /* Proxy Options */
-$lang['proxy____host'] = 'Proxy servername';
-$lang['proxy____port'] = 'Proxy port';
-$lang['proxy____user'] = 'Proxy user name';
-$lang['proxy____pass'] = 'Proxy password';
-$lang['proxy____ssl']  = 'Use ssl to connect to Proxy';
+$lang['proxy____host']    = 'Proxy servername';
+$lang['proxy____port']    = 'Proxy port';
+$lang['proxy____user']    = 'Proxy user name';
+$lang['proxy____pass']    = 'Proxy password';
+$lang['proxy____ssl']     = 'Use SLL to connect to proxy';
+$lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped for.';
 
 /* Safemode Hack */
 $lang['safemodehack'] = 'Enable safemode hack';
@@ -234,3 +236,4 @@ $lang['useheading_o_navigation'] = 'Navigation Only';
 $lang['useheading_o_content'] = 'Wiki Content Only';
 $lang['useheading_o_1'] = 'Always';
 
+$lang['readdircache'] = 'Maximum age for readdir cache (sec)';

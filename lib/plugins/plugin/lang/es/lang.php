@@ -17,6 +17,8 @@
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
+ * @author Victor Castelan <victorcastelan@gmail.com>
+ * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';

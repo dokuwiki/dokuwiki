@@ -11,5 +11,5 @@ použite prosím nasledujúci odkaz.
 @CONFIRM@
 
 -- 
-Tento mail bol generovaný Dokuwiki na adrese
+Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@

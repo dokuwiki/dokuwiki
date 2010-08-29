@@ -84,7 +84,6 @@ $lang['profileconfirm']        = 'プロフィール変更時に現在のパス�
 $lang['disableactions']        = 'DokuWiki の動作を無効にする';
 $lang['disableactions_check']  = 'チェック';
 $lang['disableactions_subscription'] = '登録 / 解除';
-$lang['disableactions_nssubscription'] = '名前空間の登録 / 解除';
 $lang['disableactions_wikicode'] = 'ソース閲覧 / 生データ出力';
 $lang['disableactions_other']  = 'その他の動作（カンマ区切り）';
 $lang['sneaky_index']          = 'デフォルトでは索引にすべての名前空間を表示しますが、この機能はユーザーに閲覧権限のない名前空間を非表示にします。ただし、閲覧が可能な副名前空間まで表示されなくなるため、ACLの設定が適正でない場合は索引機能が使えなくなる場合があります。';

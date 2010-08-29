@@ -1,0 +1,5 @@
+====== Un version plus nove existe ======
+
+Existe un version plus nove del documento que tu ha modificate. Isto occurre si un altere usator cambia le documento durante que tu lo modifica.
+
+Examina minutiosemente le differentias monstrate hic infra, postea decide qual version debe esser conservate. Si tu selige ''salveguardar'', tu version essera salveguardate. Preme ''cancellar'' pro conservar le version actual.

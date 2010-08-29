@@ -127,8 +127,8 @@ $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
 $meta['registernotify'] = array('email');
 $meta['disableactions'] = array('disableactions',
-                                '_choices' => array('backlink','index','recent','revisions','search','subscription','nssubscription','register','resendpwd','profile','edit','wikicode','check'),
-                                '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw'), 'nssubscription' => array('subscribens','unsubscribens')));
+                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
+                                '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
 $meta['sneaky_index'] = array('onoff');
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
@@ -148,6 +148,7 @@ $meta['htmlok']      = array('onoff');
 $meta['phpok']       = array('onoff');
 $meta['notify']      = array('email', '_multiple' => true);
 $meta['subscribers'] = array('onoff');
+$meta['subscribe_time'] = array('numeric');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
 
@@ -170,6 +171,7 @@ $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
 $meta['useslash']    = array('onoff');
 $meta['sepchar']     = array('sepchar');
 $meta['canonical']   = array('onoff');
+$meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'));
 $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
 $meta['compress']    = array('onoff');
@@ -187,6 +189,7 @@ $meta['rss_show_summary'] = array('onoff');
 $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
+$meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
@@ -194,6 +197,7 @@ $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
+$meta['proxy____except'] = array('string');
 $meta['safemodehack'] = array('onoff');
 $meta['ftp____host']  = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['ftp____port']  = array('numericopt');

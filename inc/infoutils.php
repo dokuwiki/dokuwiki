@@ -7,7 +7,6 @@
  */
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
-require_once(DOKU_INC.'inc/HTTPClient.php');
 
 /**
  * Check for new messages from upstream
@@ -17,6 +16,7 @@ require_once(DOKU_INC.'inc/HTTPClient.php');
 function checkUpdateMessages(){
     global $conf;
     global $INFO;
+    global $updateVersion;
     if(!$conf['updatecheck']) return;
     if($conf['useacl'] && !$INFO['ismanager']) return;
 
@@ -24,12 +24,10 @@ function checkUpdateMessages(){
     $lm = @filemtime($cf);
 
     // check if new messages needs to be fetched
-    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_CONF.'msg')){
-        $num = @file(DOKU_CONF.'msg');
-        $num = is_array($num) ? (int) $num[0] : 0;
+    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.'doku.php')){
         $http = new DokuHTTPClient();
         $http->timeout = 8;
-        $data = $http->get(DOKU_MESSAGEURL.$num);
+        $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
     }else{
         $data = io_readFile($cf);
@@ -55,36 +53,31 @@ function getVersionData(){
         //official release
         $version['date'] = trim(io_readfile(DOKU_INC.'VERSION'));
         $version['type'] = 'Release';
-        return $version;
-    }elseif(is_dir(DOKU_INC.'_darcs')){
-        if(is_file(DOKU_INC.'_darcs/inventory')){
-            $inventory = DOKU_INC.'_darcs/inventory';
-        }elseif(is_file(DOKU_INC.'_darcs/hashed_inventory')){
-            $inventory = DOKU_INC.'_darcs/hashed_inventory';
-        }else{
-            $version['date'] = 'unknown';
-            $version['type'] = 'Darcs';
-            return $version;
+    }elseif(is_dir(DOKU_INC.'.git')){
+        $version['type'] = 'Git';
+        $version['date'] = 'unknown';
+
+        $inventory = DOKU_INC.'.git/logs/HEAD';
+        if(is_file($inventory)){
+            $sz   = filesize($inventory);
+            $seek = max(0,$sz-2000); // read from back of the file
+            $fh   = fopen($inventory,'rb');
+            fseek($fh,$seek);
+            $chunk = fread($fh,2000);
+            fclose($fh);
+            $chunk = trim($chunk);
+            $chunk = array_pop(explode("\n",$chunk));   //last log line
+            $chunk = array_shift(explode("\t",$chunk)); //strip commit msg
+            $chunk = explode(" ",$chunk);
+            array_pop($chunk); //strip timezone
+            $date = date('Y-m-d',array_pop($chunk));
+            if($date) $version['date'] = $date;
         }
-
-        //darcs checkout - read last 2000 bytes of inventory
-        $sz   = filesize($inventory);
-        $seek = max(0,$sz-2000);
-        $fh   = fopen($inventory,'rb');
-        fseek($fh,$seek);
-        $chunk = fread($fh,2000);
-        fclose($fh);
-
-        preg_match_all('#\*\*(\d{4})(\d{2})(\d{2})\d{6}(?:\]|$)#m', $chunk, $matches,
-                       PREG_SET_ORDER);
-        $version['date'] = implode('-', array_slice(array_pop($matches), 1));
-        $version['type'] = 'Darcs';
-        return $version;
     }else{
         $version['date'] = 'unknown';
         $version['type'] = 'snapshot?';
-        return $version;
     }
+    return $version;
 }
 
 /**
@@ -106,7 +99,9 @@ function check(){
     global $conf;
     global $INFO;
 
-    msg('DokuWiki version: '.getVersion(),1);
+    if ($INFO['isadmin'] || $INFO['ismanager']){
+        msg('DokuWiki version: '.getVersion(),1);
+    }
 
     if(version_compare(phpversion(),'5.1.2','<')){
         msg('Your PHP version is too old ('.phpversion().' vs. 5.1.2+ needed)',-1);
@@ -228,7 +223,6 @@ function check(){
         msg('The current page is not writable by you',0);
     }
 
-    require_once(DOKU_INC.'inc/HTTPClient.php');
     $check = wl('','',true).'data/_dummy';
     $http = new DokuHTTPClient();
     $http->timeout = 6;
@@ -272,17 +266,15 @@ function msg($message,$lvl=0,$line='',$file=''){
 
     if($line || $file) $message.=' ['.basename($file).':'.$line.']';
 
-    if(!headers_sent()){
-        if(!isset($MSG)) $MSG = array();
-        $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
-    }else{
-        $MSG = array();
-        $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+    if(!isset($MSG)) $MSG = array();
+    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+    if(headers_sent()){
         if(function_exists('html_msgarea')){
             html_msgarea();
         }else{
             print "ERROR($lvl) $message";
         }
+        unset($GLOBALS['MSG']);
     }
 }
 
@@ -294,9 +286,15 @@ function msg($message,$lvl=0,$line='',$file=''){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function dbg($msg,$hidden=false){
-    (!$hidden) ? print '<pre class="dbg">' : print "<!--\n";
-    print_r($msg);
-    (!$hidden) ? print '</pre>' : print "\n-->";
+    if($hidden){
+        echo "<!--\n";
+        print_r($msg);
+        echo "\n-->";
+    }else{
+        echo '<pre class="dbg">';
+        echo hsc(print_r($msg,true));
+        echo '</pre>';
+    }
 }
 
 /**

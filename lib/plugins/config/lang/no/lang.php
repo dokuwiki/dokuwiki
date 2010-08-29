@@ -91,7 +91,6 @@ $lang['profileconfirm']        = 'Bekreft profilendringer med passord';
 $lang['disableactions']        = 'Skru av følgende DokuWiki-kommandoer';
 $lang['disableactions_check']  = 'Sjekk';
 $lang['disableactions_subscription'] = 'Meld på/av';
-$lang['disableactions_nssubscription'] = 'Navnerom Abonnere /Stoppe abonnement';
 $lang['disableactions_wikicode'] = 'Vis kildekode/eksporter rådata';
 $lang['disableactions_other']  = 'Andre kommandoer (kommaseparert)';
 $lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerom i innholdsfortegnelsen. Hvis du skrur på dette alternativet vil brukere bare se de navnerommene der de har lesetilgang. Dette kan føre til at tilgjengelige undernavnerom skjules. Det kan gjøre innholdsfortegnelsen ubrukelig med enkelte ACL-oppsett.';

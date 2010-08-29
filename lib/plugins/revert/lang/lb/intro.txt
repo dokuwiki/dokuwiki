@@ -1,0 +1,3 @@
+====== Revert Manager ======
+
+Dës Säit hëlleft bei der automatescher zerécksetzung no enger Spamattack. Fir eng Lëscht vun zougespamte Säiten ze fannen, gëff fir d'éischt e Sichbegrëff an (z.B. eng Spamadress). Konfirméier dann dass déi Säite wierklech zougespamt goufen a setz se dann zréck.

@@ -59,7 +59,6 @@
 
 // for DokuWiki
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/utf8.php');
 
 /**
  * Marker constant for JSON::decode(), used to flag stack state
@@ -112,38 +111,35 @@ define('JSON_STRICT_TYPE', 11);
  * @since
  * @deprecated
  */
-class JSON
-{
-   /**
-    * constructs a new JSON instance
-    *
-    * @param    int     $use    object behavior: when encoding or decoding,
-    *                           be loose or strict about object/array usage
-    *
-    *                           possible values:
-    *                              JSON_STRICT_TYPE - strict typing, default
-    *                                                 "{...}" syntax creates objects in decode.
-    *                               JSON_LOOSE_TYPE - loose typing
-    *                                                 "{...}" syntax creates associative arrays in decode.
-    */
-    function JSON($use=JSON_STRICT_TYPE)
-    {
+class JSON {
+    /**
+     * constructs a new JSON instance
+     *
+     * @param    int     $use    object behavior: when encoding or decoding,
+     *                           be loose or strict about object/array usage
+     *
+     *                           possible values:
+     *                              JSON_STRICT_TYPE - strict typing, default
+     *                                                 "{...}" syntax creates objects in decode.
+     *                               JSON_LOOSE_TYPE - loose typing
+     *                                                 "{...}" syntax creates associative arrays in decode.
+     */
+    function JSON($use=JSON_STRICT_TYPE) {
         $this->use = $use;
     }
 
-   /**
-    * encodes an arbitrary variable into JSON format
-    *
-    * @param    mixed   $var    any number, boolean, string, array, or object to be encoded.
-    *                           see argument 1 to JSON() above for array-parsing behavior.
-    *                           if var is a strng, note that encode() always expects it
-    *                           to be in ASCII or UTF-8 format!
-    *
-    * @return   string  JSON string representation of input var
-    * @access   public
-    */
-    function encode($var)
-    {
+    /**
+     * encodes an arbitrary variable into JSON format
+     *
+     * @param    mixed   $var    any number, boolean, string, array, or object to be encoded.
+     *                           see argument 1 to JSON() above for array-parsing behavior.
+     *                           if var is a strng, note that encode() always expects it
+     *                           to be in ASCII or UTF-8 format!
+     *
+     * @return   string  JSON string representation of input var
+     * @access   public
+     */
+    function encode($var) {
         switch (gettype($var)) {
             case 'boolean':
                 return $var ? 'true' : 'false';
@@ -163,20 +159,30 @@ class JSON
                 $ascii = '';
                 $strlen_var = strlen($var);
 
-               /*
-                * Iterate over every character in the string,
-                * escaping with a slash or encoding to UTF-8 where necessary
-                */
+                /*
+                 * Iterate over every character in the string,
+                 * escaping with a slash or encoding to UTF-8 where necessary
+                 */
                 for ($c = 0; $c < $strlen_var; ++$c) {
 
                     $ord_var_c = ord($var{$c});
 
                     switch ($ord_var_c) {
-                        case 0x08:  $ascii .= '\b';  break;
-                        case 0x09:  $ascii .= '\t';  break;
-                        case 0x0A:  $ascii .= '\n';  break;
-                        case 0x0C:  $ascii .= '\f';  break;
-                        case 0x0D:  $ascii .= '\r';  break;
+                        case 0x08:
+                            $ascii .= '\b';
+                            break;
+                        case 0x09:
+                            $ascii .= '\t';
+                            break;
+                        case 0x0A:
+                            $ascii .= '\n';
+                            break;
+                        case 0x0C:
+                            $ascii .= '\f';
+                            break;
+                        case 0x0D:
+                            $ascii .= '\r';
+                            break;
 
                         case 0x22:
                         case 0x2F:
@@ -259,26 +265,26 @@ class JSON
                 return '"'.$ascii.'"';
 
             case 'array':
-               /*
-                * As per JSON spec if any array key is not an integer
-                * we must treat the the whole array as an object. We
-                * also try to catch a sparsely populated associative
-                * array with numeric keys here because some JS engines
-                * will create an array with empty indexes up to
-                * max_index which can cause memory issues and because
-                * the keys, which may be relevant, will be remapped
-                * otherwise.
-                *
-                * As per the ECMA and JSON specification an object may
-                * have any string as a property. Unfortunately due to
-                * a hole in the ECMA specification if the key is a
-                * ECMA reserved word or starts with a digit the
-                * parameter is only accessible using ECMAScript's
-                * bracket notation.
-                */
+                /*
+                 * As per JSON spec if any array key is not an integer
+                 * we must treat the the whole array as an object. We
+                 * also try to catch a sparsely populated associative
+                 * array with numeric keys here because some JS engines
+                 * will create an array with empty indexes up to
+                 * max_index which can cause memory issues and because
+                 * the keys, which may be relevant, will be remapped
+                 * otherwise.
+                 *
+                 * As per the ECMA and JSON specification an object may
+                 * have any string as a property. Unfortunately due to
+                 * a hole in the ECMA specification if the key is a
+                 * ECMA reserved word or starts with a digit the
+                 * parameter is only accessible using ECMAScript's
+                 * bracket notation.
+                 */
 
                 // treat as a JSON object
-                if (is_array($var) && count($var) && (array_keys($var) !== range(0, sizeof($var) - 1))) {
+                if (is_array($var) && count($var) && (array_keys($var) !== range(0, count($var) - 1))) {
                     return sprintf('{%s}', join(',', array_map(array($this, 'name_value'),
                                                                array_keys($var),
                                                                array_values($var))));
@@ -298,38 +304,35 @@ class JSON
         }
     }
 
-   /**
-    * encodes an arbitrary variable into JSON format, alias for encode()
-    */
-    function enc($var)
-    {
+    /**
+     * encodes an arbitrary variable into JSON format, alias for encode()
+     */
+    function enc($var) {
         return $this->encode($var);
     }
 
-   /** function name_value
-    * array-walking function for use in generating JSON-formatted name-value pairs
-    *
-    * @param    string  $name   name of key to use
-    * @param    mixed   $value  reference to an array element to be encoded
-    *
-    * @return   string  JSON-formatted name-value pair, like '"name":value'
-    * @access   private
-    */
-    function name_value($name, $value)
-    {
+    /** function name_value
+     * array-walking function for use in generating JSON-formatted name-value pairs
+     *
+     * @param    string  $name   name of key to use
+     * @param    mixed   $value  reference to an array element to be encoded
+     *
+     * @return   string  JSON-formatted name-value pair, like '"name":value'
+     * @access   private
+     */
+    function name_value($name, $value) {
         return (sprintf("%s:%s", $this->encode(strval($name)), $this->encode($value)));
     }
 
-   /**
-    * reduce a string by removing leading and trailing comments and whitespace
-    *
-    * @param    $str    string      string value to strip of comments and whitespace
-    *
-    * @return   string  string value stripped of comments and whitespace
-    * @access   private
-    */
-    function reduce_string($str)
-    {
+    /**
+     * reduce a string by removing leading and trailing comments and whitespace
+     *
+     * @param    $str    string      string value to strip of comments and whitespace
+     *
+     * @return   string  string value stripped of comments and whitespace
+     * @access   private
+     */
+    function reduce_string($str) {
         $str = preg_replace(array(
 
                 // eliminate single line comments in '// ...' form
@@ -347,20 +350,19 @@ class JSON
         return trim($str);
     }
 
-   /**
-    * decodes a JSON string into appropriate variable
-    *
-    * @param    string  $str    JSON-formatted string
-    *
-    * @return   mixed   number, boolean, string, array, or object
-    *                   corresponding to given JSON input string.
-    *                   See argument 1 to JSON() above for object-output behavior.
-    *                   Note that decode() always returns strings
-    *                   in ASCII or UTF-8 format!
-    * @access   public
-    */
-    function decode($str)
-    {
+    /**
+     * decodes a JSON string into appropriate variable
+     *
+     * @param    string  $str    JSON-formatted string
+     *
+     * @return   mixed   number, boolean, string, array, or object
+     *                   corresponding to given JSON input string.
+     *                   See argument 1 to JSON() above for object-output behavior.
+     *                   Note that decode() always returns strings
+     *                   in ASCII or UTF-8 format!
+     * @access   public
+     */
+    function decode($str) {
         $str = $this->reduce_string($str);
 
         switch (strtolower($str)) {
@@ -399,11 +401,26 @@ class JSON
                         $ord_chrs_c = ord($chrs{$c});
 
                         switch ($substr_chrs_c_2) {
-                            case '\b':  $utf8 .= chr(0x08);  $c+=1;  break;
-                            case '\t':  $utf8 .= chr(0x09);  $c+=1;  break;
-                            case '\n':  $utf8 .= chr(0x0A);  $c+=1;  break;
-                            case '\f':  $utf8 .= chr(0x0C);  $c+=1;  break;
-                            case '\r':  $utf8 .= chr(0x0D);  $c+=1;  break;
+                            case '\b':
+                                $utf8 .= chr(0x08);
+                                $c+=1;
+                                break;
+                            case '\t':
+                                $utf8 .= chr(0x09);
+                                $c+=1;
+                                break;
+                            case '\n':
+                                $utf8 .= chr(0x0A);
+                                $c+=1;
+                                break;
+                            case '\f':
+                                $utf8 .= chr(0x0C);
+                                $c+=1;
+                                break;
+                            case '\r':
+                                $utf8 .= chr(0x0D);
+                                $c+=1;
+                                break;
 
                             case '\\"':
                             case '\\\'':
@@ -430,27 +447,32 @@ class JSON
                                 } elseif(($ord_chrs_c & 0xE0) == 0xC0) {
                                     // characters U-00000080 - U-000007FF, mask 110XXXXX
                                     //see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                                    $utf8 .= substr($chrs, $c, 2); $c += 1;
+                                    $utf8 .= substr($chrs, $c, 2);
+                                    $c += 1;
 
                                 } elseif(($ord_chrs_c & 0xF0) == 0xE0) {
                                     // characters U-00000800 - U-0000FFFF, mask 1110XXXX
                                     // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                                    $utf8 .= substr($chrs, $c, 3); $c += 2;
+                                    $utf8 .= substr($chrs, $c, 3);
+                                    $c += 2;
 
                                 } elseif(($ord_chrs_c & 0xF8) == 0xF0) {
                                     // characters U-00010000 - U-001FFFFF, mask 11110XXX
                                     // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                                    $utf8 .= substr($chrs, $c, 4); $c += 3;
+                                    $utf8 .= substr($chrs, $c, 4);
+                                    $c += 3;
 
                                 } elseif(($ord_chrs_c & 0xFC) == 0xF8) {
                                     // characters U-00200000 - U-03FFFFFF, mask 111110XX
                                     // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                                    $utf8 .= substr($chrs, $c, 5); $c += 4;
+                                    $utf8 .= substr($chrs, $c, 5);
+                                    $c += 4;
 
                                 } elseif(($ord_chrs_c & 0xFE) == 0xFC) {
                                     // characters U-04000000 - U-7FFFFFFF, mask 1111110X
                                     // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                                    $utf8 .= substr($chrs, $c, 6); $c += 5;
+                                    $utf8 .= substr($chrs, $c, 6);
+                                    $c += 5;
 
                                 }
                                 break;
@@ -612,13 +634,11 @@ class JSON
         }
     }
 
-   /**
-    * decodes a JSON string into appropriate variable; alias for decode()
-    */
-    function dec($var)
-    {
+    /**
+     * decodes a JSON string into appropriate variable; alias for decode()
+     */
+    function dec($var) {
         return $this->decode($var);
     }
-
 }
 

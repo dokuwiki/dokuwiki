@@ -1,0 +1,1 @@
+Redaktoni faqen dhe shtypni "Ruaj". Shikoni [[wiki:syntax]] për sintaksën e Wiki-t. Nëse doni të provoni disa gjëra, mësoni të hidhni hapat e parë në [[playground:playground|playground]].

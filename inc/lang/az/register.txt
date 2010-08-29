@@ -1,0 +1,3 @@
+====== Регистрация нового пользователя ======
+
+Qeydiyyat üçün bütün aşağıdaı xanalari doldurun. **e-mail adresinizin duz olduguna** fikir verin. Əgər şıfrəni əl ilə daxil etməyiniz xaiş olunmursa, onda şifrə e-mail adresinizə göndəriləcək. İstifadəçi adı [[doku>pagename|səhifənin identifikatorunun]] məhdudiyyətlərinə uyğun olmalıdır.

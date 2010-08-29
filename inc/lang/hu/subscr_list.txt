@@ -1,0 +1,14 @@
+Szia,
+
+A @PAGE@ névtérhez tartozó oldalak megváltoztak a @TITLE wikiben.
+Itt vannak a módosított oldalak:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Ha nem szeretnél értesítéseket kapni, jelentkezz be a wiki-be itt: @DOKUWIKIURL@, majd ezen az oldalon tudsz leiratkozni: @SUBSCRIBE@.
+
+--
+Ezt a levelet a DokuWiki generálta
+@DOKUWIKIURL@

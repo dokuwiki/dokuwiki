@@ -89,6 +89,7 @@ $conf['usedraft']    = 1;                //automatically save a draft while edit
 $conf['sepchar']     = '_';              //word separator character in page names; may be a
                                          //  letter, a digit, '_', '-', or '.'.
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
+$conf['fnencode']    = 'url';            //encode filenames (url|safe|utf-8)
 $conf['autoplural']  = 0;                //try (non)plural form of nonexisting files?
 $conf['compression'] = 'gz';             //compress old revisions: (0: off) ('gz': gnuzip) ('bz2': bzip)
                                          //  bz2 generates smaller files, but needs more cpu-power
@@ -103,6 +104,8 @@ $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
 $conf['jpg_quality'] = '70';             //quality of compression when scaling jpg images (0-100)
 $conf['subscribers'] = 0;                //enable change notice subscription support
+$conf['subscribe_time'] = 24*60*60;      //Time after which digests / lists are sent (in sec, default 1 day)
+                                         //Should be smaller than the time specified in recent_days
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0
 $conf['hidepages']   = '';               //Regexp for pages to be skipped from RSS, Search and Recent Changes
 $conf['send404']     = 0;                //Send a HTTP 404 status for non existing pages?
@@ -139,11 +142,12 @@ $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 
 //Proxy setup - if your Server needs a proxy to access the web set these
-$conf['proxy']['host'] = '';
-$conf['proxy']['port'] = '';
-$conf['proxy']['user'] = '';
-$conf['proxy']['pass'] = '';
-$conf['proxy']['ssl']  = 0;
+$conf['proxy']['host']    = '';
+$conf['proxy']['port']    = '';
+$conf['proxy']['user']    = '';
+$conf['proxy']['pass']    = '';
+$conf['proxy']['ssl']     = 0;
+$conf['proxy']['except']  = '';
 
 /* Safemode Hack */
 
@@ -154,3 +158,4 @@ $conf['ftp']['user'] = 'user';
 $conf['ftp']['pass'] = 'password';
 $conf['ftp']['root'] = '/home/user/htdocs';
 
+$conf['readdircache'] = 0;               //time cache in second for the readdir opération, 0 to deactivate.

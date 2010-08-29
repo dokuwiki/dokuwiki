@@ -7,6 +7,10 @@
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
+ * @author sleshek@wp.pl
+ * @author Leszek Stachowski <shazarre@gmail.com>
+ * @author maros <dobrimaros@yahoo.pl>
+ * @author Grzegorz Widła <dzesdzes@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -40,9 +44,6 @@ $lang['btn_back']              = 'Wstecz';
 $lang['btn_backlink']          = 'Odnośniki';
 $lang['btn_backtomedia']       = 'Powrót do wyboru pliku';
 $lang['btn_subscribe']         = 'Subskrybuj zmiany';
-$lang['btn_unsubscribe']       = 'Zaprzestań subskrypcji zmian';
-$lang['btn_subscribens']       = 'Subskrybuj zmiany w katalogu';
-$lang['btn_unsubscribens']     = 'Zaprzestań subskrypcji zmian w katalogu';
 $lang['btn_profile']           = 'Aktualizuj profil';
 $lang['btn_reset']             = 'Resetuj';
 $lang['btn_resendpwd']         = 'Prześlij nowe hasło';
@@ -96,7 +97,38 @@ $lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
 $lang['lockedby']              = 'Aktualnie zablokowane przez';
 $lang['lockexpire']            = 'Blokada wygasa';
 $lang['willexpire']            = 'Za minutę Twoja blokada tej strony wygaśnie.\nW celu uniknięcia konfliktów wyświetl podgląd aby odnowić blokadę.';
-$lang['notsavedyet']           = 'Nie zapisane zmiany zostaną utracone.\nCzy na pewno kontynuować?';
+$lang['js']['notsavedyet']     = 'Nie zapisane zmiany zostaną utracone.
+Czy na pewno kontynuować?';
+$lang['js']['searchmedia']     = 'Szukaj plików';
+$lang['js']['keepopen']        = 'Nie zamykaj okna po wyborze';
+$lang['js']['hidedetails']     = 'Ukryj szczegóły';
+$lang['js']['mediatitle']      = 'Ustawienia odnośników';
+$lang['js']['mediadisplay']    = 'Typ odnośnika';
+$lang['js']['mediaalign']      = 'Położenie';
+$lang['js']['mediasize']       = 'Rozmiar grafiki';
+$lang['js']['mediatarget']     = 'Cel odnośnika';
+$lang['js']['mediaclose']      = 'Zamknij';
+$lang['js']['mediainsert']     = 'Wstaw';
+$lang['js']['mediadisplayimg'] = 'Pokaż grafikę';
+$lang['js']['mediadisplaylnk'] = 'Pokaż tylko odnośnik.';
+$lang['js']['mediasmall']      = 'Mały rozmiar';
+$lang['js']['mediamedium']     = 'Średni rozmiar';
+$lang['js']['medialarge']      = 'Duży rozmiar';
+$lang['js']['mediaoriginal']   = 'Wersja oryginalna';
+$lang['js']['medialnk']        = 'Odnośnik do strony ze szczegółami';
+$lang['js']['mediadirect']     = 'Bezpośredni odnośnik do oryginału';
+$lang['js']['medianolnk']      = 'Bez odnośnika';
+$lang['js']['medianolink']     = 'Nie ustawiaj odnośnika do grafiki';
+$lang['js']['medialeft']       = 'Ustaw położenie po lewej stronie.';
+$lang['js']['mediaright']      = 'Ustaw położenie po prawej stronie.';
+$lang['js']['mediacenter']     = 'Ustaw położenie po środku.';
+$lang['js']['medianoalign']    = 'Nie ustawiaj położenia.';
+$lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer.
+Możesz skopiować odnośnik.';
+$lang['js']['linkwiz']         = 'Tworzenie odnośników';
+$lang['js']['linkto']          = 'Link do';
+$lang['js']['del_confirm']     = 'Czy na pewno usunąć?';
+$lang['js']['mu_btn']          = 'Wyślij wiele plików na raz';
 $lang['rssfailed']             = 'Wystąpił błąd przy pobieraniu tych danych: ';
 $lang['nothingfound']          = 'Nic nie znaleziono.';
 $lang['mediaselect']           = 'Wysyłanie pliku';
@@ -114,15 +146,6 @@ $lang['deletefail']            = 'Plik "%s" nie został usunięty, sprawdź upra
 $lang['mediainuse']            = 'Plik "%s" nie został usunięty, ponieważ jest używany.';
 $lang['namespaces']            = 'Katalogi';
 $lang['mediafiles']            = 'Dostępne pliki';
-$lang['js']['searchmedia']     = 'Szukaj plików';
-$lang['js']['keepopen']        = 'Nie zamykaj okna po wyborze';
-$lang['js']['hidedetails']     = 'Ukryj szczegóły';
-$lang['js']['nosmblinks']      = 'Odnośniki do zasobów sieci Windows działają tylko w przeglądarce Internet Explorer.
-Możesz skopiować odnośnik.';
-$lang['js']['linkwiz']         = 'Tworzenie odnośników';
-$lang['js']['linkto']          = 'Link do';
-$lang['js']['del_confirm']     = 'Czy na pewno usunąć?';
-$lang['js']['mu_btn']          = 'Wyślij wiele plików na raz';
 $lang['mediausage']            = 'Użyj następującej składni w odnośniku do tego pliku:';
 $lang['mediaview']             = 'Pokaż oryginalny plik';
 $lang['mediaroot']             = 'główny';
@@ -152,6 +175,7 @@ $lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/
 $lang['download']              = 'Pobierz zrzut';
 $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
+$lang['mail_subscribe_list']   = 'Zmienione strony w katalogu:';
 $lang['mail_new_user']         = 'Nowy użytkownik:';
 $lang['mail_upload']           = 'Umieszczono plik:';
 $lang['qb_bold']               = 'Pogrubienie';
@@ -194,11 +218,22 @@ $lang['img_copyr']             = 'Prawa autorskie';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Aparat';
 $lang['img_keywords']          = 'Słowa kluczowe';
-$lang['subscribe_success']     = 'Dodano %s do listy subskrypcji strony %s';
-$lang['subscribe_error']       = 'Błąd przy dodawaniu %s do listy subskrypcji strony %s';
-$lang['subscribe_noaddress']   = 'Nie podałeś adresu e-mail przy rejestracji, nie możesz zostać dodany do listy subskrypcji.';
-$lang['unsubscribe_success']   = 'Usunięto %s z listy subskrypcji strony %s';
-$lang['unsubscribe_error']     = 'Błąd przy usuwaniu %s z listy subskrypcji strony %s';
+$lang['subscr_subscribe_success'] = 'Dodano %s do listy subskrypcji %s';
+$lang['subscr_subscribe_error'] = 'Błąd podczas dodawania %s do listy subskrypcji %s';
+$lang['subscr_subscribe_noaddress'] = 'Brak adresu skojarzonego z twoim loginem, nie możesz zostać dodany(a) do listy subskrypcji';
+$lang['subscr_unsubscribe_success'] = 'Usunięto %s z listy subskrypcji %s';
+$lang['subscr_unsubscribe_error'] = 'Błąd podczas usuwania %s z listy subskrypcji %s';
+$lang['subscr_already_subscribed'] = '%s jest już subskrybowany(a) przez %s';
+$lang['subscr_not_subscribed'] = '%s nie jest subskrybowany(a) przez %s';
+$lang['subscr_m_not_subscribed'] = 'Obecnie nie subskrybujesz bieżącej strony lub katalogu.';
+$lang['subscr_m_new_header']   = 'Dodaj subskrypcję';
+$lang['subscr_m_current_header'] = 'Aktualne subskrypcje';
+$lang['subscr_m_unsubscribe']  = 'Zrezygnuj z subskrypcji';
+$lang['subscr_m_subscribe']    = 'Subskrybuj';
+$lang['subscr_m_receive']      = 'Otrzymuj';
+$lang['subscr_style_every']    = 'email przy każdej zmianie';
+$lang['subscr_style_digest']   = 'email ze streszczeniem zmian dla każdej ze stron';
+$lang['subscr_style_list']     = 'lista zmienionych stron od czasu ostatniego emaila';
 $lang['authmodfailed']         = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
 $lang['i_chooselang']          = 'Wybierz język';
@@ -246,3 +281,4 @@ $lang['days']                  = '%d dni temu';
 $lang['hours']                 = '%d godzin temu';
 $lang['minutes']               = '%d minut temu';
 $lang['seconds']               = '%d sekund temu';
+$lang['wordblock']             = 'Twoje ustawienia nie zostały zapisane ponieważ zawierają niedozwoloną treść (spam).';

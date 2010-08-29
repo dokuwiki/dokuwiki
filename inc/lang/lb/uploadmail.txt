@@ -1,0 +1,14 @@
+Eng Datei gouf op däin DokuWiki eropgelueden. Hei sinn d'Deteiler:
+
+Datei       : @MEDIA@
+Datum       : @DATE@
+Browser     : @BROWSER@
+IP-Adress   : @IPADDRESS@
+Hostnumm    : @HOSTNAME@
+Gréisst     : @SIZE@
+MIME Typ    : @MIME@
+Benotzer    : @USER@
+
+-- 
+Dës Mail gouf generéiert vun DokuWiki op
+@DOKUWIKIURL@

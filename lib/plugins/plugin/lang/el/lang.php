@@ -10,6 +10,7 @@
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
+ * @author George Petsagourakis <petsagouris@gmail.com>
  */
 $lang['menu']                  = 'Διαχείριση Επεκτάσεων';
 $lang['download']              = 'Κατεβάστε και εγκαταστήστε μια νέα επέκταση (plugin)';

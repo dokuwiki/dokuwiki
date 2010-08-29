@@ -29,6 +29,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $doc = '';        // will contain the whole document
     var $toc = array();   // will contain the Table of Contents
 
+    private $sectionedits = array(); // A stack of section edit data
 
     var $headers = array();
     var $footnotes = array();
@@ -38,6 +39,40 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     var $_counter   = array(); // used as global counter, introduced for table classes
     var $_codeblock = 0; // counts the code and file blocks, used to provide download links
+
+    /**
+     * Register a new edit section range
+     *
+     * @param $type  string The section type identifier
+     * @param $title string The section title
+     * @param $start int    The byte position for the edit start
+     * @return string A marker class for the starting HTML element
+     * @author Adrian Lang <lang@cosmocode.de>
+     */
+    public function startSectionEdit($start, $type, $title = null) {
+        static $lastsecid = 0;
+        $this->sectionedits[] = array(++$lastsecid, $start, $type, $title);
+        return 'sectionedit' . $lastsecid;
+    }
+
+    /**
+     * Finish an edit section range
+     *
+     * @param $end int The byte position for the edit end; null for the rest of
+                       the page
+     * @author Adrian Lang <lang@cosmocode.de>
+     */
+    public function finishSectionEdit($end = null) {
+        list($id, $start, $type, $title) = array_pop($this->sectionedits);
+        if (!is_null($end) && $end <= $start) {
+            return;
+        }
+        $this->doc .= "<!-- EDIT$id " . strtoupper($type) . ' ';
+        if (!is_null($title)) {
+            $this->doc .= '"' . str_replace('"', '', $title) . '" ';
+        }
+        $this->doc .= "[$start-" . (is_null($end) ? '' : $end) . '] -->';
+    }
 
     function getFormat(){
         return 'xhtml';
@@ -51,6 +86,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function document_end() {
+        // Finish open section edits.
+        while (count($this->sectionedits) > 0) {
+            if ($this->sectionedits[count($this->sectionedits) - 1][1] <= 1) {
+                // If there is only one section, do not write a section edit
+                // marker.
+                array_pop($this->sectionedits);
+            } else {
+                $this->finishSectionEdit();
+            }
+        }
+
         if ( count ($this->footnotes) > 0 ) {
             $this->doc .= '<div class="footnotes">'.DOKU_LF;
 
@@ -106,6 +152,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function header($text, $level, $pos) {
+        global $conf;
+
         if(!$text) return; //skip empty headlines
 
         $hid = $this->_headerToLink($text,true);
@@ -122,30 +170,24 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $this->lastlevel = $level;
 
+        if ($level <= $conf['maxseclevel'] &&
+            count($this->sectionedits) > 0 &&
+            $this->sectionedits[count($this->sectionedits) - 1][2] === 'section') {
+            $this->finishSectionEdit($pos - 1);
+        }
+
         // write the header
-        $this->doc .= DOKU_LF.'<h'.$level.'><a name="'.$hid.'" id="'.$hid.'">';
+        $this->doc .= DOKU_LF.'<h'.$level;
+        if ($level <= $conf['maxseclevel']) {
+            $this->doc .= ' class="' . $this->startSectionEdit($pos, 'section', $text) . '"';
+        }
+        $this->doc .= '><a name="'.$hid.'" id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
         $this->doc .= "</a></h$level>".DOKU_LF;
     }
 
-     /**
-     * Section edit marker is replaced by an edit button when
-     * the page is editable. Replacement done in 'inc/html.php#html_secedit'
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @author Ben Coburn   <btcoburn@silicodon.net>
-     */
-    function section_edit($start, $end, $level, $name) {
-        global $conf;
-
-        if ($start!=-1 && $level<=$conf['maxseclevel']) {
-            $name = str_replace('"', '', $name);
-            $this->doc .= '<!-- SECTION "'.$name.'" ['.$start.'-'.(($end===0)?'':$end).'] -->';
-        }
-    }
-
     function section_open($level) {
-        $this->doc .= "<div class=\"level$level\">".DOKU_LF;
+        $this->doc .= '<div class="level' . $level . '">' . DOKU_LF;
     }
 
     function section_close() {
@@ -400,6 +442,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
         }
 
+        if ($text{0} == "\n") {
+            $text = substr($text, 1);
+        }
+        if (substr($text, -1) == "\n") {
+            $text = substr($text, 0, -1);
+        }
+
         if ( is_null($language) ) {
             $this->doc .= '<pre class="'.$type.'">'.$this->_xmlEntities($text).'</pre>'.DOKU_LF;
         } else {
@@ -517,6 +566,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
+
+        $params = '';
+        $parts = explode('?', $id, 2);
+        if (count($parts) === 2) {
+            $id = $parts[0];
+            $params = $parts[1];
+        }
+
         // default name is based on $id as given
         $default = $this->_simpleTitle($id);
 
@@ -550,7 +607,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $link['more']   = '';
         $link['class']  = $class;
-        $link['url']    = wl($id);
+        $link['url']    = wl($id, $params);
         $link['name']   = $name;
         $link['title']  = $id;
         //add search string
@@ -845,14 +902,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     // $numrows not yet implemented
-    function table_open($maxcols = NULL, $numrows = NULL){
+    function table_open($maxcols = NULL, $numrows = NULL, $pos){
+        global $lang;
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
-        $this->doc .= '<table class="inline">'.DOKU_LF;
+        $this->doc .= '<div class="table ' . $this->startSectionEdit($pos, 'table') . '"><table class="inline">'.DOKU_LF;
     }
 
-    function table_close(){
-        $this->doc .= '</table>'.DOKU_LF;
+    function table_close($pos){
+        $this->doc .= '</table></div>'.DOKU_LF;
+        $this->finishSectionEdit($pos);
     }
 
     function tablerow_open(){
@@ -966,7 +1025,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             }elseif($ext == 'jpg' || $ext == 'jpeg'){
                 //try to use the caption from IPTC/EXIF
                 require_once(DOKU_INC.'inc/JpegMeta.php');
-                $jpeg =& new JpegMeta(mediaFN($src));
+                $jpeg =new JpegMeta(mediaFN($src));
                 if($jpeg !== false) $cap = $jpeg->getTitle();
                 if($cap){
                     $title = $this->_xmlEntities($cap);
@@ -1019,7 +1078,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $att['class'] = "media$align";
             if($align == 'right') $att['align'] = 'right';
             if($align == 'left')  $att['align'] = 'left';
-            $ret .= html_flashobject(ml($src,array('cache'=>$cache)),$width,$height,
+            $ret .= html_flashobject(ml($src,array('cache'=>$cache),true,'&'),$width,$height,
                                      array('quality' => 'high'),
                                      null,
                                      $att,

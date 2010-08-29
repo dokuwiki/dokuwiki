@@ -1,8 +1,0 @@
-25
-The first line of this file contains a number, indicating
-which notification messages should not be displayed. This
-is the only information sent to dokuwiki.org when the
-updatecheck option is enabled. You usually don't need to
-change this number as it gets updated when you install the
-new release - but to ignore a certain message set its
-number here.

@@ -11,6 +11,8 @@
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Matthias Carchon webmaster@c-mattic.be
+ * @author Marijn Hofstra <hofstra.m@gmail.com>
+ * @author Timon Van Overveldt <timonvo@gmail.com>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -85,7 +87,6 @@ $lang['profileconfirm']        = 'Bevestig profielwijzigingen met wachtwoord';
 $lang['disableactions']        = 'Aangevinkte DokuWiki-akties uitschakelen';
 $lang['disableactions_check']  = 'Controleer';
 $lang['disableactions_subscription'] = 'Inschrijven/opzeggen';
-$lang['disableactions_nssubscription'] = 'Namespace inschrijven/opzeggen';
 $lang['disableactions_wikicode'] = 'Bron bekijken/exporteer rauw';
 $lang['disableactions_other']  = 'Andere akties (gescheiden door komma\'s)';
 $lang['sneaky_index']          = 'Met de standaardinstellingen zal DokuWiki alle namespaces laten zien in de index. Het inschakelen van deze optie zorgt ervoor dat de namespaces waar de gebruiker geen leestoegang tot heeft, verborgen worden. Dit kan resulteren in het verbergen van subnamespaces waar de gebruiker wel toegang to heeft. Dit kan de index onbruikbaar maken met bepaalde ACL-instellingen.';
@@ -99,6 +100,7 @@ $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepac
 $lang['usedraft']              = 'Sla automatisch een concept op tijdens het wijzigen';
 $lang['sepchar']               = 'Woordscheider in paginanamen';
 $lang['canonical']             = 'Herleid URL\'s tot hun basisvorm';
+$lang['fnencode']              = 'Methode om niet-ASCII bestandsnamen te coderen.';
 $lang['autoplural']            = 'Controleer op meervoudsvormen in links';
 $lang['compression']           = 'Compressiemethode voor attic-bestanden';
 $lang['cachetime']             = 'Maximum leeftijd voor cache (sec)';
@@ -112,6 +114,7 @@ $lang['gdlib']                 = 'Versie GD Lib ';
 $lang['im_convert']            = 'Path naar ImageMagick\'s convert tool';
 $lang['jpg_quality']           = 'JPG compressiekwaliteit (0-100)';
 $lang['subscribers']           = 'Ondersteuning pagina-inschrijving aanzetten';
+$lang['subscribe_time']        = 'Inschrijvingsmeldingen en samenvattingen worden na deze tijdsduur (in seconden) verzonden. Deze waarde dient kleiner te zijn dan de tijd ingevuld bij "Hoeveel recente wijzigingen bewaren (dagen)"';
 $lang['compress']              = 'Compacte CSS en javascript output';
 $lang['hidepages']             = 'Verberg deze pagina\'s (regular expressions)';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
@@ -138,6 +141,7 @@ $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy gebruikersnaam';
 $lang['proxy____pass']         = 'Proxy wachtwoord';
 $lang['proxy____ssl']          = 'Gebruik SSL om een connectie te maken met de proxy';
+$lang['proxy____except']       = 'Reguliere expressie om URL\'s te bepalen waarvoor de proxy overgeslaan moet worden.';
 $lang['safemodehack']          = 'Safemode hack aanzetten';
 $lang['ftp____host']           = 'FTP server voor safemode hack';
 $lang['ftp____port']           = 'FTP port voor safemode hack';
@@ -185,3 +189,4 @@ $lang['useheading_o_0']        = 'Nooit';
 $lang['useheading_o_navigation'] = 'Alleen navigatie';
 $lang['useheading_o_content']  = 'Alleen wiki inhoud';
 $lang['useheading_o_1']        = 'Altijd';
+$lang['readdircache']          = 'Maximale leeftijd voor readdir cache (in seconden)';

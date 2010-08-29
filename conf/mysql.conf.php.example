@@ -8,15 +8,15 @@
  *
  * TABLE users
  *     uid   login   pass   firstname   lastname   email
- *	  
+ *
  * TABLE groups
  *     gid   name
- *	  
+ *
  * TABLE usergroup
  *     uid   gid
- * 
- * To use this configuration you have to copy them to local.php
- * or at least include this file in local.php.
+ *
+ * To use this configuration you have to copy them to local.protected.php
+ * or at least include this file in local.protected.php.
  */
 
 /* Options to configure database access. You need to set up this
@@ -59,9 +59,9 @@ $conf['auth']['mysql']['TablesToLock']= array("users", "users AS u","groups", "g
  * The module access the password as 'pass' so a alias might be necessary.
  *
  * Following patters will be replaced:
- *   %{user}	user name
- *   %{pass}	encrypted or clear text password (depends on 'encryptPass')
- *   %{dgroup}	default group name 
+ *   %{user}    user name
+ *   %{pass}    encrypted or clear text password (depends on 'encryptPass')
+ *   %{dgroup}  default group name
  */
 $conf['auth']['mysql']['checkPass']   = "SELECT pass
                                          FROM usergroup AS ug
@@ -80,7 +80,7 @@ $conf['auth']['mysql']['checkPass']   = "SELECT pass
  * names listed above so aliasses might be neseccary.
  *
  * Following patters will be replaced:
- *   %{user}	user name
+ *   %{user}    user name
  */
 $conf['auth']['mysql']['getUserInfo'] = "SELECT pass, CONCAT(firstname,' ',lastname) AS name, email AS mail
                                          FROM users
@@ -92,7 +92,7 @@ $conf['auth']['mysql']['getUserInfo'] = "SELECT pass, CONCAT(firstname,' ',lastn
  * might be nessecary.
  *
  * Following patters will be replaced:
- *   %{user}	user name
+ *   %{user}    user name
  */
 $conf['auth']['mysql']['getGroups']   = "SELECT name as `group`
                                          FROM groups g, users u, usergroup ug
@@ -113,13 +113,13 @@ $conf['auth']['mysql']['getGroups']   = "SELECT name as `group`
  * The login name will be accessed as 'user' to a alias might be neseccary.
  * No patterns will be replaced in this statement but following patters
  * will be replaced in the filter expressions:
- *   %{user}	in FilterLogin  user's login name
- *   %{name}	in FilterName   user's full name
- *   %{email}	in FilterEmail  user's email address
- *   %{group}	in FilterGroup  group name
+ *   %{user}    in FilterLogin  user's login name
+ *   %{name}    in FilterName   user's full name
+ *   %{email}   in FilterEmail  user's email address
+ *   %{group}   in FilterGroup  group name
  */
 $conf['auth']['mysql']['getUsers']    = "SELECT DISTINCT login AS user
-                                         FROM users AS u 
+                                         FROM users AS u
                                          LEFT JOIN usergroup AS ug ON u.uid=ug.uid
                                          LEFT JOIN groups AS g ON ug.gid=g.gid";
 $conf['auth']['mysql']['FilterLogin'] = "login LIKE '%{user}'";
@@ -136,11 +136,11 @@ $conf['auth']['mysql']['SortOrder']   = "ORDER BY login";
  * to store are: login name, password, email address and full name.
  *
  * Following patterns will be replaced:
- *   %{user}	user's login name
- *   %{pass}	password (encrypted or clear text, depends on 'encryptPass')
- *   %{email}	email address
- *   %{name}	user's full name
- */ 
+ *   %{user}    user's login name
+ *   %{pass}    password (encrypted or clear text, depends on 'encryptPass')
+ *   %{email}   email address
+ *   %{name}    user's full name
+ */
 $conf['auth']['mysql']['addUser']     = "INSERT INTO users
                                          (login, pass, email, firstname, lastname)
                                          VALUES ('%{user}', '%{pass}', '%{email}',
@@ -149,7 +149,7 @@ $conf['auth']['mysql']['addUser']     = "INSERT INTO users
 
 /* This statement should add a group to the database.
  * Following patterns will be replaced:
- *   %{group}	group name
+ *   %{group}   group name
  */
 $conf['auth']['mysql']['addGroup']    = "INSERT INTO groups (name)
                                          VALUES ('%{group}')";
@@ -157,18 +157,18 @@ $conf['auth']['mysql']['addGroup']    = "INSERT INTO groups (name)
 /* This statement should connect a user to a group (a user become member
  * of that group).
  * Following patterns will be replaced:
- *   %{user}	user's login name
- *   %{uid}		id of a user dataset
- *   %{group}	group name
- *   %{gid}		id of a group dataset
+ *   %{user}    user's login name
+ *   %{uid}     id of a user dataset
+ *   %{group}   group name
+ *   %{gid}     id of a group dataset
  */
 $conf['auth']['mysql']['addUserGroup']= "INSERT INTO usergroup (uid, gid)
                                          VALUES ('%{uid}', '%{gid}')";
 
 /* This statement should remove a group fom the database.
  * Following patterns will be replaced:
- *   %{group}	group name
- *   %{gid}		id of a group dataset
+ *   %{group}   group name
+ *   %{gid}     id of a group dataset
  */
 $conf['auth']['mysql']['delGroup']    = "DELETE FROM groups
                                          WHERE gid='%{gid}'";
@@ -177,7 +177,7 @@ $conf['auth']['mysql']['delGroup']    = "DELETE FROM groups
  * The module will access the index with the name 'id' so a alias might be
  * necessary.
  * following patters will be replaced:
- *   %{user}	user name 
+ *   %{user}    user name
  */
 $conf['auth']['mysql']['getUserID']   = "SELECT uid AS id
                                          FROM users
@@ -189,8 +189,8 @@ $conf['auth']['mysql']['getUserID']   = "SELECT uid AS id
 
 /* This statement should remove a user fom the database.
  * Following patterns will be replaced:
- *   %{user}	user's login name
- *   %{uid}		id of a user dataset
+ *   %{user}    user's login name
+ *   %{uid}     id of a user dataset
  */
 $conf['auth']['mysql']['delUser']     = "DELETE FROM users
                                          WHERE uid='%{uid}'";
@@ -198,7 +198,7 @@ $conf['auth']['mysql']['delUser']     = "DELETE FROM users
 /* This statement should remove all connections from a user to any group
  * (a user quits membership of all groups).
  * Following patterns will be replaced:
- *   %{uid}		id of a user dataset
+ *   %{uid}     id of a user dataset
  */
 $conf['auth']['mysql']['delUserRefs'] = "DELETE FROM usergroup
                                          WHERE uid='%{uid}'";
@@ -212,12 +212,12 @@ $conf['auth']['mysql']['delUserRefs'] = "DELETE FROM usergroup
  * added to updateUser on demand. Only changed parameters will be used.
  *
  * Following patterns will be replaced:
- *   %{user}	user's login name
- *   %{pass}	password (encrypted or clear text, depends on 'encryptPass')
- *   %{email}	email address
- *   %{name}	user's full name
+ *   %{user}    user's login name
+ *   %{pass}    password (encrypted or clear text, depends on 'encryptPass')
+ *   %{email}   email address
+ *   %{name}    user's full name
  *   %{uid}     user id that should be updated
- */ 
+ */
 $conf['auth']['mysql']['updateUser']  = "UPDATE users SET";
 $conf['auth']['mysql']['UpdateLogin'] = "login='%{user}'";
 $conf['auth']['mysql']['UpdatePass']  = "pass='%{pass}'";
@@ -230,10 +230,10 @@ $conf['auth']['mysql']['UpdateTarget']= "WHERE uid=%{uid}";
  * group (a user quits membership of that group).
  *
  * Following patterns will be replaced:
- *   %{user}	user's login name
- *   %{uid}		id of a user dataset
- *   %{group}	group name
- *   %{gid}		id of a group dataset
+ *   %{user}    user's login name
+ *   %{uid}     id of a user dataset
+ *   %{group}   group name
+ *   %{gid}     id of a group dataset
  */
 $conf['auth']['mysql']['delUserGroup']= "DELETE FROM usergroup
                                          WHERE uid='%{uid}'
@@ -244,7 +244,7 @@ $conf['auth']['mysql']['delUserGroup']= "DELETE FROM usergroup
  * be necessary.
  *
  * Following patters will be replaced:
- *   %{group}	group name 
+ *   %{group}   group name
  */
 $conf['auth']['mysql']['getGroupID']  = "SELECT gid AS id
                                          FROM groups

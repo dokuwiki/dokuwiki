@@ -1,0 +1,20 @@
+Szia,
+
+A @PAGE@ oldal a @TITLE wikiben megváltozott.
+Itt vannak az eltérések:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Dátum: @DATE@
+Felhasználó: @USER@
+Összefoglaló: @SUMMARY@
+Régi verzió: @OLDPAGE@
+Új verzió: @NEWPAGE@
+
+Ha nem szeretnél értesítéseket kapni, jelentkezz be a wiki-be itt: @DOKUWIKIURL@, majd ezen az oldalon tudsz leiratkozni: @NEWPAGE@.
+
+--
+Ezt a levelet a DokuWiki generálta
+@DOKUWIKIURL@

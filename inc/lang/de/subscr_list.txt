@@ -1,0 +1,18 @@
+Hallo!
+
+Seite im Namensraum @PAGE@ im @TITLE@ Wiki wurden bearbeitet.
+Das sind die geänderten Seiten:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Um das Abonnement für diese Seite aufzulösen, melde Sie sich im Wiki an
+@DOKUWIKIURL@, besuchen dann
+@SUBSCRIBE@
+und klicken auf die Taste 'Änderungen abbestellen'.
+
+--
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@
+

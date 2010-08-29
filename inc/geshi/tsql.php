@@ -4,7 +4,7 @@
  * --------
  * Author: Duncan Lock (dunc@dflock.co.uk)
  * Copyright: (c) 2006 Duncan Lock (http://dflock.co.uk/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2005/11/22
  *
  * T-SQL language file for GeSHi.
@@ -41,16 +41,16 @@ $language_data = array (
     'LANG_NAME' => 'T-SQL',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array('/*' => '*/'),
-    'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
-    'ESCAPE_CHAR' => '\\',
+    'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
             // Datatypes
-            'bigint', 'int', 'smallint', 'tinyint', 'bit', 'decimal', 'numeric', 'money',
-            'smallmoney', 'float', 'real', 'datetime', 'smalldatetime', 'char', 'varchar',
-            'text', 'nchar', 'nvarchar', 'ntext', 'binary', 'varbinary', 'image', 'cursor',
-            'sql_variant', 'table', 'timestamp', 'uniqueidentifier',
+            'bigint', 'tinyint', 'money',
+            'smallmoney', 'datetime', 'smalldatetime',
+            'text', 'nvarchar', 'ntext', 'varbinary', 'image',
+            'sql_variant', 'uniqueidentifier',
 
             // Keywords
             'ABSOLUTE', 'ACTION', 'ADD', 'ADMIN', 'AFTER', 'AGGREGATE', 'ALIAS', 'ALLOCATE', 'ALTER', 'ARE', 'ARRAY', 'AS',

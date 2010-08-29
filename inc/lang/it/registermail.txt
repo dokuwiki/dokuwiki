@@ -2,7 +2,7 @@ Un nuovo utente è stato registrato. Ecco i dettagli:
 
 Nome utente   : @NEWUSER@
 Nome completo : @NEWNAME@
-E-Mail        : @NEWEMAIL@
+EMail        : @NEWEMAIL@
 
 Data          : @DATE@
 Browser       : @BROWSER@
@@ -10,5 +10,5 @@ Indirizzo IP  : @IPADDRESS@
 Nome macchina : @HOSTNAME@
 
 -- 
-Questa mail è stata generata da DokuWiki su
+Questa email è stata generata dal DokuWiki di
 @DOKUWIKIURL@

@@ -8,6 +8,7 @@
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
+ * @author ben <ben@livetom.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -84,12 +85,12 @@ $lang['profileconfirm']        = '更新个人信息时需要输入当前密码'
 $lang['disableactions']        = '停用 DokuWiki 功能';
 $lang['disableactions_check']  = '检查';
 $lang['disableactions_subscription'] = '订阅/退订';
-$lang['disableactions_nssubscription'] = '命名空间订阅/退订';
 $lang['disableactions_wikicode'] = '查看源文件/导出源文件';
 $lang['disableactions_other']  = '其他功能（用英文逗号分隔）';
 $lang['sneaky_index']          = '默认情况下，DokuWiki 在索引页会显示所有 namespace。启用该选项能隐藏那些用户没有权限阅读的页面。但也可能将用户能够阅读的子页面一并隐藏。这有可能导致在特定 ACL 设置下，索引功能不可用。';
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
 $lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
+$lang['xmlrpc']                = '启用/禁用 XML-RPC 交互界面。';
 $lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 splitbrain.org。';
 $lang['userewrite']            = '使用更整洁的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
@@ -115,7 +116,6 @@ $lang['send404']               = '发送 "HTTP 404/页面没有找到" 错误信
 $lang['sitemap']               = '生成 Google sitemap（天）';
 $lang['broken_iua']            = 'ignore_user_abort 功能失效了？这有可能导致搜索索引不可用。IIS+PHP/CGI 已损坏。请参阅 <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> 获取更多信息。';
 $lang['xsendfile']             = '使用 X-Sendfile 头让服务器发送状态文件？您的服务器需要支持该功能。';
-$lang['xmlrpc']                = '启用/禁用 XML-RPC 交互界面。';
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s（DokuWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';

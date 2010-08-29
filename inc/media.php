@@ -8,9 +8,6 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
-require_once(DOKU_INC.'inc/html.php');
-require_once(DOKU_INC.'inc/search.php');
-require_once(DOKU_INC.'inc/JpegMeta.php');
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -152,7 +149,6 @@ function media_inuse($id) {
     global $conf;
     $mediareferences = array();
     if($conf['refcheck']){
-        require_once(DOKU_INC.'inc/fulltext.php');
         $mediareferences = ft_mediause($id,$conf['refshow']);
         if(!count($mediareferences)) {
             return false;
@@ -230,7 +226,6 @@ function media_delete($id,$auth){
 function media_upload($ns,$auth){
     if($auth < AUTH_UPLOAD) return false;
     if(!checkSecurityToken()) return false;
-    require_once(DOKU_INC.'inc/confutils.php');
     global $lang;
     global $conf;
 

@@ -9,6 +9,8 @@
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author rasmus@kinnerup.com
+ * @author Michael Pedersen subben@gmail.com
  */
 $lang['menu']                  = 'Opsætningsindstillinger';
 $lang['error']                 = 'Indstillingerne blev ikke opdateret på grund af en ugyldig værdi, Gennemse venligst dine ændringer og gem dem igen.
@@ -85,7 +87,6 @@ $lang['profileconfirm']        = 'Bekræft profilændringer med kodeord';
 $lang['disableactions']        = 'Slå DokuWiki-muligheder fra';
 $lang['disableactions_check']  = 'Tjek';
 $lang['disableactions_subscription'] = 'Tliføj/Fjern opskrivning';
-$lang['disableactions_nssubscription'] = 'Tilmelding / afmelding af navnerum';
 $lang['disableactions_wikicode'] = 'Vis kilde/Eksporter grundkode';
 $lang['disableactions_other']  = 'Andre muligheder (kommasepareret)';
 $lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerum i indholdsfortegnelsen. Ved at slå denne valgmulighed til vil skjule de navnerum, hvor brugeren ikke har læsetilladelse. Dette kan føre til, at tilgængelige undernavnerum bliver skjult. Ligeledes kan det også gøre indholdsfortegnelsen ubrugelig med visse ACL-opsætninger.';
@@ -112,6 +113,7 @@ $lang['gdlib']                 = 'Udgave af GD Lib';
 $lang['im_convert']            = 'Sti til ImageMagick\'s omdannerværktøj';
 $lang['jpg_quality']           = 'JPG komprimeringskvalitet (0-100)';
 $lang['subscribers']           = 'Slå understøttelse af abonnement på sider til';
+$lang['subscribe_time']        = 'Tid der går før abonnementlister og nyhedsbreve er sendt (i sekunder). Denne værdi skal være mindre end den tid specificeret under recent_days.';
 $lang['compress']              = 'Komprimer CSS- og JavaScript-filer';
 $lang['hidepages']             = 'Skjul lignende sider (almindelige udtryk)';
 $lang['send404']               = 'Send "HTTP 404/Page Not Found" for ikke-eksisterende sider';

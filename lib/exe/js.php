@@ -11,10 +11,6 @@ if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session o
 if(!defined('NL')) define('NL',"\n");
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/httputils.php');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/JSON.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
@@ -33,6 +29,7 @@ if(!defined('SIMPLE_TEST')){
 function js_out(){
     global $conf;
     global $lang;
+    global $config_cascade;
 
     // The generated script depends on some dynamic options
     $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
@@ -41,6 +38,7 @@ function js_out(){
     $files = array(
                 DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
+                DOKU_INC.'lib/scripts/delay.js',
                 DOKU_INC.'lib/scripts/cookie.js',
                 DOKU_INC.'lib/scripts/script.js',
                 DOKU_INC.'lib/scripts/tw-sack.js',
@@ -52,12 +50,16 @@ function js_out(){
                 DOKU_INC.'lib/scripts/edit.js',
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
+                DOKU_INC.'lib/scripts/subscriptions.js',
+                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_TPLINC.'script.js',
             );
 
     // add possible plugin scripts and userscript
     $files   = array_merge($files,js_pluginscripts());
-    $files[] = DOKU_CONF.'userscript.js';
+    if(isset($config_cascade['userscript']['default'])){
+        $files[] = $config_cascade['userscript']['default'];
+    }
 
     // check cache age & handle conditional request
     header('Cache-Control: public, max-age=3600');
@@ -94,7 +96,6 @@ function js_out(){
     echo 'LANG = '.$json->encode($lang['js']).";\n";
 
     // load toolbar
-    require_once(DOKU_INC.'inc/toolbar.php');
     toolbar_JSdefines('toolbar');
 
     // load files
@@ -106,15 +107,17 @@ function js_out(){
 
 
     // init stuff
-    js_runonstart("ajax_qsearch.init('qsearch__in','qsearch__out')");
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart('addTocToggle()');
     js_runonstart("initSizeCtl('size__ctl','wiki__text')");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
-    js_runonstart("initChangeCheck('".js_escape($lang['notsavedyet'])."')");
-    js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+    if($conf['locktime'] != 0){
+        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+    }
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
+    // init hotkeys - must have been done after init of toolbar
+    js_runonstart('initializeHotkeys()');
 
     // end output buffering and get contents
     $js = ob_get_contents();
@@ -151,7 +154,7 @@ function js_load($file){
     static $loaded = array();
 
     $data = io_readFile($file);
-    while(preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\./]+)\s*\*/#',$data,$match)){
+    while(preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\.\-_/]+)\s*\*/#',$data,$match)){
         $ifile = $match[2];
 
         // is it a include_once?

@@ -4,7 +4,7 @@
  * --------
  * Author: Jan-Philipp Halle (typo3@jphalle.de)
  * Copyright: (c) 2005 Jan-Philipp Halle (http://www.jphalle.de/)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2005/07/29
  *
  * TypoScript language file for GeSHi.

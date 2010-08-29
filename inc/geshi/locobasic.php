@@ -4,7 +4,7 @@
  * -------------
  * Author: Nacho Cabanes
  * Copyright: (c) 2009 Nacho Cabanes (http://www.nachocabanes.com)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2009/03/22
  *
  * Locomotive Basic (Amstrad CPC series) language file for GeSHi.
@@ -80,8 +80,8 @@ $language_data = array (
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #0000ff; font-weight: bold;',
-            2 => 'color: #008888; font-weight: bold;'
+            1 => 'color: #000088; font-weight: bold;',
+            2 => 'color: #AA00AA; font-weight: bold;'
             ),
         'COMMENTS' => array(
             1 => 'color: #808080;',
@@ -91,7 +91,7 @@ $language_data = array (
             0 => 'color: #ff0000;'
             ),
         'STRINGS' => array(
-            0 => 'color: #ff0000;'
+            0 => 'color: #008800;'
             ),
         'NUMBERS' => array(
             0 => 'color: #0044ff;'

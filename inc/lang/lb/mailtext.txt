@@ -1,0 +1,17 @@
+Et gouf eng Säit an dengem DokuWiki g'ännert oder nei erstallt. Hei sinn d'Detailer:
+
+Datum          : @DATE@
+Browser        : @BROWSER@
+IP-Address     : @IPADDRESS@
+Hostname       : @HOSTNAME@
+Al Versioun    : @OLDPAGE@
+Nei Versioun   : @NEWPAGE@
+Zesummefaassung: @SUMMARY@
+Benotzer       : @USER@
+
+@DIFF@
+
+
+-- 
+Dës Mail gouf generéiert vum DokuWiki op
+@DOKUWIKIURL@

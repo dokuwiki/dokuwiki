@@ -1,0 +1,17 @@
+Salute!
+
+Alcun paginas in le spatio de nomines @PAGE@ del wiki @TITLE@ ha cambiate.
+Ecce le paginas con modiicationes:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Pro cancellar le notificationes de paginas, aperi un session al wiki a
+@DOKUWIKIURL@ postea visita
+@SUBSCRIBE@
+e cancella tu subscription al modificationes in paginas e/o spatios de nomines.
+
+--
+Iste message ha essite generate per DokuWiki a
+@DOKUWIKIURL@

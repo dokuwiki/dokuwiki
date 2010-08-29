@@ -21,6 +21,10 @@ a {
   background: none !important;
 }
 
+a.interwiki {
+  padding-left: 0px !important;
+}
+
 
 div.meta {
   clear: both;
@@ -141,6 +145,10 @@ div.dokuwiki ol ol ol ol { list-style-type: lower-greek; }
 /* the list items overriding the ol definition */
 span.li {
     font-weight: normal;
+}
+
+pre {
+  font-family: monospace;
 }
 
 /* code blocks by indention */

@@ -1,0 +1,11 @@
+=== Ndihmë e Shpejtë: ===
+
+Në këtë faqe mund të shtoni ose hiqni të drejta për hapësira emri dhe faqe në wiki-n tuaj.
+
+Paneli i majtë tregon të gjitha faqet dhe hapësirat e emrit të disponueshme.
+
+Forma më sipër ju lejon të shihni dhe ndryshoni lejet për një grup ose përdorues të përzgjedhur.
+
+Në tabelën më poshtë tregohen të gjitha rregullat e vendosjes së aksesit. Mund ta përdorni për të fshirë shpejt ose ndryshuar shumë rregulla njëkohësisht.
+
+Leximi i [[doku>acl|dokumentimit zyrtar mbi ACL]]  mund t'ju ndihmojë për të kuptuar plotësisht sesi funksionin Kontrolli i Aksesit në DokuWiki.

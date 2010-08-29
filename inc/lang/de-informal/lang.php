@@ -15,6 +15,7 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author Marcel Metz <marcel_metz@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -104,7 +105,7 @@ $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['lockedby']              = 'Momentan gesperrt von';
 $lang['lockexpire']            = 'Sperre läuft ab am';
 $lang['willexpire']            = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
-$lang['notsavedyet']           = 'Nicht gespeicherte Änderungen gehen verloren!\nWeitermachen?';
+$lang['js']['notsavedyet']     = "Nicht gespeicherte Änderungen gehen verloren!";
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
 $lang['nothingfound']          = 'Nichts gefunden.';
 $lang['mediaselect']           = 'Dateiauswahl';
@@ -156,7 +157,7 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wieder hergestellt';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
-$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Ihnalt anzuzeigen.';
+$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Download-Teil';
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geaendert:';
@@ -197,7 +198,7 @@ $lang['img_caption']           = 'Bildunterschrift';
 $lang['img_date']              = 'Datum';
 $lang['img_fname']             = 'Dateiname';
 $lang['img_fsize']             = 'Grösse';
-$lang['img_artist']            = 'FotografIn';
+$lang['img_artist']            = 'Fotograf';
 $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Kamera';

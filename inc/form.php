@@ -7,7 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/html.php');
 
 /**
  * Class for creating simple HTML forms.
@@ -283,6 +282,27 @@ class Doku_Form {
         echo $this->getForm();
     }
 
+    /**
+     * Add a radio set
+     *
+     * This function adds a set of radio buttons to the form. If $_POST[$name]
+     * is set, this radio is preselected, else the first radio button.
+     *
+     * @param string    $name    The HTML field name
+     * @param array     $entries An array of entries $value => $caption
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
+     */
+
+    function addRadioSet($name, $entries) {
+        $value = (isset($_POST[$name]) && isset($entries[$_POST[$name]])) ?
+                 $_POST[$name] : key($entries);
+        foreach($entries as $val => $cap) {
+            $data = ($value === $val) ? array('checked' => 'checked') : array();
+            $this->addElement(form_makeRadioField($name, $val, $cap, '', '', $data));
+        }
+    }
+
 }
 
 /**
@@ -464,6 +484,8 @@ function form_makeFileField($name, $label=null, $id='', $class='', $attrs=array(
  * form_makeCheckboxField
  *
  * Create a form element for a checkbox input element with label.
+ * If $value is an array, a hidden field with the same name and the value
+ * $value[1] is constructed as well.
  *
  * @see     form_makeFieldRight
  * @author  Tom N Harris <tnharris@whoopdedo.org>
@@ -798,6 +820,8 @@ function form_filefield($attrs) {
  *   _class : class attribute used on the label tag
  *   _text  : Text to display after the input. Not escaped.
  * Other attributes are passed to buildAttributes() for the input tag.
+ * If value is an array, a hidden field with the same name and the value
+ * $attrs['value'][1] is constructed as well.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
@@ -807,7 +831,13 @@ function form_checkboxfield($attrs) {
     $s = '<label';
     if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
     if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><input type="checkbox" '.buildAttributes($attrs,true).'/>';
+    $s .= '>';
+    if (is_array($attrs['value'])) {
+        echo '<input type="hidden" name="' . hsc($attrs['name']) .'"'
+                 . ' value="' . hsc($attrs['value'][1]) . '" />';
+        $attrs['value'] = $attrs['value'][0];
+    }
+    $s .= '<input type="checkbox" '.buildAttributes($attrs,true).'/>';
     $s .= ' <span>'.$attrs['_text'].'</span></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
@@ -859,7 +889,9 @@ function form_menufield($attrs) {
     $s .= ' <select '.buildAttributes($attrs,true).'>'.DOKU_LF;
     if (!empty($attrs['_options'])) {
         $selected = false;
-        for($n=0;$n<count($attrs['_options']);$n++){
+
+        $cnt = count($attrs['_options']);
+        for($n=0; $n < $cnt; $n++){
             @list($value,$text,$select) = $attrs['_options'][$n];
             $p = '';
             if (!is_null($text))

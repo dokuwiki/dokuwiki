@@ -30,7 +30,7 @@ class auth_basic {
     'getUserCount'=> false, // can the number of users be retrieved?
     'getGroups'   => false, // can a list of available groups be retrieved?
     'external'    => false, // does the module do external auth checking?
-    'logoff'      => false, // has the module some special logoff method?
+    'logout'      => true,  // can the user logout again? (eg. not possible with HTTP auth)
   );
 
 

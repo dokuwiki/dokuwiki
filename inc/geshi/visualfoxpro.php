@@ -4,7 +4,7 @@
  * ----------------
  * Author: Roberto Armellin (r.armellin@tin.it)
  * Copyright: (c) 2004 Roberto Armellin, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2004/09/17
  *
  * Visual FoxPro language file for GeSHi.
@@ -69,7 +69,7 @@ $language_data = array (
             'At_c','Atan','Atc','Atcc','Atcline','Atline',
             'Atn2','Aused','Autoform','Autoreport','Avcxclasses','Average',
             'BarCount','BarPrompt','BatchMode','BatchUpdateCount','Begin','BellSound',
-            'BinToC','Bintoc','Bitand','Bitclear','Bitlshift','Bitnot',
+            'BinToC','Bitand','Bitclear','Bitlshift','Bitnot',
             'Bitor','Bitrshift','Bitset','Bittest','Bitxor','Bof',
             'Browse','BrowseRefresh','Buffering','BuilderLock','COMArray','COMReturnError',
             'CToBin','Calculate','Call','Capslock','Cd','Cdow',
@@ -81,7 +81,7 @@ $language_data = array (
             'Cot','Count','Coverage','Cpconvert','Cpcurrent','Cpdbf',
             'Cpnotrans','Create','CreateBinary','Createobject','Createobjectex','Createoffline',
             'CrsBuffering','CrsFetchMemo','CrsFetchSize','CrsMaxRows','CrsMethodUsed','CrsNumBatch',
-            'CrsShareConnection','CrsUseMemoSize','CrsWhereClause','Ctobin','Ctod','Ctot',
+            'CrsShareConnection','CrsUseMemoSize','CrsWhereClause','Ctod','Ctot',
             'Curdate','Curdir','CurrLeft','CurrSymbol','CursorGetProp','CursorSetProp',
             'Curtime','Curval','DBGetProp','DBSetProp','DB_BufLockRow','DB_BufLockTable',
             'DB_BufOff','DB_BufOptRow','DB_BufOptTable','DB_Complette','DB_DeleteInsert','DB_KeyAndModified',
@@ -93,7 +93,7 @@ $language_data = array (
             'Debugout','Declare','DefOLELCid','DefaultValue','Defaultext','Degrees',
             'DeleteTrigger','Desc','Description','Difference','Dimension','Dir',
             'Directory','Diskspace','DispLogin','DispWarnings','Display','Dll',
-            'Dmy','DoDefault','DoEvents','Doc','Doevents','Dow',
+            'Dmy','DoDefault','DoEvents','Doc','Dow',
             'Drivetype','Drop','Dropoffline','Dtoc','Dtor','Dtos',
             'Dtot','DynamicInputMask','Each','Edit','Eject','Elif',
             'End','Eof','Erase','Evaluate','Event','Eventtracking',
@@ -115,12 +115,12 @@ $language_data = array (
             'Indbc','Index','Indexseek','Inkey','Inlist','Input',
             'Insert','InsertTrigger','Insmode','IsBlank','IsFLocked','IsLeadByte',
             'IsMouse','IsNull','IsRLocked','Isalpha','Iscolor','Isdigit',
-            'Isexclusive','Isflocked','Ishosted','Islower','Isreadonly','Isrlocked',
-            'Isupper','Italian','Japan','Join','Justdrive','Justext',
+            'IsExclusive','Ishosted','IsLower','IsReadOnly',
+            'IsUpper','Italian','Japan','Join','Justdrive','Justext',
             'Justfname','Justpath','Juststem','KeyField','KeyFieldList','Keyboard'
             ),
         2 => array('Keymatch','LastProject','Lastkey','Lcase','Leftc','Len',
-            'Lenc','Length','Likec','Lineno','LoadPicture','Loadpicture',
+            'Lenc','Length','Likec','Lineno','LoadPicture',
             'Locate','Locfile','Log','Log10','Logout','Lookup',
             'Loop','Lower','Ltrim','Lupdate','Mail','MaxRecords',
             'Mcol','Md','Mdown','Mdx','Mdy','Memlines',
@@ -148,7 +148,7 @@ $language_data = array (
             'SQLBatchMode','SQLCancel','SQLColumns','SQLConnect','SQLConnectTimeOut','SQLDisconnect',
             'SQLDispLogin','SQLDispWarnings','SQLExec','SQLGetProp','SQLIdleTimeOut','SQLMoreResults',
             'SQLPrepare','SQLQueryTimeOut','SQLSetProp','SQLTables','SQLTransactions','SQLWaitTime',
-            'Save','SavePicture','Savepicture','ScaleUnits','Scatter','Scols',
+            'Save','SavePicture','ScaleUnits','Scatter','Scols',
             'Scroll','Sec','Second','Seek','Select','SendUpdates',
             'Set','SetDefault','Setfldstate','Setup','ShareConnection','ShowOLEControls',
             'ShowOLEInsertable','ShowVCXs','Sign','Sin','Size','SizeBox',

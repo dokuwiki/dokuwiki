@@ -29,11 +29,12 @@ class DokuHTTPClient extends HTTPClient {
         $this->HTTPClient();
 
         // set some values from the config
-        $this->proxy_host = $conf['proxy']['host'];
-        $this->proxy_port = $conf['proxy']['port'];
-        $this->proxy_user = $conf['proxy']['user'];
-        $this->proxy_pass = conf_decodeString($conf['proxy']['pass']);
-        $this->proxy_ssl  = $conf['proxy']['ssl'];
+        $this->proxy_host   = $conf['proxy']['host'];
+        $this->proxy_port   = $conf['proxy']['port'];
+        $this->proxy_user   = $conf['proxy']['user'];
+        $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
+        $this->proxy_ssl    = $conf['proxy']['ssl'];
+        $this->proxy_except = $conf['proxy']['except'];
     }
 
 
@@ -105,6 +106,7 @@ class HTTPClient {
     var $proxy_user;
     var $proxy_pass;
     var $proxy_ssl; //boolean set to true if your proxy needs SSL
+    var $proxy_except; // regexp of URLs to exclude from proxy
 
     // what we use as boundary on multipart/form-data posts
     var $boundary = '---DokuWikiHTTPClient--4523452351';
@@ -148,6 +150,29 @@ class HTTPClient {
         if($this->status == 304 && $sloppy304) return $this->resp_body;
         if($this->status < 200 || $this->status > 206) return false;
         return $this->resp_body;
+    }
+
+    /**
+     * Simple function to do a GET request with given parameters
+     *
+     * Returns the wanted page or false on an error.
+     *
+     * This is a convenience wrapper around get(). The given parameters
+     * will be correctly encoded and added to the given base URL.
+     *
+     * @param  string $url       The URL to fetch
+     * @param  string $data      Associative array of parameters
+     * @param  bool   $sloppy304 Return body on 304 not modified
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function dget($url,$data,$sloppy304=false){
+        if(strpos($url,'?')){
+            $url .= '&';
+        }else{
+            $url .= '?';
+        }
+        $url .= $this->_postEncode($data);
+        return $this->get($url,$sloppy304);
     }
 
     /**
@@ -202,7 +227,7 @@ class HTTPClient {
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
         // proxy setup
-        if($this->proxy_host){
+        if($this->proxy_host && (!$this->proxy_except || !preg_match('/'.$this->proxy_except.'/i',$url)) ){
             $request_url = $url;
             $server      = $this->proxy_host;
             $port        = $this->proxy_port;
@@ -278,7 +303,6 @@ class HTTPClient {
             }
             $written += $ret;
         }
-
 
         // read headers from socket
         $r_headers = '';

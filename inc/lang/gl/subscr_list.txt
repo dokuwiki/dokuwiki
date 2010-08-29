@@ -1,0 +1,17 @@
+Ola.
+
+Houbo trocos en páxinas do nome de espazo @PAGE@ do wiki @TITLE@.
+Estas son as páxinas que mudaron:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Para cancelares as notificacións da páxina inicia sesión no wiki en
+@DOKUWIKIURL@ e logo visita
+@SUBSCRIBE@
+e desubscríbete do seguimento dos trocos da páxina e/ou nome de espazo.
+
+--
+Este correo-e foi xerado polo DokuWiki de
+@DOKUWIKIURL@

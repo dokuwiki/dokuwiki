@@ -10,5 +10,5 @@ Adresse IP          : @IPADDRESS@
 Nom d'hôte          : @HOSTNAME@
 
 -- 
-Ce message a été généré par DokuWiki
+Ce courriel a été généré par DokuWiki
 @DOKUWIKIURL@

@@ -7,7 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/common.php');
 
 /**
  * recurse direcory
@@ -195,13 +194,12 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     $info['writable'] = is_writable($base.'/'.$file);
     if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
         $info['isimg'] = true;
-        require_once(DOKU_INC.'inc/JpegMeta.php');
         $info['meta']  = new JpegMeta($base.'/'.$file);
     }else{
         $info['isimg'] = false;
     }
     if($opts['hash']){
-        $info['hash'] = md5(io_readFile(wikiFN($info['id']),false));
+        $info['hash'] = md5(io_readFile(mediaFN($info['id']),false));
     }
 
     $data[] = $info;
@@ -321,7 +319,6 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
     }
 
     //fetch instructions
-    require_once(DOKU_INC.'inc/parserutils.php');
     $instructions = p_cached_instructions($base.$file,true);
     if(is_null($instructions)) return false;
 
@@ -552,7 +549,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $return = true;
 
     // get ID and check if it is a valid one
-    $item['id'] = pathID($file);
+    $item['id'] = pathID($file,$opts['keeptxt']);
     if($item['id'] != cleanID($item['id'])){
         if($opts['showmsg'])
             msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);

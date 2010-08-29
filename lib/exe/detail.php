@@ -2,13 +2,6 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
   define('DOKU_MEDIADETAIL',1);
   require_once(DOKU_INC.'inc/init.php');
-  require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/lang/en/lang.php');
-  require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
-  require_once(DOKU_INC.'inc/JpegMeta.php');
-  require_once(DOKU_INC.'inc/html.php');
-  require_once(DOKU_INC.'inc/template.php');
-  require_once(DOKU_INC.'inc/auth.php');
   //close session
   session_write_close();
 

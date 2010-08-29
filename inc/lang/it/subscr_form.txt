@@ -1,0 +1,3 @@
+====== Gestione iscrizioni ======
+
+Questa pagina permette di gestire le tue iscrizioni alla pagina e catogoria attuale.

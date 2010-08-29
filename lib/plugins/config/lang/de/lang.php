@@ -12,6 +12,7 @@
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
@@ -88,7 +89,6 @@ $lang['profileconfirm']        = 'Profiländerung nur nach Passwortbestätigung'
 $lang['disableactions']        = 'DokuWiki-Aktionen deaktivieren';
 $lang['disableactions_check']  = 'Check';
 $lang['disableactions_subscription'] = 'Seiten-Abonnements';
-$lang['disableactions_nssubscription'] = 'Namensraum-Abonnements';
 $lang['disableactions_wikicode'] = 'Quelltext betrachten/exportieren';
 $lang['disableactions_other']  = 'Andere Aktionen (durch Komma getrennt)';
 $lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Übersicht. Wenn diese Option aktiviert wird, werden alle Namensräume, für die der Benutzer keine Lese-Rechte hat, nicht angezeigt. Dies kann unter Umständen dazu führen, das lesbare Unter-Namensräume nicht angezeigt werden und macht die Übersicht evtl. unbrauchbar in Kombination mit bestimmten ACL Einstellungen.';
@@ -115,6 +115,7 @@ $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';
 $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
+$lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';

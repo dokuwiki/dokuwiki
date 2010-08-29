@@ -4,7 +4,7 @@
  * -------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2004/07/29
  *
  * Ada language file for GeSHi.
@@ -57,14 +57,16 @@ $language_data = array (
             'goto', 'return'
             ),
         2 => array(
-            'abs', 'and', 'mod', 'not', 'or', 'rem', 'xor'
+            'abs', 'and', 'at', 'mod', 'not', 'or', 'rem', 'xor'
             ),
         3 => array(
-            'abort', 'abstract', 'accept', 'access', 'aliased', 'all', 'array', 'at', 'body',
-            'constant', 'delay', 'delta', 'digits', 'entry', 'exit',
-            'function', 'generic', 'in', 'limited', 'new', 'null', 'of', 'others', 'out', 'package', 'pragma',
-            'private', 'procedure', 'protected', 'raise', 'range', 'record', 'renames', 'requeue', 'reverse',
-            'separate', 'subtype', 'tagged', 'task', 'terminate', 'type', 'use', 'when', 'with'
+            'abort', 'abstract', 'accept', 'access', 'aliased', 'all', 'array',
+            'body', 'constant', 'delay', 'delta', 'digits', 'entry', 'exit',
+            'function', 'generic', 'in', 'interface', 'limited', 'new', 'null',
+            'of', 'others', 'out', 'overriding', 'package', 'pragma', 'private',
+            'procedure', 'protected', 'raise', 'range', 'record', 'renames',
+            'requeue', 'reverse', 'separate', 'subtype', 'synchronized',
+            'tagged', 'task', 'terminate', 'type', 'use', 'when', 'with'
             )
         ),
     'SYMBOLS' => array(

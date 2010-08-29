@@ -10,21 +10,22 @@
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
+ * @author Osman Tekin osman.tekin93@hotmail.it
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
 $lang['nosupport']             = '(gestione utenti non supportata)';
 $lang['badauth']               = 'sistema di autenticazione non valido';
-$lang['user_id']               = 'User ID';
+$lang['user_id']               = 'ID utente';
 $lang['user_pass']             = 'Password';
 $lang['user_name']             = 'Nome completo';
-$lang['user_mail']             = 'E-mail';
+$lang['user_mail']             = 'Email';
 $lang['user_groups']           = 'Gruppi';
 $lang['field']                 = 'Campo';
 $lang['value']                 = 'Valore';
 $lang['add']                   = 'Aggiungi';
-$lang['delete']                = 'Cancella';
-$lang['delete_selected']       = 'Cancella selezionati';
+$lang['delete']                = 'Elimina';
+$lang['delete_selected']       = 'Elimina selezionati';
 $lang['edit']                  = 'Modifica';
 $lang['edit_prompt']           = 'Modifica questo utente';
 $lang['modify']                = 'Salva modifiche';
@@ -34,20 +35,20 @@ $lang['clear']                 = 'Azzera filtro di ricerca';
 $lang['filter']                = 'Filtro';
 $lang['summary']               = 'Visualizzazione utenti %1$d-%2$d di %3$d trovati. %4$d utenti totali.';
 $lang['nonefound']             = 'Nessun utente trovato. %d utenti totali.';
-$lang['delete_ok']             = '%d utenti cancellati';
-$lang['delete_fail']           = 'Cancellazione %d fallita.';
+$lang['delete_ok']             = '%d utenti eliminati';
+$lang['delete_fail']           = 'Eliminazione %d fallita.';
 $lang['update_ok']             = 'Aggiornamento utente riuscito';
 $lang['update_fail']           = 'Aggiornamento utente fallito';
-$lang['update_exists']         = 'Modifica nome utente fallita, il nome utente specificato (%s) esiste già  (qualunque altra modifica sarà  applicata).';
+$lang['update_exists']         = 'Modifica nome utente fallita, il nome utente specificato (%s) esiste già (qualunque altra modifica sarà  applicata).';
 $lang['start']                 = 'primo';
 $lang['prev']                  = 'precedente';
 $lang['next']                  = 'successivo';
 $lang['last']                  = 'ultimo';
-$lang['edit_usermissing']      = 'Utente selezionato non trovato, il nome utente specificato potrebbe essere stato cancellato o modificato altrove.';
+$lang['edit_usermissing']      = 'Utente selezionato non trovato, il nome utente specificato potrebbe essere stato eliminato o modificato altrove.';
 $lang['user_notify']           = 'Notifica utente';
 $lang['note_notify']           = 'Le email di notifica sono inviate soltanto se all\'utente è stata assegnata una nuova password.';
-$lang['note_group']            = 'Se non si specifica alcun gruppo, i nuovi utenti saranno aggiunti al gruppo di default (%s).';
-$lang['note_pass']             = 'La password verrà generata automaticamente qualora il campo di inserimento relatvivo venisse lasciato vuoto e le notifiche all\'utente fossero abilitate.';
+$lang['note_group']            = 'Se non si specifica alcun gruppo, i nuovi utenti saranno aggiunti al gruppo predefinito (%s).';
+$lang['note_pass']             = 'La password verrà generata automaticamente qualora il campo di inserimento relativo venisse lasciato vuoto e le notifiche all\'utente fossero abilitate.';
 $lang['add_ok']                = 'Utente aggiunto correttamente';
 $lang['add_fail']              = 'Aggiunta utente fallita';
 $lang['notify_ok']             = 'Email di notifica inviata';

@@ -1,0 +1,14 @@
+Un file ha essite incargate in tu DokuWiki. Ecce le detalios:
+
+File : @MEDIA@
+Data : @DATE@
+Navigator : @BROWSER@
+Adresse IP : @IPADDRESS@
+Nomine host: @HOSTNAME@
+Dimension : @SIZE@
+Typo MIME : @MIME@
+Usator : @USER@
+
+-- 
+Iste message ha essite generate per DokuWiki a
+@DOKUWIKIURL@

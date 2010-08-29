@@ -1,0 +1,3 @@
+====== Crear un nove conto de usator ======
+
+Completa tote le informationes hic infra pro crear un nove conto in iste wiki. Assecura te de fornir un **adresse de e-mail valide!** Si le systema non te demanda de entrar un contrasigno hic, un nove contrasigno essera inviate a iste adresse. Le nomine de usator debe esser un [[doku>pagename|nomine de pagina]] valide.

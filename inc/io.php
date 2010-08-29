@@ -7,10 +7,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/HTTPClient.php');
-require_once(DOKU_INC.'inc/events.php');
-require_once(DOKU_INC.'inc/utf8.php');
 
 /**
  * Removes empty directories

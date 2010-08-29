@@ -1,0 +1,3 @@
+====== Gestion de reversiones ======
+
+Iste pagina te adjuta con le reversion automatic de un attacco de spam. Pro cercar un lista de paginas spammose, primo entra un texto a cercar (p.ex. un URL de spam), postea confirma que le paginas trovate es realmente spam e reverte le modificationes.

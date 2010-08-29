@@ -7,13 +7,18 @@
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
+ * @author Piotr JANKOWSKI <jankowski.piotr@gmail.com>
+ * @author sleshek@wp.pl
+ * @author Leszek Stachowski <shazarre@gmail.com>
+ * @author maros <dobrimaros@yahoo.pl>
+ * @author Grzegorz Widła <dzesdzes@gmail.com>
  */
 $lang['menu']                  = 'Ustawienia';
 $lang['error']                 = 'Ustawienia nie zostały zapisane z powodu błędnych wartości, przejrzyj je i ponów próbę zapisu. <br/> Niepoprawne wartości są wyróżnione kolorem czerwonym.';
 $lang['updated']               = 'Ustawienia zostały zmienione.';
 $lang['nochoice']              = '(brak innych możliwości)';
 $lang['locked']                = 'Plik ustawień nie mógł zostać zmieniony, upewnij się, czy uprawnienia do pliku są odpowiednie.';
-$lang['danger']                = 'Uwaga: Zmiana tej opcji może uniemożliwić dostęp do twojej wiki oraz konfogiracji.';
+$lang['danger']                = 'Uwaga: Zmiana tej opcji może uniemożliwić dostęp do twojej wiki oraz konfiguracji.';
 $lang['warning']               = 'Ostrzeżenie: Zmiana tej opcji może spowodować nieporządane skutki.';
 $lang['security']              = 'Alert bezpieczeństwa: Zmiana tej opcji może obniżyć bezpieczeństwo.';
 $lang['_configuration_manager'] = 'Menadżer konfiguracji';
@@ -81,7 +86,6 @@ $lang['profileconfirm']        = 'Potwierdzanie zmiany profilu hasłem';
 $lang['disableactions']        = 'Wyłącz akcje DokuWiki';
 $lang['disableactions_check']  = 'Sprawdzanie';
 $lang['disableactions_subscription'] = 'Subskrypcje';
-$lang['disableactions_nssubscription'] = 'Subskrypcje katalogów';
 $lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
 $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['sneaky_index']          = 'Domyślnie, Dokuwiki pokazuje wszystkie katalogi w indeksie. Włączenie tej opcji ukryje katalogi, do których użytkownik nie ma praw. Może to spowodować ukrycie podkatalogów, do których użytkownik ma prawa. Ta opcja może spowodować błędne działanie indeksu w połączeniu z pewnymi konfiguracjami praw dostępu.';
@@ -95,6 +99,7 @@ $lang['useslash']              = 'Używanie ukośnika jako separatora w adresie 
 $lang['usedraft']              = 'Automatyczne zapisywanie szkicu podczas edycji';
 $lang['sepchar']               = 'Znak rozdzielający wyrazy nazw';
 $lang['canonical']             = 'Kanoniczne adresy URL';
+$lang['fnencode']              = 'Metoda kodowana nazw pików bez użycia ASCII.';
 $lang['autoplural']            = 'Automatyczne tworzenie liczby mnogiej';
 $lang['compression']           = 'Metoda kompresji dla usuniętych plików';
 $lang['cachetime']             = 'Maksymalny wiek cache w sekundach';
@@ -108,6 +113,7 @@ $lang['gdlib']                 = 'Wersja biblioteki GDLib';
 $lang['im_convert']            = 'Ścieżka do programu imagemagick';
 $lang['jpg_quality']           = 'Jakość kompresji JPG (0-100)';
 $lang['subscribers']           = 'Subskrypcja';
+$lang['subscribe_time']        = 'Czas po którym są wysyłane listy subskrypcji i streszczenia (sek.); Powinna być to wartość większa niż podana w zmiennej recent_days.';
 $lang['compress']              = 'Kompresja arkuszy CSS i plików JavaScript';
 $lang['hidepages']             = 'Ukrywanie stron pasujących do wzorca (wyrażenie regularne)';
 $lang['send404']               = 'Nagłówek "HTTP 404/Page Not Found" dla nieistniejących stron';
@@ -181,3 +187,4 @@ $lang['useheading_o_0']        = 'Nigdy';
 $lang['useheading_o_navigation'] = 'W nawigacji';
 $lang['useheading_o_content']  = 'W treści';
 $lang['useheading_o_1']        = 'Zawsze';
+$lang['readdircache']          = 'Maksymalny czas dla bufora readdir (w sek).';

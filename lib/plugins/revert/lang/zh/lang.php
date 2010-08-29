@@ -8,6 +8,7 @@
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
+ * @author ben <ben@livetom.com>
  */
 $lang['menu']                  = '还原管理器';
 $lang['filter']                = '搜索包含垃圾信息的页面';

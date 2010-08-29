@@ -6,13 +6,6 @@
     @ini_set('session.use_only_cookies',0);
 
     require_once(DOKU_INC.'inc/init.php');
-    require_once(DOKU_INC.'inc/lang/en/lang.php');
-    require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
-    require_once(DOKU_INC.'inc/media.php');
-    require_once(DOKU_INC.'inc/common.php');
-    require_once(DOKU_INC.'inc/search.php');
-    require_once(DOKU_INC.'inc/template.php');
-    require_once(DOKU_INC.'inc/auth.php');
 
     trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
     session_write_close();  //close session
@@ -40,6 +33,12 @@
 
     // check auth
     $AUTH = auth_quickaclcheck("$NS:*");
+
+    // do not display the manager if user does not have read access
+    if($AUTH < AUTH_READ) {
+        header('HTTP/1.0 403 Forbidden');
+        die($lang['accessdenied']);
+    }
 
     // create the given namespace (just for beautification)
     if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }

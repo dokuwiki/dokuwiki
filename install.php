@@ -45,7 +45,8 @@ $dokuwiki_hash = array(
     '2007-06-26'   => 'b3ca19c7a654823144119980be73cd77',
     '2008-05-04'   => '1e5c42eac3219d9e21927c39e3240aad',
     '2009-02-14'   => 'ec8c04210732a14fdfce0f7f6eead865',
-    '2009-12-25' => '993c4b2b385643efe5abf8e7010e11f4',
+    '2009-12-25'   => '993c4b2b385643efe5abf8e7010e11f4',
+    '2010-08-29rc' => '7921d48195f4db21b8ead6d9bea801b8'
 );
 
 
@@ -68,6 +69,7 @@ header('Content-Type: text/html; charset=utf-8');
         fieldset { border: none }
         label { display: block; margin-top: 0.5em; }
         select.text, input.text { width: 30em; margin: 0 0.5em; }
+        a {text-decoration: none}
     </style>
     <script type="text/javascript" language="javascript">
         function acltoggle(){
@@ -150,6 +152,8 @@ function print_form($d){
     global $lang;
     global $LC;
 
+    include(DOKU_CONF.'license.php');
+
     if(!is_array($d)) $d = array();
     $d = array_map('htmlspecialchars',$d);
 
@@ -190,7 +194,24 @@ function print_form($d){
                     <option value="1" <?php echo ($d['policy'] == 1)?'selected="selected"':'' ?>><?php echo $lang['i_pol1']?></option>
                     <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
                 </select>
+
             </fieldset>
+        </fieldset>
+
+        <fieldset>
+            <p><?php echo $lang['i_license']?></p>
+            <?php
+            array_unshift($license,array('name' => 'None', 'url'=>''));
+            if(!isset($d['license'])) $d['license'] = 'cc-by-sa';
+            foreach($license as $key => $lic){
+                echo '<label for="lic_'.$key.'">';
+                echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
+                     (($d['license'] == $key)?'checked="checked"':'').'>';
+                echo htmlspecialchars($lic['name']);
+                if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
+                echo '</label>';
+            }
+            ?>
         </fieldset>
 
     </fieldset>
@@ -202,16 +223,16 @@ function print_form($d){
 }
 
 function print_retry() {
-  global $lang;
-  global $LC;
-?>
+    global $lang;
+    global $LC;
+    ?>
     <form action="" method="get">
       <fieldset>
         <input type="hidden" name="l" value="<?php echo $LC ?>" />
         <input class="button" type="submit" value="<?php echo $lang['i_retry'];?>" />
       </fieldset>
     </form>
-<?php
+    <?php
 }
 
 /**
@@ -234,7 +255,7 @@ function check_data(&$d){
         $ok      = false;
     }
     if($d['acl']){
-        if(!preg_match('/^[a-z1-9_]+$/',$d['superuser'])){
+        if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
             $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
             $ok      = false;
         }
@@ -281,6 +302,7 @@ function store_data($d){
 EOT;
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
     $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
+    $output .= '$conf[\'license\'] = \''.addslashes($d['license'])."';\n";
     if($d['acl']){
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";
@@ -360,7 +382,6 @@ function check_configs(){
         'auth'  => DOKU_LOCAL.'acl.auth.php'
     );
 
-
     // main dokuwiki config file (conf/dokuwiki.php) must not have been modified
     $installation_hash = md5(preg_replace("/(\015\012)|(\015)/","\012",
                              @file_get_contents(DOKU_CONF.'dokuwiki.php')));
@@ -437,8 +458,8 @@ function check_functions(){
                          'preg_replace file_get_contents htmlspecialchars_decode');
 
     if (!function_exists('mb_substr')) {
-      $funcs[] = 'utf8_encode';
-      $funcs[] = 'utf8_decode';
+        $funcs[] = 'utf8_encode';
+        $funcs[] = 'utf8_decode';
     }
 
     foreach($funcs as $func){
@@ -505,12 +526,12 @@ function print_errors(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function remove_magic_quotes(&$array) {
-  foreach (array_keys($array) as $key) {
-    if (is_array($array[$key])) {
-      remove_magic_quotes($array[$key]);
-    }else {
-      $array[$key] = stripslashes($array[$key]);
+    foreach (array_keys($array) as $key) {
+        if (is_array($array[$key])) {
+            remove_magic_quotes($array[$key]);
+        }else {
+            $array[$key] = stripslashes($array[$key]);
+        }
     }
-  }
 }
 

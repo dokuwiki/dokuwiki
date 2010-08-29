@@ -6,13 +6,16 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+// update message version
+$updateVersion = 26;
+
 //  xdebug_start_profiling();
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 
 if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
-} elseif (!empty($IDX)) {
+} elseif (!empty($_REQUEST['idx'])) {
     $ACT = 'index';
 } elseif (isset($_REQUEST['do'])) {
     $ACT = $_REQUEST['do'];
@@ -20,13 +23,8 @@ if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
     $ACT = 'show';
 }
 
+// load and initialize the core system
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/events.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/html.php');
-require_once(DOKU_INC.'inc/auth.php');
-require_once(DOKU_INC.'inc/actions.php');
 
 //import variables
 $QUERY = trim($_REQUEST['id']);
@@ -35,11 +33,13 @@ $NS    = getNS($ID);
 $REV   = $_REQUEST['rev'];
 $IDX   = $_REQUEST['idx'];
 $DATE  = $_REQUEST['date'];
-$RANGE = $_REQUEST['lines'];
+$RANGE = $_REQUEST['range'];
 $HIGH  = $_REQUEST['s'];
 if(empty($HIGH)) $HIGH = getGoogleQuery();
 
-$TEXT  = cleanText($_POST['wikitext']);
+if (isset($_POST['wikitext'])) {
+    $TEXT  = cleanText($_POST['wikitext']);
+}
 $PRE   = cleanText($_POST['prefix']);
 $SUF   = cleanText($_POST['suffix']);
 $SUM   = $_REQUEST['summary'];
@@ -64,7 +64,7 @@ if($conf['allowdebug'] && $ACT == 'debug'){
 //send 404 for missing pages if configured or ID has special meaning to bots
 if(!$INFO['exists'] &&
   ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/',$ID)) &&
-  ($ACT == 'show' || substr($ACT,0,7) == 'export_') ){
+  ($ACT == 'show' || (!is_array($ACT) && substr($ACT,0,7) == 'export_')) ){
     header('HTTP/1.0 404 Not Found');
 }
 

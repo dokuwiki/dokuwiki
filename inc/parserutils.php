@@ -8,10 +8,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/confutils.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/cache.php');
 
 /**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
@@ -204,10 +200,10 @@ function p_get_instructions($text){
     $modes = p_get_parsermodes();
 
     // Create the parser
-    $Parser = & new Doku_Parser();
+    $Parser = new Doku_Parser();
 
     // Add the Handler
-    $Parser->Handler = & new Doku_Handler();
+    $Parser->Handler = new Doku_Handler();
 
     //add modes to parser
     foreach($modes as $mode){
@@ -226,7 +222,7 @@ function p_get_instructions($text){
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
-function p_get_metadata($id, $key=false, $render=false){
+function p_get_metadata($id, $key='', $render=false){
     global $ID, $INFO, $cache_metadata;
 
     // cache the current page
@@ -245,19 +241,16 @@ function p_get_metadata($id, $key=false, $render=false){
         if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
     }
 
+    $val = $meta['current'];
+
     // filter by $key
-    if ($key){
-        list($key, $subkey) = explode(' ', $key, 2);
-        $subkey = trim($subkey);
-
-        if ($subkey) {
-            return isset($meta['current'][$key][$subkey]) ? $meta['current'][$key][$subkey] : null;
+    foreach(preg_split('/\s+/', $key, 2, PREG_SPLIT_NO_EMPTY) as $cur_key) {
+        if (!isset($val[$cur_key])) {
+            return null;
         }
-
-        return isset($meta['current'][$key]) ? $meta['current'][$key] : null;
+        $val = $val[$cur_key];
     }
-
-    return $meta['current'];
+    return $val;
 }
 
 /**
@@ -416,14 +409,14 @@ function p_render_metadata($id, $orig){
         }
 
         // set up the renderer
-        $renderer = & new Doku_Renderer_metadata();
+        $renderer = new Doku_Renderer_metadata();
         $renderer->meta = $orig['current'];
         $renderer->persistent = $orig['persistent'];
 
         // loop through the instructions
         foreach ($instructions as $instruction){
             // execute the callback against the renderer
-            call_user_func_array(array(&$renderer, $instruction[0]), $instruction[1]);
+            call_user_func_array(array(&$renderer, $instruction[0]), (array) $instruction[1]);
         }
 
         $evt->result = array('current'=>$renderer->meta,'persistent'=>$renderer->persistent);
@@ -587,12 +580,12 @@ function & p_get_renderer($mode) {
             msg("Renderer '$rname' for $mode not valid",-1);
             return null;
         }
-        $Renderer = & new $rclass();
+        $Renderer = new $rclass();
     }else{
         // Maybe a plugin/component is available?
         list($plugin, $component) = $plugin_controller->_splitName($rname);
         if (!$plugin_controller->isdisabled($plugin)){
-            $Renderer =& $plugin_controller->load('renderer',$rname, true);
+            $Renderer =& $plugin_controller->load('renderer',$rname);
         }
 
         if(is_null($Renderer)){
@@ -647,8 +640,6 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
         $highlighted_code = io_readFile($cache, false);
 
     } else {
-
-        require_once(DOKU_INC . 'inc/geshi.php');
 
         $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
         $geshi->set_encoding('utf-8');

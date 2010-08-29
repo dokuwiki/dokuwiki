@@ -1,0 +1,5 @@
+====== Skedari skicë u gjend ======
+
+Sesioni juaj i fundit i redaktimit në këtë faqe nuk përfundoi me sukses. DokuWiki ruajti automatikisht një skicë gjatë punës tuaj të cilën mund ta përdorni tani për të vazhduar redaktimin tuaj. Më poshtë mund të shihni të dhënat që janë ruajtur nga sesioni juaj i fundit.
+
+Ju lutem vendosni nëse doni të //rekuperoni// sesionin tuaj të humbur të redaktimit, //fshini// skicën e ruajtur automatikisht ose //dilni// nga proçesi i redaktimit.

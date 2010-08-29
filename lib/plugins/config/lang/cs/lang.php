@@ -6,6 +6,8 @@
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author tomas@valenta.cz
+ * @author Marek Sacha <sachamar@fel.cvut.cz>
+ * @author Lefty <lefty@multihost.cz>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -84,7 +86,6 @@ $lang['profileconfirm']        = 'Potvrdit změny v profilu zadáním hesla';
 $lang['disableactions']        = 'Vypnout DokuWiki akce';
 $lang['disableactions_check']  = 'Zkontrolovat';
 $lang['disableactions_subscription'] = 'Přihlásit se/Odhlásit se ze seznamu pro odběr změn';
-$lang['disableactions_nssubscription'] = 'Přihlásit se/Odhlásit se ze seznamu pro odběr změn ve jmenném prostoru';
 $lang['disableactions_wikicode'] = 'Prohlížet zdrojové kódy/Export wiki textu';
 $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
 $lang['sneaky_index']          = 'Ve výchozím nastavení DokuWiki zobrazuje v indexu všechny
@@ -103,6 +104,7 @@ $lang['useslash']              = 'Používat lomítko jako oddělovač jmenných
 $lang['usedraft']              = 'Během editace ukládat koncept automaticky';
 $lang['sepchar']               = 'Znak pro oddělování slov v názvech stránek';
 $lang['canonical']             = 'Používat plně kanonická URL';
+$lang['fnencode']              = 'Metoda pro kódování ne-ASCII názvů souborů';
 $lang['autoplural']            = 'Kontrolovat plurálové tvary v odkazech';
 $lang['compression']           = 'Metoda komprese pro staré verze';
 $lang['cachetime']             = 'Maximální životnost cache (v sekundách)';
@@ -116,6 +118,7 @@ $lang['gdlib']                 = 'Verze GD knihovny';
 $lang['im_convert']            = 'Cesta k nástroji convert z balíku ImageMagick';
 $lang['jpg_quality']           = 'Kvalita komprese JPEG (0-100)';
 $lang['subscribers']           = 'Možnost přihlásit se k odběru novinek stránky';
+$lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jsou posílány změny a souhrny změn. Interval by neměl být kratší než čas uvedený v recent_days.';
 $lang['compress']              = 'Zahustit CSS a JavaScript výstup';
 $lang['hidepages']             = 'Skrýt stránky odpovídající vzoru (regulární výrazy)';
 $lang['send404']               = 'Posílat "HTTP 404/Page Not Found" pro neexistují stránky';
@@ -142,6 +145,7 @@ $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy uživatelské jméno';
 $lang['proxy____pass']         = 'Proxy heslo';
 $lang['proxy____ssl']          = 'Použít SSL při připojení k proxy';
+$lang['proxy____except']       = 'Regulární výrazy pro URL, pro které bude přeskočena proxy.';
 $lang['safemodehack']          = 'Zapnout safemode hack';
 $lang['ftp____host']           = 'FTP server pro safemode hack';
 $lang['ftp____port']           = 'FTP port pro safemode hack';
@@ -189,3 +193,4 @@ $lang['useheading_o_0']        = 'Nikdy';
 $lang['useheading_o_navigation'] = 'Pouze pro navigaci';
 $lang['useheading_o_content']  = 'Pouze pro wiki obsah';
 $lang['useheading_o_1']        = 'Vždy';
+$lang['readdircache']          = 'Maximální stáří readdir cache (sec)';

@@ -1,0 +1,13 @@
+Përshëndetje @FULLNAME@!
+
+Dikush kërkoi një fjalëkalim të ri për hyrjen tuaj @TITLE@ në @DOKUWIKIURL@
+
+Nëse nuk kërkuat një fjalëkalim të ri atëherë thjesht injorojeni këtë email.
+
+Për të konfirmuar që kërkesa u dërgua me të vërtetë nga ju, ju lutemi përdorni link-un e mëposhtëm.
+
+@CONFIRM@
+
+--
+Ky email u gjenerua nga DokuWiki në 
+@DOKUWIKIURL@

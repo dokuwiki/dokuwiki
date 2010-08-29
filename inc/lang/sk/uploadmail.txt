@@ -10,5 +10,5 @@ MIME Typ : @MIME@
 Užívateľ : @USER@
 
 -- 
-Tento mail vygenerovalo DokuWiki na
+Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@

@@ -1,0 +1,3 @@
+====== Administrador de Suscripciones ======
+
+Esta página te permite administrar tus suscripciones para la página actual y espacio de nombres.

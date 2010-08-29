@@ -4,7 +4,7 @@
  * --------
  * Author: Conny Brunnkvist (conny@fuchsia.se), W. Tasin (tasin@fhm.edu)
  * Copyright: (c) 2004 Fuchsia Open Source Solutions (http://www.fuchsia.se/)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2004/12/29
  *
  * Diff-output language file for GeSHi.
@@ -115,7 +115,7 @@ $language_data = array (
         0 => "[0-9,]+[acd][0-9,]+",
         //Removed lines
         1 => array(
-            GESHI_SEARCH => '^\\&lt;.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))\\&lt;.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -123,7 +123,7 @@ $language_data = array (
             ),
         //Inserted lines
         2 => array(
-            GESHI_SEARCH => '^\\&gt;.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))\\&gt;.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -131,7 +131,7 @@ $language_data = array (
             ),
         //Location line
         3 => array(
-            GESHI_SEARCH => '^[\\-]{3}\\s.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))-{3}\\s.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -139,7 +139,7 @@ $language_data = array (
             ),
         //Inserted line
         4 => array(
-            GESHI_SEARCH => '^(\\+){3}\\s.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))(\\+){3}\\s.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -147,7 +147,7 @@ $language_data = array (
             ),
         //Modified line
         5 => array(
-            GESHI_SEARCH => '^\\!.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))\\!.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -155,7 +155,7 @@ $language_data = array (
             ),
         //File specification
         6 => array(
-            GESHI_SEARCH => '^[\\@]{2}.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))[\\@]{2}.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -163,7 +163,7 @@ $language_data = array (
             ),
         //Removed line
         7 => array(
-            GESHI_SEARCH => '^\\-.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))\\-.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -171,7 +171,7 @@ $language_data = array (
             ),
         //Inserted line
         8 => array(
-            GESHI_SEARCH => '^\\+.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))\\+.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',
@@ -179,7 +179,7 @@ $language_data = array (
             ),
         //File specification
         9 => array(
-            GESHI_SEARCH => '^(\\*){3}\\s.*$',
+            GESHI_SEARCH => '(^|(?<=\A\s))(\\*){3}\\s.*$',
             GESHI_REPLACE => '\\0',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '',

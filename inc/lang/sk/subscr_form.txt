@@ -1,0 +1,3 @@
+====== Sledovanie zmien ======
+
+Táto stánka umožňuje sledovať zmeny aktuálnej stránky a menného priestoru.

@@ -1,0 +1,3 @@
+====== Inviar nove contrasigno ======
+
+Per favor entra tu nomine de usator in le formulario hic infra pro requestar un nove contrasigno pro tu conto in iste wiki. Un ligamine de confirmation essera inviate a tu adresse de e-mail registrate.

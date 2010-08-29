@@ -1,0 +1,3 @@
+====== Gerenciamento de inscrição ======
+
+Esta página permite voce gerencias as inscrições para a página e namespace corrente.

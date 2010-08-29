@@ -7,16 +7,13 @@
  */
 
 //fix for Opera XMLHttpRequests
-if(!count($_POST) && $HTTP_RAW_POST_DATA){
+if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
   parse_str($HTTP_RAW_POST_DATA, $_POST);
 }
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/auth.php');
-//close sesseion
+//close session
 session_write_close();
 
 header('Content-Type: text/html; charset=utf-8');
@@ -53,30 +50,28 @@ function ajax_qsearch(){
   global $conf;
   global $lang;
 
-  $query = cleanID($_POST['q']);
-  if(empty($query)) $query = cleanID($_GET['q']);
+  $query = $_POST['q'];
+  if(empty($query)) $query = $_GET['q'];
   if(empty($query)) return;
 
-  require_once(DOKU_INC.'inc/html.php');
-  require_once(DOKU_INC.'inc/fulltext.php');
-
-  $data = array();
-  $data = ft_pageLookup($query);
+  $data = ft_pageLookup($query, true, useHeading('navigation'));
 
   if(!count($data)) return;
 
   print '<strong>'.$lang['quickhits'].'</strong>';
   print '<ul>';
-  foreach($data as $id){
-    print '<li>';
-    $ns = getNS($id);
-    if($ns){
-      $name = shorten(noNS($id), ' ('.$ns.')',30);
-    }else{
-      $name = $id;
+  foreach($data as $id => $title){
+    if (useHeading('navigation')) {
+        $name = $title;
+    } else {
+        $ns = getNS($id);
+        if($ns){
+          $name = shorten(noNS($id), ' ('.$ns.')',30);
+        }else{
+          $name = $id;
+        }
     }
-    print html_wikilink(':'.$id,$name);
-    print '</li>';
+    echo '<li>' . html_wikilink(':'.$id,$name) . '</li>';
   }
   print '</ul>';
 }
@@ -95,13 +90,10 @@ function ajax_suggestions() {
   if(empty($query)) $query = cleanID($_GET['q']);
   if(empty($query)) return;
 
-  require_once(DOKU_INC.'inc/html.php');
-  require_once(DOKU_INC.'inc/fulltext.php');
-  require_once(DOKU_INC.'inc/JSON.php');
-
   $data = array();
   $data = ft_pageLookup($query);
   if(!count($data)) return;
+  $data = array_keys($data);
 
   // limit results to 15 hits
   $data = array_slice($data, 0, 15);
@@ -147,7 +139,7 @@ function ajax_lock(){
                    'prefix' => $_POST['prefix'],
                    'text'   => $_POST['wikitext'],
                    'suffix' => $_POST['suffix'],
-                   'date'   => $_POST['date'],
+                   'date'   => (int) $_POST['date'],
                    'client' => $client,
                   );
     $cname = getCacheName($draft['client'].$id,'.draft');
@@ -164,7 +156,7 @@ function ajax_lock(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_draftdel(){
-  $id = cleanID($_POST['id']);
+  $id = cleanID($_REQUEST['id']);
   if(empty($id)) return;
 
   $client = $_SERVER['REMOTE_USER'];
@@ -181,8 +173,6 @@ function ajax_draftdel(){
  */
 function ajax_medians(){
   global $conf;
-  require_once(DOKU_INC.'inc/search.php');
-  require_once(DOKU_INC.'inc/media.php');
 
   // wanted namespace
   $ns  = cleanID($_POST['ns']);
@@ -208,23 +198,9 @@ function ajax_medians(){
 function ajax_medialist(){
   global $conf;
   global $NS;
-  require_once(DOKU_INC.'inc/media.php');
-  require_once(DOKU_INC.'inc/template.php');
 
   $NS = $_POST['ns'];
   tpl_mediaContent(true);
-}
-
-/**
- * Return list of search result for the Mediamanager
- *
- * @author Tobias Sarnowski <sarnowski@cosmocode.de>
- */
-function ajax_mediasearchlist(){
-  global $conf;
-  require_once(DOKU_INC.'inc/media.php');
-
-  media_searchlist($_POST['ns']);
 }
 
 /**
@@ -234,8 +210,6 @@ function ajax_mediasearchlist(){
  */
 function ajax_index(){
   global $conf;
-  require_once(DOKU_INC.'inc/search.php');
-  require_once(DOKU_INC.'inc/html.php');
 
   // wanted namespace
   $ns  = cleanID($_POST['idx']);
@@ -263,7 +237,6 @@ function ajax_index(){
 function ajax_linkwiz(){
   global $conf;
   global $lang;
-  require_once(DOKU_INC.'inc/html.php');
 
   $q  = ltrim($_POST['q'],':');
   $id = noNS($q);
@@ -279,29 +252,28 @@ function ajax_linkwiz(){
   if($q && !$ns){
 
     // use index to lookup matching pages
-    require_once(DOKU_INC.'inc/fulltext.php');
-    require_once(DOKU_INC.'inc/parserutils.php');
     $pages = array();
-    $pages = ft_pageLookup($id,false);
+    $pages = ft_pageLookup($id,true);
 
     // result contains matches in pages and namespaces
     // we now extract the matching namespaces to show
     // them seperately
     $dirs  = array();
-    $count = count($pages);
-    for($i=0; $i<$count; $i++){
-      if(strpos(noNS($pages[$i]),$id) === false){
+
+
+    foreach($pages as $pid => $title){
+      if(strpos(noNS($pid),$id) === false){
         // match was in the namespace
-        $dirs[getNS($pages[$i])] = 1; // assoc array avoids dupes
+        $dirs[getNS($pid)] = 1; // assoc array avoids dupes
       }else{
         // it is a matching page, add it to the result
         $data[] = array(
-          'id'    => $pages[$i],
-          'title' => p_get_first_heading($pages[$i],false),
+          'id'    => $pid,
+          'title' => $title,
           'type'  => 'f',
         );
       }
-      unset($pages[$i]);
+      unset($pages[$pid]);
     }
     foreach($dirs as $dir => $junk){
       $data[] = array(
@@ -312,13 +284,13 @@ function ajax_linkwiz(){
 
   }else{
 
-    require_once(DOKU_INC.'inc/search.php');
     $opts = array(
       'depth' => 1,
       'listfiles' => true,
       'listdirs'  => true,
       'pagesonly' => true,
       'firsthead' => true,
+      'sneakyacl' => $conf['sneaky_index'],
     );
     if($id) $opts['filematch'] = '^.*\/'.$id;
     if($id) $opts['dirmatch']  = '^.*\/'.$id;

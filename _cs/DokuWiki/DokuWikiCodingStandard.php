@@ -47,14 +47,14 @@ class PHP_CodeSniffer_Standards_DokuWiki_DokuWikiCodingStandard extends PHP_Code
             'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
             'Generic/Sniffs/PHP/ForbiddenFunctionsSniff.php',
             'Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
-            'Generic/Sniffs/WhiteSpace/ScopeIndentSniff.php',
+            'DokuWiki/Sniffs/WhiteSpace/ScopeIndentSniff.php',
             'Zend/Sniffs/Files/ClosingTagSniff.php',
             'PEAR/Sniffs/Functions/ValidDefaultValueSniff.php',
             'Squiz/Sniffs/PHP/EvalSniff.php',
             'Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
 //            'Squiz/Sniffs/PHP/CommentedOutCodeSniff.php', //FIXME should ignore oneliners
             'Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
-
+            'Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
             'Squiz/Sniffs/CSS/LowercaseStyleDefinitionSniff.php',
             'Squiz/Sniffs/CSS/MissingColonSniff.php',
             'Squiz/Sniffs/CSS/DisallowMultipleStyleDefinitionsSniff.php',

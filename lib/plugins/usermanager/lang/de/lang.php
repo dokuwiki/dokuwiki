@@ -12,6 +12,7 @@
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';
@@ -49,7 +50,7 @@ $lang['edit_usermissing']      = 'Der ausgewählte Nutzer wurde nicht gefunden. 
 $lang['user_notify']           = 'Nutzer benachrichtigen';
 $lang['note_notify']           = 'Benachrichtigungs-E-Mails werden nur versandt, wenn ein neues Passwort vergeben wurde.';
 $lang['note_group']            = 'Neue Nutzer werden der Standard-Gruppe (%s) hinzugefügt, wenn keine Gruppe angegeben wurde.';
-$lang['note_pass']             = 'Das Password wird automatisch generiert, wenn das entsprechende Feld leergelassen wird und die Benachrichtigung des Nutzers aktiviert ist.';
+$lang['note_pass']             = 'Das Passwort wird automatisch generiert, wenn das entsprechende Feld leergelassen wird und die Benachrichtigung des Nutzers aktiviert ist.';
 $lang['add_ok']                = 'Nutzer erfolgreich angelegt';
 $lang['add_fail']              = 'Nutzer konnte nicht angelegt werden';
 $lang['notify_ok']             = 'Benachrichtigungsmail wurde versandt';

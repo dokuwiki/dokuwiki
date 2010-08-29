@@ -9,5 +9,5 @@ Käytä alla olevaa linkkiä vahvistaaksesi, että pyynnön lähettäjä todella
 @CONFIRM@
 
 -- 
-Tämän postin generoi DokuWiki
+Tämän postin loi DokuWiki
 @DOKUWIKIURL@

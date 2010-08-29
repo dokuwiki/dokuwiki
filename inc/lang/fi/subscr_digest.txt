@@ -1,0 +1,20 @@
+Hei!
+
+Sivu @PAGE@ wikissä @TITLE@ on muuttunut.
+Tässä ovat muutokset:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Vanha versio: @OLDPAGE@
+Uusi versio: @NEWPAGE@
+
+Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
+@DOKUWIKIURL@ , jonka jälkeen katso
+@SUBSCRIBE@
+ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
+
+--
+Tämän postin loi DokuWiki osoitteessa
+@DOKUWIKIURL@

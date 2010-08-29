@@ -7,17 +7,12 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',2);
+define('DOKU_XMLRPC_API_VERSION',4);
 
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/auth.php');
 session_write_close();  //close session
 
 if(!$conf['xmlrpc']) die('XML-RPC server not enabled.');
-
-require_once(DOKU_INC.'inc/IXR_Library.php');
-
 
 /**
  * Contains needed wrapper functions and registers all available
@@ -119,6 +114,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         );
 
         $this->addCallback(
+            'dokuwiki.search',
+            'this:search',
+            array('struct','string'),
+            'Perform a fulltext search and return a list of matching pages'
+        );
+
+        $this->addCallback(
             'dokuwiki.getTime',
             'time',
             array('int'),
@@ -130,6 +132,15 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             'this:setLocks',
             array('struct','struct'),
             'Lock or unlock pages.'
+        );
+
+
+        $this->addCallback(
+            'dokuwiki.getTitle',
+            'this:getTitle',
+            array('string'),
+            'Returns the wiki title.',
+            true
         );
 
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
@@ -283,8 +294,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         }
         $text = rawWiki($id,$rev);
         if(!$text) {
-            $data = array($id);
-            return trigger_event('HTML_PAGE_FROMTEMPLATE',$data,'pageTemplate',true);
+            return pageTemplate($id);
         } else {
             return $text;
         }
@@ -344,24 +354,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * List all pages - we use the indexer list here
      */
     function listPages(){
-        global $conf;
-
         $list  = array();
-        $pages = file($conf['indexdir'] . '/page.idx');
-        $pages = array_filter($pages, 'isVisiblePage');
+        $pages = array_filter(array_filter(idx_getIndex('page', ''),
+                                           'isVisiblePage'),
+                              'page_exists');
 
         foreach(array_keys($pages) as $idx) {
-            if(page_exists($pages[$idx])) {
-                $perm = auth_quickaclcheck($pages[$idx]);
-                if($perm >= AUTH_READ) {
-                    $page = array();
-                    $page['id'] = trim($pages[$idx]);
-                    $page['perms'] = $perm;
-                    $page['size'] = @filesize(wikiFN($pages[$idx]));
-                    $page['lastModified'] = new IXR_Date(@filemtime(wikiFN($pages[$idx])));
-                    $list[] = $page;
-                }
+            $perm = auth_quickaclcheck($pages[$idx]);
+            if($perm < AUTH_READ) {
+                continue;
             }
+            $page = array();
+            $page['id'] = trim($pages[$idx]);
+            $page['perms'] = $perm;
+            $page['size'] = @filesize(wikiFN($pages[$idx]));
+            $page['lastModified'] = new IXR_Date(@filemtime(wikiFN($pages[$idx])));
+            $list[] = $page;
         }
 
         return $list;
@@ -378,10 +386,51 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $ns = cleanID($ns);
         $dir = utf8_encodeFN(str_replace(':', '/', $ns));
         $data = array();
-        require_once(DOKU_INC.'inc/search.php');
         $opts['skipacl'] = 0; // no ACL skipping for XMLRPC
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
         return $data;
+    }
+
+    /**
+     * List all pages in the given namespace (and below)
+     */
+    function search($query){
+        require_once(DOKU_INC.'inc/fulltext.php');
+
+        $regex = '';
+        $data  = ft_pageSearch($query,$regex);
+        $pages = array();
+
+        // prepare additional data
+        $idx = 0;
+        foreach($data as $id => $score){
+            $file = wikiFN($id);
+
+            if($idx < FT_SNIPPET_NUMBER){
+                $snippet = ft_snippet($id,$regex);
+                $idx++;
+            }else{
+                $snippet = '';
+            }
+
+            $pages[] = array(
+                'id'      => $id,
+                'score'   => $score,
+                'rev'     => filemtime($file),
+                'mtime'   => filemtime($file),
+                'size'    => filesize($file),
+                'snippet' => $snippet,
+            );
+        }
+        return $pages;
+    }
+
+    /**
+     * Returns the wiki title.
+     */
+    function getTitle(){
+        global $conf;
+        return $conf['title'];
     }
 
     /**
@@ -407,7 +456,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
             $data = array();
-            require_once(DOKU_INC.'inc/search.php');
             search($data, $conf['mediadir'], 'search_media', $options, $dir);
             $len = count($data);
             if(!$len) return array();
@@ -426,8 +474,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Return a list of backlinks
      */
     function listBackLinks($id){
-        require_once(DOKU_INC.'inc/fulltext.php');
-        return ft_backlinks($id);
+        return ft_backlinks(cleanID($id));
     }
 
     /**
@@ -519,8 +566,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             }
             if($conf['dperm']) chmod($lock, $conf['dperm']);
 
-            require_once(DOKU_INC.'inc/indexer.php');
-
             // do the work
             idx_addPage($id);
 
@@ -547,7 +592,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 return new IXR_ERROR(1, 'Filename not given.');
             }
 
-            $ftmp = $conf['tmpdir'] . '/' . $id;
+            $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
 
             // save temporary file
             @unlink($ftmp);
@@ -572,7 +617,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                     return new IXR_ERROR(1, $lang['uploadexist'].'1');
                 }
                 // check for valid content
-                @require_once(DOKU_INC.'inc/media.php');
                 $ok = media_contentcheck($ftmp, $imime);
                 if($ok == -1) {
                     return new IXR_ERROR(1, sprintf($lang['uploadexist'].'2', ".$iext"));
@@ -590,7 +634,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 $data[4] = $overwrite;
 
                 // trigger event
-                require_once(DOKU_INC.'inc/events.php');
                 return trigger_event('MEDIA_UPLOAD_FINISH', $data, array($this, '_media_upload_action'), true);
 
             } else {
@@ -615,14 +658,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         // check for references if needed
         $mediareferences = array();
         if($conf['refcheck']){
-            require_once(DOKU_INC.'inc/fulltext.php');
             $mediareferences = ft_mediause($id,$conf['refshow']);
         }
 
         if(!count($mediareferences)){
             $file = mediaFN($id);
             if(@unlink($file)){
-                require_once(DOKU_INC.'inc/changelog.php');
                 addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
                 io_sweepNS($id,'mediadir');
                 return 0;
@@ -648,7 +689,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
                 chmod($data[1], $conf['fmode']);
                 media_notify($data[2], $data[1], $data[3]);
                 // add a log entry to the media changelog
-                require_once(DOKU_INC.'inc/changelog.php');
                 if ($data[4]) {
                     addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_EDIT);
                 } else {
@@ -728,9 +768,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if(strlen($timestamp) != 10)
             return new IXR_Error(20, 'The provided value is not a valid timestamp');
 
-        require_once(DOKU_INC.'inc/changelog.php');
-        require_once(DOKU_INC.'inc/pageutils.php');
-
         $recents = getRecentsSince($timestamp);
 
         $changes = array();
@@ -763,9 +800,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function getRecentMediaChanges($timestamp) {
         if(strlen($timestamp) != 10)
             return new IXR_Error(20, 'The provided value is not a valid timestamp');
-
-        require_once(DOKU_INC.'inc/changelog.php');
-        require_once(DOKU_INC.'inc/pageutils.php');
 
         $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
 
@@ -802,8 +836,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         if(empty($id))
             return new IXR_Error(1, 'Empty page ID');
-
-        require_once(DOKU_INC.'inc/changelog.php');
 
         $revisions = getRevisions($id, $first, $conf['recent']+1);
 

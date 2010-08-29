@@ -49,6 +49,15 @@ class Doku_Renderer extends DokuWiki_Plugin {
         trigger_error('getFormat() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
+    /**
+     * Allow the plugin to prevent DokuWiki from reusing an instance
+     *
+     * @return bool   false if the plugin has to be instantiated
+     */
+    function isSingleton() {
+        return false;
+    }
+
 
     //handle plugin rendering
     function plugin($name,$data){
@@ -84,8 +93,6 @@ class Doku_Renderer extends DokuWiki_Plugin {
     function toc_additem($id, $text, $level) {}
 
     function header($text, $level, $pos) {}
-
-    function section_edit($start, $end, $level, $name) {}
 
     function section_open($level) {}
 
@@ -231,9 +238,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
         $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
         ) {}
 
-    function table_open($maxcols = NULL, $numrows = NULL){}
+    function table_open($maxcols = NULL, $numrows = NULL, $pos){}
 
-    function table_close(){}
+    function table_close($pos){}
 
     function tablerow_open(){}
 
@@ -264,20 +271,12 @@ class Doku_Renderer extends DokuWiki_Plugin {
         list($name,$hash) = explode('#',$name,2);
         if($hash) return $hash;
 
-        //trim colons or slash of a namespace link
-        $name = rtrim($name,':');
-        if($conf['useslash'])
-          $name = rtrim($name,'/');
-
+        $name = strtr($name,';',':');
         if($conf['useslash']){
-            $nssep = '[:;/]';
-        }else{
-            $nssep = '[:;]';
+            $name = strtr($name,'/',':');
         }
-        $name = preg_replace('!.*'.$nssep.'!','',$name);
 
-        if(!$name) return $this->_simpleTitle($conf['start']);
-        return $name;
+        return noNSorNS($name);
     }
 
     /**

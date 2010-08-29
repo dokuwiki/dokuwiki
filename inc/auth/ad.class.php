@@ -26,6 +26,10 @@
  *   $conf['auth']['ad']['use_ssl']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
  *
+ *   // get additional informations to the userinfo array
+ *   // add a list of comma separated ldap contact fields.
+ *   $conf['auth']['ad']['additional'] = 'field1,field2';
+ *
  *  @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *  @author  James Van Lommel <jamesvl@gmail.com>
  *  @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
@@ -38,6 +42,7 @@ class auth_ad extends auth_basic {
     var $cnf = null;
     var $opts = null;
     var $adldap = null;
+    var $users = null;
 
     /**
      * Constructor
@@ -45,6 +50,12 @@ class auth_ad extends auth_basic {
     function auth_ad() {
         global $conf;
         $this->cnf = $conf['auth']['ad'];
+
+        // additional information fields
+        if (isset($this->cnf['additional'])) {
+            $this->cnf['additional'] = str_replace(' ', '', $this->cnf['additional']);
+            $this->cnf['additional'] = explode(',', $this->cnf['additional']);
+        } else $this->cnf['additional'] = array();
 
         // ldap extension is needed
         if (!function_exists('ldap_connect')) {
@@ -130,14 +141,26 @@ class auth_ad extends auth_basic {
         global $conf;
         if(!$this->_init()) return false;
 
-        //get info for given user
-        $result = $this->adldap->user_info($user);
+        $fields = array('mail','displayname','samaccountname');
 
+        // add additional fields to read
+        $fields = array_merge($fields, $this->cnf['additional']);
+        $fields = array_unique($fields);
+
+        //get info for given user
+        $result = $this->adldap->user_info($user, $fields);
         //general user info
         $info['name'] = $result[0]['displayname'][0];
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];
         $info['dn']   = $result[0]['dn'];
+
+        // additional informations
+        foreach ($this->cnf['additional'] as $field) {
+            if (isset($result[0][strtolower($field)])) {
+                $info[$field] = $result[0][strtolower($field)][0];
+            }
+        }
 
         // handle ActiveDirectory memberOf
         $info['grps'] = $this->adldap->user_groups($user,(bool) $this->opts['recursive_groups']);
@@ -185,6 +208,45 @@ class auth_ad extends auth_basic {
     }
 
     /**
+     * Bulk retrieval of user data
+     *
+     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
+     * @param   start     index of first user to be returned
+     * @param   limit     max number of users to be returned
+     * @param   filter    array of field/pattern pairs, null for no filter
+     * @return  array of userinfo (refer getUserData for internal userinfo details)
+     */
+    function retrieveUsers($start=0,$limit=-1,$filter=array()) {
+        if(!$this->_init()) return false;
+
+        if ($this->users === null) {
+            //get info for given user
+            $result = $this->adldap->all_users();
+            if (!$result) return array();
+            $this->users = array_fill_keys($result, false);
+        }
+
+        $i = 0;
+        $count = 0;
+        $this->_constructPattern($filter);
+        $result = array();
+
+        foreach ($this->users as $user => &$info) {
+            if ($i++ < $start) {
+                continue;
+            }
+            if ($info === false) {
+                $info = $this->getUserData($user);
+            }
+            if ($this->_filter($user, $info)) {
+                $result[$user] = $info;
+                if (($limit >= 0) && (++$count >= $limit)) break;
+            }
+        }
+        return $result;
+    }
+
+    /**
      * Initialize the AdLDAP library and connect to the server
      */
     function _init(){
@@ -193,12 +255,44 @@ class auth_ad extends auth_basic {
         // connect
         try {
             $this->adldap = new adLDAP($this->opts);
+            if (isset($this->opts['ad_username']) && isset($this->opts['ad_password'])) {
+                $this->canDo['getUsers'] = true;
+            }
             return true;
         } catch (adLDAPException $e) {
+            if ($this->cnf['debug']) {
+                msg($e->getMessage(), -1);
+            }
             $this->success = false;
             $this->adldap  = null;
         }
         return false;
+    }
+
+    /**
+     * return 1 if $user + $info match $filter criteria, 0 otherwise
+     *
+     * @author   Chris Smith <chris@jalakai.co.uk>
+     */
+    function _filter($user, $info) {
+        foreach ($this->_pattern as $item => $pattern) {
+            if ($item == 'user') {
+                if (!preg_match($pattern, $user)) return 0;
+            } else if ($item == 'grps') {
+                if (!count(preg_grep($pattern, $info['grps']))) return 0;
+            } else {
+                if (!preg_match($pattern, $info[$item])) return 0;
+            }
+        }
+        return 1;
+    }
+
+    function _constructPattern($filter) {
+        $this->_pattern = array();
+        foreach ($filter as $item => $pattern) {
+//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
+            $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
+        }
     }
 }
 

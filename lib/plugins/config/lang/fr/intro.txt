@@ -1,8 +1,8 @@
 ====== Gestionnaire de configuration ======
 
-Utilisez cette page pour contrôler les paramètres de votre installation de DokuWiki. Pour de l'aide sur chaque paramètre, reportez vous à [[doku>config]]. Pour d'autres détails concernant ce plugin, reportez vous à [[doku>plugin:config]].
+Utilisez cette page pour contrôler les paramètres de votre installation de DokuWiki. Pour de l'aide sur chaque paramètre, reportez vous à [[doku>config]]. Pour d'autres détails concernant ce module, reportez vous à [[doku>plugin:config]].
 
-Les paramètres affichés sur un fond rouge sont protégés et ne peuvent être modifiés avec ce plugin. Les paramètres affichés sur un fond bleu sont les valeurs par défaut et les valeurs affectées à votre installation sont affichées sur un fond blanc. Les paramètres bleus et blancs peuvent être modifiés.
+Les paramètres affichés sur un fond rouge sont protégés et ne peuvent être modifiés avec ce module. Les paramètres affichés sur un fond bleu sont les valeurs par défaut et les valeurs affectées à votre installation sont affichées sur un fond blanc. Les paramètres bleus et blancs peuvent être modifiés.
 
 N'oubliez pas d'utiliser le bouton **Enregistrer** avant de quitter cette page, sinon vos modifications seront perdues.
 

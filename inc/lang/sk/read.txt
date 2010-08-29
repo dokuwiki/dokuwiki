@@ -1,2 +1,2 @@
-Táto stránka je iba na čítanie. Môžete si iba prehliadnuť zdrojový kód, ale nie meniť ho. Opýtajte sa správcu, ak si myslíťe že niečo nie je v poriadku.
+Táto stránka je iba na čítanie. Môžete si prehliadnuť zdrojový kód, ale nemôžete ho meniť. Opýtajte sa správcu, ak si myslíte, že niečo nie je v poriadku.
 

@@ -81,7 +81,7 @@ $lang['lockedby']     = 'Fyribils læst av';
 $lang['lockexpire']   = 'Lásið ferð úr gildi kl.';
 $lang['willexpire']   = 'Títt lás á hetta skjalið ferð úr gildi um ein minnutt.\nTrýst á '.$lang['btn_preview'].'-knappin fyri at sleppa undan trupulleikum.';
 
-$lang['notsavedyet'] = 'Tað eru gjørdar broytingar í skjalinum, um tú haldur fram vilja broytingar fara fyri skeytið.\nYnskir tú at halda fram?';
+$lang['js']['notsavedyet'] = "Tað eru gjørdar broytingar í skjalinum, um tú haldur fram vilja broytingar fara fyri skeytið.\nYnskir tú at halda fram?";
 $lang['rssfailed']   = 'Eitt brek koma fyri tá roynt var at fáa: ';
 $lang['nothingfound']= 'Leiting gav onki úrslit.';
 

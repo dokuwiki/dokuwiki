@@ -8,6 +8,7 @@
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
+ * @author ben <ben@livetom.com>
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';

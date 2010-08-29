@@ -8,9 +8,6 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-require_once(DOKU_INC.'inc/parser/parser.php');
-
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
@@ -269,13 +266,14 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     return $conf;
   }
 
-  /**
-   * Allow the plugin to prevent DokuWiki creating a second instance of itself
-   *
-   * @return bool   true if the plugin can not be instantiated more than once
-   */
-  function isSingleton() {
-    return false;
-  }
+    /**
+     * Allow the plugin to prevent DokuWiki from reusing an instance
+     *
+     * @return bool   false if the plugin has to be instantiated
+     */
+    function isSingleton() {
+        return true;
+    }
+
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :

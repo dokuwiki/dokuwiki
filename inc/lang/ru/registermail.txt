@@ -2,7 +2,7 @@
 
 Логин       : @NEWUSER@
 Полное имя  : @NEWNAME@
-E-mail      : @NEWEMAIL@
+Эл. адрес   : @NEWEMAIL@
 
 Дата        : @DATE@
 Браузер     : @BROWSER@

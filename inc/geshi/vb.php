@@ -5,7 +5,7 @@
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org),
  *                     Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2004/08/30
  *
  * Visual Basic language file for GeSHi.
@@ -57,34 +57,53 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
-            'AddressOf', 'Alias', 'And', 'Append', 'As', 'BF', 'Binary',
-            'Boolean', 'ByRef', 'Byte', 'ByVal', 'Call', 'Case', 'CBool',
-            'CByte', 'CCur', 'CDate', 'CDbl', 'CDec', 'CInt', 'CLng',
-            'Close', 'Collection', 'Const', 'Control', 'CSng', 'CStr',
-            'Currency', 'CVar', 'Date', 'Declare', 'Dim', 'Do', 'Double',
-            'Each', 'Else', 'ElseIf', 'End', 'Enum', 'Erase', 'Error',
-            'Event', 'Exit', 'Explicit', 'False', 'For', 'Friend',
-            'Function', 'Get', 'GoSub', 'Goto', 'If', 'Implements', 'In',
-            'Input', 'Integer', 'Is', 'LBound', 'Let', 'Lib', 'Like',
-            'Line', 'Long', 'Loop', 'Mod', 'New', 'Next', 'Not',
-            'Nothing', 'Object', 'On', 'Open', 'Option', 'Optional',
-            'Or', 'Output', 'ParamArray', 'Preserve', 'Print', 'Private',
-            'Property', 'Public', 'RaiseEvent', 'Random', 'ReDim',
-            'Resume', 'Select', 'Set', 'Single', 'Static', 'Step',
-            'Stop', 'String', 'Sub', 'Then', 'To', 'True', 'Type',
-            'TypeOf', 'UBound', 'Until', 'Variant', 'While', 'With',
-            'WithEvents', 'Xor'
-            )
+            'Binary', 'Boolean', 'Byte', 'Currency', 'Date', 'Decimal', 'Double',
+            'String', 'Enum', 'Integer', 'Long', 'Object', 'Single', 'Variant'
+            ),
+        2 => array(
+            'CreateObject', 'GetObject', 'New', 'Option', 'Function',
+            'Call', 'Private', 'Public', 'Sub', 'Explicit', 'Compare', 'Exit'
+            ),
+        3 => array(
+            'And', 'Case', 'Do', 'Each', 'Else', 'ElseIf', 'For',
+            'Goto', 'If', 'Is', 'Loop', 'Next', 'Not', 'Or', 'Select', 'Step',
+            'Then', 'To', 'Until', 'While', 'With', 'Xor', 'WithEvents',
+            'DoEvents', 'Close', 'Like', 'In', 'End'
+            ),
+        4 => array(
+            'As', 'Dim', 'Get', 'Set', 'ReDim', 'Error',
+            'Resume', 'Declare', 'Let', 'ByRef', 'ByVal',
+            'Optional', 'Property', 'Control', 'UBound', 'Mod',
+            'GoSub', 'Implements', 'Input', 'LBound', 'Static', 'Stop',
+            'Type', 'TypeOf', 'On', 'Open', 'Output', 'ParamArray',
+            'Preserve', 'Print', 'RaiseEvent', 'Random', 'Line'
+            ),
+        5 => array(
+            'Nothing', 'False', 'True', 'Null', 'Empty'
+            ),
+        6 => array(
+            'ErrorHandler','ExitProc', 'PublishReport'
+            ),
         ),
     'SYMBOLS' => array(
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => false
+        1 => false,
+        2 => false,
+        3 => false,
+        4 => false,
+        5 => false,
+        6 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #000080;'
+            1 => 'color: #F660AB; font-weight: bold;',
+            2 => 'color: #E56717; font-weight: bold;',
+            3 => 'color: #8D38C9; font-weight: bold;',
+            4 => 'color: #151B8D; font-weight: bold;',
+            5 => 'color: #00C2FF; font-weight: bold;',
+            6 => 'color: #3EA99F; font-weight: bold;'
             ),
         'COMMENTS' => array(
             1 => 'color: #008000;'
@@ -109,7 +128,12 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        1 => ''
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => '',
+        5 => '',
+        6 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

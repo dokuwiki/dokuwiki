@@ -1,0 +1,20 @@
+Ciao!
+
+La pagina @PAGE@ nel wiki @TITLE@ è cambiata.
+Queste sono le modifiche:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Vecchia revisione: @OLDPAGE@
+Nuova revisione: @NEWPAGE@
+
+Per annullare la pagina delle notifiche collegati al 
+wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
+e rimuovi la sottoscrizione alle modifiche delle 
+pagine e/o categorie.
+
+--
+Questa email è stata generata dal DokuWiki di
+@DOKUWIKIURL@

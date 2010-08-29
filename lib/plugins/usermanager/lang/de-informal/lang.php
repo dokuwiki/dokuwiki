@@ -4,6 +4,7 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author Marcel Metz <marcel_metz@gmx.de>
  */
 $lang['menu']                  = 'Benutzerverwalter';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
@@ -19,8 +20,8 @@ $lang['value']                 = 'Wert';
 $lang['add']                   = 'Zufügen';
 $lang['delete']                = 'Löschen';
 $lang['delete_selected']       = 'Lösche ausgewähltes';
-$lang['edit']                  = 'Editieren';
-$lang['edit_prompt']           = 'Editiere den Benutzer';
+$lang['edit']                  = 'Bearbeiten';
+$lang['edit_prompt']           = 'Bearbeite diesen Benutzer';
 $lang['modify']                = 'Änderungen speichern';
 $lang['search']                = 'Suchen';
 $lang['search_prompt']         = 'Suche ausführen';

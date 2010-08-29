@@ -1,0 +1,17 @@
+Dobrý deň!
+
+Stránky v mennom priestore @PAGE@ wiki @TITLE@ boli zmenené.
+Zoznam zmenených stránok:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Ak si neprajete zasielať tieto správy, prihláste sa do wiki
+@DOKUWIKIURL@, potom prejdite na
+@SUBSCRIBE@
+a odhláste sa z informovania o zmenách stránky alebo menného priestoru.
+
+--
+Táto správa bola zaslaná DokuWiki
+@DOKUWIKIURL@

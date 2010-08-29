@@ -1,0 +1,23 @@
+Labdien!
+
+@TITLE@ viki nodaļā @PAGE@ ir mainījušās šadas lapas:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Datums : @DATE@
+Lietotājs : @USER@
+Izmaiņu anotācija: @SUMMARY@
+Vecā versija: @OLDPAGE@
+Jaunā versija: @NEWPAGE@
+
+
+Lai atceltu izmaiņu paziņošanu, ielogojieties 
+@DOKUWIKIURL@, apmeklējiet 
+@SUBSCRIBE@
+un atsakieties no lapas vai nodaļas izmaiņu paziņojumiem .
+
+--
+Šo vēstuli izveidoja DokuWiki no 
+@DOKUWIKIURL@

@@ -1,0 +1,7 @@
+====== Menaxheri Konfigurimit ======
+
+Përdoreni këtë faqe për të kontrolluar kuadrot e instalimit të DokuWiki-t tuaj. Për ndihmë mbi kuadro individuale referojuni  [[doku>config]]. Për më tepër detaje rreth këtij plugin-i shih [[doku>plugin:config]].
+
+Kuadrot e treguara me një backgroudn me një ngjyrë të kuqe të lehtë janë të mbrojtura dhe nuk mund të ndryshohen me këtë plugin. Kuadrot e treguara me një background blu janë vlerat default dhe kuadrot e treguara me një background të bardhë janë vendosur lokalisht për këtë instalim të caktuar. Si kuadrot blu, ashtu edhe ato të bardhë mund të ndryshohen.
+
+Kujtohuni të shtypni butonin **Ruaj** para se të dilni nga kjo faqe ose ndryshimet tuaja do të humbasin.

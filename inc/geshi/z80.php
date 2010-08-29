@@ -4,7 +4,7 @@
  * -------
  * Author: Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2007-2008 Benny Baumann (http://www.omorphia.de/)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2007/02/06
  *
  * ZiLOG Z80 Assembler language file for GeSHi.
@@ -129,7 +129,7 @@ $language_data = array (
         //Hex numbers
         0 => '0[0-9a-fA-F]{1,32}[hH]',
         //Binary numbers
-        1 => '\%[01]{1,64}|[01]{1,64}[bB]?',
+        1 => '\%[01]{1,64}|[01]{1,64}[bB]?(?![^<]*>)',
         //Labels
         2 => '^[_a-zA-Z][_a-zA-Z0-9]?\:'
         ),

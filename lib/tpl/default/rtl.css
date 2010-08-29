@@ -45,6 +45,10 @@ div.meta div.doc {
 
 div.dokuwiki ul,
 div.dokuwiki ol {
+  margin: 0.5em 3.5em 0.5em 0;
+}
+div.dokuwiki li ul,
+div.dokuwiki li ol {
   margin: 0.5em 1.5em 0.5em 0;
 }
 
@@ -113,7 +117,13 @@ div.dokuwiki ul.toc li.clear {
   padding-right: 0.4em;
 }
 
-div.dokuwiki pre {
+div.dokuwiki .code {
+  direction: ltr;
   text-align: left;
 }
-
+div.dokuwiki blockquote {
+  border-left: 0;
+  padding-left: 0;
+  border-right: 2px solid  __border__;
+  padding-right: 3px;
+}

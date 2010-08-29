@@ -4,7 +4,7 @@
  * --------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2004/08/30
  *
  * Generic Lisp language file for GeSHi.
@@ -73,7 +73,7 @@ $language_data = array (
             'rem','min','max','abs','sin','cos','tan','expt','exp','sqrt',
             'random','logand','logior','logxor','lognot','bignums','logeqv',
             'lognand','lognor','logorc2','logtest','logbitp','logcount',
-            'integer','nil','parse-integer'
+            'integer','nil','parse-integer','make-list','print','write'
             )
         ),
     'SYMBOLS' => array(

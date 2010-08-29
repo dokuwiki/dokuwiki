@@ -197,17 +197,15 @@ class ap_download extends ap_manage {
 
         $ext = $this->guess_archive($file);
         if (in_array($ext, array('tar','bz','gz'))) {
-            require_once(DOKU_INC."inc/TarLib.class.php");
-
             switch($ext){
                 case 'bz':
-                    $compress_type = COMPRESS_BZIP;
+                    $compress_type = TarLib::COMPRESS_BZIP;
                     break;
                 case 'gz':
-                    $compress_type = COMPRESS_GZIP;
+                    $compress_type = TarLib::COMPRESS_GZIP;
                     break;
                 default:
-                    $compress_type = COMPRESS_NONE;
+                    $compress_type = TarLib::COMPRESS_NONE;
             }
 
             $tar = new TarLib($file, $compress_type);
@@ -217,7 +215,7 @@ class ap_download extends ap_manage {
                 }
                 return false;
             }
-            $ok = $tar->Extract(FULL_ARCHIVE, $target, '', 0777);
+            $ok = $tar->Extract(TarLib::FULL_ARCHIVE, $target, '', 0777);
 
             if($ok<1){
                 if($conf['allowdebug']){
@@ -227,7 +225,6 @@ class ap_download extends ap_manage {
             }
             return true;
         } else if ($ext == 'zip') {
-            require_once(DOKU_INC."inc/ZipLib.class.php");
 
             $zip = new ZipLib();
             $ok = $zip->Extract($file, $target);

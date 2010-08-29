@@ -5,6 +5,8 @@
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
+ * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
+ * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  */
 $lang['menu']                  = 'Bővítménykezelő';
 $lang['download']              = 'Új bővítmény letöltése és telepítése';

@@ -1,0 +1,4 @@
+====== Plugin Management ======
+
+Op dëser Säit kanns de alles verwalte wat mat Dokuwiki [[doku>plugins|Pluginen]] ze dinn huet. Fir e Plugin kënnen z'installéieren, muss däi Pluginverzeechnës vum Webserver schreiwbar sinn.
+

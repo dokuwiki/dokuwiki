@@ -13,6 +13,7 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
+ * @author Sergio Motta sergio@cisne.com.br
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -89,19 +90,20 @@ $lang['profileconfirm']        = 'Confirmar mudanças no perfil com a senha';
 $lang['disableactions']        = 'Desabilitar as ações do DokuWiki';
 $lang['disableactions_check']  = 'Verificação';
 $lang['disableactions_subscription'] = 'Monitoramento';
-$lang['disableactions_nssubscription'] = 'Monitoramento do espaços de nomes';
 $lang['disableactions_wikicode'] = 'Visualização da fonte/Exportação sem processamento';
 $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
 $lang['sneaky_index']          = 'Por padrão, o DokuWiki irá exibir todos os espaços de nomes na visualização do índice. Ao habilitar essa opção, serão escondidos aqueles que o usuário não tiver permissão de leitura. Isso pode resultar na omissão de subespaços de nomes, tornando o índice inútil para certas configurações de ACL.';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS devem ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação, de maneira insegura.';
 $lang['xmlrpc']                = 'Habilitar/desabilitar interface XML-RPC.';
+$lang['xmlrpcuser']            = 'Acesso Restrito ao XML-RPC para grupos separados por virgula ou usuários aqui. Deixe em branco para conveder acesso a todos.';
 $lang['updatecheck']           = 'Verificar atualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efetuar esse recurso.';
 $lang['userewrite']            = 'Usar URLs "limpas"';
 $lang['useslash']              = 'Usar a barra como separador de espaços de nomes nas URLs';
 $lang['usedraft']              = 'Salvar o rascunho automaticamente durante a edição';
 $lang['sepchar']               = 'Separador de palavras no nome da página';
 $lang['canonical']             = 'Usar URLs absolutas (http://servidor/caminho)';
+$lang['fnencode']              = 'Método de codificação não-ASCII de nome de arquivos.';
 $lang['autoplural']            = 'Verificar formas plurais nos links';
 $lang['compression']           = 'Método de compressão para arquivos antigos';
 $lang['cachetime']             = 'Tempo máximo para o cache (seg)';
@@ -115,6 +117,7 @@ $lang['gdlib']                 = 'Versão da biblioteca "GD Lib"';
 $lang['im_convert']            = 'Caminho para a ferramenta de conversão ImageMagick';
 $lang['jpg_quality']           = 'Qualidade de compressão do JPG (0-100)';
 $lang['subscribers']           = 'Habilitar o suporte a monitoramento de páginas';
+$lang['subscribe_time']        = 'Tempo de envio que as listas de inscrições serão enviadas (segundos); Este tempo deve ser menor que o tempo especificado em mudanças recentes.';
 $lang['compress']              = 'Compactar as saídas de CSS e JavaScript';
 $lang['hidepages']             = 'Esconder páginas correspondentes (expressão regular)';
 $lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para páginas não existentes';
@@ -141,6 +144,7 @@ $lang['proxy____port']         = 'Porta do proxy';
 $lang['proxy____user']         = 'Nome de usuário do proxy';
 $lang['proxy____pass']         = 'Senha do proxy';
 $lang['proxy____ssl']          = 'Usar SSL para conectar ao proxy';
+$lang['proxy____except']       = 'Expressões regulares de URL para excessão de proxy.';
 $lang['safemodehack']          = 'Habilitar o contorno de segurança';
 $lang['ftp____host']           = 'Servidor FTP para o contorno de segurança';
 $lang['ftp____port']           = 'Porta do FTP para o contorno de segurança';
@@ -188,3 +192,4 @@ $lang['useheading_o_0']        = 'nunca';
 $lang['useheading_o_navigation'] = 'somente a navegação';
 $lang['useheading_o_content']  = 'somente o conteúdo do wiki';
 $lang['useheading_o_1']        = 'sempre';
+$lang['readdircache']          = 'Tempo máximo para cache readdir (segundos)';

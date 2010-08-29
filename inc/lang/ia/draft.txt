@@ -1,0 +1,5 @@
+====== Version provisori trovate ======
+
+Tu ultime session de modification in iste pagina non ha essite concludite correctemente. DokuWiki ha automaticamente salveguardate un version provisori durante tu labor. Ora tu pote usar iste version provisori pro continuar le modification. Hic infra tu vide le datos salveguardate de tu ultime session.
+
+Per favor decide si tu vole //recuperar// le session de modification perdite, //deler// le version provisori o //cancellar// le processo de modification.

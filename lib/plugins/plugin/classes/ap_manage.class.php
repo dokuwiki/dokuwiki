@@ -113,23 +113,14 @@ class ap_manage {
      *  Refresh plugin list
      */
     function refresh() {
-        global $MSG,$config_cascade;
-
-        //are there any undisplayed messages? keep them in session for display
-        if (isset($MSG) && count($MSG)){
-            //reopen session, store data and close session again
-            @session_start();
-            $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
-            session_write_close();
-        }
+        global $config_cascade;
 
         // expire dokuwiki caches
         // touching local.php expires wiki page, JS and CSS caches
         @touch(reset($config_cascade['main']['local']));
 
         // update latest plugin date - FIXME
-        header('Location: '.wl($ID).'?do=admin&page=plugin');
-        exit();
+        send_redirect(wl($ID,array('do'=>'admin','page'=>'plugin'),true));
     }
 
     /**

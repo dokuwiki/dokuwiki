@@ -1,0 +1,18 @@
+Sizin DokuWiki-də səhifə yaradılıb ya dəyişdirilib. Ətraflı məlumat:
+
+Tarix                 : @DATE@
+Brauzer               : @BROWSER@
+IP-adres              : @IPADDRESS@
+Host                  : @HOSTNAME@
+Köhnə versiya         : @OLDPAGE@
+Yeni versiya          : @NEWPAGE@
+Dəyişiklərin xülasəsi : @SUMMARY@
+İstifadəçi            : @USER@
+
+@DIFF@
+
+
+-- 
+Bu məktub DokuWiki tərəfindən yaradıldı.
+DokuWiki aşağıdakı adresdə yerləşir:
+@DOKUWIKIURL@

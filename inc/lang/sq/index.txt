@@ -1,0 +1,3 @@
+====== Index ======
+
+Ky është një index mbi të gjitha faqet e disponueshme të renditura sipas [[doku>namespaces|namespaces]].

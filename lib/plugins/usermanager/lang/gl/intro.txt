@@ -1,1 +1,1 @@
-====== Xestor de persoas usuarias ======
+====== Xestor de Usuarios ======

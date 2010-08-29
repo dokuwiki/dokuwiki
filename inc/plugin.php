@@ -231,12 +231,12 @@ class DokuWiki_Plugin {
     }
 
     /**
-     * Allow the plugin to prevent DokuWiki creating a second instance of itself
+     * Allow the plugin to prevent DokuWiki from reusing an instance
      *
-     * @return bool   true if the plugin can not be instantiated more than once
+     * @return bool   false if the plugin has to be instantiated
      */
     function isSingleton() {
-        return false;
+        return true;
     }
 
     // deprecated functions

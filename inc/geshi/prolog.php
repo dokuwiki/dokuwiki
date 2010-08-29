@@ -4,7 +4,7 @@
  * --------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2008 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2008/10/02
  *
  * Prolog language file for GeSHi.
@@ -130,7 +130,7 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Variables
-        0 => "(?<![A-Z_])(?!(?:PIPE|SEMI)[^a-zA-Z0-9_])[A-Z_][a-zA-Z0-9_]*(?![a-zA-Z0-9_])"
+        0 => "(?<![a-zA-Z0-9_])(?!(?:PIPE|SEMI|DOT)[^a-zA-Z0-9_])[A-Z_][a-zA-Z0-9_]*(?![a-zA-Z0-9_])(?!\x7C)"
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

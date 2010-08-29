@@ -91,7 +91,6 @@ $lang['profileconfirm']        = 'Bekräfta ändringarna i profilen med lösenor
 $lang['disableactions']        = 'Stäng av funktioner i DokuWiki';
 $lang['disableactions_check']  = 'Kontroll';
 $lang['disableactions_subscription'] = 'Prenumerera/Säg upp prenumeration';
-$lang['disableactions_nssubscription'] = 'Namnrymd Prenumerera/Säg upp prenumeration';
 $lang['disableactions_wikicode'] = 'Visa källkod/Exportera råtext';
 $lang['disableactions_other']  = 'Andra funktioner (kommaseparerade)';
 $lang['sneaky_index']          = 'Som standard visar DokuWiki alla namnrymder på indexsidan. Genom att aktivera det här valet döljer man namnrymder som användaren inte har behörighet att läsa. Det kan leda till att man döljer åtkomliga undernamnrymder, och gör indexet oanvändbart med vissa ACL-inställningar.';

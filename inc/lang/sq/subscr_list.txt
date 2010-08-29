@@ -1,0 +1,13 @@
+Përshëndetje!
+
+Faqet në hapësirën e emrit @PAGE@ të wiki-t @TITLE@ ndryshuan. Këto janë faqet e ndryshuara:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Për të fshirë lajmërimet e faqes, hyni në wiki-n tek @DOKUWIKIURL@ dhe pastaj vizitoni @SUBSCRIBE@ dhe fshini ndryshimet e faqes dhe/ose të hapësirës së emrit.
+
+--
+Ky email u gjenerua nga DokuWiki në 
+@DOKUWIKIURL@

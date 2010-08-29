@@ -10,5 +10,5 @@ IP adresa        : @IPADDRESS@
 Meno servera     : @HOSTNAME@
 
 -- 
-Tento mail bol generovaný Dokuwiki na adrese
+Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@

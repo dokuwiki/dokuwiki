@@ -1,4 +1,4 @@
-====== Rexistro como persoa usuaria nova ======
+====== Rexistro como novo usuario ======
 
-Encha toda a información requirida a continuación para crear unha conta nova neste wiki. Asegúrese de proporcionar un **enderezo de correo electrónico válido** - se non se lle solicita aquí que insira un contrasinal, recibirá un contrasinal novo nese enderezo. O nome de persoa usuaria deberá ser un [[doku>pagename|nome de páxina]] válido.
+Cubre toda a información requirida a continuación para creares unha nova conta neste wiki. Asegúrate de forneceres un **enderezo de correo-e válido** - se non se che pide aquí que insiras un contrasinal, recibirás un novo nese enderezo. O nome de usuario deberá ser un [[doku>pagename|nome de páxina]] válido.
 

@@ -1,0 +1,3 @@
+====== Abonnementverwaltung ======
+
+Hier können Sie Ihre Abonnements für die aktuelle Seite oder den aktuellen [[doku>Namespaces|Namespace]] verwalten.

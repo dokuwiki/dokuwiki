@@ -91,7 +91,10 @@ div.dokuwiki textarea.edit {
   background-color: __background__;
   border: 1px solid __border__;
   padding: 0.3em 0 0 0.3em;
-  width: 100%;
+  /* should just be "width: 100%", but IE8 doesn't like it, see FS#1910 + FS#1667 */
+  width: 700px;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 /* nice alphatransparency background except for IE <7 */
@@ -462,6 +465,7 @@ div.dokuwiki blockquote {
 }
 
 div.dokuwiki pre {
+  font-family: monospace;
   font-size: 120%;
   padding: 0.5em;
   border: 1px dashed __border__;
@@ -688,6 +692,7 @@ div.insitu-footnote {
   text-align: left;
   padding: 4px;
   max-width: 40%;    /* IE's width is handled in javascript */
+  min-width: 5em;
 }
 
 /* overcome IE issue with one line code or file boxes which require h. scrolling */
@@ -741,8 +746,8 @@ div.dokuwiki ul.search_quickhits li {
   width: 30%;
 }
 
-div.dokuwiki div.section_highlight {
-  background-color: __background_alt__;
+div.dokuwiki .section_highlight {
+  background-color: __background_alt__ !important;
 }
 
 /* ------------------ Additional ---------------------- */
@@ -833,3 +838,4 @@ div.dokuwiki div.imagemeta img.thumb {
   float: left;
   margin-right: 0.1em;
 }
+

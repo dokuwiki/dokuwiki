@@ -17,6 +17,8 @@
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
+ * @author Victor Castelan <victorcastelan@gmail.com>
+ * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -91,7 +93,6 @@ $lang['profileconfirm']        = 'Confirmar cambios en perfil con contraseña';
 $lang['disableactions']        = 'Deshabilitar acciones DokuWiki';
 $lang['disableactions_check']  = 'Controlar';
 $lang['disableactions_subscription'] = 'Suscribirse/Cancelar suscripción';
-$lang['disableactions_nssubscription'] = 'Suscribirse/Cancelar suscripción (Espacio de nombres)';
 $lang['disableactions_wikicode'] = 'Ver la fuente/Exportar en formato raw';
 $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
 $lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los namespaces en el index. Habilitando esta opción los ocultará si el usuario no tiene permisos de lectura. Los sub-namespaces pueden resultar inaccesibles. El index puede hacerse poco usable dependiendo de las configuraciones ACL.';
@@ -105,6 +106,7 @@ $lang['useslash']              = 'Usar barra (/) como separador de espacios de n
 $lang['usedraft']              = 'Guardar automáticamente un borrador mientras se edita';
 $lang['sepchar']               = 'Separador de palabras en nombres de páginas';
 $lang['canonical']             = 'Usar URLs totalmente canónicas';
+$lang['fnencode']              = 'Método para codificar nombres de archivo no-ASCII.';
 $lang['autoplural']            = 'Controlar plurales en enlaces';
 $lang['compression']           = 'Método de compresión para archivos en el ático';
 $lang['cachetime']             = 'Edad máxima para caché (segundos)';
@@ -118,6 +120,7 @@ $lang['gdlib']                 = 'Versión de GD Lib';
 $lang['im_convert']            = 'Ruta a la herramienta de conversión de ImageMagick';
 $lang['jpg_quality']           = 'Calidad de compresión de JPG (0-100)';
 $lang['subscribers']           = 'Habilitar soporte para suscripción a páginas';
+$lang['subscribe_time']        = 'Tiempo después que alguna lista de suscripción fue enviada (seg); Debe ser menor que el tiempo especificado en días recientes.';
 $lang['compress']              = 'Compactar la salida de CSS y javascript';
 $lang['hidepages']             = 'Ocultar páginas con coincidencias (expresiones regulares)';
 $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas no existentes';
@@ -191,3 +194,4 @@ $lang['useheading_o_0']        = 'Nunca';
 $lang['useheading_o_navigation'] = 'Solamente Navegación';
 $lang['useheading_o_content']  = 'Contenido wiki solamente';
 $lang['useheading_o_1']        = 'Siempre';
+$lang['readdircache']          = 'Tiempo máximo para la cache readdir (en segundos)';

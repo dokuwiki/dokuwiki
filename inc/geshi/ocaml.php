@@ -4,7 +4,7 @@
  * ----------
  * Author: Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2005/08/27
  *
  * OCaml (Objective Caml) language file for GeSHi.
@@ -43,6 +43,7 @@ $language_data = array (
     'LANG_NAME' => 'OCaml',
     'COMMENT_SINGLE' => array(),
     'COMMENT_MULTI' => array('(*' => '*)'),
+    'COMMENT_REGEXP' => array(1 => '/\(\*(?:(?R)|.)+?\*\)/s'),
     'CASE_KEYWORDS' => 0,
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => "",
@@ -58,13 +59,17 @@ $language_data = array (
             ),
         /* define names of main librarys, so we can link to it */
         2 => array(
-            'Arg', 'Arith_status', 'Array', 'ArrayLabels', 'Big_int', 'Bigarray', 'Buffer', 'Callback',
-            'CamlinternalOO', 'Char', 'Complex', 'Condition', 'Dbm', 'Digest', 'Dynlink', 'Event',
-            'Filename', 'Format', 'Gc', 'Genlex', 'Graphics', 'GraphicsX11', 'Hashtbl', 'Int32', 'Int64',
-            'Lazy', 'Lexing', 'List', 'ListLabels', 'Map', 'Marshal', 'MoreLabels', 'Mutex', 'Nativeint',
-            'Num', 'Obj', 'Oo', 'Parsing', 'Pervasives', 'Printexc', 'Printf', 'Queue', 'Random', 'Scanf',
-            'Set', 'Sort', 'Stack', 'StdLabels', 'Str', 'Stream', 'String', 'StringLabels', 'Sys', 'Thread',
-            'ThreadUnix', 'Tk'
+            'Arg', 'Arith_status', 'Array', //'Array1', 'Array2', 'Array3',
+            'ArrayLabels', 'Big_int', 'Bigarray', 'Buffer', 'Callback',
+            'CamlinternalLazy', 'CamlinternalMod', 'CamlinternalOO', 'Char',
+            'Complex', 'Condition', 'Dbm', 'Digest', 'Dynlink', 'Event',
+            'Filename', 'Format', 'Gc', 'Genlex', 'Graphics', 'GraphicsX11',
+            'Hashtbl', 'Int32', 'Int64', 'Lazy', 'Lexing', 'List', 'ListLabels',
+            'Map', 'Marshal', 'MoreLabels', 'Mutex', 'Nativeint', 'Num', 'Obj',
+            'Oo', 'Parsing', 'Pervasives', 'Printexc', 'Printf', 'Queue',
+            'Random', 'Scanf', 'Set', 'Sort', 'Stack', 'StdLabels', 'Str',
+            'Stream', 'String', 'StringLabels', 'Sys', 'Thread', 'ThreadUnix',
+            'Tk', 'Unix', 'UnixLabels', 'Weak'
             ),
         /* just link to the Pervasives functions library, cause it's the default opened library when starting OCaml */
         3 => array(
@@ -93,7 +98,9 @@ $language_data = array (
             ),
         /* here Pervasives Types */
         4 => array (
-            'fpclass', 'in_channel', 'out_channel', 'open_flag', 'Sys_error', 'format'
+            'array','bool','char','exn','file_descr','format','fpclass',
+            'in_channel','int','int32','int64','list','nativeint','open_flag',
+            'out_channel','string','Sys_error','unit'
             ),
         /* finally Pervasives Exceptions */
         5 => array (
@@ -102,8 +109,9 @@ $language_data = array (
         ),
     /* highlighting symbols is really important in OCaml */
     'SYMBOLS' => array(
+        '+.', '-.', '*.', '/.', '[<', '>]',
         ';', '!', ':', '.', '=', '%', '^', '*', '-', '/', '+',
-        '>', '<', '(', ')', '[', ']', '&', '|', '#', "'"
+        '>', '<', '(', ')', '[', ']', '&', '|', '#', "'",
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -122,12 +130,13 @@ $language_data = array (
             5 => 'color: #06c; font-weight: bold;' /* nice blue */
             ),
         'COMMENTS' => array(
-            'MULTI' => 'color: #5d478b; font-style: italic;' /* light purple */
+            'MULTI' => 'color: #5d478b; font-style: italic;', /* light purple */
+            1 => 'color: #5d478b; font-style: italic;' /* light purple */
             ),
         'ESCAPE_CHAR' => array(
             ),
         'BRACKETS' => array(
-            0 => 'color: #6c6;'
+            0 => 'color: #a52a2a;'
             ),
         'STRINGS' => array(
             0 => 'color: #3cb371;' /* nice green */
@@ -139,6 +148,8 @@ $language_data = array (
             1 => 'color: #060;' /* dark green */
             ),
         'REGEXPS' => array(
+            1 => 'font-weight:bold; color:#339933;',
+            2 => 'font-weight:bold; color:#993399;'
             ),
         'SYMBOLS' => array(
             0 => 'color: #a52a2a;' /* maroon */
@@ -158,11 +169,13 @@ $language_data = array (
         /* link to Pervasives exceptions */
         5 => 'http://caml.inria.fr/pub/docs/manual-ocaml/libref/Pervasives.html#EXCEPTION{FNAME}'
         ),
-    'OOLANG' => true,
+    'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
         1 => '.'
         ),
     'REGEXPS' => array(
+        1 => '~\w+',
+        2 => '`(?=(?-i:[a-z]))\w*',
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

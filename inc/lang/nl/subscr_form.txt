@@ -1,0 +1,3 @@
+====== Beheer inschrijvingen ======
+
+Deze pagina stelt u in staat uw inschrijven voor de huidige pagina en namespace te configureren.

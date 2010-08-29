@@ -10,10 +10,6 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/httputils.php');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/confutils.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
@@ -32,6 +28,8 @@ if(!defined('SIMPLE_TEST')){
 function css_out(){
     global $conf;
     global $lang;
+    global $config_cascade;
+
     $style = '';
     if (isset($_REQUEST['s']) &&
         in_array($_REQUEST['s'], array('all', 'print', 'feed'))) {
@@ -68,7 +66,10 @@ function css_out(){
         // load plugin, template, user styles
         $files = array_merge($files, css_pluginstyles($style));
         if (isset($tplstyles[$style])) $files = array_merge($files, $tplstyles[$style]);
-        $files[DOKU_CONF.'user'.$style.'.css'] = DOKU_BASE;
+
+        if(isset($config_cascade['userstyle'][$style])){
+            $files[$config_cascade['userstyle'][$style]] = DOKU_BASE;
+        }
     }else{
         $files[DOKU_INC.'lib/styles/style.css'] = DOKU_BASE.'lib/styles/';
         // load plugin, template, user styles
@@ -77,7 +78,9 @@ function css_out(){
         if($lang['direction'] == 'rtl'){
             if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
         }
-        $files[DOKU_CONF.'userstyle.css'] = DOKU_BASE;
+        if(isset($config_cascade['userstyle']['default'])){
+            $files[$config_cascade['userstyle']['default']] = DOKU_BASE;
+        }
     }
 
     // check cache age & handle conditional request

@@ -1,0 +1,14 @@
+Un nove conto de usator ha essite create. Ecce le detalios:
+
+Nomine de usator : @NEWUSER@
+Nomine complete : @NEWNAME@
+E-mail : @NEWEMAIL@
+
+Data : @DATE@
+Navigator : @BROWSER@
+Adresse IP : @IPADDRESS@
+Nomine host : @HOSTNAME@
+
+-- 
+Iste message ha essite generate per DokuWiki a
+@DOKUWIKIURL@

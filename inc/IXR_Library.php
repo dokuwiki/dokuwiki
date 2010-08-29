@@ -136,6 +136,7 @@ class IXR_Message {
     var $_value;
     var $_currentTag;
     var $_currentTagContents;
+    var $_lastseen;
     // The XML parser
     var $_parser;
     function IXR_Message ($message) {
@@ -150,6 +151,7 @@ class IXR_Message {
         $this->message = str_replace('&amp;', '&#38;', $this->message);
         $this->message = str_replace('&apos;', '&#39;', $this->message);
         $this->message = str_replace('&quot;', '&#34;', $this->message);
+        $this->message = str_replace("\x0b", ' ', $this->message); //vertical tab
         if (trim($this->message) == '') {
             return false;
         }
@@ -193,6 +195,7 @@ class IXR_Message {
                 $this->_arraystructs[] = array();
                 break;
         }
+        $this->_lastseen = $tag;
     }
     function cdata($parser, $cdata) {
         $this->_currentTagContents .= $cdata;
@@ -224,7 +227,7 @@ class IXR_Message {
                 break;
             case 'value':
                 // "If no type is indicated, the type is string."
-                if (trim($this->_currentTagContents) != '') {
+                if($this->_lastseen == 'value'){
                     $value = (string)$this->_currentTagContents;
                     $this->_currentTagContents = '';
                     $valueFlag = true;
@@ -279,6 +282,7 @@ class IXR_Message {
                 $this->params[] = $value;
             }
         }
+        $this->_lastseen = $tag;
     }
 }
 
@@ -300,7 +304,7 @@ class IXR_Server {
         if (!$data) {
             global $HTTP_RAW_POST_DATA;
             if (!$HTTP_RAW_POST_DATA) {
-               die('XML-RPC server accepts POST requests only.');
+                die('XML-RPC server accepts POST requests only.');
             }
             $data = $HTTP_RAW_POST_DATA;
         }
@@ -342,14 +346,13 @@ EOD;
         $method = $this->callbacks[$methodname];
         // Perform the callback and send the response
 
-# Removed for DokuWiki to have a more consistent interface
-#        if (count($args) == 1) {
-#            // If only one paramater just send that instead of the whole array
-#            $args = $args[0];
-#        }
+        # Removed for DokuWiki to have a more consistent interface
+        #        if (count($args) == 1) {
+        #            // If only one paramater just send that instead of the whole array
+        #            $args = $args[0];
+        #        }
 
-
-# Adjusted for DokuWiki to use call_user_func_array
+        # Adjusted for DokuWiki to use call_user_func_array
 
         // args need to be an array
         $args = (array) $args;
@@ -365,7 +368,6 @@ EOD;
             #$result = $this->$method($args);
             $result = call_user_func_array(array(&$this,$method),$args);
         } elseif (substr($method, 0, 7) == 'plugin:') {
-            require_once(DOKU_INC.'inc/pluginutils.php');
             list($pluginname, $callback) = explode(':', substr($method, 7), 2);
             if(!plugin_isdisabled($pluginname)) {
                 $plugin = plugin_load('action', $pluginname);
@@ -618,15 +620,17 @@ class IXR_Date {
         $this->second = gmdate('s', $timestamp);
     }
     function parseIso($iso) {
-        $this->year = substr($iso, 0, 4);
-        $this->month = substr($iso, 5, 2);
-        $this->day = substr($iso, 8, 2);
-        $this->hour = substr($iso, 11, 2);
-        $this->minute = substr($iso, 14, 2);
-        $this->second = substr($iso, 17, 2);
+        if(preg_match('/^(\d\d\d\d)-?(\d\d)-?(\d\d)([T ](\d\d):(\d\d)(:(\d\d))?)?/',$iso,$match)){
+            $this->year   = (int) $match[1];
+            $this->month  = (int) $match[2];
+            $this->day    = (int) $match[3];
+            $this->hour   = (int) $match[5];
+            $this->minute = (int) $match[6];
+            $this->second = (int) $match[8];
+        }
     }
     function getIso() {
-        return $this->year.'-'.$this->month.'-'.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second;
+        return $this->year.$this->month.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second;
     }
     function getXml() {
         return '<dateTime.iso8601>'.$this->getIso().'</dateTime.iso8601>';

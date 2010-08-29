@@ -8,6 +8,7 @@
  * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
+ * @author ben <ben@livetom.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,6 +51,7 @@ $lang['btn_resendpwd']         = '发送新密码';
 $lang['btn_draft']             = '编辑草稿';
 $lang['btn_recover']           = '恢复草稿';
 $lang['btn_draftdel']          = '删除草稿';
+$lang['btn_revert']            = '恢复';
 $lang['loggedinas']            = '登录为';
 $lang['user']                  = '用户名';
 $lang['pass']                  = '密码';
@@ -88,13 +90,15 @@ $lang['resendpwdconfirm']      = '确认链接已经通过邮件发送给您了�
 $lang['resendpwdsuccess']      = '您的新密码已经通过邮件发送给您了。';
 $lang['license']               = '除额外注明的地方外，本维基上的内容按下列许可协议发布：';
 $lang['licenseok']             = '当您选择开始编辑本页，即寓示你同意将你贡献的内容按下列许可协议发布：';
+$lang['searchmedia']           = '查找文件名：';
+$lang['searchmedia_in']        = '在%s中查找';
 $lang['txt_upload']            = '选择要上传的文件';
 $lang['txt_filename']          = '上传并重命名为（可选）';
 $lang['txt_overwrt']           = '覆盖已存在的同名文件';
 $lang['lockedby']              = '目前已被下列人员锁定';
 $lang['lockexpire']            = '预计锁定解除于';
 $lang['willexpire']            = '您对本页的独有编辑权将于一分钟之后解除。\n为了防止与其他人的编辑冲突，请使用预览按钮重设计时器。';
-$lang['notsavedyet']           = '未保存的更改将丢失。\n真的要继续？';
+$lang['js']['notsavedyet']     = "未保存的更改将丢失。\n真的要继续？";
 $lang['rssfailed']             = '获取该 RSS 信息时产生错误：';
 $lang['nothingfound']          = '什么都没有找到。';
 $lang['mediaselect']           = '媒体文件';
@@ -112,10 +116,14 @@ $lang['deletefail']            = '无法删除“%s”- 请检查权限。';
 $lang['mediainuse']            = '文件“%s”无法删除 - 它正被使用中。';
 $lang['namespaces']            = '命名空间';
 $lang['mediafiles']            = '可用的文件';
+$lang['js']['searchmedia']     = '查找文件';
 $lang['js']['keepopen']        = '选中后不自动关闭窗口';
 $lang['js']['hidedetails']     = '隐藏详细信息';
 $lang['js']['nosmblinks']      = '连接到 Windows 共享功能只有在 IE 浏览器中才能正常使用。
 但您仍能复制并粘贴该链接。';
+$lang['js']['linkwiz']         = '链接向导';
+$lang['js']['linkto']          = '链接到：';
+$lang['js']['del_confirm']     = '真的要删除选中的项目吗？';
 $lang['js']['mu_btn']          = '一次上传了多个文件';
 $lang['mediausage']            = '使用下列字符链接到该文件：';
 $lang['mediaview']             = '查看该文件';
@@ -157,6 +165,11 @@ $lang['qb_h2']                 = '标题 H2 ';
 $lang['qb_h3']                 = '标题 H3';
 $lang['qb_h4']                 = '标题 H4';
 $lang['qb_h5']                 = '标题 H5';
+$lang['qb_h']                  = '标题';
+$lang['qb_hs']                 = '选择标题';
+$lang['qb_hplus']              = '上级标题';
+$lang['qb_hminus']             = '下级标题';
+$lang['qb_hequal']             = '同级标题';
 $lang['qb_link']               = '内部链接';
 $lang['qb_extlink']            = '外部链接';
 $lang['qb_hr']                 = '水平线';
@@ -166,7 +179,7 @@ $lang['qb_media']              = '插入图像或其他文件';
 $lang['qb_sig']                = '插入签名';
 $lang['qb_smileys']            = '表情符号';
 $lang['qb_chars']              = '特殊字符';
-$lang['js']['del_confirm']           = '真的要删除选中的项目吗？';
+$lang['upperns']               = '跳转到父级名空间';
 $lang['admin_register']        = '添加新用户';
 $lang['metaedit']              = '编辑元数据';
 $lang['metasaveerr']           = '写入元数据失败';
@@ -227,4 +240,12 @@ $lang['mu_fail']               = '失败';
 $lang['mu_authfail']           = '会话过期';
 $lang['mu_progress']           = '@PCT@% 上传完成';
 $lang['mu_filetypes']          = '允许的文件类型';
+$lang['mu_info']               = '文件已上传。';
 $lang['recent_global']         = '您当前看到的是<b>%s</b> 名称空间的变动。你还可以在<a href="%s">查看整个维基的近期变动</a>。';
+$lang['years']                 = '%d年前';
+$lang['months']                = '%d月前';
+$lang['weeks']                 = '%d周前';
+$lang['days']                  = '%d天前';
+$lang['hours']                 = '%d小时前';
+$lang['minutes']               = '%d分钟前';
+$lang['seconds']               = '%d秒前';

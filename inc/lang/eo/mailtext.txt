@@ -12,5 +12,5 @@ Uzulo: @USER@
 @DIFF@
 
 -- 
-Tiu ĉi mesaĝo estis kreata de DokuWiki, kiu lokiĝas tie:
+Tiu ĉi mesaĝo estis kreita de DokuWiki, kiu lokiĝas tie:
 @DOKUWIKIURL@

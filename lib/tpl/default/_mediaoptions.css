@@ -1,0 +1,92 @@
+/* --- popup --- */
+
+#media__popup {
+    background-color:__background__;
+    display:none;
+    border: 1px solid __border__;
+    position: absolute;
+    width:270px;
+}
+
+#media__popup h1 {
+    text-align:center;
+    font-weight:normal;
+    background-color: __background_alt__;
+    height: 16px;
+    margin-bottom: 5px;
+    font-size:12px;
+    border-bottom: 0;
+}
+
+#media__popup p {
+    display:block;
+    line-height:14pt;
+    margin:0.5em;
+}
+
+#media_nolink {
+    padding:4px 0;
+}
+
+#media__popup label {
+    float:left;
+    width:9em;
+}
+
+#media__popup .button {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#media__popup .btnlbl {
+    text-align:center;
+}
+
+#media__popup .btnlbl input {
+    margin:0 1em;
+}
+
+#media__closeimg {
+    float:right;
+}
+
+/* --- display options --- */
+
+#media__linkopts label,
+#media__nolnk {
+	width: 80px;
+	float: left;
+	margin-left: 10px;
+}
+
+#media__linkopts label{
+	line-height: 20px;
+}
+
+#media__nolnk,
+#media__linkopts label.long{
+	margin-bottom: 8px;
+	line-height: 12px;
+}
+
+#media__linkopts label.long{
+	width: 150px;
+	float: none;
+}
+
+#media__linkopts br {
+	clear: both;
+}
+
+#media__linkopts select {
+	width: 60px;
+	margin-left: 10px;
+}
+
+#media__linkopts input.edit {
+    width:50px;
+    margin-left:10px;
+}
+#media__linkopts #media__title {
+    width:150px;
+}

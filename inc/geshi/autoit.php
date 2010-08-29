@@ -4,7 +4,7 @@
  * --------
  * Author: big_daddy (robert.i.anthony@gmail.com)
  * Copyright: (c) 2006 and to GESHi ;)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2006/01/26
  *
  * AutoIT language file for GeSHi.
@@ -60,7 +60,10 @@ $language_data = array (
     'COMMENT_MULTI' => array(
         '#comments-start' => '#comments-end',
         '#cs' => '#ce'),
-    'COMMENT_REGEXP' => array(0 => '/(?<!#)#(\s.*)?$/m'),
+    'COMMENT_REGEXP' => array(
+        0 => '/(?<!#)#(\s.*)?$/m',
+        1 => '/(?<=include)\s+<.*?>/'
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '',
@@ -1101,8 +1104,9 @@ $language_data = array (
             6 => 'color: #A00FF0; font-style: italic;'
             ),
         'COMMENTS' => array(
+            'MULTI' => 'font-style: italic; color: #669900;',
             0 => 'font-style: italic; color: #009933;',
-            'MULTI' => 'font-style: italic; color: #669900;'
+            1 => 'font-style: italic; color: #9977BB;',
             ),
         'ESCAPE_CHAR' => array(
             0 => ''
@@ -1111,7 +1115,7 @@ $language_data = array (
             0 => 'color: #FF0000; font-weight: bold;'
             ),
         'STRINGS' => array(
-            0 => 'font-weight: bold; color: #008080;'
+            0 => 'font-weight: bold; color: #9977BB;'
             ),
         'NUMBERS' => array(
             0 => 'color: #AC00A9; font-style: italic; font-weight: bold;'

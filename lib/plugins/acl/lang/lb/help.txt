@@ -1,0 +1,11 @@
+=== Séier Hëllef: ===
+
+Op dëser Säit kanns de Rechter fir Namespacen a Säiten an dengem Wiki setzen.
+
+Op der lénkser Säit hues de all d'Namespacen a Säiten.
+
+Am Formulär hei uewendriwwer kanns de d'Rechter vun dem ausgewielte Benotzer oder Grupp änneren
+
+An der Tabell hei ënnendrënner kanns de all d'Reegele gesinn déi de Moment gesat sinn. Du kanns se huelen fir Reegelen ze änneren oder ze läschen.
+
+Déi [[doku>acl|offiziell Dokumentatioun iwwert ACL]] hëlleft der besser ze verstoen wéi déi Reegelen am Dokuwiki funktionéieren.

@@ -4,6 +4,7 @@
  *
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
+ * @author Yaron Yogev <yaronyogev@gmail.com>
  */
 $lang['menu']                  = 'מנהל שחזור';
 $lang['filter']                = 'חפש דפים עם ספאם';

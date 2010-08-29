@@ -81,7 +81,6 @@ $lang['profileconfirm']        = 'Confirmar canvis al perfil en la contrasenya';
 $lang['disableactions']        = 'Desactivar accions de DokuWiki';
 $lang['disableactions_check']  = 'Comprovar';
 $lang['disableactions_subscription'] = 'Subscriure\'s/Desubscriure\'s';
-$lang['disableactions_nssubscription'] = 'Subscriure\'s/desubscriure\'s a l\'espai de noms';
 $lang['disableactions_wikicode'] = 'Vore font/exportar còdic';
 $lang['disableactions_other']  = 'Atres accions (separades per comes)';
 $lang['sneaky_index']          = 'Normalment, DokuWiki mostra tots els espais de noms en la vista d\'índex. Activant esta opció s\'ocultaran aquells per als que l\'usuari no tinga permís de llectura. Açò pot ocultar subespais accessibles i inutilisar l\'índex per a certes configuracions del ACL.';

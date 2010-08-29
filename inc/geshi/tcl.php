@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Reid van Melle (rvanmelle@gmail.com)
  * Copyright: (c) 2004 Reid van Melle (sorry@nowhere)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2006/05/05
  *
  * TCL/iTCL language file for GeSHi.
@@ -54,7 +54,7 @@ $language_data = array (
     'COMMENT_MULTI' => array(),
     'COMMENT_REGEXP' => array(
         1 => '/(?<!\\\\)#(?:\\\\\\\\|\\\\\\n|.)*$/m',
-        2 => '/{[^}\n]+}/'
+        //2 => '/{[^}\n]+}/'
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"', "'"),
@@ -138,7 +138,7 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;',
-            2 => 'color: #483d8b;',
+//            2 => 'color: #483d8b;',
             'MULTI' => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(

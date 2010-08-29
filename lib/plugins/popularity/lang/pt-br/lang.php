@@ -12,6 +12,7 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
+ * @author Sergio Motta sergio@cisne.com.br
  */
 $lang['name']                  = 'Retorno de popularidade (pode demorar um pouco para carregar)';
 $lang['submit']                = 'Enviar dados';

@@ -1,0 +1,19 @@
+Dobrý den!
+
+Byly změněny stránky ve jmenném prostoru @PAGE@ wiki @TITLE@.
+Zde jsou:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Pro odhlášení z odebírání změn
+se prosím příhlašte do wiki na adrese 
+@DOKUWIKIURL@,pak navštivte 
+@SUBSCRIBE@ 
+a odhlaště se z odebírání změn na stránce či 
+ve jmenném prostoru.
+
+-- 
+Tento email byl automaticky vygenerován systémem DokuWiki
+@DOKUWIKIURL@

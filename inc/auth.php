@@ -10,8 +10,6 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/io.php');
 
 // some ACL level defines
 define('AUTH_NONE',0);
@@ -22,15 +20,27 @@ define('AUTH_UPLOAD',8);
 define('AUTH_DELETE',16);
 define('AUTH_ADMIN',255);
 
-global $conf;
-
-if($conf['useacl']){
-    require_once(DOKU_INC.'inc/blowfish.php');
-    require_once(DOKU_INC.'inc/mail.php');
-
+/**
+ * Initialize the auth system.
+ *
+ * This function is automatically called at the end of init.php
+ *
+ * This used to be the main() of the auth.php
+ *
+ * @todo backend loading maybe should be handled by the class autoloader
+ * @todo maybe split into multiple functions at the XXX marked positions
+ */
+function auth_setup(){
+    global $conf;
     global $auth;
+    global $AUTH_ACL;
+    global $lang;
+    global $config_cascade;
+    $AUTH_ACL = array();
 
-    // load the the backend auth functions and instantiate the auth object
+    if(!$conf['useacl']) return false;
+
+    // load the the backend auth functions and instantiate the auth object XXX
     if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
         require_once(DOKU_INC.'inc/auth/basic.class.php');
         require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
@@ -50,68 +60,63 @@ if($conf['useacl']){
     } else {
         nice_die($lang['authmodfailed']);
     }
-}
 
-// do the login either by cookie or provided credentials
-if($conf['useacl']){
-    if($auth){
-        if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
-        if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
-        if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
-        $_REQUEST['http_credentials'] = false;
-        if (!$conf['rememberme']) $_REQUEST['r'] = false;
+    if(!$auth) return;
 
-        // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
-        if(isset($_SERVER['HTTP_AUTHORIZATION'])){
-            list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
-                explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
-        }
+    // do the login either by cookie or provided credentials XXX
+    if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
+    if (!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
+    if (!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
+    $_REQUEST['http_credentials'] = false;
+    if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
-        // if no credentials were given try to use HTTP auth (for SSO)
-        if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
-            $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
-            $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
-            $_REQUEST['http_credentials'] = true;
-        }
-
-        // apply cleaning
-        $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
-
-        if(isset($_REQUEST['authtok'])){
-            // when an authentication token is given, trust the session
-            auth_validateToken($_REQUEST['authtok']);
-        }elseif(!is_null($auth) && $auth->canDo('external')){
-            // external trust mechanism in place
-            $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
-        }else{
-            $evdata = array(
-                    'user'     => $_REQUEST['u'],
-                    'password' => $_REQUEST['p'],
-                    'sticky'   => $_REQUEST['r'],
-                    'silent'   => $_REQUEST['http_credentials'],
-                    );
-            $evt = new Doku_Event('AUTH_LOGIN_CHECK',$evdata);
-            if($evt->advise_before()){
-                auth_login($evdata['user'],
-                           $evdata['password'],
-                           $evdata['sticky'],
-                           $evdata['silent']);
-            }
-        }
+    // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
+    if(isset($_SERVER['HTTP_AUTHORIZATION'])){
+        list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
+            explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
     }
 
-    //load ACL into a global array
-    global $AUTH_ACL;
-    if(is_readable(DOKU_CONF.'acl.auth.php')){
-        $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+    // if no credentials were given try to use HTTP auth (for SSO)
+    if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
+        $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
+        $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
+        $_REQUEST['http_credentials'] = true;
+    }
+
+    // apply cleaning
+    $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+
+    if(isset($_REQUEST['authtok'])){
+        // when an authentication token is given, trust the session
+        auth_validateToken($_REQUEST['authtok']);
+    }elseif(!is_null($auth) && $auth->canDo('external')){
+        // external trust mechanism in place
+        $auth->trustExternal($_REQUEST['u'],$_REQUEST['p'],$_REQUEST['r']);
+    }else{
+        $evdata = array(
+                'user'     => $_REQUEST['u'],
+                'password' => $_REQUEST['p'],
+                'sticky'   => $_REQUEST['r'],
+                'silent'   => $_REQUEST['http_credentials'],
+                );
+        trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+    }
+
+    //load ACL into a global array XXX
+    if(is_readable($config_cascade['acl']['default'])){
+        $AUTH_ACL = file($config_cascade['acl']['default']);
         //support user wildcard
         if(isset($_SERVER['REMOTE_USER'])){
             $AUTH_ACL = str_replace('%USER%',$_SERVER['REMOTE_USER'],$AUTH_ACL);
-            $AUTH_ACL = str_replace('@USER@',$_SERVER['REMOTE_USER'],$AUTH_ACL); //legacy
         }
-    }else{
-        $AUTH_ACL = array();
     }
+}
+
+function auth_login_wrapper($evdata) {
+    return auth_login($evdata['user'],
+                      $evdata['password'],
+                      $evdata['sticky'],
+                      $evdata['silent']);
 }
 
 /**
@@ -315,9 +320,7 @@ function auth_logoff($keepbc=false){
         setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
     }
 
-    if($auth && $auth->canDo('logoff')){
-        $auth->logOff();
-    }
+    if($auth) $auth->logOff();
 }
 
 /**
@@ -347,7 +350,8 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
             $user = $_SERVER['REMOTE_USER'];
         }
     }
-    $user = $auth->cleanUser($user);
+    $user = trim($auth->cleanUser($user));
+    if($user === '') return false;
     if(is_null($groups)) $groups = (array) $USERINFO['grps'];
     $groups = array_map(array($auth,'cleanGroup'),$groups);
     $user   = auth_nameencode($user);
@@ -356,6 +360,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
     $superusers = explode(',', $conf['superuser']);
     $superusers = array_unique($superusers);
     $superusers = array_map('trim', $superusers);
+    $superusers = array_filter($superusers);
     // prepare an array containing only true values for array_map call
     $alltrue = array_fill(0, count($superusers), true);
     $superusers = array_map('auth_nameencode', $superusers, $alltrue);
@@ -374,6 +379,7 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
         $managers = explode(',', $conf['manager']);
         $managers = array_unique($managers);
         $managers = array_map('trim', $managers);
+        $managers = array_filter($managers);
         // prepare an array containing only true values for array_map call
         $alltrue = array_fill(0, count($managers), true);
         $managers = array_map('auth_nameencode', $managers, $alltrue);
@@ -565,6 +571,9 @@ function auth_nameencode($name,$skip_group=false){
     global $cache_authname;
     $cache =& $cache_authname;
     $name  = (string) $name;
+
+    // never encode wildcard FS#1955
+    if($name == '%USER%') return $name;
 
     if (!isset($cache[$name][$skip_group])) {
         if($skip_group && $name{0} =='@'){
@@ -926,7 +935,7 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             $magic = '1';
         case 'apr1':
             //from http://de.php.net/manual/en/function.crypt.php#73619 comment by <mikey_nich at hotmail dot com>
-            if(!$magic) $magic = 'apr1';
+            if(!isset($magic)) $magic = 'apr1';
             $salt = substr($salt,0,8);
             $len = strlen($clear);
             $text = $clear.'$'.$magic.'$'.$salt;

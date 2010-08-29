@@ -7,12 +7,11 @@
  */
 
 if(!defined('DOKU_INC')) die('meh.');
-require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/EmailAddressValidator.php');
 
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
+if(!defined('QUOTEDPRINTABLE_EOL')) define('QUOTEDPRINTABLE_EOL',"\015\012");
 #define('MAILHEADER_ASCIIONLY',1);
 
 /**
@@ -256,11 +255,11 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         // but this wouldn't be caught by such an easy RegExp
         if($maxlen){
             preg_match_all( '/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch );
-            $sLine = implode( '=' . MAILHEADER_EOL, $aMatch[0] ); // add soft crlf's
+            $sLine = implode( '=' . QUOTEDPRINTABLE_EOL, $aMatch[0] ); // add soft crlf's
         }
     }
 
     // join lines into text
-    return implode(MAILHEADER_EOL,$aLines);
+    return implode(QUOTEDPRINTABLE_EOL,$aLines);
 }
 

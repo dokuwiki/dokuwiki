@@ -9,14 +9,8 @@
   if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
   define('DOKU_DISABLE_GZIP_OUTPUT', 1);
   require_once(DOKU_INC.'inc/init.php');
-  require_once(DOKU_INC.'inc/common.php');
-  require_once(DOKU_INC.'inc/media.php');
-  require_once(DOKU_INC.'inc/pageutils.php');
-  require_once(DOKU_INC.'inc/httputils.php');
-  require_once(DOKU_INC.'inc/confutils.php');
-  require_once(DOKU_INC.'inc/auth.php');
 
-  //close sesseion
+  //close session
   session_write_close();
 
   $mimetypes = getMimeTypes();
@@ -33,72 +27,59 @@
     $DL   = true;
   }
 
-  //media to local file
-  if(preg_match('#^(https?)://#i',$MEDIA)){
-    //check hash
-    if(substr(md5(auth_cookiesalt().$MEDIA),0,6) != $_REQUEST['hash']){
-      header("HTTP/1.0 412 Precondition Failed");
-      print 'Precondition Failed';
-      exit;
-    }
-    //handle external images
-    if(strncmp($MIME,'image/',6) == 0) $FILE = media_get_from_URL($MEDIA,$EXT,$CACHE);
-    if(!$FILE){
-      //download failed - redirect to original URL
-      header('Location: '.$MEDIA);
-      exit;
-    }
-  }else{
-    $MEDIA = cleanID($MEDIA);
-    if(empty($MEDIA)){
-      header("HTTP/1.0 400 Bad Request");
-      print 'Bad request';
-      exit;
-    }
+  // check for permissions, preconditions and cache external files
+  list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE);
 
-    //check permissions (namespace only)
-    if(auth_quickaclcheck(getNS($MEDIA).':X') < AUTH_READ){
-      header("HTTP/1.0 401 Unauthorized");
-      //fixme add some image for imagefiles
-      print 'Unauthorized';
+  // prepare data for plugin events
+  $data = array('media'           => $MEDIA,
+                'file'            => $FILE,
+                'orig'            => $FILE,
+                'mime'            => $MIME,
+                'download'        => $DL,
+                'cache'           => $CACHE,
+                'ext'             => $EXT,
+                'width'           => $WIDTH,
+                'height'          => $HEIGHT,
+                'status'          => $STATUS,
+                'statusmessage'   => $STATUSMESSAGE,
+  );
+
+  // handle the file status
+  $evt = new Doku_Event('FETCH_MEDIA_STATUS', $data);
+  if ( $evt->advise_before() ) {
+    // redirects
+    if($data['status'] > 300 && $data['status'] <= 304){
+      send_redirect($data['statusmessage']);
+    }
+    // send any non 200 status
+    if($data['status'] != 200){
+      header('HTTP/1.0 ' . $data['status'] . ' ' . $data['statusmessage']);
+    }
+    // die on errors
+    if($data['status'] > 203){
+      print $data['statusmessage'];
       exit;
     }
-    $FILE  = mediaFN($MEDIA);
   }
-
-  //check file existance
-  if(!@file_exists($FILE)){
-    header("HTTP/1.0 404 Not Found");
-    //FIXME add some default broken image
-    print 'Not Found';
-    exit;
-  }
-
-  $ORIG = $FILE;
+  $evt->advise_after();
+  unset($evt);
 
   //handle image resizing/cropping
   if((substr($MIME,0,5) == 'image') && $WIDTH){
     if($HEIGHT){
-        $FILE = media_crop_image($FILE,$EXT,$WIDTH,$HEIGHT);
+        $data['file'] = $FILE = media_crop_image($data['file'],$EXT,$WIDTH,$HEIGHT);
     }else{
-        $FILE = media_resize_image($FILE,$EXT,$WIDTH,$HEIGHT);
+        $data['file'] = $FILE  = media_resize_image($data['file'],$EXT,$WIDTH,$HEIGHT);
     }
   }
 
   // finally send the file to the client
-  $data = array('file'     => $FILE,
-                'mime'     => $MIME,
-                'download' => $DL,
-                'cache'    => $CACHE,
-                'orig'     => $ORIG,
-                'ext'      => $EXT,
-                'width'    => $WIDTH,
-                'height'   => $HEIGHT);
-
   $evt = new Doku_Event('MEDIA_SENDFILE', $data);
   if ($evt->advise_before()) {
     sendFile($data['file'],$data['mime'],$data['download'],$data['cache']);
   }
+  // Do something after the download finished.
+  $evt->advise_after();
 
 /* ------------------------------------------------------------------------ */
 
@@ -153,6 +134,53 @@ function sendFile($file,$mime,$dl,$cache){
     header("HTTP/1.0 500 Internal Server Error");
     print "Could not read $file - bad permissions?";
   }
+}
+
+/**
+ * Check for media for preconditions and return correct status code
+ *
+ * READ: MEDIA, MIME, EXT, CACHE
+ * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
+ *
+ * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ * @param $media reference to the media id
+ * @param $file reference to the file variable
+ * @returns array(STATUS, STATUSMESSAGE)
+ */
+function checkFileStatus(&$media, &$file) {
+  global $MIME, $EXT, $CACHE;
+
+  //media to local file
+  if(preg_match('#^(https?)://#i',$media)){
+    //check hash
+    if(substr(md5(auth_cookiesalt().$media),0,6) != $_REQUEST['hash']){
+      return array( 412, 'Precondition Failed');
+    }
+    //handle external images
+    if(strncmp($MIME,'image/',6) == 0) $file = media_get_from_URL($media,$EXT,$CACHE);
+    if(!$file){
+      //download failed - redirect to original URL
+      return array( 302, $media );
+    }
+  }else{
+    $media = cleanID($media);
+    if(empty($media)){
+      return array( 400, 'Bad request' );
+    }
+
+    //check permissions (namespace only)
+    if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ){
+      return array( 403, 'Forbidden' );
+    }
+    $file  = mediaFN($media);
+  }
+
+  //check file existance
+  if(!@file_exists($file)){
+      return array( 404, 'Not Found' );
+  }
+
+  return array(200, null);
 }
 
 /**

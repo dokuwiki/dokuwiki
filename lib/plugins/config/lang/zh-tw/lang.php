@@ -83,7 +83,6 @@ $lang['profileconfirm']        = '修改個人資料時需要確認密碼';
 $lang['disableactions']        = '停用DokuWiki功能';
 $lang['disableactions_check']  = '檢查';
 $lang['disableactions_subscription'] = '訂閱/取消訂閱';
-$lang['disableactions_nssubscription'] = '命名空間訂閱/退訂';
 $lang['disableactions_wikicode'] = '查看源文件/導出源文件';
 $lang['disableactions_other']  = '其他功能(以逗號分隔)';
 $lang['sneaky_index']          = '默認情況下，DokuWiki 在索引頁會顯示所有 namespace。啟用該選項能隱藏那些用戶沒有權限閱讀的頁面。但也可能將用戶能夠閱讀的子頁面一並隱藏。這有可能導致在特定 ACL 設置下，索引功能不可用。';

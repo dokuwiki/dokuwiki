@@ -299,8 +299,7 @@ class Horde_Cipher_blowfish
      *
      * @param String $key   The key to use
      */
-    function setKey($key)
-    {
+    function setKey($key) {
         $key = $this->_formatKey($key);
         $keyPos = $keyXor = 0;
 
@@ -318,37 +317,37 @@ class Horde_Cipher_blowfish
 
         $encZero = array('L' => 0, 'R' => 0);
         for ($i = 0; $i + 1 < $iMax; $i += 2) {
-          $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
-          $this->p[$i] = $encZero['L'];
-          $this->p[$i + 1] = $encZero['R'];
+            $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
+            $this->p[$i] = $encZero['L'];
+            $this->p[$i + 1] = $encZero['R'];
         }
 
         $iMax = count($this->s1);
         for ($i = 0; $i < $iMax; $i += 2) {
-          $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
-          $this->s1[$i] = $encZero['L'];
-          $this->s1[$i + 1] = $encZero['R'];
+            $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
+            $this->s1[$i] = $encZero['L'];
+            $this->s1[$i + 1] = $encZero['R'];
         }
 
         $iMax = count($this->s2);
         for ($i = 0; $i < $iMax; $i += 2) {
-          $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
-          $this->s2[$i] = $encZero['L'];
-          $this->s2[$i + 1] = $encZero['R'];
+            $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
+            $this->s2[$i] = $encZero['L'];
+            $this->s2[$i + 1] = $encZero['R'];
         }
 
         $iMax = count($this->s3);
         for ($i = 0; $i < $iMax; $i += 2) {
-          $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
-          $this->s3[$i] = $encZero['L'];
-          $this->s3[$i + 1] = $encZero['R'];
+            $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
+            $this->s3[$i] = $encZero['L'];
+            $this->s3[$i + 1] = $encZero['R'];
         }
 
         $iMax = count($this->s4);
         for ($i = 0; $i < $iMax; $i += 2) {
-          $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
-          $this->s4[$i] = $encZero['L'];
-          $this->s4[$i + 1] = $encZero['R'];
+            $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
+            $this->s4[$i] = $encZero['L'];
+            $this->s4[$i + 1] = $encZero['R'];
         }
 
     }
@@ -361,8 +360,7 @@ class Horde_Cipher_blowfish
      *
      * @return String the encrypted output
      */
-    function encryptBlock($block, $key = null)
-    {
+    function encryptBlock($block, $key = null) {
         if (!is_null($key)) {
             $this->setKey($key);
         }
@@ -380,8 +378,7 @@ class Horde_Cipher_blowfish
      *
      * @return String  The encrypted output.
      */
-    function _encryptBlock($L, $R)
-    {
+    function _encryptBlock($L, $R) {
         $L ^= $this->p[0];
         $R ^= ((($this->s1[($L >> 24) & 0xFF] + $this->s2[($L >> 16) & 0x0ff]) ^ $this->s3[($L >> 8) & 0x0ff]) + $this->s4[$L & 0x0ff]) ^ $this->p[1];
         $L ^= ((($this->s1[($R >> 24) & 0xFF] + $this->s2[($R >> 16) & 0x0ff]) ^ $this->s3[($R >> 8) & 0x0ff]) + $this->s4[$R & 0x0ff]) ^ $this->p[2];
@@ -412,13 +409,12 @@ class Horde_Cipher_blowfish
      *
      * @return String the decrypted output
      */
-    function decryptBlock($block, $key = null)
-    {
+    function decryptBlock($block, $key = null) {
         if (!is_null($key)) {
             $this->setKey($key);
         }
 
-// change for phpMyAdmin
+        // change for phpMyAdmin
         $L = null;
         $R = null;
 
@@ -429,7 +425,7 @@ class Horde_Cipher_blowfish
         if (isset($retarray[1])) {
             $R = $retarray[1];
         }
-// end change for phpMyAdmin
+        // end change for phpMyAdmin
 
         $L ^= $this->p[17];
         $R ^= ((($this->s1[($L >> 24) & 0xFF] + $this->s2[($L >> 16) & 0x0ff]) ^ $this->s3[($L >> 8) & 0x0ff]) + $this->s4[$L & 0x0ff]) ^ $this->p[16];
@@ -458,8 +454,7 @@ class Horde_Cipher_blowfish
      *
      * @return array  The key.
      */
-    function _formatKey($key)
-    {
+    function _formatKey($key) {
         return array_values(unpack('C*', $key));
     }
 
@@ -478,8 +473,7 @@ class Horde_Cipher_blowfish
  *
  * @author  lem9
  */
-function PMA_blowfish_encrypt($data, $secret)
-{
+function PMA_blowfish_encrypt($data, $secret) {
     $pma_cipher = new Horde_Cipher_blowfish;
     $encrypt = '';
 
@@ -508,8 +502,7 @@ function PMA_blowfish_encrypt($data, $secret)
  *
  * @author  lem9
  */
-function PMA_blowfish_decrypt($encdata, $secret)
-{
+function PMA_blowfish_decrypt($encdata, $secret) {
     $pma_cipher = new Horde_Cipher_blowfish;
     $decrypt = '';
     $data = base64_decode($encdata);

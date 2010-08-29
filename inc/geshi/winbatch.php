@@ -4,7 +4,7 @@
  * ------------
  * Author: Craig Storey (storey.craig@gmail.com)
  * Copyright: (c) 2004 Craig Storey (craig.xcottawa.ca)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2006/05/19
  *
  * WinBatch language file for GeSHi.
@@ -106,8 +106,8 @@ $language_data = array (
             'RegExistKey', 'RegEntryType', 'RegDelValue', 'RegDeleteKey', 'RegCreateKey', 'RegConnect', 'RegCloseKey', 'RegApp', 'Random',
             'PtrPersistent', 'PtrGlobalDefine', 'PtrGlobal', 'Print', 'PlayWaveform', 'PlayMidi', 'PlayMedia', 'PipeServerWrite', 'PipeServerRead',
             'PipeServerCreate', 'PipeServerClose', 'PipeInfo', 'PipeClientSendRecvData', 'PipeClientOpen', 'PipeClientClose', 'Pause',
-            'ParseData', 'ObjectTypeGet', 'ObjectType', 'ObjectOpen', 'ObjectGet', 'ObjectEventRemove', 'objecteventremove', 'ObjectEventAdd',
-            'objecteventadd', 'ObjectCreate', 'ObjectConstToArray', 'ObjectConstantsGet', 'ObjectCollectionOpen', 'ObjectCollectionNext',
+            'ParseData', 'ObjectTypeGet', 'ObjectType', 'ObjectOpen', 'ObjectGet', 'ObjectEventRemove', 'ObjectEventAdd',
+            'ObjectCreate', 'ObjectConstToArray', 'ObjectConstantsGet', 'ObjectCollectionOpen', 'ObjectCollectionNext',
             'ObjectCollectionClose', 'ObjectClose', 'ObjectAccess', 'Num2Char', 'NetInfo', 'MsgTextGet', 'MousePlay', 'MouseMove', 'MouseInfo',
             'MouseDrag', 'MouseCoords', 'MouseClickBtn', 'MouseClick', 'mod', 'Min', 'Message', 'Max', 'Loge', 'LogDisk', 'Log10', 'LastError',
             'KeyToggleSet', 'KeyToggleGet', 'ItemSortNc', 'ItemSort', 'ItemSelect', 'ItemReplace', 'ItemRemove', 'ItemLocate', 'ItemInsert',

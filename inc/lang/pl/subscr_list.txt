@@ -1,0 +1,18 @@
+Witaj!
+
+Strony w katalogu @PAGE@ na wiki @TITLE@ uległy
+następującym zmianom:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Aby zrezygnować z powiadomień o zmianach zaloguj się do wiki na
+@DOKUWIKIURL@, a następnie odwiedź
+@SUBSCRIBE@
+i anuluj otrzymywanie powiadomień o zmianach na stronach i/lub
+katalogach.
+
+--
+Ta wiadomość została wygenerowana przez DokuWiki na
+@DOKUWIKIURL@

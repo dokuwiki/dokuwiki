@@ -4,9 +4,11 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author Marcel Metz <marcel_metz@gmx.de>
  */
 $lang['menu']                  = 'Zurückstellungsmanager';
 $lang['revert']                = 'Stelle ausgewählte Seiten zurück.';
+$lang['reverted']              = '%s zu Revision %s zurückgesetzt';
 $lang['removed']               = '%s entfernt';
 $lang['revstart']              = 'Zurückstellungsprozess gestartet. Dies kann eine längere Zeit dauern. Wenn das Skript vor Fertigstellung stopt, sollten Sie es in kleineren Stücken versuchen.';
 $lang['revstop']               = 'Zurückstellungsprozess erfolgreich beendet.';

@@ -8,13 +8,6 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/events.php');
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/feedcreator.class.php');
-require_once(DOKU_INC.'inc/auth.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/httputils.php');
 
 //close session
 session_write_close();
@@ -25,7 +18,7 @@ $opt = rss_parseOptions();
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
 $cache = getCacheName(join('',array_values($opt)).$_SERVER['REMOTE_USER'],'.feed');
-$key   = join('', array_values($opt)) . $_SERVER['REMOTE_USER']; 
+$key   = join('', array_values($opt)) . $_SERVER['REMOTE_USER'];
 $cache = new cache($key, '.feed');
 
 // prepare cache depends
@@ -260,7 +253,18 @@ function rss_buildItems(&$rss,&$data,$opt){
             $item->author = '';
             if($user && $conf['useacl'] && $auth){
                 $userInfo = $auth->getUserData($user);
-                $item->author = $userInfo['name'];
+                if ($userInfo){
+                    switch ($conf['showuseras']){
+                        case 'username':
+                            $item->author = $userInfo['name'];
+                            break;
+                        default:
+                            $item->author = $user;
+                            break;
+                    }
+                } else {
+                    $item->author = $user;
+                }
                 if($userInfo && !$opt['guardmail']){
                     $item->authorEmail = $userInfo['mail'];
                 }else{

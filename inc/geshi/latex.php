@@ -4,7 +4,7 @@
  * -----
  * Author: efi, Matthias Pospiech (matthias@pospiech.eu)
  * Copyright: (c) 2006 efi, Matthias Pospiech (matthias@pospiech.eu), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.4
+ * Release Version: 1.0.8.8
  * Date Started: 2006/09/23
  *
  * LaTeX language file for GeSHi.
@@ -61,21 +61,26 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
-            'addlinespace','address','appendix','author','backmatter',
+            'addlinespace','and','address','appendix','author','backmatter',
             'bfseries','bibitem','bigskip','blindtext','caption','captionabove',
-            'captionbelow','cdot','centering','cite','color','colorbox','date',
-            'def','definecolor','documentclass','edef','eqref','else','email','emph','fbox',
-            'fi','flushleft','flushright','footnote','frac','frontmatter','graphicspath','hfill',
-            'hline','hspace','huge','include','includegraphics','infty','input','int','ifx',
-            'item','label','LaTeX','left','let','limits','listfiles','listoffigures',
-            'listoftables','mainmatter','makeatletter','makeatother','makebox',
-            'makeindex','maketitle','mbox','mediumskip','newcommand',
-            'newenvironment','newpage','nocite','nonumber','pagestyle','par','paragraph','parbox',
-            'parident','parskip','partial','raggedleft','raggedright','raisebox','ref',
-            'renewcommand','renewenvironment','right','rule','section','setlength',
-            'sffamily','subparagraph','subsection','subsubsection','sum','table',
-            'tableofcontents','textbf','textcolor','textit','textnormal',
-            'textsuperscript','texttt','title','today','ttfamily','urlstyle',
+            'captionbelow','cdot','centering','chapter','cite','color',
+            'colorbox','date','dedication','def','definecolor','documentclass',
+            'edef','else','email','emph','eqref','extratitle','fbox','fi',
+            'flushleft','flushright','footnote','frac','frontmatter',
+            'graphicspath','hfill','hline','hspace','huge','ifx','include',
+            'includegraphics','infty','input','int','item','itemsep',
+            'KOMAoption','KOMAoptions','label','LaTeX','left','let','limits',
+            'listfiles','listoffigures','listoftables','lowertitleback',
+            'mainmatter','makeatletter','makeatother','makebox','makeindex',
+            'maketitle','mbox','mediumskip','newcommand','newenvironment',
+            'newpage','nocite','nonumber','pagestyle','par','paragraph',
+            'parbox','parident','parskip','partial','publishers','raggedleft',
+            'raggedright','raisebox','ref','renewcommand','renewenvironment',
+            'right','rule','section','setlength','sffamily','subject',
+            'subparagraph','subsection','subsubsection','subtitle','sum',
+            'table','tableofcontents','textbf','textcolor','textit',
+            'textnormal','textsuperscript','texttt','textwidth','thanks','title',
+            'titlehead','today','ttfamily','uppertitleback','urlstyle',
             'usepackage','vspace'
             )
         ),
@@ -142,7 +147,7 @@ $language_data = array (
             ),
         // [options]
         2 => array(
-            GESHI_SEARCH => "(?<=\[).+(?=\])",
+            GESHI_SEARCH => "(?<=\[).*(?=\])",
             GESHI_REPLACE => '\0',
             GESHI_MODIFIERS => 'Us',
             GESHI_BEFORE => '',

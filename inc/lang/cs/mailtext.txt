@@ -13,5 +13,5 @@ Uživatel    : @USER@
 
 
 -- 
-Tato zpráva byla vygenerována systémem DokuWiki
+Tento email byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@

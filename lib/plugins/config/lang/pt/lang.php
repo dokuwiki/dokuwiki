@@ -81,7 +81,6 @@ $lang['profileconfirm']        = 'Confirmar mudanças no perfil com a senha';
 $lang['disableactions']        = 'Desactivar acções DokuWiki';
 $lang['disableactions_check']  = 'Checar';
 $lang['disableactions_subscription'] = 'Subscrever/Não Subscrver';
-$lang['disableactions_nssubscription'] = 'Subscrever / Dessubscrever Espaço de Nome';
 $lang['disableactions_wikicode'] = 'Ver fonte/Exportar em bruto';
 $lang['disableactions_other']  = 'Outras acções (separadas por vírgula)';
 $lang['sneaky_index']          = 'Por norma, o DokuWiki irá exibir todos os espaços de nomes na visualização do índice. Ao habilitar essa opção, serão escondidos aqueles em que o utilizador não tenha permissão de leitura. Isto pode resultar na omissão de sub-ramos acessíveis, que poderá tornar o índice inútil para certas configurações de ACL.';

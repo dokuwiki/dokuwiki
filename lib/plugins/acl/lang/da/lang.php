@@ -11,6 +11,8 @@
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author rasmus@kinnerup.com
+ * @author Michael Pedersen subben@gmail.com
  */
 $lang['admin_acl']             = 'Rettighedsadministration';
 $lang['acl_group']             = 'Gruppe';
@@ -31,7 +33,7 @@ $lang['p_include']             = 'Højere tilladelse inkluderer også lavere. Ti
 $lang['current']               = 'Aktuelle ACL-regler';
 $lang['where']                 = 'Side/navnerum';
 $lang['who']                   = 'Bruger/gruppe';
-$lang['perm']                  = 'Adgangsniveau';
+$lang['perm']                  = 'Rettigheder';
 $lang['acl_perm0']             = 'Ingen';
 $lang['acl_perm1']             = 'Læs';
 $lang['acl_perm2']             = 'Skriv';

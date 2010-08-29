@@ -23,10 +23,11 @@ function getID($param='id',$clean=true){
 
     $id = isset($_REQUEST[$param]) ? $_REQUEST[$param] : null;
 
-    $request = $_SERVER['REQUEST_URI'];
-
     //construct page id from request URI
     if(empty($id) && $conf['userewrite'] == 2){
+        $request = $_SERVER['REQUEST_URI'];
+        $script = '';
+
         //get the script URL
         if($conf['basedir']){
             $relpath = '';
@@ -35,15 +36,14 @@ function getID($param='id',$clean=true){
             }
             $script = $conf['basedir'].$relpath.basename($_SERVER['SCRIPT_FILENAME']);
 
-        }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['PATH_TRANSLATED']){
-            $request = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
-                    $_SERVER['PATH_TRANSLATED']);
+        }elseif($_SERVER['PATH_INFO']){
+            $request = $_SERVER['PATH_INFO'];
+        }elseif($_SERVER['SCRIPT_NAME']){
+            $script = $_SERVER['SCRIPT_NAME'];
         }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
             $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
                     $_SERVER['SCRIPT_FILENAME']);
             $script = '/'.$script;
-        }else{
-            $script = $_SERVER['SCRIPT_NAME'];
         }
 
         //clean script and request (fixes a windows problem)
@@ -185,10 +185,10 @@ function noNSorNS($id) {
     global $conf;
 
     $p = noNS($id);
-    if ($p == $conf['start']) {
+    if ($p == $conf['start'] || $p == false) {
         $p = curNS($id);
         if ($p == false) {
-            return noNS($id);
+            return $conf['start'];
         }
     }
     return $p;
@@ -198,7 +198,7 @@ function noNSorNS($id) {
  * Creates a XHTML valid linkid from a given headline title
  *
  * @param string  $title   The headline title
- * @param array   $check   List of existing IDs
+ * @param array   $check   Existing IDs (title => number)
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function sectionID($title,&$check) {
@@ -212,12 +212,11 @@ function sectionID($title,&$check) {
 
     if(is_array($check)){
         // make sure tiles are unique
-        $num = '';
-        while(in_array($title.$num,$check)){
-            ($num) ? $num++ : $num = 1;
+        if (!array_key_exists ($title,$check)) {
+           $check[$title] = 0;
+        } else {
+           $title .= ++ $check[$title];
         }
-        $title = $title.$num;
-        $check[] = $title;
     }
 
     return $title;
@@ -319,15 +318,7 @@ function metaFiles($id){
     $ns     = getNS($id);
     $dir    = ($ns) ? metaFN($ns,'').'/' : metaFN($ns,'');
     $files  = array();
-
-    $dh = @opendir($dir);
-    if(!$dh) return $files;
-    while(($file = readdir($dh)) !== false){
-        if(strpos($file,$name.'.') === 0 && !is_dir($dir.$file))
-            $files[] = $dir.$file;
-    }
-    closedir($dh);
-
+    $files  = glob($dir.$name.'.*');
     return $files;
 }
 
@@ -446,7 +437,8 @@ function resolve_pageid($ns,&$page,&$exists){
     $file = wikiFN($page);
 
     // if ends with colon or slash we have a namespace link
-    if(substr($page,-1) == ':' || ($conf['useslash'] && substr($page,-1) == '/')){
+    if(in_array(substr($page,-1), array(':', ';')) ||
+       ($conf['useslash'] && substr($page,-1) == '/')){
         if(page_exists($page.$conf['start'])){
             // start page inside namespace
             $page = $page.$conf['start'];
@@ -534,4 +526,71 @@ function isVisiblePage($id){
     return !isHiddenPage($id);
 }
 
+/**
+ * Format an id for output to a user
+ *
+ * Namespaces are denoted by a trailing “:*”. The root namespace is
+ * “*”. Output is escaped.
+ *
+ * @author Adrian Lang <lang@cosmocode.de>
+ */
+
+function prettyprint_id($id) {
+    if (!$id || $id === ':') {
+        return '*';
+    }
+    if ((substr($id, -1, 1) === ':')) {
+        $id .= '*';
+    }
+    return hsc($id);
+}
+
+/**
+ * Encode a UTF-8 filename to use on any filesystem
+ *
+ * Uses the 'fnencode' option to determine encoding
+ *
+ * When the second parameter is true the string will
+ * be encoded only if non ASCII characters are detected -
+ * This makes it safe to run it multiple times on the
+ * same string (default is true)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    urlencode
+ */
+function utf8_encodeFN($file,$safe=true){
+    global $conf;
+    if($conf['fnencode'] == 'utf-8') return $file;
+
+    if($safe && preg_match('#^[a-zA-Z0-9/_\-\.%]+$#',$file)){
+        return $file;
+    }
+
+    if($conf['fnencode'] == 'safe'){
+        return SafeFN::encode($file);
+    }
+
+    $file = urlencode($file);
+    $file = str_replace('%2F','/',$file);
+    return $file;
+}
+
+/**
+ * Decode a filename back to UTF-8
+ *
+ * Uses the 'fnencode' option to determine encoding
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @see    urldecode
+ */
+function utf8_decodeFN($file){
+    global $conf;
+    if($conf['fnencode'] == 'utf-8') return $file;
+
+    if($conf['fnencode'] == 'safe'){
+        return SafeFN::decode($file);
+    }
+
+    return urldecode($file);
+}
 
