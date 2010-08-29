@@ -4,7 +4,7 @@
  * --------
  * Author: Jess Johnson (jess@grok-code.com)
  * Copyright: (c) 2009 Jess Johnson (http://grok-code.com)
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2009/09/20
  *
  * Clojure language file for GeSHi.
@@ -51,10 +51,10 @@ $language_data = array (
             'defn', 'defn-', 'defmulti', 'defmethod', 'defmacro', 'deftest',
             'defstruct', 'def', 'defonce', 'let', 'letfn', 'do', 'cond', 'condp',
             'for', 'loop', 'recur', 'when', 'when-not', 'when-let', 'when-first',
-            'if', 'if-let', 'if-not', 'doto', 'and', 'or',
+            'if', 'if-let', 'if-not', 'doto', 'and', 'or','not','aget','aset',
             'dosync', 'doseq', 'dotimes', 'dorun', 'doall',
-            'load', 'import', 'unimport', 'ns', 'in-ns', 'refer',
-            'try', 'catch', 'finally', 'throw',
+            'load', 'import', 'unimport', 'ns', 'in-ns', 'refer', 'print',
+            'try', 'catch', 'finally', 'throw', 'fn', 'update-in',
             'with-open', 'with-local-vars', 'binding',
             'gen-class', 'gen-and-load-class', 'gen-and-save-class',
             'implement', 'proxy', 'lazy-cons', 'with-meta',
@@ -72,7 +72,7 @@ $language_data = array (
             'line-seq', 'resultset-seq', 're-seq', 're-find', 'tree-seq', 'file-seq',
             'iterator-seq', 'enumeration-seq', 'declare',  'xml-seq',
             'symbol?', 'string?', 'vector', 'conj', 'str',
-            'pos?', 'neg?', 'zero?', 'nil?', 'inc', 'format',
+            'pos?', 'neg?', 'zero?', 'nil?', 'inc', 'dec', 'format',
             'alter', 'commute', 'ref-set', 'floor', 'assoc', 'send', 'send-off'
             )
         ),

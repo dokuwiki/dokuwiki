@@ -4,7 +4,7 @@
  * -------
  * Author: Iulian M
  * Copyright: (c) 2006 Iulian M
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2004/09/27
  *
  * C++ (with QT extensions) language file for GeSHi.
@@ -89,7 +89,7 @@ $language_data = array (
             'EXIT_FAILURE', 'EXIT_SUCCESS', 'RAND_MAX', 'CLOCKS_PER_SEC',
             'virtual', 'public', 'private', 'protected', 'template', 'using', 'namespace',
             'try', 'catch', 'inline', 'dynamic_cast', 'const_cast', 'reinterpret_cast',
-            'static_cast', 'explicit', 'friend', 'wchar_t', 'typename', 'typeid', 'class' ,
+            'static_cast', 'explicit', 'friend', 'typename', 'typeid', 'class' ,
             'foreach','connect', 'Q_OBJECT' , 'slots' , 'signals', 'Q_SIGNALS', 'Q_SLOTS',
             'Q_FOREACH', 'QCOMPARE', 'QVERIFY', 'qDebug', 'kDebug', 'QBENCHMARK'
             ),
@@ -120,7 +120,21 @@ $language_data = array (
             'register', 'short', 'shortint', 'signed', 'static', 'struct',
             'typedef', 'union', 'unsigned', 'void', 'volatile', 'extern', 'jmp_buf',
             'signal', 'raise', 'va_list', 'ptrdiff_t', 'size_t', 'FILE', 'fpos_t',
-            'div_t', 'ldiv_t', 'clock_t', 'time_t', 'tm',
+            'div_t', 'ldiv_t', 'clock_t', 'time_t', 'tm', 'wchar_t',
+
+            'int8', 'int16', 'int32', 'int64',
+            'uint8', 'uint16', 'uint32', 'uint64',
+
+            'int_fast8_t', 'int_fast16_t', 'int_fast32_t', 'int_fast64_t',
+            'uint_fast8_t', 'uint_fast16_t', 'uint_fast32_t', 'uint_fast64_t',
+
+            'int_least8_t', 'int_least16_t', 'int_least32_t', 'int_least64_t',
+            'uint_least8_t', 'uint_least16_t', 'uint_least32_t', 'uint_least64_t',
+
+            'int8_t', 'int16_t', 'int32_t', 'int64_t',
+            'uint8_t', 'uint16_t', 'uint32_t', 'uint64_t',
+
+            'intmax_t', 'uintmax_t', 'intptr_t', 'uintptr_t'
             ),
         5 => array(
             "Q_UINT16", "Q_UINT32", "Q_UINT64", "Q_UINT8", "Q_ULLONG",

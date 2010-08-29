@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2004/07/10
  *
  * Java language file for GeSHi.
@@ -56,7 +56,7 @@ $language_data = array (
     'COMMENT_MULTI' => array('/*' => '*/'),
     'COMMENT_REGEXP' => array(
         //Import and Package directives (Basic Support only)
-        2 => '/(?:(?<=import[\\n\\s])|(?<=package[\\n\\s]))[\\n\\s]*([a-zA-Z0-9_]+\\.)*([a-zA-Z0-9_]+|\*)(?=[\n\s;])/i',
+        2 => '/(?:(?<=import[\\n\\s](?!static))|(?<=import[\\n\\s]static[\\n\\s])|(?<=package[\\n\\s]))[\\n\\s]*([a-zA-Z0-9_]+\\.)*([a-zA-Z0-9_]+|\*)(?=[\n\s;])/i',
         // javadoc comments
         3 => '#/\*\*(?![\*\/]).*\*/#sU'
         ),
@@ -1025,6 +1025,12 @@ $language_data = array (
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
+    'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            'DISALLOWED_BEFORE' => '(?<![a-zA-Z0-9\$_\|\#>|^&"\'])',
+            'DISALLOWED_AFTER' => '(?![a-zA-Z0-9_\|%\\-;"\'])'
+            )
         )
 );
 

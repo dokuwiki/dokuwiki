@@ -4,7 +4,7 @@
  * -----
  * Author: efi, Matthias Pospiech (matthias@pospiech.eu)
  * Copyright: (c) 2006 efi, Matthias Pospiech (matthias@pospiech.eu), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2006/09/23
  *
  * LaTeX language file for GeSHi.
@@ -147,7 +147,7 @@ $language_data = array (
             ),
         // [options]
         2 => array(
-            GESHI_SEARCH => "(?<=\[).+(?=\])",
+            GESHI_SEARCH => "(?<=\[).*(?=\])",
             GESHI_REPLACE => '\0',
             GESHI_MODIFIERS => 'Us',
             GESHI_BEFORE => '',

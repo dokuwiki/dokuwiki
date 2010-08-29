@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -91,7 +91,7 @@ $language_data = array (
             ),
         2 => array(
             'aclocal', 'aconnect', 'aplay', 'apm', 'apmsleep', 'apropos',
-            'apt-cache', 'apt-get', 'apt-key', 'aptitude',
+            'apt-cache', 'apt-file', 'apt-get', 'apt-key', 'apt-src', 'aptitude',
             'ar', 'arch', 'arecord', 'as', 'as86', 'ash', 'autoconf',
             'autoheader', 'automake', 'awk',
 
@@ -104,10 +104,11 @@ $language_data = array (
             'chown', 'chroot', 'chsh', 'chvt', 'clear', 'cmp', 'comm', 'co',
             'col', 'cp', 'cpio', 'cpp', 'csh', 'cut', 'cvs', 'cvs-pserver',
 
-            'dash', 'date', 'dd', 'dc', 'dcop', 'deallocvt', 'df', 'dialog',
-            'diff', 'diff3', 'dir', 'dircolors', 'directomatic', 'dirname',
-            'dmesg', 'dnsdomainname', 'domainname', 'dpkg', 'dselect', 'du',
-            'dumpkeys',
+            'dash', 'date', 'dc', 'dch', 'dcop', 'dd', 'ddate', 'ddd',
+            'deallocvt', 'debconf', 'defoma', 'depmod', 'df', 'dh',
+            'dialog', 'diff', 'diff3', 'dig', 'dir', 'dircolors', 'directomatic',
+            'dirname', 'dmesg', 'dnsdomainname', 'domainname', 'dpkg',
+            'dselect', 'du', 'dumpkeys',
 
             'ed', 'egrep', 'env', 'expr',
 
@@ -208,8 +209,10 @@ $language_data = array (
 
             'valgrind', 'vdir', 'vi', 'vim', 'vmstat',
 
-            'w', 'wall', 'wc', 'wget', 'whatis', 'whereis', 'which', 'whiptail',
-            'who', 'whoami', 'write',
+            'w', 'wall', 'watch', 'wc', 'wget', 'whatis', 'whereis',
+            'which', 'whiptail', 'who', 'whoami', 'whois', 'wine', 'wineboot',
+            'winebuild', 'winecfg', 'wineconsole', 'winedbg', 'winedump',
+            'winefile', 'wodim', 'write',
 
             'xargs', 'xhost', 'xmodmap', 'xset',
 
@@ -302,7 +305,7 @@ $language_data = array (
         //Shorthand shell variables
         4 => "\\$[*#\$\\-\\?!\d]",
         //Parameters of commands
-        5 => "(?<=\s)--?[0-9a-zA-Z\-]+(?=[\s=]|$)"
+        5 => "(?<=\s)--?[0-9a-zA-Z\-]+(?=[\s=]|<(?:SEMI|PIPE)>|$)"
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

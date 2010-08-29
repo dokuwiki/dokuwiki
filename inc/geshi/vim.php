@@ -1,5 +1,4 @@
 <?php
-
 /*************************************************************************************
  * vim.php
  * ----------------
@@ -7,7 +6,7 @@
  * Contributors:
  *  - Laurent Peuch (psycojoker@gmail.com)
  * Copyright: (c) 2008 Swaroop C H (http://www.swaroopch.com)
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2008/10/19
  *
  * Vim scripting language file for GeSHi.
@@ -55,7 +54,9 @@ $language_data = array(
     'LANG_NAME' => 'Vim Script',
     'COMMENT_SINGLE' => array(),
     'COMMENT_REGEXP' => array(
-        1 => "/^\s*\"[^\"]*?$/m"
+        1 => "/\s*\"[^\"]*?$/m",
+        //Regular expressions (Ported from perl.php)
+//        2 => "/(?<=[\\s^])(s|tr|y)\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/(?:\\\\.|(?!\n)[^\\/\\\\])*\\/[msixpogcde]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])(m|q[qrwx]?)?\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/[msixpogc]*(?=[\\s$\\.\\,\\;\\)])/iU",
         ),
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
@@ -65,12 +66,12 @@ $language_data = array(
         1 => array(
             'au', 'augroup', 'autocmd', 'brea', 'break', 'bufadd',
             'bufcreate', 'bufdelete', 'bufenter', 'buffilepost',
-            'buffilepre', 'bufhidden', 'bufleave', 'bufnew', 'bufnewfile',
+            'buffilepre', 'bufleave', 'bufnew', 'bufnewfile',
             'bufread', 'bufreadcmd', 'bufreadpost', 'bufreadpre',
             'bufunload', 'bufwinenter', 'bufwinleave', 'bufwipeout',
             'bufwrite', 'bufwritecmd', 'bufwritepost', 'bufwritepre',
             'call', 'cat', 'catc', 'catch', 'cmd-event', 'cmdwinenter',
-            'cmdwinleave', 'colorscheme', 'con', 'cont', 'conti',
+            'cmdwinleave', 'colorscheme', 'con', 'confirm', 'cont', 'conti',
             'contin', 'continu', 'continue', 'cursorhold', 'cursorholdi',
             'cursormoved', 'cursormovedi', 'ec', 'echo', 'echoe',
             'echoer', 'echoerr', 'echoh', 'echohl', 'echom', 'echoms',
@@ -80,7 +81,7 @@ $language_data = array(
             'endwhil', 'endwhile', 'exe', 'exec', 'execu', 'execut',
             'execute', 'fileappendcmd', 'fileappendpost', 'fileappendpre',
             'filechangedro', 'filechangedshell', 'filechangedshellpost',
-            'fileencoding', 'filereadcmd', 'filereadpost', 'filereadpre',
+            'filereadcmd', 'filereadpost', 'filereadpre',
             'filetype', 'filewritecmd', 'filewritepost', 'filewritepre',
             'filterreadpost', 'filterreadpre', 'filterwritepost',
             'filterwritepre', 'fina', 'final', 'finall', 'finally',
@@ -94,7 +95,7 @@ $language_data = array(
             'shellcmdpost', 'shellfilterpost', 'sourcecmd', 'sourcepre',
             'spellfilemissing', 'stdinreadpost', 'stdinreadpre',
             'swapexists', 'syntax', 'tabenter', 'tableave', 'termchanged',
-            'termresponse', 'th', 'thr', 'thro', 'throw', 'try', 'unl',
+            'termresponse', 'th', 'thr', 'thro', 'throw', 'tr', 'try', 'unl',
             'unle', 'unlet', 'unlo', 'unloc', 'unlock', 'unlockv',
             'unlockva', 'unlockvar', 'user', 'usergettingbored',
             'vimenter', 'vimleave', 'vimleavepre', 'vimresized', 'wh',
@@ -116,17 +117,17 @@ $language_data = array(
             'bdir', 'bdlay', 'beval', 'bex', 'bexpr', 'bg',
             'bh', 'bin', 'binary', 'biosk', 'bioskey',
             'bk', 'bkc', 'bl', 'bomb', 'breakat', 'brk',
-            'browsedir', 'bs', 'bsdir', 'bsk', 'bt', 'bufhidden',
-            'buflisted', 'buftype', 'casemap', 'cb',
+            'bs', 'bsdir', 'bsk', 'bt', 'bufhidden',
+            'buftype', 'casemap', 'cb',
             'ccv', 'cd', 'cdpath', 'cedit', 'cf', 'cfu', 'ch',
-            'charconvert', 'ci', 'cin', 'cindent', 'cink',
+            'charconvert', 'ci', 'cin', 'cink',
             'cinkeys', 'cino', 'cinoptions', 'cinw', 'cinwords',
             'clipboard', 'cmdheight', 'cmdwinheight',
             'cmp', 'cms', 'co', 'columns', 'com',
             'comc', 'comcl', 'comcle', 'comclea', 'comclear', 'comm',
             'comma', 'comman', 'command', 'comments', 'commentstring',
-            'compatible', 'complete', 'completefunc', 'completeopt',
-            'confirm', 'consk', 'conskey', 'copyindent',
+            'compatible', 'completefunc', 'completeopt',
+            'consk', 'conskey', 'copyindent',
             'cot', 'cp', 'cpo', 'cpoptions', 'cpt',
             'cscopepathcomp', 'cscopeprg', 'cscopequickfix', 'cscopetag',
             'cscopetagorder', 'cscopeverbose',
@@ -138,19 +139,18 @@ $language_data = array(
             'diffopt', 'digraph', 'dip', 'dir', 'directory', 'display',
             'dlcomma', 'dy', 'ea', 'ead', 'eadirection',
             'eb', 'ed', 'edcompatible', 'ef', 'efm',
-            'ei', 'ek', 'enc', 'encoding', 'endofline',
+            'ei', 'ek', 'enc', 'encoding', 'endfun', 'endofline',
             'eol', 'ep', 'equalalways', 'equalprg', 'errorbells',
             'errorfile', 'errorformat', 'esckeys', 'et',
             'eventignore', 'ex', 'expandtab', 'exrc', 'fcl',
             'fcs', 'fdc', 'fde', 'fdi', 'fdl', 'fdls', 'fdm',
             'fdn', 'fdo', 'fdt', 'fen', 'fenc', 'fencs', 'fex',
             'ff', 'ffs', 'fileencoding', 'fileencodings', 'fileformat',
-            'fileformats', 'filetype', 'fillchars', 'fk',
+            'fileformats', /*'filetype',*/ 'fillchars', 'fk',
             'fkmap', 'flp', 'fml', 'fmr', 'fo', 'foldclose',
             'foldcolumn', 'foldenable', 'foldexpr', 'foldignore',
-            'foldlevel', 'foldlevelstart', 'foldmarker',
-            'foldmethod', 'foldminlines', 'foldnestmax', 'foldopen',
-            'foldtext', 'formatexpr', 'formatlistpat',
+            'foldlevelstart', 'foldmarker', 'foldmethod', 'foldminlines',
+            'foldnestmax', 'foldopen', 'formatexpr', 'formatlistpat',
             'formatoptions', 'formatprg', 'fp', 'fs', 'fsync', 'ft',
             'gcr', 'gd', 'gdefault', 'gfm', 'gfn', 'gfs', 'gfw',
             'ghr', 'go', 'gp', 'grepformat', 'grepprg', 'gtl',
@@ -255,13 +255,13 @@ $language_data = array(
             'sidescrolloff', 'siso', 'sj', 'slm', 'sm', 'smartcase',
             'smartindent', 'smarttab', 'smc', 'smd', 'sn',
             'so', 'softtabstop', 'sol', 'sp', 'spc', 'spell',
-            'spellcapcheck', 'spellfile', 'spelllang', 'spellsuggest',
+            'spellcapcheck', 'spellfile', 'spelllang',
             'spf', 'spl', 'splitbelow', 'splitright', 'spr',
             'sps', 'sr', 'srr', 'ss', 'ssl', 'ssop', 'st', 'sta',
             'stal', 'startofline', 'statusline', 'stl', 'stmp',
             'sts', 'su', 'sua', 'suffixes', 'suffixesadd', 'sw',
             'swapfile', 'swapsync', 'swb', 'swf', 'switchbuf',
-            'sws', 'sxq', 'syn', 'synmaxcol', 'syntax', 'ta',
+            'sws', 'sxq', 'syn', 'synmaxcol', 'ta',
             'tabline', 'tabpagemax', 'tabstop', 'tag',
             'tagbsearch', 'taglength', 'tagrelative', 'tags', 'tagstack',
             'tal', 'tb', 'tbi', 'tbidi', 'tbis', 'tbs',
@@ -270,7 +270,7 @@ $language_data = array(
             'thesaurus', 'tildeop', 'timeout', 'timeoutlen',
             'title', 'titlelen', 'titleold', 'titlestring',
             'tl', 'tm', 'to', 'toolbar', 'toolbariconsize', 'top',
-            'tpm', 'tr', 'ts', 'tsl', 'tsr', 'ttimeout',
+            'tpm', 'ts', 'tsl', 'tsr', 'ttimeout',
             'ttimeoutlen', 'ttm', 'tty', 'ttybuiltin', 'ttyfast', 'ttym',
             'ttymouse', 'ttyscroll', 'ttytype', 'tw', 'tx', 'uc',
             'ul', 'undolevels', 'updatecount', 'updatetime', 'ut',
@@ -278,7 +278,7 @@ $language_data = array(
             'vfile', 'vi', 'viewdir', 'viewoptions', 'viminfo',
             'virtualedit', 'visualbell', 'vop', 'wa', 'wak',
             'warn', 'wb', 'wc', 'wcm', 'wd', 'weirdinvert', 'wfh',
-            'wfw', 'wh', 'whichwrap', 'wi', 'wig', 'wildchar',
+            'wfw', /*'wh',*/ 'whichwrap', 'wi', 'wig', 'wildchar',
             'wildcharm', 'wildignore', 'wildmenu',
             'wildmode', 'wildoptions', 'wim', 'winaltkeys', 'window',
             'winfixheight', 'winfixwidth', 'winheight',
@@ -315,7 +315,7 @@ $language_data = array(
             'bufexists', 'buflisted', 'bufloaded', 'bufname', 'bufnr',
             'bufwinnr', 'byte2line', 'byteidx', 'ceil', 'changenr',
             'char2nr', 'cindent', 'clearmatches', 'col', 'complete',
-            'complete_add', 'complete_check', 'confirm', 'copy',
+            'complete_add', 'complete_check', 'copy',
             'cos', 'count', 'cscope_connection', 'cursor', 'deepcopy',
             'delete', 'did_filetype', 'diff_filler', 'diff_hlID',
             'empty', 'escape', 'eval', 'eventhandler', 'executable',
@@ -354,10 +354,10 @@ $language_data = array(
             'strridx', 'strtrans', 'submatch', 'substitute',
             'synID', 'synIDattr', 'synIDtrans', 'synstack', 'system',
             'tabpagebuflist', 'tabpagenr', 'tabpagewinnr', 'tagfiles',
-            'taglist', 'tempname', 'tolower', 'toupper', 'tr', 'trunc',
+            'taglist', 'tempname', 'tolower', 'toupper', 'trunc',
             'type', 'values', 'virtcol', 'visualmode', 'winbufnr',
-            'wincol', 'winheight', 'winline', 'winnr', 'winrestcmd',
-            'winrestview', 'winsaveview', 'winwidth', 'writefile'
+            'wincol', 'winline', 'winnr', 'winrestcmd',
+            'winrestview', 'winsaveview', 'writefile'
             )
         ),
     'SYMBOLS' => array(
@@ -375,7 +375,8 @@ $language_data = array(
             0 => 'color: #000000;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #adadad; font-style: italic;'
+            1 => 'color: #adadad; font-style: italic;',
+//            2 => 'color: #009966; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
             0 => ''

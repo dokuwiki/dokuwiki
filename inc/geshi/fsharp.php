@@ -4,7 +4,7 @@
  * ----------
  * Author: julien ortin (jo_spam-divers@yahoo.fr)
  * Copyright: (c) 2009 julien ortin
- * Release Version: 1.0.8.6
+ * Release Version: 1.0.8.8
  * Date Started: 2009/09/20
  *
  * F# language file for GeSHi.
