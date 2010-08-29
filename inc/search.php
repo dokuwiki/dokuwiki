@@ -549,7 +549,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $return = true;
 
     // get ID and check if it is a valid one
-    $item['id'] = pathID($file);
+    $item['id'] = pathID($file,$opts['keeptxt']);
     if($item['id'] != cleanID($item['id'])){
         if($opts['showmsg'])
             msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);
