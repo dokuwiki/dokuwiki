@@ -243,11 +243,11 @@ function _ft_pageLookup(&$data){
     $titles = array_map('rtrim', idx_getIndex('title', ''));
     $pages = array_combine($pages, $titles);
 
-    if ($id !== '' && cleanID($id) !== '') {
-        $cleaned = cleanID($id);
+    $cleaned = cleanID($id);
+    if ($id !== '' && $cleaned !== '') {
         foreach ($pages as $p_id => $p_title) {
             if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) === false) &&
-                ($in_title && stripos($p_title, $id) === false)) {
+                (!$in_title || (stripos($p_title, $id) === false)) ) {
                 unset($pages[$p_id]);
             }
         }
