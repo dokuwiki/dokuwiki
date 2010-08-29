@@ -55,14 +55,22 @@ class Doku_Plugin_Controller {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      *
-     * @param  $type string     type of plugin to load
-     * @param  $name string     name of the plugin to load
-     * @param  $new  bool       true to return a new instance of the plugin, false to use an already loaded instance
+     * @param  $type     string type of plugin to load
+     * @param  $name     string name of the plugin to load
+     * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
+     * @param  $disabled bool   true to load even disabled plugins
      * @return objectreference  the plugin object or null on failure
      */
-    function &load($type,$name,$new=false){
+    function &load($type,$name,$new=false,$disabled=false){
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
+
+        list($plugin,$component) = $this->_splitName($name);
+
+        // check if disabled
+        if(!$disabled && $this->isdisabled($plugin)){
+            return null;
+        }
 
         //plugin already loaded?
         if(!empty($DOKU_PLUGINS[$type][$name])){
@@ -75,7 +83,6 @@ class Doku_Plugin_Controller {
         }
 
         //try to load the wanted plugin file
-        list($plugin,$component) = $this->_splitName($name);
         $dir = $this->get_directory($plugin);
         $file = $component ? "$type/$component.php" : "$type.php";
 

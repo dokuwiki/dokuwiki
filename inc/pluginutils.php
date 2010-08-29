@@ -16,9 +16,9 @@ function plugin_list($type='',$all=false) {
     global $plugin_controller;
     return $plugin_controller->getList($type,$all);
 }
-function &plugin_load($type,$name,$new=false) {
+function &plugin_load($type,$name,$new=false,$disabled=false) {
     global $plugin_controller;
-    return $plugin_controller->load($type,$name,$new);
+    return $plugin_controller->load($type,$name,$new,$disabled);
 }
 function plugin_isdisabled($plugin) {
     global $plugin_controller;
