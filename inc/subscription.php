@@ -29,13 +29,11 @@ function subscription_filename($id) {
     $meta_fname = '.mlist';
     if ((substr($id, -1, 1) === ':')) {
         $meta_froot = getNS($id);
-        if ($meta_froot === false) {
-            $meta_fname = '/' . $meta_fname;
-        }
+        $meta_fname = '/' . $meta_fname;
     } else {
         $meta_froot = $id;
     }
-    return metaFN($meta_froot, $meta_fname);
+    return metaFN((string) $meta_froot, $meta_fname);
 }
 
 /**
