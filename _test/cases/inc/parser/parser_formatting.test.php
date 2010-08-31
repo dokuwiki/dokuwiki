@@ -210,6 +210,34 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    function testNoEmWithInvalidURL() {
+        // Case from #1629
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('http://<CertificateServerName>/certsrv/certcarc.asp');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array('http://<CertificateServerName>/certsrv/certcarc.asp')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
+    function testNoEmWithUnknownURL() {
+        // Case from #1640
+        $this->P->addMode('emphasis',new Doku_Parser_Mode_Formatting('emphasis'));
+        $this->P->parse('svn://example.com/foo/bar');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array('svn://example.com/foo/bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
     function testUnderline() {
         $this->P->addMode('underline',new Doku_Parser_Mode_Formatting('underline'));
         $this->P->parse('abc __bar__ def');
