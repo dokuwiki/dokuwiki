@@ -110,6 +110,10 @@ header('Content-Type: text/html; charset=utf-8');
                 print "</div>\n";
             }
         ?>
+        <a style="background: transparent url(data/security.png) left top no-repeat;
+                  display: block; width:380px; height:73px; border:none; clear:both;"
+           target="_blank"
+           href="http://www.dokuwiki.org/security#web_access_security"></a>
     </div>
 
     <div style="float: left; width: 58%;">
@@ -136,6 +140,7 @@ header('Content-Type: text/html; charset=utf-8');
             }
         ?>
     </div>
+
 
 <div style="clear: both">
   <a href="http://dokuwiki.org/"><img src="lib/tpl/default/images/button-dw.png" alt="driven by DokuWiki" /></a>
