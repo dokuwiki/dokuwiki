@@ -1394,6 +1394,12 @@ function html_admin(){
                 );
     }
 
+    // data security check
+    echo '<a style="background: transparent url(data/security.png) left top no-repeat;
+                  display: block; width:380px; height:73px; border:none; float:right"
+           target="_blank"
+           href="http://www.dokuwiki.org/security#web_access_security"></a>';
+
     print p_locale_xhtml('admin');
 
     // Admin Tasks
