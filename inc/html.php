@@ -1447,7 +1447,11 @@ function html_admin(){
     }
     unset($menu['popularity']);
 
+    // print DokuWiki version:
     ptln('</ul>');
+    echo '<div id="admin__version">';
+    echo getVersion();
+    echo '</div>';
 
     // print the rest as sorted list
     if(count($menu)){
