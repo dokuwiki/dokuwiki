@@ -1258,6 +1258,7 @@ function tpl_subscribe() {
     global $ID;
     global $lang;
     global $conf;
+    $stime_days = $conf['subscribe_time']/60/60/24;
 
     echo p_locale_xhtml('subscr_form');
     echo '<h2>' . $lang['subscr_m_current_header'] . '</h2>';
@@ -1273,7 +1274,7 @@ function tpl_subscribe() {
             } else {
                 echo '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
             }
-            $sstl = $lang['subscr_style_'.$sub['style']];
+            $sstl = sprintf($lang['subscr_style_'.$sub['style']], $stime_days);
             if(!$sstl) $sstl = hsc($sub['style']);
             echo ' ('.$sstl.') ';
 
@@ -1298,7 +1299,6 @@ function tpl_subscribe() {
             $ID => '<code class="page">'.prettyprint_id($ID).'</code>',
             $ns => '<code class="ns">'.prettyprint_id($ns).'</code>',
             );
-    $stime_days = $conf['subscribe_time']/60/60/24;
     $styles = array(
             'every'  => $lang['subscr_style_every'],
             'digest' => sprintf($lang['subscr_style_digest'], $stime_days),
