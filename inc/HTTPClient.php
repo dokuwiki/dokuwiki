@@ -244,6 +244,7 @@ class HTTPClient {
         // prepare headers
         $headers               = $this->headers;
         $headers['Host']       = $uri['host'];
+        if($uri['port']) $headers['Host'].= ':'.$uri['port'];
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
         $headers['Connection'] = 'Close';
