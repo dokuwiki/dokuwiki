@@ -34,8 +34,16 @@ function js_out(){
     // The generated script depends on some dynamic options
     $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
 
+    // load jQuery, minified if compression is eanbled.
+    $jquery_file_path = DOKU_INC.'lib/scripts/jquery/jquery';
+    if($conf['compress']) {
+        $jquery_file_path .= '.min';
+    }
+    $jquery_file_path .= '.js';
+
     // array of core files
     $files = array(
+                $jquery_file_path,
                 DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/delay.js',
