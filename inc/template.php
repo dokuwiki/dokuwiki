@@ -793,75 +793,75 @@ function tpl_userinfo(){
     global $INFO;
     if(isset($_SERVER['REMOTE_USER'])){
         print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')';
-                return true;
-                }
-                return false;
-                }
+        return true;
+    }
+    return false;
+}
 
-                /**
-                 * Print some info about the current page
-                 *
-                 * @author Andreas Gohr <andi@splitbrain.org>
-                 */
-                function tpl_pageinfo($ret=false){
-                global $conf;
-                global $lang;
-                global $INFO;
-                global $ID;
+/**
+ * Print some info about the current page
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_pageinfo($ret=false){
+    global $conf;
+    global $lang;
+    global $INFO;
+    global $ID;
 
-                // return if we are not allowed to view the page
-                if (!auth_quickaclcheck($ID)) { return false; }
+    // return if we are not allowed to view the page
+    if (!auth_quickaclcheck($ID)) { return false; }
 
-                // prepare date and path
-                $fn = $INFO['filepath'];
-                if(!$conf['fullpath']){
-                    if($INFO['rev']){
-                        $fn = str_replace(fullpath($conf['olddir']).'/','',$fn);
-                    }else{
-                        $fn = str_replace(fullpath($conf['datadir']).'/','',$fn);
-                    }
-                }
-                $fn = utf8_decodeFN($fn);
-                $date = dformat($INFO['lastmod']);
+    // prepare date and path
+    $fn = $INFO['filepath'];
+    if(!$conf['fullpath']){
+        if($INFO['rev']){
+            $fn = str_replace(fullpath($conf['olddir']).'/','',$fn);
+        }else{
+            $fn = str_replace(fullpath($conf['datadir']).'/','',$fn);
+        }
+    }
+    $fn = utf8_decodeFN($fn);
+    $date = dformat($INFO['lastmod']);
 
-                // print it
-                if($INFO['exists']){
-                    $out = '';
-                    $out .= $fn;
-                    $out .= ' &middot; ';
-                    $out .= $lang['lastmod'];
-                    $out .= ': ';
-                    $out .= $date;
-                    if($INFO['editor']){
-                        $out .= ' '.$lang['by'].' ';
-                        $out .= editorinfo($INFO['editor']);
-                    }else{
-                        $out .= ' ('.$lang['external_edit'].')';
-                                }
-                                if($INFO['locked']){
-                                $out .= ' &middot; ';
-                                $out .= $lang['lockedby'];
-                                $out .= ': ';
-                                $out .= editorinfo($INFO['locked']);
-                                }
-                                if($ret){
-                                return $out;
-                                }else{
-                                echo $out;
-                                return true;
-                                }
-                                }
-                                return false;
-                                }
+    // print it
+    if($INFO['exists']){
+        $out = '';
+        $out .= $fn;
+        $out .= ' &middot; ';
+        $out .= $lang['lastmod'];
+        $out .= ': ';
+        $out .= $date;
+        if($INFO['editor']){
+            $out .= ' '.$lang['by'].' ';
+            $out .= editorinfo($INFO['editor']);
+        }else{
+            $out .= ' ('.$lang['external_edit'].')';
+        }
+        if($INFO['locked']){
+            $out .= ' &middot; ';
+            $out .= $lang['lockedby'];
+            $out .= ': ';
+            $out .= editorinfo($INFO['locked']);
+        }
+        if($ret){
+            return $out;
+        }else{
+            echo $out;
+            return true;
+        }
+    }
+    return false;
+}
 
-                                /**
-                                 * Prints or returns the name of the given page (current one if none given).
-                                 *
-                                 * If useheading is enabled this will use the first headline else
-                                 * the given ID is used.
-                                 *
-                                 * @author Andreas Gohr <andi@splitbrain.org>
-                                 */
+/**
+ * Prints or returns the name of the given page (current one if none given).
+ *
+ * If useheading is enabled this will use the first headline else
+ * the given ID is used.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function tpl_pagetitle($id=null, $ret=false){
     global $conf;
     if(is_null($id)){
