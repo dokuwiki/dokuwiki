@@ -1017,7 +1017,7 @@ function tpl_indexerWebBug(){
  */
 function tpl_getConf($id){
     global $conf;
-    global $tpl_configloaded;
+    static $tpl_configloaded = false;
 
     $tpl = $conf['template'];
 
@@ -1051,6 +1051,29 @@ function tpl_loadConfig(){
     include($file);
 
     return $conf;
+}
+
+// language methods
+/**
+ * tpl_getLang($id)
+ *
+ * use this function to access template language variables
+ */
+function tpl_getLang($id){
+    static $lang = array();
+
+    if (count($lang) === 0){
+        $path = DOKU_TPLINC.'lang/';
+
+        $lang = array();
+
+        global $conf;            // definitely don't invoke "global $lang"
+        // don't include once
+        @include($path.'en/lang.php');
+        if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
+    }
+
+    return $lang[$id];
 }
 
 /**
