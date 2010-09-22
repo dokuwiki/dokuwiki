@@ -136,7 +136,7 @@ function ajax_lock(){
     if(!$client) $client = clientIP(true);
 
     $draft = array('id'     => $id,
-                   'prefix' => $_POST['prefix'],
+                   'prefix' => substr($_POST['prefix'], 0, -1),
                    'text'   => $_POST['wikitext'],
                    'suffix' => $_POST['suffix'],
                    'date'   => (int) $_POST['date'],

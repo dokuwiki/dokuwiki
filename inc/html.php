@@ -1177,7 +1177,7 @@ function html_edit(){
     $form->addHidden('id', $ID);
     $form->addHidden('rev', $REV);
     $form->addHidden('date', $DATE);
-    $form->addHidden('prefix', $PRE);
+    $form->addHidden('prefix', $PRE . '.');
     $form->addHidden('suffix', $SUF);
     $form->addHidden('changecheck', $check);
 

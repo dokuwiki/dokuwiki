@@ -40,7 +40,7 @@ if(empty($HIGH)) $HIGH = getGoogleQuery();
 if (isset($_POST['wikitext'])) {
     $TEXT  = cleanText($_POST['wikitext']);
 }
-$PRE   = cleanText($_POST['prefix']);
+$PRE   = cleanText(substr($_POST['prefix'], 0, -1));
 $SUF   = cleanText($_POST['suffix']);
 $SUM   = $_REQUEST['summary'];
 
