@@ -57,8 +57,9 @@ function act_dispatch(){
         $ACT = act_permcheck($ACT);
 
         //sitemap
-        if ($ACT == 'sitemap')
+        if ($ACT == 'sitemap'){
             $ACT = act_sitemap($ACT);
+        }
 
         //register
         $nil = array();
@@ -599,17 +600,16 @@ function act_export($act){
 function act_sitemap($act) {
     global $conf;
 
-    if (!$conf['sitemap']) {
+    if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
         header("HTTP/1.0 404 Not Found");
         print "Sitemap generation is disabled.";
         exit;
     }
     
-    $sitemap = $conf['cachedir'].'/sitemap.xml';
-    if($conf['compression'] == 'bz2' || $conf['compression'] == 'gz'){
+    $sitemap = Sitemapper::getFilePath();
+    if(strrchr($sitemap, '.') === '.gz'){
         $mime = 'application/x-gzip';
-        $sitemap .= '.gz';
-    } else {
+    }else{
         $mime = 'application/xml; charset=utf-8';
     }
 
@@ -622,19 +622,18 @@ function act_sitemap($act) {
         // Send headers
         header('Content-Type: '.$mime);
 
+        http_conditionalRequest(filemtime($sitemap));
+
         // Send file
         //use x-sendfile header to pass the delivery to compatible webservers
         if (http_sendfile($sitemap)) exit;
 
-        $fp = @fopen($sitemap,"rb");
-        if($fp){
-            http_rangeRequest($fp,filesize($sitemap),$mime);
-            exit;
-        }
+        readfile($sitemap);
+        exit;
     }
 
     header("HTTP/1.0 500 Internal Server Error");
-    print "Could not read $sitemap - bad permissions?";
+    print "Could not read the sitemap file - bad permissions?";
     exit;
 }
 
