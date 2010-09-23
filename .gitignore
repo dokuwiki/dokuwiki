@@ -11,6 +11,7 @@
 *.bak
 *.old
 *~
+*.DS_Store
 /data/attic/*
 /data/cache/*
 /data/index/*
