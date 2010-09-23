@@ -788,6 +788,7 @@ function media_nstree_li($item){
         $img   = DOKU_BASE.'lib/images/plus.gif';
         $alt   = '+';
     }
+    // TODO: only deliver an image if it actually has a subtree...
     return '<li class="'.$class.'">'.
         '<img src="'.$img.'" alt="'.$alt.'" />';
 }
