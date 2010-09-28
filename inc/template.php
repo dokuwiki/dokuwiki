@@ -1169,7 +1169,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     global $lang;
     global $auth;
 
-    echo '<form method="post" accept-charset="utf-8">'; #FIXME action
+    echo '<form action="' . DOKU_SCRIPT . '" method="post" accept-charset="utf-8">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';

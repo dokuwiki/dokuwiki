@@ -97,7 +97,6 @@ function pageinfo(){
     global $REV;
     global $RANGE;
     global $USERINFO;
-    global $conf;
     global $lang;
 
     // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml

@@ -276,7 +276,7 @@ class HTTPClient {
         // open socket
         $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
         if (!$socket){
-            $resp->status = '-100';
+            $this->status = -100;
             $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
             return false;
         }
@@ -560,6 +560,7 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _postEncode($data){
+        $url = '';
         foreach($data as $key => $val){
             if($url) $url .= '&';
             $url .= urlencode($key).'='.urlencode($val);

@@ -16,13 +16,10 @@ if(!defined('DOKU_INC')) die('meh.');
  * @triggers ACTION_HEADERS_SEND
  */
 function act_dispatch(){
-    global $INFO;
     global $ACT;
     global $ID;
     global $QUERY;
     global $lang;
-    global $conf;
-    global $license;
 
     $preact = $ACT;
 
@@ -57,7 +54,6 @@ function act_dispatch(){
         $ACT = act_permcheck($ACT);
 
         //register
-        $nil = array();
         if($ACT == 'register' && $_POST['save'] && register()){
             $ACT = 'login';
         }

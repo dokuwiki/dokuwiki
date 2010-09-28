@@ -126,6 +126,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
      */
     function _list($filter){
         global $conf;
+        global $lang;
         echo '<hr /><br />';
         echo '<form action="" method="post"><div class="no">';
         echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
