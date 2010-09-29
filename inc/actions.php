@@ -145,6 +145,10 @@ function act_dispatch(){
         act_redirect($ID,$preact);
     }
 
+    global $INFO;
+    global $conf;
+    global $license;
+
     //call template FIXME: all needed vars available?
     $headers[] = 'Content-Type: text/html; charset=utf-8';
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
