@@ -14,6 +14,7 @@
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
  * @author Sergio Motta sergio@cisne.com.br
+ * @author Isaias Masiero Filho <masiero@masiero.org>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -169,7 +170,7 @@ $lang['rss_type_o_rss1']       = 'RSS 1.0';
 $lang['rss_type_o_rss2']       = 'RSS 2.0';
 $lang['rss_type_o_atom']       = 'Atom 0.3';
 $lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'abstrato';
+$lang['rss_content_o_abstract'] = 'resumo';
 $lang['rss_content_o_diff']    = 'diff unificado';
 $lang['rss_content_o_htmldiff'] = 'tabela de diff formatada em HTML';
 $lang['rss_content_o_html']    = 'conteúdo completo da página em HTML';

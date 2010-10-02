@@ -14,6 +14,7 @@
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
  * @author Sergio Motta sergio@cisne.com.br
+ * @author Isaias Masiero Filho <masiero@masiero.org>
  */
 $lang['menu']                  = 'Gerenciar Plug-ins';
 $lang['download']              = 'Baixar e instalar um novo plug-in';
