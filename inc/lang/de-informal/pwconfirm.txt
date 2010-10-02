@@ -1,7 +1,7 @@
 Hallo @FULLNAME@!
 
 Jemand hat ein neues Passwort für deinen @TITLE@
-login auf @DOKUWIKIURL@ angefordert.
+Login auf @DOKUWIKIURL@ angefordert.
 
 Wenn du diese Änderung nicht angefordert hast, ignoriere diese
 E-Mail einfach.

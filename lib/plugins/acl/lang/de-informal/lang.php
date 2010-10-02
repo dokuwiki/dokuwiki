@@ -5,6 +5,7 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
+ * @author Matthias Schulte <post@lupo49.de>
  */
 $lang['admin_acl']             = 'Zugriffskontrollsystem Management';
 $lang['acl_group']             = 'Gruppe';
