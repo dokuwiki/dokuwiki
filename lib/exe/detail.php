@@ -37,6 +37,10 @@ if($AUTH >= AUTH_READ){
     $ERROR = p_locale_xhtml('denied');
 }
 
+// this makes some general infos available as well as the info about the
+// "parent" page
+$INFO = pageinfo();
+
 //start output and load template
 header('Content-Type: text/html; charset=utf-8');
 include(template('detail.php'));
