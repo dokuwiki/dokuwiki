@@ -103,13 +103,34 @@ function auth_setup(){
     }
 
     //load ACL into a global array XXX
-    if(is_readable($config_cascade['acl']['default'])){
-        $AUTH_ACL = file($config_cascade['acl']['default']);
-        //support user wildcard
-        if(isset($_SERVER['REMOTE_USER'])){
-            $AUTH_ACL = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$AUTH_ACL);
+    $AUTH_ACL = auth_loadACL();
+}
+
+/**
+ * Loads the ACL setup and handle user wildcards
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @returns array
+ */
+function auth_loadACL(){
+    global $config_cascade;
+
+    if(!is_readable($config_cascade['acl']['default'])) return array();
+
+    $acl = file($config_cascade['acl']['default']);
+
+    //support user wildcard
+    if(isset($_SERVER['REMOTE_USER'])){
+        $len = count($acl);
+        for($i=0; $i<$len; $i++){
+            if($acl[$i]{0} == '#') continue;
+            list($id,$rest) = preg_split('/\s+/',$acl[$i],2);
+            $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
+            $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
+            $acl[$i] = "$id\t$rest";
         }
     }
+    return $acl;
 }
 
 function auth_login_wrapper($evdata) {
