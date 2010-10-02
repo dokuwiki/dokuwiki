@@ -107,7 +107,7 @@ function auth_setup(){
         $AUTH_ACL = file($config_cascade['acl']['default']);
         //support user wildcard
         if(isset($_SERVER['REMOTE_USER'])){
-            $AUTH_ACL = str_replace('%USER%',$_SERVER['REMOTE_USER'],$AUTH_ACL);
+            $AUTH_ACL = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$AUTH_ACL);
         }
     }
 }
