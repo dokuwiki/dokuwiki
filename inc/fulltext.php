@@ -313,7 +313,7 @@ function ft_snippet($id,$highlight){
         $len = utf8_strlen($text);
 
         // build a regexp from the phrases to highlight
-        $re1 = '('.join('|',array_map('preg_quote_cb',array_filter((array) $highlight))).')';
+        $re1 = '('.join('|',array_map('_ft_snippet_re_preprocess', array_map('preg_quote_cb',array_filter((array) $highlight)))).')';
         $re2 = "$re1.{0,75}(?!\\1)$re1";
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
@@ -384,6 +384,13 @@ function ft_snippet($id,$highlight){
     unset($evt);
 
     return $evdata['snippet'];
+}
+
+/**
+ * Wraps a search term in regex boundary checks.
+ */
+function _ft_snippet_re_preprocess($term) {
+    return '\b'.$term.'\b';
 }
 
 /**

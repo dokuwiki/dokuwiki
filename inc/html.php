@@ -285,11 +285,18 @@ function html_draft(){
  */
 function html_hilight($html,$phrases){
     $phrases = array_filter((array) $phrases);
-    $regex = join('|',array_map('preg_quote_cb',$phrases));
+    $regex = join('|',array_map('_html_hilight_re_preprocess', array_map('preg_quote_cb',$phrases)));
 
     if ($regex === '') return $html;
     $html = preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
     return $html;
+}
+
+/**
+ * Wraps a search term in regex boundary checks.
+ */
+function _html_hilight_re_preprocess($term) {
+    return '\b'.$term.'\b';
 }
 
 /**
