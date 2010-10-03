@@ -399,7 +399,7 @@ class TarLib {
      *
      * This function attempts to get the list of the files stored in the
      * archive, and return either an error code or an indexed array of
-     * associative array containing for each file the following informations :
+     * associative array containing for each file the following information :
      *
      * checksum    Tar Checksum of the file
      * filename    The full name of the stored file (up to 100 c.)
