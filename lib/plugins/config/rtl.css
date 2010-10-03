@@ -6,3 +6,21 @@
     text-align: right;
 }
 
+#config__manager td.label {
+    padding: 0.8em 1em 0.6em 0;
+}
+
+#config__manager td.label span.outkey {
+    float: right;
+    margin-right: 1em;
+}
+
+#config__manager td.label label {
+    text-align: right;
+    clear: right;
+}
+
+#config__manager td.label img {
+    float: left;
+}
+
