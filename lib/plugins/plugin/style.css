@@ -5,47 +5,152 @@
  * @link    http://wiki.jalakai.co.uk/dokuwiki/doku.php/tutorials/adminplugin
  */
 
-/* overall containing div */
-#plugin__manager {}
+#plugin__manager h2 {
+    margin-left: 0;
+}
 
-#plugin__manager h2 { margin-left: 0;}
-#plugin__manager form { display: block; margin: 0; padding: 0;}
-#plugin__manager legend { display: none;}
-#plugin__manager fieldset { width: auto;}
-#plugin__manager .button { margin: 0;}
-#plugin__manager p, #plugin__manager label { text-align: left;}
-#plugin__manager .hidden { display: none;}
-#plugin__manager .new { background: #dee7ec;}
-#plugin__manager input[disabled] { color: #ccc; border-color: #ccc;}  /* IE won't understand but doesn't require it */
+#plugin__manager form {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
 
-#plugin__manager .pm_menu, #plugin__manager .pm_info { margin-left: 0; text-align: left; }
-#plugin__manager .pm_menu { float: left; width: 48%; }
-#plugin__manager .pm_info { float: right; width: 50%; }
+#plugin__manager legend {
+    display: none;
+}
 
-#plugin__manager .common { }
-#plugin__manager .common form { }
-#plugin__manager .common fieldset { margin: 0; padding: 0 0 1.0em 0; text-align: left; border: none;}
-#plugin__manager .common label { padding: 0 0 0.5em 0;}
-#plugin__manager .common input {  }
-#plugin__manager .common input.edit { width: 24em; margin: 0.5em;}
-#plugin__manager .common .button { }
+#plugin__manager fieldset {
+    width: auto;
+}
 
-#plugin__manager form.plugins { }
-#plugin__manager .plugins fieldset { color: #000; background: #fff; text-align: right; border-top: none; border-right: none; border-left: none;}
-#plugin__manager .plugins fieldset.protected { background: #fdd; color: #000; }
-#plugin__manager .plugins fieldset.disabled { background: #e0e0e0; color: #a8a8a8; }
+#plugin__manager .button {
+    margin: 0;
+}
 
-#plugin__manager .plugins .legend { color: #000; background: inherit; display: block; margin: 0; padding: 0; font-size: 1em; line-height: 1.4em; font-weight: normal; text-align: left; float: left; padding: 0; clear: none;}
-#plugin__manager .plugins .button { font-size: 95%;}
+#plugin__manager p,
+#plugin__manager label {
+    text-align: left;
+}
 
-#plugin__manager .plugins fieldset.buttons { border: none;}
-#plugin__manager .plugins fieldset.buttons .button { float: left; }
+#plugin__manager .hidden {
+    display: none;
+}
 
-#plugin__manager .pm_info h3 { margin-left: 0; }
-#plugin__manager .pm_info dl { margin: 1em 0; padding: 0; }
-#plugin__manager .pm_info dt { width: 6em; float: left; clear: left; margin: 0; padding: 0; }
-#plugin__manager .pm_info dd { margin: 0 0 0 7em; padding: 0; background: none; }
+#plugin__manager .new {
+    background: #dee7ec;
+}
 
-#plugin__manager .plugins .enable { float: left; width: auto; margin-right: 0.5em;}
+/* IE won't understand but doesn't require it */
+#plugin__manager input[disabled] {
+    color: #ccc;
+    border-color: #ccc;
+}
+
+#plugin__manager .pm_menu,
+#plugin__manager .pm_info {
+    margin-left: 0;
+    text-align: left;
+}
+
+#plugin__manager .pm_menu {
+    float: left;
+    width: 48%;
+}
+
+#plugin__manager .pm_info {
+    float: right;
+    width: 50%;
+}
+
+#plugin__manager .common fieldset {
+    margin: 0;
+    padding: 0 0 1.0em 0;
+    text-align: left;
+    border: none;
+}
+
+#plugin__manager .common label {
+    padding: 0 0 0.5em 0;
+}
+
+#plugin__manager .common input.edit {
+    width: 24em;
+    margin: 0.5em;
+}
+
+#plugin__manager .plugins fieldset {
+    color: #000;
+    background: #fff;
+    text-align: right;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+#plugin__manager .plugins fieldset.protected {
+    background: #fdd;
+    color: #000;
+}
+
+#plugin__manager .plugins fieldset.disabled {
+    background: #e0e0e0;
+    color: #a8a8a8;
+}
+
+#plugin__manager .plugins .legend {
+    color: #000;
+    background: inherit;
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    line-height: 1.4em;
+    font-weight: normal;
+    text-align: left;
+    float: left;
+    padding: 0;
+    clear: none;
+}
+
+#plugin__manager .plugins .button {
+    font-size: 95%;
+}
+
+#plugin__manager .plugins fieldset.buttons {
+    border: none;
+}
+
+#plugin__manager .plugins fieldset.buttons .button {
+    float: left;
+}
+
+#plugin__manager .pm_info h3 {
+    margin-left: 0;
+}
+
+#plugin__manager .pm_info dl {
+    margin: 1em 0;
+    padding: 0;
+}
+
+#plugin__manager .pm_info dt {
+    width: 6em;
+    float: left;
+    clear: left;
+    margin: 0;
+    padding: 0;
+}
+
+#plugin__manager .pm_info dd {
+    margin: 0 0 0 7em;
+    padding: 0;
+    background: none;
+}
+
+#plugin__manager .plugins .enable {
+    float: left;
+    width: auto;
+    margin-right: 0.5em;
+}
 
 /* end admin plugin styles */

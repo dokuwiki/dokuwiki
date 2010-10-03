@@ -17,8 +17,9 @@
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
  * @author Sergio Motta sergio@cisne.com.br
+ * @author Isaias Masiero Filho <masiero@masiero.org>
  */
-$lang['encoding']              = 'utf-8';
+$lang['encoding']              = 'utf-8<';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
@@ -121,7 +122,7 @@ $lang['js']['mediasmall']      = 'Versão Pequena';
 $lang['js']['mediamedium']     = 'Versão Média';
 $lang['js']['medialarge']      = 'Versão Grande';
 $lang['js']['mediaoriginal']   = 'Versão Original';
-$lang['js']['medialnk']        = 'Link para pagina de detalhes';
+$lang['js']['medialnk']        = 'Link para página de detalhes';
 $lang['js']['mediadirect']     = 'Link direto para original';
 $lang['js']['medianolnk']      = 'Sem Link';
 $lang['js']['medianolink']     = 'Sem link na imagem';
@@ -152,6 +153,7 @@ $lang['deletefail']            = 'Não foi possível excluir "%s" - verifique as
 $lang['mediainuse']            = 'O arquivo "%s" não foi excluído - ele ainda está em uso.';
 $lang['namespaces']            = 'Espaços de nome';
 $lang['mediafiles']            = 'Arquivos disponíveis em';
+$lang['accessdenied']          = 'Você não tem permissão para visualizar esta página.';
 $lang['mediausage']            = 'Use a seguinte sintaxe para referenciar esse arquivo:';
 $lang['mediaview']             = 'Ver o arquivo original';
 $lang['mediaroot']             = 'raiz';
@@ -167,6 +169,7 @@ $lang['current']               = 'atual';
 $lang['yours']                 = 'Sua versão';
 $lang['diff']                  = 'Mostrar diferenças com a revisão atual';
 $lang['diff2']                 = 'Mostrar diferenças entre as revisões selecionadas';
+$lang['difflink']              = 'Link para esta página de comparações';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Visitou';
 $lang['youarehere']            = 'Você está aqui';
@@ -188,7 +191,7 @@ $lang['qb_bold']               = 'Texto em negrito';
 $lang['qb_italic']             = 'Texto em itálico';
 $lang['qb_underl']             = 'Texto sublinhado';
 $lang['qb_code']               = 'Texto de código';
-$lang['qb_strike']             = 'Texto riscado';
+$lang['qb_strike']             = 'Texto tachado';
 $lang['qb_h1']                 = 'Cabeçalho de nível 1';
 $lang['qb_h2']                 = 'Cabeçalho de nível 2';
 $lang['qb_h3']                 = 'Cabeçalho de nível 3';

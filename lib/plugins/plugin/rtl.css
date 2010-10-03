@@ -1,0 +1,51 @@
+
+#plugin__manager .pm_menu,
+#plugin__manager .pm_info,
+#plugin__manager p,
+#plugin__manager label {
+    text-align: right;
+}
+
+#plugin__manager .pm_menu {
+    float: right;
+}
+
+#plugin__manager .pm_info {
+    float: left;
+}
+
+#plugin__manager .pm_info dt {
+    float: right;
+    clear: right;
+}
+
+#plugin__manager .pm_info dd {
+    margin: 0 7em 0 0;
+}
+
+#plugin__manager .common fieldset {
+    text-align: right;
+}
+
+
+#plugin__manager .plugins .legend {
+    text-align: right;
+    float: right;
+}
+
+#plugin__manager .plugins .enable {
+    float: right;
+    margin-right: 0;
+    margin-left: 0.5em;
+}
+
+#plugin__manager .plugins .button {
+    float: left;
+    margin-right: 0.5em;
+}
+
+
+#plugin__manager .plugins fieldset.buttons .button {
+    float: right;
+}
+

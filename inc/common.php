@@ -987,9 +987,10 @@ function saveWikiText($id,$text,$summary,$minor=false){
         $mfiles = metaFiles($id);
         $changelog = metaFN($id, '.changes');
         $metadata  = metaFN($id, '.meta');
+        $subscribers = metaFN($id, '.mlist');
         foreach ($mfiles as $mfile) {
-            // but keep per-page changelog to preserve page history and keep meta data
-            if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata) { @unlink($mfile); }
+            // but keep per-page changelog to preserve page history, keep subscriber list and keep meta data
+            if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata && $mfile!==$subscribers) { @unlink($mfile); }
         }
         // purge meta data
         p_purge_metadata($id);
