@@ -1128,7 +1128,11 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $diff = rawWiki($id);
     }
     $text = str_replace('@DIFF@',$diff,$text);
-    $subject = '['.$conf['title'].'] '.$subject;
+    if(utf8_strlen($conf['title']) < 20) {
+        $subject = '['.$conf['title'].'] '.$subject;
+    }else{
+        $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
+    }
 
     $from = $conf['mailfrom'];
     $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
