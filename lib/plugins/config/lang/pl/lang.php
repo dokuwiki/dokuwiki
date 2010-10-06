@@ -140,6 +140,7 @@ $lang['proxy____port']         = 'Proxy - port';
 $lang['proxy____user']         = 'Proxy - nazwa użytkownika';
 $lang['proxy____pass']         = 'Proxy - hasło';
 $lang['proxy____ssl']          = 'Proxy - SSL';
+$lang['proxy____except']       = 'Wyrażenie regularne określające adresy URL, do których nie należy używać proxy.';
 $lang['safemodehack']          = 'Bezpieczny tryb (przez FTP)';
 $lang['ftp____host']           = 'FTP - serwer';
 $lang['ftp____port']           = 'FTP - port';
