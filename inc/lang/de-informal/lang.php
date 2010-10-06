@@ -128,8 +128,7 @@ $lang['js']['medialeft']        = 'Bild nach links ausrichten.';
 $lang['js']['mediaright']       = 'Bild nach rechts ausrichten.';
 $lang['js']['mediacenter']      = 'Bild in der Mitte ausrichten';
 $lang['js']['medianoalign']     = 'Keine Ausrichtung des Bildes.';
-$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet-Explorer.
-Der Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
+$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet-Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
 $lang['js']['linkwiz']         = 'Link-Assistent';
 $lang['js']['linkto']          = 'Link zu:';
 $lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
