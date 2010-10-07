@@ -285,7 +285,7 @@ function html_draft(){
  */
 function html_hilight($html,$phrases){
     $phrases = array_filter((array) $phrases);
-    $regex = join('|',array_map('preg_quote_cb',$phrases));
+    $regex = join('|',array_map('ft_snippet_re_preprocess', array_map('preg_quote_cb',$phrases)));
 
     if ($regex === '') return $html;
     $html = preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
@@ -1177,7 +1177,7 @@ function html_edit(){
     $form->addHidden('id', $ID);
     $form->addHidden('rev', $REV);
     $form->addHidden('date', $DATE);
-    $form->addHidden('prefix', $PRE);
+    $form->addHidden('prefix', $PRE . '.');
     $form->addHidden('suffix', $SUF);
     $form->addHidden('changecheck', $check);
 
@@ -1394,6 +1394,12 @@ function html_admin(){
                 );
     }
 
+    // data security check
+    echo '<a style="background: transparent url(data/security.png) left top no-repeat;
+                  display: block; width:380px; height:73px; border:none; float:right"
+           target="_blank"
+           href="http://www.dokuwiki.org/security#web_access_security"></a>';
+
     print p_locale_xhtml('admin');
 
     // Admin Tasks
@@ -1447,7 +1453,11 @@ function html_admin(){
     }
     unset($menu['popularity']);
 
+    // print DokuWiki version:
     ptln('</ul>');
+    echo '<div id="admin__version">';
+    echo getVersion();
+    echo '</div>';
 
     // print the rest as sorted list
     if(count($menu)){

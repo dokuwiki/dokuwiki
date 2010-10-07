@@ -13,7 +13,7 @@ if(!defined('DOKU_INC')) die();
  * need to inherit from this class
  */
 class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
-    var $version = '2008-02-20';
+    var $version = '2010-09-17';
 
 
     /**
@@ -26,7 +26,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             'date'   => $this->version,
             'name'   => 'Popularity Feedback Plugin',
             'desc'   => 'Send anonymous data about your wiki to the developers.',
-            'url'    => 'http://dokuwiki.org/plugin:popularity',
+            'url'    => 'http://www.dokuwiki.org/plugin:popularity',
         );
     }
 
@@ -114,6 +114,8 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
         $data['page_size']     = $list['file_size'];
         $data['page_biggest']  = $list['file_max'];
         $data['page_smallest'] = $list['file_min'];
+        $data['page_nscount']  = $list['dir_count'];
+        $data['page_nsnest']   = $list['dir_nest'];
         if($list['file_count']) $data['page_avg'] = $list['file_size'] / $list['file_count'];
         $data['page_oldest']   = $list['file_oldest'];
         unset($list);
@@ -125,6 +127,8 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
         $data['media_size']     = $list['file_size'];
         $data['media_biggest']  = $list['file_max'];
         $data['media_smallest'] = $list['file_min'];
+        $data['media_nscount']  = $list['dir_count'];
+        $data['media_nsnest']   = $list['dir_nest'];
         if($list['file_count']) $data['media_avg'] = $list['file_size'] / $list['file_count'];
         unset($list);
 
@@ -209,6 +213,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     function _search_count(&$data,$base,$file,$type,$lvl,$opts){
         // traverse
         if($type == 'd'){
+            if($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
             $data['dir_count']++;
             return true;
         }
@@ -223,6 +228,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             if($data['file_max'] < $size) $data['file_max'] = $size;
             if(!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
         }
+
         return false;
     }
 

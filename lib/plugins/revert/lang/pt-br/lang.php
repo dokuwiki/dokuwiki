@@ -14,6 +14,7 @@
  * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
  * @author Sergio Motta sergio@cisne.com.br
+ * @author Isaias Masiero Filho <masiero@masiero.org>
  */
 $lang['menu']                  = 'Gerenciador de reversões';
 $lang['filter']                = 'Procura por páginas com spam';

@@ -304,6 +304,9 @@ function dbg($msg,$hidden=false){
  */
 function dbglog($msg,$header=''){
     global $conf;
+    // The debug log isn't automatically cleaned thus only write it when
+    // debugging has been enabled by the user.
+    if($conf['allowdebug'] !== 1) return;
     if(is_object($msg) || is_array($msg)){
         $msg = print_r($msg,true);
     }

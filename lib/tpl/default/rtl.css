@@ -127,3 +127,21 @@ div.dokuwiki blockquote {
   border-right: 2px solid  __border__;
   padding-right: 3px;
 }
+
+/* Admin corrections */
+#admin__version {
+    clear: right;
+    float: left;
+}
+
+.dokuwiki ul.admin_tasks {
+    float: right;
+}
+
+.dokuwiki ul.admin_tasks li {
+    padding-left: 0px;
+    padding-right: 35px;
+    background: transparent none no-repeat scroll right 0;
+    text-align: right;
+}
+

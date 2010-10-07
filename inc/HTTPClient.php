@@ -244,6 +244,7 @@ class HTTPClient {
         // prepare headers
         $headers               = $this->headers;
         $headers['Host']       = $uri['host'];
+        if($uri['port']) $headers['Host'].= ':'.$uri['port'];
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
         $headers['Connection'] = 'Close';
@@ -275,7 +276,7 @@ class HTTPClient {
         // open socket
         $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
         if (!$socket){
-            $resp->status = '-100';
+            $this->status = -100;
             $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
             return false;
         }
@@ -458,6 +459,10 @@ class HTTPClient {
            $this->resp_headers['content-encoding'] == 'gzip' &&
            strlen($r_body) > 10 && substr($r_body,0,3)=="\x1f\x8b\x08"){
             $this->resp_body = @gzinflate(substr($r_body, 10));
+            if($this->resp_body === false){
+                $this->error = 'Failed to decompress gzip encoded content';
+                $this->resp_body = $r_body;
+            }
         }else{
             $this->resp_body = $r_body;
         }
@@ -555,6 +560,7 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _postEncode($data){
+        $url = '';
         foreach($data as $key => $val){
             if($url) $url .= '&';
             $url .= urlencode($key).'='.urlencode($val);

@@ -13,6 +13,7 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <robog@GMX.de>
+ * @author Robert BOGENSCHNEIDER <robog@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -99,24 +100,8 @@ $lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
 $lang['lockedby']              = 'Nune ŝlosita de';
 $lang['lockexpire']            = 'Ŝlosado ĉesos en';
 $lang['willexpire']            = 'Vi povos redakti ĉi tiun paĝon post unu minuto.\nSe vi volas nuligi tempkontrolon de la ŝlosado, do premu butonon "Antaŭrigardi".';
-$lang['js']['notsavedyet']     = "Ne konservitaj modifoj perdiĝos.\nĈu vi certe volas daŭrigi la procezon?";
-$lang['rssfailed']             = 'Okazis eraro dum ricevado de la novaĵ-fluo: ';
-$lang['nothingfound']          = 'Ankoraŭ nenio troviĝas tie ĉi.';
-$lang['mediaselect']           = 'Elekto de aŭdvidaĵa dosiero';
-$lang['fileupload']            = 'Alŝuto de aŭdvidaĵa dosiero';
-$lang['uploadsucc']            = 'Alŝuto estis sukcesa';
-$lang['uploadfail']            = 'Alŝuto estis malsukcesa. Eble ĉu estas problemoj pro permes-atributoj?';
-$lang['uploadwrong']           = 'Rifuzita alŝuto. Tiu ĉi dosiersufikso estas malpermesata!';
-$lang['uploadexist']           = 'La dosiero jam ekzistas. Nenio estas farita.';
-$lang['uploadbadcontent']      = 'La alŝutita enhavo ne kongruas al la sufikso %s.';
-$lang['uploadspam']            = 'La alŝutaĵo estis blokita de kontraŭspama vortlisto.';
-$lang['uploadxss']             = 'La alŝutajo estis blokita pro ebla malica enhavo.';
-$lang['uploadsize']            = 'La alŝutita dosiero estis tro granda. (maks. %s)';
-$lang['deletesucc']            = 'La dosiero "%s" estas forigita.';
-$lang['deletefail']            = '"%s" ne povis esti forigita - kontrolu permes-atributojn.';
-$lang['mediainuse']            = 'La dosiero "%s" ne estis forigita - ĝi ankoraŭ estas uzata.';
-$lang['namespaces']            = 'Nomspacoj';
-$lang['mediafiles']            = 'Disponeblaj dosieroj';
+$lang['js']['notsavedyet']     = 'Ne konservitaj modifoj perdiĝos.
+Ĉu vi certe volas daŭrigi la procezon?';
 $lang['js']['searchmedia']     = 'Serĉi dosierojn';
 $lang['js']['keepopen']        = 'Tenu la fenestron malfermata dum elekto';
 $lang['js']['hidedetails']     = 'Kaŝi detalojn';
@@ -147,6 +132,24 @@ $lang['js']['linkwiz']         = 'Ligil-Asistanto';
 $lang['js']['linkto']          = 'Ligilo al:';
 $lang['js']['del_confirm']     = 'Ĉu vere forigi elektitajn ero(j)n?';
 $lang['js']['mu_btn']          = 'Alŝuti plurajn dosierojn multope.';
+$lang['rssfailed']             = 'Okazis eraro dum ricevado de la novaĵ-fluo: ';
+$lang['nothingfound']          = 'Ankoraŭ nenio troviĝas tie ĉi.';
+$lang['mediaselect']           = 'Elekto de aŭdvidaĵa dosiero';
+$lang['fileupload']            = 'Alŝuto de aŭdvidaĵa dosiero';
+$lang['uploadsucc']            = 'Alŝuto estis sukcesa';
+$lang['uploadfail']            = 'Alŝuto estis malsukcesa. Eble ĉu estas problemoj pro permes-atributoj?';
+$lang['uploadwrong']           = 'Rifuzita alŝuto. Tiu ĉi dosiersufikso estas malpermesata!';
+$lang['uploadexist']           = 'La dosiero jam ekzistas. Nenio estas farita.';
+$lang['uploadbadcontent']      = 'La alŝutita enhavo ne kongruas al la sufikso %s.';
+$lang['uploadspam']            = 'La alŝutaĵo estis blokita de kontraŭspama vortlisto.';
+$lang['uploadxss']             = 'La alŝutajo estis blokita pro ebla malica enhavo.';
+$lang['uploadsize']            = 'La alŝutita dosiero estis tro granda. (maks. %s)';
+$lang['deletesucc']            = 'La dosiero "%s" estas forigita.';
+$lang['deletefail']            = '"%s" ne povis esti forigita - kontrolu permes-atributojn.';
+$lang['mediainuse']            = 'La dosiero "%s" ne estis forigita - ĝi ankoraŭ estas uzata.';
+$lang['namespaces']            = 'Nomspacoj';
+$lang['mediafiles']            = 'Disponeblaj dosieroj';
+$lang['accessdenied']          = 'Vi ne rajtas vidi tiun paĝon.';
 $lang['mediausage']            = 'Uzu la jenan sintakson por referenci tiun ĉi dosieron:';
 $lang['mediaview']             = 'Rigardi originalan dosieron';
 $lang['mediaroot']             = 'ĉefo (root)';
@@ -162,6 +165,7 @@ $lang['current']               = 'aktuala';
 $lang['yours']                 = 'Via Versio';
 $lang['diff']                  = 'Montri diferencojn el la aktuala versio';
 $lang['diff2']                 = 'Montri diferencojn inter la elektitaj revizioj';
+$lang['difflink']              = 'Ligilo al kompara rigardo';
 $lang['line']                  = 'Linio';
 $lang['breadcrumb']            = 'Paŝoj';
 $lang['youarehere']            = 'Vi estas ĉi tie';
@@ -259,6 +263,7 @@ $lang['i_pol0']                = 'Malferma Vikio (legi, skribi, alŝuti povas ĉ
 $lang['i_pol1']                = 'Publika Vikio (legi povas ĉiuj, skribi kaj alŝuti povas registritaj uzantoj)';
 $lang['i_pol2']                = 'Ferma Vikio (legi, skribi, alŝuti nur povas registritaj uzantoj)';
 $lang['i_retry']               = 'Reprovi';
+$lang['i_license']             = 'Bonvolu elekti la permesilon, sub kiun vi volas meti vian enhavon:';
 $lang['mu_intro']              = 'Ĉi tie vi povas alŝuti plurajn dosierojn multope. Klaku la esplor-butonon por aldoni ilin al la vico. Premu alŝuti kiam prete.';
 $lang['mu_gridname']           = 'Dosiernomo';
 $lang['mu_gridsize']           = 'Grandeco';

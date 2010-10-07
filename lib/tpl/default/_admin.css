@@ -1,3 +1,8 @@
+#admin__version {
+    clear:left;
+    float: right;
+    color: __text_neu__;
+}
 
 .dokuwiki ul.admin_tasks {
     font-size: 115%;

@@ -16,13 +16,10 @@ if(!defined('DOKU_INC')) die('meh.');
  * @triggers ACTION_HEADERS_SEND
  */
 function act_dispatch(){
-    global $INFO;
     global $ACT;
     global $ID;
     global $QUERY;
     global $lang;
-    global $conf;
-    global $license;
 
     $preact = $ACT;
 
@@ -57,7 +54,6 @@ function act_dispatch(){
         $ACT = act_permcheck($ACT);
 
         //register
-        $nil = array();
         if($ACT == 'register' && $_POST['save'] && register()){
             $ACT = 'login';
         }
@@ -148,6 +144,10 @@ function act_dispatch(){
     if($ACT == 'show' && $preact != 'show' && strtolower($_SERVER['REQUEST_METHOD']) == 'post'){
         act_redirect($ID,$preact);
     }
+
+    global $INFO;
+    global $conf;
+    global $license;
 
     //call template FIXME: all needed vars available?
     $headers[] = 'Content-Type: text/html; charset=utf-8';

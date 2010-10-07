@@ -134,6 +134,7 @@ $lang['proxy____port']         = 'Proxy server - port';
 $lang['proxy____user']         = 'Proxy server - užívateľské meno';
 $lang['proxy____pass']         = 'Proxy server - heslo';
 $lang['proxy____ssl']          = 'Proxy server - použiť SSL';
+$lang['proxy____except']       = 'Regulárny výraz popisujúci URL odkazy, pre ktoré by proxy nemala byť použitá.';
 $lang['safemodehack']          = 'Povoliť "safemode hack"';
 $lang['ftp____host']           = 'FTP server pre "safemode hack"';
 $lang['ftp____port']           = 'FTP port pre "safemode hack"';

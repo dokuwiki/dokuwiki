@@ -96,7 +96,6 @@ function getID($param='id',$clean=true){
  */
 function cleanID($raw_id,$ascii=false,$media=false){
     global $conf;
-    global $lang;
     static $sepcharpat = null;
 
     global $cache_cleanid;

@@ -440,7 +440,7 @@ class Doku_Handler {
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
                 $pos
                 );
-        }elseif ( preg_match('/^\\\\\\\\[\w.:?\-;,]+?\\\\/u',$link[0]) ) {
+        }elseif ( preg_match('/^\\\\\\\\[^\\\\]+?\\\\/u',$link[0]) ) {
         // Windows Share
             $this->_addCall(
                 'windowssharelink',
@@ -1543,14 +1543,12 @@ class Doku_Handler_Block {
             // Process blocks which are stack like... (contain linefeeds)
             if ( in_array($cname,$this->stackOpen ) && (!$plugin || $plugin_open) ) {
 
+                // Hack - footnotes shouldn't immediately contain a p_open
+                if ($this->addToStack($cname != 'footnote_open')) {
+                    $this->closeParagraph($call[2]);
+                }
                 $this->calls[] = $call;
 
-                // Hack - footnotes shouldn't immediately contain a p_open
-                if ( $cname != 'footnote_open' ) {
-                    $this->addToStack();
-                } else {
-                    $this->addToStack(false);
-                }
                 continue;
             }
 
@@ -1560,7 +1558,9 @@ class Doku_Handler_Block {
                     $this->closeParagraph($call[2]);
                 }
                 $this->calls[] = $call;
-                $this->removeFromStack();
+                if ($this->removeFromStack()) {
+                    $this->calls[] = array('p_open',array(), $call[2]);
+                }
                 continue;
             }
 
@@ -1676,16 +1676,25 @@ class Doku_Handler_Block {
         return $this->calls;
     }
 
+    /**
+     *
+     * @return   bool    true when a p_close() is required
+     */
     function addToStack($newStart = true) {
+        $ret = $this->inParagraph;
         $this->blockStack[] = array($this->atStart, $this->inParagraph);
         $this->atStart = $newStart;
         $this->inParagraph = false;
+
+        return $ret;
     }
 
     function removeFromStack() {
         $state = array_pop($this->blockStack);
         $this->atStart = $state[0];
         $this->inParagraph = $state[1];
+
+        return $this->inParagraph;
     }
 
     function addCall($call) {

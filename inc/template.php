@@ -621,6 +621,10 @@ function tpl_get_action($type) {
                 return false;
             }
             break;
+        case 'subscribens':
+            // Superseeded by subscribe/subscription
+            return '';
+            break;
         default:
             return '[unknown %s type]';
             break;
@@ -664,7 +668,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
     // don't print the search form if search action has been disabled
     if (!actionOk('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
+    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
     if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
@@ -793,75 +797,75 @@ function tpl_userinfo(){
     global $INFO;
     if(isset($_SERVER['REMOTE_USER'])){
         print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')';
-                return true;
-                }
-                return false;
-                }
+        return true;
+    }
+    return false;
+}
 
-                /**
-                 * Print some info about the current page
-                 *
-                 * @author Andreas Gohr <andi@splitbrain.org>
-                 */
-                function tpl_pageinfo($ret=false){
-                global $conf;
-                global $lang;
-                global $INFO;
-                global $ID;
+/**
+ * Print some info about the current page
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_pageinfo($ret=false){
+    global $conf;
+    global $lang;
+    global $INFO;
+    global $ID;
 
-                // return if we are not allowed to view the page
-                if (!auth_quickaclcheck($ID)) { return false; }
+    // return if we are not allowed to view the page
+    if (!auth_quickaclcheck($ID)) { return false; }
 
-                // prepare date and path
-                $fn = $INFO['filepath'];
-                if(!$conf['fullpath']){
-                    if($INFO['rev']){
-                        $fn = str_replace(fullpath($conf['olddir']).'/','',$fn);
-                    }else{
-                        $fn = str_replace(fullpath($conf['datadir']).'/','',$fn);
-                    }
-                }
-                $fn = utf8_decodeFN($fn);
-                $date = dformat($INFO['lastmod']);
+    // prepare date and path
+    $fn = $INFO['filepath'];
+    if(!$conf['fullpath']){
+        if($INFO['rev']){
+            $fn = str_replace(fullpath($conf['olddir']).'/','',$fn);
+        }else{
+            $fn = str_replace(fullpath($conf['datadir']).'/','',$fn);
+        }
+    }
+    $fn = utf8_decodeFN($fn);
+    $date = dformat($INFO['lastmod']);
 
-                // print it
-                if($INFO['exists']){
-                    $out = '';
-                    $out .= $fn;
-                    $out .= ' &middot; ';
-                    $out .= $lang['lastmod'];
-                    $out .= ': ';
-                    $out .= $date;
-                    if($INFO['editor']){
-                        $out .= ' '.$lang['by'].' ';
-                        $out .= editorinfo($INFO['editor']);
-                    }else{
-                        $out .= ' ('.$lang['external_edit'].')';
-                                }
-                                if($INFO['locked']){
-                                $out .= ' &middot; ';
-                                $out .= $lang['lockedby'];
-                                $out .= ': ';
-                                $out .= editorinfo($INFO['locked']);
-                                }
-                                if($ret){
-                                return $out;
-                                }else{
-                                echo $out;
-                                return true;
-                                }
-                                }
-                                return false;
-                                }
+    // print it
+    if($INFO['exists']){
+        $out = '';
+        $out .= $fn;
+        $out .= ' &middot; ';
+        $out .= $lang['lastmod'];
+        $out .= ': ';
+        $out .= $date;
+        if($INFO['editor']){
+            $out .= ' '.$lang['by'].' ';
+            $out .= editorinfo($INFO['editor']);
+        }else{
+            $out .= ' ('.$lang['external_edit'].')';
+        }
+        if($INFO['locked']){
+            $out .= ' &middot; ';
+            $out .= $lang['lockedby'];
+            $out .= ': ';
+            $out .= editorinfo($INFO['locked']);
+        }
+        if($ret){
+            return $out;
+        }else{
+            echo $out;
+            return true;
+        }
+    }
+    return false;
+}
 
-                                /**
-                                 * Prints or returns the name of the given page (current one if none given).
-                                 *
-                                 * If useheading is enabled this will use the first headline else
-                                 * the given ID is used.
-                                 *
-                                 * @author Andreas Gohr <andi@splitbrain.org>
-                                 */
+/**
+ * Prints or returns the name of the given page (current one if none given).
+ *
+ * If useheading is enabled this will use the first headline else
+ * the given ID is used.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 function tpl_pagetitle($id=null, $ret=false){
     global $conf;
     if(is_null($id)){
@@ -1017,7 +1021,7 @@ function tpl_indexerWebBug(){
  */
 function tpl_getConf($id){
     global $conf;
-    global $tpl_configloaded;
+    static $tpl_configloaded = false;
 
     $tpl = $conf['template'];
 
@@ -1051,6 +1055,29 @@ function tpl_loadConfig(){
     include($file);
 
     return $conf;
+}
+
+// language methods
+/**
+ * tpl_getLang($id)
+ *
+ * use this function to access template language variables
+ */
+function tpl_getLang($id){
+    static $lang = array();
+
+    if (count($lang) === 0){
+        $path = DOKU_TPLINC.'lang/';
+
+        $lang = array();
+
+        global $conf;            // definitely don't invoke "global $lang"
+        // don't include once
+        @include($path.'en/lang.php');
+        if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
+    }
+
+    return $lang[$id];
 }
 
 /**
@@ -1146,7 +1173,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     global $lang;
     global $auth;
 
-    echo '<form method="post" accept-charset="utf-8">'; #FIXME action
+    echo '<form action="' . DOKU_SCRIPT . '" method="post" accept-charset="utf-8">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
@@ -1258,6 +1285,7 @@ function tpl_subscribe() {
     global $ID;
     global $lang;
     global $conf;
+    $stime_days = $conf['subscribe_time']/60/60/24;
 
     echo p_locale_xhtml('subscr_form');
     echo '<h2>' . $lang['subscr_m_current_header'] . '</h2>';
@@ -1273,7 +1301,7 @@ function tpl_subscribe() {
             } else {
                 echo '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
             }
-            $sstl = $lang['subscr_style_'.$sub['style']];
+            $sstl = sprintf($lang['subscr_style_'.$sub['style']], $stime_days);
             if(!$sstl) $sstl = hsc($sub['style']);
             echo ' ('.$sstl.') ';
 
@@ -1298,7 +1326,6 @@ function tpl_subscribe() {
             $ID => '<code class="page">'.prettyprint_id($ID).'</code>',
             $ns => '<code class="ns">'.prettyprint_id($ns).'</code>',
             );
-    $stime_days = $conf['subscribe_time']/60/60/24;
     $styles = array(
             'every'  => $lang['subscr_style_every'],
             'digest' => sprintf($lang['subscr_style_digest'], $stime_days),

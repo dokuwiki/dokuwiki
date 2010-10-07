@@ -62,6 +62,14 @@ class CLIReporter extends SimpleReporter {
     }
 
     /**
+     * reset failinfo
+     */
+    function paintPass($message) {
+        parent::paintPass($message);
+        $this->_failinfo = '';
+    }
+
+    /**
      * Paint exception faildetail to STDERR.
      */
     function paintException($message) {
