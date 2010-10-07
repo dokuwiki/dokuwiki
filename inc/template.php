@@ -621,6 +621,10 @@ function tpl_get_action($type) {
                 return false;
             }
             break;
+        case 'subscribens':
+            // Superseeded by subscribe/subscription
+            return '';
+            break;
         default:
             return '[unknown %s type]';
             break;
