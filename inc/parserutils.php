@@ -531,7 +531,7 @@ function p_sort_modes($a, $b){
 /**
  * Renders a list of instruction to the specified output mode
  *
- * In the $info array are informations from the renderer returned
+ * In the $info array is information from the renderer returned
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>

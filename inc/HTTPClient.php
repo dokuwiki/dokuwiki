@@ -161,7 +161,7 @@ class HTTPClient {
      * will be correctly encoded and added to the given base URL.
      *
      * @param  string $url       The URL to fetch
-     * @param  string $data      Associative array of parameters
+     * @param  array  $data      Associative array of parameters
      * @param  bool   $sloppy304 Return body on 304 not modified
      * @author Andreas Gohr <andi@splitbrain.org>
      */

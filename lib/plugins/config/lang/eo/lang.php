@@ -10,6 +10,7 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <robog@GMX.de>
+ * @author Robert BOGENSCHNEIDER <robog@gmx.de>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: kompleze reviziu viajn ŝanĝojn kaj resubmetu ilin.
@@ -98,6 +99,7 @@ $lang['useslash']              = 'Uzi frakcistrekon kiel apartigsignaĵo por nom
 $lang['usedraft']              = 'Aŭtomate konservi skizon dum redaktado';
 $lang['sepchar']               = 'Apartigsignaĵo de vortoj en paĝnomoj';
 $lang['canonical']             = 'Uzi tute evidentajn URL-ojn';
+$lang['fnencode']              = 'Kodiga metodo por ne-ASCII-aj dosiernomoj.';
 $lang['autoplural']            = 'Kontroli pluralajn formojn en ligiloj';
 $lang['compression']           = 'Kompaktigmetodo por arkivaj dosieroj';
 $lang['cachetime']             = 'Maksimuma aĝo por provizmemoro (sek.)';
@@ -138,6 +140,7 @@ $lang['proxy____port']         = 'Pordo ĉe la "Proxy"';
 $lang['proxy____user']         = 'Uzantonomo ĉe la "Proxy"';
 $lang['proxy____pass']         = 'Pasvorto ĉe la "Proxy"';
 $lang['proxy____ssl']          = 'Uzi SSL por konekti al la "Proxy"';
+$lang['proxy____except']       = 'Regula esprimo por URL-oj, kiujn la servilo preterrigardu.';
 $lang['safemodehack']          = 'Ebligi sekuran modon';
 $lang['ftp____host']           = 'FTP-a servilo por sekura modo';
 $lang['ftp____port']           = 'FTP-a pordo por sekura modo';
@@ -185,3 +188,4 @@ $lang['useheading_o_0']        = 'Neniam';
 $lang['useheading_o_navigation'] = 'Nur foliumado';
 $lang['useheading_o_content']  = 'Nur vikia enhavo';
 $lang['useheading_o_1']        = 'Ĉiam';
+$lang['readdircache']          = 'Maksimuma daŭro de la dosieruja kaŝmemoro (sekundoj)';

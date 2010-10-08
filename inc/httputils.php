@@ -14,13 +14,13 @@ define('HTTP_CHUNK_SIZE',16*1024);
  * Checks and sets HTTP headers for conditional HTTP requests
  *
  * @author   Simon Willison <swillison@gmail.com>
- * @link     http://simon.incutio.com/archive/2003/04/23/conditionalGet
+ * @link     http://simonwillison.net/2003/Apr/23/conditionalGet/
  * @param    timestamp $timestamp lastmodified time of the cache file
  * @returns  void or exits with previously header() commands executed
  */
 function http_conditionalRequest($timestamp){
     // A PHP implementation of conditional get, see
-    //   http://fishbowl.pastiche.org/archives/001132.html
+    //   http://fishbowl.pastiche.org/2002/10/21/http_conditional_get_for_rss_hackers/
     $last_modified = substr(gmdate('r', $timestamp), 0, -5).'GMT';
     $etag = '"'.md5($last_modified).'"';
     // Send the headers

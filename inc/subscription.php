@@ -65,7 +65,7 @@ function subscription_unlock($id) {
 /**
  * Set subscription information
  *
- * Allows to set subscription informations for permanent storage in meta files.
+ * Allows to set subscription information for permanent storage in meta files.
  * Subscriptions consist of a target object, a subscribing user, a subscribe
  * style and optional data.
  * A subscription may be deleted by specifying an empty subscribe style.

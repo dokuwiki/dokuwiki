@@ -1,6 +1,6 @@
 Hallo!
 
-Die Seiten im Namespace @PAGE@ im @TITLE@ wurden geändert.
+Die Seiten im Namensraum @PAGE@ im @TITLE@ wurden geändert.
 Nachfolgenden findest du die geänderten Seiten:
 
 --------------------------------------------------------
