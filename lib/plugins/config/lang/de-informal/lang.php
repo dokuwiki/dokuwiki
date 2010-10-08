@@ -93,6 +93,7 @@ $lang['useslash']              = 'Benutze Schrägstrich als Namensraumtrenner in
 $lang['usedraft']              = 'Speichere automatisch Entwürfe während der Bearbeitung';
 $lang['sepchar']               = 'Worttrenner für Seitennamen in URLs';
 $lang['canonical']             = 'Immer Links mit vollständigen URLs erzeugen';
+$lang['fnencode']              = 'Methode um nicht-ASCII Dateinamen zu kodieren.';
 $lang['autoplural']            = 'Bei Links automatisch nach vorhandenen Pluralformen suchen';
 $lang['compression']           = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['cachetime']             = 'Maximale Cachespeicherung (Sekunden)';
