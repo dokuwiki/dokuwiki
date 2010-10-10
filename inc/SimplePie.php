@@ -9120,7 +9120,7 @@ class SimplePie_Misc
 			}
 			else
 			{
-				trigger_error('Unknown class passed as parameter', E_USER_WARNNG);
+				trigger_error('Unknown class passed as parameter', E_USER_WARNING);
 			}
 		}
 		return false;

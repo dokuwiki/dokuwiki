@@ -97,7 +97,6 @@ function pageinfo(){
     global $REV;
     global $RANGE;
     global $USERINFO;
-    global $conf;
     global $lang;
 
     // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
@@ -988,9 +987,10 @@ function saveWikiText($id,$text,$summary,$minor=false){
         $mfiles = metaFiles($id);
         $changelog = metaFN($id, '.changes');
         $metadata  = metaFN($id, '.meta');
+        $subscribers = metaFN($id, '.mlist');
         foreach ($mfiles as $mfile) {
-            // but keep per-page changelog to preserve page history and keep meta data
-            if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata) { @unlink($mfile); }
+            // but keep per-page changelog to preserve page history, keep subscriber list and keep meta data
+            if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata && $mfile!==$subscribers) { @unlink($mfile); }
         }
         // purge meta data
         p_purge_metadata($id);
@@ -1128,7 +1128,11 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $diff = rawWiki($id);
     }
     $text = str_replace('@DIFF@',$diff,$text);
-    $subject = '['.$conf['title'].'] '.$subject;
+    if(utf8_strlen($conf['title']) < 20) {
+        $subject = '['.$conf['title'].'] '.$subject;
+    }else{
+        $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
+    }
 
     $from = $conf['mailfrom'];
     $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);

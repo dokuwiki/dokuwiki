@@ -1488,6 +1488,8 @@ class JpegMeta {
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
      */
     function _parseXmpNode($values, &$i, &$meta) {
+        if ($values[$i]['type'] == 'close') return;
+
         if ($values[$i]['type'] == 'complete') {
             // Simple Type property
             $meta = $values[$i]['value'];
@@ -1501,14 +1503,16 @@ class JpegMeta {
             while ($values[++$i]['tag'] == 'rdf:li') {
                 $this->_parseXmpNode($values, $i, $meta[]);
             }
-            $i++; // skip closing tag
+            $i++; // skip closing Bag/Seq tag
 
         } elseif ($values[$i]['tag'] == 'rdf:Alt') {
             // Language Alternative property, only the first (default) value is used
-            $i++;
-            $this->_parseXmpNode($values, $i, $meta);
-            while ($values[++$i]['tag'] != 'rdf:Alt');
-            $i++; // skip closing tag
+            if ($values[$i]['type'] == 'open') {
+                $i++;
+                $this->_parseXmpNode($values, $i, $meta);
+                while ($values[++$i]['tag'] != 'rdf:Alt');
+                $i++; // skip closing Alt tag
+            }
 
         } else {
             // Structure property

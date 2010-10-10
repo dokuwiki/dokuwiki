@@ -16,8 +16,6 @@ if(!defined('DOKU_INC')) die('meh.');
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function toolbar_JSdefines($varname){
-    global $ID;
-    global $conf;
     global $lang;
 
     $menu = array();

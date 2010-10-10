@@ -33,8 +33,8 @@ class TestOfDoku_Parser extends UnitTestCase {
     }
 
     function setup() {
-        $this->P = & new Doku_Parser();
-        $this->H = & new Doku_Handler();
+        $this->P = new Doku_Parser();
+        $this->H = new Doku_Handler();
         $this->P->Handler = & $this->H;
     }
 

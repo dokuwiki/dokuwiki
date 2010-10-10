@@ -147,6 +147,7 @@ $lang['proxy____port']         = 'Puerto del servidor Proxy';
 $lang['proxy____user']         = 'Nombre de usuario para el servidor Proxy';
 $lang['proxy____pass']         = 'Contraseña para el servidor Proxy';
 $lang['proxy____ssl']          = 'Usar ssl para conectarse al servidor Proxy';
+$lang['proxy____except']       = 'Expresiones regulares para encontrar URLs que el proxy debería omitir.';
 $lang['safemodehack']          = 'Habilitar edición (hack) de modo seguro';
 $lang['ftp____host']           = 'Nombre del servidor FTP  para modo seguro';
 $lang['ftp____port']           = 'Puerto del servidor FTP  para modo seguro';

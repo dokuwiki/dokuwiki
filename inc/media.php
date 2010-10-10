@@ -391,6 +391,7 @@ function media_contentcheck($file,$mime){
 function media_notify($id,$file,$mime){
     global $lang;
     global $conf;
+    global $INFO;
     if(empty($conf['notify'])) return; //notify enabled?
 
     $ip = clientIP();
@@ -729,6 +730,7 @@ function media_nstree($ns){
     // currently selected namespace
     $ns  = cleanID($ns);
     if(empty($ns)){
+        global $ID;
         $ns = dirname(str_replace(':','/',$ID));
         if($ns == '.') $ns ='';
     }

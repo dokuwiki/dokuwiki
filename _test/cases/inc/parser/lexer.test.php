@@ -19,24 +19,24 @@ class TestOfLexerParallelRegex extends UnitTestCase {
 		$this->UnitTestCase();
 	}
 	function testNoPatterns() {
-		$regex = &new Doku_LexerParallelRegex(false);
+		$regex = new Doku_LexerParallelRegex(false);
 		$this->assertFalse($regex->match("Hello", $match));
 		$this->assertEqual($match, "");
 	}
 	function testNoSubject() {
-		$regex = &new Doku_LexerParallelRegex(false);
+		$regex = new Doku_LexerParallelRegex(false);
 		$regex->addPattern(".*");
 		$this->assertTrue($regex->match("", $match));
 		$this->assertEqual($match, "");
 	}
 	function testMatchAll() {
-		$regex = &new Doku_LexerParallelRegex(false);
+		$regex = new Doku_LexerParallelRegex(false);
 		$regex->addPattern(".*");
 		$this->assertTrue($regex->match("Hello", $match));
 		$this->assertEqual($match, "Hello");
 	}
 	function testCaseSensitive() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("abc");
 		$this->assertTrue($regex->match("abcdef", $match));
 		$this->assertEqual($match, "abc");
@@ -44,7 +44,7 @@ class TestOfLexerParallelRegex extends UnitTestCase {
 		$this->assertEqual($match, "abc");
 	}
 	function testCaseInsensitive() {
-		$regex = &new Doku_LexerParallelRegex(false);
+		$regex = new Doku_LexerParallelRegex(false);
 		$regex->addPattern("abc");
 		$this->assertTrue($regex->match("abcdef", $match));
 		$this->assertEqual($match, "abc");
@@ -52,7 +52,7 @@ class TestOfLexerParallelRegex extends UnitTestCase {
 		$this->assertEqual($match, "ABC");
 	}
 	function testMatchMultiple() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("abc");
 		$regex->addPattern("ABC");
 		$this->assertTrue($regex->match("abcdef", $match));
@@ -62,7 +62,7 @@ class TestOfLexerParallelRegex extends UnitTestCase {
 		$this->assertFalse($regex->match("Hello", $match));
 	}
 	function testPatternLabels() {
-		$regex = &new Doku_LexerParallelRegex(false);
+		$regex = new Doku_LexerParallelRegex(false);
 		$regex->addPattern("abc", "letter");
 		$regex->addPattern("123", "number");
 		$this->assertIdentical($regex->match("abcdef", $match), "letter");
@@ -71,7 +71,7 @@ class TestOfLexerParallelRegex extends UnitTestCase {
 		$this->assertEqual($match, "123");
 	}
 	function testMatchMultipleWithLookaheadNot() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("abc");
 		$regex->addPattern("ABC");
 		$regex->addPattern("a(?!\n).{1}");
@@ -84,37 +84,37 @@ class TestOfLexerParallelRegex extends UnitTestCase {
 		$this->assertFalse($regex->match("Hello", $match));
 	}
 	function testMatchSetOptionCaseless() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("a(?i)b(?i)c");
 		$this->assertTrue($regex->match("aBc", $match));
 		$this->assertEqual($match, "aBc");
 	}
 	function testMatchSetOptionUngreedy() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("(?U)\w+");
 		$this->assertTrue($regex->match("aaaaaa", $match));
 		$this->assertEqual($match, "a");
 	}
 	function testMatchLookaheadEqual() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("\w(?=c)");
 		$this->assertTrue($regex->match("xbyczd", $match));
 		$this->assertEqual($match, "y");
 	}
 	function testMatchLookaheadNot() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("\w(?!b|c)");
 		$this->assertTrue($regex->match("xbyczd", $match));
 		$this->assertEqual($match, "b");
 	}
 	function testMatchLookbehindEqual() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("(?<=c)\w");
 		$this->assertTrue($regex->match("xbyczd", $match));
 		$this->assertEqual($match, "z");
 	}
 	function testMatchLookbehindNot() {
-		$regex = &new Doku_LexerParallelRegex(true);
+		$regex = new Doku_LexerParallelRegex(true);
 		$regex->addPattern("(?<!\A|x|b)\w");
 		$this->assertTrue($regex->match("xbyczd", $match));
 		$this->assertEqual($match, "c");
@@ -127,15 +127,15 @@ class TestOfLexerStateStack extends UnitTestCase {
 		$this->UnitTestCase();
 	}
 	function testStartState() {
-		$stack = &new Doku_LexerStateStack("one");
+		$stack = new Doku_LexerStateStack("one");
 		$this->assertEqual($stack->getCurrent(), "one");
 	}
 	function testExhaustion() {
-		$stack = &new Doku_LexerStateStack("one");
+		$stack = new Doku_LexerStateStack("one");
 		$this->assertFalse($stack->leave());
 	}
 	function testStateMoves() {
-		$stack = &new Doku_LexerStateStack("one");
+		$stack = new Doku_LexerStateStack("one");
 		$stack->enter("two");
 		$this->assertEqual($stack->getCurrent(), "two");
 		$stack->enter("three");
@@ -167,24 +167,24 @@ class TestOfLexer extends UnitTestCase {
 		$this->UnitTestCase();
 	}
 	function testNoPatterns() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->expectNever("accept");
 		$handler->setReturnValue("accept", true);
-		$lexer = &new Doku_Lexer($handler);
+		$lexer = new Doku_Lexer($handler);
 		$this->assertFalse($lexer->parse("abcdef"));
 	}
 	function testEmptyPage() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->expectNever("accept");
 		$handler->setReturnValue("accept", true);
 		$handler->expectNever("accept");
 		$handler->setReturnValue("accept", true);
-		$lexer = &new Doku_Lexer($handler);
+		$lexer = new Doku_Lexer($handler);
 		$lexer->addPattern("a+");
 		$this->assertTrue($lexer->parse(""));
 	}
 	function testSinglePattern() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->expectArgumentsAt(0, "accept", array("aaa", DOKU_LEXER_MATCHED, 0));
 		$handler->expectArgumentsAt(1, "accept", array("x", DOKU_LEXER_UNMATCHED, 3));
 		$handler->expectArgumentsAt(2, "accept", array("a", DOKU_LEXER_MATCHED, 4));
@@ -195,13 +195,13 @@ class TestOfLexer extends UnitTestCase {
 		$handler->expectArgumentsAt(7, "accept", array("z", DOKU_LEXER_UNMATCHED, 13));
 		$handler->expectCallCount("accept", 8);
 		$handler->setReturnValue("accept", true);
-		$lexer = &new Doku_Lexer($handler);
+		$lexer = new Doku_Lexer($handler);
 		$lexer->addPattern("a+");
 		$this->assertTrue($lexer->parse("aaaxayyyaxaaaz"));
 		$handler->tally();
 	}
 	function testMultiplePattern() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$target = array("a", "b", "a", "bb", "x", "b", "a", "xxxxxx", "a", "x");
 		$positions = array(0,1,2,3,5,6,7,8,14,15);
 		for ($i = 0; $i < count($target); $i++) {
@@ -209,7 +209,7 @@ class TestOfLexer extends UnitTestCase {
 		}
 		$handler->expectCallCount("accept", count($target));
 		$handler->setReturnValue("accept", true);
-		$lexer = &new Doku_Lexer($handler);
+		$lexer = new Doku_Lexer($handler);
 		$lexer->addPattern("a+");
 		$lexer->addPattern("b+");
 		$this->assertTrue($lexer->parse("ababbxbaxxxxxxax"));
@@ -222,7 +222,7 @@ class TestOfLexerModes extends UnitTestCase {
 		$this->UnitTestCase();
 	}
 	function testIsolatedPattern() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->expectArgumentsAt(0, "a", array("a", DOKU_LEXER_MATCHED,0));
 		$handler->expectArgumentsAt(1, "a", array("b", DOKU_LEXER_UNMATCHED,1));
 		$handler->expectArgumentsAt(2, "a", array("aa", DOKU_LEXER_MATCHED,2));
@@ -233,14 +233,14 @@ class TestOfLexerModes extends UnitTestCase {
 		$handler->expectArgumentsAt(7, "a", array("x", DOKU_LEXER_UNMATCHED,15));
 		$handler->expectCallCount("a", 8);
 		$handler->setReturnValue("a", true);
-		$lexer = &new Doku_Lexer($handler, "a");
+		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addPattern("b+", "b");
 		$this->assertTrue($lexer->parse("abaabxbaaaxaaaax"));
 		$handler->tally();
 	}
 	function testModeChange() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->expectArgumentsAt(0, "a", array("a", DOKU_LEXER_MATCHED,0));
 		$handler->expectArgumentsAt(1, "a", array("b", DOKU_LEXER_UNMATCHED,1));
 		$handler->expectArgumentsAt(2, "a", array("aa", DOKU_LEXER_MATCHED,2));
@@ -258,7 +258,7 @@ class TestOfLexerModes extends UnitTestCase {
 		$handler->expectCallCount("b", 8);
 		$handler->setReturnValue("a", true);
 		$handler->setReturnValue("b", true);
-		$lexer = &new Doku_Lexer($handler, "a");
+		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addEntryPattern(":", "a", "b");
 		$lexer->addPattern("b+", "b");
@@ -266,7 +266,7 @@ class TestOfLexerModes extends UnitTestCase {
 		$handler->tally();
 	}
 	function testNesting() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->setReturnValue("a", true);
 		$handler->setReturnValue("b", true);
 		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
@@ -282,7 +282,7 @@ class TestOfLexerModes extends UnitTestCase {
 		$handler->expectArgumentsAt(5, "a", array("b", DOKU_LEXER_UNMATCHED,15));
 		$handler->expectCallCount("a", 6);
 		$handler->expectCallCount("b", 5);
-		$lexer = &new Doku_Lexer($handler, "a");
+		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addEntryPattern("(", "a", "b");
 		$lexer->addPattern("b+", "b");
@@ -291,7 +291,7 @@ class TestOfLexerModes extends UnitTestCase {
 		$handler->tally();
 	}
 	function testSingular() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->setReturnValue("a", true);
 		$handler->setReturnValue("b", true);
 		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
@@ -302,19 +302,19 @@ class TestOfLexerModes extends UnitTestCase {
 		$handler->expectArgumentsAt(1, "b", array("bbb", DOKU_LEXER_SPECIAL,7));
 		$handler->expectCallCount("a", 4);
 		$handler->expectCallCount("b", 2);
-		$lexer = &new Doku_Lexer($handler, "a");
+		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addSpecialPattern("b+", "a", "b");
 		$this->assertTrue($lexer->parse("aabaaxxbbbxx"));
 		$handler->tally();
 	}
 	function testUnwindTooFar() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->setReturnValue("a", true);
 		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
 		$handler->expectArgumentsAt(1, "a", array(")", DOKU_LEXER_EXIT,2));
 		$handler->expectCallCount("a", 2);
-		$lexer = &new Doku_Lexer($handler, "a");
+		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addExitPattern(")", "a");
 		$this->assertFalse($lexer->parse("aa)aa"));
@@ -327,7 +327,7 @@ class TestOfLexerHandlers extends UnitTestCase {
 		$this->UnitTestCase();
 	}
 	function testModeMapping() {
-		$handler = &new MockTestParser($this);
+		$handler = new MockTestParser($this);
 		$handler->setReturnValue("a", true);
 		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
 		$handler->expectArgumentsAt(1, "a", array("(", DOKU_LEXER_ENTER,2));
@@ -337,7 +337,7 @@ class TestOfLexerHandlers extends UnitTestCase {
 		$handler->expectArgumentsAt(5, "a", array(")", DOKU_LEXER_EXIT,8));
 		$handler->expectArgumentsAt(6, "a", array("b", DOKU_LEXER_UNMATCHED,9));
 		$handler->expectCallCount("a", 7);
-		$lexer = &new Doku_Lexer($handler, "mode_a");
+		$lexer = new Doku_Lexer($handler, "mode_a");
 		$lexer->addPattern("a+", "mode_a");
 		$lexer->addEntryPattern("(", "mode_a", "mode_b");
 		$lexer->addPattern("b+", "mode_b");
@@ -369,7 +369,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
 	function testIndex() {
         $doc = "aaa<file>bcd</file>eee";
         
-		$handler = &new MockTestParserByteIndex($this);
+		$handler = new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
         $handler->setReturnValue("caught", true);
         
@@ -400,7 +400,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
             );
 		$handler->expectCallCount("caught", 5);
         
-		$lexer = &new Doku_Lexer($handler, "ignore");
+		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern("<file>", "ignore", "caught");
 		$lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -414,7 +414,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
 	function testIndexLookaheadEqual() {
         $doc = "aaa<file>bcd</file>eee";
         
-		$handler = &new MockTestParserByteIndex($this);
+		$handler = new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
         $handler->setReturnValue("caught", true);
         
@@ -445,7 +445,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
             );
 		$handler->expectCallCount("caught", 5);
         
-		$lexer = &new Doku_Lexer($handler, "ignore");
+		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>(?=.*</file>)', "ignore", "caught");
 		$lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -459,7 +459,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
 	function testIndexLookaheadNotEqual() {
         $doc = "aaa<file>bcd</file>eee";
         
-		$handler = &new MockTestParserByteIndex($this);
+		$handler = new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
         $handler->setReturnValue("caught", true);
         
@@ -490,7 +490,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
             );
 		$handler->expectCallCount("caught", 5);
         
-		$lexer = &new Doku_Lexer($handler, "ignore");
+		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>(?!foo)', "ignore", "caught");
 		$lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -504,7 +504,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
 	function testIndexLookbehindEqual() {
         $doc = "aaa<file>bcd</file>eee";
         
-		$handler = &new MockTestParserByteIndex($this);
+		$handler = new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
         $handler->setReturnValue("caught", true);
         
@@ -535,7 +535,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
             );
 		$handler->expectCallCount("caught", 5);
         
-		$lexer = &new Doku_Lexer($handler, "ignore");
+		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>', "ignore", "caught");
 		$lexer->addExitPattern("(?<=d)</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -549,7 +549,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
 	function testIndexLookbehindNotEqual() {
         $doc = "aaa<file>bcd</file>eee";
         
-		$handler = &new MockTestParserByteIndex($this);
+		$handler = new MockTestParserByteIndex($this);
 		$handler->setReturnValue("ignore", true);
         $handler->setReturnValue("caught", true);
         
@@ -580,7 +580,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
             );
 		$handler->expectCallCount("caught", 5);
         
-		$lexer = &new Doku_Lexer($handler, "ignore");
+		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>', "ignore", "caught");
 		$lexer->addExitPattern("(?<!c)</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -599,7 +599,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
         $doc = "ALL FOOLS ARE FOO";
         $pattern = '\bFOO\b';
 
-        $handler = &new MockTestParserByteIndex($this);
+        $handler = new MockTestParserByteIndex($this);
         $handler->setReturnValue("ignore", true);
         $handler->setReturnValue("caught", true);
 
@@ -613,7 +613,7 @@ class TestOfLexerByteIndices extends UnitTestCase {
             );
         $handler->expectCallCount("caught", 1);
 
-        $lexer = &new Doku_Lexer($handler, "ignore");
+        $lexer = new Doku_Lexer($handler, "ignore");
         $lexer->addSpecialPattern($pattern,'ignore','caught');
 
         $this->assertTrue($lexer->parse($doc));

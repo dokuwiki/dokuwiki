@@ -313,7 +313,7 @@ function ft_snippet($id,$highlight){
         $len = utf8_strlen($text);
 
         // build a regexp from the phrases to highlight
-        $re1 = '('.join('|',array_map('preg_quote_cb',array_filter((array) $highlight))).')';
+        $re1 = '('.join('|',array_map('ft_snippet_re_preprocess', array_map('preg_quote_cb',array_filter((array) $highlight)))).')';
         $re2 = "$re1.{0,75}(?!\\1)$re1";
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
@@ -384,6 +384,24 @@ function ft_snippet($id,$highlight){
     unset($evt);
 
     return $evdata['snippet'];
+}
+
+/**
+ * Wraps a search term in regex boundary checks.
+ */
+function ft_snippet_re_preprocess($term) {
+    if(substr($term,0,2) == '\\*'){
+        $term = substr($term,2);
+    }else{
+        $term = '\b'.$term;
+    }
+
+    if(substr($term,-2,2) == '\\*'){
+        $term = substr($term,0,-2);
+    }else{
+        $term = $term.'\b';
+    }
+    return $term;
 }
 
 /**
@@ -678,7 +696,7 @@ function ft_queryParser($query){
                      break;
             case 'W+:':
                      $q['words'][]     = $body;
-                     $q['highlight'][] = str_replace('*', '', $body);
+                     $q['highlight'][] = $body;
                      $q['and'][]       = $body; // for backward compatibility
                      break;
             case 'P-:':
@@ -686,7 +704,7 @@ function ft_queryParser($query){
                      break;
             case 'P+:':
                      $q['phrases'][]   = $body;
-                     $q['highlight'][] = str_replace('*', '', $body);
+                     $q['highlight'][] = $body;
                      break;
         }
     }

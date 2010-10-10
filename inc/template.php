@@ -621,6 +621,10 @@ function tpl_get_action($type) {
                 return false;
             }
             break;
+        case 'subscribens':
+            // Superseeded by subscribe/subscription
+            return '';
+            break;
         default:
             return '[unknown %s type]';
             break;
@@ -664,7 +668,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
     // don't print the search form if search action has been disabled
     if (!actionOk('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search"><div class="no">';
+    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
     if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
@@ -1169,7 +1173,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     global $lang;
     global $auth;
 
-    echo '<form method="post" accept-charset="utf-8">'; #FIXME action
+    echo '<form action="' . DOKU_SCRIPT . '" method="post" accept-charset="utf-8">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';

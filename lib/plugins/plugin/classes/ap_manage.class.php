@@ -120,6 +120,7 @@ class ap_manage {
         @touch(reset($config_cascade['main']['local']));
 
         // update latest plugin date - FIXME
+        global $ID;
         send_redirect(wl($ID,array('do'=>'admin','page'=>'plugin'),true));
     }
 

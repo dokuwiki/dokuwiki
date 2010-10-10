@@ -1,0 +1,17 @@
+Hallo!
+
+Die Seiten im Namensraum @PAGE@ im @TITLE@ wurden geändert.
+Nachfolgenden findest du die geänderten Seiten:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Um die Benachrichtigungen zu deaktivieren, melde dich am Wiki unter 
+@DOKUWIKIURL@ an, gehe zur Seite 
+@SUBSCRIBE@
+und deaktiviere das Abonnement für die Seite und/oder den Namensraum.
+
+--
+Diese E-Mail wurde erzeugt vom DokuWiki unter
+@DOKUWIKIURL@

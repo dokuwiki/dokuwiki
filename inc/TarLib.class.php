@@ -399,7 +399,7 @@ class TarLib {
      *
      * This function attempts to get the list of the files stored in the
      * archive, and return either an error code or an indexed array of
-     * associative array containing for each file the following informations :
+     * associative array containing for each file the following information :
      *
      * checksum    Tar Checksum of the file
      * filename    The full name of the stored file (up to 100 c.)
@@ -455,82 +455,6 @@ class TarLib {
                 );
 
         return isset($ecodes[$i]) ? $ecodes[$i] : $ecodes[0];
-    }
-
-    /**
-     * Display informations about the MaxgTar Class.
-     *
-     * This function will display vaious informations about the server
-     * MaxgTar is running on.
-     *
-     * The optional parameter DispHeaders is used to generate a full page with
-     * HTML headers (TRUE by default) or just the table with the informations
-     * (FALSE).  Note that the HTML page generated is verified compatible XHTML
-     * 1.0, but not HTML 4.0 compatible.
-     */
-    function TarInfo($headers = true) {
-        if($headers) {
-            ?>
-                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-                <html>
-
-                <head>
-                <title>MaxgComp TAR</title>
-                <style type="text/css">
-                body{margin: 20px;}
-            body,td{font-size:10pt;font-family: arial;}
-            </style>
-                <meta name="Author" content="The Maxg Network, http://maxg.info" />
-                <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-                </head>
-
-                <body bgcolor="#EFEFEF">
-                <?php
-        }
-        ?>
-            <table border="0" align="center" width="500" cellspacing="4" cellpadding="5" style="border:1px dotted black;">
-            <tr>
-            <td align="center" bgcolor="#DFDFEF" colspan="3" style="font-size:15pt;font-color:#330000;border:1px solid black;">MaxgComp TAR</td>
-            </tr>
-            <tr>
-            <td colspan="2" bgcolor="#EFEFFE" style="border:1px solid black;">This software was created by the Maxg Network, <a href="http://maxg.info" target="_blank" style="text-decoration:none;color:#333366;">http://maxg.info</a>
-            <br />It is distributed under the GNU <a href="http://www.gnu.org/copyleft/lesser.html" target="_blank" style="text-decoration:none;color:#333366;">Lesser General Public License</a>
-            <br />You can find the documentation of this class <a href="http://docs.maxg.info" target="_blank" style="text-decoration:none;color:#333366;">here</a></td>
-            <td width="60" bgcolor="#EFEFFE" style="border:1px solid black;" align="center"><img src="http://img.maxg.info/menu/tar.gif" border="0" alt="MaxgComp TAR" /></td>
-            </tr>
-            <tr>
-            <td width="50%" align="center" style="border:1px solid black;" bgcolor="#DFDFEF">MaxgComp TAR version</td>
-            <td colspan="2" align="center" bgcolor="#EFEFFE" style="border:1px solid black;"><?=TARLIB_VERSION?></td>
-            </tr>
-            <tr>
-            <td width="50%" align="center" style="border:1px solid black;" bgcolor="#DFDFEF">ZLIB extensions</td>
-            <td colspan="2" align="center" bgcolor="#EFEFFE" style="border:1px solid black;"><?=(extension_loaded('zlib') ? '<b>Yes</b>' : '<i>No</i>')?></td>
-            </tr>
-            <tr>
-            <td width="50%" align="center" style="border:1px solid black;" bgcolor="#DFDFEF">BZ2 extensions</td>
-            <td colspan="2" align="center" bgcolor="#EFEFFE" style="border:1px solid black;"><?=(extension_loaded('bz2') ? '<b>Yes</b>' : '<i>No</i>')?></td>
-            </tr>
-            <tr>
-            <td width="50%" align="center" style="border:1px solid black;" bgcolor="#DFDFEF">Allow URL fopen</td>
-            <td colspan="2" align="center" bgcolor="#EFEFFE" style="border:1px solid black;"><?=(ini_get('allow_url_fopen') ? '<b>Yes</b>' : '<i>No</i>')?></td>
-            </tr>
-            <tr>
-            <td width="50%" align="center" style="border:1px solid black;" bgcolor="#DFDFEF">Time limit</td>
-            <td colspan="2" align="center" bgcolor="#EFEFFE" style="border:1px solid black;"><?=ini_get('max_execution_time')?></td>
-            </tr>
-            <tr>
-            <td width="50%" align="center" style="border:1px solid black;" bgcolor="#DFDFEF">PHP Version</td>
-            <td colspan="2" align="center" bgcolor="#EFEFFE" style="border:1px solid black;"><?=phpversion()?></td>
-            </tr>
-            <tr>
-            <td colspan="3" align="center" bgcolor="#EFEFFE" style="border:1px solid black;">
-            <i>Special thanks to &laquo; Vincent Blavet &raquo; for his PEAR::Archive_Tar class</i>
-            </td>
-            </tr>
-            </table>
-            <?php
-            if($headers) echo '</body></html>';
     }
 
     function _seek($p_flen, $tell=0) {

@@ -685,7 +685,8 @@ class FeedDate {
             $months = Array("Jan"=>1,"Feb"=>2,"Mar"=>3,"Apr"=>4,"May"=>5,"Jun"=>6,"Jul"=>7,"Aug"=>8,"Sep"=>9,"Oct"=>10,"Nov"=>11,"Dec"=>12);
             $this->unix = mktime($matches[4],$matches[5],$matches[6],$months[$matches[2]],$matches[1],$matches[3]);
             if (substr($matches[7],0,1)=='+' OR substr($matches[7],0,1)=='-') {
-                $tzOffset = (substr($matches[7],0,3) * 60 + substr($matches[7],-2)) * 60;
+                $tzOffset = (((int) substr($matches[7],0,3) * 60) +
+                             (int) substr($matches[7],-2)) * 60;
             } else {
                 if (strlen($matches[7])==1) {
                     $oneHour = 3600;
@@ -709,7 +710,8 @@ class FeedDate {
         if (preg_match("~(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})(.*)~",$dateString,$matches)) {
             $this->unix = mktime($matches[4],$matches[5],$matches[6],$matches[2],$matches[3],$matches[1]);
             if (substr($matches[7],0,1)=='+' OR substr($matches[7],0,1)=='-') {
-                $tzOffset = (substr($matches[7],0,3) * 60 + substr($matches[7],-2)) * 60;
+                $tzOffset = (((int) substr($matches[7],0,3) * 60) +
+                             (int) substr($matches[7],-2)) * 60;
             } else {
                 if ($matches[7]=="Z") {
                     $tzOffset = 0;
