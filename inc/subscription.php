@@ -251,7 +251,7 @@ function subscription_addresslist(&$data){
     $self = $data['self'];
     $addresslist = $data['addresslist'];
 
-    if (!$conf['subscribers']) {
+    if (!$conf['subscribers'] || $auth === null) {
         return '';
     }
     $pres = array('style' => 'every', 'escaped' => true);
