@@ -239,9 +239,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
         $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
         ) {}
 
-    function table_open($maxcols = NULL, $numrows = NULL, $pos){}
+    function table_open($maxcols = null, $numrows = null, $pos = null){}
 
-    function table_close($pos){}
+    function table_close($pos = null){}
 
     function tablerow_open(){}
 
