@@ -298,6 +298,8 @@ class Doku_Parser_Mode_hr extends Doku_Parser_Mode {
 }
 
 //-------------------------------------------------------------------
+// sets the markup for bold (=strong), italic (=emphasis), underline,
+// etc.
 class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
     var $type;
 
