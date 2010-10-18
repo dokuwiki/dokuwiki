@@ -44,9 +44,26 @@ function subscription_filename($id) {
  *
  * @author Adrian Lang <lang@cosmocode.de>
  */
+function subscription_lock_filename ($id){
+    global $conf;
+    return $conf['lockdir'].'/_subscr_' . $id . '.lock';
+}
+
 function subscription_lock($id) {
-    $lockf = subscription_filename($id) . '.lock';
-    return !file_exists($lockf) && touch($lockf);
+    // FIXME merge this with the indexer lock generation, abstract out
+    global $conf;
+    $lock = subscription_lock_filename($id);
+    while(!@mkdir($lock,$conf['dmode'])){
+        usleep(50);
+        if(time()-@filemtime($lock) > 60*5){
+            // looks like a stale lock - remove it
+            @rmdir($lock);
+        }else{
+            return false;
+        }
+    }
+    if($conf['dperm']) chmod($lock, $conf['dperm']);
+    return true;
 }
 
 /**
@@ -58,8 +75,8 @@ function subscription_lock($id) {
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function subscription_unlock($id) {
-    $lockf = subscription_filename($id) . '.lock';
-    return file_exists($lockf) && unlink($lockf);
+    $lockf = subscription_lock_filename($id);
+    return @rmdir($lockf);
 }
 
 /**
