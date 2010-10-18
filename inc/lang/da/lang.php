@@ -14,7 +14,7 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  */
-$lang['encoding']              = 'ISO 8859-1 ';
+$lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '„';
 $lang['doublequoteclosing']    = '“';

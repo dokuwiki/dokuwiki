@@ -19,7 +19,7 @@
  * @author Sergio Motta sergio@cisne.com.br
  * @author Isaias Masiero Filho <masiero@masiero.org>
  */
-$lang['encoding']              = 'utf-8<';
+$lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
