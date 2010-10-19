@@ -1,0 +1,17 @@
+Olá!
+
+Páginas no espaço de nome  @PAGE@ da wiki @TITLE@ mudaram.
+Eis as páginas alteradas:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Para cancelar as notificações de páginas, inicie sessão na wiki em 
+@DOKUWIKIURL@, visite
+@SUBSCRIBE@
+e des-subscreva às alterações da página e/ou espaço de nome.
+
+--
+Este email foi gerado por DokuWiki em
+@DOKUWIKIURL@

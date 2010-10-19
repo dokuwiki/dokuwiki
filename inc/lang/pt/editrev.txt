@@ -1,5 +1,1 @@
-**Atenção**: Carregou uma revisão antiga do documento!
-
-Se gravar esta revisão irá criar uma nova versão actual do documento com este conteúdo, que substituirá a versão actual.
-
-----
+**Carregou uma revisão antiga do documento!** Se a gravar irá criar uma nova versão do documento com este conteúdo, que substituirá a versão actual.

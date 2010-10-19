@@ -1,7 +1,3 @@
 ====== Documento Inexistente ======
 
-Acaba de tentar aceder a um documento que ainda não existe.
-
-Pode criar o conteúdo deste novo documento após clicar no botão <Criar página>.
-
-----
+Seguiu uma ligação para um documento que ainda não existe. Pode criá-lo usando o botão "Criar página", se as permissões lho permitirem.

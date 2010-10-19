@@ -1,7 +1,3 @@
 ====== Previsão ======
 
-Esta é a previsão de como irá ficar o conteúdo do documento se clicar no botão <Gravar>.
-
-**Atenção**: O documento ainda não se encontra gravado.\\ É necessário clicar no botão <Gravar> para efectivar as modificações que tenha realizado.
-
-----
+Esta é uma previsão de como ficará o conteúdo. Lembre-se: ainda **não está gravado**!
