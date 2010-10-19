@@ -9,6 +9,7 @@
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
+ * @author lainme <lainme993@gmail.com>
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';

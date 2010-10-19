@@ -9,6 +9,7 @@
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
+ * @author lainme <lainme993@gmail.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -91,12 +92,14 @@ $lang['sneaky_index']          = '默认情况下，DokuWiki 在索引页会显�
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
 $lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
 $lang['xmlrpc']                = '启用/禁用 XML-RPC 交互界面。';
+$lang['xmlrpcuser']            = '将 XML-RPC 连接限制在用逗号分隔的组或用户中。留空对所有人开启连接权限。';
 $lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 splitbrain.org。';
 $lang['userewrite']            = '使用更整洁的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
 $lang['usedraft']              = '编辑时自动保存一份草稿';
 $lang['sepchar']               = '页面名称中的单词分隔符';
 $lang['canonical']             = '使用完全标准的 URL';
+$lang['fnencode']              = '非 ASCII 文件名的编码方法。';
 $lang['autoplural']            = '在链接中检查多种格式';
 $lang['compression']           = 'attic 文件的压缩方式';
 $lang['cachetime']             = '缓存的最长时间（秒）';
@@ -110,6 +113,8 @@ $lang['gdlib']                 = 'GD 库版本';
 $lang['im_convert']            = 'ImageMagick 转换工具的路径';
 $lang['jpg_quality']           = 'JPG 压缩质量（0-100）';
 $lang['subscribers']           = '启用页面订阅支持';
+$lang['subscribe_time']        = '订阅列表和摘要发送的时间间隔（秒）；这应当小于指定的最近更改保留时间（recent_days）。
+';
 $lang['compress']              = '使 CSS 和 javascript 输出更紧密';
 $lang['hidepages']             = '隐藏匹配的界面（正则表达式）';
 $lang['send404']               = '发送 "HTTP 404/页面没有找到" 错误信息给不存在的页面';
@@ -136,6 +141,7 @@ $lang['proxy____port']         = '代理服务器的端口';
 $lang['proxy____user']         = '代理服务器的用户名';
 $lang['proxy____pass']         = '代理服务器的密码';
 $lang['proxy____ssl']          = '使用 SSL 连接到代理服务器';
+$lang['proxy____except']       = '用来匹配代理应跳过的地址的正则表达式。';
 $lang['safemodehack']          = '启用 Safemode Hack';
 $lang['ftp____host']           = 'Safemode Hack 的 FTP 服务器';
 $lang['ftp____port']           = 'Safemode Hack 的 FTP 端口';
@@ -183,3 +189,4 @@ $lang['useheading_o_0']        = '从不';
 $lang['useheading_o_navigation'] = '仅限导航';
 $lang['useheading_o_content']  = '仅限维基内容内';
 $lang['useheading_o_1']        = '一直';
+$lang['readdircache']          = 'readdir缓存的最长寿命（秒）';
