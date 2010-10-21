@@ -26,6 +26,7 @@ function html_wikilink($id,$name=null,$search=''){
 /**
  * Helps building long attribute lists
  *
+ * @deprecated Use buildAttributes instead
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_attbuild($attributes){

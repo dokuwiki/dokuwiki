@@ -252,7 +252,7 @@ class Doku_Form {
         global $lang;
         $form = '';
         $this->params['accept-charset'] = $lang['encoding'];
-        $form .= '<form ' . html_attbuild($this->params) . '><div class="no">' . DOKU_LF;
+        $form .= '<form ' . buildAttributes($this->params,true) . '><div class="no">' . DOKU_LF;
         if (!empty($this->_hidden)) {
             foreach ($this->_hidden as $name=>$value)
                 $form .= form_hidden(array('name'=>$name, 'value'=>$value));
@@ -597,7 +597,7 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_tag($attrs) {
-    return '<'.$attrs['_tag'].' '.buildAttributes($attrs).'/>';
+    return '<'.$attrs['_tag'].' '.buildAttributes($attrs,true).'/>';
 }
 
 /**
