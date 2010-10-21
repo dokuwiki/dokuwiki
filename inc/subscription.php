@@ -175,6 +175,10 @@ function subscription_find($page, $pre) {
                 // This is an old subscription file.
                 $subscription = trim($subscription) . " every\n";
             }
+
+            list($user, $rest) = explode(' ', $subscription, 2);
+            $subscription = rawurldecode($user) . " " . $rest;
+
             if (preg_match(subscription_regex($pre), $subscription,
                            $line_matches) === 0) {
                 continue;
