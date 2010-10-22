@@ -115,7 +115,7 @@ function subscription_set($user, $page, $style, $data = null,
 
         // io_deleteFromFile does not return false if no line matched.
         return io_deleteFromFile($file,
-                                 subscription_regex(array('user' => $user)),
+                                 subscription_regex(array('user' => auth_nameencode($user))),
                                  true);
     }
 
