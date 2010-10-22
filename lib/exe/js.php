@@ -51,7 +51,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
                 DOKU_INC.'lib/scripts/subscriptions.js',
-                DOKU_INC.'lib/scripts/hotkeys.js',
+# disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_TPLINC.'script.js',
             );
 
