@@ -270,7 +270,7 @@ $lang['mu_fail']               = 'epäonnistui';
 $lang['mu_authfail']           = 'istunto on vanhentunut';
 $lang['mu_progress']           = '@PCT@% lähetetty';
 $lang['mu_filetypes']          = 'Sallitut tyypit';
-$lang['mu_info']               = 'tiedstoa ladattu.';
+$lang['mu_info']               = 'tiedostoa ladattu.';
 $lang['mu_lasterr']            = 'Edellinen virhe:';
 $lang['recent_global']         = 'Seuraat tällä hetkellä muutoksia nimiavaruuden <b>%s</b> sisällä. Voit myös <a href="%s">katsoa muutoksia koko wikissä</a>';
 $lang['years']                 = '%d vuotta sitten';

@@ -843,7 +843,7 @@ function parsePageTemplate(&$data) {
 
     // replace placeholders
     $file = noNS($id);
-    $page = strtr($file,'_',' ');
+    $page = strtr($file, $conf['sepchar'], ' ');
 
     $tpl = str_replace(array(
                 '@ID@',

@@ -11,4 +11,5 @@ Utilizador : @USER@
 
 ----
 
-Esta mensagem foi gerada pelo DokuWiki em @DOKUWIKIURL@
+Esta mensagem foi gerada pelo DokuWiki em
+@DOKUWIKIURL@

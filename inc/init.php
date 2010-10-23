@@ -200,10 +200,6 @@ init_creationmodes();
 init_paths();
 init_files();
 
-// automatic upgrade to script versions of certain files
-scriptify(DOKU_CONF.'users.auth');
-scriptify(DOKU_CONF.'acl.auth');
-
 // setup plugin controller class (can be overwritten in preload.php)
 $plugin_types = array('admin','syntax','action','renderer', 'helper');
 global $plugin_controller_class, $plugin_controller;
@@ -460,43 +456,6 @@ function is_ssl(){
     }else{
         return true;
     }
-}
-
-/**
- * Append a PHP extension to a given file and adds an exit call
- *
- * This is used to migrate some old configfiles. An added PHP extension
- * ensures the contents are not shown to webusers even if .htaccess files
- * do not work
- *
- * @author Jan Decaluwe <jan@jandecaluwe.com>
- */
-function scriptify($file) {
-    // checks
-    if (!is_readable($file)) {
-        return;
-    }
-    $fn = $file.'.php';
-    if (@file_exists($fn)) {
-        return;
-    }
-    $fh = fopen($fn, 'w');
-    if (!$fh) {
-        nice_die($fn.' is not writable. Check your permission settings!');
-    }
-    // write php exit hack first
-    fwrite($fh, "# $fn\n");
-    fwrite($fh, '# <?php exit()?>'."\n");
-    fwrite($fh, "# Don't modify the lines above\n");
-    fwrite($fh, "#\n");
-    // copy existing lines
-    $lines = file($file);
-    foreach ($lines as $line){
-        fwrite($fh, $line);
-    }
-    fclose($fh);
-    //try to rename the old file
-    io_rename($file,"$file.old");
 }
 
 /**

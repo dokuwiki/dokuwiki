@@ -9,6 +9,7 @@
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesHi.php?view=co
  * @author Abhinav Tyagi <abhinavtyagi11@gmail.com>
+ * @author yndesai@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -41,6 +42,8 @@ $lang['btn_delete']            = 'मिटाना';
 $lang['btn_back']              = 'पीछे';
 $lang['btn_backlink']          = 'पिछली कड़ियाँ';
 $lang['btn_backtomedia']       = 'मीडिया फाइल चयन पर पीछे जायें';
+$lang['btn_subscribe']         = 'सदस्यता प्रबंधन';
+$lang['btn_profile']           = 'परिचय संपादित करें';
 $lang['user']                  = 'उपयोगकर्ता का नाम';
 $lang['pass']                  = 'गुप्त शब्द';
 $lang['newpass']               = 'नव गुप्त शब्द';
@@ -64,10 +67,10 @@ $lang['txt_filename']          = 'के रूप में अपलोड क
 $lang['txt_overwrt']           = 'अधिलेखित उपस्थित फ़ाइल';
 $lang['lockedby']              = 'इस समय तक बंद';
 $lang['lockexpire']            = 'बंद समाप्त होगा';
+$lang['js']['hidedetails']     = 'विवरण छिपाएँ';
 $lang['nothingfound']          = 'कुच्छ नहीं मिला |';
 $lang['uploadexist']           = 'फ़ाइल पहले से उपस्थित है. कुछ भी नहीं किया |';
 $lang['mediafiles']            = 'उपलब्ध फाइलों में';
-$lang['js']['hidedetails']     = 'विवरण छिपाएँ';
 $lang['mediaview']             = 'मूल फ़ाइल देखें';
 $lang['reference']             = 'संदर्भ के लिए';
 $lang['ref_hidden']            = 'कुच्छ संदर्भ उन पन्नो पर हैं जिनको पड़ने की आपको अनुमति नहीं है|';

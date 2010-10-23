@@ -222,12 +222,12 @@ class auth_ldap extends auth_basic {
             $base   = $this->_makeFilter($this->cnf['grouptree'], $user_result);
             $filter = $this->_makeFilter($this->cnf['groupfilter'], $user_result);
             $sr = $this->_ldapsearch($this->con, $base, $filter, $this->cnf['groupscope'], array($this->cnf['groupkey']));
+            if($this->cnf['debug']){
+                msg('LDAP group search: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+                msg('LDAP search at: '.htmlspecialchars($base.' '.$filter),0,__LINE__,__FILE__);
+            }
             if(!$sr){
                 msg("LDAP: Reading group memberships failed",-1);
-                if($this->cnf['debug']){
-                    msg('LDAP group search: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
-                    msg('LDAP search at: '.htmlspecialchars($base.' '.$filter),0,__LINE__,__FILE__);
-                }
                 return false;
             }
             $result = ldap_get_entries($this->con, $sr);

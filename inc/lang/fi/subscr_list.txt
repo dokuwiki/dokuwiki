@@ -7,7 +7,7 @@ Tässä ovat muuttuneet sivut:
 @DIFF@
 --------------------------------------------------------
 
-Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
+Peruuttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
 @DOKUWIKIURL@ , jonka jälkeen katso
 @SUBSCRIBE@
 ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.

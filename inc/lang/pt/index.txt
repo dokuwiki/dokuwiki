@@ -1,6 +1,3 @@
 ====== Índice ======
 
-Este índice mostra todos os documentos disponíveis neste site Wiki, [[doku>namespaces | agrupados]] por assunto.
-
-----
-
+Este índice mostra todas as páginas disponíveis, agrupadas por [[doku>namespaces|espaço de nome]].

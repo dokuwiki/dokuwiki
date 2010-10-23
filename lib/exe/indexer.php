@@ -163,10 +163,6 @@ function runIndexer(){
     }
     if($conf['dperm']) chmod($lock, $conf['dperm']);
 
-    // upgrade to version 2
-    if (!@file_exists($conf['indexdir'].'/pageword.idx'))
-        idx_upgradePageWords();
-
     // do the work
     idx_addPage($ID);
 
