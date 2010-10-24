@@ -295,7 +295,7 @@ function store_data($d){
     $d['policy'] = (int) $d['policy'];
 
     // create local.php
-    $now    = date('r');
+    $now    = gmdate('r');
     $output = <<<EOT
 <?php
 /**
