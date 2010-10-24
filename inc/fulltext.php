@@ -229,6 +229,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 }
 
 function _ft_pageLookup(&$data){
+    global $conf;
     // split out original parameters
     $id = $data['id'];
     if (preg_match('/(?:^| )@(\w+)/', $id, $matches)) {
