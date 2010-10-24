@@ -241,6 +241,11 @@ function _ft_pageLookup(&$data){
 
     $pages  = array_map('rtrim', idx_getIndex('page', ''));
     $titles = array_map('rtrim', idx_getIndex('title', ''));
+    // check for corrupt title index #FS2076
+    if(count($pages) != count($titles)){
+        $titles = array_fill(0,count($pages),'');
+        @unlink($conf['indexdir'].'/title.idx'); // will be rebuilt in inc/init.php
+    }
     $pages = array_combine($pages, $titles);
 
     $cleaned = cleanID($id);
