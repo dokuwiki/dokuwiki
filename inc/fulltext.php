@@ -276,7 +276,7 @@ function _ft_pageLookup(&$data){
         }
     }
 
-    uasort($pages,'ft_pagesorter');
+    uksort($pages,'ft_pagesorter');
     return $pages;
 }
 
