@@ -26,7 +26,8 @@ if(!$defer){
 $ID = cleanID($_REQUEST['id']);
 
 // Catch any possible output (e.g. errors)
-if(!isset($_REQUEST['debug'])) ob_start();
+$output = isset($_REQUEST['debug']) && $conf['allowdebug'];
+if(!$output) ob_start();
 
 // run one of the jobs
 $tmp = array(); // No event data
@@ -42,7 +43,7 @@ if ($evt->advise_before()) {
 }
 if($defer) sendGIF();
 
-if(!isset($_REQUEST['debug'])) ob_end_clean();
+if(!$output) ob_end_clean();
 exit;
 
 // --------------------------------------------------------------------
