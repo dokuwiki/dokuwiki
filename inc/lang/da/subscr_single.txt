@@ -1,0 +1,23 @@
+Hej!
+
+Siden @PAGE@ i wikien @TITLE@ er blevet ændret.
+Her er ændringerne:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Dato : @DATE@
+Bruger : @USER@
+Summering: @SUMMARY@
+Gammel Revision: @OLDPAGE@
+Ny Revision: @NEWPAGE@
+
+For at slå side notifikationer fra, skal du logge ind på 
+@DOKUWIKIURL@ og besøge
+@NEWPAGE@
+og slå abonnoment for side / navnerum ændringer fra.
+
+--
+Denne email blev generet af DokuWiki på
+@DOKUWIKIURL@

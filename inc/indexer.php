@@ -701,49 +701,4 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
     return $words;
 }
 
-/**
- * Create a pagewords index from the existing index.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function idx_upgradePageWords(){
-    global $conf;
-    $page_idx = idx_getIndex('page','');
-    if (empty($page_idx)) return;
-    $pagewords = array();
-    $len = count($page_idx);
-    for ($n=0;$n<$len;$n++){
-        $pagewords[] = array();
-    }
-    unset($page_idx);
-
-    $n=0;
-    foreach (idx_indexLengths($n) as $wlen) {
-        $lines = idx_getIndex('i',$wlen);
-        $len = count($lines);
-        for ($wid=0;$wid<$len;$wid++) {
-            $wkey = "$wlen*$wid";
-            foreach (explode(':',trim($lines[$wid])) as $part) {
-                if($part == '') continue;
-                list($doc,$cnt) = explode('*',$part);
-                $pagewords[(int)$doc][] = $wkey;
-            }
-        }
-    }
-
-    $fn = $conf['indexdir'].'/pageword';
-    $fh = @fopen($fn.'.tmp','w');
-    if (!$fh){
-        trigger_error("Failed to write word index", E_USER_ERROR);
-        return false;
-    }
-    foreach ($pagewords as $line){
-        fwrite($fh, join(':',$line)."\n");
-    }
-    fclose($fh);
-    if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
-    io_rename($fn.'.tmp', $fn.'.idx');
-    return true;
-}
-
 //Setup VIM: ex: et ts=4 enc=utf-8 :

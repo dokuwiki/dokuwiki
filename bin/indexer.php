@@ -71,13 +71,6 @@ function _usage() {
 function _update(){
     global $conf;
 
-    // upgrade to version 2
-    if (!@file_exists($conf['indexdir'].'/pageword.idx')){
-        _lock();
-        idx_upgradePageWords();
-        _unlock();
-    }
-
     $data = array();
     _quietecho("Searching pages... ");
     search($data,$conf['datadir'],'search_allpages',array('skipacl' => true));

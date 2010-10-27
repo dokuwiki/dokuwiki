@@ -121,7 +121,7 @@ class ap_manage {
 
         // update latest plugin date - FIXME
         global $ID;
-        send_redirect(wl($ID,array('do'=>'admin','page'=>'plugin'),true));
+        send_redirect(wl($ID,array('do'=>'admin','page'=>'plugin'),true, '&'));
     }
 
     /**

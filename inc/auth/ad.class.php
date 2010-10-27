@@ -26,7 +26,7 @@
  *   $conf['auth']['ad']['use_ssl']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
  *
- *   // get additional informations to the userinfo array
+ *   // get additional information to the userinfo array
  *   // add a list of comma separated ldap contact fields.
  *   $conf['auth']['ad']['additional'] = 'field1,field2';
  *
@@ -155,7 +155,7 @@ class auth_ad extends auth_basic {
         $info['uid']  = $result[0]['samaccountname'][0];
         $info['dn']   = $result[0]['dn'];
 
-        // additional informations
+        // additional information
         foreach ($this->cnf['additional'] as $field) {
             if (isset($result[0][strtolower($field)])) {
                 $info[$field] = $result[0][strtolower($field)][0];

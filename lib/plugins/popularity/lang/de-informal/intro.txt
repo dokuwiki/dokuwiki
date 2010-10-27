@@ -2,7 +2,7 @@
 
 Dieses Werkzeug sammelt anonym Daten über dein Wiki und erlaubt es dir diese an die Entwickler von DokuWiki zu senden. Dies hilft ihnen zu verstehen, wie DokuWiki von den Nutzern verwendet wird und stellt somit sicher, dass Entscheidungen für zukünftige Entwicklungen mit reellen Nutzungsstatistiken belegbar sind.
 
-Du wirst angehalten diesen Schritt von Zeit zu Zeit erneut zu machen um die Entwickler zu informieren wenn dein Wiki wächst. Deine aktuelleren Datensätze werden anhand einer anonymen Identifikationsnummer zugeordnet.
+Bitte wiederhole diesen Schritt von Zeit zu Zeit, um die Entwickler zu informieren wenn dein Wiki wächst. Deine aktuelleren Datensätze werden anhand einer anonymen Identifikationsnummer zugeordnet.
 
 Die gesammelten Daten enthalten Informationen über deine Version von DokuWiki, die Anzahl und Größe der Seiten und Dateien, installierte Erweiterungen und Informationen über deine PHP-Version.
 

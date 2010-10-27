@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Pasha L. Topchiyev <pasha@itopchiyev.com>
  */
-$lang['encoding']              = ' utf-8';
+$lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';

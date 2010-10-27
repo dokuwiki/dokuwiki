@@ -46,7 +46,7 @@ $dokuwiki_hash = array(
     '2008-05-04'   => '1e5c42eac3219d9e21927c39e3240aad',
     '2009-02-14'   => 'ec8c04210732a14fdfce0f7f6eead865',
     '2009-12-25'   => '993c4b2b385643efe5abf8e7010e11f4',
-    '2010-10-07rc' => '7921d48195f4db21b8ead6d9bea801b8'
+    '2010-10-27rc' => '7921d48195f4db21b8ead6d9bea801b8'
 );
 
 
@@ -295,7 +295,7 @@ function store_data($d){
     $d['policy'] = (int) $d['policy'];
 
     // create local.php
-    $now    = date('r');
+    $now    = gmdate('r');
     $output = <<<EOT
 <?php
 /**

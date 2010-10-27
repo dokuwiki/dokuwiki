@@ -1,0 +1,14 @@
+Documentum nouatum est. Hae mutatione sunt:
+
+Documentum : @MEDIA@
+Dies : @DATE@
+Machina interretis : @BROWSER@
+IP-Numerus : @IPADDRESS@
+Hospes situs : @HOSTNAME@
+Pondus : @SIZE@
+MIME Genus : @MIME@
+Sodalis : @USER@
+
+-- 
+Hic cursu generatus a(b)
+@DOKUWIKIURL@

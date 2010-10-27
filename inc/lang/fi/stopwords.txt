@@ -1,7 +1,7 @@
 # Tämä on lista sanoista, jotka indeksoija ohittaa. Yksi sana riviä kohti
 # Kun muokkaat sivua, varmista että käytät UNIX rivinvaihtoa (yksi newline)
 # Ei tarvitse lisätä alle kolmen merkin sanoja. NE ohitetaan automaattisesti.
-# Jos wikissäsin muita kieliä, lisää sanoja listaan esim sivulta http://www.ranks.nl/stopwords/
+# Jos wikissäsin muita kieliä, lisää sanoja listaan esimerkiksi sivulta http://www.ranks.nl/stopwords/
 www
 eli
 tai

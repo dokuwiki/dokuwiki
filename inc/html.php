@@ -319,13 +319,6 @@ function html_search(){
     print p_locale_xhtml('searchpage');
     flush();
 
-    //check if search is restricted to namespace
-    if(preg_match('/@([^@]*)/',$QUERY,$match)) {
-        $id = cleanID($match[1]);
-    } else {
-        $id = cleanID($QUERY);
-    }
-
     //show progressbar
     print '<div class="centeralign" id="dw__loading">'.NL;
     print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
@@ -337,7 +330,7 @@ function html_search(){
     //do quick pagesearch
     $data = array();
 
-    if($id) $data = ft_pageLookup($id,true,useHeading('navigation'));
+    $data = ft_pageLookup($QUERY,true,useHeading('navigation'));
     if(count($data)){
         print '<div class="search_quickresult">';
         print '<h3>'.$lang['quickhits'].':</h3>';

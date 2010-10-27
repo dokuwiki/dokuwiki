@@ -1,7 +1,3 @@
-====== Inscrição ======
+====== Inscrição como novo utilizador ======
 
-Por favor, preencha todos os campos com a informação correspondente, para poder criar uma nova conta neste SiteWiki.
-
-**Nota**: O nome de utilizador deve cumprir as mesmas regras de nomeação de documentos Wiki válidos.\\ **Atenção**: Verifique que o endereço de correio electrónico que preencheu é válido, pois a sua senha será enviada por e-mail.
-
-----
+Preencha toda a informação abaixo para criar uma nova conta nesta wiki. Assegure que providencia um **endereço de email válido** - se não lhe for pedido que introduza uma nova palavra chave aqui, ser-lhe-á enviada uma para esse endereço. O nome de utilizador deve ser um [[doku>pagename|nome de página]] válido.

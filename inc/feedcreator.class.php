@@ -50,11 +50,11 @@
  *  added a switch to select an external stylesheet (thanks to Pascal Van Hecke)
  *  changed default content-type to application/xml
  *  added character encoding setting
- *  fixed numerous smaller bugs (thanks to Sören Fuhrmann of golem.de)
+ *  fixed numerous smaller bugs (thanks to SÃ¶ren Fuhrmann of golem.de)
  *  improved changing ATOM versions handling (thanks to August Trometer)
- *  improved the UniversalFeedCreator's useCached method (thanks to Sören Fuhrmann of golem.de)
- *  added charset output in HTTP headers (thanks to Sören Fuhrmann of golem.de)
- *  added Slashdot namespace to RSS 1.0 (thanks to Sören Fuhrmann of golem.de)
+ *  improved the UniversalFeedCreator's useCached method (thanks to SÃ¶ren Fuhrmann of golem.de)
+ *  added charset output in HTTP headers (thanks to SÃ¶ren Fuhrmann of golem.de)
+ *  added Slashdot namespace to RSS 1.0 (thanks to SÃ¶ren Fuhrmann of golem.de)
  *
  * See www.bitfolge.de for additional changelog info
  */

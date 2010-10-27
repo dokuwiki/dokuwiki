@@ -119,7 +119,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $id = pathID($file);
+    $id = pathID($file,($type == 'd'));
 
     if($type=='d' && $conf['sneaky_index'] && auth_quickaclcheck($id.':') < AUTH_READ){
         return false;
@@ -550,7 +550,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $return = true;
 
     // get ID and check if it is a valid one
-    $item['id'] = pathID($file,$opts['keeptxt']);
+    $item['id'] = pathID($file,($type == 'd' || $opts['keeptxt']));
     if($item['id'] != cleanID($item['id'])){
         if($opts['showmsg'])
             msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);

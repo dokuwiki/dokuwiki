@@ -26,7 +26,8 @@ if(!$defer){
 $ID = cleanID($_REQUEST['id']);
 
 // Catch any possible output (e.g. errors)
-if(!isset($_REQUEST['debug'])) ob_start();
+$output = isset($_REQUEST['debug']) && $conf['allowdebug'];
+if(!$output) ob_start();
 
 // run one of the jobs
 $tmp = array(); // No event data
@@ -42,7 +43,7 @@ if ($evt->advise_before()) {
 }
 if($defer) sendGIF();
 
-if(!isset($_REQUEST['debug'])) ob_end_clean();
+if(!$output) ob_end_clean();
 exit;
 
 // --------------------------------------------------------------------
@@ -162,10 +163,6 @@ function runIndexer(){
         }
     }
     if($conf['dperm']) chmod($lock, $conf['dperm']);
-
-    // upgrade to version 2
-    if (!@file_exists($conf['indexdir'].'/pageword.idx'))
-        idx_upgradePageWords();
 
     // do the work
     idx_addPage($ID);
