@@ -110,6 +110,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         ptln('<div class="success">'.$this->getLang('updated').'</div>');
 
       ptln('<form action="'.script().'" method="post">');
+      ptln('<input type="hidden" name="id" value="'.$ID.'" />');
       formSecurityToken();
       $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
