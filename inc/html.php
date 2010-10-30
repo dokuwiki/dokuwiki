@@ -581,16 +581,14 @@ function html_recent($first=0){
     global $conf;
     global $lang;
     global $ID;
-
-    $ns=((integer)$conf['recentrel']!=0)? $ID: '';
     /* we need to get one additionally log entry to be able to
      * decide if this is the last page or is there another one.
      * This is the cheapest solution to get this information.
      */
-    $recents = getRecents($first,$conf['recent'] + 1,getNS($ns));
+    $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
     if(count($recents) == 0 && $first != 0){
         $first=0;
-        $recents = getRecents($first,$conf['recent'] + 1,getNS($ns));
+        $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
     }
     $hasNext = false;
     if (count($recents)>$conf['recent']) {
@@ -600,16 +598,13 @@ function html_recent($first=0){
 
     print p_locale_xhtml('recent');
 
-    if ($conf['recentrel']) {
-        $heading = ($conf['useheading'])? p_get_first_heading(getNS($ns), false): getNS($ns);
-        if ($heading == '') $heading = getNS($ns);
-        print '<div class="level1"><p>' . sprintf($lang['recent_global'], $heading, wl('', 'do=recent')) . '</p></div>';
-    }
+    if (getNS($ID) != '')
+        print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
 
     $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET'));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
-    $form->addHidden('id', $ns);
+    $form->addHidden('id', $ID);
     $form->addElement(form_makeOpenTag('ul'));
 
     foreach($recents as $recent){

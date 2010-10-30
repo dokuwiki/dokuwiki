@@ -28,7 +28,6 @@ $conf['title']       = 'DokuWiki';        //what to show in the title
 $conf['template']    = 'default';         //see lib/tpl directory
 $conf['license']     = 'cc-by-nc-sa';     //see conf/license.php
 $conf['fullpath']    = 0;                 //show full path of the document or relative to datadir only? 0|1
-$conf['recentrel']   = 1;                 //show recent changes relative to current namespace (1) or global (0)
 $conf['recent']      = 20;                //how many entries to show in recent
 $conf['breadcrumbs'] = 10;                //how many recent visited pages to show
 $conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
