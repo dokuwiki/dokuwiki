@@ -1506,12 +1506,13 @@ function html_resendpwd() {
 function html_TOC($toc){
     if(!count($toc)) return '';
     global $lang;
+    global $conf;
     $out  = '<!-- TOC START -->'.DOKU_LF;
     $out .= '<div class="toc">'.DOKU_LF;
     $out .= '<div class="tocheader toctoggle" id="toc__header">';
     $out .= $lang['toc'];
     $out .= '</div>'.DOKU_LF;
-    $out .= '<div id="toc__inside">'.DOKU_LF;
+    $out .= ($conf['toctoggled'])? '<div id="toc__inside" style="display:none">'.DOKU_LF : '<div id="toc__inside">'.DOKU_LF;
     $out .= html_buildlist($toc,'toc','html_list_toc');
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
