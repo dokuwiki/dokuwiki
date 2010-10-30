@@ -371,7 +371,9 @@ function resolve_id($ns,$id,$clean=true){
 
     // if the id starts with a dot we need to handle the
     // relative stuff
-    if($id{0} == '.'){
+    $p = explode(':',$id);
+    $n = explode(':',$ns);
+    if(($id{0}=='.' || $id{0}!=':') && $p[0]!=$n[0]){
         // normalize initial dots without a colon
         $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
         // prepend the current namespace
