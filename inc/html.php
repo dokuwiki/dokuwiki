@@ -602,8 +602,8 @@ function html_recent($first=0){
 
     if ($conf['recentrel']) {
         $heading = ($conf['useheading'])? p_get_first_heading(getNS($ns), false): getNS($ns);
-        if ($heading == '') $heading = getNS($ns);
-        print '<div class="level1"><p>' . sprintf($lang['recent_global'], $heading, wl('', 'do=recent')) . '</p></div>';
+        if ($heading != '') 
+            print '<div class="level1"><p>' . sprintf($lang['recent_global'], $heading, wl('', 'do=recent')) . '</p></div>';
     }
 
     $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET'));
