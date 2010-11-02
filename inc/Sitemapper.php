@@ -54,7 +54,9 @@ class Sitemapper {
             //skip hidden, non existing and restricted files
             if(isHiddenPage($id)) continue;
             if(auth_aclcheck($id,'','') < AUTH_READ) continue;
-            $items[] = SitemapItem::createFromID($id);
+            $item = SitemapItem::createFromID($id);
+            if ($item !== NULL)
+                $items[] = $item;
         }
 
         $eventData = array('items' => &$items, 'sitemap' => &$sitemap);
