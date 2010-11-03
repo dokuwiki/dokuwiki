@@ -387,7 +387,26 @@ class auth_ldap extends auth_basic {
         $this->bound = 0;
 
         $port = ($this->cnf['port']) ? $this->cnf['port'] : 389;
-        $this->con = @ldap_connect($this->cnf['server'],$port);
+        // support multiple ldap servers
+        // separate servers by space, like in Apache module:
+        // http://httpd.apache.org/docs/2.0/mod/mod_auth_ldap.html#authldapurl
+        $url = parse_url($this->cnf['server']);
+        // for plain hostname, emulate parse_url result
+        if (empty($url['host'])) {
+            $url = array(
+                'scheme' => 'ldap',
+                'host' => $url['path'],
+                'port' => $port,
+            );
+        }
+        foreach (explode(' ', $url['host']) as $host) {
+            $server = $url['scheme'].'://'.$host.':'.$url['port'];
+            $this->con = @ldap_connect($server,$port);
+            if ($this->con) {
+                break;
+            }
+        }
+
         if(!$this->con){
             msg("LDAP: couldn't connect to LDAP server",-1);
             return false;
