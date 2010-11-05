@@ -145,3 +145,11 @@ div.dokuwiki blockquote {
     text-align: right;
 }
 
+/* Search corrections */
+div.dokuwiki ul.search_quickhits li {
+    float: right;
+}
+
+div#qsearch__out {
+    text-align: right;
+}
