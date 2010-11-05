@@ -64,10 +64,15 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                         <ul>
                             <?php /* the optional second parameter of tpl_action() switches between a link and a button,
                                      e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
-                                 tpl_action('admin', 1, 'li');
-                                 tpl_action('profile', 1, 'li', 0, '', '', $INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')');
-                                     // this partly replaces tpl_userinfo()
-                                 tpl_action('login', 1, 'li');
+                                tpl_action('admin', 1, 'li');
+                                tpl_action('profile', 1, 'li', 0, '', '', $INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')');
+                                    // this partly replaces tpl_userinfo()
+                                if (tpl_getConf('userNS') && $_SERVER['REMOTE_USER']) {
+                                    echo '<li>';
+                                    _tpl_userpage(tpl_getConf('userNS').':',1);
+                                    echo '</li>';
+                                }
+                                tpl_action('login', 1, 'li');
                             ?>
                         </ul>
                         <!-- <div class="user"><?php tpl_userinfo() /* 'Logged in as ...' */ ?></div> -->
@@ -80,8 +85,8 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                     <?php tpl_searchform(); ?>
                     <ul>
                         <?php
-                             tpl_action('recent', 1, 'li');
-                             tpl_action('index', 1, 'li');
+                            tpl_action('recent', 1, 'li');
+                            tpl_action('index', 1, 'li');
                         ?>
                     </ul>
                 </div>
