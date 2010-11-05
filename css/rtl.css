@@ -1,0 +1,146 @@
+/* TODO */
+
+/**
+ * This file provides layout and design corrections for right-to-left
+ * languages.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Dotan Kamber <kamberd@yahoo.com>
+ */
+
+/*..... new code ........................................................................*/
+
+body,
+caption,
+td,
+th {
+    text-align: right;
+}
+
+ul, ol {
+    padding: 0 1.5em 0 0;
+}
+
+li, dd {
+    margin: 0 1.5em 0 0;
+}
+
+blockquote {
+    border-width: 0 .25em 0 0;
+}
+
+
+/*..... @todo: old code ........................................................................*/
+
+.bar-left {
+  float: right;
+  text-align: right;
+}
+
+.bar-right {
+  float: left;
+  text-align: left;
+}
+
+.pagename {
+  float: right;
+  text-align: right;
+}
+
+.logo {
+  float: left;
+  text-align: left;
+}
+
+label {
+  text-align: left;
+}
+
+label.simple {
+  text-align: right;
+}
+
+div.meta div.user {
+  float: right
+}
+
+div.meta div.doc {
+  text-align: left;
+}
+
+/* ------------------  Design corrections  --------------------------------- */
+
+div.dokuwiki ul,
+div.dokuwiki ol {
+  margin: 0.5em 1.5em 0.5em 0;
+}
+
+div.dokuwiki a.urlextern,
+div.dokuwiki a.interwiki,
+div.dokuwiki a.windows,
+div.dokuwiki a.mail,
+div.dokuwiki a.mail.JSnocheck {
+  /* should work but doesn't - so we just disable icons here*/
+  /*
+  background-position: right 1px;
+  padding-right: 16px;
+  */
+  background-image: none !important;
+  padding: 0px 0px 0px 0px;
+}
+
+div.dokuwiki div.secedit input.button {
+  float: left;
+}
+
+/* headlines */
+div.dokuwiki h1, div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki h5 {
+  clear: right;
+}
+
+/* special headlines */
+div.dokuwiki h1 {margin-left: 0px; margin-right: 0px;}
+div.dokuwiki h2 {margin-left: 0px; margin-right: 20px;}
+div.dokuwiki h3 {margin-left: 0px; margin-right: 40px;}
+div.dokuwiki h4 {margin-left: 0px; margin-right: 60px;}
+div.dokuwiki h5 {margin-left: 0px; margin-right: 80px;}
+
+/* indent different sections */
+div.dokuwiki div.level1 {margin-left: 0px; margin-right: 3px;}
+div.dokuwiki div.level2 {margin-left: 0px; margin-right: 23px;}
+div.dokuwiki div.level3 {margin-left: 0px; margin-right: 43px;}
+div.dokuwiki div.level4 {margin-left: 0px; margin-right: 63px;}
+div.dokuwiki div.level5 {margin-left: 0px; margin-right: 83px;}
+
+/* TOC control */
+div.dokuwiki div.toc {
+  float: left;
+}
+
+div.dokuwiki div.tocheader {
+  text-align: right;
+}
+
+div.dokuwiki #toc__inside {
+  text-align: right;
+}
+
+div.dokuwiki ul.toc {
+  padding: 0;
+  padding-right: 1em;
+}
+
+div.dokuwiki ul.toc li {
+  background-position: right 0.6em;
+  padding-right:0.4em;
+  direction: rtl;
+}
+
+div.dokuwiki ul.toc li.clear {
+  padding-right:0.4em;
+}
+
+div.dokuwiki pre {
+  text-align: left;
+}
+

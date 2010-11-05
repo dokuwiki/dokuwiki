@@ -1,0 +1,65 @@
+/**
+ * This file provides styles for the diff view, which shows you
+ * differences between two versions of a page (?do=diff).
+ */
+
+.dokuwiki table.diff {
+    width: 100%;
+    border-width: 0;
+}
+.dokuwiki table.diff th,
+.dokuwiki table.diff td {
+    vertical-align: top;
+    padding: 0;
+    border-width: 0;
+    /* no style.ini colours because deleted and added lines have a fixed background colour */
+    background-color: #fff;
+    color: #333;
+}
+
+/* table header */
+.dokuwiki table.diff th {
+    border-bottom: 1px solid __border__;
+    font-size: 110%;
+    width: 50%;
+    font-weight: normal;
+}
+.dokuwiki table.diff th a {
+    font-weight: bold;
+}
+.dokuwiki table.diff th span.user {
+    font-size: .9em;
+}
+.dokuwiki table.diff th span.sum {
+    font-size: .9em;
+    font-weight: bold;
+}
+.dokuwiki table.diff th.minor {
+    color: #999;
+}
+
+/* table body */
+.dokuwiki table.diff td {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+}
+.dokuwiki table.diff td.diff-blockheader {
+    font-weight: bold;
+}
+.dokuwiki table.diff td.diff-addedline {
+    background-color: #cfc;
+    color: inherit;
+}
+.dokuwiki table.diff td.diff-deletedline {
+    background-color: #fdd;
+    color: inherit;
+}
+.dokuwiki table.diff td.diff-context {
+    background-color: #eee;
+    color: inherit;
+}
+.dokuwiki table.diff td.diff-addedline strong,
+.dokuwiki table.diff td.diff-deletedline strong {
+    color: #f00;
+    background-color: inherit;
+    font-weight: bold;
+}

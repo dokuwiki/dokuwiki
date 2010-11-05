@@ -1,0 +1,175 @@
+
+/* TODO */
+
+/**
+ * This file provides styles for modal dialogues.
+ */
+
+/* link wizard (opens from the link button in the edit toolbar)
+********************************************************************/
+
+#link__wiz {
+    position: absolute;
+    display: block;
+    z-index: 99;
+    width:   300px;
+    height:  250px;
+    padding: 0;
+    margin:  0;
+    overflow: hidden;
+    border: 1px solid __border__;
+    background-color: __background_neu__;
+    text-align: center;
+}
+
+#link__wiz_header {
+    background-color: __background_alt__;
+    height: 16px;
+    margin-bottom: 5px;
+}
+
+#link__wiz_close {
+    cursor: pointer;
+    margin: 0;
+}
+
+#link__wiz_result {
+    background-color: __background__;
+    width:  293px;
+    height: 193px;
+    overflow: auto;
+    border: 1px solid __border__;
+    margin: 3px auto;
+    text-align: left;
+}
+
+#link__wiz_result div.type_u {
+    padding: 3px 3px 3px 22px;
+    background: transparent url(../../images/up.png) 3px 3px no-repeat;
+}
+
+#link__wiz_result div.type_f {
+    padding: 3px 3px 3px 22px;
+    background: transparent url(../../images/page.png) 3px 3px no-repeat;
+}
+
+#link__wiz_result div.type_d {
+    padding: 3px 3px 3px 22px;
+    background: transparent url(../../images/ns.png) 3px 3px no-repeat;
+}
+
+#link__wiz_result div.even {
+    background-color: __background_neu__;
+}
+
+#link__wiz_result div.selected {
+    background-color: __background_alt__;
+}
+
+#link__wiz_result span {
+    display: block;
+    color: __text_neu__;
+}
+
+/*FIXME maybe move to a more general style sheet*/
+.ondrag {
+    cursor: move;
+    opacity: 0.8;
+}
+
+
+/* media option wizard (opens when inserting media in the media popup)
+********************************************************************/
+
+/* --- popup --- */
+
+#media__popup {
+    background-color:__background__;
+    display:none;
+    border: 1px solid __border__;
+    position: absolute;
+    width:270px;
+}
+
+#media__popup h1 {
+    text-align:center;
+    font-weight:normal;
+    background-color: __background_alt__;
+    height: 16px;
+    margin-bottom: 5px;
+    font-size:12px;
+    border-bottom: 0;
+}
+
+#media__popup p {
+    display:block;
+    line-height:14pt;
+    margin:0.5em;
+}
+
+#media_nolink {
+    padding:4px 0;
+}
+
+#media__popup label {
+    float:left;
+    width:9em;
+}
+
+#media__popup .button {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#media__popup .btnlbl {
+    text-align:center;
+}
+
+#media__popup .btnlbl input {
+    margin:0 1em;
+}
+
+#media__closeimg {
+    float:right;
+}
+
+/* --- display options --- */
+
+#media__linkopts label,
+#media__nolnk {
+    width: 80px;
+    float: left;
+    margin-left: 10px;
+}
+
+#media__linkopts label{
+    line-height: 20px;
+}
+
+#media__nolnk,
+#media__linkopts label.long{
+    margin-bottom: 8px;
+    line-height: 12px;
+}
+
+#media__linkopts label.long{
+    width: 150px;
+    float: none;
+}
+
+#media__linkopts br {
+    clear: both;
+}
+
+#media__linkopts select {
+    width: 60px;
+    margin-left: 10px;
+}
+
+#media__linkopts input.edit {
+    width:50px;
+    margin-left:10px;
+}
+#media__linkopts #media__title {
+    width:150px;
+}

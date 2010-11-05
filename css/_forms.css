@@ -1,0 +1,82 @@
+
+/* TODO */
+
+/**
+ * This file provides styles for forms in general and specifically
+ * for ?do=
+ *   - login
+ *   - resendpwd
+ *   - register
+ *   - profile
+ *   - subscribe
+ */
+
+/* ---------------- forms ------------------------ */
+
+div.dokuwiki form {
+  border: none;
+  display: inline;
+}
+
+div.dokuwiki label.block {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+}
+
+div.dokuwiki label.simple {
+  display: block;
+  text-align: left;
+  font-weight: normal;
+}
+
+div.dokuwiki label.block input.edit {
+  width: 50%;
+}
+
+div.dokuwiki label span {
+    vertical-align: middle;
+}
+
+div.dokuwiki fieldset {
+  width: 400px;
+  text-align: center;
+  border: 1px solid __border__;
+  padding: 0.5em;
+  margin: auto;
+}
+
+
+div.dokuwiki input.edit,
+div.dokuwiki select.edit {
+  vertical-align: middle;
+}
+div.dokuwiki select.edit {
+  padding: 0.1em 0;
+}
+
+
+.dokuwiki input.button,
+.dokuwiki button.button {
+    vertical-align: middle;
+}
+
+/**
+ * Styles for the subscription page
+ */
+
+form#subscribe__form {
+    display: block;
+    width: 400px;
+    text-align: center;
+}
+
+form#subscribe__form fieldset {
+    text-align: left;
+    margin: 0.5em 0;
+}
+
+form#subscribe__form label {
+    display: block;
+    margin: 0 0.5em 0.5em;
+}
