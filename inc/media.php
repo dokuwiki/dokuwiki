@@ -407,14 +407,9 @@ function media_notify($id,$file,$mime){
     $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
 
-    $from = $conf['mailfrom'];
-    $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
-    $from = str_replace('@NAME@',$INFO['userinfo']['name'],$from);
-    $from = str_replace('@MAIL@',$INFO['userinfo']['mail'],$from);
-
     $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
 
-    mail_send($conf['notify'],$subject,$text,$from);
+    mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
 }
 
 /**
