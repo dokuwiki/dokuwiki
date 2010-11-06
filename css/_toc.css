@@ -16,7 +16,7 @@
 /*____________ toc header ____________*/
 
 .dokuwiki div.tocheader {
-    padding: 0.2em 0.4em;
+    padding: .2em .5em;
     margin-bottom: .2em;
     font-weight: bold;
     background-color: __background_alt__;
@@ -47,7 +47,7 @@
 /*____________ toc list ____________*/
 
 .dokuwiki #toc__inside {
-    padding: .2em .4em;
+    padding: .2em .5em;
     background-color: __background_alt__;
     color: __text__;
 }

@@ -1,13 +1,7 @@
 <?php
 /**
- * DokuWiki Default Template
+ * DokuWiki Media Manager Popup
  *
- * This is the template for the media manager popup
- *
- * You should leave the doctype at the very top - It should
- * always be the very first line of a document.
- *
- * @link   http://dokuwiki.org/templates
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -28,7 +22,7 @@
     <!--[if IE 6 ]><div id="IE6"><![endif]--><!--[if IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
     <div id="media__manager" class="dokuwiki">
         <?php html_msgarea() ?>
-        <div id="media__left"><div class="pad">
+        <div id="mediamgr__aside"><div class="pad">
             <h1><?php echo hsc($lang['mediaselect'])?></h1>
 
             <?php /* keep the id! additional elements are inserted via JS here */?>
@@ -37,7 +31,7 @@
             <?php tpl_mediaTree() ?>
         </div></div>
 
-        <div id="media__right"><div class="pad">
+        <div id="mediamgr__content"><div class="pad">
             <?php tpl_mediaContent() ?>
         </div></div>
     </div>

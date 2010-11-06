@@ -45,44 +45,41 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 <?php if (tpl_getConf('tagline')): ?>
                     <p class="claim"><?php echo tpl_getConf('tagline') ?></p>
                 <?php endif ?>
-                <!--<h2><?php if (!$conf['useheading']) echo '[[' ?><?php tpl_pagetitle($ID) ?><?php if (!$conf['useheading']) echo ']]' ?></h2>-->
 
-                <?php /* TODO: skip links */ ?>
                 <ul class="a11y">
-                    <li><a href="#">skip to nav</a></li>
-                    <li><a href="#">skip to controls</a></li>
-                    <li><a href="#">skip to content</a></li>
+                    <li><a href="#dokuwiki__content"><?php echo tpl_getLang('skip_to_content') ?></a></li>
                 </ul>
                 <div class="clearer"></div>
             </div>
 
             <div class="tools">
-                <!-- AUTH ACTIONS -->
+                <!-- USER TOOLS -->
                 <?php if ($conf['useacl'] && $showTools): ?>
                     <div id="dokuwiki__usertools">
-                        <h3 class="a11y">User Tools</h3> <?php /*TODO: localize*/ ?>
+                        <h3 class="a11y"><?php echo tpl_getLang('user_tools') ?></h3>
                         <ul>
                             <?php /* the optional second parameter of tpl_action() switches between a link and a button,
                                      e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
-                                tpl_action('admin', 1, 'li');
-                                tpl_action('profile', 1, 'li', 0, '', '', $INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')');
-                                    // this partly replaces tpl_userinfo()
-                                if (tpl_getConf('userNS') && $_SERVER['REMOTE_USER']) {
-                                    echo '<li>';
-                                    _tpl_userpage(tpl_getConf('userNS').':',1);
+                                if ($_SERVER['REMOTE_USER']) {
+                                    echo '<li class="user">';
+                                    tpl_userinfo(); /* 'Logged in as ...' */
                                     echo '</li>';
                                 }
+                                tpl_action('admin', 1, 'li');
+                                if (tpl_getConf('userNS')) {
+                                    _tpl_userpage(tpl_getConf('userNS'),1,'li');
+                                }
+                                tpl_action('profile', 1, 'li');
                                 tpl_action('login', 1, 'li');
                             ?>
                         </ul>
-                        <!-- <div class="user"><?php tpl_userinfo() /* 'Logged in as ...' */ ?></div> -->
                     </div>
                 <?php endif ?>
 
-                <!-- SITE ACTIONS -->
+                <!-- SITE TOOLS -->
                 <div id="dokuwiki__sitetools">
-                    <h3 class="a11y">Site Tools</h3> <?php /*TODO: localize*/ ?>
-                    <?php tpl_searchform(); ?>
+                    <h3 class="a11y"><?php echo tpl_getLang('site_tools') ?></h3>
+                    <?php tpl_searchform() ?>
                     <ul>
                         <?php
                             tpl_action('recent', 1, 'li');
@@ -118,26 +115,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad">
-                <!-- PAGE ACTIONS -->
-                <?php if ($showTools): ?>
-                    <div id="dokuwiki__pagetools">
-                        <h3 class="a11y">Page Tools</h3> <?php /*TODO: localize*/ ?>
-                        <ul>
-                            <?php
-                                tpl_action('edit', 1, 'li');
-                                if (tpl_getConf('discussionNS')) {
-                                    echo '<li>';
-                                    _tpl_discussion(tpl_getConf('discussionNS').':',1);
-                                    echo '</li>';
-                                }
-                                tpl_action('history', 1, 'li');
-                                tpl_action('backlink', 1, 'li');
-                                tpl_action('subscribe', 1, 'li');
-                            ?>
-                        </ul>
-                    </div>
-                <?php endif; ?>
-
                 <?php tpl_flush() /* flush the output buffer */ ?>
                 <?php @include(dirname(__FILE__).'/pageheader.html') /* include hook */ ?>
 
@@ -154,20 +131,38 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
             <div class="clearer"></div>
             <hr class="a11y" />
-        </div><!-- /wrapper -->
 
+            <!-- PAGE ACTIONS -->
+            <?php if ($showTools): ?>
+                <div id="dokuwiki__pagetools">
+                    <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
+                    <ul>
+                        <?php
+                            tpl_action('edit', 1, 'li');
+                            if (tpl_getConf('discussionNS')) {
+                                _tpl_discussion(tpl_getConf('discussionNS'),1,'li',tpl_getConf('discussNSreverse'));
+                            }
+                            tpl_action('history', 1, 'li');
+                            tpl_action('backlink', 1, 'li');
+                            tpl_action('subscribe', 1, 'li');
+                            tpl_action('revert', 1, 'li');
+                            tpl_action('top', 1, 'li');
+                        ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+        </div><!-- /wrapper -->
 
         <!-- ********** FOOTER ********** -->
         <div id="dokuwiki__footer"><div class="pad">
             <div class="doc"><?php tpl_pageinfo() /* 'Last modified' etc */ ?></div>
-            <?php tpl_action('top',1) /* the second parameter switches between a link and a button */ ?>
             <?php tpl_license('button') /* content license, parameters: img=*badge|button|0, imgonly=*0|1, return=*0|1 */ ?>
         </div></div><!-- /footer -->
 
 
     </div></div><!-- /site -->
 
-    <?php //@include(dirname(__FILE__).'/footer.html') /* include hook */ ?>
+    <?php @include(dirname(__FILE__).'/footer.html') /* include hook */ ?>
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>
     <!--[if ( IE 6 | IE 7 | IE 8 ) ]></div><![endif]-->
 </body>

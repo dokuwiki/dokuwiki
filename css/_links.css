@@ -13,7 +13,7 @@
 .dokuwiki a.wikilink2 {
     color: __missing__;
     background-color: inherit;
-    text-decoration: none !important;
+    text-decoration: none;
 }
 .dokuwiki a.wikilink2:link,
 .dokuwiki a.wikilink2:visited {
@@ -23,6 +23,11 @@
 .dokuwiki a.wikilink2:active,
 .dokuwiki a.wikilink2:focus {
     border-bottom-width: 0;
+}
+
+/* any link to current page */
+.dokuwiki span.curid a {
+    font-weight: bold;
 }
 
 /*____________ other link types ____________*/

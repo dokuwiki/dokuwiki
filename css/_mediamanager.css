@@ -14,7 +14,7 @@ html.popup {
     overflow: hidden;
 }
 
-#media__left {
+#mediamgr__aside {
     width: 30%;
     height: 100%;
     overflow: auto;
@@ -22,18 +22,18 @@ html.popup {
     left: 0;
     border-right: solid 1px __border__;
 }
-#media__left .pad {
+#mediamgr__aside .pad {
     padding: .5em;
 }
 
-#media__right {
+#mediamgr__content {
     width: 69.7%;
     height: 100%;
     overflow: auto;
     position: absolute;
     right: 0;
 }
-#media__right .pad {
+#mediamgr__content .pad {
     padding: .5em;
 }
 
