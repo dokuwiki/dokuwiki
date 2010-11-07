@@ -140,9 +140,11 @@
 #dokuwiki__pagetools ul li a.action.top {
     float: right;
 }
+#IE6 #dokuwiki__pagetools ul,
 #IE7 #dokuwiki__pagetools ul {
-    position: relative;;
+    position: relative;
 }
+#IE6 #dokuwiki__pagetools ul li a.action.top,
 #IE7 #dokuwiki__pagetools ul li a.action.top {
     position: absolute;
     top: 0;
@@ -283,8 +285,8 @@
     font-size: 90%;
 }
 
-#IE6 input.button, #IE6 button,
-#IE7 input.button, #IE7 button {
+#IE6 .dokuwiki input.button, #IE6 .dokuwiki button,
+#IE7 .dokuwiki input.button, #IE7 .dokuwiki button {
     line-height: 1.4;
 }
 
@@ -317,6 +319,7 @@
 #dokuwiki__footer {
     margin-bottom: 1em;
 }
+#IE6 #dokuwiki__footer,
 #IE7 #dokuwiki__footer {
     height: 1%;
 }
