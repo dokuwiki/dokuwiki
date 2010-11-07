@@ -796,7 +796,7 @@ function tpl_userinfo(){
     global $lang;
     global $INFO;
     if(isset($_SERVER['REMOTE_USER'])){
-        print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')';
+        print $lang['loggedinas'].': '.hsc($INFO['userinfo']['name']).' ('.hsc($_SERVER['REMOTE_USER']).')';
         return true;
     }
     return false;

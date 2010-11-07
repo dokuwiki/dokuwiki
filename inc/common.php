@@ -1134,12 +1134,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
     }
 
-    $from = $conf['mailfrom'];
-    $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
-    $from = str_replace('@NAME@',$INFO['userinfo']['name'],$from);
-    $from = str_replace('@MAIL@',$INFO['userinfo']['mail'],$from);
-
-    mail_send($to,$subject,$text,$from,'',$bcc);
+    mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
 }
 
 /**

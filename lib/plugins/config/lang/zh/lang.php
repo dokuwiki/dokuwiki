@@ -10,6 +10,7 @@
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
+ * @author caii <zhoucaiqi@gmail.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -115,7 +116,7 @@ $lang['jpg_quality']           = 'JPG 压缩质量（0-100）';
 $lang['subscribers']           = '启用页面订阅支持';
 $lang['subscribe_time']        = '订阅列表和摘要发送的时间间隔（秒）；这应当小于指定的最近更改保留时间（recent_days）。
 ';
-$lang['compress']              = '使 CSS 和 javascript 输出更紧密';
+$lang['compress']              = '使 CSS 和 javascript 的输出更紧密';
 $lang['hidepages']             = '隐藏匹配的界面（正则表达式）';
 $lang['send404']               = '发送 "HTTP 404/页面没有找到" 错误信息给不存在的页面';
 $lang['sitemap']               = '生成 Google sitemap（天）';

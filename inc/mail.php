@@ -30,7 +30,39 @@ if(!defined('QUOTEDPRINTABLE_EOL')) define('QUOTEDPRINTABLE_EOL',"\015\012");
 if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
 if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,4}|museum|travel)');
 
+/**
+ * Prepare mailfrom replacement patterns
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function mail_setup(){
+    global $conf;
+    global $INFO;
 
+    $replace = array();
+
+    if(!empty($INFO['userinfo']['mail'])){
+        $replace['@MAIL@'] = $INFO['userinfo']['mail'];
+    }else{
+        $replace['@MAIL@'] = 'noreply@'.parse_url(DOKU_URL,PHP_URL_HOST);
+    }
+
+    if(!empty($_SERVER['REMOTE_USER'])){
+        $replace['@USER@'] = $_SERVER['REMOTE_USER'];
+    }else{
+        $replace['@USER@'] = 'noreply';
+    }
+
+    if(!empty($INFO['userinfo']['name'])){
+        $replace['@NAME@'] = $INFO['userinfo']['name'];
+    }else{
+        $replace['@NAME@'] = '';
+    }
+
+    $conf['mailfrom'] = str_replace(array_keys($replace),
+                                    array_values($replace),
+                                    $conf['mailfrom']);
+}
 
 /**
  * UTF-8 autoencoding replacement for PHPs mail function

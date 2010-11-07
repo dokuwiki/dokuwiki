@@ -10,6 +10,7 @@
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
+ * @author caii <zhoucaiqi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -62,7 +63,7 @@ $lang['email']                 = 'E-Mail';
 $lang['register']              = '注册';
 $lang['profile']               = '用户信息';
 $lang['badlogin']              = '对不起，用户名或密码错误。';
-$lang['minoredit']             = '轻微修改';
+$lang['minoredit']             = '细微修改';
 $lang['draftdate']             = '草稿自动保存于';
 $lang['nosecedit']             = '在您编辑期间本页刚被他人修改过，局部信息已过期，故载入全页。';
 $lang['regmissing']            = '对不起，您必须填写所有的区域。';
