@@ -34,10 +34,12 @@
 
 .dokuwiki a.urlextern,
 .dokuwiki a.windows,
-.dokuwiki a.mail {
+.dokuwiki a.mail,
+.dokuwiki a.mediafile,
+.dokuwiki a.interwiki {
     background-repeat: no-repeat;
     background-position: 0 center;
-    padding-left: 17px;
+    padding: 0 0 0 17px;
 }
 /* external link */
 .dokuwiki a.urlextern {
@@ -55,10 +57,7 @@
 /* icons of the following are set by dokuwiki in lib/exe/css.php */
 /* link to some embedded media */
 .dokuwiki a.mediafile {
-    background-position: 0 center;
-    padding-bottom: 0;
 }
 /* interwiki link */
 .dokuwiki a.interwiki {
-    background-position: 0 center;
 }

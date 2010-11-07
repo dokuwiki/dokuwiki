@@ -51,11 +51,8 @@
     text-align: center;
     margin: 1.4em 0;
 }
-.dokuwiki div.pagenav-prev {
-    display: inline;
-    margin-right: .5em;
-}
+.dokuwiki div.pagenav-prev,
 .dokuwiki div.pagenav-next {
     display: inline;
-    margin-left: .5em;
+    margin: 0 .5em;
 }

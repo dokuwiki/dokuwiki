@@ -7,7 +7,7 @@
     float: left;
     width: 40%;
     list-style-type: none;
-    font-size: 115%;
+    font-size: 1.125em;
 }
 
 .dokuwiki ul.admin_tasks li {

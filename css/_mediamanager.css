@@ -20,7 +20,7 @@ html.popup {
     overflow: auto;
     position: absolute;
     left: 0;
-    border-right: solid 1px __border__;
+    border-right: 1px solid __border__;
 }
 #mediamgr__aside .pad {
     padding: .5em;
@@ -208,6 +208,9 @@ form#dw__mediasearch input.button {
     margin: 0;
 }
 #media__content form.meta textarea.edit {
+    /* needed because of IE8 hack in _edit.css for textarea.edit: */
+    max-width: 70%;
+    min-width: 70%;
 }
 
 #media__content form.meta div.buttons {
