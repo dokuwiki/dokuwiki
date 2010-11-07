@@ -10,6 +10,7 @@
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
+ * @author caii <zhoucaiqi@gmail.com>
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';
@@ -51,7 +52,7 @@ $lang['error_dircreate']       = '无法创建用于接收下载文件的';
 $lang['error_decompress']      = '插件管理器无法解压下载的文件。这可能是由于下载出现错误，遇到这种情况，请您再次尝试;或者是压缩格式无法识别，遇到这种情况，您需要手动下载并安装该插件。';
 $lang['error_copy']            = '尝试安装插件 <em>%s</em> 的相关文件时产生一个复制错误：磁盘空间已满或文件访问权限错误。这可能是由于一个安装了一部分的插件，并使得您的维基系统不稳定。';
 $lang['error_delete']          = '尝试删除插件 <em>%s</em> 时产生一个错误。最有可能的情况是文件或路径的访问权限不够';
-$lang['enabled']               = '%s 插件开';
-$lang['notenabled']            = '%s插件打开失败，请检查文件权限。';
-$lang['disabled']              = '%s 插件关';
-$lang['notdisabled']           = '%s插件关闭失败，请检查文件权限。';
+$lang['enabled']               = '%s 插件启用';
+$lang['notenabled']            = '%s插件启用失败，请检查文件权限。';
+$lang['disabled']              = '%s 插件禁用';
+$lang['notdisabled']           = '%s插件禁用失败，请检查文件权限。';
