@@ -22,14 +22,23 @@ body {
     #dokuwiki__header .headings {
         float: left;
     }
+    #IE6 #dokuwiki__header .headings {
+        width: 50%;
+    }
     #dokuwiki__header .tools {
         float: right;
         text-align: right;
     }
+    #IE6 #dokuwiki__header .tools {
+        width: 50%;
+    }
 
 #dokuwiki__site .wrapper {
     position: relative;
-    zoom: 1; /* @todo: IE */
+}
+#IE6 #dokuwiki__site .wrapper,
+#IE7 #dokuwiki__site .wrapper {
+    height: 1%;
 }
 
     /* show sidebar only in show mode */
@@ -41,7 +50,6 @@ body {
         float: left;
         position: relative;
         display: block;
-        zoom: 1; /* @todo: IE */
     }
     #dokuwiki__aside .pad {
         margin: 0 1.5em 0 0;
