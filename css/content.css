@@ -1,0 +1,125 @@
+/**
+ * This file provides the main design styles for the page content.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+
+
+/*____________ section indenting ____________
+
+.dokuwiki h1 {margin-left: 0;}
+.dokuwiki h2 {margin-left: .666em;}
+.dokuwiki h3 {margin-left: 1.776em;}
+.dokuwiki h4 {margin-left: 3em;}
+.dokuwiki h5 {margin-left: 4.5712em;}
+.dokuwiki div.level1 {margin-left: 0;}
+.dokuwiki div.level2 {margin-left: 1em;}
+.dokuwiki div.level3 {margin-left: 2em;}
+.dokuwiki div.level4 {margin-left: 3em;}
+.dokuwiki div.level5 {margin-left: 4em;}
+*/
+/* hx margin-left = (1 / font-size) * .levelx-margin */
+
+
+/*____________ images ____________*/
+
+/* embedded images (styles are already partly set in lib/styles/style.css) */
+.dokuwiki img.media       { }
+.dokuwiki img.medialeft   { margin: .5em 1.5em .5em 0; }
+.dokuwiki img.mediaright  { margin: .5em 0 .5em 1.5em; }
+.dokuwiki img.mediacenter { margin: .5em auto; }
+
+
+/*____________ tables ____________*/
+
+.dokuwiki table.inline {
+    min-width: 50%;
+}
+.dokuwiki table.inline th,
+.dokuwiki table.inline td {
+    border: 1px solid __text_alt__;
+}
+.dokuwiki table.inline th {
+    color: inherit;
+    background-color: __background_neu__;
+}
+.dokuwiki table.inline td {
+}
+.dokuwiki table.inline tr:hover td {
+    background-color: __background_alt__;
+}
+.dokuwiki table.inline tr:hover th {
+    background-color: __border__;
+}
+
+
+/*____________ code ____________*/
+
+.dokuwiki pre,
+.dokuwiki tt,
+.dokuwiki code,
+.dokuwiki samp,
+.dokuwiki kbd {
+    background-color: __background_alt__;
+    color: inherit;
+}
+.dokuwiki pre {
+    border: 1px solid __border__;
+    padding: 0 .2em;
+}
+/* for code in <file> */
+.dokuwiki pre.file {
+}
+
+/* filenames for downloadable file and code blocks */
+.dokuwiki dl.code,
+.dokuwiki dl.file {
+}
+
+.dokuwiki dl.code dt,
+.dokuwiki dl.file dt {
+    background-color: __background_alt__;
+    border: solid __border__;
+    border-width: 1px 1px 0;
+    color: inherit;
+    display: inline;
+    padding: 0 .5em;
+    margin-left: 1em;
+}
+.dokuwiki dl.code dt a,
+.dokuwiki dl.file dt a {
+}
+
+.dokuwiki dl.code dd,
+.dokuwiki dl.file dd {
+    margin: 0;
+}
+
+
+/*____________ misc ____________*/
+
+/* license note in footer and under edit window */
+.dokuwiki div.license {
+    font-size: 90%;
+}
+
+#IE6 .dokuwiki input.button, #IE6 .dokuwiki button,
+#IE7 .dokuwiki input.button, #IE7 .dokuwiki button {
+    line-height: 1.4;
+}
+
+/*____________ JS popup ____________*/
+
+.JSpopup {
+    background-color: __background__;
+    color: __text__;
+    border: 1px solid __border__;
+    line-height: 1.2;
+    padding: 0 .2em;
+}
+
+.JSpopup ul,
+.JSpopup ol {
+    padding-left: 0;
+}
