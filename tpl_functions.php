@@ -4,6 +4,8 @@
  *
  * This file provides template specific custom functions that are
  * not provided by the DokuWiki core.
+ * It is common practice to start each function with an underscore
+ * to make sure it won't interfere with future core functions.
  */
 
 // must be run from within DokuWiki
@@ -63,4 +65,16 @@ function _tpl_userpage($userNS='user',$link=0,$wrapper=false) {
         echo html_btn('userpage',$userPage,'',array(),0,0,tpl_getLang('userpage'));
 
     if ($wrapper) echo "</$wrapper>";
+}
+
+/**
+ * Use favicon.ico from data/media root directory if it exists, otherwise use
+ * the one in the template's image directory.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function _tpl_getFavicon() {
+    if (file_exists(mediaFN('favicon.ico')))
+        return ml('favicon.ico');
+    return DOKU_TPL.'images/favicon.ico';
 }
