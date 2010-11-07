@@ -49,12 +49,6 @@ a.mail:after {
    font-size: 90%;
 }
 
-/* undo section indenting */
-.dokuwiki h1, .dokuwiki h2, .dokuwiki h3, .dokuwiki h4, .dokuwiki h5,
-.dokuwiki div.level1, .dokuwiki div.level2, .dokuwiki div.level3, .dokuwiki div.level4, .dokuwiki div.level5 {
-    margin-left: 0;
-}
-
 /* code blocks */
 .dokuwiki pre {
     font-family: monospace;

@@ -71,16 +71,16 @@ caption, legend {
 /*____________ content ____________*/
 
 /* section indenting
-.dokuwiki h1 {margin-left: 0; margin-right: 0;}
-.dokuwiki h2 {margin-left: 0; margin-right: .666em;}
-.dokuwiki h3 {margin-left: 0; margin-right: 1.776em;}
-.dokuwiki h4 {margin-left: 0; margin-right: 3em;}
-.dokuwiki h5 {margin-left: 0; margin-right: 4.5712em;}
-.dokuwiki div.level1 {margin-left: 0; margin-right: 0;}
-.dokuwiki div.level2 {margin-left: 0; margin-right: 1em;}
-.dokuwiki div.level3 {margin-left: 0; margin-right: 2em;}
-.dokuwiki div.level4 {margin-left: 0; margin-right: 3em;}
-.dokuwiki div.level5 {margin-left: 0; margin-right: 4em;}
+.dokuwiki .page h1 {margin-left: 0; margin-right: 0;}
+.dokuwiki .page h2 {margin-left: 0; margin-right: .666em;}
+.dokuwiki .page h3 {margin-left: 0; margin-right: 1.776em;}
+.dokuwiki .page h4 {margin-left: 0; margin-right: 3em;}
+.dokuwiki .page h5 {margin-left: 0; margin-right: 4.5712em;}
+.dokuwiki .page div.level1 {margin-left: 0; margin-right: 0;}
+.dokuwiki .page div.level2 {margin-left: 0; margin-right: 1em;}
+.dokuwiki .page div.level3 {margin-left: 0; margin-right: 2em;}
+.dokuwiki .page div.level4 {margin-left: 0; margin-right: 3em;}
+.dokuwiki .page div.level5 {margin-left: 0; margin-right: 4em;}
 */
 
 .dokuwiki dl.code dt,
