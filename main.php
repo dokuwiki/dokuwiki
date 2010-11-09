@@ -26,13 +26,13 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <?php /* with these Conditional Comments you can better address IE issues in CSS files,
              precede CSS rules by #IE6 for IE6, #IE7 for IE7 and #IE8 for IE8 (div closes at the bottom) */ ?>
     <!--[if IE 6 ]><div id="IE6"><![endif]--><!--[if IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
-    <?php @include(dirname(__FILE__).'/topheader.html') /* include hook */ ?>
 
     <?php /* classes mode_<action> are added to make it possible to e.g. style a page differently if it's in edit mode,
          see http://www.dokuwiki.org/devel:action_modes for a list of action modes */ ?>
     <?php /* .dokuwiki should always be in one of the surrounding elements (e.g. plugins and templates depend on it) */ ?>
     <div id="dokuwiki__site"><div class="dokuwiki site mode_<?php echo $ACT ?>">
         <?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
+        <?php @include(dirname(__FILE__).'/header.html') /* include hook */ ?>
 
         <!-- ********** HEADER ********** -->
         <div id="dokuwiki__header"><div class="pad">
@@ -99,7 +99,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
               <div class="breadcrumbs"><?php tpl_youarehere() ?></div>
             <?php } ?>
 
-            <?php @include(dirname(__FILE__).'/header.html') /* include hook */ ?>
             <div class="clearer"></div>
             <hr class="a11y" />
         </div></div><!-- /header -->
@@ -159,10 +158,9 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             <?php tpl_license('button') /* content license, parameters: img=*badge|button|0, imgonly=*0|1, return=*0|1 */ ?>
         </div></div><!-- /footer -->
 
-
+        <?php @include(dirname(__FILE__).'/footer.html') /* include hook */ ?>
     </div></div><!-- /site -->
 
-    <?php @include(dirname(__FILE__).'/footer.html') /* include hook */ ?>
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>
     <!--[if ( IE 6 | IE 7 | IE 8 ) ]></div><![endif]-->
 </body>
