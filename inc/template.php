@@ -1359,5 +1359,18 @@ function tpl_flush(){
 }
 
 
+/**
+ * Use favicon.ico from data/media root directory if it exists, otherwise use
+ * the one in the template's image directory.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_getFavicon() {
+    if (file_exists(mediaFN('favicon.ico')))
+        return ml('favicon.ico');
+    return DOKU_TPL.'images/favicon.ico';
+}
+
+
 //Setup VIM: ex: et ts=4 enc=utf-8 :
 
