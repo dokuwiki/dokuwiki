@@ -229,88 +229,10 @@ function metaUpdate(){
  * @link   https://www.google.com/webmasters/sitemaps/docs/en/about.html
  */
 function runSitemapper(){
-    global $conf;
     print "runSitemapper(): started".NL;
-    if(!$conf['sitemap']) return false;
-
-    if($conf['compression'] == 'bz2' || $conf['compression'] == 'gz'){
-        $sitemap = 'sitemap.xml.gz';
-    }else{
-        $sitemap = 'sitemap.xml';
-    }
-    print "runSitemapper(): using $sitemap".NL;
-
-    if(@file_exists(DOKU_INC.$sitemap)){
-        if(!is_writable(DOKU_INC.$sitemap)) return false;
-    }else{
-        if(!is_writable(DOKU_INC)) return false;
-    }
-
-    if(@filesize(DOKU_INC.$sitemap) &&
-       @filemtime(DOKU_INC.$sitemap) > (time()-($conf['sitemap']*60*60*24))){
-       print 'runSitemapper(): Sitemap up to date'.NL;
-       return false;
-    }
-
-    $pages = idx_getIndex('page', '');
-    print 'runSitemapper(): creating sitemap using '.count($pages).' pages'.NL;
-
-    // build the sitemap
-    ob_start();
-    print '<?xml version="1.0" encoding="UTF-8"?>'.NL;
-    print '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
-    foreach($pages as $id){
-        $id = trim($id);
-        $file = wikiFN($id);
-
-        //skip hidden, non existing and restricted files
-        if(isHiddenPage($id)) continue;
-        $date = @filemtime($file);
-        if(!$date) continue;
-        if(auth_aclcheck($id,'','') < AUTH_READ) continue;
-
-        print '  <url>'.NL;
-        print '    <loc>'.wl($id,'',true).'</loc>'.NL;
-        print '    <lastmod>'.date_iso8601($date).'</lastmod>'.NL;
-        print '  </url>'.NL;
-    }
-    print '</urlset>'.NL;
-    $data = ob_get_contents();
-    ob_end_clean();
-
-    //save the new sitemap
-    io_saveFile(DOKU_INC.$sitemap,$data);
-
-    //ping search engines...
-    $http = new DokuHTTPClient();
-    $http->timeout = 8;
-
-    //ping google
-    print 'runSitemapper(): pinging google'.NL;
-    $url  = 'http://www.google.com/webmasters/sitemaps/ping?sitemap=';
-    $url .= urlencode(DOKU_URL.$sitemap);
-    $resp = $http->get($url);
-    if($http->error) print 'runSitemapper(): '.$http->error.NL;
-    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
-
-    //ping yahoo
-    print 'runSitemapper(): pinging yahoo'.NL;
-    $url  = 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=dokuwiki&url=';
-    $url .= urlencode(DOKU_URL.$sitemap);
-    $resp = $http->get($url);
-    if($http->error) print 'runSitemapper(): '.$http->error.NL;
-    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
-
-    //ping microsoft
-    print 'runSitemapper(): pinging microsoft'.NL;
-    $url  = 'http://www.bing.com/webmaster/ping.aspx?siteMap=';
-    $url .= urlencode(DOKU_URL.$sitemap);
-    $resp = $http->get($url);
-    if($http->error) print 'runSitemapper(): '.$http->error.NL;
-    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
-
+    $result = Sitemapper::generate() && Sitemapper::pingSearchEngines();
     print 'runSitemapper(): finished'.NL;
-    return true;
+    return $result;
 }
 
 /**
@@ -403,21 +325,6 @@ function sendDigest() {
     // restore current user info
     $USERINFO = $olduinfo;
     $_SERVER['REMOTE_USER'] = $olduser;
-}
-
-/**
- * Formats a timestamp as ISO 8601 date
- *
- * @author <ungu at terong dot com>
- * @link http://www.php.net/manual/en/function.date.php#54072
- */
-function date_iso8601($int_date) {
-   //$int_date: current date in UNIX timestamp
-   $date_mod = date('Y-m-d\TH:i:s', $int_date);
-   $pre_timezone = date('O', $int_date);
-   $time_zone = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
-   $date_mod .= $time_zone;
-   return $date_mod;
 }
 
 /**
