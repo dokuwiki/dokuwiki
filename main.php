@@ -18,7 +18,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php tpl_pagetitle() ?> [<?php echo strip_tags($conf['title']) ?>]</title>
     <?php tpl_metaheaders() ?>
-    <link rel="shortcut icon" href="<?php echo _tpl_getFavicon() ?>" />
+    <link rel="shortcut icon" href="<?php echo _tpl_getFavicon() /* DW versions > 2010-11-12 can use the core function tpl_getFavicon() */ ?>" />
     <?php @include(dirname(__FILE__).'/meta.html') /* include hook */ ?>
 </head>
 
