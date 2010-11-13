@@ -91,7 +91,8 @@
 .mode_recent a.action.recent,
 .mode_index a.action.index,
 .mode_revisions a.action.revs,
-.mode_backlink a.action.backlink {
+.mode_backlink a.action.backlink,
+.mode_subscribe a.action.subscribe {
     font-weight: bold;
 }
 
