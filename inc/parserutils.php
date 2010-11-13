@@ -223,7 +223,7 @@ function p_get_instructions($text){
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_get_metadata($id, $key='', $render=false){
-    global $ID, $INFO, $cache_metadata;
+    global $ID;
 
     // cache the current page
     // Benchmarking shows the current page's metadata is generally the only page metadata
@@ -234,11 +234,7 @@ function p_get_metadata($id, $key='', $render=false){
     // metadata has never been rendered before - do it! (but not for non-existent pages)
     if ($render && !isset($meta['current']['description']['abstract']) && page_exists($id)){
         $meta = p_render_metadata($id, $meta);
-        io_saveFile(metaFN($id, '.meta'), serialize($meta));
-
-        // sync cached copies, including $INFO metadata
-        if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-        if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+        p_save_metadata($id, $meta);
     }
 
     $val = $meta['current'];
@@ -305,13 +301,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
     // save only if metadata changed
     if ($meta == $orig) return true;
 
-    // sync cached copies, including $INFO metadata
-    global $cache_metadata, $INFO;
-
-    if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
-
-    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    return p_save_metadata($id, $meta);
 }
 
 /**
@@ -321,16 +311,16 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
  * @author Michael Klier <chi@chimeric.de>
  */
 function p_purge_metadata($id) {
-    $metafn = metaFN('id', '.meta');
-    $meta   = p_read_metadata($id);
+    $meta = p_read_metadata($id);
     foreach($meta['current'] as $key => $value) {
         if(is_array($meta[$key])) {
             $meta['current'][$key] = array();
         } else {
             $meta['current'][$key] = '';
         }
+
     }
-    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    return p_save_metadata($id, $meta);
 }
 
 /**
@@ -358,6 +348,24 @@ function p_read_metadata($id,$cache=false) {
     }
 
     return $meta;
+}
+
+/**
+ * This is the backend function to save a metadata array to a file
+ *
+ * @param    string   $id      absolute wiki page id
+ * @param    array    $meta    metadata
+ *
+ * @return   bool              success / fail
+ */
+function p_save_metadata($id, $meta) {
+    // sync cached copies, including $INFO metadata
+    global $cache_metadata, $INFO;
+
+    if (isset($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+
+    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
 }
 
 /**

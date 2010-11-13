@@ -190,7 +190,7 @@ function metaUpdate(){
 
     // rendering needed?
     if (@file_exists($file)) return false;
-    if (!@file_exists(wikiFN($ID))) return false;
+    if (!page_exists($ID)) return false;
 
     global $conf;
 
@@ -213,7 +213,7 @@ function metaUpdate(){
     }
 
     $meta = p_render_metadata($ID, $meta);
-    io_saveFile($file, serialize($meta));
+    p_save_metadata($ID, $meta);
 
     echo "metaUpdate(): finished".NL;
     return true;
