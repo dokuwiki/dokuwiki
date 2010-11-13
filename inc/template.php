@@ -609,7 +609,7 @@ function tpl_get_action($type) {
             $type = 'subscribe';
             $params['do'] = 'subscribe';
         case 'subscribe':
-            if(!$conf['useacl'] || !$auth || $ACT !== 'show' || !$conf['subscribers'] || !$_SERVER['REMOTE_USER']){
+            if(!$conf['useacl'] || !$auth  || !$conf['subscribers'] || !$_SERVER['REMOTE_USER']){
                 return false;
             }
             break;
@@ -617,7 +617,7 @@ function tpl_get_action($type) {
             break;
         case 'profile':
             if(!$conf['useacl'] || !$auth || !isset($_SERVER['REMOTE_USER']) ||
-                    !$auth->canDo('Profile') || ($ACT=='profile')){
+                    !$auth->canDo('Profile')){
                 return false;
             }
             break;
