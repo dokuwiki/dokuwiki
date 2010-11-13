@@ -252,6 +252,15 @@ function p_get_metadata($id, $key='', $render=false){
 /**
  * sets metadata elements of a page
  *
+ * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
+ *
+ * @param String  $id         is the ID of a wiki page
+ * @param Array   $data       is an array with key ⇒ value pairs to be set in the metadata
+ * @param Boolean $render     whether or not the page metadata should be generated with the renderer
+ * @param Boolean $persistent indicates whether or not the particular metadata value will persist through
+ *                            the next metadata rendering.
+ * @return boolean true on success
+ *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_set_metadata($id, $data, $render=false, $persistent=true){
