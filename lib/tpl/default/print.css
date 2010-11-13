@@ -43,6 +43,14 @@ div.secedit {
   display: none;
 }
 
+div.clearer {
+  clear: both;
+  line-height: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+
 /* --------------------- Text formating -------------------------------- */
 
 /* external link */
@@ -112,6 +120,21 @@ img.mediaright {
   border: 0;
   float: right;
   margin: 0 0 0 1.5em;
+}
+
+img.mediacenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* underline */
+em.u {
+  font-style: normal;
+  text-decoration: underline;
+}
+em em.u {
+  font-style: italic;
 }
 
 /* unordered lists */

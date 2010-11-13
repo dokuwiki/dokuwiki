@@ -220,6 +220,9 @@ if (!defined('NOSESSION')) {
     auth_setup();
 }
 
+// setup mail system
+mail_setup();
+
 /**
  * Checks paths from config file
  */

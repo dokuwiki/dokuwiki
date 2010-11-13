@@ -1134,12 +1134,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
     }
 
-    $from = $conf['mailfrom'];
-    $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
-    $from = str_replace('@NAME@',$INFO['userinfo']['name'],$from);
-    $from = str_replace('@MAIL@',$INFO['userinfo']['mail'],$from);
-
-    mail_send($to,$subject,$text,$from,'',$bcc);
+    mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
 }
 
 /**
@@ -1268,6 +1263,21 @@ function dformat($dt=null,$format=''){
 
     $format = str_replace('%f',datetime_h($dt),$format);
     return strftime($format,$dt);
+}
+
+/**
+ * Formats a timestamp as ISO 8601 date
+ *
+ * @author <ungu at terong dot com>
+ * @link http://www.php.net/manual/en/function.date.php#54072
+ */
+function date_iso8601($int_date) {
+   //$int_date: current date in UNIX timestamp
+   $date_mod = date('Y-m-d\TH:i:s', $int_date);
+   $pre_timezone = date('O', $int_date);
+   $time_zone = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
+   $date_mod .= $time_zone;
+   return $date_mod;
 }
 
 /**

@@ -796,7 +796,7 @@ function tpl_userinfo(){
     global $lang;
     global $INFO;
     if(isset($_SERVER['REMOTE_USER'])){
-        print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$_SERVER['REMOTE_USER'].')';
+        print $lang['loggedinas'].': '.hsc($INFO['userinfo']['name']).' ('.hsc($_SERVER['REMOTE_USER']).')';
         return true;
     }
     return false;
@@ -1356,6 +1356,19 @@ function tpl_subscribe() {
 function tpl_flush(){
     ob_flush();
     flush();
+}
+
+
+/**
+ * Use favicon.ico from data/media root directory if it exists, otherwise use
+ * the one in the template's image directory.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_getFavicon() {
+    if (file_exists(mediaFN('favicon.ico')))
+        return ml('favicon.ico');
+    return DOKU_TPL.'images/favicon.ico';
 }
 
 

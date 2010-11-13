@@ -229,6 +229,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 }
 
 function _ft_pageLookup(&$data){
+    global $conf;
     // split out original parameters
     $id = $data['id'];
     if (preg_match('/(?:^| )@(\w+)/', $id, $matches)) {
@@ -241,6 +242,11 @@ function _ft_pageLookup(&$data){
 
     $pages  = array_map('rtrim', idx_getIndex('page', ''));
     $titles = array_map('rtrim', idx_getIndex('title', ''));
+    // check for corrupt title index #FS2076
+    if(count($pages) != count($titles)){
+        $titles = array_fill(0,count($pages),'');
+        @unlink($conf['indexdir'].'/title.idx'); // will be rebuilt in inc/init.php
+    }
     $pages = array_combine($pages, $titles);
 
     $cleaned = cleanID($id);
@@ -270,7 +276,7 @@ function _ft_pageLookup(&$data){
         }
     }
 
-    uasort($pages,'ft_pagesorter');
+    uksort($pages,'ft_pagesorter');
     return $pages;
 }
 

@@ -1,0 +1,17 @@
+Kaixo!
+
+@TITLE@ wikiko @PAGE@ izen-espazioko orri batzuk aldatu egin dira.
+Hemen aldatutako orriak:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Orri jakinarazpenak ezeztatzeko, sartu wikian 
+@DOKUWIKIURL@ helbidean, bisitatu
+@SUBSCRIBE@
+eta ezabatu orri eta/edo izen-espazio aldaketen harpidetza.
+
+--
+E-posta hau DokuWiki-k sortua izan da helbide honetan:
+@DOKUWIKIURL@
