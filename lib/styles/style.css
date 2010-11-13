@@ -87,6 +87,17 @@ em em.u {
     font-style: italic;
 }
 
+/* modal windows */
+.JSpopup,
+#link__wiz,
+#media__popup {
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    z-index: 20;
+    overflow: hidden;
+}
+
 
 /* syntax highlighting code */
 .code .br0  { color: #66cc66; }
