@@ -337,9 +337,6 @@ function p_purge_metadata($id) {
  * read the metadata from source/cache for $id
  * (internal use only - called by p_get_metadata & p_set_metadata)
  *
- * this function also converts the metadata from the original format to
- * the current format ('current' & 'persistent' arrays)
- *
  * @author   Christopher Smith <chris@jalakai.co.uk>
  *
  * @param    string   $id      absolute wiki page id
@@ -355,26 +352,6 @@ function p_read_metadata($id,$cache=false) {
 
     $file = metaFN($id, '.meta');
     $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
-
-    // convert $meta from old format to new (current+persistent) format
-    if (!isset($meta['current'])) {
-        $meta = array('current'=>$meta,'persistent'=>$meta);
-
-        // remove non-persistent keys
-        unset($meta['persistent']['title']);
-        unset($meta['persistent']['description']['abstract']);
-        unset($meta['persistent']['description']['tableofcontents']);
-        unset($meta['persistent']['relation']['haspart']);
-        unset($meta['persistent']['relation']['references']);
-        unset($meta['persistent']['date']['valid']);
-
-        if (empty($meta['persistent']['description'])) unset($meta['persistent']['description']);
-        if (empty($meta['persistent']['relation'])) unset($meta['persistent']['relation']);
-        if (empty($meta['persistent']['date'])) unset($meta['persistent']['date']);
-
-        // save converted metadata
-        io_saveFile($file, serialize($meta));
-    }
 
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;
