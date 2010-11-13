@@ -7,7 +7,7 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',4);
+define('DOKU_XMLRPC_API_VERSION',5);
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
@@ -141,6 +141,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('string'),
             'Returns the wiki title.',
             true
+        );
+
+        $this->addCallback(
+            'dokuwiki.appendPage',
+            'this:appendPage',
+            array('int', 'string', 'string', 'struct'),
+            'Append text to a wiki page.'
         );
 
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
@@ -575,6 +582,17 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         }
 
         return 0;
+    }
+
+    /**
+     * Appends text to a wiki page.
+     */
+    function appendPage($id, $text, $params) {
+        $currentpage = $this->rawPage($id);
+        if (!is_string($currentpage)) {
+            return $currentpage;
+        }
+        return $this->putPage($id, $currentpage.$text, $params);
     }
 
     /**
