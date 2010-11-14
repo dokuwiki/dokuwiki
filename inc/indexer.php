@@ -104,22 +104,6 @@ function idx_getIndex($pre, $wlen){
 }
 
 /**
- * Create an empty index file if it doesn't exist yet.
- *
- * FIXME: This function isn't currently used. It will probably be removed soon.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function idx_touchIndex($pre, $wlen){
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
-    if(!@file_exists($fn)){
-        touch($fn);
-        if($conf['fperm']) chmod($fn, $conf['fperm']);
-    }
-}
-
-/**
  * Read a line ending with \n.
  * Returns false on EOF.
  *
