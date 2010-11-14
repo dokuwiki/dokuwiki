@@ -140,7 +140,7 @@ function runIndexer(){
     // check if indexing needed
     $idxtag = metaFN($ID,'.indexed');
     if(@file_exists($idxtag)){
-        if(io_readFile($idxtag) >= INDEXER_VERSION){
+        if(trim(io_readFile($idxtag)) == INDEXER_VERSION){
             $last = @filemtime($idxtag);
             if($last > @filemtime(wikiFN($ID))){
                 print "runIndexer(): index for $ID up to date".NL;
