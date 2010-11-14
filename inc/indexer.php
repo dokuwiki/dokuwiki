@@ -203,8 +203,7 @@ function idx_getPageWords($page){
 
     list($page,$body) = $data;
 
-    $body   = strtr($body, "\r\n\t", '   ');
-    $tokens = explode(' ', $body);
+    $tokens = idx_tokenizer($body, $stopwords);
     $tokens = array_count_values($tokens);   // count the frequency of each token
 
     // ensure the deaccented or romanised page names of internal links are added to the token array
@@ -225,16 +224,12 @@ function idx_getPageWords($page){
     }
 
     $words = array();
-    foreach ($tokens as $word => $count) {
-        $arr = idx_tokenizer($word,$stopwords);
-        $arr = array_count_values($arr);
-        foreach ($arr as $w => $c) {
-            $l = wordlen($w);
-            if(isset($words[$l])){
-                $words[$l][$w] = $c * $count + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
-            }else{
-                $words[$l] = array($w => $c * $count);
-            }
+    foreach ($tokens as $w => $c) {
+        $l = wordlen($w);
+        if(isset($words[$l])){
+            $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
+        }else{
+            $words[$l] = array($w => $c);
         }
     }
 
@@ -655,33 +650,51 @@ function idx_parseIndexLine(&$page_idx,$line){
  * Tokenizes a string into an array of search words
  *
  * Uses the same algorithm as idx_getPageWords()
+ * Takes an arbitrarily complex string and returns a list of words
+ * suitable for indexing. The string may include spaces and line
+ * breaks
  *
  * @param string   $string     the query as given by the user
  * @param arrayref $stopwords  array of stopwords
  * @param boolean  $wc         are wildcards allowed?
+ * @return array               list of indexable words
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idx_tokenizer($string,&$stopwords,$wc=false){
     $words = array();
     $wc = ($wc) ? '' : $wc = '\*';
 
-    if(preg_match('/[^0-9A-Za-z]/u', $string)){
-        // handle asian chars as single words (may fail on older PHP version)
-        $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$string);
-        if(!is_null($asia)) $string = $asia; //recover from regexp failure
+    if (!$stopwords)
+        $sw = array();
+    else
+        $sw =& $stopwords;
 
-        $arr = explode(' ', utf8_stripspecials($string,' ','\._\-:'.$wc));
-        foreach ($arr as $w) {
-            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
-            $w = utf8_strtolower($w);
-            if($stopwords && is_int(array_search("$w\n",$stopwords))) continue;
+    $string = strtr($string, "\r\n\t", '   ');
+    if(preg_match('/[^0-9A-Za-z ]/u', $string))
+        $string = utf8_stripspecials($string, ' ', '\._\-:'.$wc);
+
+    $wordlist = explode(' ', $string);
+    foreach ($wordlist as $word) {
+        if(preg_match('/[^0-9A-Za-z]/u', $word)){
+            // handle asian chars as single words (may fail on older PHP version)
+            $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$word);
+            if(!is_null($asia)) $word = $asia; //recover from regexp failure
+
+            $arr = explode(' ', $word);
+            foreach ($arr as $w) {
+                if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
+                $w = utf8_strtolower($w);
+                if(is_int(array_search("$w\n",$stopwords))) continue;
+                $words[] = $w;
+            }
+        }else{
+            $w = $word;
+            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) return $words;
+            $w = strtolower($w);
+            if(is_int(array_search("$w\n",$stopwords))) return $words;
             $words[] = $w;
         }
-    }else{
-        $w = $string;
-        if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) return $words;
-        $w = strtolower($w);
-        if(is_int(array_search("$w\n",$stopwords))) return $words;
-        $words[] = $w;
     }
 
     return $words;
