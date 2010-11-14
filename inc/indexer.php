@@ -52,8 +52,10 @@ function wordlen($w){
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
-    if(preg_match('/'.IDX_ASIAN2.'/u',$w))
-        $l += ord($w) - 0xE1;  // Lead bytes from 0xE2-0xEF
+    if(preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
+        foreach($leadbytes[0] as $b)
+            $l += ord($b) - 0xE1;
+    }
     return $l;
 }
 
