@@ -149,7 +149,7 @@ function idx_saveIndexLine($pre, $wlen, $idx, $line){
     $ih = @fopen($fn.'.idx','r');
     if ($ih) {
         $ln = -1;
-        while (($curline = _freadline($ih)) !== false) {
+        while (($curline = fgets($ih)) !== false) {
             if (++$ln == $idx) {
                 fwrite($fh, $line);
             } else {
@@ -181,7 +181,7 @@ function idx_getIndexLine($pre, $wlen, $idx){
     $fh = @fopen($fn,'r');
     if(!$fh) return '';
     $ln = -1;
-    while (($line = _freadline($fh)) !== false) {
+    while (($line = fgets($fh)) !== false) {
         if (++$ln == $idx) break;
     }
     fclose($fh);
