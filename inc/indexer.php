@@ -67,9 +67,7 @@ function idx_saveIndex($pre, $wlen, &$idx){
     $fn = $conf['indexdir'].'/'.$pre.$wlen;
     $fh = @fopen($fn.'.tmp','w');
     if(!$fh) return false;
-    foreach ($idx as $line) {
-        fwrite($fh,$line);
-    }
+    fwrite($fh,join('', $idx));
     fclose($fh);
     if(isset($conf['fperm'])) chmod($fn.'.tmp', $conf['fperm']);
     io_rename($fn.'.tmp', $fn.'.idx');
