@@ -252,6 +252,8 @@ function idx_getPageWords($page){
 
     // arrive here with $words = array(wordlen => array(word => frequency))
 
+    $word_idx_modified = false;
+
     $index = array(); //resulting index
     foreach (array_keys($words) as $wlen){
         $word_idx = idx_getIndex('w',$wlen);
@@ -260,6 +262,7 @@ function idx_getPageWords($page){
             if(!is_int($wid)){
                 $wid = count($word_idx);
                 $word_idx[] = "$word\n";
+                $word_idx_modified = true;
             }
             if(!isset($index[$wlen]))
                 $index[$wlen] = array();
@@ -267,7 +270,7 @@ function idx_getPageWords($page){
         }
 
         // save back word index
-        if(!idx_saveIndex('w',$wlen,$word_idx)){
+        if($word_idx_modified && !idx_saveIndex('w',$wlen,$word_idx)){
             trigger_error("Failed to write word index", E_USER_ERROR);
             return false;
         }
