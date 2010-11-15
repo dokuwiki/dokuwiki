@@ -690,9 +690,9 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
             }
         }else{
             $w = $word;
-            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) return $words;
+            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
             $w = strtolower($w);
-            if(is_int(array_search("$w\n",$stopwords))) return $words;
+            if(is_int(array_search("$w\n",$stopwords))) continue;
             $words[] = $w;
         }
     }
