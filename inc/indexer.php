@@ -391,26 +391,19 @@ function idx_writeIndexLine($fh,$line,$pid,$count){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idx_updateIndexLine($line,$pid,$count){
-    $line = trim($line);
-    $updated = array();
-    if($line != ''){
-        $parts = explode(':',$line);
-        // remove doc from given line
-        foreach($parts as $part){
-            if($part == '') continue;
-            list($doc,$cnt) = explode('*',$part);
-            if($doc != $pid){
-                $updated[] = $part;
-            }
+    if ($line == ''){
+        $newLine = "\n";
+    }else{
+        $newLine = preg_replace('/(^|:)'.preg_quote($pid, '/').'\*\d*/', '', $line);
+    }
+    if ($count){
+        if (strlen($newLine) > 1){
+            return "$pid*$count:".$newLine;
+        }else{
+            return "$pid*$count".$newLine;
         }
     }
-
-    // add doc
-    if ($count){
-        $updated[] = "$pid*$count";
-    }
-
-    return join(':',$updated)."\n";
+    return $newLine;
 }
 
 /**
