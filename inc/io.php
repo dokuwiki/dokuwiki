@@ -533,17 +533,20 @@ function io_rename($from,$to){
  *
  * @author Harry Brueckner <harry_b@eml.cc>
  * @author Andreas Gohr <andi@splitbrain.org>
- * @deprecated
  */
-function io_runcmd($cmd){
-    $fh = popen($cmd, "r");
-    if(!$fh) return false;
-    $ret = '';
-    while (!feof($fh)) {
-        $ret .= fread($fh, 8192);
-    }
-    pclose($fh);
-    return $ret;
+function io_runcmd($cmd, $input, &$output){
+    $descspec = array(
+            0=>array("pipe","r"),
+            1=>array("pipe","w"),
+            2=>array("pipe","w"));
+    $ph = proc_open($cmd, $descspec, $pipes);
+    if(!$ph) return -1;
+    fclose($pipes[2]); // ignore stderr
+    fwrite($pipes[0], $input);
+    fclose($pipes[0]);
+    $output = stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+    return proc_close($ph);
 }
 
 /**
