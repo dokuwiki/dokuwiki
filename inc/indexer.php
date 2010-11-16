@@ -662,6 +662,7 @@ function idx_parseIndexLine(&$page_idx,$line){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idx_tokenizer($string,&$stopwords,$wc=false){
+    global $conf;
     $words = array();
     $wc = ($wc) ? '' : $wc = '\*';
 
@@ -670,6 +671,16 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
     else
         $sw =& $stopwords;
 
+    if ($conf['external_tokenizer']) {
+	if (0 == io_runcmd($conf['tokenizer_cmd'], $string, $output))
+            $string = $output;
+    } else {
+        if(preg_match('/[^0-9A-Za-z ]/u', $string)) {
+            // handle asian chars as single words (may fail on older PHP version)
+            $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$string);
+            if(!is_null($asia)) $string = $asia; //recover from regexp failure
+        }
+    }
     $string = strtr($string, "\r\n\t", '   ');
     if(preg_match('/[^0-9A-Za-z ]/u', $string))
         $string = utf8_stripspecials($string, ' ', '\._\-:'.$wc);
@@ -677,24 +688,13 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
     $wordlist = explode(' ', $string);
     foreach ($wordlist as $word) {
         if(preg_match('/[^0-9A-Za-z]/u', $word)){
-            // handle asian chars as single words (may fail on older PHP version)
-            $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$word);
-            if(!is_null($asia)) $word = $asia; //recover from regexp failure
-
-            $arr = explode(' ', $word);
-            foreach ($arr as $w) {
-                if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
-                $w = utf8_strtolower($w);
-                if(is_int(array_search("$w\n",$stopwords))) continue;
-                $words[] = $w;
-            }
+            $word = utf8_strtolower($word);
         }else{
-            $w = $word;
-            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
-            $w = strtolower($w);
-            if(is_int(array_search("$w\n",$stopwords))) continue;
-            $words[] = $w;
+            $word = strtolower($word);
         }
+        if (!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH) continue;
+        if(is_int(array_search("$word\n",$stopwords))) continue;
+        $words[] = $word;
     }
 
     return $words;
