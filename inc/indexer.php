@@ -8,6 +8,9 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
+// Version tag used to force rebuild on upgrade
+define('INDEXER_VERSION', 2);
+
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
 
@@ -41,6 +44,20 @@ define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two charact
                    '\x{31F0}-\x{31FF}'.
                    ']?');
 define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
+
+/**
+ * Version of the indexer taking into consideration the external tokenizer.
+ * The indexer is only compatible with data written by the same version.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_get_version(){
+    global $conf;
+    if($conf['external_tokenizer'])
+        return INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
+    else
+        return INDEXER_VERSION;
+}
 
 /**
  * Measure the length of a string.

@@ -13,10 +13,6 @@ require_once(DOKU_INC.'inc/auth.php');
 require_once(DOKU_INC.'inc/cliopts.php');
 session_write_close();
 
-// Version tag used to force rebuild on upgrade
-// Need to keep in sync with lib/exe/indexer.php
-if(!defined('INDEXER_VERSION')) define('INDEXER_VERSION', 2);
-
 // handle options
 $short_opts = 'hcuq';
 $long_opts  = array('help', 'clear', 'update', 'quiet');
@@ -88,7 +84,7 @@ function _index($id){
     if(!$CLEAR){
         $idxtag = metaFN($id,'.indexed');
         if(@file_exists($idxtag)){
-            if(io_readFile($idxtag) >= INDEXER_VERSION){
+            if(io_readFile($idxtag) == idx_get_version()){
                 $last = @filemtime(metaFN($id,'.indexed'));
                 if($last > @filemtime(wikiFN($id))) return;
             }
@@ -98,7 +94,7 @@ function _index($id){
     _lock();
     _quietecho("$id... ");
     idx_addPage($id);
-    io_saveFile(metaFN($id,'.indexed'),INDEXER_VERSION);
+    io_saveFile(metaFN($id,'.indexed'), idx_get_version());
     _quietecho("done.\n");
     _unlock();
 }

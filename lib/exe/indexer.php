@@ -11,9 +11,6 @@ require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
-// Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 2);
-
 // keep running after browser closes connection
 @ignore_user_abort(true);
 
@@ -140,7 +137,7 @@ function runIndexer(){
     // check if indexing needed
     $idxtag = metaFN($ID,'.indexed');
     if(@file_exists($idxtag)){
-        if(trim(io_readFile($idxtag)) == INDEXER_VERSION){
+        if(trim(io_readFile($idxtag)) == idx_get_version()){
             $last = @filemtime($idxtag);
             if($last > @filemtime(wikiFN($ID))){
                 print "runIndexer(): index for $ID up to date".NL;
@@ -168,7 +165,7 @@ function runIndexer(){
     idx_addPage($ID);
 
     // we're finished - save and free lock
-    io_saveFile(metaFN($ID,'.indexed'),INDEXER_VERSION);
+    io_saveFile(metaFN($ID,'.indexed'), idx_get_version());
     @rmdir($lock);
     print "runIndexer(): finished".NL;
     return true;
