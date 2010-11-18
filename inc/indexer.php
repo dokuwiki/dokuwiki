@@ -484,7 +484,7 @@ function idx_indexLengths(&$filter){
     } else {
         $lengths = idx_listIndexLengths();
         foreach ( $lengths as $key => $length) {
-            // we keep all the values equal or superior 
+            // we keep all the values equal or superior
             if ((int)$length >= (int)$filter) {
                 $idx[] = $length;
             }
@@ -689,7 +689,7 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
         $sw =& $stopwords;
 
     if ($conf['external_tokenizer']) {
-	if (0 == io_runcmd($conf['tokenizer_cmd'], $string, $output))
+        if (0 == io_exec($conf['tokenizer_cmd'], $string, $output))
             $string = $output;
     } else {
         if(preg_match('/[^0-9A-Za-z ]/u', $string)) {
