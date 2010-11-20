@@ -765,7 +765,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
             //build code
             $ret .= '<label for="pbox'.$label.'" title="'.$this->getLang('acl_perm'.$perm).'"'.$class.'>';
-            $ret .= '<input '.html_attbuild($atts).' />&nbsp;';
+            $ret .= '<input '.buildAttributes($atts).' />&nbsp;';
             $ret .= $this->getLang('acl_perm'.$perm);
             $ret .= '</label>'.NL;
         }
