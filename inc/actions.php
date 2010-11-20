@@ -50,6 +50,12 @@ function act_dispatch(){
             }
         }
 
+        //display some infos
+        if($ACT == 'check'){
+            check();
+            $ACT = 'show';
+        }
+
         //check permissions
         $ACT = act_permcheck($ACT);
 
@@ -119,12 +125,6 @@ function act_dispatch(){
         //handle export
         if(substr($ACT,0,7) == 'export_')
             $ACT = act_export($ACT);
-
-        //display some infos
-        if($ACT == 'check'){
-            check();
-            $ACT = 'show';
-        }
 
         //handle admin tasks
         if($ACT == 'admin'){
