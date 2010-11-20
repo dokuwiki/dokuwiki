@@ -8,6 +8,9 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
+// Version tag used to force rebuild on upgrade
+define('INDEXER_VERSION', 2);
+
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
 
@@ -43,6 +46,20 @@ define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two charact
 define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
 
 /**
+ * Version of the indexer taking into consideration the external tokenizer.
+ * The indexer is only compatible with data written by the same version.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_get_version(){
+    global $conf;
+    if($conf['external_tokenizer'])
+        return INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
+    else
+        return INDEXER_VERSION;
+}
+
+/**
  * Measure the length of a string.
  * Differs from strlen in handling of asian characters.
  *
@@ -52,8 +69,10 @@ function wordlen($w){
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
-    if(preg_match('/'.IDX_ASIAN2.'/u',$w))
-        $l += ord($w) - 0xE1;  // Lead bytes from 0xE2-0xEF
+    if(preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
+        foreach($leadbytes[0] as $b)
+            $l += ord($b) - 0xE1;
+    }
     return $l;
 }
 
@@ -99,22 +118,6 @@ function idx_getIndex($pre, $wlen){
     $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
     if(!@file_exists($fn)) return array();
     return file($fn);
-}
-
-/**
- * Create an empty index file if it doesn't exist yet.
- *
- * FIXME: This function isn't currently used. It will probably be removed soon.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function idx_touchIndex($pre, $wlen){
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
-    if(!@file_exists($fn)){
-        touch($fn);
-        if($conf['fperm']) chmod($fn, $conf['fperm']);
-    }
 }
 
 /**
@@ -215,8 +218,7 @@ function idx_getPageWords($page){
 
     list($page,$body) = $data;
 
-    $body   = strtr($body, "\r\n\t", '   ');
-    $tokens = explode(' ', $body);
+    $tokens = idx_tokenizer($body, $stopwords);
     $tokens = array_count_values($tokens);   // count the frequency of each token
 
     // ensure the deaccented or romanised page names of internal links are added to the token array
@@ -237,16 +239,12 @@ function idx_getPageWords($page){
     }
 
     $words = array();
-    foreach ($tokens as $word => $count) {
-        $arr = idx_tokenizer($word,$stopwords);
-        $arr = array_count_values($arr);
-        foreach ($arr as $w => $c) {
-            $l = wordlen($w);
-            if(isset($words[$l])){
-                $words[$l][$w] = $c * $count + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
-            }else{
-                $words[$l] = array($w => $c * $count);
-            }
+    foreach ($tokens as $w => $c) {
+        $l = wordlen($w);
+        if(isset($words[$l])){
+            $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
+        }else{
+            $words[$l] = array($w => $c);
         }
     }
 
@@ -480,7 +478,7 @@ function idx_indexLengths(&$filter){
     } else {
         $lengths = idx_listIndexLengths();
         foreach ( $lengths as $key => $length) {
-            // we keep all the values equal or superior 
+            // we keep all the values equal or superior
             if ((int)$length >= (int)$filter) {
                 $idx[] = $length;
             }
@@ -663,33 +661,51 @@ function idx_parseIndexLine(&$page_idx,$line){
  * Tokenizes a string into an array of search words
  *
  * Uses the same algorithm as idx_getPageWords()
+ * Takes an arbitrarily complex string and returns a list of words
+ * suitable for indexing. The string may include spaces and line
+ * breaks
  *
  * @param string   $string     the query as given by the user
  * @param arrayref $stopwords  array of stopwords
  * @param boolean  $wc         are wildcards allowed?
+ * @return array               list of indexable words
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function idx_tokenizer($string,&$stopwords,$wc=false){
+    global $conf;
     $words = array();
     $wc = ($wc) ? '' : $wc = '\*';
 
-    if(preg_match('/[^0-9A-Za-z]/u', $string)){
-        // handle asian chars as single words (may fail on older PHP version)
-        $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$string);
-        if(!is_null($asia)) $string = $asia; //recover from regexp failure
+    if (!$stopwords)
+        $sw = array();
+    else
+        $sw =& $stopwords;
 
-        $arr = explode(' ', utf8_stripspecials($string,' ','\._\-:'.$wc));
-        foreach ($arr as $w) {
-            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
-            $w = utf8_strtolower($w);
-            if($stopwords && is_int(array_search("$w\n",$stopwords))) continue;
-            $words[] = $w;
+    if ($conf['external_tokenizer']) {
+        if (0 == io_exec($conf['tokenizer_cmd'], $string, $output))
+            $string = $output;
+    } else {
+        if(preg_match('/[^0-9A-Za-z ]/u', $string)) {
+            // handle asian chars as single words (may fail on older PHP version)
+            $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$string);
+            if(!is_null($asia)) $string = $asia; //recover from regexp failure
         }
-    }else{
-        $w = $string;
-        if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) return $words;
-        $w = strtolower($w);
-        if(is_int(array_search("$w\n",$stopwords))) return $words;
-        $words[] = $w;
+    }
+    $string = strtr($string, "\r\n\t", '   ');
+    if(preg_match('/[^0-9A-Za-z ]/u', $string))
+        $string = utf8_stripspecials($string, ' ', '\._\-:'.$wc);
+
+    $wordlist = explode(' ', $string);
+    foreach ($wordlist as $word) {
+        if(preg_match('/[^0-9A-Za-z]/u', $word)){
+            $word = utf8_strtolower($word);
+        }else{
+            $word = strtolower($word);
+        }
+        if (!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH) continue;
+        if(is_int(array_search("$word\n",$stopwords))) continue;
+        $words[] = $word;
     }
 
     return $words;
