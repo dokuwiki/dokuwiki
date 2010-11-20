@@ -20,6 +20,7 @@ function act_dispatch(){
     global $ID;
     global $QUERY;
     global $lang;
+    global $conf;
 
     $preact = $ACT;
 
@@ -143,6 +144,10 @@ function act_dispatch(){
         $ACT = act_permcheck($ACT);
     }  // end event ACTION_ACT_PREPROCESS default action
     $evt->advise_after();
+    // Make sure plugs can handle 'denied'
+    if($conf['send404'] && $ACT == 'denied') {
+        header('HTTP/1.0 403 Forbidden');
+    }
     unset($evt);
 
     // when action 'show', the intial not 'show' and POST, do a redirect
