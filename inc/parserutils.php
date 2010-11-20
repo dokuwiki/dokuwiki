@@ -223,7 +223,7 @@ function p_get_instructions($text){
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
 function p_get_metadata($id, $key='', $render=false){
-    global $ID, $INFO, $cache_metadata;
+    global $ID;
 
     // cache the current page
     // Benchmarking shows the current page's metadata is generally the only page metadata
@@ -234,11 +234,7 @@ function p_get_metadata($id, $key='', $render=false){
     // metadata has never been rendered before - do it! (but not for non-existent pages)
     if ($render && !isset($meta['current']['description']['abstract']) && page_exists($id)){
         $meta = p_render_metadata($id, $meta);
-        io_saveFile(metaFN($id, '.meta'), serialize($meta));
-
-        // sync cached copies, including $INFO metadata
-        if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-        if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+        p_save_metadata($id, $meta);
     }
 
     $val = $meta['current'];
@@ -255,6 +251,15 @@ function p_get_metadata($id, $key='', $render=false){
 
 /**
  * sets metadata elements of a page
+ *
+ * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
+ *
+ * @param String  $id         is the ID of a wiki page
+ * @param Array   $data       is an array with key ⇒ value pairs to be set in the metadata
+ * @param Boolean $render     whether or not the page metadata should be generated with the renderer
+ * @param Boolean $persistent indicates whether or not the particular metadata value will persist through
+ *                            the next metadata rendering.
+ * @return boolean true on success
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  */
@@ -305,13 +310,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
     // save only if metadata changed
     if ($meta == $orig) return true;
 
-    // sync cached copies, including $INFO metadata
-    global $cache_metadata, $INFO;
-
-    if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
-
-    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    return p_save_metadata($id, $meta);
 }
 
 /**
@@ -321,24 +320,21 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
  * @author Michael Klier <chi@chimeric.de>
  */
 function p_purge_metadata($id) {
-    $metafn = metaFN('id', '.meta');
-    $meta   = p_read_metadata($id);
+    $meta = p_read_metadata($id);
     foreach($meta['current'] as $key => $value) {
         if(is_array($meta[$key])) {
             $meta['current'][$key] = array();
         } else {
             $meta['current'][$key] = '';
         }
+
     }
-    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    return p_save_metadata($id, $meta);
 }
 
 /**
  * read the metadata from source/cache for $id
  * (internal use only - called by p_get_metadata & p_set_metadata)
- *
- * this function also converts the metadata from the original format to
- * the current format ('current' & 'persistent' arrays)
  *
  * @author   Christopher Smith <chris@jalakai.co.uk>
  *
@@ -356,31 +352,29 @@ function p_read_metadata($id,$cache=false) {
     $file = metaFN($id, '.meta');
     $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
 
-    // convert $meta from old format to new (current+persistent) format
-    if (!isset($meta['current'])) {
-        $meta = array('current'=>$meta,'persistent'=>$meta);
-
-        // remove non-persistent keys
-        unset($meta['persistent']['title']);
-        unset($meta['persistent']['description']['abstract']);
-        unset($meta['persistent']['description']['tableofcontents']);
-        unset($meta['persistent']['relation']['haspart']);
-        unset($meta['persistent']['relation']['references']);
-        unset($meta['persistent']['date']['valid']);
-
-        if (empty($meta['persistent']['description'])) unset($meta['persistent']['description']);
-        if (empty($meta['persistent']['relation'])) unset($meta['persistent']['relation']);
-        if (empty($meta['persistent']['date'])) unset($meta['persistent']['date']);
-
-        // save converted metadata
-        io_saveFile($file, serialize($meta));
-    }
-
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;
     }
 
     return $meta;
+}
+
+/**
+ * This is the backend function to save a metadata array to a file
+ *
+ * @param    string   $id      absolute wiki page id
+ * @param    array    $meta    metadata
+ *
+ * @return   bool              success / fail
+ */
+function p_save_metadata($id, $meta) {
+    // sync cached copies, including $INFO metadata
+    global $cache_metadata, $INFO;
+
+    if (isset($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+
+    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
 }
 
 /**

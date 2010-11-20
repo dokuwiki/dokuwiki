@@ -37,6 +37,15 @@ function parseChangelogLine($line) {
 /**
  * Add's an entry to the changelog and saves the metadata for the page
  *
+ * @param int    $date      Timestamp of the change
+ * @param String $id        Name of the affected page
+ * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
+ * @param String $summary   Summary of the change
+ * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
+ * @param array  $flags     Additional flags in a key value array.
+ *                             Availible flags:
+ *                             - ExternalEdit - mark as an external edit.
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>

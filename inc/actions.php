@@ -20,6 +20,7 @@ function act_dispatch(){
     global $ID;
     global $QUERY;
     global $lang;
+    global $conf;
 
     $preact = $ACT;
 
@@ -48,6 +49,12 @@ function act_dispatch(){
             } catch (Exception $e) {
                 msg($e->getMessage(), -1);
             }
+        }
+
+        //display some infos
+        if($ACT == 'check'){
+            check();
+            $ACT = 'show';
         }
 
         //check permissions
@@ -120,12 +127,6 @@ function act_dispatch(){
         if(substr($ACT,0,7) == 'export_')
             $ACT = act_export($ACT);
 
-        //display some infos
-        if($ACT == 'check'){
-            check();
-            $ACT = 'show';
-        }
-
         //handle admin tasks
         if($ACT == 'admin'){
             // retrieve admin plugin name from $_REQUEST['page']
@@ -143,6 +144,10 @@ function act_dispatch(){
         $ACT = act_permcheck($ACT);
     }  // end event ACTION_ACT_PREPROCESS default action
     $evt->advise_after();
+    // Make sure plugs can handle 'denied'
+    if($conf['send404'] && $ACT == 'denied') {
+        header('HTTP/1.0 403 Forbidden');
+    }
     unset($evt);
 
     // when action 'show', the intial not 'show' and POST, do a redirect

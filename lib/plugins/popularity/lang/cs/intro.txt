@@ -1,6 +1,6 @@
 ===== Průzkum používání =====
 
-Tento nástroj jednorázově shromáží anonymní data o vaší wiki a umožní vám odeslat je vývojářům DokuWiki. To jim pomůže lépe porozumět, jak uživatelé DokuWiki používají, a jejich rozhodnutí při dalším vývoji budou založena na statistikách z reálného používání DokuWiki.
+Tento nástroj jednorázově shromáždí anonymní data o vaší wiki a umožní vám odeslat je vývojářům DokuWiki. To jim pomůže lépe porozumět, jak uživatelé DokuWiki používají, a jejich rozhodnutí při dalším vývoji budou založena na statistikách z reálného používání DokuWiki.
 
 Chcete-li pomoci vývojářům, čas od času, jak vaše wiki poroste, použijte tento nástroj. Vaše data budou pokaždé označena stejným anonymním identifikátorem.
 

@@ -511,8 +511,7 @@ function pathID($path,$keeptxt=false){
     $id = utf8_decodeFN($path);
     $id = str_replace('/',':',$id);
     if(!$keeptxt) $id = preg_replace('#\.txt$#','',$id);
-    $id = preg_replace('#^:+#','',$id);
-    $id = preg_replace('#:+$#','',$id);
+    $id = trim($id, ':');
     return $id;
 }
 
