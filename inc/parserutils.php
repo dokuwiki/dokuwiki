@@ -221,6 +221,7 @@ function p_get_instructions($text){
  * returns the metadata of a page
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function p_get_metadata($id, $key='', $render=false){
     global $ID;
@@ -231,10 +232,24 @@ function p_get_metadata($id, $key='', $render=false){
     $cache = ($ID == $id);
     $meta = p_read_metadata($id, $cache);
 
-    // metadata has never been rendered before - do it! (but not for non-existent pages)
-    if ($render && !isset($meta['current']['description']['abstract']) && page_exists($id)){
-        $meta = p_render_metadata($id, $meta);
-        p_save_metadata($id, $meta);
+    // prevent recursive calls in the cache
+    static $recursion = false;
+    if (!$recursion){
+        $recursion = true;
+
+        $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
+
+        if (page_exists($id) && !$cachefile->useCache()){
+            $meta = p_render_metadata($id, $meta);
+            if (p_save_metadata($id, $meta)) {
+                // store a timestamp in order to make sure that the cachefile is touched
+                $cachefile->storeCache(time());
+            } else {
+                msg('Unable to save metadata file. Hint: disk full; file permissions; safe_mode setting.',-1);
+            }
+        }
+
+        $recursion = false;
     }
 
     $val = $meta['current'];
