@@ -460,7 +460,8 @@ function check_functions(){
                          'glob header ignore_user_abort ini_get mail mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
-                         'preg_replace file_get_contents htmlspecialchars_decode');
+                         'preg_replace file_get_contents htmlspecialchars_decode '.
+                         'spl_autoload_register');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';
