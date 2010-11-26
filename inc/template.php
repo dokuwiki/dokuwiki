@@ -690,7 +690,7 @@ function tpl_breadcrumbs($sep='&raquo;'){
     global $conf;
 
     //check if enabled
-    if(!$conf['breadcrumbs']) return false;
+    if(!is_numeric($conf['breadcrumbs']) || $conf['breadcrumbs'] <= 0) return false;
 
     $crumbs = breadcrumbs(); //setup crumb trace
 

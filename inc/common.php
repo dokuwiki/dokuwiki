@@ -268,6 +268,9 @@ function breadcrumbs(){
     global $ACT;
     global $conf;
 
+    // Prevent infinite loop later in this function
+    if (!is_numeric($conf['breadcrumbs']) || $conf['breadcrumbs'] <= 0) return array();
+
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
     //we only save on show and existing wiki documents

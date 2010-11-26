@@ -68,7 +68,7 @@ if (!defined('DOKU_INC')) die();
       <div class="clearer"></div>
     </div>
 
-    <?php if($conf['breadcrumbs']){?>
+    <?php if($conf['breadcrumbs'] > 0){?>
     <div class="breadcrumbs">
       <?php tpl_breadcrumbs()?>
       <?php //tpl_youarehere() //(some people prefer this)?>
