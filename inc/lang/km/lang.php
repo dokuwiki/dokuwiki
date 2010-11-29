@@ -227,4 +227,4 @@ $lang['i_pol2']       = 'វីគីបិទជិត';
 
 $lang['i_retry']      = 'ម្តងទៀត';
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

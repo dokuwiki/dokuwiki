@@ -74,4 +74,4 @@ $lang['notenabled']       = 'Plugin %s could not be enabled, check file permissi
 $lang['disabled']         = 'Plugin %s disabled.';
 $lang['notdisabled']      = 'Plugin %s could not be disabled, check file permissions.';
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

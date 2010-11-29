@@ -252,4 +252,4 @@ function toolbar_signature(){
     return $sig;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

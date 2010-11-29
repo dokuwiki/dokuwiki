@@ -701,4 +701,4 @@ function idx_tokenizer($string,&$stopwords,$wc=false){
     return $words;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

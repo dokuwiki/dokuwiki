@@ -211,4 +211,4 @@ $lang['js']['del_confirm']= 'Kas kustutame selle kirje?';
 #$lang['unsubscribe_success'] = '';
 #$lang['unsubscribe_error'] = '';
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

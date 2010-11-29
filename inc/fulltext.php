@@ -756,4 +756,4 @@ function ft_termParser($term, &$stopwords, $consider_asian = true, $phrase_mode 
     return $parsed;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

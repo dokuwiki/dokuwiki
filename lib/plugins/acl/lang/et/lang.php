@@ -20,4 +20,4 @@ $lang['acl_perm2']  = 'Toimetamine';
 $lang['acl_perm4']  = 'Tekitamine';
 $lang['acl_perm8']  = 'Üles laadimine';
 $lang['acl_new']    = 'Uue kirje lisamine';
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

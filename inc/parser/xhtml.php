@@ -1205,4 +1205,4 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

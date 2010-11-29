@@ -743,4 +743,4 @@ function subscription_handle_post(&$params) {
     $params = compact('target', 'style', 'data', 'action');
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

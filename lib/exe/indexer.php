@@ -302,6 +302,6 @@ function sendGIF(){
     // Thinks it's got the whole image
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :
 // No trailing PHP closing tag - no output please!
 // See Note at http://www.php.net/manual/en/language.basic-syntax.instruction-separation.php

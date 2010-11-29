@@ -160,4 +160,4 @@ $lang['subscribe_noaddress']= 'There is no address associated with your login, y
 $lang['unsubscribe_success']= 'Removed %s from subscription list for %s';
 $lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

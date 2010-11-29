@@ -1541,4 +1541,4 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
     }
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

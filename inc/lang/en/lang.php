@@ -316,4 +316,4 @@ $lang['seconds'] = '%d seconds ago';
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

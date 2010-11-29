@@ -339,4 +339,4 @@ function ajax_linkwiz(){
 
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

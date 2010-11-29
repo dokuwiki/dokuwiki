@@ -330,4 +330,4 @@ function css_comment_cb($matches){
     return $matches[0];
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

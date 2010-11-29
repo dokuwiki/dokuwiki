@@ -324,4 +324,4 @@ function conf_decodeString($str) {
                      return $str;
     }
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :
