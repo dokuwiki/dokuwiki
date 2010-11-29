@@ -37,12 +37,12 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['
  */
 function mail_setup(){
     global $conf;
-    global $INFO;
+    global $USERINFO;
 
     $replace = array();
 
-    if(!empty($INFO['userinfo']['mail'])){
-        $replace['@MAIL@'] = $INFO['userinfo']['mail'];
+    if(!empty($USERINFO['mail'])){
+        $replace['@MAIL@'] = $USERINFO['mail'];
     }else{
         $replace['@MAIL@'] = 'noreply@'.parse_url(DOKU_URL,PHP_URL_HOST);
     }
@@ -53,8 +53,8 @@ function mail_setup(){
         $replace['@USER@'] = 'noreply';
     }
 
-    if(!empty($INFO['userinfo']['name'])){
-        $replace['@NAME@'] = $INFO['userinfo']['name'];
+    if(!empty($USERINFO['name'])){
+        $replace['@NAME@'] = $USERINFO['name'];
     }else{
         $replace['@NAME@'] = '';
     }
