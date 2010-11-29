@@ -1,5 +1,10 @@
 #!/usr/bin/php
 <?php
+/**
+ * Strip unwanted languages from the DokuWiki install
+ *
+ * @author Martin 'E.T.' Misuth <et.github@ethome.sk>
+ */
 if ('cli' != php_sapi_name()) die();
 
 #------------------------------------------------------------------------------
@@ -16,20 +21,20 @@ function usage($show_examples = false) {
     OPTIONS
         -h, --help     get this help
         -x, --examples get also usage examples
-        -k, --keep     comma separated list of languages, -e is always implied        
+        -k, --keep     comma separated list of languages, -e is always implied
         -e, --english  keeps english, dummy to use without -k";
     if ( $show_examples ) {
         print "\n
     EXAMPLES
-        Strips all languages, but keeps 'en' and 'de':        
+        Strips all languages, but keeps 'en' and 'de':
          striplangs -k de
 
         Strips all but 'en','ca-valencia','cs','de','is','sk':
          striplangs --keep ca-valencia,cs,de,is,sk
-         
+
         Strips all but 'en':
          striplangs -e
-         
+
         No option specified, prints usage and throws error:
          striplangs\n";
     }
@@ -49,16 +54,16 @@ function processPlugins($path, $keep_langs) {
 
         foreach ($entries as $entry) {
             if ($entry != "." && $entry != "..") {
-                if ( is_dir($path.'\\'.$entry) ) {
-                    
-                    $plugin_langs = $path.'\\'.$entry.'\\lang';
-                                        
+                if ( is_dir($path.'/'.$entry) ) {
+
+                    $plugin_langs = $path.'/'.$entry.'/lang';
+
                     if ( is_dir( $plugin_langs ) ) {
                         stripDirLangs($plugin_langs, $keep_langs);
                     }
                 }
             }
-        }    
+        }
     }
 }
 
@@ -66,15 +71,15 @@ function stripDirLangs($path, $keep_langs) {
     $dir = dir($path);
 
     while(($cur_dir = $dir->read()) !== false) {
-        if( $cur_dir != '.' and $cur_dir != '..' and is_dir($path.'\\'.$cur_dir)) {
+        if( $cur_dir != '.' and $cur_dir != '..' and is_dir($path.'/'.$cur_dir)) {
 
             if ( !in_array($cur_dir, $keep_langs, true ) ) {
-                killDir($path.'\\'.$cur_dir);
+                killDir($path.'/'.$cur_dir);
             }
         }
     }
     $dir->close();
-} 
+}
 
 function killDir($dir) {
     if (is_dir($dir)) {
@@ -82,13 +87,13 @@ function killDir($dir) {
 
         foreach ($entries as $entry) {
             if ($entry != "." && $entry != "..") {
-                if ( is_dir($dir.'\\'.$entry) ) {
-                    killDir($dir.'\\'.$entry);
+                if ( is_dir($dir.'/'.$entry) ) {
+                    killDir($dir.'/'.$entry);
                 } else {
-                    unlink($dir.'\\'.$entry);
+                    unlink($dir.'/'.$entry);
                 }
             }
-        }    
+        }
         reset($entries);
         rmdir($dir);
     }
@@ -119,11 +124,11 @@ if ( $OPTS->has('h') or $OPTS->has('help') ) {
 if ( $OPTS->has('k') or $OPTS->has('keep') ) {
     $preserved_langs = getSuppliedArgument($OPTS,'k','keep');
     $langs = explode(',', $preserved_langs);
-    
+
     // ! always enforce 'en' lang when using '--keep' (DW relies on it)
     if ( !isset($langs['en']) ) {
       $langs[]='en';
-    }    
+    }
 } elseif ( $OPTS->has('e') or $OPTS->has('english') ) {
     // '--english' was specified strip everything besides 'en'
     $langs = array ('en');
