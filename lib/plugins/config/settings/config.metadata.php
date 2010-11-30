@@ -101,7 +101,7 @@ $meta['allowdebug']  = array('onoff');
 
 $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
-$meta['breadcrumbs'] = array('numeric');
+$meta['breadcrumbs'] = array('numeric','_min' => 0);
 $meta['youarehere']  = array('onoff');
 $meta['fullpath']    = array('onoff');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));

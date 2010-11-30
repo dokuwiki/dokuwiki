@@ -69,7 +69,7 @@ if(!$INFO['exists'] &&
 }
 
 //prepare breadcrumbs (initialize a static var)
-if ($conf['breadcrumbs'] > 0) breadcrumbs();
+if ($conf['breadcrumbs']) breadcrumbs();
 
 // check upstream
 checkUpdateMessages();
