@@ -618,6 +618,24 @@ if (!class_exists('setting_numeric')) {
     // much more restrictive, but should eliminate syntax errors.
     var $_pattern = '/^[-]?[0-9]+(?:[-+*][0-9]+)*$/';
     //FIXME - make the numeric error checking better.
+    var $_min = null;
+    var $_max = null;
+
+    function update($input) {
+        $local = $this->_local;
+        $valid = parent::update($input);
+        if ($valid && !(is_null($this->_min) && is_null($this->_max))) {
+            $numeric_local = (int) eval('return '.$this->_local.';');
+            if ((!is_null($this->_min) && $numeric_local < $this->_min) ||
+                (!is_null($this->_max) && $numeric_local > $this->_max)) {
+                $this->_error = true;
+                $this->_input = $input;
+                $this->_local = $local;
+                $valid = false;
+            }
+        }
+        return $valid;
+    }
 
     function out($var, $fmt='php') {
 

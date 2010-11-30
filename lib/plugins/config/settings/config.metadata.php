@@ -16,6 +16,7 @@
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
  *   'numeric'      - text input, accepts numbers and arithmetic operators, setting output without quotes
+ *                    if given the '_min' and '_max' parameters are used for validation
  *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
@@ -54,6 +55,8 @@
  *   '_combine'    - complimentary output setting values which can be combined into a single display checkbox
  *                   optional for 'multicheckbox', ignored by other classes
  *   '_code'       - encoding method to use, accepted values: 'base64','uuencode','plain'.  defaults to plain.
+ *   '_min'        - minimum numeric value, optional for 'numeric' and 'numericopt', ignored by others
+ *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
