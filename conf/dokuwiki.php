@@ -75,6 +75,7 @@ $conf['profileconfirm'] = 1;             //Require current password to confirm c
 $conf['disableactions'] = '';            //comma separated list of actions to disable
 $conf['sneaky_index']   = 0;             //check for namespace read permission in index view (0|1) (1 might cause unexpected behavior)
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
+$conf['http_auth'] = 1;                  //allows HTTP authorization (SSO) from PHP_AUTH_USER/PHP_AUTH_PW variables
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 
 $conf['xmlrpc']      = 0;                //Enable/disable XML-RPC interface
