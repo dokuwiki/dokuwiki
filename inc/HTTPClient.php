@@ -92,7 +92,7 @@ class HTTPClient {
     var $redirect_count;
 
     // read these after a successful request
-    var $resp_status;
+    var $status;
     var $resp_body;
     var $resp_headers;
 
