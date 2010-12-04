@@ -106,6 +106,9 @@ div.picker button.pickerbutton {
     float: right;
     margin-top: -1.4em;
 }
+.dokuwiki .secedit input.button {
+    font-size: 75%;
+}
 .dokuwiki .section_highlight {
     background-color: __background_alt__ !important;
     color: inherit;

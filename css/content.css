@@ -100,30 +100,3 @@
     margin: 0;
 }
 
-
-/*____________ misc ____________*/
-
-/* license note in footer and under edit window */
-.dokuwiki div.license {
-    font-size: 90%;
-}
-
-#IE6 .dokuwiki input.button, #IE6 .dokuwiki button,
-#IE7 .dokuwiki input.button, #IE7 .dokuwiki button {
-    line-height: 1.4;
-}
-
-/*____________ JS popup ____________*/
-
-.JSpopup {
-    background-color: __background__;
-    color: __text__;
-    border: 1px solid __border__;
-    line-height: 1.2;
-    padding: 0 .2em;
-}
-
-.JSpopup ul,
-.JSpopup ol {
-    padding-left: 0;
-}
