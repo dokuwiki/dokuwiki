@@ -93,11 +93,10 @@ div.picker button.pickerbutton {
 ********************************************************************/
 
 .dokuwiki div.preview {
-    background-color: __background_neu__;
-    color: __text__;
+    border: dashed __border__;
+    border-width: .2em 0;
+    padding: 1.4em 0;
     margin-bottom: 1.4em;
-    padding: .5em;
-    border: 1px dotted __text_neu__;
 }
 
 /* section edit buttons
