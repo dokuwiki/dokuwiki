@@ -170,8 +170,9 @@ acronym, abbr {
 }
 
 pre, code, samp, kbd {
-    font: normal 1em Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
     /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
+    font-size: 1em;
     direction: ltr;
     text-align: left;
 }

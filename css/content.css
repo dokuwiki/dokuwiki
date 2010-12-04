@@ -64,6 +64,10 @@
     background-color: __background_alt__;
     color: inherit;
 }
+/* fix if background-color hides underlining */
+.dokuwiki em.u code {
+    text-decoration: underline;
+}
 .dokuwiki pre {
     border: 1px solid __border__;
     padding: 0 .2em;
