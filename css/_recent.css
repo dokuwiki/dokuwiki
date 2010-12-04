@@ -10,9 +10,15 @@
     list-style: none;
     margin-left: 0;
 }
-.dokuwiki #dw__recent ul li *,
-.dokuwiki #page__revisions ul li * {
+.dokuwiki #dw__recent ul li span,
+.dokuwiki #dw__recent ul li a,
+.dokuwiki #page__revisions ul li span,
+.dokuwiki #page__revisions ul li a {
     vertical-align: middle;
+}
+.dokuwiki #dw__recent ul li span.user a,
+.dokuwiki #page__revisions ul li span.user a {
+    vertical-align: bottom;
 }
 .dokuwiki #dw__recent ul li.minor,
 .dokuwiki #page__revisions ul li.minor {
