@@ -16,31 +16,26 @@ if (!defined('DOKU_INC')) die();
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function _tpl_discussion($discussNS='discussion',$link=0,$wrapper=0,$reverse=0) {
+function _tpl_discussion($discussionPage,$title,$backTitle,$link=0,$wrapper=0) {
     global $ID;
 
-    if ($reverse) {
-        $discussPage   = $ID.':'.$discussNS;
-        $isDiscussPage = substr($ID,-strlen($discussNS),strlen($discussNS))==$discussNS;
-        $backID        = substr($ID,0,-strlen($discussNS));
-    } else {
-        $discussPage   = $discussNS.':'.$ID;
-        $isDiscussPage = substr($ID,0,strlen($discussNS))==$discussNS;
-        $backID        = strstr($ID,':');
-    }
+    $discussPage    = str_replace('@ID@',$ID,$discussionPage);
+    $discussPageRaw = str_replace('@ID@','',$discussionPage);
+    $isDiscussPage  = strpos($ID,$discussPageRaw)!==false;
+    $backID         = str_replace($discussPageRaw,'',$ID);
 
     if ($wrapper) echo "<$wrapper>";
 
-    if($isDiscussPage) {
+    if ($isDiscussPage) {
         if ($link)
-            tpl_pagelink($backID,tpl_getLang('back_to_article'));
+            tpl_pagelink($backID,$backTitle);
         else
-            echo html_btn('back2article',$backID,'',array(),0,0,tpl_getLang('back_to_article'));
+            echo html_btn('back2article',$backID,'',array(),0,0,$backTitle);
     } else {
         if ($link)
-            tpl_pagelink($discussPage,tpl_getLang('discussion'));
+            tpl_pagelink($discussPage,$title);
         else
-            echo html_btn('discussion',$discussPage,'',array(),0,0,tpl_getLang('discussion'));
+            echo html_btn('discussion',$discussPage,'',array(),0,0,$title);
     }
 
     if ($wrapper) echo "</$wrapper>";
@@ -51,20 +46,40 @@ function _tpl_discussion($discussNS='discussion',$link=0,$wrapper=0,$reverse=0) 
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function _tpl_userpage($userNS='user',$link=0,$wrapper=false) {
+function _tpl_userpage($userPage,$title,$link=0,$wrapper=0) {
     if (!$_SERVER['REMOTE_USER']) return;
 
     global $conf;
-    $userPage = $userNS.':'.$_SERVER['REMOTE_USER'].':'.$conf['start'];
+    $userPage = str_replace('@USER@',$_SERVER['REMOTE_USER'],$userPage);
 
     if ($wrapper) echo "<$wrapper>";
 
     if ($link)
-        tpl_pagelink($userPage,tpl_getLang('userpage'));
+        tpl_pagelink($userPage,$title);
     else
-        echo html_btn('userpage',$userPage,'',array(),0,0,tpl_getLang('userpage'));
+        echo html_btn('userpage',$userPage,'',array(),0,0,$title);
 
     if ($wrapper) echo "</$wrapper>";
+}
+
+/**
+ * Wrapper around custom template actions
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function _tpl_action($type,$link=0,$wrapper=0) {
+    switch ($type) {
+        case 'discussion':
+            if (tpl_getConf('discussionPage')) {
+                _tpl_discussion(tpl_getConf('discussionPage'),tpl_getLang('discussion'),tpl_getLang('back_to_article'),$link,$wrapper);
+            }
+            break;
+        case 'userpage':
+            if (tpl_getConf('userPage')) {
+                _tpl_userpage(tpl_getConf('userPage'),tpl_getLang('userpage'),$link,$wrapper);
+            }
+            break;
+    }
 }
 
 /**

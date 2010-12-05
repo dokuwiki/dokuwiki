@@ -5,8 +5,7 @@
  */
 
 $meta['tagline']          = array('string');
-$meta['discussionNS']     = array('string');
-$meta['discussNSreverse'] = array('onoff');
-$meta['userNS']           = array('string');
+$meta['discussionPage']   = array('string');
+$meta['userPage']         = array('string');
 $meta['sidebarID']        = array('string');
 $meta['hideTools']        = array('onoff');
