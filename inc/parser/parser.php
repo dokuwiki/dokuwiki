@@ -90,7 +90,6 @@ class Doku_Parser {
             if ( $mode == 'base' ) {
                 continue;
             }
-
             $this->modes[$mode]->preConnect();
 
             foreach ( array_keys($this->modes) as $cm ) {
@@ -218,11 +217,11 @@ class Doku_Parser_Mode_footnote extends Doku_Parser_Mode {
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_header extends Doku_Parser_Mode {
 
-    function preConnect() {
+    function connectTo($mode) {
         //we're not picky about the closing ones, two are enough
         $this->Lexer->addSpecialPattern(
                             '[ \t]*={2,}[^\n]+={2,}[ \t]*(?=\n)',
-                            'base',
+                            $mode,
                             'header'
                         );
     }
