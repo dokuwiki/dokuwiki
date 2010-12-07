@@ -121,7 +121,7 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
-$conf['rss_content'] = 'abstract';       // what to put in the items by deafult?
+$conf['rss_content'] = 'abstract';       // what to put in the items by default?
                                          //  'abstract' - plain text, first paragraph or so
                                          //  'diff'     - plain text unified diff wrapped in <pre> tags
                                          //  'htmldiff' - diff as HTML table
