@@ -222,7 +222,7 @@ class HTTPClient {
         $path   = $uri['path'];
         if(empty($path)) $path = '/';
         if(!empty($uri['query'])) $path .= '?'.$uri['query'];
-        $port = $uri['port'];
+        if(isset($uri['port']) && !empty($uri['port'])) $port = $uri['port'];
         if(isset($uri['user'])) $this->user = $uri['user'];
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
@@ -235,7 +235,7 @@ class HTTPClient {
         }else{
             $request_url = $path;
             $server      = $server;
-            if (empty($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
+            if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
         }
 
         // add SSL stream prefix if needed - needs SSL support in PHP
@@ -506,12 +506,13 @@ class HTTPClient {
      */
     function _parseHeaders($string){
         $headers = array();
-        $lines = explode("\n",$string);
-        foreach($lines as $line){
-            list($key,$val) = explode(':',$line,2);
-            $key = strtolower(trim($key));
-            $val = trim($val);
-            if(empty($val)) continue;
+        if (!preg_match_all('/^\s*([\w-]+)\s*:\s*([\S \t]+)\s*$/m', $string,
+                            $matches, PREG_SET_ORDER)) {
+            return $headers;
+        }
+        foreach($matches as $match){
+            list(, $key, $val) = $match;
+            $key = strtolower($key);
             if(isset($headers[$key])){
                 if(is_array($headers[$key])){
                     $headers[$key][] = $val;

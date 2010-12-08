@@ -194,10 +194,11 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     }else{
         // read cookie information
         list($user,$sticky,$pass) = auth_getCookie();
-        // get session info
-        $session = $_SESSION[DOKU_COOKIE]['auth'];
         if($user && $pass){
             // we got a cookie - see if we can trust it
+
+            // get session info
+            $session = $_SESSION[DOKU_COOKIE]['auth'];
             if(isset($session) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time()-$conf['auth_security_timeout']) &&
