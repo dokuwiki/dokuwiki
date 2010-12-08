@@ -888,6 +888,9 @@ function html_diff($text='',$intro=true){
         $rev2 = (int) $_REQUEST['rev2'];
     }
 
+    $r_minor = '';
+    $l_minor = '';
+
     if($text){                      // compare text to the most current revision
         $l_rev   = '';
         $l_text  = rawWiki($ID,'');
