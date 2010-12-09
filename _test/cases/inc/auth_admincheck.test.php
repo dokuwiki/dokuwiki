@@ -15,8 +15,8 @@ class auth_admin_test extends UnitTestCase {
 
     function test_ismanager(){
         global $conf;
-        $conf['superuser'] = 'john,@admin';
-        $conf['manager'] = 'john,@managers,doe';
+        $conf['superuser'] = 'john,@admin,@Mötly Görls, Dörte';
+        $conf['manager'] = 'john,@managers,doe, @Mötly Böys, Dänny';
 
         // anonymous user
         $this->assertEqual(auth_ismanager('jill', null,false), false);
@@ -25,9 +25,15 @@ class auth_admin_test extends UnitTestCase {
         $this->assertEqual(auth_ismanager('john', null,false), true);
         $this->assertEqual(auth_ismanager('doe',  null,false), true);
 
+        $this->assertEqual(auth_ismanager('dörte', null,false), true);
+        $this->assertEqual(auth_ismanager('dänny', null,false), true);
+
         // admin or manager groups
         $this->assertEqual(auth_ismanager('jill', array('admin'),false), true);
         $this->assertEqual(auth_ismanager('jill', array('managers'),false), true);
+
+        $this->assertEqual(auth_ismanager('jill', array('mötly görls'),false), true);
+        $this->assertEqual(auth_ismanager('jill', array('mötly böys'),false), true);
     }
 
     function test_isadmin(){
