@@ -536,13 +536,13 @@ function auth_aclcheck($id,$user,$groups){
 
     //still here? do the namespace checks
     if($ns){
-        $path = $ns.':\*';
+        $path = $ns.':*';
     }else{
-        $path = '\*'; //root document
+        $path = '*'; //root document
     }
 
     do{
-        $matches = preg_grep('/^'.$path.'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -559,9 +559,9 @@ function auth_aclcheck($id,$user,$groups){
         //get next higher namespace
         $ns   = getNS($ns);
 
-        if($path != '\*'){
-            $path = $ns.':\*';
-            if($path == ':\*') $path = '\*';
+        if($path != '*'){
+            $path = $ns.':*';
+            if($path == ':*') $path = '*';
         }else{
             //we did this already
             //looks like there is something wrong with the ACL
