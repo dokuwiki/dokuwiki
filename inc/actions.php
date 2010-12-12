@@ -292,9 +292,10 @@ function act_draftsave($act){
     global $conf;
     if($conf['usedraft'] && $_POST['wikitext']){
         $draft = array('id'     => $ID,
-                'prefix' => $_POST['prefix'],
+                'prefix' => substr($_POST['prefix'], 0, -1),
                 'text'   => $_POST['wikitext'],
                 'suffix' => $_POST['suffix'],
+                'date'   => (int) $_POST['date'],
                 'date'   => $_POST['date'],
                 'client' => $INFO['client'],
                 );
