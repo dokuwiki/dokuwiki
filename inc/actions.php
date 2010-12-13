@@ -296,7 +296,6 @@ function act_draftsave($act){
                 'text'   => $_POST['wikitext'],
                 'suffix' => $_POST['suffix'],
                 'date'   => (int) $_POST['date'],
-                'date'   => $_POST['date'],
                 'client' => $INFO['client'],
                 );
         $cname = getCacheName($draft['client'].$ID,'.draft');
