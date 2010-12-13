@@ -396,6 +396,11 @@ function ft_snippet($id,$highlight){
  * Wraps a search term in regex boundary checks.
  */
 function ft_snippet_re_preprocess($term) {
+    // do not process asian terms where word boundaries are not explicit
+    if(preg_match('/'.IDX_ASIAN.'/u',$term)){
+        return $term;
+    }
+
     if(substr($term,0,2) == '\\*'){
         $term = substr($term,2);
     }else{
