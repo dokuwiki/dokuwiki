@@ -227,6 +227,7 @@ function mail_encode_address($string,$header='',$names=true){
  */
 function mail_isvalid($email){
     $validator = new EmailAddressValidator;
+    $validator->allowLocalAddresses = true;
     return $validator->check_email_address($email);
 }
 
