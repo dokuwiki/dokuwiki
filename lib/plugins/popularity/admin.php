@@ -53,6 +53,10 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
         //Send the data
         if ( isset($_REQUEST['data']) ){
             $this->sentStatus = $this->helper->sendData( $_REQUEST['data'] );
+            if ( $this->sentStatus === '' ){
+                //Update the last time we sent the data
+                touch ( $this->helper->popularityLastSubmitFile );
+            }
             //Deal with the autosubmit option
             $this->_enableAutosubmit( isset($_REQUEST['autosubmit']) );
         }
@@ -87,6 +91,12 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
 
             flush();
             echo $this->buildForm('server');
+
+            //Print the last time the data was sent
+            $lastSent = $this->helper->lastSentTime();
+            if ( $lastSent !== 0 ){
+                echo $this->getLang('lastSent') . datetime_h($lastSent);
+            }
         } else {
             //If we just submitted the form
             if ( $this->sentStatus === '' ){
