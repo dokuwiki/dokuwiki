@@ -48,10 +48,10 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
 
     /**
      * Check if it's time to send autosubmit data
-     * (we should have check the autosubmit is enabled first)
+     * (we should have check if autosubmit is enabled first)
      */
     function _isTooEarlyToSubmit(){
-        $lastSubmit = @filemtime($this->helper->autosubmitFile);
+        $lastSubmit = $this->helper->lastSentTime();
         return $lastSubmit + 24*60*60*30 > time();
     }
 }

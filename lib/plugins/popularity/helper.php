@@ -13,7 +13,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Name of the file which determine if the the autosubmit is enabled,
-     * and when it was submited for the las time
+     * and when it was submited for the last time
      */
     var $autosubmitFile;
 
@@ -22,10 +22,19 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      */
     var $autosubmitErrorFile;
 
+    /**
+     * Name of the file which determine when the popularity data was manually
+     * submitted for the last time
+     * (If this file doesn't exist, the data has never been sent)
+     */
+    var $popularityLastSubmitFile;
+
+
     function helper_plugin_popularity(){
         global $conf;
         $this->autosubmitFile = $conf['cachedir'].'/autosubmit.txt';
         $this->autosubmitErrorFile = $conf['cachedir'].'/autosubmitError.txt';
+        $this->popularityLastSubmitFile = $conf['cachedir'].'/lastSubmitTime.txt';
     }
 
     function getMethods(){
@@ -47,6 +56,12 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
                 'desc' => 'Gather the popularity data',
                 'params' => array(),
                 'return' => array('data' => 'string')
+                );
+        $result[] = array(
+                'name'   => 'lastSentTime',
+                'desc'   => 'Compute the last time popularity data was sent',
+                'params' => 'array()',
+                'return' => array('data' => 'int')
                 );
         return $result;
 
@@ -73,6 +88,16 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
             $error = $httpClient->error;
         }
         return $error;
+    }
+
+    /**
+     * Compute the last time the data was sent. If it has never been sent, we return 0.
+     */
+    function lastSentTime(){
+        $manualSubmission = @filemtime($this->popularityLastSubmitFile);
+        $autoSubmission   = @filemtime($this->autosubmitFile);
+
+        return max((int) $manualSubmission, (int) $autoSubmission);
     }
 
     /**
