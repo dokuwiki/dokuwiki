@@ -1,0 +1,20 @@
+Pozdravljeni!
+
+Stran @PAGE@ v wikiju @TITLE@ je bila spremenjena.
+Tu so spremembe:
+
+------------------------------------------------
+@DIFF@
+------------------------------------------------
+
+Stara revizija: @OLDPAGE@
+Nova revizija: @NEWPAGE@
+
+Za odjavo pošiljanja sprememb se prijavite v wiki na naslovu
+@DOKUWIKIURL@, nato obiščite
+@SUBSCRIBE@
+in se odjavite od sprememb strani in/ali imenskega prostora.
+
+--
+To sporočilo je generiral DokuWiki na naslovu
+@DUKOWIKIURL@
