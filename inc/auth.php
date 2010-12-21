@@ -415,7 +415,7 @@ function auth_isMember($memberlist,$user,array $groups){
     if (!$auth) return false;
 
     // clean user and groups
-    if($auth->isCaseSensitive()){
+    if(!$auth->isCaseSensitive()){
         $user = utf8_strtolower($user);
         $groups = array_map('utf8_strtolower',$groups);
     }
@@ -430,7 +430,7 @@ function auth_isMember($memberlist,$user,array $groups){
 
     // compare cleaned values
     foreach($members as $member){
-        if($auth->isCaseSensitive()) $member = utf8_strtolower($member);
+        if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
         if($member[0] == '@'){
             $member = $auth->cleanGroup(substr($member,1));
             if(in_array($member, $groups)) return true;
