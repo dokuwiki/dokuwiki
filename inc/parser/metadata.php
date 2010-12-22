@@ -45,6 +45,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     if(!$this->persistent['date']['created']){
         $this->persistent['date']['created'] = filectime(wikiFN($ID));
     }
+    if(!isset($this->persistent['user'])){
+        $this->persistent['user'] = '';
+    }
     if(!isset($this->persistent['creator'])){
         $this->persistent['creator'] = '';
     }
