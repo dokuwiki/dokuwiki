@@ -464,7 +464,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     } else if (is_string($title)){
       return $title;
     } else if (is_array($title)){
-      return '['.$title['title'].']';
+      if($title['title']) return '['.$title['title'].']';
     }
   }
 
