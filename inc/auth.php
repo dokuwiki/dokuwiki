@@ -70,6 +70,12 @@ function auth_setup(){
     $_REQUEST['http_credentials'] = false;
     if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
+    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like
+    // the one presented at
+    // http://www.besthostratings.com/articles/http-auth-php-cgi.html is used
+    // for enabling HTTP authentication with CGI/SuExec)
+    if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
     // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
     if(isset($_SERVER['HTTP_AUTHORIZATION'])){
         list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
