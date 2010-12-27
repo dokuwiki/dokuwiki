@@ -240,8 +240,10 @@ function p_get_metadata($id, $key='', $render=false){
         $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
 
         if (page_exists($id) && !$cachefile->useCache()){
+            $old_meta = $meta;
             $meta = p_render_metadata($id, $meta);
-            if (p_save_metadata($id, $meta)) {
+            // only update the file when the metadata has been changed
+            if ($meta == $old_meta || p_save_metadata($id, $meta)) {
                 // store a timestamp in order to make sure that the cachefile is touched
                 $cachefile->storeCache(time());
             } else {
