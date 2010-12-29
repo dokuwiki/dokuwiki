@@ -134,41 +134,8 @@ function runIndexer(){
 
     if(!$ID) return false;
 
-    // check if indexing needed
-    $idxtag = metaFN($ID,'.indexed');
-    if(@file_exists($idxtag)){
-        if(trim(io_readFile($idxtag)) == idx_get_version()){
-            $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($ID))){
-                print "runIndexer(): index for $ID up to date".NL;
-                return false;
-            }
-        }
-    }
-
-    // try to aquire a lock
-    $lock = $conf['lockdir'].'/_indexer.lock';
-    while(!@mkdir($lock,$conf['dmode'])){
-        usleep(50);
-        if(time()-@filemtime($lock) > 60*5){
-            // looks like a stale lock - remove it
-            @rmdir($lock);
-            print "runIndexer(): stale lock removed".NL;
-        }else{
-            print "runIndexer(): indexer locked".NL;
-            return false;
-        }
-    }
-    if($conf['dperm']) chmod($lock, $conf['dperm']);
-
     // do the work
-    idx_addPage($ID);
-
-    // we're finished - save and free lock
-    io_saveFile(metaFN($ID,'.indexed'), idx_get_version());
-    @rmdir($lock);
-    print "runIndexer(): finished".NL;
-    return true;
+    return idx_addPage($ID, true);
 }
 
 /**

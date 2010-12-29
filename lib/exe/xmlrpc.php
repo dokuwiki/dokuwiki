@@ -355,9 +355,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function listPages(){
         $list  = array();
-        $pages = array_filter(array_filter(idx_getIndex('page', ''),
-                                           'isVisiblePage'),
-                              'page_exists');
+        $pages = idx_get_indexer()->getPages();
+        $pages = array_filter(array_filter($pages,'isVisiblePage'),'page_exists');
 
         foreach(array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);
@@ -552,27 +551,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         unlock($id);
 
         // run the indexer if page wasn't indexed yet
-        if(!@file_exists(metaFN($id, '.indexed'))) {
-            // try to aquire a lock
-            $lock = $conf['lockdir'].'/_indexer.lock';
-            while(!@mkdir($lock,$conf['dmode'])){
-                usleep(50);
-                if(time()-@filemtime($lock) > 60*5){
-                    // looks like a stale lock - remove it
-                    @rmdir($lock);
-                }else{
-                    return false;
-                }
-            }
-            if($conf['dperm']) chmod($lock, $conf['dperm']);
-
-            // do the work
-            idx_addPage($id);
-
-            // we're finished - save and free lock
-            io_saveFile(metaFN($id,'.indexed'), idx_get_version());
-            @rmdir($lock);
-        }
+        idx_addPage($id);
 
         return 0;
     }

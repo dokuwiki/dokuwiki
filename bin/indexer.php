@@ -24,6 +24,7 @@ if ( $OPTS->isError() ) {
 }
 $CLEAR = false;
 $QUIET = false;
+$INDEXER = null;
 foreach ($OPTS->options as $key => $val) {
     switch ($key) {
         case 'h':
@@ -66,6 +67,9 @@ function _usage() {
 
 function _update(){
     global $conf;
+    global $INDEXER;
+
+    $INDEXER = idx_get_indexer();
 
     $data = array();
     _quietecho("Searching pages... ");
@@ -78,25 +82,47 @@ function _update(){
 }
 
 function _index($id){
+    global $INDEXER;
     global $CLEAR;
+    global $QUIET;
 
     // if not cleared only update changed and new files
     if(!$CLEAR){
         $idxtag = metaFN($id,'.indexed');
         if(@file_exists($idxtag)){
             if(io_readFile($idxtag) == idx_get_version()){
-                $last = @filemtime(metaFN($id,'.indexed'));
+                $last = @filemtime($idxtag);
                 if($last > @filemtime(wikiFN($id))) return;
             }
         }
     }
 
-    _lock();
     _quietecho("$id... ");
-    idx_addPage($id);
-    io_saveFile(metaFN($id,'.indexed'), idx_get_version());
+    $body = '';
+    $data = array($id, $body);
+    $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
+    if ($evt->advise_before()) $data[1] = $data[1] . " " . rawWiki($id);
+    $evt->advise_after();
+    unset($evt);
+    list($id,$body) = $data;
+    $said = false;
+    while(true) {
+        $result = $INDEXER->addPageWords($id, $body);
+        if ($result == "locked") {
+            if($said){
+                _quietecho(".");
+            }else{
+                _quietecho("Waiting for lockfile (max. 5 min)");
+                $said = true;
+            }
+            sleep(15);
+        } else {
+            break;
+        }
+    }
+    if ($result)
+        io_saveFile(metaFN($id,'.indexed'), idx_get_version());
     _quietecho("done.\n");
-    _unlock();
 }
 
 /**
@@ -141,7 +167,7 @@ function _clearindex(){
     _lock();
     _quietecho("Clearing index... ");
     io_saveFile($conf['indexdir'].'/page.idx','');
-    io_saveFile($conf['indexdir'].'/title.idx','');
+    //io_saveFile($conf['indexdir'].'/title.idx','');
     $dir = @opendir($conf['indexdir']);
     if($dir!==false){
         while(($f = readdir($dir)) !== false){
@@ -150,6 +176,7 @@ function _clearindex(){
                 @unlink($conf['indexdir']."/$f");
         }
     }
+    @unlink($conf['indexdir'].'/lengths.idx');
     _quietecho("done.\n");
     _unlock();
 }

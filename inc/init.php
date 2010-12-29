@@ -276,6 +276,7 @@ function init_files(){
     }
 
     # create title index (needs to have same length as page.idx)
+    /*
     $file = $conf['indexdir'].'/title.idx';
     if(!@file_exists($file)){
         $pages = file($conf['indexdir'].'/page.idx');
@@ -290,6 +291,7 @@ function init_files(){
             nice_die("$file is not writable. Check your permissions settings!");
         }
     }
+    */
 }
 
 /**

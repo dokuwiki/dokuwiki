@@ -97,7 +97,8 @@ class Doku_Indexer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function addPageWords($page, $text) {
-        $this->_lock();
+        if (!$this->_lock())
+            return "locked";
 
         // load known documents
         $page_idx = $this->_addIndexKey('page', '', $page);
@@ -348,12 +349,12 @@ class Doku_Indexer {
      * in the returned list is an array with the page names as keys and the
      * number of times that token appeas on the page as value.
      *
-     * @param array     $tokens list of words to search for
+     * @param arrayref  $tokens list of words to search for
      * @return array            list of page names with usage counts
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function lookup($tokens) {
+    public function lookup(&$tokens) {
         $result = array();
         $wids = $this->_getIndexWords($tokens, $result);
         if (empty($wids)) return array();
@@ -397,10 +398,11 @@ class Doku_Indexer {
      * @param string    $key    name of the metadata key to look for
      * @param string    $value  search term to look for
      * @param callback  $func   comparison function
-     * @return array            list with page names
+     * @return array            list with page names, keys are query values if more than one given
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function lookupKey($key, $value, $func=null) {
+        return array();
     }
 
     /**
@@ -411,12 +413,12 @@ class Doku_Indexer {
      * The $result parameter can be used to merge the index locations with
      * the appropriate query term.
      *
-     * @param array     $words  The query terms.
+     * @param arrayref  $words  The query terms.
      * @param arrayref  $result Set to word => array("length*id" ...)
      * @return array            Set to length => array(id ...)
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    private function _getIndexWords($words, &$result) {
+    private function _getIndexWords(&$words, &$result) {
         $tokens = array();
         $tokenlength = array();
         $tokenwild = array();
@@ -807,7 +809,7 @@ class Doku_Indexer {
  * @return object               a Doku_Indexer
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function & idx_get_indexer() {
+function idx_get_indexer() {
     static $Indexer = null;
     if (is_null($Indexer)) {
         $Indexer = new Doku_Indexer();
@@ -841,10 +843,23 @@ function & idx_get_stopwords() {
  * Locking is handled internally.
  *
  * @param string        $page   name of the page to index
+ * @param boolean       $verbose    print status messages
  * @return boolean              the function completed successfully
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_addPage($page) {
+function idx_addPage($page, $verbose=false) {
+    // check if indexing needed
+    $idxtag = metaFN($page,'.indexed');
+    if(@file_exists($idxtag)){
+        if(trim(io_readFile($idxtag)) == idx_get_version()){
+            $last = @filemtime($idxtag);
+            if($last > @filemtime(wikiFN($ID))){
+                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
+                return false;
+            }
+        }
+    }
+
     $body = '';
     $data = array($page, $body);
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
@@ -853,8 +868,19 @@ function idx_addPage($page) {
     unset($evt);
     list($page,$body) = $data;
 
-    $Indexer =& idx_get_indexer();
-    return $Indexer->addPageWords($page, $body);
+    $Indexer = idx_get_indexer();
+    $result = $Indexer->addPageWords($page, $body);
+    if ($result == "locked") {
+        if ($verbose) print("Indexer: locked".DOKU_LF);
+        return false;
+    }
+    if ($result)
+        io_saveFile(metaFN($page,'.indexed'), idx_get_version());
+    if ($verbose) {
+        print("Indexer: finished".DOKU_LF);
+        return true;
+    }
+    return $result;
 }
 
 /**
@@ -866,11 +892,11 @@ function idx_addPage($page) {
  * Important: No ACL checking is done here! All results are
  *            returned, regardless of permissions
  *
- * @param array         $words  list of words to search for
+ * @param arrayref      $words  list of words to search for
  * @return array                list of pages found, associated with the search terms
  */
-function idx_lookup($words) {
-    $Indexer =& idx_get_indexer();
+function idx_lookup(&$words) {
+    $Indexer = idx_get_indexer();
     return $Indexer->lookup($words);
 }
 
@@ -879,7 +905,7 @@ function idx_lookup($words) {
  *
  */
 function idx_tokenizer($string, $wc=false) {
-    $Indexer =& idx_get_indexer();
+    $Indexer = idx_get_indexer();
     return $Indexer->tokenizer($string, $wc);
 }
 

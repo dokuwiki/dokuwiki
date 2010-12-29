@@ -45,7 +45,7 @@ class Sitemapper {
 
         dbglog("Sitemapper::generate(): using $sitemap"); // FIXME: Only in debug mode
 
-        $pages = idx_getIndex('page', '');
+        $pages = idx_get_indexer()->getPages();
         dbglog('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
         $items = array();
 
