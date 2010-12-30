@@ -58,6 +58,7 @@ $lang['lang']        = 'Interface language';
 $lang['basedir']     = 'Server path (eg. <code>/dokuwiki/</code>). Leave blank for autodetection.';
 $lang['baseurl']     = 'Server URL (eg. <code>http://www.yourserver.com</code>). Leave blank for autodetection.';
 $lang['savedir']     = 'Directory for saving data';
+$lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
 $lang['start']       = 'Start page name';
 $lang['title']       = 'Wiki title';
 $lang['template']    = 'Template';
