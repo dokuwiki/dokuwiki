@@ -1128,12 +1128,15 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $diff = rawWiki($id);
     }
     $text = str_replace('@DIFF@',$diff,$text);
-    if(utf8_strlen($conf['title']) < 20) {
-        $subject = '['.$conf['title'].'] '.$subject;
+    if(empty($conf['mailprefix'])) {
+        if(utf8_strlen($conf['title']) < 20) {
+            $subject = '['.$conf['title'].'] '.$subject;
+        }else{
+            $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
+        }
     }else{
-        $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
+        $subject = '['.$conf['mailprefix'].'] '.$subject;
     }
-
     mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
 }
 
