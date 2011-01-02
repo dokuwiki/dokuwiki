@@ -748,39 +748,27 @@ function tpl_youarehere($sep=' &raquo; '){
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
     // always print the startpage
-    $title = useHeading('navigation') ? p_get_first_heading($conf['start']) : $conf['start'];
-    if(!$title) $title = $conf['start'];
-    tpl_link(wl($conf['start']),hsc($title),'title="'.$conf['start'].'"');
+    tpl_pagelink(':'.$conf['start']);
 
     // print intermediate namespace links
     $part = '';
     for($i=0; $i<$count - 1; $i++){
         $part .= $parts[$i].':';
         $page = $part;
-        resolve_pageid('',$page,$exists);
         if ($page == $conf['start']) continue; // Skip startpage
 
         // output
         echo $sep;
-        if($exists){
-            $title = useHeading('navigation') ? p_get_first_heading($page) : $parts[$i];
-            tpl_link(wl($page),hsc($title),'title="'.$page.'"');
-        }else{
-            tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2" rel="nofollow"');
-        }
+        tpl_pagelink($page);
     }
 
     // print current page, skipping start page, skipping for namespace index
+    resolve_pageid('',$page,$exists);
     if(isset($page) && $page==$part.$parts[$i]) return;
     $page = $part.$parts[$i];
     if($page == $conf['start']) return;
     echo $sep;
-    if(page_exists($page)){
-        $title = useHeading('navigation') ? p_get_first_heading($page) : $parts[$i];
-        tpl_link(wl($page),hsc($title),'title="'.$page.'"');
-    }else{
-        tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2" rel="nofollow"');
-    }
+    tpl_pagelink($page);
     return true;
 }
 
