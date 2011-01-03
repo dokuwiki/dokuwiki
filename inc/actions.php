@@ -626,6 +626,7 @@ function act_sitemap($act) {
     if (is_readable($sitemap)) {
         // Send headers
         header('Content-Type: '.$mime);
+        header('Content-Disposition: attachment; filename='.basename($sitemap));
 
         http_conditionalRequest(filemtime($sitemap));
 
