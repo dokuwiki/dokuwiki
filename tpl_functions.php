@@ -30,12 +30,12 @@ function _tpl_discussion($discussionPage,$title,$backTitle,$link=0,$wrapper=0) {
         if ($link)
             tpl_pagelink($backID,$backTitle);
         else
-            echo html_btn('back2article',$backID,'',array(),0,0,$backTitle);
+            echo html_btn('back2article',$backID,'',array(),'get',0,$backTitle);
     } else {
         if ($link)
             tpl_pagelink($discussPage,$title);
         else
-            echo html_btn('discussion',$discussPage,'',array(),0,0,$title);
+            echo html_btn('discussion',$discussPage,'',array(),'get',0,$title);
     }
 
     if ($wrapper) echo "</$wrapper>";
@@ -57,7 +57,7 @@ function _tpl_userpage($userPage,$title,$link=0,$wrapper=0) {
     if ($link)
         tpl_pagelink($userPage,$title);
     else
-        echo html_btn('userpage',$userPage,'',array(),0,0,$title);
+        echo html_btn('userpage',$userPage,'',array(),'get',0,$title);
 
     if ($wrapper) echo "</$wrapper>";
 }
