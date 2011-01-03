@@ -19,7 +19,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <title><?php tpl_pagetitle() ?> [<?php echo strip_tags($conf['title']) ?>]</title>
     <?php tpl_metaheaders() ?>
     <link rel="shortcut icon" href="<?php echo _tpl_getFavicon() /* DW versions > 2010-11-12 can use the core function tpl_getFavicon() */ ?>" />
-    <?php @include(dirname(__FILE__).'/meta.html') /* include hook */ ?>
+    <?php _tpl_include('meta.html') ?>
 </head>
 
 <body>
@@ -32,7 +32,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <?php /* .dokuwiki should always be in one of the surrounding elements (e.g. plugins and templates depend on it) */ ?>
     <div id="dokuwiki__site"><div class="dokuwiki site mode_<?php echo $ACT ?>">
         <?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
-        <?php @include(dirname(__FILE__).'/header.html') /* include hook */ ?>
+        <?php _tpl_include('header.html') ?>
 
         <!-- ********** HEADER ********** -->
         <div id="dokuwiki__header"><div class="pad">
@@ -113,7 +113,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad">
                 <?php tpl_flush() /* flush the output buffer */ ?>
-                <?php @include(dirname(__FILE__).'/pageheader.html') /* include hook */ ?>
+                <?php _tpl_include('pageheader.html') ?>
 
                 <div class="page">
                     <!-- wikipage start -->
@@ -123,7 +123,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 </div>
 
                 <?php tpl_flush() ?>
-                <?php @include(dirname(__FILE__).'/pagefooter.html') /* include hook */ ?>
+                <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
 
             <div class="clearer"></div>
@@ -154,7 +154,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             <?php tpl_license('button') /* content license, parameters: img=*badge|button|0, imgonly=*0|1, return=*0|1 */ ?>
         </div></div><!-- /footer -->
 
-        <?php @include(dirname(__FILE__).'/footer.html') /* include hook */ ?>
+        <?php _tpl_include('footer.html') ?>
     </div></div><!-- /site -->
 
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>
