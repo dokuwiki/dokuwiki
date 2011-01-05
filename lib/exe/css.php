@@ -268,7 +268,7 @@ function css_loadfile($file,$location=''){
     if(!$location) return $css;
 
     $css = preg_replace('#(url\([ \'"]*)((?!/|http://|https://| |\'|"))#','\\1'.$location.'\\3',$css);
-    $css = preg_replace('#@import\s+"([^"]+)"#', '@import "'.$location.'\\1"', $css);
+    $css = preg_replace('#(@import\s+[\'"])((?!/|http://|https://))#', '\\1'.$location.'\\2"', $css);
     return $css;
 }
 
@@ -309,7 +309,7 @@ function css_pluginstyles($mode='screen'){
 function css_moveimports($css)
 {
     if(!preg_match_all('/@import\s+(?:url\([^)]+\)|"[^"]+")\s*[^;]*;\s*/', $css, $matches, PREG_OFFSET_CAPTURE)) {
-        return;
+        return $css;
     }
     $newCss  = "";
     $imports = "";
