@@ -10,7 +10,7 @@ Hae mutationes sunt:
 Ut adnotationes deleas, preme hic
 @DOKUWIKIURL@ then visit
 @SUBSCRIBE@
-et paginarum spatiorum nominis mutationes tollis.
+et paginarum et\aut generum mutationes tollis.
 
 --
 Hic cursus generatus a(b)
