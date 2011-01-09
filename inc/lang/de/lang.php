@@ -17,6 +17,7 @@
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Niels Lange <niels@boldencursief.nl>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

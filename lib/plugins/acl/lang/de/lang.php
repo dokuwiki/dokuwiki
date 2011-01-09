@@ -17,6 +17,7 @@
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Niels Lange <niels@boldencursief.nl>
  */
 $lang['admin_acl']             = 'Zugangsverwaltung';
 $lang['acl_group']             = 'Gruppe';
