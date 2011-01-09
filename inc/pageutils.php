@@ -316,9 +316,8 @@ function metaFiles($id){
     $name   = noNS($id);
     $ns     = getNS($id);
     $dir    = ($ns) ? metaFN($ns,'').'/' : metaFN($ns,'');
-    $files  = array();
-    $files  = glob($dir.$name.'.*');
-    return $files;
+    $files  = glob($dir.$name.'.*', GLOB_MARK);
+    return    $files ? preg_grep('/^'.preg_quote($dir.$name, '/').'\.[^.\/]*$/u', $files) : array();
 }
 
 /**
