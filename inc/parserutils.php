@@ -625,9 +625,41 @@ function & p_get_renderer($mode) {
  *                                               headings ... and so on.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function p_get_first_heading($id, $render=true){
-    return p_get_metadata($id,'title',$render);
+    // counter how many titles have been requested using p_get_metadata
+    static $count = 0;
+    // the index of all titles, only loaded when many titles are requested
+    static $title_index = null;
+    // cache for titles requested using p_get_metadata
+    static $title_cache = array();
+
+    $id = cleanID($id);
+
+    // check if this title has already been requested
+    if (isset($title_cache[$id]))
+      return $title_cache[$id];
+
+    // check if already too many titles have been requested and probably
+    // using the title index is better
+    if ($count > 10) {
+        if (is_null($title_index)) {
+            $pages  = array_map('rtrim', idx_getIndex('page', ''));
+            $titles = array_map('rtrim', idx_getIndex('title', ''));
+            // check for corrupt title index #FS2076
+            if(count($pages) != count($titles)){
+                $titles = array_fill(0,count($pages),'');
+                @unlink($conf['indexdir'].'/title.idx'); // will be rebuilt in inc/init.php
+            }
+            $title_index = array_combine($pages, $titles);
+        }
+        return $title_index[$id];
+    }
+
+    ++$count;
+    $title_cache[$id] = p_get_metadata($id,'title',$render);
+    return $title_cache[$id];
 }
 
 /**
