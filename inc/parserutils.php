@@ -10,6 +10,13 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
+ * For how many different pages shall the first heading be loaded from the
+ * metadata? When this limit is reached the title index is loaded and used for
+ * all following requests.
+ */
+if (!defined('P_GET_FIRST_HEADING_METADATA_LIMIT')) define('P_GET_FIRST_HEADING_METADATA_LIMIT', 10);
+
+/**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
  *
  * If $excuse is true an explanation is returned if the file
@@ -629,7 +636,7 @@ function & p_get_renderer($mode) {
  */
 function p_get_first_heading($id, $render=true){
     // counter how many titles have been requested using p_get_metadata
-    static $count = 0;
+    static $count = 1;
     // the index of all titles, only loaded when many titles are requested
     static $title_index = null;
     // cache for titles requested using p_get_metadata
@@ -643,7 +650,7 @@ function p_get_first_heading($id, $render=true){
 
     // check if already too many titles have been requested and probably
     // using the title index is better
-    if ($count > 10) {
+    if ($count > P_GET_FIRST_HEADING_METADATA_LIMIT) {
         if (is_null($title_index)) {
             $pages  = array_map('rtrim', idx_getIndex('page', ''));
             $titles = array_map('rtrim', idx_getIndex('title', ''));
