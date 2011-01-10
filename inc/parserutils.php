@@ -220,10 +220,15 @@ function p_get_instructions($text){
 /**
  * returns the metadata of a page
  *
+ * @param string $id The id of the page the metadata should be returned from
+ * @param string $key The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param boolean $render If the page should be rendererd when the cache can't be used - default true
+ * @return mixed The requested metadata fields
+ *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Michael Hamann <michael@content-space.de>
  */
-function p_get_metadata($id, $key='', $render=false){
+function p_get_metadata($id, $key='', $render=true){
     global $ID;
 
     // cache the current page
@@ -234,7 +239,7 @@ function p_get_metadata($id, $key='', $render=false){
 
     // prevent recursive calls in the cache
     static $recursion = false;
-    if (!$recursion){
+    if (!$recursion && $render){
         $recursion = true;
 
         $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
