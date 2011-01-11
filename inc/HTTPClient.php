@@ -111,7 +111,7 @@ class HTTPClient {
     var $proxy_except; // regexp of URLs to exclude from proxy
 
     // list of kept alive connections
-    var $connections = array();
+    static $connections = array();
 
     // what we use as boundary on multipart/form-data posts
     var $boundary = '---DokuWikiHTTPClient--4523452351';
