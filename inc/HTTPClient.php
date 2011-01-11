@@ -285,10 +285,12 @@ class HTTPClient {
         // already connected?
         $connectionId = $this->_uniqueConnectionId($server,$port);
         $this->_debug('connection pool', $this->connections);
+        $socket = null;
         if (isset($this->connections[$connectionId])) {
             $this->_debug('reusing connection', $connectionId);
             $socket = $this->connections[$connectionId];
-        } else {
+        }
+        if (is_null($socket) || feof($socket)) {
             $this->_debug('opening connection', $connectionId);
             // open socket
             $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
@@ -303,6 +305,8 @@ class HTTPClient {
             // keep alive?
             if ($this->isKeepAlive()) {
                 $this->connections[$connectionId] = $socket;
+            } else {
+                unset($this->connections[$connectionId]);
             }
         }
 
@@ -323,6 +327,7 @@ class HTTPClient {
             if($ret === false){
                 $this->status = -100;
                 $this->error = 'Failed writing to socket';
+                unset($this->connections[$connectionId]);
                 return false;
             }
             $written += $ret;
@@ -334,10 +339,12 @@ class HTTPClient {
             if(time()-$start > $this->timeout){
                 $this->status = -100;
                 $this->error = sprintf('Timeout while reading headers (%.3fs)',$this->_time() - $this->start);
+                unset($this->connections[$connectionId]);
                 return false;
             }
             if(feof($socket)){
                 $this->error = 'Premature End of File (socket)';
+                unset($this->connections[$connectionId]);
                 return false;
             }
             $r_headers .= fgets($socket,1024);
@@ -350,6 +357,7 @@ class HTTPClient {
             if($match[1] > $this->max_bodysize){
                 $this->error = 'Reported content length exceeds allowed response size';
                 if ($this->max_bodysize_abort)
+                    unset($this->connections[$connectionId]);
                     return false;
             }
         }
@@ -357,6 +365,7 @@ class HTTPClient {
         // get Status
         if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m)) {
             $this->error = 'Server returned bad answer';
+            unset($this->connections[$connectionId]);
             return false;
         }
         $this->status = $m[2];
@@ -414,6 +423,7 @@ class HTTPClient {
         // check if headers are as expected
         if($this->header_regexp && !preg_match($this->header_regexp,$r_headers)){
             $this->error = 'The received headers did not match the given regexp';
+            unset($this->connections[$connectionId]);
             return false;
         }
 
@@ -425,11 +435,13 @@ class HTTPClient {
                 do {
                     if(feof($socket)){
                         $this->error = 'Premature End of File (socket)';
+                        unset($this->connections[$connectionId]);
                         return false;
                     }
                     if(time()-$start > $this->timeout){
                         $this->status = -100;
                         $this->error = sprintf('Timeout while reading chunk (%.3fs)',$this->_time() - $this->start);
+                        unset($this->connections[$connectionId]);
                         return false;
                     }
                     $byte = fread($socket,1);
@@ -447,6 +459,7 @@ class HTTPClient {
                 if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
                     if ($this->max_bodysize_abort)
+                        unset($this->connections[$connectionId]);
                         return false;
                     else
                         break;
@@ -458,6 +471,7 @@ class HTTPClient {
                 if(time()-$start > $this->timeout){
                     $this->status = -100;
                     $this->error = sprintf('Timeout while reading response (%.3fs)',$this->_time() - $this->start);
+                    unset($this->connections[$connectionId]);
                     return false;
                 }
                 $r_body .= fread($socket,4096);
@@ -465,6 +479,7 @@ class HTTPClient {
                 if($this->max_bodysize && $r_size > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
                     if ($this->max_bodysize_abort)
+                        unset($this->connections[$connectionId]);
                         return false;
                     else
                         break;
