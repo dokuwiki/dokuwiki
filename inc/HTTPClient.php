@@ -71,6 +71,7 @@ class DokuHTTPClient extends HTTPClient {
  * @link   http://www.splitbrain.org/go/videodb
  * @author Andreas Goetz <cpuidle@gmx.de>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Tobias Sarnowski <sarnowski@new-thoughts.org>
  */
 class HTTPClient {
     //set these if you like
@@ -86,6 +87,7 @@ class HTTPClient {
     var $headers;
     var $debug;
     var $start = 0; // for timings
+    var $keep_alive = true; // keep alive rocks
 
     // don't set these, read on error
     var $error;
@@ -107,6 +109,9 @@ class HTTPClient {
     var $proxy_pass;
     var $proxy_ssl; //boolean set to true if your proxy needs SSL
     var $proxy_except; // regexp of URLs to exclude from proxy
+
+    // list of kept alive connections
+    var $connections = array();
 
     // what we use as boundary on multipart/form-data posts
     var $boundary = '---DokuWikiHTTPClient--4523452351';
@@ -247,7 +252,11 @@ class HTTPClient {
         if($uri['port']) $headers['Host'].= ':'.$uri['port'];
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
-        $headers['Connection'] = 'Close';
+        if ($this->isKeepAlive()) {
+            $headers['Connection'] = 'Keep-Alive';
+        } else {
+            $headers['Connection'] = 'Close';
+        }
         if($method == 'POST'){
             if(is_array($data)){
                 if($headers['Content-Type'] == 'multipart/form-data'){
@@ -273,15 +282,29 @@ class HTTPClient {
         // stop time
         $start = time();
 
-        // open socket
-        $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
-        if (!$socket){
-            $this->status = -100;
-            $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
-            return false;
+        // already connected?
+        $connectionId = $this->_uniqueConnectionId($server,$port);
+        $this->_debug('connection pool', $this->connections);
+        if (isset($this->connections[$connectionId])) {
+            $this->_debug('reusing connection', $connectionId);
+            $socket = $this->connections[$connectionId];
+        } else {
+            $this->_debug('opening connection', $connectionId);
+            // open socket
+            $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
+            if (!$socket){
+                $this->status = -100;
+                $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
+                return false;
+            }
+            //set non blocking
+            stream_set_blocking($socket,0);
+
+            // keep alive?
+            if ($this->isKeepAlive()) {
+                $this->connections[$connectionId] = $socket;
+            }
         }
-        //set non blocking
-        stream_set_blocking($socket,0);
 
         // build request
         $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -359,6 +382,11 @@ class HTTPClient {
 
         // check server status code to follow redirect
         if($this->status == 301 || $this->status == 302 ){
+            // close the connection because we don't handle content retrieval here
+            // that's the easiest way to clean up the connection
+            fclose($socket);
+            unset($this->connections[$connectionId]);
+
             if (empty($this->resp_headers['location'])){
                 $this->error = 'Redirect but no Location Header found';
                 return false;
@@ -450,9 +478,13 @@ class HTTPClient {
             }
         }
 
-        // close socket
-        $status = socket_get_status($socket);
-        fclose($socket);
+        if (!$this->isKeepAlive() ||
+                (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')) {
+            // close socket
+            $status = socket_get_status($socket);
+            fclose($socket);
+            unset($this->connections[$connectionId]);
+        }
 
         // decode gzip if needed
         if(isset($this->resp_headers['content-encoding']) &&
@@ -598,6 +630,34 @@ class HTTPClient {
         return $out;
     }
 
+    /**
+     * Returns if the keep-alive feature is enabled or not.
+     *
+     * @return bool keep-alive enabled
+     * @author Tobias Sarnowski <sarnowski@new-thoughts.org>
+     */
+    function isKeepAlive() {
+        return $this->keep_alive;
+    }
+
+    /**
+     * Set the keep-alive feature status.
+     *
+     * @param bool $keep_alive if keep-alive should be enabled or not
+     * @author Tobias Sarnowski <sarnowski@new-thoughts.org>
+     */
+    function setKeepAlive($keep_alive) {
+        $this->keep_alive = $keep_alive;
+    }
+
+    /**
+     * Generates a unique identifier for a connection.
+     *
+     * @return string unique identifier
+     */
+    function _uniqueConnectionId($server, $port) {
+        return "$server:$port";
+    }
 }
 
 //Setup VIM: ex: et ts=4 :
