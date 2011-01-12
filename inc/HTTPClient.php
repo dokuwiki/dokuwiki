@@ -458,11 +458,12 @@ class HTTPClient {
 
                 if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
-                    if ($this->max_bodysize_abort)
+                    if ($this->max_bodysize_abort){
                         unset($this->connections[$connectionId]);
                         return false;
-                    else
+                    } else {
                         break;
+                    }
                 }
             } while ($chunk_size);
         }else{
@@ -478,11 +479,12 @@ class HTTPClient {
                 $r_size = strlen($r_body);
                 if($this->max_bodysize && $r_size > $this->max_bodysize){
                     $this->error = 'Allowed response size exceeded';
-                    if ($this->max_bodysize_abort)
+                    if ($this->max_bodysize_abort) {
                         unset($this->connections[$connectionId]);
                         return false;
-                    else
+                    } else {
                         break;
+                    }
                 }
                 if(isset($this->resp_headers['content-length']) &&
                    !isset($this->resp_headers['transfer-encoding']) &&
