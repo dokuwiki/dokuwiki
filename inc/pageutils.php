@@ -311,13 +311,13 @@ function metaFN($id,$ext){
  * returns an array of full paths to all metafiles of a given ID
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function metaFiles($id){
-    $name   = noNS($id);
-    $ns     = getNS($id);
-    $dir    = ($ns) ? metaFN($ns,'').'/' : metaFN($ns,'');
-    $files  = glob($dir.$name.'.*', GLOB_MARK);
-    return    $files ? preg_grep('/^'.preg_quote($dir.$name, '/').'\.[^.\/]*$/u', $files) : array();
+    $basename = metaFN($id, '');
+    $files    = glob($basename.'.*', GLOB_MARK);
+    // filter files like foo.bar.meta when $id == 'foo'
+    return    $files ? preg_grep('/^'.preg_quote($basename, '/').'\.[^.\/]*$/u', $files) : array();
 }
 
 /**
