@@ -252,7 +252,7 @@ class HTTPClient {
         if($uri['port']) $headers['Host'].= ':'.$uri['port'];
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
-        if ($this->isKeepAlive()) {
+        if ($this->keep_alive) {
             $headers['Connection'] = 'Keep-Alive';
         } else {
             $headers['Connection'] = 'Close';
@@ -303,7 +303,7 @@ class HTTPClient {
             stream_set_blocking($socket,0);
 
             // keep alive?
-            if ($this->isKeepAlive()) {
+            if ($this->keep_alive) {
                 $this->connections[$connectionId] = $socket;
             } else {
                 unset($this->connections[$connectionId]);
@@ -493,7 +493,7 @@ class HTTPClient {
             }
         }
 
-        if (!$this->isKeepAlive() ||
+        if (!$this->keep_alive ||
                 (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')) {
             // close socket
             $status = socket_get_status($socket);
@@ -643,26 +643,6 @@ class HTTPClient {
         }
         $out .= "$boundary--".HTTP_NL;
         return $out;
-    }
-
-    /**
-     * Returns if the keep-alive feature is enabled or not.
-     *
-     * @return bool keep-alive enabled
-     * @author Tobias Sarnowski <sarnowski@new-thoughts.org>
-     */
-    function isKeepAlive() {
-        return $this->keep_alive;
-    }
-
-    /**
-     * Set the keep-alive feature status.
-     *
-     * @param bool $keep_alive if keep-alive should be enabled or not
-     * @author Tobias Sarnowski <sarnowski@new-thoughts.org>
-     */
-    function setKeepAlive($keep_alive) {
-        $this->keep_alive = $keep_alive;
     }
 
     /**
