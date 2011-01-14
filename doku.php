@@ -30,7 +30,10 @@ $old = error_reporting(E_ALL ^ E_NOTICE);
 //import variables
 $QUERY = trim($_REQUEST['id']);
 $ID    = getID();
+
+// deprecated 2011-01-14
 $NS    = getNS($ID);
+
 $REV   = $_REQUEST['rev'];
 $IDX   = $_REQUEST['idx'];
 $DATE  = $_REQUEST['date'];
