@@ -55,8 +55,7 @@ div.dokuwiki li ol {
 div.dokuwiki a.urlextern,
 div.dokuwiki a.interwiki,
 div.dokuwiki a.windows,
-div.dokuwiki a.mail,
-div.dokuwiki a.mail.JSnocheck {
+div.dokuwiki a.mail {
   /* should work but doesn't - so we just disable icons here*/
   /*
   background-position: right 1px;

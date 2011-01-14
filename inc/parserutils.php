@@ -10,6 +10,13 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
+ * For how many different pages shall the first heading be loaded from the
+ * metadata? When this limit is reached the title index is loaded and used for
+ * all following requests.
+ */
+if (!defined('P_GET_FIRST_HEADING_METADATA_LIMIT')) define('P_GET_FIRST_HEADING_METADATA_LIMIT', 10);
+
+/**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
  *
  * If $excuse is true an explanation is returned if the file
@@ -220,10 +227,15 @@ function p_get_instructions($text){
 /**
  * returns the metadata of a page
  *
+ * @param string $id The id of the page the metadata should be returned from
+ * @param string $key The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param boolean $render If the page should be rendererd when the cache can't be used - default true
+ * @return mixed The requested metadata fields
+ *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Michael Hamann <michael@content-space.de>
  */
-function p_get_metadata($id, $key='', $render=false){
+function p_get_metadata($id, $key='', $render=true){
     global $ID;
 
     // cache the current page
@@ -234,14 +246,16 @@ function p_get_metadata($id, $key='', $render=false){
 
     // prevent recursive calls in the cache
     static $recursion = false;
-    if (!$recursion){
+    if (!$recursion && $render){
         $recursion = true;
 
         $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
 
         if (page_exists($id) && !$cachefile->useCache()){
+            $old_meta = $meta;
             $meta = p_render_metadata($id, $meta);
-            if (p_save_metadata($id, $meta)) {
+            // only update the file when the metadata has been changed
+            if ($meta == $old_meta || p_save_metadata($id, $meta)) {
                 // store a timestamp in order to make sure that the cachefile is touched
                 $cachefile->storeCache(time());
             } else {
@@ -618,9 +632,41 @@ function & p_get_renderer($mode) {
  *                                               headings ... and so on.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function p_get_first_heading($id, $render=true){
-    return p_get_metadata($id,'title',$render);
+    // counter how many titles have been requested using p_get_metadata
+    static $count = 1;
+    // the index of all titles, only loaded when many titles are requested
+    static $title_index = null;
+    // cache for titles requested using p_get_metadata
+    static $title_cache = array();
+
+    $id = cleanID($id);
+
+    // check if this title has already been requested
+    if (isset($title_cache[$id]))
+      return $title_cache[$id];
+
+    // check if already too many titles have been requested and probably
+    // using the title index is better
+    if ($count > P_GET_FIRST_HEADING_METADATA_LIMIT) {
+        if (is_null($title_index)) {
+            $pages  = array_map('rtrim', idx_getIndex('page', ''));
+            $titles = array_map('rtrim', idx_getIndex('title', ''));
+            // check for corrupt title index #FS2076
+            if(count($pages) != count($titles)){
+                $titles = array_fill(0,count($pages),'');
+                @unlink($conf['indexdir'].'/title.idx'); // will be rebuilt in inc/init.php
+            }
+            $title_index = array_combine($pages, $titles);
+        }
+        return $title_index[$id];
+    }
+
+    ++$count;
+    $title_cache[$id] = p_get_metadata($id,'title',$render);
+    return $title_cache[$id];
 }
 
 /**

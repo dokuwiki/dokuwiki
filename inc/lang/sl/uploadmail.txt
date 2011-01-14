@@ -1,0 +1,13 @@
+Datoteka je bila naložena v vaš DokuWiki. Tu so podatki:
+
+Datoteka: @MEDIA@
+Datum: @DATE@
+Brskalnik: @BROWSER@
+IP naslov: @IPADDRESS@
+Ponudnik: @HOSTNAME@
+Velikost: @SIZE@
+MIME tip: @MIME@
+Uporabnik: @USER@
+
+--
+Sporočilo je generiral DokuWiki na naslovu @DOKUWIKIURL@

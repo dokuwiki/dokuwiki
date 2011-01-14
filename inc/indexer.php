@@ -305,7 +305,7 @@ function idx_addPage($page){
     }
     unset($page_idx); // free memory
 
-    idx_saveIndexLine('title', '', $pid, p_get_first_heading($page, false));
+    idx_saveIndexLine('title', '', $pid, p_get_first_heading($page, true));
 
     $pagewords = array();
     // get word usage in page

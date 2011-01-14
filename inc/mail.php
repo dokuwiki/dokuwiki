@@ -44,7 +44,9 @@ function mail_setup(){
     if(!empty($USERINFO['mail'])){
         $replace['@MAIL@'] = $USERINFO['mail'];
     }else{
-        $replace['@MAIL@'] = 'noreply@'.parse_url(DOKU_URL,PHP_URL_HOST);
+        $host = @parse_url(DOKU_URL,PHP_URL_HOST);
+        if(!$host) $host = 'example.com';
+        $replace['@MAIL@'] = 'noreply@'.$host;
     }
 
     if(!empty($_SERVER['REMOTE_USER'])){
@@ -225,6 +227,7 @@ function mail_encode_address($string,$header='',$names=true){
  */
 function mail_isvalid($email){
     $validator = new EmailAddressValidator;
+    $validator->allowLocalAddresses = true;
     return $validator->check_email_address($email);
 }
 

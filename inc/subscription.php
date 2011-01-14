@@ -46,7 +46,7 @@ function subscription_filename($id) {
  */
 function subscription_lock_filename ($id){
     global $conf;
-    return $conf['lockdir'].'/_subscr_' . $id . '.lock';
+    return $conf['lockdir'].'/_subscr_' . md5($id) . '.lock';
 }
 
 function subscription_lock($id) {

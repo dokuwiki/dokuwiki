@@ -1,7 +1,7 @@
 Hallo!
 
 Die Seite @PAGE@ im @TITLE@ Wiki wurde bearbeitet.
-Das sind die Änderungen:
+Ãœersicht der Ã„nderungen:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,10 +10,10 @@ Das sind die Änderungen:
 Alte Revision: @OLDPAGE@
 Neue Revision: @NEWPAGE@
 
-Um das Abonnement für diese Seite aufzulösen, melde dich im Wiki an
+Um das Abonnement fÃ¼r diese Seite aufzulÃ¶sen, melde dich im Wiki an
 @DOKUWIKIURL@, besuchen dann
 @SUBSCRIBE@
-und klicke auf den Link 'Änderungen abbestellen'.
+und klicke auf den Link 'Aboverwaltung'.
 
 --
 Diese Mail kommt vom DokuWiki auf

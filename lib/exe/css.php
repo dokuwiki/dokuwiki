@@ -122,6 +122,9 @@ function css_out(){
 
     // apply style replacements
     $css = css_applystyle($css,$tplinc);
+    
+    // place all @import statements at the top of the file
+    $css = css_moveimports($css);
 
     // compress whitespace and comments
     if($conf['compress']){
@@ -264,7 +267,8 @@ function css_loadfile($file,$location=''){
     $css = io_readFile($file);
     if(!$location) return $css;
 
-    $css = preg_replace('#(url\([ \'"]*)((?!/|http://|https://| |\'|"))#','\\1'.$location.'\\3',$css);
+    $css = preg_replace('#(url\([ \'"]*)(?!/|http://|https://| |\'|")#','\\1'.$location,$css);
+    $css = preg_replace('#(@import\s+[\'"])(?!/|http://|https://)#', '\\1'.$location, $css);
     return $css;
 }
 
@@ -294,6 +298,29 @@ function css_pluginstyles($mode='screen'){
         }
     }
     return $list;
+}
+
+/**
+ * Move all @import statements in a combined stylesheet to the top so they
+ * aren't ignored by the browser. 
+ *
+ * @author Gabriel Birke <birke@d-scribe.de>
+ */
+function css_moveimports($css)
+{
+    if(!preg_match_all('/@import\s+(?:url\([^)]+\)|"[^"]+")\s*[^;]*;\s*/', $css, $matches, PREG_OFFSET_CAPTURE)) {
+        return $css;
+    }
+    $newCss  = "";
+    $imports = "";
+    $offset  = 0;
+    foreach($matches[0] as $match) {
+        $newCss  .= substr($css, $offset, $match[1] - $offset);
+        $imports .= $match[0];
+        $offset   = $match[1] + strlen($match[0]);
+    }
+    $newCss .= substr($css, $offset);
+    return $imports.$newCss;
 }
 
 /**

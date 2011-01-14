@@ -177,6 +177,7 @@ $meta['canonical']   = array('onoff');
 $meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'));
 $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
+$meta['mailprefix']  = array('string');
 $meta['compress']    = array('onoff');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');

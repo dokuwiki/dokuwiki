@@ -419,12 +419,16 @@ function getBaseURL($abs=null){
     if($conf['baseurl']) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port
-    $addr = explode(':',$_SERVER['HTTP_HOST']);
-    $host = $addr[0];
-    $port = '';
-    if (isset($addr[1])) {
-        $port = $addr[1];
-    } elseif (isset($_SERVER['SERVER_PORT'])) {
+    if(isset($_SERVER['HTTP_HOST'])){
+        list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
+    }elseif(isset($_SERVER['SERVER_NAME'])){
+        list($host,$port) = explode(':',$_SERVER['SERVER_NAME']);
+    }else{
+        $host = php_uname('n');
+        $port = '';
+    }
+
+    if(!$port && isset($_SERVER['SERVER_PORT'])) {
         $port = $_SERVER['SERVER_PORT'];
     }
     if(!is_ssl()){

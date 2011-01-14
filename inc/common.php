@@ -242,13 +242,16 @@ function buildURLparams($params, $sep='&amp;'){
  */
 function buildAttributes($params,$skipempty=false){
     $url = '';
+    $white = false;
     foreach($params as $key => $val){
         if($key{0} == '_') continue;
         if($val === '' && $skipempty) continue;
+        if($white) $url .= ' ';
 
         $url .= $key.'="';
         $url .= htmlspecialchars ($val);
-        $url .= '" ';
+        $url .= '"';
+        $white = true;
     }
     return $url;
 }
@@ -1128,12 +1131,15 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $diff = rawWiki($id);
     }
     $text = str_replace('@DIFF@',$diff,$text);
-    if(utf8_strlen($conf['title']) < 20) {
-        $subject = '['.$conf['title'].'] '.$subject;
+    if(empty($conf['mailprefix'])) {
+        if(utf8_strlen($conf['title']) < 20) {
+            $subject = '['.$conf['title'].'] '.$subject;
+        }else{
+            $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
+        }
     }else{
-        $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
+        $subject = '['.$conf['mailprefix'].'] '.$subject;
     }
-
     mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
 }
 

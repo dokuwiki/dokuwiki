@@ -372,63 +372,15 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
             $user = $_SERVER['REMOTE_USER'];
         }
     }
-    $user = trim($auth->cleanUser($user));
-    if($user === '') return false;
-    if(is_null($groups)) $groups = (array) $USERINFO['grps'];
-    $groups = array_map(array($auth,'cleanGroup'),$groups);
-    $user   = auth_nameencode($user);
-
-    // check username against superuser and manager
-    $superusers = explode(',', $conf['superuser']);
-    $superusers = array_unique($superusers);
-    $superusers = array_map('trim', $superusers);
-    $superusers = array_filter($superusers);
-    // prepare an array containing only true values for array_map call
-    $alltrue = array_fill(0, count($superusers), true);
-    $superusers = array_map('auth_nameencode', $superusers, $alltrue);
-
-    // case insensitive?
-    if(!$auth->isCaseSensitive()){
-        $superusers = array_map('utf8_strtolower',$superusers);
-        $user       = utf8_strtolower($user);
+    if(is_null($groups)){
+        $groups = (array) $USERINFO['grps'];
     }
 
-    // check user match
-    if(in_array($user, $superusers)) return true;
-
+    // check superuser match
+    if(auth_isMember($conf['superuser'],$user, $groups)) return true;
+    if($adminonly) return false;
     // check managers
-    if(!$adminonly){
-        $managers = explode(',', $conf['manager']);
-        $managers = array_unique($managers);
-        $managers = array_map('trim', $managers);
-        $managers = array_filter($managers);
-        // prepare an array containing only true values for array_map call
-        $alltrue = array_fill(0, count($managers), true);
-        $managers = array_map('auth_nameencode', $managers, $alltrue);
-        if(!$auth->isCaseSensitive()) $managers = array_map('utf8_strtolower',$managers);
-        if(in_array($user, $managers)) return true;
-    }
-
-    // check user's groups against superuser and manager
-    if (!empty($groups)) {
-
-        //prepend groups with @ and nameencode
-        $cnt = count($groups);
-        for($i=0; $i<$cnt; $i++){
-            $groups[$i] = '@'.auth_nameencode($groups[$i]);
-            if(!$auth->isCaseSensitive()){
-                $groups[$i] = utf8_strtolower($groups[$i]);
-            }
-        }
-
-        // check groups against superuser and manager
-        foreach($superusers as $supu)
-            if(in_array($supu, $groups)) return true;
-        if(!$adminonly){
-            foreach($managers as $mana)
-                if(in_array($mana, $groups)) return true;
-        }
-    }
+    if(auth_isMember($conf['manager'],$user, $groups)) return true;
 
     return false;
 }
@@ -445,6 +397,52 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
  */
 function auth_isadmin($user=null,$groups=null){
     return auth_ismanager($user,$groups,true);
+}
+
+
+/**
+ * Match a user and his groups against a comma separated list of
+ * users and groups to determine membership status
+ *
+ * Note: all input should NOT be nameencoded.
+ *
+ * @param $memberlist string commaseparated list of allowed users and groups
+ * @param $user       string user to match against
+ * @param $groups     array  groups the user is member of
+ * @returns bool      true for membership acknowledged
+ */
+function auth_isMember($memberlist,$user,array $groups){
+    global $auth;
+    if (!$auth) return false;
+
+    // clean user and groups
+    if(!$auth->isCaseSensitive()){
+        $user = utf8_strtolower($user);
+        $groups = array_map('utf8_strtolower',$groups);
+    }
+    $user = $auth->cleanUser($user);
+    $groups = array_map(array($auth,'cleanGroup'),$groups);
+
+    // extract the memberlist
+    $members = explode(',',$memberlist);
+    $members = array_map('trim',$members);
+    $members = array_unique($members);
+    $members = array_filter($members);
+
+    // compare cleaned values
+    foreach($members as $member){
+        if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
+        if($member[0] == '@'){
+            $member = $auth->cleanGroup(substr($member,1));
+            if(in_array($member, $groups)) return true;
+        }else{
+            $member = $auth->cleanUser($member);
+            if($member == $user) return true;
+        }
+    }
+
+    // still here? not a member!
+    return false;
 }
 
 /**
@@ -537,13 +535,13 @@ function auth_aclcheck($id,$user,$groups){
 
     //still here? do the namespace checks
     if($ns){
-        $path = $ns.':\*';
+        $path = $ns.':*';
     }else{
-        $path = '\*'; //root document
+        $path = '*'; //root document
     }
 
     do{
-        $matches = preg_grep('/^'.$path.'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -560,9 +558,9 @@ function auth_aclcheck($id,$user,$groups){
         //get next higher namespace
         $ns   = getNS($ns);
 
-        if($path != '\*'){
-            $path = $ns.':\*';
-            if($path == ':\*') $path = '\*';
+        if($path != '*'){
+            $path = $ns.':*';
+            if($path == ':*') $path = '*';
         }else{
             //we did this already
             //looks like there is something wrong with the ACL

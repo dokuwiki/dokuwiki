@@ -292,10 +292,10 @@ function act_draftsave($act){
     global $conf;
     if($conf['usedraft'] && $_POST['wikitext']){
         $draft = array('id'     => $ID,
-                'prefix' => $_POST['prefix'],
+                'prefix' => substr($_POST['prefix'], 0, -1),
                 'text'   => $_POST['wikitext'],
                 'suffix' => $_POST['suffix'],
-                'date'   => $_POST['date'],
+                'date'   => (int) $_POST['date'],
                 'client' => $INFO['client'],
                 );
         $cname = getCacheName($draft['client'].$ID,'.draft');
@@ -626,6 +626,7 @@ function act_sitemap($act) {
     if (is_readable($sitemap)) {
         // Send headers
         header('Content-Type: '.$mime);
+        header('Content-Disposition: attachment; filename='.basename($sitemap));
 
         http_conditionalRequest(filemtime($sitemap));
 
