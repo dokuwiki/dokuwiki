@@ -685,7 +685,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_breadcrumbs($sep='&raquo;'){
+function tpl_breadcrumbs($sep='&diams;'){
     global $lang;
     global $conf;
 
