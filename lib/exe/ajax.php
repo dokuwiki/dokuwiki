@@ -66,7 +66,7 @@ function ajax_qsearch(){
         } else {
             $ns = getNS($id);
             if($ns){
-                $name = shorten(noNS($id), ' ('.$ns.')',30);
+                $name = noNS($id).' ('.$ns.')';
             }else{
                 $name = $id;
             }
