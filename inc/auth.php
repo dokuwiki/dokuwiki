@@ -937,6 +937,8 @@ function act_resendpwd(){
  *   mysql - MySQL password (old method)
  *   my411 - MySQL 4.1.1 password
  *   kmd5  - Salted MD5 hashing as used by UNB
+ *   pmd5  - Salted multi iteration MD5 as used by Wordpress
+ *   hmd5  - Same as pmd5 but PhpBB3 flavour
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  string  The crypted password
@@ -1016,6 +1018,45 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             $hash1 = strtolower(md5($key . md5($clear)));
             $hash2 = substr($hash1, 0, 16) . $key . substr($hash1, 16);
             return $hash2;
+        case 'hmd5':
+            $key = 'H';
+            // hmd5 is exactly the same as pmd5, but uses an H as identifier
+            // PhpBB3 uses it that way, so we just fall through here
+        case 'pmd5':
+            if(!$key) $key = 'P';
+            $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            $iterc = $salt[0]; // pos 0 of salt is iteration count
+            $iter = strpos($itoa64,$iterc);
+            $iter = 1 << $iter;
+            $salt = substr($salt,1,8);
+
+            // iterate
+            $hash = md5($salt . $clear, true);
+            do {
+                $hash = md5($hash . $clear, true);
+            } while (--$iter);
+
+            // encode
+            $output = '';
+            $count = 16;
+            $i = 0;
+            do {
+                $value = ord($hash[$i++]);
+                $output .= $itoa64[$value & 0x3f];
+                if ($i < $count)
+                    $value |= ord($hash[$i]) << 8;
+                $output .= $itoa64[($value >> 6) & 0x3f];
+                if ($i++ >= $count)
+                    break;
+                if ($i < $count)
+                    $value |= ord($hash[$i]) << 16;
+                $output .= $itoa64[($value >> 12) & 0x3f];
+                if ($i++ >= $count)
+                    break;
+                $output .= $itoa64[($value >> 18) & 0x3f];
+            } while ($i < $count);
+
+            return '$'.$key.'$'.$iterc.$salt.$output;
         default:
             msg("Unsupported crypt method $method",-1);
     }
@@ -1042,6 +1083,12 @@ function auth_verifyPassword($clear,$crypt){
         $salt   = $m[1];
     }elseif(preg_match('/^\$apr1\$([^\$]{0,8})\$/',$crypt,$m)){
         $method = 'apr1';
+        $salt   = $m[1];
+    }elseif(preg_match('/^\$P\$(.{31})$/',$crypt,$m)){
+        $method = 'pmd5';
+        $salt   = $m[1];
+    }elseif(preg_match('/^\$H\$(.{31})$/',$crypt,$m)){
+        $method = 'hmd5';
         $salt   = $m[1];
     }elseif(substr($crypt,0,6) == '{SSHA}'){
         $method = 'ssha';
