@@ -15,6 +15,7 @@ class auth_password_test extends UnitTestCase {
         'crypt' => 'ablvoGr1hvZ5k',
         'mysql' => '4a1fa3780bd6fd55',
         'my411' => '*e5929347e25f82e19e4ebe92f1dc6b6e7c2dbd29',
+        'kmd5'  => 'a579299436d7969791189acadd86fcb716',
     );
 
 
@@ -22,7 +23,7 @@ class auth_password_test extends UnitTestCase {
         foreach($this->passes as $method => $hash){
             $info = "testing method $method";
             $this->signal('failinfo',$info);
-            $this->assertEqual(auth_cryptPassword('foo'.$method,$method,'abcdefgh'),$hash);
+            $this->assertEqual(auth_cryptPassword('foo'.$method,$method,'abcdefgh12345678912345678912345678'),$hash);
         }
     }
 
