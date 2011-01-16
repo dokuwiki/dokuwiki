@@ -420,9 +420,13 @@ function getBaseURL($abs=null){
 
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
-        list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
+        $parsed_host = parse_url('http://'.$_SERVER['HTTP_HOST']);
+        $host = $parsed_host['host'];
+        $port = $parsed_host['port'];
     }elseif(isset($_SERVER['SERVER_NAME'])){
-        list($host,$port) = explode(':',$_SERVER['SERVER_NAME']);
+        $parsed_host = parse_url('http://'.$_SERVER['SERVER_NAME']);
+        $host = $parsed_host['host'];
+        $port = $parsed_host['port'];
     }else{
         $host = php_uname('n');
         $port = '';
@@ -431,6 +435,11 @@ function getBaseURL($abs=null){
     if(!$port && isset($_SERVER['SERVER_PORT'])) {
         $port = $_SERVER['SERVER_PORT'];
     }
+
+    if(is_null($port)){
+        $port = '';
+    }
+
     if(!is_ssl()){
         $proto = 'http://';
         if ($port == '80') {
