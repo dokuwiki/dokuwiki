@@ -26,7 +26,6 @@ if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
 // load and initialize the core system
 require_once(DOKU_INC.'inc/init.php');
 
-$old = error_reporting(E_ALL ^ E_NOTICE);
 //import variables
 $QUERY = trim($_REQUEST['id']);
 $ID    = getID();
@@ -47,7 +46,6 @@ if (isset($_POST['wikitext'])) {
 $PRE   = cleanText(substr($_POST['prefix'], 0, -1));
 $SUF   = cleanText($_POST['suffix']);
 $SUM   = $_REQUEST['summary'];
-error_reporting($old);
 
 //sanitize revision
 $REV = preg_replace('/[^0-9]/','',$REV);
