@@ -876,7 +876,7 @@ function html_diff($text='',$intro=true){
     // array in rev2.
     $rev1 = $REV;
 
-    if (is_array($_REQUEST['rev2'])){
+    if(is_array($_REQUEST['rev2'])){
         $rev1 = (int) $_REQUEST['rev2'][0];
         $rev2 = (int) $_REQUEST['rev2'][1];
 
@@ -948,12 +948,8 @@ function html_diff($text='',$intro=true){
             '<br />'.$l_user.' '.$l_sum;
         }
 
-        $_r_rev = $r_rev;
-        if (!$_r_rev) {
-            $_r_rev = @filemtime(wikiFN($ID));
-        }
-        if($_r_rev){
-            $r_info   = getRevisionInfo($ID,$_r_rev,true);
+        if($r_rev){
+            $r_info   = getRevisionInfo($ID,$r_rev,true);
             if($r_info['user']){
                 $r_user = editorinfo($r_info['user']);
                 if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
