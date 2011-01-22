@@ -12,6 +12,7 @@
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Ladyko Andrey <fylh@succexy.spb.ru>
  */
 $lang['menu']                  = 'Менеджер откаток';
 $lang['filter']                = 'Поиск спам-страниц';

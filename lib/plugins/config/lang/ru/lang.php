@@ -14,6 +14,7 @@
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Ladyko Andrey <fylh@succexy.spb.ru>
  */
 $lang['menu']                  = 'Настройки вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте свои изменения и попробуйте ещё раз.<br />Неправильные значения будут обведены красной рамкой.';
@@ -110,6 +111,7 @@ $lang['fetchsize']             = 'Максимальный размер файл
 $lang['notify']                = 'Электронный адрес для извещений';
 $lang['registernotify']        = 'Посылать информацию о новых зарегистрированных пользователях на этот электронный адрес';
 $lang['mailfrom']              = 'Электронный адрес вики (От:)';
+$lang['mailprefix']            = 'Префикс используемый для автоматического письма станет темой сообщений';
 $lang['gzip_output']           = 'Использовать gzip-сжатие для xhtml';
 $lang['gdlib']                 = 'Версия LibGD';
 $lang['im_convert']            = 'Путь к ImageMagick';

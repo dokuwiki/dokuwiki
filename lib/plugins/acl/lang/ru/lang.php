@@ -13,6 +13,7 @@
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Ladyko Andrey <fylh@succexy.spb.ru>
  */
 $lang['admin_acl']             = 'Управление списками контроля доступа';
 $lang['acl_group']             = 'Группа';
