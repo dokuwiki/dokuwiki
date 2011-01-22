@@ -1,5 +1,5 @@
-=====Najden je bil osnutek strani=====
+===== Zaznan je shranjen osnutek strani =====
 
-Vaša zadnja seja na tej strani ni bila pravilno zaključena. DokuWiki je samodejno shranil osnutek med vašim delom, katerega sedaj lahko nadaljujete. Spodaj lahko vidite podatke, ki so bili samodejno shranjeni v vaši zadnji seji.
+Zadnja seja te strani ni bila pravilno zaključena. Sistem DokuWiki je samodejno shranil osnutek strani, ki ga je mogoče naprej urejati. Spodaj so navedeni podatki samodejnega shranjevanja zadnje seje.
 
-Prosimo, odločite se ali boste //obnovili// vašo sejo, //izbrisali// samodejno shranjen osnutek alo //prekinili// proces urejanja.
+Vsebino osnutka je mogoče //obnoviti// na zadnjo sejo, //izbrisati// samodejno shranjen osnutek ali pa //prekiniti// urejanje.

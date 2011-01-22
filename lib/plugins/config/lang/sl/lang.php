@@ -5,6 +5,7 @@
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
+  * @author Matej Urbančič (mateju@svn.gnome.org)
  */
 $lang['lang']                  = 'Jezik';
 $lang['template']              = 'Predloga';
@@ -12,7 +13,7 @@ $lang['recent']                = 'Zadnje spremembe';
 $lang['signature']             = 'Podpis';
 $lang['defaultgroup']          = 'Privzeta skupina';
 $lang['disableactions_check']  = 'Preveri';
-$lang['userewrite']            = 'Uporabi lepše URL naslove';
+$lang['userewrite']            = 'Uporabi olepšane naslove URL';
 $lang['userewrite_o_1']        = '.htaccess';
 $lang['rss_type_o_rss']        = 'RSS 0.91';
 $lang['rss_type_o_rss1']       = 'RSS 1.0';

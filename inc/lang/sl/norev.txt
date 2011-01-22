@@ -1,4 +1,3 @@
-====== Ta različica ne obstaja ======
+====== Neobstoječa različica strani ======
 
-Podana različica ne obstaja. Uporabite gumb ''Stare različice'' za seznam starih različic tega dokumenta.
-
+Zahtevana različica strani ne obstaja. Uporabite gumb ''Stare različice'' za izpis seznama starih različic tega dokumenta.

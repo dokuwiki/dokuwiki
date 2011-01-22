@@ -5,6 +5,7 @@
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
+ * @author Matej Urbančič (mateju@svn.gnome.org)
  */
 $lang['btn_delete']            = 'Izbriši';
 $lang['btn_settings']          = 'Nastavitve';
@@ -17,7 +18,7 @@ $lang['updating']              = 'Posodabljanje ...';
 $lang['deleting']              = 'Brisanje ...';
 $lang['name']                  = 'Ime:';
 $lang['date']                  = 'Datum:';
-$lang['type']                  = 'Tip:';
+$lang['type']                  = 'Vrsta:';
 $lang['desc']                  = 'Opis:';
 $lang['author']                = 'Avtor:';
 $lang['www']                   = 'Spletna stran:';

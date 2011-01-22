@@ -1,4 +1,4 @@
-====== Kaj je povezano sem ======
+====== Povratne povezave ======
 
-To je seznam strani, ki so povezane na trenutno stran. Opomba: CamelCase povezave niso zaznane kot take povezave.
+Spodaj je naveden seznam strani, ki so povezane na trenutno stran. CamelCase povezave niso zaznane kot povratne povezave.
 
