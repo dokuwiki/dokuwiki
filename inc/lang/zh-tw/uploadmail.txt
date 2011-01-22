@@ -3,8 +3,8 @@
 檔名 : @MEDIA@
 日期 : @DATE@
 瀏覽器 : @BROWSER@
-IP-Address : @IPADDRESS@
-Hostname : @HOSTNAME@
+IP位址 : @IPADDRESS@
+主機名稱 : @HOSTNAME@
 尺寸 : @SIZE@
 MIME Type : @MIME@
 帳號 : @USER@

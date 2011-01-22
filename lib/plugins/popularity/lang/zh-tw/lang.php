@@ -7,6 +7,7 @@
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
+ * @author Danny Lin
  */
 $lang['name']                  = '人氣反饋（載入可能需要一些時間）';
-$lang['submit']                = '發送數據';
+$lang['submit']                = '發送資料';

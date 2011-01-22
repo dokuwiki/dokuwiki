@@ -6,8 +6,8 @@ E-mail : @NEWEMAIL@
 
 日期 : @DATE@
 瀏覽器 : @BROWSER@
-IP-Address : @IPADDRESS@
-Hostname : @HOSTNAME@
+IP位址 : @IPADDRESS@
+主機名稱 : @HOSTNAME@
 
 -- 
 這封信是由 @DOKUWIKIURL@ 的 DokuWiki 所產生的

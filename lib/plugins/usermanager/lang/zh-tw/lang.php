@@ -8,6 +8,7 @@
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
+ * @author Danny Lin
  */
 $lang['menu']                  = '帳號管理員(User Manager)';
 $lang['noauth']                = '(帳號認證尚未開放)';
@@ -41,7 +42,7 @@ $lang['start']                 = '開始';
 $lang['prev']                  = '上一步';
 $lang['next']                  = '下一步';
 $lang['last']                  = '最後步驟';
-$lang['edit_usermissing']      = '找不到所選的帳號，該帳號可能已經被刪除或是改為其他名稱喔。';
+$lang['edit_usermissing']      = '找不到所選的帳號，可能是被刪除或被改為其他名稱。';
 $lang['user_notify']           = '通知使用者';
 $lang['note_notify']           = '通知信只有在給予使用者新密碼時寄送。';
 $lang['note_group']            = '如果沒有指定群組，新使用者將會被加入到預設群組(%s)當中。';
