@@ -277,7 +277,7 @@ class Doku_Indexer {
                     else unset($val_idx[$id]);
                 }
                 $val_idx = array_keys($val_idx);
-                $this->_saveIndexKey($metaname.'_p', '', $pid, $val_idx);
+                $this->_saveIndexKey($metaname.'_p', '', $pid, implode(':', $val_idx));
             }
             unset($metaidx);
             unset($metawords);
@@ -559,8 +559,8 @@ class Doku_Indexer {
     private function _getIndex($idx, $suffix) {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-        if (!@file_exists($fn, FILE_IGNORE_NEW_LINES)) return array();
-        return file($fn);
+        if (!@file_exists($fn)) return array();
+        return file($fn, FILE_IGNORE_NEW_LINES);
     }
 
     /**
@@ -773,7 +773,7 @@ class Doku_Indexer {
             $newLine = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $newLine);
         $newLine = trim($newLine, ':');
         if ($count) {
-            if ($strlen($newLine) > 0)
+            if (strlen($newLine) > 0)
                 return "$id*$count:".$newLine;
             else
                 return "$id*$count".$newLine;
@@ -794,7 +794,7 @@ class Doku_Indexer {
         foreach ($parts as $tuple) {
             if ($tuple == '') continue;
             list($key, $cnt) = explode('*', $tuple);
-            if (!$cnd) continue;
+            if (!$cnt) continue;
             $key = $keys[$key];
             if (!$key) continue;
             $result[$key] = $cnt;
