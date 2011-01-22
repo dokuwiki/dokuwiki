@@ -400,9 +400,44 @@ class Doku_Indexer {
      * @param callback  $func   comparison function
      * @return array            list with page names, keys are query values if more than one given
      * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Michael Hamann <michael@content-space.de>
      */
     public function lookupKey($key, $value, $func=null) {
-        return array();
+        $metaname = idx_cleanName($key);
+
+        // get all words in order to search the matching ids
+        $words = $this->_getIndex($metaname, '_w');
+
+        // the matching ids for the provided value(s)
+        $value_ids = array();
+
+        if (!is_array($value)) $value = array($value);
+
+        foreach ($value as $val) {
+            if (is_null($func)) {
+                if (($i = array_search($val, $words)) !== false)
+                    $value_ids[$i] = $val;
+            } else {
+                foreach ($words as $i => $word) {
+                    if (call_user_func_array($func, array($word, $value)))
+                        $value_ids[$i] = $val;
+                }
+            }
+        }
+
+        unset($words); // free the used memory
+
+        // load all lines and pages so the used lines can be taken and matched with the pages
+        $lines = $this->_getIndex($metaname, '_i');
+        $page_idx = $this->_getIndex('page', '');
+
+        $result = array();
+        foreach ($value_ids as $value_id => $val) {
+            // parse the tuples of the form page_id*1:page2_id*1 and so on, return value
+            // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
+            $result[$val] = array_keys($this->_parseTuples($page_idx, $lines[$value_id]));
+        }
+        return $result;
     }
 
     /**
