@@ -18,6 +18,8 @@ class auth_password_test extends UnitTestCase {
         'kmd5'  => 'a579299436d7969791189acadd86fcb716',
         'pmd5'  => '$P$abcdefgh1RC6Fd32heUzl7EYCG9uGw.',
         'hmd5'  => '$H$abcdefgh1ZbJodHxmeXVAhEzTG7IAp.',
+        'djangomd5'  => '$md5$abcde$d0fdddeda8cd92725d2b54148ac09158',
+        'djangosha1' => '$sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678',
     );
 
 
