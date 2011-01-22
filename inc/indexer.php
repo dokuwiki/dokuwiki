@@ -620,10 +620,16 @@ class Doku_Indexer {
             while (($curline = fgets($ih)) !== false) {
                 fwrite($fh, (++$ln == $id) ? $line : $curline);
             }
-            if ($id > $ln)
+            if ($id > $ln) {
+                while ($id > ++$ln)
+                    fwrite($fh, "\n");
                 fwrite($fh, $line);
+            }
             fclose($ih);
         } else {
+            $ln = -1;
+            while ($id > ++$ln)
+                fwrite($fh, "\n");
             fwrite($fh, $line);
         }
         fclose($fh);
