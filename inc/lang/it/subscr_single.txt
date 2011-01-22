@@ -13,11 +13,12 @@ Sommario modifica: @SUMMARY@
 Vecchia revisione: @OLDPAGE@
 Nuova revisione: @NEWPAGE@
 
-Per annullare la pagina delle notifiche collegati al 
-wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
-e rimuovi la sottoscrizione alle modifiche delle 
-pagine e/o categorie.
+Per non ricevere più queste notifiche, collegati al 
+wiki all'indirizzo @DOKUWIKIURL@ e poi visita
+@NEWPAGE@
+e rimuovi la sottoscrizione alle modifiche della 
+pagina o categoria.
 
 --
-Questa email è stata generata dal DokuWiki di
+Questa email è stata generata dal DokuWiki all'indirizzo
 @DOKUWIKIURL@
