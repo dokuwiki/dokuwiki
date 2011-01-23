@@ -103,4 +103,4 @@ $lang['qb_sig']     = 'Đặt chữ ký';
 $lang['js']['del_confirm']= 'Xoá mục này?';
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

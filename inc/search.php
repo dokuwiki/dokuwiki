@@ -624,4 +624,4 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     return $return;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

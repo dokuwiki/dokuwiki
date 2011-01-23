@@ -6,6 +6,7 @@
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
  * @author Matthias Schulte <post@lupo49.de>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['menu']                  = 'Einstellungen';
 $lang['error']                 = 'Einstellungen wurden nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -102,6 +103,7 @@ $lang['fetchsize']             = 'Maximale Größe (in Bytes), die fetch.php von
 $lang['notify']                = 'Sende Änderungsbenachrichtigungen an diese E-Mail-Adresse.';
 $lang['registernotify']        = 'Sende Information bei neu registrierten Benutzern an diese E-Mail-Adresse.';
 $lang['mailfrom']              = 'Absenderadresse für automatisch erzeugte E-Mails';
+$lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';

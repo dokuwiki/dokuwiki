@@ -112,6 +112,16 @@ define('JSON_STRICT_TYPE', 11);
  * @deprecated
  */
 class JSON {
+
+    /**
+     * Disables the use of PHP5's native json_decode()
+     *
+     * You shouldn't change this usually because the native function is much
+     * faster. However, this non-native will also parse slightly broken JSON
+     * which might be handy when talking to a non-conform endpoint
+     */
+    public $skipnative = false;
+
     /**
      * constructs a new JSON instance
      *
@@ -366,7 +376,10 @@ class JSON {
      * @access   public
      */
     function decode($str) {
-        if (function_exists('json_decode')) return json_decode($str);
+        if (!$this->skipnative && function_exists('json_decode')){
+            return json_decode($str,($this->use == JSON_LOOSE_TYPE));
+        }
+
         $str = $this->reduce_string($str);
 
         switch (strtolower($str)) {

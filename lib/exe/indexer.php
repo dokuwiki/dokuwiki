@@ -31,7 +31,6 @@ $tmp = array(); // No event data
 $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
 if ($evt->advise_before()) {
   runIndexer() or
-  metaUpdate() or
   runSitemapper() or
   sendDigest() or
   runTrimRecentChanges() or
@@ -136,51 +135,6 @@ function runIndexer(){
 
     // do the work
     return idx_addPage($ID, true);
-}
-
-/**
- * Will render the metadata for the page if not exists yet
- *
- * This makes sure pages which are created from outside DokuWiki will
- * gain their data when viewed for the first time.
- */
-function metaUpdate(){
-    global $ID;
-    print "metaUpdate(): started".NL;
-
-    if(!$ID) return false;
-    $file = metaFN($ID, '.meta');
-    echo "meta file: $file".NL;
-
-    // rendering needed?
-    if (@file_exists($file)) return false;
-    if (!page_exists($ID)) return false;
-
-    global $conf;
-
-    // gather some additional info from changelog
-    $info = io_grep($conf['changelog'],
-                    '/^(\d+)\t(\d+\.\d+\.\d+\.\d+)\t'.preg_quote($ID,'/').'\t([^\t]+)\t([^\t\n]+)/',
-                    0,true);
-
-    $meta = array();
-    if(!empty($info)){
-        $meta['date']['created'] = $info[0][1];
-        foreach($info as $item){
-            if($item[4] != '*'){
-                $meta['date']['modified'] = $item[1];
-                if($item[3]){
-                    $meta['contributor'][$item[3]] = $item[3];
-                }
-            }
-        }
-    }
-
-    $meta = p_render_metadata($ID, $meta);
-    p_save_metadata($ID, $meta);
-
-    echo "metaUpdate(): finished".NL;
-    return true;
 }
 
 /**
@@ -312,6 +266,6 @@ function sendGIF(){
     // Thinks it's got the whole image
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :
 // No trailing PHP closing tag - no output please!
 // See Note at http://www.php.net/manual/en/language.basic-syntax.instruction-separation.php

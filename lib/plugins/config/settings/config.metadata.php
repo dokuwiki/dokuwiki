@@ -16,6 +16,7 @@
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
  *   'numeric'      - text input, accepts numbers and arithmetic operators, setting output without quotes
+ *                    if given the '_min' and '_max' parameters are used for validation
  *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
@@ -54,6 +55,8 @@
  *   '_combine'    - complimentary output setting values which can be combined into a single display checkbox
  *                   optional for 'multicheckbox', ignored by other classes
  *   '_code'       - encoding method to use, accepted values: 'base64','uuencode','plain'.  defaults to plain.
+ *   '_min'        - minimum numeric value, optional for 'numeric' and 'numericopt', ignored by others
+ *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
@@ -98,7 +101,7 @@ $meta['allowdebug']  = array('onoff');
 
 $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
-$meta['breadcrumbs'] = array('numeric');
+$meta['breadcrumbs'] = array('numeric','_min' => 0);
 $meta['youarehere']  = array('onoff');
 $meta['fullpath']    = array('onoff');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));
@@ -119,7 +122,7 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','crypt','mysql','my411','kmd5'));
+$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','crypt','mysql','my411','kmd5','pmd5','hmd5'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');
@@ -174,6 +177,7 @@ $meta['canonical']   = array('onoff');
 $meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'));
 $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
+$meta['mailprefix']  = array('string');
 $meta['compress']    = array('onoff');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');

@@ -20,6 +20,7 @@ function act_dispatch(){
     global $ID;
     global $QUERY;
     global $lang;
+    global $conf;
 
     $preact = $ACT;
 
@@ -48,6 +49,12 @@ function act_dispatch(){
             } catch (Exception $e) {
                 msg($e->getMessage(), -1);
             }
+        }
+
+        //display some infos
+        if($ACT == 'check'){
+            check();
+            $ACT = 'show';
         }
 
         //check permissions
@@ -120,12 +127,6 @@ function act_dispatch(){
         if(substr($ACT,0,7) == 'export_')
             $ACT = act_export($ACT);
 
-        //display some infos
-        if($ACT == 'check'){
-            check();
-            $ACT = 'show';
-        }
-
         //handle admin tasks
         if($ACT == 'admin'){
             // retrieve admin plugin name from $_REQUEST['page']
@@ -143,6 +144,10 @@ function act_dispatch(){
         $ACT = act_permcheck($ACT);
     }  // end event ACTION_ACT_PREPROCESS default action
     $evt->advise_after();
+    // Make sure plugs can handle 'denied'
+    if($conf['send404'] && $ACT == 'denied') {
+        header('HTTP/1.0 403 Forbidden');
+    }
     unset($evt);
 
     // when action 'show', the intial not 'show' and POST, do a redirect
@@ -287,10 +292,10 @@ function act_draftsave($act){
     global $conf;
     if($conf['usedraft'] && $_POST['wikitext']){
         $draft = array('id'     => $ID,
-                'prefix' => $_POST['prefix'],
+                'prefix' => substr($_POST['prefix'], 0, -1),
                 'text'   => $_POST['wikitext'],
                 'suffix' => $_POST['suffix'],
-                'date'   => $_POST['date'],
+                'date'   => (int) $_POST['date'],
                 'client' => $INFO['client'],
                 );
         $cname = getCacheName($draft['client'].$ID,'.draft');
@@ -621,6 +626,7 @@ function act_sitemap($act) {
     if (is_readable($sitemap)) {
         // Send headers
         header('Content-Type: '.$mime);
+        header('Content-Disposition: attachment; filename='.basename($sitemap));
 
         http_conditionalRequest(filemtime($sitemap));
 
@@ -738,4 +744,4 @@ function subscription_handle_post(&$params) {
     $params = compact('target', 'style', 'data', 'action');
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

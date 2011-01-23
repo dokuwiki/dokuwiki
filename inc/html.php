@@ -26,6 +26,7 @@ function html_wikilink($id,$name=null,$search=''){
 /**
  * Helps building long attribute lists
  *
+ * @deprecated Use buildAttributes instead
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_attbuild($attributes){
@@ -887,6 +888,9 @@ function html_diff($text='',$intro=true){
         $rev2 = (int) $_REQUEST['rev2'];
     }
 
+    $r_minor = '';
+    $l_minor = '';
+
     if($text){                      // compare text to the most current revision
         $l_rev   = '';
         $l_text  = rawWiki($ID,'');
@@ -1033,7 +1037,10 @@ function html_conflict($text,$summary){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_msgarea(){
-    global $MSG;
+    global $MSG, $MSG_shown;
+    // store if the global $MSG has already been shown and thus HTML output has been started
+    $MSG_shown = true;
+
     if(!isset($MSG)) return;
 
     $shown = array();
@@ -1045,6 +1052,8 @@ function html_msgarea(){
         print '</div>';
         $shown[$hash] = 1;
     }
+
+    unset($GLOBALS['MSG']);
 }
 
 /**
@@ -1213,9 +1222,9 @@ function html_edit(){
     if($wr && $conf['license']){
         $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
         $out  = $lang['licenseok'];
-        $out .= '<a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
+        $out .= ' <a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
         if(isset($conf['target']['extern'])) $out .= ' target="'.$conf['target']['extern'].'"';
-        $out .= '> '.$license[$conf['license']]['name'].'</a>';
+        $out .= '>'.$license[$conf['license']]['name'].'</a>';
         $form->addElement($out);
         $form->addElement(form_makeCloseTag('div'));
     }

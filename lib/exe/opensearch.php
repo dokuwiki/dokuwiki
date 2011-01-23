@@ -35,4 +35,4 @@ echo '  <Url type="application/x-suggestions+json" template="'.
         DOKU_URL.'lib/exe/ajax.php?call=suggestions&amp;q={searchTerms}" />'.NL;
 echo '</OpenSearchDescription>'.NL;
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

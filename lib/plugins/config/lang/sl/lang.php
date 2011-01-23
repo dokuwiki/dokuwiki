@@ -4,6 +4,7 @@
  *
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
+ * @author Gregor Skumavc (grega.skumavc@gmail.com)
  */
 $lang['lang']                  = 'Jezik';
 $lang['template']              = 'Predloga';

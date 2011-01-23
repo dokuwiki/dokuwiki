@@ -196,4 +196,4 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     }
 
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

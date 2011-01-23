@@ -16,4 +16,4 @@ class common_pagetemplate_test extends UnitTestCase {
         error_reporting($old);
     }
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

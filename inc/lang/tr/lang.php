@@ -4,11 +4,10 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
- * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
- * @author yavuzselim@gmail.com
- * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
+ * @author Caleb Maclennan <caleb@alerque.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -186,6 +185,9 @@ $lang['qb_h2']                 = '2. Seviye Başlık';
 $lang['qb_h3']                 = '3. Seviye Başlık';
 $lang['qb_h4']                 = '4. Seviye Başlık';
 $lang['qb_h5']                 = '5. Seviye Başlık';
+$lang['qb_h']                  = 'Başlık';
+$lang['qb_hs']                 = 'Başlığı seç';
+$lang['qb_hplus']              = 'Daha yüksek başlık';
 $lang['qb_link']               = 'İç Bağlantı';
 $lang['qb_extlink']            = 'Dış Bağlantı';
 $lang['qb_hr']                 = 'Yatay Çizgi';

@@ -70,6 +70,12 @@ function auth_setup(){
     $_REQUEST['http_credentials'] = false;
     if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
+    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like
+    // the one presented at
+    // http://www.besthostratings.com/articles/http-auth-php-cgi.html is used
+    // for enabling HTTP authentication with CGI/SuExec)
+    if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
     // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
     if(isset($_SERVER['HTTP_AUTHORIZATION'])){
         list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
@@ -194,10 +200,11 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     }else{
         // read cookie information
         list($user,$sticky,$pass) = auth_getCookie();
-        // get session info
-        $session = $_SESSION[DOKU_COOKIE]['auth'];
         if($user && $pass){
             // we got a cookie - see if we can trust it
+
+            // get session info
+            $session = $_SESSION[DOKU_COOKIE]['auth'];
             if(isset($session) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time()-$conf['auth_security_timeout']) &&
@@ -371,63 +378,15 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
             $user = $_SERVER['REMOTE_USER'];
         }
     }
-    $user = trim($auth->cleanUser($user));
-    if($user === '') return false;
-    if(is_null($groups)) $groups = (array) $USERINFO['grps'];
-    $groups = array_map(array($auth,'cleanGroup'),$groups);
-    $user   = auth_nameencode($user);
-
-    // check username against superuser and manager
-    $superusers = explode(',', $conf['superuser']);
-    $superusers = array_unique($superusers);
-    $superusers = array_map('trim', $superusers);
-    $superusers = array_filter($superusers);
-    // prepare an array containing only true values for array_map call
-    $alltrue = array_fill(0, count($superusers), true);
-    $superusers = array_map('auth_nameencode', $superusers, $alltrue);
-
-    // case insensitive?
-    if(!$auth->isCaseSensitive()){
-        $superusers = array_map('utf8_strtolower',$superusers);
-        $user       = utf8_strtolower($user);
+    if(is_null($groups)){
+        $groups = (array) $USERINFO['grps'];
     }
 
-    // check user match
-    if(in_array($user, $superusers)) return true;
-
+    // check superuser match
+    if(auth_isMember($conf['superuser'],$user, $groups)) return true;
+    if($adminonly) return false;
     // check managers
-    if(!$adminonly){
-        $managers = explode(',', $conf['manager']);
-        $managers = array_unique($managers);
-        $managers = array_map('trim', $managers);
-        $managers = array_filter($managers);
-        // prepare an array containing only true values for array_map call
-        $alltrue = array_fill(0, count($managers), true);
-        $managers = array_map('auth_nameencode', $managers, $alltrue);
-        if(!$auth->isCaseSensitive()) $managers = array_map('utf8_strtolower',$managers);
-        if(in_array($user, $managers)) return true;
-    }
-
-    // check user's groups against superuser and manager
-    if (!empty($groups)) {
-
-        //prepend groups with @ and nameencode
-        $cnt = count($groups);
-        for($i=0; $i<$cnt; $i++){
-            $groups[$i] = '@'.auth_nameencode($groups[$i]);
-            if(!$auth->isCaseSensitive()){
-                $groups[$i] = utf8_strtolower($groups[$i]);
-            }
-        }
-
-        // check groups against superuser and manager
-        foreach($superusers as $supu)
-            if(in_array($supu, $groups)) return true;
-        if(!$adminonly){
-            foreach($managers as $mana)
-                if(in_array($mana, $groups)) return true;
-        }
-    }
+    if(auth_isMember($conf['manager'],$user, $groups)) return true;
 
     return false;
 }
@@ -444,6 +403,52 @@ function auth_ismanager($user=null,$groups=null,$adminonly=false){
  */
 function auth_isadmin($user=null,$groups=null){
     return auth_ismanager($user,$groups,true);
+}
+
+
+/**
+ * Match a user and his groups against a comma separated list of
+ * users and groups to determine membership status
+ *
+ * Note: all input should NOT be nameencoded.
+ *
+ * @param $memberlist string commaseparated list of allowed users and groups
+ * @param $user       string user to match against
+ * @param $groups     array  groups the user is member of
+ * @returns bool      true for membership acknowledged
+ */
+function auth_isMember($memberlist,$user,array $groups){
+    global $auth;
+    if (!$auth) return false;
+
+    // clean user and groups
+    if(!$auth->isCaseSensitive()){
+        $user = utf8_strtolower($user);
+        $groups = array_map('utf8_strtolower',$groups);
+    }
+    $user = $auth->cleanUser($user);
+    $groups = array_map(array($auth,'cleanGroup'),$groups);
+
+    // extract the memberlist
+    $members = explode(',',$memberlist);
+    $members = array_map('trim',$members);
+    $members = array_unique($members);
+    $members = array_filter($members);
+
+    // compare cleaned values
+    foreach($members as $member){
+        if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
+        if($member[0] == '@'){
+            $member = $auth->cleanGroup(substr($member,1));
+            if(in_array($member, $groups)) return true;
+        }else{
+            $member = $auth->cleanUser($member);
+            if($member == $user) return true;
+        }
+    }
+
+    // still here? not a member!
+    return false;
 }
 
 /**
@@ -536,13 +541,13 @@ function auth_aclcheck($id,$user,$groups){
 
     //still here? do the namespace checks
     if($ns){
-        $path = $ns.':\*';
+        $path = $ns.':*';
     }else{
-        $path = '\*'; //root document
+        $path = '*'; //root document
     }
 
     do{
-        $matches = preg_grep('/^'.$path.'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -559,9 +564,9 @@ function auth_aclcheck($id,$user,$groups){
         //get next higher namespace
         $ns   = getNS($ns);
 
-        if($path != '\*'){
-            $path = $ns.':\*';
-            if($path == ':\*') $path = '\*';
+        if($path != '*'){
+            $path = $ns.':*';
+            if($path == ':*') $path = '*';
         }else{
             //we did this already
             //looks like there is something wrong with the ACL
@@ -938,6 +943,8 @@ function act_resendpwd(){
  *   mysql - MySQL password (old method)
  *   my411 - MySQL 4.1.1 password
  *   kmd5  - Salted MD5 hashing as used by UNB
+ *   pmd5  - Salted multi iteration MD5 as used by Wordpress
+ *   hmd5  - Same as pmd5 but PhpBB3 flavour
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  string  The crypted password
@@ -1017,6 +1024,45 @@ function auth_cryptPassword($clear,$method='',$salt=null){
             $hash1 = strtolower(md5($key . md5($clear)));
             $hash2 = substr($hash1, 0, 16) . $key . substr($hash1, 16);
             return $hash2;
+        case 'hmd5':
+            $key = 'H';
+            // hmd5 is exactly the same as pmd5, but uses an H as identifier
+            // PhpBB3 uses it that way, so we just fall through here
+        case 'pmd5':
+            if(!$key) $key = 'P';
+            $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            $iterc = $salt[0]; // pos 0 of salt is iteration count
+            $iter = strpos($itoa64,$iterc);
+            $iter = 1 << $iter;
+            $salt = substr($salt,1,8);
+
+            // iterate
+            $hash = md5($salt . $clear, true);
+            do {
+                $hash = md5($hash . $clear, true);
+            } while (--$iter);
+
+            // encode
+            $output = '';
+            $count = 16;
+            $i = 0;
+            do {
+                $value = ord($hash[$i++]);
+                $output .= $itoa64[$value & 0x3f];
+                if ($i < $count)
+                    $value |= ord($hash[$i]) << 8;
+                $output .= $itoa64[($value >> 6) & 0x3f];
+                if ($i++ >= $count)
+                    break;
+                if ($i < $count)
+                    $value |= ord($hash[$i]) << 16;
+                $output .= $itoa64[($value >> 12) & 0x3f];
+                if ($i++ >= $count)
+                    break;
+                $output .= $itoa64[($value >> 18) & 0x3f];
+            } while ($i < $count);
+
+            return '$'.$key.'$'.$iterc.$salt.$output;
         default:
             msg("Unsupported crypt method $method",-1);
     }
@@ -1043,6 +1089,12 @@ function auth_verifyPassword($clear,$crypt){
         $salt   = $m[1];
     }elseif(preg_match('/^\$apr1\$([^\$]{0,8})\$/',$crypt,$m)){
         $method = 'apr1';
+        $salt   = $m[1];
+    }elseif(preg_match('/^\$P\$(.{31})$/',$crypt,$m)){
+        $method = 'pmd5';
+        $salt   = $m[1];
+    }elseif(preg_match('/^\$H\$(.{31})$/',$crypt,$m)){
+        $method = 'hmd5';
         $salt   = $m[1];
     }elseif(substr($crypt,0,6) == '{SSHA}'){
         $method = 'ssha';
@@ -1117,4 +1169,4 @@ function auth_getCookie(){
     return array($user,$sticky,$pass);
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

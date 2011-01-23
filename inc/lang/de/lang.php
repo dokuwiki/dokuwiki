@@ -17,6 +17,8 @@
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Niels Lange <niels@boldencursief.nl>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,12 +51,12 @@ $lang['btn_delete']            = 'Löschen';
 $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
 $lang['btn_backtomedia']       = 'Zurück zur Dateiauswahl';
-$lang['btn_subscribe']         = 'Änderungen abonnieren';
+$lang['btn_subscribe']         = 'Aboverwaltung';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
 $lang['btn_resendpwd']         = 'Sende neues Passwort';
 $lang['btn_draft']             = 'Entwurf bearbeiten';
-$lang['btn_recover']           = 'Entwurf wieder herstellen';
+$lang['btn_recover']           = 'Entwurf wiederherstellen';
 $lang['btn_draftdel']          = 'Entwurf löschen';
 $lang['btn_revert']            = 'Wiederherstellen';
 $lang['loggedinas']            = 'Angemeldet als';

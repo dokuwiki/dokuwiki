@@ -1,22 +1,22 @@
 Hallo!
 
 Die Seite @PAGE@ im @TITLE@ Wiki wurde bearbeitet.
-Das sind die Änderungen:
+Übersicht der Änderungen:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Datum : @DATE@
-Benutzer : @USER@
-Übersicht: @SUMMARY@
+Datum: @DATE@
+Benutzer: @USER@
+Zusammenfassung: @SUMMARY@
 Alte Revision: @OLDPAGE@
 Neue Revision: @NEWPAGE@
 
 Um das Abonnement für diese Seite aufzulösen, melde dich im Wiki an
-@DOKUWIKIURL@, besuchen dann
+@DOKUWIKIURL@, besuche dann
 @NEWPAGE@
-und klicke auf den Link 'Änderungen abbestellen'.
+und klicke auf den Link 'Aboverwaltung'.
 
 --
 Diese Mail kommt vom DokuWiki auf

@@ -486,7 +486,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
                 $name = basename($match[1]);
-        }
+            }
 
         }
 

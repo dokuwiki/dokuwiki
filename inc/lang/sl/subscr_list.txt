@@ -1,0 +1,17 @@
+Pozdravljeni!
+
+Strani v imenskem prostoru @PAGE@ wikija @TITLE@ so se spremenile.
+Tu so spremenjene strani:
+
+------------------------------------------------
+@DIFF@
+------------------------------------------------
+
+Za odjavo pošiljanja sprememb se prijavite v wiki na naslovu
+@DOKUWIKIURL@, nato obiščite
+@SUBSCRIBE@
+in se odjavite od sprememb strani in/ali imenskega prostora.
+
+--
+To sporočilo je generiral DokuWiki na naslovu
+@DUKOWIKIURL@

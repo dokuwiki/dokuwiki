@@ -376,6 +376,11 @@ function ft_snippet($id,$highlight){
  * Wraps a search term in regex boundary checks.
  */
 function ft_snippet_re_preprocess($term) {
+    // do not process asian terms where word boundaries are not explicit
+    if(preg_match('/'.IDX_ASIAN.'/u',$term)){
+        return $term;
+    }
+
     if(substr($term,0,2) == '\\*'){
         $term = substr($term,2);
     }else{
@@ -710,7 +715,7 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
         // successive asian characters need to be searched as a phrase
         $words = preg_split('/('.IDX_ASIAN.'+)/u', $term, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         foreach ($words as $word) {
-            if (preg_match('/'.IDX_ASIAN.'/u', $word)) $phrase_mode = true;
+            $phrase_mode = $phrase_mode ? true : preg_match('/'.IDX_ASIAN.'/u', $word);
             $parsed .= ft_termParser($Indexer, $word, false, $phrase_mode);
         }
     } else {
@@ -732,4 +737,4 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
     return $parsed;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

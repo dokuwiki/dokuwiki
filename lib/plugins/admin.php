@@ -43,4 +43,4 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         return array();
     }
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

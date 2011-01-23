@@ -33,4 +33,4 @@ class utf8_romanize_test extends UnitTestCase {
         $this->assertEqual("a A a A a o O",utf8_romanize("å Å ä Ä ä ö Ö"));
     }
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

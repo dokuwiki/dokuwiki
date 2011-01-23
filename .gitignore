@@ -6,6 +6,8 @@
 /conf/user*.css
 /conf/user*.js
 /conf/words.aspell
+/conf/lang/*
+/conf/plugin_lang/*
 .htaccess
 *.swp
 *.bak

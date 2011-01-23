@@ -186,4 +186,4 @@ function _quietecho($msg) {
     if(!$QUIET) echo $msg;
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

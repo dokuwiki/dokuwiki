@@ -126,7 +126,7 @@ class auth_ad extends auth_basic {
      * at least these fields:
      *
      * name string  full name of the user
-     * mail string  email addres of the user
+     * mail string  email address of the user
      * grps array   list of groups the user is in
      *
      * This LDAP specific function returns the following
@@ -296,4 +296,4 @@ class auth_ad extends auth_basic {
     }
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

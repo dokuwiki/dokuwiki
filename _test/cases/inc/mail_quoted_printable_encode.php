@@ -41,4 +41,4 @@ class mail_quotedprintable_encode extends UnitTestCase {
     }
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

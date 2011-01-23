@@ -37,14 +37,16 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['
  */
 function mail_setup(){
     global $conf;
-    global $INFO;
+    global $USERINFO;
 
     $replace = array();
 
-    if(!empty($INFO['userinfo']['mail'])){
-        $replace['@MAIL@'] = $INFO['userinfo']['mail'];
+    if(!empty($USERINFO['mail'])){
+        $replace['@MAIL@'] = $USERINFO['mail'];
     }else{
-        $replace['@MAIL@'] = 'noreply@'.parse_url(DOKU_URL,PHP_URL_HOST);
+        $host = @parse_url(DOKU_URL,PHP_URL_HOST);
+        if(!$host) $host = 'example.com';
+        $replace['@MAIL@'] = 'noreply@'.$host;
     }
 
     if(!empty($_SERVER['REMOTE_USER'])){
@@ -53,8 +55,8 @@ function mail_setup(){
         $replace['@USER@'] = 'noreply';
     }
 
-    if(!empty($INFO['userinfo']['name'])){
-        $replace['@NAME@'] = $INFO['userinfo']['name'];
+    if(!empty($USERINFO['name'])){
+        $replace['@NAME@'] = $USERINFO['name'];
     }else{
         $replace['@NAME@'] = '';
     }
@@ -225,6 +227,7 @@ function mail_encode_address($string,$header='',$names=true){
  */
 function mail_isvalid($email){
     $validator = new EmailAddressValidator;
+    $validator->allowLocalAddresses = true;
     return $validator->check_email_address($email);
 }
 

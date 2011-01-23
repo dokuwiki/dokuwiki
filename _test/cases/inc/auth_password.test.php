@@ -15,6 +15,9 @@ class auth_password_test extends UnitTestCase {
         'crypt' => 'ablvoGr1hvZ5k',
         'mysql' => '4a1fa3780bd6fd55',
         'my411' => '*e5929347e25f82e19e4ebe92f1dc6b6e7c2dbd29',
+        'kmd5'  => 'a579299436d7969791189acadd86fcb716',
+        'pmd5'  => '$P$abcdefgh1RC6Fd32heUzl7EYCG9uGw.',
+        'hmd5'  => '$H$abcdefgh1ZbJodHxmeXVAhEzTG7IAp.',
     );
 
 
@@ -22,7 +25,7 @@ class auth_password_test extends UnitTestCase {
         foreach($this->passes as $method => $hash){
             $info = "testing method $method";
             $this->signal('failinfo',$info);
-            $this->assertEqual(auth_cryptPassword('foo'.$method,$method,'abcdefgh'),$hash);
+            $this->assertEqual(auth_cryptPassword('foo'.$method,$method,'abcdefgh12345678912345678912345678'),$hash);
         }
     }
 
@@ -38,6 +41,11 @@ class auth_password_test extends UnitTestCase {
         $this->assertTrue(auth_verifyPassword('foo','$1$$n1rTiFE0nRifwV/43bVon/'));
     }
 
+    function test_verifyPassword_fixedpmd5(){
+        $this->assertTrue(auth_verifyPassword('test12345','$P$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
+        $this->assertTrue(auth_verifyPassword('test12345','$H$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
+    }
+
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :
