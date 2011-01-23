@@ -23,6 +23,10 @@ define('IDX_ASIAN2','['.
                    '\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}'.
                    '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
                    '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
+                   "\xF0\xA0\x80\x80-\xF0\xAA\x9B\x9F". // CJK Extension B
+                   "\xF0\xAA\x9C\x80-\xF0\xAB\x9C\xBF". // CJK Extension C
+                   "\xF0\xAB\x9D\x80-\xF0\xAB\xA0\x9F". // CJK Extension D
+                   "\xF0\xAF\xA0\x80-\xF0\xAF\xAB\xBF". // CJK Compatibility Supplement
                    ']');
 define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two characters)
                    '\x{3042}\x{3044}\x{3046}\x{3048}'.

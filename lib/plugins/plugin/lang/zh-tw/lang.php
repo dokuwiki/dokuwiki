@@ -9,7 +9,7 @@
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
  */
-$lang['menu']                  = '管理插件(Plugins)';
+$lang['menu']                  = '管理插件 (Plugins)';
 $lang['download']              = '下載與安裝插件';
 $lang['manage']                = '已安裝的插件';
 $lang['btn_info']              = '資訊';
