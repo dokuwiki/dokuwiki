@@ -210,7 +210,7 @@ class Doku_Indexer {
     }
 
     /**
-     * Add keys to the metadata index.
+     * Add/update keys to/of the metadata index.
      *
      * Adding new keys does not remove other keys for the page.
      * An empty value will erase the key.
@@ -222,6 +222,7 @@ class Doku_Indexer {
      * @param mixed     $value  the value or list of values
      * @return boolean          the function completed successfully
      * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Michael Hamann <michael@content-space.de>
      */
     public function addMetaKeys($page, $key, $value=null) {
         if (!is_array($key)) {
@@ -231,7 +232,8 @@ class Doku_Indexer {
             trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
         }
 
-        $this->_lock();
+        if (!$this->_lock())
+            return "locked";
 
         // load known documents
         $pid = $this->_addIndexKey('page', '', $page);
@@ -245,8 +247,19 @@ class Doku_Indexer {
             $metaidx = $this->_getIndex($metaname, '_i');
             $metawords = $this->_getIndex($metaname, '_w');
             $addwords = false;
-            $update = array();
-            if (!is_array($val)) $values = array($values);
+
+            if (!is_array($values)) $values = array($values);
+
+            $val_idx = $this->_getIndexKey($metaname, '_p', $pid);
+            if ($val_idx != '') {
+                $val_idx = explode(':', $val_idx);
+                // -1 means remove, 0 keep, 1 add
+                $val_idx = array_combine($val_idx, array_fill(0, count($val_idx), -1));
+            } else {
+                $val_idx = array();
+            }
+
+
             foreach ($values as $val) {
                 $val = (string)$val;
                 if ($val !== "") {
@@ -256,32 +269,39 @@ class Doku_Indexer {
                         $metawords[$id] = $val;
                         $addwords = true;
                     }
+                    // test if value is already in the index
+                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0)
+                        $val_idx[$id] = 0;
+                    else // else add it
+                        $val_idx[$id] = 1;
+                }
+            }
+
+            if ($addwords)
+                $this->_saveIndex($metaname.'_w', '', $metawords);
+            $vals_changed = false;
+            foreach ($val_idx as $id => $action) {
+                if ($action == -1) {
+                    $metaidx[$id] = $this->_updateTuple($metaidx[$id], $pid, 0);
+                    $vals_changed = true;
+                    unset($val_idx[$id]);
+                } elseif ($action == 1) {
                     $metaidx[$id] = $this->_updateTuple($metaidx[$id], $pid, 1);
-                    $update[$id] = 1;
-                } else {
-                    $id = array_search($val, $metawords);
-                    if ($id !== false) {
-                        $metaidx[$id] = $this->_updateTuple($metaidx[$id], $pid, 0);
-                        $update[$id] = 0;
-                    }
+                    $vals_changed = true;
                 }
             }
-            if (!empty($update)) {
-                if ($addwords)
-                    $this->_saveIndex($metaname.'_w', '', $metawords);
+
+            if ($vals_changed) {
                 $this->_saveIndex($metaname.'_i', '', $metaidx);
-                $val_idx = $this->_getIndexKey($metaname, '_p', $pid);
-                $val_idx = array_flip(explode(':', $val_idx));
-                foreach ($update as $id => $add) {
-                    if ($add) $val_idx[$id] = 1;
-                    else unset($val_idx[$id]);
-                }
-                $val_idx = array_keys($val_idx);
-                $this->_saveIndexKey($metaname.'_p', '', $pid, implode(':', $val_idx));
+                $val_idx = implode(':', array_keys($val_idx));
+                $this->_saveIndexKey($metaname.'_p', '', $pid, $val_idx);
             }
+
             unset($metaidx);
             unset($metawords);
         }
+
+        $this->_unlock();
         return true;
     }
 
@@ -398,7 +418,7 @@ class Doku_Indexer {
      * @param string    $key    name of the metadata key to look for
      * @param string    $value  search term to look for
      * @param callback  $func   comparison function
-     * @return array            list with page names, keys are query values if more than one given
+     * @return array            lists with page names, keys are query values
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
@@ -911,7 +931,7 @@ function idx_addPage($page, $verbose=false) {
 
     $Indexer = idx_get_indexer();
     $result = $Indexer->addPageWords($page, $body);
-    if ($result == "locked") {
+    if ($result === "locked") {
         if ($verbose) print("Indexer: locked".DOKU_LF);
         return false;
     }
