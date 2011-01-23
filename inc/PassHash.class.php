@@ -41,10 +41,10 @@ class PassHash {
             $method = 'pmd5';
             $salt   = $m[1];
             $magic  = 'H';
-        }elseif(preg_match('/^\$sha1\$(.{5})\$/',$hash,$m)){
+        }elseif(preg_match('/^sha1\$(.{5})\$/',$hash,$m)){
             $method = 'djangosha1';
             $salt   = $m[1];
-        }elseif(preg_match('/^\$md5\$(.{5})\$/',$hash,$m)){
+        }elseif(preg_match('/^md5\$(.{5})\$/',$hash,$m)){
             $method = 'djangomd5';
             $salt   = $m[1];
         }elseif(substr($hash,0,6) == '{SSHA}'){
@@ -348,13 +348,14 @@ class PassHash {
      * Uses salted SHA1 hashs. Salt is 5 bytes long.
      * This is used by the Django Python framework
      *
+     * @link http://docs.djangoproject.com/en/dev/topics/auth/#passwords
      * @param string $clear - the clear text to hash
      * @param string $salt  - the salt to use, null for random
      * @returns string - hashed password
      */
     public function hash_djangosha1($clear, $salt=null){
         $this->init_salt($salt,5);
-        return '$sha1$'.$salt.'$'.sha1($salt.$clear);
+        return 'sha1$'.$salt.'$'.sha1($salt.$clear);
     }
 
     /**
@@ -363,13 +364,14 @@ class PassHash {
      * Uses salted MD5 hashs. Salt is 5 bytes long.
      * This is used by the Django Python framework
      *
+     * @link http://docs.djangoproject.com/en/dev/topics/auth/#passwords
      * @param string $clear - the clear text to hash
      * @param string $salt  - the salt to use, null for random
      * @returns string - hashed password
      */
     public function hash_djangomd5($clear, $salt=null){
         $this->init_salt($salt,5);
-        return '$md5$'.$salt.'$'.md5($salt.$clear);
+        return 'md5$'.$salt.'$'.md5($salt.$clear);
     }
 
 }
