@@ -1,7 +1,7 @@
 您好！
 
-@TITLE@ 維基中的頁面 @PAGE@ 已經更改。
-這裡是更改的内容：
+維基 @TITLE@ 的頁面 @PAGE@ 已更改。
+更改內容如下：
 
 --------------------------------------------------------
 @DIFF@
@@ -10,10 +10,10 @@
 舊版本：@OLDPAGE@
 新版本：@NEWPAGE@
 
-要取消頁面提醒，從 @DOKUWIKIURL@ 登入維基，然後拜訪
-@SUBSCRIBE@
+要取消頁面提醒，請登入維基 @DOKUWIKIURL@
+然後拜訪 @SUBSCRIBE@
 並取消訂閱頁面或命名空間的更改。
 
 --
-本信件由以下 DokuWiki 產生
+本信件由以下 DokuWiki 站台產生：
 @DOKUWIKIURL@

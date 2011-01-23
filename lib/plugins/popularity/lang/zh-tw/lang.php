@@ -9,5 +9,5 @@
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
  */
-$lang['name']                  = '人氣反饋（載入可能需要一些時間）';
+$lang['name']                  = '人氣回饋（載入可能需要一些時間）';
 $lang['submit']                = '發送資料';
