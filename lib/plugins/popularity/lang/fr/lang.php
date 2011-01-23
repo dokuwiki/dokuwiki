@@ -13,5 +13,10 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  */
-$lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargé)';
+$lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargée)';
 $lang['submit']                = 'Envoyer les données';
+$lang['autosubmit']            = 'Envoyer les données automatiquement chaque mois';
+$lang['submissionFailed']      = 'Les données ne peuvent pas être envoyées à cause des erreurs suivantes :';
+$lang['submitDirectly']        = 'Vous pouvez envoyer le données manuellement  en soumettant ce formulaire.';
+$lang['autosubmitError']       = 'La dernière soumission automatique a échoué pour les raisons suivantes :';
+$lang['lastSent']              = 'Les données ont été envoyées';
