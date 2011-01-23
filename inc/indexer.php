@@ -935,6 +935,25 @@ function idx_addPage($page, $verbose=false) {
         if ($verbose) print("Indexer: locked".DOKU_LF);
         return false;
     }
+
+    if ($result) {
+        $data = array('page' => $page, 'metadata' => array());
+
+        if (($references = p_get_metadata($page, 'relation references')) !== null)
+            $data['metadata']['relation_references'] = array_keys($references);
+
+        $evt = new Doku_Event('INDEXER_METADATA_INDEX', $data);
+        if ($evt->advise_before()) {
+            $result = $Indexer->addMetaKeys($page, $data['metadata']);
+            if ($result === "locked") {
+                if ($verbose) print("Indexer: locked".DOKU_LF);
+                return false;
+            }
+        }
+        $evt->advise_after();
+        unset($evt);
+    }
+
     if ($result)
         io_saveFile(metaFN($page,'.indexed'), idx_get_version());
     if ($verbose) {

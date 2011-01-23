@@ -124,26 +124,13 @@ function _ft_pageSearch(&$data) {
 /**
  * Returns the backlinks for a given page
  *
- * Does a quick lookup with the fulltext index, then
- * evaluates the instructions of the found pages
+ * Uses the metadata index.
  */
 function ft_backlinks($id){
     $result = array();
 
-    // quick lookup of the pagename
-    // FIXME use metadata key lookup
-    $page    = noNS($id);
-    $matches = idx_lookup(idx_tokenizer($page));  // pagename may contain specials (_ or .)
-    $docs    = array_keys(ft_resultCombine(array_values($matches)));
-    $docs    = array_filter($docs,'isVisiblePage'); // discard hidden pages
-    if(!count($docs)) return $result;
-
-    // check metadata for matching links
-    foreach($docs as $match){
-        // metadata relation reference links are already resolved
-        $links = p_get_metadata($match,'relation references');
-        if (isset($links[$id])) $result[] = $match;
-    }
+    $result = idx_get_indexer()->lookupKey('relation_references', $id);
+    $result = $result[$id];
 
     if(!count($result)) return $result;
 
