@@ -77,11 +77,13 @@ class PassHash {
     /**
      * Create a random salt
      *
-     * @todo use full range of characters instead of hex values only
      * @param int $len - The length of the salt
      */
     public function gen_salt($len=32){
-        return substr(md5(uniqid(rand(), true)),0,$len);
+        $salt  = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        for($i=0;$i<$len,$i++;) $salt .= $chars[mt_rand(0,61)];
+        return $salt;
     }
 
     /**
