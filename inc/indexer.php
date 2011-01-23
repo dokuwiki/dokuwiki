@@ -51,13 +51,18 @@ define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
  * The indexer is only compatible with data written by the same version.
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function idx_get_version(){
     global $conf;
     if($conf['external_tokenizer'])
-        return INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
+        $version = INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
     else
-        return INDEXER_VERSION;
+        $version = INDEXER_VERSION;
+
+    $data = array($version);
+    trigger_event('INDEXER_VERSION_GET', $data, null, false);
+    return implode('+', $data);
 }
 
 /**
