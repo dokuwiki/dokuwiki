@@ -1183,8 +1183,17 @@ class adLDAP {
         $add=array();
         $add["unicodePwd"][0]=$this->encode_password($password);
 
-        $result=ldap_mod_replace($this->_conn,$user_dn,$add);
-        if ($result==false){ return (false); }
+        $result=@ldap_mod_replace($this->_conn,$user_dn,$add);
+        if ($result==false){
+            $err = ldap_errno($this->_conn);
+            if($err){
+                $msg = 'Error '.$err.': '.ldap_err2str($err).'.';
+                if($err == 53) $msg .= ' Your password might not match the password policy.';
+                throw new adLDAPException($msg);
+            }else{
+                return false;
+            }
+        }
 
         return (true);
     }
