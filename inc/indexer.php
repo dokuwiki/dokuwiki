@@ -458,7 +458,7 @@ class Doku_Indexer {
      * @param string    $key    name of the metadata key to look for
      * @param string    $value  search term to look for
      * @param callback  $func   comparison function
-     * @return array            lists with page names, keys are query values
+     * @return array            lists with page names, keys are query values if $key is array
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
@@ -471,15 +471,38 @@ class Doku_Indexer {
         // the matching ids for the provided value(s)
         $value_ids = array();
 
-        if (!is_array($value)) $value = array($value);
+        if (!is_array($value))
+            $value_array = array($value);
+        else
+            $value_array =& $value;
 
-        foreach ($value as $val) {
-            if (is_null($func)) {
-                if (($i = array_search($val, $words)) !== false)
-                    $value_ids[$i] = $val;
-            } else {
+        if (!is_null($func)) {
+            foreach ($value_array as $val) {
                 foreach ($words as $i => $word) {
-                    if (call_user_func_array($func, array($word, $value)))
+                    if (call_user_func_array($func, array($word, $val)))
+                        $value_ids[$i] = $val;
+                }
+            }
+        } else {
+            foreach ($value_array as $val) {
+                $xval = $val;
+                $caret = false;
+                $dollar = false;
+                // check for wildcards
+                if (substr($xval, 0, 1) == '*') {
+                    $xval = substr($xval, 1);
+                    $caret = '^';
+                }
+                if (substr($xval, -1, 1) == '*') {
+                    $xval = substr($xval, 0, -1);
+                    $dollar = '$';
+                }
+                if ($caret || $dollar) {
+                    $re = $caret.preg_quote($xval, '/').$dollar;
+                    foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
+                        $value_ids[$i] = $val;
+                } else {
+                    if (($i = array_search($val, $words)) !== false)
                         $value_ids[$i] = $val;
                 }
             }
@@ -497,6 +520,7 @@ class Doku_Indexer {
             // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
             $result[$val] = array_keys($this->_parseTuples($page_idx, $lines[$value_id]));
         }
+        if (!is_array($value)) $result = $result[$value];
         return $result;
     }
 
@@ -527,12 +551,12 @@ class Doku_Indexer {
             // check for wildcards
             if (substr($xword, 0, 1) == '*') {
                 $xword = substr($xword, 1);
-                $caret = true;
+                $caret = '^';
                 $wlen -= 1;
             }
             if (substr($xword, -1, 1) == '*') {
                 $xword = substr($xword, 0, -1);
-                $dollar = true;
+                $dollar = '$';
                 $wlen -= 1;
             }
             if ($wlen < IDX_MINWORDLENGTH && !$caret && !$dollar && !is_numeric($xword))
@@ -540,9 +564,7 @@ class Doku_Indexer {
             if (!isset($tokens[$xword]))
                 $tokenlength[$wlen][] = $xword;
             if ($caret || $dollar) {
-                $re = preg_quote($xword, '/');
-                if ($caret) $re = '^'.$re;
-                if ($dollar) $re = $re.'$';
+                $re = $caret.preg_quote($xword, '/').$dollar;
                 $tokens[$xword][] = array($word, '/'.$re.'/');
                 if (!isset($tokenwild[$xword]))
                     $tokenwild[$xword] = $wlen;
