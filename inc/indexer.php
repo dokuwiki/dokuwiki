@@ -315,6 +315,46 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function deletePage($page) {
+        if (!$this->_lock())
+            return "locked";
+
+        // load known documents
+        $page_idx = $this->_getIndexKey('page', '', $page);
+        if ($page_idx === false) {
+            $this->_unlock();
+            return false;
+        }
+
+        // Remove obsolete index entries
+        $pageword_idx = $this->_getIndexKey('pageword', '', $pid);
+        if ($pageword_idx !== '') {
+            $delwords = explode(':',$pageword_idx);
+            $upwords = array();
+            foreach ($delwords as $word) {
+                if ($word != '') {
+                    list($wlen,$wid) = explode('*', $word);
+                    $wid = (int)$wid;
+                    $upwords[$wlen][] = $wid;
+                }
+            }
+            foreach ($upwords as $wlen => $widx) {
+                $index = $this->_getIndex('i', $wlen);
+                foreach ($widx as $wid) {
+                    $index[$wid] = $this->_updateTuple($index[$wid], $pid, 0);
+                }
+                $this->_saveIndex('i', $wlen, $index);
+            }
+        }
+        // Save the reverse index
+        if (!$this->_saveIndexKey('pageword', '', $pid, "")) {
+            $this->_unlock();
+            return false;
+        }
+
+        // XXX TODO: delete meta keys
+
+        $this->_unlock();
+        return true;
     }
 
     /**
@@ -921,6 +961,36 @@ function idx_addPage($page, $verbose=false) {
         }
     }
 
+    if (!page_exists($page)) {
+        if (!@file_exists($idxtag)) {
+            if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
+            return false;
+        }
+        $Indexer = idx_get_indexer();
+        $result = $Indexer->deletePage($page);
+        if ($result === "locked") {
+            if ($verbose) print("Indexer: locked".DOKU_LF);
+            return false;
+        }
+        @unlink($idxtag);
+        return $result;
+    }
+    $indexenabled = p_get_metadata($page, 'internal index', false);
+    if ($indexenabled === false) {
+        $result = false;
+        if (@file_exists($idxtag)) {
+            $Indexer = idx_get_indexer();
+            $result = $Indexer->deletePage($page);
+            if ($result === "locked") {
+                if ($verbose) print("Indexer: locked".DOKU_LF);
+                return false;
+            }
+            @unlink($idxtag);
+        }
+        if ($verbose) print("Indexer: index disabled for $page".DOKU_LF);
+        return $result;
+    }
+
     $body = '';
     $data = array($page, $body);
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
@@ -939,7 +1009,8 @@ function idx_addPage($page, $verbose=false) {
     if ($result) {
         $data = array('page' => $page, 'metadata' => array());
 
-        if (($references = p_get_metadata($page, 'relation references')) !== null)
+        $data['metadata']['title'] = p_get_metadata($page, 'title', false);
+        if (($references = p_get_metadata($page, 'relation references', false)) !== null)
             $data['metadata']['relation_references'] = array_keys($references);
 
         $evt = new Doku_Event('INDEXER_METADATA_INDEX', $data);
