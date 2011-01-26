@@ -24,6 +24,7 @@
  *   $conf['auth']['ad']['ad_password']        = 'pass';
  *   $conf['auth']['ad']['real_primarygroup']  = 1;
  *   $conf['auth']['ad']['use_ssl']            = 1;
+ *   $conf['auth']['ad']['use_tls']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
  *
  *   // get additional information to the userinfo array
@@ -52,7 +53,7 @@ class auth_ad extends auth_basic {
         $this->cnf = $conf['auth']['ad'];
 
         // we can change the password if SSL is set
-        if($this->cnf['use_ssl']){
+        if($this->cnf['use_ssl'] || $this->cnf['use_tls']){
             $this->cando['modPass'] = true;
         }
         $this->cando['modName'] = true;
