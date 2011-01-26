@@ -52,12 +52,6 @@ class auth_ad extends auth_basic {
         global $conf;
         $this->cnf = $conf['auth']['ad'];
 
-        // we can change the password if SSL is set
-        if($this->cnf['use_ssl'] || $this->cnf['use_tls']){
-            $this->cando['modPass'] = true;
-        }
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
 
         // additional information fields
         if (isset($this->cnf['additional'])) {
@@ -105,7 +99,12 @@ class auth_ad extends auth_basic {
         $this->opts['domain_controllers'] = array_map('trim',$this->opts['domain_controllers']);
         $this->opts['domain_controllers'] = array_filter($this->opts['domain_controllers']);
 
-        // we currently just handle authentication, so no capabilities are set
+        // we can change the password if SSL is set
+        if($this->opts['use_ssl'] || $this->opts['use_tls']){
+            $this->cando['modPass'] = true;
+        }
+        $this->cando['modName'] = true;
+        $this->cando['modMail'] = true;
     }
 
     /**
