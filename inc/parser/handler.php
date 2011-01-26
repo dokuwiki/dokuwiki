@@ -1489,6 +1489,11 @@ class Doku_Handler_Block {
         }
     }
 
+    function openParagraph($pos){
+        $this->calls[] = array('p_open',array(), $pos);
+        $this->inParagraph = true;
+    }
+
     /**
      * Close a paragraph if needed
      *
@@ -1548,7 +1553,7 @@ class Doku_Handler_Block {
                     $this->closeParagraph($call[2]);
                 }
                 $this->calls[] = $call;
-
+                $this->skipEolKey = $key+1;
                 continue;
             }
 
@@ -1561,104 +1566,73 @@ class Doku_Handler_Block {
                 if ($this->removeFromStack()) {
                     $this->calls[] = array('p_open',array(), $call[2]);
                 }
+                $this->skipEolKey = $key+1;
                 continue;
             }
 
-            if ( !$this->atStart ) {
+            // Always opens a paragraph on stack start
+            // If this is a block start, it will soon be closed later
+            if ( $this->atStart ) {
+                $this->openParagraph($call[2]);
+                $this->atStart = false;
+                $this->skipEolKey = $key;
+            }
 
-                if ( $cname == 'eol' ) {
+            if ( $cname == 'eol' ) {
 
-                    // Check this isn't an eol instruction to skip...
-                    if ( $this->skipEolKey != $key ) {
-                        // Look to see if the next instruction is an EOL
-                        if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
+                // Check this isn't an eol instruction to skip...
+                if ( $this->skipEolKey != $key ) {
+                    // Look to see if the next instruction is an EOL
+                    if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
 
-                            if ( $this->inParagraph ) {
-                                //$this->calls[] = array('p_close',array(), $call[2]);
-                                $this->closeParagraph($call[2]);
-                            }
-
-                            $this->calls[] = array('p_open',array(), $call[2]);
-                            $this->inParagraph = true;
-
-
-                            // Mark the next instruction for skipping
-                            $this->skipEolKey = $key+1;
-
-                        }else{
-                            //if this is just a single eol make a space from it
-                            $this->addCall(array('cdata',array(DOKU_PARSER_EOL), $call[2]));
-                        }
-                    }
-
-
-                } else {
-
-                    $storeCall = true;
-                    if ( $this->inParagraph && (in_array($cname, $this->blockOpen) && (!$plugin || $plugin_open))) {
-                        $this->closeParagraph($call[2]);
-                        $this->calls[] = $call;
-                        $storeCall = false;
-                    }
-
-                    if ( in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
                         if ( $this->inParagraph ) {
                             $this->closeParagraph($call[2]);
                         }
-                        if ( $storeCall ) {
-                            $this->calls[] = $call;
-                            $storeCall = false;
-                        }
-
-                        // This really sucks and suggests this whole class sucks but...
-                        if ( isset($calls[$key+1])) {
-                            $cname_plusone = $calls[$key+1][0];
-                            if ($cname_plusone == 'plugin') {
-                                $cname_plusone = 'plugin'.$calls[$key+1][1][0];
-
-                                // plugin test, true if plugin has a state which precludes it requiring blockOpen or blockClose
-                                $plugin_plusone = true;
-                                $plugin_test = ($call[$key+1][1][2] == DOKU_LEXER_MATCHED) || ($call[$key+1][1][2] == DOKU_LEXER_MATCHED);
-                            } else {
-                                $plugin_plusone = false;
-                            }
-                            if ((!in_array($cname_plusone, $this->blockOpen) && !in_array($cname_plusone, $this->blockClose)) ||
-                                ($plugin_plusone && $plugin_test)
-                                ) {
-
-                                $this->calls[] = array('p_open',array(), $call[2]);
-                                $this->inParagraph = true;
-                            }
-                        }
+                        $this->openParagraph($call[2]);
+                        // Mark the next instruction for skipping
+                        $this->skipEolKey = $key+1;
+                    } else {
+                        //if this is just a single eol make a space from it
+                        $this->addCall(array('cdata',array(DOKU_PARSER_EOL), $call[2]));
                     }
-
-                    if ( $storeCall ) {
-                        $this->addCall($call);
-                    }
-
+                } else {
+                    $this->skipEolKey = $key+1;
                 }
 
 
             } else {
 
-                // Unless there's already a block at the start, start a paragraph
-                if ( !in_array($cname,$this->blockOpen) ) {
-                    $this->calls[] = array('p_open',array(), $call[2]);
-                    if ( $call[0] != 'eol' ) {
-                        $this->calls[] = $call;
-                    }
-                    $this->atStart = false;
-                    $this->inParagraph = true;
-                } else {
-                    $this->addCall($call);
-                    $this->atStart = false;
+                $storeCall = true;
+                if ( $this->inParagraph && (in_array($cname, $this->blockOpen) && (!$plugin || $plugin_open))) {
+                    $this->closeParagraph($call[2]);
+                    $this->calls[] = $call;
+                    $storeCall = false;
+                    // Mark next eol(s) for skipping
+                    $this->skipEolKey = $key+1;
                 }
 
+                if ( in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
+                    if ( $this->inParagraph ) {
+                        $this->closeParagraph($call[2]);
+                    }
+                    if ( $storeCall ) {
+                        $this->calls[] = $call;
+                        $storeCall = false;
+                    }
+                    $this->openParagraph($call[2]);
+                    // Mark next eol(s) for skipping
+                    $this->skipEolKey = $key+1;
+                }
+                if ( $storeCall ) {
+                    $this->addCall($call);
+                }
             }
 
         }
 
         if ( $this->inParagraph ) {
+            $call = end($this->calls);
+            $cname = $call[0];
             if ( $cname == 'p_open' ) {
                 // Ditch the last call
                 array_pop($this->calls);
