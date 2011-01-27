@@ -318,7 +318,13 @@ function html_search(){
     global $ID;
     global $lang;
 
-    print p_locale_xhtml('searchpage');
+    $intro = p_locale_xhtml('searchpage');
+    // allow use of placeholder in search intro
+    $intro = str_replace(
+                array('@QUERY@','@SEARCH@'),
+                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
+                $intro);
+    echo $intro;
     flush();
 
     //show progressbar
