@@ -1164,7 +1164,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
 
-    echo '<select name="do" id="action__selector" class="edit">';
+    echo '<select name="do" class="edit quickselect">';
     echo '<option value="">'.$empty.'</option>';
 
     echo '<optgroup label=" &mdash; ">';
@@ -1204,7 +1204,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '</optgroup>';
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" id="action__selectorbtn" />';
+    echo '<input type="submit" value="'.$button.'" />';
     echo '</form>';
 }
 
