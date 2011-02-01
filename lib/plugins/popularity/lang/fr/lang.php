@@ -12,6 +12,7 @@
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
+ * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargée)';
 $lang['submit']                = 'Envoyer les données';

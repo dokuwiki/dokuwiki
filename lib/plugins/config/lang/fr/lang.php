@@ -15,6 +15,7 @@
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
+ * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -111,6 +112,7 @@ $lang['fetchsize']             = 'Taille maximale (en octets) du fichier que fet
 $lang['notify']                = 'Notifier les modifications à cette adresse de courriel';
 $lang['registernotify']        = 'Envoyer un courriel annonçant les nouveaux utilisateurs enregistrés à cette adresse';
 $lang['mailfrom']              = 'Expéditeur des notifications par courriel du wiki';
+$lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques';
 $lang['gzip_output']           = 'Utiliser Content-Encoding gzip pour XHTML';
 $lang['gdlib']                 = 'Version de GD Lib';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion d\'ImageMagick';
