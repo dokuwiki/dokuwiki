@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Viktor Usunov <usun0v@mail.bg>
+ * @author Kiril Velikov neohidra@gmail.com
  */
 $lang['menu']                  = 'Управление на приставките';
 $lang['download']              = 'Сваляне и инсталиране на нова приставка';
