@@ -130,7 +130,6 @@ function ft_backlinks($id){
     $result = array();
 
     $result = idx_get_indexer()->lookupKey('relation_references', $id);
-    $result = $result[$id];
 
     if(!count($result)) return $result;
 
@@ -234,8 +233,12 @@ function _ft_pageLookup(&$data){
                     $pages[$p_id] = p_get_first_heading($p_id, false);
             }
         }
-        //if ($in_title)
-        //    $titles = $Indexer->lookupKey('title', "*$id*");
+        if ($in_title) {
+            foreach ($Indexer->lookupKey('title', "*$id*") as $p_id) {
+                if (!isset($pages[$p_id]))
+                    $pages[$p_id] = p_get_first_heading($p_id, false);
+            }
+        }
     }
     if (isset($ns)) {
         foreach ($page_idx as $p_id) {
