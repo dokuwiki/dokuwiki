@@ -63,6 +63,28 @@ function _tpl_userpage($userPage,$title,$link=0,$wrapper=0) {
 }
 
 /**
+ * Create link/button to register page
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function _tpl_register($link=0,$wrapper=0) {
+    global $conf;
+    global $lang;
+    global $ID;
+
+    if ($_SERVER['REMOTE_USER'] || !$conf['useacl'] || !actionOK('register')) return;
+
+    if ($wrapper) echo "<$wrapper>";
+
+    if ($link)
+        tpl_link(wl($ID,'do=register'),$lang['register'],'class="action register" rel="nofollow"');
+    else
+        echo html_btn('register',$ID,'',array('do'=>'register'),'get',0,$lang['register']);
+
+    if ($wrapper) echo "</$wrapper>";
+}
+
+/**
  * Wrapper around custom template actions
  *
  * @author Anika Henke <anika@selfthinker.org>
@@ -78,6 +100,9 @@ function _tpl_action($type,$link=0,$wrapper=0) {
             if (tpl_getConf('userPage')) {
                 _tpl_userpage(tpl_getConf('userPage'),tpl_getLang('userpage'),$link,$wrapper);
             }
+            break;
+        case 'register':
+            _tpl_register($link,$wrapper);
             break;
     }
 }

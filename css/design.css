@@ -87,6 +87,8 @@
 
 /* highlight selected tool */
 .mode_admin a.action.admin,
+.mode_login a.action.login,
+.mode_register a.action.register,
 .mode_profile a.action.profile,
 .mode_recent a.action.recent,
 .mode_index a.action.index,
