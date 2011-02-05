@@ -103,6 +103,7 @@ $lang['fetchsize']             = 'Tamanho máximo (bytes) que o fetch.php pode t
 $lang['notify']                = 'Enviar notificações de mudanças para este endereço de email';
 $lang['registernotify']        = 'Enviar informações de utilizadores registados para este endereço de email';
 $lang['mailfrom']              = 'Endereço de email a ser utilizado para mensagens automáticas';
+$lang['mailprefix']            = 'Prefixo de email a ser utilizado para mensagens automáticas';
 $lang['gzip_output']           = 'Usar "Content-Encoding" do gzip para o código xhtml';
 $lang['gdlib']                 = 'Versão GD Lib';
 $lang['im_convert']            = 'Caminho para a ferramenta "convert" do ImageMagick';
