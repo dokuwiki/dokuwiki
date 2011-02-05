@@ -1012,7 +1012,7 @@ function html_diff($text='',$intro=true,$type=null){
         ptln('<p class="difflink">');
 
         $form = new Doku_Form(array('action'=>wl()));
-        $form->addHidden('ID',$ID);
+        $form->addHidden('id',$ID);
         $form->addHidden('rev2[0]',$l_rev);
         $form->addHidden('rev2[1]',$r_rev);
         $form->addHidden('do','diff');
