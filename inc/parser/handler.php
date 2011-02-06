@@ -720,6 +720,7 @@ class Doku_Handler_CallWriter {
     // function is required, but since this call writer is first/highest in
     // the chain it is not required to do anything
     function finalise() {
+        unset($this->Handler);
     }
 }
 
@@ -764,6 +765,7 @@ class Doku_Handler_Nest {
 
         $this->process();
         $this->CallWriter->finalise();
+        unset($this->CallWriter);
     }
 
     function process() {
@@ -817,6 +819,7 @@ class Doku_Handler_List {
 
         $this->process();
         $this->CallWriter->finalise();
+        unset($this->CallWriter);
     }
 
     //------------------------------------------------------------------------
@@ -1014,6 +1017,7 @@ class Doku_Handler_Preformatted {
 
         $this->process();
         $this->CallWriter->finalise();
+        unset($this->CallWriter);
     }
 
     function process() {
@@ -1070,6 +1074,7 @@ class Doku_Handler_Quote {
 
         $this->process();
         $this->CallWriter->finalise();
+        unset($this->CallWriter);
     }
 
     function process() {
@@ -1165,6 +1170,7 @@ class Doku_Handler_Table {
 
         $this->process();
         $this->CallWriter->finalise();
+        unset($this->CallWriter);
     }
 
     //------------------------------------------------------------------------
