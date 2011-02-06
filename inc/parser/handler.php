@@ -1433,8 +1433,14 @@ class Doku_Handler_Table {
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
 class Doku_Handler_Block {
+
     var $calls = array();
-    var $skipEol = false;
+
+    var $blockStack = array();
+
+    var $inParagraph = false;
+    var $atStart = true;
+    var $skipEolKey = -1;
 
     // Blocks these should not be inside paragraphs
     var $blockOpen = array(
@@ -1442,9 +1448,9 @@ class Doku_Handler_Block {
             'listu_open','listo_open','listitem_open','listcontent_open',
             'table_open','tablerow_open','tablecell_open','tableheader_open',
             'quote_open',
+            'section_open', // Needed to prevent p_open between header and section_open
             'code','file','hr','preformatted','rss',
             'htmlblock','phpblock',
-            'footnote_open',
         );
 
     var $blockClose = array(
@@ -1452,18 +1458,18 @@ class Doku_Handler_Block {
             'listu_close','listo_close','listitem_close','listcontent_close',
             'table_close','tablerow_close','tablecell_close','tableheader_close',
             'quote_close',
+            'section_close', // Needed to prevent p_close after section_close
             'code','file','hr','preformatted','rss',
             'htmlblock','phpblock',
-            'footnote_close',
         );
 
     // Stacks can contain paragraphs
     var $stackOpen = array(
-        'section_open',
+        'footnote_open','section_open',
         );
 
     var $stackClose = array(
-        'section_close',
+        'footnote_close','section_close',
         );
 
 
@@ -1489,13 +1495,6 @@ class Doku_Handler_Block {
         }
     }
 
-    function openParagraph($pos){
-        if ($this->inParagraph) return;
-        $this->calls[] = array('p_open',array(), $pos);
-        $this->inParagraph = true;
-        $this->skipEol = true;
-    }
-
     /**
      * Close a paragraph if needed
      *
@@ -1504,7 +1503,6 @@ class Doku_Handler_Block {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function closeParagraph($pos){
-        if (!$this->inParagraph) return;
         // look back if there was any content - we don't want empty paragraphs
         $content = '';
         for($i=count($this->calls)-1; $i>=0; $i--){
@@ -1522,28 +1520,10 @@ class Doku_Handler_Block {
             //remove the whole paragraph
             array_splice($this->calls,$i);
         }else{
-            // remove ending linebreaks in the paragraph
-            $i=count($this->calls)-1;
-            if ($this->calls[$i][0] == 'cdata') $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0],DOKU_PARSER_EOL);
             $this->calls[] = array('p_close',array(), $pos);
         }
 
         $this->inParagraph = false;
-        $this->skipEol = true;
-    }
-    
-    function addCall($call) {
-        $key = count($this->calls);
-        if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
-            $this->calls[$key-1][1][0] .= $call[1][0];
-        } else {
-            $this->calls[] = $call;
-        }
-    }
-
-    // simple version of addCall, without checking cdata
-    function storeCall($call) {
-        $this->calls[] = $call;
     }
 
     /**
@@ -1551,70 +1531,185 @@ class Doku_Handler_Block {
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      * @author Andreas Gohr <andi@splitbrain.org>
+     * @todo   This thing is really messy and should be rewritten
      */
     function process($calls) {
-        // open first paragraph
-        $this->openParagraph(0);
         foreach ( $calls as $key => $call ) {
             $cname = $call[0];
-            if ($cname == 'plugin') {
+            if($cname == 'plugin') {
                 $cname='plugin_'.$call[1][0];
+
                 $plugin = true;
                 $plugin_open = (($call[1][2] == DOKU_LEXER_ENTER) || ($call[1][2] == DOKU_LEXER_SPECIAL));
                 $plugin_close = (($call[1][2] == DOKU_LEXER_EXIT) || ($call[1][2] == DOKU_LEXER_SPECIAL));
             } else {
                 $plugin = false;
             }
-            /* stack */
-            if ( in_array($cname,$this->stackClose ) && (!$plugin || $plugin_close)) {
-                $this->closeParagraph($call[2]);
-                $this->storeCall($call);
-                $this->openParagraph($call[2]);
-                continue;
-            }
+
+            // Process blocks which are stack like... (contain linefeeds)
             if ( in_array($cname,$this->stackOpen ) && (!$plugin || $plugin_open) ) {
-                $this->closeParagraph($call[2]);
-                $this->storeCall($call);
-                $this->openParagraph($call[2]);
+
+                // Hack - footnotes shouldn't immediately contain a p_open
+                if ($this->addToStack($cname != 'footnote_open')) {
+                    $this->closeParagraph($call[2]);
+                }
+                $this->calls[] = $call;
+
                 continue;
             }
-            /* block */
-            // If it's a substition it opens and closes at the same call.
-            // To make sure next paragraph is correctly started, let close go first.
-            if ( in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
-                $this->closeParagraph($call[2]);
-                $this->storeCall($call);
-                $this->openParagraph($call[2]);
-                continue;
-            }
-            if ( in_array($cname, $this->blockOpen) && (!$plugin || $plugin_open)) {
-                $this->closeParagraph($call[2]);
-                $this->storeCall($call);
-                continue;
-            }
-            /* eol */
-            if ( $cname == 'eol' ) {
-                // Check this isn't an eol instruction to skip...
-                if ( !$this->skipEol ) {
-                    // Next is EOL => double eol => mark as paragraph
-                    if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
-                        $this->closeParagraph($call[2]);
-                        $this->openParagraph($call[2]);
-                    } else {
-                        //if this is just a single eol make a space from it
-                        $this->addCall(array('cdata',array(DOKU_PARSER_EOL), $call[2]));
-                    }
+
+            if ( in_array($cname,$this->stackClose ) && (!$plugin || $plugin_close)) {
+
+                if ( $this->inParagraph ) {
+                    $this->closeParagraph($call[2]);
+                }
+                $this->calls[] = $call;
+                if ($this->removeFromStack()) {
+                    $this->calls[] = array('p_open',array(), $call[2]);
                 }
                 continue;
             }
-            /* normal */
-            $this->addCall($call);
-            $this->skipEol = false;
+
+            if ( !$this->atStart ) {
+
+                if ( $cname == 'eol' ) {
+
+                    // Check this isn't an eol instruction to skip...
+                    if ( $this->skipEolKey != $key ) {
+                        // Look to see if the next instruction is an EOL
+                        if ( isset($calls[$key+1]) && $calls[$key+1][0] == 'eol' ) {
+
+                            if ( $this->inParagraph ) {
+                                //$this->calls[] = array('p_close',array(), $call[2]);
+                                $this->closeParagraph($call[2]);
+                            }
+
+                            $this->calls[] = array('p_open',array(), $call[2]);
+                            $this->inParagraph = true;
+
+
+                            // Mark the next instruction for skipping
+                            $this->skipEolKey = $key+1;
+
+                        }else{
+                            //if this is just a single eol make a space from it
+                            $this->addCall(array('cdata',array(DOKU_PARSER_EOL), $call[2]));
+                        }
+                    }
+
+
+                } else {
+
+                    $storeCall = true;
+                    if ( $this->inParagraph && (in_array($cname, $this->blockOpen) && (!$plugin || $plugin_open))) {
+                        $this->closeParagraph($call[2]);
+                        $this->calls[] = $call;
+                        $storeCall = false;
+                    }
+
+                    if ( in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
+                        if ( $this->inParagraph ) {
+                            $this->closeParagraph($call[2]);
+                        }
+                        if ( $storeCall ) {
+                            $this->calls[] = $call;
+                            $storeCall = false;
+                        }
+
+                        // This really sucks and suggests this whole class sucks but...
+                        if ( isset($calls[$key+1])) {
+                            $cname_plusone = $calls[$key+1][0];
+                            if ($cname_plusone == 'plugin') {
+                                $cname_plusone = 'plugin'.$calls[$key+1][1][0];
+
+                                // plugin test, true if plugin has a state which precludes it requiring blockOpen or blockClose
+                                $plugin_plusone = true;
+                                $plugin_test = ($call[$key+1][1][2] == DOKU_LEXER_MATCHED) || ($call[$key+1][1][2] == DOKU_LEXER_MATCHED);
+                            } else {
+                                $plugin_plusone = false;
+                            }
+                            if ((!in_array($cname_plusone, $this->blockOpen) && !in_array($cname_plusone, $this->blockClose)) ||
+                                ($plugin_plusone && $plugin_test)
+                                ) {
+
+                                $this->calls[] = array('p_open',array(), $call[2]);
+                                $this->inParagraph = true;
+                            }
+                        }
+                    }
+
+                    if ( $storeCall ) {
+                        $this->addCall($call);
+                    }
+
+                }
+
+
+            } else {
+
+                // Unless there's already a block at the start, start a paragraph
+                if ( !in_array($cname,$this->blockOpen) ) {
+                    $this->calls[] = array('p_open',array(), $call[2]);
+                    if ( $call[0] != 'eol' ) {
+                        $this->calls[] = $call;
+                    }
+                    $this->atStart = false;
+                    $this->inParagraph = true;
+                } else {
+                    $this->addCall($call);
+                    $this->atStart = false;
+                }
+
+            }
+
         }
-        // close last paragraph
-        $call = end($this->calls);
-        $this->closeParagraph($call[2]);
+
+        if ( $this->inParagraph ) {
+            if ( $cname == 'p_open' ) {
+                // Ditch the last call
+                array_pop($this->calls);
+            } else if ( !in_array($cname, $this->blockClose) ) {
+                //$this->calls[] = array('p_close',array(), $call[2]);
+                $this->closeParagraph($call[2]);
+            } else {
+                $last_call = array_pop($this->calls);
+                //$this->calls[] = array('p_close',array(), $call[2]);
+                $this->closeParagraph($call[2]);
+                $this->calls[] = $last_call;
+            }
+        }
+
         return $this->calls;
+    }
+
+    /**
+     *
+     * @return   bool    true when a p_close() is required
+     */
+    function addToStack($newStart = true) {
+        $ret = $this->inParagraph;
+        $this->blockStack[] = array($this->atStart, $this->inParagraph);
+        $this->atStart = $newStart;
+        $this->inParagraph = false;
+
+        return $ret;
+    }
+
+    function removeFromStack() {
+        $state = array_pop($this->blockStack);
+        $this->atStart = $state[0];
+        $this->inParagraph = $state[1];
+
+        return $this->inParagraph;
+    }
+
+    function addCall($call) {
+        $key = count($this->calls);
+        if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
+            $this->calls[$key-1][1][0] .= $call[1][0];
+        } else {
+            $this->calls[] = $call;
+        }
     }
 }
 
