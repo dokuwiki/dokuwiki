@@ -38,6 +38,85 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testExternalIPv4() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo http://123.123.3.21/foo Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('http://123.123.3.21/foo', NULL)),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalIPv6() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo http://[3ffe:2a00:100:7031::1]/foo Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('http://[3ffe:2a00:100:7031::1]/foo', NULL)),
+            array('cdata',array(' Bar'."\n")),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalMulti(){
+        $this->teardown();
+
+        $links = array(
+            'http://www.google.com',
+            'HTTP://WWW.GOOGLE.COM',
+            'http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html',
+            'http://[1080:0:0:0:8:800:200C:417A]/index.html',
+            'http://[3ffe:2a00:100:7031::1]',
+            'http://[1080::8:800:200C:417A]/foo',
+            'http://[::192.9.5.5]/ipng',
+            'http://[::FFFF:129.144.52.38]:80/index.html',
+            'http://[2010:836B:4179::836B:4179]',
+        );
+        $titles = array(false,null,'foo bar');
+        foreach($links as $link){
+            foreach($titles as $title){
+                if($title === false){
+                    $source = $link;
+                    $name   = null;
+                }elseif($title === null){
+                    $source = "[[$link]]";
+                    $name   = null;
+                }else{
+                    $source = "[[$link|$title]]";
+                    $name   = $title;
+                }
+                $this->signal('failinfo',$source);
+
+                $this->setup();
+                $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+                $this->P->parse("Foo $source Bar");
+                $calls = array (
+                    array('document_start',array()),
+                    array('p_open',array()),
+                    array('cdata',array("\n".'Foo ')),
+                    array('externallink',array($link, $name)),
+                    array('cdata',array(' Bar'."\n")),
+                    array('p_close',array()),
+                    array('document_end',array()),
+                );
+                $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+                $this->teardown();
+            }
+        }
+
+        $this->setup();
+    }
+
     function testExternalLinkJavascript() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo javascript:alert('XSS'); Bar");
@@ -81,8 +160,6 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
     function testEmail() {
-/*      $this->fail('The emaillink mode seems to cause php 5.0.5 to segfault');
-        return; //FIXME: is this still true?*/
         $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
         $calls = array (
