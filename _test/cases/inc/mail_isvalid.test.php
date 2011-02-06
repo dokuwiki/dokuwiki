@@ -25,7 +25,7 @@ class mail_isvalid extends UnitTestCase {
         $tests[] = array('bu[g]s@php.net1',false);
         $tests[] = array('somebody@somewhere.museum',true);
         $tests[] = array('somebody@somewhere.travel',true);
-
+        $tests[] = array('root@[2010:fb:fdac::311:2101]',true);
 
         // tests from http://code.google.com/p/php-email-address-validation/ below
 
