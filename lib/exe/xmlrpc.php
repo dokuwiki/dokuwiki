@@ -674,27 +674,15 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function deleteAttachment($id){
         $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id).':*');
-        if($auth < AUTH_DELETE) return new IXR_ERROR(1, "You don't have permissions to delete files.");
-        global $conf;
-        global $lang;
-
-        // check for references if needed
-        $mediareferences = array();
-        if($conf['refcheck']){
-            $mediareferences = ft_mediause($id,$conf['refshow']);
-        }
-
-        if(!count($mediareferences)){
-            $file = mediaFN($id);
-            if(@unlink($file)){
-                addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
-                io_sweepNS($id,'mediadir');
-                return 0;
-            }
-            //something went wrong
-               return new IXR_ERROR(1, 'Could not delete file');
-        } else {
+        $res = media_delete($id, $auth);
+        if ($res & DOKU_MEDIA_DELETED) {
+            return 0;
+        } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
+            return new IXR_ERROR(1, "You don't have permissions to delete files.");
+        } elseif ($res & DOKU_MEDIA_INUSE) {
             return new IXR_ERROR(1, 'File is still referenced');
+        } else {
+            return new IXR_ERROR(1, 'Could not delete file');
         }
     }
 

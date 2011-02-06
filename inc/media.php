@@ -141,7 +141,7 @@ function media_metaform($id,$auth){
 }
 
 /**
- * Conveinience function to check if a media file is still in use
+ * Convenience function to check if a media file is still in use
  *
  * @author Michael Klier <chi@chimeric.de>
  */
@@ -160,19 +160,26 @@ function media_inuse($id) {
     }
 }
 
+define('DOKU_MEDIA_DELETED', 1);
+define('DOKU_MEDIA_NOT_AUTH', 2);
+define('DOKU_MEDIA_INUSE', 4);
+define('DOKU_MEDIA_EMPTY_NS', 8);
+
 /**
  * Handles media file deletions
  *
  * If configured, checks for media references before deletion
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @return mixed false on error, true on delete or array with refs
+ * @return int One of: 0,
+                       DOKU_MEDIA_DELETED,
+                       DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS,
+                       DOKU_MEDIA_NOT_AUTH,
+                       DOKU_MEDIA_INUSE
  */
 function media_delete($id,$auth){
-    if($auth < AUTH_DELETE) return false;
-    if(!checkSecurityToken()) return false;
-    global $conf;
-    global $lang;
+    if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
+    if(media_inuse($id)) return DOKU_MEDIA_INUSE;
 
     $file = mediaFN($id);
 
@@ -196,12 +203,10 @@ function media_delete($id,$auth){
     unset($evt);
 
     if($data['unl'] && $data['del']){
-        // current namespace was removed. redirecting to root ns passing msg along
-        send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
-                rawurlencode(sprintf(noNS($id),$lang['deletesucc'])));
+        return DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS;
     }
 
-    return $data['unl'];
+    return $data['unl'] ? DOKU_MEDIA_DELETED : 0;
 }
 
 /**
