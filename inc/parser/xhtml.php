@@ -29,7 +29,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $doc = '';        // will contain the whole document
     var $toc = array();   // will contain the Table of Contents
 
-    private $sectionedits = array(); // A stack of section edit data
+    var $sectionedits = array(); // A stack of section edit data
 
     var $headers = array();
     var $footnotes = array();
