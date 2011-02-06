@@ -1443,7 +1443,8 @@ function html_admin(){
     // @todo: could be checked and only displayed if $conf['savedir'] is under the web root
     echo '<a style="border:none; float:right;" target="_blank"
             href="http://www.dokuwiki.org/security#web_access_security">
-            <img src="data/security.png" alt="Broken image? Everything\'s alright!" /></a>';
+            <img src="data/security.png" alt="Your data directory seems to be protected properly."
+             onerror="this.parentNode.style.display=\'none\'" /></a>';
 
     print p_locale_xhtml('admin');
 
