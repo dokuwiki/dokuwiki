@@ -304,6 +304,7 @@ function ft_pagesorter($a, $b){
  */
 function ft_snippet($id,$highlight){
     $text = rawWiki($id);
+    $text = str_replace("\xC2\xAD",'',$text); // remove soft-hyphens
     $evdata = array(
             'id'        => $id,
             'text'      => &$text,
