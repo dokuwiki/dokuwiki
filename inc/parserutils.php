@@ -291,18 +291,25 @@ function p_get_metadata($id, $key='', $render=true){
  * @return boolean true on success
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function p_set_metadata($id, $data, $render=false, $persistent=true){
     if (!is_array($data)) return false;
 
-    global $ID;
+    global $ID, $METADATA_RENDERERS;
 
-    // cache the current page
-    $cache = ($ID == $id);
-    $orig = p_read_metadata($id, $cache);
+    // if there is currently a renderer change the data in the renderer instead
+    if (isset($METADATA_RENDERERS[$id])) {
+        $orig =& $METADATA_RENDERERS[$id];
+        $meta = $orig;
+    } else {
+        // cache the current page
+        $cache = ($ID == $id);
+        $orig = p_read_metadata($id, $cache);
 
-    // render metadata first?
-    $meta = $render ? p_render_metadata($id, $orig) : $orig;
+        // render metadata first?
+        $meta = $render ? p_render_metadata($id, $orig) : $orig;
+    }
 
     // now add the passed metadata
     $protected = array('description', 'date', 'contributor');
@@ -339,7 +346,13 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
     // save only if metadata changed
     if ($meta == $orig) return true;
 
-    return p_save_metadata($id, $meta);
+    if (isset($METADATA_RENDERERS[$id])) {
+        // set both keys individually as the renderer has references to the individual keys
+        $METADATA_RENDERERS[$id]['current']    = $meta['current'];
+        $METADATA_RENDERERS[$id]['persistent'] = $meta['persistent'];
+    } else {
+        return p_save_metadata($id, $meta);
+    }
 }
 
 /**
@@ -413,7 +426,15 @@ function p_save_metadata($id, $meta) {
  */
 function p_render_metadata($id, $orig){
     // make sure the correct ID is in global ID
-    global $ID;
+    global $ID, $METADATA_RENDERERS;
+
+    // avoid recursive rendering processes for the same id
+    if (isset($METADATA_RENDERERS[$id]))
+        return $orig;
+
+    // store the original metadata in the global $METADATA_RENDERERS so p_set_metadata can use it
+    $METADATA_RENDERERS[$id] =& $orig;
+
     $keep = $ID;
     $ID   = $id;
 
@@ -428,13 +449,14 @@ function p_render_metadata($id, $orig){
         $instructions = p_cached_instructions(wikiFN($id),false,$id);
         if(is_null($instructions)){
             $ID = $keep;
+            unset($METADATA_RENDERERS[$id]);
             return null; // something went wrong with the instructions
         }
 
         // set up the renderer
         $renderer = new Doku_Renderer_metadata();
-        $renderer->meta = $orig['current'];
-        $renderer->persistent = $orig['persistent'];
+        $renderer->meta =& $orig['current'];
+        $renderer->persistent =& $orig['persistent'];
 
         // loop through the instructions
         foreach ($instructions as $instruction){
@@ -442,11 +464,13 @@ function p_render_metadata($id, $orig){
             call_user_func_array(array(&$renderer, $instruction[0]), (array) $instruction[1]);
         }
 
-        $evt->result = array('current'=>$renderer->meta,'persistent'=>$renderer->persistent);
+        $evt->result = array('current'=>&$renderer->meta,'persistent'=>&$renderer->persistent);
     }
     $evt->advise_after();
 
+    // clean up
     $ID = $keep;
+    unset($METADATA_RENDERERS[$id]);
     return $evt->result;
 }
 
