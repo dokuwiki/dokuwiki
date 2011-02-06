@@ -299,8 +299,6 @@ class HTTPClient {
                 $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
                 return false;
             }
-            //set non blocking
-            stream_set_blocking($socket,0);
 
             // keep alive?
             if ($this->keep_alive) {
@@ -309,6 +307,9 @@ class HTTPClient {
                 unset($this->connections[$connectionId]);
             }
         }
+
+        //set blocking
+        stream_set_blocking($socket,1);
 
         // build request
         $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -319,11 +320,28 @@ class HTTPClient {
 
         $this->_debug('request',$request);
 
+        // select parameters
+        $sel_r = null;
+        $sel_w = array($socket);
+        $sel_e = null;
+
         // send request
         $towrite = strlen($request);
         $written = 0;
         while($written < $towrite){
-            $ret = fwrite($socket, substr($request,$written));
+            // check timeout
+            if(time()-$start > $this->timeout){
+                $this->status = -100;
+                $this->error = sprintf('Timeout while sending request (%.3fs)',$this->_time() - $this->start);
+                unset($this->connections[$connectionId]);
+                return false;
+            }
+
+            // wait for stream ready or timeout (1sec)
+            if(stream_select($sel_r,$sel_w,$sel_e,1) === false) continue;
+
+            // write to stream
+            $ret = fwrite($socket, substr($request,$written,4096));
             if($ret === false){
                 $this->status = -100;
                 $this->error = 'Failed writing to socket';
@@ -332,6 +350,9 @@ class HTTPClient {
             }
             $written += $ret;
         }
+
+        // continue non-blocking
+        stream_set_blocking($socket,0);
 
         // read headers from socket
         $r_headers = '';
