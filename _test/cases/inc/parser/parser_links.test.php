@@ -98,6 +98,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
                 $this->signal('failinfo',$source);
 
                 $this->setup();
+                $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
                 $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
                 $this->P->parse("Foo $source Bar");
                 $calls = array (
