@@ -153,11 +153,15 @@ function runIndexer(){
     $lock = $conf['lockdir'].'/_indexer.lock';
     while(!@mkdir($lock,$conf['dmode'])){
         usleep(50);
-        if(time()-@filemtime($lock) > 60*5){
+        if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
             // looks like a stale lock - remove it
-            @rmdir($lock);
-            print "runIndexer(): stale lock removed".NL;
-        }elseif($run++ = 1000){
+            if (!@rmdir($lock)) {
+                print "runIndexer(): removing the stale lock failed".NL;
+                return false;
+            } else {
+                print "runIndexer(): stale lock removed".NL;
+            }
+        }elseif($run++ == 1000){
             // we waited 5 seconds for that lock
             print "runIndexer(): indexer locked".NL;
             return false;
