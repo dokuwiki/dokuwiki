@@ -870,7 +870,7 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
         if(count($this->patterns)) return;
 
         $ltrs = '\w';
-        $gunk = '/\#~:.?+=&%@!\-';
+        $gunk = '/\#~:.?+=&%@!\-\[\]';
         $punc = '.:?\-;,';
         $host = $ltrs.$punc;
         $any  = $ltrs.$gunk.$punc;
