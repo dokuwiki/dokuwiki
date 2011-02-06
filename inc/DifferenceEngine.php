@@ -943,7 +943,7 @@ class InlineWordLevelDiff extends MappedDiff {
         $orig = new _HWLDF_WordAccumulator;
         foreach ($this->edits as $edit) {
             if ($edit->type == 'copy')
-                $orig->addWords($edit->orig);
+                $orig->addWords($edit->closing);
             elseif ($edit->type == 'change'){
                 $orig->addWords($edit->orig, 'del');
                 $orig->addWords($edit->closing, 'add');
