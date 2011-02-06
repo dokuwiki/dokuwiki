@@ -258,7 +258,7 @@ function p_get_metadata($id, $key='', $render=true){
             if ($meta == $old_meta || p_save_metadata($id, $meta)) {
                 // store a timestamp in order to make sure that the cachefile is touched
                 $cachefile->storeCache(time());
-            } else {
+            } elseif ($meta != $old_meta) {
                 msg('Unable to save metadata file. Hint: disk full; file permissions; safe_mode setting.',-1);
             }
         }
