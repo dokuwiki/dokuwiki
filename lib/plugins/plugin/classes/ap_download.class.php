@@ -1,7 +1,7 @@
 <?php
 class ap_download extends ap_manage {
 
-    var $overwrite = false;
+    var $overwrite = true;
 
     /**
      * Initiate the plugin download
