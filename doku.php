@@ -7,7 +7,7 @@
  */
 
 // update message version
-$updateVersion = 29;
+$updateVersion = 30;
 
 //  xdebug_start_profiling();
 
@@ -29,7 +29,10 @@ require_once(DOKU_INC.'inc/init.php');
 //import variables
 $QUERY = trim($_REQUEST['id']);
 $ID    = getID();
+
+// deprecated 2011-01-14
 $NS    = getNS($ID);
+
 $REV   = $_REQUEST['rev'];
 $IDX   = $_REQUEST['idx'];
 $DATE  = $_REQUEST['date'];

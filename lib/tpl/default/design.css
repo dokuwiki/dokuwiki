@@ -652,10 +652,12 @@ div.dokuwiki table.diff td {
   font-family: monospace;
   font-size: 100%;
 }
-div.dokuwiki td.diff-addedline {
+div.dokuwiki td.diff-addedline,
+div.dokuwiki span.diff-addedline {
   background-color: #ddffdd;
 }
-div.dokuwiki td.diff-deletedline {
+div.dokuwiki td.diff-deletedline,
+div.dokuwiki span.diff-deletedline {
     background-color: #ffffbb;
 }
 div.dokuwiki td.diff-context {

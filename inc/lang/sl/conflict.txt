@@ -1,6 +1,5 @@
-====== Obstaja novejša različica ======
+====== Obstaja novejša različica dokumenta ======
 
-Obstaja novejša različica dokumenta, ki ga urejate. Do tega pride, ko kak drugi uporabnik spremeni dokument med vašim urejanjem.
+Obstaja novejša različica dokumenta, ki ga trenutno urejate. Do zapleta pride, ko drug uporabnik spremeni dokument med vašim urejanjem in ga pred vami shrani.
 
-Temeljito preglejte spodaj prikazane razlike in se potem odločite, katero verzijo želite obdržati. Če izberete ''shrani'', bo shranjena vaša različica. Pritisnite ''prekliči'', če želite ohraniti trenutno različico.
-
+Temeljito preglejte spodaj izpisane razlike med dokumentoma in izberite različico, ki jo želite ohraniti. V kolikor je izbrana možnost ''shrani'', bo shranjena vaša zadnja različica. Z izbiro možnosti ''prekliči'', pa bo ohranjena trenutno shranjena različica.

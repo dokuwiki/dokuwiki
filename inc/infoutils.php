@@ -258,7 +258,7 @@ function check(){
  * @see    html_msgarea
  */
 function msg($message,$lvl=0,$line='',$file=''){
-    global $MSG;
+    global $MSG, $MSG_shown;
     $errors[-1] = 'error';
     $errors[0]  = 'info';
     $errors[1]  = 'success';
@@ -268,7 +268,7 @@ function msg($message,$lvl=0,$line='',$file=''){
 
     if(!isset($MSG)) $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
-    if(headers_sent()){
+    if(isset($MSG_shown) || headers_sent()){
         if(function_exists('html_msgarea')){
             html_msgarea();
         }else{

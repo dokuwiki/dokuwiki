@@ -2,6 +2,7 @@
 /**
  * Latin language file
  *
+ * @author Massimiliano Vassalli <vassalli.max@gmail.com>
  */
 $lang['menu']                  = 'Sodalis Tabella';
 $lang['noauth']                = '(Sodalis confirmatio deest)';

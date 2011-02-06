@@ -176,7 +176,7 @@ class ap_manage {
     function dir_delete($path) {
         if (!is_string($path) || $path == "") return false;
 
-        if (is_dir($path)) {
+        if (is_dir($path) && !is_link($path)) {
             if (!$dh = @opendir($path)) return false;
 
             while ($f = readdir($dh)) {

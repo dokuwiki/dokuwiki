@@ -6,6 +6,7 @@
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
  * @author Matthias Schulte <post@lupo49.de>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['menu']                  = 'Zurückstellungsmanager';
 $lang['filter']                = 'Durchsuche als Spam markierte Seiten';

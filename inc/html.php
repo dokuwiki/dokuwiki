@@ -318,7 +318,13 @@ function html_search(){
     global $ID;
     global $lang;
 
-    print p_locale_xhtml('searchpage');
+    $intro = p_locale_xhtml('searchpage');
+    // allow use of placeholder in search intro
+    $intro = str_replace(
+                array('@QUERY@','@SEARCH@'),
+                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
+                $intro);
+    echo $intro;
     flush();
 
     //show progressbar
@@ -864,12 +870,17 @@ function html_backlinks(){
  * show diff
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string $text - compare with this text with most current version
+ * @param  bool   $intr - display the intro text
  */
-function html_diff($text='',$intro=true){
+function html_diff($text='',$intro=true,$type=null){
     global $ID;
     global $REV;
     global $lang;
     global $conf;
+
+    if(!$type) $type = $_REQUEST['difftype'];
+    if($type != 'inline') $type = 'sidebyside';
 
     // we're trying to be clever here, revisions to compare can be either
     // given as rev and rev2 parameters, with rev2 being optional. Or in an
@@ -887,6 +898,9 @@ function html_diff($text='',$intro=true){
     }else{
         $rev2 = (int) $_REQUEST['rev2'];
     }
+
+    $r_minor = '';
+    $l_minor = '';
 
     if($text){                      // compare text to the most current revision
         $l_rev   = '';
@@ -984,17 +998,48 @@ function html_diff($text='',$intro=true){
     $df = new Diff(explode("\n",htmlspecialchars($l_text)),
         explode("\n",htmlspecialchars($r_text)));
 
-    $tdf = new TableDiffFormatter();
+    if($type == 'inline'){
+        $tdf = new InlineDiffFormatter();
+    } else {
+        $tdf = new TableDiffFormatter();
+    }
+
+
+
     if($intro) print p_locale_xhtml('diff');
 
     if (!$text) {
-        $diffurl = wl($ID, array('do'=>'diff', 'rev2[0]'=>$l_rev, 'rev2[1]'=>$r_rev));
         ptln('<p class="difflink">');
-        ptln('  <a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a>');
+
+        $form = new Doku_Form(array('action'=>wl()));
+        $form->addHidden('id',$ID);
+        $form->addHidden('rev2[0]',$l_rev);
+        $form->addHidden('rev2[1]',$r_rev);
+        $form->addHidden('do','diff');
+        $form->addElement(form_makeListboxField(
+                            'difftype',
+                            array(
+                                'sidebyside' => $lang['diff_side'],
+                                'inline'     => $lang['diff_inline']),
+                            $type,
+                            $lang['diff_type'],
+                            '','',
+                            array('class'=>'quickselect')));
+        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form->printForm();
+
+
+        $diffurl = wl($ID, array(
+                        'do'       => 'diff',
+                        'rev2[0]'  => $l_rev,
+                        'rev2[1]'  => $r_rev,
+                        'difftype' => $type,
+                      ));
+        ptln('<br /><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a>');
         ptln('</p>');
     }
     ?>
-    <table class="diff">
+    <table class="diff diff_<?php echo $type?>">
     <tr>
     <th colspan="2" <?php echo $l_minor?>>
     <?php echo $l_head?>
@@ -1034,7 +1079,10 @@ function html_conflict($text,$summary){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_msgarea(){
-    global $MSG;
+    global $MSG, $MSG_shown;
+    // store if the global $MSG has already been shown and thus HTML output has been started
+    $MSG_shown = true;
+
     if(!isset($MSG)) return;
 
     $shown = array();
@@ -1046,6 +1094,8 @@ function html_msgarea(){
         print '</div>';
         $shown[$hash] = 1;
     }
+
+    unset($GLOBALS['MSG']);
 }
 
 /**
@@ -1214,9 +1264,9 @@ function html_edit(){
     if($wr && $conf['license']){
         $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
         $out  = $lang['licenseok'];
-        $out .= '<a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
+        $out .= ' <a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
         if(isset($conf['target']['extern'])) $out .= ' target="'.$conf['target']['extern'].'"';
-        $out .= '> '.$license[$conf['license']]['name'].'</a>';
+        $out .= '>'.$license[$conf['license']]['name'].'</a>';
         $form->addElement($out);
         $form->addElement(form_makeCloseTag('div'));
     }

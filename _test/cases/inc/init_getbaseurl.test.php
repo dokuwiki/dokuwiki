@@ -275,6 +275,31 @@ class init_getBaseURL_test extends UnitTestCase {
           $this->assertEqual(getBaseURL(true),$correct_result);
         }
     }
+
+    /**
+     * Absolute URL with IPv6 domain name.
+     * lighttpd, fastcgi
+     *
+     * data provided by Michael Hamann <michael@content-space.de>
+     */
+    function test12() {
+        global $conf;
+        $conf['basedir'] = '';
+        $conf['baseurl'] = '';
+        $conf['canonical'] = 0;
+
+        $_SERVER['DOCUMENT_ROOT'] = '/srv/http/';
+        $_SERVER['HTTP_HOST'] = '[fd00::6592:39ed:a2ed:2c78]';
+        $_SERVER['SCRIPT_FILENAME'] = '/srv/http/~michitux/dokuwiki/doku.php';
+        $_SERVER['REQUEST_URI'] = '/~michitux/dokuwiki/doku.php?do=debug';
+        $_SERVER['SCRIPT_NAME'] = '/~michitux/dokuwiki/doku.php';
+        $_SERVER['PATH_INFO'] = null;
+        $_SERVER['PATH_TRANSLATED'] = null;
+        $_SERVER['PHP_SELF'] = '/~michitux/dokuwiki/doku.php';
+        $_SERVER['SERVER_PORT'] = '80';
+        $_SERVER['SERVER_NAME'] = '[fd00';
+        $this->assertEqual(getBaseURL(true), 'http://[fd00::6592:39ed:a2ed:2c78]/~michitux/dokuwiki/');
+    }
 }
 
 //Setup VIM: ex: et ts=2 :

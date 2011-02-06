@@ -12,6 +12,7 @@
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
  * @author Osman Tekin osman.tekin93@hotmail.it
+ * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -110,6 +111,7 @@ $lang['fetchsize']             = 'Dimensione massima (bytes) scaricabile da fetc
 $lang['notify']                = 'Invia notifiche sulle modifiche a questo indirizzo';
 $lang['registernotify']        = 'Invia informazioni sui nuovi utenti registrati a questo indirizzo email';
 $lang['mailfrom']              = 'Mittente per le mail automatiche';
+$lang['mailprefix']            = 'Prefisso da inserire nell\'oggetto delle mail automatiche';
 $lang['gzip_output']           = 'Usa il Content-Encoding gzip per xhtml';
 $lang['gdlib']                 = 'Versione GD Lib ';
 $lang['im_convert']            = 'Percorso per il convertitore di ImageMagick';
@@ -182,7 +184,7 @@ $lang['xsendfile_o_0']         = 'non usare';
 $lang['xsendfile_o_1']         = 'Header proprietario lighttpd (prima della versione 1.5)';
 $lang['xsendfile_o_2']         = 'Header standard X-Sendfile';
 $lang['xsendfile_o_3']         = 'Header proprietario Nginx X-Accel-Redirect';
-$lang['showuseras_o_loginname'] = 'Nome accesso';
+$lang['showuseras_o_loginname'] = 'Nome utente';
 $lang['showuseras_o_username'] = 'Nome completo dell\'utente';
 $lang['showuseras_o_email']    = 'Indirizzo email dell\'utente (offuscato in base alle impostazioni di sicurezza posta)';
 $lang['showuseras_o_email_link'] = 'Indirizzo email dell\'utente come collegamento mailto:';

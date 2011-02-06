@@ -296,6 +296,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Return a raw wiki page
      */
     function rawPage($id,$rev=''){
+        $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             return new IXR_Error(1, 'You are not allowed to read this page');
         }
@@ -351,6 +352,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Return a wiki page rendered to html
      */
     function htmlPage($id,$rev=''){
+        $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             return new IXR_Error(1, 'You are not allowed to read this page');
         }
@@ -488,6 +490,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Return some basic data about a page
      */
     function pageInfo($id,$rev=''){
+        $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             return new IXR_Error(1, 'You are not allowed to read this page');
         }
@@ -601,64 +604,27 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Michael Klier <chi@chimeric.de>
      */
     function putAttachment($id, $file, $params) {
-        global $conf;
-        global $lang;
-
+        $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id).':*');
-        if($auth >= AUTH_UPLOAD) {
-            if(!isset($id)) {
-                return new IXR_ERROR(1, 'Filename not given.');
-            }
 
-            $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
+        if(!isset($id)) {
+            return new IXR_ERROR(1, 'Filename not given.');
+        }
 
-            // save temporary file
-            @unlink($ftmp);
-            $buff = base64_decode($file);
-            io_saveFile($ftmp, $buff);
+        global $conf;
 
-            // get filename
-            list($iext, $imime,$dl) = mimetype($id);
-            $id = cleanID($id);
-            $fn = mediaFN($id);
+        $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
 
-            // get filetype regexp
-            $types = array_keys(getMimeTypes());
-            $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
-            $regex = join('|',$types);
+        // save temporary file
+        @unlink($ftmp);
+        $buff = base64_decode($file);
+        io_saveFile($ftmp, $buff);
 
-            // because a temp file was created already
-            if(preg_match('/\.('.$regex.')$/i',$fn)) {
-                //check for overwrite
-                $overwrite = @file_exists($fn);
-                if($overwrite && (!$params['ow'] || $auth < AUTH_DELETE)) {
-                    return new IXR_ERROR(1, $lang['uploadexist'].'1');
-                }
-                // check for valid content
-                $ok = media_contentcheck($ftmp, $imime);
-                if($ok == -1) {
-                    return new IXR_ERROR(1, sprintf($lang['uploadexist'].'2', ".$iext"));
-                } elseif($ok == -2) {
-                    return new IXR_ERROR(1, $lang['uploadspam']);
-                } elseif($ok == -3) {
-                    return new IXR_ERROR(1, $lang['uploadxss']);
-                }
-
-                // prepare event data
-                $data[0] = $ftmp;
-                $data[1] = $fn;
-                $data[2] = $id;
-                $data[3] = $imime;
-                $data[4] = $overwrite;
-
-                // trigger event
-                return trigger_event('MEDIA_UPLOAD_FINISH', $data, array($this, '_media_upload_action'), true);
-
-            } else {
-                return new IXR_ERROR(1, $lang['uploadwrong']);
-            }
+        $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
+        if (is_array($res)) {
+            return new IXR_ERROR(-$res[1], $res[0]);
         } else {
-            return new IXR_ERROR(1, "You don't have permissions to upload files.");
+            return $res;
         }
     }
 
@@ -668,56 +634,17 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Gina Haeussge <osd@foosel.net>
      */
     function deleteAttachment($id){
+        $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id).':*');
-        if($auth < AUTH_DELETE) return new IXR_ERROR(1, "You don't have permissions to delete files.");
-        global $conf;
-        global $lang;
-
-        // check for references if needed
-        $mediareferences = array();
-        if($conf['refcheck']){
-            $mediareferences = ft_mediause($id,$conf['refshow']);
-        }
-
-        if(!count($mediareferences)){
-            $file = mediaFN($id);
-            if(@unlink($file)){
-                addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
-                io_sweepNS($id,'mediadir');
-                return 0;
-            }
-            //something went wrong
-               return new IXR_ERROR(1, 'Could not delete file');
-        } else {
+        $res = media_delete($id, $auth);
+        if ($res & DOKU_MEDIA_DELETED) {
+            return 0;
+        } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
+            return new IXR_ERROR(1, "You don't have permissions to delete files.");
+        } elseif ($res & DOKU_MEDIA_INUSE) {
             return new IXR_ERROR(1, 'File is still referenced');
-        }
-    }
-
-    /**
-     * Moves the temporary file to its final destination.
-     *
-     * Michael Klier <chi@chimeric.de>
-     */
-    function _media_upload_action($data) {
-        global $conf;
-
-        if(is_array($data) && count($data)===5) {
-            io_createNamespace($data[2], 'media');
-            if(rename($data[0], $data[1])) {
-                chmod($data[1], $conf['fmode']);
-                media_notify($data[2], $data[1], $data[3]);
-                // add a log entry to the media changelog
-                if ($data[4]) {
-                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_EDIT);
-                } else {
-                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_CREATE);
-                }
-                return $data[2];
-            } else {
-                return new IXR_ERROR(1, 'Upload failed.');
-            }
         } else {
-            return new IXR_ERROR(1, 'Upload failed.');
+            return new IXR_ERROR(1, 'Could not delete file');
         }
     }
 
@@ -725,6 +652,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     * Returns the permissions of a given wiki page
     */
     function aclCheck($id) {
+        $id = cleanID($id);
         return auth_quickaclcheck($id);
     }
 
@@ -734,13 +662,14 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Michael Klier <chi@chimeric.de>
      */
     function listLinks($id) {
+        $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             return new IXR_Error(1, 'You are not allowed to read this page');
         }
         $links = array();
 
         // resolve page instructions
-        $ins   = p_cached_instructions(wikiFN(cleanID($id)));
+        $ins   = p_cached_instructions(wikiFN($id));
 
         // instantiate new Renderer - needed for interwiki links
         include(DOKU_INC.'inc/parser/xhtml.php');
@@ -848,6 +777,10 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Michael Klier <chi@chimeric.de>
      */
     function pageVersions($id, $first) {
+        $id = cleanID($id);
+        if(auth_quickaclcheck($id) < AUTH_READ){
+            return new IXR_Error(1, 'You are not allowed to read this page');
+        }
         global $conf;
 
         $versions = array();
@@ -923,7 +856,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $unlockfail = array();
 
         foreach((array) $set['lock'] as $id){
-            if(checklock($id)){
+            $id = cleanID($id);
+            if(auth_quickaclcheck($id) < AUTH_EDIT || checklock($id)){
                 $lockfail[] = $id;
             }else{
                 lock($id);
@@ -932,10 +866,11 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         }
 
         foreach((array) $set['unlock'] as $id){
-            if(unlock($id)){
-                $unlocked[] = $id;
-            }else{
+            $id = cleanID($id);
+            if(auth_quickaclcheck($id) < AUTH_EDIT || !unlock($id)){
                 $unlockfail[] = $id;
+            }else{
+                $unlocked[] = $id;
             }
         }
 

@@ -70,6 +70,12 @@ function auth_setup(){
     $_REQUEST['http_credentials'] = false;
     if (!$conf['rememberme']) $_REQUEST['r'] = false;
 
+    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like
+    // the one presented at
+    // http://www.besthostratings.com/articles/http-auth-php-cgi.html is used
+    // for enabling HTTP authentication with CGI/SuExec)
+    if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
     // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
     if(isset($_SERVER['HTTP_AUTHORIZATION'])){
         list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) =
@@ -194,10 +200,11 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
     }else{
         // read cookie information
         list($user,$sticky,$pass) = auth_getCookie();
-        // get session info
-        $session = $_SESSION[DOKU_COOKIE]['auth'];
         if($user && $pass){
             // we got a cookie - see if we can trust it
+
+            // get session info
+            $session = $_SESSION[DOKU_COOKIE]['auth'];
             if(isset($session) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time()-$conf['auth_security_timeout']) &&
@@ -415,7 +422,7 @@ function auth_isMember($memberlist,$user,array $groups){
     if (!$auth) return false;
 
     // clean user and groups
-    if($auth->isCaseSensitive()){
+    if(!$auth->isCaseSensitive()){
         $user = utf8_strtolower($user);
         $groups = array_map('utf8_strtolower',$groups);
     }
@@ -430,7 +437,7 @@ function auth_isMember($memberlist,$user,array $groups){
 
     // compare cleaned values
     foreach($members as $member){
-        if($auth->isCaseSensitive()) $member = utf8_strtolower($member);
+        if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
         if($member[0] == '@'){
             $member = $auth->cleanGroup(substr($member,1));
             if(in_array($member, $groups)) return true;
@@ -534,13 +541,13 @@ function auth_aclcheck($id,$user,$groups){
 
     //still here? do the namespace checks
     if($ns){
-        $path = $ns.':\*';
+        $path = $ns.':*';
     }else{
-        $path = '\*'; //root document
+        $path = '*'; //root document
     }
 
     do{
-        $matches = preg_grep('/^'.$path.'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -557,9 +564,9 @@ function auth_aclcheck($id,$user,$groups){
         //get next higher namespace
         $ns   = getNS($ns);
 
-        if($path != '\*'){
-            $path = $ns.':\*';
-            if($path == ':\*') $path = '\*';
+        if($path != '*'){
+            $path = $ns.':*';
+            if($path == ':*') $path = '*';
         }else{
             //we did this already
             //looks like there is something wrong with the ACL
@@ -925,18 +932,6 @@ function act_resendpwd(){
  * If the selected method needs a salt and none was given, a random one
  * is chosen.
  *
- * The following methods are understood:
- *
- *   smd5  - Salted MD5 hashing
- *   apr1  - Apache salted MD5 hashing
- *   md5   - Simple MD5 hashing
- *   sha1  - SHA1 hashing
- *   ssha  - Salted SHA1 hashing
- *   crypt - Unix crypt
- *   mysql - MySQL password (old method)
- *   my411 - MySQL 4.1.1 password
- *   kmd5  - Salted MD5 hashing as used by UNB
- *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  string  The crypted password
  */
@@ -944,128 +939,26 @@ function auth_cryptPassword($clear,$method='',$salt=null){
     global $conf;
     if(empty($method)) $method = $conf['passcrypt'];
 
-    //prepare a salt
-    if(is_null($salt)) $salt = md5(uniqid(rand(), true));
+    $pass  = new PassHash();
+    $call  = 'hash_'.$method;
 
-    switch(strtolower($method)){
-        case 'smd5':
-            if(defined('CRYPT_MD5') && CRYPT_MD5) return crypt($clear,'$1$'.substr($salt,0,8).'$');
-            // when crypt can't handle SMD5, falls through to pure PHP implementation
-            $magic = '1';
-        case 'apr1':
-            //from http://de.php.net/manual/en/function.crypt.php#73619 comment by <mikey_nich at hotmail dot com>
-            if(!isset($magic)) $magic = 'apr1';
-            $salt = substr($salt,0,8);
-            $len = strlen($clear);
-            $text = $clear.'$'.$magic.'$'.$salt;
-            $bin = pack("H32", md5($clear.$salt.$clear));
-            for($i = $len; $i > 0; $i -= 16) {
-                $text .= substr($bin, 0, min(16, $i));
-            }
-            for($i = $len; $i > 0; $i >>= 1) {
-                $text .= ($i & 1) ? chr(0) : $clear{0};
-            }
-            $bin = pack("H32", md5($text));
-            for($i = 0; $i < 1000; $i++) {
-                $new = ($i & 1) ? $clear : $bin;
-                if ($i % 3) $new .= $salt;
-                if ($i % 7) $new .= $clear;
-                $new .= ($i & 1) ? $bin : $clear;
-                $bin = pack("H32", md5($new));
-            }
-            $tmp = '';
-            for ($i = 0; $i < 5; $i++) {
-                $k = $i + 6;
-                $j = $i + 12;
-                if ($j == 16) $j = 5;
-                $tmp = $bin[$i].$bin[$k].$bin[$j].$tmp;
-            }
-            $tmp = chr(0).chr(0).$bin[11].$tmp;
-            $tmp = strtr(strrev(substr(base64_encode($tmp), 2)),
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
-                    "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-            return '$'.$magic.'$'.$salt.'$'.$tmp;
-        case 'md5':
-            return md5($clear);
-        case 'sha1':
-            return sha1($clear);
-        case 'ssha':
-            $salt=substr($salt,0,4);
-            return '{SSHA}'.base64_encode(pack("H*", sha1($clear.$salt)).$salt);
-        case 'crypt':
-            return crypt($clear,substr($salt,0,2));
-        case 'mysql':
-            //from http://www.php.net/mysql comment by <soren at byu dot edu>
-            $nr=0x50305735;
-            $nr2=0x12345671;
-            $add=7;
-            $charArr = preg_split("//", $clear);
-            foreach ($charArr as $char) {
-                if (($char == '') || ($char == ' ') || ($char == '\t')) continue;
-                $charVal = ord($char);
-                $nr ^= ((($nr & 63) + $add) * $charVal) + ($nr << 8);
-                $nr2 += ($nr2 << 8) ^ $nr;
-                $add += $charVal;
-            }
-            return sprintf("%08x%08x", ($nr & 0x7fffffff), ($nr2 & 0x7fffffff));
-        case 'my411':
-            return '*'.sha1(pack("H*", sha1($clear)));
-        case 'kmd5':
-            $key = substr($salt, 16, 2);
-            $hash1 = strtolower(md5($key . md5($clear)));
-            $hash2 = substr($hash1, 0, 16) . $key . substr($hash1, 16);
-            return $hash2;
-        default:
-            msg("Unsupported crypt method $method",-1);
+    if(!method_exists($pass,$call)){
+        msg("Unsupported crypt method $method",-1);
+        return false;
     }
+
+    return $pass->$call($clear,$salt);
 }
 
 /**
  * Verifies a cleartext password against a crypted hash
  *
- * The method and salt used for the crypted hash is determined automatically
- * then the clear text password is crypted using the same method. If both hashs
- * match true is is returned else false
- *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @return  bool
  */
 function auth_verifyPassword($clear,$crypt){
-    $method='';
-    $salt='';
-
-    //determine the used method and salt
-    $len = strlen($crypt);
-    if(preg_match('/^\$1\$([^\$]{0,8})\$/',$crypt,$m)){
-        $method = 'smd5';
-        $salt   = $m[1];
-    }elseif(preg_match('/^\$apr1\$([^\$]{0,8})\$/',$crypt,$m)){
-        $method = 'apr1';
-        $salt   = $m[1];
-    }elseif(substr($crypt,0,6) == '{SSHA}'){
-        $method = 'ssha';
-        $salt   = substr(base64_decode(substr($crypt, 6)),20);
-    }elseif($len == 32){
-        $method = 'md5';
-    }elseif($len == 40){
-        $method = 'sha1';
-    }elseif($len == 16){
-        $method = 'mysql';
-    }elseif($len == 41 && $crypt[0] == '*'){
-        $method = 'my411';
-    }elseif($len == 34){
-        $method = 'kmd5';
-        $salt   = $crypt;
-    }else{
-        $method = 'crypt';
-        $salt   = substr($crypt,0,2);
-    }
-
-    //crypt and compare
-    if(auth_cryptPassword($clear,$method,$salt) === $crypt){
-        return true;
-    }
-    return false;
+    $pass = new PassHash();
+    return $pass->verify_hash($clear,$crypt);
 }
 
 /**
