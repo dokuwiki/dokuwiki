@@ -605,64 +605,26 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function putAttachment($id, $file, $params) {
         $id = cleanID($id);
-        global $conf;
-        global $lang;
-
         $auth = auth_quickaclcheck(getNS($id).':*');
-        if($auth >= AUTH_UPLOAD) {
-            if(!isset($id)) {
-                return new IXR_ERROR(1, 'Filename not given.');
-            }
 
-            $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
+        if(!isset($id)) {
+            return new IXR_ERROR(1, 'Filename not given.');
+        }
 
-            // save temporary file
-            @unlink($ftmp);
-            $buff = base64_decode($file);
-            io_saveFile($ftmp, $buff);
+        global $conf;
 
-            // get filename
-            list($iext, $imime,$dl) = mimetype($id);
-            $id = cleanID($id);
-            $fn = mediaFN($id);
+        $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
 
-            // get filetype regexp
-            $types = array_keys(getMimeTypes());
-            $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
-            $regex = join('|',$types);
+        // save temporary file
+        @unlink($ftmp);
+        $buff = base64_decode($file);
+        io_saveFile($ftmp, $buff);
 
-            // because a temp file was created already
-            if(preg_match('/\.('.$regex.')$/i',$fn)) {
-                //check for overwrite
-                $overwrite = @file_exists($fn);
-                if($overwrite && (!$params['ow'] || $auth < AUTH_DELETE)) {
-                    return new IXR_ERROR(1, $lang['uploadexist'].'1');
-                }
-                // check for valid content
-                $ok = media_contentcheck($ftmp, $imime);
-                if($ok == -1) {
-                    return new IXR_ERROR(1, sprintf($lang['uploadexist'].'2', ".$iext"));
-                } elseif($ok == -2) {
-                    return new IXR_ERROR(1, $lang['uploadspam']);
-                } elseif($ok == -3) {
-                    return new IXR_ERROR(1, $lang['uploadxss']);
-                }
-
-                // prepare event data
-                $data[0] = $ftmp;
-                $data[1] = $fn;
-                $data[2] = $id;
-                $data[3] = $imime;
-                $data[4] = $overwrite;
-
-                // trigger event
-                return trigger_event('MEDIA_UPLOAD_FINISH', $data, array($this, '_media_upload_action'), true);
-
-            } else {
-                return new IXR_ERROR(1, $lang['uploadwrong']);
-            }
+        $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
+        if (is_array($res)) {
+            return new IXR_ERROR(-$res[1], $res[0]);
         } else {
-            return new IXR_ERROR(1, "You don't have permissions to upload files.");
+            return $res;
         }
     }
 
@@ -683,34 +645,6 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return new IXR_ERROR(1, 'File is still referenced');
         } else {
             return new IXR_ERROR(1, 'Could not delete file');
-        }
-    }
-
-    /**
-     * Moves the temporary file to its final destination.
-     *
-     * Michael Klier <chi@chimeric.de>
-     */
-    function _media_upload_action($data) {
-        global $conf;
-
-        if(is_array($data) && count($data)===5) {
-            io_createNamespace($data[2], 'media');
-            if(rename($data[0], $data[1])) {
-                chmod($data[1], $conf['fmode']);
-                media_notify($data[2], $data[1], $data[3]);
-                // add a log entry to the media changelog
-                if ($data[4]) {
-                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_EDIT);
-                } else {
-                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_CREATE);
-                }
-                return $data[2];
-            } else {
-                return new IXR_ERROR(1, 'Upload failed.');
-            }
-        } else {
-            return new IXR_ERROR(1, 'Upload failed.');
         }
     }
 
