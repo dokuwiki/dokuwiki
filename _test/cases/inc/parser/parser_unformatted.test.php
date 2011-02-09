@@ -15,7 +15,7 @@ class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('unformatted',array('testing')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -32,7 +32,7 @@ class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('unformatted',array('testing')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );

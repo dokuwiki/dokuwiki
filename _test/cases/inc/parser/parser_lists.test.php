@@ -171,7 +171,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nFoo  -bar  *foo Bar\n")),
+            array('cdata',array("\nFoo  -bar  *foo Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -211,7 +211,7 @@ Bar');
             array('listitem_close',array()),
             array('listu_close',array()),
             array('p_open',array()),
-            array('cdata',array("Bar".DOKU_PARSER_EOL)),
+            array('cdata',array("Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );

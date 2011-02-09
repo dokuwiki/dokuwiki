@@ -23,7 +23,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' testing ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -35,7 +35,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nFoo (( testing\n Bar\n")),
+            array('cdata',array("\nFoo (( testing\n Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -54,7 +54,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(" testing\ntesting ")),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'.DOKU_PARSER_EOL)),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -72,7 +72,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' x((y')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array('z )) Bar'."\n")),
+            array('cdata',array('z )) Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -91,7 +91,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(" test\ning ")),
               array('footnote_close',array()),
             ))),
-            array('cdata',array('Y'.DOKU_PARSER_EOL.' Bar'.DOKU_PARSER_EOL)),
+            array('cdata',array('Y'.DOKU_PARSER_EOL.' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -114,7 +114,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -135,7 +135,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array("\n ")),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -156,7 +156,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -177,7 +177,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -199,7 +199,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'.DOKU_PARSER_EOL)),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -221,7 +221,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -240,7 +240,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(" \n====Test====\n ")),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -286,7 +286,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -328,7 +328,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -356,7 +356,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
               array('cdata',array(' ')),
               array('footnote_close',array()),
             ))),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -381,7 +381,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             ))),
             array('cdata',array(" ")),
             array('strong_close',array()),
-            array('cdata',array(" c ))\n")),
+            array('cdata',array(" c ))")),
             array('p_close',array()),
             array('document_end',array()),
         );

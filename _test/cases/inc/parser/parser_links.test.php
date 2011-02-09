@@ -16,7 +16,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('http://www.google.com', NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -31,7 +31,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('HTTP://WWW.GOOGLE.COM', NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -46,7 +46,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('http://123.123.3.21/foo', NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -61,7 +61,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('http://[3ffe:2a00:100:7031::1]/foo', NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -106,7 +106,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
                     array('p_open',array()),
                     array('cdata',array("\n".'Foo ')),
                     array('externallink',array($link, $name)),
-                    array('cdata',array(' Bar'."\n")),
+                    array('cdata',array(' Bar')),
                     array('p_close',array()),
                     array('document_end',array()),
                 );
@@ -124,7 +124,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nFoo javascript:alert('XSS'); Bar\n")),
+            array('cdata',array("\nFoo javascript:alert('XSS'); Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -139,7 +139,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('http://www.google.com', 'www.google.com')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -154,7 +154,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('ftp://ftp.sunsite.com', 'ftp.sunsite.com')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -168,7 +168,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('emaillink',array('bugs@php.net', NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -183,7 +183,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('emaillink',array("~fix+bug's.for/ev{e}r@php.net", NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -198,7 +198,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('emaillink',array('bugs@pHp.net', NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -214,7 +214,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('l',NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -229,7 +229,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('foo:bar',NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -244,7 +244,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('x:1:y:foo_bar:z','Test')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -259,7 +259,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('wiki:syntax#internal','Syntax')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -274,7 +274,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('http://www.google.com','Google')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -289,7 +289,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('interwikilink',array('iw>somepage','Some Page','iw','somepage')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -304,7 +304,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('interwikilink',array('IW>somepage','Some Page','iw','somepage')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -319,7 +319,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('interwikilink',array('wp>Callback_(computer_science)','callbacks','wp','Callback_(computer_science)')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -334,7 +334,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('camelcaselink',array('FooBar')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -349,7 +349,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('filelink',array('file://temp/file.txt ',NULL)),
-            array('cdata',array('Bar'."\n")),
+            array('cdata',array('Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -364,7 +364,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('file://temp/file.txt','Some File')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -379,7 +379,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('windowssharelink',array('\\\server\share',NULL)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -394,7 +394,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('windowssharelink',array('\\\server\share','My Documents')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -409,7 +409,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -424,7 +424,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','linkonly')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -439,7 +439,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('foo.txt','Some File',null,10,10,'cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -454,7 +454,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif',NULL,'left',NULL,NULL,'cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -469,7 +469,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif',NULL,'right',NULL,NULL,'cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -484,7 +484,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif',NULL,'center',NULL,NULL,'cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -499,7 +499,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif',NULL,NULL,'50','100','nocache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -514,7 +514,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',array('img.gif','Some Image',NULL,'50','100','cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -529,7 +529,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externalmedia',array('http://www.google.com/img.gif',NULL,NULL,NULL,NULL,'cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -544,7 +544,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externalmedia',array('http://www.google.com/img.gif',NULL,NULL,'50','100','nocache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -560,7 +560,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('externalmedia',
             array('http://www.google.com/img.gif','Some Image',NULL,'50','100','cache','details')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -587,7 +587,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('x:1:y:foo_bar:z',$image)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -614,7 +614,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('x:1:y:foo_bar:z',$image)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -641,7 +641,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('emaillink',array('foo@example.com',$image)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -657,7 +657,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',
             array('img.gif','{{foo.gif|{{bar.gif|Bar',NULL,NULL,NULL,'cache','details')),
-            array('cdata',array('}}}} Bar'."\n")),
+            array('cdata',array('}}}} Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
