@@ -12,6 +12,7 @@
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['name']                  = 'Сбор информации о популярности (для загрузки может потребоваться некоторое время)';
 $lang['submit']                = 'Отправить данные';

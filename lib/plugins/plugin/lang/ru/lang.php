@@ -15,6 +15,7 @@
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['menu']                  = 'Управление плагинами';
 $lang['download']              = 'Скачать и установить новый плагин';
