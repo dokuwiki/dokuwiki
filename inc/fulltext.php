@@ -142,7 +142,7 @@ function ft_backlinks($id){
     // check metadata for matching links
     foreach($docs as $match){
         // metadata relation reference links are already resolved
-        $links = p_get_metadata($match,'relation references');
+        $links = p_get_metadata($match,'relation references',false);
         if (isset($links[$id])) $result[] = $match;
     }
 
