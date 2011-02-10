@@ -112,9 +112,16 @@ function _mail_send_action($data) {
     }
 
     if(!utf8_isASCII($subject)) {
-        $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
+        $enc_subj = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
         // Spaces must be encoded according to rfc2047. Use the "_" shorthand
-        $subject = preg_replace('/ /', '_', $subject);
+        $enc_sub = preg_replace('/ /', '_', $enc_sub);
+
+        // quoted printable has length restriction, use base64 if needed
+        if(strlen($subject) > 74){
+            $enc_subj = '=?UTF-8?B?'.base64_encode($subject).'?=';
+        }
+
+        $subject = $enc_subj;
     }
 
     $header  = '';
