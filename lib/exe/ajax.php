@@ -238,7 +238,7 @@ function ajax_linkwiz(){
     global $conf;
     global $lang;
 
-    $q  = ltrim($_POST['q'],':');
+    $q  = ltrim(trim($_POST['q']),':');
     $id = noNS($q);
     $ns = getNS($q);
 
