@@ -203,7 +203,16 @@ function mail_encode_address($string,$header='',$names=true){
             }
 
             if(!utf8_isASCII($text)){
-                $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text,0).'?=';
+                // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
+                if (preg_match('/^"(.+)"$/', $text, $matches)) {
+                  $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';
+                } else {
+                  $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text, 0).'?=';
+                }
+                // additionally the space character should be encoded as =20 (or each
+                // word QP encoded separately).
+                // however this is needed only in mail headers, not globally in mail_quotedprintable_encode().
+                $text = str_replace(" ", "=20", $text);
             }
         }else{
             $text = '';
