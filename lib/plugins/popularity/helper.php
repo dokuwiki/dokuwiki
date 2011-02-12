@@ -60,7 +60,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $result[] = array(
                 'name'   => 'lastSentTime',
                 'desc'   => 'Compute the last time popularity data was sent',
-                'params' => 'array()',
+                'params' => array(),
                 'return' => array('data' => 'int')
                 );
         return $result;
