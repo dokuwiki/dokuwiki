@@ -125,6 +125,7 @@ class Doku_Plugin_Controller {
     }
 
     function _populateMasterList() {
+        global $conf;
         if ($dh = opendir(DOKU_PLUGIN)) {
             while (false !== ($plugin = readdir($dh))) {
                 if ($plugin[0] == '.') continue;               // skip hidden entries
@@ -134,7 +135,9 @@ class Doku_Plugin_Controller {
                     // the plugin was disabled by rc2009-01-26
                     // disabling mechanism was changed back very soon again
                     // to keep everything simple we just skip the plugin completely
-                }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled')){
+                }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled') ||
+                        ($plugin === 'plugin' && isset($conf['pluginmanager']) &&
+                         !$conf['pluginmanager'])){
                     $this->list_disabled[] = $plugin;
                 } else {
                     $this->list_enabled[] = $plugin;

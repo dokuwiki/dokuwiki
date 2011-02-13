@@ -17,7 +17,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'abc ')),
             array('acronym',array('FOOBAR')),
-            array('cdata',array(' xyz'."\n")),
+            array('cdata',array(' xyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -32,7 +32,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\n".'abcFOOBARxyz'."\n")),
+            array('cdata',array("\n".'abcFOOBARxyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -49,7 +49,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'FOOBAR ')),
             array('acronym',array('FOO')),
-            array('cdata',array("\n")),
+            array('cdata',array('')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -68,7 +68,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('acronym',array('FOO')),
             array('cdata',array(' def ')),
             array('acronym',array('BAR')),
-            array('cdata',array(' xyz'."\n")),
+            array('cdata',array(' xyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -92,7 +92,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('acronym',array('FOO.1')),
             array('cdata',array(" ")),
             array('acronym',array('A.FOO.1')),
-            array('cdata',array("\n")),
+            array('cdata',array('')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -115,7 +115,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('acronym',array('FOO.1')),
             array('cdata',array(" ")),
             array('acronym',array('A.FOO.1')),
-            array('cdata',array("\n")),
+            array('cdata',array('')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -130,7 +130,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc:-)xyz\n")),
+            array('cdata',array("\nabc:-)xyz")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -147,7 +147,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'abc ')),
             array('smiley',array(':-)')),
-            array('cdata',array(' xyz'."\n")),
+            array('cdata',array(' xyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -162,7 +162,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc:-)x^_^yz\n")),
+            array('cdata',array("\nabc:-)x^_^yz")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -181,7 +181,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('smiley',array(':-)')),
             array('cdata',array(' x ')),
             array('smiley',array('^_^')),
-            array('cdata',array(' yz'."\n")),
+            array('cdata',array(' yz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -197,7 +197,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc".':-\\\\'."xyz\n")),
+            array('cdata',array("\nabc".':-\\\\'."xyz")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -215,7 +215,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'abc ')),
             array('smiley',array(':-\\\\')),
-            array('cdata',array(' xyz'."\n")),
+            array('cdata',array(' xyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -232,7 +232,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'abc ')),
             array('wordblock',array('CAT')),
-            array('cdata',array(' xyz'."\n")),
+            array('cdata',array(' xyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -249,7 +249,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'abc ')),
             array('wordblock',array('cat')),
-            array('cdata',array(' xyz'."\n")),
+            array('cdata',array(' xyz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -268,7 +268,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('wordblock',array('cat')),
             array('cdata',array(' x ')),
             array('wordblock',array('DOG')),
-            array('cdata',array(' yz'."\n")),
+            array('cdata',array(' yz')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -285,7 +285,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'x ')),
             array('entity',array('->')),
-            array('cdata',array(' y'."\n")),
+            array('cdata',array(' y')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -304,7 +304,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('entity',array('->')),
             array('cdata',array(' y ')),
             array('entity',array('<-')),
-            array('cdata',array(' z'."\n")),
+            array('cdata',array(' z')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -321,7 +321,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('multiplyentity',array(10,20)),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -337,7 +337,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\n".'Foo 0x123 Bar'."\n")),
+            array('cdata',array("\n".'Foo 0x123 Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -356,7 +356,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_close',array()),
             array('hr',array()),
             array('p_open',array()),
-            array('cdata',array("\n Bar\n")),
+            array('cdata',array("\n Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -374,7 +374,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
             array('p_close',array()),
             array('hr',array()),
             array('p_open',array()),
-            array('cdata',array("\n Bar\n")),
+            array('cdata',array("\n Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );

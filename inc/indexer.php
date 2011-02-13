@@ -221,7 +221,14 @@ function idx_getPageWords($page){
 
     list($page,$body) = $data;
 
-    $body   = strtr($body, "\r\n\t", '   ');
+    $body   = strtr($body,
+                    array(
+                        "\r" => ' ',
+                        "\n" => ' ',
+                        "\t" => ' ',
+                        "\xC2\xAD" => '', //soft-hyphen
+                    )
+                   );
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
 

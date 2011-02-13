@@ -11,7 +11,6 @@ if(!defined('DOKU_INC')) die('meh.');
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
-if(!defined('QUOTEDPRINTABLE_EOL')) define('QUOTEDPRINTABLE_EOL',"\015\012");
 #define('MAILHEADER_ASCIIONLY',1);
 
 /**
@@ -113,9 +112,16 @@ function _mail_send_action($data) {
     }
 
     if(!utf8_isASCII($subject)) {
-        $subject = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
+        $enc_subj = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
         // Spaces must be encoded according to rfc2047. Use the "_" shorthand
-        $subject = preg_replace('/ /', '_', $subject);
+        $enc_sub = preg_replace('/ /', '_', $enc_sub);
+
+        // quoted printable has length restriction, use base64 if needed
+        if(strlen($subject) > 74){
+            $enc_subj = '=?UTF-8?B?'.base64_encode($subject).'?=';
+        }
+
+        $subject = $enc_subj;
     }
 
     $header  = '';
@@ -197,7 +203,16 @@ function mail_encode_address($string,$header='',$names=true){
             }
 
             if(!utf8_isASCII($text)){
-                $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text,0).'?=';
+                // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
+                if (preg_match('/^"(.+)"$/', $text, $matches)) {
+                  $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';
+                } else {
+                  $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text, 0).'?=';
+                }
+                // additionally the space character should be encoded as =20 (or each
+                // word QP encoded separately).
+                // however this is needed only in mail headers, not globally in mail_quotedprintable_encode().
+                $text = str_replace(" ", "=20", $text);
             }
         }else{
             $text = '';
@@ -290,11 +305,11 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         // but this wouldn't be caught by such an easy RegExp
         if($maxlen){
             preg_match_all( '/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch );
-            $sLine = implode( '=' . QUOTEDPRINTABLE_EOL, $aMatch[0] ); // add soft crlf's
+            $sLine = implode( '=' . MAILHEADER_EOL, $aMatch[0] ); // add soft crlf's
         }
     }
 
     // join lines into text
-    return implode(QUOTEDPRINTABLE_EOL,$aLines);
+    return implode(MAILHEADER_EOL,$aLines);
 }
 

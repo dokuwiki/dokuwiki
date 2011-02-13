@@ -18,6 +18,7 @@
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -168,6 +169,9 @@ $lang['yours']                 = 'Ваша версия';
 $lang['diff']                  = 'показать отличия от текущей версии';
 $lang['diff2']                 = 'Показать различия между ревизиями  ';
 $lang['difflink']              = 'Ссылка на это сравнение';
+$lang['diff_type']             = 'Посмотреть отличия';
+$lang['diff_inline']           = 'Встроенный';
+$lang['diff_side']             = 'Бок о бок';
 $lang['line']                  = 'Строка';
 $lang['breadcrumb']            = 'Вы посетили';
 $lang['youarehere']            = 'Вы находитесь здесь';

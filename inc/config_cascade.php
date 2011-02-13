@@ -5,7 +5,8 @@
  * This array configures the default locations of various files in the
  * DokuWiki directory hierarchy. It can be overriden in inc/preload.php
  */
-$config_cascade = array(
+$config_cascade = array_merge(
+    array(
         'main' => array(
             'default'   => array(DOKU_CONF.'dokuwiki.php'),
             'local'     => array(DOKU_CONF.'local.php'),
@@ -62,5 +63,7 @@ $config_cascade = array(
         'plainauth.users' => array(
             'default' => DOKU_CONF.'users.auth.php',
             ),
+        ),
+        $config_cascade
 );
 

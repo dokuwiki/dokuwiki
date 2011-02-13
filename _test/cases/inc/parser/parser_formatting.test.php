@@ -17,7 +17,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('strong_open',array()),
             array('cdata',array('bar')),
             array('strong_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -30,7 +30,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc **bar def\n")),
+            array('cdata',array("\nabc **bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -47,7 +47,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('bar')),
             array('emphasis_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -64,7 +64,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('Тест: ')),
             array('emphasis_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -81,7 +81,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('b')),
             array('emphasis_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -98,7 +98,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('foo:')),
             array('emphasis_close',array()),
-            array('cdata',array(' bar// def'."\n")),
+            array('cdata',array(' bar// def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -118,7 +118,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('externallink',array('http://www.google.com', NULL)),
             array('cdata',array(' bar')),
             array('emphasis_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -131,7 +131,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc //bar def\n")),
+            array('cdata',array("\nabc //bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -148,7 +148,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('bar')),
             array('emphasis_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
                         array('p_close',array()),
             array('document_end',array()),
         );
@@ -161,7 +161,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc //http:// def\n")),
+            array('cdata',array("\nabc //http:// def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -185,7 +185,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('text:')),
             array('emphasis_close',array()),
-            array('cdata',array(" another Blablabla Blablabla\n")),
+            array('cdata',array(" another Blablabla Blablabla")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -203,7 +203,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_open',array()),
             array('cdata',array('Тест:')),
             array('emphasis_close',array()),
-            array('cdata',array("\n")),
+            array('cdata', array('')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -248,7 +248,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('underline_open',array()),
             array('cdata',array('bar')),
             array('underline_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -261,7 +261,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc __bar def\n")),
+            array('cdata',array("\nabc __bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -278,7 +278,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('monospace_open',array()),
             array('cdata',array('bar')),
             array('monospace_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -291,7 +291,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc ''bar def\n")),
+            array('cdata',array("\nabc ''bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -308,7 +308,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('subscript_open',array()),
             array('cdata',array('bar')),
             array('subscript_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -321,7 +321,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc <sub>bar def\n")),
+            array('cdata',array("\nabc <sub>bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -338,7 +338,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('superscript_open',array()),
             array('cdata',array('bar')),
             array('superscript_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -351,7 +351,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc <sup>bar def\n")),
+            array('cdata',array("\nabc <sup>bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -368,7 +368,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('deleted_open',array()),
             array('cdata',array('bar')),
             array('deleted_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -381,7 +381,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nabc <del>bar def\n")),
+            array('cdata',array("\nabc <del>bar def")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -403,7 +403,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('emphasis_close',array()),
             array('cdata',array('c')),
             array('strong_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -424,7 +424,7 @@ class TestOfDoku_Parser_Formatting extends TestOfDoku_Parser {
             array('strong_open',array()),
             array('cdata',array('c')),
             array('strong_close',array()),
-            array('cdata',array(' def'."\n")),
+            array('cdata',array(' def')),
             array('p_close',array()),
             array('document_end',array()),
         );
