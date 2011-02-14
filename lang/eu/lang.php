@@ -5,6 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-$lang['discussion']   = 'Arutelu';
+$lang['discussion']      = 'Eztabaida';
+$lang['back_to_article'] = 'Bueltatu';
+$lang['userpage']        = 'Lankide orrialdea';//Erabiltzaile orrialdea
 
 //Setup VIM: ex: et ts=2 :

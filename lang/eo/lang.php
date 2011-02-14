@@ -6,5 +6,6 @@
  */
 
 $lang['discussion']   = 'Diskuto';
+$lang['userpage']     = 'Pago de uzanto';
 
 //Setup VIM: ex: et ts=2 :
