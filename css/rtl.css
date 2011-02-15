@@ -28,6 +28,10 @@ caption, legend {
     clear: right;
 }
 
+.a11y {
+    left: auto;
+    right: -9000px;
+}
 
 /*____________ structure ____________*/
 
@@ -61,6 +65,14 @@ caption, legend {
 #dokuwiki__header form.search #qsearch__in {
     margin-right: 0;
     margin-left: .5em;
+}
+
+#dokuwiki__usertools ul li.user {
+    float: right;
+    margin-right: 0;
+}
+#dokuwiki__pagetools ul li a.action.top {
+    float: left;
 }
 
 #dokuwiki__aside ul, #dokuwiki__aside ol {
