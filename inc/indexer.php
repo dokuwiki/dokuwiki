@@ -247,6 +247,15 @@ class Doku_Indexer {
             return false;
         }
 
+        // Special handling for titles so the index file is simpler
+        if (array_key_exists('title', $key)) {
+            $value = $key['title'];
+            if (is_array($value))
+                $value = $value[0];
+            $this->_saveIndexKey('title', '', $pid, $value);
+            unset($key['title']);
+        }
+
         foreach ($key as $name => $values) {
             $metaname = idx_cleanName($name);
             $metaidx = $this->_getIndex($metaname, '_i');
@@ -357,6 +366,7 @@ class Doku_Indexer {
         }
 
         // XXX TODO: delete meta keys
+        $this->_saveIndexKey('title', '', $pid, "");
 
         $this->_unlock();
         return true;
@@ -468,24 +478,28 @@ class Doku_Indexer {
      * @author Michael Hamann <michael@content-space.de>
      */
     public function lookupKey($key, $value, $func=null) {
-        $metaname = idx_cleanName($key);
-
-        // get all words in order to search the matching ids
-        $words = $this->_getIndex($metaname, '_w');
-
-        // the matching ids for the provided value(s)
-        $value_ids = array();
-
         if (!is_array($value))
             $value_array = array($value);
         else
             $value_array =& $value;
 
+        // the matching ids for the provided value(s)
+        $value_ids = array();
+
+        $metaname = idx_cleanName($key);
+
+        // get all words in order to search the matching ids
+        if ($key == 'title') {
+            $words = $this->_getIndex('title', '');
+        } else {
+            $words = $this->_getIndex($metaname, '_w');
+        }
+
         if (!is_null($func)) {
             foreach ($value_array as $val) {
                 foreach ($words as $i => $word) {
                     if (call_user_func_array($func, array($word, $val)))
-                        $value_ids[$i] = $val;
+                        $value_ids[$i][] = $val;
                 }
             }
         } else {
@@ -505,25 +519,42 @@ class Doku_Indexer {
                 if ($caret || $dollar) {
                     $re = $caret.preg_quote($xval, '/').$dollar;
                     foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
-                        $value_ids[$i] = $val;
+                        $value_ids[$i][] = $val;
                 } else {
                     if (($i = array_search($val, $words)) !== false)
-                        $value_ids[$i] = $val;
+                        $value_ids[$i][] = $val;
                 }
             }
         }
 
         unset($words); // free the used memory
 
-        // load all lines and pages so the used lines can be taken and matched with the pages
-        $lines = $this->_getIndex($metaname, '_i');
+        $result = array();
         $page_idx = $this->_getIndex('page', '');
 
-        $result = array();
-        foreach ($value_ids as $value_id => $val) {
-            // parse the tuples of the form page_id*1:page2_id*1 and so on, return value
-            // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
-            $result[$val] = array_keys($this->_parseTuples($page_idx, $lines[$value_id]));
+        // Special handling for titles
+        if ($key == 'title') {
+            foreach ($value_ids as $pid => $val_list) {
+                $page = $page_idx[$pid];
+                foreach ($val_list as $val) {
+                    $result[$val][] = $page;
+                }
+            }
+        } else {
+            // load all lines and pages so the used lines can be taken and matched with the pages
+            $lines = $this->_getIndex($metaname, '_i');
+
+            foreach ($value_ids as $value_id => $val_list) {
+                // parse the tuples of the form page_id*1:page2_id*1 and so on, return value
+                // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
+                $pages = array_keys($this->_parseTuples($page_idx, $lines[$value_id]));
+                foreach ($val_list as $val) {
+                    if (!isset($result[$val]))
+                        $result[$val] = $pages;
+                    else
+                        $result[$val] = array_merge($result[$val], $pages);
+                }
+            }
         }
         if (!is_array($value)) $result = $result[$value];
         return $result;
@@ -616,6 +647,7 @@ class Doku_Indexer {
 
     /**
      * Return a list of all pages
+     * Warning: pages may not exist!
      *
      * @param string    $key    list only pages containing the metadata key (optional)
      * @return array            list of page names
@@ -624,6 +656,24 @@ class Doku_Indexer {
     public function getPages($key=null) {
         $page_idx = $this->_getIndex('page', '');
         if (is_null($key)) return $page_idx;
+
+        $metaname = idx_cleanName($key);
+
+        // Special handling for titles
+        if ($key == 'title') {
+            $title_idx = $this->_getIndex('title', '');
+            array_splice($page_idx, count($title_idx));
+            foreach ($title_idx as $i => $title)
+                if ($title === "") unset($page_idx[$i]);
+            return $page_idx;
+        }
+
+        $pages = array();
+        $lines = $this->_getIndex($metaname, '_i');
+        foreach ($lines as $line) {
+            $pages = array_merge($pages, $this->_parseTuples($page_idx, $line));
+        }
+        return array_keys($pages);
     }
 
     /**
