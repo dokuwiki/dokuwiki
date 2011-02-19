@@ -11,6 +11,7 @@
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
+ * @author Hiphen Lee <jacob.b.leung@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -163,6 +164,7 @@ $lang['yours']                 = '您的版本';
 $lang['diff']                  = '显示与当前版本的差别';
 $lang['diff2']                 = '显示跟目前版本的差异';
 $lang['difflink']              = '到此差别页面的链接';
+$lang['diff_type']             = '查看差异：';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '您的足迹';
 $lang['youarehere']            = '您在这里';
