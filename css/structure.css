@@ -46,7 +46,7 @@ body {
         display: none;
     }
     .mode_show #dokuwiki__aside {
-        width: 16em;
+        width: __sidebar_width__;
         float: left;
         position: relative;
         display: block;
@@ -58,11 +58,11 @@ body {
     /* make content wider when there's no sidebar */
     .mode_show #dokuwiki__content {
         float: right;
-        margin-left: -16em; /* left negative margin: width of sidebar (#dokuwiki__aside) */
+        margin-left: -__sidebar_width__;
         width: 100%;
     }
     .mode_show #dokuwiki__content .pad {
-        margin-left: 16em; /* left positive margin: width of sidebar (#dokuwiki__aside) */
+        margin-left: __sidebar_width__;
     }
 
 #dokuwiki__footer {

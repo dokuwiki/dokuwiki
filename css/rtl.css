@@ -53,11 +53,11 @@ caption, legend {
 .mode_show #dokuwiki__content {
     float: left;
     margin-left: 0;
-    margin-right: -16em;
+    margin-right: -__sidebar_width__;
 }
 .mode_show #dokuwiki__content .pad {
     margin-left: 0;
-    margin-right: 16em;
+    margin-right: __sidebar_width__;
 }
 
 /*____________ design ____________*/
