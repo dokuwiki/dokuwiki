@@ -10,7 +10,6 @@
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesMr.php?view=co
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
- * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
  * @author shantanoo@gmail.com
  */
 $lang['encoding']              = 'utf-8';

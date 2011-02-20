@@ -7,7 +7,6 @@
  * @author Edmondas Girkantas <eg@zemaitija.net>
  * @author Arūnas Vaitekūnas <aras@fan.lt>
  * @author audrius.klevas@gmail.com
- * @author Arunas Vaitekunas <aras@fan.lt>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

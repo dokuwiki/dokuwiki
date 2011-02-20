@@ -6,7 +6,6 @@
  * @link       http://sourceforge.net/projects/hebdokuwiki/
  * @author גיא שפר <guysoft@ort.org.il>
  * @author Denis Simakov <akinoame1@gmail.com>
- * @author DoK <kamberd@yahoo.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
  * @author Yaron Yogev <yaronyogev@gmail.com>

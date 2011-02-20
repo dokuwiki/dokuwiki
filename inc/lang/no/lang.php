@@ -5,17 +5,16 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
- * @author Rune Rasmussen http://www.syntaxerror.no/
+ * @author Rune Rasmussen [http://www.syntaxerror.no/]
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
- * @author Jakob Vad Nielsen (me@jakobnielsen.net)
+ * @author Jakob Vad Nielsen <me@jakobnielsen.net>
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

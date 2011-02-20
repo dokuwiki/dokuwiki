@@ -5,10 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
- * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
- * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';

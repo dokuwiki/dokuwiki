@@ -5,11 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
- * @author s_baltariu@yahoo.com
- * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
- * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

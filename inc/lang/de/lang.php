@@ -15,7 +15,6 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
- * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>

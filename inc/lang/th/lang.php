@@ -9,7 +9,6 @@
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesTh.php?view=co
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
- * @author Kittithat Arnontavilas mrtomyum@gmail.com
  * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
  * @author Thanasak Sompaisansin <jombthep@gmail.com>

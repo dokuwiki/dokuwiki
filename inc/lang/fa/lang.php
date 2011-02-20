@@ -10,7 +10,6 @@
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesFa.php?view=co
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
- * @author omidmr@gmail.com
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  */

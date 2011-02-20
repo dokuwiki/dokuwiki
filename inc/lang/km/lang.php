@@ -1,9 +1,6 @@
 <?php
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Anika Henke <henke@cosmocode.de>
- * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author     Ratana Lim <aerorat@yahoo.com>
  */
 $lang['encoding']   = 'utf-8';

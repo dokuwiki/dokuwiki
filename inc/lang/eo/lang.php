@@ -4,16 +4,11 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
- * @author Felipe Castro <fefcas CXE yahoo.com.br>
+ * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
- * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
- * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
- * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Robert Bogenschneider <robog@GMX.de>
- * @author Robert BOGENSCHNEIDER <robog@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

@@ -5,7 +5,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
- * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  */

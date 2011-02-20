@@ -8,7 +8,7 @@
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesSq.php?view=co
- * @author Leonard Elezi leonard.elezi@depinfo.info
+ * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

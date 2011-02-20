@@ -8,10 +8,10 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Kaens Bard <kaens@mail.ru>
  * @author Andrew Pleshakov <beotiger@mail.ru>
- * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Змей Этерийский <evil_snake@eternion.ru>
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
- * @author Irina Ponomareva irinaponomareva@webperfectionist.com
+ * @author Irina Ponomareva <irinaponomareva@webperfectionist.com>
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>

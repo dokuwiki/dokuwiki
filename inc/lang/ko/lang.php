@@ -7,7 +7,6 @@
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
- * @author SONG Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo  <dryoo@live.com>
  */
 $lang['encoding']              = 'utf-8';

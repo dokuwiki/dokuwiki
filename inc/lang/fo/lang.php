@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Poul J. Clementsen <poul@diku.dk>
- * @author Einar Petersen einar.petersen@gmail.com
+ * @author Einar Petersen <einar.petersen@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
