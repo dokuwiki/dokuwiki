@@ -43,6 +43,8 @@ $lang['btn_resendpwd'] = 'Saada uus parool';
 $lang['btn_draft'] = 'Toimeta mustandit';
 $lang['btn_recover'] = 'Taata mustand';
 $lang['btn_draftdel'] = 'Kustuta mustand';
+$lang['btn_register'] = 'Registreeri uus kasutaja';
+
 $lang['newpass'] = 'Uus parool';
 $lang['oldpass'] = 'Vana parool';
 $lang['passchk'] = 'Korda uut parooli';
@@ -131,7 +133,6 @@ $lang['pass']       = 'Parool';
 $lang['remember']   = 'Pea mind meeles';
 $lang['fullname']   = 'Täielik nimi';
 $lang['email']      = 'E-post';
-$lang['register']   = 'Registreeri uus kasutaja';
 $lang['badlogin']   = 'Oops, Sinu kasutajanimi või parool oli vale.';
 
 $lang['regmissing'] = 'Kõik väljad tuleb ära täita.';

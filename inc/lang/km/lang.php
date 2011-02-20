@@ -46,6 +46,7 @@ $lang['btn_resendpwd']   = 'ផ្ញើពាក្សសម្ងាត់';
 $lang['btn_draft']    = 'កែគំរោង';
 $lang['btn_recover']  = 'ស្រោះគំរោងឡើង';
 $lang['btn_draftdel'] = 'លុបគំរោង';
+$lang['btn_register'] = 'ចុះឈ្មោះ';//'Register';
 
 $lang['loggedinas'] = 'អ្នកប្រើ';
 $lang['user']       = 'នាមបម្រើ';
@@ -56,7 +57,6 @@ $lang['passchk']    = 'ម្ដងទាត';
 $lang['remember']   = 'ចំណាំខ្ញុំ';
 $lang['fullname']   = 'នាមត្រគោល';
 $lang['email']      = 'អ៊ីមែល';
-$lang['register']   = 'ចុះឈ្មោះ';//'Register';
 $lang['profile']    = 'ប្រវត្តិរូប';// 'User Profile';
 $lang['badlogin']   = 'សុំអាទោស​ នាមបំរើ ឬ ពាក្សសម្ងាតមិនត្រវទេ។';
 $lang['minoredit']  = 'កែបបណ្តិចបណ្តួច';// 'Minor Changes';

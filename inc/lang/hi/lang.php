@@ -79,11 +79,8 @@ $lang['current']               = 'वर्तमान';
 $lang['yours']                 = 'आपका संस्करणः';
 $lang['diff']                  = 'वर्तमान संशोधन में मतभेद दिखाइये |';
 $lang['diff2']                 = 'चयनित संशोधन के बीच में मतभेद दिखाइये |';
-$lang['line']                  = 'रेखा
-';
-$lang['youarehere']            = 'आप यहाँ हैं |
-
-';
+$lang['line']                  = 'रेखा';
+$lang['youarehere']            = 'आप यहाँ हैं |';
 $lang['lastmod']               = 'अंतिम बार संशोधित';
 $lang['by']                    = 'के द्वारा';
 $lang['deleted']               = 'हटाया';
@@ -121,8 +118,7 @@ $lang['i_superuser']           = 'महाउपयोगकर्ता';
 $lang['i_retry']               = 'पुनःप्रयास';
 $lang['mu_gridsize']           = 'आकार';
 $lang['mu_gridstat']           = 'स्थिति';
-$lang['mu_browse']             = 'ब्राउज़
-';
+$lang['mu_browse']             = 'ब्राउज़';
 $lang['mu_toobig']             = 'बहुत बड़ा';
 $lang['mu_ready']              = 'अपलोड करने के लिए तैयार';
 $lang['mu_done']               = 'पूर्ण';
