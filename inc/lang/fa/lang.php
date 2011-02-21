@@ -10,7 +10,6 @@
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesFa.php?view=co
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
- * @author omidmr@gmail.com
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  */
@@ -53,6 +52,7 @@ $lang['btn_draft']             = 'ویرایش پیش‌نویس';
 $lang['btn_recover']           = 'بازیابی پیش‌نویس';
 $lang['btn_draftdel']          = 'حذف پیش‌نویس';
 $lang['btn_revert']            = 'بازیابی';
+$lang['btn_register']          = 'یک حساب جدید بسازید';
 $lang['loggedinas']            = 'به عنوان کاربر روبرو وارد شده‌اید:';
 $lang['user']                  = 'نام کاربری:';
 $lang['pass']                  = 'گذرواژه‌ی شما';
@@ -62,7 +62,6 @@ $lang['passchk']               = 'گذرواژه را دوباره وارد کن
 $lang['remember']              = 'گذرواژه را به یاد بسپار.';
 $lang['fullname']              = '*نام واقعی شما';
 $lang['email']                 = 'ایمیل شما*';
-$lang['register']              = 'یک حساب جدید بسازید';
 $lang['profile']               = 'پروفایل کاربر';
 $lang['badlogin']              = 'خطا در ورود به سیستم';
 $lang['minoredit']             = 'این ویرایش خُرد است';

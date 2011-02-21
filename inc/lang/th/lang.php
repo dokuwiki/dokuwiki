@@ -9,7 +9,6 @@
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesTh.php?view=co
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
- * @author Kittithat Arnontavilas mrtomyum@gmail.com
  * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
  * @author Thanasak Sompaisansin <jombthep@gmail.com>
@@ -56,6 +55,7 @@ $lang['btn_draft']             = 'แก้ไขเอกสารฉบับ�
 $lang['btn_recover']           = 'กู้คืนเอกสารฉบับร่าง';
 $lang['btn_draftdel']          = 'ลบเอกสารฉบับร่าง';
 $lang['btn_revert']            = 'กู้คืน';
+$lang['btn_register']          = 'สร้างบัญชีผู้ใช้';
 $lang['loggedinas']            = 'ลงชื่อเข้าใช้เป็น';
 $lang['user']                  = 'ชื่อผู้ใช้:';
 $lang['pass']                  = 'รหัสผ่าน';
@@ -65,7 +65,6 @@ $lang['passchk']               = 'พิมพ์รหัสผ่านอี�
 $lang['remember']              = 'จำชื่อและรหัสผ่าน';
 $lang['fullname']              = 'ชื่อจริง:';
 $lang['email']                 = 'อีเมล:';
-$lang['register']              = 'สร้างบัญชีผู้ใช้';
 $lang['profile']               = 'ข้อมูลส่วนตัวผู้ใช้';
 $lang['badlogin']              = 'ขัดข้อง:';
 $lang['minoredit']             = 'เป็นการแก้ไขเล็กน้อย';

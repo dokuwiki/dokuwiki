@@ -15,7 +15,6 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
- * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
@@ -59,6 +58,7 @@ $lang['btn_draft']             = 'Entwurf bearbeiten';
 $lang['btn_recover']           = 'Entwurf wiederherstellen';
 $lang['btn_draftdel']          = 'Entwurf löschen';
 $lang['btn_revert']            = 'Wiederherstellen';
+$lang['btn_register']          = 'Registrieren';
 $lang['loggedinas']            = 'Angemeldet als';
 $lang['user']                  = 'Benutzername';
 $lang['pass']                  = 'Passwort';
@@ -68,7 +68,6 @@ $lang['passchk']               = 'und nochmal';
 $lang['remember']              = 'Angemeldet bleiben';
 $lang['fullname']              = 'Voller Name';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Registrieren';
 $lang['profile']               = 'Benutzerprofil';
 $lang['badlogin']              = 'Nutzername oder Passwort sind falsch.';
 $lang['minoredit']             = 'kleine Änderung';

@@ -62,17 +62,11 @@ function html_login(){
     $form->endFieldset();
 
     if(actionOK('register')){
-        $form->addElement('<p>'
-                          . $lang['reghere']
-                          . ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>'
-                          . '</p>');
+        $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
     }
 
     if (actionOK('resendpwd')) {
-        $form->addElement('<p>'
-                          . $lang['pwdforget']
-                          . ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>'
-                          . '</p>');
+        $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
     }
 
     html_form('login', $form);
@@ -1111,7 +1105,7 @@ function html_register(){
     print p_locale_xhtml('register');
     print '<div class="centeralign">'.NL;
     $form = new Doku_Form(array('id' => 'dw__register'));
-    $form->startFieldset($lang['register']);
+    $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
     $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], null, 'block', array('size'=>'50')));
@@ -1121,7 +1115,7 @@ function html_register(){
     }
     $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', array('size'=>'50')));
     $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', array('size'=>'50')));
-    $form->addElement(form_makeButton('submit', '', $lang['register']));
+    $form->addElement(form_makeButton('submit', '', $lang['btn_register']));
     $form->endFieldset();
     html_form('register', $form);
 

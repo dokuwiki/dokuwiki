@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
- * @author George Sheraton guxd@163.com
+ * @author George Sheraton <guxd@163.com>
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
@@ -52,6 +52,7 @@ $lang['btn_draft']             = '编辑草稿';
 $lang['btn_recover']           = '恢复草稿';
 $lang['btn_draftdel']          = '删除草稿';
 $lang['btn_revert']            = '恢复';
+$lang['btn_register']          = '注册';
 $lang['loggedinas']            = '登录为';
 $lang['user']                  = '用户名';
 $lang['pass']                  = '密码';
@@ -61,7 +62,6 @@ $lang['passchk']               = '请再输一次';
 $lang['remember']              = '记住我';
 $lang['fullname']              = '全名';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = '注册';
 $lang['profile']               = '用户信息';
 $lang['badlogin']              = '对不起，用户名或密码错误。';
 $lang['minoredit']             = '细微修改';

@@ -5,8 +5,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
- * @author carles.bellver@gmail.com
- * @author carles.bellver@cent.uji.es
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,6 +48,7 @@ $lang['btn_draft']             = 'Edita esborrany';
 $lang['btn_recover']           = 'Recupera esborrany';
 $lang['btn_draftdel']          = 'Suprimeix esborrany';
 $lang['btn_revert']            = 'Restaura';
+$lang['btn_register']          = 'Registra\'m';
 $lang['loggedinas']            = 'Heu entrat com';
 $lang['user']                  = 'Nom d\'usuari';
 $lang['pass']                  = 'Contrasenya';
@@ -59,7 +58,6 @@ $lang['passchk']               = 'una altra vegada';
 $lang['remember']              = 'Recorda\'m';
 $lang['fullname']              = 'Nom complet';
 $lang['email']                 = 'Correu electrònic';
-$lang['register']              = 'Registra\'m';
 $lang['profile']               = 'Perfil d\'usuari';
 $lang['badlogin']              = 'Nom d\'usuari o contrasenya incorrectes.';
 $lang['minoredit']             = 'Canvis menors';

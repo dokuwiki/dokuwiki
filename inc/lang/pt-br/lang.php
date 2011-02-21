@@ -13,10 +13,9 @@
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
  * @author Luis Dantas <luis@dantas.com>
- * @author Frederico Guimarães <frederico@teia.bio.br>
- * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
- * @author Sergio Motta sergio@cisne.com.br
+ * @author Jair Henrique <jair.henrique@gmail.com>
+ * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
  */
 $lang['encoding']              = 'utf-8';
@@ -58,6 +57,7 @@ $lang['btn_draft']             = 'Editar o rascunho';
 $lang['btn_recover']           = 'Recuperar o rascunho';
 $lang['btn_draftdel']          = 'Excluir o rascunho';
 $lang['btn_revert']            = 'Restaure';
+$lang['btn_register']          = 'Registrar';
 $lang['loggedinas']            = 'Autenticado(a) como';
 $lang['user']                  = 'Nome de usuário';
 $lang['pass']                  = 'Senha';
@@ -67,7 +67,6 @@ $lang['passchk']               = 'mais uma vez';
 $lang['remember']              = 'Lembre-se de mim';
 $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'E-mail';
-$lang['register']              = 'Registrar';
 $lang['profile']               = 'Perfil do usuário';
 $lang['badlogin']              = 'Desculpe, mas o nome de usuário ou a senha estão incorretos.';
 $lang['minoredit']             = 'Alterações mínimas';

@@ -6,7 +6,6 @@
  * @link       http://sourceforge.net/projects/hebdokuwiki/
  * @author גיא שפר <guysoft@ort.org.il>
  * @author Denis Simakov <akinoame1@gmail.com>
- * @author DoK <kamberd@yahoo.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
  * @author Yaron Yogev <yaronyogev@gmail.com>
@@ -51,6 +50,7 @@ $lang['btn_draft']             = 'עריכת טיוטה';
 $lang['btn_recover']           = 'שחזור טיוטה';
 $lang['btn_draftdel']          = 'מחיקת טיוטה';
 $lang['btn_revert']            = 'שחזור';
+$lang['btn_register']          = 'הרשמה';
 $lang['loggedinas']            = 'נכנסת בשם';
 $lang['user']                  = 'שם משתמש';
 $lang['pass']                  = 'ססמה';
@@ -60,7 +60,6 @@ $lang['passchk']               = 'פעם נוספת';
 $lang['remember']              = 'שמירת הפרטים שלי';
 $lang['fullname']              = 'שם מלא';
 $lang['email']                 = 'דוא״ל';
-$lang['register']              = 'הרשמה';
 $lang['profile']               = 'פרופיל המשתמש';
 $lang['badlogin']              = 'שם המשתמש או הססמה שגויים, עמך הסליחה';
 $lang['minoredit']             = 'שינוים מזעריים';

@@ -93,7 +93,7 @@ function tpl_content_core(){
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-                break;
+            break;
         case 'backlink':
             html_backlinks();
             break;
@@ -591,6 +591,16 @@ function tpl_get_action($type) {
                 }
                 $params['do'] = 'logout';
                 $type = 'logout';
+            }
+            break;
+        case 'register':
+            if($_SERVER['REMOTE_USER']){
+                return false;
+            }
+            break;
+        case 'resendpwd':
+            if($_SERVER['REMOTE_USER']){
+                return false;
             }
             break;
         case 'admin':

@@ -7,15 +7,15 @@
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
+ * @author Håkan Sandell <hakan.sandell@home.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
+ * @author Tormod Johansson <tormod.otter.johansson@gmail.com>
  * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
- * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
- * @author Håkan Sandell <hakan.sandell@home.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -56,6 +56,7 @@ $lang['btn_draft']             = 'Redigera utkast';
 $lang['btn_recover']           = 'Återskapa utkast';
 $lang['btn_draftdel']          = 'Radera utkast';
 $lang['btn_revert']            = 'Återställ';
+$lang['btn_register']          = 'Registrera';
 $lang['loggedinas']            = 'Inloggad som';
 $lang['user']                  = 'Användarnamn';
 $lang['pass']                  = 'Lösenord';
@@ -65,7 +66,6 @@ $lang['passchk']               = 'en gång till';
 $lang['remember']              = 'Kom ihåg mig';
 $lang['fullname']              = 'Namn';
 $lang['email']                 = 'E-post';
-$lang['register']              = 'Registrera';
 $lang['profile']               = 'Användarprofil';
 $lang['badlogin']              = 'Felaktigt användarnamn eller lösenord.';
 $lang['minoredit']             = 'Små ändringar';

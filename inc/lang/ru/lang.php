@@ -8,10 +8,10 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Kaens Bard <kaens@mail.ru>
  * @author Andrew Pleshakov <beotiger@mail.ru>
- * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Змей Этерийский <evil_snake@eternion.ru>
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
- * @author Irina Ponomareva irinaponomareva@webperfectionist.com
+ * @author Irina Ponomareva <irinaponomareva@webperfectionist.com>
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
@@ -59,6 +59,7 @@ $lang['btn_draft']             = 'Править черновик';
 $lang['btn_recover']           = 'Восстановить черновик';
 $lang['btn_draftdel']          = 'Удалить черновик';
 $lang['btn_revert']            = 'Восстановить';
+$lang['btn_register']          = 'Зарегистрироваться';
 $lang['loggedinas']            = 'Зашли как';
 $lang['user']                  = 'Логин';
 $lang['pass']                  = 'Пароль';
@@ -68,7 +69,6 @@ $lang['passchk']               = 'повторите';
 $lang['remember']              = 'Запомнить меня';
 $lang['fullname']              = 'Полное имя';
 $lang['email']                 = 'Эл. адрес';
-$lang['register']              = 'Зарегистрироваться';
 $lang['profile']               = 'Профиль пользователя';
 $lang['badlogin']              = 'Извините, неверное имя пользователя или пароль.';
 $lang['minoredit']             = 'Небольшие изменения';

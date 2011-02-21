@@ -4,16 +4,14 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
- * @author Roberto Bolli <http://www.rbnet.it/>
+ * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Diego Pierotto <ita.translations@tiscali.it>
- * @author Diego Pierotto ita.translations@tiscali.it
- * @author ita.translations@tiscali.it
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
  * @author Matteo Carnevali <rekstorm@gmail.com>
- * @author Osman Tekin osman.tekin93@hotmail.it
+ * @author Osman Tekin <osman.tekin93@hotmail.it>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -55,6 +53,7 @@ $lang['btn_draft']             = 'Modifica bozza';
 $lang['btn_recover']           = 'Ripristina bozza';
 $lang['btn_draftdel']          = 'Elimina bozza';
 $lang['btn_revert']            = 'Ripristina';
+$lang['btn_register']          = 'Registrazione';
 $lang['loggedinas']            = 'Collegato come';
 $lang['user']                  = 'Nome utente';
 $lang['pass']                  = 'Password';
@@ -64,7 +63,6 @@ $lang['passchk']               = 'Ripeti password';
 $lang['remember']              = 'Memorizza nome utente e password';
 $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'Email';
-$lang['register']              = 'Registrazione';
 $lang['profile']               = 'Profilo utente';
 $lang['badlogin']              = 'Il nome utente o la password non sono validi.';
 $lang['minoredit']             = 'Modifiche minori';
@@ -248,7 +246,7 @@ $lang['i_enableacl']           = 'Abilita ACL (consigliato)';
 $lang['i_superuser']           = 'Amministratore';
 $lang['i_problems']            = 'Si sono verificati problemi durante l\'installazione, indicati di seguito. Non è possibile continuare finché non saranno risolti.';
 $lang['i_modified']            = 'Per motivi di sicurezza questa procedura funziona solamente con un\'installazione Dokuwiki nuova e non modificata.
-Prova a estrarre di nuovo i file dal pacchetto scaricato oppure consulta le 
+Prova a estrarre di nuovo i file dal pacchetto scaricato oppure consulta le
 <a href="http://dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
 $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponibile. Forse è stata disabilitata dal tuo provider per qualche motivo?';
 $lang['i_phpver']              = 'La versione di PHP <code>%s</code> è inferiore a quella richiesta <code>%s</code>. Devi aggiornare l\'installazione di PHP.';
