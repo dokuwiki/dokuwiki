@@ -1,16 +1,16 @@
-Страница във DokuWiki бе добавена или променена. Ето детайлите:
+Страница във DokuWiki е добавена или променена. Ето детайлите:
 
-Дата        : @DATE@
-Браузър     : @BROWSER@
-IP-адрес    : @IPADDRESS@
-Име на хост : @HOSTNAME@
+Дата : @DATE@
+Браузър : @BROWSER@
+IP адрес : @IPADDRESS@
+Име на хоста : @HOSTNAME@
 Стара версия: @OLDPAGE@
-Нова версия : @NEWPAGE@
-Обобщение   : @SUMMARY@
-Потребител  : @USER@
+Нова версия: @NEWPAGE@
+Обобщение: @SUMMARY@
+Потребител : @USER@
 
 @DIFF@
 
 
 -- 
-Това писмо е генерирано от DokuWiki на адрес @DOKUWIKIURL@
+Писмото е генерирано от DokuWiki на адрес @DOKUWIKIURL@
