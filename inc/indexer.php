@@ -422,7 +422,7 @@ class Doku_Indexer {
      *
      * The returned array will have the original tokens as key. The values
      * in the returned list is an array with the page names as keys and the
-     * number of times that token appeas on the page as value.
+     * number of times that token appears on the page as value.
      *
      * @param arrayref  $tokens list of words to search for
      * @return array            list of page names with usage counts
@@ -468,16 +468,18 @@ class Doku_Indexer {
      *
      * The metadata values are compared as case-sensitive strings. Pass a
      * callback function that returns true or false to use a different
-     * comparison function
+     * comparison function. The function will be called with the $value being
+     * searched for as the first argument, and the word in the index as the
+     * second argument.
      *
      * @param string    $key    name of the metadata key to look for
      * @param string    $value  search term to look for
      * @param callback  $func   comparison function
-     * @return array            lists with page names, keys are query values if $key is array
+     * @return array            lists with page names, keys are query values if $value is array
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
-    public function lookupKey($key, $value, $func=null) {
+    public function lookupKey($key, &$value, $func=null) {
         if (!is_array($value))
             $value_array = array($value);
         else
@@ -496,9 +498,9 @@ class Doku_Indexer {
         }
 
         if (!is_null($func)) {
-            foreach ($value_array as $val) {
+            foreach ($value_array as &$val) {
                 foreach ($words as $i => $word) {
-                    if (call_user_func_array($func, array($word, $val)))
+                    if (call_user_func_array($func, array(&$val, $word)))
                         $value_ids[$i][] = $val;
                 }
             }
