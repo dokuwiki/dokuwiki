@@ -581,12 +581,9 @@ function tpl_get_action($type) {
             $accesskey = 'b';
             break;
         case 'login':
-            if(!$conf['useacl'] || !$auth){
-                return false;
-            }
             $params['sectok'] = getSecurityToken();
             if(isset($_SERVER['REMOTE_USER'])){
-                if (!$auth->canDo('logout')) {
+                if (!actionOK('logout')) {
                     return false;
                 }
                 $params['do'] = 'logout';
@@ -619,20 +616,19 @@ function tpl_get_action($type) {
             $type = 'subscribe';
             $params['do'] = 'subscribe';
         case 'subscribe':
-            if(!$conf['useacl'] || !$auth  || !$conf['subscribers'] || !$_SERVER['REMOTE_USER']){
+            if(!$_SERVER['REMOTE_USER']){
                 return false;
             }
             break;
         case 'backlink':
             break;
         case 'profile':
-            if(!$conf['useacl'] || !$auth || !isset($_SERVER['REMOTE_USER']) ||
-                    !$auth->canDo('Profile')){
+            if(!isset($_SERVER['REMOTE_USER'])){
                 return false;
             }
             break;
         case 'subscribens':
-            // Superseeded by subscribe/subscription
+            // Superseded by subscribe/subscription
             return '';
             break;
         default:

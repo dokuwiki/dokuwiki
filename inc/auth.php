@@ -686,9 +686,8 @@ function register(){
     global $conf;
     global $auth;
 
-    if (!$auth) return false;
     if(!$_POST['save']) return false;
-    if(!$auth->canDo('addUser')) return false;
+    if(!actionOK('register')) return false;
 
     //clean username
     $_POST['login'] = trim($auth->cleanUser($_POST['login']));
@@ -764,12 +763,10 @@ function updateprofile() {
     global $lang;
     global $auth;
 
-    if (!$auth) return false;
     if(empty($_POST['save'])) return false;
     if(!checkSecurityToken()) return false;
 
-    // should not be able to get here without Profile being possible...
-    if(!$auth->canDo('Profile')) {
+    if(!actionOK('profile')) {
         msg($lang['profna'],-1);
         return false;
     }
@@ -840,11 +837,7 @@ function act_resendpwd(){
     global $conf;
     global $auth;
 
-    if(!actionOK('resendpwd')) return false;
-    if (!$auth) return false;
-
-    // should not be able to get here without modPass being possible...
-    if(!$auth->canDo('modPass')) {
+    if(!actionOK('resendpwd')) {
         msg($lang['resendna'],-1);
         return false;
     }

@@ -241,16 +241,23 @@ function actionOK($action){
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',',$conf['disableactions']);
         $disabled = array_map('trim',$disabled);
-        if(isset($conf['openregister']) && !$conf['openregister']) $disabled[] = 'register';
-        if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) $disabled[] = 'resendpwd';
-        if(isset($conf['subscribers']) && !$conf['subscribers']) {
-            $disabled[] = 'subscribe';
-        }
-        if (is_null($auth) || !$auth->canDo('addUser')) {
+        if(!empty($conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
             $disabled[] = 'register';
         }
-        if (is_null($auth) || !$auth->canDo('modPass')) {
+        if(!empty($conf['resendpasswd']) || is_null($auth) || !$auth->canDo('modPass')) {
             $disabled[] = 'resendpwd';
+        }
+        if(!empty($conf['subscribers']) || is_null($auth)) {
+            $disabled[] = 'subscribe';
+        }
+        if (is_null($auth) || !$auth->canDo('Profile')) {
+            $disabled[] = 'profile';
+        }
+        if (is_null($auth)) {
+            $disabled[] = 'login';
+        }
+        if (is_null($auth) || !$auth->canDo('logout')) {
+            $disabled[] = 'logout';
         }
         $disabled = array_unique($disabled);
     }
