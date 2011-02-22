@@ -50,19 +50,33 @@ define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
  * Version of the indexer taking into consideration the external tokenizer.
  * The indexer is only compatible with data written by the same version.
  *
+ * Triggers INDEXER_VERSION_GET
+ * Plugins that modify what gets indexed should hook this event and
+ * add their version info to the event data like so:
+ *     $data[$plugin_name] = $plugin_version;
+ *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  * @author Michael Hamann <michael@content-space.de>
  */
 function idx_get_version(){
-    global $conf;
-    if($conf['external_tokenizer'])
-        $version = INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
-    else
-        $version = INDEXER_VERSION;
+    static $indexer_version = null;
+    if ($indexer_version == null) {
+        global $conf;
+        if($conf['external_tokenizer'])
+            $version = INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
+        else
+            $version = INDEXER_VERSION;
 
-    $data = array($version);
-    trigger_event('INDEXER_VERSION_GET', $data, null, false);
-    return implode('+', $data);
+        // DokuWiki version is included for the convenience of plugins
+        $data = array('dokuwiki'=>$version);
+        trigger_event('INDEXER_VERSION_GET', $data, null, false);
+        unset($data['dokuwiki']); // this needs to be first
+        ksort($data);
+        foreach ($data as $plugin=>$vers)
+            $version .= '+'.$plugin.'='.$vers;
+        $indexer_version = $version;
+    }
+    return $indexer_version;
 }
 
 /**
