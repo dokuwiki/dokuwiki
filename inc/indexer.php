@@ -258,6 +258,7 @@ class Doku_Indexer {
 
         foreach ($key as $name => $values) {
             $metaname = idx_cleanName($name);
+            $this->_addIndexKey('metadata', '', $metaname);
             $metaidx = $this->_getIndex($metaname, '_i');
             $metawords = $this->_getIndex($metaname, '_w');
             $addwords = false;
@@ -365,8 +366,17 @@ class Doku_Indexer {
             return false;
         }
 
-        // XXX TODO: delete meta keys
         $this->_saveIndexKey('title', '', $pid, "");
+        $keyidx = $this->_getIndex('metadata', '');
+        foreach ($keyidx as $metaname) {
+            $val_idx = explode(':', $this->_getIndexKey($metaname.'_p', '', $pid));
+            $meta_idx = $this->_getIndex($metaname.'_i', '');
+            foreach ($val_idx as $id) {
+                $meta_idx[$id] = $this->_updateTuple($meta_idx[$id], $pid, 0);
+            }
+            $this->_saveIndex($metaname.'_i', '', $meta_idx);
+            $this->_saveIndexKey($metaname.'_p', '', $pid, '');
+        }
 
         $this->_unlock();
         return true;
