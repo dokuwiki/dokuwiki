@@ -712,6 +712,54 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function histogram($min=1, $max=0, $key=null) {
+        if ($min < 1)
+            $min = 1;
+        if ($max < $min)
+            $max = 0;
+
+        $result = array();
+
+        if ($key == 'title') {
+            $index = $this->_getIndex('title', '');
+            $index = array_count_values($index);
+            foreach ($index as $val => $cnt) {
+                if ($cnt >= $min && (!$max || $cnt <= $max))
+                    $result[$val] = $cnt;
+            }
+        }
+        elseif (!is_null($key)) {
+            $metaname = idx_cleanName($key);
+            $index = $this->_getIndex($metaname.'_i', '');
+            $val_idx = array();
+            foreach ($index as $wid => $line) {
+                $freq = $this->_countTuples($line);
+                if ($freq >= $min && (!$max || $freq <= $max))
+                    $val_idx[$wid] = $freq;
+            }
+            if (!empty($val_idx)) {
+                $words = $this->_getIndex($metaname.'_w', '');
+                foreach ($val_idx as $wid => $freq)
+                    $result[$words[$wid]] = $freq;
+            }
+        }
+        else {
+            $lengths = idx_listIndexLengths();
+            foreach ($lengths as $length) {
+                $index = $this->_getIndex('i', $length);
+                $words = null;
+                foreach ($index as $wid => $line) {
+                    $freq = $this->_countTuples($line);
+                    if ($freq >= $min && (!$max || $freq <= $max)) {
+                        if ($words === null)
+                            $words = $this->_getIndex('w', $length);
+                        $result[$words[$wid]] = $freq;
+                    }
+                }
+            }
+        }
+
+        arsort($result);
+        return $result;
     }
 
     /**
@@ -1004,6 +1052,22 @@ class Doku_Indexer {
             $result[$key] = $cnt;
         }
         return $result;
+    }
+
+    /**
+     * Sum the counts in a list of tuples.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    private function _countTuples($line) {
+        $freq = 0;
+        $parts = explode(':', $line);
+        foreach ($parts as $tuple) {
+            if ($tuple == '') continue;
+            list($pid, $cnt) = explode('*', $tuple);
+            $freq += (int)$cnt;
+        }
+        return $freq;
     }
 }
 
