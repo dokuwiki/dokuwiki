@@ -120,8 +120,8 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $page_idx = $this->_addIndexKey('page', '', $page);
-        if ($page_idx === false) {
+        $pid = $this->_addIndexKey('page', '', $page);
+        if ($pid === false) {
             $this->_unlock();
             return false;
         }
@@ -348,8 +348,8 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $page_idx = $this->_getIndexKey('page', '', $page);
-        if ($page_idx === false) {
+        $pid = $this->_getIndexKey('page', '', $page);
+        if ($pid === false) {
             $this->_unlock();
             return false;
         }
