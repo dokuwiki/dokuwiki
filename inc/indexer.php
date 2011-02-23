@@ -707,11 +707,12 @@ class Doku_Indexer {
      *
      * @param int       $min    bottom frequency threshold
      * @param int       $max    upper frequency limit. No limit if $max<$min
+     * @param int       $length minimum length of words to count
      * @param string    $key    metadata key to list. Uses the fulltext index if not given
      * @return array            list of words as the keys and frequency as values
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function histogram($min=1, $max=0, $key=null) {
+    public function histogram($min=1, $max=0, $minlen=3, $key=null) {
         if ($min < 1)
             $min = 1;
         if ($max < $min)
@@ -723,7 +724,7 @@ class Doku_Indexer {
             $index = $this->_getIndex('title', '');
             $index = array_count_values($index);
             foreach ($index as $val => $cnt) {
-                if ($cnt >= $min && (!$max || $cnt <= $max))
+                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen)
                     $result[$val] = $cnt;
             }
         }
@@ -733,7 +734,7 @@ class Doku_Indexer {
             $val_idx = array();
             foreach ($index as $wid => $line) {
                 $freq = $this->_countTuples($line);
-                if ($freq >= $min && (!$max || $freq <= $max))
+                if ($freq >= $min && (!$max || $freq <= $max) && strlen($val) >= $minlen)
                     $val_idx[$wid] = $freq;
             }
             if (!empty($val_idx)) {
@@ -745,6 +746,7 @@ class Doku_Indexer {
         else {
             $lengths = idx_listIndexLengths();
             foreach ($lengths as $length) {
+                if ($length < $minlen) continue;
                 $index = $this->_getIndex('i', $length);
                 $words = null;
                 foreach ($index as $wid => $line) {
