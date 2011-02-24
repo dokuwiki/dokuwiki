@@ -234,7 +234,8 @@ function _ft_pageLookup(&$data){
             }
         }
         if ($in_title) {
-            foreach ($Indexer->lookupKey('title', "*$id*") as $p_id) {
+            $wildcard_id = "*$id*";
+            foreach ($Indexer->lookupKey('title', $wildcard_id) as $p_id) {
                 if (!isset($pages[$p_id]))
                     $pages[$p_id] = p_get_first_heading($p_id, false);
             }

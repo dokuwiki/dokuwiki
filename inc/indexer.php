@@ -566,7 +566,12 @@ class Doku_Indexer {
 
         unset($words); // free the used memory
 
+        // initialize the result so it won't be null
         $result = array();
+        foreach ($value_array as $val) {
+            $result[$val] = array();
+        }
+
         $page_idx = $this->_getIndex('page', '');
 
         // Special handling for titles
