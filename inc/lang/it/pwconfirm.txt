@@ -11,5 +11,5 @@ seguente collegamento.
 @CONFIRM@
 
 -- 
-Questa email è stata generata dal DokuWiki di
+Questa email è stata generata dal DokuWiki all'indirizzo
 @DOKUWIKIURL@

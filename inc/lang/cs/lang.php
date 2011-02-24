@@ -5,8 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
+ * @author Tomas Valenta <tomas@valenta.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
- * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  */
@@ -49,6 +49,7 @@ $lang['btn_draft']             = 'Upravit koncept';
 $lang['btn_recover']           = 'Obnovit koncept';
 $lang['btn_draftdel']          = 'Vymazat koncept';
 $lang['btn_revert']            = 'Vrátit zpět';
+$lang['btn_register']          = 'Registrovat';
 $lang['loggedinas']            = 'Přihlášen(a) jako';
 $lang['user']                  = 'Uživatelské jméno';
 $lang['pass']                  = 'Heslo';
@@ -58,7 +59,6 @@ $lang['passchk']               = 'ještě jednou';
 $lang['remember']              = 'Přihlásit se nastálo';
 $lang['fullname']              = 'Celé jméno';
 $lang['email']                 = 'E-mail';
-$lang['register']              = 'Registrovat';
 $lang['profile']               = 'Uživatelský profil';
 $lang['badlogin']              = 'Zadané uživatelské jméno a heslo není správně.';
 $lang['minoredit']             = 'Drobné změny';

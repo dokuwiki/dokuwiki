@@ -50,18 +50,19 @@ function subscription_lock_filename ($id){
 }
 
 function subscription_lock($id) {
-    // FIXME merge this with the indexer lock generation, abstract out
     global $conf;
     $lock = subscription_lock_filename($id);
-    while(!@mkdir($lock,$conf['dmode'])){
-        usleep(50);
-        if(time()-@filemtime($lock) > 60*5){
-            // looks like a stale lock - remove it
-            @rmdir($lock);
-        }else{
-            return false;
-        }
+
+    if (is_dir($lock) && time()-@filemtime($lock) > 60*5) {
+        // looks like a stale lock - remove it
+        @rmdir($lock);
     }
+
+    // try creating the lock directory
+    if (!@mkdir($lock,$conf['dmode'])) {
+        return false;
+    }
+
     if($conf['dperm']) chmod($lock, $conf['dperm']);
     return true;
 }

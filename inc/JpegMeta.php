@@ -1466,16 +1466,21 @@ class JpegMeta {
         $parser = xml_parser_create();
         xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
         xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-        xml_parse_into_struct($parser, $data, $values, $tags);
+        $result = xml_parse_into_struct($parser, $data, $values, $tags);
         xml_parser_free($parser);
+
+        if ($result == 0) {
+            $this->_info['xmp'] = false;
+            return false;
+        }
 
         $this->_info['xmp'] = array();
         $count = count($values);
         for ($i = 0; $i < $count; $i++) {
             if ($values[$i]['tag'] == 'rdf:Description' && $values[$i]['type'] == 'open') {
 
-                while ($values[++$i]['tag'] != 'rdf:Description') {
-                    $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i]['tag']]);
+                while ((++$i < $count) && ($values[$i]['tag'] != 'rdf:Description')) {
+                    $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i]['tag']], $count);
                 }
             }
         }
@@ -1487,7 +1492,7 @@ class JpegMeta {
      *
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
      */
-    function _parseXmpNode($values, &$i, &$meta) {
+    function _parseXmpNode($values, &$i, &$meta, $count) {
         if ($values[$i]['type'] == 'close') return;
 
         if ($values[$i]['type'] == 'complete') {
@@ -1497,11 +1502,13 @@ class JpegMeta {
         }
 
         $i++;
+        if ($i >= $count) return;
+
         if ($values[$i]['tag'] == 'rdf:Bag' || $values[$i]['tag'] == 'rdf:Seq') {
             // Array property
             $meta = array();
             while ($values[++$i]['tag'] == 'rdf:li') {
-                $this->_parseXmpNode($values, $i, $meta[]);
+                $this->_parseXmpNode($values, $i, $meta[], $count);
             }
             $i++; // skip closing Bag/Seq tag
 
@@ -1509,8 +1516,8 @@ class JpegMeta {
             // Language Alternative property, only the first (default) value is used
             if ($values[$i]['type'] == 'open') {
                 $i++;
-                $this->_parseXmpNode($values, $i, $meta);
-                while ($values[++$i]['tag'] != 'rdf:Alt');
+                $this->_parseXmpNode($values, $i, $meta, $count);
+                while ((++$i < $count) && ($values[$i]['tag'] != 'rdf:Alt'));
                 $i++; // skip closing Alt tag
             }
 
@@ -1519,8 +1526,8 @@ class JpegMeta {
             $meta = array();
             $startTag = $values[$i-1]['tag'];
             do {
-                $this->_parseXmpNode($values, $i, $meta[$values[$i]['tag']]);
-            } while ($values[++$i]['tag'] != $startTag);
+                $this->_parseXmpNode($values, $i, $meta[$values[$i]['tag']], $count);
+            } while ((++$i < $count) && ($values[$i]['tag'] != $startTag));
         }
     }
 

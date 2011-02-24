@@ -27,6 +27,10 @@ define('IDX_ASIAN2','['.
                    '\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}'.
                    '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
                    '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
+                   "\xF0\xA0\x80\x80-\xF0\xAA\x9B\x9F". // CJK Extension B
+                   "\xF0\xAA\x9C\x80-\xF0\xAB\x9C\xBF". // CJK Extension C
+                   "\xF0\xAB\x9D\x80-\xF0\xAB\xA0\x9F". // CJK Extension D
+                   "\xF0\xAF\xA0\x80-\xF0\xAF\xAB\xBF". // CJK Compatibility Supplement
                    ']');
 define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two characters)
                    '\x{3042}\x{3044}\x{3046}\x{3048}'.
@@ -423,7 +427,14 @@ class Doku_Indexer {
                 if (!is_null($asia)) $text = $asia; // recover from regexp falure
             }
         }
-        $text = strtr($text, "\r\n\t", '   ');
+        $text = strtr($text,
+                       array(
+                           "\r" => ' ',
+                           "\n" => ' ',
+                           "\t" => ' ',
+                           "\xC2\xAD" => '', //soft-hyphen
+                       )
+                     );
         if (preg_match('/[^0-9A-Za-z ]/u', $text))
             $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
 
@@ -772,14 +783,20 @@ class Doku_Indexer {
     private function _lock() {
         global $conf;
         $status = true;
+        $run = 0;
         $lock = $conf['lockdir'].'/_indexer.lock';
         while (!@mkdir($lock, $conf['dmode'])) {
             usleep(50);
-            if (time() - @filemtime($lock) > 60*5) {
-                // looks like a stale lock, remove it
-                @rmdir($lock);
-                $status = "stale lock removed";
-            } else {
+            if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
+                // looks like a stale lock - remove it
+                if (!@rmdir($lock)) {
+                    $status = "removing the stale lock failed";
+                    return false;
+                } else {
+                    $status = "stale lock removed";
+                }
+            }elseif($run++ == 1000){
+                // we waited 5 seconds for that lock
                 return false;
             }
         }

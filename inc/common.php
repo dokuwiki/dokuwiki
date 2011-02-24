@@ -639,7 +639,7 @@ function clientIP($single=false){
     // decide which IP to use, trying to avoid local addresses
     $ip = array_reverse($ip);
     foreach($ip as $i){
-        if(preg_match('/^(127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/',$i)){
+        if(preg_match('/^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/',$i)){
             continue;
         }else{
             return $i;
@@ -804,7 +804,7 @@ function rawWiki($id,$rev=''){
 /**
  * Returns the pagetemplate contents for the ID's namespace
  *
- * @triggers COMMON_PAGE_FROMTEMPLATE
+ * @triggers COMMON_PAGETPL_LOAD
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function pageTemplate($id){
@@ -812,29 +812,50 @@ function pageTemplate($id){
 
     if (is_array($id)) $id = $id[0];
 
-    $path = dirname(wikiFN($id));
-    $tpl = '';
-    if(@file_exists($path.'/_template.txt')){
-        $tpl = io_readFile($path.'/_template.txt');
-    }else{
-        // search upper namespaces for templates
-        $len = strlen(rtrim($conf['datadir'],'/'));
-        while (strlen($path) >= $len){
-            if(@file_exists($path.'/__template.txt')){
-                $tpl = io_readFile($path.'/__template.txt');
-                break;
+    // prepare initial event data
+    $data = array(
+        'id'        => $id,   // the id of the page to be created
+        'tpl'       => '',    // the text used as template
+        'tplfile'   => '',    // the file above text was/should be loaded from
+        'doreplace' => true   // should wildcard replacements be done on the text?
+    );
+
+    $evt = new Doku_Event('COMMON_PAGETPL_LOAD',$data);
+    if($evt->advise_before(true)){
+        // the before event might have loaded the content already
+        if(empty($data['tpl'])){
+            // if the before event did not set a template file, try to find one
+            if(empty($data['tplfile'])){
+                $path = dirname(wikiFN($id));
+                $tpl = '';
+                if(@file_exists($path.'/_template.txt')){
+                    $data['tplfile'] = $path.'/_template.txt';
+                }else{
+                    // search upper namespaces for templates
+                    $len = strlen(rtrim($conf['datadir'],'/'));
+                    while (strlen($path) >= $len){
+                        if(@file_exists($path.'/__template.txt')){
+                            $data['tplfile'] = $path.'/__template.txt';
+                            break;
+                        }
+                        $path = substr($path, 0, strrpos($path, '/'));
+                    }
+                }
             }
-            $path = substr($path, 0, strrpos($path, '/'));
+            // load the content
+            $data['tpl'] = io_readFile($data['tplfile']);
         }
+        if($data['doreplace']) parsePageTemplate(&$data);
     }
-    $data = compact('tpl', 'id');
-    trigger_event('COMMON_PAGE_FROMTEMPLATE', $data, 'parsePageTemplate', true);
+    $evt->advise_after();
+    unset($evt);
+
     return $data['tpl'];
 }
 
 /**
  * Performs common page template replacements
- * This is the default action for COMMON_PAGE_FROMTEMPLATE
+ * This works on data from COMMON_PAGETPL_LOAD
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */

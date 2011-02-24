@@ -1,9 +1,9 @@
 ====== Populariteitsfeedback ======
 
-Dit onderdeel verzamelt anonieme gegevens over je wiki en stelt je in staat deze te versturen naar de ontwikkelaars van DokuWiki.  Dit helpt hen te begrijpen hoe DokuWiki wordt gebruikt door de gebruikers en zorgt er ook voor dat toekomstige ontwikkelkeuzes kunnen worden gestaafd door echte gebruikersstatistieken.
+Dit onderdeel verzamelt anonieme gegevens over uw wiki en stelt u in staat deze te versturen naar de ontwikkelaars van DokuWiki.  Dit helpt hen te begrijpen hoe DokuWiki wordt gebruikt door de gebruikers en zorgt er ook voor dat toekomstige ontwikkelkeuzes kunnen worden gestaafd door echte gebruikersstatistieken.
 
-U wordt verzocht deze stap van tijd tot tijd te herhalen om ontwikkelaars op de hoogte te houden terwijl je wiki groeit. De herhaalde data zal worden geïdentificeerd door een uniek, anoniem ID.
+U wordt verzocht deze stap van tijd tot tijd te herhalen om ontwikkelaars op de hoogte te houden terwijl uw wiki groeit. De herhaalde data zal worden geïdentificeerd door een uniek, anoniem ID.
 
-De verzamelde gegevens bevat onder andere gegevens over je versie van DokuWiki, het aantal- en de grootte van de pagina's en bestanden, geïnstalleerde plugins en informatie over PHP.
+De verzamelde gegevens bevat onder andere gegevens over uw versie van DokuWiki, het aantal- en de grootte van de pagina's en bestanden, geïnstalleerde plugins en informatie over PHP.
 
 De ruwe data die verzonden worden staan hieronder. Gebruik de knop "Verstuur" om de informatie te verzenden.

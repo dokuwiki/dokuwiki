@@ -562,16 +562,19 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @return  array(user, password, full name, email, array(groups))
      */
     function _retrieveUser($clean=true) {
+        global $auth;
 
-        $user[0] = ($clean) ? cleanID(preg_replace('/.*:/','',$_REQUEST['userid'])) : $_REQUEST['userid'];
+        $user[0] = ($clean) ? $auth->cleanUser($_REQUEST['userid']) : $_REQUEST['userid'];
         $user[1] = $_REQUEST['userpass'];
         $user[2] = $_REQUEST['username'];
         $user[3] = $_REQUEST['usermail'];
-        $user[4] = preg_split('/\s*,\s*/',$_REQUEST['usergroups'],-1,PREG_SPLIT_NO_EMPTY);
+        $user[4] = explode(',',$_REQUEST['usergroups']);
 
-        if (empty($user[4]) || (is_array($user[4]) && (count($user[4]) == 1) && (trim($user[4][0]) == ''))) {
-            $user[4] = null;
-        }
+        $user[4] = array_map('trim',$user[4]);
+        if($clean) $user[4] = array_map(array($auth,'cleanGroup'),$user[4]);
+        $user[4] = array_filter($user[4]);
+        $user[4] = array_unique($user[4]);
+        if(!count($user[4])) $user[4] = null;
 
         return $user;
     }

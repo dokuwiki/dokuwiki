@@ -44,7 +44,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
 
     function admin_plugin_plugin() {
         global $conf;
-        $this->disabled = (isset($conf['pluginmanager']) && ($conf['pluginmanager'] == 0));
+        $this->disabled = plugin_isdisabled('plugin');
     }
 
     /**

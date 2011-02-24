@@ -46,7 +46,7 @@ $lang['btn_draft']             = 'حرر المسودة';
 $lang['btn_recover']           = 'استرجع المسودة';
 $lang['btn_draftdel']          = 'احذف المسوّدة';
 $lang['btn_revert']            = 'استعد
-';
+$lang['btn_register']          = 'سجّل';
 $lang['loggedinas']            = 'داخل باسم';
 $lang['user']                  = 'اسم المستخدم';
 $lang['pass']                  = 'كلمة السر';
@@ -56,7 +56,6 @@ $lang['passchk']               = 'مرة أخرى';
 $lang['remember']              = 'تذكرني';
 $lang['fullname']              = 'الاسم الحقيقي';
 $lang['email']                 = 'البريد الإلكتروني';
-$lang['register']              = 'سجّل';
 $lang['profile']               = 'الملف الشخصي';
 $lang['badlogin']              = 'عذرا، اسم المشترك أو كلمة السر غير صحيحة';
 $lang['minoredit']             = 'تعديلات طفيفة';

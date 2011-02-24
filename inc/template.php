@@ -93,7 +93,7 @@ function tpl_content_core(){
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-                break;
+            break;
         case 'backlink':
             html_backlinks();
             break;
@@ -581,16 +581,23 @@ function tpl_get_action($type) {
             $accesskey = 'b';
             break;
         case 'login':
-            if(!$conf['useacl'] || !$auth){
-                return false;
-            }
             $params['sectok'] = getSecurityToken();
             if(isset($_SERVER['REMOTE_USER'])){
-                if (!$auth->canDo('logout')) {
+                if (!actionOK('logout')) {
                     return false;
                 }
                 $params['do'] = 'logout';
                 $type = 'logout';
+            }
+            break;
+        case 'register':
+            if($_SERVER['REMOTE_USER']){
+                return false;
+            }
+            break;
+        case 'resendpwd':
+            if($_SERVER['REMOTE_USER']){
+                return false;
             }
             break;
         case 'admin':
@@ -609,20 +616,19 @@ function tpl_get_action($type) {
             $type = 'subscribe';
             $params['do'] = 'subscribe';
         case 'subscribe':
-            if(!$conf['useacl'] || !$auth  || !$conf['subscribers'] || !$_SERVER['REMOTE_USER']){
+            if(!$_SERVER['REMOTE_USER']){
                 return false;
             }
             break;
         case 'backlink':
             break;
         case 'profile':
-            if(!$conf['useacl'] || !$auth || !isset($_SERVER['REMOTE_USER']) ||
-                    !$auth->canDo('Profile')){
+            if(!isset($_SERVER['REMOTE_USER'])){
                 return false;
             }
             break;
         case 'subscribens':
-            // Superseeded by subscribe/subscription
+            // Superseded by subscribe/subscription
             return '';
             break;
         default:
@@ -685,7 +691,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_breadcrumbs($sep='&diams;'){
+function tpl_breadcrumbs($sep='&bull;'){
     global $lang;
     global $conf;
 
@@ -738,12 +744,6 @@ function tpl_youarehere($sep=' &raquo; '){
 
     $parts = explode(':', $ID);
     $count = count($parts);
-
-    if($GLOBALS['ACT'] == 'search')
-    {
-        $parts = array($conf['start']);
-        $count = 1;
-    }
 
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
@@ -1164,7 +1164,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
 
-    echo '<select name="do" id="action__selector" class="edit">';
+    echo '<select name="do" class="edit quickselect">';
     echo '<option value="">'.$empty.'</option>';
 
     echo '<optgroup label=" &mdash; ">';
@@ -1204,7 +1204,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '</optgroup>';
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" id="action__selectorbtn" />';
+    echo '<input type="submit" value="'.$button.'" />';
     echo '</form>';
 }
 

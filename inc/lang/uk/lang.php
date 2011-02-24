@@ -5,10 +5,9 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
- * @author okunia@gmail.com
  * @author Oleksandr Kunytsia <okunia@gmail.com>
- * @author Uko uko@uar.net
- * @author Ulrikhe Lukoie  <lukoie@gmail>.com
+ * @author Uko <uko@uar.net>
+ * @author Ulrikhe Lukoie  <lukoie@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,6 +48,7 @@ $lang['btn_draft']             = 'Редагувати чернетку';
 $lang['btn_recover']           = 'Відновити чернетку';
 $lang['btn_draftdel']          = 'Знищити чернетку';
 $lang['btn_revert']            = 'Відновити';
+$lang['btn_register']          = 'Реєстрація';
 $lang['loggedinas']            = 'Ви';
 $lang['user']                  = 'Користувач';
 $lang['pass']                  = 'Пароль';
@@ -58,7 +58,6 @@ $lang['passchk']               = 'ще раз';
 $lang['remember']              = 'Запам\'ятати мене';
 $lang['fullname']              = 'Повне ім\'я';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Реєстрація';
 $lang['profile']               = 'Профіль користувача';
 $lang['badlogin']              = 'Вибачте, невірне ім\'я чи пароль.';
 $lang['minoredit']             = 'Незначні зміни';

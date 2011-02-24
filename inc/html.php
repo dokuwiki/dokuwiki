@@ -62,17 +62,11 @@ function html_login(){
     $form->endFieldset();
 
     if(actionOK('register')){
-        $form->addElement('<p>'
-                          . $lang['reghere']
-                          . ': <a href="'.wl($ID,'do=register').'" rel="nofollow" class="wikilink1">'.$lang['register'].'</a>'
-                          . '</p>');
+        $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
     }
 
     if (actionOK('resendpwd')) {
-        $form->addElement('<p>'
-                          . $lang['pwdforget']
-                          . ': <a href="'.wl($ID,'do=resendpwd').'" rel="nofollow" class="wikilink1">'.$lang['btn_resendpwd'].'</a>'
-                          . '</p>');
+        $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
     }
 
     html_form('login', $form);
@@ -318,7 +312,13 @@ function html_search(){
     global $ID;
     global $lang;
 
-    print p_locale_xhtml('searchpage');
+    $intro = p_locale_xhtml('searchpage');
+    // allow use of placeholder in search intro
+    $intro = str_replace(
+                array('@QUERY@','@SEARCH@'),
+                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
+                $intro);
+    echo $intro;
     flush();
 
     //show progressbar
@@ -864,12 +864,17 @@ function html_backlinks(){
  * show diff
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string $text - compare with this text with most current version
+ * @param  bool   $intr - display the intro text
  */
-function html_diff($text='',$intro=true){
+function html_diff($text='',$intro=true,$type=null){
     global $ID;
     global $REV;
     global $lang;
     global $conf;
+
+    if(!$type) $type = $_REQUEST['difftype'];
+    if($type != 'inline') $type = 'sidebyside';
 
     // we're trying to be clever here, revisions to compare can be either
     // given as rev and rev2 parameters, with rev2 being optional. Or in an
@@ -987,17 +992,48 @@ function html_diff($text='',$intro=true){
     $df = new Diff(explode("\n",htmlspecialchars($l_text)),
         explode("\n",htmlspecialchars($r_text)));
 
-    $tdf = new TableDiffFormatter();
+    if($type == 'inline'){
+        $tdf = new InlineDiffFormatter();
+    } else {
+        $tdf = new TableDiffFormatter();
+    }
+
+
+
     if($intro) print p_locale_xhtml('diff');
 
     if (!$text) {
-        $diffurl = wl($ID, array('do'=>'diff', 'rev2[0]'=>$l_rev, 'rev2[1]'=>$r_rev));
         ptln('<p class="difflink">');
-        ptln('  <a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a>');
+
+        $form = new Doku_Form(array('action'=>wl()));
+        $form->addHidden('id',$ID);
+        $form->addHidden('rev2[0]',$l_rev);
+        $form->addHidden('rev2[1]',$r_rev);
+        $form->addHidden('do','diff');
+        $form->addElement(form_makeListboxField(
+                            'difftype',
+                            array(
+                                'sidebyside' => $lang['diff_side'],
+                                'inline'     => $lang['diff_inline']),
+                            $type,
+                            $lang['diff_type'],
+                            '','',
+                            array('class'=>'quickselect')));
+        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form->printForm();
+
+
+        $diffurl = wl($ID, array(
+                        'do'       => 'diff',
+                        'rev2[0]'  => $l_rev,
+                        'rev2[1]'  => $r_rev,
+                        'difftype' => $type,
+                      ));
+        ptln('<br /><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a>');
         ptln('</p>');
     }
     ?>
-    <table class="diff">
+    <table class="diff diff_<?php echo $type?>">
     <tr>
     <th colspan="2" <?php echo $l_minor?>>
     <?php echo $l_head?>
@@ -1069,7 +1105,7 @@ function html_register(){
     print p_locale_xhtml('register');
     print '<div class="centeralign">'.NL;
     $form = new Doku_Form(array('id' => 'dw__register'));
-    $form->startFieldset($lang['register']);
+    $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
     $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], null, 'block', array('size'=>'50')));
@@ -1079,7 +1115,7 @@ function html_register(){
     }
     $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', array('size'=>'50')));
     $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', array('size'=>'50')));
-    $form->addElement(form_makeButton('submit', '', $lang['register']));
+    $form->addElement(form_makeButton('submit', '', $lang['btn_register']));
     $form->endFieldset();
     html_form('register', $form);
 
@@ -1398,10 +1434,11 @@ function html_admin(){
     }
 
     // data security check
-    echo '<a style="background: transparent url(data/security.png) left top no-repeat;
-                  display: block; width:380px; height:73px; border:none; float:right"
-           target="_blank"
-           href="http://www.dokuwiki.org/security#web_access_security"></a>';
+    // @todo: could be checked and only displayed if $conf['savedir'] is under the web root
+    echo '<a style="border:none; float:right;" target="_blank"
+            href="http://www.dokuwiki.org/security#web_access_security">
+            <img src="data/security.png" alt="Your data directory seems to be protected properly."
+             onerror="this.parentNode.style.display=\'none\'" /></a>';
 
     print p_locale_xhtml('admin');
 

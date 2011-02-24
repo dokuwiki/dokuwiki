@@ -5,7 +5,7 @@
  * @author  Dave Child <dave@addedbytes.com>
  * @link    http://code.google.com/p/php-email-address-validation/
  * @license http://www.opensource.org/licenses/bsd-license.php
- * @version SVN r10 + Issue 15 fix
+ * @version SVN r10 + Issue 15 fix + Issue 12 fix
  */
 class EmailAddressValidator {
     /**
@@ -121,13 +121,30 @@ class EmailAddressValidator {
         if (!$this->check_text_length($strDomainPortion, 1, 255)) {
             return false;
         }
+
+        // some IPv4/v6 regexps borrowed from Feyd
+        // see: http://forums.devnetwork.net/viewtopic.php?f=38&t=53479
+        $dec_octet = '(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|[0-9])';
+        $hex_digit = '[A-Fa-f0-9]';
+        $h16 = "{$hex_digit}{1,4}";
+        $IPv4Address = "$dec_octet\\.$dec_octet\\.$dec_octet\\.$dec_octet";
+        $ls32 = "(?:$h16:$h16|$IPv4Address)";
+        $IPv6Address =
+            "(?:(?:{$IPv4Address})|(?:".
+            "(?:$h16:){6}$ls32" .
+            "|::(?:$h16:){5}$ls32" .
+            "|(?:$h16)?::(?:$h16:){4}$ls32" .
+            "|(?:(?:$h16:){0,1}$h16)?::(?:$h16:){3}$ls32" .
+            "|(?:(?:$h16:){0,2}$h16)?::(?:$h16:){2}$ls32" .
+            "|(?:(?:$h16:){0,3}$h16)?::(?:$h16:){1}$ls32" .
+            "|(?:(?:$h16:){0,4}$h16)?::$ls32" .
+            "|(?:(?:$h16:){0,5}$h16)?::$h16" .
+            "|(?:(?:$h16:){0,6}$h16)?::" .
+            ")(?:\\/(?:12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))?)";
+
         // Check if domain is IP, possibly enclosed in square brackets.
-        if (preg_match('/^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])'
-           .'(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}$/'
-           ,$strDomainPortion) ||
-            preg_match('/^\[(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])'
-           .'(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}\]$/'
-           ,$strDomainPortion)) {
+        if (preg_match("/^($IPv4Address|\[$IPv4Address\]|\[$IPv6Address\])$/",
+                        $strDomainPortion)){
             return true;
         } else {
             $arrDomainPortion = explode('.', $strDomainPortion);

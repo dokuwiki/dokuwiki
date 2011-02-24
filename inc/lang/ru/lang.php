@@ -8,15 +8,17 @@
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Kaens Bard <kaens@mail.ru>
  * @author Andrew Pleshakov <beotiger@mail.ru>
- * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Змей Этерийский <evil_snake@eternion.ru>
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
- * @author Irina Ponomareva irinaponomareva@webperfectionist.com
+ * @author Irina Ponomareva <irinaponomareva@webperfectionist.com>
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +59,7 @@ $lang['btn_draft']             = 'Править черновик';
 $lang['btn_recover']           = 'Восстановить черновик';
 $lang['btn_draftdel']          = 'Удалить черновик';
 $lang['btn_revert']            = 'Восстановить';
+$lang['btn_register']          = 'Зарегистрироваться';
 $lang['loggedinas']            = 'Зашли как';
 $lang['user']                  = 'Логин';
 $lang['pass']                  = 'Пароль';
@@ -66,7 +69,6 @@ $lang['passchk']               = 'повторите';
 $lang['remember']              = 'Запомнить меня';
 $lang['fullname']              = 'Полное имя';
 $lang['email']                 = 'Эл. адрес';
-$lang['register']              = 'Зарегистрироваться';
 $lang['profile']               = 'Профиль пользователя';
 $lang['badlogin']              = 'Извините, неверное имя пользователя или пароль.';
 $lang['minoredit']             = 'Небольшие изменения';
@@ -167,6 +169,9 @@ $lang['yours']                 = 'Ваша версия';
 $lang['diff']                  = 'показать отличия от текущей версии';
 $lang['diff2']                 = 'Показать различия между ревизиями  ';
 $lang['difflink']              = 'Ссылка на это сравнение';
+$lang['diff_type']             = 'Посмотреть отличия';
+$lang['diff_inline']           = 'Встроенный';
+$lang['diff_side']             = 'Бок о бок';
 $lang['line']                  = 'Строка';
 $lang['breadcrumb']            = 'Вы посетили';
 $lang['youarehere']            = 'Вы находитесь здесь';

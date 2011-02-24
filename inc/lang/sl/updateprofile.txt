@@ -1,3 +1,3 @@
-===== Posodobite svoj profil računa =====
+===== Posodabljanje računa =====
 
-Posodobite le tista polja, ki jih želite spremeniti. Svojega uporabiškega imena ne morete spreminjati.
+Posodobiti ali spremeniti je mogoče le nekatere podatke. Uporabniškega imena ni mogoče spremeniti.

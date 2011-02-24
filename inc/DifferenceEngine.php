@@ -932,7 +932,7 @@ class InlineWordLevelDiff extends MappedDiff {
     }
 
     function _split($lines) {
-        if (!preg_match_all('/ ( [^\S\n]+ | [0-9_A-Za-z\x80-\xff]+ | . ) (?: (?!< \n) [^\S\n])? /xs',
+        if (!preg_match_all('/ ( [^\S\n]+ | [0-9_A-Za-z\x80-\xff]+ | . ) (?: (?!< \n) [^\S\n])? /xsu',
              implode("\n", $lines), $m)) {
             return array(array(''), array(''));
         }
@@ -943,7 +943,7 @@ class InlineWordLevelDiff extends MappedDiff {
         $orig = new _HWLDF_WordAccumulator;
         foreach ($this->edits as $edit) {
             if ($edit->type == 'copy')
-                $orig->addWords($edit->orig);
+                $orig->addWords($edit->closing);
             elseif ($edit->type == 'change'){
                 $orig->addWords($edit->orig, 'del');
                 $orig->addWords($edit->closing, 'add');
@@ -1087,6 +1087,7 @@ class TableDiffFormatter extends DiffFormatter {
  *
  */
 class InlineDiffFormatter extends DiffFormatter {
+    var $colspan = 4;
 
     function InlineDiffFormatter() {
         $this->leading_context_lines = 2;
@@ -1113,7 +1114,7 @@ class InlineDiffFormatter extends DiffFormatter {
             $xbeg .= "," . $xlen;
         if ($ylen != 1)
             $ybeg .= "," . $ylen;
-        $r = '<tr><td class="diff-blockheader">@@ '.$lang['line']." -$xbeg +$ybeg @@";
+        $r = '<tr><td colspan="'.$this->colspan.'" class="diff-blockheader">@@ '.$lang['line']." -$xbeg +$ybeg @@";
         $r .= ' <span class="diff-deletedline"><del>'.$lang['deleted'].'</del></span>';
         $r .= ' <span class="diff-addedline">'.$lang['created'].'</span>';
         $r .= "</td></tr>\n";
@@ -1132,19 +1133,19 @@ class InlineDiffFormatter extends DiffFormatter {
 
     function _added($lines) {
         foreach ($lines as $line) {
-            print('<tr><td class="diff-addedline">'. $line . "</td></tr>\n");
+            print('<tr><td colspan="'.$this->colspan.'" class="diff-addedline">'. $line . "</td></tr>\n");
         }
     }
 
     function _deleted($lines) {
         foreach ($lines as $line) {
-            print('<tr><td class="diff-deletedline"><del>' . $line . "</del></td></tr>\n");
+            print('<tr><td colspan="'.$this->colspan.'" class="diff-deletedline"><del>' . $line . "</del></td></tr>\n");
         }
     }
 
     function _context($lines) {
         foreach ($lines as $line) {
-            print('<tr><td class="diff-context">'.$line."</td></tr>\n");
+            print('<tr><td colspan="'.$this->colspan.'" class="diff-context">'.$line."</td></tr>\n");
         }
     }
 
@@ -1153,7 +1154,7 @@ class InlineDiffFormatter extends DiffFormatter {
         $add = $diff->inline();
 
         foreach ($add as $line)
-            print('<tr><td>'.$line."</td></tr>\n");
+            print('<tr><td colspan="'.$this->colspan.'">'.$line."</td></tr>\n");
     }
 }
 

@@ -112,6 +112,7 @@ $lang['fetchsize']             = 'Maximal storlek (bytes) som fetch.php får lad
 $lang['notify']                = 'Skicka meddelande om ändrade sidor till den här e-postadressen';
 $lang['registernotify']        = 'Skicka meddelande om nyregistrerade användare till en här e-postadressen';
 $lang['mailfrom']              = 'Avsändaradress i automatiska e-postmeddelanden';
+$lang['mailprefix']            = 'Prefix i början på ämnesraden vid automatiska e-postmeddelanden';
 $lang['gzip_output']           = 'Använd gzip Content-Encoding för xhtml';
 $lang['gdlib']                 = 'Version av GD-biblioteket';
 $lang['im_convert']            = 'Sökväg till ImageMagicks konverteringsverktyg';

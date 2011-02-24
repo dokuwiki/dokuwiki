@@ -85,8 +85,10 @@ div.dokuwiki fieldset {
 }
 
 div.dokuwiki textarea.edit {
-  font-family: monospace;
-  font-size: 14px;
+  font-family: monospace, serif;
+  /* second generic font fixes problem with font-size, see
+     http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
+  font-size: 100%;
   color: __text__;
   background-color: __background__;
   border: 1px solid __border__;
@@ -464,9 +466,14 @@ div.dokuwiki blockquote {
   padding-left: 3px;
 }
 
+div.dokuwiki pre,
+div.dokuwiki code {
+  font-family: monospace, serif;
+  /* second generic font fixes problem with font-size, see
+     http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
+  font-size: 100%;
+}
 div.dokuwiki pre {
-  font-family: monospace;
-  font-size: 120%;
   padding: 0.5em;
   border: 1px dashed __border__;
   color: __text__;
@@ -518,11 +525,6 @@ div.dokuwiki dl.file dt {
     border-bottom: 1px solid __background_alt__;
 }
 
-
-/* inline code words */
-div.dokuwiki code {
-  font-size: 120%;
-}
 
 /* inline tables */
 div.dokuwiki table.inline {
@@ -652,10 +654,12 @@ div.dokuwiki table.diff td {
   font-family: monospace;
   font-size: 100%;
 }
-div.dokuwiki td.diff-addedline {
+div.dokuwiki td.diff-addedline,
+div.dokuwiki span.diff-addedline {
   background-color: #ddffdd;
 }
-div.dokuwiki td.diff-deletedline {
+div.dokuwiki td.diff-deletedline,
+div.dokuwiki span.diff-deletedline {
     background-color: #ffffbb;
 }
 div.dokuwiki td.diff-context {

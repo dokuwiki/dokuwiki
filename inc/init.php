@@ -11,7 +11,7 @@ function delta_time($start=0) {
 define('DOKU_START_TIME', delta_time());
 
 global $config_cascade;
-$config_cascade = '';
+$config_cascade = array();
 
 // if available load a preload config file
 $preload = fullpath(dirname(__FILE__)).'/preload.php';
@@ -52,10 +52,9 @@ global $cache_authname;
 global $cache_metadata;
        $cache_metadata = array();
 
-//set the configuration cascade - but only if its not already been set in preload.php
-if (empty($config_cascade)) {
-    include(DOKU_INC.'inc/config_cascade.php');
-}
+// always include 'inc/config_cascade.php'
+// previously in preload.php set fields of $config_cascade will be merged with the defaults
+include(DOKU_INC.'inc/config_cascade.php');
 
 //prepare config array()
 global $conf;
