@@ -505,10 +505,11 @@ class Doku_Indexer {
      * callback function that returns true or false to use a different
      * comparison function. The function will be called with the $value being
      * searched for as the first argument, and the word in the index as the
-     * second argument.
+     * second argument. The function preg_match can be used directly if the
+     * values are regexes.
      *
      * @param string    $key    name of the metadata key to look for
-     * @param string    $value  search term to look for
+     * @param string    $value  search term to look for, must be a string or array of strings
      * @param callback  $func   comparison function
      * @return array            lists with page names, keys are query values if $value is array
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -533,9 +534,9 @@ class Doku_Indexer {
         }
 
         if (!is_null($func)) {
-            foreach ($value_array as &$val) {
+            foreach ($value_array as $val) {
                 foreach ($words as $i => $word) {
-                    if (call_user_func_array($func, array(&$val, $word)))
+                    if (call_user_func_array($func, array($val, $word)))
                         $value_ids[$i][] = $val;
                 }
             }
@@ -591,10 +592,7 @@ class Doku_Indexer {
                 // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
                 $pages = array_keys($this->_parseTuples($page_idx, $lines[$value_id]));
                 foreach ($val_list as $val) {
-                    if (!isset($result[$val]))
-                        $result[$val] = $pages;
-                    else
-                        $result[$val] = array_merge($result[$val], $pages);
+                    $result[$val] = array_merge($result[$val], $pages);
                 }
             }
         }
