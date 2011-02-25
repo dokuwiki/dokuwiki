@@ -439,14 +439,14 @@ class Doku_Indexer {
             $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
-        foreach ($wordlist as $word) {
+        foreach ($wordlist as $i => &$word) {
             $word = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
                 utf8_strtolower($word) : strtolower($word);
-            if (!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH) continue;
-            if (array_search($word, $stopwords) !== false) continue;
-            $words[] = $word;
+            if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
+              || array_search($word, $stopwords) !== false)
+                unset($wordlist[$i]);
         }
-        return $words;
+        return array_values($wordlist);
     }
 
     /**
@@ -707,7 +707,7 @@ class Doku_Indexer {
             array_splice($page_idx, count($title_idx));
             foreach ($title_idx as $i => $title)
                 if ($title === "") unset($page_idx[$i]);
-            return $page_idx;
+            return array_values($page_idx);
         }
 
         $pages = array();
@@ -1068,7 +1068,7 @@ class Doku_Indexer {
         if ($line == '') return $result;
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
-            if ($tuple == '') continue;
+            if ($tuple === '') continue;
             list($key, $cnt) = explode('*', $tuple);
             if (!$cnt) continue;
             $key = $keys[$key];
@@ -1087,7 +1087,7 @@ class Doku_Indexer {
         $freq = 0;
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
-            if ($tuple == '') continue;
+            if ($tuple === '') continue;
             list($pid, $cnt) = explode('*', $tuple);
             $freq += (int)$cnt;
         }
