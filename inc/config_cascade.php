@@ -50,10 +50,10 @@ $config_cascade = array_merge(
             ),
         'userstyle' => array(
             'screen'  => DOKU_CONF.'userstyle.css',
-            'rtl'     => DOKU_CONF.'rtlstyle.css',
-            'print'   => DOKU_CONF.'printstyle.css',
-            'feed'    => DOKU_CONF.'feedstyle.css',
-            'all'     => DOKU_CONF.'allstyle.css',
+            'rtl'     => DOKU_CONF.'userrtl.css',
+            'print'   => DOKU_CONF.'userprint.css',
+            'feed'    => DOKU_CONF.'userfeed.css',
+            'all'     => DOKU_CONF.'userall.css',
             ),
         'userscript' => array(
             'default' => DOKU_CONF.'userscript.js'
