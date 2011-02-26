@@ -49,7 +49,7 @@ $config_cascade = array_merge(
             'local'     => array(DOKU_CONF.'wordblock.local.conf'),
             ),
         'userstyle' => array(
-            'default' => DOKU_CONF.'userstyle.css',
+            'screen'  => DOKU_CONF.'userstyle.css',
             'rtl'     => DOKU_CONF.'rtlstyle.css',
             'print'   => DOKU_CONF.'printstyle.css',
             'feed'    => DOKU_CONF.'feedstyle.css',
