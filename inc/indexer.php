@@ -543,18 +543,18 @@ class Doku_Indexer {
         } else {
             foreach ($value_array as $val) {
                 $xval = $val;
-                $caret = false;
-                $dollar = false;
+                $caret = '^';
+                $dollar = '$';
                 // check for wildcards
                 if (substr($xval, 0, 1) == '*') {
                     $xval = substr($xval, 1);
-                    $caret = '^';
+                    $caret = '';
                 }
                 if (substr($xval, -1, 1) == '*') {
                     $xval = substr($xval, 0, -1);
-                    $dollar = '$';
+                    $dollar = '';
                 }
-                if ($caret || $dollar) {
+                if (!$caret || !$dollar) {
                     $re = $caret.preg_quote($xval, '/').$dollar;
                     foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
                         $value_ids[$i][] = $val;
@@ -619,27 +619,27 @@ class Doku_Indexer {
         $tokenwild = array();
         foreach ($words as $word) {
             $result[$word] = array();
-            $caret = false;
-            $dollar = false;
+            $caret = '^';
+            $dollar = '$';
             $xword = $word;
             $wlen = wordlen($word);
 
             // check for wildcards
             if (substr($xword, 0, 1) == '*') {
                 $xword = substr($xword, 1);
-                $caret = '^';
+                $caret = '';
                 $wlen -= 1;
             }
             if (substr($xword, -1, 1) == '*') {
                 $xword = substr($xword, 0, -1);
-                $dollar = '$';
+                $dollar = '';
                 $wlen -= 1;
             }
-            if ($wlen < IDX_MINWORDLENGTH && !$caret && !$dollar && !is_numeric($xword))
+            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword))
                 continue;
             if (!isset($tokens[$xword]))
                 $tokenlength[$wlen][] = $xword;
-            if ($caret || $dollar) {
+            if (!$caret || !$dollar) {
                 $re = $caret.preg_quote($xword, '/').$dollar;
                 $tokens[$xword][] = array($word, '/'.$re.'/');
                 if (!isset($tokenwild[$xword]))
