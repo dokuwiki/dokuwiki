@@ -114,11 +114,10 @@ function cleanID($raw_id,$ascii=false,$media=false){
     $id = utf8_strtolower($id);
 
     //alternative namespace seperator
-    $id = strtr($id,';',':');
     if($conf['useslash']){
-        $id = strtr($id,'/',':');
+        $id = str_replace(array(';','/'),':',$id);
     }else{
-        $id = strtr($id,'/',$sepchar);
+        $id = str_replace(array(';','/'),array(':',$sepchar),$id);
     }
 
     if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id);

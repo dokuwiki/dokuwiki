@@ -320,10 +320,10 @@ function breadcrumbs(){
 function idfilter($id,$ue=true){
     global $conf;
     if ($conf['useslash'] && $conf['userewrite']){
-        $id = strtr($id,':','/');
+        $id = str_replace(':','/',$id);
     }elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
             $conf['userewrite']) {
-        $id = strtr($id,':',';');
+        $id = str_replace(':',';',$id);
     }
     if($ue){
         $id = rawurlencode($id);
@@ -867,7 +867,7 @@ function parsePageTemplate(&$data) {
 
     // replace placeholders
     $file = noNS($id);
-    $page = strtr($file, $conf['sepchar'], ' ');
+    $page = str_replace($conf['sepchar'], ' ', $file);
 
     $tpl = str_replace(array(
                 '@ID@',
@@ -1318,8 +1318,7 @@ function obfuscate($email) {
 
     switch ($conf['mailguard']) {
         case 'visible' :
-            $obfuscate = array('@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] ');
-            return strtr($email, $obfuscate);
+            return str_replace(array('@','.','-'), array(' [at] ',' [dot] ',' [dash] '), $email);
 
         case 'hex' :
             $encode = '';

@@ -995,8 +995,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // be sure there are no bad chars in url or title
         // (we can't do this for name because it can contain an img tag)
-        $link['url']   = strtr($link['url'],array('>'=>'%3E','<'=>'%3C','"'=>'%22'));
-        $link['title'] = strtr($link['title'],array('>'=>'&gt;','<'=>'&lt;','"'=>'&quot;'));
+        $link['url']   = str_replace(array('>','<','"'),array('%3E','%3C','%22'),$link['url']);
+        $link['title'] = str_replace(array('>','<','"'),array('&gt;','&lt;','&quot;',$link['title']);
 
         $ret  = '';
         $ret .= $link['pre'];

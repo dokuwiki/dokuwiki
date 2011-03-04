@@ -272,9 +272,10 @@ class Doku_Renderer extends DokuWiki_Plugin {
         list($name,$hash) = explode('#',$name,2);
         if($hash) return $hash;
 
-        $name = strtr($name,';',':');
         if($conf['useslash']){
-            $name = strtr($name,'/',':');
+            $name = str_replace(array(';','/'),':',$name);
+        }else{
+            $name = str_replace(';',':',$name);
         }
 
         return noNSorNS($name);
