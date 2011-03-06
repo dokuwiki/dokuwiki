@@ -87,41 +87,15 @@ function _index($id){
     global $QUIET;
 
     // if not cleared only update changed and new files
-    if(!$CLEAR){
+    if($CLEAR){
         $idxtag = metaFN($id,'.indexed');
         if(@file_exists($idxtag)){
-            if(io_readFile($idxtag) == idx_get_version()){
-                $last = @filemtime($idxtag);
-                if($last > @filemtime(wikiFN($id))) return;
-            }
+            @unlink($idxtag);
         }
     }
 
     _quietecho("$id... ");
-    $body = '';
-    $data = array($id, $body);
-    $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
-    if ($evt->advise_before()) $data[1] = $data[1] . " " . rawWiki($id);
-    $evt->advise_after();
-    unset($evt);
-    list($id,$body) = $data;
-    $said = false;
-    while(true) {
-        $result = $INDEXER->addPageWords($id, $body);
-        if ($result == "locked") {
-            if($said){
-                _quietecho(".");
-            }else{
-                _quietecho("Waiting for lockfile (max. 5 min)");
-                $said = true;
-            }
-            sleep(15);
-        } else {
-            break;
-        }
-    }
-    if ($result)
-        io_saveFile(metaFN($id,'.indexed'), idx_get_version());
+    idx_addPage($id, !$QUIET);
     _quietecho("done.\n");
 }
 
