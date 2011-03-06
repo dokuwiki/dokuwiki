@@ -1181,12 +1181,16 @@ function idx_addPage($page, $verbose=false) {
     }
 
     $body = '';
-    $data = array($page, $body);
+    $metadata = array();
+    $metadata['title'] = p_get_metadata($page, 'title', false);
+    if (($references = p_get_metadata($page, 'relation references', false)) !== null)
+        $metadata['relation_references'] = array_keys($references);
+    $data = compact('page', 'body', 'metadata');
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
-    if ($evt->advise_before()) $data[1] = $data[1] . " " . rawWiki($page);
+    if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
     $evt->advise_after();
     unset($evt);
-    list($page,$body) = $data;
+    extract($data);
 
     $Indexer = idx_get_indexer();
     $result = $Indexer->addPageWords($page, $body);
@@ -1196,22 +1200,11 @@ function idx_addPage($page, $verbose=false) {
     }
 
     if ($result) {
-        $data = array('page' => $page, 'metadata' => array());
-
-        $data['metadata']['title'] = p_get_metadata($page, 'title', false);
-        if (($references = p_get_metadata($page, 'relation references', false)) !== null)
-            $data['metadata']['relation_references'] = array_keys($references);
-
-        $evt = new Doku_Event('INDEXER_METADATA_INDEX', $data);
-        if ($evt->advise_before()) {
-            $result = $Indexer->addMetaKeys($page, $data['metadata']);
-            if ($result === "locked") {
-                if ($verbose) print("Indexer: locked".DOKU_LF);
-                return false;
-            }
+        $result = $Indexer->addMetaKeys($page, $metadata);
+        if ($result === "locked") {
+            if ($verbose) print("Indexer: locked".DOKU_LF);
+            return false;
         }
-        $evt->advise_after();
-        unset($evt);
     }
 
     if ($result)
