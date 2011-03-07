@@ -11,9 +11,6 @@ require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
-// Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 3);
-
 // keep running after browser closes connection
 @ignore_user_abort(true);
 
@@ -136,47 +133,8 @@ function runIndexer(){
 
     if(!$ID) return false;
 
-    // check if indexing needed
-    $idxtag = metaFN($ID,'.indexed');
-    if(@file_exists($idxtag)){
-        if(io_readFile($idxtag) >= INDEXER_VERSION){
-            $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($ID))){
-                print "runIndexer(): index for $ID up to date".NL;
-                return false;
-            }
-        }
-    }
-
-    // try to aquire a lock
-    $run = 0;
-    $lock = $conf['lockdir'].'/_indexer.lock';
-    while(!@mkdir($lock,$conf['dmode'])){
-        usleep(50);
-        if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
-            // looks like a stale lock - remove it
-            if (!@rmdir($lock)) {
-                print "runIndexer(): removing the stale lock failed".NL;
-                return false;
-            } else {
-                print "runIndexer(): stale lock removed".NL;
-            }
-        }elseif($run++ == 1000){
-            // we waited 5 seconds for that lock
-            print "runIndexer(): indexer locked".NL;
-            return false;
-        }
-    }
-    if($conf['dperm']) chmod($lock, $conf['dperm']);
-
     // do the work
-    idx_addPage($ID);
-
-    // we're finished - save and free lock
-    io_saveFile(metaFN($ID,'.indexed'),INDEXER_VERSION);
-    @rmdir($lock);
-    print "runIndexer(): finished".NL;
-    return true;
+    return idx_addPage($ID, true);
 }
 
 /**
