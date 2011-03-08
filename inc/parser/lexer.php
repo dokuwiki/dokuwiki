@@ -556,27 +556,27 @@ class Doku_Lexer {
 function Doku_Lexer_Escape($str) {
     //$str = addslashes($str);
     $chars = array(
-        '/\\\\/',
-        '/\./',
-        '/\+/',
-        '/\*/',
-        '/\?/',
-        '/\[/',
-        '/\^/',
-        '/\]/',
-        '/\$/',
-        '/\{/',
-        '/\}/',
-        '/\=/',
-        '/\!/',
-        '/\</',
-        '/\>/',
-        '/\|/',
-        '/\:/'
+        '\\',
+        '.',
+        '+',
+        '*',
+        '?',
+        '[',
+        '^',
+        ']',
+        '$',
+        '{',
+        '}',
+        '=',
+        '!',
+        '<',
+        '>',
+        '|',
+        ':'
         );
 
     $escaped = array(
-        '\\\\\\\\',
+        '\\\\',
         '\.',
         '\+',
         '\*',
@@ -594,7 +594,7 @@ function Doku_Lexer_Escape($str) {
         '\|',
         '\:'
         );
-    return preg_replace($chars, $escaped, $str);
+    return str_replace($chars, $escaped, $str);
 }
 
 //Setup VIM: ex: et ts=4 sw=4 :

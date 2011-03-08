@@ -221,13 +221,15 @@ function idx_getPageWords($page){
 
     list($page,$body) = $data;
 
-    $body   = strtr($body,
+    $body   = str_replace(
                     array(
-                        "\r" => ' ',
-                        "\n" => ' ',
-                        "\t" => ' ',
-                        "\xC2\xAD" => '', //soft-hyphen
-                    )
+                        "\r",
+                        "\n",
+                        "\t",
+                        "\xC2\xAD", //soft-hyphen
+                    ),
+                    array(' ',' ',' ',''),
+                    $body
                    );
     $tokens = explode(' ', $body);
     $tokens = array_count_values($tokens);   // count the frequency of each token
@@ -239,7 +241,7 @@ function idx_getPageWords($page){
 
         if (!empty($links)) {
             $tmp = join(' ',array_keys($links));                // make a single string
-            $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
+            $tmp = str_replace(':', ' ', $tmp);                       // replace namespace separator with a space
             $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
 
             foreach ($link_tokens as $link_token) {
