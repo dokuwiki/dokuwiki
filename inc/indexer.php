@@ -1185,6 +1185,8 @@ function idx_addPage($page, $verbose=false) {
     $metadata['title'] = p_get_metadata($page, 'title', false);
     if (($references = p_get_metadata($page, 'relation references', false)) !== null)
         $metadata['relation_references'] = array_keys($references);
+    else
+        $metadata['relation_references'] = array();
     $data = compact('page', 'body', 'metadata');
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
     if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
