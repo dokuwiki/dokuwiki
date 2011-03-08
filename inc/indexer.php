@@ -413,7 +413,6 @@ class Doku_Indexer {
      */
     public function tokenizer($text, $wc=false) {
         global $conf;
-        $words = array();
         $wc = ($wc) ? '' : '\*';
         $stopwords =& idx_get_stopwords();
 
@@ -421,7 +420,7 @@ class Doku_Indexer {
             if (0 == io_exec($conf['tokenizer_cmd'], $text, $output))
                 $text = $output;
         } else {
-            if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
+            if (preg_match('/'.IDX_ASIAN.'/u', $text)) {
                 // handle asian chars as single words (may fail on older PHP version)
                 $asia = @preg_replace('/('.IDX_ASIAN.')/u', ' \1 ', $text);
                 if (!is_null($asia)) $text = $asia; // recover from regexp falure
@@ -429,15 +428,17 @@ class Doku_Indexer {
         }
         // tabs and newlines are handled by utf8_stripspecials
         $text = str_replace("\xC2\xAD", '', $text); //soft-hyphen
-        if (preg_match('/[^0-9A-Za-z ]/u', $text))
+
+        if (preg_match(($wc)?'/[^0-9A-Za-z ]/u':'/[^0-9A-Za-z \*]/u', $text))
             $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
+        unset($text);
         foreach ($wordlist as $i => &$word) {
-            $word = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
+            $word = (preg_match('/[^0-9A-Za-z\*]/u', $word)) ?
                 utf8_strtolower($word) : strtolower($word);
-            if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-              || array_search($word, $stopwords) !== false)
+            if ($wc && ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
+              || array_search($word, $stopwords) !== false))
                 unset($wordlist[$i]);
         }
         return array_values($wordlist);
