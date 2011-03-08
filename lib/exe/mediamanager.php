@@ -91,7 +91,7 @@
             if ($res & DOKU_MEDIA_EMPTY_NS) {
                 // current namespace was removed. redirecting to root ns passing msg along
                 send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
-                        rawurlencode($msg));
+                        rawurlencode($msg).'&edid='.$_REQUEST['edid']);
             }
             msg($msg,1);
         } elseif ($res & DOKU_MEDIA_INUSE) {

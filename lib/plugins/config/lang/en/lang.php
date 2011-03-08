@@ -142,6 +142,8 @@ $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
 $lang['rememberme'] = 'Allow permanent login cookies (remember me)';
+$lang['external_tokenizer'] = 'Use an external program to split pages into words for indexing';
+$lang['tokenizer_cmd'] = 'Command line to start the external tokenizer';
 
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';

@@ -209,14 +209,9 @@ function tpl_admin(){
     }
 
     if ($plugin !== null){
-        if($plugin->forAdminOnly() && !$INFO['isadmin']){
-            msg('For admins only',-1);
-            html_admin();
-        }else{
-            if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
-            if($INFO['prependTOC']) tpl_toc();
-            $plugin->html();
-        }
+        if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
+        if($INFO['prependTOC']) tpl_toc();
+        $plugin->html();
     }else{
         html_admin();
     }
