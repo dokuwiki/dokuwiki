@@ -1318,8 +1318,7 @@ function obfuscate($email) {
 
     switch ($conf['mailguard']) {
         case 'visible' :
-            $obfuscate = array('@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] ');
-            return strtr($email, $obfuscate);
+            return str_replace(array('@','.','-'), array(' [at] ',' [dot] ',' [dash] '), $email);
 
         case 'hex' :
             $encode = '';
