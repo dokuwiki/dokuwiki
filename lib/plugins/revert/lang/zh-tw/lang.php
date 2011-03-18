@@ -8,13 +8,9 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin <danny0838@pchome.com.tw>
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
-
-// for admin plugins, the menu prompt to be displayed in the admin menu
-// if set here, the plugin doesn't need to override the getMenuText() method
 $lang['menu']                  = '還原管理';
-
-// custom language strings for the plugin
 $lang['filter']                = '搜索包含垃圾訊息的頁面';
 $lang['revert']                = '還原選取的頁面';
 $lang['reverted']              = '%s 已還原為版本 %s';

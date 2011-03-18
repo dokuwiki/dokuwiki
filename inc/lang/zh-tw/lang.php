@@ -9,6 +9,7 @@
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -160,6 +161,9 @@ $lang['yours']                 = '您的版本';
 $lang['diff']                  = '顯示與目前版本的差異';
 $lang['diff2']                 = '顯示選擇版本間的差異';
 $lang['difflink']              = '連向這個比對檢視';
+$lang['diff_type']             = '檢視差異:';
+$lang['diff_inline']           = '行內';
+$lang['diff_side']             = '並排';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '足跡';
 $lang['youarehere']            = '您在這裡';
