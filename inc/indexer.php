@@ -54,7 +54,7 @@ define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
  * Version of the indexer taking into consideration the external tokenizer.
  * The indexer is only compatible with data written by the same version.
  *
- * Triggers INDEXER_VERSION_GET
+ * @triggers INDEXER_VERSION_GET
  * Plugins that modify what gets indexed should hook this event and
  * add their version info to the event data like so:
  *     $data[$plugin_name] = $plugin_version;
@@ -66,10 +66,7 @@ function idx_get_version(){
     static $indexer_version = null;
     if ($indexer_version == null) {
         global $conf;
-        if($conf['external_tokenizer'])
-            $version = INDEXER_VERSION . '+' . trim($conf['tokenizer_cmd']);
-        else
-            $version = INDEXER_VERSION;
+        $version = INDEXER_VERSION;
 
         // DokuWiki version is included for the convenience of plugins
         $data = array('dokuwiki'=>$version);
@@ -405,6 +402,10 @@ class Doku_Indexer {
      *
      * TODO: does this also need &$stopwords ?
      *
+     * @triggers INDEXER_TEXT_PREPARE
+     * This event allows plugins to modify the text before it gets tokenized.
+     * Plugins intercepting this event should also intercept INDEX_VERSION_GET
+     *
      * @param string    $text   plain text
      * @param boolean   $wc     are wildcards allowed?
      * @return array            list of words in the text
@@ -417,16 +418,18 @@ class Doku_Indexer {
         $wc = ($wc) ? '' : '\*';
         $stopwords =& idx_get_stopwords();
 
-        if ($conf['external_tokenizer'] && $conf['tokenizer_cmd'] != '') {
-            if (0 == io_exec($conf['tokenizer_cmd'], $text, $output))
-                $text = $output;
-        } else {
+        // prepare the text to be tokenized
+        $evt = new Doku_Event('INDEXER_TEXT_PREPARE', $text);
+        if ($evt->advise_before(true)) {
             if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
                 // handle asian chars as single words (may fail on older PHP version)
                 $asia = @preg_replace('/('.IDX_ASIAN.')/u', ' \1 ', $text);
                 if (!is_null($asia)) $text = $asia; // recover from regexp falure
             }
         }
+        $evt->advise_after();
+        unset($evt);
+
         $text = strtr($text,
                        array(
                            "\r" => ' ',
