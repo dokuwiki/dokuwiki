@@ -189,7 +189,9 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
         if ($auth->checkPass($user,$pass)){
             // make logininfo globally available
             $_SERVER['REMOTE_USER'] = $user;
-            auth_setCookie($user,PMA_blowfish_encrypt($pass,auth_cookiesalt()),$sticky);
+            $secret = auth_cookiesalt();
+            if(!$sticky) $secret .= session_id; //bind non-sticky to session
+            auth_setCookie($user,PMA_blowfish_encrypt($pass,$secret),$sticky);
             return true;
         }else{
             //invalid credentials - log off
@@ -218,7 +220,9 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
                 return true;
             }
             // no we don't trust it yet - recheck pass but silent
-            $pass = PMA_blowfish_decrypt($pass,auth_cookiesalt());
+            $secret = auth_cookiesalt();
+            if(!$sticky) $secret .= session_id(); //bind non-sticky to session
+            $pass = PMA_blowfish_decrypt($pass,$secret);
             return auth_login($user,$pass,$sticky,true);
         }
     }
