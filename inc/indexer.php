@@ -185,6 +185,8 @@ class Doku_Indexer {
     /**
      * Split the words in a page and add them to the index.
      *
+     * @param string    $text   content of the page
+     * @return array            list of word IDs and number of times used
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -274,13 +276,13 @@ class Doku_Indexer {
         foreach ($key as $name => $values) {
             $metaname = idx_cleanName($name);
             $this->addIndexKey('metadata', '', $metaname);
-            $metaidx = $this->getIndex($metaname, '_i');
-            $metawords = $this->getIndex($metaname, '_w');
+            $metaidx = $this->getIndex($metaname.'_i', '');
+            $metawords = $this->getIndex($metaname.'_w', '');
             $addwords = false;
 
             if (!is_array($values)) $values = array($values);
 
-            $val_idx = $this->getIndexKey($metaname, '_p', $pid);
+            $val_idx = $this->getIndexKey($metaname.'_p', '', $pid);
             if ($val_idx != '') {
                 $val_idx = explode(':', $val_idx);
                 // -1 means remove, 0 keep, 1 add
@@ -533,7 +535,7 @@ class Doku_Indexer {
         if ($key == 'title') {
             $words = $this->getIndex('title', '');
         } else {
-            $words = $this->getIndex($metaname, '_w');
+            $words = $this->getIndex($metaname.'_w', '');
         }
 
         if (!is_null($func)) {
@@ -588,7 +590,7 @@ class Doku_Indexer {
             }
         } else {
             // load all lines and pages so the used lines can be taken and matched with the pages
-            $lines = $this->getIndex($metaname, '_i');
+            $lines = $this->getIndex($metaname.'_i', '');
 
             foreach ($value_ids as $value_id => $val_list) {
                 // parse the tuples of the form page_id*1:page2_id*1 and so on, return value
@@ -712,7 +714,7 @@ class Doku_Indexer {
         }
 
         $pages = array();
-        $lines = $this->getIndex($metaname, '_i');
+        $lines = $this->getIndex($metaname.'_i', '');
         foreach ($lines as $line) {
             $pages = array_merge($pages, $this->parseTuples($page_idx, $line));
         }
@@ -825,6 +827,13 @@ class Doku_Indexer {
     /**
      * Retrieve the entire index.
      *
+     * The $suffix argument is for an index that is split into
+     * multiple parts. Different index files should use different
+     * base names.
+     *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @return array            list of lines without CR or LF
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getIndex($idx, $suffix) {
@@ -837,6 +846,9 @@ class Doku_Indexer {
     /**
      * Replace the contents of the index with an array.
      *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param arrayref  $linex  list of lines without LF
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndex($idx, $suffix, &$lines) {
@@ -857,6 +869,10 @@ class Doku_Indexer {
     /**
      * Retrieve a line from the index.
      *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param int       $id     the line number
+     * @return string           a line with trailing whitespace removed
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getIndexKey($idx, $suffix, $id) {
@@ -876,6 +892,10 @@ class Doku_Indexer {
     /**
      * Write a line into the index.
      *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param int       $id     the line number
+     * @param string    $line   line to write
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndexKey($idx, $suffix, $id, $line) {
@@ -915,6 +935,10 @@ class Doku_Indexer {
     /**
      * Retrieve or insert a value in the index.
      *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param string    $value  line to find in the index
+     * @return int              line number of the value in the index
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function addIndexKey($idx, $suffix, $value) {
