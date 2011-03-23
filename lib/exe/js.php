@@ -57,10 +57,11 @@ function js_out(){
                 DOKU_INC.'lib/scripts/textselection.js',
                 DOKU_INC.'lib/scripts/toolbar.js',
                 DOKU_INC.'lib/scripts/edit.js',
+                DOKU_INC.'lib/scripts/locktimer.js',
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
                 DOKU_INC.'lib/scripts/subscriptions.js',
-                DOKU_INC.'lib/scripts/hotkeys.js',
+# disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_TPLINC.'script.js',
             );
 
@@ -126,7 +127,7 @@ function js_out(){
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
     // init hotkeys - must have been done after init of toolbar
-    js_runonstart('initializeHotkeys()');
+# disabled for FS#1958    js_runonstart('initializeHotkeys()');
 
     // end output buffering and get contents
     $js = ob_get_contents();
@@ -405,4 +406,4 @@ function js_compress($s){
     return trim($result);
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

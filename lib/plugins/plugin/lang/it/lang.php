@@ -12,6 +12,7 @@
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
  * @author Osman Tekin osman.tekin93@hotmail.it
+ * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  */
 $lang['menu']                  = 'Gestione Plugin';
 $lang['download']              = 'Scarica e installa un nuovo plugin';

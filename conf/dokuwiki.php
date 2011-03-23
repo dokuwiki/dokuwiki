@@ -99,6 +99,7 @@ $conf['fetchsize']   = 0;                //maximum size (bytes) fetch.php may do
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
+$conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['gzip_output'] = 0;                //use gzip content encodeing for the output xhtml (if allowed by browser)
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
@@ -121,7 +122,7 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
-$conf['rss_content'] = 'abstract';       // what to put in the items by deafult?
+$conf['rss_content'] = 'abstract';       // what to put in the items by default?
                                          //  'abstract' - plain text, first paragraph or so
                                          //  'diff'     - plain text unified diff wrapped in <pre> tags
                                          //  'htmldiff' - diff as HTML table
@@ -133,6 +134,8 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
+$conf['external_tokenizer'] = 0;         //Use an external program to split pages into words for indexing
+$conf['tokenizer_cmd'] = '/usr/bin/mecab -O wakati';
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';

@@ -119,7 +119,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $id = pathID($file);
+    $id = pathID($file,($type == 'd'));
 
     if($type=='d' && $conf['sneaky_index'] && auth_quickaclcheck($id.':') < AUTH_READ){
         return false;
@@ -511,8 +511,7 @@ function pathID($path,$keeptxt=false){
     $id = utf8_decodeFN($path);
     $id = str_replace('/',':',$id);
     if(!$keeptxt) $id = preg_replace('#\.txt$#','',$id);
-    $id = preg_replace('#^:+#','',$id);
-    $id = preg_replace('#:+$#','',$id);
+    $id = trim($id, ':');
     return $id;
 }
 
@@ -550,7 +549,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $return = true;
 
     // get ID and check if it is a valid one
-    $item['id'] = pathID($file,$opts['keeptxt']);
+    $item['id'] = pathID($file,($type == 'd' || $opts['keeptxt']));
     if($item['id'] != cleanID($item['id'])){
         if($opts['showmsg'])
             msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);
@@ -625,4 +624,4 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     return $return;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

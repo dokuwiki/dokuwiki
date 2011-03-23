@@ -1,0 +1,3 @@
+====== Povrnitev okvarjene vsebine ======
+
+Na tej strani je mogoèe povrniti vsebino wiki strani na izvorne vrednosti po napadu na stran in vpisu ne¾elenih vsebin. Za iskanje strani z ne¾eleno vsebino, uporabite iskalnik z ustreznim nizom (npr. naslov URL), potem pa potrdite, da so najdene strani res z ne¾eleno vsebino in nato povrnite stanje na zadnjo pravo razlièico.

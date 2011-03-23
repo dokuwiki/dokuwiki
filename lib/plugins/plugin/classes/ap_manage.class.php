@@ -121,7 +121,7 @@ class ap_manage {
 
         // update latest plugin date - FIXME
         global $ID;
-        send_redirect(wl($ID,array('do'=>'admin','page'=>'plugin'),true));
+        send_redirect(wl($ID,array('do'=>'admin','page'=>'plugin'),true, '&'));
     }
 
     /**
@@ -176,7 +176,7 @@ class ap_manage {
     function dir_delete($path) {
         if (!is_string($path) || $path == "") return false;
 
-        if (is_dir($path)) {
+        if (is_dir($path) && !is_link($path)) {
             if (!$dh = @opendir($path)) return false;
 
             while ($f = readdir($dh)) {

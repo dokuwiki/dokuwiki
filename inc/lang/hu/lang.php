@@ -5,10 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
- * @author Siaynoq Siaynoq <siaynoqmage@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
- * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';
@@ -50,6 +48,7 @@ $lang['btn_draft']             = 'Piszkozat szerkesztése';
 $lang['btn_recover']           = 'Piszkozat folytatása';
 $lang['btn_draftdel']          = 'Piszkozat törlése';
 $lang['btn_revert']            = 'Helyreállítás';
+$lang['btn_register']          = 'Regisztráció';
 $lang['loggedinas']            = 'Belépett felhasználó: ';
 $lang['user']                  = 'Azonosító';
 $lang['pass']                  = 'Jelszó';
@@ -59,7 +58,6 @@ $lang['passchk']               = 'még egyszer';
 $lang['remember']              = 'Emlékezz rám';
 $lang['fullname']              = 'Teljes név';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Regisztráció';
 $lang['profile']               = 'Személyes beállítások';
 $lang['badlogin']              = 'Sajnáljuk, az azonosító, vagy a jelszó nem jó.';
 $lang['minoredit']             = 'Apróbb változások';

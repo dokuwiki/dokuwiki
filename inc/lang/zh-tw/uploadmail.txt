@@ -1,13 +1,14 @@
-一個檔案已經被上傳到您的 DokuWiki. 以下是詳細內容:
+有人把檔案上傳到您的 DokuWiki。詳細資料如下：
 
-檔名 : @MEDIA@
-日期 : @DATE@
-瀏覽器 : @BROWSER@
-IP-Address : @IPADDRESS@
-Hostname : @HOSTNAME@
-尺寸 : @SIZE@
-MIME Type : @MIME@
-帳號 : @USER@
+檔名     : @MEDIA@
+日期     : @DATE@
+瀏覽器   : @BROWSER@
+IP位址   : @IPADDRESS@
+主機名稱 : @HOSTNAME@
+大小     : @SIZE@
+MIME類型 : @MIME@
+使用者   : @USER@
 
--- 
-這封信是由 @DOKUWIKIURL@ 的 DokuWiki 所產生的
+--
+本信件由以下 DokuWiki 站台產生：
+@DOKUWIKIURL@

@@ -253,4 +253,4 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     }
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

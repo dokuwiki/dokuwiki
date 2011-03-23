@@ -43,4 +43,4 @@ $lang['acl_perm8']  = 'Upload';
 $lang['acl_perm16'] = 'Delete';
 $lang['acl_new']    = 'Add new Entry';
 $lang['acl_mod']    = 'Modify Entry';
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

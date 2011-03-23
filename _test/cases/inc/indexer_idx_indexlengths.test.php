@@ -57,4 +57,4 @@ class indexer_idx_indexlengths_test extends UnitTestCase {
 }
 
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

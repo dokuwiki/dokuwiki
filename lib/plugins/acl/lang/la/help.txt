@@ -1,0 +1,11 @@
+=== Auxilium: ===
+
+Hic facultates generum paginarumque addere delereue potes.
+
+Tabella sinistra omnes paginas generaque ostendit.
+
+His campis mutare facultates electorum Sodalium Gregumque potes.
+
+In tabula omnes administrationis leges ostensae sunt. Delere quoque uel mutare plures leges potes.
+
+Si [[doku>acl|official documentation on ACL]] legas, maius auxilium in Vicem mutando habes.

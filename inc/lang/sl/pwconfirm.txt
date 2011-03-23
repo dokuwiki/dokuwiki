@@ -1,13 +1,11 @@
-Pozdravljen @FULLNAME@!
+Pozdravljeni, @FULLNAME@!
 
-Nekdo je v vašem imenu zahteval novo geslo za uporabniško ime @TITLE@ na @DOKUWIKIURL@.
+S podatki vašega imena je bila poslana zahteva za pridobitev novega gesla za uporabniško ime @TITLE@ na wiki spletišču @DOKUWIKIURL@.
 
-Če novega gesla niste zahtevali, prezrite to sporočilo.
-
-Za potrditev novega gesla, kliknite spodnjo povezavo.
+ - V kolikor novega gesla niste zahtevali, prezrite to sporočilo.
+ - Za potrditev zahteve za pridobitev novega gesla, kliknite spodnjo povezavo.
 
 @CONFIRM@
 
--- 
-To sporočilo je ustvaril DokuWiki na
-@DOKUWIKIURL@
+--
+Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@

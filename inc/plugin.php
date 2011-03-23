@@ -33,7 +33,15 @@ class DokuWiki_Plugin {
         $parts = explode('_',get_class($this));
         $info  = DOKU_PLUGIN.'/'.$parts[2].'/plugin.info.txt';
         if(@file_exists($info)) return confToHash($info);
-        trigger_error('getInfo() not implemented in '.get_class($this).' and '.$info.' not found', E_USER_WARNING);
+
+        msg('getInfo() not implemented in '.get_class($this).
+               ' and '.$info.' not found.<br />This is a bug in the '.
+               $parts[2].' plugin and should be reported to the '.
+               'plugin author.',-1);
+        return array(
+            'date'   => '0000-00-00',
+            'name'   => $parts[2].' plugin',
+        );
     }
 
     // plugin introspection methods
@@ -88,10 +96,13 @@ class DokuWiki_Plugin {
     function localFN($id) {
         global $conf;
         $plugin = $this->getPluginName();
-        $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
-        if(!@file_exists($file)){
-            //fall back to english
-            $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+        $file = DOKU_CONF.'/plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
+        if (!@file_exists($file)){
+            $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
+            if(!@file_exists($file)){
+                //fall back to english
+                $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+            }
         }
         return $file;
     }

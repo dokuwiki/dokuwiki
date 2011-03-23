@@ -136,4 +136,4 @@ class ixr_library_ixr_message_test extends UnitTestCase {
     }
 
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

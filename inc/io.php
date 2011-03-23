@@ -486,7 +486,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
                 $name = basename($match[1]);
-        }
+            }
 
         }
 
@@ -529,7 +529,7 @@ function io_rename($from,$to){
 
 
 /**
- * Runs an external command and returns it's output as string
+ * Runs an external command and returns its output as string
  *
  * @author Harry Brueckner <harry_b@eml.cc>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -544,6 +544,27 @@ function io_runcmd($cmd){
     }
     pclose($fh);
     return $ret;
+}
+
+/**
+ * Runs an external command with input and output pipes.
+ * Returns the exit code from the process.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function io_exec($cmd, $input, &$output){
+    $descspec = array(
+            0=>array("pipe","r"),
+            1=>array("pipe","w"),
+            2=>array("pipe","w"));
+    $ph = proc_open($cmd, $descspec, $pipes);
+    if(!$ph) return -1;
+    fclose($pipes[2]); // ignore stderr
+    fwrite($pipes[0], $input);
+    fclose($pipes[0]);
+    $output = stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+    return proc_close($ph);
 }
 
 /**

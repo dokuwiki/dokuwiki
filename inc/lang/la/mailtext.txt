@@ -1,0 +1,16 @@
+Pagina in uice addita uel mutata. Hae singulae res sunt:
+
+Dies : @DATE@
+IP-Numerus : @IPADDRESS@
+Hospes situs : @HOSTNAME@
+Vetus recensio: @OLDPAGE@
+Noua recensio: @NEWPAGE@
+Summa recensere: @SUMMARY@
+Sodalis : @USER@
+
+@DIFF@
+
+
+-- 
+Hic cursus generatus a(b)
+@DOKUWIKIURL@

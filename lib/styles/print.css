@@ -1,0 +1,24 @@
+/**
+ * Basic styles. These styles are needed for basic DokuWiki functions
+ * regardless of the used template. Templates can override them of course
+ */
+
+/* messages with msg() */
+div.error,
+div.info,
+div.success,
+div.notify {
+    display: none;
+}
+
+/* section edit button */
+.secedit {
+    display: none;
+}
+
+/* modal windows */
+.JSpopup,
+#link__wiz,
+#media__popup {
+    display: none;
+}

@@ -1,0 +1,20 @@
+Olá!
+
+A página @PAGE@ na wiki @TITLE@ mudou.
+Eis as mudanças:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Revisão Antiga: @OLDPAGE@
+Revisão Nova: @NEWPAGE@
+
+Para cancelar as notificações de página, inicie sessão na wiki em
+@DOKUWIKIURL@, visite
+@SUBSCRIBE@
+e des-subscreva as alterações à página e/ou nome espaço de nome.
+
+--
+Este email foi gerado por DokuWiki em
+@DOKUWIKIURL@

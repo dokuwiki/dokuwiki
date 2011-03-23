@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Pasha L. Topchiyev <pasha@itopchiyev.com>
  */
-$lang['encoding']              = ' utf-8';
+$lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
@@ -47,6 +47,7 @@ $lang['btn_draft']             = 'Qaralamada düzəliş etmək';
 $lang['btn_recover']           = 'Qaralamanı qaytar';
 $lang['btn_draftdel']          = 'Qaralamanı sil';
 $lang['btn_revert']            = 'Qaytar';
+$lang['btn_register']          = 'Qeydiyyatdan keç';
 $lang['loggedinas']            = 'İstifadəcinin adı';
 $lang['user']                  = 'istifadəci adı';
 $lang['pass']                  = 'Şifrə';
@@ -56,7 +57,6 @@ $lang['passchk']               = 'təkrarlayın';
 $lang['remember']              = 'Məni yadda saxla';
 $lang['fullname']              = 'Tam ad';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Qeydiyyatdan keç';
 $lang['profile']               = 'İstifadəçi profili';
 $lang['badlogin']              = 'Təssüf ki istifadəçi adı və ya şifrə səhvdir.';
 $lang['minoredit']             = 'Az dəyişiklər';

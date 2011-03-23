@@ -14,6 +14,8 @@
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['menu']                  = 'Управление пользователями';
 $lang['noauth']                = '(авторизация пользователей недоступна)';
@@ -47,12 +49,12 @@ $lang['start']                 = 'в начало';
 $lang['prev']                  = 'назад';
 $lang['next']                  = 'вперёд';
 $lang['last']                  = 'в конец';
-$lang['edit_usermissing']      = 'Выбранный пользователь не найден. Возможно, указанный логин был удалён или изменен извне.';
+$lang['edit_usermissing']      = 'Выбранный пользователь не найден. Возможно, указанный логин был удалён или изменён извне.';
 $lang['user_notify']           = 'Сообщить пользователю';
 $lang['note_notify']           = 'Письма с уведомлением высылаются только в случае получения нового пароля.';
 $lang['note_group']            = 'Если группа не указана, новые пользователи будут добавлены в группу по умолчанию (%s).';
 $lang['note_pass']             = 'Пароль будет сгенерирован автоматически, если поле оставлено пустым и включено уведомление пользователя.';
 $lang['add_ok']                = 'Пользователь успешно добавлен';
 $lang['add_fail']              = 'Не удалось добавить пользователя';
-$lang['notify_ok']             = 'Пиьмо с уведомлением отправлено';
+$lang['notify_ok']             = 'Письмо с уведомлением отправлено';
 $lang['notify_fail']           = 'Не удалось отправить письмо с уведомлением';

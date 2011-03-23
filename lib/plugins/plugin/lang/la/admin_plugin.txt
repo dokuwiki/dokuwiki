@@ -1,0 +1,3 @@
+====== Addendorum Administratio ======
+
+In hac pagina omnia uicis [[doku>plugins|plugins]] mutare et administrare potes. Vt addenda capere et his uti, in scrinio addendorum scribere et legere potest.

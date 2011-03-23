@@ -188,10 +188,13 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     function localFN($id) {
       global $conf;
       $plugin = $this->getPluginName();
-      $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
-      if(!@file_exists($file)){
-        //fall back to english
-        $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+      $file = DOKU_CONF.'/plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
+      if (!@file_exists($file)){
+        $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
+        if(!@file_exists($file)){
+          //fall back to english
+          $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+        }
       }
       return $file;
     }
@@ -276,4 +279,4 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     }
 
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

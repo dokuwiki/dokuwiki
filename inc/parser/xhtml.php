@@ -734,9 +734,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $name = $this->_getLinkTitle($name, '', $isImage);
         if ( !$isImage ) {
-            $link['class']='mail JSnocheck';
+            $link['class']='mail';
         } else {
-            $link['class']='media JSnocheck';
+            $link['class']='media';
         }
 
         $address = $this->_xmlEntities($address);
@@ -902,16 +902,23 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     // $numrows not yet implemented
-    function table_open($maxcols = NULL, $numrows = NULL, $pos){
+    function table_open($maxcols = null, $numrows = null, $pos = null){
         global $lang;
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
-        $this->doc .= '<div class="table ' . $this->startSectionEdit($pos, 'table') . '"><table class="inline">'.DOKU_LF;
+        $class = 'table';
+        if ($pos !== null) {
+            $class .= ' ' . $this->startSectionEdit($pos, 'table');
+        }
+        $this->doc .= '<div class="' . $class . '"><table class="inline">' .
+                      DOKU_LF;
     }
 
-    function table_close($pos){
+    function table_close($pos = null){
         $this->doc .= '</table></div>'.DOKU_LF;
-        $this->finishSectionEdit($pos);
+        if ($pos !== null) {
+            $this->finishSectionEdit($pos);
+        }
     }
 
     function tablerow_open(){
@@ -1198,4 +1205,4 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

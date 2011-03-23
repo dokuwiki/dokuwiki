@@ -96,7 +96,15 @@ class Doku_Plugin_Controller {
 
         //construct class and instantiate
         $class = $type.'_plugin_'.$name;
-        if (!class_exists($class)) return null;
+        if (!class_exists($class)){
+            # the plugin might be in the wrong directory
+            $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
+            if($inf['base'] && $inf['base'] != $plugin){
+                msg("Plugin installed incorrectly. Rename plugin directory '".
+                    hsc($plugin)."' to '".hsc($inf['base'])."'.",-1);
+            }
+            return null;
+        }
 
         $DOKU_PLUGINS[$type][$name] = new $class;
         return $DOKU_PLUGINS[$type][$name];
@@ -125,6 +133,7 @@ class Doku_Plugin_Controller {
     }
 
     function _populateMasterList() {
+        global $conf;
         if ($dh = opendir(DOKU_PLUGIN)) {
             while (false !== ($plugin = readdir($dh))) {
                 if ($plugin[0] == '.') continue;               // skip hidden entries
@@ -134,7 +143,9 @@ class Doku_Plugin_Controller {
                     // the plugin was disabled by rc2009-01-26
                     // disabling mechanism was changed back very soon again
                     // to keep everything simple we just skip the plugin completely
-                }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled')){
+                }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled') ||
+                        ($plugin === 'plugin' && isset($conf['pluginmanager']) &&
+                         !$conf['pluginmanager'])){
                     $this->list_disabled[] = $plugin;
                 } else {
                     $this->list_enabled[] = $plugin;

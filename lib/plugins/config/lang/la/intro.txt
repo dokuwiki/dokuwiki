@@ -1,0 +1,7 @@
+====== Optionum Administratio ======
+
+In hac pagina administratoris optiones mutare et inspicere potes. Auxilia in pagina [[doku>config|conformationis]] sunt, si singulas res uidere uis, i ad paginam [[doku>plugin:config|conformationis]].
+
+Optiones ostensae rubro colore tutae et non nunc mutabiles sunt. Optiones ostensae caeruleo colore praecipuae sunt et optiones ostensae in area alba singulares huic uici sunt. Et caerulae et albae optiones mutabiles sunt.
+
+Memento premere **SERVA** ante quam nouam paginam eas: si hoc non facias, mutata amissa sunt.

@@ -1,0 +1,5 @@
+===== Zaznan je shranjen osnutek strani =====
+
+Zadnja seja te strani ni bila pravilno zaključena. Sistem DokuWiki je samodejno shranil osnutek strani, ki ga je mogoče naprej urejati. Spodaj so navedeni podatki samodejnega shranjevanja zadnje seje.
+
+Vsebino osnutka je mogoče //obnoviti// na zadnjo sejo, //izbrisati// samodejno shranjen osnutek ali pa //prekiniti// urejanje.

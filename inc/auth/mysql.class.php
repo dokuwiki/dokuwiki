@@ -46,7 +46,7 @@ class auth_mysql extends auth_basic {
 
       // set capabilities based upon config strings set
       if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
-          empty($this->cnf['password']) || empty($this->cnf['database'])){
+          !isset($this->cnf['password']) || empty($this->cnf['database'])){
         if ($this->cnf['debug'])
           msg("MySQL err: insufficient configuration.",-1,__LINE__,__FILE__);
         $this->success = false;
@@ -936,4 +936,4 @@ class auth_mysql extends auth_basic {
     }
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

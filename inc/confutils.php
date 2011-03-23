@@ -241,16 +241,23 @@ function actionOK($action){
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',',$conf['disableactions']);
         $disabled = array_map('trim',$disabled);
-        if(isset($conf['openregister']) && !$conf['openregister']) $disabled[] = 'register';
-        if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) $disabled[] = 'resendpwd';
-        if(isset($conf['subscribers']) && !$conf['subscribers']) {
-            $disabled[] = 'subscribe';
-        }
-        if (is_null($auth) || !$auth->canDo('addUser')) {
+        if((isset($conf['openregister']) && !$conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
             $disabled[] = 'register';
         }
-        if (is_null($auth) || !$auth->canDo('modPass')) {
+        if((isset($conf['resendpasswd']) && !$conf['resendpasswd']) || is_null($auth) || !$auth->canDo('modPass')) {
             $disabled[] = 'resendpwd';
+        }
+        if((isset($conf['subscribers']) && !$conf['subscribers']) || is_null($auth)) {
+            $disabled[] = 'subscribe';
+        }
+        if (is_null($auth) || !$auth->canDo('Profile')) {
+            $disabled[] = 'profile';
+        }
+        if (is_null($auth)) {
+            $disabled[] = 'login';
+        }
+        if (is_null($auth) || !$auth->canDo('logout')) {
+            $disabled[] = 'logout';
         }
         $disabled = array_unique($disabled);
     }
@@ -324,4 +331,4 @@ function conf_decodeString($str) {
                      return $str;
     }
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

@@ -1,2 +1,1 @@
-Uredite stran in pritisnite ''Shrani''. Glej [[wiki:syntax]] za  navodila za urejanje. Prosimo vas, da stran spremenite le, če jo nameravate **izboljšati**. Če hočete preizkusiti kakšno zadevo, se poigrajte v [[playground:playground|peskovniku]].
-
+Po koncu urejanja strani, je stran treba ''shraniti''. Navodila in podrobnosti za urejanje je mogoče najti na strani [[wiki:syntax|skladnje]]. Možnosti urejanja in pravila skladnje je mogoče varno preizkusiti v [[playground:playground|peskovniku]].

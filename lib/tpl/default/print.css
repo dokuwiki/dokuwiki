@@ -33,15 +33,10 @@ div.meta {
   text-align: right;
 }
 
-
-div.notify,
-div.info,
-div.success,
-div.error,
-div.breadcrumbs,
-div.secedit {
+div.breadcrumbs {
   display: none;
 }
+
 
 /* --------------------- Text formating -------------------------------- */
 
@@ -102,16 +97,15 @@ img.media {
   margin: 3px;
 }
 
+/* the styles for media images are already in
+   lib/styles/all.css, these are additional styles */
 img.medialeft {
-  border: 0;
-  float: left;
   margin: 0 1.5em 0 0;
 }
-
 img.mediaright {
-  border: 0;
-  float: right;
   margin: 0 0 0 1.5em;
+}
+img.mediacenter {
 }
 
 /* unordered lists */
@@ -228,18 +222,6 @@ table.inline th {
 table.inline td {
   padding: 3px;
   border: 1px solid #000000;
-}
-
-.leftalign {
-  text-align: left;
-}
-
-.centeralign {
-  text-align: center;
-}
-
-.rightalign {
-  text-align: right;
 }
 
 .toc, .footerinc, .header, .bar, .user { display: none; }

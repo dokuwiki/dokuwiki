@@ -198,4 +198,4 @@ function calc_cache($cache){
   return -1; //cache endless
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

@@ -6,6 +6,7 @@
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
  * @author Matthias Schulte <post@lupo49.de>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['menu']                  = 'Einstellungen';
 $lang['error']                 = 'Einstellungen wurden nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -102,6 +103,7 @@ $lang['fetchsize']             = 'Maximale Größe (in Bytes), die fetch.php von
 $lang['notify']                = 'Sende Änderungsbenachrichtigungen an diese E-Mail-Adresse.';
 $lang['registernotify']        = 'Sende Information bei neu registrierten Benutzern an diese E-Mail-Adresse.';
 $lang['mailfrom']              = 'Absenderadresse für automatisch erzeugte E-Mails';
+$lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';
@@ -118,23 +120,23 @@ $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wik
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Erweiterung)';
 $lang['rememberme']            = 'Permanente Login-Cookies erlauben (Auf diesem Computer eingeloggt bleiben)';
-$lang['rss_type']              = 'XML Feed-Typ';
+$lang['rss_type']              = 'XML-Feed-Format';
 $lang['rss_linkto']            = 'XML-Feed verlinken auf';
 $lang['rss_content']           = 'Was soll in XML-Feedinhalten angezeigt werden?';
 $lang['rss_update']            = 'Aktualisierungsintervall für XML-Feeds (Sekunden)';
 $lang['recent_days']           = 'Wie viele Änderungen sollen vorgehalten werden? (Tage)';
 $lang['rss_show_summary']      = 'Bearbeitungs-Zusammenfassung im XML-Feed anzeigen';
 $lang['target____wiki']        = 'Zielfenstername für interne Links';
-$lang['target____interwiki']   = 'Zielfenstername für interwiki Links';
+$lang['target____interwiki']   = 'Zielfenstername für InterWiki-Links';
 $lang['target____extern']      = 'Zielfenstername für externe Links';
 $lang['target____media']       = 'Zielfenstername für Medienlinks';
-$lang['target____windows']     = 'Zielfenstername für Windowslinks';
+$lang['target____windows']     = 'Zielfenstername für Windows-Freigaben-Links';
 $lang['proxy____host']         = 'Proxyadresse';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Benutzername für den Proxy';
 $lang['proxy____pass']         = 'Passwort von dem Proxybenutzer';
 $lang['proxy____ssl']          = 'SSL verwenden um auf den Proxy zu zugreifen';
-$land['proxy____except']       = 'Regulärer Ausdruck um Adressen zu beschreiben, für die kein Proxy verwendet werden soll';
+$lang['proxy____except']       = 'Regulärer Ausdruck um Adressen zu beschreiben, für die kein Proxy verwendet werden soll';
 $lang['safemodehack']          = 'Aktiviere safemode Hack';
 $lang['ftp____host']           = 'FTP Server für safemode Hack';
 $lang['ftp____port']           = 'FTP Port für safemode Hack';

@@ -1,5 +1,5 @@
-====== Išči ======
+====== Iskanje ======
 
-Spodaj so prikazani rezultati vašega iskanja. Če niste našli kar ste iskali, lahko ustvarite novo stran z imenom vaše poizvedbe, tako da uporabite gumb ''Uredi to stran''.
+Spodaj so izpisani rezultati iskanja. V kolikor rezultati niso skladni z zahtevami iskanja, je mogoče ustvariti  novo stran z nazivom vaše poizvedbe preko povezave ''Uredi stran''.
 
 ===== Rezultati =====

@@ -1,0 +1,18 @@
+# To je seznam besed, ki jih ustvarjalnik kazala prezre. Seznam je sestavljen iz
+# besede, ki so zapisane vsaka v svoji vrstici. Datoteka mora biti zapisana s konènim
+# UNIX znakom vrstice. Besede krajše od treh znakov so iz kazala izloèene samodejno
+# zaradi preglednosti. Seznam se s bo s èasom spreminjal in dopolnjeval.
+moja
+moje
+moji
+mojo
+njegovi
+njegove
+njegovo
+njeno
+njeni
+njene
+njihova
+njihove
+njihovi
+njihovo

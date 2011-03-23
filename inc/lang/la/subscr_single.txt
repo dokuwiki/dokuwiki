@@ -1,0 +1,23 @@
+Aue!
+
+Pagina "@PAGE@" in titulo "@TITlE@" mutata.
+Hae mutationes sunt:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Dies : @DATE@
+Sodalis : @USER@
+Summa recensita: @SUMMARY@
+Vetus recensio: @OLDPAGE@
+Noua recensio: @NEWPAGE@
+
+Ut paginae adnotationes deleas, in uicem ineas in
+@DOKUWIKIURL@, deinde uideas
+@NEWPAGE@
+et paginarum et\aut generum optiones mutasa.
+
+--
+Hic cursus a uicis generatus
+@DOKUWIKIURL@

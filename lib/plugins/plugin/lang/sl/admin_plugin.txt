@@ -1,0 +1,3 @@
+====== Upravljanje vstavkov ======
+
+Na tej strani je mogoèe spreminjati in prilagajati nastavitve Dokuwiki [[doku>plugins|vstavkov]]. Za prejemanje in name¹èanje vstavkov v ustrezne mape, morajo imeti te doloèena ustrezna dovoljenja za pisanje spletnega stre¾nika.

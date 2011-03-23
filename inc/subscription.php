@@ -44,9 +44,27 @@ function subscription_filename($id) {
  *
  * @author Adrian Lang <lang@cosmocode.de>
  */
+function subscription_lock_filename ($id){
+    global $conf;
+    return $conf['lockdir'].'/_subscr_' . md5($id) . '.lock';
+}
+
 function subscription_lock($id) {
-    $lockf = subscription_filename($id) . '.lock';
-    return !file_exists($lockf) && touch($lockf);
+    global $conf;
+    $lock = subscription_lock_filename($id);
+
+    if (is_dir($lock) && time()-@filemtime($lock) > 60*5) {
+        // looks like a stale lock - remove it
+        @rmdir($lock);
+    }
+
+    // try creating the lock directory
+    if (!@mkdir($lock,$conf['dmode'])) {
+        return false;
+    }
+
+    if($conf['dperm']) chmod($lock, $conf['dperm']);
+    return true;
 }
 
 /**
@@ -58,8 +76,8 @@ function subscription_lock($id) {
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function subscription_unlock($id) {
-    $lockf = subscription_filename($id) . '.lock';
-    return file_exists($lockf) && unlink($lockf);
+    $lockf = subscription_lock_filename($id);
+    return @rmdir($lockf);
 }
 
 /**
@@ -98,7 +116,7 @@ function subscription_set($user, $page, $style, $data = null,
 
         // io_deleteFromFile does not return false if no line matched.
         return io_deleteFromFile($file,
-                                 subscription_regex(array('user' => $user)),
+                                 subscription_regex(array('user' => auth_nameencode($user))),
                                  true);
     }
 
@@ -158,6 +176,10 @@ function subscription_find($page, $pre) {
                 // This is an old subscription file.
                 $subscription = trim($subscription) . " every\n";
             }
+
+            list($user, $rest) = explode(' ', $subscription, 2);
+            $subscription = rawurldecode($user) . " " . $rest;
+
             if (preg_match(subscription_regex($pre), $subscription,
                            $line_matches) === 0) {
                 continue;
@@ -251,7 +273,7 @@ function subscription_addresslist(&$data){
     $self = $data['self'];
     $addresslist = $data['addresslist'];
 
-    if (!$conf['subscribers']) {
+    if (!$conf['subscribers'] || $auth === null) {
         return '';
     }
     $pres = array('style' => 'every', 'escaped' => true);

@@ -1,0 +1,14 @@
+Aue, @FULLNAME@!
+
+Aliquis tesseram nouam @TITLE@
+ut ineas in @DOKUWIKIURL@
+
+Si nouam tesseram non petiuisti, hoc nuntium ignorat.
+
+Ut hoc nuntium petiuisti, premendo hunc nexum confirmas.
+
+@CONFIRM@
+
+-- 
+Hic cursus generatus a
+@DOKUWIKIURL@

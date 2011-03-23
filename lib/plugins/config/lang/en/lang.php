@@ -125,6 +125,7 @@ $lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern'
 $lang['notify']      = 'Send change notifications to this email address';
 $lang['registernotify'] = 'Send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Email address to use for automatic mails';
+$lang['mailprefix']  = 'Email subject prefix to use for automatic mails';
 $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
