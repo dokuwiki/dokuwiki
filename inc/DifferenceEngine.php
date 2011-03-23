@@ -29,12 +29,6 @@ class _DiffOp {
 
 class _DiffOp_Copy extends _DiffOp {
     var $type = 'copy';
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function _DiffOp_Copy($orig, $closing = false) {
-        $this->__construct($orig, $closing);
-    }
     
     function __construct($orig, $closing = false) {
         if (!is_array($closing))
@@ -50,12 +44,6 @@ class _DiffOp_Copy extends _DiffOp {
 
 class _DiffOp_Delete extends _DiffOp {
     var $type = 'delete';
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function _DiffOp_Delete($lines) {
-        $this->__construct($lines);
-    }
     
     function __construct($lines) {
         $this->orig = $lines;
@@ -69,12 +57,6 @@ class _DiffOp_Delete extends _DiffOp {
 
 class _DiffOp_Add extends _DiffOp {
     var $type = 'add';
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function _DiffOp_Add($lines) {
-        $this->__construct($lines);
-    }
     
     function __construct($lines) {
         $this->closing = $lines;
@@ -88,12 +70,6 @@ class _DiffOp_Add extends _DiffOp {
 
 class _DiffOp_Change extends _DiffOp {
     var $type = 'change';
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function _DiffOp_Change($orig, $closing) {
-        $this->__construct($orig, $closing);
-    }
     
     function __construct($orig, $closing) {
         $this->orig = $orig;
@@ -514,13 +490,6 @@ class _DiffEngine {
 class Diff {
 
     var $edits;
-    
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function Diff($from_lines, $to_lines) {
-        $this->__construct($from_lines, $to_lines);
-    }
 
     /**
      * Constructor.
@@ -653,13 +622,6 @@ class Diff {
  * FIXME: bad name.
  */
 class MappedDiff extends Diff {
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function MappedDiff($from_lines, $to_lines, $mapped_from_lines, $mapped_to_lines) {
-        $this->__construct($from_lines, $to_lines, $mapped_from_lines, $mapped_to_lines);
-    }
-    
     /**
      * Constructor.
      *
@@ -865,13 +827,7 @@ class DiffFormatter {
 define('NBSP', "\xC2\xA0");     // utf-8 non-breaking space.
 
 class _HWLDF_WordAccumulator {
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function _HWLDF_WordAccumulator() {
-        $this->__construct();
-    }
-    
+
     function __construct() {
         $this->_lines = array();
         $this->_line = '';
@@ -927,13 +883,6 @@ class _HWLDF_WordAccumulator {
 
 class WordLevelDiff extends MappedDiff {
 
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function WordLevelDiff($orig_lines, $closing_lines) {
-        $this->__construct($orig_lines, $closing_lines);
-    }
-    
     function __construct($orig_lines, $closing_lines) {
         list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
         list ($closing_words, $closing_stripped) = $this->_split($closing_lines);
@@ -975,13 +924,6 @@ class WordLevelDiff extends MappedDiff {
 }
 
 class InlineWordLevelDiff extends MappedDiff {
-
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function InlineWordLevelDiff($orig_lines, $closing_lines) {
-        $this->__construct($orig_lines, $closing_lines);
-    }
     
     function __construct($orig_lines, $closing_lines) {
         list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
@@ -1024,13 +966,6 @@ class InlineWordLevelDiff extends MappedDiff {
  */
 class UnifiedDiffFormatter extends DiffFormatter {
 
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function UnifiedDiffFormatter($context_lines = 4) {
-        $this->__construct($context_lines);
-    }
-    
     function __construct($context_lines = 4) {
         $this->leading_context_lines = $context_lines;
         $this->trailing_context_lines = $context_lines;
@@ -1062,13 +997,6 @@ class UnifiedDiffFormatter extends DiffFormatter {
  */
 class TableDiffFormatter extends DiffFormatter {
 
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function TableDiffFormatter() {
-        $this->__construct();
-    }
-    
     function __construct() {
         $this->leading_context_lines = 2;
         $this->trailing_context_lines = 2;
@@ -1161,13 +1089,7 @@ class TableDiffFormatter extends DiffFormatter {
  */
 class InlineDiffFormatter extends DiffFormatter {
     var $colspan = 4;
-    /**
-     * DONOT USE THIS. Its just to make sure nothing breaks because of the name change.
-     */
-    function InlineDiffFormatter() {
-        $this->__construct();
-    }
-    
+
     function __construct() {
         $this->leading_context_lines = 2;
         $this->trailing_context_lines = 2;
