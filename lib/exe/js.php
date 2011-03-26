@@ -44,6 +44,7 @@ function js_out(){
     // array of core files
     $files = array(
                 $jquery_file_path,
+                DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.core.min.js',
                 DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.interactions.min.js',
                 DOKU_INC.'lib/scripts/helpers.js',
