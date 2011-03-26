@@ -134,8 +134,6 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
-$conf['external_tokenizer'] = 0;         //Use an external program to split pages into words for indexing
-$conf['tokenizer_cmd'] = '/usr/bin/mecab -O wakati';
 
 //Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
