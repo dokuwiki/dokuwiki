@@ -47,7 +47,6 @@ function js_out(){
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.core.min.js',
                 DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.interactions.min.js',
-                DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/delay.js',
                 DOKU_INC.'lib/scripts/cookie.js',
