@@ -47,6 +47,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.core.min.js',
                 DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.interactions.min.js',
+                DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/delay.js',
                 DOKU_INC.'lib/scripts/cookie.js',
@@ -122,7 +123,7 @@ function js_out(){
     js_runonstart("initSizeCtl('size__ctl','wiki__text')");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
-        js_runonstart("initLocktimer(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
     }
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
