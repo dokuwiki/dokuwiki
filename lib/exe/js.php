@@ -55,6 +55,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/tw-sack.js',
                 DOKU_INC.'lib/scripts/ajax.js',
                 DOKU_INC.'lib/scripts/index.js',
+                DOKU_INC.'lib/scripts/drag.js',
                 DOKU_INC.'lib/scripts/textselection.js',
                 DOKU_INC.'lib/scripts/toolbar.js',
                 DOKU_INC.'lib/scripts/edit.js',
