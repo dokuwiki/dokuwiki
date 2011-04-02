@@ -5,7 +5,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
- * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  */
@@ -48,6 +47,7 @@ $lang['btn_draft']             = 'Muokkaa luonnosta';
 $lang['btn_recover']           = 'Palauta luonnos';
 $lang['btn_draftdel']          = 'Poista luonnos';
 $lang['btn_revert']            = 'palauta';
+$lang['btn_register']          = 'Rekisteröidy';
 $lang['loggedinas']            = 'Kirjautunut nimellä';
 $lang['user']                  = 'Käyttäjänimi';
 $lang['pass']                  = 'Salasana';
@@ -57,7 +57,6 @@ $lang['passchk']               = 'uudelleen';
 $lang['remember']              = 'Muista minut';
 $lang['fullname']              = 'Koko nimi';
 $lang['email']                 = 'Sähköposti';
-$lang['register']              = 'Rekisteröidy';
 $lang['profile']               = 'Käyttäjän profiili';
 $lang['badlogin']              = 'Käyttäjänimi tai salasana oli väärä.';
 $lang['minoredit']             = 'Pieni muutos';

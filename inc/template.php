@@ -93,7 +93,7 @@ function tpl_content_core(){
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-                break;
+            break;
         case 'backlink':
             html_backlinks();
             break;
@@ -209,14 +209,9 @@ function tpl_admin(){
     }
 
     if ($plugin !== null){
-        if($plugin->forAdminOnly() && !$INFO['isadmin']){
-            msg('For admins only',-1);
-            html_admin();
-        }else{
-            if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
-            if($INFO['prependTOC']) tpl_toc();
-            $plugin->html();
-        }
+        if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
+        if($INFO['prependTOC']) tpl_toc();
+        $plugin->html();
     }else{
         html_admin();
     }
@@ -581,16 +576,23 @@ function tpl_get_action($type) {
             $accesskey = 'b';
             break;
         case 'login':
-            if(!$conf['useacl'] || !$auth){
-                return false;
-            }
             $params['sectok'] = getSecurityToken();
             if(isset($_SERVER['REMOTE_USER'])){
-                if (!$auth->canDo('logout')) {
+                if (!actionOK('logout')) {
                     return false;
                 }
                 $params['do'] = 'logout';
                 $type = 'logout';
+            }
+            break;
+        case 'register':
+            if($_SERVER['REMOTE_USER']){
+                return false;
+            }
+            break;
+        case 'resendpwd':
+            if($_SERVER['REMOTE_USER']){
+                return false;
             }
             break;
         case 'admin':
@@ -609,20 +611,19 @@ function tpl_get_action($type) {
             $type = 'subscribe';
             $params['do'] = 'subscribe';
         case 'subscribe':
-            if(!$conf['useacl'] || !$auth  || !$conf['subscribers'] || !$_SERVER['REMOTE_USER']){
+            if(!$_SERVER['REMOTE_USER']){
                 return false;
             }
             break;
         case 'backlink':
             break;
         case 'profile':
-            if(!$conf['useacl'] || !$auth || !isset($_SERVER['REMOTE_USER']) ||
-                    !$auth->canDo('Profile')){
+            if(!isset($_SERVER['REMOTE_USER'])){
                 return false;
             }
             break;
         case 'subscribens':
-            // Superseeded by subscribe/subscription
+            // Superseded by subscribe/subscription
             return '';
             break;
         default:

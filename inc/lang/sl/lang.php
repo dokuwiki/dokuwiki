@@ -10,7 +10,7 @@
  * @author Matej Urbančič (mateju@svn.gnome.org)
  */
 $lang['encoding']              = 'utf-8';
-$lang['direction']             = 'L-D';
+$lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '„';
 $lang['doublequoteclosing']    = '“';
 $lang['singlequoteopening']    = '‚';
@@ -53,7 +53,7 @@ $lang['user']                  = 'Uporabniško ime';
 $lang['pass']                  = 'Geslo';
 $lang['newpass']               = 'Novo geslo';
 $lang['oldpass']               = 'Potrdi trenutno geslo';
-$lang['passchk']               = 'znova';
+$lang['passchk']               = 'Ponovi novo geslo';
 $lang['remember']              = 'Zapomni si me';
 $lang['fullname']              = 'Pravo ime';
 $lang['email']                 = 'Elektronski naslov';
@@ -99,7 +99,7 @@ $lang['js']['searchmedia']     = 'Poišči datoteke';
 $lang['js']['keepopen']        = 'Od izbiri ohrani okno odprto';
 $lang['js']['hidedetails']     = 'Skrij podrobnosti';
 $lang['js']['mediatitle']      = 'Nastavitve povezave';
-$lang['js']['mediadisplay']    = 'Vrsta povezaave';
+$lang['js']['mediadisplay']    = 'Vrsta povezave';
 $lang['js']['mediaalign']      = 'Poravnava';
 $lang['js']['mediasize']       = 'Velikost slike';
 $lang['js']['mediatarget']     = 'Mesto povezave';
@@ -119,7 +119,7 @@ $lang['js']['medialeft']       = 'Poravnaj sliko na levo.';
 $lang['js']['mediaright']      = 'Poravnaj sliko na desno.';
 $lang['js']['mediacenter']     = 'Poravnaj sliko na sredini.';
 $lang['js']['medianoalign']    = 'Ne uporabi poravnave.';
-$lang['js']['nosmblinks']      = 'Povezovanje do souporabenih datotek sistema Windows deluje le pri uporabi brskalnika Microsoft Internet Explorer. Povezavo je mogoče kopirati ročno.';
+$lang['js']['nosmblinks']      = 'Povezovanje do souporabnih datotek sistema Windows deluje le pri uporabi brskalnika Microsoft Internet Explorer. Povezavo je mogoče kopirati ročno.';
 $lang['js']['linkwiz']         = 'Čarovnik za povezave';
 $lang['js']['linkto']          = 'Poveži na:';
 $lang['js']['del_confirm']     = 'Ali naj se res izbrišejo izbrani predmeti?';

@@ -3,23 +3,6 @@
  * regardless of the used template. Templates can override them of course
  */
 
-div.clearer {
-    clear: both;
-    line-height: 0;
-    height: 0;
-    overflow: hidden;
-}
-
-div.no {
-    display: inline;
-    margin: 0;
-    padding: 0;
-}
-
-.hidden {
-    display: none;
-}
-
 /* messages with msg() */
 div.error,
 div.info,
@@ -57,34 +40,6 @@ div.notify {
     background-color: #ffc;
     background-image: url(../images/notify.png);
     border-bottom-color: #ffa;
-}
-
-
-/* image alignment */
-.medialeft {
-    float: left;
-}
-.mediaright {
-    float: right;
-}
-.mediacenter {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* table cell alignment */
-.leftalign   { text-align: left;   }
-.centeralign { text-align: center; }
-.rightalign  { text-align: right;  }
-
-/* underline */
-em.u {
-    font-style: normal;
-    text-decoration: underline;
-}
-em em.u {
-    font-style: italic;
 }
 
 /* modal windows */

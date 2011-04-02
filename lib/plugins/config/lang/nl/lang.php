@@ -109,6 +109,7 @@ $lang['fetchsize']             = 'Maximum grootte (bytes) die fetch.php mag down
 $lang['notify']                = 'Stuur e-mailnotificaties naar dit adres';
 $lang['registernotify']        = 'Stuur informatie over nieuw aangemelde gebruikers naar dit e-mailadres';
 $lang['mailfrom']              = 'E-mailadres voor automatische e-mail';
+$lang['mailprefix']            = 'Te gebruiken voorvoegsel voor onderwerp automatische email';
 $lang['gzip_output']           = 'Gebruik gzip Content-Encoding voor xhtml';
 $lang['gdlib']                 = 'Versie GD Lib ';
 $lang['im_convert']            = 'Path naar ImageMagick\'s convert tool';

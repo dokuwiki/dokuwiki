@@ -7,9 +7,9 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
- * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,6 +50,7 @@ $lang['btn_draft']             = '編輯草稿';
 $lang['btn_recover']           = '復原草稿';
 $lang['btn_draftdel']          = '捨棄草稿';
 $lang['btn_revert']            = '復原';
+$lang['btn_register']          = '註冊';
 $lang['loggedinas']            = '登入為';
 $lang['user']                  = '帳號';
 $lang['pass']                  = '密碼';
@@ -59,7 +60,6 @@ $lang['passchk']               = '確認密碼';
 $lang['remember']              = '記住帳號密碼';
 $lang['fullname']              = '真實姓名';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = '註冊';
 $lang['profile']               = '使用者個人資料';
 $lang['badlogin']              = '很抱歉，您的使用者名稱或密碼可能有錯誤';
 $lang['minoredit']             = '小修改';
@@ -161,6 +161,9 @@ $lang['yours']                 = '您的版本';
 $lang['diff']                  = '顯示與目前版本的差異';
 $lang['diff2']                 = '顯示選擇版本間的差異';
 $lang['difflink']              = '連向這個比對檢視';
+$lang['diff_type']             = '檢視差異:';
+$lang['diff_inline']           = '行內';
+$lang['diff_side']             = '並排';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '足跡';
 $lang['youarehere']            = '您在這裡';

@@ -11,6 +11,7 @@
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
+ * @author Hiphen Lee <jacob.b.leung@gmail.com>
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';

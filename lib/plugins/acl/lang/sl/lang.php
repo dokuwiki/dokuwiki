@@ -7,7 +7,7 @@
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
   * @author Matej Urbančič (mateju@svn.gnome.org)
  */
-$lang['admin_acl']             = 'Skrbništvo ACL';
+$lang['admin_acl']             = 'Upravljanje dostopa';
 $lang['acl_group']             = 'Skupina';
 $lang['acl_user']              = 'Uporabnik';
 $lang['acl_perms']             = 'Dovoljenja za';
@@ -23,7 +23,7 @@ $lang['p_choose_ns']           = 'Vnesite ime <b>uporabnika ali skupine</b> v zg
 $lang['p_inherited']           = 'Opomba: trenutna dovoljenja niso bila posebej določena, temveč so bila prevzeta iz drugih skupin ali višjih imenskih prostorov.';
 $lang['p_isadmin']             = 'Opomba: izbrana skupina ali uporabnik imajo vsa dovoljenja za spreminjanje, saj so določeni kot skrbniki sistema.';
 $lang['p_include']             = 'Višja dovoljenja vključujejo tudi nižja. ';
-$lang['current']               = 'Trenutna ACL pravila';
+$lang['current']               = 'Trenutna pravila dostopa';
 $lang['where']                 = 'Stran / Imenski prostor';
 $lang['who']                   = 'Uporabnik/Skupina';
 $lang['perm']                  = 'Dovoljenja';

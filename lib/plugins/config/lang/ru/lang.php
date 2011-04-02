@@ -15,6 +15,7 @@
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['menu']                  = 'Настройки вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте свои изменения и попробуйте ещё раз.<br />Неправильные значения будут обведены красной рамкой.';

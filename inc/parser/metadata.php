@@ -455,16 +455,16 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     global $conf;
 
     $isImage = false;
-    if (is_array($title)){
-      if($title['title']) return '['.$title['title'].']';
-    } else if (is_null($title) || trim($title)==''){
+    if (is_null($title)){
       if (useHeading('content') && $id){
         $heading = p_get_first_heading($id,false);
         if ($heading) return $heading;
       }
       return $default;
-    } else {
+    } else if (is_string($title)){
       return $title;
+    } else if (is_array($title)){
+      if($title['title']) return '['.$title['title'].']';
     }
   }
 

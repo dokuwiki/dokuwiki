@@ -1,0 +1,7 @@
+====== Splošne nastavitve ======
+
+Na tej strani je mogoče spreminjati nastavitve sistema DokuWiki. Pomoč o posameznih nastavitvah je na voljo med [[doku>config|nastavitvami]]. Več podrobnosti o vstavku je na voljo na [[doku>plugin:config|nastavitvami vstavka]].
+
+Nastavitve označene s svetlo rdečim ozadjem so zaščitene in jih s tem vstavkom ni mogoče spreminjati. Nastavitve označene s svetlo modrim ozadjem so privzete vrednosti in nastavitve z belim ozadjem so tiste, ki so bile določene krajevno posebej za to nastavitev. Spreminjati je mogoče vrednosti označene z modrimi in belim ozadjem.
+
+Spremembe je treba **shraniti**, da se uveljavijo, sicer se spremembe prezrejo.

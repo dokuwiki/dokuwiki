@@ -5,17 +5,16 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
- * @author Rune Rasmussen http://www.syntaxerror.no/
+ * @author Rune Rasmussen [http://www.syntaxerror.no/]
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
- * @author Jakob Vad Nielsen (me@jakobnielsen.net)
+ * @author Jakob Vad Nielsen <me@jakobnielsen.net>
  * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -59,6 +58,7 @@ $lang['btn_draft']             = 'Rediger kladd';
 $lang['btn_recover']           = 'Gjennvinn kladd';
 $lang['btn_draftdel']          = 'Slett kladd';
 $lang['btn_revert']            = 'Gjenopprette';
+$lang['btn_register']          = 'Registrer deg';
 $lang['loggedinas']            = 'Innlogget som';
 $lang['user']                  = 'Brukernavn';
 $lang['pass']                  = 'Passord';
@@ -68,7 +68,6 @@ $lang['passchk']               = 'Bekreft passord';
 $lang['remember']              = 'Husk meg';
 $lang['fullname']              = 'Fullt navn';
 $lang['email']                 = 'E-post';
-$lang['register']              = 'Registrer deg';
 $lang['profile']               = 'Brukerprofil';
 $lang['badlogin']              = 'Ugyldig brukernavn og/eller passord.';
 $lang['minoredit']             = 'Mindre endringer';

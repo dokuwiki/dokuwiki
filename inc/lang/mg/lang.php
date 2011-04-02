@@ -28,6 +28,7 @@ $lang['btn_update'] = 'Update';
 $lang['btn_delete'] = 'Fafao';
 $lang['btn_back']   = 'Miverina';
 $lang['btn_backtomedia'] = 'Fitsongana fichier Media';
+$lang['btn_register'] = 'Hisoratra';
 
 $lang['loggedinas'] = 'Anaranao:';
 $lang['user']       = 'Anarana';
@@ -36,7 +37,6 @@ $lang['passchk']    = 'Ataovy indray';
 $lang['remember']   = 'Tsarovy';
 $lang['fullname']   = 'Anarana feno';
 $lang['email']      = 'Imailaka';
-$lang['register']   = 'Hisoratra';
 $lang['badlogin']   = 'Miala tsiny fa misy diso ny anarana na ny alahidy.';
 
 $lang['regmissing'] = 'Tsy maintsy fenoina ny saha rehetra.';

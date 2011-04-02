@@ -10,6 +10,7 @@
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
+ * @author Hiphen Lee <jacob.b.leung@gmail.com>
  */
 $lang['menu']                  = '用户管理器';
 $lang['noauth']                = '（用户认证不可用）';

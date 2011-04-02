@@ -5,11 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
- * @author s_baltariu@yahoo.com
- * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
- * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,6 +47,7 @@ $lang['btn_draft']             = 'Editează schiţă';
 $lang['btn_recover']           = 'Recuperează schiţă';
 $lang['btn_draftdel']          = 'Şterge schiţă';
 $lang['btn_revert']            = 'Revenire';
+$lang['btn_register']          = 'Înregistrează';
 $lang['loggedinas']            = 'Logat ca şi';
 $lang['user']                  = 'Utilizator';
 $lang['pass']                  = 'Parola';
@@ -59,7 +57,6 @@ $lang['passchk']               = 'încă o dată';
 $lang['remember']              = 'Ţine-mă minte';
 $lang['fullname']              = 'Nume complet';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Înregistrează';
 $lang['profile']               = 'Profil Utilizator';
 $lang['badlogin']              = 'Imi pare rău, utilizatorul şi/sau parola au fost greşite.';
 $lang['minoredit']             = 'Modificare Minoră';
@@ -162,6 +159,9 @@ $lang['yours']                 = 'Versiunea ta';
 $lang['diff']                  = 'arată diferenţele faţă de versiunea curentă';
 $lang['diff2']                 = 'Arată diferenţele dintre versiunile selectate';
 $lang['difflink']              = 'Link către această vizualizare comparativă';
+$lang['diff_type']             = 'Vezi diferențe:';
+$lang['diff_inline']           = 'Succesiv';
+$lang['diff_side']             = 'Alăturate';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Traseu';
 $lang['youarehere']            = 'Sunteţi aici';

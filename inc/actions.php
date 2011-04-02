@@ -18,6 +18,7 @@ if(!defined('DOKU_INC')) die('meh.');
 function act_dispatch(){
     global $ACT;
     global $ID;
+    global $INFO;
     global $QUERY;
     global $lang;
     global $conf;
@@ -134,8 +135,15 @@ function act_dispatch(){
                 $pluginlist = plugin_list('admin');
                 if (in_array($_REQUEST['page'], $pluginlist)) {
                     // attempt to load the plugin
-                    if ($plugin =& plugin_load('admin',$_REQUEST['page']) !== null)
-                        $plugin->handle();
+                    if ($plugin =& plugin_load('admin',$_REQUEST['page']) !== null){
+                        if($plugin->forAdminOnly() && !$INFO['isadmin']){
+                            // a manager tried to load a plugin that's for admins only
+                            unset($_REQUEST['page']);
+                            msg('For admins only',-1);
+                        }else{
+                            $plugin->handle();
+                        }
+                    }
                 }
             }
         }
@@ -244,7 +252,6 @@ function act_permcheck($act){
             $permneed = AUTH_CREATE;
         }
     }elseif(in_array($act,array('login','search','recent','profile','index', 'sitemap'))){
-    }elseif(in_array($act,array('login','search','recent','profile','sitemap'))){
         $permneed = AUTH_NONE;
     }elseif($act == 'revert'){
         $permneed = AUTH_ADMIN;
@@ -610,7 +617,7 @@ function act_sitemap($act) {
         print "Sitemap generation is disabled.";
         exit;
     }
-    
+
     $sitemap = Sitemapper::getFilePath();
     if(strrchr($sitemap, '.') === '.gz'){
         $mime = 'application/x-gzip';

@@ -10,6 +10,7 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin <danny0838@pchome.com.tw>
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['admin_acl']             = '管理存取控制表 (ACL)';
 $lang['acl_group']             = '群組';

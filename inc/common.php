@@ -843,7 +843,7 @@ function pageTemplate($id){
                 }
             }
             // load the content
-            $data['tpl'] = io_readFile($data['tpl']);
+            $data['tpl'] = io_readFile($data['tplfile']);
         }
         if($data['doreplace']) parsePageTemplate(&$data);
     }

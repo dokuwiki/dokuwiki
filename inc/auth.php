@@ -189,7 +189,9 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
         if ($auth->checkPass($user,$pass)){
             // make logininfo globally available
             $_SERVER['REMOTE_USER'] = $user;
-            auth_setCookie($user,PMA_blowfish_encrypt($pass,auth_cookiesalt()),$sticky);
+            $secret = auth_cookiesalt();
+            if(!$sticky) $secret .= session_id; //bind non-sticky to session
+            auth_setCookie($user,PMA_blowfish_encrypt($pass,$secret),$sticky);
             return true;
         }else{
             //invalid credentials - log off
@@ -209,15 +211,18 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time()-$conf['auth_security_timeout']) &&
                     ($session['user'] == $user) &&
-                    ($session['pass'] == $pass) &&  //still crypted
+                    ($session['pass'] == sha1($pass)) &&  //still crypted
                     ($session['buid'] == auth_browseruid()) ){
+
                 // he has session, cookie and browser right - let him in
                 $_SERVER['REMOTE_USER'] = $user;
                 $USERINFO = $session['info']; //FIXME move all references to session
                 return true;
             }
             // no we don't trust it yet - recheck pass but silent
-            $pass = PMA_blowfish_decrypt($pass,auth_cookiesalt());
+            $secret = auth_cookiesalt();
+            if(!$sticky) $secret .= session_id(); //bind non-sticky to session
+            $pass = PMA_blowfish_decrypt($pass,$secret);
             return auth_login($user,$pass,$sticky,true);
         }
     }
@@ -686,9 +691,8 @@ function register(){
     global $conf;
     global $auth;
 
-    if (!$auth) return false;
     if(!$_POST['save']) return false;
-    if(!$auth->canDo('addUser')) return false;
+    if(!actionOK('register')) return false;
 
     //clean username
     $_POST['login'] = trim($auth->cleanUser($_POST['login']));
@@ -764,12 +768,10 @@ function updateprofile() {
     global $lang;
     global $auth;
 
-    if (!$auth) return false;
     if(empty($_POST['save'])) return false;
     if(!checkSecurityToken()) return false;
 
-    // should not be able to get here without Profile being possible...
-    if(!$auth->canDo('Profile')) {
+    if(!actionOK('profile')) {
         msg($lang['profna'],-1);
         return false;
     }
@@ -840,11 +842,7 @@ function act_resendpwd(){
     global $conf;
     global $auth;
 
-    if(!actionOK('resendpwd')) return false;
-    if (!$auth) return false;
-
-    // should not be able to get here without modPass being possible...
-    if(!$auth->canDo('modPass')) {
+    if(!actionOK('resendpwd')) {
         msg($lang['resendna'],-1);
         return false;
     }
@@ -986,7 +984,7 @@ function auth_setCookie($user,$pass,$sticky) {
     }
     // set session
     $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-    $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+    $_SESSION[DOKU_COOKIE]['auth']['pass'] = sha1($pass);
     $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
     $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
     $_SESSION[DOKU_COOKIE]['auth']['time'] = time();

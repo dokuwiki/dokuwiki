@@ -46,7 +46,8 @@ $lang['btn_resendpwd']   = 'Send new password';
 $lang['btn_draft']    = 'Edit draft';
 $lang['btn_recover']  = 'Recover draft';
 $lang['btn_draftdel'] = 'Delete draft';
-$lang['btn_revert'] = 'Restore';
+$lang['btn_revert']   = 'Restore';
+$lang['btn_register'] = 'Register';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -57,7 +58,6 @@ $lang['passchk']    = 'once again';
 $lang['remember']   = 'Remember me';
 $lang['fullname']   = 'Real name';
 $lang['email']      = 'E-Mail';
-$lang['register']   = 'Register';
 $lang['profile']    = 'User Profile';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
 $lang['minoredit']  = 'Minor Changes';

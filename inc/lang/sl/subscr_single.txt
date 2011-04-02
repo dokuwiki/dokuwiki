@@ -1,0 +1,22 @@
+Pozdravljeni!
+
+Stran @PAGE@ na spletišču Wiki @TITLE@ je spremenjena.
+Spremenjeno je:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Datum            : @DATE@
+Uporabnik        : @USER@
+Povzetek urejanja: @SUMMARY@
+Stara različica  : @OLDPAGE@
+Nova različica   : @NEWPAGE@
+
+Preklic obveščanja o spremembah strani je mogoče določiti
+na Wiki naslovu @DOKUWIKIURL@ in z obiskom @NEWPAGE@,
+kjer se je mogoče odjaviti od spremljanja strani ali
+imenskega prostora.
+
+--
+Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@
