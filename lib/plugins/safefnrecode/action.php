@@ -57,7 +57,7 @@ class action_plugin_safefnrecode extends DokuWiki_Action_Plugin {
             if(is_dir("$dir/$file")) $this->recode("$dir/$file"); #recurse
             if(strpos('%',$file) === false) continue;             # no encoding used
             $new = preg_replace('/(%.*?)\./','\1]',$file);        # new post indicator
-            if(preg_match('/%[^\.]+$/',$new)) $new .= ']';        # fix end FS#2122
+            if(preg_match('/%[^\]]+$/',$new)) $new .= ']';        # fix end FS#2122
             rename("$dir/$file","$dir/$new");                     # rename it
         }
         closedir($dh);
