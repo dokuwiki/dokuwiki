@@ -1,0 +1,7 @@
+base   safefnrecode
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2011-04-03
+name   safefnrecode plugin
+desc   Changes existing page and foldernames for the change in the safe filename encoding
+url    http://www.dokuwiki.org/plugin:safefnrecode
