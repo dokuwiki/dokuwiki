@@ -410,25 +410,34 @@ if(!function_exists('utf8_stripspecials')){
      * @param  string $additional Additional chars to strip (used in regexp char class)
      */
     function utf8_stripspecials($string,$repl='',$additional=''){
-        global $UTF8_SPECIAL_CHARS;
         global $UTF8_SPECIAL_CHARS2;
+        global $UTF8_SPECIAL_CHARS3;
 
         static $specials = null;
-        if(is_null($specials)){
-        $chars = array(
-                        "\x00","\x01","\x02","\x03","\x04","\x05","\x06",
-                        "\x07","\x08","\x09","\x0A","\x0B","\x0C","\x0D",
-                        "\x0E","\x0F","\x10","\x11","\x12","\x13","\x14",
-                        "\x15","\x16","\x17","\x18","\x19"
-                      );
-        $specials = array('' => array_merge($chars, $UTF8_SPECIAL_CHARS2));
+        static $specials2 = null;
+
+	if (strlen($string) < 32) {
+            if(is_null($specials)){
+                $specials = preg_quote($UTF8_SPECIAL_CHARS2, '/');
+            }
+            return preg_replace('/['.$additional.'\x00-\x19'.$specials.']/u',$repl,$string);
         }
-        if(!isset($specials[$additional])){
+        // str_replace is faster for long strings
+        if(is_null($specials2)){
+            $chars = array(
+                         "\x00","\x01","\x02","\x03","\x04","\x05","\x06",
+                         "\x07","\x08","\x09","\x0A","\x0B","\x0C","\x0D",
+                         "\x0E","\x0F","\x10","\x11","\x12","\x13","\x14",
+                         "\x15","\x16","\x17","\x18","\x19"
+                     );
+            $specials2 = array('' => array_merge($chars, $UTF8_SPECIAL_CHARS3));
+        }
+        if(!isset($specials2[$additional])){
             $chars = utf8_split($additional);
             $chars = array_keys(array_flip($chars));
-            $specials[$additional] = array_merge($chars, $specials['']);
+            $specials2[$additional] = array_merge($chars, $specials2['']);
         }
-        return str_replace($specials[$additional], $repl, $string);
+        return str_replace($specials2[$additional], $repl, $string);
     }
 }
 
@@ -1274,7 +1283,32 @@ if(empty($UTF8_SPECIAL_CHARS)) $UTF8_SPECIAL_CHARS = array(
 
 // utf8 version of above data
 global $UTF8_SPECIAL_CHARS2;
-if(empty($UTF8_SPECIAL_CHARS2)) $UTF8_SPECIAL_CHARS2 = array(
+if(empty($UTF8_SPECIAL_CHARS2)) $UTF8_SPECIAL_CHARS2 =
+    "\x1A".' !"#$%&\'()+,/;<=>?@[\]^`{|}~�'.
+    '� ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½�'.
+    '�¿×÷ˇ˘˙˚˛˜˝̣̀́̃̉΄΅·ϖְֱֲֳִֵֶַָֹֻּֽ־ֿ�'.
+    '�ׁׂ׃׳״،؛؟ـًٌٍَُِّْ٪฿‌‍‎‏–—―‗‘’‚“”�'.
+    '��†‡•…‰′″‹›⁄₧₪₫€№℘™Ωℵ←↑→↓↔↕↵'.
+    '⇐⇑⇒⇓⇔∀∂∃∅∆∇∈∉∋∏∑−∕∗∙√∝∞∠∧∨�'.
+    '�∪∫∴∼≅≈≠≡≤≥⊂⊃⊄⊆⊇⊕⊗⊥⋅⌐⌠⌡〈〉⑩─�'.
+    '��┌┐└┘├┤┬┴┼═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠'.
+    '╡╢╣╤╥╦╧╨╩╪╫╬▀▄█▌▐░▒▓■▲▼◆◊●�'.
+    '�★☎☛☞♠♣♥♦✁✂✃✄✆✇✈✉✌✍✎✏✐✑✒✓✔✕�'.
+    '��✗✘✙✚✛✜✝✞✟✠✡✢✣✤✥✦✧✩✪✫✬✭✮✯✰✱'.
+    '✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀❁❂❃❄❅❆❇❈❉❊❋�'.
+    '�❏❐❑❒❖❘❙❚❛❜❝❞❡❢❣❤❥❦❧❿➉➓➔➘➙➚�'.
+    '��➜➝➞➟➠➡➢➣➤➥➦➧➨➩➪➫➬➭➮➯➱➲➳➴➵➶'.
+    '➷➸➹➺➻➼➽➾'.
+    '　、。〃〈〉《》「」『』【】〒〔〕〖〗〘〙〚〛〶'.
+    '�'.
+    '�ﹼﹽ'.
+    '！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾｀｛｜｝～'.
+    '｟｠｡｢｣､･￠￡￢￣￤￥￦￨￩￪￫￬￭￮'.
+    '𝛼𝛽𝛾𝛿𝜀𝜁𝜂𝜃𝜄𝜅𝜆𝜇𝜈𝜉𝜊𝜋𝜌𝜍𝜎𝜏𝜐𝜑𝜒𝜓𝜔𝜕𝜖𝜗𝜘𝜙𝜚𝜛'.
+    '   ⁠﻿';
+// array version of above
+global $UTF8_SPECIAL_CHARS3;
+if(empty($UTF8_SPECIAL_CHARS3)) $UTF8_SPECIAL_CHARS3 = array(
     "\x1A",'','','','','',' ','!','"','#','$','%','&','\'','(',')','+',
     ',','/',';','<','=','>','?','@','[','\\',']','^','`','{','|','}','~','',
     '','','','','','','','','','','','','','','','','','',
@@ -1310,6 +1344,7 @@ if(empty($UTF8_SPECIAL_CHARS2)) $UTF8_SPECIAL_CHARS2 = array(
     '𝜌','𝜍','𝜎','𝜏','𝜐','𝜑','𝜒','𝜓','𝜔','𝜕','𝜖','𝜗','𝜘','𝜙','𝜚','𝜛',
     ' ',' ',' ','⁠','﻿'
 );
+
 /**
  * Romanization lookup table
  *
