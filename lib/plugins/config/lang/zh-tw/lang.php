@@ -8,6 +8,7 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '系統配置設定';
 $lang['error']                 = '設定因為不合法的值而未更新，請檢查您的更改並重新送出。
@@ -105,6 +106,7 @@ $lang['fetchsize']             = 'fetch.php 可以從外部下載的最大檔案
 $lang['notify']                = '寄送變更通知信到這個 E-mail 位址';
 $lang['registernotify']        = '寄送新使用者註冊資訊到這個 E-mail 位址';
 $lang['mailfrom']              = '自動發送郵件時使用的郵件地址';
+$lang['mailprefix']            = '自動發送郵件時使用的標題前綴';
 $lang['gzip_output']           = '對 xhtml 使用 gzip 內容編碼';
 $lang['gdlib']                 = 'GD Lib 版本';
 $lang['im_convert']            = 'ImageMagick 的轉換工具路徑';

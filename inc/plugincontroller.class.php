@@ -96,7 +96,15 @@ class Doku_Plugin_Controller {
 
         //construct class and instantiate
         $class = $type.'_plugin_'.$name;
-        if (!class_exists($class)) return null;
+        if (!class_exists($class)){
+            # the plugin might be in the wrong directory
+            $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
+            if($inf['base'] && $inf['base'] != $plugin){
+                msg("Plugin installed incorrectly. Rename plugin directory '".
+                    hsc($plugin)."' to '".hsc($inf['base'])."'.",-1);
+            }
+            return null;
+        }
 
         $DOKU_PLUGINS[$type][$name] = new $class;
         return $DOKU_PLUGINS[$type][$name];

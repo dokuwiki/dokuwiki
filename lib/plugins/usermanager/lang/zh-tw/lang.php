@@ -9,6 +9,7 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin <danny0838@pchome.com.tw>
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '帳號管理員';
 $lang['noauth']                = '(帳號認證尚未開放)';

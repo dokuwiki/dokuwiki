@@ -8,6 +8,7 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '管理插件 (Plugins)';
 $lang['download']              = '下載與安裝插件';

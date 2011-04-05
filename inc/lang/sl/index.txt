@@ -1,4 +1,4 @@
 ====== Kazalo ======
 
-Na spodnjem seznamu so izpisane vse wiki strani, ki so na voljo, urejene pa so skladno z [[doku>namespaces|imenskimi prostori]].
+Na spodnjem seznamu so izpisane vse wiki strani, ki so na voljo, razvrščene pa so po posameznih [[doku>namespaces|imenskih prostorih]].
 

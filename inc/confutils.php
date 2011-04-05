@@ -241,13 +241,13 @@ function actionOK($action){
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',',$conf['disableactions']);
         $disabled = array_map('trim',$disabled);
-        if(!empty($conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
+        if((isset($conf['openregister']) && !$conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
             $disabled[] = 'register';
         }
-        if(!empty($conf['resendpasswd']) || is_null($auth) || !$auth->canDo('modPass')) {
+        if((isset($conf['resendpasswd']) && !$conf['resendpasswd']) || is_null($auth) || !$auth->canDo('modPass')) {
             $disabled[] = 'resendpwd';
         }
-        if(!empty($conf['subscribers']) || is_null($auth)) {
+        if((isset($conf['subscribers']) && !$conf['subscribers']) || is_null($auth)) {
             $disabled[] = 'subscribe';
         }
         if (is_null($auth) || !$auth->canDo('Profile')) {
