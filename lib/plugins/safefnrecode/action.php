@@ -39,8 +39,8 @@ class action_plugin_safefnrecode extends DokuWiki_Action_Plugin {
         }
 
         if(!file_exists($conf['mediadir'].'_safefn.recoded')){
-            $this->recode($conf['metadir']);
-            touch($conf['metadir'].'_safefn.recoded');
+            $this->recode($conf['mediadir']);
+            touch($conf['mediadir'].'_safefn.recoded');
         }
 
     }
@@ -55,7 +55,7 @@ class action_plugin_safefnrecode extends DokuWiki_Action_Plugin {
         while (($file = readdir($dh)) !== false) {
             if($file == '.' || $file == '..') continue;           # cur and upper dir
             if(is_dir("$dir/$file")) $this->recode("$dir/$file"); #recurse
-            if(strpos('%',$file) === false) continue;             # no encoding used
+            if(strpos($file,'%') === false) continue;             # no encoding used
             $new = preg_replace('/(%[^\]]*?)\./','\1]',$file);    # new post indicator
             if(preg_match('/%[^\]]+$/',$new)) $new .= ']';        # fix end FS#2122
             rename("$dir/$file","$dir/$new");                     # rename it
