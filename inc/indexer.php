@@ -1146,7 +1146,7 @@ function idx_addPage($page, $verbose=false) {
     if(@file_exists($idxtag)){
         if(trim(io_readFile($idxtag)) == idx_get_version()){
             $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($ID))){
+            if($last > @filemtime(wikiFN($page))){
                 if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
                 return false;
             }
