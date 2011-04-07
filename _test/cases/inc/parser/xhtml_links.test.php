@@ -48,10 +48,17 @@ class xhtml_links_test extends UnitTestCase {
         global $ID;
         $ID = 'my:space';
 
+        global $conf;
+        $conf['basedir']     = '/';
+        $conf['useheading']  = 0;
+        $conf['userewrite']  = 0;
+        $conf['useslash']    = 0;
+        $conf['canonical']   = 0;
+
         $p = new Doku_Renderer_xhtml();
         $p->internallink('');
 
-        $expect = '<span class="curid"><a href="/./doku.php/my:space" class="wikilink1" title="my:space">start</a></span>';
+        $expect = '<span class="curid"><a href="/./doku.php?id=my:space" class="wikilink1" title="my:space">start</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -63,10 +70,17 @@ class xhtml_links_test extends UnitTestCase {
         global $ID;
         $ID = 'my:space';
 
+        global $conf;
+        $conf['basedir']     = '/';
+        $conf['useheading']  = 0;
+        $conf['userewrite']  = 0;
+        $conf['useslash']    = 0;
+        $conf['canonical']   = 0;
+
         $p = new Doku_Renderer_xhtml();
         $p->internallink('', 'my caption');
 
-        $expect = '<span class="curid"><a href="/./doku.php/my:space" class="wikilink1" title="my:space">my caption</a></span>';
+        $expect = '<span class="curid"><a href="/./doku.php?id=my:space" class="wikilink1" title="my:space">my caption</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -78,10 +92,17 @@ class xhtml_links_test extends UnitTestCase {
         global $ID;
         $ID = 'my:space';
 
+        global $conf;
+        $conf['basedir']     = '/';
+        $conf['useheading']  = 0;
+        $conf['userewrite']  = 0;
+        $conf['useslash']    = 0;
+        $conf['canonical']   = 0;
+
         $p = new Doku_Renderer_xhtml();
         $p->internallink('?do=index');
 
-        $expect = '<span class="curid"><a href="/./doku.php/my:space?do=index" class="wikilink1" title="my:space">start</a></span>';
+        $expect = '<span class="curid"><a href="/./doku.php?id=my:space&amp;do=index" class="wikilink1" title="my:space">start</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -93,10 +114,17 @@ class xhtml_links_test extends UnitTestCase {
         global $ID;
         $ID = 'my:space';
 
+        global $conf;
+        $conf['basedir']     = '/';
+        $conf['useheading']  = 0;
+        $conf['userewrite']  = 0;
+        $conf['useslash']    = 0;
+        $conf['canonical']   = 0;
+
         $p = new Doku_Renderer_xhtml();
         $p->internallink('?do=index', 'my caption');
 
-        $expect = '<span class="curid"><a href="/./doku.php/my:space?do=index" class="wikilink1" title="my:space">my caption</a></span>';
+        $expect = '<span class="curid"><a href="/./doku.php?id=my:space&amp;do=index" class="wikilink1" title="my:space">my caption</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -107,6 +135,13 @@ class xhtml_links_test extends UnitTestCase {
     function test_empty_locallink(){
         global $ID;
         $ID = 'my:space';
+
+        global $conf;
+        $conf['basedir']     = '/';
+        $conf['useheading']  = 0;
+        $conf['userewrite']  = 0;
+        $conf['useslash']    = 0;
+        $conf['canonical']   = 0;
 
         $p = new Doku_Renderer_xhtml();
         $p->locallink('test');
@@ -122,6 +157,13 @@ class xhtml_links_test extends UnitTestCase {
     function test_empty_locallink_with_caption(){
         global $ID;
         $ID = 'my:space';
+
+        global $conf;
+        $conf['basedir']     = '/';
+        $conf['useheading']  = 0;
+        $conf['userewrite']  = 0;
+        $conf['useslash']    = 0;
+        $conf['canonical']   = 0;
 
         $p = new Doku_Renderer_xhtml();
         $p->locallink('test', 'my caption');
