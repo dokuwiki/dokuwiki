@@ -1,6 +1,7 @@
 <?php
 if (!defined('DOKU_BASE')) define('DOKU_BASE','./');
 require_once DOKU_INC.'inc/parser/xhtml.php';
+require_once DOKU_INC.'inc/pageutils.php';
 
 class xhtml_links_test extends UnitTestCase {
 
@@ -45,8 +46,13 @@ class xhtml_links_test extends UnitTestCase {
       *  Produced by syntax like [[ ]]
       */
     function test_empty_internallink(){
+        $page = 'my:space';
+
         global $ID;
-        $ID = 'my:space';
+        $ID = $page;
+
+        global $conf;
+        $conf['start'] = 'start';
 
         global $conf;
         $conf['basedir']     = '/';
@@ -58,7 +64,20 @@ class xhtml_links_test extends UnitTestCase {
         $p = new Doku_Renderer_xhtml();
         $p->internallink('');
 
-        $expect = '<span class="curid"><a href="/./doku.php?id=my:space" class="wikilink1" title="my:space">start</a></span>';
+
+        if (page_exists($page)) {
+            $class = 'wikilink1';
+            $rel = '';
+        }
+        else {
+            $class = 'wikilink2';
+            $rel = ' rel="nofollow"';
+        }
+
+        $parts = split(':', $page);
+        $caption = $parts[count($parts)-1];
+
+        $expect = '<span class="curid"><a href="/./doku.php?id='.$page.'" class="'.$class.'" title="'.$page.'"'.$rel.'>'.$caption.'</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -67,8 +86,11 @@ class xhtml_links_test extends UnitTestCase {
       *  Produced by syntax like [[ |my caption]]
       */
     function test_empty_internallink_with_caption(){
+        $page = 'my:space';
+        $caption = 'my caption';
+
         global $ID;
-        $ID = 'my:space';
+        $ID = $page;
 
         global $conf;
         $conf['basedir']     = '/';
@@ -78,9 +100,18 @@ class xhtml_links_test extends UnitTestCase {
         $conf['canonical']   = 0;
 
         $p = new Doku_Renderer_xhtml();
-        $p->internallink('', 'my caption');
+        $p->internallink('', $caption);
 
-        $expect = '<span class="curid"><a href="/./doku.php?id=my:space" class="wikilink1" title="my:space">my caption</a></span>';
+        if (page_exists($page)) {
+            $class = 'wikilink1';
+            $rel = '';
+        }
+        else {
+            $class = 'wikilink2';
+            $rel = ' rel="nofollow"';
+        }
+
+        $expect = '<span class="curid"><a href="/./doku.php?id='.$page.'" class="'.$class.'" title="'.$page.'"'.$rel.'>'.$caption.'</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -89,8 +120,13 @@ class xhtml_links_test extends UnitTestCase {
       *  Produced by syntax like [[?do=index]]
       */
     function test_empty_internallink_index(){
+        $page = 'my:space';
+
         global $ID;
-        $ID = 'my:space';
+        $ID = $page;
+
+        global $conf;
+        $conf['start'] = 'start';
 
         global $conf;
         $conf['basedir']     = '/';
@@ -102,7 +138,19 @@ class xhtml_links_test extends UnitTestCase {
         $p = new Doku_Renderer_xhtml();
         $p->internallink('?do=index');
 
-        $expect = '<span class="curid"><a href="/./doku.php?id=my:space&amp;do=index" class="wikilink1" title="my:space">start</a></span>';
+        if (page_exists($page)) {
+            $class = 'wikilink1';
+            $rel = '';
+        }
+        else {
+            $class = 'wikilink2';
+            $rel = ' rel="nofollow"';
+        }
+
+        $parts = split(':', $page);
+        $caption = $parts[count($parts)-1];
+
+        $expect = '<span class="curid"><a href="/./doku.php?id='.$page.'&amp;do=index" class="'.$class.'" title="'.$page.'"'.$rel.'>'.$caption.'</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -111,8 +159,11 @@ class xhtml_links_test extends UnitTestCase {
       *  Produced by syntax like [[?do=index|my caption]]
       */
     function test_empty_internallink_index_with_caption(){
+        $page = 'my:space';
+        $caption = 'my caption';
+
         global $ID;
-        $ID = 'my:space';
+        $ID = $page;
 
         global $conf;
         $conf['basedir']     = '/';
@@ -122,9 +173,18 @@ class xhtml_links_test extends UnitTestCase {
         $conf['canonical']   = 0;
 
         $p = new Doku_Renderer_xhtml();
-        $p->internallink('?do=index', 'my caption');
+        $p->internallink('?do=index', $caption);
 
-        $expect = '<span class="curid"><a href="/./doku.php?id=my:space&amp;do=index" class="wikilink1" title="my:space">my caption</a></span>';
+        if (page_exists($page)) {
+            $class = 'wikilink1';
+            $rel = '';
+        }
+        else {
+            $class = 'wikilink2';
+            $rel = ' rel="nofollow"';
+        }
+
+        $expect = '<span class="curid"><a href="/./doku.php?id='.$page.'&amp;do=index" class="'.$class.'" title="'.$page.'"'.$rel.'>'.$caption.'</a></span>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -133,8 +193,9 @@ class xhtml_links_test extends UnitTestCase {
       *  Produced by syntax like [[#test]]
       */
     function test_empty_locallink(){
+        $page = 'my:spacex';
         global $ID;
-        $ID = 'my:space';
+        $ID = $page;
 
         global $conf;
         $conf['basedir']     = '/';
@@ -146,7 +207,7 @@ class xhtml_links_test extends UnitTestCase {
         $p = new Doku_Renderer_xhtml();
         $p->locallink('test');
 
-        $expect = '<a href="#test" title="my:space &crarr;" class="wikilink1">test</a>';
+        $expect = '<a href="#test" title="'.$page.' &crarr;" class="wikilink1">test</a>';
 
         $this->assertEqual($p->doc, $expect);
     }
@@ -155,8 +216,11 @@ class xhtml_links_test extends UnitTestCase {
       *  Produced by syntax like [[#test|my caption]]
       */
     function test_empty_locallink_with_caption(){
+        $page = 'my:spacex';
+        $caption = 'my caption';
+
         global $ID;
-        $ID = 'my:space';
+        $ID = $page;
 
         global $conf;
         $conf['basedir']     = '/';
@@ -166,9 +230,9 @@ class xhtml_links_test extends UnitTestCase {
         $conf['canonical']   = 0;
 
         $p = new Doku_Renderer_xhtml();
-        $p->locallink('test', 'my caption');
+        $p->locallink('test', $caption);
 
-        $expect = '<a href="#test" title="my:space &crarr;" class="wikilink1">my caption</a>';
+        $expect = '<a href="#test" title="'.$caption.' &crarr;" class="wikilink1">'.$caption.'</a>';
 
         $this->assertEqual($p->doc, $expect);
     }
