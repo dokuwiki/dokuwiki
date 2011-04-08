@@ -16,9 +16,9 @@
 class SafeFN {
 
     // 'safe' characters are a superset of $plain, $pre_indicator and $post_indicator
-    private static $plain = '-/_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
+    private static $plain = '-./[_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
     private static $pre_indicator = '%';
-    private static $post_indicator = '.';
+    private static $post_indicator = ']';
 
     /**
      * Convert an UTF-8 string to a safe ASCII String
@@ -37,7 +37,7 @@ class SafeFN {
      *    - reduce codepoint value for non-printable ASCII characters (0x00 - 0x1f).  Space becomes our zero.
      *    - convert reduced value to base36 (0-9a-z)
      *    - append $pre_indicator characater followed by base36 string to output, set converted flag
-     *      continue to next character)
+     *    (continue to next character)
      *
      * @param    string    $filename     a utf8 string, should only include printable characters - not 0x00-0x1f
      * @return   string    an encoded representation of $filename using only 'safe' ASCII characters
