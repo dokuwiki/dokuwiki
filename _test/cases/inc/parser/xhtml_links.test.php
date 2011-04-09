@@ -232,7 +232,7 @@ class xhtml_links_test extends UnitTestCase {
         $p = new Doku_Renderer_xhtml();
         $p->locallink('test', $caption);
 
-        $expect = '<a href="#test" title="'.$caption.' &crarr;" class="wikilink1">'.$caption.'</a>';
+        $expect = '<a href="#test" title="'.$page.' &crarr;" class="wikilink1">'.$caption.'</a>';
 
         $this->assertEqual($p->doc, $expect);
     }

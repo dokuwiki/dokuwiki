@@ -99,7 +99,7 @@ class init_getID_test extends UnitTestCase {
         $_SERVER['PATH_TRANSLATED'] = '/var/www/index.html';
         $_SERVER['PHP_SELF'] = '/dokuwiki/doku.php/';
 
-        $this->assertEqual(getID(), 'start');
+        $this->assertEqual(getID(), cleanID($conf['start']));
     }
 
 }
