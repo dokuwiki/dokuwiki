@@ -355,7 +355,7 @@ function html_search(){
         }
         print '</ul> ';
         //clear float (see http://www.complexspiral.com/publications/containing-floats/)
-        print '<div class="clearer">&nbsp;</div>';
+        print '<div class="clearer"></div>';
         print '</div>';
     }
     flush();
