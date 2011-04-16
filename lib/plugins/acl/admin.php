@@ -800,38 +800,42 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<select name="acl_t" class="edit">'.NL;
         echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
         echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
-        echo '  <optgroup label="&nbsp;">'.NL;
-        foreach($this->specials as $ug){
-            if($ug == $this->who){
-                $sel    = ' selected="selected"';
-                $inlist = true;
-            }else{
-                $sel = '';
-            }
+        if (!empty($this->specials)) {
+	        echo '  <optgroup label="&nbsp;">'.NL;
+	        foreach($this->specials as $ug){
+	            if($ug == $this->who){
+	                $sel    = ' selected="selected"';
+	                $inlist = true;
+	            }else{
+	                $sel = '';
+	            }
 
-            if($ug{0} == '@'){
-                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
-            }else{
-                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
-            }
+	            if($ug{0} == '@'){
+	                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+	            }else{
+	                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+	            }
+	        }
+	        echo '  </optgroup>'.NL;
         }
-        echo '  </optgroup>'.NL;
-        echo '  <optgroup label="&nbsp;">'.NL;
-        foreach($this->usersgroups as $ug){
-            if($ug == $this->who){
-                $sel    = ' selected="selected"';
-                $inlist = true;
-            }else{
-                $sel = '';
-            }
+        if (!empty($this->usersgroups)) {
+	        echo '  <optgroup label="&nbsp;">'.NL;
+	        foreach($this->usersgroups as $ug){
+	            if($ug == $this->who){
+	                $sel    = ' selected="selected"';
+	                $inlist = true;
+	            }else{
+	                $sel = '';
+	            }
 
-            if($ug{0} == '@'){
-                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
-            }else{
-                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
-            }
+	            if($ug{0} == '@'){
+	                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+	            }else{
+	                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+	            }
+	        }
+	        echo '  </optgroup>'.NL;
         }
-        echo '  </optgroup>'.NL;
         echo '</select>'.NL;
         return $inlist;
     }
