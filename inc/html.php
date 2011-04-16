@@ -457,11 +457,7 @@ function html_revisions($first=0){
         $form->addElement($date);
         $form->addElement(form_makeCloseTag('span'));
 
-        $form->addElement(form_makeTag('img', array(
-                        'src' =>  DOKU_BASE.'lib/images/blank.gif',
-                        'width' => '15',
-                        'height' => '11',
-                        'alt'    => '')));
+        $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
 
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
@@ -499,11 +495,7 @@ function html_revisions($first=0){
                             'name' => 'rev2[]',
                             'value' => $rev)));
         }else{
-            $form->addElement(form_makeTag('img', array(
-                            'src' => DOKU_BASE.'lib/images/blank.gif',
-                            'width' => 14,
-                            'height' => 11,
-                            'alt' => '')));
+            $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
         }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
@@ -524,11 +516,7 @@ function html_revisions($first=0){
             $form->addElement($ID);
             $form->addElement(form_makeCloseTag('a'));
         }else{
-            $form->addElement(form_makeTag('img', array(
-                            'src' => DOKU_BASE.'lib/images/blank.gif',
-                            'width' => '15',
-                            'height' => '11',
-                            'alt'   => '')));
+            $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
             $form->addElement($ID);
         }
 
