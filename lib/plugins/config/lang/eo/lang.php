@@ -108,6 +108,7 @@ $lang['fetchsize']             = 'Maksimuma grandeco (bitokoj) permesita al "fet
 $lang['notify']                = 'Sendi avizojn pri ŝanĝoj al tiu ĉi retadreso';
 $lang['registernotify']        = 'Sendi informon pri ĵus aliĝintoj al tiu ĉi retadreso';
 $lang['mailfrom']              = 'Retadreso uzota por aŭtomataj retmesaĝoj ';
+$lang['mailprefix']            = 'Retpoŝta temo-prefikso por uzi en aŭtomataj mesaĝoj';
 $lang['gzip_output']           = 'Uzi gzip-a enhav-enkodigo por XHTML';
 $lang['gdlib']                 = 'Versio de GD Lib';
 $lang['im_convert']            = 'Pado al la konvertilo de ImageMagick';
