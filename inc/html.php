@@ -1004,7 +1004,7 @@ function html_diff($text='',$intro=true,$type=null){
     if($intro) print p_locale_xhtml('diff');
 
     if (!$text) {
-        ptln('<p class="difflink">');
+        ptln('<div class="diffoptions">');
 
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
@@ -1030,8 +1030,8 @@ function html_diff($text='',$intro=true,$type=null){
                         'rev2[1]'  => $r_rev,
                         'difftype' => $type,
                       ));
-        ptln('<br /><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a>');
-        ptln('</p>');
+        ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a></p>');
+        ptln('</div>');
     }
     ?>
     <table class="diff diff_<?php echo $type?>">
