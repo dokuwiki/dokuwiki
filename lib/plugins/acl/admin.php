@@ -17,7 +17,7 @@ if(!defined('DOKU_INC')) die();
 class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     var $acl = null;
     var $ns  = null;
-    /** 
+    /**
      * The currently selected item, associative array with id and type.
      * Populated from (in this order):
      * $_REQUEST['current_ns']
@@ -37,7 +37,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2010-01-17',
+            'date'   => '2011-04-16',
             'name'   => 'ACL Manager',
             'desc'   => 'Manage Page Access Control Lists',
             'url'    => 'http://dokuwiki.org/plugin:acl',
@@ -449,7 +449,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $user   = '';
             $groups = array(ltrim($who,'@'));
         }else{
-            $user = auth_nameencode($who);
+            $user = $who;
             $info = $auth->getUserData($user);
             if($info === false){
                 $groups = array();
@@ -521,7 +521,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // highlight?
-        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id'])) 
+        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id']))
             $cl = ' cur';
 
         // namespace or page?
