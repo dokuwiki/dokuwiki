@@ -1021,7 +1021,7 @@ class TableDiffFormatter extends DiffFormatter {
         $l1 = $lang['line'].' '.$xbeg;
         $l2 = $lang['line'].' '.$ybeg;
         $r = '<tr><td class="diff-blockheader" colspan="2">'.$l1.":</td>\n".
-             '    <td class="diff-blockheader" colspan="2">'.$l2.":</td>\n".
+             '<td class="diff-blockheader" colspan="2">'.$l2.":</td>\n".
              "</tr>\n";
         return $r;
     }
