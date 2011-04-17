@@ -1424,7 +1424,7 @@ function html_admin(){
 
     // data security check
     // @todo: could be checked and only displayed if $conf['savedir'] is under the web root
-    echo '<a style="border:none; float:right;" target="_blank"
+    echo '<a style="border:none; float:right;"
             href="http://www.dokuwiki.org/security#web_access_security">
             <img src="data/security.png" alt="Your data directory seems to be protected properly."
              onerror="this.parentNode.style.display=\'none\'" /></a>';
