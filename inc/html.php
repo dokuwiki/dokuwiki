@@ -1097,7 +1097,7 @@ function html_register(){
     $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], null, 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block', array('size'=>'50')));
     if (!$conf['autopasswd']) {
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
