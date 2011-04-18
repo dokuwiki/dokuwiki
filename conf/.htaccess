@@ -1,3 +1,4 @@
 ## no access to the conf directory
 order allow,deny
 deny from all
+Satisfy All

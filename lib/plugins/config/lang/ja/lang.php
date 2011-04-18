@@ -106,6 +106,7 @@ $lang['fetchsize']             = '外部からのダウンロード最大サイ�
 $lang['notify']                = '変更を通知するメールアドレス';
 $lang['registernotify']        = '新規ユーザー登録を通知するメールアドレス';
 $lang['mailfrom']              = 'メール送信時の送信元アドレス';
+$lang['mailprefix']            = '自動メールの題名に使用する接頭語';
 $lang['gzip_output']           = 'xhtmlに対するコンテンツ圧縮（gzip）を使用';
 $lang['gdlib']                 = 'GDlibバージョン';
 $lang['im_convert']            = 'ImageMagick変換ツールへのパス';

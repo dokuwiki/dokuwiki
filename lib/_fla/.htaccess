@@ -1,3 +1,4 @@
 ## no access to the fla directory
 order allow,deny
 deny from all
+Satisfy All

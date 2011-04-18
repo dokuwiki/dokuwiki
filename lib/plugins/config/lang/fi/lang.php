@@ -103,6 +103,7 @@ $lang['fetchsize']             = 'Suurin koko (bytejä), jonka fetch.php voi lad
 $lang['notify']                = 'Lähetä muutosilmoitukset tähän osoitteeseen';
 $lang['registernotify']        = 'Lähetä ilmoitus uusista rekisteröitymisistä tähän osoitteeseen';
 $lang['mailfrom']              = 'Sähköpostiosoite automaattisia postituksia varten';
+$lang['mailprefix']            = 'Etuliite automaattisesti lähetettyihin dähköposteihin';
 $lang['gzip_output']           = 'Käytä gzip "Content-Encoding"-otsaketta xhtml-tiedostojen lähettämiseen';
 $lang['gdlib']                 = 'GD Lib versio';
 $lang['im_convert']            = 'ImageMagick-muunnostyökalun polku';

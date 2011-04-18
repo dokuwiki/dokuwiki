@@ -92,7 +92,7 @@ if (!defined('DOKU_INC')) die();
     <!-- wikipage stop -->
   </div>
 
-  <div class="clearer">&nbsp;</div>
+  <div class="clearer"></div>
 
   <?php tpl_flush()?>
 
