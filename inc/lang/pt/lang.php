@@ -8,6 +8,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
+ * @author José Campos zecarlosdecampos@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -161,6 +162,7 @@ $lang['diff']                  = 'mostrar diferenças com a versão actual';
 $lang['diff2']                 = 'mostrar diferenças entre versões escolhidas';
 $lang['difflink']              = 'Ligação para esta vista de comparação';
 $lang['diff_type']             = 'Ver diferenças';
+$lang['diff_inline']           = 'Embutido';
 $lang['diff_side']             = 'Lado a lado';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Está em';

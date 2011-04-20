@@ -6,6 +6,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
+ * @author José Campos zecarlosdecampos@gmail.com
  */
 $lang['menu']                  = 'Configuração';
 $lang['error']                 = 'Parâmetros de Configuração não actualizados devido a valores inválidos. Por favor, reveja as modificações que pretende efectuar antes de re-submetê-las.<br /> Os valores incorrectos serão mostrados dentro de uma "moldura" vermelha.';
