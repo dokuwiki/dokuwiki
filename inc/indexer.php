@@ -1191,7 +1191,7 @@ function idx_addPage($page, $verbose=false) {
         @unlink($idxtag);
         return $result;
     }
-    $indexenabled = p_get_metadata($page, 'internal index', false);
+    $indexenabled = p_get_metadata($page, 'internal index', true);
     if ($indexenabled === false) {
         $result = false;
         if (@file_exists($idxtag)) {
@@ -1209,8 +1209,8 @@ function idx_addPage($page, $verbose=false) {
 
     $body = '';
     $metadata = array();
-    $metadata['title'] = p_get_metadata($page, 'title', false);
-    if (($references = p_get_metadata($page, 'relation references', false)) !== null)
+    $metadata['title'] = p_get_metadata($page, 'title', true);
+    if (($references = p_get_metadata($page, 'relation references', true)) !== null)
         $metadata['relation_references'] = array_keys($references);
     else
         $metadata['relation_references'] = array();
