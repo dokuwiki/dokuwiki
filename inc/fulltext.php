@@ -241,11 +241,11 @@ function _ft_pageLookup(&$data){
             }
         }
     }
+
     if (isset($ns)) {
-        foreach ($page_idx as $p_id) {
-            if (strpos($p_id, $ns) === 0) {
-                if (!isset($pages[$p_id]))
-                    $pages[$p_id] = p_get_first_heading($p_id, false);
+        foreach (array_keys($pages) as $p_id) {
+            if (strpos($p_id, $ns) !== 0) {
+                unset($pages[$p_id]);
             }
         }
     }
