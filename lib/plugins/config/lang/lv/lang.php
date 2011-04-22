@@ -101,6 +101,7 @@ $lang['fetchsize']             = 'Maksimālais faila apjoms baitos, ko fetch.php
 $lang['notify']                = 'Nosūtīt izmaiņu paziņojumu uz epasta adresi';
 $lang['registernotify']        = 'Nosūtīt paziņojumu par jauniem lietotājiem uz epasta adresi';
 $lang['mailfrom']              = 'Epasta adrese automātiskajiem paziņojumiem';
+$lang['mailprefix']            = 'E-pasta temata prefikss automātiskajiem paziņojumiem';
 $lang['gzip_output']           = 'Lietot gzip Content-Encoding priekš xhtml';
 $lang['gdlib']                 = 'GD Lib versija';
 $lang['im_convert']            = 'Ceļš uz ImageMagick convert rīku';

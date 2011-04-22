@@ -20,6 +20,7 @@
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
+ * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  */
 $lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
 $lang['acl_group']             = 'Groupe';

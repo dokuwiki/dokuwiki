@@ -2,7 +2,7 @@
 
 Tuto stránku můžete používat ke správě nastavení vaší instalace DokuWiki. Nápovědu pro konkrétní položky nastavení naleznete na [[doku>config]]. Pro další detaily o tomto pluginu viz [[doku>plugin:config]].
 
-Položky se světle červeným pozadím jsou chráněné a nelze je upravovat tímto pluginem.  Položky s modrým pozadím jsou výchozí hodnoty a položky s bílým pozadím byly nastaveny lokálně v této konktétní instalaci. Modré i bílé položky je možné upravovat.
+Položky se světle červeným pozadím jsou chráněné a nelze je upravovat tímto pluginem.  Položky s modrým pozadím jsou výchozí hodnoty a položky s bílým pozadím byly nastaveny lokálně v této konkrétní instalaci. Modré i bílé položky je možné upravovat.
 
 Než opustíte tuto stránku, nezapomeňte stisknout tlačítko **Uložit**, jinak budou změny ztraceny.
 

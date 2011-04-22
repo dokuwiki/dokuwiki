@@ -8,6 +8,9 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Anika Henke <anika@selfthinker.org>
  */
+if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+if(!define('NOSESSION')) define('NOSESSION',1);
+require_once(DOKU_INC.'inc/init.php');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,9 +44,6 @@
 </head>
 <body>
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
-require_once(DOKU_INC.'inc/init.php');
-
 $ini = @parse_ini_file($conf['template'].'/style.ini',true);
 if ($ini) {
     echo '<table>';

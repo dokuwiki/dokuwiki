@@ -1,7 +1,7 @@
 <?php
 /**
  * PHP LDAP CLASS FOR MANIPULATING ACTIVE DIRECTORY
- * Version 3.3.1
+ * Version 3.3.2
  *
  * PHP Version 5 with SSL and LDAP support
  *
@@ -9,7 +9,7 @@
  *   email: scott@wiggumworld.com, adldap@richardhyland.com
  *   http://adldap.sourceforge.net/
  *
- * Copyright (c) 2006-2009 Scott Barnett, Richard Hyland
+ * Copyright (c) 2006-2010 Scott Barnett, Richard Hyland
  *
  * We'd appreciate any improvements or additions to be submitted back
  * to benefit the entire community :)
@@ -27,10 +27,10 @@
  * @category ToolsAndUtilities
  * @package adLDAP
  * @author Scott Barnett, Richard Hyland
- * @copyright (c) 2006-2009 Scott Barnett, Richard Hyland
+ * @copyright (c) 2006-2010 Scott Barnett, Richard Hyland
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
- * @revision $Revision: 67 $
- * @version 3.3.1
+ * @revision $Revision: 91 $
+ * @version 3.3.2
  * @link http://adldap.sourceforge.net/
  */
 
@@ -409,25 +409,26 @@ class adLDAP {
     * @param bool optional $prevent_rebind
     * @return bool
     */
-    public function authenticate($username,$password,$prevent_rebind=false){
+    public function authenticate($username, $password, $prevent_rebind = false) {
         // Prevent null binding
-        if ($username===NULL || $password===NULL){ return (false); }
-        if (empty($username) || empty($password)){ return (false); }
+        if ($username === NULL || $password === NULL) { return false; }
+        if (empty($username) || empty($password)) { return false; }
 
         // Bind as the user
-        $this->_bind = @ldap_bind($this->_conn,$username.$this->_account_suffix,$password);
-        if (!$this->_bind){ return (false); }
+        $ret = true;
+        $this->_bind = @ldap_bind($this->_conn, $username . $this->_account_suffix, $password);
+        if (!$this->_bind){ $ret = false; }
 
         // Cnce we've checked their details, kick back into admin mode if we have it
-        if ($this->_ad_username!=NULL && !$prevent_rebind){
-            $this->_bind = @ldap_bind($this->_conn,$this->_ad_username.$this->_account_suffix,$this->_ad_password);
+        if ($this->_ad_username !== NULL && !$prevent_rebind) {
+            $this->_bind = @ldap_bind($this->_conn, $this->_ad_username . $this->_account_suffix , $this->_ad_password);
             if (!$this->_bind){
                 // This should never happen in theory
                 throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->get_last_error());
             }
         }
 
-        return (true);
+        return $ret;
     }
 
     //*****************************************************************************************************************
@@ -758,7 +759,7 @@ class adLDAP {
         $ret_groups=array();
 
         $groups=$this->group_info($group,array("memberof"));
-        if (is_array($groups[0]["memberof"])) {
+        if (isset($groups[0]["memberof"]) && is_array($groups[0]["memberof"])) {
             $groups=$groups[0]["memberof"];
 
             if ($groups){
@@ -861,7 +862,7 @@ class adLDAP {
     * @param array $attributes The attributes to set to the user account
     * @return bool
     */
-    public function user_create($attributes){
+        public function user_create($attributes){
         // Check for compulsory fields
         if (!array_key_exists("username",$attributes)){ return ("Missing compulsory field [username]"); }
         if (!array_key_exists("firstname",$attributes)){ return ("Missing compulsory field [firstname]"); }
@@ -963,25 +964,36 @@ class adLDAP {
             $username = $this->strguid2hex($username);
             $filter="objectguid=".$username;
         }
-        else {
-            $filter="samaccountname=".$username;
+        else if (strstr($username, "@")) {
+             $filter="userPrincipalName=".$username;
         }
+        else {
+             $filter="samaccountname=".$username;
+        }
+        $filter = "(&(objectCategory=person)({$filter}))";
         if ($fields===NULL){ $fields=array("samaccountname","mail","memberof","department","displayname","telephonenumber","primarygroupid","objectsid"); }
+        if (!in_array("objectsid",$fields)){
+            $fields[] = "objectsid";
+        }
         $sr=ldap_search($this->_conn,$this->_base_dn,$filter,$fields);
         $entries = ldap_get_entries($this->_conn, $sr);
 
-        if ($entries[0]['count'] >= 1) {
-            // AD does not return the primary group in the ldap query, we may need to fudge it
-            if ($this->_real_primarygroup && isset($entries[0]["primarygroupid"][0]) && isset($entries[0]["objectsid"][0])){
-                //$entries[0]["memberof"][]=$this->group_cn($entries[0]["primarygroupid"][0]);
-                $entries[0]["memberof"][]=$this->get_primary_group($entries[0]["primarygroupid"][0], $entries[0]["objectsid"][0]);
-            } else {
-                $entries[0]["memberof"][]="CN=Domain Users,CN=Users,".$this->_base_dn;
+        if (isset($entries[0])) {
+            if ($entries[0]['count'] >= 1) {
+                if (in_array("memberof", $fields)) {
+                    // AD does not return the primary group in the ldap query, we may need to fudge it
+                    if ($this->_real_primarygroup && isset($entries[0]["primarygroupid"][0]) && isset($entries[0]["objectsid"][0])){
+                        //$entries[0]["memberof"][]=$this->group_cn($entries[0]["primarygroupid"][0]);
+                        $entries[0]["memberof"][]=$this->get_primary_group($entries[0]["primarygroupid"][0], $entries[0]["objectsid"][0]);
+                    } else {
+                        $entries[0]["memberof"][]="CN=Domain Users,CN=Users,".$this->_base_dn;
+                    }
+                    $entries[0]["memberof"]["count"]++;
+                }
             }
+            return $entries;
         }
-
-        $entries[0]["memberof"]["count"]++;
-        return ($entries);
+        return false;
     }
 
     /**
@@ -1171,8 +1183,17 @@ class adLDAP {
         $add=array();
         $add["unicodePwd"][0]=$this->encode_password($password);
 
-        $result=ldap_mod_replace($this->_conn,$user_dn,$add);
-        if ($result==false){ return (false); }
+        $result=@ldap_mod_replace($this->_conn,$user_dn,$add);
+        if ($result==false){
+            $err = ldap_errno($this->_conn);
+            if($err){
+                $msg = 'Error '.$err.': '.ldap_err2str($err).'.';
+                if($err == 53) $msg .= ' Your password might not match the password policy.';
+                throw new adLDAPException($msg);
+            }else{
+                return false;
+            }
+        }
 
         return (true);
     }
@@ -1230,6 +1251,33 @@ class adLDAP {
         else {
             return (false);
         }
+    }
+
+    /**
+    * Move a user account to a different OU
+    *
+    * @param string $username The username to move (please be careful here!)
+    * @param array $container The container or containers to move the user to (please be careful here!).
+    * accepts containers in 1. parent 2. child order
+    * @return array
+    */
+    public function user_move($username, $container) {
+        if (!$this->_bind){ return (false); }
+        if ($username === null){ return ("Missing compulsory field [username]"); }
+        if ($container === null){ return ("Missing compulsory field [container]"); }
+        if (!is_array($container)){ return ("Container must be an array"); }
+
+        $userinfo = $this->user_info($username, array("*"));
+        $dn = $userinfo[0]['distinguishedname'][0];
+        $newrdn = "cn=" . $username;
+        $container = array_reverse($container);
+        $newcontainer = "ou=" . implode(",ou=",$container);
+        $newbasedn = strtolower($newcontainer) . "," . $this->_base_dn;
+        $result=@ldap_rename($this->_conn,$dn,$newrdn,$newbasedn,true);
+        if ($result !== true) {
+            return (false);
+        }
+        return (true);
     }
 
     //*****************************************************************************************************************
@@ -1565,6 +1613,32 @@ class adLDAP {
         }
 
         return ($groups);
+    }
+
+    //************************************************************************************************************
+    //  ORGANIZATIONAL UNIT FUNCTIONS
+
+     /**
+    * Create an organizational unit
+    *
+    * @param array $attributes Default attributes of the ou
+    * @return bool
+    */
+    public function ou_create($attributes){
+        if (!is_array($attributes)){ return ("Attributes must be an array"); }
+        if (!array_key_exists("ou_name",$attributes)){ return ("Missing compulsory field [ou_name]"); }
+        if (!array_key_exists("container",$attributes)){ return ("Missing compulsory field [container]"); }
+        if (!is_array($attributes["container"])){ return ("Container attribute must be an array."); }
+        $attributes["container"]=array_reverse($attributes["container"]);
+
+        $add=array();
+        $add["objectClass"] = "organizationalUnit";
+
+        $container="OU=".implode(",OU=",$attributes["container"]);
+        $result=ldap_add($this->_conn,"CN=".$add["cn"].", ".$container.",".$this->_base_dn,$add);
+        if ($result!=true){ return (false); }
+
+        return (true);
     }
 
     //************************************************************************************************************
@@ -1998,6 +2072,7 @@ class adLDAP {
         if ($attributes["exchange_usedefaults"]){ $mod["mDBUseDefaults"][0]=$attributes["exchange_usedefaults"]; }
         if ($attributes["exchange_policyexclude"]){ $mod["msExchPoliciesExcluded"][0]=$attributes["exchange_policyexclude"]; }
         if ($attributes["exchange_policyinclude"]){ $mod["msExchPoliciesIncluded"][0]=$attributes["exchange_policyinclude"]; }
+        if ($attributes["exchange_addressbook"]){ $mod["showInAddressBook"][0]=$attributes["exchange_addressbook"]; }
 
         // This schema is designed for contacts
         if ($attributes["exchange_hidefromlists"]){ $mod["msExchHideFromAddressLists"][0]=$attributes["exchange_hidefromlists"]; }

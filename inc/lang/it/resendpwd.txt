@@ -1,3 +1,3 @@
 ====== Invia nuova password ======
 
-Riempi tutte le informazioni seguenti per ottenere una nuova password per il tuo account su questo wiki. La nuova password sarà inviata al tuo indirizzo di posta elettronica registrato. Il nome utente deve essere il tuo nome utente di questo wiki.
+Inserisci tutte le informazioni per ottenere una nuova password per il tuo account su questo wiki. La nuova password sarà inviata al tuo indirizzo di posta elettronica registrato. Il nome utente deve essere il tuo nome utente in questo wiki.

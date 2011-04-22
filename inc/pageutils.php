@@ -311,14 +311,13 @@ function metaFN($id,$ext){
  * returns an array of full paths to all metafiles of a given ID
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function metaFiles($id){
-    $name   = noNS($id);
-    $ns     = getNS($id);
-    $dir    = ($ns) ? metaFN($ns,'').'/' : metaFN($ns,'');
-    $files  = array();
-    $files  = glob($dir.$name.'.*');
-    return $files;
+    $basename = metaFN($id, '');
+    $files    = glob($basename.'.*', GLOB_MARK);
+    // filter files like foo.bar.meta when $id == 'foo'
+    return    $files ? preg_grep('/^'.preg_quote($basename, '/').'\.[^.\/]*$/u', $files) : array();
 }
 
 /**
@@ -344,10 +343,13 @@ function mediaFN($id){
  */
 function localeFN($id){
     global $conf;
-    $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.txt';
+    $file = DOKU_CONF.'/lang/'.$conf['lang'].'/'.$id.'.txt';
     if(!@file_exists($file)){
-        //fall back to english
-        $file = DOKU_INC.'inc/lang/en/'.$id.'.txt';
+        $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.txt';
+        if(!@file_exists($file)){
+            //fall back to english
+            $file = DOKU_INC.'inc/lang/en/'.$id.'.txt';
+        }
     }
     return $file;
 }
@@ -421,7 +423,13 @@ function resolve_mediaid($ns,&$page,&$exists){
  */
 function resolve_pageid($ns,&$page,&$exists){
     global $conf;
+    global $ID;
     $exists = false;
+
+    //empty address should point to current page
+    if ($page === "") {
+        $page = $ID;
+    }
 
     //keep hashlink if exists then clean both parts
     if (strpos($page,'#')) {

@@ -48,6 +48,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/textselection.js',
                 DOKU_INC.'lib/scripts/toolbar.js',
                 DOKU_INC.'lib/scripts/edit.js',
+                DOKU_INC.'lib/scripts/locktimer.js',
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
                 DOKU_INC.'lib/scripts/subscriptions.js',
@@ -112,7 +113,7 @@ function js_out(){
     js_runonstart("initSizeCtl('size__ctl','wiki__text')");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
-        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
     }
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
@@ -396,4 +397,4 @@ function js_compress($s){
     return trim($result);
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

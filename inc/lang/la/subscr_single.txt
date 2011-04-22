@@ -16,7 +16,7 @@ Noua recensio: @NEWPAGE@
 Ut paginae adnotationes deleas, in uicem ineas in
 @DOKUWIKIURL@, deinde uideas
 @NEWPAGE@
-et paginarum spatiorum nominis optiones mutasa.
+et paginarum et\aut generum optiones mutasa.
 
 --
 Hic cursus a uicis generatus

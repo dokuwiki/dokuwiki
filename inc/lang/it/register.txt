@@ -1,4 +1,3 @@
 ====== Registrazione nuovo utente ======
 
-Riempi tutte le informazioni seguenti per creare un nuovo account in questo wiki.  Assicurati di inserire un **indirizzo email valido** - la tua nuova password ti sarà inviata con un messaggio di posta elettronica. L'account dovrebbe essere un [[doku>pagename|nome di pagina]] valido.
-
+Riempi tutte le informazioni seguenti per creare un nuovo account in questo wiki.  Assicurati di inserire un **indirizzo email valido** - a meno che tu non l'abbia già inserita qui, la password ti sarà inviata con un messaggio di posta elettronica. Il nome utente deve soddisfare i criteri per i [[doku>pagename|nomi delle pagine]].

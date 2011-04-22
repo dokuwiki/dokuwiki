@@ -11,9 +11,6 @@ require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
 if(!defined('NL')) define('NL',"\n");
 
-// Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 2);
-
 // keep running after browser closes connection
 @ignore_user_abort(true);
 
@@ -34,7 +31,6 @@ $tmp = array(); // No event data
 $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
 if ($evt->advise_before()) {
   runIndexer() or
-  metaUpdate() or
   runSitemapper() or
   sendDigest() or
   runTrimRecentChanges() or
@@ -137,86 +133,8 @@ function runIndexer(){
 
     if(!$ID) return false;
 
-    // check if indexing needed
-    $idxtag = metaFN($ID,'.indexed');
-    if(@file_exists($idxtag)){
-        if(io_readFile($idxtag) >= INDEXER_VERSION){
-            $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($ID))){
-                print "runIndexer(): index for $ID up to date".NL;
-                return false;
-            }
-        }
-    }
-
-    // try to aquire a lock
-    $lock = $conf['lockdir'].'/_indexer.lock';
-    while(!@mkdir($lock,$conf['dmode'])){
-        usleep(50);
-        if(time()-@filemtime($lock) > 60*5){
-            // looks like a stale lock - remove it
-            @rmdir($lock);
-            print "runIndexer(): stale lock removed".NL;
-        }else{
-            print "runIndexer(): indexer locked".NL;
-            return false;
-        }
-    }
-    if($conf['dperm']) chmod($lock, $conf['dperm']);
-
     // do the work
-    idx_addPage($ID);
-
-    // we're finished - save and free lock
-    io_saveFile(metaFN($ID,'.indexed'),INDEXER_VERSION);
-    @rmdir($lock);
-    print "runIndexer(): finished".NL;
-    return true;
-}
-
-/**
- * Will render the metadata for the page if not exists yet
- *
- * This makes sure pages which are created from outside DokuWiki will
- * gain their data when viewed for the first time.
- */
-function metaUpdate(){
-    global $ID;
-    print "metaUpdate(): started".NL;
-
-    if(!$ID) return false;
-    $file = metaFN($ID, '.meta');
-    echo "meta file: $file".NL;
-
-    // rendering needed?
-    if (@file_exists($file)) return false;
-    if (!@file_exists(wikiFN($ID))) return false;
-
-    global $conf;
-
-    // gather some additional info from changelog
-    $info = io_grep($conf['changelog'],
-                    '/^(\d+)\t(\d+\.\d+\.\d+\.\d+)\t'.preg_quote($ID,'/').'\t([^\t]+)\t([^\t\n]+)/',
-                    0,true);
-
-    $meta = array();
-    if(!empty($info)){
-        $meta['date']['created'] = $info[0][1];
-        foreach($info as $item){
-            if($item[4] != '*'){
-                $meta['date']['modified'] = $item[1];
-                if($item[3]){
-                    $meta['contributor'][$item[3]] = $item[3];
-                }
-            }
-        }
-    }
-
-    $meta = p_render_metadata($ID, $meta);
-    io_saveFile($file, serialize($meta));
-
-    echo "metaUpdate(): finished".NL;
-    return true;
+    return idx_addPage($ID, true);
 }
 
 /**
@@ -229,88 +147,10 @@ function metaUpdate(){
  * @link   https://www.google.com/webmasters/sitemaps/docs/en/about.html
  */
 function runSitemapper(){
-    global $conf;
     print "runSitemapper(): started".NL;
-    if(!$conf['sitemap']) return false;
-
-    if($conf['compression'] == 'bz2' || $conf['compression'] == 'gz'){
-        $sitemap = 'sitemap.xml.gz';
-    }else{
-        $sitemap = 'sitemap.xml';
-    }
-    print "runSitemapper(): using $sitemap".NL;
-
-    if(@file_exists(DOKU_INC.$sitemap)){
-        if(!is_writable(DOKU_INC.$sitemap)) return false;
-    }else{
-        if(!is_writable(DOKU_INC)) return false;
-    }
-
-    if(@filesize(DOKU_INC.$sitemap) &&
-       @filemtime(DOKU_INC.$sitemap) > (time()-($conf['sitemap']*60*60*24))){
-       print 'runSitemapper(): Sitemap up to date'.NL;
-       return false;
-    }
-
-    $pages = idx_getIndex('page', '');
-    print 'runSitemapper(): creating sitemap using '.count($pages).' pages'.NL;
-
-    // build the sitemap
-    ob_start();
-    print '<?xml version="1.0" encoding="UTF-8"?>'.NL;
-    print '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
-    foreach($pages as $id){
-        $id = trim($id);
-        $file = wikiFN($id);
-
-        //skip hidden, non existing and restricted files
-        if(isHiddenPage($id)) continue;
-        $date = @filemtime($file);
-        if(!$date) continue;
-        if(auth_aclcheck($id,'','') < AUTH_READ) continue;
-
-        print '  <url>'.NL;
-        print '    <loc>'.wl($id,'',true).'</loc>'.NL;
-        print '    <lastmod>'.date_iso8601($date).'</lastmod>'.NL;
-        print '  </url>'.NL;
-    }
-    print '</urlset>'.NL;
-    $data = ob_get_contents();
-    ob_end_clean();
-
-    //save the new sitemap
-    io_saveFile(DOKU_INC.$sitemap,$data);
-
-    //ping search engines...
-    $http = new DokuHTTPClient();
-    $http->timeout = 8;
-
-    //ping google
-    print 'runSitemapper(): pinging google'.NL;
-    $url  = 'http://www.google.com/webmasters/sitemaps/ping?sitemap=';
-    $url .= urlencode(DOKU_URL.$sitemap);
-    $resp = $http->get($url);
-    if($http->error) print 'runSitemapper(): '.$http->error.NL;
-    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
-
-    //ping yahoo
-    print 'runSitemapper(): pinging yahoo'.NL;
-    $url  = 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=dokuwiki&url=';
-    $url .= urlencode(DOKU_URL.$sitemap);
-    $resp = $http->get($url);
-    if($http->error) print 'runSitemapper(): '.$http->error.NL;
-    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
-
-    //ping microsoft
-    print 'runSitemapper(): pinging microsoft'.NL;
-    $url  = 'http://www.bing.com/webmaster/ping.aspx?siteMap=';
-    $url .= urlencode(DOKU_URL.$sitemap);
-    $resp = $http->get($url);
-    if($http->error) print 'runSitemapper(): '.$http->error.NL;
-    print 'runSitemapper(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)).NL;
-
+    $result = Sitemapper::generate() && Sitemapper::pingSearchEngines();
     print 'runSitemapper(): finished'.NL;
-    return true;
+    return $result;
 }
 
 /**
@@ -406,21 +246,6 @@ function sendDigest() {
 }
 
 /**
- * Formats a timestamp as ISO 8601 date
- *
- * @author <ungu at terong dot com>
- * @link http://www.php.net/manual/en/function.date.php#54072
- */
-function date_iso8601($int_date) {
-   //$int_date: current date in UNIX timestamp
-   $date_mod = date('Y-m-d\TH:i:s', $int_date);
-   $pre_timezone = date('O', $int_date);
-   $time_zone = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
-   $date_mod .= $time_zone;
-   return $date_mod;
-}
-
-/**
  * Just send a 1x1 pixel blank gif to the browser
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -441,6 +266,6 @@ function sendGIF(){
     // Thinks it's got the whole image
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :
 // No trailing PHP closing tag - no output please!
 // See Note at http://www.php.net/manual/en/language.basic-syntax.instruction-separation.php

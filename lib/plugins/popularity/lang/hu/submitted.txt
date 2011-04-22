@@ -1,0 +1,3 @@
+====== Visszajelzés a DokuWiki használatáról ======
+
+Az adatokat sikeresen elküldtük.

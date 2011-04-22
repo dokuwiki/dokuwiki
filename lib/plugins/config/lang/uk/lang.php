@@ -9,6 +9,7 @@
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  * @author Uko uko@uar.net
  * @author Ulrikhe Lukoie  <lukoie@gmail>.com
+ * @author Kate Arzamastseva pshns@ukr.net
  */
 $lang['menu']                  = 'Настройка конфігурації';
 $lang['error']                 = 'Параметри не збережено через помилкові значення. Будь ласка, перегляньте ваші зміни та спробуйте ще раз
@@ -107,6 +108,7 @@ $lang['fetchsize']             = 'Максимальний розмір (в ба
 $lang['notify']                = 'E-mail для сповіщень';
 $lang['registernotify']        = 'Надсилати інформацію про нових користувачів на цю адресу';
 $lang['mailfrom']              = 'E-mail для автоматичних повідомлень';
+$lang['mailprefix']            = 'Префікс теми повідомлення, що використовується в автоматичній розсилці електронних листів';
 $lang['gzip_output']           = 'Використовувати gzip, як Content-Encoding для xhtml';
 $lang['gdlib']                 = 'Версія GD Lib';
 $lang['im_convert']            = 'Шлях до ImageMagick';
@@ -187,4 +189,4 @@ $lang['useheading_o_0']        = 'Ніколи';
 $lang['useheading_o_navigation'] = 'Лише для навігації';
 $lang['useheading_o_content']  = 'Лише у змісті';
 $lang['useheading_o_1']        = 'Завжди';
-$lang['readdircache']          = 'Макссимальний вік для файлів кешу (сек.)';
+$lang['readdircache']          = 'Максимальний вік для файлів кешу (сек.)';

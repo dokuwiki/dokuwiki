@@ -8,7 +8,7 @@
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesSq.php?view=co
- * @author Leonard Elezi leonard.elezi@depinfo.info
+ * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,6 +49,7 @@ $lang['btn_draft']             = 'Redakto skicën';
 $lang['btn_recover']           = 'Rekupero skicën';
 $lang['btn_draftdel']          = 'Fshi skicën';
 $lang['btn_revert']            = 'Kthe si më parë';
+$lang['btn_register']          = 'Regjsitrohuni';
 $lang['loggedinas']            = 'Regjistruar si ';
 $lang['user']                  = 'Nofka e përdoruesit:';
 $lang['pass']                  = 'Fjalëkalimi';
@@ -58,7 +59,6 @@ $lang['passchk']               = 'Edhe një herë';
 $lang['remember']              = 'Më mbaj mend';
 $lang['fullname']              = 'Emri i vërtetë';
 $lang['email']                 = 'Adresa e email-it*';
-$lang['register']              = 'Regjsitrohuni';
 $lang['profile']               = 'Profili i përdoruesit';
 $lang['badlogin']              = 'Na vjen keq, emri ose fjalëkalimi është gabim.';
 $lang['minoredit']             = 'Ndryshime të Vogla';

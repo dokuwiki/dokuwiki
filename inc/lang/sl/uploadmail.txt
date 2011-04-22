@@ -1,0 +1,14 @@
+Datoteka je bila uspešno naložena na DokuWiki spletišče.
+Podrobnosti o datoteki:
+
+Datoteka  : @MEDIA@
+Datum     : @DATE@
+Brskalnik : @BROWSER@
+Naslov IP : @IPADDRESS@
+Ponudnik  : @HOSTNAME@
+Velikost  : @SIZE@
+Vrsta MIME: @MIME@
+Uporabnik : @USER@
+
+--
+Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@

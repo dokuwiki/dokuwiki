@@ -20,4 +20,4 @@ $lang['revstop']  = 'Reversion process finished successfully.';
 $lang['note1']    = 'Note: this search is case sensitive';
 $lang['note2']    = 'Note: the page will be reverted to the last version not containing the given spam term <i>%s</i>.';
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

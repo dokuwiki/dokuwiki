@@ -5,10 +5,10 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
- * @author okunia@gmail.com
  * @author Oleksandr Kunytsia <okunia@gmail.com>
- * @author Uko uko@uar.net
- * @author Ulrikhe Lukoie  <lukoie@gmail>.com
+ * @author Uko <uko@uar.net>
+ * @author Ulrikhe Lukoie  <lukoie@gmail.com>
+ * @author Kate Arzamastseva pshns@ukr.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -43,12 +43,13 @@ $lang['btn_backlink']          = 'Посилання сюди';
 $lang['btn_backtomedia']       = 'Назад до вибору медіа-файлу';
 $lang['btn_subscribe']         = 'Підписатися';
 $lang['btn_profile']           = 'Оновити профіль';
-$lang['btn_reset']             = 'Очисти';
+$lang['btn_reset']             = 'Очистити';
 $lang['btn_resendpwd']         = 'Надіслати новий пароль';
 $lang['btn_draft']             = 'Редагувати чернетку';
 $lang['btn_recover']           = 'Відновити чернетку';
 $lang['btn_draftdel']          = 'Знищити чернетку';
 $lang['btn_revert']            = 'Відновити';
+$lang['btn_register']          = 'Реєстрація';
 $lang['loggedinas']            = 'Ви';
 $lang['user']                  = 'Користувач';
 $lang['pass']                  = 'Пароль';
@@ -58,7 +59,6 @@ $lang['passchk']               = 'ще раз';
 $lang['remember']              = 'Запам\'ятати мене';
 $lang['fullname']              = 'Повне ім\'я';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Реєстрація';
 $lang['profile']               = 'Профіль користувача';
 $lang['badlogin']              = 'Вибачте, невірне ім\'я чи пароль.';
 $lang['minoredit']             = 'Незначні зміни';
@@ -108,11 +108,11 @@ $lang['js']['mediatarget']     = 'Ціль посилання';
 $lang['js']['mediaclose']      = 'Закрити';
 $lang['js']['mediainsert']     = 'Вставити';
 $lang['js']['mediadisplayimg'] = 'Показати зображення.';
-$lang['js']['mediadisplaylnk'] = 'Показати тілки посилання.';
-$lang['js']['mediasmall']      = 'Зменшена версіяЁ';
+$lang['js']['mediadisplaylnk'] = 'Показати тільки посилання.';
+$lang['js']['mediasmall']      = 'Зменшена версія';
 $lang['js']['mediamedium']     = 'Середня версія';
 $lang['js']['medialarge']      = 'Велика версія';
-$lang['js']['mediaoriginal']   = 'Оигінальна версія';
+$lang['js']['mediaoriginal']   = 'Оригінальна версія';
 $lang['js']['medialnk']        = 'Посилання на сторінку з описом';
 $lang['js']['mediadirect']     = 'Пряме посилання на оригінал';
 $lang['js']['medianolnk']      = 'Немає посилання';
@@ -161,6 +161,9 @@ $lang['yours']                 = 'Ваша версія';
 $lang['diff']                  = 'показати відмінності від поточної версії';
 $lang['diff2']                 = 'Показати відмінності між вибраними версіями';
 $lang['difflink']              = 'Посилання на цей список змін';
+$lang['diff_type']             = 'Переглянути відмінності:';
+$lang['diff_inline']           = 'Вбудувати';
+$lang['diff_side']             = 'Поряд';
 $lang['line']                  = 'Рядок';
 $lang['breadcrumb']            = 'Відвідано';
 $lang['youarehere']            = 'Ви тут';
@@ -220,9 +223,9 @@ $lang['img_camera']            = 'Камера';
 $lang['img_keywords']          = 'Ключові слова';
 $lang['subscr_subscribe_success'] = 'Додано %s до списку підписки для %s';
 $lang['subscr_subscribe_error'] = 'Помилка при додавані %s до списку підписки для %s';
-$lang['subscr_subscribe_noaddress'] = 'Немає адреси, асоційованої з Вашим логіном, тому Ві не можете бути додані до списку підписки.';
+$lang['subscr_subscribe_noaddress'] = 'Немає адреси, асоційованої з Вашим логіном, тому Ви не можете бути додані до списку підписки.';
 $lang['subscr_unsubscribe_success'] = 'Видалено %s із списку підписки для %s';
-$lang['subscr_unsubscribe_error'] = 'Помилка при видаленні %s із списку підписки для %s';
+$lang['subscr_unsubscribe_error'] = 'Помилка при видаленні %s зі списку підписки для %s';
 $lang['subscr_already_subscribed'] = '%s вже підписаний до %s';
 $lang['subscr_not_subscribed'] = '%s не підписаний до %s';
 $lang['subscr_m_not_subscribed'] = 'Ви зараз не підписані до цієї сторінки або простору імен.';
@@ -231,9 +234,9 @@ $lang['subscr_m_current_header'] = 'Поточні підписки';
 $lang['subscr_m_unsubscribe']  = 'Відписатися';
 $lang['subscr_m_subscribe']    = 'Підписатися';
 $lang['subscr_m_receive']      = 'Отримувати';
-$lang['subscr_style_every']    = 'пошту про кожну зміну';
+$lang['subscr_style_every']    = 'повідомляти на пошту про кожну зміну';
 $lang['subscr_style_digest']   = 'лист з дайджестом для зміни кожної сторінки (кожні %.2f днів)';
-$lang['subscr_style_list']     = 'список змінених сторінок від часу отримання останньоголиста (кожні %.2f днів)';
+$lang['subscr_style_list']     = 'список змінених сторінок від часу отримання останнього листа (кожні %.2f днів)';
 $lang['authmodfailed']         = 'Неправильна настройка автентифікації користувача. Будь ласка, повідомте про це адміністратора.';
 $lang['authtempfail']          = 'Автентифікація користувача тимчасово не доступна. Якщо це буде продовжуватись, будь ласка, повідомте адміністратора.';
 $lang['i_chooselang']          = 'Виберіть мову';

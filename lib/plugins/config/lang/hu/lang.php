@@ -5,8 +5,8 @@
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
- * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
+ * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.

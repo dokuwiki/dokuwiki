@@ -2,11 +2,10 @@
 /**
  * Turkish language file
  *
- * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
- * @author yavuzselim@gmail.com
- * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
+ * @author Caleb Maclennan <caleb@alerque.com>
  */
 $lang['menu']                  = 'Site Ayarları';
 $lang['error']                 = 'Ayarlar yanlış bir değer girildiği için güncellenemedi. Lütfen değişikliklerinizi gözden geçirin ve tekrar gönderin.

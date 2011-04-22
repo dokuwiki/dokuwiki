@@ -1,7 +1,7 @@
 <?php
 class ap_download extends ap_manage {
 
-    var $overwrite = false;
+    var $overwrite = true;
 
     /**
      * Initiate the plugin download
@@ -114,7 +114,7 @@ class ap_download extends ap_manage {
         if ($tmp) $this->dir_delete($tmp);
 
         if (!$this->manager->error) {
-            msg('Plugin package ('.count($this->downloaded).' plugin'.(count($this->downloaded) != 1?'s':'').': '.join(',',$this->downloaded).') successfully installed.',1);
+            msg(sprintf($this->lang['packageinstalled'], count($this->downloaded), (count($this->downloaded) != 1?'s':''), join(',',$this->downloaded)),1);
             $this->refresh();
             return true;
         }

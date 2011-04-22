@@ -44,7 +44,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(121)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -84,7 +84,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(121)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -108,7 +108,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(7)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -142,7 +142,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(19)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -177,7 +177,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(23)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -220,7 +220,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(31)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -268,7 +268,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(51)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -306,7 +306,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(27)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -326,7 +326,7 @@ def');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array(DOKU_PARSER_EOL."abc")),
+            array('cdata',array("abc")),
             array('p_close',array()),
             array('table_open',array(3, 2, 6)),
             array('tablerow_open',array()),
@@ -353,7 +353,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(121)),
             array('p_open',array()),
-            array('cdata',array('def'.DOKU_PARSER_EOL)),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -408,7 +408,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(129)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -459,7 +459,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(155)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -506,7 +506,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(123)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -566,7 +566,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(129)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );

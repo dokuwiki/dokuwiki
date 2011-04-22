@@ -6,6 +6,7 @@
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
  * @author SONG Younghwan <purluno@gmail.com>
+ * @author Seung-Chul Yoo  <dryoo@live.com>
  */
 $lang['menu']                  = '사용자 관리자';
 $lang['noauth']                = '(사용자 인증이 불가능합니다.)';

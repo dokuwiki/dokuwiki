@@ -13,6 +13,8 @@
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Niels Lange <niels@boldencursief.nl>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
@@ -111,6 +113,7 @@ $lang['fetchsize']             = 'Maximale Größe (in Bytes), die fetch.php von
 $lang['notify']                = 'Änderungsmitteilungen an diese E-Mail-Adresse versenden';
 $lang['registernotify']        = 'Information über neu registrierte Nutzer an diese E-Mail-Adresse senden';
 $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mails';
+$lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';

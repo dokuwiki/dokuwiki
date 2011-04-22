@@ -1,0 +1,19 @@
+Pozdravljeni!
+
+Strani v imenskem prostoru @PAGE@ wiki spletišča @TITLE@ so spremenjene.
+Podrobnosti sprememb so navedene spodaj.
+
+------------------------------------------------
+@DIFF@
+------------------------------------------------
+
+Stara različica: @OLDPAGE@
+Nova različica : @NEWPAGE@
+
+Za odjavo prejemanja podrobnosti sprememb, se je treba prijaviti na spletišče
+@DOKUWIKIURL@ in med možnostmi naročanja
+@SUBSCRIBE@
+odjaviti prejemanje poročil sprememb strani ali imenskega prostora.
+
+--
+Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@

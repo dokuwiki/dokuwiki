@@ -24,6 +24,7 @@
  *   $conf['auth']['ad']['ad_password']        = 'pass';
  *   $conf['auth']['ad']['real_primarygroup']  = 1;
  *   $conf['auth']['ad']['use_ssl']            = 1;
+ *   $conf['auth']['ad']['use_tls']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
  *
  *   // get additional information to the userinfo array
@@ -51,6 +52,7 @@ class auth_ad extends auth_basic {
         global $conf;
         $this->cnf = $conf['auth']['ad'];
 
+
         // additional information fields
         if (isset($this->cnf['additional'])) {
             $this->cnf['additional'] = str_replace(' ', '', $this->cnf['additional']);
@@ -60,7 +62,7 @@ class auth_ad extends auth_basic {
         // ldap extension is needed
         if (!function_exists('ldap_connect')) {
             if ($this->cnf['debug'])
-                msg("LDAP err: PHP LDAP extension not found.",-1);
+                msg("AD Auth: PHP LDAP extension not found.",-1);
             $this->success = false;
             return;
         }
@@ -97,7 +99,12 @@ class auth_ad extends auth_basic {
         $this->opts['domain_controllers'] = array_map('trim',$this->opts['domain_controllers']);
         $this->opts['domain_controllers'] = array_filter($this->opts['domain_controllers']);
 
-        // we currently just handle authentication, so no capabilities are set
+        // we can change the password if SSL is set
+        if($this->opts['use_ssl'] || $this->opts['use_tls']){
+            $this->cando['modPass'] = true;
+        }
+        $this->cando['modName'] = true;
+        $this->cando['modMail'] = true;
     }
 
     /**
@@ -126,7 +133,7 @@ class auth_ad extends auth_basic {
      * at least these fields:
      *
      * name string  full name of the user
-     * mail string  email addres of the user
+     * mail string  email address of the user
      * grps array   list of groups the user is in
      *
      * This LDAP specific function returns the following
@@ -247,6 +254,49 @@ class auth_ad extends auth_basic {
     }
 
     /**
+     * Modify user data
+     *
+     * @param   $user      nick of the user to be changed
+     * @param   $changes   array of field/value pairs to be changed
+     * @return  bool
+    */
+    function modifyUser($user, $changes) {
+        $return = true;
+
+        // password changing
+        if(isset($changes['pass'])){
+            try {
+                $return = $this->adldap->user_password($user,$changes['pass']);
+            } catch (adLDAPException $e) {
+                if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                $return = false;
+            }
+            if(!$return) msg('AD Auth: failed to change the password. Maybe the password policy was not met?',-1);
+        }
+
+        // changing user data
+        $adchanges = array();
+        if(isset($changes['name'])){
+            // get first and last name
+            $parts = explode(' ',$changes['name']);
+            $adchanges['surname']   = array_pop($parts);
+            $adchanges['firstname'] = join(' ',$parts);
+            $adchanges['display_name'] = $changes['name'];
+        }
+        if(isset($changes['mail'])){
+            $adchanges['email'] = $changes['mail'];
+        }
+        try {
+            $return = $return & $this->adldap->user_modify($user,$adchanges);
+        } catch (adLDAPException $e) {
+            if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+            $return = false;
+        }
+
+        return $return;
+    }
+
+    /**
      * Initialize the AdLDAP library and connect to the server
      */
     function _init(){
@@ -261,7 +311,7 @@ class auth_ad extends auth_basic {
             return true;
         } catch (adLDAPException $e) {
             if ($this->cnf['debug']) {
-                msg($e->getMessage(), -1);
+                msg('AD Auth: '.$e->getMessage(), -1);
             }
             $this->success = false;
             $this->adldap  = null;
@@ -296,4 +346,4 @@ class auth_ad extends auth_basic {
     }
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

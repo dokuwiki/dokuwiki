@@ -1577,4 +1577,4 @@ class DokuWikiFeedCreator extends UniversalFeedCreator{
 
 
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

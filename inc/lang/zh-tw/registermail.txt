@@ -1,13 +1,14 @@
-一個新使用者已經註冊. 以下是詳細內容:
+有新的使用者註冊。詳細資料如下：
 
-帳號 : @NEWUSER@
-全名 : @NEWNAME@
-E-mail : @NEWEMAIL@
+帳號     : @NEWUSER@
+姓名     : @NEWNAME@
+E-mail   : @NEWEMAIL@
 
-日期 : @DATE@
-瀏覽器 : @BROWSER@
-IP-Address : @IPADDRESS@
-Hostname : @HOSTNAME@
+日期     : @DATE@
+瀏覽器   : @BROWSER@
+IP位址   : @IPADDRESS@
+主機名稱 : @HOSTNAME@
 
--- 
-這封信是由 @DOKUWIKIURL@ 的 DokuWiki 所產生的
+--
+本信件由以下 DokuWiki 站台產生：
+@DOKUWIKIURL@

@@ -10,5 +10,5 @@ Tipo MIME : @MIME@
 Utente : @USER@
 
 -- 
-Questa email è stata generata dal DokuWiki di
+Questa email è stata generata dal DokuWiki all'indirizzo
 @DOKUWIKIURL@

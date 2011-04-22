@@ -17,7 +17,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('file',array('testing',null,null)),
             array('p_open',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -35,7 +35,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('code',array('testing', null, null)),
             array('p_open',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -52,7 +52,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('code',array('testing', null, null)),
             array('p_open',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -69,7 +69,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('code',array('testing', 'php', null)),
             array('p_open',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -86,7 +86,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('preformatted',array("x  \n  y  ")),
             array('p_open',array()),
-            array('cdata',array('Bar'."\n\n")),
+            array('cdata',array('Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -103,7 +103,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('preformatted',array("x  \n  y  ")),
             array('p_open',array()),
-            array('cdata',array('Bar'."\n\n")),
+            array('cdata',array('Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -120,7 +120,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('preformatted',array("x\t\n\ty\t")),
             array('p_open',array()),
-            array('cdata',array("Bar\n\n")),
+            array('cdata',array("Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -137,7 +137,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('preformatted',array("x\t\n\ty\t")),
             array('p_open',array()),
-            array('cdata',array("Bar\n\n")),
+            array('cdata',array("Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -169,7 +169,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_close',array()),
             array('preformatted',array("x  \n  y  \n-X\n*Y")),
             array('p_open',array()),
-            array('cdata',array("Bar\n\n")),
+            array('cdata',array("Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -186,7 +186,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('php',array('testing')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -203,7 +203,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('html',array('testing')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );

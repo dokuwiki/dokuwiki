@@ -46,7 +46,8 @@ $lang['btn_resendpwd']   = 'Send new password';
 $lang['btn_draft']    = 'Edit draft';
 $lang['btn_recover']  = 'Recover draft';
 $lang['btn_draftdel'] = 'Delete draft';
-$lang['btn_revert'] = 'Restore';
+$lang['btn_revert']   = 'Restore';
+$lang['btn_register'] = 'Register';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -57,7 +58,6 @@ $lang['passchk']    = 'once again';
 $lang['remember']   = 'Remember me';
 $lang['fullname']   = 'Real name';
 $lang['email']      = 'E-Mail';
-$lang['register']   = 'Register';
 $lang['profile']    = 'User Profile';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
 $lang['minoredit']  = 'Minor Changes';
@@ -164,6 +164,9 @@ $lang['yours']      = 'Your Version';
 $lang['diff']       = 'Show differences to current revisions';
 $lang['diff2']      = 'Show differences between selected revisions';
 $lang['difflink']   = 'Link to this comparison view';
+$lang['diff_type']  = 'View differences:';
+$lang['diff_inline']= 'Inline';
+$lang['diff_side']  = 'Side by Side';
 $lang['line']       = 'Line';
 $lang['breadcrumb'] = 'Trace';
 $lang['youarehere'] = 'You are here';
@@ -316,4 +319,4 @@ $lang['seconds'] = '%d seconds ago';
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

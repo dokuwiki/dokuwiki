@@ -82,18 +82,24 @@
 
     // handle deletion
     if($DEL) {
-        $INUSE = media_inuse($DEL);
-        if(!$INUSE) {
-            if(media_delete($DEL,$AUTH)) {
-                msg(sprintf($lang['deletesucc'],noNS($DEL)),1);
-            } else {
-                msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
+        $res = 0;
+        if(checkSecurityToken()) {
+            $res = media_delete($DEL,$AUTH);
+        }
+        if ($res & DOKU_MEDIA_DELETED) {
+            $msg = sprintf($lang['deletesucc'], noNS($DEL));
+            if ($res & DOKU_MEDIA_EMPTY_NS) {
+                // current namespace was removed. redirecting to root ns passing msg along
+                send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
+                        rawurlencode($msg).'&edid='.$_REQUEST['edid']);
             }
-        } else {
+            msg($msg,1);
+        } elseif ($res & DOKU_MEDIA_INUSE) {
             if(!$conf['refshow']) {
-                unset($INUSE);
                 msg(sprintf($lang['mediainuse'],noNS($DEL)),0);
             }
+        } else {
+            msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
         }
     }
 

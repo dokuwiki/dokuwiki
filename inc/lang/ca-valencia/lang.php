@@ -4,7 +4,6 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
- * @author Bernat Arlandis <berarma@ya.com>
  * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -49,6 +48,7 @@ $lang['btn_draft']             = 'Editar borrador';
 $lang['btn_recover']           = 'Recuperar borrador';
 $lang['btn_draftdel']          = 'Borrar borrador';
 $lang['btn_revert']            = 'Recuperar';
+$lang['btn_register']          = 'Registrar-se';
 $lang['loggedinas']            = 'Sessió de';
 $lang['user']                  = 'Nom d\'usuari';
 $lang['pass']                  = 'Contrasenya';
@@ -58,7 +58,6 @@ $lang['passchk']               = 'una atra volta';
 $lang['remember']              = 'Recorda\'m';
 $lang['fullname']              = 'Nom complet';
 $lang['email']                 = 'Correu electrònic';
-$lang['register']              = 'Registrar-se';
 $lang['profile']               = 'Perfil d\'usuari';
 $lang['badlogin']              = 'Disculpe, pero el nom d\'usuari o la contrasenya són incorrectes.';
 $lang['minoredit']             = 'Canvis menors';

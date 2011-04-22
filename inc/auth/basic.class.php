@@ -400,4 +400,4 @@ class auth_basic {
   }
 
 }
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

@@ -15,6 +15,7 @@
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
+ * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -102,7 +103,7 @@ $lang['useslash']              = 'Utiliser « / » comme séparateur de catég
 $lang['usedraft']              = 'Enregistrer automatiquement un brouillon pendant l\'édition';
 $lang['sepchar']               = 'Séparateur de mots dans les noms de page';
 $lang['canonical']             = 'Utiliser des URL canoniques';
-$lang['fnencode']              = 'Méhtode pou r l\'encodage des fichiers non-ASCII';
+$lang['fnencode']              = 'Méthode pour l\'encodage des fichiers non-ASCII';
 $lang['autoplural']            = 'Rechercher les formes plurielles dans les liens';
 $lang['compression']           = 'Méthode de compression pour les fichiers dans attic';
 $lang['cachetime']             = 'Âge maximum d\'un fichier en cache (en secondes)';
@@ -111,6 +112,7 @@ $lang['fetchsize']             = 'Taille maximale (en octets) du fichier que fet
 $lang['notify']                = 'Notifier les modifications à cette adresse de courriel';
 $lang['registernotify']        = 'Envoyer un courriel annonçant les nouveaux utilisateurs enregistrés à cette adresse';
 $lang['mailfrom']              = 'Expéditeur des notifications par courriel du wiki';
+$lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques';
 $lang['gzip_output']           = 'Utiliser Content-Encoding gzip pour XHTML';
 $lang['gdlib']                 = 'Version de GD Lib';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion d\'ImageMagick';
@@ -161,7 +163,7 @@ $lang['userewrite_o_2']        = 'Interne à DokuWiki';
 $lang['deaccent_o_0']          = 'off';
 $lang['deaccent_o_1']          = 'supprimer les accents';
 $lang['deaccent_o_2']          = 'convertir en roman';
-$lang['gdlib_o_0']             = 'GD Lib non disponible';
+$lang['gdlib_o_0']             = 'Librairie GD non disponible';
 $lang['gdlib_o_1']             = 'version 1.x';
 $lang['gdlib_o_2']             = 'auto-détectée';
 $lang['rss_type_o_rss']        = 'RSS 0.91';

@@ -10,6 +10,13 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
+ * For how many different pages shall the first heading be loaded from the
+ * metadata? When this limit is reached the title index is loaded and used for
+ * all following requests.
+ */
+if (!defined('P_GET_FIRST_HEADING_METADATA_LIMIT')) define('P_GET_FIRST_HEADING_METADATA_LIMIT', 10);
+
+/**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
  *
  * If $excuse is true an explanation is returned if the file
@@ -220,10 +227,16 @@ function p_get_instructions($text){
 /**
  * returns the metadata of a page
  *
+ * @param string $id The id of the page the metadata should be returned from
+ * @param string $key The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param boolean $render If the page should be rendererd when the cache can't be used - default true
+ * @return mixed The requested metadata fields
+ *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ * @author Michael Hamann <michael@content-space.de>
  */
-function p_get_metadata($id, $key='', $render=false){
-    global $ID, $INFO, $cache_metadata;
+function p_get_metadata($id, $key='', $render=true){
+    global $ID;
 
     // cache the current page
     // Benchmarking shows the current page's metadata is generally the only page metadata
@@ -231,14 +244,26 @@ function p_get_metadata($id, $key='', $render=false){
     $cache = ($ID == $id);
     $meta = p_read_metadata($id, $cache);
 
-    // metadata has never been rendered before - do it! (but not for non-existent pages)
-    if ($render && !isset($meta['current']['description']['abstract']) && page_exists($id)){
-        $meta = p_render_metadata($id, $meta);
-        io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    // prevent recursive calls in the cache
+    static $recursion = false;
+    if (!$recursion && $render){
+        $recursion = true;
 
-        // sync cached copies, including $INFO metadata
-        if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-        if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+        $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
+
+        if (page_exists($id) && !$cachefile->useCache()){
+            $old_meta = $meta;
+            $meta = p_render_metadata($id, $meta);
+            // only update the file when the metadata has been changed
+            if ($meta == $old_meta || p_save_metadata($id, $meta)) {
+                // store a timestamp in order to make sure that the cachefile is touched
+                $cachefile->storeCache(time());
+            } elseif ($meta != $old_meta) {
+                msg('Unable to save metadata file. Hint: disk full; file permissions; safe_mode setting.',-1);
+            }
+        }
+
+        $recursion = false;
     }
 
     $val = $meta['current'];
@@ -256,19 +281,35 @@ function p_get_metadata($id, $key='', $render=false){
 /**
  * sets metadata elements of a page
  *
+ * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
+ *
+ * @param String  $id         is the ID of a wiki page
+ * @param Array   $data       is an array with key ⇒ value pairs to be set in the metadata
+ * @param Boolean $render     whether or not the page metadata should be generated with the renderer
+ * @param Boolean $persistent indicates whether or not the particular metadata value will persist through
+ *                            the next metadata rendering.
+ * @return boolean true on success
+ *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function p_set_metadata($id, $data, $render=false, $persistent=true){
     if (!is_array($data)) return false;
 
-    global $ID;
+    global $ID, $METADATA_RENDERERS;
 
-    // cache the current page
-    $cache = ($ID == $id);
-    $orig = p_read_metadata($id, $cache);
+    // if there is currently a renderer change the data in the renderer instead
+    if (isset($METADATA_RENDERERS[$id])) {
+        $orig =& $METADATA_RENDERERS[$id];
+        $meta = $orig;
+    } else {
+        // cache the current page
+        $cache = ($ID == $id);
+        $orig = p_read_metadata($id, $cache);
 
-    // render metadata first?
-    $meta = $render ? p_render_metadata($id, $orig) : $orig;
+        // render metadata first?
+        $meta = $render ? p_render_metadata($id, $orig) : $orig;
+    }
 
     // now add the passed metadata
     $protected = array('description', 'date', 'contributor');
@@ -305,13 +346,13 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
     // save only if metadata changed
     if ($meta == $orig) return true;
 
-    // sync cached copies, including $INFO metadata
-    global $cache_metadata, $INFO;
-
-    if (!empty($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
-
-    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    if (isset($METADATA_RENDERERS[$id])) {
+        // set both keys individually as the renderer has references to the individual keys
+        $METADATA_RENDERERS[$id]['current']    = $meta['current'];
+        $METADATA_RENDERERS[$id]['persistent'] = $meta['persistent'];
+    } else {
+        return p_save_metadata($id, $meta);
+    }
 }
 
 /**
@@ -321,24 +362,21 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
  * @author Michael Klier <chi@chimeric.de>
  */
 function p_purge_metadata($id) {
-    $metafn = metaFN('id', '.meta');
-    $meta   = p_read_metadata($id);
+    $meta = p_read_metadata($id);
     foreach($meta['current'] as $key => $value) {
         if(is_array($meta[$key])) {
             $meta['current'][$key] = array();
         } else {
             $meta['current'][$key] = '';
         }
+
     }
-    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
+    return p_save_metadata($id, $meta);
 }
 
 /**
  * read the metadata from source/cache for $id
  * (internal use only - called by p_get_metadata & p_set_metadata)
- *
- * this function also converts the metadata from the original format to
- * the current format ('current' & 'persistent' arrays)
  *
  * @author   Christopher Smith <chris@jalakai.co.uk>
  *
@@ -356,31 +394,29 @@ function p_read_metadata($id,$cache=false) {
     $file = metaFN($id, '.meta');
     $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
 
-    // convert $meta from old format to new (current+persistent) format
-    if (!isset($meta['current'])) {
-        $meta = array('current'=>$meta,'persistent'=>$meta);
-
-        // remove non-persistent keys
-        unset($meta['persistent']['title']);
-        unset($meta['persistent']['description']['abstract']);
-        unset($meta['persistent']['description']['tableofcontents']);
-        unset($meta['persistent']['relation']['haspart']);
-        unset($meta['persistent']['relation']['references']);
-        unset($meta['persistent']['date']['valid']);
-
-        if (empty($meta['persistent']['description'])) unset($meta['persistent']['description']);
-        if (empty($meta['persistent']['relation'])) unset($meta['persistent']['relation']);
-        if (empty($meta['persistent']['date'])) unset($meta['persistent']['date']);
-
-        // save converted metadata
-        io_saveFile($file, serialize($meta));
-    }
-
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;
     }
 
     return $meta;
+}
+
+/**
+ * This is the backend function to save a metadata array to a file
+ *
+ * @param    string   $id      absolute wiki page id
+ * @param    array    $meta    metadata
+ *
+ * @return   bool              success / fail
+ */
+function p_save_metadata($id, $meta) {
+    // sync cached copies, including $INFO metadata
+    global $cache_metadata, $INFO;
+
+    if (isset($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+
+    return io_saveFile(metaFN($id, '.meta'), serialize($meta));
 }
 
 /**
@@ -390,7 +426,15 @@ function p_read_metadata($id,$cache=false) {
  */
 function p_render_metadata($id, $orig){
     // make sure the correct ID is in global ID
-    global $ID;
+    global $ID, $METADATA_RENDERERS;
+
+    // avoid recursive rendering processes for the same id
+    if (isset($METADATA_RENDERERS[$id]))
+        return $orig;
+
+    // store the original metadata in the global $METADATA_RENDERERS so p_set_metadata can use it
+    $METADATA_RENDERERS[$id] =& $orig;
+
     $keep = $ID;
     $ID   = $id;
 
@@ -405,13 +449,14 @@ function p_render_metadata($id, $orig){
         $instructions = p_cached_instructions(wikiFN($id),false,$id);
         if(is_null($instructions)){
             $ID = $keep;
+            unset($METADATA_RENDERERS[$id]);
             return null; // something went wrong with the instructions
         }
 
         // set up the renderer
         $renderer = new Doku_Renderer_metadata();
-        $renderer->meta = $orig['current'];
-        $renderer->persistent = $orig['persistent'];
+        $renderer->meta =& $orig['current'];
+        $renderer->persistent =& $orig['persistent'];
 
         // loop through the instructions
         foreach ($instructions as $instruction){
@@ -419,11 +464,13 @@ function p_render_metadata($id, $orig){
             call_user_func_array(array(&$renderer, $instruction[0]), (array) $instruction[1]);
         }
 
-        $evt->result = array('current'=>$renderer->meta,'persistent'=>$renderer->persistent);
+        $evt->result = array('current'=>&$renderer->meta,'persistent'=>&$renderer->persistent);
     }
     $evt->advise_after();
 
+    // clean up
     $ID = $keep;
+    unset($METADATA_RENDERERS[$id]);
     return $evt->result;
 }
 
@@ -609,9 +656,41 @@ function & p_get_renderer($mode) {
  *                                               headings ... and so on.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Michael Hamann <michael@content-space.de>
  */
 function p_get_first_heading($id, $render=true){
-    return p_get_metadata($id,'title',$render);
+    // counter how many titles have been requested using p_get_metadata
+    static $count = 1;
+    // the index of all titles, only loaded when many titles are requested
+    static $title_index = null;
+    // cache for titles requested using p_get_metadata
+    static $title_cache = array();
+
+    $id = cleanID($id);
+
+    // check if this title has already been requested
+    if (isset($title_cache[$id]))
+      return $title_cache[$id];
+
+    // check if already too many titles have been requested and probably
+    // using the title index is better
+    if ($count > P_GET_FIRST_HEADING_METADATA_LIMIT) {
+        if (is_null($title_index)) {
+            $pages  = array_map('rtrim', idx_getIndex('page', ''));
+            $titles = array_map('rtrim', idx_getIndex('title', ''));
+            // check for corrupt title index #FS2076
+            if(count($pages) != count($titles)){
+                $titles = array_fill(0,count($pages),'');
+                @unlink($conf['indexdir'].'/title.idx'); // will be rebuilt in inc/init.php
+            }
+            $title_index = array_combine($pages, $titles);
+        }
+        return $title_index[$id];
+    }
+
+    ++$count;
+    $title_cache[$id] = p_get_metadata($id,'title',$render);
+    return $title_cache[$id];
 }
 
 /**
