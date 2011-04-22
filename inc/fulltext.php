@@ -234,8 +234,7 @@ function _ft_pageLookup(&$data){
             }
         }
         if ($in_title) {
-            $wildcard_id = "*$id*";
-            foreach ($Indexer->lookupKey('title', $wildcard_id) as $p_id) {
+            foreach ($Indexer->lookupKey('title', $id, '_ft_pageLookupTitleCompare') as $p_id) {
                 if (!isset($pages[$p_id]))
                     $pages[$p_id] = p_get_first_heading($p_id, false);
             }
@@ -262,6 +261,15 @@ function _ft_pageLookup(&$data){
 
     uksort($pages,'ft_pagesorter');
     return $pages;
+}
+
+/**
+ * Tiny helper function for comparing the searched title with the title
+ * from the search index. This function is a wrapper around stripos with
+ * adapted argument order and return value.
+ */
+function _ft_pageLookupTitleCompare($search, $title) {
+    return stripos($title, $search) !== false;
 }
 
 /**
