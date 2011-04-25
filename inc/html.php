@@ -236,6 +236,7 @@ function html_show($txt=null, $scroll=TRUE){
         echo $html;
         echo '<div class="clearer"></div>';
         echo '</div>';
+        echo '<div id="preview__status"/>';
 
     }else{
         if ($REV) print p_locale_xhtml('showrev');
