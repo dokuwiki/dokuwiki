@@ -151,6 +151,7 @@ function ajax_lock(){
     }
     if($conf['autopreview'] && $_POST['wikitext']){
         $json_array['preview_html'] = p_render('xhtml', p_get_instructions($_POST['wikitext']), $info);
+        $json_array['preview_status'] = dformat();
     }
     
     echo json_encode($json_array);
