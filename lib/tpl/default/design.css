@@ -172,7 +172,7 @@ div.dokuwiki div#wiki__editbar div.summary {
 div.dokuwiki .nowrap {
    white-space: nowrap;
 }
-div.dokuwiki div#draft__status {
+div.dokuwiki div#draft__status, div.dokuwiki div#preview__status {
   float: right;
   color: __text_alt__;
 }
