@@ -213,7 +213,7 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_show($txt=null){
+function html_show($txt=null, $scroll=TRUE){
     global $ID;
     global $REV;
     global $HIGH;
@@ -227,7 +227,8 @@ function html_show($txt=null){
 
     if (!is_null($txt)){
         //PreviewHeader
-        echo '<br id="scroll__here" />';
+        if($scroll)
+          echo '<br id="scroll__here" />';
         echo p_locale_xhtml('preview');
         echo '<div id="preview__area" class="preview">';
         $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);

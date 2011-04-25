@@ -67,7 +67,7 @@ function tpl_content_core(){
         case 'recover':
             html_edit();
             if($conf['autopreview'])
-              html_show($TEXT);
+              html_show($TEXT, FALSE);
             break;
         case 'preview':
             html_edit();
