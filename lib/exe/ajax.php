@@ -149,6 +149,9 @@ function ajax_lock(){
             $json_array['draft_message'] = $lang['draftdate'].' '.dformat();
         }
     }
+    if($conf['autopreview'] && $_POST['wikitext']){
+        $json_array['preview_html'] = p_render('xhtml', p_get_instructions($_POST['wikitext']), $info);
+    }
     
     echo json_encode($json_array);
 
