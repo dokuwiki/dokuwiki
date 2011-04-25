@@ -154,6 +154,7 @@ $meta['subscribers'] = array('onoff');
 $meta['subscribe_time'] = array('numeric');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
+$meta['autopreview'] = array('onoff');
 
 $meta['_links']    = array('fieldset');
 $meta['target____wiki']      = array('string');
