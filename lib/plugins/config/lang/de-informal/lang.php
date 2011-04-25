@@ -98,6 +98,7 @@ $lang['fnencode']              = 'Methode um nicht-ASCII Dateinamen zu kodieren.
 $lang['autoplural']            = 'Bei Links automatisch nach vorhandenen Pluralformen suchen';
 $lang['compression']           = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['cachetime']             = 'Maximale Cachespeicherung (Sekunden)';
+$lang['autopreview']           = 'Automatische Vorschau des aktuellen Entwurfs anzeigen';
 $lang['locktime']              = 'Maximales Alter für Seitensperren (Sekunden)';
 $lang['fetchsize']             = 'Maximale Größe (in Bytes), die fetch.php von extern herunterladen darf';
 $lang['notify']                = 'Sende Änderungsbenachrichtigungen an diese E-Mail-Adresse.';
