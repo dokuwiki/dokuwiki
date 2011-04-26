@@ -682,10 +682,15 @@ function p_get_first_heading($id, $render=true){
             if(count($pages) != count($titles)){
                 $titles = array_fill(0,count($pages),'');
                 @unlink($conf['indexdir'].'/title.idx'); // will be rebuilt in inc/init.php
+            } else {
+                if (!empty($pages)) // array_combine throws a warning when the parameters are empty arrays
+                    $title_index = array_combine($pages, $titles);
+                else
+                    $title_index = array();
             }
-            $title_index = array_combine($pages, $titles);
         }
-        return $title_index[$id];
+        if (!empty($title_index)) // don't use the index when it obviously isn't working
+            return $title_index[$id];
     }
 
     ++$count;
