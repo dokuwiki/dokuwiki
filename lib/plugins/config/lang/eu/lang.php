@@ -100,6 +100,7 @@ $lang['fetchsize']             = 'Kanpo esteketatik fetch.php-k deskargatu dezak
 $lang['notify']                = 'Aldaketen jakinarazpenak posta-e helbide honetara bidali';
 $lang['registernotify']        = 'Erregistratu berri diren erabiltzaileei buruzko informazioa post-e helbide honetara bidali';
 $lang['mailfrom']              = 'Posta automatikoentzat erabiliko den posta-e helbidea';
+$lang['mailprefix']            = 'Posta automatikoen gaientzat erabili beharreko aurrizkia';
 $lang['gzip_output']           = 'Gzip Eduki-Kodeketa erabili xhtml-rentzat';
 $lang['gdlib']                 = 'GD Lib bertsioa';
 $lang['im_convert']            = 'ImageMagick-en aldaketa tresnara bidea';
