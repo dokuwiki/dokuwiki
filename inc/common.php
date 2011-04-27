@@ -845,7 +845,7 @@ function pageTemplate($id){
             // load the content
             $data['tpl'] = io_readFile($data['tplfile']);
         }
-        if($data['doreplace']) parsePageTemplate(&$data);
+        if($data['doreplace']) parsePageTemplate($data);
     }
     $evt->advise_after();
     unset($evt);
