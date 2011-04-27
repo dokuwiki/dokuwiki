@@ -8,6 +8,7 @@
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
+ * @author Vojta Beran <xmamut@email.cz>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -112,7 +113,8 @@ $lang['locktime']              = 'Maximální životnost zámkových souborů (v
 $lang['fetchsize']             = 'Maximální velikost souboru (v bajtech), co ještě fetch.php bude stahovat z externích zdrojů';
 $lang['notify']                = 'Posílat oznámení o změnách na následující emailovou adresu';
 $lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
-$lang['mailfrom']              = 'Emailová adresa, která se bude používat pro automatické maily';
+$lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
+$lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
 $lang['gzip_output']           = 'Používat pro xhtml Content-Encoding gzip';
 $lang['gdlib']                 = 'Verze GD knihovny';
 $lang['im_convert']            = 'Cesta k nástroji convert z balíku ImageMagick';
