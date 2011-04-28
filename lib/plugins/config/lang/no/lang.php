@@ -99,7 +99,7 @@ $lang['securecookie']          = 'Skal informasjonskapsler satt via HTTPS kun se
 $lang['xmlrpc']                = 'Slå på/slå av XML-RPC-grensesnitt';
 $lang['xmlrpcuser']            = 'Å tillate XML-RPC-adgang til bestemte grupper eller brukere, sette deres navne (kommaseparert) her. Slik får du tilgang til alle, la feltet tomt.
 ';
-$lang['updatecheck']           = 'Se etter oppdateringer og sikkerhetsadvarsler? Denne funksjonen er avhengig av å kontakte splitbrain.org.';
+$lang['updatecheck']           = 'Se etter oppdateringer og sikkerhetsadvarsler? Denne funksjonen er avhengig av å kontakte update.dokuwiki.org.';
 $lang['userewrite']            = 'Bruk pene URLer';
 $lang['useslash']              = 'Bruk / som skilletegn mellom navnerom i URLer';
 $lang['usedraft']              = 'Lagre kladd automatisk under redigering';
