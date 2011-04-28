@@ -110,7 +110,7 @@ $lang['xmlrpc']      = 'Enable/disable XML-RPC interface.';
 $lang['xmlrpcuser']  = 'Restrict XML-RPC access to the comma separated groups or users given here. Leave empty to give access to everyone.';
 
 /* Advanced Options */
-$lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact splitbrain.org for this feature.';
+$lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['usedraft']    = 'Automatically save a draft while editing';
