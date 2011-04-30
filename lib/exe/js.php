@@ -117,6 +117,7 @@ function js_out(){
     }
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
+    js_runonstart('initConflictSelect()');
     // init hotkeys - must have been done after init of toolbar
 # disabled for FS#1958    js_runonstart('initializeHotkeys()');
 

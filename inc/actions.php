@@ -331,6 +331,7 @@ function act_save($act){
     global $SUM;
     global $lang;
     global $INFO;
+    global $JSINFO;
 
     //spam check
     if(checkwordblock()) {
@@ -344,6 +345,7 @@ function act_save($act){
     //deny saving when merge markers are present
     if(preg_match('/^(✎|✏|✐)——————/m',$mine)){
             msg('Please resolve the conflicts',-1); //FIXME localize
+            $JSINFO['selectConflict'] = 'wiki__text';
             return 'edit';
     }
 
@@ -374,6 +376,7 @@ function act_save($act){
             $TEXT = $final;
 
             msg('Please resolve the conflicts',-1); //FIXME we'll need more explantion than that
+            $JSINFO['selectConflict'] = 'wiki__text';
             return 'edit';
         }
         // no merge conflicts
