@@ -354,8 +354,15 @@ function act_save($act){
         $final = join("\n",$diff3->mergedOutput('mine','theirs')); //FIXME better labels!
         if($diff3->_conflictingBlocks){
             // failed to merge without conflicts
-            // fixme throw user back to editor instead
-            return 'conflict';
+            // throw user back to editor
+
+            $DATE = $INFO['meta']['date']['modified'];
+            $PRE  = '';
+            $SUF  = '';
+            $TEXT = $final;
+
+            msg('Please resolve the conflicts',-1); //FIXME we'll need more explantion than that
+            return 'edit';
         }
         // no merge conflicts
         msg("Your version was merged.",1); //FIXME better message and localize
