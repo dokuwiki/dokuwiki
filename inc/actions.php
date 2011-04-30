@@ -337,12 +337,34 @@ function act_save($act){
         msg($lang['wordblock'], -1);
         return 'edit';
     }
+
+    //prepare text
+    $mine = con($PRE,$TEXT,$SUF,1); //use pretty mode for con
+
     //conflict check
-    if($DATE != 0 && $INFO['meta']['date']['modified'] > $DATE )
-        return 'conflict';
+    if($DATE != 0 && $INFO['meta']['date']['modified'] > $DATE ){
+        // try to auto merge the conflict
+        $orig   = rawWiki($ID,$DATE);
+        $theirs = rawWiki($ID);
+        $diff3  = new Diff3(
+                    explode("\n",$orig),
+                    explode("\n",$mine),
+                    explode("\n",$theirs)
+                  );
+        $final = join("\n",$diff3->mergedOutput('mine','theirs')); //FIXME better labels!
+        if($diff3->_conflictingBlocks){
+            // failed to merge without conflicts
+            // fixme throw user back to editor instead
+            return 'conflict';
+        }
+        // no merge conflicts
+        msg("Your version was merged.",1); //FIXME better message and localize
+    }else{
+        $final = &$mine;
+    }
 
     //save it
-    saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
+    saveWikiText($ID,$final,$SUM,$_REQUEST['minor']);
     //unlock it
     unlock($ID);
 
