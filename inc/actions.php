@@ -317,7 +317,6 @@ function act_draftsave($act){
  * Handle 'save'
  *
  * Checks for spam and conflicts and saves the page.
- * Does a redirect to show the page afterwards or
  * returns a new action.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -344,7 +343,7 @@ function act_save($act){
 
     //deny saving when merge markers are present
     if(preg_match('/^(✎|✏|✐)——————/m',$mine)){
-            msg('Please resolve the conflicts',-1); //FIXME localize
+            msg($lang['merge_conflicts'],-1);
             $JSINFO['selectConflict'] = 'wiki__text';
             return 'edit';
     }
@@ -360,9 +359,9 @@ function act_save($act){
                     explode("\n",$theirs)
                   );
 
-        // FIXME localize labels
-        $label1 = '✎———————————————————————————— Your Version —————';
-        $label3 = '✏———————————————————————————— Other Version ————';
+        // prepare labels
+        $label1 = '✎———————————————————————————— '.$lang['merge_yours'].' ————';
+        $label3 = '✏———————————————————————————— '.$lang['merge_other'].' ————';
         $label2 = '✐———————————————————————————————————————————————';
 
         $final = join("\n",$diff3->mergedOutput($label1,$label2,$label3));
@@ -375,12 +374,12 @@ function act_save($act){
             $SUF  = '';
             $TEXT = $final;
 
-            msg('Please resolve the conflicts',-1); //FIXME we'll need more explantion than that
+            msg($lang['merge_conflicts'],-1);
             $JSINFO['selectConflict'] = 'wiki__text';
             return 'edit';
         }
         // no merge conflicts
-        msg("Your version was merged.",1); //FIXME better message and localize
+        msg($lang['merge_successful'],1);
     }else{
         $final = &$mine;
     }

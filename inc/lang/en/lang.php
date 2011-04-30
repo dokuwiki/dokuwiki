@@ -318,5 +318,10 @@ $lang['seconds'] = '%d seconds ago';
 
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
+$lang['merge_conflicts']  = 'Someone else edited the page and conflicts have been marked in your text (✎) - please resolve them before saving.';
+$lang['merge_successful'] = 'Your changes were merged with someone else\'s edits automatically.';
+$lang['merge_yours']      = 'Your Version';
+$lang['merge_other']      = 'Other Version';
+
 
 //Setup VIM: ex: et ts=2 :
