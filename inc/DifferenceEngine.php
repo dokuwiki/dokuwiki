@@ -1314,19 +1314,20 @@ class Diff3 extends Diff {
      *
      * @param string $label1  label for first version
      * @param string $label2  label for second version
+     * @param string $label3  separator between versions
      * @return array          lines of the merged text
      */
-    function mergedOutput($label1 = false, $label2 = false) {
+    function mergedOutput($label1='<<<<<<<',$label2='>>>>>>>',$label3='=======') {
         $lines = array();
         foreach ($this->_edits as $edit) {
             if ($edit->isConflict()) {
                 /* FIXME: this should probably be moved somewhere else. */
                 $lines = array_merge($lines,
-                                     array('<<<<<<<' . ($label1 ? ' ' . $label1 : '')),
+                                     array($label1),
                                      $edit->final1,
-                                     array("======="),
+                                     array($label3),
                                      $edit->final2,
-                                     array('>>>>>>>' . ($label2 ? ' ' . $label2 : '')));
+                                     array($label2));
                 $this->_conflictingBlocks++;
             } else {
                 $lines = array_merge($lines, $edit->merged());
