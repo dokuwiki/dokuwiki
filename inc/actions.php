@@ -341,6 +341,12 @@ function act_save($act){
     //prepare text
     $mine = con($PRE,$TEXT,$SUF,1); //use pretty mode for con
 
+    //deny saving when merge markers are present
+    if(preg_match('/^(✎|✏|✐)——————/m',$mine)){
+            msg('Please resolve the conflicts',-1); //FIXME localize
+            return 'edit';
+    }
+
     //conflict check
     if($DATE != 0 && $INFO['meta']['date']['modified'] > $DATE ){
         // try to auto merge the conflict
@@ -351,7 +357,13 @@ function act_save($act){
                     explode("\n",$mine),
                     explode("\n",$theirs)
                   );
-        $final = join("\n",$diff3->mergedOutput('mine','theirs')); //FIXME better labels!
+
+        // FIXME localize labels
+        $label1 = '✎———————————————————————————— Your Version —————';
+        $label3 = '✏———————————————————————————— Other Version ————';
+        $label2 = '✐———————————————————————————————————————————————';
+
+        $final = join("\n",$diff3->mergedOutput($label1,$label2,$label3));
         if($diff3->_conflictingBlocks){
             // failed to merge without conflicts
             // throw user back to editor
