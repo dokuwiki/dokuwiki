@@ -860,6 +860,8 @@ class Doku_Indexer {
         $fh = @fopen($fn.'.tmp', 'w');
         if (!$fh) return false;
         fwrite($fh, join("\n", $lines));
+        if (!empty($lines))
+            fwrite($fh, "\n");
         fclose($fh);
         if (isset($conf['fperm']))
             chmod($fn.'.tmp', $conf['fperm']);
