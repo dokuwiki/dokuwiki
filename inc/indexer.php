@@ -1166,13 +1166,14 @@ function & idx_get_stopwords() {
  *
  * @param string        $page   name of the page to index
  * @param boolean       $verbose    print status messages
+ * @param boolean       $force  force reindexing even when the index is up to date
  * @return boolean              the function completed successfully
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_addPage($page, $verbose=false) {
+function idx_addPage($page, $verbose=false, $force=false) {
     // check if indexing needed
     $idxtag = metaFN($page,'.indexed');
-    if(@file_exists($idxtag)){
+    if(!$force && @file_exists($idxtag)){
         if(trim(io_readFile($idxtag)) == idx_get_version()){
             $last = @filemtime($idxtag);
             if($last > @filemtime(wikiFN($page))){

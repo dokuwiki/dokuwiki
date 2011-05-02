@@ -86,16 +86,8 @@ function _index($id){
     global $CLEAR;
     global $QUIET;
 
-    // if not cleared only update changed and new files
-    if($CLEAR){
-        $idxtag = metaFN($id,'.indexed');
-        if(@file_exists($idxtag)){
-            @unlink($idxtag);
-        }
-    }
-
     _quietecho("$id... ");
-    idx_addPage($id, !$QUIET);
+    idx_addPage($id, !$QUIET, $CLEAR);
     _quietecho("done.\n");
 }
 
