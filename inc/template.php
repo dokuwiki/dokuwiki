@@ -986,7 +986,7 @@ function tpl_indexerWebBug(){
     $p = array();
     $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
         '&'.time();
-    $p['width']  = 1;
+    $p['width']  = 2;
     $p['height'] = 1;
     $p['alt']    = '';
     $att = buildAttributes($p);
