@@ -190,6 +190,7 @@ function act_sendheaders($headers) {
 function act_clean($act){
     global $lang;
     global $conf;
+    global $INFO;
 
     // check if the action was given as array key
     if(is_array($act)){
@@ -218,6 +219,9 @@ function act_clean($act){
         msg('Command unavailable: '.htmlspecialchars($act),-1);
         return 'show';
     }
+
+    //is there really a draft?
+    if($act == 'draft' && !file_exists($INFO['draft'])) return 'edit';
 
     if(!in_array($act,array('login','logout','register','save','cancel','edit','draft',
                     'preview','search','show','check','index','revisions',
