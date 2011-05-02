@@ -257,18 +257,17 @@ function check(){
     }
 
     if ($index_corrupted)
-        msg('Your search index is corrupted. It might produce wrong results
-                unless you fix it. See
+        msg('The search index is corrupted. It might produce wrong results and most
+                probably needs to be rebuilt. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for ways to rebuild your search index.', -1);
+                for ways to rebuild the search index.', -1);
     elseif (!empty($lengths))
-        msg('Your search index seems to be okay.', 1);
+        msg('The search index seems to be working', 1);
     else
-        msg('Your search index is empty. See
+        msg('The search index is empty. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for help on how to fix your search index unless you are using an
-                external indexer or your wiki is actually empty.');
-
+                for help on how to fix the search index. If the default indexer
+                isn\'t used or the wiki is actually empty this is normal.');
 }
 
 /**
