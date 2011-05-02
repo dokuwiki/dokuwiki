@@ -489,6 +489,9 @@ class Doku_Indexer {
         foreach ($result as $word => $res) {
             $final[$word] = array();
             foreach ($res as $wid) {
+                // handle the case when ($ixid < count($index)) has been false
+                // and thus $docs[$wid] hasn't been set.
+                if (!isset($docs[$wid])) continue;
                 $hits = &$docs[$wid];
                 foreach ($hits as $hitkey => $hitcnt) {
                     // make sure the document still exists
