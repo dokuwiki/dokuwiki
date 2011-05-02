@@ -1323,7 +1323,7 @@ function idx_listIndexLengths() {
         $dir = @opendir($conf['indexdir']);
         if ($dir === false)
             return array();
-        $idx[] = array();
+        $idx = array();
         while (($f = readdir($dir)) !== false) {
             if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
                 $i = substr($f, 1, -4);

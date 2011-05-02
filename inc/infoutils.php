@@ -238,6 +238,37 @@ function check(){
                 Make sure this directory is properly protected
                 (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
     }
+
+    // Check for corrupted search index
+    $lengths = idx_listIndexLengths();
+    $index_corrupted = false;
+    foreach ($lengths as $length) {
+        if (count(idx_getIndex('w', $length)) != count(idx_getIndex('i', $length))) {
+            $index_corrupted = true;
+            break;
+        }
+    }
+
+    foreach (idx_getIndex('metadata', '') as $index) {
+        if (count(idx_getIndex($index.'_w', '')) != count(idx_getIndex($index.'_i', ''))) {
+            $index_corrupted = true;
+            break;
+        }
+    }
+
+    if ($index_corrupted)
+        msg('Your search index is corrupted. It might produce wrong results
+                unless you fix it. See
+                <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                for ways to rebuild your search index.', -1);
+    elseif (!empty($lengths))
+        msg('Your search index seems to be okay.', 1);
+    else
+        msg('Your search index is empty. See
+                <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                for help on how to fix your search index unless you are using an
+                external indexer or your wiki is actually empty.');
+
 }
 
 /**
