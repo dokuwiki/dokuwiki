@@ -1,0 +1,3 @@
+====== Retorno de popularidade ======
+
+Os dados foram enviados com sucesso.
