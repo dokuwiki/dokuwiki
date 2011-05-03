@@ -19,6 +19,7 @@
  * @author Fernando J. Gómez <fjgomez@gmail.com>
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
+ * @author emezeta <emezeta@infoprimo.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -115,6 +116,7 @@ $lang['fetchsize']             = 'Tamaño máximo (bytes) que fetch.php puede de
 $lang['notify']                = 'Enviar notificación de cambios a esta dirección de correo electrónico';
 $lang['registernotify']        = 'Enviar información cuando se registran nuevos usuarios a esta dirección de correo electrónico';
 $lang['mailfrom']              = 'Dirección de correo electrónico para emails automáticos';
+$lang['mailprefix']            = 'Asunto por defecto que se utilizará en mails automáticos.';
 $lang['gzip_output']           = 'Usar gzip Content-Encoding para xhtml';
 $lang['gdlib']                 = 'Versión de GD Lib';
 $lang['im_convert']            = 'Ruta a la herramienta de conversión de ImageMagick';
