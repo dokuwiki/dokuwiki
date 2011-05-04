@@ -55,6 +55,7 @@ function tpl_content_core(){
     global $SUF;
     global $SUM;
     global $IDX;
+    global $conf;
 
     switch($ACT){
         case 'show':
@@ -65,6 +66,8 @@ function tpl_content_core(){
         case 'edit':
         case 'recover':
             html_edit();
+            if($conf['autopreview'])
+              html_show($TEXT, FALSE);
             break;
         case 'preview':
             html_edit();

@@ -95,6 +95,7 @@ $conf['compression'] = 'gz';             //compress old revisions: (0: off) ('gz
                                          //  bz2 generates smaller files, but needs more cpu-power
 $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds (defaults to a day)
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
+$conf['autopreview'] = 0;                //automatically renders preview of the current edited text (0|1)
 $conf['fetchsize']   = 0;                //maximum size (bytes) fetch.php may download from extern, disabled by default
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)

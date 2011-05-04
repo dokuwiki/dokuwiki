@@ -103,6 +103,7 @@ $lang['fnencode']              = 'Metoda kodowana nazw pików bez użycia ASCII.
 $lang['autoplural']            = 'Automatyczne tworzenie liczby mnogiej';
 $lang['compression']           = 'Metoda kompresji dla usuniętych plików';
 $lang['cachetime']             = 'Maksymalny wiek cache w sekundach';
+$lang['autopreview']           = 'Automatyczny podgląd edytowanej treści';
 $lang['locktime']              = 'Maksymalny wiek blokad w sekundach';
 $lang['fetchsize']             = 'Maksymalny rozmiar pliku (w bajtach) jaki można pobrać z zewnątrz';
 $lang['notify']                = 'Wysyłanie powiadomień na adres e-mail';

@@ -213,7 +213,7 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_show($txt=null){
+function html_show($txt=null, $scroll=TRUE){
     global $ID;
     global $REV;
     global $HIGH;
@@ -227,14 +227,16 @@ function html_show($txt=null){
 
     if (!is_null($txt)){
         //PreviewHeader
-        echo '<br id="scroll__here" />';
+        if($scroll)
+          echo '<br id="scroll__here" />';
         echo p_locale_xhtml('preview');
-        echo '<div class="preview">';
+        echo '<div id="preview__area" class="preview">';
         $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         echo $html;
         echo '<div class="clearer"></div>';
         echo '</div>';
+        echo '<div id="preview__status"/>';
 
     }else{
         if ($REV) print p_locale_xhtml('showrev');

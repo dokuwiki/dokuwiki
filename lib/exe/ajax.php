@@ -130,6 +130,8 @@ function ajax_lock(){
         lock($id);
         echo 1;
     }
+    
+    $json_array = array();
 
     if($conf['usedraft'] && $_POST['wikitext']){
         $client = $_SERVER['REMOTE_USER'];
@@ -144,9 +146,15 @@ function ajax_lock(){
                 );
         $cname = getCacheName($draft['client'].$id,'.draft');
         if(io_saveFile($cname,serialize($draft))){
-            echo $lang['draftdate'].' '.dformat();
+            $json_array['draft_message'] = $lang['draftdate'].' '.dformat();
         }
     }
+    if($conf['autopreview'] && $_POST['wikitext']){
+        $json_array['preview_html'] = p_render('xhtml', p_get_instructions($_POST['wikitext']), $info);
+        $json_array['preview_status'] = dformat();
+    }
+    
+    echo json_encode($json_array);
 
 }
 

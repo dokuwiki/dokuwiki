@@ -120,6 +120,7 @@ $lang['fnencode']    = 'Method for encoding non-ASCII filenames.';
 $lang['autoplural']  = 'Check for plural forms in links';
 $lang['compression'] = 'Compression method for attic files';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
+$lang['autopreview'] = 'Automatically rendering of preview of the current draft';
 $lang['locktime']    = 'Maximum age for lock files (sec)';
 $lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern';
 $lang['notify']      = 'Send change notifications to this email address';
