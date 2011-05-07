@@ -72,7 +72,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $config_cascade;
 
         // fresh 1:1 copy without replacements
-        $AUTH_ACL = file(DOKU_CONF.'acl.auth.php');
+        $AUTH_ACL = file($config_cascade['acl']['default']);
 
 
         // namespace given?
@@ -711,7 +711,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         $new_config = $acl_config.$new_acl;
 
-        return io_saveFile(DOKU_CONF.'acl.auth.php', $new_config);
+        return io_saveFile($config_cascade['acl']['default'], $new_config);
     }
 
     /**
@@ -729,7 +729,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // save all non!-matching
         $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
 
-        return io_saveFile(DOKU_CONF.'acl.auth.php', join('',$new_config));
+        return io_saveFile($config_cascade['acl']['default'], join('',$new_config));
     }
 
     /**
@@ -801,40 +801,40 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
         echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
         if (!empty($this->specials)) {
-	        echo '  <optgroup label="&nbsp;">'.NL;
-	        foreach($this->specials as $ug){
-	            if($ug == $this->who){
-	                $sel    = ' selected="selected"';
-	                $inlist = true;
-	            }else{
-	                $sel = '';
-	            }
+            echo '  <optgroup label="&nbsp;">'.NL;
+            foreach($this->specials as $ug){
+                if($ug == $this->who){
+                    $sel    = ' selected="selected"';
+                    $inlist = true;
+                }else{
+                    $sel = '';
+                }
 
-	            if($ug{0} == '@'){
-	                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
-	            }else{
-	                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
-	            }
-	        }
-	        echo '  </optgroup>'.NL;
+                if($ug{0} == '@'){
+                        echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                }else{
+                        echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                }
+            }
+            echo '  </optgroup>'.NL;
         }
         if (!empty($this->usersgroups)) {
-	        echo '  <optgroup label="&nbsp;">'.NL;
-	        foreach($this->usersgroups as $ug){
-	            if($ug == $this->who){
-	                $sel    = ' selected="selected"';
-	                $inlist = true;
-	            }else{
-	                $sel = '';
-	            }
+            echo '  <optgroup label="&nbsp;">'.NL;
+            foreach($this->usersgroups as $ug){
+                if($ug == $this->who){
+                    $sel    = ' selected="selected"';
+                    $inlist = true;
+                }else{
+                    $sel = '';
+                }
 
-	            if($ug{0} == '@'){
-	                    echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
-	            }else{
-	                    echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
-	            }
-	        }
-	        echo '  </optgroup>'.NL;
+                if($ug{0} == '@'){
+                        echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                }else{
+                        echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                }
+            }
+            echo '  </optgroup>'.NL;
         }
         echo '</select>'.NL;
         return $inlist;

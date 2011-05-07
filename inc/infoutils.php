@@ -176,7 +176,8 @@ function check(){
     }
 
     if($conf['authtype'] == 'plain'){
-        if(is_writable(DOKU_CONF.'users.auth.php')){
+        global $config_cascade;
+        if(is_writable($config_cascade['plainauth.users']['default'])){
             msg('conf/users.auth.php is writable',1);
         }else{
             msg('conf/users.auth.php is not writable',0);
