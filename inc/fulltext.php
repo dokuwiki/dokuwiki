@@ -230,13 +230,13 @@ function _ft_pageLookup(&$data){
         foreach ($page_idx as $p_id) {
             if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
                 if (!isset($pages[$p_id]))
-                    $pages[$p_id] = p_get_first_heading($p_id, false);
+                    $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
             }
         }
         if ($in_title) {
             foreach ($Indexer->lookupKey('title', $id, '_ft_pageLookupTitleCompare') as $p_id) {
                 if (!isset($pages[$p_id]))
-                    $pages[$p_id] = p_get_first_heading($p_id, false);
+                    $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
             }
         }
     }

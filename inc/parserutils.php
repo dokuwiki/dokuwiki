@@ -14,7 +14,16 @@ if(!defined('DOKU_INC')) die('meh.');
  * metadata? When this limit is reached the title index is loaded and used for
  * all following requests.
  */
-if (!defined('P_GET_FIRST_HEADING_METADATA_LIMIT')) define('P_GET_FIRST_HEADING_METADATA_LIMIT', 10);
+if (!defined('P_GET_FIRST_HEADING_METADATA_LIMIT')) define('P_GET_FIRST_HEADING_METADATA_LIMIT', 20);
+
+/** Don't render metadata even if it is outdated or doesn't exist */
+define('METADATA_DONT_RENDER', 0);
+/** Render metadata when the page is really newer or the metadata doesn't exist. Uses just a simple check,
+    but should work pretty well for loading simple metadata values like the page title and avoids
+    rendering a lot of pages in one request. */
+define('METADATA_RENDER_USING_SIMPLE_CACHE', 1);
+/** Render metadata using the metadata cache logic. */
+define('METADATA_RENDER_USING_CACHE', 2);
 
 /**
  * Returns the parsed Wikitext in XHTML for the given id and revision.
@@ -229,13 +238,15 @@ function p_get_instructions($text){
  *
  * @param string $id The id of the page the metadata should be returned from
  * @param string $key The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
- * @param boolean $render If the page should be rendererd when the cache can't be used - default true
+ * @param int $render If the page should be rendererd - possible values:
+ *     METADATA_DONT_RENDER, METADATA_RENDER_USING_SIMPLE_CACHE, METADATA_RENDER_USING_CACHE, default:
+ *     METADATA_RENDER_USING_CACHE
  * @return mixed The requested metadata fields
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Michael Hamann <michael@content-space.de>
  */
-function p_get_metadata($id, $key='', $render=true){
+function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
     global $ID;
 
     // cache the current page
@@ -244,14 +255,32 @@ function p_get_metadata($id, $key='', $render=true){
     $cache = ($ID == $id);
     $meta = p_read_metadata($id, $cache);
 
+    if (!is_numeric($render)) {
+        if ($render) {
+            $render = METADATA_RENDER_USING_SIMPLE_CACHE;
+        } else {
+            $render = METADATA_DONT_RENDER;
+        }
+    }
+
     // prevent recursive calls in the cache
     static $recursion = false;
-    if (!$recursion && $render){
+    if (!$recursion && $render != METADATA_DONT_RENDER && page_exists($id)){
         $recursion = true;
 
         $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
 
-        if (page_exists($id) && !$cachefile->useCache()){
+        $do_render = false;
+        if ($render == METADATA_RENDER_USING_SIMPLE_CACHE) {
+            $pagefn = wikiFN($id);
+            $metafn = metaFN($id, '.meta');
+            if (!@file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
+                $do_render = true;
+            }
+        } elseif (!$cachefile->useCache()){
+            $do_render = true;
+        }
+        if ($do_render) {
             $old_meta = $meta;
             $meta = p_render_metadata($id, $meta);
             // only update the file when the metadata has been changed
@@ -647,18 +676,25 @@ function & p_get_renderer($mode) {
 /**
  * Gets the first heading from a file
  *
+ * After P_GET_FIRST_HEADING_METADATA_LIMIT requests for different pages the title
+ * index will be loaded and used instead. Use METADATA_DONT_RENDER when you are
+ * requesting a lot of titles, METADATA_RENDER_USING_CACHE when you think
+ * rendering the page although it hasn't changed might be needed (or also
+ * want to influence rendering using events) and METADATA_RENDER_USING_SIMPLE_CACHE
+ * otherwise. Use METADATA_RENDER_USING_CACHE with care as it could cause
+ * parsing and rendering a lot of pages in one request.
+ *
  * @param   string   $id       dokuwiki page id
- * @param   bool     $render   rerender if first heading not known
- *                             default: true  -- must be set to false for calls from the metadata renderer to
- *                                               protects against loops and excessive resource usage when pages
- *                                               for which only a first heading is required will attempt to
- *                                               render metadata for all the pages for which they require first
- *                                               headings ... and so on.
+ * @param   int      $render   rerender if first heading not known
+ *                             default: METADATA_RENDER_USING_SIMPLE_CACHE
+ *                             Possible values: METADATA_DONT_RENDER,
+ *                                              METADATA_RENDER_USING_SIMPLE_CACHE,
+ *                                              METADATA_RENDER_USING_CACHE
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Hamann <michael@content-space.de>
  */
-function p_get_first_heading($id, $render=true){
+function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
     // counter how many titles have been requested using p_get_metadata
     static $count = 1;
     // the index of all titles, only loaded when many titles are requested

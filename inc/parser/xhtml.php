@@ -1144,7 +1144,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             return $this->_imageTitle($title);
         } elseif ( is_null($title) || trim($title)=='') {
             if (useHeading($linktype) && $id) {
-                $heading = p_get_first_heading($id,true);
+                $heading = p_get_first_heading($id);
                 if ($heading) {
                     return $this->_xmlEntities($heading);
                 }
