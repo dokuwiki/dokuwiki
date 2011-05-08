@@ -155,7 +155,7 @@ function tpl_toc($return=false){
         $toc = $TOC;
     }elseif(($ACT == 'show' || substr($ACT,0,6) == 'export') && !$REV && $INFO['exists']){
         // get TOC from metadata, render if neccessary
-        $meta = p_get_metadata($ID, false, true);
+        $meta = p_get_metadata($ID, false, METADATA_RENDER_USING_CACHE);
         if(isset($meta['internal']['toc'])){
             $tocok = $meta['internal']['toc'];
         }else{
