@@ -188,9 +188,11 @@ function js_cacheok($cache,$files){
     $ctime = @filemtime($cache);
     if(!$ctime) return false; //There is no cache
 
+    global $config_cascade;
+
     // some additional files to check
     $files = array_merge($files, getConfigFiles('main'));
-    $files[] = DOKU_CONF.'userscript.js';
+    $files[] = $config_cascade['userscript']['default'];
     $files[] = __FILE__;
 
     // now walk the files

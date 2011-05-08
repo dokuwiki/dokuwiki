@@ -1,6 +1,6 @@
 Olá!
 
-A página @PAGE@ na wiki @TITLE@ mudou.
+A página @PAGE@ na wiki @TITLE@ foi alterada.
 Estas foram as mudanças:
 
 --------------------------------------------------------
@@ -13,8 +13,10 @@ Sumário : @SUMMARY@
 Revisão antiga:@OLDPAGE@
 Nova Revisão:@NEWPAGE@
 
-Para cancelar a página de notificações, entre na wiki @DOKUWIKIURL@ visite @NEWPAGE@
-e cancele a inscrição de edição da página ou namespace.
+Para cancelar as notificações de mudanças, entre em
+@DOKUWIKIURL@, vá até @NEWPAGE@
+e cancele o monitoramento da página e/ou do espaço de
+nomes.
 --
 Este e-mail foi gerado pelo DokuWiki em
 @DOKUWIKIURL@

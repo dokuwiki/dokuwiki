@@ -12,6 +12,7 @@
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
+ * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -34,7 +35,7 @@ $lang['btn_revs']              = '修订记录';
 $lang['btn_recent']            = '最近更改';
 $lang['btn_upload']            = '上传';
 $lang['btn_cancel']            = '取消';
-$lang['btn_index']             = '索引';
+$lang['btn_index']             = '网站地图';
 $lang['btn_secedit']           = '编辑';
 $lang['btn_login']             = '登录';
 $lang['btn_logout']            = '退出';
@@ -165,6 +166,8 @@ $lang['diff']                  = '显示与当前版本的差别';
 $lang['diff2']                 = '显示跟目前版本的差异';
 $lang['difflink']              = '到此差别页面的链接';
 $lang['diff_type']             = '查看差异：';
+$lang['diff_inline']           = '行内显示';
+$lang['diff_side']             = '并排显示';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '您的足迹';
 $lang['youarehere']            = '您在这里';

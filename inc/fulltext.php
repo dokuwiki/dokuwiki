@@ -230,22 +230,21 @@ function _ft_pageLookup(&$data){
         foreach ($page_idx as $p_id) {
             if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
                 if (!isset($pages[$p_id]))
-                    $pages[$p_id] = p_get_first_heading($p_id, false);
+                    $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
             }
         }
         if ($in_title) {
-            $wildcard_id = "*$id*";
-            foreach ($Indexer->lookupKey('title', $wildcard_id) as $p_id) {
+            foreach ($Indexer->lookupKey('title', $id, '_ft_pageLookupTitleCompare') as $p_id) {
                 if (!isset($pages[$p_id]))
-                    $pages[$p_id] = p_get_first_heading($p_id, false);
+                    $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
             }
         }
     }
+
     if (isset($ns)) {
-        foreach ($page_idx as $p_id) {
-            if (strpos($p_id, $ns) === 0) {
-                if (!isset($pages[$p_id]))
-                    $pages[$p_id] = p_get_first_heading($p_id, false);
+        foreach (array_keys($pages) as $p_id) {
+            if (strpos($p_id, $ns) !== 0) {
+                unset($pages[$p_id]);
             }
         }
     }
@@ -262,6 +261,15 @@ function _ft_pageLookup(&$data){
 
     uksort($pages,'ft_pagesorter');
     return $pages;
+}
+
+/**
+ * Tiny helper function for comparing the searched title with the title
+ * from the search index. This function is a wrapper around stripos with
+ * adapted argument order and return value.
+ */
+function _ft_pageLookupTitleCompare($search, $title) {
+    return stripos($title, $search) !== false;
 }
 
 /**

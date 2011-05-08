@@ -9,6 +9,7 @@
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
+ * @author Vojta Beran <xmamut@email.cz>
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';
@@ -55,3 +56,4 @@ $lang['enabled']               = 'Plugin %s aktivován.';
 $lang['notenabled']            = 'Plugin %s nelze aktivovat, zkontrolujte práva k souborům.';
 $lang['disabled']              = 'Plugin %s deaktivován.';
 $lang['notdisabled']           = 'Plugin %s nelze deaktivovat, zkontrolujte práva k souborům.';
+$lang['packageinstalled']      = 'Plugin package (%d plugin%s: %s) úspěšně nainstalován.';

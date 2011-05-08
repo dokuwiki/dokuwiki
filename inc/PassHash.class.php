@@ -126,7 +126,7 @@ class PassHash {
             return crypt($clear,'$1$'.$salt.'$');
         }else{
             // Fall back to PHP-only implementation
-            return $this->apr1($clear, $salt, '1');
+            return $this->hash_apr1($clear, $salt, '1');
         }
     }
 
