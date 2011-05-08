@@ -1347,12 +1347,14 @@ function tpl_flush(){
  * @author Anika Henke <anika@selfthinker.org>
  */
 function tpl_getFavicon($abs=false) {
-    if (file_exists(mediaFN('favicon.ico'))) {
-        if($abs) return ml('favicon.ico', '', '', '', true);
-        else return ml('favicon.ico');
+    if (file_exists(mediaFN('favicon.ico')))
+        return ml('favicon.ico', '', '', '', $abs);
+
+    if($abs) { 
+        return DOKU_URL.substr(DOKU_TPL.'images/favicon.ico', strlen(DOKU_REL));
+    } else { 
+         return DOKU_TPL.'images/favicon.ico';   
     }
-    if($abs) return DOKU_URL.substr(DOKU_TPL.'images/favicon.ico', strlen(DOKU_REL));
-    else return DOKU_TPL.'images/favicon.ico';
 }
 
 
