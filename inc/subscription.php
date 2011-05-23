@@ -279,7 +279,7 @@ function subscription_addresslist(&$data){
     $pres = array('style' => 'every', 'escaped' => true);
     if (!$self && isset($_SERVER['REMOTE_USER'])) {
         $pres['user'] = '((?!' . preg_quote_cb($_SERVER['REMOTE_USER']) .
-                        '\b)\S+)';
+                        '(?: |$))\S+)';
     }
     $subs = subscription_find($id, $pres);
     $emails = array();
