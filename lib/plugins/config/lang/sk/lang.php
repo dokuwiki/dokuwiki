@@ -102,6 +102,7 @@ $lang['fetchsize']             = 'Maximálna veľkosť (v bajtoch) pri sťahovan
 $lang['notify']                = 'Posielať upozornenia na zmeny na túto e-mailovú adresu';
 $lang['registernotify']        = 'Posielať informáciu o nových užívateľoch na túto e-mailovú adresu';
 $lang['mailfrom']              = 'E-mailová adresa na automatické e-maily';
+$lang['mailprefix']            = 'Prefix predmetu emailovej spravy zasielanej automaticky';
 $lang['gzip_output']           = 'Používať gzip Content-Encoding pre xhtml';
 $lang['gdlib']                 = 'Verzia GD Lib';
 $lang['im_convert']            = 'Cesta k ImageMagick convert tool';
