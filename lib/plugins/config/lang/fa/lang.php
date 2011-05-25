@@ -103,6 +103,7 @@ $lang['fetchsize']             = 'بیشینه‌ی حجمی که فایل fetch
 $lang['notify']                = 'تغییرات به این ایمیل ارسال شود';
 $lang['registernotify']        = 'اطلاعات کاربران تازه وارد به این ایمیل ارسال شود';
 $lang['mailfrom']              = 'آدرس ایمیلی که برای ایمیل‌های خودکار استفاده می‌شود';
+$lang['mailprefix']            = 'پیشوند عنوان رای‌نامه، برای رای‌نامه‌های خودکار';
 $lang['gzip_output']           = 'استفاده از gzip برای xhtmlها';
 $lang['gdlib']                 = 'نگارش کتاب‌خانه‌ی GD';
 $lang['im_convert']            = 'مسیر ابزار convert از برنامه‌ی ImageMagick';

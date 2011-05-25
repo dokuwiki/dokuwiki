@@ -509,10 +509,14 @@ function act_edit($act){
     if(!$DATE) $DATE = $INFO['meta']['date']['modified'];
 
     //check if locked by anyone - if not lock for my self
-    $lockedby = checklock($ID);
-    if($lockedby) return 'locked';
+    //do not lock when the user can't edit anyway
+    if ($INFO['writable']) {
+        $lockedby = checklock($ID);
+        if($lockedby) return 'locked';
 
-    lock($ID);
+        lock($ID);
+    }
+
     return $act;
 }
 
