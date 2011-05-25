@@ -128,7 +128,6 @@ function ajax_lock(){
 
     $ID = cleanID($_POST['id']);
     if(empty($ID)) return;
-    if (!checkSecurityToken()) return;
 
     $INFO = pageinfo();
 
@@ -169,7 +168,6 @@ function ajax_lock(){
 function ajax_draftdel(){
     $id = cleanID($_REQUEST['id']);
     if(empty($id)) return;
-    if (!checkSecurityToken()) return;
 
     $client = $_SERVER['REMOTE_USER'];
     if(!$client) $client = clientIP(true);
