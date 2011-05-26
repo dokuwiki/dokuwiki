@@ -308,6 +308,19 @@ function metaFN($id,$ext){
 }
 
 /**
+ * returns the full path to the media's meta file specified by ID and extension
+ *
+ * The filename is URL encoded to protect Unicode chars
+ */
+function mediaMetaFN($id,$ext){
+    global $conf;
+    $id = cleanID($id);
+    $id = str_replace(':','/',$id);
+    $fn = $conf['mediametadir'].'/'.utf8_encodeFN($id).$ext;
+    return $fn;
+}
+
+/**
  * returns an array of full paths to all metafiles of a given ID
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
@@ -327,11 +340,16 @@ function metaFiles($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function mediaFN($id){
+function mediaFN($id, $rev=''){
     global $conf;
     $id = cleanID($id);
     $id = str_replace(':','/',$id);
-    $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
+    if(empty($rev)){
+        $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
+    }else{
+    	list($name, $ext) = explode(".", $id);
+        $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name).'.'.$rev.'.'.utf8_encodeFN($ext);
+    }
     return $fn;
 }
 

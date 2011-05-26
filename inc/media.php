@@ -346,6 +346,13 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     global $conf;
     global $lang;
 
+    $old = @filemtime($fn);
+    //
+    if(!@file_exists(mediaFN($id, $old)) && @file_exists($fn)) {
+        // add old revision to the attic if missing
+        saveOldMediaRevision($id);
+    }
+
     // prepare directory
     io_createNamespace($id, 'media');
 
@@ -366,6 +373,26 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     }else{
         return array($lang['uploadfail'],-1);
     }
+}
+
+/**
+ * moves the current version to the media_attic and returns its
+ * revision date
+ */
+function saveOldMediaRevision($id, $move = 'copy'){
+    global $conf;
+    $oldf = mediaFN($id);
+    if(!@file_exists($oldf)) return '';
+    $date = filemtime($oldf);
+    $newf = mediaFN($id,$date);
+    io_makeFileDir($newf);
+    if($move($oldf, $newf)) {
+        // Set the correct permission here.
+        // Always chmod media because they may be saved with different permissions than expected from the php umask.
+        // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
+        chmod($newf, $conf['fmode']);
+    }
+    return $date;
 }
 
 /**

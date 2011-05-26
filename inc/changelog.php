@@ -138,6 +138,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
     // add changelog lines
     $logline = implode("\t", $logline)."\n";
     io_saveFile($conf['media_changelog'],$logline,true); //global media changelog cache
+    io_saveFile(mediaMetaFN($id,'.changes'),$logline,true); //media file's changelog
 }
 
 /**
@@ -301,7 +302,7 @@ function _handleRecent($line,$ns,$flags,&$seen){
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRevisionInfo($id, $rev, $chunk_size=8192) {
+function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
     global $cache_revinfo;
     $cache =& $cache_revinfo;
     if (!isset($cache[$id])) { $cache[$id] = array(); }
@@ -312,7 +313,11 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
         return $cache[$id][$rev];
     }
 
-    $file = metaFN($id, '.changes');
+    if ($media) {
+        $file = mediaMetaFN($id, '.changes');
+    } else {
+        $file = metaFN($id, '.changes');
+    }
     if (!@file_exists($file)) { return false; }
     if (filesize($file)<$chunk_size || $chunk_size==0) {
         // read whole file
@@ -398,7 +403,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRevisions($id, $first, $num, $chunk_size=8192) {
+function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
     global $cache_revinfo;
     $cache =& $cache_revinfo;
     if (!isset($cache[$id])) { $cache[$id] = array(); }
@@ -406,11 +411,15 @@ function getRevisions($id, $first, $num, $chunk_size=8192) {
     $revs = array();
     $lines = array();
     $count  = 0;
-    $file = metaFN($id, '.changes');
+    if ($media) {
+        $file = mediaMetaFN($id, '.changes');
+    } else {
+        $file = metaFN($id, '.changes');
+    }
     $num = max($num, 0);
     $chunk_size = max($chunk_size, 0);
     if ($first<0) { $first = 0; }
-    else if (@file_exists(wikiFN($id))) {
+    else if (!$media && @file_exists(wikiFN($id)) || $media && @file_exists(mediaFN($id))) {
         // skip current revision if the page exists
         $first = max($first+1, 0);
     }
