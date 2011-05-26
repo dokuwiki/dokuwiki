@@ -8,3 +8,8 @@
  */
 $lang['name']                  = 'Prieskum používania (môže chvíľu trvať)';
 $lang['submit']                = 'Poslať dáta';
+$lang['autosubmit']            = 'Automaticky zaslať dáta raz mesačne';
+$lang['submissionFailed']      = 'Dáta nemohli byť odoslané z nasledujúceho dôdovu:';
+$lang['submitDirectly']        = 'Dáta môžu byť zaslané manuálne nasledujúcim formulárom:';
+$lang['autosubmitError']       = 'Posledné automatické odoslanie dát zlyhalo z nasledujúceho dôvodu:';
+$lang['lastSent']              = 'Dáta boli odoslané.';

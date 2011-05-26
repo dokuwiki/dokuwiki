@@ -123,11 +123,21 @@ function ajax_suggestions() {
 function ajax_lock(){
     global $conf;
     global $lang;
-    $id = cleanID($_POST['id']);
-    if(empty($id)) return;
+    global $ID;
+    global $INFO;
 
-    if(!checklock($id)){
-        lock($id);
+    $ID = cleanID($_POST['id']);
+    if(empty($ID)) return;
+
+    $INFO = pageinfo();
+
+    if (!$INFO['writable']) {
+        echo 'Permission denied';
+        return;
+    }
+
+    if(!checklock($ID)){
+        lock($ID);
         echo 1;
     }
 
@@ -135,14 +145,14 @@ function ajax_lock(){
         $client = $_SERVER['REMOTE_USER'];
         if(!$client) $client = clientIP(true);
 
-        $draft = array('id'     => $id,
+        $draft = array('id'     => $ID,
                 'prefix' => substr($_POST['prefix'], 0, -1),
                 'text'   => $_POST['wikitext'],
                 'suffix' => $_POST['suffix'],
                 'date'   => (int) $_POST['date'],
                 'client' => $client,
                 );
-        $cname = getCacheName($draft['client'].$id,'.draft');
+        $cname = getCacheName($draft['client'].$ID,'.draft');
         if(io_saveFile($cname,serialize($draft))){
             echo $lang['draftdate'].' '.dformat();
         }

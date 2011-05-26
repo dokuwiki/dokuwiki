@@ -909,7 +909,7 @@ class Doku_Indexer {
             $line .= "\n";
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
-        if (!fh) return false;
+        if (!$fh) return false;
         $ih = @fopen($fn.'.idx', 'r');
         if ($ih) {
             $ln = -1;
