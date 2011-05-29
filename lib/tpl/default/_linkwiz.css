@@ -16,6 +16,7 @@
     background-color: __background_alt__;
     height: 16px;
     margin-bottom: 5px;
+    cursor: move;
 }
 
 #link__wiz_close {
