@@ -12,7 +12,7 @@ if(!defined('DOKU_INC')) die();
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
+abstract class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
 
     function getMenuText($language) {
         $menutext = $this->getLang('menu');
@@ -27,13 +27,9 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         return 1000;
     }
 
-    function handle() {
-        trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
-    }
+    abstract function handle();
 
-    function html() {
-        trigger_error('html() not implemented in '.get_class($this), E_USER_WARNING);
-    }
+    abstract function html();
 
     function forAdminOnly() {
         return true;
