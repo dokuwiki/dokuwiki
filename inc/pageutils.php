@@ -295,8 +295,6 @@ function wikiLockFN($id) {
 /**
  * returns the full path to the meta file specified by ID and extension
  *
- * The filename is URL encoded to protect Unicode chars
- *
  * @author Steven Danz <steven-danz@kc.rr.com>
  */
 function metaFN($id,$ext){
@@ -310,7 +308,7 @@ function metaFN($id,$ext){
 /**
  * returns the full path to the media's meta file specified by ID and extension
  *
- * The filename is URL encoded to protect Unicode chars
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function mediaMetaFN($id,$ext){
     global $conf;
@@ -339,6 +337,7 @@ function metaFiles($id){
  * The filename is URL encoded to protect Unicode chars
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function mediaFN($id, $rev=''){
     global $conf;
@@ -347,8 +346,9 @@ function mediaFN($id, $rev=''){
     if(empty($rev)){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
     }else{
-    	list($name, $ext) = explode(".", $id);
-        $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name).'.'.$rev.'.'.utf8_encodeFN($ext);
+    	$ext = mimetype($id);
+    	$name = substr($id, 0, strrpos($id, '.'));
+        $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name).'.'.(int)$rev.'.'.utf8_encodeFN($ext[0]);
     }
     return $fn;
 }
