@@ -152,6 +152,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * RECENTS_SKIP_MINORS    - don't include minor changes
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
  * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
+ * RECENTS_INCLUDE_MEDIA  - return both media changes and page changes
  *
  * @param int    $first   number of first entry returned (for paginating
  * @param int    $num     return $num entries
@@ -159,6 +160,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * @param bool   $flags   see above
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRecents($first,$num,$ns='',$flags=0){
     global $conf;
@@ -174,20 +176,46 @@ function getRecents($first,$num,$ns='',$flags=0){
     } else {
         $lines = @file($conf['changelog']);
     }
+    $lines_position = count($lines)-1;
 
-    // handle lines
-    $seen = array(); // caches seen lines, _handleRecent() skips them
-    for($i = count($lines)-1; $i >= 0; $i--){
-        $rec = _handleRecent($lines[$i], $ns, $flags, $seen);
-        if($rec !== false) {
-            if(--$first >= 0) continue; // skip first entries
-            $recent[] = $rec;
-            $count++;
-            // break when we have enough entries
-            if($count >= $num){ break; }
-        }
+    if ($flags & RECENTS_INCLUDE_MEDIA) {
+        $media_lines = @file($conf['media_changelog']);
+        $media_lines_position = count($media_lines)-1;
     }
 
+    $seen = array(); // caches seen lines, _handleRecent() skips them
+
+    // handle lines
+    while ($lines_position >= 0 || (($flags & RECENTS_INCLUDE_MEDIA) && $media_lines_position >=0)) {
+        if (empty($rec) && $lines_position >= 0) {
+            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
+            if (!$rec) {
+                $lines_position --;
+                continue;
+            }
+        }
+        if (($flags & RECENTS_INCLUDE_MEDIA) && empty($media_rec) && $media_lines_position >= 0) {
+            $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags, $seen);
+            if (!$media_rec) {
+            	$media_lines_position --;
+            	continue;
+            }
+        }
+        if (($flags & RECENTS_INCLUDE_MEDIA) && @$media_rec['date'] >= @$rec['date']) {
+            $media_lines_position--;
+            $x = $media_rec;
+            $media_rec = false;
+        } else {
+            $lines_position--;
+            $x = $rec;
+            $rec = false;
+        }
+        if(--$first >= 0) continue; // skip first entries
+        $recent[] = $x;
+        $count++;
+        // break when we have enough entries
+        if($count >= $num){ break; }
+    }
     return $recent;
 }
 
@@ -301,6 +329,7 @@ function _handleRecent($line,$ns,$flags,&$seen){
  * requested changelog line is read.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
     global $cache_revinfo;
@@ -402,6 +431,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
  * lines are recieved.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
     global $cache_revinfo;
