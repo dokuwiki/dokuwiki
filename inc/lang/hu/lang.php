@@ -9,6 +9,7 @@
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
