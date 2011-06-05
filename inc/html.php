@@ -569,7 +569,7 @@ function html_revisions($first=0){
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function html_recent($first=0, $show_changes){
+function html_recent($first=0, $show_changes='both'){
     global $conf;
     global $lang;
     global $ID;
