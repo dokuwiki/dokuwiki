@@ -151,7 +151,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * RECENTS_SKIP_DELETED   - don't include deleted pages
  * RECENTS_SKIP_MINORS    - don't include minor changes
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
- * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
+ * RECENTS_SKIP_PAGES  - return media changes instead of page changes
  * RECENTS_INCLUDE_MEDIA  - return both media changes and page changes
  *
  * @param int    $first   number of first entry returned (for paginating
@@ -171,7 +171,7 @@ function getRecents($first,$num,$ns='',$flags=0){
         return $recent;
 
     // read all recent changes. (kept short)
-    if ($flags & RECENTS_MEDIA_CHANGES) {
+    if ($flags & RECENTS_SKIP_PAGES) {
         $lines = @file($conf['media_changelog']);
     } else {
         $lines = @file($conf['changelog']);
@@ -229,7 +229,7 @@ function getRecents($first,$num,$ns='',$flags=0){
  * RECENTS_SKIP_DELETED   - don't include deleted pages
  * RECENTS_SKIP_MINORS    - don't include minor changes
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
- * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
+ * RECENTS_SKIP_PAGES  - return media changes instead of page changes
  *
  * @param int    $from    date of the oldest entry to return
  * @param int    $to      date of the newest entry to return (for pagination, optional)
@@ -247,7 +247,7 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
         return $recent;
 
     // read all recent changes. (kept short)
-    if ($flags & RECENTS_MEDIA_CHANGES) {
+    if ($flags & RECENTS_SKIP_PAGES) {
         $lines = @file($conf['media_changelog']);
     } else {
         $lines = @file($conf['changelog']);
@@ -314,7 +314,7 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
-    $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
+    $fn = (($flags & RECENTS_SKIP_PAGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
     if((!@file_exists($fn)) && ($flags & RECENTS_SKIP_DELETED)) return false;
 
     return $recent;

@@ -347,8 +347,8 @@ function mediaFN($id, $rev=''){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
     }else{
     	$ext = mimetype($id);
-    	$name = substr($id, 0, strrpos($id, '.'));
-        $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name).'.'.(int)$rev.'.'.utf8_encodeFN($ext[0]);
+    	$name = substr($id,0, -1*strlen($ext[0]));
+        $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name .'.'.( (int) $rev ).'.'.$ext[0]);
     }
     return $fn;
 }
