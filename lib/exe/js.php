@@ -185,7 +185,7 @@ function js_load($file){
         }
         $data  = str_replace($match[0],$idata,$data);
     }
-    echo $data;
+    echo "$data\n";
 }
 
 /**
