@@ -34,19 +34,14 @@ function js_out(){
     // The generated script depends on some dynamic options
     $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
 
-    // load jQuery, minified if compression is eanbled.
-    $jquery_file_path = DOKU_INC.'lib/scripts/jquery/jquery';
-    if($conf['compress']) {
-        $jquery_file_path .= '.min';
-    }
-    $jquery_file_path .= '.js';
+    // load minified version for some files
+    $min = $conf['compress'] ? '.min' : '';
 
     // array of core files
     $files = array(
-                $jquery_file_path,
+                DOKU_INC."lib/scripts/jquery/jquery$min.js";
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
-                DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.core.min.js',
-                DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.interactions.min.js',
+                DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
                 DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/delay.js',
