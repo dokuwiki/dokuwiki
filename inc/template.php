@@ -89,7 +89,8 @@ function tpl_content_core(){
                 $_REQUEST['first'] = $_REQUEST['first'][0];
             }
             $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
-            html_recent($first);
+            $show_changes = $_REQUEST['show_changes'];
+            html_recent($first, $show_changes);
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?

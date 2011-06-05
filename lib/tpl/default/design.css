@@ -246,6 +246,18 @@ div.dokuwiki div.pagenav-next {
     width: 49%
 }
 
+/* ----------- type of recent changes ------------- */
+
+div.dokuwiki div.changestypenav {
+    border-bottom: 1px solid #8CACBB;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+div.dokuwiki div.changestypenav label {
+    padding-right: 10px;
+}
+
 /* --------------- Links ------------------ */
 
 div.dokuwiki a:link,

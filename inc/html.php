@@ -567,8 +567,9 @@ function html_revisions($first=0){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function html_recent($first=0){
+function html_recent($first=0, $show_changes){
     global $conf;
     global $lang;
     global $ID;
@@ -576,10 +577,14 @@ function html_recent($first=0){
      * decide if this is the last page or is there another one.
      * This is the cheapest solution to get this information.
      */
-    $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
+    $flags = RECENTS_INCLUDE_MEDIA;
+    if ($show_changes == 'mediafiles') $flags = RECENTS_SKIP_PAGES;
+    if ($show_changes == 'pages') $flags = 0;
+
+    $recents = getRecents($first,$conf['recent'] + 1,getNS($ID),$flags);
     if(count($recents) == 0 && $first != 0){
         $first=0;
-        $recents = getRecents($first,$conf['recent'] + 1,getNS($ID));
+        $recents = getRecents($first,$conf['recent'] + 1,getNS($ID),$flags);
     }
     $hasNext = false;
     if (count($recents)>$conf['recent']) {
@@ -596,6 +601,31 @@ function html_recent($first=0){
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
+
+    $form->addElement(form_makeOpenTag('div', array('class' => 'changestypenav')));
+    $attrs = array('name' => 'show_changes',
+                   'value' => 'pages',
+                   '_text' => $lang['pages_changes']);
+    if ($show_changes == 'pages') $attrs['checked'] = 'checked';
+    $form->addElement(form_radiofield($attrs));
+    $attrs = array('name' => 'show_changes',
+                   'value' => 'mediafiles',
+                   '_text' => $lang['media_changes']);
+    if ($show_changes == 'mediafiles') $attrs['checked'] = 'checked';
+    $form->addElement(form_radiofield($attrs));
+    $attrs = array('name' => 'show_changes',
+                   'value' => 'both',
+                   '_text' => $lang['both_changes'] );
+    if (empty($show_changes) || $show_changes == 'both') $attrs['checked'] = 'checked';
+    $form->addElement(form_radiofield($attrs));
+    $form->addElement(form_makeTag('input', array(
+                    'type'  => 'submit',
+                    'value' => $lang['btn_apply'],
+                    'title' => $lang['btn_apply'],
+                    'class' => 'button'
+                    )));
+    $form->addElement(form_makeCloseTag('div'));
+
     $form->addElement(form_makeOpenTag('ul'));
 
     foreach($recents as $recent){
