@@ -294,7 +294,7 @@ function js_compress($s){
     // items that don't need spaces next to them
     $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"[]";
 
-    $regex_starters = array("(", "=", "[", "," , ":");
+    $regex_starters = array("(", "=", "[", "," , ":", "!");
 
     $whitespaces_chars = array(" ", "\t", "\n", "\r", "\0", "\x0B");
 
