@@ -114,7 +114,7 @@ function _mail_send_action($data) {
     if(!utf8_isASCII($subject)) {
         $enc_subj = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
         // Spaces must be encoded according to rfc2047. Use the "_" shorthand
-        $enc_sub = preg_replace('/ /', '_', $enc_sub);
+        $enc_subj = preg_replace('/ /', '_', $enc_subj);
 
         // quoted printable has length restriction, use base64 if needed
         if(strlen($subject) > 74){
