@@ -123,6 +123,9 @@ function tpl_content_core(){
         case 'subscribe':
             tpl_subscribe();
             break;
+        case 'media':
+            tpl_media();
+            break;
         default:
             $evt = new Doku_Event('TPL_ACT_UNKNOWN',$ACT);
             if ($evt->advise_before())
@@ -1124,16 +1127,66 @@ function tpl_mediaContent($fromajax=false){
 }
 
 /**
+ * Prints the central column in full-screen media manager
+ * Depending on the opened tab this may be a list of
+ * files in a namespace, upload form or search form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_fileList(){
+    global $AUTH;
+    global $NS;
+    global $JUMPTO;
+
+    $opened_tab = $_REQUEST['tab_files'];
+    if (!$opened_tab) $opened_tab = 'files';
+
+    media_tabs_files($opened_tab);
+    if ($opened_tab == 'files') media_tab_files($NS,$AUTH,$JUMPTO);
+    if ($opened_tab == 'upload') media_tab_upload($NS,$AUTH,$JUMPTO);
+    if ($opened_tab == 'search') media_tab_search($NS,$AUTH);
+
+}
+
+/**
+ * Prints the third column in full-screen media manager
+ * Depending on the opened tab this may be details of the
+ * selected file, the meta editing dialog or
+ * list of file revisions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_fileDetails(){
+    global $AUTH;
+    global $NS;
+    global $IMG;
+
+    $opened_tab = $_REQUEST['tab_details'];
+    if (!$opened_tab) $opened_tab = 'view';
+    if ($_REQUEST['edit']) $opened_tab = 'edit';
+    media_tabs_details($opened_tab);
+
+    $image = $_REQUEST['image'];
+    if (!$image && !$IMG) return false;
+    if ($opened_tab == 'view') media_tab_view($image, $NS, $AUTH);
+    if ($opened_tab == 'edit') {
+        if ($IMG) media_tab_edit($IMG, $NS, $AUTH);
+        else if ($image) media_tab_edit($image, $NS, $AUTH);
+    }
+    if ($opened_tab == 'history') media_tab_history($image,$NS,$AUTH);
+}
+
+/**
  * prints the namespace tree in the mediamanger popup
  *
  * Only allowed in mediamanager.php
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_mediaTree(){
+function tpl_mediaTree($fullscreen = false){
     global $NS;
-
-    ptln('<div id="media__tree">');
+    if ($fullscreen) ptln('<div id="media-menu">');
+    else ptln('<div id="media__tree">');
     media_nstree($NS);
     ptln('</div>');
 }
@@ -1359,6 +1412,36 @@ function tpl_getFavicon($abs=false) {
     return DOKU_TPL.'images/favicon.ico';
 }
 
+/**
+ * Prints full-screen media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_media() {
+    //
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO;
+    require_once(DOKU_INC.'lib/exe/mediamanager.php');
+
+    echo '<div class="mediamanager" id="id-mediamanager">';
+    echo '<div class="mediamanager-slider" id="id-mediamanager-layout">';
+    echo '<div id="id-mediamanager-layout-namespaces" class="layout" style="width: 25%;">';
+    html_msgarea();
+    echo hsc('Namespaces:');
+    echo '<br /><br />';
+    echo '<div class="scroll-container">';
+    tpl_mediaTree(true);
+    echo '</div>';
+    echo '</div>';
+    echo '<div id="id-mediamanager-layout-list" class="layout" style="width: 40%;">';
+    tpl_fileList();
+    echo '</div>';
+    echo '<div id="id-mediamanager-layout-detail" class="layout" style="width: 30%;">';
+    tpl_fileDetails();
+    echo '</div>';
+    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '</div>';
+    echo '</div>';
+}
 
 //Setup VIM: ex: et ts=4 :
 

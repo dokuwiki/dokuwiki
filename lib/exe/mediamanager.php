@@ -76,7 +76,11 @@
     }
 
     // handle meta saving
-    if($IMG && $_REQUEST['do']['save']){
+    if($IMG && @array_key_exists('save', $_REQUEST['do'])){
+        $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
+    }
+
+    if($IMG && @array_key_exists('save', $_REQUEST['mediado'])){
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
     }
 
@@ -102,9 +106,11 @@
             msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
         }
     }
-
     // finished - start output
-    header('Content-Type: text/html; charset=utf-8');
-    include(template('mediamanager.php'));
+
+    if (!($_REQUEST['do'] == 'media')) {
+        header('Content-Type: text/html; charset=utf-8');
+        include(template('mediamanager.php'));
+    }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

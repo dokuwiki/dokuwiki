@@ -74,8 +74,9 @@ function media_metasave($id,$auth,$data){
  * Display the form to edit image meta data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_metaform($id,$auth){
+function media_metaform($id,$auth,$fullscreen = false){
     if($auth < AUTH_UPLOAD) return false;
     global $lang, $config_cascade;
 
@@ -96,8 +97,13 @@ function media_metaform($id,$auth){
     $src = mediaFN($id);
 
     // output
-    echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
-    echo '<form action="'.DOKU_BASE.'lib/exe/mediamanager.php" accept-charset="utf-8" method="post" class="meta">'.NL;
+    if (!$fullscreen) {
+        echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
+        echo '<form action="'.DOKU_BASE.'lib/exe/mediamanager.php" accept-charset="utf-8" method="post" class="meta">'.NL;
+    } else {
+        echo '<form action="'.media_managerURL(array('tab_details' => 'view')).
+            '" accept-charset="utf-8" method="post" class="meta">'.NL;
+    }
     formSecurityToken();
     foreach($fields as $key => $field){
         // get current value
@@ -132,8 +138,11 @@ function media_metaform($id,$auth){
     }
     echo '<div class="buttons">'.NL;
     echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
-    echo '<input name="do[save]" type="submit" value="'.$lang['btn_save'].
+    if (!$fullscreen) $do = 'do';
+    else $do = 'mediado';
+    echo '<input name="'.$do.'[save]" type="submit" value="'.$lang['btn_save'].
         '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
+    if (!$fullscreen)
     echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].
         '" title="'.$lang['btn_cancel'].' [C]" accesskey="c" class="button" />'.NL;
     echo '</div>'.NL;
@@ -476,7 +485,7 @@ function media_notify($id,$file,$mime){
 /**
  * List all files in a given Media namespace
  */
-function media_filelist($ns,$auth=null,$jump=''){
+function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false){
     global $conf;
     global $lang;
     $ns = cleanID($ns);
@@ -484,13 +493,13 @@ function media_filelist($ns,$auth=null,$jump=''){
     // check auth our self if not given (needed for ajax calls)
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<h1 id="media__ns">:'.hsc($ns).'</h1>'.NL;
+    if (!$fullscreenview) echo '<h1 id="media__ns">:'.hsc($ns).'</h1>'.NL;
 
     if($auth < AUTH_READ){
         // FIXME: print permission warning here instead?
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else{
-        media_uploadform($ns, $auth);
+        if (!$fullscreenview) media_uploadform($ns, $auth);
 
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
@@ -500,10 +509,248 @@ function media_filelist($ns,$auth=null,$jump=''){
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
         }else foreach($data as $item){
-            media_printfile($item,$auth,$jump);
+            if (!$fullscreenview) media_printfile($item,$auth,$jump);
+            else if ($fullscreenview == 'thumbs') media_printfile_thumbs($item,$auth,$jump);
         }
     }
-    media_searchform($ns);
+    if (!$fullscreenview) media_searchform($ns);
+}
+
+/**
+ * Prints tabs for files list actions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $selected - opened tab
+ */
+function media_tabs_files($selected=false){
+    global $lang;
+
+    echo '<div class="mediamanager-tabs" id="id-mediamanager-tabs">';
+    $tab = '<a href="'.media_managerURL(array('tab_files' => 'files')).
+        '" rel=".mediamanager-tab-files"';
+    if (!empty($selected) && $selected == 'files') $class = 'files selected';
+    else $class = 'files';
+    $tab .= ' class="'.$class.'" >Files</a>';
+    echo $tab;
+
+    $tab = '<a href="'.media_managerURL(array('tab_files' => 'upload')).
+        '" rel=".mediamanager-tab-upload"';
+    if (!empty($selected) && $selected == 'upload') $class = 'upload selected';
+    else $class = 'upload';
+    $tab .= ' class="'.$class.'" >Upload</a>';
+    echo $tab;
+
+    $tab = '<a href="'.media_managerURL(array('tab_files' => 'search')).
+        '" rel=".mediamanager-tab-search"';
+    if (!empty($selected) && $selected == 'search') $class = 'search selected';
+    else $class = 'search';
+    $tab .= ' class="'.$class.'" >Search</a>';
+    echo $tab;
+
+    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tabs for files details actions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $selected - opened tab
+ */
+function media_tabs_details($selected=false){
+    global $lang;
+
+    echo '<div class="mediamanager-tabs" id="id-mediamanager-tabs-detail">';
+    $tab = '<a href="'.media_managerURL(array('tab_details' => 'view')).
+        '" rel=".mediamanager-tab-view"';
+    if (!empty($selected) && $selected == 'view') $class = 'view selected';
+    else $class = 'view';
+    $tab .= ' class="'.$class.'" >View</a>';
+    echo $tab;
+
+    $tab = '<a href="'.media_managerURL(array('tab_details' => 'edit')).
+        '" rel=".mediamanager-tab-edit"';
+    if (!empty($selected) && $selected == 'edit') $class = 'edit selected';
+    else $class = 'edit';
+    $tab .= ' class="'.$class.'" >Edit</a>';
+    echo $tab;
+
+    $tab = '<a href="'.media_managerURL(array('tab_details' => 'history')).
+        '" rel=".mediamanager-tab-history"';
+    if (!empty($selected) && $selected == 'history') $class = 'history selected';
+    else $class = 'history';
+    $tab .= ' class="'.$class.'" >History</a>';
+    echo $tab;
+
+    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints options for the tab that displays a list of all files
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_files_options(){
+    global $lang;
+
+    echo '<div class="background-container">';
+    echo '<div id="id-mediamanager-tabs-files" style="display: inline;">';
+    echo '<a href="'.media_managerURL(array('view' => 'thumbs')).'"
+        rel=".mediamanager-files-thumbnails-tab" class="mediamanager-link-thumbnails">
+        Thumbs</a>';
+    echo '<a href="'.media_managerURL(array('view' => 'list')).'"
+        rel=".mediamanager-files-list-tab" class="mediamanager-link-list"
+        title="View as list">List</a>';
+
+    echo '</div>';
+    echo '<div class="mediamanager-block-sort">Sort';
+    //select
+    echo '</div>';
+    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tab that displays a list of all files
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_files($ns,$auth=null,$jump='') {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<div class="mediamanager-tab-files">';
+    media_tab_files_options();
+    echo '<div class="scroll-container">';
+
+    $view = $_REQUEST['view'];
+    if($auth < AUTH_READ){
+        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+    }else{
+        if ($view == 'list') {
+            echo '<div class="mediamanager-files-list-tab">';
+            echo '</div>';
+        } else {
+            echo '<div class="mediamanager-files-thumbnails-tab">';
+            media_filelist($ns,$auth,$jump,'thumbs');
+            echo '</div>';
+        }
+    }
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tab that displays uploading form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_upload($ns,$auth=null,$jump='') {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<div class="mediamanager-tab-upload"">';
+    echo '<div class="background-container">';
+    echo $lang['mediaupload'];
+    echo '</div>';
+
+    echo '<div class="scroll-container">';
+    media_uploadform($ns, $auth, true);
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tab that displays search form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_search($ns,$auth=null) {
+    global $lang;
+
+    $do = $_REQUEST['mediado'];
+    $query = $_REQUEST['q'];
+    if (!$query) $query = '';
+
+    echo '<div class="mediamanager-tab-search">';
+    echo '<div class="background-container">';
+    echo 'Search';
+    echo'</div>';
+
+    echo '<div class="scroll-container">';
+    media_searchform($ns, $query, true);
+
+    if($do == 'searchlist'){
+        media_searchlist($query,$ns,$auth,true);
+    }
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tab that displays mediafile details
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_view($image, $ns, $auth=null) {
+    global $lang, $conf;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<div class="mediamanager-tab-detail-view">';
+    echo '<div class="background-container">';
+    echo 'Preview of image';
+    echo '</div>';
+
+    echo '<div class="scroll-container">';
+    if($auth < AUTH_READ) return false;
+
+    $info = new JpegMeta(mediaFN($image));
+    $w = (int) $info->getField('File.Width');
+    $src = ml($image);
+    echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" />';
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tab that displays form for editing mediafile metadata
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_edit($image, $ns, $auth=null) {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<div class="mediamanager-tab-detail-edit">';
+    echo '<div class="background-container">';
+    echo 'Edit';
+    echo '</div>';
+
+    echo '<div class="scroll-container">';
+    media_metaform($image,$auth,true);
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * Prints tab that displays mediafile revisions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_history($image, $ns, $auth=null) {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<div class="mediamanager-tab-detail-history">';
+    echo '<div class="background-container">';
+    echo 'History';
+    echo '</div>';
+
+    echo '<div class="scroll-container">';
+
+    echo '</div>';
+    echo '</div>';
 }
 
 /**
@@ -511,9 +758,10 @@ function media_filelist($ns,$auth=null,$jump=''){
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
  * @author Andreas Gohr <gohr@cosmocode.de>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  * @triggers MEDIA_SEARCH
  */
-function media_searchlist($query,$ns,$auth=null){
+function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
     global $conf;
     global $lang;
     $ns = cleanID($ns);
@@ -538,13 +786,16 @@ function media_searchlist($query,$ns,$auth=null){
         unset($evt);
     }
 
-    echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'],hsc($ns).':*').'</h1>'.NL;
-    media_searchform($ns,$query);
+    if (!$fullscreen) {
+        echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'],hsc($ns).':*').'</h1>'.NL;
+        media_searchform($ns,$query);
+    }
 
     if(!count($evdata['data'])){
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else foreach($evdata['data'] as $item){
-        media_printfile($item,$item['perm'],'',true);
+        if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
+        else media_printfile_thumbs($item,$item['perm'],'',true);
     }
 }
 
@@ -552,7 +803,7 @@ function media_searchlist($query,$ns,$auth=null){
  * Print action links for a file depending on filetype
  * and available permissions
  */
-function media_fileactions($item,$auth){
+function media_fileactions($item,$auth,$fullscreen=false){
     global $lang;
 
     // view button
@@ -565,15 +816,20 @@ function media_fileactions($item,$auth){
 
     // delete button
     if($auth >= AUTH_DELETE){
-        echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-            '&amp;sectok='.getSecurityToken().'" class="btn_media_delete" title="'.$item['id'].'">'.
+        if (!$fullscreen) $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
+            '&amp;sectok='.getSecurityToken();
+        else $link = media_managerURL(array('delete' => $item['id'],
+            'sectok' => getSecurityToken()));
+        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
             '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
             'title="'.$lang['btn_delete'].'" class="btn" /></a>';
     }
 
     // edit button
     if($auth >= AUTH_UPLOAD && $item['isimg'] && $item['meta']->getField('File.Mime') == 'image/jpeg'){
-        echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']).'">'.
+        if (!$fullscreen) $link = DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']);
+        else $link = media_managerURL(array('edit' => $item['id']));
+        echo ' <a href="'.$link.'">'.
             '<img src="'.DOKU_BASE.'lib/images/pencil.png" alt="'.$lang['metaedit'].'" '.
             'title="'.$lang['metaedit'].'" class="btn" /></a>';
     }
@@ -638,14 +894,49 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
 }
 
 /**
+ * Formats and prints one file in the list in the thumbnails view
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_printfile_thumbs($item,$auth,$jump){
+    global $lang;
+    global $conf;
+
+    // Prepare filename
+    $file = utf8_decodeFN($item['file']);
+
+    // Prepare info
+    $info = '';
+    if($item['isimg']){
+        $info .= (int) $item['meta']->getField('File.Width');
+        $info .= '&#215;';
+        $info .= (int) $item['meta']->getField('File.Height');
+        $info .= '<br/>';
+    }
+    $info .= '<i>'.dformat($item['mtime']).'</i><br/>';
+    $info .= filesize_h($item['size']);
+
+    // output
+    echo '<div class="float-image" >';
+    if($item['isimg']) media_printimgdetail($item, true);
+    echo '<br/><a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
+        "h_:'.$item['id'].'"  >'.hsc($file).'</a><br/>';
+    echo '<span>'.$info.'</span><br/>';
+    media_fileactions($item,$auth,true);
+    echo '</div>'.NL;
+}
+
+/**
  * Prints a thumbnail and metainfos
  */
-function media_printimgdetail($item){
+function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
+    if (!$fullscreen) $size = 120;
+    else $size = 90;
     $w = (int) $item['meta']->getField('File.Width');
     $h = (int) $item['meta']->getField('File.Height');
-    if($w>120 || $h>120){
-        $ratio = $item['meta']->getResizeRatio(120);
+    if($w>$size || $h>$size){
+        $ratio = $item['meta']->getResizeRatio($size);
         $w = floor($w * $ratio);
         $h = floor($h * $ratio);
     }
@@ -658,6 +949,13 @@ function media_printimgdetail($item){
     $att = buildAttributes($p);
 
     // output
+    if ($fullscreen) {
+        echo '<a name="d_:'.$item['id'].'" >';
+        echo '<img src="'.$src.'" '.$att.' />';
+        echo '</a>';
+        return 1;
+    }
+
     echo '<div class="detail">';
     echo '<div class="thumb">';
     echo '<a name="d_:'.$item['id'].'" class="select">';
@@ -685,20 +983,58 @@ function media_printimgdetail($item){
 }
 
 /**
+ * Build link based on the current, adding/rewriting
+ * parameters
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param array $params
+ * @param string $amp - separator
+ * @return string - link
+ */
+function media_managerURL($params=false, $amp='&') {
+    global $conf;
+    global $ID;
+
+    $url = $_SERVER['REQUEST_URI'];
+
+    $urlArray = explode('?', $url, 2);
+    $gets = @$urlArray[1];
+    parse_str($gets, $gets);
+
+    if ($gets['edit']) $gets['image'] = $gets['edit'];
+    unset($gets['edit']);
+    unset($gets['sectok']);
+    unset($gets['delete']);
+
+    if ($params) {
+        foreach ($params as $k => $v) {
+            $gets[$k] = $v;
+        }
+    }
+    unset($gets['id']);
+
+    return wl($ID,$gets,false,$amp);
+}
+
+/**
  * Print the media upload form if permissions are correct
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_uploadform($ns, $auth){
+function media_uploadform($ns, $auth, $fullscreen = false){
     global $lang;
 
     if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
 
     // The default HTML upload form
-    $form = new Doku_Form(array('id'      => 'dw__upload',
-                                'action'  => DOKU_BASE.'lib/exe/mediamanager.php',
-                                'enctype' => 'multipart/form-data'));
-    $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
+    $params = array('id'      => 'dw__upload',
+                    'enctype' => 'multipart/form-data');
+    if (!$fullscreen) $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+    else $params['action'] = media_managerURL(array('tab_files' => 'files'));
+
+    $form = new Doku_Form($params);
+    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
     $form->addElement(form_makeOpenTag('p'));
@@ -757,16 +1093,21 @@ function media_uploadform($ns, $auth){
  * Print the search field form
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_searchform($ns,$query=''){
+function media_searchform($ns,$query='',$fullscreen=false){
     global $lang;
 
     // The default HTML search form
-    $form = new Doku_Form(array('id' => 'dw__mediasearch', 'action' => DOKU_BASE.'lib/exe/mediamanager.php'));
-    $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
+    $params = array('id' => 'dw__mediasearch');
+    if (!$fullscreen) $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+    else $params['action'] = media_managerURL();
+    $form = new Doku_Form($params);
+    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', $ns);
-    $form->addHidden('do', 'searchlist');
+    if (!$fullscreen) $form->addHidden('do', 'searchlist');
+    else $form->addHidden('mediado', 'searchlist');
     $form->addElement(form_makeOpenTag('p'));
     $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
@@ -820,7 +1161,9 @@ function media_nstree_item($item){
     if(!$item['label']) $item['label'] = $label;
 
     $ret  = '';
+    if (!($_REQUEST['do'] == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
+    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id']))).'" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
     return $ret;
