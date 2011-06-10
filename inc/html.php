@@ -577,8 +577,8 @@ function html_recent($first=0, $show_changes='both'){
      * decide if this is the last page or is there another one.
      * This is the cheapest solution to get this information.
      */
-    $flags = RECENTS_INCLUDE_MEDIA;
-    if ($show_changes == 'mediafiles') $flags = RECENTS_SKIP_PAGES;
+    if (!$show_changes || $show_changes == 'both') $flags = RECENTS_MEDIA_PAGES_MIXED;
+    if ($show_changes == 'mediafiles') $flags = RECENTS_MEDIA_CHANGES;
     if ($show_changes == 'pages') $flags = 0;
 
     $recents = getRecents($first,$conf['recent'] + 1,getNS($ID),$flags);

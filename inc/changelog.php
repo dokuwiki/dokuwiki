@@ -151,8 +151,8 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * RECENTS_SKIP_DELETED   - don't include deleted pages
  * RECENTS_SKIP_MINORS    - don't include minor changes
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
- * RECENTS_SKIP_PAGES  - return media changes instead of page changes
- * RECENTS_INCLUDE_MEDIA  - return both media changes and page changes
+ * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
+ * RECENTS_MEDIA_PAGES_MIXED  - return both media changes and page changes
  *
  * @param int    $first   number of first entry returned (for paginating
  * @param int    $num     return $num entries
@@ -171,14 +171,14 @@ function getRecents($first,$num,$ns='',$flags=0){
         return $recent;
 
     // read all recent changes. (kept short)
-    if ($flags & RECENTS_SKIP_PAGES) {
+    if ($flags & RECENTS_MEDIA_CHANGES) {
         $lines = @file($conf['media_changelog']);
     } else {
         $lines = @file($conf['changelog']);
     }
     $lines_position = count($lines)-1;
 
-    if ($flags & RECENTS_INCLUDE_MEDIA) {
+    if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
         $media_lines = @file($conf['media_changelog']);
         $media_lines_position = count($media_lines)-1;
     }
@@ -186,7 +186,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     $seen = array(); // caches seen lines, _handleRecent() skips them
 
     // handle lines
-    while ($lines_position >= 0 || (($flags & RECENTS_INCLUDE_MEDIA) && $media_lines_position >=0)) {
+    while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >=0)) {
         if (empty($rec) && $lines_position >= 0) {
             $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
             if (!$rec) {
@@ -194,14 +194,14 @@ function getRecents($first,$num,$ns='',$flags=0){
                 continue;
             }
         }
-        if (($flags & RECENTS_INCLUDE_MEDIA) && empty($media_rec) && $media_lines_position >= 0) {
+        if (($flags & RECENTS_MEDIA_PAGES_MIXED) && empty($media_rec) && $media_lines_position >= 0) {
             $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags, $seen);
             if (!$media_rec) {
             	$media_lines_position --;
             	continue;
             }
         }
-        if (($flags & RECENTS_INCLUDE_MEDIA) && @$media_rec['date'] >= @$rec['date']) {
+        if (($flags & RECENTS_MEDIA_PAGES_MIXED) && @$media_rec['date'] >= @$rec['date']) {
             $media_lines_position--;
             $x = $media_rec;
             $media_rec = false;
@@ -229,7 +229,7 @@ function getRecents($first,$num,$ns='',$flags=0){
  * RECENTS_SKIP_DELETED   - don't include deleted pages
  * RECENTS_SKIP_MINORS    - don't include minor changes
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
- * RECENTS_SKIP_PAGES  - return media changes instead of page changes
+ * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
  *
  * @param int    $from    date of the oldest entry to return
  * @param int    $to      date of the newest entry to return (for pagination, optional)
@@ -247,7 +247,7 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
         return $recent;
 
     // read all recent changes. (kept short)
-    if ($flags & RECENTS_SKIP_PAGES) {
+    if ($flags & RECENTS_MEDIA_CHANGES) {
         $lines = @file($conf['media_changelog']);
     } else {
         $lines = @file($conf['changelog']);
@@ -314,7 +314,7 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
-    $fn = (($flags & RECENTS_SKIP_PAGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
+    $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
     if((!@file_exists($fn)) && ($flags & RECENTS_SKIP_DELETED)) return false;
 
     return $recent;

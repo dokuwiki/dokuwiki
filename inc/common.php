@@ -14,8 +14,8 @@ if(!defined('DOKU_INC')) die('meh.');
 define('RECENTS_SKIP_DELETED',2);
 define('RECENTS_SKIP_MINORS',4);
 define('RECENTS_SKIP_SUBSPACES',8);
-define('RECENTS_SKIP_PAGES',16);
-define('RECENTS_INCLUDE_MEDIA',32);
+define('RECENTS_MEDIA_CHANGES',16);
+define('RECENTS_MEDIA_PAGES_MIXED',32);
 
 /**
  * Wrapper around htmlspecialchars()
