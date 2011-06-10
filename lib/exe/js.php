@@ -60,6 +60,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/subscriptions.js',
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_TPLINC.'script.js',
+                DOKU_INC.'lib/scripts/behaviour.js',
             );
 
     // add possible plugin scripts and userscript
@@ -121,8 +122,6 @@ function js_out(){
     if($conf['locktime'] != 0){
         js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
     }
-    js_runonstart('scrollToMarker()');
-    js_runonstart('focusMarker()');
     // init hotkeys - must have been done after init of toolbar
 # disabled for FS#1958    js_runonstart('initializeHotkeys()');
 
