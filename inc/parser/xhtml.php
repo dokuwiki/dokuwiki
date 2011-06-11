@@ -40,6 +40,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $_counter   = array(); // used as global counter, introduced for table classes
     var $_codeblock = 0; // counts the code and file blocks, used to provide download links
 
+    private $schemes = null; // protocol schemes
+
     /**
      * Register a new edit section range
      *
@@ -867,6 +869,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $this->doc .= '<li><div class="li">';
                 // support feeds without links
                 $lnkurl = $item->get_permalink();
+                if($lnkurl){
+                    // lnkurl might be an attack vector, only allow registered protocols
+                    if(is_null($this->schemes)) $this->schemes = getSchemes();
+                    list($scheme) = explode('://',$lnkurl);
+                    $scheme = strtolower($scheme);
+                    if(!in_array($scheme,$this->schemes)) $lnkurl = '';
+                }
+
                 if($lnkurl){
                     // title is escaped by SimplePie, we unescape here because it
                     // is escaped again in externallink() FS#1705
