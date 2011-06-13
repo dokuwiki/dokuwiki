@@ -48,6 +48,7 @@ $lang['btn_recover']  = 'Recover draft';
 $lang['btn_draftdel'] = 'Delete draft';
 $lang['btn_revert']   = 'Restore';
 $lang['btn_register'] = 'Register';
+$lang['btn_apply'] = 'Apply';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -179,6 +180,9 @@ $lang['external_edit'] = 'external edit';
 $lang['summary']    = 'Edit summary';
 $lang['noflash']    = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']   = 'Download Snippet';
+$lang['pages_changes'] = 'Show pages changes';
+$lang['media_changes'] = 'Show media files changes';
+$lang['both_changes'] = 'Show both';
 
 $lang['mail_newpage']  = 'page added:';
 $lang['mail_changed']  = 'page changed:';
@@ -318,5 +322,17 @@ $lang['seconds'] = '%d seconds ago';
 
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
+$lang['media_uploadtab'] = 'Upload';
+$lang['media_searchtab'] = 'Search';
+$lang['media_viewtab']   = 'View';
+$lang['media_edittab']   = 'Edit';
+$lang['media_historytab']   = 'History';
+$lang['media_thumbsview']   = 'Thumnails';
+$lang['media_listview']   = 'List';
+$lang['media_sort']   = 'Sort';
+$lang['media_search'] = 'Search';
+$lang['media_view']   = 'View';
+$lang['media_edit']   = 'Edit';
+$lang['media_history']   = 'These are the older revisons of the file.';
 
 //Setup VIM: ex: et ts=2 :

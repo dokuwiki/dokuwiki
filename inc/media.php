@@ -357,9 +357,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     global $lang;
 
     $old = @filemtime($fn);
-    $oldRev = getRevisions($id, -1, 1, 1024, true); // from changelog
-    $oldRev = (int)(empty($oldRev)?0:$oldRev[0]);
-    if(!@file_exists(mediaFN($id, $old)) && @file_exists($fn) && $old>=$oldRev) {
+    if(!@file_exists(mediaFN($id, $old)) && @file_exists($fn)) {
         // add old revision to the attic if missing
         media_saveOldRevision($id);
     }
@@ -530,21 +528,21 @@ function media_tabs_files($selected=false){
         '" rel=".mediamanager-tab-files"';
     if (!empty($selected) && $selected == 'files') $class = 'files selected';
     else $class = 'files';
-    $tab .= ' class="'.$class.'" >Files</a>';
+    $tab .= ' class="'.$class.'" >'.$lang['mediaselect'].'</a>';
     echo $tab;
 
     $tab = '<a href="'.media_managerURL(array('tab_files' => 'upload')).
         '" rel=".mediamanager-tab-upload"';
     if (!empty($selected) && $selected == 'upload') $class = 'upload selected';
     else $class = 'upload';
-    $tab .= ' class="'.$class.'" >Upload</a>';
+    $tab .= ' class="'.$class.'" >'.$lang['media_uploadtab'].'</a>';
     echo $tab;
 
     $tab = '<a href="'.media_managerURL(array('tab_files' => 'search')).
         '" rel=".mediamanager-tab-search"';
     if (!empty($selected) && $selected == 'search') $class = 'search selected';
     else $class = 'search';
-    $tab .= ' class="'.$class.'" >Search</a>';
+    $tab .= ' class="'.$class.'" >'.$lang['media_searchtab'].'</a>';
     echo $tab;
 
     echo '<div class="mediamanager-clear">&nbsp;</div>';
@@ -565,21 +563,21 @@ function media_tabs_details($selected=false){
         '" rel=".mediamanager-tab-view"';
     if (!empty($selected) && $selected == 'view') $class = 'view selected';
     else $class = 'view';
-    $tab .= ' class="'.$class.'" >View</a>';
+    $tab .= ' class="'.$class.'" >'.$lang['media_viewtab'].'</a>';
     echo $tab;
 
     $tab = '<a href="'.media_managerURL(array('tab_details' => 'edit')).
         '" rel=".mediamanager-tab-edit"';
     if (!empty($selected) && $selected == 'edit') $class = 'edit selected';
     else $class = 'edit';
-    $tab .= ' class="'.$class.'" >Edit</a>';
+    $tab .= ' class="'.$class.'" >'.$lang['media_edittab'].'</a>';
     echo $tab;
 
     $tab = '<a href="'.media_managerURL(array('tab_details' => 'history')).
         '" rel=".mediamanager-tab-history"';
     if (!empty($selected) && $selected == 'history') $class = 'history selected';
     else $class = 'history';
-    $tab .= ' class="'.$class.'" >History</a>';
+    $tab .= ' class="'.$class.'" >'.$lang['media_historytab'].'</a>';
     echo $tab;
 
     echo '<div class="mediamanager-clear">&nbsp;</div>';
@@ -597,14 +595,14 @@ function media_tab_files_options(){
     echo '<div class="background-container">';
     echo '<div id="id-mediamanager-tabs-files" style="display: inline;">';
     echo '<a href="'.media_managerURL(array('view' => 'thumbs')).'"
-        rel=".mediamanager-files-thumbnails-tab" class="mediamanager-link-thumbnails">
-        Thumbs</a>';
+        rel=".mediamanager-files-thumbnails-tab" class="mediamanager-link-thumbnails">'.
+        $lang['media_thumbsview'].'</a>';
     echo '<a href="'.media_managerURL(array('view' => 'list')).'"
         rel=".mediamanager-files-list-tab" class="mediamanager-link-list"
-        title="View as list">List</a>';
+        title="View as list">'.$lang['media_listview'].'</a>';
 
     echo '</div>';
-    echo '<div class="mediamanager-block-sort">Sort';
+    echo '<div class="mediamanager-block-sort">'.$lang['media_sort'];
     //select
     echo '</div>';
     echo '<div class="mediamanager-clear">&nbsp;</div>';
@@ -675,7 +673,7 @@ function media_tab_search($ns,$auth=null) {
 
     echo '<div class="mediamanager-tab-search">';
     echo '<div class="background-container">';
-    echo 'Search';
+    echo $lang['media_search'];
     echo'</div>';
 
     echo '<div class="scroll-container">';
@@ -699,16 +697,16 @@ function media_tab_view($image, $ns, $auth=null) {
 
     echo '<div class="mediamanager-tab-detail-view">';
     echo '<div class="background-container">';
-    echo 'Preview of image';
+    echo $lang['media_view'];
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    if($auth < AUTH_READ) return false;
-
-    $info = new JpegMeta(mediaFN($image));
-    $w = (int) $info->getField('File.Width');
-    $src = ml($image);
-    echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" />';
+    if ($auth >= AUTH_READ && $image) {
+        $info = new JpegMeta(mediaFN($image));
+        $w = (int) $info->getField('File.Width');
+        $src = ml($image);
+        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" />';
+    }
     echo '</div>';
     echo '</div>';
 }
@@ -724,11 +722,11 @@ function media_tab_edit($image, $ns, $auth=null) {
 
     echo '<div class="mediamanager-tab-detail-edit">';
     echo '<div class="background-container">';
-    echo 'Edit';
+    echo $lang['media_edit'];
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    media_metaform($image,$auth,true);
+    if ($image) media_metaform($image,$auth,true);
     echo '</div>';
     echo '</div>';
 }
@@ -744,11 +742,12 @@ function media_tab_history($image, $ns, $auth=null) {
 
     echo '<div class="mediamanager-tab-detail-history">';
     echo '<div class="background-container">';
-    echo 'History';
+    echo $lang['media_history'];
     echo '</div>';
 
     echo '<div class="scroll-container">';
-
+    $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
+    html_revisions($first, $image);
     echo '</div>';
     echo '</div>';
 }
@@ -764,6 +763,7 @@ function media_tab_history($image, $ns, $auth=null) {
 function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
     global $conf;
     global $lang;
+
     $ns = cleanID($ns);
 
     if ($query) {

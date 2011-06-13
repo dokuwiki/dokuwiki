@@ -1,0 +1,155 @@
+.float-image {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 100px;
+    height: 180px;
+    background-color: #DEE7EC;
+    padding: 10px;
+    text-align: center;
+}
+
+.float-image:hover {
+    background-color: #dadada;
+}
+
+/* --- Tree formatting --- */
+
+#media-menu img {
+    float: left;
+    padding: 0.5em 0.3em 0 0;
+}
+
+#media-menu ul {
+    list-style-type: none;
+    list-style-image: none;
+    margin-left: 1.5em;
+}
+
+#media-menu li {
+    clear: left;
+    list-style-type: none;
+    list-style-image: none;
+}
+
+/* -------------- */
+
+.mediamanager {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.mediamanager .mediamanager-slider {
+    width: auto;
+}
+
+.mediamanager .mediamanager-slider .layout {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mediamanager .scroll-container {
+    /*height: 0px;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.background-container {
+    background-color: #DEE7EC;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: left;
+}
+
+.mediamanager-link-thumbnails {
+    background: url('icon-thumb.png') 0 -4px no-repeat;
+    padding-left: 30px;
+    display: block;
+    float: left;
+    /*width: 0;*/
+    /*overflow: hidden;*/
+}
+
+.mediamanager-link-list {
+    background: url('icon-list.png') 0 -4px no-repeat;
+    padding-left: 30px;
+    display: block;
+    float: left;
+    /*width: 0;*/
+    /*overflow: hidden;*/
+}
+
+.mediamanager-block-sort {
+    background: url('icon-sort.png') 0 -4px no-repeat;
+    padding-left: 30px;
+    display: block;
+    float: right;
+}
+
+.mediamanager-link-thumbnails:hover,
+.mediamanager-link-list:hover {
+    width: auto;
+    margin-right: 10px;
+}
+
+.mediamanager-clear {
+    clear: both;
+    line-height: 0;
+    font-size: 0;
+}
+
+.mediamanager-link-upload {
+    background: url('icon-upload.png') 0 -4px no-repeat;
+    padding-left: 30px;
+}
+
+.mediamanager-link-search {
+    background: url('icon-search.png') 0 -4px no-repeat;
+    padding-left: 30px;
+}
+
+.mediamanager-tabs a {
+    font-weight: bold;
+    display: block;
+    float: left;
+    padding: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+    margin-right: 2px;
+
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -webkit-border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.mediamanager-tabs .selected {
+    background-color: #DEE7EC;
+}
+
+.mediamanager-tabs a:hover {
+    background-color: #DEE7EC;
+    opacity: 0.5;
+}
+
+.mediamanager-table td {
+    padding: 5px;
+}
+
+.mediamanager-table tr:nth-child(2n+1){
+    background-color: #f5f5f5;
+}
+
+.mediamanager-table {
+   background: expression(this.rowIndex % 2 == 0 ? "#ffffff" : "#f5f5f5");
+}
+
+.mediamanager-table tr:hover {
+    background-color: #DEE7EC;
+}

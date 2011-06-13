@@ -415,20 +415,28 @@ function html_locked(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function html_revisions($first=0){
+function html_revisions($first=0, $media_id = false){
     global $ID;
     global $INFO;
     global $conf;
     global $lang;
+    $id = $ID;
     /* we need to get one additionally log entry to be able to
      * decide if this is the last page or is there another one.
      * see html_recent()
      */
-    $revisions = getRevisions($ID, $first, $conf['recent']+1);
+    if (!$media_id) $revisions = getRevisions($ID, $first, $conf['recent']+1);
+    else {
+        $revisions = getRevisions($media_id, $first, $conf['recent']+1, 8192, true);
+        $id = $media_id;
+    }
+
     if(count($revisions)==0 && $first!=0){
         $first=0;
-        $revisions = getRevisions($ID, $first, $conf['recent']+1);;
+        if (!$media_id) $revisions = getRevisions($ID, $first, $conf['recent']+1);
+        else $revisions = getRevisions($media_id, $first, $conf['recent']+1, 8192, true);
     }
     $hasNext = false;
     if (count($revisions)>$conf['recent']) {
@@ -436,14 +444,19 @@ function html_revisions($first=0){
         array_pop($revisions); // remove extra log entry
     }
 
-    $date = dformat($INFO['lastmod']);
+    if (!$media_id) $date = dformat($INFO['lastmod']);
+    else $date = dformat(@filemtime(mediaFN($id)));
 
-    print p_locale_xhtml('revisions');
+    if (!$media_id) print p_locale_xhtml('revisions');
 
     $form = new Doku_Form(array('id' => 'page__revisions'));
     $form->addElement(form_makeOpenTag('ul'));
-    if($INFO['exists'] && $first==0){
-        if (isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
+
+    if (!$media_id) $exists = $INFO['exists'];
+    else $exists = @file_exists(mediaFN($id));
+
+    if($exists && $first==0){
+        if (!$media_id && isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
             $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
         else
             $form->addElement(form_makeOpenTag('li'));
@@ -461,8 +474,8 @@ function html_revisions($first=0){
 
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
-                        'href'  => wl($ID))));
-        $form->addElement($ID);
+                        'href'  => wl($id))));
+        $form->addElement($id);
         $form->addElement(form_makeCloseTag('a'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
@@ -471,6 +484,7 @@ function html_revisions($first=0){
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
+        ///
         $form->addElement((empty($INFO['editor']))?('('.$lang['external_edit'].')'):editorinfo($INFO['editor']));
         $form->addElement(form_makeCloseTag('span'));
 
@@ -481,8 +495,9 @@ function html_revisions($first=0){
 
     foreach($revisions as $rev){
         $date   = dformat($rev);
-        $info   = getRevisionInfo($ID,$rev,true);
-        $exists = page_exists($ID,$rev);
+        $info   = getRevisionInfo($id,$rev,true);
+        if (!$media_id) $exists = page_exists($id,$rev);
+        else $exists = @file_exists(mediaFN($id,$rev));
 
         if ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
             $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
@@ -503,7 +518,8 @@ function html_revisions($first=0){
         $form->addElement(form_makeCloseTag('span'));
 
         if($exists){
-            $form->addElement(form_makeOpenTag('a', array('href' => wl($ID,"rev=$rev,do=diff", false, '&'), 'class' => 'diff_link')));
+            ///
+            $form->addElement(form_makeOpenTag('a', array('href' => wl($id,"rev=$rev,do=diff", false, '&'), 'class' => 'diff_link')));
             $form->addElement(form_makeTag('img', array(
                             'src'    => DOKU_BASE.'lib/images/diff.png',
                             'width'  => 15,
@@ -511,13 +527,13 @@ function html_revisions($first=0){
                             'title'  => $lang['diff'],
                             'alt'    => $lang['diff'])));
             $form->addElement(form_makeCloseTag('a'));
-
-            $form->addElement(form_makeOpenTag('a', array('href' => wl($ID,"rev=$rev",false,'&'), 'class' => 'wikilink1')));
-            $form->addElement($ID);
+            ///
+            $form->addElement(form_makeOpenTag('a', array('href' => wl($id,"rev=$rev",false,'&'), 'class' => 'wikilink1')));
+            $form->addElement($id);
             $form->addElement(form_makeCloseTag('a'));
         }else{
             $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
-            $form->addElement($ID);
+            $form->addElement($id);
         }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
@@ -549,12 +565,12 @@ function html_revisions($first=0){
         $first -= $conf['recent'];
         if ($first < 0) $first = 0;
         print '<div class="pagenav-prev">';
-        print html_btn('newer',$ID,"p",array('do' => 'revisions', 'first' => $first));
+        print html_btn('newer',$id,"p",array('do' => 'revisions', 'first' => $first));
         print '</div>';
     }
     if ($hasNext) {
         print '<div class="pagenav-next">';
-        print html_btn('older',$ID,"n",array('do' => 'revisions', 'first' => $last));
+        print html_btn('older',$id,"n",array('do' => 'revisions', 'first' => $last));
         print '</div>';
     }
     print '</div>';
