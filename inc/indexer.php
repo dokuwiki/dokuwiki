@@ -444,9 +444,12 @@ class Doku_Indexer {
             $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
-        foreach ($wordlist as $i => &$word) {
-            $word = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
+        foreach ($wordlist as $i => $word) {
+            $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
                 utf8_strtolower($word) : strtolower($word);
+        }
+
+        foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
               || array_search($word, $stopwords) !== false)
                 unset($wordlist[$i]);
