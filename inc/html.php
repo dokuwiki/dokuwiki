@@ -472,20 +472,30 @@ function html_revisions($first=0, $media_id = false){
 
         $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
 
+        if (!$media_id) $href = wl($id);
+        else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view'));
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
-                        'href'  => wl($id))));
+                        'href'  => $href)));
         $form->addElement($id);
         $form->addElement(form_makeCloseTag('a'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
         $form->addElement(' &ndash; ');
-        $form->addElement(htmlspecialchars($INFO['sum']));
+        if (!$media_id) $form->addElement(htmlspecialchars($INFO['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
-        ///
-        $form->addElement((empty($INFO['editor']))?('('.$lang['external_edit'].')'):editorinfo($INFO['editor']));
+        if (!$media_id) $editor = $INFO['editor'];
+        else {
+            $revinfo = getRevisionInfo($id, @filemtime(fullpath(mediaFN($id))), 1024, true);
+            if($revinfo['user']){
+                $editor = $revinfo['user'];
+            }else{
+                $editor = $revinfo['ip'];
+            }
+        }
+        $form->addElement((empty($editor))?('('.$lang['external_edit'].')'):editorinfo($editor));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement('('.$lang['current'].')');
@@ -494,10 +504,14 @@ function html_revisions($first=0, $media_id = false){
     }
 
     foreach($revisions as $rev){
-        $date   = dformat($rev);
-        $info   = getRevisionInfo($id,$rev,true);
-        if (!$media_id) $exists = page_exists($id,$rev);
-        else $exists = @file_exists(mediaFN($id,$rev));
+        $date = dformat($rev);
+        if (!$media_id) {
+            $info = getRevisionInfo($id,$rev,true);
+            $exists = page_exists($id,$rev);
+        }  else {
+            $info = getRevisionInfo($id,$rev,true,true);
+            $exists = @file_exists(mediaFN($id,$rev));
+        }
 
         if ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
             $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
@@ -518,8 +532,9 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeCloseTag('span'));
 
         if($exists){
-            ///
-            $form->addElement(form_makeOpenTag('a', array('href' => wl($id,"rev=$rev,do=diff", false, '&'), 'class' => 'diff_link')));
+            if (!$media_id) $href = wl($id,"rev=$rev,do=diff", false, '&');
+            else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev));
+            $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'diff_link')));
             $form->addElement(form_makeTag('img', array(
                             'src'    => DOKU_BASE.'lib/images/diff.png',
                             'width'  => 15,
@@ -527,8 +542,9 @@ function html_revisions($first=0, $media_id = false){
                             'title'  => $lang['diff'],
                             'alt'    => $lang['diff'])));
             $form->addElement(form_makeCloseTag('a'));
-            ///
-            $form->addElement(form_makeOpenTag('a', array('href' => wl($id,"rev=$rev",false,'&'), 'class' => 'wikilink1')));
+            if (!$media_id) $href = wl($id,"rev=$rev",false,'&');
+            else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev));
+            $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'wikilink1')));
             $form->addElement($id);
             $form->addElement(form_makeCloseTag('a'));
         }else{
@@ -556,7 +572,7 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeCloseTag('li'));
     }
     $form->addElement(form_makeCloseTag('ul'));
-    $form->addElement(form_makeButton('submit', 'diff', $lang['diff2']));
+    if (!$media_id) $form->addElement(form_makeButton('submit', 'diff', $lang['diff2']));
     html_form('revisions', $form);
 
     print '<div class="pagenav">';

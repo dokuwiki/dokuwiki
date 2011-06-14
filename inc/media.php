@@ -366,6 +366,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     io_createNamespace($id, 'media');
 
     if($move($fn_tmp, $fn)) {
+        $new = @filemtime($fn);
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
@@ -374,9 +375,9 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         media_notify($id,$fn,$imime);
         // add a log entry to the media changelog
         if ($overwrite) {
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_EDIT);
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT);
         } else {
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_CREATE);
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
         }
         return $id;
     }else{
@@ -704,7 +705,12 @@ function media_tab_view($image, $ns, $auth=null) {
     if ($auth >= AUTH_READ && $image) {
         $info = new JpegMeta(mediaFN($image));
         $w = (int) $info->getField('File.Width');
-        $src = ml($image);
+
+        $rev = $_REQUEST['rev'];
+        $more = '';
+        if (isset($rev)) $more = "rev=$rev";
+        $src = ml($image, $more);
+
         echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" />';
     }
     echo '</div>';
@@ -1005,6 +1011,7 @@ function media_managerURL($params=false, $amp='&') {
     unset($gets['edit']);
     unset($gets['sectok']);
     unset($gets['delete']);
+    unset($gets['rev']);
 
     if ($params) {
         foreach ($params as $k => $v) {
