@@ -702,17 +702,7 @@ function media_tab_view($image, $ns, $auth=null) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    if ($auth >= AUTH_READ && $image) {
-        $info = new JpegMeta(mediaFN($image));
-        $w = (int) $info->getField('File.Width');
-
-        $rev = $_REQUEST['rev'];
-        $more = '';
-        if (isset($rev)) $more = "rev=$rev";
-        $src = ml($image, $more);
-
-        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" />';
-    }
+    media_preview($image, $auth);
     echo '</div>';
     echo '</div>';
 }
@@ -732,7 +722,11 @@ function media_tab_edit($image, $ns, $auth=null) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    if ($image) media_metaform($image,$auth,true);
+    if ($image) {
+        $info = new JpegMeta(mediaFN($image));
+        if ($info->getField('File.Mime') == 'image/jpeg')
+            media_metaform($image,$auth,true);
+    }
     echo '</div>';
     echo '</div>';
 }
@@ -756,6 +750,68 @@ function media_tab_history($image, $ns, $auth=null) {
     html_revisions($first, $image);
     echo '</div>';
     echo '</div>';
+}
+
+/**
+ * Prints mediafile details
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_preview($image, $auth) {
+    global $lang;
+    if ($auth >= AUTH_READ && $image) {
+        $info = new JpegMeta(mediaFN($image));
+        $w = (int) $info->getField('File.Width');
+
+        $rev = $_REQUEST['rev'];
+        $more = '';
+        if (isset($rev)) $more = "rev=$rev";
+        $src = ml($image, $more);
+
+        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
+
+        $link = ml($image,'',true);
+        echo $image.' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
+        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+
+        // delete button
+        if($auth >= AUTH_DELETE){
+           $link = media_managerURL(array('delete' => $image,'sectok' => getSecurityToken()));
+            echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$image.'">'.
+                '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
+                'title="'.$lang['btn_delete'].'" class="btn" /></a>';
+        }
+
+        echo '<br /><br />';
+
+        $tags = array(
+            array('simple.title','img_title','text'),
+            array('Date.EarliestTime','img_date','date'),
+            array('File.Name','img_fname','text'),
+            array(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'),'img_artist','text'),
+            array(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'),'img_copyr','text'),
+            array('File.Format','img_format','text'),
+            array('File.NiceSize','img_fsize','text'),
+            array('Simple.Camera','img_camera','text'),
+            array(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'),'img_keywords','text')
+        );
+
+        $src = mediaFN($image);
+        echo '<dl class="img_tags">';
+        foreach($tags as $key => $tag){
+            $t = $tag[0];
+            if (!is_array($t)) $t = array($tag[0]);
+            $value = tpl_img_getTag($t,'',$src);
+            $value = cleanText($value);
+            if ($value) {
+                echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
+                if ($tag[2] == 'text') echo hsc($value);
+                if ($tag[2] == 'date') echo dformat($value);
+                echo '</dd>';
+            }
+        }
+        echo '</dl>';
+    }
 }
 
 /**
@@ -809,7 +865,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
  * Print action links for a file depending on filetype
  * and available permissions
  */
-function media_fileactions($item,$auth,$fullscreen=false){
+function media_fileactions($item,$auth){
     global $lang;
 
     // view button
@@ -822,10 +878,8 @@ function media_fileactions($item,$auth,$fullscreen=false){
 
     // delete button
     if($auth >= AUTH_DELETE){
-        if (!$fullscreen) $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
+        $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
             '&amp;sectok='.getSecurityToken();
-        else $link = media_managerURL(array('delete' => $item['id'],
-            'sectok' => getSecurityToken()));
         echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
             '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
             'title="'.$lang['btn_delete'].'" class="btn" /></a>';
@@ -833,8 +887,7 @@ function media_fileactions($item,$auth,$fullscreen=false){
 
     // edit button
     if($auth >= AUTH_UPLOAD && $item['isimg'] && $item['meta']->getField('File.Mime') == 'image/jpeg'){
-        if (!$fullscreen) $link = DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']);
-        else $link = media_managerURL(array('edit' => $item['id']));
+        $link = DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']);
         echo ' <a href="'.$link.'">'.
             '<img src="'.DOKU_BASE.'lib/images/pencil.png" alt="'.$lang['metaedit'].'" '.
             'title="'.$lang['metaedit'].'" class="btn" /></a>';
@@ -928,7 +981,6 @@ function media_printfile_thumbs($item,$auth,$jump){
     echo '<br/><a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
         "h_:'.$item['id'].'"  >'.hsc($file).'</a><br/>';
     echo '<span>'.$info.'</span><br/>';
-    media_fileactions($item,$auth,true);
     echo '</div>'.NL;
 }
 
@@ -956,7 +1008,8 @@ function media_printimgdetail($item, $fullscreen=false){
 
     // output
     if ($fullscreen) {
-        echo '<a name="d_:'.$item['id'].'" >';
+        echo '<a name="d_:'.$item['id'].'" href="'.
+            media_managerURL(array('image' => hsc($item['id']))).'">';
         echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';
         return 1;
@@ -1019,6 +1072,10 @@ function media_managerURL($params=false, $amp='&') {
         }
     }
     unset($gets['id']);
+    if ($gets['delete']) {
+        unset($gets['image']);
+        unset($gets['tab_details']);
+    }
 
     return wl($ID,$gets,false,$amp);
 }

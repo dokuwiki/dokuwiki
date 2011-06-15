@@ -1161,13 +1161,14 @@ function tpl_fileDetails(){
     global $NS;
     global $IMG;
 
+    $image = $_REQUEST['image'];
+    if (!isset($IMG) && !isset($image)) return '';
+
     $opened_tab = $_REQUEST['tab_details'];
     if (!$opened_tab) $opened_tab = 'view';
     if ($_REQUEST['edit']) $opened_tab = 'edit';
     media_tabs_details($opened_tab);
 
-    $image = $_REQUEST['image'];
-    if (!$image && !$IMG) return false;
     if ($opened_tab == 'view') media_tab_view($image, $NS, $AUTH);
     if ($opened_tab == 'edit') {
         if ($IMG) media_tab_edit($IMG, $NS, $AUTH);

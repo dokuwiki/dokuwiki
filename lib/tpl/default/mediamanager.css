@@ -153,3 +153,10 @@
 .mediamanager-table tr:hover {
     background-color: #DEE7EC;
 }
+
+form.meta textarea.edit {
+    height: 8em;
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
+}
