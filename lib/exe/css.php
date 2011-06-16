@@ -135,6 +135,12 @@ function css_out(){
         $css = css_compress($css);
     }
 
+    // embed small images right into the stylesheet
+    if($conf['cssdatauri']){
+        $base = preg_quote(DOKU_BASE,'#');
+        $css = preg_replace_callback('#(url\([ \'"]*)('.$base.')(.*?(?:\.(png|gif)))#i','css_datauri',$css);
+    }
+
     // save cache file
     io_saveFile($cache,$css);
     if(function_exists('gzopen')) io_saveFile("$cache.gz",$css);
@@ -271,9 +277,34 @@ function css_loadfile($file,$location=''){
     $css = io_readFile($file);
     if(!$location) return $css;
 
-    $css = preg_replace('#(url\([ \'"]*)(?!/|http://|https://| |\'|")#','\\1'.$location,$css);
-    $css = preg_replace('#(@import\s+[\'"])(?!/|http://|https://)#', '\\1'.$location, $css);
+    $css = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
+    $css = preg_replace('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
+
     return $css;
+}
+
+/**
+ * Converte local image URLs to data URLs if the filesize is small
+ *
+ * Callback for preg_replace_callback
+ */
+function css_datauri($match){
+    $pre   = unslash($match[1]);
+    $base  = unslash($match[2]);
+    $url   = unslash($match[3]);
+    $ext   = unslash($match[4]);
+
+    $local = DOKU_INC.$url;
+    $size  = @filesize($local);
+    if($size && $size < 600){
+        $data = base64_encode(file_get_contents($local));
+    }
+    if($data){
+        $url = 'data:image/'.$ext.';base64,'.$data;
+    }else{
+        $url = $base.$url;
+    }
+    return $pre.$url;
 }
 
 
