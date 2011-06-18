@@ -289,6 +289,8 @@ function css_loadfile($file,$location=''){
  * Callback for preg_replace_callback
  */
 function css_datauri($match){
+    global $conf;
+
     $pre   = unslash($match[1]);
     $base  = unslash($match[2]);
     $url   = unslash($match[3]);
@@ -296,7 +298,7 @@ function css_datauri($match){
 
     $local = DOKU_INC.$url;
     $size  = @filesize($local);
-    if($size && $size < 600){
+    if($size && $size < $conf['cssdatauri']){
         $data = base64_encode(file_get_contents($local));
     }
     if($data){
