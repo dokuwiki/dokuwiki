@@ -546,7 +546,7 @@ function media_tabs_files($selected=false){
     $tab .= ' class="'.$class.'" >'.$lang['media_searchtab'].'</a>';
     echo $tab;
 
-    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '<div class="clearer"></div>';
     echo '</div>';
 }
 
@@ -581,7 +581,7 @@ function media_tabs_details($selected=false){
     $tab .= ' class="'.$class.'" >'.$lang['media_historytab'].'</a>';
     echo $tab;
 
-    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '<div class="clearer"></div>';
     echo '</div>';
 }
 
@@ -606,7 +606,7 @@ function media_tab_files_options(){
     echo '<div class="mediamanager-block-sort">'.$lang['media_sort'];
     //select
     echo '</div>';
-    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '<div class="clearer"></div>';
     echo '</div>';
 }
 
@@ -628,13 +628,12 @@ function media_tab_files($ns,$auth=null,$jump='') {
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else{
         if ($view == 'list') {
-            echo '<div class="mediamanager-files-list-tab">';
-            echo '</div>';
+            echo '<ul class="mediamanager-file-list mediamanager-list" id="id-mediamanager-file-list">';
         } else {
-            echo '<div class="mediamanager-files-thumbnails-tab">';
-            media_filelist($ns,$auth,$jump,'thumbs');
-            echo '</div>';
+            echo '<ul class="mediamanager-file-list mediamanager-thumbs" id="id-mediamanager-file-list">';
         }
+        media_filelist($ns,$auth,$jump,'thumbs');
+        echo '</ul>';
     }
     echo '</div>';
     echo '</div>';
@@ -1044,24 +1043,24 @@ function media_printfile_thumbs($item,$auth,$jump){
     // Prepare filename
     $file = utf8_decodeFN($item['file']);
 
-    // Prepare info
-    $info = '';
+    // output
+    echo '<li><div>';
+    if($item['isimg']) media_printimgdetail($item, true);
+    echo '<a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
+        "h_:'.$item['id'].'" class="info" >'.hsc($file).'</a>';
     if($item['isimg']){
+        $info = '';
         $info .= (int) $item['meta']->getField('File.Width');
         $info .= '&#215;';
         $info .= (int) $item['meta']->getField('File.Height');
-        $info .= '<br/>';
+        echo '<span class="info">'.$info.'</span>';
     }
-    $info .= '<i>'.dformat($item['mtime']).'</i><br/>';
-    $info .= filesize_h($item['size']);
-
-    // output
-    echo '<div class="float-image" >';
-    if($item['isimg']) media_printimgdetail($item, true);
-    echo '<br/><a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
-        "h_:'.$item['id'].'"  >'.hsc($file).'</a><br/>';
-    echo '<span>'.$info.'</span><br/>';
-    echo '</div>'.NL;
+    $info = '<i>'.dformat($item['mtime']).'</i>';
+    echo '<span class="info">'.$info.'</span>';
+    $info = filesize_h($item['size']);
+    echo '<span class="info">'.$info.'</span>';
+    echo '<div class="clearer"></div>';
+    echo '</div></li>'.NL;
 }
 
 /**
@@ -1088,7 +1087,7 @@ function media_printimgdetail($item, $fullscreen=false){
 
     // output
     if ($fullscreen) {
-        echo '<a name="d_:'.$item['id'].'" href="'.
+        echo '<a name="d_:'.$item['id'].'" class="image" href="'.
             media_managerURL(array('image' => hsc($item['id']))).'">';
         echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';

@@ -1441,7 +1441,7 @@ function tpl_media() {
     echo '<div id="id-mediamanager-layout-detail" class="layout" style="width: 30%;">';
     tpl_fileDetails();
     echo '</div>';
-    echo '<div class="mediamanager-clear">&nbsp;</div>';
+    echo '<div class="clearer"></div>';
     echo '</div>';
     echo '</div>';
 }
