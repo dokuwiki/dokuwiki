@@ -241,6 +241,8 @@ $lang['img_copyr']   = 'Copyright';
 $lang['img_format']  = 'Format';
 $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Keywords';
+$lang['img_width']   = 'Width';
+$lang['img_height']  = 'Height';
 
 $lang['subscr_subscribe_success']  = 'Added %s to subscription list for %s';
 $lang['subscr_subscribe_error']    = 'Error adding %s to subscription list for %s';

@@ -702,7 +702,9 @@ function media_tab_view($image, $ns, $auth=null) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    media_preview($image, $auth);
+    $rev = (int) $_REQUEST['rev'];
+    media_preview($image, $auth, $rev);
+    media_details($image, $auth, $rev);
     echo '</div>';
     echo '</div>';
 }
@@ -739,6 +741,7 @@ function media_tab_edit($image, $ns, $auth=null) {
 function media_tab_history($image, $ns, $auth=null) {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+    $do = $_REQUEST['mediado'];
 
     echo '<div class="mediamanager-tab-detail-history">';
     echo '<div class="background-container">';
@@ -746,8 +749,14 @@ function media_tab_history($image, $ns, $auth=null) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
-    html_revisions($first, $image);
+    if ($auth >= AUTH_READ && $image) {
+        if ($do == 'diff'){
+            media_diff($image, $ns, $auth);
+        } else {
+            $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
+            html_revisions($first, $image);
+        }
+    }
     echo '</div>';
     echo '</div>';
 }
@@ -757,61 +766,132 @@ function media_tab_history($image, $ns, $auth=null) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth) {
+function media_preview($image, $auth, $rev=false) {
     global $lang;
-    if ($auth >= AUTH_READ && $image) {
-        $info = new JpegMeta(mediaFN($image));
-        $w = (int) $info->getField('File.Width');
+    if ($auth < AUTH_READ || !$image) return '';
+    $info = new JpegMeta(mediaFN($image));
+    $w = (int) $info->getField('File.Width');
 
-        $rev = $_REQUEST['rev'];
-        $more = '';
-        if (isset($rev)) $more = "rev=$rev";
-        $src = ml($image, $more);
+    $more = '';
+    if ($rev) $more = "rev=$rev";
+    $src = ml($image, $more);
 
-        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
+    echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
 
-        $link = ml($image,'',true);
-        echo $image.' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+    $link = ml($image,$more,true);
+    echo $image.' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
+    'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
 
-        // delete button
-        if($auth >= AUTH_DELETE){
-           $link = media_managerURL(array('delete' => $image,'sectok' => getSecurityToken()));
-            echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$image.'">'.
-                '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
-                'title="'.$lang['btn_delete'].'" class="btn" /></a>';
-        }
-
-        echo '<br /><br />';
-
-        $tags = array(
-            array('simple.title','img_title','text'),
-            array('Date.EarliestTime','img_date','date'),
-            array('File.Name','img_fname','text'),
-            array(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'),'img_artist','text'),
-            array(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'),'img_copyr','text'),
-            array('File.Format','img_format','text'),
-            array('File.NiceSize','img_fsize','text'),
-            array('Simple.Camera','img_camera','text'),
-            array(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'),'img_keywords','text')
-        );
-
-        $src = mediaFN($image);
-        echo '<dl class="img_tags">';
-        foreach($tags as $key => $tag){
-            $t = $tag[0];
-            if (!is_array($t)) $t = array($tag[0]);
-            $value = tpl_img_getTag($t,'',$src);
-            $value = cleanText($value);
-            if ($value) {
-                echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
-                if ($tag[2] == 'text') echo hsc($value);
-                if ($tag[2] == 'date') echo dformat($value);
-                echo '</dd>';
-            }
-        }
-        echo '</dl>';
+    // delete button
+    if($auth >= AUTH_DELETE && !$rev){
+       $link = media_managerURL(array('delete' => $image,'sectok' => getSecurityToken()));
+        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$image.'">'.
+            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
+            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
     }
+
+}
+
+/**
+ * Prints mediafile tags
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_details($image, $auth, $rev=false) {
+    global $lang;
+
+    $tags = array(
+        array('simple.title','img_title','text'),
+        array('Date.EarliestTime','img_date','date'),
+        array('File.Name','img_fname','text'),
+        array(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'),'img_artist','text'),
+        array(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'),'img_copyr','text'),
+        array('File.Format','img_format','text'),
+        array('File.NiceSize','img_fsize','text'),
+        array('File.Width','img_width','text'),
+        array('File.Height','img_height','text'),
+        array('Simple.Camera','img_camera','text'),
+        array(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'),'img_keywords','text')
+    );
+
+    $src = mediaFN($image, $rev);
+    echo '<dl class="img_tags">';
+    foreach($tags as $key => $tag){
+        $t = $tag[0];
+        if (!is_array($t)) $t = array($tag[0]);
+        $value = media_getTag($t,$src);
+        $value = cleanText($value);
+        if (!$value) $value='-';
+        echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
+        if ($tag[2] == 'text') echo hsc($value);
+        if ($tag[2] == 'date') echo dformat($value);
+        echo '</dd>';
+    }
+    echo '</dl>';
+}
+
+/**
+ * Returns the requested EXIF/IPTC tag from the current image
+ *
+ */
+function media_getTag($tags,$src,$alt=''){
+    $meta = new JpegMeta($src);
+    if($meta === false) return $alt;
+    $info = $meta->getField($tags);
+    if($info == false) return $alt;
+    return $info;
+}
+
+/**
+ * Shows difference between two revisions of file
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_diff($image, $ns, $auth) {
+    global $lang;
+    global $conf;
+
+    $rev1 = (int) $_REQUEST['rev'];
+
+    if(is_array($_REQUEST['rev2'])){
+        $rev1 = (int) $_REQUEST['rev2'][0];
+        $rev2 = (int) $_REQUEST['rev2'][1];
+
+        if(!$rev1){
+            $rev1 = $rev2;
+            unset($rev2);
+        }
+    }else{
+        $rev2 = (int) $_REQUEST['rev2'];
+    }
+    if($rev1 && $rev2){            // two specific revisions wanted
+        // make sure order is correct (older on the left)
+        if($rev1 < $rev2){
+            $l_rev = $rev1;
+            $r_rev = $rev2;
+        }else{
+            $l_rev = $rev2;
+            $r_rev = $rev1;
+        }
+    }elseif($rev1){                // single revision given, compare to current
+        $r_rev = '';
+        $l_rev = $rev1;
+    }else{                        // no revision was given, compare previous to current
+        $r_rev = '';
+        $revs = getRevisions($image, 0, 1, 8192, true);
+        $l_rev = $revs[0];
+    }
+    echo '<table><tr><td>';
+    media_preview($image, $auth, $l_rev);
+    echo '</td>';
+    echo '<td>';
+    media_preview($image, $auth, $r_rev);
+    echo '</td></tr><tr><td>';
+    media_details($image, $auth, $l_rev);
+    echo '</td>';
+    echo '<td>';
+    media_details($image, $auth, $r_rev);
+    echo '</td></tr></table>';
 }
 
 /**
@@ -1065,6 +1145,7 @@ function media_managerURL($params=false, $amp='&') {
     unset($gets['sectok']);
     unset($gets['delete']);
     unset($gets['rev']);
+    unset($gets['mediado']);
 
     if ($params) {
         foreach ($params as $k => $v) {

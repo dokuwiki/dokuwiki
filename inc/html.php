@@ -533,7 +533,7 @@ function html_revisions($first=0, $media_id = false){
 
         if($exists){
             if (!$media_id) $href = wl($id,"rev=$rev,do=diff", false, '&');
-            else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev));
+            else $href = media_managerURL(array('image' => $id, 'rev' => $rev, 'mediado' => 'diff'));
             $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'diff_link')));
             $form->addElement(form_makeTag('img', array(
                             'src'    => DOKU_BASE.'lib/images/diff.png',
@@ -572,7 +572,12 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeCloseTag('li'));
     }
     $form->addElement(form_makeCloseTag('ul'));
-    if (!$media_id) $form->addElement(form_makeButton('submit', 'diff', $lang['diff2']));
+    if (!$media_id) {
+        $form->addElement(form_makeButton('submit', 'diff', $lang['diff2']));
+    } else {
+        $form->addHidden('mediado', 'diff');
+        $form->addElement(form_makeButton('submit', '', $lang['diff2']));
+    }
     html_form('revisions', $form);
 
     print '<div class="pagenav">';
