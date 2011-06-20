@@ -49,6 +49,7 @@ $lang['btn_draftdel'] = 'Delete draft';
 $lang['btn_revert']   = 'Restore';
 $lang['btn_register'] = 'Register';
 $lang['btn_apply'] = 'Apply';
+$lang['btn_media'] = 'Media Manager';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -327,12 +328,12 @@ $lang['media_searchtab'] = 'Search';
 $lang['media_viewtab']   = 'View';
 $lang['media_edittab']   = 'Edit';
 $lang['media_historytab']   = 'History';
-$lang['media_thumbsview']   = 'Thumnails';
+$lang['media_thumbsview']   = 'Thumbnails';
 $lang['media_listview']   = 'List';
 $lang['media_sort']   = 'Sort';
 $lang['media_search'] = 'Search';
 $lang['media_view']   = 'View';
 $lang['media_edit']   = 'Edit';
-$lang['media_history']   = 'These are the older revisons of the file.';
+$lang['media_history']   = 'These are the older revisions of the file.';
 
 //Setup VIM: ex: et ts=2 :

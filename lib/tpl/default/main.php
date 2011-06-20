@@ -117,6 +117,7 @@ if (!defined('DOKU_INC')) die();
       </div>
       <div class="bar-right" id="bar__bottomright">
         <?php tpl_button('subscribe')?>
+        <?php tpl_button('media')?>
         <?php tpl_button('admin')?>
         <?php tpl_button('profile')?>
         <?php tpl_button('login')?>

@@ -630,6 +630,8 @@ function tpl_get_action($type) {
             // Superseded by subscribe/subscription
             return '';
             break;
+        case 'media':
+            break;
         default:
             return '[unknown %s type]';
             break;
