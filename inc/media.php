@@ -40,6 +40,7 @@ function media_filesinuse($data,$id){
  * Handles the saving of image meta data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_metasave($id,$auth,$data){
     if($auth < AUTH_UPLOAD) return false;
@@ -60,8 +61,19 @@ function media_metasave($id,$auth,$data){
         }
     }
 
+    $old = @filemtime($src);
+    if(!@file_exists(mediaFN($id, $old)) && @file_exists($src)) {
+        // add old revision to the attic
+        media_saveOldRevision($id);
+    }
+
     if($meta->save()){
         if($conf['fperm']) chmod($src, $conf['fperm']);
+
+        $new = @filemtime($src);
+        // add a log entry to the media changelog
+        addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, $lang['media_meta_edited']);
+
         msg($lang['metasaveok'],1);
         return $id;
     }else{
@@ -834,7 +846,8 @@ function media_details($image, $auth, $rev=false) {
  *
  */
 function media_getTag($tags,$src,$alt=''){
-    $meta = new JpegMeta($src);
+    //$meta = new JpegMeta($src);
+    $meta = JpegMeta::Create($src);
     if($meta === false) return $alt;
     $info = $meta->getField($tags);
     if($info == false) return $alt;

@@ -325,17 +325,18 @@ $lang['seconds'] = '%d seconds ago';
 
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
-$lang['media_uploadtab'] = 'Upload';
-$lang['media_searchtab'] = 'Search';
-$lang['media_viewtab']   = 'View';
-$lang['media_edittab']   = 'Edit';
-$lang['media_historytab']   = 'History';
-$lang['media_thumbsview']   = 'Thumbnails';
+$lang['media_uploadtab']  = 'Upload';
+$lang['media_searchtab']  = 'Search';
+$lang['media_viewtab']    = 'View';
+$lang['media_edittab']    = 'Edit';
+$lang['media_historytab'] = 'History';
+$lang['media_thumbsview'] = 'Thumbnails';
 $lang['media_listview']   = 'List';
-$lang['media_sort']   = 'Sort';
-$lang['media_search'] = 'Search';
-$lang['media_view']   = 'View';
-$lang['media_edit']   = 'Edit';
-$lang['media_history']   = 'These are the older revisions of the file.';
+$lang['media_sort']       = 'Sort';
+$lang['media_search']     = 'Search';
+$lang['media_view']       = 'View';
+$lang['media_edit']       = 'Edit';
+$lang['media_history']    = 'These are the older revisions of the file.';
+$lang['media_meta_edited']= 'metadata edited';
 
 //Setup VIM: ex: et ts=2 :
