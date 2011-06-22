@@ -1163,8 +1163,9 @@ function tpl_fileDetails(){
     global $NS;
     global $IMG;
 
-    $image = $_REQUEST['image'];
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
     if (!isset($IMG) && !isset($image)) return '';
+    if (isset($NS) && getNS($image) != $NS) return '';
 
     $opened_tab = $_REQUEST['tab_details'];
     if (!$opened_tab) $opened_tab = 'view';
@@ -1422,15 +1423,20 @@ function tpl_getFavicon($abs=false) {
  */
 function tpl_media() {
     //
-    global $DEL, $NS, $IMG, $AUTH, $JUMPTO;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $lang;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 
     echo '<div class="mediamanager" id="id-mediamanager">';
     echo '<div class="mediamanager-slider" id="id-mediamanager-layout">';
     echo '<div id="id-mediamanager-layout-namespaces" class="layout" style="width: 25%;">';
     html_msgarea();
-    echo hsc('Namespaces:');
-    echo '<br /><br />';
+    echo '<div class="mediamanager-tabs">';
+    echo '<a href="#" class="selected">'.hsc($lang['namespaces']).'</a>';
+    echo '<div class="clearer"></div>';
+    echo '</div>';
+    echo '<div class="background-container">';
+    echo hsc($lang['namespaces']);
+    echo '</div>';
     echo '<div class="scroll-container">';
     tpl_mediaTree(true);
     echo '</div>';

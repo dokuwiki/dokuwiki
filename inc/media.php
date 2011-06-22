@@ -697,7 +697,7 @@ function media_tab_view($image, $ns, $auth=null) {
 
     echo '<div class="mediamanager-tab-detail-view">';
     echo '<div class="background-container">';
-    echo $lang['media_view'];
+    echo $image;
     echo '</div>';
 
     echo '<div class="scroll-container">';
@@ -880,17 +880,17 @@ function media_diff($image, $ns, $auth) {
         $revs = getRevisions($image, 0, 1, 8192, true);
         $l_rev = $revs[0];
     }
-    echo '<table><tr><td>';
+    echo '<ul class="mediamanager-table-50"><li><div>';
     media_preview($image, $auth, $l_rev);
-    echo '</td>';
-    echo '<td>';
+    echo '</div></li>';
+    echo '<li><div>';
     media_preview($image, $auth, $r_rev);
-    echo '</td></tr><tr><td>';
+    echo '</div></li><li><div>';
     media_details($image, $auth, $l_rev);
-    echo '</td>';
-    echo '<td>';
+    echo '</div></li>';
+    echo '<li><div>';
     media_details($image, $auth, $r_rev);
-    echo '</td></tr></table>';
+    echo '</div></li></ul>';
 }
 
 /**
@@ -1045,7 +1045,14 @@ function media_printfile_thumbs($item,$auth,$jump){
 
     // output
     echo '<li><div>';
-    if($item['isimg']) media_printimgdetail($item, true);
+    if($item['isimg']) {
+        media_printimgdetail($item, true);
+    } else {
+        echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
+            media_managerURL(array('image' => hsc($item['id']))).'">';
+        echo '<img src="'.DOKU_BASE.'lib/images/icon-file.png" width="90px" />';
+        echo '</a>';
+    }
     echo '<a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
         "h_:'.$item['id'].'" class="info" >'.hsc($file).'</a>';
     if($item['isimg']){
@@ -1054,6 +1061,8 @@ function media_printfile_thumbs($item,$auth,$jump){
         $info .= '&#215;';
         $info .= (int) $item['meta']->getField('File.Height');
         echo '<span class="info">'.$info.'</span>';
+    } else {
+        echo '<span class="info">&nbsp;</span>';
     }
     $info = '<i>'.dformat($item['mtime']).'</i>';
     echo '<span class="info">'.$info.'</span>';
@@ -1073,21 +1082,25 @@ function media_printimgdetail($item, $fullscreen=false){
     $w = (int) $item['meta']->getField('File.Width');
     $h = (int) $item['meta']->getField('File.Height');
     if($w>$size || $h>$size){
-        $ratio = $item['meta']->getResizeRatio($size);
+        if (!$fullscreen) {
+            $ratio = $item['meta']->getResizeRatio($size);
+        } else {
+            $ratio = $item['meta']->getResizeRatio($size,$size);
+        }
         $w = floor($w * $ratio);
         $h = floor($h * $ratio);
     }
     $src = ml($item['id'],array('w'=>$w,'h'=>$h));
     $p = array();
     $p['width']  = $w;
-    $p['height'] = $h;
+    if (!$fullscreen) $p['height'] = $h;
     $p['alt']    = $item['id'];
     $p['class']  = 'thumb';
     $att = buildAttributes($p);
 
     // output
     if ($fullscreen) {
-        echo '<a name="d_:'.$item['id'].'" class="image" href="'.
+        echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
             media_managerURL(array('image' => hsc($item['id']))).'">';
         echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';

@@ -24,6 +24,11 @@
     overflow-y: auto;
 }
 
+.mediamanager .clearer {
+    font-size: 0;
+    line-height: 0;
+}
+
 .mediamanager .mediamanager-slider {
     width: auto;
 }
@@ -51,7 +56,7 @@
 }
 
 .mediamanager-link-thumbnails {
-    background: url('/lib/images/icon-thumb.png') 0 -4px no-repeat;
+    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
     padding-left: 30px;
     display: block;
     float: left;
@@ -60,7 +65,7 @@
 }
 
 .mediamanager-link-list {
-    background: url('/lib/images/icon-list.png') 0 -4px no-repeat;
+    background: url('../../images/icon-list.png') 0 -4px no-repeat;
     padding-left: 30px;
     display: block;
     float: left;
@@ -69,7 +74,7 @@
 }
 
 .mediamanager-block-sort {
-    background: url('/lib/images/icon-sort.png') 0 -4px no-repeat;
+    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
     padding-left: 30px;
     display: block;
     float: right;
@@ -148,14 +153,44 @@ form.meta textarea.edit {
     vertical-align: top;
     display: -moz-inline-stack;
     text-align: center;
+    zoom: 1;
+    *display: inline;
+    _height: 130px;
+    position: relative;
+}
+
+.mediamanager-thumbs li .image {
+    width: 100%;
+    height: 90px;
+    display: block;
+    overflow: hidden;
 }
 
 .mediamanager-thumbs li .info {
     display: block;
+    overflow: hidden;
+}
+
+.mediamanager-thumbs li input[type=checkbox] {
+    /*position: absolute;
+    left: 100%;
+    top: 100%;
+    margin-left: -20px;
+    margin-top: -20px;*/
+    display: none;
+}
+
+.mediamanager-thumbs li:hover input[type=checkbox],
+.mediamanager-thumbs li input[type=checkbox]:checked {
+    display: inline;
 }
 
 .mediamanager-list li {
+    list-style: none;
     display: block;
+    position: relative;
+    max-height: 50px;
+    margin: 0;
     margin-bottom: 3px;
 }
 
@@ -164,10 +199,11 @@ form.meta textarea.edit {
 }
 
 .mediamanager-list li .image {
-    width: 50px;
-    height: 50px;
+    width: 10%;
+    display: block;
     overflow: hidden;
     float: left;
+    height: 40px;
 }
 
 .mediamanager-list li .image img {
@@ -177,10 +213,39 @@ form.meta textarea.edit {
 .mediamanager-list li .info {
     overflow: hidden;
     float: left;
-    margin-left: 5px;
-    width: 20%;
+    width: 19%;
+    margin-left: 1%;
+}
+
+.mediamanager-list li input[type=checkbox] {
+    position: absolute;
+    left: 100%;
+    margin-left: -20px;
+    margin-top: 3px;
+    display: none;
+}
+
+.mediamanager-list li:hover input[type=checkbox],
+.mediamanager-list li input[type=checkbox]:checked {
+    display: block;
 }
 
 .mediamanager-file-list li:hover {
     background-color: #dadada;
+}
+
+.mediamanager-table-50 {
+    padding: 0;
+    margin: 0 !important;
+}
+
+.mediamanager-table-50 li {
+    width: 48%;
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 2px;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;
 }
