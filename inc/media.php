@@ -736,9 +736,8 @@ function media_tab_edit($image, $ns, $auth=null) {
 
     echo '<div class="scroll-container">';
     if ($image) {
-        $info = new JpegMeta(mediaFN($image));
-        if ($info->getField('File.Mime') == 'image/jpeg')
-            media_metaform($image,$auth,true);
+        list($ext, $mime) = mimetype($image);
+        if ($mime == 'image/jpeg') media_metaform($image,$auth,true);
     }
     echo '</div>';
     echo '</div>';
@@ -780,8 +779,8 @@ function media_tab_history($image, $ns, $auth=null) {
 function media_preview($image, $auth, $rev=false) {
     global $lang;
     if ($auth < AUTH_READ || !$image) return '';
-    $info = new JpegMeta(mediaFN($image));
-    $w = (int) $info->getField('File.Width');
+    $info = getimagesize(mediaFN($image));
+    $w = (int) $info[0];
 
     $more = '';
     if ($rev) $more = "rev=$rev";
@@ -809,30 +808,29 @@ function media_preview($image, $auth, $rev=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_details($image, $auth, $rev=false) {
-    global $lang;
+    global $lang, $config_cascade;;
 
-    $tags = array(
-        array('simple.title','img_title','text'),
-        array('Date.EarliestTime','img_date','date'),
-        array('File.Name','img_fname','text'),
-        array(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'),'img_artist','text'),
-        array(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'),'img_copyr','text'),
-        array('File.Format','img_format','text'),
-        array('File.NiceSize','img_fsize','text'),
-        array('File.Width','img_width','text'),
-        array('File.Height','img_height','text'),
-        array('Simple.Camera','img_camera','text'),
-        array(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'),'img_keywords','text')
-    );
+    // load the field descriptions
+    static $tags = null;
+    if(is_null($tags)){
+        foreach (array('default','local') as $config_group) {
+            if (empty($config_cascade['mediameta'][$config_group])) continue;
+            foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
+                if(@file_exists($config_file)){
+                    include($config_file);
+                }
+            }
+        }
+    }
 
     $src = mediaFN($image, $rev);
+    $meta = new JpegMeta($src);
     echo '<dl class="img_tags">';
     foreach($tags as $key => $tag){
         $t = $tag[0];
         if (!is_array($t)) $t = array($tag[0]);
-        $value = media_getTag($t,$src);
+        $value = media_getTag($t, $meta, '-');
         $value = cleanText($value);
-        if (!$value) $value='-';
         echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
         if ($tag[2] == 'text') echo hsc($value);
         if ($tag[2] == 'date') echo dformat($value);
@@ -842,12 +840,15 @@ function media_details($image, $auth, $rev=false) {
 }
 
 /**
- * Returns the requested EXIF/IPTC tag from the current image
+ * Returns the requested EXIF/IPTC tag from the image meta
  *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param array $tags
+ * @param JpegMeta $meta
+ * @param string $alt
+ * @return string
  */
-function media_getTag($tags,$src,$alt=''){
-    //$meta = new JpegMeta($src);
-    $meta = JpegMeta::Create($src);
+function media_getTag($tags,$meta,$alt=''){
     if($meta === false) return $alt;
     $info = $meta->getField($tags);
     if($info == false) return $alt;

@@ -52,30 +52,28 @@ if (!defined('DOKU_INC')) die();
 
       <dl class="img_tags">
         <?php
-          $t = tpl_img_getTag('Date.EarliestTime');
-          if($t) print '<dt>'.$lang['img_date'].':</dt><dd>'.dformat($t).'</dd>';
-
-          $t = tpl_img_getTag('File.Name');
-          if($t) print '<dt>'.$lang['img_fname'].':</dt><dd>'.hsc($t).'</dd>';
-
-          $t = tpl_img_getTag(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'));
-          if($t) print '<dt>'.$lang['img_artist'].':</dt><dd>'.hsc($t).'</dd>';
-
-          $t = tpl_img_getTag(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'));
-          if($t) print '<dt>'.$lang['img_copyr'].':</dt><dd>'.hsc($t).'</dd>';
-
-          $t = tpl_img_getTag('File.Format');
-          if($t) print '<dt>'.$lang['img_format'].':</dt><dd>'.hsc($t).'</dd>';
-
-          $t = tpl_img_getTag('File.NiceSize');
-          if($t) print '<dt>'.$lang['img_fsize'].':</dt><dd>'.hsc($t).'</dd>';
-
-          $t = tpl_img_getTag('Simple.Camera');
-          if($t) print '<dt>'.$lang['img_camera'].':</dt><dd>'.hsc($t).'</dd>';
-
-          $t = tpl_img_getTag(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
-          if($t) print '<dt>'.$lang['img_keywords'].':</dt><dd>'.hsc($t).'</dd>';
-
+            static $tags = null;
+            if(is_null($tags)){
+                foreach (array('default','local') as $config_group) {
+                    if (empty($config_cascade['mediameta'][$config_group])) continue;
+                    foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
+                        if(@file_exists($config_file)){
+                            include($config_file);
+                        }
+                    }
+                }
+            }
+            foreach($tags as $key => $tag){
+                $t = $tag[0];
+                if (!is_array($t)) $t = array($tag[0]);
+                $value = tpl_img_getTag($t);
+                if ($value) {
+                    echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
+                    if ($tag[2] == 'text') echo hsc($value);
+                    if ($tag[2] == 'date') echo dformat($value);
+                    echo '</dd>';
+                }
+            }
         ?>
       </dl>
       <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>

@@ -55,3 +55,25 @@ $fields = array(
                 array('Exif.Category')),
 );
 
+
+/**
+ * This configures which meta data will be shown in details view
+ * of the media manager. Each field of the array is an array with the
+ * following contents:
+ *   fieldname - Where data will be saved (EXIF or IPTC fields)
+ *   label     - key to lookup in the $lang var, if not found printed as is
+ *   fieldtype - 'text' or 'date'
+ */
+$tags = array(
+    array('simple.title','img_title','text'),
+    array('Date.EarliestTime','img_date','date'),
+    array('File.Name','img_fname','text'),
+    array(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'),'img_artist','text'),
+    array(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'),'img_copyr','text'),
+    array('File.Format','img_format','text'),
+    array('File.NiceSize','img_fsize','text'),
+    array('File.Width','img_width','text'),
+    array('File.Height','img_height','text'),
+    array('Simple.Camera','img_camera','text'),
+    array(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'),'img_keywords','text')
+);
