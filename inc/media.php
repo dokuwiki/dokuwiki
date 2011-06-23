@@ -795,21 +795,27 @@ function media_preview($image, $auth, $rev=false) {
     $more = '';
     if ($rev) $more = "rev=$rev";
     $src = ml($image, $more);
-
+    echo '<div class="mediamanager-preview">';
     echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
 
-    $link = ml($image,$more,true);
-    echo $image.' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-    'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+    $link = ml($image,$more,true,'&');
+
+    $form = new Doku_Form(array('action'=>$link, 'target'=>'_blank'));
+    $form->addElement(form_makeButton('submit','',$lang['mediaview']));
+    $form->printForm();
 
     // delete button
     if($auth >= AUTH_DELETE && !$rev){
-       $link = media_managerURL(array('delete' => $image,'sectok' => getSecurityToken()));
-        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$image.'">'.
-            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
-            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
-    }
+        $form = new Doku_Form(array('action'=>media_managerURL(array('delete' => $image))));
+        $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
+        $form->printForm();
 
+        $form = new Doku_Form(array('action'=>media_managerURL()));
+        $form->addHidden('mediado','update');
+        $form->addElement(form_makeButton('submit','',$lang['media_update']));
+        $form->printForm();
+    }
+    echo '</div>';
 }
 
 /**
@@ -1217,6 +1223,13 @@ function media_uploadform($ns, $auth, $fullscreen = false){
         return;
     }
 
+    $update = false;
+    $id = '';
+    if ($auth >= AUTH_DELETE && $fullscreen && $_REQUEST['mediado'] == 'update') {
+        $update = true;
+        $id = cleanID($_REQUEST['image']);
+    }
+
     // The default HTML upload form
     $params = array('id'      => 'dw__upload',
                     'enctype' => 'multipart/form-data');
@@ -1231,13 +1244,15 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $form->addElement(form_makeFileField('upload', $lang['txt_upload'].':', 'upload__file'));
     $form->addElement(form_makeCloseTag('p'));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('id', '', $lang['txt_filename'].':', 'upload__name'));
+    $form->addElement(form_makeTextField('id', $id, $lang['txt_filename'].':', 'upload__name'));
     $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
     $form->addElement(form_makeCloseTag('p'));
 
     if($auth >= AUTH_DELETE){
         $form->addElement(form_makeOpenTag('p'));
-        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check'));
+        $attrs = array();
+        if ($update) $attrs['checked'] = 'checked';
+        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check', $attrs));
         $form->addElement(form_makeCloseTag('p'));
     }
     html_form('upload', $form);

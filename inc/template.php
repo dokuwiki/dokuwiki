@@ -1142,6 +1142,7 @@ function tpl_fileList(){
 
     $opened_tab = $_REQUEST['tab_files'];
     if (!$opened_tab) $opened_tab = 'files';
+    if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
 
     media_tabs_files($opened_tab);
     if ($opened_tab == 'files') media_tab_files($NS,$AUTH,$JUMPTO);
@@ -1161,11 +1162,9 @@ function tpl_fileList(){
 function tpl_fileDetails(){
     global $AUTH;
     global $NS;
-    global $IMG;
 
     if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
-    if (!isset($IMG) && !isset($image)) return '';
-    if (isset($NS) && getNS($image) != $NS) return '';
+    if (!isset($image) || isset($NS) && getNS($image) != $NS) return '';
 
     $opened_tab = $_REQUEST['tab_details'];
     if (!$opened_tab) $opened_tab = 'view';
@@ -1173,10 +1172,7 @@ function tpl_fileDetails(){
     media_tabs_details($opened_tab);
 
     if ($opened_tab == 'view') media_tab_view($image, $NS, $AUTH);
-    if ($opened_tab == 'edit') {
-        if ($IMG) media_tab_edit($IMG, $NS, $AUTH);
-        else if ($image) media_tab_edit($image, $NS, $AUTH);
-    }
+    if ($opened_tab == 'edit') media_tab_edit($image, $NS, $AUTH);
     if ($opened_tab == 'history') media_tab_history($image,$NS,$AUTH);
 }
 

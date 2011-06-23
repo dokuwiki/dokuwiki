@@ -249,3 +249,7 @@ form.meta textarea.edit {
     zoom: 1;
     *display: inline;
 }
+
+.mediamanager-preview {
+    margin-bottom: 5px;
+}
