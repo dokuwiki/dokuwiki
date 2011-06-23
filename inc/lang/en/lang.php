@@ -338,5 +338,7 @@ $lang['media_view']       = 'View';
 $lang['media_edit']       = 'Edit';
 $lang['media_history']    = 'These are the older revisions of the file.';
 $lang['media_meta_edited']= 'metadata edited';
+$lang['media_perm_read']  = 'Sorry, you don\'t have enough rights to read files.';
+$lang['media_perm_upload']= 'Sorry, you don\'t have enough rights to upload files.';
 
 //Setup VIM: ex: et ts=2 :

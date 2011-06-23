@@ -89,8 +89,12 @@ function media_metasave($id,$auth,$data){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_metaform($id,$auth,$fullscreen = false){
-    if($auth < AUTH_UPLOAD) return false;
     global $lang, $config_cascade;
+
+    if($auth < AUTH_UPLOAD) {
+        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
+        return false;
+    }
 
     // load the field descriptions
     static $fields = null;
@@ -637,7 +641,7 @@ function media_tab_files($ns,$auth=null,$jump='') {
 
     $view = $_REQUEST['view'];
     if($auth < AUTH_READ){
-        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }else{
         if ($view == 'list') {
             echo '<ul class="mediamanager-file-list mediamanager-list" id="id-mediamanager-file-list">';
@@ -766,6 +770,8 @@ function media_tab_history($image, $ns, $auth=null) {
             $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
             html_revisions($first, $image);
         }
+    } else {
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }
     echo '</div>';
     echo '</div>';
@@ -778,7 +784,11 @@ function media_tab_history($image, $ns, $auth=null) {
  */
 function media_preview($image, $auth, $rev=false) {
     global $lang;
-    if ($auth < AUTH_READ || !$image) return '';
+    if (!$image) return '';
+    if ($auth < AUTH_READ) {
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+        return '';
+    }
     $info = getimagesize(mediaFN($image));
     $w = (int) $info[0];
 
@@ -809,6 +819,12 @@ function media_preview($image, $auth, $rev=false) {
  */
 function media_details($image, $auth, $rev=false) {
     global $lang, $config_cascade;;
+
+    if (!$image) return '';
+    if ($auth < AUTH_READ) {
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+        return '';
+    }
 
     // load the field descriptions
     static $tags = null;
@@ -1196,7 +1212,10 @@ function media_managerURL($params=false, $amp='&') {
 function media_uploadform($ns, $auth, $fullscreen = false){
     global $lang;
 
-    if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
+    if($auth < AUTH_UPLOAD) {
+        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
+        return;
+    }
 
     // The default HTML upload form
     $params = array('id'      => 'dw__upload',

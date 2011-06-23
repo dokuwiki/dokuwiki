@@ -35,7 +35,7 @@
     $AUTH = auth_quickaclcheck("$NS:*");
 
     // do not display the manager if user does not have read access
-    if($AUTH < AUTH_READ) {
+    if($AUTH < AUTH_READ && !$fullscreen) {
         header('HTTP/1.0 403 Forbidden');
         die($lang['accessdenied']);
     }
@@ -108,7 +108,7 @@
     }
     // finished - start output
 
-    if (!($_REQUEST['do'] == 'media')) {
+    if (!$fullscreen) {
         header('Content-Type: text/html; charset=utf-8');
         include(template('mediamanager.php'));
     }

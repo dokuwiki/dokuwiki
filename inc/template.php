@@ -1423,7 +1423,8 @@ function tpl_getFavicon($abs=false) {
  */
 function tpl_media() {
     //
-    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $lang;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $lang, $fullscreen;
+    $fullscreen = true;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 
     echo '<div class="mediamanager" id="id-mediamanager">';
