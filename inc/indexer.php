@@ -10,7 +10,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 4);
+define('INDEXER_VERSION', 5);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -444,9 +444,12 @@ class Doku_Indexer {
             $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
-        foreach ($wordlist as $i => &$word) {
-            $word = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
+        foreach ($wordlist as $i => $word) {
+            $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
                 utf8_strtolower($word) : strtolower($word);
+        }
+
+        foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
               || array_search($word, $stopwords) !== false)
                 unset($wordlist[$i]);

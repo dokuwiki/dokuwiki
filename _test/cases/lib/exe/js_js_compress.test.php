@@ -105,6 +105,12 @@ class js_js_compress_test extends UnitTestCase {
 
     }
 
+    function test_complexminified(){
+        $text = 'if(!k.isXML(a))try{if(e||!l.match.PSEUDO.test(c)&&!/!=/.test(c)){var f=b.call(a,c);if(f||!d||a.document&&a.document.nodeType!==11)return f}}catch(g){}return k(c,null,null,[a]).length>0}}}(),function(){var a=c.createElement("div");a.innerHTML="<div class=\'test e\'></div><div class=\'test\'></div>";if(!!a.getElementsByClassName&&a.getElementsByClassName("e").length!==0){a.lastChild.className="e";if(a.getElementsByClassName("e").length===1)return;foo="text/*";bla="*/"';
+
+        $this->assertEqual(js_compress($text),$text);
+    }
+
     /**
      * Test the files provided with the original JsStrip
      */

@@ -411,6 +411,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
         // set both keys individually as the renderer has references to the individual keys
         $METADATA_RENDERERS[$id]['current']    = $meta['current'];
         $METADATA_RENDERERS[$id]['persistent'] = $meta['persistent'];
+        return true;
     } else {
         return p_save_metadata($id, $meta);
     }

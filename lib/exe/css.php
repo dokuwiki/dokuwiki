@@ -62,6 +62,8 @@ function css_out(){
     $files   = array();
     // load core styles
     $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+    // load jQuery-UI theme
+    $files[DOKU_INC.'lib/js/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/js/jquery/jquery-ui-theme/';
     // load plugin styles
     $files = array_merge($files, css_pluginstyles($mediatype));
     // load template styles

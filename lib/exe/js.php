@@ -34,26 +34,21 @@ function js_out(){
     // The generated script depends on some dynamic options
     $cache = getCacheName('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
 
-    // load jQuery, minified if compression is eanbled.
-    $jquery_file_path = DOKU_INC.'lib/scripts/jquery/jquery';
-    if($conf['compress']) {
-        $jquery_file_path .= '.min';
-    }
-    $jquery_file_path .= '.js';
+    // load minified version for some files
+    $min = $conf['compress'] ? '.min' : '';
 
     // array of core files
     $files = array(
-                $jquery_file_path,
+                DOKU_INC."lib/scripts/jquery/jquery$min.js",
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
-                DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.core.min.js',
-                DOKU_INC.'lib/scripts/jquery-ui/jquery-ui.interactions.min.js',
+                DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
                 DOKU_INC.'lib/scripts/helpers.js',
                 DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/delay.js',
                 DOKU_INC.'lib/scripts/cookie.js',
                 DOKU_INC.'lib/scripts/script.js',
                 DOKU_INC.'lib/scripts/tw-sack.js',
-                DOKU_INC.'lib/scripts/ajax.js',
+                DOKU_INC.'lib/scripts/qsearch.js',
                 DOKU_INC.'lib/scripts/index.js',
                 DOKU_INC.'lib/scripts/drag.js',
                 DOKU_INC.'lib/scripts/textselection.js',
@@ -63,8 +58,10 @@ function js_out(){
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
                 DOKU_INC.'lib/scripts/subscriptions.js',
+                DOKU_INC.'lib/scripts/compatibility.js',
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_TPLINC.'script.js',
+                DOKU_INC.'lib/scripts/behaviour.js',
             );
 
     // add possible plugin scripts and userscript
@@ -126,8 +123,6 @@ function js_out(){
     if($conf['locktime'] != 0){
         js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
     }
-    js_runonstart('scrollToMarker()');
-    js_runonstart('focusMarker()');
     // init hotkeys - must have been done after init of toolbar
 # disabled for FS#1958    js_runonstart('initializeHotkeys()');
 
@@ -185,7 +180,7 @@ function js_load($file){
         }
         $data  = str_replace($match[0],$idata,$data);
     }
-    echo $data;
+    echo "$data\n";
 }
 
 /**
@@ -299,7 +294,7 @@ function js_compress($s){
     // items that don't need spaces next to them
     $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"[]";
 
-    $regex_starters = array("(", "=", "[", "," , ":");
+    $regex_starters = array("(", "=", "[", "," , ":", "!");
 
     $whitespaces_chars = array(" ", "\t", "\n", "\r", "\0", "\x0B");
 
