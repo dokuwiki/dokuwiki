@@ -24,11 +24,6 @@
     overflow-y: auto;
 }
 
-.mediamanager .clearer {
-    font-size: 0;
-    line-height: 0;
-}
-
 .mediamanager .mediamanager-slider {
     width: auto;
 }
@@ -154,9 +149,14 @@ form.meta textarea.edit {
     display: -moz-inline-stack;
     text-align: center;
     zoom: 1;
-    *display: inline;
-    _height: 130px;
     position: relative;
+}
+* html .mediamanager-thumbs li {
+    display: inline;
+}
+*+html .mediamanager-thumbs li {
+    display: inline;
+    _height: 130px;
 }
 
 .mediamanager-thumbs li .image {
@@ -166,23 +166,23 @@ form.meta textarea.edit {
     overflow: hidden;
 }
 
-.mediamanager-thumbs li .info {
+.mediamanager-thumbs li .name,
+.mediamanager-thumbs li .size,
+.mediamanager-thumbs li .filesize,
+.mediamanager-thumbs li .date {
     display: block;
     overflow: hidden;
 }
 
 .mediamanager-thumbs li input[type=checkbox] {
-    /*position: absolute;
-    left: 100%;
-    top: 100%;
-    margin-left: -20px;
-    margin-top: -20px;*/
     display: none;
+    float: left;
+    margin: 3px;
 }
 
 .mediamanager-thumbs li:hover input[type=checkbox],
 .mediamanager-thumbs li input[type=checkbox]:checked {
-    display: inline;
+    display: block;
 }
 
 .mediamanager-list li {
@@ -210,19 +210,25 @@ form.meta textarea.edit {
     width: 100%;
 }
 
-.mediamanager-list li .info {
+.mediamanager-list li .name,
+.mediamanager-list li .size,
+.mediamanager-list li .filesize
+.mediamanager-list li .date {
     overflow: hidden;
     float: left;
     width: 19%;
     margin-left: 1%;
 }
 
+.mediamanager-list li .date,
+.mediamanager-thumbs li .date {
+    font-style: italic;
+}
+
 .mediamanager-list li input[type=checkbox] {
-    position: absolute;
-    left: 100%;
-    margin-left: -20px;
-    margin-top: 3px;
     display: none;
+    float: left;
+    margin: 3px;
 }
 
 .mediamanager-list li:hover input[type=checkbox],
@@ -247,7 +253,9 @@ form.meta textarea.edit {
     padding: 2px;
     vertical-align: top;
     zoom: 1;
-    *display: inline;
+}
+* html .mediamanager-table-50 li {
+    display: inline;
 }
 
 .mediamanager-preview {

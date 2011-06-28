@@ -1093,21 +1093,22 @@ function media_printfile_thumbs($item,$auth,$jump){
         echo '<img src="'.DOKU_BASE.'lib/images/icon-file.png" width="90px" />';
         echo '</a>';
     }
+    //echo '<input type=checkbox />';
     echo '<a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
-        "h_:'.$item['id'].'" class="info" >'.hsc($file).'</a>';
+        "h_:'.$item['id'].'" class="name">'.hsc($file).'</a>';
     if($item['isimg']){
-        $info = '';
-        $info .= (int) $item['meta']->getField('File.Width');
-        $info .= '&#215;';
-        $info .= (int) $item['meta']->getField('File.Height');
-        echo '<span class="info">'.$info.'</span>';
+        $size = '';
+        $size .= (int) $item['meta']->getField('File.Width');
+        $size .= '&#215;';
+        $size .= (int) $item['meta']->getField('File.Height');
+        echo '<span class="size">'.$size.'</span>';
     } else {
-        echo '<span class="info">&nbsp;</span>';
+        echo '<span class="size">&nbsp;</span>';
     }
-    $info = '<i>'.dformat($item['mtime']).'</i>';
-    echo '<span class="info">'.$info.'</span>';
-    $info = filesize_h($item['size']);
-    echo '<span class="info">'.$info.'</span>';
+    $date = dformat($item['mtime']);
+    echo '<span class="date">'.$date.'</span>';
+    $filesize = filesize_h($item['size']);
+    echo '<span class="filesize">'.$filesize.'</span>';
     echo '<div class="clearer"></div>';
     echo '</div></li>'.NL;
 }
