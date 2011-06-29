@@ -99,14 +99,9 @@ function media_metaform($id,$auth,$fullscreen = false){
     // load the field descriptions
     static $fields = null;
     if(is_null($fields)){
-
-        foreach (array('default','local') as $config_group) {
-            if (empty($config_cascade['mediameta'][$config_group])) continue;
-            foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
-                if(@file_exists($config_file)){
-                    include($config_file);
-                }
-            }
+        $config_files = getConfigFiles('mediameta');
+        foreach ($config_files as $config_file) {
+            if(@file_exists($config_file)) include($config_file);
         }
     }
 
@@ -123,6 +118,7 @@ function media_metaform($id,$auth,$fullscreen = false){
     formSecurityToken();
     foreach($fields as $key => $field){
         // get current value
+        if (empty($field[0])) continue;
         $tags = array($field[0]);
         if(is_array($field[3])) $tags = array_merge($tags,$field[3]);
         $value = tpl_img_getTag($tags,'',$src);
@@ -837,29 +833,26 @@ function media_details($image, $auth, $rev=false) {
     }
 
     // load the field descriptions
-    static $tags = null;
-    if(is_null($tags)){
-        foreach (array('default','local') as $config_group) {
-            if (empty($config_cascade['mediameta'][$config_group])) continue;
-            foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
-                if(@file_exists($config_file)){
-                    include($config_file);
-                }
-            }
+    static $fields = null;
+    if(is_null($fields)){
+        $config_files = getConfigFiles('mediameta');
+        foreach ($config_files as $config_file) {
+            if(@file_exists($config_file)) include($config_file);
         }
     }
 
     $src = mediaFN($image, $rev);
     $meta = new JpegMeta($src);
     echo '<dl class="img_tags">';
-    foreach($tags as $key => $tag){
-        $t = $tag[0];
-        if (!is_array($t)) $t = array($tag[0]);
+    foreach($fields as $key => $tag){
+        $t = array();
+        if (!empty($tag[0])) $t = array($tag[0]);
+        if(is_array($tag[3])) $t = array_merge($t,$tag[3]);
         $value = media_getTag($t, $meta, '-');
         $value = cleanText($value);
         echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
-        if ($tag[2] == 'text') echo hsc($value);
         if ($tag[2] == 'date') echo dformat($value);
+        else echo hsc($value);
         echo '</dd>';
     }
     echo '</dl>';

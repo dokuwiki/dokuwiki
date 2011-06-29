@@ -52,25 +52,20 @@ if (!defined('DOKU_INC')) die();
 
       <dl class="img_tags">
         <?php
-            static $tags = null;
-            if(is_null($tags)){
-                foreach (array('default','local') as $config_group) {
-                    if (empty($config_cascade['mediameta'][$config_group])) continue;
-                    foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
-                        if(@file_exists($config_file)){
-                            include($config_file);
-                        }
-                    }
-                }
+            $config_files = getConfigFiles('mediameta');
+            foreach ($config_files as $config_file) {
+                if(@file_exists($config_file)) include($config_file);
             }
-            foreach($tags as $key => $tag){
-                $t = $tag[0];
-                if (!is_array($t)) $t = array($tag[0]);
+
+            foreach($fields as $key => $tag){
+                $t = array();
+                if (!empty($tag[0])) $t = array($tag[0]);
+                if(is_array($tag[3])) $t = array_merge($t,$tag[3]);
                 $value = tpl_img_getTag($t);
                 if ($value) {
                     echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
-                    if ($tag[2] == 'text') echo hsc($value);
                     if ($tag[2] == 'date') echo dformat($value);
+                    else echo hsc($value);
                     echo '</dd>';
                 }
             }

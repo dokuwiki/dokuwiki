@@ -29,51 +29,63 @@ $fields = array(
                 'img_title',
                 'text'),
 
-    20 => array('Iptc.Caption',
+    20 => array('',
+                'img_date',
+                'date',
+                array('Date.EarliestTime')),
+
+    30 => array('',
+                'img_fname',
+                'text',
+                array('File.Name')),
+
+    40 => array('Iptc.Caption',
                 'img_caption',
                 'textarea',
                 array('Exif.UserComment',
                       'Exif.TIFFImageDescription',
                       'Exif.TIFFUserComment')),
 
-    30 => array('Iptc.Byline',
+    50 => array('Iptc.Byline',
                 'img_artist',
                 'text',
                 array('Exif.TIFFArtist',
                       'Exif.Artist',
                       'Iptc.Credit')),
 
-    40 => array('Iptc.CopyrightNotice',
+    60 => array('Iptc.CopyrightNotice',
                 'img_copyr',
                 'text',
                 array('Exif.TIFFCopyright',
                       'Exif.Copyright')),
 
-    50 => array('Iptc.Keywords',
+    70 => array('',
+                'img_format',
+                'text',
+                array('File.Format')),
+
+    80 => array('',
+                'img_fsize',
+                'text',
+                array('File.NiceSize')),
+
+    90 => array('',
+                'img_width',
+                'text',
+                array('File.Width')),
+
+    100 => array('',
+                'img_height',
+                'text',
+                array('File.Height')),
+
+    110 => array('',
+                'img_camera',
+                'text',
+                array('Simple.Camera')),
+
+    120 => array('Iptc.Keywords',
                 'img_keywords',
                 'text',
                 array('Exif.Category')),
-);
-
-
-/**
- * This configures which meta data will be shown in details view
- * of the media manager. Each field of the array is an array with the
- * following contents:
- *   fieldname - Where data will be saved (EXIF or IPTC fields)
- *   label     - key to lookup in the $lang var, if not found printed as is
- *   fieldtype - 'text' or 'date'
- */
-$tags = array(
-    array('simple.title','img_title','text'),
-    array('Date.EarliestTime','img_date','date'),
-    array('File.Name','img_fname','text'),
-    array(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'),'img_artist','text'),
-    array(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'),'img_copyr','text'),
-    array('File.Format','img_format','text'),
-    array('File.NiceSize','img_fsize','text'),
-    array('File.Width','img_width','text'),
-    array('File.Height','img_height','text'),
-    array('Simple.Camera','img_camera','text'),
-    array(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'),'img_keywords','text')
 );
