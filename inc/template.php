@@ -1159,17 +1159,17 @@ function tpl_fileList(){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_fileDetails(){
+function tpl_fileDetails($image){
     global $AUTH;
     global $NS;
 
-    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
-    if (!isset($image) || isset($NS) && getNS($image) != $NS) return '';
+    if (!$image || !file_exists(mediaFN($image))) return '';
+    if (isset($NS) && getNS($image) != $NS) return '';
 
     $opened_tab = $_REQUEST['tab_details'];
     if (!$opened_tab) $opened_tab = 'view';
     if ($_REQUEST['edit']) $opened_tab = 'edit';
-    media_tabs_details($opened_tab);
+    media_tabs_details($image, $opened_tab);
 
     if ($opened_tab == 'view') media_tab_view($image, $NS, $AUTH);
     if ($opened_tab == 'edit') media_tab_edit($image, $NS, $AUTH);
@@ -1423,6 +1423,10 @@ function tpl_media() {
     $fullscreen = true;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if (isset($IMG)) $image = $IMG;
+    if (isset($JUMPTO)) $image = $JUMPTO;
+
     echo '<div class="mediamanager" id="id-mediamanager">';
     echo '<div class="mediamanager-slider" id="id-mediamanager-layout">';
     echo '<div id="id-mediamanager-layout-namespaces" class="layout" style="width: 25%;">';
@@ -1442,7 +1446,7 @@ function tpl_media() {
     tpl_fileList();
     echo '</div>';
     echo '<div id="id-mediamanager-layout-detail" class="layout" style="width: 30%;">';
-    tpl_fileDetails();
+    tpl_fileDetails($image);
     echo '</div>';
     echo '<div class="clearer"></div>';
     echo '</div>';

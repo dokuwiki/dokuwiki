@@ -242,7 +242,7 @@ function media_upload($ns,$auth){
     global $lang;
 
     // get file and id
-    $id   = $_POST['id'];
+    $id   = $_POST['mediaid'];
     $file = $_FILES['upload'];
     if(empty($id)) $id = $file['name'];
 
@@ -572,25 +572,25 @@ function media_tabs_files($selected=false){
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @param string $selected - opened tab
  */
-function media_tabs_details($selected=false){
+function media_tabs_details($image, $selected=false){
     global $lang;
 
     echo '<div class="mediamanager-tabs" id="id-mediamanager-tabs-detail">';
-    $tab = '<a href="'.media_managerURL(array('tab_details' => 'view')).
+    $tab = '<a href="'.media_managerURL(array('tab_details' => 'view', 'image' => $image)).
         '" rel=".mediamanager-tab-view"';
     if (!empty($selected) && $selected == 'view') $class = 'view selected';
     else $class = 'view';
     $tab .= ' class="'.$class.'" >'.$lang['media_viewtab'].'</a>';
     echo $tab;
 
-    $tab = '<a href="'.media_managerURL(array('tab_details' => 'edit')).
+    $tab = '<a href="'.media_managerURL(array('tab_details' => 'edit', 'image' => $image)).
         '" rel=".mediamanager-tab-edit"';
     if (!empty($selected) && $selected == 'edit') $class = 'edit selected';
     else $class = 'edit';
     $tab .= ' class="'.$class.'" >'.$lang['media_edittab'].'</a>';
     echo $tab;
 
-    $tab = '<a href="'.media_managerURL(array('tab_details' => 'history')).
+    $tab = '<a href="'.media_managerURL(array('tab_details' => 'history', 'image' => $image)).
         '" rel=".mediamanager-tab-history"';
     if (!empty($selected) && $selected == 'history') $class = 'history selected';
     else $class = 'history';
@@ -1231,8 +1231,12 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     // The default HTML upload form
     $params = array('id'      => 'dw__upload',
                     'enctype' => 'multipart/form-data');
-    if (!$fullscreen) $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
-    else $params['action'] = media_managerURL(array('tab_files' => 'files'));
+    if (!$fullscreen) {
+        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+    } else {
+        $params['action'] = media_managerURL(array('tab_files' => 'files',
+            'tab_details' => 'view'));
+    }
 
     $form = new Doku_Form($params);
     if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
@@ -1242,7 +1246,7 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $form->addElement(form_makeFileField('upload', $lang['txt_upload'].':', 'upload__file'));
     $form->addElement(form_makeCloseTag('p'));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('id', $id, $lang['txt_filename'].':', 'upload__name'));
+    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'].':', 'upload__name'));
     $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
     $form->addElement(form_makeCloseTag('p'));
 
