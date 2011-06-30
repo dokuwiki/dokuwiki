@@ -367,6 +367,7 @@ function _media_upload_action($data) {
 function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file') {
     global $conf;
     global $lang;
+    global $REV;
 
     $old = @filemtime($fn);
     if(!@file_exists(mediaFN($id, $old)) && @file_exists($fn)) {
@@ -378,6 +379,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     io_createNamespace($id, 'media');
 
     if($move($fn_tmp, $fn)) {
+        clearstatcache(true,$fn);
         $new = @filemtime($fn);
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
@@ -386,7 +388,9 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         msg($lang['uploadsucc'],1);
         media_notify($id,$fn,$imime);
         // add a log entry to the media changelog
-        if ($overwrite) {
+        if ($REV){
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, '', $REV);
+        } elseif ($overwrite) {
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT);
         } else {
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
@@ -707,7 +711,7 @@ function media_tab_search($ns,$auth=null) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_tab_view($image, $ns, $auth=null) {
+function media_tab_view($image, $ns, $auth=null, $rev=false) {
     global $lang, $conf;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
@@ -717,7 +721,6 @@ function media_tab_view($image, $ns, $auth=null) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    $rev = (int) $_REQUEST['rev'];
     media_preview($image, $auth, $rev);
     media_details($image, $auth, $rev);
     echo '</div>';
@@ -789,7 +792,7 @@ function media_preview($image, $auth, $rev=false) {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
         return '';
     }
-    $info = getimagesize(mediaFN($image));
+    $info = getimagesize(mediaFN($image, $rev));
     $w = (int) $info[0];
 
     $more = '';
@@ -810,9 +813,16 @@ function media_preview($image, $auth, $rev=false) {
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         $form->printForm();
 
-        $form = new Doku_Form(array('action'=>media_managerURL()));
+        $form = new Doku_Form(array('action'=>media_managerURL(array('image' => $image))));
         $form->addHidden('mediado','update');
         $form->addElement(form_makeButton('submit','',$lang['media_update']));
+        $form->printForm();
+    }
+    if($auth >= AUTH_DELETE && $rev){
+        $form = new Doku_Form(array('action'=>media_managerURL(array('image' => $image))));
+        $form->addHidden('mediado','restore');
+        $form->addHidden('rev',$rev);
+        $form->addElement(form_makeButton('submit','',$lang['media_restore']));
         $form->printForm();
     }
     echo '</div>';
@@ -924,6 +934,33 @@ function media_diff($image, $ns, $auth) {
     echo '<li><div>';
     media_details($image, $auth, $r_rev);
     echo '</div></li></ul>';
+}
+
+/**
+ * Restores an old revision of a media file
+ *
+ * @param string $image
+ * @param int $rev
+ * @param int $auth
+ * @return string - file's id
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_restore($image, $rev, $auth){
+    if ($auth < AUTH_DELETE) return false;
+    if (!$image || !file_exists(mediaFN($image))) return false;
+    if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
+    list($iext,$imime,$dl) = mimetype($image);
+    $res = media_upload_finish(mediaFN($image, $rev),
+        mediaFN($image),
+        $image,
+        $imime,
+        true,
+        'copy');
+    if (is_array($res)) {
+        msg($res[0], $res[1]);
+        return false;
+    }
+    return $res;
 }
 
 /**

@@ -1159,11 +1159,12 @@ function tpl_fileList(){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_fileDetails($image){
+function tpl_fileDetails($image, $rev){
     global $AUTH;
     global $NS;
 
     if (!$image || !file_exists(mediaFN($image))) return '';
+    if ($rev && !file_exists(mediaFN($image, $rev))) return '';
     if (isset($NS) && getNS($image) != $NS) return '';
 
     $opened_tab = $_REQUEST['tab_details'];
@@ -1171,7 +1172,7 @@ function tpl_fileDetails($image){
     if ($_REQUEST['edit']) $opened_tab = 'edit';
     media_tabs_details($image, $opened_tab);
 
-    if ($opened_tab == 'view') media_tab_view($image, $NS, $AUTH);
+    if ($opened_tab == 'view') media_tab_view($image, $NS, $AUTH, $rev);
     if ($opened_tab == 'edit') media_tab_edit($image, $NS, $AUTH);
     if ($opened_tab == 'history') media_tab_history($image,$NS,$AUTH);
 }
@@ -1419,13 +1420,14 @@ function tpl_getFavicon($abs=false) {
  */
 function tpl_media() {
     //
-    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $lang, $fullscreen;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen;
     $fullscreen = true;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 
     if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
     if (isset($IMG)) $image = $IMG;
     if (isset($JUMPTO)) $image = $JUMPTO;
+    if (isset($REV) && !$JUMPTO) $rev = $REV;
 
     echo '<div class="mediamanager" id="id-mediamanager">';
     echo '<div class="mediamanager-slider" id="id-mediamanager-layout">';
@@ -1446,7 +1448,7 @@ function tpl_media() {
     tpl_fileList();
     echo '</div>';
     echo '<div id="id-mediamanager-layout-detail" class="layout" style="width: 30%;">';
-    tpl_fileDetails($image);
+    tpl_fileDetails($image, $rev);
     echo '</div>';
     echo '<div class="clearer"></div>';
     echo '</div>';

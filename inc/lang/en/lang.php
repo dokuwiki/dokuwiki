@@ -341,5 +341,6 @@ $lang['media_meta_edited']= 'metadata edited';
 $lang['media_perm_read']  = 'Sorry, you don\'t have enough rights to read files.';
 $lang['media_perm_upload']= 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']     = 'Upload new version';
+$lang['media_restore']    = 'Restore this version';
 
 //Setup VIM: ex: et ts=2 :
