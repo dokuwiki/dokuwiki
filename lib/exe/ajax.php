@@ -211,7 +211,7 @@ function ajax_medialist(){
 
     $NS = $_POST['ns'];
     if ($_POST['do'] == 'media') {
-        tpl_fileList(true);
+        tpl_fileList();
     } else {
         tpl_mediaContent(true);
     }
@@ -229,11 +229,7 @@ function ajax_mediadetails(){
 
     $NS = $_POST['ns'];
     $image = $_POST['image'];
-    if (isset($_POST['full'])) {
-        tpl_fileDetails($image, false);
-    } else {
-        tpl_fileDetails($image, false, true);
-    }
+    tpl_fileDetails($image, false);
 }
 
 /**

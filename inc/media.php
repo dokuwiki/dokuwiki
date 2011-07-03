@@ -807,8 +807,8 @@ function media_preview($image, $auth, $rev=false) {
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         $form->printForm();
 
-        $form = new Doku_Form(array('action'=>media_managerURL(array('image' => $image))));
-        $form->addHidden('mediado','update');
+        $form = new Doku_Form(array('id' => 'mediamanager__btn_update',
+            'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'))));
         $form->addElement(form_makeButton('submit','',$lang['media_update']));
         $form->printForm();
     }

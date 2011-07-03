@@ -1135,7 +1135,7 @@ function tpl_mediaContent($fromajax=false){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_fileList($fromajax=false){
+function tpl_fileList(){
     global $AUTH;
     global $NS;
     global $JUMPTO;
@@ -1144,22 +1144,22 @@ function tpl_fileList($fromajax=false){
     if (!$opened_tab) $opened_tab = 'files';
     if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
 
-    if(!$fromajax) media_tabs_files($opened_tab);
+    media_tabs_files($opened_tab);
 
     if ($opened_tab == 'files') {
-        if (!$fromajax) echo '<div class="mediamanager-tab-files" id="mediamanager__files">';
+        echo '<div class="mediamanager-tab-files" id="mediamanager__files">';
         media_tab_files($NS,$AUTH,$JUMPTO);
-        if (!$fromajax) echo '</div>';
+        echo '</div>';
 
     } elseif ($opened_tab == 'upload') {
-        if (!$fromajax) echo '<div class="mediamanager-tab-upload" id="mediamanager__files">';
+        echo '<div class="mediamanager-tab-upload" id="mediamanager__files">';
         media_tab_upload($NS,$AUTH,$JUMPTO);
-        if (!$fromajax) echo '</div>';
+        echo '</div>';
 
     } elseif ($opened_tab == 'search') {
-        if (!$fromajax) echo '<div class="mediamanager-tab-search" id="mediamanager__files">';
+        echo '<div class="mediamanager-tab-search" id="mediamanager__files">';
         media_tab_search($NS,$AUTH);
-        if (!$fromajax) echo '</div>';
+        echo '</div>';
     }
 
 }
@@ -1172,7 +1172,7 @@ function tpl_fileList($fromajax=false){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_fileDetails($image, $rev, $fromajax=false){
+function tpl_fileDetails($image, $rev){
     global $AUTH;
     global $NS;
 
@@ -1186,22 +1186,22 @@ function tpl_fileDetails($image, $rev, $fromajax=false){
     if ($_REQUEST['edit']) $opened_tab = 'edit';
     if ($do == 'restore') $opened_tab = 'view';
 
-    if(!$fromajax) media_tabs_details($image, $opened_tab);
+    media_tabs_details($image, $opened_tab);
 
     if ($opened_tab == 'view') {
-        if (!$fromajax) echo '<div class="mediamanager-tab-detail-view" id="mediamanager__details">';
+        echo '<div class="mediamanager-tab-detail-view" id="mediamanager__details">';
         media_tab_view($image, $NS, $AUTH, $rev);
-        if (!$fromajax) echo '</div>';
+        echo '</div>';
 
     } elseif ($opened_tab == 'edit') {
-        if (!$fromajax) echo '<div class="mediamanager-tab-detail-edit" id="mediamanager__details">';
+        echo '<div class="mediamanager-tab-detail-edit" id="mediamanager__details">';
         media_tab_edit($image, $NS, $AUTH);
-        if (!$fromajax) echo '</div>';
+        echo '</div>';
 
     } elseif ($opened_tab == 'history') {
-        if (!$fromajax) echo '<div class="mediamanager-tab-detail-history" id="mediamanager__details">';
+        echo '<div class="mediamanager-tab-detail-history" id="mediamanager__details">';
         media_tab_history($image,$NS,$AUTH);
-        if (!$fromajax) echo '</div>';
+        echo '</div>';
     }
 }
 
