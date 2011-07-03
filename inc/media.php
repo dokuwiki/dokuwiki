@@ -379,7 +379,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     io_createNamespace($id, 'media');
 
     if($move($fn_tmp, $fn)) {
-        clearstatcache(true,$fn);
+        @clearstatcache(true,$fn);
         $new = @filemtime($fn);
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
@@ -529,7 +529,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
         }else foreach($data as $item){
             if (!$fullscreenview) media_printfile($item,$auth,$jump);
-            else if ($fullscreenview == 'thumbs') media_printfile_thumbs($item,$auth,$jump);
+            else media_printfile_thumbs($item,$auth,$jump);
         }
     }
     if (!$fullscreenview) media_searchform($ns);
@@ -544,9 +544,8 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false){
 function media_tabs_files($selected=false){
     global $lang;
 
-    echo '<div class="mediamanager-tabs" id="id-mediamanager-tabs">';
-    $tab = '<a href="'.media_managerURL(array('tab_files' => 'files')).
-        '" rel=".mediamanager-tab-files"';
+    echo '<div class="mediamanager-tabs" id="mediamanager__tabs_files">';
+    $tab = '<a href="'.media_managerURL(array('tab_files' => 'files')).'"';
     if (!empty($selected) && $selected == 'files') $class = 'files selected';
     else $class = 'files';
     $tab .= ' class="'.$class.'" >'.$lang['mediaselect'].'</a>';
@@ -579,7 +578,7 @@ function media_tabs_files($selected=false){
 function media_tabs_details($image, $selected=false){
     global $lang;
 
-    echo '<div class="mediamanager-tabs" id="id-mediamanager-tabs-detail">';
+    echo '<div class="mediamanager-tabs" id="mediamanager__tabs_details">';
     $tab = '<a href="'.media_managerURL(array('tab_details' => 'view', 'image' => $image)).
         '" rel=".mediamanager-tab-view"';
     if (!empty($selected) && $selected == 'view') $class = 'view selected';
@@ -614,7 +613,7 @@ function media_tab_files_options(){
     global $lang;
 
     echo '<div class="background-container">';
-    echo '<div id="id-mediamanager-tabs-files" style="display: inline;">';
+    echo '<div id="mediamanager__tabs_list" style="display: inline;">';
     echo '<a href="'.media_managerURL(array('view' => 'thumbs')).'"
         rel=".mediamanager-files-thumbnails-tab" class="mediamanager-link-thumbnails">'.
         $lang['media_thumbsview'].'</a>';
@@ -639,23 +638,21 @@ function media_tab_files($ns,$auth=null,$jump='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<div class="mediamanager-tab-files">';
     media_tab_files_options();
-    echo '<div class="scroll-container">';
 
+    echo '<div class="scroll-container" >';
     $view = $_REQUEST['view'];
     if($auth < AUTH_READ){
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }else{
         if ($view == 'list') {
-            echo '<ul class="mediamanager-file-list mediamanager-list" id="id-mediamanager-file-list">';
+            echo '<ul class="mediamanager-file-list mediamanager-list" id="mediamanager__file_list">';
         } else {
-            echo '<ul class="mediamanager-file-list mediamanager-thumbs" id="id-mediamanager-file-list">';
+            echo '<ul class="mediamanager-file-list mediamanager-thumbs" id="mediamanager__file_list">';
         }
-        media_filelist($ns,$auth,$jump,'thumbs');
+        media_filelist($ns,$auth,$jump,true);
         echo '</ul>';
     }
-    echo '</div>';
     echo '</div>';
 }
 
@@ -668,14 +665,12 @@ function media_tab_upload($ns,$auth=null,$jump='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<div class="mediamanager-tab-upload"">';
     echo '<div class="background-container">';
     echo $lang['mediaupload'];
     echo '</div>';
 
     echo '<div class="scroll-container">';
     media_uploadform($ns, $auth, true);
-    echo '</div>';
     echo '</div>';
 }
 
@@ -691,7 +686,6 @@ function media_tab_search($ns,$auth=null) {
     $query = $_REQUEST['q'];
     if (!$query) $query = '';
 
-    echo '<div class="mediamanager-tab-search">';
     echo '<div class="background-container">';
     echo $lang['media_search'];
     echo'</div>';
@@ -700,9 +694,15 @@ function media_tab_search($ns,$auth=null) {
     media_searchform($ns, $query, true);
 
     if($do == 'searchlist'){
+        $view = $_REQUEST['view'];
+        if ($view == 'list') {
+            echo '<ul class="mediamanager-file-list mediamanager-list" id="mediamanager__file_list">';
+        } else {
+            echo '<ul class="mediamanager-file-list mediamanager-thumbs" id="mediamanager__file_list">';
+        }
         media_searchlist($query,$ns,$auth,true);
+        echo '</ul>';
     }
-    echo '</div>';
     echo '</div>';
 }
 
@@ -715,7 +715,6 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     global $lang, $conf;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<div class="mediamanager-tab-detail-view">';
     echo '<div class="background-container">';
     echo $image;
     echo '</div>';
@@ -723,7 +722,6 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     echo '<div class="scroll-container">';
     media_preview($image, $auth, $rev);
     media_details($image, $auth, $rev);
-    echo '</div>';
     echo '</div>';
 }
 
@@ -736,7 +734,6 @@ function media_tab_edit($image, $ns, $auth=null) {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<div class="mediamanager-tab-detail-edit">';
     echo '<div class="background-container">';
     echo $lang['media_edit'];
     echo '</div>';
@@ -746,7 +743,6 @@ function media_tab_edit($image, $ns, $auth=null) {
         list($ext, $mime) = mimetype($image);
         if ($mime == 'image/jpeg') media_metaform($image,$auth,true);
     }
-    echo '</div>';
     echo '</div>';
 }
 
@@ -760,7 +756,6 @@ function media_tab_history($image, $ns, $auth=null) {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
     $do = $_REQUEST['mediado'];
 
-    echo '<div class="mediamanager-tab-detail-history">';
     echo '<div class="background-container">';
     echo $lang['media_history'];
     echo '</div>';
@@ -776,7 +771,6 @@ function media_tab_history($image, $ns, $auth=null) {
     } else {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }
-    echo '</div>';
     echo '</div>';
 }
 
@@ -1006,7 +1000,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else foreach($evdata['data'] as $item){
         if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
-        else media_printfile_thumbs($item,$item['perm'],'',true);
+        else media_printfile_thumbs($item,$item['perm']);
     }
 }
 
@@ -1106,7 +1100,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_printfile_thumbs($item,$auth,$jump){
+function media_printfile_thumbs($item,$auth,$jump=false){
     global $lang;
     global $conf;
 
@@ -1217,18 +1211,11 @@ function media_managerURL($params=false, $amp='&') {
     global $conf;
     global $ID;
 
-    $url = $_SERVER['REQUEST_URI'];
-
-    $urlArray = explode('?', $url, 2);
-    $gets = @$urlArray[1];
-    parse_str($gets, $gets);
-
-    if ($gets['edit']) $gets['image'] = $gets['edit'];
-    unset($gets['edit']);
-    unset($gets['sectok']);
-    unset($gets['delete']);
-    unset($gets['rev']);
-    unset($gets['mediado']);
+    $gets = array('do' => 'media');
+    $media_manager_params = array('tab_files', 'tab_details', 'image', 'ns', 'view');
+    foreach ($media_manager_params as $x) {
+        if (isset($_REQUEST[$x])) $gets[$x] = $_REQUEST[$x];
+    }
 
     if ($params) {
         foreach ($params as $k => $v) {
@@ -1407,7 +1394,8 @@ function media_nstree_item($item){
     $ret  = '';
     if (!($_REQUEST['do'] == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
-    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id']))).'" class="idx_dir">';
+    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id']), 'tab_files' => 'files'))
+        .'" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
     return $ret;

@@ -210,7 +210,30 @@ function ajax_medialist(){
     global $NS;
 
     $NS = $_POST['ns'];
-    tpl_mediaContent(true);
+    if ($_POST['do'] == 'media') {
+        tpl_fileList(true);
+    } else {
+        tpl_mediaContent(true);
+    }
+}
+
+/**
+ * Return the content of the right column
+ * (image details) for the Mediamanager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function ajax_mediadetails(){
+    global $conf;
+    global $NS;
+
+    $NS = $_POST['ns'];
+    $image = $_POST['image'];
+    if (isset($_POST['full'])) {
+        tpl_fileDetails($image, false);
+    } else {
+        tpl_fileDetails($image, false, true);
+    }
 }
 
 /**
