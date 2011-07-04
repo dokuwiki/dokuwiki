@@ -449,7 +449,10 @@ function html_revisions($first=0, $media_id = false){
 
     if (!$media_id) print p_locale_xhtml('revisions');
 
-    $form = new Doku_Form(array('id' => 'page__revisions'));
+    $params = array('id' => 'page__revisions');
+    if ($media_id) $params['action'] = media_managerURL(array('image' => $media_id));
+
+    $form = new Doku_Form($params);
     $form->addElement(form_makeOpenTag('ul'));
 
     if (!$media_id) $exists = $INFO['exists'];

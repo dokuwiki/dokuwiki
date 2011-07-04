@@ -224,12 +224,17 @@ function ajax_medialist(){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function ajax_mediadetails(){
-    global $conf;
-    global $NS;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen;
+    $fullscreen = true;
+    require_once(DOKU_INC.'lib/exe/mediamanager.php');
 
-    $NS = $_POST['ns'];
-    $image = $_POST['image'];
-    tpl_fileDetails($image, false);
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if (isset($IMG)) $image = $IMG;
+    if (isset($JUMPTO)) $image = $JUMPTO;
+    if (isset($REV) && !$JUMPTO) $rev = $REV;
+
+    html_msgarea();
+    tpl_fileDetails($image, $rev);
 }
 
 /**

@@ -80,7 +80,7 @@
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
     }
 
-    if($IMG && @array_key_exists('save', $_REQUEST['mediado'])){
+    if($IMG && $_REQUEST['mediado'] == 'save') {
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
     }
 
@@ -98,7 +98,7 @@
         }
         if ($res & DOKU_MEDIA_DELETED) {
             $msg = sprintf($lang['deletesucc'], noNS($DEL));
-            if ($res & DOKU_MEDIA_EMPTY_NS) {
+            if ($res & DOKU_MEDIA_EMPTY_NS && !$fullscreen) {
                 // current namespace was removed. redirecting to root ns passing msg along
                 send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
                         rawurlencode($msg).'&edid='.$_REQUEST['edid']);

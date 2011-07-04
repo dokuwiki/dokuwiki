@@ -110,11 +110,12 @@ function media_metaform($id,$auth,$fullscreen = false){
     // output
     if (!$fullscreen) {
         echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
-        echo '<form action="'.DOKU_BASE.'lib/exe/mediamanager.php" accept-charset="utf-8" method="post" class="meta">'.NL;
+        $action = DOKU_BASE.'lib/exe/mediamanager.php';
     } else {
-        echo '<form action="'.media_managerURL(array('tab_details' => 'view')).
-            '" accept-charset="utf-8" method="post" class="meta">'.NL;
+        $action = media_managerURL(array('tab_details' => 'view'));
     }
+    echo '<form action="'.$action.'" id="mediamanager__save_meta" accept-charset="utf-8" method="post" class="meta">'.NL;
+
     formSecurityToken();
     foreach($fields as $key => $field){
         // get current value
@@ -150,8 +151,12 @@ function media_metaform($id,$auth,$fullscreen = false){
     }
     echo '<div class="buttons">'.NL;
     echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
-    if (!$fullscreen) $do = 'do';
-    else $do = 'mediado';
+    if (!$fullscreen) {
+        $do = 'do';
+    } else {
+        echo '<input type="hidden" name="mediado" value="save" />';
+        $do = 'mediado';
+    }
     echo '<input name="'.$do.'[save]" type="submit" value="'.$lang['btn_save'].
         '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
     if (!$fullscreen)
@@ -803,7 +808,8 @@ function media_preview($image, $auth, $rev=false) {
 
     // delete button
     if($auth >= AUTH_DELETE && !$rev){
-        $form = new Doku_Form(array('action'=>media_managerURL(array('delete' => $image))));
+        $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
+            'action'=>media_managerURL(array('delete' => $image))));
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         $form->printForm();
 
@@ -813,7 +819,8 @@ function media_preview($image, $auth, $rev=false) {
         $form->printForm();
     }
     if($auth >= AUTH_DELETE && $rev){
-        $form = new Doku_Form(array('action'=>media_managerURL(array('image' => $image))));
+        $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
+            'action'=>media_managerURL(array('image' => $image))));
         $form->addHidden('mediado','restore');
         $form->addHidden('rev',$rev);
         $form->addElement(form_makeButton('submit','',$lang['media_restore']));
