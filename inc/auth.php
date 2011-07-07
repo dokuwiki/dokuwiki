@@ -529,7 +529,7 @@ function auth_aclcheck($id,$user,$groups){
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+    $matches = preg_grep('/^'.preg_replace('/([^:]+)\\\:/', '(\1|\*)\:', preg_quote($id,'/')).'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
     if(count($matches)){
         foreach($matches as $match){
             $match = preg_replace('/#.*$/','',$match); //ignore comments
@@ -553,7 +553,7 @@ function auth_aclcheck($id,$user,$groups){
     }
 
     do{
-        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        $matches = preg_grep('/^'.preg_replace('/([^:]+)\\\:/', '(\1|\*)\:', preg_quote($path,'/')).'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments

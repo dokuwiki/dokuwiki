@@ -131,6 +131,70 @@ class auth_acl_test extends UnitTestCase {
 
     }
 
+    function test_wildcards(){
+        global $conf;
+        global $AUTH_ACL;
+        $conf['superuser'] = 'john';
+        $conf['useacl']    = 1;
+
+        $AUTH_ACL = array(
+            '*                          @ALL        0',
+            'start                      @ALL        1',
+            '*                          bigboss    16',
+            '*                          @marketing  1',
+            '*                          @devel      1',
+            'project:*:marketing:*      @marketing 16',
+            'project:*:start            @ALL        1',
+            'project:*:*:start          @ALL        1',
+            'project:*:*:start          @marketing  2',
+            'project:*:*:start          @devel      2',
+            'marketing:*                @marketing  8',
+            'devel:*                    @devel      8',
+            '*:funstuff                 bigboss     0',
+            '*:funstuff                 @marketing  4',
+            '*:funstuff                 @devel      4',
+        );
+
+
+        $this->assertEqual(auth_aclcheck('page', ''        ,array())            , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('page', 'bigboss' ,array('foo'))       , AUTH_DELETE);
+        $this->assertEqual(auth_aclcheck('page', 'jill'    ,array('marketing')) , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('page', 'jane'    ,array('devel'))     , AUTH_READ);
+
+        $this->assertEqual(auth_aclcheck('start', ''        ,array())            , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('start', 'bigboss' ,array('foo'))       , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('start', 'jill'    ,array('marketing')) , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('start', 'jane'    ,array('devel'))     , AUTH_READ);
+
+        $this->assertEqual(auth_aclcheck('project:any:page'             ,''     ,array())           , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('project:any:start'            ,''     ,array())           , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('project:any:marketing:start'  ,''     ,array())           , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('project:any:marketing:page'   ,''     ,array())           , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('project:any:marketing:page'   ,'jane' ,array('devel'))    , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('project:any:marketing:start'  ,'jane' ,array('devel'))    , AUTH_EDIT);
+        $this->assertEqual(auth_aclcheck('project:any:marketing:page'   ,'jill' ,array('marketing')), AUTH_DELETE);
+        $this->assertEqual(auth_aclcheck('project:any:marketing:start'  ,'jill' ,array('marketing')), AUTH_EDIT);
+
+        $this->assertEqual(auth_aclcheck('marketing:page', ''        ,array())            , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('marketing:page', 'bigboss' ,array('foo'))       , AUTH_DELETE);
+        $this->assertEqual(auth_aclcheck('marketing:page', 'jill'    ,array('marketing')) , AUTH_UPLOAD);
+        $this->assertEqual(auth_aclcheck('marketing:page', 'jane'    ,array('devel'))     , AUTH_READ);
+
+        $this->assertEqual(auth_aclcheck('devel:page', ''        ,array())            , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('devel:page', 'bigboss' ,array('foo'))       , AUTH_DELETE);
+        $this->assertEqual(auth_aclcheck('devel:page', 'jill'    ,array('marketing')) , AUTH_READ);
+        $this->assertEqual(auth_aclcheck('devel:page', 'jane'    ,array('devel'))     , AUTH_UPLOAD);
+
+        $this->assertEqual(auth_aclcheck('devel:funstuff',      ''          ,array())            , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('devel:funstuff',      'bigboss'   ,array('foo'))       , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('devel:funstuff',      'jill'      ,array('marketing')) , AUTH_CREATE);
+        $this->assertEqual(auth_aclcheck('devel:funstuff',      'jane'      ,array('devel'))     , AUTH_CREATE);
+        $this->assertEqual(auth_aclcheck('marketing:funstuff',  ''          ,array())            , AUTH_NONE);
+        $this->assertEqual(auth_aclcheck('marketing:funstuff',  'bigboss'   ,array('foo'))       , AUTH_NONE);         
+        $this->assertEqual(auth_aclcheck('marketing:funstuff',  'jill'      ,array('marketing')) , AUTH_CREATE);
+        $this->assertEqual(auth_aclcheck('marketing:funstuff',  'jane'      ,array('devel'))     , AUTH_CREATE);
+    }
+
     function test_multiadmin_restricted(){
         global $conf;
         global $AUTH_ACL;
