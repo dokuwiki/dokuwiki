@@ -50,6 +50,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/script.js',
                 DOKU_INC.'lib/scripts/tw-sack.js',
                 DOKU_INC.'lib/scripts/qsearch.js',
+                DOKU_INC.'lib/scripts/tree.js',
                 DOKU_INC.'lib/scripts/index.js',
                 DOKU_INC.'lib/scripts/drag.js',
                 DOKU_INC.'lib/scripts/textselection.js',

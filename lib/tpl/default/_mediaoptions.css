@@ -1,24 +1,6 @@
 /* --- popup --- */
 
-#media__popup {
-    background-color:__background__;
-    display:none;
-    border: 1px solid __border__;
-    position: absolute;
-    width:280px;
-}
-
-#media__popup h1 {
-    text-align:center;
-    font-weight:normal;
-    background-color: __background_alt__;
-    height: 16px;
-    margin-bottom: 5px;
-    font-size:12px;
-    border-bottom: 0;
-}
-
-#media__popup p {
+#media__popup_content p {
     display:block;
     line-height:14pt;
     margin:0.5em;
@@ -28,26 +10,22 @@
     padding:4px 0;
 }
 
-#media__popup label {
+#media__popup_content label {
     float:left;
     width:9em;
 }
 
-#media__popup .button {
+#media__popup_content .button {
     margin-left:auto;
     margin-right:auto;
 }
 
-#media__popup .btnlbl {
+#media__popup_content .btnlbl {
     text-align:center;
 }
 
-#media__popup .btnlbl input {
+#media__popup_content .btnlbl input {
     margin:0 1em;
-}
-
-#media__closeimg {
-    float:right;
 }
 
 /* --- display options --- */
