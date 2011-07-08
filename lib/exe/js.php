@@ -55,6 +55,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/textselection.js',
                 DOKU_INC.'lib/scripts/toolbar.js',
                 DOKU_INC.'lib/scripts/edit.js',
+                DOKU_INC.'lib/scripts/editor.js',
                 DOKU_INC.'lib/scripts/locktimer.js',
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
@@ -107,7 +108,6 @@ function js_out(){
     // init stuff
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart('addTocToggle()');
-    js_runonstart("initSizeCtl('size__ctl','wiki__text')");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
         js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
