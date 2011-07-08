@@ -107,7 +107,6 @@ function js_out(){
 
     // init stuff
     js_runonstart("addEvent(document,'click',closePopups)");
-    js_runonstart('addTocToggle()');
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
         js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
