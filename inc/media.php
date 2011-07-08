@@ -112,7 +112,7 @@ function media_metaform($id,$auth,$fullscreen = false){
         echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
         $action = DOKU_BASE.'lib/exe/mediamanager.php';
     } else {
-        $action = media_managerURL(array('tab_details' => 'view'));
+        $action = media_managerURL(array('tab_details' => 'view'), '&');
     }
     echo '<form action="'.$action.'" id="mediamanager__save_meta" accept-charset="utf-8" method="post" class="meta">'.NL;
 
@@ -204,6 +204,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
                        DOKU_MEDIA_INUSE
  */
 function media_delete($id,$auth){
+    global $lang;
     if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if(media_inuse($id)) return DOKU_MEDIA_INUSE;
 
@@ -219,9 +220,15 @@ function media_delete($id,$auth){
     $data['del'] = false;
     $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
     if ($evt->advise_before()) {
+        $old = @filemtime($file);
+        if(!@file_exists(mediaFN($id, $old)) && @file_exists($file)) {
+            // add old revision to the attic
+            media_saveOldRevision($id);
+        }
+
         $data['unl'] = @unlink($file);
         if($data['unl']){
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
+            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted']);
             $data['del'] = io_sweepNS($id,'mediadir');
         }
     }
@@ -394,7 +401,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         media_notify($id,$fn,$imime);
         // add a log entry to the media changelog
         if ($REV){
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, '', $REV);
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, $lang['restored'], $REV);
         } elseif ($overwrite) {
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT);
         } else {
@@ -692,7 +699,7 @@ function media_tab_search($ns,$auth=null) {
     if (!$query) $query = '';
 
     echo '<div class="background-container">';
-    echo $lang['media_search'];
+    echo sprintf($lang['media_search'], $ns);
     echo'</div>';
 
     echo '<div class="scroll-container">';
@@ -809,18 +816,18 @@ function media_preview($image, $auth, $rev=false) {
     // delete button
     if($auth >= AUTH_DELETE && !$rev){
         $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
-            'action'=>media_managerURL(array('delete' => $image))));
+            'action'=>media_managerURL(array('delete' => $image), '&')));
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         $form->printForm();
 
         $form = new Doku_Form(array('id' => 'mediamanager__btn_update',
-            'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'))));
+            'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'), '&')));
         $form->addElement(form_makeButton('submit','',$lang['media_update']));
         $form->printForm();
     }
     if($auth >= AUTH_DELETE && $rev){
         $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
-            'action'=>media_managerURL(array('image' => $image))));
+            'action'=>media_managerURL(array('image' => $image), '&')));
         $form->addHidden('mediado','restore');
         $form->addHidden('rev',$rev);
         $form->addElement(form_makeButton('submit','',$lang['media_restore']));
@@ -1214,7 +1221,7 @@ function media_printimgdetail($item, $fullscreen=false){
  * @param string $amp - separator
  * @return string - link
  */
-function media_managerURL($params=false, $amp='&') {
+function media_managerURL($params=false, $amp='&amp;') {
     global $conf;
     global $ID;
 
@@ -1266,7 +1273,7 @@ function media_uploadform($ns, $auth, $fullscreen = false){
         $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
     } else {
         $params['action'] = media_managerURL(array('tab_files' => 'files',
-            'tab_details' => 'view'));
+            'tab_details' => 'view'), '&');
     }
 
     $form = new Doku_Form($params);
@@ -1339,7 +1346,7 @@ function media_searchform($ns,$query='',$fullscreen=false){
     // The default HTML search form
     $params = array('id' => 'dw__mediasearch');
     if (!$fullscreen) $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
-    else $params['action'] = media_managerURL();
+    else $params['action'] = media_managerURL(array(), '&');
     $form = new Doku_Form($params);
     if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
     $form->addElement(formSecurityToken());

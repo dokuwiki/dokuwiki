@@ -225,6 +225,7 @@ $lang['js']['linkwiz'] = 'Link Wizard';
 $lang['js']['linkto']  = 'Link to:';
 
 $lang['js']['del_confirm']= 'Really delete selected item(s)?';
+$lang['js']['restore_confirm']= 'Really restore this version?';
 $lang['admin_register']= 'Add new user';
 
 $lang['metaedit']    = 'Edit Metadata';
@@ -333,8 +334,7 @@ $lang['media_historytab'] = 'History';
 $lang['media_thumbsview'] = 'Thumbnails';
 $lang['media_listview']   = 'List';
 $lang['media_sort']       = 'Sort';
-$lang['media_search']     = 'Search';
-$lang['media_view']       = 'View';
+$lang['media_search']     = 'Search in the <b>%s</b> namespace.';
 $lang['media_edit']       = 'Edit';
 $lang['media_history']    = 'These are the older revisions of the file.';
 $lang['media_meta_edited']= 'metadata edited';

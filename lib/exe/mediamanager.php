@@ -80,7 +80,7 @@
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
     }
 
-    if($IMG && $_REQUEST['mediado'] == 'save') {
+    if($IMG && ($_REQUEST['mediado'] == 'save' || @array_key_exists('save', $_REQUEST['mediado']))) {
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
     }
 
