@@ -802,7 +802,12 @@ function media_preview($image, $auth, $rev=false) {
     $w = (int) $info[0];
 
     $more = '';
-    if ($rev) $more = "rev=$rev";
+    if ($rev) {
+        $more = "rev=$rev";
+    } else {
+        $t = @filemtime(mediaFN($image));
+        $more = "t=$t";
+    }
     $src = ml($image, $more);
     echo '<div class="mediamanager-preview">';
     echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
@@ -1169,7 +1174,7 @@ function media_printimgdetail($item, $fullscreen=false){
         $w = floor($w * $ratio);
         $h = floor($h * $ratio);
     }
-    $src = ml($item['id'],array('w'=>$w,'h'=>$h));
+    $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
     $p = array();
     $p['width']  = $w;
     if (!$fullscreen) $p['height'] = $h;
