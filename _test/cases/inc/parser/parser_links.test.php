@@ -221,6 +221,21 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testInternalLinkNoChar() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[]] Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('',NULL)),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEqual(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testInternalLinkNamespaceNoTitle() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[foo:bar]] Bar");

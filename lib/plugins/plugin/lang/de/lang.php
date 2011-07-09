@@ -61,3 +61,4 @@ $lang['enabled']               = 'Plugin %s wurde aktiviert.';
 $lang['notenabled']            = 'Plugin %s konnte nicht aktiviert werden, überprüfen Sie die Dateirechte.';
 $lang['disabled']              = 'Plugin %s wurde deaktiviert.';
 $lang['notdisabled']           = 'Plugin %s konnte nicht deaktiviert werden, überprüfen Sie die Dateirechte.';
+$lang['packageinstalled']      = 'Plugin-Paket (%d Plugin%s: %s) erfolgreich installiert.';

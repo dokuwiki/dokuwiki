@@ -12,6 +12,7 @@
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
+ * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。

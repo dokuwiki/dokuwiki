@@ -6,6 +6,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
+ * @author José Campos zecarlosdecampos@gmail.com
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';

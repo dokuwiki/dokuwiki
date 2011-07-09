@@ -5,8 +5,9 @@
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
- * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
+ * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
@@ -90,7 +91,7 @@ $lang['auth_security_timeout'] = 'Authentikációs biztonsági időablak (másod
 $lang['securecookie']          = 'A böngészők a HTTPS felett beállított sütijüket csak HTTPS felett küldhetik? Kapcsoljuk ki ezt az opciót, ha csak a bejelentkezést védjük SSL-lel, a wiki tartalmának böngészése nyílt forgalommal történik.';
 $lang['xmlrpc']                = 'XML-RPC interfész engedélyezése/tiltása';
 $lang['xmlrpcuser']            = 'Korlátozza XML-RPC hozzáférést az itt megadott vesszővel elválasztott csoportok vagy felhasználók számára. Hagyja üresen, ha mindenki számára biztosítja a hozzáférést.';
-$lang['updatecheck']           = 'Frissítések és biztonsági figyelmeztetések figyelése. Ehhez a DokuWikinek kapcsolatba kell lépnie a splitbrain.org-gal.';
+$lang['updatecheck']           = 'Frissítések és biztonsági figyelmeztetések figyelése. Ehhez a DokuWikinek kapcsolatba kell lépnie a update.dokuwiki.org-gal.';
 $lang['userewrite']            = 'Szép URL-ek használata';
 $lang['useslash']              = 'Per-jel használata névtér-elválasztóként az URL-ekben';
 $lang['usedraft']              = 'Piszkozat automatikus mentése szerkesztés alatt';
@@ -105,6 +106,7 @@ $lang['fetchsize']             = 'Maximális méret (bájtban), amit a fetch.php
 $lang['notify']                = 'Az oldal-változásokat erre az e-mail címre küldje';
 $lang['registernotify']        = 'Értesítés egy újonnan regisztrált felhasználóról erre az e-mail címre';
 $lang['mailfrom']              = 'Az automatikusan küldött levelekben használt e-mail cím';
+$lang['mailprefix']            = 'Előtag az automatikus e-mailek tárgyában';
 $lang['gzip_output']           = 'gzip tömörítés használata xhtml-hez (Content-Encoding)';
 $lang['gdlib']                 = 'GD Lib verzió';
 $lang['im_convert']            = 'Útvonal az ImageMagick csomag convert parancsához';

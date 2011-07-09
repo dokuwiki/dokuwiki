@@ -16,6 +16,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author mikael@mallander.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -225,8 +226,8 @@ $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Nyckelord';
 $lang['subscr_m_new_header']   = 'Lägg till prenumeration';
 $lang['subscr_m_current_header'] = 'Nuvarande prenumerationer';
-$lang['subscr_m_unsubscribe']  = 'Prenumerera';
-$lang['subscr_m_subscribe']    = 'Avsluta prenumeration';
+$lang['subscr_m_unsubscribe']  = 'Avsluta prenumeration';
+$lang['subscr_m_subscribe']    = 'Prenumerera';
 $lang['subscr_m_receive']      = 'Ta emot';
 $lang['subscr_style_every']    = 'skicka epost vid varje ändring';
 $lang['authmodfailed']         = 'Felaktiga inställningar för användarautentisering. Var vänlig meddela wikiadministratören.';

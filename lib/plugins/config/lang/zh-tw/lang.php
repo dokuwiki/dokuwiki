@@ -8,6 +8,7 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '系統配置設定';
 $lang['error']                 = '設定因為不合法的值而未更新，請檢查您的更改並重新送出。
@@ -90,7 +91,7 @@ $lang['auth_security_timeout'] = '安全認證的計時 (秒)';
 $lang['securecookie']          = 'HTTPS 頁面設定的 cookie 是否只能由瀏覽器經 HTTPS 傳送？取消此選項後，只有登入維基會被 SSL 保護而瀏覽時不會。';
 $lang['xmlrpc']                = '啟用/停用 XML-RPC 介面';
 $lang['xmlrpcuser']            = 'XML-RPC 存取權限將局限於在此提供的群組或使用者 (逗號分隔)。若要開放權限給所有人請留白。';
-$lang['updatecheck']           = '檢查更新與安全性警告？DokuWiki 需要聯繫 splitbrain.org 才能使用此功能。';
+$lang['updatecheck']           = '檢查更新與安全性警告？DokuWiki 需要聯繫 update.dokuwiki.org 才能使用此功能。';
 $lang['userewrite']            = '使用好看的 URL';
 $lang['useslash']              = '在 URL 中使用斜線作為命名空間的分隔字元';
 $lang['usedraft']              = '編輯時自動儲存草稿';
@@ -105,6 +106,7 @@ $lang['fetchsize']             = 'fetch.php 可以從外部下載的最大檔案
 $lang['notify']                = '寄送變更通知信到這個 E-mail 位址';
 $lang['registernotify']        = '寄送新使用者註冊資訊到這個 E-mail 位址';
 $lang['mailfrom']              = '自動發送郵件時使用的郵件地址';
+$lang['mailprefix']            = '自動發送郵件時使用的標題前綴';
 $lang['gzip_output']           = '對 xhtml 使用 gzip 內容編碼';
 $lang['gdlib']                 = 'GD Lib 版本';
 $lang['im_convert']            = 'ImageMagick 的轉換工具路徑';

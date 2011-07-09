@@ -574,11 +574,20 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $params = $parts[1];
         }
 
+        // For empty $id we need to know the current $ID
+        // We need this check because _simpleTitle needs
+        // correct $id and resolve_pageid() use cleanID($id)
+        // (some things could be lost)
+        if ($id === '') {
+            $id = $ID;
+        }
+
         // default name is based on $id as given
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
         resolve_pageid(getNS($ID),$id,$exists);
+
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if ( !$isImage ) {
             if ( $exists ) {
@@ -637,6 +646,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $name = $this->_getLinkTitle($name, $url, $isImage);
 
+        // url might be an attack vector, only allow registered protocols
+        if(is_null($this->schemes)) $this->schemes = getSchemes();
+        list($scheme) = explode('://',$url);
+        $scheme = strtolower($scheme);
+        if(!in_array($scheme,$this->schemes)) $url = '';
+
+        // is there still an URL?
+        if(!$url){
+            $this->doc .= $name;
+            return;
+        }
+
+        // set class
         if ( !$isImage ) {
             $class='urlextern';
         } else {
@@ -1135,7 +1157,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             return $this->_imageTitle($title);
         } elseif ( is_null($title) || trim($title)=='') {
             if (useHeading($linktype) && $id) {
-                $heading = p_get_first_heading($id,true);
+                $heading = p_get_first_heading($id);
                 if ($heading) {
                     return $this->_xmlEntities($heading);
                 }

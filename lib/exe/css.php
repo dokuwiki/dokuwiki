@@ -46,7 +46,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = getCacheName('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$mediatype,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$mediatype,'.css');
 
     // load template styles
     $tplstyles = array();
@@ -62,6 +62,8 @@ function css_out(){
     $files   = array();
     // load core styles
     $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+    // load jQuery-UI theme
+    $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
     // load plugin styles
     $files = array_merge($files, css_pluginstyles($mediatype));
     // load template styles
@@ -85,26 +87,14 @@ function css_out(){
         }
     }
 
+    $cache_files = array_merge(array_keys($files), getConfigFiles('main'));
+    $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = __FILE__;
+
     // check cache age & handle conditional request
-    header('Cache-Control: public, max-age=3600');
-    header('Pragma: public');
-    if(css_cacheok($cache,array_keys($files),$tplinc)){
-        http_conditionalRequest(filemtime($cache));
-        if($conf['allowdebug']) header("X-CacheUsed: $cache");
-
-        // finally send output
-        if ($conf['gzip_output'] && http_gzip_valid($cache)) {
-          header('Vary: Accept-Encoding');
-          header('Content-Encoding: gzip');
-          readfile($cache.".gz");
-        } else {
-          if (!http_sendfile($cache)) readfile($cache);
-        }
-
-        return;
-    } else {
-        http_conditionalRequest(time());
-    }
+    // This may exit if a cache can be used
+    http_cached($cache->cache,
+                $cache->useCache(array('files' => $cache_files)));
 
     // start output buffering and build the stylesheet
     ob_start();
@@ -133,45 +123,13 @@ function css_out(){
         $css = css_compress($css);
     }
 
-    // save cache file
-    io_saveFile($cache,$css);
-    if(function_exists('gzopen')) io_saveFile("$cache.gz",$css);
-
-    // finally send output
-    if ($conf['gzip_output']) {
-      header('Vary: Accept-Encoding');
-      header('Content-Encoding: gzip');
-      print gzencode($css,9,FORCE_GZIP);
-    } else {
-      print $css;
+    // embed small images right into the stylesheet
+    if($conf['cssdatauri']){
+        $base = preg_quote(DOKU_BASE,'#');
+        $css = preg_replace_callback('#(url\([ \'"]*)('.$base.')(.*?(?:\.(png|gif)))#i','css_datauri',$css);
     }
-}
 
-/**
- * Checks if a CSS Cache file still is valid
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function css_cacheok($cache,$files,$tplinc){
-    global $config_cascade;
-
-    if(isset($_REQUEST['purge'])) return false; //support purge request
-
-    $ctime = @filemtime($cache);
-    if(!$ctime) return false; //There is no cache
-
-    // some additional files to check
-    $files = array_merge($files, getConfigFiles('main'));
-    $files[] = $tplinc.'style.ini';
-    $files[] = __FILE__;
-
-    // now walk the files
-    foreach($files as $file){
-        if(@filemtime($file) > $ctime){
-            return false;
-        }
-    }
-    return true;
+    http_cached_finish($cache->cache, $css);
 }
 
 /**
@@ -204,7 +162,7 @@ function css_interwiki(){
     // default style
     echo 'a.interwiki {';
     echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.png) 0px 1px no-repeat;';
-    echo ' padding-left: 16px;';
+    echo ' padding: 1px 0px 1px 16px;';
     echo '}';
 
     // additional styles when icon available
@@ -269,9 +227,36 @@ function css_loadfile($file,$location=''){
     $css = io_readFile($file);
     if(!$location) return $css;
 
-    $css = preg_replace('#(url\([ \'"]*)(?!/|http://|https://| |\'|")#','\\1'.$location,$css);
-    $css = preg_replace('#(@import\s+[\'"])(?!/|http://|https://)#', '\\1'.$location, $css);
+    $css = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
+    $css = preg_replace('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
+
     return $css;
+}
+
+/**
+ * Converte local image URLs to data URLs if the filesize is small
+ *
+ * Callback for preg_replace_callback
+ */
+function css_datauri($match){
+    global $conf;
+
+    $pre   = unslash($match[1]);
+    $base  = unslash($match[2]);
+    $url   = unslash($match[3]);
+    $ext   = unslash($match[4]);
+
+    $local = DOKU_INC.$url;
+    $size  = @filesize($local);
+    if($size && $size < $conf['cssdatauri']){
+        $data = base64_encode(file_get_contents($local));
+    }
+    if($data){
+        $url = 'data:image/'.$ext.';base64,'.$data;
+    }else{
+        $url = $base.$url;
+    }
+    return $pre.$url;
 }
 
 

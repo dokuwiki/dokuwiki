@@ -6,6 +6,7 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
+ * @author José Campos zecarlosdecampos@gmail.com
  */
 $lang['menu']                  = 'Gerir Plugins';
 $lang['download']              = 'Descarregar e instalar um novo plugin';
@@ -51,3 +52,4 @@ $lang['enabled']               = 'Plugin %s habilitado.';
 $lang['notenabled']            = 'Plugin %s não pôde ser habilitado, verifique as permissões.';
 $lang['disabled']              = 'Plugin %s desabilitado.';
 $lang['notdisabled']           = 'Plugin %s não pôde ser desabilitado, verifique as permissões.';
+$lang['packageinstalled']      = 'Pacote de Plugins (%d plugin%s: %s) instalado com sucesso.';

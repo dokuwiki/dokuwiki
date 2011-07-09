@@ -104,6 +104,9 @@ function _mail_send_action($data) {
     $headers = isset($data['headers']) ? $data['headers'] : null;
     $params = isset($data['params']) ? $data['params'] : null;
 
+    // discard mail request if no recipients are available
+    if(trim($to) === '' && trim($cc) === '' && trim($bcc) === '') return false;
+    
     // end additional code to support event ... original mail_send() code from here
 
     if(defined('MAILHEADER_ASCIIONLY')){
@@ -114,7 +117,7 @@ function _mail_send_action($data) {
     if(!utf8_isASCII($subject)) {
         $enc_subj = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
         // Spaces must be encoded according to rfc2047. Use the "_" shorthand
-        $enc_sub = preg_replace('/ /', '_', $enc_sub);
+        $enc_subj = preg_replace('/ /', '_', $enc_subj);
 
         // quoted printable has length restriction, use base64 if needed
         if(strlen($subject) > 74){

@@ -189,7 +189,8 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
         if ($auth->checkPass($user,$pass)){
             // make logininfo globally available
             $_SERVER['REMOTE_USER'] = $user;
-            auth_setCookie($user,PMA_blowfish_encrypt($pass,auth_cookiesalt()),$sticky);
+            $secret = auth_cookiesalt(!$sticky); //bind non-sticky to session
+            auth_setCookie($user,PMA_blowfish_encrypt($pass,$secret),$sticky);
             return true;
         }else{
             //invalid credentials - log off
@@ -209,15 +210,17 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time()-$conf['auth_security_timeout']) &&
                     ($session['user'] == $user) &&
-                    ($session['pass'] == $pass) &&  //still crypted
+                    ($session['pass'] == sha1($pass)) &&  //still crypted
                     ($session['buid'] == auth_browseruid()) ){
+
                 // he has session, cookie and browser right - let him in
                 $_SERVER['REMOTE_USER'] = $user;
                 $USERINFO = $session['info']; //FIXME move all references to session
                 return true;
             }
             // no we don't trust it yet - recheck pass but silent
-            $pass = PMA_blowfish_decrypt($pass,auth_cookiesalt());
+            $secret = auth_cookiesalt(!$sticky); //bind non-sticky to session
+            $pass = PMA_blowfish_decrypt($pass,$secret);
             return auth_login($user,$pass,$sticky,true);
         }
     }
@@ -298,16 +301,19 @@ function auth_browseruid(){
  * and stored in this file.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- *
+ * @param   bool $addsession if true, the sessionid is added to the salt
  * @return  string
  */
-function auth_cookiesalt(){
+function auth_cookiesalt($addsession=false){
     global $conf;
     $file = $conf['metadir'].'/_htcookiesalt';
     $salt = io_readFile($file);
     if(empty($salt)){
         $salt = uniqid(rand(),true);
         io_saveFile($file,$salt);
+    }
+    if($addsession){
+        $salt .= session_id();
     }
     return $salt;
 }
@@ -809,11 +815,11 @@ function updateprofile() {
 
     if ($result = $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes))) {
         // update cookie and session with the changed data
-        $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
-        list($user,$sticky,$pass) = explode('|',$cookie,3);
-        if ($changes['pass']) $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt());
-
-        auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);
+        if ($changes['pass']){
+            list($user,$sticky,$pass) = auth_getCookie();
+            $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt(!$sticky));
+            auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);
+        }
         return true;
     }
 }
@@ -979,7 +985,7 @@ function auth_setCookie($user,$pass,$sticky) {
     }
     // set session
     $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-    $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+    $_SESSION[DOKU_COOKIE]['auth']['pass'] = sha1($pass);
     $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
     $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
     $_SESSION[DOKU_COOKIE]['auth']['time'] = time();

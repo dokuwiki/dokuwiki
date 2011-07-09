@@ -7,7 +7,7 @@
  *
  * This is a piece of PHP code so PHP syntax applies!
  *
- * For help with the configuration see http://www.splitbrain.org/dokuwiki/wiki:config
+ * For help with the configuration see http://www.dokuwiki.org/config
  */
 
 
@@ -108,6 +108,7 @@ $conf['subscribers'] = 0;                //enable change notice subscription sup
 $conf['subscribe_time'] = 24*60*60;      //Time after which digests / lists are sent (in sec, default 1 day)
                                          //Should be smaller than the time specified in recent_days
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0
+$conf['cssdatauri']  = 0;                //Maximum byte size of small images to embed into CSS, won't work on IE<8
 $conf['hidepages']   = '';               //Regexp for pages to be skipped from RSS, Search and Recent Changes
 $conf['send404']     = 0;                //Send a HTTP 404 status for non existing pages?
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.

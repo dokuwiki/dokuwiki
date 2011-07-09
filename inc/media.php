@@ -435,7 +435,11 @@ function media_notify($id,$file,$mime){
     $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
 
-    $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+    if(empty($conf['mailprefix'])) {
+        $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+    } else {
+        $subject = '['.$conf['mailprefix'].'] '.$lang['mail_upload'].' '.$id;
+    }
 
     mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
 }
@@ -811,6 +815,7 @@ function media_nstree_li($item){
         $img   = DOKU_BASE.'lib/images/plus.gif';
         $alt   = '+';
     }
+    // TODO: only deliver an image if it actually has a subtree...
     return '<li class="'.$class.'">'.
         '<img src="'.$img.'" alt="'.$alt.'" />';
 }

@@ -252,7 +252,7 @@ class Doku_Form {
         global $lang;
         $form = '';
         $this->params['accept-charset'] = $lang['encoding'];
-        $form .= '<form ' . buildAttributes($this->params,true) . '><div class="no">' . DOKU_LF;
+        $form .= '<form ' . buildAttributes($this->params,false) . '><div class="no">' . DOKU_LF;
         if (!empty($this->_hidden)) {
             foreach ($this->_hidden as $name=>$value)
                 $form .= form_hidden(array('name'=>$name, 'value'=>$value));

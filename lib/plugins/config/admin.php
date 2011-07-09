@@ -113,7 +113,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       // rewrite config is broken. Add $ID as hidden field to remember
       // current ID in most cases.
       ptln('<form action="'.script().'" method="post">');
-      ptln('<input type="hidden" name="id" value="'.$ID.'" />');
+      ptln('<div class="no"><input type="hidden" name="id" value="'.$ID.'" /></div>');
       formSecurityToken();
       $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 

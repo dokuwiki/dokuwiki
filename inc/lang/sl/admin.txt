@@ -1,3 +1,3 @@
-===== Skrbni�tvo =====
+===== Skrbništvo =====
 
-Spodaj je naveden seznam skrbni�kih opravil sistema DokuWiki.
+Navedene možnosti omogočajo skrbniško prilagajanje nastavitev sistema DokuWiki.

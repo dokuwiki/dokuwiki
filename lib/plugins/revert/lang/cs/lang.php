@@ -9,6 +9,7 @@
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
+ * @author Vojta Beran <xmamut@email.cz>
  */
 $lang['menu']                  = 'Obnova zaspamovaných stránek';
 $lang['filter']                = 'Hledat zaspamované stránky';

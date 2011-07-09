@@ -50,6 +50,10 @@ class init_resolve_pageid_test extends UnitTestCase {
         $tests[] = array('foo','foo:','foo:start');
         $tests[] = array('foo','playground:','playground:playground');
 
+        // empty $page
+        global $ID;
+        $ID = 'my:space';
+        $tests[] = array('my', '', 'my:space');
 
         foreach($tests as $test){
             $page = $test[1];
@@ -58,6 +62,24 @@ class init_resolve_pageid_test extends UnitTestCase {
             $this->assertEqual($page,$test[2]);
         }
     }
+
+    /**
+     * Empty page on homepage should resolve to start page
+     */
+    function test_resolve_pageid_empty_homepage() {
+        global $ID;
+        $ID = '';
+
+        global $conf;
+        $conf['start'] = 'someverystrangestartname';
+
+        $ns = '';
+        $page = '';
+        $exist = true;
+
+        resolve_pageid($ns, $page, $exist);
+        $this->assertEqual($page, $conf['start']);
+   }
 
 }
 //Setup VIM: ex: et ts=4 :

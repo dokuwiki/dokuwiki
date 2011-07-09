@@ -16,6 +16,7 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
+ * @author emezeta <emezeta@infoprimo.com>
  */
 $lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
 $lang['submit']                = 'Enviar datos';

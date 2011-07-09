@@ -72,31 +72,28 @@ class Doku_Plugin_Controller {
             return null;
         }
 
+        $class = $type.'_plugin_'.$name;
+
         //plugin already loaded?
         if(!empty($DOKU_PLUGINS[$type][$name])){
             if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
-                $class = $type.'_plugin_'.$name;
-                return class_exists($class) ? new $class : null;
+                return class_exists($class, true) ? new $class : null;
             } else {
                 return $DOKU_PLUGINS[$type][$name];
             }
         }
 
-        //try to load the wanted plugin file
-        $dir = $this->get_directory($plugin);
-        $file = $component ? "$type/$component.php" : "$type.php";
-
-        if(!is_file(DOKU_PLUGIN."$dir/$file")){
-            return null;
-        }
-
-        if (!include_once(DOKU_PLUGIN."$dir/$file")) {
-            return null;
-        }
-
         //construct class and instantiate
-        $class = $type.'_plugin_'.$name;
-        if (!class_exists($class)) return null;
+        if (!class_exists($class, true)) {
+            # the plugin might be in the wrong directory
+            $dir = $this->get_directory($plugin);
+            $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
+            if($inf['base'] && $inf['base'] != $plugin){
+                msg("Plugin installed incorrectly. Rename plugin directory '".
+                    hsc($plugin)."' to '".hsc($inf['base'])."'.",-1);
+            }
+            return null;
+        }
 
         $DOKU_PLUGINS[$type][$name] = new $class;
         return $DOKU_PLUGINS[$type][$name];

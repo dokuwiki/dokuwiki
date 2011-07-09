@@ -8,6 +8,7 @@
  * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '管理插件 (Plugins)';
 $lang['download']              = '下載與安裝插件';
@@ -53,3 +54,4 @@ $lang['enabled']               = '插件 %s 已啟用。';
 $lang['notenabled']            = '插件 %s 無法啟用，請檢查檔案權限。';
 $lang['disabled']              = '插件 %s 已停用。';
 $lang['notdisabled']           = '插件 %s 無法停用，請檢查檔案權限。';
+$lang['packageinstalled']      = '插件 (%d 插件%s: %s) 已成功地安裝。';

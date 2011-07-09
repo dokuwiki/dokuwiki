@@ -8,6 +8,8 @@
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
+ * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -160,6 +162,9 @@ $lang['yours']                 = 'A te változatod';
 $lang['diff']                  = 'a különbségeket mutatja az aktuális változathoz képest';
 $lang['diff2']                 = 'a különbségeket mutatja a kiválasztott változatok között';
 $lang['difflink']              = 'Összehasonlító nézet linkje';
+$lang['diff_type']             = 'Összehasonlítás módja:';
+$lang['diff_inline']           = 'Sorok között';
+$lang['diff_side']             = 'Kétoldalas';
 $lang['line']                  = 'sorszám';
 $lang['breadcrumb']            = 'Nyomvonal';
 $lang['youarehere']            = 'Itt vagy';

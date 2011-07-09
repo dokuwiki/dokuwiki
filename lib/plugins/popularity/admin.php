@@ -95,7 +95,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             //Print the last time the data was sent
             $lastSent = $this->helper->lastSentTime();
             if ( $lastSent !== 0 ){
-                echo $this->getLang('lastSent') . datetime_h($lastSent);
+                echo $this->getLang('lastSent') . ' ' . datetime_h($lastSent);
             }
         } else {
             //If we just submitted the form
@@ -137,8 +137,8 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
                 .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
                 .'/>' . $this->getLang('autosubmit') .'<br />'
                 .'</label>'
-                .'<input type="hidden" name="do" value="admin">'
-                .'<input type="hidden" name="page" value="popularity">';
+                .'<input type="hidden" name="do" value="admin" />'
+                .'<input type="hidden" name="page" value="popularity" />';
         }
         $form .= '<input type="submit" class="button" value="'.$this->getLang('submit').'"/>'
             .'</fieldset>'
