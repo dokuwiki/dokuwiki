@@ -476,7 +476,7 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
 
         if (!$media_id) $href = wl($id);
-        else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view'));
+        else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view'), '&');
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
                         'href'  => $href)));
@@ -536,7 +536,7 @@ function html_revisions($first=0, $media_id = false){
 
         if($exists){
             if (!$media_id) $href = wl($id,"rev=$rev,do=diff", false, '&');
-            else $href = media_managerURL(array('image' => $id, 'rev' => $rev, 'mediado' => 'diff'));
+            else $href = media_managerURL(array('image' => $id, 'rev' => $rev, 'mediado' => 'diff'), '&');
             $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'diff_link')));
             $form->addElement(form_makeTag('img', array(
                             'src'    => DOKU_BASE.'lib/images/diff.png',
@@ -546,7 +546,7 @@ function html_revisions($first=0, $media_id = false){
                             'alt'    => $lang['diff'])));
             $form->addElement(form_makeCloseTag('a'));
             if (!$media_id) $href = wl($id,"rev=$rev",false,'&');
-            else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev));
+            else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
             $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'wikilink1')));
             $form->addElement($id);
             $form->addElement(form_makeCloseTag('a'));

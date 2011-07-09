@@ -621,10 +621,11 @@ function media_tabs_details($image, $selected=false){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_tab_files_options(){
+function media_tab_files_options($ns){
     global $lang;
 
     echo '<div class="background-container">';
+    echo $ns;
     echo '<div id="mediamanager__tabs_list" style="display: inline;">';
     echo '<a href="'.media_managerURL(array('view' => 'thumbs')).'"
         rel=".mediamanager-files-thumbnails-tab" class="mediamanager-link-thumbnails">'.
@@ -650,7 +651,7 @@ function media_tab_files($ns,$auth=null,$jump='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    media_tab_files_options();
+    media_tab_files_options($ns);
 
     echo '<div class="scroll-container" >';
     $view = $_REQUEST['view'];

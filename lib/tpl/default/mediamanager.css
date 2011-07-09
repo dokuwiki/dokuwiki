@@ -232,6 +232,7 @@ form.meta textarea.edit {
     padding: 2px;
     vertical-align: top;
     zoom: 1;
+    color: black !important;
 }
 * html .mediamanager-table-50 li {
     display: inline;
@@ -239,4 +240,8 @@ form.meta textarea.edit {
 
 .mediamanager-preview {
     margin-bottom: 5px;
+}
+
+.idx .selected {
+    color: red !important;
 }
