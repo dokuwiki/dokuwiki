@@ -677,12 +677,16 @@ function & p_get_renderer($mode) {
     global $conf, $plugin_controller;
 
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
+    $rclass = "Doku_Renderer_$rname";
+
+    if( class_exists($rclass) ) {
+        return new $rclass();
+    }
 
     // try default renderer first:
     $file = DOKU_INC."inc/parser/$rname.php";
     if(@file_exists($file)){
         require_once $file;
-        $rclass = "Doku_Renderer_$rname";
 
         if ( !class_exists($rclass) ) {
             trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
