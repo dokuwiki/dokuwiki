@@ -1,20 +1,19 @@
 .mediamanager {
     width: 100%;
-    overflow-y: auto;
+    overflow-x: auto;
 }
 
 .mediamanager .mediamanager-slider {
-    width: auto;
+
 }
 
 .mediamanager .mediamanager-slider .layout {
-    float: left;
     margin-left: 5px;
     margin-right: 5px;
+    float: left;
 }
 
 .mediamanager .scroll-container {
-    /*height: 0px;*/
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -32,17 +31,17 @@
 .mediamanager-link-thumbnails {
     background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
     padding-left: 30px;
-    display: block;
-    float: left;
+    display: inline-block;
     width: 0;
     overflow: hidden;
+
+    margin-left: 10px;
 }
 
 .mediamanager-link-list {
     background: url('../../images/icon-list.png') 0 -4px no-repeat;
     padding-left: 30px;
-    display: block;
-    float: left;
+    display: inline-block;
     width: 0;
     overflow: hidden;
 }
@@ -240,6 +239,10 @@ form.meta textarea.edit {
 
 .mediamanager-preview {
     margin-bottom: 5px;
+}
+
+.ui-resizable-e:hover {
+    background-color: #dadada;
 }
 
 .idx .selected {
