@@ -73,6 +73,6 @@ $lang['enabled']          = 'Plugin %s enabled.';
 $lang['notenabled']       = 'Plugin %s could not be enabled, check file permissions.';
 $lang['disabled']         = 'Plugin %s disabled.';
 $lang['notdisabled']      = 'Plugin %s could not be disabled, check file permissions.';
-$lang['packageinstalled'] = 'Plugin package (%d plugin%s: %s) successfully installed.';
+$lang['packageinstalled'] = 'Plugin package (%d plugin(s): %s) successfully installed.';
 
 //Setup VIM: ex: et ts=4 :
