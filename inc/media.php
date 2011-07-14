@@ -722,7 +722,6 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
     echo '<a class="'.$class.'" >'.$image.'</a>';
-    //echo '<span style="background: url(/lib/images/fileicons/pdf.png) 0 0 no-repeat; padding-left: 20px;">'.$image.'</span>';
     echo '</div>';
 
     echo '<div class="scroll-container">';
