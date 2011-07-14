@@ -134,7 +134,7 @@ form.meta textarea.edit {
 }
 *+html .mediamanager-thumbs li {
     display: inline;
-    _height: 130px;
+    height: 130px;
 }
 
 .mediamanager-thumbs li .image {
@@ -144,12 +144,20 @@ form.meta textarea.edit {
     overflow: hidden;
 }
 
+.mediamanager-thumbs li .image div {
+    vertical-align: middle;
+    display: table-cell;
+    width: 100px;
+    height: 90px;
+}
+
 .mediamanager-thumbs li .name,
 .mediamanager-thumbs li .size,
 .mediamanager-thumbs li .filesize,
 .mediamanager-thumbs li .date {
     display: block;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .mediamanager-thumbs li input[type=checkbox] {
@@ -186,6 +194,7 @@ form.meta textarea.edit {
 
 .mediamanager-list li .image img {
     width: 100%;
+    vertical-align: middle;
 }
 
 .mediamanager-list li .name,
@@ -196,11 +205,26 @@ form.meta textarea.edit {
     float: left;
     width: 19%;
     margin-left: 1%;
+    white-space: nowrap;
 }
 
 .mediamanager-list li .date,
 .mediamanager-thumbs li .date {
     font-style: italic;
+    white-space: normal;
+}
+
+.mediamanager-list .icon {
+    max-width: 16px;
+    max-height: 16px;
+}
+
+.mediamanager-list li .image div {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    width: 100px;
+    height: 40px;
 }
 
 .mediamanager-list li input[type=checkbox] {
@@ -231,8 +255,9 @@ form.meta textarea.edit {
     padding: 2px;
     vertical-align: top;
     zoom: 1;
-    color: black !important;
+    color: black;
 }
+
 * html .mediamanager-table-50 li {
     display: inline;
 }
@@ -252,4 +277,8 @@ form.meta textarea.edit {
 
 .mediamanager div.upload {
     padding-bottom: 0.5em;
+}
+
+.background-container .icon {
+    margin-right: 5px;
 }

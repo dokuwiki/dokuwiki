@@ -718,7 +718,10 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     echo '<div class="background-container">';
-    echo $image;
+    list($ext,$mime,$dl) = mimetype($image,false);
+    $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+    $class = 'select mediafile mf_'.$class;
+    echo '<a class="'.$class.'" >'.$image.'</a>';
     echo '</div>';
 
     echo '<div class="scroll-container">';
@@ -789,9 +792,8 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
         return '';
     }
-    $info = getimagesize(mediaFN($image, $rev));
-    $w = (int) $info[0];
-    $h = (int) $info[1];
+
+    echo '<div class="mediamanager-preview">';
 
     $more = '';
     if ($rev) {
@@ -802,17 +804,22 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
     }
     $link = ml($image,$more,true,'&');
 
-    $size = 500;
-    if($meta && ($w > $size || $h > $size)){
-        $ratio = $meta->getResizeRatio($size, $size);
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-        $more .= "&h=$h&w=$w";
-    }
+    if (preg_match("/\.(jpe?g|gif|png)$/", $image)) {
+        $info = getimagesize(mediaFN($image, $rev));
+        $w = (int) $info[0];
+        $h = (int) $info[1];
 
-    $src = ml($image, $more);
-    echo '<div class="mediamanager-preview">';
-    echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
+        $size = 500;
+        if($meta && ($w > $size || $h > $size)){
+            $ratio = $meta->getResizeRatio($size, $size);
+            $w = floor($w * $ratio);
+            $h = floor($h * $ratio);
+            $more .= "&h=$h&w=$w";
+        }
+
+        $src = ml($image, $more);
+        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
+    }
 
     $form = new Doku_Form(array('action'=>$link, 'target'=>'_blank'));
     $form->addElement(form_makeButton('submit','',$lang['mediaview']));
@@ -1118,6 +1125,19 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     echo '</div>'.NL;
 }
 
+function media_printicon($filename){
+    list($ext,$mime,$dl) = mimetype(mediaFN($filename),false);
+
+    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')) {
+        $icon = DOKU_BASE.'lib/images/fileicons/'.$ext.'.png';
+    } else {
+        $icon = DOKU_BASE.'lib/images/fileicons/file.png';
+    }
+
+    echo '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
+
+}
+
 /**
  * Formats and prints one file in the list in the thumbnails view
  *
@@ -1132,13 +1152,15 @@ function media_printfile_thumbs($item,$auth,$jump=false){
 
     // output
     echo '<li><div>';
+
     if($item['isimg']) {
         media_printimgdetail($item, true);
+
     } else {
         echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(array('image' => hsc($item['id']))).'">';
-        echo '<img src="'.DOKU_BASE.'lib/images/icon-file.png" width="90px" />';
-        echo '</a>';
+            media_managerURL(array('image' => hsc($item['id']))).'"><div>';
+        media_printicon($item['id']);
+        echo '</div></a>';
     }
     //echo '<input type=checkbox />';
     echo '<a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
@@ -1190,7 +1212,7 @@ function media_printimgdetail($item, $fullscreen=false){
     if ($fullscreen) {
         echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
             media_managerURL(array('image' => hsc($item['id']))).'">';
-        echo '<img src="'.$src.'" '.$att.' />';
+        echo '<div><img src="'.$src.'" '.$att.' /></div>';
         echo '</a>';
         return 1;
     }
