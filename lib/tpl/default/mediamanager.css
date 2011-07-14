@@ -246,5 +246,10 @@ form.meta textarea.edit {
 }
 
 .idx .selected {
-    color: red !important;
+    background-color: __highlight__;
+    font-weight: bold;
+}
+
+.mediamanager div.upload {
+    padding-bottom: 0.5em;
 }

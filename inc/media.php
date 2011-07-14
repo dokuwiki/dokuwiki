@@ -557,28 +557,28 @@ function media_tabs_files($selected=false){
     global $lang;
 
     echo '<div class="mediamanager-tabs" id="mediamanager__tabs_files">';
-    $tab = '<a href="'.media_managerURL(array('tab_files' => 'files')).'"';
-    if (!empty($selected) && $selected == 'files') $class = 'files selected';
-    else $class = 'files';
-    $tab .= ' class="'.$class.'" >'.$lang['mediaselect'].'</a>';
-    echo $tab;
 
-    $tab = '<a href="'.media_managerURL(array('tab_files' => 'upload')).
-        '" rel=".mediamanager-tab-upload"';
-    if (!empty($selected) && $selected == 'upload') $class = 'upload selected';
-    else $class = 'upload';
-    $tab .= ' class="'.$class.'" >'.$lang['media_uploadtab'].'</a>';
-    echo $tab;
-
-    $tab = '<a href="'.media_managerURL(array('tab_files' => 'search')).
-        '" rel=".mediamanager-tab-search"';
-    if (!empty($selected) && $selected == 'search') $class = 'search selected';
-    else $class = 'search';
-    $tab .= ' class="'.$class.'" >'.$lang['media_searchtab'].'</a>';
-    echo $tab;
+    media_tab(media_managerURL(array('tab_files' => 'files')), 'files', $lang['mediaselect'], $selected);
+    media_tab(media_managerURL(array('tab_files' => 'upload')), 'upload', $lang['media_uploadtab'], $selected);
+    media_tab(media_managerURL(array('tab_files' => 'search')), 'search', $lang['media_searchtab'], $selected);
 
     echo '<div class="clearer"></div>';
     echo '</div>';
+}
+
+/**
+ * Prints mediamanager tab
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $link
+ * @param string $class
+ * @param string $name
+ * @param string $selected
+ */
+function media_tab($link, $class, $name, $selected=false) {
+    if (!empty($selected) && $selected == $class) $class .= ' selected';
+    $tab = '<a href="'.$link.'" class="'.$class.'" >'.$name.'</a>';
+    echo $tab;
 }
 
 /**
@@ -591,26 +591,14 @@ function media_tabs_details($image, $selected=false){
     global $lang;
 
     echo '<div class="mediamanager-tabs" id="mediamanager__tabs_details">';
-    $tab = '<a href="'.media_managerURL(array('tab_details' => 'view', 'image' => $image)).
-        '" rel=".mediamanager-tab-view"';
-    if (!empty($selected) && $selected == 'view') $class = 'view selected';
-    else $class = 'view';
-    $tab .= ' class="'.$class.'" >'.$lang['media_viewtab'].'</a>';
-    echo $tab;
 
-    $tab = '<a href="'.media_managerURL(array('tab_details' => 'edit', 'image' => $image)).
-        '" rel=".mediamanager-tab-edit"';
-    if (!empty($selected) && $selected == 'edit') $class = 'edit selected';
-    else $class = 'edit';
-    $tab .= ' class="'.$class.'" >'.$lang['media_edittab'].'</a>';
-    echo $tab;
+    media_tab(media_managerURL(array('tab_details' => 'view')), 'view', $lang['media_viewtab'], $selected);
 
-    $tab = '<a href="'.media_managerURL(array('tab_details' => 'history', 'image' => $image)).
-        '" rel=".mediamanager-tab-history"';
-    if (!empty($selected) && $selected == 'history') $class = 'history selected';
-    else $class = 'history';
-    $tab .= ' class="'.$class.'" >'.$lang['media_historytab'].'</a>';
-    echo $tab;
+    list($ext, $mime) = mimetype($image);
+    if ($mime == 'image/jpeg') {
+        media_tab(media_managerURL(array('tab_details' => 'edit')), 'edit', $lang['media_edittab'], $selected);
+    }
+    media_tab(media_managerURL(array('tab_details' => 'history')), 'history', $lang['media_historytab'], $selected);
 
     echo '<div class="clearer"></div>';
     echo '</div>';
@@ -679,10 +667,11 @@ function media_tab_upload($ns,$auth=null,$jump='') {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     echo '<div class="background-container">';
-    echo $lang['mediaupload'];
+    echo sprintf($lang['media_upload'], $ns);
     echo '</div>';
 
     echo '<div class="scroll-container">';
+    if ($auth >= AUTH_UPLOAD) echo '<div class="upload">' . $lang['mediaupload'] . '</div>';
     media_uploadform($ns, $auth, true);
     echo '</div>';
 }
@@ -733,8 +722,9 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    media_preview($image, $auth, $rev);
-    media_details($image, $auth, $rev);
+    $meta = new JpegMeta(mediaFN($image, $rev));
+    media_preview($image, $auth, $rev, $meta);
+    media_details($image, $auth, $rev, $meta);
     echo '</div>';
 }
 
@@ -792,7 +782,7 @@ function media_tab_history($image, $ns, $auth=null) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth, $rev=false) {
+function media_preview($image, $auth, $rev=false, $meta=false) {
     global $lang;
     if (!$image) return '';
     if ($auth < AUTH_READ) {
@@ -801,6 +791,7 @@ function media_preview($image, $auth, $rev=false) {
     }
     $info = getimagesize(mediaFN($image, $rev));
     $w = (int) $info[0];
+    $h = (int) $info[1];
 
     $more = '';
     if ($rev) {
@@ -809,11 +800,19 @@ function media_preview($image, $auth, $rev=false) {
         $t = @filemtime(mediaFN($image));
         $more = "t=$t";
     }
+    $link = ml($image,$more,true,'&');
+
+    $size = 500;
+    if($meta && ($w > $size || $h > $size)){
+        $ratio = $meta->getResizeRatio($size, $size);
+        $w = floor($w * $ratio);
+        $h = floor($h * $ratio);
+        $more .= "&h=$h&w=$w";
+    }
+
     $src = ml($image, $more);
     echo '<div class="mediamanager-preview">';
     echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
-
-    $link = ml($image,$more,true,'&');
 
     $form = new Doku_Form(array('action'=>$link, 'target'=>'_blank'));
     $form->addElement(form_makeButton('submit','',$lang['mediaview']));
@@ -847,7 +846,7 @@ function media_preview($image, $auth, $rev=false) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_details($image, $auth, $rev=false) {
+function media_details($image, $auth, $rev=false, $meta=false) {
     global $lang, $config_cascade;;
 
     if (!$image) return '';
@@ -865,8 +864,8 @@ function media_details($image, $auth, $rev=false) {
         }
     }
 
-    $src = mediaFN($image, $rev);
-    $meta = new JpegMeta($src);
+    if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
+
     echo '<dl class="img_tags">';
     foreach($fields as $key => $tag){
         $t = array();
@@ -937,16 +936,20 @@ function media_diff($image, $ns, $auth) {
         $revs = getRevisions($image, 0, 1, 8192, true);
         $l_rev = $revs[0];
     }
+
+    $l_meta = new JpegMeta(mediaFN($image, $l_rev));
+    $r_meta = new JpegMeta(mediaFN($image, $r_rev));
+
     echo '<ul class="mediamanager-table-50"><li><div>';
-    media_preview($image, $auth, $l_rev);
+    media_preview($image, $auth, $l_rev, $l_meta);
     echo '</div></li>';
     echo '<li><div>';
-    media_preview($image, $auth, $r_rev);
+    media_preview($image, $auth, $r_rev, $r_meta);
     echo '</div></li><li><div>';
-    media_details($image, $auth, $l_rev);
+    media_details($image, $auth, $l_rev, $l_meta);
     echo '</div></li>';
     echo '<li><div>';
-    media_details($image, $auth, $r_rev);
+    media_details($image, $auth, $r_rev, $r_meta);
     echo '</div></li></ul>';
 }
 
