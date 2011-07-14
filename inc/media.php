@@ -722,6 +722,7 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
     echo '<a class="'.$class.'" >'.$image.'</a>';
+    //echo '<span style="background: url(/lib/images/fileicons/pdf.png) 0 0 no-repeat; padding-left: 20px;">'.$image.'</span>';
     echo '</div>';
 
     echo '<div class="scroll-container">';
@@ -854,7 +855,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_details($image, $auth, $rev=false, $meta=false) {
-    global $lang, $config_cascade;;
+    global $lang, $config_cascade;
 
     if (!$image) return '';
     if ($auth < AUTH_READ) {
@@ -944,6 +945,32 @@ function media_diff($image, $ns, $auth) {
         $l_rev = $revs[0];
     }
 
+    // prepare event data
+    $data[0] = $image;
+    $data[1] = $l_rev;
+    $data[2] = $r_rev;
+    $data[3] = $ns;
+    $data[4] = $auth;
+
+    // trigger event
+    return trigger_event('MEDIA_DIFF', $data, '_media_image_diff', true);
+
+}
+
+function _media_image_diff($data) {
+    if(is_array($data) && count($data)===5) {
+        return media_image_diff($data[0], $data[1], $data[2], $data[3], $data[4]);
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Shows difference between two revisions of image
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_image_diff($image, $l_rev, $r_rev, $ns, $auth){
     $l_meta = new JpegMeta(mediaFN($image, $l_rev));
     $r_meta = new JpegMeta(mediaFN($image, $r_rev));
 
