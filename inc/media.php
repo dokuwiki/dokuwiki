@@ -1439,15 +1439,10 @@ function media_nstree($ns){
     search($data,$conf['mediadir'],'search_index',array('ns' => $ns, 'nofiles' => true));
 
     // wrap a list with the root level around the other namespaces
-    $item = array( 'level' => 0, 'id' => '',
-            'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
+    array_unshift($data, array('level' => 0, 'id' => '', 'open' =>'true',
+                               'label' => '['.$lang['mediaroot'].']'));
 
-    echo '<ul class="idx">';
-    echo media_nstree_li($item);
-    echo media_nstree_item($item);
     echo html_buildlist($data,'idx','media_nstree_item','media_nstree_li');
-    echo '</li>';
-    echo '</ul>';
 }
 
 /**

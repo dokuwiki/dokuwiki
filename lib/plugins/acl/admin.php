@@ -253,19 +253,12 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $data = $this->_get_tree($ns);
 
         // wrap a list with the root level around the other namespaces
-        $item = array( 'level' => 0, 'id' => '*', 'type' => 'd',
-                   'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
+        array_unshift($data, array( 'level' => 0, 'id' => '*', 'type' => 'd',
+                   'open' =>'true', 'label' => '['.$lang['mediaroot'].']'));
 
-        echo '<ul class="acltree">';
-        echo $this->_html_li_acl($item);
-        echo '<div class="li">';
-        echo $this->_html_list_acl($item);
-        echo '</div>';
         echo html_buildlist($data,'acl',
                             array($this,'_html_list_acl'),
                             array($this,'_html_li_acl'));
-        echo '</li>';
-        echo '</ul>';
 
     }
 

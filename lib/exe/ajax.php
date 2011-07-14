@@ -192,12 +192,10 @@ function ajax_medians(){
 
     $data = array();
     search($data,$conf['mediadir'],'search_index',array('nofiles' => true),$dir);
-    foreach($data as $item){
-        $item['level'] = $lvl+1;
-        echo media_nstree_li($item);
-        echo media_nstree_item($item);
-        echo '</li>';
+    foreach(array_keys($data) as $item){
+        $data[$item]['level'] = $lvl+1;
     }
+    echo html_buildlist($data, 'idx', 'media_nstree_item', 'media_nstree_li');
 }
 
 /**
@@ -253,14 +251,10 @@ function ajax_index(){
 
     $data = array();
     search($data,$conf['datadir'],'search_index',array('ns' => $ns),$dir);
-    foreach($data as $item){
-        $item['level'] = $lvl+1;
-        echo html_li_index($item);
-        echo '<div class="li">';
-        echo html_list_index($item);
-        echo '</div>';
-        echo '</li>';
+    foreach(array_keys($data) as $item){
+        $data[$item]['level'] = $lvl+1;
     }
+    echo html_buildlist($data, 'idx', 'html_list_index', 'html_li_index');
 }
 
 /**

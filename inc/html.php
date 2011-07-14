@@ -807,7 +807,7 @@ function html_list_index($item){
 /**
  * Index List item
  *
- * This user function is used in html_build_lidt to build the
+ * This user function is used in html_buildlist to build the
  * <li> tags for namespaces when displaying the page index
  * it gives different classes to opened or closed "folders"
  *
@@ -848,9 +848,19 @@ function html_li_default($item){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
-    $level = 0;
+    if (count($data) === 0) {
+        return '';
+    }
+
+    $level = $data[0]['level'];
     $opens = 0;
     $ret   = '';
+
+    if ($level < 2) {
+        // Trigger building a wrapper ul if the first level is
+        // 0 (we have a root object) or 1 (just the root content)
+        --$level;
+    }
 
     foreach ($data as $item){
 
@@ -867,7 +877,7 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
                 //close higher lists
                 $ret .= "</ul>\n</li>\n";
             }
-        }else{
+        } elseif ($ret !== '') {
             //close last item
             $ret .= "</li>\n";
         }
