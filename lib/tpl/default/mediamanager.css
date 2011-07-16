@@ -263,6 +263,7 @@ form.meta textarea.edit {
 }
 
 .mediamanager-preview {
+    text-align: center;
     margin-bottom: 5px;
 }
 
@@ -281,4 +282,36 @@ form.meta textarea.edit {
 
 .background-container .icon {
     margin-right: 5px;
+}
+
+.mediamanager dl.img_tags dd.highlighted{
+    background-color: __highlight__;
+}
+
+#mediamanager__diff_opacity_image1,
+#mediamanager__diff_portions_image1 {
+    width: 99%;
+    position: relative;
+}
+
+#mediamanager__diff_opacity_image2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+}
+
+#mediamanager__diff_portions_image2 {
+    width: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-right: 1px solid red;
+}
+
+#mediamanager__opacity_slider,
+#mediamanager__portions_slider {
+    margin: 10px;
+    width: 99%;
 }

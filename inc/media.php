@@ -725,9 +725,15 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     echo '</div>';
 
     echo '<div class="scroll-container">';
-    $meta = new JpegMeta(mediaFN($image, $rev));
-    media_preview($image, $auth, $rev, $meta);
-    media_details($image, $auth, $rev, $meta);
+    if ($image && $auth >= AUTH_READ) {
+        $meta = new JpegMeta(mediaFN($image, $rev));
+        media_preview($image, $auth, $rev, $meta);
+        media_preview_buttons($image, $auth, $rev);
+        media_details($image, $auth, $rev, $meta);
+
+    } else {
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>';
+    }
     echo '</div>';
 }
 
@@ -787,11 +793,36 @@ function media_tab_history($image, $ns, $auth=null) {
  */
 function media_preview($image, $auth, $rev=false, $meta=false) {
     global $lang;
-    if (!$image) return '';
-    if ($auth < AUTH_READ) {
-        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
-        return '';
+
+    echo '<div class="mediamanager-preview">';
+
+    $size = media_image_preview_size($image, $rev, $meta);
+
+    if ($size) {
+        $more = '';
+        if ($rev) {
+            $more = "rev=$rev";
+        } else {
+            $t = @filemtime(mediaFN($image));
+            $more = "t=$t";
+        }
+
+        $more .= '&w='.$size[0].'&h='.$size[1];
+
+        $src = ml($image, $more);
+        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$size[0].'px;" />';
     }
+
+    echo '</div>';
+}
+
+/**
+ * Prints mediafile action buttons
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_preview_buttons($image, $auth, $rev=false) {
+    global $lang;
 
     echo '<div class="mediamanager-preview">';
 
@@ -804,40 +835,29 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
     }
     $link = ml($image,$more,true,'&');
 
-    if (preg_match("/\.(jpe?g|gif|png)$/", $image)) {
-        $info = getimagesize(mediaFN($image, $rev));
-        $w = (int) $info[0];
-        $h = (int) $info[1];
-
-        $size = 500;
-        if($meta && ($w > $size || $h > $size)){
-            $ratio = $meta->getResizeRatio($size, $size);
-            $w = floor($w * $ratio);
-            $h = floor($h * $ratio);
-            $more .= "&h=$h&w=$w";
-        }
-
-        $src = ml($image, $more);
-        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$w.'px;" /><br /><br />';
-    }
-
+    // view original file button
     $form = new Doku_Form(array('action'=>$link, 'target'=>'_blank'));
     $form->addElement(form_makeButton('submit','',$lang['mediaview']));
     $form->printForm();
 
-    // delete button
     if($auth >= AUTH_DELETE && !$rev){
+
+        // delete button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
             'action'=>media_managerURL(array('delete' => $image), '&')));
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         $form->printForm();
 
+        // upload new version button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_update',
             'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'), '&')));
         $form->addElement(form_makeButton('submit','',$lang['media_update']));
         $form->printForm();
     }
+
     if($auth >= AUTH_DELETE && $rev){
+
+        // restore button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
             'action'=>media_managerURL(array('image' => $image), '&')));
         $form->addHidden('mediado','restore');
@@ -845,22 +865,19 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
         $form->addElement(form_makeButton('submit','',$lang['media_restore']));
         $form->printForm();
     }
+
     echo '</div>';
 }
 
 /**
- * Prints mediafile tags
+ * Returns mediafile tags
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param JpegMeta $meta
+ * @return array
  */
-function media_details($image, $auth, $rev=false, $meta=false) {
-    global $lang, $config_cascade;
-
-    if (!$image) return '';
-    if ($auth < AUTH_READ) {
-        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
-        return '';
-    }
+function media_file_tags($meta) {
+    global $config_cascade;
 
     // load the field descriptions
     static $fields = null;
@@ -871,19 +888,39 @@ function media_details($image, $auth, $rev=false, $meta=false) {
         }
     }
 
-    if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
+    $tags = array();
 
-    echo '<dl class="img_tags">';
     foreach($fields as $key => $tag){
         $t = array();
         if (!empty($tag[0])) $t = array($tag[0]);
         if(is_array($tag[3])) $t = array_merge($t,$tag[3]);
-        $value = media_getTag($t, $meta, '-');
-        $value = cleanText($value);
-        echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
-        if ($tag[2] == 'date') echo dformat($value);
-        else echo hsc($value);
-        echo '</dd>';
+        $value = media_getTag($t, $meta);
+        $tags[] = array('tag' => $tag, 'value' => $value);
+    }
+
+    return $tags;
+}
+
+/**
+ * Prints mediafile tags
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_details($image, $auth, $rev=false, $meta=false) {
+    global $lang;
+
+    if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
+    $tags = media_file_tags($meta);
+
+    echo '<dl class="img_tags">';
+    foreach($tags as $tag){
+        if ($tag['value']) {
+            $value = cleanText($tag['value']);
+            echo '<dt>'.$lang[$tag['tag'][1]].':</dt><dd>';
+            if ($tag['tag'][2] == 'date') echo dformat($value);
+            else echo hsc($value);
+            echo '</dd>';
+        }
     }
     echo '</dl>';
 }
@@ -970,20 +1007,156 @@ function _media_image_diff($data) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_image_diff($image, $l_rev, $r_rev, $ns, $auth){
+    global $lang, $config_cascade;
+
+    echo '<ul class="mediamanager-table-50">';
+
+    echo '<li>';
+    media_preview($image, $auth, $l_rev, $l_meta);
+    echo '</li>';
+
+    echo '<li>';
+    media_preview($image, $auth, $r_rev, $r_meta);
+    echo '</li>';
+
+    echo '<li>';
+    media_preview_buttons($image, $auth, $l_rev);
+    echo '</li>';
+
+    echo '<li>';
+    media_preview_buttons($image, $auth, $r_rev);
+    echo '</li>';
+
     $l_meta = new JpegMeta(mediaFN($image, $l_rev));
     $r_meta = new JpegMeta(mediaFN($image, $r_rev));
 
-    echo '<ul class="mediamanager-table-50"><li><div>';
-    media_preview($image, $auth, $l_rev, $l_meta);
-    echo '</div></li>';
-    echo '<li><div>';
-    media_preview($image, $auth, $r_rev, $r_meta);
-    echo '</div></li><li><div>';
-    media_details($image, $auth, $l_rev, $l_meta);
-    echo '</div></li>';
-    echo '<li><div>';
-    media_details($image, $auth, $r_rev, $r_meta);
-    echo '</div></li></ul>';
+    $l_tags = media_file_tags($l_meta);
+    $r_tags = media_file_tags($r_meta);
+    foreach ($l_tags as $key => $l_tag) {
+        if ($l_tag['value'] != $r_tags[$key]['value']) {
+            $r_tags[$key]['class'] = 'highlighted';
+            $l_tags[$key]['class'] = 'highlighted';
+        } else if (!$l_tag['value'] || !$r_tags[$key]['value']) {
+            unset($r_tags[$key]);
+            unset($l_tags[$key]);
+        }
+    }
+
+    foreach(array($l_tags,$r_tags) as $tags){
+        echo '<li><div>';
+
+        echo '<dl class="img_tags">';
+        foreach($tags as $tag){
+            $value = cleanText($tag['value']);
+            if (!$value) $value = '-';
+            echo '<dt>'.$lang[$tag['tag'][1]].':</dt>';
+            echo '<dd class="'.$tag['class'].'" >';
+            if ($tag['tag'][2] == 'date') echo dformat($value);
+            else echo hsc($value);
+            echo '</dd>';
+        }
+        echo '</dl>';
+
+        echo '</div></li>';
+    }
+
+    echo '</ul>';
+
+    media_image_diff_opacity($image, $l_rev, $r_rev, $l_meta);
+    media_image_diff_portions($image, $l_rev, $r_rev, $l_meta);
+}
+
+/**
+ * Returns image width and height for mediamanager preview panel
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $image
+ * @param int $rev
+ * @param JpegMeta $meta
+ * @return array
+ */
+function media_image_preview_size($image, $rev, $meta) {
+    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)) return false;
+
+    $info = getimagesize(mediaFN($image, $rev));
+    $w = (int) $info[0];
+    $h = (int) $info[1];
+
+    $size = 500;
+    if($meta && ($w > $size || $h > $size)){
+        $ratio = $meta->getResizeRatio($size, $size);
+        $w = floor($w * $ratio);
+        $h = floor($h * $ratio);
+    }
+    return array($w, $h);
+}
+
+/**
+ * Prints two images side by side
+ * and slider to change the opacity
+ * of one of the images
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $image
+ * @param int $l_rev
+ * @param int $r_rev
+ * @param JpegMeta $meta
+ */
+function media_image_diff_opacity($image, $l_rev, $r_rev, $meta) {
+    $l_size = media_image_preview_size($image, $l_rev, $meta);
+    $r_size = media_image_preview_size($image, $r_rev, $meta);
+
+    if (!$l_size || !$r_size || $l_size != $r_size || $l_size[0] < 30) return '';
+
+    echo '<div class="mediamanager-preview">';
+
+    $l_more = 'rev='.$l_rev.'&h='.$l_size[1].'&w='.$l_size[0];
+    $r_more = 'rev='.$r_rev.'&h='.$l_size[1].'&w='.$l_size[0];
+
+    $l_src = ml($image, $l_more);
+    $r_src = ml($image, $r_more);
+
+    echo '<div id="mediamanager__diff_opacity_image1" style="background-image: url(\''.$l_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    echo '<div id="mediamanager__diff_opacity_image2" style="background-image: url(\''.$r_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div id="mediamanager__opacity_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
+    echo '</div>';
+}
+
+/**
+ * Prints two images side by side
+ * and slider to change the width
+ * of one of the images
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $image
+ * @param int $l_rev
+ * @param int $r_rev
+ * @param JpegMeta $meta
+ */
+function media_image_diff_portions($image, $l_rev, $r_rev, $meta) {
+    $l_size = media_image_preview_size($image, $l_rev, $meta);
+    $r_size = media_image_preview_size($image, $r_rev, $meta);
+
+    if (!$l_size || !$r_size || $l_size != $r_size || $l_size[0] < 30) return '';
+
+    echo '<div class="mediamanager-preview">';
+
+    $l_more = 'rev='.$l_rev.'&h='.$l_size[1].'&w='.$l_size[0];
+    $r_more = 'rev='.$r_rev.'&h='.$l_size[1].'&w='.$l_size[0];
+
+    $l_src = ml($image, $l_more);
+    $r_src = ml($image, $r_more);
+
+    echo '<div id="mediamanager__diff_portions_image1" style="background-image: url(\''.$l_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    echo '<div id="mediamanager__diff_portions_image2" style="background-image: url(\''.$r_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div id="mediamanager__portions_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
+    echo '</div>';
 }
 
 /**
