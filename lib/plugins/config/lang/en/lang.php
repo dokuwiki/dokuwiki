@@ -133,6 +133,7 @@ $lang['jpg_quality'] = 'JPG compression quality (0-100)';
 $lang['subscribers'] = 'Enable page subscription support';
 $lang['subscribe_time'] = 'Time after which subscription lists and digests are sent (sec); This should be smaller than the time specified in recent_days.';
 $lang['compress']    = 'Compact CSS and javascript output';
+$lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. This technique won\'t work in IE < 8! <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
 $lang['hidepages']   = 'Hide matching pages (regular expressions)';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['sitemap']     = 'Generate Google sitemap (days)';
