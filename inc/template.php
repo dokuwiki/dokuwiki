@@ -1146,17 +1146,17 @@ function tpl_fileList(){
     media_tabs_files($opened_tab);
 
     if ($opened_tab == 'files') {
-        echo '<div class="mediamanager-tab-files" id="mediamanager__files">';
+        echo '<div id="mediamanager__files">';
         media_tab_files($NS,$AUTH,$JUMPTO);
         echo '</div>';
 
     } elseif ($opened_tab == 'upload') {
-        echo '<div class="mediamanager-tab-upload" id="mediamanager__files">';
+        echo '<div id="mediamanager__files">';
         media_tab_upload($NS,$AUTH,$JUMPTO);
         echo '</div>';
 
     } elseif ($opened_tab == 'search') {
-        echo '<div class="mediamanager-tab-search" id="mediamanager__files">';
+        echo '<div id="mediamanager__files">';
         media_tab_search($NS,$AUTH);
         echo '</div>';
     }
@@ -1188,17 +1188,17 @@ function tpl_fileDetails($image, $rev){
     media_tabs_details($image, $opened_tab);
 
     if ($opened_tab == 'view') {
-        echo '<div class="mediamanager-tab-detail-view" id="mediamanager__details">';
+        echo '<div id="mediamanager__details">';
         media_tab_view($image, $NS, $AUTH, $rev);
         echo '</div>';
 
     } elseif ($opened_tab == 'edit') {
-        echo '<div class="mediamanager-tab-detail-edit" id="mediamanager__details">';
+        echo '<div id="mediamanager__details">';
         media_tab_edit($image, $NS, $AUTH);
         echo '</div>';
 
     } elseif ($opened_tab == 'history') {
-        echo '<div class="mediamanager-tab-detail-history" id="mediamanager__details">';
+        echo '<div id="mediamanager__details">';
         media_tab_history($image,$NS,$AUTH);
         echo '</div>';
     }
@@ -1211,7 +1211,7 @@ function tpl_fileDetails($image, $rev){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_mediaTree($fullscreen = false){
+function tpl_mediaTree(){
     global $NS;
     ptln('<div id="media__tree">');
     media_nstree($NS);
@@ -1456,8 +1456,9 @@ function tpl_media() {
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
     echo '<div class="mediamanager" id="id-mediamanager">';
-    echo '<div class="mediamanager-slider" id="id-mediamanager-layout">';
-    echo '<div id="id-mediamanager-layout-namespaces" class="layout" style="width: 25%;">';
+    echo '<div id="mediamanager__layout">';
+
+    echo '<div id="mediamanager__layout_namespaces" class="layout resizable" >';
     html_msgarea();
     echo '<div class="mediamanager-tabs">';
     echo '<a href="#" class="selected">'.hsc($lang['namespaces']).'</a>';
@@ -1467,15 +1468,18 @@ function tpl_media() {
     echo hsc($lang['namespaces']);
     echo '</div>';
     echo '<div class="scroll-container">';
-    tpl_mediaTree(true);
+    tpl_mediaTree();
     echo '</div>';
     echo '</div>';
-    echo '<div id="mediamanager__layout_list" class="layout" style="width: 40%;">';
+
+    echo '<div id="mediamanager__layout_list" class="layout resizable" >';
     tpl_fileList();
     echo '</div>';
-    echo '<div id="mediamanager__layout_detail" class="layout" style="width: 30%;">';
+
+    echo '<div id="mediamanager__layout_detail" class="layout" >';
     tpl_fileDetails($image, $rev);
     echo '</div>';
+
     echo '<div class="clearer"></div>';
     echo '</div>';
     echo '</div>';

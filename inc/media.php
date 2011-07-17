@@ -548,6 +548,21 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false){
 }
 
 /**
+ * Prints mediamanager tab
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $link
+ * @param string $class
+ * @param string $name
+ * @param string $selected
+ */
+function media_tab($link, $class, $name, $selected=false) {
+    if (!empty($selected) && $selected == $class) $class .= ' selected';
+    $tab = '<a href="'.$link.'" class="'.$class.'" >'.$name.'</a>';
+    echo $tab;
+}
+
+/**
  * Prints tabs for files list actions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -564,21 +579,6 @@ function media_tabs_files($selected=false){
 
     echo '<div class="clearer"></div>';
     echo '</div>';
-}
-
-/**
- * Prints mediamanager tab
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $link
- * @param string $class
- * @param string $name
- * @param string $selected
- */
-function media_tab($link, $class, $name, $selected=false) {
-    if (!empty($selected) && $selected == $class) $class .= ' selected';
-    $tab = '<a href="'.$link.'" class="'.$class.'" >'.$name.'</a>';
-    echo $tab;
 }
 
 /**
@@ -614,18 +614,23 @@ function media_tab_files_options($ns){
 
     echo '<div class="background-container">';
     echo $ns;
-    echo '<div id="mediamanager__tabs_list" style="display: inline;">';
-    echo '<a href="'.media_managerURL(array('view' => 'thumbs')).'"
-        rel=".mediamanager-files-thumbnails-tab" class="mediamanager-link-thumbnails">'.
-        $lang['media_thumbsview'].'</a>';
-    echo '<a href="'.media_managerURL(array('view' => 'list')).'"
-        rel=".mediamanager-files-list-tab" class="mediamanager-link-list"
-        title="View as list">'.$lang['media_listview'].'</a>';
+
+    echo '<div id="mediamanager__tabs_list">';
+
+    echo '<a href="'.media_managerURL(array('view' => 'thumbs')).'" id="mediamanager__link_thumbs" >';
+    echo $lang['media_thumbsview'];
+    echo '</a>';
+
+    echo '<a href="'.media_managerURL(array('view' => 'list')).'" id="mediamanager__link_list" >';
+    echo $lang['media_listview'];
+    echo '</a>';
 
     echo '</div>';
-    echo '<div class="mediamanager-block-sort">'.$lang['media_sort'];
-    //select
+
+    echo '<div id="mediamanager__sort">';
+    echo $lang['media_sort'];
     echo '</div>';
+
     echo '<div class="clearer"></div>';
     echo '</div>';
 }
@@ -647,9 +652,9 @@ function media_tab_files($ns,$auth=null,$jump='') {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }else{
         if ($view == 'list') {
-            echo '<ul class="mediamanager-file-list mediamanager-list" id="mediamanager__file_list">';
+            echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
         } else {
-            echo '<ul class="mediamanager-file-list mediamanager-thumbs" id="mediamanager__file_list">';
+            echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
         }
         media_filelist($ns,$auth,$jump,true);
         echo '</ul>';
@@ -698,9 +703,9 @@ function media_tab_search($ns,$auth=null) {
     if($do == 'searchlist'){
         $view = $_REQUEST['view'];
         if ($view == 'list') {
-            echo '<ul class="mediamanager-file-list mediamanager-list" id="mediamanager__file_list">';
+            echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
         } else {
-            echo '<ul class="mediamanager-file-list mediamanager-thumbs" id="mediamanager__file_list">';
+            echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
         }
         media_searchlist($query,$ns,$auth,true);
         echo '</ul>';
@@ -794,7 +799,7 @@ function media_tab_history($image, $ns, $auth=null) {
 function media_preview($image, $auth, $rev=false, $meta=false) {
     global $lang;
 
-    echo '<div class="mediamanager-preview">';
+    echo '<div id="mediamanager__preview">';
 
     $size = media_image_preview_size($image, $rev, $meta);
 
@@ -810,7 +815,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
         $more .= '&w='.$size[0].'&h='.$size[1];
 
         $src = ml($image, $more);
-        echo '<img src="'.$src.'" alt="" width="99%" style="max-width: '.$size[0].'px;" />';
+        echo '<img src="'.$src.'" alt="'.$image.'" style="max-width: '.$size[0].'px;" />';
     }
 
     echo '</div>';
@@ -824,7 +829,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
 function media_preview_buttons($image, $auth, $rev=false) {
     global $lang;
 
-    echo '<div class="mediamanager-preview">';
+    echo '<div id="mediamanager__preview_buttons">';
 
     $more = '';
     if ($rev) {
@@ -867,6 +872,47 @@ function media_preview_buttons($image, $auth, $rev=false) {
     }
 
     echo '</div>';
+}
+
+/**
+ * Returns image width and height for mediamanager preview panel
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $image
+ * @param int $rev
+ * @param JpegMeta $meta
+ * @return array
+ */
+function media_image_preview_size($image, $rev, $meta) {
+    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)) return false;
+
+    $info = getimagesize(mediaFN($image, $rev));
+    $w = (int) $info[0];
+    $h = (int) $info[1];
+
+    $size = 500;
+    if($meta && ($w > $size || $h > $size)){
+        $ratio = $meta->getResizeRatio($size, $size);
+        $w = floor($w * $ratio);
+        $h = floor($h * $ratio);
+    }
+    return array($w, $h);
+}
+
+/**
+ * Returns the requested EXIF/IPTC tag from the image meta
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param array $tags
+ * @param JpegMeta $meta
+ * @param string $alt
+ * @return string
+ */
+function media_getTag($tags,$meta,$alt=''){
+    if($meta === false) return $alt;
+    $info = $meta->getField($tags);
+    if($info == false) return $alt;
+    return $info;
 }
 
 /**
@@ -926,22 +972,6 @@ function media_details($image, $auth, $rev=false, $meta=false) {
 }
 
 /**
- * Returns the requested EXIF/IPTC tag from the image meta
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- * @param array $tags
- * @param JpegMeta $meta
- * @param string $alt
- * @return string
- */
-function media_getTag($tags,$meta,$alt=''){
-    if($meta === false) return $alt;
-    $info = $meta->getField($tags);
-    if($info == false) return $alt;
-    return $info;
-}
-
-/**
  * Shows difference between two revisions of file
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -989,13 +1019,13 @@ function media_diff($image, $ns, $auth) {
     $data[4] = $auth;
 
     // trigger event
-    return trigger_event('MEDIA_DIFF', $data, '_media_image_diff', true);
+    return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
 
 }
 
-function _media_image_diff($data) {
+function _media_file_diff($data) {
     if(is_array($data) && count($data)===5) {
-        return media_image_diff($data[0], $data[1], $data[2], $data[3], $data[4]);
+        return media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4]);
     } else {
         return false;
     }
@@ -1006,10 +1036,10 @@ function _media_image_diff($data) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_image_diff($image, $l_rev, $r_rev, $ns, $auth){
+function media_file_diff($image, $l_rev, $r_rev, $ns, $auth){
     global $lang, $config_cascade;
 
-    echo '<ul class="mediamanager-table-50">';
+    echo '<ul id="mediamanager__diff_table">';
 
     echo '<li>';
     media_preview($image, $auth, $l_rev, $l_meta);
@@ -1062,39 +1092,13 @@ function media_image_diff($image, $l_rev, $r_rev, $ns, $auth){
 
     echo '</ul>';
 
-    media_image_diff_opacity($image, $l_rev, $r_rev, $l_meta);
-    media_image_diff_portions($image, $l_rev, $r_rev, $l_meta);
-}
-
-/**
- * Returns image width and height for mediamanager preview panel
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $image
- * @param int $rev
- * @param JpegMeta $meta
- * @return array
- */
-function media_image_preview_size($image, $rev, $meta) {
-    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)) return false;
-
-    $info = getimagesize(mediaFN($image, $rev));
-    $w = (int) $info[0];
-    $h = (int) $info[1];
-
-    $size = 500;
-    if($meta && ($w > $size || $h > $size)){
-        $ratio = $meta->getResizeRatio($size, $size);
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-    }
-    return array($w, $h);
+    media_image_diff($image, $l_rev, $r_rev, $l_meta, 'opacity');
+    media_image_diff($image, $l_rev, $r_rev, $l_meta, 'portions');
 }
 
 /**
  * Prints two images side by side
- * and slider to change the opacity
- * of one of the images
+ * and slider
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @param string $image
@@ -1102,7 +1106,7 @@ function media_image_preview_size($image, $rev, $meta) {
  * @param int $r_rev
  * @param JpegMeta $meta
  */
-function media_image_diff_opacity($image, $l_rev, $r_rev, $meta) {
+function media_image_diff($image, $l_rev, $r_rev, $meta, $type) {
     $l_size = media_image_preview_size($image, $l_rev, $meta);
     $r_size = media_image_preview_size($image, $r_rev, $meta);
 
@@ -1116,46 +1120,12 @@ function media_image_diff_opacity($image, $l_rev, $r_rev, $meta) {
     $l_src = ml($image, $l_more);
     $r_src = ml($image, $r_more);
 
-    echo '<div id="mediamanager__diff_opacity_image1" style="background-image: url(\''.$l_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
-    echo '<div id="mediamanager__diff_opacity_image2" style="background-image: url(\''.$r_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    echo '<div id="mediamanager__diff_'.$type.'_image1" style="background-image: url(\''.$l_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    echo '<div id="mediamanager__diff_'.$type.'_image2" style="background-image: url(\''.$r_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
     echo '</div>';
     echo '</div>';
 
-    echo '<div id="mediamanager__opacity_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
-    echo '</div>';
-}
-
-/**
- * Prints two images side by side
- * and slider to change the width
- * of one of the images
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $image
- * @param int $l_rev
- * @param int $r_rev
- * @param JpegMeta $meta
- */
-function media_image_diff_portions($image, $l_rev, $r_rev, $meta) {
-    $l_size = media_image_preview_size($image, $l_rev, $meta);
-    $r_size = media_image_preview_size($image, $r_rev, $meta);
-
-    if (!$l_size || !$r_size || $l_size != $r_size || $l_size[0] < 30) return '';
-
-    echo '<div class="mediamanager-preview">';
-
-    $l_more = 'rev='.$l_rev.'&h='.$l_size[1].'&w='.$l_size[0];
-    $r_more = 'rev='.$r_rev.'&h='.$l_size[1].'&w='.$l_size[0];
-
-    $l_src = ml($image, $l_more);
-    $r_src = ml($image, $r_more);
-
-    echo '<div id="mediamanager__diff_portions_image1" style="background-image: url(\''.$l_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
-    echo '<div id="mediamanager__diff_portions_image2" style="background-image: url(\''.$r_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
-    echo '</div>';
-    echo '</div>';
-
-    echo '<div id="mediamanager__portions_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
+    echo '<div id="mediamanager__'.$type.'_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
     echo '</div>';
 }
 

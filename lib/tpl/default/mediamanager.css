@@ -1,19 +1,17 @@
+/* Layout */
+
 .mediamanager {
     width: 100%;
     overflow-x: auto;
 }
 
-.mediamanager .mediamanager-slider {
-
-}
-
-.mediamanager .mediamanager-slider .layout {
+#mediamanager__layout .layout {
     margin-left: 5px;
     margin-right: 5px;
     float: left;
 }
 
-.mediamanager .scroll-container {
+#mediamanager__layout .scroll-container {
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -21,43 +19,44 @@
     text-align: left;
 }
 
-.background-container {
+#mediamanager__layout .background-container {
     background-color: __background_alt__;
     margin-bottom: 10px;
     padding: 10px;
     text-align: left;
 }
 
-.mediamanager-link-thumbnails {
-    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
-    padding-left: 30px;
-    display: inline-block;
-    width: 0;
-    overflow: hidden;
-
-    margin-left: 10px;
+#mediamanager__layout .background-container .icon {
+    margin-right: 5px;
 }
 
-.mediamanager-link-list {
-    background: url('../../images/icon-list.png') 0 -4px no-repeat;
-    padding-left: 30px;
-    display: inline-block;
-    width: 0;
-    overflow: hidden;
+#mediamanager__layout_namespaces {
+    width: 25%;
+    min-width: 125px;
 }
 
-.mediamanager-block-sort {
-    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
-    padding-left: 30px;
-    display: block;
-    float: right;
+#mediamanager__layout_list {
+    width: 40%;
+    min-width: 375px;
 }
 
-.mediamanager-link-thumbnails:hover,
-.mediamanager-link-list:hover {
-    width: auto;
-    margin-right: 10px;
+#mediamanager__layout_detail {
+    width: 30%;
+    min-width: 200px;
 }
+
+.ui-resizable-e:hover {
+    background-color: #dadada;
+}
+
+/* Namespaces tree */
+
+.idx .selected {
+    background-color: __highlight__;
+    font-weight: bold;
+}
+
+/* Tabs */
 
 .mediamanager-tabs a {
     font-weight: bold;
@@ -66,13 +65,7 @@
     padding: 10px;
     padding-bottom: 5px;
     padding-top: 5px;
-
     margin-right: 2px;
-
-    -moz-border-radius-topright: 10px;
-    -webkit-border-top-right-radius: 10px;
-    -moz-border-radius-topleft: 10px;
-    -webkit-border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
@@ -86,33 +79,54 @@
     opacity: 0.5;
 }
 
-.mediamanager-table td {
-    padding: 5px;
+/* Title links */
+
+#mediamanager__tabs_list {
+    display: inline;
 }
 
-.mediamanager-table tr:nth-child(2n+1){
-    background-color: __background_neu__;
+#mediamanager__link_thumbs {
+    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
+    padding-left: 30px;
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
+    margin-left: 10px;
 }
 
-.mediamanager-table {
-   background: expression(this.rowIndex % 2 == 0 ? "#ffffff" : "#f5f5f5");
+#mediamanager__link_list {
+    background: url('../../images/icon-list.png') 0 -4px no-repeat;
+    padding-left: 30px;
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
 }
 
-.mediamanager-table tr:hover {
-    background-color: __background_alt__;
+#mediamanager__link_thumbs:hover,
+#mediamanager__link_list:hover {
+    width: auto;
+    margin-right: 10px;
 }
 
-form.meta textarea.edit {
-    height: 8em;
-    width: 95%;
-    min-width: 95%;
-    max-width: 95%;
+#mediamanager__sort {
+    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
+    padding-left: 30px;
+    display: block;
+    float: right;
 }
 
-.mediamanager-file-list {
+/* File list */
+
+#mediamanager__file_list {
     padding: 0;
     margin: 0 !important;
 }
+
+#mediamanager__file_list li:hover {
+    background-color: #dadada;
+}
+
+/* Files thumbs view */
 
 .mediamanager-thumbs li {
     width: 100px;
@@ -129,9 +143,11 @@ form.meta textarea.edit {
     zoom: 1;
     position: relative;
 }
+
 * html .mediamanager-thumbs li {
     display: inline;
 }
+
 *+html .mediamanager-thumbs li {
     display: inline;
     height: 130px;
@@ -160,6 +176,11 @@ form.meta textarea.edit {
     white-space: nowrap;
 }
 
+.mediamanager-thumbs li .date {
+    font-style: italic;
+    white-space: normal;
+}
+
 .mediamanager-thumbs li input[type=checkbox] {
     display: none;
     float: left;
@@ -170,6 +191,8 @@ form.meta textarea.edit {
 .mediamanager-thumbs li input[type=checkbox]:checked {
     display: block;
 }
+
+/* Files list view */
 
 .mediamanager-list li {
     list-style: none;
@@ -194,7 +217,6 @@ form.meta textarea.edit {
 
 .mediamanager-list li .image img {
     width: 100%;
-    vertical-align: middle;
 }
 
 .mediamanager-list li .name,
@@ -208,8 +230,7 @@ form.meta textarea.edit {
     white-space: nowrap;
 }
 
-.mediamanager-list li .date,
-.mediamanager-thumbs li .date {
+.mediamanager-list li .date {
     font-style: italic;
     white-space: normal;
 }
@@ -238,16 +259,41 @@ form.meta textarea.edit {
     display: block;
 }
 
-.mediamanager-file-list li:hover {
-    background-color: #dadada;
+/* Upload panel */
+
+#mediamanager__layout div.upload {
+    padding-bottom: 0.5em;
 }
 
-.mediamanager-table-50 {
+/* File preview */
+
+#mediamanager__preview,
+#mediamanager__preview_buttons {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+#mediamanager__preview img {
+    width: 99%;
+}
+
+/* Meta data edit form */
+
+form.meta textarea.edit {
+    height: 8em;
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
+}
+
+/* File diff */
+
+#mediamanager__diff_table {
     padding: 0;
     margin: 0 !important;
 }
 
-.mediamanager-table-50 li {
+#mediamanager__diff_table li {
     width: 48%;
     display: inline-block;
     margin: 0;
@@ -258,33 +304,13 @@ form.meta textarea.edit {
     color: black;
 }
 
-* html .mediamanager-table-50 li {
+* html #mediamanager__diff_table li {
     display: inline;
 }
 
-.mediamanager-preview {
-    text-align: center;
-    margin-bottom: 5px;
-}
+/* Image diff */
 
-.ui-resizable-e:hover {
-    background-color: #dadada;
-}
-
-.idx .selected {
-    background-color: __highlight__;
-    font-weight: bold;
-}
-
-.mediamanager div.upload {
-    padding-bottom: 0.5em;
-}
-
-.background-container .icon {
-    margin-right: 5px;
-}
-
-.mediamanager dl.img_tags dd.highlighted{
+#mediamanager__layout dl.img_tags dd.highlighted{
     background-color: __highlight__;
 }
 
