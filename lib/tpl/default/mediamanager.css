@@ -1,11 +1,11 @@
 /* Layout */
 
-.mediamanager {
+#mediamanager__page {
     width: 100%;
-    overflow-x: auto;
 }
 
-#mediamanager__layout .layout {
+#mediamanager__layout .layout,
+#mediamanager__layout .layout-resizable {
     margin-left: 5px;
     margin-right: 5px;
     float: left;
@@ -31,18 +31,18 @@
 }
 
 #mediamanager__layout_namespaces {
-    width: 25%;
+    width: 15%;
     min-width: 125px;
 }
 
 #mediamanager__layout_list {
-    width: 40%;
+    width: 47%;
     min-width: 375px;
 }
 
 #mediamanager__layout_detail {
-    width: 30%;
-    min-width: 200px;
+    width: 33%;
+    min-width: 265px;
 }
 
 .ui-resizable-e:hover {

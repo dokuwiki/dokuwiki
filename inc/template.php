@@ -1455,10 +1455,10 @@ function tpl_media() {
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
-    echo '<div class="mediamanager" id="id-mediamanager">';
+    echo '<div id="mediamanager__page">';
     echo '<div id="mediamanager__layout">';
 
-    echo '<div id="mediamanager__layout_namespaces" class="layout resizable" >';
+    echo '<div id="mediamanager__layout_namespaces" class="layout-resizable" >';
     html_msgarea();
     echo '<div class="mediamanager-tabs">';
     echo '<a href="#" class="selected">'.hsc($lang['namespaces']).'</a>';
@@ -1472,7 +1472,7 @@ function tpl_media() {
     echo '</div>';
     echo '</div>';
 
-    echo '<div id="mediamanager__layout_list" class="layout resizable" >';
+    echo '<div id="mediamanager__layout_list" class="layout-resizable" >';
     tpl_fileList();
     echo '</div>';
 
