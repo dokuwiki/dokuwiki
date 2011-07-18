@@ -398,7 +398,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($fn, $conf['fmode']);
         msg($lang['uploadsucc'],1);
-        media_notify($id,$fn,$imime);
+        media_notify($id,$fn,$imime,$old);
         // add a log entry to the media changelog
         if ($REV){
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, $lang['restored'], $REV);
@@ -485,7 +485,7 @@ function media_contentcheck($file,$mime){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function media_notify($id,$file,$mime){
+function media_notify($id,$file,$mime,$old_rev=false){
     global $lang;
     global $conf;
     global $INFO;
@@ -503,6 +503,11 @@ function media_notify($id,$file,$mime){
     $text = str_replace('@MIME@',$mime,$text);
     $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
+    if ($old_rev) {
+        $text = str_replace('@OLD@', ml($id, "rev=$old_rev", true, '&', true), $text);
+    } else {
+        $text = str_replace('@OLD@', '', $text);
+    }
 
     if(empty($conf['mailprefix'])) {
         $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
