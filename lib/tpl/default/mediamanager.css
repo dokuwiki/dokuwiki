@@ -299,6 +299,24 @@ form.meta textarea.edit {
     max-width: 95%;
 }
 
+/* Revisions form */
+
+#mediamanager__details #page__revisions ul {
+    margin-left: 10px;
+    list-style-type: none;
+}
+
+#mediamanager__details #page__revisions ul li div.li div {
+    font-size: 12px;
+    color: gray;
+    padding-left: 18px;
+}
+
+#mediamanager__details #page__revisions ul li div.li input {
+    position: relative;
+    top: 1px;
+}
+
 /* File diff */
 
 #mediamanager__diff_table {

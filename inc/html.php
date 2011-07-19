@@ -483,8 +483,10 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement($id);
         $form->addElement(form_makeCloseTag('a'));
 
+        if ($media_id) $form->addElement(form_makeOpenTag('div'));
+
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' &ndash; ');
+        if (!$media_id) $form->addElement(' &ndash; ');
         if (!$media_id) $form->addElement(htmlspecialchars($INFO['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
@@ -502,6 +504,9 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement('('.$lang['current'].')');
+
+        if ($media_id) $form->addElement(form_makeCloseTag('div'));
+
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeCloseTag('li'));
     }
@@ -555,8 +560,10 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement($id);
         }
 
+        if ($media_id) $form->addElement(form_makeOpenTag('div'));
+
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' &ndash; ');
+        if (!$media_id) $form->addElement(' &ndash; ');
         $form->addElement(htmlspecialchars($info['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
@@ -570,6 +577,8 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement($info['ip']);
         }
         $form->addElement(form_makeCloseTag('span'));
+
+        if ($media_id) $form->addElement(form_makeCloseTag('div'));
 
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeCloseTag('li'));
