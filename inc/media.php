@@ -1361,35 +1361,43 @@ function media_printfile_thumbs($item,$auth,$jump=false){
  */
 function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
-    if (!$fullscreen) $size = 120;
-    else $size = 90;
-    $w = (int) $item['meta']->getField('File.Width');
-    $h = (int) $item['meta']->getField('File.Height');
-    if($w>$size || $h>$size){
-        if (!$fullscreen) {
-            $ratio = $item['meta']->getResizeRatio($size);
-        } else {
-            $ratio = $item['meta']->getResizeRatio($size,$size);
+    if (!$fullscreen) {
+        $size_array[] = 120;
+    } else {
+        $size_array = array(90, 40);
+    }
+    foreach ($size_array as $index => $size) {
+        $w = (int) $item['meta']->getField('File.Width');
+        $h = (int) $item['meta']->getField('File.Height');
+        if($w>$size || $h>$size){
+            if (!$fullscreen) {
+                $ratio = $item['meta']->getResizeRatio($size);
+            } else {
+                $ratio = $item['meta']->getResizeRatio($size,$size);
+            }
+            $w = floor($w * $ratio);
+            $h = floor($h * $ratio);
         }
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-    }
-    $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
-    $p = array();
-    $p['width']  = $w;
-    if (!$fullscreen) $p['height'] = $h;
-    $p['alt']    = $item['id'];
-    $p['class']  = 'thumb';
-    $att = buildAttributes($p);
+        $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
+        $p = array();
+        if (!$fullscreen) {
+            $p['width']  = $w;
+            $p['height'] = $h;
+        }
+        $p['alt']    = $item['id'];
+        $p['class']  = 'thumb';
+        $att = buildAttributes($p);
 
-    // output
-    if ($fullscreen) {
-        echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(array('image' => hsc($item['id']))).'">';
-        echo '<div><img src="'.$src.'" '.$att.' /></div>';
-        echo '</a>';
-        return 1;
+        // output
+        if ($fullscreen) {
+            echo '<a name="d_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
+                media_managerURL(array('image' => hsc($item['id']))).'">';
+            echo '<div><img src="'.$src.'" '.$att.' /></div>';
+            echo '</a>';
+        }
     }
+
+    if ($fullscreen) return '';
 
     echo '<div class="detail">';
     echo '<div class="thumb">';

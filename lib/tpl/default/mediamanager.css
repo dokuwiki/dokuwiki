@@ -36,13 +36,13 @@
 }
 
 #mediamanager__layout_list {
-    width: 47%;
+    width: 45%;
     min-width: 375px;
 }
 
 #mediamanager__layout_detail {
-    width: 33%;
-    min-width: 265px;
+    width: 35%;
+    min-width: 300px;
 }
 
 .ui-resizable-e:hover {
@@ -66,6 +66,10 @@
     padding-bottom: 5px;
     padding-top: 5px;
     margin-right: 2px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -webkit-border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
@@ -153,14 +157,20 @@
     height: 130px;
 }
 
-.mediamanager-thumbs li .image {
+.mediamanager-thumbs li .image,
+.mediamanager-thumbs li .image0 {
     width: 100%;
     height: 90px;
     display: block;
     overflow: hidden;
 }
 
-.mediamanager-thumbs li .image div {
+.mediamanager-thumbs li .image1 {
+    display: none;
+}
+
+.mediamanager-thumbs li .image div,
+.mediamanager-thumbs li .image0 div {
     vertical-align: middle;
     display: table-cell;
     width: 100px;
@@ -207,16 +217,18 @@
     background-color: __background_neu__;
 }
 
-.mediamanager-list li .image {
+.mediamanager-list li .image,
+.mediamanager-list li .image1 {
     width: 10%;
     display: block;
     overflow: hidden;
     float: left;
     height: 40px;
+    text-align: center;
 }
 
-.mediamanager-list li .image img {
-    width: 100%;
+.mediamanager-list li .image0 {
+    display: none;
 }
 
 .mediamanager-list li .name,
@@ -240,7 +252,8 @@
     max-height: 16px;
 }
 
-.mediamanager-list li .image div {
+.mediamanager-list li .image div,
+.mediamanager-list li .image1 div {
     vertical-align: middle;
     text-align: center;
     display: table-cell;
@@ -325,6 +338,8 @@ form.meta textarea.edit {
     position: absolute;
     top: 0;
     left: 0;
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
     opacity: 0.5;
 }
 
