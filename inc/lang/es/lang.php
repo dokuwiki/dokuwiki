@@ -23,6 +23,7 @@
  * @author Fernando J. Gómez <fjgomez@gmail.com>
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
+ * @author emezeta <emezeta@infoprimo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -175,6 +176,9 @@ $lang['yours']                 = 'Tu versión';
 $lang['diff']                  = 'Muestra diferencias a la versión actual';
 $lang['diff2']                 = 'Muestra las diferencias entre las revisiones seleccionadas';
 $lang['difflink']              = 'Enlace a la vista de comparación';
+$lang['diff_type']             = 'Ver diferencias';
+$lang['diff_inline']           = 'En línea';
+$lang['diff_side']             = 'Lado a lado';
 $lang['line']                  = 'Línea';
 $lang['breadcrumb']            = 'Traza';
 $lang['youarehere']            = 'Estás aquí';

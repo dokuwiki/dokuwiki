@@ -113,7 +113,7 @@ function js_out(){
     js_runonstart("initSizeCtl('size__ctl','wiki__text')");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
-        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].")");
+        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
     }
     js_runonstart('scrollToMarker()');
     js_runonstart('focusMarker()');
@@ -188,9 +188,11 @@ function js_cacheok($cache,$files){
     $ctime = @filemtime($cache);
     if(!$ctime) return false; //There is no cache
 
+    global $config_cascade;
+
     // some additional files to check
     $files = array_merge($files, getConfigFiles('main'));
-    $files[] = DOKU_CONF.'userscript.js';
+    $files[] = $config_cascade['userscript']['default'];
     $files[] = __FILE__;
 
     // now walk the files

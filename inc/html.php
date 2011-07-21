@@ -355,7 +355,7 @@ function html_search(){
         }
         print '</ul> ';
         //clear float (see http://www.complexspiral.com/publications/containing-floats/)
-        print '<div class="clearer">&nbsp;</div>';
+        print '<div class="clearer"></div>';
         print '</div>';
     }
     flush();
@@ -457,11 +457,7 @@ function html_revisions($first=0){
         $form->addElement($date);
         $form->addElement(form_makeCloseTag('span'));
 
-        $form->addElement(form_makeTag('img', array(
-                        'src' =>  DOKU_BASE.'lib/images/blank.gif',
-                        'width' => '15',
-                        'height' => '11',
-                        'alt'    => '')));
+        $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
 
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
@@ -499,11 +495,7 @@ function html_revisions($first=0){
                             'name' => 'rev2[]',
                             'value' => $rev)));
         }else{
-            $form->addElement(form_makeTag('img', array(
-                            'src' => DOKU_BASE.'lib/images/blank.gif',
-                            'width' => 14,
-                            'height' => 11,
-                            'alt' => '')));
+            $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
         }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
@@ -524,11 +516,7 @@ function html_revisions($first=0){
             $form->addElement($ID);
             $form->addElement(form_makeCloseTag('a'));
         }else{
-            $form->addElement(form_makeTag('img', array(
-                            'src' => DOKU_BASE.'lib/images/blank.gif',
-                            'width' => '15',
-                            'height' => '11',
-                            'alt'   => '')));
+            $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
             $form->addElement($ID);
         }
 
@@ -1004,7 +992,7 @@ function html_diff($text='',$intro=true,$type=null){
     if($intro) print p_locale_xhtml('diff');
 
     if (!$text) {
-        ptln('<p class="difflink">');
+        ptln('<div class="diffoptions">');
 
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
@@ -1030,8 +1018,8 @@ function html_diff($text='',$intro=true,$type=null){
                         'rev2[1]'  => $r_rev,
                         'difftype' => $type,
                       ));
-        ptln('<br /><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a>');
-        ptln('</p>');
+        ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a></p>');
+        ptln('</div>');
     }
     ?>
     <table class="diff diff_<?php echo $type?>">
@@ -1109,7 +1097,7 @@ function html_register(){
     $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], null, 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block', array('size'=>'50')));
     if (!$conf['autopasswd']) {
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
@@ -1436,7 +1424,7 @@ function html_admin(){
 
     // data security check
     // @todo: could be checked and only displayed if $conf['savedir'] is under the web root
-    echo '<a style="border:none; float:right;" target="_blank"
+    echo '<a style="border:none; float:right;"
             href="http://www.dokuwiki.org/security#web_access_security">
             <img src="data/security.png" alt="Your data directory seems to be protected properly."
              onerror="this.parentNode.style.display=\'none\'" /></a>';

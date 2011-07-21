@@ -422,7 +422,13 @@ function resolve_mediaid($ns,&$page,&$exists){
  */
 function resolve_pageid($ns,&$page,&$exists){
     global $conf;
+    global $ID;
     $exists = false;
+
+    //empty address should point to current page
+    if ($page === "") {
+        $page = $ID;
+    }
 
     //keep hashlink if exists then clean both parts
     if (strpos($page,'#')) {

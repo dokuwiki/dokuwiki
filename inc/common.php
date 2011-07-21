@@ -284,7 +284,7 @@ function breadcrumbs(){
     $name = noNSorNS($ID);
     if (useHeading('navigation')) {
         // get page title
-        $title = p_get_first_heading($ID,true);
+        $title = p_get_first_heading($ID,METADATA_RENDER_USING_SIMPLE_CACHE);
         if ($title) {
             $name = $title;
         }
@@ -845,7 +845,7 @@ function pageTemplate($id){
             // load the content
             $data['tpl'] = io_readFile($data['tplfile']);
         }
-        if($data['doreplace']) parsePageTemplate(&$data);
+        if($data['doreplace']) parsePageTemplate($data);
     }
     $evt->advise_after();
     unset($evt);

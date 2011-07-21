@@ -137,8 +137,8 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
                 .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
                 .'/>' . $this->getLang('autosubmit') .'<br />'
                 .'</label>'
-                .'<input type="hidden" name="do" value="admin">'
-                .'<input type="hidden" name="page" value="popularity">';
+                .'<input type="hidden" name="do" value="admin" />'
+                .'<input type="hidden" name="page" value="popularity" />';
         }
         $form .= '<input type="submit" class="button" value="'.$this->getLang('submit').'"/>'
             .'</fieldset>'

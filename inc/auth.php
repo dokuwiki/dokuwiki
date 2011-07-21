@@ -189,8 +189,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
         if ($auth->checkPass($user,$pass)){
             // make logininfo globally available
             $_SERVER['REMOTE_USER'] = $user;
-            $secret = auth_cookiesalt();
-            if(!$sticky) $secret .= session_id; //bind non-sticky to session
+            $secret = auth_cookiesalt(!$sticky); //bind non-sticky to session
             auth_setCookie($user,PMA_blowfish_encrypt($pass,$secret),$sticky);
             return true;
         }else{
@@ -220,8 +219,7 @@ function auth_login($user,$pass,$sticky=false,$silent=false){
                 return true;
             }
             // no we don't trust it yet - recheck pass but silent
-            $secret = auth_cookiesalt();
-            if(!$sticky) $secret .= session_id(); //bind non-sticky to session
+            $secret = auth_cookiesalt(!$sticky); //bind non-sticky to session
             $pass = PMA_blowfish_decrypt($pass,$secret);
             return auth_login($user,$pass,$sticky,true);
         }
@@ -303,16 +301,19 @@ function auth_browseruid(){
  * and stored in this file.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- *
+ * @param   bool $addsession if true, the sessionid is added to the salt
  * @return  string
  */
-function auth_cookiesalt(){
+function auth_cookiesalt($addsession=false){
     global $conf;
     $file = $conf['metadir'].'/_htcookiesalt';
     $salt = io_readFile($file);
     if(empty($salt)){
         $salt = uniqid(rand(),true);
         io_saveFile($file,$salt);
+    }
+    if($addsession){
+        $salt .= session_id();
     }
     return $salt;
 }
@@ -814,11 +815,11 @@ function updateprofile() {
 
     if ($result = $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes))) {
         // update cookie and session with the changed data
-        $cookie = base64_decode($_COOKIE[DOKU_COOKIE]);
-        list($user,$sticky,$pass) = explode('|',$cookie,3);
-        if ($changes['pass']) $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt());
-
-        auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);
+        if ($changes['pass']){
+            list($user,$sticky,$pass) = auth_getCookie();
+            $pass = PMA_blowfish_encrypt($changes['pass'],auth_cookiesalt(!$sticky));
+            auth_setCookie($_SERVER['REMOTE_USER'],$pass,(bool)$sticky);
+        }
         return true;
     }
 }

@@ -7,7 +7,7 @@
  *
  * This is a piece of PHP code so PHP syntax applies!
  *
- * For help with the configuration see http://www.splitbrain.org/dokuwiki/wiki:config
+ * For help with the configuration see http://www.dokuwiki.org/config
  */
 
 

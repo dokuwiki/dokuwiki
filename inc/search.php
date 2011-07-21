@@ -616,7 +616,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
 
     if($type == 'f'){
         if($opts['hash']) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
-        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],false);
+        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
     }
 
     // finally add the item

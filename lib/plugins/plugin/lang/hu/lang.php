@@ -5,8 +5,8 @@
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
- * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
+ * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
 $lang['download']              = 'Új bővítmény letöltése és telepítése';
@@ -52,3 +52,4 @@ $lang['enabled']               = 'A(z) %s bővítmény bekapcsolva.';
 $lang['notenabled']            = 'A(z) %s bővítmény engedélyezése nem sikerült. Ellenőrizze a fájl-hozzáférési engedélyeket.';
 $lang['disabled']              = 'A(z) %s bővítmény kikapcsolva.';
 $lang['notdisabled']           = 'A(z) %s bővítmény kikapcsolása nem sikerült. Ellenőrizze a fájl-hozzáférési engedélyeket.';
+$lang['packageinstalled']      = 'A bővítmény csomag(ok) feltelepült(ek): %d plugin%s: %s';

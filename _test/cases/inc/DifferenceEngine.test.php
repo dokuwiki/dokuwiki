@@ -22,7 +22,7 @@ class differenceengine_test extends UnitTestCase {
 ');
         $this->assertEqual($tdf->format($df),
                            '<tr><td class="diff-blockheader" colspan="2">' . $lang['line'] . ' 1:</td>
-&nbsp; &nbsp;&nbsp;<td class="diff-blockheader" colspan="2">' . $lang['line'] . ' 1:</td>
+<td class="diff-blockheader" colspan="2">' . $lang['line'] . ' 1:</td>
 </tr>
 <tr><td>-</td><td class="diff-deletedline">example</td><td>+</td><td class="diff-addedline">example&nbsp;<strong>example2</strong></td></tr>
 ');

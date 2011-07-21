@@ -50,7 +50,7 @@ $rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
 
 $image = new FeedImage();
 $image->title = $conf['title'];
-$image->url = DOKU_URL."lib/images/favicon.ico";
+$image->url = tpl_getFavicon(true);
 $image->link = DOKU_URL;
 $rss->image = $image;
 

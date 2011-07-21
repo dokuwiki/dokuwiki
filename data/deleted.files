@@ -4,6 +4,9 @@
 # A copy of this list is maintained at
 # http://www.dokuwiki.org/install:upgrade#files_to_remove
 
+# removed in 2011-05-25
+conf/words.aspell.dist
+lib/styles/style.css
 
 # removed in 2010-11-07
 inc/lang/ar/subscribermail.txt

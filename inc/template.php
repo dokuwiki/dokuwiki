@@ -155,7 +155,7 @@ function tpl_toc($return=false){
         $toc = $TOC;
     }elseif(($ACT == 'show' || substr($ACT,0,6) == 'export') && !$REV && $INFO['exists']){
         // get TOC from metadata, render if neccessary
-        $meta = p_get_metadata($ID, false, true);
+        $meta = p_get_metadata($ID, false, METADATA_RENDER_USING_CACHE);
         if(isset($meta['internal']['toc'])){
             $tocok = $meta['internal']['toc'];
         }else{
@@ -986,7 +986,7 @@ function tpl_indexerWebBug(){
     $p = array();
     $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
         '&'.time();
-    $p['width']  = 1;
+    $p['width']  = 2;
     $p['height'] = 1;
     $p['alt']    = '';
     $att = buildAttributes($p);
@@ -1346,9 +1346,15 @@ function tpl_flush(){
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function tpl_getFavicon() {
-    if (file_exists(mediaFN('favicon.ico')))
-        return ml('favicon.ico');
+function tpl_getFavicon($abs=false) {
+    if (file_exists(mediaFN('favicon.ico'))) {
+        return ml('favicon.ico', '', true, '', $abs);
+    }
+
+    if($abs) {
+        return DOKU_URL.substr(DOKU_TPL.'images/favicon.ico', strlen(DOKU_REL));
+    }
+
     return DOKU_TPL.'images/favicon.ico';
 }
 

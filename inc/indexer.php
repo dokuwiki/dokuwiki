@@ -10,7 +10,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 4);
+define('INDEXER_VERSION', 5);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -438,12 +438,14 @@ class Doku_Indexer {
             $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
-        unset($text);
-        foreach ($wordlist as $i => &$word) {
-            $word = (preg_match('/[^0-9A-Za-z\*]/u', $word)) ?
+        foreach ($wordlist as $i => $word) {
+            $wordlist[$i] = (preg_match('/[^0-9A-Za-z\*]/u', $word)) ?
                 utf8_strtolower($word) : strtolower($word);
-            if ($wc && ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-              || array_search($word, $stopwords) !== false))
+        }
+
+        foreach ($wordlist as $i => $word) {
+            if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
+              || array_search($word, $stopwords) !== false)
                 unset($wordlist[$i]);
         }
         return array_values($wordlist);
@@ -484,6 +486,9 @@ class Doku_Indexer {
         foreach ($result as $word => $res) {
             $final[$word] = array();
             foreach ($res as $wid) {
+                // handle the case when ($ixid < count($index)) has been false
+                // and thus $docs[$wid] hasn't been set.
+                if (!isset($docs[$wid])) continue;
                 $hits = &$docs[$wid];
                 foreach ($hits as $hitkey => $hitcnt) {
                     // make sure the document still exists
@@ -852,6 +857,8 @@ class Doku_Indexer {
         $fh = @fopen($fn.'.tmp', 'w');
         if (!$fh) return false;
         fwrite($fh, join("\n", $lines));
+        if (!empty($lines))
+            fwrite($fh, "\n");
         fclose($fh);
         if (isset($conf['fperm']))
             chmod($fn.'.tmp', $conf['fperm']);
@@ -899,7 +906,7 @@ class Doku_Indexer {
             $line .= "\n";
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
-        if (!fh) return false;
+        if (!$fh) return false;
         $ih = @fopen($fn.'.idx', 'r');
         if ($ih) {
             $ln = -1;
@@ -1156,16 +1163,17 @@ function & idx_get_stopwords() {
  *
  * @param string        $page   name of the page to index
  * @param boolean       $verbose    print status messages
+ * @param boolean       $force  force reindexing even when the index is up to date
  * @return boolean              the function completed successfully
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_addPage($page, $verbose=false) {
+function idx_addPage($page, $verbose=false, $force=false) {
     // check if indexing needed
     $idxtag = metaFN($page,'.indexed');
-    if(@file_exists($idxtag)){
+    if(!$force && @file_exists($idxtag)){
         if(trim(io_readFile($idxtag)) == idx_get_version()){
             $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($ID))){
+            if($last > @filemtime(wikiFN($page))){
                 if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
                 return false;
             }
@@ -1186,7 +1194,7 @@ function idx_addPage($page, $verbose=false) {
         @unlink($idxtag);
         return $result;
     }
-    $indexenabled = p_get_metadata($page, 'internal index', false);
+    $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
     if ($indexenabled === false) {
         $result = false;
         if (@file_exists($idxtag)) {
@@ -1204,8 +1212,8 @@ function idx_addPage($page, $verbose=false) {
 
     $body = '';
     $metadata = array();
-    $metadata['title'] = p_get_metadata($page, 'title', false);
-    if (($references = p_get_metadata($page, 'relation references', false)) !== null)
+    $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
+    if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
         $metadata['relation_references'] = array_keys($references);
     else
         $metadata['relation_references'] = array();
@@ -1312,7 +1320,7 @@ function idx_listIndexLengths() {
         $dir = @opendir($conf['indexdir']);
         if ($dir === false)
             return array();
-        $idx[] = array();
+        $idx = array();
         while (($f = readdir($dir)) !== false) {
             if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
                 $i = substr($f, 1, -4);

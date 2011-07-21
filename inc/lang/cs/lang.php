@@ -9,6 +9,7 @@
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
+ * @author Vojta Beran <xmamut@email.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -158,9 +159,12 @@ $lang['quickhits']             = 'Odpovídající stránky';
 $lang['toc']                   = 'Obsah';
 $lang['current']               = 'aktuální';
 $lang['yours']                 = 'Vaše verze';
-$lang['diff']                  = 'zobrazit rozdíly vůči aktuální verzi';
-$lang['diff2']                 = 'zobrazit rozdíly mezi vybranými verzemi';
+$lang['diff']                  = 'Zobrazit rozdíly vůči aktuální verzi';
+$lang['diff2']                 = 'Zobrazit rozdíly mezi vybranými verzemi';
 $lang['difflink']              = 'Odkaz na výstup diff';
+$lang['diff_type']             = 'Prohlédnout rozdíly:';
+$lang['diff_inline']           = 'Vložené';
+$lang['diff_side']             = 'Přidané';
 $lang['line']                  = 'Řádek';
 $lang['breadcrumb']            = 'Historie';
 $lang['youarehere']            = 'Umístění';
