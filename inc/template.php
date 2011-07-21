@@ -972,8 +972,7 @@ function _tpl_img_action($data, $param=NULL) {
 }
 
 /**
- * This function inserts a 1x1 pixel gif which in reality
- * is the indexer function.
+ * This function inserts a small gif which in reality is the indexer function.
  *
  * Should be called somewhere at the very end of the main.php
  * template
@@ -986,7 +985,7 @@ function tpl_indexerWebBug(){
     $p = array();
     $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
         '&'.time();
-    $p['width']  = 2;
+    $p['width']  = 2; //no more 1x1 px image because we live in times of ad blockers...
     $p['height'] = 1;
     $p['alt']    = '';
     $att = buildAttributes($p);

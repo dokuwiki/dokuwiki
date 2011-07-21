@@ -30,26 +30,9 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         global $USERINFO;
 
         if(!$conf['useacl']) return true; //no ACL - then no checks
+        if(trim($conf['xmlrpcuser']) == '') return true; //no restrictions
 
-        $allowed = explode(',',$conf['xmlrpcuser']);
-        $allowed = array_map('trim', $allowed);
-        $allowed = array_unique($allowed);
-        $allowed = array_filter($allowed);
-
-        if(!count($allowed)) return true; //no restrictions
-
-        $user   = $_SERVER['REMOTE_USER'];
-        $groups = (array) $USERINFO['grps'];
-
-        if(in_array($user,$allowed)) return true; //user explicitly mentioned
-
-        //check group memberships
-        foreach($groups as $group){
-            if(in_array('@'.$group,$allowed)) return true;
-        }
-
-        //still here? no access!
-        return false;
+        return auth_isMember($conf['xmlrpcuser'],$_SERVER['REMOTE_USER'],(array) $USERINFO['grps']);
     }
 
     /**

@@ -100,8 +100,8 @@ if (!class_exists('configuration')) {
 
       if ($this->locked) return false;
 
-#      $file = eval('return '.$this->_local_file.';');
-      $file = $this->_local_files[0];
+      // write back to the last file in the local config cascade
+      $file = end($this->_local_files);
 
       // backup current file (remove any existing backup)
       if (@file_exists($file) && $backup) {

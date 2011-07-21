@@ -179,6 +179,7 @@ $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
 $meta['mailprefix']  = array('string');
 $meta['compress']    = array('onoff');
+$meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');

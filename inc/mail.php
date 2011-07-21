@@ -104,6 +104,9 @@ function _mail_send_action($data) {
     $headers = isset($data['headers']) ? $data['headers'] : null;
     $params = isset($data['params']) ? $data['params'] : null;
 
+    // discard mail request if no recipients are available
+    if(trim($to) === '' && trim($cc) === '' && trim($bcc) === '') return false;
+    
     // end additional code to support event ... original mail_send() code from here
 
     if(defined('MAILHEADER_ASCIIONLY')){

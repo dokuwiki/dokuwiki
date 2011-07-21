@@ -435,7 +435,11 @@ function media_notify($id,$file,$mime){
     $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
 
-    $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+    if(empty($conf['mailprefix'])) {
+        $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+    } else {
+        $subject = '['.$conf['mailprefix'].'] '.$lang['mail_upload'].' '.$id;
+    }
 
     mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
 }
@@ -763,15 +767,10 @@ function media_nstree($ns){
     search($data,$conf['mediadir'],'search_index',array('ns' => $ns, 'nofiles' => true));
 
     // wrap a list with the root level around the other namespaces
-    $item = array( 'level' => 0, 'id' => '',
-            'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
+    array_unshift($data, array('level' => 0, 'id' => '', 'open' =>'true',
+                               'label' => '['.$lang['mediaroot'].']'));
 
-    echo '<ul class="idx">';
-    echo media_nstree_li($item);
-    echo media_nstree_item($item);
     echo html_buildlist($data,'idx','media_nstree_item','media_nstree_li');
-    echo '</li>';
-    echo '</ul>';
 }
 
 /**
@@ -811,6 +810,7 @@ function media_nstree_li($item){
         $img   = DOKU_BASE.'lib/images/plus.gif';
         $alt   = '+';
     }
+    // TODO: only deliver an image if it actually has a subtree...
     return '<li class="'.$class.'">'.
         '<img src="'.$img.'" alt="'.$alt.'" />';
 }

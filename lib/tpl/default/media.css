@@ -32,6 +32,10 @@
     margin-bottom: 0.5em;
 }
 
+#media__manager a.select {
+    cursor: pointer;
+}
+
 /* --- Tree formatting --- */
 
 #media__tree img {

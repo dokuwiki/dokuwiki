@@ -7,6 +7,7 @@
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['menu']                  = 'Beállító Központ';
 $lang['error']                 = 'Helytelen érték miatt a módosítások nem mentődtek. Nézd át a módosításokat, és ments újra.
@@ -105,6 +106,7 @@ $lang['fetchsize']             = 'Maximális méret (bájtban), amit a fetch.php
 $lang['notify']                = 'Az oldal-változásokat erre az e-mail címre küldje';
 $lang['registernotify']        = 'Értesítés egy újonnan regisztrált felhasználóról erre az e-mail címre';
 $lang['mailfrom']              = 'Az automatikusan küldött levelekben használt e-mail cím';
+$lang['mailprefix']            = 'Előtag az automatikus e-mailek tárgyában';
 $lang['gzip_output']           = 'gzip tömörítés használata xhtml-hez (Content-Encoding)';
 $lang['gdlib']                 = 'GD Lib verzió';
 $lang['im_convert']            = 'Útvonal az ImageMagick csomag convert parancsához';

@@ -18,7 +18,6 @@ div.notify {
 
 /* modal windows */
 .JSpopup,
-#link__wiz,
-#media__popup {
+#link__wiz {
     display: none;
 }

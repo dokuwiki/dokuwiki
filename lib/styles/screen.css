@@ -44,13 +44,22 @@ div.notify {
 
 /* modal windows */
 .JSpopup,
-#link__wiz,
-#media__popup {
+#link__wiz {
     position: absolute;
     background-color: #fff;
     color: #000;
     z-index: 20;
     overflow: hidden;
+}
+
+/* media manager popup toggle buttons */
+
+#media__popup_content button.button {
+    border-style: outset;
+}
+
+#media__popup_content button.selected {
+    border-style: inset;
 }
 
 

@@ -15,6 +15,7 @@
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author Rune Rasmussen syntaxerror.no@gmail.com
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
 $lang['acl_group']             = 'Gruppe';
