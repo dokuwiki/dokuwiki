@@ -626,9 +626,14 @@ function html_recent($first=0, $show_changes='both'){
      * decide if this is the last page or is there another one.
      * This is the cheapest solution to get this information.
      */
-    if (!$show_changes || $show_changes == 'both') $flags = RECENTS_MEDIA_PAGES_MIXED;
-    if ($show_changes == 'mediafiles') $flags = RECENTS_MEDIA_CHANGES;
-    if ($show_changes == 'pages') $flags = 0;
+    if ($show_changes == 'mediafiles') {
+        $flags = RECENTS_MEDIA_CHANGES;
+    } elseif ($show_changes == 'pages') {
+        $flags = 0;
+    } else {
+        $show_changes = 'both';
+        $flags = RECENTS_MEDIA_PAGES_MIXED;
+    }
 
     $recents = getRecents($first,$conf['recent'] + 1,getNS($ID),$flags);
     if(count($recents) == 0 && $first != 0){
@@ -651,29 +656,18 @@ function html_recent($first=0, $show_changes='both'){
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
 
-    $form->addElement(form_makeOpenTag('div', array('class' => 'changestypenav')));
-    $attrs = array('name' => 'show_changes',
-                   'value' => 'pages',
-                   '_text' => $lang['pages_changes']);
-    if ($show_changes == 'pages') $attrs['checked'] = 'checked';
-    $form->addElement(form_radiofield($attrs));
-    $attrs = array('name' => 'show_changes',
-                   'value' => 'mediafiles',
-                   '_text' => $lang['media_changes']);
-    if ($show_changes == 'mediafiles') $attrs['checked'] = 'checked';
-    $form->addElement(form_radiofield($attrs));
-    $attrs = array('name' => 'show_changes',
-                   'value' => 'both',
-                   '_text' => $lang['both_changes'] );
-    if (empty($show_changes) || $show_changes == 'both') $attrs['checked'] = 'checked';
-    $form->addElement(form_radiofield($attrs));
-    $form->addElement(form_makeTag('input', array(
-                    'type'  => 'submit',
-                    'value' => $lang['btn_apply'],
-                    'title' => $lang['btn_apply'],
-                    'class' => 'button'
-                    )));
-    $form->addElement(form_makeCloseTag('div'));
+    $form->addElement(form_makeListboxField(
+                'show_changes',
+                array(
+                    'pages'      => $lang['pages_changes'],
+                    'mediafiles' => $lang['media_changes'],
+                    'both'       => $lang['both_changes']),
+                $show_changes,
+                $lang['changes_type'],
+                '','',
+                array('class'=>'quickselect')));
+
+    $form->addElement(form_makeButton('submit', 'recent', $lang['btn_apply']));
 
     $form->addElement(form_makeOpenTag('ul'));
 
@@ -690,7 +684,13 @@ function html_recent($first=0, $show_changes='both'){
         $form->addElement($date);
         $form->addElement(form_makeCloseTag('span'));
 
-        $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => wl($recent['id'],"do=diff", false, '&'))));
+        if ($recent['media']) {
+            $href = media_managerURL(array('tab_details' => 'history',
+                'mediado' => 'diff', 'image' => $recent['id']), '&');
+        } else {
+            $href = wl($recent['id'],"do=diff", false, '&');
+        }
+        $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => $href)));
         $form->addElement(form_makeTag('img', array(
                         'src'   => DOKU_BASE.'lib/images/diff.png',
                         'width' => 15,
@@ -700,7 +700,12 @@ function html_recent($first=0, $show_changes='both'){
                         )));
         $form->addElement(form_makeCloseTag('a'));
 
-        $form->addElement(form_makeOpenTag('a', array('class' => 'revisions_link', 'href' => wl($recent['id'],"do=revisions",false,'&'))));
+        if ($recent['media']) {
+            $href = media_managerURL(array('tab_details' => 'history', 'image' => $recent['id']), '&');
+        } else {
+            $href = wl($recent['id'],"do=revisions",false,'&');
+        }
+        $form->addElement(form_makeOpenTag('a', array('class' => 'revisions_link', 'href' => $href)));
         $form->addElement(form_makeTag('img', array(
                         'src'   => DOKU_BASE.'lib/images/history.png',
                         'width' => 12,
@@ -710,8 +715,19 @@ function html_recent($first=0, $show_changes='both'){
                         )));
         $form->addElement(form_makeCloseTag('a'));
 
-        $form->addElement(html_wikilink(':'.$recent['id'],useHeading('navigation')?null:$recent['id']));
+        if ($recent['media']) {
+            // Prepare fileicons
+            list($ext,$mime,$dl) = mimetype($recent['id'],false);
+            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+            $class = 'mediafile mf_'.$class;
 
+            $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id']), '&');
+            $form->addElement(form_makeOpenTag('a', array('class' => 'wikilink1 '.$class, 'href' => $href)));
+            $form->addElement($recent['id']);
+            $form->addElement(form_makeCloseTag('a'));
+        } else {
+            $form->addElement(html_wikilink(':'.$recent['id'],useHeading('navigation')?null:$recent['id']));
+        }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
         $form->addElement(' &ndash; '.htmlspecialchars($recent['sum']));
         $form->addElement(form_makeCloseTag('span'));
@@ -744,7 +760,7 @@ function html_recent($first=0, $show_changes='both'){
                     'value' => $lang['btn_newer'],
                     'accesskey' => 'n',
                     'title' => $lang['btn_newer'].' [N]',
-                    'class' => 'button'
+                    'class' => 'button not_hide'
                     )));
         $form->addElement(form_makeCloseTag('div'));
     }
@@ -756,7 +772,7 @@ function html_recent($first=0, $show_changes='both'){
                         'value' => $lang['btn_older'],
                         'accesskey' => 'p',
                         'title' => $lang['btn_older'].' [P]',
-                        'class' => 'button'
+                        'class' => 'button not_hide'
                         )));
         $form->addElement(form_makeCloseTag('div'));
     }

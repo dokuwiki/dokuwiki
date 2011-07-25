@@ -181,9 +181,11 @@ $lang['external_edit'] = 'external edit';
 $lang['summary']    = 'Edit summary';
 $lang['noflash']    = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']   = 'Download Snippet';
-$lang['pages_changes'] = 'Show pages changes';
-$lang['media_changes'] = 'Show media files changes';
-$lang['both_changes'] = 'Show both';
+
+$lang['changes_type']  = 'View changes of';
+$lang['pages_changes'] = 'Pages';
+$lang['media_changes'] = 'Media files';
+$lang['both_changes']  = 'Both pages and media files';
 
 $lang['mail_newpage']  = 'page added:';
 $lang['mail_changed']  = 'page changed:';

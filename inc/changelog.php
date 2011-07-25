@@ -204,6 +204,7 @@ function getRecents($first,$num,$ns='',$flags=0){
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && @$media_rec['date'] >= @$rec['date']) {
             $media_lines_position--;
             $x = $media_rec;
+            $x['media'] = true;
             $media_rec = false;
         } else {
             $lines_position--;
