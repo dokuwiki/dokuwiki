@@ -7,6 +7,7 @@
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
+ * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
