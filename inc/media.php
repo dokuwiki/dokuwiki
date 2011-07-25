@@ -521,7 +521,7 @@ function media_notify($id,$file,$mime,$old_rev=false){
 /**
  * List all files in a given Media namespace
  */
-function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false){
+function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
     global $conf;
     global $lang;
     $ns = cleanID($ns);
@@ -540,7 +540,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false){
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
         search($data,$conf['mediadir'],'search_media',
-                array('showmsg'=>true,'depth'=>1),$dir);
+                array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
@@ -614,7 +614,7 @@ function media_tabs_details($image, $selected=false){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_tab_files_options($ns){
+function media_tab_files_options($ns, $sort){
     global $lang;
 
     echo '<div class="background-container">';
@@ -633,7 +633,16 @@ function media_tab_files_options($ns){
     echo '</div>';
 
     echo '<div id="mediamanager__sort">';
-    echo $lang['media_sort'];
+    $form = new Doku_Form(array('action'=>media_managerURL(array(), '&'), 'id' => 'mediamanager__form_sort'));
+    $form->addElement(form_makeListboxField(
+                        'sort',
+                        array(
+                            'name' => $lang['media_sort_name'],
+                            'date' => $lang['media_sort_date']),
+                        $sort,
+                        $lang['media_sort']));
+    $form->addElement(form_makeButton('submit', '', $lang['btn_apply']));
+    $form->printForm();
     echo '</div>';
 
     echo '<div class="clearer"></div>';
@@ -649,10 +658,12 @@ function media_tab_files($ns,$auth=null,$jump='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    media_tab_files_options($ns);
+    $sort = $_REQUEST['sort'];
+    media_tab_files_options($ns, $sort);
 
     echo '<div class="scroll-container" >';
     $view = $_REQUEST['view'];
+
     if($auth < AUTH_READ){
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }else{
@@ -661,7 +672,7 @@ function media_tab_files($ns,$auth=null,$jump='') {
         } else {
             echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
         }
-        media_filelist($ns,$auth,$jump,true);
+        media_filelist($ns,$auth,$jump,true,$sort);
         echo '</ul>';
     }
     echo '</div>';
