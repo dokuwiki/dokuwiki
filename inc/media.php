@@ -996,6 +996,8 @@ function media_diff($image, $ns, $auth) {
     global $lang;
     global $conf;
 
+    if ($auth < AUTH_READ || !$image) return '';
+
     $rev1 = (int) $_REQUEST['rev'];
 
     if(is_array($_REQUEST['rev2'])){
@@ -1054,6 +1056,24 @@ function _media_file_diff($data) {
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth){
     global $lang, $config_cascade;
+    $is_img = preg_match("/\.(jpe?g|gif|png)$/", $image);
+
+    if ($is_img) {
+        $difftype = $_REQUEST['difftype'];
+
+        $form = new Doku_Form(array('action'=>media_managerURL(array(), '&'),
+            'id' => 'mediamanager__form_diffview'));
+        $form->addElement('<input type=hidden name=rev2[] value='.$l_rev.' ></input>');
+        $form->addElement('<input type=hidden name=rev2[] value='.$r_rev.' ></input>');
+        $form->addHidden('mediado', 'diff');
+        $form->printForm();
+
+        echo '<div id="mediamanager__diff" >';
+
+        if ($difftype == 'opacity') return media_image_diff($image, $l_rev, $r_rev, $l_meta, 'opacity');
+        if ($difftype == 'portions') return media_image_diff($image, $l_rev, $r_rev, $l_meta, 'portions');
+
+    }
 
     echo '<ul id="mediamanager__diff_table">';
 
@@ -1108,8 +1128,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth){
 
     echo '</ul>';
 
-    media_image_diff($image, $l_rev, $r_rev, $l_meta, 'opacity');
-    media_image_diff($image, $l_rev, $r_rev, $l_meta, 'portions');
+    if ($is_img) echo '</div>';
 }
 
 /**

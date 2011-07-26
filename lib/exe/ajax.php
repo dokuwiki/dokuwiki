@@ -236,6 +236,19 @@ function ajax_mediadetails(){
 }
 
 /**
+ * Returns image diff representation for mediamanager
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function ajax_mediadiff(){
+    global $NS;
+
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    $NS = $_POST['ns'];
+    $auth = auth_quickaclcheck("$ns:*");
+    media_diff($image, $NS, $auth);
+}
+
+/**
  * Return sub index for index view
  *
  * @author Andreas Gohr <andi@splitbrain.org>

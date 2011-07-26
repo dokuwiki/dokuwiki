@@ -348,4 +348,9 @@ $lang['media_perm_upload']= 'Sorry, you don\'t have enough rights to upload file
 $lang['media_update']     = 'Upload new version';
 $lang['media_restore']    = 'Restore this version';
 
+$lang['js']['media_diff']          = 'View differences:';
+$lang['js']['media_diff_both']     = 'Both images';
+$lang['js']['media_diff_opacity']  = 'Changeable opacity of images';
+$lang['js']['media_diff_portions'] = 'Portions of images';
+
 //Setup VIM: ex: et ts=2 :

@@ -321,7 +321,8 @@ form.meta textarea.edit {
 
 #mediamanager__diff_table {
     padding: 0;
-    margin: 0 !important;
+    margin: 0;
+    margin-top: 10px;
 }
 
 #mediamanager__diff_table li {
@@ -345,10 +346,15 @@ form.meta textarea.edit {
     background-color: __highlight__;
 }
 
+#mediamanager__form_diffview {
+    margin-bottom: 10px;
+}
+
 #mediamanager__diff_opacity_image1,
 #mediamanager__diff_portions_image1 {
     width: 99%;
     position: relative;
+    margin-top: 10px;
 }
 
 #mediamanager__diff_opacity_image2 {
@@ -372,5 +378,5 @@ form.meta textarea.edit {
 #mediamanager__opacity_slider,
 #mediamanager__portions_slider {
     margin: 10px;
-    width: 99%;
+    width: 95%;
 }
