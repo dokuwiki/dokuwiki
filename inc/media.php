@@ -1338,7 +1338,7 @@ function media_printicon($filename){
         $icon = DOKU_BASE.'lib/images/fileicons/file.png';
     }
 
-    echo '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
+    return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
 
 }
 
@@ -1363,7 +1363,7 @@ function media_printfile_thumbs($item,$auth,$jump=false){
     } else {
         echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
             media_managerURL(array('image' => hsc($item['id']))).'"><div>';
-        media_printicon($item['id']);
+        echo media_printicon($item['id']);
         echo '</div></a>';
     }
     //echo '<input type=checkbox />';

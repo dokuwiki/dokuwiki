@@ -680,13 +680,20 @@ function html_recent($first=0, $show_changes='both'){
 
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
 
+        if ($recent['media']) {
+            $form->addElement(media_printicon($recent['id']));
+        } else {
+            $icon = DOKU_BASE.'lib/images/fileicons/file.png';
+            $form->addElement('<img src="'.$icon.'" alt="'.$filename.'" class="icon" />');
+        }
+
         $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
         $form->addElement($date);
         $form->addElement(form_makeCloseTag('span'));
 
         if ($recent['media']) {
             $href = media_managerURL(array('tab_details' => 'history',
-                'mediado' => 'diff', 'image' => $recent['id']), '&');
+                'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
         } else {
             $href = wl($recent['id'],"do=diff", false, '&');
         }
@@ -701,7 +708,8 @@ function html_recent($first=0, $show_changes='both'){
         $form->addElement(form_makeCloseTag('a'));
 
         if ($recent['media']) {
-            $href = media_managerURL(array('tab_details' => 'history', 'image' => $recent['id']), '&');
+            $href = media_managerURL(array('tab_details' => 'history',
+                'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
         } else {
             $href = wl($recent['id'],"do=revisions",false,'&');
         }
@@ -716,13 +724,8 @@ function html_recent($first=0, $show_changes='both'){
         $form->addElement(form_makeCloseTag('a'));
 
         if ($recent['media']) {
-            // Prepare fileicons
-            list($ext,$mime,$dl) = mimetype($recent['id'],false);
-            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
-            $class = 'mediafile mf_'.$class;
-
-            $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id']), '&');
-            $form->addElement(form_makeOpenTag('a', array('class' => 'wikilink1 '.$class, 'href' => $href)));
+            $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+            $form->addElement(form_makeOpenTag('a', array('class' => 'wikilink1', 'href' => $href)));
             $form->addElement($recent['id']);
             $form->addElement(form_makeCloseTag('a'));
         } else {
