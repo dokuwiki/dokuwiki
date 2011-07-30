@@ -22,7 +22,7 @@ function usage($show_examples = false) {
         -h, --help     get this help
         -x, --examples get also usage examples
         -k, --keep     comma separated list of languages, -e is always implied
-        -e, --english  keeps english, dummy to use without -k";
+        -e, --english  keeps english, dummy to use without -k\n";
     if ( $show_examples ) {
         print "\n
     EXAMPLES
