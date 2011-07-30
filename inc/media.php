@@ -659,6 +659,12 @@ function media_tab_files($ns,$auth=null,$jump='') {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     $sort = $_REQUEST['sort'];
+    if (!$sort && @strpos($_COOKIE['DOKU_PREFS'], 'sort')) {
+        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+            for ($i = 0; $i < count($parts); $i+=2){
+                if ($parts[$i] == 'sort') $sort = $parts[$i+1];
+            }
+    }
     media_tab_files_options($ns, $sort);
 
     echo '<div class="scroll-container" >';

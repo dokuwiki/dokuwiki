@@ -40,7 +40,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort=false){
     }
     closedir($dh);
     if ($sort == 'date') {
-        @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_ASC, $files);
+        @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
     } else {
         sort($files);
     }
