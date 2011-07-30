@@ -21,6 +21,7 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -121,10 +122,10 @@ $lang['js']['mediaclose']      = 'Fermer';
 $lang['js']['mediainsert']     = 'Insérer';
 $lang['js']['mediadisplayimg'] = 'Afficher l\'image.';
 $lang['js']['mediadisplaylnk'] = 'N\'afficher que le lien.';
-$lang['js']['mediasmall']      = 'Petite version';
-$lang['js']['mediamedium']     = 'Version moyenne';
-$lang['js']['medialarge']      = 'Grande version';
-$lang['js']['mediaoriginal']   = 'Version originale';
+$lang['js']['mediasmall']      = 'Petite taille';
+$lang['js']['mediamedium']     = 'taille moyenne';
+$lang['js']['medialarge']      = 'Grande taille';
+$lang['js']['mediaoriginal']   = 'taille d\'origine';
 $lang['js']['medialnk']        = 'Lien vers la page de détail';
 $lang['js']['mediadirect']     = 'Lien direct vers l\'original';
 $lang['js']['medianolnk']      = 'Aucun lien';

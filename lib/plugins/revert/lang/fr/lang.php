@@ -14,6 +14,7 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
  */
 $lang['menu']                  = 'Gestionnaire de réversions';
 $lang['filter']                = 'Trouver les pages spammées ';
