@@ -763,7 +763,7 @@ function html_recent($first=0, $show_changes='both'){
                     'value' => $lang['btn_newer'],
                     'accesskey' => 'n',
                     'title' => $lang['btn_newer'].' [N]',
-                    'class' => 'button not_hide'
+                    'class' => 'button show'
                     )));
         $form->addElement(form_makeCloseTag('div'));
     }
@@ -775,7 +775,7 @@ function html_recent($first=0, $show_changes='both'){
                         'value' => $lang['btn_older'],
                         'accesskey' => 'p',
                         'title' => $lang['btn_older'].' [P]',
-                        'class' => 'button not_hide'
+                        'class' => 'button show'
                         )));
         $form->addElement(form_makeCloseTag('div'));
     }

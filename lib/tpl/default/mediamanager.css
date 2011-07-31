@@ -313,7 +313,7 @@ form.meta textarea.edit {
 
 #mediamanager__details #page__revisions ul li div.li div {
     font-size: 12px;
-    color: gray;
+    color: __text_neu__;
     padding-left: 18px;
 }
 
@@ -338,7 +338,7 @@ form.meta textarea.edit {
     padding: 2px;
     vertical-align: top;
     zoom: 1;
-    color: black;
+    color: __text__;
 }
 
 * html #mediamanager__diff_table li {
