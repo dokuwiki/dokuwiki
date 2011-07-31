@@ -2,6 +2,11 @@
 
 #mediamanager__page {
     width: 100%;
+    overflow-x: auto;
+}
+
+#mediamanager__layout {
+    min-width: 840px;
 }
 
 #mediamanager__layout .layout,
@@ -42,7 +47,7 @@
 
 #mediamanager__layout_detail {
     width: 35%;
-    min-width: 300px;
+    min-width: 290px;
 }
 
 .ui-resizable-e:hover {
