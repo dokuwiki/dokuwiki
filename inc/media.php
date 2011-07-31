@@ -1161,12 +1161,19 @@ function media_image_diff($image, $l_rev, $r_rev, $meta, $type) {
     $l_src = ml($image, $l_more);
     $r_src = ml($image, $r_more);
 
-    echo '<div id="mediamanager__diff_'.$type.'_image1" style="background-image: url(\''.$l_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
-    echo '<div id="mediamanager__diff_'.$type.'_image2" style="background-image: url(\''.$r_src.'\'); max-width: '.$l_size[0].'px; height: '.$l_size[1].'px; " >';
+    // slider
+    echo '<div id="mediamanager__'.$type.'_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
+
+    // two image's in div's
+    echo '<div id="mediamanager__diff_layout">';
+    echo '<div id="mediamanager__diff_'.$type.'_image1" style="max-width: '.$l_size[0].'px;">'; //  height: '.$l_size[1].'px;
+    echo '<img src="'.$l_src.'" />';
+    echo '</div>';
+    echo '<div id="mediamanager__diff_'.$type.'_image2" style="max-width: '.$l_size[0].'px;">'; // height: '.$l_size[1].'px;
+    echo '<img src="'.$r_src.'" />';
     echo '</div>';
     echo '</div>';
 
-    echo '<div id="mediamanager__'.$type.'_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
     echo '</div>';
 }
 

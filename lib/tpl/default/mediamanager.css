@@ -355,18 +355,22 @@ form.meta textarea.edit {
     margin-bottom: 10px;
 }
 
-#mediamanager__diff_opacity_image1,
-#mediamanager__diff_portions_image1 {
-    width: 99%;
+#mediamanager__diff_layout {
     position: relative;
-    margin-top: 10px;
 }
 
-#mediamanager__diff_opacity_image2 {
-    width: 100%;
+#mediamanager__diff_layout div {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+}
+
+#mediamanager__diff_layout div img {
+    width: 100%;
+}
+
+#mediamanager__diff_opacity_image2 {
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
@@ -374,10 +378,8 @@ form.meta textarea.edit {
 
 #mediamanager__diff_portions_image2 {
     width: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
     border-right: 1px solid red;
+    overflow: hidden;
 }
 
 #mediamanager__opacity_slider,
