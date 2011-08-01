@@ -1258,7 +1258,7 @@ function html_edit(){
         $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
         $out  = $lang['licenseok'];
         $out .= ' <a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
-        if(isset($conf['target']['extern'])) $out .= ' target="'.$conf['target']['extern'].'"';
+        if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
         $out .= '>'.$license[$conf['license']]['name'].'</a>';
         $form->addElement($out);
         $form->addElement(form_makeCloseTag('div'));
