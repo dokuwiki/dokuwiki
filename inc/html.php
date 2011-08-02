@@ -626,11 +626,12 @@ function html_recent($first=0, $show_changes='both'){
      * decide if this is the last page or is there another one.
      * This is the cheapest solution to get this information.
      */
-    if ($show_changes == 'mediafiles') {
+    $flags = 0;
+    if ($show_changes == 'mediafiles' && $conf['mediarevisions']) {
         $flags = RECENTS_MEDIA_CHANGES;
     } elseif ($show_changes == 'pages') {
         $flags = 0;
-    } else {
+    } elseif ($conf['mediarevisions']) {
         $show_changes = 'both';
         $flags = RECENTS_MEDIA_PAGES_MIXED;
     }
@@ -656,18 +657,20 @@ function html_recent($first=0, $show_changes='both'){
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
 
-    $form->addElement(form_makeListboxField(
-                'show_changes',
-                array(
-                    'pages'      => $lang['pages_changes'],
-                    'mediafiles' => $lang['media_changes'],
-                    'both'       => $lang['both_changes']),
-                $show_changes,
-                $lang['changes_type'],
-                '','',
-                array('class'=>'quickselect')));
+    if ($conf['mediarevisions']) {
+        $form->addElement(form_makeListboxField(
+                    'show_changes',
+                    array(
+                        'pages'      => $lang['pages_changes'],
+                        'mediafiles' => $lang['media_changes'],
+                        'both'       => $lang['both_changes']),
+                    $show_changes,
+                    $lang['changes_type'],
+                    '','',
+                    array('class'=>'quickselect')));
 
-    $form->addElement(form_makeButton('submit', 'recent', $lang['btn_apply']));
+        $form->addElement(form_makeButton('submit', 'recent', $lang['btn_apply']));
+    }
 
     $form->addElement(form_makeOpenTag('ul'));
 

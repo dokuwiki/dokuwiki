@@ -410,10 +410,11 @@ function rss_buildItems(&$rss,&$data,$opt){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssRecentChanges($opt){
+    global $conf;
     $flags = RECENTS_SKIP_DELETED;
     if(!$opt['show_minor']) $flags += RECENTS_SKIP_MINORS;
-    if($opt['content_type'] == 'media') $flags += RECENTS_MEDIA_CHANGES;
-    if($opt['content_type'] == 'both') $flags += RECENTS_MEDIA_PAGES_MIXED;
+    if($opt['content_type'] == 'media' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_CHANGES;
+    if($opt['content_type'] == 'both' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_PAGES_MIXED;
 
     $recents = getRecents(0,$opt['items'],$opt['namespace'],$flags);
     return $recents;

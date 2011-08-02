@@ -331,7 +331,8 @@ function media_save($file, $id, $ow, $auth, $move) {
 
     //check for overwrite
     $overwrite = @file_exists($fn);
-    if($overwrite && (!$ow || $auth < AUTH_DELETE)) {
+    $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
+    if($overwrite && (!$ow || $auth < $auth_ow)) {
         return array($lang['uploadexist'], 0);
     }
     // check for valid content
@@ -426,6 +427,8 @@ function media_saveOldRevision($id){
     $oldf = mediaFN($id);
     if(!@file_exists($oldf)) return '';
     $date = filemtime($oldf);
+    if (!$conf['mediarevisions']) return $date;
+
     $newf = mediaFN($id,$date);
     io_makeFileDir($newf);
     if(copy($oldf, $newf)) {
@@ -503,7 +506,7 @@ function media_notify($id,$file,$mime,$old_rev=false){
     $text = str_replace('@MIME@',$mime,$text);
     $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
-    if ($old_rev) {
+    if ($old_rev && $conf['mediarevisions']) {
         $text = str_replace('@OLD@', ml($id, "rev=$old_rev", true, '&', true), $text);
     } else {
         $text = str_replace('@OLD@', '', $text);
@@ -593,7 +596,7 @@ function media_tabs_files($selected=false){
  * @param string $selected - opened tab
  */
 function media_tabs_details($image, $selected=false){
-    global $lang;
+    global $lang, $conf;
 
     echo '<div class="mediamanager-tabs" id="mediamanager__tabs_details">';
 
@@ -603,7 +606,9 @@ function media_tabs_details($image, $selected=false){
     if ($mime == 'image/jpeg') {
         media_tab(media_managerURL(array('tab_details' => 'edit')), 'edit', $lang['media_edittab'], $selected);
     }
-    media_tab(media_managerURL(array('tab_details' => 'history')), 'history', $lang['media_historytab'], $selected);
+    if ($conf['mediarevisions']) {
+        media_tab(media_managerURL(array('tab_details' => 'history')), 'history', $lang['media_historytab'], $selected);
+    }
 
     echo '<div class="clearer"></div>';
     echo '</div>';
@@ -849,7 +854,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_preview_buttons($image, $auth, $rev=false) {
-    global $lang;
+    global $lang, $conf;
 
     echo '<div id="mediamanager__preview_buttons">';
 
@@ -875,6 +880,11 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         $form->printForm();
 
+    }
+
+    $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
+    if($auth >= $auth_ow && !$rev){
+
         // upload new version button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_update',
             'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'), '&')));
@@ -882,7 +892,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->printForm();
     }
 
-    if($auth >= AUTH_DELETE && $rev){
+    if($auth >= AUTH_DELETE && $rev && $conf['mediarevisions']){
 
         // restore button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
@@ -1001,7 +1011,7 @@ function media_diff($image, $ns, $auth) {
     global $lang;
     global $conf;
 
-    if ($auth < AUTH_READ || !$image) return '';
+    if ($auth < AUTH_READ || !$image || !$conf['mediarevisions']) return '';
 
     $rev1 = (int) $_REQUEST['rev'];
 
@@ -1035,7 +1045,11 @@ function media_diff($image, $ns, $auth) {
     }else{                        // no revision was given, compare previous to current
         $r_rev = '';
         $revs = getRevisions($image, 0, 1, 8192, true);
-        $l_rev = $revs[0];
+        if (file_exists(mediaFN($image, $revs[0]))) {
+            $l_rev = $revs[0];
+        } else {
+            $l_rev = '';
+        }
     }
 
     // prepare event data
@@ -1190,7 +1204,8 @@ function media_image_diff($image, $l_rev, $r_rev, $meta, $type) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_restore($image, $rev, $auth){
-    if ($auth < AUTH_DELETE) return false;
+    global $conf;
+    if ($auth < AUTH_DELETE || !$conf['mediarevisions']) return false;
     if (!$image || !file_exists(mediaFN($image))) return false;
     if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
     list($iext,$imime,$dl) = mimetype($image);

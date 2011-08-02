@@ -1140,7 +1140,7 @@ function tpl_fileList(){
     global $JUMPTO;
 
     $opened_tab = $_REQUEST['tab_files'];
-    if (!$opened_tab) $opened_tab = 'files';
+    if (!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
     if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
 
     media_tabs_files($opened_tab);
@@ -1172,8 +1172,7 @@ function tpl_fileList(){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_fileDetails($image, $rev){
-    global $AUTH;
-    global $NS;
+    global $AUTH, $NS, $conf;
 
     if (!$image || !file_exists(mediaFN($image))) return '';
     if ($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
@@ -1181,7 +1180,17 @@ function tpl_fileDetails($image, $rev){
     $do = $_REQUEST['mediado'];
 
     $opened_tab = $_REQUEST['tab_details'];
-    if (!$opened_tab) $opened_tab = 'view';
+
+    $tab_array = array('view');
+    list($ext, $mime) = mimetype($image);
+    if ($mime == 'image/jpeg') {
+        $tab_array[] = 'edit';
+    }
+    if ($conf['mediarevisions']) {
+        $tab_array[] = 'history';
+    }
+
+    if (!$opened_tab || !in_array($opened_tab, $tab_array)) $opened_tab = 'view';
     if ($_REQUEST['edit']) $opened_tab = 'edit';
     if ($do == 'restore') $opened_tab = 'view';
 
@@ -1197,7 +1206,7 @@ function tpl_fileDetails($image, $rev){
         media_tab_edit($image, $NS, $AUTH);
         echo '</div>';
 
-    } elseif ($opened_tab == 'history') {
+    } elseif ($opened_tab == 'history' && $conf['mediarevisions']) {
         echo '<div id="mediamanager__details">';
         media_tab_history($image,$NS,$AUTH);
         echo '</div>';
@@ -1446,7 +1455,7 @@ function tpl_getFavicon($abs=false) {
  */
 function tpl_media() {
     //
-    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
     $fullscreen = true;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 

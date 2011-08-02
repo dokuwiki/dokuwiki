@@ -84,9 +84,9 @@
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
     }
 
-    if ($_REQUEST['rev']) $REV = (int) $_REQUEST['rev'];
+    if ($_REQUEST['rev'] && $conf['mediarevisions']) $REV = (int) $_REQUEST['rev'];
 
-    if($_REQUEST['mediado'] == 'restore'){
+    if($_REQUEST['mediado'] == 'restore' && $conf['mediarevisions']){
         $JUMPTO = media_restore($_REQUEST['image'], $REV, $AUTH);
     }
 
