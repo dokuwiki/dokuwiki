@@ -1176,7 +1176,7 @@ function tpl_fileDetails($image, $rev){
     global $NS;
 
     if (!$image || !file_exists(mediaFN($image))) return '';
-    if ($rev && !file_exists(mediaFN($image, $rev))) return '';
+    if ($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
     if (isset($NS) && getNS($image) != $NS) return '';
     $do = $_REQUEST['mediado'];
 

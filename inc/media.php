@@ -905,14 +905,13 @@ function media_preview_buttons($image, $auth, $rev=false) {
  * @param JpegMeta $meta
  * @return array
  */
-function media_image_preview_size($image, $rev, $meta) {
+function media_image_preview_size($image, $rev, $meta, $size = 500) {
     if (!preg_match("/\.(jpe?g|gif|png)$/", $image)) return false;
 
     $info = getimagesize(mediaFN($image, $rev));
     $w = (int) $info[0];
     $h = (int) $info[1];
 
-    $size = 500;
     if($meta && ($w > $size || $h > $size)){
         $ratio = $meta->getResizeRatio($size, $size);
         $w = floor($w * $ratio);
@@ -1017,6 +1016,10 @@ function media_diff($image, $ns, $auth) {
     }else{
         $rev2 = (int) $_REQUEST['rev2'];
     }
+
+    if ($rev1 && !file_exists(mediaFN($image, $rev1))) $rev1 = false;
+    if ($rev2 && !file_exists(mediaFN($image, $rev2))) $rev2 = false;
+
     if($rev1 && $rev2){            // two specific revisions wanted
         // make sure order is correct (older on the left)
         if($rev1 < $rev2){
@@ -1477,7 +1480,7 @@ function media_printimgdetail($item, $fullscreen=false){
  * @param string $amp - separator
  * @return string - link
  */
-function media_managerURL($params=false, $amp='&amp;') {
+function media_managerURL($params=false, $amp='&amp;', $abs=false) {
     global $conf;
     global $ID;
 
@@ -1498,7 +1501,7 @@ function media_managerURL($params=false, $amp='&amp;') {
         unset($gets['tab_details']);
     }
 
-    return wl($ID,$gets,false,$amp);
+    return wl($ID,$gets,$abs,$amp);
 }
 
 /**

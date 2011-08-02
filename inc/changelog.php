@@ -316,8 +316,7 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
-    $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
-    if((!@file_exists($fn)) && ($flags & RECENTS_SKIP_DELETED)) return false;
+    if(!@file_exists(wikiFN($recent['id'])) && !@file_exists(mediaFN($recent['id'])) && $flags & RECENTS_SKIP_DELETED) return false;
 
     return $recent;
 }
