@@ -695,20 +695,28 @@ function html_recent($first=0, $show_changes='both'){
         $form->addElement(form_makeCloseTag('span'));
 
         if ($recent['media']) {
-            $href = media_managerURL(array('tab_details' => 'history',
-                'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
+            if ($diff) {
+                $href = media_managerURL(array('tab_details' => 'history',
+                    'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+            }
         } else {
             $href = wl($recent['id'],"do=diff", false, '&');
         }
-        $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => $href)));
-        $form->addElement(form_makeTag('img', array(
-                        'src'   => DOKU_BASE.'lib/images/diff.png',
-                        'width' => 15,
-                        'height'=> 11,
-                        'title' => $lang['diff'],
-                        'alt'   => $lang['diff']
-                        )));
-        $form->addElement(form_makeCloseTag('a'));
+
+        if ($recent['media'] && !$diff) {
+            $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
+        } else {
+            $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => $href)));
+            $form->addElement(form_makeTag('img', array(
+                            'src'   => DOKU_BASE.'lib/images/diff.png',
+                            'width' => 15,
+                            'height'=> 11,
+                            'title' => $lang['diff'],
+                            'alt'   => $lang['diff']
+                            )));
+            $form->addElement(form_makeCloseTag('a'));
+        }
 
         if ($recent['media']) {
             $href = media_managerURL(array('tab_details' => 'history',

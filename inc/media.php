@@ -313,7 +313,7 @@ function media_save($file, $id, $ow, $auth, $move) {
         }
     }
 
-    global $lang;
+    global $lang, $conf;
 
     // get filename
     $id   = cleanID($id,false,true);
@@ -603,7 +603,7 @@ function media_tabs_details($image, $selected=false){
     media_tab(media_managerURL(array('tab_details' => 'view')), 'view', $lang['media_viewtab'], $selected);
 
     list($ext, $mime) = mimetype($image);
-    if ($mime == 'image/jpeg') {
+    if ($mime == 'image/jpeg' && @file_exists(mediaFN($image))) {
         media_tab(media_managerURL(array('tab_details' => 'edit')), 'edit', $lang['media_edittab'], $selected);
     }
     if ($conf['mediarevisions']) {
@@ -867,12 +867,15 @@ function media_preview_buttons($image, $auth, $rev=false) {
     }
     $link = ml($image,$more,true,'&');
 
-    // view original file button
-    $form = new Doku_Form(array('action'=>$link, 'target'=>'_blank'));
-    $form->addElement(form_makeButton('submit','',$lang['mediaview']));
-    $form->printForm();
+    if (@file_exists(mediaFN($image, $rev))) {
 
-    if($auth >= AUTH_DELETE && !$rev){
+        // view original file button
+        $form = new Doku_Form(array('action'=>$link, 'target'=>'_blank'));
+        $form->addElement(form_makeButton('submit','',$lang['mediaview']));
+        $form->printForm();
+    }
+
+    if($auth >= AUTH_DELETE && !$rev && @file_exists(mediaFN($image))){
 
         // delete button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
@@ -892,7 +895,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->printForm();
     }
 
-    if($auth >= AUTH_DELETE && $rev && $conf['mediarevisions']){
+    if($auth >= AUTH_DELETE && $rev && $conf['mediarevisions'] && @file_exists(mediaFN($image, $rev))){
 
         // restore button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
@@ -916,7 +919,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
  * @return array
  */
 function media_image_preview_size($image, $rev, $meta, $size = 500) {
-    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)) return false;
+    if (!preg_match("/\.(jpe?g|gif|png)$/", $image) || !file_exists(mediaFN($image, $rev))) return false;
 
     $info = getimagesize(mediaFN($image, $rev));
     $w = (int) $info[0];
@@ -1206,7 +1209,8 @@ function media_image_diff($image, $l_rev, $r_rev, $meta, $type) {
 function media_restore($image, $rev, $auth){
     global $conf;
     if ($auth < AUTH_DELETE || !$conf['mediarevisions']) return false;
-    if (!$image || !file_exists(mediaFN($image))) return false;
+    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')));
+    if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return false;
     if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
     list($iext,$imime,$dl) = mimetype($image);
     $res = media_upload_finish(mediaFN($image, $rev),
@@ -1526,16 +1530,17 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_uploadform($ns, $auth, $fullscreen = false){
-    global $lang;
+    global $lang, $conf;
 
     if($auth < AUTH_UPLOAD) {
         echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
         return;
     }
+    $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
 
     $update = false;
     $id = '';
-    if ($auth >= AUTH_DELETE && $fullscreen && $_REQUEST['mediado'] == 'update') {
+    if ($auth >= $auth_ow && $fullscreen && $_REQUEST['mediado'] == 'update') {
         $update = true;
         $id = cleanID($_REQUEST['image']);
     }
@@ -1562,7 +1567,7 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
     $form->addElement(form_makeCloseTag('p'));
 
-    if($auth >= AUTH_DELETE){
+    if($auth >= $auth_ow){
         $form->addElement(form_makeOpenTag('p'));
         $attrs = array();
         if ($update) $attrs['checked'] = 'checked';

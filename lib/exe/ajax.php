@@ -222,7 +222,7 @@ function ajax_medialist(){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function ajax_mediadetails(){
-    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
     $fullscreen = true;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 

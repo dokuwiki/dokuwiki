@@ -1174,7 +1174,8 @@ function tpl_fileList(){
 function tpl_fileDetails($image, $rev){
     global $AUTH, $NS, $conf;
 
-    if (!$image || !file_exists(mediaFN($image))) return '';
+    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
+    if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return '';
     if ($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
     if (isset($NS) && getNS($image) != $NS) return '';
     $do = $_REQUEST['mediado'];
@@ -1201,7 +1202,7 @@ function tpl_fileDetails($image, $rev){
         media_tab_view($image, $NS, $AUTH, $rev);
         echo '</div>';
 
-    } elseif ($opened_tab == 'edit') {
+    } elseif ($opened_tab == 'edit' && !$removed) {
         echo '<div id="mediamanager__details">';
         media_tab_edit($image, $NS, $AUTH);
         echo '</div>';
