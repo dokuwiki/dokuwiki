@@ -423,11 +423,22 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
  * @return int - revision date
  */
 function media_saveOldRevision($id){
-    global $conf;
+    global $conf, $lang;
+
     $oldf = mediaFN($id);
     if(!@file_exists($oldf)) return '';
     $date = filemtime($oldf);
     if (!$conf['mediarevisions']) return $date;
+
+    if (!getRevisionInfo($id, $date, 8192, true)) {
+        // there was an external edit,
+        // there is no log entry for current version of file
+        if (!@file_exists(mediaMetaFN($id,'.changes'))) {
+            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
+        } else {
+            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_EDIT);
+        }
+    }
 
     $newf = mediaFN($id,$date);
     io_makeFileDir($newf);
