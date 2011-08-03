@@ -363,21 +363,23 @@ form.meta textarea.edit {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
 }
 
-#mediamanager__diff_layout div img {
+#mediamanager__diff_layout div img,
+#mediamanager__diff_opacity_image1,
+#mediamanager__diff_portions_image1 {
     width: 100%;
 }
 
 #mediamanager__diff_opacity_image2 {
+    width: 100%;
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
 }
 
 #mediamanager__diff_portions_image2 {
-    width: 50%;
+    width: 100%;
     border-right: 1px solid red;
     overflow: hidden;
 }
