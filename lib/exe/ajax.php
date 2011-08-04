@@ -248,6 +248,88 @@ function ajax_mediadiff(){
     media_diff($image, $NS, $auth);
 }
 
+function ajax_mediaupload(){
+    global $NS;
+    $NS = $_REQUEST['ns'];
+    $AUTH = auth_quickaclcheck("$NS:*");
+    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
+
+    if($_FILES['qqfile']['error']){
+        unset($_FILES['qqfile']);
+    }
+
+    if($_FILES['qqfile']['tmp_name']){
+        $id   = $_FILES['qqfile']['name'];
+        $file = $_FILES['qqfile']['tmp_name'];
+        list($ext,$mime,$dl) = mimetype($id);
+
+        $res = media_save(
+            array('name' => $file,
+                'mime' => $mime,
+                'ext'  => $ext),
+            $NS.':'.$id,
+            false,
+            $AUTH,
+            'move_uploaded_file'
+        );
+        if (!is_array($res)) {
+            $result = array('success'=>true);
+        }
+    }
+
+    if (isset($_GET['qqfile'])) {
+        $id = $_GET['qqfile'];
+        list($ext,$mime,$dl) = mimetype($id);
+        $input = fopen("php://input", "r");
+        $temp = tmpfile();
+        $realSize = stream_copy_to_stream($input, $temp);
+        fclose($input);
+        if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]) return false;
+        if (!($tmp = io_mktmpdir())) return false;
+        $path = $tmp.'/'.$id;
+        $target = fopen($path, "w");
+        fseek($temp, 0, SEEK_SET);
+        stream_copy_to_stream($temp, $target);
+        fclose($target);
+        $res = media_save(
+            array('name' => $path,
+                'mime' => $mime,
+                'ext'  => $ext),
+            $NS.':'.$id,
+            false,
+            $AUTH,
+            'copy'
+        );
+        unlink($path);
+        if ($tmp) dir_delete($tmp);
+        if (!is_array($res)) {
+            $result = array('success'=>true);
+        }
+    }
+    if (!$result) $result = array('error'=> 'Could not save uploaded file.');
+    echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+}
+
+function dir_delete($path) {
+    if (!is_string($path) || $path == "") return false;
+
+    if (is_dir($path) && !is_link($path)) {
+        if (!$dh = @opendir($path)) return false;
+
+        while ($f = readdir($dh)) {
+            if ($f == '..' || $f == '.') continue;
+            dir_delete("$path/$f");
+        }
+
+        closedir($dh);
+        return @rmdir($path);
+    } else {
+        return @unlink($path);
+    }
+
+    return false;
+}
+
 /**
  * Return sub index for index view
  *

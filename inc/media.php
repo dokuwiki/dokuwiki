@@ -1587,6 +1587,11 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     }
     html_form('upload', $form);
 
+    if ($fullscreen) {
+        echo '<div id="mediamanager__uploader" style="display:none"></div>';
+        return '';
+    }
+
     // prepare flashvars for multiupload
     $opt = array(
             'L_gridname'  => $lang['mu_gridname'] ,
