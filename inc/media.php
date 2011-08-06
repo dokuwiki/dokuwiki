@@ -1094,9 +1094,16 @@ function _media_file_diff($data) {
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     global $lang, $config_cascade;
-    $is_img = preg_match("/\.(jpe?g|gif|png)$/", $image);
 
+    $l_meta = new JpegMeta(mediaFN($image, $l_rev));
+    $r_meta = new JpegMeta(mediaFN($image, $r_rev));
+
+    $is_img = preg_match("/\.(jpe?g|gif|png)$/", $image);
     if ($is_img) {
+        $l_size = media_image_preview_size($image, $l_rev, $l_meta);
+        $r_size = media_image_preview_size($image, $r_rev, $r_meta);
+        $is_img = ($l_size && $r_size && ($l_size[0] >= 30 || $r_size[0] >= 30));
+
         $difftype = $_REQUEST['difftype'];
 
         if (!$fromajax) {
@@ -1110,19 +1117,14 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
             echo '<div id="mediamanager__diff" >';
         }
 
-        $l_meta = new JpegMeta(mediaFN($image, $l_rev));
-        $r_meta = new JpegMeta(mediaFN($image, $r_rev));
-
         if ($difftype == 'opacity' || $difftype == 'portions') {
-            media_image_diff($image, $l_rev, $r_rev, $l_meta, $difftype);
+            media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $difftype);
             if (!$fromajax) echo '</div>';
             return '';
         }
-
-        echo '<div class="mediamanager-preview">';
-
     }
 
+    echo '<div class="mediamanager-preview">';
     echo '<ul id="mediamanager__diff_table">';
 
     echo '<li>';
@@ -1140,9 +1142,6 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     echo '<li>';
     media_preview_buttons($image, $auth, $r_rev);
     echo '</li>';
-
-    $l_meta = new JpegMeta(mediaFN($image, $l_rev));
-    $r_meta = new JpegMeta(mediaFN($image, $r_rev));
 
     $l_tags = media_file_tags($l_meta);
     $r_tags = media_file_tags($r_meta);
@@ -1175,9 +1174,9 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     }
 
     echo '</ul>';
+    echo '</div>';
 
     if ($is_img && !$fromajax) echo '</div>';
-    if ($is_img) echo '</div>';
 }
 
 /**
@@ -1188,13 +1187,16 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
  * @param string $image
  * @param int $l_rev
  * @param int $r_rev
- * @param JpegMeta $meta
+ * @param array $l_size
+ * @param array $r_size
+ * @param string $type
  */
-function media_image_diff($image, $l_rev, $r_rev, $meta, $type) {
-    $l_size = media_image_preview_size($image, $l_rev, $meta);
-    $r_size = media_image_preview_size($image, $r_rev, $meta);
-
-    if (!$l_size || !$r_size || $l_size != $r_size || $l_size[0] < 30) return '';
+function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
+    if ($l_size != $r_size) {
+        if ($r_size[0] > $l_size[0]) {
+            $l_size = $r_size;
+        }
+    }
 
     echo '<div class="mediamanager-preview">';
 
