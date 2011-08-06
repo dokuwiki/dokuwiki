@@ -324,6 +324,10 @@ form.meta textarea.edit {
 
 /* File diff */
 
+#mediamanager__diff {
+    margin-top: 10px;
+}
+
 #mediamanager__diff_table {
     padding: 0;
     margin: 0;
@@ -365,21 +369,24 @@ form.meta textarea.edit {
     left: 0;
 }
 
-#mediamanager__diff_layout div img,
 #mediamanager__diff_opacity_image1,
 #mediamanager__diff_portions_image1 {
+    width: 97%;
+}
+
+#mediamanager__diff_layout div img {
     width: 100%;
 }
 
 #mediamanager__diff_opacity_image2 {
-    width: 100%;
+    width: 97%;
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
 }
 
 #mediamanager__diff_portions_image2 {
-    width: 100%;
+    width: 97%;
     border-right: 1px solid red;
     overflow: hidden;
 }

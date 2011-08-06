@@ -1021,7 +1021,7 @@ function media_details($image, $auth, $rev=false, $meta=false) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_diff($image, $ns, $auth) {
+function media_diff($image, $ns, $auth, $fromajax = false) {
     global $lang;
     global $conf;
 
@@ -1072,6 +1072,7 @@ function media_diff($image, $ns, $auth) {
     $data[2] = $r_rev;
     $data[3] = $ns;
     $data[4] = $auth;
+    $data[5] = $fromajax;
 
     // trigger event
     return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
@@ -1079,8 +1080,8 @@ function media_diff($image, $ns, $auth) {
 }
 
 function _media_file_diff($data) {
-    if(is_array($data) && count($data)===5) {
-        return media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4]);
+    if(is_array($data) && count($data)===6) {
+        return media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
     } else {
         return false;
     }
@@ -1091,24 +1092,34 @@ function _media_file_diff($data) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_file_diff($image, $l_rev, $r_rev, $ns, $auth){
+function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     global $lang, $config_cascade;
     $is_img = preg_match("/\.(jpe?g|gif|png)$/", $image);
 
     if ($is_img) {
         $difftype = $_REQUEST['difftype'];
 
-        $form = new Doku_Form(array('action'=>media_managerURL(array(), '&'),
-            'id' => 'mediamanager__form_diffview'));
-        $form->addElement('<input type=hidden name=rev2[] value='.$l_rev.' ></input>');
-        $form->addElement('<input type=hidden name=rev2[] value='.$r_rev.' ></input>');
-        $form->addHidden('mediado', 'diff');
-        $form->printForm();
+        if (!$fromajax) {
+            $form = new Doku_Form(array('action'=>media_managerURL(array(), '&'),
+                'id' => 'mediamanager__form_diffview'));
+            $form->addElement('<input type=hidden name=rev2[] value='.$l_rev.' ></input>');
+            $form->addElement('<input type=hidden name=rev2[] value='.$r_rev.' ></input>');
+            $form->addHidden('mediado', 'diff');
+            $form->printForm();
 
-        echo '<div id="mediamanager__diff" >';
+            echo '<div id="mediamanager__diff" >';
+        }
 
-        if ($difftype == 'opacity') return media_image_diff($image, $l_rev, $r_rev, $l_meta, 'opacity');
-        if ($difftype == 'portions') return media_image_diff($image, $l_rev, $r_rev, $l_meta, 'portions');
+        $l_meta = new JpegMeta(mediaFN($image, $l_rev));
+        $r_meta = new JpegMeta(mediaFN($image, $r_rev));
+
+        if ($difftype == 'opacity' || $difftype == 'portions') {
+            media_image_diff($image, $l_rev, $r_rev, $l_meta, $difftype);
+            if (!$fromajax) echo '</div>';
+            return '';
+        }
+
+        echo '<div class="mediamanager-preview">';
 
     }
 
@@ -1165,6 +1176,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth){
 
     echo '</ul>';
 
+    if ($is_img && !$fromajax) echo '</div>';
     if ($is_img) echo '</div>';
 }
 
