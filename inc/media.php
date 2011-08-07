@@ -1599,10 +1599,14 @@ function media_uploadform($ns, $auth, $fullscreen = false){
         $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check', $attrs));
         $form->addElement(form_makeCloseTag('p'));
     }
+    if ($fullscreen) {
+        echo '<div id="mediamanager__uploader"><noscript>';
+    }
+
     html_form('upload', $form);
 
     if ($fullscreen) {
-        echo '<div id="mediamanager__uploader" style="display:none"></div>';
+        echo '</noscript></div>';
         return '';
     }
 
