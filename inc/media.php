@@ -1422,9 +1422,9 @@ function media_printfile_thumbs($item,$auth,$jump=false){
 
     } else {
         echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(array('image' => hsc($item['id']))).'"><div>';
+            media_managerURL(array('image' => hsc($item['id']))).'"><span>';
         echo media_printicon($item['id']);
-        echo '</div></a>';
+        echo '</span></a>';
     }
     //echo '<input type=checkbox />';
     echo '<a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
@@ -1482,7 +1482,7 @@ function media_printimgdetail($item, $fullscreen=false){
         if ($fullscreen) {
             echo '<a name="d_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
                 media_managerURL(array('image' => hsc($item['id']))).'">';
-            echo '<div><img src="'.$src.'" '.$att.' /></div>';
+            echo '<span><img src="'.$src.'" '.$att.' /></span>';
             echo '</a>';
         }
     }

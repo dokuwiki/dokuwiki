@@ -124,6 +124,12 @@
     float: right;
 }
 
+* html #mediamanager__sort,
+*+html #mediamanager__sort {
+    position: relative;
+    margin-top: -18px;
+}
+
 /* File list */
 
 #mediamanager__file_list {
@@ -159,7 +165,6 @@
 
 *+html .mediamanager-thumbs li {
     display: inline;
-    height: 130px;
 }
 
 .mediamanager-thumbs li .image,
@@ -174,8 +179,8 @@
     display: none;
 }
 
-.mediamanager-thumbs li .image div,
-.mediamanager-thumbs li .image0 div {
+.mediamanager-thumbs li .image span,
+.mediamanager-thumbs li .image0 span {
     vertical-align: middle;
     display: table-cell;
     width: 100px;
@@ -188,6 +193,7 @@
 .mediamanager-thumbs li .date {
     display: block;
     overflow: hidden;
+    width: 90px;
     white-space: nowrap;
 }
 
@@ -257,8 +263,8 @@
     max-height: 16px;
 }
 
-.mediamanager-list li .image div,
-.mediamanager-list li .image1 div {
+.mediamanager-list li .image span,
+.mediamanager-list li .image1 span {
     vertical-align: middle;
     text-align: center;
     display: table-cell;
@@ -346,6 +352,9 @@ form.meta textarea.edit {
 }
 
 * html #mediamanager__diff_table li {
+    display: inline;
+}
+*+html #mediamanager__diff_table li {
     display: inline;
 }
 
