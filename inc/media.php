@@ -1600,13 +1600,13 @@ function media_uploadform($ns, $auth, $fullscreen = false){
         $form->addElement(form_makeCloseTag('p'));
     }
     if ($fullscreen) {
-        echo '<div id="mediamanager__uploader"><noscript>';
+        echo '<div id="mediamanager__uploader">';
     }
 
     html_form('upload', $form);
 
     if ($fullscreen) {
-        echo '</noscript></div>';
+        echo '</div>';
         return '';
     }
 

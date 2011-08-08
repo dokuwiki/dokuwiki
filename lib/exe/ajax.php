@@ -245,7 +245,7 @@ function ajax_mediadiff(){
     if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
     $NS = $_POST['ns'];
     $auth = auth_quickaclcheck("$ns:*");
-    media_diff($image, $NS, $auth);
+    media_diff($image, $NS, $auth, true);
 }
 
 function ajax_mediaupload(){
@@ -259,7 +259,8 @@ function ajax_mediaupload(){
     }
 
     if($_FILES['qqfile']['tmp_name']){
-        $id   = $_FILES['qqfile']['name'];
+        $id = $_REQUEST['file_name'];
+        if (!$id) $id = $_FILES['qqfile']['name'];
         $file = $_FILES['qqfile']['tmp_name'];
         list($ext,$mime,$dl) = mimetype($id);
 
@@ -268,7 +269,7 @@ function ajax_mediaupload(){
                 'mime' => $mime,
                 'ext'  => $ext),
             $NS.':'.$id,
-            false,
+            $_REQUEST['ow'],
             $AUTH,
             'move_uploaded_file'
         );
@@ -296,7 +297,7 @@ function ajax_mediaupload(){
                 'mime' => $mime,
                 'ext'  => $ext),
             $NS.':'.$id,
-            false,
+            (($_REQUEST['ow'] == 'true') ? true : false),
             $AUTH,
             'copy'
         );
