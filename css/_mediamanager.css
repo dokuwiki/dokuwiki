@@ -1,0 +1,219 @@
+/**
+ * This file provides styles for the media manager
+ * (mediamanager.php).
+ */
+
+/*____________ structure ____________*/
+
+html.popup {
+    overflow: auto;
+}
+
+#media__manager {
+    height: 100%;
+    overflow: hidden;
+}
+
+#mediamgr__aside {
+    width: 30%;
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    border-right: 1px solid __border__;
+}
+#mediamgr__aside .pad {
+    padding: .5em;
+}
+
+#mediamgr__content {
+    width: 69.7%;
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+}
+#mediamgr__content .pad {
+    padding: .5em;
+}
+
+#media__manager h1,
+#media__manager h2 {
+    font-size: 1.5em;
+    margin-bottom: .5em;
+    padding-bottom: .2em;
+    border-bottom: 1px solid __border__;
+}
+
+/* left side
+********************************************************************/
+
+/*____________ options ____________*/
+
+#media__opts {
+    margin-bottom: .5em;
+}
+
+#media__opts input {
+    margin-right: .3em;
+}
+#media__opts label {
+}
+
+/*____________ tree ____________*/
+
+#media__tree ul {
+    padding-left: .2em;
+}
+#media__tree ul li {
+    clear: left;
+    list-style-type: none;
+    list-style-image: none;
+    margin-left: 0;
+}
+#media__tree ul li img {
+    float: left;
+    padding: .5em .3em 0 0;
+}
+#media__tree ul li div.li {
+    display: inline;
+}
+#media__tree ul li li {
+    margin-left: 1.5em;
+}
+
+/* right side
+********************************************************************/
+
+/*____________ upload form ____________*/
+
+/* upload info */
+#media__content div.upload {
+    font-size: .9em;
+    margin-bottom: .5em;
+}
+
+#media__content form#dw__upload,
+#media__content div#dw__flashupload {
+    display: block;
+    border-bottom: solid 1px __border__;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+}
+#media__content form#dw__upload p {
+    margin-bottom: .5em;
+}
+
+#media__content form#dw__upload label {
+}
+#media__content form#dw__upload label.check {
+}
+#media__content form#dw__upload input.check {
+}
+#media__content form#dw__upload input.edit {
+}
+#media__content form#dw__upload img {
+}
+
+/*____________ file list ____________*/
+
+#media__content img.load {
+    margin: 1em auto;
+}
+
+#media__content .odd,
+#media__content .even {
+    padding: .5em;
+}
+#media__content .odd {
+    background-color: __background_alt__;
+}
+#media__content .even {
+}
+/* highlight newly uploaded or edited file */
+#media__content #scroll__here {
+    border: 1px dashed __border__;
+}
+
+/* link which inserts media file */
+#media__content a.mediafile {
+    margin-right: 1.5em;
+    font-weight: bold;
+}
+#media__content span.info {
+}
+#media__content img.btn {
+    vertical-align: text-bottom;
+}
+
+/* info how to insert media, if JS disabled */
+#media__content div.example {
+    color: __text_neu__;
+    margin-left: 1em;
+}
+
+#media__content div.detail {
+    padding: .2em 0;
+}
+#media__content div.detail div.thumb {
+    float: left;
+    margin: 0 .5em 0 18px;
+}
+#media__content div.detail div.thumb a {
+    display: block;
+}
+#media__content div.detail p {
+    margin-bottom: 0;
+}
+
+
+/*____________ media search ____________*/
+
+form#dw__mediasearch {
+}
+form#dw__mediasearch p {
+}
+form#dw__mediasearch label {
+}
+form#dw__mediasearch label span {
+}
+form#dw__mediasearch input.edit {
+}
+form#dw__mediasearch input.button {
+}
+
+
+/* meta edit form
+********************************************************************/
+
+#media__content form.meta {
+}
+
+#media__content form.meta div.metafield {
+    clear: left;
+    margin-bottom: .5em;
+    overflow: hidden;
+}
+
+#media__content form.meta label {
+    display: block;
+    width: 25%;
+    float: left;
+    font-weight: bold;
+    clear: left;
+}
+#media__content form.meta .edit {
+    float: left;
+    width: 70%;
+    margin: 0;
+}
+#media__content form.meta textarea.edit {
+    /* needed because of IE8 hack in _edit.css for textarea.edit: */
+    max-width: 70%;
+    min-width: 70%;
+}
+
+#media__content form.meta div.buttons {
+    clear: left;
+    margin: .2em 0 0 25%;
+}

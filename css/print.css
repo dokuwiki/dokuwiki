@@ -1,0 +1,123 @@
+/**
+ * This file provides the styles for printing.
+ *
+ * @todo: improve and finish
+ */
+
+body {
+    /*
+    font: normal 12pt/1.2 serif;
+    color: #000;
+    background-color: #fff;
+    */
+}
+
+/* hide certain sections */
+.a11y,
+div.notify, div.info, div.success, div.error,
+#dokuwiki__header .tools, #dokuwiki__aside,
+.dokuwiki .breadcrumbs, .dokuwiki .toc, .dokuwiki .secedit,
+#dokuwiki__pagetools, #dokuwiki__footer {
+    display: none;
+}
+
+.dokuwiki h1, .dokuwiki h2, .dokuwiki h3, .dokuwiki h4, .dokuwiki h5,
+.dokuwiki caption, .dokuwiki legend {
+    clear: both;
+}
+.dokuwiki ul             { list-style: disc outside; }
+.dokuwiki ol             { list-style: decimal outside; }
+.dokuwiki ol ol          { list-style-type: lower-alpha; }
+.dokuwiki ol ol ol       { list-style-type: upper-roman; }
+.dokuwiki ol ol ol ol    { list-style-type: upper-alpha; }
+.dokuwiki ol ol ol ol ol { list-style-type: lower-roman; }
+
+/* undo icons */
+.dokuwiki a:link, .dokuwiki a:visited {
+    text-decoration: underline;
+    color: #333;
+    background-color: inherit;
+    background-image: none;
+    padding: 0;
+}
+
+/* display href after link */
+a.urlextern:after,
+a.interwiki:after,
+a.mail:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+
+/* code blocks */
+.dokuwiki pre {
+    font-family: monospace;
+}
+.dokuwiki dl.code dt, .dokuwiki dl.file dt {
+    font-weight: bold;
+}
+
+/* images */
+.dokuwiki img             { border-width: 0; vertical-align: middle; }
+.dokuwiki img.medialeft   { margin: .5em 1.5em .5em 0; float: left; }
+.dokuwiki img.mediaright  { margin: .5em 0 .5em 1.5em; float: right; }
+.dokuwiki img.mediacenter { margin: .5em auto; display: block; }
+
+/* align table cells */
+.dokuwiki .leftalign   { text-align: left; }
+.dokuwiki .centeralign { text-align: center; }
+.dokuwiki .rightalign  { text-align: right; }
+
+/* underline */
+.dokuwiki em.u { font-style: normal; text-decoration: underline; }
+.dokuwiki em em.u { font-style: italic; }
+
+div.clearer {
+    clear: both;
+    line-height: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.dokuwiki blockquote {
+    padding: 0 10pt;
+    margin: 0;
+    border: solid #ccc;
+    border-width: 0 0 0 2pt;
+}
+
+/* tables */
+.dokuwiki table {
+    border-collapse: collapse;
+    empty-cells: show;
+    border-spacing: 0;
+    border: 1pt solid #ccc;
+}
+.dokuwiki th, .dokuwiki td {
+    padding: 3pt 5pt;
+    margin: 0;
+    vertical-align: top;
+    border: 1pt solid #666;
+    text-align: left;
+}
+.dokuwiki th {
+    font-weight: bold;
+}
+
+
+/*____________ a bit of layout ____________*/
+
+#dokuwiki__header {
+    border-bottom: 2pt solid #ccc;
+}
+#dokuwiki__header h1 {
+    font-size: 1.5em;
+}
+#dokuwiki__header h1 a {
+    text-decoration: none;
+}
+.dokuwiki div.footnotes {
+    clear: both;
+    border-top: 1pt solid #000;
+    margin-top: 10pt;
+}

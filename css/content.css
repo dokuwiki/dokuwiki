@@ -1,0 +1,102 @@
+/**
+ * This file provides the main design styles for the page content.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+
+
+/*____________ section indenting ____________
+
+.dokuwiki.page  h1 {margin-left: 0;}
+.dokuwiki.page  h2 {margin-left: .666em;}
+.dokuwiki.page  h3 {margin-left: 1.776em;}
+.dokuwiki.page  h4 {margin-left: 3em;}
+.dokuwiki.page  h5 {margin-left: 4.5712em;}
+.dokuwiki.page  div.level1 {margin-left: 0;}
+.dokuwiki.page  div.level2 {margin-left: 1em;}
+.dokuwiki.page  div.level3 {margin-left: 2em;}
+.dokuwiki.page  div.level4 {margin-left: 3em;}
+.dokuwiki.page  div.level5 {margin-left: 4em;}
+*/
+/* hx margin-left = (1 / font-size) * .levelx-margin */
+
+
+/*____________ images ____________*/
+
+/* embedded images (styles are already partly set in lib/styles/style.css) */
+.dokuwiki img.media       { }
+.dokuwiki img.medialeft   { margin: .5em 1.5em .5em 0; }
+.dokuwiki img.mediaright  { margin: .5em 0 .5em 1.5em; }
+.dokuwiki img.mediacenter { margin: .5em auto; }
+
+
+/*____________ tables ____________*/
+
+.dokuwiki table.inline {
+    min-width: 50%;
+}
+.dokuwiki table.inline th,
+.dokuwiki table.inline td {
+    border: 1px solid __text_alt__;
+}
+.dokuwiki table.inline th {
+    color: inherit;
+    background-color: __background_neu__;
+}
+.dokuwiki table.inline td {
+}
+.dokuwiki table.inline tr:hover td {
+    background-color: __background_alt__;
+}
+.dokuwiki table.inline tr:hover th {
+    background-color: __border__;
+}
+
+
+/*____________ code ____________*/
+
+.dokuwiki pre,
+.dokuwiki tt,
+.dokuwiki code,
+.dokuwiki samp,
+.dokuwiki kbd {
+    background-color: __background_alt__;
+    color: inherit;
+}
+/* fix if background-color hides underlining */
+.dokuwiki em.u code {
+    text-decoration: underline;
+}
+.dokuwiki pre {
+    border: 1px solid __border__;
+    padding: 0 .2em;
+}
+/* for code in <file> */
+.dokuwiki pre.file {
+}
+
+/* filenames for downloadable file and code blocks */
+.dokuwiki dl.code,
+.dokuwiki dl.file {
+}
+
+.dokuwiki dl.code dt,
+.dokuwiki dl.file dt {
+    background-color: __background_alt__;
+    border: solid __border__;
+    border-width: 1px 1px 0;
+    color: inherit;
+    display: inline;
+    padding: 0 .5em;
+    margin-left: 1em;
+}
+.dokuwiki dl.code dt a,
+.dokuwiki dl.file dt a {
+}
+
+.dokuwiki dl.code dd,
+.dokuwiki dl.file dd {
+    margin: 0;
+}
+

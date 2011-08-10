@@ -1,0 +1,263 @@
+/**
+ * This file provides the most basic styles.
+ *
+ * If you integrate DokuWiki into another project, you might either
+ * want to integrate this file into the other project as well, or use
+ * the other project's basic CSS for DokuWiki instead of this one.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+
+html {
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+html, body {
+    background-color: __background__;
+    color: __text__;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font: normal 100%/1.4 Frutiger, "Frutiger Linotype", Univers, Calibri, Myriad, "Liberation Sans", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* default font size: 100% => 16px; 93.75% => 15px; 87.5% => 14px; 81.25% => 13px; 75% => 12px */
+}
+
+
+/*____________ headers ____________*/
+
+h1, h2, h3, h4, h5, h6,
+caption, legend {
+    font-family: Constantia, Utopia, Lucidabright, Lucida, Georgia, serif;
+    font-weight: bold;
+    color: __text_neu__;
+    background-color: inherit;
+    padding: 0;
+    clear: left; /* ideally 'both', but problems with toc */
+}
+
+h1 { font-size: 2.25em;  margin: 0 0 0.444em; }
+h2 { font-size: 1.5em;   margin: 0 0 0.666em; }
+h3 { font-size: 1.125em; margin: 0 0 0.888em; }
+h4 { font-size: 1em;     margin: 0 0 1.0em; }
+h5 { font-size: .875em;  margin: 0 0 1.1428em; }
+h6 { font-size: .75em;   margin: 0 0 1.333em; }
+/* bottom margin = 1 / font-size */
+
+
+/*____________ basic margins and paddings ____________*/
+
+p, ul, ol, dl, pre, table,
+hr, blockquote, fieldset, address {
+    margin: 0 0 1.4em 0; /* bottom margin = line-height */
+    padding: 0;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+p, dt, dd, td, th, li {
+}
+
+
+/*____________ lists ____________*/
+
+ul, ol {
+    padding: 0 0 0 1.5em;
+}
+li, dd {
+    padding: 0;
+    margin: 0 0 0 1.5em;
+}
+dt {
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+li ul, li ol, li dl,
+dl ul, dl ol, dl dl {
+    margin-bottom: 0;
+    padding: 0;
+}
+li li {
+    font-size: 100%;
+}
+
+ul             { list-style: disc outside; }
+ol             { list-style: decimal outside; }
+ol ol          { list-style-type: lower-alpha; }
+ol ol ol       { list-style-type: upper-roman; }
+ol ol ol ol    { list-style-type: upper-alpha; }
+ol ol ol ol ol { list-style-type: lower-roman; }
+
+
+/*____________ tables ____________*/
+
+table {
+    border-collapse: collapse;
+    empty-cells: show;
+    border-spacing: 0;
+    border: 1px solid __border__;
+}
+
+caption {
+    caption-side: top;
+    text-align: left;
+    margin: 0 0 .3em;
+}
+
+th, td {
+    padding: .3em .5em;
+    margin: 0;
+    vertical-align: top;
+    border: 1px solid __border__;
+    text-align: left;
+}
+th {
+    font-weight: bold;
+    background-color: __background_alt__;
+}
+
+
+/*____________ links ____________*/
+
+a {
+}
+a:link, a:visited {
+    text-decoration: none;
+    color: #00c; /* §colour */
+}
+a:link:hover, a:visited:hover,
+a:link:focus, a:visited:focus,
+a:link:active, a:visited:active {
+    text-decoration: underline;
+}
+a:link:focus, a:visited:focus {
+    outline: 1px dotted;
+}
+a:link:active, a:visited:active {
+    color: #c00; /* §colour */
+}
+
+
+/*____________ misc ____________*/
+
+img {
+    border-width: 0;
+    vertical-align: middle;
+    color: #666;
+    background-color: transparent;
+    font-style: italic;
+}
+
+hr {
+    border-style: solid;
+    border-width: 1px 0 0;
+    text-align: center;
+    height: 0;
+    width: 100%;
+    clear: both;
+}
+
+acronym, abbr {
+    cursor: help;
+    border-bottom: 1px dotted;
+    font-style: normal;
+}
+
+pre, code, samp, kbd {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+    /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
+    font-size: 1em;
+    direction: ltr;
+    text-align: left;
+}
+pre {
+    overflow: auto;
+}
+
+blockquote {
+    padding: 0 1.25em;
+    border: solid __border__;
+    border-width: 0 0 0 .25em;
+}
+q:before, q:after {
+    content: '';
+}
+
+sub, sup {
+    font-size: .8em;
+    line-height: 1;
+}
+sub {
+    vertical-align: sub;
+}
+sup {
+    vertical-align: super;
+}
+
+/*____________ forms ____________*/
+
+form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+fieldset {
+    padding: 1em 1em 0;
+    border: 1px solid __text_alt__;
+}
+legend {
+    margin: 0;
+    padding: 0 .1em;
+}
+label {
+    vertical-align: middle;
+    cursor: pointer;
+}
+input, textarea, button,
+select, optgroup, option {
+    font: inherit;
+    color: inherit;
+    /* background-color destroys button look */
+    line-height: 1;
+    margin: 0;
+    vertical-align: middle;
+}
+input[type=text], input[type=password], textarea {
+    padding: .1em;
+}
+input[type=radio], input[type=checkbox], input.check {
+    padding: 0;
+}
+input[type=submit], input.button, button {
+    cursor: pointer;
+}
+input[disabled], button[disabled],
+input[readonly], button[readonly] {
+    cursor: auto;
+}
+optgroup { font-style: italic; font-weight: bold; }
+option   { font-style: normal; font-weight: normal; }
+
+
+/*____________ general classes ____________*/
+
+div.clearer {
+    /* additional to what's already in lib/styles/style.css: */
+    font-size: 1px;
+    visibility: hidden;
+}
+
+.a11y {
+    position: absolute;
+    left: -9000px;
+    top: -4000px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    display: inline;
+}

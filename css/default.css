@@ -1,0 +1,241 @@
+body{
+  font: 0.875em/1.4 'Helvetica Neue', sans-serif;
+}
+
+h1, h2, h3, h4, h5{
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: normal;
+  color: black;
+}
+
+h1{
+  font-size: 2em;
+  letter-spacing: -0.035em;
+}
+
+h1{
+  /*2 lines below makes ascenders of h1 be at the top of block*/
+  line-height: 0.75em;
+  padding-bottom: 0.3em;
+}
+
+table{
+  border: none;
+}
+
+a:link{
+  color: #06d;
+}
+
+a:visited{
+  color: #2E5E94;
+  border-bottom: 1px dotted #09d;
+}
+
+.button{
+  background-color: #eee;
+  background: -moz-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(30%,#f4f4f4), color-stop(99%,#eeeeee), color-stop(99%,#cccccc));
+  background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+  background: -o-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+  background: -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
+  background: linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+  border: 1px solid #ccc;
+}
+
+.dokuwiki pre{
+  border-left: none;
+  border-right: none;
+  padding: 0.75em 1em;
+}
+
+#dokuwiki__site{
+  width: 770px
+}
+
+#dokuwiki__header{
+  margin-top: 4em;
+  margin-bottom: 3em;
+}
+
+#dokuwiki__header .tools{
+  text-align: left;
+}
+
+#dokuwiki__header .tools,
+#dokuwiki__header .headings{
+  margin-bottom: 1em;
+}
+
+#dokuwiki__header h1 a{
+  color: black;
+}
+
+#dokuwiki__header .claim{
+  color: #888;
+  font-style: italic;
+  font-size: 0.875em;
+}
+
+#dokuwiki__header form.search{
+  margin-top: 0;
+  font-size: 0.875em;
+}
+
+div.breadcrumbs{
+  border: 1px solid #ccc;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  padding: 0.2em 0 0.75em 0;
+  margin-bottom: 0.6em;
+  font-size: 0.875em;
+}
+
+div.breadcrumbs .bcsep{
+  font-size: 0.75em;
+}
+
+.mode_show #dokuwiki__content{
+  float: left;
+  width: 750px;
+}
+
+.mode_show #dokuwiki__aside{
+  border-top: 1px solid #ccc;
+  float: right;
+  width: 220px;
+  font-size: 0.87em;
+}
+
+#dokuwiki__usertools,
+#dokuwiki__pagetools{
+  padding: 10px;
+  padding-left: 0;
+  padding-right: 0;
+  background: #eee;
+  border: none;
+}
+
+#dokuwiki__usertools{
+  z-index: 1;
+  background: #edf1f2;
+  background: -moz-linear-gradient(top, #edf1f2 0%, #eaeaea 88%, #dbdfe0 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#edf1f2), color-stop(88%,#eaeaea), color-stop(100%,#dbdfe0));
+  background: -webkit-linear-gradient(top, #edf1f2 0%,#eaeaea 88%,#dbdfe0 100%);
+  background: -o-linear-gradient(top, #edf1f2 0%,#eaeaea 88%,#dbdfe0 100%);
+  background: -ms-linear-gradient(top, #edf1f2 0%,#eaeaea 88%,#dbdfe0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edf1f2', endColorstr='#dbdfe0',GradientType=0 );
+  background: linear-gradient(top, #edf1f2 0%,#eaeaea 88%,#dbdfe0 100%);
+}
+
+#dokuwiki__pagetools{
+  background: #dbdfe0;
+  background: -moz-linear-gradient(top, #dbdfe0 0%, #eaeaea 12%, #edf1f2 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdfe0), color-stop(12%,#eaeaea), color-stop(100%,#edf1f2));
+  background: -webkit-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+  background: -o-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+  background: -ms-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdfe0', endColorstr='#edf1f2',GradientType=0 );
+  background: linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+}
+
+#dokuwiki__sitetools{
+  width: 220px;
+}
+
+#dokuwiki__sitetools ul,
+#dokuwiki__usertools ul,
+#dokuwiki__pagetools ul{
+  max-width: 800px;
+  font-size: 0.875em;
+  padding-left: 0;
+}
+
+#dokuwiki__sitetools li,
+#dokuwiki__usertools li,
+#dokuwiki__pagetools li{
+  margin-left: 0;
+  margin-right: 1em;
+}
+
+#dokuwiki__sitetools ul{
+  margin-top: 0.5em;
+}
+
+#dokuwiki__header form.search #qsearch__in{
+  border: 1px solid #ccc;
+  border-right: none;
+  padding: 0.41em 0;
+  margin-right: 0;
+  -webkit-border-bottom-left-radius: 2px;
+  -webkit-border-top-left-radius: 2px;
+  -moz-border-radius-bottomleft: 2px;
+  -moz-border-radius-topleft: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  -moz-box-shadow:inset 0 0 1px #eee;
+  -webkit-box-shadow:inset 0 0 1px #eee;
+  box-shadow:inset 0 0 1px #eee;
+}
+
+#dokuwiki__sitetools .button{
+  border: 1px solid #ddd;
+  -webkit-border-bottom-right-radius: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -moz-border-radius-topright: 2px;
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 0.5em 0.75em;
+}
+
+#dokuwiki__pagetools a,
+#dokuwiki__usertools a{
+}
+
+#dokuwiki__pagetools a.wikilink1,
+#dokuwiki__pagetools a.wikilink2,
+#dokuwiki__usertools a.wikilink1,
+#dokuwiki__usertools a.wikilink2{
+  color: #06d;
+}
+
+.dokuwiki div.toc{
+  font-size: 0.875em;
+  line-height: 1.5em;
+  width: 220px;
+  margin-bottom: 0.5em;
+  margin-left: 20px;
+  margin-top: -0.3em;
+}
+
+.dokuwiki div.tocheader{
+  padding: 0.5em 1em;
+}
+
+.dokuwiki #toc__inside{
+  padding: 0.75em 1em 1.5em;
+}
+
+.dokuwiki .secedit{
+  float: none;
+  margin: 0 0 1.4em 0;
+  text-align: right;
+}
+
+.dokuwiki div.secedit{
+}
+
+.dokuwiki .secedit input.button{
+  -webkit-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-radius: 2px;
+  padding: 0.5em 0.9em;
+  color: #555;
+}

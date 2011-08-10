@@ -1,0 +1,91 @@
+/**
+ * This file provides styles for the TOC (table of contents), the
+ * sitemap (?do=index) and backlinks (?do=backlink).
+ */
+
+/* toc
+********************************************************************/
+
+/* toc container */
+.dokuwiki div.toc {
+    float: right;
+    margin: 0 0 1.4em 1.4em;
+    width: 12em;
+}
+
+/*____________ toc header ____________*/
+
+.dokuwiki div.tocheader {
+    padding: .2em .5em;
+    margin-bottom: .2em;
+    font-weight: bold;
+    background-color: __background_alt__;
+    color: __text__;
+}
+
+/* css arrow */
+.dokuwiki .toc span.toc_open,
+.dokuwiki .toc span.toc_close {
+    border: .4em solid __background_alt__;
+    float: right;
+    display: block;
+    margin: 0 .2em 0 0;
+}
+.dokuwiki .toc span.toc_open span,
+.dokuwiki .toc span.toc_close span {
+    display: none;
+}
+.dokuwiki .toc span.toc_open {
+    margin-top: .4em;
+    border-top: .4em solid __text__;
+}
+.dokuwiki .toc span.toc_close {
+    margin-top: 0;
+    border-bottom: .4em solid __text__;
+}
+
+/*____________ toc list ____________*/
+
+.dokuwiki #toc__inside {
+    padding: .2em .5em;
+    background-color: __background_alt__;
+    color: __text__;
+}
+.dokuwiki #toc__inside ul {
+    padding: 0;
+    margin: 0;
+}
+.dokuwiki #toc__inside ul li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.dokuwiki #toc__inside ul ul {
+    padding-left: 1em;
+}
+.dokuwiki #toc__inside ul ul li {
+}
+.dokuwiki #toc__inside ul li a {
+}
+
+/* in case of toc list jumping one level
+  (e.g. if heading level 3 follows directly after heading level 1) */
+.dokuwiki #toc__inside ul li.clear {
+}
+
+
+/* sitemap (and backlinkss)
+********************************************************************/
+
+.dokuwiki ul.idx {
+    padding-left: 0;
+}
+.dokuwiki ul.idx li {
+    list-style-image: url(images/bullet.png);
+}
+.dokuwiki ul.idx li.open {
+    list-style-image: url(images/open.png);
+}
+.dokuwiki ul.idx li.closed {
+    list-style-image: url(images/closed.png);
+}

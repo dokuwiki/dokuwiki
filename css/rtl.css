@@ -1,0 +1,309 @@
+/**
+ * This file provides layout and design corrections for right-to-left
+ * languages.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+
+/*____________ basic ____________*/
+
+caption,
+td,
+th {
+    text-align: right;
+}
+
+ul, ol {
+    padding: 0 1.5em 0 0;
+}
+li, dd {
+    margin: 0 1.5em 0 0;
+}
+blockquote {
+    border-width: 0 .25em 0 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+caption, legend {
+    clear: right;
+}
+
+.a11y {
+    left: auto;
+    right: -9000px;
+}
+
+/*____________ structure ____________*/
+
+#dokuwiki__header .headings {
+    float: right;
+}
+#dokuwiki__header .tools {
+    float: left;
+    text-align: left;
+}
+
+.mode_show #dokuwiki__aside {
+    float: right;
+}
+#dokuwiki__aside .pad {
+    margin: 0 0 0 1.5em;
+}
+
+.mode_show #dokuwiki__content {
+    float: left;
+    margin-left: 0;
+    margin-right: -__sidebar_width__;
+}
+.mode_show #dokuwiki__content .pad {
+    margin-left: 0;
+    margin-right: __sidebar_width__;
+}
+
+/*____________ design ____________*/
+
+#dokuwiki__header form.search #qsearch__in {
+    margin-right: 0;
+    margin-left: .5em;
+}
+
+#dokuwiki__usertools ul li.user {
+    float: right;
+    margin-right: 0;
+}
+#dokuwiki__pagetools ul li a.action.top {
+    float: left;
+}
+
+#dokuwiki__aside ul, #dokuwiki__aside ol {
+    padding-right: 0;
+}
+
+/*____________ content ____________*/
+
+/* section indenting
+.dokuwiki .page h1 {margin-left: 0; margin-right: 0;}
+.dokuwiki .page h2 {margin-left: 0; margin-right: .666em;}
+.dokuwiki .page h3 {margin-left: 0; margin-right: 1.776em;}
+.dokuwiki .page h4 {margin-left: 0; margin-right: 3em;}
+.dokuwiki .page h5 {margin-left: 0; margin-right: 4.5712em;}
+.dokuwiki .page div.level1 {margin-left: 0; margin-right: 0;}
+.dokuwiki .page div.level2 {margin-left: 0; margin-right: 1em;}
+.dokuwiki .page div.level3 {margin-left: 0; margin-right: 2em;}
+.dokuwiki .page div.level4 {margin-left: 0; margin-right: 3em;}
+.dokuwiki .page div.level5 {margin-left: 0; margin-right: 4em;}
+*/
+
+.dokuwiki dl.code dt,
+.dokuwiki dl.file dt {
+    margin-left: 0;
+    margin-right: 1em;
+}
+
+.JSpopup ul,
+.JSpopup ol {
+    padding-right: 0;
+}
+
+
+/*____________ _imgdetail ____________*/
+
+#dokuwiki__detail div.content img {
+    float: right;
+    margin-right: 0;
+    margin-left: 1.5em;
+}
+#dokuwiki__detail div.content div.img_detail {
+    float: right
+}
+
+
+/*____________ _mediamanager ____________*/
+
+#mediamgr__aside {
+    left: auto;
+    right: 0;
+    border-right-width: 0;
+    border-left: 1px solid __border__;
+}
+#mediamgr__content {
+    right: auto;
+    left: 0;
+}
+
+#media__opts input {
+    margin-right: 0;
+    margin-left: .3em;
+}
+
+#media__tree ul {
+    padding-left: 0;
+    padding-right: .2em;
+}
+#media__tree ul li {
+    clear: right;
+    margin-right: 0;
+}
+#media__tree ul li img {
+    float: right;
+    padding: .5em 0 0 .3em;
+}
+#media__tree ul li li {
+    margin-left: 0;
+    margin-right: 1.5em;
+}
+
+#media__content a.mediafile {
+    margin-right: 0;
+    margin-left: 1.5em;
+}
+#media__content div.detail div.thumb {
+    float: right;
+    margin: 0 18px 0 .5em;
+}
+#media__content form.meta div.metafield {
+    clear: right;
+}
+#media__content form.meta label {
+    float: right;
+    clear: right;
+}
+#media__content form.meta .edit {
+    float: right;
+}
+#media__content form.meta div.buttons {
+    clear: right;
+    margin: .2em 25% 0 0;
+}
+
+
+/*____________ _links ____________*/
+
+/* if link icons don't work as expected, remove the following lines */
+.dokuwiki a.urlextern,
+.dokuwiki a.windows,
+.dokuwiki a.mail,
+.dokuwiki a.interwiki,
+.dokuwiki a.mediafile {
+    background-position: right center;
+    padding: 0 17px 0 0;
+}
+
+
+/*____________ _toc ____________*/
+
+.dokuwiki div.toc {
+    float: left;
+    margin: 0 1.4em 1.4em 0;
+}
+.dokuwiki .toc span.toc_open,
+.dokuwiki .toc span.toc_close {
+    float: left;
+    margin: 0 0 0 .2em;
+}
+.dokuwiki #toc__inside ul ul {
+    padding-left: 0;
+    padding-right: 1em;
+}
+.dokuwiki ul.idx {
+    padding-right: 0;
+}
+
+
+/*____________ _footnotes ____________*/
+
+
+/*____________ _search ____________*/
+
+.dokuwiki div.search_quickresult ul li {
+    float: right;
+}
+.dokuwiki form.search div.ajax_qsearch {
+    left: auto;
+    right: -13.5em;
+    text-align: right;
+}
+
+
+/*____________ _recent ____________*/
+
+.dokuwiki #dw__recent ul li,
+.dokuwiki #page__revisions ul li {
+    margin-right: 0;
+}
+
+
+/*____________ _diff ____________*/
+
+
+/*____________ _edit ____________*/
+
+.dokuwiki div.toolbar #draft__status {
+    float: left;
+}
+.dokuwiki #wiki__editbar #size__ctl {
+    float: left;
+}
+.dokuwiki #wiki__editbar #size__ctl img {
+    cursor: pointer;
+}
+.dokuwiki #wiki__editbar .editButtons {
+    margin-right: 0;
+    margin-left: 1em;
+}
+
+.dokuwiki .secedit {
+    float: left;
+}
+
+
+/*____________ _modal ____________*/
+
+#link__wiz_close {
+    float: left;
+}
+#link__wiz_result {
+    text-align: right;
+}
+#link__wiz_result div.type_u,
+#link__wiz_result div.type_f,
+#link__wiz_result div.type_d {
+    padding: 3px 22px 3px 3px;
+    background-position: 257px 3px;
+}
+
+
+/*____________ _forms ____________*/
+
+.dokuwiki label.block {
+    text-align: left;
+}
+.dokuwiki label.simple {
+    text-align: right;
+}
+
+form#subscribe__form fieldset {
+    text-align: right;
+}
+
+
+/*____________ _admin ____________*/
+
+.dokuwiki ul.admin_tasks {
+    float: right;
+}
+.dokuwiki ul.admin_tasks li {
+    padding-left: 0;
+    padding-right: 35px;
+    background-position: right 0;
+}
+
+.dokuwiki #admin__version {
+    clear: right;
+    float: left;
+}
+
+
+/*____________ includes ____________*/
+
+
