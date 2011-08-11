@@ -20,7 +20,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <?php tpl_metaheaders() ?>
     <link rel="shortcut icon" href="<?php echo _tpl_getFavicon() /* DW versions > 2010-11-12 can use the core function tpl_getFavicon() */ ?>" />
     <?php _tpl_include('meta.html') ?>
-    <link type="text/css" rel="stylesheet" href="/lib/tpl/starter/css/default.css"/>
 </head>
 
 <body>
