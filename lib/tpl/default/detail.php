@@ -49,6 +49,13 @@ if (!defined('DOKU_INC')) die();
       </p>
 
       <p>&larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?></p>
+      <p><?php
+            $imgNS = getNS($IMG);
+            $authNS = auth_quickaclcheck("$imgNS:*");
+            if ($authNS >= AUTH_UPLOAD) {
+                echo '<a href="'.media_managerURL(array('ns' => $imgNS, 'image' => $IMG)).'">'.$lang['img_manager'].'</a>';
+            }
+      ?></p>
 
       <dl class="img_tags">
         <?php

@@ -246,6 +246,7 @@ $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Keywords';
 $lang['img_width']   = 'Width';
 $lang['img_height']  = 'Height';
+$lang['img_manager'] = 'View in media manager';
 
 $lang['subscr_subscribe_success']  = 'Added %s to subscription list for %s';
 $lang['subscr_subscribe_error']    = 'Error adding %s to subscription list for %s';
