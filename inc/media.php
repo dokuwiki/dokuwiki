@@ -243,19 +243,56 @@ function media_delete($id,$auth){
 }
 
 /**
+ * Handle file uploads via XMLHttpRequest
+ *
+ * @return mixed false on error, id of the new file on success
+ */
+function media_upload_xhr($ns,$auth){
+    $id = $_GET['qqfile'];
+    list($ext,$mime,$dl) = mimetype($id);
+    $input = fopen("php://input", "r");
+    $temp = tmpfile();
+    $realSize = stream_copy_to_stream($input, $temp);
+    fclose($input);
+    if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]) return false;
+    if (!($tmp = io_mktmpdir())) return false;
+    $path = $tmp.'/'.$id;
+    $target = fopen($path, "w");
+    fseek($temp, 0, SEEK_SET);
+    stream_copy_to_stream($temp, $target);
+    fclose($target);
+    $res = media_save(
+        array('name' => $path,
+            'mime' => $mime,
+            'ext'  => $ext),
+        $ns.':'.$id,
+        (($_REQUEST['ow'] == 'true') ? true : false),
+        $auth,
+        'copy'
+    );
+    unlink($path);
+    if ($tmp) dir_delete($tmp);
+    if (is_array($res)) {
+        msg($res[0], $res[1]);
+        return false;
+    }
+    return $res;
+}
+
+/**
  * Handles media file uploads
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @return mixed false on error, id of the new file on success
  */
-function media_upload($ns,$auth){
+function media_upload($ns,$auth,$file=false){
     if(!checkSecurityToken()) return false;
     global $lang;
 
     // get file and id
     $id   = $_POST['mediaid'];
-    $file = $_FILES['upload'];
+    if (!$file) $file = $_FILES['upload'];
     if(empty($id)) $id = $file['name'];
 
     // check for errors (messages are done in lib/exe/mediamanager.php)

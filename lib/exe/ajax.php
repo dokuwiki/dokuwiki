@@ -249,65 +249,24 @@ function ajax_mediadiff(){
 }
 
 function ajax_mediaupload(){
-    global $NS;
+    global $NS, $MSG;
+
     $NS = $_REQUEST['ns'];
     $AUTH = auth_quickaclcheck("$NS:*");
     if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
 
-    if($_FILES['qqfile']['error']){
-        unset($_FILES['qqfile']);
-    }
+    if ($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
+    if ($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+    if (isset($_GET['qqfile'])) $res = media_upload_xhr($NS, $AUTH);
+    if ($res) $result = array('success'=>true);
 
-    if($_FILES['qqfile']['tmp_name']){
-        $id = $_REQUEST['file_name'];
-        if (!$id) $id = $_FILES['qqfile']['name'];
-        $file = $_FILES['qqfile']['tmp_name'];
-        list($ext,$mime,$dl) = mimetype($id);
-
-        $res = media_save(
-            array('name' => $file,
-                'mime' => $mime,
-                'ext'  => $ext),
-            $NS.':'.$id,
-            $_REQUEST['ow'],
-            $AUTH,
-            'move_uploaded_file'
-        );
-        if (!is_array($res)) {
-            $result = array('success'=>true);
+    if (!$result) {
+        $error = '';
+        if (isset($MSG)) {
+            foreach($MSG as $msg) $error .= $msg['msg'];
         }
+        $result = array('error'=> $msg['msg']);
     }
-
-    if (isset($_GET['qqfile'])) {
-        $id = $_GET['qqfile'];
-        list($ext,$mime,$dl) = mimetype($id);
-        $input = fopen("php://input", "r");
-        $temp = tmpfile();
-        $realSize = stream_copy_to_stream($input, $temp);
-        fclose($input);
-        if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]) return false;
-        if (!($tmp = io_mktmpdir())) return false;
-        $path = $tmp.'/'.$id;
-        $target = fopen($path, "w");
-        fseek($temp, 0, SEEK_SET);
-        stream_copy_to_stream($temp, $target);
-        fclose($target);
-        $res = media_save(
-            array('name' => $path,
-                'mime' => $mime,
-                'ext'  => $ext),
-            $NS.':'.$id,
-            (($_REQUEST['ow'] == 'true') ? true : false),
-            $AUTH,
-            'copy'
-        );
-        unlink($path);
-        if ($tmp) dir_delete($tmp);
-        if (!is_array($res)) {
-            $result = array('success'=>true);
-        }
-    }
-    if (!$result) $result = array('error'=> 'Could not save uploaded file.');
     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 }
 
