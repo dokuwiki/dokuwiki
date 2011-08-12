@@ -47,10 +47,12 @@
 }
 
 .qq-upload-list {
-    margin: 15px 35px !important;
+    margin: 0 !important;
     padding: 0;
-    list-style: disc;
+    list-style: none !important;
     margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    color: black !important;
 }
 
 .qq-upload-list li {
@@ -88,6 +90,10 @@
 .qq-upload-list li .qq-upload-file {
     display: block;
     font-weight: bold;
+}
+
+.qq-upload-file-hidden {
+    display:none !important;
 }
 
 .qq-upload-list li .qq-upload-cancel {

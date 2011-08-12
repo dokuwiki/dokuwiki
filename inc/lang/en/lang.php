@@ -353,4 +353,10 @@ $lang['js']['media_diff_both']     = 'Both images';
 $lang['js']['media_diff_opacity']  = 'Changeable opacity of images';
 $lang['js']['media_diff_portions'] = 'Portions of images';
 
+$lang['js']['media_select']     = 'Select files';
+$lang['js']['media_upload_btn'] = 'Start uploading';
+$lang['js']['media_drop']       = 'Drop files here to upload';
+$lang['js']['media_cancel']     = 'remove';
+$lang['js']['media_overwrt']    = 'Overwrite existing files';
+
 //Setup VIM: ex: et ts=2 :
