@@ -598,12 +598,22 @@ function html_revisions($first=0, $media_id = false){
         $first -= $conf['recent'];
         if ($first < 0) $first = 0;
         print '<div class="pagenav-prev">';
-        print html_btn('newer',$id,"p",array('do' => 'revisions', 'first' => $first));
+        if ($media_id) {
+            echo '<form class="button btn_newer" method="post" action="'.media_managerURL(array('first' => $first)).'">';
+            echo '<input type="submit" value="'.$lang['btn_newer'].'" class="button" /></form>';
+        } else {
+            print html_btn('newer',$id,"p",array('do' => 'revisions', 'first' => $first));
+        }
         print '</div>';
     }
     if ($hasNext) {
         print '<div class="pagenav-next">';
-        print html_btn('older',$id,"n",array('do' => 'revisions', 'first' => $last));
+        if ($media_id) {
+            echo '<form class="button btn_older" method="post" action="'.media_managerURL(array('first' => $last)).'">';
+            echo '<input type="submit" value="'.$lang['btn_older'].'" class="button" /></form>';
+        } else {
+            print html_btn('older',$id,"n",array('do' => 'revisions', 'first' => $last));
+        }
         print '</div>';
     }
     print '</div>';
