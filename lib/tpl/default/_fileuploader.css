@@ -1,0 +1,91 @@
+.qq-uploader {
+    position: relative;
+    width: 100%;
+}
+
+.qq-upload-button {
+    display: block;
+    width: 115px;
+    padding: 7px 0;
+    text-align: center;
+    background: __background_alt__;
+    border: 1px solid __border__;
+    color: __extern__;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.qq-upload-button-hover {
+    background: __border__;
+    color: __background__;
+}
+
+.qq-upload-button-focus {
+    outline: 1px dotted black;
+}
+
+.qq-upload-drop-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 70px;
+    z-index: 2;
+    background: __background_neu__;
+    text-align: center;
+}
+
+.qq-upload-drop-area span {
+    display:block;
+    position:absolute;
+    top: 50%;
+    width:100%;
+    margin-top:-8px;
+    font-size:16px;
+}
+
+.qq-upload-drop-area-active {
+    background: #DADADA;
+}
+
+.qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
+    margin-right: 7px;
+}
+
+.qq-upload-spinner {
+    display: inline-block;
+    background: url("../../images/throbber.gif");
+    width: 15px;
+    height: 15px;
+    vertical-align: text-bottom;
+}
+
+.qq-upload-size,.qq-upload-cancel {
+    font-size:11px;
+}
+
+.qq-upload-failed-text {
+    display:none;
+}
+
+.qq-upload-fail .qq-upload-failed-text {
+    display:inline;
+}
+
+.qq-upload-file {
+    display: block;
+    font-weight: bold;
+}
+
+.qq-upload-file-hidden {
+    display:none;
+}
+
+.qq-upload-cancel {
+    padding-left: 10px;
+}
+
+.qq-uploader #dw__ow {
+    margin: 10px 0;
+}

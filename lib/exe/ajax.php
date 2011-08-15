@@ -256,16 +256,25 @@ function ajax_mediaupload(){
     if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
 
     if ($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
-    if ($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
-    if (isset($_GET['qqfile'])) $res = media_upload_xhr($NS, $AUTH);
-    if ($res) $result = array('success'=>true);
+
+    if ($_FILES['qqfile']['tmp_name']) {
+        $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+        $id = ((empty($_POST['mediaid'])) ? $_FILES['qqfile']['name'] : $_POST['mediaid']);
+    }
+    if (isset($_GET['qqfile'])) {
+        $res = media_upload_xhr($NS, $AUTH);
+        $id = $_GET['qqfile'];
+    }
+
+    if ($res) $result = array('success' => true,
+        'link' => media_managerURL(array('ns' => getNS($id), 'image' => $id), '&'));
 
     if (!$result) {
         $error = '';
         if (isset($MSG)) {
             foreach($MSG as $msg) $error .= $msg['msg'];
         }
-        $result = array('error'=> $msg['msg']);
+        $result = array('error' => $msg['msg']);
     }
     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 }
