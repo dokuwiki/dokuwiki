@@ -1336,7 +1336,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
         }
         foreach($evdata['data'] as $item){
             if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
-            else media_printfile_thumbs($item,$item['perm']);
+            else media_printfile_thumbs($item,$item['perm'],false,true);
         }
         if ($fullscreen) echo '</ul>';
     }
@@ -1451,7 +1451,7 @@ function media_printicon($filename){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_printfile_thumbs($item,$auth,$jump=false){
+function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false){
     global $lang;
     global $conf;
 
@@ -1466,13 +1466,19 @@ function media_printfile_thumbs($item,$auth,$jump=false){
 
     } else {
         echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(array('image' => hsc($item['id']))).'"><span>';
+            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'"><span>';
         echo media_printicon($item['id']);
         echo '</span></a>';
     }
     //echo '<input type=checkbox />';
-    echo '<a href="'.media_managerURL(array('image' => hsc($item['id']))).'" name=
-        "h_:'.$item['id'].'" class="name">'.hsc($file).'</a>';
+    if (!$display_namespace) {
+        $name = hsc($file);
+    } else {
+        $name = hsc($item['id']);
+    }
+    echo '<a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'" name=
+        "h_:'.$item['id'].'" class="name">'.$name.'</a>';
+
     if($item['isimg']){
         $size = '';
         $size .= (int) $item['meta']->getField('File.Width');
@@ -1525,7 +1531,7 @@ function media_printimgdetail($item, $fullscreen=false){
         // output
         if ($fullscreen) {
             echo '<a name="d_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
-                media_managerURL(array('image' => hsc($item['id']))).'">';
+                media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'">';
             echo '<span><img src="'.$src.'" '.$att.' /></span>';
             echo '</a>';
         }
