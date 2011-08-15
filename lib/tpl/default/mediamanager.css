@@ -291,13 +291,13 @@
 
 /* File preview */
 
-#mediamanager__preview,
-#mediamanager__preview_buttons {
+.mediamanager__preview,
+.mediamanager__preview_buttons {
     text-align: center;
     margin-bottom: 5px;
 }
 
-#mediamanager__preview img {
+.mediamanager__preview img {
     width: 99%;
 }
 

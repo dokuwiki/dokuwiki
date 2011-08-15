@@ -350,9 +350,9 @@ $lang['media_update']     = 'Upload new version';
 $lang['media_restore']    = 'Restore this version';
 
 $lang['js']['media_diff']          = 'View differences:';
-$lang['js']['media_diff_both']     = 'Both images';
-$lang['js']['media_diff_opacity']  = 'Changeable opacity of images';
-$lang['js']['media_diff_portions'] = 'Portions of images';
+$lang['js']['media_diff_both']     = 'Side by Side';
+$lang['js']['media_diff_opacity']  = 'Overlay';
+$lang['js']['media_diff_portions'] = 'Slider';
 
 $lang['js']['media_select']     = 'Select files...';
 $lang['js']['media_upload_btn'] = 'Start uploading';

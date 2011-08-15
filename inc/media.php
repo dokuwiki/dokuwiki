@@ -595,9 +595,23 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-        }else foreach($data as $item){
-            if (!$fullscreenview) media_printfile($item,$auth,$jump);
-            else media_printfile_thumbs($item,$auth,$jump);
+        }else {
+            if ($fullscreenview) {
+                $view = $_REQUEST['view'];
+                if ($view == 'list') {
+                    echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
+                } else {
+                    echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
+                }
+            }
+            foreach($data as $item){
+                if (!$fullscreenview) {
+                    media_printfile($item,$auth,$jump);
+                } else {
+                    media_printfile_thumbs($item,$auth,$jump);
+                }
+            }
+            if ($fullscreenview) echo '</ul>';
         }
     }
     if (!$fullscreenview) media_searchform($ns);
@@ -721,18 +735,10 @@ function media_tab_files($ns,$auth=null,$jump='') {
     media_tab_files_options($ns, $sort);
 
     echo '<div class="scroll-container" >';
-    $view = $_REQUEST['view'];
-
     if($auth < AUTH_READ){
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }else{
-        if ($view == 'list') {
-            echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
-        } else {
-            echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
-        }
         media_filelist($ns,$auth,$jump,true,$sort);
-        echo '</ul>';
     }
     echo '</div>';
 }
@@ -774,17 +780,7 @@ function media_tab_search($ns,$auth=null) {
 
     echo '<div class="scroll-container">';
     media_searchform($ns, $query, true);
-
-    if($do == 'searchlist'){
-        $view = $_REQUEST['view'];
-        if ($view == 'list') {
-            echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
-        } else {
-            echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
-        }
-        media_searchlist($query,$ns,$auth,true);
-        echo '</ul>';
-    }
+    if ($do == 'searchlist') media_searchlist($query,$ns,$auth,true);
     echo '</div>';
 }
 
@@ -874,21 +870,21 @@ function media_tab_history($image, $ns, $auth=null) {
 function media_preview($image, $auth, $rev=false, $meta=false) {
     global $lang;
 
-    echo '<div id="mediamanager__preview">';
+    echo '<div class="mediamanager__preview">';
 
     $size = media_image_preview_size($image, $rev, $meta);
 
     if ($size) {
-        $more = '';
+        $more = array();
         if ($rev) {
-            $more = "rev=$rev";
+            $more['rev'] = $rev;
         } else {
             $t = @filemtime(mediaFN($image));
-            $more = "t=$t";
+            $more['t'] = $t;
         }
 
-        $more .= '&w='.$size[0].'&h='.$size[1];
-
+        $more['w'] = $size[0];
+        $more['h'] = $size[1];
         $src = ml($image, $more);
         echo '<img src="'.$src.'" alt="'.$image.'" style="max-width: '.$size[0].'px;" />';
     }
@@ -904,7 +900,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
 function media_preview_buttons($image, $auth, $rev=false) {
     global $lang, $conf;
 
-    echo '<div id="mediamanager__preview_buttons">';
+    echo '<div class="mediamanager__preview_buttons">';
 
     $more = '';
     if ($rev) {
@@ -1146,8 +1142,8 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         if (!$fromajax) {
             $form = new Doku_Form(array('action'=>media_managerURL(array(), '&'),
                 'id' => 'mediamanager__form_diffview'));
-            $form->addElement('<input type=hidden name=rev2[] value='.$l_rev.' ></input>');
-            $form->addElement('<input type=hidden name=rev2[] value='.$r_rev.' ></input>');
+            $form->addElement('<input type="hidden" name="rev2[]" value="'.$l_rev.'" ></input>');
+            $form->addElement('<input type="hidden" name="rev2[]" value="'.$r_rev.'" ></input>');
             $form->addHidden('mediado', 'diff');
             $form->printForm();
 
@@ -1237,8 +1233,8 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
 
     echo '<div class="mediamanager-preview">';
 
-    $l_more = 'rev='.$l_rev.'&h='.$l_size[1].'&w='.$l_size[0];
-    $r_more = 'rev='.$r_rev.'&h='.$l_size[1].'&w='.$l_size[0];
+    $l_more = array('rev' => $l_rev, 'h' => $l_size[1], 'w' => $l_size[0]);
+    $r_more = array('rev' => $r_rev, 'h' => $l_size[1], 'w' => $l_size[0]);
 
     $l_src = ml($image, $l_more);
     $r_src = ml($image, $r_more);
@@ -1249,10 +1245,10 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
     // two image's in div's
     echo '<div id="mediamanager__diff_layout">';
     echo '<div id="mediamanager__diff_'.$type.'_image1" style="max-width: '.$l_size[0].'px;">';
-    echo '<img src="'.$l_src.'" />';
+    echo '<img src="'.$l_src.'" alt="" />';
     echo '</div>';
     echo '<div id="mediamanager__diff_'.$type.'_image2" style="max-width: '.$l_size[0].'px;">';
-    echo '<img src="'.$r_src.'" />';
+    echo '<img src="'.$r_src.'" alt="" />';
     echo '</div>';
     echo '</div>';
 
@@ -1329,9 +1325,20 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
 
     if(!count($evdata['data'])){
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-    }else foreach($evdata['data'] as $item){
-        if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
-        else media_printfile_thumbs($item,$item['perm']);
+    }else {
+        if ($fullscreen) {
+            $view = $_REQUEST['view'];
+            if ($view == 'list') {
+                echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
+            } else {
+                echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
+            }
+        }
+        foreach($evdata['data'] as $item){
+            if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
+            else media_printfile_thumbs($item,$item['perm']);
+        }
+        if ($fullscreen) echo '</ul>';
     }
 }
 
@@ -1736,6 +1743,9 @@ function media_nstree($ns){
                                'label' => '['.$lang['mediaroot'].']'));
 
     echo html_buildlist($data,'idx','media_nstree_item','media_nstree_li');
+    echo '</li>';
+
+    echo '</ul>';
 }
 
 /**
