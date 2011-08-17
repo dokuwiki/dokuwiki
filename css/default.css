@@ -3,7 +3,7 @@ body{
 }
 
 h1, h2, h3, h4, h5{
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Lucida Grande', 'Arial', sans-serif;
   font-weight: normal;
   color: black;
 }
@@ -51,7 +51,8 @@ a:visited{
 }
 
 #dokuwiki__site{
-  width: 770px
+  max-width: 1024px;
+  padding: 1.4em 20px; /* don't like mixing units, but with max-width set in px, I don't have another solution? */
 }
 
 #dokuwiki__header{
@@ -83,7 +84,7 @@ a:visited{
   font-size: 0.875em;
 }
 
-div.breadcrumbs{
+.wrapper div.breadcrumbs{
   border: 1px solid #ccc;
   border-left: 0;
   border-right: 0;
@@ -98,13 +99,17 @@ div.breadcrumbs .bcsep{
 }
 
 .mode_show #dokuwiki__content{
-  float: left;
-  width: 750px;
+  float: right;
+  width: 99%; /* 99% of what? */
+}
+
+.mode_show #dokuwiki__content h1{
+  line-height: 1.175em;
 }
 
 .mode_show #dokuwiki__aside{
   border-top: 1px solid #ccc;
-  float: right;
+  float: left;
   width: 220px;
   font-size: 0.87em;
 }
@@ -119,6 +124,7 @@ div.breadcrumbs .bcsep{
 }
 
 #dokuwiki__usertools{
+  padding: 10px 0;
   z-index: 1;
   background: #edf1f2;
   background: -moz-linear-gradient(top, #edf1f2 0%, #eaeaea 88%, #dbdfe0 100%);
@@ -128,6 +134,11 @@ div.breadcrumbs .bcsep{
   background: -ms-linear-gradient(top, #edf1f2 0%,#eaeaea 88%,#dbdfe0 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edf1f2', endColorstr='#dbdfe0',GradientType=0 );
   background: linear-gradient(top, #edf1f2 0%,#eaeaea 88%,#dbdfe0 100%);
+}
+
+.wrapper #dokuwiki__pagetools ul, /* making a mess :P */
+.tools #dokuwiki__usertools ul{
+  padding: 0 20px;
 }
 
 #dokuwiki__pagetools{
@@ -148,7 +159,7 @@ div.breadcrumbs .bcsep{
 #dokuwiki__sitetools ul,
 #dokuwiki__usertools ul,
 #dokuwiki__pagetools ul{
-  max-width: 800px;
+  max-width: 1004px;
   font-size: 0.875em;
   padding-left: 0;
 }
@@ -203,9 +214,9 @@ div.breadcrumbs .bcsep{
 }
 
 .dokuwiki div.toc{
-  font-size: 0.875em;
-  line-height: 1.5em;
-  width: 220px;
+  font-size: 0.75em;
+  line-height: 1.4em;
+  width: 200px;
   margin-bottom: 0.5em;
   margin-left: 20px;
   margin-top: -0.3em;
@@ -217,6 +228,11 @@ div.breadcrumbs .bcsep{
 
 .dokuwiki #toc__inside{
   padding: 0.75em 1em 1.5em;
+}
+
+.dokuwiki #toc__inside ul li{
+  list-style: disc;
+  margin-left: 1.5em;
 }
 
 .dokuwiki .secedit{
