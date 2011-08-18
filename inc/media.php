@@ -248,6 +248,8 @@ function media_delete($id,$auth){
  * @return mixed false on error, id of the new file on success
  */
 function media_upload_xhr($ns,$auth){
+    if(!checkSecurityToken()) return false;
+
     $id = $_GET['qqfile'];
     list($ext,$mime,$dl) = mimetype($id);
     $input = fopen("php://input", "r");
@@ -685,7 +687,7 @@ function media_tab_files_options($ns, $sort){
     global $lang;
 
     echo '<div class="background-container">';
-    echo $ns;
+    echo $ns ? $ns : '['.$lang['mediaroot'].']';
 
     echo '<div id="mediamanager__tabs_list">';
 
@@ -753,7 +755,7 @@ function media_tab_upload($ns,$auth=null,$jump='') {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     echo '<div class="background-container">';
-    echo sprintf($lang['media_upload'], $ns);
+    echo sprintf($lang['media_upload'], $ns ? $ns : '['.$lang['mediaroot'].']');
     echo '</div>';
 
     echo '<div class="scroll-container">';
@@ -775,7 +777,7 @@ function media_tab_search($ns,$auth=null) {
     if (!$query) $query = '';
 
     echo '<div class="background-container">';
-    echo sprintf($lang['media_search'], $ns);
+    echo sprintf($lang['media_search'], $ns ? $ns : '['.$lang['mediaroot'].']');
     echo'</div>';
 
     echo '<div class="scroll-container">';

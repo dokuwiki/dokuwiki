@@ -87,5 +87,14 @@
 }
 
 .qq-uploader #dw__ow {
-    margin: 10px 0;
+    margin: 10px 3px -5px 10px;
+}
+
+.qq-uploader .check {
+    line-height: 18px;
+}
+
+.qq-uploader #mediamanager__upload_button {
+    margin-top: -5px;
+    margin-bottom: 10px;
 }

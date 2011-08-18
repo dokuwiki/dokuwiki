@@ -129,7 +129,7 @@ $lang['js']['hidedetails'] = 'Hide Details';
 $lang['mediausage']  = 'Use the following syntax to reference this file:';
 $lang['mediaview']   = 'View original file';
 $lang['mediaroot']   = 'root';
-$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons.';
+$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons. Files also can be selected by drag and drop.';
 $lang['mediaextchange'] = 'Filextension changed from .%s to .%s!';
 
 $lang['js']['mediatitle']       = 'Link settings';
@@ -354,8 +354,8 @@ $lang['js']['media_diff_both']     = 'Side by Side';
 $lang['js']['media_diff_opacity']  = 'Overlay';
 $lang['js']['media_diff_portions'] = 'Slider';
 
-$lang['js']['media_select']     = 'Select files...';
-$lang['js']['media_upload_btn'] = 'Start uploading';
+$lang['js']['media_select']     = 'Select files…';
+$lang['js']['media_upload_btn'] = 'Upload';
 $lang['js']['media_drop']       = 'Drop files here to upload';
 $lang['js']['media_cancel']     = 'remove';
 $lang['js']['media_overwrt']    = 'Overwrite existing files';
