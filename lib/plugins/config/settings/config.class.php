@@ -341,7 +341,7 @@ if (!class_exists('setting')) {
     var $_input = NULL;             // only used by those classes which error check
 
     var $_cautionList = array(
-        'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
+        'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'cookiedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
         'start' => 'warning', 'camelcase' => 'warning', 'deaccent' => 'warning', 'sepchar' => 'warning', 'compression' => 'warning', 'xsendfile' => 'warning', 'renderer_xhtml' => 'warning', 'fnencode' => 'warning',
         'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'xmlrpc' => 'security', 'fullpath' => 'security'
     );
