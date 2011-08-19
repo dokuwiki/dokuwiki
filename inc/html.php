@@ -782,15 +782,16 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
         return '';
     }
 
-    $level = $data[0]['level'];
-    $opens = 0;
+    $start_level = $data[0]['level'];
     $ret   = '';
 
-    if ($level < 2) {
+    if ($start_level < 2) {
         // Trigger building a wrapper ul if the first level is
         // 0 (we have a root object) or 1 (just the root content)
-        --$level;
+        --$start_level;
     }
+
+    $level = $start_level;
 
     foreach ($data as $item){
 
@@ -824,7 +825,7 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
     }
 
     //close remaining items and lists
-    for ($i=0; $i < $level; $i++){
+    while(--$level >= $start_level) {
         $ret .= "</li></ul>\n";
     }
 
