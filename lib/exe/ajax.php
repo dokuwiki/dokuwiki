@@ -265,9 +265,11 @@ function ajax_mediaupload(){
         $res = media_upload_xhr($NS, $AUTH);
         $id = $_GET['qqfile'];
     }
+    $id = cleanID($id, false, true);
 
     if ($res) $result = array('success' => true,
-        'link' => media_managerURL(array('ns' => getNS($id), 'image' => $id), '&'));
+        'link' => media_managerURL(array('ns' => getNS($id), 'image' => $id), '&'),
+        'id' => $id);
 
     if (!$result) {
         $error = '';

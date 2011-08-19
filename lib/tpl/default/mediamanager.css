@@ -289,6 +289,11 @@
     padding-bottom: 0.5em;
 }
 
+#media__content #mediamanager__uploader {
+    border-bottom: 1px solid #8CACBB;
+    padding-bottom: 0.5em;
+}
+
 /* File preview */
 
 .mediamanager__preview,
@@ -318,7 +323,7 @@ form.meta textarea.edit {
 }
 
 #mediamanager__details #page__revisions ul li div.li div {
-    font-size: 12px;
+    font-size: 90%;
     color: __text_neu__;
     padding-left: 18px;
 }

@@ -1626,14 +1626,14 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $params = array('id'      => 'dw__upload',
                     'enctype' => 'multipart/form-data');
     if (!$fullscreen) {
-        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns;
     } else {
         $params['action'] = media_managerURL(array('tab_files' => 'files',
             'tab_details' => 'view'), '&');
     }
 
     $form = new Doku_Form($params);
-    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
+    if (!$fullscreen) echo '<div class="upload">' . $lang['mediaupload'] . '</div>';
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
     $form->addElement(form_makeOpenTag('p'));
@@ -1651,52 +1651,10 @@ function media_uploadform($ns, $auth, $fullscreen = false){
         $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check', $attrs));
         $form->addElement(form_makeCloseTag('p'));
     }
-    if ($fullscreen) {
-        echo '<div id="mediamanager__uploader">';
-    }
 
+    echo '<div id="mediamanager__uploader">';
     html_form('upload', $form);
-
-    if ($fullscreen) {
-        echo '</div>';
-        return '';
-    }
-
-    // prepare flashvars for multiupload
-    $opt = array(
-            'L_gridname'  => $lang['mu_gridname'] ,
-            'L_gridsize'  => $lang['mu_gridsize'] ,
-            'L_gridstat'  => $lang['mu_gridstat'] ,
-            'L_namespace' => $lang['mu_namespace'] ,
-            'L_overwrite' => $lang['txt_overwrt'],
-            'L_browse'    => $lang['mu_browse'],
-            'L_upload'    => $lang['btn_upload'],
-            'L_toobig'    => $lang['mu_toobig'],
-            'L_ready'     => $lang['mu_ready'],
-            'L_done'      => $lang['mu_done'],
-            'L_fail'      => $lang['mu_fail'],
-            'L_authfail'  => $lang['mu_authfail'],
-            'L_progress'  => $lang['mu_progress'],
-            'L_filetypes' => $lang['mu_filetypes'],
-            'L_info'      => $lang['mu_info'],
-            'L_lasterr'   => $lang['mu_lasterr'],
-
-            'O_ns'        => ":$ns",
-            'O_backend'   => 'mediamanager.php?'.session_name().'='.session_id(),
-            'O_maxsize'   => php_to_byte(ini_get('upload_max_filesize')),
-            'O_extensions'=> join('|',array_keys(getMimeTypes())),
-            'O_overwrite' => ($auth >= AUTH_DELETE),
-            'O_sectok'    => getSecurityToken(),
-            'O_authtok'   => auth_createToken(),
-            );
-    $var = buildURLparams($opt);
-    // output the flash uploader
-    ?>
-        <div id="dw__flashupload" style="display:none">
-        <div class="upload"><?php echo $lang['mu_intro']?></div>
-        <?php echo html_flashobject('multipleUpload.swf','500','190',null,$opt); ?>
-        </div>
-        <?php
+    echo '</div>';
 }
 
 /**

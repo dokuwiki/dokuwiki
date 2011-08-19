@@ -4,20 +4,18 @@
 }
 
 .qq-upload-button {
-    display: block;
-    width: 115px;
-    padding: 7px 0;
-    text-align: center;
-    background: __background_alt__;
+    display: inline-block;
     border: 1px solid __border__;
-    color: __extern__;
-    font-weight: bold;
+    color: __text__;
+    background-color: __background__;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 100%;
+    cursor: pointer;
+    margin: 1px;
     margin-bottom: 5px;
-}
-
-.qq-upload-button-hover {
-    background: __border__;
-    color: __background__;
+    padding: 0.125em 0.4em;
+    background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
 }
 
 .qq-upload-button-focus {
@@ -42,11 +40,11 @@
     top: 50%;
     width:100%;
     margin-top:-8px;
-    font-size:16px;
+    font-size: 120%;
 }
 
 .qq-upload-drop-area-active {
-    background: #DADADA;
+    background: __background_alt__;
 }
 
 .qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
@@ -62,7 +60,7 @@
 }
 
 .qq-upload-size,.qq-upload-cancel {
-    font-size:11px;
+    font-size: 85%;
 }
 
 .qq-upload-failed-text {
@@ -97,4 +95,8 @@
 .qq-uploader #mediamanager__upload_button {
     margin-top: -5px;
     margin-bottom: 10px;
+}
+
+.qq-uploader div.li {
+    margin-bottom: 5px;
 }

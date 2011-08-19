@@ -356,6 +356,7 @@ $lang['js']['media_diff_portions'] = 'Slider';
 
 $lang['js']['media_select']     = 'Select files…';
 $lang['js']['media_upload_btn'] = 'Upload';
+$lang['js']['media_done_btn']   = 'Done';
 $lang['js']['media_drop']       = 'Drop files here to upload';
 $lang['js']['media_cancel']     = 'remove';
 $lang['js']['media_overwrt']    = 'Overwrite existing files';
