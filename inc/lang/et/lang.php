@@ -92,7 +92,7 @@ $lang['txt_filename']          = 'Siseta oma Wikinimi (soovituslik)';
 $lang['txt_overwrt']           = 'Kirjutan olemasoleva faili üle';
 $lang['lockedby']              = 'Praegu on selle lukustanud';
 $lang['lockexpire']            = 'Lukustus aegub';
-$lang['willexpire']            = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
+$lang['js']['willexpire']            = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
 $lang['js']['notsavedyet']     = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.
 Kas Sa ikka tahad edasi liikuda?';
 $lang['js']['searchmedia']     = 'Otsi faile';

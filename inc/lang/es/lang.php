@@ -109,7 +109,7 @@ $lang['txt_filename']          = 'Subir como (opcional)';
 $lang['txt_overwrt']           = 'Sobreescribir archivo existente';
 $lang['lockedby']              = 'Actualmente bloqueado por';
 $lang['lockexpire']            = 'El bloqueo expira en';
-$lang['willexpire']            = 'Tu bloqueo para editar esta página expira en un minuto.\nPara evitar conflictos usa el botón previsualizar para reiniciar el contador de tiempo.';
+$lang['js']['willexpire']            = 'Tu bloqueo para editar esta página expira en un minuto.\nPara evitar conflictos usa el botón previsualizar para reiniciar el contador de tiempo.';
 $lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
 ¿Realmente quieres continuar?';
 $lang['js']['searchmedia']     = 'Buscar archivos';

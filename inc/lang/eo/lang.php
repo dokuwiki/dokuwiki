@@ -94,7 +94,7 @@ $lang['txt_filename']          = 'Alŝuti kiel (laŭvole)';
 $lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
 $lang['lockedby']              = 'Nune ŝlosita de';
 $lang['lockexpire']            = 'Ŝlosado ĉesos en';
-$lang['willexpire']            = 'Vi povos redakti ĉi tiun paĝon post unu minuto.\nSe vi volas nuligi tempkontrolon de la ŝlosado, do premu butonon "Antaŭrigardi".';
+$lang['js']['willexpire']            = 'Vi povos redakti ĉi tiun paĝon post unu minuto.\nSe vi volas nuligi tempkontrolon de la ŝlosado, do premu butonon "Antaŭrigardi".';
 $lang['js']['notsavedyet']     = 'Ne konservitaj modifoj perdiĝos.
 Ĉu vi certe volas daŭrigi la procezon?';
 $lang['js']['searchmedia']     = 'Serĉi dosierojn';

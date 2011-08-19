@@ -89,7 +89,7 @@ $lang['txt_filename']          = 'Ievadi vikivārdu (nav obligāts)';
 $lang['txt_overwrt']           = 'Aizstāt esošo failu';
 $lang['lockedby']              = 'Patlaban bloķējis ';
 $lang['lockexpire']            = 'Bloķējums beigsies ';
-$lang['willexpire']            = 'Tavs bloķējums uz šo lapu pēc minūtes beigsies.\nLai izvairītos no konflikta, nospied Iepriekšapskata pogu\n un bloķējuma laiku sāks skaitīt no jauna.';
+$lang['js']['willexpire']            = 'Tavs bloķējums uz šo lapu pēc minūtes beigsies.\nLai izvairītos no konflikta, nospied Iepriekšapskata pogu\n un bloķējuma laiku sāks skaitīt no jauna.';
 $lang['js']['notsavedyet']     = 'Veiktas bet nav saglabātas izmaiņas.
 Vai tiešām tās nevajag?';
 $lang['js']['searchmedia']     = 'Meklēt failus';

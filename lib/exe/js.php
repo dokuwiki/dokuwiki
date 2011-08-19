@@ -109,7 +109,7 @@ function js_out(){
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
-        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
+        js_runonstart("dw_locktimer.init(".($conf['locktime'] - 60).",".$conf['usedraft'].")");
     }
     // init hotkeys - must have been done after init of toolbar
 # disabled for FS#1958    js_runonstart('initializeHotkeys()');

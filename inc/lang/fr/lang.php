@@ -107,7 +107,7 @@ $lang['txt_filename']          = 'Donnez un « wikiname » (optionnel) ';
 $lang['txt_overwrt']           = 'Écraser le fichier cible';
 $lang['lockedby']              = 'Actuellement bloqué par';
 $lang['lockexpire']            = 'Le blocage expire à';
-$lang['willexpire']            = 'Votre blocage pour modifier cette page expire dans une minute.\nPour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
+$lang['js']['willexpire']            = 'Votre blocage pour modifier cette page expire dans une minute.\nPour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
 $lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues.
 Voulez-vous vraiment continuer ?';
 $lang['js']['searchmedia']     = 'Chercher des fichiers';

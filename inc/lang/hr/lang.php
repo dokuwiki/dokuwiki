@@ -92,7 +92,7 @@ $lang['txt_filename']          = 'Postaviti kao (nije obavezno)';
 $lang['txt_overwrt']           = 'Prepiši postojeću datoteku';
 $lang['lockedby']              = 'Zaključao';
 $lang['lockexpire']            = 'Zaključano do';
-$lang['willexpire']            = 'Dokument kojeg mijenjate će biti zaključan još 1 minutu.\n Ukoliko želite i dalje raditi izmjene na dokumentu - kliknite na "Pregled".';
+$lang['js']['willexpire']            = 'Dokument kojeg mijenjate će biti zaključan još 1 minutu.\n Ukoliko želite i dalje raditi izmjene na dokumentu - kliknite na "Pregled".';
 $lang['js']['notsavedyet']     = 'Vaše izmjene će se izgubiti.
 Želite li nastaviti?';
 $lang['js']['searchmedia']     = 'Traži datoteke';

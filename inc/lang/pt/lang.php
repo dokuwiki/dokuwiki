@@ -94,7 +94,7 @@ $lang['txt_filename']          = 'Carregar como (opcional)';
 $lang['txt_overwrt']           = 'Escrever por cima do ficheiro já existente';
 $lang['lockedby']              = 'Bloqueado por';
 $lang['lockexpire']            = 'Expira em';
-$lang['willexpire']            = 'O bloqueio de edição para este documento irá expirar num minuto.\nPara evitar conflitos de edição, clique no botão <Prever> para re-iniciar o temporizador de bloqueio.';
+$lang['js']['willexpire']            = 'O bloqueio de edição para este documento irá expirar num minuto.\nPara evitar conflitos de edição, clique no botão <Prever> para re-iniciar o temporizador de bloqueio.';
 $lang['js']['notsavedyet']     = 'Existem alterações não gravadas, que serão perdidas se continuar.
 Deseja realmente continuar?';
 $lang['js']['searchmedia']     = 'Procurar por ficheiros';

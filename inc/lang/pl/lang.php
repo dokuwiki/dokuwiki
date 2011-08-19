@@ -96,7 +96,7 @@ $lang['txt_filename']          = 'Nazwa pliku (opcjonalnie)';
 $lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
 $lang['lockedby']              = 'Aktualnie zablokowane przez';
 $lang['lockexpire']            = 'Blokada wygasa';
-$lang['willexpire']            = 'Za minutę Twoja blokada tej strony wygaśnie.\nW celu uniknięcia konfliktów wyświetl podgląd aby odnowić blokadę.';
+$lang['js']['willexpire']            = 'Za minutę Twoja blokada tej strony wygaśnie.\nW celu uniknięcia konfliktów wyświetl podgląd aby odnowić blokadę.';
 $lang['js']['notsavedyet']     = 'Nie zapisane zmiany zostaną utracone.
 Czy na pewno kontynuować?';
 $lang['js']['searchmedia']     = 'Szukaj plików';
