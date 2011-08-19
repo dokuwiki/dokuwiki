@@ -1172,10 +1172,10 @@ function tpl_fileList(){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_fileDetails($image, $rev){
-    global $AUTH, $NS, $conf;
+    global $AUTH, $NS, $conf, $DEL;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
-    if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return '';
+    if (!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return '';
     if ($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
     if (isset($NS) && getNS($image) != $NS) return '';
     $do = $_REQUEST['mediado'];
@@ -1209,7 +1209,7 @@ function tpl_fileDetails($image, $rev){
 
     } elseif ($opened_tab == 'history' && $conf['mediarevisions']) {
         echo '<div id="mediamanager__details">';
-        media_tab_history($image,$NS,$AUTH);
+        media_tab_history($image,$NS,$AUTH,$removed);
         echo '</div>';
     }
 }
@@ -1465,6 +1465,7 @@ function tpl_media() {
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
+    echo '<div id="test"></div>';
     echo '<div id="mediamanager__page">';
     echo '<div id="mediamanager__layout">';
 
