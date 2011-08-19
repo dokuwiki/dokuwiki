@@ -1209,7 +1209,7 @@ function tpl_fileDetails($image, $rev){
 
     } elseif ($opened_tab == 'history' && $conf['mediarevisions']) {
         echo '<div id="mediamanager__details">';
-        media_tab_history($image,$NS,$AUTH,$removed);
+        media_tab_history($image,$NS,$AUTH);
         echo '</div>';
     }
 }
@@ -1465,7 +1465,6 @@ function tpl_media() {
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
-    echo '<div id="test"></div>';
     echo '<div id="mediamanager__page">';
     echo '<div id="mediamanager__layout">';
 
