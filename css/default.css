@@ -1,9 +1,9 @@
 body{
-  font: 0.875em/1.4 'Helvetica Neue', sans-serif;
+  font: 0.875em/1.4 'Arial', sans-serif;
 }
 
 h1, h2, h3, h4, h5{
-  font-family: 'Lucida Grande', 'Arial', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-weight: normal;
   color: black;
 }
