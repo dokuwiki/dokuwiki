@@ -22,6 +22,7 @@
     padding: 0;
     margin: 0;
     text-align: left;
+    position: relative;
 }
 
 #mediamanager__layout .background-container {
@@ -359,8 +360,14 @@ form.meta textarea.edit {
 * html #mediamanager__diff_table li {
     display: inline;
 }
+
 *+html #mediamanager__diff_table li {
     display: inline;
+}
+
+/* For IE7 */
+*:first-child+html #mediamanager__diff_table li {
+    width: 45%;
 }
 
 /* Image diff */

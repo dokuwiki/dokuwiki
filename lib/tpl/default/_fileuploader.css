@@ -8,7 +8,6 @@
     border: 1px solid __border__;
     color: __text__;
     background-color: __background__;
-    vertical-align: middle;
     text-decoration: none;
     font-size: 100%;
     cursor: pointer;
@@ -16,6 +15,11 @@
     margin-bottom: 5px;
     padding: 0.125em 0.4em;
     background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
+}
+
+* html .qq-upload-button,
+*+html .qq-upload-button {
+    display: inline;
 }
 
 .qq-upload-button-focus {
@@ -84,8 +88,9 @@
     padding-left: 10px;
 }
 
-.qq-uploader #dw__ow {
-    margin: 10px 3px -5px 10px;
+.qq-uploader .dw__ow {
+    margin-left: 10px;
+    margin-right: 3px;
 }
 
 .qq-uploader .check {
@@ -93,7 +98,6 @@
 }
 
 .qq-uploader #mediamanager__upload_button {
-    margin-top: -5px;
     margin-bottom: 10px;
 }
 

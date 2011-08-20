@@ -268,15 +268,15 @@ function ajax_mediaupload(){
     $id = cleanID($id, false, true);
 
     if ($res) $result = array('success' => true,
-        'link' => media_managerURL(array('ns' => getNS($id), 'image' => $id), '&'),
-        'id' => $id);
+        'link' => media_managerURL(array('ns' => $NS, 'image' => $id), '&'),
+        'id' => $NS.':'.$id, 'ns' => $NS);
 
     if (!$result) {
         $error = '';
         if (isset($MSG)) {
             foreach($MSG as $msg) $error .= $msg['msg'];
         }
-        $result = array('error' => $msg['msg']);
+        $result = array('error' => $msg['msg'], 'ns' => $NS);
     }
     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 }

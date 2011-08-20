@@ -268,7 +268,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($_REQUEST['ow'] == 'true') ? true : false),
+        (($_REQUEST['ow'] == 'checked') ? true : false),
         $auth,
         'copy'
     );
@@ -1626,7 +1626,7 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $params = array('id'      => 'dw__upload',
                     'enctype' => 'multipart/form-data');
     if (!$fullscreen) {
-        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns;
+        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
     } else {
         $params['action'] = media_managerURL(array('tab_files' => 'files',
             'tab_details' => 'view'), '&');
