@@ -318,5 +318,5 @@ $lang['seconds'] = '%d seconds ago';
 
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
-
+$lang['plugin_insterr'] = "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.";
 //Setup VIM: ex: et ts=2 :

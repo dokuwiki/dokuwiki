@@ -8,6 +8,7 @@
 /conf/words.aspell
 /conf/lang/*
 /conf/plugin_lang/*
+/conf/plugins.local.*
 .htaccess
 *.swp
 *.bak

@@ -32,21 +32,6 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     var $_session_started = false;
     var $_localised_prompts = false;
 
-    /**
-     * return some info
-     */
-    function getInfo(){
-
-      return array(
-        'author' => 'Christopher Smith',
-        'email'  => 'chris@jalakai.co.uk',
-        'date'   => '2007-08-05',
-        'name'   => 'Configuration Manager',
-        'desc'   => "Manage Dokuwiki's Configuration Settings",
-        'url'    => 'http://dokuwiki.org/plugin:config',
-      );
-    }
-
     function getMenuSort() { return 100; }
 
     /**

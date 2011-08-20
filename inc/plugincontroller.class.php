@@ -11,11 +11,18 @@ if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 class Doku_Plugin_Controller {
 
-    var $list_enabled = array();
-    var $list_disabled = array();
     var $list_bytype = array();
+    var $tmp_plugins = array();
+    var $plugin_cascade = array('default'=>array(),'local'=>array(),'protected'=>array());
+    var $last_local = '';
+    //backup of tmp_plugins needed for write check
+    var $tmp_bak =array();
 
-    function Doku_Plugin_Controller() {
+    /**
+     * Populates the master list of plugins
+     */
+    function __construct() {
+        $this->loadConfig();
         $this->_populateMasterList();
     }
 
@@ -37,7 +44,7 @@ class Doku_Plugin_Controller {
 
         // request the complete list
         if (!$type) {
-            return $all ? array_merge($this->list_enabled,$this->list_disabled) : $this->list_enabled;
+            return $all ? array_keys($this->tmp_plugins) : array_keys(array_filter($this->tmp_plugins));
         }
 
         if (!isset($this->list_bytype[$type]['enabled'])) {
@@ -61,9 +68,10 @@ class Doku_Plugin_Controller {
      * @param  $disabled bool   true to load even disabled plugins
      * @return objectreference  the plugin object or null on failure
      */
-    function &load($type,$name,$new=false,$disabled=false){
+    function load($type,$name,$new=false,$disabled=false){
+
         //we keep all loaded plugins available in global scope for reuse
-        global $DOKU_PLUGINS;
+        global $DOKU_PLUGINS,$lang;
 
         list($plugin,$component) = $this->_splitName($name);
 
@@ -85,12 +93,12 @@ class Doku_Plugin_Controller {
 
         //construct class and instantiate
         if (!class_exists($class, true)) {
+
             # the plugin might be in the wrong directory
             $dir = $this->get_directory($plugin);
             $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
             if($inf['base'] && $inf['base'] != $plugin){
-                msg("Plugin installed incorrectly. Rename plugin directory '".
-                    hsc($plugin)."' to '".hsc($inf['base'])."'.",-1);
+                msg(sprintf($lang['plugin_insterr'],hsc($plugin),hsc($inf['base'])),-1);
             }
             return null;
         }
@@ -100,30 +108,27 @@ class Doku_Plugin_Controller {
     }
 
     function isdisabled($plugin) {
-        return (array_search($plugin, $this->list_enabled) === false);
-    }
-
-    function enable($plugin) {
-        if (array_search($plugin, $this->list_disabled) !== false) {
-            return @unlink(DOKU_PLUGIN.$plugin.'/disabled');
-        }
-        return false;
+        return empty($this->tmp_plugins[$plugin]);
     }
 
     function disable($plugin) {
-        if (array_search($plugin, $this->list_enabled) !== false) {
-            return @touch(DOKU_PLUGIN.$plugin.'/disabled');
-        }
-        return false;
+        if(array_key_exists($plugin,$this->plugin_cascade['protected'])) return false;
+        $this->tmp_plugins[$plugin] = 0;
+        return $this->saveList();
+    }
+
+    function enable($plugin) {
+        if(array_key_exists($plugin,$this->plugin_cascade['protected'])) return false;
+        $this->tmp_plugins[$plugin] = 1;
+        return $this->saveList();
     }
 
     function get_directory($plugin) {
         return $plugin;
     }
 
-    function _populateMasterList() {
-        global $conf;
-        if ($dh = opendir(DOKU_PLUGIN)) {
+    protected function _populateMasterList() {
+        if ($dh = @opendir(DOKU_PLUGIN)) {
             while (false !== ($plugin = readdir($dh))) {
                 if ($plugin[0] == '.') continue;               // skip hidden entries
                 if (is_file(DOKU_PLUGIN.$plugin)) continue;    // skip files, we're only interested in directories
@@ -132,19 +137,123 @@ class Doku_Plugin_Controller {
                     // the plugin was disabled by rc2009-01-26
                     // disabling mechanism was changed back very soon again
                     // to keep everything simple we just skip the plugin completely
-                }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled') ||
+                }elseif(@file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
+                    if(empty($this->plugin_cascade['local'][$plugin]))
+                        $all_plugins[$plugin] = 0;
+                    else
+                        $all_plugins[$plugin] = 1;
+                    //treat this as a default disabled plugin(over-rideable by the plugin manager)
+                    $this->plugin_cascade['default'][$plugin] = 0;
+                    //TODO take this out before final release, 
+                    //it is here only for other developers to be able to switch branches easily
+                    //@unlink(DOKU_PLUGIN.$plugin.'/disabled');
+                    continue;
+                }
+                elseif((array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 0) ||
                         ($plugin === 'plugin' && isset($conf['pluginmanager']) &&
                          !$conf['pluginmanager'])){
-                    $this->list_disabled[] = $plugin;
+                    $all_plugins[$plugin] = 0;
+                } elseif((array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 1)) {
+                    $all_plugins[$plugin] = 1;
                 } else {
-                    $this->list_enabled[] = $plugin;
+                    $all_plugins[$plugin] = 1;
                 }
             }
+            $this->tmp_plugins = $all_plugins;
+            $this->saveList();
         }
     }
 
+    protected function checkRequire($files) {
+        $plugins = array();
+        foreach($files as $file) {
+            if(file_exists($file)) {
+                @include_once($file);
+            }
+        }
+        return $plugins;
+    }
+
+    function getCascade() {
+        return $this->plugin_cascade;
+    }
+    /**
+     * Save the current list of plugins
+     */
+    function saveList() {
+        if(!empty($this->tmp_plugins)) {
+            //quick check to ensure rewrite is necessary
+            if($this->tmp_plugins != $this->tmp_bak) {
+                //Rebuild local for better check and saving
+                $local_plugins = $this->rebuildLocal();
+                //only write if the list has changed
+                if($local_plugins != $this->plugin_cascade['local']) {
+                    $file = $this->last_local;
+                    $out = "<?php\n";
+                    foreach ($local_plugins as $plugin => $value) {
+                        $out .= "\$plugins['$plugin'] = $value;\n";
+                    }
+                    // backup current file (remove any existing backup)
+                    if (@file_exists($file)) {
+                        if (@file_exists($file.'.bak')) @unlink($file.'.bak');
+                        if (!io_rename($file, $file.'.bak')) return false;
+                    }
+                    //check if can open for writing, else restore
+                    if (!$fh = @fopen($file, 'wb')) {
+                        io_rename($file.'.bak', $file);// problem opening, restore the backup
+                        return false;
+                    }
+                    @fwrite($fh, $out);
+                    fclose($fh);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Rebuild the set of local plugins
+     * @return array array of plugins to be saved in end($config_cascade['plugins']['local'])
+     */
+    function rebuildLocal() {
+        //assign to local variable to avoid overwriting
+        $backup = $this->tmp_plugins;
+        //Can't do anything about protected one so rule them out completely
+        $local_default = array_diff_key($backup,$this->plugin_cascade['protected']);
+        //Diff between local+default and default
+        //gives us the ones we need to check and save
+        $diffed_ones = array_diff_key($local_default,$this->plugin_cascade['default']);
+        //The ones which we are sure of (list of 0s not in default)
+        $sure_plugins = array_filter($diffed_ones,array($this,'negate'));
+        //the ones in need of diff
+        $conflicts = array_diff_key($local_default,$diffed_ones);
+        //The final list
+        return array_merge($sure_plugins,array_diff_assoc($conflicts,$this->plugin_cascade['default']));
+    }
+
+    /**
+     * Build the list of plugins and cascade
+     * 
+     */
+    function loadConfig() {
+        global $config_cascade;
+        foreach(array('default','protected') as $type) {
+            if(array_key_exists($type,$config_cascade['plugins']))
+                $this->plugin_cascade[$type] = $this->checkRequire($config_cascade['plugins'][$type]);
+        }
+        $local = $config_cascade['plugins']['local'];
+        $this->last_local = array_pop($local);
+        $this->plugin_cascade['local'] = $this->checkRequire(array($this->last_local));
+        if(is_array($local)) {
+            $this->plugin_cascade['default'] = array_merge($this->plugin_cascade['default'],$this->checkRequire($local));
+        }
+        $this->tmp_plugins = array_merge($this->plugin_cascade['default'],$this->plugin_cascade['local'],$this->plugin_cascade['protected']);
+        $this->tmp_bak = $this->tmp_plugins;
+    }
+
     function _getListByType($type, $enabled) {
-        $master_list = $enabled ? $this->list_enabled : $this->list_disabled;
+        $master_list = $enabled ? array_keys(array_filter($this->tmp_plugins)) : array_keys(array_filter($this->tmp_plugins,array($this,'negate')));
 
         $plugins = array();
         foreach ($master_list as $plugin) {
@@ -169,11 +278,13 @@ class Doku_Plugin_Controller {
     }
 
     function _splitName($name) {
-        if (array_search($name, $this->list_enabled + $this->list_disabled) === false) {
+        if (array_search($name, array_keys($this->tmp_plugins)) === false) {
             return explode('_',$name,2);
         }
 
         return array($name,'');
     }
-
+    function negate($input) {
+        return !(bool) $input;
+    }
 }
