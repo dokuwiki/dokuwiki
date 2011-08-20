@@ -188,14 +188,14 @@ function getRecents($first,$num,$ns='',$flags=0){
     // handle lines
     while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >=0)) {
         if (empty($rec) && $lines_position >= 0) {
-            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
+            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags & ~RECENTS_MEDIA_CHANGES, $seen);
             if (!$rec) {
                 $lines_position --;
                 continue;
             }
         }
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && empty($media_rec) && $media_lines_position >= 0) {
-            $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags, $seen);
+            $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags | RECENTS_MEDIA_CHANGES, $seen);
             if (!$media_rec) {
             	$media_lines_position --;
             	continue;
@@ -312,11 +312,16 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
 
     // check ACL
-    $recent['perms'] = auth_quickaclcheck($recent['id']);
+    if ($flags & RECENTS_MEDIA_CHANGES) {
+        $recent['perms'] = auth_quickaclcheck(getNS($recent['id']).':*');
+    } else {
+        $recent['perms'] = auth_quickaclcheck($recent['id']);
+    }
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
-    if(!@file_exists(wikiFN($recent['id'])) && !@file_exists(mediaFN($recent['id'])) && $flags & RECENTS_SKIP_DELETED) return false;
+    $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
+    if((!@file_exists($fn)) && ($flags & RECENTS_SKIP_DELETED)) return false;
 
     return $recent;
 }
