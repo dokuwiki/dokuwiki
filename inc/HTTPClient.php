@@ -368,6 +368,7 @@ class HTTPClient {
                 unset($this->connections[$connectionId]);
                 return false;
             }
+            usleep(1000);
             $r_headers .= fgets($socket,1024);
         }while(!preg_match('/\r?\n\r?\n$/',$r_headers));
 
