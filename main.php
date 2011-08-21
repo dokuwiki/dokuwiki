@@ -56,22 +56,24 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 <!-- USER TOOLS -->
                 <?php if ($conf['useacl'] && $showTools): ?>
                     <div id="dokuwiki__usertools">
-                        <h3 class="a11y"><?php echo tpl_getLang('user_tools') ?></h3>
-                        <ul>
-                            <?php /* the optional second parameter of tpl_action() switches between a link and a button,
-                                     e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
-                                if ($_SERVER['REMOTE_USER']) {
-                                    echo '<li class="user">';
-                                    tpl_userinfo(); /* 'Logged in as ...' */
-                                    echo '</li>';
-                                }
-                                tpl_action('admin', 1, 'li');
-                                _tpl_action('userpage', 1, 'li');
-                                tpl_action('profile', 1, 'li');
-                                _tpl_action('register', 1, 'li'); /* DW versions > 2011-02-20 can use the core function tpl_action('register', 1, 'li') */
-                                tpl_action('login', 1, 'li');
-                            ?>
-                        </ul>
+                      <div class="inner">
+                          <h3 class="a11y"><?php echo tpl_getLang('user_tools') ?></h3>
+                          <ul>
+                              <?php /* the optional second parameter of tpl_action() switches between a link and a button,
+                                       e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
+                                  if ($_SERVER['REMOTE_USER']) {
+                                      echo '<li class="user">';
+                                      tpl_userinfo(); /* 'Logged in as ...' */
+                                      echo '</li>';
+                                  }
+                                  tpl_action('admin', 1, 'li');
+                                  _tpl_action('userpage', 1, 'li');
+                                  tpl_action('profile', 1, 'li');
+                                  _tpl_action('register', 1, 'li'); /* DW versions > 2011-02-20 can use the core function tpl_action('register', 1, 'li') */
+                                  tpl_action('login', 1, 'li');
+                              ?>
+                          </ul>
+                        </div>
                     </div>
                 <?php endif ?>
 
@@ -161,5 +163,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>
     <!--[if ( IE 6 | IE 7 | IE 8 ) ]></div><![endif]-->
+    <div class="header_background"></div>
 </body>
 </html>
