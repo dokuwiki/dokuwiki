@@ -103,7 +103,7 @@ $lang['txt_filename']          = 'Enviar como (opcional)';
 $lang['txt_overwrt']           = 'Substituir o arquivo existente';
 $lang['lockedby']              = 'Atualmente bloqueada por';
 $lang['lockexpire']            = 'O bloqueio expira em';
-$lang['willexpire']            = 'O seu bloqueio de edição deste página irá expirar em um minuto.\nPara evitar conflitos de edição, clique no botão de visualização para reiniciar o temporizador de bloqueio.';
+$lang['js']['willexpire']            = 'O seu bloqueio de edição deste página irá expirar em um minuto.\nPara evitar conflitos de edição, clique no botão de visualização para reiniciar o temporizador de bloqueio.';
 $lang['js']['notsavedyet']     = 'As alterações não salvas serão perdidas.
 Deseja realmente continuar?';
 $lang['js']['searchmedia']     = 'Buscar por arquivos';

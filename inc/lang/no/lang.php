@@ -101,7 +101,7 @@ $lang['txt_filename']          = 'Skriv inn wikinavn (alternativt)';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
 $lang['lockedby']              = 'Stengt av';
 $lang['lockexpire']            = 'Avstengningen opphører';
-$lang['willexpire']            = 'Din redigeringslås for dette dokumentet kommer snart til å opphøre.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
+$lang['js']['willexpire']            = 'Din redigeringslås for dette dokumentet kommer snart til å opphøre.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
 $lang['js']['notsavedyet']     = 'Ulagrede endringer vil gå tapt.
 Vil du fortsette?';
 $lang['js']['searchmedia']     = 'Søk for filer';

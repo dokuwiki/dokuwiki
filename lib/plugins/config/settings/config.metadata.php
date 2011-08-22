@@ -95,6 +95,7 @@ $meta['license']  = array('license');
 $meta['savedir']  = array('savedir');
 $meta['basedir']  = array('string');
 $meta['baseurl']  = array('string');
+$meta['cookiedir'] = array('string');
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['allowdebug']  = array('onoff');

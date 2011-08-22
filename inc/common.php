@@ -1007,16 +1007,8 @@ function saveWikiText($id,$text,$summary,$minor=false){
         $newRev = saveOldRevision($id);
         // remove empty file
         @unlink($file);
-        // remove old meta info...
-        $mfiles = metaFiles($id);
-        $changelog = metaFN($id, '.changes');
-        $metadata  = metaFN($id, '.meta');
-        $subscribers = metaFN($id, '.mlist');
-        foreach ($mfiles as $mfile) {
-            // but keep per-page changelog to preserve page history, keep subscriber list and keep meta data
-            if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata && $mfile!==$subscribers) { @unlink($mfile); }
-        }
-        // purge meta data
+        // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
+        // purge non-persistant meta data
         p_purge_metadata($id);
         $del = true;
         // autoset summary on deletion

@@ -134,6 +134,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data['popversion'] = $this->version;
         $data['language'] = $conf['lang'];
         $data['now']      = time();
+        $data['popauto']  = (int) $this->isAutoSubmitEnabled();
 
         // some config values
         $data['conf_useacl']   = $conf['useacl'];

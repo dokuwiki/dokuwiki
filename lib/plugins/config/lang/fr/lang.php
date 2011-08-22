@@ -16,6 +16,7 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -120,6 +121,7 @@ $lang['jpg_quality']           = 'Qualité de la compression JPEG (0-100)';
 $lang['subscribers']           = 'Activer l\'abonnement aux pages';
 $lang['subscribe_time']        = 'Délai après lequel les listes d\'abonnement et résumés sont envoyés (en secondes). Devrait être plus petit que le délai précisé dans recent_days.';
 $lang['compress']              = 'Compresser CSS et JavaScript';
+$lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS, les images qui y sont référencées. Cette technique minimise les requêtes HTTP. Pour IE, ceci ne fonctionne qu\'à partir de la version 8 !  Valeurs correctes entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['hidepages']             = 'Cacher les pages correspondant à (expression régulière)';
 $lang['send404']               = 'Renvoyer "HTTP 404/Page Non Trouvée" pour les pages introuvables';
 $lang['sitemap']               = 'Fréquence de génération une carte Google du site (en jours)';
