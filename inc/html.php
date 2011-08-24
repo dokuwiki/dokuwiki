@@ -485,10 +485,12 @@ function html_revisions($first=0, $media_id = false){
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
 
-        $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        if (!$media_id) $form->addElement(' &ndash; ');
-        if (!$media_id) $form->addElement(htmlspecialchars($INFO['sum']));
-        $form->addElement(form_makeCloseTag('span'));
+        if (!$media_id) {
+            $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
+            $form->addElement(' &ndash; ');
+            $form->addElement(htmlspecialchars($INFO['sum']));
+            $form->addElement(form_makeCloseTag('span'));
+        }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
         if (!$media_id) $editor = $INFO['editor'];
@@ -562,10 +564,12 @@ function html_revisions($first=0, $media_id = false){
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
 
-        $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        if (!$media_id) $form->addElement(' &ndash; ');
-        $form->addElement(htmlspecialchars($info['sum']));
-        $form->addElement(form_makeCloseTag('span'));
+        if ($info['sum']) {
+            $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
+            if (!$media_id) $form->addElement(' &ndash; ');
+            $form->addElement(htmlspecialchars($info['sum']));
+            $form->addElement(form_makeCloseTag('span'));
+        }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
         if($info['user']){
@@ -599,8 +603,7 @@ function html_revisions($first=0, $media_id = false){
         if ($first < 0) $first = 0;
         print '<div class="pagenav-prev">';
         if ($media_id) {
-            echo '<form class="button btn_newer" method="post" action="'.media_managerURL(array('first' => $first)).'">';
-            echo '<div class="no"><input type="submit" value="'.$lang['btn_newer'].'" class="button" /></div></form>';
+            print html_btn('newer',$media_id,"p",media_managerURL(array('first' => $first), '&amp;', false, true));
         } else {
             print html_btn('newer',$id,"p",array('do' => 'revisions', 'first' => $first));
         }
@@ -609,8 +612,7 @@ function html_revisions($first=0, $media_id = false){
     if ($hasNext) {
         print '<div class="pagenav-next">';
         if ($media_id) {
-            echo '<form class="button btn_older" method="post" action="'.media_managerURL(array('first' => $last)).'">';
-            echo '<div class="no"><input type="submit" value="'.$lang['btn_older'].'" class="button" /></div></form>';
+            print html_btn('older',$media_id,"n",media_managerURL(array('first' => $last), '&amp;', false, true));
         } else {
             print html_btn('older',$id,"n",array('do' => 'revisions', 'first' => $last));
         }
@@ -746,7 +748,8 @@ function html_recent($first=0, $show_changes='both'){
 
         if ($recent['media']) {
             $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
-            $form->addElement(form_makeOpenTag('a', array('class' => 'wikilink1', 'href' => $href)));
+            $class = (file_exists(mediaFN($recent['id']))) ? 'wikilink1' : $class = 'wikilink2';
+            $form->addElement(form_makeOpenTag('a', array('class' => $class, 'href' => $href)));
             $form->addElement($recent['id']);
             $form->addElement(form_makeCloseTag('a'));
         } else {

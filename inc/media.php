@@ -112,7 +112,7 @@ function media_metaform($id,$auth,$fullscreen = false){
         echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
         $action = DOKU_BASE.'lib/exe/mediamanager.php';
     } else {
-        $action = media_managerURL(array('tab_details' => 'view'), '&');
+        $action = media_managerURL(array('tab_details' => 'view'));
     }
     echo '<form action="'.$action.'" id="mediamanager__save_meta" accept-charset="utf-8" method="post" class="meta">'.NL;
 
@@ -623,13 +623,13 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
  * Prints mediamanager tab
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $link
- * @param string $class
- * @param string $name
- * @param string $selected
+ * @param string $link - tab href
+ * @param string $class - tab css class
+ * @param string $name - tab caption
+ * @param boolean $selected - is tab selected
  */
 function media_tab($link, $class, $name, $selected=false) {
-    if (!empty($selected) && $selected == $class) $class .= ' selected';
+    if ($selected) $class .= ' selected';
     $tab = '<a href="'.$link.'" class="'.$class.'" >'.$name.'</a>';
     echo $tab;
 }
@@ -638,16 +638,19 @@ function media_tab($link, $class, $name, $selected=false) {
  * Prints tabs for files list actions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $selected - opened tab
+ * @param string $selected_tab - opened tab
  */
-function media_tabs_files($selected=false){
+function media_tabs_files($selected_tab = ''){
     global $lang;
 
     echo '<div class="mediamanager-tabs" id="mediamanager__tabs_files">';
 
-    media_tab(media_managerURL(array('tab_files' => 'files')), 'files', $lang['mediaselect'], $selected);
-    media_tab(media_managerURL(array('tab_files' => 'upload')), 'upload', $lang['media_uploadtab'], $selected);
-    media_tab(media_managerURL(array('tab_files' => 'search')), 'search', $lang['media_searchtab'], $selected);
+    media_tab(media_managerURL(array('tab_files' => 'files')),
+        'files', $lang['mediaselect'], ($selected_tab == 'files'));
+    media_tab(media_managerURL(array('tab_files' => 'upload')),
+        'upload', $lang['media_uploadtab'], ($selected_tab == 'upload'));
+    media_tab(media_managerURL(array('tab_files' => 'search')),
+        'search', $lang['media_searchtab'], ($selected_tab == 'search'));
 
     echo '<div class="clearer"></div>';
     echo '</div>';
@@ -657,21 +660,24 @@ function media_tabs_files($selected=false){
  * Prints tabs for files details actions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $selected - opened tab
+ * @param string $selected_tab - opened tab
  */
-function media_tabs_details($image, $selected=false){
+function media_tabs_details($image, $selected_tab = ''){
     global $lang, $conf;
 
     echo '<div class="mediamanager-tabs" id="mediamanager__tabs_details">';
 
-    media_tab(media_managerURL(array('tab_details' => 'view')), 'view', $lang['media_viewtab'], $selected);
+    media_tab(media_managerURL(array('tab_details' => 'view')),
+        'view', $lang['media_viewtab'], ($selected_tab == 'view'));
 
     list($ext, $mime) = mimetype($image);
     if ($mime == 'image/jpeg' && @file_exists(mediaFN($image))) {
-        media_tab(media_managerURL(array('tab_details' => 'edit')), 'edit', $lang['media_edittab'], $selected);
+        media_tab(media_managerURL(array('tab_details' => 'edit')),
+            'edit', $lang['media_edittab'], ($selected_tab == 'edit'));
     }
     if ($conf['mediarevisions']) {
-        media_tab(media_managerURL(array('tab_details' => 'history')), 'history', $lang['media_historytab'], $selected);
+        media_tab(media_managerURL(array('tab_details' => 'history')),
+            'history', $lang['media_historytab'], ($selected_tab == 'history'));
     }
 
     echo '<div class="clearer"></div>';
@@ -799,7 +805,7 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
     list($ext,$mime,$dl) = mimetype($image,false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
-    echo '<a class="'.$class.'" >'.$image.'</a>';
+    echo '<span class="'.$class.'" >'.$image.'</span>';
     echo '</div>';
 
     echo '<div class="scroll-container">';
@@ -1532,7 +1538,7 @@ function media_printimgdetail($item, $fullscreen=false){
 
         // output
         if ($fullscreen) {
-            echo '<a name="d_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
+            echo '<a name="'.($index ? 'd' : 'l').'_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
                 media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'">';
             echo '<span><img src="'.$src.'" '.$att.' /></span>';
             echo '</a>';
@@ -1576,7 +1582,7 @@ function media_printimgdetail($item, $fullscreen=false){
  * @param string $amp - separator
  * @return string - link
  */
-function media_managerURL($params=false, $amp='&amp;', $abs=false) {
+function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
     global $conf;
     global $ID;
 
@@ -1596,6 +1602,8 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false) {
         unset($gets['image']);
         unset($gets['tab_details']);
     }
+
+    if ($params_array) return $gets;
 
     return wl($ID,$gets,$abs,$amp);
 }

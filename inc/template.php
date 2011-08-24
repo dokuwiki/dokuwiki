@@ -1134,7 +1134,7 @@ function tpl_mediaContent($fromajax=false){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_fileList(){
+function tpl_mediaFileList(){
     global $AUTH;
     global $NS;
     global $JUMPTO;
@@ -1171,7 +1171,7 @@ function tpl_fileList(){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_fileDetails($image, $rev){
+function tpl_mediaFileDetails($image, $rev){
     global $AUTH, $NS, $conf, $DEL;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
@@ -1483,11 +1483,11 @@ function tpl_media() {
     echo '</div>';
 
     echo '<div id="mediamanager__layout_list" class="layout-resizable" >';
-    tpl_fileList();
+    tpl_mediaFileList();
     echo '</div>';
 
     echo '<div id="mediamanager__layout_detail" class="layout" >';
-    tpl_fileDetails($image, $rev);
+    tpl_mediaFileDetails($image, $rev);
     echo '</div>';
 
     echo '<div class="clearer"></div>';

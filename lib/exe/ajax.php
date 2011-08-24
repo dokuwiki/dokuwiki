@@ -209,7 +209,7 @@ function ajax_medialist(){
 
     $NS = $_POST['ns'];
     if ($_POST['do'] == 'media') {
-        tpl_fileList();
+        tpl_mediaFileList();
     } else {
         tpl_mediaContent(true);
     }
@@ -232,7 +232,7 @@ function ajax_mediadetails(){
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
     html_msgarea();
-    tpl_fileDetails($image, $rev);
+    tpl_mediaFileDetails($image, $rev);
 }
 
 /**
@@ -268,7 +268,7 @@ function ajax_mediaupload(){
     $id = cleanID($id, false, true);
 
     if ($res) $result = array('success' => true,
-        'link' => media_managerURL(array('ns' => $NS, 'image' => $id), '&'),
+        'link' => media_managerURL(array('ns' => $NS, 'image' => $NS.':'.$id), '&'),
         'id' => $NS.':'.$id, 'ns' => $NS);
 
     if (!$result) {

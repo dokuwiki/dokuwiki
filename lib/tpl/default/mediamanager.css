@@ -291,7 +291,7 @@
 }
 
 #media__content #mediamanager__uploader {
-    border-bottom: 1px solid #8CACBB;
+    border-bottom: 1px solid __border__;
     padding-bottom: 0.5em;
 }
 
