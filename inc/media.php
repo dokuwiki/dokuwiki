@@ -947,7 +947,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->printForm();
     }
 
-    if($auth >= AUTH_DELETE && $rev && $conf['mediarevisions'] && @file_exists(mediaFN($image, $rev))){
+    if($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && @file_exists(mediaFN($image, $rev))){
 
         // restore button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
@@ -1274,7 +1274,7 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
  */
 function media_restore($image, $rev, $auth){
     global $conf;
-    if ($auth < AUTH_DELETE || !$conf['mediarevisions']) return false;
+    if ($auth < AUTH_UPLOAD || !$conf['mediarevisions']) return false;
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')));
     if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return false;
     if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
