@@ -90,7 +90,7 @@ $lang['txt_filename']          = 'Sláa inn wikinavn (valfrítt)';
 $lang['txt_overwrt']           = 'Yvurskriva verandi fílu';
 $lang['lockedby']              = 'Fyribils læst av';
 $lang['lockexpire']            = 'Lásið ferð úr gildi kl.';
-$lang['willexpire']            = 'Títt lás á hetta skjalið ferð úr gildi um ein minnutt.\nTrýst á Forskoðan-knappin fyri at sleppa undan trupulleikum.';
+$lang['js']['willexpire']            = 'Títt lás á hetta skjalið ferð úr gildi um ein minnutt.\nTrýst á Forskoðan-knappin fyri at sleppa undan trupulleikum.';
 $lang['js']['notsavedyet']     = 'Tað eru gjørdar broytingar í skjalinum, um tú haldur fram vilja broytingar fara fyri skeytið.
 Ynskir tú at halda fram?';
 $lang['js']['searchmedia']     = 'Leita eftir dátufílum';

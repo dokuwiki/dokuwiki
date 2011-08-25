@@ -1717,9 +1717,6 @@ function media_nstree($ns){
                                'label' => '['.$lang['mediaroot'].']'));
 
     echo html_buildlist($data,'idx','media_nstree_item','media_nstree_li');
-    echo '</li>';
-
-    echo '</ul>';
 }
 
 /**

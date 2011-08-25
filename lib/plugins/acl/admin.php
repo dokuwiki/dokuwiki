@@ -540,7 +540,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
 
     function _html_li_acl($item){
-            return '<li class="level'.$item['level'].'">';
+        return '<li class="level' . $item['level'] . ' ' .
+               ($item['open'] ? 'open' : 'closed') . '">';
     }
 
 

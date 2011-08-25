@@ -95,7 +95,7 @@ $lang['txt_filename']          = 'feltöltési név (elhagyható)';
 $lang['txt_overwrt']           = 'Létező fájl felülírása';
 $lang['lockedby']              = 'Jelenleg zárolta:';
 $lang['lockexpire']            = 'A zárolás lejár:';
-$lang['willexpire']            = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolási időzítés frissítéséhez.';
+$lang['js']['willexpire']            = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolási időzítés frissítéséhez.';
 $lang['js']['notsavedyet']     = 'Elmentetlen változások vannak, amelyek el fognak veszni.
 Tényleg ezt akarod?';
 $lang['js']['searchmedia']     = 'Fájlok keresése';

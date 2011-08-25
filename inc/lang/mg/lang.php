@@ -54,7 +54,7 @@ $lang['txt_filename'] = 'Ampidiro ny anaran\'ny wiki (tsy voatery)';
 $lang['txt_overwrt']  = 'Fafana izay rakitra efa misy?';
 $lang['lockedby']     = 'Mbola voahidin\'i';
 $lang['lockexpire']   = 'Afaka ny hidy amin\'ny';
-$lang['willexpire']   = 'Efa ho lany fotoana afaka iray minitra ny hidy ahafahanao manova ny pejy.\nMba hialana amin\'ny conflit dia ampiasao ny bokotra topi-maso hamerenana ny timer-n\'ny hidy.';
+$lang['js']['willexpire']   = 'Efa ho lany fotoana afaka iray minitra ny hidy ahafahanao manova ny pejy.\nMba hialana amin\'ny conflit dia ampiasao ny bokotra topi-maso hamerenana ny timer-n\'ny hidy.';
 
 $lang['js']['notsavedyet'] = "Misy fiovana tsy voarakitra, ho very izany ireo.\nAzo antoka fa hotohizana?";
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';

@@ -21,6 +21,7 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -106,7 +107,7 @@ $lang['txt_filename']          = 'Donnez un « wikiname » (optionnel) ';
 $lang['txt_overwrt']           = 'Écraser le fichier cible';
 $lang['lockedby']              = 'Actuellement bloqué par';
 $lang['lockexpire']            = 'Le blocage expire à';
-$lang['willexpire']            = 'Votre blocage pour modifier cette page expire dans une minute.\nPour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
+$lang['js']['willexpire']            = 'Votre blocage pour modifier cette page expire dans une minute.\nPour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
 $lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues.
 Voulez-vous vraiment continuer ?';
 $lang['js']['searchmedia']     = 'Chercher des fichiers';
@@ -121,10 +122,10 @@ $lang['js']['mediaclose']      = 'Fermer';
 $lang['js']['mediainsert']     = 'Insérer';
 $lang['js']['mediadisplayimg'] = 'Afficher l\'image.';
 $lang['js']['mediadisplaylnk'] = 'N\'afficher que le lien.';
-$lang['js']['mediasmall']      = 'Petite version';
-$lang['js']['mediamedium']     = 'Version moyenne';
-$lang['js']['medialarge']      = 'Grande version';
-$lang['js']['mediaoriginal']   = 'Version originale';
+$lang['js']['mediasmall']      = 'Petite taille';
+$lang['js']['mediamedium']     = 'taille moyenne';
+$lang['js']['medialarge']      = 'Grande taille';
+$lang['js']['mediaoriginal']   = 'taille d\'origine';
 $lang['js']['medialnk']        = 'Lien vers la page de détail';
 $lang['js']['mediadirect']     = 'Lien direct vers l\'original';
 $lang['js']['medianolnk']      = 'Aucun lien';

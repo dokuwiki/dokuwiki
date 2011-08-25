@@ -92,7 +92,7 @@ $lang['txt_filename']          = 'Uložiť ako (voliteľné)';
 $lang['txt_overwrt']           = 'Prepísať existujúci súbor';
 $lang['lockedby']              = 'Práve zamknuté:';
 $lang['lockexpire']            = 'Zámok stratí platnosť:';
-$lang['willexpire']            = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
+$lang['js']['willexpire']            = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
 $lang['js']['notsavedyet']     = 'Neuložené zmeny budú stratené.
 Chcete naozaj pokračovať?';
 $lang['js']['searchmedia']     = 'Hľadať súbory';

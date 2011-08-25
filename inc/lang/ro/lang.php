@@ -92,7 +92,7 @@ $lang['txt_filename']          = 'Încarcă fişierul ca (opţional)';
 $lang['txt_overwrt']           = 'Suprascrie fişierul existent';
 $lang['lockedby']              = 'Momentan blocat de';
 $lang['lockexpire']            = 'Blocarea expiră la';
-$lang['willexpire']            = 'Blocarea pentru editarea paginii expiră intr-un minut.\nPentru a preveni conflictele foloseşte butonul de previzualizare pentru resetarea blocării.';
+$lang['js']['willexpire']            = 'Blocarea pentru editarea paginii expiră intr-un minut.\nPentru a preveni conflictele foloseşte butonul de previzualizare pentru resetarea blocării.';
 $lang['js']['notsavedyet']     = 'Există modificări nesalvate, care se vor pierde.
 Doreşti să continui?';
 $lang['js']['searchmedia']     = 'Caută fişiere';

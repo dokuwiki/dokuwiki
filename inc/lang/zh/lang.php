@@ -98,7 +98,7 @@ $lang['txt_filename']          = '上传并重命名为（可选）';
 $lang['txt_overwrt']           = '覆盖已存在的同名文件';
 $lang['lockedby']              = '目前已被下列人员锁定';
 $lang['lockexpire']            = '预计锁定解除于';
-$lang['willexpire']            = '您对本页的独有编辑权将于一分钟之后解除。\n为了防止与其他人的编辑冲突，请使用预览按钮重设计时器。';
+$lang['js']['willexpire']            = '您对本页的独有编辑权将于一分钟之后解除。\n为了防止与其他人的编辑冲突，请使用预览按钮重设计时器。';
 $lang['js']['notsavedyet']     = '未保存的更改将丢失。
 真的要继续？';
 $lang['js']['searchmedia']     = '查找文件';

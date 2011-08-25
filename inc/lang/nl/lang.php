@@ -99,7 +99,7 @@ $lang['txt_filename']          = 'Vul nieuwe naam in (optioneel)';
 $lang['txt_overwrt']           = 'Overschrijf bestaand bestand';
 $lang['lockedby']              = 'Momenteel in gebruik door';
 $lang['lockexpire']            = 'Exclusief gebruiksrecht vervalt op';
-$lang['willexpire']            = 'Je exclusieve gebruiksrecht voor het aanpassen van deze pagina verloopt over een minuut.\nKlik op de Voorbeeld-knop om het exclusieve gebruiksrecht te verlengen.';
+$lang['js']['willexpire']            = 'Je exclusieve gebruiksrecht voor het aanpassen van deze pagina verloopt over een minuut.\nKlik op de Voorbeeld-knop om het exclusieve gebruiksrecht te verlengen.';
 $lang['js']['notsavedyet']     = 'Nog niet bewaarde wijzigingen zullen verloren gaan.
 Weet je zeker dat je wilt doorgaan?';
 $lang['js']['searchmedia']     = 'Zoek naar bestanden';

@@ -50,6 +50,7 @@ $lang['dmode']                 = 'Rechte für neue Verzeichnisse';
 $lang['lang']                  = 'Sprache';
 $lang['basedir']               = 'Installationsverzeichnis';
 $lang['baseurl']               = 'Installationspfad (URL)';
+$lang['cookiedir']             = 'Cookiepfad. Frei lassen, um den gleichen Pfad wie "baseurl" zu benutzen.';
 $lang['savedir']               = 'Speicherverzeichnis';
 $lang['start']                 = 'Startseitenname';
 $lang['title']                 = 'Titel des Wikis';

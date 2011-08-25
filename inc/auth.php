@@ -348,10 +348,11 @@ function auth_logoff($keepbc=false){
         unset($_SERVER['REMOTE_USER']);
     $USERINFO=null; //FIXME
 
+    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-        setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+        setcookie(DOKU_COOKIE,'',time()-600000,$cookieDir,'',($conf['securecookie'] && is_ssl()),true);
     }else{
-        setcookie(DOKU_COOKIE,'',time()-600000,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+        setcookie(DOKU_COOKIE,'',time()-600000,$cookieDir,'',($conf['securecookie'] && is_ssl()));
     }
 
     if($auth) $auth->logOff();
@@ -977,11 +978,12 @@ function auth_setCookie($user,$pass,$sticky) {
 
     // set cookie
     $cookie = base64_encode($user).'|'.((int) $sticky).'|'.base64_encode($pass);
+    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     $time = $sticky ? (time()+60*60*24*365) : 0; //one year
     if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-        setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+        setcookie(DOKU_COOKIE,$cookie,$time,$cookieDir,'',($conf['securecookie'] && is_ssl()),true);
     }else{
-        setcookie(DOKU_COOKIE,$cookie,$time,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+        setcookie(DOKU_COOKIE,$cookie,$time,$cookieDir,'',($conf['securecookie'] && is_ssl()));
     }
     // set session
     $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;

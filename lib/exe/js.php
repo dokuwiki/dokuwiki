@@ -46,7 +46,6 @@ function js_out(){
                 DOKU_INC."lib/scripts/fileuploader.js",
                 DOKU_INC."lib/scripts/fileuploaderextended.js",
                 DOKU_INC.'lib/scripts/helpers.js',
-                DOKU_INC.'lib/scripts/events.js',
                 DOKU_INC.'lib/scripts/delay.js',
                 DOKU_INC.'lib/scripts/cookie.js',
                 DOKU_INC.'lib/scripts/script.js',
@@ -62,11 +61,11 @@ function js_out(){
                 DOKU_INC.'lib/scripts/locktimer.js',
                 DOKU_INC.'lib/scripts/linkwiz.js',
                 DOKU_INC.'lib/scripts/media.js',
-                DOKU_INC.'lib/scripts/subscriptions.js',
                 DOKU_INC.'lib/scripts/compatibility.js',
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
-                DOKU_TPLINC.'script.js',
                 DOKU_INC.'lib/scripts/behaviour.js',
+                DOKU_INC.'lib/scripts/page.js',
+                DOKU_TPLINC.'script.js',
             );
 
     // add possible plugin scripts and userscript
@@ -112,7 +111,7 @@ function js_out(){
     js_runonstart("addEvent(document,'click',closePopups)");
     js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
-        js_runonstart("locktimer.init(".($conf['locktime'] - 60).",'".js_escape($lang['willexpire'])."',".$conf['usedraft'].", 'wiki__text')");
+        js_runonstart("dw_locktimer.init(".($conf['locktime'] - 60).",".$conf['usedraft'].")");
     }
     // init hotkeys - must have been done after init of toolbar
 # disabled for FS#1958    js_runonstart('initializeHotkeys()');

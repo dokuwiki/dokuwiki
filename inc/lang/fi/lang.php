@@ -7,6 +7,7 @@
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
+ * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -92,7 +93,7 @@ $lang['txt_filename']          = 'Lähetä nimellä (valinnainen)';
 $lang['txt_overwrt']           = 'Ylikirjoita olemassa oleva';
 $lang['lockedby']              = 'Tällä hetkellä tiedoston on lukinnut';
 $lang['lockexpire']            = 'Lukitus päättyy';
-$lang['willexpire']            = 'Lukituksesi tämän sivun muokkaukseen päättyy minuutin kuluttua.\nRistiriitojen välttämiseksi paina esikatselu-nappia nollataksesi lukitusajan.';
+$lang['js']['willexpire']            = 'Lukituksesi tämän sivun muokkaukseen päättyy minuutin kuluttua.\nRistiriitojen välttämiseksi paina esikatselu-nappia nollataksesi lukitusajan.';
 $lang['js']['notsavedyet']     = 'Dokumentissa on tallentamattomia muutoksia, jotka häviävät.
  Haluatko varmasti jatkaa?';
 $lang['js']['searchmedia']     = 'Etsi tiedostoja';

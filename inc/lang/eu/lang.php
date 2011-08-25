@@ -90,7 +90,7 @@ $lang['txt_filename']          = 'Idatzi wikiname-a (aukerazkoa)';
 $lang['txt_overwrt']           = 'Oraingo fitxategiaren gainean idatzi';
 $lang['lockedby']              = 'Momentu honetan blokeatzen:';
 $lang['lockexpire']            = 'Blokeaketa iraungitzen da:';
-$lang['willexpire']            = 'Zure blokeaketa orri hau aldatzeko minutu batean iraungitzen da.\nGatazkak saihesteko, aurreikusi botoia erabili blokeaketa denboragailua berrabiarazteko.';
+$lang['js']['willexpire']            = 'Zure blokeaketa orri hau aldatzeko minutu batean iraungitzen da.\nGatazkak saihesteko, aurreikusi botoia erabili blokeaketa denboragailua berrabiarazteko.';
 $lang['js']['notsavedyet']     = 'Gorde gabeko aldaketak galdu egingo dira.
 Benetan jarraitu nahi duzu?';
 $lang['js']['searchmedia']     = 'Bilatu fitxategiak';
