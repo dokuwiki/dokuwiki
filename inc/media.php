@@ -725,6 +725,23 @@ function media_tab_files_options($ns, $sort){
 }
 
 /**
+ * Returns type of sorting for the list of files in media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @return string - sort type
+ */
+function _media_get_sort_type() {
+    $sort = $_REQUEST['sort'];
+    if (!$sort && (strpos($_COOKIE['DOKU_PREFS'], 'sort') >= 0)) {
+        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+            for ($i = 0; $i < count($parts); $i+=2){
+                if ($parts[$i] == 'sort') $sort = $parts[$i+1];
+            }
+    }
+    return $sort;
+}
+
+/**
  * Prints tab that displays a list of all files
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -733,13 +750,7 @@ function media_tab_files($ns,$auth=null,$jump='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    $sort = $_REQUEST['sort'];
-    if (!$sort && @strpos($_COOKIE['DOKU_PREFS'], 'sort')) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-            for ($i = 0; $i < count($parts); $i+=2){
-                if ($parts[$i] == 'sort') $sort = $parts[$i+1];
-            }
-    }
+    $sort = _media_get_sort_type();
     media_tab_files_options($ns, $sort);
 
     echo '<div class="scroll-container" >';
@@ -782,13 +793,12 @@ function media_tab_search($ns,$auth=null) {
     $query = $_REQUEST['q'];
     if (!$query) $query = '';
 
-    echo '<div class="background-container">';
-    echo sprintf($lang['media_search'], $ns ? $ns : '['.$lang['mediaroot'].']');
-    echo'</div>';
+    $sort = _media_get_sort_type();
+    media_tab_files_options($ns, $sort);
 
     echo '<div class="scroll-container">';
     media_searchform($ns, $query, true);
-    if ($do == 'searchlist') media_searchlist($query,$ns,$auth,true);
+    if ($do == 'searchlist') media_searchlist($query,$ns,$auth,true,$sort);
     echo '</div>';
 }
 
@@ -1300,7 +1310,7 @@ function media_restore($image, $rev, $auth){
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @triggers MEDIA_SEARCH
  */
-function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
+function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
     global $conf;
     global $lang;
 
@@ -1322,6 +1332,14 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false){
                     array('showmsg'=>false,'pattern'=>$pattern),
                     $dir);
         }
+        if ($sort == 'date') {
+            $data = array();
+            foreach ($evdata['data'] as $k => $v) {
+                $data[$k]  = $v['mtime'];
+            }
+            array_multisort($data, SORT_DESC, SORT_NUMERIC, $evdata['data']);
+        }
+
         $evt->advise_after();
         unset($evt);
     }
@@ -1685,7 +1703,7 @@ function media_searchform($ns,$query='',$fullscreen=false){
     if (!$fullscreen) $form->addHidden('do', 'searchlist');
     else $form->addHidden('mediado', 'searchlist');
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
+    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'mediamanager__sort_textfield','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
     $form->addElement(form_makeCloseTag('p'));
     html_form('searchmedia', $form);
