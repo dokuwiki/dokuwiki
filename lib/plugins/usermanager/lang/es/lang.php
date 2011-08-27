@@ -19,6 +19,7 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';
