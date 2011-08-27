@@ -12,6 +12,7 @@
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
+ * @author Łukasz Chmaj <teachmeter@gmail.com>
  */
 $lang['menu']                  = 'Menadżer wtyczek';
 $lang['download']              = 'Ściągnij i zainstaluj nową wtyczkę';
