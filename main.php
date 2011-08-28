@@ -18,7 +18,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php tpl_pagetitle() ?> [<?php echo strip_tags($conf['title']) ?>]</title>
     <?php tpl_metaheaders() ?>
-    <link rel="shortcut icon" href="<?php echo _tpl_getFavicon() /* DW versions > 2010-11-12 can use the core function tpl_getFavicon() */ ?>" />
+    <link rel="shortcut icon" href="<?php echo tpl_getFavicon() ?>" />
     <?php _tpl_include('meta.html') ?>
 </head>
 
@@ -67,9 +67,8 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                                       echo '</li>';
                                   }
                                   tpl_action('admin', 1, 'li');
-                                  _tpl_action('userpage', 1, 'li');
                                   tpl_action('profile', 1, 'li');
-                                  _tpl_action('register', 1, 'li'); /* DW versions > 2011-02-20 can use the core function tpl_action('register', 1, 'li') */
+                                  tpl_action('register', 1, 'li');
                                   tpl_action('login', 1, 'li');
                               ?>
                           </ul>
@@ -140,7 +139,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                     <ul>
                         <?php
                             tpl_action('edit', 1, 'li');
-                            _tpl_action('discussion', 1, 'li');
                             tpl_action('history', 1, 'li');
                             tpl_action('backlink', 1, 'li');
                             tpl_action('subscribe', 1, 'li');
