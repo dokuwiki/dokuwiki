@@ -19,7 +19,7 @@ html, body {
     padding: 0;
 }
 body {
-    font: normal 100%/1.4 Frutiger, "Frutiger Linotype", Univers, Calibri, Myriad, "Liberation Sans", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: normal 87.5%/1.4 Arial, sans-serif;
     /* default font size: 100% => 16px; 93.75% => 15px; 87.5% => 14px; 81.25% => 13px; 75% => 12px */
 }
 
@@ -28,15 +28,22 @@ body {
 
 h1, h2, h3, h4, h5, h6,
 caption, legend {
-    font-family: Constantia, Utopia, Lucidabright, Lucida, Georgia, serif;
-    font-weight: bold;
-    color: __text_neu__;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    color: #000;/* @todo: style.ini */
     background-color: inherit;
     padding: 0;
     clear: left; /* ideally 'both', but problems with toc */
 }
 
-h1 { font-size: 2.25em;  margin: 0 0 0.444em; }
+h1 {
+    font-size: 2em;
+    margin: 0 0 0.444em;
+    letter-spacing: -0.035em;
+    /*2 lines below makes ascenders of h1 be at the top of block*/
+    line-height: 0.75;
+    padding-bottom: 0.3em;
+}
 h2 { font-size: 1.5em;   margin: 0 0 0.666em; }
 h3 { font-size: 1.125em; margin: 0 0 0.888em; }
 h4 { font-size: 1em;     margin: 0 0 1.0em; }
@@ -242,6 +249,34 @@ input[readonly], button[readonly] {
 }
 optgroup { font-style: italic; font-weight: bold; }
 option   { font-style: normal; font-weight: normal; }
+
+/* @todo: either make input.edit and buttons more generic or put into design.css */
+.dokuwiki input.edit {
+    border: 1px solid __border__;
+    padding: 0.41em 0;
+    -moz-box-shadow: inset 0 0 1px __background_alt__;
+    -webkit-box-shadow: inset 0 0 1px __background_alt__;
+    box-shadow: inset 0 0 1px __background_alt__;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+.dokuwiki input.button,
+.dokuwiki button.button,
+.dokuwiki div.toolbar button.toolbutton {
+    /* @todo: make style.ini colours any sense here? */
+    vertical-align: middle;
+    color: inherit;
+    background-color: #eee;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(30%,#f4f4f4), color-stop(99%,#eeeeee), color-stop(99%,#cccccc));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+    background: -o-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
+    background: linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
 
 
 /*____________ general classes ____________*/

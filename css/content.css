@@ -3,6 +3,7 @@
  *
  * @author Anika Henke <anika@selfthinker.org>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Clarence Lee <spicynoodles@gmail.com>
  */
 
 
@@ -35,14 +36,15 @@
 
 .dokuwiki table.inline {
     min-width: 50%;
+    border-width: 0;
 }
 .dokuwiki table.inline th,
 .dokuwiki table.inline td {
-    border: 1px solid __text_alt__;
+    border: 1px solid __border__;
 }
 .dokuwiki table.inline th {
     color: inherit;
-    background-color: __background_neu__;
+    background-color: __background_alt__;
 }
 .dokuwiki table.inline td {
 }
@@ -70,7 +72,7 @@
 }
 .dokuwiki pre {
     border: 1px solid __border__;
-    padding: 0 .2em;
+    padding: .75em 1em;
 }
 /* for code in <file> */
 .dokuwiki pre.file {
@@ -84,19 +86,28 @@
 .dokuwiki dl.code dt,
 .dokuwiki dl.file dt {
     background-color: __background_alt__;
-    border: solid __border__;
-    border-width: 1px 1px 0;
+    /* @todo: add gradients for other browsers */
+    background: -webkit-linear-gradient(top, __background__ 0%, __background_alt__ 100%);
     color: inherit;
-    display: inline;
-    padding: 0 .5em;
-    margin-left: 1em;
+    border: 1px solid __border__;
+    border-bottom-color: __background_alt__;
+    border-top-left-radius: .3em;
+    border-top-right-radius: .3em;
+    padding: .3em .6em .1em;
+    margin-bottom: -1px;
+    float: left;
 }
 .dokuwiki dl.code dt a,
 .dokuwiki dl.file dt a {
+    background-color: transparent;
+    /* @todo: those 19px should better be in exe/css.php for all media icons */
+    padding: 0.2em 0 0.1em 19px;
+    font-size: 0.875em;
+    font-weight: normal;
 }
-
 .dokuwiki dl.code dd,
 .dokuwiki dl.file dd {
     margin: 0;
+    clear: left;
 }
 

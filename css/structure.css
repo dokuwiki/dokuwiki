@@ -8,16 +8,16 @@ body {
     margin: 0 auto;
 }
 #dokuwiki__site {
-    margin: 0 auto;
-    max-width: 64em;
-    padding: 1.4em 1em;
 }
 #dokuwiki__site .site {
 }
 
 #dokuwiki__header {
+    width: 100%;
 }
 #dokuwiki__header .pad {
+    margin: 0 auto;
+    max-width: __site_width__;
 }
     #dokuwiki__header .headings {
         float: left;
@@ -35,6 +35,9 @@ body {
 
 #dokuwiki__site .wrapper {
     position: relative;
+    margin: 0 auto;
+    max-width: __site_width__;
+    padding: 1.4em 1em; /* @pad */
 }
 #IE6 #dokuwiki__site .wrapper,
 #IE7 #dokuwiki__site .wrapper {
@@ -67,6 +70,9 @@ body {
 
 #dokuwiki__footer {
     clear: both;
+    margin: 0 auto;
+    max-width: __site_width__;
+    padding: 0 1em 2.4em; /* @pad */
 }
 #dokuwiki__footer .pad {
 }

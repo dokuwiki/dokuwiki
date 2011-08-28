@@ -1,132 +1,16 @@
-body{
-  font: 0.875em/1.4 'Arial', sans-serif;
-}
 
-h1, h2, h3, h4, h5{
-  font-family: 'Arial', sans-serif;
-  font-weight: normal;
-  color: black;
-}
-
-h1{
-  font-size: 2em;
-  letter-spacing: -0.035em;
-}
-
-h1{
-  /*2 lines below makes ascenders of h1 be at the top of block*/
-  line-height: 0.75em;
-  padding-bottom: 0.3em;
-}
-
-table{
-  border: none;
-}
+/*____________ basic ____________*/
 
 a:link{
   color: #06d;
 }
-
 a:visited{
   color: #2E5E94;
   border-bottom: 1px dotted #09d;
 }
 
-.button{
-  background-color: #eee;
-  background: -moz-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(30%,#f4f4f4), color-stop(99%,#eeeeee), color-stop(99%,#cccccc));
-  background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  background: -o-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  background: -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
-  background: linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  border: 1px solid #ccc;
-}
 
-.dokuwiki pre{
-  padding: 0.75em 1em;
-}
-
-#dokuwiki__site{
-  max-width: 1024px;
-  padding: 1.4em 20px; /* don't like mixing units, but with max-width set in px, I don't have another solution? */
-}
-
-#dokuwiki__header{
-  padding-top: 2em;
-  padding-bottom: 2em;
-  background: #eee;
-}
-
-#dokuwiki__header #dokuwiki__sitetools,
-#dokuwiki__header .headings{
-  z-index: 12;
-  position: relative;
-}
-
-.header_background{
-  background: #eee;
-  background: -webkit-linear-gradient(top, #eeeeee 98%,#dfdfdf 100%);
-  position: absolute;
-  top: 0;
-  height: 165px;
-  width: 100%;
-  z-index: 1;
-}
-
-#dokuwiki__header .tools{
-  text-align: left;
-}
-
-#dokuwiki__header .tools,
-#dokuwiki__header .headings{
-  margin-bottom: 1em;
-}
-
-#dokuwiki__header h1 a{
-  font-size: 1.5em;
-  font-weight: bold;
-  text-shadow: 1px 1px 0px #fff;
-}
-
-#dokuwiki__header h1 a{
-  color: black;
-}
-
-#dokuwiki__header .claim{
-  color: #888;
-  font-style: italic;
-  font-size: 0.875em;
-}
-
-#dokuwiki__header form.search{
-  margin-top: 0;
-  font-size: 0.875em;
-}
-
-.wrapper{
-  padding-top: 30px;
-}
-
-.wrapper div.breadcrumbs{
-  /*border: 1px solid #ccc;*/
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 0;
-  padding: 0.2em 0 0.75em 0;
-  margin-bottom: 0.6em;
-  font-size: 0.875em;
-}
-
-div.breadcrumbs .bcsep{
-  font-size: 0.75em;
-}
-
-.mode_show #dokuwiki__content{
-  float: right;
-  width: 99%; /* 99% of what? */
-}
+/*____________ content ____________*/
 
 .mode_show #dokuwiki__content h1{
   line-height: 1.175em;
@@ -134,9 +18,8 @@ div.breadcrumbs .bcsep{
 
 .mode_show #dokuwiki__aside{
   /*border-top: 1px solid #ccc;*/
-  float: left;
-  width: 220px;
   font-size: 0.87em;
+  /* @todo: is 1.5 intentional? shouldn't it be less? */
   line-height: 1.5;
 }
 
@@ -150,208 +33,17 @@ div.breadcrumbs .bcsep{
 }
 
 
-#dokuwiki__usertools,
-#dokuwiki__pagetools{
-  padding: 10px;
-  padding-left: 0;
-  padding-right: 0;
-  background: #eee;
-  border: none;
+/*____________ _edit ____________*/
+
+.dokuwiki .secedit {
+    float: none;
+    margin: 0 0 1.4em 0;
+    text-align: right;
+}
+.dokuwiki div.secedit {
+}
+.dokuwiki .secedit input.button {
+    padding: 0.5em 0.9em;
+    color: #555;
 }
 
-#dokuwiki__usertools{
-  padding: 0;
-  z-index: 11;
-  background: transparent;
-}
-
-#dokuwiki__usertools .inner{
-  margin: 0 auto;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  background: #ffffff;
-  background: -moz-linear-gradient(top, #ffffff 0%, #f2f2f2 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f2f2f2));
-  background: -webkit-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
-  background: -o-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
-  background: -ms-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2',GradientType=0 );
-  background: linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
-  width: 1004px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-top: none;
-}
-
-.wrapper #dokuwiki__pagetools ul, /* making a mess :P */
-.tools #dokuwiki__usertools ul{
-  padding: 0 20px;
-}
-
-#dokuwiki__pagetools{
-  background: #dbdfe0;
-  background: -moz-linear-gradient(top, #dbdfe0 0%, #eaeaea 12%, #edf1f2 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdfe0), color-stop(12%,#eaeaea), color-stop(100%,#edf1f2));
-  background: -webkit-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
-  background: -o-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
-  background: -ms-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdfe0', endColorstr='#edf1f2',GradientType=0 );
-  background: linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
-}
-
-#dokuwiki__sitetools{
-  width: 220px;
-}
-
-#dokuwiki__sitetools ul,
-#dokuwiki__usertools ul,
-#dokuwiki__pagetools ul{
-  max-width: 1004px;
-  font-size: 0.875em;
-  padding-left: 0;
-}
-
-#dokuwiki__sitetools li,
-#dokuwiki__usertools li,
-#dokuwiki__pagetools li{
-  margin-left: 1em;
-}
-
-#dokuwiki__sitetools ul{
-  margin-top: 0.5em;
-}
-
-#dokuwiki__header form.search #qsearch__in{
-  border: 1px solid #ccc;
-  border-right: none;
-  padding: 0.41em 0;
-  margin-right: 0;
-  -webkit-border-bottom-left-radius: 2px;
-  -webkit-border-top-left-radius: 2px;
-  -moz-border-radius-bottomleft: 2px;
-  -moz-border-radius-topleft: 2px;
-  border-bottom-left-radius: 2px;
-  border-top-left-radius: 2px;
-  -moz-box-shadow:inset 0 0 1px #eee;
-  -webkit-box-shadow:inset 0 0 1px #eee;
-  box-shadow:inset 0 0 1px #eee;
-}
-
-#dokuwiki__header #dokuwiki__sitetools ul,
-#dokuwiki__header form.search{
-  text-align: right;
-}
-
-#dokuwiki__sitetools .button{
-  border: 1px solid #ddd;
-  -webkit-border-bottom-right-radius: 2px;
-  -webkit-border-top-right-radius: 2px;
-  -moz-border-radius-bottomright: 2px;
-  -moz-border-radius-topright: 2px;
-  border-bottom-right-radius: 2px;
-  border-top-right-radius: 2px;
-  padding: 0.5em 0.75em;
-}
-
-#dokuwiki__pagetools a,
-#dokuwiki__usertools a{
-}
-
-#dokuwiki__pagetools a.wikilink1,
-#dokuwiki__pagetools a.wikilink2,
-#dokuwiki__usertools a.wikilink1,
-#dokuwiki__usertools a.wikilink2{
-  color: #06d;
-}
-
-.dokuwiki div.toc{
-  font-size: 0.75em;
-  line-height: 1.4em;
-  width: 200px;
-  margin-bottom: 0.5em;
-  margin-left: 20px;
-  margin-top: -0.3em;
-}
-
-.dokuwiki div.tocheader{
-  padding: 0.5em 1em;
-}
-
-.dokuwiki #toc__inside{
-  padding: 0.75em 1em 1.5em;
-}
-
-.dokuwiki #toc__inside ul li{
-  list-style: disc;
-  margin-left: 1.5em;
-}
-
-.dokuwiki .secedit{
-  float: none;
-  margin: 0 0 1.4em 0;
-  text-align: right;
-}
-
-.dokuwiki div.secedit{
-}
-
-.dokuwiki .secedit input.button{
-  -webkit-border-bottom-right-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -moz-border-radius-bottomright: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-radius: 2px;
-  padding: 0.5em 0.9em;
-  color: #555;
-}
-
-.dokuwiki dl.code dt, .dokuwiki dl.file dt{
-  padding: 5px 8px 2px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom: 1px dashed #ccc;
-  background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
-  margin-left: 0;
-}
-
-.dokuwiki dl.code dt, .dokuwiki dl.file dt a{
-  background-color: transparent;
-  padding: 0.2em 0 0.1em 1.6em;
-  font-size: 0.875em;
-  font-weight: normal;
-}
-
-.dokuwiki table.inline th, .dokuwiki table.inline td{
-  border: 1px solid #ccc;
-}
-
-.dokuwiki table.inline th{
-  background: #eee;
-}
-
-.dokuwiki div.toolbar button.toolbutton{
-  background: none;
-  background-color: #eee;
-  background: -moz-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(30%,#f4f4f4), color-stop(99%,#eeeeee), color-stop(99%,#cccccc));
-  background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  background: -o-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  background: -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
-  background: linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-  border: 1px solid #ccc;
-  border-right: none;
-}
-
-.dokuwiki div.toolbar button.toolbutton:first-child{
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
-.dokuwiki div.toolbar button.toolbutton:last-child{
-  border-left: 1px solid #eee;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}

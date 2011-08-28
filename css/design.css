@@ -4,6 +4,7 @@
  *
  * @author Anika Henke <anika@selfthinker.org>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Clarence Lee <spicynoodles@gmail.com>
  */
 
 
@@ -11,34 +12,42 @@
 ********************************************************************/
 
 #dokuwiki__header {
-    margin: 1em 0 0;
+    padding: 4em 0 2em;
+    background-color: __background_alt__;
+    /* @todo: add gradients for other browsers */
+    background: -webkit-linear-gradient(top, __background_alt__ 98%, __background_neu__ 100%);
 }
 #IE7 #dokuwiki__header {
-    margin-top: 2em;
+}
+#dokuwiki__header .pad {
+    padding: 0 1em; /* @pad */
 }
 
 #dokuwiki__header .headings {
-    margin-bottom: 2.1em;
+    margin-bottom: 1em;
 }
 #dokuwiki__header h1 {
     margin-bottom: 0;
-    font-size: 1.5em;
+    font-size: 2.25em;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px #fff;
 }
 #dokuwiki__header h1 a {
     text-decoration: none;
-    color: #00c;
+    /* @todo: style.ini */
+    color: #000;
     background-color: inherit;
 }
 #dokuwiki__header p.claim {
     margin-bottom: 0;
-}
-#dokuwiki__header h2 {
-    margin-bottom: 0;
-    font-size: 1.125em;
+    /* @todo: style.ini */
+    color: #888;
+    font-style: italic;
+    font-size: 0.875em;
 }
 
 #dokuwiki__header .tools {
-    margin-bottom: 2.1em;
+    margin-bottom: 1em;
 }
 #dokuwiki__header .tools ul {
     margin-bottom: 0;
@@ -47,43 +56,9 @@
     display: inline;
 }
 
-#dokuwiki__header form.search {
-    margin: .5em 0 0;
-    display: block;
-}
-#dokuwiki__header form.search #qsearch__in {
-    width: 12em;
-    margin-right: .5em;
-}
-
-#dokuwiki__header div.breadcrumbs {
-    margin-bottom: .3em;
-}
-#dokuwiki__header div.breadcrumbs a {
-    color: __existing__;
-    background-color: inherit;
-}
-
 
 /* tools
 ********************************************************************/
-
-/* make wiki links look the same as tool links in tool bars */
-#dokuwiki__usertools a.wikilink1,
-#dokuwiki__pagetools a.wikilink1,
-#dokuwiki__usertools a.wikilink2,
-#dokuwiki__pagetools a.wikilink2 {
-    color: #00c;
-    border-bottom-width: 0;
-}
-#dokuwiki__usertools a.wikilink2:hover,
-#dokuwiki__pagetools a.wikilink2:hover,
-#dokuwiki__usertools a.wikilink2:active,
-#dokuwiki__pagetools a.wikilink2:active,
-#dokuwiki__usertools a.wikilink2:focus,
-#dokuwiki__pagetools a.wikilink2:focus {
-    text-decoration: underline;
-}
 
 /* highlight selected tool */
 .mode_admin a.action.admin,
@@ -98,29 +73,62 @@
     font-weight: bold;
 }
 
+#dokuwiki__usertools ul,
+#dokuwiki__sitetools ul,
+#dokuwiki__pagetools ul {
+    padding-left: 0;
+}
+#dokuwiki__usertools ul li,
+#dokuwiki__sitetools ul li,
+#dokuwiki__pagetools ul li {
+    font-size: 0.875em;
+    margin-left: 1em;
+}
+#dokuwiki__usertools ul li,
+#dokuwiki__pagetools ul li {
+    margin-top: .7em;
+    margin-bottom: .7em;
+    float: left;
+    list-style: none;
+}
+
 /*____________ user tools ____________*/
 
 #dokuwiki__usertools {
     position: absolute;
     top: 0;
-    right: 0;
-    border-bottom: 1px solid __border__;
-    background-color: __background_alt__;
+    left: 0;
+    text-align: left;
     width: 100%;
 }
-#dokuwiki__usertools ul,
-#dokuwiki__pagetools ul {
-    /* imitate #dokuwiki__site */
+#dokuwiki__usertools ul {
+    /* @todo: style.ini colours for gradients? */
+    background-color: __background__;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f2f2f2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f2f2f2));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2',GradientType=0 );
+    background: linear-gradient(top, #ffffff 0%,#f2f2f2 100%);
+    border: solid __background_neu__;
+    border-width: 0 1px 1px;
+    border-bottom-left-radius: .3em;
+    border-bottom-right-radius: .3em;
     margin: 0 auto;
-    max-width: 64em;
-    padding: 0 1em;
+    padding: 0;
+    max-width: __site_width__;
+    overflow: hidden;
 }
 #IE6 #dokuwiki__usertools ul {
     width: 100%;
 }
-#dokuwiki__usertools ul li.user {
+#dokuwiki__usertools ul li {
+    margin: .7em 0 .7em 1em;
     float: left;
-    margin-left: 0;
+    list-style: none;
+}
+#dokuwiki__usertools ul li.user {
 }
 
 /*____________ page tools ____________*/
@@ -129,30 +137,66 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    border-top: 1px solid __border__;
-    background-color: __background_alt__;
     width: 100%;
     z-index: 10;
+    background: #dbdfe0;
+    background: -moz-linear-gradient(top, #dbdfe0 0%, #eaeaea 12%, #edf1f2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdfe0), color-stop(12%,#eaeaea), color-stop(100%,#edf1f2));
+    background: -webkit-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+    background: -o-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+    background: -ms-linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdfe0', endColorstr='#edf1f2',GradientType=0 );
+    background: linear-gradient(top, #dbdfe0 0%,#eaeaea 12%,#edf1f2 100%);
 }
 #IE6 #dokuwiki__content {
     margin-bottom: 1.4em;
 }
+#dokuwiki__pagetools ul {
+    margin: 0 auto;
+    max-width: __site_width__;
+    padding: 0 1em; /* @pad */
+}
 #dokuwiki__pagetools ul li {
-    display: inline;
-    margin: 0 1.5em 0 0;
+    margin: .7em 1em .7em 0;
 }
-#dokuwiki__pagetools ul li a.action.top {
-    float: right;
-}
-#IE6 #dokuwiki__pagetools ul,
-#IE7 #dokuwiki__pagetools ul {
+#dokuwiki__pagetools ul {
     position: relative;
 }
-#IE6 #dokuwiki__pagetools ul li a.action.top,
-#IE7 #dokuwiki__pagetools ul li a.action.top {
+#dokuwiki__pagetools ul li a.action.top {
     position: absolute;
-    top: 0;
+    top: .7em;
     right: 0;
+}
+
+/*____________ site tools ____________*/
+
+#dokuwiki__sitetools {
+    /* @todo: is the width still needed? */
+    width: __sidebar_width__;
+    text-align: right;
+}
+
+#dokuwiki__sitetools form.search {
+    display: block;
+    font-size: 0.875em;
+}
+#dokuwiki__sitetools form.search input.edit {
+    /* @todo: em doesn't fit with px value for sitetools div */
+    width: 12em;
+    border-right: none;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+#dokuwiki__sitetools form.search input.button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    padding: 0.5em 0.75em;
+}
+
+#dokuwiki__sitetools ul {
+    margin-top: 0.5em;
+}
+#dokuwiki__sitetools li {
 }
 
 
@@ -192,6 +236,23 @@
 .dokuwiki .page {
 }
 
+/*____________ breadcrumbs ____________*/
+
+.dokuwiki div.breadcrumbs {
+    /*border-top: 1px solid #ccc;*/
+    padding: 0.2em 0 0.75em 0;
+    margin-bottom: 0.6em;
+    font-size: 0.875em;
+}
+.dokuwiki div.breadcrumbs a {
+    /* @todo: wiki page colour or external link colour? */
+    color: __existing__;
+    background-color: inherit;
+}
+.dokuwiki div.breadcrumbs .bcsep {
+    font-size: 0.75em;
+}
+
 /*____________ misc ____________*/
 
 /* license note in footer and under edit window */
@@ -202,6 +263,20 @@
 #IE6 .dokuwiki input.button, #IE6 .dokuwiki button,
 #IE7 .dokuwiki input.button, #IE7 .dokuwiki button {
     line-height: 1.4;
+}
+
+.dokuwiki div.toolbar button.toolbutton {
+    border-radius: 0;
+    border-right-width: 0;
+}
+.dokuwiki div.toolbar button.toolbutton:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.dokuwiki div.toolbar button.toolbutton:last-child {
+    border-right-width: 1px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 /*____________ JS popup ____________*/
