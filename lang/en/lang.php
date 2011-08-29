@@ -4,10 +4,6 @@
  *
  */
 
-$lang['discussion']        = 'Discussion';
-$lang['back_to_article']   = 'Back to article';
-$lang['userpage']          = 'User page';
-
 /* accessibility headlines */
 $lang['user_tools']        = 'User Tools';
 $lang['site_tools']        = 'Site Tools';

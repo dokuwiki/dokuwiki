@@ -5,14 +5,14 @@ Look at next:
 
 icons (start with the usertools? Decide where icons are needed)
 footnotes
-[[page name]]
+* [[page name]]
 breadcrumb
 trace
-Too much white/gray space
-remove dashed line under downloadable
+* Too much white/gray space
+* remove dashed line under downloadable
 * alignment of usertools looks weird
 check out old default and consider edit-page menu
-TOC looks unstyled, too much indentation
+* TOC looks unstyled, too much indentation
 
 ------------
 Anika todo:

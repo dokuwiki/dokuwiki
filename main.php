@@ -18,7 +18,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php tpl_pagetitle() ?> [<?php echo strip_tags($conf['title']) ?>]</title>
     <?php tpl_metaheaders() ?>
-    <link rel="shortcut icon" href="<?php echo _tpl_getFavicon() /* DW versions > 2010-11-12 can use the core function tpl_getFavicon() */ ?>" />
+    <link rel="shortcut icon" href="<?php echo tpl_getFavicon() ?>" />
     <?php _tpl_include('meta.html') ?>
 </head>
 
@@ -56,24 +56,21 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 <!-- USER TOOLS -->
                 <?php if ($conf['useacl'] && $showTools): ?>
                     <div id="dokuwiki__usertools">
-                      <div class="inner">
-                          <h3 class="a11y"><?php echo tpl_getLang('user_tools') ?></h3>
-                          <ul>
-                              <?php /* the optional second parameter of tpl_action() switches between a link and a button,
-                                       e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
-                                  if ($_SERVER['REMOTE_USER']) {
-                                      echo '<li class="user">';
-                                      tpl_userinfo(); /* 'Logged in as ...' */
-                                      echo '</li>';
-                                  }
-                                  tpl_action('admin', 1, 'li');
-                                  _tpl_action('userpage', 1, 'li');
-                                  tpl_action('profile', 1, 'li');
-                                  _tpl_action('register', 1, 'li'); /* DW versions > 2011-02-20 can use the core function tpl_action('register', 1, 'li') */
-                                  tpl_action('login', 1, 'li');
-                              ?>
-                          </ul>
-                        </div>
+                        <h3 class="a11y"><?php echo tpl_getLang('user_tools') ?></h3>
+                        <ul>
+                            <?php /* the optional second parameter of tpl_action() switches between a link and a button,
+                                     e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
+                                if ($_SERVER['REMOTE_USER']) {
+                                    echo '<li class="user">';
+                                    tpl_userinfo(); /* 'Logged in as ...' */
+                                    echo '</li>';
+                                }
+                                tpl_action('admin', 1, 'li');
+                                tpl_action('profile', 1, 'li');
+                                tpl_action('register', 1, 'li');
+                                tpl_action('login', 1, 'li');
+                            ?>
+                        </ul>
                     </div>
                 <?php endif ?>
 
@@ -90,7 +87,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 </div>
 
             </div>
-            <div class="clearer"></div>
 
             <div class="clearer"></div>
             <hr class="a11y" />
@@ -113,6 +109,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                     <?php if($conf['youarehere']){ ?>
                         <div class="breadcrumbs"><?php tpl_youarehere() ?></div>
                     <?php } ?>
+                    <div id="page_id">[[page_id]]</div>
 
                     <!-- wikipage start -->
                     <?php tpl_content() /* the main content */ ?>
@@ -140,7 +137,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                     <ul>
                         <?php
                             tpl_action('edit', 1, 'li');
-                            _tpl_action('discussion', 1, 'li');
                             tpl_action('history', 1, 'li');
                             tpl_action('backlink', 1, 'li');
                             tpl_action('subscribe', 1, 'li');
@@ -163,6 +159,5 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>
     <!--[if ( IE 6 | IE 7 | IE 8 ) ]></div><![endif]-->
-    <div class="header_background"></div>
 </body>
 </html>
