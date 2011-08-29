@@ -11,6 +11,7 @@
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
+ * @author Łukasz Chmaj <teachmeter@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -96,7 +97,7 @@ $lang['txt_filename']          = 'Nazwa pliku (opcjonalnie)';
 $lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
 $lang['lockedby']              = 'Aktualnie zablokowane przez';
 $lang['lockexpire']            = 'Blokada wygasa';
-$lang['js']['willexpire']            = 'Za minutę Twoja blokada tej strony wygaśnie.\nW celu uniknięcia konfliktów wyświetl podgląd aby odnowić blokadę.';
+$lang['willexpire']            = 'Za minutę Twoja blokada tej strony wygaśnie.\nW celu uniknięcia konfliktów wyświetl podgląd aby odnowić blokadę.';
 $lang['js']['notsavedyet']     = 'Nie zapisane zmiany zostaną utracone.
 Czy na pewno kontynuować?';
 $lang['js']['searchmedia']     = 'Szukaj plików';
@@ -163,6 +164,9 @@ $lang['yours']                 = 'Twoja wersja';
 $lang['diff']                  = 'Pokaż różnice między wersjami';
 $lang['diff2']                 = 'Pokaż różnice między zaznaczonymi wersjami';
 $lang['difflink']              = 'Odnośnik do tego porównania';
+$lang['diff_type']             = 'Zobacz różnice:';
+$lang['diff_inline']           = 'W linii';
+$lang['diff_side']             = 'Jeden obok drugiego';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Ślad';
 $lang['youarehere']            = 'Jesteś tutaj';
