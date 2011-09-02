@@ -1332,13 +1332,12 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
                     array('showmsg'=>false,'pattern'=>$pattern),
                     $dir);
         }
-        if ($sort == 'date') {
-            $data = array();
-            foreach ($evdata['data'] as $k => $v) {
-                $data[$k]  = $v['mtime'];
-            }
-            array_multisort($data, SORT_DESC, SORT_NUMERIC, $evdata['data']);
+
+        $data = array();
+        foreach ($evdata['data'] as $k => $v) {
+            $data[$k] = ($sort == 'date') ? $v['mtime'] : $v['id'];
         }
+        array_multisort($data, SORT_DESC, SORT_NUMERIC, $evdata['data']);
 
         $evt->advise_after();
         unset($evt);
