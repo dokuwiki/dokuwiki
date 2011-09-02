@@ -88,7 +88,7 @@ function media_metasave($id,$auth,$data){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_metaform($id,$auth,$fullscreen = false){
+function media_metaform($id,$auth){
     global $lang, $config_cascade;
 
     if($auth < AUTH_UPLOAD) {
@@ -108,12 +108,7 @@ function media_metaform($id,$auth,$fullscreen = false){
     $src = mediaFN($id);
 
     // output
-    if (!$fullscreen) {
-        echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
-        $action = DOKU_BASE.'lib/exe/mediamanager.php';
-    } else {
-        $action = media_managerURL(array('tab_details' => 'view'));
-    }
+    $action = media_managerURL(array('tab_details' => 'view'));
     echo '<form action="'.$action.'" id="mediamanager__save_meta" accept-charset="utf-8" method="post" class="meta">'.NL;
 
     formSecurityToken();
@@ -151,17 +146,11 @@ function media_metaform($id,$auth,$fullscreen = false){
     }
     echo '<div class="buttons">'.NL;
     echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
-    if (!$fullscreen) {
-        $do = 'do';
-    } else {
-        echo '<input type="hidden" name="mediado" value="save" />';
-        $do = 'mediado';
-    }
+    echo '<input type="hidden" name="mediado" value="save" />';
+
+    $do = 'mediado';
     echo '<input name="'.$do.'[save]" type="submit" value="'.$lang['btn_save'].
         '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
-    if (!$fullscreen)
-    echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].
-        '" title="'.$lang['btn_cancel'].' [C]" accesskey="c" class="button" />'.NL;
     echo '</div>'.NL;
     echo '</form>'.NL;
 }
@@ -847,7 +836,7 @@ function media_tab_edit($image, $ns, $auth=null) {
     echo '<div class="scroll-container">';
     if ($image) {
         list($ext, $mime) = mimetype($image);
-        if ($mime == 'image/jpeg') media_metaform($image,$auth,true);
+        if ($mime == 'image/jpeg') media_metaform($image,$auth);
     }
     echo '</div>';
 }
@@ -1368,40 +1357,6 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
 }
 
 /**
- * Print action links for a file depending on filetype
- * and available permissions
- */
-function media_fileactions($item,$auth){
-    global $lang;
-
-    // view button
-    $link = ml($item['id'],'',true);
-    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
-
-    // no further actions if not writable
-    if(!$item['writable']) return;
-
-    // delete button
-    if($auth >= AUTH_DELETE){
-        $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-            '&amp;sectok='.getSecurityToken();
-        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
-            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
-            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
-    }
-
-    // edit button
-    if($auth >= AUTH_UPLOAD && $item['isimg'] && $item['meta']->getField('File.Mime') == 'image/jpeg'){
-        $link = DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']);
-        echo ' <a href="'.$link.'">'.
-            '<img src="'.DOKU_BASE.'lib/images/pencil.png" alt="'.$lang['metaedit'].'" '.
-            'title="'.$lang['metaedit'].'" class="btn" /></a>';
-    }
-
-}
-
-/**
  * Formats and prints one file in the list
  */
 function media_printfile($item,$auth,$jump,$display_namespace=false){
@@ -1449,7 +1404,12 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
         echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
     }
     echo '<span class="info">('.$info.')</span>'.NL;
-    media_fileactions($item,$auth);
+
+    // view button
+    $link = ml($item['id'],'',true);
+    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
+        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
     echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';
     echo '</div>';
@@ -1491,7 +1451,8 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
 
     } else {
         echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'"><span>';
+            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
+            'tab_details' => 'view')).'"><span>';
         echo media_printicon($item['id']);
         echo '</span></a>';
     }
@@ -1501,8 +1462,8 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
     } else {
         $name = hsc($item['id']);
     }
-    echo '<a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'" name=
-        "h_:'.$item['id'].'" class="name">'.$name.'</a>';
+    echo '<a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
+        'tab_details' => 'view')).'" name="h_:'.$item['id'].'" class="name">'.$name.'</a>';
 
     if($item['isimg']){
         $size = '';
@@ -1556,7 +1517,7 @@ function media_printimgdetail($item, $fullscreen=false){
         // output
         if ($fullscreen) {
             echo '<a name="'.($index ? 'd' : 'l').'_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
-                media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']))).'">';
+                media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
             echo '<span><img src="'.$src.'" '.$att.' /></span>';
             echo '</a>';
         }

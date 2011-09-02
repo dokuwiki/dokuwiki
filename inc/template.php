@@ -1109,9 +1109,7 @@ function tpl_mediaContent($fromajax=false){
     $evt = new Doku_Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if ($evt->advise_before()) {
         $do = $data['do'];
-        if($do == 'metaform'){
-            media_metaform($IMG,$AUTH);
-        }elseif($do == 'filesinuse'){
+        if($do == 'filesinuse'){
             media_filesinuse($INUSE,$IMG);
         }elseif($do == 'filelist'){
             media_filelist($NS,$AUTH,$JUMPTO);

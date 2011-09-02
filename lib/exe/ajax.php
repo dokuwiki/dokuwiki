@@ -268,7 +268,7 @@ function ajax_mediaupload(){
     $id = cleanID($id, false, true);
 
     if ($res) $result = array('success' => true,
-        'link' => media_managerURL(array('ns' => $NS, 'image' => $NS.':'.$id), '&'),
+        'link' => media_managerURL(array('ns' => $NS.':'.getNS($id), 'image' => $NS.':'.$id), '&'),
         'id' => $NS.':'.$id, 'ns' => $NS);
 
     if (!$result) {
