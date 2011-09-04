@@ -596,6 +596,25 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
         if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
     }
 
+    if($type == 'd' && !$opts['skipacl'] && $opts['sneakyacl'] && $item['perm'] < AUTH_READ) {
+        if ($opts['sneakyacl'] === 2) {
+            // Perform shy sneaking, i. e. just show the ns if it contains
+            // something accessible
+            $old_data_count = count($data);
+            search($data,$base,'search_universal',$opts,$file,$lvl+1);
+            if (count($data) > $old_data_count) {
+                // Contains something visible
+                array_splice($data, $old_data_count, $return ? 0 : count($data),
+                             array($item));
+            } else {
+                // Contains nothing visible, so hide
+                $data = array_slice($data, 0, $old_data_count);
+            }
+        }
+        // Stop recursing in any case since we did it ourself
+        return false;
+    }
+
     // finally add the item
     $data[] = $item;
     return $return;
