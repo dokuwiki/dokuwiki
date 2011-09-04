@@ -87,3 +87,8 @@ div.notify {
 .code .st0  { color: #ff0000; }
 .code .sy0  { color: #66cc66; }
 
+div.hiddenpicker {
+    /* No display: none to keep accesskeys working */
+    margin-left: -10000px;
+    margin-top: -10000px;
+}
