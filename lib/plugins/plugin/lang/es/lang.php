@@ -20,6 +20,7 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';

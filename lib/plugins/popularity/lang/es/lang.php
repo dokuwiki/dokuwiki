@@ -17,6 +17,7 @@
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
  */
 $lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
 $lang['submit']                = 'Enviar datos';

@@ -84,8 +84,8 @@ function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
  * return values for files are ignored
  *
  * All functions should check the ACL for document READ rights
- * namespaces (directories) are NOT checked as this would break
- * the recursion (You can have an nonreadable dir over a readable
+ * namespaces (directories) are NOT checked (when sneaky_index is 0) as this
+ * would break the recursion (You can have an nonreadable dir over a readable
  * one deeper nested) also make sure to check the file type (for example
  * in case of lockfiles).
  */
@@ -107,45 +107,22 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
 /**
  * Build the browsable index of pages
  *
- * $opts['ns'] is the current namespace
+ * $opts['ns'] is the currently viewed namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
-    $return = true;
+    $opts = array(
+        'pagesonly' => true,
+        'listdirs' => true,
+        'listfiles' => !$opts['nofiles'],
+        'sneakyacl' => $conf['sneaky_index'],
+        // Hacky, should rather use recmatch
+        'depth' => preg_match('#^'.$file.'(/|$)#','/'.$opts['ns']) ? 0 : -1
+    );
 
-    $item = array();
-
-    if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
-        //add but don't recurse
-        $return = false;
-    }elseif($type == 'f' && ($opts['nofiles'] || substr($file,-4) != '.txt')){
-        //don't add
-        return false;
-    }
-
-    $id = pathID($file,($type == 'd'));
-
-    if($type=='d' && $conf['sneaky_index'] && auth_quickaclcheck($id.':') < AUTH_READ){
-        return false;
-    }
-
-    //check hidden
-    if(isHiddenPage($id)){
-        return false;
-    }
-
-    //check ACL
-    if($type=='f' && auth_quickaclcheck($id) < AUTH_READ){
-        return false;
-    }
-
-    $data[]=array( 'id'    => $id,
-            'type'  => $type,
-            'level' => $lvl,
-            'open'  => $return );
-    return $return;
+    return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
 
 /**
