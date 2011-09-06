@@ -251,24 +251,27 @@ function ajax_mediadiff(){
 function ajax_mediaupload(){
     global $NS, $MSG;
 
+    if ($_FILES['qqfile']['tmp_name']) {
+        $id = ((empty($_POST['mediaid'])) ? $_FILES['qqfile']['name'] : $_POST['mediaid']);
+    } elseif (isset($_GET['qqfile'])) {
+        $id = $_GET['qqfile'];
+    }
+
+    $id = cleanID($id, false, true);
+
     $NS = $_REQUEST['ns'];
-    $AUTH = auth_quickaclcheck("$NS:*");
-    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
+    $ns = $NS.':'.getNS($id);
+
+    $AUTH = auth_quickaclcheck("$ns:*");
+    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$ns:xxx", 'media'); }
 
     if ($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
 
-    if ($_FILES['qqfile']['tmp_name']) {
-        $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
-        $id = ((empty($_POST['mediaid'])) ? $_FILES['qqfile']['name'] : $_POST['mediaid']);
-    }
-    if (isset($_GET['qqfile'])) {
-        $res = media_upload_xhr($NS, $AUTH);
-        $id = $_GET['qqfile'];
-    }
-    $id = cleanID($id, false, true);
+    if ($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+    if (isset($_GET['qqfile'])) $res = media_upload_xhr($NS, $AUTH);
 
     if ($res) $result = array('success' => true,
-        'link' => media_managerURL(array('ns' => $NS.':'.getNS($id), 'image' => $NS.':'.$id), '&'),
+        'link' => media_managerURL(array('ns' => $ns, 'image' => $NS.':'.$id), '&'),
         'id' => $NS.':'.$id, 'ns' => $NS);
 
     if (!$result) {
