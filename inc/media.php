@@ -247,7 +247,7 @@ function media_upload_xhr($ns,$auth){
     fclose($input);
     if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]) return false;
     if (!($tmp = io_mktmpdir())) return false;
-    $path = $tmp.'/'.$id;
+    $path = $tmp.'/'.md5($id);
     $target = fopen($path, "w");
     fseek($temp, 0, SEEK_SET);
     stream_copy_to_stream($temp, $target);
