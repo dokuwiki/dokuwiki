@@ -48,6 +48,8 @@ $lang['btn_recover']  = 'Recover draft';
 $lang['btn_draftdel'] = 'Delete draft';
 $lang['btn_revert']   = 'Restore';
 $lang['btn_register'] = 'Register';
+$lang['btn_apply'] = 'Apply';
+$lang['btn_media'] = 'Media Manager';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -127,7 +129,7 @@ $lang['js']['hidedetails'] = 'Hide Details';
 $lang['mediausage']  = 'Use the following syntax to reference this file:';
 $lang['mediaview']   = 'View original file';
 $lang['mediaroot']   = 'root';
-$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons.';
+$lang['mediaupload'] = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons. Files also can be selected by drag and drop.';
 $lang['mediaextchange'] = 'Filextension changed from .%s to .%s!';
 
 $lang['js']['mediatitle']       = 'Link settings';
@@ -180,6 +182,11 @@ $lang['summary']    = 'Edit summary';
 $lang['noflash']    = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']   = 'Download Snippet';
 
+$lang['changes_type']  = 'View changes of';
+$lang['pages_changes'] = 'Pages';
+$lang['media_changes'] = 'Media files';
+$lang['both_changes']  = 'Both pages and media files';
+
 $lang['mail_newpage']  = 'page added:';
 $lang['mail_changed']  = 'page changed:';
 $lang['mail_subscribe_list'] = 'pages changed in namespace:';
@@ -220,6 +227,7 @@ $lang['js']['linkwiz'] = 'Link Wizard';
 $lang['js']['linkto']  = 'Link to:';
 
 $lang['js']['del_confirm']= 'Really delete selected item(s)?';
+$lang['js']['restore_confirm']= 'Really restore this version?';
 $lang['admin_register']= 'Add new user';
 
 $lang['metaedit']    = 'Edit Metadata';
@@ -236,6 +244,9 @@ $lang['img_copyr']   = 'Copyright';
 $lang['img_format']  = 'Format';
 $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Keywords';
+$lang['img_width']   = 'Width';
+$lang['img_height']  = 'Height';
+$lang['img_manager'] = 'View in media manager';
 
 $lang['subscr_subscribe_success']  = 'Added %s to subscription list for %s';
 $lang['subscr_subscribe_error']    = 'Error adding %s to subscription list for %s';
@@ -318,5 +329,36 @@ $lang['seconds'] = '%d seconds ago';
 
 $lang['wordblock'] = 'Your change was not saved because it contains blocked text (spam).';
 
+$lang['media_uploadtab']  = 'Upload';
+$lang['media_searchtab']  = 'Search';
+$lang['media_viewtab']    = 'View';
+$lang['media_edittab']    = 'Edit';
+$lang['media_historytab'] = 'History';
+$lang['media_thumbsview'] = 'Thumbnails';
+$lang['media_listview']   = 'List';
+$lang['media_sort']       = 'Sort';
+$lang['media_sort_name']  = 'by name';
+$lang['media_sort_date']  = 'by date';
+$lang['media_upload']     = 'Upload to the <strong>%s</strong> namespace.';
+$lang['media_search']     = 'Search in the <strong>%s</strong> namespace.';
+$lang['media_edit']       = 'Edit';
+$lang['media_history']    = 'These are the older revisions of the file.';
+$lang['media_meta_edited']= 'metadata edited';
+$lang['media_perm_read']  = 'Sorry, you don\'t have enough rights to read files.';
+$lang['media_perm_upload']= 'Sorry, you don\'t have enough rights to upload files.';
+$lang['media_update']     = 'Upload new version';
+$lang['media_restore']    = 'Restore this version';
+
+$lang['js']['media_diff']          = 'View differences:';
+$lang['js']['media_diff_both']     = 'Side by Side';
+$lang['js']['media_diff_opacity']  = 'Overlay';
+$lang['js']['media_diff_portions'] = 'Slider';
+
+$lang['js']['media_select']     = 'Select files…';
+$lang['js']['media_upload_btn'] = 'Upload';
+$lang['js']['media_done_btn']   = 'Done';
+$lang['js']['media_drop']       = 'Drop files here to upload';
+$lang['js']['media_cancel']     = 'remove';
+$lang['js']['media_overwrt']    = 'Overwrite existing files';
 
 //Setup VIM: ex: et ts=2 :

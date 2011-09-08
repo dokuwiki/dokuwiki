@@ -20,6 +20,7 @@ $conf['basedir']     = '';                //absolute dir from serveroot - blank 
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
 $conf['savedir']     = './data';          //where to store all the files
 $conf['allowdebug']  = 0;                 //allow debug output, enable if needed 0|1
+$conf['mediarevisions'] = 1;              //enable/disable media revisions
 
 /* Display Options */
 

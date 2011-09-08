@@ -21,9 +21,10 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param   int       $lvl  Recursion Level
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
+function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort=false){
     $dirs   = array();
     $files  = array();
+    $filepaths = array();
 
     //read in directories and files
     $dh = @opendir($base.'/'.$dir);
@@ -35,9 +36,14 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
             continue;
         }
         $files[] = $dir.'/'.$file;
+        $filepaths[] = $base.'/'.$dir.'/'.$file;
     }
     closedir($dh);
-    sort($files);
+    if ($sort == 'date') {
+        @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
+    } else {
+        sort($files);
+    }
     sort($dirs);
 
     //give directories to userfunction then recurse
