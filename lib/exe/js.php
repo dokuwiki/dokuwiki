@@ -88,6 +88,7 @@ function js_out(){
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".DOKU_TPL."';";
+    // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
 
@@ -106,10 +107,7 @@ function js_out(){
         echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
 
-
     // init stuff
-    js_runonstart("addEvent(document,'click',closePopups)");
-    js_runonstart("initToolbar('tool__bar','wiki__text',toolbar)");
     if($conf['locktime'] != 0){
         js_runonstart("dw_locktimer.init(".($conf['locktime'] - 60).",".$conf['usedraft'].")");
     }
@@ -220,7 +218,7 @@ function js_escape($string){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function js_runonstart($func){
-    echo "addInitEvent(function(){ $func; });".NL;
+    echo "jQuery(function(){ $func; });".NL;
 }
 
 /**
