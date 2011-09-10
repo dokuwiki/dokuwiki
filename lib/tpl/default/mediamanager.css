@@ -160,7 +160,7 @@
 }
 
 #mediamanager__file_list li:hover {
-    background-color: #dadada;
+    background-color: __background_alt__;
 }
 
 /* Files thumbs view */
@@ -172,12 +172,14 @@
     display: -moz-inline-stack;
     /* the right margin should visually be 10px, but because of its inline-block nature the whitespace inbetween is about 4px more */
     margin: 0 6px 10px 0;
-    background-color: __background_alt__;
-    padding: 10px;
+    background-color: __background_neu__;
+    color: __text__;
+    padding: 5px;
     vertical-align: top;
     text-align: center;
     zoom: 1;
     position: relative;
+    line-height: 1.2;
 }
 
 * html .mediamanager-thumbs li {
@@ -218,6 +220,11 @@
     white-space: nowrap;
 }
 
+.mediamanager-thumbs li .name {
+    padding: 5px 0;
+    font-weight: bold;
+}
+
 .mediamanager-thumbs li .date {
     font-style: italic;
     white-space: normal;
@@ -243,6 +250,8 @@
     max-height: 50px;
     margin: 0;
     margin-bottom: 3px;
+    background-color: __background__;
+    color: __text__;
 }
 
 .mediamanager-list li:nth-child(2n+1) {
@@ -269,9 +278,22 @@
 .mediamanager-list li .date {
     overflow: hidden;
     float: left;
-    width: 19%;
     margin-left: 1%;
     white-space: nowrap;
+}
+
+.mediamanager-list li .name {
+    width: 30%;
+    font-weight: bold;
+}
+
+.mediamanager-list li .size,
+.mediamanager-list li .filesize {
+    width: 15%;
+}
+
+.mediamanager-list li .date {
+    width: 20%;
 }
 
 .mediamanager-list li .date {
@@ -329,8 +351,24 @@
 
 /* Meta data edit form */
 
-form.meta textarea.edit {
-    height: 8em;
+#mediamanager__details div.metafield {
+    margin-bottom: 5px;
+}
+
+#mediamanager__details label {
+    display: block;
+}
+
+#mediamanager__details form.meta input {
+    width: 50%;
+}
+
+#mediamanager__details form.meta input.button {
+    width: auto;
+}
+
+#mediamanager__details form.meta textarea.edit {
+    height: 6em;
     width: 95%;
     min-width: 95%;
     max-width: 95%;
