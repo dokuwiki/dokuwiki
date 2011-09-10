@@ -176,37 +176,33 @@ class Doku_Plugin_Controller {
     function getCascade() {
         return $this->plugin_cascade;
     }
+
     /**
      * Save the current list of plugins
      */
     function saveList() {
-        if(!empty($this->tmp_plugins)) {
-            //quick check to ensure rewrite is necessary
-            if($this->tmp_plugins != $this->tmp_bak) {
-                //Rebuild local for better check and saving
-                $local_plugins = $this->rebuildLocal();
-                //only write if the list has changed
-                if($local_plugins != $this->plugin_cascade['local']) {
-                    $file = $this->last_local_config_file;
-                    $out = "<?php\n";
-                    foreach ($local_plugins as $plugin => $value) {
-                        $out .= "\$plugins['$plugin'] = $value;\n";
-                    }
-                    // backup current file (remove any existing backup)
-                    if (@file_exists($file)) {
-                        if (@file_exists($file.'.bak')) @unlink($file.'.bak');
-                        if (!io_rename($file, $file.'.bak')) return false;
-                    }
-                    //check if can open for writing, else restore
-                    if (!$fh = @fopen($file, 'wb')) {
-                        io_rename($file.'.bak', $file);// problem opening, restore the backup
-                        return false;
-                    }
-                    @fwrite($fh, $out);
-                    fclose($fh);
-                    return true;
-                }
+        global $conf;
+
+        if (empty($this->tmp_plugins)) return false;
+        if ($this->tmp_plugins == $this->tmp_bak) return false;
+
+        // Rebuild list of local settings
+        $local_plugins = $this->rebuildLocal();
+        if($local_plugins != $this->plugin_cascade['local']) {
+            $file = $this->last_local_config_file;
+            $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n */\n";
+            foreach ($local_plugins as $plugin => $value) {
+                $out .= "\$plugins['$plugin'] = $value;\n";
             }
+            // backup current file (remove any existing backup)
+            if (@file_exists($file)) {
+                $backup = $file.'.bak';
+                if (@file_exists($backup)) @unlink($backup);
+                if (!@copy($file,$backup)) return false;
+                if ($conf['fperm']) chmod($backup, $conf['fperm']);
+            }
+            //check if can open for writing, else restore
+            return io_saveFile($file,$out);
         }
         return false;
     }
