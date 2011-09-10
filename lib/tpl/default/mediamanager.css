@@ -15,8 +15,11 @@
 
 #mediamanager__layout .layout,
 #mediamanager__layout .layout-resizable {
-    margin-left: 5px;
-    margin-right: 5px;
+    float: left;
+}
+
+#mediamanager__layout .layout-resizable {
+    margin-right: 10px;
     float: left;
 }
 
@@ -32,8 +35,9 @@
 #mediamanager__layout .background-container {
     background-color: __background_alt__;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 10px 8px;
     text-align: left;
+    min-height: 20px;
 }
 
 #mediamanager__layout .background-container .icon {
@@ -60,6 +64,14 @@
 }
 
 /* Namespaces tree */
+
+#mediamanager__page ul.idx {
+    margin-left: .2em;
+}
+
+#mediamanager__page ul.idx ul {
+    margin-left: 1em;
+}
 
 .idx .selected {
     background-color: __highlight__;
@@ -95,25 +107,30 @@
 
 /* Title links */
 
-#mediamanager__tabs_list {
-    display: inline;
+#mediamanager__files .namespace {
+    float: left;
+    font-weight: normal;
 }
 
-#mediamanager__link_thumbs {
-    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
+#mediamanager__tabs_list {
+    float: left;
+}
+
+#mediamanager__link_thumbs,
+#mediamanager__link_list {
     padding-left: 30px;
     display: inline-block;
     width: 0;
     overflow: hidden;
+}
+
+#mediamanager__link_thumbs {
+    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
     margin-left: 10px;
 }
 
 #mediamanager__link_list {
     background: url('../../images/icon-list.png') 0 -4px no-repeat;
-    padding-left: 30px;
-    display: inline-block;
-    width: 0;
-    overflow: hidden;
 }
 
 #mediamanager__link_thumbs:hover,
@@ -152,13 +169,12 @@
     width: 100px;
     min-height: 130px;
     display: inline-block;
-    margin: 0;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    display: -moz-inline-stack;
+    /* the right margin should visually be 10px, but because of its inline-block nature the whitespace inbetween is about 4px more */
+    margin: 0 6px 10px 0;
     background-color: __background_alt__;
     padding: 10px;
     vertical-align: top;
-    display: -moz-inline-stack;
     text-align: center;
     zoom: 1;
     position: relative;

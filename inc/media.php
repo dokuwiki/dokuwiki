@@ -682,7 +682,10 @@ function media_tab_files_options($ns, $sort){
     global $lang;
 
     echo '<div class="background-container">';
+
+    echo '<strong class="namespace">';
     echo $ns ? $ns : '['.$lang['mediaroot'].']';
+    echo '</strong>';
 
     echo '<div id="mediamanager__tabs_list">';
 
