@@ -158,6 +158,9 @@ class Doku_Plugin_Controller {
                 }
             }
             $this->tmp_plugins = $all_plugins;
+            if (!file_exists($this->last_local_config_file)) {
+                $this->saveList(true);
+            }
         }
     }
 
@@ -178,17 +181,18 @@ class Doku_Plugin_Controller {
     /**
      * Save the current list of plugins
      */
-    function saveList() {
+    function saveList($forceSave = false) {
         global $conf;
 
         if (empty($this->tmp_plugins)) return false;
 
         // Rebuild list of local settings
         $local_plugins = $this->rebuildLocal();
-        if($local_plugins != $this->plugin_cascade['local']) {
+        if($local_plugins != $this->plugin_cascade['local'] || $forceSave) {
             $file = $this->last_local_config_file;
-            $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n".
-                   " * NOTE: plugins with a 'disabled' file will not be added to this file unless they are enabled which overrides the 'disabled' file\n */\n";
+            $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n *\n".
+                   " * NOTE: Plugins will not be added to this file unless there is a need to override a default setting. Plugins are\n".
+                   " *       enabled by default, unless having a 'disabled' file in their plugin folder.\n */\n";
             foreach ($local_plugins as $plugin => $value) {
                 $out .= "\$plugins['$plugin'] = $value;\n";
             }
