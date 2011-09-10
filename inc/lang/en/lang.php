@@ -361,4 +361,6 @@ $lang['js']['media_drop']       = 'Drop files here to upload';
 $lang['js']['media_cancel']     = 'remove';
 $lang['js']['media_overwrt']    = 'Overwrite existing files';
 
+$lang['plugin_install_err'] = "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.";
+
 //Setup VIM: ex: et ts=2 :

@@ -1,0 +1,6 @@
+author Christopher Smith
+email  chris@jalakai.co.uk
+date   2007-08-05
+name   Configuration Manager
+desc   Manage Dokuwiki's Configuration Settings
+url    http://dokuwiki.org/plugin:config
