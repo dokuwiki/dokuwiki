@@ -14,7 +14,7 @@ class Doku_Plugin_Controller {
     var $list_bytype = array();
     var $tmp_plugins = array();
     var $plugin_cascade = array('default'=>array(),'local'=>array(),'protected'=>array());
-    var $last_local = '';
+    var $last_local_config_file = '';
     //backup of tmp_plugins needed for write check
     var $tmp_bak =array();
 
@@ -71,7 +71,8 @@ class Doku_Plugin_Controller {
     function load($type,$name,$new=false,$disabled=false){
 
         //we keep all loaded plugins available in global scope for reuse
-        global $DOKU_PLUGINS,$lang;
+        global $DOKU_PLUGINS;
+        global $lang;
 
         list($plugin,$component) = $this->_splitName($name);
 
@@ -98,7 +99,7 @@ class Doku_Plugin_Controller {
             $dir = $this->get_directory($plugin);
             $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
             if($inf['base'] && $inf['base'] != $plugin){
-                msg(sprintf($lang['plugin_insterr'],hsc($plugin),hsc($inf['base'])),-1);
+                msg(sprintf($lang['plugin_install_err'],hsc($plugin),hsc($inf['base'])),-1);
             }
             return null;
         }
@@ -129,6 +130,7 @@ class Doku_Plugin_Controller {
 
     protected function _populateMasterList() {
         if ($dh = @opendir(DOKU_PLUGIN)) {
+            $all_plugins = array();
             while (false !== ($plugin = readdir($dh))) {
                 if ($plugin[0] == '.') continue;               // skip hidden entries
                 if (is_file(DOKU_PLUGIN.$plugin)) continue;    // skip files, we're only interested in directories
@@ -188,7 +190,7 @@ class Doku_Plugin_Controller {
                 $local_plugins = $this->rebuildLocal();
                 //only write if the list has changed
                 if($local_plugins != $this->plugin_cascade['local']) {
-                    $file = $this->last_local;
+                    $file = $this->last_local_config_file;
                     $out = "<?php\n";
                     foreach ($local_plugins as $plugin => $value) {
                         $out .= "\$plugins['$plugin'] = $value;\n";
@@ -243,8 +245,8 @@ class Doku_Plugin_Controller {
                 $this->plugin_cascade[$type] = $this->checkRequire($config_cascade['plugins'][$type]);
         }
         $local = $config_cascade['plugins']['local'];
-        $this->last_local = array_pop($local);
-        $this->plugin_cascade['local'] = $this->checkRequire(array($this->last_local));
+        $this->last_local_config_file = array_pop($local);
+        $this->plugin_cascade['local'] = $this->checkRequire(array($this->last_local_config_file));
         if(is_array($local)) {
             $this->plugin_cascade['default'] = array_merge($this->plugin_cascade['default'],$this->checkRequire($local));
         }

@@ -40,30 +40,3 @@ function plugin_getcascade() {
     global $plugin_controller;
     return $plugin_controller->getCascade();
 }
-/**
- * return a list (name & type) of all the component plugins that make up this plugin
- *
- */
-function get_plugin_components($plugin) {
-    global $plugin_types;
-    static $plugins;
-    if(empty($plugins[$plugin])) {
-        $components = array();
-        $path = DOKU_PLUGIN.plugin_directory($plugin).'/';
-
-        foreach ($plugin_types as $type) {
-            if (@file_exists($path.$type.'.php')) { $components[] = array('name'=>$plugin, 'type'=>$type); continue; }
-
-            if ($dh = @opendir($path.$type.'/')) {
-                while (false !== ($cp = readdir($dh))) {
-                    if ($cp == '.' || $cp == '..' || strtolower(substr($cp,-4)) != '.php') continue;
-
-                    $components[] = array('name'=>$plugin.'_'.substr($cp, 0, -4), 'type'=>$type);
-                }
-                closedir($dh);
-            }
-        }
-        $plugins[$plugin] = $components;
-    }
-    return $plugins[$plugin];
-}
