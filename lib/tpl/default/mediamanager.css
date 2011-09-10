@@ -59,8 +59,18 @@
     min-width: 290px;
 }
 
-.ui-resizable-e:hover {
-    background-color: #dadada;
+#mediamanager__page .ui-resizable-e {
+    width: 16px;
+    right: -13px;
+    /* icon from Crystal Clear icon set (LGPL) */
+    background: transparent url(images/resizecol.png) 0 25px no-repeat;
+}
+
+#mediamanager__page .ui-resizable-e:hover {
+    width: 6px;
+    right: -8px;
+    background-image: none;
+    background-color: __background_alt__;
 }
 
 /* Namespaces tree */
