@@ -15,8 +15,6 @@ class Doku_Plugin_Controller {
     var $tmp_plugins = array();
     var $plugin_cascade = array('default'=>array(),'local'=>array(),'protected'=>array());
     var $last_local_config_file = '';
-    //backup of tmp_plugins needed for write check
-    var $tmp_bak =array();
 
     /**
      * Populates the master list of plugins
@@ -184,7 +182,6 @@ class Doku_Plugin_Controller {
         global $conf;
 
         if (empty($this->tmp_plugins)) return false;
-        if ($this->tmp_plugins == $this->tmp_bak) return false;
 
         // Rebuild list of local settings
         $local_plugins = $this->rebuildLocal();
@@ -244,7 +241,6 @@ class Doku_Plugin_Controller {
             $this->plugin_cascade['default'] = array_merge($this->plugin_cascade['default'],$this->checkRequire($local));
         }
         $this->tmp_plugins = array_merge($this->plugin_cascade['default'],$this->plugin_cascade['local'],$this->plugin_cascade['protected']);
-        $this->tmp_bak = $this->tmp_plugins;
     }
 
     function _getListByType($type, $enabled) {
