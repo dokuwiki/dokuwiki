@@ -1493,6 +1493,7 @@ function tpl_media() {
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
     echo '<div id="mediamanager__page">';
+    echo '<h1>'.$lang['btn_media'].'</h1>';
     echo '<div id="mediamanager__layout">';
 
     echo '<div id="mediamanager__layout_namespaces" class="layout-resizable" >';

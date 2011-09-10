@@ -5,6 +5,10 @@
     overflow-x: auto;
 }
 
+#mediamanager__page h1 {
+    margin: 0 0 .5em;
+}
+
 #mediamanager__layout {
     min-width: 840px;
 }
