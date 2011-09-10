@@ -187,7 +187,8 @@ class Doku_Plugin_Controller {
         $local_plugins = $this->rebuildLocal();
         if($local_plugins != $this->plugin_cascade['local']) {
             $file = $this->last_local_config_file;
-            $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n */\n";
+            $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n".
+                   " * NOTE: plugins with a 'disabled' file will not be added to this file unless they are enabled which overrides the 'disabled' file\n */\n";
             foreach ($local_plugins as $plugin => $value) {
                 $out .= "\$plugins['$plugin'] = $value;\n";
             }
