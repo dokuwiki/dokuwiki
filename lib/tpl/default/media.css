@@ -151,6 +151,11 @@ it's dirty, so any "real" fixes are welcome */
     border-bottom: solid 1px __border__;
     padding: 0 0.5em 1em 0.5em;
 }
+
+#media__content form#dw__upload {
+    border-bottom: 0;
+}
+
 #media__content form#dw__upload fieldset {
     padding: 0;
     margin: 0;

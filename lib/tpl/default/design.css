@@ -246,6 +246,12 @@ div.dokuwiki div.pagenav-next {
     width: 49%
 }
 
+/* ----------- type of recent changes select -------- */
+
+div.dokuwiki form#dw__recent select {
+    margin-bottom: 10px;
+}
+
 /* --------------- Links ------------------ */
 
 div.dokuwiki a:link,

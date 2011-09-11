@@ -89,7 +89,8 @@ function tpl_content_core(){
                 $_REQUEST['first'] = $_REQUEST['first'][0];
             }
             $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
-            html_recent($first);
+            $show_changes = $_REQUEST['show_changes'];
+            html_recent($first, $show_changes);
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
@@ -121,6 +122,9 @@ function tpl_content_core(){
             break;
         case 'subscribe':
             tpl_subscribe();
+            break;
+        case 'media':
+            tpl_media();
             break;
         default:
             $evt = new Doku_Event('TPL_ACT_UNKNOWN',$ACT);
@@ -626,6 +630,8 @@ function tpl_get_action($type) {
             // Superseded by subscribe/subscription
             return '';
             break;
+        case 'media':
+            break;
         default:
             return '[unknown %s type]';
             break;
@@ -1103,9 +1109,7 @@ function tpl_mediaContent($fromajax=false){
     $evt = new Doku_Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if ($evt->advise_before()) {
         $do = $data['do'];
-        if($do == 'metaform'){
-            media_metaform($IMG,$AUTH);
-        }elseif($do == 'filesinuse'){
+        if($do == 'filesinuse'){
             media_filesinuse($INUSE,$IMG);
         }elseif($do == 'filelist'){
             media_filelist($NS,$AUTH,$JUMPTO);
@@ -1122,6 +1126,93 @@ function tpl_mediaContent($fromajax=false){
 }
 
 /**
+ * Prints the central column in full-screen media manager
+ * Depending on the opened tab this may be a list of
+ * files in a namespace, upload form or search form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_mediaFileList(){
+    global $AUTH;
+    global $NS;
+    global $JUMPTO;
+
+    $opened_tab = $_REQUEST['tab_files'];
+    if (!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
+    if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
+
+    media_tabs_files($opened_tab);
+
+    if ($opened_tab == 'files') {
+        echo '<div id="mediamanager__files">';
+        media_tab_files($NS,$AUTH,$JUMPTO);
+        echo '</div>';
+
+    } elseif ($opened_tab == 'upload') {
+        echo '<div id="mediamanager__files">';
+        media_tab_upload($NS,$AUTH,$JUMPTO);
+        echo '</div>';
+
+    } elseif ($opened_tab == 'search') {
+        echo '<div id="mediamanager__files">';
+        media_tab_search($NS,$AUTH);
+        echo '</div>';
+    }
+
+}
+
+/**
+ * Prints the third column in full-screen media manager
+ * Depending on the opened tab this may be details of the
+ * selected file, the meta editing dialog or
+ * list of file revisions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_mediaFileDetails($image, $rev){
+    global $AUTH, $NS, $conf, $DEL;
+
+    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
+    if (!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return '';
+    if ($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
+    if (isset($NS) && getNS($image) != $NS) return '';
+    $do = $_REQUEST['mediado'];
+
+    $opened_tab = $_REQUEST['tab_details'];
+
+    $tab_array = array('view');
+    list($ext, $mime) = mimetype($image);
+    if ($mime == 'image/jpeg') {
+        $tab_array[] = 'edit';
+    }
+    if ($conf['mediarevisions']) {
+        $tab_array[] = 'history';
+    }
+
+    if (!$opened_tab || !in_array($opened_tab, $tab_array)) $opened_tab = 'view';
+    if ($_REQUEST['edit']) $opened_tab = 'edit';
+    if ($do == 'restore') $opened_tab = 'view';
+
+    media_tabs_details($image, $opened_tab);
+
+    if ($opened_tab == 'view') {
+        echo '<div id="mediamanager__details">';
+        media_tab_view($image, $NS, $AUTH, $rev);
+        echo '</div>';
+
+    } elseif ($opened_tab == 'edit' && !$removed) {
+        echo '<div id="mediamanager__details">';
+        media_tab_edit($image, $NS, $AUTH);
+        echo '</div>';
+
+    } elseif ($opened_tab == 'history' && $conf['mediarevisions']) {
+        echo '<div id="mediamanager__details">';
+        media_tab_history($image,$NS,$AUTH);
+        echo '</div>';
+    }
+}
+
+/**
  * prints the namespace tree in the mediamanger popup
  *
  * Only allowed in mediamanager.php
@@ -1130,7 +1221,6 @@ function tpl_mediaContent($fromajax=false){
  */
 function tpl_mediaTree(){
     global $NS;
-
     ptln('<div id="media__tree">');
     media_nstree($NS);
     ptln('</div>');
@@ -1386,6 +1476,52 @@ function tpl_favicon($types=array('favicon')) {
     return $return;
 }
 
+/**
+ * Prints full-screen media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_media() {
+    //
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
+    $fullscreen = true;
+    require_once(DOKU_INC.'lib/exe/mediamanager.php');
+
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if (isset($IMG)) $image = $IMG;
+    if (isset($JUMPTO)) $image = $JUMPTO;
+    if (isset($REV) && !$JUMPTO) $rev = $REV;
+
+    echo '<div id="mediamanager__page">';
+    echo '<h1>'.$lang['btn_media'].'</h1>';
+    echo '<div id="mediamanager__layout">';
+
+    echo '<div id="mediamanager__layout_namespaces" class="layout-resizable" >';
+    html_msgarea();
+    echo '<div class="mediamanager-tabs">';
+    echo '<a href="#" class="selected">'.hsc($lang['namespaces']).'</a>';
+    echo '<div class="clearer"></div>';
+    echo '</div>';
+    echo '<div class="background-container">';
+    echo hsc($lang['namespaces']);
+    echo '</div>';
+    echo '<div class="scroll-container">';
+    tpl_mediaTree();
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div id="mediamanager__layout_list" class="layout-resizable" >';
+    tpl_mediaFileList();
+    echo '</div>';
+
+    echo '<div id="mediamanager__layout_detail" class="layout" >';
+    tpl_mediaFileDetails($image, $rev);
+    echo '</div>';
+
+    echo '<div class="clearer"></div>';
+    echo '</div>';
+    echo '</div>';
+}
 
 //Setup VIM: ex: et ts=4 :
 

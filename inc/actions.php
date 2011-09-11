@@ -227,7 +227,7 @@ function act_clean($act){
                     'preview','search','show','check','index','revisions',
                     'diff','recent','backlink','admin','subscribe','revert',
                     'unsubscribe','profile','resendpwd','recover',
-                    'draftdel','subscribens','unsubscribens','sitemap')) && substr($act,0,7) != 'export_' ) {
+                    'draftdel','subscribens','unsubscribens','sitemap','media')) && substr($act,0,7) != 'export_' ) {
         msg('Command unknown: '.htmlspecialchars($act),-1);
         return 'show';
     }
