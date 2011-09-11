@@ -31,20 +31,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     var $specials = array();
 
     /**
-     * return some info
-     */
-    function getInfo(){
-        return array(
-            'author' => 'Andreas Gohr',
-            'email'  => 'andi@splitbrain.org',
-            'date'   => '2011-04-16',
-            'name'   => 'ACL Manager',
-            'desc'   => 'Manage Page Access Control Lists',
-            'url'    => 'http://dokuwiki.org/plugin:acl',
-        );
-    }
-
-    /**
      * return prompt for admin menu
      */
     function getMenuText($language) {

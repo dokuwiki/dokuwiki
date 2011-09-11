@@ -66,8 +66,8 @@ function getVersionData(){
             $chunk = fread($fh,2000);
             fclose($fh);
             $chunk = trim($chunk);
-            $chunk = array_pop(explode("\n",$chunk));   //last log line
-            $chunk = array_shift(explode("\t",$chunk)); //strip commit msg
+            $chunk = @array_pop(explode("\n",$chunk));   //last log line
+            $chunk = @array_shift(explode("\t",$chunk)); //strip commit msg
             $chunk = explode(" ",$chunk);
             array_pop($chunk); //strip timezone
             $date = date('Y-m-d',array_pop($chunk));
