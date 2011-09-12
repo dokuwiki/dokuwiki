@@ -103,7 +103,7 @@ $lang['lockedby']              = 'Currently locked by';
 $lang['lockexpire']            = 'Lock expires at';
 
 $lang['js']['willexpire']      = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
-$lang['js']['notsavedyet']     = "Unsaved changes will be lost.";
+$lang['js']['notsavedyet']     = 'Unsaved changes will be lost.';
 $lang['js']['searchmedia']     = 'Search for files';
 $lang['js']['keepopen']        = 'Keep window open on selection';
 $lang['js']['hidedetails']     = 'Hide Details';
@@ -128,7 +128,7 @@ $lang['js']['medialeft']       = 'Align the image on the left.';
 $lang['js']['mediaright']      = 'Align the image on the right.';
 $lang['js']['mediacenter']     = 'Align the image in the middle.';
 $lang['js']['medianoalign']    = 'Use no align.';
-$lang['js']['nosmblinks']      = "Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.";
+$lang['js']['nosmblinks']      = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
 $lang['js']['linkwiz']         = 'Link Wizard';
 $lang['js']['linkto']          = 'Link to:';
 $lang['js']['del_confirm']     = 'Really delete selected item(s)?';

@@ -25,11 +25,12 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“';
-$lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‘';
-$lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '’';
+$lang['doublequoteopening']    = '“'; //&ldquo;
+$lang['doublequoteclosing']    = '”'; //&rdquo;
+$lang['singlequoteopening']    = '‘'; //&lsquo;
+$lang['singlequoteclosing']    = '’'; //&rsquo;
+$lang['apostrophe']            = '’'; //&rsquo;
+
 $lang['btn_edit']              = 'Modifier cette page';
 $lang['btn_source']            = 'Afficher le texte source';
 $lang['btn_show']              = 'Afficher la page';
@@ -63,6 +64,9 @@ $lang['btn_recover']           = 'Récupérer le brouillon';
 $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
 $lang['btn_register']          = 'S\'enregistrer';
+$lang['btn_apply']             = 'Appliquer';
+$lang['btn_media']             = 'Gestionnaire de médias';
+
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
 $lang['pass']                  = 'Mot de passe';
@@ -75,8 +79,9 @@ $lang['email']                 = 'Adresse de courriel';
 $lang['profile']               = 'Profil utilisateur';
 $lang['badlogin']              = 'L\'utilisateur ou le mot de passe est incorrect.';
 $lang['minoredit']             = 'Modification mineure';
-$lang['draftdate']             = 'Brouillon auto-enregistré le';
+$lang['draftdate']             = 'Brouillon auto-enregistré le'; // full dformat date will be added
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
+
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
@@ -86,10 +91,12 @@ $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si v
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
 $lang['regpwmail']             = 'Votre mot de passe DokuWiki';
 $lang['reghere']               = 'Vous n\'avez pas encore de compte ? Enregistrez-vous ici ';
+
 $lang['profna']                = 'Ce wiki ne permet pas de modifier les profils';
 $lang['profnochange']          = 'Pas de changement, rien à faire.';
 $lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
 $lang['profchanged']           = 'Mise à jour du profil réussie.';
+
 $lang['pwdforget']             = 'Mot de passe oublié ? Faites-vous envoyer votre mot de passe ';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Renvoyer le mot de passe de';
@@ -98,8 +105,10 @@ $lang['resendpwdnouser']       = 'Désolé, cet utilisateur est introuvable dans
 $lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez-vous d\'avoir utilisé le lien de confirmation.';
 $lang['resendpwdconfirm']      = 'Un lien de confirmation vous a été envoyé par courriel.';
 $lang['resendpwdsuccess']      = 'Votre nouveau mot de passe vous a été expédié par courriel.';
+
 $lang['license']               = 'Sauf mention contraire, le contenu de ce wiki est placé sous la licence suivante :';
 $lang['licenseok']             = 'Note : En modifiant cette page, vous acceptez que le contenu soit placé sous les termes de la licence suivante :';
+
 $lang['searchmedia']           = 'Chercher le nom de fichier :';
 $lang['searchmedia_in']        = 'Chercher dans %s';
 $lang['txt_upload']            = 'Sélectionnez un fichier à envoyer ';
@@ -107,9 +116,10 @@ $lang['txt_filename']          = 'Donnez un « wikiname » (optionnel) ';
 $lang['txt_overwrt']           = 'Écraser le fichier cible';
 $lang['lockedby']              = 'Actuellement bloqué par';
 $lang['lockexpire']            = 'Le blocage expire à';
-$lang['js']['willexpire']            = 'Votre blocage pour modifier cette page expire dans une minute.\nPour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
-$lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues.
-Voulez-vous vraiment continuer ?';
+
+$lang['js']['willexpire']      = 'Votre blocage pour modifier cette page expire dans une minute.
+                                  Pour éviter les conflits, utiliser le bouton « Aperçu » pour réinitialiser le minuteur.';
+$lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues. Voulez-vous vraiment continuer ?';
 $lang['js']['searchmedia']     = 'Chercher des fichiers';
 $lang['js']['keepopen']        = 'Gardez la fenêtre ouverte pendant la sélection';
 $lang['js']['hidedetails']     = 'Masquer détails';
@@ -135,13 +145,27 @@ $lang['js']['mediaright']      = 'Aligner l\'image sur la droite.';
 $lang['js']['mediacenter']     = 'Centrer l\'image';
 $lang['js']['medianoalign']    = 'Ne pas aligner.';
 $lang['js']['nosmblinks']      = 'Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.
-Vous pouvez toujours copier puis coller le lien.';
+                                  Vous pouvez toujours copier puis coller le lien.';
 $lang['js']['linkwiz']         = 'Assistant Lien';
 $lang['js']['linkto']          = 'Lien vers :';
 $lang['js']['del_confirm']     = 'Effacer cette entrée ?';
 $lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
+$lang['js']['willexpire']      = 'Votre verrouillage pour la modification de cette page expire dans une minute.\nPour éviter les conflits, utilisez le bouton « Aperçu » pour réinitialiser le minuteur.';
+$lang['js']['restore_confirm']     = 'Voulez vous vraiment restaurer cette version?';
+$lang['js']['media_diff']          = 'Voir les différences:';
+$lang['js']['media_diff_both']     = 'Côte à côte';
+$lang['js']['media_diff_opacity']  = 'Calque';
+$lang['js']['media_diff_portions'] = 'Curseur';
+$lang['js']['media_select']        = 'Sélection de fichiers…';
+$lang['js']['media_upload_btn']    = 'Télécharger';
+$lang['js']['media_done_btn']      = 'Terminé';
+$lang['js']['media_drop']          = 'Déposez des fichiers ici pour les télécharger';
+$lang['js']['media_cancel']        = 'supprimer';
+$lang['js']['media_overwrt']       = 'Écraser les fichiers existants';
+
 $lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
 $lang['nothingfound']          = 'Pas de réponse.';
+
 $lang['mediaselect']           = 'Sélection de fichier';
 $lang['fileupload']            = 'Envoi de fichier';
 $lang['uploadsucc']            = 'Téléversement réussi';
@@ -166,6 +190,7 @@ $lang['mediaextchange']        = 'Extension du fichier changée de .%s en .%s !'
 $lang['reference']             = 'Références pour';
 $lang['ref_inuse']             = 'Le fichier ne peut être effacé car il est utilisé par les pages suivantes :';
 $lang['ref_hidden']            = 'Des références existent dans des pages que vous n\'avez pas la permission de lire';
+
 $lang['hits']                  = 'Occurrences trouvées';
 $lang['quickhits']             = 'Pages trouvées ';
 $lang['toc']                   = 'Table des matières';
@@ -189,11 +214,18 @@ $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'Le greffon <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash</a> est nécessaire pour afficher ce contenu.';
 $lang['download']              = 'Télécharger un extrait';
+
 $lang['mail_newpage']          = 'page ajoutée :';
 $lang['mail_changed']          = 'page modifiée :';
 $lang['mail_subscribe_list']   = 'pages modifiées dans la catégorie :';
 $lang['mail_new_user']         = 'nouvel utilisateur :';
 $lang['mail_upload']           = 'fichier envoyé :';
+
+$lang['changes_type']          = 'Voir les changements';
+$lang['pages_changes']         = 'Pages';
+$lang['media_changes']         = 'Fichier multimédias';
+$lang['both_changes']          = 'Pages et fichiers multimédias';
+
 $lang['qb_bold']               = 'Emphase forte (gras)';
 $lang['qb_italic']             = 'Emphase (italique)';
 $lang['qb_underl']             = 'Souligné';
@@ -218,8 +250,11 @@ $lang['qb_media']              = 'Ajouter des images ou d\'autres fichiers';
 $lang['qb_sig']                = 'Insérer une signature';
 $lang['qb_smileys']            = 'Émoticones';
 $lang['qb_chars']              = 'Caractères spéciaux';
+
 $lang['upperns']               = 'Aller à la catégorie parente';
+
 $lang['admin_register']        = 'Ajouter un nouvel utilisateur';
+
 $lang['metaedit']              = 'Modifier les métadonnées';
 $lang['metasaveerr']           = 'Erreur lors de l\'écriture des métadonnées';
 $lang['metasaveok']            = 'Métadonnées enregistrées';
@@ -234,24 +269,33 @@ $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Appareil photo';
 $lang['img_keywords']          = 'Mots-clés';
-$lang['subscr_subscribe_success'] = '%s a été ajouté à la liste de souscription de %s';
-$lang['subscr_subscribe_error'] = 'Erreur en ajoutant %s à la liste de souscription de %s';
+$lang['img_width']             = 'Largeur';
+$lang['img_height']            = 'Hauteur';
+$lang['img_manager']           = 'Voir dans le gestionnaire de médias';
+
+$lang['subscr_subscribe_success']   = '%s a été ajouté à la liste de souscription de %s';
+$lang['subscr_subscribe_error']     = 'Erreur en ajoutant %s à la liste de souscription de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste de souscription';
 $lang['subscr_unsubscribe_success'] = '%s a été retiré de la liste de souscription de %s';
-$lang['subscr_unsubscribe_error'] = 'Erreur en retirant %s de la liste de souscription de %s';
-$lang['subscr_already_subscribed'] = '%s est déjà souscrit à %s';
-$lang['subscr_not_subscribed'] = '%s n\'est pas souscrit à %s';
-$lang['subscr_m_not_subscribed'] = 'Vous n\'avez pas souscrit pour l\'instant à la page actuelle ou la catégorie';
-$lang['subscr_m_new_header']   = 'Ajouter une souscription';
-$lang['subscr_m_current_header'] = 'Souscriptions actives';
-$lang['subscr_m_unsubscribe']  = 'Annuler la souscription';
-$lang['subscr_m_subscribe']    = 'Souscrire';
-$lang['subscr_m_receive']      = 'Recevoir';
-$lang['subscr_style_every']    = 'Envoyer un courriel à chaque modification';
-$lang['subscr_style_digest']   = 'Courriel résumant les modifications de chaque page';
-$lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel';
+$lang['subscr_unsubscribe_error']   = 'Erreur en retirant %s de la liste de souscription de %s';
+$lang['subscr_already_subscribed']  = '%s est déjà souscrit à %s';
+// Manage page for subscriptions
+$lang['subscr_not_subscribed']      = '%s n\'est pas souscrit à %s';
+$lang['subscr_m_not_subscribed']    = 'Vous n\'avez pas souscrit pour l\'instant à la page actuelle ou la catégorie';
+$lang['subscr_m_new_header']        = 'Ajouter une souscription';
+$lang['subscr_m_current_header']    = 'Souscriptions actives';
+$lang['subscr_m_unsubscribe']       = 'Annuler la souscription';
+$lang['subscr_m_subscribe']         = 'Souscrire';
+$lang['subscr_m_receive']           = 'Recevoir';
+$lang['subscr_style_every']         = 'Envoyer un courriel à chaque modification';
+$lang['subscr_style_digest']        = 'Courriel résumant les modifications de chaque page';
+$lang['subscr_style_list']          = 'Liste des pages modifiées depuis le dernier courriel';
+
+/* auth.class language support */
 $lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'informer l\'administrateur du Wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'informer l\'administrateur du Wiki.';
+
+/* installer strings */
 $lang['i_chooselang']          = 'Choisissez votre langue';
 $lang['i_installer']           = 'Installeur DokuWiki';
 $lang['i_wikiname']            = 'Nom du wiki';
@@ -274,6 +318,7 @@ $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écri
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
 $lang['i_retry']               = 'Réessayer';
 $lang['i_license']             = 'Veuillez choisir la licence sous laquelle placer votre contenu :';
+
 $lang['mu_intro']              = 'Ici vous pouvez envoyer plusieurs fichiers en même temps. Cliquez sur le bouton parcourir pour les ajouter. Cliquez sur envoyer lorsque c\'est prêt. ';
 $lang['mu_gridname']           = 'Nom du fichier';
 $lang['mu_gridsize']           = 'Taille';
@@ -289,6 +334,7 @@ $lang['mu_progress']           = '@PCT@% envoyé';
 $lang['mu_filetypes']          = 'Types de fichiers acceptés';
 $lang['mu_info']               = 'fichiers envoyés.';
 $lang['mu_lasterr']            = 'Dernière erreur : ';
+
 $lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein de la catégorie <strong>%s</strong>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>.';
 $lang['years']                 = 'il y a %d ans';
 $lang['months']                = 'il y a %d mois';
@@ -297,4 +343,27 @@ $lang['days']                  = 'il y a %d jours';
 $lang['hours']                 = 'il y a %d heures';
 $lang['minutes']               = 'il y a %d minutes';
 $lang['seconds']               = 'il y a %d secondes';
+
 $lang['wordblock']             = 'Vos modifications n\'ont pas été sauvegardées parce qu\'elles contiennent des textes non autorisé (spam).';
+
+$lang['media_uploadtab']       = 'Télécharger';
+$lang['media_searchtab']       = 'Rechercher';
+$lang['media_viewtab']         = 'Voir';
+$lang['media_edittab']         = 'Éditer';
+$lang['media_historytab']      = 'Historique';
+$lang['media_thumbsview']      = 'Miniatures';
+$lang['media_listview']        = 'Liste';
+$lang['media_sort']            = 'Tri';
+$lang['media_sort_name']       = 'par nom';
+$lang['media_sort_date']       = 'par date';
+$lang['media_upload']          = 'Télécharger dans la catégorie <strong>%s</strong>.';
+$lang['media_search']          = 'Chercher dans la catégorie <strong>%s</strong>.';
+$lang['media_edit']            = 'Éditer';
+$lang['media_history']         = 'Anciennes révision du fichier.';
+$lang['media_meta_edited']     = 'métadonnées éditées';
+$lang['media_perm_read']       = 'Désolé, vous n\'avez pas les droits pour lire les fichiers.';
+$lang['media_perm_upload']     = 'Désolé, vous n\'avez pas les droits pour télécharger des fichiers.';
+$lang['media_update']          = 'Télécharger une nouvelle version';
+$lang['media_restore']         = 'Restaurer cette version';
+
+$lang['plugin_install_err']    = "Extension mal installée. Renommez le dossier de l'extension '%s' en '%s'.";
