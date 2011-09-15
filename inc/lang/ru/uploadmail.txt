@@ -1,12 +1,12 @@
 В вашу вики был закачан файл. Подробная информация:
 
-Файл        : @MEDIA@
-Дата        : @DATE@
-Браузер     : @BROWSER@
-Адрес IP    : @IPADDRESS@
-Хост        : @HOSTNAME@
-Размер      : @SIZE@
-Тип MIME    : @MIME@
+Файл: @MEDIA@
+Дата: @DATE@
+Браузер: @BROWSER@
+IP-адрес: @IPADDRESS@
+Хост: @HOSTNAME@
+Размер: @SIZE@
+Тип MIME: @MIME@
 Пользователь: @USER@
 
 -- 
