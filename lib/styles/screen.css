@@ -52,6 +52,11 @@ div.notify {
     overflow: hidden;
 }
 
+#link__wiz .ui-dialog-content {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 /* media manager popup toggle buttons */
 
 #media__popup_content button.button {
@@ -87,7 +92,7 @@ div.notify {
 .code .st0  { color: #ff0000; }
 .code .sy0  { color: #66cc66; }
 
-.hidden_with_access_keys {
+.a11y {
     /* No display: none to keep accesskeys working */
     margin-left: -10000px !important;
     margin-top: -10000px !important;
