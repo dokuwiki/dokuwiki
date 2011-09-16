@@ -60,7 +60,7 @@ div.notify {
 /* media manager popup toggle buttons */
 
 #media__popup_content button.button {
-    border-style: outset;
+    border: 1px outset;
 }
 
 #media__popup_content button.selected {

@@ -1,70 +1,18 @@
-/* --- popup --- */
 
 #media__popup_content p {
-    display:block;
-    line-height:14pt;
-    margin:0.5em;
-}
-
-#media_nolink {
-    padding:4px 0;
+    margin: 0 0 .5em;
 }
 
 #media__popup_content label {
-    float:left;
-    width:9em;
+    float: left;
+    width: 9em;
 }
 
 #media__popup_content .button {
-    margin-left:auto;
-    margin-right:auto;
+    margin-right: 1px;
+    cursor: pointer;
 }
 
-#media__popup_content .btnlbl {
-    text-align:center;
-}
-
-#media__popup_content .btnlbl input {
-    margin:0 1em;
-}
-
-/* --- display options --- */
-
-#media__linkopts label,
-#media__nolnk {
-	width: 80px;
-	float: left;
-	margin-left: 10px;
-}
-
-#media__linkopts label{
-	line-height: 20px;
-}
-
-#media__nolnk,
-#media__linkopts label.long{
-	margin-bottom: 8px;
-	line-height: 12px;
-}
-
-#media__linkopts label.long{
-	width: 150px;
-	float: none;
-}
-
-#media__linkopts br {
-	clear: both;
-}
-
-#media__linkopts select {
-	width: 60px;
-	margin-left: 10px;
-}
-
-#media__linkopts input.edit {
-    width:50px;
-    margin-left:10px;
-}
-#media__linkopts #media__title {
-    width:150px;
+#media__popup_content input.button {
+    margin-left: 9em;
 }
