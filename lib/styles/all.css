@@ -11,6 +11,22 @@ div.clearer {
     overflow: hidden;
 }
 
+/* one of the many clearfix versions */
+.group {
+    display: inline-block;
+}
+.group {
+    display: block;
+}
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+}
+.group:after {
+    clear: both;
+}
+
 div.no {
     display: inline;
     margin: 0;
