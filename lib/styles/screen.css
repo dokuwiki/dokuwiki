@@ -67,6 +67,16 @@ div.notify {
     border-style: inset;
 }
 
+/* hide something accessibly
+   (e.g. for screen readers or to keep access keys working) */
+.a11y {
+    position: absolute !important;
+    left: -10000px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}
 
 /* syntax highlighting code */
 .code .br0  { color: #66cc66; }
@@ -91,9 +101,3 @@ div.notify {
 .code .re4  { color: #009999; }
 .code .st0  { color: #ff0000; }
 .code .sy0  { color: #66cc66; }
-
-.a11y {
-    /* No display: none to keep accesskeys working */
-    margin-left: -10000px !important;
-    margin-top: -10000px !important;
-}
