@@ -1136,29 +1136,36 @@ function tpl_mediaFileList(){
     global $AUTH;
     global $NS;
     global $JUMPTO;
+    global $lang;
 
     $opened_tab = $_REQUEST['tab_files'];
     if (!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
     if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
 
+    // FIXME: define lang
+    echo '<h2 class="a11y">' . sprintf($lang['filelist_desc'], $NS) .  '</h2>';
+
     media_tabs_files($opened_tab);
 
-    if ($opened_tab == 'files') {
-        echo '<div id="mediamanager__files">';
-        media_tab_files($NS,$AUTH,$JUMPTO);
-        echo '</div>';
-
-    } elseif ($opened_tab == 'upload') {
-        echo '<div id="mediamanager__files">';
-        media_tab_upload($NS,$AUTH,$JUMPTO);
-        echo '</div>';
-
-    } elseif ($opened_tab == 'search') {
-        echo '<div id="mediamanager__files">';
-        media_tab_search($NS,$AUTH);
-        echo '</div>';
+    echo '<div class="panelHeader">';
+    echo '<h3>';
+    printf($lang['media_' . $opened_tab],
+           hsc($ns ? $ns : '['.$lang['mediaroot'].']'));
+    echo '</h3>';
+    if ($opened_tab === 'search' || $opened_tab === 'files') {
+        media_tab_files_options();
     }
+    echo '</div>';
 
+    echo '<div class="panelContent">';
+    if ($opened_tab == 'files') {
+        media_tab_files($NS,$AUTH,$JUMPTO);
+    } elseif ($opened_tab == 'upload') {
+        media_tab_upload($NS,$AUTH,$JUMPTO);
+    } elseif ($opened_tab == 'search') {
+        media_tab_search($NS,$AUTH);
+    }
+    echo '</div>';
 }
 
 /**
@@ -1170,7 +1177,7 @@ function tpl_mediaFileList(){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_mediaFileDetails($image, $rev){
-    global $AUTH, $NS, $conf, $DEL;
+    global $AUTH, $NS, $conf, $DEL, $lang;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
     if (!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return '';
@@ -1195,21 +1202,26 @@ function tpl_mediaFileDetails($image, $rev){
 
     media_tabs_details($image, $opened_tab);
 
+    echo '<div class="panelHeader"><h3>';
+    list($ext,$mime,$dl) = mimetype($image,false);
+    $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+    $class = 'select mediafile mf_'.$class;
+    printf($lang['media_' . $opened_tab], $class, $image);
+    echo '</h3></div>';
+
+    echo '<div class="panelContent">';
+
     if ($opened_tab == 'view') {
-        echo '<div id="mediamanager__details">';
         media_tab_view($image, $NS, $AUTH, $rev);
-        echo '</div>';
 
     } elseif ($opened_tab == 'edit' && !$removed) {
-        echo '<div id="mediamanager__details">';
         media_tab_edit($image, $NS, $AUTH);
-        echo '</div>';
 
     } elseif ($opened_tab == 'history' && $conf['mediarevisions']) {
-        echo '<div id="mediamanager__details">';
         media_tab_history($image,$NS,$AUTH);
-        echo '</div>';
     }
+
+    echo '</div>';
 }
 
 /**
@@ -1482,43 +1494,36 @@ function tpl_favicon($types=array('favicon')) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_media() {
-    //
     global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
     $fullscreen = true;
-    require_once(DOKU_INC.'lib/exe/mediamanager.php');
+    require_once DOKU_INC.'lib/exe/mediamanager.php';
 
     if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
     if (isset($IMG)) $image = $IMG;
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
-    echo '<div id="mediamanager__page">';
     echo '<h1>'.$lang['btn_media'].'</h1>';
-    echo '<div id="mediamanager__layout">';
+    echo '<div id="mediamanager__page">';
 
-    echo '<div id="mediamanager__layout_namespaces" class="layout-resizable" >';
+    echo '<div class="panel namespaces">';
     html_msgarea();
-    echo '<div class="mediamanager-tabs">';
-    echo '<a href="#" class="selected">'.hsc($lang['namespaces']).'</a>';
-    echo '<div class="clearer"></div>';
-    echo '</div>';
-    echo '<div class="background-container">';
+    echo '<h2>'.hsc($lang['namespaces']).'</h2>';
+    echo '<div class="panelHeader">';
     echo hsc($lang['namespaces']);
     echo '</div>';
-    echo '<div class="scroll-container">';
-    tpl_mediaTree();
+
+    echo '<div class="panelContent">';
+    media_nstree($NS);
     echo '</div>';
     echo '</div>';
 
-    echo '<div id="mediamanager__layout_list" class="layout-resizable" >';
+    echo '<div class="panel filelist">';
     tpl_mediaFileList();
     echo '</div>';
 
-    echo '<div id="mediamanager__layout_detail" class="layout" >';
+    echo '<div class="panel file">';
     tpl_mediaFileDetails($image, $rev);
-    echo '</div>';
-
-    echo '<div class="clearer"></div>';
     echo '</div>';
     echo '</div>';
 }

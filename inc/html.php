@@ -982,6 +982,73 @@ function html_backlinks(){
     }
 }
 
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
+    global $lang;
+    if ($id === null) {
+        global $ID;
+        $id = $ID;
+    }
+    $media_or_wikiFN = $media ? 'mediaFN' : 'wikiFN';
+    $ml_or_wl = $media ? 'ml' : 'wl';
+    $l_minor = $r_minor = '';
+
+    if(!$l_rev){
+        $l_head = '&mdash;';
+    }else{
+        $l_info   = getRevisionInfo($id,$l_rev,true, $media);
+        if($l_info['user']){
+            $l_user = editorinfo($l_info['user']);
+            if(auth_ismanager()) $l_user .= ' ('.$l_info['ip'].')';
+        } else {
+            $l_user = $l_info['ip'];
+        }
+        $l_user  = '<span class="user">'.$l_user.'</span>';
+        $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
+        if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
+
+        $l_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
+        $id.' ['.dformat($l_rev).']</a>'.
+        '<br />'.$l_user.' '.$l_sum;
+    }
+
+    if($r_rev){
+        $r_info   = getRevisionInfo($id,$r_rev,true, $media);
+        if($r_info['user']){
+            $r_user = editorinfo($r_info['user']);
+            if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
+        } else {
+            $r_user = $r_info['ip'];
+        }
+        $r_user = '<span class="user">'.$r_user.'</span>';
+        $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
+        if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
+
+        $r_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
+        $id.' ['.dformat($r_rev).']</a>'.
+        '<br />'.$r_user.' '.$r_sum;
+    }elseif($_rev = @filemtime($media_or_wikiFN($id))){
+        $_info   = getRevisionInfo($id,$_rev,true, $media);
+        if($_info['user']){
+            $_user = editorinfo($_info['user']);
+            if(auth_ismanager()) $_user .= ' ('.$_info['ip'].')';
+        } else {
+            $_user = $_info['ip'];
+        }
+        $_user = '<span class="user">'.$_user.'</span>';
+        $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
+        if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
+
+        $r_head  = '<a class="wikilink1" href="'.$ml_or_wl($id).'">'.
+        $id.' ['.dformat($_rev).']</a> '.
+        '('.$lang['current'].')'.
+        '<br />'.$_user.' '.$_sum;
+    }else{
+        $r_head = '&mdash; ('.$lang['current'].')';
+    }
+
+    return array($l_head, $r_head, $l_minor, $r_minor);
+}
+
 /**
  * show diff
  *
@@ -1056,59 +1123,7 @@ function html_diff($text='',$intro=true,$type=null){
         }
         $r_text = rawWiki($ID,$r_rev);
 
-        if(!$l_rev){
-            $l_head = '&mdash;';
-        }else{
-            $l_info   = getRevisionInfo($ID,$l_rev,true);
-            if($l_info['user']){
-                $l_user = editorinfo($l_info['user']);
-                if(auth_ismanager()) $l_user .= ' ('.$l_info['ip'].')';
-            } else {
-                $l_user = $l_info['ip'];
-            }
-            $l_user  = '<span class="user">'.$l_user.'</span>';
-            $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
-            if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
-
-            $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-            $ID.' ['.dformat($l_rev).']</a>'.
-            '<br />'.$l_user.' '.$l_sum;
-        }
-
-        if($r_rev){
-            $r_info   = getRevisionInfo($ID,$r_rev,true);
-            if($r_info['user']){
-                $r_user = editorinfo($r_info['user']);
-                if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
-            } else {
-                $r_user = $r_info['ip'];
-            }
-            $r_user = '<span class="user">'.$r_user.'</span>';
-            $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
-            if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
-
-            $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
-            $ID.' ['.dformat($r_rev).']</a>'.
-            '<br />'.$r_user.' '.$r_sum;
-        }elseif($_rev = @filemtime(wikiFN($ID))){
-            $_info   = getRevisionInfo($ID,$_rev,true);
-            if($_info['user']){
-                $_user = editorinfo($_info['user']);
-                if(auth_ismanager()) $_user .= ' ('.$_info['ip'].')';
-            } else {
-                $_user = $_info['ip'];
-            }
-            $_user = '<span class="user">'.$_user.'</span>';
-            $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
-            if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
-
-            $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-            $ID.' ['.dformat($_rev).']</a> '.
-            '('.$lang['current'].')'.
-            '<br />'.$_user.' '.$_sum;
-        }else{
-            $r_head = '&mdash; ('.$lang['current'].')';
-        }
+        list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
     }
 
     $df = new Diff(explode("\n",htmlspecialchars($l_text)),
@@ -1809,5 +1824,39 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     $out .= '<!-- <![endif]-->'.NL;
 
     return $out;
+}
+
+function html_tabs($tabs, $current_tab = null) {
+    echo '<ul class="tabs">';
+
+    foreach($tabs as $id => $tab) {
+        html_tab($tab['href'], $tab['caption'], $id === $current_tab);
+    }
+
+    echo '</ul>';
+    echo '<div class="clearer"></div>';
+}
+/**
+ * Prints a single tab
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @author Adrian Lang <mail@adrianlang.de>
+ *
+ * @param string $href - tab href
+ * @param string $caption - tab caption
+ * @param boolean $selected - is tab selected
+ */
+
+function html_tab($href, $caption, $selected=false) {
+    $tab = '<li>';
+    if ($selected) {
+        $tab .= '<strong>';
+    } else {
+        $tab .= '<a href="' . hsc($href) . '">';
+    }
+    $tab .= hsc($caption)
+         .  '</' . ($selected ? 'strong' : 'a') . '>'
+         .  '</li>';
+    echo $tab;
 }
 

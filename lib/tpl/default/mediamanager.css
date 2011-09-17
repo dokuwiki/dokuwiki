@@ -1,29 +1,21 @@
 /* Layout */
 
-#mediamanager__page {
-    width: 100%;
-    overflow-x: auto;
-}
-
 #mediamanager__page h1 {
     margin: 0 0 .5em;
 }
 
-#mediamanager__layout {
+#mediamanager__page {
     min-width: 840px;
+    width: 100%;
+    overflow-x: auto;
 }
 
-#mediamanager__layout .layout,
-#mediamanager__layout .layout-resizable {
+#mediamanager__page .panel {
     float: left;
-}
-
-#mediamanager__layout .layout-resizable {
     margin-right: 10px;
-    float: left;
 }
 
-#mediamanager__layout .scroll-container {
+#mediamanager__page .panelContent {
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -32,7 +24,7 @@
     position: relative;
 }
 
-#mediamanager__layout .background-container {
+#mediamanager__page .panelHeader {
     background-color: __background_alt__;
     margin-bottom: 10px;
     padding: 10px 10px 8px;
@@ -40,21 +32,21 @@
     min-height: 20px;
 }
 
-#mediamanager__layout .background-container .icon {
+#mediamanager__page .panelHeader .icon {
     margin-right: 5px;
 }
 
-#mediamanager__layout_namespaces {
+#mediamanager__page .namespaces {
     width: 15%;
     min-width: 125px;
 }
 
-#mediamanager__layout_list {
+#mediamanager__page .filelist {
     width: 45%;
     min-width: 375px;
 }
 
-#mediamanager__layout_detail {
+#mediamanager__page_detail {
     width: 35%;
     min-width: 290px;
 }
@@ -75,22 +67,22 @@
 
 /* Namespaces tree */
 
-#mediamanager__page ul.idx {
+#mediamanager__page .namespaces ul.idx {
     margin-left: .2em;
 }
 
-#mediamanager__page ul.idx ul {
+#mediamanager__page .namespaces ul.idx ul {
     margin-left: 1em;
 }
 
-.idx .selected {
+#mediamanager__page .namespaces ul.idx .selected {
     background-color: __highlight__;
     font-weight: bold;
 }
 
 /* Tabs */
 
-.mediamanager-tabs a {
+#mediamanager__page div.panel h2.a11y {
     font-weight: bold;
     display: block;
     float: left;
@@ -106,18 +98,18 @@
     border-top-left-radius: 10px;
 }
 
-.mediamanager-tabs .selected {
+#mediamanager__page div.panel h2.a11y .selected {
     background-color: __background_alt__;
 }
 
-.mediamanager-tabs a:hover {
+#mediamanager__page div.panel h2.a11y a:hover {
     background-color: __background_alt__;
     opacity: 0.5;
 }
 
 /* Title links */
 
-#mediamanager__files .namespace {
+#mediamanager__page .filelist .panelHeader h3 {
     float: left;
     font-weight: normal;
 }
@@ -164,18 +156,18 @@
 
 /* File list */
 
-#mediamanager__file_list {
+#mediamanager__page .filelist .list {
     padding: 0;
     margin: 0 !important;
 }
 
-#mediamanager__file_list li:hover {
+#mediamanager__page .filelist .list li:hover {
     background-color: __background_alt__;
 }
 
 /* Files thumbs view */
 
-.mediamanager-thumbs li {
+#mediamanager__page .filelist .thumbs li {
     width: 100px;
     min-height: 130px;
     display: inline-block;
@@ -192,68 +184,68 @@
     line-height: 1.2;
 }
 
-* html .mediamanager-thumbs li {
+* html #mediamanager__page .filelist .thumbs li {
     display: inline;
 }
 
-*+html .mediamanager-thumbs li {
+*+html #mediamanager__page .filelist .thumbs li {
     display: inline;
 }
 
-.mediamanager-thumbs li .image,
-.mediamanager-thumbs li .image0 {
+#mediamanager__page .filelist .thumbs li .image,
+#mediamanager__page .filelist .thumbs li .image0 {
     width: 100%;
     height: 90px;
     display: block;
     overflow: hidden;
 }
 
-.mediamanager-thumbs li .image1 {
+#mediamanager__page .filelist .thumbs li .image1 {
     display: none;
 }
 
-.mediamanager-thumbs li .image span,
-.mediamanager-thumbs li .image0 span {
+#mediamanager__page .filelist .thumbs li .image span,
+#mediamanager__page .filelist .thumbs li .image0 span {
     vertical-align: middle;
     display: table-cell;
     width: 100px;
     height: 90px;
 }
 
-.mediamanager-thumbs li .name,
-.mediamanager-thumbs li .size,
-.mediamanager-thumbs li .filesize,
-.mediamanager-thumbs li .date {
+#mediamanager__page .filelist .thumbs li .name,
+#mediamanager__page .filelist .thumbs li .size,
+#mediamanager__page .filelist .thumbs li .filesize,
+#mediamanager__page .filelist .thumbs li .date {
     display: block;
     overflow: hidden;
     width: 90px;
     white-space: nowrap;
 }
 
-.mediamanager-thumbs li .name {
+#mediamanager__page .filelist .thumbs li .name {
     padding: 5px 0;
     font-weight: bold;
 }
 
-.mediamanager-thumbs li .date {
+#mediamanager__page .filelist .thumbs li .date {
     font-style: italic;
     white-space: normal;
 }
 
-.mediamanager-thumbs li input[type=checkbox] {
+#mediamanager__page .filelist .thumbs li input[type=checkbox] {
     display: none;
     float: left;
     margin: 3px;
 }
 
-.mediamanager-thumbs li:hover input[type=checkbox],
-.mediamanager-thumbs li input[type=checkbox]:checked {
+#mediamanager__page .filelist .thumbs li:hover input[type=checkbox],
+#mediamanager__page .filelist .thumbs li input[type=checkbox]:checked {
     display: block;
 }
 
 /* Files list view */
 
-.mediamanager-list li {
+#mediamanager__page .filelist .list li {
     list-style: none;
     display: block;
     position: relative;
@@ -264,12 +256,12 @@
     color: __text__;
 }
 
-.mediamanager-list li:nth-child(2n+1) {
+#mediamanager__page .filelist .list li:nth-child(2n+1) {
     background-color: __background_neu__;
 }
 
-.mediamanager-list li .image,
-.mediamanager-list li .image1 {
+#mediamanager__page .filelist .list li .image,
+#mediamanager__page .filelist .list li .image1 {
     width: 10%;
     display: block;
     overflow: hidden;
@@ -278,46 +270,46 @@
     text-align: center;
 }
 
-.mediamanager-list li .image0 {
+#mediamanager__page .filelist .list li .image0 {
     display: none;
 }
 
-.mediamanager-list li .name,
-.mediamanager-list li .size,
-.mediamanager-list li .filesize,
-.mediamanager-list li .date {
+#mediamanager__page .filelist .list li .name,
+#mediamanager__page .filelist .list li .size,
+#mediamanager__page .filelist .list li .filesize,
+#mediamanager__page .filelist .list li .date {
     overflow: hidden;
     float: left;
     margin-left: 1%;
     white-space: nowrap;
 }
 
-.mediamanager-list li .name {
+#mediamanager__page .filelist .list li .name {
     width: 30%;
     font-weight: bold;
 }
 
-.mediamanager-list li .size,
-.mediamanager-list li .filesize {
+#mediamanager__page .filelist .list li .size,
+#mediamanager__page .filelist .list li .filesize {
     width: 15%;
 }
 
-.mediamanager-list li .date {
+#mediamanager__page .filelist .list li .date {
     width: 20%;
 }
 
-.mediamanager-list li .date {
+#mediamanager__page .filelist .list li .date {
     font-style: italic;
     white-space: normal;
 }
 
-.mediamanager-list .icon {
+#mediamanager__page .filelist .list .icon {
     max-width: 16px;
     max-height: 16px;
 }
 
-.mediamanager-list li .image span,
-.mediamanager-list li .image1 span {
+#mediamanager__page .filelist .list li .image span,
+#mediamanager__page .filelist .list li .image1 span {
     vertical-align: middle;
     text-align: center;
     display: table-cell;
@@ -325,20 +317,20 @@
     height: 40px;
 }
 
-.mediamanager-list li input[type=checkbox] {
+#mediamanager__page .filelist .list li input[type=checkbox] {
     display: none;
     float: left;
     margin: 3px;
 }
 
-.mediamanager-list li:hover input[type=checkbox],
-.mediamanager-list li input[type=checkbox]:checked {
+#mediamanager__page .filelist .list li:hover input[type=checkbox],
+#mediamanager__page .filelist .list li input[type=checkbox]:checked {
     display: block;
 }
 
 /* Upload panel */
 
-#mediamanager__layout div.upload {
+#mediamanager__page div.upload {
     padding-bottom: 0.5em;
 }
 
@@ -440,7 +432,7 @@
 
 /* Image diff */
 
-#mediamanager__layout dl.img_tags dd.highlighted{
+#mediamanager__page dl.img_tags dd.highlighted{
     background-color: __highlight__;
 }
 
