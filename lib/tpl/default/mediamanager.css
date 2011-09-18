@@ -20,12 +20,17 @@
     margin-right: 0;
 }
 
-#mediamanager__page .panelContent {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
-    margin: 0;
-    position: relative;
+#mediamanager__page .namespaces {
+    width: 15%;
+    min-width: 125px;
+}
+#mediamanager__page .filelist {
+    width: 45%;
+    min-width: 375px;
+}
+#mediamanager__page .file {
+    width: 35%;
+    min-width: 290px;
 }
 
 #mediamanager__page .panelHeader {
@@ -37,19 +42,12 @@
     overflow: hidden;
 }
 
-#mediamanager__page .namespaces {
-    width: 15%;
-    min-width: 125px;
-}
-
-#mediamanager__page .filelist {
-    width: 45%;
-    min-width: 375px;
-}
-
-#mediamanager__page .file {
-    /* width: 35%; @todo: needed? */
-    min-width: 290px;
+#mediamanager__page .panelContent {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    position: relative;
 }
 
 #mediamanager__page .ui-resizable-e {
@@ -58,7 +56,6 @@
     /* icon from Crystal Clear icon set (LGPL) */
     background: transparent url(images/resizecol.png) 0 25px no-repeat;
 }
-
 #mediamanager__page .ui-resizable-e:hover {
     width: 6px;
     right: -8px;
@@ -84,7 +81,6 @@
     margin-left: .2em;
     list-style: none;
 }
-
 #mediamanager__page .namespaces ul ul {
     margin-left: 1em;
 }
@@ -112,6 +108,10 @@
     list-style: none;
     margin: 0;
     padding: 0;
+}
+#mediamanager__page .panelHeader ul li {
+    color: __text__;
+    float: left;
 }
 
 #mediamanager__page .panelHeader form.options label span span {
@@ -212,17 +212,6 @@
     white-space: normal;
 }
 
-#mediamanager__page .filelist .thumbs li input[type=checkbox] {
-    display: none;
-    float: left;
-    margin: 3px;
-}
-
-#mediamanager__page .filelist .thumbs li:hover input[type=checkbox],
-#mediamanager__page .filelist .thumbs li input[type=checkbox]:checked {
-    display: block;
-}
-
 /* rows */
 
 #mediamanager__page .filelist .rows li {
@@ -280,16 +269,12 @@
 
 #mediamanager__page .filelist .rows li .date {
     width: 20%;
-}
-
-#mediamanager__page .filelist .rows li .date {
     font-style: italic;
     white-space: normal;
 }
 
 #mediamanager__page .filelist .rows .icon {
-    max-width: 16px;
-    max-height: 16px;
+    margin-top: 12px;
 }
 
 #mediamanager__page .filelist .rows li .image span,
@@ -299,17 +284,6 @@
     display: table-cell;
     width: 100px;
     height: 40px;
-}
-
-#mediamanager__page .filelist .rows li input[type=checkbox] {
-    display: none;
-    float: left;
-    margin: 3px;
-}
-
-#mediamanager__page .filelist .rows li:hover input[type=checkbox],
-#mediamanager__page .filelist .rows li input[type=checkbox]:checked {
-    display: block;
 }
 
 /*____________ Upload panel ____________*/
@@ -329,6 +303,9 @@
     text-align: center;
     margin-bottom: 5px;
     list-style: none;
+}
+#mediamanager__page .file ul.actions li {
+    display: inline;
 }
 
 #mediamanager__page .file div.image {
@@ -358,7 +335,7 @@
     margin-bottom: 5px;
 }
 
-#mediamanager__page form.meta label {
+#mediamanager__page form.meta label span {
     display: block;
 }
 
@@ -398,43 +375,38 @@
 /* File diff */
 
 #mediamanager__diff {
-    margin-top: 10px;
 }
 
-#mediamanager__diff_table {
-    padding: 0;
-    margin: 0;
-    margin-top: 10px;
-}
-
-#mediamanager__diff_table li {
+#mediamanager__diff td,
+#mediamanager__diff th {
     width: 48%;
-    display: inline-block;
-    margin: 0;
-    margin-bottom: 10px;
-    padding: 2px;
+    margin: 0 5px 10px 0;
+    padding: 0;
     vertical-align: top;
-    zoom: 1;
-    color: __text__;
-}
-
-* html #mediamanager__diff_table li {
-    display: inline;
-}
-
-*+html #mediamanager__diff_table li {
-    display: inline;
+    text-align: left;
 }
 
 /* For IE7 */
-*:first-child+html #mediamanager__diff_table li {
+*:first-child+html #mediamanager__diff td {
     width: 45%;
+}
+
+#mediamanager__diff th {
+    font-weight: normal;
+}
+#mediamanager__diff th a {
+    font-weight: bold;
+}
+#mediamanager__diff th span {
+    font-size: 90%;
 }
 
 /* Image diff */
 
-#mediamanager__page dl.img_tags dd.highlighted{
+#mediamanager__diff dl dd strong{
     background-color: __highlight__;
+    color: __text__;
+    font-weight: normal;
 }
 
 #mediamanager__form_diffview {

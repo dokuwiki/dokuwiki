@@ -1430,7 +1430,6 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         echo '</a>';
     }
     echo '</dt>';
-    //echo '<input type=checkbox />';
     if (!$display_namespace) {
         $name = hsc($file);
     } else {
