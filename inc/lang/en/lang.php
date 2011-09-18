@@ -334,6 +334,7 @@ $lang['wordblock']             = 'Your change was not saved because it contains 
 
 $lang['media_uploadtab']       = 'Upload';
 $lang['media_searchtab']       = 'Search';
+$lang['media_file']            = 'File';
 $lang['media_viewtab']         = 'View';
 $lang['media_edittab']         = 'Edit';
 $lang['media_historytab']      = 'History';
@@ -341,12 +342,13 @@ $lang['media_list_thumbs']     = '<span>Show list as</span> thumbnails';
 $lang['media_list_rows']       = '<span>Show list as</span> list';
 $lang['media_sort_name']       = '<span>Sort by</span> name';
 $lang['media_sort_date']       = '<span>Sort by</span> date';
-$lang['media_files']           = 'Media files in the <strong>%s</strong> namespace.';
-$lang['media_upload']          = 'Upload to the <strong>%s</strong> namespace.';
-$lang['media_search']          = 'Search in the <strong>%s</strong> namespace.';
-$lang['media_view']            = '<span class="%s">%s</span>';
-$lang['media_edit']            = 'Edit <span class="%s">%s</span>';
-$lang['media_history']         = 'History of <span class="%s">%s</span>';
+$lang['media_namespaces']      = 'Choose namespace';
+$lang['media_files']           = 'Media files in <strong>%s</strong>';
+$lang['media_upload']          = 'Upload to <strong>%s</strong>';
+$lang['media_search']          = 'Search in <strong>%s</strong>';
+$lang['media_view']            = '<strong class="%s">%s</strong>';
+$lang['media_edit']            = 'Edit <strong class="%s">%s</strong>';
+$lang['media_history']         = 'History of <strong class="%s">%s</strong>';
 $lang['media_meta_edited']     = 'metadata edited';
 $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read files.';
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';

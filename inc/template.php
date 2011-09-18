@@ -1508,9 +1508,9 @@ function tpl_media() {
 
     echo '<div class="panel namespaces">';
     html_msgarea();
-    echo '<h2>'.hsc($lang['namespaces']).'</h2>';
+    echo '<h2>'.$lang['namespaces'].'</h2>';
     echo '<div class="panelHeader">';
-    echo hsc($lang['namespaces']);
+    echo $lang['media_namespaces'];
     echo '</div>';
 
     echo '<div class="panelContent" id="media__tree">';
@@ -1519,12 +1519,15 @@ function tpl_media() {
     echo '</div>';
 
     echo '<div class="panel filelist">';
+    echo '<h2 class="a11y">'.$lang['mediaselect'].'</h2>';
     tpl_mediaFileList();
     echo '</div>';
 
     echo '<div class="panel file">';
+    echo '<h2 class="a11y">'.$lang['media_file'].'</h2>';
     tpl_mediaFileDetails($image, $rev);
     echo '</div>';
+
     echo '</div>';
 }
 
