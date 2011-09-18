@@ -1,4 +1,5 @@
-/* Layout */
+
+/*____________ Layout ____________*/
 
 #mediamanager__page h1 {
     margin: 0 0 .5em;
@@ -8,11 +9,15 @@
     min-width: 840px;
     width: 100%;
     overflow-x: auto;
+    text-align: left;
 }
 
 #mediamanager__page .panel {
     float: left;
     margin-right: 10px;
+}
+#mediamanager__page .panel.file {
+    margin-right: 0;
 }
 
 #mediamanager__page .panelContent {
@@ -20,7 +25,6 @@
     overflow-x: hidden;
     padding: 0;
     margin: 0;
-    text-align: left;
     position: relative;
 }
 
@@ -30,10 +34,7 @@
     padding: 10px 10px 8px;
     text-align: left;
     min-height: 20px;
-}
-
-#mediamanager__page .panelHeader .icon {
-    margin-right: 5px;
+    overflow: hidden;
 }
 
 #mediamanager__page .namespaces {
@@ -46,8 +47,8 @@
     min-width: 375px;
 }
 
-#mediamanager__page_detail {
-    width: 35%;
+#mediamanager__page .file {
+    /* width: 35%; @todo: needed? */
     min-width: 290px;
 }
 
@@ -65,107 +66,86 @@
     background-color: __background_alt__;
 }
 
-/* Namespaces tree */
+/*____________ Namespaces tree ____________*/
 
-#mediamanager__page .namespaces ul.idx {
-    margin-left: .2em;
+#mediamanager__page .namespaces h2 {
+    font-size: 1em;
+    display: inline-block;
+    border-width: 0;
+    padding: .3em .8em;
+    margin: 0 .3em 0 0;
+    border-radius: .5em .5em 0 0;
+    font-weight: normal;
+    background-color: __background_alt__;
+    color: __text__;
 }
 
-#mediamanager__page .namespaces ul.idx ul {
+#mediamanager__page .namespaces ul {
+    margin-left: .2em;
+    list-style: none;
+}
+
+#mediamanager__page .namespaces ul ul {
     margin-left: 1em;
 }
 
-#mediamanager__page .namespaces ul.idx .selected {
+#mediamanager__page .namespaces ul .selected {
     background-color: __highlight__;
     font-weight: bold;
 }
 
-/* Tabs */
+/*____________ Panel header ____________*/
 
-#mediamanager__page div.panel h2.a11y {
-    font-weight: bold;
-    display: block;
-    float: left;
-    padding: 10px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    margin-right: 2px;
-    -moz-border-radius-topright: 10px;
-    -webkit-border-top-right-radius: 10px;
-    -moz-border-radius-topleft: 10px;
-    -webkit-border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-#mediamanager__page div.panel h2.a11y .selected {
-    background-color: __background_alt__;
-}
-
-#mediamanager__page div.panel h2.a11y a:hover {
-    background-color: __background_alt__;
-    opacity: 0.5;
-}
-
-/* Title links */
-
-#mediamanager__page .filelist .panelHeader h3 {
+#mediamanager__page .panelHeader h3 {
     float: left;
     font-weight: normal;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
 }
 
-#mediamanager__tabs_list {
-    float: left;
-}
-
-#mediamanager__link_thumbs,
-#mediamanager__link_list {
-    padding-left: 30px;
-    display: inline-block;
-    width: 0;
-    overflow: hidden;
-}
-
-#mediamanager__link_thumbs {
-    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
-    margin-left: 10px;
-}
-
-#mediamanager__link_list {
-    background: url('../../images/icon-list.png') 0 -4px no-repeat;
-}
-
-#mediamanager__link_thumbs:hover,
-#mediamanager__link_list:hover {
-    width: auto;
-    margin-right: 10px;
-}
-
-#mediamanager__sort {
-    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
-    padding-left: 30px;
-    display: block;
+#mediamanager__page .panelHeader form.options {
     float: right;
 }
 
-* html #mediamanager__sort,
-*+html #mediamanager__sort {
-    position: relative;
-    margin-top: -18px;
-}
-
-/* File list */
-
-#mediamanager__page .filelist .list {
+#mediamanager__page .panelHeader ul {
+    list-style: none;
+    margin: 0;
     padding: 0;
-    margin: 0 !important;
 }
 
-#mediamanager__page .filelist .list li:hover {
+#mediamanager__page .panelHeader form.options label span span {
+    display: none; /* @todo: hide accessibly */
+}
+#mediamanager__page .panelHeader form.options label span {
+    padding-left: 27px;
+}
+/* @todo: get different images */
+#mediamanager__page .panelHeader label.thumbs span {
+    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
+}
+#mediamanager__page .panelHeader label.rows span {
+    background: url('../../images/icon-list.png') 0 -4px no-repeat;
+}
+#mediamanager__page .panelHeader label.name span {
+    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
+}
+#mediamanager__page .panelHeader label.date span {
+    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
+}
+
+/*____________ File list ____________*/
+
+#mediamanager__page .filelist ul {
+    padding: 0;
+    margin: 0;
+}
+
+#mediamanager__page .filelist .panelContent ul li:hover {
     background-color: __background_alt__;
 }
 
-/* Files thumbs view */
+/* thumbs */
 
 #mediamanager__page .filelist .thumbs li {
     width: 100px;
@@ -204,8 +184,8 @@
     display: none;
 }
 
-#mediamanager__page .filelist .thumbs li .image span,
-#mediamanager__page .filelist .thumbs li .image0 span {
+#mediamanager__page .filelist .thumbs li .image,
+#mediamanager__page .filelist .thumbs li .image0 {
     vertical-align: middle;
     display: table-cell;
     width: 100px;
@@ -243,9 +223,13 @@
     display: block;
 }
 
-/* Files list view */
+/* rows */
 
-#mediamanager__page .filelist .list li {
+#mediamanager__page .filelist .rows li {
+    overflow: hidden;
+}
+
+#mediamanager__page .filelist .rows li {
     list-style: none;
     display: block;
     position: relative;
@@ -256,12 +240,12 @@
     color: __text__;
 }
 
-#mediamanager__page .filelist .list li:nth-child(2n+1) {
+#mediamanager__page .filelist .rows li:nth-child(2n+1) {
     background-color: __background_neu__;
 }
 
-#mediamanager__page .filelist .list li .image,
-#mediamanager__page .filelist .list li .image1 {
+#mediamanager__page .filelist .rows li .image,
+#mediamanager__page .filelist .rows li .image1 {
     width: 10%;
     display: block;
     overflow: hidden;
@@ -270,46 +254,46 @@
     text-align: center;
 }
 
-#mediamanager__page .filelist .list li .image0 {
+#mediamanager__page .filelist .rows li .image0 {
     display: none;
 }
 
-#mediamanager__page .filelist .list li .name,
-#mediamanager__page .filelist .list li .size,
-#mediamanager__page .filelist .list li .filesize,
-#mediamanager__page .filelist .list li .date {
+#mediamanager__page .filelist .rows li .name,
+#mediamanager__page .filelist .rows li .size,
+#mediamanager__page .filelist .rows li .filesize,
+#mediamanager__page .filelist .rows li .date {
     overflow: hidden;
     float: left;
     margin-left: 1%;
     white-space: nowrap;
 }
 
-#mediamanager__page .filelist .list li .name {
+#mediamanager__page .filelist .rows li .name {
     width: 30%;
     font-weight: bold;
 }
 
-#mediamanager__page .filelist .list li .size,
-#mediamanager__page .filelist .list li .filesize {
+#mediamanager__page .filelist .rows li .size,
+#mediamanager__page .filelist .rows li .filesize {
     width: 15%;
 }
 
-#mediamanager__page .filelist .list li .date {
+#mediamanager__page .filelist .rows li .date {
     width: 20%;
 }
 
-#mediamanager__page .filelist .list li .date {
+#mediamanager__page .filelist .rows li .date {
     font-style: italic;
     white-space: normal;
 }
 
-#mediamanager__page .filelist .list .icon {
+#mediamanager__page .filelist .rows .icon {
     max-width: 16px;
     max-height: 16px;
 }
 
-#mediamanager__page .filelist .list li .image span,
-#mediamanager__page .filelist .list li .image1 span {
+#mediamanager__page .filelist .rows li .image span,
+#mediamanager__page .filelist .rows li .image1 span {
     vertical-align: middle;
     text-align: center;
     display: table-cell;
@@ -317,18 +301,18 @@
     height: 40px;
 }
 
-#mediamanager__page .filelist .list li input[type=checkbox] {
+#mediamanager__page .filelist .rows li input[type=checkbox] {
     display: none;
     float: left;
     margin: 3px;
 }
 
-#mediamanager__page .filelist .list li:hover input[type=checkbox],
-#mediamanager__page .filelist .list li input[type=checkbox]:checked {
+#mediamanager__page .filelist .rows li:hover input[type=checkbox],
+#mediamanager__page .filelist .rows li input[type=checkbox]:checked {
     display: block;
 }
 
-/* Upload panel */
+/*____________ Upload panel ____________*/
 
 #mediamanager__page div.upload {
     padding-bottom: 0.5em;
@@ -339,57 +323,74 @@
     padding-bottom: 0.5em;
 }
 
-/* File preview */
+/*____________ File preview ____________*/
 
-.mediamanager__preview,
-.mediamanager__preview_buttons {
+#mediamanager__page .file ul.actions {
     text-align: center;
+    margin-bottom: 5px;
+    list-style: none;
+}
+
+#mediamanager__page .file div.image {
     margin-bottom: 5px;
 }
 
-.mediamanager__preview img {
+#mediamanager__page .file div.image img {
     width: 99%;
 }
 
-/* Meta data edit form */
+#mediamanager__page .file dl {
+}
+#mediamanager__page .file dl dt {
+    font-weight: bold;
+    display: block;
+    background-color: __background_alt__;
+}
+#mediamanager__page .file dl dd {
+    display: block;
+    background-color: __background_neu__;
+}
 
-#mediamanager__details div.metafield {
+
+/*____________ Meta data edit form ____________*/
+
+#mediamanager__page form.meta div.row {
     margin-bottom: 5px;
 }
 
-#mediamanager__details label {
+#mediamanager__page form.meta label {
     display: block;
 }
 
-#mediamanager__details form.meta input {
+#mediamanager__page form.meta input {
     width: 50%;
 }
 
-#mediamanager__details form.meta input.button {
+#mediamanager__page form.meta input.button {
     width: auto;
 }
 
-#mediamanager__details form.meta textarea.edit {
+#mediamanager__page form.meta textarea.edit {
     height: 6em;
     width: 95%;
     min-width: 95%;
     max-width: 95%;
 }
 
-/* Revisions form */
+/*____________ Revisions form ____________*/
 
-#mediamanager__details #page__revisions ul {
+#mediamanager__page #page__revisions ul {
     margin-left: 10px;
     list-style-type: none;
 }
 
-#mediamanager__details #page__revisions ul li div.li div {
+#mediamanager__page #page__revisions ul li div.li div {
     font-size: 90%;
     color: __text_neu__;
     padding-left: 18px;
 }
 
-#mediamanager__details #page__revisions ul li div.li input {
+#mediamanager__page #page__revisions ul li div.li input {
     position: relative;
     top: 1px;
 }

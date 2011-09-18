@@ -1513,7 +1513,7 @@ function tpl_media() {
     echo hsc($lang['namespaces']);
     echo '</div>';
 
-    echo '<div class="panelContent">';
+    echo '<div class="panelContent" id="media__tree">';
     media_nstree($NS);
     echo '</div>';
     echo '</div>';
