@@ -401,15 +401,14 @@
     margin-top: 10px;
 }
 
-#mediamanager__diff_table {
+#mediamanager__diff table {
     padding: 0;
     margin: 0;
     margin-top: 10px;
 }
 
-#mediamanager__diff_table li {
+#mediamanager__diff table tr {
     width: 48%;
-    display: inline-block;
     margin: 0;
     margin-bottom: 10px;
     padding: 2px;
@@ -418,23 +417,24 @@
     color: __text__;
 }
 
-* html #mediamanager__diff_table li {
+* html #mediamanager__diff table tr {
     display: inline;
 }
 
-*+html #mediamanager__diff_table li {
+*+html #mediamanager__diff table tr {
     display: inline;
 }
 
 /* For IE7 */
-*:first-child+html #mediamanager__diff_table li {
+*:first-child+html #mediamanager__diff table tr {
     width: 45%;
 }
 
 /* Image diff */
 
-#mediamanager__page dl.img_tags dd.highlighted{
+#mediamanager__page dl.img_tags dd strong {
     background-color: __highlight__;
+    font-weight: normal;
 }
 
 #mediamanager__form_diffview {
@@ -451,8 +451,7 @@
     left: 0;
 }
 
-#mediamanager__diff_opacity_image1,
-#mediamanager__diff_portions_image1 {
+#mediamanager__diff div.image1 {
     width: 97%;
 }
 
@@ -460,21 +459,20 @@
     width: 100%;
 }
 
-#mediamanager__diff_opacity_image2 {
+#mediamanager__diff div.diff_opacity div.image2 {
     width: 97%;
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
 }
 
-#mediamanager__diff_portions_image2 {
+#mediamanager__diff div.diff_portions div.image2 {
     width: 97%;
     border-right: 1px solid red;
     overflow: hidden;
 }
 
-#mediamanager__opacity_slider,
-#mediamanager__portions_slider {
+#mediamanager__diff div.diff_slider {
     margin: 10px;
     width: 95%;
 }
