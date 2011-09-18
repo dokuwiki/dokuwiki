@@ -650,7 +650,7 @@ function media_tabs_details($image, $selected_tab = ''){
 function media_tab_files_options(){
     global $lang, $NS;
     $sort = _media_get_sort_type();
-    $form = new Doku_Form(array('class' => 'actions', 'method' => 'get'));
+    $form = new Doku_Form(array('class' => 'options', 'method' => 'get'));
     $form->addHidden('sectok', null);
     $form->addHidden('ns', $NS);
     $form->addHidden('do', 'media');
