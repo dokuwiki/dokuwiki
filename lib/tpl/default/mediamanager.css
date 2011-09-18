@@ -102,6 +102,7 @@
 
 #mediamanager__page .panelHeader form.options {
     float: right;
+    margin-top: -3px;
 }
 
 #mediamanager__page .panelHeader ul {
@@ -112,26 +113,24 @@
 #mediamanager__page .panelHeader ul li {
     color: __text__;
     float: left;
+    line-height: 1;
 }
 
-#mediamanager__page .panelHeader form.options label span span {
-    display: none; /* @todo: hide accessibly */
-}
-#mediamanager__page .panelHeader form.options label span {
+#mediamanager__page .panelHeader ul li.listType {
     padding-left: 27px;
+    background: url('../../images/icon-list.png') 0 1px no-repeat;
 }
-/* @todo: get different images */
-#mediamanager__page .panelHeader label.thumbs span {
-    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
+#mediamanager__page .panelHeader ul li.sortBy {
+    padding-left: 27px;
+    background: url('../../images/icon-sort.png') 0 1px no-repeat;
 }
-#mediamanager__page .panelHeader label.rows span {
-    background: url('../../images/icon-list.png') 0 -4px no-repeat;
+
+#mediamanager__page .panelHeader form.options .ui-buttonset label{
+    font-size: 90%;
 }
-#mediamanager__page .panelHeader label.name span {
-    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
-}
-#mediamanager__page .panelHeader label.date span {
-    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
+#mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
+    padding: .4em .7em;
+    line-height: 1;
 }
 
 /*____________ File list ____________*/
