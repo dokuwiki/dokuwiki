@@ -75,6 +75,7 @@
     font-weight: normal;
     background-color: __background_alt__;
     color: __text__;
+    line-height: 1.5em;
 }
 
 #mediamanager__page .namespaces ul {
@@ -117,7 +118,7 @@
 }
 
 #mediamanager__page .panelHeader ul li.listType {
-    padding-left: 27px;
+    padding: 0 3px 0 27px;
     background: url('../../images/icon-list.png') 0 1px no-repeat;
 }
 #mediamanager__page .panelHeader ul li.sortBy {
@@ -127,6 +128,7 @@
 
 #mediamanager__page .panelHeader form.options .ui-buttonset label{
     font-size: 90%;
+    margin-right: -0.4em;
 }
 #mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
     padding: .4em .7em;
@@ -158,37 +160,26 @@
     padding: 5px;
     vertical-align: top;
     text-align: center;
-    zoom: 1;
     position: relative;
     line-height: 1.2;
 }
-
 * html #mediamanager__page .filelist .thumbs li {
     display: inline;
+    zoom: 1;
 }
-
 *+html #mediamanager__page .filelist .thumbs li {
     display: inline;
 }
 
-#mediamanager__page .filelist .thumbs li .image,
-#mediamanager__page .filelist .thumbs li .image0 {
-    width: 100%;
-    height: 90px;
-    display: block;
-    overflow: hidden;
-}
-
-#mediamanager__page .filelist .thumbs li .image1 {
-    display: none;
-}
-
-#mediamanager__page .filelist .thumbs li .image,
-#mediamanager__page .filelist .thumbs li .image0 {
+#mediamanager__page .filelist .thumbs li .image {
     vertical-align: middle;
     display: table-cell;
     width: 100px;
     height: 90px;
+    overflow: hidden;
+}
+#mediamanager__page .filelist .thumbs li .tiny {
+    display: none;
 }
 
 #mediamanager__page .filelist .thumbs li .name,
@@ -200,22 +191,16 @@
     width: 90px;
     white-space: nowrap;
 }
-
 #mediamanager__page .filelist .thumbs li .name {
     padding: 5px 0;
     font-weight: bold;
 }
-
 #mediamanager__page .filelist .thumbs li .date {
     font-style: italic;
     white-space: normal;
 }
 
 /* rows */
-
-#mediamanager__page .filelist .rows li {
-    overflow: hidden;
-}
 
 #mediamanager__page .filelist .rows li {
     list-style: none;
@@ -226,14 +211,14 @@
     margin-bottom: 3px;
     background-color: __background__;
     color: __text__;
+    overflow: hidden;
 }
 
 #mediamanager__page .filelist .rows li:nth-child(2n+1) {
     background-color: __background_neu__;
 }
 
-#mediamanager__page .filelist .rows li .image,
-#mediamanager__page .filelist .rows li .image1 {
+#mediamanager__page .filelist .rows li .image {
     width: 10%;
     display: block;
     overflow: hidden;
@@ -241,9 +226,19 @@
     height: 40px;
     text-align: center;
 }
-
-#mediamanager__page .filelist .rows li .image0 {
+#mediamanager__page .filelist .rows li .thumb {
     display: none;
+}
+
+#mediamanager__page .filelist .rows li .image span {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    width: 100px;
+    height: 40px;
+}
+#mediamanager__page .filelist .rows .icon {
+    margin-top: 12px;
 }
 
 #mediamanager__page .filelist .rows li .name,
@@ -260,29 +255,14 @@
     width: 30%;
     font-weight: bold;
 }
-
 #mediamanager__page .filelist .rows li .size,
 #mediamanager__page .filelist .rows li .filesize {
     width: 15%;
 }
-
 #mediamanager__page .filelist .rows li .date {
     width: 20%;
     font-style: italic;
     white-space: normal;
-}
-
-#mediamanager__page .filelist .rows .icon {
-    margin-top: 12px;
-}
-
-#mediamanager__page .filelist .rows li .image span,
-#mediamanager__page .filelist .rows li .image1 span {
-    vertical-align: middle;
-    text-align: center;
-    display: table-cell;
-    width: 100px;
-    height: 40px;
 }
 
 /*____________ Upload panel ____________*/
@@ -300,7 +280,7 @@
 
 #mediamanager__page .file ul.actions {
     text-align: center;
-    margin-bottom: 5px;
+    margin: 0 0 5px;
     list-style: none;
 }
 #mediamanager__page .file ul.actions li {
@@ -410,7 +390,12 @@
 
 #mediamanager__form_diffview {
     margin-bottom: 10px;
+    display: block;
 }
+
+
+
+
 
 #mediamanager__diff_layout {
     position: relative;

@@ -125,12 +125,14 @@ function media_metaform($id,$auth){
         $p['class'] = 'edit';
         $p['id']    = 'meta__'.$key;
         $p['name']  = 'meta['.$field[0].']';
+        $p_attrs    = array('class' => 'edit');
 
         $form->addElement('<div class="row">');
         if($field[2] == 'text'){
-            $form->addElement(form_makeField('text', $p['name'], $value, ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':', $p['id'], $p['class']));
+            $form->addElement(form_makeField('text', $p['name'], $value, ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':', $p['id'], $p['class'], $p_attrs));
         }else{
             $att = buildAttributes($p);
+            $form->addElement('<label for="meta__'.$key.'">'.$lang[$field[1]].'</label>');
             $form->addElement("<textarea $att rows=\"6\" cols=\"50\">".formText($value).'</textarea>');
         }
         $form->addElement('</div>');
@@ -853,26 +855,6 @@ function media_preview_buttons($image, $auth, $rev=false) {
 
     echo '<ul class="actions">';
 
-    $more = '';
-    if ($rev) {
-        $more = "rev=$rev";
-    } else {
-        $t = @filemtime(mediaFN($image));
-        $more = "t=$t";
-    }
-    $link = ml($image,$more,true,'&');
-
-    if (@file_exists(mediaFN($image, $rev))) {
-
-        // view original file button
-        $form = new Doku_Form(array('action'=>$link, 'method'=>'get', 'target' => '_blank'));
-        $form->addHidden('sectok', null);
-        $form->addElement(form_makeButton('submit','',$lang['mediaview']));
-        echo '<li>';
-        $form->printForm();
-        echo '</li>';
-    }
-
     if($auth >= AUTH_DELETE && !$rev && @file_exists(mediaFN($image))){
 
         // delete button
@@ -1484,12 +1466,11 @@ function media_printimgdetail($item, $fullscreen=false){
             $p['height'] = $h;
         }
         $p['alt']    = $item['id'];
-        $p['class']  = 'thumb';
         $att = buildAttributes($p);
 
         // output
         if ($fullscreen) {
-            echo '<a name="'.($index ? 'd' : 'l').'_:'.$item['id'].'" class="image'.$index.'" title="'.$item['id'].'" href="'.
+            echo '<a name="'.($index ? 'd' : 'l').'_:'.$item['id'].'" class="image '.($index ? 'tiny' : 'thumb').'" href="'.
                 media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
             echo '<span><img src="'.$src.'" '.$att.' /></span>';
             echo '</a>';

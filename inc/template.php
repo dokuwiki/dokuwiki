@@ -1142,8 +1142,7 @@ function tpl_mediaFileList(){
     if (!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
     if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
 
-    // FIXME: define lang
-    echo '<h2 class="a11y">' . sprintf($lang['filelist_desc'], $NS) .  '</h2>';
+    echo '<h2 class="a11y">' . $lang['mediaselect'] . '</h2>';
 
     media_tabs_files($opened_tab);
 
@@ -1519,7 +1518,6 @@ function tpl_media() {
     echo '</div>';
 
     echo '<div class="panel filelist">';
-    echo '<h2 class="a11y">'.$lang['mediaselect'].'</h2>';
     tpl_mediaFileList();
     echo '</div>';
 

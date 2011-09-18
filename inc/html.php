@@ -1006,8 +1006,9 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
         if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
 
+        $l_head_title = ($media) ? dformat($l_rev) : $id.' ['.dformat($l_rev).']';
         $l_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
-        $id.' ['.dformat($l_rev).']</a>'.
+        $l_head_title.'</a>'.
         '<br />'.$l_user.' '.$l_sum;
     }
 
@@ -1023,8 +1024,9 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
         if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
+        $r_head_title = ($media) ? dformat($r_rev) : $id.' ['.dformat($r_rev).']';
         $r_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
-        $id.' ['.dformat($r_rev).']</a>'.
+        $r_head_title.'</a>'.
         '<br />'.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
         $_info   = getRevisionInfo($id,$_rev,true, $media);
@@ -1038,8 +1040,9 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
         if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
+        $r_head_title = ($media) ? dformat($_rev) : $id.' ['.dformat($_rev).']';
         $r_head  = '<a class="wikilink1" href="'.$ml_or_wl($id).'">'.
-        $id.' ['.dformat($_rev).']</a> '.
+        $r_head_title.'</a> '.
         '('.$lang['current'].')'.
         '<br />'.$_user.' '.$_sum;
     }else{
