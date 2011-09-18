@@ -1099,8 +1099,9 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         $difftype = $_REQUEST['difftype'];
 
         if (!$fromajax) {
-            $form = new Doku_Form(array('action'=>media_managerURL(array(), '&'), 'method' => 'get'
-            ));
+            $form = new Doku_Form(array('action' => media_managerURL(array(), '&'),
+                                        'method' => 'get',
+                                        'id' => 'mediamanager__form_diffview'));
             $form->addHidden('sectok', null);
             $form->addElement('<input type="hidden" name="rev2[]" value="'.$l_rev.'" ></input>');
             $form->addElement('<input type="hidden" name="rev2[]" value="'.$r_rev.'" ></input>');
@@ -1219,10 +1220,10 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
     $r_src = ml($image, $r_more);
 
     // slider
-    echo '<div id="diff_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
+    echo '<div class="diff_slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
 
     // two images in divs
-    echo '<div id="diff_' . $type . '">';
+    echo '<div class="diff_' . $type . '">';
     echo '<div class="image1" style="max-width: '.$l_size[0].'px;">';
     echo '<img src="'.$l_src.'" alt="" />';
     echo '</div>';
