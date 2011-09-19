@@ -98,7 +98,7 @@
     font-weight: normal;
     font-size: 1em;
     padding: 0;
-    margin: 0;
+    margin: 0 0 3px;
 }
 
 #mediamanager__page .panelHeader form.options {
@@ -115,26 +115,22 @@
     color: __text__;
     float: left;
     line-height: 1;
+    padding-left: 3px;
 }
 
 #mediamanager__page .panelHeader ul li.listType {
-    padding: 0 3px 0 27px;
-    background: url('../../images/icon-list.png') 0 1px no-repeat;
+    padding-left: 30px;
+    background: url('../../images/icon-list.png') 3px 1px no-repeat;
 }
 #mediamanager__page .panelHeader ul li.sortBy {
-    padding-left: 27px;
-    background: url('../../images/icon-sort.png') 0 1px no-repeat;
+    padding-left: 30px;
+    background: url('../../images/icon-sort.png') 3px 1px no-repeat;
 }
 
 #mediamanager__page .panelHeader form.options .ui-buttonset label{
     font-size: 90%;
     margin-right: -0.4em;
 }
-/*
-#mediamanager__page .panelHeader form.options label span span{
-    display: none;
-}
-*/
 #mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
     padding: .4em .7em;
     line-height: 1;
