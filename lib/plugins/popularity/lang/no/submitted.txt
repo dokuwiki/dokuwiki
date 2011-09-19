@@ -1,0 +1,3 @@
+====== Tilbakemelding om popularitet ======
+
+Innsending av dataene var vellykka.

@@ -58,3 +58,4 @@ $lang['enabled']               = 'Tillegget %s aktivert';
 $lang['notenabled']            = 'Plugin %s kunne ikke aktiveres, sjekk filrettighetene.';
 $lang['disabled']              = 'Plugin %s deaktivert';
 $lang['notdisabled']           = 'Plugin %s kunne ikke deaktiveres, sjekk filrettighetene.';
+$lang['packageinstalled']      = 'Installasjonen av tilleggspakka (%d tillegg: %s) var vellykka';
