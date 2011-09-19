@@ -11,6 +11,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert BOGENSCHNEIDER <robog@gmx.de>
+ * @author Robert BOGENSCHNEIDER <bogi@UEA.org>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: kompleze reviziu viajn ŝanĝojn kaj resubmetu ilin.
@@ -46,6 +47,7 @@ $lang['lang']                  = 'Lingvo';
 $lang['basedir']               = 'Baza dosierujo';
 $lang['baseurl']               = 'Baza URL';
 $lang['savedir']               = 'Dosierujo por konservi datenaron';
+$lang['cookiedir']             = 'KUketopado. Lasu malplena por uzi baseurl.';
 $lang['start']                 = 'Nomo de la hejmpaĝo';
 $lang['title']                 = 'Titolo de la vikio';
 $lang['template']              = 'Ŝablono';
@@ -116,6 +118,8 @@ $lang['jpg_quality']           = 'Kompaktiga kvalito de JPG (0-100)';
 $lang['subscribers']           = 'Ebligi subtenon de avizoj pri ŝanĝoj sur paĝoj';
 $lang['subscribe_time']        = 'Tempo, post kiu abonlistoj kaj kolektaĵoj sendiĝas (sek); Tio estu pli malgranda ol la tempo indikita en recent_days.';
 $lang['compress']              = 'Kompaktigi CSS-ajn kaj ĵavaskriptajn elmetojn';
+$lang['cssdatauri']            = 'Grandeco en bitokoj, ĝis kiom en CSS-dosieroj referencitaj bildoj estu enmetataj rekte en la stilfolion por malgrandigi vanan HTTP-kapan trafikon. Tiu tekniko ne funkcias en IE < 8!
+<code>400</code> ĝis <code>600</code> bitokoj estas bona grandeco. Indiku <code>0</code> por malebligi enmeton.';
 $lang['hidepages']             = 'Kaŝi kongruantajn paĝojn (laŭ regulaj esprimoj)';
 $lang['send404']               = 'Sendi la mesaĝon "HTTP 404/Ne Trovita Paĝo" por ne ekzistantaj paĝoj';
 $lang['sitemap']               = 'Krei Guglan paĝarmapon "sitemap" (po kiom tagoj)';
