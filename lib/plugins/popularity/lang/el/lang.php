@@ -4,6 +4,7 @@
  *
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
+ * @author Petros Vidalis <pvidalis@gmail.com>
  */
 $lang['name']                  = 'Αναφορά Δημοτικότητας (ίσως αργήσει λίγο να εμφανιστεί)';
 $lang['submit']                = 'Αποστολή Δεδομένων';
