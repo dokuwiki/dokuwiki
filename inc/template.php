@@ -1206,7 +1206,11 @@ function tpl_mediaFileDetails($image, $rev){
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
     $tabTitle = '<strong class="'.$class.'">'.$image.'</strong>';
-    printf($lang['media_' . $opened_tab], $tabTitle);
+    if ($opened_tab === 'view' && $rev) {
+        printf($lang['media_viewold'], $tabTitle, dformat($rev));
+    } else {
+        printf($lang['media_' . $opened_tab], $tabTitle);
+    }
     echo '</h3></div>'.NL;
 
     echo '<div class="panelContent">'.NL;

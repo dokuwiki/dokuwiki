@@ -347,6 +347,7 @@ $lang['media_files']           = 'Files in %s';
 $lang['media_upload']          = 'Upload to %s';
 $lang['media_search']          = 'Search in %s';
 $lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s at %s';
 $lang['media_edit']            = 'Edit %s';
 $lang['media_history']         = 'History of %s';
 $lang['media_meta_edited']     = 'metadata edited';
