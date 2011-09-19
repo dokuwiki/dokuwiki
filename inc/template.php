@@ -1148,8 +1148,8 @@ function tpl_mediaFileList(){
 
     echo '<div class="panelHeader">'.NL;
     echo '<h3>';
-    printf($lang['media_' . $opened_tab],
-           hsc($ns ? $ns : '['.$lang['mediaroot'].']'));
+    $tabTitle = ($NS) ? $NS : '['.$lang['mediaroot'].']';
+    printf($lang['media_' . $opened_tab], '<strong>'.$tabTitle.'</strong>');
     echo '</h3>'.NL;
     if ($opened_tab === 'search' || $opened_tab === 'files') {
         media_tab_files_options();
@@ -1205,7 +1205,8 @@ function tpl_mediaFileDetails($image, $rev){
     list($ext,$mime,$dl) = mimetype($image,false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
-    printf($lang['media_' . $opened_tab], $class, $image);
+    $tabTitle = '<strong class="'.$class.'">'.$image.'</strong>';
+    printf($lang['media_' . $opened_tab], $tabTitle);
     echo '</h3></div>'.NL;
 
     echo '<div class="panelContent">'.NL;
