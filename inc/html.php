@@ -1830,14 +1830,13 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
 }
 
 function html_tabs($tabs, $current_tab = null) {
-    echo '<ul class="tabs">';
+    echo '<ul class="tabs">'.NL;
 
     foreach($tabs as $id => $tab) {
         html_tab($tab['href'], $tab['caption'], $id === $current_tab);
     }
 
-    echo '</ul>';
-    echo '<div class="clearer"></div>';
+    echo '</ul>'.NL;
 }
 /**
  * Prints a single tab
@@ -1859,7 +1858,7 @@ function html_tab($href, $caption, $selected=false) {
     }
     $tab .= hsc($caption)
          .  '</' . ($selected ? 'strong' : 'a') . '>'
-         .  '</li>';
+         .  '</li>'.NL;
     echo $tab;
 }
 

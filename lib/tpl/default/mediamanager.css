@@ -130,6 +130,9 @@
     font-size: 90%;
     margin-right: -0.4em;
 }
+#mediamanager__page .panelHeader form.options label span span{
+    display: none;
+}
 #mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
     padding: .4em .7em;
     line-height: 1;

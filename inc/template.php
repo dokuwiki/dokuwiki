@@ -1142,21 +1142,21 @@ function tpl_mediaFileList(){
     if (!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
     if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
 
-    echo '<h2 class="a11y">' . $lang['mediaselect'] . '</h2>';
+    echo '<h2 class="a11y">' . $lang['mediaselect'] . '</h2>'.NL;
 
     media_tabs_files($opened_tab);
 
-    echo '<div class="panelHeader">';
+    echo '<div class="panelHeader">'.NL;
     echo '<h3>';
     printf($lang['media_' . $opened_tab],
            hsc($ns ? $ns : '['.$lang['mediaroot'].']'));
-    echo '</h3>';
+    echo '</h3>'.NL;
     if ($opened_tab === 'search' || $opened_tab === 'files') {
         media_tab_files_options();
     }
-    echo '</div>';
+    echo '</div>'.NL;
 
-    echo '<div class="panelContent">';
+    echo '<div class="panelContent">'.NL;
     if ($opened_tab == 'files') {
         media_tab_files($NS,$AUTH,$JUMPTO);
     } elseif ($opened_tab == 'upload') {
@@ -1164,7 +1164,7 @@ function tpl_mediaFileList(){
     } elseif ($opened_tab == 'search') {
         media_tab_search($NS,$AUTH);
     }
-    echo '</div>';
+    echo '</div>'.NL;
 }
 
 /**
@@ -1206,9 +1206,9 @@ function tpl_mediaFileDetails($image, $rev){
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
     printf($lang['media_' . $opened_tab], $class, $image);
-    echo '</h3></div>';
+    echo '</h3></div>'.NL;
 
-    echo '<div class="panelContent">';
+    echo '<div class="panelContent">'.NL;
 
     if ($opened_tab == 'view') {
         media_tab_view($image, $NS, $AUTH, $rev);
@@ -1220,7 +1220,7 @@ function tpl_mediaFileDetails($image, $rev){
         media_tab_history($image,$NS,$AUTH);
     }
 
-    echo '</div>';
+    echo '</div>'.NL;
 }
 
 /**
@@ -1502,31 +1502,31 @@ function tpl_media() {
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
-    echo '<h1>'.$lang['btn_media'].'</h1>';
-    echo '<div id="mediamanager__page">';
-
-    echo '<div class="panel namespaces">';
+    echo '<h1>'.$lang['btn_media'].'</h1>'.NL;
+    echo '<div id="mediamanager__page">'.NL;
     html_msgarea();
-    echo '<h2>'.$lang['namespaces'].'</h2>';
+
+    echo '<div class="panel namespaces">'.NL;
+    echo '<h2>'.$lang['namespaces'].'</h2>'.NL;
     echo '<div class="panelHeader">';
     echo $lang['media_namespaces'];
-    echo '</div>';
+    echo '</div>'.NL;
 
-    echo '<div class="panelContent" id="media__tree">';
+    echo '<div class="panelContent" id="media__tree">'.NL;
     media_nstree($NS);
-    echo '</div>';
-    echo '</div>';
+    echo '</div>'.NL;
+    echo '</div>'.NL;
 
-    echo '<div class="panel filelist">';
+    echo '<div class="panel filelist">'.NL;
     tpl_mediaFileList();
-    echo '</div>';
+    echo '</div>'.NL;
 
-    echo '<div class="panel file">';
-    echo '<h2 class="a11y">'.$lang['media_file'].'</h2>';
+    echo '<div class="panel file">'.NL;
+    echo '<h2 class="a11y">'.$lang['media_file'].'</h2>'.NL;
     tpl_mediaFileDetails($image, $rev);
-    echo '</div>';
+    echo '</div>'.NL;
 
-    echo '</div>';
+    echo '</div>'.NL;
 }
 
 //Setup VIM: ex: et ts=4 :

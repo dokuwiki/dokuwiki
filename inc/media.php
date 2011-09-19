@@ -135,11 +135,11 @@ function media_metaform($id,$auth){
             $form->addElement('<label for="meta__'.$key.'">'.$lang[$field[1]].'</label>');
             $form->addElement("<textarea $att rows=\"6\" cols=\"50\">".formText($value).'</textarea>');
         }
-        $form->addElement('</div>');
+        $form->addElement('</div>'.NL);
     }
     $form->addElement('<div class="buttons">');
     $form->addElement(form_makeButton('submit', '', $lang['btn_save'], array('accesskey' => 's', 'name' => 'mediado[save]')));
-    $form->addElement('</div>');
+    $form->addElement('</div>'.NL);
     $form->printForm();
 }
 
@@ -578,9 +578,9 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             if ($fullscreenview) {
                 $view = $_REQUEST['list'];
                 if ($view == 'rows') {
-                    echo '<ul class="rows">';
+                    echo '<ul class="rows">'.NL;
                 } else {
-                    echo '<ul class="thumbs">';
+                    echo '<ul class="thumbs">'.NL;
                 }
             }
             foreach($data as $item){
@@ -590,7 +590,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
                     media_printfile_thumbs($item,$auth,$jump);
                 }
             }
-            if ($fullscreenview) echo '</ul>';
+            if ($fullscreenview) echo '</ul>'.NL;
         }
     }
     if (!$fullscreenview) media_searchform($ns);
@@ -656,7 +656,7 @@ function media_tab_files_options(){
     $form->addHidden('sectok', null);
     $form->addHidden('ns', $NS);
     $form->addHidden('do', 'media');
-    $form->addElement('<ul>');
+    $form->addElement('<ul>'.NL);
     foreach(array('list' => array('listType', array('thumbs', 'rows')),
                   'sort' => array('sortBy', array('name', 'date'), $sort))
             as $group => $content) {
@@ -677,12 +677,12 @@ function media_tab_files_options(){
                                                   $content[0] . '__' . $option,
                                                   $option, $attrs));
         }
-        $form->addElement('</li>');
+        $form->addElement('</li>'.NL);
     }
     $form->addElement('<li>');
     $form->addElement(form_makeButton('submit', '', $lang['btn_apply']));
-    $form->addElement('</li>');
-    $form->addElement('</ul>');
+    $form->addElement('</li>'.NL);
+    $form->addElement('</ul>'.NL);
     $form->printForm();
 }
 
@@ -730,12 +730,12 @@ function media_tab_upload($ns,$auth=null,$jump='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<div class="upload">';
+    echo '<div class="upload">'.NL;
     if ($auth >= AUTH_UPLOAD) {
         echo '<p>' . $lang['mediaupload'] . '</p>';
     }
     media_uploadform($ns, $auth, true);
-    echo '</div>';
+    echo '</div>'.NL;
 }
 
 /**
@@ -749,13 +749,13 @@ function media_tab_search($ns,$auth=null) {
     $do = $_REQUEST['mediado'];
     $query = $_REQUEST['q'];
     if (!$query) $query = '';
-    echo '<div class="search">';
+    echo '<div class="search">'.NL;
 
     media_searchform($ns, $query, true);
     if ($do == 'searchlist') {
         media_searchlist($query,$ns,$auth,true,_media_get_sort_type());
     }
-    echo '</div>';
+    echo '</div>'.NL;
 }
 
 /**
@@ -774,7 +774,7 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
         media_details($image, $auth, $rev, $meta);
 
     } else {
-        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>';
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }
 }
 
@@ -821,13 +821,12 @@ function media_tab_history($image, $ns, $auth=null) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_preview($image, $auth, $rev=false, $meta=false) {
-    global $lang;
-
-    echo '<div class="image">';
 
     $size = media_image_preview_size($image, $rev, $meta);
 
     if ($size) {
+        echo '<div class="image">';
+
         $more = array();
         if ($rev) {
             $more['rev'] = $rev;
@@ -840,9 +839,9 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
         $more['h'] = $size[1];
         $src = ml($image, $more);
         echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
-    }
 
-    echo '</div>';
+        echo '</div>'.NL;
+    }
 }
 
 /**
@@ -853,7 +852,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
 function media_preview_buttons($image, $auth, $rev=false) {
     global $lang, $conf;
 
-    echo '<ul class="actions">';
+    echo '<ul class="actions">'.NL;
 
     if($auth >= AUTH_DELETE && !$rev && @file_exists(mediaFN($image))){
 
@@ -863,7 +862,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
         echo '<li>';
         $form->printForm();
-        echo '</li>';
+        echo '</li>'.NL;
     }
 
     $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
@@ -875,7 +874,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->addElement(form_makeButton('submit','',$lang['media_update']));
         echo '<li>';
         $form->printForm();
-        echo '</li>';
+        echo '</li>'.NL;
     }
 
     if($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && @file_exists(mediaFN($image, $rev))){
@@ -888,10 +887,10 @@ function media_preview_buttons($image, $auth, $rev=false) {
         $form->addElement(form_makeButton('submit','',$lang['media_restore']));
         echo '<li>';
         $form->printForm();
-        echo '</li>';
+        echo '</li>'.NL;
     }
 
-    echo '</ul>';
+    echo '</ul>'.NL;
 }
 
 /**
@@ -977,17 +976,17 @@ function media_details($image, $auth, $rev=false, $meta=false) {
     if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
     $tags = media_file_tags($meta);
 
-    echo '<dl>';
+    echo '<dl>'.NL;
     foreach($tags as $tag){
         if ($tag['value']) {
             $value = cleanText($tag['value']);
             echo '<dt>'.$lang[$tag['tag'][1]].':</dt><dd>';
             if ($tag['tag'][2] == 'date') echo dformat($value);
             else echo hsc($value);
-            echo '</dd>';
+            echo '</dd>'.NL;
         }
     }
-    echo '</dl>';
+    echo '</dl>'.NL;
 }
 
 /**
@@ -1090,7 +1089,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
             $form->addHidden('mediado', 'diff');
             $form->printForm();
 
-            echo '<div id="mediamanager__diff" >';
+            echo NL.'<div id="mediamanager__diff" >'.NL;
         }
 
         if ($difftype == 'opacity' || $difftype == 'portions') {
@@ -1118,7 +1117,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     echo '<td>';
     media_preview($image, $auth, $r_rev, $r_meta);
     echo '</td>';
-    echo '</tr>';
+    echo '</tr>'.NL;
 
     echo '<tr class="actions">';
     echo '<td>';
@@ -1128,7 +1127,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     echo '<td>';
     media_preview_buttons($image, $auth, $r_rev);
     echo '</td>';
-    echo '</tr>';
+    echo '</tr>'.NL;
 
     $l_tags = media_file_tags($l_meta);
     $r_tags = media_file_tags($r_meta);
@@ -1145,7 +1144,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
 
     echo '<tr>';
     foreach(array($l_tags,$r_tags) as $tags){
-        echo '<td>';
+        echo '<td>'.NL;
 
         echo '<dl class="img_tags">';
         foreach($tags as $tag){
@@ -1163,13 +1162,13 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
             }
             echo '</dd>';
         }
-        echo '</dl>';
+        echo '</dl>'.NL;
 
         echo '</td>';
     }
-    echo '</tr>';
+    echo '</tr>'.NL;
 
-    echo '</table>';
+    echo '</table>'.NL;
 
     if ($is_img && !$fromajax) echo '</div>';
 }
@@ -1298,16 +1297,16 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
         if ($fullscreen) {
             $view = $_REQUEST['view'];
             if ($view == 'list') {
-                echo '<ul class="mediamanager-list" id="mediamanager__file_list">';
+                echo '<ul class="mediamanager-list" id="mediamanager__file_list">'.NL;
             } else {
-                echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">';
+                echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">'.NL;
             }
         }
         foreach($evdata['data'] as $item){
             if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
             else media_printfile_thumbs($item,$item['perm'],false,true);
         }
-        if ($fullscreen) echo '</ul>';
+        if ($fullscreen) echo '</ul>'.NL;
     }
 }
 
@@ -1399,7 +1398,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
     $file = utf8_decodeFN($item['file']);
 
     // output
-    echo '<li><dl>';
+    echo '<li><dl>'.NL;
 
         echo '<dt>';
     if($item['isimg']) {
@@ -1412,28 +1411,28 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         echo media_printicon($item['id']);
         echo '</a>';
     }
-    echo '</dt>';
+    echo '</dt>'.NL;
     if (!$display_namespace) {
         $name = hsc($file);
     } else {
         $name = hsc($item['id']);
     }
     echo '<dd class="name"><a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
-        'tab_details' => 'view')).'" name="h_:'.$item['id'].'">'.$name.'</a></dd>';
+        'tab_details' => 'view')).'" name="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
 
     if($item['isimg']){
         $size = '';
         $size .= (int) $item['meta']->getField('File.Width');
         $size .= '&#215;';
         $size .= (int) $item['meta']->getField('File.Height');
-        echo '<dd class="size">'.$size.'</dd>';
+        echo '<dd class="size">'.$size.'</dd>'.NL;
     } else {
-        echo '<dd class="size">&nbsp;</dd>';
+        echo '<dd class="size">&nbsp;</dd>'.NL;
     }
     $date = dformat($item['mtime']);
-    echo '<dd class="date">'.$date.'</dd>';
+    echo '<dd class="date">'.$date.'</dd>'.NL;
     $filesize = filesize_h($item['size']);
-    echo '<dd class="filesize">'.$filesize.'</dd>';
+    echo '<dd class="filesize">'.$filesize.'</dd>'.NL;
     echo '</dl></li>'.NL;
 }
 
@@ -1592,9 +1591,9 @@ function media_uploadform($ns, $auth, $fullscreen = false){
         $form->addElement(form_makeCloseTag('p'));
     }
 
-    echo '<div id="mediamanager__uploader">';
+    echo NL.'<div id="mediamanager__uploader">'.NL;
     html_form('upload', $form);
-    echo '</div>';
+    echo '</div>'.NL;
 }
 
 /**
@@ -1611,7 +1610,7 @@ function media_searchform($ns,$query='',$fullscreen=false){
     if (!$fullscreen) $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
     else $params['action'] = media_managerURL(array(), '&');
     $form = new Doku_Form($params);
-    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
+    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>'.NL);
     $form->addHidden('ns', $ns);
     if (!$fullscreen) $form->addHidden('do', 'searchlist');
     else $form->addHidden('mediado', 'searchlist');
