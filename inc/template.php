@@ -1507,8 +1507,8 @@ function tpl_media() {
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
 
-    echo '<h1>'.$lang['btn_media'].'</h1>'.NL;
     echo '<div id="mediamanager__page">'.NL;
+    echo '<h1>'.$lang['btn_media'].'</h1>'.NL;
     html_msgarea();
 
     echo '<div class="panel namespaces">'.NL;

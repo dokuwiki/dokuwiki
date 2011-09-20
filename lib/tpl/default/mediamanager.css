@@ -6,36 +6,31 @@
 }
 
 #mediamanager__page {
-    min-width: 840px;
+    min-width: 800px;
     width: 100%;
-    overflow-x: auto;
     text-align: left;
 }
 
 #mediamanager__page .panel {
     float: left;
-    margin-right: 10px;
-}
-#mediamanager__page .panel.file {
-    margin-right: 0;
 }
 
 #mediamanager__page .namespaces {
     width: 15%;
-    min-width: 125px;
+    min-width: 120px;
 }
 #mediamanager__page .filelist {
-    width: 45%;
-    min-width: 375px;
+    width: 50%;
+    min-width: 400px;
 }
 #mediamanager__page .file {
     width: 35%;
-    min-width: 290px;
+    min-width: 280px;
 }
 
 #mediamanager__page .panelHeader {
     background-color: __background_alt__;
-    margin-bottom: 10px;
+    margin: 0 10px 10px 0;
     padding: 10px 10px 8px;
     text-align: left;
     min-height: 20px;
@@ -46,19 +41,24 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
-    margin: 0;
+    margin: 0 10px 10px 0;
     position: relative;
+}
+
+#mediamanager__page .file .panelHeader,
+#mediamanager__page .file .panelContent {
+    margin-right: 0;
 }
 
 #mediamanager__page .ui-resizable-e {
     width: 16px;
-    right: -13px;
+    right: -3px;
     /* icon from Crystal Clear icon set (LGPL) */
     background: transparent url(images/resizecol.png) 0 25px no-repeat;
 }
 #mediamanager__page .ui-resizable-e:hover {
     width: 6px;
-    right: -8px;
+    right: 2px;
     background-image: none;
     background-color: __background_alt__;
 }
@@ -290,10 +290,11 @@
 
 #mediamanager__page .file div.image {
     margin-bottom: 5px;
+    text-align: center;
 }
 
 #mediamanager__page .file div.image img {
-    width: 99%;
+    width: 100%;
 }
 
 #mediamanager__page .file dl {
