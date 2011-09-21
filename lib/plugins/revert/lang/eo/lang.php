@@ -11,6 +11,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert BOGENSCHNEIDER <robog@gmx.de>
+ * @author Robert BOGENSCHNEIDER <bogi@UEA.org>
  */
 $lang['menu']                  = 'Administrado de restarigo';
 $lang['filter']                = 'Serĉi spamecajn paĝojn';

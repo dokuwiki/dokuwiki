@@ -1,178 +1,151 @@
-/* Layout */
 
-#mediamanager__page {
-    width: 100%;
-    overflow-x: auto;
-}
+/*____________ Layout ____________*/
 
 #mediamanager__page h1 {
     margin: 0 0 .5em;
 }
 
-#mediamanager__layout {
-    min-width: 840px;
-}
-
-#mediamanager__layout .layout,
-#mediamanager__layout .layout-resizable {
-    float: left;
-}
-
-#mediamanager__layout .layout-resizable {
-    margin-right: 10px;
-    float: left;
-}
-
-#mediamanager__layout .scroll-container {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
-    margin: 0;
+#mediamanager__page {
+    min-width: 800px;
+    width: 100%;
     text-align: left;
-    position: relative;
 }
 
-#mediamanager__layout .background-container {
+#mediamanager__page .panel {
+    float: left;
+}
+
+#mediamanager__page .namespaces {
+    width: 15%;
+    min-width: 120px;
+}
+#mediamanager__page .filelist {
+    width: 50%;
+    min-width: 400px;
+}
+#mediamanager__page .file {
+    width: 35%;
+    min-width: 280px;
+}
+
+#mediamanager__page .panelHeader {
     background-color: __background_alt__;
-    margin-bottom: 10px;
+    margin: 0 10px 10px 0;
     padding: 10px 10px 8px;
     text-align: left;
     min-height: 20px;
+    overflow: hidden;
 }
 
-#mediamanager__layout .background-container .icon {
-    margin-right: 5px;
+#mediamanager__page .panelContent {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0 10px 10px 0;
+    position: relative;
 }
 
-#mediamanager__layout_namespaces {
-    width: 15%;
-    min-width: 125px;
-}
-
-#mediamanager__layout_list {
-    width: 45%;
-    min-width: 375px;
-}
-
-#mediamanager__layout_detail {
-    width: 35%;
-    min-width: 290px;
+#mediamanager__page .file .panelHeader,
+#mediamanager__page .file .panelContent {
+    margin-right: 0;
 }
 
 #mediamanager__page .ui-resizable-e {
-    width: 7px;
-    right: -9px;
+    width: 6px;
+    right: 2px;
     background: transparent url(images/resizecol.png) center center no-repeat;
 }
-
 #mediamanager__page .ui-resizable-e:hover {
-    background-image: none;
     background-color: __background_alt__;
 }
 
-/* Namespaces tree */
+/*____________ Namespaces tree ____________*/
 
-#mediamanager__page ul.idx {
-    margin-left: .2em;
+#mediamanager__page .namespaces h2 {
+    font-size: 1em;
+    display: inline-block;
+    border-width: 0;
+    padding: .3em .8em;
+    margin: 0 .3em 0 0;
+    border-radius: .5em .5em 0 0;
+    font-weight: normal;
+    background-color: __background_alt__;
+    color: __text__;
+    line-height: 1.5em;
 }
 
-#mediamanager__page ul.idx ul {
+#mediamanager__page .namespaces ul {
+    margin-left: .2em;
+    list-style: none;
+}
+#mediamanager__page .namespaces ul ul {
     margin-left: 1em;
 }
 
-.idx .selected {
+#mediamanager__page .namespaces ul .selected {
     background-color: __highlight__;
     font-weight: bold;
 }
 
-/* Tabs */
+/*____________ Panel header ____________*/
 
-.mediamanager-tabs a {
-    font-weight: bold;
-    display: block;
-    float: left;
-    padding: 10px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    margin-right: 2px;
-    -moz-border-radius-topright: 10px;
-    -webkit-border-top-right-radius: 10px;
-    -moz-border-radius-topleft: 10px;
-    -webkit-border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-.mediamanager-tabs .selected {
-    background-color: __background_alt__;
-}
-
-.mediamanager-tabs a:hover {
-    background-color: __background_alt__;
-    opacity: 0.5;
-}
-
-/* Title links */
-
-#mediamanager__files .namespace {
+#mediamanager__page .panelHeader h3 {
     float: left;
     font-weight: normal;
-}
-
-#mediamanager__tabs_list {
-    float: left;
-}
-
-#mediamanager__link_thumbs,
-#mediamanager__link_list {
-    padding-left: 30px;
-    display: inline-block;
-    width: 0;
-    overflow: hidden;
-}
-
-#mediamanager__link_thumbs {
-    background: url('../../images/icon-thumb.png') 0 -4px no-repeat;
-    margin-left: 10px;
-}
-
-#mediamanager__link_list {
-    background: url('../../images/icon-list.png') 0 -4px no-repeat;
-}
-
-#mediamanager__link_thumbs:hover,
-#mediamanager__link_list:hover {
-    width: auto;
-    margin-right: 10px;
-}
-
-#mediamanager__sort {
-    background: url('../../images/icon-sort.png') 0 -4px no-repeat;
-    padding-left: 30px;
-    display: block;
-    float: right;
-}
-
-* html #mediamanager__sort,
-*+html #mediamanager__sort {
-    position: relative;
-    margin-top: -18px;
-}
-
-/* File list */
-
-#mediamanager__file_list {
+    font-size: 1em;
     padding: 0;
-    margin: 0 !important;
+    margin: 0 0 3px;
 }
 
-#mediamanager__file_list li:hover {
+#mediamanager__page .panelHeader form.options {
+    float: right;
+    margin-top: -3px;
+}
+
+#mediamanager__page .panelHeader ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#mediamanager__page .panelHeader ul li {
+    color: __text__;
+    float: left;
+    line-height: 1;
+    padding-left: 3px;
+}
+
+#mediamanager__page .panelHeader ul li.listType {
+    padding-left: 30px;
+    background: url('../../images/icon-list.png') 3px 1px no-repeat;
+}
+#mediamanager__page .panelHeader ul li.sortBy {
+    padding-left: 30px;
+    background: url('../../images/icon-sort.png') 3px 1px no-repeat;
+}
+
+#mediamanager__page .panelHeader form.options .ui-buttonset label{
+    font-size: 90%;
+    margin-right: -0.4em;
+}
+#mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
+    padding: .4em .7em;
+    line-height: 1;
+}
+
+/*____________ File list ____________*/
+
+#mediamanager__page .filelist ul {
+    padding: 0;
+    margin: 0;
+}
+
+#mediamanager__page .filelist .panelContent ul li:hover {
     background-color: __background_alt__;
 }
 
-/* Files thumbs view */
+/* thumbs */
 
-.mediamanager-thumbs li {
+#mediamanager__page .filelist .thumbs li {
     width: 100px;
     min-height: 130px;
     display: inline-block;
@@ -184,73 +157,49 @@
     padding: 5px;
     vertical-align: top;
     text-align: center;
-    zoom: 1;
     position: relative;
     line-height: 1.2;
 }
-
-* html .mediamanager-thumbs li {
+* html #mediamanager__page .filelist .thumbs li {
+    display: inline;
+    zoom: 1;
+}
+*+html #mediamanager__page .filelist .thumbs li {
     display: inline;
 }
 
-*+html .mediamanager-thumbs li {
-    display: inline;
-}
-
-.mediamanager-thumbs li .image,
-.mediamanager-thumbs li .image0 {
-    width: 100%;
-    height: 90px;
-    display: block;
-    overflow: hidden;
-}
-
-.mediamanager-thumbs li .image1 {
-    display: none;
-}
-
-.mediamanager-thumbs li .image span,
-.mediamanager-thumbs li .image0 span {
+#mediamanager__page .filelist .thumbs li .image {
     vertical-align: middle;
     display: table-cell;
     width: 100px;
     height: 90px;
+    overflow: hidden;
+}
+#mediamanager__page .filelist .thumbs li .tiny {
+    display: none;
 }
 
-.mediamanager-thumbs li .name,
-.mediamanager-thumbs li .size,
-.mediamanager-thumbs li .filesize,
-.mediamanager-thumbs li .date {
+#mediamanager__page .filelist .thumbs li .name,
+#mediamanager__page .filelist .thumbs li .size,
+#mediamanager__page .filelist .thumbs li .filesize,
+#mediamanager__page .filelist .thumbs li .date {
     display: block;
     overflow: hidden;
     width: 90px;
     white-space: nowrap;
 }
-
-.mediamanager-thumbs li .name {
+#mediamanager__page .filelist .thumbs li .name {
     padding: 5px 0;
     font-weight: bold;
 }
-
-.mediamanager-thumbs li .date {
+#mediamanager__page .filelist .thumbs li .date {
     font-style: italic;
     white-space: normal;
 }
 
-.mediamanager-thumbs li input[type=checkbox] {
-    display: none;
-    float: left;
-    margin: 3px;
-}
+/* rows */
 
-.mediamanager-thumbs li:hover input[type=checkbox],
-.mediamanager-thumbs li input[type=checkbox]:checked {
-    display: block;
-}
-
-/* Files list view */
-
-.mediamanager-list li {
+#mediamanager__page .filelist .rows li {
     list-style: none;
     display: block;
     position: relative;
@@ -259,14 +208,14 @@
     margin-bottom: 3px;
     background-color: __background__;
     color: __text__;
+    overflow: hidden;
 }
 
-.mediamanager-list li:nth-child(2n+1) {
+#mediamanager__page .filelist .rows li:nth-child(2n+1) {
     background-color: __background_neu__;
 }
 
-.mediamanager-list li .image,
-.mediamanager-list li .image1 {
+#mediamanager__page .filelist .rows li .image {
     width: 10%;
     display: block;
     overflow: hidden;
@@ -274,68 +223,48 @@
     height: 40px;
     text-align: center;
 }
-
-.mediamanager-list li .image0 {
+#mediamanager__page .filelist .rows li .thumb {
     display: none;
 }
 
-.mediamanager-list li .name,
-.mediamanager-list li .size,
-.mediamanager-list li .filesize,
-.mediamanager-list li .date {
-    overflow: hidden;
-    float: left;
-    margin-left: 1%;
-    white-space: nowrap;
-}
-
-.mediamanager-list li .name {
-    width: 30%;
-    font-weight: bold;
-}
-
-.mediamanager-list li .size,
-.mediamanager-list li .filesize {
-    width: 15%;
-}
-
-.mediamanager-list li .date {
-    width: 20%;
-}
-
-.mediamanager-list li .date {
-    font-style: italic;
-    white-space: normal;
-}
-
-.mediamanager-list .icon {
-    max-width: 16px;
-    max-height: 16px;
-}
-
-.mediamanager-list li .image span,
-.mediamanager-list li .image1 span {
+#mediamanager__page .filelist .rows li .image span {
     vertical-align: middle;
     text-align: center;
     display: table-cell;
     width: 100px;
     height: 40px;
 }
+#mediamanager__page .filelist .rows .icon {
+    margin-top: 12px;
+}
 
-.mediamanager-list li input[type=checkbox] {
-    display: none;
+#mediamanager__page .filelist .rows li .name,
+#mediamanager__page .filelist .rows li .size,
+#mediamanager__page .filelist .rows li .filesize,
+#mediamanager__page .filelist .rows li .date {
+    overflow: hidden;
     float: left;
-    margin: 3px;
+    margin-left: 1%;
+    white-space: nowrap;
 }
 
-.mediamanager-list li:hover input[type=checkbox],
-.mediamanager-list li input[type=checkbox]:checked {
-    display: block;
+#mediamanager__page .filelist .rows li .name {
+    width: 30%;
+    font-weight: bold;
+}
+#mediamanager__page .filelist .rows li .size,
+#mediamanager__page .filelist .rows li .filesize {
+    width: 15%;
+}
+#mediamanager__page .filelist .rows li .date {
+    width: 20%;
+    font-style: italic;
+    white-space: normal;
 }
 
-/* Upload panel */
+/*____________ Upload panel ____________*/
 
-#mediamanager__layout div.upload {
+#mediamanager__page div.upload {
     padding-bottom: 0.5em;
 }
 
@@ -344,57 +273,78 @@
     padding-bottom: 0.5em;
 }
 
-/* File preview */
+/*____________ File preview ____________*/
 
-.mediamanager__preview,
-.mediamanager__preview_buttons {
+#mediamanager__page .file ul.actions {
     text-align: center;
+    margin: 0 0 5px;
+    list-style: none;
+}
+#mediamanager__page .file ul.actions li {
+    display: inline;
+}
+
+#mediamanager__page .file div.image {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+#mediamanager__page .file div.image img {
+    width: 100%;
+}
+
+#mediamanager__page .file dl {
+}
+#mediamanager__page .file dl dt {
+    font-weight: bold;
+    display: block;
+    background-color: __background_alt__;
+}
+#mediamanager__page .file dl dd {
+    display: block;
+    background-color: __background_neu__;
+}
+
+
+/*____________ Meta data edit form ____________*/
+
+#mediamanager__page form.meta div.row {
     margin-bottom: 5px;
 }
 
-.mediamanager__preview img {
-    width: 99%;
-}
-
-/* Meta data edit form */
-
-#mediamanager__details div.metafield {
-    margin-bottom: 5px;
-}
-
-#mediamanager__details label {
+#mediamanager__page form.meta label span {
     display: block;
 }
 
-#mediamanager__details form.meta input {
+#mediamanager__page form.meta input {
     width: 50%;
 }
 
-#mediamanager__details form.meta input.button {
+#mediamanager__page form.meta input.button {
     width: auto;
 }
 
-#mediamanager__details form.meta textarea.edit {
+#mediamanager__page form.meta textarea.edit {
     height: 6em;
     width: 95%;
     min-width: 95%;
     max-width: 95%;
 }
 
-/* Revisions form */
+/*____________ Revisions form ____________*/
 
-#mediamanager__details #page__revisions ul {
+#mediamanager__page #page__revisions ul {
     margin-left: 10px;
     list-style-type: none;
 }
 
-#mediamanager__details #page__revisions ul li div.li div {
+#mediamanager__page #page__revisions ul li div.li div {
     font-size: 90%;
     color: __text_neu__;
     padding-left: 18px;
 }
 
-#mediamanager__details #page__revisions ul li div.li input {
+#mediamanager__page #page__revisions ul li div.li input {
     position: relative;
     top: 1px;
 }
@@ -402,48 +352,48 @@
 /* File diff */
 
 #mediamanager__diff {
-    margin-top: 10px;
 }
 
-#mediamanager__diff_table {
-    padding: 0;
-    margin: 0;
-    margin-top: 10px;
-}
-
-#mediamanager__diff_table li {
+#mediamanager__diff td,
+#mediamanager__diff th {
     width: 48%;
-    display: inline-block;
-    margin: 0;
-    margin-bottom: 10px;
-    padding: 2px;
+    margin: 0 5px 10px 0;
+    padding: 0;
     vertical-align: top;
-    zoom: 1;
-    color: __text__;
-}
-
-* html #mediamanager__diff_table li {
-    display: inline;
-}
-
-*+html #mediamanager__diff_table li {
-    display: inline;
+    text-align: left;
 }
 
 /* For IE7 */
-*:first-child+html #mediamanager__diff_table li {
+*:first-child+html #mediamanager__diff td {
     width: 45%;
+}
+
+#mediamanager__diff th {
+    font-weight: normal;
+}
+#mediamanager__diff th a {
+    font-weight: bold;
+}
+#mediamanager__diff th span {
+    font-size: 90%;
 }
 
 /* Image diff */
 
-#mediamanager__layout dl.img_tags dd.highlighted{
+#mediamanager__diff dl dd strong{
     background-color: __highlight__;
+    color: __text__;
+    font-weight: normal;
 }
 
 #mediamanager__form_diffview {
     margin-bottom: 10px;
+    display: block;
 }
+
+
+
+
 
 #mediamanager__diff_layout {
     position: relative;
@@ -455,8 +405,7 @@
     left: 0;
 }
 
-#mediamanager__diff_opacity_image1,
-#mediamanager__diff_portions_image1 {
+#mediamanager__diff div.image1 {
     width: 97%;
 }
 
@@ -464,21 +413,20 @@
     width: 100%;
 }
 
-#mediamanager__diff_opacity_image2 {
+#mediamanager__diff div.diff_opacity div.image2 {
     width: 97%;
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
 }
 
-#mediamanager__diff_portions_image2 {
+#mediamanager__diff div.diff_portions div.image2 {
     width: 97%;
     border-right: 1px solid red;
     overflow: hidden;
 }
 
-#mediamanager__opacity_slider,
-#mediamanager__portions_slider {
+#mediamanager__diff div.diff_slider {
     margin: 10px;
     width: 95%;
 }

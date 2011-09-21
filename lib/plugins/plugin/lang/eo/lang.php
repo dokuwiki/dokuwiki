@@ -11,6 +11,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert BOGENSCHNEIDER <robog@gmx.de>
+ * @author Robert BOGENSCHNEIDER <bogi@UEA.org>
  */
 $lang['menu']                  = 'Administri Kromaĵojn';
 $lang['download']              = 'Elŝuti kaj instali novan kromaĵon';
@@ -56,3 +57,4 @@ $lang['enabled']               = 'La kromaĵo %s estas ebligita.';
 $lang['notenabled']            = 'La kromaĵo %s ne povis esti ebligita, kontrolu dosier-permesojn.';
 $lang['disabled']              = 'La kromaĵo %s estas malebligita.';
 $lang['notdisabled']           = 'La kromaĵo %s ne povis esti malebligita, kontrolu dosier-permesojn.';
+$lang['packageinstalled']      = 'Kromaĵa pakaĵo (%d kromaĵo(j): %s) sukcese instalitaj.';
