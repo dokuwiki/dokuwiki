@@ -175,8 +175,10 @@
     height: 90px;
     overflow: hidden;
 }
-#mediamanager__page .filelist .thumbs li .tiny {
-    display: none;
+
+#mediamanager__page .filelist .thumbs li .thumb img {
+    max-width: 90px;
+    max-height: 90px;
 }
 
 #mediamanager__page .filelist .thumbs li .name,
@@ -223,8 +225,10 @@
     height: 40px;
     text-align: center;
 }
-#mediamanager__page .filelist .rows li .thumb {
-    display: none;
+
+#mediamanager__page .filelist .rows li .thumb img {
+    max-width: 40px;
+    max-height: 40px;
 }
 
 #mediamanager__page .filelist .rows li .image span {

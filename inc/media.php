@@ -1441,42 +1441,38 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
  */
 function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
-    if (!$fullscreen) {
-        $size_array[] = 120;
-    } else {
-        $size_array = array(90, 40);
-    }
-    foreach ($size_array as $index => $size) {
-        $w = (int) $item['meta']->getField('File.Width');
-        $h = (int) $item['meta']->getField('File.Height');
-        if($w>$size || $h>$size){
-            if (!$fullscreen) {
-                $ratio = $item['meta']->getResizeRatio($size);
-            } else {
-                $ratio = $item['meta']->getResizeRatio($size,$size);
-            }
-            $w = floor($w * $ratio);
-            $h = floor($h * $ratio);
-        }
-        $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
-        $p = array();
+    $size = $fullscreen ? 90 : 120;
+
+    $w = (int) $item['meta']->getField('File.Width');
+    $h = (int) $item['meta']->getField('File.Height');
+    if($w>$size || $h>$size){
         if (!$fullscreen) {
-            $p['width']  = $w;
-            $p['height'] = $h;
+            $ratio = $item['meta']->getResizeRatio($size);
+        } else {
+            $ratio = $item['meta']->getResizeRatio($size,$size);
         }
-        $p['alt']    = $item['id'];
-        $att = buildAttributes($p);
+        $w = floor($w * $ratio);
+        $h = floor($h * $ratio);
+    }
+    $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
+    $p = array();
+    if (!$fullscreen) {
+        // In fullscreen mediamanager view, image resizing is done via CSS.
+        $p['width']  = $w;
+        $p['height'] = $h;
+    }
+    $p['alt']    = $item['id'];
+    $att = buildAttributes($p);
 
-        // output
-        if ($fullscreen) {
-            echo '<a name="'.($index ? 'd' : 'l').'_:'.$item['id'].'" class="image '.($index ? 'tiny' : 'thumb').'" href="'.
-                media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
-            echo '<span><img src="'.$src.'" '.$att.' /></span>';
-            echo '</a>';
-        }
+    // output
+    if ($fullscreen) {
+        echo '<a name="l_:'.$item['id'].'" class="image thumb" href="'.
+            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
+        echo '<span><img src="'.$src.'" '.$att.' /></span>';
+        echo '</a>';
     }
 
-    if ($fullscreen) return '';
+    if ($fullscreen) return;
 
     echo '<div class="detail">';
     echo '<div class="thumb">';
