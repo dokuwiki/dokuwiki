@@ -576,12 +576,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
         }else {
             if ($fullscreenview) {
-                $view = $_REQUEST['list'];
-                if ($view == 'rows') {
-                    echo '<ul class="rows">'.NL;
-                } else {
-                    echo '<ul class="thumbs">'.NL;
-                }
+                echo '<ul class="' . _media_get_list_type() . '">';
             }
             foreach($data as $item){
                 if (!$fullscreenview) {
@@ -651,25 +646,23 @@ function media_tabs_details($image, $selected_tab = ''){
  */
 function media_tab_files_options(){
     global $lang, $NS;
-    $sort = _media_get_sort_type();
-    $form = new Doku_Form(array('class' => 'options', 'method' => 'get'));
+    $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
+                                'action' => media_managerURL(array(), '&')));
     $form->addHidden('sectok', null);
-    $form->addHidden('ns', $NS);
-    $form->addHidden('do', 'media');
+    if (isset($_REQUEST['q'])) {
+        $form->addHidden('q', $_REQUEST['q']);
+    }
     $form->addElement('<ul>'.NL);
     foreach(array('list' => array('listType', array('thumbs', 'rows')),
-                  'sort' => array('sortBy', array('name', 'date'), $sort))
+                  'sort' => array('sortBy', array('name', 'date')))
             as $group => $content) {
-        if (count($content) < 3) {
-            $content[2] = isset($_REQUEST[$group])
-                            ? $_REQUEST[$group]
-                            : $content[1][0];
-        }
+        $checked = "_media_get_${group}_type";
+        $checked = $checked();
 
         $form->addElement('<li class="' . $content[0] . '">');
         foreach($content[1] as $option) {
             $attrs = array();
-            if ($content[2] == $option) {
+            if ($checked == $option) {
                 $attrs['checked'] = 'checked';
             }
             $form->addElement(form_makeRadioField($group, $option,
@@ -693,16 +686,20 @@ function media_tab_files_options(){
  * @return string - sort type
  */
 function _media_get_sort_type() {
-    $sort = 'name';
-    if (isset($_REQUEST['sort'])) {
-        $sort = $_REQUEST['sort'];
-    } elseif (strpos($_COOKIE['DOKU_PREFS'], 'sort') >= 0) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        for ($i = 0; $i < count($parts); $i+=2){
-            if ($parts[$i] == 'sort') $sort = $parts[$i+1];
-        }
+    return _media_get_display_param('sort', array('default' => 'name', 'date'));
+}
+
+function _media_get_list_type() {
+    return _media_get_display_param('list', array('default' => 'thumbs', 'rows'));
+}
+
+function _media_get_display_param($param, $values) {
+    if (isset($_REQUEST[$param]) && in_array($_REQUEST[$param], $values)) {
+        // FIXME: Set cookie
+        return $_REQUEST[$param];
+    } else {
+        return get_doku_pref($param, $values['default']);
     }
-    return $sort;
 }
 
 /**
@@ -1295,12 +1292,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else {
         if ($fullscreen) {
-            $view = $_REQUEST['view'];
-            if ($view == 'list') {
-                echo '<ul class="mediamanager-list" id="mediamanager__file_list">'.NL;
-            } else {
-                echo '<ul class="mediamanager-thumbs" id="mediamanager__file_list">'.NL;
-            }
+            echo '<ul class="' . _media_get_list_type() . '">';
         }
         foreach($evdata['data'] as $item){
             if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
@@ -1514,18 +1506,16 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array
     global $ID;
 
     $gets = array('do' => 'media');
-    $media_manager_params = array('tab_files', 'tab_details', 'image', 'ns', 'view');
+    $media_manager_params = array('tab_files', 'tab_details', 'image', 'ns', 'list', 'sort');
     foreach ($media_manager_params as $x) {
         if (isset($_REQUEST[$x])) $gets[$x] = $_REQUEST[$x];
     }
 
     if ($params) {
-        foreach ($params as $k => $v) {
-            $gets[$k] = $v;
-        }
+        $gets = $params + $gets;
     }
     unset($gets['id']);
-    if ($gets['delete']) {
+    if (isset($gets['delete'])) {
         unset($gets['image']);
         unset($gets['tab_details']);
     }
@@ -1603,15 +1593,18 @@ function media_searchform($ns,$query='',$fullscreen=false){
 
     // The default HTML search form
     $params = array('id' => 'dw__mediasearch');
-    if (!$fullscreen) $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
-    else $params['action'] = media_managerURL(array(), '&');
+    if (!$fullscreen) {
+        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+    } else {
+        $params['action'] = media_managerURL(array(), '&');
+    }
     $form = new Doku_Form($params);
-    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>'.NL);
     $form->addHidden('ns', $ns);
-    if (!$fullscreen) $form->addHidden('do', 'searchlist');
-    else $form->addHidden('mediado', 'searchlist');
+    $form->addHidden($fullscreen ? 'mediado' : 'do', 'searchlist');
+
+    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>'.NL);
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'mediamanager__sort_textfield','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
+    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
     $form->addElement(form_makeCloseTag('p'));
     html_form('searchmedia', $form);

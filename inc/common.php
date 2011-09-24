@@ -1558,4 +1558,16 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
     }
 }
 
+function get_doku_pref($pref, $default) {
+    if (strpos($_COOKIE['DOKU_PREFS'], $pref) !== false) {
+        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+        for ($i = 0; $i < count($parts); $i+=2){
+            if ($parts[$i] == $pref) {
+                return $parts[$i+1];
+            }
+        }
+    }
+    return $default;
+}
+
 //Setup VIM: ex: et ts=2 :
