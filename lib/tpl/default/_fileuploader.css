@@ -1,20 +1,26 @@
+
 .qq-uploader {
     position: relative;
     width: 100%;
 }
 
+.qq-uploader .error {
+    color: #f00;
+    background-color: #fff;
+}
+
+/* select file button */
+
 .qq-upload-button {
     display: inline-block;
     border: 1px solid __border__;
     color: __text__;
-    background-color: __background__;
+    background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
     text-decoration: none;
     font-size: 100%;
     cursor: pointer;
-    margin: 1px;
-    margin-bottom: 5px;
+    margin: 1px 1px 5px;
     padding: 0.125em 0.4em;
-    background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
 }
 
 * html .qq-upload-button,
@@ -23,8 +29,10 @@
 }
 
 .qq-upload-button-focus {
-    outline: 1px dotted black;
+    outline: 1px dotted;
 }
+
+/* drop area */
 
 .qq-upload-drop-area {
     position: absolute;
@@ -35,15 +43,16 @@
     min-height: 70px;
     z-index: 2;
     background: __background_neu__;
+    color: __text__;
     text-align: center;
 }
 
 .qq-upload-drop-area span {
-    display:block;
-    position:absolute;
+    display: block;
+    position: absolute;
     top: 50%;
-    width:100%;
-    margin-top:-8px;
+    width: 100%;
+    margin-top: -8px;
     font-size: 120%;
 }
 
@@ -51,8 +60,22 @@
     background: __background_alt__;
 }
 
-.qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
-    margin-right: 7px;
+/* list of files to upload */
+
+.qq-uploader li {
+    margin-bottom: 5px;
+    color: __text__;
+}
+
+.qq-uploader li span,
+.qq-uploader li input,
+.qq-uploader li a {
+    margin-right: 5px;
+}
+
+.qq-upload-file {
+    display: block;
+    font-weight: bold;
 }
 
 .qq-upload-spinner {
@@ -63,44 +86,21 @@
     vertical-align: text-bottom;
 }
 
-.qq-upload-size,.qq-upload-cancel {
+.qq-upload-size,
+.qq-upload-cancel {
     font-size: 85%;
 }
 
 .qq-upload-failed-text {
-    display:none;
+    display: none;
 }
-
 .qq-upload-fail .qq-upload-failed-text {
-    display:inline;
+    display: inline;
 }
 
-.qq-upload-file {
-    display: block;
-    font-weight: bold;
+.qq-action-container * {
+    vertical-align: middle;
 }
-
-.qq-upload-file-hidden {
-    display:none;
-}
-
-.qq-upload-cancel {
-    padding-left: 10px;
-}
-
-.qq-uploader .dw__ow {
+.qq-overwrite-check input {
     margin-left: 10px;
-    margin-right: 3px;
-}
-
-.qq-uploader .check {
-    line-height: 18px;
-}
-
-.qq-uploader #mediamanager__upload_button {
-    margin-bottom: 10px;
-}
-
-.qq-uploader div.li {
-    margin-bottom: 5px;
 }
