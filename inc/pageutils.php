@@ -134,6 +134,7 @@ function cleanID($raw_id,$ascii=false,$media=false){
     $id = preg_replace('#:+#',':',$id);
     $id = ($media ? trim($id,':.-') : trim($id,':._-'));
     $id = preg_replace('#:[:\._\-]+#',':',$id);
+    $id = preg_replace('#[:\._\-]+:#',':',$id);
 
     $cache[(string)$raw_id] = $id;
     return($id);
