@@ -62,6 +62,11 @@
 
 /* list of files to upload */
 
+div.qq-uploader ul {
+    margin: 0;
+    list-style: none;
+}
+
 .qq-uploader li {
     margin-bottom: 5px;
     color: __text__;
