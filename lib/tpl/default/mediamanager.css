@@ -382,55 +382,47 @@
     font-size: 90%;
 }
 
-/* Image diff */
-
 #mediamanager__diff dl dd strong{
     background-color: __highlight__;
     color: __text__;
     font-weight: normal;
 }
 
-#mediamanager__form_diffview {
+/* Image diff */
+
+#mediamanager__page .file form.diffView {
     margin-bottom: 10px;
     display: block;
 }
 
-
-
-
-
-#mediamanager__diff_layout {
-    position: relative;
+#mediamanager__diff div.slider {
+    margin: 10px;
+    width: 95%;
 }
 
-#mediamanager__diff_layout div {
+#mediamanager__diff .imageDiff {
+    position: relative;
+}
+#mediamanager__diff .imageDiff .image1,
+#mediamanager__diff .imageDiff .image2 {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-#mediamanager__diff div.image1 {
     width: 97%;
 }
 
-#mediamanager__diff_layout div img {
-    width: 100%;
-}
-
-#mediamanager__diff div.diff_opacity div.image2 {
-    width: 97%;
+#mediamanager__diff .imageDiff.opacity .image2 {
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
 }
 
-#mediamanager__diff div.diff_portions div.image2 {
-    width: 97%;
+#mediamanager__diff .imageDiff.portions .image2 {
     border-right: 1px solid red;
     overflow: hidden;
 }
 
-#mediamanager__diff div.diff_slider {
-    margin: 10px;
-    width: 95%;
+#mediamanager__diff .imageDiff img {
+    width: 100%;
 }
+
