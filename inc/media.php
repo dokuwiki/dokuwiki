@@ -1078,7 +1078,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
 
         if (!$fromajax) {
             $form = new Doku_Form(array(
-            	'action' => media_managerURL(array(), '&'),
+                'action' => media_managerURL(array(), '&'),
                 'method' => 'get',
                 'id' => 'mediamanager__form_diffview',
                 'class' => 'diffView'
