@@ -73,6 +73,10 @@
     color: __text__;
     line-height: 1.5em;
 }
+* html #mediamanager__page .namespaces h2,
+*+html #mediamanager__page .namespaces h2 {
+    display: inline;
+}
 
 #mediamanager__page .namespaces ul {
     margin-left: .2em;
@@ -143,6 +147,20 @@
     background-color: __background_alt__;
 }
 
+#mediamanager__page .filelist li dt a {
+    vertical-align: middle;
+    display: table-cell;
+    overflow: hidden;
+}
+* html #mediamanager__page .filelist .thumbs li dt a,
+*+html #mediamanager__page .filelist .thumbs li dt a {
+    display: block;
+}
+* html #mediamanager__page .filelist .rows li dt a,
+*+html #mediamanager__page .filelist .rows li dt a {
+    display: inline;
+}
+
 /* thumbs */
 
 #mediamanager__page .filelist .thumbs li {
@@ -160,23 +178,18 @@
     position: relative;
     line-height: 1.2;
 }
-* html #mediamanager__page .filelist .thumbs li {
+* html #mediamanager__page .filelist .thumbs li,
+*+html #mediamanager__page .filelist .thumbs li {
     display: inline;
     zoom: 1;
 }
-*+html #mediamanager__page .filelist .thumbs li {
-    display: inline;
-}
 
-#mediamanager__page .filelist .thumbs li .image {
-    vertical-align: middle;
-    display: table-cell;
+#mediamanager__page .filelist .thumbs li dt a {
     width: 100px;
     height: 90px;
-    overflow: hidden;
 }
 
-#mediamanager__page .filelist .thumbs li .thumb img {
+#mediamanager__page .filelist .thumbs li dt a img {
     max-width: 90px;
     max-height: 90px;
 }
@@ -217,29 +230,21 @@
     background-color: __background_neu__;
 }
 
-#mediamanager__page .filelist .rows li .image {
-    width: 10%;
-    display: block;
-    overflow: hidden;
+#mediamanager__page .filelist .rows li dt {
     float: left;
+    width: 10%;
     height: 40px;
     text-align: center;
 }
 
-#mediamanager__page .filelist .rows li .thumb img {
-    max-width: 40px;
-    max-height: 40px;
-}
-
-#mediamanager__page .filelist .rows li .image span {
-    vertical-align: middle;
-    text-align: center;
-    display: table-cell;
+#mediamanager__page .filelist .rows li dt a {
     width: 100px;
     height: 40px;
 }
-#mediamanager__page .filelist .rows .icon {
-    margin-top: 12px;
+
+#mediamanager__page .filelist .rows li dt a img {
+    max-width: 40px;
+    max-height: 40px;
 }
 
 #mediamanager__page .filelist .rows li .name,
@@ -355,7 +360,8 @@
 
 /* File diff */
 
-#mediamanager__diff {
+#mediamanager__diff table {
+    table-layout: fixed;
 }
 
 #mediamanager__diff td,
@@ -365,11 +371,6 @@
     padding: 0;
     vertical-align: top;
     text-align: left;
-}
-
-/* For IE7 */
-*:first-child+html #mediamanager__diff td {
-    width: 45%;
 }
 
 #mediamanager__diff th {

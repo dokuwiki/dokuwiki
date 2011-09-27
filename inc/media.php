@@ -1459,7 +1459,7 @@ function media_printimgdetail($item, $fullscreen=false){
     if ($fullscreen) {
         echo '<a name="l_:'.$item['id'].'" class="image thumb" href="'.
             media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
-        echo '<span><img src="'.$src.'" '.$att.' /></span>';
+        echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';
     }
 
