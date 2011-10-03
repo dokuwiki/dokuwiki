@@ -81,6 +81,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                     <ul>
                         <?php
                             tpl_action('recent', 1, 'li');
+                            tpl_action('media', 1, 'li');
                             tpl_action('index', 1, 'li');
                         ?>
                     </ul>
@@ -89,28 +90,35 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             </div>
 
             <div class="clearer"></div>
+
+            <!-- BREADCRUMBS -->
+            <?php if($conf['breadcrumbs']){ ?>
+                <div class="tracking breadcrumbs"><?php tpl_breadcrumbs() ?></div>
+            <?php } ?>
+            <?php if($conf['youarehere']){ ?>
+                <div class="hierarchical breadcrumbs"><?php tpl_youarehere() ?></div>
+            <?php } ?>
+
             <hr class="a11y" />
         </div></div><!-- /header -->
 
 
         <div class="wrapper">
 
+            <!-- ********** ASIDE ********** -->
+            <div id="dokuwiki__aside"><div class="pad include">
+                <?php tpl_include_page(tpl_getConf('sidebarID')) /* includes the given wiki page */ ?>
+                <div class="clearer"></div>
+            </div></div><!-- /aside -->
+
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad">
                 <?php tpl_flush() /* flush the output buffer */ ?>
                 <?php _tpl_include('pageheader.html') ?>
 
+                <div class="pageId"><span>[[<?php echo tpl_pagetitle($ID,true) ?>]]</span></div>
+
                 <div class="page">
-
-                    <!-- BREADCRUMBS -->
-                    <?php if($conf['breadcrumbs']){ ?>
-                        <div class="breadcrumbs"><?php tpl_breadcrumbs() ?></div>
-                    <?php } ?>
-                    <?php if($conf['youarehere']){ ?>
-                        <div class="breadcrumbs"><?php tpl_youarehere() ?></div>
-                    <?php } ?>
-                    <div id="page_id">[[page_id]]</div>
-
                     <!-- wikipage start -->
                     <?php tpl_content() /* the main content */ ?>
                     <!-- wikipage stop -->
@@ -121,12 +129,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
 
-            <!-- ********** ASIDE ********** -->
-            <div id="dokuwiki__aside"><div class="pad include">
-                <?php tpl_include_page(tpl_getConf('sidebarID')) /* includes the given wiki page */ ?>
-                <div class="clearer"></div>
-            </div></div><!-- /aside -->
-
             <div class="clearer"></div>
             <hr class="a11y" />
 
@@ -134,16 +136,18 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             <?php if ($showTools): ?>
                 <div id="dokuwiki__pagetools">
                     <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
-                    <ul>
-                        <?php
-                            tpl_action('edit', 1, 'li');
-                            tpl_action('history', 1, 'li');
-                            tpl_action('backlink', 1, 'li');
-                            tpl_action('subscribe', 1, 'li');
-                            tpl_action('revert', 1, 'li');
-                            tpl_action('top', 1, 'li');
-                        ?>
-                    </ul>
+                    <div class="tools">
+                        <ul>
+                            <?php
+                                tpl_action('edit', 1, 'li');
+                                tpl_action('history', 1, 'li');
+                                tpl_action('backlink', 1, 'li');
+                                tpl_action('subscribe', 1, 'li');
+                                tpl_action('revert', 1, 'li');
+                                tpl_action('top', 1, 'li');
+                            ?>
+                        </ul>
+                    </div>
                 </div>
             <?php endif; ?>
         </div><!-- /wrapper -->

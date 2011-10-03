@@ -13,7 +13,16 @@ html {
     overflow-y: scroll;
 }
 html, body {
-    background-color: __background__;
+    background-color: #fbfaf9;
+    background: -moz-linear-gradient(   top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    /* do we want to support old browsers?
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ddd), color-stop(1em,#eee), color-stop(4em,#fbfaf9));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ddd', endColorstr='#fbfaf9',GradientType=0 );
+    */
+    background: -webkit-linear-gradient(top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background: -o-linear-gradient(     top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background: -ms-linear-gradient(    top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background: linear-gradient(        top, #ddd 0%, #eee 1em, #fbfaf9 4em);
     color: __text__;
     margin: 0;
     padding: 0;
@@ -135,7 +144,7 @@ a {
 }
 a:link, a:visited {
     text-decoration: none;
-    color: #00c; /* §colour */
+    color: __link__; /* §colour */
 }
 a:link:hover, a:visited:hover,
 a:link:focus, a:visited:focus,
@@ -161,11 +170,12 @@ img {
 }
 
 hr {
-    border-style: solid;
-    border-width: 1px 0 0;
-    text-align: center;
+    border-top: solid #ccc;
+    border-bottom: solid #fff;
+    border-width: 1px 0;
     height: 0;
     width: 100%;
+    text-align: center;
     clear: both;
 }
 
@@ -253,7 +263,7 @@ option   { font-style: normal; font-weight: normal; }
 /* @todo: either make input.edit and buttons more generic or put into design.css */
 .dokuwiki input.edit {
     border: 1px solid __border__;
-    padding: 0.41em 0;
+    padding: 0.35em .1em;
     -moz-box-shadow: inset 0 0 1px __background_alt__;
     -webkit-box-shadow: inset 0 0 1px __background_alt__;
     box-shadow: inset 0 0 1px __background_alt__;

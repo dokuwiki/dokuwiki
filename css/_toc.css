@@ -9,12 +9,12 @@
 /* toc container */
 .dokuwiki div.toc {
     float: right;
-    margin:  -0.3em 0 .5em 1.4em;
+    margin:  -2em -2em .5em 1.4em;
     /* @todo: possible to make calculation sort of automatic? */
-    width: 200px; /* __sidebar_width__ - margin-left */
-    margin-left: 20px;
-    /*width: 12em;*/
-    font-size: 0.75em;
+    /*width: 200px;  __sidebar_width__ - margin-left */
+    width: __sidebar_width__;
+    font-size: 0.9em;
+    border-left: 1px solid __border__;
 }
 
 /*____________ toc header ____________*/
@@ -23,14 +23,16 @@
     padding: 0.5em 1em;
     margin-bottom: .2em;
     font-weight: bold;
+    /*
     background-color: __background_alt__;
     color: __text__;
+    */
 }
 
 /* css arrow */
 .dokuwiki .toc span.toc_open,
 .dokuwiki .toc span.toc_close {
-    border: .4em solid __background_alt__;
+    border: .4em solid __background__;
     float: right;
     display: block;
     margin: 0 .2em 0 0;
@@ -52,8 +54,10 @@
 
 .dokuwiki #toc__inside {
     padding: 0.75em 1em 1.5em;
+    /*
     background-color: __background_alt__;
     color: __text__;
+    */
 }
 .dokuwiki #toc__inside ul {
     padding: 0 0 0 1.5em;
