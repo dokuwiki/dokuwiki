@@ -104,7 +104,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             <hr class="a11y" />
         </div></div><!-- /header -->
 
-        <div class="wrapper">
+        <div class="wrapper group">
 
             <!-- ********** ASIDE ********** -->
             <div id="dokuwiki__aside"><div class="pad include group">

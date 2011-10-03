@@ -63,7 +63,6 @@ body {
 
 #dokuwiki__footer {
     clear: both;
-    padding: 0 0 2.4em; /* @pad */
     margin-left: __sidebar_width__;
 }
 #dokuwiki__footer .pad {
