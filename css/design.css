@@ -17,6 +17,15 @@
 #dokuwiki__header .headings,
 #dokuwiki__header .tools {
     margin-bottom: 1em;
+    width: 50%;
+}
+#dokuwiki__header h1 img {
+    float: left;
+    margin-right: .5em;
+}
+#dokuwiki__header h1 span {
+    display: block;
+    padding-top: 10px;
 }
 #dokuwiki__header h1 {
     margin-bottom: 0;
@@ -234,6 +243,19 @@
     margin-bottom: .5em;
     font-size: 0.875em;
 }
+/* alternative:
+.dokuwiki div.breadcrumbs {
+    border-top: 1px solid __border__;
+    border-bottom: 1px solid __background__;
+    margin-bottom: .5em;
+    font-size: 0.875em;
+}
+.dokuwiki div.breadcrumbs div {
+    border-top: 1px solid __background__;
+    border-bottom: 1px solid __border__;
+    padding: .1em .35em;
+}
+*/
 .dokuwiki div.breadcrumbs a {
     color: __link__;
     background-color: inherit;
@@ -271,6 +293,12 @@
     margin-bottom: 0;
 }
 
+#dokuwiki__aside a:link,
+#dokuwiki__aside a:visited {
+    color: __link__;
+    background-color: inherit;
+}
+
 
 /* content
 ********************************************************************/
@@ -289,7 +317,7 @@
     border-top-right-radius: 2px;
 }
 
-.dokuwiki .page {
+.dokuwiki div.page {
     background: __background__;
     color: inherit;
     border: 1px solid #eee;

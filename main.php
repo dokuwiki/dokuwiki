@@ -38,10 +38,11 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
         <div id="dokuwiki__header"><div class="pad">
 
             <div class="headings">
-                <h1><?php tpl_link(wl(),$conf['title'],'id="dokuwiki__top" accesskey="h" title="[H]"') ?></h1>
-                <?php /* how to insert logo instead (if no CSS image replacement technique is used):
-                        upload your logo into the data/media folder (root of the media manager) and replace 'logo.png' accordingly:
-                        tpl_link(wl(),'<img src="'.ml('logo.png').'" alt="'.$conf['title'].'" />','id="dokuwiki__top" accesskey="h" title="[H]"') */ ?>
+                <h1><?php tpl_link(
+                    wl(),
+                    '<img src="'.tpl_getFavicon(false, 'logo.png').'" alt="" /> <span>'.$conf['title'].'</span>',
+                    'id="dokuwiki__top" accesskey="h" title="[H]"'
+                ) /* @todo: obviously don't use tpl_getFavicon, but make a new function (or use a config option?) */ ?></h1>
                 <?php if (tpl_getConf('tagline')): ?>
                     <p class="claim"><?php echo tpl_getConf('tagline') ?></p>
                 <?php endif ?>
@@ -93,10 +94,10 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
             <!-- BREADCRUMBS -->
             <?php if($conf['breadcrumbs']){ ?>
-                <div class="tracking breadcrumbs"><?php tpl_breadcrumbs() ?></div>
+                <div class="tracking breadcrumbs"><div><?php tpl_breadcrumbs() ?></div></div>
             <?php } ?>
             <?php if($conf['youarehere']){ ?>
-                <div class="hierarchical breadcrumbs"><?php tpl_youarehere() ?></div>
+                <div class="hierarchical breadcrumbs"><div><?php tpl_youarehere() ?></div></div>
             <?php } ?>
 
             <hr class="a11y" />
