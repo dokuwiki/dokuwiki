@@ -35,9 +35,9 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
         <?php _tpl_include('header.html') ?>
 
         <!-- ********** HEADER ********** -->
-        <div id="dokuwiki__header"><div class="pad">
+        <div id="dokuwiki__header"><div class="pad group">
 
-            <div class="headings">
+            <div class="headings group">
                 <h1><?php tpl_link(
                     wl(),
                     '<img src="'.tpl_getFavicon(false, 'logo.png').'" alt="" /> <span>'.$conf['title'].'</span>',
@@ -50,10 +50,9 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                 <ul class="a11y">
                     <li><a href="#dokuwiki__content"><?php echo tpl_getLang('skip_to_content') ?></a></li>
                 </ul>
-                <div class="clearer"></div>
             </div>
 
-            <div class="tools">
+            <div class="tools group">
                 <!-- USER TOOLS -->
                 <?php if ($conf['useacl'] && $showTools): ?>
                     <div id="dokuwiki__usertools">
@@ -90,47 +89,45 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
             </div>
 
-            <div class="clearer"></div>
-
             <!-- BREADCRUMBS -->
-            <?php if($conf['breadcrumbs']){ ?>
-                <div class="tracking breadcrumbs"><div><?php tpl_breadcrumbs() ?></div></div>
-            <?php } ?>
-            <?php if($conf['youarehere']){ ?>
-                <div class="hierarchical breadcrumbs"><div><?php tpl_youarehere() ?></div></div>
-            <?php } ?>
+            <?php if($conf['breadcrumbs'] || $conf['youarehere']): ?>
+                <div class="breadcrumbs"><div class="pad">
+                    <?php if($conf['breadcrumbs']): ?>
+                        <div class="trace"><?php tpl_breadcrumbs() ?></div>
+                    <?php endif ?>
+                    <?php if($conf['youarehere']): ?>
+                        <div class="youarehere"><?php tpl_youarehere() ?></div>
+                    <?php endif ?>
+                </div></div>
+            <?php endif ?>
 
             <hr class="a11y" />
         </div></div><!-- /header -->
 
-
         <div class="wrapper">
 
             <!-- ********** ASIDE ********** -->
-            <div id="dokuwiki__aside"><div class="pad include">
+            <div id="dokuwiki__aside"><div class="pad include group">
                 <?php tpl_include_page(tpl_getConf('sidebarID')) /* includes the given wiki page */ ?>
-                <div class="clearer"></div>
             </div></div><!-- /aside -->
 
             <!-- ********** CONTENT ********** -->
-            <div id="dokuwiki__content"><div class="pad">
+            <div id="dokuwiki__content"><div class="pad group">
                 <?php tpl_flush() /* flush the output buffer */ ?>
                 <?php _tpl_include('pageheader.html') ?>
 
-                <div class="pageId"><span>[[<?php echo tpl_pagetitle($ID,true) ?>]]</span></div>
+                <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
 
-                <div class="page">
+                <div class="page group">
                     <!-- wikipage start -->
                     <?php tpl_content() /* the main content */ ?>
                     <!-- wikipage stop -->
-                    <div class="clearer"></div>
                 </div>
 
                 <?php tpl_flush() ?>
                 <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
 
-            <div class="clearer"></div>
             <hr class="a11y" />
 
             <!-- PAGE ACTIONS -->

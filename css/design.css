@@ -106,7 +106,7 @@
 
 #dokuwiki__pagetools {
     position: absolute;
-    right: -32px;
+    right: -34px;
     top: 1em;
     font-size: 90%;
 }
@@ -120,8 +120,7 @@
     right: 0;
     width: 32px;
     overflow: hidden;
-    border: solid __border__;
-    border-width: 1px 1px 1px 0;
+    border: 1px solid __border__;
     border-radius: 2px;
     text-align: right;
     margin: 0;
@@ -134,7 +133,6 @@
 #dokuwiki__pagetools:active ul,
 #dokuwiki__pagetools:focus ul {
     width: auto;
-    border-width: 1px;
 }
 
 #dokuwiki__pagetools ul li {
@@ -232,30 +230,17 @@
 /*____________ breadcrumbs ____________*/
 
 .dokuwiki div.breadcrumbs {
-    border: 1px solid __border__;
-    padding: .1em .35em;
-    -moz-box-shadow: inset 0 0 1px __background_alt__;
-    -webkit-box-shadow: inset 0 0 1px __background_alt__;
-    box-shadow: inset 0 0 1px __background_alt__;
-    border-radius: 2px;
-    /* @todo: style.ini */
-    background-color: #fdfdfd;
-    margin-bottom: .5em;
-    font-size: 0.875em;
-}
-/* alternative:
-.dokuwiki div.breadcrumbs {
     border-top: 1px solid __border__;
     border-bottom: 1px solid __background__;
     margin-bottom: .5em;
     font-size: 0.875em;
+    clear: both;
 }
-.dokuwiki div.breadcrumbs div {
+.dokuwiki div.breadcrumbs div.pad {
     border-top: 1px solid __background__;
     border-bottom: 1px solid __border__;
     padding: .1em .35em;
 }
-*/
 .dokuwiki div.breadcrumbs a {
     color: __link__;
     background-color: inherit;
@@ -270,6 +255,7 @@
 
 #dokuwiki__aside {
     line-height: 1.2;
+    font-size: 0.875em;
 }
 
 /* make sidebar more condensed */
