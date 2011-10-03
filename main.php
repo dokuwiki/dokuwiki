@@ -40,7 +40,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
             <div class="headings group">
                 <h1><?php tpl_link(
                     wl(),
-                    '<img src="'.tpl_getFavicon(false, 'logo.png').'" alt="" /> <span>'.$conf['title'].'</span>',
+                    '<img src="'.tpl_getFavicon(false, 'logo.png').'" width="64" height="64" alt="" /> <span>'.$conf['title'].'</span>',
                     'id="dokuwiki__top" accesskey="h" title="[H]"'
                 ) /* @todo: obviously don't use tpl_getFavicon, but make a new function (or use a config option?) */ ?></h1>
                 <?php if (tpl_getConf('tagline')): ?>
