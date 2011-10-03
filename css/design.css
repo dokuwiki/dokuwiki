@@ -232,20 +232,24 @@
     clear: both;
 }
 .dokuwiki div.breadcrumbs div {
-    border-top: 1px solid __background__;
-    border-bottom: 1px solid __border__;
     padding: .1em .35em;
 }
-.dokuwiki div.breadcrumbs div:first-child {
-    border-bottom-width: 0;
+
+.dokuwiki div.breadcrumbs div:only-child {
+    border-top: 1px solid __background__;
+    border-bottom: 1px solid __border__;
 }
-#IE7 .dokuwiki div.breadcrumbs div:first-child,
-#IE8 .dokuwiki div.breadcrumbs div:first-child {
-    border-bottom-width: 1px;
+.dokuwiki div.breadcrumbs div:first-child {
+    border-top: 1px solid __background__;
+}
+#IE7 .dokuwiki div.breadcrumbs div,
+#IE8 .dokuwiki div.breadcrumbs div {
+    border-bottom: 1px solid __border__;
 }
 .dokuwiki div.breadcrumbs div:last-child {
-    border-top-width: 0;
+    border-bottom: 1px solid __border__;
 }
+
 .dokuwiki div.breadcrumbs a {
     color: __link__;
     background-color: inherit;
