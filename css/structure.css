@@ -23,15 +23,9 @@ body {
     #dokuwiki__header .headings {
         float: left;
     }
-    #IE6 #dokuwiki__header .headings {
-        width: 50%;
-    }
     #dokuwiki__header .tools {
         float: right;
         text-align: right;
-    }
-    #IE6 #dokuwiki__header .tools {
-        width: 50%;
     }
 
 #dokuwiki__site .wrapper {

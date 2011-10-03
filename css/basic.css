@@ -13,17 +13,20 @@ html {
     overflow-y: scroll;
 }
 html, body {
+    /* @todo: style.ini */
     background-color: #fbfaf9;
-    background: -moz-linear-gradient(   top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    color: __text__;
+    background-image: -moz-linear-gradient(   top, #ddd 0%, #eee 1em, #fbfaf9 4em);
     /* do we want to support old browsers?
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ddd), color-stop(1em,#eee), color-stop(4em,#fbfaf9));
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ddd), color-stop(1em,#eee), color-stop(4em,#fbfaf9));
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ddd', endColorstr='#fbfaf9',GradientType=0 );
     */
-    background: -webkit-linear-gradient(top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    background: -o-linear-gradient(     top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    background: -ms-linear-gradient(    top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    background: linear-gradient(        top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    color: __text__;
+    background-image: -webkit-linear-gradient(top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background-image: -o-linear-gradient(     top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background-image: -ms-linear-gradient(    top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background-image: linear-gradient(        top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background-size: 1px 10em;
+    background-repeat: repeat-x;
     margin: 0;
     padding: 0;
 }
@@ -282,7 +285,9 @@ option   { font-style: normal; font-weight: normal; }
     background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
     background: -o-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
     background: -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+    /*
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
+    */
     background: linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
     border: 1px solid #ccc;
     border-radius: 2px;

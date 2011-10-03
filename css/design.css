@@ -17,7 +17,7 @@
 #dokuwiki__header .headings,
 #dokuwiki__header .tools {
     margin-bottom: 1em;
-    width: 50%;
+    width: 49%;
 }
 #dokuwiki__header h1 img {
     float: left;
@@ -106,7 +106,7 @@
 
 #dokuwiki__pagetools {
     position: absolute;
-    right: -34px;
+    right: -33px;
     top: 1em;
     font-size: 90%;
 }
@@ -120,7 +120,7 @@
     right: 0;
     width: 32px;
     overflow: hidden;
-    border: 1px solid __border__;
+    border: 1px solid __background_alt__;
     border-radius: 2px;
     text-align: right;
     margin: 0;
@@ -208,14 +208,9 @@
     padding-right: 22px;
 }
 #dokuwiki__sitetools form.search input.button {
-/*
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    padding: 0.5em 0.75em;
-*/
     background: transparent url(images/search.png) no-repeat 0 0;
     border-width: 0;
-    width: 14px;
+    width: 19px;
     height: 14px;
     text-indent: -99999px;
     margin-left: -20px;
@@ -292,9 +287,9 @@
 .dokuwiki .pageId {
     position: absolute;
     top: -1.5em;
-    right: .5em;
+    right: 1em;
     font-size: 0.875em;
-    border: solid __border__;
+    border: solid __background_alt__;
     border-width: 1px 1px 0;
     background-color: __background__;
     color: __text_alt__;
