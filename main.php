@@ -91,14 +91,14 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
             <!-- BREADCRUMBS -->
             <?php if($conf['breadcrumbs'] || $conf['youarehere']): ?>
-                <div class="breadcrumbs"><div class="pad">
+                <div class="breadcrumbs">
                     <?php if($conf['breadcrumbs']): ?>
                         <div class="trace"><?php tpl_breadcrumbs() ?></div>
                     <?php endif ?>
                     <?php if($conf['youarehere']): ?>
                         <div class="youarehere"><?php tpl_youarehere() ?></div>
                     <?php endif ?>
-                </div></div>
+                </div>
             <?php endif ?>
 
             <hr class="a11y" />
