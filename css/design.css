@@ -104,10 +104,18 @@
 
 /*____________ page tools ____________*/
 
+#dokuwiki__site .site {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+#dokuwiki__usertools {
+    right: 40px;
+}
+
 #dokuwiki__pagetools {
     position: absolute;
-    right: -33px;
-    top: 1em;
+    right: -37px;
+    top: 2em;
     font-size: 90%;
 }
 
@@ -120,7 +128,7 @@
     right: 0;
     width: 32px;
     overflow: hidden;
-    border: 1px solid __background_alt__;
+    border: 1px solid __border__;
     border-radius: 2px;
     text-align: right;
     margin: 0;
@@ -133,6 +141,7 @@
 #dokuwiki__pagetools:active ul,
 #dokuwiki__pagetools:focus ul {
     width: auto;
+    box-shadow: 0 0 .3em #666;
 }
 
 #dokuwiki__pagetools ul li {
@@ -342,7 +351,7 @@
 .dokuwiki .pageId {
     position: absolute;
     top: -1.5em;
-    right: 1em;
+    right: 0;
     font-size: 0.875em;
     border: solid __background_alt__;
     border-width: 1px 1px 0;
