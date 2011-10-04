@@ -292,6 +292,10 @@ option   { font-style: normal; font-weight: normal; }
     border: 1px solid #ccc;
     border-radius: 2px;
 }
+.dokuwiki textarea.edit {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+}
+
 
 
 /*____________ general classes ____________*/
