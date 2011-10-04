@@ -224,31 +224,72 @@
 
 /*____________ breadcrumbs ____________*/
 
-.dokuwiki div.breadcrumbs {
+/* version01 */
+
+.dokuwiki div.breadcrumbs.version01 {
     border-top: 1px solid __border__;
     border-bottom: 1px solid __background__;
     margin-bottom: .5em;
     font-size: 0.875em;
     clear: both;
 }
-.dokuwiki div.breadcrumbs div {
+.dokuwiki div.breadcrumbs.version01 div {
     padding: .1em .35em;
 }
 
-.dokuwiki div.breadcrumbs div:only-child {
+.dokuwiki div.breadcrumbs.version01 div:only-child {
     border-top: 1px solid __background__;
     border-bottom: 1px solid __border__;
 }
-.dokuwiki div.breadcrumbs div:first-child {
+.dokuwiki div.breadcrumbs.version01 div:first-child {
     border-top: 1px solid __background__;
 }
-#IE7 .dokuwiki div.breadcrumbs div,
-#IE8 .dokuwiki div.breadcrumbs div {
+#IE7 .dokuwiki div.breadcrumbs.version01 div,
+#IE8 .dokuwiki div.breadcrumbs.version01 div {
     border-bottom: 1px solid __border__;
 }
-.dokuwiki div.breadcrumbs div:last-child {
+.dokuwiki div.breadcrumbs.version01 div:last-child {
     border-bottom: 1px solid __border__;
 }
+
+/* version02 */
+
+.dokuwiki div.breadcrumbs.version02 {
+    border-bottom: 1px solid __background__;
+    margin-bottom: .5em;
+    padding: .1em 0;
+    font-size: 0.875em;
+    clear: both;
+}
+
+.dokuwiki div.breadcrumbs.version02 div {
+    padding: .1em 0;
+}
+
+.dokuwiki div.breadcrumbs.version02 div:only-child,
+.dokuwiki div.breadcrumbs.version02 div:last-child {
+    border-bottom: 1px solid __border__;
+}
+#IE7 .dokuwiki div.breadcrumbs.version02 div,
+#IE8 .dokuwiki div.breadcrumbs.version02 div {
+    border-bottom: 1px solid __border__;
+}
+
+/* version03 */
+
+.dokuwiki div.breadcrumbs.version03 {
+    border: 1px solid __border__;
+    padding: .1em .35em;
+    -moz-box-shadow: inset 0 0 1px __background_alt__;
+    -webkit-box-shadow: inset 0 0 1px __background_alt__;
+    box-shadow: inset 0 0 1px __background_alt__;
+    border-radius: 2px;
+    background-color: #fdfdfd;
+    margin-bottom: .5em;
+    font-size: 0.875em;
+    clear: both;
+}
+
 
 .dokuwiki div.breadcrumbs a {
     color: __link__;
