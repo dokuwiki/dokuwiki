@@ -132,7 +132,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
             <!-- PAGE ACTIONS -->
             <?php if ($showTools): ?>
-                <div id="dokuwiki__pagetools">
+                <div id="dokuwiki__pagetools" class="version01">
                     <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
                     <div class="tools">
                         <ul>
