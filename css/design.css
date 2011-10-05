@@ -11,12 +11,12 @@
 ********************************************************************/
 
 #dokuwiki__header {
-    padding: 2em 0;
+    padding: 2em 0 1.5em;
 }
 
 #dokuwiki__header .headings,
 #dokuwiki__header .tools {
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
     width: 49%;
 }
 #dokuwiki__header h1 img {
