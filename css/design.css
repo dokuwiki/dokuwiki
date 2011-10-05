@@ -381,6 +381,52 @@
     clear: both;
 }
 
+.dokuwiki div.breadcrumbs.version04 {
+    padding: .1em .35em;
+    box-shadow: inset 0 0 .3em __background_alt__;
+    border-radius: 2px;
+    background-color: #fdfdfd;
+    margin-bottom: .5em;
+    font-size: 0.875em;
+    clear: both;
+}
+
+.dokuwiki div.breadcrumbs.version05 {
+    padding: .1em .35em;
+    border-radius: 2px;
+    background-color: #fdfdfd;
+    background-image: -moz-linear-gradient(   left, #fff 0%, #eee 50%, #fff 100%);
+    background-image: -webkit-linear-gradient(left, #fff 0%, #eee 50%, #fff 100%);
+    background-image: -o-linear-gradient(     left, #fff 0%, #eee 50%, #fff 100%);
+    background-image: -ms-linear-gradient(    left, #fff 0%, #eee 50%, #fff 100%);
+    background-image: linear-gradient(        left, #fff 0%, #eee 50%, #fff 100%);
+    margin-bottom: .5em;
+    font-size: 0.875em;
+    clear: both;
+}
+
+.dokuwiki div.breadcrumbs.version06 {
+    padding: .1em .35em;
+    border-radius: 2px;
+    background-color: #fdfdfd;
+    background-image: -moz-linear-gradient(   left, #f3f3f3 0%, #fff 100%);
+    background-image: -webkit-linear-gradient(left, #f3f3f3 0%, #fff 100%);
+    background-image: -o-linear-gradient(     left, #f3f3f3 0%, #fff 100%);
+    background-image: -ms-linear-gradient(    left, #f3f3f3 0%, #fff 100%);
+    background-image: linear-gradient(        left, #f3f3f3 0%, #fff 100%);
+    margin-bottom: .5em;
+    font-size: 0.875em;
+    clear: both;
+}
+
+.dokuwiki div.breadcrumbs.version07 {
+    padding: .1em .35em;
+    border-radius: 2px;
+    background-color: #fdfdfd;
+    margin-bottom: .5em;
+    font-size: 0.875em;
+    clear: both;
+}
 
 .dokuwiki div.breadcrumbs a {
     color: __link__;
