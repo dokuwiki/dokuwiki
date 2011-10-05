@@ -112,15 +112,13 @@
     right: 40px;
 }
 
-#dokuwiki__pagetools {
-    position: absolute;
-}
-
 #dokuwiki__pagetools.version01 {
+    position: absolute;
     right: -37px;
     top: 2em;
 }
 #dokuwiki__pagetools.version02 {
+    position: absolute;
     left: __sidebar_width__;
     top: 2em;
     margin-left: -2.6em;
@@ -150,6 +148,7 @@
     text-align: left;
 }
 
+
 #dokuwiki__pagetools:hover ul,
 #dokuwiki__pagetools:active ul,
 #dokuwiki__pagetools:focus ul {
@@ -163,11 +162,12 @@
     list-style: none;
     font-size: 0.875em;
 }
-#dokuwiki__pagetools:hover ul li,
-#dokuwiki__pagetools:active ul li,
-#dokuwiki__pagetools:focus ul li {
+#dokuwiki__pagetools.version01:hover ul li,
+#dokuwiki__pagetools.version01:active ul li,
+#dokuwiki__pagetools.version01:focus ul li {
     padding: 4px 4px;
 }
+
 
 #dokuwiki__pagetools ul li a {
     white-space: nowrap;
@@ -183,6 +183,37 @@
     padding-right: 32px;
     padding-left: 0;
     background-position: right center;
+}
+
+
+#dokuwiki__pagetools.version03 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+#dokuwiki__pagetools.version03 div.tools {
+    position: static;
+    max-width: __site_width__;
+    margin: 0 auto;
+}
+#dokuwiki__pagetools.version03 ul {
+    position: static;
+    width: auto;
+    box-shadow: 0 0 .3em #666;
+    padding: .2em 40px;
+    margin-left: __sidebar_width__;
+}
+#dokuwiki__pagetools.version03 ul li {
+    display: inline;
+}
+#dokuwiki__pagetools.version03 ul li:first-child {
+    padding-left: 2em;
+}
+#dokuwiki__pagetools.version03 ul li a {
+    padding-left: 22px;
+    padding-right: 1em;
+    background-position: 0 center;
 }
 
 /* @todo: add NEW icons */
