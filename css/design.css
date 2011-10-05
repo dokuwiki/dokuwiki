@@ -112,16 +112,10 @@
     right: 40px;
 }
 
-#dokuwiki__pagetools.version01 {
+#dokuwiki__pagetools {
     position: absolute;
     right: -37px;
     top: 2em;
-}
-#dokuwiki__pagetools.version02 {
-    position: absolute;
-    left: __sidebar_width__;
-    top: 2em;
-    margin-left: -2.6em;
 }
 
 #dokuwiki__pagetools div.tools {
@@ -138,16 +132,9 @@
     padding: 0;
     background-color: __background__;
     color: inherit;
-}
-#dokuwiki__pagetools.version01 ul {
     right: 0;
     text-align: right;
 }
-#dokuwiki__pagetools.version02 ul {
-    left: 0;
-    text-align: left;
-}
-
 
 #dokuwiki__pagetools:hover ul,
 #dokuwiki__pagetools:active ul,
@@ -162,9 +149,9 @@
     list-style: none;
     font-size: 0.875em;
 }
-#dokuwiki__pagetools.version01:hover ul li,
-#dokuwiki__pagetools.version01:active ul li,
-#dokuwiki__pagetools.version01:focus ul li {
+#dokuwiki__pagetools:hover ul li,
+#dokuwiki__pagetools:active ul li,
+#dokuwiki__pagetools:focus ul li {
     padding: 4px 4px;
 }
 
@@ -177,82 +164,14 @@
     background-position: 10px center;
 }
 
-#dokuwiki__pagetools.version01:hover ul li a,
-#dokuwiki__pagetools.version01:active ul li a,
-#dokuwiki__pagetools.version01:focus ul li a {
+#dokuwiki__pagetools:hover ul li a,
+#dokuwiki__pagetools:active ul li a,
+#dokuwiki__pagetools:focus ul li a {
     padding-right: 32px;
     padding-left: 0;
     background-position: right center;
 }
 
-
-#dokuwiki__pagetools.version03,
-#dokuwiki__pagetools.version04,
-#dokuwiki__pagetools.version05 {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-#dokuwiki__pagetools.version03 {
-    left: 0;
-}
-#dokuwiki__pagetools.version04 {
-    left: __sidebar_width__;
-}
-#dokuwiki__pagetools.version05 {
-    right: 0;
-}
-#dokuwiki__pagetools.version03 div.tools,
-#dokuwiki__pagetools.version04 div.tools,
-#dokuwiki__pagetools.version05 div.tools {
-    position: relative;
-    max-width: __site_width__;
-    margin: 0 auto;
-}
-#dokuwiki__pagetools.version03 ul {
-    position: static;
-    width: auto;
-    box-shadow: 0 0 .3em #666;
-    padding: .2em 40px;
-    margin-left: __sidebar_width__;
-}
-#dokuwiki__pagetools.version04 ul {
-    position: absolute;
-    bottom: .2em;
-    left: -.2em;
-    padding: .2em;
-}
-#dokuwiki__pagetools.version05 ul {
-    position: absolute;
-    bottom: .2em;
-    right: -.2em;
-    padding: .2em;
-    text-align: right;
-}
-#dokuwiki__pagetools.version03 ul li {
-    display: inline;
-}
-#dokuwiki__pagetools.version03 ul li:first-child {
-    padding-left: 2em;
-}
-#dokuwiki__pagetools.version03 ul li a {
-    padding-left: 22px;
-    padding-right: 1em;
-    background-position: 0 center;
-}
-
-#dokuwiki__pagetools.version05:hover ul li,
-#dokuwiki__pagetools.version05:active ul li,
-#dokuwiki__pagetools.version05:focus ul li {
-    padding: 4px 4px;
-}
-#dokuwiki__pagetools.version05:hover ul li a,
-#dokuwiki__pagetools.version05:active ul li a,
-#dokuwiki__pagetools.version05:focus ul li a {
-    padding-right: 32px;
-    padding-left: 0;
-    background-position: right center;
-}
 
 /* @todo: add NEW icons */
 #dokuwiki__pagetools ul li a.edit {
@@ -316,116 +235,30 @@
 
 /*____________ breadcrumbs ____________*/
 
-/* version01 */
-
-.dokuwiki div.breadcrumbs.version01 {
+.dokuwiki div.breadcrumbs {
     border-top: 1px solid __border__;
     border-bottom: 1px solid __background__;
     margin-bottom: .5em;
     font-size: 0.875em;
     clear: both;
 }
-.dokuwiki div.breadcrumbs.version01 div {
+.dokuwiki div.breadcrumbs div {
     padding: .1em .35em;
 }
 
-.dokuwiki div.breadcrumbs.version01 div:only-child {
+.dokuwiki div.breadcrumbs div:only-child {
     border-top: 1px solid __background__;
     border-bottom: 1px solid __border__;
 }
-.dokuwiki div.breadcrumbs.version01 div:first-child {
+.dokuwiki div.breadcrumbs div:first-child {
     border-top: 1px solid __background__;
 }
-#IE7 .dokuwiki div.breadcrumbs.version01 div,
-#IE8 .dokuwiki div.breadcrumbs.version01 div {
+#IE7 .dokuwiki div.breadcrumbs div,
+#IE8 .dokuwiki div.breadcrumbs div {
     border-bottom: 1px solid __border__;
 }
-.dokuwiki div.breadcrumbs.version01 div:last-child {
+.dokuwiki div.breadcrumbs div:last-child {
     border-bottom: 1px solid __border__;
-}
-
-/* version02 */
-
-.dokuwiki div.breadcrumbs.version02 {
-    border-bottom: 1px solid __background__;
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
-}
-
-.dokuwiki div.breadcrumbs.version02 div {
-    padding: .1em 0;
-}
-
-.dokuwiki div.breadcrumbs.version02 div:only-child,
-.dokuwiki div.breadcrumbs.version02 div:last-child {
-    border-bottom: 1px solid __border__;
-}
-#IE7 .dokuwiki div.breadcrumbs.version02 div,
-#IE8 .dokuwiki div.breadcrumbs.version02 div {
-    border-bottom: 1px solid __border__;
-}
-
-/* version03 */
-
-.dokuwiki div.breadcrumbs.version03 {
-    border: 1px solid __border__;
-    padding: .1em .35em;
-    -moz-box-shadow: inset 0 0 1px __background_alt__;
-    -webkit-box-shadow: inset 0 0 1px __background_alt__;
-    box-shadow: inset 0 0 1px __background_alt__;
-    border-radius: 2px;
-    background-color: #fdfdfd;
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
-}
-
-.dokuwiki div.breadcrumbs.version04 {
-    padding: .1em .35em;
-    box-shadow: inset 0 0 .3em __background_alt__;
-    border-radius: 2px;
-    background-color: #fdfdfd;
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
-}
-
-.dokuwiki div.breadcrumbs.version05 {
-    padding: .1em .35em;
-    border-radius: 2px;
-    background-color: #fdfdfd;
-    background-image: -moz-linear-gradient(   left, #fff 0%, #eee 50%, #fff 100%);
-    background-image: -webkit-linear-gradient(left, #fff 0%, #eee 50%, #fff 100%);
-    background-image: -o-linear-gradient(     left, #fff 0%, #eee 50%, #fff 100%);
-    background-image: -ms-linear-gradient(    left, #fff 0%, #eee 50%, #fff 100%);
-    background-image: linear-gradient(        left, #fff 0%, #eee 50%, #fff 100%);
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
-}
-
-.dokuwiki div.breadcrumbs.version06 {
-    padding: .1em .35em;
-    border-radius: 2px;
-    background-color: #fdfdfd;
-    background-image: -moz-linear-gradient(   left, #f3f3f3 0%, #fff 100%);
-    background-image: -webkit-linear-gradient(left, #f3f3f3 0%, #fff 100%);
-    background-image: -o-linear-gradient(     left, #f3f3f3 0%, #fff 100%);
-    background-image: -ms-linear-gradient(    left, #f3f3f3 0%, #fff 100%);
-    background-image: linear-gradient(        left, #f3f3f3 0%, #fff 100%);
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
-}
-
-.dokuwiki div.breadcrumbs.version07 {
-    padding: .1em .35em;
-    border-radius: 2px;
-    background-color: #fdfdfd;
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
 }
 
 .dokuwiki div.breadcrumbs a {
