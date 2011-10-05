@@ -186,14 +186,21 @@
 }
 
 
-#dokuwiki__pagetools.version03 {
+#dokuwiki__pagetools.version03,
+#dokuwiki__pagetools.version04 {
     position: fixed;
     bottom: 0;
-    left: 0;
     width: 100%;
 }
-#dokuwiki__pagetools.version03 div.tools {
-    position: static;
+#dokuwiki__pagetools.version03 {
+    left: 0;
+}
+#dokuwiki__pagetools.version04 {
+    left: __sidebar_width__;
+}
+#dokuwiki__pagetools.version03 div.tools,
+#dokuwiki__pagetools.version04 div.tools {
+    position: relative;
     max-width: __site_width__;
     margin: 0 auto;
 }
@@ -203,6 +210,12 @@
     box-shadow: 0 0 .3em #666;
     padding: .2em 40px;
     margin-left: __sidebar_width__;
+}
+#dokuwiki__pagetools.version04 ul {
+    position: absolute;
+    bottom: .2em;
+    left: -.2em;
+    padding: .2em;
 }
 #dokuwiki__pagetools.version03 ul li {
     display: inline;
