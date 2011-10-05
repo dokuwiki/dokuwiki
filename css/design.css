@@ -332,7 +332,11 @@
     box-shadow: 0 0 .5em #999;
     border-radius: 2px;
     padding: 2em;
+    margin-bottom: 1em;
+}
 
+.dokuwiki .docInfo {
+    font-size: 0.875em;
 }
 
 /*____________ misc ____________*/
@@ -397,18 +401,8 @@
 #dokuwiki__footer .pad {
     font-size: 0.875em;
 }
-#IE6 #dokuwiki__footer,
-#IE7 #dokuwiki__footer {
-    height: 1%;
-}
-#dokuwiki__footer .doc {
-    float: left;
-}
-#dokuwiki__footer .top {
-    float: right;
-}
-#dokuwiki__footer .license {
-    clear: both;
+#dokuwiki__footer div.license {
+    text-align: center;
 }
 #dokuwiki__footer .license img {
     margin: 0 .5em 0 0;

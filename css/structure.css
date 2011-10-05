@@ -31,10 +31,6 @@ body {
 #dokuwiki__site .wrapper {
     position: relative;
 }
-#IE6 #dokuwiki__site .wrapper,
-#IE7 #dokuwiki__site .wrapper {
-    height: 1%;
-}
 
     #dokuwiki__aside {
         width: __sidebar_width__;
@@ -57,7 +53,6 @@ body {
 
 #dokuwiki__footer {
     clear: both;
-    margin-left: __sidebar_width__;
 }
 #dokuwiki__footer .pad {
 }

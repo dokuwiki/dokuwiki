@@ -124,6 +124,8 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                     <!-- wikipage stop -->
                 </div>
 
+                <div class="docInfo"><?php tpl_pageinfo() /* 'Last modified' etc */ ?></div>
+
                 <?php tpl_flush() ?>
                 <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
@@ -152,7 +154,6 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
         <!-- ********** FOOTER ********** -->
         <div id="dokuwiki__footer"><div class="pad">
-            <div class="doc"><?php tpl_pageinfo() /* 'Last modified' etc */ ?></div>
             <?php tpl_license('button') /* content license, parameters: img=*badge|button|0, imgonly=*0|1, return=*0|1 */ ?>
         </div></div><!-- /footer -->
 
