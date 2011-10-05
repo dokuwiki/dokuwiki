@@ -114,7 +114,6 @@
 
 #dokuwiki__pagetools {
     position: absolute;
-    font-size: 90%;
 }
 
 #dokuwiki__pagetools.version01 {
@@ -162,6 +161,7 @@
     padding: 4px 2px;
     margin: 0;
     list-style: none;
+    font-size: 0.875em;
 }
 #dokuwiki__pagetools:hover ul li,
 #dokuwiki__pagetools:active ul li,
@@ -327,6 +327,8 @@
 ********************************************************************/
 
 #dokuwiki__aside {
+}
+#dokuwiki__aside .pad {
     line-height: 1.2;
     font-size: 0.875em;
 }
@@ -388,9 +390,13 @@
 
 /*____________ misc ____________*/
 
-/* license note in footer and under edit window */
+/* license note under edit window */
 .dokuwiki div.license {
     font-size: 93.75%;
+}
+/* license note in footer */
+.dokuwiki #dokuwiki__footer div.license {
+    font-size: 100%;
 }
 
 #IE6 .dokuwiki input.button, #IE6 .dokuwiki button,
@@ -440,6 +446,9 @@
 
 #dokuwiki__footer {
     margin-bottom: 1em;
+}
+#dokuwiki__footer .pad {
+    font-size: 0.875em;
 }
 #IE6 #dokuwiki__footer,
 #IE7 #dokuwiki__footer {
