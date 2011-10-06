@@ -140,10 +140,10 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
                         <ul>
                             <?php
                                 tpl_action('edit', 1, 'li');
+                                tpl_action('revert', 1, 'li');
                                 tpl_action('history', 1, 'li');
                                 tpl_action('backlink', 1, 'li');
                                 tpl_action('subscribe', 1, 'li');
-                                tpl_action('revert', 1, 'li');
                                 tpl_action('top', 1, 'li');
                             ?>
                         </ul>

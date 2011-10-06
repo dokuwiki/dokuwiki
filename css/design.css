@@ -186,6 +186,9 @@
 #dokuwiki__pagetools ul li a.draft {
     background-image: url(images/pagetools/inbox-document-text.png);
 }
+#dokuwiki__pagetools ul li a.revert {
+    background-image: url(images/pagetools/site_backup_and_restore.png);
+}
 #dokuwiki__pagetools ul li a.source {
     background-image: url(images/pagetools/page_code.png);
 }
