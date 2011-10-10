@@ -74,7 +74,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
             'type'  => str_replace($strip, '', $type),
             'id'    => $id,
             'user'  => $user,
-            'sum'   => str_replace($strip, '', $summary),
+            'sum'   => utf8_substr(str_replace($strip, '', $summary),0,255),
             'extra' => str_replace($strip, '', $extra)
             );
 
@@ -131,7 +131,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
             'type'  => str_replace($strip, '', $type),
             'id'    => $id,
             'user'  => $user,
-            'sum'   => str_replace($strip, '', $summary),
+            'sum'   => utf8_substr(str_replace($strip, '', $summary),0,255),
             'extra' => str_replace($strip, '', $extra)
             );
 
