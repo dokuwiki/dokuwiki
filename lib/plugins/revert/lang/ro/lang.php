@@ -8,6 +8,7 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
+ * @author Marius OLAR <olarmariusalex@gmail.com>
  */
 $lang['menu']                  = 'Manager Reveniri';
 $lang['filter']                = 'Caută pagini cu posibil spam';
