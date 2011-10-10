@@ -454,8 +454,9 @@ function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
     }
     $num = max($num, 0);
     $chunk_size = max($chunk_size, 0);
-    if ($first<0) { $first = 0; }
-    else if (!$media && @file_exists(wikiFN($id)) || $media && @file_exists(mediaFN($id))) {
+    if ($first<0) {
+        $first = 0;
+    } else if (!$media && @file_exists(wikiFN($id)) || $media && @file_exists(mediaFN($id))) {
         // skip current revision if the page exists
         $first = max($first+1, 0);
     }
@@ -476,13 +477,21 @@ function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
         $finger = max($tail-$chunk_size, 0);
         while ($count<$num+$first) {
             fseek($fp, $finger);
+            $nl = $finger;
             if ($finger>0) {
                 fgets($fp); // slip the finger forward to a new line
-                $finger = ftell($fp);
+                $nl = ftell($fp);
+            }
+
+            // was the chunk big enough? if not, take another bite
+            if($nl > 0 && $tail <= $nl){
+                $finger = max($finger-$chunk_size, 0);
+                continue;
+            }else{
+                $finger = $nl;
             }
 
             // read chunk
-            if ($tail<=$finger) { break; }
             $chunk = '';
             $read_size = max($tail-$finger, 0); // found chunk size
             $got = 0;
