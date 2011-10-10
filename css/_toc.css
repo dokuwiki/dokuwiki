@@ -10,10 +10,7 @@
 .dokuwiki div.toc {
     float: right;
     margin:  -2em -2em .5em 1.4em;
-    /* @todo: possible to make calculation sort of automatic? */
-    /*width: 200px;  __sidebar_width__ - margin-left */
     width: __sidebar_width__;
-    font-size: 0.9em;
     border-left: 1px solid __border__;
     background: __background__;
     color: inherit;
@@ -23,15 +20,30 @@
 
 .dokuwiki div.tocheader {
     padding: 0.5em 1em;
-    margin-bottom: .2em;
     font-weight: bold;
-    /*
-    background-color: __background_alt__;
-    color: __text__;
-    */
+    font-size: 0.875em;
+    letter-spacing: .05em;
 }
 
-/* css arrow */
+
+.dokuwiki .toc span.toc_open,
+.dokuwiki .toc span.toc_close {
+    background: transparent url(images/toc-arrows.png) 0 0;
+    width: 8px;
+    height: 5px;
+    margin: .4em 0 0;
+    float: right;
+}
+.dokuwiki .toc span.toc_open {
+    background-position: 0 -5px;
+}
+
+.dokuwiki .toc span.toc_open span,
+.dokuwiki .toc span.toc_close span {
+    display: none;
+}
+
+/* css arrow 
 .dokuwiki .toc span.toc_open,
 .dokuwiki .toc span.toc_close {
     border: .4em solid __background__;
@@ -51,15 +63,13 @@
     margin-top: 0;
     border-bottom: .4em solid __text__;
 }
+*/
 
 /*____________ toc list ____________*/
 
 .dokuwiki #toc__inside {
-    padding: 0.75em 1em 1.5em;
-    /*
-    background-color: __background_alt__;
-    color: __text__;
-    */
+    font-size: 0.875em;
+    padding: .5em 1em 1em;
 }
 .dokuwiki #toc__inside ul {
     padding: 0 0 0 1.5em;
