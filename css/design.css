@@ -114,7 +114,7 @@
 
 #dokuwiki__pagetools {
     position: absolute;
-    right: -37px;
+    right: -42px;
     top: 2em;
 }
 
@@ -124,58 +124,76 @@
 
 #dokuwiki__pagetools ul {
     position: absolute;
-    width: 32px;
-    overflow: hidden;
-    border: 1px solid __border__;
-    border-radius: 2px;
+    right: 0;
     margin: 0;
     padding: 0;
-    background-color: __background__;
-    color: inherit;
-    right: 0;
     text-align: right;
 }
 
-#dokuwiki__pagetools:hover ul,
-#dokuwiki__pagetools:active ul,
-#dokuwiki__pagetools:focus ul {
-    width: auto;
-    box-shadow: 0 0 .3em #666;
+#dokuwiki__pagetools.version03 ul {
+    border: 1px solid __border__;
+    border-radius: 2px;
+    background-color: __background__;
+    box-shadow: .1em .1em .1em __text__;
+    margin: 0 -.5em;
+}
+#dokuwiki__pagetools.version03:hover ul li a span,
+#dokuwiki__pagetools.version03:active ul li a span,
+#dokuwiki__pagetools.version03:focus ul li a span {
+    display: inline;
 }
 
+
 #dokuwiki__pagetools ul li {
-    padding: 4px 2px;
+    padding: 0;
     margin: 0;
     list-style: none;
     font-size: 0.875em;
 }
-#dokuwiki__pagetools:hover ul li,
-#dokuwiki__pagetools:active ul li,
-#dokuwiki__pagetools:focus ul li {
-    padding: 4px 4px;
-}
-
 
 #dokuwiki__pagetools ul li a {
-    white-space: nowrap;
+    display: block;
+    min-height: 17px;
+    padding: .5em 34px .5em 1em;
     background-repeat: no-repeat;
-    padding-right: 0;
-    padding-left: 32px;
-    background-position: 10px center;
+    background-position: right center;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+#dokuwiki__pagetools.version02 ul li a {
+    padding: .2em 34px .2em .5em;
+}
+#dokuwiki__pagetools.version03 ul li a {
+    padding: .2em 34px .2em .5em;
+}
+#dokuwiki__pagetools.version01 ul li a:hover,
+#dokuwiki__pagetools.version01 ul li a:active,
+#dokuwiki__pagetools.version01 ul li a:focus {
+    border-radius: 2px;
+    background-color: __background__;
+    box-shadow: .1em .1em .1em __text__;
+    text-decoration: none;
+    border-color: __border__;
+}
+#dokuwiki__pagetools ul li a span {
+    display: none;
+}
+#dokuwiki__pagetools.version01 ul li a:hover span,
+#dokuwiki__pagetools.version01 ul li a:active span,
+#dokuwiki__pagetools.version01 ul li a:focus span {
+    display: inline;
 }
 
-#dokuwiki__pagetools:hover ul li a,
-#dokuwiki__pagetools:active ul li a,
-#dokuwiki__pagetools:focus ul li a {
-    padding-right: 32px;
-    padding-left: 0;
-    background-position: right center;
-}
 
 
 /* @todo: add NEW icons */
 #dokuwiki__pagetools ul li a.edit {
-    background-image: url(images/pagetools/pencil.png);
+    background-image: url(images/pagetools/edit.png);
+}
+#dokuwiki__pagetools ul li a.edit:hover,
+#dokuwiki__pagetools ul li a.edit:active,
+#dokuwiki__pagetools ul li a.edit:focus {
+    background-image: url(images/pagetools/edit-active.png);
 }
 #dokuwiki__pagetools ul li a.show {
     background-image: url(images/pagetools/page.png);
@@ -183,26 +201,43 @@
 #dokuwiki__pagetools ul li a.create {
     background-image: url(images/pagetools/pencil_add.png);
 }
+#dokuwiki__pagetools ul li a.source {
+    background-image: url(images/pagetools/page_code.png);
+}
 #dokuwiki__pagetools ul li a.draft {
     background-image: url(images/pagetools/inbox-document-text.png);
 }
 #dokuwiki__pagetools ul li a.revert {
     background-image: url(images/pagetools/site_backup_and_restore.png);
 }
-#dokuwiki__pagetools ul li a.source {
-    background-image: url(images/pagetools/page_code.png);
-}
 #dokuwiki__pagetools ul li a.revs {
-    background-image: url(images/pagetools/time.png);
+    background-image: url(images/pagetools/revs.png);
+}
+#dokuwiki__pagetools ul li a.revs:hover,
+#dokuwiki__pagetools ul li a.revs:active,
+#dokuwiki__pagetools ul li a.revs:focus,
+.mode_revisions #dokuwiki__pagetools ul li a.revs {
+    background-image: url(images/pagetools/revs-active.png);
 }
 #dokuwiki__pagetools ul li a.backlink {
-    background-image: url(images/pagetools/arrow_redo.png);
+    background-image: url(images/pagetools/backlink.png);
+}
+#dokuwiki__pagetools ul li a.backlink:hover,
+#dokuwiki__pagetools ul li a.backlink:active,
+#dokuwiki__pagetools ul li a.backlink:focus,
+.mode_backlink #dokuwiki__pagetools ul li a.backlink {
+    background-image: url(images/pagetools/backlink-active.png);
 }
 #dokuwiki__pagetools ul li a.subscribe {
     background-image: url(images/pagetools/email_star.png);
 }
 #dokuwiki__pagetools ul li a.top {
-    background-image: url(images/pagetools/arrow_up.png);
+    background-image: url(images/pagetools/top.png);
+}
+#dokuwiki__pagetools ul li a.top:hover,
+#dokuwiki__pagetools ul li a.top:active,
+#dokuwiki__pagetools ul li a.top:focus {
+    background-image: url(images/pagetools/top-active.png);
 }
 
 
