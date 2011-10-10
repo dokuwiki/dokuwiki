@@ -21,6 +21,7 @@
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
  * @author Oscar Ciudad <oscar@jacho.net>
+ * @author Ruben Figols <ruben.figols@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -55,6 +56,7 @@ $lang['lang']                  = 'Idioma';
 $lang['basedir']               = 'Directorio de base';
 $lang['baseurl']               = 'URL de base';
 $lang['savedir']               = 'Directorio para guardar los datos';
+$lang['cookiedir']             = 'Ruta para las Cookie. Dejar en blanco para usar la ruta básica.';
 $lang['start']                 = 'Nombre de la página inicial';
 $lang['title']                 = 'Título del wiki';
 $lang['template']              = 'Plantilla';
