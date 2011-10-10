@@ -19,15 +19,15 @@
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Matthias Schulte <mailinglist@lupo49.de>
+ * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '„'; //&ldquo;
-$lang['doublequoteclosing']    = '“'; //&rdquo;
-$lang['singlequoteopening']    = '‚'; //&lsquo;
-$lang['singlequoteclosing']    = '‘'; //&rsquo;
-$lang['apostrophe']            = '’'; //&rsquo;
-
+$lang['doublequoteopening']    = '„';
+$lang['doublequoteclosing']    = '“';
+$lang['singlequoteopening']    = '‚';
+$lang['singlequoteclosing']    = '‘';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Diese Seite bearbeiten';
 $lang['btn_source']            = 'Zeige Quelltext';
 $lang['btn_show']              = 'Seite anzeigen';
@@ -63,7 +63,6 @@ $lang['btn_revert']            = 'Wiederherstellen';
 $lang['btn_register']          = 'Registrieren';
 $lang['btn_apply']             = 'Übernehmen';
 $lang['btn_media']             = 'Medien-Manager';
-
 $lang['loggedinas']            = 'Angemeldet als';
 $lang['user']                  = 'Benutzername';
 $lang['pass']                  = 'Passwort';
@@ -76,9 +75,8 @@ $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Benutzerprofil';
 $lang['badlogin']              = 'Nutzername oder Passwort sind falsch.';
 $lang['minoredit']             = 'kleine Änderung';
-$lang['draftdate']             = 'Entwurf gespeichert am'; // full dformat date will be added
+$lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, Sektionsinfo ist veraltet, lade stattdessen volle Seite.';
-
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden.';
 $lang['reguexists']            = 'Der Nutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Nutzer wurde angelegt und das Passwort per E-Mail versandt.';
@@ -88,12 +86,10 @@ $lang['regbadmail']            = 'Die angegebene E-Mail-Adresse scheint ungülti
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal.';
 $lang['regpwmail']             = 'Ihr DokuWiki Passwort';
 $lang['reghere']               = 'Sie haben noch keinen Zugang? Hier registrieren';
-
 $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki nicht möglich.';
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muss ein Name und eine E-Mail-Adresse angegeben werden.';
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
-
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort senden für';
@@ -102,10 +98,8 @@ $lang['resendpwdnouser']       = 'Es tut mir Leid, aber der Benutzer existiert n
 $lang['resendpwdbadauth']      = 'Es tut mir Leid, aber dieser Authentifizierungscode ist ungültig. Stellen Sie sicher, dass Sie den kompletten Bestätigungslink verwendet haben.';
 $lang['resendpwdconfirm']      = 'Ein Bestätigungslink wurde per E-Mail versandt.';
 $lang['resendpwdsuccess']      = 'Ihr neues Passwort wurde per E-Mail versandt.';
-
 $lang['license']               = 'Falls nicht anders bezeichnet, ist der Inhalt dieses Wikis unter der folgenden Lizenz veröffentlicht:';
 $lang['licenseok']             = 'Hinweis: Durch das Bearbeiten dieser Seite geben Sie Ihr Einverständnis, dass Ihr Inhalt unter der folgenden Lizenz veröffentlicht wird:';
-
 $lang['searchmedia']           = 'Suche Dateinamen:';
 $lang['searchmedia_in']        = 'Suche in %s';
 $lang['txt_upload']            = 'Datei zum Hochladen auswählen';
@@ -113,7 +107,6 @@ $lang['txt_filename']          = 'Hochladen als (optional)';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['lockedby']              = 'Momentan gesperrt von';
 $lang['lockexpire']            = 'Sperre läuft ab am';
-
 $lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
 $lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
 $lang['js']['searchmedia']     = 'Suche Dateien';
@@ -146,20 +139,18 @@ $lang['js']['linkto']          = 'Link nach:';
 $lang['js']['del_confirm']     = 'Eintrag wirklich löschen?';
 $lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['js']['restore_confirm'] = 'Really restore this version?';
-$lang['js']['media_diff']          = 'Unterschiede anzeigen:';
-$lang['js']['media_diff_both']     = 'Side by Side';
-$lang['js']['media_diff_opacity']  = 'Überblenden';
+$lang['js']['media_diff']      = 'Unterschiede anzeigen:';
+$lang['js']['media_diff_both'] = 'Side by Side';
+$lang['js']['media_diff_opacity'] = 'Überblenden';
 $lang['js']['media_diff_portions'] = 'Übergang';
-$lang['js']['media_select']        = 'Dateien auswählen…';
-$lang['js']['media_upload_btn']    = 'Hochladen';
-$lang['js']['media_done_btn']      = 'Fertig';
-$lang['js']['media_drop']          = 'Dateien hier draufziehen um sie hochzuladen';
-$lang['js']['media_cancel']        = 'Entfernen';
-$lang['js']['media_overwrt']       = 'Existierende Dateien überschreiben';
-
+$lang['js']['media_select']    = 'Dateien auswählen…';
+$lang['js']['media_upload_btn'] = 'Hochladen';
+$lang['js']['media_done_btn']  = 'Fertig';
+$lang['js']['media_drop']      = 'Dateien hier draufziehen um sie hochzuladen';
+$lang['js']['media_cancel']    = 'Entfernen';
+$lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
 $lang['nothingfound']          = 'Nichts gefunden.';
-
 $lang['mediaselect']           = 'Dateiauswahl';
 $lang['fileupload']            = 'Datei hochladen';
 $lang['uploadsucc']            = 'Datei wurde erfolgreich hochgeladen';
@@ -184,7 +175,6 @@ $lang['mediaextchange']        = 'Dateiendung vom .%s nach .%s geändert!';
 $lang['reference']             = 'Verwendung von';
 $lang['ref_inuse']             = 'Diese Datei kann nicht gelöscht werden, da sie noch von folgenden Seiten benutzt wird:';
 $lang['ref_hidden']            = 'Einige Verweise sind auf Seiten, für die Sie keine Leseberechtigung haben.';
-
 $lang['hits']                  = 'Treffer';
 $lang['quickhits']             = 'Passende Seitennamen';
 $lang['toc']                   = 'Inhaltsverzeichnis';
@@ -208,18 +198,15 @@ $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
-
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geändert:';
 $lang['mail_subscribe_list']   = 'Geänderte Seiten im Namensraum:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
 $lang['mail_upload']           = 'Datei hochgeladen:';
-
 $lang['changes_type']          = 'Änderungen anzeigen von';
 $lang['pages_changes']         = 'Seiten';
 $lang['media_changes']         = 'Mediendateien';
 $lang['both_changes']          = 'Beides, Seiten- und Mediendateien';
-
 $lang['qb_bold']               = 'Fetter Text';
 $lang['qb_italic']             = 'Kursiver Text';
 $lang['qb_underl']             = 'Unterstrichener Text';
@@ -244,11 +231,8 @@ $lang['qb_media']              = 'Bilder und andere Dateien hinzufügen';
 $lang['qb_sig']                = 'Unterschrift einfügen';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Sonderzeichen';
-
 $lang['upperns']               = 'zum übergeordneten Namensraum springen';
-
 $lang['admin_register']        = 'Neuen Benutzer anmelden';
-
 $lang['metaedit']              = 'Metadaten bearbeiten';
 $lang['metasaveerr']           = 'Die Metadaten konnten nicht gesichert werden';
 $lang['metasaveok']            = 'Metadaten gesichert';
@@ -266,30 +250,24 @@ $lang['img_keywords']          = 'Schlagwörter';
 $lang['img_width']             = 'Breite';
 $lang['img_height']            = 'Höhe';
 $lang['img_manager']           = 'Im Medien-Manager anzeigen';
-
-$lang['subscr_subscribe_success']   = '%s hat nun Änderungen der Seite %s abonniert';
-$lang['subscr_subscribe_error']     = '%s kann die Änderungen der Seite %s nicht abonnieren';
+$lang['subscr_subscribe_success'] = '%s hat nun Änderungen der Seite %s abonniert';
+$lang['subscr_subscribe_error'] = '%s kann die Änderungen der Seite %s nicht abonnieren';
 $lang['subscr_subscribe_noaddress'] = 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
 $lang['subscr_unsubscribe_success'] = 'Das Abonnement von %s für die Seite %s wurde aufgelöst';
-$lang['subscr_unsubscribe_error']   = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
-$lang['subscr_already_subscribed']  = '%s hat %s bereits abonniert';
-$lang['subscr_not_subscribed']      = '%s hat %s nicht abonniert';
-// Manage page for subscriptions
-$lang['subscr_m_not_subscribed']    = 'Sie haben die aktuelle Seite und ihre Namensräume nicht abonniert.';
-$lang['subscr_m_new_header']        = 'Abonnement hinzufügen';
-$lang['subscr_m_current_header']    = 'Aktuelle Abonnements';
-$lang['subscr_m_unsubscribe']       = 'Löschen';
-$lang['subscr_m_subscribe']         = 'Abonnieren';
-$lang['subscr_m_receive']           = 'Benachrichtigung';
-$lang['subscr_style_every']         = 'E-Mail bei jeder Bearbeitung';
-$lang['subscr_style_digest']        = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
-$lang['subscr_style_list']          = 'Liste der geänderten Seiten (Alle %.2f Tage)';
-
-/* auth.class language support */
+$lang['subscr_unsubscribe_error'] = 'Das Abonnement von %s für die Seite %s konnte nicht aufgelöst werden';
+$lang['subscr_already_subscribed'] = '%s hat %s bereits abonniert';
+$lang['subscr_not_subscribed'] = '%s hat %s nicht abonniert';
+$lang['subscr_m_not_subscribed'] = 'Sie haben die aktuelle Seite und ihre Namensräume nicht abonniert.';
+$lang['subscr_m_new_header']   = 'Abonnement hinzufügen';
+$lang['subscr_m_current_header'] = 'Aktuelle Abonnements';
+$lang['subscr_m_unsubscribe']  = 'Löschen';
+$lang['subscr_m_subscribe']    = 'Abonnieren';
+$lang['subscr_m_receive']      = 'Benachrichtigung';
+$lang['subscr_style_every']    = 'E-Mail bei jeder Bearbeitung';
+$lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
+$lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Systembetreuer.';
-
-/* installer strings */
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
 $lang['i_installer']           = 'DokuWiki Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
@@ -312,7 +290,6 @@ $lang['i_pol1']                = 'Öffentliches Wiki (lesen für alle, schreiben
 $lang['i_pol2']                = 'Geschlossenes Wiki (lesen, schreiben, hochladen nur für registrierte Nutzer)';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wählen Sie die Lizenz, unter die Sie Ihre Inhalte stellen möchten:';
-
 $lang['mu_intro']              = 'In diesem Bereich können Sie mehrere Dateien gleichzeitig hochladen. Benutzen Sie die Schaltfläche "Durchsuchen" um sie der Warteschlange zuzufügen. Betätigen Sie die Schaltfläche "Hochladen" um die Übertragung zu starten.';
 $lang['mu_gridname']           = 'Dateiname';
 $lang['mu_gridsize']           = 'Größe';
@@ -328,7 +305,6 @@ $lang['mu_progress']           = '@PCT@% hochgeladen';
 $lang['mu_filetypes']          = 'Erlaubte Dateitypen';
 $lang['mu_info']               = 'Dateien hochgeladen!';
 $lang['mu_lasterr']            = 'Letzter Fehler:';
-
 $lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';
@@ -337,30 +313,24 @@ $lang['days']                  = 'vor %d Tagen';
 $lang['hours']                 = 'vor %d Stunden';
 $lang['minutes']               = 'vor %d Minuten';
 $lang['seconds']               = 'vor %d Sekunden';
-
 $lang['wordblock']             = 'Ihre Bearbeitung wurde nicht gespeichert, da sie gesperrten Text enthielt (Spam).';
-
 $lang['media_uploadtab']       = 'Hochladen';
 $lang['media_searchtab']       = 'Suchen';
 $lang['media_viewtab']         = 'Anzeigen';
 $lang['media_edittab']         = 'Bearbeiten';
 $lang['media_historytab']      = 'Verlauf';
-$lang['media_list_thumbs']     = '<span>Medien anzeigen als</span> Miniaturansicht';
-$lang['media_list_rows']       = '<span>Medien anzeigen als</span> Listenansicht';
-$lang['media_sort_name']       = '<span>Sortieren nach</span> Name';
-$lang['media_sort_date']       = '<span>Sortieren nach</span> Datum';
-$lang['media_files']           = 'Medien im Namespace <strong>%s</strong>.';
+$lang['media_thumbsview']      = 'Miniaturansicht';
+$lang['media_listview']        = 'Detailansicht';
+$lang['media_sort']            = 'Sortieren';
+$lang['media_sort_name']       = 'nach Name';
+$lang['media_sort_date']       = 'nach Datum';
 $lang['media_upload']          = 'In den <strong>%s</strong> Namespace hochladen.';
 $lang['media_search']          = 'Im Namespace <strong>%s</strong> suchen.';
-$lang['media_view']            = '<span class="%s">%s</span>';
-$lang['media_edit']            = '<span class="%s">%s</span> bearbeiten';
-$lang['media_history']         = 'Versionen von <span class="%s">%s</span>';
+$lang['media_edit']            = 'Bearbeiten';
+$lang['media_history']         = 'Versionsverlauf der Datei.';
 $lang['media_meta_edited']     = 'Meta-Informationen bearbeitet';
 $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigungen um die Datei anzuzeigen.';
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
-
-$lang['plugin_install_err']    = "Plugin nicht korrekt installiert. Plugin-Verzeichnis von '%s' nach '%s' umbenennen.";
-
-//Setup VIM: ex: et ts=2 :
+$lang['plugin_install_err']    = 'Plugin nicht korrekt installiert. Plugin-Verzeichnis von \'%s\' nach \'%s\' umbenennen.';

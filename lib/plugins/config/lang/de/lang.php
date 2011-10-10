@@ -15,6 +15,7 @@
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
@@ -50,8 +51,8 @@ $lang['dmode']                 = 'Rechte für neue Verzeichnisse';
 $lang['lang']                  = 'Sprache';
 $lang['basedir']               = 'Installationsverzeichnis';
 $lang['baseurl']               = 'Installationspfad (URL)';
-$lang['cookiedir']             = 'Cookiepfad. Frei lassen, um den gleichen Pfad wie "baseurl" zu benutzen.';
 $lang['savedir']               = 'Speicherverzeichnis';
+$lang['cookiedir']             = 'Cookiepfad. Frei lassen, um den gleichen Pfad wie "baseurl" zu benutzen.';
 $lang['start']                 = 'Startseitenname';
 $lang['title']                 = 'Titel des Wikis';
 $lang['template']              = 'Designvorlage (Template)';
@@ -122,6 +123,13 @@ $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
+$lang['cssdatauri']            = 'Oberer Grenzwert in Bytes für Dateigrössen. Im CSS referenzierte Bilddateien unter diesem Grenzwert werden direkt ins Stylesheet eingebettet um den "HTTP request header overload" zu reduzieren. 
+Diese Technik funktioniert nicht in Internet Explorer <8!
+
+Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes.
+Setze die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.
+
+ ';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage)';
