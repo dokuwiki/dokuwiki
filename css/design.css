@@ -351,8 +351,12 @@
 
 .dokuwiki .pageId {
     position: absolute;
-    top: -1.5em;
-    right: 0;
+    top: -2.3em;
+    right: -1em;
+    overflow: hidden;
+    padding: 1em 1em 0;
+}
+.dokuwiki .pageId span {
     font-size: 0.875em;
     border: solid __background_alt__;
     border-width: 1px 1px 0;
@@ -361,6 +365,8 @@
     padding: .1em .35em;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
+    box-shadow: 0 0 .5em #999;
+    display: block;
 }
 
 .dokuwiki div.page {
