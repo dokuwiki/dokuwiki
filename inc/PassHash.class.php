@@ -82,7 +82,7 @@ class PassHash {
     public function gen_salt($len=32){
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        for($i=0;$i<$len,$i++;) $salt .= $chars[mt_rand(0,61)];
+        for($i=0;$i<$len;$i++) $salt .= $chars[mt_rand(0,61)];
         return $salt;
     }
 
@@ -292,17 +292,20 @@ class PassHash {
      * Password hashing method 'pmd5'
      *
      * Uses salted MD5 hashs. Salt is 1+8 bytes long, 1st byte is the
-     * iteration count.
+     * iteration count when given, for null salts $compute is used.
      *
      * @param string $clear - the clear text to hash
      * @param string $salt  - the salt to use, null for random
      * @param string $magic - the hash identifier (P or H)
+     * @param int  $compute - the iteration count for new passwords
      * @returns string - hashed password
      */
-    public function hash_pmd5($clear, $salt=null, $magic='P'){
-        $this->init_salt($salt);
-
+    public function hash_pmd5($clear, $salt=null, $magic='P',$compute=8){
         $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        if(is_null($salt)){
+            $this->init_salt($salt);
+            $salt = $itoa64[$compute].$salt; // prefix iteration count
+        }
         $iterc = $salt[0]; // pos 0 of salt is iteration count
         $iter = strpos($itoa64,$iterc);
         $iter = 1 << $iter;
@@ -340,8 +343,8 @@ class PassHash {
     /**
      * Alias for hash_pmd5
      */
-    public function hash_hmd5($clear, $salt=null, $magic='H'){
-        return $this->hash_pmd5($clear, $salt, $magic);
+    public function hash_hmd5($clear, $salt=null, $magic='H', $compute=8){
+        return $this->hash_pmd5($clear, $salt, $magic, $compute);
     }
 
     /**
