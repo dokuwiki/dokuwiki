@@ -48,6 +48,11 @@ class auth_password_test extends UnitTestCase {
         }
     }
 
+    function test_bcrypt_self(){
+        $hash = auth_cryptPassword('foobcrypt','bcrypt');
+        $this->assertTrue(auth_verifyPassword('foobcrypt',$hash));
+    }
+
     function test_verifyPassword_nohash(){
         $this->assertTrue(auth_verifyPassword('foo','$1$$n1rTiFE0nRifwV/43bVon/'));
     }
