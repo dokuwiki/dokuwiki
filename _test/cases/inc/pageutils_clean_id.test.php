@@ -35,6 +35,7 @@ class init_clean_id_test extends UnitTestCase {
         $tests[] = array('ښ侧化并곦  β',false,'ښ侧化并곦_β');
         $tests[] = array('page:page',false,'page:page');
         $tests[] = array('page;page',false,'page:page');
+        $tests[] = array('page:page 1.2',false,'page:page_1.2');
 
         $tests[] = array('page._#!','false','page');
         $tests[] = array('._#!page','false','page');
