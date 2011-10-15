@@ -127,7 +127,7 @@ $lang['cssdatauri']            = 'Oberer Grenzwert in Bytes für Dateigrössen. 
 Diese Technik funktioniert nicht in Internet Explorer <8!
 
 Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes.
-Setze die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.
+Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.
 
  ';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
