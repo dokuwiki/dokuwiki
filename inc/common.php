@@ -980,7 +980,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
     $file = wikiFN($id);
     $old = @filemtime($file); // from page
-    $wasRemoved = empty($text);
+    $wasRemoved = (trim($text) == ''); // check for empty or whitespace only
     $wasCreated = !@file_exists($file);
     $wasReverted = ($REV==true);
     $newRev = false;
