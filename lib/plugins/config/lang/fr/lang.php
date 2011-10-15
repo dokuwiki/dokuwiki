@@ -51,6 +51,7 @@ $lang['lang']                  = 'Langue';
 $lang['basedir']               = 'Répertoire de base (ex. : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base. Laisser vide pour une détection automatique.';
 $lang['savedir']               = 'Répertoire de stockage';
+$lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
 $lang['start']                 = 'Nom de la page d\'accueil';
 $lang['title']                 = 'Titre du wiki';
 $lang['template']              = 'Modèle';
