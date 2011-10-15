@@ -714,8 +714,8 @@ function checklock($id){
     }
 
     //my own lock
-    $ip = io_readFile($lock);
-    if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){
+    list($ip,$session) = explode("\n",io_readFile($lock));
+    if($ip == $_SERVER['REMOTE_USER'] || $ip == clientIP() || $session == session_id()){
         return false;
     }
 
@@ -738,7 +738,7 @@ function lock($id){
     if($_SERVER['REMOTE_USER']){
         io_saveFile($lock,$_SERVER['REMOTE_USER']);
     }else{
-        io_saveFile($lock,clientIP());
+        io_saveFile($lock,clientIP()."\n".session_id());
     }
 }
 
@@ -751,8 +751,8 @@ function lock($id){
 function unlock($id){
     $lock = wikiLockFN($id);
     if(@file_exists($lock)){
-        $ip = io_readFile($lock);
-        if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){
+        list($ip,$session) = explode("\n",io_readFile($lock));
+        if($ip == $_SERVER['REMOTE_USER'] || $ip == clientIP() || $session == session_id()){
             @unlink($lock);
             return true;
         }
