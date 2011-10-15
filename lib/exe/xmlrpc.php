@@ -53,6 +53,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function call($methodname, $args){
         if(!in_array($methodname,$this->public_methods) && !$this->checkAuth()){
+            header('HTTP/1.1 401 Unauthorized');
             return new IXR_Error(-32603, 'server error. not authorized to call method "'.$methodname.'".');
         }
         return parent::call($methodname, $args);
