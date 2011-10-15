@@ -1355,6 +1355,20 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
         'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
 
+    // mediamanager button
+    $link = wl('',array('do'=>'media','image'=>$item['id']));
+    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/mediamanager.png" '.
+        'alt="'.$lang['btn_media'].'" title="'.$lang['btn_media'].'" class="btn" /></a>';
+
+    // delete button
+    if($item['writable'] && $auth >= AUTH_DELETE){
+        $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
+            '&amp;sectok='.getSecurityToken();
+        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
+            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
+            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
+    }
+
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
     echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';
     echo '</div>';
