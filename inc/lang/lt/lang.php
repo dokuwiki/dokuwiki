@@ -115,7 +115,6 @@ $lang['js']['keepopen']        = 'Pažymėjus palikti langą atvertą';
 $lang['js']['hidedetails']     = 'Paslėpti Detales';
 $lang['js']['nosmblinks']      = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.
 Vis dėlto, jūs galite nukopijuoti šią nuorodą.';
-$lang['js']['mu_btn']          = 'Pateikite kelis failus vienu ypu';
 $lang['mediausage']            = 'Failo nuorodai užrašyti naudokite tokią sintaksę:';
 $lang['mediaview']             = 'Žiūrėti pirminį failą';
 $lang['mediaroot']             = 'pradžia (root)';

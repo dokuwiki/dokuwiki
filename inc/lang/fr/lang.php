@@ -149,7 +149,6 @@ $lang['js']['nosmblinks']      = 'Les liens vers les partages Windows ne fonctio
 $lang['js']['linkwiz']         = 'Assistant Lien';
 $lang['js']['linkto']          = 'Lien vers :';
 $lang['js']['del_confirm']     = 'Effacer cette entrée ?';
-$lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
 $lang['js']['willexpire']      = 'Votre verrouillage pour la modification de cette page expire dans une minute.\nPour éviter les conflits, utilisez le bouton « Aperçu » pour réinitialiser le minuteur.';
 $lang['js']['restore_confirm']     = 'Voulez vous vraiment restaurer cette version?';
 $lang['js']['media_diff']          = 'Voir les différences:';

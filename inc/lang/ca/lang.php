@@ -120,7 +120,6 @@ Si voleu podeu copiar i enganxar l\'enllaç.';
 $lang['js']['linkwiz']         = 'Auxiliar d\'enllaços';
 $lang['js']['linkto']          = 'Enllaça a:';
 $lang['js']['del_confirm']     = 'Suprimiu aquesta entrada?';
-$lang['js']['mu_btn']          = 'Penja múltiples fitxers';
 $lang['mediausage']            = 'Utilitzeu la sintaxi següent per referir-vos a aquest enllaç:';
 $lang['mediaview']             = 'Mostra el fitxer original';
 $lang['mediaroot']             = 'arrel';

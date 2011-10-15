@@ -123,7 +123,6 @@ $lang['js']['nosmblinks']      = 'Linkovi na dijeljene Windows mape rade samo s 
 $lang['js']['linkwiz']         = 'Čarobnjak za poveznice';
 $lang['js']['linkto']          = 'Poveznica na:';
 $lang['js']['del_confirm']     = 'Zbilja želite obrisati odabrane stavke?';
-$lang['js']['mu_btn']          = 'Postavi više datoteka odjednom';
 $lang['rssfailed']             = 'Došlo je do greške prilikom preuzimanja feed-a: ';
 $lang['nothingfound']          = 'Traženi dokumetni nisu pronađeni.';
 $lang['mediaselect']           = 'Mediafile datoteke';

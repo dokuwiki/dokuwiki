@@ -118,7 +118,6 @@ $lang['js']['nosmblinks']      = 'Windows-un şəbəkə qovluqlarına link ancaq
 $lang['js']['linkwiz']         = 'Linklər köməkçisi';
 $lang['js']['linkto']          = 'Link göstərir:';
 $lang['js']['del_confirm']     = 'Siz əminsiz ki, seçilmişləri silmək istəyirsiniz?';
-$lang['js']['mu_btn']          = 'Bir neçə faylı birdən yükləmək';
 $lang['mediausage']            = 'Bu fayla link yaratmaq üçün aşağıdakı sintaksisdən istifadə edin:';
 $lang['mediaview']             = 'Bu faylın ilkinə bax';
 $lang['mediaroot']             = 'kök';

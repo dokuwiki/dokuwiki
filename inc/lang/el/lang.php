@@ -127,7 +127,6 @@ $lang['js']['nosmblinks']      = 'Οι σύνδεσμοι προς Windows share
 $lang['js']['linkwiz']         = 'Αυτόματος Οδηγός Συνδέσμων';
 $lang['js']['linkto']          = 'Σύνδεση σε:';
 $lang['js']['del_confirm']     = 'Να διαγραφεί;';
-$lang['js']['mu_btn']          = 'Ταυτόχρονη φόρτωση πολλαπλών φακέλων';
 $lang['js']['restore_confirm'] = 'Θέλετε την επαναφορά σε αυτή την έκδοση;';
 $lang['js']['media_diff']      = 'Εμφάνιση διαφορών:';
 $lang['js']['media_diff_both'] = 'Δίπλα δίπλα';

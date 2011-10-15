@@ -133,7 +133,6 @@ $lang['js']['nosmblinks']      = '连接到 Windows 共享功能只有在 IE 浏
 $lang['js']['linkwiz']         = '链接向导';
 $lang['js']['linkto']          = '链接到：';
 $lang['js']['del_confirm']     = '真的要删除选中的项目吗？';
-$lang['js']['mu_btn']          = '一次上传了多个文件';
 $lang['js']['restore_confirm'] = '确实要恢复这个版本么？';
 $lang['js']['media_diff']      = '查看差异：';
 $lang['js']['media_diff_both'] = '肩并肩';

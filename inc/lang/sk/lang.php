@@ -124,7 +124,6 @@ Aj napriek tomu tento odkaz môžete skopírovať a vložiť inde.';
 $lang['js']['linkwiz']         = 'Sprievodca odkazmi';
 $lang['js']['linkto']          = 'Odkaz na:';
 $lang['js']['del_confirm']     = 'Zmazať túto položku?';
-$lang['js']['mu_btn']          = 'Nahrať viac súborov súčasne';
 $lang['rssfailed']             = 'Nastala chyba pri vytváraní tohto RSS: ';
 $lang['nothingfound']          = 'Nič nenájdené.';
 $lang['mediaselect']           = 'Výber dokumentu';

@@ -119,7 +119,6 @@ $lang['js']['nosmblinks']      = 'Els vínculs a recursos compartits de Windows 
 $lang['js']['linkwiz']         = 'Assistent de vínculs';
 $lang['js']['linkto']          = 'Vincular a:';
 $lang['js']['del_confirm']     = '¿Realment vol borrar el(s) ítem(s) seleccionat(s)?';
-$lang['js']['mu_btn']          = 'Enviar diversos archius d\'una';
 $lang['mediausage']            = 'Utilise la següent sintaxis per a referenciar est archiu:';
 $lang['mediaview']             = 'Vore l\'archiu original';
 $lang['mediaroot']             = 'base';

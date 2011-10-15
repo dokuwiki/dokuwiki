@@ -121,7 +121,6 @@ Protams, ka vari saiti kopēt un iespraust citā programmā.';
 $lang['js']['linkwiz']         = 'Saišu vednis';
 $lang['js']['linkto']          = 'Saite uz: ';
 $lang['js']['del_confirm']     = 'Dzēst šo šķirkli?';
-$lang['js']['mu_btn']          = 'Augšuplādēt uzreiz vairākus failus.';
 $lang['rssfailed']             = 'Kļūda saņemot saturu no ';
 $lang['nothingfound']          = 'Nekas nav atrasts.';
 $lang['mediaselect']           = 'Mēdiju faila izvēle';

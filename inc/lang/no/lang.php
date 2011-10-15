@@ -135,7 +135,6 @@ Du kan fortsatt kopiere og lime inn lenken.';
 $lang['js']['linkwiz']         = 'guide til lenker';
 $lang['js']['linkto']          = 'Lenke til:';
 $lang['js']['del_confirm']     = 'Slett denne oppføringen?';
-$lang['js']['mu_btn']          = 'Last opp flere filer samtidig';
 $lang['js']['restore_confirm'] = 'Er du sikker på at du vil gjenopprette denne versjonen?';
 $lang['js']['media_diff']      = 'Vis forskjeller:';
 $lang['js']['media_diff_both'] = 'Side ved side:';

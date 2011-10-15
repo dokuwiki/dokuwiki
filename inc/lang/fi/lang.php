@@ -127,7 +127,6 @@ Voit silti kopioida ja liittää linkin.';
 $lang['js']['linkwiz']         = 'Linkkivelho';
 $lang['js']['linkto']          = 'Linkki kohteeseen:';
 $lang['js']['del_confirm']     = 'Haluatko todella poistaa valitut kohteet?';
-$lang['js']['mu_btn']          = 'Lähetä useampia tiedostoja kerralla';
 $lang['js']['restore_confirm'] = 'Haluatko varmasti palauttaa tämän version?';
 $lang['js']['media_diff']      = 'Näytä erot:';
 $lang['js']['media_diff_both'] = 'Vierekkäin';

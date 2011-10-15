@@ -127,7 +127,6 @@ Puteţi însă copia şi insera legătura.';
 $lang['js']['linkwiz']         = 'Asistent legătură';
 $lang['js']['linkto']          = 'Legătură la:';
 $lang['js']['del_confirm']     = 'Doriţi într-adevăr ştergerea elementelor selectate?';
-$lang['js']['mu_btn']          = 'Încarcă mai multe fişiere simultan';
 $lang['js']['restore_confirm'] = 'Sunteți sigur că doriți restaurarea acestei versiuni?';
 $lang['js']['media_diff']      = 'Arată diferențele:';
 $lang['js']['media_diff_both'] = 'Unul lângă altul';

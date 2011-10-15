@@ -136,7 +136,6 @@ Entretanto, você ainda pode copiar e colar o atalho.';
 $lang['js']['linkwiz']         = 'Link Wizard';
 $lang['js']['linkto']          = 'Link para:';
 $lang['js']['del_confirm']     = 'Deseja realmente excluir o(s) item(ns) selecionado(s)?';
-$lang['js']['mu_btn']          = 'Enviar vários arquivos de uma vez';
 $lang['rssfailed']             = 'Ocorreu um erro durante a atualização dessa fonte: ';
 $lang['nothingfound']          = 'Não foi encontrado nada.';
 $lang['mediaselect']           = 'Arquivos de mídia';

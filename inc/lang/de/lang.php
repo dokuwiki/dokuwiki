@@ -137,7 +137,6 @@ $lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktionie
 $lang['js']['linkwiz']         = 'Link-Assistent';
 $lang['js']['linkto']          = 'Link nach:';
 $lang['js']['del_confirm']     = 'Eintrag wirklich löschen?';
-$lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['js']['restore_confirm'] = 'Really restore this version?';
 $lang['js']['media_diff']      = 'Unterschiede anzeigen:';
 $lang['js']['media_diff_both'] = 'Side by Side';

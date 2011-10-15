@@ -131,7 +131,6 @@ Du kan fortfarande klippa och klistra in länken om du använder en annan webbl�
 $lang['js']['linkwiz']         = 'Snabbguide Länkar';
 $lang['js']['linkto']          = 'Länk till:';
 $lang['js']['del_confirm']     = 'Vill du verkligen radera?';
-$lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
 $lang['rssfailed']             = 'Ett fel uppstod när detta RSS-flöde skulle hämtas: ';
 $lang['nothingfound']          = 'Inga filer hittades.';
 $lang['mediaselect']           = 'Mediafiler';

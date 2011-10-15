@@ -129,7 +129,6 @@ Vi ankoraŭ povas kopii kaj almeti la ligilon.';
 $lang['js']['linkwiz']         = 'Ligil-Asistanto';
 $lang['js']['linkto']          = 'Ligilo al:';
 $lang['js']['del_confirm']     = 'Ĉu vere forigi elektitajn ero(j)n?';
-$lang['js']['mu_btn']          = 'Alŝuti plurajn dosierojn multope.';
 $lang['js']['restore_confirm'] = 'Ĉu vere restarigi ĉi tiun version?';
 $lang['js']['media_diff']      = 'Rigardu la diferencojn:';
 $lang['js']['media_diff_both'] = 'Flankon apud flanko';

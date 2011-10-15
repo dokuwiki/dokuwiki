@@ -137,7 +137,6 @@ $lang['js']['linkwiz']         = 'Assistente de Criação de Ligação';
 $lang['js']['linkto']          = 'Ligação para:';
 $lang['js']['del_confirm']     = 'Remover o(s) item(s) selecionados?';
 $lang['js']['restore_confirm'] = 'Restaurar esta versão?';
-$lang['js']['mu_btn']          = 'Enviar múltiplos ficheiros de uma vez';
 $lang['rssfailed']             = 'Ocorreu um erro neste canal RSS: ';
 $lang['nothingfound']          = 'Nada foi encontrado.';
 $lang['mediaselect']           = 'Selecção de ficheiros';

@@ -123,7 +123,6 @@ $lang['js']['nosmblinks']      = 'ウィンドウズの共有フォルダへリ�
 $lang['js']['linkwiz']         = 'リンクウィザード';
 $lang['js']['linkto']          = 'リンク先：';
 $lang['js']['del_confirm']     = '選択した項目を本当に削除しますか？';
-$lang['js']['mu_btn']          = '複数のファイルを一度にアップロード';
 $lang['rssfailed']             = 'RSSの取得に失敗しました：';
 $lang['nothingfound']          = '該当文書はありませんでした。';
 $lang['mediaselect']           = 'メディアファイルを選択';

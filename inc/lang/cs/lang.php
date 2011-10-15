@@ -127,7 +127,6 @@ Přesto tento odkaz můžete zkopírovat a vložit jinde.';
 $lang['js']['linkwiz']         = 'Průvodce odkazy';
 $lang['js']['linkto']          = 'Odkaz na:';
 $lang['js']['del_confirm']     = 'Vymazat tuto položku?';
-$lang['js']['mu_btn']          = 'Načíst více souborů najednou';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
 $lang['nothingfound']          = 'Nic nenalezeno.';
 $lang['mediaselect']           = 'Výběr dokumentu';

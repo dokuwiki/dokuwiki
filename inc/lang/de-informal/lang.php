@@ -19,7 +19,7 @@
  * @author Matthias Schulte <mailinglist@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  */
- 
+
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '„';
@@ -144,7 +144,6 @@ $lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktionie
 $lang['js']['linkwiz']         = 'Link-Assistent';
 $lang['js']['linkto']          = 'Link zu:';
 $lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
-$lang['js']['mu_btn']          = 'Mehrere Dateien gleichzeitig hochladen';
 $lang['js']['restore_confirm'] = 'Really restore this version?';
 $lang['js']['media_diff']          = 'Unterschiede anzeigen:';
 $lang['js']['media_diff_both']     = 'Side by Side';

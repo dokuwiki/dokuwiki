@@ -120,7 +120,6 @@ $lang['js']['nosmblinks']      = 'Lidhja te Windows shares funksionon vetëm në
 $lang['js']['linkwiz']         = 'Magjistari i Link';
 $lang['js']['linkto']          = 'Lidh tek:';
 $lang['js']['del_confirm']     = 'Fshiji vërtetë objektet e përzgjedhura?';
-$lang['js']['mu_btn']          = 'Ngarko shumë skedarë njëkohësisht';
 $lang['mediausage']            = 'Përdor sintaksën e mëposhtme për të referuar këtë skedar:';
 $lang['mediaview']             = 'Shiko skedarin origjinal';
 $lang['mediaroot']             = 'rrënja';

@@ -132,7 +132,6 @@ $lang['js']['nosmblinks']      = 'Linking to Windows shares only works in Micros
 $lang['js']['linkwiz']         = 'Link Wizard';
 $lang['js']['linkto']          = 'Link to:';
 $lang['js']['del_confirm']     = 'Really delete selected item(s)?';
-$lang['js']['mu_btn']          = 'Upload multiple files at once';
 $lang['js']['restore_confirm'] = 'Really restore this version?';
 $lang['js']['media_diff']          = 'View differences:';
 $lang['js']['media_diff_both']     = 'Side by Side';
