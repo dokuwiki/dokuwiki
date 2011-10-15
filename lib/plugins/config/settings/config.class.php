@@ -774,8 +774,8 @@ if (!class_exists('setting_dirchoice')) {
           if ($entry == '.' || $entry == '..') continue;
           if ($this->_pattern && !preg_match($this->_pattern,$entry)) continue;
 
-          $file = (is_link($this->_dir.$entry)) ? readlink($this->_dir.$entry) : $entry;
-          if (is_dir($this->_dir.$file)) $list[] = $entry;
+          $file = (is_link($this->_dir.$entry)) ? readlink($this->_dir.$entry) : $this->_dir.$entry;
+          if (is_dir($file)) $list[] = $entry;
         }
         closedir($dh);
       }
