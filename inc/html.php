@@ -899,7 +899,7 @@ function html_li_default($item){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
+function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
     if (count($data) === 0) {
         return '';
     }
@@ -907,7 +907,7 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
     $start_level = $data[0]['level'];
     $ret   = '';
 
-    if ($start_level < 2) {
+    if ($forcewrapper || $start_level < 2) {
         // Trigger building a wrapper ul if the first level is
         // 0 (we have a root object) or 1 (just the root content)
         --$start_level;
@@ -930,8 +930,9 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
                 //close higher lists
                 $ret .= "</ul>\n</li>\n";
             }
+            $ret .= "<ul class=\"$class\">\n";
         } elseif ($ret !== '') {
-            //close last item
+            //close previous item
             $ret .= "</li>\n";
         }
 
@@ -1694,7 +1695,7 @@ function html_TOC($toc){
     $out .= $lang['toc'];
     $out .= '</div>'.DOKU_LF;
     $out .= '<div id="toc__inside">'.DOKU_LF;
-    $out .= html_buildlist($toc,'toc','html_list_toc');
+    $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
     return $out;
