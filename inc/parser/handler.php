@@ -1522,7 +1522,7 @@ class Doku_Handler_Block {
         if(trim($content)==''){
             //remove the whole paragraph
             //array_splice($this->calls,$i); // <- this is much slower than the loop below
-            for($x=$ccount-1; $x>$i; $x--) unset($this->calls[$x]);
+            for($x=$ccount; $x>$i; $x--) array_pop($this->calls);
         }else{
             // remove ending linebreaks in the paragraph
             $i=count($this->calls)-1;
