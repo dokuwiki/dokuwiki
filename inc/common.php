@@ -56,7 +56,7 @@ function stripctl($string){
  * @return  string
  */
 function getSecurityToken(){
-    return md5(auth_cookiesalt().session_id());
+    return md5(auth_cookiesalt().session_id().$_SERVER['REMOTE_USER']);
 }
 
 /**

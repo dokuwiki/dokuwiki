@@ -101,7 +101,7 @@ function act_dispatch(){
             if(checkSecurityToken()){
                 $ACT = act_save($ACT);
             }else{
-                $ACT = 'show';
+                $ACT = 'preview';
             }
         }
 
