@@ -1507,7 +1507,8 @@ class Doku_Handler_Block {
         if (!$this->inParagraph) return;
         // look back if there was any content - we don't want empty paragraphs
         $content = '';
-        for($i=count($this->calls)-1; $i>=0; $i--){
+        $ccount = count($this->calls);
+        for($i=$ccount-1; $i>=0; $i--){
             if($this->calls[$i][0] == 'p_open'){
                 break;
             }elseif($this->calls[$i][0] == 'cdata'){
