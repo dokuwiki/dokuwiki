@@ -319,7 +319,8 @@ function css_compress($css){
 
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
-    $css = preg_replace('/ ?([:;,{}\/]) ?/','\\1',$css);
+    $css = preg_replace('/ ?([;,{}\/]) ?/','\\1',$css);
+    $css = preg_replace('/ ?: /',':',$css);
 
     // shorten colors
     $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3/", "#\\1\\2\\3",$css);
