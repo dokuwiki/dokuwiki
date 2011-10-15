@@ -1531,7 +1531,7 @@ class Doku_Handler_Block {
         $this->inParagraph = false;
         $this->skipEol = true;
     }
-    
+
     function addCall($call) {
         $key = count($this->calls);
         if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
