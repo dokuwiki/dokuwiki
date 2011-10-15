@@ -858,11 +858,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         global $auth;
         if(!$conf['useacl']) return 0;
         if(!$auth) return 0;
+
+        @session_start(); // reopen session for login
         if($auth->canDo('external')){
-            return $auth->trustExternal($user,$pass,false);
+            $ok = $auth->trustExternal($user,$pass,false);
         }else{
-            return auth_login($user,$pass,false,true);
+            $evdata = array(
+                'user'     => $user,
+                'password' => $pass,
+                'sticky'   => false,
+                'silent'   => true,
+            );
+            $ok = trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
+        session_write_close(); // we're done with the session
+
+        return $ok;
     }
 
 
