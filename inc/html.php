@@ -905,39 +905,34 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
     }
 
     $start_level = $data[0]['level'];
-    $ret   = '';
-
-    if ($forcewrapper || $start_level < 2) {
-        // Trigger building a wrapper ul if the first level is
-        // 0 (we have a root object) or 1 (just the root content)
-        --$start_level;
-    }
-
     $level = $start_level;
+    $ret   = '';
+    $open  = 0;
 
     foreach ($data as $item){
 
         if( $item['level'] > $level ){
             //open new list
             for($i=0; $i<($item['level'] - $level); $i++){
-                if ($i) $ret .= "<li class=\"clear\">\n";
+                if ($i) $ret .= "<li class=\"clear\">";
                 $ret .= "\n<ul class=\"$class\">\n";
+                $open++;
             }
+            $level = $item['level'];
+
         }elseif( $item['level'] < $level ){
             //close last item
             $ret .= "</li>\n";
-            for ($i=0; $i<($level - $item['level']); $i++){
+            while( $level > $item['level'] && $open > 0 ){
                 //close higher lists
                 $ret .= "</ul>\n</li>\n";
+                $level--;
+                $open--;
             }
-            $ret .= "<ul class=\"$class\">\n";
         } elseif ($ret !== '') {
             //close previous item
             $ret .= "</li>\n";
         }
-
-        //remember current level
-        $level = $item['level'];
 
         //print item
         $ret .= call_user_func($lifunc,$item);
@@ -948,8 +943,15 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
     }
 
     //close remaining items and lists
-    while(--$level >= $start_level) {
-        $ret .= "</li></ul>\n";
+    $ret .= "</li>\n";
+    while($open-- > 0) {
+        $ret .= "</ul></li>\n";
+    }
+
+    if ($forcewrapper || $start_level < 2) {
+        // Trigger building a wrapper ul if the first level is
+        // 0 (we have a root object) or 1 (just the root content)
+        $ret = "\n<ul class=\"$class\">\n".$ret."</ul>\n";
     }
 
     return $ret;
