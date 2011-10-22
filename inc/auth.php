@@ -422,7 +422,7 @@ function auth_isadmin($user=null,$groups=null){
  * @param $memberlist string commaseparated list of allowed users and groups
  * @param $user       string user to match against
  * @param $groups     array  groups the user is member of
- * @returns bool      true for membership acknowledged
+ * @return bool       true for membership acknowledged
  */
 function auth_isMember($memberlist,$user,array $groups){
     global $auth;
