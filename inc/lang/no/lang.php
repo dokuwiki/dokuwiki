@@ -16,6 +16,7 @@
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Jon Bøe <jonmagneboe@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -137,7 +138,8 @@ $lang['js']['linkto']          = 'Lenke til:';
 $lang['js']['del_confirm']     = 'Slett denne oppføringen?';
 $lang['js']['restore_confirm'] = 'Er du sikker på at du vil gjenopprette denne versjonen?';
 $lang['js']['media_diff']      = 'Vis forskjeller:';
-$lang['js']['media_diff_both'] = 'Side ved side:';
+$lang['js']['media_diff_both'] = 'Side ved side';
+$lang['js']['media_diff_opacity'] = 'Gjennomskinnelighet';
 $lang['js']['media_diff_portions'] = 'Glidebryter';
 $lang['js']['media_select']    = 'Velg filer…';
 $lang['js']['media_upload_btn'] = 'Last opp';
@@ -316,16 +318,20 @@ $lang['seconds']               = '%d sekunder siden';
 $lang['wordblock']             = 'Din endring ble ikke lagret ettersom den inneholder blokkert tekst (søppel).';
 $lang['media_uploadtab']       = 'Last opp';
 $lang['media_searchtab']       = 'Søk';
+$lang['media_file']            = 'Fil';
 $lang['media_viewtab']         = 'Vis';
 $lang['media_edittab']         = 'Rediger';
 $lang['media_historytab']      = 'Historikk';
-$lang['media_thumbsview']      = 'Miniatyrbilder';
-$lang['media_listview']        = 'Liste';
-$lang['media_sort']            = 'Sorter';
+$lang['media_list_thumbs']     = 'Miniatyrbilder';
+$lang['media_list_rows']       = 'Rader';
 $lang['media_sort_name']       = 'etter navn';
 $lang['media_sort_date']       = 'etter dato';
+$lang['media_namespaces']      = 'Velg navnerom';
+$lang['media_files']           = 'Filer i %s';
 $lang['media_upload']          = 'Last opp til navnerommet <strong>%s</strong>.';
 $lang['media_search']          = 'Søk i navnerommet <strong>%s</strong>.';
+$lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s på %s';
 $lang['media_edit']            = 'Rediger';
 $lang['media_history']         = 'Dette er de tidligere versjonene av fila.';
 $lang['media_meta_edited']     = 'metadata er endra';

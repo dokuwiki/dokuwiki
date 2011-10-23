@@ -1,4 +1,4 @@
-En ny bruker har registret seg, her er detaljene:
+En ny bruker har registrert seg, her er detaljene:
 
 Brukernavn  : @NEWUSER@
 Fult navn   : @NEWNAME@
