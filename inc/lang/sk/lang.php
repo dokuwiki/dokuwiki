@@ -92,7 +92,7 @@ $lang['txt_filename']          = 'Uložiť ako (voliteľné)';
 $lang['txt_overwrt']           = 'Prepísať existujúci súbor';
 $lang['lockedby']              = 'Práve zamknuté:';
 $lang['lockexpire']            = 'Zámok stratí platnosť:';
-$lang['js']['willexpire']            = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
+$lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
 $lang['js']['notsavedyet']     = 'Neuložené zmeny budú stratené.
 Chcete naozaj pokračovať?';
 $lang['js']['searchmedia']     = 'Hľadať súbory';
@@ -101,7 +101,7 @@ $lang['js']['hidedetails']     = 'Skryť detaily';
 $lang['js']['mediatitle']      = 'Nastavenia odkazu';
 $lang['js']['mediadisplay']    = 'Typ odkazu';
 $lang['js']['mediaalign']      = 'Zarovnanie';
-$lang['js']['mediasize']       = 'Veľkosť obrázku';
+$lang['js']['mediasize']       = 'Veľkosť obrázka';
 $lang['js']['mediatarget']     = 'Cieľ odkazu';
 $lang['js']['mediaclose']      = 'Zatvoriť';
 $lang['js']['mediainsert']     = 'Vložiť';
