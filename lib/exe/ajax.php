@@ -281,7 +281,8 @@ function ajax_mediaupload(){
         }
         $result = array('error' => $msg['msg'], 'ns' => $NS);
     }
-    echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+    $json = new JSON;
+    echo htmlspecialchars($json->encode($result), ENT_NOQUOTES);
 }
 
 function dir_delete($path) {
