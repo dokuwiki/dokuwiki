@@ -1021,6 +1021,26 @@ class adLDAP {
     }
 
     /**
+     * Return info about the domain itself
+     *
+     * @authot Andreas Gohr <gohr@cosmocode.de>
+     * @param array $fields The fields to query
+     * @return array
+     */
+    public function domain_info($fields){
+        if (!$this->_bind){ return (false); }
+
+        $sr = ldap_read($this->_conn, $this->_base_dn, 'objectclass=*', $fields);
+        if (!$sr) {
+            return false;
+        }
+        $info = ldap_get_entries($this->_conn, $sr);
+        if(count($info)) return $info[0];
+
+        return false;
+    }
+
+    /**
     * Determine a user's password expiry date
     *
     * @param string $username The username to query
