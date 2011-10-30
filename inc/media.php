@@ -698,7 +698,11 @@ function _media_get_display_param($param, $values) {
         // FIXME: Set cookie
         return $_REQUEST[$param];
     } else {
-        return get_doku_pref($param, $values['default']);
+        $val = get_doku_pref($param, $values['default']);
+        if (!in_array($val, $values)) {
+            $val = $values['default'];
+        }
+        return $val;
     }
 }
 

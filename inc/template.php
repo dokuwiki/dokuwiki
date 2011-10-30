@@ -631,10 +631,6 @@ function tpl_get_action($type) {
                 return false;
             }
             break;
-        case 'subscribens':
-            // Superseded by subscribe/subscription
-            return '';
-            break;
         case 'media':
             break;
         default:
