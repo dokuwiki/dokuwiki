@@ -286,11 +286,13 @@ class auth_ad extends auth_basic {
         if(isset($changes['mail'])){
             $adchanges['email'] = $changes['mail'];
         }
-        try {
-            $return = $return & $this->adldap->user_modify($user,$adchanges);
-        } catch (adLDAPException $e) {
-            if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
-            $return = false;
+        if(count($adchanges)){
+            try {
+                $return = $return & $this->adldap->user_modify($user,$adchanges);
+            } catch (adLDAPException $e) {
+                if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                $return = false;
+            }
         }
 
         return $return;
