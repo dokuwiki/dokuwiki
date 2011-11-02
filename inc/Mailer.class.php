@@ -1,14 +1,18 @@
 <?php
 /**
+ * A class to build and send multi part mails (with HTML content and embedded
+ * attachments). All mails are assumed to be in UTF-8 encoding.
+ *
+ * Attachments are handled in memory so this shouldn't be used to send huge
+ * files, but then again mail shouldn't be used to send huge files either.
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-
 
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
 #define('MAILHEADER_ASCIIONLY',1);
-
 
 class Mailer {
 
@@ -19,10 +23,23 @@ class Mailer {
 
     private $boundary = '';
     private $partid   = '';
-    private $sendparam= '';
+    private $sendparam= null;
 
-    function __construct(){
-        $this->partid = md5(uniqid(rand(),true)).'@'.$_SERVER['SERVER_NAME'];
+    private $validator = null;
+
+    /**
+     * Constructor
+     *
+     * Initializes the boundary strings and part counters
+     */
+    public function __construct(){
+        if(isset($_SERVER['SERVER_NAME'])){
+            $server = $_SERVER['SERVER_NAME'];
+        }else{
+            $server = 'localhost';
+        }
+
+        $this->partid = md5(uniqid(rand(),true)).'@'.$server;
         $this->boundary = '----------'.md5(uniqid(rand(),true));
     }
 
@@ -70,23 +87,49 @@ class Mailer {
     }
 
     /**
+     * Add an arbitrary header to the mail
+     *
+     * @param string $header the header name (no trailing colon!)
+     * @param string $value  the value of the header
+     * @param bool   $clean  remove all non-ASCII chars and line feeds?
+     */
+    public function setHeader($header,$value,$clean=true){
+        $header = ucwords(strtolower($header)); // streamline casing
+        if($clean){
+            $header = preg_replace('/[^\w \-\.\+\@]+/','',$header);
+            $value  = preg_replace('/[^\w \-\.\+\@]+/','',$value);
+        }
+        $this->headers[$header] = $value;
+    }
+
+    /**
+     * Set additional parameters to be passed to sendmail
+     *
+     * Whatever is set here is directly passed to PHP's mail() command as last
+     * parameter. Depending on the PHP setup this might break mailing alltogether
+     */
+    public function setParameters($param){
+        $this->sendparam = $param;
+    }
+
+    /**
      * Set the HTML part of the mail
      *
      * Placeholders can be used to reference embedded attachments
      */
-    public function setHTMLBody($html){
+    public function setHTML($html){
         $this->html = $html;
     }
 
     /**
      * Set the plain text part of the mail
      */
-    public function setTextBody($text){
+    public function setText($text){
         $this->text = $text;
     }
 
     /**
-     * Ses an email address header with correct encoding
+     * Sets an email address header with correct encoding
      *
      * Unicode characters will be deaccented and encoded base64
      * for headers. Addresses may not contain Non-ASCII data!
@@ -97,9 +140,12 @@ class Mailer {
      * @param string  $address Multiple adresses separated by commas
      * @param string  $header  Name of the header (To,Bcc,Cc,...)
      */
-    function mail_encode_address($address,$header){
+    function setAddress($address,$header){
         // No named recipients for To: in Windows (see FS#652)
         $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
+
+        $header = ucwords(strtolower($header)); // streamline casing
+        $address = preg_replace('/[\r\n\0]+/',' ',$address); // remove attack vectors
 
         $headers = '';
         $parts = explode(',',$address);
@@ -124,7 +170,11 @@ class Mailer {
                 continue;
             }
 
-            if(!mail_isvalid($addr)){
+            if(is_null($this->validator)){
+                $this->validator = new EmailAddressValidator();
+                $this->validator->allowLocalAddresses = true;
+            }
+            if(!$this->validator->check_email_address($addr)){
                 msg(htmlspecialchars("E-Mail address <$addr> is not valid"),-1);
                 continue;
             }
@@ -140,7 +190,7 @@ class Mailer {
                 }
 
                 if(!utf8_isASCII($text)){
-                    //FIXME
+                    //FIXME check if this is needed for base64 too
                     // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
                     /*
                     if (preg_match('/^"(.+)"$/', $text, $matches)) {
@@ -200,6 +250,19 @@ class Mailer {
     }
 
     /**
+     * Add the From: address
+     *
+     * This is set to $conf['mailfrom'] when not specified so you shouldn't need
+     * to call this function
+     *
+     * @see setAddress
+     * @param string  $address from address
+     */
+    public function from($address){
+        $this->setAddress($address, 'From');
+    }
+
+    /**
      * Add the mail's Subject: header
      *
      * @param string $subject the mail subject
@@ -246,20 +309,33 @@ class Mailer {
         return $mime;
     }
 
-    protected function createBody(){
+    /**
+     * Build the body and handles multi part mails
+     *
+     * Needs to be called before prepareHeaders!
+     *
+     * @return string the prepared mail body, false on errors
+     */
+    protected function prepareBody(){
+        global $conf;
+
         // check for body
         if(!$this->text && !$this->html){
             return false;
         }
 
         // add general headers
+        if(!isset($this->headers['From'])) $this->from($conf['mailfrom']);
         $this->headers['MIME-Version'] = '1.0';
+
+        $body = '';
 
         if(!$this->html && !count($this->attach)){ // we can send a simple single part message
             $this->headers['Content-Type'] = 'text/plain; charset=UTF-8';
             $this->headers['Content-Transfer-Encoding'] = 'base64';
-            $body = chunk_split(base64_encode($this->text),74,MAILHEADER_EOL);
+            $body .= chunk_split(base64_encode($this->text),74,MAILHEADER_EOL);
         }else{ // multi part it is
+            $body .= "This is a multi-part message in MIME format.".MAILHEADER_EOL;
 
             // prepare the attachments
             $attachments = $this->prepareAttachments();
@@ -267,25 +343,21 @@ class Mailer {
             // do we have alternative text content?
             if($this->text && $this->html){
                 $this->headers['Content-Type'] = 'multipart/alternative; boundary="'.$this->boundary.'XX"';
-                $body  = "This is a multi-part message in MIME format.".MAILHEADER_EOL;
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
+                $body .= 'Content-Type: text/plain; charset=UTF-8'.MAILHEADER_EOL;
+                $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
-                $body .= 'Content-Type: text/plain; charset=UTF-8';
-                $body .= 'Content-Transfer-Encoding: base64';
                 $body .= chunk_split(base64_encode($this->text),74,MAILHEADER_EOL);
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
                 $body .= 'Content-Type: multipart/related; boundary="'.$this->boundary.'"'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
-            }else{
-                $this->headers['Content-Type'] = 'multipart/related; boundary="'.$this->boundary.'"';
-                $body  = "This is a multi-part message in MIME format.".MAILHEADER_EOL;
             }
 
-            $body .= '--'.$this->boundary."\n";
-            $body .= "Content-Type: text/html; charset=UTF-8\n";
-            $body .= "Content-Transfer-Encoding: base64\n";
+            $body .= '--'.$this->boundary.MAILHEADER_EOL;
+            $body .= 'Content-Type: text/html; charset=UTF-8'.MAILHEADER_EOL;
+            $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
             $body .= MAILHEADER_EOL;
-            $body = chunk_split(base64_encode($this->html),74,MAILHEADER_EOL);
+            $body .= chunk_split(base64_encode($this->html),74,MAILHEADER_EOL);
             $body .= MAILHEADER_EOL;
             $body .= $attachments;
             $body .= '--'.$this->boundary.'--'.MAILHEADER_EOL;
@@ -301,6 +373,8 @@ class Mailer {
 
     /**
      * Create a string from the headers array
+     *
+     * @returns string the headers
      */
     protected function prepareHeaders(){
         $headers = '';
@@ -313,12 +387,61 @@ class Mailer {
     /**
      * return a full email with all headers
      *
-     * This is mainly for debugging and testing
+     * This is mainly intended for debugging and testing but could also be
+     * used for MHT exports
+     *
+     * @return string the mail, false on errors
      */
     public function dump(){
-        $headers = $this->prepareHeaders();
         $body    = $this->prepareBody();
+        if($body === 'false') return false;
+        $headers = $this->prepareHeaders();
 
         return $headers.MAILHEADER_EOL.$body;
+    }
+
+    /**
+     * Send the mail
+     *
+     * Call this after all data was set
+     *
+     * @fixme we need to support the old plugin hook here!
+     * @return bool true if the mail was successfully passed to the MTA
+     */
+    public function send(){
+        // any recipients?
+        if(trim($this->headers['To'])  === '' &&
+           trim($this->headers['Cc'])  === '' &&
+           trim($this->headers['Bcc']) === '') return false;
+
+        // The To: header is special
+        if(isset($this->headers['To'])){
+            $to = $this->headers['To'];
+            unset($this->headers['To']);
+        }else{
+            $to = '';
+        }
+
+        // so is the subject
+        if(isset($this->headers['Subject'])){
+            $subject = $this->headers['Subject'];
+            unset($this->headers['Subject']);
+        }else{
+            $subject = '';
+        }
+
+        // make the body
+        $body    = $this->prepareBody();
+        if($body === 'false') return false;
+
+        // cook the headers
+        $headers = $this->prepareHeaders();
+
+        // send the thing
+        if(is_null($this->sendparam)){
+            return @mail($to,$subject,$body,$headers);
+        }else{
+            return @mail($to,$subject,$body,$headers,$this->sendparam);
+        }
     }
 }
