@@ -7,7 +7,7 @@
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
  * @author Gwenn Gueguen <contact@demisel.net>
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Fabien Chabreuil <fabien@integralpersonality.com>
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Delassaux Julien <julien@delassaux.fr>
@@ -141,7 +141,7 @@ $lang['js']['linkwiz']         = 'Assistant Lien';
 $lang['js']['linkto']          = 'Lien vers :';
 $lang['js']['del_confirm']     = 'Effacer cette entrée ?';
 $lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
-$lang['js']['restore_confirm'] = 'Voulez vous vraiment restaurer cette version?';
+$lang['js']['restore_confirm'] = 'Voulez vous vraiment restaurer cette version ?';
 $lang['js']['media_diff']      = 'Voir les différences:';
 $lang['js']['media_diff_both'] = 'Côte à côte';
 $lang['js']['media_diff_opacity'] = 'Calque';
