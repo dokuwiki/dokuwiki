@@ -175,6 +175,12 @@ function check(){
         msg('Lockdir is not writable',-1);
     }
 
+    if(is_writable(DOKU_CONF)){
+        msg('conf directory is writable',1);
+    }else{
+        msg('conf directory is not writable',-1);
+    }
+
     if($conf['authtype'] == 'plain'){
         global $config_cascade;
         if(is_writable($config_cascade['plainauth.users']['default'])){
