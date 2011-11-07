@@ -189,14 +189,16 @@ class auth_ad extends auth_basic {
             $info['grps'][] = $conf['defaultgroup'];
         }
 
-        // password will expire, let's warn the current user
-        if($_SERVER['REMOTE_USER'] == $user && $info['expires'] && $this->cnf['expirywarn']){
+        // check expiry time
+        if($info['expires'] && $this->cnf['expirywarn']){
             $result   = $this->adldap->domain_info(array('maxpwdage')); // maximum pass age
             $maxage   = -1 * $result['maxpwdage'][0] / 10000000; // negative 100 nanosecs
             $timeleft = $maxage - (time() - $info['lastpwd']);
             $timeleft = round($timeleft/(24*60*60));
+            $info['expiresin'] = $timeleft;
 
-            if($timeleft <= $this->cnf['expirywarn']){
+            // if this is the current user, warn him
+            if( ($_SERVER['REMOTE_USER'] == $user) && ($timeleft <= $this->cnf['expirywarn'])){
                 msg('Your password will expire in '.$timeleft.' days. You should change it.');
             }
         }
