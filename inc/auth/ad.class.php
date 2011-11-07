@@ -26,7 +26,7 @@
  *   $conf['auth']['ad']['use_ssl']            = 1;
  *   $conf['auth']['ad']['use_tls']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
- *   // warn user about expiring password in this mayn days in advance:
+ *   // warn user about expiring password this many days in advance:
  *   $conf['auth']['ad']['expirywarn']         = 5;
  *
  *   // get additional information to the userinfo array
@@ -148,6 +148,7 @@ class auth_ad extends auth_basic {
      */
    function getUserData($user){
         global $conf;
+        global $lang;
         if(!$this->_init()) return false;
 
         if($user == '') return array();
@@ -205,7 +206,7 @@ class auth_ad extends auth_basic {
 
             // if this is the current user, warn him
             if( ($_SERVER['REMOTE_USER'] == $user) && ($timeleft <= $this->cnf['expirywarn'])){
-                msg('Your password will expire in '.$timeleft.' days. You should change it.');
+                msg(sprintf($lang['authpwdexpire'],$timeleft));
             }
         }
 
