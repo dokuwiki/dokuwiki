@@ -150,6 +150,8 @@ class auth_ad extends auth_basic {
         global $conf;
         if(!$this->_init()) return false;
 
+        if($user == '') return array();
+
         $fields = array('mail','displayname','samaccountname','lastpwd','pwdlastset','useraccountcontrol');
 
         // add additional fields to read
