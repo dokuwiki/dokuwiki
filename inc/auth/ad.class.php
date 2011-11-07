@@ -160,6 +160,10 @@ class auth_ad extends auth_basic {
 
         //get info for given user
         $result = $this->adldap->user_info($user, $fields);
+        if($result == false){
+            return array();
+        }
+
         //general user info
         $info['name']    = $result[0]['displayname'][0];
         $info['mail']    = $result[0]['mail'][0];
