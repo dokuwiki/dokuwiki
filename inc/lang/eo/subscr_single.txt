@@ -7,8 +7,8 @@ Jen sekvas la ŝanĝoj:
 @DIFF@
 --------------------------------------------------------
 
-Dato : @DATE@
-Uzanto : @USER@
+Dato: @DATE@
+Uzanto: @USER@
 Modifa resumo: @SUMMARY@
 Malnova versio: @OLDPAGE@
 Nova versio: @NEWPAGE@
