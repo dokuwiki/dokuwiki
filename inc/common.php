@@ -15,6 +15,7 @@ define('RECENTS_SKIP_DELETED',2);
 define('RECENTS_SKIP_MINORS',4);
 define('RECENTS_SKIP_SUBSPACES',8);
 define('RECENTS_MEDIA_CHANGES',16);
+define('RECENTS_MEDIA_PAGES_MIXED',32);
 
 /**
  * Wrapper around htmlspecialchars()
@@ -55,7 +56,7 @@ function stripctl($string){
  * @return  string
  */
 function getSecurityToken(){
-    return md5(auth_cookiesalt().session_id());
+    return md5(auth_cookiesalt().session_id().$_SERVER['REMOTE_USER']);
 }
 
 /**
@@ -713,8 +714,8 @@ function checklock($id){
     }
 
     //my own lock
-    $ip = io_readFile($lock);
-    if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){
+    list($ip,$session) = explode("\n",io_readFile($lock));
+    if($ip == $_SERVER['REMOTE_USER'] || $ip == clientIP() || $session == session_id()){
         return false;
     }
 
@@ -737,7 +738,7 @@ function lock($id){
     if($_SERVER['REMOTE_USER']){
         io_saveFile($lock,$_SERVER['REMOTE_USER']);
     }else{
-        io_saveFile($lock,clientIP());
+        io_saveFile($lock,clientIP()."\n".session_id());
     }
 }
 
@@ -750,8 +751,8 @@ function lock($id){
 function unlock($id){
     $lock = wikiLockFN($id);
     if(@file_exists($lock)){
-        $ip = io_readFile($lock);
-        if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){
+        list($ip,$session) = explode("\n",io_readFile($lock));
+        if($ip == $_SERVER['REMOTE_USER'] || $ip == clientIP() || $session == session_id()){
             @unlink($lock);
             return true;
         }
@@ -979,7 +980,7 @@ function saveWikiText($id,$text,$summary,$minor=false){
 
     $file = wikiFN($id);
     $old = @filemtime($file); // from page
-    $wasRemoved = empty($text);
+    $wasRemoved = (trim($text) == ''); // check for empty or whitespace only
     $wasCreated = !@file_exists($file);
     $wasReverted = ($REV==true);
     $newRev = false;
@@ -1007,16 +1008,8 @@ function saveWikiText($id,$text,$summary,$minor=false){
         $newRev = saveOldRevision($id);
         // remove empty file
         @unlink($file);
-        // remove old meta info...
-        $mfiles = metaFiles($id);
-        $changelog = metaFN($id, '.changes');
-        $metadata  = metaFN($id, '.meta');
-        $subscribers = metaFN($id, '.mlist');
-        foreach ($mfiles as $mfile) {
-            // but keep per-page changelog to preserve page history, keep subscriber list and keep meta data
-            if (@file_exists($mfile) && $mfile!==$changelog && $mfile!==$metadata && $mfile!==$subscribers) { @unlink($mfile); }
-        }
-        // purge meta data
+        // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
+        // purge non-persistant meta data
         p_purge_metadata($id);
         $del = true;
         // autoset summary on deletion
@@ -1563,6 +1556,18 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
     } else {
         throw new Exception($exc);
     }
+}
+
+function get_doku_pref($pref, $default) {
+    if (strpos($_COOKIE['DOKU_PREFS'], $pref) !== false) {
+        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+        for ($i = 0; $i < count($parts); $i+=2){
+            if ($parts[$i] == $pref) {
+                return $parts[$i+1];
+            }
+        }
+    }
+    return $default;
 }
 
 //Setup VIM: ex: et ts=2 :

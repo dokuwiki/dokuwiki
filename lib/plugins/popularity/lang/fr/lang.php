@@ -2,8 +2,7 @@
 /**
  * French language file
  *
- * @author gb@isis.u-strasbg.fr
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -13,6 +12,7 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargée)';
 $lang['submit']                = 'Envoyer les données';

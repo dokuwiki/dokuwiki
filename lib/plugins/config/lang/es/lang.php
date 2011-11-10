@@ -20,6 +20,8 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
+ * @author Ruben Figols <ruben.figols@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -54,6 +56,7 @@ $lang['lang']                  = 'Idioma';
 $lang['basedir']               = 'Directorio de base';
 $lang['baseurl']               = 'URL de base';
 $lang['savedir']               = 'Directorio para guardar los datos';
+$lang['cookiedir']             = 'Ruta para las Cookie. Dejar en blanco para usar la ruta básica.';
 $lang['start']                 = 'Nombre de la página inicial';
 $lang['title']                 = 'Título del wiki';
 $lang['template']              = 'Plantilla';
@@ -124,6 +127,7 @@ $lang['jpg_quality']           = 'Calidad de compresión de JPG (0-100)';
 $lang['subscribers']           = 'Habilitar soporte para suscripción a páginas';
 $lang['subscribe_time']        = 'Tiempo después que alguna lista de suscripción fue enviada (seg); Debe ser menor que el tiempo especificado en días recientes.';
 $lang['compress']              = 'Compactar la salida de CSS y javascript';
+$lang['cssdatauri']            = 'Tamaño en bytes hasta el cual las imágenes referenciadas en archivos CSS deberían ir incrustadas en la hoja de estilos para reducir el número de cabeceras de petición HTTP. ¡Esta técnica no funcionará en IE < 8! De <code>400</code> a <code>600</code> bytes es un valor adecuado. Establezca <code>0</code> para deshabilitarlo.';
 $lang['hidepages']             = 'Ocultar páginas con coincidencias (expresiones regulares)';
 $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas no existentes';
 $lang['sitemap']               = 'Generar sitemap de Google (días)';

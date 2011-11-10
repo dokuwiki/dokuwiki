@@ -98,7 +98,7 @@ $lang['txt_filename']          = 'Indtast wikinavn (valgfrit)';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
 $lang['lockedby']              = 'Midlertidig låst af';
 $lang['lockexpire']            = 'Lås udløber kl.';
-$lang['willexpire']            = 'Din lås på dette dokument udløber om et minut.\nTryk på Forhåndsvisning-knappen for at undgå konflikter.';
+$lang['js']['willexpire']            = 'Din lås på dette dokument udløber om et minut.\nTryk på Forhåndsvisning-knappen for at undgå konflikter.';
 $lang['js']['notsavedyet']     = 'Ugemte ændringer vil blive mistet
 Fortsæt alligevel?';
 $lang['js']['searchmedia']     = 'Søg efter filer';
@@ -130,7 +130,6 @@ Du kan stadig kopiere og indsætte linket.';
 $lang['js']['linkwiz']         = 'guiden til henvisninger';
 $lang['js']['linkto']          = 'Henvise til:';
 $lang['js']['del_confirm']     = 'Slet valgte post(er)?';
-$lang['js']['mu_btn']          = 'Overføre flere filer på en gang';
 $lang['rssfailed']             = 'Der opstod en fejl ved indhentning af: ';
 $lang['nothingfound']          = 'Søgningen gav intet resultat.';
 $lang['mediaselect']           = 'Vælg mediefil';

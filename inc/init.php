@@ -146,10 +146,11 @@ if ($conf['gzip_output'] &&
 // init session
 if (!headers_sent() && !defined('NOSESSION')){
     session_name("DokuWiki");
+    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-        session_set_cookie_params(0,DOKU_REL,'',($conf['securecookie'] && is_ssl()),true);
+        session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()),true);
     }else{
-        session_set_cookie_params(0,DOKU_REL,'',($conf['securecookie'] && is_ssl()));
+        session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()));
     }
     session_start();
 
@@ -230,7 +231,9 @@ function init_paths(){
     $paths = array('datadir'   => 'pages',
             'olddir'    => 'attic',
             'mediadir'  => 'media',
+            'mediaolddir' => 'media_attic',
             'metadir'   => 'meta',
+            'mediametadir' => 'media_meta',
             'cachedir'  => 'cache',
             'indexdir'  => 'index',
             'lockdir'   => 'locks',

@@ -93,7 +93,7 @@ $lang['txt_filename']          = 'Dosya adı (zorunlu değil)';
 $lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
 $lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
 $lang['lockexpire']            = 'Kilitin açılma tarihi:';
-$lang['willexpire']            = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
+$lang['js']['willexpire']            = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
 $lang['js']['notsavedyet']     = 'Kaydedilmemiş değişiklikler kaybolacak.
 Devam etmek istiyor musunuz?';
 $lang['js']['searchmedia']     = 'Dosyalar için Ara';
@@ -124,7 +124,6 @@ $lang['js']['nosmblinks']      = 'Windows paylaşımı sadece Microsoft Internet
 $lang['js']['linkwiz']         = 'Bağlantı sihirbazı';
 $lang['js']['linkto']          = 'Bağlantı:';
 $lang['js']['del_confirm']     = 'Bu girişi sil?';
-$lang['js']['mu_btn']          = 'Birden fazla dosyayı bir seferde gönder';
 $lang['rssfailed']             = 'Bu beslemeyi çekerken hata oluştu: ';
 $lang['nothingfound']          = 'Hiçbir şey yok.';
 $lang['mediaselect']           = 'Çokluortam dosyası seçimi';

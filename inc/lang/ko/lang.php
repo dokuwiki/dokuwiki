@@ -93,7 +93,7 @@ $lang['txt_filename']          = '업로드 파일 이름을 입력합니다.(�
 $lang['txt_overwrt']           = '새로운 파일로 이전 파일을 교체합니다.';
 $lang['lockedby']              = '현재 잠금 사용자';
 $lang['lockexpire']            = '잠금 해제 시간';
-$lang['willexpire']            = '잠시 후 편집 잠금이 해제됩니다.\n편집 충돌을 피하려면 미리보기를 눌러 잠금 시간을 다시 설정하기 바랍니다.';
+$lang['js']['willexpire']            = '잠시 후 편집 잠금이 해제됩니다.\n편집 충돌을 피하려면 미리보기를 눌러 잠금 시간을 다시 설정하기 바랍니다.';
 $lang['js']['notsavedyet']     = '저장하지 않은 변경은 지워집니다.
 계속하시겠습니까?';
 $lang['js']['searchmedia']     = '파일 찾기';
@@ -125,7 +125,6 @@ $lang['js']['nosmblinks']      = '윈도우 공유 파일과의 연결은 MS 인
 $lang['js']['linkwiz']         = '링크 마법사';
 $lang['js']['linkto']          = '다음으로 연결:';
 $lang['js']['del_confirm']     = '정말로 선택된 항목(들)을 삭제하시겠습니까?';
-$lang['js']['mu_btn']          = '여러 파일들을 한번에 업로드합니다.';
 $lang['rssfailed']             = 'feed 가져오기 실패: ';
 $lang['nothingfound']          = '아무 것도 없습니다.';
 $lang['mediaselect']           = '미디어 파일 선택';

@@ -20,6 +20,10 @@
   $CACHE  = calc_cache($_REQUEST['cache']);
   $WIDTH  = (int) $_REQUEST['w'];
   $HEIGHT = (int) $_REQUEST['h'];
+  $REV   = (int) @$_REQUEST['rev'];
+  //sanitize revision
+  $REV = preg_replace('/[^0-9]/','',$REV);
+
   list($EXT,$MIME,$DL) = mimetype($MEDIA,false);
   if($EXT === false){
     $EXT  = 'unknown';
@@ -28,7 +32,7 @@
   }
 
   // check for permissions, preconditions and cache external files
-  list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE);
+  list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE, $REV);
 
   // prepare data for plugin events
   $data = array('media'           => $MEDIA,
@@ -147,7 +151,7 @@ function sendFile($file,$mime,$dl,$cache){
  * @param $file reference to the file variable
  * @returns array(STATUS, STATUSMESSAGE)
  */
-function checkFileStatus(&$media, &$file) {
+function checkFileStatus(&$media, &$file, $rev='') {
   global $MIME, $EXT, $CACHE;
 
   //media to local file
@@ -172,7 +176,7 @@ function checkFileStatus(&$media, &$file) {
     if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ){
       return array( 403, 'Forbidden' );
     }
-    $file  = mediaFN($media);
+    $file  = mediaFN($media, $rev);
   }
 
   //check file existance

@@ -1,0 +1,11 @@
+=== Brza Pomoć: ===
+
+Na ovoj stranici možeš dodavati i brisati dozvole za imenske prostore i stranice u svom wiki-u.
+
+Lijevi prozor prikazuje sve dostupne imenske prostore i stranice.
+
+Forma iznad ti omogućuje pregled i mijenjanje dozvola odabranom korisniku ili grupi.
+
+U tablici ispod prikazana su sva trenutno postavljena pravila kontrole pristupa. Koristite je za višestruko brisanje ili mijenjanje pravila.
+
+Čitanje [[doku>acl|službena dokumentacija o ACL]] može vam pomoći potpuno razumijeti kako kontrola pristupa radi u DokuWiki.

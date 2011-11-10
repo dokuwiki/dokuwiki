@@ -22,6 +22,7 @@ div#acl_manager div#acl__tree ul {
 
 div#acl_manager div#acl__tree li {
     padding-left: 1em;
+    list-style-image: none;
 }
 
 div#acl_manager div#acl__tree ul img {

@@ -95,7 +95,7 @@ $lang['txt_filename']          = 'Wiki jméno (volitelné)';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
 $lang['lockedby']              = 'Právě zamknuto:';
 $lang['lockexpire']            = 'Zámek vyprší:';
-$lang['willexpire']            = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
+$lang['js']['willexpire']            = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
 $lang['js']['notsavedyet']     = 'Jsou tu neuložené změny, které budou ztraceny.
 Chcete opravdu pokračovat?';
 $lang['js']['searchmedia']     = 'Hledat soubory';
@@ -127,7 +127,6 @@ Přesto tento odkaz můžete zkopírovat a vložit jinde.';
 $lang['js']['linkwiz']         = 'Průvodce odkazy';
 $lang['js']['linkto']          = 'Odkaz na:';
 $lang['js']['del_confirm']     = 'Vymazat tuto položku?';
-$lang['js']['mu_btn']          = 'Načíst více souborů najednou';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
 $lang['nothingfound']          = 'Nic nenalezeno.';
 $lang['mediaselect']           = 'Výběr dokumentu';

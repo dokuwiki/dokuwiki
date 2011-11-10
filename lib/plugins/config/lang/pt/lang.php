@@ -112,6 +112,7 @@ $lang['jpg_quality']           = 'Compressão/Qualidade JPG (0-100)';
 $lang['subscribers']           = 'Habilitar o suporte a subscrição de páginas ';
 $lang['subscribe_time']        = 'Tempo após o qual as listas de subscrição e "digests" são enviados (seg.); Isto deve ser inferior ao tempo especificado em recent_days.';
 $lang['compress']              = 'Compactar as saídas de CSS e JavaScript';
+$lang['cssdatauri']            = 'Tamanho em bytes até ao qual as imagens referenciadas em ficheiros CSS devem ser embutidas diretamente no CSS para reduzir a carga de pedidos HTTP extra. Esta técnica não funciona em IE 7 e abaixo! <code>400</code> a <code>600</code> bytes é um bom valor. Escolher <code>0</code> para desativar.';
 $lang['hidepages']             = 'Esconder páginas correspondentes (expressões regulares)';
 $lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para páginas não existentes';
 $lang['sitemap']               = 'Gerar Sitemap Google (dias)';

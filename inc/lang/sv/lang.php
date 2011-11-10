@@ -16,6 +16,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author mikael@mallander.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -101,7 +102,7 @@ $lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt)';
 $lang['txt_overwrt']           = 'Skriv över befintlig fil';
 $lang['lockedby']              = 'Låst av';
 $lang['lockexpire']            = 'Lås upphör att gälla';
-$lang['willexpire']            = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
+$lang['js']['willexpire']            = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
 $lang['js']['notsavedyet']     = 'Det finns ändringar som inte är sparade.
 Är du säker på att du vill fortsätta?';
 $lang['js']['searchmedia']     = 'Sök efter filer';
@@ -130,7 +131,6 @@ Du kan fortfarande klippa och klistra in länken om du använder en annan webbl�
 $lang['js']['linkwiz']         = 'Snabbguide Länkar';
 $lang['js']['linkto']          = 'Länk till:';
 $lang['js']['del_confirm']     = 'Vill du verkligen radera?';
-$lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
 $lang['rssfailed']             = 'Ett fel uppstod när detta RSS-flöde skulle hämtas: ';
 $lang['nothingfound']          = 'Inga filer hittades.';
 $lang['mediaselect']           = 'Mediafiler';
@@ -225,8 +225,8 @@ $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Nyckelord';
 $lang['subscr_m_new_header']   = 'Lägg till prenumeration';
 $lang['subscr_m_current_header'] = 'Nuvarande prenumerationer';
-$lang['subscr_m_unsubscribe']  = 'Prenumerera';
-$lang['subscr_m_subscribe']    = 'Avsluta prenumeration';
+$lang['subscr_m_unsubscribe']  = 'Avsluta prenumeration';
+$lang['subscr_m_subscribe']    = 'Prenumerera';
 $lang['subscr_m_receive']      = 'Ta emot';
 $lang['subscr_style_every']    = 'skicka epost vid varje ändring';
 $lang['authmodfailed']         = 'Felaktiga inställningar för användarautentisering. Var vänlig meddela wikiadministratören.';

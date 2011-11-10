@@ -16,6 +16,8 @@
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
+ * @author Pierre Corell <info@joomla-praxis.de>
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Neues Plugin herunterladen und installieren';

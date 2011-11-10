@@ -95,6 +95,7 @@ $meta['license']  = array('license');
 $meta['savedir']  = array('savedir');
 $meta['basedir']  = array('string');
 $meta['baseurl']  = array('string');
+$meta['cookiedir'] = array('string');
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['allowdebug']  = array('onoff');
@@ -179,6 +180,7 @@ $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
 $meta['mailprefix']  = array('string');
 $meta['compress']    = array('onoff');
+$meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');

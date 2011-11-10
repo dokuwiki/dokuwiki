@@ -90,7 +90,7 @@ $lang['txt_filename']          = 'Idatzi wikiname-a (aukerazkoa)';
 $lang['txt_overwrt']           = 'Oraingo fitxategiaren gainean idatzi';
 $lang['lockedby']              = 'Momentu honetan blokeatzen:';
 $lang['lockexpire']            = 'Blokeaketa iraungitzen da:';
-$lang['willexpire']            = 'Zure blokeaketa orri hau aldatzeko minutu batean iraungitzen da.\nGatazkak saihesteko, aurreikusi botoia erabili blokeaketa denboragailua berrabiarazteko.';
+$lang['js']['willexpire']            = 'Zure blokeaketa orri hau aldatzeko minutu batean iraungitzen da.\nGatazkak saihesteko, aurreikusi botoia erabili blokeaketa denboragailua berrabiarazteko.';
 $lang['js']['notsavedyet']     = 'Gorde gabeko aldaketak galdu egingo dira.
 Benetan jarraitu nahi duzu?';
 $lang['js']['searchmedia']     = 'Bilatu fitxategiak';
@@ -122,7 +122,6 @@ Esteka kopiatu eta itsatsi dezakezu dena den.';
 $lang['js']['linkwiz']         = 'Estekatze Laguntzailea';
 $lang['js']['linkto']          = 'Estekatu hona:';
 $lang['js']['del_confirm']     = 'Benetan ezabatu aukeratutako fitxategia(k)?';
-$lang['js']['mu_btn']          = 'Igo hainbat fitxategi aldi berean';
 $lang['rssfailed']             = 'Errorea gertatu da feed hau irakurtzean:';
 $lang['nothingfound']          = 'Ez da ezer aurkitu.';
 $lang['mediaselect']           = 'Aukeratu Multimedia fitxategia';

@@ -9,6 +9,7 @@
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -94,7 +95,7 @@ $lang['txt_filename']          = 'feltöltési név (elhagyható)';
 $lang['txt_overwrt']           = 'Létező fájl felülírása';
 $lang['lockedby']              = 'Jelenleg zárolta:';
 $lang['lockexpire']            = 'A zárolás lejár:';
-$lang['willexpire']            = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolási időzítés frissítéséhez.';
+$lang['js']['willexpire']            = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolási időzítés frissítéséhez.';
 $lang['js']['notsavedyet']     = 'Elmentetlen változások vannak, amelyek el fognak veszni.
 Tényleg ezt akarod?';
 $lang['js']['searchmedia']     = 'Fájlok keresése';
@@ -126,7 +127,6 @@ A hivatkozást másolni és beszúrni ettől fügetlenül mndig tudod.';
 $lang['js']['linkwiz']         = 'Hivatkozás varázsló';
 $lang['js']['linkto']          = 'Hivatkozás erre:';
 $lang['js']['del_confirm']     = 'Valóban törölni akarod a kiválasztott elem(ek)et?';
-$lang['js']['mu_btn']          = 'Több fájl feltöltése egyszerre';
 $lang['rssfailed']             = 'Hiba történt ennek a betöltésekor: ';
 $lang['nothingfound']          = 'Semmit sem találtam.';
 $lang['mediaselect']           = 'Médiafájl kiválasztása';

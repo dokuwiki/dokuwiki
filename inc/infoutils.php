@@ -24,7 +24,7 @@ function checkUpdateMessages(){
     $lm = @filemtime($cf);
 
     // check if new messages needs to be fetched
-    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.'doku.php')){
+    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         $http = new DokuHTTPClient();
         $http->timeout = 8;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -66,8 +66,8 @@ function getVersionData(){
             $chunk = fread($fh,2000);
             fclose($fh);
             $chunk = trim($chunk);
-            $chunk = array_pop(explode("\n",$chunk));   //last log line
-            $chunk = array_shift(explode("\t",$chunk)); //strip commit msg
+            $chunk = @array_pop(explode("\n",$chunk));   //last log line
+            $chunk = @array_shift(explode("\t",$chunk)); //strip commit msg
             $chunk = explode(" ",$chunk);
             array_pop($chunk); //strip timezone
             $date = date('Y-m-d',array_pop($chunk));
@@ -173,6 +173,12 @@ function check(){
         msg('Lockdir is writable',1);
     }else{
         msg('Lockdir is not writable',-1);
+    }
+
+    if(is_writable(DOKU_CONF)){
+        msg('conf directory is writable',1);
+    }else{
+        msg('conf directory is not writable',-1);
     }
 
     if($conf['authtype'] == 'plain'){

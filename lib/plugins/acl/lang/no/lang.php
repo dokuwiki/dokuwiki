@@ -15,6 +15,8 @@
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Jon Bøe <jonmagneboe@hotmail.com>
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
 $lang['acl_group']             = 'Gruppe';
@@ -39,7 +41,7 @@ $lang['perm']                  = 'Tillatelser';
 $lang['acl_perm0']             = 'Ingen';
 $lang['acl_perm1']             = 'Lese';
 $lang['acl_perm2']             = 'Redigere';
-$lang['acl_perm4']             = 'Lage';
+$lang['acl_perm4']             = 'Opprette';
 $lang['acl_perm8']             = 'Laste opp';
 $lang['acl_perm16']            = 'Slette';
 $lang['acl_new']               = 'Legg til ny oppføring';

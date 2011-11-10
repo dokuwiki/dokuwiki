@@ -43,8 +43,7 @@ class auth_password_test extends UnitTestCase {
         foreach($this->passes as $method => $hash){
             $info = "testing method $method";
             $this->signal('failinfo',$info);
-
-            $hash = auth_cryptPassword('foo'.$method);
+            $hash = auth_cryptPassword('foo'.$method,$method);
             $this->assertTrue(auth_verifyPassword('foo'.$method,$hash));
         }
     }

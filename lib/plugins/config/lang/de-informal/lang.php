@@ -7,6 +7,7 @@
  * @author Marcel Metz <marcel_metz@gmx.de>
  * @author Matthias Schulte <post@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Pierre Corell <info@joomla-praxis.de>
  */
 $lang['menu']                  = 'Einstellungen';
 $lang['error']                 = 'Einstellungen wurden nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -41,6 +42,7 @@ $lang['lang']                  = 'Sprache';
 $lang['basedir']               = 'Installationsverzeichnis';
 $lang['baseurl']               = 'Installationspfad (URL)';
 $lang['savedir']               = 'Ordner zum Speichern von Daten';
+$lang['cookiedir']             = 'Cookie Pfad. Leer lassen, um die Standard-Url zu belassen.';
 $lang['start']                 = 'Name der Startseite';
 $lang['title']                 = 'Wiki Titel';
 $lang['template']              = 'Vorlage';
@@ -111,9 +113,10 @@ $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter! <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nicht existierende Seiten';
-$lang['sitemap']               = 'Erzeugte Google Sitemaps (Tage)';
+$lang['sitemap']               = 'Erzeuge Google Sitemaps (Tage)';
 $lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';

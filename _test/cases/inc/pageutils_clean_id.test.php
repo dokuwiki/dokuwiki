@@ -35,6 +35,16 @@ class init_clean_id_test extends UnitTestCase {
         $tests[] = array('ښ侧化并곦  β',false,'ښ侧化并곦_β');
         $tests[] = array('page:page',false,'page:page');
         $tests[] = array('page;page',false,'page:page');
+        $tests[] = array('page:page 1.2',false,'page:page_1.2');
+
+        $tests[] = array('page._#!','false','page');
+        $tests[] = array('._#!page','false','page');
+        $tests[] = array('page._#!page','false','page._page');
+        $tests[] = array('ns._#!:page','false','ns:page');
+        $tests[] = array('ns:._#!page','false','ns:page');
+        $tests[] = array('ns._#!ns:page','false','ns._ns:page');
+        $tests[] = array('ns_:page',false,'ns:page');
+        $tests[] = array('page...page','false','page...page');
 
         $conf['useslash'] = 0;
         $tests[] = array('page/page',false,'page_page');

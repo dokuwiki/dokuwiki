@@ -1219,7 +1219,7 @@ if(empty($UTF8_SPECIAL_CHARS)) $UTF8_SPECIAL_CHARS = array(
 global $UTF8_SPECIAL_CHARS2;
 if(empty($UTF8_SPECIAL_CHARS2)) $UTF8_SPECIAL_CHARS2 =
     "\x1A".' !"#$%&\'()+,/;<=>?@[\]^`{|}~�'.
-    '� ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½�'.
+    '� ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½�'.
     '�¿×÷ˇ˘˙˚˛˜˝̣̀́̃̉΄΅·ϖְֱֲֳִֵֶַָֹֻּֽ־ֿ�'.
     '�ׁׂ׃׳״،؛؟ـًٌٍَُِّْ٪฿‌‍‎‏–—―‗‘’‚“”�'.
     '��†‡•…‰′″‹›⁄₧₪₫€№℘™Ωℵ←↑→↓↔↕↵'.
@@ -1261,6 +1261,7 @@ if(empty($UTF8_SPECIAL_CHARS2)) $UTF8_SPECIAL_CHARS2 =
  * @link   http://www.btranslations.com/resources/romanization/korean.asp
  * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Denis Scheither <amorphis@uni-bremen.de>
+ * @author Eivind Morland <eivind.morland@gmail.com>
  */
 global $UTF8_ROMANIZATION;
 if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
@@ -1293,6 +1294,11 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   'ड'=>'dq','ढ'=>'dqh','ण'=>'nq','त'=>'t','थ'=>'th','द'=>'d','ध'=>'dh',
   'न'=>'n','प'=>'p','फ'=>'ph','ब'=>'b','भ'=>'bh','म'=>'m','य'=>'z','र'=>'r',
   'ल'=>'l','व'=>'v','श'=>'sh','ष'=>'sqh','स'=>'s','ह'=>'x',
+  //Sanskrit diacritics
+  'Ā'=>'A','Ī'=>'I','Ū'=>'U','Ṛ'=>'R','Ṝ'=>'R','Ṅ'=>'N','Ñ'=>'N','Ṭ'=>'T',
+  'Ḍ'=>'D','Ṇ'=>'N','Ś'=>'S','Ṣ'=>'S','Ṁ'=>'M','Ṃ'=>'M','Ḥ'=>'H','Ḷ'=>'L','Ḹ'=>'L',
+  'ā'=>'a','ī'=>'i','ū'=>'u','ṛ'=>'r','ṝ'=>'r','ṅ'=>'n','ñ'=>'n','ṭ'=>'t',
+  'ḍ'=>'d','ṇ'=>'n','ś'=>'s','ṣ'=>'s','ṁ'=>'m','ṃ'=>'m','ḥ'=>'h','ḷ'=>'l','ḹ'=>'l',
   //Hebrew
   'א'=>'a', 'ב'=>'b','ג'=>'g','ד'=>'d','ה'=>'h','ו'=>'v','ז'=>'z','ח'=>'kh','ט'=>'th',
   'י'=>'y','ך'=>'h','כ'=>'k','ל'=>'l','ם'=>'m','מ'=>'m','ן'=>'n','נ'=>'n',

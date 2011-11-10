@@ -12,6 +12,8 @@
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Jon Bøe <jonmagneboe@hotmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -51,6 +53,7 @@ $lang['lang']                  = 'Språk';
 $lang['basedir']               = 'Grunnkatalog';
 $lang['baseurl']               = 'Grunn-nettadresse';
 $lang['savedir']               = 'Mappe for lagring av data';
+$lang['cookiedir']             = 'Sti for informasjonskapsler. La stå blankt for å bruke grunn-nettadressa.';
 $lang['start']                 = 'Sidenavn på forsiden';
 $lang['title']                 = 'Navn på Wikien';
 $lang['template']              = 'Mal';
@@ -105,6 +108,7 @@ $lang['useslash']              = 'Bruk / som skilletegn mellom navnerom i URLer'
 $lang['usedraft']              = 'Lagre kladd automatisk under redigering';
 $lang['sepchar']               = 'Skilletegn mellom ord i sidenavn';
 $lang['canonical']             = 'Bruk fulle URLer (i stedet for relative)';
+$lang['fnencode']              = 'Metode for å kode ikke-ASCII-filnavn';
 $lang['autoplural']            = 'Se etter flertallsformer i lenker';
 $lang['compression']           = 'Metode for komprimering av gamle filer';
 $lang['cachetime']             = 'Maksimal alder på hurtiglager (sekunder)';
@@ -113,12 +117,15 @@ $lang['fetchsize']             = 'Maksimal størrelse (byter) fetch.php kan last
 $lang['notify']                = 'Send meldinger om endringer denne e-postadressen';
 $lang['registernotify']        = 'Send info om nylig registrerte brukere til denne e-postadressen';
 $lang['mailfrom']              = 'Avsenderadresse for automatiske e-poster';
+$lang['mailprefix']            = 'Prefiks for emne i automatiske e-poster ';
 $lang['gzip_output']           = 'Bruk gzip Content-Encoding for XHTML';
 $lang['gdlib']                 = 'Versjon av libGD';
 $lang['im_convert']            = 'Sti til ImageMagicks konverteringsverktøy';
 $lang['jpg_quality']           = 'JPEG-kvalitet (0-100)';
 $lang['subscribers']           = 'Åpne for abonnement på endringer av en side';
+$lang['subscribe_time']        = 'Hvor lenge det skal gå mellom utsending av e-poster med endringer (i sekunder). Denne verdien bør være mindre enn verdien i recent_days.';
 $lang['compress']              = 'Kompakt CSS og JavaScript';
+$lang['cssdatauri']            = 'Opp til denne størrelsen (i bytes) skal bilder som er vist til i CSS-filer kodes direkte inn i fila for å redusere antall HTTP-forespørsler. Denne teknikken fungerer ikke i IE < 8! Mellom <code>400</code> og <code>600</code> bytes er fornuftige verdier. Bruk <code>0</code> for å skru av funksjonen.';
 $lang['hidepages']             = 'Skjul sider fra automatiske lister (regulære uttrykk)';
 $lang['send404']               = 'Send "HTTP 404/Page Not Found" for ikke-eksisterende sider';
 $lang['sitemap']               = 'Lag Google-sidekart (dager)';
@@ -144,6 +151,7 @@ $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Brukernavn på proxyserver';
 $lang['proxy____pass']         = 'Passord på proxyserver';
 $lang['proxy____ssl']          = 'Bruk SSL for å koble til proxyserver';
+$lang['proxy____except']       = 'Regulært uttrykk for URLer som ikke trenger en proxy.';
 $lang['safemodehack']          = 'Bruk safemode-hack';
 $lang['ftp____host']           = 'FTP-server for safemode-hack';
 $lang['ftp____port']           = 'FTP-port for safemode-hack';
@@ -191,3 +199,4 @@ $lang['useheading_o_0']        = 'Aldri';
 $lang['useheading_o_navigation'] = 'Kun navigering';
 $lang['useheading_o_content']  = 'Kun wiki-innhold';
 $lang['useheading_o_1']        = 'Alltid';
+$lang['readdircache']          = 'Maksimal alder for mellomlagring av mappa med søkeindekser (sekunder)';

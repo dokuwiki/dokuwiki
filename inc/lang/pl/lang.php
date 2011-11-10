@@ -11,6 +11,7 @@
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
+ * @author Łukasz Chmaj <teachmeter@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -128,7 +129,6 @@ Możesz skopiować odnośnik.';
 $lang['js']['linkwiz']         = 'Tworzenie odnośników';
 $lang['js']['linkto']          = 'Link do';
 $lang['js']['del_confirm']     = 'Czy na pewno usunąć?';
-$lang['js']['mu_btn']          = 'Wyślij wiele plików na raz';
 $lang['rssfailed']             = 'Wystąpił błąd przy pobieraniu tych danych: ';
 $lang['nothingfound']          = 'Nic nie znaleziono.';
 $lang['mediaselect']           = 'Wysyłanie pliku';
@@ -163,6 +163,9 @@ $lang['yours']                 = 'Twoja wersja';
 $lang['diff']                  = 'Pokaż różnice między wersjami';
 $lang['diff2']                 = 'Pokaż różnice między zaznaczonymi wersjami';
 $lang['difflink']              = 'Odnośnik do tego porównania';
+$lang['diff_type']             = 'Zobacz różnice:';
+$lang['diff_inline']           = 'W linii';
+$lang['diff_side']             = 'Jeden obok drugiego';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Ślad';
 $lang['youarehere']            = 'Jesteś tutaj';

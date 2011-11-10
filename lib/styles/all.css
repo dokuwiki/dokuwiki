@@ -5,9 +5,26 @@
 
 div.clearer {
     clear: both;
+    font-size: 0;
     line-height: 0;
     height: 0;
     overflow: hidden;
+}
+
+/* one of the many clearfix versions */
+.group {
+    display: inline-block;
+}
+.group {
+    display: block;
+}
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+}
+.group:after {
+    clear: both;
 }
 
 div.no {
