@@ -27,6 +27,7 @@ $lang['btn_logout'] = 'Thoát';
 $lang['btn_admin']  = 'Quản lý';
 $lang['btn_update'] = 'Cập nhật';
 $lang['btn_delete'] = 'Xoá';
+$lang['btn_register'] = 'Đăng ký';
 
 $lang['loggedinas'] = 'Username đang dùng';
 $lang['user']       = 'Username';
@@ -34,7 +35,6 @@ $lang['pass']       = 'Password';
 $lang['remember']   = 'Lưu username/password lại';
 $lang['fullname']   = 'Họ và tên';
 $lang['email']      = 'E-Mail';
-$lang['register']   = 'Đăng ký';
 $lang['badlogin']   = 'Username hoặc password không đúng.';
 
 $lang['regmissing'] = 'Bạn cần điền vào tất cả các trường';
@@ -103,4 +103,4 @@ $lang['qb_sig']     = 'Đặt chữ ký';
 $lang['js']['del_confirm']= 'Xoá mục này?';
 
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

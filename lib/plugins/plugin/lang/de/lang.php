@@ -14,6 +14,8 @@
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Niels Lange <niels@boldencursief.nl>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Neues Plugin herunterladen und installieren';
@@ -59,3 +61,4 @@ $lang['enabled']               = 'Plugin %s wurde aktiviert.';
 $lang['notenabled']            = 'Plugin %s konnte nicht aktiviert werden, überprüfen Sie die Dateirechte.';
 $lang['disabled']              = 'Plugin %s wurde deaktiviert.';
 $lang['notdisabled']           = 'Plugin %s konnte nicht deaktiviert werden, überprüfen Sie die Dateirechte.';
+$lang['packageinstalled']      = 'Plugin-Paket (%d Plugin%s: %s) erfolgreich installiert.';

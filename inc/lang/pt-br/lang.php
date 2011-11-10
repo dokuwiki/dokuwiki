@@ -13,11 +13,11 @@
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
  * @author jair.henrique@gmail.com
  * @author Luis Dantas <luis@dantas.com>
- * @author Frederico Guimarães <frederico@teia.bio.br>
- * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luisdantas@gmail.com>
- * @author Sergio Motta sergio@cisne.com.br
+ * @author Jair Henrique <jair.henrique@gmail.com>
+ * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
+ * @author Frederico Guimarães <frederico@teia.bio.br>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -42,7 +42,7 @@ $lang['btn_upload']            = 'Enviar';
 $lang['btn_cancel']            = 'Cancelar';
 $lang['btn_index']             = 'Índice';
 $lang['btn_secedit']           = 'Editar';
-$lang['btn_login']             = 'Autenticar-se';
+$lang['btn_login']             = 'Entrar';
 $lang['btn_logout']            = 'Sair';
 $lang['btn_admin']             = 'Administrar';
 $lang['btn_update']            = 'Atualizar';
@@ -50,24 +50,24 @@ $lang['btn_delete']            = 'Excluir';
 $lang['btn_back']              = 'Voltar';
 $lang['btn_backlink']          = 'Links reversos';
 $lang['btn_backtomedia']       = 'Voltar à seleção do arquivo de mídia';
-$lang['btn_subscribe']         = 'Monitorar alterações na página';
+$lang['btn_subscribe']         = 'Monitorar alterações';
 $lang['btn_profile']           = 'Atualizar o perfil';
 $lang['btn_reset']             = 'Limpar';
-$lang['btn_resendpwd']         = 'Enviar uma nova senha';
+$lang['btn_resendpwd']         = 'Envie-me uma nova senha';
 $lang['btn_draft']             = 'Editar o rascunho';
 $lang['btn_recover']           = 'Recuperar o rascunho';
 $lang['btn_draftdel']          = 'Excluir o rascunho';
-$lang['btn_revert']            = 'Restaure';
-$lang['loggedinas']            = 'Autenticado(a) como';
+$lang['btn_revert']            = 'Restaurar';
+$lang['btn_register']          = 'Cadastre-se';
+$lang['loggedinas']            = 'Identificado(a) como';
 $lang['user']                  = 'Nome de usuário';
 $lang['pass']                  = 'Senha';
 $lang['newpass']               = 'Nova senha';
 $lang['oldpass']               = 'Confirme a senha atual';
-$lang['passchk']               = 'mais uma vez';
+$lang['passchk']               = 'Outra vez';
 $lang['remember']              = 'Lembre-se de mim';
 $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'E-mail';
-$lang['register']              = 'Registrar';
 $lang['profile']               = 'Perfil do usuário';
 $lang['badlogin']              = 'Desculpe, mas o nome de usuário ou a senha estão incorretos.';
 $lang['minoredit']             = 'Alterações mínimas';
@@ -81,12 +81,12 @@ $lang['regmailfail']           = 'Aparentemente ocorreu um erro no envio da senh
 $lang['regbadmail']            = 'O endereço de e-mail fornecido é, aparentemente, inválido - se você acha que isso é um erro, entre em contato com o administrador';
 $lang['regbadpass']            = 'As senhas digitadas não são idênticas. Por favor, tente novamente.';
 $lang['regpwmail']             = 'A sua senha do DokuWiki';
-$lang['reghere']               = 'Ainda não tem uma conta? Cadastre-se para obter uma.';
+$lang['reghere']               = 'Ainda não tem uma conta? Crie uma';
 $lang['profna']                = 'Esse wiki não suporta modificações do perfil.';
 $lang['profnochange']          = 'Sem alterações, nada para fazer.';
 $lang['profnoempty']           = 'Não são permitidos nomes ou endereços de e-mail em branco.';
 $lang['profchanged']           = 'O perfil do usuário foi atualizado com sucesso.';
-$lang['pwdforget']             = 'Esqueceu sua senha? Obtenha uma nova.';
+$lang['pwdforget']             = 'Esqueceu sua senha? Solicite outra';
 $lang['resendna']              = 'Esse wiki não tem suporte para o reenvio de senhas.';
 $lang['resendpwd']             = 'Enviar a nova senha para';
 $lang['resendpwdmissing']      = 'Desculpe, você deve preencher todos os campos.';
@@ -151,7 +151,7 @@ $lang['uploadsize']            = 'O arquivo transmitido era grande demais. (max.
 $lang['deletesucc']            = 'O arquivo "%s" foi excluído.';
 $lang['deletefail']            = 'Não foi possível excluir "%s" - verifique as permissões.';
 $lang['mediainuse']            = 'O arquivo "%s" não foi excluído - ele ainda está em uso.';
-$lang['namespaces']            = 'Espaços de nome';
+$lang['namespaces']            = 'Espaços de nomes';
 $lang['mediafiles']            = 'Arquivos disponíveis em';
 $lang['accessdenied']          = 'Você não tem permissão para visualizar esta página.';
 $lang['mediausage']            = 'Use a seguinte sintaxe para referenciar esse arquivo:';
@@ -170,6 +170,9 @@ $lang['yours']                 = 'Sua versão';
 $lang['diff']                  = 'Mostrar diferenças com a revisão atual';
 $lang['diff2']                 = 'Mostrar diferenças entre as revisões selecionadas';
 $lang['difflink']              = 'Link para esta página de comparações';
+$lang['diff_type']             = 'Ver as diferenças:';
+$lang['diff_inline']           = 'Mescladas';
+$lang['diff_side']             = 'Lado a lado';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Visitou';
 $lang['youarehere']            = 'Você está aqui';
@@ -184,7 +187,7 @@ $lang['noflash']               = 'O <a href="http://www.adobe.com/products/flash
 $lang['download']              = 'Download Snippet';
 $lang['mail_newpage']          = 'página adicionada:';
 $lang['mail_changed']          = 'página modificada:';
-$lang['mail_subscribe_list']   = 'páginas alteradas no namespace:';
+$lang['mail_subscribe_list']   = 'páginas alteradas no espaço de nomes:';
 $lang['mail_new_user']         = 'novo usuário:';
 $lang['mail_upload']           = 'arquivo enviado:';
 $lang['qb_bold']               = 'Texto em negrito';
@@ -227,22 +230,22 @@ $lang['img_copyr']             = 'Direitos autorais';
 $lang['img_format']            = 'Formato';
 $lang['img_camera']            = 'Câmera';
 $lang['img_keywords']          = 'Palavras-chave';
-$lang['subscr_subscribe_success'] = 'Adicionado %s para a lista de inscrição para %s';
-$lang['subscr_subscribe_error'] = 'Erro adicionando %s para a lista de inscrição para %s';
-$lang['subscr_subscribe_noaddress'] = 'Não há endereço associado com seu login, você não pode ser adicionado à lista de inscrição';
-$lang['subscr_unsubscribe_success'] = 'Removido %s da lista de inscrição para %s';
-$lang['subscr_unsubscribe_error'] = 'Erro removendo %s da lista de inscrição para %s';
-$lang['subscr_already_subscribed'] = '%s já está inscrito para s%';
-$lang['subscr_not_subscribed'] = 's% não está inscrito para s%';
-$lang['subscr_m_not_subscribed'] = 'Voce não está inscrito na pagina ou namespace corrent';
-$lang['subscr_m_new_header']   = 'Adicionar inscrição';
-$lang['subscr_m_current_header'] = 'Inscrições correntes';
-$lang['subscr_m_unsubscribe']  = 'cancelar inscrição';
-$lang['subscr_m_subscribe']    = 'Inscrição';
+$lang['subscr_subscribe_success'] = 'Adicionado %s à lista de monitoramentos de %s';
+$lang['subscr_subscribe_error'] = 'Ocorreu um erro na adição de %s à lista de monitoramentos de %s';
+$lang['subscr_subscribe_noaddress'] = 'Como não há nenhum endereço associado ao seu usuário, você não pode ser adicionado à lista de monitoramento';
+$lang['subscr_unsubscribe_success'] = '%s foi removido da lista de monitoramento de %s';
+$lang['subscr_unsubscribe_error'] = 'Ocorreu um erro na remoção de %s da lista de monitoramentos de %s';
+$lang['subscr_already_subscribed'] = '%s já está monitorando s%';
+$lang['subscr_not_subscribed'] = 's% não está monitorando s%';
+$lang['subscr_m_not_subscribed'] = 'Você não está monitorando nem a página atual nem o espaço de nomes.';
+$lang['subscr_m_new_header']   = 'Adicionar monitoramento';
+$lang['subscr_m_current_header'] = 'Monitoramentos atuais';
+$lang['subscr_m_unsubscribe']  = 'Cancelar monitoramento';
+$lang['subscr_m_subscribe']    = 'Monitorar';
 $lang['subscr_m_receive']      = 'Receber';
-$lang['subscr_style_every']    = 'email em cada modificação';
-$lang['subscr_style_digest']   = 'digerir emails de mudanças para cada página (A cada %.2f dias)';
-$lang['subscr_style_list']     = 'Lista de mudanças desde o último email (A cada %.2f dias)';
+$lang['subscr_style_every']    = 'um e-mail a cada modificação';
+$lang['subscr_style_digest']   = 'um agrupamento de e-mails com as mudanças para cada página (a cada %.2f dias)';
+$lang['subscr_style_list']     = 'uma lista de páginas modificadas desde o último e-mail (a cada %.2f dias)';
 $lang['authmodfailed']         = 'A configuração da autenticação de usuário está com problemas. Por favor, informe ao administrador do wiki.';
 $lang['authtempfail']          = 'A autenticação de usuários está temporariamente desabilitada. Se essa situação persistir, por favor, informe ao administrador do Wiki.';
 $lang['i_chooselang']          = 'Selecione o seu idioma';

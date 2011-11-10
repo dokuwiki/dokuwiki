@@ -511,8 +511,7 @@ function pathID($path,$keeptxt=false){
     $id = utf8_decodeFN($path);
     $id = str_replace('/',':',$id);
     if(!$keeptxt) $id = preg_replace('#\.txt$#','',$id);
-    $id = preg_replace('#^:+#','',$id);
-    $id = preg_replace('#:+$#','',$id);
+    $id = trim($id, ':');
     return $id;
 }
 
@@ -617,7 +616,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
 
     if($type == 'f'){
         if($opts['hash']) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
-        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],false);
+        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
     }
 
     // finally add the item
@@ -625,4 +624,4 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     return $return;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

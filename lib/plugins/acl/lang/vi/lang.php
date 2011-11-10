@@ -18,4 +18,4 @@ $lang['acl_perm2']  = 'Biên soạn';
 $lang['acl_perm4']  = 'Tạo';
 $lang['acl_perm8']  = 'Tải lên';
 $lang['acl_new']    = 'Thêm mục mới';
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

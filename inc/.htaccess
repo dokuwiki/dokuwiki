@@ -1,3 +1,4 @@
 ## no access to the inc directory
 order allow,deny
 deny from all
+Satisfy All

@@ -2,11 +2,10 @@
 /**
  * Turkish language file
  *
- * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
- * @author yavuzselim@gmail.com
- * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
+ * @author Caleb Maclennan <caleb@alerque.com>
  */
 $lang['menu']                  = 'Eskiye Döndürme';
 $lang['filter']                = 'Spam bulunan sayfaları ara';

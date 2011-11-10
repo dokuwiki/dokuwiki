@@ -47,7 +47,7 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
             array('deleted_open',array()),
             array('cdata',array('æ')),
             array('deleted_close',array()),
-            array('cdata',array("tiøn\n")),
+            array('cdata',array("tiøn")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -60,12 +60,12 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("\nFoo\n")),
+            array('cdata',array("\nFoo")),
             array('p_close',array()),
             array('header',array('Iñtërnâtiônàlizætiøn',3,5)),
             array('section_open',array(3)),
             array('p_open',array()),
-            array('cdata',array("\n Bar\n")),
+            array('cdata',array("\n Bar")),
             array('p_close',array()),
             array('section_close',array()),
             array('document_end',array()),
@@ -110,7 +110,7 @@ def');
             array('tablerow_close',array()),
             array('table_close',array(153)),
             array('p_open',array()),
-            array('cdata',array('def'."\n")),
+            array('cdata',array('def')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -126,7 +126,7 @@ def');
             array('p_open',array()),
             array('cdata',array("\nFoo ")),
             array('acronym',array('Iñtërnâtiônàlizætiøn')),
-            array('cdata',array(" Bar\n")),
+            array('cdata',array(" Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -141,7 +141,7 @@ def');
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('interwikilink',array('wp>Iñtërnâtiônàlizætiøn','Iñtërnâtiônàlizætiøn','wp','Iñtërnâtiônàlizætiøn')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -156,7 +156,7 @@ def');
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internallink',array('x:Iñtërnâtiônàlizætiøn:y:foo_bar:z','Iñtërnâtiônàlizætiøn')),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );

@@ -7,6 +7,7 @@
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
  * @author SONG Younghwan <purluno@gmail.com>
+ * @author Seung-Chul Yoo  <dryoo@live.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값때문에 설정들을 변경할 수 없습니다. 수정한 값들을 검사하고 확인을 누르기 바랍니다.
@@ -89,12 +90,15 @@ $lang['sneaky_index']          = '기본적으로, DokuWiki는 색인 목록에 
 특정 ACL 설정은 색인 사용이 불가능하게 할 수도 있습니다.';
 $lang['auth_security_timeout'] = '인증 보안 초과 시간(초)';
 $lang['securecookie']          = 'HTTPS로 보내진 쿠키는 HTTPS에만 적용 할까요? 위키의 로그인 페이지만 SSL로 암호화 하고 위키 페이지는 그렇지 않은경우 꺼야 합니다.';
-$lang['updatecheck']           = '업데이트와 보안 문제를 검사(DokuWiki를 splitbrain.org에 연결해야 합니다.)';
+$lang['xmlrpc']                = 'XML-RPC 인터페이스 지원/무시';
+$lang['xmlrpcuser']            = '주어진 그룹이나 유저들에게만 XML-RPC접근을 허락하려면 컴마로 구분하여 적으세요. 비어두면 모두에게 허용됩니다.';
+$lang['updatecheck']           = '업데이트와 보안 문제를 검사(DokuWiki를 update.dokuwiki.org에 연결해야 합니다.)';
 $lang['userewrite']            = 'URL rewriting기능 사용';
 $lang['useslash']              = 'URL에서 네임스페이스 구분자로 슬래쉬 문자 사용';
 $lang['usedraft']              = '편집하는 동안 자동으로 문서 초안 저장';
 $lang['sepchar']               = '페이지 이름 단어 구분자';
 $lang['canonical']             = '완전한 canonical URL 사용';
+$lang['fnencode']              = '아스키가 아닌 파일이름을 인코딩 하는 방법.';
 $lang['autoplural']            = '링크 연결시 plural폼 검사';
 $lang['compression']           = 'attic파일 압축 방법 선택';
 $lang['cachetime']             = '최대 캐쉬 생존 시간(초)';
@@ -103,11 +107,13 @@ $lang['fetchsize']             = 'fetch.php가 외부에서 다운로드할 수�
 $lang['notify']                = '이메일 알람 기능';
 $lang['registernotify']        = '신규 등록자 알람 기능';
 $lang['mailfrom']              = '자동으로 보내지는 메일 발신자';
+$lang['mailprefix']            = '자동으로 보내지는 메일의 제목 말머리 내용';
 $lang['gzip_output']           = 'xhml 내용 gzip 압축 여부';
 $lang['gdlib']                 = 'GD 라이브러리 버전';
 $lang['im_convert']            = 'ImageMagick 위치';
 $lang['jpg_quality']           = 'JPG 압축 품질 (0-100)';
 $lang['subscribers']           = '페이지 갱신 알람 기능';
+$lang['subscribe_time']        = ' 구독 목록과 요약이 보내질 경과 시간 (초); 이 것은 recent_days에서 설정된 시간보다 작아야 합니다.';
 $lang['compress']              = '최적화된 CSS, javascript 출력';
 $lang['hidepages']             = '매칭된 페이지 숨기기(정규표현식)';
 $lang['send404']               = '존재하지 않는 페이지에 대해 "HTTP 404/Page Not Found" 응답';
@@ -115,7 +121,6 @@ $lang['sitemap']               = '구글 사이트맵 생성(날짜)';
 $lang['broken_iua']            = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있으면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>를 참고하기 바랍니다.';
 $lang['xsendfile']             = '웹 서버 static 파일 전송 지원을 위해 X-Sendfile 헤더를 사용한다면 이 옵션을 사용합니다.
 웹 서버가 이 기능을 지원해야 합니다.';
-$lang['xmlrpc']                = 'XML-RPC 인터페이스 지원/무시';
 $lang['renderer_xhtml']        = '주 (xhtml) 위키 출력 처리기';
 $lang['renderer__core']        = '%s (DokuWiki 내부 기능)';
 $lang['renderer__plugin']      = '%s (DokuWiki 플러그인)';
@@ -136,6 +141,7 @@ $lang['proxy____port']         = '프록시 서버 포트';
 $lang['proxy____user']         = '프록시 사용자 이름';
 $lang['proxy____pass']         = '프록시 패스워드';
 $lang['proxy____ssl']          = '프록시 연결시 ssl사용';
+$lang['proxy____except']       = '프록시설정이 무시될 URL주소들의 RegEx형식표현';
 $lang['safemodehack']          = 'safemode hack기능 사용';
 $lang['ftp____host']           = 'safemode hack의 FTP 서버';
 $lang['ftp____port']           = 'safemode hack의 FTP port';
@@ -183,3 +189,4 @@ $lang['useheading_o_0']        = '아니요';
 $lang['useheading_o_navigation'] = '네비게이션에만';
 $lang['useheading_o_content']  = '위키 내용에만';
 $lang['useheading_o_1']        = '항상';
+$lang['readdircache']          = 'readdir 캐쉬를 위한 최대 시간 (초)';

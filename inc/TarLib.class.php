@@ -7,7 +7,7 @@
  *
  * Modified for Dokuwiki
  *
- * @license GPL
+ * @license LGPL-2.1
  * @link    http://docs.maxg.info
  * @author  Bouchon <tarlib@bouchon.org> (Maxg)
  * @author  Christopher Smith <chris@jalakai.co.uk>

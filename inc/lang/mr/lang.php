@@ -10,7 +10,6 @@
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesMr.php?view=co
  * @author ghatothkach@hotmail.com
  * @author Padmanabh Kulkarni <kulkarnipadmanabh@gmail.com>
- * @author Padmanabh Kulkarni<kulkarnipadmanabh@gmail.com>
  * @author shantanoo@gmail.com
  */
 $lang['encoding']              = 'utf-8';
@@ -54,6 +53,7 @@ $lang['btn_resendpwd']         = 'कृपया परवलीचा नव�
 $lang['btn_draft']             = 'प्रत संपादन';
 $lang['btn_recover']           = 'प्रत परत मिळवा';
 $lang['btn_draftdel']          = 'प्रत रद्द';
+$lang['btn_register']          = 'नोंदणी';
 $lang['loggedinas']            = 'लॉगिन नाव';
 $lang['user']                  = 'वापरकर्ता';
 $lang['pass']                  = 'परवलीचा शब्द';
@@ -63,7 +63,6 @@ $lang['passchk']               = 'परत एकदा';
 $lang['remember']              = 'लक्षात ठेवा';
 $lang['fullname']              = 'पूर्ण नावं';
 $lang['email']                 = 'इमेल';
-$lang['register']              = 'नोंदणी';
 $lang['profile']               = 'वापरकर्त्याची माहिती';
 $lang['badlogin']              = 'माफ़ करा, वापरकर्ता नावात किंवा परवलीच्या शब्दात चूक झाली आहे.';
 $lang['minoredit']             = 'छोटे बदल';

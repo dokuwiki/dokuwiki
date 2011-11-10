@@ -7,7 +7,7 @@
  *
  * This is a piece of PHP code so PHP syntax applies!
  *
- * For help with the configuration see http://www.splitbrain.org/dokuwiki/wiki:config
+ * For help with the configuration see http://www.dokuwiki.org/config
  */
 
 
@@ -99,6 +99,7 @@ $conf['fetchsize']   = 0;                //maximum size (bytes) fetch.php may do
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
+$conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['gzip_output'] = 0;                //use gzip content encodeing for the output xhtml (if allowed by browser)
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
@@ -121,7 +122,7 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
-$conf['rss_content'] = 'abstract';       // what to put in the items by deafult?
+$conf['rss_content'] = 'abstract';       // what to put in the items by default?
                                          //  'abstract' - plain text, first paragraph or so
                                          //  'diff'     - plain text unified diff wrapped in <pre> tags
                                          //  'htmldiff' - diff as HTML table

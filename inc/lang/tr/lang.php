@@ -4,11 +4,10 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
- * @author Aydın Coşkuner aydinweb@gmail.com
  * @author Aydın Coşkuner <aydinweb@gmail.com>
- * @author yavuzselim@gmail.com
- * @author Cihan Kahveci kahvecicihan@gmail.com
+ * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
+ * @author Caleb Maclennan <caleb@alerque.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,6 +48,7 @@ $lang['btn_draft']             = 'Taslağı düzenle';
 $lang['btn_recover']           = 'Taslağı geri yükle';
 $lang['btn_draftdel']          = 'Taslağı sil';
 $lang['btn_revert']            = 'Geri Yükle';
+$lang['btn_register']          = 'Kayıt ol';
 $lang['loggedinas']            = 'Giriş ismi';
 $lang['user']                  = 'Kullanıcı ismi';
 $lang['pass']                  = 'Parola';
@@ -58,7 +58,6 @@ $lang['passchk']               = 'Bir kez daha girin';
 $lang['remember']              = 'Beni hatırla';
 $lang['fullname']              = 'Tam isim';
 $lang['email']                 = 'E-posta';
-$lang['register']              = 'Kayıt ol';
 $lang['profile']               = 'Kullanıcı Bilgileri';
 $lang['badlogin']              = 'Üzgünüz, Kullanıcı adı veya şifre yanlış oldu.';
 $lang['minoredit']             = 'Küçük Değişiklikler';
@@ -186,6 +185,9 @@ $lang['qb_h2']                 = '2. Seviye Başlık';
 $lang['qb_h3']                 = '3. Seviye Başlık';
 $lang['qb_h4']                 = '4. Seviye Başlık';
 $lang['qb_h5']                 = '5. Seviye Başlık';
+$lang['qb_h']                  = 'Başlık';
+$lang['qb_hs']                 = 'Başlığı seç';
+$lang['qb_hplus']              = 'Daha yüksek başlık';
 $lang['qb_link']               = 'İç Bağlantı';
 $lang['qb_extlink']            = 'Dış Bağlantı';
 $lang['qb_hr']                 = 'Yatay Çizgi';

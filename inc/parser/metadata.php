@@ -45,6 +45,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     if(!$this->persistent['date']['created']){
         $this->persistent['date']['created'] = filectime(wikiFN($ID));
     }
+    if(!isset($this->persistent['user'])){
+        $this->persistent['user'] = '';
+    }
     if(!isset($this->persistent['creator'])){
         $this->persistent['creator'] = '';
     }
@@ -454,14 +457,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     $isImage = false;
     if (is_null($title)){
       if (useHeading('content') && $id){
-        $heading = p_get_first_heading($id,false);
+        $heading = p_get_first_heading($id,METADATA_DONT_RENDER);
         if ($heading) return $heading;
       }
       return $default;
     } else if (is_string($title)){
       return $title;
     } else if (is_array($title)){
-      return '['.$title['title'].']';
+      if($title['title']) return '['.$title['title'].']';
     }
   }
 
@@ -479,4 +482,4 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

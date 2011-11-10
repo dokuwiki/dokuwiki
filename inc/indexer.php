@@ -4,9 +4,13 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
 if(!defined('DOKU_INC')) die('meh.');
+
+// Version tag used to force rebuild on upgrade
+define('INDEXER_VERSION', 5);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -23,6 +27,10 @@ define('IDX_ASIAN2','['.
                    '\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}'.
                    '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
                    '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
+                   "\xF0\xA0\x80\x80-\xF0\xAA\x9B\x9F". // CJK Extension B
+                   "\xF0\xAA\x9C\x80-\xF0\xAB\x9C\xBF". // CJK Extension C
+                   "\xF0\xAB\x9D\x80-\xF0\xAB\xA0\x9F". // CJK Extension D
+                   "\xF0\xAF\xA0\x80-\xF0\xAF\xAB\xBF". // CJK Compatibility Supplement
                    ']');
 define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two characters)
                    '\x{3042}\x{3044}\x{3046}\x{3048}'.
@@ -43,6 +51,36 @@ define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two charact
 define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
 
 /**
+ * Version of the indexer taking into consideration the external tokenizer.
+ * The indexer is only compatible with data written by the same version.
+ *
+ * @triggers INDEXER_VERSION_GET
+ * Plugins that modify what gets indexed should hook this event and
+ * add their version info to the event data like so:
+ *     $data[$plugin_name] = $plugin_version;
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @author Michael Hamann <michael@content-space.de>
+ */
+function idx_get_version(){
+    static $indexer_version = null;
+    if ($indexer_version == null) {
+        global $conf;
+        $version = INDEXER_VERSION;
+
+        // DokuWiki version is included for the convenience of plugins
+        $data = array('dokuwiki'=>$version);
+        trigger_event('INDEXER_VERSION_GET', $data, null, false);
+        unset($data['dokuwiki']); // this needs to be first
+        ksort($data);
+        foreach ($data as $plugin=>$vers)
+            $version .= '+'.$plugin.'='.$vers;
+        $indexer_version = $version;
+    }
+    return $indexer_version;
+}
+
+/**
  * Measure the length of a string.
  * Differs from strlen in handling of asian characters.
  *
@@ -52,368 +90,1212 @@ function wordlen($w){
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
-    if(preg_match('/'.IDX_ASIAN2.'/u',$w))
-        $l += ord($w) - 0xE1;  // Lead bytes from 0xE2-0xEF
+    if(preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
+        foreach($leadbytes[0] as $b)
+            $l += ord($b) - 0xE1;
+    }
     return $l;
 }
 
 /**
- * Write a list of strings to an index file.
+ * Class that encapsulates operations on the indexer database.
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_saveIndex($pre, $wlen, &$idx){
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen;
-    $fh = @fopen($fn.'.tmp','w');
-    if(!$fh) return false;
-    foreach ($idx as $line) {
-        fwrite($fh,$line);
+class Doku_Indexer {
+
+    /**
+     * Adds the contents of a page to the fulltext index
+     *
+     * The added text replaces previous words for the same page.
+     * An empty value erases the page.
+     *
+     * @param string    $page   a page name
+     * @param string    $text   the body of the page
+     * @return boolean          the function completed successfully
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public function addPageWords($page, $text) {
+        if (!$this->lock())
+            return "locked";
+
+        // load known documents
+        $pid = $this->addIndexKey('page', '', $page);
+        if ($pid === false) {
+            $this->unlock();
+            return false;
+        }
+
+        $pagewords = array();
+        // get word usage in page
+        $words = $this->getPageWords($text);
+        if ($words === false) {
+            $this->unlock();
+            return false;
+        }
+
+        if (!empty($words)) {
+            foreach (array_keys($words) as $wlen) {
+                $index = $this->getIndex('i', $wlen);
+                foreach ($words[$wlen] as $wid => $freq) {
+                    $idx = ($wid<count($index)) ? $index[$wid] : '';
+                    $index[$wid] = $this->updateTuple($idx, $pid, $freq);
+                    $pagewords[] = "$wlen*$wid";
+                }
+                if (!$this->saveIndex('i', $wlen, $index)) {
+                    $this->unlock();
+                    return false;
+                }
+            }
+        }
+
+        // Remove obsolete index entries
+        $pageword_idx = $this->getIndexKey('pageword', '', $pid);
+        if ($pageword_idx !== '') {
+            $oldwords = explode(':',$pageword_idx);
+            $delwords = array_diff($oldwords, $pagewords);
+            $upwords = array();
+            foreach ($delwords as $word) {
+                if ($word != '') {
+                    list($wlen,$wid) = explode('*', $word);
+                    $wid = (int)$wid;
+                    $upwords[$wlen][] = $wid;
+                }
+            }
+            foreach ($upwords as $wlen => $widx) {
+                $index = $this->getIndex('i', $wlen);
+                foreach ($widx as $wid) {
+                    $index[$wid] = $this->updateTuple($index[$wid], $pid, 0);
+                }
+                $this->saveIndex('i', $wlen, $index);
+            }
+        }
+        // Save the reverse index
+        $pageword_idx = join(':', $pagewords);
+        if (!$this->saveIndexKey('pageword', '', $pid, $pageword_idx)) {
+            $this->unlock();
+            return false;
+        }
+
+        $this->unlock();
+        return true;
     }
-    fclose($fh);
-    if(isset($conf['fperm'])) chmod($fn.'.tmp', $conf['fperm']);
-    io_rename($fn.'.tmp', $fn.'.idx');
-    return true;
+
+    /**
+     * Split the words in a page and add them to the index.
+     *
+     * @param string    $text   content of the page
+     * @return array            list of word IDs and number of times used
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Christopher Smith <chris@jalakai.co.uk>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function getPageWords($text) {
+        global $conf;
+
+        $tokens = $this->tokenizer($text);
+        $tokens = array_count_values($tokens);  // count the frequency of each token
+
+        $words = array();
+        foreach ($tokens as $w=>$c) {
+            $l = wordlen($w);
+            if (isset($words[$l])){
+                $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
+            }else{
+                $words[$l] = array($w => $c);
+            }
+        }
+
+        // arrive here with $words = array(wordlen => array(word => frequency))
+        $word_idx_modified = false;
+        $index = array();   //resulting index
+        foreach (array_keys($words) as $wlen) {
+            $word_idx = $this->getIndex('w', $wlen);
+            foreach ($words[$wlen] as $word => $freq) {
+                $wid = array_search($word, $word_idx);
+                if ($wid === false) {
+                    $wid = count($word_idx);
+                    $word_idx[] = $word;
+                    $word_idx_modified = true;
+                }
+                if (!isset($index[$wlen]))
+                    $index[$wlen] = array();
+                $index[$wlen][$wid] = $freq;
+            }
+            // save back the word index
+            if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx))
+                return false;
+        }
+
+        return $index;
+    }
+
+    /**
+     * Add/update keys to/of the metadata index.
+     *
+     * Adding new keys does not remove other keys for the page.
+     * An empty value will erase the key.
+     * The $key parameter can be an array to add multiple keys. $value will
+     * not be used if $key is an array.
+     *
+     * @param string    $page   a page name
+     * @param mixed     $key    a key string or array of key=>value pairs
+     * @param mixed     $value  the value or list of values
+     * @return boolean          the function completed successfully
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Michael Hamann <michael@content-space.de>
+     */
+    public function addMetaKeys($page, $key, $value=null) {
+        if (!is_array($key)) {
+            $key = array($key => $value);
+        } elseif (!is_null($value)) {
+            // $key is array, but $value is not null
+            trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
+        }
+
+        if (!$this->lock())
+            return "locked";
+
+        // load known documents
+        $pid = $this->addIndexKey('page', '', $page);
+        if ($pid === false) {
+            $this->unlock();
+            return false;
+        }
+
+        // Special handling for titles so the index file is simpler
+        if (array_key_exists('title', $key)) {
+            $value = $key['title'];
+            if (is_array($value))
+                $value = $value[0];
+            $this->saveIndexKey('title', '', $pid, $value);
+            unset($key['title']);
+        }
+
+        foreach ($key as $name => $values) {
+            $metaname = idx_cleanName($name);
+            $this->addIndexKey('metadata', '', $metaname);
+            $metaidx = $this->getIndex($metaname.'_i', '');
+            $metawords = $this->getIndex($metaname.'_w', '');
+            $addwords = false;
+
+            if (!is_array($values)) $values = array($values);
+
+            $val_idx = $this->getIndexKey($metaname.'_p', '', $pid);
+            if ($val_idx != '') {
+                $val_idx = explode(':', $val_idx);
+                // -1 means remove, 0 keep, 1 add
+                $val_idx = array_combine($val_idx, array_fill(0, count($val_idx), -1));
+            } else {
+                $val_idx = array();
+            }
+
+
+            foreach ($values as $val) {
+                $val = (string)$val;
+                if ($val !== "") {
+                    $id = array_search($val, $metawords);
+                    if ($id === false) {
+                        $id = count($metawords);
+                        $metawords[$id] = $val;
+                        $addwords = true;
+                    }
+                    // test if value is already in the index
+                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0)
+                        $val_idx[$id] = 0;
+                    else // else add it
+                        $val_idx[$id] = 1;
+                }
+            }
+
+            if ($addwords)
+                $this->saveIndex($metaname.'_w', '', $metawords);
+            $vals_changed = false;
+            foreach ($val_idx as $id => $action) {
+                if ($action == -1) {
+                    $metaidx[$id] = $this->updateTuple($metaidx[$id], $pid, 0);
+                    $vals_changed = true;
+                    unset($val_idx[$id]);
+                } elseif ($action == 1) {
+                    $metaidx[$id] = $this->updateTuple($metaidx[$id], $pid, 1);
+                    $vals_changed = true;
+                }
+            }
+
+            if ($vals_changed) {
+                $this->saveIndex($metaname.'_i', '', $metaidx);
+                $val_idx = implode(':', array_keys($val_idx));
+                $this->saveIndexKey($metaname.'_p', '', $pid, $val_idx);
+            }
+
+            unset($metaidx);
+            unset($metawords);
+        }
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
+     * Remove a page from the index
+     *
+     * Erases entries in all known indexes.
+     *
+     * @param string    $page   a page name
+     * @return boolean          the function completed successfully
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function deletePage($page) {
+        if (!$this->lock())
+            return "locked";
+
+        // load known documents
+        $pid = $this->getIndexKey('page', '', $page);
+        if ($pid === false) {
+            $this->unlock();
+            return false;
+        }
+
+        // Remove obsolete index entries
+        $pageword_idx = $this->getIndexKey('pageword', '', $pid);
+        if ($pageword_idx !== '') {
+            $delwords = explode(':',$pageword_idx);
+            $upwords = array();
+            foreach ($delwords as $word) {
+                if ($word != '') {
+                    list($wlen,$wid) = explode('*', $word);
+                    $wid = (int)$wid;
+                    $upwords[$wlen][] = $wid;
+                }
+            }
+            foreach ($upwords as $wlen => $widx) {
+                $index = $this->getIndex('i', $wlen);
+                foreach ($widx as $wid) {
+                    $index[$wid] = $this->updateTuple($index[$wid], $pid, 0);
+                }
+                $this->saveIndex('i', $wlen, $index);
+            }
+        }
+        // Save the reverse index
+        if (!$this->saveIndexKey('pageword', '', $pid, "")) {
+            $this->unlock();
+            return false;
+        }
+
+        $this->saveIndexKey('title', '', $pid, "");
+        $keyidx = $this->getIndex('metadata', '');
+        foreach ($keyidx as $metaname) {
+            $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
+            $meta_idx = $this->getIndex($metaname.'_i', '');
+            foreach ($val_idx as $id) {
+                $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
+            }
+            $this->saveIndex($metaname.'_i', '', $meta_idx);
+            $this->saveIndexKey($metaname.'_p', '', $pid, '');
+        }
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
+     * Split the text into words for fulltext search
+     *
+     * TODO: does this also need &$stopwords ?
+     *
+     * @triggers INDEXER_TEXT_PREPARE
+     * This event allows plugins to modify the text before it gets tokenized.
+     * Plugins intercepting this event should also intercept INDEX_VERSION_GET
+     *
+     * @param string    $text   plain text
+     * @param boolean   $wc     are wildcards allowed?
+     * @return array            list of words in the text
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public function tokenizer($text, $wc=false) {
+        global $conf;
+        $words = array();
+        $wc = ($wc) ? '' : '\*';
+        $stopwords =& idx_get_stopwords();
+
+        // prepare the text to be tokenized
+        $evt = new Doku_Event('INDEXER_TEXT_PREPARE', $text);
+        if ($evt->advise_before(true)) {
+            if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
+                // handle asian chars as single words (may fail on older PHP version)
+                $asia = @preg_replace('/('.IDX_ASIAN.')/u', ' \1 ', $text);
+                if (!is_null($asia)) $text = $asia; // recover from regexp falure
+            }
+        }
+        $evt->advise_after();
+        unset($evt);
+
+        $text = strtr($text,
+                       array(
+                           "\r" => ' ',
+                           "\n" => ' ',
+                           "\t" => ' ',
+                           "\xC2\xAD" => '', //soft-hyphen
+                       )
+                     );
+        if (preg_match('/[^0-9A-Za-z ]/u', $text))
+            $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
+
+        $wordlist = explode(' ', $text);
+        foreach ($wordlist as $i => $word) {
+            $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
+                utf8_strtolower($word) : strtolower($word);
+        }
+
+        foreach ($wordlist as $i => $word) {
+            if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
+              || array_search($word, $stopwords) !== false)
+                unset($wordlist[$i]);
+        }
+        return array_values($wordlist);
+    }
+
+    /**
+     * Find pages in the fulltext index containing the words,
+     *
+     * The search words must be pre-tokenized, meaning only letters and
+     * numbers with an optional wildcard
+     *
+     * The returned array will have the original tokens as key. The values
+     * in the returned list is an array with the page names as keys and the
+     * number of times that token appears on the page as value.
+     *
+     * @param arrayref  $tokens list of words to search for
+     * @return array            list of page names with usage counts
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public function lookup(&$tokens) {
+        $result = array();
+        $wids = $this->getIndexWords($tokens, $result);
+        if (empty($wids)) return array();
+        // load known words and documents
+        $page_idx = $this->getIndex('page', '');
+        $docs = array();
+        foreach (array_keys($wids) as $wlen) {
+            $wids[$wlen] = array_unique($wids[$wlen]);
+            $index = $this->getIndex('i', $wlen);
+            foreach($wids[$wlen] as $ixid) {
+                if ($ixid < count($index))
+                    $docs["$wlen*$ixid"] = $this->parseTuples($page_idx, $index[$ixid]);
+            }
+        }
+        // merge found pages into final result array
+        $final = array();
+        foreach ($result as $word => $res) {
+            $final[$word] = array();
+            foreach ($res as $wid) {
+                // handle the case when ($ixid < count($index)) has been false
+                // and thus $docs[$wid] hasn't been set.
+                if (!isset($docs[$wid])) continue;
+                $hits = &$docs[$wid];
+                foreach ($hits as $hitkey => $hitcnt) {
+                    // make sure the document still exists
+                    if (!page_exists($hitkey, '', false)) continue;
+                    if (!isset($final[$word][$hitkey]))
+                        $final[$word][$hitkey] = $hitcnt;
+                    else
+                        $final[$word][$hitkey] += $hitcnt;
+                }
+            }
+        }
+        return $final;
+    }
+
+    /**
+     * Find pages containing a metadata key.
+     *
+     * The metadata values are compared as case-sensitive strings. Pass a
+     * callback function that returns true or false to use a different
+     * comparison function. The function will be called with the $value being
+     * searched for as the first argument, and the word in the index as the
+     * second argument. The function preg_match can be used directly if the
+     * values are regexes.
+     *
+     * @param string    $key    name of the metadata key to look for
+     * @param string    $value  search term to look for, must be a string or array of strings
+     * @param callback  $func   comparison function
+     * @return array            lists with page names, keys are query values if $value is array
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Michael Hamann <michael@content-space.de>
+     */
+    public function lookupKey($key, &$value, $func=null) {
+        if (!is_array($value))
+            $value_array = array($value);
+        else
+            $value_array =& $value;
+
+        // the matching ids for the provided value(s)
+        $value_ids = array();
+
+        $metaname = idx_cleanName($key);
+
+        // get all words in order to search the matching ids
+        if ($key == 'title') {
+            $words = $this->getIndex('title', '');
+        } else {
+            $words = $this->getIndex($metaname.'_w', '');
+        }
+
+        if (!is_null($func)) {
+            foreach ($value_array as $val) {
+                foreach ($words as $i => $word) {
+                    if (call_user_func_array($func, array($val, $word)))
+                        $value_ids[$i][] = $val;
+                }
+            }
+        } else {
+            foreach ($value_array as $val) {
+                $xval = $val;
+                $caret = '^';
+                $dollar = '$';
+                // check for wildcards
+                if (substr($xval, 0, 1) == '*') {
+                    $xval = substr($xval, 1);
+                    $caret = '';
+                }
+                if (substr($xval, -1, 1) == '*') {
+                    $xval = substr($xval, 0, -1);
+                    $dollar = '';
+                }
+                if (!$caret || !$dollar) {
+                    $re = $caret.preg_quote($xval, '/').$dollar;
+                    foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
+                        $value_ids[$i][] = $val;
+                } else {
+                    if (($i = array_search($val, $words)) !== false)
+                        $value_ids[$i][] = $val;
+                }
+            }
+        }
+
+        unset($words); // free the used memory
+
+        // initialize the result so it won't be null
+        $result = array();
+        foreach ($value_array as $val) {
+            $result[$val] = array();
+        }
+
+        $page_idx = $this->getIndex('page', '');
+
+        // Special handling for titles
+        if ($key == 'title') {
+            foreach ($value_ids as $pid => $val_list) {
+                $page = $page_idx[$pid];
+                foreach ($val_list as $val) {
+                    $result[$val][] = $page;
+                }
+            }
+        } else {
+            // load all lines and pages so the used lines can be taken and matched with the pages
+            $lines = $this->getIndex($metaname.'_i', '');
+
+            foreach ($value_ids as $value_id => $val_list) {
+                // parse the tuples of the form page_id*1:page2_id*1 and so on, return value
+                // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
+                $pages = array_keys($this->parseTuples($page_idx, $lines[$value_id]));
+                foreach ($val_list as $val) {
+                    $result[$val] = array_merge($result[$val], $pages);
+                }
+            }
+        }
+        if (!is_array($value)) $result = $result[$value];
+        return $result;
+    }
+
+    /**
+     * Find the index ID of each search term.
+     *
+     * The query terms should only contain valid characters, with a '*' at
+     * either the beginning or end of the word (or both).
+     * The $result parameter can be used to merge the index locations with
+     * the appropriate query term.
+     *
+     * @param arrayref  $words  The query terms.
+     * @param arrayref  $result Set to word => array("length*id" ...)
+     * @return array            Set to length => array(id ...)
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function getIndexWords(&$words, &$result) {
+        $tokens = array();
+        $tokenlength = array();
+        $tokenwild = array();
+        foreach ($words as $word) {
+            $result[$word] = array();
+            $caret = '^';
+            $dollar = '$';
+            $xword = $word;
+            $wlen = wordlen($word);
+
+            // check for wildcards
+            if (substr($xword, 0, 1) == '*') {
+                $xword = substr($xword, 1);
+                $caret = '';
+                $wlen -= 1;
+            }
+            if (substr($xword, -1, 1) == '*') {
+                $xword = substr($xword, 0, -1);
+                $dollar = '';
+                $wlen -= 1;
+            }
+            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword))
+                continue;
+            if (!isset($tokens[$xword]))
+                $tokenlength[$wlen][] = $xword;
+            if (!$caret || !$dollar) {
+                $re = $caret.preg_quote($xword, '/').$dollar;
+                $tokens[$xword][] = array($word, '/'.$re.'/');
+                if (!isset($tokenwild[$xword]))
+                    $tokenwild[$xword] = $wlen;
+            } else {
+                $tokens[$xword][] = array($word, null);
+            }
+        }
+        asort($tokenwild);
+        // $tokens = array( base word => array( [ query term , regexp ] ... ) ... )
+        // $tokenlength = array( base word length => base word ... )
+        // $tokenwild = array( base word => base word length ... )
+        $length_filter = empty($tokenwild) ? $tokenlength : min(array_keys($tokenlength));
+        $indexes_known = $this->indexLengths($length_filter);
+        if (!empty($tokenwild)) sort($indexes_known);
+        // get word IDs
+        $wids = array();
+        foreach ($indexes_known as $ixlen) {
+            $word_idx = $this->getIndex('w', $ixlen);
+            // handle exact search
+            if (isset($tokenlength[$ixlen])) {
+                foreach ($tokenlength[$ixlen] as $xword) {
+                    $wid = array_search($xword, $word_idx);
+                    if ($wid !== false) {
+                        $wids[$ixlen][] = $wid;
+                        foreach ($tokens[$xword] as $w)
+                            $result[$w[0]][] = "$ixlen*$wid";
+                    }
+                }
+            }
+            // handle wildcard search
+            foreach ($tokenwild as $xword => $wlen) {
+                if ($wlen >= $ixlen) break;
+                foreach ($tokens[$xword] as $w) {
+                    if (is_null($w[1])) continue;
+                    foreach(array_keys(preg_grep($w[1], $word_idx)) as $wid) {
+                        $wids[$ixlen][] = $wid;
+                        $result[$w[0]][] = "$ixlen*$wid";
+                    }
+                }
+            }
+        }
+        return $wids;
+    }
+
+    /**
+     * Return a list of all pages
+     * Warning: pages may not exist!
+     *
+     * @param string    $key    list only pages containing the metadata key (optional)
+     * @return array            list of page names
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function getPages($key=null) {
+        $page_idx = $this->getIndex('page', '');
+        if (is_null($key)) return $page_idx;
+
+        $metaname = idx_cleanName($key);
+
+        // Special handling for titles
+        if ($key == 'title') {
+            $title_idx = $this->getIndex('title', '');
+            array_splice($page_idx, count($title_idx));
+            foreach ($title_idx as $i => $title)
+                if ($title === "") unset($page_idx[$i]);
+            return array_values($page_idx);
+        }
+
+        $pages = array();
+        $lines = $this->getIndex($metaname.'_i', '');
+        foreach ($lines as $line) {
+            $pages = array_merge($pages, $this->parseTuples($page_idx, $line));
+        }
+        return array_keys($pages);
+    }
+
+    /**
+     * Return a list of words sorted by number of times used
+     *
+     * @param int       $min    bottom frequency threshold
+     * @param int       $max    upper frequency limit. No limit if $max<$min
+     * @param int       $length minimum length of words to count
+     * @param string    $key    metadata key to list. Uses the fulltext index if not given
+     * @return array            list of words as the keys and frequency as values
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function histogram($min=1, $max=0, $minlen=3, $key=null) {
+        if ($min < 1)
+            $min = 1;
+        if ($max < $min)
+            $max = 0;
+
+        $result = array();
+
+        if ($key == 'title') {
+            $index = $this->getIndex('title', '');
+            $index = array_count_values($index);
+            foreach ($index as $val => $cnt) {
+                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen)
+                    $result[$val] = $cnt;
+            }
+        }
+        elseif (!is_null($key)) {
+            $metaname = idx_cleanName($key);
+            $index = $this->getIndex($metaname.'_i', '');
+            $val_idx = array();
+            foreach ($index as $wid => $line) {
+                $freq = $this->countTuples($line);
+                if ($freq >= $min && (!$max || $freq <= $max) && strlen($val) >= $minlen)
+                    $val_idx[$wid] = $freq;
+            }
+            if (!empty($val_idx)) {
+                $words = $this->getIndex($metaname.'_w', '');
+                foreach ($val_idx as $wid => $freq)
+                    $result[$words[$wid]] = $freq;
+            }
+        }
+        else {
+            $lengths = idx_listIndexLengths();
+            foreach ($lengths as $length) {
+                if ($length < $minlen) continue;
+                $index = $this->getIndex('i', $length);
+                $words = null;
+                foreach ($index as $wid => $line) {
+                    $freq = $this->countTuples($line);
+                    if ($freq >= $min && (!$max || $freq <= $max)) {
+                        if ($words === null)
+                            $words = $this->getIndex('w', $length);
+                        $result[$words[$wid]] = $freq;
+                    }
+                }
+            }
+        }
+
+        arsort($result);
+        return $result;
+    }
+
+    /**
+     * Lock the indexer.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function lock() {
+        global $conf;
+        $status = true;
+        $run = 0;
+        $lock = $conf['lockdir'].'/_indexer.lock';
+        while (!@mkdir($lock, $conf['dmode'])) {
+            usleep(50);
+            if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
+                // looks like a stale lock - remove it
+                if (!@rmdir($lock)) {
+                    $status = "removing the stale lock failed";
+                    return false;
+                } else {
+                    $status = "stale lock removed";
+                }
+            }elseif($run++ == 1000){
+                // we waited 5 seconds for that lock
+                return false;
+            }
+        }
+        if ($conf['dperm'])
+            chmod($lock, $conf['dperm']);
+        return $status;
+    }
+
+    /**
+     * Release the indexer lock.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function unlock() {
+        global $conf;
+        @rmdir($conf['lockdir'].'/_indexer.lock');
+        return true;
+    }
+
+    /**
+     * Retrieve the entire index.
+     *
+     * The $suffix argument is for an index that is split into
+     * multiple parts. Different index files should use different
+     * base names.
+     *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @return array            list of lines without CR or LF
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function getIndex($idx, $suffix) {
+        global $conf;
+        $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
+        if (!@file_exists($fn)) return array();
+        return file($fn, FILE_IGNORE_NEW_LINES);
+    }
+
+    /**
+     * Replace the contents of the index with an array.
+     *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param arrayref  $linex  list of lines without LF
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function saveIndex($idx, $suffix, &$lines) {
+        global $conf;
+        $fn = $conf['indexdir'].'/'.$idx.$suffix;
+        $fh = @fopen($fn.'.tmp', 'w');
+        if (!$fh) return false;
+        fwrite($fh, join("\n", $lines));
+        if (!empty($lines))
+            fwrite($fh, "\n");
+        fclose($fh);
+        if (isset($conf['fperm']))
+            chmod($fn.'.tmp', $conf['fperm']);
+        io_rename($fn.'.tmp', $fn.'.idx');
+        if ($suffix !== '')
+            $this->cacheIndexDir($idx, $suffix, empty($lines));
+        return true;
+    }
+
+    /**
+     * Retrieve a line from the index.
+     *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param int       $id     the line number
+     * @return string           a line with trailing whitespace removed
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function getIndexKey($idx, $suffix, $id) {
+        global $conf;
+        $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
+        if (!@file_exists($fn)) return '';
+        $fh = @fopen($fn, 'r');
+        if (!$fh) return '';
+        $ln = -1;
+        while (($line = fgets($fh)) !== false) {
+            if (++$ln == $id) break;
+        }
+        fclose($fh);
+        return rtrim((string)$line);
+    }
+
+    /**
+     * Write a line into the index.
+     *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param int       $id     the line number
+     * @param string    $line   line to write
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function saveIndexKey($idx, $suffix, $id, $line) {
+        global $conf;
+        if (substr($line, -1) != "\n")
+            $line .= "\n";
+        $fn = $conf['indexdir'].'/'.$idx.$suffix;
+        $fh = @fopen($fn.'.tmp', 'w');
+        if (!$fh) return false;
+        $ih = @fopen($fn.'.idx', 'r');
+        if ($ih) {
+            $ln = -1;
+            while (($curline = fgets($ih)) !== false) {
+                fwrite($fh, (++$ln == $id) ? $line : $curline);
+            }
+            if ($id > $ln) {
+                while ($id > ++$ln)
+                    fwrite($fh, "\n");
+                fwrite($fh, $line);
+            }
+            fclose($ih);
+        } else {
+            $ln = -1;
+            while ($id > ++$ln)
+                fwrite($fh, "\n");
+            fwrite($fh, $line);
+        }
+        fclose($fh);
+        if (isset($conf['fperm']))
+            chmod($fn.'.tmp', $conf['fperm']);
+        io_rename($fn.'.tmp', $fn.'.idx');
+        if ($suffix !== '')
+            $this->cacheIndexDir($idx, $suffix);
+        return true;
+    }
+
+    /**
+     * Retrieve or insert a value in the index.
+     *
+     * @param string    $idx    name of the index
+     * @param string    $suffix subpart identifier
+     * @param string    $value  line to find in the index
+     * @return int              line number of the value in the index
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function addIndexKey($idx, $suffix, $value) {
+        $index = $this->getIndex($idx, $suffix);
+        $id = array_search($value, $index);
+        if ($id === false) {
+            $id = count($index);
+            $index[$id] = $value;
+            if (!$this->saveIndex($idx, $suffix, $index)) {
+                trigger_error("Failed to write $idx index", E_USER_ERROR);
+                return false;
+            }
+        }
+        return $id;
+    }
+
+    protected function cacheIndexDir($idx, $suffix, $delete=false) {
+        global $conf;
+        if ($idx == 'i')
+            $cachename = $conf['indexdir'].'/lengths';
+        else
+            $cachename = $conf['indexdir'].'/'.$idx.'lengths';
+        $lengths = @file($cachename.'.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if ($lengths === false) $lengths = array();
+        $old = array_search((string)$suffix, $lengths);
+        if (empty($lines)) {
+            if ($old === false) return;
+            unset($lengths[$old]);
+        } else {
+            if ($old !== false) return;
+            $lengths[] = $suffix;
+            sort($lengths);
+        }
+        $fh = @fopen($cachename.'.tmp', 'w');
+        if (!$fh) {
+            trigger_error("Failed to write index cache", E_USER_ERROR);
+            return;
+        }
+        @fwrite($fh, implode("\n", $lengths));
+        @fclose($fh);
+        if (isset($conf['fperm']))
+            chmod($cachename.'.tmp', $conf['fperm']);
+        io_rename($cachename.'.tmp', $cachename.'.idx');
+    }
+
+    /**
+     * Get the list of lengths indexed in the wiki.
+     *
+     * Read the index directory or a cache file and returns
+     * a sorted array of lengths of the words used in the wiki.
+     *
+     * @author YoBoY <yoboy.leguesh@gmail.com>
+     */
+    protected function listIndexLengths() {
+        global $conf;
+        $cachename = $conf['indexdir'].'/lengths';
+        clearstatcache();
+        if (@file_exists($cachename.'.idx')) {
+            $lengths = @file($cachename.'.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            if ($lengths !== false) {
+                $idx = array();
+                foreach ($lengths as $length)
+                    $idx[] = (int)$length;
+                return $idx;
+            }
+        }
+
+        $dir = @opendir($conf['indexdir']);
+        if ($dir === false)
+            return array();
+        $lengths[] = array();
+        while (($f = readdir($dir)) !== false) {
+            if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
+                $i = substr($f, 1, -4);
+                if (is_numeric($i))
+                    $lengths[] = (int)$i;
+            }
+        }
+        closedir($dir);
+        sort($lengths);
+        // save this in a file
+        $fh = @fopen($cachename.'.tmp', 'w');
+        if (!$fh) {
+            trigger_error("Failed to write index cache", E_USER_ERROR);
+            return;
+        }
+        @fwrite($fh, implode("\n", $lengths));
+        @fclose($fh);
+        if (isset($conf['fperm']))
+            chmod($cachename.'.tmp', $conf['fperm']);
+        io_rename($cachename.'.tmp', $cachename.'.idx');
+
+        return $lengths;
+    }
+
+    /**
+     * Get the word lengths that have been indexed.
+     *
+     * Reads the index directory and returns an array of lengths
+     * that there are indices for.
+     *
+     * @author YoBoY <yoboy.leguesh@gmail.com>
+     */
+    protected function indexLengths($filter) {
+        global $conf;
+        $idx = array();
+        if (is_array($filter)) {
+            // testing if index files exist only
+            $path = $conf['indexdir']."/i";
+            foreach ($filter as $key => $value) {
+                if (@file_exists($path.$key.'.idx'))
+                    $idx[] = $key;
+            }
+        } else {
+            $lengths = idx_listIndexLengths();
+            foreach ($lengths as $key => $length) {
+                // keep all the values equal or superior
+                if ((int)$length >= (int)$filter)
+                    $idx[] = $length;
+            }
+        }
+        return $idx;
+    }
+
+    /**
+     * Insert or replace a tuple in a line.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function updateTuple($line, $id, $count) {
+        $newLine = $line;
+        if ($newLine !== '')
+            $newLine = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $newLine);
+        $newLine = trim($newLine, ':');
+        if ($count) {
+            if (strlen($newLine) > 0)
+                return "$id*$count:".$newLine;
+            else
+                return "$id*$count".$newLine;
+        }
+        return $newLine;
+    }
+
+    /**
+     * Split a line into an array of tuples.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    protected function parseTuples(&$keys, $line) {
+        $result = array();
+        if ($line == '') return $result;
+        $parts = explode(':', $line);
+        foreach ($parts as $tuple) {
+            if ($tuple === '') continue;
+            list($key, $cnt) = explode('*', $tuple);
+            if (!$cnt) continue;
+            $key = $keys[$key];
+            if (!$key) continue;
+            $result[$key] = $cnt;
+        }
+        return $result;
+    }
+
+    /**
+     * Sum the counts in a list of tuples.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function countTuples($line) {
+        $freq = 0;
+        $parts = explode(':', $line);
+        foreach ($parts as $tuple) {
+            if ($tuple === '') continue;
+            list($pid, $cnt) = explode('*', $tuple);
+            $freq += (int)$cnt;
+        }
+        return $freq;
+    }
 }
 
 /**
- * Append a given line to an index file.
+ * Create an instance of the indexer.
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @return object               a Doku_Indexer
+ * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_appendIndex($pre, $wlen, $line){
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen;
-    $fh = @fopen($fn.'.idx','a');
-    if(!$fh) return false;
-    fwrite($fh,$line);
-    fclose($fh);
-    return true;
+function idx_get_indexer() {
+    static $Indexer = null;
+    if (is_null($Indexer)) {
+        $Indexer = new Doku_Indexer();
+    }
+    return $Indexer;
 }
+
+/**
+ * Returns words that will be ignored.
+ *
+ * @return array                list of stop words
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function & idx_get_stopwords() {
+    static $stopwords = null;
+    if (is_null($stopwords)) {
+        global $conf;
+        $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+        if(@file_exists($swfile)){
+            $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
+        }else{
+            $stopwords = array();
+        }
+    }
+    return $stopwords;
+}
+
+/**
+ * Adds/updates the search index for the given page
+ *
+ * Locking is handled internally.
+ *
+ * @param string        $page   name of the page to index
+ * @param boolean       $verbose    print status messages
+ * @param boolean       $force  force reindexing even when the index is up to date
+ * @return boolean              the function completed successfully
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ */
+function idx_addPage($page, $verbose=false, $force=false) {
+    // check if indexing needed
+    $idxtag = metaFN($page,'.indexed');
+    if(!$force && @file_exists($idxtag)){
+        if(trim(io_readFile($idxtag)) == idx_get_version()){
+            $last = @filemtime($idxtag);
+            if($last > @filemtime(wikiFN($page))){
+                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
+                return false;
+            }
+        }
+    }
+
+    if (!page_exists($page)) {
+        if (!@file_exists($idxtag)) {
+            if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
+            return false;
+        }
+        $Indexer = idx_get_indexer();
+        $result = $Indexer->deletePage($page);
+        if ($result === "locked") {
+            if ($verbose) print("Indexer: locked".DOKU_LF);
+            return false;
+        }
+        @unlink($idxtag);
+        return $result;
+    }
+    $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
+    if ($indexenabled === false) {
+        $result = false;
+        if (@file_exists($idxtag)) {
+            $Indexer = idx_get_indexer();
+            $result = $Indexer->deletePage($page);
+            if ($result === "locked") {
+                if ($verbose) print("Indexer: locked".DOKU_LF);
+                return false;
+            }
+            @unlink($idxtag);
+        }
+        if ($verbose) print("Indexer: index disabled for $page".DOKU_LF);
+        return $result;
+    }
+
+    $body = '';
+    $metadata = array();
+    $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
+    if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
+        $metadata['relation_references'] = array_keys($references);
+    else
+        $metadata['relation_references'] = array();
+    $data = compact('page', 'body', 'metadata');
+    $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
+    if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
+    $evt->advise_after();
+    unset($evt);
+    extract($data);
+
+    $Indexer = idx_get_indexer();
+    $result = $Indexer->addPageWords($page, $body);
+    if ($result === "locked") {
+        if ($verbose) print("Indexer: locked".DOKU_LF);
+        return false;
+    }
+
+    if ($result) {
+        $result = $Indexer->addMetaKeys($page, $metadata);
+        if ($result === "locked") {
+            if ($verbose) print("Indexer: locked".DOKU_LF);
+            return false;
+        }
+    }
+
+    if ($result)
+        io_saveFile(metaFN($page,'.indexed'), idx_get_version());
+    if ($verbose) {
+        print("Indexer: finished".DOKU_LF);
+        return true;
+    }
+    return $result;
+}
+
+/**
+ * Find tokens in the fulltext index
+ *
+ * Takes an array of words and will return a list of matching
+ * pages for each one.
+ *
+ * Important: No ACL checking is done here! All results are
+ *            returned, regardless of permissions
+ *
+ * @param arrayref      $words  list of words to search for
+ * @return array                list of pages found, associated with the search terms
+ */
+function idx_lookup(&$words) {
+    $Indexer = idx_get_indexer();
+    return $Indexer->lookup($words);
+}
+
+/**
+ * Split a string into tokens
+ *
+ */
+function idx_tokenizer($string, $wc=false) {
+    $Indexer = idx_get_indexer();
+    return $Indexer->tokenizer($string, $wc);
+}
+
+/* For compatibility */
 
 /**
  * Read the list of words in an index (if it exists).
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_getIndex($pre, $wlen){
+function idx_getIndex($idx, $suffix) {
     global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
-    if(!@file_exists($fn)) return array();
+    $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
+    if (!@file_exists($fn)) return array();
     return file($fn);
 }
 
 /**
- * Create an empty index file if it doesn't exist yet.
- *
- * FIXME: This function isn't currently used. It will probably be removed soon.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function idx_touchIndex($pre, $wlen){
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
-    if(!@file_exists($fn)){
-        touch($fn);
-        if($conf['fperm']) chmod($fn, $conf['fperm']);
-    }
-}
-
-/**
- * Read a line ending with \n.
- * Returns false on EOF.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function _freadline($fh) {
-    if (feof($fh)) return false;
-    $ln = '';
-    while (($buf = fgets($fh,4096)) !== false) {
-        $ln .= $buf;
-        if (substr($buf,-1) == "\n") break;
-    }
-    if ($ln === '') return false;
-    if (substr($ln,-1) != "\n") $ln .= "\n";
-    return $ln;
-}
-
-/**
- * Write a line to an index file.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function idx_saveIndexLine($pre, $wlen, $idx, $line){
-    global $conf;
-    if(substr($line,-1) != "\n") $line .= "\n";
-    $fn = $conf['indexdir'].'/'.$pre.$wlen;
-    $fh = @fopen($fn.'.tmp','w');
-    if(!$fh) return false;
-    $ih = @fopen($fn.'.idx','r');
-    if ($ih) {
-        $ln = -1;
-        while (($curline = _freadline($ih)) !== false) {
-            if (++$ln == $idx) {
-                fwrite($fh, $line);
-            } else {
-                fwrite($fh, $curline);
-            }
-        }
-        if ($idx > $ln) {
-            fwrite($fh,$line);
-        }
-        fclose($ih);
-    } else {
-        fwrite($fh,$line);
-    }
-    fclose($fh);
-    if($conf['fperm']) chmod($fn.'.tmp', $conf['fperm']);
-    io_rename($fn.'.tmp', $fn.'.idx');
-    return true;
-}
-
-/**
- * Read a single line from an index (if it exists).
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
-function idx_getIndexLine($pre, $wlen, $idx){
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$pre.$wlen.'.idx';
-    if(!@file_exists($fn)) return '';
-    $fh = @fopen($fn,'r');
-    if(!$fh) return '';
-    $ln = -1;
-    while (($line = _freadline($fh)) !== false) {
-        if (++$ln == $idx) break;
-    }
-    fclose($fh);
-    return "$line";
-}
-
-/**
- * Split a page into words
- *
- * Returns an array of word counts, false if an error occurred.
- * Array is keyed on the word length, then the word index.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Christopher Smith <chris@jalakai.co.uk>
- */
-function idx_getPageWords($page){
-    global $conf;
-    $swfile   = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
-    if(@file_exists($swfile)){
-        $stopwords = file($swfile);
-    }else{
-        $stopwords = array();
-    }
-
-    $body = '';
-    $data = array($page, $body);
-    $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
-    if ($evt->advise_before()) $data[1] .= rawWiki($page);
-    $evt->advise_after();
-    unset($evt);
-
-    list($page,$body) = $data;
-
-    $body   = strtr($body, "\r\n\t", '   ');
-    $tokens = explode(' ', $body);
-    $tokens = array_count_values($tokens);   // count the frequency of each token
-
-    // ensure the deaccented or romanised page names of internal links are added to the token array
-    // (this is necessary for the backlink function -- there maybe a better way!)
-    if ($conf['deaccent']) {
-        $links = p_get_metadata($page,'relation references');
-
-        if (!empty($links)) {
-            $tmp = join(' ',array_keys($links));                // make a single string
-            $tmp = strtr($tmp, ':', ' ');                       // replace namespace separator with a space
-            $link_tokens = array_unique(explode(' ', $tmp));    // break into tokens
-
-            foreach ($link_tokens as $link_token) {
-                if (isset($tokens[$link_token])) continue;
-                $tokens[$link_token] = 1;
-            }
-        }
-    }
-
-    $words = array();
-    foreach ($tokens as $word => $count) {
-        $arr = idx_tokenizer($word,$stopwords);
-        $arr = array_count_values($arr);
-        foreach ($arr as $w => $c) {
-            $l = wordlen($w);
-            if(isset($words[$l])){
-                $words[$l][$w] = $c * $count + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
-            }else{
-                $words[$l] = array($w => $c * $count);
-            }
-        }
-    }
-
-    // arrive here with $words = array(wordlen => array(word => frequency))
-
-    $index = array(); //resulting index
-    foreach (array_keys($words) as $wlen){
-        $word_idx = idx_getIndex('w',$wlen);
-        foreach ($words[$wlen] as $word => $freq) {
-            $wid = array_search("$word\n",$word_idx);
-            if(!is_int($wid)){
-                $wid = count($word_idx);
-                $word_idx[] = "$word\n";
-            }
-            if(!isset($index[$wlen]))
-                $index[$wlen] = array();
-            $index[$wlen][$wid] = $freq;
-        }
-
-        // save back word index
-        if(!idx_saveIndex('w',$wlen,$word_idx)){
-            trigger_error("Failed to write word index", E_USER_ERROR);
-            return false;
-        }
-    }
-
-    return $index;
-}
-
-/**
- * Adds/updates the search for the given page
- *
- * This is the core function of the indexer which does most
- * of the work. This function needs to be called with proper
- * locking!
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function idx_addPage($page){
-    global $conf;
-
-    // load known documents
-    $page_idx = idx_getIndex('page','');
-
-    // get page id (this is the linenumber in page.idx)
-    $pid = array_search("$page\n",$page_idx);
-    if(!is_int($pid)){
-        $pid = count($page_idx);
-        // page was new - write back
-        if (!idx_appendIndex('page','',"$page\n")){
-            trigger_error("Failed to write page index", E_USER_ERROR);
-            return false;
-        }
-    }
-    unset($page_idx); // free memory
-
-    idx_saveIndexLine('title', '', $pid, p_get_first_heading($page, false));
-
-    $pagewords = array();
-    // get word usage in page
-    $words = idx_getPageWords($page);
-    if($words === false) return false;
-
-    if(!empty($words)) {
-        foreach(array_keys($words) as $wlen){
-            $index = idx_getIndex('i',$wlen);
-            foreach($words[$wlen] as $wid => $freq){
-                if($wid<count($index)){
-                    $index[$wid] = idx_updateIndexLine($index[$wid],$pid,$freq);
-                }else{
-                    // New words **should** have been added in increasing order
-                    // starting with the first unassigned index.
-                    // If someone can show how this isn't true, then I'll need to sort
-                    // or do something special.
-                    $index[$wid] = idx_updateIndexLine('',$pid,$freq);
-                }
-                $pagewords[] = "$wlen*$wid";
-            }
-            // save back word index
-            if(!idx_saveIndex('i',$wlen,$index)){
-                trigger_error("Failed to write index", E_USER_ERROR);
-                return false;
-            }
-        }
-    }
-
-    // Remove obsolete index entries
-    $pageword_idx = trim(idx_getIndexLine('pageword','',$pid));
-    if ($pageword_idx !== '') {
-        $oldwords = explode(':',$pageword_idx);
-        $delwords = array_diff($oldwords, $pagewords);
-        $upwords = array();
-        foreach ($delwords as $word) {
-            if($word=='') continue;
-            list($wlen,$wid) = explode('*',$word);
-            $wid = (int)$wid;
-            $upwords[$wlen][] = $wid;
-        }
-        foreach ($upwords as $wlen => $widx) {
-            $index = idx_getIndex('i',$wlen);
-            foreach ($widx as $wid) {
-                $index[$wid] = idx_updateIndexLine($index[$wid],$pid,0);
-            }
-            idx_saveIndex('i',$wlen,$index);
-        }
-    }
-    // Save the reverse index
-    $pageword_idx = join(':',$pagewords)."\n";
-    if(!idx_saveIndexLine('pageword','',$pid,$pageword_idx)){
-        trigger_error("Failed to write word index", E_USER_ERROR);
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * Write a new index line to the filehandle
- *
- * This function writes an line for the index file to the
- * given filehandle. It removes the given document from
- * the given line and readds it when $count is >0.
- *
- * @deprecated - see idx_updateIndexLine
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function idx_writeIndexLine($fh,$line,$pid,$count){
-    fwrite($fh,idx_updateIndexLine($line,$pid,$count));
-}
-
-/**
- * Modify an index line with new information
- *
- * This returns a line of the index. It removes the
- * given document from the line and readds it if
- * $count is >0.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function idx_updateIndexLine($line,$pid,$count){
-    $line = trim($line);
-    $updated = array();
-    if($line != ''){
-        $parts = explode(':',$line);
-        // remove doc from given line
-        foreach($parts as $part){
-            if($part == '') continue;
-            list($doc,$cnt) = explode('*',$part);
-            if($doc != $pid){
-                $updated[] = $part;
-            }
-        }
-    }
-
-    // add doc
-    if ($count){
-        $updated[] = "$pid*$count";
-    }
-
-    return join(':',$updated)."\n";
-}
-
-/**
- * Get the list of lenghts indexed in the wiki
+ * Get the list of lengths indexed in the wiki.
  *
  * Read the index directory or a cache file and returns
  * a sorted array of lengths of the words used in the wiki.
@@ -427,10 +1309,11 @@ function idx_listIndexLengths() {
         $docache = false;
     } else {
         clearstatcache();
-        if (@file_exists($conf['indexdir'].'/lengths.idx') and (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
-            if (($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ) !== false) {
+        if (@file_exists($conf['indexdir'].'/lengths.idx')
+        && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
+            if (($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) !== false) {
                 $idx = array();
-                foreach ( $lengths as $length) {
+                foreach ($lengths as $length) {
                     $idx[] = (int)$length;
                 }
                 return $idx;
@@ -439,24 +1322,24 @@ function idx_listIndexLengths() {
         $docache = true;
     }
 
-    if ($conf['readdircache'] == 0 or $docache ) {
+    if ($conf['readdircache'] == 0 || $docache) {
         $dir = @opendir($conf['indexdir']);
-        if($dir===false)
+        if ($dir === false)
             return array();
-        $idx[] = array();
+        $idx = array();
         while (($f = readdir($dir)) !== false) {
-            if (substr($f,0,1) == 'i' && substr($f,-4) == '.idx'){
-                $i = substr($f,1,-4);
+            if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
+                $i = substr($f, 1, -4);
                 if (is_numeric($i))
                     $idx[] = (int)$i;
             }
         }
         closedir($dir);
         sort($idx);
-        // we save this in a file.
-        if ($docache === true) {
-            $handle = @fopen($conf['indexdir'].'/lengths.idx','w');
-            @fwrite($handle, implode("\n",$idx));
+        // save this in a file
+        if ($docache) {
+            $handle = @fopen($conf['indexdir'].'/lengths.idx', 'w');
+            @fwrite($handle, implode("\n", $idx));
             @fclose($handle);
         }
         return $idx;
@@ -473,232 +1356,40 @@ function idx_listIndexLengths() {
  *
  * @author YoBoY <yoboy.leguesh@gmail.com>
  */
-function idx_indexLengths(&$filter){
+function idx_indexLengths($filter) {
     global $conf;
     $idx = array();
-    if (is_array($filter)){
-        // testing if index files exists only
+    if (is_array($filter)) {
+        // testing if index files exist only
+        $path = $conf['indexdir']."/i";
         foreach ($filter as $key => $value) {
-            if (@file_exists($conf['indexdir']."/i$key.idx")) {
+            if (@file_exists($path.$key.'.idx'))
                 $idx[] = $key;
-            }
         }
     } else {
         $lengths = idx_listIndexLengths();
-        foreach ( $lengths as $key => $length) {
-            // we keep all the values equal or superior 
-            if ((int)$length >= (int)$filter) {
+        foreach ($lengths as $key => $length) {
+            // keep all the values equal or superior
+            if ((int)$length >= (int)$filter)
                 $idx[] = $length;
-            }
         }
     }
     return $idx;
 }
 
 /**
- * Find the the index number of each search term.
+ * Clean a name of a key for use as a file name.
  *
- * This will group together words that appear in the same index.
- * So it should perform better, because it only opens each index once.
- * Actually, it's not that great. (in my experience) Probably because of the disk cache.
- * And the sorted function does more work, making it slightly slower in some cases.
- *
- * @param array    $words   The query terms. Words should only contain valid characters,
- *                          with a '*' at either the beginning or end of the word (or both)
- * @param arrayref $result  Set to word => array("length*id" ...), use this to merge the
- *                          index locations with the appropriate query term.
- * @return array            Set to length => array(id ...)
+ * Romanizes non-latin characters, then strips away anything that's
+ * not a letter, number, or underscore.
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_getIndexWordsSorted($words,&$result){
-    // parse and sort tokens
-    $tokens = array();
-    $tokenlength = array();
-    $tokenwild = array();
-    foreach($words as $word){
-        $result[$word] = array();
-        $wild = 0;
-        $xword = $word;
-        $wlen = wordlen($word);
-
-        // check for wildcards
-        if(substr($xword,0,1) == '*'){
-            $xword = substr($xword,1);
-            $wild |= 1;
-            $wlen -= 1;
-        }
-        if(substr($xword,-1,1) == '*'){
-            $xword = substr($xword,0,-1);
-            $wild |= 2;
-            $wlen -= 1;
-        }
-        if ($wlen < IDX_MINWORDLENGTH && $wild == 0 && !is_numeric($xword)) continue;
-        if(!isset($tokens[$xword])){
-            $tokenlength[$wlen][] = $xword;
-        }
-        if($wild){
-            $ptn = preg_quote($xword,'/');
-            if(($wild&1) == 0) $ptn = '^'.$ptn;
-            if(($wild&2) == 0) $ptn = $ptn.'$';
-            $tokens[$xword][] = array($word, '/'.$ptn.'/');
-            if(!isset($tokenwild[$xword])) $tokenwild[$xword] = $wlen;
-        }else
-            $tokens[$xword][] = array($word, null);
-    }
-    asort($tokenwild);
-    // $tokens = array( base word => array( [ query word , grep pattern ] ... ) ... )
-    // $tokenlength = array( base word length => base word ... )
-    // $tokenwild = array( base word => base word length ... )
-
-    $length_filter = empty($tokenwild) ? $tokenlength : min(array_keys($tokenlength));
-    $indexes_known = idx_indexLengths($length_filter);
-    if(!empty($tokenwild)) sort($indexes_known);
-    // get word IDs
-    $wids = array();
-    foreach($indexes_known as $ixlen){
-        $word_idx = idx_getIndex('w',$ixlen);
-        // handle exact search
-        if(isset($tokenlength[$ixlen])){
-            foreach($tokenlength[$ixlen] as $xword){
-                $wid = array_search("$xword\n",$word_idx);
-                if(is_int($wid)){
-                    $wids[$ixlen][] = $wid;
-                    foreach($tokens[$xword] as $w)
-                        $result[$w[0]][] = "$ixlen*$wid";
-                }
-            }
-        }
-        // handle wildcard search
-        foreach($tokenwild as $xword => $wlen){
-            if($wlen >= $ixlen) break;
-            foreach($tokens[$xword] as $w){
-                if(is_null($w[1])) continue;
-                foreach(array_keys(preg_grep($w[1],$word_idx)) as $wid){
-                    $wids[$ixlen][] = $wid;
-                    $result[$w[0]][] = "$ixlen*$wid";
-                }
-            }
-        }
-    }
-    return $wids;
+function idx_cleanName($name) {
+    $name = utf8_romanize(trim((string)$name));
+    $name = preg_replace('#[ \./\\:-]+#', '_', $name);
+    $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
+    return strtolower($name);
 }
 
-/**
- * Lookup words in index
- *
- * Takes an array of word and will return a list of matching
- * documents for each one.
- *
- * Important: No ACL checking is done here! All results are
- *            returned, regardless of permissions
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function idx_lookup($words){
-    global $conf;
-
-    $result = array();
-
-    $wids = idx_getIndexWordsSorted($words, $result);
-    if(empty($wids)) return array();
-
-    // load known words and documents
-    $page_idx = idx_getIndex('page','');
-
-    $docs = array();                          // hold docs found
-    foreach(array_keys($wids) as $wlen){
-        $wids[$wlen] = array_unique($wids[$wlen]);
-        $index = idx_getIndex('i',$wlen);
-        foreach($wids[$wlen] as $ixid){
-            if($ixid < count($index))
-                $docs["$wlen*$ixid"] = idx_parseIndexLine($page_idx,$index[$ixid]);
-        }
-    }
-
-    // merge found pages into final result array
-    $final = array();
-    foreach($result as $word => $res){
-        $final[$word] = array();
-        foreach($res as $wid){
-            $hits = &$docs[$wid];
-            foreach ($hits as $hitkey => $hitcnt) {
-                if (!isset($final[$word][$hitkey])) {
-                    $final[$word][$hitkey] = $hitcnt;
-                } else {
-                    $final[$word][$hitkey] += $hitcnt;
-                }
-            }
-        }
-    }
-    return $final;
-}
-
-/**
- * Returns a list of documents and counts from a index line
- *
- * It omits docs with a count of 0 and pages that no longer
- * exist.
- *
- * @param  array  $page_idx The list of known pages
- * @param  string $line     A line from the main index
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function idx_parseIndexLine(&$page_idx,$line){
-    $result = array();
-
-    $line = trim($line);
-    if($line == '') return $result;
-
-    $parts = explode(':',$line);
-    foreach($parts as $part){
-        if($part == '') continue;
-        list($doc,$cnt) = explode('*',$part);
-        if(!$cnt) continue;
-        $doc = trim($page_idx[$doc]);
-        if(!$doc) continue;
-        // make sure the document still exists
-        if(!page_exists($doc,'',false)) continue;
-
-        $result[$doc] = $cnt;
-    }
-    return $result;
-}
-
-/**
- * Tokenizes a string into an array of search words
- *
- * Uses the same algorithm as idx_getPageWords()
- *
- * @param string   $string     the query as given by the user
- * @param arrayref $stopwords  array of stopwords
- * @param boolean  $wc         are wildcards allowed?
- */
-function idx_tokenizer($string,&$stopwords,$wc=false){
-    $words = array();
-    $wc = ($wc) ? '' : $wc = '\*';
-
-    if(preg_match('/[^0-9A-Za-z]/u', $string)){
-        // handle asian chars as single words (may fail on older PHP version)
-        $asia = @preg_replace('/('.IDX_ASIAN.')/u',' \1 ',$string);
-        if(!is_null($asia)) $string = $asia; //recover from regexp failure
-
-        $arr = explode(' ', utf8_stripspecials($string,' ','\._\-:'.$wc));
-        foreach ($arr as $w) {
-            if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) continue;
-            $w = utf8_strtolower($w);
-            if($stopwords && is_int(array_search("$w\n",$stopwords))) continue;
-            $words[] = $w;
-        }
-    }else{
-        $w = $string;
-        if (!is_numeric($w) && strlen($w) < IDX_MINWORDLENGTH) return $words;
-        $w = strtolower($w);
-        if(is_int(array_search("$w\n",$stopwords))) return $words;
-        $words[] = $w;
-    }
-
-    return $words;
-}
-
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

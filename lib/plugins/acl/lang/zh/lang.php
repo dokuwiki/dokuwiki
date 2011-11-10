@@ -11,6 +11,8 @@
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
+ * @author Hiphen Lee <jacob.b.leung@gmail.com>
+ * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  */
 $lang['admin_acl']             = '访问控制列表（ACL）管理器';
 $lang['acl_group']             = '组';

@@ -4,11 +4,11 @@ Nome utente   : @NEWUSER@
 Nome completo : @NEWNAME@
 EMail        : @NEWEMAIL@
 
-Data          : @DATE@
-Browser       : @BROWSER@
-Indirizzo IP  : @IPADDRESS@
-Nome macchina : @HOSTNAME@
+Data : @DATE@
+Browser : @BROWSER@
+Indirizzo IP : @IPADDRESS@
+Nome host : @HOSTNAME@
 
 -- 
-Questa email è stata generata dal DokuWiki di
+Questa email è stata generata dal DokuWiki all'indirizzo
 @DOKUWIKIURL@

@@ -93,7 +93,7 @@ function tpl_content_core(){
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-                break;
+            break;
         case 'backlink':
             html_backlinks();
             break;
@@ -155,7 +155,7 @@ function tpl_toc($return=false){
         $toc = $TOC;
     }elseif(($ACT == 'show' || substr($ACT,0,6) == 'export') && !$REV && $INFO['exists']){
         // get TOC from metadata, render if neccessary
-        $meta = p_get_metadata($ID, false, true);
+        $meta = p_get_metadata($ID, false, METADATA_RENDER_USING_CACHE);
         if(isset($meta['internal']['toc'])){
             $tocok = $meta['internal']['toc'];
         }else{
@@ -209,14 +209,9 @@ function tpl_admin(){
     }
 
     if ($plugin !== null){
-        if($plugin->forAdminOnly() && !$INFO['isadmin']){
-            msg('For admins only',-1);
-            html_admin();
-        }else{
-            if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
-            if($INFO['prependTOC']) tpl_toc();
-            $plugin->html();
-        }
+        if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
+        if($INFO['prependTOC']) tpl_toc();
+        $plugin->html();
     }else{
         html_admin();
     }
@@ -581,16 +576,23 @@ function tpl_get_action($type) {
             $accesskey = 'b';
             break;
         case 'login':
-            if(!$conf['useacl'] || !$auth){
-                return false;
-            }
             $params['sectok'] = getSecurityToken();
             if(isset($_SERVER['REMOTE_USER'])){
-                if (!$auth->canDo('logout')) {
+                if (!actionOK('logout')) {
                     return false;
                 }
                 $params['do'] = 'logout';
                 $type = 'logout';
+            }
+            break;
+        case 'register':
+            if($_SERVER['REMOTE_USER']){
+                return false;
+            }
+            break;
+        case 'resendpwd':
+            if($_SERVER['REMOTE_USER']){
+                return false;
             }
             break;
         case 'admin':
@@ -609,20 +611,19 @@ function tpl_get_action($type) {
             $type = 'subscribe';
             $params['do'] = 'subscribe';
         case 'subscribe':
-            if(!$conf['useacl'] || !$auth || $ACT !== 'show' || !$conf['subscribers'] || !$_SERVER['REMOTE_USER']){
+            if(!$_SERVER['REMOTE_USER']){
                 return false;
             }
             break;
         case 'backlink':
             break;
         case 'profile':
-            if(!$conf['useacl'] || !$auth || !isset($_SERVER['REMOTE_USER']) ||
-                    !$auth->canDo('Profile') || ($ACT=='profile')){
+            if(!isset($_SERVER['REMOTE_USER'])){
                 return false;
             }
             break;
         case 'subscribens':
-            // Superseeded by subscribe/subscription
+            // Superseded by subscribe/subscription
             return '';
             break;
         default:
@@ -685,7 +686,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_breadcrumbs($sep='&raquo;'){
+function tpl_breadcrumbs($sep='&bull;'){
     global $lang;
     global $conf;
 
@@ -739,48 +740,30 @@ function tpl_youarehere($sep=' &raquo; '){
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    if($GLOBALS['ACT'] == 'search')
-    {
-        $parts = array($conf['start']);
-        $count = 1;
-    }
-
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
     // always print the startpage
-    $title = useHeading('navigation') ? p_get_first_heading($conf['start']) : $conf['start'];
-    if(!$title) $title = $conf['start'];
-    tpl_link(wl($conf['start']),hsc($title),'title="'.$conf['start'].'"');
+    tpl_pagelink(':'.$conf['start']);
 
     // print intermediate namespace links
     $part = '';
     for($i=0; $i<$count - 1; $i++){
         $part .= $parts[$i].':';
         $page = $part;
-        resolve_pageid('',$page,$exists);
         if ($page == $conf['start']) continue; // Skip startpage
 
         // output
         echo $sep;
-        if($exists){
-            $title = useHeading('navigation') ? p_get_first_heading($page) : $parts[$i];
-            tpl_link(wl($page),hsc($title),'title="'.$page.'"');
-        }else{
-            tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2" rel="nofollow"');
-        }
+        tpl_pagelink($page);
     }
 
     // print current page, skipping start page, skipping for namespace index
+    resolve_pageid('',$page,$exists);
     if(isset($page) && $page==$part.$parts[$i]) return;
     $page = $part.$parts[$i];
     if($page == $conf['start']) return;
     echo $sep;
-    if(page_exists($page)){
-        $title = useHeading('navigation') ? p_get_first_heading($page) : $parts[$i];
-        tpl_link(wl($page),hsc($title),'title="'.$page.'"');
-    }else{
-        tpl_link(wl($page),$parts[$i],'title="'.$page.'" class="wikilink2" rel="nofollow"');
-    }
+    tpl_pagelink($page);
     return true;
 }
 
@@ -1000,12 +983,10 @@ function tpl_indexerWebBug(){
     global $INFO;
     if(!$INFO['exists']) return false;
 
-    if(isHiddenPage($ID)) return false; //no need to index hidden pages
-
     $p = array();
     $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
         '&'.time();
-    $p['width']  = 1;
+    $p['width']  = 2;
     $p['height'] = 1;
     $p['alt']    = '';
     $att = buildAttributes($p);
@@ -1178,7 +1159,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
 
-    echo '<select name="do" id="action__selector" class="edit">';
+    echo '<select name="do" class="edit quickselect">';
     echo '<option value="">'.$empty.'</option>';
 
     echo '<optgroup label=" &mdash; ">';
@@ -1218,7 +1199,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '</optgroup>';
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" id="action__selectorbtn" />';
+    echo '<input type="submit" value="'.$button.'" />';
     echo '</form>';
 }
 
@@ -1248,7 +1229,7 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
     }
     if(!$imgonly) {
         $out .= $lang['license'];
-        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
+        $out .= ' <a href="'.$lic['url'].'" rel="license" class="urlextern"';
         if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
         $out .= '>'.$lic['name'].'</a>';
     }
@@ -1359,5 +1340,24 @@ function tpl_flush(){
 }
 
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+/**
+ * Use favicon.ico from data/media root directory if it exists, otherwise use
+ * the one in the template's image directory.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_getFavicon($abs=false) {
+    if (file_exists(mediaFN('favicon.ico'))) {
+        return ml('favicon.ico', '', true, '', $abs);
+    }
+
+    if($abs) {
+        return DOKU_URL.substr(DOKU_TPL.'images/favicon.ico', strlen(DOKU_REL));
+    }
+
+    return DOKU_TPL.'images/favicon.ico';
+}
+
+
+//Setup VIM: ex: et ts=4 :
 

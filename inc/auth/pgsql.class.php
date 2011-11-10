@@ -407,4 +407,4 @@ class auth_pgsql extends auth_mysql {
 
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

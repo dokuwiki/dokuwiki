@@ -22,7 +22,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('singlequoteopening',array()),
-            array('cdata',array('hello Bar'."\n")),
+            array('cdata',array('hello Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -39,7 +39,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo said:')),
             array('singlequoteopening',array()),
-            array('cdata',array('hello Bar'."\n")),
+            array('cdata',array('hello Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -56,7 +56,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo hello')),
             array('singlequoteclosing',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -73,7 +73,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo hello')),
             array('singlequoteclosing',array()),
-            array('cdata',array(') Bar'."\n")),
+            array('cdata',array(') Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -92,7 +92,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('singlequoteopening',array()),
             array('cdata',array('hello')),
             array('singlequoteclosing',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -109,7 +109,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'hey it')),
             array('apostrophe',array()),
-            array('cdata',array('s fine weather today'."\n")),
+            array('cdata',array('s fine weather today')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -129,7 +129,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('singlequoteopening',array()),
             array('cdata',array('hello')),
             array('singlequoteclosing',array()),
-            array('cdata',array(') Bar'."\n")),
+            array('cdata',array(') Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -146,7 +146,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('doublequoteopening',array()),
-            array('cdata',array('hello Bar'."\n")),
+            array('cdata',array('hello Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -163,7 +163,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo said:')),
             array('doublequoteopening',array()),
-            array('cdata',array('hello Bar'."\n")),
+            array('cdata',array('hello Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -180,7 +180,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo hello')),
             array('doublequoteclosing',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -197,7 +197,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo hello')),
             array('doublequoteclosing',array()),
-            array('cdata',array(') Bar'."\n")),
+            array('cdata',array(') Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -216,7 +216,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('doublequoteopening',array()),
             array('cdata',array('hello')),
             array('doublequoteclosing',array()),
-            array('cdata',array(' Bar'."\n")),
+            array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -235,7 +235,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('doublequoteopening',array()),
             array('cdata',array('hello')),
             array('doublequoteclosing',array()),
-            array('cdata',array(') Bar'."\n")),
+            array('cdata',array(') Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -261,7 +261,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
             array('cdata',array('s world')),
             array('singlequoteclosing',array()),
             array('doublequoteclosing',array()),
-            array('cdata',array(".\n")),
+            array('cdata',array(".")),
             array('p_close',array()),
             array('document_end',array()),
         );

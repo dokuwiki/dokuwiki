@@ -13,6 +13,8 @@
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
+ * @author Niels Lange <niels@boldencursief.nl>
+ * @author Christian Wichmann <nospam@zone0.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
@@ -96,7 +98,7 @@ $lang['auth_security_timeout'] = 'Authentifikations-Timeout (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktivieren Sie diese Option, wenn nur der Login Ihres Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
 $lang['xmlrpc']                = 'XML-RPC-Zugriff erlauben.';
 $lang['xmlrpcuser']            = 'XML-RPC-Zugriff auf folgende Gruppen oder Benutzer (kommasepariert) beschränken. Wenn Sie dieses Feld leer lassen, wir der Zugriff jedem gewährt.';
-$lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit splitbrain.org verbinden.';
+$lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit update.dokuwiki.org verbinden.';
 $lang['userewrite']            = 'URL rewriting';
 $lang['useslash']              = 'Schrägstrich (/) als Namensraumtrenner in URLs verwenden';
 $lang['usedraft']              = 'Während des Bearbeitens automatisch Zwischenentwürfe speichern';
@@ -111,6 +113,7 @@ $lang['fetchsize']             = 'Maximale Größe (in Bytes), die fetch.php von
 $lang['notify']                = 'Änderungsmitteilungen an diese E-Mail-Adresse versenden';
 $lang['registernotify']        = 'Information über neu registrierte Nutzer an diese E-Mail-Adresse senden';
 $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mails';
+$lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';

@@ -12,6 +12,7 @@
  * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
  * @author Osman Tekin osman.tekin93@hotmail.it
+ * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
 $lang['acl_group']             = 'Gruppo';

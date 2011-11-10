@@ -8,11 +8,11 @@ Queste sono le pagine modificate:
 @DIFF@
 --------------------------------------------------------
 
-Per annullare la pagina delle notifiche collegati al 
+Per non ricevere più queste notifiche collegati al 
 wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
 e rimuovi la sottoscrizione alle modifiche delle 
 pagine e/o categorie.
 
 --
-Questa email è stata generata dal DokuWiki di
+Questa email è stata generata dal DokuWiki all'indirizzo
 @DOKUWIKIURL@

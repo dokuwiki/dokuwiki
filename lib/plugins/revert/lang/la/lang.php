@@ -2,6 +2,7 @@
 /**
  * Latin language file
  *
+ * @author Massimiliano Vassalli <vassalli.max@gmail.com>
  */
 $lang['menu']                  = 'Restituendi administrator';
 $lang['filter']                = 'Malas paginas quaerere';

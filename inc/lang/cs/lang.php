@@ -5,10 +5,11 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
+ * @author Tomas Valenta <tomas@valenta.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
- * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
+ * @author Vojta Beran <xmamut@email.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,6 +50,7 @@ $lang['btn_draft']             = 'Upravit koncept';
 $lang['btn_recover']           = 'Obnovit koncept';
 $lang['btn_draftdel']          = 'Vymazat koncept';
 $lang['btn_revert']            = 'Vrátit zpět';
+$lang['btn_register']          = 'Registrovat';
 $lang['loggedinas']            = 'Přihlášen(a) jako';
 $lang['user']                  = 'Uživatelské jméno';
 $lang['pass']                  = 'Heslo';
@@ -58,7 +60,6 @@ $lang['passchk']               = 'ještě jednou';
 $lang['remember']              = 'Přihlásit se nastálo';
 $lang['fullname']              = 'Celé jméno';
 $lang['email']                 = 'E-mail';
-$lang['register']              = 'Registrovat';
 $lang['profile']               = 'Uživatelský profil';
 $lang['badlogin']              = 'Zadané uživatelské jméno a heslo není správně.';
 $lang['minoredit']             = 'Drobné změny';
@@ -158,9 +159,12 @@ $lang['quickhits']             = 'Odpovídající stránky';
 $lang['toc']                   = 'Obsah';
 $lang['current']               = 'aktuální';
 $lang['yours']                 = 'Vaše verze';
-$lang['diff']                  = 'zobrazit rozdíly vůči aktuální verzi';
-$lang['diff2']                 = 'zobrazit rozdíly mezi vybranými verzemi';
+$lang['diff']                  = 'Zobrazit rozdíly vůči aktuální verzi';
+$lang['diff2']                 = 'Zobrazit rozdíly mezi vybranými verzemi';
 $lang['difflink']              = 'Odkaz na výstup diff';
+$lang['diff_type']             = 'Prohlédnout rozdíly:';
+$lang['diff_inline']           = 'Vložené';
+$lang['diff_side']             = 'Přidané';
 $lang['line']                  = 'Řádek';
 $lang['breadcrumb']            = 'Historie';
 $lang['youarehere']            = 'Umístění';
@@ -242,7 +246,7 @@ $lang['i_wikiname']            = 'Název wiki';
 $lang['i_enableacl']           = 'Zapnout ACL (doporučeno)';
 $lang['i_superuser']           = 'Správce';
 $lang['i_problems']            = 'Instalátor narazil na níže popsané problémy. Nelze pokračovat v instalaci, dokud je neopravíte.';
-$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte souboru z instalačního balíčku nebo se zkuste poradit s <a href="http://dokuwiki.org/install">instrukcemi pro instalci DokuWiki</a>.';
+$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte souboru z instalačního balíčku nebo se zkuste poradit s <a href="http://dokuwiki.org/install">instrukcemi pro instalaci DokuWiki</a>.';
 $lang['i_funcna']              = 'PHP funkce <code>%s</code> není dostupná. Váš webhosting ji možná z nějakého důvodu vypnul.';
 $lang['i_phpver']              = 'Verze vaší instalace PHP <code>%s</code> je nižší než požadovaná <code>%s</code>. Budete muset aktualizovat svou instalaci PHP.';
 $lang['i_permfail']            = 'DokuWiki nemůže zapisovat do <code>%s</code>. Budete muset opravit práva k tomuto adresáři.';
@@ -268,7 +272,7 @@ $lang['mu_toobig']             = 'příliš velké';
 $lang['mu_ready']              = 'připraveno k načtení';
 $lang['mu_done']               = 'hotovo';
 $lang['mu_fail']               = 'selhalo';
-$lang['mu_authfail']           = 'vypršla session';
+$lang['mu_authfail']           = 'vypršela session';
 $lang['mu_progress']           = '@PCT@% načten';
 $lang['mu_filetypes']          = 'Povolené typy souborů';
 $lang['mu_info']               = 'soubory načteny.';

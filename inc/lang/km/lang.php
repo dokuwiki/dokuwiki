@@ -1,9 +1,6 @@
 <?php
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Anika Henke <henke@cosmocode.de>
- * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author     Ratana Lim <aerorat@yahoo.com>
  */
 $lang['encoding']   = 'utf-8';
@@ -46,6 +43,7 @@ $lang['btn_resendpwd']   = 'ផ្ញើពាក្សសម្ងាត់';
 $lang['btn_draft']    = 'កែគំរោង';
 $lang['btn_recover']  = 'ស្រោះគំរោងឡើង';
 $lang['btn_draftdel'] = 'លុបគំរោង';
+$lang['btn_register'] = 'ចុះឈ្មោះ';//'Register';
 
 $lang['loggedinas'] = 'អ្នកប្រើ';
 $lang['user']       = 'នាមបម្រើ';
@@ -56,7 +54,6 @@ $lang['passchk']    = 'ម្ដងទាត';
 $lang['remember']   = 'ចំណាំខ្ញុំ';
 $lang['fullname']   = 'នាមត្រគោល';
 $lang['email']      = 'អ៊ីមែល';
-$lang['register']   = 'ចុះឈ្មោះ';//'Register';
 $lang['profile']    = 'ប្រវត្តិរូប';// 'User Profile';
 $lang['badlogin']   = 'សុំអាទោស​ នាមបំរើ ឬ ពាក្សសម្ងាតមិនត្រវទេ។';
 $lang['minoredit']  = 'កែបបណ្តិចបណ្តួច';// 'Minor Changes';
@@ -227,4 +224,4 @@ $lang['i_pol2']       = 'វីគីបិទជិត';
 
 $lang['i_retry']      = 'ម្តងទៀត';
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

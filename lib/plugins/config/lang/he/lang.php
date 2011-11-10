@@ -7,6 +7,7 @@
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
  * @author Yaron Yogev <yaronyogev@gmail.com>
+ * @author Yaron Shahrabani <sh.yaron@gmail.com>
  */
 $lang['menu']                  = 'הגדרות תצורה';
 $lang['error']                 = 'ההגדרות לא עודכנו בגלל ערך לא תקף, נא לעיין בשינויים ולשלוח שנית.
@@ -82,7 +83,7 @@ $lang['disableactions_other']  = 'פעולות אחרות (מופרדות בפס
 $lang['sneaky_index']          = 'כברירת מחדל, דוקוויקי יציג את כל מרחבי השמות בתצוגת תוכן הענינים. בחירה באפשרות זאת תסתיר את אלו שבהם למשתמש אין הרשאות קריאה. התוצאה עלולה להיות הסתרת תת מרחבי שמות אליהם יש למשתמש גישה. באופן זה תוכן הענינים עלול להפוך לחסר תועלת עם הגדרות ACL מסוימות';
 $lang['auth_security_timeout'] = 'מגבלת אבטח פסק הזמן להזדהות (שניות)';
 $lang['xmlrpc']                = 'לאפשר.לחסום את מנשק XML-RPC';
-$lang['updatecheck']           = 'בדיקת עידכוני אבטחה והתראות? על DokuWiki להתקשר אל splitbrain.org לצורך כך.';
+$lang['updatecheck']           = 'בדיקת עידכוני אבטחה והתראות? על DokuWiki להתקשר אל update.dokuwiki.org לצורך כך.';
 $lang['userewrite']            = 'השתמש בכתובות URL יפות';
 $lang['useslash']              = 'השתמש בלוכסן להגדרת מרחבי שמות בכתובות';
 $lang['usedraft']              = 'שמור טיוטות באופן אוטומטי בעת עריכה';

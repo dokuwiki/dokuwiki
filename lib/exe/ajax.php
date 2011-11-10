@@ -8,7 +8,7 @@
 
 //fix for Opera XMLHttpRequests
 if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
-  parse_str($HTTP_RAW_POST_DATA, $_POST);
+    parse_str($HTTP_RAW_POST_DATA, $_POST);
 }
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
@@ -20,25 +20,25 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 //call the requested function
-if(isset($_POST['call']))
-  $call = $_POST['call'];
-else if(isset($_GET['call']))
-  $call = $_GET['call'];
-else
-  exit;
-
+if(isset($_POST['call'])){
+    $call = $_POST['call'];
+}else if(isset($_GET['call'])){
+    $call = $_GET['call'];
+}else{
+    exit;
+}
 $callfn = 'ajax_'.$call;
 
 if(function_exists($callfn)){
-  $callfn();
+    $callfn();
 }else{
-  $evt = new Doku_Event('AJAX_CALL_UNKNOWN', $call);
-  if ($evt->advise_before()) {
-    print "AJAX call '".htmlspecialchars($call)."' unknown!\n";
-    exit;
-  }
-  $evt->advise_after();
-  unset($evt);
+    $evt = new Doku_Event('AJAX_CALL_UNKNOWN', $call);
+    if ($evt->advise_before()) {
+        print "AJAX call '".htmlspecialchars($call)."' unknown!\n";
+        exit;
+    }
+    $evt->advise_after();
+    unset($evt);
 }
 
 /**
@@ -47,33 +47,33 @@ if(function_exists($callfn)){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_qsearch(){
-  global $conf;
-  global $lang;
+    global $conf;
+    global $lang;
 
-  $query = $_POST['q'];
-  if(empty($query)) $query = $_GET['q'];
-  if(empty($query)) return;
+    $query = $_POST['q'];
+    if(empty($query)) $query = $_GET['q'];
+    if(empty($query)) return;
 
-  $data = ft_pageLookup($query, true, useHeading('navigation'));
+    $data = ft_pageLookup($query, true, useHeading('navigation'));
 
-  if(!count($data)) return;
+    if(!count($data)) return;
 
-  print '<strong>'.$lang['quickhits'].'</strong>';
-  print '<ul>';
-  foreach($data as $id => $title){
-    if (useHeading('navigation')) {
-        $name = $title;
-    } else {
-        $ns = getNS($id);
-        if($ns){
-          $name = shorten(noNS($id), ' ('.$ns.')',30);
-        }else{
-          $name = $id;
+    print '<strong>'.$lang['quickhits'].'</strong>';
+    print '<ul>';
+    foreach($data as $id => $title){
+        if (useHeading('navigation')) {
+            $name = $title;
+        } else {
+            $ns = getNS($id);
+            if($ns){
+                $name = noNS($id).' ('.$ns.')';
+            }else{
+                $name = $id;
+            }
         }
+        echo '<li>' . html_wikilink(':'.$id,$name) . '</li>';
     }
-    echo '<li>' . html_wikilink(':'.$id,$name) . '</li>';
-  }
-  print '</ul>';
+    print '</ul>';
 }
 
 /**
@@ -83,36 +83,36 @@ function ajax_qsearch(){
  * @author Mike Frysinger <vapier@gentoo.org>
  */
 function ajax_suggestions() {
-  global $conf;
-  global $lang;
+    global $conf;
+    global $lang;
 
-  $query = cleanID($_POST['q']);
-  if(empty($query)) $query = cleanID($_GET['q']);
-  if(empty($query)) return;
+    $query = cleanID($_POST['q']);
+    if(empty($query)) $query = cleanID($_GET['q']);
+    if(empty($query)) return;
 
-  $data = array();
-  $data = ft_pageLookup($query);
-  if(!count($data)) return;
-  $data = array_keys($data);
+    $data = array();
+    $data = ft_pageLookup($query);
+    if(!count($data)) return;
+    $data = array_keys($data);
 
-  // limit results to 15 hits
-  $data = array_slice($data, 0, 15);
-  $data = array_map('trim',$data);
-  $data = array_map('noNS',$data);
-  $data = array_unique($data);
-  sort($data);
+    // limit results to 15 hits
+    $data = array_slice($data, 0, 15);
+    $data = array_map('trim',$data);
+    $data = array_map('noNS',$data);
+    $data = array_unique($data);
+    sort($data);
 
-  /* now construct a json */
-  $suggestions = array(
-    $query,  // the original query
-    $data,   // some suggestions
-    array(), // no description
-    array()  // no urls
-  );
-  $json = new JSON();
+    /* now construct a json */
+    $suggestions = array(
+                        $query,  // the original query
+                        $data,   // some suggestions
+                        array(), // no description
+                        array()  // no urls
+                   );
+    $json = new JSON();
 
-  header('Content-Type: application/x-suggestions+json');
-  print $json->encode($suggestions);
+    header('Content-Type: application/x-suggestions+json');
+    print $json->encode($suggestions);
 }
 
 /**
@@ -121,32 +121,42 @@ function ajax_suggestions() {
  * Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_lock(){
-  global $conf;
-  global $lang;
-  $id = cleanID($_POST['id']);
-  if(empty($id)) return;
+    global $conf;
+    global $lang;
+    global $ID;
+    global $INFO;
 
-  if(!checklock($id)){
-    lock($id);
-    echo 1;
-  }
+    $ID = cleanID($_POST['id']);
+    if(empty($ID)) return;
 
-  if($conf['usedraft'] && $_POST['wikitext']){
-    $client = $_SERVER['REMOTE_USER'];
-    if(!$client) $client = clientIP(true);
+    $INFO = pageinfo();
 
-    $draft = array('id'     => $id,
-                   'prefix' => substr($_POST['prefix'], 0, -1),
-                   'text'   => $_POST['wikitext'],
-                   'suffix' => $_POST['suffix'],
-                   'date'   => (int) $_POST['date'],
-                   'client' => $client,
-                  );
-    $cname = getCacheName($draft['client'].$id,'.draft');
-    if(io_saveFile($cname,serialize($draft))){
-      echo $lang['draftdate'].' '.dformat();
+    if (!$INFO['writable']) {
+        echo 'Permission denied';
+        return;
     }
-  }
+
+    if(!checklock($ID)){
+        lock($ID);
+        echo 1;
+    }
+
+    if($conf['usedraft'] && $_POST['wikitext']){
+        $client = $_SERVER['REMOTE_USER'];
+        if(!$client) $client = clientIP(true);
+
+        $draft = array('id'     => $ID,
+                'prefix' => substr($_POST['prefix'], 0, -1),
+                'text'   => $_POST['wikitext'],
+                'suffix' => $_POST['suffix'],
+                'date'   => (int) $_POST['date'],
+                'client' => $client,
+                );
+        $cname = getCacheName($draft['client'].$ID,'.draft');
+        if(io_saveFile($cname,serialize($draft))){
+            echo $lang['draftdate'].' '.dformat();
+        }
+    }
 
 }
 
@@ -156,14 +166,14 @@ function ajax_lock(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_draftdel(){
-  $id = cleanID($_REQUEST['id']);
-  if(empty($id)) return;
+    $id = cleanID($_REQUEST['id']);
+    if(empty($id)) return;
 
-  $client = $_SERVER['REMOTE_USER'];
-  if(!$client) $client = clientIP(true);
+    $client = $_SERVER['REMOTE_USER'];
+    if(!$client) $client = clientIP(true);
 
-  $cname = getCacheName($client.$id,'.draft');
-  @unlink($cname);
+    $cname = getCacheName($client.$id,'.draft');
+    @unlink($cname);
 }
 
 /**
@@ -172,22 +182,22 @@ function ajax_draftdel(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_medians(){
-  global $conf;
+    global $conf;
 
-  // wanted namespace
-  $ns  = cleanID($_POST['ns']);
-  $dir  = utf8_encodeFN(str_replace(':','/',$ns));
+    // wanted namespace
+    $ns  = cleanID($_POST['ns']);
+    $dir  = utf8_encodeFN(str_replace(':','/',$ns));
 
-  $lvl = count(explode(':',$ns));
+    $lvl = count(explode(':',$ns));
 
-  $data = array();
-  search($data,$conf['mediadir'],'search_index',array('nofiles' => true),$dir);
-  foreach($data as $item){
-    $item['level'] = $lvl+1;
-    echo media_nstree_li($item);
-    echo media_nstree_item($item);
-    echo '</li>';
-  }
+    $data = array();
+    search($data,$conf['mediadir'],'search_index',array('nofiles' => true),$dir);
+    foreach($data as $item){
+        $item['level'] = $lvl+1;
+        echo media_nstree_li($item);
+        echo media_nstree_item($item);
+        echo '</li>';
+    }
 }
 
 /**
@@ -196,11 +206,11 @@ function ajax_medians(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_medialist(){
-  global $conf;
-  global $NS;
+    global $conf;
+    global $NS;
 
-  $NS = $_POST['ns'];
-  tpl_mediaContent(true);
+    $NS = $_POST['ns'];
+    tpl_mediaContent(true);
 }
 
 /**
@@ -209,24 +219,24 @@ function ajax_medialist(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_index(){
-  global $conf;
+    global $conf;
 
-  // wanted namespace
-  $ns  = cleanID($_POST['idx']);
-  $dir  = utf8_encodeFN(str_replace(':','/',$ns));
+    // wanted namespace
+    $ns  = cleanID($_POST['idx']);
+    $dir  = utf8_encodeFN(str_replace(':','/',$ns));
 
-  $lvl = count(explode(':',$ns));
+    $lvl = count(explode(':',$ns));
 
-  $data = array();
-  search($data,$conf['datadir'],'search_index',array('ns' => $ns),$dir);
-  foreach($data as $item){
-    $item['level'] = $lvl+1;
-    echo html_li_index($item);
-    echo '<div class="li">';
-    echo html_list_index($item);
-    echo '</div>';
-    echo '</li>';
-  }
+    $data = array();
+    search($data,$conf['datadir'],'search_index',array('ns' => $ns),$dir);
+    foreach($data as $item){
+        $item['level'] = $lvl+1;
+        echo html_li_index($item);
+        echo '<div class="li">';
+        echo html_list_index($item);
+        echo '</div>';
+        echo '</li>';
+    }
 }
 
 /**
@@ -235,108 +245,106 @@ function ajax_index(){
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function ajax_linkwiz(){
-  global $conf;
-  global $lang;
+    global $conf;
+    global $lang;
 
-  $q  = ltrim($_POST['q'],':');
-  $id = noNS($q);
-  $ns = getNS($q);
+    $q  = ltrim(trim($_POST['q']),':');
+    $id = noNS($q);
+    $ns = getNS($q);
 
-  $ns = cleanID($ns);
-  $id = cleanID($id);
+    $ns = cleanID($ns);
+    $id = cleanID($id);
 
-  $nsd  = utf8_encodeFN(str_replace(':','/',$ns));
-  $idd  = utf8_encodeFN(str_replace(':','/',$id));
+    $nsd  = utf8_encodeFN(str_replace(':','/',$ns));
+    $idd  = utf8_encodeFN(str_replace(':','/',$id));
 
-  $data = array();
-  if($q && !$ns){
+    $data = array();
+    if($q && !$ns){
 
-    // use index to lookup matching pages
-    $pages = array();
-    $pages = ft_pageLookup($id,true);
+        // use index to lookup matching pages
+        $pages = array();
+        $pages = ft_pageLookup($id,true);
 
-    // result contains matches in pages and namespaces
-    // we now extract the matching namespaces to show
-    // them seperately
-    $dirs  = array();
+        // result contains matches in pages and namespaces
+        // we now extract the matching namespaces to show
+        // them seperately
+        $dirs  = array();
 
+        foreach($pages as $pid => $title){
+            if(strpos(noNS($pid),$id) === false){
+                // match was in the namespace
+                $dirs[getNS($pid)] = 1; // assoc array avoids dupes
+            }else{
+                // it is a matching page, add it to the result
+                $data[] = array(
+                        'id'    => $pid,
+                        'title' => $title,
+                        'type'  => 'f',
+                        );
+            }
+            unset($pages[$pid]);
+        }
+        foreach($dirs as $dir => $junk){
+            $data[] = array(
+                    'id'   => $dir,
+                    'type' => 'd',
+                    );
+        }
 
-    foreach($pages as $pid => $title){
-      if(strpos(noNS($pid),$id) === false){
-        // match was in the namespace
-        $dirs[getNS($pid)] = 1; // assoc array avoids dupes
-      }else{
-        // it is a matching page, add it to the result
-        $data[] = array(
-          'id'    => $pid,
-          'title' => $title,
-          'type'  => 'f',
-        );
-      }
-      unset($pages[$pid]);
-    }
-    foreach($dirs as $dir => $junk){
-      $data[] = array(
-        'id'   => $dir,
-        'type' => 'd',
-      );
-    }
-
-  }else{
-
-    $opts = array(
-      'depth' => 1,
-      'listfiles' => true,
-      'listdirs'  => true,
-      'pagesonly' => true,
-      'firsthead' => true,
-      'sneakyacl' => $conf['sneaky_index'],
-    );
-    if($id) $opts['filematch'] = '^.*\/'.$id;
-    if($id) $opts['dirmatch']  = '^.*\/'.$id;
-    search($data,$conf['datadir'],'search_universal',$opts,$nsd);
-
-    // add back to upper
-    if($ns){
-        array_unshift($data,array(
-            'id'   => getNS($ns),
-            'type' => 'u',
-        ));
-    }
-  }
-
-  // fixme sort results in a useful way ?
-
-  if(!count($data)){
-    echo $lang['nothingfound'];
-    exit;
-  }
-
-  // output the found data
-  $even = 1;
-  foreach($data as $item){
-    $even *= -1; //zebra
-
-    if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id']) $item['id'] .= ':';
-    $link = wl($item['id']);
-
-    echo '<div class="'.(($even > 0)?'even':'odd').' type_'.$item['type'].'">';
-
-
-    if($item['type'] == 'u'){
-        $name = $lang['upperns'];
     }else{
-        $name = htmlspecialchars($item['id']);
+
+        $opts = array(
+                'depth' => 1,
+                'listfiles' => true,
+                'listdirs'  => true,
+                'pagesonly' => true,
+                'firsthead' => true,
+                'sneakyacl' => $conf['sneaky_index'],
+                );
+        if($id) $opts['filematch'] = '^.*\/'.$id;
+        if($id) $opts['dirmatch']  = '^.*\/'.$id;
+        search($data,$conf['datadir'],'search_universal',$opts,$nsd);
+
+        // add back to upper
+        if($ns){
+            array_unshift($data,array(
+                        'id'   => getNS($ns),
+                        'type' => 'u',
+                        ));
+        }
     }
 
-    echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
+    // fixme sort results in a useful way ?
 
-    if($item['title']){
-      echo '<span>'.htmlspecialchars($item['title']).'</span>';
+    if(!count($data)){
+        echo $lang['nothingfound'];
+        exit;
     }
-    echo '</div>';
-  }
+
+    // output the found data
+    $even = 1;
+    foreach($data as $item){
+        $even *= -1; //zebra
+
+        if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id']) $item['id'] .= ':';
+        $link = wl($item['id']);
+
+        echo '<div class="'.(($even > 0)?'even':'odd').' type_'.$item['type'].'">';
+
+        if($item['type'] == 'u'){
+            $name = $lang['upperns'];
+        }else{
+            $name = htmlspecialchars($item['id']);
+        }
+
+        echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
+
+        if($item['title']){
+            echo '<span>'.htmlspecialchars($item['title']).'</span>';
+        }
+        echo '</div>';
+    }
 
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

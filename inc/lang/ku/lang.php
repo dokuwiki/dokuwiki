@@ -34,6 +34,7 @@ $lang['btn_backlink']    = "Girêdanên paş";
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
 $lang['btn_unsubscribe'] = 'Unsubscribe Changes';
+$lang['btn_register'] = 'Register';
 
 $lang['loggedinas'] = 'Logged in as';
 $lang['user']       = 'Username';
@@ -42,7 +43,6 @@ $lang['passchk']    = 'once again';
 $lang['remember']   = 'Remember me';
 $lang['fullname']   = 'Full name';
 $lang['email']      = 'E-Mail';
-$lang['register']   = 'Register';
 $lang['badlogin']   = 'Sorry, username or password was wrong.';
 
 $lang['regmissing'] = 'Sorry, you must fill in all fields.';
@@ -160,4 +160,4 @@ $lang['subscribe_noaddress']= 'There is no address associated with your login, y
 $lang['unsubscribe_success']= 'Removed %s from subscription list for %s';
 $lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

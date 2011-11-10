@@ -13,13 +13,15 @@
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Ladyko Andrey <fylh@succexy.spb.ru>
+ * @author Eugene <windy.wanderer@gmail.com>
  */
 $lang['admin_acl']             = 'Управление списками контроля доступа';
 $lang['acl_group']             = 'Группа';
 $lang['acl_user']              = 'Пользователь';
 $lang['acl_perms']             = 'Права доступа для';
 $lang['page']                  = 'Страница';
-$lang['namespace']             = 'Пространство имен';
+$lang['namespace']             = 'Пространство имён';
 $lang['btn_select']            = 'Выбрать';
 $lang['p_user_id']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';

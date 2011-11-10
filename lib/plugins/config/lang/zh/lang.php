@@ -11,6 +11,8 @@
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
+ * @author Hiphen Lee <jacob.b.leung@gmail.com>
+ * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -109,6 +111,7 @@ $lang['fetchsize']             = 'fetch.php 能从外部下载的最大文件大
 $lang['notify']                = '发送更改通知给这个邮件地址';
 $lang['registernotify']        = '发送新注册用户的信息给这个邮件地址';
 $lang['mailfrom']              = '自动发送邮件时使用的邮件地址';
+$lang['mailprefix']            = '自动发送邮件时使用的邮件地址前缀';
 $lang['gzip_output']           = '对 xhtml 使用 gzip 内容编码';
 $lang['gdlib']                 = 'GD 库版本';
 $lang['im_convert']            = 'ImageMagick 转换工具的路径';

@@ -14,8 +14,7 @@
  * @author oliver@samera.com.py
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
- * @author VictorCastelan <victorcastelan@gmail.com>
- * @author Jordan Mero  hack.jord@gmail.com
+ * @author Jordan Mero <hack.jord@gmail.com>
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
@@ -24,6 +23,7 @@
  * @author Fernando J. Gómez <fjgomez@gmail.com>
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
+ * @author emezeta <emezeta@infoprimo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -64,6 +64,7 @@ $lang['btn_draft']             = 'Editar borrador';
 $lang['btn_recover']           = 'Recuperar borrador';
 $lang['btn_draftdel']          = 'Eliminar borrador';
 $lang['btn_revert']            = 'Restaurar';
+$lang['btn_register']          = 'Registrarse';
 $lang['loggedinas']            = 'Conectado como ';
 $lang['user']                  = 'Usuario';
 $lang['pass']                  = 'Contraseña';
@@ -73,7 +74,6 @@ $lang['passchk']               = 'otra vez';
 $lang['remember']              = 'Recordarme';
 $lang['fullname']              = 'Nombre real';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = 'Registrarse';
 $lang['profile']               = 'Perfil del usuario';
 $lang['badlogin']              = 'Lo siento, el usuario o la contraseña es incorrecto.';
 $lang['minoredit']             = 'Cambios menores';
@@ -176,6 +176,9 @@ $lang['yours']                 = 'Tu versión';
 $lang['diff']                  = 'Muestra diferencias a la versión actual';
 $lang['diff2']                 = 'Muestra las diferencias entre las revisiones seleccionadas';
 $lang['difflink']              = 'Enlace a la vista de comparación';
+$lang['diff_type']             = 'Ver diferencias';
+$lang['diff_inline']           = 'En línea';
+$lang['diff_side']             = 'Lado a lado';
 $lang['line']                  = 'Línea';
 $lang['breadcrumb']            = 'Traza';
 $lang['youarehere']            = 'Estás aquí';

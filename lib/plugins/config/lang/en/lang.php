@@ -110,7 +110,7 @@ $lang['xmlrpc']      = 'Enable/disable XML-RPC interface.';
 $lang['xmlrpcuser']  = 'Restrict XML-RPC access to the comma separated groups or users given here. Leave empty to give access to everyone.';
 
 /* Advanced Options */
-$lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact splitbrain.org for this feature.';
+$lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['usedraft']    = 'Automatically save a draft while editing';
@@ -125,6 +125,7 @@ $lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern'
 $lang['notify']      = 'Send change notifications to this email address';
 $lang['registernotify'] = 'Send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Email address to use for automatic mails';
+$lang['mailprefix']  = 'Email subject prefix to use for automatic mails';
 $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';

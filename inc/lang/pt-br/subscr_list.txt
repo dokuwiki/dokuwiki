@@ -1,14 +1,25 @@
 Olá!
 
-Páginas no namespace @PAGE@ na wiki @TITLE@ mudaram.
-Estas foram as mudanças:
+Páginas no espaço de nomes @PAGE@ na wiki
+@TITLE@ foram modificadas.
+Estas são as páginas modificadas:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Para cancelar a página de notificações, entre na wiki @DOKUWIKIURL@
-e então visite a página de @SUBSCRIBE@ e cancele a inscrição de edição da página ou namespace.
+Para cancelar as notificações de alterações, entre em
+@DOKUWIKIURL@, vá até @SUBSCRIBE@
+e cancele o monitoramento da página e/ou do espaço de
+nomes.
+
+
+Para cancelar as notificações de páginas, entre na wiki @DOKUWIKIURL@
+e então visite @SUBSCRIBE@ e cancele a inscrição de edição da página ou namespace.
+
+
+Para cancelar a página de notificações, entre na wiki @DOKUWIKIURL@,
+visite a página de @SUBSCRIBE@ e cancele a inscrição de edição da página ou namespace.
 --
 Este e-mail foi gerado pelo DokuWiki em
 @DOKUWIKIURL@

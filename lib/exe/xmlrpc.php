@@ -1,13 +1,13 @@
 <?php
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 
-// fix when '<?xml' isn't on the very first line
+// fix when '< ?xml' isn't on the very first line
 if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',4);
+define('DOKU_XMLRPC_API_VERSION',5);
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
@@ -141,6 +141,13 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             array('string'),
             'Returns the wiki title.',
             true
+        );
+
+        $this->addCallback(
+            'dokuwiki.appendPage',
+            'this:appendPage',
+            array('int', 'string', 'string', 'struct'),
+            'Append text to a wiki page.'
         );
 
         /* Wiki API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 */
@@ -357,9 +364,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function listPages(){
         $list  = array();
-        $pages = array_filter(array_filter(idx_getIndex('page', ''),
-                                           'isVisiblePage'),
-                              'page_exists');
+        $pages = idx_get_indexer()->getPages();
+        $pages = array_filter(array_filter($pages,'isVisiblePage'),'page_exists');
 
         foreach(array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);
@@ -555,29 +561,20 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         unlock($id);
 
         // run the indexer if page wasn't indexed yet
-        if(!@file_exists(metaFN($id, '.indexed'))) {
-            // try to aquire a lock
-            $lock = $conf['lockdir'].'/_indexer.lock';
-            while(!@mkdir($lock,$conf['dmode'])){
-                usleep(50);
-                if(time()-@filemtime($lock) > 60*5){
-                    // looks like a stale lock - remove it
-                    @rmdir($lock);
-                }else{
-                    return false;
-                }
-            }
-            if($conf['dperm']) chmod($lock, $conf['dperm']);
-
-            // do the work
-            idx_addPage($id);
-
-            // we're finished - save and free lock
-            io_saveFile(metaFN($id,'.indexed'),INDEXER_VERSION);
-            @rmdir($lock);
-        }
+        idx_addPage($id);
 
         return 0;
+    }
+
+    /**
+     * Appends text to a wiki page.
+     */
+    function appendPage($id, $text, $params) {
+        $currentpage = $this->rawPage($id);
+        if (!is_string($currentpage)) {
+            return $currentpage;
+        }
+        return $this->putPage($id, $currentpage.$text, $params);
     }
 
     /**
@@ -587,64 +584,26 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function putAttachment($id, $file, $params) {
         $id = cleanID($id);
-        global $conf;
-        global $lang;
-
         $auth = auth_quickaclcheck(getNS($id).':*');
-        if($auth >= AUTH_UPLOAD) {
-            if(!isset($id)) {
-                return new IXR_ERROR(1, 'Filename not given.');
-            }
 
-            $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
+        if(!isset($id)) {
+            return new IXR_ERROR(1, 'Filename not given.');
+        }
 
-            // save temporary file
-            @unlink($ftmp);
-            $buff = base64_decode($file);
-            io_saveFile($ftmp, $buff);
+        global $conf;
 
-            // get filename
-            list($iext, $imime,$dl) = mimetype($id);
-            $id = cleanID($id);
-            $fn = mediaFN($id);
+        $ftmp = $conf['tmpdir'] . '/' . md5($id.clientIP());
 
-            // get filetype regexp
-            $types = array_keys(getMimeTypes());
-            $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
-            $regex = join('|',$types);
+        // save temporary file
+        @unlink($ftmp);
+        $buff = base64_decode($file);
+        io_saveFile($ftmp, $buff);
 
-            // because a temp file was created already
-            if(preg_match('/\.('.$regex.')$/i',$fn)) {
-                //check for overwrite
-                $overwrite = @file_exists($fn);
-                if($overwrite && (!$params['ow'] || $auth < AUTH_DELETE)) {
-                    return new IXR_ERROR(1, $lang['uploadexist'].'1');
-                }
-                // check for valid content
-                $ok = media_contentcheck($ftmp, $imime);
-                if($ok == -1) {
-                    return new IXR_ERROR(1, sprintf($lang['uploadexist'].'2', ".$iext"));
-                } elseif($ok == -2) {
-                    return new IXR_ERROR(1, $lang['uploadspam']);
-                } elseif($ok == -3) {
-                    return new IXR_ERROR(1, $lang['uploadxss']);
-                }
-
-                // prepare event data
-                $data[0] = $ftmp;
-                $data[1] = $fn;
-                $data[2] = $id;
-                $data[3] = $imime;
-                $data[4] = $overwrite;
-
-                // trigger event
-                return trigger_event('MEDIA_UPLOAD_FINISH', $data, array($this, '_media_upload_action'), true);
-
-            } else {
-                return new IXR_ERROR(1, $lang['uploadwrong']);
-            }
+        $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
+        if (is_array($res)) {
+            return new IXR_ERROR(-$res[1], $res[0]);
         } else {
-            return new IXR_ERROR(1, "You don't have permissions to upload files.");
+            return $res;
         }
     }
 
@@ -656,55 +615,15 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function deleteAttachment($id){
         $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id).':*');
-        if($auth < AUTH_DELETE) return new IXR_ERROR(1, "You don't have permissions to delete files.");
-        global $conf;
-        global $lang;
-
-        // check for references if needed
-        $mediareferences = array();
-        if($conf['refcheck']){
-            $mediareferences = ft_mediause($id,$conf['refshow']);
-        }
-
-        if(!count($mediareferences)){
-            $file = mediaFN($id);
-            if(@unlink($file)){
-                addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
-                io_sweepNS($id,'mediadir');
-                return 0;
-            }
-            //something went wrong
-               return new IXR_ERROR(1, 'Could not delete file');
-        } else {
+        $res = media_delete($id, $auth);
+        if ($res & DOKU_MEDIA_DELETED) {
+            return 0;
+        } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
+            return new IXR_ERROR(1, "You don't have permissions to delete files.");
+        } elseif ($res & DOKU_MEDIA_INUSE) {
             return new IXR_ERROR(1, 'File is still referenced');
-        }
-    }
-
-    /**
-     * Moves the temporary file to its final destination.
-     *
-     * Michael Klier <chi@chimeric.de>
-     */
-    function _media_upload_action($data) {
-        global $conf;
-
-        if(is_array($data) && count($data)===5) {
-            io_createNamespace($data[2], 'media');
-            if(rename($data[0], $data[1])) {
-                chmod($data[1], $conf['fmode']);
-                media_notify($data[2], $data[1], $data[3]);
-                // add a log entry to the media changelog
-                if ($data[4]) {
-                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_EDIT);
-                } else {
-                    addMediaLogEntry(time(), $data[2], DOKU_CHANGE_TYPE_CREATE);
-                }
-                return $data[2];
-            } else {
-                return new IXR_ERROR(1, 'Upload failed.');
-            }
         } else {
-            return new IXR_ERROR(1, 'Upload failed.');
+            return new IXR_ERROR(1, 'Could not delete file');
         }
     }
 
@@ -963,4 +882,4 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
 $server = new dokuwiki_xmlrpc_server();
 
-// vim:ts=4:sw=4:et:enc=utf-8:
+// vim:ts=4:sw=4:et:

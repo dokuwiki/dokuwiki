@@ -4,16 +4,11 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
- * @author Felipe Castro <fefcas CXE yahoo.com.br>
+ * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
- * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
- * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
- * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Robert Bogenschneider <robog@GMX.de>
- * @author Robert BOGENSCHNEIDER <robog@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -54,6 +49,7 @@ $lang['btn_draft']             = 'Redakti skizon';
 $lang['btn_recover']           = 'Restarigi skizon';
 $lang['btn_draftdel']          = 'Forigi skizon';
 $lang['btn_revert']            = 'Restarigi';
+$lang['btn_register']          = 'Registriĝi';
 $lang['loggedinas']            = 'Ensalutita kiel';
 $lang['user']                  = 'Uzant-nomo';
 $lang['pass']                  = 'Pasvorto';
@@ -63,7 +59,6 @@ $lang['passchk']               = 'plian fojon';
 $lang['remember']              = 'Rememoru min';
 $lang['fullname']              = 'Kompleta nomo';
 $lang['email']                 = 'Retpoŝto';
-$lang['register']              = 'Registriĝi';
 $lang['profile']               = 'Uzanto-profilo';
 $lang['badlogin']              = 'Pardonu, uzant-nomo aŭ pasvorto estis erara.';
 $lang['minoredit']             = 'Etaj modifoj';
@@ -166,6 +161,9 @@ $lang['yours']                 = 'Via Versio';
 $lang['diff']                  = 'Montri diferencojn el la aktuala versio';
 $lang['diff2']                 = 'Montri diferencojn inter la elektitaj revizioj';
 $lang['difflink']              = 'Ligilo al kompara rigardo';
+$lang['diff_type']             = 'Rigardi malsamojn:';
+$lang['diff_inline']           = 'Samlinie';
+$lang['diff_side']             = 'Apude';
 $lang['line']                  = 'Linio';
 $lang['breadcrumb']            = 'Paŝoj';
 $lang['youarehere']            = 'Vi estas ĉi tie';

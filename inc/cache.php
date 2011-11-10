@@ -197,18 +197,6 @@ class cache_parser extends cache {
 }
 
 class cache_renderer extends cache_parser {
-
-    function useCache($depends=array()) {
-        $use = parent::useCache($depends);
-
-        // meta data needs to be kept in step with the cache
-        if (!$use && isset($this->page)) {
-            p_set_metadata($this->page,array(),true);
-        }
-
-        return $use;
-    }
-
     function _useCache() {
         global $conf;
 
@@ -251,19 +239,12 @@ class cache_renderer extends cache_parser {
         if (isset($this->page)) {
 
             $metafile = metaFN($this->page,'.meta');
-            if (@file_exists($metafile)) {
-                $files[] = $metafile;                                       // ... the page's own metadata
-                $files[] = DOKU_INC.'inc/parser/metadata.php';              // ... the metadata renderer
+            $files[] = $metafile;                                       // ... the page's own metadata
 
-                $valid = p_get_metadata($this->page, 'date valid');
-                if (!empty($valid['age'])) {
-                    $this->depends['age'] = isset($this->depends['age']) ?
-                        min($this->depends['age'],$valid['age']) : $valid['age'];
-                }
-
-            } else {
-                $this->depends['purge'] = true;                             // ... purging cache will generate metadata
-                return;
+            $valid = p_get_metadata($this->page, 'date valid');         // for xhtml this will render the metadata if needed
+            if (!empty($valid['age'])) {
+                $this->depends['age'] = isset($this->depends['age']) ?
+                    min($this->depends['age'],$valid['age']) : $valid['age'];
             }
         }
 

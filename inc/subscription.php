@@ -46,22 +46,23 @@ function subscription_filename($id) {
  */
 function subscription_lock_filename ($id){
     global $conf;
-    return $conf['lockdir'].'/_subscr_' . $id . '.lock';
+    return $conf['lockdir'].'/_subscr_' . md5($id) . '.lock';
 }
 
 function subscription_lock($id) {
-    // FIXME merge this with the indexer lock generation, abstract out
     global $conf;
     $lock = subscription_lock_filename($id);
-    while(!@mkdir($lock,$conf['dmode'])){
-        usleep(50);
-        if(time()-@filemtime($lock) > 60*5){
-            // looks like a stale lock - remove it
-            @rmdir($lock);
-        }else{
-            return false;
-        }
+
+    if (is_dir($lock) && time()-@filemtime($lock) > 60*5) {
+        // looks like a stale lock - remove it
+        @rmdir($lock);
     }
+
+    // try creating the lock directory
+    if (!@mkdir($lock,$conf['dmode'])) {
+        return false;
+    }
+
     if($conf['dperm']) chmod($lock, $conf['dperm']);
     return true;
 }
@@ -277,8 +278,8 @@ function subscription_addresslist(&$data){
     }
     $pres = array('style' => 'every', 'escaped' => true);
     if (!$self && isset($_SERVER['REMOTE_USER'])) {
-        $pres['user'] = '((?:(?!' . preg_quote_cb($_SERVER['REMOTE_USER']) .
-                        ')\S?)+)';
+        $pres['user'] = '((?!' . preg_quote_cb($_SERVER['REMOTE_USER']) .
+                        '(?: |$))\S+)';
     }
     $subs = subscription_find($id, $pres);
     $emails = array();

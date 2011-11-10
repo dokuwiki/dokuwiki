@@ -13,10 +13,6 @@ require_once(DOKU_INC.'inc/auth.php');
 require_once(DOKU_INC.'inc/cliopts.php');
 session_write_close();
 
-// Version tag used to force rebuild on upgrade
-// Need to keep in sync with lib/exe/indexer.php
-if(!defined('INDEXER_VERSION')) define('INDEXER_VERSION', 2);
-
 // handle options
 $short_opts = 'hcuq';
 $long_opts  = array('help', 'clear', 'update', 'quiet');
@@ -28,6 +24,7 @@ if ( $OPTS->isError() ) {
 }
 $CLEAR = false;
 $QUIET = false;
+$INDEXER = null;
 foreach ($OPTS->options as $key => $val) {
     switch ($key) {
         case 'h':
@@ -70,6 +67,9 @@ function _usage() {
 
 function _update(){
     global $conf;
+    global $INDEXER;
+
+    $INDEXER = idx_get_indexer();
 
     $data = array();
     _quietecho("Searching pages... ");
@@ -82,25 +82,13 @@ function _update(){
 }
 
 function _index($id){
+    global $INDEXER;
     global $CLEAR;
+    global $QUIET;
 
-    // if not cleared only update changed and new files
-    if(!$CLEAR){
-        $idxtag = metaFN($id,'.indexed');
-        if(@file_exists($idxtag)){
-            if(io_readFile($idxtag) >= INDEXER_VERSION){
-                $last = @filemtime(metaFN($id,'.indexed'));
-                if($last > @filemtime(wikiFN($id))) return;
-            }
-        }
-    }
-
-    _lock();
     _quietecho("$id... ");
-    idx_addPage($id);
-    io_saveFile(metaFN($id,'.indexed'),INDEXER_VERSION);
+    idx_addPage($id, !$QUIET, $CLEAR);
     _quietecho("done.\n");
-    _unlock();
 }
 
 /**
@@ -145,7 +133,7 @@ function _clearindex(){
     _lock();
     _quietecho("Clearing index... ");
     io_saveFile($conf['indexdir'].'/page.idx','');
-    io_saveFile($conf['indexdir'].'/title.idx','');
+    //io_saveFile($conf['indexdir'].'/title.idx','');
     $dir = @opendir($conf['indexdir']);
     if($dir!==false){
         while(($f = readdir($dir)) !== false){
@@ -154,6 +142,7 @@ function _clearindex(){
                 @unlink($conf['indexdir']."/$f");
         }
     }
+    @unlink($conf['indexdir'].'/lengths.idx');
     _quietecho("done.\n");
     _unlock();
 }
@@ -163,4 +152,4 @@ function _quietecho($msg) {
     if(!$QUIET) echo $msg;
 }
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

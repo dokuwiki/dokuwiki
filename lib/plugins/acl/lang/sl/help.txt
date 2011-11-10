@@ -1,0 +1,11 @@
+=== Hitra pomoè ===
+
+Na tej strani je mogoèe dodajati, odstranjevati in spreminjati dovoljenja za delo z wiki stranmi in imenskimi prostori.
+
+Na veli strani so izpisani vsi imenski prostori in strani.
+
+Na obrazcu zgoraj je mogoèe pregledovati in spreminjati dovoljenja za izbranega uporabnika ali skupino.
+
+V preglednici spodaj so prikazana vsa pravila nadzora. Ta je mogoèe hitro spreminjati ali brisati.
+
+Veè podrobnosti o delovanju nadzora dostopa sistema DokuWiki je mogoèe najti v [[doku>acl|uradni dokumentaciji ACL]].

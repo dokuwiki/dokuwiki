@@ -25,7 +25,8 @@ class mail_isvalid extends UnitTestCase {
         $tests[] = array('bu[g]s@php.net1',false);
         $tests[] = array('somebody@somewhere.museum',true);
         $tests[] = array('somebody@somewhere.travel',true);
-
+        $tests[] = array('root@[2010:fb:fdac::311:2101]',true);
+        $tests[] = array('test@example', true); // we allow local addresses
 
         // tests from http://code.google.com/p/php-email-address-validation/ below
 
@@ -62,7 +63,6 @@ class mail_isvalid extends UnitTestCase {
         $tests[] = array('test@.org', false);
         $tests[] = array('12345678901234567890123456789012345678901234567890123456789012345@example.com', false); // 64 characters is maximum length for local part. This is 65.
         $tests[] = array('test@123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012.com', false); // 255 characters is maximum length for domain. This is 256.
-        $tests[] = array('test@example', false);
         $tests[] = array('test@[123.123.123.123', false);
         $tests[] = array('test@123.123.123.123]', false);
 
@@ -80,4 +80,4 @@ class mail_isvalid extends UnitTestCase {
     }
 
 }
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

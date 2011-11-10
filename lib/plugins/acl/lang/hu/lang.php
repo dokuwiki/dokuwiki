@@ -5,8 +5,8 @@
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
- * @author Szabó Dávid (szabo.david@gyumolcstarhely.hu)
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
+ * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  */
 $lang['admin_acl']             = 'Hozzáférési lista (ACL) kezelő';
 $lang['acl_group']             = 'Csoport:';

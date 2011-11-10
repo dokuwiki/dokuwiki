@@ -5,12 +5,14 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
- * @author George Sheraton guxd@163.com
+ * @author George Sheraton <guxd@163.com>
  * @author Simon zhan <simonzhan@21cn.com>
  * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
+ * @author Hiphen Lee <jacob.b.leung@gmail.com>
+ * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -33,7 +35,7 @@ $lang['btn_revs']              = '修订记录';
 $lang['btn_recent']            = '最近更改';
 $lang['btn_upload']            = '上传';
 $lang['btn_cancel']            = '取消';
-$lang['btn_index']             = '索引';
+$lang['btn_index']             = '网站地图';
 $lang['btn_secedit']           = '编辑';
 $lang['btn_login']             = '登录';
 $lang['btn_logout']            = '退出';
@@ -51,6 +53,7 @@ $lang['btn_draft']             = '编辑草稿';
 $lang['btn_recover']           = '恢复草稿';
 $lang['btn_draftdel']          = '删除草稿';
 $lang['btn_revert']            = '恢复';
+$lang['btn_register']          = '注册';
 $lang['loggedinas']            = '登录为';
 $lang['user']                  = '用户名';
 $lang['pass']                  = '密码';
@@ -60,7 +63,6 @@ $lang['passchk']               = '请再输一次';
 $lang['remember']              = '记住我';
 $lang['fullname']              = '全名';
 $lang['email']                 = 'E-Mail';
-$lang['register']              = '注册';
 $lang['profile']               = '用户信息';
 $lang['badlogin']              = '对不起，用户名或密码错误。';
 $lang['minoredit']             = '细微修改';
@@ -163,6 +165,9 @@ $lang['yours']                 = '您的版本';
 $lang['diff']                  = '显示与当前版本的差别';
 $lang['diff2']                 = '显示跟目前版本的差异';
 $lang['difflink']              = '到此差别页面的链接';
+$lang['diff_type']             = '查看差异：';
+$lang['diff_inline']           = '行内显示';
+$lang['diff_side']             = '并排显示';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '您的足迹';
 $lang['youarehere']            = '您在这里';

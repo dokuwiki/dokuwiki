@@ -90,7 +90,6 @@ class Doku_Parser {
             if ( $mode == 'base' ) {
                 continue;
             }
-
             $this->modes[$mode]->preConnect();
 
             foreach ( array_keys($this->modes) as $cm ) {
@@ -218,11 +217,11 @@ class Doku_Parser_Mode_footnote extends Doku_Parser_Mode {
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_header extends Doku_Parser_Mode {
 
-    function preConnect() {
+    function connectTo($mode) {
         //we're not picky about the closing ones, two are enough
         $this->Lexer->addSpecialPattern(
                             '[ \t]*={2,}[^\n]+={2,}[ \t]*(?=\n)',
-                            'base',
+                            $mode,
                             'header'
                         );
     }
@@ -829,7 +828,7 @@ class Doku_Parser_Mode_internallink extends Doku_Parser_Mode {
 
     function connectTo($mode) {
         // Word boundaries?
-        $this->Lexer->addSpecialPattern("\[\[.+?\]\]",$mode,'internallink');
+        $this->Lexer->addSpecialPattern("\[\[(?:(?:[^[\]]*?\[.*?\])|.*?)\]\]",$mode,'internallink');
     }
 
     function getSort() {
@@ -871,7 +870,7 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
         if(count($this->patterns)) return;
 
         $ltrs = '\w';
-        $gunk = '/\#~:.?+=&%@!\-';
+        $gunk = '/\#~:.?+=&%@!\-\[\]';
         $punc = '.:?\-;,';
         $host = $ltrs.$punc;
         $any  = $ltrs.$gunk.$punc;
@@ -957,4 +956,4 @@ class Doku_Parser_Mode_emaillink extends Doku_Parser_Mode {
 }
 
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

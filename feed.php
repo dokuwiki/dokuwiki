@@ -24,7 +24,7 @@ $cache = new cache($key, '.feed');
 // prepare cache depends
 $depends['files'] = getConfigFiles('main');
 $depends['age']   = $conf['rss_update'];
-$depends['purge'] = ($_REQUEST['purge']) ? true : false;
+$depends['purge'] = isset($_REQUEST['purge']);
 
 // check cacheage and deliver if nothing has changed since last
 // time or the update interval has not passed, also handles conditional requests
@@ -50,23 +50,25 @@ $rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
 
 $image = new FeedImage();
 $image->title = $conf['title'];
-$image->url = DOKU_URL."lib/images/favicon.ico";
+$image->url = tpl_getFavicon(true);
 $image->link = DOKU_URL;
 $rss->image = $image;
 
 $data = null;
-if($opt['feed_mode'] == 'list'){
-    $data = rssListNamespace($opt);
-}elseif($opt['feed_mode'] == 'search'){
-    $data = rssSearch($opt);
-}else{
+$modes = array('list'   => 'rssListNamespace',
+               'search' => 'rssSearch',
+               'recent' => 'rssRecentChanges');
+if (isset($modes[$opt['feed_mode']])) {
+    $data = $modes[$opt['feed_mode']]($opt);
+} else {
     $eventData = array(
         'opt'  => &$opt,
         'data' => &$data,
     );
     $event = new Doku_Event('FEED_MODE_UNKNOWN', $eventData);
     if ($event->advise_before(true)) {
-        $data = rssRecentChanges($opt);
+        echo sprintf('<error>Unknown feed mode %s</error>', hsc($opt['feed_mode']));
+        exit;
     }
     $event->advise_after();
 }
@@ -83,29 +85,53 @@ print $feed;
 // ---------------------------------------------------------------- //
 
 /**
- * Get URL parameters and config options and return a initialized option array
+ * Get URL parameters and config options and return an initialized option array
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rss_parseOptions(){
     global $conf;
 
-    $opt['items']        = (int) $_REQUEST['num'];
-    $opt['feed_type']    = $_REQUEST['type'];
-    $opt['feed_mode']    = $_REQUEST['mode'];
-    $opt['show_minor']   = $_REQUEST['minor'];
-    $opt['namespace']    = $_REQUEST['ns'];
-    $opt['link_to']      = $_REQUEST['linkto'];
-    $opt['item_content'] = $_REQUEST['content'];
-    $opt['search_query'] = $_REQUEST['q'];
+    $opt = array();
 
-    if(!$opt['feed_type'])    $opt['feed_type']    = $conf['rss_type'];
-    if(!$opt['item_content']) $opt['item_content'] = $conf['rss_content'];
-    if(!$opt['link_to'])      $opt['link_to']      = $conf['rss_linkto'];
-    if(!$opt['items'])        $opt['items']        = $conf['recent'];
+    foreach(array(
+                  // Basic feed properties
+                  // Plugins may probably want to add new values to these
+                  // properties for implementing own feeds
+
+                  // One of: list, search, recent
+                  'feed_mode'    => array('mode', 'recent'),
+                  // One of: diff, page, rev, current
+                  'link_to'      => array('linkto', $conf['rss_linkto']),
+                  // One of: abstract, diff, htmldiff, html
+                  'item_content' => array('content', $conf['rss_content']),
+
+                  // Special feed properties
+                  // These are only used by certain feed_modes
+
+                  // String, used for feed title, in list and rc mode
+                  'namespace'    => array('ns', null),
+                  // Positive integer, only used in rc mode
+                  'items'        => array('num', $conf['recent']),
+                  // Boolean, only used in rc mode
+                  'show_minor'   => array('minor', false),
+                  // String, only used in search mode
+                  'search_query' => array('q', null),
+
+                 ) as $name => $val) {
+        $opt[$name] = (isset($_REQUEST[$val[0]]) && !empty($_REQUEST[$val[0]]))
+                      ? $_REQUEST[$val[0]] : $val[1];
+    }
+
+    $opt['items']        = max(0, (int)  $opt['items']);
+    $opt['show_minor']   = (bool) $opt['show_minor'];
+
     $opt['guardmail']  = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
-    switch ($opt['feed_type']){
+    $type = valid_input_set('type', array('rss','rss2','atom','atom1','rss1',
+                                          'default' => $conf['rss_type']),
+                            $_REQUEST);
+    switch ($type){
         case 'rss':
             $opt['feed_type'] = 'RSS0.91';
             $opt['mime_type'] = 'text/xml';
@@ -279,7 +305,7 @@ function rss_buildItems(&$rss,&$data,$opt){
             }
 
             // add category
-            if($meta['subject']){
+            if(isset($meta['subject'])) {
                 $item->category = $meta['subject'];
             }else{
                 $cat = getNS($id);
@@ -349,4 +375,4 @@ function rssSearch($opt){
     return $data;
 }
 
-//Setup VIM: ex: et ts=4 enc=utf-8 :
+//Setup VIM: ex: et ts=4 :

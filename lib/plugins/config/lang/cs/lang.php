@@ -8,10 +8,11 @@
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
+ * @author Vojta Beran <xmamut@email.cz>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
-zkotrolujte prosím své úpravy a odešlete je znovu.<br />
+zkontrolujte prosím své úpravy a odešlete je znovu.<br />
 Neplatné hodnoty se zobrazí v červeném rámečku.';
 $lang['updated']               = 'Nastavení byla úspěšně upravena.';
 $lang['nochoice']              = '(nejsou k dispozici žádné další volby)';
@@ -69,10 +70,10 @@ $lang['useheading']            = 'Používat první nadpis jako název stránky'
 $lang['refcheck']              = 'Kontrolovat odkazy na média (před vymazáním)';
 $lang['refshow']               = 'Počet zobrazených odkazů na média';
 $lang['allowdebug']            = 'Povolit debugování. <b>Vypněte, pokud to nepotřebujete!</b>';
-$lang['usewordblock']          = 'Blokovat spam za použítí seznamu známých spamových slov';
+$lang['usewordblock']          = 'Blokovat spam za použití seznamu známých spamových slov';
 $lang['indexdelay']            = 'Časová prodleva před indexací (v sekundách)';
 $lang['relnofollow']           = 'Používat rel="nofollow" na externí odkazy';
-$lang['mailguard']             = 'Metoda "zamaskování" emailových addres';
+$lang['mailguard']             = 'Metoda "zamaskování" emailových adres';
 $lang['iexssprotect']          = 'Zkontrolovat nahrané soubory vůči možnému škodlivému JavaScriptu či HTML';
 $lang['showuseras']            = 'Co se má přesně zobrazit, když se ukazuje uživatel, který naposledy editoval stránku';
 $lang['useacl']                = 'Používat přístupová práva (ACL)';
@@ -95,10 +96,10 @@ vnořené jmenné prostory, k nimž právo má, budou přesto skryty.
 To může mít za následek, že index bude při některých
 nastaveních ACL nepoužitelný.';
 $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)';
-$lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypňete tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
+$lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
 $lang['xmlrpc']                = 'Povolit/Zakázat rozhraní XML-RPC.';
 $lang['xmlrpcuser']            = 'Omezit přístup pomocí XML-RPC pouze na zde zadané skupiny či uživatele (oddělené čárkami). Necháte-li pole prázdné, dáte přístup komukoliv.';
-$lang['updatecheck']           = 'Kontrolovat aktualizace a bezpečnostní varování? DokuWiki potřebuje pro tuto funkci přístup k splitbrain.org';
+$lang['updatecheck']           = 'Kontrolovat aktualizace a bezpečnostní varování? DokuWiki potřebuje pro tuto funkci přístup k update.dokuwiki.org';
 $lang['userewrite']            = 'Používat "pěkná" URL';
 $lang['useslash']              = 'Používat lomítko jako oddělovač jmenných prostorů v URL';
 $lang['usedraft']              = 'Během editace ukládat koncept automaticky';
@@ -112,7 +113,8 @@ $lang['locktime']              = 'Maximální životnost zámkových souborů (v
 $lang['fetchsize']             = 'Maximální velikost souboru (v bajtech), co ještě fetch.php bude stahovat z externích zdrojů';
 $lang['notify']                = 'Posílat oznámení o změnách na následující emailovou adresu';
 $lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
-$lang['mailfrom']              = 'Emailová addresa, která se bude používat pro automatické maily';
+$lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
+$lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
 $lang['gzip_output']           = 'Používat pro xhtml Content-Encoding gzip';
 $lang['gdlib']                 = 'Verze GD knihovny';
 $lang['im_convert']            = 'Cesta k nástroji convert z balíku ImageMagick';
