@@ -89,6 +89,8 @@ class Mailer {
     /**
      * Add an arbitrary header to the mail
      *
+     * If an empy value is passed, the header is removed
+     *
      * @param string $header the header name (no trailing colon!)
      * @param string $value  the value of the header
      * @param bool   $clean  remove all non-ASCII chars and line feeds?
@@ -99,7 +101,14 @@ class Mailer {
             $header = preg_replace('/[^\w \-\.\+\@]+/','',$header);
             $value  = preg_replace('/[^\w \-\.\+\@]+/','',$value);
         }
-        $this->headers[$header] = $value;
+
+        // empty value deletes
+        $value = trim($value);
+        if($value === ''){
+            if(isset($this->headers[$header])) unset($this->headers[$header]);
+        }else{
+            $this->headers[$header] = $value;
+        }
     }
 
     /**
@@ -129,6 +138,58 @@ class Mailer {
     }
 
     /**
+     * Add the To: recipients
+     *
+     * @see setAddress
+     * @param string  $address Multiple adresses separated by commas
+     */
+    public function to($address){
+        $this->setHeader('To', $address, false);
+    }
+
+    /**
+     * Add the Cc: recipients
+     *
+     * @see setAddress
+     * @param string  $address Multiple adresses separated by commas
+     */
+    public function cc($address){
+        $this->setHeader('Cc', $address, false);
+    }
+
+    /**
+     * Add the Bcc: recipients
+     *
+     * @see setAddress
+     * @param string  $address Multiple adresses separated by commas
+     */
+    public function bcc($address){
+        $this->setHeader('Bcc', $address, false);
+    }
+
+    /**
+     * Add the From: address
+     *
+     * This is set to $conf['mailfrom'] when not specified so you shouldn't need
+     * to call this function
+     *
+     * @see setAddress
+     * @param string  $address from address
+     */
+    public function from($address){
+        $this->setHeader('From', $address, false);
+    }
+
+    /**
+     * Add the mail's Subject: header
+     *
+     * @param string $subject the mail subject
+     */
+    public function subject($subject){
+        $this->headers['Subject'] = $subject;
+    }
+
+    /**
      * Sets an email address header with correct encoding
      *
      * Unicode characters will be deaccented and encoded base64
@@ -138,13 +199,12 @@ class Mailer {
      *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
      * @param string  $address Multiple adresses separated by commas
-     * @param string  $header  Name of the header (To,Bcc,Cc,...)
+     * @param string  returns the prepared header (can contain multiple lines)
      */
-    function setAddress($address,$header){
+    public function cleanAddress($address){
         // No named recipients for To: in Windows (see FS#652)
         $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
 
-        $header = ucwords(strtolower($header)); // streamline casing
         $address = preg_replace('/[\r\n\0]+/',' ',$address); // remove attack vectors
 
         $headers = '';
@@ -207,72 +267,16 @@ class Mailer {
 
             // add to header comma seperated
             if($headers != ''){
-                $headers .= ',';
-                $headers .= MAILHEADER_EOL.' '; // avoid overlong mail headers
+                $headers .= ', ';
             }
             $headers .= $text.' '.$addr;
         }
 
         if(empty($headers)) return false;
 
-        $this->headers[$header] = $headers;
         return $headers;
     }
 
-    /**
-     * Add the To: recipients
-     *
-     * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
-     */
-    public function to($address){
-        $this->setAddress($address, 'To');
-    }
-
-    /**
-     * Add the Cc: recipients
-     *
-     * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
-     */
-    public function cc($address){
-        $this->setAddress($address, 'Cc');
-    }
-
-    /**
-     * Add the Bcc: recipients
-     *
-     * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
-     */
-    public function bcc($address){
-        $this->setAddress($address, 'Bcc');
-    }
-
-    /**
-     * Add the From: address
-     *
-     * This is set to $conf['mailfrom'] when not specified so you shouldn't need
-     * to call this function
-     *
-     * @see setAddress
-     * @param string  $address from address
-     */
-    public function from($address){
-        $this->setAddress($address, 'From');
-    }
-
-    /**
-     * Add the mail's Subject: header
-     *
-     * @param string $subject the mail subject
-     */
-    public function subject($subject){
-        if(!utf8_isASCII($subject)){
-            $subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
-        }
-        $this->headers['Subject'] = $subject;
-    }
 
     /**
      * Prepare the mime multiparts for all attachments
@@ -325,7 +329,6 @@ class Mailer {
         }
 
         // add general headers
-        if(!isset($this->headers['From'])) $this->from($conf['mailfrom']);
         $this->headers['MIME-Version'] = '1.0';
 
         $body = '';
@@ -342,14 +345,16 @@ class Mailer {
 
             // do we have alternative text content?
             if($this->text && $this->html){
-                $this->headers['Content-Type'] = 'multipart/alternative; boundary="'.$this->boundary.'XX"';
+                $this->headers['Content-Type'] = 'multipart/alternative;'.MAILHEADER_EOL.
+                                                 '  boundary="'.$this->boundary.'XX"';
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
                 $body .= 'Content-Type: text/plain; charset=UTF-8'.MAILHEADER_EOL;
                 $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
                 $body .= chunk_split(base64_encode($this->text),74,MAILHEADER_EOL);
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
-                $body .= 'Content-Type: multipart/related; boundary="'.$this->boundary.'"'.MAILHEADER_EOL;
+                $body .= 'Content-Type: multipart/related;'.MAILHEADER_EOL.
+                         '  boundary="'.$this->boundary.'"'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
             }
 
@@ -369,6 +374,47 @@ class Mailer {
         }
 
         return $body;
+    }
+
+    /**
+     * Cleanup and encode the headers array
+     */
+    protected function cleanHeaders(){
+        global $conf;
+
+        // clean up addresses
+        if(empty($this->headers['From'])) $this->from($conf['mailfrom']);
+        $addrs = array('To','From','Cc','Bcc');
+        foreach($addrs as $addr){
+            if(isset($this->headers[$addr])){
+                $this->headers[$addr] = $this->cleanAddress($this->headers[$addr]);
+            }
+        }
+
+        if(isset($subject)){
+            // add prefix to subject
+            if($conf['mailprefix']){
+                $prefix = '['.$conf['mailprefix'].']';
+                $len = strlen($prefix);
+                if(substr($this->headers['subject'],0,$len) != $prefix){
+                    $this->headers['subject'] = $prefix.' '.$this->headers['subject'];
+                }
+            }
+
+            // encode subject
+            if(defined('MAILHEADER_ASCIIONLY')){
+                $this->headers['subject'] = utf8_deaccent($this->headers['subject']);
+                $this->headers['subject'] = utf8_strip($this->headers['subject']);
+            }
+            if(!utf8_isASCII($this->headers['Subject'])){
+                $subject = '=?UTF-8?B?'.base64_encode($this->headers['Subject']).'?=';
+            }
+        }
+
+        // wrap headers
+        foreach($this->headers as $key => $val){
+            $this->headers[$key] = wordwrap($val,78,MAILHEADER_EOL.'  ');
+        }
     }
 
     /**
@@ -393,6 +439,7 @@ class Mailer {
      * @return string the mail, false on errors
      */
     public function dump(){
+        $this->cleanHeaders();
         $body    = $this->prepareBody();
         if($body === 'false') return false;
         $headers = $this->prepareHeaders();
@@ -409,6 +456,10 @@ class Mailer {
      * @return bool true if the mail was successfully passed to the MTA
      */
     public function send(){
+        // FIXME hook here
+
+        $this->cleanHeaders();
+
         // any recipients?
         if(trim($this->headers['To'])  === '' &&
            trim($this->headers['Cc'])  === '' &&
