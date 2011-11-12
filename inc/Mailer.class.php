@@ -452,47 +452,76 @@ class Mailer {
      *
      * Call this after all data was set
      *
-     * @fixme we need to support the old plugin hook here!
+     * @triggers MAIL_MESSAGE_SEND
      * @return bool true if the mail was successfully passed to the MTA
      */
     public function send(){
-        // FIXME hook here
+        $success = false;
 
-        $this->cleanHeaders();
+        // prepare hook data
+        $data = array(
+            // pass the whole mail class to plugin
+            'mail' => $this,
+            // pass references for backward compatibility
+            'to'      => &$this->headers['To'],
+            'cc'      => &$this->headers['Cc'],
+            'bcc'     => &$this->headers['Bcc'],
+            'from'    => &$this->headers['From'],
+            'subject' => &$this->headers['Subject'],
+            'body'    => &$this->text,
+            'params'  => &$this->sendparams,
+            'headers' => '', // plugins shouldn't use this
+            // signal if we mailed successfully to AFTER event
+            'success' => &$success,
+        );
 
-        // any recipients?
-        if(trim($this->headers['To'])  === '' &&
-           trim($this->headers['Cc'])  === '' &&
-           trim($this->headers['Bcc']) === '') return false;
+        // do our thing if BEFORE hook approves
+        $evt = new Doku_Event('MAIL_MESSAGE_SEND', $data);
+        if ($evt->advise_before(true)) {
+            // clean up before using the headers
+            $this->cleanHeaders();
 
-        // The To: header is special
-        if(isset($this->headers['To'])){
-            $to = $this->headers['To'];
-            unset($this->headers['To']);
-        }else{
-            $to = '';
+            // any recipients?
+            if(trim($this->headers['To'])  === '' &&
+               trim($this->headers['Cc'])  === '' &&
+               trim($this->headers['Bcc']) === '') return false;
+
+            // The To: header is special
+            if(isset($this->headers['To'])){
+                $to = $this->headers['To'];
+                unset($this->headers['To']);
+            }else{
+                $to = '';
+            }
+
+            // so is the subject
+            if(isset($this->headers['Subject'])){
+                $subject = $this->headers['Subject'];
+                unset($this->headers['Subject']);
+            }else{
+                $subject = '';
+            }
+
+            // make the body
+            $body    = $this->prepareBody();
+            if($body === 'false') return false;
+
+            // cook the headers
+            $headers = $this->prepareHeaders();
+            // add any headers set by legacy plugins
+            if(trim($data['headers'])){
+                $headers .= MAILHEADER_EOL.trim($data['headers']);
+            }
+
+            // send the thing
+            if(is_null($this->sendparam)){
+                $success = @mail($to,$subject,$body,$headers);
+            }else{
+                $success = @mail($to,$subject,$body,$headers,$this->sendparam);
+            }
         }
-
-        // so is the subject
-        if(isset($this->headers['Subject'])){
-            $subject = $this->headers['Subject'];
-            unset($this->headers['Subject']);
-        }else{
-            $subject = '';
-        }
-
-        // make the body
-        $body    = $this->prepareBody();
-        if($body === 'false') return false;
-
-        // cook the headers
-        $headers = $this->prepareHeaders();
-
-        // send the thing
-        if(is_null($this->sendparam)){
-            return @mail($to,$subject,$body,$headers);
-        }else{
-            return @mail($to,$subject,$body,$headers,$this->sendparam);
-        }
+        // any AFTER actions?
+        $evt->advise_after();
+        return $success;
     }
 }
