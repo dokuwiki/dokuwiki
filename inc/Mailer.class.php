@@ -122,9 +122,79 @@ class Mailer {
     }
 
     /**
+     * Set the text and HTML body and apply replacements
+     *
+     * This function applies a whole bunch of default replacements in addition
+     * to the ones specidifed as parameters
+     *
+     * If you pass the HTML part or HTML replacements yourself you have to make
+     * sure you encode all HTML special chars correctly
+     *
+     * @fixme the HTML head and body still needs to be set
+     * @param string $text     plain text body
+     * @param array  $textrep  replacements to apply on the text part
+     * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
+     * @param array  $html     the HTML body, leave null to create it from $text
+     */
+    public function setBody($text, $textrep=null, $htmlrep=null, $html=null){
+        global $INFO;
+        global $conf;
+
+        // create HTML from text if not given
+        if(is_null($html)){
+            $html = hsc($text);
+            $html = nl2br($text);
+        }
+        if(!is_null($textrep) && is_null($htmlrep)){
+            $htmlrep = array_map('hsc',$textrep);
+        }
+
+        // prepare default replacements
+        $ip   = clientIP();
+        $trep = array(
+            'DATE'        => dformat(),
+            'BROWSER'     => $_SERVER['HTTP_USER_AGENT'],
+            'IPADDRESS'   => $ip,
+            'HOSTNAME'    => gethostsbyaddrs($ip),
+            'TITLE'       => $conf['title'],
+            'DOKUWIKIURL' => DOKU_URL,
+            'USER'        => $_SERVER['REMOTE_USER'],
+            'NAME'        => $INFO['userinfo']['name'],
+            'MAIL'        => $INFO['userinfo']['mail'],
+        );
+        $trep = array_merge($trep,(array) $textrep);
+        $hrep = array(
+            'DATE'        => '<i>'.hsc(dformat()).'</i>',
+            'BROWSER'     => hsc($_SERVER['HTTP_USER_AGENT']),
+            'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
+            'HOSTNAME'    => '<code>'.hsc(gethostsbyaddrs($ip)).'</code>',
+            'TITLE'       => hsc($conf['title']),
+            'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
+            'USER'        => hsc($_SERVER['REMOTE_USER']),
+            'NAME'        => hsc($INFO['userinfo']['name']),
+            'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
+                             hsc($INFO['userinfo']['mail']).'</a>',
+        );
+        $hrep = array_merge($hrep,(array) $htmlrep);
+
+        // Apply replacements
+        foreach ($trep as $key => $substitution) {
+            $text = str_replace('@'.strtoupper($key).'@',$substitution, $text);
+        }
+        foreach ($hrep as $key => $substitution) {
+            $html = str_replace('@'.strtoupper($key).'@',$substitution, $html);
+        }
+
+        $this->setHTML($html);
+        $this->setText($text);
+    }
+
+    /**
      * Set the HTML part of the mail
      *
      * Placeholders can be used to reference embedded attachments
+     *
+     * You probably want to use setBody() instead
      */
     public function setHTML($html){
         $this->html = $html;
@@ -132,6 +202,8 @@ class Mailer {
 
     /**
      * Set the plain text part of the mail
+     *
+     * You probably want to use setBody() instead
      */
     public function setText($text){
         $this->text = $text;
