@@ -139,14 +139,22 @@ class Mailer {
     public function setBody($text, $textrep=null, $htmlrep=null, $html=null){
         global $INFO;
         global $conf;
+        $htmlrep = (array) $htmlrep;
+        $textrep = (array) $textrep;
 
         // create HTML from text if not given
         if(is_null($html)){
             $html = hsc($text);
             $html = nl2br($text);
         }
-        if(!is_null($textrep) && is_null($htmlrep)){
-            $htmlrep = array_map('hsc',$textrep);
+        // copy over all replacements missing for HTML (autolink URLs)
+        foreach($textrep as $key => $value){
+            if(isset($htmlrep[$key])) continue;
+            if(preg_match('/^https?:\/\//i',$value)){
+                $htmlrep[$key] = '<a href="'.hsc($value).'">'.hsc($value).'</a>';
+            }else{
+                $htmlrep[$key] = hsc($value);
+            }
         }
 
         // prepare default replacements
