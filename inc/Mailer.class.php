@@ -394,7 +394,11 @@ class Mailer {
         if(isset($subject)){
             // add prefix to subject
             if(empty($conf['mailprefix'])){
-                $prefix = '['.$conf['title'].']';
+                if(utf8_strlen($conf['title']) < 20) {
+                    $prefix = '['.$conf['title'].']';
+                }else{
+                    $prefix = '['.utf8_substr($conf['title'], 0, 20).'...]';
+                }
             }else{
                 $prefix = '['.$conf['mailprefix'].']';
             }
