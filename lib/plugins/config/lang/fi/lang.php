@@ -42,6 +42,7 @@ $lang['lang']                  = 'Kieli';
 $lang['basedir']               = 'Perushakemisto';
 $lang['baseurl']               = 'Perus URL';
 $lang['savedir']               = 'Hakemisto tietojen tallennukseen.';
+$lang['cookiedir']             = 'Cookien path. Jätä tyhjäksi käyttääksesi baseurl arvoa';
 $lang['start']                 = 'Alkusivun nimi';
 $lang['title']                 = 'Wikin nimi';
 $lang['template']              = 'Sivumalli';

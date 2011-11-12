@@ -137,7 +137,6 @@ Sempre podes copiar e colar a ligazón.';
 $lang['js']['linkwiz']         = 'Asistente de ligazóns';
 $lang['js']['linkto']          = 'Ligazón para:';
 $lang['js']['del_confirm']     = 'Estás certo de quereres eliminar os elementos seleccionados?';
-$lang['js']['mu_btn']          = 'Subir varios arquivos de vez';
 $lang['mediausage']            = 'Emprega a seguinte sintaxe para inserires unha referencia a este arquivo:';
 $lang['mediaview']             = 'Ver arquivo orixinal';
 $lang['mediaroot']             = 'raigaña';

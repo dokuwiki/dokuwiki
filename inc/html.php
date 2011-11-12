@@ -899,44 +899,40 @@ function html_li_default($item){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
+function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
     if (count($data) === 0) {
         return '';
     }
 
     $start_level = $data[0]['level'];
-    $ret   = '';
-
-    if ($start_level < 2) {
-        // Trigger building a wrapper ul if the first level is
-        // 0 (we have a root object) or 1 (just the root content)
-        --$start_level;
-    }
-
     $level = $start_level;
+    $ret   = '';
+    $open  = 0;
 
     foreach ($data as $item){
 
         if( $item['level'] > $level ){
             //open new list
             for($i=0; $i<($item['level'] - $level); $i++){
-                if ($i) $ret .= "<li class=\"clear\">\n";
+                if ($i) $ret .= "<li class=\"clear\">";
                 $ret .= "\n<ul class=\"$class\">\n";
+                $open++;
             }
+            $level = $item['level'];
+
         }elseif( $item['level'] < $level ){
             //close last item
             $ret .= "</li>\n";
-            for ($i=0; $i<($level - $item['level']); $i++){
+            while( $level > $item['level'] && $open > 0 ){
                 //close higher lists
                 $ret .= "</ul>\n</li>\n";
+                $level--;
+                $open--;
             }
         } elseif ($ret !== '') {
-            //close last item
+            //close previous item
             $ret .= "</li>\n";
         }
-
-        //remember current level
-        $level = $item['level'];
 
         //print item
         $ret .= call_user_func($lifunc,$item);
@@ -947,8 +943,15 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
     }
 
     //close remaining items and lists
-    while(--$level >= $start_level) {
-        $ret .= "</li></ul>\n";
+    $ret .= "</li>\n";
+    while($open-- > 0) {
+        $ret .= "</ul></li>\n";
+    }
+
+    if ($forcewrapper || $start_level < 2) {
+        // Trigger building a wrapper ul if the first level is
+        // 0 (we have a root object) or 1 (just the root content)
+        $ret = "\n<ul class=\"$class\">\n".$ret."</ul>\n";
     }
 
     return $ret;
@@ -980,6 +983,76 @@ function html_backlinks(){
     } else {
         print '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
     }
+}
+
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
+    global $lang;
+    if ($id === null) {
+        global $ID;
+        $id = $ID;
+    }
+    $media_or_wikiFN = $media ? 'mediaFN' : 'wikiFN';
+    $ml_or_wl = $media ? 'ml' : 'wl';
+    $l_minor = $r_minor = '';
+
+    if(!$l_rev){
+        $l_head = '&mdash;';
+    }else{
+        $l_info   = getRevisionInfo($id,$l_rev,true, $media);
+        if($l_info['user']){
+            $l_user = editorinfo($l_info['user']);
+            if(auth_ismanager()) $l_user .= ' ('.$l_info['ip'].')';
+        } else {
+            $l_user = $l_info['ip'];
+        }
+        $l_user  = '<span class="user">'.$l_user.'</span>';
+        $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
+        if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
+
+        $l_head_title = ($media) ? dformat($l_rev) : $id.' ['.dformat($l_rev).']';
+        $l_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
+        $l_head_title.'</a>'.
+        '<br />'.$l_user.' '.$l_sum;
+    }
+
+    if($r_rev){
+        $r_info   = getRevisionInfo($id,$r_rev,true, $media);
+        if($r_info['user']){
+            $r_user = editorinfo($r_info['user']);
+            if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
+        } else {
+            $r_user = $r_info['ip'];
+        }
+        $r_user = '<span class="user">'.$r_user.'</span>';
+        $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
+        if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
+
+        $r_head_title = ($media) ? dformat($r_rev) : $id.' ['.dformat($r_rev).']';
+        $r_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
+        $r_head_title.'</a>'.
+        '<br />'.$r_user.' '.$r_sum;
+    }elseif($_rev = @filemtime($media_or_wikiFN($id))){
+        $_info   = getRevisionInfo($id,$_rev,true, $media);
+        if($_info['user']){
+            $_user = editorinfo($_info['user']);
+            if(auth_ismanager()) $_user .= ' ('.$_info['ip'].')';
+        } else {
+            $_user = $_info['ip'];
+        }
+        $_user = '<span class="user">'.$_user.'</span>';
+        $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
+        if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
+
+        $r_head_title = ($media) ? dformat($_rev) : $id.' ['.dformat($_rev).']';
+        $r_head  = '<a class="wikilink1" href="'.$ml_or_wl($id).'">'.
+        $r_head_title.'</a> '.
+        '('.$lang['current'].')'.
+        '<br />'.$_user.' '.$_sum;
+    }else{
+        $r_head = '&mdash; ('.$lang['current'].')';
+    }
+
+    return array($l_head, $r_head, $l_minor, $r_minor);
 }
 
 /**
@@ -1056,59 +1129,7 @@ function html_diff($text='',$intro=true,$type=null){
         }
         $r_text = rawWiki($ID,$r_rev);
 
-        if(!$l_rev){
-            $l_head = '&mdash;';
-        }else{
-            $l_info   = getRevisionInfo($ID,$l_rev,true);
-            if($l_info['user']){
-                $l_user = editorinfo($l_info['user']);
-                if(auth_ismanager()) $l_user .= ' ('.$l_info['ip'].')';
-            } else {
-                $l_user = $l_info['ip'];
-            }
-            $l_user  = '<span class="user">'.$l_user.'</span>';
-            $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
-            if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
-
-            $l_head = '<a class="wikilink1" href="'.wl($ID,"rev=$l_rev").'">'.
-            $ID.' ['.dformat($l_rev).']</a>'.
-            '<br />'.$l_user.' '.$l_sum;
-        }
-
-        if($r_rev){
-            $r_info   = getRevisionInfo($ID,$r_rev,true);
-            if($r_info['user']){
-                $r_user = editorinfo($r_info['user']);
-                if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
-            } else {
-                $r_user = $r_info['ip'];
-            }
-            $r_user = '<span class="user">'.$r_user.'</span>';
-            $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
-            if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
-
-            $r_head = '<a class="wikilink1" href="'.wl($ID,"rev=$r_rev").'">'.
-            $ID.' ['.dformat($r_rev).']</a>'.
-            '<br />'.$r_user.' '.$r_sum;
-        }elseif($_rev = @filemtime(wikiFN($ID))){
-            $_info   = getRevisionInfo($ID,$_rev,true);
-            if($_info['user']){
-                $_user = editorinfo($_info['user']);
-                if(auth_ismanager()) $_user .= ' ('.$_info['ip'].')';
-            } else {
-                $_user = $_info['ip'];
-            }
-            $_user = '<span class="user">'.$_user.'</span>';
-            $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
-            if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
-
-            $r_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-            $ID.' ['.dformat($_rev).']</a> '.
-            '('.$lang['current'].')'.
-            '<br />'.$_user.' '.$_sum;
-        }else{
-            $r_head = '&mdash; ('.$lang['current'].')';
-        }
+        list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
     }
 
     $df = new Diff(explode("\n",htmlspecialchars($l_text)),
@@ -1676,7 +1697,7 @@ function html_TOC($toc){
     $out .= $lang['toc'];
     $out .= '</div>'.DOKU_LF;
     $out .= '<div id="toc__inside">'.DOKU_LF;
-    $out .= html_buildlist($toc,'toc','html_list_toc');
+    $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
     return $out;
@@ -1809,5 +1830,38 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     $out .= '<!-- <![endif]-->'.NL;
 
     return $out;
+}
+
+function html_tabs($tabs, $current_tab = null) {
+    echo '<ul class="tabs">'.NL;
+
+    foreach($tabs as $id => $tab) {
+        html_tab($tab['href'], $tab['caption'], $id === $current_tab);
+    }
+
+    echo '</ul>'.NL;
+}
+/**
+ * Prints a single tab
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @author Adrian Lang <mail@adrianlang.de>
+ *
+ * @param string $href - tab href
+ * @param string $caption - tab caption
+ * @param boolean $selected - is tab selected
+ */
+
+function html_tab($href, $caption, $selected=false) {
+    $tab = '<li>';
+    if ($selected) {
+        $tab .= '<strong>';
+    } else {
+        $tab .= '<a href="' . hsc($href) . '">';
+    }
+    $tab .= hsc($caption)
+         .  '</' . ($selected ? 'strong' : 'a') . '>'
+         .  '</li>'.NL;
+    echo $tab;
 }
 

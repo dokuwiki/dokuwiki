@@ -125,7 +125,6 @@ Adhuc transcribere nexum potes.';
 $lang['js']['linkwiz']         = 'Connectendi ductor';
 $lang['js']['linkto']          = 'Nexum ad:';
 $lang['js']['del_confirm']     = 'Delere electas res uin?';
-$lang['js']['mu_btn']          = 'Plura documenta uno tempore onerare';
 $lang['rssfailed']             = 'Error in restituendo ';
 $lang['nothingfound']          = 'Nihil inuentum est.';
 $lang['mediaselect']           = 'Documenta uisiua:';

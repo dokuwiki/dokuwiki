@@ -13,6 +13,7 @@
  * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
+ * @author Jeroen
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -47,6 +48,7 @@ $lang['lang']                  = 'Taal';
 $lang['basedir']               = 'Basisdirectory';
 $lang['baseurl']               = 'Basis-URL';
 $lang['savedir']               = 'Directory om data op te slaan';
+$lang['cookiedir']             = 'Cookie pad. Laat leeg om de basis URL te gebruiken.';
 $lang['start']                 = 'Naam startpagina';
 $lang['title']                 = 'Titel van de wiki';
 $lang['template']              = 'Sjabloon';

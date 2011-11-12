@@ -41,8 +41,6 @@ $lang['btn_backlink']          = 'Atgalinės nuorodos';
 $lang['btn_backtomedia']       = 'Atgal į Mediabylos išsirinkimą';
 $lang['btn_subscribe']         = 'Užsisakyti keitimų prenumeratą';
 $lang['btn_unsubscribe']       = 'Atsisakyti keitimų prenumeratos';
-$lang['btn_subscribens']       = 'Užsakyti vardų srities prenumeratą';
-$lang['btn_unsubscribens']     = 'Atsisakyti vardų srities prenumeratos';
 $lang['btn_profile']           = 'Atnaujinti profilį';
 $lang['btn_reset']             = 'Atstata';
 $lang['btn_resendpwd']         = 'Išsiųsti naują slaptažodį';
@@ -115,7 +113,6 @@ $lang['js']['keepopen']        = 'Pažymėjus palikti langą atvertą';
 $lang['js']['hidedetails']     = 'Paslėpti Detales';
 $lang['js']['nosmblinks']      = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.
 Vis dėlto, jūs galite nukopijuoti šią nuorodą.';
-$lang['js']['mu_btn']          = 'Pateikite kelis failus vienu ypu';
 $lang['mediausage']            = 'Failo nuorodai užrašyti naudokite tokią sintaksę:';
 $lang['mediaview']             = 'Žiūrėti pirminį failą';
 $lang['mediaroot']             = 'pradžia (root)';

@@ -13,6 +13,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Jon Bøe <jonmagneboe@hotmail.com>
  */
 $lang['menu']                  = 'Behandle brukere';
 $lang['noauth']                = '(autentisering av brukere ikke tilgjengelig)';

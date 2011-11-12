@@ -21,6 +21,7 @@
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
  * @author Oscar Ciudad <oscar@jacho.net>
+ * @author Ruben Figols <ruben.figols@gmail.com>
  */
 $lang['admin_acl']             = 'Administración de lista de control de acceso';
 $lang['acl_group']             = 'Grupo';

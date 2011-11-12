@@ -3,10 +3,9 @@
  * french language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -51,6 +50,7 @@ $lang['lang']                  = 'Langue';
 $lang['basedir']               = 'Répertoire de base (ex. : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base. Laisser vide pour une détection automatique.';
 $lang['savedir']               = 'Répertoire de stockage';
+$lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
 $lang['start']                 = 'Nom de la page d\'accueil';
 $lang['title']                 = 'Titre du wiki';
 $lang['template']              = 'Modèle';

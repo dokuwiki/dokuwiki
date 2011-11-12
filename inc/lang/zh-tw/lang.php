@@ -126,7 +126,6 @@ $lang['js']['nosmblinks']      = '只有在 Microsoft IE 下才能執行「連�
 $lang['js']['linkwiz']         = '建立連結精靈';
 $lang['js']['linkto']          = '連結至：';
 $lang['js']['del_confirm']     = '確定刪除選取的項目？';
-$lang['js']['mu_btn']          = '上傳多個檔案';
 $lang['rssfailed']             = '擷取 RSS 饋送檔時發生錯誤：';
 $lang['nothingfound']          = '沒找到任何結果。';
 $lang['mediaselect']           = '媒體檔案';

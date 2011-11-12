@@ -1,0 +1,429 @@
+
+/*____________ Layout ____________*/
+
+#mediamanager__page h1 {
+    margin: 0 0 .5em;
+}
+
+#mediamanager__page {
+    min-width: 800px;
+    width: 100%;
+    text-align: left;
+}
+
+#mediamanager__page .panel {
+    float: left;
+}
+
+#mediamanager__page .namespaces {
+    width: 15%;
+    min-width: 120px;
+}
+#mediamanager__page .filelist {
+    width: 50%;
+    min-width: 400px;
+}
+#mediamanager__page .file {
+    width: 35%;
+    min-width: 280px;
+}
+
+#mediamanager__page .panelHeader {
+    background-color: __background_alt__;
+    margin: 0 10px 10px 0;
+    padding: 10px 10px 8px;
+    text-align: left;
+    min-height: 20px;
+    overflow: hidden;
+}
+
+#mediamanager__page .panelContent {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0 10px 10px 0;
+    position: relative;
+}
+
+#mediamanager__page .file .panelHeader,
+#mediamanager__page .file .panelContent {
+    margin-right: 0;
+}
+
+#mediamanager__page .ui-resizable-e {
+    width: 6px;
+    right: 2px;
+    background: transparent url(images/resizecol.png) center center no-repeat;
+}
+#mediamanager__page .ui-resizable-e:hover {
+    background-color: __background_alt__;
+}
+
+/*____________ Namespaces tree ____________*/
+
+#mediamanager__page .namespaces h2 {
+    font-size: 1em;
+    display: inline-block;
+    border-width: 0;
+    padding: .3em .8em;
+    margin: 0 .3em 0 0;
+    border-radius: .5em .5em 0 0;
+    font-weight: normal;
+    background-color: __background_alt__;
+    color: __text__;
+    line-height: 1.5em;
+}
+* html #mediamanager__page .namespaces h2,
+*+html #mediamanager__page .namespaces h2 {
+    display: inline;
+}
+
+#mediamanager__page .namespaces ul {
+    margin-left: .2em;
+    list-style: none;
+}
+#mediamanager__page .namespaces ul ul {
+    margin-left: 1em;
+}
+
+#mediamanager__page .namespaces ul .selected {
+    background-color: __highlight__;
+    font-weight: bold;
+}
+
+/*____________ Panel header ____________*/
+
+#mediamanager__page .panelHeader h3 {
+    float: left;
+    font-weight: normal;
+    font-size: 1em;
+    padding: 0;
+    margin: 0 0 3px;
+}
+
+#mediamanager__page .panelHeader form.options {
+    float: right;
+    margin-top: -3px;
+}
+
+#mediamanager__page .panelHeader ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#mediamanager__page .panelHeader ul li {
+    color: __text__;
+    float: left;
+    line-height: 1;
+    padding-left: 3px;
+}
+
+#mediamanager__page .panelHeader ul li.listType {
+    padding-left: 30px;
+    background: url('../../images/icon-list.png') 3px 1px no-repeat;
+}
+#mediamanager__page .panelHeader ul li.sortBy {
+    padding-left: 30px;
+    background: url('../../images/icon-sort.png') 3px 1px no-repeat;
+}
+
+#mediamanager__page .panelHeader form.options .ui-buttonset label{
+    font-size: 90%;
+    margin-right: -0.4em;
+}
+#mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
+    padding: .4em .7em;
+    line-height: 1;
+}
+
+/*____________ File list ____________*/
+
+#mediamanager__page .filelist ul {
+    padding: 0;
+    margin: 0;
+}
+
+#mediamanager__page .filelist .panelContent ul li:hover {
+    background-color: __background_alt__;
+}
+
+#mediamanager__page .filelist li dt a {
+    vertical-align: middle;
+    display: table-cell;
+    overflow: hidden;
+}
+* html #mediamanager__page .filelist .thumbs li dt a,
+*+html #mediamanager__page .filelist .thumbs li dt a {
+    display: block;
+}
+* html #mediamanager__page .filelist .rows li dt a,
+*+html #mediamanager__page .filelist .rows li dt a {
+    display: inline;
+}
+
+/* thumbs */
+
+#mediamanager__page .filelist .thumbs li {
+    width: 100px;
+    min-height: 130px;
+    display: inline-block;
+    display: -moz-inline-stack;
+    /* the right margin should visually be 10px, but because of its inline-block nature the whitespace inbetween is about 4px more */
+    margin: 0 6px 10px 0;
+    background-color: __background_neu__;
+    color: __text__;
+    padding: 5px;
+    vertical-align: top;
+    text-align: center;
+    position: relative;
+    line-height: 1.2;
+}
+* html #mediamanager__page .filelist .thumbs li,
+*+html #mediamanager__page .filelist .thumbs li {
+    display: inline;
+    zoom: 1;
+}
+
+#mediamanager__page .filelist .thumbs li dt a {
+    width: 100px;
+    height: 90px;
+}
+
+#mediamanager__page .filelist .thumbs li dt a img {
+    max-width: 90px;
+    max-height: 90px;
+}
+
+#mediamanager__page .filelist .thumbs li .name,
+#mediamanager__page .filelist .thumbs li .size,
+#mediamanager__page .filelist .thumbs li .filesize,
+#mediamanager__page .filelist .thumbs li .date {
+    display: block;
+    overflow: hidden;
+    width: 90px;
+    white-space: nowrap;
+}
+#mediamanager__page .filelist .thumbs li .name {
+    padding: 5px 0;
+    font-weight: bold;
+}
+#mediamanager__page .filelist .thumbs li .date {
+    font-style: italic;
+    white-space: normal;
+}
+
+/* rows */
+
+#mediamanager__page .filelist .rows li {
+    list-style: none;
+    display: block;
+    position: relative;
+    max-height: 50px;
+    margin: 0;
+    margin-bottom: 3px;
+    background-color: __background__;
+    color: __text__;
+    overflow: hidden;
+}
+
+#mediamanager__page .filelist .rows li:nth-child(2n+1) {
+    background-color: __background_neu__;
+}
+
+#mediamanager__page .filelist .rows li dt {
+    float: left;
+    width: 10%;
+    height: 40px;
+    text-align: center;
+}
+
+#mediamanager__page .filelist .rows li dt a {
+    width: 100px;
+    height: 40px;
+}
+
+#mediamanager__page .filelist .rows li dt a img {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+#mediamanager__page .filelist .rows li .name,
+#mediamanager__page .filelist .rows li .size,
+#mediamanager__page .filelist .rows li .filesize,
+#mediamanager__page .filelist .rows li .date {
+    overflow: hidden;
+    float: left;
+    margin-left: 1%;
+    white-space: nowrap;
+}
+
+#mediamanager__page .filelist .rows li .name {
+    width: 30%;
+    font-weight: bold;
+}
+#mediamanager__page .filelist .rows li .size,
+#mediamanager__page .filelist .rows li .filesize {
+    width: 15%;
+}
+#mediamanager__page .filelist .rows li .date {
+    width: 20%;
+    font-style: italic;
+    white-space: normal;
+}
+
+/*____________ Upload panel ____________*/
+
+#mediamanager__page div.upload {
+    padding-bottom: 0.5em;
+}
+
+#media__content #mediamanager__uploader {
+    border-bottom: 1px solid __border__;
+    padding-bottom: 0.5em;
+}
+
+/*____________ File preview ____________*/
+
+#mediamanager__page .file ul.actions {
+    text-align: center;
+    margin: 0 0 5px;
+    list-style: none;
+}
+#mediamanager__page .file ul.actions li {
+    display: inline;
+}
+
+#mediamanager__page .file div.image {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+#mediamanager__page .file div.image img {
+    width: 100%;
+}
+
+#mediamanager__page .file dl {
+}
+#mediamanager__page .file dl dt {
+    font-weight: bold;
+    display: block;
+    background-color: __background_alt__;
+}
+#mediamanager__page .file dl dd {
+    display: block;
+    background-color: __background_neu__;
+}
+
+
+/*____________ Meta data edit form ____________*/
+
+#mediamanager__page form.meta div.row {
+    margin-bottom: 5px;
+}
+
+#mediamanager__page form.meta label span {
+    display: block;
+}
+
+#mediamanager__page form.meta input {
+    width: 50%;
+}
+
+#mediamanager__page form.meta input.button {
+    width: auto;
+}
+
+#mediamanager__page form.meta textarea.edit {
+    height: 6em;
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
+}
+
+/*____________ Revisions form ____________*/
+
+#mediamanager__page #page__revisions ul {
+    margin-left: 10px;
+    list-style-type: none;
+}
+
+#mediamanager__page #page__revisions ul li div.li div {
+    font-size: 90%;
+    color: __text_neu__;
+    padding-left: 18px;
+}
+
+#mediamanager__page #page__revisions ul li div.li input {
+    position: relative;
+    top: 1px;
+}
+
+/* File diff */
+
+#mediamanager__diff table {
+    table-layout: fixed;
+}
+
+#mediamanager__diff td,
+#mediamanager__diff th {
+    width: 48%;
+    margin: 0 5px 10px 0;
+    padding: 0;
+    vertical-align: top;
+    text-align: left;
+}
+
+#mediamanager__diff th {
+    font-weight: normal;
+}
+#mediamanager__diff th a {
+    font-weight: bold;
+}
+#mediamanager__diff th span {
+    font-size: 90%;
+}
+
+#mediamanager__diff dl dd strong{
+    background-color: __highlight__;
+    color: __text__;
+    font-weight: normal;
+}
+
+/* Image diff */
+
+#mediamanager__page .file form.diffView {
+    margin-bottom: 10px;
+    display: block;
+}
+
+#mediamanager__diff div.slider {
+    margin: 10px;
+    width: 95%;
+}
+
+#mediamanager__diff .imageDiff {
+    position: relative;
+}
+#mediamanager__diff .imageDiff .image1,
+#mediamanager__diff .imageDiff .image2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97%;
+}
+
+#mediamanager__diff .imageDiff.opacity .image2 {
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+
+#mediamanager__diff .imageDiff.portions .image2 {
+    border-right: 1px solid red;
+    overflow: hidden;
+}
+
+#mediamanager__diff .imageDiff img {
+    width: 100%;
+}
+

@@ -129,7 +129,6 @@ $lang['js']['nosmblinks']      = 'I collegamenti con le risorse condivise di Win
 $lang['js']['linkwiz']         = 'Collegamento guidato';
 $lang['js']['linkto']          = 'Collega a:';
 $lang['js']['del_confirm']     = 'Eliminare veramente questa voce?';
-$lang['js']['mu_btn']          = 'Carica più di un file alla volta';
 $lang['rssfailed']             = 'Si è verificato un errore cercando questo feed: ';
 $lang['nothingfound']          = 'Nessun risultato trovato.';
 $lang['mediaselect']           = 'Selezione dei file';

@@ -124,7 +124,6 @@ $lang['js']['nosmblinks']      = 'Windows paylaşımı sadece Microsoft Internet
 $lang['js']['linkwiz']         = 'Bağlantı sihirbazı';
 $lang['js']['linkto']          = 'Bağlantı:';
 $lang['js']['del_confirm']     = 'Bu girişi sil?';
-$lang['js']['mu_btn']          = 'Birden fazla dosyayı bir seferde gönder';
 $lang['rssfailed']             = 'Bu beslemeyi çekerken hata oluştu: ';
 $lang['nothingfound']          = 'Hiçbir şey yok.';
 $lang['mediaselect']           = 'Çokluortam dosyası seçimi';

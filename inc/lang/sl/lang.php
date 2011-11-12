@@ -123,7 +123,6 @@ $lang['js']['nosmblinks']      = 'Povezovanje do souporabnih datotek sistema Win
 $lang['js']['linkwiz']         = 'Čarovnik za povezave';
 $lang['js']['linkto']          = 'Poveži na:';
 $lang['js']['del_confirm']     = 'Ali naj se res izbrišejo izbrani predmeti?';
-$lang['js']['mu_btn']          = 'Pošiljanje več dokumentov hkrati.';
 $lang['rssfailed']             = 'Prišlo je do napake med pridobivanjem vira: ';
 $lang['nothingfound']          = 'Ni najdenih predmetov.';
 $lang['mediaselect']           = 'Predstavne datoteke';

@@ -125,7 +125,6 @@ $lang['js']['nosmblinks']      = '윈도우 공유 파일과의 연결은 MS 인
 $lang['js']['linkwiz']         = '링크 마법사';
 $lang['js']['linkto']          = '다음으로 연결:';
 $lang['js']['del_confirm']     = '정말로 선택된 항목(들)을 삭제하시겠습니까?';
-$lang['js']['mu_btn']          = '여러 파일들을 한번에 업로드합니다.';
 $lang['rssfailed']             = 'feed 가져오기 실패: ';
 $lang['nothingfound']          = '아무 것도 없습니다.';
 $lang['mediaselect']           = '미디어 파일 선택';

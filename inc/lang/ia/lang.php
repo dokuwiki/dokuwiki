@@ -143,7 +143,6 @@ Tu pote nonobstante copiar e collar le ligamine.';
 $lang['js']['linkwiz']         = 'Assistente pro ligamines';
 $lang['js']['linkto']          = 'Ligar verso:';
 $lang['js']['del_confirm']     = 'Realmente deler le entrata(s) seligite?';
-$lang['js']['mu_btn']          = 'Incargar plure files simultaneemente';
 $lang['mediausage']            = 'Usa le syntaxe sequente pro referer a iste file:';
 $lang['mediaview']             = 'Vider file original';
 $lang['mediaroot']             = 'radice';

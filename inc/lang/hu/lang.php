@@ -127,7 +127,6 @@ A hivatkozást másolni és beszúrni ettől fügetlenül mndig tudod.';
 $lang['js']['linkwiz']         = 'Hivatkozás varázsló';
 $lang['js']['linkto']          = 'Hivatkozás erre:';
 $lang['js']['del_confirm']     = 'Valóban törölni akarod a kiválasztott elem(ek)et?';
-$lang['js']['mu_btn']          = 'Több fájl feltöltése egyszerre';
 $lang['rssfailed']             = 'Hiba történt ennek a betöltésekor: ';
 $lang['nothingfound']          = 'Semmit sem találtam.';
 $lang['mediaselect']           = 'Médiafájl kiválasztása';

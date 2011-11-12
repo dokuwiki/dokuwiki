@@ -124,7 +124,6 @@ Siiski võid kopeerida ja asetada lingi.';
 $lang['js']['linkwiz']         = 'Lingi nõustaja';
 $lang['js']['linkto']          = 'Lingi:';
 $lang['js']['del_confirm']     = 'Kas kustutame selle kirje?';
-$lang['js']['mu_btn']          = 'Laadi üles mittu faili';
 $lang['rssfailed']             = 'Sinu soovitud info ammutamisel tekkis viga: ';
 $lang['nothingfound']          = 'Oops, aga mitte muhvigi ei leitud.';
 $lang['mediaselect']           = 'Hunnik faile';

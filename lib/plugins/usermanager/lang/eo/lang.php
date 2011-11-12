@@ -11,8 +11,9 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert BOGENSCHNEIDER <robog@gmx.de>
+ * @author Robert BOGENSCHNEIDER <bogi@UEA.org>
  */
-$lang['menu']                  = 'Administrado de Uzantoj';
+$lang['menu']                  = 'Administrado de uzantoj';
 $lang['noauth']                = '(identiĝo de uzantoj ne disponeblas)';
 $lang['nosupport']             = '(administro de uzantoj ne estas subtenata)';
 $lang['badauth']               = 'tiu identiĝa procezo ne validas';

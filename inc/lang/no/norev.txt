@@ -1,4 +1,4 @@
-====== Det fins ingen slik versjon ======
+====== Versjonen finnes ikke ======
 
-Den angitte versjonen fins ikke. Bruk ''**Historikk**'' for en oversikt over de versjoner som fins av dette dokumentet.
+Den angitte versjonen finnes ikke. Bruk ''**Historikk**'' for en oversikt over de versjoner som finnes av dette dokumentet.
 

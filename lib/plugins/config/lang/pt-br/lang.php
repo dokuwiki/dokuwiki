@@ -15,6 +15,7 @@
  * @author Luis Dantas <luisdantas@gmail.com>
  * @author Sergio Motta sergio@cisne.com.br
  * @author Isaias Masiero Filho <masiero@masiero.org>
+ * @author Balaco Baco <balacobaco@imap.cc>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -51,6 +52,7 @@ $lang['lang']                  = 'Idioma';
 $lang['basedir']               = 'Diretório base';
 $lang['baseurl']               = 'URL base';
 $lang['savedir']               = 'Diretório para salvar os dados';
+$lang['cookiedir']             = 'Caminhos dos cookies. Deixe em branco para usar a url base.';
 $lang['start']                 = 'Nome da página inicial';
 $lang['title']                 = 'Título do wiki';
 $lang['template']              = 'Modelo';
@@ -121,6 +123,7 @@ $lang['jpg_quality']           = 'Qualidade de compressão do JPG (0-100)';
 $lang['subscribers']           = 'Habilitar o suporte ao monitoramento de páginas';
 $lang['subscribe_time']        = 'Tempo de espera antes do envio das listas e mensagens de monitoramento (segundos); este tempo deve ser menor que o especificado no parâmetro recent_days';
 $lang['compress']              = 'Compactar as saídas de CSS e JavaScript';
+$lang['cssdatauri']            = 'Tamanho máximo em bytes para o qual as imagens referenciadas em arquivos CSS devam ser incorporadas na folha de estilos (o arquivo CSS) para reduzir o custo dos pedidos HTTP. Essa técnica não funcionará na versões do IE < 8!  Valores de <code>400</code> a <code>600</code> são bons. Defina o valor <code>0</code> para desativar.';
 $lang['hidepages']             = 'Esconder páginas correspondentes (expressão regular)';
 $lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para páginas não existentes';
 $lang['sitemap']               = 'Gerar Google Sitemap (dias)';

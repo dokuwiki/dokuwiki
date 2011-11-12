@@ -129,7 +129,6 @@ Możesz skopiować odnośnik.';
 $lang['js']['linkwiz']         = 'Tworzenie odnośników';
 $lang['js']['linkto']          = 'Link do';
 $lang['js']['del_confirm']     = 'Czy na pewno usunąć?';
-$lang['js']['mu_btn']          = 'Wyślij wiele plików na raz';
 $lang['rssfailed']             = 'Wystąpił błąd przy pobieraniu tych danych: ';
 $lang['nothingfound']          = 'Nic nie znaleziono.';
 $lang['mediaselect']           = 'Wysyłanie pliku';

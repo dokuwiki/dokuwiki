@@ -126,7 +126,6 @@ $lang['js']['nosmblinks']      = 'קישור לכונני שיתוף של Window
 $lang['js']['linkwiz']         = 'אשף הקישורים';
 $lang['js']['linkto']          = 'קישור אל:';
 $lang['js']['del_confirm']     = 'באמת למחוק?';
-$lang['js']['mu_btn']          = 'העלאת מספר קבצים יחד';
 $lang['rssfailed']             = 'אירע כשל בעת קבלת הזנה זו:';
 $lang['nothingfound']          = 'לא נמצאו תוצאות.';
 $lang['mediaselect']           = 'קובצי מדיה';

@@ -1,0 +1,23 @@
+Hei!
+
+Siden @PAGE@ på wikien @TITLE@ har blitt endret.
+Her er endringene:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Dato : @DATE@
+Bruker : @USER@
+Sammendrag: @SUMMARY@
+Gammel versjon : @OLDPAGE@
+Ny versjon: @NEWPAGE@
+
+For å avslutte varslingen, logg inn på
+@DOKUWIKIURL@, gå til 
+@NEWPAGE@
+og avslutt abonnementet på endringer av siden eller i navnerommet.
+
+--
+Denne e-posten ble generert av DokuWiki på
+@DOKUWIKIURL@

@@ -1207,7 +1207,7 @@ class JpegMeta {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function _parseFileInfo() {
-        if (file_exists($this->_fileName)) {
+        if (file_exists($this->_fileName) && is_file($this->_fileName)) {
             $this->_info['file'] = array();
             $this->_info['file']['Name'] = basename($this->_fileName);
             $this->_info['file']['Path'] = fullpath($this->_fileName);
