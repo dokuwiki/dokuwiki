@@ -57,5 +57,5 @@ $lang['note_group']            = 'Neue Nutzer werden der Standard-Gruppe (%s) hi
 $lang['note_pass']             = 'Das Passwort wird automatisch generiert, wenn das entsprechende Feld leergelassen wird und die Benachrichtigung des Nutzers aktiviert ist.';
 $lang['add_ok']                = 'Nutzer erfolgreich angelegt';
 $lang['add_fail']              = 'Nutzer konnte nicht angelegt werden';
-$lang['notify_ok']             = 'Benachrichtigungsmail wurde versandt';
-$lang['notify_fail']           = 'Benachrichtigungsmail konnte nicht versandt werden';
+$lang['notify_ok']             = 'Benachrichtigungs-Mail wurde versandt';
+$lang['notify_fail']           = 'Benachrichtigungs-Mail konnte nicht versandt werden';
