@@ -647,7 +647,11 @@ function media_tabs_details($image, $selected_tab = ''){
 function media_tab_files_options(){
     global $lang, $NS;
     $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
-                                'action' => media_managerURL(array(), '&')));
+                                'action' => wl($ID)));
+    $media_manager_params = media_managerURL(array(), '', false, true);
+    foreach($media_manager_params as $pKey => $pVal){
+        $form->addHidden($pKey, $pVal);
+    }
     $form->addHidden('sectok', null);
     if (isset($_REQUEST['q'])) {
         $form->addHidden('q', $_REQUEST['q']);

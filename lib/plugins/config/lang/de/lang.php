@@ -124,8 +124,8 @@ $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
-$lang['cssdatauri']            = 'Oberer Grenzwert in Bytes für Dateigrössen. Im CSS referenzierte Bilddateien unter diesem Grenzwert werden direkt ins Stylesheet eingebettet um den "HTTP request header overload" zu reduzieren. 
-Diese Technik funktioniert nicht in Internet Explorer <8!
+$lang['cssdatauri']            = 'Oberer Grenzwert in Bytes für Dateigrössen. Im CSS referenzierte Bilddateien unter diesem Grenzwert werden direkt ins Stylesheet eingebettet um den "HTTP request header overload" zu reduzieren.
+Diese Technik funktioniert nicht im Internet Explorer 7 und älter!
 
 Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes.
 Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.

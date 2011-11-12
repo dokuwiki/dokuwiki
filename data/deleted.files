@@ -4,6 +4,18 @@
 # A copy of this list is maintained at
 # http://www.dokuwiki.org/install:upgrade#files_to_remove
 
+# removed in 2011-11-10
+lib/_fla/.htaccess
+lib/_fla/MultipleUpload.as
+lib/_fla/README
+lib/_fla/index.html
+lib/_fla/multipleUpload.fla
+lib/exe/multipleUpload.swf
+lib/images/multiupload.png
+lib/scripts/ajax.js
+lib/scripts/events.js
+lib/scripts/subscriptions.js
+
 # removed in 2011-05-25
 conf/words.aspell.dist
 lib/styles/style.css
