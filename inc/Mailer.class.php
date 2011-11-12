@@ -393,12 +393,14 @@ class Mailer {
 
         if(isset($subject)){
             // add prefix to subject
-            if($conf['mailprefix']){
+            if(empty($conf['mailprefix'])){
+                $prefix = '['.$conf['title'].']';
+            }else{
                 $prefix = '['.$conf['mailprefix'].']';
-                $len = strlen($prefix);
-                if(substr($this->headers['subject'],0,$len) != $prefix){
-                    $this->headers['subject'] = $prefix.' '.$this->headers['subject'];
-                }
+            }
+            $len = strlen($prefix);
+            if(substr($this->headers['subject'],0,$len) != $prefix){
+                $this->headers['subject'] = $prefix.' '.$this->headers['subject'];
             }
 
             // encode subject
