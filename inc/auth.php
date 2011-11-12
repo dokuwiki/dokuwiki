@@ -667,16 +667,17 @@ function auth_sendPassword($user,$password){
     if(!$userinfo['mail']) return false;
 
     $text = rawLocale('password');
-    $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
-    $text = str_replace('@FULLNAME@',$userinfo['name'],$text);
-    $text = str_replace('@LOGIN@',$user,$text);
-    $text = str_replace('@PASSWORD@',$password,$text);
-    $text = str_replace('@TITLE@',$conf['title'],$text);
+    $trep = array(
+                'FULLNAME' => $userinfo['name'],
+                'LOGIN'    => $user,
+                'PASSWORD' => $password
+            );
 
-    return mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
-            $lang['regpwmail'],
-            $text,
-            $conf['mailfrom']);
+    $mail = new Mailer();
+    $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
+    $mail->subject($lang['regpwmail']);
+    $mail->setBody($text,$trep);
+    return $mail->send();
 }
 
 /**
@@ -906,16 +907,17 @@ function act_resendpwd(){
         io_saveFile($tfile,$user);
 
         $text = rawLocale('pwconfirm');
-        $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
-        $text = str_replace('@FULLNAME@',$userinfo['name'],$text);
-        $text = str_replace('@LOGIN@',$user,$text);
-        $text = str_replace('@TITLE@',$conf['title'],$text);
-        $text = str_replace('@CONFIRM@',$url,$text);
+        $trep = array(
+                    'FULLNAME' => $userinfo['name'],
+                    'LOGIN'    => $user,
+                    'CONFIRM'  => $url
+                );
 
-        if(mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
-                     $lang['regpwmail'],
-                     $text,
-                     $conf['mailfrom'])){
+        $mail = new Mailer();
+        $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
+        $mail->subject($lang['regpwmail']);
+        $mail->setBody($text,$trep);
+        if($mail->send()){
             msg($lang['resendpwdconfirm'],1);
         }else{
             msg($lang['regmailfail'],-1);
