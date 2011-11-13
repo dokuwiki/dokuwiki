@@ -48,4 +48,4 @@ $lang['enabled']               = '%s Plugin-a gaitua.';
 $lang['notenabled']            = '%s Plugin-a ezin izan da gaitu, egiaztatu fitxategi baimenak.';
 $lang['disabled']              = '%s Plugin-a ezgaitua.';
 $lang['notdisabled']           = '%s Plugin-a ezin izan da ezgaitu, egiaztatu fitxategi baimenak. ';
-$lang['packageinstalled']      = 'Plugin paketea (%d plugin%s: %s) arrakastaz instalatua izan da.';
+$lang['packageinstalled']      = 'Plugin paketea (%d plugin(s): %s) arrakastaz instalatua izan da.';
