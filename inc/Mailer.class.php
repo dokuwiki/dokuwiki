@@ -130,13 +130,13 @@ class Mailer {
      * If you pass the HTML part or HTML replacements yourself you have to make
      * sure you encode all HTML special chars correctly
      *
-     * @fixme the HTML head and body still needs to be set
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
      * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
      * @param array  $html     the HTML body, leave null to create it from $text
+     * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
-    public function setBody($text, $textrep=null, $htmlrep=null, $html=null){
+    public function setBody($text, $textrep=null, $htmlrep=null, $html=null, $wrap=true){
         global $INFO;
         global $conf;
         $htmlrep = (array) $htmlrep;
@@ -147,6 +147,12 @@ class Mailer {
             $html = hsc($text);
             $html = nl2br($text);
         }
+        if($wrap){
+            $wrap = rawLocale('mailwrap','html');
+            $html = preg_replace('/\n-- \n.*$/m','',$html); //strip signature
+            $html = str_replace('@HTMLBODY@',$html,$wrap);
+        }
+
         // copy over all replacements missing for HTML (autolink URLs)
         foreach($textrep as $key => $value){
             if(isset($htmlrep[$key])) continue;
@@ -159,11 +165,12 @@ class Mailer {
 
         // prepare default replacements
         $ip   = clientIP();
+        $cip  = gethostsbyaddrs($ip);
         $trep = array(
             'DATE'        => dformat(),
             'BROWSER'     => $_SERVER['HTTP_USER_AGENT'],
             'IPADDRESS'   => $ip,
-            'HOSTNAME'    => gethostsbyaddrs($ip),
+            'HOSTNAME'    => $cip,
             'TITLE'       => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
             'USER'        => $_SERVER['REMOTE_USER'],
@@ -175,7 +182,7 @@ class Mailer {
             'DATE'        => '<i>'.hsc(dformat()).'</i>',
             'BROWSER'     => hsc($_SERVER['HTTP_USER_AGENT']),
             'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
-            'HOSTNAME'    => '<code>'.hsc(gethostsbyaddrs($ip)).'</code>',
+            'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
             'TITLE'       => hsc($conf['title']),
             'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
             'USER'        => hsc($_SERVER['REMOTE_USER']),
