@@ -789,8 +789,8 @@ function formText($text){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rawLocale($id){
-    return io_readFile(localeFN($id));
+function rawLocale($id,$ext='txt'){
+    return io_readFile(localeFN($id,$ext));
 }
 
 /**
