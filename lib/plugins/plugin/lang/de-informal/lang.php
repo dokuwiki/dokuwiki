@@ -53,4 +53,4 @@ $lang['enabled']               = 'Erweiterung %s aktiviert.';
 $lang['notenabled']            = 'Erweiterung %s konnte nicht aktiviert werden. Überprüfen sie die Zugriffsberechtigung der Datei.';
 $lang['disabled']              = 'Erweiterung %s deaktiviert.';
 $lang['notdisabled']           = 'Erweiterung %s konnte nicht deaktiviert werden - überprüfe Dateiberechtigungen';
-$lang['packageinstalled']      = 'Plugin-Paket (%d Plugin%s: %s) erfolgreich installiert.';
+$lang['packageinstalled']      = 'Plugin-Paket (%d Plugin(s): %s) erfolgreich installiert.';
