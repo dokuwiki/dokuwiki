@@ -87,6 +87,24 @@ class Mailer {
     }
 
     /**
+     * Callback function to automatically embed images referenced in HTML templates
+     */
+    protected function autoembed_cb($matches){
+        static $embeds = 0;
+        $embeds++;
+
+        // get file and mime type
+        $media = cleanID($matches[1]);
+        list($ext, $mime) = mimetype($media);
+        $file  = mediaFN($media);
+        if(!file_exists($file)) return $matches[0]; //bad reference, keep as is
+
+        // attach it and set placeholder
+        $this->attachFile($file,$mime,'','autoembed'.$embeds);
+        return '%%autoembed'.$embeds.'%%';
+    }
+
+    /**
      * Add an arbitrary header to the mail
      *
      * If an empy value is passed, the header is removed
@@ -162,6 +180,10 @@ class Mailer {
                 $htmlrep[$key] = hsc($value);
             }
         }
+
+        // embed media from templates
+        $html = preg_replace_callback('/@MEDIA\(([^\)]+)\)@/',
+                                      array($this,'autoembed_cb'),$html);
 
         // prepare default replacements
         $ip   = clientIP();
