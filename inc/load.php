@@ -89,7 +89,7 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(helper|syntax|action|admin|renderer)_plugin_([^_]+)(?:_([^_]+))?$/',
+    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_([^_]+)(?:_([^_]+))?$/',
                   $name, $m)) {
                 //try to load the wanted plugin file
         // include, but be silent. Maybe some other autoloader has an idea
