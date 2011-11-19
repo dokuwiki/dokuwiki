@@ -7,7 +7,7 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',5);
+define('DOKU_XMLRPC_API_VERSION', 6);
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
@@ -584,8 +584,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         // save temporary file
         @unlink($ftmp);
-        $buff = base64_decode($file);
-        io_saveFile($ftmp, $buff);
+        if (preg_match('/^[A-Za-z0-9\+\/]*={0,2}$/', $file) === 1) {
+            // DEPRECATED: Double-decode file if it still looks like base64
+            // after first decoding (which is done by the library)
+            $file = base64_decode($file);
+        }
+        io_saveFile($ftmp, $file);
 
         $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
         if (is_array($res)) {

@@ -206,7 +206,7 @@ $lang['mu_info']               = 'Dateien eropgelueden.';
 $lang['mu_lasterr']            = 'Leschte Feeler:';
 $lang['recent_global']         = 'Du kucks am Moment d\'Ännerungen innerhalb vum <b>%s</b> Namespace. Du kanns och <a href="%s">d\'Kierzilech Ännerungen vum ganze Wiki kucken</a>.';
 $lang['years']                 = 'virun %d Joer';
-$lang['months']                = 'virun % Méint';
+$lang['months']                = 'virun %d Méint';
 $lang['weeks']                 = 'virun %d Wochen';
 $lang['days']                  = 'virun %d Deeg';
 $lang['hours']                 = 'virun %d Stonnen';

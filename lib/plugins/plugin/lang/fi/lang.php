@@ -51,4 +51,4 @@ $lang['enabled']               = 'Liitännäinen %s käytössä';
 $lang['notenabled']            = 'Liitännäistä %s ei voitu ottaa käyttöön. Tarkista tiedostojen oikeudet.';
 $lang['disabled']              = 'Liitännäinen %s pois käytössä';
 $lang['notdisabled']           = 'Liitännäistä %s ei voitu ottaa pois käytöstä. Tarkista tiedostojen oikeudet.';
-$lang['packageinstalled']      = 'Pluginpaketti (%d plugin%s: %s:) asennettu onnistuneesti.';
+$lang['packageinstalled']      = 'Pluginpaketti (%d plugin: %s:) asennettu onnistuneesti.';

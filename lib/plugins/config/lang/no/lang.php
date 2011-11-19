@@ -13,6 +13,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Jon Bøe <jonmagneboe@hotmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.

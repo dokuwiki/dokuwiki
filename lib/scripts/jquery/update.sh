@@ -23,3 +23,6 @@ for img in $images
 do
     wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/$img -O jquery-ui-theme/$img
 done
+
+# remove font family declarations from smoothness CSS
+sed -i "s/font-family:[^;]*; \?//" jquery-ui-theme/smoothness.css

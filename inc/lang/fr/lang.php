@@ -7,7 +7,7 @@
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
  * @author Gwenn Gueguen <contact@demisel.net>
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Fabien Chabreuil <fabien@integralpersonality.com>
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Delassaux Julien <julien@delassaux.fr>
@@ -141,7 +141,7 @@ $lang['js']['linkwiz']         = 'Assistant Lien';
 $lang['js']['linkto']          = 'Lien vers :';
 $lang['js']['del_confirm']     = 'Effacer cette entrée ?';
 $lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
-$lang['js']['restore_confirm'] = 'Voulez vous vraiment restaurer cette version?';
+$lang['js']['restore_confirm'] = 'Voulez vous vraiment restaurer cette version ?';
 $lang['js']['media_diff']      = 'Voir les différences:';
 $lang['js']['media_diff_both'] = 'Côte à côte';
 $lang['js']['media_diff_opacity'] = 'Calque';
@@ -325,16 +325,16 @@ $lang['media_edittab']         = 'Éditer';
 $lang['media_historytab']      = 'Historique';
 $lang['media_list_thumbs']     = 'Aperçus';
 $lang['media_list_rows']       = 'Lignes';
-$lang['media_sort_name']       = '<span>Tri par</span> nom';
-$lang['media_sort_date']       = '<span>Tri par</span> date';
+$lang['media_sort_name']       = 'Tri par nom';
+$lang['media_sort_date']       = 'Tri par date';
 $lang['media_namespaces']      = 'Choisissez un espace de nom';
 $lang['media_files']           = 'Fichiers présents dans';
 $lang['media_upload']          = 'Télécharger dans la catégorie <strong>%s</strong>.';
 $lang['media_search']          = 'Chercher dans la catégorie <strong>%s</strong>.';
-$lang['media_view']            = '<span class="%s">%s</span>';
+$lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s dans %s';
-$lang['media_edit']            = 'Éditer <span class="%s">%s</span>';
-$lang['media_history']         = 'Historique du <span class="%s">%s</span>';
+$lang['media_edit']            = 'Éditer %s';
+$lang['media_history']         = 'Historique du %s';
 $lang['media_meta_edited']     = 'métadonnées éditées';
 $lang['media_perm_read']       = 'Désolé, vous n\'avez pas les droits pour lire les fichiers.';
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas les droits pour télécharger des fichiers.';

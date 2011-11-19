@@ -20,6 +20,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Matthias Schulte <mailinglist@lupo49.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
+ * @author Pierre Corell <info@joomla-praxis.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -315,18 +316,22 @@ $lang['seconds']               = 'vor %d Sekunden';
 $lang['wordblock']             = 'Ihre Bearbeitung wurde nicht gespeichert, da sie gesperrten Text enthielt (Spam).';
 $lang['media_uploadtab']       = 'Hochladen';
 $lang['media_searchtab']       = 'Suchen';
+$lang['media_file']            = 'Datei';
 $lang['media_viewtab']         = 'Anzeigen';
 $lang['media_edittab']         = 'Bearbeiten';
 $lang['media_historytab']      = 'Verlauf';
-$lang['media_thumbsview']      = 'Miniaturansicht';
-$lang['media_listview']        = 'Detailansicht';
-$lang['media_sort']            = 'Sortieren';
+$lang['media_list_thumbs']     = 'Vorschaubilder';
+$lang['media_list_rows']       = 'Reihen';
 $lang['media_sort_name']       = 'nach Name';
 $lang['media_sort_date']       = 'nach Datum';
+$lang['media_namespaces']      = 'Namensraum wählen';
+$lang['media_files']           = 'Dateien in %s';
 $lang['media_upload']          = 'In den <strong>%s</strong> Namespace hochladen.';
 $lang['media_search']          = 'Im Namespace <strong>%s</strong> suchen.';
-$lang['media_edit']            = 'Bearbeiten';
-$lang['media_history']         = 'Versionsverlauf der Datei.';
+$lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s in %s';
+$lang['media_edit']            = '%s bearbeiten';
+$lang['media_history']         = 'Versionsverlauf von %s.';
 $lang['media_meta_edited']     = 'Meta-Informationen bearbeitet';
 $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigungen um die Datei anzuzeigen.';
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';

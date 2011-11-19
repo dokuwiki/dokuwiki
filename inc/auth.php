@@ -673,8 +673,14 @@ function auth_sendPassword($user,$password){
     $text = str_replace('@PASSWORD@',$password,$text);
     $text = str_replace('@TITLE@',$conf['title'],$text);
 
+    if(empty($conf['mailprefix'])) {
+        $subject = $lang['regpwmail'];
+    } else {  
+        $subject = '['.$conf['mailprefix'].'] '.$lang['regpwmail'];
+    }
+
     return mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
-            $lang['regpwmail'],
+            $subject,
             $text,
             $conf['mailfrom']);
 }
@@ -912,8 +918,14 @@ function act_resendpwd(){
         $text = str_replace('@TITLE@',$conf['title'],$text);
         $text = str_replace('@CONFIRM@',$url,$text);
 
+        if(empty($conf['mailprefix'])) {
+            $subject = $lang['regpwmail'];
+        } else {  
+            $subject = '['.$conf['mailprefix'].'] '.$lang['regpwmail'];
+        }
+        
         if(mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
-                     $lang['regpwmail'],
+                     $subject,
                      $text,
                      $conf['mailfrom'])){
             msg($lang['resendpwdconfirm'],1);

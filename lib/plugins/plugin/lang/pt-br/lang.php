@@ -61,4 +61,4 @@ $lang['enabled']               = 'O plug-in %s foi habilitado.';
 $lang['notenabled']            = 'Não foi possível habilitar o plug-in %s. Verifique as permissões de acesso.';
 $lang['disabled']              = 'O plug-in %s foi desabilitado.';
 $lang['notdisabled']           = 'Não foi possível desabilitar o plug-in %s. Verifique as permissões de acesso.';
-$lang['packageinstalled']      = 'O pacote do plugin (%d plugin%s: %s) foi instalado com sucesso.';
+$lang['packageinstalled']      = 'O pacote do plugin (%d plugin(s): %s) foi instalado com sucesso.';
