@@ -11,7 +11,7 @@ if(@file_exists(DOKU_CONF.'local.php')){ require_once(DOKU_CONF.'local.php'); }
 $conf['lang'] = 'en'; 
 define('TEST_ROOT', dirname(__FILE__));
 define('TMPL_FILESCHEME_PATH', TEST_ROOT . '/filescheme/');
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_DEPRECATED);
 
 set_time_limit(600);
 ini_set('memory_limit','128M');

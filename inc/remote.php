@@ -17,6 +17,7 @@ if (!defined('DOKU_INC')) die();
  *          'args' => array(
  *              'type' => 'string|int|...',
  *          )
+ *          'return' => 'type'
  *     )
  * )
  *
@@ -102,8 +103,20 @@ class RemoteAPI {
      */
     public function getPluginMethods() {
         if ($this->pluginMethods === null) {
-            // TODO: find plugin methods
             $this->pluginMethods = array();
+            $plugins = plugin_list('remote');
+
+            foreach ($plugins as $pluginName) {
+                $plugin = plugin_load('remote', $pluginName);
+                if (!is_subclass_of($plugin, 'DokuWiki_Remote_Plugin')) {
+                    throw new RemoteException("Plugin $pluginName dose not implement DokuWiki_Remote_Plugin");
+                }
+
+                $methods = $plugin->_getMethods();
+                foreach ($methods as $method => $meta) {
+                    $this->pluginMethods["plugin.$pluginName.$method"] = $meta;
+                }
+            }
         }
         return $this->pluginMethods;
     }
