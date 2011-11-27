@@ -62,7 +62,7 @@ $lang['youarehere']            = 'Traces hiérarchiques';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['htmlok']                = 'Permettre HTML dans les pages';
 $lang['phpok']                 = 'Permettre PHP dans les pages';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://www.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Signature';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';
 $lang['tocminheads']           = 'Nombre minimum de titres pour qu\'une table des matières soit construite';
