@@ -53,6 +53,9 @@ class PassHash {
         }elseif(substr($hash,0,6) == '{SSHA}'){
             $method = 'ssha';
             $salt   = substr(base64_decode(substr($hash, 6)),20);
+        }elseif(substr($hash,0,6) == '{SMD5}'){
+            $method = 'lsmd5';
+            $salt   = substr(base64_decode(substr($hash, 6)),16);
         }elseif($len == 32){
             $method = 'md5';
         }elseif($len == 40){
@@ -132,6 +135,20 @@ class PassHash {
             return $this->hash_apr1($clear, $salt, '1');
         }
     }
+
+
+    /**
+     * Password hashing method 'lsmd5'
+     *
+     * Uses salted MD5 hashs. Salt is 8 bytes long.
+     *
+     * This is the format used by LDAP.
+     */
+    public function hash_lsmd5($clear, $salt=null){
+        $this->init_salt($salt,8);
+        return "{SMD5}".base64_encode(md5($clear.$salt, true).$salt);
+    }
+
 
     /**
      * Password hashing method 'apr1'

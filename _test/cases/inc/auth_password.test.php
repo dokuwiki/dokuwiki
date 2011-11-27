@@ -12,6 +12,7 @@ class auth_password_test extends UnitTestCase {
         'md5'   => '8fa22d62408e5351553acdd91c6b7003',
         'sha1'  => 'b456d3b0efd105d613744ffd549514ecafcfc7e1',
         'ssha'  => '{SSHA}QMHG+uC7bHNYKkmoLbNsNI38/dJhYmNk',
+        'lsmd5' => '{SMD5}HGbkPrkWgy9KgcRGWlrsUWFiY2RlZmdo',
         'crypt' => 'ablvoGr1hvZ5k',
         'mysql' => '4a1fa3780bd6fd55',
         'my411' => '*e5929347e25f82e19e4ebe92f1dc6b6e7c2dbd29',
