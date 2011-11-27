@@ -647,7 +647,11 @@ function media_tabs_details($image, $selected_tab = ''){
 function media_tab_files_options(){
     global $lang, $NS;
     $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
-                                'action' => media_managerURL(array(), '&')));
+                                'action' => wl($ID)));
+    $media_manager_params = media_managerURL(array(), '', false, true);
+    foreach($media_manager_params as $pKey => $pVal){
+        $form->addHidden($pKey, $pVal);
+    }
     $form->addHidden('sectok', null);
     if (isset($_REQUEST['q'])) {
         $form->addHidden('q', $_REQUEST['q']);
@@ -698,7 +702,11 @@ function _media_get_display_param($param, $values) {
         // FIXME: Set cookie
         return $_REQUEST[$param];
     } else {
-        return get_doku_pref($param, $values['default']);
+        $val = get_doku_pref($param, $values['default']);
+        if (!in_array($val, $values)) {
+            $val = $values['default'];
+        }
+        return $val;
     }
 }
 
@@ -1354,6 +1362,20 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     $link = ml($item['id'],'',true);
     echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
         'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+
+    // mediamanager button
+    $link = wl('',array('do'=>'media','image'=>$item['id']));
+    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/mediamanager.png" '.
+        'alt="'.$lang['btn_media'].'" title="'.$lang['btn_media'].'" class="btn" /></a>';
+
+    // delete button
+    if($item['writable'] && $auth >= AUTH_DELETE){
+        $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
+            '&amp;sectok='.getSecurityToken();
+        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
+            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
+            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
+    }
 
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
     echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';

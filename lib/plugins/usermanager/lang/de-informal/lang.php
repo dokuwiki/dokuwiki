@@ -7,6 +7,7 @@
  * @author Marcel Metz <marcel_metz@gmx.de>
  * @author Matthias Schulte <post@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Pierre Corell <info@joomla-praxis.de>
  */
 $lang['menu']                  = 'Benutzerverwalter';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
@@ -47,5 +48,5 @@ $lang['note_group']            = 'Neue Benutzer werden zur Standardgruppe (%s) h
 $lang['note_pass']             = 'Das Passwort wird automatisch erzeugt, wenn das Feld freigelassen wird und der Benutzer Benachrichtigungen aktiviert hat.';
 $lang['add_ok']                = 'Benutzer erfolgreich hinzugefügt';
 $lang['add_fail']              = 'Hinzufügen des Benutzers fehlgeschlagen';
-$lang['notify_ok']             = 'Benachrichtigungsemail wurde versendet';
-$lang['notify_fail']           = 'Benachrichtigungsemail konnte nicht gesendet werden';
+$lang['notify_ok']             = 'Benachrichtigungs-Mail wurde versendet';
+$lang['notify_fail']           = 'Benachrichtigungse-Mail konnte nicht gesendet werden';

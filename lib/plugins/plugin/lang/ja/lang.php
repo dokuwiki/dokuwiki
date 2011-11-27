@@ -53,4 +53,4 @@ $lang['enabled']               = 'プラグイン %s が有効です。';
 $lang['notenabled']            = 'プラグイン %s を有効にすることができません。権限を確認してください。';
 $lang['disabled']              = 'プラグイン %s が無効です。';
 $lang['notdisabled']           = 'プラグイン %s を無効にすることができません。権限を確認してください。';
-$lang['packageinstalled']      = 'プラグインパッケージ（%d plugin%s: %s）は正しくインストールされました。';
+$lang['packageinstalled']      = 'プラグインパッケージ（%d plugin(s): %s）は正しくインストールされました。';

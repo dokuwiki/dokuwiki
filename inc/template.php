@@ -480,10 +480,15 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
             $linktarget = wl($id, $params);
         }
         $caption = $lang['btn_' . $type];
+        $akey = $addTitle = '';
+        if($accesskey){
+            $akey = 'accesskey="'.$accesskey.'" ';
+            $addTitle = ' ['.strtoupper($accesskey).']';
+        }
         $out = tpl_link($linktarget, $pre.(($inner)?$inner:$caption).$suf,
                         'class="action ' . $type . '" ' .
-                        'accesskey="' . $accesskey . '" rel="nofollow" ' .
-                        'title="' . hsc($caption) . '"', 1);
+                        $akey . 'rel="nofollow" ' .
+                        'title="' . hsc($caption).$addTitle . '"', 1);
     }
     if ($return) return $out;
     echo $out;
@@ -625,10 +630,6 @@ function tpl_get_action($type) {
             if(!isset($_SERVER['REMOTE_USER'])){
                 return false;
             }
-            break;
-        case 'subscribens':
-            // Superseded by subscribe/subscription
-            return '';
             break;
         case 'media':
             break;

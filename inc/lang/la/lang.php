@@ -125,7 +125,6 @@ Adhuc transcribere nexum potes.';
 $lang['js']['linkwiz']         = 'Connectendi ductor';
 $lang['js']['linkto']          = 'Nexum ad:';
 $lang['js']['del_confirm']     = 'Delere electas res uin?';
-$lang['js']['mu_btn']          = 'Plura documenta uno tempore onerare';
 $lang['rssfailed']             = 'Error in restituendo ';
 $lang['nothingfound']          = 'Nihil inuentum est.';
 $lang['mediaselect']           = 'Documenta uisiua:';
@@ -223,7 +222,7 @@ $lang['subscr_subscribe_noaddress'] = 'Cursus interretialis tuus deest, sic in i
 $lang['subscr_unsubscribe_success'] = 'A subscriptione %s deletur quod %s';
 $lang['subscr_unsubscribe_error'] = 'Error delendi %s a subscriptione quod %s';
 $lang['subscr_already_subscribed'] = '%s iam subscriptus\a est in %s';
-$lang['subscr_not_subscribed'] = '%s non subscriptus\a est in %n';
+$lang['subscr_not_subscribed'] = '%s non subscriptus\a est in %s';
 $lang['subscr_m_not_subscribed'] = 'Non hanc paginam uel genus subscribere potes.';
 $lang['subscr_m_new_header']   = 'Subscriptionem addere';
 $lang['subscr_m_current_header'] = 'haec subscriptio:';

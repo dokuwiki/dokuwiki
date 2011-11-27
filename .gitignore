@@ -20,6 +20,8 @@
 /data/index/*
 /data/locks/*
 /data/media/*
+/data/media_meta/*
+/data/media_attic/*
 /data/meta/*
 /data/pages/*
 /data/tmp/*

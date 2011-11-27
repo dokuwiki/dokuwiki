@@ -145,7 +145,6 @@ Lo que sí puedes hacer es copiar y pegar el enlace.';
 $lang['js']['linkwiz']         = 'Asistente de enlaces';
 $lang['js']['linkto']          = 'Enlazar a:';
 $lang['js']['del_confirm']     = '¿Quieres realmente borrar lo seleccionado?';
-$lang['js']['mu_btn']          = 'Subir varios archivos a la vez';
 $lang['js']['restore_confirm'] = '¿Estás seguro de querer restaurar esta versión?';
 $lang['js']['media_diff']      = 'Ver diferencias:';
 $lang['js']['media_diff_both'] = 'Lado por lado';

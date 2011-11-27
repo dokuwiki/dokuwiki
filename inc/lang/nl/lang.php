@@ -134,7 +134,6 @@ Je kan de link wel kopiëren en plakken.';
 $lang['js']['linkwiz']         = 'Linkwizard';
 $lang['js']['linkto']          = 'Link naar:';
 $lang['js']['del_confirm']     = 'Item(s) verwijderen?';
-$lang['js']['mu_btn']          = 'Meerdere files tegelijk uploaden';
 $lang['js']['restore_confirm'] = 'Werkelijk deze versie terugzetten?';
 $lang['js']['media_diff']      = 'Verschillen bekijken:';
 $lang['js']['media_diff_both'] = 'Naast elkaar';

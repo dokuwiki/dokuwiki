@@ -1,6 +1,6 @@
 Hei!
 
-Sida @PAGE@ på wikien @TITLE@ har blitt endra.
+Siden @PAGE@ på wikien @TITLE@ har blitt endret.
 Her er endringene:
 
 --------------------------------------------------------
@@ -10,10 +10,10 @@ Her er endringene:
 Gammel versjon : @OLDPAGE@
 Ny versjon: @NEWPAGE@
 
-For å avslutte varslinga, logg inn på
+For å avslutte varslingen, logg inn på
 @DOKUWIKIURL@ og gå til 
 @NEWPAGE@
-og avslutt abonnementet på endringer av sida eller i navnerommet.
+og avslutt abonnementet på endringer av siden eller i navnerommet.
 
 --
 Denne e-posten ble generert av DokuWiki på

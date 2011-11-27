@@ -122,7 +122,6 @@ Esteka kopiatu eta itsatsi dezakezu dena den.';
 $lang['js']['linkwiz']         = 'Estekatze Laguntzailea';
 $lang['js']['linkto']          = 'Estekatu hona:';
 $lang['js']['del_confirm']     = 'Benetan ezabatu aukeratutako fitxategia(k)?';
-$lang['js']['mu_btn']          = 'Igo hainbat fitxategi aldi berean';
 $lang['rssfailed']             = 'Errorea gertatu da feed hau irakurtzean:';
 $lang['nothingfound']          = 'Ez da ezer aurkitu.';
 $lang['mediaselect']           = 'Aukeratu Multimedia fitxategia';

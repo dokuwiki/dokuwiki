@@ -2,4 +2,4 @@
 
 Ekzistas pli nova versio de la dokumento. Tio okazas kiam iu alia uzanto ŝanĝigis enhavon de la dokumento dum vi redaktis ĝin.
 
-Atente esploru distingojn kaj decidu kiun version vi tenigos. Se vi premos ''Konservi'', do via versio estos konservita. Presonte butonon ''Rezigni'' vi tenos la kurantan version.
+Atente esploru distingojn kaj decidu kiun version vi tenigos. Se vi premos '&quot;Konservi'&quot;, do via versio estos konservita. Presonte butonon '&quot;Rezigni&quot; vi tenos la kurantan version.
