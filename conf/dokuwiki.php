@@ -18,6 +18,7 @@ $conf['dmode']       = 0755;              //set directory creation mode
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
+$conf['cookiedir']   = '';                //Cookie path. Leave blank for using baseurl.
 $conf['savedir']     = './data';          //where to store all the files
 $conf['allowdebug']  = 0;                 //allow debug output, enable if needed 0|1
 $conf['mediarevisions'] = 1;              //enable/disable media revisions
