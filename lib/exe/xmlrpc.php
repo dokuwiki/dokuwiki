@@ -311,7 +311,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return new IXR_Error(1, 'The requested file does not exist');
 
         $data = io_readFile($file, false);
-        $base64 = base64_encode($data);
+        $base64 = new IXR_Base64($data);
         return $base64;
     }
 
