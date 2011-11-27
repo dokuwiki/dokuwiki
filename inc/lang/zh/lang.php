@@ -14,6 +14,7 @@
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  * @author lainme993@gmail.com
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -315,18 +316,22 @@ $lang['seconds']               = '%d秒前';
 $lang['wordblock']             = '您的更改没有被保存，因为它包含被屏蔽的文字（垃圾信息）。';
 $lang['media_uploadtab']       = '上传';
 $lang['media_searchtab']       = '搜索';
+$lang['media_file']            = '文件';
 $lang['media_viewtab']         = '查看';
 $lang['media_edittab']         = '编辑';
 $lang['media_historytab']      = '历史';
-$lang['media_thumbsview']      = '缩略图';
-$lang['media_listview']        = '列表';
-$lang['media_sort']            = '排序';
+$lang['media_list_thumbs']     = '缩图';
+$lang['media_list_rows']       = '列表';
 $lang['media_sort_name']       = '按名称';
 $lang['media_sort_date']       = '按日期';
+$lang['media_namespaces']      = '选择命名空间';
+$lang['media_files']           = '在 %s 中的文件';
 $lang['media_upload']          = '上传到 <strong>%s</strong> 命名空间。';
 $lang['media_search']          = '在 <strong>%s</strong> 命名空间中搜索。';
-$lang['media_edit']            = '编辑';
-$lang['media_history']         = '这些是文件的旧版本。';
+$lang['media_view']            = '%s 在 %s';
+$lang['media_viewold']         = '%s ';
+$lang['media_edit']            = '编辑 %s';
+$lang['media_history']         = '%s 的历史纪录';
 $lang['media_meta_edited']     = '元数据已编辑';
 $lang['media_perm_read']       = '抱歉，您没有足够权限读取这些文件。';
 $lang['media_perm_upload']     = '抱歉，您没有足够权限来上传文件。';
