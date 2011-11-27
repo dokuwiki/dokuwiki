@@ -57,4 +57,4 @@ $lang['enabled']               = 'Plugin %s ingeschakeld.';
 $lang['notenabled']            = 'Plugin %s kon niet worden ingeschakeld, controleer bestandsrechten.';
 $lang['disabled']              = 'Plugin %s uitgeschakeld.';
 $lang['notdisabled']           = 'Plugin %s kon niet worden uitgeschakeld, controleer bestandsrechten.';
-$lang['packageinstalled']      = 'Plugin package (%d plugin(s): %s) succesvol geïnstalleerd.';
+$lang['packageinstalled']      = 'Plugin package (%d plugin%s: %s) succesvol geïnstalleerd.';

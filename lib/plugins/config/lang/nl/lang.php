@@ -119,6 +119,7 @@ $lang['jpg_quality']           = 'JPG compressiekwaliteit (0-100)';
 $lang['subscribers']           = 'Ondersteuning pagina-inschrijving aanzetten';
 $lang['subscribe_time']        = 'Inschrijvingsmeldingen en samenvattingen worden na deze tijdsduur (in seconden) verzonden. Deze waarde dient kleiner te zijn dan de tijd ingevuld bij "Hoeveel recente wijzigingen bewaren (dagen)"';
 $lang['compress']              = 'Compacte CSS en javascript output';
+$lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. Deze techniek werkt niet in IE7 en ouder! <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
 $lang['hidepages']             = 'Verberg deze pagina\'s (regular expressions)';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
 $lang['sitemap']               = 'Genereer Google sitemap (dagen)';
