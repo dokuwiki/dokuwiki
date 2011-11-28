@@ -131,3 +131,4 @@ class RemoteAPI {
 
 
 class RemoteException extends Exception {}
+class RemoteAccessDenied extends RemoteException {}

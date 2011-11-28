@@ -21,6 +21,7 @@ if(!$conf['xmlrpc']) die('XML-RPC server not enabled.');
 class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     var $methods       = array();
     var $public_methods = array();
+    var $remote;
 
     /**
      * Checks if the current user is allowed to execute non anonymous methods
@@ -67,6 +68,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Constructor. Register methods and run Server
      */
     function dokuwiki_xmlrpc_server(){
+        $this->remote = new RemoteAPI();
         $this->IXR_IntrospectionServer();
 
         /* DokuWiki's own methods */
@@ -284,15 +286,10 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * Return a raw wiki page
      */
     function rawPage($id,$rev=''){
-        $id = cleanID($id);
-        if(auth_quickaclcheck($id) < AUTH_READ){
+        try {
+            return $this->remote->rawPage($id, $rev);
+        } catch(RemoteAccessDenied $e) {
             return new IXR_Error(1, 'You are not allowed to read this page');
-        }
-        $text = rawWiki($id,$rev);
-        if(!$text) {
-            return pageTemplate($id);
-        } else {
-            return $text;
         }
     }
 
