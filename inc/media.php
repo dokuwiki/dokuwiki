@@ -108,7 +108,7 @@ function media_metaform($id,$auth){
     $src = mediaFN($id);
 
     // output
-    $form = new Doku_Form(array('action' => media_managerURL(array('tab_details' => 'view')),
+    $form = new Doku_Form(array('action' => media_managerURL(array('tab_details' => 'view'), '&'),
                                 'class' => 'meta'));
     $form->addHidden('img', $id);
     $form->addHidden('mediado', 'save');
