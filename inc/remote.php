@@ -92,7 +92,7 @@ class RemoteAPI {
      * @throws RemoteException On denied access.
      * @return void
      */
-    private function forceAccess() {
+    public function forceAccess() {
         if (!$this->hasAccess()) {
             throw new RemoteException('Access denied');
         }
