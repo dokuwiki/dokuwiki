@@ -257,7 +257,7 @@ function ajax_mediaupload(){
         $id = $_GET['qqfile'];
     }
 
-    $id = cleanID($id, false, true);
+    $id = cleanID($id);
 
     $NS = $_REQUEST['ns'];
     $ns = $NS.':'.getNS($id);

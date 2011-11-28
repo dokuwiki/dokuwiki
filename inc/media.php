@@ -332,7 +332,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     global $lang, $conf;
 
     // get filename
-    $id   = cleanID($id,false,true);
+    $id   = cleanID($id);
     $fn   = mediaFN($id);
 
     // get filetype regexp
