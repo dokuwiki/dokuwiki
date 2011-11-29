@@ -286,7 +286,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function rawPage($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            return new IXR_Error(1, 'You are not allowed to read this page');
+            return new IXR_Error(111, 'You are not allowed to read this page');
         }
         $text = rawWiki($id,$rev);
         if(!$text) {
@@ -304,11 +304,11 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function getAttachment($id){
         $id = cleanID($id);
         if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
-            return new IXR_Error(1, 'You are not allowed to read this file');
+            return new IXR_Error(211, 'You are not allowed to read this file');
 
         $file = mediaFN($id);
         if (!@ file_exists($file))
-            return new IXR_Error(1, 'The requested file does not exist');
+            return new IXR_Error(221, 'The requested file does not exist');
 
         $data = io_readFile($file, false);
         $base64 = new IXR_Base64($data);
@@ -342,7 +342,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function htmlPage($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            return new IXR_Error(1, 'You are not allowed to read this page');
+            return new IXR_Error(111, 'You are not allowed to read this page');
         }
         return p_wiki_xhtml($id,$rev,false);
     }
@@ -462,7 +462,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             }
             return $data;
         } else {
-            return new IXR_Error(1, 'You are not allowed to list media files.');
+            return new IXR_Error(215, 'You are not allowed to list media files.');
         }
     }
 
@@ -479,12 +479,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function pageInfo($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            return new IXR_Error(1, 'You are not allowed to read this page');
+            return new IXR_Error(111, 'You are not allowed to read this page');
         }
         $file = wikiFN($id,$rev);
         $time = @filemtime($file);
         if(!$time){
-            return new IXR_Error(10, 'The requested page does not exist');
+            return new IXR_Error(121, 'The requested page does not exist');
         }
 
         $info = getRevisionInfo($id, $time, 1024);
@@ -515,22 +515,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $minor = $params['minor'];
 
         if(empty($id))
-            return new IXR_Error(1, 'Empty page ID');
+            return new IXR_Error(131, 'Empty page ID');
 
         if(!page_exists($id) && trim($TEXT) == '' ) {
-            return new IXR_ERROR(1, 'Refusing to write an empty new wiki page');
+            return new IXR_ERROR(132, 'Refusing to write an empty new wiki page');
         }
 
         if(auth_quickaclcheck($id) < AUTH_EDIT)
-            return new IXR_Error(1, 'You are not allowed to edit this page');
+            return new IXR_Error(112, 'You are not allowed to edit this page');
 
         // Check, if page is locked
         if(checklock($id))
-            return new IXR_Error(1, 'The page is currently locked');
+            return new IXR_Error(133, 'The page is currently locked');
 
         // SPAM check
         if(checkwordblock())
-            return new IXR_Error(1, 'Positive wordblock check');
+            return new IXR_Error(134, 'Positive wordblock check');
 
         // autoset summary on new pages
         if(!page_exists($id) && empty($sum)) {
@@ -635,7 +635,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function listLinks($id) {
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            return new IXR_Error(1, 'You are not allowed to read this page');
+            return new IXR_Error(111, 'You are not allowed to read this page');
         }
         $links = array();
 
@@ -684,7 +684,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function getRecentChanges($timestamp) {
         if(strlen($timestamp) != 10)
-            return new IXR_Error(20, 'The provided value is not a valid timestamp');
+            return new IXR_Error(311, 'The provided value is not a valid timestamp');
 
         $recents = getRecentsSince($timestamp);
 
@@ -705,7 +705,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return $changes;
         } else {
             // in case we still have nothing at this point
-            return new IXR_Error(30, 'There are no changes in the specified timeframe');
+            return new IXR_Error(321, 'There are no changes in the specified timeframe');
         }
     }
 
@@ -717,7 +717,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function getRecentMediaChanges($timestamp) {
         if(strlen($timestamp) != 10)
-            return new IXR_Error(20, 'The provided value is not a valid timestamp');
+            return new IXR_Error(311, 'The provided value is not a valid timestamp');
 
         $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
 
@@ -738,7 +738,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
             return $changes;
         } else {
             // in case we still have nothing at this point
-            return new IXR_Error(30, 'There are no changes in the specified timeframe');
+            return new IXR_Error(321, 'There are no changes in the specified timeframe');
         }
     }
 
@@ -750,14 +750,14 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
     function pageVersions($id, $first) {
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            return new IXR_Error(1, 'You are not allowed to read this page');
+            return new IXR_Error(111, 'You are not allowed to read this page');
         }
         global $conf;
 
         $versions = array();
 
         if(empty($id))
-            return new IXR_Error(1, 'Empty page ID');
+            return new IXR_Error(131, 'Empty page ID');
 
         $revisions = getRevisions($id, $first, $conf['recent']+1);
 
