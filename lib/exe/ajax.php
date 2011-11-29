@@ -53,6 +53,8 @@ function ajax_qsearch(){
     $query = $_POST['q'];
     if(empty($query)) $query = $_GET['q'];
     if(empty($query)) return;
+    
+    $query = urldecode($query);
 
     $data = ft_pageLookup($query, true, useHeading('navigation'));
 
