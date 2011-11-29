@@ -575,7 +575,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         $auth = auth_quickaclcheck(getNS($id).':*');
 
         if(!isset($id)) {
-            return new IXR_ERROR(1, 'Filename not given.');
+            return new IXR_ERROR(231, 'Filename not given.');
         }
 
         global $conf;
@@ -611,11 +611,11 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         if ($res & DOKU_MEDIA_DELETED) {
             return 0;
         } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
-            return new IXR_ERROR(1, "You don't have permissions to delete files.");
+            return new IXR_ERROR(212, "You don't have permissions to delete files.");
         } elseif ($res & DOKU_MEDIA_INUSE) {
-            return new IXR_ERROR(1, 'File is still referenced');
+            return new IXR_ERROR(232, 'File is still referenced');
         } else {
-            return new IXR_ERROR(1, 'Could not delete file');
+            return new IXR_ERROR(233, 'Could not delete file');
         }
     }
 
