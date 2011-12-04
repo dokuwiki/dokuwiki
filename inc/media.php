@@ -1364,7 +1364,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
         'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
 
     // mediamanager button
-    $link = wl('',array('do'=>'media','image'=>$item['id']));
+    $link = wl('',array('do'=>'media','image'=>$item['id'],'ns'=>getNS($item['id'])));
     echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/mediamanager.png" '.
         'alt="'.$lang['btn_media'].'" title="'.$lang['btn_media'].'" class="btn" /></a>';
 
