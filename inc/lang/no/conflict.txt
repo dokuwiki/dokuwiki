@@ -1,6 +1,6 @@
 ====== Det finnes en nyere versjon ======
 
-Det fins en nyere versjon av dokumentet du har redigert. Dette kan skje når en annen bruker redigerer dokumentet samtidig med deg.
+Det fins en nyere utgave av dokumentet du har redigert. Dette kan skje når en annen bruker redigerer dokumentet samtidig med deg.
 
 Legg nøye merke til forskjellene som vises under, og velg deretter hvilken versjon du vil beholde. Om du velger ''**Lagre**'', så kommer din versjon til å lagres. Velg ''**Avbryt**'' for å beholde den nyeste versjonen (ikke din).
 

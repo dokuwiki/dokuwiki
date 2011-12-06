@@ -14,6 +14,7 @@
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
  * @author Jon Bøe <jonmagneboe@hotmail.com>
+ * @author Egil Hansen <egil@rosetta.no>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -24,10 +25,10 @@ $lang['locked']                = 'Innstillingene kan ikke oppdateres. Hvis dette
 forsikre deg om at fila med de lokale innstillingene har korrekt filnavn<br/>
 og tillatelser.';
 $lang['danger']                = 'Advarsel: Endrig av dette valget kan føre til at wiki og konfigurasjon menyen ikke blir tilgjengelig.';
-$lang['warning']               = 'Advarsel: Endring av dette valget kan føre til utilsiktede atferd.
+$lang['warning']               = 'Advarsel: Endring av dette valget kan føre til utilsiktet atferd.
 
 ';
-$lang['security']              = 'Sikkerhets Advarsel: Endring av dette valget kan føre til sikkerhetsrisiko.';
+$lang['security']              = 'Sikkerhetsadvarsel: Endring av dette valget kan innebære en sikkerhetsrisiko.';
 $lang['_configuration_manager'] = 'Konfigurasjonsinnstillinger';
 $lang['_header_dokuwiki']      = 'Innstillinger for DokuWiki';
 $lang['_header_plugin']        = 'Innstillinger for tillegg';
@@ -36,10 +37,10 @@ $lang['_header_undefined']     = 'Udefinerte innstillinger';
 $lang['_basic']                = 'Grunnleggende innstillinger';
 $lang['_display']              = 'Innstillinger for visning av sider';
 $lang['_authentication']       = 'Innstillinger for autentisering';
-$lang['_anti_spam']            = 'Motsøppel-innstillinger';
+$lang['_anti_spam']            = 'Anti-Spam innstillinger';
 $lang['_editing']              = 'Innstillinger for redigering';
 $lang['_links']                = 'Innstillinger for lenker';
-$lang['_media']                = 'Innstillinger for media-filer';
+$lang['_media']                = 'Innstillinger for mediafiler';
 $lang['_advanced']             = 'Avanserte innstillinger';
 $lang['_network']              = 'Nettverksinnstillinger';
 $lang['_plugin_sufix']         = '&ndash; innstillinger for tillegg';
@@ -77,6 +78,7 @@ $lang['useheading']            = 'Bruk første overskrift som tittel';
 $lang['refcheck']              = 'Sjekk referanser før mediafiler slettes';
 $lang['refshow']               = 'Antall viste referanser til mediafiler';
 $lang['allowdebug']            = 'Tillat feilsøking <b>skru av om det ikke behøves!</b>';
+$lang['mediarevisions']        = 'Slå på mediaversjonering?';
 $lang['usewordblock']          = 'Blokker søppel basert på ordliste';
 $lang['indexdelay']            = 'Forsinkelse før indeksering (sekunder)';
 $lang['relnofollow']           = 'Bruk rel="nofollow" på eksterne lenker';
@@ -193,10 +195,10 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3']         = 'Priprietær Nginx X-Accel-Redirect header';
 $lang['showuseras_o_loginname'] = 'Brukernavn';
 $lang['showuseras_o_username'] = 'Brukerens fulle navn';
-$lang['showuseras_o_email']    = 'Brukerens epostadresse (tilpasset i henhold til mailguar-instilling)';
+$lang['showuseras_o_email']    = 'Brukerens e-postadresse (tilpasset i henhold til mailguar-instilling)';
 $lang['showuseras_o_email_link'] = 'Brukerens epost-addresse som "mailto:"-lenke';
 $lang['useheading_o_0']        = 'Aldri';
 $lang['useheading_o_navigation'] = 'Kun navigering';
 $lang['useheading_o_content']  = 'Kun wiki-innhold';
 $lang['useheading_o_1']        = 'Alltid';
-$lang['readdircache']          = 'Maksimal alder for mellomlagring av mappa med søkeindekser (sekunder)';
+$lang['readdircache']          = 'Maksimal alder for mellomlagring av mappen med søkeindekser (sekunder)';
