@@ -1,8 +1,73 @@
 <?php
 
 require_once DOKU_INC . 'inc/init.php';
+require_once DOKU_INC . 'inc/RemoteAPICore.php';
 
 Mock::generate('Doku_Plugin_Controller');
+
+class RemoteAPICoreTest {
+
+    function __getRemoteInfo() {
+        return array(
+            'wiki.stringTestMethod' => array(
+                'args' => array(),
+                'return' => 'string',
+                'doc' => 'Test method',
+                'name' => 'stringTestMethod',
+            ), 'wiki.intTestMethod' => array(
+                'args' => array(),
+                'return' => 'int',
+                'doc' => 'Test method',
+                'name' => 'intTestMethod',
+            ), 'wiki.floatTestMethod' => array(
+                'args' => array(),
+                'return' => 'float',
+                'doc' => 'Test method',
+                'name' => 'floatTestMethod',
+            ), 'wiki.dateTestMethod' => array(
+                'args' => array(),
+                'return' => 'date',
+                'doc' => 'Test method',
+                'name' => 'dateTestMethod',
+            ), 'wiki.fileTestMethod' => array(
+                'args' => array(),
+                'return' => 'file',
+                'doc' => 'Test method',
+                'name' => 'fileTestMethod',
+            ), 'wiki.voidTestMethod' => array(
+                'args' => array(),
+                'return' => 'void',
+                'doc' => 'Test method',
+                'name' => 'voidTestMethod',
+            ),  'wiki.oneStringArgMethod' => array(
+                'args' => array('string'),
+                'return' => 'string',
+                'doc' => 'Test method',
+                'name' => 'oneStringArgMethod',
+            ), 'wiki.twoArgMethod' => array(
+                'args' => array('string', 'int'),
+                'return' => 'array',
+                'doc' => 'Test method',
+                'name' => 'twoArgMethod',
+            ), 'wiki.twoArgWithDefaultArg' => array(
+                'args' => array('string', 'string'),
+                'return' => 'string',
+                'doc' => 'Test method',
+                'name' => 'twoArgWithDefaultArg',
+            ),
+        );
+    }
+    function stringTestMethod() { return 'success'; }
+    function intTestMethod() { return 42; }
+    function floatTestMethod() { return 3.14159265; }
+    function dateTestMethod() { return 2623452346; }
+    function fileTestMethod() { return 'file content'; }
+    function voidTestMethod() { return null; }
+    function oneStringArgMethod($arg) {return $arg; }
+    function twoArgMethod($string, $int) { return array($string, $int); }
+    function twoArgWithDefaultArg($string1, $string2 = 'default') { return array($string1, $string2); }
+
+}
 
 class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
     function _getMethods() {
@@ -73,5 +138,42 @@ class remote_test extends UnitTestCase {
         $conf['remote'] = 0;
         $this->expectException('RemoteException');
         $this->remote->forceAccess();
+    }
+
+    function test_generalCoreFunctionWithoutArguments() {
+        global $conf;
+        $conf['remote'] = 1;
+        $remoteApi = new RemoteApi();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        $this->assertEqual($remoteApi->call('wiki.stringTestMethod'), 'success');
+        $this->assertEqual($remoteApi->call('wiki.intTestMethod'), 42);
+        $this->assertEqual($remoteApi->call('wiki.floatTestMethod'), 3.14159265);
+        $this->assertEqual($remoteApi->call('wiki.dateTestMethod'), 2623452346);
+        $this->assertEqual($remoteApi->call('wiki.fileTestMethod'), 'file content');
+        $this->assertEqual($remoteApi->call('wiki.voidTestMethod'), null);
+    }
+
+    function test_generalCoreFunctionOnArgumentMismatch() {
+        global $conf;
+        $conf['remote'] = 1;
+        $remoteApi = new RemoteApi();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        $this->expectException('RemoteException');
+        $remoteApi->call('wiki.voidTestMethod', array('something'));
+    }
+
+    function test_generalCoreFunctionWithArguments() {
+        global $conf;
+        $conf['remote'] = 1;
+
+        $remoteApi = new RemoteApi();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        $this->assertEqual($remoteApi->call('wiki.oneStringArgMethod', array('string')), 'string');
+        $this->assertEqual($remoteApi->call('wiki.twoArgMethod', array('string', 1)), array('string' , 1));
+        $this->assertEqual($remoteApi->call('wiki.twoArgWithDefaultArg', array('string')), array('string', 'default'));
+        $this->assertEqual($remoteApi->call('wiki.twoArgWithDefaultArg', array('string', 'another')), array('string', 'another'));
     }
 }

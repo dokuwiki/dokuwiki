@@ -2,6 +2,9 @@
 
 if (!defined('DOKU_INC')) die();
 
+class RemoteException extends Exception {}
+class RemoteAccessDenied extends RemoteException {}
+
 /**
  * This class provides information about remote access to the wiki.
  *
@@ -13,11 +16,16 @@ if (!defined('DOKU_INC')) die();
  * == Information structure ==
  * The information about methods will be given in an array with the following structure:
  * array(
- *     'method.name' => array(
+ *     'method.remoteName' => array(
  *          'args' => array(
- *              'type' => 'string|int|...',
+ *              'name' => array(
+ *                  'type' => 'string|int|...|date|file',
+ *                  ['doc' = 'argument documentation'],
+ *              ),
  *          )
- *          'return' => 'type'
+ *          'name' => 'method name in class',
+ *          'return' => 'type',
+*          ['doc' = 'method documentation'],
  *     )
  * )
  *
@@ -35,9 +43,9 @@ if (!defined('DOKU_INC')) die();
 class RemoteAPI {
 
     /**
-     * @var array remote methods provided by dokuwiki.
+     * @var RemoteAPICore
      */
-    private $coreMethods = array();
+    private $coreMethods = null;
 
     /**
      * @var array remote methods provided by dokuwiki plugins - will be filled lazy via
@@ -62,19 +70,36 @@ class RemoteAPI {
      * @param array $args arguments to pass to the given method
      * @return mixed result of method call, must be a primitive type.
      */
-    public function call($method, $args) {
+    public function call($method, $args = array()) {
         $this->forceAccess();
-        $method = explode('.', $method);
-        if ($method[0] === 'plugin') {
-            $plugin = plugin_load('remote', $method[1]);
+        list($type, $pluginName, $call) = explode('.', $method, 3);
+        if ($type === 'plugin') {
+            $plugin = plugin_load('remote', $pluginName);
             if (!$plugin) {
-                throw new RemoteException('Method unavailable');
+                throw new RemoteException('Method dose not exists');
             }
-            return call_user_func_array(array($plugin, $method[2]), $args);
+            return call_user_func_array(array($plugin, $call), $args);
         } else {
-            // TODO call core method
+            $coreMethods = $this->getCoreMethods();
+            if (!isset($coreMethods[$method])) {
+                throw new RemoteException('Method dose not exists');
+            }
+            $this->checkArgumentLength($coreMethods[$method], $args);
+            return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
         }
+    }
 
+    private function checkArgumentLength($method, $args) {
+        if (count($method['args']) < count($args)) {
+            throw new RemoteException('Method dose not exists - wrong parameter count.');
+        }
+    }
+
+    private function getMethodName($methodMeta, $method) {
+        if (isset($methodMeta[$method]['name'])) {
+            return $methodMeta[$method]['name'];
+        }
+        return $method;
     }
 
     /**
@@ -122,13 +147,18 @@ class RemoteAPI {
     }
 
     /**
+     * @param RemoteAPICore $apiCore this parameter is used for testing. Here you can pass a non-default RemoteAPICore
+     *                               instance. (for mocking)
      * @return array all core methods.
      */
-    public function getCoreMethods() {
-        return $this->coreMethods;
+    public function getCoreMethods($apiCore = null) {
+        if ($this->coreMethods === null) {
+            if ($apiCore === null) {
+                $this->coreMethods = new RemoteAPICore();
+            } else {
+                $this->coreMethods = $apiCore;
+            }
+        }
+        return $this->coreMethods->__getRemoteInfo();
     }
 }
-
-
-class RemoteException extends Exception {}
-class RemoteAccessDenied extends RemoteException {}

@@ -2,6 +2,47 @@
 
 class RemoteAPICore {
 
+    function __getRemoteInfo() {
+        return array(
+            'wiki.getPage' => array(
+                'args' => array(
+                    'id' => array(
+                        'type' => 'string',
+                        'doc' => 'wiki page id'
+                    ),
+                ),
+                'return' => 'string',
+                'doc' => 'Return a raw wiki page',
+                'name' => 'rawPage',
+            ),
+            'wiki.getPageVersion' => array(
+                'args' => array(
+                    'id' => array(
+                        'type' => 'string',
+                        'doc' => 'wiki page id'
+                    ),
+                    'rev' => array(
+                        'type' => 'int',
+                        'doc' => 'revision number of the page',
+                    ),
+                ),
+                'name' => 'rawPage',
+                'return' => 'string',
+                'doc' => 'Return a raw wiki page'
+            ),
+            'wiki.getAttachment' => array(
+                'args' => array(
+                    'type' => 'string',
+                    'doc' => 'file id',
+                ),
+                'doc' => 'Return a media file',
+                'return' => 'file',
+                'name' => 'getAttachment',
+            ),
+
+        );
+    }
+
     /**
      * Return a raw wiki page
      * @param string $id wiki page id
@@ -58,7 +99,7 @@ class RemoteAPICore {
 
         $file = mediaFN($id);
         if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
-            $info['lastModified'] = new IXR_Date(filemtime($file));
+            $info['lastModified'] = filemtime($file);
             $info['size'] = filesize($file);
         }
 
