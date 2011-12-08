@@ -75,13 +75,24 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
             'method1' => array(
                 'args' => array(),
                 'return' => 'void'
-            ),
-            'method2' => array(
+            ), 'methodString' => array(
+                'args' => array(),
+                'return' => 'string'
+            ), 'method2' => array(
+                'args' => array('string', 'int'),
+                'return' => 'array',
+                'name' => 'method2',
+            ), 'method2ext' => array(
                 'args' => array('string', 'int', 'bool'),
-                'return' => array('string'),
+                'return' => 'array',
+                'name' => 'method2',
             )
         );
     }
+
+    function method1() { return null; }
+    function methodString() { return 'success'; }
+    function method2($str, $int, $bool = false) { return array($str, $int, $bool); }
 }
 
 
@@ -112,7 +123,11 @@ class remote_test extends UnitTestCase {
 
     function test_pluginMethods() {
         $methods = $this->remote->getPluginMethods();
-        $this->assertEqual(array_keys($methods), array('plugin.testplugin.method1', 'plugin.testplugin.method2'));
+        $actual = array_keys($methods);
+        sort($actual);
+        $expect = array('plugin.testplugin.method1', 'plugin.testplugin.method2', 'plugin.testplugin.methodString', 'plugin.testplugin.method2ext');
+        sort($expect);
+        $this->assertEqual($expect,$actual);
     }
 
     function test_hasAccessSuccess() {
@@ -175,5 +190,25 @@ class remote_test extends UnitTestCase {
         $this->assertEqual($remoteApi->call('wiki.twoArgMethod', array('string', 1)), array('string' , 1));
         $this->assertEqual($remoteApi->call('wiki.twoArgWithDefaultArg', array('string')), array('string', 'default'));
         $this->assertEqual($remoteApi->call('wiki.twoArgWithDefaultArg', array('string', 'another')), array('string', 'another'));
+    }
+
+    function test_pluginCallMethods() {
+        global $conf;
+        $conf['remote'] = 1;
+
+        $remoteApi = new RemoteApi();
+        $this->assertEqual($remoteApi->call('plugin.testplugin.method1'), null);
+        $this->assertEqual($remoteApi->call('plugin.testplugin.method2', array('string', 7)), array('string', 7, false));
+        $this->assertEqual($remoteApi->call('plugin.testplugin.method2ext', array('string', 7, true)), array('string', 7, true));
+        $this->assertEqual($remoteApi->call('plugin.testplugin.methodString'), 'success');
+    }
+
+    function test_notExistingCall() {
+        global $conf;
+        $conf['remote'] = 1;
+
+        $remoteApi = new RemoteApi();
+        $this->expectException('RemoteException');
+        $remoteApi->call('dose not exist');
     }
 }

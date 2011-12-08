@@ -75,10 +75,12 @@ class RemoteAPI {
         list($type, $pluginName, $call) = explode('.', $method, 3);
         if ($type === 'plugin') {
             $plugin = plugin_load('remote', $pluginName);
+            $methods = $this->getPluginMethods();
             if (!$plugin) {
                 throw new RemoteException('Method dose not exists');
             }
-            return call_user_func_array(array($plugin, $call), $args);
+            $name = $this->getMethodName($methods, $method);
+            return call_user_func_array(array($plugin, $name), $args);
         } else {
             $coreMethods = $this->getCoreMethods();
             if (!isset($coreMethods[$method])) {
@@ -99,7 +101,8 @@ class RemoteAPI {
         if (isset($methodMeta[$method]['name'])) {
             return $methodMeta[$method]['name'];
         }
-        return $method;
+        $method = explode('.', $method);
+        return $method[count($method)-1];
     }
 
     /**
