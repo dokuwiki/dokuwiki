@@ -14,6 +14,7 @@
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
+ * @author Ricardo Guijt <ricardoguijt@gmail.com>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -72,6 +73,7 @@ $lang['useheading']            = 'Eerste kopje voor paginanaam gebruiken';
 $lang['refcheck']              = 'Controleer verwijzingen naar media';
 $lang['refshow']               = 'Aantal te tonen mediaverwijzingen';
 $lang['allowdebug']            = 'Debug toestaan <b>uitzetten indien niet noodzakelijk!</b>';
+$lang['mediarevisions']        = 'Media revisies activeren?';
 $lang['usewordblock']          = 'Blokkeer spam op basis van woordenlijst';
 $lang['indexdelay']            = 'Uitstel voor indexeren (sec)';
 $lang['relnofollow']           = 'Gebruik rel="nofollow" voor externe links';

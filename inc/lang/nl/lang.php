@@ -15,6 +15,7 @@
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
+ * @author Ricardo Guijt <ricardoguijt@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
