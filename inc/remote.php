@@ -5,6 +5,21 @@ if (!defined('DOKU_INC')) die();
 class RemoteException extends Exception {}
 class RemoteAccessDenied extends RemoteException {}
 
+abstract class RemoteDataType {
+    private $value;
+
+    function __construct($value) {
+        $this->value = $value;
+    }
+
+    function getValue() {
+        return $this->value;
+    }
+}
+
+class RemoteDate extends RemoteDataType {}
+class RemoteFile extends RemoteDataType {}
+
 /**
  * This class provides information about remote access to the wiki.
  *
