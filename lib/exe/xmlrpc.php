@@ -299,17 +299,16 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachment($id){
-        $id = cleanID($id);
-        if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ)
-            return new IXR_Error(1, 'You are not allowed to read this file');
-
-        $file = mediaFN($id);
-        if (!@ file_exists($file))
-            return new IXR_Error(1, 'The requested file does not exist');
-
-        $data = io_readFile($file, false);
-        $base64 = base64_encode($data);
-        return $base64;
+        try {
+            try {
+                return $this->remote->getAttachment($id);
+            } catch (RemoteAccessDenied $e) {
+                return new IXR_Error(1, 'You are not allowed to read this file');
+            }
+        }
+        catch (RemoteException $e) {
+            return new IXR_Error(1, $e->getMessage());
+        }
     }
 
     /**
@@ -318,18 +317,8 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      * @author Gina Haeussge <osd@foosel.net>
      */
     function getAttachmentInfo($id){
-        $id = cleanID($id);
-        $info = array(
-            'lastModified' => 0,
-            'size' => 0,
-        );
-
-        $file = mediaFN($id);
-        if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
-            $info['lastModified'] = new IXR_Date(filemtime($file));
-            $info['size'] = filesize($file);
-        }
-
+        $info = $this->remote->getAttachmentInfo($id);
+        $info['lastModified'] = new IXR_Date($info['lastModified']);
         return $info;
     }
 
