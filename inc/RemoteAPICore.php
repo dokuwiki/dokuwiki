@@ -81,8 +81,7 @@ class RemoteAPICore {
         }
 
         $data = io_readFile($file, false);
-        $base64 = base64_encode($data);
-        return $base64;
+        return new RemoteFile($data);
     }
 
     /**
@@ -134,7 +133,7 @@ class RemoteAPICore {
             $page['id'] = trim($pages[$idx]);
             $page['perms'] = $perm;
             $page['size'] = @filesize(wikiFN($pages[$idx]));
-            $page['lastModified'] = new IXR_Date(@filemtime(wikiFN($pages[$idx])));
+            $page['lastModified'] = new RemoteDate(@filemtime(wikiFN($pages[$idx])));
             $list[] = $page;
         }
 
@@ -181,7 +180,7 @@ class RemoteAPICore {
 
             $pages[] = array(
                 'id'      => $id,
-                'score'   => $score,
+                'score'   => intval($score),
                 'rev'     => filemtime($file),
                 'mtime'   => filemtime($file),
                 'size'    => filesize($file),
@@ -210,7 +209,6 @@ class RemoteAPICore {
      */
     function listAttachments($ns, $options = array()) {
         global $conf;
-        global $lang;
 
         $ns = cleanID($ns);
 
@@ -228,7 +226,7 @@ class RemoteAPICore {
 
             for($i=0; $i<$len; $i++) {
                 unset($data[$i]['meta']);
-                $data[$i]['lastModified'] = new IXR_Date($data[$i]['mtime']);
+                $data[$i]['lastModified'] = new RemoteDate($data[$i]['mtime']);
             }
             return $data;
         } else {
@@ -261,7 +259,7 @@ class RemoteAPICore {
 
         $data = array(
             'name'         => $id,
-            'lastModified' => new IXR_Date($time),
+            'lastModified' => new RemoteDate($time),
             'author'       => (($info['user']) ? $info['user'] : $info['ip']),
             'version'      => $time
         );
@@ -344,7 +342,7 @@ class RemoteAPICore {
      *
      * Michael Klier <chi@chimeric.de>
      */
-    function putAttachment($id, $file, $params) {
+    function putAttachment($id, RemoteFile $file, $params) {
         $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id).':*');
 
@@ -358,12 +356,7 @@ class RemoteAPICore {
 
         // save temporary file
         @unlink($ftmp);
-        if (preg_match('/^[A-Za-z0-9\+\/]*={0,2}$/', $file) === 1) {
-            // DEPRECATED: Double-decode file if it still looks like base64
-            // after first decoding (which is done by the library)
-            $file = base64_decode($file);
-        }
-        io_saveFile($ftmp, $file);
+        io_saveFile($ftmp, $file->getValue());
 
         $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
@@ -468,7 +461,7 @@ class RemoteAPICore {
         foreach ($recents as $recent) {
             $change = array();
             $change['name']         = $recent['id'];
-            $change['lastModified'] = new IXR_Date($recent['date']);
+            $change['lastModified'] = new RemoteDate($recent['date']);
             $change['author']       = $recent['user'];
             $change['version']      = $recent['date'];
             $change['perms']        = $recent['perms'];
@@ -501,7 +494,7 @@ class RemoteAPICore {
         foreach ($recents as $recent) {
             $change = array();
             $change['name']         = $recent['id'];
-            $change['lastModified'] = new IXR_Date($recent['date']);
+            $change['lastModified'] = new RemoteDate($recent['date']);
             $change['author']       = $recent['user'];
             $change['version']      = $recent['date'];
             $change['perms']        = $recent['perms'];
@@ -565,7 +558,7 @@ class RemoteAPICore {
                         $data['ip']   = $info['ip'];
                         $data['type'] = $info['type'];
                         $data['sum']  = $info['sum'];
-                        $data['modified'] = new IXR_Date($info['date']);
+                        $data['modified'] = new RemoteDate($info['date']);
                         $data['version'] = $info['date'];
                         array_push($versions, $data);
                     }
