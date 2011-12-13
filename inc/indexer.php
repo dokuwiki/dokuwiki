@@ -83,7 +83,7 @@ function idx_get_version(){
 /**
  * Measure the length of a string.
  * Differs from strlen in handling of asian characters.
- *
+ * @todo Improve wordlen for accentuated letters (é,è,à,ç,ê,ù,ñ)
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function wordlen($w){
@@ -103,6 +103,20 @@ function wordlen($w){
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 class Doku_Indexer {
+    
+    protected $_weightWord = array(
+                              'header'       =>    16,
+                              'strong'       =>    6,
+                              'internalink'  =>    5,
+                              'externallink' =>    4,
+                              'internalmedia'=>    1,
+                              'emaillink'    =>    1,
+                              'acronym'      =>    2,
+                              'underline'    =>    3,
+                              'emphasis'     =>    3,
+                              'deleted'      =>    2,
+                              'monospace'    =>    1,
+                            );
 
     /**
      * Adds the contents of a page to the fulltext index
@@ -138,9 +152,9 @@ class Doku_Indexer {
         if (!empty($words)) {
             foreach (array_keys($words) as $wlen) {
                 $index = $this->getIndex('i', $wlen);
-                foreach ($words[$wlen] as $wid => $freq) {
+                foreach ($words[$wlen] as $wid => $freqAndWeight) {
                     $idx = ($wid<count($index)) ? $index[$wid] : '';
-                    $index[$wid] = $this->updateTuple($idx, $pid, $freq);
+                    $index[$wid] = $this->updateTuple($idx, $pid, $freqAndWeight);
                     $pagewords[] = "$wlen*$wid";
                 }
                 if (!$this->saveIndex('i', $wlen, $index)) {
@@ -163,6 +177,8 @@ class Doku_Indexer {
                     $upwords[$wlen][] = $wid;
                 }
             }
+            
+            
             foreach ($upwords as $wlen => $widx) {
                 $index = $this->getIndex('i', $wlen);
                 foreach ($widx as $wid) {
@@ -186,24 +202,101 @@ class Doku_Indexer {
      * Split the words in a page and add them to the index.
      *
      * @param string    $text   content of the page
-     * @return array            list of word IDs and number of times used
+     * @return array            list of word IDs with number of times used and it's weight
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getPageWords($text) {
         global $conf;
-
-        $tokens = $this->tokenizer($text);
-        $tokens = array_count_values($tokens);  // count the frequency of each token
-
+        
+        $weight = 0;
+        $openedTag = array();
+        $inlineTagWeight = 0;
+        $lastTagEntityName = 'NO TAG NAME';
+        $parsedPage = p_get_instructions($text);
         $words = array();
-        foreach ($tokens as $w=>$c) {
-            $l = wordlen($w);
-            if (isset($words[$l])){
-                $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
+        
+        //Suppression par rapport à avant de l'indexation de balise et de plugin
+        foreach ($parsedPage as $entity) {
+            $content = null;
+            
+            if(count($openedTag)-1 > 0){
+                $lastTagEntityName = $openedTag[count($openedTag)-1];
             }else{
-                $words[$l] = array($w => $c);
+                $lastTagEntityName = 'NO TAG NAME';
+            }
+            
+            preg_match('#^([^_]+)(?:_(open|close))?$#', $entity[0], $matches);
+            
+            if(empty($matches)){
+                continue;
+            }
+            
+            if($matches[2] === 'close'){
+                $lastTagEntityName .= '_close';
+            }
+            
+            $defaultCase = false;
+            
+            switch ($matches[0]) { //Value in comment for entity[1]
+                case 'header': //array(0 => content name, 1 => level (1 being the strongest), 2 => pos)
+                    $content = $entity[1][0];
+                    $headerLocalWeight = $this->_weightWord[$matches[1]]/$entity[1][1];
+                    $weight += $headerLocalWeight;
+                    $inlineTagWeight = $headerLocalWeight;
+                    break; ///////Header Break
+                case 'internallink': //array(0 => namespace(page name), 1 => content name)
+                case 'externallink': //array(0 => link http, 1 => content name)
+                case 'internalmedia':
+                case 'emaillink':
+                    if ($content == null) {
+                        $content = $entity[1][0].' '.$entity[1][1];
+                    }
+                case 'acronym': //array(0 => acronym content name)
+                    $inlineTagWeight = $this->_weightWord[$matches[1]];
+                case 'cdata': //array(0 => content)
+                case 'smiley': //array(0 => content)
+                    if($content == null){
+                        $content = $entity[1][0];
+                    }
+                case 'underline_open':
+                case 'emphasis_open':
+                case 'deleted_open':
+                case 'monospace_open':
+                case 'strong_open':
+                    if(isset($this->_weightWord[$matches[1]])){
+                        $weight += $this->_weightWord[$matches[1]];
+                    }
+                    if(isset($matches[2]) && $matches[2] === 'open'){
+                        $openedTag[] = $matches[1];
+                    }
+                    break;///////internalink, externallink, acronym, cdata, underline_open
+                         /////// emphasis_open, deleted_open, monospace_open, strong_open Break
+                case $lastTagEntityName: //close tag
+                    $weight -= $this->_weightWord[array_pop($openedTag)];
+                    break;
+                default:
+                    $defaultCase = true;
+            }
+
+            if($defaultCase){
+                continue;
+            }
+            
+            if(!empty($content)){
+                $tokens = $this->tokenizer($content);
+                $tokens = array_count_values($tokens);  // count the frequency of each token
+                
+                foreach ($tokens as $word => $freq) {
+                    $len = wordlen($word);
+                    if(isset($words[$len])){
+                        $words[$len][$word]['freq'] = $freq + (isset($words[$len][$word]['freq']) ? $words[$len][$word]['freq'] : 0);
+                        $words[$len][$word]['weight'] = round($weight) + (isset($words[$len][$word]['weight']) ? $words[$len][$word]['weight'] : 0);
+                    }else{
+                        $words[$len] = array($word => array('freq'=>$freq,'weight'=>round($weight)));
+                    }
+                }
             }
         }
 
@@ -212,7 +305,7 @@ class Doku_Indexer {
         $index = array();   //resulting index
         foreach (array_keys($words) as $wlen) {
             $word_idx = $this->getIndex('w', $wlen);
-            foreach ($words[$wlen] as $word => $freq) {
+            foreach ($words[$wlen] as $word => $arrFreqWeight) {
                 $wid = array_search($word, $word_idx);
                 if ($wid === false) {
                     $wid = count($word_idx);
@@ -221,7 +314,8 @@ class Doku_Indexer {
                 }
                 if (!isset($index[$wlen]))
                     $index[$wlen] = array();
-                $index[$wlen][$wid] = $freq;
+                //implode freq and weight compability with updatetuple
+                $index[$wlen][$wid] = $arrFreqWeight['freq'].'*'.$arrFreqWeight['weight'];
             }
             // save back the word index
             if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx))
