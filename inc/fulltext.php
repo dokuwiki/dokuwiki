@@ -107,18 +107,25 @@ function _ft_pageSearch(&$data) {
     $docs = array_pop($stack);
 
     if (empty($docs)) return array();
-
+    
+    $docsWeight = array();
     // check: settings, acls, existence
     foreach (array_keys($docs) as $id) {
         if (isHiddenPage($id) || auth_quickaclcheck($id) < AUTH_READ || !page_exists($id, '', false)) {
             unset($docs[$id]);
         }
+        $docsWeight[$id] = $docs[$id]['weight'];
     }
 
-    // sort docs by count
-    arsort($docs);
+    // sort doc by weight
+    arsort($docsWeight);
+    
+    $docscnt = array();
+    foreach (array_keys($docsWeight) as $id) {
+        $docscnt[$id] = $docs[$id]['freq'];
+    }
 
-    return $docs;
+    return $docscnt;
 }
 
 /**

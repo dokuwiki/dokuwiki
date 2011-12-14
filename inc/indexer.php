@@ -116,6 +116,7 @@ class Doku_Indexer {
                               'emphasis'     =>    3,
                               'deleted'      =>    2,
                               'monospace'    =>    1,
+                              'tableheader'  =>    3,
                             );
 
     /**
@@ -209,96 +210,10 @@ class Doku_Indexer {
      */
     protected function getPageWords($text) {
         global $conf;
-        
-        $weight = 0;
-        $openedTag = array();
-        $inlineTagWeight = 0;
-        $lastTagEntityName = 'NO TAG NAME';
+        //global $PARSER_MODES;
         $parsedPage = p_get_instructions($text);
-        $words = array();
         
-        //Suppression par rapport à avant de l'indexation de balise et de plugin
-        foreach ($parsedPage as $entity) {
-            $content = null;
-            
-            if(count($openedTag)-1 > 0){
-                $lastTagEntityName = $openedTag[count($openedTag)-1];
-            }else{
-                $lastTagEntityName = 'NO TAG NAME';
-            }
-            
-            preg_match('#^([^_]+)(?:_(open|close))?$#', $entity[0], $matches);
-            
-            if(empty($matches)){
-                continue;
-            }
-            
-            if($matches[2] === 'close'){
-                $lastTagEntityName .= '_close';
-            }
-            
-            $defaultCase = false;
-            
-            switch ($matches[0]) { //Value in comment for entity[1]
-                case 'header': //array(0 => content name, 1 => level (1 being the strongest), 2 => pos)
-                    $content = $entity[1][0];
-                    $headerLocalWeight = $this->_weightWord[$matches[1]]/$entity[1][1];
-                    $weight += $headerLocalWeight;
-                    $inlineTagWeight = $headerLocalWeight;
-                    break; ///////Header Break
-                case 'internallink': //array(0 => namespace(page name), 1 => content name)
-                case 'externallink': //array(0 => link http, 1 => content name)
-                case 'internalmedia':
-                case 'emaillink':
-                    if ($content == null) {
-                        $content = $entity[1][0].' '.$entity[1][1];
-                    }
-                case 'acronym': //array(0 => acronym content name)
-                    $inlineTagWeight = $this->_weightWord[$matches[1]];
-                case 'cdata': //array(0 => content)
-                case 'smiley': //array(0 => content)
-                    if($content == null){
-                        $content = $entity[1][0];
-                    }
-                case 'underline_open':
-                case 'emphasis_open':
-                case 'deleted_open':
-                case 'monospace_open':
-                case 'strong_open':
-                    if(isset($this->_weightWord[$matches[1]])){
-                        $weight += $this->_weightWord[$matches[1]];
-                    }
-                    if(isset($matches[2]) && $matches[2] === 'open'){
-                        $openedTag[] = $matches[1];
-                    }
-                    break;///////internalink, externallink, acronym, cdata, underline_open
-                         /////// emphasis_open, deleted_open, monospace_open, strong_open Break
-                case $lastTagEntityName: //close tag
-                    $weight -= $this->_weightWord[array_pop($openedTag)];
-                    break;
-                default:
-                    $defaultCase = true;
-            }
-
-            if($defaultCase){
-                continue;
-            }
-            
-            if(!empty($content)){
-                $tokens = $this->tokenizer($content);
-                $tokens = array_count_values($tokens);  // count the frequency of each token
-                
-                foreach ($tokens as $word => $freq) {
-                    $len = wordlen($word);
-                    if(isset($words[$len])){
-                        $words[$len][$word]['freq'] = $freq + (isset($words[$len][$word]['freq']) ? $words[$len][$word]['freq'] : 0);
-                        $words[$len][$word]['weight'] = round($weight) + (isset($words[$len][$word]['weight']) ? $words[$len][$word]['weight'] : 0);
-                    }else{
-                        $words[$len] = array($word => array('freq'=>$freq,'weight'=>round($weight)));
-                    }
-                }
-            }
-        }
+        $words = $this->getWordsWeightCountFromInstructions($parsedPage);
 
         // arrive here with $words = array(wordlen => array(word => frequency))
         $word_idx_modified = false;
@@ -323,6 +238,152 @@ class Doku_Indexer {
         }
 
         return $index;
+    }
+    
+    /**
+     * 
+     * Enter description here ...
+     * @param array $parsedPage
+     */
+    protected function getWordsWeightCountFromInstructions(array $parsedPage){
+        $weight = 0;
+        $openedTag = array();
+        $inlineTagWeight = 0;
+        $lastTagEntityName = 'NO TAG NAME';
+        $words = array();
+        
+        
+        //inc/parser/metadata.php
+        //No index wiki tag and plugin code content
+        foreach ($parsedPage as $entity) {
+            $content = null;
+        
+            if(count($openedTag)-1 >= 0){
+                $lastTagEntityName = $openedTag[count($openedTag)-1];
+            }else{
+                $lastTagEntityName = 'NO TAG NAME';
+            }
+        
+            preg_match('#^([^_]+)(?:_(open|close))?$#', $entity[0], $matches);
+        
+            if(empty($matches)){
+                continue;
+            }
+        
+            if($matches[2] === 'close'){
+                $lastTagEntityName .= '_close';
+            }
+        
+            $defaultCase = false;
+        
+            switch($matches[0]) {
+                //Value in comment for entity[1]
+                case 'header': //array(0 => content name, 1 => level (1 being the strongest), 2 => pos)
+                    $content = $entity[1][0];
+                    $headerLocalWeight = $this->_weightWord[$matches[1]]/$entity[1][1];
+                    $weight += $headerLocalWeight;
+                    $inlineTagWeight = $headerLocalWeight;
+                    break; ///////Header Break
+                case 'nest': //array(array(0=>array(0=>'footnote_open', 1=>array(), 2=>pos), 1=>array(mixed), 2=>array(0=>'footnote_close', 1=>array(), 2=>pos)))
+                    if (isset($entity[1][0][1][1][0]) && !is_array($entity[1][0][1][1][0])) {
+                        $content = $entity[1][0][1][1][0];
+                    }elseif(isset($entity[1][0]) && is_array($entity[1][0])){
+                        $wordsNest = $this->getWordsWeightCountFromInstructions($entity[1][0]);
+                        if(!empty($words)){
+                            foreach ($wordsNest as $len => $arrWords) {
+                                foreach ($arrWords as $word => $arrFW) {
+                                    $words[$len][$word]['freq'] = $arrFW['freq'] + (isset($words[$len][$word]['freq']) ? $words[$len][$word]['freq'] : 0);
+                                    $words[$len][$word]['weight'] = $arrFW['weight'] + (isset($words[$len][$word]['weight']) ? $words[$len][$word]['weight'] : 0) + $arrFW['freq'];
+                                }
+                            }
+                        }else{
+                            $words = $wordsNest;
+                        }
+                    }
+                    break; ///////Nest Break
+                case 'multiplyentity': //array(0 => width, 1 => height)
+                    if ($content == null) {
+                        $content = $entity[1][0].'x'.$entity[1][1];
+                    }
+                case 'code': //array(0 => content, 1=>programming language, 2=>downloadable file name)
+                case 'file': //array(0 => content, 1=>programming language, 2=>downloadable file name)
+                case 'internallink': //array(0 => namespace(page name), 1 => content name)
+                case 'externallink': //array(0 => link http, 1 => content name)
+                case 'internalmedia': //array(0 =>wikiurl, 1=>alt html, 2=>position, 3=>width, 4=>height, 5=>cache,6=>don't know)
+                case 'externalmedia': //array(0 =>url, 1=>alt html, 2=>position, 3=>width, 4=>height, 5=>cache,6=>don't know)
+                case 'windowssharelink': 
+                case 'emaillink':
+                    if ($content == null) {
+                        foreach ($entity[1] as $localContent){
+                            $content += $localContent.' ';
+                        }
+                    }
+                case 'interwikilink': //array(0 => content code, 1=>don't know, 2=>wiki code name, 3=>wiki page)
+                case 'acronym': //array(0 => acronym content name)
+                case 'cdata': //array(0 => content)
+                case 'smiley': //array(0 => content)
+                case 'entity': //array(0 => content)
+                case 'preformatted': //array(0 => content)
+                case 'unformatted': //array(0 => content)
+                case 'php': //array(0 => content)
+                case 'phpblock': //array(0 => content)
+                case 'html': //array(0 => content)
+                case 'htmlblock': //array(0 => content)
+                case 'rss': //array(0 => link, 1=> associative array(max, reverse, author, date, details, refresh)
+                    if(isset($this->_weightWord[$matches[1]])){
+                        $inlineTagWeight = $this->_weightWord[$matches[1]];
+                    }
+                    if($content == null){
+                        $content = $entity[1][0];
+                    }
+                case 'strong_open':
+                case 'emphasis_open':
+                case 'underline_open':
+                case 'monospace_open':
+                case 'subscript_open':
+                case 'superscript_open':
+                case 'superscript_open':
+                case 'deleted_open':
+                case 'tableheader_open':
+                    if(isset($this->_weightWord[$matches[1]])){
+                        $weight += $this->_weightWord[$matches[1]];
+                    }
+                    if(isset($matches[2]) && $matches[2] === 'open'){
+                        $openedTag[] = $matches[1];
+                    }
+                    break;///////internalink, externallink, acronym, cdata, underline_open
+                    /////// emphasis_open, deleted_open, monospace_open, strong_open Break
+                case $lastTagEntityName: //close tag
+                    $weight -= $this->_weightWord[array_pop($openedTag)];
+                    break;
+                default:
+                    $defaultCase = true;
+            }
+        
+            if($defaultCase){
+                continue;
+            }
+        
+            if(!empty($content)){
+                $tokens = $this->tokenizer($content);
+                $tokens = array_count_values($tokens);  // count the frequency of each token
+        
+                foreach ($tokens as $word => $freq) {
+                    $len = wordlen($word);
+                    if(isset($words[$len])){
+                        $words[$len][$word]['freq'] = $freq + (isset($words[$len][$word]['freq']) ? $words[$len][$word]['freq'] : 0);
+                        $words[$len][$word]['weight'] = round($weight) + (isset($words[$len][$word]['weight']) ? $words[$len][$word]['weight'] : 0) + $freq;
+                    }else{
+                        $words[$len] = array($word => array('freq'=>$freq,'weight'=>round($weight)+$freq));
+                    }
+                }
+        
+                $weight -= $inlineTagWeight;
+                $inlineTagWeight = 0;
+            }
+        }
+        
+        return $words;
     }
 
     /**
@@ -590,13 +651,16 @@ class Doku_Indexer {
                 // and thus $docs[$wid] hasn't been set.
                 if (!isset($docs[$wid])) continue;
                 $hits = &$docs[$wid];
-                foreach ($hits as $hitkey => $hitcnt) {
+                foreach ($hits as $hitkey => $hitcntwght) {
                     // make sure the document still exists
                     if (!page_exists($hitkey, '', false)) continue;
-                    if (!isset($final[$word][$hitkey]))
-                        $final[$word][$hitkey] = $hitcnt;
-                    else
-                        $final[$word][$hitkey] += $hitcnt;
+                    if (!isset($final[$word][$hitkey])){
+                        $final[$word][$hitkey]['freq'] = $hitcntwght['freq'];
+                        $final[$word][$hitkey]['weight'] = $hitcntwght['weight'];
+                    }else{
+                        $final[$word][$hitkey]['freq'] += $hitcntwght['freq'];
+                        $final[$word][$hitkey]['weight'] += $hitcntwght['weight'];
+                    }
                 }
             }
         }
@@ -1196,11 +1260,21 @@ class Doku_Indexer {
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            list($key, $cnt) = explode('*', $tuple);
+            $explodedTuple = explode('*', $tuple);
+            if(count($explodedTuple) === 3){
+                list($key, $cnt, $wgt) = $explodedTuple;
+            }else{
+                list($key, $cnt) = $explodedTuple;
+            }
             if (!$cnt) continue;
             $key = $keys[$key];
             if (!$key) continue;
-            $result[$key] = $cnt;
+            if(isset($wgt)){
+                $result[$key]['freq'] = $cnt;
+                $result[$key]['weight'] = $wgt;
+            }else{
+                $result[$key] = $cnt;
+            }
         }
         return $result;
     }
