@@ -207,10 +207,11 @@ class Doku_Indexer {
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Adrien Bettini <abettini@astrel.fr>
      */
     protected function getPageWords($text) {
         global $conf;
-        //global $PARSER_MODES;
+        
         $parsedPage = p_get_instructions($text);
         
         $words = $this->getWordsWeightCountFromInstructions($parsedPage);
@@ -241,9 +242,13 @@ class Doku_Indexer {
     }
     
     /**
-     * 
-     * Enter description here ...
-     * @param array $parsedPage
+     * Extract words from a parsed wiki page
+     * Words are indexed with frequency and weight ( defined by this->$_weightWord)
+     * WARNING: inc/parser/metadata.php change, you have to add some instruction here
+     * if not some word can't be indexed
+     * @param array $parsedPage		result of an p_get_instructions()
+     * @return array $words			words to be indexed with weight and frequency
+     * @author Adrien Bettini <abettini@astrel.fr>
      */
     protected function getWordsWeightCountFromInstructions(array $parsedPage){
         $weight = 0;
@@ -253,7 +258,6 @@ class Doku_Indexer {
         $words = array();
         
         
-        //inc/parser/metadata.php
         //No index wiki tag and plugin code content
         foreach ($parsedPage as $entity) {
             $content = null;
