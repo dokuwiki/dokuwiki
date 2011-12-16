@@ -1778,7 +1778,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
-    if( $mtime > filemtime($file) ||
+    if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
         if($conf['fperm']) chmod($local, $conf['fperm']);
