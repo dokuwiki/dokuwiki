@@ -1674,7 +1674,7 @@ function media_nstree_item($item){
     $ret  = '';
     if (!($_REQUEST['do'] == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
-    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id']), 'tab_files' => 'files'))
+    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id'], false), 'tab_files' => 'files'))
         .'" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
