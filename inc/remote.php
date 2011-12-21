@@ -33,10 +33,7 @@ class RemoteFile extends RemoteDataType {}
  * array(
  *     'method.remoteName' => array(
  *          'args' => array(
- *              'name' => array(
- *                  'type' => 'string|int|...|date|file',
- *                  ['doc' = 'argument documentation'],
- *              ),
+ *              'name' => 'type eg. string|int|...|date|file',
  *          )
  *          'name' => 'method name in class',
  *          'return' => 'type',
