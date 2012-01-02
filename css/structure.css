@@ -51,6 +51,17 @@ body {
         margin-left: __sidebar_width__;
     }
 
+    /* don't show sidebar with fullscreen media manager */
+    .mode_media #dokuwiki__aside {
+        display: none;
+    }
+    .mode_media #dokuwiki__content,
+    .mode_media #dokuwiki__content .pad {
+        float: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
 #dokuwiki__footer {
     clear: both;
 }
