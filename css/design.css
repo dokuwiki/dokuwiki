@@ -254,7 +254,7 @@
 }
 #dokuwiki__sitetools form.search input.edit {
     width: 16em;
-    padding-right: 22px;
+    padding: .35em 22px .35em .1em;
 }
 #dokuwiki__sitetools form.search input.button {
     background: transparent url(images/search.png) no-repeat 0 0;
@@ -413,6 +413,16 @@
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
+
+.dokuwiki textarea.edit {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+}
+
+
+#acl__tree li {
+    margin: 0;
+}
+
 
 /*____________ JS popup ____________*/
 

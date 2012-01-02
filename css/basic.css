@@ -13,18 +13,14 @@ html {
     overflow-y: scroll;
 }
 html, body {
-    /* @todo: style.ini */
+    /* @todo: style.ini for #fbfaf9?!? */
     background-color: #fbfaf9;
     color: __text__;
-    background-image: -moz-linear-gradient(   top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    /* do we want to support old browsers?
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ddd), color-stop(1em,#eee), color-stop(4em,#fbfaf9));
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ddd', endColorstr='#fbfaf9',GradientType=0 );
-    */
-    background-image: -webkit-linear-gradient(top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    background-image: -o-linear-gradient(     top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    background-image: -ms-linear-gradient(    top, #ddd 0%, #eee 1em, #fbfaf9 4em);
-    background-image: linear-gradient(        top, #ddd 0%, #eee 1em, #fbfaf9 4em);
+    background-image: -moz-linear-gradient(   top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
+    background-image: -webkit-linear-gradient(top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
+    background-image: -o-linear-gradient(     top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
+    background-image: -ms-linear-gradient(    top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
+    background-image: linear-gradient(        top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
     background-size: 1px 10em;
     background-repeat: repeat-x;
     margin: 0;
@@ -174,8 +170,8 @@ img {
 }
 
 hr {
-    border-top: solid #ccc;
-    border-bottom: solid #fff;
+    border-top: solid __border__;
+    border-bottom: solid __background__;
     border-width: 1px 0;
     height: 0;
     width: 100%;
@@ -239,65 +235,74 @@ label {
     vertical-align: middle;
     cursor: pointer;
 }
-input, textarea, button,
-select, optgroup, option {
+
+input,
+textarea,
+button,
+select,
+optgroup,
+option {
     font: inherit;
     color: inherit;
-    /* background-color destroys button look */
     line-height: 1;
     margin: 0;
     vertical-align: middle;
 }
-input[type=text], input[type=password], textarea {
-    padding: .1em;
-}
-input[type=radio], input[type=checkbox], input.check {
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
     padding: 0;
 }
-input[type=submit], input.button, button {
-    cursor: pointer;
-}
-input[disabled], button[disabled],
-input[readonly], button[readonly] {
+input[disabled],
+button[disabled],
+input[readonly],
+button[readonly] {
     cursor: auto;
 }
-optgroup { font-style: italic; font-weight: bold; }
-option   { font-style: normal; font-weight: normal; }
+optgroup {
+    font-style: italic;
+    font-weight: bold;
+}
+option {
+    font-style: normal;
+    font-weight: normal;
+}
 
-/* @todo: either make input.edit and buttons more generic or put into design.css */
-.dokuwiki input.edit {
+input,
+textarea,
+select {
     border: 1px solid __border__;
-    padding: 0.35em .1em;
     -moz-box-shadow: inset 0 0 1px __background_alt__;
     -webkit-box-shadow: inset 0 0 1px __background_alt__;
     box-shadow: inset 0 0 1px __background_alt__;
     border-radius: 2px;
-    vertical-align: middle;
 }
-.dokuwiki input.button,
-.dokuwiki button.button,
-.dokuwiki div.toolbar button.toolbutton {
-    /* @todo: make style.ini colours any sense here? */
-    vertical-align: middle;
-    color: inherit;
+input[type=radio],
+input[type=checkbox] {
+    padding: 0;
+    border-width: 0;
+}
+
+input[type=submit],
+input.button,
+a.button,
+button,
+.qq-upload-button {
+    /* no style.ini colours on purpose */
+    color: #333;
     background-color: #eee;
-    background: -moz-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(30%,#f4f4f4), color-stop(99%,#eeeeee), color-stop(99%,#cccccc));
-    background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-    background: -o-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-    background: -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
-    /*
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
-    */
-    background: linear-gradient(top, #ffffff 0%,#f4f4f4 30%,#eeeeee 99%,#cccccc 99%);
+    /* @todo: #ccc on purpose? */
+    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: linear-gradient(        top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
     border: 1px solid #ccc;
     border-radius: 2px;
+    padding: .1em .5em;
+    cursor: pointer;
 }
-.dokuwiki textarea.edit {
-    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
-}
-
-
 
 /*____________ general classes ____________*/
 
@@ -305,14 +310,4 @@ div.clearer {
     /* additional to what's already in lib/styles/all.css: */
     font-size: 1px;
     visibility: hidden;
-}
-
-.a11y {
-    position: absolute;
-    left: -9000px;
-    top: -4000px;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    display: inline;
 }

@@ -86,8 +86,11 @@
 .dokuwiki dl.code dt,
 .dokuwiki dl.file dt {
     background-color: __background_alt__;
-    /* @todo: add gradients for other browsers */
+    background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%);
     background: -webkit-linear-gradient(top, __background__ 0%, __background_alt__ 100%);
+    background: -o-linear-gradient(     top, __background__ 0%, __background_alt__ 100%);
+    background: -ms-linear-gradient(    top, __background__ 0%, __background_alt__ 100%);
+    background: linear-gradient(        top, __background__ 0%, __background_alt__ 100%);
     color: inherit;
     border: 1px solid __border__;
     border-bottom-color: __background_alt__;

@@ -17,14 +17,10 @@
 
 .qq-upload-button {
     display: inline-block;
-    border: 1px solid __border__;
-    color: __text__;
-    background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
     text-decoration: none;
     font-size: 100%;
     cursor: pointer;
     margin: 1px 1px 5px;
-    padding: 0.125em 0.4em;
 }
 
 * html .qq-upload-button,
