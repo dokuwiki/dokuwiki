@@ -51,12 +51,15 @@ body {
         margin-left: __sidebar_width__;
     }
 
-    /* don't show sidebar with fullscreen media manager */
-    .mode_media #dokuwiki__aside {
+    /* don't show sidebar with fullscreen media manager or in the admin */
+    .mode_media #dokuwiki__aside,
+    .mode_admin #dokuwiki__aside {
         display: none;
     }
     .mode_media #dokuwiki__content,
-    .mode_media #dokuwiki__content .pad {
+    .mode_media #dokuwiki__content .pad,
+    .mode_admin #dokuwiki__content,
+    .mode_admin #dokuwiki__content .pad {
         float: none;
         margin-left: 0;
         margin-right: 0;
