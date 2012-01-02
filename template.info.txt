@@ -1,0 +1,7 @@
+﻿base     dokuwiki
+author   Anika Henke, Clarence Lee
+email    andi@splitbrain.org
+date     devel
+name     DokuWiki Template
+desc     DokuWiki's default template 2012
+url      http://www.dokuwiki.org/template

@@ -5,6 +5,12 @@
 
 /*____________ list of revisions / recent changes ____________*/
 
+/* select type of revisions (media/pages), should have a class on it's own, but hasn't */
+.dokuwiki #dw__recent label {
+    margin-bottom: .5em;
+    display: block;
+}
+
 .dokuwiki #dw__recent ul li,
 .dokuwiki #page__revisions ul li {
     list-style: none;

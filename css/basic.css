@@ -45,6 +45,7 @@ caption, legend {
     color: #000;/* @todo: style.ini */
     background-color: inherit;
     padding: 0;
+    line-height: 1.2;
     clear: left; /* ideally 'both', but problems with toc */
 }
 
@@ -189,7 +190,7 @@ acronym, abbr {
 }
 
 pre, code, samp, kbd {
-    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
     /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
     font-size: 1em;
     direction: ltr;
@@ -301,7 +302,7 @@ option   { font-style: normal; font-weight: normal; }
 /*____________ general classes ____________*/
 
 div.clearer {
-    /* additional to what's already in lib/styles/style.css: */
+    /* additional to what's already in lib/styles/all.css: */
     font-size: 1px;
     visibility: hidden;
 }

@@ -2,12 +2,14 @@
 /**
  * DokuWiki Image Detail Page
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Anika Henke <anika@selfthinker.org>
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @author   Anika Henke <anika@selfthinker.org>
+ * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
+@require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -20,7 +22,9 @@ if (!defined('DOKU_INC')) die();
         [<?php echo strip_tags($conf['title'])?>]
     </title>
     <?php tpl_metaheaders()?>
-    <link rel="shortcut icon" href="<?php echo ml('favicon.ico') ?>" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
+    <?php _tpl_include('meta.html') ?>
 </head>
 
 <body>
@@ -40,30 +44,32 @@ if (!defined('DOKU_INC')) die();
 
                     <dl>
                         <?php
-                            $t = tpl_img_getTag('Date.EarliestTime');
-                            if($t) print '<dt>'.$lang['img_date'].':</dt><dd>'.dformat($t).'</dd>';
+                            $config_files = getConfigFiles('mediameta');
+                            foreach ($config_files as $config_file) {
+                                if(@file_exists($config_file)) {
+                                    include($config_file);
+                                }
+                            }
 
-                            $t = tpl_img_getTag('File.Name');
-                            if($t) print '<dt>'.$lang['img_fname'].':</dt><dd>'.hsc($t).'</dd>';
-
-                            $t = tpl_img_getTag(array('Iptc.Byline','Exif.TIFFArtist','Exif.Artist','Iptc.Credit'));
-                            if($t) print '<dt>'.$lang['img_artist'].':</dt><dd>'.hsc($t).'</dd>';
-
-                            $t = tpl_img_getTag(array('Iptc.CopyrightNotice','Exif.TIFFCopyright','Exif.Copyright'));
-                            if($t) print '<dt>'.$lang['img_copyr'].':</dt><dd>'.hsc($t).'</dd>';
-
-                            $t = tpl_img_getTag('File.Format');
-                            if($t) print '<dt>'.$lang['img_format'].':</dt><dd>'.hsc($t).'</dd>';
-
-                            $t = tpl_img_getTag('File.NiceSize');
-                            if($t) print '<dt>'.$lang['img_fsize'].':</dt><dd>'.hsc($t).'</dd>';
-
-                            $t = tpl_img_getTag('Simple.Camera');
-                            if($t) print '<dt>'.$lang['img_camera'].':</dt><dd>'.hsc($t).'</dd>';
-
-                            $t = tpl_img_getTag(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
-                            if($t) print '<dt>'.$lang['img_keywords'].':</dt><dd>'.hsc($t).'</dd>';
-
+                            foreach($fields as $key => $tag){
+                                $t = array();
+                                if (!empty($tag[0])) {
+                                    $t = array($tag[0]);
+                                }
+                                if(is_array($tag[3])) {
+                                    $t = array_merge($t,$tag[3]);
+                                }
+                                $value = tpl_img_getTag($t);
+                                if ($value) {
+                                    echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
+                                    if ($tag[2] == 'date') {
+                                        echo dformat($value);
+                                    } else {
+                                        echo hsc($value);
+                                    }
+                                    echo '</dd>';
+                                }
+                            }
                         ?>
                     </dl>
                     <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
@@ -71,7 +77,17 @@ if (!defined('DOKU_INC')) die();
                 <div class="clearer"></div>
             </div><!-- /.content -->
 
-            <p class="back">&larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?></p>
+            <p class="back">
+                <?php
+                    $imgNS = getNS($IMG);
+                    $authNS = auth_quickaclcheck("$imgNS:*");
+                    if (($authNS >= AUTH_UPLOAD) && function_exists('media_managerURL')) {
+                        $mmURL = media_managerURL(array('ns' => $imgNS, 'image' => $IMG));
+                        echo '<a href="'.$mmURL.'">'.$lang['img_manager'].'</a><br />';
+                    }
+                ?>
+                &larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?>
+            </p>
 
         <?php } ?>
     </div>

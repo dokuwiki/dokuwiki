@@ -2,8 +2,13 @@
 /**
  * DokuWiki Media Manager Popup
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
+// must be run from within DokuWiki
+if (!defined('DOKU_INC')) die();
+@require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>"
@@ -15,7 +20,9 @@
         [<?php echo strip_tags($conf['title'])?>]
     </title>
     <?php tpl_metaheaders()?>
-    <link rel="shortcut icon" href="<?php echo ml('favicon.ico') ?>" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
+    <?php _tpl_include('meta.html') ?>
 </head>
 
 <body>

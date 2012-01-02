@@ -1,9 +1,11 @@
 <?php
 /**
- * DokuWiki Starter Template
+ * DokuWiki Default Template 2012
  *
- * @link   http://dokuwiki.org/template:starter
- * @author Anika Henke <anika@selfthinker.org>
+ * @link     http://dokuwiki.org/template
+ * @author   Anika Henke <anika@selfthinker.org>
+ * @author   Clarence Lee <clarencedglee@gmail.com>
+ * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
@@ -18,7 +20,8 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php tpl_pagetitle() ?> [<?php echo strip_tags($conf['title']) ?>]</title>
     <?php tpl_metaheaders() ?>
-    <link rel="shortcut icon" href="<?php echo tpl_getFavicon() ?>" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
     <?php _tpl_include('meta.html') ?>
 </head>
 
