@@ -52,7 +52,7 @@ if (!class_exists('setting_authtype')) {
 
       // retrive auth types provided by plugins
       foreach ($plugin_controller->getList('auth') as $plugin) {
-      	$authtypes = $plugin;
+      	$authtypes[] = $plugin;
       }
 
       $authtypes = array_unique($authtypes);
