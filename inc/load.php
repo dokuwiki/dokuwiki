@@ -80,6 +80,7 @@ function load_autoload($name){
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
+    	'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
 
     );
 
