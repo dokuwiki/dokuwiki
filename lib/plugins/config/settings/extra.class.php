@@ -43,12 +43,19 @@ if (!class_exists('setting_authtype')) {
   class setting_authtype extends setting_multichoice {
 
     function initialize($default,$local,$protected) {
+	  global $plugin_controller;
 
       // populate $this->_choices with a list of available auth mechanisms
       $authtypes = glob(DOKU_INC.'inc/auth/*.class.php');
       $authtypes = preg_replace('#^.*/([^/]*)\.class\.php$#i','$1', $authtypes);
       $authtypes = array_diff($authtypes, array('basic'));
-      sort($authtypes);
+
+      // retrive auth types provided by plugins
+      foreach ($plugin_controller->getList('auth') as $plugin) {
+      	$authtypes = $plugin;
+      }
+
+      $authtypes = array_unique($authtypes);
 
       $this->_choices = $authtypes;
 
