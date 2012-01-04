@@ -137,10 +137,23 @@
     box-shadow: .1em .1em .1em __text__;
     margin: 0 -.5em;
 }
+#dokuwiki__pagetools.version02:hover ul li a span,
+#dokuwiki__pagetools.version02:active ul li a span,
+#dokuwiki__pagetools.version02:focus ul li a span,
 #dokuwiki__pagetools.version03:hover ul li a span,
 #dokuwiki__pagetools.version03:active ul li a span,
 #dokuwiki__pagetools.version03:focus ul li a span {
     display: inline;
+}
+#dokuwiki__pagetools.version02 ul {
+    margin: 0 -.5em;
+    border: 1px solid transparent;
+}
+#dokuwiki__pagetools.version02:hover ul {
+    border: 1px solid __border__;
+    border-radius: 2px;
+    background-color: __background__;
+    box-shadow: .1em .1em .1em __text__;
 }
 
 
@@ -160,9 +173,7 @@
     white-space: nowrap;
     border: 1px solid transparent;
 }
-#dokuwiki__pagetools.version02 ul li a {
-    padding: .2em 34px .2em .5em;
-}
+#dokuwiki__pagetools.version02 ul li a,
 #dokuwiki__pagetools.version03 ul li a {
     padding: .2em 34px .2em .5em;
 }
