@@ -13,32 +13,32 @@
 
 /* ---------------- forms ------------------------ */
 
-div.dokuwiki form {
+.dokuwiki form {
   border: none;
   display: inline;
 }
 
-div.dokuwiki label.block {
+.dokuwiki label.block {
   display: block;
   text-align: right;
   font-weight: bold;
 }
 
-div.dokuwiki label.simple {
+.dokuwiki label.simple {
   display: block;
   text-align: left;
   font-weight: normal;
 }
 
-div.dokuwiki label.block input.edit {
+.dokuwiki label.block input.edit {
   width: 50%;
 }
 
-div.dokuwiki label span {
+.dokuwiki label span {
     vertical-align: middle;
 }
 
-div.dokuwiki fieldset {
+.dokuwiki fieldset {
   width: 400px;
   text-align: center;
   border: 1px solid __border__;
@@ -47,11 +47,11 @@ div.dokuwiki fieldset {
 }
 
 
-div.dokuwiki input.edit,
-div.dokuwiki select.edit {
+.dokuwiki input.edit,
+.dokuwiki select.edit {
   vertical-align: middle;
 }
-div.dokuwiki select.edit {
+.dokuwiki select.edit {
   padding: 0.1em 0;
 }
 
