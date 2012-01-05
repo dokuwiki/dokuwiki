@@ -168,6 +168,9 @@ img {
     background-color: transparent;
     font-style: italic;
 }
+img, object {
+    max-width: 100%;
+}
 
 hr {
     border-top: solid __border__;

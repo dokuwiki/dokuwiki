@@ -358,6 +358,8 @@
 #dokuwiki__aside .pad {
     line-height: 1.2;
     font-size: 0.875em;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 /* make sidebar more condensed */
@@ -419,6 +421,8 @@
     border-radius: 2px;
     padding: 2em;
     margin-bottom: .5em;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .dokuwiki .docInfo {
