@@ -12,6 +12,7 @@ if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 @require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
 $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER['REMOTE_USER'] );
+$showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID')) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang'] ?>"
@@ -33,7 +34,7 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
     <?php /* classes mode_<action> are added to make it possible to e.g. style a page differently if it's in edit mode,
          see http://www.dokuwiki.org/devel:action_modes for a list of action modes */ ?>
     <?php /* .dokuwiki should always be in one of the surrounding elements (e.g. plugins and templates depend on it) */ ?>
-    <div id="dokuwiki__site"><div class="dokuwiki site mode_<?php echo $ACT ?>">
+    <div id="dokuwiki__site"><div class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'hasSidebar' : ''; ?>">
         <?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
         <?php _tpl_include('header.html') ?>
 
@@ -109,10 +110,12 @@ $showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER
 
         <div class="wrapper group">
 
-            <!-- ********** ASIDE ********** -->
-            <div id="dokuwiki__aside"><div class="pad include group">
-                <?php tpl_include_page(tpl_getConf('sidebarID')) /* includes the given wiki page */ ?>
-            </div></div><!-- /aside -->
+            <?php if($showSidebar): ?>
+                <!-- ********** ASIDE ********** -->
+                <div id="dokuwiki__aside"><div class="pad include group">
+                    <?php tpl_include_page(tpl_getConf('sidebarID')) /* includes the given wiki page */ ?>
+                </div></div><!-- /aside -->
+            <?php endif; ?>
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
