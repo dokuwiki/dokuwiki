@@ -37,46 +37,73 @@ caption, legend {
 
 #dokuwiki__header .headings {
     float: right;
+    text-align: right;
 }
 #dokuwiki__header .tools {
     float: left;
     text-align: left;
 }
 
-.mode_show #dokuwiki__aside {
+#dokuwiki__aside {
     float: right;
 }
 #dokuwiki__aside .pad {
     margin: 0 0 0 1.5em;
 }
 
-.mode_show #dokuwiki__content {
+.hasSidebar #dokuwiki__content {
     float: left;
     margin-left: 0;
     margin-right: -__sidebar_width__;
 }
-.mode_show #dokuwiki__content .pad {
+.hasSidebar #dokuwiki__content .pad {
     margin-left: 0;
     margin-right: __sidebar_width__;
 }
 
 /*____________ design ____________*/
 
-#dokuwiki__header form.search #qsearch__in {
-    margin-right: 0;
+#dokuwiki__header h1 img {
+    float: right;
     margin-left: .5em;
+    margin-right: 0;
 }
 
-#dokuwiki__usertools ul li.user {
-    float: right;
-    margin-right: 0;
+#dokuwiki__sitetools form.search input.edit {
+    padding: .35em .1em .35em 22px;
 }
-#dokuwiki__pagetools ul li a.action.top {
-    float: left;
+#dokuwiki__sitetools form.search input.button {
+    background-position: 5px 0;
+    margin-left: 0;
+    margin-right: -20px;
+}
+
+#dokuwiki__usertools {
+    text-align: left;
+    left: 40px;
+    right: auto;
+}
+
+#dokuwiki__sitetools {
+    text-align: left;
 }
 
 #dokuwiki__aside ul, #dokuwiki__aside ol {
     padding-right: 0;
+}
+
+.dokuwiki .pageId {
+    right: auto;
+    left: -1em;
+}
+
+.dokuwiki .docInfo {
+    text-align: left;
+}
+
+
+#dokuwiki__footer .license img {
+    margin: 0 0 0 .5em;
 }
 
 /*____________ content ____________*/
