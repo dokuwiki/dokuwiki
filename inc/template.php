@@ -1354,9 +1354,12 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
  */
 function tpl_include_page($pageid,$print=true){
     global $ID;
-    $oldid = $ID;
+    global $TOC;
+    $oldid  = $ID;
+    $oldtoc = $TOC;
     $html = p_wiki_xhtml($pageid,'',false);
-    $ID = $oldid;
+    $ID  = $oldid;
+    $TOC = $oldtoc;
 
     if(!$print) return $html;
     echo $html;
