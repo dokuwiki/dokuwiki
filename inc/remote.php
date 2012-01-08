@@ -83,6 +83,9 @@ class RemoteAPI {
      * @return mixed result of method call, must be a primitive type.
      */
     public function call($method, $args = array()) {
+        if ($args === null) {
+            $args = array();
+        }
         list($type, $pluginName, $call) = explode('.', $method, 3);
         if ($type === 'plugin') {
             $plugin = plugin_load('remote', $pluginName);
