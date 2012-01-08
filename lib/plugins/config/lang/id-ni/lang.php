@@ -5,7 +5,6 @@
  * @author Harefa <fidelis@harefa.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
  */
-$lang['xmlrpc']                = 'Orifi/böi\'orifi XML-RPC interface.';
 $lang['renderer_xhtml']        = 'Fake Renderer ba zito\'ölö (XHTML) Wiki-output.';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
