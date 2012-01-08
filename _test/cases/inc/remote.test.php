@@ -66,8 +66,8 @@ class RemoteAPICoreTest {
     function stringTestMethod() { return 'success'; }
     function intTestMethod() { return 42; }
     function floatTestMethod() { return 3.14159265; }
-    function dateTestMethod() { return new RemoteDate(2623452346); }
-    function fileTestMethod() { return new RemoteFile('file content'); }
+    function dateTestMethod() { return 2623452346; }
+    function fileTestMethod() { return 'file content'; }
     function voidTestMethod() { return null; }
     function oneStringArgMethod($arg) {return $arg; }
     function twoArgMethod($string, $int) { return array($string, $int); }
@@ -131,6 +131,7 @@ class remote_test extends UnitTestCase {
 
         $this->originalConf = $conf;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '!!not set!!';
         $conf['useacl'] = 0;
 
         $this->userinfo = $USERINFO;
@@ -221,8 +222,8 @@ class remote_test extends UnitTestCase {
         $this->assertEqual($remoteApi->call('wiki.stringTestMethod'), 'success');
         $this->assertEqual($remoteApi->call('wiki.intTestMethod'), 42);
         $this->assertEqual($remoteApi->call('wiki.floatTestMethod'), 3.14159265);
-        $this->assertEqual($remoteApi->call('wiki.dateTestMethod'), new RemoteDate(2623452346));
-        $this->assertEqual($remoteApi->call('wiki.fileTestMethod'), new RemoteFile('file content'));
+        $this->assertEqual($remoteApi->call('wiki.dateTestMethod'), 2623452346);
+        $this->assertEqual($remoteApi->call('wiki.fileTestMethod'), 'file content');
         $this->assertEqual($remoteApi->call('wiki.voidTestMethod'), null);
     }
 
