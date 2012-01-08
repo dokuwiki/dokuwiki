@@ -1,6 +1,7 @@
 <?php
 
 if (!defined('DOKU_INC')) die();
+require_once(DOKU_INC.'inc/RemoteAPICore.php');
 
 class RemoteException extends Exception {}
 class RemoteAccessDenied extends RemoteException {}
