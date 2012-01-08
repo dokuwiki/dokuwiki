@@ -171,6 +171,10 @@ class RemoteAPICore {
         );
     }
 
+    function getVersion() {
+        return getVersion();
+    }
+
     /**
      * Return a raw wiki page
      * @param string $id wiki page id
