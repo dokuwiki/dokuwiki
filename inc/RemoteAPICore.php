@@ -14,7 +14,8 @@ class RemoteAPICore {
                     'password' => 'string'
                 ),
                 'return' => 'int',
-                'doc' => 'Tries to login with the given credentials and sets auth cookies.'
+                'doc' => 'Tries to login with the given credentials and sets auth cookies.',
+                'public' => '1'
             ), 'dokuwiki.getPagelist' => array(
                 'args' => array(
                     'namespace' => 'string',
