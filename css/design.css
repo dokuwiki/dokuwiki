@@ -207,6 +207,15 @@
     background-image: url(images/pagetools/edit-active.png);
 }
 
+#dokuwiki__pagetools ul li a.create {
+    background-image: url(images/pagetools/create.png);
+}
+#dokuwiki__pagetools ul li a.create:hover,
+#dokuwiki__pagetools ul li a.create:active,
+#dokuwiki__pagetools ul li a.create:focus {
+    background-image: url(images/pagetools/create-active.png);
+}
+
 #dokuwiki__pagetools ul li a.show {
     background-image: url(images/pagetools/show.png);
 }
