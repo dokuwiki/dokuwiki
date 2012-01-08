@@ -4,7 +4,7 @@ if (!defined('DOKU_INC')) die();
 require_once(DOKU_INC.'inc/RemoteAPICore.php');
 
 class RemoteException extends Exception {}
-class RemoteAccessDenied extends RemoteException {}
+class RemoteAccessDeniedException extends RemoteException {}
 
 abstract class RemoteDataType {
     private $value;
@@ -161,7 +161,7 @@ class RemoteAPI {
      */
     public function forceAccess() {
         if (!$this->hasAccess()) {
-            throw new RemoteAccessDenied();
+            throw new RemoteAccessDeniedException();
         }
     }
 

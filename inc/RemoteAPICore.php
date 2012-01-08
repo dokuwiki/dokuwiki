@@ -194,7 +194,7 @@ class RemoteAPICore {
     function rawPage($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDenied();
+            throw new RemoteAccessDeniedException();
         }
         $text = rawWiki($id,$rev);
         if(!$text) {
@@ -214,7 +214,7 @@ class RemoteAPICore {
     function getAttachment($id){
         $id = cleanID($id);
         if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ) {
-            throw new RemoteAccessDenied();
+            throw new RemoteAccessDeniedException();
         }
 
         $file = mediaFN($id);
@@ -253,7 +253,7 @@ class RemoteAPICore {
     function htmlPage($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDenied(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
         }
         return p_wiki_xhtml($id,$rev,false);
     }
@@ -372,7 +372,7 @@ class RemoteAPICore {
             }
             return $data;
         } else {
-            throw new RemoteAccessDenied(1, 'You are not allowed to list media files.');
+            throw new RemoteAccessDeniedException(1, 'You are not allowed to list media files.');
         }
     }
 
@@ -389,7 +389,7 @@ class RemoteAPICore {
     function pageInfo($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDenied(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
         }
         $file = wikiFN($id,$rev);
         $time = @filemtime($file);
@@ -432,7 +432,7 @@ class RemoteAPICore {
         }
 
         if(auth_quickaclcheck($id) < AUTH_EDIT) {
-            throw new RemoteAccessDenied(1, 'You are not allowed to edit this page');
+            throw new RemoteAccessDeniedException(1, 'You are not allowed to edit this page');
         }
 
         // Check, if page is locked
@@ -519,7 +519,7 @@ class RemoteAPICore {
         if ($res & DOKU_MEDIA_DELETED) {
             return 0;
         } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
-            throw new RemoteAccessDenied(1, "You don't have permissions to delete files.");
+            throw new RemoteAccessDeniedException(1, "You don't have permissions to delete files.");
         } elseif ($res & DOKU_MEDIA_INUSE) {
             throw new RemoteException(1, 'File is still referenced');
         } else {
@@ -543,7 +543,7 @@ class RemoteAPICore {
     function listLinks($id) {
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDenied(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
         }
         $links = array();
 
@@ -659,7 +659,7 @@ class RemoteAPICore {
     function pageVersions($id, $first) {
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ) {
-            throw new RemoteAccessDenied(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
         }
         global $conf;
 

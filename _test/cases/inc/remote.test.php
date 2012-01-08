@@ -290,7 +290,7 @@ class remote_test extends UnitTestCase {
         $conf['useacl'] = 1;
         $remoteApi = new RemoteApi();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
-        $this->expectException('RemoteAccessDenied');
+        $this->expectException('RemoteAccessDeniedException');
         $remoteApi->call('wiki.stringTestMethod');
     }
 
@@ -298,7 +298,7 @@ class remote_test extends UnitTestCase {
         global $conf;
         $conf['useacl'] = 1;
         $remoteApi = new RemoteApi();
-        $this->expectException('RemoteAccessDenied');
+        $this->expectException('RemoteAccessDeniedException');
         $remoteApi->call('plugin.testplugin.methodString');
     }
 

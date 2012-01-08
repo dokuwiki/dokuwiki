@@ -37,7 +37,7 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
             //print 'a';
             $result = $this->remote->call($methodname, $args);
             return $result;
-        } catch (RemoteAccessDenied $e) {
+        } catch (RemoteAccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 header('HTTP/1.1 401 Unauthorized');
             } else {
