@@ -71,7 +71,6 @@ class RemoteAPI {
      * @return array with information to all available methods
      */
     public function getMethods() {
-        $this->forceAccess();
         return array_merge($this->getCoreMethods(), $this->getPluginMethods());
     }
 
@@ -122,10 +121,18 @@ class RemoteAPI {
      */
     public function hasAccess() {
         global $conf;
-        if (!isset($conf['remote'])) {
+        global $USERINFO;
+        if (!$conf['remote']) {
             return false;
         }
-        return $conf['remote'];
+        if(!$conf['useacl']) {
+            return true;
+        }
+        if(trim($conf['remoteuser']) == '') {
+            return true;
+        }
+
+        return auth_isMember($conf['remoteuser'], $_SERVER['REMOTE_USER'], (array) $USERINFO['grps']);
     }
 
     /**

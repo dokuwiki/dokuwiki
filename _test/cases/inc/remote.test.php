@@ -99,12 +99,15 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
 class remote_test extends UnitTestCase {
 
     var $originalConf;
+    var $userinfo;
 
     var $remote;
 
     function setUp() {
         global $plugin_controller;
         global $conf;
+        global $USERINFO;
+
         parent::setUp();
         $pluginManager = new MockDoku_Plugin_Controller();
         $pluginManager->setReturnValue('getList', array('testplugin'));
@@ -112,13 +115,19 @@ class remote_test extends UnitTestCase {
         $plugin_controller = $pluginManager;
 
         $this->originalConf = $conf;
+        $conf['remote'] = 1;
+        $conf['useacl'] = 0;
 
+        $this->userinfo = $USERINFO;
         $this->remote = new RemoteAPI();
     }
 
     function tearDown() {
         global $conf;
+        global $USERINFO;
         $conf = $this->originalConf;
+        $USERINFO = $this->userinfo;
+
     }
 
     function test_pluginMethods() {
@@ -131,8 +140,6 @@ class remote_test extends UnitTestCase {
     }
 
     function test_hasAccessSuccess() {
-        global $conf;
-        $conf['remote'] = 1;
         $this->assertTrue($this->remote->hasAccess());
     }
 
@@ -141,6 +148,41 @@ class remote_test extends UnitTestCase {
         $conf['remote'] = 0;
         $this->assertFalse($this->remote->hasAccess());
     }
+
+    function test_hasAccessFailAcl() {
+        global $conf;
+        $conf['useacl'] = 1;
+        $this->assertFalse($this->remote->hasAccess());
+    }
+
+    function test_hasAccessSuccessAclEmptyRemoteUser() {
+        global $conf;
+        $conf['useacl'] = 1;
+        $conf['remoteuser'] = '';
+
+        $this->assertTrue($this->remote->hasAccess());
+    }
+
+    function test_hasAccessSuccessAcl() {
+        global $conf;
+        global $USERINFO;
+        $conf['useacl'] = 1;
+        $conf['remoteuser'] = '@grp,@grp2';
+        $USERINFO['grps'] = array('grp');
+
+        $this->assertTrue($this->remote->hasAccess());
+    }
+
+    function test_hasAccessFailAcl2() {
+        global $conf;
+        global $USERINFO;
+        $conf['useacl'] = 1;
+        $conf['remoteuser'] = '@grp';
+        $USERINFO['grps'] = array('grp1');
+
+        $this->assertFalse($this->remote->hasAccess());
+    }
+
 
     function test_forceAccessSuccess() {
         global $conf;
