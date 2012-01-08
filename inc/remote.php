@@ -82,7 +82,6 @@ class RemoteAPI {
      * @return mixed result of method call, must be a primitive type.
      */
     public function call($method, $args = array()) {
-        $this->forceAccess();
         list($type, $pluginName, $call) = explode('.', $method, 3);
         if ($type === 'plugin') {
             $plugin = plugin_load('remote', $pluginName);
@@ -90,15 +89,27 @@ class RemoteAPI {
             if (!$plugin) {
                 throw new RemoteException('Method dose not exists');
             }
+            $this->checkAccess($methods[$method]);
             $name = $this->getMethodName($methods, $method);
             return call_user_func_array(array($plugin, $name), $args);
         } else {
             $coreMethods = $this->getCoreMethods();
+            $this->checkAccess($coreMethods[$method]);
             if (!isset($coreMethods[$method])) {
                 throw new RemoteException('Method dose not exists');
             }
             $this->checkArgumentLength($coreMethods[$method], $args);
             return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
+        }
+    }
+
+    private function checkAccess($methodMeta) {
+        if (!isset($methodMeta['public'])) {
+            $this->forceAccess();
+        } else{
+            if ($methodMeta['public'] == '0') {
+                $this->forceAccess();
+            }
         }
     }
 
@@ -141,7 +152,7 @@ class RemoteAPI {
      */
     public function forceAccess() {
         if (!$this->hasAccess()) {
-            throw new RemoteException('Access denied');
+            throw new RemoteAccessDenied();
         }
     }
 

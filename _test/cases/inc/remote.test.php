@@ -54,7 +54,13 @@ class RemoteAPICoreTest {
                 'return' => 'string',
                 'doc' => 'Test method',
                 'name' => 'twoArgWithDefaultArg',
-            ),
+            ), 'wiki.publicCall' => array(
+                'args' => array(),
+                'return' => 'boolean',
+                'doc' => 'testing for public access',
+                'name' => 'publicCall',
+                'public' => 1
+            )
         );
     }
     function stringTestMethod() { return 'success'; }
@@ -66,6 +72,7 @@ class RemoteAPICoreTest {
     function oneStringArgMethod($arg) {return $arg; }
     function twoArgMethod($string, $int) { return array($string, $int); }
     function twoArgWithDefaultArg($string1, $string2 = 'default') { return array($string1, $string2); }
+    function publicCall() {return true;}
 
 }
 
@@ -86,6 +93,12 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
                 'args' => array('string', 'int', 'bool'),
                 'return' => 'array',
                 'name' => 'method2',
+            ), 'publicCall' => array(
+                'args' => array(),
+                'return' => 'boolean',
+                'doc' => 'testing for public access',
+                'name' => 'publicCall',
+                'public' => 1
             )
         );
     }
@@ -93,6 +106,8 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
     function method1() { return null; }
     function methodString() { return 'success'; }
     function method2($str, $int, $bool = false) { return array($str, $int, $bool); }
+    function publicCall() {return true;}
+
 }
 
 
@@ -134,7 +149,7 @@ class remote_test extends UnitTestCase {
         $methods = $this->remote->getPluginMethods();
         $actual = array_keys($methods);
         sort($actual);
-        $expect = array('plugin.testplugin.method1', 'plugin.testplugin.method2', 'plugin.testplugin.methodString', 'plugin.testplugin.method2ext');
+        $expect = array('plugin.testplugin.method1', 'plugin.testplugin.method2', 'plugin.testplugin.methodString', 'plugin.testplugin.method2ext', 'plugin.testplugin.publicCall');
         sort($expect);
         $this->assertEqual($expect,$actual);
     }
@@ -253,4 +268,37 @@ class remote_test extends UnitTestCase {
         $this->expectException('RemoteException');
         $remoteApi->call('dose not exist');
     }
+
+    function test_publicCallCore() {
+        global $conf;
+        $conf['useacl'] = 1;
+        $remoteApi = new RemoteApi();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+        $this->assertTrue($remoteApi->call('wiki.publicCall'));
+    }
+
+    function test_publicCallPlugin() {
+        global $conf;
+        $conf['useacl'] = 1;
+        $remoteApi = new RemoteApi();
+        $this->assertTrue($remoteApi->call('plugin.testplugin.publicCall'));
+    }
+
+    function test_publicCallCoreDeny() {
+        global $conf;
+        $conf['useacl'] = 1;
+        $remoteApi = new RemoteApi();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+        $this->expectException('RemoteAccessDenied');
+        $remoteApi->call('wiki.stringTestMethod');
+    }
+
+    function test_publicCallPluginDeny() {
+        global $conf;
+        $conf['useacl'] = 1;
+        $remoteApi = new RemoteApi();
+        $this->expectException('RemoteAccessDenied');
+        $remoteApi->call('plugin.testplugin.methodString');
+    }
+
 }
