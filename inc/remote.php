@@ -18,9 +18,6 @@ abstract class RemoteDataType {
     }
 }
 
-class RemoteDate extends RemoteDataType {}
-class RemoteFile extends RemoteDataType {}
-
 /**
  * This class provides information about remote access to the wiki.
  *
@@ -65,6 +62,14 @@ class RemoteAPI {
      * {@see RemoteAPI#getPluginMethods}
      */
     private $pluginMethods = null;
+
+    private $dateTransformation;
+    private $fileTransformation;
+
+    public function __construct() {
+        $this->dateTransformation = array($this, 'dummyTransformation');
+        $this->fileTransformation = array($this, 'dummyTransformation');
+    }
 
     /**
      * Get all available methods with remote access.
@@ -191,11 +196,31 @@ class RemoteAPI {
     public function getCoreMethods($apiCore = null) {
         if ($this->coreMethods === null) {
             if ($apiCore === null) {
-                $this->coreMethods = new RemoteAPICore();
+                $this->coreMethods = new RemoteAPICore($this);
             } else {
                 $this->coreMethods = $apiCore;
             }
         }
         return $this->coreMethods->__getRemoteInfo();
+    }
+
+    public function toFile($data) {
+        return call_user_func($this->fileTransformation, $data);
+    }
+
+    public function toDate($data) {
+        return call_user_func($this->dateTransformation, $data);
+    }
+
+    public function dummyTransformation($data) {
+        return $data;
+    }
+
+    public function setDateTransformation($dateTransformation) {
+        $this->dateTransformation = $dateTransformation;
+    }
+
+    public function setFileTransformation($fileTransformation) {
+        $this->fileTransformation = $fileTransformation;
     }
 }

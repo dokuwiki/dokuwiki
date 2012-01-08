@@ -27,6 +27,8 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
      */
     function dokuwiki_xmlrpc_server(){
         $this->remote = new RemoteAPI();
+        $this->remote->setDateTransformation(array($this, 'toDate'));
+        $this->remote->setFileTransformation(array($this, 'toFile'));
         $this->IXR_Server();
     }
 
@@ -45,6 +47,14 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
         } catch (RemoteException $e) {
             return new IXR_Error($e->getCode(), $e->getMessage());
         }
+    }
+
+    function toDate($data) {
+        return new IXR_Date($data);
+    }
+
+    function toFile($data) {
+        return new IXR_Base64($data);
     }
 
 }

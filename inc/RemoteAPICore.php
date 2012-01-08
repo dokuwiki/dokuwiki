@@ -2,6 +2,12 @@
 
 class RemoteAPICore {
 
+    private $api;
+
+    public function __construct(RemoteAPI $api) {
+        $this->api = $api;
+    }
+
     function __getRemoteInfo() {
         return array(
             'dokuwiki.getVersion' => array(
@@ -217,7 +223,7 @@ class RemoteAPICore {
         }
 
         $data = io_readFile($file, false);
-        return new RemoteFile($data);
+        return $this->api->toFile($data);
     }
 
     /**
@@ -228,13 +234,13 @@ class RemoteAPICore {
     function getAttachmentInfo($id){
         $id = cleanID($id);
         $info = array(
-            'lastModified' => new RemoteDate(0),
+            'lastModified' => $this->api->toDate(0),
             'size' => 0,
         );
 
         $file = mediaFN($id);
         if ((auth_quickaclcheck(getNS($id).':*') >= AUTH_READ) && file_exists($file)){
-            $info['lastModified'] = new RemoteDate(filemtime($file));
+            $info['lastModified'] = $this->api->toDate(filemtime($file));
             $info['size'] = filesize($file);
         }
 
@@ -269,7 +275,7 @@ class RemoteAPICore {
             $page['id'] = trim($pages[$idx]);
             $page['perms'] = $perm;
             $page['size'] = @filesize(wikiFN($pages[$idx]));
-            $page['lastModified'] = new RemoteDate(@filemtime(wikiFN($pages[$idx])));
+            $page['lastModified'] = $this->api->toDate(@filemtime(wikiFN($pages[$idx])));
             $list[] = $page;
         }
 
@@ -362,7 +368,7 @@ class RemoteAPICore {
 
             for($i=0; $i<$len; $i++) {
                 unset($data[$i]['meta']);
-                $data[$i]['lastModified'] = new RemoteDate($data[$i]['mtime']);
+                $data[$i]['lastModified'] = $this->api->toDate($data[$i]['mtime']);
             }
             return $data;
         } else {
@@ -395,7 +401,7 @@ class RemoteAPICore {
 
         $data = array(
             'name'         => $id,
-            'lastModified' => new RemoteDate($time),
+            'lastModified' => $this->api->toDate($time),
             'author'       => (($info['user']) ? $info['user'] : $info['ip']),
             'version'      => $time
         );
@@ -477,7 +483,7 @@ class RemoteAPICore {
      *
      * Michael Klier <chi@chimeric.de>
      */
-    function putAttachment($id, RemoteFile $file, $params) {
+    function putAttachment($id, $file, $params) {
         $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id).':*');
 
@@ -596,7 +602,7 @@ class RemoteAPICore {
         foreach ($recents as $recent) {
             $change = array();
             $change['name']         = $recent['id'];
-            $change['lastModified'] = new RemoteDate($recent['date']);
+            $change['lastModified'] = $this->api->toDate($recent['date']);
             $change['author']       = $recent['user'];
             $change['version']      = $recent['date'];
             $change['perms']        = $recent['perms'];
@@ -629,7 +635,7 @@ class RemoteAPICore {
         foreach ($recents as $recent) {
             $change = array();
             $change['name']         = $recent['id'];
-            $change['lastModified'] = new RemoteDate($recent['date']);
+            $change['lastModified'] = $this->api->toDate($recent['date']);
             $change['author']       = $recent['user'];
             $change['version']      = $recent['date'];
             $change['perms']        = $recent['perms'];
@@ -693,7 +699,7 @@ class RemoteAPICore {
                         $data['ip']   = $info['ip'];
                         $data['type'] = $info['type'];
                         $data['sum']  = $info['sum'];
-                        $data['modified'] = new RemoteDate($info['date']);
+                        $data['modified'] = $this->api->toDate($info['date']);
                         $data['version'] = $info['date'];
                         array_push($versions, $data);
                     }
