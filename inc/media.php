@@ -230,16 +230,18 @@ function media_upload_xhr($ns,$auth){
     $id = $_GET['qqfile'];
     list($ext,$mime,$dl) = mimetype($id);
     $input = fopen("php://input", "r");
-    $temp = tmpfile();
-    $realSize = stream_copy_to_stream($input, $temp);
-    fclose($input);
-    if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]) return false;
     if (!($tmp = io_mktmpdir())) return false;
     $path = $tmp.'/'.md5($id);
     $target = fopen($path, "w");
-    fseek($temp, 0, SEEK_SET);
-    stream_copy_to_stream($temp, $target);
+    $realSize = stream_copy_to_stream($input, $target);
     fclose($target);
+    fclose($input);
+    if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]){
+        unlink($target);
+        unlink($path);
+        return false;
+    }
+
     $res = media_save(
         array('name' => $path,
             'mime' => $mime,
