@@ -206,30 +206,53 @@
 #dokuwiki__pagetools ul li a.edit:focus {
     background-image: url(images/pagetools/edit-active.png);
 }
-#dokuwiki__pagetools ul li a.show {
-    background-image: url(images/pagetools/page.png);
-}
+
 #dokuwiki__pagetools ul li a.create {
-    background-image: url(images/pagetools/pencil_add.png);
+    background-image: url(images/pagetools/create.png);
 }
+#dokuwiki__pagetools ul li a.create:hover,
+#dokuwiki__pagetools ul li a.create:active,
+#dokuwiki__pagetools ul li a.create:focus {
+    background-image: url(images/pagetools/create-active.png);
+}
+
+#dokuwiki__pagetools ul li a.show {
+    background-image: url(images/pagetools/show.png);
+}
+#dokuwiki__pagetools ul li a.show:hover,
+#dokuwiki__pagetools ul li a.show:active,
+#dokuwiki__pagetools ul li a.show:focus {
+    background-image: url(images/pagetools/show-active.png);
+}
+
 #dokuwiki__pagetools ul li a.source {
-    background-image: url(images/pagetools/page_code.png);
+    background-image: url(images/pagetools/source.png);
 }
+#dokuwiki__pagetools ul li a.source:hover,
+#dokuwiki__pagetools ul li a.source:active,
+#dokuwiki__pagetools ul li a.source:focus {
+    background-image: url(images/pagetools/source-active.png);
+}
+
 #dokuwiki__pagetools ul li a.draft {
-    background-image: url(images/pagetools/inbox-document-text.png);
+    background-image: url(images/pagetools/draft.png);
 }
-#dokuwiki__pagetools ul li a.revert {
-    background-image: url(images/pagetools/site_backup_and_restore.png);
+#dokuwiki__pagetools ul li a.draft:hover,
+#dokuwiki__pagetools ul li a.draft:active,
+#dokuwiki__pagetools ul li a.draft:focus {
+    background-image: url(images/pagetools/draft-active.png);
 }
+
 #dokuwiki__pagetools ul li a.revs {
-    background-image: url(images/pagetools/revs.png);
+    background-image: url(images/pagetools/revisions.png);
 }
 #dokuwiki__pagetools ul li a.revs:hover,
 #dokuwiki__pagetools ul li a.revs:active,
 #dokuwiki__pagetools ul li a.revs:focus,
 .mode_revisions #dokuwiki__pagetools ul li a.revs {
-    background-image: url(images/pagetools/revs-active.png);
+    background-image: url(images/pagetools/revisions-active.png);
 }
+
 #dokuwiki__pagetools ul li a.backlink {
     background-image: url(images/pagetools/backlink.png);
 }
@@ -239,9 +262,7 @@
 .mode_backlink #dokuwiki__pagetools ul li a.backlink {
     background-image: url(images/pagetools/backlink-active.png);
 }
-#dokuwiki__pagetools ul li a.subscribe {
-    background-image: url(images/pagetools/email_star.png);
-}
+
 #dokuwiki__pagetools ul li a.top {
     background-image: url(images/pagetools/top.png);
 }
@@ -251,6 +272,25 @@
     background-image: url(images/pagetools/top-active.png);
 }
 
+#dokuwiki__pagetools ul li a.revert {
+    background-image: url(images/pagetools/revert.png);
+}
+#dokuwiki__pagetools ul li a.revert:hover,
+#dokuwiki__pagetools ul li a.revert:active,
+#dokuwiki__pagetools ul li a.revert:focus,
+.mode_revert #dokuwiki__pagetools ul li a.revert {
+    background-image: url(images/pagetools/revert-active.png);
+}
+
+#dokuwiki__pagetools ul li a.subscribe {
+    background-image: url(images/pagetools/subscribe.png);
+}
+#dokuwiki__pagetools ul li a.subscribe:hover,
+#dokuwiki__pagetools ul li a.subscribe:active,
+#dokuwiki__pagetools ul li a.subscribe:focus,
+.mode_subscribe #dokuwiki__pagetools ul li a.subscribe {
+    background-image: url(images/pagetools/subscribe-active.png);
+}
 
 /*____________ site tools ____________*/
 
