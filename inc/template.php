@@ -1202,7 +1202,16 @@ function tpl_mediaFileDetails($image, $rev){
 
     media_tabs_details($image, $opened_tab);
 
-    echo '<div class="panelHeader"><h3>';
+    echo '<div class="panelHeader">';
+
+    // view button
+    if($opened_tab === 'view'){
+        $link = ml($image,array('rev'=>$rev),true);
+        echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
+            'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+    }
+
+    echo '<h3>';
     list($ext,$mime,$dl) = mimetype($image,false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
@@ -1212,6 +1221,7 @@ function tpl_mediaFileDetails($image, $rev){
     } else {
         printf($lang['media_' . $opened_tab], $tabTitle);
     }
+
     echo '</h3></div>'.NL;
 
     echo '<div class="panelContent">'.NL;
