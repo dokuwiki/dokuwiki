@@ -1352,7 +1352,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     $info .= filesize_h($item['size']);
 
     // output
-    echo '<div class="'.$zebra.'"'.$jump.'>'.NL;
+    echo '<div class="'.$zebra.'"'.$jump.' title="'.hsc($item['id']).'">'.NL;
     if (!$display_namespace) {
         echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
     } else {
@@ -1413,7 +1413,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
     $file = utf8_decodeFN($item['file']);
 
     // output
-    echo '<li><dl>'.NL;
+    echo '<li><dl title="'.hsc($item['id']).'">'.NL;
 
         echo '<dt>';
     if($item['isimg']) {
