@@ -71,5 +71,3 @@ $lang['img_date']              = 'Datem';
 $lang['img_camera']            = 'Camera';
 $lang['i_wikiname']            = 'Wiki Naam';
 $lang['i_funcna']              = 'PHP funksie <code>%s</code> is nie beskibaar nie. Miskien is dit af gehaal.';
-$lang['mu_toobig']             = 'te groet';
-$lang['mu_done']               = 'klaar';

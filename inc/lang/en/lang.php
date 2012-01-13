@@ -304,22 +304,6 @@ $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registere
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
 
-$lang['mu_intro']              = 'Here you can upload multiple files at once. Click the browse button to add them to the queue. Press upload when done.';
-$lang['mu_gridname']           = 'Filename';
-$lang['mu_gridsize']           = 'Size';
-$lang['mu_gridstat']           = 'Status';
-$lang['mu_namespace']          = 'Namespace';
-$lang['mu_browse']             = 'Browse';
-$lang['mu_toobig']             = 'too big';
-$lang['mu_ready']              = 'ready for upload';
-$lang['mu_done']               = 'complete';
-$lang['mu_fail']               = 'failed';
-$lang['mu_authfail']           = 'session expired';
-$lang['mu_progress']           = '@PCT@% uploaded';
-$lang['mu_filetypes']          = 'Allowed Filetypes';
-$lang['mu_info']               = 'files uploaded.';
-$lang['mu_lasterr']            = 'Last error:';
-
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';
 $lang['months']                = '%d months ago';
