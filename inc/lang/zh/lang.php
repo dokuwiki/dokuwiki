@@ -290,21 +290,7 @@ $lang['i_pol1']                = '公共的维基（任何人都有读的权限�
 $lang['i_pol2']                = '关闭的维基（只有注册用户才有读、写、上传的权限）';
 $lang['i_retry']               = '重试';
 $lang['i_license']             = '请选择您希望的内容发布许可协议：';
-$lang['mu_intro']              = '您可以在此一次上传多个文件。点按浏览按钮添加文件到上传队列中，先好后按上传钮。';
-$lang['mu_gridname']           = '文件名';
-$lang['mu_gridsize']           = '大小';
-$lang['mu_gridstat']           = '状态';
-$lang['mu_namespace']          = '名称空间';
-$lang['mu_browse']             = '浏览';
-$lang['mu_toobig']             = '过大';
-$lang['mu_ready']              = '准备好上传';
-$lang['mu_done']               = '完成';
-$lang['mu_fail']               = '失败';
-$lang['mu_authfail']           = '会话过期';
-$lang['mu_progress']           = '@PCT@% 上传完成';
-$lang['mu_filetypes']          = '允许的文件类型';
-$lang['mu_info']               = '文件已上传。';
-$lang['mu_lasterr']            = '最后一个错误：';
+
 $lang['recent_global']         = '您当前看到的是<b>%s</b> 名称空间的变动。你还可以在<a href="%s">查看整个维基的近期变动</a>。';
 $lang['years']                 = '%d年前';
 $lang['months']                = '%d月前';
