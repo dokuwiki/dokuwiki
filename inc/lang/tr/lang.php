@@ -234,17 +234,4 @@ $lang['i_pol0']                = 'Tamamen Açık Wiki (herkes okuyabilir, yazabi
 $lang['i_pol1']                = 'Açık Wiki (herkes okuyabilir, ancak  sadece üye olanlar yazabilir ve dosya yükleyebilir)';
 $lang['i_pol2']                = 'Kapalı Wiki (sadece üye olanlar okuyabilir, yazabilir ve dosya yükleyebilir)';
 $lang['i_retry']               = 'Tekrar Dene';
-$lang['mu_intro']              = 'Burada birden fazla dosyayı bir seferde yükleyebilirsiniz. Sıraya eklemek için Gözat butonuna tıklayın. Bitince yükleye tıklayın';
-$lang['mu_gridname']           = 'Dosya Adı';
-$lang['mu_gridsize']           = 'Boyutu';
-$lang['mu_gridstat']           = 'Durumu';
-$lang['mu_namespace']          = 'Namespace';
-$lang['mu_browse']             = 'Gözat';
-$lang['mu_toobig']             = 'çok büyük';
-$lang['mu_ready']              = 'yüklenmeye hazır';
-$lang['mu_done']               = 'tamamlandı';
-$lang['mu_fail']               = 'başarısız';
-$lang['mu_authfail']           = 'oturum zaman aşımına uğradı';
-$lang['mu_progress']           = '@PCT@% yüklendi';
-$lang['mu_filetypes']          = 'İzin verilen Dosya Türleri';
 $lang['recent_global']         = '<b>%s</b> namespace\'i içerisinde yapılan değişiklikleri görüntülemektesiniz. Wiki\'deki tüm değişiklikleri de <a href="%s">bu adresten</a> görebilirsiniz. ';
