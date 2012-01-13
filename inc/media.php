@@ -759,7 +759,7 @@ function media_tab_search($ns,$auth=null) {
     echo '<div class="search">'.NL;
 
     media_searchform($ns, $query, true);
-    if ($do == 'searchlist') {
+    if ($do == 'searchlist' || $query) {
         media_searchlist($query,$ns,$auth,true,_media_get_sort_type());
     }
     echo '</div>'.NL;
