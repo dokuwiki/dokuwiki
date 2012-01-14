@@ -315,6 +315,7 @@
     height: 14px;
     text-indent: -99999px;
     margin-left: -20px;
+    box-shadow: none;
 }
 
 #dokuwiki__sitetools ul {
