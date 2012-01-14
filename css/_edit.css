@@ -111,7 +111,13 @@ div.picker button.pickerbutton {
 .dokuwiki .secedit input.button {
     font-size: 75%;
 }
+
+/* generic style for section highlighting (including headings) */
 .dokuwiki .section_highlight {
-    background-color: __background_alt__ !important;
-    color: inherit;
+}
+/* style for section highlighting (only sections below headings) */
+.dokuwiki div.section_highlight {
+    margin: -3em 0 -.01em -1.5em;
+    padding: 3em 0 .01em 1em;
+    border-left: .5em solid __background_alt__;
 }
