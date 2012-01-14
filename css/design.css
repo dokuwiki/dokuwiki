@@ -466,6 +466,12 @@
     border-bottom-right-radius: 4px;
 }
 
+div.picker button.pickerbutton,
+div.picker button.toolbutton {
+    padding: .1em .35em;
+    border-width: 0;
+}
+
 .dokuwiki textarea.edit {
     font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
 }
