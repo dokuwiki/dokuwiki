@@ -31,10 +31,12 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
              precede CSS rules by #IE6 for IE6, #IE7 for IE7 and #IE8 for IE8 (div closes at the bottom) */ ?>
     <!--[if IE 6 ]><div id="IE6"><![endif]--><!--[if IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
 
+    <?php /* the "dokuwiki__top" id is needed somewhere at the top, because that's where the "back to top" button/link links to */ ?>
     <?php /* classes mode_<action> are added to make it possible to e.g. style a page differently if it's in edit mode,
          see http://www.dokuwiki.org/devel:action_modes for a list of action modes */ ?>
     <?php /* .dokuwiki should always be in one of the surrounding elements (e.g. plugins and templates depend on it) */ ?>
-    <div id="dokuwiki__site"><div class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'hasSidebar' : ''; ?>">
+    <div id="dokuwiki__site"><div id="dokuwiki__top"
+        class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'hasSidebar' : ''; ?>">
         <?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
         <?php _tpl_include('header.html') ?>
 
@@ -45,7 +47,7 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
                 <h1><?php tpl_link(
                     wl(),
                     '<img src="'.tpl_getFavicon(false, 'logo.png').'" width="64" height="64" alt="" /> <span>'.$conf['title'].'</span>',
-                    'id="dokuwiki__top" accesskey="h" title="[H]"'
+                    'accesskey="h" title="[H]"'
                 ) /* @todo: obviously don't use tpl_getFavicon, but make a new function (or use a config option?) */ ?></h1>
                 <?php if (tpl_getConf('tagline')): ?>
                     <p class="claim"><?php echo tpl_getConf('tagline') ?></p>
