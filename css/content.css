@@ -26,10 +26,17 @@
 /*____________ images ____________*/
 
 /* embedded images (styles are already partly set in lib/styles/all.css) */
-.dokuwiki img.media       { }
-.dokuwiki img.medialeft   { margin: .5em 1.5em .5em 0; }
-.dokuwiki img.mediaright  { margin: .5em 0 .5em 1.5em; }
-.dokuwiki img.mediacenter { margin: .5em auto; }
+.dokuwiki img.media {
+}
+.dokuwiki img.medialeft {
+    margin: .5em 1.5em .5em 0;
+}
+.dokuwiki img.mediaright {
+    margin: .5em 0 .5em 1.5em;
+}
+.dokuwiki img.mediacenter {
+    margin: .5em auto;
+}
 
 
 /*____________ tables ____________*/

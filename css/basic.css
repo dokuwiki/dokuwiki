@@ -12,7 +12,8 @@ html {
     overflow-x: auto;
     overflow-y: scroll;
 }
-html, body {
+html,
+body {
     /* @todo: style.ini for #fbfaf9?!? */
     background-color: #fbfaf9;
     color: __text__;
@@ -34,8 +35,14 @@ body {
 
 /*____________ headers ____________*/
 
-h1, h2, h3, h4, h5, h6,
-caption, legend {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+caption,
+legend {
     font-family: Arial, sans-serif;
     font-weight: bold;
     background-color: inherit;
@@ -84,8 +91,16 @@ h6 {
 
 /*____________ basic margins and paddings ____________*/
 
-p, ul, ol, dl, pre, table,
-hr, blockquote, fieldset, address {
+p,
+ul,
+ol,
+dl,
+pre,
+table,
+hr,
+blockquote,
+fieldset,
+address {
     margin: 0 0 1.4em 0; /* bottom margin = line-height */
     padding: 0;
 }
@@ -95,16 +110,15 @@ div {
     padding: 0;
 }
 
-p, dt, dd, td, th, li {
-}
-
 
 /*____________ lists ____________*/
 
-ul, ol {
+ul,
+ol {
     padding: 0 0 0 1.5em;
 }
-li, dd {
+li,
+dd {
     padding: 0;
     margin: 0 0 0 1.5em;
 }
@@ -114,8 +128,12 @@ dt {
     padding: 0;
 }
 
-li ul, li ol, li dl,
-dl ul, dl ol, dl dl {
+li ul,
+li ol,
+li dl,
+dl ul,
+dl ol,
+dl dl {
     margin-bottom: 0;
     padding: 0;
 }
@@ -146,7 +164,8 @@ caption {
     margin: 0 0 .3em;
 }
 
-th, td {
+th,
+td {
     padding: .3em .5em;
     margin: 0;
     vertical-align: top;
@@ -163,19 +182,25 @@ th {
 
 a {
 }
-a:link, a:visited {
+a:link,
+a:visited {
     text-decoration: none;
     color: __link__; /* §colour */
 }
-a:link:hover, a:visited:hover,
-a:link:focus, a:visited:focus,
-a:link:active, a:visited:active {
+a:link:hover,
+a:visited:hover,
+a:link:focus,
+a:visited:focus,
+a:link:active,
+a:visited:active {
     text-decoration: underline;
 }
-a:link:focus, a:visited:focus {
+a:link:focus,
+a:visited:focus {
     outline: 1px dotted;
 }
-a:link:active, a:visited:active {
+a:link:active,
+a:visited:active {
     color: #c00; /* §colour */
 }
 
@@ -189,7 +214,8 @@ img {
     background-color: transparent;
     font-style: italic;
 }
-img, object {
+img,
+object {
     max-width: 100%;
 }
 
@@ -203,13 +229,17 @@ hr {
     clear: both;
 }
 
-acronym, abbr {
+acronym,
+abbr {
     cursor: help;
     border-bottom: 1px dotted;
     font-style: normal;
 }
 
-pre, code, samp, kbd {
+pre,
+code,
+samp,
+kbd {
     font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
     /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
     font-size: 1em;
@@ -226,11 +256,13 @@ blockquote {
     border: solid __border__;
     border-width: 0 0 0 .25em;
 }
-q:before, q:after {
+q:before,
+q:after {
     content: '';
 }
 
-sub, sup {
+sub,
+sup {
     font-size: .8em;
     line-height: 1;
 }
@@ -329,10 +361,3 @@ button,
     cursor: pointer;
 }
 
-/*____________ general classes ____________*/
-
-div.clearer {
-    /* additional to what's already in lib/styles/all.css: */
-    font-size: 1px;
-    visibility: hidden;
-}
