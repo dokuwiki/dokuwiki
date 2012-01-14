@@ -77,6 +77,14 @@
     list-style: none;
     display: inline;
 }
+#dokuwiki__header .tools form.search div.ajax_qsearch li {
+    font-size: 1em;
+    margin-left: 0;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 /*____________ user tools ____________*/
 
@@ -493,8 +501,16 @@ div.picker button.toolbutton {
     background-color: __background__;
     color: __text__;
     border: 1px solid __border__;
+    box-shadow: .1em .1em .1em __border__;
+    border-radius: 2px;
     line-height: 1.2;
-    padding: 0 .2em;
+    padding: .3em .5em;
+    font-size: .9em;
+}
+.dokuwiki form.search div.ajax_qsearch {
+    top: -.35em;
+    font-size: 1em;
+    text-overflow: ellipsis;
 }
 
 .JSpopup ul,
