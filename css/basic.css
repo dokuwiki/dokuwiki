@@ -218,6 +218,7 @@ pre, code, samp, kbd {
 }
 pre {
     overflow: auto;
+    word-wrap: normal;
 }
 
 blockquote {
