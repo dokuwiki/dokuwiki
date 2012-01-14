@@ -100,9 +100,6 @@
     padding: 0;
     max-width: __site_width__;
 }
-#IE6 #dokuwiki__usertools ul {
-    width: 100%;
-}
 #dokuwiki__usertools ul li.user {
 }
 
@@ -475,8 +472,6 @@
     font-size: 100%;
 }
 
-#IE6 .dokuwiki input.button,
-#IE6 .dokuwiki button,
 #IE7 .dokuwiki input.button,
 #IE7 .dokuwiki button {
     line-height: 1.4;
@@ -546,9 +541,6 @@ div.picker button.toolbutton {
 
 .dokuwiki .wrapper {
     margin-bottom: 1.4em;
-}
-#IE6 .dokuwiki .wrapper {
-    margin-bottom: .7em;
 }
 
 #dokuwiki__footer {
