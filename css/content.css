@@ -110,10 +110,10 @@
 .dokuwiki dl.code dt a,
 .dokuwiki dl.file dt a {
     background-color: transparent;
-    /* @todo: those 19px should better be in exe/css.php for all media icons */
-    padding: 0.2em 0 0.1em 19px;
     font-size: 0.875em;
     font-weight: normal;
+    display: block;
+    min-height: 16px;
 }
 .dokuwiki dl.code dd,
 .dokuwiki dl.file dd {

@@ -347,7 +347,6 @@ button,
     /* no style.ini colours on purpose */
     color: #333;
     background-color: #eee;
-    /* @todo: #ccc on purpose? */
     background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
     background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
     background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
