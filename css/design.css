@@ -28,16 +28,13 @@
     padding-top: 10px;
 }
 #dokuwiki__header h1 {
-    margin-bottom: 0;
+    margin: 0;
     font-size: 1.5em;
-    /*
-    text-shadow: 1px 1px 0px #fff;
-    */
+    font-weight: normal;
 }
 #dokuwiki__header h1 a {
     text-decoration: none;
-    /* @todo: style.ini */
-    color: #000;
+    color: __text__;
     background-color: inherit;
 }
 #dokuwiki__header h1 a:hover,
@@ -46,7 +43,6 @@
 }
 #dokuwiki__header p.claim {
     margin-bottom: 0;
-    /*color: __text_neu__;*/
     font-size: 0.875em;
 }
 
