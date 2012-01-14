@@ -503,7 +503,6 @@ div.picker button.toolbutton {
     border: 1px solid __border__;
     box-shadow: .1em .1em .1em __border__;
     border-radius: 2px;
-    line-height: 1.2;
     padding: .3em .5em;
     font-size: .9em;
 }
