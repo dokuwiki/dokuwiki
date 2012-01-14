@@ -10,6 +10,7 @@
 
 .dokuwiki div.toolbar {
     margin-bottom: .5em;
+    overflow: hidden;
 }
 .dokuwiki div.toolbar #draft__status {
     float: right;
@@ -17,6 +18,7 @@
     background-color: inherit;
 }
 .dokuwiki div.toolbar #tool__bar {
+    float: left;
 }
 
 /* buttons inside of toolbar */
