@@ -330,8 +330,6 @@ input,
 textarea,
 select {
     border: 1px solid __border__;
-    -moz-box-shadow: inset 0 0 1px __background_alt__;
-    -webkit-box-shadow: inset 0 0 1px __background_alt__;
     box-shadow: inset 0 0 1px __background_alt__;
     border-radius: 2px;
 }
