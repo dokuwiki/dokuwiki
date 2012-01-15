@@ -14,14 +14,13 @@ html {
 }
 html,
 body {
-    /* @todo: style.ini for #fbfaf9?!? */
-    background-color: #fbfaf9;
     color: __text__;
-    background-image: -moz-linear-gradient(   top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
-    background-image: -webkit-linear-gradient(top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
-    background-image: -o-linear-gradient(     top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
-    background-image: -ms-linear-gradient(    top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
-    background-image: linear-gradient(        top, __background_neu__ 0%, __background_alt__ 1em, #fbfaf9 4em);
+    background-color: __background_site__;
+    background-image: -moz-linear-gradient(   top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: -webkit-linear-gradient(top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: -o-linear-gradient(     top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: -ms-linear-gradient(    top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: linear-gradient(        top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
     background-size: 1px 10em;
     background-repeat: repeat-x;
     margin: 0;
