@@ -275,6 +275,8 @@ sup {
 
 /*____________ forms ____________*/
 
+/* for all of the form styles, style.ini colours are not used on purpose (except for fieldset border) */
+
 form {
     display: inline;
     margin: 0;
@@ -300,23 +302,13 @@ select,
 optgroup,
 option {
     font: inherit;
-    color: inherit;
+    color: #333;
+    background-color: #fff;
     line-height: 1;
     margin: 0;
     vertical-align: middle;
 }
 
-input::-moz-focus-inner,
-button::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-}
-input[disabled],
-button[disabled],
-input[readonly],
-button[readonly] {
-    cursor: auto;
-}
 optgroup {
     font-style: italic;
     font-weight: bold;
@@ -329,22 +321,31 @@ option {
 input,
 textarea,
 select {
-    border: 1px solid __border__;
-    box-shadow: inset 0 0 1px __background_alt__;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 0 1px #eee;
     border-radius: 2px;
+}
+input:active,
+input:focus,
+textarea:active,
+textarea:focus,
+select:active,
+select:focus {
+    border-color: #999;
 }
 input[type=radio],
 input[type=checkbox] {
     padding: 0;
     border-width: 0;
+    box-shadow: none;
 }
 
+/* all types of buttons */
 input[type=submit],
 input.button,
 a.button,
 button,
 .qq-upload-button {
-    /* no style.ini colours on purpose */
     color: #333;
     background-color: #eee;
     background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
@@ -356,5 +357,40 @@ button,
     border-radius: 2px;
     padding: .1em .5em;
     cursor: pointer;
+}
+
+input[type=submit]:hover,
+input[type=submit]:active,
+input[type=submit]:focus,
+input.button:hover,
+input.button:active,
+input.button:focus,
+a.button:hover,
+a.button:active,
+a.button:focus,
+button:hover,
+button:active,
+button:focus,
+.qq-upload-button:hover {
+    border-color: #999;
+    background-color: #ddd;
+    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%);
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+    background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%);
+    background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%);
+    background: linear-gradient(        top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+}
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+input[disabled],
+button[disabled],
+input[readonly],
+button[readonly] {
+    cursor: auto;
 }
 
