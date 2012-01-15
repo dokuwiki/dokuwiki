@@ -25,7 +25,7 @@ class Sitemapper {
      * @link   https://www.google.com/webmasters/sitemaps/docs/en/about.html
      * @link   http://www.sitemaps.org/
      */
-    public function generate(){
+    public static function generate(){
         global $conf;
         if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) return false;
 
@@ -39,11 +39,11 @@ class Sitemapper {
 
         if(@filesize($sitemap) &&
            @filemtime($sitemap) > (time()-($conf['sitemap']*86400))){ // 60*60*24=86400
-            dbglog('Sitemapper::generate(): Sitemap up to date'); // FIXME: only in debug mode
+            dbglog('Sitemapper::generate(): Sitemap up to date');
             return false;
         }
 
-        dbglog("Sitemapper::generate(): using $sitemap"); // FIXME: Only in debug mode
+        dbglog("Sitemapper::generate(): using $sitemap");
 
         $pages = idx_get_indexer()->getPages();
         dbglog('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
@@ -77,7 +77,7 @@ class Sitemapper {
      * @return string The sitemap XML.
      * @author Michael Hamann
      */
-    private function getXML($items) {
+    private static function getXML($items) {
         ob_start();
         echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
@@ -96,7 +96,7 @@ class Sitemapper {
      * @return The path to the sitemap file.
      * @author Michael Hamann
      */
-    public function getFilePath() {
+    public static function getFilePath() {
         global $conf;
 
         $sitemap = $conf['cachedir'].'/sitemap.xml';
@@ -113,7 +113,7 @@ class Sitemapper {
      * 
      * @author Michael Hamann
      */
-    public function pingSearchEngines() {
+    public static function pingSearchEngines() {
         //ping search engines...
         $http = new DokuHTTPClient();
         $http->timeout = 8;
