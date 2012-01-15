@@ -39,6 +39,13 @@
 }
 
 
+/*____________ lists ____________
+
+.dokuwiki ul li {
+    list-style-image: url(images/bullet.png);
+}
+*/
+
 /*____________ tables ____________*/
 
 .dokuwiki table.inline {
