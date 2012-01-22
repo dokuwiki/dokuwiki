@@ -35,8 +35,12 @@ div.picker {
 div.picker.pk_hl {
     width: auto;
 }
+
 /* buttons inside of picker */
-div.picker button.pickerbutton {
+div.picker button.pickerbutton,
+div.picker button.toolbutton {
+    padding: .1em .35em;
+    border-width: 0;
 }
 
 /*____________ edit textarea ____________*/

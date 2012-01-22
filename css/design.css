@@ -307,12 +307,6 @@
     border-bottom-right-radius: 4px;
 }
 
-div.picker button.pickerbutton,
-div.picker button.toolbutton {
-    padding: .1em .35em;
-    border-width: 0;
-}
-
 .dokuwiki div.section_highlight {
     margin-left: -2em;
     border-left-width: 1em;
