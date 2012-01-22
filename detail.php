@@ -28,7 +28,7 @@ if (!defined('DOKU_INC')) die();
 </head>
 
 <body>
-    <!--[if IE 6 ]><div id="IE6"><![endif]--><!--[if IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
+    <!--[if IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
     <div id="dokuwiki__detail" class="dokuwiki">
         <?php html_msgarea() ?>
 
