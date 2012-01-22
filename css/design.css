@@ -366,6 +366,12 @@
 }
 
 
+/*____________ changes to _imgdetail ____________*/
+
+#dokuwiki__detail {
+    padding: 0;
+}
+
 /*____________ JS popup ____________*/
 
 .JSpopup {

@@ -8,14 +8,11 @@
 #dokuwiki__detail h1 {
 }
 
-#dokuwiki__detail div.content {
-}
-
-#dokuwiki__detail div.content img {
+#dokuwiki__detail img {
     float: left;
-    margin-right: 1.5em;
+    margin: 0 1.5em .5em 0;
 }
-#dokuwiki__detail div.content div.img_detail {
+#dokuwiki__detail div.img_detail {
     float: left;
 }
 
@@ -29,4 +26,5 @@
 }
 
 #dokuwiki__detail p.back {
+    clear: both;
 }
