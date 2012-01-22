@@ -185,11 +185,8 @@
 
 /* make sidebar more condensed */
 
-/* make h1 in sidebar ugly and small to prevent people using it */
 #dokuwiki__aside h1 {
-    font-size: .7em;
-    color: green;
-    background-color: pink;
+    margin-bottom: .222em;
 }
 #dokuwiki__aside h2 {
     margin-bottom: .333em;
@@ -289,6 +286,12 @@
     line-height: 1.4;
 }
 
+#acl__tree li {
+    margin: 0;
+}
+
+/*____________ changes to _edit ____________*/
+
 .dokuwiki div.toolbar button.toolbutton {
     border-radius: 0;
     border-left-width: 0;
@@ -320,8 +323,52 @@ div.picker button.toolbutton {
 }
 
 
-#acl__tree li {
-    margin: 0;
+/*____________ changes to _toc ____________*/
+
+.dokuwiki div.toc {
+    margin:  -2em -2em .5em 1.4em;
+    width: __sidebar_width__;
+    border-left: 1px solid __border__;
+    background: __background__;
+    color: inherit;
+}
+
+.dokuwiki div.tocheader {
+    padding: .5em 1em;
+    margin-bottom: 0;
+    font-size: .875em;
+    letter-spacing: .1em;
+}
+
+.dokuwiki .toc span.toc_open,
+.dokuwiki .toc span.toc_close {
+    background: transparent url(images/toc-arrows.png) 0 0;
+    width: 8px;
+    height: 5px;
+    margin: .4em 0 0;
+}
+.dokuwiki .toc span.toc_open {
+    background-position: 0 -5px;
+}
+
+.dokuwiki .toc span.toc_open span,
+.dokuwiki .toc span.toc_close span {
+    display: none;
+}
+
+
+.dokuwiki #toc__inside {
+    font-size: 0.875em;
+    padding: .5em 1em 1em;
+}
+.dokuwiki #toc__inside ul {
+    padding: 0 0 0 1.5em;
+}
+.dokuwiki #toc__inside ul li {
+    list-style: disc;
+}
+.dokuwiki #toc__inside ul li div.li {
+    padding: .2em 0;
 }
 
 
