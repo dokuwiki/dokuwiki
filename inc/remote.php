@@ -6,18 +6,6 @@ require_once(DOKU_INC.'inc/RemoteAPICore.php');
 class RemoteException extends Exception {}
 class RemoteAccessDeniedException extends RemoteException {}
 
-abstract class RemoteDataType {
-    private $value;
-
-    function __construct($value) {
-        $this->value = $value;
-    }
-
-    function getValue() {
-        return $this->value;
-    }
-}
-
 /**
  * This class provides information about remote access to the wiki.
  *
