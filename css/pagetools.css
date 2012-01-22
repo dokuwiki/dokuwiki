@@ -1,16 +1,26 @@
+
 /*____________ page tools ____________*/
 
 #dokuwiki__site .site {
-    padding-left: 40px;
+    /* give space to the right so the tools won't disappear on smaller screens */
+    /* it's 40px because the 30px wide icons will have 5px more spacing to the left and right */
     padding-right: 40px;
+    /* give the same space to the left to balance it out */
+    padding-left: 40px;
+}
+.dokuwiki div.page {
+    min-height: 190px; /* 30 (= height of icons) x 6 (= maximum number of possible tools) + 2x5 */
 }
 #dokuwiki__usertools {
+    /* move the tools just outside of the site */
     right: 40px;
 }
 
+
 #dokuwiki__pagetools {
     position: absolute;
-    right: -42px;
+    right: -40px;
+    /* on same vertical level as first headline, because .page has 2em padding */
     top: 2em;
 }
 
@@ -21,37 +31,12 @@
 #dokuwiki__pagetools ul {
     position: absolute;
     right: 0;
+    text-align: right;
     margin: 0;
     padding: 0;
-    text-align: right;
-}
-
-#dokuwiki__pagetools.version03 ul {
-    border: 1px solid __border__;
-    border-radius: 2px;
-    background-color: __background__;
-    box-shadow: .1em .1em .1em __text__;
-    margin: 0 -.5em;
-}
-#dokuwiki__pagetools.version02:hover ul li a span,
-#dokuwiki__pagetools.version02:active ul li a span,
-#dokuwiki__pagetools.version02:focus ul li a span,
-#dokuwiki__pagetools.version03:hover ul li a span,
-#dokuwiki__pagetools.version03:active ul li a span,
-#dokuwiki__pagetools.version03:focus ul li a span {
-    display: inline;
-}
-#dokuwiki__pagetools.version02 ul {
-    margin: 0 -.5em;
+    /* add transparent border to prevent jumping when proper border is added on hover */
     border: 1px solid transparent;
 }
-#dokuwiki__pagetools.version02:hover ul {
-    border: 1px solid __border__;
-    border-radius: 2px;
-    background-color: __background__;
-    box-shadow: .1em .1em .1em __text__;
-}
-
 
 #dokuwiki__pagetools ul li {
     padding: 0;
@@ -62,35 +47,40 @@
 
 #dokuwiki__pagetools ul li a {
     display: block;
-    min-height: 17px;
-    padding: .5em 34px .5em 1em;
+    min-height: 20px; /* 30 - 2x5 */
+    line-height: 20px;
+    padding: 5px 40px 5px 5px;
     background-repeat: no-repeat;
     background-position: right center;
-    white-space: nowrap;
+    /* add transparent border to prevent jumping when proper border is added on focus */
     border: 1px solid transparent;
-}
-#dokuwiki__pagetools.version02 ul li a,
-#dokuwiki__pagetools.version03 ul li a {
-    padding: .2em 34px .2em .5em;
-}
-#dokuwiki__pagetools.version01 ul li a:hover,
-#dokuwiki__pagetools.version01 ul li a:active,
-#dokuwiki__pagetools.version01 ul li a:focus {
-    border-radius: 2px;
-    background-color: __background__;
-    box-shadow: .1em .1em .1em __text__;
-    text-decoration: none;
-    border-color: __border__;
-}
-#dokuwiki__pagetools ul li a span {
-    display: none;
-}
-#dokuwiki__pagetools.version01 ul li a:hover span,
-#dokuwiki__pagetools.version01 ul li a:active span,
-#dokuwiki__pagetools.version01 ul li a:focus span {
-    display: inline;
+    white-space: nowrap;
 }
 
+/* hide labels accessibly when neither on hover nor on focus */
+#dokuwiki__pagetools ul li a span {
+    position: absolute;
+    left: -99999px;
+}
+
+/* show all tools on hover and individual tools on focus */
+#dokuwiki__pagetools:hover ul,
+#dokuwiki__pagetools ul li a:focus {
+    background-color: __background__;
+    border-color: __border__;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px __text_alt__;
+}
+
+#dokuwiki__pagetools:hover ul li a span,
+#dokuwiki__pagetools ul li a:focus span {
+    display: inline;
+    position: static;
+}
+
+#dokuwiki__pagetools ul li a:focus {
+    text-decoration: none;
+}
 
 
 /* @todo: add NEW icons */

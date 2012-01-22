@@ -142,7 +142,7 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
 
             <!-- PAGE ACTIONS -->
             <?php if ($showTools): ?>
-                <div id="dokuwiki__pagetools" class="version01">
+                <div id="dokuwiki__pagetools">
                     <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
                     <div class="tools">
                         <ul>
