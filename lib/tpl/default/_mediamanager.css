@@ -102,15 +102,6 @@
     margin: 0 0 3px;
 }
 
-#mediamanager__page .file .panelHeader h3 {
-    margin-right: 18px;
-}
-
-#mediamanager__page .file .panelHeader img.btn {
-    float: right;
-    width: 16px;
-}
-
 #mediamanager__page .panelHeader form.options {
     float: right;
     margin-top: -3px;

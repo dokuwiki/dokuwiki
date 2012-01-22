@@ -970,9 +970,10 @@ function tpl_img($maxwidth=0,$maxheight=0,$link=true,$params=null){
  * Default action for TPL_IMG_DISPLAY
  */
 function _tpl_img_action($data, $param=NULL) {
+    global $lang;
     $p = buildAttributes($data['params']);
 
-    if($data['url']) print '<a href="'.hsc($data['url']).'">';
+    if($data['url']) print '<a href="'.hsc($data['url']).'" title="'.$lang['mediaview'].'">';
     print '<img '.$p.'/>';
     if($data['url']) print '</a>';
     return true;
@@ -1202,16 +1203,7 @@ function tpl_mediaFileDetails($image, $rev){
 
     media_tabs_details($image, $opened_tab);
 
-    echo '<div class="panelHeader">';
-
-    // view button
-    if($opened_tab === 'view'){
-        $link = ml($image,array('rev'=>$rev),true);
-        echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-            'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
-    }
-
-    echo '<h3>';
+    echo '<div class="panelHeader"><h3>';
     list($ext,$mime,$dl) = mimetype($image,false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;

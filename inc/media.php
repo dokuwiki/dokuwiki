@@ -832,6 +832,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
     $size = media_image_preview_size($image, $rev, $meta);
 
     if ($size) {
+        global $lang;
         echo '<div class="image">';
 
         $more = array();
@@ -845,7 +846,10 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
         $more['w'] = $size[0];
         $more['h'] = $size[1];
         $src = ml($image, $more);
+
+        echo '<a href="'.$src.'" target="_blank" title="'.$lang['mediaview'].'">';
         echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
+        echo '</a>';
 
         echo '</div>'.NL;
     }
