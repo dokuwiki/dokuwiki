@@ -43,6 +43,6 @@ if (!defined('DOKU_INC')) die();
             <?php tpl_mediaContent() ?>
         </div></div>
     </div>
-    <!--[if ( IE 6 | IE 7 | IE 8 ) ]></div><![endif]-->
+    <!--[if ( IE lte 7 | IE 8 ) ]></div><![endif]-->
 </body>
 </html>

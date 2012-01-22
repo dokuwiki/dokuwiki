@@ -121,6 +121,6 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
         <?php include('tpl_footer.php') ?>
     </div></div><!-- /site -->
 
-    <!--[if ( IE 6 | IE 7 | IE 8 ) ]></div><![endif]-->
+    <!--[if ( IE lte 7 | IE 8 ) ]></div><![endif]-->
 </body>
 </html>
