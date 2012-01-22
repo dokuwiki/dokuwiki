@@ -50,7 +50,7 @@
     min-height: 20px; /* 30 - 2x5 */
     line-height: 20px;
     padding: 5px 40px 5px 5px;
-    background-image: url(images/pagetools/pagetools-sprite.png);
+    background-image: url(images/pagetools-sprite.png);
     background-position: right 0;
     background-repeat: no-repeat;
     /* add transparent border to prevent jumping when proper border is added on focus */
