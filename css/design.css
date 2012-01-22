@@ -356,10 +356,10 @@
     padding: .5em 1em 1em;
 }
 .dokuwiki #toc__inside ul {
-    padding: 0 0 0 1.5em;
+    padding: 0 0 0 1.2em;
 }
 .dokuwiki #toc__inside ul li {
-    list-style: disc;
+    list-style-image: url(images/toc-bullet.png);
 }
 .dokuwiki #toc__inside ul li div.li {
     padding: .2em 0;

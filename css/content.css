@@ -39,12 +39,22 @@
 }
 
 
-/*____________ lists ____________
+/*____________ lists ____________*/
 
-.dokuwiki ul li {
-    list-style-image: url(images/bullet.png);
+.dokuwiki #dokuwiki__content li {
+    font-weight: bold;
+    color: __text_alt__;
 }
-*/
+
+.dokuwiki #dokuwiki__content ul li {
+    list-style-type: square;
+}
+
+.dokuwiki #dokuwiki__content li .li {
+    font-weight: normal;
+    color: __text__;
+}
+
 
 /*____________ tables ____________*/
 
