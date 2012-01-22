@@ -140,7 +140,7 @@ li li {
     font-size: 100%;
 }
 
-ul             { list-style: disc outside; }
+ul             { list-style: square outside; }
 ol             { list-style: decimal outside; }
 ol ol          { list-style-type: lower-alpha; }
 ol ol ol       { list-style-type: upper-roman; }

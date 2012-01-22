@@ -41,17 +41,13 @@
 
 /*____________ lists ____________*/
 
-.dokuwiki #dokuwiki__content li {
-    font-weight: bold;
+.dokuwiki #dokuwiki__content ul li {
     color: __text_alt__;
 }
-
-.dokuwiki #dokuwiki__content ul li {
-    list-style-type: square;
+.dokuwiki #dokuwiki__content ol li {
+    color: __text_neu__;
 }
-
 .dokuwiki #dokuwiki__content li .li {
-    font-weight: normal;
     color: __text__;
 }
 
