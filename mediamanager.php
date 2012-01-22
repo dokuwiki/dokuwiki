@@ -15,6 +15,7 @@ if (!defined('DOKU_INC')) die();
   lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction'] ?>" class="popup">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         <?php echo hsc($lang['mediaselect'])?>
         [<?php echo strip_tags($conf['title'])?>]
