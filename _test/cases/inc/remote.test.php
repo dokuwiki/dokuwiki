@@ -2,8 +2,13 @@
 
 require_once DOKU_INC . 'inc/init.php';
 require_once DOKU_INC . 'inc/RemoteAPICore.php';
+require_once DOKU_INC . 'inc/auth/basic.class.php';
 
 Mock::generate('Doku_Plugin_Controller');
+
+class MockAuth extends auth_basic {
+    function isCaseSensitive() { return true; }
+}
 
 class RemoteAPICoreTest {
 
@@ -122,6 +127,7 @@ class remote_test extends UnitTestCase {
         global $plugin_controller;
         global $conf;
         global $USERINFO;
+        global $auth;
 
         parent::setUp();
         $pluginManager = new MockDoku_Plugin_Controller();
@@ -136,6 +142,8 @@ class remote_test extends UnitTestCase {
 
         $this->userinfo = $USERINFO;
         $this->remote = new RemoteAPI();
+
+        $auth = new MockAuth();
     }
 
     function tearDown() {
@@ -185,7 +193,6 @@ class remote_test extends UnitTestCase {
         $conf['useacl'] = 1;
         $conf['remoteuser'] = '@grp,@grp2';
         $USERINFO['grps'] = array('grp');
-
         $this->assertTrue($this->remote->hasAccess());
     }
 
