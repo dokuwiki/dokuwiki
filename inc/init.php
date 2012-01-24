@@ -69,16 +69,6 @@ foreach (array('default','local','protected') as $config_group) {
     }
 }
 
-//prepare language array
-global $lang;
-$lang = array();
-
-//load the language files
-require_once(DOKU_INC.'inc/lang/en/lang.php');
-if ( $conf['lang'] && $conf['lang'] != 'en' ) {
-    require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
-}
-
 //prepare license array()
 global $license;
 $license = array();
@@ -214,6 +204,10 @@ $plugin_controller = new $plugin_controller_class();
 global $EVENT_HANDLER;
 $EVENT_HANDLER = new Doku_Event_Handler();
 
+$local = $conf['lang'];
+trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+
+
 // setup authentication system
 if (!defined('NOSESSION')) {
     auth_setup();
@@ -254,6 +248,20 @@ function init_paths(){
     // hardcoded changelog because it is now a cache that lives in meta
     $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
+}
+
+function init_lang($langCode) {
+    //prepare language array
+    global $lang;
+    $lang = array();
+
+    //load the language files
+    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    if ($langCode && $langCode != 'en') {
+        if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
+            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+        }
+    }
 }
 
 /**
