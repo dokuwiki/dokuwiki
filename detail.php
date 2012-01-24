@@ -51,71 +51,90 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
                 <?php tpl_flush() /* flush the output buffer */ ?>
                 <?php _tpl_include('pageheader.html') ?>
 
-                <!-- ********** IMG DETAIL ********** -->
+                <?php if(!$ERROR): ?>
+                    <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG)); ?></span></div>
+                <?php endif; ?>
 
-                <?php if($ERROR){ print $ERROR; }else{ ?>
+                <div class="page group">
+                    <!-- detail start -->
+                    <?php
+                    if($ERROR):
+                        echo '<h1>'.$ERROR.'</h1>';
+                    else: ?>
 
-                    <h1><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?></h1>
+                        <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
 
-                    <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>
+                        <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>
 
-                    <div class="img_detail">
-                        <h2><?php print nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h2>
-
-                        <dl>
-                            <?php
-                                $config_files = getConfigFiles('mediameta');
-                                foreach ($config_files as $config_file) {
-                                    if(@file_exists($config_file)) {
-                                        include($config_file);
-                                    }
-                                }
-
-                                foreach($fields as $key => $tag){
-                                    $t = array();
-                                    if (!empty($tag[0])) {
-                                        $t = array($tag[0]);
-                                    }
-                                    if(is_array($tag[3])) {
-                                        $t = array_merge($t,$tag[3]);
-                                    }
-                                    $value = tpl_img_getTag($t);
-                                    if ($value) {
-                                        echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
-                                        if ($tag[2] == 'date') {
-                                            echo dformat($value);
-                                        } else {
-                                            echo hsc($value);
+                        <div class="img_detail">
+                            <dl>
+                                <?php
+                                    // @todo: logic should be transferred to backend
+                                    $config_files = getConfigFiles('mediameta');
+                                    foreach ($config_files as $config_file) {
+                                        if(@file_exists($config_file)) {
+                                            include($config_file);
                                         }
-                                        echo '</dd>';
                                     }
-                                }
-                            ?>
-                        </dl>
+
+                                    foreach($fields as $key => $tag){
+                                        $t = array();
+                                        if (!empty($tag[0])) {
+                                            $t = array($tag[0]);
+                                        }
+                                        if(is_array($tag[3])) {
+                                            $t = array_merge($t,$tag[3]);
+                                        }
+                                        $value = tpl_img_getTag($t);
+                                        if ($value) {
+                                            echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
+                                            if ($tag[2] == 'date') {
+                                                echo dformat($value);
+                                            } else {
+                                                echo hsc($value);
+                                            }
+                                            echo '</dd>';
+                                        }
+                                    }
+                                ?>
+                            </dl>
+                        </div>
                         <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
-                    </div>
+                    <?php endif; ?>
+                </div>
+                <!-- detail stop -->
 
-                    <p class="back">
-                        <?php
-                            $imgNS = getNS($IMG);
-                            $authNS = auth_quickaclcheck("$imgNS:*");
-                            if (($authNS >= AUTH_UPLOAD) && function_exists('media_managerURL')) {
-                                $mmURL = media_managerURL(array('ns' => $imgNS, 'image' => $IMG));
-                                echo '<a href="'.$mmURL.'">'.$lang['img_manager'].'</a><br />';
-                            }
-                        ?>
-                        &larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?>
-                    </p>
-
-                <?php } ?>
-
-                <!-- ********** /IMG DETAIL ********** -->
+                <?php /* doesn't make sense like this; @todo: maybe add tpl_imginfo()?
+                <div class="docInfo"><?php tpl_pageinfo(); ?></div>
+                */ ?>
 
                 <?php tpl_flush() ?>
                 <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
+
             <hr class="a11y" />
 
+            <!-- PAGE ACTIONS -->
+            <?php if ($showTools && !$ERROR): ?>
+                <div id="dokuwiki__pagetools">
+                    <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
+                    <div class="tools">
+                        <ul>
+                            <?php // View in media manager; @todo: transfer logic to backend
+                                $imgNS = getNS($IMG);
+                                $authNS = auth_quickaclcheck("$imgNS:*");
+                                if (($authNS >= AUTH_UPLOAD) && function_exists('media_managerURL')) {
+                                    $mmURL = media_managerURL(array('ns' => $imgNS, 'image' => $IMG));
+                                    echo '<li><a href="'.$mmURL.'" class="mediaManager"><span>'.$lang['img_manager'].'</span></a></li>';
+                                }
+                            ?>
+                            <?php // Back to [ID]; @todo: transfer logic to backend
+                                echo '<li><a href="'.wl($ID).'" class="back"><span>'.$lang['img_backto'].' '.$ID.'</span></a></li>';
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div><!-- /wrapper -->
 
         <?php include('tpl_footer.php') ?>

@@ -344,6 +344,17 @@ form#subscribe__form fieldset {
     padding: 0 1.5em 0 0;
 }
 
+#dokuwiki__detail div.img_detail dl dt {
+    float: right;
+    text-align: left;
+    clear: right;
+}
+#dokuwiki__detail div.img_detail dl dd {
+    margin-left: 0;
+    margin-right: 9.5em;
+}
+
+
 /*____________ pagetools ____________*/
 
 #dokuwiki__usertools {
@@ -465,6 +476,24 @@ form#subscribe__form fieldset {
 #dokuwiki__pagetools ul li a.subscribe:focus,
 .mode_subscribe #dokuwiki__pagetools ul li a.subscribe {
     background-position: left -765px;
+}
+
+#dokuwiki__pagetools ul li a.mediaManager {
+    background-position: left -900px;
+}
+#dokuwiki__pagetools ul li a.mediaManager:hover,
+#dokuwiki__pagetools ul li a.mediaManager:active,
+#dokuwiki__pagetools ul li a.mediaManager:focus {
+    background-position: left -945px;
+}
+
+#dokuwiki__pagetools ul li a.back {
+    background-position: left -990px;
+}
+#dokuwiki__pagetools ul li a.back:hover,
+#dokuwiki__pagetools ul li a.back:active,
+#dokuwiki__pagetools ul li a.back:focus {
+    background-position: left -1035px;
 }
 
 

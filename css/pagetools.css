@@ -182,3 +182,21 @@
 .mode_subscribe #dokuwiki__pagetools ul li a.subscribe {
     background-position: right -765px;
 }
+
+#dokuwiki__pagetools ul li a.mediaManager {
+    background-position: right -900px;
+}
+#dokuwiki__pagetools ul li a.mediaManager:hover,
+#dokuwiki__pagetools ul li a.mediaManager:active,
+#dokuwiki__pagetools ul li a.mediaManager:focus {
+    background-position: right -945px;
+}
+
+#dokuwiki__pagetools ul li a.back {
+    background-position: right -990px;
+}
+#dokuwiki__pagetools ul li a.back:hover,
+#dokuwiki__pagetools ul li a.back:active,
+#dokuwiki__pagetools ul li a.back:focus {
+    background-position: right -1035px;
+}

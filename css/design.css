@@ -371,6 +371,27 @@
 #dokuwiki__detail {
     padding: 0;
 }
+#dokuwiki__detail img {
+    float: none;
+    margin-bottom: 1.4em;
+}
+#dokuwiki__detail div.img_detail {
+    float: none;
+}
+
+#dokuwiki__detail div.img_detail dl {
+    overflow: hidden;
+}
+#dokuwiki__detail div.img_detail dl dt {
+    float: left;
+    width: 9em;
+    text-align: right;
+    clear: left;
+}
+#dokuwiki__detail div.img_detail dl dd {
+    margin-left: 9.5em;
+}
+
 
 /*____________ JS popup ____________*/
 
