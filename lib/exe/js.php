@@ -31,8 +31,14 @@ function js_out(){
     global $lang;
     global $config_cascade;
 
+    if (isset($_GET['cacheKey'])) {
+        $cacheKey = strval($_GET['cacheKey']);
+    } else {
+        $cacheKey = '';
+    }
+
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$cacheKey,
                        '.js');
 
     // load minified version for some files
