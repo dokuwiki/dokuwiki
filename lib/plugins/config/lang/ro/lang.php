@@ -9,6 +9,7 @@
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['menu']                  = 'Setări de Configurare';
 $lang['error']                 = 'Setări nu au fost actualizate datorită unei valori incorecte; verificaţi modificările şi încercaţi din nou. <br /> Valorile incorecte vor apărea într-un chenar roşu.';
@@ -67,6 +68,7 @@ $lang['useheading']            = 'Foloseşte primul titlu pentru numele paginii'
 $lang['refcheck']              = 'Verificare referinţă media';
 $lang['refshow']               = 'Numărul de referinţe media de arătat';
 $lang['allowdebug']            = 'Permite depanarea <b>dezactivaţi dacă cu e necesar!</b>';
+$lang['mediarevisions']        = 'Activează revizii media?';
 $lang['usewordblock']          = 'Blochează spam-ul pe baza listei de cuvinte';
 $lang['indexdelay']            = 'Timpul de întârziere înainte de indexare (sec)';
 $lang['relnofollow']           = 'Folosiţi rel="nofollow" pentru legăturile externe';

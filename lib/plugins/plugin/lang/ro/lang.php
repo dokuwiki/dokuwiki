@@ -9,6 +9,7 @@
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['menu']                  = 'Administrează plugin-uri';
 $lang['download']              = 'Descarcă şi instalează un nou plugin';
