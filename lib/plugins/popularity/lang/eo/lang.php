@@ -12,7 +12,7 @@
  * @author Robert BOGENSCHNEIDER <bogi@UEA.org>
  */
 $lang['name']                  = 'Populareca enketo (eble la ŝargo prokrastos iomete)';
-$lang['submit']                = 'Sendi datenaron';
+$lang['submit']                = 'Sendi datumaron';
 $lang['autosubmit']            = 'Aŭtomate sendi datumaron monate';
 $lang['submissionFailed']      = 'La datumaro ne povis esti sendata pro la jena eraro:';
 $lang['submitDirectly']        = 'Vi povas sendi vi mem la datumaron per la sekva informilo.';

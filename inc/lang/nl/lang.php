@@ -15,6 +15,7 @@
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
+ * @author Ricardo Guijt <ricardoguijt@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -138,8 +139,11 @@ $lang['js']['restore_confirm'] = 'Werkelijk deze versie terugzetten?';
 $lang['js']['media_diff']      = 'Verschillen bekijken:';
 $lang['js']['media_diff_both'] = 'Naast elkaar';
 $lang['js']['media_diff_opacity'] = 'Doorschijnend';
+$lang['js']['media_diff_portions'] = 'Swipe';
 $lang['js']['media_select']    = 'Selecteer bestanden';
+$lang['js']['media_upload_btn'] = 'Uploaden';
 $lang['js']['media_done_btn']  = 'Klaar';
+$lang['js']['media_drop']      = 'Sleep bestanden hierheen om ze te uploaden';
 $lang['js']['media_cancel']    = 'Verwijderen';
 $lang['js']['media_overwrt']   = 'Bestaande bestanden overschrijven';
 $lang['rssfailed']             = 'Er is een fout opgetreden bij het ophalen van de feed: ';
@@ -196,6 +200,7 @@ $lang['mail_changed']          = 'pagina aangepast:';
 $lang['mail_subscribe_list']   = 'Pagina\'s veranderd in namespace:';
 $lang['mail_new_user']         = 'nieuwe gebruiker:';
 $lang['mail_upload']           = 'bestand geüpload:';
+$lang['changes_type']          = 'Bekijk wijzigingen van';
 $lang['pages_changes']         = 'Pagina\'s';
 $lang['media_changes']         = 'Media bestanden';
 $lang['both_changes']          = 'Zowel pagina\'s als media bestanden';
@@ -282,21 +287,6 @@ $lang['i_pol1']                = 'Publieke wiki (lezen voor iedereen, schrijven 
 $lang['i_pol2']                = 'Besloten wiki (lezen, schrijven en uploaden alleen voor geregistreerde gebruikers)';
 $lang['i_retry']               = 'Opnieuw';
 $lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
-$lang['mu_intro']              = 'Hiier kun je meerdere bestanden tegelijk uploaden. Klik de blader-knop om ze aan de lijst toe te voegen. Klik Upload als je klaar bent.';
-$lang['mu_gridname']           = 'Bestandsnaam';
-$lang['mu_gridsize']           = 'Grootte';
-$lang['mu_gridstat']           = 'Status';
-$lang['mu_namespace']          = 'Namespace';
-$lang['mu_browse']             = 'Blader';
-$lang['mu_toobig']             = 'te groot';
-$lang['mu_ready']              = 'Klaar om te uploaden';
-$lang['mu_done']               = 'klaar';
-$lang['mu_fail']               = 'mislukt';
-$lang['mu_authfail']           = 'sessie beëindigd';
-$lang['mu_progress']           = '@PCT@% geüpload';
-$lang['mu_filetypes']          = 'Toegestane bestandstypes';
-$lang['mu_info']               = 'bestanden geüpload.';
-$lang['mu_lasterr']            = 'Laatste foutmelding:';
 $lang['recent_global']         = 'Je bekijkt momenteel de wijzigingen binnen de <b>%s</b> namespace. Je kunt ook de <a href="%s">recente wijzigingen van de hele wiki</a> bekijken.';
 $lang['years']                 = '%d jaar geleden';
 $lang['months']                = '%d maand geleden';
@@ -306,22 +296,27 @@ $lang['hours']                 = '%d uren geleden';
 $lang['minutes']               = '%d minuten geleden';
 $lang['seconds']               = '%d seconden geleden';
 $lang['wordblock']             = 'Uw wijziging is niet opgeslagen omdat deze niet-toegestane tekst bevat (spam).';
+$lang['media_uploadtab']       = 'Uploaden';
 $lang['media_searchtab']       = 'Zoeken';
 $lang['media_file']            = 'Bestand';
 $lang['media_viewtab']         = 'Beeld';
 $lang['media_edittab']         = 'Bewerken';
 $lang['media_historytab']      = 'Geschiedenis';
+$lang['media_list_thumbs']     = 'Miniatuurweergaven';
 $lang['media_list_rows']       = 'Regels';
 $lang['media_sort_name']       = 'Naam';
 $lang['media_sort_date']       = 'Datum';
 $lang['media_namespaces']      = 'Kies naamruimte';
 $lang['media_files']           = 'Bestanden in %s';
+$lang['media_upload']          = 'Upload naar %s';
 $lang['media_search']          = 'Zoeken in %s';
 $lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s bij %s';
 $lang['media_edit']            = '%s bewerken';
 $lang['media_history']         = 'Geschiedenis van %s';
 $lang['media_meta_edited']     = 'Metagegevens bewerkt';
 $lang['media_perm_read']       = 'Sorry, u heeft niet voldoende rechten om bestanden te lezen.';
 $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om bestanden te uploaden.';
+$lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
 $lang['plugin_install_err']    = 'Plugin is juist geinstalleerd. Hernoem plugin map \'%s\' naar \'%s\'.';

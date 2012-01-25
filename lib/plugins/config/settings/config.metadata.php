@@ -164,6 +164,7 @@ $meta['target____media']     = array('string');
 $meta['target____windows']   = array('string');
 
 $meta['_media']      = array('fieldset');
+$meta['mediarevisions']  = array('onoff');
 $meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
 $meta['im_convert']  = array('im_convert');
 $meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)

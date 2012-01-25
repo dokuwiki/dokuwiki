@@ -1,4 +1,4 @@
-===Lynhjelp===
+=== Hurtighjelp: ===
 
 På denne siden kan du legge til og fjerne tillatelser for navnerom og sider i din wiki.
 

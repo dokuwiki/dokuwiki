@@ -67,7 +67,7 @@ $lang['htmlok']                = 'HTML erlauben';
 $lang['phpok']                 = 'PHP erlauben';
 $lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://www.php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
-$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftsgröße beginnen';
+$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
 $lang['tocminheads']           = 'Mindestanzahl der Überschriften die entscheidet, ob ein Inhaltsverzeichnis erscheinen soll';
 $lang['maxtoclevel']           = 'Maximale Überschriftsgröße für Inhaltsverzeichnis';
 $lang['maxseclevel']           = 'Abschnitte bis zu dieser Stufe einzeln editierbar machen';
@@ -75,8 +75,9 @@ $lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';
 $lang['deaccent']              = 'Seitennamen bereinigen';
 $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
 $lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
-$lang['refshow']               = 'Wieviele Verwendungsorte der Media-Datei zeigen';
+$lang['refshow']               = 'Wiev iele Verwendungsorte der Media-Datei zeigen';
 $lang['allowdebug']            = 'Debug-Ausgaben erlauben <b>Abschalten wenn nicht benötigt!</b>';
+$lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
 $lang['usewordblock']          = 'Spam-Blocking benutzen';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
@@ -119,18 +120,12 @@ $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mail
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
-$lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';
+$lang['im_convert']            = 'Pfad zu ImageMagicks-Konvertierwerkzeug';
 $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
-$lang['cssdatauri']            = 'Oberer Grenzwert in Bytes für Dateigrössen. Im CSS referenzierte Bilddateien unter diesem Grenzwert werden direkt ins Stylesheet eingebettet um den "HTTP request header overload" zu reduzieren.
-Diese Technik funktioniert nicht im Internet Explorer 7 und älter!
-
-Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes.
-Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.
-
- ';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter!  Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes. Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage)';

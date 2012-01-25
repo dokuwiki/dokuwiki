@@ -14,10 +14,11 @@
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
  * @author Jon Bøe <jonmagneboe@hotmail.com>
+ * @author Egil Hansen <egil@rosetta.no>
  */
-$lang['menu']                  = 'Behandle tillegg';
-$lang['download']              = 'Last ned og installer et tillegg';
-$lang['manage']                = 'Installerte tillegg';
+$lang['menu']                  = 'Behandle programtillegg';
+$lang['download']              = 'Last ned og installer et programtillegg';
+$lang['manage']                = 'Installerte programtillegg';
 $lang['btn_info']              = 'informasjon';
 $lang['btn_update']            = 'oppdater';
 $lang['btn_delete']            = 'slett';
@@ -31,7 +32,7 @@ $lang['source']                = 'Kilde:';
 $lang['unknown']               = 'ukjent';
 $lang['updating']              = 'Oppdaterer ...';
 $lang['updated']               = 'Tillegget %s er oppdatert';
-$lang['updates']               = 'De følgende tilleggene har blitt oppdatert';
+$lang['updates']               = 'Følgende programtillegg har blitt oppdatert';
 $lang['update_none']           = 'Ingen oppdateringer funnet.';
 $lang['deleting']              = 'Sletter ...';
 $lang['deleted']               = 'Tillegget %s ble slettet.';

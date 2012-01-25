@@ -3,6 +3,7 @@
  * Galicianlanguage file
  *
  * @author Medúlio <medulio@ciberirmandade.org>
+ * @author Oscar M. Lage <r0sk10@gmail.com>
  */
 $lang['menu']                  = 'Xestionar Extensións';
 $lang['download']              = 'Descargar e instalar unha nova extensión';
@@ -48,3 +49,4 @@ $lang['enabled']               = 'Extensión %s activado.';
 $lang['notenabled']            = 'A extensión %s non puido ser activada, comproba os permisos de arquivo.';
 $lang['disabled']              = 'Extensión %s desactivada.';
 $lang['notdisabled']           = 'A extensión %s non puido ser desactivada, comproba os permisos de arquivo.';
+$lang['packageinstalled']      = 'Paquete de extensión (%d plugin(s): %s) instalado axeitadamente.';

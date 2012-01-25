@@ -22,6 +22,7 @@
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -112,7 +113,7 @@ $lang['lockexpire']            = 'Le blocage expire à';
 $lang['js']['willexpire']      = 'Votre verrouillage pour la modification de cette page expire dans une minute.\nPour éviter les conflits, utilisez le bouton « Aperçu » pour réinitialiser le minuteur.';
 $lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues. Voulez-vous vraiment continuer ?';
 $lang['js']['searchmedia']     = 'Chercher des fichiers';
-$lang['js']['keepopen']        = 'Gardez la fenêtre ouverte pendant la sélection';
+$lang['js']['keepopen']        = 'Gardez cette fenêtre toujours ouverte';
 $lang['js']['hidedetails']     = 'Masquer détails';
 $lang['js']['mediatitle']      = 'Paramètres de lien';
 $lang['js']['mediadisplay']    = 'Type de lien';
@@ -135,12 +136,10 @@ $lang['js']['medialeft']       = 'Aligner l\'image sur la gauche.';
 $lang['js']['mediaright']      = 'Aligner l\'image sur la droite.';
 $lang['js']['mediacenter']     = 'Centrer l\'image';
 $lang['js']['medianoalign']    = 'Ne pas aligner.';
-$lang['js']['nosmblinks']      = 'Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.
-                                  Vous pouvez toujours copier puis coller le lien.';
+$lang['js']['nosmblinks']      = 'Les liens vers les partages Windows ne fonctionnent qu\'avec Microsoft Internet Explorer.\nVous pouvez toujours copier puis coller le lien.';
 $lang['js']['linkwiz']         = 'Assistant Lien';
 $lang['js']['linkto']          = 'Lien vers :';
 $lang['js']['del_confirm']     = 'Effacer cette entrée ?';
-$lang['js']['mu_btn']          = 'Envoyer plusieurs fichiers en même temps';
 $lang['js']['restore_confirm'] = 'Voulez vous vraiment restaurer cette version ?';
 $lang['js']['media_diff']      = 'Voir les différences:';
 $lang['js']['media_diff_both'] = 'Côte à côte';
@@ -267,8 +266,8 @@ $lang['subscr_m_unsubscribe']  = 'Annuler la souscription';
 $lang['subscr_m_subscribe']    = 'Souscrire';
 $lang['subscr_m_receive']      = 'Recevoir';
 $lang['subscr_style_every']    = 'Envoyer un courriel à chaque modification';
-$lang['subscr_style_digest']   = 'Courriel résumant les modifications de chaque page';
-$lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel';
+$lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
+$lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
 $lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'informer l\'administrateur du Wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'informer l\'administrateur du Wiki.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
@@ -293,21 +292,6 @@ $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écri
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
 $lang['i_retry']               = 'Réessayer';
 $lang['i_license']             = 'Veuillez choisir la licence sous laquelle placer votre contenu :';
-$lang['mu_intro']              = 'Ici vous pouvez envoyer plusieurs fichiers en même temps. Cliquez sur le bouton parcourir pour les ajouter. Cliquez sur envoyer lorsque c\'est prêt. ';
-$lang['mu_gridname']           = 'Nom du fichier';
-$lang['mu_gridsize']           = 'Taille';
-$lang['mu_gridstat']           = 'État';
-$lang['mu_namespace']          = 'Catégorie';
-$lang['mu_browse']             = 'Parcourir';
-$lang['mu_toobig']             = 'Trop gros';
-$lang['mu_ready']              = 'Prêt à envoyer';
-$lang['mu_done']               = 'Terminé';
-$lang['mu_fail']               = 'Échoué';
-$lang['mu_authfail']           = 'Session expirée';
-$lang['mu_progress']           = '@PCT@% envoyé';
-$lang['mu_filetypes']          = 'Types de fichiers acceptés';
-$lang['mu_info']               = 'fichiers envoyés.';
-$lang['mu_lasterr']            = 'Dernière erreur : ';
 $lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein de la catégorie <strong>%s</strong>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>.';
 $lang['years']                 = 'il y a %d ans';
 $lang['months']                = 'il y a %d mois';
@@ -328,13 +312,13 @@ $lang['media_list_rows']       = 'Lignes';
 $lang['media_sort_name']       = 'Tri par nom';
 $lang['media_sort_date']       = 'Tri par date';
 $lang['media_namespaces']      = 'Choisissez un espace de nom';
-$lang['media_files']           = 'Fichiers présents dans';
-$lang['media_upload']          = 'Télécharger dans la catégorie <strong>%s</strong>.';
-$lang['media_search']          = 'Chercher dans la catégorie <strong>%s</strong>.';
+$lang['media_files']           = 'Fichiers de %s';
+$lang['media_upload']          = 'Télécharger dans %s.';
+$lang['media_search']          = 'Chercher dans %s.';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s dans %s';
 $lang['media_edit']            = 'Éditer %s';
-$lang['media_history']         = 'Historique du %s';
+$lang['media_history']         = 'Historique de %s';
 $lang['media_meta_edited']     = 'métadonnées éditées';
 $lang['media_perm_read']       = 'Désolé, vous n\'avez pas les droits pour lire les fichiers.';
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas les droits pour télécharger des fichiers.';

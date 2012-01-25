@@ -108,7 +108,7 @@ function media_metaform($id,$auth){
     $src = mediaFN($id);
 
     // output
-    $form = new Doku_Form(array('action' => media_managerURL(array('tab_details' => 'view')),
+    $form = new Doku_Form(array('action' => media_managerURL(array('tab_details' => 'view'), '&'),
                                 'class' => 'meta'));
     $form->addHidden('img', $id);
     $form->addHidden('mediado', 'save');
@@ -230,16 +230,18 @@ function media_upload_xhr($ns,$auth){
     $id = $_GET['qqfile'];
     list($ext,$mime,$dl) = mimetype($id);
     $input = fopen("php://input", "r");
-    $temp = tmpfile();
-    $realSize = stream_copy_to_stream($input, $temp);
-    fclose($input);
-    if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]) return false;
     if (!($tmp = io_mktmpdir())) return false;
     $path = $tmp.'/'.md5($id);
     $target = fopen($path, "w");
-    fseek($temp, 0, SEEK_SET);
-    stream_copy_to_stream($temp, $target);
+    $realSize = stream_copy_to_stream($input, $target);
     fclose($target);
+    fclose($input);
+    if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]){
+        unlink($target);
+        unlink($path);
+        return false;
+    }
+
     $res = media_save(
         array('name' => $path,
             'mime' => $mime,
@@ -332,7 +334,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     global $lang, $conf;
 
     // get filename
-    $id   = cleanID($id,false,true);
+    $id   = cleanID($id);
     $fn   = mediaFN($id);
 
     // get filetype regexp
@@ -757,7 +759,7 @@ function media_tab_search($ns,$auth=null) {
     echo '<div class="search">'.NL;
 
     media_searchform($ns, $query, true);
-    if ($do == 'searchlist') {
+    if ($do == 'searchlist' || $query) {
         media_searchlist($query,$ns,$auth,true,_media_get_sort_type());
     }
     echo '</div>'.NL;
@@ -830,6 +832,7 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
     $size = media_image_preview_size($image, $rev, $meta);
 
     if ($size) {
+        global $lang;
         echo '<div class="image">';
 
         $more = array();
@@ -843,7 +846,10 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
         $more['w'] = $size[0];
         $more['h'] = $size[1];
         $src = ml($image, $more);
+
+        echo '<a href="'.$src.'" target="_blank" title="'.$lang['mediaview'].'">';
         echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
+        echo '</a>';
 
         echo '</div>'.NL;
     }
@@ -1350,7 +1356,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     $info .= filesize_h($item['size']);
 
     // output
-    echo '<div class="'.$zebra.'"'.$jump.'>'.NL;
+    echo '<div class="'.$zebra.'"'.$jump.' title="'.hsc($item['id']).'">'.NL;
     if (!$display_namespace) {
         echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
     } else {
@@ -1364,7 +1370,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
         'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
 
     // mediamanager button
-    $link = wl('',array('do'=>'media','image'=>$item['id']));
+    $link = wl('',array('do'=>'media','image'=>$item['id'],'ns'=>getNS($item['id'])));
     echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/mediamanager.png" '.
         'alt="'.$lang['btn_media'].'" title="'.$lang['btn_media'].'" class="btn" /></a>';
 
@@ -1411,7 +1417,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
     $file = utf8_decodeFN($item['file']);
 
     // output
-    echo '<li><dl>'.NL;
+    echo '<li><dl title="'.hsc($item['id']).'">'.NL;
 
         echo '<dt>';
     if($item['isimg']) {
@@ -1674,7 +1680,7 @@ function media_nstree_item($item){
     $ret  = '';
     if (!($_REQUEST['do'] == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
-    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id']), 'tab_files' => 'files'))
+    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id'], false), 'tab_files' => 'files'))
         .'" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
@@ -1778,7 +1784,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
-    if( $mtime > filemtime($file) ||
+    if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
         if($conf['fperm']) chmod($local, $conf['fperm']);

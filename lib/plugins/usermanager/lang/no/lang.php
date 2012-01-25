@@ -14,6 +14,7 @@
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
  * @author Jon Bøe <jonmagneboe@hotmail.com>
+ * @author Egil Hansen <egil@rosetta.no>
  */
 $lang['menu']                  = 'Behandle brukere';
 $lang['noauth']                = '(autentisering av brukere ikke tilgjengelig)';
@@ -28,7 +29,7 @@ $lang['field']                 = 'Felt';
 $lang['value']                 = 'Verdi';
 $lang['add']                   = 'Legg til';
 $lang['delete']                = 'Slett';
-$lang['delete_selected']       = 'Slett utvalgte';
+$lang['delete_selected']       = 'Slett valgte';
 $lang['edit']                  = 'Rediger';
 $lang['edit_prompt']           = 'Rediger denne brukeren';
 $lang['modify']                = 'Lagre endringer';

@@ -1,27 +1,4 @@
 #link__wiz {
-    position: absolute;
-    display: block;
-    z-index: 99;
-    width:   300px;
-    height:  250px;
-    padding: 0;
-    margin:  0;
-    overflow: hidden;
-    border: 1px solid __border__;
-    background-color: __background_neu__;
-    text-align: center;
-}
-
-#link__wiz_header {
-    background-color: __background_alt__;
-    height: 16px;
-    margin-bottom: 5px;
-    cursor: move;
-}
-
-#link__wiz_close {
-    cursor: pointer;
-    margin: 0;
 }
 
 #link__wiz_result {
@@ -60,10 +37,4 @@
 #link__wiz_result span {
     display: block;
     color: __text_neu__;
-}
-
-/*FIXME maybe move to a more general style sheet*/
-.ondrag {
-    cursor: move;
-    opacity: 0.8;
 }

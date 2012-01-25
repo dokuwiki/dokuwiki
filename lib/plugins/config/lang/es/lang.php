@@ -80,6 +80,7 @@ $lang['useheading']            = 'Usar el primer encabezado para nombres de pág
 $lang['refcheck']              = 'Control de referencia a medios';
 $lang['refshow']               = 'Número de referencias a medios a mostrar';
 $lang['allowdebug']            = 'Permitir debug <b>deshabilítelo si no lo necesita!</b>';
+$lang['mediarevisions']        = '¿Habilitar Mediarevisions?';
 $lang['usewordblock']          = 'Bloquear spam usando una lista de palabras';
 $lang['indexdelay']            = 'Intervalo de tiempo antes de indexar (segundos)';
 $lang['relnofollow']           = 'Usar rel="nofollow" en enlaces externos';
@@ -132,14 +133,14 @@ $lang['hidepages']             = 'Ocultar páginas con coincidencias (expresione
 $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas no existentes';
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['broken_iua']            = '¿Se ha roto (broken) la función ignore_user_abort en su sistema? Esto puede causar que no funcione el index de búsqueda. Se sabe que IIS+PHP/CGI está roto. Vea <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>para más información.';
-$lang['xsendfile']             = 'Utilice el X-Sendfile header para permitirle sl servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
+$lang['xsendfile']             = '¿Utilizar la cabecera X-Sendfile para permitirle al servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['rememberme']            = 'Permitir cookies para acceso permanente (recordarme)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';
-$lang['rss_content']           = 'Que mostrar en los itemes del archivo XML?';
+$lang['rss_content']           = '¿Qué mostrar en los items del archivo XML?';
 $lang['rss_update']            = 'Intervalo de actualización de feed XML (segundos)';
 $lang['recent_days']           = 'Cuántos cambios recientes mantener (días)';
 $lang['rss_show_summary']      = 'Feed XML muestra el resumen en el título';

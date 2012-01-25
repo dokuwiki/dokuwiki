@@ -8,6 +8,7 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -280,21 +281,6 @@ $lang['i_pol1']                = 'Wiki Deschisă (citeste oricine, scrie şi în
 $lang['i_pol2']                = 'Wiki Închisă (citeşte, scrie şi încarcă doar utilizatorul înregistrat)';
 $lang['i_retry']               = 'Încearcă din nou';
 $lang['i_license']             = 'Vă rugăm alegeţi licenţa sub care doriţi să vă licenţiaţi materialul:';
-$lang['mu_intro']              = 'Aici poţi încărca mai multe fişiere simultan. Apasă butonul Răsfoieşte pentru a le adăuga. Apasă Încarcă când ai terminat.';
-$lang['mu_gridname']           = 'Numele fişierului';
-$lang['mu_gridsize']           = 'Mărime';
-$lang['mu_gridstat']           = 'Stare';
-$lang['mu_namespace']          = 'Spaţiu de nume';
-$lang['mu_browse']             = 'Răsfoieşte';
-$lang['mu_toobig']             = 'prea mare';
-$lang['mu_ready']              = 'pregătit pentru încărcare';
-$lang['mu_done']               = 'complet';
-$lang['mu_fail']               = 'eşuat';
-$lang['mu_authfail']           = 'sesiunea a expirat';
-$lang['mu_progress']           = '@PCT@% încărcat';
-$lang['mu_filetypes']          = 'Tipuri de fişiere permise';
-$lang['mu_info']               = 'fişiere încărcate';
-$lang['mu_lasterr']            = 'Ultima eroare:';
 $lang['recent_global']         = 'Acum vizualizaţi modificările în interiorul numelui de spaţiu <b>%s</b>. De asemenea puteţi <a href="%s">vizualiza modificările recente ale întregului wiki</a>.';
 $lang['years']                 = 'acum %d ani';
 $lang['months']                = 'acum %d luni';

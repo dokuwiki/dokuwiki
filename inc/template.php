@@ -970,9 +970,10 @@ function tpl_img($maxwidth=0,$maxheight=0,$link=true,$params=null){
  * Default action for TPL_IMG_DISPLAY
  */
 function _tpl_img_action($data, $param=NULL) {
+    global $lang;
     $p = buildAttributes($data['params']);
 
-    if($data['url']) print '<a href="'.hsc($data['url']).'">';
+    if($data['url']) print '<a href="'.hsc($data['url']).'" title="'.$lang['mediaview'].'">';
     print '<img '.$p.'/>';
     if($data['url']) print '</a>';
     return true;
@@ -1212,6 +1213,7 @@ function tpl_mediaFileDetails($image, $rev){
     } else {
         printf($lang['media_' . $opened_tab], $tabTitle);
     }
+
     echo '</h3></div>'.NL;
 
     echo '<div class="panelContent">'.NL;
@@ -1354,9 +1356,12 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
  */
 function tpl_include_page($pageid,$print=true){
     global $ID;
-    $oldid = $ID;
+    global $TOC;
+    $oldid  = $ID;
+    $oldtoc = $TOC;
     $html = p_wiki_xhtml($pageid,'',false);
-    $ID = $oldid;
+    $ID  = $oldid;
+    $TOC = $oldtoc;
 
     if(!$print) return $html;
     echo $html;

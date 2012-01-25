@@ -807,7 +807,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //markup non existing files
         if (!$exists) {
             $link['class'] .= ' wikilink2';
-            $link['url'] = media_managerURL(array('tab_details' => 'view', 'image' => $src, 'ns' => getNS($src)), '&');
         }
 
         //output formatted

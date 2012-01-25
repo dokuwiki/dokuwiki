@@ -59,7 +59,7 @@ class ap_download extends ap_manage {
             return false;
         }
 
-        if (!$file = io_download($url, "$tmp/", true, $file)) {
+        if (!$file = io_download($url, "$tmp/", true, $file, 0)) {
             $this->manager->error = sprintf($this->lang['error_download'],$url)."\n";
         }
 

@@ -30,8 +30,8 @@ if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
-    if(defined('E_DEPRECATED')){ // since php 5.3
-        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    if(defined('E_DEPRECATED')){ // since php 5.3, since php 5.4 E_STRICT is part of E_ALL
+        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
     }else{
         error_reporting(E_ALL ^ E_NOTICE);
     }

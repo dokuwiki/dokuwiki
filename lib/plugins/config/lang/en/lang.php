@@ -82,6 +82,7 @@ $lang['useheading']  = 'Use first heading for pagenames';
 $lang['refcheck']    = 'Media reference check';
 $lang['refshow']     = 'Number of media references to show';
 $lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
+$lang['mediarevisions'] = 'Enable Mediarevisions?';
 
 $lang['usewordblock']= 'Block spam based on wordlist';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';

@@ -11,6 +11,7 @@
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
  * @author Łukasz Chmaj <teachmeter@gmail.com>
+ * @author Begina Felicysym <begina.felicysym@wp.eu>
  */
 $lang['menu']                  = 'Menadżer użytkowników';
 $lang['noauth']                = '(uwierzytelnienie użytkownika niemożliwe)';

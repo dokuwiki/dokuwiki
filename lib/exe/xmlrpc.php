@@ -411,7 +411,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
             $pages[] = array(
                 'id'      => $id,
-                'score'   => $score,
+                'score'   => intval($score),
                 'rev'     => filemtime($file),
                 'mtime'   => filemtime($file),
                 'size'    => filesize($file),

@@ -6,11 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-//fix for Opera XMLHttpRequests
-if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
-    parse_str($HTTP_RAW_POST_DATA, $_POST);
-}
-
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 require_once(DOKU_INC.'inc/init.php');
 //close session
@@ -53,6 +48,8 @@ function ajax_qsearch(){
     $query = $_POST['q'];
     if(empty($query)) $query = $_GET['q'];
     if(empty($query)) return;
+
+    $query = urldecode($query);
 
     $data = ft_pageLookup($query, true, useHeading('navigation'));
 
@@ -257,7 +254,7 @@ function ajax_mediaupload(){
         $id = $_GET['qqfile'];
     }
 
-    $id = cleanID($id, false, true);
+    $id = cleanID($id);
 
     $NS = $_REQUEST['ns'];
     $ns = $NS.':'.getNS($id);

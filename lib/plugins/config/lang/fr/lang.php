@@ -16,6 +16,7 @@
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -62,7 +63,7 @@ $lang['youarehere']            = 'Traces hiérarchiques';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['htmlok']                = 'Permettre HTML dans les pages';
 $lang['phpok']                 = 'Permettre PHP dans les pages';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://www.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Signature';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';
 $lang['tocminheads']           = 'Nombre minimum de titres pour qu\'une table des matières soit construite';
@@ -74,6 +75,7 @@ $lang['useheading']            = 'Utiliser le titre de premier niveau';
 $lang['refcheck']              = 'Vérifier les références de média';
 $lang['refshow']               = 'Nombre de références de média à montrer';
 $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en avez besoin !</strong>)';
+$lang['mediarevisions']        = 'Activer les révisions (gestion de versions) des médias';
 $lang['usewordblock']          = 'Bloquer le spam selon les mots utilisés';
 $lang['indexdelay']            = 'Délai avant l\'indexation (en secondes)';
 $lang['relnofollow']           = 'Utiliser rel="nofollow" sur les liens extérieurs';
