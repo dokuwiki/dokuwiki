@@ -301,6 +301,7 @@ select,
 optgroup,
 option {
     font: inherit;
+    font-weight: normal;
     color: #333;
     background-color: #fff;
     line-height: 1;
