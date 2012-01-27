@@ -1,8 +1,8 @@
-<?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
-<?php _tpl_include('header.html') ?>
-
 <!-- ********** HEADER ********** -->
 <div id="dokuwiki__header"><div class="pad group">
+
+    <?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
+    <?php _tpl_include('header.html') ?>
 
     <div class="headings group">
         <h1><?php tpl_link(
