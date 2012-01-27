@@ -116,6 +116,10 @@ div.clearer {
 #dokuwiki__header h1 a {
     text-decoration: none;
 }
+#dokuwiki__header h1 img {
+    float: left;
+    margin-right: .5em;
+}
 .dokuwiki div.footnotes {
     clear: both;
     border-top: 1pt solid #000;
