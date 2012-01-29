@@ -1270,7 +1270,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '<select name="do" class="edit quickselect">';
     echo '<option value="">'.$empty.'</option>';
 
-    echo '<optgroup label=" &mdash; ">';
+    echo '<optgroup label="'.$lang['page_tools'].'">';
         $act = tpl_get_action('edit');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
@@ -1284,7 +1284,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
     echo '</optgroup>';
 
-    echo '<optgroup label=" &mdash; ">';
+    echo '<optgroup label="'.$lang['site_tools'].'">';
         $act = tpl_get_action('recent');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
@@ -1292,7 +1292,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
     echo '</optgroup>';
 
-    echo '<optgroup label=" &mdash; ">';
+    echo '<optgroup label="'.$lang['user_tools'].'">';
         $act = tpl_get_action('login');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
