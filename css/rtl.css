@@ -184,13 +184,6 @@ caption, legend {
     float: left;
 }
 
-.dokuwiki div.section_highlight {
-    margin: -3em -1.5em -.01em 0;
-    padding: 3em 1em .01em 0;
-    border-left-width: 0;
-    border-right: .5em solid __background_alt__;
-}
-
 
 /*____________ _modal ____________*/
 
@@ -523,3 +516,55 @@ form#subscribe__form fieldset {
     padding-right: 0;
 }
 
+
+/*____________ mobile ____________*/
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+
+
+.hasSidebar #dokuwiki__content,
+.hasSidebar #dokuwiki__content .pad {
+    margin-right: 0;
+}
+
+#dokuwiki__header ul.a11y.skip {
+    left: auto !important;
+    right: 0 !important;
+    float: left;
+    padding-right: 0;
+}
+#dokuwiki__header ul.a11y.skip li {
+    margin: 0 .35em 0 0;
+}
+
+#dokuwiki__header .headings,
+#dokuwiki__header .tools {
+    float: none;
+    text-align: right;
+    width: auto;
+}
+#dokuwiki__sitetools {
+    text-align: right;
+}
+
+#dokuwiki__sitetools form.search {
+    float: right;
+    margin: 0 0 .2em .2em;
+}
+#dokuwiki__sitetools form.search input.button {
+    right: auto;
+    left: .2em;
+}
+
+#dokuwiki__header .mobileTools {
+    float: left;
+}
+
+.dokuwiki div.toc {
+    float: none;
+    margin: 0 0 1em 0;
+    border-right-width: 0;
+}
+
+
+} /* /@media */

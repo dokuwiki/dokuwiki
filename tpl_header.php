@@ -5,6 +5,10 @@
     <?php _tpl_include('header.html') ?>
 
     <div class="headings group">
+        <ul class="a11y skip">
+            <li><a href="#dokuwiki__content"><?php echo tpl_getLang('skip_to_content') ?></a></li>
+        </ul>
+
         <h1><?php tpl_link(
             wl(),
             '<img src="'.tpl_getFavicon(false, 'logo.png').'" width="64" height="64" alt="" /> <span>'.$conf['title'].'</span>',
@@ -13,10 +17,6 @@
         <?php if (tpl_getConf('tagline')): ?>
             <p class="claim"><?php echo tpl_getConf('tagline') ?></p>
         <?php endif ?>
-
-        <ul class="a11y">
-            <li><a href="#dokuwiki__content"><?php echo tpl_getLang('skip_to_content') ?></a></li>
-        </ul>
     </div>
 
     <div class="tools group">
@@ -44,7 +44,11 @@
         <!-- SITE TOOLS -->
         <div id="dokuwiki__sitetools">
             <h3 class="a11y"><?php echo tpl_getLang('site_tools') ?></h3>
-            <?php tpl_searchform() ?>
+            <?php tpl_searchform(); ?>
+            <?php /* all the tools in one dropdown (good for mobile view): */ ?>
+            <div class="mobileTools">
+                <?php tpl_actiondropdown('Tools'); /* @todo: lang */ ?>
+            </div>
             <ul>
                 <?php
                     tpl_action('recent', 1, 'li');

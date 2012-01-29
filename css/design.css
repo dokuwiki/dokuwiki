@@ -85,6 +85,9 @@
     text-overflow: ellipsis;
 }
 
+#dokuwiki__header .mobileTools {
+    display: none; /* hide mobile tools dropdown to only show in mobile view */
+}
 
 /*____________ user tools ____________*/
 
@@ -232,6 +235,10 @@
 
 /* content
 ********************************************************************/
+
+#dokuwiki__content {
+    position: relative;
+}
 
 .dokuwiki .pageId {
     position: absolute;
