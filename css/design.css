@@ -308,12 +308,18 @@
 }
 
 .dokuwiki div.section_highlight {
-    margin-left: -2em;
-    border-left-width: 1em;
+    margin: -3em -2em -.01em -2em;
+    padding: 3em 1em .01em 1em;
+    border-width: 0 1em;
 }
 
 .dokuwiki textarea.edit {
     font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+}
+
+.dokuwiki div.preview {
+    margin: 0 -2em;
+    padding: 2em;
 }
 
 

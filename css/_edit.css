@@ -99,7 +99,7 @@ div.picker button.toolbutton {
 ********************************************************************/
 
 .dokuwiki div.preview {
-    border: dashed __border__;
+    border: dotted __border__;
     border-width: .2em 0;
     padding: 1.4em 0;
     margin-bottom: 1.4em;
@@ -121,7 +121,8 @@ div.picker button.toolbutton {
 }
 /* style for section highlighting (only sections below headings) */
 .dokuwiki div.section_highlight {
-    margin: -3em 0 -.01em -1.5em;
-    padding: 3em 0 .01em 1em;
-    border-left: .5em solid __background_alt__;
+    margin: -3em -1em -.01em -1em; /* negative side margin = side padding + side border */
+    padding: 3em .5em .01em .5em;
+    border: solid __background_alt__;
+    border-width: 0 .5em;
 }
