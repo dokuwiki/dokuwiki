@@ -74,13 +74,13 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
             <!-- PAGE ACTIONS -->
             <?php if ($showTools): ?>
                 <div id="dokuwiki__pagetools">
-                    <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
+                    <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
                     <div class="tools">
                         <ul>
                             <?php
                                 tpl_action('edit',      1, 'li', 0, '<span>', '</span>');
                                 tpl_action('revert',    1, 'li', 0, '<span>', '</span>');
-                                tpl_action('history',   1, 'li', 0, '<span>', '</span>');
+                                tpl_action('revisions', 1, 'li', 0, '<span>', '</span>');
                                 tpl_action('backlink',  1, 'li', 0, '<span>', '</span>');
                                 tpl_action('subscribe', 1, 'li', 0, '<span>', '</span>');
                                 tpl_action('top',       1, 'li', 0, '<span>', '</span>');

@@ -117,7 +117,7 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
             <!-- PAGE ACTIONS -->
             <?php if ($showTools && !$ERROR): ?>
                 <div id="dokuwiki__pagetools">
-                    <h3 class="a11y"><?php echo tpl_getLang('page_tools') ?></h3>
+                    <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
                     <div class="tools">
                         <ul>
                             <?php // View in media manager; @todo: transfer logic to backend

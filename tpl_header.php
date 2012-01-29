@@ -6,7 +6,7 @@
 
     <div class="headings group">
         <ul class="a11y skip">
-            <li><a href="#dokuwiki__content"><?php echo tpl_getLang('skip_to_content') ?></a></li>
+            <li><a href="#dokuwiki__content"><?php echo $lang['skip_to_content']; ?></a></li>
         </ul>
 
         <h1><?php tpl_link(
@@ -23,7 +23,7 @@
         <!-- USER TOOLS -->
         <?php if ($conf['useacl'] && $showTools): ?>
             <div id="dokuwiki__usertools">
-                <h3 class="a11y"><?php echo tpl_getLang('user_tools') ?></h3>
+                <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
                 <ul>
                     <?php /* the optional second parameter of tpl_action() switches between a link and a button,
                              e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
@@ -43,11 +43,11 @@
 
         <!-- SITE TOOLS -->
         <div id="dokuwiki__sitetools">
-            <h3 class="a11y"><?php echo tpl_getLang('site_tools') ?></h3>
+            <h3 class="a11y"><?php echo $lang['site_tools']; ?></h3>
             <?php tpl_searchform(); ?>
             <?php /* all the tools in one dropdown (good for mobile view): */ ?>
             <div class="mobileTools">
-                <?php tpl_actiondropdown('Tools'); /* @todo: lang */ ?>
+                <?php tpl_actiondropdown($lang['tools']); ?>
             </div>
             <ul>
                 <?php
