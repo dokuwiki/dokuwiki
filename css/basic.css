@@ -53,21 +53,10 @@ legend {
 h1 {
     font-size: 2em;
     margin: -.222em 0 0.444em;
-    /*2 lines below makes ascenders of h1 be at the top of block
-    line-height: 0.75;
-    padding-bottom: 0.3em;
-    letter-spacing: -0.035em;
-    margin: 0 0 0.444em;
-    */
 }
 h2 {
     font-size: 1.5em;
     margin: 0 0 0.666em;
-    /*
-    border-bottom: 1px dashed #888;
-    margin: 0 0 .444em -1px;
-    padding: 0 0 .222em 1px;
-    */
 }
 h3 {
     font-size: 1.125em;
