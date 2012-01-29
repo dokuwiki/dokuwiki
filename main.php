@@ -11,8 +11,7 @@
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 @require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
-$showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER['REMOTE_USER'] );
-$showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID')) && ($ACT=='show');
+$showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang'] ?>"
@@ -46,7 +45,7 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
             <?php if($showSidebar): ?>
                 <!-- ********** ASIDE ********** -->
                 <div id="dokuwiki__aside"><div class="pad include group">
-                    <?php tpl_include_page(tpl_getConf('sidebarID')) /* includes the given wiki page */ ?>
+                    <?php tpl_include_page($conf['sidebar']) /* includes the given wiki page */ ?>
                 </div></div><!-- /aside -->
             <?php endif; ?>
 
@@ -72,23 +71,21 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
             <hr class="a11y" />
 
             <!-- PAGE ACTIONS -->
-            <?php if ($showTools): ?>
-                <div id="dokuwiki__pagetools">
-                    <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
-                    <div class="tools">
-                        <ul>
-                            <?php
-                                tpl_action('edit',      1, 'li', 0, '<span>', '</span>');
-                                tpl_action('revert',    1, 'li', 0, '<span>', '</span>');
-                                tpl_action('revisions', 1, 'li', 0, '<span>', '</span>');
-                                tpl_action('backlink',  1, 'li', 0, '<span>', '</span>');
-                                tpl_action('subscribe', 1, 'li', 0, '<span>', '</span>');
-                                tpl_action('top',       1, 'li', 0, '<span>', '</span>');
-                            ?>
-                        </ul>
-                    </div>
+            <div id="dokuwiki__pagetools">
+                <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
+                <div class="tools">
+                    <ul>
+                        <?php
+                            tpl_action('edit',      1, 'li', 0, '<span>', '</span>');
+                            tpl_action('revert',    1, 'li', 0, '<span>', '</span>');
+                            tpl_action('revisions', 1, 'li', 0, '<span>', '</span>');
+                            tpl_action('backlink',  1, 'li', 0, '<span>', '</span>');
+                            tpl_action('subscribe', 1, 'li', 0, '<span>', '</span>');
+                            tpl_action('top',       1, 'li', 0, '<span>', '</span>');
+                        ?>
+                    </ul>
                 </div>
-            <?php endif; ?>
+            </div>
         </div><!-- /wrapper -->
 
         <?php include('tpl_footer.php') ?>

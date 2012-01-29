@@ -14,14 +14,14 @@
             '<img src="'.tpl_getFavicon(false, 'logo.png').'" width="64" height="64" alt="" /> <span>'.$conf['title'].'</span>',
             'accesskey="h" title="[H]"'
         ) /* @todo: obviously don't use tpl_getFavicon, but make a new function (or use a config option?) */ ?></h1>
-        <?php if (tpl_getConf('tagline')): ?>
-            <p class="claim"><?php echo tpl_getConf('tagline') ?></p>
+        <?php if ($conf['tagline']): ?>
+            <p class="claim"><?php echo $conf['tagline']; ?></p>
         <?php endif ?>
     </div>
 
     <div class="tools group">
         <!-- USER TOOLS -->
-        <?php if ($conf['useacl'] && $showTools): ?>
+        <?php if ($conf['useacl']): ?>
             <div id="dokuwiki__usertools">
                 <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
                 <ul>

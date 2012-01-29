@@ -11,8 +11,7 @@
 if (!defined('DOKU_INC')) die();
 @require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
-$showTools = !tpl_getConf('hideTools') || ( tpl_getConf('hideTools') && $_SERVER['REMOTE_USER'] );
-$showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID')) && ($ACT=='show');
+$showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>"
@@ -115,7 +114,7 @@ $showSidebar = tpl_getConf('sidebarID') && page_exists(tpl_getConf('sidebarID'))
             <hr class="a11y" />
 
             <!-- PAGE ACTIONS -->
-            <?php if ($showTools && !$ERROR): ?>
+            <?php if (!$ERROR): ?>
                 <div id="dokuwiki__pagetools">
                     <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
                     <div class="tools">
