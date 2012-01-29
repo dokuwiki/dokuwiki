@@ -1263,6 +1263,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     global $auth;
 
     echo '<form action="' . DOKU_SCRIPT . '" method="post" accept-charset="utf-8">';
+    echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
@@ -1274,18 +1275,24 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
         $act = tpl_get_action('edit');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-        $act = tpl_get_action('revisions');
+        $act = tpl_get_action('revert');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-        $act = tpl_get_action('revert');
+        $act = tpl_get_action('revisions');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
         $act = tpl_get_action('backlink');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
+
+        $act = tpl_get_action('subscribe');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+        echo '</optgroup>';
 
     echo '<optgroup label="'.$lang['site_tools'].'">';
         $act = tpl_get_action('recent');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
+        $act = tpl_get_action('media');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
         $act = tpl_get_action('index');
@@ -1296,10 +1303,10 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
         $act = tpl_get_action('login');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-        $act = tpl_get_action('profile');
+        $act = tpl_get_action('register');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-        $act = tpl_get_action('subscribe');
+        $act = tpl_get_action('profile');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
         $act = tpl_get_action('admin');
@@ -1308,6 +1315,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
 
     echo '</select>';
     echo '<input type="submit" value="'.$button.'" />';
+    echo '</div>';
     echo '</form>';
 }
 
