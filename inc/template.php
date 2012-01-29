@@ -1458,16 +1458,15 @@ function tpl_flush(){
     flush();
 }
 
-
 /**
- * Returns icon from data/media root directory if it exists, otherwise
- * the one in the template's image directory.
+ * Returns link to media file from data/media root directory if it exists,
+ * otherwise the one in the template's image directory.
  *
- * @param  bool $abs        - if to use absolute URL
  * @param  string $fileName - file name of icon
+ * @param  bool $abs        - if to use absolute URL
  * @author Anika Henke <anika@selfthinker.org>
  */
-function tpl_getFavicon($abs=false, $fileName='favicon.ico') {
+function tpl_getMediaFile($fileName, $abs=false) {
     if (file_exists(mediaFN($fileName))) {
         return ml($fileName, '', true, '', $abs);
     }
@@ -1476,6 +1475,17 @@ function tpl_getFavicon($abs=false, $fileName='favicon.ico') {
         return DOKU_URL.substr(DOKU_TPL.'images/'.$fileName, strlen(DOKU_REL));
     }
     return DOKU_TPL.'images/'.$fileName;
+}
+
+/**
+ * Returns icon from data/media root directory if it exists, otherwise
+ * the one in the template's image directory.
+ *
+ * @deprecated Use tpl_getMediaFile() instead
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_getFavicon($abs=false, $fileName='favicon.ico') {
+    return tpl_getMediaFile($fileName, $abs);
 }
 
 /**
@@ -1491,14 +1501,14 @@ function tpl_favicon($types=array('favicon')) {
     foreach ($types as $type) {
         switch($type) {
             case 'favicon':
-                $return .= '<link rel="shortcut icon" href="'.tpl_getFavicon().'" />'.NL;
+                $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile('favicon.ico').'" />'.NL;
                 break;
             case 'mobile':
-                $return .= '<link rel="apple-touch-icon" href="'.tpl_getFavicon(false, 'apple-touch-icon.png').'" />'.NL;
+                $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile('apple-touch-icon.png').'" />'.NL;
                 break;
             case 'generic':
                 // ideal world solution, which doesn't work in any browser yet
-                $return .= '<link rel="icon" href="'.tpl_getFavicon(false, 'icon.svg').'" type="image/svg+xml" />'.NL;
+                $return .= '<link rel="icon" href="'.tpl_getMediaFile('icon.svg').'" type="image/svg+xml" />'.NL;
                 break;
         }
     }
