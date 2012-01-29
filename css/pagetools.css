@@ -1,5 +1,10 @@
-
-/*____________ page tools ____________*/
+/**
+ * This file provides the styles for the page tools
+ * (fly out navigation beside the page to edit, etc).
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
 
 #dokuwiki__site .site {
     /* give space to the right so the tools won't disappear on smaller screens */
@@ -88,7 +93,8 @@
     background-color: __background_alt__;
 }
 
-/* all available icons in sprite */
+/*____________ all available icons in sprite ____________*/
+
 #dokuwiki__pagetools ul li a.edit {
     background-position: right 0;
 }
