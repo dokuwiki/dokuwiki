@@ -566,5 +566,10 @@ form#subscribe__form fieldset {
     border-right-width: 0;
 }
 
+.dokuwiki label.block {
+    text-align: right;
+}
+
+
 
 } /* /@media */

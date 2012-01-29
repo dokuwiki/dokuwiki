@@ -148,6 +148,13 @@ h1 {
     margin-right: 0;
 }
 
+.dokuwiki label.block {
+    text-align: left;
+}
+.dokuwiki label.block span {
+    display: block;
+}
+
 /* _edit */
 .dokuwiki div.section_highlight {
     margin: 0;
