@@ -9,11 +9,19 @@
             <li><a href="#dokuwiki__content"><?php echo $lang['skip_to_content']; ?></a></li>
         </ul>
 
-        <h1><?php tpl_link(
-            wl(),
-            '<img src="'.tpl_getFavicon(false, 'logo.png').'" width="64" height="64" alt="" /> <span>'.$conf['title'].'</span>',
-            'accesskey="h" title="[H]"'
-        ) /* @todo: obviously don't use tpl_getFavicon, but make a new function (or use a config option?) */ ?></h1>
+        <h1><?php
+            // get logo either out of the template images folder or data/media folder
+            $logo = tpl_getMediaFile('logo.png');
+            // get the size of the logo
+            $logoSize = getimagesize($_SERVER["DOCUMENT_ROOT"].$logo);
+
+            // display logo and wiki title in a link to the home page
+            tpl_link(
+                wl(),
+                '<img src="'.$logo.'" '.$logoSize[3].' alt="" /> <span>'.$conf['title'].'</span>',
+                'accesskey="h" title="[H]"'
+            );
+        ?></h1>
         <?php if ($conf['tagline']): ?>
             <p class="claim"><?php echo $conf['tagline']; ?></p>
         <?php endif ?>
