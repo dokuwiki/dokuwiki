@@ -1459,22 +1459,44 @@ function tpl_flush(){
 }
 
 /**
- * Returns link to media file from data/media root directory if it exists,
- * otherwise the one in the template's image directory.
+ * Tries to find a ressource file in the given locations.
  *
- * @param  string $fileName - file name of icon
- * @param  bool $abs        - if to use absolute URL
- * @author Anika Henke <anika@selfthinker.org>
+ * If a given location starts with a colon it is assumed to be a media
+ * file, otherwise it is assumed to be relative to the current template
+ *
+ * @param  array $search       locations to look at
+ * @param  bool $abs           if to use absolute URL
+ * @param  arrayref $imginfo   filled with getimagesize()
+ * @author Andreas  Gohr <andi@splitbrain.org>
  */
-function tpl_getMediaFile($fileName, $abs=false) {
-    if (file_exists(mediaFN($fileName))) {
-        return ml($fileName, '', true, '', $abs);
+function tpl_getMediaFile($search, $abs=false, &$imginfo=null){
+    // loop through candidates until a match was found:
+    foreach($search as $img){
+        if(substr($img,0,1) == ':'){
+            $file    = mediaFN($img);
+            $ismedia = true;
+        }else{
+            $file = DOKU_TPLINC.$img;
+            $ismedia = false;
+        }
+
+        if(file_exists($file)) break;
     }
 
-    if($abs) {
-        return DOKU_URL.substr(DOKU_TPL.'images/'.$fileName, strlen(DOKU_REL));
+    // fetch image data if requested
+    if(!is_null($imginfo)){
+        $imginfo = getimagesize($file);
     }
-    return DOKU_TPL.'images/'.$fileName;
+
+    // build URL
+    if($ismedia){
+        $url = ml($img, '', true, '', $abs);
+    }else{
+        $url = DOKU_TPL.$img;
+        if($abs) $url = DOKU_URL.substr($url, strlen(DOKU_REL));
+    }
+
+    return $url;
 }
 
 /**
@@ -1485,7 +1507,8 @@ function tpl_getMediaFile($fileName, $abs=false) {
  * @author Anika Henke <anika@selfthinker.org>
  */
 function tpl_getFavicon($abs=false, $fileName='favicon.ico') {
-    return tpl_getMediaFile($fileName, $abs);
+    $look = array(":wiki:$fileName", ":$fileName", "images/$fileName");
+    return tpl_getMediaFile($look, $abs);
 }
 
 /**
@@ -1501,14 +1524,17 @@ function tpl_favicon($types=array('favicon')) {
     foreach ($types as $type) {
         switch($type) {
             case 'favicon':
-                $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile('favicon.ico').'" />'.NL;
+                $look = array(':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico');
+                $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'mobile':
-                $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile('apple-touch-icon.png').'" />'.NL;
+                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.ico');
+                $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'generic':
                 // ideal world solution, which doesn't work in any browser yet
-                $return .= '<link rel="icon" href="'.tpl_getMediaFile('icon.svg').'" type="image/svg+xml" />'.NL;
+                $look = array(':wiki:favicon.svg', ':favicon.svg', 'images/favicon.svg');
+                $return .= '<link rel="icon" href="'.tpl_getMediaFile($look).'" type="image/svg+xml" />'.NL;
                 break;
         }
     }
