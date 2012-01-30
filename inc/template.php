@@ -32,6 +32,7 @@ function template($tpl){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_incdir(){
+    global $conf;
     return DOKU_INC.'lib/tpl/'.$conf['template'].'/';
 }
 
@@ -43,6 +44,7 @@ function tpl_incdir(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_basedir(){
+    global $conf;
     return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
 }
 
