@@ -69,6 +69,8 @@ $conf['iexssprotect']= 1;                 // check for JavaScript and HTML in up
 /* Authentication Options - read http://www.splitbrain.org/dokuwiki/wiki:acl */
 
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
+$conf['usewildcards']   = 1;              //Use ACL wildcards
+$conf['groupwildcards'] = 1;              //More specifically, use %GROUP% wildcard
 $conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
 $conf['authtype']    = 'plain';          //which authentication backend should be used
 $conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
