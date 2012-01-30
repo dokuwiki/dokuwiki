@@ -11,6 +11,8 @@
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
 
+/* @todo: add this function to the core and delete this file */
+
 /**
  * Include additional html file from conf directory if it exists, otherwise use
  * file in the template's root directory.
