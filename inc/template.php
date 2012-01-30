@@ -23,6 +23,29 @@ function template($tpl){
     return DOKU_INC.'lib/tpl/default/'.$tpl;
 }
 
+
+/**
+ * Convenience function to access template dir from local FS
+ *
+ * This replaces the deprecated DOKU_TPLINC constant
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_incdir(){
+    return DOKU_INC.'lib/tpl/'.$conf['template'].'/';
+}
+
+/**
+ * Convenience function to access template dir from web
+ *
+ * This replaces the deprecated DOKU_TPL constant
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_basedir(){
+    return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
+}
+
 /**
  * Print the content
  *
@@ -1034,7 +1057,7 @@ function tpl_getConf($id){
  */
 function tpl_loadConfig(){
 
-    $file = DOKU_TPLINC.'/conf/default.php';
+    $file = tpl_incdir().'/conf/default.php';
     $conf = array();
 
     if (!@file_exists($file)) return false;
@@ -1055,7 +1078,7 @@ function tpl_getLang($id){
     static $lang = array();
 
     if (count($lang) === 0){
-        $path = DOKU_TPLINC.'lang/';
+        $path = tpl_incdir().'lang/';
 
         $lang = array();
 
@@ -1476,7 +1499,7 @@ function tpl_getMediaFile($search, $abs=false, &$imginfo=null){
             $file    = mediaFN($img);
             $ismedia = true;
         }else{
-            $file = DOKU_TPLINC.$img;
+            $file = tpl_incdir().$img;
             $ismedia = false;
         }
 
@@ -1492,7 +1515,7 @@ function tpl_getMediaFile($search, $abs=false, &$imginfo=null){
     if($ismedia){
         $url = ml($img, '', true, '', $abs);
     }else{
-        $url = DOKU_TPL.$img;
+        $url = tpl_basedir().$img;
         if($abs) $url = DOKU_URL.substr($url, strlen(DOKU_REL));
     }
 

@@ -118,11 +118,11 @@ if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['se
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
-// define Template baseURL
+// DEPRECATED, use tpl_basedir() instead
 if(!defined('DOKU_TPL')) define('DOKU_TPL',
         DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
 
-// define real Template directory
+// DEPRECATED, use tpl_incdir() instead
 if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
         DOKU_INC.'lib/tpl/'.$conf['template'].'/');
 
