@@ -11,6 +11,7 @@
 
         <h1><?php
             // get logo either out of the template images folder or data/media folder
+            $logoSize = array();
             $logo = tpl_getMediaFile(array(':wiki:logo.png','images/logo.png'),false,$logoSize);
 
             // display logo and wiki title in a link to the home page
