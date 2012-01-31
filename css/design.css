@@ -296,6 +296,14 @@
     margin: 0;
 }
 
+.dokuwiki #dokuwiki__content span.curid a {
+    font-weight: normal;
+}
+.dokuwiki #dokuwiki__content strong span.curid a {
+    font-weight: bold;
+}
+
+
 /*____________ changes to _edit ____________*/
 
 .dokuwiki div.toolbar button.toolbutton {
