@@ -566,6 +566,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
+        global $INFO;
 
         $params = '';
         $parts = explode('?', $id, 2);
@@ -610,7 +611,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['pre']    = '';
         $link['suf']    = '';
         // highlight link to current page
-        if ($id == $ID) {
+        if ($id == $INFO['id']) {
             $link['pre']    = '<span class="curid">';
             $link['suf']    = '</span>';
         }
