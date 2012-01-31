@@ -169,11 +169,12 @@ th {
 /*____________ links ____________*/
 
 a {
+    outline: none;
 }
 a:link,
 a:visited {
     text-decoration: none;
-    color: __link__; /* §colour */
+    color: __link__;
 }
 a:link:hover,
 a:visited:hover,
@@ -182,14 +183,6 @@ a:visited:focus,
 a:link:active,
 a:visited:active {
     text-decoration: underline;
-}
-a:link:focus,
-a:visited:focus {
-    outline: 1px dotted;
-}
-a:link:active,
-a:visited:active {
-    color: #c00; /* §colour */
 }
 
 
