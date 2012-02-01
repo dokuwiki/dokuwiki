@@ -16,9 +16,9 @@ require_once(DOKU_INC.'inc/init.php');
 // try to be clever about the favicon location
 if(file_exists(DOKU_INC.'favicon.ico')){
     $ico = DOKU_URL.'favicon.ico';
-}elseif(file_exists(DOKU_TPLINC.'images/favicon.ico')){
+}elseif(file_exists(tpl_incdir().'images/favicon.ico')){
     $ico = DOKU_URL.'lib/tpl/'.$conf['template'].'/images/favicon.ico';
-}elseif(file_exists(DOKU_TPLINC.'favicon.ico')){
+}elseif(file_exists(tpl_incdir().'favicon.ico')){
     $ico = DOKU_URL.'lib/tpl/'.$conf['template'].'/favicon.ico';
 }else{
     $ico = DOKU_URL.'lib/tpl/default/images/favicon.ico';

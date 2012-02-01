@@ -41,8 +41,8 @@ function css_out(){
         $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
         $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
     }else{
-        $tplinc = DOKU_TPLINC;
-        $tpldir = DOKU_TPL;
+        $tplinc = tpl_incdir();
+        $tpldir = tpl_basedir();
     }
 
     // The generated script depends on some dynamic options

@@ -65,7 +65,7 @@ function js_out(){
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_INC.'lib/scripts/behaviour.js',
                 DOKU_INC.'lib/scripts/page.js',
-                DOKU_TPLINC.'script.js',
+                tpl_incdir().'script.js',
             );
 
     // add possible plugin scripts and userscript
@@ -87,7 +87,7 @@ function js_out(){
 
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
-    print "var DOKU_TPL    = '".DOKU_TPL."';";
+    print "var DOKU_TPL    = '".tpl_basedir()."';";
     // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
