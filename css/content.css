@@ -57,6 +57,15 @@
 
 /*____________ tables ____________*/
 
+.dokuwiki div.table {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1.4em;
+}
+.dokuwiki div.table table.inline {
+    margin-bottom: 0;
+}
+
 .dokuwiki table.inline {
     min-width: 50%;
     border-width: 0;
