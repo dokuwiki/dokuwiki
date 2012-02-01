@@ -47,14 +47,14 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
-                <?php tpl_flush() /* flush the output buffer */ ?>
-                <?php _tpl_include('pageheader.html') ?>
 
                 <?php if(!$ERROR): ?>
                     <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG)); ?></span></div>
                 <?php endif; ?>
 
                 <div class="page group">
+                    <?php tpl_flush() /* flush the output buffer */ ?>
+                    <?php _tpl_include('pageheader.html') ?>
                     <!-- detail start -->
                     <?php
                     if($ERROR):
@@ -102,13 +102,13 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
                     <?php endif; ?>
                 </div>
                 <!-- detail stop -->
+                <?php _tpl_include('pagefooter.html') ?>
+                <?php tpl_flush() ?>
 
                 <?php /* doesn't make sense like this; @todo: maybe add tpl_imginfo()?
                 <div class="docInfo"><?php tpl_pageinfo(); ?></div>
                 */ ?>
 
-                <?php tpl_flush() ?>
-                <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
 
             <hr class="a11y" />

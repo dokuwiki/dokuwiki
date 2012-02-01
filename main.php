@@ -45,27 +45,30 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
             <?php if($showSidebar): ?>
                 <!-- ********** ASIDE ********** -->
                 <div id="dokuwiki__aside"><div class="pad include group">
+                    <?php tpl_flush() /* flush the output buffer */ ?>
+                    <?php _tpl_include('sidebarheader.html') ?>
                     <?php tpl_include_page($conf['sidebar']) /* includes the given wiki page */ ?>
+                    <?php _tpl_include('sidebarfooter.html') ?>
                 </div></div><!-- /aside -->
             <?php endif; ?>
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
-                <?php tpl_flush() /* flush the output buffer */ ?>
-                <?php _tpl_include('pageheader.html') ?>
 
                 <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
 
                 <div class="page group">
+                    <?php tpl_flush() ?>
+                    <?php _tpl_include('pageheader.html') ?>
                     <!-- wikipage start -->
                     <?php tpl_content() /* the main content */ ?>
                     <!-- wikipage stop -->
+                    <?php _tpl_include('pagefooter.html') ?>
                 </div>
 
                 <div class="docInfo"><?php tpl_pageinfo() /* 'Last modified' etc */ ?></div>
 
                 <?php tpl_flush() ?>
-                <?php _tpl_include('pagefooter.html') ?>
             </div></div><!-- /content -->
 
             <hr class="a11y" />
