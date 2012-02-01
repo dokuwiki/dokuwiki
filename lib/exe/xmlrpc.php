@@ -7,7 +7,7 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION', 6);
+define('DOKU_XMLRPC_API_VERSION', 7);
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
