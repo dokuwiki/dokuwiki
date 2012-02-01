@@ -523,18 +523,19 @@ function auth_aclcheck($id,$user,$groups){
         $groups[] = '@ALL';
         //add User
         if($user) $groups[] = $user;
-        //build regexp
-        $regexp   = join('|',$groups);
     }else{
-        $regexp = '@ALL';
+        $groups[] = '@ALL';
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+    $matches = preg_grep('/^'.preg_quote($id,'/').'\s+(\S+)\s+/'.$ci,$AUTH_ACL);
     if(count($matches)){
         foreach($matches as $match){
             $match = preg_replace('/#.*$/','',$match); //ignore comments
             $acl   = preg_split('/\s+/',$match);
+            if (!in_array($acl[1], $groups)) {
+                continue;
+            }
             if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
             if($acl[2] > $perm){
                 $perm = $acl[2];
@@ -554,20 +555,24 @@ function auth_aclcheck($id,$user,$groups){
     }
 
     do{
-        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path,'/').'\s+(\S+)\s+/'.$ci,$AUTH_ACL);
         if(count($matches)){
             foreach($matches as $match){
                 $match = preg_replace('/#.*$/','',$match); //ignore comments
                 $acl   = preg_split('/\s+/',$match);
+                if (!in_array($acl[1], $groups)) {
+                    continue;
+                }
                 if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
                 if($acl[2] > $perm){
                     $perm = $acl[2];
                 }
             }
             //we had a match - return it
-            return $perm;
+            if ($perm != -1) {
+                return $perm;
+            }
         }
-
         //get next higher namespace
         $ns   = getNS($ns);
 
@@ -582,9 +587,6 @@ function auth_aclcheck($id,$user,$groups){
             return AUTH_NONE;
         }
     }while(1); //this should never loop endless
-
-    //still here? return no permissions
-    return AUTH_NONE;
 }
 
 /**
