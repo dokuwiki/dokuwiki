@@ -270,10 +270,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       // the same for the active template
       $tpl = $conf['template'];
 
-      if (@file_exists(DOKU_TPLINC.$enlangfile)){
+      if (@file_exists(tpl_incdir().$enlangfile)){
         $lang = array();
-        @include(DOKU_TPLINC.$enlangfile);
-        if ($conf['lang'] != 'en') @include(DOKU_TPLINC.$langfile);
+        @include(tpl_incdir().$enlangfile);
+        if ($conf['lang'] != 'en') @include(tpl_incdir().$langfile);
         foreach ($lang as $key => $value){
           $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }
