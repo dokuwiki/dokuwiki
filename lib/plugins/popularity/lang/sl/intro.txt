@@ -1,9 +1,9 @@
-====== Poroèilo o uporabi ======
+====== PoroÄilo o uporabi ======
 
-To orodje je namenjeno zbiranju brezimnih podatkov o postavljeni Dokuwiki strani in omogoèa pošiljanje nekaterih podatkov neposredno razvijalcem sistema. S temi podatki lahko razvijalci razumejo naèine uporabe sistema, zahteve uporabnikov in pogostost uporabe, kar s statistiènimi podatki vpliva tudi na nadaljnji razvoj sistema.
+To orodje je namenjeno zbiranju brezimnih podatkov o postavljeni DokuWiki strani in omogoÄa poÅ¡iljanje nekaterih podatkov neposredno razvijalcem sistema. S temi podatki lahko razvijalci razumejo naÄine uporabe sistema, zahteve uporabnikov in pogostost uporabe, kar s statistiÄnimi podatki vpliva tudi na nadaljnji razvoj sistema.
 
-Priporoèeno je, da poroèilo o uporabi pošljete vsake toliko èasa, saj lahko le tako razvijalci dobijo podatke o hitrosti rasti spletišèa in pogostosti uporabe. Vsi podatki so poslani oznaèeni s posebno vpisno številko, ki omogoèa brezimno sledenje.
+PriporoÄeno je, da poroÄilo o uporabi poÅ¡ljete vsake toliko Äasa, saj lahko le tako razvijalci dobijo podatke o hitrosti rasti spletiÅ¡Äa in pogostosti uporabe. Vsi podatki so poslani oznaÄeni s posebno vpisno Å¡tevilko, ki omogoÄa brezimno sledenje.
 
-Zbrani podatki vsebujejo podrobnosti o razlièici uporabljenega sistema DokuWiki, število in velikost wiki strani, datotekah, ki so naložene na sistem in podatke o vstavkih ter PHP namestitvi in razlièici.
+Zbrani podatki vsebujejo podrobnosti o razliÄici uporabljenega sistema DokuWiki, Å¡tevilo in velikost wiki strani, datotekah, ki so naloÅ¾ene na sistem in podatke o vstavkih ter PHP namestitvi in razliÄici.
 
-Surovi podatki, ki bodo poslani so prikazani spodaj. S pritiskom na gumb "Pošlji podatke", bodo ti poslani na strežnik razvijalcev.
+Surovi podatki, ki bodo poslani so prikazani spodaj. S pritiskom na gumb "PoÅ¡lji podatke", bodo ti poslani na streÅ¾nik razvijalcev.
