@@ -28,8 +28,7 @@
 }
 .dokuwiki #dw__recent ul li.minor,
 .dokuwiki #page__revisions ul li.minor {
-    color: __text_alt__;
-    background-color: inherit;
+    opacity: .7;
 }
 
 .dokuwiki #dw__recent li span.date,
