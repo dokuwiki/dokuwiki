@@ -551,10 +551,6 @@ form#subscribe__form fieldset {
     float: right;
     margin: 0 0 .2em .2em;
 }
-#dokuwiki__sitetools form.search input.button {
-    right: auto;
-    left: .2em;
-}
 
 #dokuwiki__header .mobileTools {
     float: left;

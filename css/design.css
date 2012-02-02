@@ -119,7 +119,7 @@
     position: relative;
 }
 #dokuwiki__sitetools form.search input.edit {
-    width: 16em;
+    width: 18em;
     padding: .35em 22px .35em .1em;
 }
 #dokuwiki__sitetools form.search input.button {
