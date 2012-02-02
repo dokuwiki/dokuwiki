@@ -130,6 +130,7 @@
     text-indent: -99999px;
     margin-left: -20px;
     box-shadow: none;
+    padding: 0;
 }
 
 #dokuwiki__sitetools ul {

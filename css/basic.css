@@ -289,6 +289,9 @@ option {
     line-height: 1;
     margin: 0;
     vertical-align: middle;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 optgroup {

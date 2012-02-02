@@ -79,15 +79,9 @@
     float: left;
     margin: 0 .2em .2em 0;
     width: 49%;
-    position: relative;
 }
 #dokuwiki__sitetools form.search input.edit {
-    width: 90% !important;
-}
-#dokuwiki__sitetools form.search input.button {
-    position: absolute;
-    top: .2em;
-    right: .2em;
+    width: 100% !important;
 }
 .dokuwiki form.search div.ajax_qsearch {
     display: none !important;
@@ -102,7 +96,7 @@
     width: 49%;
 }
 #dokuwiki__header .mobileTools select {
-    padding: .25em .1em;
+    padding: .3em .1em;
     width: 100% !important;
 }
 
