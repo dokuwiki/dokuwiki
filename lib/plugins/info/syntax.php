@@ -174,7 +174,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                 $hid = $this->_addToTOC($title, 3, $renderer);
                 $doc .= '<h3><a name="'.$hid.'" id="'.$hid.'">'.hsc($title).'</a></h3>';
                 $doc .= '<div class="level3">';
-                $doc .= '<table class="inline"><tbody>';
+                $doc .= '<div class="table"><table class="inline"><tbody>';
                 $doc .= '<tr><th>Description</th><td colspan="2">'.$method['desc'].
                     '</td></tr>';
                 if ($method['params']){
@@ -190,7 +190,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                     $doc .= '<tr><th>Return value</th><td>'.hsc(key($method['return'])).
                         '</td><td>'.hsc(current($method['return'])).'</td></tr>';
                 }
-                $doc .= '</tbody></table>';
+                $doc .= '</tbody></table></div>';
                 $doc .= '</div>';
             }
             unset($po);
@@ -206,7 +206,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         global $PARSER_MODES;
         $doc  = '';
 
-        $doc .= '<table class="inline"><tbody>';
+        $doc .= '<div class="table"><table class="inline"><tbody>';
         foreach($PARSER_MODES as $mode => $modes){
             $doc .= '<tr>';
             $doc .= '<td class="leftalign">';
@@ -217,7 +217,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $doc .= '</td>';
             $doc .= '</tr>';
         }
-        $doc .= '</tbody></table>';
+        $doc .= '</tbody></table></div>';
         return $doc;
     }
 

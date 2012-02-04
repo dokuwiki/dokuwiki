@@ -597,6 +597,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<input type="hidden" name="do" value="admin" />'.NL;
         echo '<input type="hidden" name="page" value="acl" />'.NL;
         echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'.NL;
+        echo '<div class="table">';
         echo '<table class="inline">';
         echo '<tr>';
         echo '<th>'.$this->getLang('where').'</th>';
@@ -642,6 +643,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '</th>';
         echo '</tr>';
         echo '</table>';
+        echo '</div>';
         echo '</div></form>'.NL;
     }
 

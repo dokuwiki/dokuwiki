@@ -149,6 +149,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
         ptln("<form action=\"".wl($ID)."\" method=\"post\">");
         formSecurityToken();
+        ptln("  <div class=\"table\">");
         ptln("  <table class=\"inline\">");
         ptln("    <thead>");
         ptln("      <tr>");
@@ -206,6 +207,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      </td></tr>");
         ptln("    </tbody>");
         ptln("  </table>");
+        ptln("  </div>");
 
         ptln("</form>");
         ptln("</div>");
@@ -256,6 +258,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         ptln("<form action=\"".wl($ID)."\" method=\"post\">",$indent);
         formSecurityToken();
+        ptln("  <div class=\"table\">",$indent);
         ptln("  <table class=\"inline\">",$indent);
         ptln("    <thead>",$indent);
         ptln("      <tr><th>".$this->lang["field"]."</th><th>".$this->lang["value"]."</th></tr>",$indent);
@@ -295,6 +298,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      </tr>",$indent);
         ptln("    </tbody>",$indent);
         ptln("  </table>",$indent);
+        ptln("  </div>",$indent);
 
         foreach ($notes as $note)
           ptln("<div class=\"fn\">".$note."</div>",$indent);

@@ -1176,6 +1176,7 @@ function html_diff($text='',$intro=true,$type=null){
         ptln('</div>');
     }
     ?>
+    <div class="table">
     <table class="diff diff_<?php echo $type?>">
     <tr>
     <th colspan="2" <?php echo $l_minor?>>
@@ -1187,6 +1188,7 @@ function html_diff($text='',$intro=true,$type=null){
     </tr>
     <?php echo $tdf->format($df)?>
     </table>
+    </div>
     <?php
 }
 

@@ -1116,6 +1116,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     list($l_head, $r_head) = html_diff_head($l_rev, $r_rev, $image, true);
 
     ?>
+    <div class="table">
     <table>
       <tr>
         <th><?php echo $l_head; ?></th>
@@ -1183,6 +1184,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     echo '</tr>'.NL;
 
     echo '</table>'.NL;
+    echo '</div>'.NL;
 
     if ($is_img && !$fromajax) echo '</div>';
 }
