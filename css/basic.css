@@ -12,43 +12,83 @@ html {
     overflow-x: auto;
     overflow-y: scroll;
 }
-html, body {
-    background-color: __background__;
+html,
+body {
     color: __text__;
+    background-color: __background_site__;
+    background-image: -moz-linear-gradient(   top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: -webkit-linear-gradient(top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: -o-linear-gradient(     top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: -ms-linear-gradient(    top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-image: linear-gradient(        top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
+    background-size: 1px 10em;
+    background-repeat: repeat-x;
     margin: 0;
     padding: 0;
 }
 body {
-    font: normal 100%/1.4 Frutiger, "Frutiger Linotype", Univers, Calibri, Myriad, "Liberation Sans", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: normal 87.5%/1.4 Arial, sans-serif;
     /* default font size: 100% => 16px; 93.75% => 15px; 87.5% => 14px; 81.25% => 13px; 75% => 12px */
 }
 
 
 /*____________ headers ____________*/
 
-h1, h2, h3, h4, h5, h6,
-caption, legend {
-    font-family: Constantia, Utopia, Lucidabright, Lucida, Georgia, serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+caption,
+legend {
+    font-family: Arial, sans-serif;
     font-weight: bold;
-    color: __text_neu__;
     background-color: inherit;
     padding: 0;
+    line-height: 1.2;
     clear: left; /* ideally 'both', but problems with toc */
 }
 
-h1 { font-size: 2.25em;  margin: 0 0 0.444em; }
-h2 { font-size: 1.5em;   margin: 0 0 0.666em; }
-h3 { font-size: 1.125em; margin: 0 0 0.888em; }
-h4 { font-size: 1em;     margin: 0 0 1.0em; }
-h5 { font-size: .875em;  margin: 0 0 1.1428em; }
-h6 { font-size: .75em;   margin: 0 0 1.333em; }
+h1 {
+    font-size: 2em;
+    margin: -.222em 0 0.444em;
+}
+h2 {
+    font-size: 1.5em;
+    margin: 0 0 0.666em;
+}
+h3 {
+    font-size: 1.125em;
+    margin: 0 0 0.888em;
+}
+h4 {
+    font-size: 1em;
+    margin: 0 0 1.0em;
+}
+h5 {
+    font-size: .875em;
+    margin: 0 0 1.1428em;
+}
+h6 {
+    font-size: .75em;
+    margin: 0 0 1.333em;
+}
 /* bottom margin = 1 / font-size */
 
 
 /*____________ basic margins and paddings ____________*/
 
-p, ul, ol, dl, pre, table,
-hr, blockquote, fieldset, address {
+p,
+ul,
+ol,
+dl,
+pre,
+table,
+hr,
+blockquote,
+fieldset,
+address {
     margin: 0 0 1.4em 0; /* bottom margin = line-height */
     padding: 0;
 }
@@ -58,16 +98,15 @@ div {
     padding: 0;
 }
 
-p, dt, dd, td, th, li {
-}
-
 
 /*____________ lists ____________*/
 
-ul, ol {
+ul,
+ol {
     padding: 0 0 0 1.5em;
 }
-li, dd {
+li,
+dd {
     padding: 0;
     margin: 0 0 0 1.5em;
 }
@@ -77,8 +116,12 @@ dt {
     padding: 0;
 }
 
-li ul, li ol, li dl,
-dl ul, dl ol, dl dl {
+li ul,
+li ol,
+li dl,
+dl ul,
+dl ol,
+dl dl {
     margin-bottom: 0;
     padding: 0;
 }
@@ -86,7 +129,7 @@ li li {
     font-size: 100%;
 }
 
-ul             { list-style: disc outside; }
+ul             { list-style: square outside; }
 ol             { list-style: decimal outside; }
 ol ol          { list-style-type: lower-alpha; }
 ol ol ol       { list-style-type: upper-roman; }
@@ -109,7 +152,8 @@ caption {
     margin: 0 0 .3em;
 }
 
-th, td {
+th,
+td {
     padding: .3em .5em;
     margin: 0;
     vertical-align: top;
@@ -125,21 +169,20 @@ th {
 /*____________ links ____________*/
 
 a {
+    outline: none;
 }
-a:link, a:visited {
+a:link,
+a:visited {
     text-decoration: none;
-    color: #00c; /* §colour */
+    color: __link__;
 }
-a:link:hover, a:visited:hover,
-a:link:focus, a:visited:focus,
-a:link:active, a:visited:active {
+a:link:hover,
+a:visited:hover,
+a:link:focus,
+a:visited:focus,
+a:link:active,
+a:visited:active {
     text-decoration: underline;
-}
-a:link:focus, a:visited:focus {
-    outline: 1px dotted;
-}
-a:link:active, a:visited:active {
-    color: #c00; /* §colour */
 }
 
 
@@ -152,24 +195,33 @@ img {
     background-color: transparent;
     font-style: italic;
 }
+img,
+object {
+    max-width: 100%;
+}
 
 hr {
-    border-style: solid;
-    border-width: 1px 0 0;
-    text-align: center;
+    border-top: solid __border__;
+    border-bottom: solid __background__;
+    border-width: 1px 0;
     height: 0;
     width: 100%;
+    text-align: center;
     clear: both;
 }
 
-acronym, abbr {
+acronym,
+abbr {
     cursor: help;
     border-bottom: 1px dotted;
     font-style: normal;
 }
 
-pre, code, samp, kbd {
-    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+pre,
+code,
+samp,
+kbd {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
     /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
     font-size: 1em;
     direction: ltr;
@@ -177,18 +229,21 @@ pre, code, samp, kbd {
 }
 pre {
     overflow: auto;
+    word-wrap: normal;
 }
 
 blockquote {
-    padding: 0 1.25em;
+    padding: 0 .5em;
     border: solid __border__;
     border-width: 0 0 0 .25em;
 }
-q:before, q:after {
+q:before,
+q:after {
     content: '';
 }
 
-sub, sup {
+sub,
+sup {
     font-size: .8em;
     line-height: 1;
 }
@@ -200,6 +255,8 @@ sup {
 }
 
 /*____________ forms ____________*/
+
+/* for all of the form styles, style.ini colours are not used on purpose (except for fieldset border) */
 
 form {
     display: inline;
@@ -218,46 +275,107 @@ label {
     vertical-align: middle;
     cursor: pointer;
 }
-input, textarea, button,
-select, optgroup, option {
+
+input,
+textarea,
+button,
+select,
+optgroup,
+option {
     font: inherit;
-    color: inherit;
-    /* background-color destroys button look */
+    font-weight: normal;
+    color: #333;
+    background-color: #fff;
     line-height: 1;
     margin: 0;
     vertical-align: middle;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
-input[type=text], input[type=password], textarea {
-    padding: .1em;
+
+optgroup {
+    font-style: italic;
+    font-weight: bold;
 }
-input[type=radio], input[type=checkbox], input.check {
+option {
+    font-style: normal;
+    font-weight: normal;
+}
+
+input,
+textarea,
+select {
+    border: 1px solid #ccc;
+    box-shadow: inset 0 0 1px #eee;
+    border-radius: 2px;
+}
+input:active,
+input:focus,
+textarea:active,
+textarea:focus,
+select:active,
+select:focus {
+    border-color: #999;
+}
+input[type=radio],
+input[type=checkbox] {
     padding: 0;
+    border-width: 0;
+    box-shadow: none;
 }
-input[type=submit], input.button, button {
+
+/* all types of buttons */
+input[type=submit],
+input.button,
+a.button,
+button,
+.qq-upload-button {
+    color: #333;
+    background-color: #eee;
+    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background: linear-gradient(        top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: .1em .5em;
     cursor: pointer;
 }
-input[disabled], button[disabled],
-input[readonly], button[readonly] {
+
+input[type=submit]:hover,
+input[type=submit]:active,
+input[type=submit]:focus,
+input.button:hover,
+input.button:active,
+input.button:focus,
+a.button:hover,
+a.button:active,
+a.button:focus,
+button:hover,
+button:active,
+button:focus,
+.qq-upload-button:hover {
+    border-color: #999;
+    background-color: #ddd;
+    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%);
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+    background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%);
+    background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%);
+    background: linear-gradient(        top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+}
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+input[disabled],
+button[disabled],
+input[readonly],
+button[readonly] {
     cursor: auto;
 }
-optgroup { font-style: italic; font-weight: bold; }
-option   { font-style: normal; font-weight: normal; }
 
-
-/*____________ general classes ____________*/
-
-div.clearer {
-    /* additional to what's already in lib/styles/style.css: */
-    font-size: 1px;
-    visibility: hidden;
-}
-
-.a11y {
-    position: absolute;
-    left: -9000px;
-    top: -4000px;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    display: inline;
-}

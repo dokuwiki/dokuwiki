@@ -33,78 +33,6 @@ caption, legend {
     right: -9000px;
 }
 
-/*____________ structure ____________*/
-
-#dokuwiki__header .headings {
-    float: right;
-}
-#dokuwiki__header .tools {
-    float: left;
-    text-align: left;
-}
-
-.mode_show #dokuwiki__aside {
-    float: right;
-}
-#dokuwiki__aside .pad {
-    margin: 0 0 0 1.5em;
-}
-
-.mode_show #dokuwiki__content {
-    float: left;
-    margin-left: 0;
-    margin-right: -__sidebar_width__;
-}
-.mode_show #dokuwiki__content .pad {
-    margin-left: 0;
-    margin-right: __sidebar_width__;
-}
-
-/*____________ design ____________*/
-
-#dokuwiki__header form.search #qsearch__in {
-    margin-right: 0;
-    margin-left: .5em;
-}
-
-#dokuwiki__usertools ul li.user {
-    float: right;
-    margin-right: 0;
-}
-#dokuwiki__pagetools ul li a.action.top {
-    float: left;
-}
-
-#dokuwiki__aside ul, #dokuwiki__aside ol {
-    padding-right: 0;
-}
-
-/*____________ content ____________*/
-
-/* section indenting
-.dokuwiki .page h1 {margin-left: 0; margin-right: 0;}
-.dokuwiki .page h2 {margin-left: 0; margin-right: .666em;}
-.dokuwiki .page h3 {margin-left: 0; margin-right: 1.776em;}
-.dokuwiki .page h4 {margin-left: 0; margin-right: 3em;}
-.dokuwiki .page h5 {margin-left: 0; margin-right: 4.5712em;}
-.dokuwiki .page div.level1 {margin-left: 0; margin-right: 0;}
-.dokuwiki .page div.level2 {margin-left: 0; margin-right: 1em;}
-.dokuwiki .page div.level3 {margin-left: 0; margin-right: 2em;}
-.dokuwiki .page div.level4 {margin-left: 0; margin-right: 3em;}
-.dokuwiki .page div.level5 {margin-left: 0; margin-right: 4em;}
-*/
-
-.dokuwiki dl.code dt,
-.dokuwiki dl.file dt {
-    margin-left: 0;
-    margin-right: 1em;
-}
-
-.JSpopup ul,
-.JSpopup ol {
-    padding-right: 0;
-}
-
 
 /*____________ _imgdetail ____________*/
 
@@ -199,12 +127,12 @@ caption, legend {
 .dokuwiki .toc span.toc_open,
 .dokuwiki .toc span.toc_close {
     float: left;
-    margin: 0 0 0 .2em;
 }
 .dokuwiki #toc__inside ul ul {
     padding-left: 0;
     padding-right: 1em;
 }
+
 .dokuwiki ul.idx {
     padding-right: 0;
 }
@@ -307,3 +235,337 @@ form#subscribe__form fieldset {
 /*____________ includes ____________*/
 
 
+/*____________ structure ____________*/
+
+#dokuwiki__header .headings {
+    float: right;
+    text-align: right;
+}
+#dokuwiki__header .tools {
+    float: left;
+    text-align: left;
+}
+
+#dokuwiki__aside {
+    float: right;
+}
+#dokuwiki__aside .pad {
+    margin: 0 0 0 1.5em;
+}
+
+.hasSidebar #dokuwiki__content {
+    float: left;
+    margin-left: 0;
+    margin-right: -__sidebar_width__;
+}
+.hasSidebar #dokuwiki__content .pad {
+    margin-left: 0;
+    margin-right: __sidebar_width__;
+}
+
+/*____________ design ____________*/
+
+#dokuwiki__header h1 img {
+    float: right;
+    margin-left: .5em;
+    margin-right: 0;
+}
+
+#dokuwiki__sitetools form.search input.edit {
+    padding: .35em .1em .35em 22px;
+}
+#dokuwiki__sitetools form.search input.button {
+    background-position: 5px 0;
+    margin-left: 0;
+    margin-right: -20px;
+}
+
+#dokuwiki__usertools {
+    text-align: left;
+    left: 40px;
+    right: auto;
+}
+
+#dokuwiki__sitetools {
+    text-align: left;
+}
+
+#dokuwiki__aside ul, #dokuwiki__aside ol {
+    padding-right: 0;
+}
+
+.dokuwiki .pageId {
+    right: auto;
+    left: -1em;
+}
+
+.dokuwiki .docInfo {
+    text-align: left;
+}
+
+.dokuwiki div.toolbar button.toolbutton:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left-width: 0;
+    border-right-width: 1px;
+}
+.dokuwiki div.toolbar button.toolbutton:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-left-width: 1px;
+}
+
+.dokuwiki div.section_highlight {
+    margin-right: -2em;
+    border-right-width: 1em;
+}
+
+#dokuwiki__footer .license img {
+    margin: 0 0 0 .5em;
+}
+
+.dokuwiki div.toc {
+    margin: -2em 1.4em .5em -2em;
+    border-left-width: 0;
+    border-right: 1px solid __border__;
+}
+.dokuwiki #toc__inside ul {
+    padding: 0 1.5em 0 0;
+}
+
+#dokuwiki__detail div.img_detail dl dt {
+    float: right;
+    text-align: left;
+    clear: right;
+}
+#dokuwiki__detail div.img_detail dl dd {
+    margin-left: 0;
+    margin-right: 9.5em;
+}
+
+
+/*____________ pagetools ____________*/
+
+#dokuwiki__usertools {
+    right: auto;
+    left: 40px;
+}
+
+#dokuwiki__pagetools {
+    right: auto;
+    left: -40px;
+}
+
+#dokuwiki__pagetools ul {
+    right: auto;
+    left: 0;
+    text-align: left;
+}
+
+#dokuwiki__pagetools ul li a {
+    padding: 5px 5px 5px 40px;
+    background-position: left 0;
+}
+
+#dokuwiki__pagetools:hover ul,
+#dokuwiki__pagetools ul li a:focus {
+    box-shadow: -2px 2px 2px __text_alt__;
+}
+
+/* all available icons in sprite */
+#dokuwiki__pagetools ul li a.edit {
+    background-position: left 0;
+}
+#dokuwiki__pagetools ul li a.edit:hover,
+#dokuwiki__pagetools ul li a.edit:active,
+#dokuwiki__pagetools ul li a.edit:focus {
+    background-position: left -45px;
+}
+
+#dokuwiki__pagetools ul li a.create {
+    background-position: left -90px;
+}
+#dokuwiki__pagetools ul li a.create:hover,
+#dokuwiki__pagetools ul li a.create:active,
+#dokuwiki__pagetools ul li a.create:focus {
+    background-position: left -135px;
+}
+
+#dokuwiki__pagetools ul li a.show {
+    background-position: left -270px;
+}
+#dokuwiki__pagetools ul li a.show:hover,
+#dokuwiki__pagetools ul li a.show:active,
+#dokuwiki__pagetools ul li a.show:focus {
+    background-position: left -315px;
+}
+
+#dokuwiki__pagetools ul li a.source {
+    background-position: left -360px;
+}
+#dokuwiki__pagetools ul li a.source:hover,
+#dokuwiki__pagetools ul li a.source:active,
+#dokuwiki__pagetools ul li a.source:focus {
+    background-position: left -405px;
+}
+
+#dokuwiki__pagetools ul li a.draft {
+    background-position: left -180px;
+}
+#dokuwiki__pagetools ul li a.draft:hover,
+#dokuwiki__pagetools ul li a.draft:active,
+#dokuwiki__pagetools ul li a.draft:focus {
+    background-position: left -225px;
+}
+
+#dokuwiki__pagetools ul li a.revs {
+    background-position: left -540px;
+}
+#dokuwiki__pagetools ul li a.revs:hover,
+#dokuwiki__pagetools ul li a.revs:active,
+#dokuwiki__pagetools ul li a.revs:focus,
+.mode_revisions #dokuwiki__pagetools ul li a.revs {
+    background-position: left -585px;
+}
+
+#dokuwiki__pagetools ul li a.backlink {
+    background-position: left -630px;
+}
+#dokuwiki__pagetools ul li a.backlink:hover,
+#dokuwiki__pagetools ul li a.backlink:active,
+#dokuwiki__pagetools ul li a.backlink:focus,
+.mode_backlink #dokuwiki__pagetools ul li a.backlink {
+    background-position: left -675px;
+}
+
+#dokuwiki__pagetools ul li a.top {
+    background-position: left -810px;
+}
+#dokuwiki__pagetools ul li a.top:hover,
+#dokuwiki__pagetools ul li a.top:active,
+#dokuwiki__pagetools ul li a.top:focus {
+    background-position: left -855px;
+}
+
+#dokuwiki__pagetools ul li a.revert {
+    background-position: left -450px;
+}
+#dokuwiki__pagetools ul li a.revert:hover,
+#dokuwiki__pagetools ul li a.revert:active,
+#dokuwiki__pagetools ul li a.revert:focus,
+.mode_revert #dokuwiki__pagetools ul li a.revert {
+    background-position: left -495px;
+}
+
+#dokuwiki__pagetools ul li a.subscribe {
+    background-position: left -720px;
+}
+#dokuwiki__pagetools ul li a.subscribe:hover,
+#dokuwiki__pagetools ul li a.subscribe:active,
+#dokuwiki__pagetools ul li a.subscribe:focus,
+.mode_subscribe #dokuwiki__pagetools ul li a.subscribe {
+    background-position: left -765px;
+}
+
+#dokuwiki__pagetools ul li a.mediaManager {
+    background-position: left -900px;
+}
+#dokuwiki__pagetools ul li a.mediaManager:hover,
+#dokuwiki__pagetools ul li a.mediaManager:active,
+#dokuwiki__pagetools ul li a.mediaManager:focus {
+    background-position: left -945px;
+}
+
+#dokuwiki__pagetools ul li a.back {
+    background-position: left -990px;
+}
+#dokuwiki__pagetools ul li a.back:hover,
+#dokuwiki__pagetools ul li a.back:active,
+#dokuwiki__pagetools ul li a.back:focus {
+    background-position: left -1035px;
+}
+
+
+/*____________ content ____________*/
+
+/* section indenting
+.dokuwiki .page h1 {margin-left: 0; margin-right: 0;}
+.dokuwiki .page h2 {margin-left: 0; margin-right: .666em;}
+.dokuwiki .page h3 {margin-left: 0; margin-right: 1.776em;}
+.dokuwiki .page h4 {margin-left: 0; margin-right: 3em;}
+.dokuwiki .page h5 {margin-left: 0; margin-right: 4.5712em;}
+.dokuwiki .page div.level1 {margin-left: 0; margin-right: 0;}
+.dokuwiki .page div.level2 {margin-left: 0; margin-right: 1em;}
+.dokuwiki .page div.level3 {margin-left: 0; margin-right: 2em;}
+.dokuwiki .page div.level4 {margin-left: 0; margin-right: 3em;}
+.dokuwiki .page div.level5 {margin-left: 0; margin-right: 4em;}
+*/
+
+.dokuwiki dl.code dt,
+.dokuwiki dl.file dt {
+    margin-left: 0;
+    margin-right: 1em;
+}
+
+.JSpopup ul,
+.JSpopup ol {
+    padding-right: 0;
+}
+
+
+/*____________ mobile ____________*/
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+
+
+.hasSidebar #dokuwiki__content,
+.hasSidebar #dokuwiki__content .pad {
+    margin-right: 0;
+}
+
+#dokuwiki__header ul.a11y.skip {
+    left: auto !important;
+    right: 0 !important;
+    float: left;
+    padding-right: 0;
+}
+#dokuwiki__header ul.a11y.skip li {
+    margin: 0 .35em 0 0;
+}
+
+#dokuwiki__header .headings,
+#dokuwiki__header .tools {
+    float: none;
+    text-align: right;
+    width: auto;
+}
+#dokuwiki__sitetools {
+    text-align: right;
+}
+
+#dokuwiki__sitetools form.search {
+    float: right;
+    margin: 0 0 .2em .2em;
+}
+
+#dokuwiki__header .mobileTools {
+    float: left;
+}
+
+.dokuwiki div.toc {
+    float: none;
+    margin: 0 0 1em 0;
+    border-right-width: 0;
+}
+
+.dokuwiki label.block {
+    text-align: right;
+}
+
+
+
+} /* /@media */

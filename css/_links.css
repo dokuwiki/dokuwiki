@@ -39,11 +39,12 @@
 .dokuwiki a.interwiki {
     background-repeat: no-repeat;
     background-position: 0 center;
-    padding: 0 0 0 17px;
+    padding: 0 0 0 20px;
 }
 /* external link */
 .dokuwiki a.urlextern {
     background-image: url(images/link_icon.gif);
+    padding: 0 0 0 17px;
 }
 /* windows share */
 .dokuwiki a.windows {
@@ -60,4 +61,5 @@
 }
 /* interwiki link */
 .dokuwiki a.interwiki {
+    padding: 0 0 0 17px;
 }

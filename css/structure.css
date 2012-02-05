@@ -9,43 +9,30 @@ body {
 }
 #dokuwiki__site {
     margin: 0 auto;
-    max-width: 64em;
-    padding: 1.4em 1em;
+    max-width: __site_width__;
 }
 #dokuwiki__site .site {
+    padding: 0 .5em;
 }
 
 #dokuwiki__header {
+    width: 100%;
 }
 #dokuwiki__header .pad {
 }
     #dokuwiki__header .headings {
         float: left;
     }
-    #IE6 #dokuwiki__header .headings {
-        width: 50%;
-    }
     #dokuwiki__header .tools {
         float: right;
         text-align: right;
-    }
-    #IE6 #dokuwiki__header .tools {
-        width: 50%;
     }
 
 #dokuwiki__site .wrapper {
     position: relative;
 }
-#IE6 #dokuwiki__site .wrapper,
-#IE7 #dokuwiki__site .wrapper {
-    height: 1%;
-}
 
-    /* show sidebar only in show mode */
     #dokuwiki__aside {
-        display: none;
-    }
-    .mode_show #dokuwiki__aside {
         width: __sidebar_width__;
         float: left;
         position: relative;
@@ -55,13 +42,12 @@ body {
         margin: 0 1.5em 0 0;
     }
 
-    /* make content wider when there's no sidebar */
-    .mode_show #dokuwiki__content {
+    .hasSidebar #dokuwiki__content {
         float: right;
         margin-left: -__sidebar_width__;
         width: 100%;
     }
-    .mode_show #dokuwiki__content .pad {
+    .hasSidebar #dokuwiki__content .pad {
         margin-left: __sidebar_width__;
     }
 

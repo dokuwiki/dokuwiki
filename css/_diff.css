@@ -40,16 +40,16 @@
 
 /* table body */
 .dokuwiki table.diff td {
-    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Monaco, "Courier New", monospace;
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
 }
 .dokuwiki table.diff td.diff-blockheader {
     font-weight: bold;
 }
-.dokuwiki table.diff td.diff-addedline {
+.dokuwiki table.diff .diff-addedline {
     background-color: #cfc;
     color: inherit;
 }
-.dokuwiki table.diff td.diff-deletedline {
+.dokuwiki table.diff .diff-deletedline {
     background-color: #fdd;
     color: inherit;
 }

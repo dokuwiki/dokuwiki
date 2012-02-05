@@ -3,6 +3,7 @@
  *
  * @author Anika Henke <anika@selfthinker.org>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Clarence Lee <clarencedglee@gmail.com>
  */
 
 
@@ -24,25 +25,58 @@
 
 /*____________ images ____________*/
 
-/* embedded images (styles are already partly set in lib/styles/style.css) */
-.dokuwiki img.media       { }
-.dokuwiki img.medialeft   { margin: .5em 1.5em .5em 0; }
-.dokuwiki img.mediaright  { margin: .5em 0 .5em 1.5em; }
-.dokuwiki img.mediacenter { margin: .5em auto; }
+/* embedded images (styles are already partly set in lib/styles/all.css) */
+.dokuwiki img.media {
+}
+.dokuwiki img.medialeft {
+    margin: .5em 1.5em .5em 0;
+}
+.dokuwiki img.mediaright {
+    margin: .5em 0 .5em 1.5em;
+}
+.dokuwiki img.mediacenter {
+    margin: .5em auto;
+}
+
+
+/*____________ lists ____________*/
+
+.dokuwiki #dokuwiki__content ul li,
+.dokuwiki #dokuwiki__aside ul li {
+    color: __text_alt__;
+}
+.dokuwiki #dokuwiki__content ol li,
+.dokuwiki #dokuwiki__aside ol li {
+    color: __text_neu__;
+}
+.dokuwiki #dokuwiki__content li .li,
+.dokuwiki #dokuwiki__aside li .li {
+    color: __text__;
+}
 
 
 /*____________ tables ____________*/
 
+.dokuwiki div.table {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1.4em;
+}
+.dokuwiki div.table table {
+    margin-bottom: 0;
+}
+
 .dokuwiki table.inline {
     min-width: 50%;
+    border-width: 0;
 }
 .dokuwiki table.inline th,
 .dokuwiki table.inline td {
-    border: 1px solid __text_alt__;
+    border: 1px solid __border__;
 }
 .dokuwiki table.inline th {
     color: inherit;
-    background-color: __background_neu__;
+    background-color: __background_alt__;
 }
 .dokuwiki table.inline td {
 }
@@ -62,7 +96,7 @@
 .dokuwiki samp,
 .dokuwiki kbd {
     background-color: __background_alt__;
-    color: inherit;
+    color: __text__;
 }
 /* fix if background-color hides underlining */
 .dokuwiki em.u code {
@@ -70,7 +104,7 @@
 }
 .dokuwiki pre {
     border: 1px solid __border__;
-    padding: 0 .2em;
+    padding: .75em 1em;
 }
 /* for code in <file> */
 .dokuwiki pre.file {
@@ -84,19 +118,31 @@
 .dokuwiki dl.code dt,
 .dokuwiki dl.file dt {
     background-color: __background_alt__;
-    border: solid __border__;
-    border-width: 1px 1px 0;
+    background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%);
+    background: -webkit-linear-gradient(top, __background__ 0%, __background_alt__ 100%);
+    background: -o-linear-gradient(     top, __background__ 0%, __background_alt__ 100%);
+    background: -ms-linear-gradient(    top, __background__ 0%, __background_alt__ 100%);
+    background: linear-gradient(        top, __background__ 0%, __background_alt__ 100%);
     color: inherit;
-    display: inline;
-    padding: 0 .5em;
-    margin-left: 1em;
+    border: 1px solid __border__;
+    border-bottom-color: __background_alt__;
+    border-top-left-radius: .3em;
+    border-top-right-radius: .3em;
+    padding: .3em .6em .1em;
+    margin-bottom: -1px;
+    float: left;
 }
 .dokuwiki dl.code dt a,
 .dokuwiki dl.file dt a {
+    background-color: transparent;
+    font-size: 0.875em;
+    font-weight: normal;
+    display: block;
+    min-height: 16px;
 }
-
 .dokuwiki dl.code dd,
 .dokuwiki dl.file dd {
     margin: 0;
+    clear: left;
 }
 
