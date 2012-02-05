@@ -82,23 +82,31 @@ class RemoteAPI {
         }
         list($type, $pluginName, $call) = explode('.', $method, 3);
         if ($type === 'plugin') {
-            $plugin = plugin_load('remote', $pluginName);
-            $methods = $this->getPluginMethods();
-            if (!$plugin) {
-                throw new RemoteException('Method dose not exists');
-            }
-            $this->checkAccess($methods[$method]);
-            $name = $this->getMethodName($methods, $method);
-            return call_user_func_array(array($plugin, $name), $args);
+            return $this->callPlugin($pluginName, $method, $args);
         } else {
-            $coreMethods = $this->getCoreMethods();
-            $this->checkAccess($coreMethods[$method]);
-            if (!isset($coreMethods[$method])) {
-                throw new RemoteException('Method dose not exists');
-            }
-            $this->checkArgumentLength($coreMethods[$method], $args);
-            return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
+            return $this->callCoreMethod($method, $args);
         }
+    }
+
+    private function callPlugin($pluginName, $method, $args) {
+        $plugin = plugin_load('remote', $pluginName);
+        $methods = $this->getPluginMethods();
+        if (!$plugin) {
+            throw new RemoteException('Method dose not exists');
+        }
+        $this->checkAccess($methods[$method]);
+        $name = $this->getMethodName($methods, $method);
+        return call_user_func_array(array($plugin, $name), $args);
+    }
+
+    private function callCoreMethod($method, $args) {
+        $coreMethods = $this->getCoreMethods();
+        $this->checkAccess($coreMethods[$method]);
+        if (!isset($coreMethods[$method])) {
+            throw new RemoteException('Method dose not exists');
+        }
+        $this->checkArgumentLength($coreMethods[$method], $args);
+        return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
     }
 
     private function checkAccess($methodMeta) {
