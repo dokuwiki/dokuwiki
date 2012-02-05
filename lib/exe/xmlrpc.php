@@ -34,7 +34,6 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
 
     function call($methodname, $args){
         try {
-            //print 'a';
             $result = $this->remote->call($methodname, $args);
             return $result;
         } catch (RemoteAccessDeniedException $e) {

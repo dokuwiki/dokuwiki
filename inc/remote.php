@@ -23,7 +23,8 @@ class RemoteAccessDeniedException extends RemoteException {}
  *          )
  *          'name' => 'method name in class',
  *          'return' => 'type',
-*          ['doc' = 'method documentation'],
+ *          'public' => 1/0 - method bypass default group check (used by login)
+ *          ['doc' = 'method documentation'],
  *     )
  * )
  *
