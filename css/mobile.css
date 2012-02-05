@@ -1,10 +1,75 @@
 /**
  * This file provides styles for mobile devices
- * and smaller screens (up to 480px width).
+ * and smaller screens (up to 480px and 768px width).
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
 
+/* up to 768px screen widths
+********************************************************************/
+@media only screen and (max-width: 768px), only screen and (max-device-width: 960px) {
+
+/* structure */
+#dokuwiki__aside {
+    width: 100%;
+    float: none;
+}
+#dokuwiki__aside .pad {
+    margin: 0 0 .5em;
+}
+
+.hasSidebar #dokuwiki__content {
+    float: none;
+    margin-left: 0;
+    width: 100%;
+}
+.hasSidebar #dokuwiki__content .pad {
+    margin-left: 0;
+}
+
+/* toc */
+.dokuwiki div.toc {
+    float: none;
+    margin: 0 0 1em 0;
+    width: auto;
+    border-left-width: 0;
+    border-bottom: 1px solid __border__;
+}
+.dokuwiki div.tocheader {
+    padding: 0 0 .5em;
+}
+.dokuwiki #toc__inside {
+    padding: .2em 0 .5em;
+}
+
+/* page */
+.dokuwiki div.page {
+    padding: 1em;
+}
+.dokuwiki .pageId span {
+    border-width: 0;
+    background-color: __background_site__;
+    color: __text_alt__;
+    box-shadow: 0 0 0;
+}
+
+/* _edit */
+.dokuwiki div.section_highlight {
+    margin: -3em -1em -.01em -1em;
+    padding: 3em .5em .01em .5em;
+    border-width: 0 .5em;
+}
+.dokuwiki div.preview {
+    margin: 0 -1em;
+    padding: 1em;
+}
+
+
+} /* /@media */
+
+
+/* up to 480px screen widths
+********************************************************************/
 @media only screen and (max-width: 480px), only screen and (max-device-width: 960px) {
 
 /*____________ structure ____________*/
@@ -18,24 +83,6 @@
 #dokuwiki__header {
     padding: .5em 0;
 }
-
-#dokuwiki__aside {
-    width: 100%;
-    float: none;
-}
-#dokuwiki__aside .pad {
-    margin: 0;
-}
-
-.hasSidebar #dokuwiki__content {
-    float: none;
-    margin-left: 0;
-    width: 100%;
-}
-.hasSidebar #dokuwiki__content .pad {
-    margin-left: 0;
-}
-
 
 /*____________ header ____________*/
 
@@ -105,25 +152,6 @@
 
 .dokuwiki div.page {
     padding: .5em;
-}
-
-h1 {
-    margin-top: 0;
-}
-
-/* toc */
-.dokuwiki div.toc {
-    float: none;
-    margin: 0 0 1em 0;
-    width: auto;
-    border-left-width: 0;
-    border-bottom: 1px solid __border__;
-}
-.dokuwiki div.tocheader {
-    padding: 0 0 .5em;
-}
-.dokuwiki #toc__inside {
-    padding: .2em 0 .5em;
 }
 
 /* form elements */
