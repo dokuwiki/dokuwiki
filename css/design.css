@@ -382,6 +382,9 @@
 .dokuwiki #toc__inside ul li {
     list-style-image: url(images/toc-bullet.png);
 }
+.dokuwiki #toc__inside ul li.clear {
+    list-style: none;
+}
 .dokuwiki #toc__inside ul li div.li {
     padding: .2em 0;
 }
