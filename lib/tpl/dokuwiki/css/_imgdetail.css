@@ -1,0 +1,30 @@
+/**
+ * This file provides styles for the image detail page (detail.php).
+ */
+
+#dokuwiki__detail {
+    padding: 1em;
+}
+#dokuwiki__detail h1 {
+}
+
+#dokuwiki__detail img {
+    float: left;
+    margin: 0 1.5em .5em 0;
+}
+#dokuwiki__detail div.img_detail {
+    float: left;
+}
+
+#dokuwiki__detail div.img_detail h2 {
+}
+#dokuwiki__detail div.img_detail dl {
+}
+#dokuwiki__detail div.img_detail dl dt {
+}
+#dokuwiki__detail div.img_detail dl dd {
+}
+
+#dokuwiki__detail p.back {
+    clear: both;
+}
