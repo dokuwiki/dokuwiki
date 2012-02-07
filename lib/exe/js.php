@@ -31,15 +31,9 @@ function js_out(){
     global $lang;
     global $config_cascade;
 
-    if (isset($_GET['cacheKey'])) {
-        $cacheKey = strval($_GET['cacheKey']);
-    } else {
-        $cacheKey = '';
-    }
-
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$cacheKey,
-                       '.js');
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
+    $cache->_event = 'JS_CACHE_USE';
 
     // load minified version for some files
     $min = $conf['compress'] ? '.min' : '';
@@ -85,8 +79,8 @@ function js_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    http_cached($cache->cache,
-                $cache->useCache(array('files' => $cache_files)));
+    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    http_cached($cache->cache, $cache_ok);
 
     // start output buffering and build the script
     ob_start();
