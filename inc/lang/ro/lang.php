@@ -8,7 +8,7 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
- * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
+ * @author Marius Olar <olarmariusalex@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
