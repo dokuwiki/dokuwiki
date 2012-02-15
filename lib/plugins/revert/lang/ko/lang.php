@@ -7,6 +7,7 @@
  * @author Song Younghwan <purluno@gmail.com>
  * @author SONG Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo  <dryoo@live.com>
+ * @author erial2@gmail.com
  */
 $lang['menu']                  = '복구 관리자';
 $lang['filter']                = '스팸 페이지 검색 ';
