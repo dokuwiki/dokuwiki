@@ -1677,7 +1677,6 @@ function html_resendpwd() {
         $form->startFieldset($lang['btn_resendpwd']);
         $form->addHidden('token', $token);
         $form->addHidden('do', 'resendpwd');
-        //$form->addElement(form_makeTag('br'));
 
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
