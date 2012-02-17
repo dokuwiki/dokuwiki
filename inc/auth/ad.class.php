@@ -149,6 +149,7 @@ class auth_ad extends auth_basic {
    function getUserData($user){
         global $conf;
         global $lang;
+        global $ID;
         if(!$this->_init()) return false;
 
         if($user == '') return array();
@@ -206,7 +207,12 @@ class auth_ad extends auth_basic {
 
             // if this is the current user, warn him
             if( ($_SERVER['REMOTE_USER'] == $user) && ($timeleft <= $this->cnf['expirywarn'])){
-                msg(sprintf($lang['authpwdexpire'],$timeleft));
+                $msg = sprintf($lang['authpwdexpire'],$timeleft);
+                if($this->canDo('modPass')){
+                    $url = wl($ID,array('do'=>'profile'));
+                    $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                }
+                msg($msg);
             }
         }
 
