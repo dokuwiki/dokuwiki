@@ -46,6 +46,7 @@ class auth_ad extends auth_basic {
     var $opts = null;
     var $adldap = null;
     var $users = null;
+    var $msgshown = false;
 
     /**
      * Constructor
@@ -205,14 +206,18 @@ class auth_ad extends auth_basic {
             $timeleft = round($timeleft/(24*60*60));
             $info['expiresin'] = $timeleft;
 
-            // if this is the current user, warn him
-            if( ($_SERVER['REMOTE_USER'] == $user) && ($timeleft <= $this->cnf['expirywarn'])){
+            // if this is the current user, warn him (once per request only)
+            if( ($_SERVER['REMOTE_USER'] == $user) &&
+                ($timeleft <= $this->cnf['expirywarn']) &&
+                !$this->msgshown
+            ){
                 $msg = sprintf($lang['authpwdexpire'],$timeleft);
                 if($this->canDo('modPass')){
                     $url = wl($ID,array('do'=>'profile'));
                     $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
                 }
                 msg($msg);
+                $this->msgshown = true;
             }
         }
 
