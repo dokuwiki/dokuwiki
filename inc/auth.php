@@ -872,7 +872,7 @@ function act_resendpwd(){
             // password given correctly?
             if(!isset($_REQUEST['pass']) || $_REQUEST['pass'] == '') return false;
             if($_REQUEST['pass'] != $_REQUEST['passchk']){
-                msg('password mismatch',-1); #FIXME localize
+                msg($lang['regbadpass'],-1);
                 return false;
             }
             $pass = $_REQUEST['pass'];
