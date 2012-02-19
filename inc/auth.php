@@ -860,6 +860,14 @@ function act_resendpwd(){
             unset($_REQUEST['pwauth']);
             return false;
         }
+        // token is only valid for 3 days
+        if( (time() - filemtime($tfile)) > (3*60*60*24) ){
+            msg($lang['resendpwdbadauth'],-1);
+            unset($_REQUEST['pwauth']);
+            @unlink($tfile);
+            return false;
+        }
+
         $user = io_readfile($tfile);
         $userinfo = $auth->getUserData($user);
         if(!$userinfo['mail']) {
