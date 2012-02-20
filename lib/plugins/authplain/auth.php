@@ -1,14 +1,23 @@
 <?php
 /**
+ * Plugin auth provider
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Jan Schumann <js@schumann-it.com>
+ */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+/**
  * Plaintext authentication backend
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
+ * @author     Jan Schumann <js@schumann-it.com>
  */
-
-class auth_plain extends auth_basic {
-
+class auth_plugin_authplain extends DokuWiki_Auth_Plugin
+{
     var $users = null;
     var $_pattern = array();
 
@@ -20,7 +29,7 @@ class auth_plain extends auth_basic {
      *
      * @author  Christopher Smith <chris@jalakai.co.uk>
      */
-    function auth_plain() {
+    function auth_plugin_authplain() {
       global $config_cascade;
 
       if (!@is_readable($config_cascade['plainauth.users']['default'])){
@@ -322,7 +331,5 @@ class auth_plain extends auth_basic {
 //        $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
         $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
       }
-    }
+   }
 }
-
-//Setup VIM: ex: et ts=2 :

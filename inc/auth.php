@@ -45,35 +45,19 @@ function auth_setup(){
     $plugins = $plugin_controller->getList('auth');
     foreach ($plugin_controller->getList('auth') as $plugin) {
     	if ($conf['authtype'] === $plugin) {
-    		$auth = $plugin_controller->load('auth', $plugin)->getAuth();
+    		$auth = $plugin_controller->load('auth', $plugin);
     		break;
     	}
     }
 
-    if (!$auth) {
-	    // load the the backend auth functions and instantiate the auth object XXX
-	    if (@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
-	        require_once(DOKU_INC.'inc/auth/basic.class.php');
-	        require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
+	if(!$auth) return;
 
-	        $auth_class = "auth_".$conf['authtype'];
-	        if (class_exists($auth_class)) {
-	            $auth = new $auth_class();
-	            if ($auth->success == false) {
-	                // degrade to unauthenticated user
-	                unset($auth);
-	                auth_logoff();
-	                msg($lang['authtempfail'], -1);
-	            }
-	        } else {
-	            nice_die($lang['authmodfailed']);
-	        }
-	    } else {
-	        nice_die($lang['authmodfailed']);
-	    }
-    }
-
-    if(!$auth) return;
+	if ($auth && $auth->success == false) {
+		// degrade to unauthenticated user
+	    unset($auth);
+	    auth_logoff();
+	    msg($lang['authtempfail'], -1);
+	}
 
     // do the login either by cookie or provided credentials XXX
     if (!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
@@ -102,7 +86,10 @@ function auth_setup(){
     }
 
     // apply cleaning
-    $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+    if (true === $auth->success)
+    {
+    	$_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+    }
 
     if(isset($_REQUEST['authtok'])){
         // when an authentication token is given, trust the session

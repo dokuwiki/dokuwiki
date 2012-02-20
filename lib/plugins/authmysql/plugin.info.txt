@@ -1,0 +1,7 @@
+base   authmysql
+author
+email
+date
+name   mysql auth plugin
+desc   Provides authentication against a MySQL Server
+url
