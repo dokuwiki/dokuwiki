@@ -95,6 +95,8 @@ $lang['showuseras']  = 'What to display when showing the user that last edited a
 
 /* Authentication Options */
 $lang['useacl']      = 'Use access control lists';
+$lang['usewildcards']   = 'Use the wildcard %USER% for ACL';
+$lang['groupwildcards'] = 'Use the wildcard %GROUP% for ACL';
 $lang['autopasswd']  = 'Autogenerate passwords';
 $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';
