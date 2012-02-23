@@ -519,13 +519,25 @@ form#subscribe__form fieldset {
 
 /*____________ mobile ____________*/
 
-@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 768px), only screen and (max-device-width: 960px) {
 
 
 .hasSidebar #dokuwiki__content,
 .hasSidebar #dokuwiki__content > .pad {
     margin-right: 0;
 }
+
+.dokuwiki div.toc {
+    float: none;
+    margin: 0 0 1em 0;
+    border-right-width: 0;
+}
+
+
+} /* /@media */
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+
 
 #dokuwiki__header ul.a11y.skip {
     left: auto !important;
@@ -554,12 +566,6 @@ form#subscribe__form fieldset {
 
 #dokuwiki__header .mobileTools {
     float: left;
-}
-
-.dokuwiki div.toc {
-    float: none;
-    margin: 0 0 1em 0;
-    border-right-width: 0;
 }
 
 .dokuwiki label.block {
