@@ -104,6 +104,7 @@ div {
 ul,
 ol {
     padding: 0 0 0 1.5em;
+    overflow: hidden;
 }
 li,
 dd {
