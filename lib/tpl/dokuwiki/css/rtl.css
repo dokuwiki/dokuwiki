@@ -544,6 +544,11 @@
     border-right-width: 0;
 }
 
+[dir=rtl] .dokuwiki #dw__recent ul,
+[dir=rtl] .dokuwiki #page__revisions ul {
+    padding-right: 0;
+}
+
 
 } /* /@media */
 

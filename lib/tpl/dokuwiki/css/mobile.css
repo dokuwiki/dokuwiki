@@ -64,6 +64,12 @@
     padding: 1em;
 }
 
+/* _recent */
+.dokuwiki #dw__recent ul,
+.dokuwiki #page__revisions ul {
+    padding-left: 0;
+}
+
 
 } /* /@media */
 
