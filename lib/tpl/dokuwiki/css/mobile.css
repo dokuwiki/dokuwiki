@@ -14,7 +14,7 @@
     width: 100%;
     float: none;
 }
-#dokuwiki__aside .pad {
+#dokuwiki__aside > .pad {
     margin: 0 0 .5em;
 }
 
@@ -23,7 +23,7 @@
     margin-left: 0;
     width: 100%;
 }
-.hasSidebar #dokuwiki__content .pad {
+.hasSidebar #dokuwiki__content > .pad {
     margin-left: 0;
 }
 
@@ -77,7 +77,7 @@
 #dokuwiki__site {
     max-width: 100%;
 }
-#dokuwiki__site .site {
+#dokuwiki__site > .site {
     padding: 0 .5em;
 }
 #dokuwiki__header {

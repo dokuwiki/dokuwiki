@@ -181,7 +181,7 @@
 
 #dokuwiki__aside {
 }
-#dokuwiki__aside .pad {
+#dokuwiki__aside > .pad {
     font-size: 0.875em;
     overflow: hidden;
     word-wrap: break-word;
@@ -450,7 +450,7 @@
 #dokuwiki__footer {
     margin-bottom: 1em;
 }
-#dokuwiki__footer .pad {
+#dokuwiki__footer > .pad {
     font-size: 0.875em;
 }
 #dokuwiki__footer div.license {

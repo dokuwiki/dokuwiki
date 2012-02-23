@@ -6,7 +6,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-#dokuwiki__site .site {
+#dokuwiki__site > .site {
     /* give space to the right so the tools won't disappear on smaller screens */
     /* it's 40px because the 30px wide icons will have 5px more spacing to the left and right */
     padding-right: 40px;
