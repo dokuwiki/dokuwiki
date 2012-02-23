@@ -144,6 +144,9 @@
 [dir=rtl] .dokuwiki ul.idx {
     padding-right: 0;
 }
+[dir=rtl] .dokuwiki ul.idx li.closed {
+    list-style-image: url(images/closed-rtl.png);
+}
 
 
 /*____________ _footnotes ____________*/
