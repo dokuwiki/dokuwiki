@@ -459,7 +459,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
       if($title['title']) return '['.$title['title'].']';
     } else if (is_null($title) || trim($title)==''){
       if (useHeading('content') && $id){
-        $heading = p_get_first_heading($id,METADATA_DONT_RENDER));
+        $heading = p_get_first_heading($id,METADATA_DONT_RENDER);
         if ($heading) return $heading;
       }
       return $default;
