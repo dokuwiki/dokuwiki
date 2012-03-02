@@ -117,8 +117,8 @@ function rss_parseOptions(){
                   'show_minor'   => array('minor', false),
                   // String, only used in search mode
                   'search_query' => array('q', null),
-                // One of: pages, media, both
-                  'content_type' => array('view', 'both')
+                  // One of: pages, media, both
+                  'content_type' => array('view', $conf['rss_media'])
 
                  ) as $name => $val) {
         $opt[$name] = (isset($_REQUEST[$val[0]]) && !empty($_REQUEST[$val[0]]))

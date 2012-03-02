@@ -154,6 +154,7 @@ $lang['rss_content'] = 'What to display in the XML feed items?';
 $lang['rss_update']  = 'XML feed update interval (sec)';
 $lang['recent_days'] = 'How many recent changes to keep (days)';
 $lang['rss_show_summary'] = 'XML feed show summary in title';
+$lang['rss_media']   = 'What kind of changes should be listed in the XML feed?';
 
 /* Target options */
 $lang['target____wiki']      = 'Target window for internal links';
