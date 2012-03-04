@@ -1147,7 +1147,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     $mail->to($to);
     $mail->bcc($bcc);
     $mail->subject($subject);
-    $mail->setBody($text,$trep);
+    $mail->setBody($text,$trep,$hrep);
     return $mail->send();
 }
 
