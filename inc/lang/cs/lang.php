@@ -11,6 +11,7 @@
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -190,6 +191,11 @@ $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
 $lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stáhnout snippet';
+$lang['tools']                 = 'Nástroje';
+$lang['user_tools']            = 'Uživatelské nástroje';
+$lang['site_tools']            = 'Nástroje pro tento web';
+$lang['page_tools']            = 'Nástroje pro stránku';
+$lang['skip_to_content']       = 'jít k obsahu';
 $lang['mail_newpage']          = 'nová stránka:';
 $lang['mail_changed']          = 'změna stránky:';
 $lang['mail_subscribe_list']   = 'stránky změněné ve jmenném prostoru:';
