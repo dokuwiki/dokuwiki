@@ -694,6 +694,7 @@ function tpl_action($type,$link=0,$wrapper=false,$return=false,$pre='',$suf='',$
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_searchform($ajax=true,$autocomplete=true){
+    global $conf;
     global $lang;
     global $ACT;
     global $QUERY;
@@ -701,7 +702,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
     // don't print the search form if search action has been disabled
     if (!actionOk('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
+    print '<form action="'.wl($conf['start']).'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
     if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
