@@ -929,7 +929,7 @@ class Doku_Parser_Mode_windowssharelink extends Doku_Parser_Mode {
     var $pattern;
 
     function preConnect() {
-        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w$]+)+";
+        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w-$]+)+";
     }
 
     function connectTo($mode) {
