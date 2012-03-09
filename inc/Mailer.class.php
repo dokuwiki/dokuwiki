@@ -167,7 +167,7 @@ class Mailer {
         }
         if($wrap){
             $wrap = rawLocale('mailwrap','html');
-            $html = preg_replace('/\n-- \n.*$/m','',$html); //strip signature
+            $html = preg_replace('/\n-- <br \/>.*$/s','',$html); //strip signature
             $html = str_replace('@HTMLBODY@',$html,$wrap);
         }
 
