@@ -1152,6 +1152,13 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     $mail->bcc($bcc);
     $mail->subject($subject);
     $mail->setBody($text,$trep,$hrep);
+    if($who == 'subscribers'){
+        $mail->setHeader(
+            'List-Unsubscribe',
+            '<'.wl($id,array('do'=>'subscribe'),true,'&').'>',
+            false
+        );
+    }
     return $mail->send();
 }
 

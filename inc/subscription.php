@@ -387,6 +387,10 @@ function subscription_send($subscriber_mail, $replaces, $subject, $id, $template
     $mail->bcc($subscriber_mail);
     $mail->subject($subject);
     $mail->setBody($text,$trep);
-
+    $mail->setHeader(
+        'List-Unsubscribe',
+        '<'.wl($id,array('do'=>'subscribe'),true,'&').'>',
+        false
+    );
     return $mail->send();
 }

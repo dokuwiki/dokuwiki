@@ -33,14 +33,23 @@ class Mailer {
      * Initializes the boundary strings and part counters
      */
     public function __construct(){
-        if(isset($_SERVER['SERVER_NAME'])){
-            $server = $_SERVER['SERVER_NAME'];
-        }else{
-            $server = 'localhost';
-        }
+        global $conf;
+
+        $server = parse_url(DOKU_URL,PHP_URL_HOST);
 
         $this->partid = md5(uniqid(rand(),true)).'@'.$server;
         $this->boundary = '----------'.md5(uniqid(rand(),true));
+
+        $listid = join('.',array_reverse(explode('/',DOKU_BASE))).$server;
+        $listid = strtolower(trim($listid,'.'));
+
+        // add some default headers for mailfiltering FS#2247
+        $this->setHeader('X-Mailer','DokuWiki '.getVersion());
+        $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
+        $this->setHeader('X-DokuWiki-Title', $conf['title']);
+        $this->setHeader('X-DokuWiki-Server', $server);
+        $this->setHeader('X-Auto-Response-Suppress', 'OOF');
+        $this->setHeader('List-Id',$conf['title'].' <'.$listid.'>');
     }
 
     /**
@@ -114,10 +123,10 @@ class Mailer {
      * @param bool   $clean  remove all non-ASCII chars and line feeds?
      */
     public function setHeader($header,$value,$clean=true){
-        $header = ucwords(strtolower($header)); // streamline casing
+        $header = str_replace(' ','-',ucwords(strtolower(str_replace('-',' ',$header)))); // streamline casing
         if($clean){
             $header = preg_replace('/[^\w \-\.\+\@]+/','',$header);
-            $value  = preg_replace('/[^\w \-\.\+\@]+/','',$value);
+            $value  = preg_replace('/[^\w \-\.\+\@<>]+/','',$value);
         }
 
         // empty value deletes
