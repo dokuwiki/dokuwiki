@@ -1086,6 +1086,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     global $lang;
     global $conf;
     global $INFO;
+    global $DIFF_INLINESTYLES;
 
     // decide if there is something to do, eg. whom to mail
     if($who == 'admin'){
@@ -1131,8 +1132,11 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
                                     explode("\n",rawWiki($id)));
         $dformat         = new UnifiedDiffFormatter();
         $tdiff           = $dformat->format($df);
+
+        $DIFF_INLINESTYLES = true;
         $dformat         = new InlineDiffFormatter();
         $hdiff           = $dformat->format($df);
+        $DIFF_INLINESTYLES = false;
     }else{
         $subject         = $lang['mail_newpage'].' '.$id;
         $trep['OLDPAGE'] = '---';
