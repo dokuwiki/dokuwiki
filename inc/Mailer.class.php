@@ -171,8 +171,10 @@ class Mailer {
 
         // create HTML from text if not given
         if(is_null($html)){
-            $html = hsc($text);
-            $html = nl2br($text);
+            $html = $text;
+            $html = hsc($html);
+            $html = preg_replace('/^-----*$/m','<hr >',$html);
+            $html = nl2br($html);
         }
         if($wrap){
             $wrap = rawLocale('mailwrap','html');
