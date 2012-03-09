@@ -500,7 +500,7 @@ class Mailer {
             }
         }
 
-        if(isset($subject)){
+        if(isset($this->headers['Subject'])){
             // add prefix to subject
             if(empty($conf['mailprefix'])){
                 if(utf8_strlen($conf['title']) < 20) {
@@ -512,17 +512,17 @@ class Mailer {
                 $prefix = '['.$conf['mailprefix'].']';
             }
             $len = strlen($prefix);
-            if(substr($this->headers['subject'],0,$len) != $prefix){
-                $this->headers['subject'] = $prefix.' '.$this->headers['subject'];
+            if(substr($this->headers['Subject'],0,$len) != $prefix){
+                $this->headers['Subject'] = $prefix.' '.$this->headers['Subject'];
             }
 
             // encode subject
             if(defined('MAILHEADER_ASCIIONLY')){
-                $this->headers['subject'] = utf8_deaccent($this->headers['subject']);
-                $this->headers['subject'] = utf8_strip($this->headers['subject']);
+                $this->headers['Subject'] = utf8_deaccent($this->headers['Subject']);
+                $this->headers['Subject'] = utf8_strip($this->headers['Subject']);
             }
             if(!utf8_isASCII($this->headers['Subject'])){
-                $subject = '=?UTF-8?B?'.base64_encode($this->headers['Subject']).'?=';
+                $this->headers['Subject'] = '=?UTF-8?B?'.base64_encode($this->headers['Subject']).'?=';
             }
         }
 
