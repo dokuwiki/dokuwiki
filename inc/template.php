@@ -1350,8 +1350,9 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string $img    - print image? (|button|badge)
  * @param  bool   $return - when true don't print, but return HTML
+ * @param  bool   $wrap   - wrap in div with class="license"?
  */
-function tpl_license($img='badge',$imgonly=false,$return=false){
+function tpl_license($img='badge',$imgonly=false,$return=false,$wrap=true){
     global $license;
     global $conf;
     global $lang;
@@ -1359,22 +1360,29 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
     if(!is_array($license[$conf['license']])) return '';
     $lic = $license[$conf['license']];
 
-    $out  = '<div class="license">';
+    $out = '';
+    if($wrap) $out  .= '<div class="license">';
     if($img){
         $src = license_img($img);
         if($src){
+            if(!$imgonly){
+                $left = 'medialeft';
+            }else{
+                $left = '';
+            }
+
             $out .= '<a href="'.$lic['url'].'" rel="license"';
             if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
-            $out .= '><img src="'.DOKU_BASE.$src.'" class="medialeft lic'.$img.'" alt="'.$lic['name'].'" /></a> ';
+            $out .= '><img src="'.DOKU_BASE.$src.'" class="'.$left.' lic'.$img.'" alt="'.$lic['name'].'" /></a> ';
         }
     }
     if(!$imgonly) {
         $out .= $lang['license'];
-        $out .= ' <a href="'.$lic['url'].'" rel="license" class="urlextern"';
+        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
         if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
         $out .= '>'.$lic['name'].'</a>';
     }
-    $out .= '</div>';
+    if($wrap) $out .= '</div>';
 
     if($return) return $out;
     echo $out;
