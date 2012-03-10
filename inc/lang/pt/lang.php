@@ -45,7 +45,6 @@ $lang['btn_backtomedia']       = 'Voltar à Selecção de Media';
 $lang['btn_subscribe']         = 'Subscrever Alterações';
 $lang['btn_profile']           = 'Actualizar Perfil';
 $lang['btn_reset']             = 'Limpar';
-$lang['btn_resendpwd']         = 'Enviar nova senha';
 $lang['btn_draft']             = 'Editar rascunho';
 $lang['btn_recover']           = 'Recuperar rascunho';
 $lang['btn_draftdel']          = 'Apagar rascunho';
@@ -86,7 +85,6 @@ $lang['profchanged']           = 'Perfil do utilizador actualizado com sucesso.'
 
 $lang['pwdforget']             = 'Esqueceu a sua senha? Pedir nova senha';
 $lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
-$lang['resendpwd']             = 'Enviar nova senha para';
 $lang['resendpwdmissing']      = 'É preciso preencher todos os campos.';
 $lang['resendpwdnouser']       = 'Não foi possível encontrar este utilizador.';
 $lang['resendpwdbadauth']      = 'O código de autenticação não é válido. Por favor, assegure-se de que o link de confirmação está completo.';

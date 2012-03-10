@@ -860,32 +860,60 @@ function act_resendpwd(){
     $token = preg_replace('/[^a-f0-9]+/','',$_REQUEST['pwauth']);
 
     if($token){
-        // we're in token phase
+        // we're in token phase - get user info from token
 
         $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
         if(!@file_exists($tfile)){
             msg($lang['resendpwdbadauth'],-1);
+            unset($_REQUEST['pwauth']);
             return false;
         }
+        // token is only valid for 3 days
+        if( (time() - filemtime($tfile)) > (3*60*60*24) ){
+            msg($lang['resendpwdbadauth'],-1);
+            unset($_REQUEST['pwauth']);
+            @unlink($tfile);
+            return false;
+        }
+
         $user = io_readfile($tfile);
-        @unlink($tfile);
         $userinfo = $auth->getUserData($user);
         if(!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;
         }
 
-        $pass = auth_pwgen();
-        if (!$auth->triggerUserMod('modify', array($user,array('pass' => $pass)))) {
-            msg('error modifying user data',-1);
-            return false;
+
+        if(!$conf['autopasswd']){ // we let the user choose a password
+            // password given correctly?
+            if(!isset($_REQUEST['pass']) || $_REQUEST['pass'] == '') return false;
+            if($_REQUEST['pass'] != $_REQUEST['passchk']){
+                msg($lang['regbadpass'],-1);
+                return false;
+            }
+            $pass = $_REQUEST['pass'];
+
+            if (!$auth->triggerUserMod('modify', array($user,array('pass' => $pass)))) {
+                msg('error modifying user data',-1);
+                return false;
+            }
+
+        }else{ // autogenerate the password and send by mail
+
+            $pass = auth_pwgen();
+            if (!$auth->triggerUserMod('modify', array($user,array('pass' => $pass)))) {
+                msg('error modifying user data',-1);
+                return false;
+            }
+
+            if (auth_sendPassword($user,$pass)) {
+                msg($lang['resendpwdsuccess'],1);
+            } else {
+                msg($lang['regmailfail'],-1);
+            }
         }
 
-        if (auth_sendPassword($user,$pass)) {
-            msg($lang['resendpwdsuccess'],1);
-        } else {
-            msg($lang['regmailfail'],-1);
-        }
+        @unlink($tfile);
         return true;
 
     } else {

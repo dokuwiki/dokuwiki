@@ -43,7 +43,7 @@ $lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
 $lang['btn_reset']             = 'Reset';
-$lang['btn_resendpwd']         = 'Send new password';
+$lang['btn_resendpwd']         = 'Set new password';
 $lang['btn_draft']             = 'Edit draft';
 $lang['btn_recover']           = 'Recover draft';
 $lang['btn_draftdel']          = 'Delete draft';
@@ -84,7 +84,7 @@ $lang['profchanged']           = 'User profile successfully updated.';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
-$lang['resendpwd']             = 'Send new password for';
+$lang['resendpwd']             = 'Set new password for';
 $lang['resendpwdmissing']      = 'Sorry, you must fill in all fields.';
 $lang['resendpwdnouser']       = 'Sorry, we can\'t find this user in our database.';
 $lang['resendpwdbadauth']      = 'Sorry, this auth code is not valid. Make sure you used the complete confirmation link.';
