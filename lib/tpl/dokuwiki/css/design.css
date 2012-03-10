@@ -453,11 +453,17 @@
 #dokuwiki__footer > .pad {
     font-size: 0.875em;
 }
-#dokuwiki__footer div.license {
+#dokuwiki__footer div.license,
+#dokuwiki__footer div.footerbuttons {
     text-align: center;
 }
-#dokuwiki__footer .license img {
-    margin: 0 .5em 0 0;
-    float: none;
+#dokuwiki__footer div.license {
+    margin-bottom: 0.5em;
+}
+#dokuwiki__footer div.footerbuttons img {
+    opacity: 0.5;
 }
 
+#dokuwiki__footer div.footerbuttons a:hover img {
+    opacity: 1;
+}
