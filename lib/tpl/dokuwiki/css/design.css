@@ -283,10 +283,6 @@
 .dokuwiki div.license {
     font-size: 93.75%;
 }
-/* license note in footer */
-.dokuwiki #dokuwiki__footer div.license {
-    font-size: 100%;
-}
 
 #IE7 .dokuwiki input.button,
 #IE7 .dokuwiki button {
@@ -449,21 +445,22 @@
 
 #dokuwiki__footer {
     margin-bottom: 1em;
+    text-align: center;
 }
 #dokuwiki__footer > .pad {
     font-size: 0.875em;
 }
-#dokuwiki__footer div.license,
-#dokuwiki__footer div.footerbuttons {
-    text-align: center;
-}
+
 #dokuwiki__footer div.license {
     margin-bottom: 0.5em;
-}
-#dokuwiki__footer div.footerbuttons img {
-    opacity: 0.5;
+    font-size: 100%;
 }
 
-#dokuwiki__footer div.footerbuttons a:hover img {
+#dokuwiki__footer div.buttons a img {
+    opacity: 0.5;
+}
+#dokuwiki__footer div.buttons a:hover img,
+#dokuwiki__footer div.buttons a:active img,
+#dokuwiki__footer div.buttons a:focus img {
     opacity: 1;
 }
