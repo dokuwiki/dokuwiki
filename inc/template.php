@@ -1359,27 +1359,21 @@ function tpl_license($img='badge',$imgonly=false,$return=false,$wrap=true){
     if(!$conf['license']) return '';
     if(!is_array($license[$conf['license']])) return '';
     $lic = $license[$conf['license']];
+    $target = ($conf['target']['extern']) ? ' target="'.$conf['target']['extern'].'"' : '';
 
     $out = '';
     if($wrap) $out  .= '<div class="license">';
     if($img){
         $src = license_img($img);
         if($src){
-            if(!$imgonly){
-                $left = 'medialeft';
-            }else{
-                $left = '';
-            }
-
-            $out .= '<a href="'.$lic['url'].'" rel="license"';
-            if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
-            $out .= '><img src="'.DOKU_BASE.$src.'" class="'.$left.' lic'.$img.'" alt="'.$lic['name'].'" /></a> ';
+            $out .= '<a href="'.$lic['url'].'" rel="license"'.$target;
+            $out .= '><img src="'.DOKU_BASE.$src.'" alt="'.$lic['name'].'" /></a>';
+            if(!$imgonly) $out .= ' ';
         }
     }
     if(!$imgonly) {
-        $out .= $lang['license'];
-        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"';
-        if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
+        $out .= $lang['license'].' ';
+        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"'.$target;
         $out .= '>'.$lic['name'].'</a>';
     }
     if($wrap) $out .= '</div>';
