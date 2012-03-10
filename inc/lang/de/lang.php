@@ -273,6 +273,7 @@ $lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede ver�
 $lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Systembetreuer.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Systembetreuer.';
+$lang['authpwdexpire']         = 'Ihr Passwort läuft in %d Tag(en) ab, Sie sollten es bald ändern.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
 $lang['i_installer']           = 'DokuWiki Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
