@@ -27,7 +27,7 @@ $conf['mediarevisions'] = 1;              //enable/disable media revisions
 
 $conf['start']       = 'start';           //name of start page
 $conf['title']       = 'DokuWiki';        //what to show in the title
-$conf['template']    = 'default';         //see lib/tpl directory
+$conf['template']    = 'dokuwiki';        //see lib/tpl directory
 $conf['tagline']     = '';                //tagline in header (if template supports it)
 $conf['sidebar']     = 'sidebar';         //name of sidebar in root namespace (if template supports it)
 $conf['license']     = 'cc-by-nc-sa';     //see conf/license.php
