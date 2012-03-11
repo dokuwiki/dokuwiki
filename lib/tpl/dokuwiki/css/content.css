@@ -27,15 +27,16 @@
 
 /* embedded images (styles are already partly set in lib/styles/all.css) */
 .dokuwiki img.media {
+    margin: .2em 0;
 }
 .dokuwiki img.medialeft {
-    margin: .5em 1.5em .5em 0;
+    margin: .2em 1em .2em 0;
 }
 .dokuwiki img.mediaright {
-    margin: .5em 0 .5em 1.5em;
+    margin: .2em 0 .2em 1em;
 }
 .dokuwiki img.mediacenter {
-    margin: .5em auto;
+    margin: .2em auto;
 }
 
 
