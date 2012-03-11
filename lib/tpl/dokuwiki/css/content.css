@@ -42,16 +42,16 @@
 
 /*____________ lists ____________*/
 
-.dokuwiki #dokuwiki__content ul li,
-.dokuwiki #dokuwiki__aside ul li {
+#dokuwiki__content ul li,
+#dokuwiki__aside ul li {
     color: __text_alt__;
 }
-.dokuwiki #dokuwiki__content ol li,
-.dokuwiki #dokuwiki__aside ol li {
+#dokuwiki__content ol li,
+#dokuwiki__aside ol li {
     color: __text_neu__;
 }
-.dokuwiki #dokuwiki__content li .li,
-.dokuwiki #dokuwiki__aside li .li {
+#dokuwiki__content li .li,
+#dokuwiki__aside li .li {
     color: __text__;
 }
 
