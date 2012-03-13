@@ -19,10 +19,13 @@ class common_clientIP_test extends UnitTestCase {
                 two
 
                 three';
-        $win  = 'one
+        $win = 'one
                 two
-                
+
                 three';
+
+        $this->assertEqual(bin2hex($unix),'6f6e650a2020202020202020202020202020202074776f0a0a202020202020202020202020202020207468726565');
+        $this->assertEqual(bin2hex($win),'6f6e650d0a2020202020202020202020202020202074776f0d0a0d0a202020202020202020202020202020207468726565');
         $this->assertNotEqual($unix,$win);
         $this->assertEqual($unix,cleanText($win));
     }
