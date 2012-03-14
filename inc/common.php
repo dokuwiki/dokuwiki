@@ -1136,6 +1136,7 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         $DIFF_INLINESTYLES = true;
         $dformat         = new InlineDiffFormatter();
         $hdiff           = $dformat->format($df);
+        $hdiff           = '<table>'.$hdiff.'</table>';
         $DIFF_INLINESTYLES = false;
     }else{
         $subject         = $lang['mail_newpage'].' '.$id;
