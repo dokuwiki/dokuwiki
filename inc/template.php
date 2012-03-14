@@ -23,6 +23,31 @@ function template($tpl){
     return DOKU_INC.'lib/tpl/default/'.$tpl;
 }
 
+
+/**
+ * Convenience function to access template dir from local FS
+ *
+ * This replaces the deprecated DOKU_TPLINC constant
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_incdir(){
+    global $conf;
+    return DOKU_INC.'lib/tpl/'.$conf['template'].'/';
+}
+
+/**
+ * Convenience function to access template dir from web
+ *
+ * This replaces the deprecated DOKU_TPL constant
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_basedir(){
+    global $conf;
+    return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
+}
+
 /**
  * Print the content
  *
@@ -970,9 +995,10 @@ function tpl_img($maxwidth=0,$maxheight=0,$link=true,$params=null){
  * Default action for TPL_IMG_DISPLAY
  */
 function _tpl_img_action($data, $param=NULL) {
+    global $lang;
     $p = buildAttributes($data['params']);
 
-    if($data['url']) print '<a href="'.hsc($data['url']).'">';
+    if($data['url']) print '<a href="'.hsc($data['url']).'" title="'.$lang['mediaview'].'">';
     print '<img '.$p.'/>';
     if($data['url']) print '</a>';
     return true;
@@ -1033,7 +1059,7 @@ function tpl_getConf($id){
  */
 function tpl_loadConfig(){
 
-    $file = DOKU_TPLINC.'/conf/default.php';
+    $file = tpl_incdir().'/conf/default.php';
     $conf = array();
 
     if (!@file_exists($file)) return false;
@@ -1054,7 +1080,7 @@ function tpl_getLang($id){
     static $lang = array();
 
     if (count($lang) === 0){
-        $path = DOKU_TPLINC.'lang/';
+        $path = tpl_incdir().'lang/';
 
         $lang = array();
 
@@ -1206,12 +1232,13 @@ function tpl_mediaFileDetails($image, $rev){
     list($ext,$mime,$dl) = mimetype($image,false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
-    $tabTitle = '<strong class="'.$class.'">'.$image.'</strong>';
+    $tabTitle = '<strong class="'.$class.'"><a href="'.ml($image).'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
     if ($opened_tab === 'view' && $rev) {
         printf($lang['media_viewold'], $tabTitle, dformat($rev));
     } else {
         printf($lang['media_' . $opened_tab], $tabTitle);
     }
+
     echo '</h3></div>'.NL;
 
     echo '<div class="panelContent">'.NL;
@@ -1261,6 +1288,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     global $auth;
 
     echo '<form action="' . DOKU_SCRIPT . '" method="post" accept-charset="utf-8">';
+    echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
@@ -1268,36 +1296,42 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     echo '<select name="do" class="edit quickselect">';
     echo '<option value="">'.$empty.'</option>';
 
-    echo '<optgroup label=" &mdash; ">';
+    echo '<optgroup label="'.$lang['page_tools'].'">';
         $act = tpl_get_action('edit');
-        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-        $act = tpl_get_action('revisions');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
         $act = tpl_get_action('revert');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
+        $act = tpl_get_action('revisions');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
         $act = tpl_get_action('backlink');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
 
-    echo '<optgroup label=" &mdash; ">';
+        $act = tpl_get_action('subscribe');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+        echo '</optgroup>';
+
+    echo '<optgroup label="'.$lang['site_tools'].'">';
         $act = tpl_get_action('recent');
+        if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
+        $act = tpl_get_action('media');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
         $act = tpl_get_action('index');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
     echo '</optgroup>';
 
-    echo '<optgroup label=" &mdash; ">';
+    echo '<optgroup label="'.$lang['user_tools'].'">';
         $act = tpl_get_action('login');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-        $act = tpl_get_action('profile');
+        $act = tpl_get_action('register');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
-        $act = tpl_get_action('subscribe');
+        $act = tpl_get_action('profile');
         if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
         $act = tpl_get_action('admin');
@@ -1306,6 +1340,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
 
     echo '</select>';
     echo '<input type="submit" value="'.$button.'" />';
+    echo '</div>';
     echo '</form>';
 }
 
@@ -1354,9 +1389,12 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
  */
 function tpl_include_page($pageid,$print=true){
     global $ID;
-    $oldid = $ID;
+    global $TOC;
+    $oldid  = $ID;
+    $oldtoc = $TOC;
     $html = p_wiki_xhtml($pageid,'',false);
-    $ID = $oldid;
+    $ID  = $oldid;
+    $TOC = $oldtoc;
 
     if(!$print) return $html;
     echo $html;
@@ -1445,24 +1483,57 @@ function tpl_flush(){
     flush();
 }
 
+/**
+ * Tries to find a ressource file in the given locations.
+ *
+ * If a given location starts with a colon it is assumed to be a media
+ * file, otherwise it is assumed to be relative to the current template
+ *
+ * @param  array $search       locations to look at
+ * @param  bool $abs           if to use absolute URL
+ * @param  arrayref $imginfo   filled with getimagesize()
+ * @author Andreas  Gohr <andi@splitbrain.org>
+ */
+function tpl_getMediaFile($search, $abs=false, &$imginfo=null){
+    // loop through candidates until a match was found:
+    foreach($search as $img){
+        if(substr($img,0,1) == ':'){
+            $file    = mediaFN($img);
+            $ismedia = true;
+        }else{
+            $file = tpl_incdir().$img;
+            $ismedia = false;
+        }
+
+        if(file_exists($file)) break;
+    }
+
+    // fetch image data if requested
+    if(!is_null($imginfo)){
+        $imginfo = getimagesize($file);
+    }
+
+    // build URL
+    if($ismedia){
+        $url = ml($img, '', true, '', $abs);
+    }else{
+        $url = tpl_basedir().$img;
+        if($abs) $url = DOKU_URL.substr($url, strlen(DOKU_REL));
+    }
+
+    return $url;
+}
 
 /**
  * Returns icon from data/media root directory if it exists, otherwise
  * the one in the template's image directory.
  *
- * @param  bool $abs        - if to use absolute URL
- * @param  string $fileName - file name of icon
+ * @deprecated Use tpl_getMediaFile() instead
  * @author Anika Henke <anika@selfthinker.org>
  */
 function tpl_getFavicon($abs=false, $fileName='favicon.ico') {
-    if (file_exists(mediaFN($fileName))) {
-        return ml($fileName, '', true, '', $abs);
-    }
-
-    if($abs) {
-        return DOKU_URL.substr(DOKU_TPL.'images/'.$fileName, strlen(DOKU_REL));
-    }
-    return DOKU_TPL.'images/'.$fileName;
+    $look = array(":wiki:$fileName", ":$fileName", "images/$fileName");
+    return tpl_getMediaFile($look, $abs);
 }
 
 /**
@@ -1478,14 +1549,17 @@ function tpl_favicon($types=array('favicon')) {
     foreach ($types as $type) {
         switch($type) {
             case 'favicon':
-                $return .= '<link rel="shortcut icon" href="'.tpl_getFavicon().'" />'.NL;
+                $look = array(':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico');
+                $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'mobile':
-                $return .= '<link rel="apple-touch-icon" href="'.tpl_getFavicon(false, 'apple-touch-icon.png').'" />'.NL;
+                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.ico');
+                $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'generic':
                 // ideal world solution, which doesn't work in any browser yet
-                $return .= '<link rel="icon" href="'.tpl_getFavicon(false, 'icon.svg').'" type="image/svg+xml" />'.NL;
+                $look = array(':wiki:favicon.svg', ':favicon.svg', 'images/favicon.svg');
+                $return .= '<link rel="icon" href="'.tpl_getMediaFile($look).'" type="image/svg+xml" />'.NL;
                 break;
         }
     }

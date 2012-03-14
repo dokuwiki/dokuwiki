@@ -14,6 +14,7 @@
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  * @author lainme993@gmail.com
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '还原管理器';
 $lang['filter']                = '搜索包含垃圾信息的页面';

@@ -368,7 +368,7 @@ Those blocks were created by this source:
 
 ==== Syntax Highlighting ====
 
-[[wiki:DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax is the same like in the code and file blocks in the previous section, but this time the name of the used language is inserted inside the tag. Eg. ''<nowiki><code java></nowiki>'' or ''<nowiki><file java></nowiki>''.
+[[wiki:DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. ''<nowiki><code java></nowiki>'' or ''<nowiki><file java></nowiki>''.
 
 <code java>
 /**

@@ -77,6 +77,7 @@ $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
 $lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
 $lang['refshow']               = 'Wiev iele Verwendungsorte der Media-Datei zeigen';
 $lang['allowdebug']            = 'Debug-Ausgaben erlauben <b>Abschalten wenn nicht benötigt!</b>';
+$lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
 $lang['usewordblock']          = 'Spam-Blocking benutzen';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';

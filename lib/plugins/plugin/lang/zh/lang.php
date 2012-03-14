@@ -14,6 +14,7 @@
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  * @author lainme993@gmail.com
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';
@@ -59,4 +60,4 @@ $lang['enabled']               = '%s 插件启用';
 $lang['notenabled']            = '%s插件启用失败，请检查文件权限。';
 $lang['disabled']              = '%s 插件禁用';
 $lang['notdisabled']           = '%s插件禁用失败，请检查文件权限。';
-$lang['packageinstalled']      = '插件  (%d plugin(s): %s) 已成功安装。';
+$lang['packageinstalled']      = '插件  (%d plugin%s: %s) 已成功安装。';

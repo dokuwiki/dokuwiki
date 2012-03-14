@@ -29,7 +29,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $doc = '';        // will contain the whole document
     var $toc = array();   // will contain the Table of Contents
 
-    private $sectionedits = array(); // A stack of section edit data
+    var $sectionedits = array(); // A stack of section edit data
 
     var $headers = array();
     var $footnotes = array();
@@ -566,6 +566,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
+        global $INFO;
 
         $params = '';
         $parts = explode('?', $id, 2);
@@ -610,7 +611,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['pre']    = '';
         $link['suf']    = '';
         // highlight link to current page
-        if ($id == $ID) {
+        if ($id == $INFO['id']) {
             $link['pre']    = '<span class="curid">';
             $link['suf']    = '</span>';
         }
@@ -807,7 +808,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //markup non existing files
         if (!$exists) {
             $link['class'] .= ' wikilink2';
-            $link['url'] = media_managerURL(array('tab_details' => 'view', 'image' => $src, 'ns' => getNS($src)), '&');
         }
 
         //output formatted

@@ -49,6 +49,7 @@ $dokuwiki_hash = array(
     '2010-11-07'   => '7921d48195f4db21b8ead6d9bea801b8',
     '2011-05-25'   => '4241865472edb6fa14a1227721008072',
     '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
+    '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
 );
 
 
@@ -419,16 +420,18 @@ function check_permissions(){
     global $lang;
 
     $dirs = array(
-        'conf'      => DOKU_LOCAL,
-        'data'      => DOKU_INC.'data',
-        'pages'     => DOKU_INC.'data/pages',
-        'attic'     => DOKU_INC.'data/attic',
-        'media'     => DOKU_INC.'data/media',
-        'meta'      => DOKU_INC.'data/meta',
-        'cache'     => DOKU_INC.'data/cache',
-        'locks'     => DOKU_INC.'data/locks',
-        'index'     => DOKU_INC.'data/index',
-        'tmp'       => DOKU_INC.'data/tmp'
+        'conf'        => DOKU_LOCAL,
+        'data'        => DOKU_INC.'data',
+        'pages'       => DOKU_INC.'data/pages',
+        'attic'       => DOKU_INC.'data/attic',
+        'media'       => DOKU_INC.'data/media',
+        'media_attic' => DOKU_INC.'data/media_attic',
+        'media_meta'  => DOKU_INC.'data/media_meta',
+        'meta'        => DOKU_INC.'data/meta',
+        'cache'       => DOKU_INC.'data/cache',
+        'locks'       => DOKU_INC.'data/locks',
+        'index'       => DOKU_INC.'data/index',
+        'tmp'         => DOKU_INC.'data/tmp'
     );
 
     $ok = true;

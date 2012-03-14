@@ -131,6 +131,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           }
           ptln('  <fieldset id="'.$setting->_key.'">');
           ptln('  <legend>'.$setting->prompt($this).'</legend>');
+          ptln('  <div class="table">');
           ptln('  <table class="inline">');
         } else {
           // config settings
@@ -151,6 +152,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       }
 
       ptln('  </table>');
+      ptln('  </div>');
       if ($in_fieldset) {
         ptln('  </fieldset>');
       }
@@ -161,6 +163,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         usort($undefined_settings, '_setting_natural_comparison');
         $this->_print_h1('undefined_settings', $this->getLang('_header_undefined'));
         ptln('<fieldset>');
+        ptln('<div class="table">');
         ptln('<table class="inline">');
         $undefined_setting_match = array();
         foreach($undefined_settings as $setting) {
@@ -175,6 +178,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           ptln('  </tr>');
         }
         ptln('</table>');
+        ptln('</div>');
         ptln('</fieldset>');
       }
 
@@ -270,10 +274,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       // the same for the active template
       $tpl = $conf['template'];
 
-      if (@file_exists(DOKU_TPLINC.$enlangfile)){
+      if (@file_exists(tpl_incdir().$enlangfile)){
         $lang = array();
-        @include(DOKU_TPLINC.$enlangfile);
-        if ($conf['lang'] != 'en') @include(DOKU_TPLINC.$langfile);
+        @include(tpl_incdir().$enlangfile);
+        if ($conf['lang'] != 'en') @include(tpl_incdir().$langfile);
         foreach ($lang as $key => $value){
           $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }

@@ -1,4 +1,4 @@
 ====== Index ======
 
-Voici un index de toutes les pages disponibles, triées par [[doku>namespaces|catégorie]].
+Voici un index de toutes les pages disponibles, triées par [[doku>fr:namespaces|catégorie]].
 

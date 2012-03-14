@@ -62,6 +62,8 @@ $lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
 $lang['start']       = 'Start page name';
 $lang['title']       = 'Wiki title';
 $lang['template']    = 'Template';
+$lang['tagline']     = 'Tagline (if template supports it)';
+$lang['sidebar']     = 'Sidebar page name (if template supports it), empty field disables the sidebar';
 $lang['license']     = 'Under which license should your content be released?';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['recent']      = 'Recent changes';
@@ -82,6 +84,7 @@ $lang['useheading']  = 'Use first heading for pagenames';
 $lang['refcheck']    = 'Media reference check';
 $lang['refshow']     = 'Number of media references to show';
 $lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
+$lang['mediarevisions'] = 'Enable Mediarevisions?';
 
 $lang['usewordblock']= 'Block spam based on wordlist';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
@@ -151,6 +154,7 @@ $lang['rss_content'] = 'What to display in the XML feed items?';
 $lang['rss_update']  = 'XML feed update interval (sec)';
 $lang['recent_days'] = 'How many recent changes to keep (days)';
 $lang['rss_show_summary'] = 'XML feed show summary in title';
+$lang['rss_media']   = 'What kind of changes should be listed in the XML feed?';
 
 /* Target options */
 $lang['target____wiki']      = 'Target window for internal links';

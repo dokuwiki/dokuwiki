@@ -64,6 +64,7 @@ $lang['useheading']            = 'Použiť nadpis pre názov stránky';
 $lang['refcheck']              = 'Kontrolovať odkazy na médiá (pred vymazaním)';
 $lang['refshow']               = 'Počet zobrazených odkazov na médiá';
 $lang['allowdebug']            = 'Povoliť ladenie chýb <b>deaktivujte, ak nie je potrebné!</b>';
+$lang['mediarevisions']        = 'Povoliť verzie súborov?';
 $lang['usewordblock']          = 'Blokovať spam na základe zoznamu známych slov';
 $lang['indexdelay']            = 'Časové oneskorenie pred indexovaním (sek)';
 $lang['relnofollow']           = 'Používať rel="nofollow" pre externé odkazy';

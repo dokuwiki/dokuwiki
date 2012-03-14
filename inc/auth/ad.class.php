@@ -26,6 +26,8 @@
  *   $conf['auth']['ad']['use_ssl']            = 1;
  *   $conf['auth']['ad']['use_tls']            = 1;
  *   $conf['auth']['ad']['debug']              = 1;
+ *   // warn user about expiring password this many days in advance:
+ *   $conf['auth']['ad']['expirywarn']         = 5;
  *
  *   // get additional information to the userinfo array
  *   // add a list of comma separated ldap contact fields.
@@ -44,6 +46,7 @@ class auth_ad extends auth_basic {
     var $opts = null;
     var $adldap = null;
     var $users = null;
+    var $msgshown = false;
 
     /**
      * Constructor
@@ -146,9 +149,13 @@ class auth_ad extends auth_basic {
      */
    function getUserData($user){
         global $conf;
+        global $lang;
+        global $ID;
         if(!$this->_init()) return false;
 
-        $fields = array('mail','displayname','samaccountname');
+        if($user == '') return array();
+
+        $fields = array('mail','displayname','samaccountname','lastpwd','pwdlastset','useraccountcontrol');
 
         // add additional fields to read
         $fields = array_merge($fields, $this->cnf['additional']);
@@ -156,11 +163,19 @@ class auth_ad extends auth_basic {
 
         //get info for given user
         $result = $this->adldap->user_info($user, $fields);
+        if($result == false){
+            return array();
+        }
+
         //general user info
-        $info['name'] = $result[0]['displayname'][0];
-        $info['mail'] = $result[0]['mail'][0];
-        $info['uid']  = $result[0]['samaccountname'][0];
-        $info['dn']   = $result[0]['dn'];
+        $info['name']    = $result[0]['displayname'][0];
+        $info['mail']    = $result[0]['mail'][0];
+        $info['uid']     = $result[0]['samaccountname'][0];
+        $info['dn']      = $result[0]['dn'];
+        //last password set (Windows counts from January 1st 1601)
+        $info['lastpwd'] = $result[0]['pwdlastset'][0] / 10000000 - 11644473600;
+        //will it expire?
+        $info['expires'] = !($result[0]['useraccountcontrol'][0] & 0x10000); //ADS_UF_DONT_EXPIRE_PASSWD
 
         // additional information
         foreach ($this->cnf['additional'] as $field) {
@@ -181,6 +196,29 @@ class auth_ad extends auth_basic {
         // always add the default group to the list of groups
         if(!is_array($info['grps']) || !in_array($conf['defaultgroup'],$info['grps'])){
             $info['grps'][] = $conf['defaultgroup'];
+        }
+
+        // check expiry time
+        if($info['expires'] && $this->cnf['expirywarn']){
+            $result   = $this->adldap->domain_info(array('maxpwdage')); // maximum pass age
+            $maxage   = -1 * $result['maxpwdage'][0] / 10000000; // negative 100 nanosecs
+            $timeleft = $maxage - (time() - $info['lastpwd']);
+            $timeleft = round($timeleft/(24*60*60));
+            $info['expiresin'] = $timeleft;
+
+            // if this is the current user, warn him (once per request only)
+            if( ($_SERVER['REMOTE_USER'] == $user) &&
+                ($timeleft <= $this->cnf['expirywarn']) &&
+                !$this->msgshown
+            ){
+                $msg = sprintf($lang['authpwdexpire'],$timeleft);
+                if($this->canDo('modPass')){
+                    $url = wl($ID,array('do'=>'profile'));
+                    $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                }
+                msg($msg);
+                $this->msgshown = true;
+            }
         }
 
         return $info;

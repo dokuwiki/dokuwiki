@@ -11,6 +11,7 @@
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['menu']                  = 'Obnova zaspamovaných stránek';
 $lang['filter']                = 'Hledat zaspamované stránky';

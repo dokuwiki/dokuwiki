@@ -18,6 +18,7 @@ $conf['dmode']       = 0755;              //set directory creation mode
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
+$conf['cookiedir']   = '';                //Cookie path. Leave blank for using baseurl.
 $conf['savedir']     = './data';          //where to store all the files
 $conf['allowdebug']  = 0;                 //allow debug output, enable if needed 0|1
 $conf['mediarevisions'] = 1;              //enable/disable media revisions
@@ -27,6 +28,8 @@ $conf['mediarevisions'] = 1;              //enable/disable media revisions
 $conf['start']       = 'start';           //name of start page
 $conf['title']       = 'DokuWiki';        //what to show in the title
 $conf['template']    = 'default';         //see lib/tpl directory
+$conf['tagline']     = '';                //tagline in header (if template supports it)
+$conf['sidebar']     = 'sidebar';         //name of sidebar in root namespace (if template supports it)
 $conf['license']     = 'cc-by-nc-sa';     //see conf/license.php
 $conf['fullpath']    = 0;                 //show full path of the document or relative to datadir only? 0|1
 $conf['recent']      = 20;                //how many entries to show in recent
@@ -124,14 +127,18 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
-$conf['rss_content'] = 'abstract';       // what to put in the items by default?
+$conf['rss_content'] = 'abstract';       //what to put in the items by default?
                                          //  'abstract' - plain text, first paragraph or so
                                          //  'diff'     - plain text unified diff wrapped in <pre> tags
                                          //  'htmldiff' - diff as HTML table
                                          //  'html'     - the full page rendered in XHTML
+$conf['rss_media']   = 'both';           //what should be listed?
+                                         //  'both'     - page and media changes
+                                         //  'pages'    - page changes only
+                                         //  'media'    - media changes only
 $conf['rss_update'] = 5*60;              //Update the RSS feed every n seconds (defaults to 5 minutes)
-$conf['recent_days'] = 7;                //How many days of recent changes to keep. (days)
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
+$conf['recent_days'] = 7;                //How many days of recent changes to keep. (days)
 $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abort (IIS+CGI) 0|1
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation

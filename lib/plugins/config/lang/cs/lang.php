@@ -10,6 +10,7 @@
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,

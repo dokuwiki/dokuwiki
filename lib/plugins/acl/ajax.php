@@ -7,7 +7,7 @@
  */
 
 //fix for Opera XMLHttpRequests
-if(!count($_POST) && $HTTP_RAW_POST_DATA){
+if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
   parse_str($HTTP_RAW_POST_DATA, $_POST);
 }
 

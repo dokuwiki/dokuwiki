@@ -11,6 +11,7 @@
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -46,7 +47,6 @@ $lang['btn_backtomedia']       = 'Zpět do Výběru dokumentu';
 $lang['btn_subscribe']         = 'Odebírat emailem změny stránky';
 $lang['btn_profile']           = 'Upravit profil';
 $lang['btn_reset']             = 'Reset';
-$lang['btn_resendpwd']         = 'Zaslat nové heslo';
 $lang['btn_draft']             = 'Upravit koncept';
 $lang['btn_recover']           = 'Obnovit koncept';
 $lang['btn_draftdel']          = 'Vymazat koncept';
@@ -83,7 +83,6 @@ $lang['profnoempty']           = 'Nelze zadat prázdné jméno nebo mailová adr
 $lang['profchanged']           = 'Uživatelský profil změněn.';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
-$lang['resendpwd']             = 'Odeslat nové heslo pro uživatele';
 $lang['resendpwdmissing']      = 'Musíte vyplnit všechny položky.';
 $lang['resendpwdnouser']       = 'Bohužel takový uživatel v systému není.';
 $lang['resendpwdbadauth']      = 'Autorizační kód není platný. Zadali jste opravdu celý odkaz na potvrzovací stránku?';
@@ -190,6 +189,11 @@ $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
 $lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stáhnout snippet';
+$lang['tools']                 = 'Nástroje';
+$lang['user_tools']            = 'Uživatelské nástroje';
+$lang['site_tools']            = 'Nástroje pro tento web';
+$lang['page_tools']            = 'Nástroje pro stránku';
+$lang['skip_to_content']       = 'jít k obsahu';
 $lang['mail_newpage']          = 'nová stránka:';
 $lang['mail_changed']          = 'změna stránky:';
 $lang['mail_subscribe_list']   = 'stránky změněné ve jmenném prostoru:';
@@ -282,21 +286,6 @@ $lang['i_pol1']                = 'Veřejná wiki (čtení pro všechny, zápis a
 $lang['i_pol2']                = 'Uzavřená wiki (čtení, zápis a upload pouze pro registrované uživatele)';
 $lang['i_retry']               = 'Zkusit znovu';
 $lang['i_license']             = 'Vyberte prosím licenci obsahu:';
-$lang['mu_intro']              = 'Zde můžete načíst více souborů najednou. Pro přidání souborů do fronty stiskněte tlačítko "Procházet". Až budete hotovi, stiskněte "Načíst".';
-$lang['mu_gridname']           = 'Název souboru';
-$lang['mu_gridsize']           = 'Velikost';
-$lang['mu_gridstat']           = 'Stav';
-$lang['mu_namespace']          = 'Jmenný prostor';
-$lang['mu_browse']             = 'Procházet';
-$lang['mu_toobig']             = 'příliš velké';
-$lang['mu_ready']              = 'připraveno k načtení';
-$lang['mu_done']               = 'hotovo';
-$lang['mu_fail']               = 'selhalo';
-$lang['mu_authfail']           = 'vypršela session';
-$lang['mu_progress']           = '@PCT@% načten';
-$lang['mu_filetypes']          = 'Povolené typy souborů';
-$lang['mu_info']               = 'soubory načteny.';
-$lang['mu_lasterr']            = 'Poslední chyba:';
 $lang['recent_global']         = 'Právě si prohlížíte změny ve jmenném prostoru <b>%s</b>. Také si můžete <a href="%s">zobrazit změny v celé wiki</a>.';
 $lang['years']                 = 'před %d roky';
 $lang['months']                = 'před %d měsíci';

@@ -30,8 +30,8 @@ if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
-    if(defined('E_DEPRECATED')){ // since php 5.3
-        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    if(defined('E_DEPRECATED')){ // since php 5.3, since php 5.4 E_STRICT is part of E_ALL
+        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
     }else{
         error_reporting(E_ALL ^ E_NOTICE);
     }
@@ -67,16 +67,6 @@ foreach (array('default','local','protected') as $config_group) {
             include($config_file);
         }
     }
-}
-
-//prepare language array
-global $lang;
-$lang = array();
-
-//load the language files
-require_once(DOKU_INC.'inc/lang/en/lang.php');
-if ( $conf['lang'] && $conf['lang'] != 'en' ) {
-    require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
 }
 
 //prepare license array()
@@ -118,11 +108,11 @@ if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['se
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
-// define Template baseURL
+// DEPRECATED, use tpl_basedir() instead
 if(!defined('DOKU_TPL')) define('DOKU_TPL',
         DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
 
-// define real Template directory
+// DEPRECATED, use tpl_incdir() instead
 if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
         DOKU_INC.'lib/tpl/'.$conf['template'].'/');
 
@@ -214,6 +204,10 @@ $plugin_controller = new $plugin_controller_class();
 global $EVENT_HANDLER;
 $EVENT_HANDLER = new Doku_Event_Handler();
 
+$local = $conf['lang'];
+trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+
+
 // setup authentication system
 if (!defined('NOSESSION')) {
     auth_setup();
@@ -254,6 +248,20 @@ function init_paths(){
     // hardcoded changelog because it is now a cache that lives in meta
     $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
+}
+
+function init_lang($langCode) {
+    //prepare language array
+    global $lang;
+    $lang = array();
+
+    //load the language files
+    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    if ($langCode && $langCode != 'en') {
+        if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
+            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+        }
+    }
 }
 
 /**

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Increased whenever the API is changed
+ */
+define('DOKU_API_VERSION', 7);
+
 class RemoteAPICore {
 
     private $api;
@@ -194,7 +199,7 @@ class RemoteAPICore {
     function rawPage($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDeniedException();
+            throw new RemoteAccessDeniedException('You are not allowed to read this file', 111);
         }
         $text = rawWiki($id,$rev);
         if(!$text) {
@@ -214,12 +219,12 @@ class RemoteAPICore {
     function getAttachment($id){
         $id = cleanID($id);
         if (auth_quickaclcheck(getNS($id).':*') < AUTH_READ) {
-            throw new RemoteAccessDeniedException();
+            throw new RemoteAccessDeniedException('You are not allowed to read this file', 211);
         }
 
         $file = mediaFN($id);
         if (!@ file_exists($file)) {
-            throw new RemoteException('The requested file does not exist');
+            throw new RemoteException('The requested file does not exist', 221);
         }
 
         $data = io_readFile($file, false);
@@ -253,7 +258,7 @@ class RemoteAPICore {
     function htmlPage($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
         return p_wiki_xhtml($id,$rev,false);
     }
@@ -372,7 +377,7 @@ class RemoteAPICore {
             }
             return $data;
         } else {
-            throw new RemoteAccessDeniedException(1, 'You are not allowed to list media files.');
+            throw new RemoteAccessDeniedException('You are not allowed to list media files.', 215);
         }
     }
 
@@ -389,12 +394,12 @@ class RemoteAPICore {
     function pageInfo($id,$rev=''){
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
         $file = wikiFN($id,$rev);
         $time = @filemtime($file);
         if(!$time){
-            throw new RemoteException(10, 'The requested page does not exist');
+            throw new RemoteException(10, 'The requested page does not exist', 121);
         }
 
         $info = getRevisionInfo($id, $time, 1024);
@@ -424,25 +429,25 @@ class RemoteAPICore {
         $minor = $params['minor'];
 
         if(empty($id)) {
-            throw new RemoteException(1, 'Empty page ID');
+            throw new RemoteException('Empty page ID', 131);
         }
 
         if(!page_exists($id) && trim($TEXT) == '' ) {
-            throw new RemoteException(1, 'Refusing to write an empty new wiki page');
+            throw new RemoteException('Refusing to write an empty new wiki page', 132);
         }
 
         if(auth_quickaclcheck($id) < AUTH_EDIT) {
-            throw new RemoteAccessDeniedException(1, 'You are not allowed to edit this page');
+            throw new RemoteAccessDeniedException('You are not allowed to edit this page', 112);
         }
 
         // Check, if page is locked
         if(checklock($id)) {
-            throw new RemoteException(1, 'The page is currently locked');
+            throw new RemoteException('The page is currently locked', 133);
         }
 
         // SPAM check
         if(checkwordblock()) {
-            throw new RemoteException(1, 'Positive wordblock check');
+            throw new RemoteException('Positive wordblock check', 134);
         }
 
         // autoset summary on new pages
@@ -488,7 +493,7 @@ class RemoteAPICore {
         $auth = auth_quickaclcheck(getNS($id).':*');
 
         if(!isset($id)) {
-            throw new RemoteException(1, 'Filename not given.');
+            throw new RemoteException('Filename not given.', 231);
         }
 
         global $conf;
@@ -501,7 +506,7 @@ class RemoteAPICore {
 
         $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
-            throw new RemoteException(-$res[1], $res[0]);
+            throw new RemoteException($res[0], -$res[1]);
         } else {
             return $res;
         }
@@ -519,11 +524,11 @@ class RemoteAPICore {
         if ($res & DOKU_MEDIA_DELETED) {
             return 0;
         } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
-            throw new RemoteAccessDeniedException(1, "You don't have permissions to delete files.");
+            throw new RemoteAccessDeniedException('You don\'t have permissions to delete files.', 212);
         } elseif ($res & DOKU_MEDIA_INUSE) {
-            throw new RemoteException(1, 'File is still referenced');
+            throw new RemoteException('File is still referenced', 232);
         } else {
-            throw new RemoteException(1, 'Could not delete file');
+            throw new RemoteException('Could not delete file', 233);
         }
     }
 
@@ -543,7 +548,7 @@ class RemoteAPICore {
     function listLinks($id) {
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
-            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
         $links = array();
 
@@ -592,7 +597,7 @@ class RemoteAPICore {
      */
     function getRecentChanges($timestamp) {
         if(strlen($timestamp) != 10) {
-            throw new RemoteException(20, 'The provided value is not a valid timestamp');
+            throw new RemoteException('The provided value is not a valid timestamp', 311);
         }
 
         $recents = getRecentsSince($timestamp);
@@ -614,7 +619,7 @@ class RemoteAPICore {
             return $changes;
         } else {
             // in case we still have nothing at this point
-            return new RemoteException('There are no changes in the specified timeframe');
+            return new RemoteException('There are no changes in the specified timeframe', 321);
         }
     }
 
@@ -626,7 +631,7 @@ class RemoteAPICore {
      */
     function getRecentMediaChanges($timestamp) {
         if(strlen($timestamp) != 10)
-            throw new RemoteException(20, 'The provided value is not a valid timestamp');
+            throw new RemoteException('The provided value is not a valid timestamp', 311);
 
         $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
 
@@ -647,7 +652,7 @@ class RemoteAPICore {
             return $changes;
         } else {
             // in case we still have nothing at this point
-            throw new RemoteException(30, 'There are no changes in the specified timeframe');
+            throw new RemoteException('There are no changes in the specified timeframe', 321);
         }
     }
 
@@ -659,14 +664,14 @@ class RemoteAPICore {
     function pageVersions($id, $first) {
         $id = cleanID($id);
         if(auth_quickaclcheck($id) < AUTH_READ) {
-            throw new RemoteAccessDeniedException(1, 'You are not allowed to read this page');
+            throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
         global $conf;
 
         $versions = array();
 
         if(empty($id)) {
-            throw new RemoteException(1, 'Empty page ID');
+            throw new RemoteException('Empty page ID', 131);
         }
 
         $revisions = getRevisions($id, $first, $conf['recent']+1);
@@ -762,7 +767,7 @@ class RemoteAPICore {
     }
 
     function getAPIVersion(){
-        return DOKU_XMLRPC_API_VERSION;
+        return DOKU_API_VERSION;
     }
 
     function login($user,$pass){
@@ -790,3 +795,4 @@ class RemoteAPICore {
 
 
 }
+

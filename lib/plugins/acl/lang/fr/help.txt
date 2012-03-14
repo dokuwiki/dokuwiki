@@ -2,8 +2,8 @@
 
 Cette page vous permet d'ajouter ou de supprimer des permissions pour les catégories et les pages de votre wiki. Le panneau de gauche liste toutes les catégories et les pages disponibles.
 
-Le formulaire au-dessus permet d'afficher et de modifier les permissions d'un utilisateur ou d'un groupe sélectionné.
+Le formulaire ci-dessus permet d'afficher et de modifier les permissions d'un utilisateur ou d'un groupe sélectionné.
 
 Dans le tableau ci-dessous, toutes les listes de contrôle d'accès actuelles sont affichées. Vous pouvez l'utiliser pour supprimer ou modifier rapidement plusieurs ACL.
 
-La lecture de [[doku>acl|la documentation officielle des ACL]] pourra vous permettre de bien comprendre le fonctionnement du contrôle d'accès dans DokuWiki.
+La lecture de [[doku>fr:acl|la documentation officielle des ACL]] pourra vous permettre de bien comprendre le fonctionnement du contrôle d'accès dans DokuWiki.

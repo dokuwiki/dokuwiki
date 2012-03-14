@@ -4,11 +4,6 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 // fix when '< ?xml' isn't on the very first line
 if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 
-/**
- * Increased whenever the API is changed
- */
-define('DOKU_XMLRPC_API_VERSION', 6);
-
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/remote.php');
 session_write_close();  //close session
@@ -42,7 +37,7 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
             } else {
                 header('HTTP/1.1 403 Forbidden');
             }
-            return new IXR_Error(-32603, 'server error. not authorized to call method');
+            return new IXR_Error(-32603, "server error. not authorized to call method $methodname");
         } catch (RemoteException $e) {
             return new IXR_Error($e->getCode(), $e->getMessage());
         }
@@ -55,7 +50,6 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
     function toFile($data) {
         return new IXR_Base64($data);
     }
-
 }
 
 $server = new dokuwiki_xmlrpc_server();
