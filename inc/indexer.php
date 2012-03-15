@@ -351,7 +351,7 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $pid = $this->getIndexKey('page', '', $page);
+        $pid = $this->addIndexKey('page', '', $page);
         if ($pid === false) {
             $this->unlock();
             return false;
@@ -389,6 +389,7 @@ class Doku_Indexer {
             $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
             $meta_idx = $this->getIndex($metaname.'_i', '');
             foreach ($val_idx as $id) {
+                if ($id === '') continue;
                 $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
             }
             $this->saveIndex($metaname.'_i', '', $meta_idx);
