@@ -1012,8 +1012,6 @@ function _tpl_img_action($data, $param=NULL) {
  */
 function tpl_indexerWebBug(){
     global $ID;
-    global $INFO;
-    if(!$INFO['exists']) return false;
 
     $p = array();
     $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
