@@ -243,7 +243,7 @@ function toolbar_signature(){
     global $INFO;
 
     $sig = $conf['signature'];
-    $sig = strftime($sig);
+    $sig = dformat(null,$sig);
     $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
     $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
     $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
