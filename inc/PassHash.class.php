@@ -427,7 +427,7 @@ class PassHash {
                     $this->gen_salt(22);
         }
 
-        return crypt($password, $salt);
+        return crypt($clear, $salt);
     }
 
 }
